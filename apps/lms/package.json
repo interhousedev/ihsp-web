@@ -1,0 +1,20 @@
+{
+  "name": "@ihsp/lms",
+  "version": "0.0.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev -p 3005",
+    "build": "next build",
+    "typecheck": "tsc --noEmit",
+    "test": "bun test --timeout 30000 --preload ../../packages/test-utils/src/preload.ts"
+  },
+  "dependencies": {
+    "@ihsp/api": "workspace:*",
+    "@ihsp/auth": "workspace:*",
+    "@ihsp/config": "workspace:*",
+    "@ihsp/features-core": "workspace:*",
+    "@ihsp/i18n": "workspace:*",
+    "@ihsp/telegram": "workspace:*",
+    "@ihsp/ui": "workspace:*"
+  }
+}
