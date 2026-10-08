@@ -59,7 +59,9 @@
     "due": {
       "title": "Keyingi oʻquv kuniga topshirish",
       "titleOn": "{date} gacha topshirish",
-      "all": "Barcha vazifalar"
+      "all": "Barcha vazifalar",
+      "count": "{count, plural, other {# ta vazifa bajarilishi kerak}}",
+      "overdueCount": "muddati oʻtgan: {count}"
     },
     "marks": {
       "title": "Yangi baholar",
@@ -335,6 +337,11 @@
   "homework": {
     "title": "Uy vazifalari",
     "description": "Bajarilgan vazifalarni belgilang. Belgilar va qaydlarni faqat siz koʻrasiz.",
+    "overdue": {
+      "title": "Muddati oʻtgan",
+      "description": "Bu vazifalarning topshirish muddati oʻtib ketgan. Avval shularni bajaring."
+    },
+    "overdueBy": "{count, plural, other {Muddati # kun oʻtgan}}",
     "tabs": {
       "upcoming": "Yaqin",
       "later": "Keyinroq",

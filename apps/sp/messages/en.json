@@ -59,7 +59,9 @@
     "due": {
       "title": "Due next study day",
       "titleOn": "Due {date}",
-      "all": "All homework"
+      "all": "All homework",
+      "count": "{count, plural, one {# task to do} other {# tasks to do}}",
+      "overdueCount": "{count} overdue"
     },
     "marks": {
       "title": "New marks",
@@ -335,6 +337,11 @@
   "homework": {
     "title": "Homework",
     "description": "Tick tasks when they are done. Only you see ticks and notes.",
+    "overdue": {
+      "title": "Overdue",
+      "description": "These tasks are past their due date. Do them first."
+    },
+    "overdueBy": "{count, plural, one {# day overdue} other {# days overdue}}",
     "tabs": {
       "upcoming": "Upcoming",
       "later": "Later",
