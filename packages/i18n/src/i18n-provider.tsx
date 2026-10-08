@@ -1,5 +1,6 @@
 "use client"
 
+import { BootSplash } from "@ihsp/config"
 import { NextIntlClientProvider } from "next-intl"
 import { useEffect, useRef, useState, type ReactNode } from "react"
 import { useLocaleStore } from "./locale-store"
@@ -19,10 +20,23 @@ function messageFallback({ namespace, key }: { namespace?: string; key: string }
   return namespace ? `${namespace}.${key}` : key
 }
 
+function MessagesFailed() {
+  return (
+    <div role="alert" style={{ display: "grid", minHeight: "100dvh", placeItems: "center", padding: 16 }}>
+      <p style={{ margin: 0, textAlign: "center" }}>
+        The page could not be loaded.{" "}
+        <button type="button" onClick={() => window.location.reload()} style={{ textDecoration: "underline" }}>
+          Reload
+        </button>
+      </p>
+    </div>
+  )
+}
+
 /**
  * Client-side next-intl provider without locale routing. The locale comes from the account preference, then
  * `localStorage`, then the browser, then `ru`. Messages are the shared ones plus the app's own (`loadMessages`).
- * Nothing renders until the messages of the active locale are loaded, so there is no flash of message keys.
+ * Only the boot spinner shows until the messages of the active locale are loaded, so there is no flash of message keys.
  */
 export function I18nProvider({
   app,
@@ -37,6 +51,7 @@ export function I18nProvider({
   const locale = useLocaleStore((state) => state.locale)
   const resolved = useLocaleStore((state) => state.resolved)
   const [loaded, setLoaded] = useState<Loaded | null>(null)
+  const [failed, setFailed] = useState(false)
   // Apps pass a module-level loader; a ref keeps an inline function from restarting the effect on every render.
   const loaderRef = useRef(appLoader)
   useEffect(() => {
@@ -52,10 +67,13 @@ export function I18nProvider({
     let cancelled = false
     loadMessages(locale, loaderRef.current).then(
       (messages) => {
-        if (!cancelled) setLoaded({ locale, messages })
+        if (cancelled) return
+        setFailed(false)
+        setLoaded({ locale, messages })
       },
       (error: unknown) => {
         console.error(`[i18n] could not load messages (${app}, ${locale})`, error)
+        if (!cancelled) setFailed(true)
       },
     )
     return () => {
@@ -67,7 +85,9 @@ export function I18nProvider({
     document.documentElement.lang = locale
   }, [locale])
 
-  if (!loaded) return null
+  // Until the messages exist: the same spinner as the static HTML and the app's own loading states. A failed load
+  // (stale chunk after a deployment, offline) must not leave a blank page: offer a reload in plain words.
+  if (!loaded) return failed ? <MessagesFailed /> : <BootSplash />
 
   return (
     <NextIntlClientProvider

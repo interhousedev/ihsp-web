@@ -91,6 +91,7 @@
     "integrations": "Integrations",
     "connectors": "Connectors",
     "account": "Account",
+    "appearance": "Appearance",
     "delete": "Delete account"
   },
   "login": {
@@ -328,6 +329,8 @@
       "emisNeedsReauth": "Needs a new password",
       "connectors": "Connectors",
       "connectorsHint": "Give AI apps access to your data.",
+      "appearance": "Appearance",
+      "appearanceHint": "Light, dark or system theme.",
       "delete": "Delete account",
       "deleteHint": "Remove your account and data."
     },
@@ -478,6 +481,17 @@
       "doneTitle": "Account closed",
       "doneDescription": "Your personal data will be removed on {date}."
     }
+  },
+  "appearance": {
+    "title": "Appearance",
+    "description": "Choose how IHSP looks. The choice is saved in your account and used on every IHSP platform.",
+    "theme": "Theme",
+    "light": "Light",
+    "lightHint": "Always use the light theme.",
+    "dark": "Dark",
+    "darkHint": "Always use the dark theme.",
+    "system": "System",
+    "systemHint": "Follow the setting of this device."
   },
   "connectors": {
     "title": "Connectors",

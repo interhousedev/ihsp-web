@@ -1,7 +1,7 @@
 "use client"
 
-import { Field, FieldDescription, FieldError, FieldLabel, Input } from "@ihsp/ui"
-import { useId, type ComponentProps } from "react"
+import { Field, FieldDescription, FieldError, FieldLabel, Input, PasswordInput } from "@ihsp/ui"
+import { useId, type ChangeEvent, type ComponentProps } from "react"
 
 type TextFieldProps = Omit<ComponentProps<"input">, "value" | "onChange" | "id"> & {
   label: string
@@ -19,22 +19,25 @@ export function TextField({
   description,
   error,
   className,
+  type,
   ...inputProps
 }: TextFieldProps) {
   const id = useId()
   const errorId = `${id}-error`
+  const shared = {
+    id,
+    value,
+    onChange: (event: ChangeEvent<HTMLInputElement>) => onValueChange(event.target.value),
+    "aria-invalid": error ? true : undefined,
+    "aria-describedby": error ? errorId : undefined,
+    className: `h-11 text-base ${className ?? ""}`,
+    ...inputProps,
+  }
   return (
     <Field data-invalid={error ? true : undefined}>
       <FieldLabel htmlFor={id}>{label}</FieldLabel>
-      <Input
-        id={id}
-        value={value}
-        onChange={(event) => onValueChange(event.target.value)}
-        aria-invalid={error ? true : undefined}
-        aria-describedby={error ? errorId : undefined}
-        className={`h-11 text-base ${className ?? ""}`}
-        {...inputProps}
-      />
+      {/* Passwords get the show/hide eye button. */}
+      {type === "password" ? <PasswordInput {...shared} /> : <Input type={type} {...shared} />}
       {description ? <FieldDescription>{description}</FieldDescription> : null}
       {error ? <FieldError id={errorId}>{error}</FieldError> : null}
     </Field>

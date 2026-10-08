@@ -22,7 +22,22 @@ import { getSession, resetAuthStore, useAuthStore } from "./store"
 export const REFRESH_MARGIN_MS = 60_000
 
 const PENDING_KEY = "ihsp.oauth.pending"
+const ATTEMPTS_KEY = "ihsp.oauth.attempts"
+const RETRY_KEY = "ihsp.oauth.retry"
 const CALLBACK_PATH = "/auth/callback/"
+
+/** More automatic logins than this within `LOOP_WINDOW_MS` mean the login "succeeds" but the app is still unauthorised. */
+const LOOP_LIMIT = 4
+const LOOP_WINDOW_MS = 60_000
+/**
+ * Hydra errors that only mean "another login of this app started in this browser meanwhile" (two tabs share one CSRF
+ * cookie per client). The callback starts one fresh login for them; after the first tab finished, single sign-on
+ * completes it without a form. A callback without matching PKCE data (the page was reloaded after the code was
+ * exchanged, a duplicated tab, an old link) is restarted the same way; it also ignores a foreign code.
+ */
+const RESTARTABLE_ERRORS = new Set(["request_forbidden"])
+/** A restart is allowed once per this time, so a login that keeps failing ends with a message and not a loop. */
+const RESTART_WINDOW_MS = 120_000
 
 type Pending = { state: string; nonce: string; verifier: string; returnTo: string }
 
@@ -60,6 +75,55 @@ function readPending(): Pending | null {
     return raw ? (JSON.parse(raw) as Pending) : null
   } catch {
     return null
+  }
+}
+
+function readAttempts(now: number): number[] {
+  try {
+    const raw = JSON.parse(window.sessionStorage.getItem(ATTEMPTS_KEY) ?? "[]") as unknown
+    return Array.isArray(raw)
+      ? raw.filter((at): at is number => typeof at === "number" && now - at < LOOP_WINDOW_MS)
+      : []
+  } catch {
+    return []
+  }
+}
+
+function writeAttempts(attempts: number[]): void {
+  try {
+    if (attempts.length > 0) window.sessionStorage.setItem(ATTEMPTS_KEY, JSON.stringify(attempts))
+    else window.sessionStorage.removeItem(ATTEMPTS_KEY)
+  } catch {
+    // Without sessionStorage there is no loop guard, and also no PKCE state: the login fails at the callback instead.
+  }
+}
+
+/** Remembers that the callback restarted the login; `false` when it did so recently or cannot remember (no restart). */
+function markRestarted(): boolean {
+  try {
+    const now = Date.now()
+    const last = Number(window.sessionStorage.getItem(RETRY_KEY))
+    if (last && now - last < RESTART_WINDOW_MS) return false
+    window.sessionStorage.setItem(RETRY_KEY, String(now))
+    return window.sessionStorage.getItem(RETRY_KEY) === String(now)
+  } catch {
+    return false
+  }
+}
+
+/** The callback starts the login again (silently) when `markRestarted` allows it; the page waits for the browser. */
+async function restartLogin(returnTo: string | undefined): Promise<Promise<string> | null> {
+  if (!markRestarted()) return null
+  await login(returnTo ?? "/")
+  return new Promise<string>(() => undefined)
+}
+
+function clearLoginBookkeeping(): void {
+  try {
+    window.sessionStorage.removeItem(ATTEMPTS_KEY)
+    window.sessionStorage.removeItem(RETRY_KEY)
+  } catch {
+    // nothing to clear
   }
 }
 
@@ -101,19 +165,30 @@ async function establishSession(response: TokenResponse): Promise<void> {
 
 // - - - Login (authorization code + PKCE) - - -
 
+export type LoginOptions = {
+  /** A click of the user ("Log in again"): not limited by the loop guard, and it resets the guard. */
+  manual?: boolean
+}
+
 /**
  * Starts the login: PKCE verifier, `state` and `nonce` go to sessionStorage and the browser is sent to Hydra.
- * Calling it twice (React strict mode, two guards) starts one login.
+ * The current page is replaced in the history (`location.replace`), so Back never lands on a page that would start
+ * the login again. Calling it twice at once (React strict mode, two guards) starts one login. An automatic login that
+ * keeps coming back unauthorised (4 times in a minute) is refused with `AuthError("login-loop")`.
  */
-export function login(returnTo?: string): Promise<void> {
-  loginInflight ??= startLogin(returnTo ?? currentPath()).catch((error: unknown) => {
+export function login(returnTo?: string, options: LoginOptions = {}): Promise<void> {
+  loginInflight ??= startLogin(returnTo ?? currentPath(), options).finally(() => {
     loginInflight = null
-    throw error
   })
   return loginInflight
 }
 
-async function startLogin(returnTo: string): Promise<void> {
+async function startLogin(returnTo: string, options: LoginOptions): Promise<void> {
+  const now = Date.now()
+  const attempts = options.manual ? [] : readAttempts(now)
+  if (attempts.length >= LOOP_LIMIT) throw new AuthError("login-loop")
+  writeAttempts([...attempts, now])
+
   const config = getConfig()
   const verifier = generateCodeVerifier()
   const state = randomString(32)
@@ -132,12 +207,15 @@ async function startLogin(returnTo: string): Promise<void> {
     code_challenge: await codeChallengeS256(verifier),
     code_challenge_method: "S256",
   }).toString()
-  navigation.assign(url.toString())
+  navigation.replace(url.toString())
 }
 
 /**
- * `/auth/callback/`: checks `state`, exchanges the code at `POST /v1/oauth/token`, loads the user and returns the
- * path to continue with. Calling it again (React strict mode) returns the same result.
+ * `/auth/callback/`: checks `state`, exchanges the code at `POST /v1/oauth/token`, loads the user and returns the path
+ * to continue with. Calling it again (React strict mode) returns the same result, so the code is exchanged once.
+ * A Hydra CSRF error (another login of this app was started in a second tab) or a callback without matching PKCE data
+ * (the page was reloaded after the exchange) restarts the login once instead of failing; the returned promise then
+ * never settles, because the browser is already leaving the page.
  */
 export function handleCallback(): Promise<string> {
   callbackInflight ??= runCallback()
@@ -146,17 +224,23 @@ export function handleCallback(): Promise<string> {
 
 async function runCallback(): Promise<string> {
   const params = new URLSearchParams(window.location.search)
+  const pending = readPending()
   const failure = params.get("error")
   if (failure) {
     writePending(null)
+    if (RESTARTABLE_ERRORS.has(failure)) {
+      const restarted = await restartLogin(pending?.returnTo)
+      if (restarted) return restarted
+    }
     throw new AuthError("oauth-error", params.get("error_description") ?? failure)
   }
 
-  const pending = readPending()
   const code = params.get("code")
   const state = params.get("state")
   if (!pending || !code || !state || pending.state !== state) {
     writePending(null)
+    const restarted = await restartLogin(pending?.returnTo)
+    if (restarted) return restarted
     throw new AuthError("state-mismatch")
   }
   writePending(null)
@@ -169,6 +253,7 @@ async function runCallback(): Promise<string> {
     redirect_uri: `${window.location.origin}${CALLBACK_PATH}`,
   })
   await establishSession(response)
+  clearLoginBookkeeping()
   return safeReturnTo(pending.returnTo)
 }
 
@@ -188,6 +273,7 @@ async function exchangeTelegram(): Promise<boolean> {
 }
 
 async function exchangeCookie(): Promise<boolean> {
+  const before = useAuthStore.getState().token
   try {
     const response = await postOauthRefresh({ client_id: getConfig().OAUTH_CLIENT_ID })
     const hadUser = useAuthStore.getState().user !== null
@@ -199,6 +285,8 @@ async function exchangeCookie(): Promise<boolean> {
     }
     return true
   } catch (error) {
+    // The login callback may have signed the user in while this request was in flight: its token wins.
+    if (useAuthStore.getState().token !== before) return false
     return failRefresh(error)
   }
 }
@@ -238,14 +326,19 @@ export async function getAccessToken(): Promise<string | null> {
   return next && next.expires_at > Date.now() ? next.access_token : null
 }
 
-/** Restores the session on page load (cookie refresh, or `initData` in a mini app). Runs once per page. */
+/**
+ * Restores the session (cookie refresh, or `initData` in a mini app). Runs once per page, and only when something on
+ * the page needs the session (`useSession`, `RequireAuth`): the login, consent and registration pages do not.
+ */
 export function bootstrapSession(): Promise<void> {
   // Only a page that has not decided yet restores a session; a logged-in or logged-out store is left alone.
   if (useAuthStore.getState().status !== "loading") return Promise.resolve()
+  // The callback page owns the session: it signs in with the code. A refresh next to it would race with the exchange.
+  if (window.location.pathname.startsWith(CALLBACK_PATH)) return Promise.resolve()
   bootstrapInflight ??= (async () => {
     const ok = await refresh()
     const store = useAuthStore.getState()
-    if (!ok && !store.networkError) store.setAnonymous()
+    if (!ok && !store.networkError && store.status === "loading") store.setAnonymous()
   })()
   return bootstrapInflight
 }

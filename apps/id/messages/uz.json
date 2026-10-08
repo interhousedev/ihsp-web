@@ -91,6 +91,7 @@
     "integrations": "Integratsiyalar",
     "connectors": "Konnektorlar",
     "account": "Hisob",
+    "appearance": "Ko‘rinish",
     "delete": "Hisobni o‘chirish"
   },
   "login": {
@@ -328,6 +329,8 @@
       "emisNeedsReauth": "Yangi parol kerak",
       "connectors": "Konnektorlar",
       "connectorsHint": "AI ilovalariga ma’lumotlaringizdan foydalanishga ruxsat.",
+      "appearance": "Ko‘rinish",
+      "appearanceHint": "Yorug‘, qorong‘i yoki tizim mavzusi.",
       "delete": "Hisobni o‘chirish",
       "deleteHint": "Hisob va ma’lumotlarni o‘chirish."
     },
@@ -478,6 +481,17 @@
       "doneTitle": "Hisob yopildi",
       "doneDescription": "Shaxsiy ma’lumotlaringiz {date} da o‘chiriladi."
     }
+  },
+  "appearance": {
+    "title": "Ko‘rinish",
+    "description": "IHSP qanday ko‘rinishini tanlang. Tanlov hisobingizda saqlanadi va IHSPning barcha platformalarida amal qiladi.",
+    "theme": "Mavzu",
+    "light": "Yorug‘",
+    "lightHint": "Doim yorug‘ mavzu.",
+    "dark": "Qorong‘i",
+    "darkHint": "Doim qorong‘i mavzu.",
+    "system": "Tizim",
+    "systemHint": "Ushbu qurilma sozlamasiga amal qiladi."
   },
   "connectors": {
     "title": "Konnektorlar",

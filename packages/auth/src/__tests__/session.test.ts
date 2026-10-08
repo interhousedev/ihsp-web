@@ -22,8 +22,8 @@ function readPending(): { state: string; verifier: string; nonce: string; return
   return JSON.parse(window.sessionStorage.getItem(PENDING_KEY) ?? "null")
 }
 
-function lastRedirect(assign: ReturnType<typeof spyOn<typeof navigation, "assign">>): URL {
-  return new URL(String(assign.mock.calls.at(-1)?.[0]))
+function lastRedirect(replace: ReturnType<typeof spyOn<typeof navigation, "replace">>): URL {
+  return new URL(String(replace.mock.calls.at(-1)?.[0]))
 }
 
 beforeEach(() => {
@@ -33,11 +33,11 @@ beforeEach(() => {
 
 describe("login", () => {
   it("redirects to Hydra with a PKCE S256 challenge, state and the callback URL", async () => {
-    const assign = spyOn(navigation, "assign").mockImplementation(() => undefined)
+    const replace = spyOn(navigation, "replace").mockImplementation(() => undefined)
 
     await login("/grades/")
 
-    const url = lastRedirect(assign)
+    const url = lastRedirect(replace)
     const pending = readPending()
     expect(url.origin + url.pathname).toBe("http://localhost:4444/oauth2/auth")
     expect(url.searchParams.get("client_id")).toBe("sp")
@@ -54,23 +54,25 @@ describe("login", () => {
   })
 
   it("two calls at once start one login (strict mode runs effects twice)", async () => {
-    const assign = spyOn(navigation, "assign").mockImplementation(() => undefined)
+    const replace = spyOn(navigation, "replace").mockImplementation(() => undefined)
 
     await Promise.all([login("/"), login("/")])
 
-    expect(assign).toHaveBeenCalledTimes(1)
+    expect(replace).toHaveBeenCalledTimes(1)
   })
 })
 
-describe("handleCallback", () => {
-  async function startLogin(returnTo = "/homework/"): Promise<{ state: string; verifier: string }> {
-    spyOn(navigation, "assign").mockImplementation(() => undefined)
-    await login(returnTo)
-    return readPending()
-  }
+async function startLogin(returnTo = "/homework/"): Promise<{ state: string; verifier: string }> {
+  spyOn(navigation, "replace").mockImplementation(() => undefined)
+  await login(returnTo)
+  return readPending()
+}
 
-  it("rejects a wrong state and exchanges nothing", async () => {
+describe("handleCallback", () => {
+  it("ignores a callback with a wrong state: nothing is exchanged and the login starts over", async () => {
     await startLogin()
+    const replace = spyOn(navigation, "replace").mockImplementation(() => undefined)
+    replace.mockClear()
     setTestRoute("/auth/callback/?code=abc&state=not-the-state")
     let exchanged = false
     server.use(
@@ -80,16 +82,43 @@ describe("handleCallback", () => {
       }),
     )
 
-    await expect(handleCallback()).rejects.toMatchObject({ code: "state-mismatch" })
+    const outcome = await Promise.race([
+      handleCallback().then(() => "settled"),
+      new Promise((resolve) => setTimeout(() => resolve("restarting"), 150)),
+    ])
 
+    expect(outcome).toBe("restarting")
+    expect(replace).toHaveBeenCalledTimes(1)
     expect(exchanged).toBe(false)
     expect(getSession()).toBeNull()
   })
 
-  it("rejects a callback when no login was started in this tab", async () => {
-    setTestRoute("/auth/callback/?code=abc&state=anything")
+  it("a wrong state that comes again right after a restart is an error, not a loop", async () => {
+    await startLogin()
+    setTestRoute("/auth/callback/?code=abc&state=not-the-state")
+    void handleCallback()
+    await new Promise((resolve) => setTimeout(resolve, 50))
+    resetAuthState()
+    configureApiClient()
+    setTestRoute("/auth/callback/?code=abc&state=still-not-the-state")
 
     await expect(handleCallback()).rejects.toMatchObject({ code: "state-mismatch" })
+  })
+
+  it("rejects a callback when the storage is blocked (no PKCE data, and no way to remember a restart)", async () => {
+    setTestRoute("/auth/callback/?code=abc&state=anything")
+    const original = Object.getOwnPropertyDescriptor(window, "sessionStorage")
+    Object.defineProperty(window, "sessionStorage", {
+      configurable: true,
+      get() {
+        throw new Error("blocked")
+      },
+    })
+    try {
+      await expect(handleCallback()).rejects.toMatchObject({ code: "state-mismatch" })
+    } finally {
+      if (original) Object.defineProperty(window, "sessionStorage", original)
+    }
   })
 
   it("exchanges the code with the verifier, loads the user and returns the page to continue on", async () => {

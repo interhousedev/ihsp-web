@@ -79,3 +79,19 @@ describe("ConfigGate", () => {
     expect(screen.getByRole("list")).toHaveTextContent("OAUTH_CLIENT_ID")
   })
 })
+
+describe("BootSplash", () => {
+  it("is what the static HTML of an app contains, so the first paint is a spinner and not a blank page", async () => {
+    const { renderToString } = await import("react-dom/server")
+
+    const html = renderToString(
+      <ConfigGate>
+        <p>app</p>
+      </ConfigGate>,
+    )
+
+    expect(html).toContain("data-boot-splash")
+    expect(html).toContain('role="status"')
+    expect(html).not.toContain("app</p>")
+  })
+})

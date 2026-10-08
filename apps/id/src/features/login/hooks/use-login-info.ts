@@ -8,11 +8,13 @@ import { redirectTo } from "../../shared/utils/redirect"
 
 /**
  * Loads the Hydra login request. An already authenticated browser (`skip`) is sent on at once, and a used challenge
- * (`410 auth/challenge-used`) follows its `redirect_to`; `redirecting` is true in both cases.
+ * (`410 auth/challenge-used`) follows its `redirect_to`; `redirecting` is true in both cases. The backend redirect
+ * normally decides `skip` before the page opens and names the client in the address; `enabled: false` then saves the call.
  */
-export function useLoginInfo(challenge: string) {
+export function useLoginInfo(challenge: string, options: { enabled?: boolean } = {}) {
   const query = useQuery({
     ...getIdLoginQuery(challenge),
+    enabled: options.enabled ?? true,
     retry: false,
     staleTime: Infinity,
     refetchOnWindowFocus: false,

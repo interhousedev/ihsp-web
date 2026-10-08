@@ -98,6 +98,29 @@ describe("login page", () => {
     await waitFor(() => expect(redirectToMock).toHaveBeenCalledWith("http://localhost:3002/after"))
   })
 
+  test("the form is drawn at once when the address says which client asks (no login request, no skeleton)", async () => {
+    let requests = 0
+    server.use(
+      http.get(apiUrl("/v1/id/login"), () => {
+        requests += 1
+        return problem(500, "common/internal", "must not be asked")
+      }),
+    )
+    renderId(<LoginPage />, { route: `${ROUTE}&client_id=staff&client_name=IHSP+staff` })
+
+    expect(await screen.findByText("to continue to IHSP staff")).toBeInTheDocument()
+    expect(screen.getByLabelText("Password")).toBeInTheDocument()
+    expect(requests).toBe(0)
+  })
+
+  test("a hinted form still logs in and follows redirect_to", async () => {
+    renderId(<LoginPage />, { route: `${ROUTE}&client_id=sp&client_name=IHSP+sp` })
+
+    await submitCredentials("brastilov.aleksey", "Secret123")
+
+    await waitFor(() => expect(redirectToMock).toHaveBeenCalledWith(loginResultRedirect.redirect_to))
+  })
+
   test("without a challenge the page explains how to start", async () => {
     renderId(<LoginPage />, { route: "/login/" })
 

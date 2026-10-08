@@ -1,4 +1,5 @@
 import "@ihsp/ui/styles"
+import { TELEGRAM_SDK_LOADER } from "@ihsp/telegram/sdk-loader"
 import { THEME_INIT_SCRIPT } from "@ihsp/ui/theme-init"
 import type { Metadata, Viewport } from "next"
 import type { ReactNode } from "react"
@@ -24,7 +25,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
     <html lang="ru" data-theme="vercel" suppressHydrationWarning>
       <head>
         <script src="/env.js" />
-        <script src="https://telegram.org/js/telegram-web-app.js?64" />
+        <script dangerouslySetInnerHTML={{ __html: TELEGRAM_SDK_LOADER }} />
         <script dangerouslySetInnerHTML={{ __html: THEME_INIT_SCRIPT }} />
       </head>
       <body className="bg-background text-foreground min-h-dvh overflow-x-hidden font-sans antialiased">

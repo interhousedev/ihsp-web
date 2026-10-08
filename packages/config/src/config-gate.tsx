@@ -1,6 +1,7 @@
 "use client"
 
 import { useSyncExternalStore, type ReactNode } from "react"
+import { BootSplash } from "./boot-splash"
 import { readConfig } from "./get-config"
 
 const subscribe = () => () => undefined
@@ -21,7 +22,8 @@ function useIsClient(): boolean {
  */
 export function ConfigGate({ children }: { children: ReactNode }) {
   const isClient = useIsClient()
-  if (!isClient) return null
+  // The static HTML and the first client render show the same spinner, so the page is never blank.
+  if (!isClient) return <BootSplash />
 
   const result = readConfig()
   if (result.ok) return <>{children}</>

@@ -16,13 +16,10 @@ test.describe("UF-ID-02 login", () => {
     await expect(heading(page, "Today")).toBeVisible()
     await a11y(page, testInfo, { label: "sp today" })
 
-    // Without "Remember me" Hydra keeps no login session: the security pages (client `id`) ask for the password again.
+    // Single sign-on (ID-16): the login is remembered even without "Remember me", so the security pages (client `id`)
+    // open at once, without a password and without a login page (uf-id-sso.spec.ts counts the pages).
     await page.goto(`${URLS.id}/security/`)
-    await page.waitForURL((url) => url.origin === origin(URLS.id) && url.pathname.startsWith("/login"), {
-      timeout: 60_000,
-    })
-    await submitLoginForm(page, STUDENT)
-    await expect(heading(page, "Security")).toBeVisible()
+    await expect(heading(page, "Security")).toBeVisible({ timeout: 60_000 })
     await a11y(page, testInfo, { label: "id security" })
   })
 

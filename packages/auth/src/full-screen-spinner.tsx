@@ -1,13 +1,11 @@
 "use client"
 
-import { Spinner } from "@ihsp/ui"
+import { BootSplash } from "@ihsp/config"
 
-/** Centered spinner with an optional line of text, used while the session is being restored. */
+/**
+ * The loading screen of the login: the same spinner the static HTML, `ConfigGate` and `I18nProvider` show, so the whole
+ * start of an app is one spinner. `text` is read by screen readers only; it does not change between steps.
+ */
 export function FullScreenSpinner({ text }: { text?: string }) {
-  return (
-    <div className="flex min-h-dvh flex-col items-center justify-center gap-3 p-4">
-      <Spinner className="size-8" />
-      {text ? <p className="text-muted-foreground text-sm">{text}</p> : null}
-    </div>
-  )
+  return <BootSplash label={text} />
 }

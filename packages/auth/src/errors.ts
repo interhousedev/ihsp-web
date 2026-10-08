@@ -3,6 +3,7 @@ export type AuthErrorCode =
   | "state-mismatch" // missing or wrong `state`, or no PKCE data in sessionStorage
   | "oauth-error" // Hydra returned `?error=...`
   | "no-session" // the token exchange worked but the user could not be loaded
+  | "login-loop" // logins keep coming back unauthorised: stop redirecting and let the user decide
 
 export class AuthError extends Error {
   readonly code: AuthErrorCode

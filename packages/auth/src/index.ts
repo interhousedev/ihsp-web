@@ -1,3 +1,4 @@
+export { AuthCallback } from "./auth-callback"
 export { AuthProvider } from "./auth-provider"
 export { AuthError, type AuthErrorCode } from "./errors"
 export { navigation } from "./navigation"
@@ -15,6 +16,7 @@ export {
   resetAuthState,
   retryBootstrap,
   safeReturnTo,
+  type LoginOptions,
 } from "./session"
 export { getSession, resetAuthStore, setSession, useAuthStore, type AuthStatus, type Session } from "./store"
 export { TelegramAutoLogin } from "./telegram-auto-login"
