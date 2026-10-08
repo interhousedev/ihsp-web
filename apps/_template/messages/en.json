@@ -1,0 +1,13 @@
+{
+  "app": {
+    "name": "IHSP App Template"
+  },
+  "nav": {
+    "home": "Home"
+  },
+  "home": {
+    "title": "Home",
+    "description": "Copy this folder to start an app",
+    "placeholder": "This page is a placeholder from the app shell."
+  }
+}

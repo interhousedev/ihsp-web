@@ -1,0 +1,13 @@
+{
+  "app": {
+    "name": "IHSP App Template"
+  },
+  "nav": {
+    "home": "Bosh sahifa"
+  },
+  "home": {
+    "title": "Bosh sahifa",
+    "description": "Ilovani boshlash uchun bu papkani nusxalang",
+    "placeholder": "Bu ilova qolipidagi vaqtinchalik sahifa."
+  }
+}

@@ -1,0 +1,550 @@
+{
+  "idCommon": {
+    "brand": "IHSP",
+    "working": "Please wait…",
+    "loading": "Loading…",
+    "code": "Code",
+    "resend": "Send a new code",
+    "resendIn": "Send a new code in {seconds} s",
+    "step": "Step {current} of {total}",
+    "newPassword": "New password",
+    "confirmPassword": "Repeat the password",
+    "recoveryEmail": "Recovery email",
+    "recoveryEmailHint": "We send codes and security notices to this address.",
+    "emisLogin": "EMIS login",
+    "emisPassword": "EMIS password",
+    "emisPasswordHint": "It is stored encrypted and used only to load your marks and schedule from EMIS.",
+    "passwordRules": {
+      "title": "Password rules",
+      "length": "At least 8 characters",
+      "digit": "At least one digit",
+      "upper": "At least one uppercase letter",
+      "lower": "At least one lowercase letter",
+      "met": "(done)",
+      "notMet": "(not yet)"
+    },
+    "validation": {
+      "required": "This field is required.",
+      "email": "Enter a valid email address.",
+      "code": "Enter the 6-digit code.",
+      "password": "The password does not meet the rules.",
+      "mismatch": "The passwords do not match.",
+      "confirmRequired": "Please confirm to continue."
+    },
+    "missingChallenge": {
+      "title": "Open this page from an app",
+      "description": "Login, consent and logout pages open from the Log in button of an IHSP app. Start from the app you want to use.",
+      "action": "Open account security"
+    },
+    "stepUp": {
+      "send": "Send code",
+      "sendAgain": "Send the code again",
+      "sent": "We sent a code to your OTP channels.",
+      "needSession": "To get a code you must be signed in here.",
+      "openSecurity": "Sign in in a new tab"
+    }
+  },
+  "idErrors": {
+    "generic": "Something went wrong. Try again in a moment.",
+    "network": "No connection to the server. Check your internet and try again.",
+    "auth": {
+      "unauthorized": "Wrong login or password.",
+      "invalid-credentials": "Wrong login or password.",
+      "locked": "Too many attempts. Try again in {minutes} min.",
+      "role-missing": "You don't have access to this platform.",
+      "otp-invalid": "Wrong code. Attempts left: {attempts}.",
+      "otp-invalid-plain": "The code is wrong or expired.",
+      "second-factor-required": "A confirmation code is required.",
+      "challenge-used": "This login link was already used. Starting again."
+    },
+    "common": {
+      "rate-limited": "Too many attempts. Try again in {minutes} min.",
+      "validation": "Some of the entered data is not valid.",
+      "request-validation": "Some of the entered data is not valid.",
+      "not-found": "We could not find what you are looking for.",
+      "forbidden": "You do not have permission to do this."
+    },
+    "id": {
+      "wrong-institution": "Only Interhouse students can register. This EMIS account belongs to another institution.",
+      "emis-already-linked": "This EMIS account already has an IHSP account.",
+      "user-not-found": "No user with this login was found.",
+      "admin-reset-forbidden": "This account can only be reset by another Administration member. Contact Administration."
+    },
+    "emis": {
+      "auth-failed": "Wrong EMIS login or password.",
+      "unavailable": "EMIS is not responding. Try again later."
+    },
+    "telegram": {
+      "linked-elsewhere": "This Telegram account is already linked to another IHSP account. Log out there first."
+    }
+  },
+  "idNav": {
+    "security": "Security",
+    "overview": "Overview",
+    "password": "Password",
+    "otp": "OTP login",
+    "telegram": "Telegram",
+    "email": "Recovery email",
+    "sessions": "Sessions",
+    "activity": "Activity",
+    "emis": "EMIS account",
+    "integrations": "Integrations",
+    "connectors": "Connectors",
+    "account": "Account",
+    "delete": "Delete account"
+  },
+  "login": {
+    "title": "Log in",
+    "description": "to continue to {client}",
+    "unavailable": "We could not open this login",
+    "login": "Login",
+    "password": "Password",
+    "remember": "Remember me on this device",
+    "submit": "Log in",
+    "withOtp": "Log in with OTP",
+    "forgotPassword": "Forgot password?",
+    "forgotLogin": "Forgot login?",
+    "register": "Register with EMIS",
+    "cantGetIn": "Can't get in? Reclaim with EMIS",
+    "helpLinks": "Help with login",
+    "backToApp": "Back to the app",
+    "channel": {
+      "telegram": "Telegram",
+      "email": "email"
+    },
+    "secondFactor": {
+      "title": "Enter the code",
+      "description": "Your account needs a second step.",
+      "sent": "We sent a code to: {channels}.",
+      "submit": "Confirm",
+      "back": "Back to the password"
+    }
+  },
+  "loginOtp": {
+    "title": "Log in with OTP",
+    "description": "to continue to {client}",
+    "sendCode": "Send code",
+    "backToPassword": "Log in with a password",
+    "lostAccess": "Lost access to Telegram?",
+    "codeTitle": "Enter the code",
+    "codeDescription": "The code is valid for 5 minutes.",
+    "neutral": "If OTP login is enabled for this login, we sent a code.",
+    "submit": "Log in",
+    "attemptsLeft": "Attempts left: {count}.",
+    "codeInvalidated": "Too many wrong attempts. Send a new code.",
+    "changeLogin": "Use another login"
+  },
+  "consent": {
+    "title": "Allow {client}?",
+    "description": "This application asks for access to your IHSP account.",
+    "verified": "Verified",
+    "unverified": "Unverified",
+    "unverifiedWarning": "Administration has not verified this application. Allow it only if you trust it.",
+    "redirectDomain": "Returns to",
+    "serverLabel": "Server",
+    "server": {
+      "student": "Students",
+      "lms": "LMS Course",
+      "admin": "Administration"
+    },
+    "scopes": "Access it asks for",
+    "tools": "Tools: {tools}",
+    "otpRequired": "Administration access needs a confirmation code.",
+    "allow": "Allow",
+    "deny": "Deny",
+    "unavailable": "We could not open this request"
+  },
+  "logout": {
+    "title": "Logging you out",
+    "description": "One moment…",
+    "failed": "We could not log you out"
+  },
+  "register": {
+    "title": "Register with EMIS",
+    "description": "Enter your EMIS login and password. We check them in EMIS and import your name and group.",
+    "submit": "Continue",
+    "haveAccount": "I already have an account",
+    "linked": {
+      "login": "Log in",
+      "reset": "Reset the password",
+      "reclaim": "Reclaim the account with EMIS"
+    },
+    "profile": {
+      "title": "Is this you?",
+      "description": "Check your details, then set a password and a recovery email.",
+      "name": "Name",
+      "group": "Group",
+      "login": "Your login",
+      "imported": "Administration already added {name} ({group}) to IHSP. If this is you, confirm below.",
+      "isThisYou": "Yes, this is me",
+      "submit": "Send code to the email"
+    },
+    "code": {
+      "title": "Confirm your email",
+      "description": "We sent a 6-digit code to {email}.",
+      "submit": "Create account",
+      "changeEmail": "Change the email"
+    },
+    "done": {
+      "title": "Account created",
+      "description": "Your login is {login}. Use it with the password you just set.",
+      "open": "Open IHSP",
+      "backToTelegram": "Back to Telegram login"
+    }
+  },
+  "reclaim": {
+    "title": "Reclaim an account",
+    "description": "Lost access? Enter your EMIS login and password to take your account back. Every session, connector and Telegram link of the account is signed out.",
+    "submit": "Continue",
+    "backToLogin": "Back to login",
+    "password": {
+      "title": "Set a new password",
+      "description": "Account found: {login}.",
+      "warning": "The old recovery email gets a notice and every device is logged out.",
+      "submit": "Send code to the email"
+    },
+    "code": {
+      "title": "Confirm your email",
+      "description": "We sent a 6-digit code to {email}.",
+      "submit": "Reclaim the account"
+    },
+    "done": {
+      "title": "Account recovered",
+      "description": "Log in with your new password, then link Telegram again.",
+      "login": "Log in"
+    }
+  },
+  "activate": {
+    "title": "Welcome, {name}",
+    "description": "Set a password and a recovery email to activate your account.",
+    "login": "Login",
+    "submit": "Send code to the email",
+    "unavailable": "We could not open the activation link",
+    "code": {
+      "title": "Confirm your email",
+      "description": "We sent a 6-digit code to {email}.",
+      "submit": "Activate the account"
+    },
+    "invalid": {
+      "title": "This link no longer works",
+      "description": "The activation link expired or was already used. Ask Administration for a new link.",
+      "login": "Log in"
+    }
+  },
+  "recovery": {
+    "backToLogin": "Back to login",
+    "password": {
+      "title": "Reset your password",
+      "description": "Enter your login or recovery email.",
+      "identifier": "Login or email",
+      "request": "Send code",
+      "confirmTitle": "Set a new password",
+      "neutral": "If the account exists, we sent a code to its recovery email.",
+      "submit": "Change the password",
+      "doneTitle": "Password changed",
+      "doneDescription": "Log in with your new password.",
+      "sessionsRevoked": "Every other device was logged out.",
+      "login": "Log in"
+    },
+    "otp": {
+      "title": "Reset OTP",
+      "description": "Lost your Telegram? Enter your login. We send a code to your recovery email.",
+      "request": "Send code",
+      "confirmTitle": "Confirm the reset",
+      "neutral": "If the account exists, we sent a code to its recovery email.",
+      "confirm": "Reset OTP",
+      "doneTitle": "OTP reset scheduled",
+      "doneDescription": "OTP will be reset on {when}. Then every Telegram link is removed.",
+      "cancelHint": "Linked Telegram accounts got a message with a Cancel button. Press it if this was not you."
+    },
+    "login": {
+      "title": "Forgot your login?",
+      "description": "Enter your recovery email and we send you the login.",
+      "submit": "Send login",
+      "sent": "If this email belongs to an account, we sent the login to it."
+    }
+  },
+  "miniApp": {
+    "title": "Log in to IHSP",
+    "description": "Log in to link this Telegram account.",
+    "submit": "Log in",
+    "register": "Register with EMIS",
+    "registered": "Account created. Log in as {login}.",
+    "unavailable": "We could not check this Telegram account",
+    "outside": {
+      "title": "Open this page from the bot",
+      "description": "Telegram signs the data this page needs. Open the page from @{bot}.",
+      "open": "Open @{bot}"
+    },
+    "expired": {
+      "title": "Press Log in in the bot again",
+      "description": "The Telegram data is too old. Go back to the bot and press Log in again."
+    },
+    "linked": {
+      "title": "Logged in",
+      "description": "Telegram is linked to {login}. Return to the bot.",
+      "close": "Close"
+    },
+    "code": {
+      "title": "Enter the code",
+      "description": "We sent a code to your OTP channels.",
+      "submit": "Confirm",
+      "back": "Back"
+    },
+    "otp": {
+      "description": "Enter your login. We send a code if OTP login is enabled."
+    }
+  },
+  "security": {
+    "title": "Security",
+    "description": "Your password, OTP, Telegram, sessions and connected apps.",
+    "profile": "Account",
+    "on": "On",
+    "off": "Off",
+    "currentPassword": "Current password",
+    "roles": {
+      "student": "Student",
+      "teacher": "Teacher",
+      "admin": "Administration",
+      "lms_admin": "LMS admin"
+    },
+    "cards": {
+      "password": "Password",
+      "passwordHint": "Change your password.",
+      "otp": "OTP login",
+      "otpHint": "Log in with a one-time code.",
+      "telegram": "Telegram",
+      "telegramHint": "Linked accounts and OTP delivery.",
+      "telegramCount": "Linked: {count}",
+      "email": "Recovery email",
+      "emailMissing": "No email set",
+      "sessions": "Sessions",
+      "sessionsHint": "Devices where you are logged in.",
+      "activity": "Activity",
+      "activityHint": "Logins and security changes.",
+      "emis": "EMIS account",
+      "emisHint": "The password IHSP uses to read EMIS.",
+      "emisActive": "Working",
+      "emisNeedsReauth": "Needs a new password",
+      "connectors": "Connectors",
+      "connectorsHint": "Give AI apps access to your data.",
+      "delete": "Delete account",
+      "deleteHint": "Remove your account and data."
+    },
+    "emisBanner": {
+      "title": "EMIS rejected the saved password",
+      "description": "Marks stop syncing until you enter the new EMIS password.",
+      "action": "Update EMIS password"
+    },
+    "sessions": {
+      "title": "Sessions",
+      "description": "Devices where you are logged in. Log out of any you do not recognise.",
+      "empty": "No active sessions.",
+      "current": "This device",
+      "deviceOn": "{browser} on {os}",
+      "unknownDevice": "Unknown device",
+      "lastSeen": "Last active {when}",
+      "revoke": "Log out",
+      "revokeOthers": "Log out everywhere else",
+      "revokeOthersTitle": "Log out everywhere else?",
+      "revokeOthersDescription": "Every other device is logged out on its next request. This device stays logged in.",
+      "amr": {
+        "pwd": "password",
+        "otp": "OTP",
+        "tg": "Telegram"
+      }
+    },
+    "telegram": {
+      "title": "Telegram accounts",
+      "description": "Telegram accounts linked to your account get notifications and OTP codes.",
+      "linkTitle": "Link Telegram",
+      "linkDescription": "Open the bot, press Log in and log in there. The account is linked automatically.",
+      "link": "Open the bot",
+      "qr": "QR code that opens the bot",
+      "empty": "No Telegram accounts are linked yet.",
+      "linkedAt": "Linked {when}",
+      "blocked": "Bot blocked",
+      "otpDelivery": "Send OTP codes here",
+      "unlink": "Unlink",
+      "unlinkTitle": "Unlink {name}?",
+      "unlinkDescription": "This Telegram account stops getting codes and notifications and is logged out of the bot.",
+      "unlinkLastChannel": "This is the last OTP channel. OTP login will have no channel: enable the recovery email or disable OTP login."
+    },
+    "otp": {
+      "title": "OTP login",
+      "description": "Log in with a one-time code instead of a password.",
+      "enabled": "OTP login is on. Codes go to your linked Telegram accounts.",
+      "enabledWithEmail": "OTP login is on. Codes go to your linked Telegram accounts and the recovery email.",
+      "enableTitle": "Turn on OTP login",
+      "enableDescription": "Choose where the codes go. We send a test code to confirm.",
+      "channels": "Channels",
+      "telegramChannel": "Linked Telegram accounts",
+      "noTelegram": "No Telegram account is linked.",
+      "linkTelegram": "Link Telegram",
+      "emailChannel": "Recovery email",
+      "needChannel": "Choose at least one channel: link Telegram or use the recovery email.",
+      "sendTestCode": "Send test code",
+      "confirmTitle": "Enter the test code",
+      "confirmDescription": "Enter the code we sent to confirm that OTP login works.",
+      "confirm": "Turn on OTP login",
+      "changeChannels": "Change channels",
+      "disableTitle": "Turn off OTP login",
+      "disableDescription": "Enter your password to turn OTP login off.",
+      "disable": "Turn off OTP login",
+      "adminRequired": "OTP is required for Administration accounts and cannot be turned off."
+    },
+    "email": {
+      "title": "Recovery email",
+      "description": "Codes and security notices go to this address.",
+      "current": "Current: {email}",
+      "hint": "Enter your password and the new address. We send a code to it.",
+      "new": "New email",
+      "send": "Send code",
+      "codeSent": "We sent a 6-digit code to {email}.",
+      "confirm": "Confirm the change",
+      "done": "The recovery email was changed. The old address got a notice."
+    },
+    "password": {
+      "title": "Change password",
+      "description": "Other devices are logged out after the change.",
+      "submit": "Change the password",
+      "done": "The password was changed. Other devices were logged out."
+    },
+    "activity": {
+      "title": "Activity",
+      "description": "Recent security events of your account.",
+      "empty": "No events yet.",
+      "more": "Load more",
+      "by": "By {name}",
+      "helpTitle": "Do not recognise something?",
+      "helpDescription": "Change your password and log out of every other device.",
+      "changePassword": "Change password",
+      "logOutEverywhere": "Log out everywhere",
+      "types": {
+        "login_success": "Logged in",
+        "login_failed": "Failed login",
+        "auth_login": "Logged in",
+        "auth_login_failed": "Failed login",
+        "password_changed": "Password changed",
+        "auth_password_changed": "Password changed",
+        "password_reset": "Password reset",
+        "otp_enabled": "OTP login turned on",
+        "otp_disabled": "OTP login turned off",
+        "otp_reset_requested": "OTP reset requested",
+        "otp_reset_cancelled": "OTP reset cancelled",
+        "email_changed": "Recovery email changed",
+        "telegram_linked": "Telegram linked",
+        "telegram_unlinked": "Telegram unlinked",
+        "session_revoked": "Session logged out",
+        "connector_created": "Connector created",
+        "connector_revoked": "Connector revoked",
+        "role_granted": "Role granted",
+        "role_revoked": "Role revoked",
+        "admin_user_blocked": "Account blocked by Administration",
+        "emis_password_updated": "EMIS password updated"
+      }
+    },
+    "emis": {
+      "title": "EMIS account",
+      "description": "IHSP reads your marks from EMIS with a saved password.",
+      "formTitle": "Update the EMIS password",
+      "formDescription": "We check the new password in EMIS before saving it.",
+      "submit": "Check and save",
+      "done": "The EMIS password was updated. Marks sync again."
+    },
+    "delete": {
+      "title": "Delete account",
+      "description": "This removes your account and personal data.",
+      "deletedTitle": "What is deleted",
+      "items": {
+        "account": "Your account and profile",
+        "files": "Your files",
+        "chats": "Assistant chats",
+        "flashcards": "Flash cards",
+        "links": "Short links and shares (they stop working)",
+        "mail": "Your mailbox"
+      },
+      "keptTitle": "What the lyceum keeps",
+      "kept": {
+        "attendance": "Attendance records, with your name",
+        "marks": "Marks history, with your name"
+      },
+      "thirtyDays": "Your account is closed at once. Personal data is removed after 30 days.",
+      "confirmTitle": "Confirm",
+      "confirmDescription": "Enter your password and, if OTP login is on, the code we send you.",
+      "submit": "Delete my account",
+      "dialogTitle": "Delete your account?",
+      "dialogDescription": "You are logged out everywhere and cannot undo this.",
+      "doneTitle": "Account closed",
+      "doneDescription": "Your personal data will be removed on {date}."
+    }
+  },
+  "connectors": {
+    "title": "Connectors",
+    "description": "AI apps that can use your IHSP data through MCP.",
+    "empty": "No connectors yet.",
+    "createdAt": "Created",
+    "lastUsed": "Last used",
+    "expires": "Expires",
+    "never": "Never",
+    "noExpiry": "No expiry",
+    "scopes": "Scopes",
+    "revoked": "Revoked",
+    "expired": "Expired",
+    "revoke": "Revoke",
+    "revokeTitle": "Revoke {name}?",
+    "revokeDescription": "The AI app loses access immediately.",
+    "kind": {
+      "token": "Token",
+      "oauth": "OAuth"
+    },
+    "server": {
+      "student": "Students",
+      "lms": "LMS Course",
+      "admin": "Administration"
+    },
+    "presets": {
+      "study_planner": "Study planner",
+      "grades": "Grades",
+      "revision": "Revision",
+      "course_reviewer": "Course reviewer",
+      "course_author": "Course author",
+      "attendance_analyst": "Attendance analyst",
+      "timetable_viewer": "Timetable viewer"
+    },
+    "new": {
+      "action": "New connector",
+      "pageTitle": "New connector",
+      "pageDescription": "Create a token for an AI app.",
+      "title": "Connector settings",
+      "description": "Choose the server, what the app may do and for how long.",
+      "noServers": "No MCP server is available for your roles.",
+      "server": "Server",
+      "preset": "Task preset",
+      "custom": "Custom scopes",
+      "scopes": "Scopes",
+      "scopesRequired": "Choose at least one scope.",
+      "courses": "Courses",
+      "coursesHint": "Leave empty to allow all the courses you can edit.",
+      "coursesFailed": "We could not load your courses.",
+      "name": "Name",
+      "nameHint": "For example, Claude — study planner.",
+      "expiry": "Expires after",
+      "days": "{count} days",
+      "adminLimit": "Administration connectors last at most 30 days.",
+      "adminOtp": "Administration connectors need a confirmation code.",
+      "submit": "Create connector"
+    },
+    "created": {
+      "title": "Connector {name} created",
+      "description": "Add it to your AI app with the settings below.",
+      "onceTitle": "Copy the token now",
+      "once": "The token is shown only once. If you lose it, revoke the connector and create a new one.",
+      "token": "Token",
+      "copyToken": "Copy token",
+      "config": "Configuration",
+      "copyConfig": "Copy configuration",
+      "done": "Done"
+    }
+  }
+}
