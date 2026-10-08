@@ -12,6 +12,8 @@ export type HomeworkItem = {
   text: string
   due_date: string | null
   given_on: string
+  /** Whole days an open item is past its due date (Asia/Tashkent); 0 when done, undated or not late yet. */
+  days_overdue: number
   updated: boolean
   done_at: string | null
   note: string | null
@@ -21,6 +23,7 @@ export type StudentToday = {
   now_or_next: (LessonItem & { minutes_left: number | null; materials_count: number }) | null
   lessons: (LessonItem & { state: "done" | "now" | "next" | "later" | "cancelled" })[]
   next_study_day: string | null
+  /** Homework to do: overdue items first (oldest due date first), then the items due by the next study day. */
   due: HomeworkItem[]
   new_marks: MarkItem[]
   semester: { semester: number | null; gpa: number | null; gpa_change: number | null; absences: number }
@@ -131,7 +134,7 @@ export type CuratorStudent = GroupStudent & {
 
 // --- Request bodies and query parameters ---
 
-export type HomeworkListParams = { status?: "upcoming" | "later" | "done" }
+export type HomeworkListParams = { status?: "overdue" | "upcoming" | "later" | "done" }
 export type HomeworkDoneBody = { done: boolean }
 export type HomeworkNoteBody = { note: string | null }
 export type StudentAttendanceParams = DateRangeParams

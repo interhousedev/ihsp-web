@@ -1,6 +1,6 @@
 /** WEB-3, UF-WEB-01, UF-WEB-02: the Today dashboard. */
 import { afterEach, beforeEach, describe, expect, test } from "bun:test"
-import { apiUrl, server } from "@ihsp/test-utils"
+import { apiUrl, homeworkOverdue, server, studentToday } from "@ihsp/test-utils"
 import { screen, waitFor, within } from "@testing-library/react"
 import { HttpResponse, http } from "msw"
 import { TodayPage } from "../features/today/components/today-page"
@@ -30,6 +30,50 @@ describe("Today page", () => {
     ]) {
       await findCard(title)
     }
+  })
+
+  test("the Due card counts overdue homework and puts it first, highlighted", async () => {
+    renderSp(<TodayPage />)
+
+    const due = await findCard(/^Due /)
+
+    expect(within(due).getByTestId("due-count")).toHaveTextContent("2 tasks to do · 1 overdue")
+    const items = within(due).getAllByTestId("homework-item")
+    expect(items).toHaveLength(2)
+    expect(within(items[0] as HTMLElement).getByText(homeworkOverdue.text)).toBeInTheDocument()
+    expect(items[0]).toHaveAttribute("data-overdue", "true")
+    expect(within(items[0] as HTMLElement).getByText("1 day overdue")).toBeInTheDocument()
+    expect(items[1]).toHaveAttribute("data-overdue", "false")
+  })
+
+  test("ticking an overdue item on Today works and lowers the count", async () => {
+    const bodies: unknown[] = []
+    server.use(
+      http.put(apiUrl("/v1/me/homework/:lessonId/done"), async ({ params, request }) => {
+        bodies.push({ lesson: params.lessonId, ...((await request.json()) as object) })
+        return HttpResponse.json({ ...homeworkOverdue, done_at: "2026-10-07T05:12:00Z", days_overdue: 0 })
+      }),
+    )
+    const { user } = renderSp(<TodayPage />)
+
+    const due = await findCard(/^Due /)
+    await user.click(within(due).getByRole("checkbox", { name: "Done: Physics" }))
+
+    await waitFor(() => expect(bodies).toEqual([{ lesson: homeworkOverdue.lesson_id, done: true }]))
+    await waitFor(() => expect(within(due).getByTestId("due-count")).toHaveTextContent(/^1 task to do$/))
+  })
+
+  test("with only overdue homework and no next study day the Due card still shows", async () => {
+    server.use(
+      http.get(apiUrl("/v1/me/today"), () =>
+        HttpResponse.json({ ...studentToday, next_study_day: null, due: [homeworkOverdue] }),
+      ),
+    )
+    renderSp(<TodayPage />, { session: studentWith({ today_cards: ["due"] }) })
+
+    const due = await findCard("Due next study day")
+
+    expect(within(due).getByTestId("due-count")).toHaveTextContent("1 task to do · 1 overdue")
   })
 
   test("the semester card shows the GPA, its change and the absences", async () => {

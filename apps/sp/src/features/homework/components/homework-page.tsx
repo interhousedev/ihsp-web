@@ -6,10 +6,14 @@ import { parseAsStringLiteral, useQueryState } from "nuqs"
 import { QueryState } from "../../shared/components/query-state"
 import { useHomeworkList } from "../hooks/use-homework"
 import { HomeworkItemCard } from "./homework-item-card"
+import { OverdueSection } from "./overdue-section"
 
 const TABS = ["upcoming", "later", "done"] as const
 
-/** Homework (WEB-18–20, UF-WEB-13): Upcoming, Later and Done lists with tick boxes and private notes. */
+/**
+ * Homework (WEB-18–20, UF-WEB-13): the highlighted Overdue group first, then the Upcoming, Later and Done lists with
+ * tick boxes and private notes.
+ */
 export function HomeworkPage() {
   const t = useT("homework")
   const [tab, setTab] = useQueryState("tab", parseAsStringLiteral(TABS).withDefault("upcoming"))
@@ -17,6 +21,7 @@ export function HomeworkPage() {
 
   return (
     <PageContainer title={t("title")} description={t("description")}>
+      <OverdueSection />
       <Tabs value={tab} onValueChange={(value) => void setTab(TABS.find((item) => item === value) ?? "upcoming")}>
         <TabsList className="h-auto min-h-11 w-full md:w-fit">
           {TABS.map((value) => (

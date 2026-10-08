@@ -36,7 +36,7 @@ test("UF-WEB-13 tick homework, move it to Done, keep a private note", async ({ p
     await page.goto(`${URLS.sp}/homework/`)
     await expect(heading(page, "Homework", 1)).toBeVisible()
 
-    // The item is under Upcoming, Later or Done depending on its due date; look through the tabs.
+    // The item is in the Overdue group above the tabs, or under Upcoming or Later, depending on its due date.
     const item = page.getByTestId("homework-item").filter({ hasText: text })
     for (const tab of ["Upcoming", "Later"]) {
       await page.getByRole("tab", { name: tab }).click()

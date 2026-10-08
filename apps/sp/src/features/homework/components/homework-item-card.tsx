@@ -11,7 +11,7 @@ import { HomeworkNoteEditor } from "./homework-note-editor"
 
 /**
  * One homework item (WEB-19, WEB-20): tick box, subject, task, teacher, due date, the lesson it was given at,
- * an "updated" badge and the student's private note. Ticking is personal tracking only.
+ * an "updated" badge, how many days it is overdue and the student's private note. Ticking is personal tracking only.
  */
 export function HomeworkItemCard({ item, withNote = true }: { item: HomeworkItem; withNote?: boolean }) {
   const t = useT("homework")
@@ -20,10 +20,19 @@ export function HomeworkItemCard({ item, withNote = true }: { item: HomeworkItem
   const setDone = useSetHomeworkDone()
   const [editing, setEditing] = useState(false)
   const done = item.done_at !== null
+  const overdue = !done && item.days_overdue > 0
   const dayFormat = { weekday: "short", day: "numeric", month: "short" } as const
 
   return (
-    <li className="bg-card flex gap-1 rounded-lg border p-2 pe-3" data-testid="homework-item" data-done={done}>
+    <li
+      className={cn(
+        "bg-card flex gap-1 rounded-lg border p-2 pe-3",
+        overdue && "border-destructive/50 bg-destructive/5",
+      )}
+      data-testid="homework-item"
+      data-done={done}
+      data-overdue={overdue}
+    >
       <div className="flex size-11 shrink-0 items-center justify-center">
         <Checkbox
           checked={done}
@@ -35,6 +44,7 @@ export function HomeworkItemCard({ item, withNote = true }: { item: HomeworkItem
       <div className="min-w-0 flex-1 py-1.5">
         <div className="flex flex-wrap items-center gap-2">
           <span className="text-sm font-semibold">{item.subject.name}</span>
+          {overdue ? <Badge variant="destructive">{t("overdueBy", { count: item.days_overdue })}</Badge> : null}
           {item.updated ? <Badge variant="secondary">{t("updated")}</Badge> : null}
         </div>
         <p className={cn("text-sm break-words", done && "text-muted-foreground line-through")}>{item.text}</p>

@@ -49,14 +49,20 @@ export const classworkHandlers = [
   }),
   http.get(apiUrl("/v1/me/homework"), ({ request }) => {
     const status = query(request).get("status")
-    const known = status === "upcoming" || status === "later" || status === "done" ? status : null
+    const known =
+      status === "overdue" || status === "upcoming" || status === "later" || status === "done" ? status : null
     return HttpResponse.json(homeworkByStatus(known))
   }),
   http.put(apiUrl("/v1/me/homework/:lessonId/done"), async ({ params, request }) => {
     const item = homeworkFor(param(params, "lessonId"))
     if (!item) return notFound("Homework")
     const body = await readJson<HomeworkDoneBody>(request)
-    return HttpResponse.json({ ...item, done_at: body.done ? FIXTURE_NOW : null, updated: false })
+    return HttpResponse.json({
+      ...item,
+      done_at: body.done ? FIXTURE_NOW : null,
+      days_overdue: body.done ? 0 : item.days_overdue,
+      updated: false,
+    })
   }),
   http.put(apiUrl("/v1/me/homework/:lessonId/note"), async ({ params, request }) => {
     const item = homeworkFor(param(params, "lessonId"))

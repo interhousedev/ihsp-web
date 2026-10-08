@@ -43,6 +43,7 @@ export const homeworkMath: HomeworkItem = {
   text: "Exercises 5.3 (a)-(f) on page 41",
   due_date: FIXTURE_TOMORROW,
   given_on: "2026-10-06",
+  days_overdue: 0,
   updated: false,
   done_at: null,
   note: null,
@@ -55,6 +56,7 @@ export const homeworkPhysics: HomeworkItem = {
   text: "Solve problems 14-17 on page 52",
   due_date: "2026-10-09",
   given_on: FIXTURE_TODAY,
+  days_overdue: 0,
   updated: true,
   done_at: null,
   note: null,
@@ -67,6 +69,7 @@ export const homeworkEnglish: HomeworkItem = {
   text: "Write a 150-word essay about your city",
   due_date: FIXTURE_TOMORROW,
   given_on: "2026-10-06",
+  days_overdue: 0,
   updated: false,
   done_at: "2026-10-06T15:00:00Z",
   note: "Draft is in my notebook",
@@ -79,6 +82,7 @@ export const homeworkChemistry: HomeworkItem = {
   text: "Learn the periodic table groups 1-3",
   due_date: "2026-10-12",
   given_on: "2026-10-06",
+  days_overdue: 0,
   updated: false,
   done_at: null,
   note: null,
@@ -91,12 +95,28 @@ export const homeworkHistory: HomeworkItem = {
   text: "Read chapter 6",
   due_date: FIXTURE_TODAY,
   given_on: "2026-10-05",
+  days_overdue: 0,
   updated: false,
   done_at: "2026-10-06T18:00:00Z",
   note: null,
 }
 
+/** Open and past due: given on Monday for Tuesday, so it is one day overdue on the fixture Wednesday. */
+export const homeworkOverdue: HomeworkItem = {
+  lesson_id: lessonId(1, 2),
+  subject: subjectRefs.physics,
+  teacher: teacherOf.physics,
+  text: "Learn the formulas of the lesson on waves",
+  due_date: "2026-10-06",
+  given_on: "2026-10-05",
+  days_overdue: 1,
+  updated: false,
+  done_at: null,
+  note: null,
+}
+
 export const homeworkItems: HomeworkItem[] = [
+  homeworkOverdue,
   homeworkMath,
   homeworkPhysics,
   homeworkEnglish,
@@ -104,13 +124,19 @@ export const homeworkItems: HomeworkItem[] = [
   homeworkHistory,
 ]
 
-/** `upcoming` is due by the next study day and not done; `later` is due after it; `done` has `done_at`. */
-export function homeworkByStatus(status: "upcoming" | "later" | "done" | null): HomeworkItem[] {
+/**
+ * `overdue` is open and due before today; `upcoming` is open and due from today up to the next study day; `later` is
+ * open and due after it (or undated); `done` has `done_at`. Every item is in exactly one of them.
+ */
+export function homeworkByStatus(status: "overdue" | "upcoming" | "later" | "done" | null): HomeworkItem[] {
   return homeworkItems.filter((item) => {
     const done = item.done_at !== null
+    const open = !done
+    const due = item.due_date
     if (status === "done") return done
-    if (status === "upcoming") return !done && item.due_date !== null && item.due_date <= FIXTURE_TOMORROW
-    if (status === "later") return !done && (item.due_date === null || item.due_date > FIXTURE_TOMORROW)
+    if (status === "overdue") return open && due !== null && due < FIXTURE_TODAY
+    if (status === "upcoming") return open && due !== null && due >= FIXTURE_TODAY && due <= FIXTURE_TOMORROW
+    if (status === "later") return open && (due === null || due > FIXTURE_TOMORROW)
     return true
   })
 }
@@ -127,7 +153,7 @@ export const studentToday: StudentToday = {
   })(),
   lessons: todayLessons.map((lesson, index) => ({ ...lesson, state: lessonStates[index] ?? "later" })),
   next_study_day: FIXTURE_TOMORROW,
-  due: [homeworkMath, homeworkEnglish],
+  due: [homeworkOverdue, homeworkMath],
   new_marks: newMarks,
   semester: { semester: 4, gpa: 4.1, gpa_change: 0.2, absences: 5 },
   synced_at: "2026-10-07T01:00:00Z",

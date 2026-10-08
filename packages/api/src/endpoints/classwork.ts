@@ -48,7 +48,7 @@ export function getMeLesson(id: string, opts?: RequestOptions): Promise<StudentL
 export const getMeLessonQuery = (id: string) =>
   queryOptions({ queryKey: keys.lessons.detail(id), queryFn: ({ signal }) => getMeLesson(id, { signal }) })
 
-/** GET /v1/me/homework?status=upcoming|later|done — student. */
+/** GET /v1/me/homework?status=overdue|upcoming|later|done — student. */
 export function getMeHomework(params?: HomeworkListParams, opts?: RequestOptions): Promise<HomeworkItem[]> {
   return api.get<HomeworkItem[]>("/v1/me/homework", { ...opts, query: params })
 }
