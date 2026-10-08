@@ -12,6 +12,8 @@ import type {
   FlashcardSetDetail,
   FlashcardSetItem,
   FlashcardSetPatchBody,
+  FlashcardStats,
+  FlashcardStatsParams,
   StudyNext,
 } from "../types/flashcards"
 
@@ -26,6 +28,16 @@ export const getMeFlashcardSetsQuery = () =>
 export function postMeFlashcardSets(body: FlashcardSetCreateBody, opts?: RequestOptions): Promise<FlashcardSetDetail> {
   return api.post<FlashcardSetDetail>("/v1/me/flashcard-sets", body, opts)
 }
+
+/** GET /v1/me/flashcard-sets/stats — student; review heatmap and streaks of one set or of all sets. */
+export function getMeFlashcardSetsStats(params?: FlashcardStatsParams, opts?: RequestOptions): Promise<FlashcardStats> {
+  return api.get<FlashcardStats>("/v1/me/flashcard-sets/stats", { ...opts, query: params })
+}
+export const getMeFlashcardSetsStatsQuery = (params?: FlashcardStatsParams) =>
+  queryOptions({
+    queryKey: keys.flashcards.stats(params?.set_id ?? null, params?.year ?? null),
+    queryFn: ({ signal }) => getMeFlashcardSetsStats(params, { signal }),
+  })
 
 /** GET /v1/me/flashcard-sets/{id} — owner. */
 export function getMeFlashcardSet(id: string, opts?: RequestOptions): Promise<FlashcardSetDetail> {
@@ -94,3 +106,4 @@ export const putFlashcardCards = putMeFlashcardSetCards
 export const getStudyNext = getMeFlashcardSetStudy
 export const postReview = postMeFlashcardReview
 export const postFlashcardCopy = postMeFlashcardSetsCopy
+export const getFlashcardStats = getMeFlashcardSetsStats

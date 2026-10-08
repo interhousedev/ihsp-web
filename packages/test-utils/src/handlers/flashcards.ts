@@ -11,6 +11,8 @@ import {
   flashcardCards,
   flashcardSetDetail,
   flashcardSets,
+  flashcardStats,
+  flashcardStatsEmpty,
   studyDone,
   studyNext,
   studyNextSecond,
@@ -34,6 +36,16 @@ function cardsWithIds(cards: { id?: string; front: string; back: string }[]): Fl
 
 export const flashcardsHandlers = [
   http.get(apiUrl("/v1/me/flashcard-sets"), () => HttpResponse.json(flashcardSets)),
+  // Before `/flashcard-sets/:id`, or "stats" would be taken for a set id.
+  http.get(apiUrl("/v1/me/flashcard-sets/stats"), ({ request }) => {
+    const url = new URL(request.url)
+    const year = Number(url.searchParams.get("year") ?? flashcardStats.year)
+    const setId = url.searchParams.get("set_id")
+    if (setId && !setDetailFor(setId)) return notFound("Flash card set")
+    return HttpResponse.json(
+      year === flashcardStats.year ? { ...flashcardStats, set_id: setId } : { ...flashcardStatsEmpty, year, set_id: setId },
+    )
+  }),
   http.post(apiUrl("/v1/me/flashcard-sets/copy"), async ({ request }) => {
     const body = await readJson<FlashcardCopyBody>(request)
     if (!body.share_slug) return notFound("Share")
@@ -43,6 +55,9 @@ export const flashcardsHandlers = [
       source: "copied",
       due_today: 0,
       new_today: flashcardSetDetail.card_count,
+      new_count: flashcardSetDetail.card_count,
+      learning_count: 0,
+      due_count: 0,
     })
   }),
   http.post(apiUrl("/v1/me/flashcard-sets"), async ({ request }) => {
@@ -57,6 +72,9 @@ export const flashcardsHandlers = [
       card_count: cards.length,
       due_today: 0,
       new_today: cards.length,
+      new_count: cards.length,
+      learning_count: 0,
+      due_count: 0,
       cards,
     })
   }),

@@ -121,6 +121,8 @@ export const keys = {
     sets: () => ["flashcards", "sets"] as const,
     set: (id: string) => ["flashcards", "sets", id] as const,
     study: (id: string) => ["flashcards", "sets", id, "study"] as const,
+    stats: (setId: string | null, year: number | null) => ["flashcards", "stats", setId, year] as const,
+    allStats: () => ["flashcards", "stats"] as const,
   },
   lms: {
     all: () => ["lms"] as const,
@@ -141,6 +143,20 @@ export const keys = {
     compare: (courseId: string, a: number, b: number) => ["lms", "course", courseId, "compare", a, b] as const,
     staff: (courseId: string) => ["lms", "course", courseId, "staff"] as const,
     preview: (courseId: string, stepId: string) => ["lms", "course", courseId, "preview", stepId] as const,
+  },
+  notebooks: {
+    all: () => ["notebooks"] as const,
+    list: (filters?: object) => ["notebooks", "list", params(filters)] as const,
+    detail: (id: string) => ["notebooks", "detail", id] as const,
+    usage: () => ["notebooks", "usage"] as const,
+    sources: (id: string) => ["notebooks", id, "sources"] as const,
+    source: (id: string, sourceId: string) => ["notebooks", id, "sources", sourceId] as const,
+    passages: (id: string, sourceId: string) => ["notebooks", id, "sources", sourceId, "passages"] as const,
+    passage: (id: string, passageId: string, context?: number) =>
+      ["notebooks", id, "passages", passageId, context ?? null] as const,
+    chat: (id: string) => ["notebooks", id, "chat"] as const,
+    artifacts: (id: string, filters?: object) => ["notebooks", id, "artifacts", params(filters)] as const,
+    artifact: (id: string, artifactId: string) => ["notebooks", id, "artifact", artifactId] as const,
   },
   public: {
     share: (slug: string) => ["public", "shares", slug] as const,

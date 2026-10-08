@@ -4,7 +4,7 @@ import type { BroadcastItem } from "./broadcasts"
 import type { HomeworkItem, StudentAttendance } from "./classwork"
 import type { PersonRef, Role, SubjectRef } from "./common"
 import type { FileItem } from "./files"
-import type { FlashcardSetItem } from "./flashcards"
+import type { FlashcardSearchItem } from "./flashcards"
 import type { AuditItem, SessionItem, TelegramAccount } from "./id"
 import type { AdminUser } from "./id-admin"
 import type { SemesterGrades, SyncRunItem } from "./marks"
@@ -19,9 +19,10 @@ export type Alert = {
 export type SearchResults = {
   subjects: SubjectRef[]
   lessons: LessonItem[]
-  homework: HomeworkItem[]
+  /** Search hits carry no overdue count: only the to-do lists and Today say how late an item is. */
+  homework: Omit<HomeworkItem, "days_overdue">[]
   files: FileItem[]
-  flashcard_sets: FlashcardSetItem[]
+  flashcard_sets: FlashcardSearchItem[]
 }
 
 export type AdminDashboard = {

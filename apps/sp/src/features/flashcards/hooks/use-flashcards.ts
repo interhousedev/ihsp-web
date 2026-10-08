@@ -5,6 +5,7 @@ import {
   getMeFlashcardSetQuery,
   getMeFlashcardSetStudyQuery,
   getMeFlashcardSetsQuery,
+  getMeFlashcardSetsStatsQuery,
   keys,
   patchMeFlashcardSet,
   postMeFlashcardReview,
@@ -26,6 +27,15 @@ export function useFlashcardSets() {
 
 export function useFlashcardSet(id: string | null) {
   return useQuery({ ...getMeFlashcardSetQuery(id ?? ""), enabled: id !== null })
+}
+
+/** The review heatmap and streaks of one set, or of all sets when `setId` is null; `year` null means this year. */
+export function useFlashcardStats(setId: string | null, year: number | null, enabled = true) {
+  return useQuery({
+    ...getMeFlashcardSetsStatsQuery({ ...(setId ? { set_id: setId } : {}), ...(year ? { year } : {}) }),
+    enabled,
+    placeholderData: (previous) => previous,
+  })
 }
 
 export function useStudyNext(id: string | null) {
@@ -85,11 +95,18 @@ export function useCopyFlashcardSet() {
 /** Rates a card; the answer is the next card, which replaces the cached study state. */
 export function useReviewFlashcard(setId: string) {
   const queryClient = useQueryClient()
-  return useMutation<StudyNext, unknown, { cardId: string; rating: ReviewRating }>({
-    mutationFn: ({ cardId, rating }) => postMeFlashcardReview(cardId, { rating }),
+  return useMutation<StudyNext, unknown, { cardId: string; rating: ReviewRating; durationMs?: number }>({
+    mutationFn: ({ cardId, rating, durationMs }) =>
+      postMeFlashcardReview(cardId, {
+        rating,
+        ...(durationMs === undefined ? {} : { duration_ms: Math.round(durationMs) }),
+      }),
     onSuccess: (next) => {
       queryClient.setQueryData(keys.flashcards.study(setId), next)
+      // The counts of the deck list and the overview, and the heatmap, change with every answer.
       void queryClient.invalidateQueries({ queryKey: keys.flashcards.sets(), exact: true })
+      void queryClient.invalidateQueries({ queryKey: keys.flashcards.set(setId), exact: true })
+      void queryClient.invalidateQueries({ queryKey: keys.flashcards.allStats() })
     },
   })
 }

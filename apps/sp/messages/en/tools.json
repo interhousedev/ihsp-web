@@ -49,114 +49,45 @@
     }
   },
   "flashcards": {
-    "list": {
+    "page": {
       "title": "Flash cards",
-      "description": "Study sets like in Anki: cards come back when you are about to forget them.",
-      "newSet": "New set",
-      "empty": "No sets yet. Create one or ask the assistant to make cards from your notes.",
-      "due": "Due",
-      "new": "New",
-      "cards": "Cards",
-      "study": "Study",
-      "open": "Open"
-    },
-    "new": {
-      "title": "New set",
-      "description": "Give the set a name. You add the cards on the next screen.",
-      "titleLabel": "Title",
-      "descriptionLabel": "Description (optional)",
-      "cancel": "Cancel",
-      "create": "Create set"
-    },
-    "source": {
-      "ai": "Assistant",
-      "mcp": "via MCP",
-      "copied": "Copied"
-    },
-    "set": {
-      "title": "Flash cards",
-      "missing": "This set was not found.",
-      "cardCount": "{count, plural, one {# card} other {# cards}}",
-      "countsLabel": "Cards to study today",
-      "counts": {
-        "learning": "Learning",
-        "review": "Due",
-        "new": "New"
-      },
-      "doneForToday": "Nothing is due now. Come back later, or raise the daily limits below.",
-      "study": "Study",
-      "edit": "Edit",
-      "share": "Share",
-      "settings": "Settings",
-      "cards": "Cards",
-      "noCards": "This set has no cards yet. Press Edit to add some.",
-      "delete": "Delete set",
-      "deleteTitle": "Delete this set?",
+      "description": "Study decks like in Anki: cards come back when you are about to forget them.",
+      "allDecks": "All decks",
+      "missing": "This deck was not found.",
+      "importFailed": "Could not read the file.",
+      "importEmpty": "No cards found in the file. Use one card per line, with the term and the definition separated by a tab.",
+      "imported": "{count, plural, one {# card} other {# cards}} imported into “{title}”.",
+      "created": "Deck created.",
+      "saved": "Cards saved.",
+      "deleteTitle": "Delete this deck?",
       "deleteDescription": "“{title}” and all its cards and progress will be deleted. Its public links stop working.",
-      "deleteConfirm": "Delete set",
-      "deleteFailed": "Could not delete the set."
+      "deleteConfirm": "Delete deck",
+      "deleteFailed": "Could not delete the deck."
     },
-    "settings": {
+    "options": {
+      "title": "Options: {title}",
+      "description": "Name, description and the daily limits of this deck.",
       "titleLabel": "Title",
       "descriptionLabel": "Description",
       "newPerDay": "New cards per day",
       "reviewsPerDay": "Reviews per day",
-      "limitInvalid": "Enter a whole number from 0 to {max}.",
+      "limitInvalid": "Enter a whole number from {min} to {max}.",
       "save": "Save",
       "saving": "Saving…",
-      "saved": "Settings saved."
+      "saved": "Options saved.",
+      "delete": "Delete deck"
     },
-    "study": {
-      "title": "Study",
-      "missing": "No set was chosen.",
-      "backToSet": "Back to the set",
-      "progress": "Study progress",
-      "remaining": "{count, plural, one {# card left} other {# cards left}}",
-      "counts": "Learning {learning} · Due {review} · New {new}",
-      "card": "Card",
-      "front": "Front",
-      "back": "Back",
-      "showAnswer": "Show answer (Space)",
-      "rate": "How well did you know it?",
-      "rating": {
-        "again": "Again",
-        "hard": "Hard",
-        "medium": "Medium",
-        "easy": "Easy"
-      },
-      "summary": {
-        "title": "Done for today",
-        "reviewed": "{count, plural, one {You reviewed # card.} other {You reviewed # cards.}}",
-        "comeBack": "Come back tomorrow, or raise the daily limits in the set settings.",
-        "toSet": "Back to the set",
-        "toList": "All sets"
-      }
-    },
-    "editor": {
-      "title": "Edit cards",
-      "titleFor": "Edit cards: {title}",
-      "missing": "No set was chosen.",
-      "hint": "Both sides support Markdown. Cards you do not change keep their progress.",
-      "preview": "Show Markdown preview",
-      "empty": "No cards yet. Add the first one.",
-      "add": "Add card",
-      "cardN": "Card {n}",
-      "front": "Front of card {n}",
-      "back": "Back of card {n}",
-      "moveUp": "Move card {n} up",
-      "moveDown": "Move card {n} down",
-      "remove": "Delete card {n}",
-      "incomplete": "Fill in both sides or delete this card.",
+    "descriptionDialog": {
+      "title": "Description",
+      "label": "Description",
+      "cancel": "Cancel",
       "save": "Save",
       "saving": "Saving…",
-      "saved": "Cards saved.",
-      "unsaved": "Unsaved changes",
-      "discard": "Cancel",
-      "backToSet": "Back to the set"
+      "saved": "Description saved."
     },
     "copy": {
-      "title": "Copy shared set",
-      "copying": "Copying the set to your account…",
+      "title": "Copy shared deck",
+      "copying": "Copying the deck to your account…",
       "missing": "This copy link is incomplete."
     }
   },

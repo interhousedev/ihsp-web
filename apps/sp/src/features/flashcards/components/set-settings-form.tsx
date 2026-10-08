@@ -7,17 +7,19 @@ import { useEffect, useId, useState } from "react"
 import { toast } from "sonner"
 import { useUpdateFlashcardSet } from "../hooks/use-flashcards"
 
-const MAX_PER_DAY = 9999
+// The limits of the backend (plan B10).
+const NEW_PER_DAY = { min: 1, max: 200 }
+const REVIEWS_PER_DAY = { min: 1, max: 2000 }
 
-function parseLimit(value: string): number | null {
+function parseLimit(value: string, range: { min: number; max: number }): number | null {
   if (!/^\d+$/.test(value.trim())) return null
   const parsed = Number(value)
-  return parsed >= 0 && parsed <= MAX_PER_DAY ? parsed : null
+  return parsed >= range.min && parsed <= range.max ? parsed : null
 }
 
-/** Title, description and daily limits of a set (WEB-23: 20 new cards and 200 reviews by default). */
-export function SetSettingsForm({ set }: { set: FlashcardSetDetail }) {
-  const t = useT("flashcards.settings")
+/** Title, description and daily limits of a deck (WEB-23: 20 new cards and 200 reviews by default). */
+export function SetSettingsForm({ set, onSaved }: { set: FlashcardSetDetail; onSaved?: () => void }) {
+  const t = useT("flashcards.options")
   const errorMessage = useErrorMessage()
   const update = useUpdateFlashcardSet(set.id)
   const ids = { title: useId(), description: useId(), newPerDay: useId(), reviewsPerDay: useId() }
@@ -33,8 +35,8 @@ export function SetSettingsForm({ set }: { set: FlashcardSetDetail }) {
     setReviewsPerDay(String(set.reviews_per_day))
   }, [set.title, set.description, set.new_per_day, set.reviews_per_day])
 
-  const newLimit = parseLimit(newPerDay)
-  const reviewsLimit = parseLimit(reviewsPerDay)
+  const newLimit = parseLimit(newPerDay, NEW_PER_DAY)
+  const reviewsLimit = parseLimit(reviewsPerDay, REVIEWS_PER_DAY)
   const valid = title.trim() !== "" && newLimit !== null && reviewsLimit !== null
 
   function submit() {
@@ -45,7 +47,12 @@ export function SetSettingsForm({ set }: { set: FlashcardSetDetail }) {
       new_per_day: newLimit,
       reviews_per_day: reviewsLimit,
     }
-    update.mutate(body, { onSuccess: () => toast.success(t("saved")) })
+    update.mutate(body, {
+      onSuccess: () => {
+        toast.success(t("saved"))
+        onSaved?.()
+      },
+    })
   }
 
   return (
@@ -61,7 +68,7 @@ export function SetSettingsForm({ set }: { set: FlashcardSetDetail }) {
         <Input
           id={ids.title}
           value={title}
-          maxLength={120}
+          maxLength={200}
           className="min-h-11"
           onChange={(event) => setTitle(event.target.value)}
         />
@@ -71,7 +78,7 @@ export function SetSettingsForm({ set }: { set: FlashcardSetDetail }) {
         <Textarea
           id={ids.description}
           value={description}
-          maxLength={500}
+          maxLength={1000}
           rows={3}
           onChange={(event) => setDescription(event.target.value)}
         />
@@ -87,9 +94,7 @@ export function SetSettingsForm({ set }: { set: FlashcardSetDetail }) {
             className="min-h-11"
             onChange={(event) => setNewPerDay(event.target.value)}
           />
-          {newLimit === null ? (
-            <p className="text-destructive text-xs">{t("limitInvalid", { max: MAX_PER_DAY })}</p>
-          ) : null}
+          {newLimit === null ? <p className="text-destructive text-xs">{t("limitInvalid", NEW_PER_DAY)}</p> : null}
         </div>
         <div className="flex flex-col gap-1">
           <Label htmlFor={ids.reviewsPerDay}>{t("reviewsPerDay")}</Label>
@@ -102,7 +107,7 @@ export function SetSettingsForm({ set }: { set: FlashcardSetDetail }) {
             onChange={(event) => setReviewsPerDay(event.target.value)}
           />
           {reviewsLimit === null ? (
-            <p className="text-destructive text-xs">{t("limitInvalid", { max: MAX_PER_DAY })}</p>
+            <p className="text-destructive text-xs">{t("limitInvalid", REVIEWS_PER_DAY)}</p>
           ) : null}
         </div>
       </div>

@@ -1,4 +1,4 @@
-import type { FlashcardSetDetail, FlashcardSetItem, StudyNext } from "@ihsp/api"
+import type { FlashcardSetDetail, FlashcardSetItem, FlashcardStats, StudyNext } from "@ihsp/api"
 import { ids } from "./world"
 
 export const flashcardCards: FlashcardSetDetail["cards"] = [
@@ -44,6 +44,9 @@ export const flashcardSetPhysics: FlashcardSetItem = {
   card_count: 4,
   due_today: 2,
   new_today: 2,
+  new_count: 2,
+  learning_count: 1,
+  due_count: 1,
 }
 
 export const flashcardSetAi: FlashcardSetItem = {
@@ -54,6 +57,9 @@ export const flashcardSetAi: FlashcardSetItem = {
   card_count: 20,
   due_today: 0,
   new_today: 10,
+  new_count: 10,
+  learning_count: 0,
+  due_count: 0,
 }
 
 export const flashcardSets: FlashcardSetItem[] = [flashcardSetPhysics, flashcardSetAi]
@@ -98,4 +104,50 @@ export const studyDone: StudyNext = {
   intervals: null,
   counts: { learning: 0, review: 0, new: 0 },
   done_for_today: true,
+}
+
+/** Reviews per day in the weeks before "today" (2026-10-07), as the heatmap of the deck list shows them. */
+export const flashcardStatsDays: FlashcardStats["days"] = [
+  { date: "2026-09-21", count: 12 },
+  { date: "2026-09-22", count: 25 },
+  { date: "2026-09-23", count: 8 },
+  { date: "2026-09-28", count: 30 },
+  { date: "2026-09-29", count: 41 },
+  { date: "2026-09-30", count: 18 },
+  { date: "2026-10-01", count: 22 },
+  { date: "2026-10-02", count: 5 },
+  { date: "2026-10-05", count: 17 },
+  { date: "2026-10-06", count: 26 },
+  { date: "2026-10-07", count: 9 },
+]
+
+export const flashcardStats: FlashcardStats = {
+  year: 2026,
+  set_id: null,
+  days: flashcardStatsDays,
+  total_reviews: 213,
+  days_studied: 11,
+  daily_average: 19.4,
+  days_learned_percent: 44,
+  longest_streak: 5,
+  current_streak: 3,
+  first_review_date: "2026-09-21",
+  today_count: 9,
+  today_seconds: 74,
+}
+
+/** Stats of a year without reviews. */
+export const flashcardStatsEmpty: FlashcardStats = {
+  year: 2025,
+  set_id: null,
+  days: [],
+  total_reviews: 0,
+  days_studied: 0,
+  daily_average: 0,
+  days_learned_percent: 0,
+  longest_streak: 5,
+  current_streak: 3,
+  first_review_date: "2026-09-21",
+  today_count: 9,
+  today_seconds: 74,
 }

@@ -49,114 +49,45 @@
     }
   },
   "flashcards": {
-    "list": {
+    "page": {
       "title": "Kartochkalar",
-      "description": "To‘plamlarni Anki kabi o‘rganing: kartochkalar unutishingiz arafasida qaytadi.",
-      "newSet": "Yangi to‘plam",
-      "empty": "Hozircha to‘plamlar yo‘q. Yarating yoki yordamchidan konspektlaringizdan kartochkalar yasashni so‘rang.",
-      "due": "Takrorlash kerak",
-      "new": "Yangi",
-      "cards": "Kartochkalar",
-      "study": "O‘rganish",
-      "open": "Ochish"
+      "description": "Kollodalarni Anki kabi o‘rganing: kartochkalar unutishingiz arafasida qaytadi.",
+      "allDecks": "Barcha kollodalar",
+      "missing": "Kolloda topilmadi.",
+      "importFailed": "Faylni o‘qib bo‘lmadi.",
+      "importEmpty": "Faylda kartochkalar topilmadi. Har qatorga bitta kartochka yozing: atama va ta’rif tab bilan ajratilgan.",
+      "imported": "“{title}” kollodasiga {count} ta kartochka import qilindi.",
+      "created": "Kolloda yaratildi.",
+      "saved": "Kartochkalar saqlandi.",
+      "deleteTitle": "Bu kolloda o‘chirilsinmi?",
+      "deleteDescription": "“{title}” kollodasi, uning barcha kartochkalari va natijalari o‘chiriladi. Ochiq havolalar ishlamay qoladi.",
+      "deleteConfirm": "Kollodani o‘chirish",
+      "deleteFailed": "Kollodani o‘chirib bo‘lmadi."
     },
-    "new": {
-      "title": "Yangi to‘plam",
-      "description": "To‘plamga nom bering. Kartochkalarni keyingi ekranda qo‘shasiz.",
-      "titleLabel": "Nomi",
-      "descriptionLabel": "Tavsif (ixtiyoriy)",
-      "cancel": "Bekor qilish",
-      "create": "To‘plam yaratish"
-    },
-    "source": {
-      "ai": "Yordamchi",
-      "mcp": "MCP orqali",
-      "copied": "Nusxalangan"
-    },
-    "set": {
-      "title": "Kartochkalar",
-      "missing": "To‘plam topilmadi.",
-      "cardCount": "{count} ta kartochka",
-      "countsLabel": "Bugungi kartochkalar",
-      "counts": {
-        "learning": "O‘rganilmoqda",
-        "review": "Takrorlash kerak",
-        "new": "Yangi"
-      },
-      "doneForToday": "Hozir takrorlash kerak emas. Keyinroq qayting yoki quyida kunlik limitlarni oshiring.",
-      "study": "O‘rganish",
-      "edit": "Tahrirlash",
-      "share": "Ulashish",
-      "settings": "Sozlamalar",
-      "cards": "Kartochkalar",
-      "noCards": "To‘plamda hali kartochkalar yo‘q. Qo‘shish uchun “Tahrirlash”ni bosing.",
-      "delete": "To‘plamni o‘chirish",
-      "deleteTitle": "Bu to‘plam o‘chirilsinmi?",
-      "deleteDescription": "“{title}” to‘plami, uning barcha kartochkalari va natijalari o‘chiriladi. Ochiq havolalar ishlamay qoladi.",
-      "deleteConfirm": "To‘plamni o‘chirish",
-      "deleteFailed": "To‘plamni o‘chirib bo‘lmadi."
-    },
-    "settings": {
+    "options": {
+      "title": "Sozlamalar: {title}",
+      "description": "Bu kollodaning nomi, tavsifi va kunlik limitlari.",
       "titleLabel": "Nomi",
       "descriptionLabel": "Tavsif",
       "newPerDay": "Kuniga yangi kartochkalar",
       "reviewsPerDay": "Kuniga takrorlashlar",
-      "limitInvalid": "0 dan {max} gacha butun son kiriting.",
+      "limitInvalid": "{min} dan {max} gacha butun son kiriting.",
       "save": "Saqlash",
       "saving": "Saqlanmoqda…",
-      "saved": "Sozlamalar saqlandi."
+      "saved": "Sozlamalar saqlandi.",
+      "delete": "Kollodani o‘chirish"
     },
-    "study": {
-      "title": "O‘rganish",
-      "missing": "To‘plam tanlanmagan.",
-      "backToSet": "To‘plamga qaytish",
-      "progress": "Mashg‘ulot jarayoni",
-      "remaining": "{count} ta kartochka qoldi",
-      "counts": "O‘rganilmoqda {learning} · Takrorlash {review} · Yangi {new}",
-      "card": "Kartochka",
-      "front": "Old tomoni",
-      "back": "Orqa tomoni",
-      "showAnswer": "Javobni ko‘rsatish (Probel)",
-      "rate": "Buni qanchalik bilar edingiz?",
-      "rating": {
-        "again": "Yana",
-        "hard": "Qiyin",
-        "medium": "O‘rtacha",
-        "easy": "Oson"
-      },
-      "summary": {
-        "title": "Bugunga yetarli",
-        "reviewed": "Siz {count} ta kartochkani takrorladingiz.",
-        "comeBack": "Ertaga qayting yoki to‘plam sozlamalarida kunlik limitlarni oshiring.",
-        "toSet": "To‘plamga qaytish",
-        "toList": "Barcha to‘plamlar"
-      }
-    },
-    "editor": {
-      "title": "Kartochkalarni tahrirlash",
-      "titleFor": "Kartochkalarni tahrirlash: {title}",
-      "missing": "To‘plam tanlanmagan.",
-      "hint": "Ikkala tomon ham Markdown’ni qo‘llab-quvvatlaydi. O‘zgartirmagan kartochkalaringiz natijasini saqlaydi.",
-      "preview": "Markdown ko‘rinishini ko‘rsatish",
-      "empty": "Hozircha kartochkalar yo‘q. Birinchisini qo‘shing.",
-      "add": "Kartochka qo‘shish",
-      "cardN": "{n}-kartochka",
-      "front": "{n}-kartochkaning old tomoni",
-      "back": "{n}-kartochkaning orqa tomoni",
-      "moveUp": "{n}-kartochkani yuqoriga siljitish",
-      "moveDown": "{n}-kartochkani pastga siljitish",
-      "remove": "{n}-kartochkani o‘chirish",
-      "incomplete": "Ikkala tomonni to‘ldiring yoki kartochkani o‘chiring.",
+    "descriptionDialog": {
+      "title": "Tavsif",
+      "label": "Tavsif",
+      "cancel": "Bekor qilish",
       "save": "Saqlash",
       "saving": "Saqlanmoqda…",
-      "saved": "Kartochkalar saqlandi.",
-      "unsaved": "Saqlanmagan o‘zgarishlar bor",
-      "discard": "Bekor qilish",
-      "backToSet": "To‘plamga qaytish"
+      "saved": "Tavsif saqlandi."
     },
     "copy": {
-      "title": "Ulashilgan to‘plamni nusxalash",
-      "copying": "To‘plam hisobingizga nusxalanmoqda…",
+      "title": "Ulashilgan kollodani nusxalash",
+      "copying": "Kolloda hisobingizga nusxalanmoqda…",
       "missing": "Nusxalash havolasi to‘liq emas."
     }
   },
