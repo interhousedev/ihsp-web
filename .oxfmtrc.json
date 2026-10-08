@@ -1,0 +1,32 @@
+{
+  "$schema": "./node_modules/oxfmt/configuration_schema.json",
+  "arrowParens": "always",
+  "bracketSpacing": true,
+  "semi": false,
+  "useTabs": false,
+  "trailingComma": "all",
+  "singleQuote": false,
+  "jsxSingleQuote": false,
+  "tabWidth": 2,
+  "printWidth": 120,
+  "endOfLine": "lf",
+  "ignorePatterns": [
+    "**/.next/**",
+    "**/out/**",
+    "**/node_modules/**",
+    "**/next-env.d.ts",
+    "**/generated/**",
+    "bun.lock",
+    "**/*.md",
+    "**/*.mdc",
+    "**/*.mdx",
+    "**/*.yml",
+    "**/*.yaml",
+    "e2e/test-results/**",
+    "e2e/.results/**",
+    "e2e/.report/**",
+    "packages/api/src/contract-check*.ts",
+    "playwright-report/**",
+    "**/public/env.js"
+  ]
+}

@@ -1,0 +1,17 @@
+# Bun configuration: https://bun.sh/docs/runtime/bunfig
+#
+# Install: refuse npm versions published less than 7 days ago (supply-chain cooldown, as in the starter).
+# Existing bun.lock entries are untouched, so installs with a frozen lockfile are unaffected.
+# Need a fresh release sooner? Add the package to `minimumReleaseAgeExcludes`.
+[install]
+# Hoisted layout: every workspace package resolves the root dependencies and `@ihsp/*` from the root node_modules.
+linker = "hoisted"
+minimumReleaseAge = 604800
+minimumReleaseAgeExcludes = []
+
+# Unit and component tests: happy-dom globals, Testing Library matchers, MSW server (see packages/test-utils).
+# Run from this folder: `bun test apps packages` (workspace scripts pass --preload explicitly).
+[test]
+preload = ["./packages/test-utils/src/preload.ts"]
+# happy-dom with Base UI components is slow; the default 5 s is too tight under load.
+timeout = 60000
