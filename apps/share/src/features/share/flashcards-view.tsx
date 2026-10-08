@@ -9,7 +9,7 @@ import { StudyMode } from "./study-mode"
 
 type Cards = NonNullable<PublicShare["flashcards"]>["cards"]
 
-/** A shared flash card set: the cards, **Study** in the browser, and **Copy to my sets** (opens the student app). */
+/** A shared flash card set: the cards, **Study** in the browser, and **Copy to my decks** (opens the student app). */
 export function FlashcardsView({ cards, slug }: { cards: Cards; slug: string }) {
   const t = useT("share.flashcards")
   const [studying, setStudying] = useState(false)

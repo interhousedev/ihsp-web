@@ -1,6 +1,16 @@
 import { describe, expect, it, setDefaultTimeout } from "bun:test"
 import type { StepView } from "@ihsp/api"
-import { apiUrl, attemptResultPassed, attemptView, ids, lmsCardStudy, server, stepViewTest } from "@ihsp/test-utils"
+import {
+  apiUrl,
+  attemptResultPassed,
+  attemptView,
+  ids,
+  lmsCardStudy,
+  problem,
+  server,
+  stepViewCards,
+  stepViewTest,
+} from "@ihsp/test-utils"
 import { screen, waitFor, within } from "@testing-library/react"
 import { HttpResponse, http } from "msw"
 import { StepPlayer } from "../features/player/components/step-player"
@@ -268,22 +278,133 @@ describe("step player: tests", () => {
   })
 })
 
-describe("step player: flash cards", () => {
-  it("reveals the answer, rates the card and loads the next one", async () => {
+/** The labels over the four rating buttons, e.g. `<10m`. */
+function intervalLabels(): (string | undefined)[] {
+  return ["Again", "Hard", "Good", "Easy"].map((name) => {
+    const button = screen.getByRole("button", { name })
+    return document.getElementById(button.getAttribute("aria-describedby") ?? "")?.textContent
+  })
+}
+
+describe("step player: flash cards (Anki's study screen)", () => {
+  it("shows the question with the counts as new + learning + review and hides the answer", async () => {
+    server.use(
+      http.get(apiUrl("/v1/lms/steps/:stepId/cards/next"), () =>
+        HttpResponse.json({ ...lmsCardStudy, counts: { new: 3, learning: 2, review: 5 } }),
+      ),
+    )
+    renderPlayer(ids.courseStepCards)
+
+    expect(await screen.findByText("d/dx sin x")).toBeInTheDocument()
+    expect(screen.getByTestId("study-counts")).toHaveTextContent("3+2+5")
+    expect(screen.queryByText("cos x")).not.toBeInTheDocument()
+    expect(screen.queryByRole("button", { name: "Easy" })).not.toBeInTheDocument()
+  })
+
+  it("reveals the answer and labels Again, Hard, Good and Easy with the next intervals", async () => {
+    const { user } = renderPlayer(ids.courseStepCards)
+
+    await user.click(await screen.findByRole("button", { name: "Show answer" }))
+
+    expect(screen.getByTestId("card-back")).toHaveTextContent("cos x")
+    expect(intervalLabels()).toEqual(["<10m", "1d", "3d", "7d"])
+  })
+
+  it("rates the card and loads the next one", async () => {
     let rating: unknown = null
     server.use(
       http.post(apiUrl("/v1/lms/steps/:stepId/cards/:cardId/review"), async ({ request }) => {
         rating = await readBody(request)
-        return HttpResponse.json({ ...lmsCardStudy, card: null })
+        return HttpResponse.json({
+          ...lmsCardStudy,
+          card: { id: "next-card", front: "d/dx cos x", back: "-sin x" },
+          counts: { new: 3, learning: 1, review: 0 },
+        })
       }),
     )
     const { user } = renderPlayer(ids.courseStepCards)
-    expect(await screen.findByText("d/dx sin x")).toBeInTheDocument()
-    expect(screen.queryByText("cos x")).not.toBeInTheDocument()
-    await user.click(screen.getByRole("button", { name: "Show answer" }))
-    expect(screen.getByText("cos x")).toBeInTheDocument()
-    await user.click(screen.getByRole("button", { name: /Easy/ }))
-    await waitFor(() => expect(rating).toEqual({ rating: "easy" }))
-    expect(await screen.findByText(/All cards are done for now/)).toBeInTheDocument()
+    await user.click(await screen.findByRole("button", { name: "Show answer" }))
+
+    await user.click(screen.getByRole("button", { name: "Good" }))
+
+    expect(await screen.findByText("d/dx cos x")).toBeInTheDocument()
+    expect(rating).toEqual({ rating: "medium" })
+    expect(screen.getByTestId("study-counts")).toHaveTextContent("3+1+0")
+    expect(screen.queryByText("-sin x")).not.toBeInTheDocument()
+  })
+
+  it("answers with the keyboard: Space, then 1", async () => {
+    const ratings: unknown[] = []
+    server.use(
+      http.post(apiUrl("/v1/lms/steps/:stepId/cards/:cardId/review"), async ({ request }) => {
+        ratings.push(((await readBody(request)) as { rating: string }).rating)
+        return HttpResponse.json({ ...lmsCardStudy, card: null, intervals: null })
+      }),
+    )
+    const { user } = renderPlayer(ids.courseStepCards)
+    await screen.findByText("d/dx sin x")
+
+    await user.keyboard(" ")
+    await user.keyboard("1")
+
+    await waitFor(() => expect(ratings).toEqual(["again"]))
+  })
+
+  it("comes back to the same card after Again and hides its answer again", async () => {
+    server.use(http.post(apiUrl("/v1/lms/steps/:stepId/cards/:cardId/review"), () => HttpResponse.json(lmsCardStudy)))
+    const { user } = renderPlayer(ids.courseStepCards)
+    await user.click(await screen.findByRole("button", { name: "Show answer" }))
+
+    await user.click(screen.getByRole("button", { name: "Again" }))
+
+    await waitFor(() => expect(screen.queryByTestId("card-back")).not.toBeInTheDocument())
+    expect(screen.getByText("d/dx sin x")).toBeInTheDocument()
+    expect(screen.getByRole("button", { name: "Show answer" })).toBeInTheDocument()
+  })
+
+  it("says the cards are done when none is left", async () => {
+    server.use(
+      http.get(apiUrl("/v1/lms/steps/:stepId/cards/next"), () =>
+        HttpResponse.json({ ...lmsCardStudy, card: null, intervals: null, counts: { new: 0, learning: 0, review: 0 } }),
+      ),
+    )
+    renderPlayer(ids.courseStepCards)
+
+    expect(await screen.findByText("Congratulations! You have finished this deck for now.")).toBeInTheDocument()
+    expect(screen.getByTestId("study-counts")).toHaveTextContent("0+0+0")
+  })
+
+  it("shows the error of a failed rating and keeps the card", async () => {
+    server.use(
+      http.post(apiUrl("/v1/lms/steps/:stepId/cards/:cardId/review"), () =>
+        problem(500, "internal-error", "Internal error"),
+      ),
+    )
+    const { user } = renderPlayer(ids.courseStepCards)
+    await user.click(await screen.findByRole("button", { name: "Show answer" }))
+
+    await user.click(screen.getByRole("button", { name: "Easy" }))
+
+    expect(await screen.findByRole("alert")).toBeInTheDocument()
+    expect(screen.getByText("d/dx sin x")).toBeInTheDocument()
+  })
+
+  it("only counts the cards to staff previewing a draft and never asks for the next card", async () => {
+    let asked = false
+    server.use(
+      http.get(apiUrl("/v1/lms/courses/:id/preview/steps/:stepId"), () =>
+        HttpResponse.json({ ...stepViewCards, preview: true }),
+      ),
+      http.get(apiUrl("/v1/lms/steps/:stepId/cards/next"), () => {
+        asked = true
+        return HttpResponse.json(lmsCardStudy)
+      }),
+    )
+    renderPlayer(ids.courseStepCards, "preview")
+
+    expect(await screen.findByText("4 cards")).toBeInTheDocument()
+    expect(screen.getByText("Studying is for enrolled students; progress is kept per student.")).toBeInTheDocument()
+    expect(screen.queryByRole("button", { name: "Show answer" })).not.toBeInTheDocument()
+    expect(asked).toBe(false)
   })
 })

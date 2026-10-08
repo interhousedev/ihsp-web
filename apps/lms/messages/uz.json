@@ -171,16 +171,7 @@
   "cards": {
     "title": "Kartochkalar",
     "count": "{count, plural, one {# kartochka} other {# kartochka}}",
-    "counts": "Yangi {new} · O'rganilmoqda {learning} · Takrorlash {review}",
-    "previewNote": "Kartochkalarni yozilgan talabalar o'rganadi; natija har bir talaba uchun alohida saqlanadi.",
-    "done": "Hozircha barcha kartochkalar tugadi. Keyinroq qaytib keling.",
-    "showAnswer": "Javobni ko'rsatish",
-    "ratings": {
-      "again": "Yana",
-      "hard": "Qiyin",
-      "medium": "O'rtacha",
-      "easy": "Oson"
-    }
+    "previewNote": "Kartochkalarni yozilgan talabalar o'rganadi; natija har bir talaba uchun alohida saqlanadi."
   },
   "saveState": {
     "saved": "Saqlandi",

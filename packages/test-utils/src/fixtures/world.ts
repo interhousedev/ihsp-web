@@ -109,13 +109,16 @@ export const teacherOf: Record<SubjectKey, PersonRef> = {
 // --- Time ---
 
 export const bells: Bell[] = [
-  { period: 1, start: "08:30", end: "09:15", weekdays: [1, 2, 3, 4, 5, 6] },
-  { period: 2, start: "09:25", end: "10:10", weekdays: [1, 2, 3, 4, 5, 6] },
-  { period: 3, start: "10:20", end: "11:05", weekdays: [1, 2, 3, 4, 5, 6] },
-  { period: 4, start: "11:25", end: "12:10", weekdays: [1, 2, 3, 4, 5, 6] },
-  { period: 5, start: "12:20", end: "13:05", weekdays: [1, 2, 3, 4, 5, 6] },
-  { period: 6, start: "13:15", end: "14:00", weekdays: [1, 2, 3, 4, 5, 6] },
+  { period: 1, start: "08:30", end: "09:15", weekdays: [1, 2, 3, 4, 5, 6], source: "manual" },
+  { period: 2, start: "09:25", end: "10:10", weekdays: [1, 2, 3, 4, 5, 6], source: "manual" },
+  { period: 3, start: "10:20", end: "11:05", weekdays: [1, 2, 3, 4, 5, 6], source: "manual" },
+  { period: 4, start: "11:25", end: "12:10", weekdays: [1, 2, 3, 4, 5, 6], source: "manual" },
+  { period: 5, start: "12:20", end: "13:05", weekdays: [1, 2, 3, 4, 5, 6], source: "manual" },
+  { period: 6, start: "13:15", end: "14:00", weekdays: [1, 2, 3, 4, 5, 6], source: "manual" },
 ]
+
+/** The same six periods as the EMIS `class-hours` sync stores them: read-only for Administration. */
+export const emisBells: Bell[] = bells.map((bell) => ({ ...bell, source: "emis" }))
 
 /** `YYYY-MM-DD` + `HH:MM` in Asia/Tashkent (UTC+5) as an ISO 8601 UTC string. */
 export function atTashkent(date: string, time: string): string {

@@ -1,10 +1,12 @@
 /** SHR-1 to SHR-8 (viewer) and SL-9 (report): the public page behind `/ai/<slug>`. */
 import { describe, expect, test } from "bun:test"
-import { getConfig } from "@ihsp/config"
-import { apiUrl, publicShareGoneSlug, server } from "@ihsp/test-utils"
-import { fireEvent, screen, waitFor } from "@testing-library/react"
+import { getConfig, resetConfig } from "@ihsp/config"
+import { apiUrl, publicShareGoneSlug, server, userMe } from "@ihsp/test-utils"
+import { fireEvent, screen, waitFor, within } from "@testing-library/react"
 import { HttpResponse, http } from "msw"
+import { ShareFrame } from "../features/share/share-header"
 import { ShareViewer } from "../features/share/share-viewer"
+import { StudyMode } from "../features/share/study-mode"
 import { slugFromPathname } from "../features/share/use-share-slug"
 import { allowSlowTests, renderShare, shareRoute } from "./helpers"
 
@@ -33,29 +35,119 @@ describe("shared chat", () => {
   })
 })
 
+/** Opens the shared set and presses Study. */
+async function startStudying() {
+  renderShare(<ShareViewer />, { route: shareRoute("zr5t8w1c") })
+  fireEvent.click(await screen.findByRole("button", { name: "Study", hidden: true }))
+  await screen.findByTestId("study-counts")
+}
+
+/** The labels over the four rating buttons, e.g. `<1m`. */
+function intervalLabels(): (string | undefined)[] {
+  return ["Again", "Hard", "Good", "Easy"].map((name) => {
+    const button = screen.getByRole("button", { name, hidden: true })
+    return document.getElementById(button.getAttribute("aria-describedby") ?? "")?.textContent
+  })
+}
+
 describe("shared flash cards", () => {
   test("lists the cards and copies the set into the student app", async () => {
     renderShare(<ShareViewer />, { route: shareRoute("zr5t8w1c") })
 
     expect(await screen.findByRole("heading", { name: "Physics: kinematics", hidden: true })).toBeInTheDocument()
-    const copy = screen.getByRole("link", { name: "Copy to my sets", hidden: true })
+    const copy = screen.getByRole("link", { name: "Copy to my decks", hidden: true })
     expect(copy.getAttribute("href")).toBe(`${getConfig().SP_URL}/flashcards/copy/?share=zr5t8w1c`)
   })
 
-  test("studies in the browser: Show answer, rating keys, a finished screen", async () => {
-    renderShare(<ShareViewer />, { route: shareRoute("zr5t8w1c") })
-    fireEvent.click(await screen.findByRole("button", { name: "Study", hidden: true }))
+  test("studies with Anki's screen: the question, the counts and Show answer", async () => {
+    await startStudying()
 
-    const total = Number(/(\d+) cards/.exec(screen.getByText(/of \d+ cards/).textContent ?? "")?.[1])
-    expect(total).toBeGreaterThan(0)
-    for (let index = 0; index < total; index += 1) {
+    expect(screen.getByText("What is velocity?")).toBeInTheDocument()
+    expect(screen.getByTestId("study-counts")).toHaveTextContent("4+0+0")
+    expect(screen.queryByText("The rate of change of velocity.")).not.toBeInTheDocument()
+
+    fireEvent.click(screen.getByRole("button", { name: "Show answer", hidden: true }))
+
+    expect(screen.getByTestId("card-back")).toHaveTextContent("The rate of change of position")
+    expect(intervalLabels()).toEqual(["<1m", "<1m", "<10m", "4d"])
+  })
+
+  test("a card rated Good moves to learning and the next new card follows", async () => {
+    await startStudying()
+    fireEvent.keyDown(window, { key: " " })
+    await screen.findByTestId("card-back")
+
+    fireEvent.keyDown(window, { key: "3" })
+
+    expect(await screen.findByText("What is acceleration?")).toBeInTheDocument()
+    expect(screen.getByTestId("study-counts")).toHaveTextContent("3+1+0")
+    expect(screen.queryByTestId("card-back")).not.toBeInTheDocument()
+  })
+
+  test("studies from the keyboard until every card is Easy, then congratulates", async () => {
+    await startStudying()
+
+    for (let index = 0; index < 4; index += 1) {
       fireEvent.keyDown(window, { key: " " })
-      await screen.findByText("Back", { exact: true })
+      await screen.findByTestId("card-back")
       fireEvent.keyDown(window, { key: "4" })
     }
 
-    expect(await screen.findByRole("heading", { name: "Finished", hidden: true })).toBeInTheDocument()
-    expect(screen.getByText(`You reviewed ${total} cards.`)).toBeInTheDocument()
+    expect(await screen.findByText("Congratulations! You have finished this deck for now.")).toBeInTheDocument()
+    expect(screen.getByText("You answered 4 cards.")).toBeInTheDocument()
+  })
+
+  test("saves nothing on the server", async () => {
+    const reviews: string[] = []
+    server.use(
+      http.post(apiUrl("/v1/me/flashcards/:cardId/review"), ({ params }) => {
+        reviews.push(String(params.cardId))
+        return new HttpResponse(null, { status: 204 })
+      }),
+    )
+    await startStudying()
+
+    fireEvent.keyDown(window, { key: " " })
+    await screen.findByTestId("card-back")
+    fireEvent.keyDown(window, { key: "4" })
+
+    expect(await screen.findByText("What is acceleration?")).toBeInTheDocument()
+    expect(reviews).toEqual([])
+  })
+
+  test("after the last card, Study again starts over and Back to the cards leaves", async () => {
+    await startStudying()
+    for (let index = 0; index < 4; index += 1) {
+      fireEvent.keyDown(window, { key: " " })
+      await screen.findByTestId("card-back")
+      fireEvent.keyDown(window, { key: "4" })
+    }
+    await screen.findByTestId("study-done")
+
+    fireEvent.click(screen.getByRole("button", { name: "Study again", hidden: true }))
+
+    expect(await screen.findByText("What is velocity?")).toBeInTheDocument()
+    expect(screen.getByTestId("study-counts")).toHaveTextContent("4+0+0")
+    expect(screen.queryByTestId("card-back")).not.toBeInTheDocument()
+
+    fireEvent.click(screen.getByRole("button", { name: "Back to the cards", hidden: true }))
+
+    expect(await screen.findByRole("link", { name: "Copy to my decks", hidden: true })).toBeInTheDocument()
+  })
+})
+
+describe("study mode of a one card set", () => {
+  test("Study again shows the question again, not the answer", async () => {
+    renderShare(<StudyMode cards={[{ id: "only", front: "Question", back: "Answer" }]} onExit={() => undefined} />)
+    fireEvent.keyDown(window, { key: " " })
+    await screen.findByTestId("card-back")
+    fireEvent.keyDown(window, { key: "4" })
+    await screen.findByTestId("study-done")
+
+    fireEvent.click(screen.getByRole("button", { name: "Study again", hidden: true }))
+
+    expect(await screen.findByText("Question")).toBeInTheDocument()
+    expect(screen.queryByTestId("card-back")).not.toBeInTheDocument()
   })
 })
 
@@ -111,5 +203,38 @@ describe("report", () => {
     fireEvent.click(await screen.findByRole("button", { name: "Send report", hidden: true }))
 
     expect(await screen.findByRole("alert")).toBeInTheDocument()
+  })
+})
+
+describe("account menu", () => {
+  test("is not shown to the public", async () => {
+    renderShare(
+      <ShareFrame>
+        <p>shared page</p>
+      </ShareFrame>,
+    )
+
+    expect(await screen.findByText("shared page")).toBeInTheDocument()
+    expect(screen.queryByRole("button", { name: "Account menu" })).not.toBeInTheDocument()
+  })
+
+  test("lists the platforms of the role when someone is logged in on this host", async () => {
+    window.__ENV__ = { ...(window.__ENV__ as object), OAUTH_CLIENT_ID: "share" }
+    resetConfig()
+    const { user } = renderShare(
+      <ShareFrame>
+        <p>shared page</p>
+      </ShareFrame>,
+      { session: { user: userMe } },
+    )
+
+    await user.click(await screen.findByRole("button", { name: "Account menu" }))
+
+    const menu = await screen.findByRole("menu")
+    expect(within(menu).getByRole("menuitem", { name: /SP/ })).toHaveAttribute("href", "http://localhost:3002")
+    expect(within(menu).getByRole("menuitem", { name: /LMS/ })).toHaveAttribute("href", "http://localhost:3005")
+    expect(within(menu).getByRole("menuitem", { name: /ID/ })).toHaveAttribute("href", "http://localhost:3001")
+    expect(within(menu).queryByRole("menuitem", { name: /Staff/ })).not.toBeInTheDocument()
+    expect(menu.querySelector("[aria-current]")).toBeNull()
   })
 })

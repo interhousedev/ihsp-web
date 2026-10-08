@@ -21,7 +21,11 @@ export function emptyTermForm(template?: Term): TermForm {
     half: 1,
     starts_on: null,
     ends_on: null,
-    bells: template ? template.bells.map((bell) => ({ ...bell, weekdays: [...bell.weekdays] })) : [],
+    // A new term starts from the template's times, which Administration now owns: copies are by hand, even when the
+    // template's bells came from EMIS (the sync replaces the periods EMIS lists once the term is current).
+    bells: template
+      ? template.bells.map((bell) => ({ ...bell, weekdays: [...bell.weekdays], source: "manual" as const }))
+      : [],
     non_study_days: [],
     moved_days: [],
   }

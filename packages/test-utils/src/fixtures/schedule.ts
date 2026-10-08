@@ -16,6 +16,7 @@ import type {
 import {
   audienceOf,
   bells,
+  emisBells,
   ids,
   makeLesson,
   persons,
@@ -39,13 +40,14 @@ export const currentTerm: Term = {
   is_current: true,
 }
 
+/** A term whose lesson times were synced from EMIS class hours: its bells are read-only. */
 export const previousTerm: Term = {
   id: ids.termPrevious,
   academic_year: "2025-2026",
   half: 2,
   starts_on: "2026-02-02",
   ends_on: "2026-06-26",
-  bells,
+  bells: emisBells,
   non_study_days: [],
   moved_days: [],
   is_current: false,

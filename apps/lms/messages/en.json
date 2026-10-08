@@ -171,16 +171,7 @@
   "cards": {
     "title": "Flash cards",
     "count": "{count, plural, one {# card} other {# cards}}",
-    "counts": "New {new} · Learning {learning} · Review {review}",
-    "previewNote": "Studying is for enrolled students; progress is kept per student.",
-    "done": "All cards are done for now. Come back later.",
-    "showAnswer": "Show answer",
-    "ratings": {
-      "again": "Again",
-      "hard": "Hard",
-      "medium": "Medium",
-      "easy": "Easy"
-    }
+    "previewNote": "Studying is for enrolled students; progress is kept per student."
   },
   "saveState": {
     "saved": "Saved",

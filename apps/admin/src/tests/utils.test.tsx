@@ -1,6 +1,7 @@
 /** Pure helpers of the admin app: CSV, term validation, broadcast text and time, audience choices, names. */
 import { describe, expect, test } from "bun:test"
-import { currentTerm } from "@ihsp/test-utils"
+import type { Bell } from "@ihsp/api"
+import { currentTerm, previousTerm } from "@ihsp/test-utils"
 import { toCsv } from "../features/shared/utils/csv"
 import { audienceLabel, fullName, fullNameWithMiddle } from "../features/shared/utils/names"
 import { toggleAudience } from "../features/shared/components/audience-picker"
@@ -46,22 +47,34 @@ describe("term form (ACA-4, ADM-18)", () => {
 
   test("a bell must start before it ends and have a weekday", () => {
     const form = termToForm(currentTerm)
-    const bells = [{ period: 1, start: "10:00", end: "09:00", weekdays: [] }]
+    const bells: Bell[] = [{ period: 1, start: "10:00", end: "09:00", weekdays: [], source: "manual" }]
     expect(validateTerm({ ...form, bells })).toEqual(["bellTime", "bellWeekdays"])
   })
 
   test("the same period on the same weekday twice is a duplicate; Saturday can differ", () => {
     const form = termToForm(currentTerm)
-    const dup = [
-      { period: 1, start: "08:30", end: "09:15", weekdays: [1, 2] },
-      { period: 1, start: "08:30", end: "09:00", weekdays: [2] },
+    const dup: Bell[] = [
+      { period: 1, start: "08:30", end: "09:15", weekdays: [1, 2], source: "manual" },
+      { period: 1, start: "08:30", end: "09:00", weekdays: [2], source: "manual" },
     ]
     expect(validateTerm({ ...form, bells: dup })).toEqual(["bellDuplicate"])
-    const saturday = [
-      { period: 1, start: "08:30", end: "09:15", weekdays: [1, 2, 3, 4, 5] },
-      { period: 1, start: "08:30", end: "09:00", weekdays: [6] },
+    const saturday: Bell[] = [
+      { period: 1, start: "08:30", end: "09:15", weekdays: [1, 2, 3, 4, 5], source: "manual" },
+      { period: 1, start: "08:30", end: "09:00", weekdays: [6], source: "manual" },
     ]
     expect(validateTerm({ ...form, bells: saturday })).toEqual([])
+  })
+
+  test("the request body keeps who set each bell, so the EMIS sync can tell its own bells", () => {
+    const form = termToForm(previousTerm)
+    expect(termInput(form).bells.map((bell) => bell.source)).toEqual(Array(form.bells.length).fill("emis"))
+    expect(termInput(termToForm(currentTerm)).bells.every((bell) => bell.source === "manual")).toBe(true)
+  })
+
+  test("a new term copies the times of the template as bells set by hand, even when they came from EMIS", () => {
+    const form = emptyTermForm(previousTerm)
+    expect(form.bells.map((bell) => bell.start)).toEqual(previousTerm.bells.map((bell) => bell.start))
+    expect(form.bells.every((bell) => bell.source === "manual")).toBe(true)
   })
 
   test("the request body is sorted and free of duplicate days", () => {

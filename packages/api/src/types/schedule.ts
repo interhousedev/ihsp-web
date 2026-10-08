@@ -2,6 +2,9 @@
 
 import type { DateRangeParams, PageParams, PersonRef, RoomRefLite, SubjectRef } from "./common"
 
+/** Who set a bell: Administration by hand, or the EMIS `class-hours` sync, which keeps its bells equal to EMIS. */
+export type BellSource = "manual" | "emis"
+
 export type Bell = {
   period: number
   /** "08:30" */
@@ -9,6 +12,7 @@ export type Bell = {
   end: string
   /** 1..6 */
   weekdays: number[]
+  source: BellSource
 }
 
 export type TermInput = {

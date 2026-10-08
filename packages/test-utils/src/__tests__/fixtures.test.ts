@@ -54,6 +54,14 @@ describe("world", () => {
     expect(fx.findLesson(fx.ids.lessonPhysicsToday)?.subject.id).toBe(fx.ids.physics)
   })
 
+  test("every bell says who set it: the current term is by hand, the previous term comes from EMIS", () => {
+    expect(fx.bells.every((bell) => bell.source === "manual")).toBe(true)
+    expect(fx.emisBells.map((bell) => bell.period)).toEqual(fx.bells.map((bell) => bell.period))
+    expect(fx.emisBells.every((bell) => bell.source === "emis")).toBe(true)
+    expect(fx.currentTerm.bells.every((bell) => bell.source === "manual")).toBe(true)
+    expect(fx.previousTerm.bells.every((bell) => bell.source === "emis")).toBe(true)
+  })
+
   test("a lesson id is stable per weekday and period", () => {
     expect(fx.lessonId(3, 4)).toBe(fx.lessonId(3, 4))
     expect(fx.lessonId(3, 4)).not.toBe(fx.lessonId(3, 5))
@@ -65,6 +73,20 @@ describe("references between fixtures resolve", () => {
 
   test("homework belongs to lessons of the week", () => {
     for (const item of fx.homeworkItems) expect(lessonIds.has(item.lesson_id)).toBe(true)
+  })
+
+  test("every homework item is in exactly one list, and overdue items are open and late", () => {
+    const lists = (["overdue", "upcoming", "later", "done"] as const).map((status) => fx.homeworkByStatus(status))
+    const seen = lists.flat().map((item) => item.lesson_id)
+    expect(seen.toSorted()).toEqual(fx.homeworkItems.map((item) => item.lesson_id).toSorted())
+    for (const item of fx.homeworkByStatus("overdue")) {
+      expect(item.done_at).toBeNull()
+      expect(item.days_overdue).toBeGreaterThan(0)
+    }
+    expect(fx.studentToday.due.map((item) => item.lesson_id)).toEqual([
+      fx.homeworkOverdue.lesson_id,
+      fx.homeworkMath.lesson_id,
+    ])
   })
 
   test("marks belong to lessons of the week and to a known subject", () => {
