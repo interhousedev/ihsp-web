@@ -1,0 +1,576 @@
+{
+  "common": {
+    "appName": "IHSP",
+    "loading": "Loading…",
+    "retry": "Try again",
+    "cancel": "Cancel",
+    "confirm": "Confirm",
+    "save": "Save",
+    "saving": "Saving…",
+    "saved": "Saved",
+    "delete": "Delete",
+    "edit": "Edit",
+    "add": "Add",
+    "create": "Create",
+    "upload": "Upload",
+    "download": "Download",
+    "refresh": "Refresh",
+    "close": "Close",
+    "back": "Back",
+    "next": "Next",
+    "previous": "Previous",
+    "done": "Done",
+    "search": "Search",
+    "searchPlaceholder": "Search…",
+    "more": "More",
+    "copy": "Copy",
+    "copied": "Copied",
+    "yes": "Yes",
+    "no": "No",
+    "open": "Open",
+    "all": "All",
+    "none": "None",
+    "apply": "Apply",
+    "reset": "Reset",
+    "clear": "Clear",
+    "today": "Today",
+    "offline": "Offline",
+    "skipToContent": "Skip to content",
+    "openMenu": "Open menu",
+    "language": "Language",
+    "theme": "Theme",
+    "logout": "Log out",
+    "profile": "Profile",
+    "settings": "Settings",
+    "notFoundTitle": "Page not found",
+    "notFoundDescription": "The page you are looking for does not exist or was moved.",
+    "goHome": "Go to the start page"
+  },
+  "state": {
+    "loadingTitle": "Loading",
+    "emptyTitle": "Nothing here yet",
+    "emptyDescription": "When there is something to show, it will appear here.",
+    "errorTitle": "Something went wrong",
+    "errorDescription": "We could not load this. Check your connection and try again.",
+    "offlineTitle": "You are offline",
+    "offlineDescription": "Saved data is shown when it is available."
+  },
+  "theme": {
+    "toggle": "Toggle light and dark mode",
+    "light": "Light",
+    "dark": "Dark",
+    "system": "System",
+    "palette": "Color theme"
+  },
+  "locale": {
+    "switcher": "Language",
+    "uz": "Oʻzbekcha",
+    "ru": "Русский",
+    "en": "English"
+  },
+  "nav": {
+    "main": "Main navigation",
+    "bottom": "Quick navigation",
+    "more": "More",
+    "moreTitle": "All sections",
+    "toggleSidebar": "Toggle the sidebar"
+  },
+  "table": {
+    "columns": "Columns",
+    "rowsPerPage": "Rows per page",
+    "pageOf": "Page {page} of {pages}",
+    "noResults": "No results.",
+    "selectedOf": "{selected} of {total} row(s) selected.",
+    "first": "First page",
+    "last": "Last page",
+    "previous": "Previous page",
+    "next": "Next page",
+    "filter": "Filter",
+    "clearFilters": "Clear filters",
+    "sortAscending": "Sort ascending",
+    "sortDescending": "Sort descending",
+    "hideColumn": "Hide column",
+    "search": "Search…",
+    "total": "{total} row(s) total.",
+    "noColumns": "No columns found.",
+    "searchColumns": "Search columns…",
+    "clearFilter": "Clear {title} filter"
+  },
+  "auth": {
+    "signingIn": "Signing you in…",
+    "redirecting": "Redirecting to the login page…",
+    "callbackFailed": "We could not complete the login.",
+    "tryAgain": "Log in again",
+    "forbiddenTitle": "No access",
+    "forbiddenDescription": "Your account does not have access to this page.",
+    "telegramLoading": "Logging you in with Telegram…",
+    "telegramTitle": "Log in in the bot first",
+    "telegramDescription": "This Telegram account is not linked to an IHSP account yet. Open the bot, press Log in and come back.",
+    "telegramOpenBot": "Open @{bot}",
+    "telegramFailed": "We could not log you in with Telegram."
+  },
+  "markdown": {
+    "externalLink": "Opens {url}",
+    "imageBlocked": "Image not shown: {alt}"
+  },
+  "calendar": {
+    "previousWeek": "Previous week",
+    "nextWeek": "Next week",
+    "thisWeek": "This week",
+    "previousDay": "Previous day",
+    "nextDay": "Next day",
+    "pickDate": "Pick a date",
+    "weekRange": "{start} – {end}"
+  },
+  "qr": {
+    "alt": "QR code"
+  },
+  "semester": {
+    "switcher": "Semester",
+    "label": "Semester {number}"
+  },
+  "command": {
+    "placeholder": "Type a command or search…",
+    "empty": "No results found.",
+    "searching": "Searching…",
+    "navigation": "Go to",
+    "open": "Open search"
+  },
+  "user": {
+    "menu": "Account menu"
+  },
+  "errors": {
+    "generic": "Something went wrong. Try again in a moment.",
+    "network": {
+      "unreachable": "No connection to the server. Check your internet and try again."
+    },
+    "common": {
+      "conflict": "Someone changed this at the same time. Reload and try again.",
+      "rate-limited": "Too many requests. Wait a little and try again.",
+      "not-found": "We could not find what you are looking for.",
+      "forbidden": "You do not have permission to do this.",
+      "validation": "Some of the entered data is not valid.",
+      "gone": "This is no longer available."
+    },
+    "auth": {
+      "challenge-used": "This login link was already used. Starting again.",
+      "invalid-credentials": "Wrong login or password.",
+      "locked": "Too many attempts. The account is locked for a while.",
+      "otp-invalid": "The code is wrong or expired.",
+      "role-missing": "Your account has no access to this app.",
+      "second-factor-required": "A one-time code is required.",
+      "unauthorized": "Please log in again.",
+      "challenge-invalid": "This sign-in request is not valid. Start again from the app."
+    },
+    "emis": {
+      "auth-failed": "EMIS did not accept this login and password.",
+      "unavailable": "EMIS is not available right now. Try again later."
+    },
+    "id": {
+      "admin-reset-forbidden": "Only an administrator can reset this account.",
+      "emis-already-linked": "This EMIS account is already linked to another IHSP account.",
+      "user-not-found": "No user with this login was found.",
+      "wrong-institution": "This EMIS account belongs to another institution.",
+      "registration-expired": "This session has expired. Please start again.",
+      "email-in-use": "This email address is already used by another account.",
+      "email-not-set": "Enter your email address and request a code first.",
+      "code-invalid": "The code is wrong or has expired. Request a new code.",
+      "import-match-unconfirmed": "Please confirm that this record is yours.",
+      "password-weak": "The password does not meet the requirements.",
+      "reclaim-forbidden": "This account cannot be reclaimed. Contact Administration.",
+      "no-emis-link": "Your account is not linked to EMIS.",
+      "emis-profile-mismatch": "These EMIS credentials belong to a different EMIS account.",
+      "wrong-password": "The password is wrong.",
+      "delete-forbidden": "This account cannot be deleted here. Contact Administration.",
+      "admin-server-forbidden": "Only verified clients can connect to the Administration server.",
+      "password-policy": "The password does not meet the requirements.",
+      "email-taken": "This email already belongs to another account.",
+      "email-locked": "The email of an activated account cannot be changed here.",
+      "otp-no-channel": "There is no channel to send a code to. Link Telegram or confirm your email.",
+      "otp-mandatory": "One-time codes cannot be turned off for Administration.",
+      "self-action-forbidden": "You cannot do this to your own account.",
+      "invalid-status": "The account status does not allow this action.",
+      "activation-invalid": "This link has expired or was already used. Ask Administration for a new one.",
+      "connector-invalid": "The connector settings are not valid.",
+      "unknown-client": "Unknown application.",
+      "hydra-unavailable": "The sign-in service is not responding. Try again later.",
+      "email-unavailable": "The email could not be sent. Try again later.",
+      "login-taken": "This login is already taken."
+    },
+    "telegram": {
+      "linked-elsewhere": "This Telegram account is already linked to another user."
+    },
+    "attendance": {
+      "window-closed": "The time to change this attendance list has passed.",
+      "lesson-cancelled": "This lesson was cancelled, so attendance cannot be taken.",
+      "lesson-reassigned": "This lesson was reassigned to another teacher.",
+      "absent-outside-roster": "Some students are not in this lesson's audience.",
+      "excuse-not-absent": "Only an absent student can be excused."
+    },
+    "files": {
+      "quota-exceeded": "Your file storage is full. Delete some files and try again.",
+      "too-large": "The file is too large.",
+      "type-not-allowed": "This type of file is not allowed.",
+      "upload-missing": "The upload did not finish. Try again.",
+      "invalid-name": "The file name is empty or longer than {max_length} characters.",
+      "invalid-checksum": "The file checksum is not valid.",
+      "invalid-size": "The file is empty or its size is not valid.",
+      "not-found": "File not found.",
+      "deleted": "This file was deleted.",
+      "not-ready": "The file is not ready yet.",
+      "no-text": "This file has no readable text.",
+      "page-not-found": "This page of the file does not exist.",
+      "upload-failed": "The upload failed. Check your connection and try again."
+    },
+    "ai": {
+      "limit-reached": "You reached the assistant limit. It resets later.",
+      "provider-error": "The assistant is not available right now. Try again later.",
+      "chat-not-found": "Chat not found.",
+      "tool-call-not-found": "This assistant action was not found.",
+      "tool-call-not-pending": "This assistant action was already decided.",
+      "tool-call-expired": "This assistant action expired.",
+      "turn-in-progress": "The assistant is still answering in this chat.",
+      "wrong-assistant": "You cannot use this assistant.",
+      "attachment-invalid": "An attached file is missing or not ready.",
+      "tool-arguments": "The assistant sent invalid arguments to a tool.",
+      "tool-failed": "The assistant tool could not complete the request."
+    },
+    "links": {
+      "blocked-url": "This address cannot be shortened.",
+      "invalid-target": "Provide either a web address or a file, as the link type requires.",
+      "file-not-ready": "The file is not ready or is not yours.",
+      "invalid-expiry": "The expiry date must be in the future.",
+      "lesson-mismatch": "Other lessons must be the same subject on the same day.",
+      "not-found": "Link not found.",
+      "gone": "This link was removed.",
+      "disabled": "This link was disabled by Administration.",
+      "share-not-allowed": "You cannot share this item.",
+      "resource-forbidden": "You cannot add or change resources of this lesson.",
+      "lesson-window-closed": "Attachments can be added from 7 days after a lesson back to 14 days ahead.",
+      "slug-exhausted": "Could not create a short link right now. Try again."
+    },
+    "lms": {
+      "draft-changed": "The draft changed while you were working. Reload it first.",
+      "no-attempts-left": "You have no attempts left for this test.",
+      "attempt-cooldown": "The pause between attempts is not over yet.",
+      "attempt-closed": "This attempt is already closed.",
+      "not-enrolled": "You are not enrolled in this course.",
+      "invite-not-valid": "Invite not valid. Check the code or ask for a new one.",
+      "course-not-found": "Course not found.",
+      "step-not-found": "Step not found.",
+      "block-not-found": "This block does not exist in the step.",
+      "card-not-found": "This flash card no longer exists.",
+      "attempt-not-found": "Attempt not found.",
+      "permission-denied": "You do not have the \"{permission}\" permission in this course.",
+      "attempt-not-submitted": "This attempt has no result yet.",
+      "attempt-start-conflict": "The attempt could not be started. Try again.",
+      "answer-invalid": "The answer to question {question_id} is not valid.",
+      "score-invalid": "The score must be between 0 and {max_score}.",
+      "attempt-preview": "Preview attempts cannot be reviewed.",
+      "revision-not-found": "This saved state of the step was not found.",
+      "version-not-found": "Version not found.",
+      "staff-not-found": "This person is not on the course staff.",
+      "slug-taken": "A course with the address \"{slug}\" already exists.",
+      "staff-exists": "This person is already on the course staff.",
+      "last-manager": "The course must keep at least one person who can manage staff.",
+      "slug-invalid": "The course address may contain only lowercase Latin letters, digits and hyphens (3 to 60 characters).",
+      "title-invalid": "The title must have 1 to {max_length} characters.",
+      "staff-invalid": "The role or the permissions are not valid.",
+      "outline-invalid": "This change does not fit the current outline of the course.",
+      "content-invalid": "The step content is not valid.",
+      "file-missing": "The step refers to a file that does not exist.",
+      "nothing-to-publish": "There are no changes to publish.",
+      "no-live-version": "There is no published version to go back to.",
+      "invite-not-applicable": "Only invite-only courses have an invite code."
+    },
+    "notify": {
+      "not-found": "Notification not found."
+    },
+    "flashcards": {
+      "set-not-found": "Flash card set not found.",
+      "card-not-found": "Card not found.",
+      "invalid-cards": "Each side of a card needs 1 to {max_chars} characters, and a set holds at most {max_cards} cards.",
+      "invalid-set": "The field \"{field}\" must be between {min} and {max}.",
+      "share-not-found": "This link does not lead to a flash card set."
+    },
+    "mail": {
+      "not-found": "Email not found.",
+      "purged": "The full email was deleted after 30 days.",
+      "mailbox-unavailable": "You do not have an active mailbox.",
+      "suspended": "Sending from your mailbox is suspended. You can still receive email.",
+      "daily-limit": "Limit of {limit} emails per day reached. Try again tomorrow.",
+      "global-limit": "The system sending limit for today is reached. Try again tomorrow.",
+      "invalid-recipient": "\"{address}\" is not a valid email address.",
+      "no-recipients": "Add at least one recipient.",
+      "too-many-recipients": "An email can have at most {limit} recipients.",
+      "too-large": "The email is too large to send. The limit is 25 MB.",
+      "not-inbound": "Only received emails can be marked as spam."
+    },
+    "admin": {
+      "broadcast-not-found": "Broadcast not found.",
+      "broadcast-not-editable": "Only drafts and scheduled broadcasts can be edited.",
+      "broadcast-not-sendable": "Only drafts and scheduled broadcasts can be sent.",
+      "broadcast-not-cancellable": "Only scheduled broadcasts can be cancelled.",
+      "broadcast-empty-audience": "The audience has no recipients.",
+      "broadcast-text-too-long": "The text is too long for one Telegram message ({length} of {limit} characters).",
+      "broadcast-no-telegram": "Link a Telegram account to receive the preview.",
+      "broadcast-time-invalid": "The scheduled time must include a time zone."
+    },
+    "academic": {
+      "invalid-date-range": "The date range is reversed or longer than three months.",
+      "term-not-found": "Term not found.",
+      "term-overlap": "The dates overlap another term.",
+      "term-duplicate": "A term with this academic year and half already exists.",
+      "term-dates-invalid": "A term must start before it ends.",
+      "term-bells-invalid": "The bell schedule is invalid: each period may appear once per weekday and must end after it starts.",
+      "term-non-study-day-invalid": "A non-study day must fall inside the term.",
+      "term-moved-day-invalid": "A moved day must follow a weekday from Monday to Saturday.",
+      "no-term-for-date": "No term contains this date.",
+      "no-bell": "The term has no bell for period {period} on this day.",
+      "group-not-found": "Group not found.",
+      "group-name-invalid": "Enter a group name.",
+      "group-name-taken": "An active group named {name} already exists.",
+      "group-emis-id-taken": "Another group is already linked to this EMIS group.",
+      "curator-not-teacher": "The curator must be a teacher.",
+      "head-student-invalid": "The head student must be an active student of this group.",
+      "not-group-curator": "Only the curator of this group or Administration can do this.",
+      "subgroup-assignment-invalid": "Every student must be an active student of this group, and the subgroup must be 1 or 2.",
+      "student-not-found": "Student record not found",
+      "subject-not-found": "This subject is not in your curriculum",
+      "subject-emis-id-taken": "Another subject is already linked to this EMIS subject.",
+      "subject-name-invalid": "Enter the subject name in at least one language.",
+      "room-not-found": "Room not found.",
+      "room-name-invalid": "Enter a room name.",
+      "room-slug-taken": "Another room already uses the address {slug}.",
+      "room-in-use": "Future lessons still use this room.",
+      "room-merge-invalid": "A room cannot be merged into itself or into an archived room.",
+      "entry-not-found": "Timetable entry not found.",
+      "entry-invalid": "The timetable entry is not valid.",
+      "lesson-not-found": "This lesson was not found.",
+      "import-invalid": "The file cannot be read as a student list.",
+      "import-expired": "The import preview has expired. Upload the file again.",
+      "sync-running": "An EMIS sync is already running",
+      "journal-not-found": "This journal is not available to you.",
+      "not-lesson-teacher": "Only the lesson's teacher or Administration can do this.",
+      "not-curator": "You are not the curator of this group.",
+      "topic-too-long": "A topic can have up to {max} characters."
+    },
+    "homework": {
+      "not-found": "This lesson has no homework.",
+      "text-invalid": "Homework must be 1 to {max} characters.",
+      "note-too-long": "A note can have up to {max} characters."
+    },
+    "mcp": {
+      "unauthenticated": "Not authenticated. Send a valid connector token or OAuth access token for this MCP server.",
+      "insufficient-scope": "insufficient_scope: the scope \"{scope}\" is not granted to this connector.",
+      "rate-limited": "Too many calls. Try again in {retry_after} seconds.",
+      "course-not-allowed": "This connector is limited to other courses.",
+      "tool-not-allowed": "The tool \"{tool}\" is not available on this read-only server.",
+      "file-not-accessible": "The file does not exist, is not ready yet or is not available to you.",
+      "not-owner": "This flash card set belongs to another user.",
+      "not-found": "Not found, or not visible to you.",
+      "invalid-input": "Invalid input: {reason}.",
+      "range-too-long": "The date range is too long. Use at most {max_days} days.",
+      "file-no-text": "This file has no text to read.",
+      "file-too-large": "The text of this file is larger than the limit of {max_bytes} bytes."
+    },
+    "calendar": {
+      "feed-not-found": "This calendar link is invalid or was replaced by a new one."
+    },
+    "composition": {
+      "student-not-found": "This user is not a student.",
+      "teacher-not-found": "This user is not a teacher."
+    },
+    "bot": {
+      "file-too-large": "This file is larger than 20 MB, so the bot cannot take it. Upload it in the staff portal."
+    }
+  },
+  "notifications": {
+    "title": "Notifications",
+    "description": "Everything that was sent to you",
+    "filters": {
+      "all": "All",
+      "activity": "Activity",
+      "announcements": "Announcements"
+    },
+    "markAllRead": "Mark all as read",
+    "empty": "No notifications yet.",
+    "loadMore": "Show more",
+    "unread": "Unread",
+    "bell": "Notifications",
+    "bellWithCount": "Notifications, {count} unread",
+    "viewAll": "View all notifications"
+  },
+  "notificationSettings": {
+    "saving": "Saving…",
+    "saved": "Saved",
+    "marks": {
+      "title": "New marks",
+      "enabled": "Notify me about new marks",
+      "enabledHint": "Sent after each EMIS sync.",
+      "types": "Mark types",
+      "values": "Mark values",
+      "subjects": "Subjects",
+      "allSubjects": "All subjects are included.",
+      "someSubjects": "Only the ticked subjects are included.",
+      "type": {
+        "lesson": "Lesson",
+        "midterm": "Midterm",
+        "final": "Final"
+      }
+    },
+    "alerts": {
+      "title": "Alerts",
+      "drops": "GPA and semester mark drops",
+      "dropsHint": "A message when your GPA or a semester mark goes down.",
+      "gpaBelow": "GPA below",
+      "semesterMarkBelow": "Semester mark below",
+      "markBelow": "A mark below"
+    },
+    "lessons": {
+      "title": "Lessons",
+      "linksLead": "Send lesson links before the lesson",
+      "minutes": "min",
+      "prompt": "End-of-lesson prompt",
+      "promptHint": "Attendance and homework prompt 5 minutes before the lesson ends."
+    },
+    "mail": {
+      "title": "Mail",
+      "forward": "Forward new mail to Telegram",
+      "forwardHint": "Messages to your IHSP mailbox arrive in the bot."
+    }
+  },
+  "assistant": {
+    "page": {
+      "title": "Assistant",
+      "description": "Ask about your timetable, homework and marks, or make flash cards from your files."
+    },
+    "list": {
+      "title": "Chats",
+      "new": "New chat",
+      "empty": "No chats yet. Start your first one.",
+      "pending": "{count, plural, one {# action waiting} other {# actions waiting}}",
+      "rename": "Rename chat {title}",
+      "delete": "Delete chat {title}",
+      "deleteTitle": "Delete this chat?",
+      "deleteDescription": "“{title}” and its public links will be removed.",
+      "deleteConfirm": "Delete chat",
+      "deleteFailed": "Could not delete the chat.",
+      "createFailed": "Could not start a new chat."
+    },
+    "chat": {
+      "back": "Back to chats",
+      "share": "Share",
+      "sharedBanner": "This chat is shared publicly. Anyone with the link can read it.",
+      "messages": "Messages",
+      "emptyChat": "Ask a question to start. I can look up your timetable, homework, marks and files.",
+      "thinking": "The assistant is working…",
+      "limitReachedTurn": "The assistant stopped because a usage limit was reached.",
+      "selectChat": "Choose a chat from the list or start a new one."
+    },
+    "message": {
+      "you": "You",
+      "assistant": "Assistant"
+    },
+    "composer": {
+      "label": "Message",
+      "placeholder": "Write a message…",
+      "disabledPlaceholder": "Input is off until the limit resets",
+      "send": "Send",
+      "upload": "Upload a file",
+      "pickFiles": "Choose from My files",
+      "attached": "Attached files",
+      "limitSession": "Session limit reached, available again at {time}",
+      "limitDay": "Daily limit reached, resets at {time}"
+    },
+    "attach": {
+      "title": "Attach files",
+      "description": "Choose files from My files for the assistant to read.",
+      "empty": "You have no ready files yet.",
+      "notReadable": "too large or not readable for the assistant",
+      "attached": "already attached",
+      "cancel": "Cancel",
+      "confirm": "{count, plural, =0 {Attach} one {Attach # file} other {Attach # files}}"
+    },
+    "files": {
+      "unnamed": "File",
+      "openFailed": "Could not open the file.",
+      "remove": "Remove {name}"
+    },
+    "approval": {
+      "approve": "Approve",
+      "reject": "Reject",
+      "sendRejection": "Send rejection",
+      "cancel": "Cancel",
+      "reasonLabel": "Reason (optional)",
+      "reasonPlaceholder": "Why not? For example: make the cards shorter",
+      "reasonShown": "Reason: {reason}",
+      "sensitive": "Check this",
+      "expiresAt": "Waiting for you until {time}",
+      "items": "{count, plural, one {# item} other {# items}}",
+      "status": {
+        "pending": "Waiting for approval",
+        "running": "Running…",
+        "done": "Done",
+        "failed": "Failed",
+        "rejected": "Rejected",
+        "expired": "Expired",
+        "superseded": "Replaced by your new message"
+      }
+    },
+    "usage": {
+      "title": "Assistant usage",
+      "session": "Session (5 hours)",
+      "day": "Today",
+      "resetsAt": "Resets at {time}"
+    },
+    "share": {
+      "titleChat": "Share this chat",
+      "titleSet": "Share this set",
+      "descriptionChat": "Anyone with the link can read this chat without logging in. Tool results are not shown.",
+      "descriptionSet": "Anyone with the link can study or copy this set. Later edits are visible through the link.",
+      "warning": "The assistant’s answers may contain personal data such as marks and absences.",
+      "includeFuture": "Include future messages",
+      "snapshotHint": "Snapshot: messages up to now. The choice cannot be changed later.",
+      "liveHint": "Live: new messages also appear in the shared chat. The choice cannot be changed later.",
+      "expiryLabel": "Expires on (optional)",
+      "create": "Create link",
+      "created": "Link created.",
+      "createdCopied": "Link created and copied.",
+      "existing": "Existing links",
+      "noLinks": "No links yet.",
+      "modeSnapshot": "Snapshot",
+      "modeLive": "Live",
+      "hits": "{count, plural, one {# view} other {# views}}",
+      "expires": "expires {date}",
+      "copy": "Copy",
+      "revoke": "Revoke",
+      "revokeTitle": "Revoke this link?",
+      "revokeDescription": "People who open it will see “This link was removed”.",
+      "revoked": "Link revoked."
+    },
+    "rename": {
+      "title": "Rename chat",
+      "label": "Title",
+      "save": "Save",
+      "cancel": "Cancel"
+    }
+  },
+  "files": {
+    "upload": {
+      "button": "Upload files",
+      "progress": "Uploading {name}",
+      "percent": "{percent}%",
+      "checking": "Checking…",
+      "rejected": "Rejected: {reason}",
+      "dismiss": "Dismiss"
+    },
+    "reasons": {
+      "unknown": "the file did not pass the check",
+      "type_mismatch": "the content does not match the file type",
+      "infected": "a virus or malware was found",
+      "too_large": "the file is too large",
+      "empty": "the file is empty"
+    }
+  }
+}
