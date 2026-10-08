@@ -165,13 +165,13 @@ describe("attendance reports", () => {
     await waitUntil(() => views.includes("teacher"), "no request for the teacher view")
   })
 
-  test("the missing tab lists teachers with a link to each lesson in the staff portal", async () => {
+  test("the missing tab lists teachers with a link to each lesson page of this console", async () => {
     renderAdmin(<AttendancePage />, { route: "/attendance/?tab=missing" })
 
     expect(await screen.findByRole("link", { name: "Yusupov Farrukh" })).toBeInTheDocument()
     const open = screen.getByRole("link", { name: "Open lesson" })
-    expect(open.getAttribute("href")).toContain("http://localhost:3003/lessons/view/?id=")
-    expect(open).toHaveAttribute("rel", "noopener noreferrer")
+    expect(hrefOf(open)).toMatch(/^\/lessons\/view\/\?id=/)
+    expect(open).not.toHaveAttribute("target")
   })
 })
 

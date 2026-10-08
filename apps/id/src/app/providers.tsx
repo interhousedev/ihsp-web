@@ -2,6 +2,7 @@
 
 import { AuthProvider } from "@ihsp/auth"
 import { ConfigGate } from "@ihsp/config"
+import { ThemePreferenceSync } from "@ihsp/features-core"
 import { I18nProvider, type Locale, type Messages } from "@ihsp/i18n"
 import { TelegramBridge } from "@ihsp/telegram"
 import { AppThemeProvider, createQueryClient } from "@ihsp/ui"
@@ -28,7 +29,9 @@ export function Providers({ children }: { children: ReactNode }) {
           <NuqsAdapter>
             <AppThemeProvider>
               <TelegramBridge>
-                <AuthProvider>{children}</AuthProvider>
+                <AuthProvider>
+                  <ThemePreferenceSync>{children}</ThemePreferenceSync>
+                </AuthProvider>
               </TelegramBridge>
             </AppThemeProvider>
           </NuqsAdapter>

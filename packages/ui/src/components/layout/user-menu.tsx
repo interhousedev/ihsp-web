@@ -2,8 +2,8 @@
 
 import { LOCALES, LOCALE_NAMES, isLocale, setLocale, useLocale, useT, type Locale } from "@ihsp/i18n"
 import Link from "next/link"
-import { useTheme } from "next-themes"
 import { Icons } from "../icons"
+import { THEME_CHOICES, isThemeChoice, useThemeChoice } from "../themes/theme-choice"
 import { Button } from "../ui/button"
 import {
   DropdownMenu,
@@ -30,7 +30,18 @@ export type UserMenuItem = {
   onSelect?: () => void
 }
 
-const THEMES = ["light", "dark", "system"] as const
+/** A platform of the IHSP family the user can open from the menu (built by `usePlatformLinks` in `@ihsp/features-core`). */
+export type PlatformLink = {
+  key: "sp" | "staff" | "admin" | "lms" | "id"
+  /** Short brand name: SP, Staff, Admin, LMS, ID. */
+  name: string
+  /** What the platform is for, already translated. */
+  description: string
+  /** Absolute address; opens in the same tab. */
+  href: string
+  /** The app the user is in now. */
+  current: boolean
+}
 
 /**
  * Profile menu for the top bar or the sidebar footer: who is logged in, app links, language, light/dark mode and
@@ -41,6 +52,7 @@ export function UserMenu({
   subtitle,
   imageUrl,
   items = [],
+  platforms = [],
   onLogout,
   onLocaleChange,
 }: {
@@ -48,13 +60,15 @@ export function UserMenu({
   subtitle?: string | null
   imageUrl?: string | null
   items?: UserMenuItem[]
+  /** Other IHSP platforms for this user (`usePlatformLinks()`); the current one is marked. */
+  platforms?: PlatformLink[]
   onLogout: () => void
   /** Called after the language was changed (save it in the account with `patchPreferences`). */
   onLocaleChange?: (locale: Locale) => void
 }) {
   const t = useT()
   const locale = useLocale()
-  const { theme, setTheme } = useTheme()
+  const { theme, setTheme } = useThemeChoice()
 
   return (
     <DropdownMenu>
@@ -89,6 +103,38 @@ export function UserMenu({
             </DropdownMenuGroup>
           </>
         ) : null}
+        {platforms.length > 0 ? (
+          <>
+            <DropdownMenuSeparator />
+            <DropdownMenuGroup>
+              <DropdownMenuLabel>{t("platforms.title")}</DropdownMenuLabel>
+              {platforms.map((platform) => (
+                <DropdownMenuItem
+                  key={platform.key}
+                  className="min-h-11 md:min-h-9"
+                  render={
+                    <a
+                      href={platform.href}
+                      aria-current={platform.current ? "page" : undefined}
+                      data-platform={platform.key}
+                    />
+                  }
+                >
+                  <span className="flex min-w-0 flex-1 flex-col">
+                    <span className="font-medium">{platform.name}</span>
+                    <span className="text-muted-foreground truncate text-xs">{platform.description}</span>
+                  </span>
+                  {platform.current ? (
+                    <>
+                      <Icons.check aria-hidden />
+                      <span className="sr-only">{t("platforms.current")}</span>
+                    </>
+                  ) : null}
+                </DropdownMenuItem>
+              ))}
+            </DropdownMenuGroup>
+          </>
+        ) : null}
         <DropdownMenuSeparator />
         <DropdownMenuGroup>
           <DropdownMenuLabel>{t("common.language")}</DropdownMenuLabel>
@@ -110,8 +156,13 @@ export function UserMenu({
         <DropdownMenuSeparator />
         <DropdownMenuGroup>
           <DropdownMenuLabel>{t("common.theme")}</DropdownMenuLabel>
-          <DropdownMenuRadioGroup value={theme ?? "system"} onValueChange={(value) => setTheme(value)}>
-            {THEMES.map((mode) => (
+          <DropdownMenuRadioGroup
+            value={theme}
+            onValueChange={(value) => {
+              if (isThemeChoice(value)) setTheme(value)
+            }}
+          >
+            {THEME_CHOICES.map((mode) => (
               <DropdownMenuRadioItem key={mode} value={mode} className="min-h-11 md:min-h-8">
                 {t(`theme.${mode}`)}
               </DropdownMenuRadioItem>

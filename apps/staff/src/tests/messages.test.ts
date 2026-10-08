@@ -14,6 +14,7 @@ const SOURCES = [
   "packages/features-core/src/notification-bell",
   "packages/features-core/src/notification-settings-form",
   "packages/features-core/src/file-upload-button",
+  "packages/features-core/src/lesson-detail",
 ]
 
 function flatten(tree: Messages, prefix = ""): Map<string, string> {
@@ -110,7 +111,7 @@ describe("keys used in the code", () => {
       "today.getStarted.steps.${step.id}.text": ["telegram", "notifications"],
       "today.getStarted.steps.${step.id}.action": ["telegram", "notifications"],
       "timetable.fields.${change.field}": ["room", "teacher", "subject", "date", "period"],
-      "lesson.header.fields.${change.field}": ["room", "teacher", "subject", "date", "period"],
+      "lessonDetail.header.fields.${change.field}": ["room", "teacher", "subject", "date", "period"],
       "settings.general.themes.${value}": ["light", "dark", "system"],
       "group.students.flags.${flag}": ["absences", "gpa_drop", "no_subgroup"],
       "group.students.flagHints.${flag}": ["absences", "gpa_drop", "no_subgroup"],

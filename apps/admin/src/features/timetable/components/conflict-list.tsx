@@ -3,6 +3,7 @@
 import type { Conflict } from "@ihsp/api"
 import { useT } from "@ihsp/i18n"
 import { Alert, AlertDescription, AlertTitle, Badge } from "@ihsp/ui"
+import Link from "next/link"
 
 /** Conflicts (teacher, room or audience busy) that block saving. */
 export function ConflictList({ conflicts }: { conflicts: Conflict[] }) {
@@ -20,6 +21,14 @@ export function ConflictList({ conflicts }: { conflicts: Conflict[] }) {
             >
               <Badge variant="destructive">{t(`conflictKind.${conflict.kind}`)}</Badge>
               <span>{conflict.description}</span>
+              {conflict.with_lesson_id ? (
+                <Link
+                  href={`/lessons/view/?id=${encodeURIComponent(conflict.with_lesson_id)}`}
+                  className="underline underline-offset-4"
+                >
+                  {t("openLesson")}
+                </Link>
+              ) : null}
             </li>
           ))}
         </ul>

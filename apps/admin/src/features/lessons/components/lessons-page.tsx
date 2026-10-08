@@ -2,7 +2,8 @@
 
 import { getAdminLessons, keys, type AdminLessonsParams, type LessonItem } from "@ihsp/api"
 import { useFormatters, useT } from "@ihsp/i18n"
-import { Badge, Button, Icons, PageContainer } from "@ihsp/ui"
+import { Badge, Button, Icons, PageContainer, buttonVariants } from "@ihsp/ui"
+import Link from "next/link"
 import { useMemo, useState } from "react"
 import { ExportButton } from "../../shared/components/export-button"
 import { ListToolbar, type ToolbarFilter } from "../../shared/components/list-toolbar"
@@ -97,7 +98,14 @@ export function LessonsPage() {
         t("columns.time"),
         (lesson) => `${lesson.period}. ${f.time(lesson.starts_at)}–${f.time(lesson.ends_at)}`,
       ),
-      col<LessonItem>("subject", t("columns.subject"), (lesson) => lesson.subject.name),
+      col<LessonItem>("subject", t("columns.subject"), (lesson) => (
+        <Link
+          href={`/lessons/view/?id=${encodeURIComponent(lesson.id)}`}
+          className="underline-offset-4 hover:underline"
+        >
+          {lesson.subject.name}
+        </Link>
+      )),
       col<LessonItem>("teacher", t("columns.teacher"), (lesson) =>
         lesson.teacher ? fullName(lesson.teacher) : <Badge variant="destructive">{t("teacherNeeded")}</Badge>,
       ),
@@ -112,15 +120,24 @@ export function LessonsPage() {
         </span>
       )),
       actionsCol<LessonItem>(t("columns.actions"), (lesson) => (
-        <Button
-          type="button"
-          variant="outline"
-          className={TOUCH}
-          aria-label={t("changeLesson", { subject: lesson.subject.name, date: f.date(lesson.date) })}
-          onClick={() => setChanging(lesson)}
-        >
-          {t("changeAction")}
-        </Button>
+        <>
+          <Link
+            href={`/lessons/view/?id=${encodeURIComponent(lesson.id)}`}
+            className={buttonVariants({ variant: "outline", className: TOUCH })}
+            aria-label={t("openLesson", { subject: lesson.subject.name, date: f.date(lesson.date) })}
+          >
+            {t("openAction")}
+          </Link>
+          <Button
+            type="button"
+            variant="outline"
+            className={TOUCH}
+            aria-label={t("changeLesson", { subject: lesson.subject.name, date: f.date(lesson.date) })}
+            onClick={() => setChanging(lesson)}
+          >
+            {t("changeAction")}
+          </Button>
+        </>
       )),
     ],
     [f, t],

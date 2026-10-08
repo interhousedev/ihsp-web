@@ -10,18 +10,18 @@ import {
   server,
   staffLessonFor,
 } from "@ihsp/test-utils"
-import { screen, waitFor, within } from "@testing-library/react"
-import { HttpResponse, http } from "msw"
-import { AttendanceSheetView } from "../features/attendance/components/attendance-sheet"
 import {
+  AttendanceSheetView,
   buildSubmitBody,
+  conflictingSheet,
   everyonePresent,
   initialMarks,
   rosterSections,
+  useStaffLesson,
   type SheetRosterItem,
-} from "../features/attendance/utils/marks"
-import { conflictingSheet } from "../features/attendance/utils/conflict"
-import { useStaffLesson } from "../features/lessons/hooks/use-staff-lesson"
+} from "@ihsp/features-core"
+import { screen, waitFor, within } from "@testing-library/react"
+import { HttpResponse, http } from "msw"
 import { configureTests, renderStaff } from "./helpers"
 
 configureTests()

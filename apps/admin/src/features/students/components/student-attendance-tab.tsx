@@ -3,6 +3,7 @@
 import type { StudentAttendance } from "@ihsp/api"
 import { useFormatters, useT } from "@ihsp/i18n"
 import { Badge, Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@ihsp/ui"
+import Link from "next/link"
 
 /** Absences per subject and the missed lessons of a period (ADM-3 "Attendance"). */
 export function StudentAttendanceTab({ attendance }: { attendance: StudentAttendance }) {
@@ -52,10 +53,13 @@ export function StudentAttendanceTab({ attendance }: { attendance: StudentAttend
           <ul className="flex flex-col divide-y rounded-lg border">
             {attendance.missed.map((item) => (
               <li key={item.lesson.id} className="flex flex-wrap items-center justify-between gap-2 p-3 text-sm">
-                <span>
+                <Link
+                  href={`/lessons/view/?id=${encodeURIComponent(item.lesson.id)}`}
+                  className="underline-offset-4 hover:underline"
+                >
                   {f.date(item.lesson.date, { day: "numeric", month: "short" })} · {item.lesson.period}.{" "}
                   {item.lesson.subject.name}
-                </span>
+                </Link>
                 {item.excused ? <Badge variant="secondary">{t("attendance.excusedBadge")}</Badge> : null}
               </li>
             ))}

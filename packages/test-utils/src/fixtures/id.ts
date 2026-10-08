@@ -15,7 +15,7 @@ import { FIXTURE_NOW, ids, persons } from "./world"
 
 export const userPreferences: UserPreferences = {
   locale: "en",
-  theme: "system",
+  theme: "light",
   marks_enabled: true,
   marks_types: ["lesson", "midterm", "final"],
   marks_values: [2, 3, 4, 5],

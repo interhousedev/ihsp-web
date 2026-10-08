@@ -2,6 +2,7 @@
 
 import { AuthProvider } from "@ihsp/auth"
 import { ConfigGate } from "@ihsp/config"
+import { ThemePreferenceSync } from "@ihsp/features-core"
 import { I18nProvider, type Locale, type Messages } from "@ihsp/i18n"
 import { AppThemeProvider, createQueryClient } from "@ihsp/ui"
 import { QueryClientProvider } from "@tanstack/react-query"
@@ -26,7 +27,9 @@ export function Providers({ children }: { children: ReactNode }) {
         <I18nProvider app="admin" loadMessages={loadAppMessages}>
           <NuqsAdapter>
             <AppThemeProvider>
-              <AuthProvider>{children}</AuthProvider>
+              <AuthProvider>
+                <ThemePreferenceSync>{children}</ThemePreferenceSync>
+              </AuthProvider>
             </AppThemeProvider>
           </NuqsAdapter>
         </I18nProvider>

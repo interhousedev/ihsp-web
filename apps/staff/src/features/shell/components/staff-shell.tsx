@@ -7,7 +7,6 @@ import { useNav } from "../../../config/nav"
 import { PageLoading } from "./page-loading"
 import { ShellHeader } from "./shell-header"
 import { StaffBrand } from "./staff-brand"
-import { ThemeSync } from "./theme-sync"
 
 /**
  * The frame of every page of this app: login check, teacher role check, sidebar and phone bottom bar (Today,
@@ -30,16 +29,8 @@ export function StaffShell({ children }: { children: ReactNode }) {
 function StaffFrame({ children }: { children: ReactNode }) {
   const nav = useNav()
   return (
-    <>
-      <ThemeSync />
-      <AppShell
-        nav={nav.groups}
-        bottomNav={nav.bottom}
-        brand={<StaffBrand />}
-        header={<ShellHeader nav={nav.groups} />}
-      >
-        <Suspense fallback={<PageLoading />}>{children}</Suspense>
-      </AppShell>
-    </>
+    <AppShell nav={nav.groups} bottomNav={nav.bottom} brand={<StaffBrand />} header={<ShellHeader nav={nav.groups} />}>
+      <Suspense fallback={<PageLoading />}>{children}</Suspense>
+    </AppShell>
   )
 }

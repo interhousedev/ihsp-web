@@ -1,7 +1,7 @@
 "use client"
 
 import { logout, useSession } from "@ihsp/auth"
-import { useUpdatePreferences } from "@ihsp/features-core"
+import { usePlatformLinks, useUpdatePreferences } from "@ihsp/features-core"
 import { useT } from "@ihsp/i18n"
 import { UserMenu } from "@ihsp/ui"
 
@@ -10,6 +10,7 @@ export function ProfileMenu() {
   const t = useT("nav")
   const { session } = useSession()
   const update = useUpdatePreferences()
+  const platforms = usePlatformLinks()
   if (!session) return null
   const { first_name, last_name, login } = session.user
 
@@ -18,6 +19,7 @@ export function ProfileMenu() {
       name={`${last_name} ${first_name}`}
       subtitle={login}
       items={[{ key: "settings", title: t("settings"), icon: "settings", href: "/settings/" }]}
+      platforms={platforms}
       onLocaleChange={(locale) => update.mutate({ locale })}
       onLogout={() => void logout()}
     />

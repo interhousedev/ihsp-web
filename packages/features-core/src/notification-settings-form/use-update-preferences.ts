@@ -5,7 +5,7 @@ import { getSession, useAuthStore } from "@ihsp/auth"
 import { useMutation, useQueryClient } from "@tanstack/react-query"
 
 /** Writes the changed preferences into the in-memory session (and the cached `GET /v1/id/me`), so every screen sees them at once. */
-function applyPreferences(changed: Partial<UserPreferences>, queryClient: ReturnType<typeof useQueryClient>) {
+export function applyPreferences(changed: Partial<UserPreferences>, queryClient: ReturnType<typeof useQueryClient>) {
   const session = getSession()
   if (session)
     useAuthStore.getState().setUser({ ...session.user, preferences: { ...session.user.preferences, ...changed } })

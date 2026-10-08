@@ -2,6 +2,7 @@
 
 import { AuthProvider, TelegramAutoLogin } from "@ihsp/auth"
 import { ConfigGate } from "@ihsp/config"
+import { ThemePreferenceSync } from "@ihsp/features-core"
 import { I18nProvider, mergeMessages, type Locale, type Messages } from "@ihsp/i18n"
 import { TelegramBridge } from "@ihsp/telegram"
 import { AppThemeProvider, createQueryClient } from "@ihsp/ui"
@@ -11,14 +12,19 @@ import { useState, type ReactNode } from "react"
 
 /**
  * The import paths are literal, so the bundler includes exactly the message files of this app:
- * `messages/<locale>.json` plus `messages/<locale>/tools.json` (study tools, written separately by W3).
+ * `messages/<locale>.json` plus `messages/<locale>/tools.json` (study tools, written separately by W3) and
+ * `messages/<locale>/notebooks.json` (notebooks, Studio and the Gemini-style assistant).
  */
 async function loadAppMessages(locale: Locale): Promise<Messages> {
-  const [base, tools] = await Promise.all([
+  const [base, tools, notebooks] = await Promise.all([
     import(`../../messages/${locale}.json`),
     import(`../../messages/${locale}/tools.json`),
+    import(`../../messages/${locale}/notebooks.json`),
   ])
-  return mergeMessages(base.default as Messages, tools.default as Messages)
+  return mergeMessages(
+    mergeMessages(base.default as Messages, tools.default as Messages),
+    notebooks.default as Messages,
+  )
 }
 
 /**
@@ -35,7 +41,9 @@ export function Providers({ children }: { children: ReactNode }) {
             <AppThemeProvider>
               <TelegramBridge>
                 <AuthProvider>
-                  <TelegramAutoLogin>{children}</TelegramAutoLogin>
+                  <ThemePreferenceSync>
+                    <TelegramAutoLogin>{children}</TelegramAutoLogin>
+                  </ThemePreferenceSync>
                 </AuthProvider>
               </TelegramBridge>
             </AppThemeProvider>

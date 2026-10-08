@@ -2,6 +2,7 @@
 
 import { patchPreferences } from "@ihsp/api"
 import { logout, useSession } from "@ihsp/auth"
+import { usePlatformLinks } from "@ihsp/features-core"
 import { AppShell, UserMenu } from "@ihsp/ui"
 import type { ReactNode } from "react"
 import { useTr } from "../../shared/hooks/use-tr"
@@ -13,6 +14,7 @@ export function AccountShell({ children }: { children: ReactNode }) {
   const { session } = useSession()
   const user = session?.user
   const nav = useIdNav(user?.roles ?? [])
+  const platforms = usePlatformLinks()
 
   return (
     <AppShell
@@ -23,6 +25,7 @@ export function AccountShell({ children }: { children: ReactNode }) {
           <UserMenu
             name={`${user.first_name} ${user.last_name}`}
             subtitle={user.login}
+            platforms={platforms}
             onLogout={() => void logout()}
             onLocaleChange={(locale) => void patchPreferences({ locale }).catch(() => undefined)}
           />

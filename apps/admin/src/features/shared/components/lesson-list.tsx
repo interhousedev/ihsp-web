@@ -3,6 +3,7 @@
 import type { LessonItem } from "@ihsp/api"
 import { useFormatters, useT } from "@ihsp/i18n"
 import { Badge } from "@ihsp/ui"
+import Link from "next/link"
 import { audienceLabel, fullName } from "../utils/names"
 
 /** Lessons grouped by date: time, subject, teacher, room and audience, with badges for cancelled and changed. */
@@ -25,7 +26,13 @@ export function LessonList({ lessons, emptyText }: { lessons: readonly LessonIte
               <li key={lesson.id} className="flex flex-col gap-1 p-3 text-sm">
                 <div className="flex flex-wrap items-center justify-between gap-2">
                   <p className="font-medium">
-                    {lesson.period}. {lesson.subject.name}
+                    {lesson.period}.{" "}
+                    <Link
+                      href={`/lessons/view/?id=${encodeURIComponent(lesson.id)}`}
+                      className="underline-offset-4 hover:underline"
+                    >
+                      {lesson.subject.name}
+                    </Link>
                   </p>
                   <div className="flex gap-1">
                     {lesson.status === "cancelled" ? <Badge variant="destructive">{t("cancelled")}</Badge> : null}

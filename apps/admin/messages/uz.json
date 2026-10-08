@@ -587,7 +587,10 @@
       "end": "Tugashi",
       "weekdays": "{period}-darsning hafta kunlari",
       "remove": "{period}-darsni o‘chirish",
-      "add": "Dars qo‘shish"
+      "add": "Dars qo‘shish",
+      "emis": "EMIS",
+      "emisHint": "EMIS dars soatlaridan sinxronlangan",
+      "emisNote": "EMIS belgisi bor darslar EMIS dars soatlaridan sinxronlanadi, shuning uchun ularni bu yerda o‘zgartirib bo‘lmaydi. Belgisiz darslarni tahrirlash mumkin."
     },
     "days": {
       "nonStudy": "Dam olish kunlari",
@@ -687,7 +690,8 @@
       "delete": "Yozuvni o‘chirish",
       "deleteTitle": "Bu yozuv o‘chirilsinmi?",
       "deleteDescription": "Bu yozuvning kelgusi darslari o‘chiriladi. Qo‘lda o‘zgartirilgan darslar qoladi.",
-      "deleted": "Yozuv o‘chirildi"
+      "deleted": "Yozuv o‘chirildi",
+      "openLesson": "Darsni ochish"
     }
   },
   "lessons": {
@@ -697,6 +701,8 @@
     "empty": "Bu filtrlarga mos darslar yo‘q.",
     "changeAction": "O‘zgartirish",
     "changeLesson": "{date} dagi “{subject}” darsini o‘zgartirish",
+    "openAction": "Ochish",
+    "openLesson": "Ochish: {subject}, {date}",
     "changed": "O‘zgartirilgan",
     "teacherNeeded": "O‘qituvchi kerak",
     "status": {
@@ -761,6 +767,11 @@
       "cancel": "Bekor qilish",
       "submit": "Dars qo‘shish",
       "created": "Qo‘shimcha dars qo‘shildi"
+    },
+    "view": {
+      "title": "Dars",
+      "missing": "Dars tanlanmagan. Uni darslar ro‘yxatidan oching.",
+      "back": "Darslar"
     }
   },
   "attendance": {

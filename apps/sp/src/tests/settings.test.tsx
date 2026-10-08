@@ -1,7 +1,13 @@
 /** WEB-29, BOT-13, UF-WEB-17: settings, notification settings, Today cards. */
 import { describe, expect, test } from "bun:test"
 import { apiUrl, server, teacherMe, userMe } from "@ihsp/test-utils"
-import { NotificationSettingsForm, nextSubjectIds, parseThreshold, toggleInList } from "@ihsp/features-core"
+import {
+  NotificationSettingsForm,
+  ThemePreferenceSync,
+  nextSubjectIds,
+  parseThreshold,
+  toggleInList,
+} from "@ihsp/features-core"
 import { screen, waitFor } from "@testing-library/react"
 import { HttpResponse, http } from "msw"
 import { SettingsPage } from "../features/settings/components/settings-page"
@@ -33,7 +39,12 @@ describe("settings page", () => {
 
   test("the theme is applied and saved in the account", async () => {
     const bodies = recordPatches()
-    const { user } = renderSp(<SettingsPage />, { route: "/settings/" })
+    const { user } = renderSp(
+      <ThemePreferenceSync>
+        <SettingsPage />
+      </ThemePreferenceSync>,
+      { route: "/settings/" },
+    )
 
     await user.click(await screen.findByRole("button", { name: "Dark" }))
 

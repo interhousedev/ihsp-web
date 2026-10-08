@@ -1,7 +1,7 @@
 "use client"
 
 import { useSession, logout } from "@ihsp/auth"
-import { useUpdatePreferences } from "@ihsp/features-core"
+import { usePlatformLinks, useUpdatePreferences } from "@ihsp/features-core"
 import { useT } from "@ihsp/i18n"
 import { UserMenu } from "@ihsp/ui"
 import { clearPersistedQueries } from "../../offline/utils/persisted-queries"
@@ -11,6 +11,7 @@ export function ProfileMenu() {
   const t = useT("nav")
   const { session } = useSession()
   const update = useUpdatePreferences()
+  const platforms = usePlatformLinks()
   if (!session) return null
   const { first_name, last_name, login } = session.user
 
@@ -22,6 +23,7 @@ export function ProfileMenu() {
         { key: "profile", title: t("profile"), icon: "profile", href: "/profile/" },
         { key: "settings", title: t("settings"), icon: "settings", href: "/settings/" },
       ]}
+      platforms={platforms}
       onLocaleChange={(locale) => update.mutate({ locale })}
       onLogout={() => {
         clearPersistedQueries()

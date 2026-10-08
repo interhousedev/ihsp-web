@@ -1,5 +1,6 @@
 "use client"
 
+import { rosterOf, useStaffLesson, type SheetRosterItem } from "@ihsp/features-core"
 import { useErrorMessage, useT } from "@ihsp/i18n"
 import {
   Badge,
@@ -14,9 +15,7 @@ import {
 } from "@ihsp/ui"
 import { useState } from "react"
 import { toast } from "sonner"
-import { rosterOf, type SheetRosterItem } from "../../attendance/utils/marks"
 import { QueryState } from "../../shared/components/query-state"
-import { useStaffLesson } from "../../lessons/hooks/use-staff-lesson"
 import { fullName } from "../../shared/utils/people"
 import { useSetExcuse } from "../hooks/use-set-excuse"
 

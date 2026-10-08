@@ -40,6 +40,8 @@
     "language": "Language",
     "theme": "Theme",
     "logout": "Log out",
+    "showPassword": "Show password",
+    "hidePassword": "Hide password",
     "profile": "Profile",
     "settings": "Settings",
     "notFoundTitle": "Page not found",
@@ -138,6 +140,30 @@
   },
   "user": {
     "menu": "Account menu"
+  },
+  "platforms": {
+    "title": "IHSP platforms",
+    "current": "(current)",
+    "sp": {
+      "name": "SP",
+      "description": "Student portal"
+    },
+    "staff": {
+      "name": "Staff",
+      "description": "Teacher workspace"
+    },
+    "admin": {
+      "name": "Admin",
+      "description": "Administration"
+    },
+    "lms": {
+      "name": "LMS",
+      "description": "Courses"
+    },
+    "id": {
+      "name": "ID",
+      "description": "Account & security"
+    }
   },
   "errors": {
     "generic": "Something went wrong. Try again in a moment.",
@@ -357,6 +383,7 @@
     },
     "homework": {
       "not-found": "This lesson has no homework.",
+      "lesson-cancelled": "Homework cannot be added to a cancelled lesson.",
       "text-invalid": "Homework must be 1 to {max} characters.",
       "note-too-long": "A note can have up to {max} characters."
     },
@@ -470,7 +497,21 @@
     },
     "message": {
       "you": "You",
-      "assistant": "Assistant"
+      "assistant": "Assistant",
+      "like": "Good answer",
+      "dislike": "Bad answer",
+      "regenerate": "Regenerate",
+      "copy": "Copy",
+      "copied": "Copied",
+      "more": "More",
+      "showMore": "Show more",
+      "showLess": "Show less",
+      "scrollDown": "Scroll to the latest message",
+      "thinking": "Thinking…",
+      "actions": "Answer actions",
+      "addChat": "Add chat to notebook",
+      "shareChat": "Share chat",
+      "feedbackFailed": "Could not send your feedback."
     },
     "composer": {
       "label": "Message",
@@ -481,7 +522,21 @@
       "pickFiles": "Choose from My files",
       "attached": "Attached files",
       "limitSession": "Session limit reached, available again at {time}",
-      "limitDay": "Daily limit reached, resets at {time}"
+      "limitDay": "Daily limit reached, resets at {time}",
+      "plus": "Add",
+      "myFiles": "From My files",
+      "notebook": "Ask a notebook",
+      "guided": "Guided learning",
+      "tier": {
+        "fast": "Fast",
+        "smart": "Smart",
+        "label": "Answer mode"
+      },
+      "guidedHint": "Guided learning: explain step by step, ask me questions and check my understanding before giving the full answer.",
+      "guidedOff": "Turn off guided learning",
+      "stop": "Stop",
+      "offline": "You are offline",
+      "noNotebooks": "No notebooks yet"
     },
     "attach": {
       "title": "Attach files",
@@ -554,6 +609,62 @@
       "label": "Title",
       "save": "Save",
       "cancel": "Cancel"
+    },
+    "sidebar": {
+      "newChat": "New chat",
+      "search": "Search chats",
+      "notebooks": "Notebooks",
+      "newNotebook": "New notebook",
+      "allNotebooks": "All notebooks",
+      "recent": "Recent",
+      "showMore": "Show more",
+      "collapse": "Collapse the sidebar",
+      "open": "Open the sidebar",
+      "empty": "No chats yet. Ask your first question.",
+      "chatMenu": "Options for {title}",
+      "usageRing": "Assistant usage, {percent}% used"
+    },
+    "search": {
+      "placeholder": "Search chats and notebooks",
+      "none": "Nothing found"
+    },
+    "home": {
+      "greeting1": "Hello, {name}",
+      "greeting2": "What shall we study today, {name}?",
+      "greeting3": "Ready when you are, {name}",
+      "greeting4": "How can I help, {name}?",
+      "placeholder": "Ask the assistant",
+      "chips": "Suggestions"
+    },
+    "chip": {
+      "explain": "Explain a topic simply",
+      "cards": "Make flash cards from my file",
+      "quiz": "Quiz me on my last lesson",
+      "due": "What is due tomorrow?",
+      "plan": "Plan my study week",
+      "notebook": "Make a notebook from my file"
+    },
+    "disclaimer": "The assistant is AI and can make mistakes. Check important information.",
+    "addToNotebook": {
+      "title": "Add to notebook",
+      "choose": "Choose a notebook",
+      "new": "New notebook",
+      "added": "Added to “{name}”",
+      "already": "Already in this notebook",
+      "open": "Open notebook",
+      "itemLabel": "Add {title} to a notebook"
+    },
+    "workspace": {
+      "sidebar": "Chats and notebooks",
+      "history": "Chat history"
+    },
+    "menu": {
+      "rename": "Rename",
+      "delete": "Delete"
+    },
+    "pane": {
+      "title": "Chat title",
+      "options": "Chat options"
     }
   },
   "files": {
@@ -571,6 +682,272 @@
       "infected": "a virus or malware was found",
       "too_large": "the file is too large",
       "empty": "the file is empty"
+    }
+  },
+  "lessonDetail": {
+    "header": {
+      "period": "Period {number}",
+      "audience": "Audience",
+      "room": "Room",
+      "noRoom": "Not set",
+      "cancelled": "Cancelled",
+      "changed": "Changed",
+      "fields": {
+        "room": "Room",
+        "teacher": "Teacher",
+        "subject": "Subject",
+        "date": "Date",
+        "period": "Period"
+      },
+      "teacherNeeded": "Teacher needed"
+    },
+    "topic": {
+      "title": "Lesson topic",
+      "placeholder": "What was taught",
+      "save": "Save topic",
+      "saved": "Topic saved"
+    },
+    "materials": {
+      "title": "Materials",
+      "empty": "No materials yet. Add a file or a link for the students.",
+      "delete": "Delete",
+      "deleteTitle": "Delete this material?",
+      "deleteDescription": "{title} will disappear from the lesson for everyone.",
+      "deleted": "Material deleted"
+    },
+    "attachments": {
+      "title": "Student attachments",
+      "description": "Files and links the students added. Hide the ones that do not belong.",
+      "empty": "No attachments.",
+      "delete": "Delete",
+      "deleteTitle": "Delete this attachment?",
+      "deleteDescription": "{title} will be removed from the lesson.",
+      "deleted": "Attachment deleted",
+      "hiddenDone": "Attachment hidden from the students",
+      "shown": "Attachment is visible again"
+    },
+    "resources": {
+      "open": "Open",
+      "openItem": "Open {title}",
+      "hide": "Hide",
+      "hideItem": "Hide {title}",
+      "show": "Show",
+      "showItem": "Show {title}",
+      "hidden": "Hidden",
+      "deleteItem": "Delete {title}"
+    },
+    "add": {
+      "button": "Add material",
+      "title": "Add to the lesson",
+      "description": "A file goes straight to storage; a link is checked and titled automatically.",
+      "kind": "Add as",
+      "role": {
+        "material": "Material",
+        "attachment": "Attachment"
+      },
+      "alsoAdd": "Also add to",
+      "period": "period {number}",
+      "tabs": {
+        "file": "File",
+        "link": "Link"
+      },
+      "upload": "Choose a file",
+      "url": "Link address",
+      "addLink": "Add link",
+      "added": "Added to the lesson"
+    },
+    "homework": {
+      "title": "Homework",
+      "text": "Homework text",
+      "placeholder": "What the students should do",
+      "dueDate": "Due date",
+      "pickDate": "Pick a date",
+      "useAutomatic": "Use the automatic date",
+      "autoHint": "The due date is set to the next lesson of this subject when you save.",
+      "autoDate": "Automatic: the next lesson, {date}.",
+      "manualDate": "You chose this date.",
+      "noNextLesson": "There is no next lesson of this subject. Pick a due date.",
+      "add": "Add homework",
+      "saveChanges": "Save changes",
+      "saved": "Homework saved",
+      "delete": "Delete homework",
+      "deleteTitle": "Delete the homework?",
+      "deleteDescription": "It disappears from the students' to-do lists.",
+      "deleted": "Homework deleted"
+    },
+    "attendance": {
+      "title": "Attendance",
+      "present": "Present",
+      "absent": "Absent",
+      "excused": "Excused",
+      "everyonePresent": "Everyone present",
+      "hint": "Everyone is marked present. Tap the students who were absent.",
+      "notTaken": "Attendance was not taken for this lesson.",
+      "submittedAt": "Submitted {time}.",
+      "submittedBy": "Submitted {time} by {name}.",
+      "summary": "Absent: {absent} of {total}",
+      "submit": "Submit attendance",
+      "saveChanges": "Save changes",
+      "saving": "Saving…",
+      "saved": "Attendance saved",
+      "noStudents": "No students in this lesson.",
+      "windowClosed": "The 7-day window has passed, so this list is read-only. Ask Administration to correct it.",
+      "cancelled": "This lesson was cancelled. Attendance is not taken.",
+      "stale": "The list was changed elsewhere. Your marks are kept.",
+      "showCurrent": "Show the current list",
+      "unassigned": {
+        "title": "Students without a subgroup",
+        "hint": "They are counted only if you mark them.",
+        "markFor": "Mark {name}",
+        "notCounted": "{count, plural, one {# student not counted} other {# students not counted}}"
+      },
+      "conflict": {
+        "title": "The list was changed",
+        "description": "Someone else saved the attendance of this lesson while you were editing.",
+        "descriptionBy": "{name} saved the attendance on {time}.",
+        "currentList": "Absent now",
+        "noAbsences": "Nobody is absent.",
+        "review": "Show the current list",
+        "keepMine": "Keep my marks"
+      }
+    },
+    "audience": {
+      "subgroup": "{group} · subgroup {number}"
+    }
+  },
+  "flashcards": {
+    "heatmap": {
+      "title": "Review heatmap",
+      "previousYear": "Previous year",
+      "nextYear": "Next year",
+      "thisYear": "Back to this year",
+      "summary": "Reviews in {year}: {count, plural, one {# review} other {# reviews}} on {days, plural, one {# day} other {# days}}",
+      "cell": "{count, plural, one {# review} other {# reviews}} on {date}",
+      "noReviews": "No reviews on {date}",
+      "cards": "{count, plural, one {# card} other {# cards}}",
+      "days": "{count, plural, one {# day} other {# days}}",
+      "dailyAverage": "Daily average",
+      "daysLearned": "Days learned",
+      "longestStreak": "Longest streak",
+      "currentStreak": "Current streak"
+    },
+    "deckList": {
+      "deck": "Deck",
+      "new": "New",
+      "learn": "Learn",
+      "due": "Due",
+      "options": "Options",
+      "editCards": "Edit cards",
+      "delete": "Delete",
+      "deckOptions": "Options for {title}",
+      "empty": "No decks yet. Create one, import a file, or ask the assistant to make cards from your notes.",
+      "studiedToday": "Studied {count, plural, one {# card} other {# cards}} in {seconds, plural, one {# second} other {# seconds}} today ({perCard}s/card)",
+      "studiedNothing": "No cards studied today yet.",
+      "getShared": "Get shared",
+      "createDeck": "Create deck",
+      "importFile": "Import file",
+      "source": {
+        "ai": "Assistant",
+        "mcp": "via MCP",
+        "copied": "Copied"
+      }
+    },
+    "getShared": {
+      "title": "Get a shared deck",
+      "description": "Paste the link of a shared deck. It is copied to your decks with fresh progress.",
+      "label": "Share link or code",
+      "invalid": "This is not a share link.",
+      "cancel": "Cancel",
+      "copy": "Copy to my decks"
+    },
+    "overview": {
+      "cardCount": "{count, plural, one {# card} other {# cards}}",
+      "countsLabel": "Cards to study today",
+      "new": "New",
+      "learning": "Learning",
+      "toReview": "To review",
+      "studyNow": "Study now",
+      "finished": "Congratulations! You have finished this deck for now.",
+      "noCards": "This deck has no cards yet. Press Edit cards to add some.",
+      "options": "Options",
+      "editCards": "Edit cards",
+      "description": "Description",
+      "share": "Share"
+    },
+    "study": {
+      "title": "Study",
+      "counts": "New {new}, learning {learning}, to review {review}",
+      "edit": "Edit",
+      "limits": "Limits",
+      "showAnswer": "Show answer",
+      "rate": "How well did you know it?",
+      "rating": {
+        "again": "Again",
+        "hard": "Hard",
+        "medium": "Good",
+        "easy": "Easy"
+      },
+      "done": {
+        "title": "Congratulations! You have finished this deck for now.",
+        "reviewed": "{count, plural, one {You answered # card.} other {You answered # cards.}}",
+        "back": "Back to the deck"
+      }
+    },
+    "editor": {
+      "createTitle": "Create a new flashcard set",
+      "editTitle": "Edit cards",
+      "titleLabel": "Title",
+      "descriptionLabel": "Add a description…",
+      "import": "Import",
+      "preview": "Show Markdown preview",
+      "hint": "Both sides support Markdown. Cards you do not change keep their progress. Paste lines of term, tab, definition to add many cards at once.",
+      "cards": "Cards",
+      "addCard": "Add a card",
+      "term": "Term",
+      "definition": "Definition",
+      "enterTerm": "Enter term",
+      "enterDefinition": "Enter definition",
+      "cardN": "Card {n}",
+      "reorder": "Reorder card {n}. Drag it, or press Alt and an arrow key.",
+      "remove": "Delete card {n}",
+      "incomplete": "Fill in both sides or delete this card.",
+      "create": "Create",
+      "createAndPractice": "Create and practice",
+      "save": "Save",
+      "saveAndPractice": "Save and practice",
+      "saving": "Saving…",
+      "cancel": "Cancel",
+      "unsaved": "Unsaved changes",
+      "moved": "Card {n} moved to position {to} of {count}.",
+      "dragInstructions": "To pick up a card, press Space. Use the arrow keys to move it and Space to drop it. Press Escape to cancel.",
+      "dragStart": "Picked up card {n}.",
+      "dragOver": "Card is over position {n}.",
+      "dragEnd": "Card dropped at position {n}.",
+      "dragCancel": "Moving cancelled.",
+      "problems": {
+        "titleRequired": "Enter a title.",
+        "titleTooLong": "The title is too long.",
+        "descriptionTooLong": "The description is too long.",
+        "cardsRequired": "Add at least one card.",
+        "tooMany": "A set has at most 500 cards."
+      }
+    },
+    "import": {
+      "title": "Import cards",
+      "hint": "Paste one card per line, with the term and the definition separated by a tab. You can also choose a .txt, .csv or .tsv file.",
+      "textLabel": "Cards to import",
+      "placeholder": "Term\tDefinition",
+      "separator": "Between term and definition",
+      "separators": {
+        "tab": "Tab",
+        "comma": "Comma",
+        "semicolon": "Semicolon"
+      },
+      "chooseFile": "Choose a file",
+      "found": "{count, plural, one {# card found.} other {# cards found.}}",
+      "skipped": "{count, plural, one {# line was skipped.} other {# lines were skipped.}}",
+      "cancel": "Cancel",
+      "confirm": "{count, plural, one {Import # card} other {Import # cards}}"
     }
   }
 }

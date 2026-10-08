@@ -18,6 +18,7 @@
     "@ihsp/auth": "workspace:*",
     "@ihsp/config": "workspace:*",
     "@ihsp/i18n": "workspace:*",
+    "@ihsp/telegram": "workspace:*",
     "@ihsp/ui": "workspace:*"
   }
 }

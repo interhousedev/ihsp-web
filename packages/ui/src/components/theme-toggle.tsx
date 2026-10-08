@@ -1,17 +1,17 @@
 "use client"
 
 import { useT } from "@ihsp/i18n"
-import { useTheme } from "next-themes"
 import { useCallback, type MouseEvent } from "react"
 import { startThemeTransition } from "../lib/theme-transition"
 import { Icons } from "./icons"
+import { useThemeChoice } from "./themes/theme-choice"
 import { Button } from "./ui/button"
 import { Tooltip, TooltipContent, TooltipTrigger } from "./ui/tooltip"
 
-/** Light/dark switch (44 px touch target on phones). */
+/** Light/dark switch (44 px touch target on phones). The choice is saved in the account when one is logged in. */
 export function ThemeToggle() {
   const t = useT()
-  const { setTheme, resolvedTheme } = useTheme()
+  const { setTheme, resolvedTheme } = useThemeChoice()
 
   const toggle = useCallback(
     (event: MouseEvent) => {

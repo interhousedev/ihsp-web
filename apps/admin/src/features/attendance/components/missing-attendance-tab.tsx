@@ -1,7 +1,6 @@
 "use client"
 
 import { getAdminAttendanceMissing } from "@ihsp/api"
-import { getConfig } from "@ihsp/config"
 import { useFormatters, useT } from "@ihsp/i18n"
 import { Badge, Card, CardContent, CardHeader, CardTitle } from "@ihsp/ui"
 import { useQuery } from "@tanstack/react-query"
@@ -13,7 +12,7 @@ import { DateRangeFields } from "./date-range-fields"
 
 /**
  * Teachers with lessons whose attendance was never submitted (UF-ADM-09 step 3). Old attendance is corrected on the
- * lesson page of the staff portal, which each lesson links to.
+ * lesson page of this console, which each lesson links to.
  */
 export function MissingAttendanceTab() {
   const t = useT("attendance.missing")
@@ -24,7 +23,6 @@ export function MissingAttendanceTab() {
     queryKey: ["admin", "attendance", "missing", params],
     queryFn: ({ signal }) => getAdminAttendanceMissing(params, { signal }),
   })
-  const staffUrl = getConfig().STAFF_URL.replace(/\/+$/, "")
 
   return (
     <div className="flex flex-col gap-4">
@@ -56,14 +54,12 @@ export function MissingAttendanceTab() {
                           {lesson.subject.name}
                           <span className="text-muted-foreground"> · {audienceLabel(lesson.audience)}</span>
                         </span>
-                        <a
-                          href={`${staffUrl}/lessons/view/?id=${encodeURIComponent(lesson.id)}`}
-                          target="_blank"
-                          rel="noopener noreferrer"
+                        <Link
+                          href={`/lessons/view/?id=${encodeURIComponent(lesson.id)}`}
                           className="inline-flex min-h-11 items-center underline-offset-4 hover:underline md:min-h-8"
                         >
                           {t("openLesson")}
-                        </a>
+                        </Link>
                       </li>
                     ))}
                   </ul>

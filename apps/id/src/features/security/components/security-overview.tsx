@@ -9,6 +9,7 @@ import {
   IconDevices,
   IconKey,
   IconMail,
+  IconPalette,
   IconPlugConnected,
   IconSchool,
   IconTrash,
@@ -95,6 +96,12 @@ export function SecurityOverview({ user }: { user: UserMe }) {
           icon={IconPlugConnected}
           title={t("security.cards.connectors")}
           description={t("security.cards.connectorsHint")}
+        />
+        <SecurityCard
+          href="/appearance/"
+          icon={IconPalette}
+          title={t("security.cards.appearance")}
+          description={t("security.cards.appearanceHint")}
         />
         {isStudent ? (
           <SecurityCard

@@ -98,6 +98,7 @@ export * from "./components/layout/user-menu"
 // - - - Themes - - -
 export * from "./components/themes/active-theme"
 export * from "./components/themes/app-theme-provider"
+export * from "./components/themes/theme-choice"
 export * from "./components/themes/theme-init-script"
 export * from "./components/themes/theme-provider"
 export * from "./components/themes/theme-selector"

@@ -3,6 +3,7 @@
 import { useT } from "@ihsp/i18n"
 import { LanguageSwitcher, ThemeToggle } from "@ihsp/ui"
 import type { ReactNode } from "react"
+import { ShareAccountMenu } from "./share-account-menu"
 
 /** Page frame of every share state: brand, language and theme on top, the content below. */
 export function ShareFrame({ children }: { children: ReactNode }) {
@@ -14,6 +15,7 @@ export function ShareFrame({ children }: { children: ReactNode }) {
         <div className="flex items-center gap-2">
           <LanguageSwitcher className="min-h-11 md:min-h-9" />
           <ThemeToggle />
+          <ShareAccountMenu />
         </div>
       </header>
       <main className="flex flex-1 flex-col gap-6">{children}</main>

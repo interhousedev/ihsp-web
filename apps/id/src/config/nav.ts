@@ -6,6 +6,7 @@ import {
   IconDevices,
   IconKey,
   IconMail,
+  IconPalette,
   IconPlugConnected,
   IconSchool,
   IconShieldLock,
@@ -13,7 +14,10 @@ import {
 } from "@tabler/icons-react"
 import type { Translate } from "../features/shared/hooks/use-tr"
 
-/** Sidebar of the security area. Items without `roles` are for everyone; EMIS and account deletion are for students. */
+/**
+ * Sidebar of the security area. Items without `roles` are for everyone; EMIS and account deletion are for students.
+ * Appearance (light / dark / system) is under Account for everybody.
+ */
 export function buildIdNav(t: Translate): NavGroup[] {
   return [
     {
@@ -35,7 +39,10 @@ export function buildIdNav(t: Translate): NavGroup[] {
     },
     {
       label: t("idNav.account"),
-      items: [{ title: t("idNav.delete"), url: "/security/delete/", icon: IconTrash, roles: ["student"] }],
+      items: [
+        { title: t("idNav.appearance"), url: "/appearance/", icon: IconPalette },
+        { title: t("idNav.delete"), url: "/security/delete/", icon: IconTrash, roles: ["student"] },
+      ],
     },
   ]
 }

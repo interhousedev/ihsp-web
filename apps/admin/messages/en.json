@@ -587,7 +587,10 @@
       "end": "End",
       "weekdays": "Weekdays of period {period}",
       "remove": "Remove period {period}",
-      "add": "Add period"
+      "add": "Add period",
+      "emis": "EMIS",
+      "emisHint": "Synced from EMIS class hours",
+      "emisNote": "Periods marked EMIS are synced from EMIS class hours, so they cannot be changed here. Periods without the mark can be edited."
     },
     "days": {
       "nonStudy": "Non-study days",
@@ -687,7 +690,8 @@
       "delete": "Delete entry",
       "deleteTitle": "Delete this entry?",
       "deleteDescription": "Future generated lessons of this entry are removed. Lessons changed by hand stay.",
-      "deleted": "Entry deleted"
+      "deleted": "Entry deleted",
+      "openLesson": "Open lesson"
     }
   },
   "lessons": {
@@ -697,6 +701,8 @@
     "empty": "No lessons match these filters.",
     "changeAction": "Change",
     "changeLesson": "Change {subject} on {date}",
+    "openAction": "Open",
+    "openLesson": "Open {subject} on {date}",
     "changed": "Changed",
     "teacherNeeded": "Teacher needed",
     "status": {
@@ -761,6 +767,11 @@
       "cancel": "Cancel",
       "submit": "Add lesson",
       "created": "Extra lesson added"
+    },
+    "view": {
+      "title": "Lesson",
+      "missing": "No lesson was chosen. Open one from the lessons list.",
+      "back": "Lessons"
     }
   },
   "attendance": {

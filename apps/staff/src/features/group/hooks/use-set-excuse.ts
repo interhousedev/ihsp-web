@@ -1,8 +1,8 @@
 "use client"
 
 import { keys, putAttendanceExcuse, type AttendanceExcuseBody, type AttendanceSheet } from "@ihsp/api"
+import { applyAttendanceSheet } from "@ihsp/features-core"
 import { useMutation, useQueryClient } from "@tanstack/react-query"
-import { applyAttendanceSheet } from "../../attendance/utils/cache"
 
 /** `PUT /v1/staff/lessons/{id}/attendance/excuse` (ACA-20, STF-13): the curator marks an absence as excused. */
 export function useSetExcuse(lessonId: string) {

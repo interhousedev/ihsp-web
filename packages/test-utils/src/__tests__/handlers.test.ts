@@ -269,6 +269,9 @@ describe("classwork", () => {
     const all = await getMeHomework()
     expect(all.length).toBeGreaterThan(0)
     expect((await getMeHomework({ status: "done" } as never)).every((item) => item.done_at !== null)).toBe(true)
+    const overdue = await getMeHomework({ status: "overdue" } as never)
+    expect(overdue.map((item) => item.lesson_id)).toEqual([fx.homeworkOverdue.lesson_id])
+    expect(overdue.every((item) => item.days_overdue > 0)).toBe(true)
     const item = all[0]
     if (!item) throw new Error("no homework fixture")
     const done = await putMeHomeworkDone(item.lesson_id, { done: true } as never)

@@ -12,6 +12,7 @@ const SOURCES = [
   "apps/admin/src",
   "packages/features-core/src/assistant-chat",
   "packages/features-core/src/file-upload-button",
+  "packages/features-core/src/lesson-detail",
 ]
 
 function flatten(tree: Messages, prefix = ""): Map<string, string> {
@@ -122,10 +123,14 @@ describe("keys used in the code", () => {
     const roles = ["student", "teacher", "admin", "lms_admin"]
     const views = ["group", "student", "subject", "teacher"]
     const expected: Record<string, string[]> = {
+      // The student assistant workspace (features-core/assistant-chat) shares this folder with the admin chat.
+      "assistant.home.greeting${greeting}": ["1", "2", "3", "4"],
+      "assistant.chip.${chip}": ["explain", "cards", "quiz", "due", "plan", "notebook"],
       "attendance.report.labels.${state.view}": views,
       "attendance.report.views.${view}": views,
       "broadcasts.audience.role.${role}": roles,
       "broadcasts.status.${value}": ["draft", "scheduled", "sending", "sent", "cancelled"],
+      "lessonDetail.header.fields.${change.field}": ["room", "teacher", "subject", "date", "period"],
       "lessons.status.${lesson.status}": ["scheduled", "cancelled"],
       "moderation.kind.${item.link.kind}": ["url", "file", "chat", "flashcard_set"],
       "students.tabs.${name}": ["overview", "timetable", "grades", "attendance", "account"],

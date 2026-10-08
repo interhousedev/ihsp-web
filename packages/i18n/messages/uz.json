@@ -40,6 +40,8 @@
     "language": "Til",
     "theme": "Mavzu",
     "logout": "Chiqish",
+    "showPassword": "Parolni koʻrsatish",
+    "hidePassword": "Parolni yashirish",
     "profile": "Profil",
     "settings": "Sozlamalar",
     "notFoundTitle": "Sahifa topilmadi",
@@ -138,6 +140,30 @@
   },
   "user": {
     "menu": "Hisob menyusi"
+  },
+  "platforms": {
+    "title": "IHSP platformalari",
+    "current": "(joriy)",
+    "sp": {
+      "name": "SP",
+      "description": "Talaba portali"
+    },
+    "staff": {
+      "name": "Staff",
+      "description": "Oʻqituvchi kabineti"
+    },
+    "admin": {
+      "name": "Admin",
+      "description": "Boshqaruv"
+    },
+    "lms": {
+      "name": "LMS",
+      "description": "Kurslar"
+    },
+    "id": {
+      "name": "ID",
+      "description": "Hisob va xavfsizlik"
+    }
   },
   "errors": {
     "generic": "Nimadir xato ketdi. Birozdan soʻng qayta urinib koʻring.",
@@ -357,6 +383,7 @@
     },
     "homework": {
       "not-found": "Bu darsda uy vazifasi yo'q.",
+      "lesson-cancelled": "Bekor qilingan darsga uyga vazifa qoʻshib boʻlmaydi.",
       "text-invalid": "Uy vazifasi 1 dan {max} belgigacha bo'lishi kerak.",
       "note-too-long": "Eslatma {max} belgigacha bo'lishi mumkin."
     },
@@ -470,7 +497,21 @@
     },
     "message": {
       "you": "Siz",
-      "assistant": "Yordamchi"
+      "assistant": "Yordamchi",
+      "like": "Yaxshi javob",
+      "dislike": "Yomon javob",
+      "regenerate": "Qayta yaratish",
+      "copy": "Nusxalash",
+      "copied": "Nusxalandi",
+      "more": "Yana",
+      "showMore": "Toʻliq koʻrsatish",
+      "showLess": "Yigʻish",
+      "scrollDown": "Oxirgi xabarga",
+      "thinking": "Oʻylayapman…",
+      "actions": "Javob amallari",
+      "addChat": "Chatni daftarga qoʻshish",
+      "shareChat": "Chatni ulashish",
+      "feedbackFailed": "Bahoni yuborib boʻlmadi."
     },
     "composer": {
       "label": "Xabar",
@@ -481,7 +522,21 @@
       "pickFiles": "“Mening fayllarim”dan tanlash",
       "attached": "Biriktirilgan fayllar",
       "limitSession": "Seans limiti tugadi, {time} da yana mavjud bo‘ladi",
-      "limitDay": "Kunlik limit tugadi, {time} da yangilanadi"
+      "limitDay": "Kunlik limit tugadi, {time} da yangilanadi",
+      "plus": "Qoʻshish",
+      "myFiles": "«Mening fayllarim»dan",
+      "notebook": "Daftardan soʻrash",
+      "guided": "Bosqichma-bosqich oʻrganish",
+      "tier": {
+        "fast": "Tezkor",
+        "smart": "Aqlli",
+        "label": "Javob rejimi"
+      },
+      "guidedHint": "Bosqichma-bosqich oʻrganish: bosqichma-bosqich tushuntir, menga savollar ber va toʻliq javob berishdan oldin tushunganimni tekshir.",
+      "guidedOff": "Bosqichma-bosqich oʻrganishni oʻchirish",
+      "stop": "Toʻxtatish",
+      "offline": "Internet yoʻq",
+      "noNotebooks": "Hozircha daftarlar yoʻq"
     },
     "attach": {
       "title": "Fayllarni biriktirish",
@@ -554,6 +609,62 @@
       "label": "Nomi",
       "save": "Saqlash",
       "cancel": "Bekor qilish"
+    },
+    "sidebar": {
+      "newChat": "Yangi chat",
+      "search": "Chatlarni qidirish",
+      "notebooks": "Daftarlar",
+      "newNotebook": "Yangi daftar",
+      "allNotebooks": "Barcha daftarlar",
+      "recent": "Oxirgilar",
+      "showMore": "Yana koʻrsatish",
+      "collapse": "Panelni yigʻish",
+      "open": "Panelni ochish",
+      "empty": "Hozircha chatlar yoʻq. Birinchi savolingizni bering.",
+      "chatMenu": "{title} amallari",
+      "usageRing": "Yordamchidan foydalanish: {percent}%"
+    },
+    "search": {
+      "placeholder": "Chat va daftarlarni qidirish",
+      "none": "Hech narsa topilmadi"
+    },
+    "home": {
+      "greeting1": "Salom, {name}",
+      "greeting2": "Bugun nimani oʻrganamiz, {name}?",
+      "greeting3": "Tayyorman, {name}",
+      "greeting4": "Qanday yordam bera olaman, {name}?",
+      "placeholder": "Yordamchidan soʻrang",
+      "chips": "Takliflar"
+    },
+    "chip": {
+      "explain": "Mavzuni oddiy qilib tushuntir",
+      "cards": "Faylim asosida kartochkalar tuz",
+      "quiz": "Oxirgi dars boʻyicha meni sina",
+      "due": "Ertaga nima topshiriladi?",
+      "plan": "Haftalik oʻqish rejasini tuz",
+      "notebook": "Faylimdan daftar yarat"
+    },
+    "disclaimer": "Yordamchi — sunʼiy intellekt, u xato qilishi mumkin. Muhim maʼlumotni tekshiring.",
+    "addToNotebook": {
+      "title": "Daftarga qoʻshish",
+      "choose": "Daftarni tanlang",
+      "new": "Yangi daftar",
+      "added": "«{name}» ga qoʻshildi",
+      "already": "Allaqachon shu daftarda",
+      "open": "Daftarni ochish",
+      "itemLabel": "«{title}» ni daftarga qoʻshish"
+    },
+    "workspace": {
+      "sidebar": "Chatlar va daftarlar",
+      "history": "Chatlar tarixi"
+    },
+    "menu": {
+      "rename": "Nomini oʻzgartirish",
+      "delete": "Oʻchirish"
+    },
+    "pane": {
+      "title": "Chat nomi",
+      "options": "Chat amallari"
     }
   },
   "files": {
@@ -571,6 +682,272 @@
       "infected": "virus yoki zararli kod topildi",
       "too_large": "fayl juda katta",
       "empty": "fayl bo‘sh"
+    }
+  },
+  "lessonDetail": {
+    "header": {
+      "period": "{number}-juftlik",
+      "audience": "Auditoriya",
+      "room": "Xona",
+      "noRoom": "Koʻrsatilmagan",
+      "cancelled": "Bekor qilingan",
+      "changed": "Oʻzgartirilgan",
+      "fields": {
+        "room": "Xona",
+        "teacher": "Oʻqituvchi",
+        "subject": "Fan",
+        "date": "Sana",
+        "period": "Juftlik"
+      },
+      "teacherNeeded": "O‘qituvchi kerak"
+    },
+    "topic": {
+      "title": "Dars mavzusi",
+      "placeholder": "Darsda nima oʻtildi",
+      "save": "Mavzuni saqlash",
+      "saved": "Mavzu saqlandi"
+    },
+    "materials": {
+      "title": "Materiallar",
+      "empty": "Hozircha materiallar yoʻq. Talabalar uchun fayl yoki havola qoʻshing.",
+      "delete": "Oʻchirish",
+      "deleteTitle": "Material oʻchirilsinmi?",
+      "deleteDescription": "«{title}» darsdan hamma uchun yoʻqoladi.",
+      "deleted": "Material oʻchirildi"
+    },
+    "attachments": {
+      "title": "Talabalar ilovalari",
+      "description": "Talabalar qoʻshgan fayllar va havolalar. Mos kelmaganlarini yashiring.",
+      "empty": "Ilovalar yoʻq.",
+      "delete": "Oʻchirish",
+      "deleteTitle": "Ilova oʻchirilsinmi?",
+      "deleteDescription": "«{title}» darsdan olib tashlanadi.",
+      "deleted": "Ilova oʻchirildi",
+      "hiddenDone": "Ilova talabalardan yashirildi",
+      "shown": "Ilova yana koʻrinadi"
+    },
+    "resources": {
+      "open": "Ochish",
+      "openItem": "Ochish: {title}",
+      "hide": "Yashirish",
+      "hideItem": "Yashirish: {title}",
+      "show": "Koʻrsatish",
+      "showItem": "Koʻrsatish: {title}",
+      "hidden": "Yashirilgan",
+      "deleteItem": "Oʻchirish: {title}"
+    },
+    "add": {
+      "button": "Material qoʻshish",
+      "title": "Darsga qoʻshish",
+      "description": "Fayl toʻgʻridan-toʻgʻri xotiraga yuklanadi, havola tekshiriladi va avtomatik nomlanadi.",
+      "kind": "Quyidagi sifatida qoʻshish",
+      "role": {
+        "material": "Material",
+        "attachment": "Ilova"
+      },
+      "alsoAdd": "Yana qoʻshish:",
+      "period": "{number}-juftlik",
+      "tabs": {
+        "file": "Fayl",
+        "link": "Havola"
+      },
+      "upload": "Fayl tanlash",
+      "url": "Havola manzili",
+      "addLink": "Havola qoʻshish",
+      "added": "Darsga qoʻshildi"
+    },
+    "homework": {
+      "title": "Uy vazifasi",
+      "text": "Vazifa matni",
+      "placeholder": "Talabalar nima qilishi kerak",
+      "dueDate": "Topshirish muddati",
+      "pickDate": "Sanani tanlang",
+      "useAutomatic": "Avtomatik sanaga qaytish",
+      "autoHint": "Saqlaganingizda muddat shu fanning keyingi darsiga qoʻyiladi.",
+      "autoDate": "Avtomatik: keyingi dars, {date}.",
+      "manualDate": "Bu sanani siz tanladingiz.",
+      "noNextLesson": "Bu fanning keyingi darsi yoʻq. Topshirish muddatini tanlang.",
+      "add": "Vazifa qoʻshish",
+      "saveChanges": "Oʻzgarishlarni saqlash",
+      "saved": "Vazifa saqlandi",
+      "delete": "Vazifani oʻchirish",
+      "deleteTitle": "Uy vazifasi oʻchirilsinmi?",
+      "deleteDescription": "U talabalarning vazifalar roʻyxatidan yoʻqoladi.",
+      "deleted": "Vazifa oʻchirildi"
+    },
+    "attendance": {
+      "title": "Davomat",
+      "present": "Bor",
+      "absent": "Yoʻq",
+      "excused": "Sababli",
+      "everyonePresent": "Hamma bor",
+      "hint": "Hamma bor deb belgilangan. Kelmaganlarni bosing.",
+      "notTaken": "Bu darsda davomat belgilanmagan.",
+      "submittedAt": "Yuborilgan: {time}.",
+      "submittedBy": "Yuborilgan: {time}, belgilagan: {name}.",
+      "summary": "Yoʻq: {absent} / {total}",
+      "submit": "Davomatni yuborish",
+      "saveChanges": "Oʻzgarishlarni saqlash",
+      "saving": "Saqlanmoqda…",
+      "saved": "Davomat saqlandi",
+      "noStudents": "Bu darsda talabalar yoʻq.",
+      "windowClosed": "7 kun oʻtdi, shuning uchun roʻyxat faqat koʻrish uchun. Maʼmuriyatdan tuzatishni soʻrang.",
+      "cancelled": "Dars bekor qilingan. Davomat belgilanmaydi.",
+      "stale": "Roʻyxat boshqa joyda oʻzgartirildi. Belgilaringiz saqlanib turibdi.",
+      "showCurrent": "Joriy roʻyxatni koʻrsatish",
+      "unassigned": {
+        "title": "Kichik guruhsiz talabalar",
+        "hint": "Ular faqat siz belgilasangiz hisobga olinadi.",
+        "markFor": "Belgilash: {name}",
+        "notCounted": "{count, plural, one {# talaba hisobga olinmagan} other {# talaba hisobga olinmagan}}"
+      },
+      "conflict": {
+        "title": "Roʻyxat oʻzgartirildi",
+        "description": "Siz tahrirlayotganingizda boshqa kishi bu darsning davomatini saqladi.",
+        "descriptionBy": "{name} davomatni saqladi: {time}.",
+        "currentList": "Hozir yoʻq",
+        "noAbsences": "Kelmaganlar yoʻq.",
+        "review": "Joriy roʻyxatni koʻrsatish",
+        "keepMine": "Belgilarimni qoldirish"
+      }
+    },
+    "audience": {
+      "subgroup": "{group} · {number}-kichik guruh"
+    }
+  },
+  "flashcards": {
+    "heatmap": {
+      "title": "Takrorlashlar xaritasi",
+      "previousYear": "Oldingi yil",
+      "nextYear": "Keyingi yil",
+      "thisYear": "Joriy yilga qaytish",
+      "summary": "{year}-yildagi takrorlashlar: {days} kunda {count} ta",
+      "cell": "{date}: {count} ta takrorlash",
+      "noReviews": "{date}: takrorlash yo‘q",
+      "cards": "{count} ta kartochka",
+      "days": "{count} kun",
+      "dailyAverage": "Kuniga o‘rtacha",
+      "daysLearned": "O‘qilgan kunlar",
+      "longestStreak": "Eng uzun seriya",
+      "currentStreak": "Joriy seriya"
+    },
+    "deckList": {
+      "deck": "Kolloda",
+      "new": "Yangi",
+      "learn": "O‘rgan.",
+      "due": "Takror",
+      "options": "Sozlamalar",
+      "editCards": "Kartochkalarni tahrirlash",
+      "delete": "O‘chirish",
+      "deckOptions": "“{title}” kollodasi sozlamalari",
+      "empty": "Hozircha kolloda yo‘q. Yarating, fayl import qiling yoki yordamchidan konspektlaringizdan kartochkalar yasashni so‘rang.",
+      "studiedToday": "Bugun {seconds} soniyada {count} ta kartochka o‘rganildi ({perCard} s/kartochka)",
+      "studiedNothing": "Bugun hali kartochka o‘rganilmadi.",
+      "getShared": "Ulashilgan",
+      "createDeck": "Kolloda yaratish",
+      "importFile": "Fayl import qilish",
+      "source": {
+        "ai": "Yordamchi",
+        "mcp": "MCP orqali",
+        "copied": "Nusxalangan"
+      }
+    },
+    "getShared": {
+      "title": "Ulashilgan kollodani olish",
+      "description": "Ulashilgan kolloda havolasini joylashtiring. U natijasiz holda kollodalaringizga nusxalanadi.",
+      "label": "Havola yoki kod",
+      "invalid": "Bu ulashish havolasi emas.",
+      "cancel": "Bekor qilish",
+      "copy": "Kollodalarimga nusxalash"
+    },
+    "overview": {
+      "cardCount": "{count} ta kartochka",
+      "countsLabel": "Bugungi kartochkalar",
+      "new": "Yangi",
+      "learning": "O‘rganilmoqda",
+      "toReview": "Takrorlash kerak",
+      "studyNow": "Hozir o‘rganish",
+      "finished": "Tabriklaymiz! Bu kolloda hozircha tugadi.",
+      "noCards": "Kollodada hali kartochkalar yo‘q. Qo‘shish uchun “Kartochkalarni tahrirlash”ni bosing.",
+      "options": "Sozlamalar",
+      "editCards": "Kartochkalarni tahrirlash",
+      "description": "Tavsif",
+      "share": "Ulashish"
+    },
+    "study": {
+      "title": "O‘rganish",
+      "counts": "Yangi {new}, o‘rganilmoqda {learning}, takrorlash {review}",
+      "edit": "Tahrirlash",
+      "limits": "Limitlar",
+      "showAnswer": "Javobni ko‘rsatish",
+      "rate": "Buni qanchalik bilar edingiz?",
+      "rating": {
+        "again": "Yana",
+        "hard": "Qiyin",
+        "medium": "Yaxshi",
+        "easy": "Oson"
+      },
+      "done": {
+        "title": "Tabriklaymiz! Bu kolloda hozircha tugadi.",
+        "reviewed": "Siz {count} ta kartochkaga javob berdingiz.",
+        "back": "Kollodaga qaytish"
+      }
+    },
+    "editor": {
+      "createTitle": "Yangi kartochkalar to‘plamini yaratish",
+      "editTitle": "Kartochkalarni tahrirlash",
+      "titleLabel": "Nomi",
+      "descriptionLabel": "Tavsif qo‘shing…",
+      "import": "Import",
+      "preview": "Markdown ko‘rinishini ko‘rsatish",
+      "hint": "Ikkala tomon ham Markdown’ni qo‘llab-quvvatlaydi. O‘zgartirmagan kartochkalaringiz natijasini saqlaydi. Ko‘p kartochkani birdan qo‘shish uchun “atama, tab, ta’rif” qatorlarini joylashtiring.",
+      "cards": "Kartochkalar",
+      "addCard": "Kartochka qo‘shish",
+      "term": "Atama",
+      "definition": "Ta’rif",
+      "enterTerm": "Atamani kiriting",
+      "enterDefinition": "Ta’rifni kiriting",
+      "cardN": "{n}-kartochka",
+      "reorder": "{n}-kartochkani siljitish. Sudrang yoki Alt va strelka tugmasini bosing.",
+      "remove": "{n}-kartochkani o‘chirish",
+      "incomplete": "Ikkala tomonni to‘ldiring yoki kartochkani o‘chiring.",
+      "create": "Yaratish",
+      "createAndPractice": "Yaratish va o‘rganish",
+      "save": "Saqlash",
+      "saveAndPractice": "Saqlash va o‘rganish",
+      "saving": "Saqlanmoqda…",
+      "cancel": "Bekor qilish",
+      "unsaved": "Saqlanmagan o‘zgarishlar bor",
+      "moved": "{n}-kartochka {count} tadan {to}-o‘ringa siljitildi.",
+      "dragInstructions": "Kartochkani olish uchun Probel bosing. Strelkalar bilan siljiting, Probel bilan qo‘ying. Escape bekor qiladi.",
+      "dragStart": "{n}-kartochka olindi.",
+      "dragOver": "Kartochka {n}-o‘rin ustida.",
+      "dragEnd": "Kartochka {n}-o‘ringa qo‘yildi.",
+      "dragCancel": "Siljitish bekor qilindi.",
+      "problems": {
+        "titleRequired": "Nomini kiriting.",
+        "titleTooLong": "Nomi juda uzun.",
+        "descriptionTooLong": "Tavsif juda uzun.",
+        "cardsRequired": "Kamida bitta kartochka qo‘shing.",
+        "tooMany": "To‘plamda ko‘pi bilan 500 ta kartochka bo‘ladi."
+      }
+    },
+    "import": {
+      "title": "Kartochkalarni import qilish",
+      "hint": "Har qatorga bitta kartochka joylashtiring: atama va ta’rif tab bilan ajratilgan. .txt, .csv yoki .tsv faylni ham tanlash mumkin.",
+      "textLabel": "Import qilinadigan kartochkalar",
+      "placeholder": "Atama\tTa’rif",
+      "separator": "Atama va ta’rif orasida",
+      "separators": {
+        "tab": "Tab",
+        "comma": "Vergul",
+        "semicolon": "Nuqtali vergul"
+      },
+      "chooseFile": "Fayl tanlash",
+      "found": "{count} ta kartochka topildi.",
+      "skipped": "{count} ta qator o‘tkazib yuborildi.",
+      "cancel": "Bekor qilish",
+      "confirm": "{count} ta kartochkani import qilish"
     }
   }
 }
