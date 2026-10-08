@@ -29,11 +29,12 @@
   "courseCard": {
     "invite": "По приглашению",
     "progress": "Прогресс по курсу",
-    "steps": "{count, plural, one {# шаг} few {# шага} many {# шагов} other {# шага}}"
+    "lessons": "{count, plural, one {# урок} few {# урока} many {# уроков} other {# урока}}",
+    "continue": "Продолжить"
   },
   "catalog": {
     "title": "Курсы",
-    "description": "Курсы, к которым можно присоединиться.",
+    "description": "Выберите курс и начните учиться.",
     "enterCode": "Ввести код приглашения",
     "searchLabel": "Поиск курсов",
     "searchPlaceholder": "Поиск по названию или описанию",
@@ -48,26 +49,37 @@
     "noneEnrolled": "Вы пока не записаны ни на один курс.",
     "empty": "У вас пока нет курсов.",
     "browse": "Открыть каталог",
-    "open": "Открыть",
+    "open": "Продолжить",
     "edit": "Редактировать",
     "view": "Смотреть"
   },
   "course": {
     "title": "Курс",
-    "enroll": "Записаться",
+    "enroll": "Записаться на курс",
     "continue": "Продолжить",
     "enterCode": "Ввести код приглашения",
     "edit": "Редактировать",
     "previewDraft": "Предпросмотр черновика",
     "progress": "Прогресс",
-    "updatedNote": "Курс обновлён {date}. {count, plural, one {# шаг новый или изменён} few {# шага новые или изменены} many {# шагов новые или изменены} other {# шага новые или изменены}}; пройденные шаги остаются пройденными.",
+    "updatedNote": "Курс обновлён {date}. {count, plural, one {# урок новый или изменён} few {# урока новые или изменены} many {# уроков новые или изменены} other {# урока новые или изменены}}; пройденные уроки остаются пройденными.",
     "lastUpdated": "Обновлён {date}",
     "staff": "Команда курса",
     "noStaff": "Команда не указана.",
-    "outline": "Программа курса",
     "emptyOutline": "Программа пока пуста.",
-    "emptySection": "В этом разделе нет шагов.",
-    "completed": "Пройден"
+    "emptySection": "В этом модуле нет уроков.",
+    "completed": "Пройден",
+    "aboutCourse": "О курсе",
+    "syllabus": "Программа курса",
+    "module": "Модуль {number}",
+    "moduleLessons": "{count, plural, one {# урок} few {# урока} many {# уроков} other {# урока}}",
+    "lessons": "{count, plural, one {# урок} few {# урока} many {# уроков} other {# урока}}",
+    "points": "{count, plural, one {# балл} few {# балла} many {# баллов} other {# балла}}",
+    "invite": "По приглашению",
+    "yourProgress": "Ваш прогресс",
+    "progressPoints": "{earned} из {total} баллов",
+    "progressLessons": "{done} из {total} уроков",
+    "facts": "О курсе в цифрах",
+    "lessonNumber": "Урок {number}"
   },
   "join": {
     "title": "Присоединиться к курсу",
@@ -77,17 +89,44 @@
     "invalid": "Приглашение недействительно. Проверьте код или попросите новый."
   },
   "player": {
-    "title": "Шаг",
+    "title": "Урок",
     "backToCourse": "К курсу",
     "backToEditor": "К редактору",
     "completed": "Пройден",
     "emptyStep": "В этом шаге пока нет содержимого.",
     "previewBanner": "Предпросмотр.",
     "previewNote": "Вы видите черновик так, как его увидят студенты после публикации. Попытки тестов здесь не учитываются.",
-    "stepNavigation": "Шаги",
+    "contents": "Содержание курса",
+    "openContents": "Открыть содержание курса",
+    "stepsOfLesson": "Шаги урока",
+    "stepLabel": "Шаг {number}: {kind}, {status}",
+    "kind": {
+      "text": "материал",
+      "test": "тест",
+      "flashcards": "карточки"
+    },
+    "status": {
+      "passed": "пройден",
+      "notPassed": "не пройден"
+    },
+    "stepsPassed": "Пройдено шагов: {passed} из {total}",
+    "pointsReceived": "Получено баллов: {earned} из {total}",
+    "courseProgressPoints": "Прогресс по курсу: {earned}/{total}",
+    "courseProgressLessons": "Прогресс по курсу: {done}/{total} уроков",
+    "lessonCompleted": "Урок пройден",
+    "noLessons": "В курсе пока нет уроков.",
     "previous": "Назад",
-    "next": "Далее",
-    "position": "{position} из {total}"
+    "nextStep": "Следующий шаг",
+    "nextLesson": "Следующий урок",
+    "finish": "Завершить",
+    "fullscreen": "На весь экран",
+    "exitFullscreen": "Выйти из полноэкранного режима",
+    "settings": "Настройки",
+    "coursePage": "Страница курса",
+    "editCourse": "Редактировать курс",
+    "myCourses": "Мои курсы",
+    "sidebarUnavailable": "Не удалось загрузить содержание курса.",
+    "lessonNavigation": "Навигация по уроку"
   },
   "test": {
     "title": "Тест",
@@ -99,7 +138,8 @@
       "timeLimit": "Лимит времени",
       "noLimit": "Нет",
       "minutes": "{count} мин",
-      "passing": "Проходной балл"
+      "passing": "Проходной балл",
+      "points": "Баллы"
     },
     "best": "Лучший результат: {score}/{max}",
     "start": "Начать",

@@ -14,6 +14,7 @@ import { Alert, AlertDescription, Badge, Button, Card, CardContent, Spinner } fr
 import { useMutation, useQueryClient } from "@tanstack/react-query"
 import { useCallback, useState } from "react"
 import { secondsToMinutes } from "../../shared/utils/time"
+import { formatPoints } from "../../shared/utils/course-progress"
 import { refreshProgress } from "../utils/fresh"
 import { AttemptResultView } from "./attempt-result"
 import { AttemptRunner } from "./attempt-runner"
@@ -103,10 +104,14 @@ export function TestBlock({
           <AttemptRunner key={attempt.id} attempt={attempt} onSubmitted={submitted} onClosed={closed} />
         ) : (
           <>
-            <dl className="grid grid-cols-2 gap-x-4 gap-y-2 text-sm sm:grid-cols-4">
+            <dl className="grid grid-cols-2 gap-x-4 gap-y-2 text-sm sm:grid-cols-5">
               <div>
                 <dt className="text-muted-foreground text-xs">{t("rules.questions")}</dt>
                 <dd className="font-medium">{rules.questions}</dd>
+              </div>
+              <div>
+                <dt className="text-muted-foreground text-xs">{t("rules.points")}</dt>
+                <dd className="font-medium">{formatPoints(block.points_total, format.locale)}</dd>
               </div>
               <div>
                 <dt className="text-muted-foreground text-xs">{t("rules.attemptsLeft")}</dt>

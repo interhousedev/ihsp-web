@@ -34,9 +34,18 @@ export type OutlineSection = {
   }[]
 }
 
-/** The outline a learner sees: steps are new or changed since the last visit (editors also see removed and MCP steps). */
+/**
+ * The outline a learner sees: steps are new or changed since the last visit (editors also see removed and MCP steps).
+ * A step is a lesson of the learner screens; its points are what a perfect pass of its tests gives.
+ */
 export type LearnerOutlineSection = Omit<OutlineSection, "steps"> & {
-  steps: (Omit<OutlineSection["steps"][number], "badge"> & { badge?: "new" | "changed" | null })[]
+  steps: (Omit<OutlineSection["steps"][number], "badge"> & {
+    badge?: "new" | "changed" | null
+    /** Points of the lesson's tests (0 for a lesson without tests). */
+    points_total: number
+    /** Points the student earned in the lesson; `null` when not enrolled. */
+    points_earned: number | null
+  })[]
 }
 
 export type CoursePage = CourseCard & {
@@ -45,14 +54,25 @@ export type CoursePage = CourseCard & {
   enrolled: boolean
   can_edit: boolean
   changed_since_last_visit: string[]
+  /** Lessons the student completed; `null` when not enrolled. */
+  steps_completed: number | null
+  /** Points of all tests of the live version ("Course progress: earned/total"). */
+  points_total: number
+  /** Points the student earned; `null` when not enrolled. */
+  points_earned: number | null
 }
 
+/**
+ * A step ("lesson") as a student sees it. Its blocks are the squares of the step strip; `passed` is the green fill: a
+ * text block once the lesson was viewed, a test block once an attempt passed, a flash card block once every card was
+ * studied. Nothing is passed in a preview.
+ */
 export type StepView = {
   step_id: string
   revision_id: string
   title: string
   blocks: (
-    | { id: string; type: "text"; markdown: string }
+    | { id: string; type: "text"; markdown: string; passed: boolean }
     | {
         id: string
         type: "test"
@@ -64,11 +84,19 @@ export type StepView = {
         }
         best: AttemptResult | null
         open_attempt_id: string | null
+        passed: boolean
+        /** Points of a perfect attempt and the best result so far. */
+        points_total: number
+        points_earned: number
       }
-    | { id: string; type: "flashcards"; cards_count: number; due: number }
+    | { id: string; type: "flashcards"; cards_count: number; due: number; passed: boolean }
   )[]
   completed: boolean
   preview: boolean
+  blocks_total: number
+  blocks_passed: number
+  points_total: number
+  points_earned: number
 }
 
 export type Answer = { option_ids?: string[]; text?: string; number?: number }

@@ -16,7 +16,7 @@ describe("catalog", () => {
     const { user } = renderLms(<CatalogPage />)
     expect(await screen.findByText("Derivatives 101")).toBeInTheDocument()
     expect(screen.getByText("Linear algebra intro")).toBeInTheDocument()
-    expect(screen.getByText("3 steps")).toBeInTheDocument()
+    expect(screen.getByText("3 lessons")).toBeInTheDocument()
     await user.click(screen.getByLabelText("Search courses"))
     await user.paste("linear")
     // The machine can be busy with other builds, so this one waits longer than the default.
@@ -54,12 +54,37 @@ describe("course page", () => {
     expect(screen.getByText("Changed")).toBeInTheDocument()
     expect(screen.getByText("New")).toBeInTheDocument()
     expect(screen.getByLabelText("Progress")).toBeInTheDocument()
-    expect(screen.getByText(/2 steps are new or changed; your completed steps stay completed\./)).toBeInTheDocument()
+    expect(screen.getByText("2 of 3 points")).toBeInTheDocument()
+    expect(
+      screen.getByText(/2 lessons are new or changed; your completed lessons stay completed\./),
+    ).toBeInTheDocument()
     expect(screen.getByLabelText("Completed")).toBeInTheDocument()
     const link = screen.getByRole("link", { name: /Derivative rules quiz/ })
     expect(link.getAttribute("href")).toContain(`course=${ids.course}&step=${ids.courseStepTest}`)
     // Continue goes to the first step that is not completed.
     expect(screen.getByRole("link", { name: "Continue" }).getAttribute("href")).toContain(`step=${ids.courseStepTest}`)
+  })
+
+  it("numbers the modules and lessons of the syllabus and sizes the course in the side card", async () => {
+    renderLms(<CoursePage slug={coursePage.slug} />)
+    const syllabus = (await screen.findByRole("heading", { name: "Syllabus" })).closest("section") as HTMLElement
+    const modules = within(syllabus).getAllByRole("heading", { level: 3 })
+    expect(modules.map((item) => item.textContent)).toEqual(["1Introduction", "2Rules and practice"])
+    expect(within(syllabus).getByText("1.1")).toBeInTheDocument()
+    expect(within(syllabus).getByText("2.1")).toBeInTheDocument()
+    expect(within(syllabus).getByText("2.2")).toBeInTheDocument()
+    expect(within(syllabus).getByText("2 lessons")).toBeInTheDocument()
+    const facts = screen.getByRole("list", { name: "Course facts" })
+    expect(within(facts).getByText("3 lessons")).toBeInTheDocument()
+    expect(within(facts).getByText("3 points")).toBeInTheDocument()
+  })
+
+  it("shows the Join course button of the promo page to someone who is not enrolled", async () => {
+    server.use(http.get(apiUrl("/v1/lms/courses/:slug"), () => HttpResponse.json(coursePageNotEnrolled)))
+    renderLms(<CoursePage slug={coursePage.slug} />)
+    expect(await screen.findByRole("button", { name: "Join course" })).toBeInTheDocument()
+    expect(screen.queryByLabelText("Progress")).not.toBeInTheDocument()
+    expect(screen.queryByRole("link", { name: "Continue" })).not.toBeInTheDocument()
   })
 
   it("enrolls in a public course and then offers Continue", async () => {
@@ -75,7 +100,7 @@ describe("course page", () => {
     // Steps are not links before enrolling.
     expect(await screen.findByText("Derivative rules quiz")).toBeInTheDocument()
     expect(screen.queryByRole("link", { name: /Derivative rules quiz/ })).not.toBeInTheDocument()
-    await user.click(screen.getByRole("button", { name: "Enroll" }))
+    await user.click(screen.getByRole("button", { name: "Join course" }))
     await waitFor(() => expect(enrolled).toBe(true))
     expect(await screen.findByRole("link", { name: "Continue" })).toBeInTheDocument()
   })
@@ -88,7 +113,7 @@ describe("course page", () => {
     )
     renderLms(<CoursePage slug={coursePage.slug} />)
     expect(await screen.findByRole("link", { name: "Enter invite code" })).toBeInTheDocument()
-    expect(screen.queryByRole("button", { name: "Enroll" })).not.toBeInTheDocument()
+    expect(screen.queryByRole("button", { name: "Join course" })).not.toBeInTheDocument()
   })
 
   it("shows Edit and Preview draft to staff", async () => {

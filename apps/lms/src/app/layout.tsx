@@ -1,4 +1,5 @@
 import "@ihsp/ui/styles"
+import "./stepik.css"
 import { THEME_INIT_SCRIPT } from "@ihsp/ui/theme-init"
 import type { Metadata, Viewport } from "next"
 import type { ReactNode } from "react"

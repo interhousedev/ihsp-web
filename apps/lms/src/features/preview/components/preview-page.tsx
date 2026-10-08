@@ -9,7 +9,15 @@ import { StepPlayer } from "../../player/components/step-player"
 import { PreviewIndex } from "./preview-index"
 
 /** `/edit/preview/?id=&step=`: the player with the draft content under a "Preview" banner, for staff with `view_drafts`. */
-export function PreviewPage({ courseId, stepId }: { courseId: string; stepId: string | null }) {
+export function PreviewPage({
+  courseId,
+  stepId,
+  block = null,
+}: {
+  courseId: string
+  stepId: string | null
+  block?: number | null
+}) {
   const { permissions, isPending } = useCoursePermissions(courseId)
   if (isPending) {
     return (
@@ -20,5 +28,5 @@ export function PreviewPage({ courseId, stepId }: { courseId: string; stepId: st
   }
   if (!can(permissions, "view_drafts")) return <AccessDenied backHref={hrefs.myCourses()} />
   if (!stepId) return <PreviewIndex courseId={courseId} />
-  return <StepPlayer courseId={courseId} stepId={stepId} slug={null} mode="preview" />
+  return <StepPlayer courseId={courseId} stepId={stepId} slug={null} block={block} mode="preview" />
 }

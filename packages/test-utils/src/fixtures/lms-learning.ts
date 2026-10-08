@@ -65,14 +65,37 @@ export const courseOutline: LearnerOutlineSection[] = [
   {
     id: ids.courseSectionIntro,
     title: "Introduction",
-    steps: [{ step_id: ids.courseStepText, title: "What is a derivative?", completed: true, badge: null }],
+    steps: [
+      {
+        step_id: ids.courseStepText,
+        title: "What is a derivative?",
+        completed: true,
+        badge: null,
+        points_total: 0,
+        points_earned: 0,
+      },
+    ],
   },
   {
     id: ids.courseSectionRules,
     title: "Rules and practice",
     steps: [
-      { step_id: ids.courseStepTest, title: "Derivative rules quiz", completed: false, badge: "changed" },
-      { step_id: ids.courseStepCards, title: "Key formulas", completed: false, badge: "new" },
+      {
+        step_id: ids.courseStepTest,
+        title: "Derivative rules quiz",
+        completed: false,
+        badge: "changed",
+        points_total: 3,
+        points_earned: 2,
+      },
+      {
+        step_id: ids.courseStepCards,
+        title: "Key formulas",
+        completed: false,
+        badge: "new",
+        points_total: 0,
+        points_earned: 0,
+      },
     ],
   },
 ]
@@ -84,6 +107,9 @@ export const coursePage: CoursePage = {
   enrolled: true,
   can_edit: false,
   changed_since_last_visit: [ids.courseStepTest, ids.courseStepCards],
+  steps_completed: 1,
+  points_total: 3,
+  points_earned: 2,
 }
 
 export const coursePageNotEnrolled: CoursePage = {
@@ -91,6 +117,12 @@ export const coursePageNotEnrolled: CoursePage = {
   progress_pct: null,
   enrolled: false,
   changed_since_last_visit: [],
+  steps_completed: null,
+  points_earned: null,
+  outline: courseOutline.map((section) => ({
+    ...section,
+    steps: section.steps.map((step) => ({ ...step, completed: undefined, badge: null, points_earned: null })),
+  })),
 }
 
 export const attemptResultPassed: AttemptResult = {
@@ -116,10 +148,15 @@ export const stepViewText: StepView = {
       type: "text",
       markdown:
         "# What is a derivative?\n\nThe derivative measures how fast a function changes.\n\n$f'(x)=\\lim_{h\\to 0}\\frac{f(x+h)-f(x)}{h}$",
+      passed: true,
     },
   ],
   completed: true,
   preview: false,
+  blocks_total: 1,
+  blocks_passed: 1,
+  points_total: 0,
+  points_earned: 0,
 }
 
 /** A step with a test: rules only, no correctness anywhere (backend never sends it before submit). */
@@ -134,19 +171,30 @@ export const stepViewTest: StepView = {
       rules: { questions: 3, attempts_left: 2, time_limit_sec: 600, passing_score_pct: 60 },
       best: attemptResultPassed,
       open_attempt_id: null,
+      passed: true,
+      points_total: 3,
+      points_earned: 2,
     },
   ],
   completed: false,
   preview: false,
+  blocks_total: 1,
+  blocks_passed: 1,
+  points_total: 3,
+  points_earned: 2,
 }
 
 export const stepViewCards: StepView = {
   step_id: ids.courseStepCards,
   revision_id: "0000000f-0000-4000-8000-000000000003",
   title: "Key formulas",
-  blocks: [{ id: "b3", type: "flashcards", cards_count: 4, due: 4 }],
+  blocks: [{ id: "b3", type: "flashcards", cards_count: 4, due: 4, passed: false }],
   completed: false,
   preview: false,
+  blocks_total: 1,
+  blocks_passed: 0,
+  points_total: 0,
+  points_earned: 0,
 }
 
 export const stepViews: StepView[] = [stepViewText, stepViewTest, stepViewCards]

@@ -1,6 +1,7 @@
 import { describe, expect, it, setDefaultTimeout } from "bun:test"
-import { apiUrl, attemptResultPassed, attemptView, ids, lmsCardStudy, server } from "@ihsp/test-utils"
-import { screen, waitFor } from "@testing-library/react"
+import type { StepView } from "@ihsp/api"
+import { apiUrl, attemptResultPassed, attemptView, ids, lmsCardStudy, server, stepViewTest } from "@ihsp/test-utils"
+import { screen, waitFor, within } from "@testing-library/react"
 import { HttpResponse, http } from "msw"
 import { StepPlayer } from "../features/player/components/step-player"
 import { readBody, renderLms } from "./helpers"
@@ -20,21 +21,146 @@ function startsAttemptWithoutDeadline() {
   )
 }
 
-function renderPlayer(stepId: string, mode: "learn" | "preview" = "learn") {
-  return renderLms(<StepPlayer courseId={courseId} stepId={stepId} slug={slug} mode={mode} />, {
+function renderPlayer(stepId: string, mode: "learn" | "preview" = "learn", block: number | null = null) {
+  return renderLms(<StepPlayer courseId={courseId} stepId={stepId} slug={slug} block={block} mode={mode} />, {
     route: `/course/step/?course=${courseId}&step=${stepId}`,
   })
 }
 
+/** A lesson of three steps: a text that is passed, a test that is not and flash cards that are not. */
+const mixedStep: StepView = {
+  ...stepViewTest,
+  title: "Derivative rules quiz",
+  blocks: [
+    { id: "t1", type: "text", markdown: "First read this.", passed: true },
+    ...stepViewTest.blocks.map((item) => (item.type === "test" ? { ...item, passed: false, points_earned: 0 } : item)),
+    { id: "c1", type: "flashcards", cards_count: 4, due: 4, passed: false },
+  ],
+  blocks_total: 3,
+  blocks_passed: 1,
+  points_total: 3,
+  points_earned: 0,
+}
+
+function servesMixedStep() {
+  server.use(http.get(apiUrl("/v1/lms/courses/:courseId/steps/:stepId"), () => HttpResponse.json(mixedStep)))
+}
+
 describe("step player: text and navigation", () => {
-  it("renders Markdown blocks and links to the neighbouring steps", async () => {
+  it("renders Markdown blocks and links to the neighbouring lessons", async () => {
     renderPlayer(ids.courseStepText)
     expect(await screen.findByRole("heading", { name: "What is a derivative?", level: 2 })).toBeInTheDocument()
-    const next = await screen.findByRole("link", { name: /Next/ })
+    const next = await screen.findByRole("link", { name: /Next lesson/ })
     // Next removes the trailing slash outside the static export config, so only the query is compared.
     expect(next.getAttribute("href")).toContain(`course=${courseId}&step=${ids.courseStepTest}&slug=${slug}`)
     expect(screen.queryByRole("link", { name: /Previous/ })).not.toBeInTheDocument()
-    expect(screen.getByText("1 of 3")).toBeInTheDocument()
+  })
+
+  it("shows the lesson number, the steps passed and the points like the Stepik header", async () => {
+    renderPlayer(ids.courseStepTest)
+    const title = await screen.findByRole("heading", { name: /Derivative rules quiz/, level: 1 })
+    expect(title).toHaveTextContent("2.1")
+    expect(screen.getByText("1 out of 1 steps passed")).toBeInTheDocument()
+    expect(screen.getByText("2 out of 3 points received")).toBeInTheDocument()
+  })
+
+  it("leaves the points out for a lesson without tests", async () => {
+    renderPlayer(ids.courseStepText)
+    await screen.findByText("1 out of 1 steps passed")
+    expect(screen.queryByText(/points received/)).not.toBeInTheDocument()
+  })
+})
+
+describe("step player: the step strip", () => {
+  it("has a square per step with its type and state, and marks the open one", async () => {
+    servesMixedStep()
+    renderPlayer(ids.courseStepTest)
+    const strip = await screen.findByRole("navigation", { name: "Steps of this lesson" })
+    const squares = within(strip).getAllByRole("link")
+    expect(squares.map((square) => square.getAttribute("aria-label"))).toEqual([
+      "Step 1: reading, passed",
+      "Step 2: quiz, not passed",
+      "Step 3: flash cards, not passed",
+    ])
+    // The first step not passed (the quiz) opens when the address names no step.
+    expect(squares.map((square) => square.getAttribute("aria-current"))).toEqual([null, "step", null])
+    expect(squares.map((square) => square.dataset.passed)).toEqual(["true", "false", "false"])
+    expect(await screen.findByTestId("best-result")).toHaveTextContent("Best result: 2/3")
+  })
+
+  it("opens the step named in the address and links the squares to their steps", async () => {
+    servesMixedStep()
+    renderPlayer(ids.courseStepTest, "learn", 1)
+    expect(await screen.findByText("First read this.")).toBeInTheDocument()
+    const strip = screen.getByRole("navigation", { name: "Steps of this lesson" })
+    const squares = within(strip).getAllByRole("link")
+    expect(squares[0]?.getAttribute("aria-current")).toBe("step")
+    expect(squares[2]?.getAttribute("href")).toContain(`step=${ids.courseStepTest}&slug=${slug}&block=3`)
+  })
+
+  it("moves to the next step inside the lesson and to the next lesson after the last step", async () => {
+    servesMixedStep()
+    const { unmount } = renderPlayer(ids.courseStepTest, "learn", 1)
+    const next = await screen.findByRole("link", { name: /Next step/ })
+    expect(next.getAttribute("href")).toContain(`step=${ids.courseStepTest}&slug=${slug}&block=2`)
+    expect(screen.queryByRole("link", { name: /^Previous/ })).toBeInTheDocument()
+    unmount()
+
+    renderPlayer(ids.courseStepTest, "learn", 3)
+    const lesson = await screen.findByRole("link", { name: /Next lesson/ })
+    expect(lesson.getAttribute("href")).toContain(`step=${ids.courseStepCards}&slug=${slug}`)
+    expect(lesson.getAttribute("href")).not.toContain("block=")
+  })
+
+  it("finishes at the end of the course by going back to the course page", async () => {
+    renderPlayer(ids.courseStepCards)
+    const finish = await screen.findByRole("link", { name: /Finish/ })
+    expect(finish.getAttribute("href")).toContain(`slug=${slug}`)
+  })
+
+  it("keeps a step from the address inside the lesson", async () => {
+    servesMixedStep()
+    renderPlayer(ids.courseStepTest, "learn", 99)
+    const strip = await screen.findByRole("navigation", { name: "Steps of this lesson" })
+    const squares = within(strip).getAllByRole("link")
+    expect(squares[2]?.getAttribute("aria-current")).toBe("step")
+  })
+})
+
+describe("step player: the course sidebar", () => {
+  it("lists the numbered modules and lessons, marks the open lesson and shows the points progress", async () => {
+    renderPlayer(ids.courseStepTest)
+    const nav = await screen.findByRole("navigation", { name: "Course contents" })
+    expect(within(nav).getByText("Introduction")).toBeInTheDocument()
+    expect(within(nav).getByText("Rules and practice")).toBeInTheDocument()
+    const current = within(nav).getByRole("link", { name: /Derivative rules quiz/ })
+    expect(current.getAttribute("aria-current")).toBe("step")
+    expect(current).toHaveTextContent("2.1")
+    expect(
+      within(nav)
+        .getByRole("link", { name: /What is a derivative\?/ })
+        .getAttribute("aria-current"),
+    ).toBeNull()
+    expect(within(nav).getByLabelText("Lesson completed")).toBeInTheDocument()
+    expect(screen.getByRole("progressbar", { name: "Course progress: 2/3" })).toBeInTheDocument()
+    expect(screen.getByText("Derivatives 101")).toBeInTheDocument()
+  })
+
+  it("opens as a drawer on a phone", async () => {
+    const { user } = renderPlayer(ids.courseStepText)
+    await screen.findByRole("heading", { name: "What is a derivative?", level: 2 })
+    await user.click(screen.getByRole("button", { name: "Open course contents" }))
+    const drawer = await screen.findByRole("dialog")
+    const nav = within(drawer).getByRole("navigation", { name: "Course contents" })
+    expect(within(nav).getByRole("link", { name: /Key formulas/ })).toBeInTheDocument()
+  })
+
+  it("offers the way back to the course and to my courses from the settings menu", async () => {
+    const { user } = renderPlayer(ids.courseStepText)
+    await screen.findByRole("heading", { name: "What is a derivative?", level: 2 })
+    await user.click(screen.getByRole("button", { name: "Settings" }))
+    expect(await screen.findByRole("menuitem", { name: "Course page" })).toBeInTheDocument()
+    expect(screen.getByRole("menuitem", { name: "My courses" })).toBeInTheDocument()
   })
 })
 
@@ -44,7 +170,7 @@ describe("step player: tests", () => {
     const { user } = renderPlayer(ids.courseStepTest)
 
     // The rules and the best result come first, with a way to start.
-    expect(await screen.findByText("Derivative rules quiz")).toBeInTheDocument()
+    expect(await screen.findByRole("heading", { name: /Derivative rules quiz/, level: 1 })).toBeInTheDocument()
     expect(screen.getByTestId("best-result")).toHaveTextContent("Best result: 2/3")
     await user.click(await screen.findByRole("button", { name: "Try again" }))
 
@@ -52,7 +178,8 @@ describe("step player: tests", () => {
     expect(await screen.findByText("What is the derivative of x^2?")).toBeInTheDocument()
     await user.click(screen.getByLabelText("2x"))
     await user.click(screen.getByLabelText("f(x) = 5"))
-    expect(screen.queryByText(/correct|incorrect|explanation|passed/i)).not.toBeInTheDocument()
+    const attempt = screen.getByRole("region", { name: "Attempt 1" })
+    expect(within(attempt).queryByText(/correct|incorrect|explanation|passed/i)).not.toBeInTheDocument()
     expect(document.querySelector("[data-correct]")).toBeNull()
 
     await user.click(screen.getByRole("button", { name: "Submit" }))

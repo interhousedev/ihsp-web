@@ -29,11 +29,12 @@
   "courseCard": {
     "invite": "Faqat taklif bilan",
     "progress": "Kurs bo'yicha natija",
-    "steps": "{count, plural, one {# qadam} other {# qadam}}"
+    "lessons": "{count, plural, one {# dars} other {# dars}}",
+    "continue": "Davom etish"
   },
   "catalog": {
     "title": "Kurslar",
-    "description": "Qo'shilish mumkin bo'lgan kurslar.",
+    "description": "Kursni tanlang va o'qishni boshlang.",
     "enterCode": "Taklif kodini kiritish",
     "searchLabel": "Kurslarni qidirish",
     "searchPlaceholder": "Nomi yoki tavsifi bo'yicha qidirish",
@@ -48,26 +49,37 @@
     "noneEnrolled": "Siz hali hech bir kursga yozilmagansiz.",
     "empty": "Sizda hali kurslar yo'q.",
     "browse": "Katalogni ochish",
-    "open": "Ochish",
+    "open": "Davom etish",
     "edit": "Tahrirlash",
     "view": "Ko'rish"
   },
   "course": {
     "title": "Kurs",
-    "enroll": "Yozilish",
+    "enroll": "Kursga qo'shilish",
     "continue": "Davom etish",
     "enterCode": "Taklif kodini kiritish",
     "edit": "Tahrirlash",
     "previewDraft": "Qoralamani ko'rish",
     "progress": "Natija",
-    "updatedNote": "Kurs {date} kuni yangilandi. {count, plural, one {# qadam yangi yoki o'zgargan} other {# qadam yangi yoki o'zgargan}}; tugatgan qadamlaringiz tugatilgan bo'lib qoladi.",
+    "updatedNote": "Kurs {date} kuni yangilandi. {count, plural, one {# dars yangi yoki o'zgargan} other {# dars yangi yoki o'zgargan}}; tugatgan darslaringiz tugatilgan bo'lib qoladi.",
     "lastUpdated": "Oxirgi yangilanish: {date}",
     "staff": "Kurs jamoasi",
     "noStaff": "Jamoa ko'rsatilmagan.",
-    "outline": "Kurs dasturi",
     "emptyOutline": "Dastur hozircha bo'sh.",
-    "emptySection": "Bu bo'limda qadamlar yo'q.",
-    "completed": "Tugatilgan"
+    "emptySection": "Bu modulda darslar yo'q.",
+    "completed": "Tugatilgan",
+    "aboutCourse": "Kurs haqida",
+    "syllabus": "Kurs dasturi",
+    "module": "{number}-modul",
+    "moduleLessons": "{count, plural, one {# dars} other {# dars}}",
+    "lessons": "{count, plural, one {# dars} other {# dars}}",
+    "points": "{count, plural, one {# ball} other {# ball}}",
+    "invite": "Faqat taklif bilan",
+    "yourProgress": "Sizning natijangiz",
+    "progressPoints": "{total} balldan {earned} ball",
+    "progressLessons": "{total} darsdan {done} tasi",
+    "facts": "Kurs haqida raqamlarda",
+    "lessonNumber": "{number}-dars"
   },
   "join": {
     "title": "Kursga qo'shilish",
@@ -77,17 +89,44 @@
     "invalid": "Taklif yaroqsiz. Kodni tekshiring yoki yangisini so'rang."
   },
   "player": {
-    "title": "Qadam",
+    "title": "Dars",
     "backToCourse": "Kursga qaytish",
     "backToEditor": "Muharrirga qaytish",
     "completed": "Tugatilgan",
     "emptyStep": "Bu qadamda hali mazmun yo'q.",
     "previewBanner": "Ko'rib chiqish.",
     "previewNote": "Siz qoralamani talabalar nashrdan keyin ko'radigan shaklda ko'ryapsiz. Bu yerdagi test urinishlari hisobga olinmaydi.",
-    "stepNavigation": "Qadamlar",
+    "contents": "Kurs mundarijasi",
+    "openContents": "Kurs mundarijasini ochish",
+    "stepsOfLesson": "Dars qadamlari",
+    "stepLabel": "{number}-qadam: {kind}, {status}",
+    "kind": {
+      "text": "material",
+      "test": "test",
+      "flashcards": "kartochkalar"
+    },
+    "status": {
+      "passed": "o'tilgan",
+      "notPassed": "o'tilmagan"
+    },
+    "stepsPassed": "{total} ta qadamdan {passed} tasi o'tildi",
+    "pointsReceived": "{total} balldan {earned} ball olindi",
+    "courseProgressPoints": "Kurs bo'yicha natija: {earned}/{total}",
+    "courseProgressLessons": "Kurs bo'yicha natija: {done}/{total} dars",
+    "lessonCompleted": "Dars tugatilgan",
+    "noLessons": "Kursda hali darslar yo'q.",
     "previous": "Oldingisi",
-    "next": "Keyingisi",
-    "position": "{position} / {total}"
+    "nextStep": "Keyingi qadam",
+    "nextLesson": "Keyingi dars",
+    "finish": "Yakunlash",
+    "fullscreen": "To'liq ekran",
+    "exitFullscreen": "To'liq ekrandan chiqish",
+    "settings": "Sozlamalar",
+    "coursePage": "Kurs sahifasi",
+    "editCourse": "Kursni tahrirlash",
+    "myCourses": "Mening kurslarim",
+    "sidebarUnavailable": "Kurs mundarijasini yuklab bo'lmadi.",
+    "lessonNavigation": "Dars navigatsiyasi"
   },
   "test": {
     "title": "Test",
@@ -99,7 +138,8 @@
       "timeLimit": "Vaqt chegarasi",
       "noLimit": "Yo'q",
       "minutes": "{count} daqiqa",
-      "passing": "O'tish bali"
+      "passing": "O'tish bali",
+      "points": "Ballar"
     },
     "best": "Eng yaxshi natija: {score}/{max}",
     "start": "Boshlash",

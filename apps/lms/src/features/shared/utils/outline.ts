@@ -34,3 +34,15 @@ export function neighbours(
     total: steps.length,
   }
 }
+
+/**
+ * Stepik-style numbers of the lessons by step id: the module number, a dot and the lesson's place in its module
+ * ("3.6" is the sixth lesson of the third module).
+ */
+export function lessonNumbers(outline: readonly OutlineSection[]): Map<string, string> {
+  const numbers = new Map<string, string>()
+  outline.forEach((section, sectionIndex) => {
+    section.steps.forEach((step, stepIndex) => numbers.set(step.step_id, `${sectionIndex + 1}.${stepIndex + 1}`))
+  })
+  return numbers
+}

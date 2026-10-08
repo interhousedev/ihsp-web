@@ -17,6 +17,7 @@ import {
 import { useMutation, useQueryClient } from "@tanstack/react-query"
 import { useRouter, useSearchParams } from "next/navigation"
 import { useState, type FormEvent } from "react"
+import { StepikScope } from "../../shared/components/stepik-scope"
 import { hrefs } from "../../shared/utils/hrefs"
 
 /** `/join/?code=`: joins an invite-only course by code (UF-LMS-02). The code from the link only pre-fills the field. */
@@ -46,34 +47,36 @@ export function JoinPage() {
   const invalid = isApiError(join.error) && (join.error.type === "lms/invite-not-valid" || join.error.status === 404)
 
   return (
-    <PageContainer title={t("title")} description={t("description")}>
-      <Card className="max-w-md">
-        <CardContent>
-          <form onSubmit={submit} className="flex flex-col gap-4" noValidate>
-            <Field>
-              <FieldLabel htmlFor="join-code">{t("codeLabel")}</FieldLabel>
-              <Input
-                id="join-code"
-                value={code}
-                onChange={(event) => setCode(event.target.value)}
-                autoComplete="off"
-                autoCapitalize="characters"
-                spellCheck={false}
-                className="h-11 font-mono tracking-widest md:h-8"
-              />
-            </Field>
-            {join.isError ? (
-              <Alert variant="destructive">
-                <AlertDescription>{invalid ? t("invalid") : errorMessage(join.error)}</AlertDescription>
-              </Alert>
-            ) : null}
-            <Button type="submit" disabled={join.isPending || code.trim() === ""} className="min-h-11 md:min-h-8">
-              {join.isPending ? <Spinner aria-hidden /> : null}
-              {t("submit")}
-            </Button>
-          </form>
-        </CardContent>
-      </Card>
-    </PageContainer>
+    <StepikScope>
+      <PageContainer title={t("title")} description={t("description")}>
+        <Card className="max-w-md">
+          <CardContent>
+            <form onSubmit={submit} className="flex flex-col gap-4" noValidate>
+              <Field>
+                <FieldLabel htmlFor="join-code">{t("codeLabel")}</FieldLabel>
+                <Input
+                  id="join-code"
+                  value={code}
+                  onChange={(event) => setCode(event.target.value)}
+                  autoComplete="off"
+                  autoCapitalize="characters"
+                  spellCheck={false}
+                  className="h-11 font-mono tracking-widest md:h-8"
+                />
+              </Field>
+              {join.isError ? (
+                <Alert variant="destructive">
+                  <AlertDescription>{invalid ? t("invalid") : errorMessage(join.error)}</AlertDescription>
+                </Alert>
+              ) : null}
+              <Button type="submit" disabled={join.isPending || code.trim() === ""} className="min-h-11 md:min-h-8">
+                {join.isPending ? <Spinner aria-hidden /> : null}
+                {t("submit")}
+              </Button>
+            </form>
+          </CardContent>
+        </Card>
+      </PageContainer>
+    </StepikScope>
   )
 }

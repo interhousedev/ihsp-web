@@ -34,7 +34,8 @@ export function useMarkViewed({
         queryClient.setQueryData<StepView>(keys.lms.step(courseId, stepId), (current) =>
           current ? { ...current, completed: progress.completed } : current,
         )
-        void refreshProgress(queryClient, { courseId, stepId, slug, step: false })
+        // The viewed mark passes the text blocks of the step, so the step is read again as well as the course page.
+        void refreshProgress(queryClient, { courseId, stepId, slug })
       },
       () => undefined,
     )

@@ -78,7 +78,9 @@ describe("preview", () => {
       session: testerSession,
     })
     expect(await screen.findByTestId("preview-banner")).toBeInTheDocument()
-    expect(await screen.findByText("Derivative rules quiz")).toBeInTheDocument()
+    expect(await screen.findByRole("heading", { name: /Derivative rules quiz/, level: 1 })).toBeInTheDocument()
+    // The preview has the same strip as the learner player, with nothing passed.
+    expect(await screen.findByRole("navigation", { name: "Steps of this lesson" })).toBeInTheDocument()
   })
 
   it("lists the draft outline when no step is given", async () => {

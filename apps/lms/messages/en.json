@@ -29,11 +29,12 @@
   "courseCard": {
     "invite": "Invite only",
     "progress": "Course progress",
-    "steps": "{count, plural, one {# step} other {# steps}}"
+    "lessons": "{count, plural, one {# lesson} other {# lessons}}",
+    "continue": "Continue"
   },
   "catalog": {
     "title": "Courses",
-    "description": "Courses you can join.",
+    "description": "Pick a course and start learning.",
     "enterCode": "Enter invite code",
     "searchLabel": "Search courses",
     "searchPlaceholder": "Search by title or description",
@@ -48,26 +49,37 @@
     "noneEnrolled": "You are not enrolled in any course yet.",
     "empty": "You have no courses yet.",
     "browse": "Browse the catalog",
-    "open": "Open",
+    "open": "Continue",
     "edit": "Edit",
     "view": "View"
   },
   "course": {
     "title": "Course",
-    "enroll": "Enroll",
+    "enroll": "Join course",
     "continue": "Continue",
     "enterCode": "Enter invite code",
     "edit": "Edit",
     "previewDraft": "Preview draft",
     "progress": "Progress",
-    "updatedNote": "Updated on {date}. {count, plural, one {# step is new or changed} other {# steps are new or changed}}; your completed steps stay completed.",
+    "updatedNote": "Updated on {date}. {count, plural, one {# lesson is new or changed} other {# lessons are new or changed}}; your completed lessons stay completed.",
     "lastUpdated": "Last updated {date}",
     "staff": "Course staff",
     "noStaff": "No staff shown.",
-    "outline": "Course outline",
-    "emptyOutline": "The outline is empty.",
-    "emptySection": "No steps in this section.",
-    "completed": "Completed"
+    "emptyOutline": "The syllabus is empty.",
+    "emptySection": "No lessons in this module.",
+    "completed": "Completed",
+    "aboutCourse": "About the course",
+    "syllabus": "Syllabus",
+    "module": "Module {number}",
+    "moduleLessons": "{count, plural, one {# lesson} other {# lessons}}",
+    "lessons": "{count, plural, one {# lesson} other {# lessons}}",
+    "points": "{count, plural, one {# point} other {# points}}",
+    "invite": "Invite only",
+    "yourProgress": "Your progress",
+    "progressPoints": "{earned} of {total} points",
+    "progressLessons": "{done} of {total} lessons",
+    "facts": "Course facts",
+    "lessonNumber": "Lesson {number}"
   },
   "join": {
     "title": "Join a course",
@@ -77,17 +89,44 @@
     "invalid": "Invite not valid. Check the code or ask for a new one."
   },
   "player": {
-    "title": "Step",
+    "title": "Lesson",
     "backToCourse": "Back to the course",
     "backToEditor": "Back to the editor",
     "completed": "Completed",
     "emptyStep": "This step has no content yet.",
     "previewBanner": "Preview.",
     "previewNote": "You see the draft as students will after publishing. Test attempts here are not counted.",
-    "stepNavigation": "Steps",
+    "contents": "Course contents",
+    "openContents": "Open course contents",
+    "stepsOfLesson": "Steps of this lesson",
+    "stepLabel": "Step {number}: {kind}, {status}",
+    "kind": {
+      "text": "reading",
+      "test": "quiz",
+      "flashcards": "flash cards"
+    },
+    "status": {
+      "passed": "passed",
+      "notPassed": "not passed"
+    },
+    "stepsPassed": "{passed} out of {total} steps passed",
+    "pointsReceived": "{earned} out of {total} points received",
+    "courseProgressPoints": "Course progress: {earned}/{total}",
+    "courseProgressLessons": "Course progress: {done}/{total} lessons",
+    "lessonCompleted": "Lesson completed",
+    "noLessons": "The course has no lessons yet.",
     "previous": "Previous",
-    "next": "Next",
-    "position": "{position} of {total}"
+    "nextStep": "Next step",
+    "nextLesson": "Next lesson",
+    "finish": "Finish",
+    "fullscreen": "Full screen",
+    "exitFullscreen": "Exit full screen",
+    "settings": "Settings",
+    "coursePage": "Course page",
+    "editCourse": "Edit the course",
+    "myCourses": "My courses",
+    "sidebarUnavailable": "The course contents could not be loaded.",
+    "lessonNavigation": "Lesson navigation"
   },
   "test": {
     "title": "Test",
@@ -99,7 +138,8 @@
       "timeLimit": "Time limit",
       "noLimit": "No limit",
       "minutes": "{count} min",
-      "passing": "Passing score"
+      "passing": "Passing score",
+      "points": "Points"
     },
     "best": "Best result: {score}/{max}",
     "start": "Start",
