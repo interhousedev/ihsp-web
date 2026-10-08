@@ -1,0 +1,232 @@
+{
+  "files": {
+    "page": {
+      "title": "Mening fayllarim",
+      "description": "Yordamchi va qisqa havolalar uchun fayllar. Semestr fayllari u tugagach o‘chiriladi.",
+      "upload": "Fayllarni yuklash",
+      "empty": "Hozircha fayllar yo‘q. Birinchisini yuklang.",
+      "loadMore": "Yana ko‘rsatish"
+    },
+    "storage": {
+      "label": "Band joy",
+      "used": "{used} / {quota}",
+      "almostFull": "Deyarli to‘lgan. Keraksiz fayllarni o‘chiring.",
+      "clearedOn": "Bu semestr fayllari {date} kuni o‘chiriladi."
+    },
+    "status": {
+      "checking": "Tekshirilmoqda…",
+      "rejected": "Rad etildi: {reason}",
+      "assistantReady": "Yordamchi uchun tayyor",
+      "assistantTooLarge": "Yordamchi uchun juda katta",
+      "assistantUnreadable": "Yordamchi o‘qiy olmaydi"
+    },
+    "usedBy": {
+      "label": "Qayerda ishlatilgan",
+      "link": "Havola",
+      "lesson": "Dars",
+      "chat": "Suhbat"
+    },
+    "row": {
+      "download": "Yuklab olish",
+      "downloadFailed": "Faylni ochib bo‘lmadi.",
+      "rename": "{name} nomini o‘zgartirish",
+      "renameShort": "Nomini o‘zgartirish",
+      "delete": "{name} faylini o‘chirish",
+      "deleteShort": "O‘chirish"
+    },
+    "rename": {
+      "title": "Fayl nomini o‘zgartirish",
+      "label": "Nomi",
+      "save": "Saqlash",
+      "cancel": "Bekor qilish"
+    },
+    "delete": {
+      "title": "Bu fayl o‘chirilsinmi?",
+      "description": "“{name}” fayli butunlay o‘chiriladi.",
+      "usedWarning": "Fayl ishlatilmoqda. Quyidagilar ishlamay qoladi:",
+      "confirm": "O‘chirish",
+      "deleted": "“{name}” fayli o‘chirildi."
+    }
+  },
+  "flashcards": {
+    "list": {
+      "title": "Kartochkalar",
+      "description": "To‘plamlarni Anki kabi o‘rganing: kartochkalar unutishingiz arafasida qaytadi.",
+      "newSet": "Yangi to‘plam",
+      "empty": "Hozircha to‘plamlar yo‘q. Yarating yoki yordamchidan konspektlaringizdan kartochkalar yasashni so‘rang.",
+      "due": "Takrorlash kerak",
+      "new": "Yangi",
+      "cards": "Kartochkalar",
+      "study": "O‘rganish",
+      "open": "Ochish"
+    },
+    "new": {
+      "title": "Yangi to‘plam",
+      "description": "To‘plamga nom bering. Kartochkalarni keyingi ekranda qo‘shasiz.",
+      "titleLabel": "Nomi",
+      "descriptionLabel": "Tavsif (ixtiyoriy)",
+      "cancel": "Bekor qilish",
+      "create": "To‘plam yaratish"
+    },
+    "source": {
+      "ai": "Yordamchi",
+      "mcp": "MCP orqali",
+      "copied": "Nusxalangan"
+    },
+    "set": {
+      "title": "Kartochkalar",
+      "missing": "To‘plam topilmadi.",
+      "cardCount": "{count} ta kartochka",
+      "countsLabel": "Bugungi kartochkalar",
+      "counts": {
+        "learning": "O‘rganilmoqda",
+        "review": "Takrorlash kerak",
+        "new": "Yangi"
+      },
+      "doneForToday": "Hozir takrorlash kerak emas. Keyinroq qayting yoki quyida kunlik limitlarni oshiring.",
+      "study": "O‘rganish",
+      "edit": "Tahrirlash",
+      "share": "Ulashish",
+      "settings": "Sozlamalar",
+      "cards": "Kartochkalar",
+      "noCards": "To‘plamda hali kartochkalar yo‘q. Qo‘shish uchun “Tahrirlash”ni bosing.",
+      "delete": "To‘plamni o‘chirish",
+      "deleteTitle": "Bu to‘plam o‘chirilsinmi?",
+      "deleteDescription": "“{title}” to‘plami, uning barcha kartochkalari va natijalari o‘chiriladi. Ochiq havolalar ishlamay qoladi.",
+      "deleteConfirm": "To‘plamni o‘chirish",
+      "deleteFailed": "To‘plamni o‘chirib bo‘lmadi."
+    },
+    "settings": {
+      "titleLabel": "Nomi",
+      "descriptionLabel": "Tavsif",
+      "newPerDay": "Kuniga yangi kartochkalar",
+      "reviewsPerDay": "Kuniga takrorlashlar",
+      "limitInvalid": "0 dan {max} gacha butun son kiriting.",
+      "save": "Saqlash",
+      "saving": "Saqlanmoqda…",
+      "saved": "Sozlamalar saqlandi."
+    },
+    "study": {
+      "title": "O‘rganish",
+      "missing": "To‘plam tanlanmagan.",
+      "backToSet": "To‘plamga qaytish",
+      "progress": "Mashg‘ulot jarayoni",
+      "remaining": "{count} ta kartochka qoldi",
+      "counts": "O‘rganilmoqda {learning} · Takrorlash {review} · Yangi {new}",
+      "card": "Kartochka",
+      "front": "Old tomoni",
+      "back": "Orqa tomoni",
+      "showAnswer": "Javobni ko‘rsatish (Probel)",
+      "rate": "Buni qanchalik bilar edingiz?",
+      "rating": {
+        "again": "Yana",
+        "hard": "Qiyin",
+        "medium": "O‘rtacha",
+        "easy": "Oson"
+      },
+      "summary": {
+        "title": "Bugunga yetarli",
+        "reviewed": "Siz {count} ta kartochkani takrorladingiz.",
+        "comeBack": "Ertaga qayting yoki to‘plam sozlamalarida kunlik limitlarni oshiring.",
+        "toSet": "To‘plamga qaytish",
+        "toList": "Barcha to‘plamlar"
+      }
+    },
+    "editor": {
+      "title": "Kartochkalarni tahrirlash",
+      "titleFor": "Kartochkalarni tahrirlash: {title}",
+      "missing": "To‘plam tanlanmagan.",
+      "hint": "Ikkala tomon ham Markdown’ni qo‘llab-quvvatlaydi. O‘zgartirmagan kartochkalaringiz natijasini saqlaydi.",
+      "preview": "Markdown ko‘rinishini ko‘rsatish",
+      "empty": "Hozircha kartochkalar yo‘q. Birinchisini qo‘shing.",
+      "add": "Kartochka qo‘shish",
+      "cardN": "{n}-kartochka",
+      "front": "{n}-kartochkaning old tomoni",
+      "back": "{n}-kartochkaning orqa tomoni",
+      "moveUp": "{n}-kartochkani yuqoriga siljitish",
+      "moveDown": "{n}-kartochkani pastga siljitish",
+      "remove": "{n}-kartochkani o‘chirish",
+      "incomplete": "Ikkala tomonni to‘ldiring yoki kartochkani o‘chiring.",
+      "save": "Saqlash",
+      "saving": "Saqlanmoqda…",
+      "saved": "Kartochkalar saqlandi.",
+      "unsaved": "Saqlanmagan o‘zgarishlar bor",
+      "discard": "Bekor qilish",
+      "backToSet": "To‘plamga qaytish"
+    },
+    "copy": {
+      "title": "Ulashilgan to‘plamni nusxalash",
+      "copying": "To‘plam hisobingizga nusxalanmoqda…",
+      "missing": "Nusxalash havolasi to‘liq emas."
+    }
+  },
+  "links": {
+    "page": {
+      "title": "Havolalar va ulashishlar",
+      "description": "Qisqa havolalar, fayllar va siz ochiq qilgan ulashishlar.",
+      "new": "Yangi qisqa havola",
+      "empty": "Hozircha havolalar yo‘q.",
+      "loadMore": "Yana ko‘rsatish",
+      "revokeTitle": "Ulashish bekor qilinsinmi?",
+      "revokeDescription": "“{name}” havolasi borlar uchun ishlamay qoladi.",
+      "revokeConfirm": "Bekor qilish",
+      "revoked": "Ulashish bekor qilindi.",
+      "deleteTitle": "Havola o‘chirilsinmi?",
+      "deleteDescription": "“{name}” ishlamay qoladi. Qisqa kod 90 kun qayta ishlatilmaydi.",
+      "deleteConfirm": "O‘chirish",
+      "deleted": "Havola o‘chirildi.",
+      "actionFailed": "Bajarilmadi. Qayta urinib ko‘ring."
+    },
+    "kind": {
+      "filter": "Turi bo‘yicha saralash",
+      "all": "Hammasi",
+      "url": "Havolalar",
+      "file": "Fayllar",
+      "chat": "Suhbatlar",
+      "flashcard_set": "Kartochkalar"
+    },
+    "row": {
+      "kind": {
+        "url": "Havola",
+        "file": "Fayl",
+        "chat": "Suhbat",
+        "flashcard_set": "Kartochkalar",
+        "lesson": "Dars ilovasi"
+      },
+      "status": {
+        "revoked": "Bekor qilingan",
+        "disabled": "O‘chirilgan",
+        "expired": "Muddati tugagan"
+      },
+      "modeSnapshot": "Surat",
+      "modeLive": "Jonli",
+      "hits": "{count} ta o‘tish",
+      "created": "{date} da yaratilgan",
+      "expires": "{date} gacha amal qiladi",
+      "copy": "Nusxalash",
+      "revoke": "Bekor qilish",
+      "revokeLabel": "{name} ni bekor qilish",
+      "delete": "O‘chirish",
+      "deleteLabel": "{name} ni o‘chirish",
+      "openLesson": "Darsni ochish"
+    },
+    "new": {
+      "title": "Yangi qisqa havola",
+      "description": "Veb-manzilni qisqartiring yoki fayllaringizdan birini ulashing.",
+      "mode": "Havola nimaga olib boradi",
+      "mode_url": "Veb-manzil",
+      "mode_file": "Fayl",
+      "urlLabel": "Manzil (http yoki https)",
+      "urlInvalid": "http:// yoki https:// bilan boshlanadigan to‘liq manzil kiriting.",
+      "fileLabel": "Fayl",
+      "chooseFile": "Faylni tanlang",
+      "loadingFiles": "Fayllar yuklanmoqda…",
+      "or": "yoki",
+      "uploadNew": "Yangi fayl yuklash",
+      "cancel": "Bekor qilish",
+      "create": "Havola yaratish",
+      "created": "Havola yaratildi: {url}",
+      "createdCopied": "Havola yaratildi va nusxalandi: {url}"
+    }
+  }
+}
