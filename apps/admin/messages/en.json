@@ -1,0 +1,1004 @@
+{
+  "app": {
+    "name": "IHSP Admin"
+  },
+  "nav": {
+    "main": "Main",
+    "home": "Home",
+    "groupHome": "Home",
+    "groupPeople": "People",
+    "groupAcademics": "Academics",
+    "groupReports": "Reports",
+    "groupCommunication": "Communication",
+    "groupTools": "Tools",
+    "dashboard": "Dashboard",
+    "students": "Students",
+    "teachers": "Teachers",
+    "users": "Users & roles",
+    "groups": "Groups",
+    "subjects": "Subjects",
+    "rooms": "Rooms",
+    "terms": "Terms & bells",
+    "timetable": "Timetable",
+    "lessons": "Lessons",
+    "attendance": "Attendance",
+    "monitoring": "Monitoring",
+    "broadcasts": "Broadcasts",
+    "moderation": "Moderation",
+    "assistant": "Assistant"
+  },
+  "shared": {
+    "filters": "Filters",
+    "exportCsv": "Export CSV",
+    "noLessons": "No lessons.",
+    "cancelled": "Cancelled",
+    "changed": "Changed",
+    "teacherNeeded": "Teacher needed",
+    "audience": {
+      "legend": "Audience",
+      "noGroups": "There are no groups yet.",
+      "whole": "Whole group",
+      "subgroup": "Subgroup {number}"
+    }
+  },
+  "status": {
+    "active": "Active",
+    "blocked": "Blocked",
+    "disabled": "Disabled",
+    "left": "Left",
+    "archived": "Archived",
+    "cancelled": "Cancelled",
+    "failed": "Failed",
+    "needs_reauth": "Needs EMIS login",
+    "pending_activation": "Not activated",
+    "deactivated": "Deactivated",
+    "draft": "Draft",
+    "scheduled": "Scheduled",
+    "sending": "Sending",
+    "sent": "Sent",
+    "partial": "Partly done",
+    "success": "Success",
+    "running": "Running"
+  },
+  "account": {
+    "noTelegram": "No Telegram accounts are linked.",
+    "linkedAt": "Linked {date}",
+    "otpDelivery": "Receives codes",
+    "botBlocked": "Blocked the bot",
+    "noSessions": "No active sessions.",
+    "unknownDevice": "Unknown device",
+    "currentSession": "Current",
+    "lastSeen": "last seen {date}",
+    "noAudit": "No audit events.",
+    "reason": "Reason",
+    "revokeSessions": "Revoke sessions",
+    "revokeTitle": "Revoke all sessions of {name}?",
+    "revokeDescription": "The user is logged out everywhere and has to log in again.",
+    "sessionsRevoked": "Sessions revoked",
+    "block": "Block",
+    "blockTitle": "Block {name}?",
+    "blockDescription": "All sessions, refresh tokens and connectors stop working and the bot stops serving their Telegram accounts. Tell the user why in the reason.",
+    "blocked": "{name} is blocked",
+    "unblock": "Unblock",
+    "unblocked": "{name} is unblocked"
+  },
+  "dashboard": {
+    "title": "Dashboard",
+    "description": "What needs action today.",
+    "lessonsToday": "Lessons today",
+    "cancelledToday": "Cancelled today",
+    "teacherNeeded": "Lessons without a teacher",
+    "needsReauth": "Students who must re-enter their EMIS password",
+    "missingTitle": "Attendance not submitted",
+    "missingNone": "Every recent lesson has its attendance.",
+    "missingCount": "Lessons: {count}",
+    "openMissing": "Open the list",
+    "syncTitle": "EMIS sync",
+    "syncLastRun": "Last run",
+    "syncStatus": "Status",
+    "syncNever": "The sync has not run yet.",
+    "syncNeedsReauth": "Need a new EMIS password: {count}",
+    "openMonitoring": "Open monitoring",
+    "broadcastsTitle": "Scheduled broadcasts",
+    "broadcastsNone": "No broadcasts are scheduled.",
+    "openBroadcasts": "Open broadcasts"
+  },
+  "students": {
+    "title": "Students",
+    "description": "Search students and open their full profile.",
+    "empty": "No students match these filters.",
+    "importAction": "Import from CSV",
+    "notSelected": "Choose a student from the list.",
+    "subgroup": "Subgroup {number}",
+    "filters": {
+      "query": "Search",
+      "queryPlaceholder": "Name or login",
+      "group": "Group",
+      "allGroups": "All groups",
+      "subgroup": "Subgroup",
+      "allSubgroups": "Any subgroup",
+      "status": "Status",
+      "allStatuses": "Any status",
+      "emisStatus": "EMIS status",
+      "allEmis": "Any EMIS status",
+      "registered": "Registration",
+      "allRegistered": "Registered or not"
+    },
+    "status": {
+      "active": "Active",
+      "left": "Left"
+    },
+    "emis": {
+      "active": "Working",
+      "needs_reauth": "Needs EMIS login"
+    },
+    "registered": {
+      "yes": "Registered",
+      "no": "Not registered"
+    },
+    "columns": {
+      "name": "Name",
+      "login": "Login",
+      "group": "Group",
+      "subgroup": "Subgroup",
+      "status": "Status",
+      "emis": "EMIS",
+      "registered": "Registration",
+      "synced": "Last sync"
+    },
+    "tabs": {
+      "overview": "Overview",
+      "timetable": "Timetable",
+      "grades": "Grades",
+      "attendance": "Attendance",
+      "account": "Account"
+    },
+    "overview": {
+      "login": "Login",
+      "mailbox": "Mailbox",
+      "group": "Group",
+      "subgroup": "Subgroup",
+      "semester": "Semester",
+      "curator": "Curator",
+      "headStudent": "Head student",
+      "status": "Status",
+      "emis": "EMIS status",
+      "synced": "Last sync",
+      "roles": "Roles"
+    },
+    "grades": {
+      "semester": "Semester {semester}",
+      "gpa": "GPA {gpa}",
+      "synced": "synced {date}",
+      "empty": "No grades yet.",
+      "subject": "Subject",
+      "lesson": "Lessons",
+      "midterm": "Midterm",
+      "final": "Final",
+      "semesterMark": "Semester mark",
+      "emisRating": "EMIS rating",
+      "count": "Marks"
+    },
+    "attendance": {
+      "period": "{from} – {to}",
+      "notTaken": "{count} lessons without attendance",
+      "empty": "No attendance data for this period.",
+      "subject": "Subject",
+      "lessons": "Lessons",
+      "absences": "Absences",
+      "excused": "Excused",
+      "rate": "Absence rate",
+      "missed": "Missed lessons",
+      "noMissed": "No missed lessons.",
+      "excusedBadge": "Excused"
+    },
+    "account": {
+      "telegram": "Telegram accounts",
+      "sessions": "Sessions",
+      "audit": "Audit events"
+    },
+    "import": {
+      "title": "Import students",
+      "description": "Upload a CSV exported from EMIS: last name, first name, middle name, group and EMIS student ID.",
+      "back": "Students",
+      "file": "CSV file",
+      "fileHint": "Nothing changes until you confirm the preview.",
+      "uploadPreview": "Show preview",
+      "new": "New students",
+      "changed": "Changes",
+      "conflicts": "Conflicts",
+      "noRows": "No rows.",
+      "line": "line {line}",
+      "unchanged": "Unchanged rows: {count}",
+      "conflictsHint": "{count} conflicting rows are skipped. Fix them in the file and upload it again to import them.",
+      "confirm": "Import {count} rows",
+      "discard": "Discard",
+      "done": "Import finished",
+      "result": "Created {created}, updated {updated}, skipped {skipped}."
+    }
+  },
+  "teachers": {
+    "title": "Teachers",
+    "description": "Teacher accounts, their timetable and missing attendance.",
+    "new": "New teacher",
+    "empty": "No teachers match these filters.",
+    "notSelected": "Choose a teacher from the list.",
+    "filters": {
+      "query": "Search",
+      "queryPlaceholder": "Name or login",
+      "status": "Status",
+      "allStatuses": "Any status"
+    },
+    "status": {
+      "active": "Active",
+      "pending_activation": "Not activated",
+      "deactivated": "Deactivated",
+      "blocked": "Blocked"
+    },
+    "columns": {
+      "name": "Name",
+      "login": "Login",
+      "status": "Status",
+      "email": "Email",
+      "lastLogin": "Last login"
+    },
+    "create": {
+      "title": "New teacher",
+      "description": "Create the account; the teacher activates it with a link.",
+      "back": "Teachers",
+      "lastName": "Last name",
+      "firstName": "First name",
+      "middleName": "Middle name",
+      "email": "Email",
+      "emailHint": "The activation link is sent to this address.",
+      "duplicate": "A teacher with this name already exists. Create another account only if it is a different person.",
+      "create": "Create account",
+      "createAnyway": "Create anyway",
+      "createdTitle": "Teacher account created",
+      "createdLogin": "Login: {login}",
+      "activationLink": "Activation link",
+      "activationHint": "Give this link to the teacher if the email does not arrive. It is shown only once.",
+      "openProfile": "Open the teacher profile",
+      "createAnother": "Create another"
+    },
+    "edit": {
+      "title": "Edit teacher",
+      "lastName": "Last name",
+      "firstName": "First name",
+      "middleName": "Middle name",
+      "email": "Email",
+      "cancel": "Cancel",
+      "save": "Save",
+      "saved": "Teacher saved"
+    },
+    "profile": {
+      "back": "Teachers",
+      "edit": "Edit",
+      "deactivate": "Deactivate",
+      "deactivateTitle": "Deactivate {name}?",
+      "deactivateDescription": "Sessions are revoked and future lessons are flagged for a new teacher.",
+      "deactivated": "{name} is deactivated",
+      "openInUsers": "Open in Users & roles",
+      "curatedGroups": "Curated groups",
+      "noGroups": "This teacher curates no group.",
+      "missingAttendance": "Lessons without attendance",
+      "missingCount": "Not submitted",
+      "noMissing": "Nothing is missing.",
+      "timetable": "Timetable of this week"
+    }
+  },
+  "users": {
+    "title": "Users & roles",
+    "description": "Block users, change roles, reset credentials and manage OAuth clients.",
+    "empty": "No users match these filters.",
+    "notSelected": "Choose a user from the list.",
+    "mailSuspended": "Mail suspended",
+    "tabs": {
+      "users": "Users",
+      "clients": "OAuth clients"
+    },
+    "filters": {
+      "query": "Search",
+      "queryPlaceholder": "Name or login",
+      "role": "Role",
+      "allRoles": "Any role",
+      "status": "Status",
+      "allStatuses": "Any status"
+    },
+    "roles": {
+      "student": "Student",
+      "teacher": "Teacher",
+      "admin": "Administration",
+      "lms_admin": "LMS admin",
+      "legend": "Roles that can be granted",
+      "save": "Save roles",
+      "saved": "Roles of {name} saved",
+      "confirmTitle": "Change roles?",
+      "confirmDescription": "The user is logged out everywhere. A new Administration member has to set up a one-time code at the next login."
+    },
+    "status": {
+      "active": "Active",
+      "pending_activation": "Not activated",
+      "blocked": "Blocked",
+      "deactivated": "Deactivated"
+    },
+    "columns": {
+      "name": "Name",
+      "login": "Login",
+      "roles": "Roles",
+      "status": "Status",
+      "lastLogin": "Last login"
+    },
+    "detail": {
+      "back": "Users & roles",
+      "created": "Created {date}",
+      "lastLogin": "Last login {date}",
+      "neverLoggedIn": "Never logged in",
+      "access": "Access",
+      "resetOnlyAdmins": "Passwords and codes can be reset here for Administration members only.",
+      "roles": "Roles",
+      "mail": "Mail",
+      "telegram": "Telegram accounts",
+      "sessions": "Sessions",
+      "audit": "Recent audit events"
+    },
+    "reset": {
+      "password": "Reset password",
+      "passwordTitle": "Reset the password of {name}?",
+      "passwordDescription": "The old password stops working. You get a one-time activation link to hand over.",
+      "otp": "Reset one-time code",
+      "otpTitle": "Reset the one-time code of {name}?",
+      "otpDescription": "The user sets up the one-time code again at the next login.",
+      "otpDone": "The one-time code of {name} is reset",
+      "linkTitle": "Activation link",
+      "linkDescription": "Give this link to the user. It is shown only once.",
+      "close": "Done"
+    },
+    "mail": {
+      "noMailbox": "No mailbox",
+      "stateActive": "Sending allowed",
+      "stateSuspended": "Sending suspended",
+      "suspend": "Suspend sending",
+      "suspendTitle": "Suspend sending from the mailbox of {name}?",
+      "suspendDescription": "The bot refuses to send from this mailbox and explains why. Receiving keeps working.",
+      "reason": "Reason",
+      "suspended": "Sending from the mailbox of {name} is suspended",
+      "resume": "Resume sending",
+      "resumed": "Sending from the mailbox of {name} is resumed"
+    },
+    "clients": {
+      "empty": "No OAuth clients yet.",
+      "name": "Name",
+      "clientId": "Client ID",
+      "kind": "Type",
+      "builtIn": "Built-in",
+      "dynamic": "Registered by a connector",
+      "lastUsed": "Last used",
+      "state": "State",
+      "actions": "Actions",
+      "verified": "Verified",
+      "unverified": "Unverified",
+      "verify": "Mark as verified",
+      "unverify": "Remove verification",
+      "verifiedDone": "{name} is verified",
+      "unverifiedDone": "{name} is no longer verified"
+    }
+  },
+  "groups": {
+    "title": "Groups",
+    "description": "Groups with students, subgroups, attendance and average GPA.",
+    "new": "New group",
+    "empty": "No groups yet.",
+    "notSelected": "Choose a group from the list.",
+    "filters": {
+      "status": "Status",
+      "allStatuses": "Any status"
+    },
+    "status": {
+      "active": "Active",
+      "archived": "Archived"
+    },
+    "columns": {
+      "name": "Group",
+      "semester": "Semester",
+      "students": "Students",
+      "subgroups": "Subgroups set",
+      "unregistered": "Not registered",
+      "attendance": "Attendance",
+      "gpa": "Average GPA",
+      "curator": "Curator",
+      "status": "Status"
+    },
+    "create": {
+      "title": "New group",
+      "description": "Groups usually come from EMIS. Add one by hand with its EMIS group ID.",
+      "name": "Name",
+      "emisId": "EMIS group ID",
+      "emisHint": "Optional. Links the group to EMIS.",
+      "semester": "Current semester",
+      "cancel": "Cancel",
+      "submit": "Create group",
+      "done": "Group {name} created"
+    },
+    "view": {
+      "semester": "Semester {semester}",
+      "people": "Curator and head student",
+      "curator": "Curator",
+      "headStudent": "Head student",
+      "none": "Not set",
+      "status": "Status",
+      "statusActive": "Active",
+      "statusArchived": "Archived",
+      "save": "Save",
+      "saved": "Group saved",
+      "students": "Students ({count})",
+      "saveSubgroups": "Save subgroups ({count})",
+      "subgroupsSaved": "Subgroups saved",
+      "noStudents": "There are no students in this group yet.",
+      "name": "Student",
+      "statusColumn": "Status",
+      "registered": "Registered",
+      "subgroup": "Subgroup",
+      "subgroupOf": "Subgroup of {name}",
+      "subgroupNumber": "Subgroup {number}",
+      "noSubgroup": "No subgroup",
+      "yes": "Yes",
+      "no": "No"
+    }
+  },
+  "subjects": {
+    "title": "Subjects",
+    "description": "Subjects from EMIS and subjects added by hand.",
+    "new": "New subject",
+    "empty": "No subjects match.",
+    "notInEmis": "Not in EMIS",
+    "edit": "Edit {name}",
+    "dividedFor": "{name} can be divided into subgroups",
+    "filters": {
+      "query": "Search",
+      "queryPlaceholder": "Subject name"
+    },
+    "columns": {
+      "nameEn": "English",
+      "nameRu": "Russian",
+      "nameUz": "Uzbek",
+      "shortName": "Short name",
+      "emis": "EMIS ID",
+      "canBeDivided": "Can be divided",
+      "actions": "Actions"
+    },
+    "dialog": {
+      "createTitle": "New subject",
+      "editTitle": "Edit subject",
+      "description": "Names are shown to students and teachers in their language.",
+      "nameUz": "Name in Uzbek",
+      "nameRu": "Name in Russian",
+      "nameEn": "Name in English",
+      "shortName": "Short name",
+      "emisId": "EMIS subject ID",
+      "emisHint": "Links the subject to its EMIS subject.",
+      "canBeDivided": "Can be divided into subgroups",
+      "cancel": "Cancel",
+      "save": "Save",
+      "created": "Subject created",
+      "saved": "Subject saved"
+    }
+  },
+  "rooms": {
+    "title": "Rooms",
+    "description": "Rooms created from the timetable, with their link and PIN.",
+    "empty": "No rooms yet. They appear when a room is used in the timetable.",
+    "copyLink": "Copy link",
+    "copyPin": "Copy PIN",
+    "pinOf": "PIN of room {name}",
+    "filters": {
+      "status": "Status",
+      "allStatuses": "Any status"
+    },
+    "status": {
+      "active": "Active",
+      "archived": "Archived"
+    },
+    "columns": {
+      "name": "Room",
+      "link": "Link",
+      "pin": "PIN",
+      "lessons": "Lessons this week",
+      "status": "Status",
+      "actions": "Actions"
+    },
+    "actions": {
+      "rename": "Rename room {name}",
+      "pin": "Regenerate the PIN of room {name}",
+      "merge": "Merge room {name} into another room",
+      "archive": "Archive room {name}"
+    },
+    "rename": {
+      "title": "Rename room {name}",
+      "description": "The address of the room page changes with the name.",
+      "name": "New name",
+      "cancel": "Cancel",
+      "submit": "Rename",
+      "done": "Room renamed"
+    },
+    "pin": {
+      "title": "Regenerate the PIN of room {name}?",
+      "description": "The old PIN and existing bookmarks stop working at once. The new PIN goes out with the next lesson message.",
+      "confirm": "Regenerate PIN",
+      "done": "New PIN created"
+    },
+    "merge": {
+      "title": "Merge room {name} into another room",
+      "description": "Use this when a typo created a room. Its lessons move to the room you choose, and this room is archived.",
+      "target": "Merge into",
+      "choose": "Choose a room",
+      "cancel": "Cancel",
+      "submit": "Merge",
+      "done": "Rooms merged"
+    },
+    "archive": {
+      "title": "Archive room {name}?",
+      "description": "Lessons this week: {count}. Archive a room only when no lesson uses it any more.",
+      "confirm": "Archive",
+      "done": "Room archived"
+    }
+  },
+  "terms": {
+    "title": "Terms & bells",
+    "description": "Terms, the bell schedule, non-study days and moved study days.",
+    "new": "New term",
+    "empty": "No terms yet.",
+    "edit": "Edit",
+    "current": "Current",
+    "termTitle": "{year}, half {half}",
+    "dates": "{from} – {to}",
+    "bell": "{period}. {start}–{end}",
+    "counts": "Non-study days: {holidays}. Moved study days: {moved}.",
+    "editor": {
+      "createTitle": "New term",
+      "editTitle": "Edit term {year}",
+      "description": "Terms cannot overlap. Changing a bell time updates future lessons only.",
+      "year": "Academic year",
+      "yearHint": "For example 2026/2027",
+      "half": "Half",
+      "half1": "First half",
+      "half2": "Second half",
+      "starts": "Starts on",
+      "ends": "Ends on",
+      "bells": "Bell schedule",
+      "bellsHint": "For another time on Saturday add a second row with the same period and only Saturday.",
+      "cancel": "Cancel",
+      "save": "Save term",
+      "created": "Term created",
+      "saved": "Term saved",
+      "issues": {
+        "year": "Enter the academic year.",
+        "dates": "Choose the start and end dates.",
+        "order": "The term must end after it starts.",
+        "noBells": "Add at least one period.",
+        "bellTime": "Every period needs a start time that is before its end time.",
+        "bellWeekdays": "Every period needs at least one weekday.",
+        "bellDuplicate": "A period appears twice on the same weekday."
+      }
+    },
+    "bells": {
+      "period": "Period",
+      "start": "Start",
+      "end": "End",
+      "weekdays": "Weekdays of period {period}",
+      "remove": "Remove period {period}",
+      "add": "Add period"
+    },
+    "days": {
+      "nonStudy": "Non-study days",
+      "nonStudyHint": "Holidays when there are no lessons.",
+      "pickHoliday": "Choose a date",
+      "addHoliday": "Add day",
+      "moved": "Moved study days",
+      "movedHint": "A date that follows the timetable of another weekday.",
+      "pickMoved": "Choose a date",
+      "follows": "Follows the timetable of",
+      "addMoved": "Add moved day",
+      "movedLine": "{date} follows {weekday}",
+      "removeDay": "Remove {date}"
+    }
+  },
+  "timetable": {
+    "title": "Timetable",
+    "description": "The weekly timetable by group, teacher or room.",
+    "term": "Term",
+    "termLabel": "{year}, half {half}",
+    "view": "View",
+    "views": {
+      "group": "Group",
+      "teacher": "Teacher",
+      "room": "Room"
+    },
+    "entity": {
+      "group": "Group",
+      "teacher": "Teacher",
+      "room": "Room"
+    },
+    "noEntities": {
+      "group": "There are no groups yet.",
+      "teacher": "There are no teachers yet.",
+      "room": "There are no rooms yet."
+    },
+    "noTerms": "Create a term first.",
+    "emptyTimetable": "This timetable is empty. Click a cell to add the first entry.",
+    "copyFromTerm": "Copy from another term",
+    "gridCaption": "Weekly timetable",
+    "period": "Period",
+    "add": "Add entry",
+    "addAt": "Add an entry on {weekday}, period {period}",
+    "openEntry": "Edit entry {subject}",
+    "parityShort": {
+      "odd": "odd weeks",
+      "even": "even weeks"
+    },
+    "copy": {
+      "title": "Copy into {year}, half {half}",
+      "description": "Entries of the chosen term are copied here. Check them and adjust what changed.",
+      "from": "Copy from",
+      "choose": "Choose a term",
+      "termLabel": "{year}, half {half}",
+      "cancel": "Cancel",
+      "submit": "Copy timetable",
+      "done": "Entries copied: {count}"
+    },
+    "editor": {
+      "createTitle": "New entry",
+      "editTitle": "Edit entry",
+      "description": "{weekday}, period {period}",
+      "weekday": "Weekday",
+      "period": "Period",
+      "parity": "Weeks",
+      "parityEvery": "Every week",
+      "parityOdd": "Odd weeks",
+      "parityEven": "Even weeks",
+      "subject": "Subject",
+      "choose": "Choose",
+      "teacher": "Teacher",
+      "noTeacher": "No teacher yet",
+      "room": "Room",
+      "roomHint": "Pick a room or type a new name to create it.",
+      "audience": "Audience",
+      "splitSuggestion": "This subject can be divided. Create two entries, one for each subgroup?",
+      "split": "Split into subgroups",
+      "splitNext": "Save subgroup 1, then the same form opens for subgroup 2.",
+      "validFrom": "Valid from",
+      "validTo": "Valid until",
+      "validToHint": "Leave empty for the whole term.",
+      "noEnd": "No end date",
+      "clear": "Clear",
+      "checking": "Checking for conflicts…",
+      "checkFailed": "The conflict check failed. Saving is checked again on the server.",
+      "noConflicts": "No conflicts.",
+      "conflictsTitle": "Conflicts: {count}",
+      "conflictKind": {
+        "teacher": "Teacher",
+        "room": "Room",
+        "audience": "Audience"
+      },
+      "cancel": "Cancel",
+      "save": "Save entry",
+      "saved": "Entry saved",
+      "created": "Entry created",
+      "delete": "Delete entry",
+      "deleteTitle": "Delete this entry?",
+      "deleteDescription": "Future generated lessons of this entry are removed. Lessons changed by hand stay.",
+      "deleted": "Entry deleted"
+    }
+  },
+  "lessons": {
+    "title": "Lessons",
+    "description": "Search lessons and change single ones.",
+    "extraAction": "Extra lesson",
+    "empty": "No lessons match these filters.",
+    "changeAction": "Change",
+    "changeLesson": "Change {subject} on {date}",
+    "changed": "Changed",
+    "teacherNeeded": "Teacher needed",
+    "status": {
+      "scheduled": "Scheduled",
+      "cancelled": "Cancelled"
+    },
+    "filters": {
+      "from": "From date",
+      "to": "To date",
+      "group": "Group",
+      "allGroups": "All groups",
+      "teacher": "Teacher",
+      "allTeachers": "All teachers",
+      "status": "Status",
+      "allStatuses": "Any status",
+      "teacherNeeded": "Teacher",
+      "anyTeacher": "With or without teacher",
+      "onlyTeacherNeeded": "Teacher needed"
+    },
+    "columns": {
+      "date": "Date",
+      "time": "Time",
+      "subject": "Subject",
+      "teacher": "Teacher",
+      "room": "Room",
+      "audience": "Audience",
+      "status": "Status",
+      "actions": "Actions"
+    },
+    "change": {
+      "title": "Change {subject}",
+      "description": "Changes are marked as made by hand, so the timetable will not overwrite them.",
+      "status": "Status",
+      "scheduled": "Scheduled",
+      "cancelled": "Cancelled",
+      "date": "Date",
+      "period": "Period",
+      "subject": "Subject",
+      "teacher": "Teacher",
+      "noTeacher": "No teacher",
+      "room": "Room",
+      "roomHint": "Pick a room or type a new name to create it.",
+      "topic": "Topic",
+      "notifyHint": "Students and the teachers of this lesson get a \"Lesson changed\" notification.",
+      "cancel": "Cancel",
+      "save": "Save changes",
+      "saved": "Lesson changed"
+    },
+    "extra": {
+      "title": "Extra lesson",
+      "description": "A lesson outside the weekly timetable.",
+      "date": "Date",
+      "period": "Period",
+      "subject": "Subject",
+      "choose": "Choose",
+      "teacher": "Teacher",
+      "noTeacher": "No teacher yet",
+      "room": "Room",
+      "roomHint": "Pick a room or type a new name to create it.",
+      "audience": "Audience",
+      "topic": "Topic",
+      "cancel": "Cancel",
+      "submit": "Add lesson",
+      "created": "Extra lesson added"
+    }
+  },
+  "attendance": {
+    "title": "Attendance",
+    "description": "Absences by group, student, subject or teacher, and lessons without attendance.",
+    "from": "From date",
+    "to": "To date",
+    "currentTerm": "Current term",
+    "resetRange": "Current term",
+    "tabs": {
+      "report": "Report",
+      "missing": "Missing attendance"
+    },
+    "report": {
+      "view": "View",
+      "views": {
+        "group": "Groups",
+        "student": "Students",
+        "subject": "Subjects",
+        "teacher": "Teachers"
+      },
+      "labels": {
+        "group": "Group",
+        "student": "Student",
+        "subject": "Subject",
+        "teacher": "Teacher"
+      },
+      "group": "Group",
+      "allGroups": "All groups",
+      "period": "{from} – {to}",
+      "empty": "No data for this period.",
+      "lessons": "Lessons",
+      "absences": "Absences",
+      "excused": "Excused",
+      "notTaken": "Not submitted",
+      "rate": "Absence rate"
+    },
+    "missing": {
+      "none": "Every lesson in this period has its attendance.",
+      "count": "Lessons: {count}",
+      "openLesson": "Open lesson"
+    }
+  },
+  "broadcasts": {
+    "title": "Broadcasts",
+    "description": "Messages to students, teachers and staff in Telegram and on the web.",
+    "new": "New broadcast",
+    "empty": "No broadcasts yet.",
+    "deliveryLine": "Sent {sent}, failed {failed}, blocked {blocked}",
+    "status": {
+      "draft": "Draft",
+      "scheduled": "Scheduled",
+      "sending": "Sending",
+      "sent": "Sent",
+      "cancelled": "Cancelled"
+    },
+    "filters": {
+      "status": "Status",
+      "allStatuses": "Any status"
+    },
+    "columns": {
+      "title": "Title",
+      "status": "Status",
+      "audience": "Audience",
+      "when": "Date",
+      "delivery": "Delivery"
+    },
+    "audience": {
+      "title": "Audience",
+      "everyone": "Everyone",
+      "roles": "Roles",
+      "role": {
+        "student": "Students",
+        "teacher": "Teachers",
+        "admin": "Administration",
+        "lms_admin": "LMS admins"
+      },
+      "groups": "Groups",
+      "groupsCount": "Groups: {count}",
+      "semesters": "Semesters",
+      "semester": "Semester {number}",
+      "semestersList": "Semesters {list}",
+      "counting": "Counting recipients…",
+      "countFailed": "Could not count recipients.",
+      "recipients": "Recipients: {count}"
+    },
+    "stats": {
+      "total": "Recipients",
+      "sent": "Sent",
+      "failed": "Failed",
+      "blocked": "Blocked the bot"
+    },
+    "editor": {
+      "newTitle": "New broadcast",
+      "description": "Write the message, choose who gets it, send a preview to yourself, then send it.",
+      "back": "Broadcasts",
+      "scheduledFor": "Scheduled for {date}",
+      "createdByAssistant": "Draft created by the assistant",
+      "assistantDraft": "The assistant created this draft. Review it; only a person can send it.",
+      "readOnly": "This broadcast can no longer be edited.",
+      "titleLabel": "Title",
+      "titleHint": "Shown in the notification center on the web.",
+      "textLabel": "Text",
+      "formatting": "Formatting",
+      "bold": "Bold",
+      "italic": "Italic",
+      "underline": "Underline",
+      "link": "Link",
+      "boldText": "bold text",
+      "italicText": "italic text",
+      "underlineText": "underlined text",
+      "linkText": "link text",
+      "linkPrompt": "Link address (https://…)",
+      "media": "Media",
+      "addMedia": "Add media",
+      "removeMedia": "Remove {name}",
+      "previewTitle": "Preview",
+      "previewEmpty": "The text appears here.",
+      "saveDraft": "Save draft",
+      "saved": "Draft saved",
+      "sendPreview": "Send preview to me",
+      "previewSent": "Preview sent to your Telegram",
+      "sendNow": "Send now",
+      "sendTitle": "Send this broadcast now?",
+      "sendDescription": "It goes to {count} recipients and cannot be recalled.",
+      "sentDone": "Broadcast is being sent",
+      "schedule": "Schedule",
+      "reschedule": "Change time",
+      "scheduledDone": "Broadcast scheduled",
+      "cancelScheduled": "Cancel sending",
+      "cancelTitle": "Cancel this scheduled broadcast?",
+      "cancelDescription": "It will not be sent. You can still keep the text as a cancelled broadcast.",
+      "cancelledDone": "Broadcast cancelled"
+    },
+    "schedule": {
+      "title": "Schedule the broadcast",
+      "description": "Choose when it goes out. You can edit or cancel it until it starts.",
+      "when": "Send at",
+      "hint": "Time in Tashkent.",
+      "past": "Choose a time in the future.",
+      "cancel": "Cancel",
+      "submit": "Schedule"
+    }
+  },
+  "moderation": {
+    "title": "Moderation",
+    "description": "Reported links, newest and most reported first.",
+    "search": "Search",
+    "searchPlaceholder": "Short ID, share URL or login",
+    "emptyQueue": "No reported links.",
+    "emptySearch": "Nothing found.",
+    "copyUrl": "Copy link",
+    "kind": {
+      "url": "Short link",
+      "file": "File link",
+      "chat": "Shared chat",
+      "flashcard_set": "Shared flash cards"
+    },
+    "live": "Live",
+    "revoked": "Revoked",
+    "disabled": "Disabled",
+    "disabledWithReason": "Disabled: {reason}",
+    "columns": {
+      "link": "Link",
+      "target": "Target",
+      "owner": "Owner",
+      "reports": "Reports",
+      "hits": "Hits",
+      "state": "State",
+      "actions": "Actions"
+    },
+    "disable": "Disable",
+    "disableFor": "Disable link {slug}",
+    "disableTitle": "Disable link {slug}?",
+    "disableDescription": "The link shows a disabled page. The content is kept as evidence.",
+    "reason": "Reason",
+    "disabledDone": "Link disabled",
+    "dismiss": "Dismiss reports",
+    "dismissFor": "Dismiss reports of link {slug}",
+    "dismissedDone": "Reports dismissed"
+  },
+  "monitoring": {
+    "title": "Monitoring",
+    "description": "EMIS sync runs and the audit log.",
+    "tabs": {
+      "sync": "EMIS sync",
+      "audit": "Audit log"
+    },
+    "sync": {
+      "userId": "Student ID",
+      "userHint": "Leave empty to sync everyone.",
+      "userInvalid": "This is not a valid ID.",
+      "runAll": "Sync everyone now",
+      "runOne": "Sync this student now",
+      "confirmAllTitle": "Start a sync for all students?",
+      "confirmAllDescription": "It uses EMIS requests for every student and can take several minutes.",
+      "confirmOneTitle": "Start a sync for this student?",
+      "confirmOneDescription": "Marks and profile of this student are updated from EMIS.",
+      "run": "Start sync",
+      "started": "Sync started",
+      "empty": "No sync runs yet.",
+      "running": "Running",
+      "seconds": "{count} s",
+      "columns": {
+        "started": "Started",
+        "duration": "Duration",
+        "status": "Status",
+        "stats": "Result"
+      }
+    },
+    "audit": {
+      "empty": "No audit events match.",
+      "filters": {
+        "user": "User ID",
+        "userPlaceholder": "User ID",
+        "type": "Event type",
+        "typePlaceholder": "Event type",
+        "from": "From date",
+        "to": "To date"
+      },
+      "columns": {
+        "time": "Time",
+        "type": "Event",
+        "actor": "Actor",
+        "ip": "IP address",
+        "details": "Details"
+      }
+    }
+  },
+  "assistant": {
+    "page": {
+      "description": "Ask about people, the timetable and attendance. Every change needs your approval."
+    },
+    "chat": {
+      "emptyChat": "Ask a question to start. I can look up people, the timetable, attendance and marks, and prepare changes for your approval."
+    },
+    "approval": {
+      "reasonPlaceholder": "Why not? For example: use room 310 instead"
+    }
+  }
+}
