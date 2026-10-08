@@ -1,0 +1,50 @@
+# Local-stack variant of deploy/Dockerfile: the static apps are built on the host, not in Docker.
+#
+# `next build` for six apps needs more memory than the 8 GB Docker VM of a laptop has, so
+# backend/scripts/local_up.sh builds the apps one at a time on the host and packs the result:
+#
+#   cd web && bun install --frozen-lockfile
+#   for app in id sp staff admin lms share; do bun run --filter "./apps/$app" build; done
+#   bun deploy/csp-hash.ts               # per-page script-src <meta> (same step as deploy/Dockerfile)
+#   docker build -f deploy/Dockerfile.prebuilt -t ihsp-web:local .
+#
+# Build context is web/ (see Dockerfile.prebuilt.dockerignore). The nginx stage below must stay
+# identical to the one in deploy/Dockerfile (backend/tests/deploy checks it); only the way the
+# apps get into /srv differs.
+
+FROM nginx:1.27-alpine
+
+# Install curl for health checks
+RUN apk add --no-cache curl bash gettext
+
+# nginx config: nginx.conf as is; sites and snippets are templates that entrypoint.sh renders
+# with envsubst into /etc/nginx/conf.d and /etc/nginx/snippets at every start
+COPY deploy/nginx.conf /etc/nginx/nginx.conf
+COPY deploy/sites/ /app/templates/sites/
+COPY deploy/snippets/ /app/templates/snippets/
+RUN rm -f /etc/nginx/conf.d/default.conf
+
+# Copy built apps (from the host)
+COPY apps/id/out /srv/id
+COPY apps/sp/out /srv/sp
+COPY apps/staff/out /srv/staff
+COPY apps/admin/out /srv/admin
+COPY apps/lms/out /srv/lms
+COPY apps/share/out /srv/share/ai
+
+# Copy env.js template and entrypoint
+COPY deploy/env.js.template /app/env.js.template
+COPY deploy/entrypoint.sh /app/entrypoint.sh
+
+# The exports must carry the per-page script-src policy: `bun deploy/csp-hash.ts` was not run otherwise
+RUN chmod +x /app/entrypoint.sh \
+    && grep -rlq 'http-equiv="Content-Security-Policy"' /srv/sp \
+    || { echo "apps/*/out has no CSP <meta>: run 'bun deploy/csp-hash.ts' in web/ before building" >&2; exit 1; }
+
+# LISTEN_PORT (default 80) is the only port; TLS is terminated by the edge nginx in front of this image
+EXPOSE 80
+
+HEALTHCHECK --interval=10s --timeout=3s --start-period=5s --retries=5 \
+  CMD curl -fsS "http://127.0.0.1:${LISTEN_PORT:-80}/health" || exit 1
+
+ENTRYPOINT ["/app/entrypoint.sh"]

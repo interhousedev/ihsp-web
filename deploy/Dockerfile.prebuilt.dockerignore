@@ -1,0 +1,9 @@
+# Build context is web/. Only deploy/ and the apps exported on the host are needed.
+*
+!deploy
+!apps/id/out
+!apps/sp/out
+!apps/staff/out
+!apps/admin/out
+!apps/lms/out
+!apps/share/out
