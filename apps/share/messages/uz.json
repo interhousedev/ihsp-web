@@ -1,0 +1,63 @@
+{
+  "share": {
+    "brand": "IHSP — havolalar",
+    "loading": "Yuklanmoqda…",
+    "sharedBy": "Ulashgan: {name}",
+    "notFound": {
+      "title": "Havola topilmadi",
+      "description": "Bunday havola yo‘q yoki o‘chirilgan."
+    },
+    "gone": {
+      "title": "Havola o‘chirilgan",
+      "description": "Muallif bu havolani bekor qilgan."
+    },
+    "chat": {
+      "publicBanner": "Havola orqali ochiq",
+      "empty": "Bu chatda xabarlar yo‘q.",
+      "messages": "Xabarlar",
+      "assistant": "Yordamchi"
+    },
+    "flashcards": {
+      "publicBanner": "Havola orqali ochiq",
+      "count": "{count, plural, one {# ta kartochka} other {# ta kartochka}}",
+      "study": "O‘rganish",
+      "copy": "Mening to‘plamlarimga nusxalash",
+      "empty": "Bu to‘plamda kartochkalar yo‘q.",
+      "cardsLabel": "Kartochkalar",
+      "cardN": "{n}-kartochka",
+      "front": "Old tomoni",
+      "back": "Orqa tomoni",
+      "showAnswer": "Javobni ko‘rsatish (Bo‘sh joy)",
+      "rating": {
+        "again": "Yana",
+        "hard": "Qiyin",
+        "medium": "O‘rtacha",
+        "easy": "Oson"
+      },
+      "progress": "{done} / {total} kartochka",
+      "progressLabel": "O‘rganish jarayoni",
+      "finished": "Tugadi",
+      "reviewed": "{count, plural, one {Siz # ta kartochkani takrorladingiz.} other {Siz # ta kartochkani takrorladingiz.}}",
+      "studyAgain": "Yana o‘rganish",
+      "backToList": "Kartochkalarga qaytish"
+    },
+    "report": {
+      "open": "Havola ustidan shikoyat",
+      "title": "Havola ustidan shikoyat",
+      "reason": "Sabab",
+      "reasons": {
+        "phishing": "Fishing yoki soxta",
+        "malware": "Zararli dastur",
+        "personal_data": "Shaxsiy ma’lumotlar",
+        "offensive": "Haqoratli mazmun",
+        "other": "Boshqa"
+      },
+      "comment": "Izoh (ixtiyoriy)",
+      "cancel": "Bekor qilish",
+      "submit": "Shikoyat yuborish",
+      "sending": "Yuborilmoqda…",
+      "success": "Rahmat. Ma’muriyat bu havolani ko‘rib chiqadi.",
+      "failed": "Shikoyatni yuborib bo‘lmadi. Keyinroq urinib ko‘ring."
+    }
+  }
+}

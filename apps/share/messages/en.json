@@ -1,0 +1,63 @@
+{
+  "share": {
+    "brand": "IHSP shares",
+    "loading": "Loading…",
+    "sharedBy": "Shared by {name}",
+    "notFound": {
+      "title": "Link not found",
+      "description": "This link does not exist or has been removed."
+    },
+    "gone": {
+      "title": "This link was removed",
+      "description": "The person who shared it has revoked the link."
+    },
+    "chat": {
+      "publicBanner": "Shared publicly",
+      "empty": "There are no messages in this chat.",
+      "messages": "Messages",
+      "assistant": "Assistant"
+    },
+    "flashcards": {
+      "publicBanner": "Shared publicly",
+      "count": "{count, plural, one {# card} other {# cards}}",
+      "study": "Study",
+      "copy": "Copy to my sets",
+      "empty": "This set has no cards.",
+      "cardsLabel": "Cards",
+      "cardN": "Card {n}",
+      "front": "Front",
+      "back": "Back",
+      "showAnswer": "Show answer (Space)",
+      "rating": {
+        "again": "Again",
+        "hard": "Hard",
+        "medium": "Medium",
+        "easy": "Easy"
+      },
+      "progress": "{done} of {total} cards",
+      "progressLabel": "Study progress",
+      "finished": "Finished",
+      "reviewed": "{count, plural, one {You reviewed # card.} other {You reviewed # cards.}}",
+      "studyAgain": "Study again",
+      "backToList": "Back to the cards"
+    },
+    "report": {
+      "open": "Report this link",
+      "title": "Report this link",
+      "reason": "Reason",
+      "reasons": {
+        "phishing": "Phishing or fake",
+        "malware": "Malware or virus",
+        "personal_data": "Personal data",
+        "offensive": "Offensive content",
+        "other": "Other"
+      },
+      "comment": "Comment (optional)",
+      "cancel": "Cancel",
+      "submit": "Send report",
+      "sending": "Sending…",
+      "success": "Thank you. Administration will look at this link.",
+      "failed": "We could not send the report. Try again later."
+    }
+  }
+}
