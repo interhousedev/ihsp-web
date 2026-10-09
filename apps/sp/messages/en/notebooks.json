@@ -87,7 +87,15 @@
       "inText": "In the text",
       "inTextLoading": "Searching in the text…",
       "searchCount": "{count, plural, one {# source found} other {# sources found}}",
-      "clearSearch": "Clear search"
+      "clearSearch": "Clear search",
+      "autoLabel": "Label sources by topic",
+      "autoLabeling": "Labelling sources…",
+      "autoLabelFailed": "Could not label the sources. Try again.",
+      "autoLabelNeedsSelection": "Select at least one ready source first.",
+      "groupBy": "Group by",
+      "groupByType": "Type",
+      "groupByTopic": "Topic",
+      "groupByNone": "None (one list)"
     },
     "group": {
       "file": "Files",
@@ -137,7 +145,8 @@
         "flashcards": "Flash cards",
         "courses": "Courses",
         "text": "Text",
-        "link": "Link"
+        "link": "Link",
+        "course_steps": "Course steps"
       },
       "upload": "Upload a file",
       "drop": "Drop files here",
@@ -190,6 +199,10 @@
         "hint": "Paste one or more links separated by spaces or new lines. Only the text of a page is used.",
         "skipped": "Not web addresses, skipped: {items}",
         "add": "{count, plural, =0 {Add links} one {Add # link} other {Add # links}}"
+      },
+      "courseSteps": {
+        "empty": "The course has no steps yet.",
+        "note": "Steps are read from the draft. Test blocks are never added."
       }
     },
     "viewer": {
@@ -373,7 +386,11 @@
       "quiz": "Quiz",
       "infographic": "Infographic",
       "data_table": "Data table",
-      "artifacts": "Study materials"
+      "artifacts": "Study materials",
+      "course_plan": "Course plan",
+      "lesson_draft": "Lesson draft",
+      "course_quiz": "Test questions",
+      "course_flashcards": "Flash cards"
     },
     "format": {
       "conspect": "Conspect",
@@ -473,7 +490,34 @@
         "scientific": "Scientific",
         "playful": "Playful"
       },
-      "sourcesChange": "Change"
+      "sourcesChange": "Change",
+      "planDepth": {
+        "label": "Detail",
+        "overview": "Overview",
+        "detailed": "Detailed"
+      },
+      "sectionsHint": {
+        "label": "Number of sections (optional)",
+        "placeholder": "Let the model decide",
+        "hint": "From {min} to {max}."
+      },
+      "lessonStep": {
+        "label": "Write it for",
+        "new": "A new step"
+      },
+      "lessonLength": {
+        "label": "Length",
+        "short": "Short",
+        "standard": "Standard",
+        "long": "Long"
+      },
+      "includeTest": {
+        "label": "Add a test with questions"
+      },
+      "includeCards": {
+        "label": "Add flash cards"
+      },
+      "yes": "yes"
     },
     "item": {
       "generating": "Generating… this can take a minute. You can leave this page.",
@@ -740,6 +784,114 @@
       "cancel": "Cancel",
       "submit": "Combine",
       "working": "Combining…"
+    },
+    "course": {
+      "acceptedAnswers": "Accepted answers",
+      "backToEditor": "Back to the course editor",
+      "cardsBlock": "{count, plural, one {# flash card} other {# flash cards}}",
+      "testBlock": "{count, plural, one {Test: # question} other {Test: # questions}}",
+      "correctOption": "correct",
+      "passingScore": "pass at {percent}%",
+      "questionType": {
+        "single": "one answer",
+        "multiple": "several answers",
+        "text": "text answer",
+        "number": "number"
+      },
+      "readOnlyChat": "You can read this workspace but not change it, so the chat is off.",
+      "readOnlySources": "You can read this workspace but not change it.",
+      "readOnlyStudio": "You can read this workspace but not change it.",
+      "lesson": {
+        "title": "Step title"
+      },
+      "chatMode": {
+        "label": "Chat mode",
+        "sources": "Ask the sources",
+        "author": "Author assistant"
+      },
+      "author": {
+        "chatPicker": "Author assistant chat",
+        "inputLabel": "Message to the author assistant",
+        "newChat": "New chat",
+        "placeholder": "Ask for a plan, a lesson, a test…",
+        "starters": "Ideas to start with",
+        "starter": {
+          "plan": "Plan a course on ",
+          "lesson": "Write the lesson for the step ",
+          "test": "Add a test with 5 questions to the step ",
+          "review": "Review the course outline and point out the gaps"
+        },
+        "starterLabel": {
+          "plan": "Plan a course",
+          "lesson": "Write a lesson",
+          "test": "Add a test",
+          "review": "Review the outline"
+        }
+      },
+      "plan": {
+        "summary": "Course overview",
+        "courseGoals": "Course learning goals (one per line)",
+        "sectionGoals": "Section goals (one per line)",
+        "stepGoals": "Step goals (one per line)",
+        "stepSummary": "What the step covers",
+        "sectionTitle": "Title of section {n}",
+        "stepTitle": "Title of step {n}",
+        "addSection": "Add section",
+        "addStep": "Add step",
+        "moveUp": "Move up",
+        "moveDown": "Move down",
+        "removeSection": "Remove section",
+        "removeStep": "Remove step",
+        "reset": "Undo my edits",
+        "problem": {
+          "no-sections": "The plan has no sections.",
+          "empty-title": "Every section and step needs a title.",
+          "no-steps": "Every section needs at least one step."
+        }
+      },
+      "apply": {
+        "title": "Apply “{title}” to the course",
+        "description": {
+          "course_plan": "Creates the sections and steps the course draft does not have yet. Nothing changes for students until you publish.",
+          "lesson_draft": "Writes the lesson into a step of the course draft. Nothing changes for students until you publish.",
+          "quiz": "Adds the questions to a step of the course draft as a test block.",
+          "flashcards": "Adds the cards to a step of the course draft as a flash cards block."
+        },
+        "buttonPlan": "Apply to course",
+        "buttonStep": "Apply to step",
+        "confirm": "Apply",
+        "loading": "Checking what would change…",
+        "problems": "This cannot be applied yet:",
+        "new": "New",
+        "exists": "Exists",
+        "added": "Added",
+        "planCounts": "{sections, plural, one {# new section} other {# new sections}}, {steps, plural, one {# new step} other {# new steps}}. {existing, plural, one {# step already exists and stays} other {# steps already exist and stay}} as they are.",
+        "newStep": "A new step “{title}” will be created.",
+        "appendTo": "Blocks are added to the end of “{title}”.",
+        "replaceIn": "The content of “{title}” is replaced.",
+        "removedBlocks": "{count, plural, one {# current block is removed} other {# current blocks are removed}}.",
+        "target": "Step",
+        "pickStep": "Choose a step…",
+        "newStepOption": "A new step",
+        "section": "In section",
+        "mode": "Mode",
+        "mode_replace": "Replace the content",
+        "mode_append": "Add to the end",
+        "addBriefs": "Put the goals and the summary of each new step into its first text block",
+        "conflict": "The step changed meanwhile. The preview was reloaded; check it and apply again.",
+        "donePlan": "{sections, plural, one {# section} other {# sections}} and {steps, plural, one {# step} other {# steps}} created in the draft.",
+        "doneStep": "The step draft is updated. Review it in the editor, then publish.",
+        "openEditor": "Open in editor",
+        "notes": "Notes about the conversion"
+      }
+    },
+    "label": {
+      "other": "No topic",
+      "rename": "Rename label",
+      "delete": "Delete label",
+      "nameField": "Label name",
+      "renameFailed": "Could not rename the label.",
+      "deleteFailed": "Could not delete the label."
     }
   },
   "errors": {

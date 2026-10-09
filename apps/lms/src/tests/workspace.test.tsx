@@ -4,7 +4,6 @@ import { apiUrl, courseIds, ids, setCourseWorkspaceReadOnly, server } from "@ihs
 import { screen, waitFor } from "@testing-library/react"
 import { HttpResponse, http } from "msw"
 import notebooks from "../../../sp/messages/en/notebooks.json"
-import notebooksCourse from "../../../sp/messages/en/notebooks.course.json"
 import { EditorNav } from "../features/editor/components/editor-nav"
 import { WorkspacePage } from "../features/workspace/components/workspace-page"
 import { authorSession, renderLms, testerSession } from "./helpers"
@@ -12,7 +11,7 @@ import en from "../../messages/en.json"
 
 setDefaultTimeout(60_000)
 
-const messages = mergeMessages(mergeMessages(en as Messages, notebooks as Messages), notebooksCourse as Messages)
+const messages = mergeMessages(en as Messages, notebooks as Messages)
 
 function renderWorkspace(session = authorSession) {
   return renderLms(<WorkspacePage courseId={ids.course} />, {

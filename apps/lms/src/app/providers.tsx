@@ -9,19 +9,15 @@ import { QueryClientProvider } from "@tanstack/react-query"
 import { NuqsAdapter } from "nuqs/adapters/next/app"
 import { useState, type ReactNode } from "react"
 
-/** The path of the import is literal, so the bundler includes exactly the three message files of this app. */
+/** The path of the import is literal, so the bundler includes exactly the two message files of this app. */
 async function loadAppMessages(locale: Locale): Promise<Messages> {
   // The workspace of a course reuses the notebooks screens of `@ihsp/features-core`; their texts live next to the
   // student app's (`apps/sp/messages/<locale>/notebooks*.json`).
-  const [app, notebooks, course] = await Promise.all([
+  const [app, notebooks] = await Promise.all([
     import(`../../messages/${locale}.json`),
     import(`../../../sp/messages/${locale}/notebooks.json`),
-    import(`../../../sp/messages/${locale}/notebooks.course.json`),
   ])
-  return mergeMessages(
-    mergeMessages(app.default as Messages, notebooks.default as Messages),
-    course.default as Messages,
-  )
+  return mergeMessages(app.default as Messages, notebooks.default as Messages)
 }
 
 /**

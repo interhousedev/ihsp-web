@@ -87,7 +87,15 @@
       "inText": "Matn ichida",
       "inTextLoading": "Matn ichidan qidirilmoqda…",
       "searchCount": "{count} ta manba topildi",
-      "clearSearch": "Qidiruvni tozalash"
+      "clearSearch": "Qidiruvni tozalash",
+      "autoLabel": "Manbalarni mavzu boʻyicha belgilash",
+      "autoLabeling": "Manbalar belgilanmoqda…",
+      "autoLabelFailed": "Manbalarni belgilab boʻlmadi. Qaytadan urinib koʻring.",
+      "autoLabelNeedsSelection": "Avval kamida bitta tayyor manbani tanlang.",
+      "groupBy": "Guruhlash",
+      "groupByType": "Turi boʻyicha",
+      "groupByTopic": "Mavzu boʻyicha",
+      "groupByNone": "Guruhsiz (bitta roʻyxat)"
     },
     "group": {
       "file": "Fayllar",
@@ -137,7 +145,8 @@
         "flashcards": "Kartochkalar",
         "courses": "Kurslar",
         "text": "Matn",
-        "link": "Havola"
+        "link": "Havola",
+        "course_steps": "Kurs qadamlari"
       },
       "upload": "Fayl yuklash",
       "drop": "Fayllarni shu yerga tashlang",
@@ -190,6 +199,10 @@
         "hint": "Bir yoki bir nechta havolani boʻsh joy yoki yangi qator bilan ajratib joylang. Faqat sahifaning matni ishlatiladi.",
         "skipped": "Veb-manzil emas, oʻtkazib yuborildi: {items}",
         "add": "{count, plural, =0 {Havolalarni qoʻshish} other {# ta havolani qoʻshish}}"
+      },
+      "courseSteps": {
+        "empty": "Kursda hali qadamlar yoʻq.",
+        "note": "Qadamlar qoralamadan oʻqiladi. Test bloklari qoʻshilmaydi."
       }
     },
     "viewer": {
@@ -373,7 +386,11 @@
       "quiz": "Test",
       "infographic": "Infografika",
       "data_table": "Maʼlumotlar jadvali",
-      "artifacts": "Oʻquv materiallari"
+      "artifacts": "Oʻquv materiallari",
+      "course_plan": "Kurs rejasi",
+      "lesson_draft": "Dars qoralamasi",
+      "course_quiz": "Test savollari",
+      "course_flashcards": "Kartochkalar"
     },
     "format": {
       "conspect": "Konspekt",
@@ -473,7 +490,34 @@
         "scientific": "Ilmiy",
         "playful": "Oʻyinqaroq"
       },
-      "sourcesChange": "Oʻzgartirish"
+      "sourcesChange": "Oʻzgartirish",
+      "planDepth": {
+        "label": "Batafsillik",
+        "overview": "Qisqacha",
+        "detailed": "Batafsil"
+      },
+      "sectionsHint": {
+        "label": "Boʻlimlar soni (ixtiyoriy)",
+        "placeholder": "Modelga qoldiring",
+        "hint": "{min} dan {max} gacha."
+      },
+      "lessonStep": {
+        "label": "Quyidagi uchun yozish",
+        "new": "Yangi qadam"
+      },
+      "lessonLength": {
+        "label": "Hajmi",
+        "short": "Qisqa",
+        "standard": "Standart",
+        "long": "Katta"
+      },
+      "includeTest": {
+        "label": "Savollar bilan test qoʻshish"
+      },
+      "includeCards": {
+        "label": "Kartochkalar qoʻshish"
+      },
+      "yes": "ha"
     },
     "item": {
       "generating": "Yaratilmoqda… bu bir daqiqa olishi mumkin. Sahifani tark etishingiz mumkin.",
@@ -740,6 +784,114 @@
       "cancel": "Bekor qilish",
       "submit": "Birlashtirish",
       "working": "Birlashtirilmoqda…"
+    },
+    "course": {
+      "acceptedAnswers": "Qabul qilinadigan javoblar",
+      "backToEditor": "Kurs muharririga qaytish",
+      "cardsBlock": "{count, plural, one {# ta kartochka} other {# ta kartochka}}",
+      "testBlock": "{count, plural, one {Test: # ta savol} other {Test: # ta savol}}",
+      "correctOption": "toʻgʻri",
+      "passingScore": "oʻtish balli {percent}%",
+      "questionType": {
+        "single": "bitta javob",
+        "multiple": "bir nechta javob",
+        "text": "matnli javob",
+        "number": "son"
+      },
+      "readOnlyChat": "Bu ish maydonini faqat oʻqiy olasiz, oʻzgartira olmaysiz, shuning uchun chat oʻchirilgan.",
+      "readOnlySources": "Bu ish maydonini faqat oʻqiy olasiz, oʻzgartira olmaysiz.",
+      "readOnlyStudio": "Bu ish maydonini faqat oʻqiy olasiz, oʻzgartira olmaysiz.",
+      "lesson": {
+        "title": "Qadam nomi"
+      },
+      "chatMode": {
+        "label": "Chat rejimi",
+        "sources": "Manbalardan soʻrash",
+        "author": "Muallif yordamchisi"
+      },
+      "author": {
+        "chatPicker": "Muallif yordamchisi chati",
+        "inputLabel": "Muallif yordamchisiga xabar",
+        "newChat": "Yangi chat",
+        "placeholder": "Reja, dars yoki test soʻrang…",
+        "starters": "Boshlash uchun gʻoyalar",
+        "starter": {
+          "plan": "Quyidagi mavzuda kurs rejasini tuz: ",
+          "lesson": "Quyidagi qadam uchun dars yoz: ",
+          "test": "Quyidagi qadamga 5 ta savoldan iborat test qoʻsh: ",
+          "review": "Kurs tuzilmasini tekshir va kamchiliklarni koʻrsat"
+        },
+        "starterLabel": {
+          "plan": "Kurs rejasini tuzish",
+          "lesson": "Dars yozish",
+          "test": "Test qoʻshish",
+          "review": "Tuzilmani tekshirish"
+        }
+      },
+      "plan": {
+        "summary": "Kurs tavsifi",
+        "courseGoals": "Kurs maqsadlari (har qatorda bittadan)",
+        "sectionGoals": "Boʻlim maqsadlari (har qatorda bittadan)",
+        "stepGoals": "Qadam maqsadlari (har qatorda bittadan)",
+        "stepSummary": "Qadam nima haqida",
+        "sectionTitle": "{n}-boʻlim nomi",
+        "stepTitle": "{n}-qadam nomi",
+        "addSection": "Boʻlim qoʻshish",
+        "addStep": "Qadam qoʻshish",
+        "moveUp": "Yuqoriga",
+        "moveDown": "Pastga",
+        "removeSection": "Boʻlimni oʻchirish",
+        "removeStep": "Qadamni oʻchirish",
+        "reset": "Tahrirlarimni bekor qilish",
+        "problem": {
+          "no-sections": "Rejada boʻlimlar yoʻq.",
+          "empty-title": "Har bir boʻlim va qadamning nomi boʻlishi kerak.",
+          "no-steps": "Har bir boʻlimda kamida bitta qadam boʻlishi kerak."
+        }
+      },
+      "apply": {
+        "title": "«{title}»ni kursga qoʻllash",
+        "description": {
+          "course_plan": "Kurs qoralamasida hali yoʻq boʻlim va qadamlarni yaratadi. Kursni nashr qilmaguningizcha talabalar uchun hech narsa oʻzgarmaydi.",
+          "lesson_draft": "Darsni kurs qoralamasidagi qadamga yozadi. Kursni nashr qilmaguningizcha talabalar uchun hech narsa oʻzgarmaydi.",
+          "quiz": "Savollarni kurs qoralamasidagi qadamga test bloki sifatida qoʻshadi.",
+          "flashcards": "Kartochkalarni kurs qoralamasidagi qadamga kartochkalar bloki sifatida qoʻshadi."
+        },
+        "buttonPlan": "Kursga qoʻllash",
+        "buttonStep": "Qadamga qoʻllash",
+        "confirm": "Qoʻllash",
+        "loading": "Nima oʻzgarishini tekshiryapmiz…",
+        "problems": "Hozircha buni qoʻllab boʻlmaydi:",
+        "new": "Yangi",
+        "exists": "Bor",
+        "added": "Qoʻshiladi",
+        "planCounts": "{sections, plural, one {# ta yangi boʻlim} other {# ta yangi boʻlim}}, {steps, plural, one {# ta yangi qadam} other {# ta yangi qadam}}. {existing, plural, one {# ta qadam allaqachon bor va oʻzgarmaydi} other {# ta qadam allaqachon bor va oʻzgarmaydi}}.",
+        "newStep": "«{title}» nomli yangi qadam yaratiladi.",
+        "appendTo": "Bloklar «{title}» qadamining oxiriga qoʻshiladi.",
+        "replaceIn": "«{title}» qadamining mazmuni almashtiriladi.",
+        "removedBlocks": "{count, plural, one {# ta joriy blok olib tashlanadi} other {# ta joriy blok olib tashlanadi}}.",
+        "target": "Qadam",
+        "pickStep": "Qadamni tanlang…",
+        "newStepOption": "Yangi qadam",
+        "section": "Boʻlimga",
+        "mode": "Rejim",
+        "mode_replace": "Mazmunni almashtirish",
+        "mode_append": "Oxiriga qoʻshish",
+        "addBriefs": "Har bir yangi qadamning maqsad va tavsifini uning birinchi matn blokiga joylash",
+        "conflict": "Qadam shu orada oʻzgargan. Koʻrib chiqish yangilandi: tekshirib, qayta qoʻllang.",
+        "donePlan": "Qoralamada {sections, plural, one {# ta boʻlim} other {# ta boʻlim}} va {steps, plural, one {# ta qadam} other {# ta qadam}} yaratildi.",
+        "doneStep": "Qadam qoralamasi yangilandi. Muharrirda tekshiring va nashr qiling.",
+        "openEditor": "Muharrirda ochish",
+        "notes": "Oʻzgartirish haqida izohlar"
+      }
+    },
+    "label": {
+      "other": "Mavzusiz",
+      "rename": "Mavzu nomini oʻzgartirish",
+      "delete": "Mavzuni oʻchirish",
+      "nameField": "Mavzu nomi",
+      "renameFailed": "Mavzu nomini oʻzgartirib boʻlmadi.",
+      "deleteFailed": "Mavzuni oʻchirib boʻlmadi."
     }
   },
   "errors": {
