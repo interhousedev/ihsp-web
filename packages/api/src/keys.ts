@@ -154,6 +154,7 @@ export const keys = {
     version: (courseId: string, number: number) => ["lms", "course", courseId, "versions", number] as const,
     compare: (courseId: string, a: number, b: number) => ["lms", "course", courseId, "compare", a, b] as const,
     staff: (courseId: string) => ["lms", "course", courseId, "staff"] as const,
+    creators: () => ["lms", "creators"] as const,
     preview: (courseId: string, stepId: string) => ["lms", "course", courseId, "preview", stepId] as const,
   },
   notebooks: {

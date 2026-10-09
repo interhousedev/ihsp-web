@@ -1,9 +1,10 @@
 /** ADM-5, MAIL-8, UF-ADM-03, UF-ADM-11, UF-ADM-15: block, roles, resets, mail suspension, OAuth clients. */
 import { describe, expect, test } from "bun:test"
-import { adminAdminUser, adminStudentUser, apiUrl, ids, server } from "@ihsp/test-utils"
+import { adminAdminUser, adminStudentUser, adminTeacherUser, apiUrl, ids, server } from "@ihsp/test-utils"
 import { screen, within } from "@testing-library/react"
 import { HttpResponse, http } from "msw"
 import { BlockActions } from "../features/users/components/block-actions"
+import { RolesEditor } from "../features/users/components/roles-editor"
 import { UserDetailPage } from "../features/users/components/user-detail-page"
 import { UsersPage } from "../features/users/components/users-page"
 import { configureTests, renderAdmin, setValue, waitUntil } from "./helpers"
@@ -100,6 +101,63 @@ describe("users list", () => {
 
     await waitUntil(() => body !== undefined, "no request")
     expect(body).toEqual({ verified: true })
+  })
+})
+
+describe("roles editor", () => {
+  test("offers LMS admin only to a member of Administration and the course creator to teachers and admins", () => {
+    const student = renderAdmin(<RolesEditor user={adminStudentUser} />)
+    expect(screen.queryByRole("checkbox", { name: "LMS admin" })).toBeNull()
+    expect(screen.queryByRole("checkbox", { name: "LMS course creator" })).toBeNull()
+    student.unmount()
+
+    const teacher = renderAdmin(<RolesEditor user={adminTeacherUser} />)
+    expect(screen.queryByRole("checkbox", { name: "LMS admin" })).toBeNull()
+    expect(screen.getByRole("checkbox", { name: "LMS course creator" })).not.toBeChecked()
+    teacher.unmount()
+
+    renderAdmin(<RolesEditor user={adminAdminUser} />)
+    expect(screen.getByRole("checkbox", { name: "LMS admin" })).toBeChecked()
+    expect(screen.getByRole("checkbox", { name: "LMS course creator" })).not.toBeChecked()
+  })
+
+  test("granting a teacher the course creator role sends only that role", async () => {
+    let body: unknown
+    server.use(
+      http.post(apiUrl(`/v1/admin/users/${adminTeacherUser.id}/roles`), async ({ request }) => {
+        body = await request.json()
+        return HttpResponse.json({ ...adminTeacherUser, roles: ["teacher", "lms_creator"] })
+      }),
+    )
+    const { user } = renderAdmin(<RolesEditor user={adminTeacherUser} />)
+
+    await user.click(screen.getByRole("checkbox", { name: "LMS course creator" }))
+    await user.click(screen.getByRole("button", { name: "Save roles" }))
+    const dialog = await screen.findByRole("alertdialog")
+    await user.click(within(dialog).getByRole("button", { name: "Save roles" }))
+
+    await waitUntil(() => body !== undefined, "no request")
+    expect(body).toEqual({ grant: ["lms_creator"], revoke: [] })
+  })
+
+  test("taking Administration away takes LMS admin with it", async () => {
+    let body: unknown
+    server.use(
+      http.post(apiUrl(`/v1/admin/users/${adminAdminUser.id}/roles`), async ({ request }) => {
+        body = await request.json()
+        return HttpResponse.json({ ...adminAdminUser, roles: [] })
+      }),
+    )
+    const { user } = renderAdmin(<RolesEditor user={adminAdminUser} />)
+
+    await user.click(screen.getByRole("checkbox", { name: "Administration" }))
+    expect(screen.queryByRole("checkbox", { name: "LMS admin" })).toBeNull()
+    await user.click(screen.getByRole("button", { name: "Save roles" }))
+    const dialog = await screen.findByRole("alertdialog")
+    await user.click(within(dialog).getByRole("button", { name: "Save roles" }))
+
+    await waitUntil(() => body !== undefined, "no request")
+    expect(body).toEqual({ grant: [], revoke: ["admin", "lms_admin"] })
   })
 })
 

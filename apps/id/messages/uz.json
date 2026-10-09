@@ -307,7 +307,8 @@
       "student": "Talaba",
       "teacher": "O‘qituvchi",
       "admin": "Ma’muriyat",
-      "lms_admin": "LMS administratori"
+      "lms_admin": "LMS administratori",
+      "lms_creator": "LMS kurs muallifi"
     },
     "cards": {
       "password": "Parol",

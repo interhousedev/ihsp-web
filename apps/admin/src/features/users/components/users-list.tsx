@@ -17,7 +17,7 @@ import { fetchAllPages } from "../../shared/utils/fetch-all-pages"
 import { fullNameWithMiddle } from "../../shared/utils/names"
 import { userStatusParam } from "../../shared/utils/status-param"
 
-export const ROLES: readonly Role[] = ["student", "teacher", "admin", "lms_admin", "librarian"]
+export const ROLES: readonly Role[] = ["student", "teacher", "admin", "lms_admin", "lms_creator", "librarian"]
 const FILTER_KEYS = ["query", "role", "status"] as const
 const STATUSES = ["active", "pending_activation", "blocked", "deactivated"] as const
 

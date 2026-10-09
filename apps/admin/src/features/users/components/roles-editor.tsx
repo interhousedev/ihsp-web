@@ -11,11 +11,24 @@ import { TOUCH } from "../../shared/utils/touch"
 import { userInvalidations } from "./block-actions"
 
 /** Roles an administrator may grant or revoke. Student and teacher come from EMIS and from teacher accounts. */
-const GRANTABLE: readonly Role[] = ["admin", "lms_admin", "librarian"]
+const GRANTABLE: readonly Role[] = ["admin", "lms_admin", "lms_creator", "librarian"]
 
 /**
- * Grant or revoke Administration, LMS admin and Librarian (UF-ADM-11 step 3). A change logs the user out everywhere and a new
- * Administration member sets up OTP at the next login, so it asks for confirmation first.
+ * `lms_admin` is an extra role of Administration, so it is offered to (and kept by) holders of `admin` only; a course creator is
+ * a teacher or an administrator. A role that is already selected always stays on the list.
+ */
+function isOffered(role: Role, selected: readonly Role[]): boolean {
+  if (role === "lms_admin") return selected.includes("admin")
+  if (role === "lms_creator") {
+    return selected.some((item) => item === "teacher" || item === "admin" || item === "lms_creator")
+  }
+  return true
+}
+
+/**
+ * Grant or revoke Administration, LMS admin, LMS course creator and Librarian (UF-ADM-11 step 3). A change logs the user out
+ * everywhere and a new Administration member sets up OTP at the next login, so it asks for confirmation first. Taking
+ * Administration away takes LMS admin with it.
  */
 export function RolesEditor({ user }: { user: AdminUser }) {
   const t = useT("users.roles")
@@ -25,6 +38,13 @@ export function RolesEditor({ user }: { user: AdminUser }) {
   useEffect(() => {
     setSelected(user.roles)
   }, [user.roles])
+
+  function toggle(role: Role, checked: boolean) {
+    setSelected((current) => {
+      const next = checked ? [...current, role] : current.filter((item) => item !== role)
+      return role === "admin" && !checked ? next.filter((item) => item !== "lms_admin") : next
+    })
+  }
 
   const grant = GRANTABLE.filter((role) => selected.includes(role) && !user.roles.includes(role))
   const revoke = GRANTABLE.filter((role) => !selected.includes(role) && user.roles.includes(role))
@@ -50,14 +70,12 @@ export function RolesEditor({ user }: { user: AdminUser }) {
       </div>
       <fieldset className="flex flex-col">
         <legend className="sr-only">{t("legend")}</legend>
-        {GRANTABLE.map((role) => (
+        {GRANTABLE.filter((role) => isOffered(role, selected)).map((role) => (
           <CheckField
             key={role}
             checked={selected.includes(role)}
             label={t(role)}
-            onChange={(checked) =>
-              setSelected((current) => (checked ? [...current, role] : current.filter((item) => item !== role)))
-            }
+            onChange={(checked) => toggle(role, checked)}
           />
         ))}
       </fieldset>

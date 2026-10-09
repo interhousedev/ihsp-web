@@ -1,6 +1,7 @@
 "use client"
 
 import { postLmsCourses, type CourseDraft } from "@ihsp/api"
+import { useSession } from "@ihsp/auth"
 import { useErrorMessage, useT } from "@ihsp/i18n"
 import {
   Alert,
@@ -23,10 +24,16 @@ import { useRouter } from "next/navigation"
 import { useState, type FormEvent } from "react"
 import { hrefs } from "../../shared/utils/hrefs"
 import { courseFormSchema, slugify, type CourseFormValues } from "../utils/slugify"
+import { CourseCreatorsCard } from "./course-creators-card"
 
-/** `/admin/`: LMS admin creates a course (UF-LMS-06 step 1): title, address and visibility; the draft starts empty. */
+/**
+ * `/admin/`: an LMS admin or a course creator creates a course (UF-LMS-06 step 1): title, address and visibility; the draft
+ * starts empty and a creator becomes its owner. LMS admins also manage the course creators here.
+ */
 export function AdminPage() {
   const t = useT("admin")
+  const { session } = useSession()
+  const isLmsAdmin = session?.user.roles.includes("lms_admin") ?? false
   const errorMessage = useErrorMessage()
   const router = useRouter()
   const [title, setTitle] = useState("")
@@ -112,6 +119,7 @@ export function AdminPage() {
           </form>
         </CardContent>
       </Card>
+      {isLmsAdmin ? <CourseCreatorsCard /> : null}
     </PageContainer>
   )
 }

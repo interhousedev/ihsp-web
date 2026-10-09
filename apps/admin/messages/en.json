@@ -316,6 +316,7 @@
       "teacher": "Teacher",
       "admin": "Administration",
       "lms_admin": "LMS admin",
+      "lms_creator": "LMS course creator",
       "librarian": "Librarian",
       "legend": "Roles that can be granted",
       "save": "Save roles",

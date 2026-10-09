@@ -316,6 +316,7 @@
       "teacher": "O‘qituvchi",
       "admin": "Ma’muriyat",
       "lms_admin": "LMS administratori",
+      "lms_creator": "LMS kurs muallifi",
       "librarian": "Kutubxonachi",
       "legend": "Berish mumkin bo‘lgan rollar",
       "save": "Rollarni saqlash",

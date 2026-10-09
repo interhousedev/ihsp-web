@@ -6672,6 +6672,50 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/v1/staff/lms/creators": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * List Creators
+         * @description Holders of `lms_creator`, newest first (LMS admins only).
+         */
+        get: operations["list_creators_v1_staff_lms_creators_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/staff/lms/creators/{user_id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        /**
+         * Add Creator
+         * @description Grant `lms_creator` (LMS admins only); students are refused.
+         */
+        put: operations["add_creator_v1_staff_lms_creators__user_id__put"];
+        post?: never;
+        /**
+         * Remove Creator
+         * @description Revoke `lms_creator` (LMS admins only); the person's courses stay theirs.
+         */
+        delete: operations["remove_creator_v1_staff_lms_creators__user_id__delete"];
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/v1/staff/timetable": {
         parameters: {
             query?: never;
@@ -7657,7 +7701,7 @@ export interface components {
             /** Group Ids */
             group_ids: string[];
             /** Roles */
-            roles: ("student" | "teacher" | "admin" | "lms_admin" | "librarian")[];
+            roles: ("student" | "teacher" | "admin" | "lms_admin" | "lms_creator" | "librarian")[];
             /** Semesters */
             semesters: number[];
         };
@@ -8792,6 +8836,27 @@ export interface components {
             new: number;
             /** Review */
             review: number;
+        };
+        /**
+         * CourseCreatorResponse
+         * @description CourseCreator: a person who holds the `lms_creator` role.
+         */
+        CourseCreatorResponse: {
+            /** First Name */
+            first_name: string;
+            /**
+             * Id
+             * Format: uuid
+             */
+            id: string;
+            /** Last Name */
+            last_name: string;
+            /** Login */
+            login: string | null;
+            /** Middle Name */
+            middle_name: string | null;
+            /** Status */
+            status: string;
         };
         /**
          * CourseDraftResponse
@@ -12557,6 +12622,13 @@ export interface components {
             /** Next Cursor */
             next_cursor?: string | null;
         };
+        /** Page[CourseCreatorResponse] */
+        Page_CourseCreatorResponse_: {
+            /** Items */
+            items: components["schemas"]["CourseCreatorResponse"][];
+            /** Next Cursor */
+            next_cursor?: string | null;
+        };
         /** Page[FileItem] */
         Page_FileItem_: {
             /** Items */
@@ -14017,7 +14089,7 @@ export interface components {
          * @description Global roles stored in users.roles.
          * @enum {string}
          */
-        Role: "student" | "teacher" | "admin" | "lms_admin" | "librarian";
+        Role: "student" | "teacher" | "admin" | "lms_admin" | "lms_creator" | "librarian";
         /**
          * RolesBody
          * @description POST /v1/admin/users/{id}/roles.
@@ -15051,7 +15123,7 @@ export interface components {
             /** Mailbox */
             mailbox: string | null;
             /** Roles */
-            roles: ("student" | "teacher" | "admin" | "lms_admin" | "librarian")[];
+            roles: ("student" | "teacher" | "admin" | "lms_admin" | "lms_creator" | "librarian")[];
             /** Status */
             status: string;
             /** Subgroup */
@@ -17265,7 +17337,7 @@ export interface components {
             /** Recovery Email */
             recovery_email: string | null;
             /** Roles */
-            roles: ("student" | "teacher" | "admin" | "lms_admin" | "librarian")[];
+            roles: ("student" | "teacher" | "admin" | "lms_admin" | "lms_creator" | "librarian")[];
             /** Status */
             status: string;
         };
@@ -30675,6 +30747,98 @@ export interface operations {
                 content: {
                     "application/json": components["schemas"]["NextSuggestionResponse"];
                 };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    list_creators_v1_staff_lms_creators_get: {
+        parameters: {
+            query?: {
+                cursor?: string | null;
+                limit?: number;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Page_CourseCreatorResponse_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    add_creator_v1_staff_lms_creators__user_id__put: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                user_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["CourseCreatorResponse"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    remove_creator_v1_staff_lms_creators__user_id__delete: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                user_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            204: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
             };
             /** @description Validation Error */
             422: {

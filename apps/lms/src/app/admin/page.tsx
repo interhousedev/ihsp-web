@@ -8,7 +8,7 @@ export default function Page() {
   return (
     <LmsShell>
       {/* oxlint-disable-next-line jsx-a11y/aria-role -- `role` is the app role the user needs, not an ARIA role */}
-      <RequireRole role="lms_admin">
+      <RequireRole role={["lms_admin", "lms_creator"]}>
         <AdminPage />
       </RequireRole>
     </LmsShell>

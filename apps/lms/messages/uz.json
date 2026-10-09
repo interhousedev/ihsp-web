@@ -718,7 +718,22 @@
     "visibilityInvite": "Faqat taklif bilan",
     "publicHint": "Istalgan kishi kursni topib, yozilishi mumkin.",
     "inviteHint": "Talabalar kod yoki havola orqali qo'shiladi.",
-    "create": "Kurs yaratish"
+    "create": "Kurs yaratish",
+    "creators": {
+      "title": "Kurs mualliflari",
+      "description": "Kurs yarata oladigan odamlar. Ular yaratgan kurslariga egalik qiladi va faqat o'z kurslarini yoki qo'shilgan kurslarini tahrirlaydi.",
+      "search": "O'qituvchi yoki administratorni toping",
+      "searchButton": "Qidirish",
+      "noResults": "O'qituvchi yoki administrator topilmadi.",
+      "results": "Qidiruv natijalari",
+      "already": "Kurs muallifi",
+      "add": "Qo'shish",
+      "empty": "Bu rol hali hech kimga berilmagan.",
+      "list": "Hozirgi kurs mualliflari",
+      "remove": "Olib tashlash",
+      "removeTitle": "Kurs muallifini olib tashlaysizmi?",
+      "removeDescription": "{name} endi kurs yarata olmaydi. Yaratilgan kurslari o'zgarishsiz qoladi."
+    }
   },
   "workspace": {
     "openFailed": "AI ish maydonini ochib boʻlmadi"

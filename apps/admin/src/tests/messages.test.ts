@@ -153,7 +153,7 @@ describe("keys used in the code", () => {
       "timetable.noEntities.${view}": ["group", "teacher", "room"],
       "timetable.parityShort.${entry.week_parity}": ["odd", "even"],
       "timetable.views.${item}": ["group", "teacher", "room"],
-      "users.roles.${role}": roles,
+      "users.roles.${role}": [...roles, "lms_creator", "librarian"],
       "users.status.${value}": ["active", "pending_activation", "blocked", "deactivated"],
     }
     const unknown = [...dynamic.keys()].filter((key) => !(key in expected))

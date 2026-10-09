@@ -718,7 +718,22 @@
     "visibilityInvite": "Invite only",
     "publicHint": "Anyone can find and enroll.",
     "inviteHint": "Students join with an invite code or link.",
-    "create": "Create course"
+    "create": "Create course",
+    "creators": {
+      "title": "Course creators",
+      "description": "People who can create courses. They own what they create and edit only the courses they own or were added to.",
+      "search": "Find a teacher or administrator",
+      "searchButton": "Search",
+      "noResults": "No teacher or administrator found.",
+      "results": "Search results",
+      "already": "Course creator",
+      "add": "Add",
+      "empty": "Nobody has been given this role yet.",
+      "list": "Current course creators",
+      "remove": "Remove",
+      "removeTitle": "Remove this course creator?",
+      "removeDescription": "{name} will no longer be able to create courses. Their existing courses stay as they are."
+    }
   },
   "workspace": {
     "openFailed": "The AI workspace could not be opened"

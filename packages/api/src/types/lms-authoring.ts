@@ -118,6 +118,16 @@ export type VersionCompare = {
   }[]
 }
 
+/** A person who holds `lms_creator` (`GET /v1/staff/lms/creators`). */
+export type CourseCreator = {
+  id: string
+  login: string | null
+  first_name: string
+  last_name: string
+  middle_name: string | null
+  status: string
+}
+
 // --- Request bodies and query parameters ---
 
 export type CourseCreateBody = { title: string; slug: string; visibility: "public" | "invite" }

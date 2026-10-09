@@ -307,7 +307,8 @@
       "student": "Студент",
       "teacher": "Преподаватель",
       "admin": "Администрация",
-      "lms_admin": "Администратор LMS"
+      "lms_admin": "Администратор LMS",
+      "lms_creator": "Автор курсов LMS"
     },
     "cards": {
       "password": "Пароль",

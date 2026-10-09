@@ -46,6 +46,11 @@ describe("platformKeysFor", () => {
     expect(platformKeysFor(["lms_admin"])).toEqual(["lms", "library", "id"])
   })
 
+  it("gives a course creator LMS, the Library and ID, next to the teacher's Staff", () => {
+    expect(platformKeysFor(["lms_creator"])).toEqual(["lms", "library", "id"])
+    expect(platformKeysFor(["teacher", "lms_creator"])).toEqual(["staff", "lms", "library", "id"])
+  })
+
   it("gives a librarian the Library and ID, and adds up with the student roles", () => {
     expect(platformKeysFor(["librarian"])).toEqual(["library", "id"])
     expect(platformKeysFor(["student", "librarian"])).toEqual(["sp", "lms", "library", "id"])

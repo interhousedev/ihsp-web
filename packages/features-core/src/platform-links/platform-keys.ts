@@ -10,6 +10,7 @@ const BY_ROLE: Record<Role, readonly PlatformKey[]> = {
   teacher: ["staff", "lms", "library", "id"],
   admin: ["admin", "lms", "library", "id"],
   lms_admin: ["lms", "library", "id"],
+  lms_creator: ["lms", "library", "id"],
   librarian: ["library", "id"],
 }
 

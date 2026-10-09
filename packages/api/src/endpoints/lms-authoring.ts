@@ -3,10 +3,11 @@
 import { api } from "../client"
 import { keys } from "../keys"
 import { queryOptions, seg, type RequestOptions } from "../query"
-import type { NoContent } from "../types/common"
+import type { NoContent, Page, PageParams } from "../types/common"
 import type {
   CheckpointBody,
   CourseCreateBody,
+  CourseCreator,
   CourseDraft,
   CourseSettingsBody,
   CourseStaffBody,
@@ -29,9 +30,29 @@ import type {
 } from "../types/lms-authoring"
 import type { CourseStaffItem, StepView } from "../types/lms-learning"
 
-/** POST /v1/lms/courses — lms_admin. */
+/** POST /v1/lms/courses — lms_admin or lms_creator (a creator becomes the owner). */
 export function postLmsCourses(body: CourseCreateBody, opts?: RequestOptions): Promise<CourseDraft> {
   return api.post<CourseDraft>("/v1/lms/courses", body, opts)
+}
+
+/** GET /v1/staff/lms/creators — lms_admin; the people who hold `lms_creator`. */
+export function getLmsCreators(params?: PageParams, opts?: RequestOptions): Promise<Page<CourseCreator>> {
+  return api.get<Page<CourseCreator>>("/v1/staff/lms/creators", { ...opts, query: params })
+}
+export const getLmsCreatorsQuery = (params?: PageParams) =>
+  queryOptions({
+    queryKey: [...keys.lms.creators(), params ?? {}] as const,
+    queryFn: ({ signal }) => getLmsCreators(params, { signal }),
+  })
+
+/** PUT /v1/staff/lms/creators/{user_id} — lms_admin; teachers and admins only (`422 id/course-creator-not-staff`). */
+export function putLmsCreator(userId: string, opts?: RequestOptions): Promise<CourseCreator> {
+  return api.put<CourseCreator>(`/v1/staff/lms/creators/${seg(userId)}`, undefined, opts)
+}
+
+/** DELETE /v1/staff/lms/creators/{user_id} — lms_admin; `204`. */
+export function deleteLmsCreator(userId: string, opts?: RequestOptions): Promise<NoContent> {
+  return api.delete<NoContent>(`/v1/staff/lms/creators/${seg(userId)}`, opts)
 }
 
 /** GET /v1/lms/courses/{id}/draft — course:edit or view_drafts. */
