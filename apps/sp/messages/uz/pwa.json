@@ -1,0 +1,112 @@
+{
+  "pwa": {
+    "landing": {
+      "title": "IHSP ni bosh ekranga qoʻshing",
+      "subtitle": "Ilovani oʻrnating va telefoningizdagi boshqa ilovalar kabi bir bosishda oching."
+    },
+    "benefits": {
+      "fast": "Bir bosishda toʻliq ekranda ochiladi",
+      "offline": "Dars jadvali, uy vazifalari va baholar internetsiz ham ishlaydi",
+      "session": "Hisobga kirish 90 kungacha saqlanadi",
+      "push": "Yangi baholar haqida bildirishnoma olish uchun oʻrnating"
+    },
+    "install": {
+      "button": "Ilovani oʻrnatish",
+      "busy": "Oʻrnatilmoqda…"
+    },
+    "installed": {
+      "title": "IHSP oʻrnatildi",
+      "text": "Uni bosh ekrandan oching."
+    },
+    "ios": {
+      "title": "iPhone yoki iPad’ga oʻrnatish",
+      "step1": "Brauzer panelidagi «Ulashish» tugmasini bosing",
+      "step2": "Pastga aylantiring va «Bosh ekranga qoʻshish» ni bosing",
+      "step3": "«Qoʻshish» ni bosing. IHSP bosh ekranda paydo boʻladi.",
+      "openInSafari": "Bu brauzer ilovani bosh ekranga qoʻsha olmaydi. Sahifani Safari’da oching va qayta urinib koʻring.",
+      "pushNote": "iPhone’da bildirishnomalar faqat ilova oʻrnatilgandan keyin ishlaydi."
+    },
+    "android": {
+      "manual": {
+        "title": "Brauzer menyusi orqali oʻrnatish",
+        "step1": "Brauzer menyusini oching (uchta nuqta)",
+        "step2": "«Ilovani oʻrnatish» yoki «Bosh ekranga qoʻshish» ni tanlang",
+        "step3": "Tasdiqlang. IHSP bosh ekranda paydo boʻladi."
+      }
+    },
+    "desktop": {
+      "title": "IHSP ni telefoningizda oching",
+      "scan": "Telefon kamerasini kodga qarating, soʻng ilovani bosh ekranga qoʻshing.",
+      "qrLabel": "IHSP ilovasi manzili yozilgan QR kod",
+      "address": "Yoki telefonda {url} manzilini oching."
+    },
+    "telegram": {
+      "open": "Telegram’da ochish",
+      "hint": "Telegram qulayroqmi? IHSP mini-ilovasi u yerda oʻrnatmasdan ishlaydi."
+    },
+    "continue": "Brauzerda davom etish",
+    "update": {
+      "available": "Yangilanish mavjud",
+      "description": "IHSP ning yangi versiyasi tayyor.",
+      "reload": "Yangilash",
+      "forced": {
+        "title": "IHSP yangilanmoqda",
+        "text": "Bu bir necha soniya oladi."
+      }
+    },
+    "menu": {
+      "install": "Ilovani oʻrnatish"
+    },
+    "lock": {
+      "title": "IHSP qulflangan",
+      "prompt": "PIN-kodni kiriting",
+      "wrong": "PIN-kod notoʻgʻri. {count} ta urinish qoldi.",
+      "lockedOut": "Notoʻgʻri urinishlar juda koʻp. Hisobdan chiqilmoqda…",
+      "signOutFailed": "Hisobdan chiqib boʻlmadi. Ulanishni tekshiring: ilova qulflangan holda qoladi va internet paydo boʻlganda qayta urinadi.",
+      "retry": "Qayta urinish",
+      "forgot": "PIN-kodni unutdingizmi?",
+      "forgotTitle": "PIN-kodni unutdingizmi?",
+      "forgotText": "Siz bu qurilmada hisobdan chiqasiz va PIN-kod oʻchiriladi. Qayta kirish uchun parolingizdan foydalanishingiz mumkin.",
+      "forgotConfirm": "Chiqish",
+      "delete": "Oxirgi raqamni oʻchirish",
+      "digits": "PIN-kod: {total} ta raqamdan {filled} tasi kiritildi",
+      "settings": {
+        "title": "Ilovani qulflash",
+        "description": "Ilova ochilganda va u fonda siz tanlagan vaqt turgandan keyin PIN-kod soʻrash.",
+        "off": "Qulf oʻchirilgan.",
+        "on": "Qulf yoqilgan.",
+        "set": "PIN-kod oʻrnatish",
+        "change": "PIN-kodni almashtirish",
+        "remove": "Oʻchirish",
+        "current": "Joriy PIN-kod",
+        "new": "Yangi PIN-kod (4–6 raqam)",
+        "repeat": "Yangi PIN-kodni takrorlang",
+        "save": "Saqlash",
+        "cancel": "Bekor qilish",
+        "errors": {
+          "length": "PIN-kod 4–6 raqamdan iborat boʻlishi kerak.",
+          "mismatch": "PIN-kodlar mos kelmadi.",
+          "wrong": "PIN-kod notoʻgʻri.",
+          "storage": "PIN-kodni bu qurilmada saqlab boʻlmadi."
+        },
+        "done": {
+          "set": "Qulf yoqildi.",
+          "change": "PIN-kod almashtirildi.",
+          "remove": "Qulf oʻchirildi."
+        },
+        "relock": {
+          "title": "PIN-kodni qayta soʻrash",
+          "hint": "Ilova PIN-kodni qayta soʻramasdan oldin fonda qancha turishi mumkin. Ilova ishga tushganda PIN-kod har doim soʻraladi.",
+          "options": {
+            "immediately": "Darhol",
+            "1m": "1 daqiqadan keyin",
+            "5m": "5 daqiqadan keyin",
+            "15m": "15 daqiqadan keyin",
+            "1h": "1 soatdan keyin",
+            "never": "Faqat ilova ishga tushganda"
+          }
+        }
+      }
+    }
+  }
+}

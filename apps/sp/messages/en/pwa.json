@@ -1,0 +1,112 @@
+{
+  "pwa": {
+    "landing": {
+      "title": "Add IHSP to your home screen",
+      "subtitle": "Install the app and open it in one tap, like any other app on your phone."
+    },
+    "benefits": {
+      "fast": "Opens full screen in one tap",
+      "offline": "Timetable, homework and grades work without internet",
+      "session": "You stay signed in for up to 90 days",
+      "push": "Install to get notifications about new marks"
+    },
+    "install": {
+      "button": "Install the app",
+      "busy": "Installing…"
+    },
+    "installed": {
+      "title": "IHSP is installed",
+      "text": "Open it from your home screen."
+    },
+    "ios": {
+      "title": "Install on iPhone or iPad",
+      "step1": "Tap the Share button in the browser bar",
+      "step2": "Scroll down and tap Add to Home Screen",
+      "step3": "Tap Add. IHSP appears on your home screen.",
+      "openInSafari": "This browser cannot add apps to the home screen. Open this page in Safari and try again.",
+      "pushNote": "On iPhone, notifications only work once the app is installed."
+    },
+    "android": {
+      "manual": {
+        "title": "Install from the browser menu",
+        "step1": "Open the browser menu (the three dots)",
+        "step2": "Choose Install app or Add to Home screen",
+        "step3": "Confirm. IHSP appears on your home screen."
+      }
+    },
+    "desktop": {
+      "title": "Open IHSP on your phone",
+      "scan": "Point your phone camera at the code, then add the app to your home screen.",
+      "qrLabel": "QR code with the address of the IHSP app",
+      "address": "Or open {url} on your phone."
+    },
+    "telegram": {
+      "open": "Open in Telegram",
+      "hint": "Prefer Telegram? The IHSP mini app works there with nothing to install."
+    },
+    "continue": "Continue in browser",
+    "update": {
+      "available": "Update available",
+      "description": "A new version of IHSP is ready.",
+      "reload": "Reload",
+      "forced": {
+        "title": "Updating IHSP",
+        "text": "This takes a few seconds."
+      }
+    },
+    "menu": {
+      "install": "Install the app"
+    },
+    "lock": {
+      "title": "IHSP is locked",
+      "prompt": "Enter your PIN",
+      "wrong": "Wrong PIN. {count, plural, one {# attempt} other {# attempts}} left.",
+      "lockedOut": "Too many wrong attempts. Signing you out…",
+      "signOutFailed": "Could not sign you out. Check your connection: the app stays locked and tries again when you are online.",
+      "retry": "Try again",
+      "forgot": "Forgot PIN?",
+      "forgotTitle": "Forgot your PIN?",
+      "forgotText": "You will be signed out on this device and the PIN will be removed. You can sign in again with your password.",
+      "forgotConfirm": "Sign out",
+      "delete": "Delete the last digit",
+      "digits": "PIN, {filled} of {total} digits entered",
+      "settings": {
+        "title": "App lock",
+        "description": "Ask for a PIN when the app is opened, and again after it was in the background for the time you choose.",
+        "off": "App lock is off.",
+        "on": "App lock is on.",
+        "set": "Set a PIN",
+        "change": "Change PIN",
+        "remove": "Turn off",
+        "current": "Current PIN",
+        "new": "New PIN (4 to 6 digits)",
+        "repeat": "Repeat the new PIN",
+        "save": "Save",
+        "cancel": "Cancel",
+        "errors": {
+          "length": "The PIN must be 4 to 6 digits.",
+          "mismatch": "The PINs do not match.",
+          "wrong": "Wrong PIN.",
+          "storage": "The PIN could not be saved on this device."
+        },
+        "done": {
+          "set": "App lock is on.",
+          "change": "PIN changed.",
+          "remove": "App lock is off."
+        },
+        "relock": {
+          "title": "Ask for the PIN again",
+          "hint": "How long the app may stay in the background before it asks for the PIN. It always asks when the app starts.",
+          "options": {
+            "immediately": "Immediately",
+            "1m": "After 1 minute",
+            "5m": "After 5 minutes",
+            "15m": "After 15 minutes",
+            "1h": "After 1 hour",
+            "never": "Only when the app starts"
+          }
+        }
+      }
+    }
+  }
+}
