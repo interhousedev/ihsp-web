@@ -94,9 +94,31 @@ export interface TocEntry {
   level: number
 }
 
+/**
+ * System codes of `status_reason` (OpenAPI `StatusReasonCode`). Any other value is free text written by a librarian or a
+ * teacher; clients translate a known code and show anything else as it is.
+ */
+export type StatusReasonCode =
+  | "withdrawn_by_owner"
+  | "reported"
+  | "superseded"
+  | "account_closed"
+  | "unpublished"
+  | "takedown"
+
+/** Where the caller stopped in an item (`ItemDetail.progress`). */
+export interface ItemProgress {
+  file_id: string
+  locator: Annotation["locator"]
+  percent: number
+}
+
 export interface ItemDetail extends ItemCard {
   status: ItemStatus
-  status_reason: string | null
+  /** A `StatusReasonCode` or free text. */
+  status_reason: StatusReasonCode | (string & Record<never, never>) | null
+  /** Where the caller stopped; absent or `null` when they never opened it (and always for external records). */
+  progress?: ItemProgress | null
   status_note: string | null
   visibility: ItemVisibility
   subtitle: string | null
@@ -115,7 +137,8 @@ export interface ItemDetail extends ItemCard {
 export interface UploadRow {
   item: ItemCard
   status: ItemStatus
-  reason: string | null
+  /** A `StatusReasonCode` or free text. */
+  reason: StatusReasonCode | (string & Record<never, never>) | null
   review_message: string | null
   queue_position: number | null
 }
@@ -409,6 +432,14 @@ export interface MaterialPatchBody {
   description?: string
   topic_ids?: string[]
   body_md?: string
+  /** Owner, draft or changes requested: ticking the attestation of a saved draft. */
+  attested?: boolean
+}
+
+/** `GET /library/my-groups`: the groups a teacher teaches or curates (librarians and Administration get all). */
+export interface LibraryGroup {
+  id: string
+  name: string
 }
 
 /** `POST /library/suggestions`. */
@@ -445,7 +476,9 @@ export type QueueParams = { tab: QueueTab; cursor?: string; limit?: number }
 /** `POST /manage/library/items/{id}/{action}`. */
 export type ModerationAction = "approve" | "request-changes" | "reject" | "hold" | "restore" | "unpublish"
 export interface ModerationBody {
+  /** A `StatusReasonCode`, or short own words (at most 40 characters). */
   reason?: string
+  /** A free message to the owner (at most 2000 characters). */
   note?: string
 }
 /** `POST /manage/library/reports/{id}/resolve`. */

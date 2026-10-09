@@ -16,7 +16,7 @@ import type { deleteFile, getFile, getFileUrl, getMeFiles, getMeStorage, patchFi
 import type { getMeFlashcardSet, getMeFlashcardSetStudy, getMeFlashcardSets, getMeFlashcardSetsStats, patchMeFlashcardSet, postMeFlashcardReview, postMeFlashcardSets, postMeFlashcardSetsCopy, putMeFlashcardSetCards } from "./endpoints/flashcards"
 import type { deleteIdMe, getIdActivation, getIdConsent, getIdLogin, getIdLogout, getIdMcpScopes, getIdMe, getIdMeActivity, getIdMeConnectors, getIdMeSessions, getIdMeTelegram, patchIdMePreferences, patchIdMeTelegram, postIdActivation, postIdConsent, postIdLogin, postIdLoginOtp, postIdLoginOtpRequest, postIdMeConnectors, postIdMeEmailChangeConfirm, postIdMeEmisPassword, postIdMeOtpDisable, postIdMeOtpEnableConfirm, postIdRecoveryOtpConfirm, postIdTelegramLogin, postIdTelegramOtpRequest, postIdTelegramStatus } from "./endpoints/id"
 import type { getAdminAudit, getAdminOauthClients, getAdminTeachers, getAdminUser, getAdminUsers, patchAdminTeacher, postAdminOauthClientVerify, postAdminTeacherDeactivate, postAdminTeachers, postAdminUserBlock, postAdminUserMailResume, postAdminUserMailSuspend, postAdminUserResetPassword, postAdminUserRoles, postAdminUserUnblock } from "./endpoints/id-admin"
-import type { getLibraryFileUrl, getLibraryItem, getLibraryItemText, getLibraryItems, getLibrarySanctions, getLibrarySubjects, getManageBook, getManageBooks, getManageQueue, getMyUploads, getUniLibraryRecord, getUniLibrarySearch, getUniLibraryStatus, getUniLibraryTaxonomies, postLibrarySanction, postManageBook, postManageBookFile, postManageImport, postMaterial, postMaterialFiles, postMaterialSubmit, postMaterialVersion, postModeration, postSuggestion, postUniLibraryPin } from "./endpoints/library"
+import type { getAnnotations, getAnnotationsExport, getLibraryCollection, getLibraryCollections, getLibraryFileUrl, getLibraryItem, getLibraryItemText, getLibraryItems, getLibrarySanctions, getLibrarySubjects, getLibraryTopics, getManageBook, getManageBooks, getManageQueue, getManageStats, getManageTopics, getMeLibrary, getMyUploads, getReadingList, getReadingLists, getShelf, getUniLibraryRecord, getUniLibrarySearch, getUniLibraryStatus, getUniLibraryTaxonomies, postAnnotation, postAnnotationsSync, postLibrarySanction, postManageBook, postManageBookFile, postManageImport, postMaterial, postMaterialFiles, postMaterialSubmit, postMaterialVersion, postModeration, postReadingList, postSuggestion, postUniLibraryPin, putReadingListItems, putShelfEntry } from "./endpoints/library"
 import type { getAdminModerationQueue, getAdminModerationSearch, getLessonResources, getMeLinks, postAdminLinkDisable, postAdminLinkDismissReports, postLessonResourceHide, postLessonResources, postLinkRevoke, postLinks, postShares } from "./endpoints/links"
 import type { getLmsCourseCompare, getLmsCourseDraft, getLmsCoursePending, getLmsCoursePreviewStep, getLmsCourseStaff, getLmsCourseVersion, getLmsCourseVersions, getLmsStepDiff, getLmsStepDraft, getLmsStepHistory, patchLmsCourseSettings, patchLmsCourseStaff, postLmsCourseDiscard, postLmsCourseDraftOutline, postLmsCourseInviteCode, postLmsCoursePublish, postLmsCourseStaff, postLmsCourseSteps, postLmsCourseVersionRestore, postLmsCourses, postLmsStepCheckpoints, postLmsStepDiscard, postLmsStepRestore, putLmsCourseDraftMeta, putLmsStepDraft } from "./endpoints/lms-authoring"
 import type { getLmsAttempt, getLmsCourse, getLmsCourseStep, getLmsCourseStudents, getLmsCourses, getLmsMyCourses, getLmsStepCardsNext, postLmsAttemptOverride, postLmsAttemptSubmit, postLmsCourseEnroll, postLmsJoin, postLmsStepBlockAttempts, postLmsStepCardReview, postLmsStepViewed, putLmsAttemptAnswers } from "./endpoints/lms-learning"
@@ -38,7 +38,7 @@ import type { FileCreateBody, FileRenameBody, FileUrlParams, MyFilesParams } fro
 import type { FlashcardCardsBody, FlashcardCopyBody, FlashcardReviewBody, FlashcardSetCreateBody, FlashcardSetPatchBody, FlashcardStatsParams } from "./types/flashcards"
 import type { ActivationBody, ActivationEmailBody, ActivityParams, ConnectorCreateBody, ConsentBody, ConsentOtpBody, DeleteAccountBody, EmailChangeBody, EmailChangeConfirmBody, EmisPasswordBody, LoginBody, LoginOtpBody, LoginOtpRequestBody, OtpDisableBody, OtpEnableBody, OtpEnableConfirmBody, PasswordChangeBody, RecoveryLoginBody, RecoveryOtpCancelBody, RecoveryOtpConfirmBody, RecoveryOtpRequestBody, RecoveryPasswordConfirmBody, RecoveryPasswordRequestBody, TelegramLoginBody, TelegramOtpRequestBody, TelegramPatchBody, TelegramStatusBody, UserPreferencesPatch } from "./types/id"
 import type { AdminAuditParams, AdminTeachersParams, AdminUsersParams, BlockUserBody, MailSuspendBody, OauthClientVerifyBody, TeacherCreateBody, TeacherPatchBody, UserRolesBody } from "./types/id-admin"
-import type { BookFileBody, BookInput, BookRowsParams, ImportBody, ItemTextParams, ItemsParams, LibraryReportBody, MaterialFilesBody, MaterialInput, ModerationBody, PinExternalBody, QueueParams, ReportResolveBody, SanctionBody, SuggestionBody, UniLibrarySearchParams, UploadsParams } from "./types/library"
+import type { AnnotationInput, AnnotationsParams, AnnotationsSyncBody, BookFileBody, BookInput, BookRowsParams, ImportBody, ItemTextParams, ItemsParams, LibraryReportBody, MaterialFilesBody, MaterialInput, ModerationBody, PinExternalBody, ProgressBody, QueueParams, ReadingListInput, ReadingListsParams, ReportResolveBody, SanctionBody, ShelfParams, SuggestionBody, UniLibrarySearchParams, UploadsParams } from "./types/library"
 import type { LinkCreateBody, LinkDisableBody, ModerationQueueParams, ModerationSearchParams, MyLinksParams, ResourceCreateBody, ResourceHideBody, ShareCreateBody } from "./types/links"
 import type { CheckpointBody, CourseCreateBody, CourseSettingsBody, CourseStaffBody, CourseStaffPatchBody, DraftMetaBody, OutlineOpsBody, PublishBody, RestoreRevisionBody, StepCreateBody, StepDraftBody, VersionCompareParams } from "./types/lms-authoring"
 import type { AttemptAnswersBody, AttemptOverrideBody, AttemptStartParams, CourseCatalogParams, CourseJoinBody, LmsCardReviewBody } from "./types/lms-learning"
@@ -856,6 +856,42 @@ export const query_ok_getLibraryItemText: QueryOf<"/v1/library/items/{item_id}/t
 declare const res_getLibrarySubjects: Awaited<ReturnType<typeof getLibrarySubjects>>
 export const response_getLibrarySubjects: ResponseOf<"/v1/library/subjects", "get"> = res_getLibrarySubjects
 
+// GET /v1/library/topics — getLibraryTopics
+declare const res_getLibraryTopics: Awaited<ReturnType<typeof getLibraryTopics>>
+export const response_getLibraryTopics: ResponseOf<"/v1/library/topics", "get"> = res_getLibraryTopics
+
+// GET /v1/library/collections — getLibraryCollections
+declare const res_getLibraryCollections: Awaited<ReturnType<typeof getLibraryCollections>>
+export const response_getLibraryCollections: ResponseOf<"/v1/library/collections", "get"> = res_getLibraryCollections
+
+// GET /v1/library/collections/{collection_id} — getLibraryCollection
+declare const res_getLibraryCollection: Awaited<ReturnType<typeof getLibraryCollection>>
+export const response_getLibraryCollection: ResponseOf<"/v1/library/collections/{collection_id}", "get"> = res_getLibraryCollection
+
+// GET /v1/library/reading-lists — getReadingLists
+declare const res_getReadingLists: Awaited<ReturnType<typeof getReadingLists>>
+export const response_getReadingLists: ResponseOf<"/v1/library/reading-lists", "get"> = res_getReadingLists
+declare const query_getReadingLists: ReadingListsParams
+export const query_ok_getReadingLists: QueryOf<"/v1/library/reading-lists", "get"> = query_getReadingLists
+
+// GET /v1/library/reading-lists/{list_id} — getReadingList
+declare const res_getReadingList: Awaited<ReturnType<typeof getReadingList>>
+export const response_getReadingList: ResponseOf<"/v1/library/reading-lists/{list_id}", "get"> = res_getReadingList
+
+// POST /v1/library/reading-lists — postReadingList
+declare const res_postReadingList: Awaited<ReturnType<typeof postReadingList>>
+export const response_postReadingList: ResponseOf<"/v1/library/reading-lists", "post"> = res_postReadingList
+declare const req_postReadingList: ReadingListInput
+export const request_postReadingList: RequestOf<"/v1/library/reading-lists", "post"> = req_postReadingList
+
+// DELETE /v1/library/reading-lists/{list_id} — deleteReadingList
+// no JSON success response (204, CSV, calendar or HTML): only the route is checked
+export type route_deleteReadingList = OperationOf<"/v1/library/reading-lists/{list_id}", "delete">
+
+// PUT /v1/library/reading-lists/{list_id}/items — putReadingListItems
+declare const res_putReadingListItems: Awaited<ReturnType<typeof putReadingListItems>>
+export const response_putReadingListItems: ResponseOf<"/v1/library/reading-lists/{list_id}/items", "put"> = res_putReadingListItems
+
 // GET /v1/library/external/unilibrary/search — getUniLibrarySearch
 declare const res_getUniLibrarySearch: Awaited<ReturnType<typeof getUniLibrarySearch>>
 export const response_getUniLibrarySearch: ResponseOf<"/v1/library/external/unilibrary/search", "get"> = res_getUniLibrarySearch
@@ -875,6 +911,56 @@ export const request_postUniLibraryPin: RequestOf<"/v1/library/external/unilibra
 // GET /v1/library/external/unilibrary/taxonomies — getUniLibraryTaxonomies
 declare const res_getUniLibraryTaxonomies: Awaited<ReturnType<typeof getUniLibraryTaxonomies>>
 export const response_getUniLibraryTaxonomies: ResponseOf<"/v1/library/external/unilibrary/taxonomies", "get"> = res_getUniLibraryTaxonomies
+
+// GET /v1/me/library — getMeLibrary
+declare const res_getMeLibrary: Awaited<ReturnType<typeof getMeLibrary>>
+export const response_getMeLibrary: ResponseOf<"/v1/me/library", "get"> = res_getMeLibrary
+
+// GET /v1/me/library/shelf — getShelf
+declare const res_getShelf: Awaited<ReturnType<typeof getShelf>>
+export const response_getShelf: ResponseOf<"/v1/me/library/shelf", "get"> = res_getShelf
+declare const query_getShelf: ShelfParams
+export const query_ok_getShelf: QueryOf<"/v1/me/library/shelf", "get"> = query_getShelf
+
+// PUT /v1/me/library/shelf/{item_id} — putShelfEntry
+declare const res_putShelfEntry: Awaited<ReturnType<typeof putShelfEntry>>
+export const response_putShelfEntry: ResponseOf<"/v1/me/library/shelf/{item_id}", "put"> = res_putShelfEntry
+
+// DELETE /v1/me/library/shelf/{item_id} — deleteShelfEntry
+// no JSON success response (204, CSV, calendar or HTML): only the route is checked
+export type route_deleteShelfEntry = OperationOf<"/v1/me/library/shelf/{item_id}", "delete">
+
+// PUT /v1/me/library/progress/{item_id} — putLibraryProgress
+// no JSON success response (204, CSV, calendar or HTML): only the route is checked
+export type route_putLibraryProgress = OperationOf<"/v1/me/library/progress/{item_id}", "put">
+declare const req_putLibraryProgress: ProgressBody
+export const request_putLibraryProgress: RequestOf<"/v1/me/library/progress/{item_id}", "put"> = req_putLibraryProgress
+
+// GET /v1/me/library/annotations — getAnnotations
+declare const res_getAnnotations: Awaited<ReturnType<typeof getAnnotations>>
+export const response_getAnnotations: ResponseOf<"/v1/me/library/annotations", "get"> = res_getAnnotations
+declare const query_getAnnotations: AnnotationsParams
+export const query_ok_getAnnotations: QueryOf<"/v1/me/library/annotations", "get"> = query_getAnnotations
+
+// POST /v1/me/library/annotations — postAnnotation
+declare const res_postAnnotation: Awaited<ReturnType<typeof postAnnotation>>
+export const response_postAnnotation: ResponseOf<"/v1/me/library/annotations", "post"> = res_postAnnotation
+declare const req_postAnnotation: AnnotationInput
+export const request_postAnnotation: RequestOf<"/v1/me/library/annotations", "post"> = req_postAnnotation
+
+// POST /v1/me/library/annotations/sync — postAnnotationsSync
+declare const res_postAnnotationsSync: Awaited<ReturnType<typeof postAnnotationsSync>>
+export const response_postAnnotationsSync: ResponseOf<"/v1/me/library/annotations/sync", "post"> = res_postAnnotationsSync
+declare const req_postAnnotationsSync: AnnotationsSyncBody
+export const request_postAnnotationsSync: RequestOf<"/v1/me/library/annotations/sync", "post"> = req_postAnnotationsSync
+
+// DELETE /v1/me/library/annotations/{annotation_id} — deleteAnnotation
+// no JSON success response (204, CSV, calendar or HTML): only the route is checked
+export type route_deleteAnnotation = OperationOf<"/v1/me/library/annotations/{annotation_id}", "delete">
+
+// GET /v1/me/library/annotations/export — getAnnotationsExport
+declare const res_getAnnotationsExport: Awaited<ReturnType<typeof getAnnotationsExport>>
+export const response_getAnnotationsExport: ResponseOf<"/v1/me/library/annotations/export", "get"> = res_getAnnotationsExport
 
 // POST /v1/library/materials — postMaterial
 declare const res_postMaterial: Awaited<ReturnType<typeof postMaterial>>
@@ -965,6 +1051,14 @@ declare const res_postManageImport: Awaited<ReturnType<typeof postManageImport>>
 export const response_postManageImport: ResponseOf<"/v1/manage/library/import", "post"> = res_postManageImport
 declare const req_postManageImport: ImportBody
 export const request_postManageImport: RequestOf<"/v1/manage/library/import", "post"> = req_postManageImport
+
+// GET /v1/manage/library/topics — getManageTopics
+declare const res_getManageTopics: Awaited<ReturnType<typeof getManageTopics>>
+export const response_getManageTopics: ResponseOf<"/v1/manage/library/topics", "get"> = res_getManageTopics
+
+// GET /v1/manage/library/stats — getManageStats
+declare const res_getManageStats: Awaited<ReturnType<typeof getManageStats>>
+export const response_getManageStats: ResponseOf<"/v1/manage/library/stats", "get"> = res_getManageStats
 
 // GET /v1/admin/library/sanctions — getLibrarySanctions
 declare const res_getLibrarySanctions: Awaited<ReturnType<typeof getLibrarySanctions>>

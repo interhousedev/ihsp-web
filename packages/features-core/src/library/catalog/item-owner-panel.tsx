@@ -1,5 +1,6 @@
 "use client"
 
+import { useReasonText } from "../upload/reason-text"
 import { deleteMaterial, type ItemDetail } from "@ihsp/api"
 import { useErrorMessage, useT } from "@ihsp/i18n"
 import { Badge, ConfirmDialog, buttonVariants } from "@ihsp/ui"
@@ -16,6 +17,7 @@ import { uploadEditHref } from "../utils/hrefs"
  */
 export function ItemOwnerPanel({ item }: { item: ItemDetail }) {
   const t = useT("library.item")
+  const reasonText = useReasonText()
   const errorMessage = useErrorMessage()
   const queryClient = useQueryClient()
   const [confirming, setConfirming] = useState(false)
@@ -42,7 +44,7 @@ export function ItemOwnerPanel({ item }: { item: ItemDetail }) {
       </div>
       {item.status_reason ? (
         <p>
-          <span className="font-medium">{t("reason")}:</span> {item.status_reason}
+          <span className="font-medium">{t("reason")}:</span> {reasonText(item.status_reason)}
         </p>
       ) : null}
       {item.status_note ? (

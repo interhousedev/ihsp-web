@@ -196,6 +196,7 @@ export const keys = {
     shelf: (filters?: object) => ["library", "me", "shelf", params(filters)] as const,
     annotations: (filters?: object) => ["library", "me", "annotations", params(filters)] as const,
     uploads: (filters?: object) => ["library", "me", "uploads", params(filters)] as const,
+    myGroups: () => ["library", "my-groups"] as const,
     manage: {
       all: () => ["library", "manage"] as const,
       queue: (filters: object) => ["library", "manage", "queue", filters] as const,

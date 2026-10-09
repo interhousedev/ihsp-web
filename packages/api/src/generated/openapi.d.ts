@@ -2726,6 +2726,70 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/v1/library/book-plans": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get Book Plan
+         * @description The textbook plan of the subject and year (`null` when there is none).
+         */
+        get: operations["get_book_plan_v1_library_book_plans_get"];
+        /**
+         * Put Book Plan
+         * @description Save the plan (teachers of the subject and librarians).
+         */
+        put: operations["put_book_plan_v1_library_book_plans_put"];
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/library/collections": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * List Collections
+         * @description Published collections with the number of items the caller can see.
+         */
+        get: operations["list_collections_v1_library_collections_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/library/collections/{collection_id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get Collection
+         * @description A published collection (by id or slug) with the cards the caller can see.
+         */
+        get: operations["get_collection_v1_library_collections__collection_id__get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/v1/library/external/unilibrary/search": {
         parameters: {
             query?: never;
@@ -3010,6 +3074,98 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/v1/library/my-groups": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * List My Groups
+         * @description Groups the teacher teaches or curates; librarians and Administration get all.
+         */
+        get: operations["list_my_groups_v1_library_my_groups_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/library/reading-lists": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * List Reading Lists
+         * @description Lists the caller may open (students: the lists of their group and school).
+         */
+        get: operations["list_reading_lists_v1_library_reading_lists_get"];
+        put?: never;
+        /**
+         * Create Reading List
+         * @description Create a list (teachers for their subjects and groups, librarians for any).
+         */
+        post: operations["create_reading_list_v1_library_reading_lists_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/library/reading-lists/{list_id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get Reading List
+         * @description The list with its entries and my read status.
+         */
+        get: operations["get_reading_list_v1_library_reading_lists__list_id__get"];
+        put?: never;
+        post?: never;
+        /**
+         * Delete Reading List
+         * @description Delete a list with its entries (its owner, or a librarian).
+         */
+        delete: operations["delete_reading_list_v1_library_reading_lists__list_id__delete"];
+        options?: never;
+        head?: never;
+        /**
+         * Update Reading List
+         * @description Change the sent fields of a list (its owner, or a librarian).
+         */
+        patch: operations["update_reading_list_v1_library_reading_lists__list_id__patch"];
+        trace?: never;
+    };
+    "/v1/library/reading-lists/{list_id}/items": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        /**
+         * Replace List Entries
+         * @description Replace all entries at once (at most 100, else `422 library/list-too-long`).
+         */
+        put: operations["replace_list_entries_v1_library_reading_lists__list_id__items_put"];
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/v1/library/subjects": {
         parameters: {
             query?: never;
@@ -3044,6 +3200,26 @@ export interface paths {
          * @description Suggest a book; it waits in the librarian queue.
          */
         post: operations["create_suggestion_v1_library_suggestions_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/library/topics": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * List Topics
+         * @description The topic tree of a subject (of every subject without `subject_id`).
+         */
+        get: operations["list_topics_v1_library_topics_get"];
+        put?: never;
+        post?: never;
         delete?: never;
         options?: never;
         head?: never;
@@ -3994,6 +4170,54 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/v1/manage/library/collections": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * List Manage Collections
+         * @description Every collection, published or not, with all languages.
+         */
+        get: operations["list_manage_collections_v1_manage_library_collections_get"];
+        put?: never;
+        /**
+         * Create Collection
+         * @description Create a collection with its items.
+         */
+        post: operations["create_collection_v1_manage_library_collections_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/manage/library/collections/{collection_id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post?: never;
+        /**
+         * Delete Collection
+         * @description Delete a collection; its items stay in the library.
+         */
+        delete: operations["delete_collection_v1_manage_library_collections__collection_id__delete"];
+        options?: never;
+        head?: never;
+        /**
+         * Update Collection
+         * @description Change the sent fields; `null` clears the description or the cover.
+         */
+        patch: operations["update_collection_v1_manage_library_collections__collection_id__patch"];
+        trace?: never;
+    };
     "/v1/manage/library/import": {
         parameters: {
             query?: never;
@@ -4074,6 +4298,26 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/v1/manage/library/stats": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get Library Stats
+         * @description Opens, readers, queue times and the rest, for the last 30 days by default.
+         */
+        get: operations["get_library_stats_v1_manage_library_stats_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/v1/manage/library/suggestions/{suggestion_id}/{decision}": {
         parameters: {
             query?: never;
@@ -4092,6 +4336,54 @@ export interface paths {
         options?: never;
         head?: never;
         patch?: never;
+        trace?: never;
+    };
+    "/v1/manage/library/topics": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * List Manage Topics
+         * @description Topics with all three names, flat, in tree order.
+         */
+        get: operations["list_manage_topics_v1_manage_library_topics_get"];
+        put?: never;
+        /**
+         * Create Topic
+         * @description Create a topic (librarians and Administration).
+         */
+        post: operations["create_topic_v1_manage_library_topics_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/manage/library/topics/{topic_id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post?: never;
+        /**
+         * Delete Topic
+         * @description Delete a topic with its sub-topics; items keep existing.
+         */
+        delete: operations["delete_topic_v1_manage_library_topics__topic_id__delete"];
+        options?: never;
+        head?: never;
+        /**
+         * Update Topic
+         * @description Change the sent fields of a topic.
+         */
+        patch: operations["update_topic_v1_manage_library_topics__topic_id__patch"];
         trace?: never;
     };
     "/v1/me/alerts": {
@@ -4465,6 +4757,198 @@ export interface paths {
         put?: never;
         post?: never;
         delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/me/lessons/{lesson_id}/item-refs": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get Lesson Item Refs
+         * @description The books a lesson follows (its students and teacher).
+         */
+        get: operations["get_lesson_item_refs_v1_me_lessons__lesson_id__item_refs_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/me/library": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get Me Library
+         * @description Continue reading, shelf counts and the offline limits.
+         */
+        get: operations["get_me_library_v1_me_library_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/me/library/annotations": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * List Annotations
+         * @description The caller's own annotations, newest first.
+         */
+        get: operations["list_annotations_v1_me_library_annotations_get"];
+        put?: never;
+        /**
+         * Create Annotation
+         * @description Store an annotation; sending the same `client_id` again changes nothing.
+         */
+        post: operations["create_annotation_v1_me_library_annotations_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/me/library/annotations/export": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Export Annotations
+         * @description The caller's annotations as Markdown text.
+         */
+        get: operations["export_annotations_v1_me_library_annotations_export_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/me/library/annotations/sync": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Sync Annotations
+         * @description Apply a device's queued changes (at most 200) and answer with their state.
+         */
+        post: operations["sync_annotations_v1_me_library_annotations_sync_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/me/library/annotations/{annotation_id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post?: never;
+        /**
+         * Delete Annotation
+         * @description Delete an annotation of the caller.
+         */
+        delete: operations["delete_annotation_v1_me_library_annotations__annotation_id__delete"];
+        options?: never;
+        head?: never;
+        /**
+         * Update Annotation
+         * @description Change the note or the colour (`note: null` clears the note).
+         */
+        patch: operations["update_annotation_v1_me_library_annotations__annotation_id__patch"];
+        trace?: never;
+    };
+    "/v1/me/library/progress/{item_id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        /**
+         * Save Progress
+         * @description Save the reading position (last write wins by `client_ts`).
+         */
+        put: operations["save_progress_v1_me_library_progress__item_id__put"];
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/me/library/shelf": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * List Shelf
+         * @description The shelf, newest change first; taken-down items stay as `removed` rows.
+         */
+        get: operations["list_shelf_v1_me_library_shelf_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/me/library/shelf/{item_id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        /**
+         * Put Shelf Entry
+         * @description Put an item on the shelf or move it (UniLibrary records too, as links).
+         */
+        put: operations["put_shelf_entry_v1_me_library_shelf__item_id__put"];
+        post?: never;
+        /**
+         * Remove Shelf Entry
+         * @description Take an item off the shelf (nothing happens when it was not there).
+         */
+        delete: operations["remove_shelf_entry_v1_me_library_shelf__item_id__delete"];
         options?: never;
         head?: never;
         patch?: never;
@@ -6148,6 +6632,46 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/v1/staff/lessons/{lesson_id}/item-refs": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        /**
+         * Set Lesson Item Refs
+         * @description Replace the links of the lesson; its topic is never touched.
+         */
+        put: operations["set_lesson_item_refs_v1_staff_lessons__lesson_id__item_refs_put"];
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/staff/library/book-plans/next": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Suggest Next Section
+         * @description The section after the last one linked to an earlier lesson, if any.
+         */
+        get: operations["suggest_next_section_v1_staff_library_book_plans_next_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/v1/staff/timetable": {
         parameters: {
             query?: never;
@@ -6419,6 +6943,117 @@ export interface components {
             kind: "text";
             /** Text */
             text: string;
+        };
+        /**
+         * AnnotationColor
+         * @description Highlight colours.
+         * @enum {string}
+         */
+        AnnotationColor: "yellow" | "green" | "blue" | "pink";
+        /**
+         * AnnotationInput
+         * @description `AnnotationInput`.
+         */
+        AnnotationInput: {
+            /**
+             * Client Id
+             * Format: uuid
+             */
+            client_id: string;
+            color: components["schemas"]["AnnotationColor"];
+            /**
+             * File Id
+             * Format: uuid
+             */
+            file_id: string;
+            /**
+             * Item Id
+             * Format: uuid
+             */
+            item_id: string;
+            kind: components["schemas"]["AnnotationKind"];
+            /** Locator */
+            locator: {
+                [key: string]: unknown;
+            };
+            /** Note */
+            note?: string | null;
+            /** Quote */
+            quote?: string | null;
+        };
+        /**
+         * AnnotationKind
+         * @description Kinds of reader annotation.
+         * @enum {string}
+         */
+        AnnotationKind: "highlight" | "note" | "bookmark";
+        /**
+         * AnnotationPatchBody
+         * @description `AnnotationPatchBody`: only the keys that were sent are applied.
+         */
+        AnnotationPatchBody: {
+            color?: components["schemas"]["AnnotationColor"] | null;
+            /** Note */
+            note?: string | null;
+        };
+        /**
+         * AnnotationResponse
+         * @description `Annotation`.
+         */
+        AnnotationResponse: {
+            /**
+             * Client Id
+             * Format: uuid
+             */
+            client_id: string;
+            color: components["schemas"]["AnnotationColor"];
+            /**
+             * File Id
+             * Format: uuid
+             */
+            file_id: string;
+            /**
+             * Id
+             * Format: uuid
+             */
+            id: string;
+            /**
+             * Item Id
+             * Format: uuid
+             */
+            item_id: string;
+            kind: components["schemas"]["AnnotationKind"];
+            /** Locator */
+            locator: {
+                [key: string]: unknown;
+            };
+            /** Note */
+            note: string | null;
+            /** Quote */
+            quote: string | null;
+            /**
+             * Updated At
+             * Format: date-time
+             */
+            updated_at: string;
+        };
+        /**
+         * AnnotationsSyncBody
+         * @description `AnnotationsSyncBody`: at most 200 changes in all.
+         */
+        AnnotationsSyncBody: {
+            /** Deletes */
+            deletes?: string[];
+            /** Upserts */
+            upserts?: components["schemas"]["AnnotationInput"][];
+        };
+        /**
+         * AnnotationsSyncResponse
+         * @description `{items}`: the current state of the touched annotations.
+         */
+        AnnotationsSyncResponse: {
+            /** Items */
+            items: components["schemas"]["AnnotationResponse"][];
         };
         /**
          * AnswerConfig
@@ -7340,6 +7975,33 @@ export interface components {
             years_of_study?: number[] | null;
         };
         /**
+         * BookPlanResponse
+         * @description `BookPlan`: the plan with the title of its book.
+         */
+        BookPlanResponse: {
+            /**
+             * Item Id
+             * Format: uuid
+             */
+            item_id: string;
+            /** Item Title */
+            item_title: string;
+            /** Sections */
+            sections: components["schemas"]["PlanSectionBody"][];
+            /**
+             * Subject Id
+             * Format: uuid
+             */
+            subject_id: string;
+            /**
+             * Updated At
+             * Format: date-time
+             */
+            updated_at: string;
+            /** Year Of Study */
+            year_of_study: number;
+        };
+        /**
          * BookRowSchema
          * @description `BookRow`: a line of the librarian's book table.
          */
@@ -7852,6 +8514,50 @@ export interface components {
             code: string;
         };
         /**
+         * CollectionDetailResponse
+         * @description `CollectionDetail`: the collection and the cards the viewer may see.
+         */
+        CollectionDetailResponse: {
+            /** Cover Url */
+            cover_url: string | null;
+            /** Description */
+            description: string | null;
+            /**
+             * Id
+             * Format: uuid
+             */
+            id: string;
+            /** Item Count */
+            item_count: number;
+            /** Items */
+            items: components["schemas"]["ItemCardSchema"][];
+            /** Slug */
+            slug: string;
+            /** Title */
+            title: string;
+        };
+        /**
+         * CollectionResponse
+         * @description `Collection` in the reader's language.
+         */
+        CollectionResponse: {
+            /** Cover Url */
+            cover_url: string | null;
+            /** Description */
+            description: string | null;
+            /**
+             * Id
+             * Format: uuid
+             */
+            id: string;
+            /** Item Count */
+            item_count: number;
+            /** Slug */
+            slug: string;
+            /** Title */
+            title: string;
+        };
+        /**
          * CompareStepView
          * @description How one step differs between two versions.
          */
@@ -8282,6 +8988,20 @@ export interface components {
             tier?: ("fast" | "smart") | null;
         };
         /**
+         * CreateCollectionBody
+         * @description `CollectionInput`.
+         */
+        CreateCollectionBody: {
+            /** Cover File Id */
+            cover_file_id?: string | null;
+            description?: components["schemas"]["NamesBody"] | null;
+            /** Item Ids */
+            item_ids?: string[];
+            /** Published */
+            published: boolean;
+            title: components["schemas"]["NamesBody"];
+        };
+        /**
          * CreateConnectorBody
          * @description POST /v1/id/me/connectors.
          */
@@ -8352,6 +9072,29 @@ export interface components {
             title?: string | null;
         };
         /**
+         * CreateReadingListBody
+         * @description `ReadingListInput`.
+         */
+        CreateReadingListBody: {
+            /** Academic Year */
+            academic_year?: string | null;
+            /** Description */
+            description?: string | null;
+            /** Group Ids */
+            group_ids?: string[];
+            scope: components["schemas"]["ListScope"];
+            /** @default draft */
+            status?: components["schemas"]["ListStatus"];
+            /** Subject Id */
+            subject_id?: string | null;
+            /** Term Half */
+            term_half?: (1 | 2) | null;
+            /** Title */
+            title: string;
+            /** Year Of Study */
+            year_of_study?: number | null;
+        };
+        /**
          * CreateSetBody
          * @description POST /v1/me/flashcard-sets.
          */
@@ -8394,6 +9137,24 @@ export interface components {
             section_id: string;
             /** Title */
             title: string;
+        };
+        /**
+         * CreateTopicBody
+         * @description `TopicInput`.
+         */
+        CreateTopicBody: {
+            name: components["schemas"]["NamesBody"];
+            /** Parent Id */
+            parent_id?: string | null;
+            /** Slug */
+            slug?: string | null;
+            /**
+             * Subject Id
+             * Format: uuid
+             */
+            subject_id: string;
+            /** Year Of Study */
+            year_of_study?: number | null;
         };
         /**
          * CreatedSectionResponse
@@ -9370,6 +10131,19 @@ export interface components {
             status?: ("active" | "archived") | null;
         };
         /**
+         * GroupResponse
+         * @description A study group a reading list can be aimed at.
+         */
+        GroupResponse: {
+            /**
+             * Id
+             * Format: uuid
+             */
+            id: string;
+            /** Name */
+            name: string;
+        };
+        /**
          * GroupStatsItemResponse
          * @description One row of `GET /v1/admin/groups/stats`.
          */
@@ -9644,6 +10418,19 @@ export interface components {
          * @enum {string}
          */
         ItemLanguage: "uz_latn" | "uz_cyrl" | "ru" | "en" | "qq" | "other";
+        /**
+         * ItemRefTitle
+         * @description `{id, title}` of the linked book.
+         */
+        ItemRefTitle: {
+            /**
+             * Id
+             * Format: uuid
+             */
+            id: string;
+            /** Title */
+            title: string;
+        };
         /**
          * ItemSort
          * @description `?sort=`; without a query the default is the newest first.
@@ -10507,6 +11294,19 @@ export interface components {
             topic_source?: ("emis" | "manual") | null;
         };
         /**
+         * LessonItemRefResponse
+         * @description `LessonItemRef`: a section of a book that a lesson follows.
+         */
+        LessonItemRefResponse: {
+            item: components["schemas"]["ItemRefTitle"];
+            /** Page From */
+            page_from: number | null;
+            /** Page To */
+            page_to: number | null;
+            /** Section Label */
+            section_label: string;
+        };
+        /**
          * LessonPatchBody
          * @description Body of PATCH /v1/admin/lessons/{id}; null clears teacher, room or topic.
          */
@@ -10525,6 +11325,23 @@ export interface components {
             teacher_id?: string | null;
             /** Topic */
             topic?: string | null;
+        };
+        /**
+         * LessonRefBody
+         * @description `{item_id, section_label, page_from, page_to}`.
+         */
+        LessonRefBody: {
+            /**
+             * Item Id
+             * Format: uuid
+             */
+            item_id: string;
+            /** Page From */
+            page_from?: number | null;
+            /** Page To */
+            page_to?: number | null;
+            /** Section Label */
+            section_label: string;
         };
         /**
          * LessonResourceInput
@@ -10597,6 +11414,33 @@ export interface components {
             reason: components["schemas"]["ReportReason"];
             /** Text */
             text?: string | null;
+        };
+        /**
+         * LibraryStatsResponse
+         * @description `LibraryStats`.
+         */
+        LibraryStatsResponse: {
+            /** Items By Status */
+            items_by_status: {
+                [key: string]: number;
+            };
+            /** Opens */
+            opens: number;
+            queue: components["schemas"]["QueueStatsResponse"];
+            /** Readers */
+            readers: number;
+            /** Reports By Reason */
+            reports_by_reason: {
+                [key: string]: number;
+            };
+            /** Searches Without Results */
+            searches_without_results: components["schemas"]["SearchMissResponse"][];
+            /** Subjects Without Materials */
+            subjects_without_materials: components["schemas"]["SubjectRefSchema"][];
+            /** Top Items */
+            top_items: components["schemas"]["TopItemResponse"][];
+            /** Uploads By Day */
+            uploads_by_day: components["schemas"]["UploadDayResponse"][];
         };
         /**
          * LibrarySubjectSchema
@@ -10681,6 +11525,18 @@ export interface components {
             /** Title */
             title: string;
         };
+        /**
+         * ListScope
+         * @description Audience of a reading list.
+         * @enum {string}
+         */
+        ListScope: "subject" | "groups" | "school";
+        /**
+         * ListStatus
+         * @description State of a reading list.
+         * @enum {string}
+         */
+        ListStatus: "draft" | "published" | "archived";
         /**
          * LmsStepInput
          * @description A step of an LMS course (text and flash card blocks only).
@@ -10772,6 +11628,54 @@ export interface components {
             logout_url: string;
         };
         /**
+         * ManageCollectionResponse
+         * @description `ManageCollection`: all languages and the stored item ids.
+         */
+        ManageCollectionResponse: {
+            /** Cover Url */
+            cover_url: string | null;
+            description: components["schemas"]["NamesResponse"] | null;
+            /**
+             * Id
+             * Format: uuid
+             */
+            id: string;
+            /** Item Ids */
+            item_ids: string[];
+            /** Position */
+            position: number;
+            /** Published */
+            published: boolean;
+            /** Slug */
+            slug: string;
+            title: components["schemas"]["NamesResponse"];
+        };
+        /**
+         * ManageTopicResponse
+         * @description `ManageTopic`: all three names, for the editor.
+         */
+        ManageTopicResponse: {
+            /**
+             * Id
+             * Format: uuid
+             */
+            id: string;
+            name: components["schemas"]["NamesResponse"];
+            /** Parent Id */
+            parent_id: string | null;
+            /** Position */
+            position: number;
+            /** Slug */
+            slug: string;
+            /**
+             * Subject Id
+             * Format: uuid
+             */
+            subject_id: string;
+            /** Year Of Study */
+            year_of_study: number | null;
+        };
+        /**
          * MarkItem
          * @description One mark.
          */
@@ -10838,7 +11742,7 @@ export interface components {
         };
         /**
          * MaterialInputBody
-         * @description `MaterialInput`: the upload form.
+         * @description `MaterialInput`: the upload form; `attested` may be false until submit.
          */
         MaterialInputBody: {
             /** Attested */
@@ -10870,6 +11774,8 @@ export interface components {
          * @description `PATCH /library/materials/{id}`: only the keys that were sent are applied.
          */
         MaterialPatchBody: {
+            /** Attested */
+            attested?: boolean | null;
             /** Body Md */
             body_md?: string | null;
             /** Description */
@@ -10878,6 +11784,19 @@ export interface components {
             title?: string | null;
             /** Topic Ids */
             topic_ids?: string[] | null;
+        };
+        /**
+         * MeLibraryResponse
+         * @description `MeLibrary`: continue reading, shelf counts and the offline limits.
+         */
+        MeLibraryResponse: {
+            /** Continue */
+            continue: components["schemas"]["ItemCardSchema"][];
+            offline: components["schemas"]["OfflineLimits"];
+            /** Shelf Counts */
+            shelf_counts: {
+                [key: string]: number;
+            };
         };
         /**
          * MessageFeedbackBody
@@ -11029,6 +11948,48 @@ export interface components {
             follows_weekday: number;
         };
         /**
+         * NamesBody
+         * @description Names in the three languages of the lyceum.
+         */
+        NamesBody: {
+            /**
+             * En
+             * @default
+             */
+            en?: string;
+            /**
+             * Ru
+             * @default
+             */
+            ru?: string;
+            /**
+             * Uz
+             * @default
+             */
+            uz?: string;
+        };
+        /**
+         * NamesResponse
+         * @description The three names of a topic, collection title or description.
+         */
+        NamesResponse: {
+            /**
+             * En
+             * @default
+             */
+            en?: string;
+            /**
+             * Ru
+             * @default
+             */
+            ru?: string;
+            /**
+             * Uz
+             * @default
+             */
+            uz?: string;
+        };
+        /**
          * NewConnectorResponse
          * @description The connector and its token, shown once.
          */
@@ -11036,6 +11997,27 @@ export interface components {
             connector: components["schemas"]["ConnectorResponse"];
             /** Token */
             token: string;
+        };
+        /**
+         * NextSectionResponse
+         * @description `{item_id, item_title, section}`: the suggested section.
+         */
+        NextSectionResponse: {
+            /**
+             * Item Id
+             * Format: uuid
+             */
+            item_id: string;
+            /** Item Title */
+            item_title: string;
+            section: components["schemas"]["PlanSectionBody"];
+        };
+        /**
+         * NextSuggestionResponse
+         * @description `{suggestion: ... | null}`.
+         */
+        NextSuggestionResponse: {
+            suggestion: components["schemas"]["NextSectionResponse"] | null;
         };
         /**
          * NoteInput
@@ -11330,6 +12312,16 @@ export interface components {
             verified: boolean;
         };
         /**
+         * OfflineLimits
+         * @description What one device may keep for offline reading.
+         */
+        OfflineLimits: {
+            /** Max Bytes */
+            max_bytes: number;
+            /** Max Items */
+            max_items: number;
+        };
+        /**
          * OpenCourseWorkspaceBody
          * @description POST /v1/notebooks/course-workspaces.
          */
@@ -11530,6 +12522,13 @@ export interface components {
             /** Next Cursor */
             next_cursor?: string | null;
         };
+        /** Page[AnnotationResponse] */
+        Page_AnnotationResponse_: {
+            /** Items */
+            items: components["schemas"]["AnnotationResponse"][];
+            /** Next Cursor */
+            next_cursor?: string | null;
+        };
         /** Page[AuditItemResponse] */
         Page_AuditItemResponse_: {
             /** Items */
@@ -11590,6 +12589,13 @@ export interface components {
         Page_QueueRowResponse_: {
             /** Items */
             items: components["schemas"]["QueueRowResponse"][];
+            /** Next Cursor */
+            next_cursor?: string | null;
+        };
+        /** Page[ShelfEntryResponse] */
+        Page_ShelfEntryResponse_: {
+            /** Items */
+            items: components["schemas"]["ShelfEntryResponse"][];
             /** Next Cursor */
             next_cursor?: string | null;
         };
@@ -11725,6 +12731,19 @@ export interface components {
             last_name: string;
         };
         /**
+         * PersonResponse
+         * @description `{id, name}` of the owner of a list.
+         */
+        PersonResponse: {
+            /**
+             * Id
+             * Format: uuid
+             */
+            id: string;
+            /** Name */
+            name: string;
+        };
+        /**
          * PinExternalBody
          * @description `PinExternalBody`: the category decides the link of the record.
          */
@@ -11748,6 +12767,25 @@ export interface components {
             new_steps: number;
             /** Sections */
             sections: components["schemas"]["PlanSectionPreviewResponse"][];
+        };
+        /**
+         * PlanSectionBody
+         * @description `{n, title, page_from, page_to, hours}`: one chapter of the plan.
+         */
+        PlanSectionBody: {
+            /**
+             * Hours
+             * @default 1
+             */
+            hours?: number;
+            /** N */
+            n: number;
+            /** Page From */
+            page_from: number;
+            /** Page To */
+            page_to: number;
+            /** Title */
+            title: string;
         };
         /**
          * PlanSectionInput
@@ -12032,14 +13070,21 @@ export interface components {
             type: string;
         };
         /**
-         * ProgressBody
-         * @description PUT .../progress: the state is opaque to the server (at most 16 KB).
+         * ProgressSchema
+         * @description `progress`: where the caller stopped in the item.
          */
-        ProgressBody: {
-            /** State */
-            state: {
+        ProgressSchema: {
+            /**
+             * File Id
+             * Format: uuid
+             */
+            file_id: string;
+            /** Locator */
+            locator: {
                 [key: string]: unknown;
             };
+            /** Percent */
+            percent: number;
         };
         /**
          * ProposalBody
@@ -12158,6 +13203,26 @@ export interface components {
             endpoint: string;
         };
         /**
+         * PutBookPlanBody
+         * @description `PUT /library/book-plans`: the textbook and its sections.
+         */
+        PutBookPlanBody: {
+            /**
+             * Item Id
+             * Format: uuid
+             */
+            item_id: string;
+            /** Sections */
+            sections: components["schemas"]["PlanSectionBody"][];
+            /**
+             * Subject Id
+             * Format: uuid
+             */
+            subject_id: string;
+            /** Year Of Study */
+            year_of_study: number;
+        };
+        /**
          * Question
          * @description A test question.
          */
@@ -12247,6 +13312,18 @@ export interface components {
         };
         QueueRowResponse: {
             [key: string]: unknown;
+        };
+        /**
+         * QueueStatsResponse
+         * @description Waiting time of the review queue.
+         */
+        QueueStatsResponse: {
+            /** Average Hours */
+            average_hours: number | null;
+            /** Length */
+            length: number;
+            /** Oldest Age Hours */
+            oldest_age_hours: number | null;
         };
         /**
          * QueueTab
@@ -12354,6 +13431,136 @@ export interface components {
          * @enum {string}
          */
         Rating: "again" | "hard" | "medium" | "easy";
+        /**
+         * ReadingListCardResponse
+         * @description `ReadingListCard`.
+         */
+        ReadingListCardResponse: {
+            /** Academic Year */
+            academic_year: string | null;
+            /** Description */
+            description: string | null;
+            /** Entry Count */
+            entry_count: number;
+            /** Essential Count */
+            essential_count: number;
+            /** Essential Done */
+            essential_done: number;
+            /**
+             * Id
+             * Format: uuid
+             */
+            id: string;
+            owner: components["schemas"]["PersonResponse"];
+            scope: components["schemas"]["ListScope"];
+            status: components["schemas"]["ListStatus"];
+            subject: components["schemas"]["SubjectRefSchema"] | null;
+            /** Term Half */
+            term_half: (1 | 2) | null;
+            /** Title */
+            title: string;
+            /**
+             * Updated At
+             * Format: date-time
+             */
+            updated_at: string;
+            /** Year Of Study */
+            year_of_study: number | null;
+        };
+        /**
+         * ReadingListDetailResponse
+         * @description `ReadingListDetail`: the card, the groups, the entries, `can_edit`.
+         */
+        ReadingListDetailResponse: {
+            /** Academic Year */
+            academic_year: string | null;
+            /** Can Edit */
+            can_edit: boolean;
+            /** Description */
+            description: string | null;
+            /** Entries */
+            entries: components["schemas"]["ReadingListEntryResponse"][];
+            /** Entry Count */
+            entry_count: number;
+            /** Essential Count */
+            essential_count: number;
+            /** Essential Done */
+            essential_done: number;
+            /** Group Ids */
+            group_ids: string[];
+            /**
+             * Id
+             * Format: uuid
+             */
+            id: string;
+            owner: components["schemas"]["PersonResponse"];
+            scope: components["schemas"]["ListScope"];
+            status: components["schemas"]["ListStatus"];
+            subject: components["schemas"]["SubjectRefSchema"] | null;
+            /** Term Half */
+            term_half: (1 | 2) | null;
+            /** Title */
+            title: string;
+            /**
+             * Updated At
+             * Format: date-time
+             */
+            updated_at: string;
+            /** Year Of Study */
+            year_of_study: number | null;
+        };
+        /**
+         * ReadingListEntryResponse
+         * @description `ReadingListEntry`: an item card or a plain link, with my read status.
+         */
+        ReadingListEntryResponse: {
+            /** Due On */
+            due_on: string | null;
+            importance: components["schemas"]["Importance"];
+            item: components["schemas"]["ItemCardSchema"] | null;
+            /** Note */
+            note: string | null;
+            /** Page From */
+            page_from: number | null;
+            /** Page To */
+            page_to: number | null;
+            /** Position */
+            position: number;
+            read_state: components["schemas"]["ShelfState"] | null;
+            /** Title */
+            title: string | null;
+            /** Topic Id */
+            topic_id: string | null;
+            /** Url */
+            url: string | null;
+            /** Week Label */
+            week_label: string | null;
+        };
+        /**
+         * ReadingListItemBody
+         * @description `ReadingListItemInput`.
+         */
+        ReadingListItemBody: {
+            /** Due On */
+            due_on?: string | null;
+            importance: components["schemas"]["Importance"];
+            /** Item Id */
+            item_id?: string | null;
+            /** Note */
+            note?: string | null;
+            /** Page From */
+            page_from?: number | null;
+            /** Page To */
+            page_to?: number | null;
+            /** Title */
+            title?: string | null;
+            /** Topic Id */
+            topic_id?: string | null;
+            /** Url */
+            url?: string | null;
+            /** Week Label */
+            week_label?: string | null;
+        };
         /**
          * RecordBookResponse
          * @description All semesters with results.
@@ -12519,6 +13726,14 @@ export interface components {
         ReplaceCardsBody: {
             /** Cards */
             cards: components["schemas"]["CardWithIdBody"][];
+        };
+        /**
+         * ReplaceEntriesBody
+         * @description `PUT /library/reading-lists/{id}/items`: `{items: ReadingListItemInput[]}`.
+         */
+        ReplaceEntriesBody: {
+            /** Items */
+            items: components["schemas"]["ReadingListItemBody"][];
         };
         /**
          * ReportBody
@@ -13030,6 +14245,16 @@ export interface components {
             snippet: string;
         };
         /**
+         * SearchMissResponse
+         * @description A query that found nothing.
+         */
+        SearchMissResponse: {
+            /** Count */
+            count: number;
+            /** Q */
+            q: string;
+        };
+        /**
          * SearchResponse
          * @description `SearchResults`: the request as searched and the sources with hits.
          */
@@ -13254,6 +14479,14 @@ export interface components {
             title: string;
         };
         /**
+         * SetLessonRefsBody
+         * @description `PUT /staff/lessons/{id}/item-refs`: `{refs: [...]}`.
+         */
+        SetLessonRefsBody: {
+            /** Refs */
+            refs: components["schemas"]["LessonRefBody"][];
+        };
+        /**
          * SetSourceLabelsBody
          * @description PUT /v1/notebooks/{id}/sources/{sid}/labels: at most 3 labels (a typed error).
          */
@@ -13306,6 +14539,30 @@ export interface components {
         SharedChat: {
             /** Messages */
             messages: components["schemas"]["ChatMessage"][];
+        };
+        /**
+         * ShelfBody
+         * @description `PUT /me/library/shelf/{item_id}`.
+         */
+        ShelfBody: {
+            state: components["schemas"]["ShelfState"];
+        };
+        /**
+         * ShelfEntryResponse
+         * @description `ShelfEntry`: the card, the state, and `removed` for taken-down items.
+         */
+        ShelfEntryResponse: {
+            /** Finished At */
+            finished_at: string | null;
+            item: components["schemas"]["ItemCardSchema"];
+            /** Removed */
+            removed: boolean;
+            state: components["schemas"]["ShelfState"];
+            /**
+             * Updated At
+             * Format: date-time
+             */
+            updated_at: string;
         };
         /**
          * ShelfState
@@ -13649,6 +14906,15 @@ export interface components {
              */
             emis_password: string;
         };
+        /**
+         * StatusReasonCode
+         * @description System codes of `item.status_reason`; a librarian may write own words instead.
+         *
+         *     The API publishes this enum so clients can translate the codes; any other value is
+         *     free text written by a librarian or a teacher, shown as it is.
+         * @enum {string}
+         */
+        StatusReasonCode: "withdrawn_by_owner" | "reported" | "superseded" | "account_closed" | "unpublished" | "takedown";
         /**
          * StepContent
          * @description Title and blocks of a step (``CourseStep.draft``, ``StepRevision.content``).
@@ -14872,6 +16138,15 @@ export interface components {
             tool: string;
         };
         /**
+         * TopItemResponse
+         * @description A much opened item.
+         */
+        TopItemResponse: {
+            item: components["schemas"]["ItemCardSchema"];
+            /** Opens */
+            opens: number;
+        };
+        /**
          * TopicRefSchema
          * @description A topic the item feeds, with the page range.
          */
@@ -14887,6 +16162,30 @@ export interface components {
             page_from: number | null;
             /** Page To */
             page_to: number | null;
+        };
+        /**
+         * TopicResponse
+         * @description `Topic`: a node of the tree of one subject.
+         */
+        TopicResponse: {
+            /** Children */
+            children: components["schemas"]["TopicResponse"][];
+            /**
+             * Id
+             * Format: uuid
+             */
+            id: string;
+            /** Name */
+            name: string;
+            /** Slug */
+            slug: string;
+            /**
+             * Subject Id
+             * Format: uuid
+             */
+            subject_id: string;
+            /** Year Of Study */
+            year_of_study: number | null;
         };
         /**
          * TurnResultResponse
@@ -14993,6 +16292,20 @@ export interface components {
             restore_refs?: string[] | null;
         };
         /**
+         * UpdateCollectionBody
+         * @description `Partial<CollectionInput>`: only the keys that were sent are applied.
+         */
+        UpdateCollectionBody: {
+            /** Cover File Id */
+            cover_file_id?: string | null;
+            description?: components["schemas"]["NamesBody"] | null;
+            /** Item Ids */
+            item_ids?: string[] | null;
+            /** Published */
+            published?: boolean | null;
+            title?: components["schemas"]["NamesBody"] | null;
+        };
+        /**
          * UpdateEmisPasswordBody
          * @description The new EMIS password.
          */
@@ -15041,6 +16354,28 @@ export interface components {
             title?: string | null;
         };
         /**
+         * UpdateReadingListBody
+         * @description `Partial<ReadingListInput>`: only the keys that were sent are applied.
+         */
+        UpdateReadingListBody: {
+            /** Academic Year */
+            academic_year?: string | null;
+            /** Description */
+            description?: string | null;
+            /** Group Ids */
+            group_ids?: string[] | null;
+            scope?: components["schemas"]["ListScope"] | null;
+            status?: components["schemas"]["ListStatus"] | null;
+            /** Subject Id */
+            subject_id?: string | null;
+            /** Term Half */
+            term_half?: (1 | 2) | null;
+            /** Title */
+            title?: string | null;
+            /** Year Of Study */
+            year_of_study?: number | null;
+        };
+        /**
          * UpdateSetBody
          * @description PATCH /v1/me/flashcard-sets/{id}; send only the fields to change.
          */
@@ -15081,6 +16416,34 @@ export interface components {
             show_on_page?: boolean | null;
         };
         /**
+         * UpdateTopicBody
+         * @description `Partial<TopicInput>`: only the keys that were sent are applied.
+         */
+        UpdateTopicBody: {
+            name?: components["schemas"]["NamesBody"] | null;
+            /** Parent Id */
+            parent_id?: string | null;
+            /** Slug */
+            slug?: string | null;
+            /** Subject Id */
+            subject_id?: string | null;
+            /** Year Of Study */
+            year_of_study?: number | null;
+        };
+        /**
+         * UploadDayResponse
+         * @description Materials uploaded on one day.
+         */
+        UploadDayResponse: {
+            /** Count */
+            count: number;
+            /**
+             * Day
+             * Format: date
+             */
+            day: string;
+        };
+        /**
          * UploadInfo
          * @description The request the client sends to storage.
          */
@@ -15115,7 +16478,7 @@ export interface components {
             /** Queue Position */
             queue_position: number | null;
             /** Reason */
-            reason: string | null;
+            reason: components["schemas"]["StatusReasonCode"] | string | null;
             /** Review Message */
             review_message: string | null;
             status: components["schemas"]["ItemStatus"];
@@ -16355,6 +17718,30 @@ export interface components {
             username: string | null;
         };
         /**
+         * ProgressBody
+         * @description `PUT /me/library/progress/{item_id}`.
+         */
+        app__interfaces__http__v1__library__reader__schemas_reader__ProgressBody: {
+            /**
+             * Client Ts
+             * Format: date-time
+             */
+            client_ts: string;
+            /**
+             * File Id
+             * Format: uuid
+             */
+            file_id: string;
+            /** Locator */
+            locator: {
+                [key: string]: unknown;
+            };
+            /** Percent */
+            percent: number;
+            /** Seconds Read */
+            seconds_read?: number | null;
+        };
+        /**
          * FileItem
          * @description A file as shown next to a link (the files module owns the full model).
          */
@@ -16844,6 +18231,16 @@ export interface components {
             resets_at: string | null;
             /** Used */
             used: number;
+        };
+        /**
+         * ProgressBody
+         * @description PUT .../progress: the state is opaque to the server (at most 16 KB).
+         */
+        app__interfaces__http__v1__notebooks__schemas_studio__ProgressBody: {
+            /** State */
+            state: {
+                [key: string]: unknown;
+            };
         };
         /**
          * Visibility
@@ -21906,6 +23303,135 @@ export interface operations {
             };
         };
     };
+    get_book_plan_v1_library_book_plans_get: {
+        parameters: {
+            query: {
+                subject_id: string;
+                year_of_study: number;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["BookPlanResponse"] | null;
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    put_book_plan_v1_library_book_plans_put: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["PutBookPlanBody"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["BookPlanResponse"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    list_collections_v1_library_collections_get: {
+        parameters: {
+            query?: never;
+            header?: {
+                "Accept-Language"?: string | null;
+            };
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["CollectionResponse"][];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    get_collection_v1_library_collections__collection_id__get: {
+        parameters: {
+            query?: never;
+            header?: {
+                "Accept-Language"?: string | null;
+            };
+            path: {
+                collection_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["CollectionDetailResponse"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
     search_unilibrary_v1_library_external_unilibrary_search_get: {
         parameters: {
             query?: {
@@ -22436,6 +23962,233 @@ export interface operations {
             };
         };
     };
+    list_my_groups_v1_library_my_groups_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["GroupResponse"][];
+                };
+            };
+        };
+    };
+    list_reading_lists_v1_library_reading_lists_get: {
+        parameters: {
+            query?: {
+                subject_id?: string | null;
+                mine?: boolean;
+                group_id?: string | null;
+                status?: components["schemas"]["ListStatus"] | null;
+            };
+            header?: {
+                "Accept-Language"?: string | null;
+            };
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ReadingListCardResponse"][];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    create_reading_list_v1_library_reading_lists_post: {
+        parameters: {
+            query?: never;
+            header?: {
+                "Accept-Language"?: string | null;
+            };
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["CreateReadingListBody"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ReadingListDetailResponse"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    get_reading_list_v1_library_reading_lists__list_id__get: {
+        parameters: {
+            query?: never;
+            header?: {
+                "Accept-Language"?: string | null;
+            };
+            path: {
+                list_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ReadingListDetailResponse"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    delete_reading_list_v1_library_reading_lists__list_id__delete: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                list_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            204: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    update_reading_list_v1_library_reading_lists__list_id__patch: {
+        parameters: {
+            query?: never;
+            header?: {
+                "Accept-Language"?: string | null;
+            };
+            path: {
+                list_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["UpdateReadingListBody"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ReadingListDetailResponse"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    replace_list_entries_v1_library_reading_lists__list_id__items_put: {
+        parameters: {
+            query?: never;
+            header?: {
+                "Accept-Language"?: string | null;
+            };
+            path: {
+                list_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["ReplaceEntriesBody"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ReadingListDetailResponse"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
     list_subjects_v1_library_subjects_get: {
         parameters: {
             query?: {
@@ -22489,6 +24242,39 @@ export interface operations {
                 };
                 content: {
                     "application/json": unknown;
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    list_topics_v1_library_topics_get: {
+        parameters: {
+            query?: {
+                subject_id?: string | null;
+            };
+            header?: {
+                "Accept-Language"?: string | null;
+            };
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["TopicResponse"][];
                 };
             };
             /** @description Validation Error */
@@ -24207,6 +25993,123 @@ export interface operations {
             };
         };
     };
+    list_manage_collections_v1_manage_library_collections_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ManageCollectionResponse"][];
+                };
+            };
+        };
+    };
+    create_collection_v1_manage_library_collections_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["CreateCollectionBody"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ManageCollectionResponse"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    delete_collection_v1_manage_library_collections__collection_id__delete: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                collection_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            204: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    update_collection_v1_manage_library_collections__collection_id__patch: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                collection_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["UpdateCollectionBody"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ManageCollectionResponse"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
     import_books_v1_manage_library_import_post: {
         parameters: {
             query?: never;
@@ -24348,6 +26251,40 @@ export interface operations {
             };
         };
     };
+    get_library_stats_v1_manage_library_stats_get: {
+        parameters: {
+            query?: {
+                from?: string | null;
+                to?: string | null;
+            };
+            header?: {
+                "Accept-Language"?: string | null;
+            };
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["LibraryStatsResponse"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
     decide_suggestion_v1_manage_library_suggestions__suggestion_id___decision__post: {
         parameters: {
             query?: never;
@@ -24366,6 +26303,134 @@ export interface operations {
                     [name: string]: unknown;
                 };
                 content?: never;
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    list_manage_topics_v1_manage_library_topics_get: {
+        parameters: {
+            query?: {
+                subject_id?: string | null;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ManageTopicResponse"][];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    create_topic_v1_manage_library_topics_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["CreateTopicBody"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ManageTopicResponse"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    delete_topic_v1_manage_library_topics__topic_id__delete: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                topic_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            204: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    update_topic_v1_manage_library_topics__topic_id__patch: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                topic_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["UpdateTopicBody"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ManageTopicResponse"];
+                };
             };
             /** @description Validation Error */
             422: {
@@ -25045,6 +27110,399 @@ export interface operations {
                 content: {
                     "application/json": components["schemas"]["StudentLessonResponse"];
                 };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    get_lesson_item_refs_v1_me_lessons__lesson_id__item_refs_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                lesson_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["LessonItemRefResponse"][];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    get_me_library_v1_me_library_get: {
+        parameters: {
+            query?: never;
+            header?: {
+                "Accept-Language"?: string | null;
+            };
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["MeLibraryResponse"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    list_annotations_v1_me_library_annotations_get: {
+        parameters: {
+            query?: {
+                item_id?: string | null;
+                kind?: components["schemas"]["AnnotationKind"] | null;
+                color?: components["schemas"]["AnnotationColor"] | null;
+                q?: string | null;
+                cursor?: string | null;
+                limit?: number;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Page_AnnotationResponse_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    create_annotation_v1_me_library_annotations_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["AnnotationInput"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["AnnotationResponse"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    export_annotations_v1_me_library_annotations_export_get: {
+        parameters: {
+            query?: {
+                item_id?: string | null;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": unknown;
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    sync_annotations_v1_me_library_annotations_sync_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["AnnotationsSyncBody"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["AnnotationsSyncResponse"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    delete_annotation_v1_me_library_annotations__annotation_id__delete: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                annotation_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            204: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    update_annotation_v1_me_library_annotations__annotation_id__patch: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                annotation_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["AnnotationPatchBody"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["AnnotationResponse"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    save_progress_v1_me_library_progress__item_id__put: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                item_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["app__interfaces__http__v1__library__reader__schemas_reader__ProgressBody"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            204: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    list_shelf_v1_me_library_shelf_get: {
+        parameters: {
+            query?: {
+                state?: components["schemas"]["ShelfState"] | null;
+                cursor?: string | null;
+                limit?: number;
+            };
+            header?: {
+                "Accept-Language"?: string | null;
+            };
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Page_ShelfEntryResponse_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    put_shelf_entry_v1_me_library_shelf__item_id__put: {
+        parameters: {
+            query?: never;
+            header?: {
+                "Accept-Language"?: string | null;
+            };
+            path: {
+                item_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["ShelfBody"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ShelfEntryResponse"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    remove_shelf_entry_v1_me_library_shelf__item_id__delete: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                item_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            204: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
             };
             /** @description Validation Error */
             422: {
@@ -26085,7 +28543,7 @@ export interface operations {
         };
         requestBody: {
             content: {
-                "application/json": components["schemas"]["ProgressBody"];
+                "application/json": components["schemas"]["app__interfaces__http__v1__notebooks__schemas_studio__ProgressBody"];
             };
         };
         responses: {
@@ -28150,6 +30608,72 @@ export interface operations {
                 };
                 content: {
                     "application/json": components["schemas"]["StaffLessonResponse"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    set_lesson_item_refs_v1_staff_lessons__lesson_id__item_refs_put: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                lesson_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["SetLessonRefsBody"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["LessonItemRefResponse"][];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    suggest_next_section_v1_staff_library_book_plans_next_get: {
+        parameters: {
+            query: {
+                lesson_id: string;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["NextSuggestionResponse"];
                 };
             };
             /** @description Validation Error */

@@ -1,11 +1,23 @@
 "use client"
 
-import type { ModerationAction } from "@ihsp/api"
+import type { ModerationAction, StatusReasonCode } from "@ihsp/api"
 import { useT } from "@ihsp/i18n"
 import { ReasonDialog } from "../shared/reason-dialog"
 
 /** The actions that open a reason dialog (approve runs at once). */
 export type ReasonedAction = Exclude<ModerationAction, "approve">
+
+/**
+ * The system reason codes each action may carry (`StatusReasonCode` of the API). Where none fits (reject, request
+ * changes, restore) the librarian writes a short reason in own words; every action also takes a free message.
+ */
+export const REASON_CODES: Record<ReasonedAction, readonly StatusReasonCode[]> = {
+  "request-changes": [],
+  reject: [],
+  hold: ["reported"],
+  unpublish: ["unpublished", "takedown", "superseded"],
+  restore: [],
+}
 
 /**
  * The reason dialog of a moderation action: request changes, reject, hold, unpublish, restore. The reason is required
@@ -25,7 +37,7 @@ export function ModerationDialog({
   title: string
   pending: boolean
   error: unknown
-  onSubmit: (action: ReasonedAction, reason: string) => void
+  onSubmit: (action: ReasonedAction, reason: string, note?: string) => void
   onClose: () => void
 }) {
   const t = useT("library.manage.queue.dialog")
@@ -42,8 +54,10 @@ export function ModerationDialog({
       destructive={shown === "reject" || shown === "unpublish"}
       pending={pending}
       error={error}
-      onSubmit={(reason) => {
-        if (action) onSubmit(action, reason)
+      codes={REASON_CODES[shown]}
+      noteRequired={shown === "request-changes"}
+      onSubmit={(reason, note) => {
+        if (action) onSubmit(action, reason, note)
       }}
     />
   )

@@ -400,7 +400,10 @@
     "reasonCode": {
       "withdrawn_by_owner": "Siz uni eʼlondan oldingiz",
       "reported": "Shikoyatlardan keyin toʻxtatilgan",
-      "superseded": "Yangi versiya bilan almashtirilgan"
+      "superseded": "Yangi versiya bilan almashtirilgan",
+      "account_closed": "Hisob yopilgan",
+      "unpublished": "Eʼlondan olingan",
+      "takedown": "Kutubxonachi tomonidan olib tashlangan"
     }
   }
 }

@@ -562,6 +562,17 @@
       "ru": "Ruscha",
       "en": "Inglizcha"
     },
-    "fieldRequired": "Bu maydon majburiy."
+    "fieldRequired": "Bu maydon majburiy.",
+    "reasonOwn": "Oʻz soʻzlaringiz bilan (40 belgigacha)",
+    "noteLabel": "Muallifga xabar",
+    "noteLabelOptional": "Muallifga xabar (ixtiyoriy)",
+    "noteRequired": "Muallif nimani tuzatishi kerakligini yozing.",
+    "reasonCodes": {
+      "reported": "Oʻquvchilar shikoyati",
+      "unpublished": "Kutubxonadan olib tashlangan",
+      "takedown": "Olib tashlash (huquq yoki qoidalar)",
+      "superseded": "Yangi versiya bilan almashtirilgan",
+      "other": "Boshqa (oʻzingiz yozing)"
+    }
   }
 }

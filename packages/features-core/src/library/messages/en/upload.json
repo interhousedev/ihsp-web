@@ -400,7 +400,10 @@
     "reasonCode": {
       "withdrawn_by_owner": "You withdrew it",
       "reported": "Held after reports",
-      "superseded": "Replaced by a newer version"
+      "superseded": "Replaced by a newer version",
+      "account_closed": "The account was closed",
+      "unpublished": "Removed from the library",
+      "takedown": "Taken down by a librarian"
     }
   }
 }

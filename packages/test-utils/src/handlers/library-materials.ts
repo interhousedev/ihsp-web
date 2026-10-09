@@ -4,7 +4,7 @@
 
 import type { ItemDetail, MaterialFilesBody, MaterialInput, MaterialPatchBody } from "@ihsp/api"
 import { HttpResponse, http } from "msw"
-import { FIXTURE_NOW } from "../fixtures/world"
+import { FIXTURE_NOW, uuid } from "../fixtures/world"
 import { makeItemDetail, makeItemFile, uploaderRoleOf, type LibraryActor } from "../fixtures/library"
 import {
   detailFor,
@@ -66,6 +66,9 @@ function activeBan(actor: LibraryActor): { until: string | null } | undefined {
   )
 }
 
+/** Drafts saved without the attestation (`attested: false`); submitting them is `422 library/attestation-required`. */
+const unattested = new WeakSet<StoredItem>()
+
 /** Creates a draft material of `actor`; the failure is a response. */
 function createMaterial(
   actor: LibraryActor,
@@ -75,7 +78,7 @@ function createMaterial(
   const ban = activeBan(actor)
   if (ban) return problem(403, "library/banned", "You cannot upload materials", { params: { until: ban.until } })
   if (!body.title?.trim()) return invalid("title", "A title is required")
-  if (!body.attested) return invalid("attested", "Confirm that you made the material or may share it")
+  if (typeof body.attested !== "boolean") return invalid("attested", "attested is required (false saves a draft)")
   const topics = topicRefs(body.topic_ids)
   if (!topics) return invalid("topic_ids", "Unknown topic")
   const id = newId()
@@ -115,6 +118,7 @@ function createMaterial(
     input: null,
     supersedesId,
   }
+  if (!body.attested) unattested.add(stored)
   state.items.set(id, stored)
   return stored
 }
@@ -124,7 +128,22 @@ function statusAfterSubmit(actor: LibraryActor): "published" | "pending_review" 
   return actor.roles.includes("admin") || actor.roles.includes("teacher") ? "published" : "pending_review"
 }
 
+/** Groups a teacher teaches or curates; librarians and Administration get all of them. */
+export const libGroups = [
+  { id: uuid(48, 1), name: "1-Litsey A" },
+  { id: uuid(48, 2), name: "1-Litsey B" },
+  { id: uuid(48, 3), name: "2-Litsey A" },
+]
+
 export const libraryMaterialHandlers = [
+  http.get(apiUrl("/v1/library/my-groups"), ({ request }) => {
+    const actor = signedIn(request)
+    if (actor instanceof Response) return actor
+    const staff = actor.roles.some((role) => role === "teacher" || role === "librarian" || role === "admin")
+    if (!staff) return problem(403, "common/forbidden", "Only staff have groups")
+    return HttpResponse.json(actor.roles.includes("teacher") ? libGroups.slice(0, 2) : libGroups)
+  }),
+
   http.post(apiUrl("/v1/library/materials"), async ({ request }) => {
     const actor = signedIn(request)
     if (actor instanceof Response) return actor
@@ -164,6 +183,9 @@ export const libraryMaterialHandlers = [
     if (!["draft", "changes_requested"].includes(stored.detail.status)) {
       return notEditable({ status: stored.detail.status })
     }
+    if (unattested.has(stored)) {
+      return problem(422, "library/attestation-required", "Confirm that you made the material or may share it")
+    }
     if (stored.detail.files.length === 0) return invalid("files", "Add a file or write the text before submitting")
     const status = statusAfterSubmit(actor)
     stored.detail = { ...stored.detail, status, status_reason: null, status_note: null }
@@ -183,6 +205,13 @@ export const libraryMaterialHandlers = [
     if (!stored) return itemNotFound()
     if (["rejected", "unpublished"].includes(stored.detail.status)) return notEditable({ status: stored.detail.status })
     const body = await readJson<MaterialPatchBody>(request)
+    if (body.attested !== undefined && body.attested !== null) {
+      if (!["draft", "changes_requested"].includes(stored.detail.status)) {
+        return notEditable({ status: stored.detail.status })
+      }
+      if (body.attested) unattested.delete(stored)
+      else unattested.add(stored)
+    }
     if (body.title !== undefined && !body.title.trim()) return invalid("title", "A title is required")
     const topics = body.topic_ids === undefined ? stored.detail.topics : topicRefs(body.topic_ids)
     if (!topics) return invalid("topic_ids", "Unknown topic")

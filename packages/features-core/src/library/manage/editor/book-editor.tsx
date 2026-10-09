@@ -1,5 +1,6 @@
 "use client"
 
+import { useReasonText } from "../../upload/reason-text"
 import { isApiError } from "@ihsp/api"
 import { useT } from "@ihsp/i18n"
 import { Badge, PageContainer, StateView, buttonVariants } from "@ihsp/ui"
@@ -24,6 +25,7 @@ import { useBookEditor } from "./use-book-editor"
 export function BookEditor({ id, initialTitle = "" }: { id: string | null; initialTitle?: string }) {
   const t = useT("library.manage.editor")
   const status = useT("library.item.status")
+  const reasonText = useReasonText()
   const [today] = useState(() => new Date())
   const editor = useBookEditor(id, initialTitle, today)
   const [coverName, setCoverName] = useState<string | null>(null)
@@ -88,7 +90,7 @@ export function BookEditor({ id, initialTitle = "" }: { id: string | null; initi
             <Badge variant={state === "published" ? "default" : "secondary"}>{status(state)}</Badge>
             {draft?.item.status_reason ? (
               <span className="text-muted-foreground">
-                {t("reason")}: {draft.item.status_reason}
+                {t("reason")}: {reasonText(draft.item.status_reason)}
               </span>
             ) : null}
           </p>

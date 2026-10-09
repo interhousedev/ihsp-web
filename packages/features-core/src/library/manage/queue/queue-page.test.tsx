@@ -1,8 +1,8 @@
 import { describe, expect, it } from "bun:test"
-import { apiUrl, problem, server, setLibraryActor, userMe } from "@ihsp/test-utils"
+import { apiUrl, libDetails, problem, server, setLibraryActor, userMe } from "@ihsp/test-utils"
 import { screen, waitFor, within } from "@testing-library/react"
 import axe from "axe-core"
-import { http } from "msw"
+import { HttpResponse, http } from "msw"
 import { allowSlowRenders, renderLibrary } from "../../test-support"
 import { QueuePage } from "./queue-page"
 
@@ -137,10 +137,64 @@ describe("QueuePage: actions", () => {
 
     await user.click(await screen.findByRole("button", { name: "Request changes" }))
     const dialog = await screen.findByRole("dialog", { name: "Request changes" })
-    await user.type(within(dialog).getByLabelText("Reason"), "Please add the page numbers")
+    await user.type(within(dialog).getByLabelText("Reason"), "Page numbers missing")
+    await user.click(within(dialog).getByRole("button", { name: "Send request" }))
+    // The message to the owner is what tells them what to fix: it is required here.
+    expect(await within(dialog).findByText("Write what the owner should change.")).toBeInTheDocument()
+    await user.type(within(dialog).getByLabelText("Message to the owner"), "Please add the page numbers to every scan.")
     await user.click(within(dialog).getByRole("button", { name: "Send request" }))
 
     expect(await screen.findByText(`Changes requested: ${PENDING}`)).toBeInTheDocument()
+  })
+
+  it("sends a short reason and a separate message, never a long text as the reason", async () => {
+    let body: Record<string, unknown> = {}
+    server.use(
+      http.post(apiUrl("/v1/manage/library/items/:id/reject"), async ({ request }) => {
+        body = (await request.json()) as Record<string, unknown>
+        return HttpResponse.json(libDetails.matPending)
+      }),
+    )
+    const { user } = renderQueue()
+    await user.click(await row(PENDING))
+    await user.click(await screen.findByRole("button", { name: "Reject" }))
+    const dialog = await screen.findByRole("dialog", { name: "Reject this item" })
+
+    await user.type(within(dialog).getByLabelText("Reason"), "Personal data")
+    await user.type(within(dialog).getByLabelText("Message to the owner (optional)"), "Page 3 shows a phone number.")
+    await user.click(within(dialog).getByRole("button", { name: "Reject" }))
+
+    await waitFor(() => expect(body).toEqual({ reason: "Personal data", note: "Page 3 shows a phone number." }))
+  })
+
+  it("offers the reason codes of the API when unpublishing, and sends the code", async () => {
+    let body: Record<string, unknown> = {}
+    server.use(
+      http.post(apiUrl("/v1/manage/library/items/:id/unpublish"), async ({ request }) => {
+        body = (await request.json()) as Record<string, unknown>
+        return HttpResponse.json(libDetails.matHeld)
+      }),
+    )
+    const { user } = renderQueue("held")
+    await user.click(await row(HELD))
+    await user.click(await screen.findByRole("button", { name: "Unpublish" }))
+    const dialog = await screen.findByRole("dialog", { name: "Unpublish this item" })
+
+    const select = within(dialog).getByLabelText("Reason")
+    expect(
+      within(select)
+        .getAllByRole("option")
+        .map((option) => option.textContent),
+    ).toEqual([
+      "Removed from the library",
+      "Takedown (rights or policy)",
+      "Replaced by a newer version",
+      "Other (write your own)",
+    ])
+    await user.selectOptions(select, "takedown")
+    await user.click(within(dialog).getByRole("button", { name: "Unpublish" }))
+
+    await waitFor(() => expect(body).toEqual({ reason: "takedown" }))
   })
 
   it("restores a held item with a reason and unpublishes it from the same tab", async () => {
@@ -232,7 +286,8 @@ describe("QueuePage: keyboard", () => {
 
     await user.keyboard("h")
     const dialog = await screen.findByRole("dialog", { name: "Hold for review" })
-    await user.type(within(dialog).getByLabelText("Reason"), "Checking the copyright")
+    // "Reported by readers" is the code that fits a hold and is preselected.
+    expect((within(dialog).getByLabelText("Reason") as HTMLSelectElement).value).toBe("reported")
     await user.click(within(dialog).getByRole("button", { name: "Hold" }))
 
     expect(await screen.findByText(`Held: ${REPORTED}`)).toBeInTheDocument()

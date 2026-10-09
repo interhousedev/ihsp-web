@@ -17,7 +17,7 @@ import type { deleteFile, getFile, getFileUrl, getMeFiles, getMeStorage, patchFi
 import type { getMeFlashcardSet, getMeFlashcardSetStudy, getMeFlashcardSets, getMeFlashcardSetsStats, patchMeFlashcardSet, postMeFlashcardReview, postMeFlashcardSets, postMeFlashcardSetsCopy, putMeFlashcardSetCards } from "./endpoints/flashcards"
 import type { deleteIdMe, getIdActivation, getIdConsent, getIdLogin, getIdLogout, getIdMcpScopes, getIdMe, getIdMeActivity, getIdMeConnectors, getIdMeSessions, getIdMeTelegram, patchIdMePreferences, patchIdMeTelegram, postIdActivation, postIdConsent, postIdLogin, postIdLoginOtp, postIdLoginOtpRequest, postIdMeConnectors, postIdMeEmailChangeConfirm, postIdMeEmisPassword, postIdMeOtpDisable, postIdMeOtpEnableConfirm, postIdRecoveryOtpConfirm, postIdTelegramLogin, postIdTelegramOtpRequest, postIdTelegramStatus } from "./endpoints/id"
 import type { getAdminAudit, getAdminOauthClients, getAdminTeachers, getAdminUser, getAdminUsers, patchAdminTeacher, postAdminOauthClientVerify, postAdminTeacherDeactivate, postAdminTeachers, postAdminUserBlock, postAdminUserMailResume, postAdminUserMailSuspend, postAdminUserResetPassword, postAdminUserRoles, postAdminUserUnblock } from "./endpoints/id-admin"
-import type { getLibraryFileUrl, getLibraryItem, getLibraryItemText, getLibraryItems, getLibrarySanctions, getLibrarySubjects, getManageBook, getManageBooks, getManageQueue, getMyUploads, getUniLibraryRecord, getUniLibrarySearch, getUniLibraryStatus, getUniLibraryTaxonomies, postLibrarySanction, postManageBook, postManageBookFile, postManageImport, postMaterial, postMaterialFiles, postMaterialSubmit, postMaterialVersion, postModeration, postSuggestion, postUniLibraryPin } from "./endpoints/library"
+import type { getAnnotations, getAnnotationsExport, getLibraryCollection, getLibraryCollections, getLibraryFileUrl, getLibraryItem, getLibraryItemText, getLibraryItems, getLibrarySanctions, getLibrarySubjects, getLibraryTopics, getManageBook, getManageBooks, getManageQueue, getManageStats, getManageTopics, getMeLibrary, getMyUploads, getReadingList, getReadingLists, getShelf, getUniLibraryRecord, getUniLibrarySearch, getUniLibraryStatus, getUniLibraryTaxonomies, postAnnotation, postAnnotationsSync, postLibrarySanction, postManageBook, postManageBookFile, postManageImport, postMaterial, postMaterialFiles, postMaterialSubmit, postMaterialVersion, postModeration, postReadingList, postSuggestion, postUniLibraryPin, putReadingListItems, putShelfEntry } from "./endpoints/library"
 import type { getAdminModerationQueue, getAdminModerationSearch, getLessonResources, getMeLinks, postAdminLinkDisable, postAdminLinkDismissReports, postLessonResourceHide, postLessonResources, postLinkRevoke, postLinks, postShares } from "./endpoints/links"
 import type { getLmsCourseCompare, getLmsCourseDraft, getLmsCoursePending, getLmsCoursePreviewStep, getLmsCourseStaff, getLmsCourseVersion, getLmsCourseVersions, getLmsStepDiff, getLmsStepDraft, getLmsStepHistory, patchLmsCourseSettings, patchLmsCourseStaff, postLmsCourseDiscard, postLmsCourseDraftOutline, postLmsCourseInviteCode, postLmsCoursePublish, postLmsCourseStaff, postLmsCourseSteps, postLmsCourseVersionRestore, postLmsCourses, postLmsStepCheckpoints, postLmsStepDiscard, postLmsStepRestore, putLmsCourseDraftMeta, putLmsStepDraft } from "./endpoints/lms-authoring"
 import type { getLmsAttempt, getLmsCourse, getLmsCourseStep, getLmsCourseStudents, getLmsCourses, getLmsMyCourses, getLmsStepCardsNext, postLmsAttemptOverride, postLmsAttemptSubmit, postLmsCourseEnroll, postLmsJoin, postLmsStepBlockAttempts, postLmsStepCardReview, postLmsStepViewed, putLmsAttemptAnswers } from "./endpoints/lms-learning"
@@ -527,6 +527,34 @@ export const served_getLibraryItemText: Awaited<ReturnType<typeof getLibraryItem
 declare const gen_getLibrarySubjects: ResponseOf<"/v1/library/subjects", "get">
 export const served_getLibrarySubjects: Awaited<ReturnType<typeof getLibrarySubjects>> = gen_getLibrarySubjects
 
+// GET /v1/library/topics — getLibraryTopics
+declare const gen_getLibraryTopics: ResponseOf<"/v1/library/topics", "get">
+export const served_getLibraryTopics: Awaited<ReturnType<typeof getLibraryTopics>> = gen_getLibraryTopics
+
+// GET /v1/library/collections — getLibraryCollections
+declare const gen_getLibraryCollections: ResponseOf<"/v1/library/collections", "get">
+export const served_getLibraryCollections: Awaited<ReturnType<typeof getLibraryCollections>> = gen_getLibraryCollections
+
+// GET /v1/library/collections/{collection_id} — getLibraryCollection
+declare const gen_getLibraryCollection: ResponseOf<"/v1/library/collections/{collection_id}", "get">
+export const served_getLibraryCollection: Awaited<ReturnType<typeof getLibraryCollection>> = gen_getLibraryCollection
+
+// GET /v1/library/reading-lists — getReadingLists
+declare const gen_getReadingLists: ResponseOf<"/v1/library/reading-lists", "get">
+export const served_getReadingLists: Awaited<ReturnType<typeof getReadingLists>> = gen_getReadingLists
+
+// GET /v1/library/reading-lists/{list_id} — getReadingList
+declare const gen_getReadingList: ResponseOf<"/v1/library/reading-lists/{list_id}", "get">
+export const served_getReadingList: Awaited<ReturnType<typeof getReadingList>> = gen_getReadingList
+
+// POST /v1/library/reading-lists — postReadingList
+declare const gen_postReadingList: ResponseOf<"/v1/library/reading-lists", "post">
+export const served_postReadingList: Awaited<ReturnType<typeof postReadingList>> = gen_postReadingList
+
+// PUT /v1/library/reading-lists/{list_id}/items — putReadingListItems
+declare const gen_putReadingListItems: ResponseOf<"/v1/library/reading-lists/{list_id}/items", "put">
+export const served_putReadingListItems: Awaited<ReturnType<typeof putReadingListItems>> = gen_putReadingListItems
+
 // GET /v1/library/external/unilibrary/search — getUniLibrarySearch
 declare const gen_getUniLibrarySearch: ResponseOf<"/v1/library/external/unilibrary/search", "get">
 export const served_getUniLibrarySearch: Awaited<ReturnType<typeof getUniLibrarySearch>> = gen_getUniLibrarySearch
@@ -542,6 +570,34 @@ export const served_postUniLibraryPin: Awaited<ReturnType<typeof postUniLibraryP
 // GET /v1/library/external/unilibrary/taxonomies — getUniLibraryTaxonomies
 declare const gen_getUniLibraryTaxonomies: ResponseOf<"/v1/library/external/unilibrary/taxonomies", "get">
 export const served_getUniLibraryTaxonomies: Awaited<ReturnType<typeof getUniLibraryTaxonomies>> = gen_getUniLibraryTaxonomies
+
+// GET /v1/me/library — getMeLibrary
+declare const gen_getMeLibrary: ResponseOf<"/v1/me/library", "get">
+export const served_getMeLibrary: Awaited<ReturnType<typeof getMeLibrary>> = gen_getMeLibrary
+
+// GET /v1/me/library/shelf — getShelf
+declare const gen_getShelf: ResponseOf<"/v1/me/library/shelf", "get">
+export const served_getShelf: Awaited<ReturnType<typeof getShelf>> = gen_getShelf
+
+// PUT /v1/me/library/shelf/{item_id} — putShelfEntry
+declare const gen_putShelfEntry: ResponseOf<"/v1/me/library/shelf/{item_id}", "put">
+export const served_putShelfEntry: Awaited<ReturnType<typeof putShelfEntry>> = gen_putShelfEntry
+
+// GET /v1/me/library/annotations — getAnnotations
+declare const gen_getAnnotations: ResponseOf<"/v1/me/library/annotations", "get">
+export const served_getAnnotations: Awaited<ReturnType<typeof getAnnotations>> = gen_getAnnotations
+
+// POST /v1/me/library/annotations — postAnnotation
+declare const gen_postAnnotation: ResponseOf<"/v1/me/library/annotations", "post">
+export const served_postAnnotation: Awaited<ReturnType<typeof postAnnotation>> = gen_postAnnotation
+
+// POST /v1/me/library/annotations/sync — postAnnotationsSync
+declare const gen_postAnnotationsSync: ResponseOf<"/v1/me/library/annotations/sync", "post">
+export const served_postAnnotationsSync: Awaited<ReturnType<typeof postAnnotationsSync>> = gen_postAnnotationsSync
+
+// GET /v1/me/library/annotations/export — getAnnotationsExport
+declare const gen_getAnnotationsExport: ResponseOf<"/v1/me/library/annotations/export", "get">
+export const served_getAnnotationsExport: Awaited<ReturnType<typeof getAnnotationsExport>> = gen_getAnnotationsExport
 
 // POST /v1/library/materials — postMaterial
 declare const gen_postMaterial: ResponseOf<"/v1/library/materials", "post">
@@ -594,6 +650,14 @@ export const served_postManageBookFile: Awaited<ReturnType<typeof postManageBook
 // POST /v1/manage/library/import — postManageImport
 declare const gen_postManageImport: ResponseOf<"/v1/manage/library/import", "post">
 export const served_postManageImport: Awaited<ReturnType<typeof postManageImport>> = gen_postManageImport
+
+// GET /v1/manage/library/topics — getManageTopics
+declare const gen_getManageTopics: ResponseOf<"/v1/manage/library/topics", "get">
+export const served_getManageTopics: Awaited<ReturnType<typeof getManageTopics>> = gen_getManageTopics
+
+// GET /v1/manage/library/stats — getManageStats
+declare const gen_getManageStats: ResponseOf<"/v1/manage/library/stats", "get">
+export const served_getManageStats: Awaited<ReturnType<typeof getManageStats>> = gen_getManageStats
 
 // GET /v1/admin/library/sanctions — getLibrarySanctions
 declare const gen_getLibrarySanctions: ResponseOf<"/v1/admin/library/sanctions", "get">

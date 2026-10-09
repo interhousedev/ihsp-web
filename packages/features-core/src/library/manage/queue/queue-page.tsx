@@ -161,8 +161,10 @@ export function QueuePage() {
           setReasoned(null)
           actions.resetError()
         }}
-        onSubmit={(action, reason) => {
-          if (reasoned) handle(reasoned.row, (callbacks) => actions.moderate(reasoned.row, action, reason, callbacks))
+        onSubmit={(action, reason, note) => {
+          if (reasoned) {
+            handle(reasoned.row, (callbacks) => actions.moderate(reasoned.row, action, reason, callbacks, note))
+          }
         }}
       />
       <ReportResolveDialog

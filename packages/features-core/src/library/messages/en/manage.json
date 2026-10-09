@@ -562,6 +562,17 @@
       "ru": "Russian",
       "en": "English"
     },
-    "fieldRequired": "This field is required."
+    "fieldRequired": "This field is required.",
+    "reasonOwn": "Your own words (up to 40 characters)",
+    "noteLabel": "Message to the owner",
+    "noteLabelOptional": "Message to the owner (optional)",
+    "noteRequired": "Write what the owner should change.",
+    "reasonCodes": {
+      "reported": "Reported by readers",
+      "unpublished": "Removed from the library",
+      "takedown": "Takedown (rights or policy)",
+      "superseded": "Replaced by a newer version",
+      "other": "Other (write your own)"
+    }
   }
 }

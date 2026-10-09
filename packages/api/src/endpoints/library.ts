@@ -34,6 +34,7 @@ import type {
   ItemText,
   ItemTextParams,
   ItemsParams,
+  LibraryGroup,
   LibraryStats,
   ManageCollection,
   ManageQueueRow,
@@ -317,7 +318,14 @@ export function getAnnotationsExport(params?: { item_id?: string }, opts?: Reque
 
 // - - - Uploading materials, suggestions, reports - - -
 
-/** POST /v1/library/materials — `201`, a `draft`. */
+/** GET /v1/library/my-groups — teachers, librarians and Administration (students: `403`). */
+export function getLibraryMyGroups(opts?: RequestOptions): Promise<LibraryGroup[]> {
+  return api.get<LibraryGroup[]>("/v1/library/my-groups", opts)
+}
+export const getLibraryMyGroupsQuery = () =>
+  queryOptions({ queryKey: keys.library.myGroups(), queryFn: ({ signal }) => getLibraryMyGroups({ signal }) })
+
+/** POST /v1/library/materials — `201`, a `draft`; `attested: false` saves it before the attestation is ticked. */
 export function postMaterial(body: MaterialInput, opts?: RequestOptions): Promise<ItemDetail> {
   return api.post<ItemDetail>("/v1/library/materials", body, opts)
 }
@@ -327,12 +335,15 @@ export function postMaterialFiles(id: string, body: MaterialFilesBody, opts?: Re
   return api.post<ItemDetail>(`/v1/library/materials/${seg(id)}/files`, body, opts)
 }
 
-/** POST /v1/library/materials/{id}/submit — `202`: `pending_review`, or `published` for a teacher. */
+/**
+ * POST /v1/library/materials/{id}/submit — `202`: `pending_review`, or `published` for a teacher.
+ * `422 library/attestation-required` until the draft is attested.
+ */
 export function postMaterialSubmit(id: string, opts?: RequestOptions): Promise<ItemDetail> {
   return api.post<ItemDetail>(`/v1/library/materials/${seg(id)}/submit`, undefined, opts)
 }
 
-/** PATCH /v1/library/materials/{id}. */
+/** PATCH /v1/library/materials/{id} (also `{ attested }` of a draft or a material with changes requested). */
 export function patchMaterial(id: string, body: MaterialPatchBody, opts?: RequestOptions): Promise<ItemDetail> {
   return api.patch<ItemDetail>(`/v1/library/materials/${seg(id)}`, body, opts)
 }

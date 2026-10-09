@@ -184,6 +184,7 @@ function moderate(
 ): Response | null {
   const reason = body.reason?.trim() ?? ""
   if (action !== "approve" && !reason) return invalid("reason", "A reason is required")
+  if (reason.length > 40) return invalid("reason", "A reason code or at most 40 characters")
   if (action === "approve" && stored.ownerId === actor.id && !actor.roles.includes("admin")) {
     return problem(403, "library/own-item", "Another librarian must approve your own upload")
   }

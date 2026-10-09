@@ -78,14 +78,20 @@ export function useQueueActions(tab: QueueTab) {
     onSettled: () => queryClient.invalidateQueries({ queryKey: keys.library.all() }),
   })
 
-  function moderate(row: ManageQueueRow, action: ModerationAction, reason: string | undefined, callbacks?: Callbacks) {
+  function moderate(
+    row: ManageQueueRow,
+    action: ModerationAction,
+    reason: string | undefined,
+    callbacks?: Callbacks,
+    note?: string,
+  ) {
     const id = row.item.id
     if (!id) return
     mutation.mutate(
       {
         row,
         announce: t(action, { title: titleOf(row) }),
-        run: () => postModeration(id, action, reason ? { reason } : undefined),
+        run: () => postModeration(id, action, reason ? { reason, ...(note ? { note } : {}) } : undefined),
       },
       callbacks,
     )

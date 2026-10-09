@@ -1,5 +1,6 @@
 "use client"
 
+import { useReasonText } from "../../upload/reason-text"
 import { getLibraryItemQuery, type ItemDetail, type ManageQueueRow } from "@ihsp/api"
 import { useFormatters, useT } from "@ihsp/i18n"
 import { Badge, Skeleton, formatBytes } from "@ihsp/ui"
@@ -88,6 +89,7 @@ export function ItemPreviewPane({
   const report = useT("library.report")
   const status = useT("library.item.status")
   const type = useT("library.type")
+  const reasonText = useReasonText()
   const format = useFormatters()
   const id = row.item.id
   const detail = useQuery({ ...getLibraryItemQuery(id ?? ""), enabled: !!id })
@@ -215,7 +217,7 @@ export function ItemPreviewPane({
             </Section>
             {detail.data.status_reason ? (
               <Section title={t("statusReason")}>
-                <p className="text-sm break-words">{detail.data.status_reason}</p>
+                <p className="text-sm break-words">{reasonText(detail.data.status_reason)}</p>
               </Section>
             ) : null}
           </>
