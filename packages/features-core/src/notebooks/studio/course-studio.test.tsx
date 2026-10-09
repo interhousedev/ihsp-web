@@ -23,7 +23,12 @@ function captureCreates(): ArtifactCreate[] {
     http.post(ARTIFACTS_URL, async ({ request }) => {
       const body = (await request.json()) as ArtifactCreate
       bodies.push(body)
-      const item: ArtifactItem = { ...artifactGenerating, id: `new-${bodies.length}`, kind: body.kind, status: "queued" }
+      const item: ArtifactItem = {
+        ...artifactGenerating,
+        id: `new-${bodies.length}`,
+        kind: body.kind,
+        status: "queued",
+      }
       return HttpResponse.json(item, { status: 202 })
     }),
   )

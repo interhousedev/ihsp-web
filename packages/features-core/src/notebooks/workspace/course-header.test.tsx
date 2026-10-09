@@ -10,7 +10,9 @@ allowSlowRenders()
 
 describe("NotebookHeader of a course workspace", () => {
   it("leads back to the course editor and cannot be renamed", async () => {
-    renderNotebook(<NotebookHeader notebook={courseWorkspaceDetail} />, { actions: { notebookId: courseIds.workspace } })
+    renderNotebook(<NotebookHeader notebook={courseWorkspaceDetail} />, {
+      actions: { notebookId: courseIds.workspace },
+    })
 
     expect(await screen.findByRole("link", { name: "Back to the course editor" })).toHaveAttribute(
       "href",
@@ -52,11 +54,17 @@ describe("ChatPane of a course workspace", () => {
 
   it("shows only the sources chat to a reader", async () => {
     renderNotebook(
-      <ChatPane notebook={{ ...courseWorkspaceDetail, can_write: false }} pendingAsk={null} onAskHandled={() => undefined} />,
+      <ChatPane
+        notebook={{ ...courseWorkspaceDetail, can_write: false }}
+        pendingAsk={null}
+        onAskHandled={() => undefined}
+      />,
       { actions: { notebookId: courseIds.workspace } },
     )
 
-    expect(await screen.findByText("You can read this workspace but not change it, so the chat is off.")).toBeInTheDocument()
+    expect(
+      await screen.findByText("You can read this workspace but not change it, so the chat is off."),
+    ).toBeInTheDocument()
     expect(screen.queryByRole("group", { name: "Chat mode" })).not.toBeInTheDocument()
   })
 })

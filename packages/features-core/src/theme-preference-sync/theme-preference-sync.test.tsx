@@ -73,9 +73,7 @@ describe("account theme", () => {
     renderWithProviders(<App />, { session: null })
     expect(html.classList.contains("dark")).toBe(false)
 
-    act(() =>
-      setSession({ access_token: "t", expires_at: Date.now() + 600_000, user: accountWith("dark").user }),
-    )
+    act(() => setSession({ access_token: "t", expires_at: Date.now() + 600_000, user: accountWith("dark").user }))
 
     await waitFor(() => expect(html.classList.contains("dark")).toBe(true))
     expect(window.localStorage.getItem("theme")).toBe("dark")

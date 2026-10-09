@@ -44,13 +44,17 @@ describe("course workspace handlers", () => {
     expect(preview.plan?.new_steps).toBe(2)
 
     setCourseApplyMode("conflict")
-    await expect(postApplyArtifact(courseIds.workspace, courseIds.coursePlan, {})).rejects.toMatchObject({ status: 409 })
+    await expect(postApplyArtifact(courseIds.workspace, courseIds.coursePlan, {})).rejects.toMatchObject({
+      status: 409,
+    })
     expect(await postApplyArtifact(courseIds.workspace, courseIds.coursePlan, {})).toEqual(applyResultPlan)
   })
 
   test("reports the problems of a draft the server refuses", async () => {
     setCourseApplyMode("invalid")
-    const preview = await postApplyPreview(courseIds.workspace, courseIds.lessonDraft, { target_step_id: courseIds.stepNewLaws })
+    const preview = await postApplyPreview(courseIds.workspace, courseIds.lessonDraft, {
+      target_step_id: courseIds.stepNewLaws,
+    })
 
     expect(preview.can_apply).toBe(false)
     expect(preview.problems).toHaveLength(1)
