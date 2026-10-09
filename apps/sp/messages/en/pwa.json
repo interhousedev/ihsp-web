@@ -95,6 +95,14 @@
           }
         }
       }
+    },
+    "hub": {
+      "title": "More IHSP apps",
+      "subtitle": "Each app installs on its own: open it and add it to your home screen.",
+      "install": "Install",
+      "installLabel": "Install {name}",
+      "forStaff": "For staff",
+      "thisApp": "Install with the steps above"
     }
   }
 }

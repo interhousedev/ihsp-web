@@ -95,6 +95,14 @@
           }
         }
       }
+    },
+    "hub": {
+      "title": "IHSP ning boshqa ilovalari",
+      "subtitle": "Har bir ilova alohida oʻrnatiladi: uni oching va bosh ekranga qoʻshing.",
+      "install": "Oʻrnatish",
+      "installLabel": "{name} ilovasini oʻrnatish",
+      "forStaff": "Xodimlar uchun",
+      "thisApp": "Yuqoridagi qadamlar bilan oʻrnating"
     }
   }
 }

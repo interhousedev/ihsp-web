@@ -6,6 +6,7 @@ import type { InstallOutcome } from "../hooks/use-install-prompt"
 import type { InstallView } from "../utils/install-view"
 import { AndroidInstallButton } from "./android-install-button"
 import { AndroidManualSteps } from "./android-manual-steps"
+import { AppsHub } from "./apps-hub"
 import { DesktopQr } from "./desktop-qr"
 import { InstalledNotice } from "./installed-notice"
 import { IosSteps } from "./ios-steps"
@@ -44,6 +45,7 @@ export function InstallLanding({ view, inAppBrowser, onInstall, onContinue }: La
         {view === "android-manual" ? <AndroidManualSteps /> : null}
         {view === "ios" ? <IosSteps openInSafari={inAppBrowser} /> : null}
         {view === "desktop" ? <DesktopQr /> : null}
+        <AppsHub />
         <TelegramLink />
         <Button variant="ghost" className="min-h-11 w-full" onClick={onContinue}>
           {t("continue")}
