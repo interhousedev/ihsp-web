@@ -891,7 +891,9 @@
       "delete": "Mavzuni oʻchirish",
       "nameField": "Mavzu nomi",
       "renameFailed": "Mavzu nomini oʻzgartirib boʻlmadi.",
-      "deleteFailed": "Mavzuni oʻchirib boʻlmadi."
+      "deleteFailed": "Mavzuni oʻchirib boʻlmadi.",
+      "deleteTitle": "Bu mavzu oʻchirilsinmi?",
+      "deleteDescription": "Mavzu oʻchiriladi. Uning manbalari daftarda qoladi."
     }
   },
   "errors": {

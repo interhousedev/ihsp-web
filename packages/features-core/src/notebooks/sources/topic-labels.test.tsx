@@ -1,5 +1,5 @@
 import { describe, expect, it } from "bun:test"
-import { getNotebookSources, postNotebookLabel, putNotebookSourceLabels } from "@ihsp/api"
+import { getNotebookLabels, getNotebookSources, postNotebookLabel, putNotebookSourceLabels } from "@ihsp/api"
 import {
   apiUrl,
   courseWorkspaceReadOnly,
@@ -9,7 +9,7 @@ import {
   server,
   setCourseWorkspaceReadOnly,
 } from "@ihsp/test-utils"
-import { screen, waitFor } from "@testing-library/react"
+import { screen, waitFor, within } from "@testing-library/react"
 import { http } from "msw"
 import { allowSlowRenders, renderNotebook } from "../test-support"
 import { SourcesPanel } from "./sources-panel"
@@ -106,13 +106,32 @@ describe("Sources panel: topic labels", () => {
     expect(await header(/^🧫 Cells\s*\(2\)/)).toBeInTheDocument()
   })
 
-  it("deletes a topic: its sources stay and move to the other topic or to no topic", async () => {
+  it("asks before deleting a topic; Cancel keeps it", async () => {
     await seedTopics()
     const { user } = renderPanel()
     await header(/^⚡ Energy/)
 
     await user.click(screen.getByRole("button", { name: "More actions for ⚡ Energy" }))
     await user.click(await screen.findByRole("menuitem", { name: "Delete label" }))
+    const dialog = await screen.findByRole("alertdialog")
+    expect(dialog).toHaveTextContent("Delete this label?")
+    expect(dialog).toHaveTextContent("The label is removed. Its sources stay in the notebook.")
+    await user.click(within(dialog).getByRole("button", { name: "Cancel" }))
+
+    await until(() => screen.queryByRole("alertdialog") === null)
+    expect(screen.getByRole("button", { name: /^⚡ Energy\s*\(1\)/ })).toBeInTheDocument()
+    expect((await getNotebookLabels(nbIds.notebook)).items).toHaveLength(2)
+  })
+
+  it("deletes a topic after the confirmation: its sources stay", async () => {
+    await seedTopics()
+    const { user } = renderPanel()
+    await header(/^⚡ Energy/)
+
+    await user.click(screen.getByRole("button", { name: "More actions for ⚡ Energy" }))
+    await user.click(await screen.findByRole("menuitem", { name: "Delete label" }))
+    const dialog = await screen.findByRole("alertdialog")
+    await user.click(within(dialog).getByRole("button", { name: "Delete label" }))
 
     await until(() => screen.queryByRole("button", { name: /^⚡ Energy/ }) === null)
     expect(screen.getByRole("button", { name: /^🧫 Cells\s*\(2\)/ })).toBeInTheDocument()

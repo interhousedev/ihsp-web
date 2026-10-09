@@ -891,7 +891,9 @@
       "delete": "Delete label",
       "nameField": "Label name",
       "renameFailed": "Could not rename the label.",
-      "deleteFailed": "Could not delete the label."
+      "deleteFailed": "Could not delete the label.",
+      "deleteTitle": "Delete this label?",
+      "deleteDescription": "The label is removed. Its sources stay in the notebook."
     }
   },
   "errors": {

@@ -2,6 +2,7 @@
 
 import type { SourceItem } from "@ihsp/api"
 import { useT } from "@ihsp/i18n"
+import { ConfirmDialog } from "@ihsp/ui"
 import { useState, type ReactNode } from "react"
 import { toast } from "sonner"
 import { useDeleteLabel, useRenameLabel } from "../api"
@@ -23,10 +24,22 @@ type TopicGroupProps = {
 export function TopicGroup({ notebookId, group, readOnly, onToggleGroup, renderRow }: TopicGroupProps) {
   const t = useT("notebooks")
   const [editing, setEditing] = useState(false)
+  const [confirming, setConfirming] = useState(false)
   const rename = useRenameLabel(notebookId)
   const remove = useDeleteLabel(notebookId)
   const { label, sources } = group
   const name = label ? `${label.emoji} ${label.name}` : t("label.other")
+
+  function confirmDelete() {
+    if (!label) return
+    remove.mutate(label.id, {
+      onSuccess: () => setConfirming(false),
+      onError: () => {
+        setConfirming(false)
+        toast.error(t("label.deleteFailed"))
+      },
+    })
+  }
 
   function save(next: string) {
     setEditing(false)
@@ -34,26 +47,34 @@ export function TopicGroup({ notebookId, group, readOnly, onToggleGroup, renderR
   }
 
   return (
-    <SourceGroup
-      name={name}
-      sources={sources}
-      onToggleGroup={onToggleGroup}
-      renaming={
-        editing && label ? (
-          <LabelRenameField name={label.name} onSave={save} onCancel={() => setEditing(false)} />
-        ) : null
-      }
-      menu={
-        label && !readOnly ? (
-          <LabelMenu
-            name={name}
-            onRename={() => setEditing(true)}
-            onDelete={() => remove.mutate(label.id, { onError: () => toast.error(t("label.deleteFailed")) })}
-          />
-        ) : null
-      }
-    >
-      {sources.map(renderRow)}
-    </SourceGroup>
+    <>
+      <SourceGroup
+        name={name}
+        sources={sources}
+        onToggleGroup={onToggleGroup}
+        renaming={
+          editing && label ? (
+            <LabelRenameField name={label.name} onSave={save} onCancel={() => setEditing(false)} />
+          ) : null
+        }
+        menu={
+          label && !readOnly ? (
+            <LabelMenu name={name} onRename={() => setEditing(true)} onDelete={() => setConfirming(true)} />
+          ) : null
+        }
+      >
+        {sources.map(renderRow)}
+      </SourceGroup>
+      <ConfirmDialog
+        open={confirming}
+        onOpenChange={(open) => !open && !remove.isPending && setConfirming(false)}
+        title={t("label.deleteTitle")}
+        description={t("label.deleteDescription")}
+        confirmLabel={t("label.delete")}
+        destructive
+        loading={remove.isPending}
+        onConfirm={confirmDelete}
+      />
+    </>
   )
 }
