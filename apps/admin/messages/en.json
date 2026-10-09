@@ -316,6 +316,7 @@
       "teacher": "Teacher",
       "admin": "Administration",
       "lms_admin": "LMS admin",
+      "librarian": "Librarian",
       "legend": "Roles that can be granted",
       "save": "Save roles",
       "saved": "Roles of {name} saved",
@@ -988,7 +989,8 @@
         "student": "Students",
         "teacher": "Teachers",
         "admin": "Administration",
-        "lms_admin": "LMS admins"
+        "lms_admin": "LMS admins",
+        "librarian": "Librarians"
       },
       "groups": "Groups",
       "groupsCount": "Groups: {count}",

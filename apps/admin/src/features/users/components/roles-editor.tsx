@@ -11,10 +11,10 @@ import { TOUCH } from "../../shared/utils/touch"
 import { userInvalidations } from "./block-actions"
 
 /** Roles an administrator may grant or revoke. Student and teacher come from EMIS and from teacher accounts. */
-const GRANTABLE: readonly Role[] = ["admin", "lms_admin"]
+const GRANTABLE: readonly Role[] = ["admin", "lms_admin", "librarian"]
 
 /**
- * Grant or revoke Administration and LMS admin (UF-ADM-11 step 3). A change logs the user out everywhere and a new
+ * Grant or revoke Administration, LMS admin and Librarian (UF-ADM-11 step 3). A change logs the user out everywhere and a new
  * Administration member sets up OTP at the next login, so it asks for confirmation first.
  */
 export function RolesEditor({ user }: { user: AdminUser }) {

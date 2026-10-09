@@ -316,6 +316,7 @@
       "teacher": "O‘qituvchi",
       "admin": "Ma’muriyat",
       "lms_admin": "LMS administratori",
+      "librarian": "Kutubxonachi",
       "legend": "Berish mumkin bo‘lgan rollar",
       "save": "Rollarni saqlash",
       "saved": "{name} rollari saqlandi",
@@ -988,7 +989,8 @@
         "student": "Talabalar",
         "teacher": "O‘qituvchilar",
         "admin": "Ma’muriyat",
-        "lms_admin": "LMS administratorlari"
+        "lms_admin": "LMS administratorlari",
+        "librarian": "Kutubxonachilar"
       },
       "groups": "Guruhlar",
       "groupsCount": "Guruhlar: {count}",
