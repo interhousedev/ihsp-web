@@ -290,16 +290,24 @@ describe("library.conf (library host)", () => {
     // add_header in a location drops the headers inherited from the server block
     const withCacheControl = [...blocks].filter(([, body]) => body.includes("add_header Cache-Control"))
     expect(withCacheControl.map(([matcher]) => matcher).toSorted()).toEqual(
-      ["= /env.js", "/_next/static/", "~ ^/_next/static/.+\\.mjs$", "~ \\.mjs$"].toSorted(),
+      [
+        "= /env.js",
+        "= /sw.js",
+        "= /manifest.webmanifest",
+        "/icons/",
+        "/_next/static/",
+        "~ ^/_next/static/.+\\.mjs$",
+        "~ \\.mjs$",
+      ].toSorted(),
     )
     for (const [matcher, body] of withCacheControl) {
       expect({ matcher, secured: body.includes(securityHeaders) }).toEqual({ matcher, secured: true })
     }
   })
 
-  it("has no manifest and no service worker, and proxies nothing (the edge sends /b/ & co. to the api)", () => {
-    expect(library).not.toContain("manifest")
-    expect(library).not.toContain("sw.js")
+  it("serves the service worker and the manifest of the installable library, and proxies nothing (the edge sends /b/ & co. to the api)", () => {
+    expect(library).toMatch(/location = \/sw\.js \{[\s\S]{0,200}?Cache-Control "no-cache"/)
+    expect(library).toMatch(/location = \/manifest\.webmanifest \{[\s\S]{0,200}?Cache-Control "no-cache"/)
     expect(library).not.toContain("proxy_pass")
     expect(library).not.toMatch(/snippets\/proxy-/)
     expect(library).not.toContain("_UPSTREAM")
@@ -474,6 +482,40 @@ describe.skipIf(!haveTools)("entrypoint.sh rendering", () => {
       expect(run.envJs(app)).toContain('APP_MODE: "sp"')
     }
     expect(run.exists("srv", "app")).toBe(false)
+  })
+
+  it("PWA_APPS turns the listed apps into installable ones on their own host, and only those", () => {
+    const run = runEntrypoint({ PWA_APPS: "lms library,staff admin sp id" })
+    expect(run.exitCode).toBe(0)
+    for (const app of ["lms", "library", "staff", "admin"]) {
+      expect(run.envJs(app)).toContain('APP_MODE: "pwa"')
+      expect(run.envJs(app)).toContain(`OAUTH_CLIENT_ID: "${app}"`)
+    }
+    // the student app is installed from the app host, and id/share are not installable
+    expect(run.envJs("sp")).toContain('APP_MODE: "sp"')
+    expect(run.envJs("id")).toContain('APP_MODE: "sp"')
+    expect(run.envJs("share/ai")).toContain('APP_MODE: "sp"')
+    expect(run.envJs("app-env")).toContain('APP_MODE: "pwa"')
+    expect(run.envJs("app-env")).toContain('OAUTH_CLIENT_ID: "app"')
+  })
+
+  it.each(["lms", "staff", "admin"])(
+    "%s.conf revalidates the service worker and the manifest and never caches env.js",
+    (app) => {
+      const conf = read("sites", `${app}.conf`)
+      expect(conf).toMatch(/location = \/env\.js \{[^}]*Cache-Control "no-store"/)
+      expect(conf).toMatch(
+        /location = \/sw\.js \{[\s\S]{0,200}?Cache-Control "no-cache"[\s\S]{0,80}?Service-Worker-Allowed "\/"/,
+      )
+      expect(conf).toMatch(/location = \/manifest\.webmanifest \{[\s\S]{0,200}?Cache-Control "no-cache"/)
+    },
+  )
+
+  it("PWA_APPS lists one app at a time", () => {
+    const run = runEntrypoint({ PWA_APPS: "lms" })
+    expect(run.exitCode).toBe(0)
+    expect(run.envJs("lms")).toContain('APP_MODE: "pwa"')
+    for (const app of ["library", "staff", "admin"]) expect(run.envJs(app)).toContain('APP_MODE: "sp"')
   })
 
   it("renders the app host and URL from APP_HOST_APP and IHSP_WEB_APP_URL", () => {

@@ -59,8 +59,13 @@ set -euo pipefail
 #   IHSP_STORAGE_ORIGIN      - File presigned URL origin (default: http://localhost:8000); also in the
 #                              img-src and connect-src of the library site's CSP header
 #
+#   PWA_APPS                 - Apps that run as installable apps on their own host (APP_MODE "pwa" in their
+#                              env.js), space or comma separated, from: lms library staff admin
+#                              (default: none). The student app is installed from the PWA host (APP_HOST_APP).
+#
 # The apps differ in two env.js values that are not variables of this image: OAUTH_CLIENT_ID is the
-# app name, and APP_MODE is "sp" for every app but the PWA host, which gets "pwa" (and client "app").
+# app name, and APP_MODE is "sp" (a plain website) for every app but the PWA host, which gets "pwa" (and
+# client "app"), and the apps listed in PWA_APPS, which get "pwa" with their own client.
 #
 # Every ${VAR} used in deploy/env.js.template, deploy/sites/* and deploy/snippets/* must be in
 # ENV_JS_VARS / NGINX_VARS below (deploy/docker.test.ts checks it).
@@ -125,9 +130,23 @@ ENV_JS_VARS='${APP_ENV} ${APP_MODE} ${IHSP_WEB_API_URL} ${IHSP_WEB_ID_URL} ${IHS
 # shellcheck disable=SC2016
 NGINX_VARS='${LISTEN_PORT} ${APP_HOST_ID} ${APP_HOST_SP} ${APP_HOST_APP} ${APP_HOST_STAFF} ${APP_HOST_ADMIN} ${APP_HOST_LMS} ${APP_HOST_LIBRARY} ${APP_HOST_SHARE} ${API_HOST} ${MCP_HOST} ${ROOT_HOST} ${HYDRA_UPSTREAM} ${IDENTITY_UPSTREAM} ${API_UPSTREAM} ${BOT_UPSTREAM} ${BACKEND_UPSTREAM} ${CSP_CONNECT_SRC} ${CSP_IMG_SRC} ${IHSP_STORAGE_ORIGIN} ${IHSP_WEB_SP_URL}'
 
+# app_mode APP: "pwa" for an app listed in PWA_APPS that can be installed on its own host, "sp" otherwise
+PWA_APPS="${PWA_APPS//,/ }"
+app_mode() {
+  case "$1" in
+    lms | library | staff | admin)
+      case " $PWA_APPS " in
+        *" $1 "*) echo pwa ;;
+        *) echo sp ;;
+      esac
+      ;;
+    *) echo sp ;;
+  esac
+}
+
 # Render env.js for each app (share loads /ai/env.js: its out/ is mounted at /srv/share/ai)
 for app in id sp staff admin lms library; do
-  APP_MODE="sp" OAUTH_CLIENT_ID="$app" envsubst "$ENV_JS_VARS" < "$ENV_JS_TEMPLATE" > "$SRV_DIR/$app/env.js"
+  APP_MODE="$(app_mode "$app")" OAUTH_CLIENT_ID="$app" envsubst "$ENV_JS_VARS" < "$ENV_JS_TEMPLATE" > "$SRV_DIR/$app/env.js"
 done
 APP_MODE="sp" OAUTH_CLIENT_ID="share" envsubst "$ENV_JS_VARS" < "$ENV_JS_TEMPLATE" > "$SRV_DIR/share/ai/env.js"
 
