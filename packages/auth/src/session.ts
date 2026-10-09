@@ -13,6 +13,7 @@ import {
 import { getConfig } from "@ihsp/config"
 import { getInitDataRaw, isMiniApp } from "@ihsp/telegram"
 import { broadcastLogout } from "./channel"
+import { holdLogin, loginHeld, releaseLoginHold } from "./login-hold"
 import { AuthError } from "./errors"
 import { navigation } from "./navigation"
 import { codeChallengeS256, generateCodeVerifier, randomString } from "./pkce"
@@ -21,6 +22,8 @@ import { getSession, resetAuthStore, useAuthStore } from "./store"
 /** A token is refreshed when fewer than this many milliseconds are left. */
 export const REFRESH_MARGIN_MS = 60_000
 
+/** How long the login stays blocked after a logout started; the browser leaves the page well before. */
+const LOGOUT_HOLD_MS = 30_000
 const PENDING_KEY = "ihsp.oauth.pending"
 const ATTEMPTS_KEY = "ihsp.oauth.attempts"
 const RETRY_KEY = "ihsp.oauth.retry"
@@ -54,6 +57,7 @@ export function resetAuthState(): void {
   callbackInflight = null
   refreshInflight = null
   bootstrapInflight = null
+  releaseLoginHold()
   resetAuthStore()
 }
 
@@ -177,6 +181,8 @@ export type LoginOptions = {
  * keeps coming back unauthorised (4 times in a minute) is refused with `AuthError("login-loop")`.
  */
 export function login(returnTo?: string, options: LoginOptions = {}): Promise<void> {
+  // A logout is leaving the page: a login now would replace its navigation and keep the Hydra session alive.
+  if (loginHeld()) return new Promise<void>(() => undefined)
   loginInflight ??= startLogin(returnTo ?? currentPath(), options).finally(() => {
     loginInflight = null
   })
@@ -355,6 +361,7 @@ export function retryBootstrap(): Promise<void> {
 /** `POST /v1/oauth/logout`, drops the tokens (here and in other tabs) and goes to the `logout_url` from Hydra. */
 export async function logout(): Promise<void> {
   const { logout_url } = await postOauthLogout({ client_id: getConfig().OAUTH_CLIENT_ID })
+  holdLogin(LOGOUT_HOLD_MS)
   useAuthStore.getState().clear()
   broadcastLogout()
   navigation.assign(logout_url)

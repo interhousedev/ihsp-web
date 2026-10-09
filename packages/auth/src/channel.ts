@@ -1,3 +1,4 @@
+import { holdLogin } from "./login-hold"
 import { useAuthStore } from "./store"
 
 const CHANNEL_NAME = "ihsp-auth"
@@ -18,8 +19,14 @@ export function broadcastLogout(): void {
   getChannel()?.postMessage(message)
 }
 
+/** The tab that logs out is ending the Hydra session; the others wait for it, then reload into the login. */
+const RELOAD_DELAY_MS = 1500
+
 function onMessage(event: MessageEvent<Message>): void {
-  if (event.data?.type === "logout") useAuthStore.getState().clear()
+  if (event.data?.type !== "logout") return
+  holdLogin(RELOAD_DELAY_MS * 2)
+  useAuthStore.getState().clear()
+  if (typeof window !== "undefined") window.setTimeout(() => window.location.reload(), RELOAD_DELAY_MS)
 }
 
 /** Starts listening for a logout in another tab; returns the function that stops it. */

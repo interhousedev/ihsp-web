@@ -244,6 +244,21 @@ describe("logout", () => {
     expect(assign).toHaveBeenCalledWith(logoutResponse.logout_url)
   })
 
+  it("does not start a login while the logout navigates away (it would win against the end-session URL)", async () => {
+    setSession({ access_token: "token", expires_at: Date.now() + 5 * 60_000, user: userMe })
+    const assign = spyOn(navigation, "assign").mockImplementation(() => undefined)
+    const replace = spyOn(navigation, "replace").mockImplementation(() => undefined)
+
+    await logout()
+    // What RequireAuth does the moment the store turns anonymous.
+    void login()
+    await Promise.resolve()
+
+    expect(replace).not.toHaveBeenCalled()
+    expect(assign).toHaveBeenCalledTimes(1)
+    expect(String(assign.mock.calls[0]?.[0])).toBe(logoutResponse.logout_url)
+  })
+
   it("does not clear the session when the server call fails", async () => {
     setSession({ access_token: "token", expires_at: Date.now() + 5 * 60_000, user: userMe })
     const assign = spyOn(navigation, "assign").mockImplementation(() => undefined)
