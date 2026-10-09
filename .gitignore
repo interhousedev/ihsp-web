@@ -14,3 +14,6 @@ apps/sp/public/sw.js
 
 # Bundled by `bun run build:sw` from packages/features-core/src/pwa/sw/generic.ts
 apps/lms/public/sw.js
+apps/library/public/sw.js
+apps/staff/public/sw.js
+apps/admin/public/sw.js

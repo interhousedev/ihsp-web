@@ -14,5 +14,7 @@ window.__ENV__ = {
   MCP_URL: "http://localhost:8000/mcp",
   BOT_USERNAME: "ihspbot",
   OAUTH_CLIENT_ID: "staff",
+  // "pwa" turns this app into an installable one (manifest, service worker, offline page, forced updates).
+  APP_MODE: "web",
   STORAGE_ORIGIN: "http://localhost:9000",
 };

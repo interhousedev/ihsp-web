@@ -3,6 +3,7 @@
 import { AuthProvider, TelegramAutoLogin } from "@ihsp/auth"
 import { ConfigGate } from "@ihsp/config"
 import { ThemePreferenceSync } from "@ihsp/features-core"
+import { PwaRuntime } from "@ihsp/features-core/pwa"
 import { I18nProvider, type Locale, type Messages } from "@ihsp/i18n"
 import { TelegramBridge } from "@ihsp/telegram"
 import { AppThemeProvider, createQueryClient } from "@ihsp/ui"
@@ -30,6 +31,7 @@ export function Providers({ children }: { children: ReactNode }) {
             <AppThemeProvider>
               <TelegramBridge>
                 <AuthProvider>
+                  <PwaRuntime />
                   <ThemePreferenceSync>
                     <TelegramAutoLogin>{children}</TelegramAutoLogin>
                   </ThemePreferenceSync>

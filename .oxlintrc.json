@@ -19,7 +19,10 @@
     "playwright-report/**",
     "deploy/**/*.conf",
     "apps/sp/public/sw.js",
-    "apps/lms/public/sw.js"
+    "apps/lms/public/sw.js",
+    "apps/admin/public/sw.js",
+    "apps/staff/public/sw.js",
+    "apps/library/public/sw.js"
   ],
   "settings": {
     "jsx-a11y": {

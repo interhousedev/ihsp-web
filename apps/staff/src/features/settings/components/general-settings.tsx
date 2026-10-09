@@ -2,14 +2,7 @@
 
 import { useUpdatePreferences } from "@ihsp/features-core"
 import { useT } from "@ihsp/i18n"
-import {
-  LanguageSwitcher,
-  THEME_CHOICES,
-  ToggleGroup,
-  ToggleGroupItem,
-  isThemeChoice,
-  useThemeChoice,
-} from "@ihsp/ui"
+import { LanguageSwitcher, THEME_CHOICES, ToggleGroup, ToggleGroupItem, isThemeChoice, useThemeChoice } from "@ihsp/ui"
 
 /** Language and theme: applied at once and saved in the account. */
 export function GeneralSettings() {
