@@ -26,7 +26,7 @@ export function OtpSettingsPage() {
                   {user.otp_via_email ? t("security.otp.enabledWithEmail") : t("security.otp.enabled")}
                 </AlertDescription>
               </Alert>
-              <OtpDisableForm user={user} onDisabled={updateMe} />
+              <OtpDisableForm onDisabled={updateMe} />
             </div>
           ) : (
             <OtpEnableForm user={user} onEnabled={updateMe} />

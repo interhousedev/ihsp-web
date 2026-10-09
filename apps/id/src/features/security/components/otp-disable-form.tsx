@@ -2,8 +2,6 @@
 
 import { postOtpDisable, type UserMe } from "@ihsp/api"
 import {
-  Alert,
-  AlertDescription,
   Card,
   CardContent,
   CardDescription,
@@ -18,10 +16,10 @@ import { z } from "zod"
 import { ErrorAlert } from "../../shared/components/error-alert"
 import { useTr } from "../../shared/hooks/use-tr"
 
-type OtpDisableFormProps = { user: UserMe; onDisabled: (user: UserMe) => void }
+type OtpDisableFormProps = { onDisabled: (user: UserMe) => void }
 
-/** UF-ID-06 1a: turning OTP off needs the password and is refused for Administration (ID-11). */
-export function OtpDisableForm({ user, onDisabled }: OtpDisableFormProps) {
+/** UF-ID-06 1a: turning OTP off needs the password (OTP is optional for everyone, Administration included). */
+export function OtpDisableForm({ onDisabled }: OtpDisableFormProps) {
   const t = useTr()
   const schema = useMemo(() => z.object({ password: z.string().min(1, t("idCommon.validation.required")) }), [t])
   const mutation = useMutation({
@@ -36,13 +34,6 @@ export function OtpDisableForm({ user, onDisabled }: OtpDisableFormProps) {
     },
   })
 
-  if (user.roles.includes("admin")) {
-    return (
-      <Alert>
-        <AlertDescription>{t("security.otp.adminRequired")}</AlertDescription>
-      </Alert>
-    )
-  }
   return (
     <Card>
       <CardHeader>

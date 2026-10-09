@@ -394,8 +394,7 @@
       "changeChannels": "Change channels",
       "disableTitle": "Turn off OTP login",
       "disableDescription": "Enter your password to turn OTP login off.",
-      "disable": "Turn off OTP login",
-      "adminRequired": "OTP is required for Administration accounts and cannot be turned off."
+      "disable": "Turn off OTP login"
     },
     "email": {
       "title": "Recovery email",

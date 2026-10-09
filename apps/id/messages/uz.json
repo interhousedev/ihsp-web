@@ -394,8 +394,7 @@
       "changeChannels": "Kanallarni o‘zgartirish",
       "disableTitle": "OTP bilan kirishni o‘chirish",
       "disableDescription": "OTP bilan kirishni o‘chirish uchun parolingizni kiriting.",
-      "disable": "OTP bilan kirishni o‘chirish",
-      "adminRequired": "Ma’muriyat hisoblari uchun OTP majburiy, uni o‘chirib bo‘lmaydi."
+      "disable": "OTP bilan kirishni o‘chirish"
     },
     "email": {
       "title": "Tiklash uchun pochta",

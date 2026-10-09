@@ -14,7 +14,7 @@ export function useClientHint(): LoginInfo | null {
     client_id: clientId,
     client_name: clientName,
     skip: false,
-    requires_second_factor: clientId === "admin",
+    requires_second_factor: false,
     redirect_to: null,
   }
 }

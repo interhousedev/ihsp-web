@@ -132,13 +132,11 @@ describe("OTP login", () => {
     expect(await screen.findByText(/OTP login is on/)).toBeInTheDocument()
   })
 
-  test("OTP cannot be turned off for Administration", async () => {
-    renderId(<OtpSettingsPage />, { route: "/security/otp/", session: admin })
+  test("OTP is optional for Administration: the password form to turn it off is shown", async () => {
+    server.use(http.get(apiUrl("/v1/id/me"), () => HttpResponse.json({ ...adminMe, otp_enabled: true })))
+    renderId(<OtpSettingsPage />, { route: "/security/otp/", session: { ...admin, user: { ...adminMe, otp_enabled: true } } })
 
-    expect(
-      await screen.findByText("OTP is required for Administration accounts and cannot be turned off."),
-    ).toBeInTheDocument()
-    expect(screen.queryByLabelText("Current password")).not.toBeInTheDocument()
+    expect(await screen.findByLabelText("Current password")).toBeInTheDocument()
   })
 
   test("turning OTP off asks for the password", async () => {
