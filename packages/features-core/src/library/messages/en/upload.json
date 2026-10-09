@@ -184,7 +184,9 @@
       "notEditableText": "Its status does not allow changes now. Look at your uploads.",
       "myUploads": "Open My uploads",
       "rejectedTitle": "A file was refused",
-      "rejectedText": "The file did not pass the check: {reason}."
+      "rejectedText": "The file did not pass the check: {reason}.",
+      "attestationTitle": "Confirm the statement first",
+      "attestationText": "A draft can be saved without it, but it is sent for review only after you confirm that you made the material or may share it. Tick the box and submit again."
     },
     "blocked": {
       "bannedTitle": "You cannot upload right now",

@@ -9,6 +9,7 @@ export type UploadErrorKind =
   | "file-too-large"
   | "too-many-pages"
   | "not-editable"
+  | "attestation-required"
   | "rejected"
   | "other"
 
@@ -28,6 +29,8 @@ export function classifyUploadError(error: unknown): UploadErrorKind {
       return "too-many-pages"
     case "library/not-editable":
       return "not-editable"
+    case "library/attestation-required":
+      return "attestation-required"
     default:
       return "other"
   }

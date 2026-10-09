@@ -55,6 +55,10 @@ describe("UploadEditPage: continue a draft", () => {
     expect(screen.getByText("Title", { selector: "dt" }).nextElementSibling).toHaveTextContent(
       "Kinematics formulas, v2",
     )
+    // The draft was saved without the attestation: it is asked for again before the material is sent.
+    await user.click(screen.getByRole("button", { name: "Submit" }))
+    expect(await screen.findByText("Tick the box to confirm.")).toBeInTheDocument()
+    await user.click(screen.getByRole("checkbox", { name: /I made this myself/ }))
     await user.click(screen.getByRole("button", { name: "Submit" }))
 
     expect(await screen.findByText("Sent for review")).toBeInTheDocument()

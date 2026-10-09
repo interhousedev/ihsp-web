@@ -184,7 +184,9 @@
       "notEditableText": "Hozirgi holatida tahrirlash mumkin emas. “Mening yuklaganlarim” boʻlimiga qarang.",
       "myUploads": "“Mening yuklaganlarim”ni ochish",
       "rejectedTitle": "Fayl rad etildi",
-      "rejectedText": "Fayl tekshiruvdan oʻtmadi: {reason}."
+      "rejectedText": "Fayl tekshiruvdan oʻtmadi: {reason}.",
+      "attestationTitle": "Avval bayonotni tasdiqlang",
+      "attestationText": "Qoralamani busiz ham saqlash mumkin, lekin material tekshiruvga faqat uni oʻzingiz tayyorlaganingizni yoki ulashishga haqqingiz borligini tasdiqlagandan soʻng yuboriladi. Katakchani belgilab, qayta yuboring."
     },
     "blocked": {
       "bannedTitle": "Hozir yuklay olmaysiz",

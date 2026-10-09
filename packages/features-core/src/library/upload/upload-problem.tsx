@@ -36,6 +36,9 @@ export function UploadProblem({ error, limits }: { error: unknown; limits: Uploa
     const pages = numberParam(error, "limit") ?? limits.pages
     title = t("tooManyPagesTitle")
     text = pages ? t("tooManyPagesText", { pages }) : errorMessage(error)
+  } else if (kind === "attestation-required") {
+    title = t("attestationTitle")
+    text = t("attestationText")
   } else if (kind === "not-editable") {
     title = t("notEditableTitle")
     text = t("notEditableText")

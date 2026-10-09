@@ -85,7 +85,8 @@ export function valuesFromItem(item: ItemDetail, body = ""): MaterialValues {
     type: item.type,
     body,
     makePublic: item.visibility === "public",
-    attested: true,
+    // A draft may have been saved without it: the box is shown again in the review step. Later states had it.
+    attested: item.status !== "draft",
   }
 }
 

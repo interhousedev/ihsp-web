@@ -17,7 +17,6 @@ const POLICY = ["made", "noScans", "noPersonal", "noHomework", "noExam", "noAds"
 export function StepLicence({ values, onChange, showProblems, canPublish }: StepProps & { canPublish: boolean }) {
   const t = useT("library.upload.licence")
   const material = useT("library.material.upload")
-  const attestId = useId()
   const problems = showProblems ? stepProblems("licence", values) : []
   return (
     <div className="flex flex-col gap-6">
@@ -90,36 +89,49 @@ export function StepLicence({ values, onChange, showProblems, canPublish }: Step
         </ul>
       </section>
 
-      <div className="flex flex-col gap-1.5">
-        <Label
-          htmlFor={attestId}
-          className={cn(
-            "min-h-11 cursor-pointer items-start gap-3 rounded-xl border p-3 font-normal",
-            problems.includes("attestRequired") && "border-destructive",
-          )}
-        >
-          <input
-            id={attestId}
-            type="checkbox"
-            className="mt-1 size-4 shrink-0"
-            checked={values.attested}
-            aria-invalid={problems.includes("attestRequired")}
-            aria-describedby={problems.includes("attestRequired") ? `${attestId}-error` : undefined}
-            onChange={(event) => onChange({ attested: event.target.checked })}
-          />
-          <span>{material("attest")}</span>
-        </Label>
-        {problems.includes("attestRequired") ? (
-          <p id={`${attestId}-error`} role="alert" className="text-destructive text-sm">
-            {material("attestRequired")}
-          </p>
-        ) : null}
-        {problems.includes("licenceRequired") ? (
-          <p role="alert" className="text-destructive text-sm">
-            {t("licenceRequired")}
-          </p>
-        ) : null}
-      </div>
+      <AttestationBox values={values} onChange={onChange} showProblems={showProblems} />
+      {problems.includes("licenceRequired") ? (
+        <p role="alert" className="text-destructive text-sm">
+          {t("licenceRequired")}
+        </p>
+      ) : null}
+    </div>
+  )
+}
+
+/**
+ * The attestation checkbox ("I made this myself or I am allowed to share it"). Saving a draft does not need it; sending
+ * the material for review does (`422 library/attestation-required` otherwise).
+ */
+export function AttestationBox({ values, onChange, showProblems }: StepProps) {
+  const material = useT("library.material.upload")
+  const attestId = useId()
+  const missing = showProblems && !values.attested
+  return (
+    <div className="flex flex-col gap-1.5">
+      <Label
+        htmlFor={attestId}
+        className={cn(
+          "min-h-11 cursor-pointer items-start gap-3 rounded-xl border p-3 font-normal",
+          missing && "border-destructive",
+        )}
+      >
+        <input
+          id={attestId}
+          type="checkbox"
+          className="mt-1 size-4 shrink-0"
+          checked={values.attested}
+          aria-invalid={missing}
+          aria-describedby={missing ? `${attestId}-error` : undefined}
+          onChange={(event) => onChange({ attested: event.target.checked })}
+        />
+        <span>{material("attest")}</span>
+      </Label>
+      {missing ? (
+        <p id={`${attestId}-error`} role="alert" className="text-destructive text-sm">
+          {material("attestRequired")}
+        </p>
+      ) : null}
     </div>
   )
 }

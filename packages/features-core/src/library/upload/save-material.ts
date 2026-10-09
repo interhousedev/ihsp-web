@@ -91,6 +91,7 @@ export async function saveMaterial(args: {
       title: values.title.trim(),
       description: values.description.trim(),
       topic_ids: values.topicIds,
+      attested: values.attested,
       ...(values.kind === "markdown" ? { body_md: values.body } : {}),
     })
   }

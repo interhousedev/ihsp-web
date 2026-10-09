@@ -123,10 +123,57 @@ describe("UploadWizard: steps and validation", () => {
 
     expect(await screen.findByText("Tick the box to confirm.")).toBeInTheDocument()
     expect(screen.getByRole("heading", { level: 2, name: "Licence and rules" })).toBeInTheDocument()
-    expect(screen.queryByRole("button", { name: "Save as draft" })).not.toBeInTheDocument()
+    // A draft can be saved without the attestation; only Next and Submit need it.
+    expect(screen.getByRole("button", { name: "Save as draft" })).toBeInTheDocument()
 
     await attest(user)
-    expect(screen.getByRole("button", { name: "Save as draft" })).toBeInTheDocument()
+    await next(user)
+    expect(await screen.findByRole("heading", { level: 2, name: "Review and submit" })).toBeInTheDocument()
+  })
+
+  it("saves a draft without the attestation (attested: false) and cannot be submitted until it is ticked", async () => {
+    const bodies: Record<string, unknown>[] = []
+    server.use(
+      http.post(apiUrl("/v1/library/materials"), async ({ request }) => {
+        bodies.push((await request.clone().json()) as Record<string, unknown>)
+        return undefined
+      }),
+    )
+    const { user } = renderWizard()
+    await chooseKind(user, /Markdown note/)
+    await fillDetails(user)
+    await user.type(screen.getByRole("textbox", { name: "Text of the note (Markdown)" }), "Newton")
+    await next(user)
+    await screen.findByRole("heading", { level: 2, name: "Licence and rules" })
+
+    await user.click(screen.getByRole("button", { name: "Save as draft" }))
+
+    await waitFor(() => expect(testRouter.push).toHaveBeenCalled())
+    expect(bodies[0]).toMatchObject({ attested: false, title: "Kinematics notes" })
+    const drafts = await getMyUploads({ status: "draft" })
+    expect(drafts.items.map((row) => row.item.title)).toContain("Kinematics notes")
+  })
+
+  it("explains a refused submit: the attestation is missing (422 library/attestation-required)", async () => {
+    server.use(
+      http.post(apiUrl("/v1/library/materials/:id/submit"), () =>
+        problem(422, "library/attestation-required", "Confirm that you made the material or may share it"),
+      ),
+    )
+    const { user } = renderWizard()
+    await chooseKind(user, /Markdown note/)
+    await fillDetails(user)
+    await user.type(screen.getByRole("textbox", { name: "Text of the note (Markdown)" }), "Newton")
+    await next(user)
+    await attest(user)
+    await next(user)
+    await screen.findByRole("heading", { level: 2, name: "Review and submit" })
+
+    await user.click(screen.getByRole("button", { name: "Submit" }))
+
+    const alert = await screen.findByRole("alert")
+    expect(alert).toHaveTextContent("Confirm the statement first")
+    expect(alert).toHaveTextContent("Tick the box and submit again.")
   })
 
   it("offers no Creative Commons licence and no public option to a student", async () => {

@@ -90,13 +90,14 @@ describe("toInput", () => {
 })
 
 describe("valuesFromItem", () => {
-  it("fills the form from a saved draft and counts the attestation as given", () => {
+  it("fills the form from a saved draft, which has to be attested again before it is sent", () => {
     const values = valuesFromItem(libDetails.matDraft)
 
     expect(values.title).toBe("Kinematics formula sheet")
     expect(values.subjectIds).toEqual(libDetails.matDraft.subjects.map((subject) => subject.id))
     expect(values.type).toBe("formula_sheet")
-    expect(values.attested).toBe(true)
+    expect(values.attested).toBe(false)
+    expect(valuesFromItem(libDetails.matChanges).attested).toBe(true)
     expect(values.kind).toBeNull()
   })
 

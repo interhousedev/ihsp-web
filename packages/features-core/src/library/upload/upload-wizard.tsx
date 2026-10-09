@@ -23,7 +23,7 @@ import { SaveProgressView } from "./save-progress-view"
 import { StepFiles } from "./step-files"
 import { StepIndicator } from "./step-indicator"
 import { StepKind } from "./step-kind"
-import { StepLicence } from "./step-licence"
+import { AttestationBox, StepLicence } from "./step-licence"
 import { StepReview } from "./step-review"
 import { SubmittedPanel } from "./submitted-panel"
 import { defaultLanguage, limitsFor } from "./upload-config"
@@ -34,8 +34,9 @@ import { useMaterialWorkflow } from "./use-material-workflow"
 
 /**
  * The upload wizard (design § 9.2): 1 kind of file, 2 about the material, 3 content, 4 licence and attestation,
- * 5 review and **Submit**. The draft is saved on the server when the attestation is given (step 4, the server needs it
- * to create a draft) and from then on the user can leave and come back through `/upload/edit/?id=`.
+ * 5 review and **Submit**. **Save draft** works at any time from step 4 on, with or without the attestation
+ * (`attested: false` keeps the draft private to its owner); **Next** and **Submit** need the box ticked. From then on
+ * the user can leave and come back through `/upload/edit/?id=`.
  *
  * With an `item` (a draft, or an item with changes requested) the same wizard continues that draft: the attestation
  * was given already, so step 4 is left out, and the last button is **Resubmit** when the reviewer asked for changes.
@@ -129,6 +130,12 @@ export function UploadWizard({
         return
       }
     }
+    if (!values.attested) {
+      // Saving a draft needs no attestation, sending it does (`422 library/attestation-required`).
+      goTo(() => steps.indexOf(existing ? "review" : "licence"))
+      setShowProblems(true)
+      return
+    }
     const submitted = await workflow.submit(values)
     if (submitted) setDone(submitted)
   }
@@ -176,6 +183,10 @@ export function UploadWizard({
             {step === "review" ? (
               <StepReview values={values} canPublish={canPublish} existingFile={existingFile} />
             ) : null}
+            {/* A draft that was saved without the attestation still needs it before it is sent. */}
+            {step === "review" && existing ? (
+              <AttestationBox values={values} onChange={patch} showProblems={showProblems} />
+            ) : null}
           </section>
 
           {workflow.error ? <UploadProblem error={workflow.error} limits={limits} /> : null}
@@ -193,7 +204,7 @@ export function UploadWizard({
               {t("back")}
             </Button>
             <div className="flex flex-wrap items-center justify-end gap-2">
-              {canSaveDraft && !(step === "licence" && !values.attested) ? (
+              {canSaveDraft ? (
                 <Button
                   type="button"
                   variant="outline"
