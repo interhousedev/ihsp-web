@@ -45,18 +45,6 @@
       "hint": "Telegram qulayroqmi? IHSP mini-ilovasi u yerda oʻrnatmasdan ishlaydi."
     },
     "continue": "Brauzerda davom etish",
-    "update": {
-      "available": "Yangilanish mavjud",
-      "description": "IHSP ning yangi versiyasi tayyor.",
-      "reload": "Yangilash",
-      "forced": {
-        "title": "IHSP yangilanmoqda",
-        "text": "Bu bir necha soniya oladi."
-      }
-    },
-    "menu": {
-      "install": "Ilovani oʻrnatish"
-    },
     "lock": {
       "title": "IHSP qulflangan",
       "prompt": "PIN-kodni kiriting",

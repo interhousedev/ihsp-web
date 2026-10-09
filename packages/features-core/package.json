@@ -8,6 +8,9 @@
   "types": "./src/index.ts",
   "exports": {
     ".": "./src/index.ts",
+    "./pwa": "./src/pwa/index.ts",
+    "./pwa/sw": "./src/pwa/sw/index.ts",
+    "./pwa/head": "./src/pwa/utils/pwa-head.ts",
     "./library-test-support": "./src/library/test-support.tsx"
   },
   "scripts": {

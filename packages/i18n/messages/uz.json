@@ -1024,5 +1024,21 @@
       "cancel": "Bekor qilish",
       "confirm": "{count} ta kartochkani import qilish"
     }
+  },
+  "pwa": {
+    "update": {
+      "available": "Yangilanish mavjud",
+      "description": "IHSP ning yangi versiyasi tayyor.",
+      "reload": "Yangilash",
+      "forced": {
+        "title": "IHSP yangilanmoqda",
+        "text": "Bu bir necha soniya oladi."
+      }
+    },
+    "menu": {
+      "install": "Ilovani oʻrnatish",
+      "iosHint": "Safari’da “Ulashish” tugmasini bosing, so‘ng “Bosh ekranga qo‘shish”ni tanlang.",
+      "manualHint": "Brauzer menyusini oching va “Ilovani o‘rnatish” yoki “Bosh ekranga qo‘shish”ni tanlang."
+    }
   }
 }

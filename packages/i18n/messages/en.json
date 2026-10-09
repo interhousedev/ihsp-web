@@ -1024,5 +1024,21 @@
       "cancel": "Cancel",
       "confirm": "{count, plural, one {Import # card} other {Import # cards}}"
     }
+  },
+  "pwa": {
+    "update": {
+      "available": "Update available",
+      "description": "A new version of IHSP is ready.",
+      "reload": "Reload",
+      "forced": {
+        "title": "Updating IHSP",
+        "text": "This takes a few seconds."
+      }
+    },
+    "menu": {
+      "install": "Install the app",
+      "iosHint": "Tap the Share button in Safari, then Add to Home Screen.",
+      "manualHint": "Open the browser menu and choose Install app or Add to Home screen."
+    }
   }
 }

@@ -45,18 +45,6 @@
       "hint": "Prefer Telegram? The IHSP mini app works there with nothing to install."
     },
     "continue": "Continue in browser",
-    "update": {
-      "available": "Update available",
-      "description": "A new version of IHSP is ready.",
-      "reload": "Reload",
-      "forced": {
-        "title": "Updating IHSP",
-        "text": "This takes a few seconds."
-      }
-    },
-    "menu": {
-      "install": "Install the app"
-    },
     "lock": {
       "title": "IHSP is locked",
       "prompt": "Enter your PIN",

@@ -28,6 +28,23 @@ describe("APP_MODE", () => {
     expect(getConfig().OAUTH_CLIENT_ID).toBe("app")
   })
 
+  it("accepts web, the neutral name of a plain website, and keeps sp valid", () => {
+    setEnv({ ...TEST_ENV, APP_MODE: "web" })
+    expect(getConfig().APP_MODE).toBe("web")
+
+    setEnv({ ...TEST_ENV, APP_MODE: "sp" })
+    expect(getConfig().APP_MODE).toBe("sp")
+  })
+
+  it("accepts pwa for every app, each with its own OAuth client", () => {
+    for (const client of ["sp", "lms", "library", "staff", "admin"] as const) {
+      setEnv({ ...TEST_ENV, APP_MODE: "pwa", OAUTH_CLIENT_ID: client })
+
+      expect(getConfig().APP_MODE).toBe("pwa")
+      expect(getConfig().OAUTH_CLIENT_ID).toBe(client)
+    }
+  })
+
   it("rejects an unknown mode and names the key", () => {
     setEnv({ ...TEST_ENV, APP_MODE: "kiosk" })
 

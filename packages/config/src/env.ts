@@ -12,10 +12,12 @@ const optionalText = z
 export const OAUTH_CLIENT_IDS = ["id", "sp", "staff", "admin", "lms", "share", "app", "library"] as const
 
 /**
- * What the static sp build runs as: `sp` (the portal at `sp.ihsu.uz`, also the Telegram mini app) or `pwa` (the installable
- * app at `app.ihsu.uz`: install page, service worker, longer offline cache and session). A missing or empty value is `sp`.
+ * What an app runs as. `pwa` turns it into an installable app (manifest, service worker, offline page, forced updates):
+ * every app can run so, on its own host. For the SP build `pwa` is the app host (`app.ihsu.uz`): the apps hub, the install
+ * page, the longer offline cache and session. Anything else is a plain website: `web` (the neutral name) or `sp` (the
+ * name from before the other apps could be installed, still valid). A missing or empty value is `sp`.
  */
-export const APP_MODES = ["sp", "pwa"] as const
+export const APP_MODES = ["web", "sp", "pwa"] as const
 
 /** An unset variable rendered by `envsubst` is an empty string: it counts as missing. */
 const emptyToUndefined = (value: unknown) => (value === "" ? undefined : value)
@@ -58,8 +60,8 @@ export type AppEnv = {
   MCP_URL: string
   BOT_USERNAME: string
   OAUTH_CLIENT_ID: "id" | "sp" | "staff" | "admin" | "lms" | "share" | "app" | "library"
-  /** `pwa` on the installable-app host, `sp` everywhere else. */
-  APP_MODE: "sp" | "pwa"
+  /** `pwa` on an installable-app host, `web` (or the older `sp`) everywhere else. */
+  APP_MODE: "web" | "sp" | "pwa"
   /** Address of the installable app (`https://app.ihsu.uz`); the portal links to it. Absent when there is none. */
   APP_URL?: string
   /** Address of the library (`https://library.ihsu.uz`); the profile menus link to it. Absent when there is none. */
