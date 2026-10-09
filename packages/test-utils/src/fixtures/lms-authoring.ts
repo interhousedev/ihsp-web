@@ -150,8 +150,8 @@ export const pendingChanges: PendingChanges = {
   draft_seq: 12,
   outline_changed: true,
   steps: [
-    { step_id: ids.courseStepTest, title: "Derivative rules quiz", change: "changed", via_mcp: false },
-    { step_id: ids.courseStepCards, title: "Key formulas", change: "added", via_mcp: true },
+    { step_id: ids.courseStepTest, title: "Derivative rules quiz", change: "changed", via_mcp: false, via_ai: false },
+    { step_id: ids.courseStepCards, title: "Key formulas", change: "added", via_mcp: true, via_ai: false },
   ],
 }
 

@@ -21,6 +21,7 @@
     "terms": "Semestrlar va qo‘ng‘iroqlar",
     "timetable": "Dars jadvali",
     "lessons": "Darslar",
+    "exams": "Imtihonlar",
     "attendance": "Davomat",
     "monitoring": "Monitoring",
     "broadcasts": "Xabarnomalar",
@@ -39,6 +40,11 @@
       "noGroups": "Hozircha guruhlar yo‘q.",
       "whole": "Butun guruh",
       "subgroup": "{number}-kichik guruh"
+    },
+    "controls": {
+      "midterm_1": "Oraliq nazorat 1",
+      "midterm_2": "Oraliq nazorat 2",
+      "final": "Yakuniy nazorat"
     }
   },
   "status": {
@@ -578,7 +584,19 @@
         "noBells": "Kamida bitta dars qo‘shing.",
         "bellTime": "Har bir darsning boshlanish vaqti tugash vaqtidan oldin bo‘lishi kerak.",
         "bellWeekdays": "Har bir darsda kamida bitta hafta kuni bo‘lishi kerak.",
-        "bellDuplicate": "Bir dars bir hafta kunida ikki marta ko‘rsatilgan."
+        "bellDuplicate": "Bir dars bir hafta kunida ikki marta ko‘rsatilgan.",
+        "controlIncomplete": "Nazorat haftasi uchun birinchi va oxirgi kun kerak.",
+        "controlOrder": "Nazorat haftasi boshlangan kundan oldin tugamasligi kerak.",
+        "controlOutside": "Nazorat haftasi semestr ichida bo‘lishi kerak.",
+        "controlSequence": "Har bir nazorat haftasi oldingisi tugagandan keyin boshlanishi kerak."
+      },
+      "controls": {
+        "title": "Nazorat haftalari",
+        "hint": "Ikkita oraliq nazorat va yakuniy nazorat haftalari. O‘qituvchilar har bir fanga o‘z haftasi ichida sana belgilaydi.",
+        "start": "{name}: birinchi kun",
+        "end": "{name}: oxirgi kun",
+        "clear": "Tozalash: {name}",
+        "clearShort": "Tozalash"
       }
     },
     "bells": {
@@ -604,6 +622,11 @@
       "addMoved": "Ko‘chirish qo‘shish",
       "movedLine": "{date}: “{weekday}” kuni darslari",
       "removeDay": "{date} ni o‘chirish"
+    },
+    "controls": {
+      "title": "Nazorat haftalari",
+      "chip": "{name}: {period}",
+      "notSet": "belgilanmagan"
     }
   },
   "timetable": {
@@ -772,6 +795,124 @@
       "title": "Dars",
       "missing": "Dars tanlanmagan. Uni darslar ro‘yxatidan oching.",
       "back": "Darslar"
+    }
+  },
+  "exams": {
+    "title": "Imtihonlar",
+    "description": "Barcha guruhlarning oraliq va yakuniy nazoratlari. Noaniq sanalarni tasdiqlang, yetishmayotganlarini belgilang va nazoratlar qo‘shing.",
+    "newAction": "Yangi imtihon",
+    "empty": "Bu filtrlar bo‘yicha imtihonlar yo‘q.",
+    "toConfirm": "Tasdiqlash kerak: {count}",
+    "toConfirmHint": "EMIS yoki guruh sardori taklif qilgan va hali hech kim tasdiqlamagan sanalar. Faqat shularni ko‘rsatish uchun bosing.",
+    "nothingToConfirm": "Tasdiqlashni kutayotgan sanalar yo‘q.",
+    "filters": {
+      "from": "Sanadan",
+      "to": "Sanagacha",
+      "group": "Guruh",
+      "allGroups": "Barcha guruhlar",
+      "subject": "Fan",
+      "allSubjects": "Barcha fanlar",
+      "kind": "Turi",
+      "allKinds": "Barcha turlar",
+      "control": "Nazorat haftasi",
+      "allControls": "Barcha nazorat haftalari",
+      "controlOption": "{name} · {period}",
+      "status": "Holati",
+      "allStatuses": "Rejalashtirilgan va tasdiqlanmagan",
+      "source": "Manba",
+      "allSources": "Istalgan manba",
+      "undated": "Sanasi yo‘q nazorat haftalarini ko‘rsatish"
+    },
+    "kind": {
+      "midterm": "Oraliq nazorat",
+      "final": "Yakuniy nazorat",
+      "other": "Boshqa"
+    },
+    "status": {
+      "planned": "Rejalashtirilgan",
+      "tentative": "Tasdiqlanmagan",
+      "cancelled": "Bekor qilingan",
+      "undated": "Sana belgilanmagan"
+    },
+    "source": {
+      "teacher": "O‘qituvchi",
+      "admin": "Ma’muriyat",
+      "emis": "EMIS",
+      "head_student": "Guruh sardori"
+    },
+    "columns": {
+      "date": "Sana",
+      "subject": "Fan",
+      "groups": "Guruhlar",
+      "kind": "Turi",
+      "time": "Vaqt",
+      "room": "Xona",
+      "status": "Holati",
+      "source": "Manba",
+      "setBy": "Kim belgilagan",
+      "note": "Izoh",
+      "actions": "Amallar"
+    },
+    "csv": {
+      "week": "Nazorat haftasi",
+      "control": "Nazorat",
+      "title": "Nomi"
+    },
+    "actions": {
+      "edit": "Tahrirlash",
+      "editLabel": "Tahrirlash: {subject}, {date}",
+      "confirm": "Tasdiqlash",
+      "confirmLabel": "Tasdiqlash: {subject}, {date}",
+      "dismiss": "Rad etish",
+      "dismissLabel": "Rad etish: {subject}, {date}",
+      "cancel": "Bekor qilish",
+      "cancelLabel": "Bekor qilish: {subject}, {date}",
+      "setDate": "Sana belgilash",
+      "setDateLabel": "Sana belgilash: {subject}, {groups}"
+    },
+    "confirmed": "Sana tasdiqlandi",
+    "dialog": {
+      "createTitle": "Yangi imtihon",
+      "createDescription": "Bitta fan bo‘yicha bir yoki bir nechta guruh uchun bitta imtihon.",
+      "editTitle": "Tahrirlash: {subject}",
+      "editDescription": "Tasdiqlanmagan sanani saqlash uni tasdiqlaydi.",
+      "setDateTitle": "Sana belgilash: {subject}",
+      "setDateDescription": "{control}, {groups}. Sana faqat shu guruhdagi shu fanga beriladi.",
+      "subject": "Fan",
+      "choose": "Tanlang",
+      "audience": "Guruhlar",
+      "kind": "Turi",
+      "control": "Nazorat haftasi",
+      "controlAuto": "Sana bo‘yicha",
+      "controlHint": "Tanlanmasa, hafta sana bo‘yicha aniqlanadi.",
+      "weekHint": "Hafta: {period}",
+      "date": "Sana",
+      "time": "Vaqt",
+      "timeHint": "Toshkent vaqti. Vaqt hali noma’lum bo‘lsa, bo‘sh qoldiring.",
+      "room": "Xona",
+      "title": "Nomi",
+      "note": "Izoh",
+      "cancel": "Bekor qilish",
+      "create": "Imtihon qo‘shish",
+      "save": "Saqlash",
+      "setDate": "Sana belgilash",
+      "created": "Imtihon qo‘shildi",
+      "saved": "Imtihon saqlandi",
+      "dateSet": "Sana belgilandi",
+      "issues": {
+        "subject": "Fanni tanlang.",
+        "audience": "Kamida bitta guruhni tanlang.",
+        "date": "Sanani tanlang.",
+        "time": "Vaqtni soat:daqiqa shaklida kiriting."
+      }
+    },
+    "dismiss": {
+      "dismissTitle": "Bu sana rad etilsinmi?",
+      "cancelTitle": "Bu imtihon bekor qilinsinmi?",
+      "description": "{subject}, {date}, {groups}: imtihon bekor qilingan deb belgilanadi va talabalar hamda o‘qituvchilar kalendaridan yo‘qoladi.",
+      "keep": "Qoldirish",
+      "dismissed": "Sana rad etildi",
+      "cancelled": "Imtihon bekor qilindi"
     }
   },
   "attendance": {

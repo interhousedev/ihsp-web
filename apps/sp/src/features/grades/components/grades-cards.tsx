@@ -4,6 +4,8 @@ import type { SemesterGrades } from "@ihsp/api"
 import { useT } from "@ihsp/i18n"
 import { Card, CardContent, MarkBadge } from "@ihsp/ui"
 import Link from "next/link"
+import { LinkButton } from "../../shared/components/link-button"
+import { plannerHref } from "../planner/utils/hrefs"
 import { subjectMarksHref } from "../utils/links"
 
 /** The same rows as cards, one per subject, for phones (UF-WEB-09 step 2). */
@@ -12,7 +14,7 @@ export function GradesCards({ grades }: { grades: SemesterGrades }) {
   return (
     <ul className="flex flex-col gap-3">
       {grades.rows.map((row) => (
-        <li key={row.subject.id} data-testid="grade-card">
+        <li key={row.subject.id} data-testid="grade-card" className="flex flex-col gap-1">
           {/* oxlint-disable-next-line jsx-a11y/control-has-associated-label -- the card text is the link name */}
           <Link
             href={subjectMarksHref(row.subject.id, grades.semester)}
@@ -42,6 +44,14 @@ export function GradesCards({ grades }: { grades: SemesterGrades }) {
               </CardContent>
             </Card>
           </Link>
+          <LinkButton
+            href={plannerHref(row.subject.id, grades.semester)}
+            variant="ghost"
+            className="self-end"
+            aria-label={t("planFor", { subject: row.subject.name })}
+          >
+            {t("plan")}
+          </LinkButton>
         </li>
       ))}
     </ul>

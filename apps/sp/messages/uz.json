@@ -9,7 +9,9 @@
     "grades": "Baholar",
     "attendance": "Davomat",
     "homework": "Uy vazifalari",
+    "exams": "Imtihonlar",
     "assistant": "Yordamchi",
+    "notebooks": "Daftarlar",
     "flashcards": "Kartochkalar",
     "files": "Mening fayllarim",
     "links": "Havolalar va ulashishlar",
@@ -275,7 +277,9 @@
       "marksCount": "{count, plural, other {# ta baho}}",
       "updated": "Yangilandi: {when}",
       "importing": "Baholaringiz EMIS’dan yuklanmoqda…",
-      "empty": "Bu semestrda hozircha baholar yoʻq."
+      "empty": "Bu semestrda hozircha baholar yoʻq.",
+      "plan": "Reja",
+      "planFor": "Baholar rejasi: {subject}"
     },
     "day": {
       "previous": "Oldingi oʻquv kuni",
@@ -298,6 +302,266 @@
       "semesterLabel": "{number}-semestr",
       "emisRating": "EMIS",
       "empty": "Yozuv daftarchasi boʻsh."
+    },
+    "planner": {
+      "link": "Reja",
+      "title": "Baho rejalashtiruvchi",
+      "description": "Kerakli bahoga chiqish uchun qolgan nazoratlarda nima kerak.",
+      "back": "Baholar",
+      "semester": "{number}-semestr",
+      "noSubject": "Baholarni rejalashtirish uchun “Baholar” sahifasida fanni tanlang.",
+      "summary": {
+        "title": "Hozirgi baholaringiz",
+        "lesson": "Dars baholari",
+        "midterm": "Oraliq nazoratlar",
+        "final": "Yakuniy",
+        "marks": "{count, plural, other {# ta baho}}",
+        "average": "oʻrtacha {value}",
+        "semesterMark": "Hozirgi semestr bahosi",
+        "missingTitle": "Hali yoʻq"
+      },
+      "missing": {
+        "lesson": "Dars baholari hali yoʻq",
+        "midterm": "Oraliq nazorat hali yoʻq",
+        "final": "Yakuniy nazorat hali yoʻq"
+      },
+      "predicted": {
+        "title": "Taxminiy baho",
+        "none": "Taxmin koʻrish uchun avval dars baholari kerak.",
+        "both": "Qolgan har bir oraliq nazoratdan {midterm}, yakuniy nazoratdan {final} olsangiz.",
+        "midterm": "Qolgan har bir oraliq nazoratdan {midterm} olsangiz.",
+        "final": "Yakuniy nazoratdan {final} olsangiz.",
+        "nothingLeft": "Nazoratlar qolmagan, bu sizning semestr bahongiz."
+      },
+      "targets": {
+        "title": "Maqsad qilish mumkin boʻlgan baholar",
+        "grade": "{grade} baho",
+        "threshold": "semestr bahosi {threshold} dan",
+        "secured": "Kafolatlangan",
+        "possible": "Mumkin",
+        "notReachable": "Erishib boʻlmaydi",
+        "unknown": "Nomaʼlum",
+        "securedText": "Qolgan nazoratlar qanday boʻlmasin, bu bahoni olasiz.",
+        "notReachableText": "Qolgan nazoratlardagi eng yaxshi baholar ham bu semestrda yetmaydi.",
+        "unknownText": "Avval dars baholari kerak.",
+        "neededMidterm": "Qolgan har bir oraliq nazoratdan kamida {value} kerak.",
+        "neededFinal": "Yakuniy nazoratdan kamida {value} kerak.",
+        "neededBoth": "Qolgan har bir nazoratdan kamida {value}.",
+        "example": "Masalan, oraliq nazoratdan {midterm}, yakuniy nazoratdan kamida {final}."
+      },
+      "pairs": {
+        "caption": "Har bir oraliq baho uchun eng past yakuniy baho",
+        "midterm": "Oraliq baho",
+        "final": "Eng past yakuniy",
+        "notReachable": "erishib boʻlmaydi"
+      },
+      "assumptions": {
+        "title": "Hisob nimaga asoslangan",
+        "rounding": "Semestr bahosi — baho qoʻyilgan dars, oraliq va yakuniy oʻrtachalarning oʻrtachasi, bir marta (yarmidan yuqoriga) 2 xonagacha yaxlitlanadi. Baho oʻrtacha bahodan 0.5 kam boʻlmaganda olinadi: 4.50 — 5 baho.",
+        "controlsPerSemester": "Semestrda {midterms, plural, other {# ta oraliq nazorat}} va {finals, plural, other {# ta yakuniy nazorat}} bor.",
+        "sameMarkOnRemaining": "Kerakli baho shu turdagi har bir qolgan nazorat uchun bir xil.",
+        "pendingAsLessonAverage": "Bahosiz nazorat {mark} deb hisoblanadi: dars baholarining butunga yaxlitlangan oʻrtachasi.",
+        "pendingAsLessonAverageNoMark": "Bahosiz nazorat dars baholarining butunga yaxlitlangan oʻrtachasi deb hisoblanadi.",
+        "noLessonMarks": "Hozircha dars baholari yoʻq, shuning uchun taxmin qilib boʻlmaydi.",
+        "whatIf": "Sinov baholari hisobga olindi: {count}. Ular siz olgandek hisoblanadi."
+      },
+      "whatIf": {
+        "title": "Agar… boʻlsa",
+        "description": "Hali olmagan baholaringizni sinab koʻring va nima oʻzgarishini koʻring. Hech narsa saqlanmaydi.",
+        "type": "Baho turi",
+        "mark": "Baho",
+        "add": "Qoʻshish",
+        "reset": "Tozalash",
+        "list": "Sinalayotgan baholar",
+        "empty": "Hali baho qoʻshilmagan.",
+        "chip": "{type}: {mark}",
+        "remove": "Olib tashlash: {type}, {mark}",
+        "limit": "Eng koʻpi bilan {max} ta baho sinab koʻrish mumkin.",
+        "types": {
+          "lesson": "Dars",
+          "midterm": "Oraliq nazorat",
+          "final": "Yakuniy"
+        }
+      }
+    }
+  },
+  "exams": {
+    "title": "Imtihonlar",
+    "description": "Oraliq va yakuniy nazoratlar hamda ularning sanalari.",
+    "empty": "Hozircha nazoratlar yoʻq. Sanalar oʻqituvchilar yoki maʼmuriyat belgilaganda shu yerda paydo boʻladi.",
+    "upcoming": "Yaqinlashayotgan",
+    "past": "Oʻtgan",
+    "noUpcoming": "Yaqinlashayotgan nazoratlar yoʻq.",
+    "noPast": "Oʻtgan nazoratlar yoʻq.",
+    "filter": {
+      "label": "Fan",
+      "all": "Barcha fanlar"
+    },
+    "kind": {
+      "midterm1": "1-oraliq nazorat",
+      "midterm2": "2-oraliq nazorat",
+      "midterm": "Oraliq nazorat",
+      "final": "Yakuniy nazorat",
+      "other": "Nazorat"
+    },
+    "name": "{control} · {subject}",
+    "countdown": {
+      "today": "bugun",
+      "tomorrow": "ertaga",
+      "yesterday": "kecha",
+      "in": "{count, plural, other {# kundan keyin}}",
+      "ago": "{count, plural, other {# kun oldin}}",
+      "weekRunning": "shu haftada"
+    },
+    "badge": {
+      "tentative": "Tasdiqlanmagan",
+      "undated": "Sana hali belgilanmagan"
+    },
+    "row": {
+      "week": "Nazorat haftasi {range}",
+      "room": "{room}-xona"
+    },
+    "view": {
+      "back": "Imtihonlar",
+      "notFound": "Bu nazorat topilmadi. U boshqa kunga koʻchirilgan yoki bekor qilingan boʻlishi mumkin.",
+      "date": "Sana",
+      "time": "Vaqt",
+      "room": "Xona",
+      "week": "Nazorat haftasi",
+      "note": "Izoh",
+      "explain": {
+        "emis": "Bu sana EMIS’dan olingan, EMIS esa har doim ham toʻgʻri emas. Oʻqituvchi yoki maʼmuriyat tasdiqlamaguncha sana tasdiqlanmagan hisoblanadi.",
+        "headStudent": "Bu sanani guruh sardori taklif qilgan. Oʻqituvchi yoki maʼmuriyat tasdiqlamaguncha sana tasdiqlanmagan hisoblanadi.",
+        "tentative": "Bu sana hali tasdiqlanmagan. Uni oʻqituvchi yoki maʼmuriyat tasdiqlaydi.",
+        "undated": "Oʻqituvchi bu fan uchun hali sana belgilamagan. Nazorat shu hafta ichida oʻtadi."
+      },
+      "planner": "Baho rejalashtiruvchi",
+      "practice": "Mashq testi"
+    },
+    "decks": {
+      "title": "Sizning kollodalaringiz",
+      "hint": "Nomida fan nomi bor kollodalar.",
+      "empty": "Bu fan boʻyicha hali kollodalar yoʻq.",
+      "create": "Kolloda yaratish",
+      "newTitle": "{subject} — imtihon",
+      "cards": "{count, plural, other {# ta kartochka}}",
+      "due": "takrorlash kerak: {count}",
+      "practice": "Mashq qilish",
+      "practiceItem": "Mashq qilish: {title}"
+    },
+    "materials": {
+      "title": "Oxirgi nazoratdan beri dars materiallari",
+      "sinceDate": "Oldingi nazoratdan beri: {control}, {date}.",
+      "sinceStart": "Bu semestrda oldingi nazorat yoʻq, shuning uchun hozirgacha boʻlgan barcha materiallar koʻrsatilgan.",
+      "empty": "Oʻshandan beri yangi materiallar yoʻq.",
+      "lesson": "{date} dagi dars",
+      "open": "Ochish",
+      "openItem": "Ochish: {title}"
+    },
+    "suggest": {
+      "button": "Sana taklif qilish",
+      "title": "Nazorat sanasini taklif qilish",
+      "description": "Guruhingizda oraliq yoki yakuniy nazorat qachon boʻlishini taklif qiling. Oʻqituvchi yoki maʼmuriyat tasdiqlamaguncha sana “Tasdiqlanmagan” boʻlib qoladi.",
+      "subject": "Fan",
+      "subjectPlaceholder": "Fanni tanlang",
+      "kind": "Nazorat",
+      "date": "Sana",
+      "time": "Vaqt (ixtiyoriy)",
+      "room": "Xona (ixtiyoriy)",
+      "note": "Izoh (ixtiyoriy)",
+      "submit": "Taklifni yuborish",
+      "doneTitle": "Taklif yuborildi",
+      "doneText": "Oʻqituvchi yoki maʼmuriyat tasdiqlamaguncha sana “Tasdiqlanmagan” boʻlib qoladi.",
+      "close": "Yopish"
+    },
+    "card": {
+      "title": "Yaqinlashayotgan nazoratlar",
+      "all": "Barcha imtihonlar",
+      "headline": "{control} · {subject} · {when}"
+    }
+  },
+  "planner": {
+    "title": "Baholar rejasi",
+    "headline": "Baholar rejasi · {semester}-semestr",
+    "back": "Baholar",
+    "noSubject": "Rejani Baholar sahifasidagi fandan oching.",
+    "type": {
+      "lesson": "Darslar",
+      "midterm": "Oraliq",
+      "final": "Yakuniy"
+    },
+    "summary": {
+      "title": "Baholaringiz",
+      "count": "{count, plural, other {# ta baho}}",
+      "noMarks": "Baho yoʻq",
+      "semesterMark": "Hozirgi semestr bahosi",
+      "noSemesterMark": "Semestr bahosi hali yoʻq",
+      "missing": {
+        "lesson": "Dars baholari hali yoʻq",
+        "midterm": "Oraliq nazorat hali yoʻq",
+        "final": "Yakuniy nazorat hali yoʻq"
+      },
+      "missingHint": "Semestr bahosi — baholari bor qismlarning oʻrtachasi."
+    },
+    "prediction": {
+      "title": "Semestr bahosi prognozi",
+      "unknown": "Avval dars baholarini qoʻshing: ularsiz prognoz tuzib boʻlmaydi.",
+      "both": "Qolgan har bir oraliq nazoratdan {midterm}, yakuniy nazoratdan {final} olsangiz.",
+      "midterm": "Qolgan har bir oraliq nazoratdan {midterm} olsangiz.",
+      "final": "Yakuniy nazoratdan {final} olsangiz.",
+      "none": "Barcha nazoratlar baholangan, shuning uchun bu — semestr bahongiz."
+    },
+    "targets": {
+      "title": "Buning uchun nima kerak"
+    },
+    "target": {
+      "grade": "{grade} baho",
+      "threshold": "Semestr bahosi {threshold} yoki undan yuqori",
+      "status": {
+        "secured": "Kafolatlangan",
+        "needed": "Baho kerak",
+        "not_reachable": "Erishib boʻlmaydi",
+        "unknown": "Hali nomaʼlum"
+      },
+      "secured": "Qolgan nazoratlar qanday boʻlishidan qatʼi nazar bu bahoni olasiz.",
+      "notReachable": "Bu semestrda erishib boʻlmaydi, qolgan barcha nazoratlardan 5 olsangiz ham.",
+      "unknown": "Avval dars baholarini qoʻshing: reja tuzish uchun hozircha asos yoʻq.",
+      "midterm": "{count, plural, other {Qolgan {count} ta oraliq nazoratning har biridan kamida {value} oling.}}",
+      "final": "Yakuniy nazoratdan kamida {value} oling.",
+      "both": "Qolgan har bir nazoratdan kamida {value} oling.",
+      "pairs": {
+        "caption": "Oraliq baho boʻyicha eng past yakuniy baho",
+        "midterm": "Oraliq baho",
+        "final": "Yakuniy kamida",
+        "notReachable": "Erishib boʻlmaydi"
+      }
+    },
+    "assumptions": {
+      "title": "Hisob-kitob nimaga asoslangan",
+      "rounding": "Semestr bahosi bir marta, yarmidan yuqoriga qarab, ikki xonagacha yaxlitlanadi; 4.50 — bu 5.",
+      "controls_per_semester": "Semestrda 2 ta oraliq va 1 ta yakuniy nazorat bor.",
+      "same_mark_on_remaining": "Hisob bir turdagi qolgan barcha nazoratlarga bir xil baho olinadi deb qilinadi.",
+      "pending_as_lesson_average": "Bahosiz nazorat sizning dars oʻrtacha bahongiz (butun songa yaxlitlangan) deb hisoblanadi.",
+      "no_lesson_marks": "Dars baholari hali yoʻq, shuning uchun prognoz tuzib boʻlmaydi.",
+      "what_if": "Hisobga bu yerda sinab koʻrayotgan baholaringiz ham kiradi. Ular haqiqiy emas va saqlanmaydi."
+    },
+    "whatIf": {
+      "title": "Boshqa baholarni sinab koʻring",
+      "hint": "Olishingiz mumkin boʻlgan baholarni qoʻshing va nima oʻzgarishini koʻring. Hech narsa saqlanmaydi va hech kimga yuborilmaydi.",
+      "typeLabel": "Turi",
+      "markLabel": "Baho",
+      "types": {
+        "lesson": "Dars",
+        "midterm": "Oraliq",
+        "final": "Yakuniy"
+      },
+      "add": "Qoʻshish",
+      "reset": "Tozalash",
+      "list": "Siz sinayotgan baholar",
+      "item": "{type} {value}",
+      "remove": "Olib tashlash: {type} {value}",
+      "empty": "Hali hech narsa sinalmadi.",
+      "full": "Bir vaqtda koʻpi bilan {max} ta baho sinash mumkin."
     }
   },
   "attendance": {

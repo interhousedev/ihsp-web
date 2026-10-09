@@ -84,6 +84,7 @@ export const resourceMaterial: ResourceItem = {
   hidden: false,
   file: null,
   created_at: "2026-10-05T13:00:00Z",
+  source: "user",
 }
 
 export const resourceMaterialFile: ResourceItem = {
@@ -97,6 +98,7 @@ export const resourceMaterialFile: ResourceItem = {
   hidden: false,
   file: filePdf,
   created_at: "2026-10-05T13:05:00Z",
+  source: "user",
 }
 
 /** An attachment a student added to the lesson. */
@@ -111,6 +113,22 @@ export const resourceAttachment: ResourceItem = {
   hidden: false,
   file: null,
   created_at: "2026-10-06T16:00:00Z",
+  source: "user",
+}
+
+/** A material EMIS brought: authored by "EMIS" and labelled in the UI (kept out of `resourceItems`). */
+export const resourceFromEmis: ResourceItem = {
+  link_id: "00000009-0000-4000-8000-000000000008",
+  lesson_id: ids.lessonPhysicsToday,
+  role: "material",
+  kind: "url",
+  short_url: "http://localhost:8000/s/m4n5o6",
+  title: "Kinematics (video)",
+  author: { id: "00000000-0000-0000-0000-00000000e015", first_name: "EMIS", last_name: "" },
+  hidden: false,
+  file: null,
+  created_at: "2026-10-06T03:00:00Z",
+  source: "emis",
 }
 
 export const resourceItems: ResourceItem[] = [resourceMaterial, resourceMaterialFile, resourceAttachment]

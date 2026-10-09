@@ -16,9 +16,10 @@ export function useNav(): { groups: NavGroup[]; bottom: BottomNavItem[] } {
     const today = { title: t("today"), url: "/", icon: "today", match: "exact" } as const
     const timetable = { title: t("timetable"), url: "/timetable/", icon: "timetable" } as const
     const journal = { title: t("journal"), url: "/journal/", icon: "journal" } as const
+    const exams = { title: t("exams"), url: "/group/exams/", icon: "calendarEvent" } as const
     const groups: NavGroup[] = [
       { label: t("groupHome"), items: [today] },
-      { label: t("groupTeaching"), items: [timetable, journal] },
+      { label: t("groupTeaching"), items: [timetable, journal, exams] },
     ]
     if (isCurator) {
       groups.push({

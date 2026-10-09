@@ -14,6 +14,8 @@ export type ResourceItem = {
   hidden: boolean
   file: FileItem | null
   created_at: string
+  /** `emis`: brought by EMIS (the author is named "EMIS"); `user`: added by a person. */
+  source: "user" | "emis"
 }
 
 export type LinkItem = {

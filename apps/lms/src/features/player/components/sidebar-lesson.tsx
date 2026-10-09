@@ -24,7 +24,7 @@ export function SidebarLesson({
   href: string
   active: boolean
   completed: boolean
-  badge: "new" | "changed" | "removed" | "mcp" | null
+  badge: "new" | "changed" | "removed" | "mcp" | "ai" | null
 }) {
   const t = useT("player")
   const badges = useT("badges")

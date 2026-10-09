@@ -4,6 +4,8 @@ import type { SemesterGrades } from "@ihsp/api"
 import { useT } from "@ihsp/i18n"
 import { MarkBadge, Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@ihsp/ui"
 import Link from "next/link"
+import { LinkButton } from "../../shared/components/link-button"
+import { plannerHref } from "../planner/utils/hrefs"
 import { subjectMarksHref } from "../utils/links"
 
 /** The semester as a table: subject, lesson / midterm / final averages, semester mark, EMIS rating (WEB-12). */
@@ -19,6 +21,9 @@ export function GradesTable({ grades }: { grades: SemesterGrades }) {
           <TableHead className="text-center">{t("finalAvg")}</TableHead>
           <TableHead className="text-center">{t("semesterMark")}</TableHead>
           <TableHead className="text-center">{t("emisRating")}</TableHead>
+          <TableHead>
+            <span className="sr-only">{t("plan")}</span>
+          </TableHead>
         </TableRow>
       </TableHeader>
       <TableBody>
@@ -43,6 +48,15 @@ export function GradesTable({ grades }: { grades: SemesterGrades }) {
               <MarkBadge mark={row.semester_mark} size="lg" />
             </TableCell>
             <TableCell className="text-center">{row.emis_rating ?? "–"}</TableCell>
+            <TableCell className="text-end">
+              <LinkButton
+                href={plannerHref(row.subject.id, grades.semester)}
+                variant="ghost"
+                aria-label={t("planFor", { subject: row.subject.name })}
+              >
+                {t("plan")}
+              </LinkButton>
+            </TableCell>
           </TableRow>
         ))}
       </TableBody>

@@ -61,7 +61,7 @@ export function pendingFile(input: {
   name: string
   size: number
   contentType: string
-  purpose: "ai_upload" | "link"
+  purpose: FileItem["purpose"]
 }): FileItem {
   return {
     id: input.id,

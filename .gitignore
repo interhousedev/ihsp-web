@@ -8,3 +8,6 @@ playwright-report/
 test-results/
 coverage/
 .w0-installed
+
+# Bundled by `bun run build:sw` from apps/sp/src/features/pwa/sw/sw.ts
+apps/sp/public/sw.js

@@ -43,6 +43,12 @@ describe("CardEditorPage, new deck (Quizlet style)", () => {
     )
   })
 
+  it("starts with the title from ?title= (the exam preparation page uses it)", async () => {
+    renderTools(<CardEditorPage />, { route: "/flashcards/edit/?title=Mathematics%20%E2%80%94%20exam" })
+
+    expect(await screen.findByLabelText("Title")).toHaveValue("Mathematics — exam")
+  })
+
   it("Create and practice opens the study screen", async () => {
     server.use(
       http.post(apiUrl("/v1/me/flashcard-sets"), () =>

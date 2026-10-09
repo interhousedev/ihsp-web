@@ -27,6 +27,7 @@
     "e2e/.report/**",
     "packages/api/src/contract-check*.ts",
     "playwright-report/**",
-    "**/public/env.js"
+    "**/public/env.js",
+    "apps/sp/public/sw.js"
   ]
 }

@@ -90,6 +90,47 @@ export const errorHandlers = {
     }),
   ),
 
+  /** `POST /v1/ai/chats/{id}/messages` answers `429 web-search/quota-exceeded` for a message sent with the web switch on. */
+  webSearchQuotaExceeded: http.post(apiUrl("/v1/ai/chats/:id/messages"), () =>
+    problem(429, "web-search/quota-exceeded", "No web searches left today", {
+      params: { limit: 10, left: 0, needed: 1, resets_at: "2026-10-08T00:00:00Z" },
+    }),
+  ),
+
+  /** `POST /v1/ai/chats/{id}/messages` answers `503 web-search/unavailable`. */
+  webSearchUnavailable: http.post(apiUrl("/v1/ai/chats/:id/messages"), () =>
+    problem(503, "web-search/unavailable", "Web search is not available right now"),
+  ),
+
+  /** `POST /v1/ai/chats/{id}/messages` answers `404 web-search/disabled`. */
+  webSearchDisabled: http.post(apiUrl("/v1/ai/chats/:id/messages"), () =>
+    problem(404, "web-search/disabled", "Web search is turned off"),
+  ),
+
+  /** `POST /v1/notebooks/{id}/chat/messages` answers `429 web-search/quota-exceeded`. */
+  notebookWebSearchQuotaExceeded: http.post(apiUrl("/v1/notebooks/:id/chat/messages"), () =>
+    problem(429, "web-search/quota-exceeded", "No web searches left today", {
+      params: { limit: 10, left: 0, needed: 1, resets_at: "2026-10-08T00:00:00Z" },
+    }),
+  ),
+
+  /** `POST /v1/notebooks/{id}/chat/messages` answers `503 web-search/unavailable`. */
+  notebookWebSearchUnavailable: http.post(apiUrl("/v1/notebooks/:id/chat/messages"), () =>
+    problem(503, "web-search/unavailable", "Web search is not available right now"),
+  ),
+
+  /** `POST /v1/notebooks/{id}/discover` answers `429 web-search/quota-exceeded`. */
+  discoverQuotaExceeded: http.post(apiUrl("/v1/notebooks/:id/discover"), () =>
+    problem(429, "web-search/quota-exceeded", "No web searches left today", {
+      params: { limit: 10, left: 0, needed: 3, resets_at: "2026-10-08T00:00:00Z" },
+    }),
+  ),
+
+  /** `POST /v1/notebooks/{id}/discover` answers `503 web-search/unavailable`. */
+  discoverUnavailable: http.post(apiUrl("/v1/notebooks/:id/discover"), () =>
+    problem(503, "web-search/unavailable", "Web search is not available right now"),
+  ),
+
   /** `POST /v1/files` answers `403 files/quota-exceeded`. */
   filesQuotaExceeded: http.post(apiUrl("/v1/files"), () =>
     problem(403, "files/quota-exceeded", "Your storage quota is exceeded", {

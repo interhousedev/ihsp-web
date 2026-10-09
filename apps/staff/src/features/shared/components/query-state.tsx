@@ -17,7 +17,7 @@ export function QueryState<T>({
   rows,
   children,
 }: {
-  query: Pick<UseQueryResult<T>, "data" | "isPending" | "isError" | "error" | "refetch">
+  query: Pick<UseQueryResult<T>, "data" | "isPending" | "isError" | "error"> & { refetch: () => unknown }
   isEmpty?: (data: T) => boolean
   emptyText?: string
   emptyAction?: ReactNode

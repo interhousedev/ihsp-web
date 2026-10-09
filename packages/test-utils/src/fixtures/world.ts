@@ -219,6 +219,8 @@ export function makeLesson(slot: Slot, overrides: LessonOverrides = {}): LessonI
     is_overridden: false,
     changes: null,
     topic: null,
+    kind: "other",
+    topic_source: null,
     has_homework: false,
     attendance_submitted: false,
     ...overrides,
@@ -231,6 +233,7 @@ export const weekLessons: LessonItem[] = weekPattern.map((slot) => {
   const homework = slot.weekday === 3 && slot.subject === "physics"
   return makeLesson(slot, {
     topic: past ? `${subjectRefs[slot.subject].name}: topic of ${weekDates[slot.weekday] ?? ""}` : null,
+    topic_source: past ? "manual" : null,
     attendance_submitted: past,
     has_homework: past || homework,
   })

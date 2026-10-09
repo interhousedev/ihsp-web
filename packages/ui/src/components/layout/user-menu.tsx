@@ -32,8 +32,8 @@ export type UserMenuItem = {
 
 /** A platform of the IHSP family the user can open from the menu (built by `usePlatformLinks` in `@ihsp/features-core`). */
 export type PlatformLink = {
-  key: "sp" | "staff" | "admin" | "lms" | "id"
-  /** Short brand name: SP, Staff, Admin, LMS, ID. */
+  key: "sp" | "staff" | "admin" | "lms" | "library" | "id"
+  /** Short brand name: SP, Staff, Admin, LMS, Library, ID. */
   name: string
   /** What the platform is for, already translated. */
   description: string

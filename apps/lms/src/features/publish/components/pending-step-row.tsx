@@ -19,6 +19,7 @@ export function PendingStepRow({ step }: { step: PendingStep }) {
       <div className="flex flex-wrap items-center gap-2">
         <Badge variant={VARIANT[step.change]}>{t(`changes.${step.change}`)}</Badge>
         {step.via_mcp ? <Badge variant="outline">{t("viaMcp")}</Badge> : null}
+        {step.via_ai ? <Badge variant="outline">{t("viaAi")}</Badge> : null}
         <span className="min-w-0 flex-1 text-sm font-medium break-words">{step.title}</span>
         {step.change !== "removed" ? (
           <Button

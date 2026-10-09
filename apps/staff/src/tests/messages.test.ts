@@ -116,6 +116,12 @@ describe("keys used in the code", () => {
       "group.students.flags.${flag}": ["absences", "gpa_drop", "no_subgroup"],
       "group.students.flagHints.${flag}": ["absences", "gpa_drop", "no_subgroup"],
       "group.attendance.views.${view}": ["student", "subject", "day", "lesson"],
+      "exams.status.${status}": ["planned", "tentative", "undated"],
+      "exams.controls.${section}": ["midterm_1", "midterm_2", "final", "other"],
+      "exams.controls.${control}": ["midterm_1", "midterm_2", "final"],
+      "exams.kinds.${item.kind}": ["midterm", "final", "other"],
+      "exams.kinds.${kind}": ["midterm", "final", "other"],
+      "exams.sources.${item.source}": ["teacher", "admin", "emis", "head_student"],
     }
     const unknown = [...dynamic.keys()].filter((key) => !(key in expected))
     expect(unknown).toEqual([])
@@ -128,7 +134,14 @@ describe("keys used in the code", () => {
   })
 
   test("the error types the staff pages handle have messages", () => {
-    for (const type of ["common.conflict", "attendance.window-closed", "attendance.lesson-cancelled"]) {
+    for (const type of [
+      "common.conflict",
+      "attendance.window-closed",
+      "attendance.lesson-cancelled",
+      "academic.not-assessment-teacher",
+      "academic.assessment-exists",
+      "academic.invalid-assessment",
+    ]) {
       expect(available.has(`errors.${type}`), type).toBe(true)
     }
   })

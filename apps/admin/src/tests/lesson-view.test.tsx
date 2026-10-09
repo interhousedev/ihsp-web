@@ -211,6 +211,7 @@ describe("links to the page", () => {
             description: "Teacher is busy",
             with_entry_id: null,
             with_lesson_id: ids.lessonPhysicsToday,
+            week_parity: null,
           },
         ]}
       />,

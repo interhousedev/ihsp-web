@@ -30,7 +30,7 @@ export function SettingsPage() {
           </SettingsSection>
         </div>
         <SettingsSection title={t("notifications.title")} description={t("notifications.description")}>
-          <NotificationSettingsForm roles={NOTIFICATION_ROLES} />
+          <NotificationSettingsForm roles={NOTIFICATION_ROLES} showPush={false} />
         </SettingsSection>
       </div>
     </PageContainer>

@@ -11,10 +11,12 @@ import type {
   ChatMessageBody,
   ChatPatchBody,
   ChatsParams,
+  MessageFeedbackBody,
   ToolCallRejectBody,
   TurnResult,
   UsageInfo,
   UsageParams,
+  WebQuota,
 } from "../types/ai"
 
 /** GET /v1/ai/chats?assistant&cursor — student or admin. */
@@ -54,6 +56,21 @@ export function postAiChatMessages(id: string, body: ChatMessageBody, opts?: Req
   return api.post<TurnResult>(`/v1/ai/chats/${seg(id)}/messages`, body, opts)
 }
 
+/** POST /v1/ai/chats/{id}/regenerate — owner; answers the last user message again (P1b). */
+export function postAiChatRegenerate(id: string, opts?: RequestOptions): Promise<TurnResult> {
+  return api.post<TurnResult>(`/v1/ai/chats/${seg(id)}/regenerate`, undefined, opts)
+}
+
+/** POST /v1/ai/chats/{id}/messages/{seq}/feedback — owner; thumbs up or down on an assistant message (P1b); `204`. */
+export function postAiChatMessageFeedback(
+  id: string,
+  seq: number,
+  body: MessageFeedbackBody,
+  opts?: RequestOptions,
+): Promise<NoContent> {
+  return api.post<NoContent>(`/v1/ai/chats/${seg(id)}/messages/${seg(seq)}/feedback`, body, opts)
+}
+
 /** POST /v1/ai/chats/{id}/tool-calls/{call_id}/approve — owner. */
 export function postAiChatToolCallApprove(id: string, callId: string, opts?: RequestOptions): Promise<TurnResult> {
   return api.post<TurnResult>(`/v1/ai/chats/${seg(id)}/tool-calls/${seg(callId)}/approve`, undefined, opts)
@@ -75,6 +92,13 @@ export function getAiUsage(params?: UsageParams, opts?: RequestOptions): Promise
 }
 export const getAiUsageQuery = (params?: UsageParams) =>
   queryOptions({
-    queryKey: keys.ai.usage(params?.assistant),
+    queryKey: keys.ai.usage(params?.assistant, params?.course_id),
     queryFn: ({ signal }) => getAiUsage(params, { signal }),
   })
+
+/** GET /v1/ai/web-search — whether web search is on and today's searches (hide the toggle when `enabled` is false). */
+export function getAiWebSearch(opts?: RequestOptions): Promise<WebQuota> {
+  return api.get<WebQuota>("/v1/ai/web-search", opts)
+}
+export const getAiWebSearchQuery = () =>
+  queryOptions({ queryKey: keys.ai.webSearch(), queryFn: ({ signal }) => getAiWebSearch({ signal }) })

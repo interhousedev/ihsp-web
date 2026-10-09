@@ -9,7 +9,16 @@ const optionalText = z
   .optional()
   .transform((value) => (value ? value : undefined))
 
-export const OAUTH_CLIENT_IDS = ["id", "sp", "staff", "admin", "lms", "share"] as const
+export const OAUTH_CLIENT_IDS = ["id", "sp", "staff", "admin", "lms", "share", "app", "library"] as const
+
+/**
+ * What the static sp build runs as: `sp` (the portal at `sp.ihsu.uz`, also the Telegram mini app) or `pwa` (the installable
+ * app at `app.ihsu.uz`: install page, service worker, longer offline cache and session). A missing or empty value is `sp`.
+ */
+export const APP_MODES = ["sp", "pwa"] as const
+
+/** An unset variable rendered by `envsubst` is an empty string: it counts as missing. */
+const emptyToUndefined = (value: unknown) => (value === "" ? undefined : value)
 
 export const envSchema = z.object({
   APP_ENV: z.enum(["dev", "test", "prod"]),
@@ -26,6 +35,9 @@ export const envSchema = z.object({
   MCP_URL: url,
   BOT_USERNAME: z.string().min(1),
   OAUTH_CLIENT_ID: z.enum(OAUTH_CLIENT_IDS),
+  APP_MODE: z.preprocess(emptyToUndefined, z.enum(APP_MODES).default("sp")),
+  APP_URL: z.preprocess(emptyToUndefined, url.optional()),
+  LIBRARY_URL: z.preprocess(emptyToUndefined, url.optional()),
   STORAGE_ORIGIN: url,
   SENTRY_DSN: optionalText,
 })
@@ -45,7 +57,13 @@ export type AppEnv = {
   ROOMS_URL: string
   MCP_URL: string
   BOT_USERNAME: string
-  OAUTH_CLIENT_ID: "id" | "sp" | "staff" | "admin" | "lms" | "share"
+  OAUTH_CLIENT_ID: "id" | "sp" | "staff" | "admin" | "lms" | "share" | "app" | "library"
+  /** `pwa` on the installable-app host, `sp` everywhere else. */
+  APP_MODE: "sp" | "pwa"
+  /** Address of the installable app (`https://app.ihsu.uz`); the portal links to it. Absent when there is none. */
+  APP_URL?: string
+  /** Address of the library (`https://library.ihsu.uz`); the profile menus link to it. Absent when there is none. */
+  LIBRARY_URL?: string
   STORAGE_ORIGIN: string
   SENTRY_DSN?: string
 }

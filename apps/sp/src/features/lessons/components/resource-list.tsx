@@ -1,8 +1,10 @@
 "use client"
 
 import type { ResourceItem } from "@ihsp/api"
+import { AddToNotebookMenu } from "@ihsp/features-core"
 import { useFormatters, useT } from "@ihsp/i18n"
 import { Button, Icons } from "@ihsp/ui"
+import { IconNotebook } from "@tabler/icons-react"
 import { LinkButton } from "../../shared/components/link-button"
 import { formatBytes } from "../../shared/utils/format-bytes"
 import { fullName } from "../../shared/utils/people"
@@ -21,6 +23,7 @@ export function ResourceList({
   onDelete?: (item: ResourceItem) => void
 }) {
   const t = useT("lesson.resources")
+  const tNotebook = useT("assistant.addToNotebook")
   const f = useFormatters()
   return (
     <ul className="flex flex-col gap-2">
@@ -56,6 +59,22 @@ export function ResourceList({
           >
             {t("open")}
           </LinkButton>
+          {item.hidden ? null : (
+            <AddToNotebookMenu
+              input={{ kind: "lesson_resource", lesson_id: item.lesson_id, link_id: item.link_id }}
+              trigger={
+                <Button
+                  type="button"
+                  variant="ghost"
+                  size="icon"
+                  className="size-11 shrink-0 md:size-8"
+                  aria-label={tNotebook("itemLabel", { title: item.title })}
+                >
+                  <IconNotebook aria-hidden />
+                </Button>
+              }
+            />
+          )}
           {onDelete && currentUserId && item.author.id === currentUserId ? (
             <Button
               variant="ghost"

@@ -24,6 +24,26 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/internal/emis/{user_id}/class-hours": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get Class Hours
+         * @description Return the bells of the lyceum as EMIS lists them.
+         */
+        get: operations["get_class_hours_internal_emis__user_id__class_hours_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/internal/emis/{user_id}/profile": {
         parameters: {
             query?: never;
@@ -82,6 +102,74 @@ export interface paths {
         options?: never;
         head?: never;
         patch?: never;
+        trace?: never;
+    };
+    "/internal/emis/{user_id}/timetable": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get Timetable
+         * @description Return the student's classes on the dates begin..end (one EMIS call a week).
+         */
+        get: operations["get_timetable_internal_emis__user_id__timetable_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/admin/assessments": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * List Assessments
+         * @description Return the controls of every group, filtered.
+         */
+        get: operations["list_assessments_v1_admin_assessments_get"];
+        put?: never;
+        /**
+         * Create Assessment
+         * @description Plan a control; a teacher must teach the subject in every group.
+         */
+        post: operations["create_assessment_v1_admin_assessments_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/admin/assessments/{assessment_id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post?: never;
+        /**
+         * Delete Assessment
+         * @description Cancel a control; the row stays, so a dismissed EMIS suggestion stays so.
+         */
+        delete: operations["delete_assessment_v1_admin_assessments__assessment_id__delete"];
+        options?: never;
+        head?: never;
+        /**
+         * Update Assessment
+         * @description Edit, confirm (`status: planned`) or dismiss (`status: cancelled`) a control.
+         */
+        patch: operations["update_assessment_v1_admin_assessments__assessment_id__patch"];
         trace?: never;
     };
     "/v1/admin/attendance": {
@@ -442,6 +530,166 @@ export interface paths {
          * @description Change one lesson; it is then marked as changed by hand.
          */
         patch: operations["update_lesson_v1_admin_lessons__lesson_id__patch"];
+        trace?: never;
+    };
+    "/v1/admin/library/sanctions": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * List Sanctions
+         * @description Warnings and bans, newest first; of one user with `?user_id=`.
+         */
+        get: operations["list_sanctions_v1_admin_library_sanctions_get"];
+        put?: never;
+        /**
+         * Create Sanction
+         * @description Warn a user or ban them from uploading.
+         */
+        post: operations["create_sanction_v1_admin_library_sanctions_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/admin/library/unilibrary/feeds": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * List Unilibrary Feeds
+         * @description All feeds.
+         */
+        get: operations["list_unilibrary_feeds_v1_admin_library_unilibrary_feeds_get"];
+        put?: never;
+        /**
+         * Create Unilibrary Feed
+         * @description Store a new feed (disabled; no sync runs it yet).
+         */
+        post: operations["create_unilibrary_feed_v1_admin_library_unilibrary_feeds_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/admin/library/unilibrary/feeds/{feed_id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post?: never;
+        /**
+         * Delete Unilibrary Feed
+         * @description Remove a feed.
+         */
+        delete: operations["delete_unilibrary_feed_v1_admin_library_unilibrary_feeds__feed_id__delete"];
+        options?: never;
+        head?: never;
+        /**
+         * Update Unilibrary Feed
+         * @description Change the keys that were sent.
+         */
+        patch: operations["update_unilibrary_feed_v1_admin_library_unilibrary_feeds__feed_id__patch"];
+        trace?: never;
+    };
+    "/v1/admin/library/unilibrary/feeds/{feed_id}/{action}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Run Unilibrary Feed Action
+         * @description `enable` and `disable` flip the flag; `dry-run` and `run` answer `409`.
+         */
+        post: operations["run_unilibrary_feed_action_v1_admin_library_unilibrary_feeds__feed_id___action__post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/admin/library/unilibrary/field-map": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get Unilibrary Field Map
+         * @description Which UniLibrary field is which subject.
+         */
+        get: operations["get_unilibrary_field_map_v1_admin_library_unilibrary_field_map_get"];
+        /**
+         * Put Unilibrary Field Map
+         * @description Replace the whole map.
+         */
+        put: operations["put_unilibrary_field_map_v1_admin_library_unilibrary_field_map_put"];
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/admin/library/unilibrary/settings": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get Unilibrary Settings
+         * @description The effective switches (the override, else the environment).
+         */
+        get: operations["get_unilibrary_settings_v1_admin_library_unilibrary_settings_get"];
+        /**
+         * Put Unilibrary Settings
+         * @description Switch UniLibrary on or off at runtime.
+         */
+        put: operations["put_unilibrary_settings_v1_admin_library_unilibrary_settings_put"];
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/admin/library/unilibrary/status": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get Unilibrary Status
+         * @description Breaker state, last calls, cache counters and hidden records.
+         */
+        get: operations["get_unilibrary_status_v1_admin_library_unilibrary_status_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
         trace?: never;
     };
     "/v1/admin/links/{link_id}/disable": {
@@ -1255,13 +1503,15 @@ export interface paths {
         };
         /**
          * List Chats
-         * @description List the caller's chats of one assistant, newest first.
+         * @description List the caller's chats of one assistant, newest first; `q` searches titles.
+         *
+         *     `lms_author` chats are listed per course: `course_id` is required for them.
          */
         get: operations["list_chats_v1_ai_chats_get"];
         put?: never;
         /**
          * Create Chat
-         * @description Start a chat with the student or the Administration assistant.
+         * @description Start a chat with the student, Administration or course author assistant.
          */
         post: operations["create_chat_v1_ai_chats_post"];
         delete?: never;
@@ -1318,6 +1568,46 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/v1/ai/chats/{chat_id}/messages/{seq}/feedback": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Set Message Feedback
+         * @description Rate an assistant message with a thumb and an optional comment.
+         */
+        post: operations["set_message_feedback_v1_ai_chats__chat_id__messages__seq__feedback_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/ai/chats/{chat_id}/regenerate": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Regenerate Answer
+         * @description Answer the last user message again and return the new messages.
+         */
+        post: operations["regenerate_answer_v1_ai_chats__chat_id__regenerate_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/v1/ai/chats/{chat_id}/tool-calls/{call_id}/approve": {
         parameters: {
             query?: never;
@@ -1368,8 +1658,50 @@ export interface paths {
         /**
          * Get Usage
          * @description Return the remaining session and daily token budget.
+         *
+         *     For `lms_author` (the course staff pool) pass the `course_id` being edited.
          */
         get: operations["get_usage_v1_ai_usage_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/ai/web-search": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get Web Search
+         * @description Whether web search is on for the caller and how many searches are left today.
+         */
+        get: operations["get_web_search_v1_ai_web_search_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/app/version": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get App Version
+         * @description Return the latest and the minimum supported app version; public, never cached.
+         */
+        get: operations["get_app_version_v1_app_version_get"];
         put?: never;
         post?: never;
         delete?: never;
@@ -2394,6 +2726,330 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/v1/library/external/unilibrary/search": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Search Unilibrary
+         * @description Live UniLibrary results as cards that are not stored (`404` while off).
+         */
+        get: operations["search_unilibrary_v1_library_external_unilibrary_search_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/library/external/unilibrary/taxonomies": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get Unilibrary Taxonomies
+         * @description Types, fields, languages and access options for the search filters.
+         */
+        get: operations["get_unilibrary_taxonomies_v1_library_external_unilibrary_taxonomies_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/library/external/unilibrary/{external_id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get Unilibrary Record
+         * @description The card of one record; the stored card when it is pinned.
+         */
+        get: operations["get_unilibrary_record_v1_library_external_unilibrary__external_id__get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/library/external/unilibrary/{external_id}/item": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Pin Unilibrary Record
+         * @description Store the snapshot of a record; `201` the first time, `200` after that.
+         */
+        post: operations["pin_unilibrary_record_v1_library_external_unilibrary__external_id__item_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/library/items": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * List Items
+         * @description Browse and search; visitors get public items only.
+         */
+        get: operations["list_items_v1_library_items_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/library/items/{id_or_slug}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get Item
+         * @description The item page; `library/not-found` for anything the caller may not see.
+         */
+        get: operations["get_item_v1_library_items__id_or_slug__get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/library/items/{item_id}/files/{file_id}/url": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get File Url
+         * @description A URL valid for 15 minutes; `inline=1` is for the reader, else a download.
+         */
+        get: operations["get_file_url_v1_library_items__item_id__files__file_id__url_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/library/items/{item_id}/report": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Report Item
+         * @description Report an item to the librarians; the owner never learns who did.
+         */
+        post: operations["report_item_v1_library_items__item_id__report_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/library/items/{item_id}/text": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get Item Text
+         * @description Pages of extracted text (at most 50 at a time).
+         */
+        get: operations["get_item_text_v1_library_items__item_id__text_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/library/materials": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Create Material
+         * @description Start a draft material of the caller.
+         */
+        post: operations["create_material_v1_library_materials_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/library/materials/{item_id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post?: never;
+        /**
+         * Withdraw Material
+         * @description The owner takes the material back (a draft is deleted).
+         */
+        delete: operations["withdraw_material_v1_library_materials__item_id__delete"];
+        options?: never;
+        head?: never;
+        /**
+         * Update Material
+         * @description Change title, description, topics or text; the status stays.
+         */
+        patch: operations["update_material_v1_library_materials__item_id__patch"];
+        trace?: never;
+    };
+    "/v1/library/materials/{item_id}/files": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Attach Material Files
+         * @description One PDF, or up to 20 photos, uploaded with the purpose `library_material`.
+         */
+        post: operations["attach_material_files_v1_library_materials__item_id__files_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/library/materials/{item_id}/submit": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Submit Material
+         * @description `pending_review`, or `published` at once for teachers and Administration.
+         */
+        post: operations["submit_material_v1_library_materials__item_id__submit_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/library/materials/{item_id}/versions": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Create Material Version
+         * @description A new draft that replaces the published material once it is approved.
+         */
+        post: operations["create_material_version_v1_library_materials__item_id__versions_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/library/subjects": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * List Subjects
+         * @description Subjects with visible items and their counts; `?all=1` lists every subject.
+         */
+        get: operations["list_subjects_v1_library_subjects_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/library/suggestions": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Create Suggestion
+         * @description Suggest a book; it waits in the librarian queue.
+         */
+        post: operations["create_suggestion_v1_library_suggestions_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/v1/links": {
         parameters: {
             query?: never;
@@ -3210,6 +3866,234 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/v1/manage/library/books": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * List Books
+         * @description The book table: every status, newest change first.
+         */
+        get: operations["list_books_v1_manage_library_books_get"];
+        put?: never;
+        /**
+         * Create Book
+         * @description Create a draft book.
+         */
+        post: operations["create_book_v1_manage_library_books_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/manage/library/books/{book_id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get Book
+         * @description The editor's data: detail, saved input and the publish checklist.
+         */
+        get: operations["get_book_v1_manage_library_books__book_id__get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        /**
+         * Update Book
+         * @description Change the fields that were sent.
+         */
+        patch: operations["update_book_v1_manage_library_books__book_id__patch"];
+        trace?: never;
+    };
+    "/v1/manage/library/books/{book_id}/files": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Attach Book File
+         * @description Attach an uploaded file; text extraction runs in the background.
+         */
+        post: operations["attach_book_file_v1_manage_library_books__book_id__files_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/manage/library/books/{book_id}/publish": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Publish Book
+         * @description Publish; `422 library/rights-incomplete` lists what is missing.
+         */
+        post: operations["publish_book_v1_manage_library_books__book_id__publish_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/manage/library/books/{book_id}/takedown": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Takedown Book
+         * @description Take a book down; the reason is required and kept.
+         */
+        post: operations["takedown_book_v1_manage_library_books__book_id__takedown_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/manage/library/books/{book_id}/unpublish": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Unpublish Book
+         * @description Withdraw a published book.
+         */
+        post: operations["unpublish_book_v1_manage_library_books__book_id__unpublish_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/manage/library/import": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Import Books
+         * @description Create draft books from the CSV; rows with errors are listed.
+         */
+        post: operations["import_books_v1_manage_library_import_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/manage/library/items/{item_id}/{action}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Review Item
+         * @description Decide; a reason is required except for approve, `403 library/own-item`.
+         */
+        post: operations["review_item_v1_manage_library_items__item_id___action__post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/manage/library/queue": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * List Queue
+         * @description One tab of the librarian queue, oldest first.
+         */
+        get: operations["list_queue_v1_manage_library_queue_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/manage/library/reports/{report_id}/resolve": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Resolve Report
+         * @description Decide every open report of the item the report belongs to.
+         */
+        post: operations["resolve_report_v1_manage_library_reports__report_id__resolve_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/manage/library/suggestions/{suggestion_id}/{decision}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Decide Suggestion
+         * @description Accept or decline a book suggestion.
+         */
+        post: operations["decide_suggestion_v1_manage_library_suggestions__suggestion_id___decision__post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/v1/me/alerts": {
         parameters: {
             query?: never;
@@ -3224,6 +4108,30 @@ export interface paths {
         get: operations["get_alerts_v1_me_alerts_get"];
         put?: never;
         post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/me/assessments": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * List Assessments
+         * @description Return the controls of the student's group, soonest first.
+         */
+        get: operations["list_assessments_v1_me_assessments_get"];
+        put?: never;
+        /**
+         * Propose Assessment
+         * @description Suggest a control date for the caller's group; it stays tentative.
+         */
+        post: operations["propose_assessment_v1_me_assessments_post"];
         delete?: never;
         options?: never;
         head?: never;
@@ -3328,6 +4236,26 @@ export interface paths {
          * @description Copy a shared set to my sets with fresh progress.
          */
         post: operations["copy_from_share_v1_me_flashcard_sets_copy_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/me/flashcard-sets/stats": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get Review Stats
+         * @description Return the review heatmap and streaks of one set or of all sets.
+         */
+        get: operations["get_review_stats_v1_me_flashcard_sets_stats_get"];
+        put?: never;
+        post?: never;
         delete?: never;
         options?: never;
         head?: never;
@@ -3542,6 +4470,26 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/v1/me/library/uploads": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * List My Uploads
+         * @description My materials with status, reason and place in the review queue.
+         */
+        get: operations["list_my_uploads_v1_me_library_uploads_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/v1/me/links": {
         parameters: {
             query?: never;
@@ -3577,6 +4525,30 @@ export interface paths {
         put?: never;
         post?: never;
         delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/me/push-subscriptions": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Subscribe
+         * @description Save this browser for the caller (an endpoint seen before changes owner).
+         */
+        post: operations["subscribe_v1_me_push_subscriptions_post"];
+        /**
+         * Unsubscribe
+         * @description Forget the caller's subscription with this endpoint.
+         */
+        delete: operations["unsubscribe_v1_me_push_subscriptions_delete"];
         options?: never;
         head?: never;
         patch?: never;
@@ -3682,6 +4654,26 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/v1/me/subjects/{subject_id}/planner": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get Planner
+         * @description Return the predicted semester mark and what the controls must bring.
+         */
+        get: operations["get_planner_v1_me_subjects__subject_id__planner_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/v1/me/timetable": {
         parameters: {
             query?: never;
@@ -3714,6 +4706,828 @@ export interface paths {
          * @description Return now and next lesson, the timeline, due homework, marks, semester.
          */
         get: operations["get_today_v1_me_today_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/notebooks": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * List Notebooks
+         * @description List the student's notebooks, pinned first, then the last opened.
+         */
+        get: operations["list_notebooks_v1_notebooks_get"];
+        put?: never;
+        /**
+         * Create Notebook
+         * @description Create a notebook; without a title it is "Untitled notebook".
+         */
+        post: operations["create_notebook_v1_notebooks_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/notebooks/auto/lesson/{lesson_id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Find Lesson Notebook
+         * @description The student's notebook of a lesson if it exists (404 otherwise); read-only.
+         */
+        get: operations["find_lesson_notebook_v1_notebooks_auto_lesson__lesson_id__get"];
+        put?: never;
+        /**
+         * Open Lesson Notebook
+         * @description Get or create the student's notebook of one lesson.
+         */
+        post: operations["open_lesson_notebook_v1_notebooks_auto_lesson__lesson_id__post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/notebooks/auto/subject/{subject_id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Find Subject Notebook
+         * @description The student's notebook of a subject if it exists (404 otherwise); read-only.
+         */
+        get: operations["find_subject_notebook_v1_notebooks_auto_subject__subject_id__get"];
+        put?: never;
+        /**
+         * Open Subject Notebook
+         * @description Get or create the student's notebook of a subject (this term's materials).
+         */
+        post: operations["open_subject_notebook_v1_notebooks_auto_subject__subject_id__post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/notebooks/course-workspaces": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Open Course Workspace
+         * @description Get or create the AI workspace of a course (creating it needs ``edit``).
+         */
+        post: operations["open_course_workspace_v1_notebooks_course_workspaces_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/notebooks/usage": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get Usage
+         * @description Return the student's budget, daily quotas and running outputs.
+         */
+        get: operations["get_usage_v1_notebooks_usage_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/notebooks/{notebook_id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get Notebook
+         * @description Open a notebook of the student (it becomes the last opened).
+         */
+        get: operations["get_notebook_v1_notebooks__notebook_id__get"];
+        put?: never;
+        post?: never;
+        /**
+         * Delete Notebook
+         * @description Delete a notebook with its sources, chat and outputs.
+         */
+        delete: operations["delete_notebook_v1_notebooks__notebook_id__delete"];
+        options?: never;
+        head?: never;
+        /**
+         * Update Notebook
+         * @description Rename, pin or configure a notebook; keys that were not sent are kept.
+         */
+        patch: operations["update_notebook_v1_notebooks__notebook_id__patch"];
+        trace?: never;
+    };
+    "/v1/notebooks/{notebook_id}/artifacts": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * List Artifacts
+         * @description The outputs of a notebook, newest first, without their content.
+         */
+        get: operations["list_artifacts_v1_notebooks__notebook_id__artifacts_get"];
+        put?: never;
+        /**
+         * Create Artifact
+         * @description Queue a Studio output; the job generates it in the background.
+         */
+        post: operations["create_artifact_v1_notebooks__notebook_id__artifacts_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/notebooks/{notebook_id}/artifacts/{artifact_id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get Artifact
+         * @description Open an output with its content; the first view clears the blue dot.
+         */
+        get: operations["get_artifact_v1_notebooks__notebook_id__artifacts__artifact_id__get"];
+        put?: never;
+        post?: never;
+        /**
+         * Delete Artifact
+         * @description Delete an output.
+         */
+        delete: operations["delete_artifact_v1_notebooks__notebook_id__artifacts__artifact_id__delete"];
+        options?: never;
+        head?: never;
+        /**
+         * Rename Artifact
+         * @description Change the title of an output.
+         */
+        patch: operations["rename_artifact_v1_notebooks__notebook_id__artifacts__artifact_id__patch"];
+        trace?: never;
+    };
+    "/v1/notebooks/{notebook_id}/artifacts/{artifact_id}/apply": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Apply Artifact
+         * @description Write the output into the course draft; nothing goes live before Publish.
+         *
+         *     Needs the `edit` permission on the course. A stale `lock_version` is 409
+         *     (`common/conflict`), invalid content 422 (`lms/content-invalid` or
+         *     `notebooks/output-invalid`).
+         */
+        post: operations["apply_artifact_v1_notebooks__notebook_id__artifacts__artifact_id__apply_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/notebooks/{notebook_id}/artifacts/{artifact_id}/apply-preview": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Apply Preview
+         * @description Dry run: what applying the output to the course draft would change.
+         *
+         *     Needs the `edit` permission on the course. Nothing is written.
+         */
+        post: operations["apply_preview_v1_notebooks__notebook_id__artifacts__artifact_id__apply_preview_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/notebooks/{notebook_id}/artifacts/{artifact_id}/cancel": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Cancel Artifact
+         * @description Stop an output that is queued or generating.
+         */
+        post: operations["cancel_artifact_v1_notebooks__notebook_id__artifacts__artifact_id__cancel_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/notebooks/{notebook_id}/artifacts/{artifact_id}/flashcard-set": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Save Flashcard Set
+         * @description Copy a deck into the student's flash card sets (once per deck).
+         */
+        post: operations["save_flashcard_set_v1_notebooks__notebook_id__artifacts__artifact_id__flashcard_set_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/notebooks/{notebook_id}/artifacts/{artifact_id}/progress": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        /**
+         * Save Progress
+         * @description Remember where the student stopped in a flash card deck or a quiz.
+         */
+        put: operations["save_progress_v1_notebooks__notebook_id__artifacts__artifact_id__progress_put"];
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/notebooks/{notebook_id}/artifacts/{artifact_id}/retry": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Retry Artifact
+         * @description Queue a failed or canceled output again.
+         */
+        post: operations["retry_artifact_v1_notebooks__notebook_id__artifacts__artifact_id__retry_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/notebooks/{notebook_id}/artifacts/{artifact_id}/save-as-source": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Save As Source
+         * @description Add a report to the notebook's sources as a note.
+         */
+        post: operations["save_as_source_v1_notebooks__notebook_id__artifacts__artifact_id__save_as_source_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/notebooks/{notebook_id}/artifacts/{artifact_id}/slides": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        /**
+         * Edit Slides
+         * @description Save the student's edits of a slide deck (text, order, deleted slides).
+         */
+        put: operations["edit_slides_v1_notebooks__notebook_id__artifacts__artifact_id__slides_put"];
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/notebooks/{notebook_id}/artifacts/{artifact_id}/slides/revise": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Revise Slides
+         * @description Queue a new deck in which only the named slides are rewritten.
+         */
+        post: operations["revise_slides_v1_notebooks__notebook_id__artifacts__artifact_id__slides_revise_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/notebooks/{notebook_id}/auto": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        /**
+         * Update Auto Settings
+         * @description Switch classmates' files on or off, exclude or restore materials; syncs now.
+         */
+        patch: operations["update_auto_settings_v1_notebooks__notebook_id__auto_patch"];
+        trace?: never;
+    };
+    "/v1/notebooks/{notebook_id}/chat": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get Chat
+         * @description The last 200 messages of the student's thread, oldest first.
+         */
+        get: operations["get_chat_v1_notebooks__notebook_id__chat_get"];
+        put?: never;
+        post?: never;
+        /**
+         * Delete Chat
+         * @description Delete the student's thread in the notebook.
+         */
+        delete: operations["delete_chat_v1_notebooks__notebook_id__chat_delete"];
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/notebooks/{notebook_id}/chat/messages": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Send Message
+         * @description Answer a question: one JSON turn, or events with `Accept: text/event-stream`.
+         */
+        post: operations["send_message_v1_notebooks__notebook_id__chat_messages_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/notebooks/{notebook_id}/chat/messages/{message_id}/feedback": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Message Feedback
+         * @description Rate an answer with a thumb up or down.
+         */
+        post: operations["message_feedback_v1_notebooks__notebook_id__chat_messages__message_id__feedback_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/notebooks/{notebook_id}/chat/messages/{message_id}/save-note": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Save Note
+         * @description Save an answer, with its citations, as a `note` source.
+         */
+        post: operations["save_note_v1_notebooks__notebook_id__chat_messages__message_id__save_note_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/notebooks/{notebook_id}/chat/regenerate": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Regenerate Chat
+         * @description Answer the last question again, as JSON or as events (see `send_message`).
+         */
+        post: operations["regenerate_chat_v1_notebooks__notebook_id__chat_regenerate_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/notebooks/{notebook_id}/copy": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Copy Notebook
+         * @description Copy a notebook with its sources into a normal, editable notebook.
+         */
+        post: operations["copy_notebook_v1_notebooks__notebook_id__copy_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/notebooks/{notebook_id}/course-steps": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * List Course Steps
+         * @description Return the course's draft outline for the "add course steps" picker.
+         */
+        get: operations["list_course_steps_v1_notebooks__notebook_id__course_steps_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/notebooks/{notebook_id}/discover": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Discover Sources
+         * @description Search the web for pages to add as sources (nothing is fetched or stored).
+         */
+        post: operations["discover_sources_v1_notebooks__notebook_id__discover_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/notebooks/{notebook_id}/labels": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * List Labels
+         * @description List the topic labels with their source counts and the auto labeling state.
+         */
+        get: operations["list_labels_v1_notebooks__notebook_id__labels_get"];
+        put?: never;
+        /**
+         * Create Label
+         * @description Make a label by hand (at most 12 per notebook).
+         */
+        post: operations["create_label_v1_notebooks__notebook_id__labels_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/notebooks/{notebook_id}/labels/auto": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Start Labeling
+         * @description Label the selected, ready sources by topic in the background.
+         */
+        post: operations["start_labeling_v1_notebooks__notebook_id__labels_auto_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/notebooks/{notebook_id}/labels/{label_id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post?: never;
+        /**
+         * Delete Label
+         * @description Delete a label; the sources that carried it lose it.
+         */
+        delete: operations["delete_label_v1_notebooks__notebook_id__labels__label_id__delete"];
+        options?: never;
+        head?: never;
+        /**
+         * Update Label
+         * @description Rename a label or change its emoji; an edited auto label becomes manual.
+         */
+        patch: operations["update_label_v1_notebooks__notebook_id__labels__label_id__patch"];
+        trace?: never;
+    };
+    "/v1/notebooks/{notebook_id}/passages/{passage_id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get Passage
+         * @description Return a passage with its source and `context` passages on each side.
+         */
+        get: operations["get_passage_v1_notebooks__notebook_id__passages__passage_id__get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/notebooks/{notebook_id}/search": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Search Sources
+         * @description Find the passages of the notebook's sources that contain the words of `q`.
+         */
+        get: operations["search_sources_v1_notebooks__notebook_id__search_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/notebooks/{notebook_id}/sources": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * List Sources
+         * @description List the sources of a notebook in their order.
+         */
+        get: operations["list_sources_v1_notebooks__notebook_id__sources_get"];
+        put?: never;
+        /**
+         * Add Sources
+         * @description Add up to 20 sources; a refused item is reported, the others are stored.
+         */
+        post: operations["add_sources_v1_notebooks__notebook_id__sources_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/notebooks/{notebook_id}/sources/select": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Select Sources
+         * @description Tick or untick some sources, or all of them when `ids` is absent.
+         */
+        post: operations["select_sources_v1_notebooks__notebook_id__sources_select_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/notebooks/{notebook_id}/sources/{source_id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get Source
+         * @description Return a source with its guide and, for a note, its text.
+         */
+        get: operations["get_source_v1_notebooks__notebook_id__sources__source_id__get"];
+        put?: never;
+        post?: never;
+        /**
+         * Remove Source
+         * @description Remove a source and its passages from the notebook.
+         */
+        delete: operations["remove_source_v1_notebooks__notebook_id__sources__source_id__delete"];
+        options?: never;
+        head?: never;
+        /**
+         * Update Source
+         * @description Rename a source, tick it or edit its text; keys that were not sent are kept.
+         */
+        patch: operations["update_source_v1_notebooks__notebook_id__sources__source_id__patch"];
+        trace?: never;
+    };
+    "/v1/notebooks/{notebook_id}/sources/{source_id}/labels": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        /**
+         * Set Source Labels
+         * @description Replace the labels of a source (at most 3); the automatic run keeps them.
+         */
+        put: operations["set_source_labels_v1_notebooks__notebook_id__sources__source_id__labels_put"];
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/notebooks/{notebook_id}/sources/{source_id}/passages": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * List Passages
+         * @description Return the text of a source in passages, for the source viewer.
+         */
+        get: operations["list_passages_v1_notebooks__notebook_id__sources__source_id__passages_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/notebooks/{notebook_id}/sources/{source_id}/sync": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Sync Source
+         * @description Read the source again (a changed file, a chat with new messages).
+         */
+        post: operations["sync_source_v1_notebooks__notebook_id__sources__source_id__sync_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/notebooks/{notebook_id}/usage": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get Notebook Usage
+         * @description Return the caller's budget and quotas of the pool this notebook uses.
+         */
+        get: operations["get_notebook_usage_v1_notebooks__notebook_id__usage_get"];
         put?: never;
         post?: never;
         delete?: never;
@@ -3942,6 +5756,26 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/v1/push/config": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get Config
+         * @description Say whether Web Push is on and give the public VAPID key.
+         */
+        get: operations["get_config_v1_push_config_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/v1/shares": {
         parameters: {
             query?: never;
@@ -3960,6 +5794,54 @@ export interface paths {
         options?: never;
         head?: never;
         patch?: never;
+        trace?: never;
+    };
+    "/v1/staff/assessments": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * List Assessments
+         * @description Return the controls of the teacher's subjects and groups (all for admin).
+         */
+        get: operations["list_assessments_v1_staff_assessments_get"];
+        put?: never;
+        /**
+         * Create Assessment
+         * @description Plan a control; a teacher must teach the subject in every group.
+         */
+        post: operations["create_assessment_v1_staff_assessments_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/staff/assessments/{assessment_id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post?: never;
+        /**
+         * Delete Assessment
+         * @description Cancel a control; the row stays, so a dismissed EMIS suggestion stays so.
+         */
+        delete: operations["delete_assessment_v1_staff_assessments__assessment_id__delete"];
+        options?: never;
+        head?: never;
+        /**
+         * Update Assessment
+         * @description Edit, confirm (`status: planned`) or dismiss (`status: cancelled`) a control.
+         */
+        patch: operations["update_assessment_v1_staff_assessments__assessment_id__patch"];
         trace?: never;
     };
     "/v1/staff/groups": {
@@ -4311,6 +6193,15 @@ export type webhooks = Record<string, never>;
 export interface components {
     schemas: {
         /**
+         * AccessOptionResponse
+         * @description An access filter option.
+         */
+        AccessOptionResponse: {
+            id: components["schemas"]["UniLibraryAccessFilter"];
+            /** Name */
+            name: string;
+        };
+        /**
          * ActivateBody
          * @description POST /v1/id/activation/{token}.
          *
@@ -4394,6 +6285,24 @@ export interface components {
             position?: number | null;
             /** Title */
             title: string;
+        };
+        /**
+         * AddSourcesBody
+         * @description POST /v1/notebooks/{id}/sources: 1 to 20 items, each of its own `kind`.
+         */
+        AddSourcesBody: {
+            /** Items */
+            items: (components["schemas"]["FileInput"] | components["schemas"]["ChatInput"] | components["schemas"]["LessonResourceInput"] | components["schemas"]["FlashcardSetInput"] | components["schemas"]["LmsStepInput"] | components["schemas"]["TextInput"] | components["schemas"]["NoteInput"] | components["schemas"]["UrlInput"] | components["schemas"]["LibraryItemInput"] | components["schemas"]["LibraryNotesInput"])[];
+        };
+        /**
+         * AddSourcesResponse
+         * @description `AddSourcesResult`: the stored sources and the items that were refused.
+         */
+        AddSourcesResponse: {
+            /** Items */
+            items: components["schemas"]["SourceItemResponse"][];
+            /** Rejected */
+            rejected: components["schemas"]["RejectedSourceResponse"][];
         };
         /**
          * AddStaffBody
@@ -4486,6 +6395,32 @@ export interface components {
             };
         };
         /**
+         * AnchorPassages
+         * @description Pins passages (flash card or quiz Explain, "Ask about this", mind map node).
+         */
+        AnchorPassages: {
+            /** Ids */
+            ids?: string[];
+            /**
+             * @description discriminator enum property added by openapi-typescript
+             * @enum {string}
+             */
+            kind: "passages";
+        };
+        /**
+         * AnchorText
+         * @description Pins a piece of text the student selected.
+         */
+        AnchorText: {
+            /**
+             * @description discriminator enum property added by openapi-typescript
+             * @enum {string}
+             */
+            kind: "text";
+            /** Text */
+            text: string;
+        };
+        /**
          * AnswerConfig
          * @description Accepted answers of a text or number question.
          */
@@ -4506,6 +6441,405 @@ export interface components {
             tolerance: number;
             /** Value */
             value?: number | null;
+        };
+        /**
+         * AppVersionResponse
+         * @description The newest release and the oldest one that may still run (dotted integers).
+         */
+        AppVersionResponse: {
+            /** Latest */
+            latest: string;
+            /** Min Supported */
+            min_supported: string;
+        };
+        /**
+         * ApplyBody
+         * @description What the author chose in the Apply dialog (all fields optional).
+         *
+         *     A new step is created when no ``target_step_id`` is given and a
+         *     ``target_section_id`` is. A lesson draft made for a step (its ``step_id``
+         *     option) goes there by default. ``plan`` and ``draft`` carry the author's edits of
+         *     the output; they are validated again on the server.
+         */
+        ApplyBody: {
+            /**
+             * Add Briefs
+             * @description A new step of a plan gets its goals and summary as a text block.
+             * @default false
+             */
+            add_briefs: boolean;
+            /** @description The edited lesson (lesson_draft only). */
+            draft?: components["schemas"]["StepDraftInput"] | null;
+            /**
+             * Lock Version
+             * @description The step's lock version from the preview; a changed draft is 409.
+             */
+            lock_version?: number | null;
+            /**
+             * Mode
+             * @description Default: replace for a lesson draft, append for a quiz or cards.
+             */
+            mode?: ("append" | "replace") | null;
+            /** @description The edited course plan (course_plan only). */
+            plan?: components["schemas"]["CoursePlanInput"] | null;
+            /**
+             * Target Section Id
+             * @description The section for a NEW step (used when no step id is given).
+             */
+            target_section_id?: string | null;
+            /**
+             * Target Step Id
+             * @description The draft step to write into.
+             */
+            target_step_id?: string | null;
+        };
+        /**
+         * ApplyPreviewResponse
+         * @description The dry run of an Apply: what would change, what is wrong, what was reduced.
+         */
+        ApplyPreviewResponse: {
+            /** Can Apply */
+            can_apply: boolean;
+            /**
+             * Kind
+             * @enum {string}
+             */
+            kind: "course_plan" | "lesson_draft" | "quiz" | "flashcards";
+            /**
+             * Notes
+             * @description What is reduced or left out; informational.
+             */
+            notes: string[];
+            plan?: components["schemas"]["PlanPreviewResponse"] | null;
+            /**
+             * Problems
+             * @description Why it cannot be applied (can_apply).
+             */
+            problems: string[];
+            step?: components["schemas"]["StepPreviewResponse"] | null;
+        };
+        /**
+         * ApplyResultResponse
+         * @description What the Apply wrote into the draft.
+         */
+        ApplyResultResponse: {
+            /** Created Sections */
+            created_sections: components["schemas"]["CreatedSectionResponse"][];
+            /** Created Steps */
+            created_steps: components["schemas"]["CreatedStepResponse"][];
+            /**
+             * Draft Seq
+             * @description The draft counter after the write.
+             */
+            draft_seq: number | null;
+            /**
+             * Kind
+             * @enum {string}
+             */
+            kind: "course_plan" | "lesson_draft" | "quiz" | "flashcards";
+            /** Lock Version */
+            lock_version: number | null;
+            /** Step Id */
+            step_id: string | null;
+        };
+        /**
+         * ArtifactDetailResponse
+         * @description `ArtifactDetail`: the item, the document, its references and the progress.
+         */
+        ArtifactDetailResponse: {
+            /** Assets */
+            assets?: {
+                [key: string]: unknown;
+            }[];
+            /** Content */
+            content: {
+                [key: string]: unknown;
+            } | null;
+            /**
+             * Created At
+             * Format: date-time
+             */
+            created_at: string;
+            error: components["schemas"]["ArtifactError"] | null;
+            /** Finished At */
+            finished_at: string | null;
+            /** Flashcard Set Id */
+            flashcard_set_id: string | null;
+            format: components["schemas"]["ReportFormat"] | null;
+            /**
+             * Has Assets
+             * @default false
+             */
+            has_assets: boolean;
+            /**
+             * Id
+             * Format: uuid
+             */
+            id: string;
+            /**
+             * Kind
+             * @enum {string}
+             */
+            kind: "report" | "mind_map" | "flashcards" | "quiz" | "data_table" | "slides" | "infographic" | "course_plan" | "lesson_draft";
+            /**
+             * Notebook Id
+             * Format: uuid
+             */
+            notebook_id: string;
+            /** Options */
+            options: {
+                [key: string]: unknown;
+            };
+            /** Parent Id */
+            parent_id: string | null;
+            /** Progress */
+            progress: number | null;
+            /** Progress State */
+            progress_state: {
+                [key: string]: unknown;
+            } | null;
+            /** Prompt */
+            prompt: string | null;
+            /** Refs Index */
+            refs_index: {
+                [key: string]: unknown;
+            };
+            /** Sampled */
+            sampled: boolean;
+            /** Source Count */
+            source_count: number;
+            /** Source Map */
+            source_map: {
+                [key: string]: string;
+            };
+            status: components["schemas"]["ArtifactStatus"];
+            /** Title */
+            title: string;
+            /** Unread */
+            unread: boolean;
+        };
+        /**
+         * ArtifactError
+         * @description `artifacts.error`.
+         */
+        ArtifactError: {
+            /** Code */
+            code: string;
+            /** Message Key */
+            message_key: string;
+            /** Params */
+            params?: {
+                [key: string]: unknown;
+            };
+        };
+        /**
+         * ArtifactItemResponse
+         * @description `ArtifactItem`: an output without its content.
+         */
+        ArtifactItemResponse: {
+            /**
+             * Created At
+             * Format: date-time
+             */
+            created_at: string;
+            error: components["schemas"]["ArtifactError"] | null;
+            /** Finished At */
+            finished_at: string | null;
+            /** Flashcard Set Id */
+            flashcard_set_id: string | null;
+            format: components["schemas"]["ReportFormat"] | null;
+            /**
+             * Has Assets
+             * @default false
+             */
+            has_assets: boolean;
+            /**
+             * Id
+             * Format: uuid
+             */
+            id: string;
+            /**
+             * Kind
+             * @enum {string}
+             */
+            kind: "report" | "mind_map" | "flashcards" | "quiz" | "data_table" | "slides" | "infographic" | "course_plan" | "lesson_draft";
+            /**
+             * Notebook Id
+             * Format: uuid
+             */
+            notebook_id: string;
+            /** Options */
+            options: {
+                [key: string]: unknown;
+            };
+            /** Parent Id */
+            parent_id: string | null;
+            /** Progress */
+            progress: number | null;
+            /** Prompt */
+            prompt: string | null;
+            /** Sampled */
+            sampled: boolean;
+            /** Source Count */
+            source_count: number;
+            status: components["schemas"]["ArtifactStatus"];
+            /** Title */
+            title: string;
+            /** Unread */
+            unread: boolean;
+        };
+        /**
+         * ArtifactStatus
+         * @description Lifecycle of a Studio output.
+         * @enum {string}
+         */
+        ArtifactStatus: "queued" | "generating" | "ready" | "failed" | "canceled";
+        /**
+         * AssessmentCreateBody
+         * @description A control a teacher or Administration plans.
+         */
+        AssessmentCreateBody: {
+            /** Audience */
+            audience: components["schemas"]["app__interfaces__http__v1__admin_schedule__shared_schemas__AudienceBody"][];
+            /** Control */
+            control?: ("midterm_1" | "midterm_2" | "final") | null;
+            /**
+             * Date
+             * Format: date
+             */
+            date: string;
+            /**
+             * Kind
+             * @enum {string}
+             */
+            kind: "midterm" | "final" | "other";
+            /** Lesson Id */
+            lesson_id?: string | null;
+            /** Note */
+            note?: string | null;
+            /** Room */
+            room?: string | null;
+            /** Starts At */
+            starts_at?: string | null;
+            /**
+             * Subject Id
+             * Format: uuid
+             */
+            subject_id: string;
+            /**
+             * Title
+             * @default
+             */
+            title: string;
+        };
+        /**
+         * AssessmentItem
+         * @description A control of a subject on a date.
+         *
+         *     ``days_left`` counts from today to ``date`` (negative once it is past).
+         *     ``has_date`` is false for a control week no teacher has given a subject date yet:
+         *     then ``date`` is the week's start (today while the week runs) and ``period`` the
+         *     week. ``status`` ``tentative`` means the date is not confirmed by a teacher or
+         *     Administration.
+         */
+        AssessmentItem: {
+            /** Control */
+            control: ("midterm_1" | "midterm_2" | "final") | null;
+            /**
+             * Date
+             * Format: date
+             */
+            date: string;
+            /** Days Left */
+            days_left: number;
+            /** Has Date */
+            has_date: boolean;
+            /**
+             * Id
+             * Format: uuid
+             */
+            id: string;
+            /**
+             * Kind
+             * @enum {string}
+             */
+            kind: "midterm" | "final" | "other";
+            /** Lesson Id */
+            lesson_id: string | null;
+            /** Note */
+            note: string | null;
+            period: components["schemas"]["ControlPeriodResponse"] | null;
+            /** Room */
+            room: string | null;
+            /**
+             * Source
+             * @enum {string}
+             */
+            source: "teacher" | "admin" | "emis" | "head_student";
+            /** Starts At */
+            starts_at: string | null;
+            /**
+             * Status
+             * @enum {string}
+             */
+            status: "planned" | "tentative" | "cancelled";
+            subject: components["schemas"]["AssessmentSubject"];
+            /** Title */
+            title: string;
+        };
+        /**
+         * AssessmentListResponse
+         * @description Controls of the student, soonest first.
+         */
+        AssessmentListResponse: {
+            /** Items */
+            items: components["schemas"]["AssessmentItem"][];
+        };
+        /**
+         * AssessmentPatchBody
+         * @description A partial edit: omitted fields stay, null clears the optional ones.
+         *
+         *     ``status`` ``planned`` confirms a tentative control as it is and ``cancelled``
+         *     dismisses it; changing any other field of a tentative control confirms it.
+         */
+        AssessmentPatchBody: {
+            /** Audience */
+            audience?: components["schemas"]["app__interfaces__http__v1__admin_schedule__shared_schemas__AudienceBody"][] | null;
+            /** Control */
+            control?: ("midterm_1" | "midterm_2" | "final") | null;
+            /** Date */
+            date?: string | null;
+            /** Kind */
+            kind?: ("midterm" | "final" | "other") | null;
+            /** Lesson Id */
+            lesson_id?: string | null;
+            /** Note */
+            note?: string | null;
+            /** Room */
+            room?: string | null;
+            /** Starts At */
+            starts_at?: string | null;
+            /** Status */
+            status?: ("planned" | "cancelled") | null;
+            /** Subject Id */
+            subject_id?: string | null;
+            /** Title */
+            title?: string | null;
+        };
+        /**
+         * AssessmentSubject
+         * @description A subject named in the caller's locale.
+         */
+        AssessmentSubject: {
+            /**
+             * Id
+             * Format: uuid
+             */
+            id: string;
+            /** Name */
+            name: string;
+            /** Short Name */
+            short_name: string;
         };
         /**
          * AttendanceLessonResponse
@@ -4543,6 +6877,12 @@ export interface components {
             id: string;
             /** Is Overridden */
             is_overridden: boolean;
+            /**
+             * Kind
+             * @default other
+             * @enum {string}
+             */
+            kind: "lecture" | "practice" | "midterm" | "final" | "other";
             /** Period */
             period: number;
             room: components["schemas"]["app__interfaces__http__v1__me_classwork__schemas__RoomRefLiteResponse"] | null;
@@ -4560,6 +6900,8 @@ export interface components {
             teacher: components["schemas"]["app__interfaces__http__v1__me_classwork__schemas__PersonRefResponse"] | null;
             /** Topic */
             topic: string | null;
+            /** Topic Source */
+            topic_source?: ("emis" | "manual") | null;
         };
         /**
          * AttendanceReportResponse
@@ -4680,9 +7022,21 @@ export interface components {
             /** Group Ids */
             group_ids: string[];
             /** Roles */
-            roles: ("student" | "teacher" | "admin" | "lms_admin")[];
+            roles: ("student" | "teacher" | "admin" | "lms_admin" | "librarian")[];
             /** Semesters */
             semesters: number[];
+        };
+        /**
+         * AutoSettingsResponse
+         * @description `AutoSettings`: what the system syncs into a subject or lesson notebook.
+         */
+        AutoSettingsResponse: {
+            /** Excluded Refs */
+            excluded_refs: components["schemas"]["ExcludedRefResponse"][];
+            /** Include Classmates */
+            include_classmates: boolean;
+            /** Synced At */
+            synced_at: string | null;
         };
         /**
          * Averages
@@ -4699,6 +7053,9 @@ export interface components {
         /**
          * Bell
          * @description Start and end of one period on some weekdays (jsonb of Term.bells).
+         *
+         *     ``source`` says who set the bell: Administration (``manual``) or the EMIS
+         *     ``class-hours`` sync (``emis``), which keeps its bells equal to EMIS.
          */
         "Bell-Input": {
             /**
@@ -4708,6 +7065,12 @@ export interface components {
             end: string;
             /** Period */
             period: number;
+            /**
+             * Source
+             * @default manual
+             * @enum {string}
+             */
+            source: "manual" | "emis";
             /**
              * Start
              * Format: time
@@ -4719,16 +7082,49 @@ export interface components {
         /**
          * Bell
          * @description Start and end of one period on some weekdays (jsonb of Term.bells).
+         *
+         *     ``source`` says who set the bell: Administration (``manual``) or the EMIS
+         *     ``class-hours`` sync (``emis``), which keeps its bells equal to EMIS.
          */
         "Bell-Output": {
             /** End */
             end: string;
             /** Period */
             period: number;
+            /**
+             * Source
+             * @default manual
+             * @enum {string}
+             */
+            source: "manual" | "emis";
             /** Start */
             start: string;
             /** Weekdays */
             weekdays: number[];
+        };
+        /**
+         * BlockAnswer
+         * @description Accepted answers of a text or number question.
+         */
+        BlockAnswer: {
+            /** Accepted */
+            accepted?: string[] | null;
+            /**
+             * Case Sensitive
+             * @default false
+             */
+            case_sensitive: boolean;
+            /** Regex */
+            regex?: string | null;
+            /**
+             * Tolerance
+             * @default 0
+             */
+            tolerance: number;
+            /** Value */
+            value?: number | null;
+        } & {
+            [key: string]: unknown;
         };
         /**
          * BlockBody
@@ -4738,11 +7134,262 @@ export interface components {
             /** Reason */
             reason: string;
         };
+        /**
+         * BlockCard
+         * @description A flash card.
+         */
+        BlockCard: {
+            /** Back */
+            back: string;
+            /** Front */
+            front: string;
+            /**
+             * Id
+             * @default
+             */
+            id: string;
+        } & {
+            [key: string]: unknown;
+        };
+        /**
+         * BlockOption
+         * @description An answer option of a choice question.
+         */
+        BlockOption: {
+            /**
+             * Correct
+             * @default false
+             */
+            correct: boolean;
+            /**
+             * Id
+             * @default
+             */
+            id: string;
+            /**
+             * Pinned
+             * @default false
+             */
+            pinned: boolean;
+            /** Text */
+            text: string;
+        } & {
+            [key: string]: unknown;
+        };
+        /**
+         * BlockQuestion
+         * @description A question of a test block.
+         */
+        BlockQuestion: {
+            answer?: components["schemas"]["BlockAnswer"] | null;
+            /** Explanation */
+            explanation?: string | null;
+            /**
+             * Id
+             * @default
+             */
+            id: string;
+            /** Options */
+            options?: components["schemas"]["BlockOption"][] | null;
+            /**
+             * Points
+             * @default 1
+             */
+            points: number;
+            /** Prompt */
+            prompt: string;
+            /**
+             * Type
+             * @enum {string}
+             */
+            type: "single" | "multiple" | "text" | "number";
+        } & {
+            [key: string]: unknown;
+        };
         /** Body_import_preview_v1_admin_students_import_post */
         Body_import_preview_v1_admin_students_import_post: {
             /** File */
             file: string;
         };
+        /**
+         * BookActionBody
+         * @description `{reason?}` of unpublish and takedown (a reason is required for takedown).
+         */
+        BookActionBody: {
+            /** Reason */
+            reason?: string | null;
+        };
+        /**
+         * BookBlockSchema
+         * @description `book` block of a card: the rights line.
+         */
+        BookBlockSchema: {
+            /** Download Allowed */
+            download_allowed: boolean;
+            /** Licence */
+            licence: string | null;
+            rights: components["schemas"]["Rights"];
+        };
+        /**
+         * BookDraftSchema
+         * @description `BookDraft`: the detail, the saved input and the publish checklist.
+         */
+        BookDraftSchema: {
+            /** Checklist */
+            checklist: components["schemas"]["ChecklistEntrySchema"][];
+            input: components["schemas"]["BookInputBody"];
+            item: components["schemas"]["ItemDetailSchema"];
+        };
+        /**
+         * BookFileBody
+         * @description `POST /manage/library/books/{id}/files`.
+         */
+        BookFileBody: {
+            /**
+             * File Id
+             * Format: uuid
+             */
+            file_id: string;
+            format: components["schemas"]["FileFormat"];
+            /**
+             * Is Primary
+             * @default false
+             */
+            is_primary: boolean;
+        };
+        /**
+         * BookInputBody
+         * @description `BookInput`: the book form (POST) and the editor's saved data (GET draft).
+         */
+        BookInputBody: {
+            /** Authors */
+            authors: string[];
+            /** Cover File Id */
+            cover_file_id?: string | null;
+            /** Description */
+            description?: string | null;
+            /** Download Allowed */
+            download_allowed: boolean;
+            /** Isbn */
+            isbn?: string | null;
+            language: components["schemas"]["ItemLanguage"];
+            /** Licence */
+            licence?: string | null;
+            /** Publisher */
+            publisher?: string | null;
+            rights: components["schemas"]["Rights"];
+            rights_basis?: components["schemas"]["RightsBasisSchema"];
+            /** Rights Proof File Id */
+            rights_proof_file_id?: string | null;
+            /** Subjects */
+            subjects: components["schemas"]["BookSubjectInput"][];
+            /** Subtitle */
+            subtitle?: string | null;
+            /** Title */
+            title: string;
+            /** Topics */
+            topics: components["schemas"]["BookTopicInput"][];
+            /** Translators */
+            translators?: string[];
+            type: components["schemas"]["ItemType"];
+            visibility: components["schemas"]["Visibility-Output"];
+            /** Year Published */
+            year_published?: number | null;
+            /** Years Of Study */
+            years_of_study: number[];
+        };
+        /**
+         * BookPatchBody
+         * @description `PATCH /manage/library/books/{id}`: only the keys that were sent change.
+         */
+        BookPatchBody: {
+            /** Authors */
+            authors?: string[] | null;
+            /** Cover File Id */
+            cover_file_id?: string | null;
+            /** Description */
+            description?: string | null;
+            /** Download Allowed */
+            download_allowed?: boolean | null;
+            /** Isbn */
+            isbn?: string | null;
+            language?: components["schemas"]["ItemLanguage"] | null;
+            /** Licence */
+            licence?: string | null;
+            /** Publisher */
+            publisher?: string | null;
+            rights?: components["schemas"]["Rights"] | null;
+            rights_basis?: components["schemas"]["RightsBasisSchema"] | null;
+            /** Rights Proof File Id */
+            rights_proof_file_id?: string | null;
+            /** Subjects */
+            subjects?: components["schemas"]["BookSubjectInput"][] | null;
+            /** Subtitle */
+            subtitle?: string | null;
+            /** Title */
+            title?: string | null;
+            /** Topics */
+            topics?: components["schemas"]["BookTopicInput"][] | null;
+            /** Translators */
+            translators?: string[] | null;
+            type?: components["schemas"]["ItemType"] | null;
+            visibility?: components["schemas"]["app__modules__library__domain__enums__Visibility"] | null;
+            /** Year Published */
+            year_published?: number | null;
+            /** Years Of Study */
+            years_of_study?: number[] | null;
+        };
+        /**
+         * BookRowSchema
+         * @description `BookRow`: a line of the librarian's book table.
+         */
+        BookRowSchema: {
+            item: components["schemas"]["ItemCardSchema"];
+            rights: components["schemas"]["Rights"];
+            status: components["schemas"]["ItemStatus"];
+            text_status: components["schemas"]["TextStatus"];
+            /**
+             * Updated At
+             * Format: date-time
+             */
+            updated_at: string;
+            visibility: components["schemas"]["Visibility-Output"];
+        };
+        /**
+         * BookSubjectInput
+         * @description A subject of the book with its role and optional year of study.
+         */
+        BookSubjectInput: {
+            role: components["schemas"]["SubjectRole"];
+            /**
+             * Subject Id
+             * Format: uuid
+             */
+            subject_id: string;
+            /** Year Of Study */
+            year_of_study?: number | null;
+        };
+        /**
+         * BookTopicInput
+         * @description A topic the book feeds, with an optional chapter range.
+         */
+        BookTopicInput: {
+            /** Page From */
+            page_from?: number | null;
+            /** Page To */
+            page_to?: number | null;
+            /**
+             * Topic Id
+             * Format: uuid
+             */
+            topic_id: string;
+        };
+        /**
+         * BreakerState
+         * @description State of the circuit breaker (`UniLibraryStatus.breaker`).
+         * @enum {string}
+         */
+        BreakerState: "closed" | "open" | "half_open";
         /**
          * BroadcastInputBody
          * @description Create a broadcast draft.
@@ -4838,12 +7485,65 @@ export interface components {
             title: string;
         };
         /**
+         * BudgetResponse
+         * @description The session and the day budget.
+         */
+        BudgetResponse: {
+            day: components["schemas"]["app__interfaces__http__v1__notebooks__schemas_common__UsagePartResponse"];
+            session: components["schemas"]["app__interfaces__http__v1__notebooks__schemas_common__UsagePartResponse"];
+        };
+        /**
+         * CacheStatsResponse
+         * @description Cache counters.
+         */
+        CacheStatsResponse: {
+            /** Hits */
+            hits: number;
+            /** Misses */
+            misses: number;
+            /** Stale Served */
+            stale_served: number;
+        };
+        /**
          * CalendarTokenResponse
          * @description The secret feed URL; shown once.
          */
         CalendarTokenResponse: {
             /** Url */
             url: string;
+        };
+        /**
+         * CallRecordResponse
+         * @description One of the last calls to UniLibrary.
+         */
+        CallRecordResponse: {
+            /**
+             * At
+             * Format: date-time
+             */
+            at: string;
+            /** Ms */
+            ms: number;
+            /** Ok */
+            ok: boolean;
+            /** Path */
+            path: string;
+        };
+        /**
+         * CanSchema
+         * @description What the caller may do with the item.
+         */
+        CanSchema: {
+            /** Add To Notebook */
+            add_to_notebook: boolean;
+            /** Download */
+            download: boolean;
+            /** Edit */
+            edit: boolean;
+            /** Read */
+            read: boolean;
+            /** Report */
+            report: boolean;
         };
         /**
          * Card
@@ -4914,6 +7614,22 @@ export interface components {
             new_password: string;
         };
         /**
+         * ChatConfig
+         * @description `notebooks.chat_config` (§ 3.3.6).
+         */
+        ChatConfig: {
+            /** Custom Prompt */
+            custom_prompt?: string | null;
+            /** Goal */
+            goal?: string | null;
+            /** @default auto */
+            language: components["schemas"]["ChatLanguage"];
+            /** @default default */
+            length: components["schemas"]["ChatLength"];
+            /** @default default */
+            style: components["schemas"]["ChatStyle"];
+        };
+        /**
          * ChatDetailResponse
          * @description ChatDetail = ChatItem plus messages and the shared flag.
          */
@@ -4922,7 +7638,9 @@ export interface components {
              * Assistant
              * @enum {string}
              */
-            assistant: "student" | "admin";
+            assistant: "student" | "admin" | "lms_author";
+            /** Course Id */
+            course_id?: string | null;
             /**
              * Id
              * Format: uuid
@@ -4939,8 +7657,39 @@ export interface components {
             pending_approvals: number;
             /** Shared */
             shared: boolean;
+            /**
+             * Tier
+             * @enum {string}
+             */
+            tier: "fast" | "smart";
             /** Title */
             title: string;
+        };
+        /**
+         * ChatHistoryResponse
+         * @description `{messages}`: the last messages of the thread, oldest first.
+         */
+        ChatHistoryResponse: {
+            /** Messages */
+            messages: components["schemas"]["NotebookMessageResponse"][];
+        };
+        /**
+         * ChatInput
+         * @description An assistant chat up to a message (`until_seq`, default: the latest).
+         */
+        ChatInput: {
+            /**
+             * Chat Id
+             * Format: uuid
+             */
+            chat_id: string;
+            /**
+             * @description discriminator enum property added by openapi-typescript
+             * @enum {string}
+             */
+            kind: "chat";
+            /** Until Seq */
+            until_seq?: number | null;
         };
         /**
          * ChatItemResponse
@@ -4951,7 +7700,9 @@ export interface components {
              * Assistant
              * @enum {string}
              */
-            assistant: "student" | "admin";
+            assistant: "student" | "admin" | "lms_author";
+            /** Course Id */
+            course_id?: string | null;
             /**
              * Id
              * Format: uuid
@@ -4964,9 +7715,26 @@ export interface components {
             last_message_at: string;
             /** Pending Approvals */
             pending_approvals: number;
+            /**
+             * Tier
+             * @enum {string}
+             */
+            tier: "fast" | "smart";
             /** Title */
             title: string;
         };
+        /**
+         * ChatLanguage
+         * @description Answer language of the notebook chat; ``auto`` follows the user's locale.
+         * @enum {string}
+         */
+        ChatLanguage: "auto" | "uz" | "ru" | "en";
+        /**
+         * ChatLength
+         * @description Answer length of the notebook chat.
+         * @enum {string}
+         */
+        ChatLength: "default" | "shorter" | "longer";
         /**
          * ChatMessage
          * @description One message of a shared chat.
@@ -4992,6 +7760,8 @@ export interface components {
              * Format: date-time
              */
             created_at: string;
+            /** Feedback */
+            feedback: ("up" | "down") | null;
             /** File Ids */
             file_ids: string[];
             /**
@@ -5005,7 +7775,15 @@ export interface components {
             text: string;
             /** Tool Calls */
             tool_calls: components["schemas"]["ToolCallViewResponse"][];
+            /** Web */
+            web: components["schemas"]["WebResultResponse"][];
         };
+        /**
+         * ChatStyle
+         * @description Answer style of the notebook chat (§ 3.3.6).
+         * @enum {string}
+         */
+        ChatStyle: "default" | "learning_guide" | "custom";
         /**
          * CheckResponse
          * @description Result of POST /v1/admin/timetable/check.
@@ -5015,12 +7793,47 @@ export interface components {
             conflicts: components["schemas"]["ConflictResponse"][];
         };
         /**
+         * ChecklistEntrySchema
+         * @description One check of the publish checklist.
+         */
+        ChecklistEntrySchema: {
+            /** Key */
+            key: string;
+            /** Ok */
+            ok: boolean;
+        };
+        /**
          * CheckpointBody
          * @description Name a checkpoint.
          */
         CheckpointBody: {
             /** Label */
             label: string;
+        };
+        /**
+         * Citation
+         * @description A numbered citation with a snapshot of the cited passage (§ 3.3.5).
+         */
+        Citation: {
+            /** N */
+            n: number;
+            /** Page */
+            page?: number | null;
+            /**
+             * Passage Id
+             * Format: uuid
+             */
+            passage_id: string;
+            /** Snippet */
+            snippet: string;
+            /**
+             * Source Id
+             * Format: uuid
+             */
+            source_id: string;
+            source_kind: components["schemas"]["SourceKind"];
+            /** Source Title */
+            source_title: string;
         };
         /**
          * ClientBody
@@ -5109,7 +7922,7 @@ export interface components {
         };
         /**
          * ConflictResponse
-         * @description Conflict.
+         * @description Conflict; ``week_parity`` says in which weeks the other entry runs.
          */
         ConflictResponse: {
             /** Description */
@@ -5119,6 +7932,8 @@ export interface components {
              * @enum {string}
              */
             kind: "teacher" | "room" | "audience";
+            /** Week Parity */
+            week_parity?: ("every" | "odd" | "even") | null;
             /** With Entry Id */
             with_entry_id: string | null;
             /** With Lesson Id */
@@ -5209,6 +8024,50 @@ export interface components {
             consent_challenge: string;
         };
         /**
+         * ControlPeriod
+         * @description The dates of a control week: both ends are control days.
+         */
+        ControlPeriod: {
+            /**
+             * End
+             * Format: date
+             */
+            end: string;
+            /**
+             * Start
+             * Format: date
+             */
+            start: string;
+        };
+        /**
+         * ControlPeriodResponse
+         * @description The control week Administration set for the term.
+         */
+        ControlPeriodResponse: {
+            /**
+             * End
+             * Format: date
+             */
+            end: string;
+            /**
+             * Start
+             * Format: date
+             */
+            start: string;
+        };
+        /**
+         * ControlPeriods
+         * @description The control weeks of a term, set by Administration (Term.control_periods).
+         *
+         *     A semester has two midterm controls and one final control. A period that is not
+         *     set yet is None.
+         */
+        ControlPeriods: {
+            final?: components["schemas"]["ControlPeriod"] | null;
+            midterm_1?: components["schemas"]["ControlPeriod"] | null;
+            midterm_2?: components["schemas"]["ControlPeriod"] | null;
+        };
+        /**
          * CopyResponse
          * @description Result of copying a timetable.
          */
@@ -5270,6 +8129,71 @@ export interface components {
             visibility: "public" | "invite";
         };
         /**
+         * CoursePlanCreate
+         * @description A course plan (course workspaces only).
+         */
+        CoursePlanCreate: {
+            /**
+             * @description discriminator enum property added by openapi-typescript
+             * @enum {string}
+             */
+            kind: "course_plan";
+            options?: components["schemas"]["CoursePlanOptions"];
+            /** Prompt */
+            prompt?: string | null;
+        };
+        /**
+         * CoursePlanInput
+         * @description A plan of a course (the ``course_plan`` output); the author may edit it.
+         */
+        CoursePlanInput: {
+            /**
+             * Goals
+             * @description Course learning outcomes.
+             */
+            goals?: string[];
+            /** Sections */
+            sections: components["schemas"]["PlanSectionInput"][];
+            /**
+             * Summary
+             * @description Course overview.
+             * @default
+             */
+            summary: string;
+        };
+        /**
+         * CoursePlanOptions
+         * @description Options of a course plan: how deep, what to concentrate on, how many sections.
+         */
+        CoursePlanOptions: {
+            /**
+             * Depth
+             * @default overview
+             * @enum {string}
+             */
+            depth: "overview" | "detailed";
+            /** Focus */
+            focus?: string | null;
+            /** Language */
+            language?: ("uz" | "ru" | "en") | null;
+            /** Sections Hint */
+            sections_hint?: number | null;
+            /** Source Ids */
+            source_ids?: string[] | null;
+        };
+        /**
+         * CourseSectionItemResponse
+         * @description One section of the draft outline.
+         */
+        CourseSectionItemResponse: {
+            /** Id */
+            id: string;
+            /** Steps */
+            steps: components["schemas"]["CourseStepItemResponse"][];
+            /** Title */
+            title: string;
+        };
+        /**
          * CourseStaffItemResponse
          * @description `CourseStaffItem`.
          */
@@ -5291,15 +8215,71 @@ export interface components {
          */
         CourseStatus: "active" | "archived";
         /**
+         * CourseStepItemResponse
+         * @description One step of the draft outline; `added` when its draft is a source already.
+         */
+        CourseStepItemResponse: {
+            /** Added */
+            added: boolean;
+            /**
+             * Id
+             * Format: uuid
+             */
+            id: string;
+            /** Title */
+            title: string;
+        };
+        /**
+         * CourseStepsResponse
+         * @description GET /v1/notebooks/{id}/course-steps: the draft outline for the step picker.
+         */
+        CourseStepsResponse: {
+            /**
+             * Course Id
+             * Format: uuid
+             */
+            course_id: string;
+            /** Sections */
+            sections: components["schemas"]["CourseSectionItemResponse"][];
+            /** Title */
+            title: string;
+        };
+        /**
+         * CourseWorkspaceResponse
+         * @description The workspace of a course and what the caller may do in it.
+         */
+        CourseWorkspaceResponse: {
+            /** Can Write */
+            can_write: boolean;
+            /**
+             * Course Id
+             * Format: uuid
+             */
+            course_id: string;
+            /** Created */
+            created: boolean;
+            /**
+             * Notebook Id
+             * Format: uuid
+             */
+            notebook_id: string;
+            /** Title */
+            title: string;
+        };
+        /**
          * CreateChatBody
-         * @description POST /v1/ai/chats.
+         * @description POST /v1/ai/chats; `tier` only matters for the student assistant.
          */
         CreateChatBody: {
             /**
              * Assistant
              * @enum {string}
              */
-            assistant: "student" | "admin";
+            assistant: "student" | "admin" | "lms_author";
+            /** Course Id */
+            course_id?: string | null;
+            /** Tier */
+            tier?: ("fast" | "smart") | null;
         };
         /**
          * CreateConnectorBody
@@ -5331,7 +8311,20 @@ export interface components {
             slug: string;
             /** Title */
             title: string;
-            visibility: components["schemas"]["Visibility"];
+            visibility: components["schemas"]["app__modules__lms__domain__authoring__enums__Visibility"];
+        };
+        /**
+         * CreateLabelBody
+         * @description POST /v1/notebooks/{id}/labels: a name of 1 to 40 characters and an emoji.
+         */
+        CreateLabelBody: {
+            /**
+             * Emoji
+             * @default
+             */
+            emoji: string;
+            /** Name */
+            name: string;
         };
         /**
          * CreateLinkBody
@@ -5347,6 +8340,16 @@ export interface components {
             kind: "url" | "file";
             /** Target Url */
             target_url?: string | null;
+        };
+        /**
+         * CreateNotebookBody
+         * @description POST /v1/notebooks: both fields are optional (the AI names an untitled one).
+         */
+        CreateNotebookBody: {
+            /** Emoji */
+            emoji?: string | null;
+            /** Title */
+            title?: string | null;
         };
         /**
          * CreateSetBody
@@ -5393,6 +8396,31 @@ export interface components {
             title: string;
         };
         /**
+         * CreatedSectionResponse
+         * @description A section created by the Apply.
+         */
+        CreatedSectionResponse: {
+            /** Id */
+            id: string;
+            /** Title */
+            title: string;
+        };
+        /**
+         * CreatedStepResponse
+         * @description A step created by the Apply.
+         */
+        CreatedStepResponse: {
+            /** Section Id */
+            section_id: string;
+            /**
+             * Step Id
+             * Format: uuid
+             */
+            step_id: string;
+            /** Title */
+            title: string;
+        };
+        /**
          * CuratorStudentResponse
          * @description ``CuratorStudent``.
          */
@@ -5421,6 +8449,48 @@ export interface components {
              * Format: uuid
              */
             user_id: string;
+        };
+        /**
+         * DataTableCreate
+         * @description A data table.
+         */
+        DataTableCreate: {
+            /**
+             * @description discriminator enum property added by openapi-typescript
+             * @enum {string}
+             */
+            kind: "data_table";
+            options?: components["schemas"]["DataTableOptions"];
+            /** Prompt */
+            prompt?: string | null;
+        };
+        /**
+         * DataTableOptions
+         * @description `DataTableOptions` of § 4.4: the row cap (the focus prompt names columns).
+         */
+        DataTableOptions: {
+            /** Language */
+            language?: ("uz" | "ru" | "en") | null;
+            /**
+             * Max Rows
+             * @default 25
+             */
+            max_rows: number;
+            /** Source Ids */
+            source_ids?: string[] | null;
+        };
+        /**
+         * DayCountResponse
+         * @description Reviews on one study day (a Tashkent calendar day).
+         */
+        DayCountResponse: {
+            /** Count */
+            count: number;
+            /**
+             * Date
+             * Format: date
+             */
+            date: string;
         };
         /**
          * DayGradesResponse
@@ -5478,6 +8548,12 @@ export interface components {
             id: string;
             /** Is Overridden */
             is_overridden: boolean;
+            /**
+             * Kind
+             * @default other
+             * @enum {string}
+             */
+            kind: "lecture" | "practice" | "midterm" | "final" | "other";
             /** Period */
             period: number;
             room: components["schemas"]["app__interfaces__http__v1__me_classwork__schemas__RoomRefLiteResponse"] | null;
@@ -5500,6 +8576,8 @@ export interface components {
             teacher: components["schemas"]["app__interfaces__http__v1__me_classwork__schemas__PersonRefResponse"] | null;
             /** Topic */
             topic: string | null;
+            /** Topic Source */
+            topic_source?: ("emis" | "manual") | null;
         };
         /**
          * DeleteAccountBody
@@ -5542,6 +8620,57 @@ export interface components {
             reason: string;
         };
         /**
+         * DiscoverBody
+         * @description `POST /notebooks/{id}/discover`.
+         *
+         *     `fast` is one web search; `deep` plans several queries, searches them and ranks
+         *     the pages, and costs `deep_cost` of today's searches (`GET /ai/web-search`).
+         */
+        DiscoverBody: {
+            /**
+             * Mode
+             * @default fast
+             * @enum {string}
+             */
+            mode: "fast" | "deep";
+            /** Query */
+            query: string;
+        };
+        /**
+         * DiscoverResponse
+         * @description `DiscoverResults`: ranked pages, what was searched and today's searches.
+         */
+        DiscoverResponse: {
+            /**
+             * Mode
+             * @enum {string}
+             */
+            mode: "fast" | "deep";
+            /** Queries */
+            queries: string[];
+            quota: components["schemas"]["WebQuotaResponse"];
+            /** Results */
+            results: components["schemas"]["DiscoverResultResponse"][];
+        };
+        /**
+         * DiscoverResultResponse
+         * @description `DiscoverResult`: a page to add as a URL source.
+         */
+        DiscoverResultResponse: {
+            /** Already Added */
+            already_added: boolean;
+            /** Site */
+            site: string;
+            /** Snippet */
+            snippet: string;
+            /** Title */
+            title: string;
+            /** Url */
+            url: string;
+            /** Why */
+            why: string;
+        };
+        /**
          * DownloadUrlResponse
          * @description A presigned URL valid for 60 seconds.
          */
@@ -5566,6 +8695,51 @@ export interface components {
             new_email: string;
             /** Password */
             password: string;
+        };
+        /**
+         * EmisClassHourResponse
+         * @description EmisClassHour: ``pair_number`` is 0-based, times are ``HH:MM``.
+         */
+        EmisClassHourResponse: {
+            /**
+             * Begin Time
+             * Format: time
+             */
+            begin_time: string;
+            /**
+             * End Time
+             * Format: time
+             */
+            end_time: string;
+            /** Pair Number */
+            pair_number: number;
+        };
+        /**
+         * EmisClassResponse
+         * @description EmisClass: ``pair_number`` is 0-based, ``subgroup`` is the student's own half.
+         */
+        EmisClassResponse: {
+            /** Class Id */
+            class_id: number;
+            /**
+             * Date
+             * Format: date
+             */
+            date: string;
+            /**
+             * Kind
+             * @enum {string}
+             */
+            kind: "lecture" | "practice" | "midterm" | "final" | "other";
+            /** Pair Number */
+            pair_number: number;
+            /** Room */
+            room: string | null;
+            /** Subgroup */
+            subgroup: (1 | 2) | null;
+            subject: components["schemas"]["EmisSubjectResponse"];
+            teacher: components["schemas"]["EmisTeacherResponse"] | null;
+            topic: components["schemas"]["EmisTopicResponse"] | null;
         };
         /**
          * EmisMarkResponse
@@ -5653,6 +8827,46 @@ export interface components {
             name_uz: string;
         };
         /**
+         * EmisTeacherResponse
+         * @description EmisTeacher.
+         */
+        EmisTeacherResponse: {
+            /** Emis Id */
+            emis_id: number | null;
+            /** First Name */
+            first_name: string;
+            /** Last Name */
+            last_name: string;
+            /** Middle Name */
+            middle_name: string | null;
+        };
+        /**
+         * EmisTopicResponse
+         * @description EmisTopic.
+         */
+        EmisTopicResponse: {
+            /** Description */
+            description: string | null;
+            /** Homework File Url */
+            homework_file_url: string | null;
+            /** Name */
+            name: string;
+            /** Topic File Url */
+            topic_file_url: string | null;
+            /** Video Url */
+            video_url: string | null;
+        };
+        /**
+         * ExcludedRefResponse
+         * @description A material left out of an auto notebook.
+         */
+        ExcludedRefResponse: {
+            /** Ref Key */
+            ref_key: string;
+            /** Title */
+            title: string;
+        };
+        /**
          * ExcuseBody
          * @description Body of ``PUT /v1/staff/lessons/{id}/attendance/excuse``.
          */
@@ -5666,6 +8880,39 @@ export interface components {
              * Format: uuid
              */
             student_id: string;
+        };
+        /**
+         * ExternalAccess
+         * @description Access class of an external record (`resource_modifier_id` 1, 2, 3).
+         * @enum {string}
+         */
+        ExternalAccess: "open" | "partial" | "closed";
+        /**
+         * ExternalBlockSchema
+         * @description `external` block of a card: the UniLibrary record.
+         */
+        ExternalBlockSchema: {
+            access: components["schemas"]["ExternalAccess"];
+            /**
+             * Category
+             * @enum {integer}
+             */
+            category: 1 | 2 | 3 | 4;
+            /** External Id */
+            external_id: string;
+            /** Field Name */
+            field_name: string;
+            /** Gone */
+            gone: boolean;
+            /**
+             * Source
+             * @constant
+             */
+            source: "unilibrary";
+            /** Type Name */
+            type_name: string;
+            /** View Url */
+            view_url: string;
         };
         /**
          * ExtraLessonInputBody
@@ -5692,6 +8939,127 @@ export interface components {
             teacher_id?: string | null;
             /** Topic */
             topic?: string | null;
+        };
+        /**
+         * FeedAction
+         * @description `POST .../feeds/{id}/{action}`; only enable and disable work without a sync.
+         * @enum {string}
+         */
+        FeedAction: "dry-run" | "run" | "enable" | "disable";
+        /**
+         * FeedInputBody
+         * @description `FeedInput`: a new feed.
+         */
+        FeedInputBody: {
+            /** Max Items */
+            max_items: number;
+            /** Name */
+            name: string;
+            params: components["schemas"]["FeedParams"];
+        };
+        /**
+         * FeedParams
+         * @description The `params` jsonb of a feed (`Feed.params` of the TypeScript contract).
+         */
+        FeedParams: {
+            /** Access */
+            access?: components["schemas"]["ExternalAccess"][];
+            /**
+             * Category
+             * @default 1
+             */
+            category: number;
+            /** Field Ids */
+            field_ids?: number[];
+            /** Language Ids */
+            language_ids?: number[];
+            /** Type Ids */
+            type_ids?: number[];
+        };
+        /**
+         * FeedPatchBody
+         * @description `Partial<FeedInput>`: only the keys that were sent are applied.
+         */
+        FeedPatchBody: {
+            /** Max Items */
+            max_items?: number | null;
+            /** Name */
+            name?: string | null;
+            params?: components["schemas"]["FeedParams"] | null;
+        };
+        /**
+         * FeedResponse
+         * @description `Feed`.
+         */
+        FeedResponse: {
+            /** Enabled */
+            enabled: boolean;
+            /** Estimate */
+            estimate: number | null;
+            /**
+             * Id
+             * Format: uuid
+             */
+            id: string;
+            /** Last Count */
+            last_count: number | null;
+            /** Last Run At */
+            last_run_at: string | null;
+            /** Last Status */
+            last_status: ("ok" | "error") | null;
+            /** Max Items */
+            max_items: number;
+            /** Name */
+            name: string;
+            params: components["schemas"]["FeedParams"];
+        };
+        /**
+         * FeedbackBody
+         * @description `POST /notebooks/{id}/chat/messages/{mid}/feedback`.
+         */
+        FeedbackBody: {
+            /** Comment */
+            comment?: string | null;
+            /**
+             * Rating
+             * @enum {string}
+             */
+            rating: "up" | "down";
+        };
+        /**
+         * FieldMapEntrySchema
+         * @description `FieldMapEntry`: this subject is that UniLibrary field.
+         */
+        FieldMapEntrySchema: {
+            /** External Field Id */
+            external_field_id: number;
+            /**
+             * Subject Id
+             * Format: uuid
+             */
+            subject_id: string;
+        };
+        /**
+         * FileFormat
+         * @description Format of an item file.
+         * @enum {string}
+         */
+        FileFormat: "pdf" | "epub" | "md" | "txt" | "docx" | "pptx";
+        /**
+         * FileInput
+         * @description One of My files (PDF, DOCX, TXT, MD).
+         */
+        FileInput: {
+            /**
+             * File Id
+             * Format: uuid
+             */
+            file_id: string;
+            /**
+             * @description discriminator enum property added by openapi-typescript
+             * @enum {string}
+             */
+            kind: "file";
         };
         /**
          * FileItemResponse
@@ -5740,13 +9108,62 @@ export interface components {
          * @description Why a file was uploaded.
          * @enum {string}
          */
-        FilePurpose: "ai_upload" | "link" | "mail";
+        FilePurpose: "ai_upload" | "link" | "mail" | "library_book" | "library_cover" | "library_material";
         /**
          * FileStatus
          * @description Lifecycle of a stored file (README -> Models -> File).
          * @enum {string}
          */
         FileStatus: "pending" | "processing" | "ready" | "rejected" | "deleted";
+        /**
+         * FileUrlSchema
+         * @description `ItemFileUrl`: a presigned URL valid for 15 minutes.
+         */
+        FileUrlSchema: {
+            /** Byte Size */
+            byte_size: number;
+            /** Content Type */
+            content_type: string;
+            /**
+             * Expires At
+             * Format: date-time
+             */
+            expires_at: string;
+            /** Url */
+            url: string;
+        };
+        /**
+         * FlashcardInput
+         * @description One flash card to create.
+         */
+        FlashcardInput: {
+            /**
+             * Back
+             * @description Answer side of the card.
+             */
+            back: string;
+            /**
+             * Front
+             * @description Question side of the card.
+             */
+            front: string;
+        };
+        /**
+         * FlashcardSetInput
+         * @description One of the student's flash card sets.
+         */
+        FlashcardSetInput: {
+            /**
+             * @description discriminator enum property added by openapi-typescript
+             * @enum {string}
+             */
+            kind: "flashcard_set";
+            /**
+             * Set Id
+             * Format: uuid
+             */
+            set_id: string;
+        };
         /**
          * FlashcardSetItemResponse
          * @description `FlashcardSetItem`.
@@ -5774,10 +9191,23 @@ export interface components {
             title: string;
         };
         /**
+         * FlashcardSetResponse
+         * @description The flash card set made from a deck; `created` is false when it existed.
+         */
+        FlashcardSetResponse: {
+            /** Created */
+            created: boolean;
+            /**
+             * Set Id
+             * Format: uuid
+             */
+            set_id: string;
+        };
+        /**
          * FlashcardsBlock
          * @description A block of flash cards studied with spaced repetition.
          */
-        FlashcardsBlock: {
+        "FlashcardsBlock-Input": {
             /** Cards */
             cards?: components["schemas"]["Card"][];
             /**
@@ -5790,6 +9220,58 @@ export interface components {
              * @enum {string}
              */
             type: "flashcards";
+        };
+        /**
+         * FlashcardsBlockInput
+         * @description A flash cards block.
+         */
+        FlashcardsBlockInput: {
+            /**
+             * Cards
+             * @description Cards to add (at most 200).
+             */
+            cards: components["schemas"]["FlashcardInput"][];
+            /**
+             * @description discriminator enum property added by openapi-typescript
+             * @enum {string}
+             */
+            type: "flashcards";
+        };
+        /**
+         * FlashcardsCreate
+         * @description A flash card deck.
+         */
+        FlashcardsCreate: {
+            /**
+             * @description discriminator enum property added by openapi-typescript
+             * @enum {string}
+             */
+            kind: "flashcards";
+            options?: components["schemas"]["FlashcardsOptions"];
+            /** Prompt */
+            prompt?: string | null;
+        };
+        /**
+         * FlashcardsOptions
+         * @description `FlashcardsOptions` of § 4.4.
+         */
+        FlashcardsOptions: {
+            /**
+             * Count
+             * @default standard
+             * @enum {string}
+             */
+            count: "fewer" | "standard" | "more";
+            /**
+             * Difficulty
+             * @default medium
+             * @enum {string}
+             */
+            difficulty: "easy" | "medium" | "hard";
+            /** Language */
+            language?: ("uz" | "ru" | "en") | null;
+            /** Source Ids */
+            source_ids?: string[] | null;
         };
         /**
          * GradeRow
@@ -5956,6 +9438,17 @@ export interface components {
             note: string | null;
         };
         /**
+         * ImportBody
+         * @description `POST /manage/library/import`: the CSV is uploaded first.
+         */
+        ImportBody: {
+            /**
+             * Csv File Id
+             * Format: uuid
+             */
+            csv_file_id: string;
+        };
+        /**
          * ImportConfirmResponse
          * @description Result of confirming an import.
          */
@@ -5966,6 +9459,16 @@ export interface components {
             skipped: number;
             /** Updated */
             updated: number;
+        };
+        /**
+         * ImportErrorSchema
+         * @description A row of the CSV that was not imported.
+         */
+        ImportErrorSchema: {
+            /** Message */
+            message: string;
+            /** Row */
+            row: number;
         };
         /**
          * ImportPreviewResponse
@@ -5985,6 +9488,16 @@ export interface components {
             new: components["schemas"]["ImportRowResponse"][];
             /** Unchanged */
             unchanged: number;
+        };
+        /**
+         * ImportResultSchema
+         * @description `ImportResult`.
+         */
+        ImportResultSchema: {
+            /** Created */
+            created: number;
+            /** Errors */
+            errors: components["schemas"]["ImportErrorSchema"][];
         };
         /**
          * ImportRowResponse
@@ -6007,6 +9520,12 @@ export interface components {
             note: string | null;
         };
         /**
+         * Importance
+         * @description Importance label of a reading-list entry.
+         * @enum {string}
+         */
+        Importance: "essential" | "recommended" | "further";
+        /**
          * ImportedMatchResponse
          * @description An imported record that may be the student's.
          */
@@ -6019,6 +9538,48 @@ export interface components {
             last_name: string;
             /** Needs Confirmation */
             needs_confirmation: boolean;
+        };
+        /**
+         * InfographicCreate
+         * @description An infographic.
+         */
+        InfographicCreate: {
+            /**
+             * @description discriminator enum property added by openapi-typescript
+             * @enum {string}
+             */
+            kind: "infographic";
+            options?: components["schemas"]["InfographicOptions"];
+            /** Prompt */
+            prompt?: string | null;
+        };
+        /**
+         * InfographicOptions
+         * @description `InfographicOptions` of § 4.4 with the defaults filled.
+         */
+        InfographicOptions: {
+            /**
+             * Detail
+             * @default standard
+             * @enum {string}
+             */
+            detail: "concise" | "standard" | "detailed";
+            /** Language */
+            language?: ("uz" | "ru" | "en") | null;
+            /**
+             * Orientation
+             * @default portrait
+             * @enum {string}
+             */
+            orientation: "portrait" | "landscape" | "square";
+            /** Source Ids */
+            source_ids?: string[] | null;
+            /**
+             * Style
+             * @default clean
+             * @enum {string}
+             */
+            style: "clean" | "sketch" | "bento" | "scientific" | "playful";
         };
         /**
          * IntervalsResponse
@@ -6042,6 +9603,92 @@ export interface components {
             /** Invite Code */
             invite_code: string;
         };
+        ItemCardSchema: {
+            [key: string]: unknown;
+        };
+        ItemDetailSchema: {
+            [key: string]: unknown;
+        };
+        /**
+         * ItemFileSchema
+         * @description `ItemFile` of the contract.
+         */
+        ItemFileSchema: {
+            /** Byte Size */
+            byte_size: number;
+            format: components["schemas"]["FileFormat"];
+            /**
+             * Id
+             * Format: uuid
+             */
+            id: string;
+            /** Is Primary */
+            is_primary: boolean;
+            /** Pages */
+            pages: number | null;
+            /** Readable */
+            readable: boolean;
+            text_status: components["schemas"]["TextStatus"];
+            /** Toc */
+            toc: components["schemas"]["TocEntrySchema"][];
+        };
+        /**
+         * ItemKind
+         * @description Three kinds of catalogue item (D1).
+         * @enum {string}
+         */
+        ItemKind: "external" | "book" | "material";
+        /**
+         * ItemLanguage
+         * @description Language and script of an item.
+         * @enum {string}
+         */
+        ItemLanguage: "uz_latn" | "uz_cyrl" | "ru" | "en" | "qq" | "other";
+        /**
+         * ItemSort
+         * @description `?sort=`; without a query the default is the newest first.
+         * @enum {string}
+         */
+        ItemSort: "relevance" | "newest" | "title" | "author";
+        /**
+         * ItemSource
+         * @description `?source=`: which kinds of item to list.
+         * @enum {string}
+         */
+        ItemSource: "all" | "book" | "material" | "external";
+        /**
+         * ItemStatus
+         * @description Lifecycle of an item (doc § 3.5).
+         * @enum {string}
+         */
+        ItemStatus: "draft" | "pending_review" | "changes_requested" | "published" | "held" | "rejected" | "unpublished" | "gone";
+        /**
+         * ItemTagSchema
+         * @description The source tag of a card.
+         */
+        ItemTagSchema: {
+            /** Label */
+            label: string;
+            /**
+             * Source
+             * @enum {string}
+             */
+            source: "unilibrary" | "book" | "material";
+        };
+        /**
+         * ItemTextSchema
+         * @description `ItemText`.
+         */
+        ItemTextSchema: {
+            /** Pages */
+            pages: components["schemas"]["TextPageSchema"][];
+        };
+        /**
+         * ItemType
+         * @description One list of types for all kinds (doc § 3.2).
+         * @enum {string}
+         */
+        ItemType: "textbook" | "manual" | "fiction" | "poetry" | "drama" | "nonfiction" | "reference" | "dictionary" | "lab_manual" | "problem_book" | "article" | "teaching_material" | "presentation" | "worksheet" | "lecture_notes" | "notes" | "practice_set" | "formula_sheet" | "other";
         /**
          * JournalCellResponse
          * @description A cell of the journal.
@@ -6128,6 +9775,61 @@ export interface components {
              */
             user_id: string;
         };
+        /**
+         * LabelAutoResponse
+         * @description The state of the automatic labeling.
+         *
+         *     `error` is the stable reason of a `failed` run (`nothing-to-label`, `provider`,
+         *     `invalid-output`, `limit-reached`, `timeout`), else null.
+         */
+        LabelAutoResponse: {
+            /** Error */
+            error: string | null;
+            /** Finished At */
+            finished_at: string | null;
+            status: components["schemas"]["LabelRunStatus"];
+        };
+        /**
+         * LabelItemResponse
+         * @description `LabelItem`: a topic label and how many sources carry it.
+         */
+        LabelItemResponse: {
+            /** Emoji */
+            emoji: string;
+            /**
+             * Id
+             * Format: uuid
+             */
+            id: string;
+            /** Name */
+            name: string;
+            origin: components["schemas"]["LabelOrigin"];
+            /** Position */
+            position: number;
+            /** Source Count */
+            source_count: number;
+        };
+        /**
+         * LabelListResponse
+         * @description `GET /v1/notebooks/{id}/labels`: the labels and the auto labeling state.
+         */
+        LabelListResponse: {
+            auto: components["schemas"]["LabelAutoResponse"];
+            /** Items */
+            items: components["schemas"]["LabelItemResponse"][];
+        };
+        /**
+         * LabelOrigin
+         * @description Who made a label or a link: the model (`auto`) or the student (`manual`).
+         * @enum {string}
+         */
+        LabelOrigin: "auto" | "manual";
+        /**
+         * LabelRunStatus
+         * @description State of the automatic labeling of a notebook.
+         * @enum {string}
+         */
+        LabelRunStatus: "idle" | "running" | "failed";
         /**
          * LearningAnswerBody
          * @description `Answer`: the chosen options, a text or a number (one of them per question).
@@ -6359,12 +10061,21 @@ export interface components {
             id: string;
             /** Outline */
             outline: components["schemas"]["LearningOutlineSectionView"][];
+            /** Points Earned */
+            points_earned?: number | null;
+            /**
+             * Points Total
+             * @default 0
+             */
+            points_total: number;
             /** Progress Pct */
             progress_pct: number | null;
             /** Slug */
             slug: string;
             /** Staff */
             staff: components["schemas"]["LearningCourseStaffItemView"][];
+            /** Steps Completed */
+            steps_completed?: number | null;
             /** Steps Count */
             steps_count: number;
             /** Title */
@@ -6417,6 +10128,11 @@ export interface components {
             /** Id */
             id: string;
             /**
+             * Passed
+             * @default false
+             */
+            passed: boolean;
+            /**
              * @description discriminator enum property added by openapi-typescript
              * @enum {string}
              */
@@ -6461,6 +10177,13 @@ export interface components {
             badge?: ("new" | "changed") | null;
             /** Completed */
             completed?: boolean | null;
+            /** Points Earned */
+            points_earned?: number | null;
+            /**
+             * Points Total
+             * @default 0
+             */
+            points_total: number;
             /**
              * Step Id
              * Format: uuid
@@ -6504,6 +10227,21 @@ export interface components {
             id: string;
             /** Open Attempt Id */
             open_attempt_id: string | null;
+            /**
+             * Passed
+             * @default false
+             */
+            passed: boolean;
+            /**
+             * Points Earned
+             * @default 0
+             */
+            points_earned: number;
+            /**
+             * Points Total
+             * @default 0
+             */
+            points_total: number;
             rules: components["schemas"]["LearningQuizRulesView"];
             /**
              * @description discriminator enum property added by openapi-typescript
@@ -6580,8 +10318,28 @@ export interface components {
         LearningStepView: {
             /** Blocks */
             blocks: (components["schemas"]["LearningTextBlockView"] | components["schemas"]["LearningQuizBlockView"] | components["schemas"]["LearningFlashcardsBlockView"])[];
+            /**
+             * Blocks Passed
+             * @default 0
+             */
+            blocks_passed: number;
+            /**
+             * Blocks Total
+             * @default 0
+             */
+            blocks_total: number;
             /** Completed */
             completed: boolean;
+            /**
+             * Points Earned
+             * @default 0
+             */
+            points_earned: number;
+            /**
+             * Points Total
+             * @default 0
+             */
+            points_total: number;
             /** Preview */
             preview: boolean;
             /**
@@ -6636,10 +10394,59 @@ export interface components {
             /** Markdown */
             markdown: string;
             /**
+             * Passed
+             * @default false
+             */
+            passed: boolean;
+            /**
              * @description discriminator enum property added by openapi-typescript
              * @enum {string}
              */
             type: "text";
+        };
+        /**
+         * LessonDraftCreate
+         * @description The blocks of one lesson (course workspaces only).
+         */
+        LessonDraftCreate: {
+            /**
+             * @description discriminator enum property added by openapi-typescript
+             * @enum {string}
+             */
+            kind: "lesson_draft";
+            options?: components["schemas"]["LessonDraftOptions"];
+            /** Prompt */
+            prompt?: string | null;
+        };
+        /**
+         * LessonDraftOptions
+         * @description Options of a lesson draft; no `step_id` means a new step.
+         */
+        LessonDraftOptions: {
+            /**
+             * Include Flashcards
+             * @default false
+             */
+            include_flashcards: boolean;
+            /**
+             * Include Test
+             * @default false
+             */
+            include_test: boolean;
+            /** Language */
+            language?: ("uz" | "ru" | "en") | null;
+            /**
+             * Length
+             * @default standard
+             * @enum {string}
+             */
+            length: "short" | "standard" | "long";
+            /** Source Ids */
+            source_ids?: string[] | null;
+            /** Step Id */
+            step_id?: string | null;
+            /** Topic */
+            topic?: string | null;
         };
         /**
          * LessonItem
@@ -6673,6 +10480,12 @@ export interface components {
             id: string;
             /** Is Overridden */
             is_overridden: boolean;
+            /**
+             * Kind
+             * @default other
+             * @enum {string}
+             */
+            kind: "lecture" | "practice" | "midterm" | "final" | "other";
             /** Period */
             period: number;
             room: components["schemas"]["RoomRefLite"] | null;
@@ -6690,6 +10503,8 @@ export interface components {
             teacher: components["schemas"]["app__interfaces__http__v1__me_marks__schemas__PersonRef"] | null;
             /** Topic */
             topic: string | null;
+            /** Topic Source */
+            topic_source?: ("emis" | "manual") | null;
         };
         /**
          * LessonPatchBody
@@ -6710,6 +10525,93 @@ export interface components {
             teacher_id?: string | null;
             /** Topic */
             topic?: string | null;
+        };
+        /**
+         * LessonResourceInput
+         * @description A material or attachment of a lesson the student attends.
+         */
+        LessonResourceInput: {
+            /**
+             * @description discriminator enum property added by openapi-typescript
+             * @enum {string}
+             */
+            kind: "lesson_resource";
+            /**
+             * Lesson Id
+             * Format: uuid
+             */
+            lesson_id: string;
+            /**
+             * Link Id
+             * Format: uuid
+             */
+            link_id: string;
+        };
+        /**
+         * LibraryItemInput
+         * @description A library book or material, or a page range of one of its files.
+         *
+         *     Without `file_id` the primary file is read. A whole textbook can be longer than
+         *     a source may be, so a chapter range (`page_from`, `page_to`, 1-based and
+         *     inclusive) keeps it under the limit.
+         */
+        LibraryItemInput: {
+            /** File Id */
+            file_id?: string | null;
+            /**
+             * Item Id
+             * Format: uuid
+             */
+            item_id: string;
+            /**
+             * @description discriminator enum property added by openapi-typescript
+             * @enum {string}
+             */
+            kind: "library_item";
+            /** Page From */
+            page_from?: number | null;
+            /** Page To */
+            page_to?: number | null;
+        };
+        /**
+         * LibraryNotesInput
+         * @description The student's own highlights and notes in a library book or material.
+         */
+        LibraryNotesInput: {
+            /**
+             * Item Id
+             * Format: uuid
+             */
+            item_id: string;
+            /**
+             * @description discriminator enum property added by openapi-typescript
+             * @enum {string}
+             */
+            kind: "library_notes";
+        };
+        /**
+         * LibraryReportBody
+         * @description `POST /library/items/{id}/report`.
+         */
+        LibraryReportBody: {
+            reason: components["schemas"]["ReportReason"];
+            /** Text */
+            text?: string | null;
+        };
+        /**
+         * LibrarySubjectSchema
+         * @description `LibrarySubject`: a subject with its number of visible items.
+         */
+        LibrarySubjectSchema: {
+            /**
+             * Id
+             * Format: uuid
+             */
+            id: string;
+            /** Item Count */
+            item_count: number;
+            /** Name */
+            name: string;
         };
         /**
          * LinkItem
@@ -6764,6 +10666,49 @@ export interface components {
             items: components["schemas"]["LinkItem"][];
             /** Next Cursor */
             next_cursor: string | null;
+        };
+        /**
+         * ListRefSchema
+         * @description A reading list the item is on.
+         */
+        ListRefSchema: {
+            /**
+             * Id
+             * Format: uuid
+             */
+            id: string;
+            importance: components["schemas"]["Importance"];
+            /** Title */
+            title: string;
+        };
+        /**
+         * LmsStepInput
+         * @description A step of an LMS course (text and flash card blocks only).
+         *
+         *     A student adds the live step of a course they are enrolled in; a course workspace
+         *     adds the *draft* of its own course's steps (`draft: true`).
+         */
+        LmsStepInput: {
+            /**
+             * Course Id
+             * Format: uuid
+             */
+            course_id: string;
+            /**
+             * Draft
+             * @default false
+             */
+            draft: boolean;
+            /**
+             * @description discriminator enum property added by openapi-typescript
+             * @enum {string}
+             */
+            kind: "lms_step";
+            /**
+             * Step Id
+             * Format: uuid
+             */
+            step_id: string;
         };
         /**
          * LoginBody
@@ -6873,6 +10818,117 @@ export interface components {
             value: number;
         };
         /**
+         * MaterialBlockSchema
+         * @description `material` block of a card: the uploader attribution.
+         */
+        MaterialBlockSchema: {
+            /** Uploader Cohort */
+            uploader_cohort: string;
+            /** Uploader Name */
+            uploader_name: string;
+            uploader_role: components["schemas"]["UploaderRole"];
+        };
+        /**
+         * MaterialFilesBody
+         * @description `POST /library/materials/{id}/files`: ids of files uploaded for the material.
+         */
+        MaterialFilesBody: {
+            /** File Ids */
+            file_ids: string[];
+        };
+        /**
+         * MaterialInputBody
+         * @description `MaterialInput`: the upload form.
+         */
+        MaterialInputBody: {
+            /** Attested */
+            attested: boolean;
+            /** Body Md */
+            body_md?: string | null;
+            /** Description */
+            description: string;
+            language: components["schemas"]["ItemLanguage"];
+            licence: components["schemas"]["MaterialLicence"];
+            /** Subject Ids */
+            subject_ids: string[];
+            /** Title */
+            title: string;
+            /** Topic Ids */
+            topic_ids?: string[];
+            type: components["schemas"]["ItemType"];
+            /** Years Of Study */
+            years_of_study?: number[];
+        };
+        /**
+         * MaterialLicence
+         * @description Licence the uploader of a material grants.
+         * @enum {string}
+         */
+        MaterialLicence: "all_rights_reserved" | "cc_by" | "cc_by_sa" | "cc_by_nc" | "cc_by_nc_sa";
+        /**
+         * MaterialPatchBody
+         * @description `PATCH /library/materials/{id}`: only the keys that were sent are applied.
+         */
+        MaterialPatchBody: {
+            /** Body Md */
+            body_md?: string | null;
+            /** Description */
+            description?: string | null;
+            /** Title */
+            title?: string | null;
+            /** Topic Ids */
+            topic_ids?: string[] | null;
+        };
+        /**
+         * MessageFeedbackBody
+         * @description POST /v1/ai/chats/{id}/messages/{seq}/feedback.
+         */
+        MessageFeedbackBody: {
+            /** Comment */
+            comment?: string | null;
+            /**
+             * Rating
+             * @enum {string}
+             */
+            rating: "up" | "down";
+        };
+        /**
+         * MessageRole
+         * @description Who wrote a notebook chat message.
+         * @enum {string}
+         */
+        MessageRole: "user" | "assistant";
+        /**
+         * MindMapCreate
+         * @description A mind map.
+         */
+        MindMapCreate: {
+            /**
+             * @description discriminator enum property added by openapi-typescript
+             * @enum {string}
+             */
+            kind: "mind_map";
+            options?: components["schemas"]["MindMapOptions"];
+            /** Prompt */
+            prompt?: string | null;
+        };
+        /**
+         * MindMapOptions
+         * @description `MindMapOptions` of § 4.4.
+         */
+        MindMapOptions: {
+            /**
+             * Detail
+             * @default overview
+             * @enum {string}
+             */
+            detail: "overview" | "detailed";
+            /** Language */
+            language?: ("uz" | "ru" | "en") | null;
+            /** Source Ids */
+            source_ids?: string[] | null;
+        };
+        /**
          * MissingAttendanceResponse
          * @description A teacher and the lessons without submitted attendance.
          */
@@ -6889,6 +10945,16 @@ export interface components {
             /** Count */
             count: number;
             teacher: components["schemas"]["app__interfaces__http__v1__composition__shared_schemas__PersonRefResponse"];
+        };
+        /**
+         * ModerationBody
+         * @description `POST /manage/library/items/{id}/{action}`: a reason code and a free note.
+         */
+        ModerationBody: {
+            /** Note */
+            note?: string | null;
+            /** Reason */
+            reason?: string | null;
         };
         /**
          * ModerationItem
@@ -6972,6 +11038,194 @@ export interface components {
             token: string;
         };
         /**
+         * NoteInput
+         * @description A note written by the student.
+         */
+        NoteInput: {
+            /** Body Md */
+            body_md: string;
+            /**
+             * @description discriminator enum property added by openapi-typescript
+             * @enum {string}
+             */
+            kind: "note";
+            /** Title */
+            title: string;
+        };
+        /**
+         * NotebookDetailResponse
+         * @description `NotebookDetail`: the item plus chat settings, summary and counters.
+         */
+        NotebookDetailResponse: {
+            auto: components["schemas"]["AutoSettingsResponse"] | null;
+            /** Can Write */
+            can_write: boolean;
+            chat_config: components["schemas"]["ChatConfig"];
+            /** Course Id */
+            course_id: string | null;
+            /**
+             * Created At
+             * Format: date-time
+             */
+            created_at: string;
+            /** Emoji */
+            emoji: string | null;
+            /**
+             * Id
+             * Format: uuid
+             */
+            id: string;
+            /** Last Opened At */
+            last_opened_at: string | null;
+            /** Lesson Id */
+            lesson_id: string | null;
+            origin: components["schemas"]["NotebookOrigin"];
+            /** Pinned */
+            pinned: boolean;
+            /** Ready Source Count */
+            ready_source_count: number;
+            /** Selected Source Count */
+            selected_source_count: number;
+            /** Source Count */
+            source_count: number;
+            /** Subject Id */
+            subject_id: string | null;
+            summary: components["schemas"]["NotebookSummary"] | null;
+            summary_status: components["schemas"]["SummaryStatus"];
+            /** Title */
+            title: string;
+            /**
+             * Updated At
+             * Format: date-time
+             */
+            updated_at: string;
+        };
+        /**
+         * NotebookItemResponse
+         * @description `NotebookItem`.
+         */
+        NotebookItemResponse: {
+            /** Can Write */
+            can_write: boolean;
+            /** Course Id */
+            course_id: string | null;
+            /** Emoji */
+            emoji: string | null;
+            /**
+             * Id
+             * Format: uuid
+             */
+            id: string;
+            /** Last Opened At */
+            last_opened_at: string | null;
+            /** Lesson Id */
+            lesson_id: string | null;
+            origin: components["schemas"]["NotebookOrigin"];
+            /** Pinned */
+            pinned: boolean;
+            /** Source Count */
+            source_count: number;
+            /** Subject Id */
+            subject_id: string | null;
+            /** Title */
+            title: string;
+            /**
+             * Updated At
+             * Format: date-time
+             */
+            updated_at: string;
+        };
+        /**
+         * NotebookMessageResponse
+         * @description `NotebookMessage`.
+         */
+        NotebookMessageResponse: {
+            /** Citations */
+            citations: components["schemas"]["Citation"][];
+            /**
+             * Created At
+             * Format: date-time
+             */
+            created_at: string;
+            /** Feedback */
+            feedback: ("up" | "down") | null;
+            /** Followups */
+            followups: string[];
+            /** Grounded */
+            grounded: boolean;
+            /**
+             * Id
+             * Format: uuid
+             */
+            id: string;
+            /** Retrieval */
+            retrieval: boolean;
+            role: components["schemas"]["MessageRole"];
+            /** Seq */
+            seq: number;
+            /** Source Ids */
+            source_ids: string[];
+            /** Stopped */
+            stopped: boolean;
+            /** Text */
+            text: string;
+            /** Web */
+            web: components["schemas"]["WebResultResponse"][];
+        };
+        /**
+         * NotebookOrigin
+         * @description How a notebook came to be: written by the student or kept up by the system.
+         * @enum {string}
+         */
+        NotebookOrigin: "manual" | "subject_auto" | "lesson_auto" | "course";
+        /**
+         * NotebookSummary
+         * @description `notebooks.summary` (§ 3.2.6).
+         */
+        NotebookSummary: {
+            /**
+             * Generated At
+             * Format: date-time
+             */
+            generated_at: string;
+            /** Key Topics */
+            key_topics?: string[];
+            /** Suggested Questions */
+            suggested_questions?: string[];
+            /** Summary */
+            summary: string;
+        };
+        /**
+         * NotebookTurnResponse
+         * @description `NotebookTurn`: both messages of one question, the usage, the proposed output.
+         */
+        NotebookTurnResponse: {
+            /** Action */
+            action: {
+                [key: string]: unknown;
+            } | null;
+            assistant_message: components["schemas"]["NotebookMessageResponse"];
+            usage: components["schemas"]["NotebookUsageResponse"];
+            user_message: components["schemas"]["NotebookMessageResponse"];
+        };
+        /**
+         * NotebookUsageResponse
+         * @description `NotebookUsage`: budget, daily quotas and the outputs generating now.
+         *
+         *     A counter that is switched off has a limit of 0 (clients hide it).
+         */
+        NotebookUsageResponse: {
+            budget: components["schemas"]["BudgetResponse"];
+            /** Generating */
+            generating: number;
+            /** Generating Limit */
+            generating_limit: number;
+            /** Quotas */
+            quotas: {
+                [key: string]: components["schemas"]["QuotaResponse"];
+            };
+        };
+        /**
          * NotificationItemResponse
          * @description One notification in the web center (NotificationItem).
          */
@@ -7029,6 +11283,12 @@ export interface components {
             id: string;
             /** Is Overridden */
             is_overridden: boolean;
+            /**
+             * Kind
+             * @default other
+             * @enum {string}
+             */
+            kind: "lecture" | "practice" | "midterm" | "final" | "other";
             /** Materials Count */
             materials_count: number;
             /** Minutes Left */
@@ -7050,6 +11310,8 @@ export interface components {
             teacher: components["schemas"]["app__interfaces__http__v1__me_classwork__schemas__PersonRefResponse"] | null;
             /** Topic */
             topic: string | null;
+            /** Topic Source */
+            topic_source?: ("emis" | "manual") | null;
         };
         /**
          * OAuthClientResponse
@@ -7066,6 +11328,17 @@ export interface components {
             name: string;
             /** Verified */
             verified: boolean;
+        };
+        /**
+         * OpenCourseWorkspaceBody
+         * @description POST /v1/notebooks/course-workspaces.
+         */
+        OpenCourseWorkspaceBody: {
+            /**
+             * Course Id
+             * Format: uuid
+             */
+            course_id: string;
         };
         /**
          * Option
@@ -7088,6 +11361,29 @@ export interface components {
              */
             pinned: boolean;
             /** Text */
+            text: string;
+        };
+        /**
+         * OptionInput
+         * @description One answer option of a single or multiple choice question.
+         */
+        OptionInput: {
+            /**
+             * Correct
+             * @description True for a correct option.
+             * @default false
+             */
+            correct: boolean;
+            /**
+             * Pinned
+             * @description Keep this option in place when options are shuffled, e.g. "None of the above".
+             * @default false
+             */
+            pinned: boolean;
+            /**
+             * Text
+             * @description Option text.
+             */
             text: string;
         };
         /**
@@ -7204,7 +11500,7 @@ export interface components {
          */
         OutlineStepView: {
             /** Badge */
-            badge?: ("new" | "changed" | "removed" | "mcp") | null;
+            badge?: ("new" | "changed" | "removed" | "mcp" | "ai") | null;
             /**
              * Step Id
              * Format: uuid
@@ -7212,6 +11508,20 @@ export interface components {
             step_id: string;
             /** Title */
             title: string;
+        };
+        /** PageResponse[NotebookItemResponse] */
+        PageResponse_NotebookItemResponse_: {
+            /** Items */
+            items: components["schemas"]["NotebookItemResponse"][];
+            /** Next Cursor */
+            next_cursor?: string | null;
+        };
+        /** PageResponse[PassageItemResponse] */
+        PageResponse_PassageItemResponse_: {
+            /** Items */
+            items: components["schemas"]["PassageItemResponse"][];
+            /** Next Cursor */
+            next_cursor?: string | null;
         };
         /** Page[AdminUserResponse] */
         Page_AdminUserResponse_: {
@@ -7224,6 +11534,13 @@ export interface components {
         Page_AuditItemResponse_: {
             /** Items */
             items: components["schemas"]["app__interfaces__http__v1__id__schemas__AuditItemResponse"][];
+            /** Next Cursor */
+            next_cursor?: string | null;
+        };
+        /** Page[BookRowSchema] */
+        Page_BookRowSchema_: {
+            /** Items */
+            items: components["schemas"]["BookRowSchema"][];
             /** Next Cursor */
             next_cursor?: string | null;
         };
@@ -7248,6 +11565,13 @@ export interface components {
             /** Next Cursor */
             next_cursor?: string | null;
         };
+        /** Page[ItemCardSchema] */
+        Page_ItemCardSchema_: {
+            /** Items */
+            items: components["schemas"]["ItemCardSchema"][];
+            /** Next Cursor */
+            next_cursor?: string | null;
+        };
         /** Page[LessonItemResponse] */
         Page_LessonItemResponse_: {
             /** Items */
@@ -7262,12 +11586,71 @@ export interface components {
             /** Next Cursor */
             next_cursor?: string | null;
         };
+        /** Page[QueueRowResponse] */
+        Page_QueueRowResponse_: {
+            /** Items */
+            items: components["schemas"]["QueueRowResponse"][];
+            /** Next Cursor */
+            next_cursor?: string | null;
+        };
         /** Page[StudentItemResponse] */
         Page_StudentItemResponse_: {
             /** Items */
             items: components["schemas"]["StudentItemResponse"][];
             /** Next Cursor */
             next_cursor?: string | null;
+        };
+        /** Page[UploadRowResponse] */
+        Page_UploadRowResponse_: {
+            /** Items */
+            items: components["schemas"]["UploadRowResponse"][];
+            /** Next Cursor */
+            next_cursor?: string | null;
+        };
+        /**
+         * PassageDetailResponse
+         * @description `PassageDetail`: a passage with the passages before and after it.
+         */
+        PassageDetailResponse: {
+            /** After */
+            after: components["schemas"]["PassageItemResponse"][];
+            /** Before */
+            before: components["schemas"]["PassageItemResponse"][];
+            passage: components["schemas"]["PassageItemResponse"];
+            source: components["schemas"]["PassageSourceResponse"];
+        };
+        /**
+         * PassageItemResponse
+         * @description `PassageItem`.
+         */
+        PassageItemResponse: {
+            /** Heading */
+            heading: string | null;
+            /**
+             * Id
+             * Format: uuid
+             */
+            id: string;
+            /** Page */
+            page: number | null;
+            /** Seq */
+            seq: number;
+            /** Text */
+            text: string;
+        };
+        /**
+         * PassageSourceResponse
+         * @description The source a passage belongs to (id, title, kind).
+         */
+        PassageSourceResponse: {
+            /**
+             * Id
+             * Format: uuid
+             */
+            id: string;
+            kind: components["schemas"]["SourceKind"];
+            /** Title */
+            title: string;
         };
         /**
          * PasswordConfirmBody
@@ -7318,6 +11701,11 @@ export interface components {
             step_id: string;
             /** Title */
             title: string;
+            /**
+             * Via Ai
+             * @default false
+             */
+            via_ai: boolean;
             /** Via Mcp */
             via_mcp: boolean;
         };
@@ -7335,6 +11723,178 @@ export interface components {
             id: string;
             /** Last Name */
             last_name: string;
+        };
+        /**
+         * PinExternalBody
+         * @description `PinExternalBody`: the category decides the link of the record.
+         */
+        PinExternalBody: {
+            /**
+             * Category
+             * @enum {integer}
+             */
+            category: 1 | 2 | 3 | 4;
+        };
+        /**
+         * PlanPreviewResponse
+         * @description What applying a course plan would do to the draft outline.
+         */
+        PlanPreviewResponse: {
+            /** Existing Steps */
+            existing_steps: number;
+            /** New Sections */
+            new_sections: number;
+            /** New Steps */
+            new_steps: number;
+            /** Sections */
+            sections: components["schemas"]["PlanSectionPreviewResponse"][];
+        };
+        /**
+         * PlanSectionInput
+         * @description One planned section.
+         */
+        PlanSectionInput: {
+            /** Goals */
+            goals?: string[];
+            /** Steps */
+            steps: components["schemas"]["PlanStepInput"][];
+            /** Title */
+            title: string;
+        };
+        /**
+         * PlanSectionPreviewResponse
+         * @description A section of the outline with its steps.
+         */
+        PlanSectionPreviewResponse: {
+            /**
+             * Action
+             * @enum {string}
+             */
+            action: "new" | "exists";
+            /** Section Id */
+            section_id: string | null;
+            /** Steps */
+            steps: components["schemas"]["PlanStepPreviewResponse"][];
+            /** Title */
+            title: string;
+        };
+        /**
+         * PlanStepInput
+         * @description One planned step.
+         */
+        PlanStepInput: {
+            /**
+             * Goals
+             * @description What a student can do after this step, one verb phrase each.
+             */
+            goals?: string[];
+            /**
+             * Summary
+             * @description What the step covers, how it is taught and checked.
+             * @default
+             */
+            summary: string;
+            /**
+             * Title
+             * @description Step title, without numbering.
+             */
+            title: string;
+        };
+        /**
+         * PlanStepPreviewResponse
+         * @description A step of the outline: it exists already, or it would be created.
+         */
+        PlanStepPreviewResponse: {
+            /**
+             * Action
+             * @enum {string}
+             */
+            action: "new" | "exists";
+            /** Step Id */
+            step_id: string | null;
+            /** Title */
+            title: string;
+        };
+        /**
+         * PlannerPair
+         * @description The lowest final that works when the midterm gets ``midterm``.
+         */
+        PlannerPair: {
+            /** Midterm */
+            midterm: number;
+            /** Min Final */
+            min_final: number | null;
+        };
+        /**
+         * PlannerPrediction
+         * @description The semester mark if pending controls get the assumed marks.
+         */
+        PlannerPrediction: {
+            /** Final */
+            final: number | null;
+            /** Midterm */
+            midterm: number | null;
+            /** Value */
+            value: number | null;
+        };
+        /**
+         * PlannerRemaining
+         * @description How many midterm and final controls of the semester have no mark yet.
+         */
+        PlannerRemaining: {
+            /** Final */
+            final: number;
+            /** Midterm */
+            midterm: number;
+        };
+        /**
+         * PlannerStat
+         * @description How many marks of one type there are and their average.
+         */
+        PlannerStat: {
+            /** Average */
+            average: number | null;
+            /** Count */
+            count: number;
+        };
+        /**
+         * PlannerTarget
+         * @description What it takes to end the semester with one grade.
+         */
+        PlannerTarget: {
+            /** Control */
+            control: ("midterm" | "final") | null;
+            /**
+             * Grade
+             * @enum {integer}
+             */
+            grade: 5 | 4 | 3;
+            /** Min Both */
+            min_both: number | null;
+            /** Min Value */
+            min_value: number | null;
+            /** Pairs */
+            pairs: components["schemas"]["PlannerPair"][];
+            /**
+             * Status
+             * @enum {string}
+             */
+            status: "secured" | "needed" | "not_reachable" | "unknown";
+            /** Threshold */
+            threshold: number;
+        };
+        /**
+         * PlannerWhatIf
+         * @description A hypothetical mark that is part of the answer.
+         */
+        PlannerWhatIf: {
+            /**
+             * Type
+             * @enum {string}
+             */
+            type: "lesson" | "midterm" | "final";
+            /** Value */
+            value: number;
         };
         /**
          * PreferencesPatchBody
@@ -7365,6 +11925,8 @@ export interface components {
             marks_types?: ("lesson" | "midterm" | "final")[] | null;
             /** Marks Values */
             marks_values?: number[] | null;
+            /** Notify Push */
+            notify_push?: boolean | null;
             /** Onboarding Dismissed */
             onboarding_dismissed?: string[] | null;
             /** Seen Marks At */
@@ -7417,8 +11979,28 @@ export interface components {
             blocks: {
                 [key: string]: unknown;
             }[];
+            /**
+             * Blocks Passed
+             * @default 0
+             */
+            blocks_passed: number;
+            /**
+             * Blocks Total
+             * @default 0
+             */
+            blocks_total: number;
             /** Completed */
             completed: boolean;
+            /**
+             * Points Earned
+             * @default 0
+             */
+            points_earned: number;
+            /**
+             * Points Total
+             * @default 0
+             */
+            points_total: number;
             /** Preview */
             preview: boolean;
             /** Revision Id */
@@ -7429,6 +12011,68 @@ export interface components {
              */
             step_id: string;
             /** Title */
+            title: string;
+        };
+        /**
+         * ProblemResponse
+         * @description The body of a problem+json response, as it is also nested in `rejected`.
+         */
+        ProblemResponse: {
+            /** Message Key */
+            message_key: string;
+            /** Params */
+            params: {
+                [key: string]: unknown;
+            };
+            /** Status */
+            status: number;
+            /** Title */
+            title: string;
+            /** Type */
+            type: string;
+        };
+        /**
+         * ProgressBody
+         * @description PUT .../progress: the state is opaque to the server (at most 16 KB).
+         */
+        ProgressBody: {
+            /** State */
+            state: {
+                [key: string]: unknown;
+            };
+        };
+        /**
+         * ProposalBody
+         * @description A date a head student suggests for their group; it stays tentative.
+         */
+        ProposalBody: {
+            /** Control */
+            control?: ("midterm_1" | "midterm_2" | "final") | null;
+            /**
+             * Date
+             * Format: date
+             */
+            date: string;
+            /**
+             * Kind
+             * @enum {string}
+             */
+            kind: "midterm" | "final" | "other";
+            /** Note */
+            note?: string | null;
+            /** Room */
+            room?: string | null;
+            /** Starts At */
+            starts_at?: string | null;
+            /**
+             * Subject Id
+             * Format: uuid
+             */
+            subject_id: string;
+            /**
+             * Title
+             * @default
+             */
             title: string;
         };
         /**
@@ -7464,6 +12108,56 @@ export interface components {
             note?: string | null;
         };
         /**
+         * PushConfigResponse
+         * @description GET /v1/push/config: whether push is on and the key to subscribe with.
+         */
+        PushConfigResponse: {
+            /** Enabled */
+            enabled: boolean;
+            /** Vapid Public Key */
+            vapid_public_key: string | null;
+        };
+        /**
+         * PushKeys
+         * @description The `keys` of a browser's PushSubscription JSON.
+         */
+        PushKeys: {
+            /** Auth */
+            auth: string;
+            /** P256Dh */
+            p256dh: string;
+        };
+        /**
+         * PushSubscriptionBody
+         * @description POST /v1/me/push-subscriptions: `PushSubscription.toJSON()` plus the agent.
+         */
+        PushSubscriptionBody: {
+            /** Endpoint */
+            endpoint: string;
+            keys: components["schemas"]["PushKeys"];
+            /** User Agent */
+            user_agent?: string | null;
+        };
+        /**
+         * PushSubscriptionResponse
+         * @description The saved subscription.
+         */
+        PushSubscriptionResponse: {
+            /**
+             * Id
+             * Format: uuid
+             */
+            id: string;
+        };
+        /**
+         * PushUnsubscribeBody
+         * @description DELETE /v1/me/push-subscriptions.
+         */
+        PushUnsubscribeBody: {
+            /** Endpoint */
+            endpoint: string;
+        };
+        /**
          * Question
          * @description A test question.
          */
@@ -7490,6 +12184,169 @@ export interface components {
              * @enum {string}
              */
             type: "single" | "multiple" | "text" | "number";
+        };
+        /**
+         * QuestionInput
+         * @description A test question. Fill the fields that belong to its type.
+         */
+        QuestionInput: {
+            /**
+             * Accepted Answers
+             * @description For text: accepted exact answers.
+             */
+            accepted_answers?: string[] | null;
+            /**
+             * Case Sensitive
+             * @description For text: compare case-sensitively.
+             * @default false
+             */
+            case_sensitive: boolean;
+            /**
+             * Explanation
+             * @description Shown after answering, if allowed.
+             */
+            explanation?: string | null;
+            /**
+             * Number
+             * @description For number: the right value.
+             */
+            number?: number | null;
+            /**
+             * Options
+             * @description For single and multiple: at least two options.
+             */
+            options?: components["schemas"]["OptionInput"][] | null;
+            /**
+             * Points
+             * @description Score for a right answer.
+             * @default 1
+             */
+            points: number;
+            /**
+             * Prompt
+             * @description Question text.
+             */
+            prompt: string;
+            /**
+             * Regex
+             * @description For text: a regular expression.
+             */
+            regex?: string | null;
+            /**
+             * Tolerance
+             * @description For number: allowed difference.
+             * @default 0
+             */
+            tolerance: number;
+            /**
+             * Type
+             * @description single: one correct option; multiple: several; text; number.
+             * @enum {string}
+             */
+            type: "single" | "multiple" | "text" | "number";
+        };
+        QueueRowResponse: {
+            [key: string]: unknown;
+        };
+        /**
+         * QueueTab
+         * @description The tabs of the librarian queue (doc § 3.6).
+         * @enum {string}
+         */
+        QueueTab: "review" | "reports" | "held" | "rights" | "suggestions";
+        /**
+         * QuizCreate
+         * @description A quiz.
+         */
+        QuizCreate: {
+            /**
+             * @description discriminator enum property added by openapi-typescript
+             * @enum {string}
+             */
+            kind: "quiz";
+            options?: components["schemas"]["QuizOptions"];
+            /** Prompt */
+            prompt?: string | null;
+        };
+        /**
+         * QuizOptions
+         * @description `QuizOptions` of § 4.4 with the defaults filled.
+         */
+        QuizOptions: {
+            /**
+             * Count
+             * @default standard
+             * @enum {string}
+             */
+            count: "fewer" | "standard" | "more";
+            /**
+             * Difficulty
+             * @default medium
+             * @enum {string}
+             */
+            difficulty: "easy" | "medium" | "hard";
+            /** Language */
+            language?: ("uz" | "ru" | "en") | null;
+            /** Source Ids */
+            source_ids?: string[] | null;
+            /** Types */
+            types?: ("single" | "multiple" | "true_false")[];
+        };
+        /**
+         * QuizSettingsInput
+         * @description Settings of a test block; omitted fields get the defaults shown.
+         */
+        QuizSettingsInput: {
+            /** Cooldown Sec */
+            cooldown_sec?: number | null;
+            /**
+             * Max Attempts
+             * @description Attempts per student; null: unlimited.
+             */
+            max_attempts?: number | null;
+            /**
+             * Passing Score Pct
+             * @default 60
+             */
+            passing_score_pct: number;
+            /**
+             * Pool Size
+             * @description Ask N random questions of the pool; null: all.
+             */
+            pool_size?: number | null;
+            /**
+             * Show Answers
+             * @default after_submit
+             * @enum {string}
+             */
+            show_answers: "never" | "after_submit" | "after_pass" | "after_last_attempt";
+            /**
+             * Shuffle Options
+             * @default false
+             */
+            shuffle_options: boolean;
+            /**
+             * Shuffle Questions
+             * @default false
+             */
+            shuffle_questions: boolean;
+            /** Time Limit Sec */
+            time_limit_sec?: number | null;
+        };
+        /**
+         * QuotaResponse
+         * @description Daily count of outputs of one counter.
+         */
+        QuotaResponse: {
+            /** Limit */
+            limit: number;
+            /**
+             * Resets At
+             * Format: date-time
+             */
+            resets_at: string;
+            /** Used */
+            used: number;
         };
         /**
          * Rating
@@ -7579,6 +12436,15 @@ export interface components {
             reason?: string | null;
         };
         /**
+         * RejectedSourceResponse
+         * @description An item of the request that was not added: its position and the reason.
+         */
+        RejectedSourceResponse: {
+            error: components["schemas"]["ProblemResponse"];
+            /** Index */
+            index: number;
+        };
+        /**
          * RemoveSection
          * @description Remove an empty section.
          */
@@ -7606,6 +12472,14 @@ export interface components {
              * Format: uuid
              */
             step_id: string;
+        };
+        /**
+         * RenameArtifactBody
+         * @description PATCH /v1/notebooks/{id}/artifacts/{aid}.
+         */
+        RenameArtifactBody: {
+            /** Title */
+            title: string;
         };
         /**
          * RenameChatBody
@@ -7662,6 +12536,67 @@ export interface components {
             slug: string;
         };
         /**
+         * ReportCountResponse
+         * @description Open reports of one reason (never who filed them).
+         */
+        ReportCountResponse: {
+            /** Count */
+            count: number;
+            reason: components["schemas"]["ReportReason"];
+        };
+        /**
+         * ReportCreate
+         * @description A report; its `format` is required.
+         */
+        ReportCreate: {
+            /**
+             * @description discriminator enum property added by openapi-typescript
+             * @enum {string}
+             */
+            kind: "report";
+            options: components["schemas"]["ReportOptions"];
+            /** Prompt */
+            prompt?: string | null;
+        };
+        /**
+         * ReportFormat
+         * @description Markdown report formats.
+         * @enum {string}
+         */
+        ReportFormat: "conspect" | "study_guide" | "briefing" | "faq" | "timeline" | "article" | "custom";
+        /**
+         * ReportOptions
+         * @description `ReportOptions` of § 4.4; ``style`` belongs to conspects only.
+         */
+        ReportOptions: {
+            /**
+             * Detail
+             * @default standard
+             * @enum {string}
+             */
+            detail: "short" | "standard" | "long";
+            format: components["schemas"]["ReportFormat"];
+            /** Language */
+            language?: ("uz" | "ru" | "en") | null;
+            /** Source Ids */
+            source_ids?: string[] | null;
+            /** Style */
+            style?: ("outline" | "cornell" | "thesis") | null;
+        };
+        /**
+         * ReportReason
+         * @description Why a user reports an item.
+         * @enum {string}
+         */
+        ReportReason: "wrong_content" | "copyright" | "inappropriate" | "personal_data" | "exam_leak" | "spam" | "other";
+        /**
+         * ReportResolveBody
+         * @description `POST /manage/library/reports/{id}/resolve`.
+         */
+        ReportResolveBody: {
+            action: components["schemas"]["ResolveAction"];
+        };
+        /**
          * RequestUploadBody
          * @description Declared properties of the file the client is going to upload.
          */
@@ -7674,12 +12609,18 @@ export interface components {
              * Purpose
              * @enum {string}
              */
-            purpose: "ai_upload" | "link";
+            purpose: "ai_upload" | "link" | "library_book" | "library_cover" | "library_material";
             /** Sha256 B64 */
             sha256_b64: string;
             /** Size */
             size: number;
         };
+        /**
+         * ResolveAction
+         * @description What a librarian decides about the open reports of an item.
+         * @enum {string}
+         */
+        ResolveAction: "dismiss" | "hold" | "unpublish" | "unpublish_and_warn";
         /**
          * ResourceItemResponse
          * @description ``ResourceItem``; ``file`` and ``created_at`` are null (links contract gap).
@@ -7716,6 +12657,12 @@ export interface components {
             role: "material" | "attachment" | "homework";
             /** Short Url */
             short_url: string;
+            /**
+             * Source
+             * @default user
+             * @enum {string}
+             */
+            source: "user" | "emis";
             /** Title */
             title: string;
         };
@@ -7733,13 +12680,56 @@ export interface components {
         /**
          * ReviewBody
          * @description POST /v1/me/flashcards/{card_id}/review.
+         *
+         *     `duration_ms` is how long the student looked at the card (the server keeps at
+         *     most one minute of it).
          */
         ReviewBody: {
+            /** Duration Ms */
+            duration_ms?: number | null;
             /**
              * Rating
              * @enum {string}
              */
             rating: "again" | "hard" | "medium" | "easy";
+        };
+        /**
+         * ReviewStatsResponse
+         * @description ReviewStats: the heatmap and the numbers of Anki's deck overview.
+         */
+        ReviewStatsResponse: {
+            /** Current Streak */
+            current_streak: number;
+            /** Daily Average */
+            daily_average: number;
+            /** Days */
+            days: components["schemas"]["DayCountResponse"][];
+            /** Days Learned Percent */
+            days_learned_percent: number;
+            /** Days Studied */
+            days_studied: number;
+            /** First Review Date */
+            first_review_date: string | null;
+            /** Longest Streak */
+            longest_streak: number;
+            /** Set Id */
+            set_id: string | null;
+            /** Today Count */
+            today_count: number;
+            /** Today Seconds */
+            today_seconds: number;
+            /** Total Reviews */
+            total_reviews: number;
+            /** Year */
+            year: number;
+        };
+        /**
+         * ReviseSlidesBody
+         * @description POST .../slides/revise.
+         */
+        ReviseSlidesBody: {
+            /** Changes */
+            changes: components["schemas"]["SlideChange"][];
         };
         /**
          * RevisionItemResponse
@@ -7768,11 +12758,51 @@ export interface components {
             published: boolean;
         };
         /**
+         * Rights
+         * @description Rights class of a hosted book (LIB-3).
+         * @enum {string}
+         */
+        Rights: "public_domain" | "open_license" | "permission" | "official";
+        /**
+         * RightsBasisSchema
+         * @description `RightsBasis`: the fields used depend on the rights class.
+         */
+        RightsBasisSchema: {
+            /** Attribution */
+            attribution?: string | null;
+            /** Author Death Year */
+            author_death_year?: number | null;
+            /** First Published Year */
+            first_published_year?: number | null;
+            /** Permission Expires On */
+            permission_expires_on?: string | null;
+            /** Permission Scope */
+            permission_scope?: string | null;
+            /** Reference */
+            reference?: string | null;
+            /** Rule */
+            rule?: string | null;
+            /** Source Url */
+            source_url?: string | null;
+        };
+        /**
+         * RightsBoxSchema
+         * @description The rights statement of a book page.
+         */
+        RightsBoxSchema: {
+            /** Attribution */
+            attribution: string | null;
+            /** Download Allowed */
+            download_allowed: boolean;
+            /** Text */
+            text: string;
+        };
+        /**
          * Role
          * @description Global roles stored in users.roles.
          * @enum {string}
          */
-        Role: "student" | "teacher" | "admin" | "lms_admin";
+        Role: "student" | "teacher" | "admin" | "lms_admin" | "librarian";
         /**
          * RolesBody
          * @description POST /v1/admin/users/{id}/roles.
@@ -7890,13 +12920,79 @@ export interface components {
             user_id?: string | null;
         };
         /**
+         * SanctionBody
+         * @description `POST /admin/library/sanctions`.
+         */
+        SanctionBody: {
+            kind: components["schemas"]["SanctionKind"];
+            /** Reason */
+            reason: string;
+            /** Until */
+            until?: string | null;
+            /**
+             * User Id
+             * Format: uuid
+             */
+            user_id: string;
+        };
+        /**
+         * SanctionKind
+         * @description Sanctions Administration can set.
+         * @enum {string}
+         */
+        SanctionKind: "warning" | "upload_ban";
+        /**
+         * SanctionResponse
+         * @description `Sanction` of the contract.
+         */
+        SanctionResponse: {
+            /**
+             * Created At
+             * Format: date-time
+             */
+            created_at: string;
+            /**
+             * Id
+             * Format: uuid
+             */
+            id: string;
+            /** Item Id */
+            item_id: string | null;
+            kind: components["schemas"]["SanctionKind"];
+            /** Reason */
+            reason: string;
+            /** Until */
+            until: string | null;
+            /**
+             * User Id
+             * Format: uuid
+             */
+            user_id: string;
+        };
+        /**
+         * SaveNoteBody
+         * @description `POST /notebooks/{id}/chat/messages/{mid}/save-note`.
+         */
+        SaveNoteBody: {
+            /** Title */
+            title?: string | null;
+        };
+        /**
          * SaveStepDraftBody
          * @description Save the draft content of a step.
          */
         SaveStepDraftBody: {
-            content: components["schemas"]["StepContent"];
+            content: components["schemas"]["StepContent-Input"];
             /** Lock Version */
             lock_version: number;
+        };
+        /**
+         * ScanResponse
+         * @description Findings of the scan job.
+         */
+        ScanResponse: {
+            /** Findings */
+            findings: string[];
         };
         /**
          * ScopeCatalogResponse
@@ -7917,6 +13013,33 @@ export interface components {
             tools: string[];
         };
         /**
+         * SearchHitResponse
+         * @description `SearchHit`: a passage that matches.
+         */
+        SearchHitResponse: {
+            /** Page */
+            page: number | null;
+            /**
+             * Passage Id
+             * Format: uuid
+             */
+            passage_id: string;
+            /** Seq */
+            seq: number;
+            /** Snippet */
+            snippet: string;
+        };
+        /**
+         * SearchResponse
+         * @description `SearchResults`: the request as searched and the sources with hits.
+         */
+        SearchResponse: {
+            /** Query */
+            query: string;
+            /** Sources */
+            sources: components["schemas"]["SearchSourceResponse"][];
+        };
+        /**
          * SearchResultsResponse
          * @description `SearchResults`: at most five items per group.
          */
@@ -7933,6 +13056,22 @@ export interface components {
             subjects: components["schemas"]["app__interfaces__http__v1__composition__shared_schemas__SubjectRefResponse"][];
         };
         /**
+         * SearchSourceResponse
+         * @description `SearchSource`: a source and its best passages (at most 3).
+         */
+        SearchSourceResponse: {
+            /** Hits */
+            hits: components["schemas"]["SearchHitResponse"][];
+            kind: components["schemas"]["SourceKind"];
+            /**
+             * Source Id
+             * Format: uuid
+             */
+            source_id: string;
+            /** Title */
+            title: string;
+        };
+        /**
          * SecondFactorResponse
          * @description A code was sent; send it back with the ticket.
          */
@@ -7947,6 +13086,16 @@ export interface components {
             method: "otp";
             /** Ticket */
             ticket: string;
+        };
+        /**
+         * SelectSourcesBody
+         * @description POST /v1/notebooks/{id}/sources/select: every source when `ids` is absent.
+         */
+        SelectSourcesBody: {
+            /** Ids */
+            ids?: string[] | null;
+            /** Selected */
+            selected: boolean;
         };
         /**
          * SemesterCardResponse
@@ -7969,16 +13118,6 @@ export interface components {
         SendBroadcastBody: {
             /** Scheduled At */
             scheduled_at?: string | null;
-        };
-        /**
-         * SendMessageBody
-         * @description POST /v1/ai/chats/{id}/messages.
-         */
-        SendMessageBody: {
-            /** File Ids */
-            file_ids?: string[];
-            /** Text */
-            text: string;
         };
         /**
          * SendReclaimEmailBody
@@ -8045,6 +13184,8 @@ export interface components {
             cards: components["schemas"]["CardResponse"][];
             /** Description */
             description: string | null;
+            /** Due Count */
+            due_count: number;
             /** Due Today */
             due_today: number;
             /**
@@ -8052,6 +13193,10 @@ export interface components {
              * Format: uuid
              */
             id: string;
+            /** Learning Count */
+            learning_count: number;
+            /** New Count */
+            new_count: number;
             /** New Per Day */
             new_per_day: number;
             /** New Today */
@@ -8085,6 +13230,8 @@ export interface components {
             card_count: number;
             /** Description */
             description: string | null;
+            /** Due Count */
+            due_count: number;
             /** Due Today */
             due_today: number;
             /**
@@ -8092,6 +13239,10 @@ export interface components {
              * Format: uuid
              */
             id: string;
+            /** Learning Count */
+            learning_count: number;
+            /** New Count */
+            new_count: number;
             /** New Today */
             new_today: number;
             /**
@@ -8101,6 +13252,14 @@ export interface components {
             source: "manual" | "ai" | "mcp" | "copied";
             /** Title */
             title: string;
+        };
+        /**
+         * SetSourceLabelsBody
+         * @description PUT /v1/notebooks/{id}/sources/{sid}/labels: at most 3 labels (a typed error).
+         */
+        SetSourceLabelsBody: {
+            /** Label Ids */
+            label_ids: string[];
         };
         /**
          * SetTopicBody
@@ -8118,7 +13277,7 @@ export interface components {
             /** Cover File Id */
             cover_file_id?: string | null;
             status?: components["schemas"]["CourseStatus"] | null;
-            visibility?: components["schemas"]["Visibility"] | null;
+            visibility?: components["schemas"]["app__modules__lms__domain__authoring__enums__Visibility"] | null;
         };
         /**
          * SharedCard
@@ -8147,6 +13306,269 @@ export interface components {
         SharedChat: {
             /** Messages */
             messages: components["schemas"]["ChatMessage"][];
+        };
+        /**
+         * ShelfState
+         * @description Where an item is on a user's shelf.
+         * @enum {string}
+         */
+        ShelfState: "want" | "reading" | "done";
+        /**
+         * SlideChange
+         * @description One instruction of a revision.
+         */
+        SlideChange: {
+            /** Instruction */
+            instruction: string;
+            /** Slide Id */
+            slide_id: string;
+        };
+        /**
+         * SlidesBody
+         * @description PUT .../slides: the edited deck, checked slide by slide by the use case.
+         */
+        SlidesBody: {
+            /** Slides */
+            slides: {
+                [key: string]: unknown;
+            }[];
+        };
+        /**
+         * SlidesCreate
+         * @description A slide deck.
+         */
+        SlidesCreate: {
+            /**
+             * @description discriminator enum property added by openapi-typescript
+             * @enum {string}
+             */
+            kind: "slides";
+            options?: components["schemas"]["SlidesOptions"];
+            /** Prompt */
+            prompt?: string | null;
+        };
+        /**
+         * SlidesOptions
+         * @description `SlidesOptions` of § 4.4 with the defaults filled.
+         */
+        SlidesOptions: {
+            /**
+             * Format
+             * @default presenter
+             * @enum {string}
+             */
+            format: "presenter" | "detailed";
+            /** Language */
+            language?: ("uz" | "ru" | "en") | null;
+            /**
+             * Length
+             * @default default
+             * @enum {string}
+             */
+            length: "short" | "default" | "long";
+            /** Source Ids */
+            source_ids?: string[] | null;
+        };
+        /**
+         * SourceDetailResponse
+         * @description `SourceDetail`: the item plus guide, text of a note and cited passages.
+         */
+        SourceDetailResponse: {
+            /** Body Md */
+            body_md: string | null;
+            /** Citations */
+            citations: components["schemas"]["Citation"][];
+            /**
+             * Created At
+             * Format: date-time
+             */
+            created_at: string;
+            /** Editable */
+            editable: boolean;
+            failure: components["schemas"]["SourceFailure"] | null;
+            guide: components["schemas"]["SourceGuide"] | null;
+            /** Has Guide */
+            has_guide: boolean;
+            /**
+             * Id
+             * Format: uuid
+             */
+            id: string;
+            kind: components["schemas"]["SourceKind"];
+            /** Label Ids */
+            label_ids: string[];
+            /**
+             * Notebook Id
+             * Format: uuid
+             */
+            notebook_id: string;
+            /** Origin */
+            origin: {
+                [key: string]: unknown;
+            } | null;
+            /** Passage Count */
+            passage_count: number;
+            /** Position */
+            position: number;
+            /** Ref */
+            ref: {
+                [key: string]: unknown;
+            };
+            /** Selected */
+            selected: boolean;
+            /** Stale */
+            stale: boolean;
+            status: components["schemas"]["SourceStatus"];
+            /** Synced At */
+            synced_at: string | null;
+            /** Title */
+            title: string;
+            /** Word Count */
+            word_count: number;
+        };
+        /**
+         * SourceFailure
+         * @description Machine code of why a source failed (translated by the web app).
+         * @enum {string}
+         */
+        SourceFailure: "unsupported_type" | "no_text" | "too_large" | "fetch_failed" | "forbidden" | "deleted" | "provider_error";
+        /**
+         * SourceGuide
+         * @description `sources.guide` (§ 3.2.5).
+         */
+        SourceGuide: {
+            /** Key Topics */
+            key_topics?: string[];
+            /** Questions */
+            questions?: string[];
+            /** Summary */
+            summary: string;
+        };
+        /**
+         * SourceItemResponse
+         * @description `SourceItem`.
+         */
+        SourceItemResponse: {
+            /**
+             * Created At
+             * Format: date-time
+             */
+            created_at: string;
+            failure: components["schemas"]["SourceFailure"] | null;
+            /** Has Guide */
+            has_guide: boolean;
+            /**
+             * Id
+             * Format: uuid
+             */
+            id: string;
+            kind: components["schemas"]["SourceKind"];
+            /** Label Ids */
+            label_ids: string[];
+            /**
+             * Notebook Id
+             * Format: uuid
+             */
+            notebook_id: string;
+            /** Origin */
+            origin: {
+                [key: string]: unknown;
+            } | null;
+            /** Passage Count */
+            passage_count: number;
+            /** Position */
+            position: number;
+            /** Ref */
+            ref: {
+                [key: string]: unknown;
+            };
+            /** Selected */
+            selected: boolean;
+            /** Stale */
+            stale: boolean;
+            status: components["schemas"]["SourceStatus"];
+            /** Synced At */
+            synced_at: string | null;
+            /** Title */
+            title: string;
+            /** Word Count */
+            word_count: number;
+        };
+        /**
+         * SourceKind
+         * @description Where the text of a source comes from (§ 3.2.1).
+         * @enum {string}
+         */
+        SourceKind: "file" | "chat" | "lesson_resource" | "flashcard_set" | "lms_step" | "text" | "note" | "url" | "web_result" | "library_item" | "library_notes";
+        /**
+         * SourceStatus
+         * @description Processing state of a source.
+         * @enum {string}
+         */
+        SourceStatus: "pending" | "processing" | "ready" | "failed" | "unavailable" | "stale";
+        /**
+         * StaffAssessmentItem
+         * @description A control as staff see it: with its audience and author.
+         */
+        StaffAssessmentItem: {
+            /** Audience */
+            audience: components["schemas"]["app__interfaces__http__v1__admin_schedule__shared_schemas__AudienceItemResponse"][];
+            /** Control */
+            control: ("midterm_1" | "midterm_2" | "final") | null;
+            /** Created At */
+            created_at: string | null;
+            created_by: components["schemas"]["app__interfaces__http__v1__admin_schedule__shared_schemas__PersonRefResponse"] | null;
+            /**
+             * Date
+             * Format: date
+             */
+            date: string;
+            /** Days Left */
+            days_left: number;
+            /** Has Date */
+            has_date: boolean;
+            /**
+             * Id
+             * Format: uuid
+             */
+            id: string;
+            /**
+             * Kind
+             * @enum {string}
+             */
+            kind: "midterm" | "final" | "other";
+            /** Lesson Id */
+            lesson_id: string | null;
+            /** Note */
+            note: string | null;
+            period: components["schemas"]["ControlPeriodResponse"] | null;
+            /** Room */
+            room: string | null;
+            /**
+             * Source
+             * @enum {string}
+             */
+            source: "teacher" | "admin" | "emis" | "head_student";
+            /** Starts At */
+            starts_at: string | null;
+            /**
+             * Status
+             * @enum {string}
+             */
+            status: "planned" | "tentative" | "cancelled";
+            subject: components["schemas"]["AssessmentSubject"];
+            /** Title */
+            title: string;
+            /** Updated At */
+            updated_at: string | null;
+        };
+        /**
+         * StaffAssessmentListResponse
+         * @description Controls for the staff portal or the admin list.
+         */
+        StaffAssessmentListResponse: {
+            /** Items */
+            items: components["schemas"]["StaffAssessmentItem"][];
         };
         /**
          * StaffHomeworkResponse
@@ -8183,6 +13605,13 @@ export interface components {
             /** Needs Attention */
             needs_attention: components["schemas"]["app__interfaces__http__v1__me_classwork__schemas__LessonItemResponse"][];
             now_or_next: components["schemas"]["app__interfaces__http__v1__me_classwork__schemas__LessonItemResponse"] | null;
+        };
+        /**
+         * StartLabelsResponse
+         * @description POST /v1/notebooks/{id}/labels/auto: the run is queued.
+         */
+        StartLabelsResponse: {
+            status: components["schemas"]["LabelRunStatus"];
         };
         /**
          * StartReclaimBody
@@ -8224,9 +13653,19 @@ export interface components {
          * StepContent
          * @description Title and blocks of a step (``CourseStep.draft``, ``StepRevision.content``).
          */
-        StepContent: {
+        "StepContent-Input": {
             /** Blocks */
-            blocks?: (components["schemas"]["TextBlock"] | components["schemas"]["TestBlock"] | components["schemas"]["FlashcardsBlock"])[];
+            blocks?: (components["schemas"]["TextBlock-Input"] | components["schemas"]["TestBlock-Input"] | components["schemas"]["FlashcardsBlock-Input"])[];
+            /** Title */
+            title: string;
+        };
+        /**
+         * StepContent
+         * @description Title and blocks of a step (``CourseStep.draft``, ``StepRevision.content``).
+         */
+        "StepContent-Output": {
+            /** Blocks */
+            blocks?: (components["schemas"]["app__modules__lms__domain__step_content__TextBlock"] | components["schemas"]["app__modules__lms__domain__step_content__TestBlock"] | components["schemas"]["app__modules__lms__domain__step_content__FlashcardsBlock"])[];
             /** Title */
             title: string;
         };
@@ -8235,15 +13674,31 @@ export interface components {
          * @description Live content next to the draft content of a step.
          */
         StepDiffResponse: {
-            draft: components["schemas"]["StepContent"];
-            live: components["schemas"]["StepContent"] | null;
+            draft: components["schemas"]["StepContent-Output"];
+            live: components["schemas"]["StepContent-Output"] | null;
+        };
+        /**
+         * StepDraftInput
+         * @description The content of one step as a model writes it (the ``lesson_draft`` output).
+         */
+        StepDraftInput: {
+            /**
+             * Blocks
+             * @description Blocks in reading order.
+             */
+            blocks: (components["schemas"]["TextBlockInput"] | components["schemas"]["TestBlockInput"] | components["schemas"]["FlashcardsBlockInput"])[];
+            /**
+             * Title
+             * @description Step title, without numbering.
+             */
+            title: string;
         };
         /**
          * StepDraftResponse
          * @description `StepDraft`.
          */
         StepDraftResponse: {
-            content: components["schemas"]["StepContent"];
+            content: components["schemas"]["StepContent-Output"];
             /**
              * Course Id
              * Format: uuid
@@ -8268,7 +13723,32 @@ export interface components {
              * Updated Via
              * @enum {string}
              */
-            updated_via: "ui" | "mcp";
+            updated_via: "ui" | "mcp" | "ai";
+        };
+        /**
+         * StepPreviewResponse
+         * @description What applying a lesson, a quiz or a deck would do to one step.
+         *
+         *     ``new_blocks`` are the blocks the step has afterwards in ``replace`` mode, and the
+         *     blocks added after ``current_blocks`` in ``append`` mode. A new step has no
+         *     ``step_id``, no ``lock_version`` and no ``current_blocks``.
+         */
+        StepPreviewResponse: {
+            /** Current Blocks */
+            current_blocks: (components["schemas"]["app__interfaces__http__v1__notebooks__schemas_apply__TextBlock"] | components["schemas"]["app__interfaces__http__v1__notebooks__schemas_apply__TestBlock"] | components["schemas"]["app__interfaces__http__v1__notebooks__schemas_apply__FlashcardsBlock"])[] | null;
+            /** Lock Version */
+            lock_version: number | null;
+            /**
+             * Mode
+             * @enum {string}
+             */
+            mode: "append" | "replace";
+            /** New Blocks */
+            new_blocks: (components["schemas"]["app__interfaces__http__v1__notebooks__schemas_apply__TextBlock"] | components["schemas"]["app__interfaces__http__v1__notebooks__schemas_apply__TestBlock"] | components["schemas"]["app__interfaces__http__v1__notebooks__schemas_apply__FlashcardsBlock"])[];
+            /** Step Id */
+            step_id: string | null;
+            /** Title */
+            title: string;
         };
         /**
          * StorageResponse
@@ -8305,7 +13785,7 @@ export interface components {
             /** Mailbox */
             mailbox: string | null;
             /** Roles */
-            roles: ("student" | "teacher" | "admin" | "lms_admin")[];
+            roles: ("student" | "teacher" | "admin" | "lms_admin" | "librarian")[];
             /** Status */
             status: string;
             /** Subgroup */
@@ -8581,6 +14061,12 @@ export interface components {
             id: string;
             /** Is Overridden */
             is_overridden: boolean;
+            /**
+             * Kind
+             * @default other
+             * @enum {string}
+             */
+            kind: "lecture" | "practice" | "midterm" | "final" | "other";
             /** Marks */
             marks: components["schemas"]["MarkItem"][];
             /** Period */
@@ -8600,6 +14086,8 @@ export interface components {
             teacher: components["schemas"]["app__interfaces__http__v1__me_marks__schemas__PersonRef"] | null;
             /** Topic */
             topic: string | null;
+            /** Topic Source */
+            topic_source?: ("emis" | "manual") | null;
         };
         /**
          * SubjectNameBody
@@ -8657,6 +14145,34 @@ export interface components {
             short_name?: string | null;
         };
         /**
+         * SubjectPlannerResponse
+         * @description Predicted semester mark and the marks the controls must bring.
+         */
+        SubjectPlannerResponse: {
+            /** Assumptions */
+            assumptions: ("rounding" | "controls_per_semester" | "same_mark_on_remaining" | "pending_as_lesson_average" | "no_lesson_marks" | "what_if")[];
+            /** Components */
+            components: ("lesson" | "midterm" | "final")[];
+            final: components["schemas"]["PlannerStat"];
+            lesson: components["schemas"]["PlannerStat"];
+            midterm: components["schemas"]["PlannerStat"];
+            /** Missing */
+            missing: ("lesson" | "midterm" | "final")[];
+            /** Pending */
+            pending: ("midterm" | "final")[];
+            predicted: components["schemas"]["PlannerPrediction"];
+            remaining: components["schemas"]["PlannerRemaining"];
+            /** Semester */
+            semester: number;
+            /** Semester Mark */
+            semester_mark: number | null;
+            subject: components["schemas"]["SubjectRef"];
+            /** Targets */
+            targets: components["schemas"]["PlannerTarget"][];
+            /** What If */
+            what_if: components["schemas"]["PlannerWhatIf"][];
+        };
+        /**
          * SubjectRef
          * @description A subject named in the caller's locale.
          */
@@ -8670,6 +14186,19 @@ export interface components {
             name: string;
             /** Short Name */
             short_name: string;
+        };
+        /**
+         * SubjectRefSchema
+         * @description `{id, name}` subject chip.
+         */
+        SubjectRefSchema: {
+            /**
+             * Id
+             * Format: uuid
+             */
+            id: string;
+            /** Name */
+            name: string;
         };
         /**
          * SubjectResponse
@@ -8690,6 +14219,12 @@ export interface components {
             short_name: string | null;
         };
         /**
+         * SubjectRole
+         * @description How an item relates to a subject.
+         * @enum {string}
+         */
+        SubjectRole: "textbook" | "core" | "supplementary" | "reference";
+        /**
          * SubmitAttendanceBody
          * @description Body of ``PUT /v1/staff/lessons/{id}/attendance``.
          */
@@ -8701,6 +14236,45 @@ export interface components {
             /** Present Unassigned */
             present_unassigned?: string[];
         };
+        /**
+         * SuggestionBody
+         * @description `POST /library/suggestions`.
+         */
+        SuggestionBody: {
+            /** File Id */
+            file_id?: string | null;
+            /** Note */
+            note?: string | null;
+            /** Title */
+            title: string;
+            /** Url */
+            url?: string | null;
+        };
+        /**
+         * SuggestionResponse
+         * @description A book suggestion in the queue.
+         */
+        SuggestionResponse: {
+            /**
+             * Id
+             * Format: uuid
+             */
+            id: string;
+            /** Note */
+            note: string | null;
+            /** Title */
+            title: string;
+            /** Url */
+            url: string | null;
+            /** User Name */
+            user_name: string;
+        };
+        /**
+         * SummaryStatus
+         * @description State of a notebook's automatic summary.
+         * @enum {string}
+         */
+        SummaryStatus: "none" | "stale" | "building" | "ready" | "failed";
         /**
          * SuspendBody
          * @description POST /v1/admin/users/{id}/mail/suspend.
@@ -8727,6 +14301,16 @@ export interface components {
             items: components["schemas"]["app__interfaces__http__v1__admin_sync__schemas__SyncRunItemResponse"][];
             /** Next Cursor */
             next_cursor?: string | null;
+        };
+        /**
+         * TaxonomyEntryResponse
+         * @description A type, field or language of UniLibrary.
+         */
+        TaxonomyEntryResponse: {
+            /** Id */
+            id: number;
+            /** Name */
+            name: string;
         };
         /**
          * TeacherCreateBody
@@ -8866,6 +14450,7 @@ export interface components {
             academic_year: string;
             /** Bells */
             bells?: components["schemas"]["Bell-Input"][];
+            control_periods?: components["schemas"]["ControlPeriods"];
             /**
              * Ends On
              * Format: date
@@ -8895,6 +14480,7 @@ export interface components {
             academic_year?: string | null;
             /** Bells */
             bells?: components["schemas"]["Bell-Input"][] | null;
+            control_periods?: components["schemas"]["ControlPeriods"] | null;
             /** Ends On */
             ends_on?: string | null;
             /** Half */
@@ -8915,6 +14501,7 @@ export interface components {
             academic_year: string;
             /** Bells */
             bells: components["schemas"]["Bell-Output"][];
+            control_periods: components["schemas"]["ControlPeriods"];
             /**
              * Ends On
              * Format: date
@@ -8943,7 +14530,7 @@ export interface components {
          * TestBlock
          * @description A test block with its settings and questions.
          */
-        TestBlock: {
+        "TestBlock-Input": {
             config?: components["schemas"]["TestConfig"];
             /**
              * Id
@@ -8952,6 +14539,21 @@ export interface components {
             id: string;
             /** Questions */
             questions?: components["schemas"]["Question"][];
+            /**
+             * @description discriminator enum property added by openapi-typescript
+             * @enum {string}
+             */
+            type: "test";
+        };
+        /**
+         * TestBlockInput
+         * @description A test block: settings and questions.
+         */
+        TestBlockInput: {
+            /** Questions */
+            questions: components["schemas"]["QuestionInput"][];
+            /** @description Test settings; omit for the defaults. */
+            settings?: components["schemas"]["QuizSettingsInput"] | null;
             /**
              * @description discriminator enum property added by openapi-typescript
              * @enum {string}
@@ -8997,7 +14599,7 @@ export interface components {
          * TextBlock
          * @description A markdown text block.
          */
-        TextBlock: {
+        "TextBlock-Input": {
             /**
              * Id
              * @default
@@ -9014,6 +14616,53 @@ export interface components {
              */
             type: "text";
         };
+        /**
+         * TextBlockInput
+         * @description A Markdown text block (LaTeX goes between ``$...$`` or ``$$...$$``).
+         */
+        TextBlockInput: {
+            /**
+             * Markdown
+             * @description Markdown. Headings, lists, tables, code and LaTeX are allowed.
+             */
+            markdown: string;
+            /**
+             * @description discriminator enum property added by openapi-typescript
+             * @enum {string}
+             */
+            type: "text";
+        };
+        /**
+         * TextInput
+         * @description Pasted text.
+         */
+        TextInput: {
+            /**
+             * @description discriminator enum property added by openapi-typescript
+             * @enum {string}
+             */
+            kind: "text";
+            /** Text */
+            text: string;
+            /** Title */
+            title: string;
+        };
+        /**
+         * TextPageSchema
+         * @description One page of extracted text.
+         */
+        TextPageSchema: {
+            /** Page */
+            page: number;
+            /** Text */
+            text: string;
+        };
+        /**
+         * TextStatus
+         * @description State of the text extraction of a file.
+         * @enum {string}
+         */
+        TextStatus: "none" | "pending" | "ready" | "no_text" | "failed";
         /**
          * TimetableEntryInputBody
          * @description TimetableEntryInput.
@@ -9094,6 +14743,12 @@ export interface components {
             /** Period */
             period: number;
             room: components["schemas"]["app__interfaces__http__v1__admin_schedule__shared_schemas__RoomRefLiteResponse"] | null;
+            /**
+             * Source
+             * @default manual
+             * @enum {string}
+             */
+            source: "manual" | "emis";
             subject: components["schemas"]["app__interfaces__http__v1__admin_schedule__shared_schemas__SubjectRefResponse"];
             teacher: components["schemas"]["app__interfaces__http__v1__admin_schedule__shared_schemas__PersonRefResponse"] | null;
             /**
@@ -9115,6 +14770,9 @@ export interface components {
             week_parity: "every" | "odd" | "even";
             /** Weekday */
             weekday: number;
+        };
+        TocEntrySchema: {
+            [key: string]: unknown;
         };
         /**
          * TodayCountsResponse
@@ -9214,6 +14872,23 @@ export interface components {
             tool: string;
         };
         /**
+         * TopicRefSchema
+         * @description A topic the item feeds, with the page range.
+         */
+        TopicRefSchema: {
+            /**
+             * Id
+             * Format: uuid
+             */
+            id: string;
+            /** Name */
+            name: string;
+            /** Page From */
+            page_from: number | null;
+            /** Page To */
+            page_to: number | null;
+        };
+        /**
          * TurnResultResponse
          * @description TurnResult.
          */
@@ -9229,12 +14904,93 @@ export interface components {
             usage: components["schemas"]["UsageInfoResponse"];
         };
         /**
+         * UniLibraryAccessFilter
+         * @description `?access=` of the search; `any` sends no access filter.
+         * @enum {string}
+         */
+        UniLibraryAccessFilter: "open" | "partial" | "closed" | "any";
+        /**
+         * UniLibrarySearchResultResponse
+         * @description `UniLibrarySearchResult`: cards that are not stored.
+         */
+        UniLibrarySearchResultResponse: {
+            /** Items */
+            items: components["schemas"]["ItemCardSchema"][];
+            /** Page */
+            page: number;
+            /** Stale */
+            stale: boolean;
+            /** Total */
+            total: number;
+        };
+        /**
+         * UniLibrarySettingsBody
+         * @description `UniLibrarySettings` as sent by `PUT .../settings`.
+         */
+        UniLibrarySettingsBody: {
+            /** Anonymous Cards */
+            anonymous_cards: boolean;
+            /** Enabled */
+            enabled: boolean;
+        };
+        /**
+         * UniLibrarySettingsResponse
+         * @description `UniLibrarySettings`: the effective switches.
+         */
+        UniLibrarySettingsResponse: {
+            /** Anonymous Cards */
+            anonymous_cards: boolean;
+            /** Enabled */
+            enabled: boolean;
+        };
+        /**
+         * UniLibraryStatusResponse
+         * @description `UniLibraryStatus`.
+         */
+        UniLibraryStatusResponse: {
+            breaker: components["schemas"]["BreakerState"];
+            cache: components["schemas"]["CacheStatsResponse"];
+            /** Hidden Records */
+            hidden_records: components["schemas"]["ItemCardSchema"][];
+            /** Last Calls */
+            last_calls: components["schemas"]["CallRecordResponse"][];
+        };
+        /**
+         * UniLibraryTaxonomyResponse
+         * @description `UniLibraryTaxonomy`: the filters the search offers.
+         */
+        UniLibraryTaxonomyResponse: {
+            /** Access */
+            access: components["schemas"]["AccessOptionResponse"][];
+            /** Fields */
+            fields: components["schemas"]["TaxonomyEntryResponse"][];
+            /** Languages */
+            languages: components["schemas"]["TaxonomyEntryResponse"][];
+            /** Types */
+            types: components["schemas"]["TaxonomyEntryResponse"][];
+        };
+        /**
          * UnreadCountResponse
          * @description Number of unread notifications.
          */
         UnreadCountResponse: {
             /** Count */
             count: number;
+        };
+        /**
+         * UpdateAutoSettingsBody
+         * @description PATCH /v1/notebooks/{id}/auto: only the keys that were sent are applied.
+         *
+         *     `exclude_source_ids` leaves lesson materials out for good (they stay out on
+         *     every sync); `restore_refs` takes excluded materials back (their `ref_key`).
+         */
+        UpdateAutoSettingsBody: {
+            /** Exclude Source Ids */
+            exclude_source_ids?: string[] | null;
+            /** Include Classmates */
+            include_classmates?: boolean | null;
+            /** Restore Refs */
+            restore_refs?: string[] | null;
         };
         /**
          * UpdateEmisPasswordBody
@@ -9246,6 +15002,16 @@ export interface components {
              * Format: password
              */
             emis_password: string;
+        };
+        /**
+         * UpdateLabelBody
+         * @description PATCH /v1/notebooks/{id}/labels/{label_id}: only the keys that were sent apply.
+         */
+        UpdateLabelBody: {
+            /** Emoji */
+            emoji?: string | null;
+            /** Name */
+            name?: string | null;
         };
         /**
          * UpdateMetaBody
@@ -9260,6 +15026,21 @@ export interface components {
             title: string;
         };
         /**
+         * UpdateNotebookBody
+         * @description PATCH /v1/notebooks/{id}: only the keys that were sent are applied.
+         *
+         *     `emoji: null` clears the emoji; a key that is absent changes nothing.
+         */
+        UpdateNotebookBody: {
+            chat_config?: components["schemas"]["ChatConfig"] | null;
+            /** Emoji */
+            emoji?: string | null;
+            /** Pinned */
+            pinned?: boolean | null;
+            /** Title */
+            title?: string | null;
+        };
+        /**
          * UpdateSetBody
          * @description PATCH /v1/me/flashcard-sets/{id}; send only the fields to change.
          */
@@ -9270,6 +15051,18 @@ export interface components {
             new_per_day?: number | null;
             /** Reviews Per Day */
             reviews_per_day?: number | null;
+            /** Title */
+            title?: string | null;
+        };
+        /**
+         * UpdateSourceBody
+         * @description PATCH /v1/notebooks/{id}/sources/{sid}: only the keys that were sent apply.
+         */
+        UpdateSourceBody: {
+            /** Body Md */
+            body_md?: string | null;
+            /** Selected */
+            selected?: boolean | null;
             /** Title */
             title?: string | null;
         };
@@ -9314,24 +15107,59 @@ export interface components {
             upload: components["schemas"]["UploadInfo"];
         };
         /**
+         * UploadRowResponse
+         * @description `UploadRow`: a material of the caller with its status and queue position.
+         */
+        UploadRowResponse: {
+            item: components["schemas"]["ItemCardSchema"];
+            /** Queue Position */
+            queue_position: number | null;
+            /** Reason */
+            reason: string | null;
+            /** Review Message */
+            review_message: string | null;
+            status: components["schemas"]["ItemStatus"];
+        };
+        /**
+         * UploaderResponse
+         * @description Who uploaded the queued item: name, cohort and role.
+         */
+        UploaderResponse: {
+            /** Cohort */
+            cohort: string;
+            /** Name */
+            name: string;
+            /** Role */
+            role: string;
+        };
+        /**
+         * UploaderRole
+         * @description Role of the uploader at upload time (snapshot).
+         * @enum {string}
+         */
+        UploaderRole: "student" | "teacher" | "librarian" | "admin";
+        /**
+         * UrlInput
+         * @description A web page; Discover sends the title the search found for it.
+         */
+        UrlInput: {
+            /**
+             * @description discriminator enum property added by openapi-typescript
+             * @enum {string}
+             */
+            kind: "url";
+            /** Title */
+            title?: string | null;
+            /** Url */
+            url: string;
+        };
+        /**
          * UsageInfoResponse
          * @description UsageInfo.
          */
         UsageInfoResponse: {
-            day: components["schemas"]["UsagePartResponse"];
-            session: components["schemas"]["UsagePartResponse"];
-        };
-        /**
-         * UsagePartResponse
-         * @description Tokens used against a limit.
-         */
-        UsagePartResponse: {
-            /** Limit */
-            limit: number;
-            /** Resets At */
-            resets_at: string | null;
-            /** Used */
-            used: number;
+            day: components["schemas"]["app__interfaces__http__v1__ai__schemas__UsagePartResponse"];
+            session: components["schemas"]["app__interfaces__http__v1__ai__schemas__UsagePartResponse"];
         };
         /**
          * UsedBy
@@ -9347,7 +15175,7 @@ export interface components {
              * Kind
              * @enum {string}
              */
-            kind: "link" | "lesson" | "chat";
+            kind: "link" | "lesson" | "chat" | "notebook";
             /** Label */
             label: string;
         };
@@ -9365,7 +15193,7 @@ export interface components {
              * Kind
              * @enum {string}
              */
-            kind: "link" | "lesson" | "chat";
+            kind: "link" | "lesson" | "chat" | "notebook";
             /** Label */
             label: string;
         };
@@ -9383,7 +15211,7 @@ export interface components {
              * Kind
              * @enum {string}
              */
-            kind: "link" | "lesson" | "chat";
+            kind: "link" | "lesson" | "chat" | "notebook";
             /** Label */
             label: string;
         };
@@ -9487,6 +15315,11 @@ export interface components {
              */
             marks_values: number[];
             /**
+             * Notify Push
+             * @default true
+             */
+            notify_push: boolean;
+            /**
              * Onboarding Dismissed
              * @default []
              */
@@ -9495,7 +15328,7 @@ export interface components {
             seen_marks_at?: string | null;
             /**
              * Theme
-             * @default system
+             * @default light
              * @enum {string}
              */
             theme: "system" | "light" | "dark";
@@ -9615,10 +15448,57 @@ export interface components {
         };
         /**
          * Visibility
-         * @description Who may enroll in a course (LMS-3).
+         * @description Who may see a published item.
          * @enum {string}
          */
-        Visibility: "public" | "invite";
+        "Visibility-Output": "public" | "lyceum" | "hidden";
+        /**
+         * WebQuotaResponse
+         * @description `WebSearchStatus`: whether web search is on and today's searches.
+         *
+         *     `remaining` is `limit - used` (never below 0). A Discover `deep` run costs
+         *     `deep_cost` searches, every other search one. When `enabled` is false clients
+         *     hide the toggle and Discover.
+         */
+        WebQuotaResponse: {
+            /** Deep Cost */
+            deep_cost: number;
+            /** Enabled */
+            enabled: boolean;
+            /** Limit */
+            limit: number;
+            /** Max Results */
+            max_results: number;
+            /** Remaining */
+            remaining: number;
+            /**
+             * Resets At
+             * Format: date-time
+             */
+            resets_at: string;
+            /** Used */
+            used: number;
+        };
+        /**
+         * WebResultResponse
+         * @description `WebResult`: a page the web search found, numbered for the `⟦w1⟧` chips.
+         */
+        WebResultResponse: {
+            /** Cited */
+            cited: boolean;
+            /** N */
+            n: number;
+            /** Site */
+            site: string;
+            /** Snippet */
+            snippet: string;
+            /** Title */
+            title: string;
+            /** Url */
+            url: string;
+            /** Why */
+            why: string;
+        };
         /**
          * AudienceBody
          * @description Who receives a broadcast: everyone, or the union of roles, groups, semesters.
@@ -9755,6 +15635,12 @@ export interface components {
             id: string;
             /** Is Overridden */
             is_overridden: boolean;
+            /**
+             * Kind
+             * @default other
+             * @enum {string}
+             */
+            kind: "lecture" | "practice" | "midterm" | "final" | "other";
             /** Period */
             period: number;
             room: components["schemas"]["app__interfaces__http__v1__admin_schedule__shared_schemas__RoomRefLiteResponse"] | null;
@@ -9772,6 +15658,8 @@ export interface components {
             teacher: components["schemas"]["app__interfaces__http__v1__admin_schedule__shared_schemas__PersonRefResponse"] | null;
             /** Topic */
             topic: string | null;
+            /** Topic Source */
+            topic_source?: ("emis" | "manual") | null;
         };
         /**
          * PersonRefResponse
@@ -9905,6 +15793,33 @@ export interface components {
             status: string;
         };
         /**
+         * SendMessageBody
+         * @description POST /v1/ai/chats/{id}/messages.
+         */
+        app__interfaces__http__v1__ai__schemas__SendMessageBody: {
+            /** File Ids */
+            file_ids?: string[];
+            /** Text */
+            text: string;
+            /**
+             * Web Search
+             * @default false
+             */
+            web_search: boolean;
+        };
+        /**
+         * UsagePartResponse
+         * @description Tokens used against a limit.
+         */
+        app__interfaces__http__v1__ai__schemas__UsagePartResponse: {
+            /** Limit */
+            limit: number;
+            /** Resets At */
+            resets_at: string | null;
+            /** Used */
+            used: number;
+        };
+        /**
          * BroadcastStatsResponse
          * @description Delivery counters of a broadcast.
          */
@@ -9987,7 +15902,7 @@ export interface components {
             /** Recovery Email */
             recovery_email: string | null;
             /** Roles */
-            roles: ("student" | "teacher" | "admin" | "lms_admin")[];
+            roles: ("student" | "teacher" | "admin" | "lms_admin" | "librarian")[];
             /** Status */
             status: string;
         };
@@ -10136,6 +16051,12 @@ export interface components {
             id: string;
             /** Is Overridden */
             is_overridden: boolean;
+            /**
+             * Kind
+             * @default other
+             * @enum {string}
+             */
+            kind: "lecture" | "practice" | "midterm" | "final" | "other";
             /** Period */
             period: number;
             room: components["schemas"]["app__interfaces__http__v1__composition__shared_schemas__RoomRefLiteResponse"] | null;
@@ -10153,6 +16074,8 @@ export interface components {
             teacher: components["schemas"]["app__interfaces__http__v1__composition__shared_schemas__PersonRefResponse"] | null;
             /** Topic */
             topic: string | null;
+            /** Topic Source */
+            topic_source?: ("emis" | "manual") | null;
         };
         /**
          * MissedLessonResponse
@@ -10518,6 +16441,12 @@ export interface components {
             role: "material" | "attachment" | "homework";
             /** Short Url */
             short_url: string;
+            /**
+             * Source
+             * @default user
+             * @enum {string}
+             */
+            source: "user" | "emis";
             /** Title */
             title: string;
         };
@@ -10551,9 +16480,11 @@ export interface components {
         };
         /**
          * HomeworkItemResponse
-         * @description ``HomeworkItem``.
+         * @description ``HomeworkItem``; ``days_overdue`` is 0 unless the open item is past due.
          */
         app__interfaces__http__v1__me_classwork__schemas__HomeworkItemResponse: {
+            /** Days Overdue */
+            days_overdue: number;
             /** Done At */
             done_at: string | null;
             /** Due Date */
@@ -10609,6 +16540,12 @@ export interface components {
             id: string;
             /** Is Overridden */
             is_overridden: boolean;
+            /**
+             * Kind
+             * @default other
+             * @enum {string}
+             */
+            kind: "lecture" | "practice" | "midterm" | "final" | "other";
             /** Period */
             period: number;
             room: components["schemas"]["app__interfaces__http__v1__me_classwork__schemas__RoomRefLiteResponse"] | null;
@@ -10626,6 +16563,8 @@ export interface components {
             teacher: components["schemas"]["app__interfaces__http__v1__me_classwork__schemas__PersonRefResponse"] | null;
             /** Topic */
             topic: string | null;
+            /** Topic Source */
+            topic_source?: ("emis" | "manual") | null;
         };
         /**
          * MissedLessonResponse
@@ -10771,6 +16710,12 @@ export interface components {
             role: "material" | "attachment" | "homework";
             /** Short Url */
             short_url: string;
+            /**
+             * Source
+             * @default user
+             * @enum {string}
+             */
+            source: "user" | "emis";
             /** Title */
             title: string;
         };
@@ -10801,6 +16746,175 @@ export interface components {
             /** Name */
             name: string;
         };
+        /**
+         * FlashcardsBlock
+         * @description A flash cards block.
+         */
+        app__interfaces__http__v1__notebooks__schemas_apply__FlashcardsBlock: {
+            /** Cards */
+            cards?: components["schemas"]["BlockCard"][];
+            /**
+             * Id
+             * @default
+             */
+            id: string;
+            /**
+             * @description discriminator enum property added by openapi-typescript
+             * @enum {string}
+             */
+            type: "flashcards";
+        } & {
+            [key: string]: unknown;
+        };
+        /**
+         * TestBlock
+         * @description A test block: its settings and questions.
+         */
+        app__interfaces__http__v1__notebooks__schemas_apply__TestBlock: {
+            /** Config */
+            config?: {
+                [key: string]: unknown;
+            };
+            /**
+             * Id
+             * @default
+             */
+            id: string;
+            /** Questions */
+            questions?: components["schemas"]["BlockQuestion"][];
+            /**
+             * @description discriminator enum property added by openapi-typescript
+             * @enum {string}
+             */
+            type: "test";
+        } & {
+            [key: string]: unknown;
+        };
+        /**
+         * TextBlock
+         * @description A Markdown text block.
+         */
+        app__interfaces__http__v1__notebooks__schemas_apply__TextBlock: {
+            /**
+             * Id
+             * @default
+             */
+            id: string;
+            /**
+             * Markdown
+             * @default
+             */
+            markdown: string;
+            /**
+             * @description discriminator enum property added by openapi-typescript
+             * @enum {string}
+             */
+            type: "text";
+        } & {
+            [key: string]: unknown;
+        };
+        /**
+         * SendMessageBody
+         * @description `POST /notebooks/{id}/chat/messages`.
+         *
+         *     The 8 000 characters are a coarse cap on the payload; the question itself may
+         *     have 4 000 characters after trimming (the use case answers 422 above that).
+         */
+        app__interfaces__http__v1__notebooks__schemas_chat__SendMessageBody: {
+            /** Anchor */
+            anchor?: (components["schemas"]["AnchorPassages"] | components["schemas"]["AnchorText"]) | null;
+            /** Source Ids */
+            source_ids?: string[] | null;
+            /** Text */
+            text: string;
+            /**
+             * Web Search
+             * @default false
+             */
+            web_search: boolean;
+        };
+        /**
+         * UsagePartResponse
+         * @description Weighted tokens used against a limit.
+         */
+        app__interfaces__http__v1__notebooks__schemas_common__UsagePartResponse: {
+            /** Limit */
+            limit: number;
+            /** Resets At */
+            resets_at: string | null;
+            /** Used */
+            used: number;
+        };
+        /**
+         * Visibility
+         * @description Who may see a published item.
+         * @enum {string}
+         */
+        app__modules__library__domain__enums__Visibility: "public" | "lyceum" | "hidden";
+        /**
+         * Visibility
+         * @description Who may enroll in a course (LMS-3).
+         * @enum {string}
+         */
+        app__modules__lms__domain__authoring__enums__Visibility: "public" | "invite";
+        /**
+         * FlashcardsBlock
+         * @description A block of flash cards studied with spaced repetition.
+         */
+        app__modules__lms__domain__step_content__FlashcardsBlock: {
+            /** Cards */
+            cards?: components["schemas"]["Card"][];
+            /**
+             * Id
+             * @default
+             */
+            id: string;
+            /**
+             * @description discriminator enum property added by openapi-typescript
+             * @enum {string}
+             */
+            type: "flashcards";
+        };
+        /**
+         * TestBlock
+         * @description A test block with its settings and questions.
+         */
+        app__modules__lms__domain__step_content__TestBlock: {
+            config?: components["schemas"]["TestConfig"];
+            /**
+             * Id
+             * @default
+             */
+            id: string;
+            /** Questions */
+            questions?: components["schemas"]["Question"][];
+            /**
+             * @description discriminator enum property added by openapi-typescript
+             * @enum {string}
+             */
+            type: "test";
+        };
+        /**
+         * TextBlock
+         * @description A markdown text block.
+         */
+        app__modules__lms__domain__step_content__TextBlock: {
+            /**
+             * Id
+             * @default
+             */
+            id: string;
+            /**
+             * Markdown
+             * @default
+             */
+            markdown: string;
+            /**
+             * @description discriminator enum property added by openapi-typescript
+             * @enum {string}
+             */
+            type: "text";
+        };
     };
     responses: never;
     parameters: never;
@@ -10828,6 +16942,37 @@ export interface operations {
                 };
                 content: {
                     "text/calendar": string;
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    get_class_hours_internal_emis__user_id__class_hours_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                user_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["EmisClassHourResponse"][];
                 };
             };
             /** @description Validation Error */
@@ -10924,6 +17069,176 @@ export interface operations {
                 };
                 content: {
                     "application/json": components["schemas"]["EmisSubjectResponse"][];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    get_timetable_internal_emis__user_id__timetable_get: {
+        parameters: {
+            query: {
+                begin: string;
+                end: string;
+            };
+            header?: never;
+            path: {
+                user_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["EmisClassResponse"][];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    list_assessments_v1_admin_assessments_get: {
+        parameters: {
+            query?: {
+                from?: string | null;
+                to?: string | null;
+                subject_id?: string | null;
+                group_id?: string | null;
+                kind?: ("midterm" | "final" | "other") | null;
+                status?: ("planned" | "tentative" | "cancelled") | null;
+                source?: ("teacher" | "admin" | "emis" | "head_student") | null;
+                /** @description Also list control weeks without a subject date. */
+                undated?: boolean;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["StaffAssessmentListResponse"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    create_assessment_v1_admin_assessments_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["AssessmentCreateBody"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["StaffAssessmentItem"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    delete_assessment_v1_admin_assessments__assessment_id__delete: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                assessment_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            204: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    update_assessment_v1_admin_assessments__assessment_id__patch: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                assessment_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["AssessmentPatchBody"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["StaffAssessmentItem"];
                 };
             };
             /** @description Validation Error */
@@ -11630,6 +17945,356 @@ export interface operations {
                 };
                 content: {
                     "application/json": components["schemas"]["app__interfaces__http__v1__admin_schedule__shared_schemas__LessonItemResponse"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    list_sanctions_v1_admin_library_sanctions_get: {
+        parameters: {
+            query?: {
+                user_id?: string | null;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["SanctionResponse"][];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    create_sanction_v1_admin_library_sanctions_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["SanctionBody"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["SanctionResponse"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    list_unilibrary_feeds_v1_admin_library_unilibrary_feeds_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["FeedResponse"][];
+                };
+            };
+        };
+    };
+    create_unilibrary_feed_v1_admin_library_unilibrary_feeds_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["FeedInputBody"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["FeedResponse"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    delete_unilibrary_feed_v1_admin_library_unilibrary_feeds__feed_id__delete: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                feed_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            204: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    update_unilibrary_feed_v1_admin_library_unilibrary_feeds__feed_id__patch: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                feed_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["FeedPatchBody"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["FeedResponse"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    run_unilibrary_feed_action_v1_admin_library_unilibrary_feeds__feed_id___action__post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                feed_id: string;
+                action: components["schemas"]["FeedAction"];
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["FeedResponse"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    get_unilibrary_field_map_v1_admin_library_unilibrary_field_map_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["FieldMapEntrySchema"][];
+                };
+            };
+        };
+    };
+    put_unilibrary_field_map_v1_admin_library_unilibrary_field_map_put: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["FieldMapEntrySchema"][];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["FieldMapEntrySchema"][];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    get_unilibrary_settings_v1_admin_library_unilibrary_settings_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["UniLibrarySettingsResponse"];
+                };
+            };
+        };
+    };
+    put_unilibrary_settings_v1_admin_library_unilibrary_settings_put: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["UniLibrarySettingsBody"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["UniLibrarySettingsResponse"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    get_unilibrary_status_v1_admin_library_unilibrary_status_get: {
+        parameters: {
+            query?: never;
+            header?: {
+                "Accept-Language"?: string | null;
+            };
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["UniLibraryStatusResponse"];
                 };
             };
             /** @description Validation Error */
@@ -13063,9 +19728,11 @@ export interface operations {
     list_chats_v1_ai_chats_get: {
         parameters: {
             query?: {
-                assistant?: ("student" | "admin") | null;
+                assistant?: ("student" | "admin" | "lms_author") | null;
                 cursor?: string | null;
                 limit?: number;
+                q?: string | null;
+                course_id?: string | null;
             };
             header?: never;
             path?: never;
@@ -13232,9 +19899,74 @@ export interface operations {
         };
         requestBody: {
             content: {
-                "application/json": components["schemas"]["SendMessageBody"];
+                "application/json": components["schemas"]["app__interfaces__http__v1__ai__schemas__SendMessageBody"];
             };
         };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["TurnResultResponse"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    set_message_feedback_v1_ai_chats__chat_id__messages__seq__feedback_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                chat_id: string;
+                seq: number;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["MessageFeedbackBody"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            204: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    regenerate_answer_v1_ai_chats__chat_id__regenerate_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                chat_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
         responses: {
             /** @description Successful Response */
             200: {
@@ -13327,7 +20059,8 @@ export interface operations {
     get_usage_v1_ai_usage_get: {
         parameters: {
             query?: {
-                assistant?: ("student" | "admin") | null;
+                assistant?: ("student" | "admin" | "lms_author") | null;
+                course_id?: string | null;
             };
             header?: never;
             path?: never;
@@ -13351,6 +20084,46 @@ export interface operations {
                 };
                 content: {
                     "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    get_web_search_v1_ai_web_search_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["WebQuotaResponse"];
+                };
+            };
+        };
+    };
+    get_app_version_v1_app_version_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["AppVersionResponse"];
                 };
             };
         };
@@ -15133,6 +21906,602 @@ export interface operations {
             };
         };
     };
+    search_unilibrary_v1_library_external_unilibrary_search_get: {
+        parameters: {
+            query?: {
+                q?: string | null;
+                subject_id?: string | null;
+                field_id?: number | null;
+                type_id?: number | null;
+                language?: string | null;
+                access?: components["schemas"]["UniLibraryAccessFilter"];
+                page?: number;
+            };
+            header?: {
+                "Accept-Language"?: string | null;
+            };
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["UniLibrarySearchResultResponse"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    get_unilibrary_taxonomies_v1_library_external_unilibrary_taxonomies_get: {
+        parameters: {
+            query?: never;
+            header?: {
+                "Accept-Language"?: string | null;
+            };
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["UniLibraryTaxonomyResponse"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    get_unilibrary_record_v1_library_external_unilibrary__external_id__get: {
+        parameters: {
+            query?: {
+                category?: number;
+            };
+            header?: {
+                "Accept-Language"?: string | null;
+            };
+            path: {
+                external_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ItemCardSchema"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    pin_unilibrary_record_v1_library_external_unilibrary__external_id__item_post: {
+        parameters: {
+            query?: never;
+            header?: {
+                "Accept-Language"?: string | null;
+            };
+            path: {
+                external_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["PinExternalBody"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ItemCardSchema"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    list_items_v1_library_items_get: {
+        parameters: {
+            query?: {
+                q?: string | null;
+                source?: components["schemas"]["ItemSource"];
+                subject_id?: string | null;
+                topic_id?: string | null;
+                year_of_study?: number | null;
+                type?: components["schemas"]["ItemType"] | null;
+                language?: string | null;
+                collection_id?: string | null;
+                uploader_role?: ("student" | "teacher") | null;
+                has_text?: boolean | null;
+                shelf?: components["schemas"]["ShelfState"] | "any" | null;
+                sort?: components["schemas"]["ItemSort"];
+                cursor?: string | null;
+                limit?: number;
+            };
+            header?: {
+                "Accept-Language"?: string | null;
+            };
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Page_ItemCardSchema_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    get_item_v1_library_items__id_or_slug__get: {
+        parameters: {
+            query?: never;
+            header?: {
+                "Accept-Language"?: string | null;
+            };
+            path: {
+                id_or_slug: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ItemDetailSchema"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    get_file_url_v1_library_items__item_id__files__file_id__url_get: {
+        parameters: {
+            query?: {
+                inline?: boolean;
+            };
+            header?: never;
+            path: {
+                item_id: string;
+                file_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["FileUrlSchema"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    report_item_v1_library_items__item_id__report_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                item_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["LibraryReportBody"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            204: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    get_item_text_v1_library_items__item_id__text_get: {
+        parameters: {
+            query?: {
+                page_from?: number | null;
+                page_to?: number | null;
+            };
+            header?: never;
+            path: {
+                item_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ItemTextSchema"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    create_material_v1_library_materials_post: {
+        parameters: {
+            query?: never;
+            header?: {
+                "Accept-Language"?: string | null;
+            };
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["MaterialInputBody"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ItemDetailSchema"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    withdraw_material_v1_library_materials__item_id__delete: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                item_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            204: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    update_material_v1_library_materials__item_id__patch: {
+        parameters: {
+            query?: never;
+            header?: {
+                "Accept-Language"?: string | null;
+            };
+            path: {
+                item_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["MaterialPatchBody"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ItemDetailSchema"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    attach_material_files_v1_library_materials__item_id__files_post: {
+        parameters: {
+            query?: never;
+            header?: {
+                "Accept-Language"?: string | null;
+            };
+            path: {
+                item_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["MaterialFilesBody"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ItemDetailSchema"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    submit_material_v1_library_materials__item_id__submit_post: {
+        parameters: {
+            query?: never;
+            header?: {
+                "Accept-Language"?: string | null;
+            };
+            path: {
+                item_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            202: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ItemDetailSchema"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    create_material_version_v1_library_materials__item_id__versions_post: {
+        parameters: {
+            query?: never;
+            header?: {
+                "Accept-Language"?: string | null;
+            };
+            path: {
+                item_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["MaterialInputBody"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ItemDetailSchema"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    list_subjects_v1_library_subjects_get: {
+        parameters: {
+            query?: {
+                all?: boolean;
+            };
+            header?: {
+                "Accept-Language"?: string | null;
+            };
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["LibrarySubjectSchema"][];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    create_suggestion_v1_library_suggestions_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["SuggestionBody"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": unknown;
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
     create_link_v1_links_post: {
         parameters: {
             query?: never;
@@ -16555,6 +23924,460 @@ export interface operations {
             };
         };
     };
+    list_books_v1_manage_library_books_get: {
+        parameters: {
+            query?: {
+                q?: string | null;
+                status?: components["schemas"]["ItemStatus"] | null;
+                cursor?: string | null;
+                limit?: number;
+            };
+            header?: {
+                "Accept-Language"?: string | null;
+            };
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Page_BookRowSchema_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    create_book_v1_manage_library_books_post: {
+        parameters: {
+            query?: never;
+            header?: {
+                "Accept-Language"?: string | null;
+            };
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["BookInputBody"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ItemDetailSchema"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    get_book_v1_manage_library_books__book_id__get: {
+        parameters: {
+            query?: never;
+            header?: {
+                "Accept-Language"?: string | null;
+            };
+            path: {
+                book_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["BookDraftSchema"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    update_book_v1_manage_library_books__book_id__patch: {
+        parameters: {
+            query?: never;
+            header?: {
+                "Accept-Language"?: string | null;
+            };
+            path: {
+                book_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["BookPatchBody"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ItemDetailSchema"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    attach_book_file_v1_manage_library_books__book_id__files_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                book_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["BookFileBody"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ItemFileSchema"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    publish_book_v1_manage_library_books__book_id__publish_post: {
+        parameters: {
+            query?: never;
+            header?: {
+                "Accept-Language"?: string | null;
+            };
+            path: {
+                book_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ItemDetailSchema"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    takedown_book_v1_manage_library_books__book_id__takedown_post: {
+        parameters: {
+            query?: never;
+            header?: {
+                "Accept-Language"?: string | null;
+            };
+            path: {
+                book_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: {
+            content: {
+                "application/json": components["schemas"]["BookActionBody"] | null;
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ItemDetailSchema"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    unpublish_book_v1_manage_library_books__book_id__unpublish_post: {
+        parameters: {
+            query?: never;
+            header?: {
+                "Accept-Language"?: string | null;
+            };
+            path: {
+                book_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: {
+            content: {
+                "application/json": components["schemas"]["BookActionBody"] | null;
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ItemDetailSchema"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    import_books_v1_manage_library_import_post: {
+        parameters: {
+            query?: never;
+            header?: {
+                "Accept-Language"?: string | null;
+            };
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["ImportBody"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ImportResultSchema"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    review_item_v1_manage_library_items__item_id___action__post: {
+        parameters: {
+            query?: never;
+            header?: {
+                "Accept-Language"?: string | null;
+            };
+            path: {
+                item_id: string;
+                action: "approve" | "request-changes" | "reject" | "hold" | "restore" | "unpublish";
+            };
+            cookie?: never;
+        };
+        requestBody?: {
+            content: {
+                "application/json": components["schemas"]["ModerationBody"] | null;
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ItemDetailSchema"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    list_queue_v1_manage_library_queue_get: {
+        parameters: {
+            query: {
+                tab: components["schemas"]["QueueTab"];
+                cursor?: string | null;
+                limit?: number;
+            };
+            header?: {
+                "Accept-Language"?: string | null;
+            };
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Page_QueueRowResponse_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    resolve_report_v1_manage_library_reports__report_id__resolve_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                report_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["ReportResolveBody"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            204: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    decide_suggestion_v1_manage_library_suggestions__suggestion_id___decision__post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                suggestion_id: string;
+                decision: "accept" | "decline";
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            204: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
     get_alerts_v1_me_alerts_get: {
         parameters: {
             query?: never;
@@ -16571,6 +24394,72 @@ export interface operations {
                 };
                 content: {
                     "application/json": components["schemas"]["AlertResponse"][];
+                };
+            };
+        };
+    };
+    list_assessments_v1_me_assessments_get: {
+        parameters: {
+            query?: {
+                from?: string | null;
+                to?: string | null;
+                subject_id?: string | null;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["AssessmentListResponse"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    propose_assessment_v1_me_assessments_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["ProposalBody"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["AssessmentItem"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
                 };
             };
         };
@@ -16733,6 +24622,38 @@ export interface operations {
                 };
                 content: {
                     "application/json": components["schemas"]["SetDetailResponse"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    get_review_stats_v1_me_flashcard_sets_stats_get: {
+        parameters: {
+            query?: {
+                set_id?: string | null;
+                year?: number | null;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ReviewStatsResponse"];
                 };
             };
             /** @description Validation Error */
@@ -17007,7 +24928,7 @@ export interface operations {
     list_homework_v1_me_homework_get: {
         parameters: {
             query?: {
-                status?: "upcoming" | "later" | "done";
+                status?: "overdue" | "upcoming" | "later" | "done";
             };
             header?: never;
             path?: never;
@@ -17136,6 +25057,41 @@ export interface operations {
             };
         };
     };
+    list_my_uploads_v1_me_library_uploads_get: {
+        parameters: {
+            query?: {
+                status?: components["schemas"]["ItemStatus"] | null;
+                cursor?: string | null;
+                limit?: number;
+            };
+            header?: {
+                "Accept-Language"?: string | null;
+            };
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Page_UploadRowResponse_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
     list_my_links_v1_me_links_get: {
         parameters: {
             query?: {
@@ -17186,6 +25142,70 @@ export interface operations {
                 };
                 content: {
                     "application/json": components["schemas"]["StudentProfileResponse"];
+                };
+            };
+        };
+    };
+    subscribe_v1_me_push_subscriptions_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["PushSubscriptionBody"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["PushSubscriptionResponse"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    unsubscribe_v1_me_push_subscriptions_delete: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["PushUnsubscribeBody"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            204: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
                 };
             };
         };
@@ -17325,6 +25345,41 @@ export interface operations {
             };
         };
     };
+    get_planner_v1_me_subjects__subject_id__planner_get: {
+        parameters: {
+            query?: {
+                semester?: number | null;
+                /** @description Hypothetical marks, `<lesson|midterm|final>:<2..5>`. */
+                what_if?: string[] | null;
+            };
+            header?: never;
+            path: {
+                subject_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["SubjectPlannerResponse"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
     get_timetable_v1_me_timetable_get: {
         parameters: {
             query?: {
@@ -17373,6 +25428,1711 @@ export interface operations {
                 };
                 content: {
                     "application/json": components["schemas"]["StudentTodayResponse"];
+                };
+            };
+        };
+    };
+    list_notebooks_v1_notebooks_get: {
+        parameters: {
+            query?: {
+                q?: string | null;
+                cursor?: string | null;
+                limit?: number;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["PageResponse_NotebookItemResponse_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    create_notebook_v1_notebooks_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["CreateNotebookBody"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["NotebookDetailResponse"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    find_lesson_notebook_v1_notebooks_auto_lesson__lesson_id__get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                lesson_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["NotebookDetailResponse"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    open_lesson_notebook_v1_notebooks_auto_lesson__lesson_id__post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                lesson_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["NotebookDetailResponse"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    find_subject_notebook_v1_notebooks_auto_subject__subject_id__get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                subject_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["NotebookDetailResponse"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    open_subject_notebook_v1_notebooks_auto_subject__subject_id__post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                subject_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["NotebookDetailResponse"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    open_course_workspace_v1_notebooks_course_workspaces_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["OpenCourseWorkspaceBody"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["CourseWorkspaceResponse"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    get_usage_v1_notebooks_usage_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["NotebookUsageResponse"];
+                };
+            };
+        };
+    };
+    get_notebook_v1_notebooks__notebook_id__get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                notebook_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["NotebookDetailResponse"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    delete_notebook_v1_notebooks__notebook_id__delete: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                notebook_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            204: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    update_notebook_v1_notebooks__notebook_id__patch: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                notebook_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["UpdateNotebookBody"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["NotebookDetailResponse"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    list_artifacts_v1_notebooks__notebook_id__artifacts_get: {
+        parameters: {
+            query?: {
+                kind?: ("report" | "mind_map" | "flashcards" | "quiz" | "data_table" | "slides" | "infographic" | "course_plan" | "lesson_draft") | null;
+                status?: components["schemas"]["ArtifactStatus"] | null;
+            };
+            header?: never;
+            path: {
+                notebook_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ArtifactItemResponse"][];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    create_artifact_v1_notebooks__notebook_id__artifacts_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                notebook_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["ReportCreate"] | components["schemas"]["MindMapCreate"] | components["schemas"]["FlashcardsCreate"] | components["schemas"]["QuizCreate"] | components["schemas"]["DataTableCreate"] | components["schemas"]["SlidesCreate"] | components["schemas"]["InfographicCreate"] | components["schemas"]["CoursePlanCreate"] | components["schemas"]["LessonDraftCreate"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            202: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ArtifactItemResponse"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    get_artifact_v1_notebooks__notebook_id__artifacts__artifact_id__get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                notebook_id: string;
+                artifact_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ArtifactDetailResponse"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    delete_artifact_v1_notebooks__notebook_id__artifacts__artifact_id__delete: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                notebook_id: string;
+                artifact_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            204: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    rename_artifact_v1_notebooks__notebook_id__artifacts__artifact_id__patch: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                notebook_id: string;
+                artifact_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["RenameArtifactBody"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ArtifactItemResponse"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    apply_artifact_v1_notebooks__notebook_id__artifacts__artifact_id__apply_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                notebook_id: string;
+                artifact_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["ApplyBody"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApplyResultResponse"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    apply_preview_v1_notebooks__notebook_id__artifacts__artifact_id__apply_preview_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                notebook_id: string;
+                artifact_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["ApplyBody"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApplyPreviewResponse"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    cancel_artifact_v1_notebooks__notebook_id__artifacts__artifact_id__cancel_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                notebook_id: string;
+                artifact_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ArtifactItemResponse"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    save_flashcard_set_v1_notebooks__notebook_id__artifacts__artifact_id__flashcard_set_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                notebook_id: string;
+                artifact_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["FlashcardSetResponse"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    save_progress_v1_notebooks__notebook_id__artifacts__artifact_id__progress_put: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                notebook_id: string;
+                artifact_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["ProgressBody"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            204: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    retry_artifact_v1_notebooks__notebook_id__artifacts__artifact_id__retry_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                notebook_id: string;
+                artifact_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            202: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ArtifactItemResponse"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    save_as_source_v1_notebooks__notebook_id__artifacts__artifact_id__save_as_source_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                notebook_id: string;
+                artifact_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["SourceItemResponse"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    edit_slides_v1_notebooks__notebook_id__artifacts__artifact_id__slides_put: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                notebook_id: string;
+                artifact_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["SlidesBody"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ArtifactDetailResponse"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    revise_slides_v1_notebooks__notebook_id__artifacts__artifact_id__slides_revise_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                notebook_id: string;
+                artifact_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["ReviseSlidesBody"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            202: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ArtifactItemResponse"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    update_auto_settings_v1_notebooks__notebook_id__auto_patch: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                notebook_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["UpdateAutoSettingsBody"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["NotebookDetailResponse"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    get_chat_v1_notebooks__notebook_id__chat_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                notebook_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ChatHistoryResponse"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    delete_chat_v1_notebooks__notebook_id__chat_delete: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                notebook_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            204: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    send_message_v1_notebooks__notebook_id__chat_messages_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                notebook_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["app__interfaces__http__v1__notebooks__schemas_chat__SendMessageBody"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["NotebookTurnResponse"];
+                    "text/event-stream": unknown;
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    message_feedback_v1_notebooks__notebook_id__chat_messages__message_id__feedback_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                notebook_id: string;
+                message_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["FeedbackBody"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            204: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    save_note_v1_notebooks__notebook_id__chat_messages__message_id__save_note_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                notebook_id: string;
+                message_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: {
+            content: {
+                "application/json": components["schemas"]["SaveNoteBody"] | null;
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["SourceItemResponse"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    regenerate_chat_v1_notebooks__notebook_id__chat_regenerate_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                notebook_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["NotebookTurnResponse"];
+                    "text/event-stream": unknown;
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    copy_notebook_v1_notebooks__notebook_id__copy_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                notebook_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["NotebookDetailResponse"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    list_course_steps_v1_notebooks__notebook_id__course_steps_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                notebook_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["CourseStepsResponse"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    discover_sources_v1_notebooks__notebook_id__discover_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                notebook_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["DiscoverBody"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["DiscoverResponse"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    list_labels_v1_notebooks__notebook_id__labels_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                notebook_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["LabelListResponse"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    create_label_v1_notebooks__notebook_id__labels_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                notebook_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["CreateLabelBody"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["LabelItemResponse"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    start_labeling_v1_notebooks__notebook_id__labels_auto_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                notebook_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            202: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["StartLabelsResponse"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    delete_label_v1_notebooks__notebook_id__labels__label_id__delete: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                notebook_id: string;
+                label_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            204: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    update_label_v1_notebooks__notebook_id__labels__label_id__patch: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                notebook_id: string;
+                label_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["UpdateLabelBody"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["LabelItemResponse"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    get_passage_v1_notebooks__notebook_id__passages__passage_id__get: {
+        parameters: {
+            query?: {
+                context?: number;
+            };
+            header?: never;
+            path: {
+                notebook_id: string;
+                passage_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["PassageDetailResponse"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    search_sources_v1_notebooks__notebook_id__search_get: {
+        parameters: {
+            query: {
+                q: string;
+                limit?: number;
+            };
+            header?: never;
+            path: {
+                notebook_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["SearchResponse"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    list_sources_v1_notebooks__notebook_id__sources_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                notebook_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["SourceItemResponse"][];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    add_sources_v1_notebooks__notebook_id__sources_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                notebook_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["AddSourcesBody"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["AddSourcesResponse"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    select_sources_v1_notebooks__notebook_id__sources_select_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                notebook_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["SelectSourcesBody"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["SourceItemResponse"][];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    get_source_v1_notebooks__notebook_id__sources__source_id__get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                notebook_id: string;
+                source_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["SourceDetailResponse"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    remove_source_v1_notebooks__notebook_id__sources__source_id__delete: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                notebook_id: string;
+                source_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            204: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    update_source_v1_notebooks__notebook_id__sources__source_id__patch: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                notebook_id: string;
+                source_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["UpdateSourceBody"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["SourceItemResponse"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    set_source_labels_v1_notebooks__notebook_id__sources__source_id__labels_put: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                notebook_id: string;
+                source_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["SetSourceLabelsBody"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["SourceItemResponse"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    list_passages_v1_notebooks__notebook_id__sources__source_id__passages_get: {
+        parameters: {
+            query?: {
+                cursor?: string | null;
+                limit?: number;
+            };
+            header?: never;
+            path: {
+                notebook_id: string;
+                source_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["PageResponse_PassageItemResponse_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    sync_source_v1_notebooks__notebook_id__sources__source_id__sync_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                notebook_id: string;
+                source_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["SourceItemResponse"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    get_notebook_usage_v1_notebooks__notebook_id__usage_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                notebook_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["NotebookUsageResponse"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
                 };
             };
         };
@@ -17710,6 +27470,26 @@ export interface operations {
             };
         };
     };
+    get_config_v1_push_config_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["PushConfigResponse"];
+                };
+            };
+        };
+    };
     create_share_v1_shares_post: {
         parameters: {
             query?: never;
@@ -17730,6 +27510,142 @@ export interface operations {
                 };
                 content: {
                     "application/json": components["schemas"]["LinkItem"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    list_assessments_v1_staff_assessments_get: {
+        parameters: {
+            query?: {
+                from?: string | null;
+                to?: string | null;
+                subject_id?: string | null;
+                group_id?: string | null;
+                kind?: ("midterm" | "final" | "other") | null;
+                status?: ("planned" | "tentative" | "cancelled") | null;
+                source?: ("teacher" | "admin" | "emis" | "head_student") | null;
+                /** @description Also list control weeks without a subject date. */
+                undated?: boolean;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["StaffAssessmentListResponse"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    create_assessment_v1_staff_assessments_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["AssessmentCreateBody"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["StaffAssessmentItem"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    delete_assessment_v1_staff_assessments__assessment_id__delete: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                assessment_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            204: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    update_assessment_v1_staff_assessments__assessment_id__patch: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                assessment_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["AssessmentPatchBody"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["StaffAssessmentItem"];
                 };
             };
             /** @description Validation Error */

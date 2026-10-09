@@ -16,11 +16,13 @@ export const TEST_ENV: AppEnv = {
   STAFF_URL: "http://localhost:3003",
   ADMIN_URL: "http://localhost:3004",
   LMS_URL: "http://localhost:3005",
+  LIBRARY_URL: "http://localhost:3008",
   SHARE_URL: "http://localhost:3006",
   SHORT_LINKS_URL: "http://localhost:8000",
   ROOMS_URL: "http://localhost:8000",
   MCP_URL: "http://localhost:8000/mcp",
   BOT_USERNAME: "ihspbot",
   OAUTH_CLIENT_ID: "sp",
+  APP_MODE: "sp",
   STORAGE_ORIGIN: TEST_STORAGE_URL,
 }

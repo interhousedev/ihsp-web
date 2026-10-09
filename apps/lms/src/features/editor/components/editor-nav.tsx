@@ -6,7 +6,7 @@ import Link from "next/link"
 import { hrefs } from "../../shared/utils/hrefs"
 import { can, type CoursePermission } from "../../shared/utils/permissions"
 
-export type EditorSection = "outline" | "publish" | "versions" | "staff" | "students" | "preview"
+export type EditorSection = "outline" | "workspace" | "publish" | "versions" | "staff" | "students" | "preview"
 
 /** Course tools as a row of links; each shows only for staff with the matching permission. */
 export function EditorNav({
@@ -24,6 +24,11 @@ export function EditorNav({
     {
       key: "outline",
       href: hrefs.edit(courseId),
+      visible: can(permissions, "edit") || can(permissions, "view_drafts"),
+    },
+    {
+      key: "workspace",
+      href: hrefs.workspace(courseId),
       visible: can(permissions, "edit") || can(permissions, "view_drafts"),
     },
     { key: "preview", href: hrefs.preview(courseId), visible: can(permissions, "view_drafts") },

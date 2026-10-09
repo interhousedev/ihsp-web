@@ -11,6 +11,7 @@ const URL_KEYS: Record<PlatformKey, keyof AppEnv> = {
   staff: "STAFF_URL",
   admin: "ADMIN_URL",
   lms: "LMS_URL",
+  library: "LIBRARY_URL",
   id: "ID_URL",
 }
 
@@ -25,11 +26,15 @@ export function usePlatformLinks(): PlatformLink[] {
   if (!roles) return []
 
   const config = getConfig()
-  return platformKeysFor(roles).map((key) => ({
-    key,
-    name: t(`${key}.name`),
-    description: t(`${key}.description`),
-    href: String(config[URL_KEYS[key]]),
-    current: config.OAUTH_CLIENT_ID === key,
-  }))
+  // An optional address (`LIBRARY_URL`) that is not configured hides its entry.
+  return platformKeysFor(roles)
+    .filter((key) => config[URL_KEYS[key]])
+    .map((key) => ({
+      key,
+      name: t(`${key}.name`),
+      description: t(`${key}.description`),
+      href: String(config[URL_KEYS[key]]),
+      // The installable app (client `app`) is the student portal in another host.
+      current: (config.OAUTH_CLIENT_ID === "app" ? "sp" : config.OAUTH_CLIENT_ID) === key,
+    }))
 }

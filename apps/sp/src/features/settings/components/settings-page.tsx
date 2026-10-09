@@ -7,6 +7,8 @@ import { useT } from "@ihsp/i18n"
 import { PageContainer } from "@ihsp/ui"
 import { useQuery } from "@tanstack/react-query"
 import { CalendarFeedPanel } from "../../calendar-feed/components/calendar-feed-panel"
+import { AppLockSection } from "../../pwa/components/app-lock-section"
+import { getServiceWorkerRegistration } from "../../pwa/utils/service-worker-registration"
 import { GeneralSettings } from "./general-settings"
 import { SettingsSection } from "./settings-section"
 import { TelegramHint } from "./telegram-hint"
@@ -33,10 +35,15 @@ export function SettingsPage() {
           <SettingsSection title={t("calendar.title")}>
             <CalendarFeedPanel />
           </SettingsSection>
+          <AppLockSection />
         </div>
         <SettingsSection title={t("notifications.title")} description={t("notifications.description")}>
           <TelegramHint />
-          <NotificationSettingsForm roles={session.user.roles} isHeadStudent={isHeadStudent} />
+          <NotificationSettingsForm
+            roles={session.user.roles}
+            isHeadStudent={isHeadStudent}
+            getPushRegistration={getServiceWorkerRegistration}
+          />
         </SettingsSection>
       </div>
     </PageContainer>

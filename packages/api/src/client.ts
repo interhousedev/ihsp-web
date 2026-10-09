@@ -20,8 +20,11 @@ export type ApiRequest = {
   /** `include` only for the cookie endpoints under `/v1/oauth/`. */
   credentials?: "include" | "omit"
   headers?: Record<string, string>
-  /** `json` (default; empty body gives `undefined`), `blob` (CSV exports) or `text` (iCal, HTML). */
-  responseType?: "json" | "blob" | "text"
+  /**
+   * `json` (default; empty body gives `undefined`), `blob` (CSV exports), `text` (iCal, HTML) or `stream`
+   * (the raw `Response` of a successful request, to read a server-sent event body).
+   */
+  responseType?: "json" | "blob" | "text" | "stream"
   signal?: AbortSignal
   /**
    * HTTP cache mode of the request. Learning GETs are served `Cache-Control: private, max-age=60`; pass `"no-cache"` to
@@ -138,6 +141,7 @@ export function createApiClient(options: ApiClientOptions): ApiClient {
       if (!refreshed || response.status === 401) options.onUnauthorized()
     }
     if (!response.ok) throw await parseApiError(response)
+    if (req.responseType === "stream") return response as T
     if (req.responseType === "blob") return (await response.blob()) as T
     if (req.responseType === "text") return (await response.text()) as T
     const text = await response.text()

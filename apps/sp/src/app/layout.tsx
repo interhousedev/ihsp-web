@@ -1,4 +1,5 @@
 import "@ihsp/ui/styles"
+import { PWA_HEAD_SCRIPT } from "@/features/pwa/utils/pwa-head"
 import { TELEGRAM_SDK_LOADER } from "@ihsp/telegram/sdk-loader"
 import { THEME_INIT_SCRIPT } from "@ihsp/ui/theme-init"
 import type { Metadata, Viewport } from "next"
@@ -18,13 +19,15 @@ export const viewport: Viewport = {
 
 /**
  * Static root layout (no cookies, no headers). `/env.js` is a plain blocking script, so `window.__ENV__` exists
- * before any app code runs; the locale is applied on the client by `I18nProvider`.
+ * before any app code runs; the locale is applied on the client by `I18nProvider`. The PWA head script only acts when
+ * `APP_MODE` is `pwa` (manifest link, iOS tags, install prompt catcher).
  */
 export default function RootLayout({ children }: { children: ReactNode }) {
   return (
     <html lang="ru" data-theme="vercel" suppressHydrationWarning>
       <head>
         <script src="/env.js" />
+        <script dangerouslySetInnerHTML={{ __html: PWA_HEAD_SCRIPT }} />
         <script dangerouslySetInnerHTML={{ __html: TELEGRAM_SDK_LOADER }} />
         <script dangerouslySetInnerHTML={{ __html: THEME_INIT_SCRIPT }} />
       </head>

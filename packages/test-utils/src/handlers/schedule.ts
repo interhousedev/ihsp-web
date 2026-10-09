@@ -89,6 +89,7 @@ function entryFromInput(input: Partial<TimetableEntryInput>, id: string): Timeta
     audience: audienceFor(input.audience ?? []),
     valid_from: input.valid_from ?? "2026-09-02",
     valid_to: input.valid_to ?? null,
+    source: "manual",
   }
 }
 
@@ -116,6 +117,8 @@ function lessonFromInput(input: Partial<ExtraLessonInput>): LessonItem {
     is_overridden: true,
     changes: null,
     topic: input.topic ?? null,
+    kind: "other",
+    topic_source: input.topic ? "manual" : null,
     has_homework: false,
     attendance_submitted: false,
   }

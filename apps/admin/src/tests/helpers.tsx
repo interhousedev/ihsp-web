@@ -5,7 +5,8 @@ import {
   type RenderWithProvidersOptions,
   type RenderWithProvidersResult,
 } from "@ihsp/test-utils"
-import { configure, fireEvent, waitFor } from "@testing-library/react"
+import { configure, fireEvent, screen, waitFor } from "@testing-library/react"
+import type { UserEvent } from "@testing-library/user-event"
 import { NuqsTestingAdapter } from "nuqs/adapters/testing"
 import type { ReactElement } from "react"
 import en from "../../messages/en.json"
@@ -65,4 +66,50 @@ export function waitUntil(condition: () => boolean, message = "condition not met
 export function hrefOf(element: Element | null): string {
   const href = element?.getAttribute("href") ?? ""
   return href.startsWith("/") ? href.replace(/([^/])(\?|#|$)/, "$1/$2") : href
+}
+
+const MONTH_NAMES = [
+  "January",
+  "February",
+  "March",
+  "April",
+  "May",
+  "June",
+  "July",
+  "August",
+  "September",
+  "October",
+  "November",
+  "December",
+]
+
+/** "October 2026" (the label of the calendar grid) as a month number counted from year 0. */
+function monthNumber(label: string): number {
+  const [name = "", year = "0"] = label.split(" ")
+  return Number(year) * 12 + MONTH_NAMES.indexOf(name)
+}
+
+/**
+ * Opens a `DatePicker`, pages its calendar to the month of `iso` (it opens in the current month) and clicks the day.
+ * The popover is closed again (Escape would close the dialog around it too), so the next picker starts clean.
+ */
+export async function pickDate(user: UserEvent, trigger: HTMLElement, iso: string): Promise<void> {
+  await user.click(trigger)
+  const [year = 0, month = 1] = iso.split("-").map(Number)
+  const target = year * 12 + (month - 1)
+  let grid = await screen.findByRole("grid")
+  for (let step = 0; step < 48 && monthNumber(grid.getAttribute("aria-label") ?? "") !== target; step += 1) {
+    const forward = monthNumber(grid.getAttribute("aria-label") ?? "") < target
+    await user.click(
+      screen.getByRole("button", { name: forward ? "Go to the Next Month" : "Go to the Previous Month" }),
+    )
+    grid = await screen.findByRole("grid")
+  }
+  const day = grid.querySelector(`td[data-day="${iso}"] button`)
+  if (!day) throw new Error(`The calendar has no enabled day ${iso}`)
+  await user.click(day)
+  await user.click(trigger)
+  await waitFor(() => {
+    if (screen.queryByRole("grid")) throw new Error("the calendar is still open")
+  })
 }

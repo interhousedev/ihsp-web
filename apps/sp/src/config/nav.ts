@@ -2,6 +2,7 @@
 
 import { useT } from "@ihsp/i18n"
 import type { BottomNavItem, NavGroup } from "@ihsp/ui"
+import { IconNotebook } from "@tabler/icons-react"
 import { useMemo } from "react"
 
 /**
@@ -26,12 +27,14 @@ export function useNav(): { groups: NavGroup[]; bottom: BottomNavItem[] } {
             grades,
             { title: t("attendance"), url: "/attendance/", icon: "attendance" },
             homework,
+            { title: t("exams"), url: "/exams/", icon: "calendarEvent" },
           ],
         },
         {
           label: t("groupStudyTools"),
           items: [
             { title: t("assistant"), url: "/assistant/", icon: "assistant" },
+            { title: t("notebooks"), url: "/notebooks/", icon: IconNotebook },
             { title: t("flashcards"), url: "/flashcards/", icon: "flashcards" },
             { title: t("files"), url: "/files/", icon: "files" },
             { title: t("links"), url: "/links/", icon: "links" },

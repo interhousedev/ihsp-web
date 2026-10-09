@@ -6,6 +6,7 @@
     "today": "Bugun",
     "timetable": "Dars jadvali",
     "journal": "Jurnal",
+    "exams": "Nazoratlar",
     "myGroup": "Mening guruhim",
     "students": "Talabalar",
     "subgroups": "Kichik guruhlar",
@@ -65,6 +66,12 @@
           "action": "Sozlamalarni ochish"
         }
       }
+    },
+    "examSuggestions": {
+      "title": "Tasdiqlanadigan nazorat sanalari",
+      "summary": "{count, plural, one {# nazorat sanasini tasdiqlash kerak} other {# nazorat sanasini tasdiqlash kerak}}",
+      "hint": "Bu sanalarni EMIS va guruh sardorlari taklif qilgan. Siz tasdiqlamaguningizcha talabalar ularni taxminiy deb koʻradi.",
+      "review": "Koʻrib chiqish"
     }
   },
   "timetable": {
@@ -209,6 +216,118 @@
       "remove": "Belgini olib tashlash",
       "marked": "Yoʻqlik sababli deb belgilandi",
       "removed": "Belgi olib tashlandi"
+    }
+  },
+  "exams": {
+    "title": "Nazoratlar",
+    "description": "Fanlaringiz boʻyicha oraliq va yakuniy nazoratlar, nazorat haftalari kesimida",
+    "noGroups": "Siz hali birorta guruhda dars bermaysiz.",
+    "pickGroup": "Guruh",
+    "groupOption": "{name} (tasdiqlash kerak: {count})",
+    "subjectFilter": "Fan",
+    "allSubjects": "Barcha fanlar",
+    "add": "Nazorat qoʻshish",
+    "empty": "Bu guruh uchun hali nazoratlar yoʻq.",
+    "emptyFiltered": "Bu fan boʻyicha nazoratlar yoʻq.",
+    "weekOf": "Nazorat haftasi: {range}",
+    "room": "{name}-xona",
+    "controls": {
+      "midterm_1": "Oraliq nazorat 1",
+      "midterm_2": "Oraliq nazorat 2",
+      "final": "Yakuniy nazorat",
+      "other": "Boshqa"
+    },
+    "kinds": {
+      "midterm": "Oraliq nazorat",
+      "final": "Yakuniy nazorat",
+      "other": "Boshqa"
+    },
+    "status": {
+      "planned": "Rejalashtirilgan",
+      "tentative": "Tasdiqlanmagan",
+      "undated": "Sana belgilanmagan"
+    },
+    "sources": {
+      "teacher": "Oʻqituvchi",
+      "admin": "Maʼmuriyat",
+      "emis": "EMIS",
+      "head_student": "Guruh sardori"
+    },
+    "actions": {
+      "edit": "Tahrirlash",
+      "editFor": "Tahrirlash: {subject}",
+      "confirm": "Tasdiqlash",
+      "confirmFor": "Tasdiqlash: {subject}",
+      "dismiss": "Rad etish",
+      "dismissFor": "Rad etish: {subject}",
+      "cancel": "Nazoratni bekor qilish",
+      "cancelFor": "Nazoratni bekor qilish: {subject}",
+      "setDate": "Sana belgilash",
+      "setDateFor": "Sana belgilash: {subject}"
+    },
+    "suggestions": {
+      "title": "Tasdiqlash uchun taklif etilgan sanalar",
+      "hint": "Bu sanalar hali tasdiqlanmagan. Har birini tasdiqlamaguncha, oʻzgartirmaguncha yoki rad etmaguncha talabalar ularni taxminiy deb koʻradi.",
+      "fromEmis": "EMIS darsidan",
+      "fromHeadStudent": "Guruh sardori taklif qilgan",
+      "confirmAsIs": "Shundayligicha tasdiqlash",
+      "confirmAsIsFor": "Shundayligicha tasdiqlash: {subject}",
+      "editConfirm": "Oʻzgartirib tasdiqlash",
+      "editConfirmFor": "Oʻzgartirib tasdiqlash: {subject}",
+      "dismiss": "Rad etish",
+      "dismissFor": "Rad etish: {subject}"
+    },
+    "confirmed": "Sana tasdiqlandi",
+    "dismissed": "Taklif rad etildi",
+    "cancelled": "Nazorat bekor qilindi",
+    "created": "Nazorat qoʻshildi",
+    "saved": "Nazorat saqlandi",
+    "dismissDialog": {
+      "titleSuggestion": "Taklif rad etilsinmi?",
+      "titleCancel": "Nazorat bekor qilinsinmi?",
+      "textSuggestion": "{subject}, {date}. Taklif olib tashlanadi va qayta paydo boʻlmaydi.",
+      "textCancel": "{subject}, {date}. Talabalar bu nazoratni boshqa koʻrmaydi.",
+      "confirmSuggestion": "Rad etish",
+      "confirmCancel": "Nazoratni bekor qilish",
+      "keep": "Qoldirish"
+    },
+    "editor": {
+      "titleAdd": "Nazorat qoʻshish",
+      "titleSetDate": "Nazorat sanasini belgilash",
+      "titleEdit": "Nazoratni tahrirlash",
+      "titleConfirm": "Oʻzgartirib tasdiqlash",
+      "group": "Guruh {name}",
+      "save": "Saqlash",
+      "saveConfirm": "Saqlash va tasdiqlash",
+      "saving": "Saqlanmoqda…",
+      "fields": {
+        "subject": "Fan",
+        "audience": "Auditoriya",
+        "kind": "Turi",
+        "control": "Nazorat haftasi",
+        "date": "Sana",
+        "time": "Boshlanish vaqti",
+        "room": "Xona",
+        "title": "Nomi",
+        "note": "Talabalar uchun izoh"
+      },
+      "chooseSubject": "Fanni tanlang",
+      "wholeGroup": "Butun guruh",
+      "subgroup": "{number}-kichik guruh",
+      "noControl": "Nazorat haftasiz",
+      "controlHint": "Nazorat haftasi: {range}",
+      "timeHint": "Ixtiyoriy, Toshkent vaqti.",
+      "roomPlaceholder": "Masalan, 204",
+      "titlePlaceholder": "Masalan, Algebra va funksiyalar",
+      "noteHint": "Talabalar izohni tayyorgarlik sahifasida koʻradi.",
+      "validation": {
+        "subject": "Fanni tanlang.",
+        "date": "Sanani tanlang.",
+        "time": "Vaqtni SS:DD koʻrinishida kiriting.",
+        "title": "Nom 200 belgidan oshmasligi kerak.",
+        "note": "Izoh 2000 belgidan oshmasligi kerak.",
+        "control": "Turi nazorat haftasiga mos emas."
+      }
     }
   },
   "settings": {

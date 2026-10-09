@@ -7,7 +7,8 @@
   "main": "./src/index.ts",
   "types": "./src/index.ts",
   "exports": {
-    ".": "./src/index.ts"
+    ".": "./src/index.ts",
+    "./library-test-support": "./src/library/test-support.tsx"
   },
   "scripts": {
     "typecheck": "tsc --noEmit",
@@ -19,6 +20,8 @@
     "@ihsp/config": "workspace:*",
     "@ihsp/i18n": "workspace:*",
     "@ihsp/telegram": "workspace:*",
-    "@ihsp/ui": "workspace:*"
+    "@ihsp/ui": "workspace:*",
+    "foliate-js": "github:johnfactotum/foliate-js#78914aef4466eb960965702401634c2cb348e9b1",
+    "pdfjs-dist": "6.3.289"
   }
 }

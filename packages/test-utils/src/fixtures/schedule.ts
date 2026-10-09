@@ -27,6 +27,7 @@ import {
   weekLessons,
   weekPattern,
 } from "./world"
+import { controlPeriods } from "./assessments"
 
 export const currentTerm: Term = {
   id: ids.term,
@@ -37,6 +38,7 @@ export const currentTerm: Term = {
   bells,
   non_study_days: ["2026-10-01"],
   moved_days: [{ date: "2026-10-31", follows_weekday: 1 }],
+  control_periods: controlPeriods,
   is_current: true,
 }
 
@@ -50,6 +52,7 @@ export const previousTerm: Term = {
   bells: emisBells,
   non_study_days: [],
   moved_days: [],
+  control_periods: {},
   is_current: false,
 }
 
@@ -218,6 +221,7 @@ export const timetableEntries: TimetableEntry[] = weekPattern.map((slot) => ({
   audience: [audienceOf(slot.subgroup)],
   valid_from: "2026-09-02",
   valid_to: null,
+  source: "manual",
 }))
 
 export const timetableConflicts: Conflict[] = [
@@ -226,6 +230,7 @@ export const timetableConflicts: Conflict[] = [
     with_entry_id: timetableEntries[0]?.id ?? null,
     with_lesson_id: null,
     description: "Rakhimov T. already teaches 2TN2 in period 1 on Monday",
+    week_parity: "every",
   },
 ]
 

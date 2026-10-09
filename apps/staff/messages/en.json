@@ -6,6 +6,7 @@
     "today": "Today",
     "timetable": "Timetable",
     "journal": "Journal",
+    "exams": "Exams",
     "myGroup": "My group",
     "students": "Students",
     "subgroups": "Subgroups",
@@ -65,6 +66,12 @@
           "action": "Open settings"
         }
       }
+    },
+    "examSuggestions": {
+      "title": "Exam dates to confirm",
+      "summary": "{count, plural, one {# exam date to confirm} other {# exam dates to confirm}}",
+      "hint": "EMIS and head students suggested these dates. Students see them as tentative until you confirm them.",
+      "review": "Review"
     }
   },
   "timetable": {
@@ -209,6 +216,118 @@
       "remove": "Remove excuse",
       "marked": "Marked as excused",
       "removed": "Excuse removed"
+    }
+  },
+  "exams": {
+    "title": "Exams",
+    "description": "Midterm and final controls of your subjects, by control week",
+    "noGroups": "You do not teach any group yet.",
+    "pickGroup": "Group",
+    "groupOption": "{name} ({count} to confirm)",
+    "subjectFilter": "Subject",
+    "allSubjects": "All subjects",
+    "add": "Add exam",
+    "empty": "No exams for this group yet.",
+    "emptyFiltered": "No exams for this subject.",
+    "weekOf": "Control week {range}",
+    "room": "Room {name}",
+    "controls": {
+      "midterm_1": "Midterm 1",
+      "midterm_2": "Midterm 2",
+      "final": "Final",
+      "other": "Other"
+    },
+    "kinds": {
+      "midterm": "Midterm",
+      "final": "Final",
+      "other": "Other"
+    },
+    "status": {
+      "planned": "Planned",
+      "tentative": "Not confirmed",
+      "undated": "Date not set"
+    },
+    "sources": {
+      "teacher": "Teacher",
+      "admin": "Administration",
+      "emis": "EMIS",
+      "head_student": "Head student"
+    },
+    "actions": {
+      "edit": "Edit",
+      "editFor": "Edit {subject}",
+      "confirm": "Confirm",
+      "confirmFor": "Confirm {subject}",
+      "dismiss": "Dismiss",
+      "dismissFor": "Dismiss {subject}",
+      "cancel": "Cancel exam",
+      "cancelFor": "Cancel exam: {subject}",
+      "setDate": "Set date",
+      "setDateFor": "Set date: {subject}"
+    },
+    "suggestions": {
+      "title": "Suggested dates to confirm",
+      "hint": "These dates are not confirmed yet. Students see them as tentative until you confirm, change or dismiss each one.",
+      "fromEmis": "From EMIS lesson",
+      "fromHeadStudent": "Suggested by the head student",
+      "confirmAsIs": "Confirm as is",
+      "confirmAsIsFor": "Confirm as is: {subject}",
+      "editConfirm": "Edit and confirm",
+      "editConfirmFor": "Edit and confirm: {subject}",
+      "dismiss": "Dismiss",
+      "dismissFor": "Dismiss: {subject}"
+    },
+    "confirmed": "Date confirmed",
+    "dismissed": "Suggestion dismissed",
+    "cancelled": "Exam cancelled",
+    "created": "Exam added",
+    "saved": "Exam saved",
+    "dismissDialog": {
+      "titleSuggestion": "Dismiss this suggestion?",
+      "titleCancel": "Cancel this exam?",
+      "textSuggestion": "{subject}, {date}. The suggestion is removed and will not come back.",
+      "textCancel": "{subject}, {date}. Students will no longer see this exam.",
+      "confirmSuggestion": "Dismiss",
+      "confirmCancel": "Cancel exam",
+      "keep": "Keep"
+    },
+    "editor": {
+      "titleAdd": "Add exam",
+      "titleSetDate": "Set exam date",
+      "titleEdit": "Edit exam",
+      "titleConfirm": "Edit and confirm",
+      "group": "Group {name}",
+      "save": "Save",
+      "saveConfirm": "Save and confirm",
+      "saving": "Saving…",
+      "fields": {
+        "subject": "Subject",
+        "audience": "Audience",
+        "kind": "Kind",
+        "control": "Control week",
+        "date": "Date",
+        "time": "Start time",
+        "room": "Room",
+        "title": "Title",
+        "note": "Note for students"
+      },
+      "chooseSubject": "Choose a subject",
+      "wholeGroup": "Whole group",
+      "subgroup": "Subgroup {number}",
+      "noControl": "No control week",
+      "controlHint": "Control week: {range}",
+      "timeHint": "Optional, Tashkent time.",
+      "roomPlaceholder": "For example 204",
+      "titlePlaceholder": "For example Algebra and functions",
+      "noteHint": "Students see the note on their preparation page.",
+      "validation": {
+        "subject": "Choose a subject.",
+        "date": "Choose a date.",
+        "time": "Enter the time as HH:MM.",
+        "title": "The title can have up to 200 characters.",
+        "note": "The note can have up to 2000 characters.",
+        "control": "The kind does not match the control week."
+      }
     }
   },
   "settings": {

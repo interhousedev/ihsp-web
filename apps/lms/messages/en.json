@@ -24,7 +24,8 @@
     "new": "New",
     "changed": "Changed",
     "removed": "Removed",
-    "mcp": "Via MCP"
+    "mcp": "Via MCP",
+    "ai": "Via AI"
   },
   "courseCard": {
     "invite": "Invite only",
@@ -186,6 +187,7 @@
     "label": "Course tools",
     "courseTools": "Course tools",
     "outline": "Outline",
+    "workspace": "AI workspace",
     "preview": "Preview",
     "publish": "Publish",
     "versions": "Versions",
@@ -284,8 +286,91 @@
   "markdownEditor": {
     "write": "Write",
     "preview": "Preview",
+    "split": "Side by side",
+    "view": "View",
     "previewLabel": "Rendered preview",
-    "empty": "Nothing to preview."
+    "empty": "Nothing to preview.",
+    "placeholder": "Write the text here. Select words to format them.",
+    "hint": "Select text to format it. Alt+F10 moves to the formatting buttons, Escape back to the text.",
+    "toolbar": "Text formatting",
+    "selectionToolbar": "Format the selected text",
+    "bold": "Bold",
+    "italic": "Italic",
+    "underline": "Underline",
+    "strike": "Strikethrough",
+    "code": "Code",
+    "spoiler": "Spoiler (hidden until clicked)",
+    "link": "Link",
+    "quote": "Quote",
+    "equation": "Equation",
+    "heading1": "Heading 1",
+    "heading2": "Heading 2",
+    "heading3": "Heading 3",
+    "bulletList": "Bulleted list",
+    "orderedList": "Numbered list",
+    "codeBlock": "Code block",
+    "displayEquation": "Equation on its own line",
+    "help": "Formatting help",
+    "helpTitle": "How formatting works",
+    "helpIntro": "The text is saved as Markdown. Select words and use the buttons or shortcuts, or type the marks yourself.",
+    "helpSyntax": "You type",
+    "helpResult": "Students see",
+    "helpExamples": {
+      "bold": "bold",
+      "italic": "italic",
+      "underline": "underlined",
+      "strike": "crossed out",
+      "code": "code",
+      "spoiler": "hidden until clicked",
+      "link": "a link",
+      "inlineMath": "a formula in the text",
+      "displayMath": "a formula on its own line",
+      "dollar": "a dollar sign",
+      "heading": "a heading",
+      "list": "a list item",
+      "quote": "a quote"
+    },
+    "helpParagraphs": "Leave an empty line between paragraphs: a single line break is shown as a space.",
+    "helpPrices": "A lone $ (a price like $5) stays text. Write \\$ to be sure.",
+    "shortcuts": "Shortcuts",
+    "equationDialog": {
+      "title": "Insert an equation",
+      "editTitle": "Edit the equation",
+      "description": "Write the formula in LaTeX. The preview shows it the way students will see it.",
+      "latex": "LaTeX",
+      "placement": "Placement",
+      "inline": "In the text",
+      "display": "On its own line",
+      "templates": "Templates",
+      "fraction": "Fraction",
+      "root": "Root",
+      "power": "Power",
+      "subscript": "Index",
+      "sum": "Sum",
+      "integral": "Integral",
+      "limit": "Limit",
+      "matrix": "Matrix",
+      "insertTemplate": "Insert {name}: {latex}",
+      "preview": "Preview",
+      "previewEmpty": "The formula appears here.",
+      "loading": "Loading the preview…",
+      "error": "The formula has an error: {message}",
+      "cannotWrite": "This formula can't be written into the text. Remove unescaped $ signs from it.",
+      "insert": "Insert",
+      "save": "Save",
+      "cancel": "Cancel"
+    },
+    "linkDialog": {
+      "title": "Add a link",
+      "editTitle": "Edit the link",
+      "text": "Text",
+      "textHint": "Leave empty to show the address.",
+      "url": "Address",
+      "invalidUrl": "Enter a web address (https://…), an email (mailto:…) or a page of this site (/…).",
+      "save": "Save",
+      "remove": "Remove the link",
+      "cancel": "Cancel"
+    }
   },
   "testBuilder": {
     "settings": "Test settings",
@@ -477,7 +562,8 @@
     "reviewAgain": "Review again",
     "discardAll": "Discard all changes",
     "discardTitle": "Discard all pending changes?",
-    "discardDescription": "The draft goes back to the live version for every step and the outline. This cannot be undone."
+    "discardDescription": "The draft goes back to the live version for every step and the outline. This cannot be undone.",
+    "viaAi": "Via AI"
   },
   "versions": {
     "title": "Versions",
@@ -633,5 +719,8 @@
     "publicHint": "Anyone can find and enroll.",
     "inviteHint": "Students join with an invite code or link.",
     "create": "Create course"
+  },
+  "workspace": {
+    "openFailed": "The AI workspace could not be opened"
   }
 }

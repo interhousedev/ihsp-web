@@ -5,6 +5,7 @@ import { usePlatformLinks, useUpdatePreferences } from "@ihsp/features-core"
 import { useT } from "@ihsp/i18n"
 import { UserMenu } from "@ihsp/ui"
 import { clearPersistedQueries } from "../../offline/utils/persisted-queries"
+import { useInstallMenuItem } from "../../pwa/hooks/use-install-menu-item"
 
 /** Profile menu in the header: Profile, Settings, language, theme and log out (WEB-2). */
 export function ProfileMenu() {
@@ -12,6 +13,7 @@ export function ProfileMenu() {
   const { session } = useSession()
   const update = useUpdatePreferences()
   const platforms = usePlatformLinks()
+  const installItem = useInstallMenuItem()
   if (!session) return null
   const { first_name, last_name, login } = session.user
 
@@ -22,6 +24,7 @@ export function ProfileMenu() {
       items={[
         { key: "profile", title: t("profile"), icon: "profile", href: "/profile/" },
         { key: "settings", title: t("settings"), icon: "settings", href: "/settings/" },
+        ...(installItem ? [installItem] : []),
       ]}
       platforms={platforms}
       onLocaleChange={(locale) => update.mutate({ locale })}

@@ -1,12 +1,16 @@
 # Local-stack variant of deploy/Dockerfile: the static apps are built on the host, not in Docker.
 #
-# `next build` for six apps needs more memory than the 8 GB Docker VM of a laptop has, so
+# `next build` for seven apps needs more memory than the 8 GB Docker VM of a laptop has, so
 # backend/scripts/local_up.sh builds the apps one at a time on the host and packs the result:
 #
 #   cd web && bun install --frozen-lockfile
-#   for app in id sp staff admin lms share; do bun run --filter "./apps/$app" build; done
+#   for app in id sp staff admin lms share library; do bun run --filter "./apps/$app" build; done
 #   bun deploy/csp-hash.ts               # per-page script-src <meta> (same step as deploy/Dockerfile)
 #   docker build -f deploy/Dockerfile.prebuilt -t ihsp-web:local .
+#
+# NEXT_PUBLIC_APP_VERSION (the version the installable app compares with GET /v1/app/version) is
+# whatever the host build used: export it before the `bun run --filter` step, as deploy/Dockerfile's
+# build arg of the same name does (1.0.0 there).
 #
 # Build context is web/ (see Dockerfile.prebuilt.dockerignore). The nginx stage below must stay
 # identical to the one in deploy/Dockerfile (backend/tests/deploy checks it); only the way the
@@ -30,6 +34,7 @@ COPY apps/sp/out /srv/sp
 COPY apps/staff/out /srv/staff
 COPY apps/admin/out /srv/admin
 COPY apps/lms/out /srv/lms
+COPY apps/library/out /srv/library
 COPY apps/share/out /srv/share/ai
 
 # Copy env.js template and entrypoint

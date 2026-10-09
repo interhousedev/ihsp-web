@@ -23,6 +23,7 @@ export const hrefs = {
     `/course/step/${query({ course: courseId, step: stepId, slug, block })}`,
   edit: (courseId: string) => `/edit/${query({ id: courseId })}`,
   editStep: (stepId: string) => `/edit/step/${query({ id: stepId })}`,
+  workspace: (courseId: string) => `/edit/workspace/${query({ id: courseId })}`,
   publish: (courseId: string) => `/edit/publish/${query({ id: courseId })}`,
   versions: (courseId: string) => `/edit/versions/${query({ id: courseId })}`,
   version: (courseId: string, number: number) => `/edit/versions/view/${query({ id: courseId, n: number })}`,

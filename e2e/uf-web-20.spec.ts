@@ -19,16 +19,17 @@ test("UF-WEB-20 approve and reject an assistant action", async ({ page }, testIn
   await expect(heading(page, "Assistant", 1)).toBeVisible()
   await a11y(page, testInfo, { label: "sp assistant" })
 
-  await page.getByRole("button", { name: "New chat" }).first().click()
+  const topic = `derivatives ${Date.now()}`
+
+  // The first message is written on the home screen: it creates the chat and opens it.
+  const message = page.getByRole("textbox", { name: "Message" })
+  await message.fill(`Make flash cards about ${topic}`)
+  await page.getByRole("button", { name: "Send" }).click()
   await expect(page).toHaveURL(new RegExp(`${URLS.sp}/assistant/chat/\\?id=`))
   const chatId = new URL(page.url()).searchParams.get("id") ?? ""
-  const topic = `derivatives ${Date.now()}`
 
   try {
     // 1. The assistant proposes a set; the card waits for approval.
-    const message = page.getByRole("textbox", { name: "Message" })
-    await message.fill(`Make flash cards about ${topic}`)
-    await page.getByRole("button", { name: "Send" }).click()
     await expect(page.getByText(`Make flash cards about ${topic}`)).toBeVisible()
     const approve = page.getByRole("button", { name: "Approve" })
     await expect(approve).toBeVisible({ timeout: 45_000 })
@@ -64,14 +65,20 @@ test("UF-WEB-20 approve and reject an assistant action", async ({ page }, testIn
   }
 })
 
-test("UF-WEB-20 chats list: the new chat is listed and can be removed", async ({ page }) => {
+test("UF-WEB-20 sidebar: the new chat is listed under Recent and has a menu", async ({ page }) => {
   await loginAs(page, STUDENT, "sp")
   const created = await api<ChatItem>(page, "POST", "/v1/ai/chats", { assistant: "student" })
   try {
     await page.goto(`${URLS.sp}/assistant/`)
     const chats = await api<ApiPage<ChatItem>>(page, "GET", "/v1/ai/chats?assistant=student")
     expect(chats.items.some((chat) => chat.id === created.id)).toBe(true)
-    await expect(page.getByRole("button", { name: /^Delete chat / }).first()).toBeVisible()
+    // The sidebar lists the chats under "Recent"; its menu offers Delete.
+    await expect(page.getByText("Recent", { exact: true })).toBeVisible()
+    await page
+      .getByRole("button", { name: /^Options for / })
+      .first()
+      .click()
+    await expect(page.getByRole("menuitem", { name: "Delete" })).toBeVisible()
   } finally {
     await api(page, "DELETE", `/v1/ai/chats/${created.id}`).catch(() => undefined)
   }

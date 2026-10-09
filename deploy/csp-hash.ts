@@ -8,14 +8,26 @@
  * as the first child of `<head>`. The rest of the policy (connect-src, img-src, frame-ancestors, ...)
  * is the nginx header from `deploy/snippets/security-headers.conf`; the browser applies both and a
  * script must pass both. The meta policy therefore carries `script-src` only: `frame-ancestors` is
- * ignored in a meta tag, and any other directive here would be intersected with the header.
+ * ignored in a meta tag, and any other directive here would be intersected with the header. The one
+ * exception is `APP_DIRECTIVES` (the library's `worker-src`, see there).
  */
 /* eslint-disable no-console -- command line script */
 import * as crypto from "node:crypto"
 import * as fs from "node:fs"
 import * as path from "node:path"
 
-export const APPS = ["id", "sp", "staff", "admin", "lms", "share"] as const
+export const APPS = ["id", "sp", "staff", "admin", "lms", "share", "library"] as const
+
+/**
+ * Directives some apps add to their page policy, after `script-src`.
+ *
+ * The library starts the self-hosted PDF.js worker, possibly from a `blob:` URL. A worker request falls
+ * back to `script-src` when a policy has no `worker-src`, and `'self'` does not match `blob:`: so the
+ * page policy has to name it too, next to the `worker-src` of the nginx header (security-headers-library.conf).
+ */
+export const APP_DIRECTIVES: Partial<Record<(typeof APPS)[number], string>> = {
+  library: "worker-src 'self' blob:",
+}
 
 /** `sha256-<base64>` of the exact script text, as the browser computes it. */
 export function hashScript(content: string): string {
@@ -36,18 +48,22 @@ export function inlineScriptHashes(html: string): string[] {
   return [...hashes]
 }
 
-/** The policy inserted into each page: scripts from the same origin, Telegram's SDK and the hashed inline scripts. */
-export function buildCspMeta(hashes: string[]): string {
+/**
+ * The policy inserted into each page: scripts from the same origin, Telegram's SDK and the hashed inline
+ * scripts, plus the app's own directives (`APP_DIRECTIVES`) when it has any.
+ */
+export function buildCspMeta(hashes: string[], extraDirectives = ""): string {
   const sources = ["'self'", ...hashes, "https://telegram.org"].join(" ")
-  return `<meta http-equiv="Content-Security-Policy" content="script-src ${sources}">`
+  const policy = [`script-src ${sources}`, extraDirectives].filter((part) => part !== "").join("; ")
+  return `<meta http-equiv="Content-Security-Policy" content="${policy}">`
 }
 
 /** Inserts the policy after the opening `<head>`; returns the HTML unchanged when there is nothing to hash. */
-export function injectCsp(html: string): { html: string; hashCount: number } {
+export function injectCsp(html: string, extraDirectives = ""): { html: string; hashCount: number } {
   if (html.includes('http-equiv="Content-Security-Policy"')) return { html, hashCount: 0 }
   const hashes = inlineScriptHashes(html)
   if (hashes.length === 0) return { html, hashCount: 0 }
-  const meta = buildCspMeta(hashes)
+  const meta = buildCspMeta(hashes, extraDirectives)
   const withMeta = html.replace(/<head(\s[^>]*)?>/i, (open) => `${open}${meta}`)
   return { html: withMeta, hashCount: withMeta === html ? 0 : hashes.length }
 }
@@ -64,7 +80,7 @@ function findHtmlFiles(dir: string, files: string[] = []): string[] {
   return files
 }
 
-function processApp(root: string, appName: string): void {
+function processApp(root: string, appName: (typeof APPS)[number]): void {
   // Every app exports to apps/<app>/out; the share app's basePath (/ai) is applied when copying into the image.
   const outDir = path.join(root, "apps", appName, "out")
   if (!fs.existsSync(outDir)) {
@@ -72,7 +88,7 @@ function processApp(root: string, appName: string): void {
     return
   }
   for (const htmlFile of findHtmlFiles(outDir)) {
-    const { html, hashCount } = injectCsp(fs.readFileSync(htmlFile, "utf-8"))
+    const { html, hashCount } = injectCsp(fs.readFileSync(htmlFile, "utf-8"), APP_DIRECTIVES[appName])
     if (hashCount > 0) {
       fs.writeFileSync(htmlFile, html)
       console.log(`Updated ${path.relative(root, htmlFile)} with ${hashCount} script hashes`)

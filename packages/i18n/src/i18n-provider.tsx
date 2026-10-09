@@ -7,7 +7,7 @@ import { useLocaleStore } from "./locale-store"
 import { TIME_ZONE, type Locale } from "./locales"
 import { loadMessages, type MessageLoader, type Messages } from "./messages"
 
-export type AppName = "id" | "sp" | "staff" | "admin" | "lms" | "share"
+export type AppName = "id" | "sp" | "staff" | "admin" | "lms" | "share" | "library"
 
 type Loaded = { locale: Locale; messages: Messages }
 

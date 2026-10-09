@@ -31,6 +31,7 @@ describe("app frame", () => {
       "Terms & bells": "/terms/",
       Timetable: "/timetable/",
       Lessons: "/lessons/",
+      Exams: "/exams/",
       Attendance: "/attendance/",
       Monitoring: "/monitoring/",
       Broadcasts: "/broadcasts/",

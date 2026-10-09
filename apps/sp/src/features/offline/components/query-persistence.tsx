@@ -7,9 +7,10 @@ import { persistQueryClientRestore, persistQueryClientSubscribe } from "@tanstac
 import { useEffect, useState, type ReactNode } from "react"
 import {
   PERSISTED_KEY_PREFIXES,
-  PERSIST_MAX_AGE_MS,
   PERSIST_STORAGE_KEY,
   isPersistedQueryKey,
+  persistBuster,
+  persistMaxAgeMs,
 } from "../utils/persisted-queries"
 
 function createPersister() {
@@ -21,7 +22,8 @@ function createPersister() {
 }
 
 /**
- * Keeps the last answers of Today, Timetable, Homework and Grades in `localStorage` for 24 hours (WEB-30).
+ * Keeps the last answers of Today, Timetable, Homework and Grades in `localStorage` for 24 hours (WEB-30), or 7 days in
+ * the installable app (`persistMaxAgeMs`, versioned by `persistBuster`).
  * They are restored before the first request, so a page opened offline still shows the last data. The stored cache
  * belongs to one user: another account (or a logout) discards it.
  */
@@ -38,12 +40,14 @@ export function QueryPersistence({ children }: { children: ReactNode }) {
       setRestoring(false)
       return
     }
+    const maxAge = persistMaxAgeMs()
+    const buster = persistBuster(userId)
     for (const prefix of PERSISTED_KEY_PREFIXES) {
-      queryClient.setQueryDefaults([...prefix], { gcTime: PERSIST_MAX_AGE_MS })
+      queryClient.setQueryDefaults([...prefix], { gcTime: maxAge })
     }
     let unsubscribe: (() => void) | undefined
     let cancelled = false
-    persistQueryClientRestore({ queryClient, persister, maxAge: PERSIST_MAX_AGE_MS, buster: userId })
+    persistQueryClientRestore({ queryClient, persister, maxAge, buster })
       // The stored answers are shown at once but treated as stale: the stored copy can lag a second behind a change
       // the user just made (the write is throttled), so every page asks the server again; offline, the old answer stays.
       .then(() => queryClient.invalidateQueries({ predicate: (query) => isPersistedQueryKey(query.queryKey) }))
@@ -53,7 +57,7 @@ export function QueryPersistence({ children }: { children: ReactNode }) {
         unsubscribe = persistQueryClientSubscribe({
           queryClient,
           persister,
-          buster: userId,
+          buster,
           dehydrateOptions: {
             shouldDehydrateQuery: (query) => query.state.status === "success" && isPersistedQueryKey(query.queryKey),
           },

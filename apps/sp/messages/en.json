@@ -9,7 +9,9 @@
     "grades": "Grades",
     "attendance": "Attendance",
     "homework": "Homework",
+    "exams": "Exams",
     "assistant": "Assistant",
+    "notebooks": "Notebooks",
     "flashcards": "Flash cards",
     "files": "My files",
     "links": "Links & shares",
@@ -275,7 +277,9 @@
       "marksCount": "{count, plural, one {# mark} other {# marks}}",
       "updated": "Updated {when}",
       "importing": "Importing your marks from EMIS…",
-      "empty": "No marks in this semester yet."
+      "empty": "No marks in this semester yet.",
+      "plan": "Plan",
+      "planFor": "Mark planner: {subject}"
     },
     "day": {
       "previous": "Previous study day",
@@ -298,6 +302,266 @@
       "semesterLabel": "Semester {number}",
       "emisRating": "EMIS",
       "empty": "The record book is empty."
+    },
+    "planner": {
+      "link": "Plan",
+      "title": "Mark planner",
+      "description": "What you need on the controls that are left to get the mark you want.",
+      "back": "Grades",
+      "semester": "Semester {number}",
+      "noSubject": "Choose a subject on the Grades page to plan its marks.",
+      "summary": {
+        "title": "Your marks now",
+        "lesson": "Lesson marks",
+        "midterm": "Midterms",
+        "final": "Final",
+        "marks": "{count, plural, one {# mark} other {# marks}}",
+        "average": "average {value}",
+        "semesterMark": "Semester mark now",
+        "missingTitle": "Still missing"
+      },
+      "missing": {
+        "lesson": "Lesson marks not yet",
+        "midterm": "Midterm not yet",
+        "final": "Final not yet"
+      },
+      "predicted": {
+        "title": "Predicted mark",
+        "none": "Add lesson marks first to see a prediction.",
+        "both": "If every remaining midterm gets {midterm} and the final gets {final}.",
+        "midterm": "If every remaining midterm gets {midterm}.",
+        "final": "If the final gets {final}.",
+        "nothingLeft": "No controls are left, so this is your semester mark."
+      },
+      "targets": {
+        "title": "Marks you can aim for",
+        "grade": "Mark {grade}",
+        "threshold": "semester mark from {threshold}",
+        "secured": "Secured",
+        "possible": "Possible",
+        "notReachable": "Not reachable",
+        "unknown": "Unknown",
+        "securedText": "You get this mark whatever the remaining controls bring.",
+        "notReachableText": "Even the best marks on the remaining controls are not enough this semester.",
+        "unknownText": "Add lesson marks first.",
+        "neededMidterm": "Needs at least {value} on every remaining midterm.",
+        "neededFinal": "Needs at least {value} on the final.",
+        "neededBoth": "At least {value} on every remaining control.",
+        "example": "For example, {midterm} on the midterm and at least {final} on the final."
+      },
+      "pairs": {
+        "caption": "Lowest final mark for each midterm mark",
+        "midterm": "Midterm mark",
+        "final": "Lowest final",
+        "notReachable": "not reachable"
+      },
+      "assumptions": {
+        "title": "What this is based on",
+        "rounding": "The semester mark is the mean of the lesson, midterm and final averages that have marks, rounded once (half up) to 2 decimals. A mark is reached at the mark minus 0.5: 4.50 gives a 5.",
+        "controlsPerSemester": "A semester has {midterms, plural, one {# midterm} other {# midterms}} and {finals, plural, one {# final} other {# finals}}.",
+        "sameMarkOnRemaining": "A needed mark is the same on every remaining control of its kind.",
+        "pendingAsLessonAverage": "A control without a mark counts as {mark}, your lesson average rounded to a whole mark.",
+        "pendingAsLessonAverageNoMark": "A control without a mark counts as your lesson average rounded to a whole mark.",
+        "noLessonMarks": "You have no lesson marks yet, so nothing can be predicted.",
+        "whatIf": "{count, plural, one {# what-if mark is} other {# what-if marks are}} counted as if you had received them."
+      },
+      "whatIf": {
+        "title": "What if…",
+        "description": "Try marks you have not received yet and see what changes. Nothing is saved.",
+        "type": "Type of mark",
+        "mark": "Mark",
+        "add": "Add",
+        "reset": "Reset",
+        "list": "Marks you are trying",
+        "empty": "No marks added yet.",
+        "chip": "{type}: {mark}",
+        "remove": "Remove {type}: {mark}",
+        "limit": "You can try up to {max} marks.",
+        "types": {
+          "lesson": "Lesson",
+          "midterm": "Midterm",
+          "final": "Final"
+        }
+      }
+    }
+  },
+  "exams": {
+    "title": "Exams",
+    "description": "Midterm and final controls and when they are.",
+    "empty": "No controls yet. The dates appear here when your teachers or the administration set them.",
+    "upcoming": "Upcoming",
+    "past": "Past",
+    "noUpcoming": "No upcoming controls.",
+    "noPast": "No past controls.",
+    "filter": {
+      "label": "Subject",
+      "all": "All subjects"
+    },
+    "kind": {
+      "midterm1": "Midterm 1",
+      "midterm2": "Midterm 2",
+      "midterm": "Midterm",
+      "final": "Final",
+      "other": "Control"
+    },
+    "name": "{control} · {subject}",
+    "countdown": {
+      "today": "today",
+      "tomorrow": "tomorrow",
+      "yesterday": "yesterday",
+      "in": "in {count, plural, one {# day} other {# days}}",
+      "ago": "{count, plural, one {# day} other {# days}} ago",
+      "weekRunning": "this week"
+    },
+    "badge": {
+      "tentative": "Not confirmed",
+      "undated": "Date not set yet"
+    },
+    "row": {
+      "week": "Control week {range}",
+      "room": "Room {room}"
+    },
+    "view": {
+      "back": "Exams",
+      "notFound": "This control was not found. It may have been moved or cancelled.",
+      "date": "Date",
+      "time": "Time",
+      "room": "Room",
+      "week": "Control week",
+      "note": "Note",
+      "explain": {
+        "emis": "This date comes from EMIS, which is not always right. It stays unconfirmed until a teacher or the administration confirms it.",
+        "headStudent": "Your head student suggested this date. It stays unconfirmed until a teacher or the administration confirms it.",
+        "tentative": "This date is not confirmed yet. A teacher or the administration will confirm it.",
+        "undated": "No teacher has set a date for this subject yet. The control takes place during this week."
+      },
+      "planner": "Mark planner",
+      "practice": "Practice quiz"
+    },
+    "decks": {
+      "title": "Your decks",
+      "hint": "Decks whose title contains the subject name.",
+      "empty": "You have no decks for this subject yet.",
+      "create": "Create a deck",
+      "newTitle": "{subject} — exam",
+      "cards": "{count, plural, one {# card} other {# cards}}",
+      "due": "{count} to review",
+      "practice": "Practice",
+      "practiceItem": "Practice: {title}"
+    },
+    "materials": {
+      "title": "Lesson materials since the previous control",
+      "sinceDate": "Since the previous control: {control}, {date}.",
+      "sinceStart": "No earlier control this semester, so these are all the materials so far.",
+      "empty": "No new materials since then.",
+      "lesson": "Lesson of {date}",
+      "open": "Open",
+      "openItem": "Open: {title}"
+    },
+    "suggest": {
+      "button": "Suggest a date",
+      "title": "Suggest a control date",
+      "description": "Suggest when your group has a midterm or final. The date stays \"Not confirmed\" until a teacher or the administration confirms it.",
+      "subject": "Subject",
+      "subjectPlaceholder": "Choose a subject",
+      "kind": "Control",
+      "date": "Date",
+      "time": "Time (optional)",
+      "room": "Room (optional)",
+      "note": "Note (optional)",
+      "submit": "Send suggestion",
+      "doneTitle": "Suggestion sent",
+      "doneText": "The date stays \"Not confirmed\" until a teacher or the administration confirms it.",
+      "close": "Close"
+    },
+    "card": {
+      "title": "Controls coming up",
+      "all": "All exams",
+      "headline": "{control} · {subject} · {when}"
+    }
+  },
+  "planner": {
+    "title": "Mark planner",
+    "headline": "Mark planner · semester {semester}",
+    "back": "Grades",
+    "noSubject": "Open the planner from a subject on the Grades page.",
+    "type": {
+      "lesson": "Lessons",
+      "midterm": "Midterm",
+      "final": "Final"
+    },
+    "summary": {
+      "title": "Your marks",
+      "count": "{count, plural, one {# mark} other {# marks}}",
+      "noMarks": "No marks",
+      "semesterMark": "Semester mark so far",
+      "noSemesterMark": "No semester mark yet",
+      "missing": {
+        "lesson": "No lesson marks yet",
+        "midterm": "Midterm not yet",
+        "final": "Final not yet"
+      },
+      "missingHint": "The semester mark is the average of the parts that already have marks."
+    },
+    "prediction": {
+      "title": "Predicted semester mark",
+      "unknown": "Add lesson marks first: without them there is nothing to predict from.",
+      "both": "Assuming a {midterm} on every remaining midterm and a {final} on the final.",
+      "midterm": "Assuming a {midterm} on every remaining midterm.",
+      "final": "Assuming a {final} on the final.",
+      "none": "Every control already has a mark, so this is your semester mark."
+    },
+    "targets": {
+      "title": "What you need"
+    },
+    "target": {
+      "grade": "Grade {grade}",
+      "threshold": "Semester mark {threshold} or higher",
+      "status": {
+        "secured": "Secured",
+        "needed": "Needs marks",
+        "not_reachable": "Out of reach",
+        "unknown": "Not known yet"
+      },
+      "secured": "You get this grade whatever the remaining controls bring.",
+      "notReachable": "Not reachable this semester, even with a 5 on every remaining control.",
+      "unknown": "Add lesson marks first: there is nothing to plan from yet.",
+      "midterm": "{count, plural, one {Get at least a {value} on the remaining midterm.} other {Get at least a {value} on each of the # remaining midterms.}}",
+      "final": "Get at least a {value} on the final.",
+      "both": "Get at least a {value} on every remaining control.",
+      "pairs": {
+        "caption": "Lowest final for each midterm mark",
+        "midterm": "Midterm mark",
+        "final": "Lowest final",
+        "notReachable": "Not reachable"
+      }
+    },
+    "assumptions": {
+      "title": "What the numbers rest on",
+      "rounding": "The semester mark is rounded once, half up, to two decimals; 4.50 counts as a 5.",
+      "controls_per_semester": "A semester has 2 midterms and 1 final.",
+      "same_mark_on_remaining": "Each target assumes the same mark on all remaining controls of a kind.",
+      "pending_as_lesson_average": "A control without a mark counts as your lesson average, rounded to a whole mark.",
+      "no_lesson_marks": "There are no lesson marks yet, so nothing can be predicted.",
+      "what_if": "The marks you try out here are included. They are not real and are not saved."
+    },
+    "whatIf": {
+      "title": "Try other marks",
+      "hint": "Add marks you might get and see what changes. Nothing here is saved or sent to anyone.",
+      "typeLabel": "Type",
+      "markLabel": "Mark",
+      "types": {
+        "lesson": "Lesson",
+        "midterm": "Midterm",
+        "final": "Final"
+      },
+      "add": "Add",
+      "reset": "Reset",
+      "list": "Marks you are trying",
+      "item": "{type} {value}",
+      "remove": "Remove {type} {value}",
+      "empty": "No marks tried yet.",
+      "full": "You can try up to {max} marks at once."
     }
   },
   "attendance": {

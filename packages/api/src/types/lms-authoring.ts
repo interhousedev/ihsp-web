@@ -67,7 +67,7 @@ export type StepDraft = {
   content: StepContent
   lock_version: number
   status: "new" | "changed" | "unchanged"
-  updated_via: "ui" | "mcp"
+  updated_via: "ui" | "mcp" | "ai"
   updated_by: PersonRef | null
   updated_at: string | null
 }
@@ -89,6 +89,7 @@ export type PendingChanges = {
     title: string
     change: "added" | "changed" | "removed"
     via_mcp: boolean
+    via_ai: boolean
   }[]
 }
 

@@ -43,7 +43,9 @@ export const flashcardsHandlers = [
     const setId = url.searchParams.get("set_id")
     if (setId && !setDetailFor(setId)) return notFound("Flash card set")
     return HttpResponse.json(
-      year === flashcardStats.year ? { ...flashcardStats, set_id: setId } : { ...flashcardStatsEmpty, year, set_id: setId },
+      year === flashcardStats.year
+        ? { ...flashcardStats, set_id: setId }
+        : { ...flashcardStatsEmpty, year, set_id: setId },
     )
   }),
   http.post(apiUrl("/v1/me/flashcard-sets/copy"), async ({ request }) => {

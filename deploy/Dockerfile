@@ -14,6 +14,12 @@ COPY packages ./packages
 # Install dependencies
 RUN bun install --frozen-lockfile
 
+# Build-time version of the installable app (the sp build served on the app host). The PWA compares
+# it with GET /v1/app/version (latest / min_supported) and forces an update when it is too old.
+# Bump it with `--build-arg NEXT_PUBLIC_APP_VERSION=1.2.3`; it is inlined into the bundle by next build.
+ARG NEXT_PUBLIC_APP_VERSION=1.0.0
+ENV NEXT_PUBLIC_APP_VERSION=${NEXT_PUBLIC_APP_VERSION}
+
 # Build all apps
 RUN bun run build
 
@@ -40,6 +46,7 @@ COPY --from=builder /app/apps/sp/out /srv/sp
 COPY --from=builder /app/apps/staff/out /srv/staff
 COPY --from=builder /app/apps/admin/out /srv/admin
 COPY --from=builder /app/apps/lms/out /srv/lms
+COPY --from=builder /app/apps/library/out /srv/library
 COPY --from=builder /app/apps/share/out /srv/share/ai
 
 # Copy env.js template and entrypoint

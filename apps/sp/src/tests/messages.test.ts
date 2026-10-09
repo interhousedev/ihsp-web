@@ -7,7 +7,7 @@ import { mergeMessages, type Messages } from "@ihsp/i18n"
 import { messages } from "./helpers"
 
 const ROOT = join(import.meta.dir, "..", "..", "..", "..")
-/** Folders owned by the study tools task: its keys live in `messages/<locale>/tools.json`. */
+/** Folders whose keys live in `messages/<locale>/tools.json` (study tools) or `notebooks.json` (notebooks). */
 const STUDY_TOOLS = [
   "features/assistant",
   "features/flashcards",
@@ -17,6 +17,11 @@ const STUDY_TOOLS = [
   "app/flashcards",
   "app/files",
   "app/links",
+  // Notebooks: keys live in `messages/<locale>/notebooks.json`, checked by nb-messages.test.ts.
+  "features/notebooks",
+  "app/notebooks",
+  // The installable app: keys live in `messages/<locale>/pwa.json`, checked by pwa-messages.test.ts.
+  "features/pwa",
 ]
 const SOURCES = [
   "apps/sp/src",

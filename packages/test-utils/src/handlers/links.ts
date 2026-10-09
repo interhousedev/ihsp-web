@@ -93,6 +93,7 @@ export const linksHandlers = [
         hidden: false,
         file,
         created_at: FIXTURE_NOW,
+        source: "user",
       }
     })
     return HttpResponse.json(created)

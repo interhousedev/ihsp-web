@@ -30,7 +30,7 @@ export type OutlineSection = {
     step_id: string
     title: string
     completed?: boolean
-    badge?: "new" | "changed" | "removed" | "mcp" | null
+    badge?: "new" | "changed" | "removed" | "mcp" | "ai" | null
   }[]
 }
 

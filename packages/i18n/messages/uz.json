@@ -113,7 +113,9 @@
   },
   "markdown": {
     "externalLink": "{url} ochiladi",
-    "imageBlocked": "Rasm koʻrsatilmadi: {alt}"
+    "imageBlocked": "Rasm koʻrsatilmadi: {alt}",
+    "spoiler": "Yashirin matn, koʻrsatish uchun bosing",
+    "mathError": "Formulada xato: {message}"
   },
   "calendar": {
     "previousWeek": "Oldingi hafta",
@@ -159,6 +161,10 @@
     "lms": {
       "name": "LMS",
       "description": "Kurslar"
+    },
+    "library": {
+      "name": "Kutubxona",
+      "description": "Kitoblar va materiallar"
     },
     "id": {
       "name": "ID",
@@ -261,6 +267,23 @@
       "tool-arguments": "Yordamchi vositaga noto'g'ri argumentlar yubordi.",
       "tool-failed": "Yordamchi vositasi so'rovni bajara olmadi."
     },
+    "library": {
+      "not-found": "Bu material mavjud emas.",
+      "not-supported": "Bu amal UniLibrary kitoblari uchun mavjud emas.",
+      "rights-incomplete": "Eʼlon qilishdan oldin huquqlar haqidagi maʼlumotni toʻldiring.",
+      "visibility-conflict": "Bu kitobni bunday huquq sinfida hamma uchun ochib boʻlmaydi.",
+      "text-unavailable": "Bu matnsiz skan.",
+      "list-too-long": "Oʻqish roʻyxatida koʻpi bilan 100 ta yozuv boʻladi.",
+      "own-item": "Buni siz yuklagansiz. Uni boshqa kutubxonachi tasdiqlashi kerak.",
+      "not-editable": "Hozirgi holatda buni tahrirlab boʻlmaydi.",
+      "file-too-large": "Fayl juda katta.",
+      "too-many-pages": "Faylda sahifalar juda koʻp.",
+      "duplicate": "Bu fayl kutubxonada allaqachon bor.",
+      "rate-limited": "Yuklash yoki shikoyatlar juda koʻp. Keyinroq urinib koʻring.",
+      "banned": "Hozir kutubxonaga yuklay olmaysiz.",
+      "external-disabled": "UniLibrary mavjud emas.",
+      "external-unavailable": "UniLibrary javob bermayapti. Keyinroq urinib koʻring."
+    },
     "links": {
       "blocked-url": "Bu manzilni qisqartirib boʻlmaydi.",
       "invalid-target": "Havola turiga qarab manzil yoki faylni ko'rsating.",
@@ -351,6 +374,7 @@
       "term-bells-invalid": "Qo‘ng‘iroqlar jadvali noto‘g‘ri: har bir juftlik hafta kuniga bir marta bo‘lishi va boshlanishidan keyin tugashi kerak.",
       "term-non-study-day-invalid": "Dam olish kuni semestr ichida bo‘lishi kerak.",
       "term-moved-day-invalid": "Ko‘chirilgan kun dushanbadan shanbagacha bo‘lgan hafta kuniga ergashishi kerak.",
+      "term-control-periods-invalid": "Nazorat haftasi noto‘g‘ri: u tugashidan oldin boshlanishi, semestr ichida bo‘lishi va oldingi nazoratdan keyin kelishi kerak.",
       "no-term-for-date": "Bu sanani o‘z ichiga olgan semestr yo‘q.",
       "no-bell": "Semestrda bu kuni {period}-juftlik uchun qo‘ng‘iroq yo‘q.",
       "group-not-found": "Guruh topilmadi.",
@@ -379,7 +403,13 @@
       "journal-not-found": "Bu jurnal siz uchun mavjud emas.",
       "not-lesson-teacher": "Buni faqat dars o'qituvchisi yoki ma'muriyat qila oladi.",
       "not-curator": "Siz bu guruhning kuratori emassiz.",
-      "topic-too-long": "Mavzu {max} belgigacha bo'lishi mumkin."
+      "topic-too-long": "Mavzu {max} belgigacha bo'lishi mumkin.",
+      "assessment-not-found": "Bu nazorat topilmadi.",
+      "not-assessment-teacher": "Buni faqat shu guruhda ushbu fanni o'qitadigan o'qituvchi yoki ma'muriyat qila oladi.",
+      "not-head-student": "Nazorat sanasini faqat guruh sardori taklif qila oladi.",
+      "assessment-subject-not-found": "Bu fan topilmadi.",
+      "invalid-assessment": "Nazorat noto'g'ri to'ldirilgan. Guruh, fan va sanani tekshiring.",
+      "assessment-exists": "Bu guruhda shu fan, tur va sanada nazorat allaqachon bor."
     },
     "homework": {
       "not-found": "Bu darsda uy vazifasi yo'q.",
@@ -410,6 +440,11 @@
     },
     "bot": {
       "file-too-large": "Fayl 20 MB dan katta, bot uni qabul qila olmaydi. Uni oʻqituvchilar portaliga yuklang."
+    },
+    "web-search": {
+      "disabled": "Internetdan qidirish oʻchirilgan.",
+      "quota-exceeded": "Bugungi qidiruvlar tugadi.",
+      "unavailable": "Internetdan qidirish hozir ishlamayapti."
     }
   },
   "notifications": {
@@ -465,6 +500,19 @@
       "title": "Pochta",
       "forward": "Yangi xatlarni Telegramga yuborish",
       "forwardHint": "IHSP pochta qutingizdagi xatlar botga keladi."
+    },
+    "push": {
+      "title": "Push-bildirishnomalar",
+      "label": "Shu qurilmada push-bildirishnomalar",
+      "checking": "Qurilma tekshirilmoqda…",
+      "off": "Ilova yopiq bo‘lsa ham bildirishnomalarni shu qurilmada oling. Qaysilari kelishini yuqoridagi tugmalar tanlaydi.",
+      "on": "Bu qurilma bildirishnomalaringizni Telegram kabi oladi. Qaysilari kelishini yuqoridagi tugmalar tanlaydi.",
+      "unsupported": "Bu brauzer push-bildirishnomalarni ko‘rsata olmaydi.",
+      "noWorker": "Shu qurilmada push-bildirishnomalarni yoqish uchun o‘rnatilgan IHSP ilovasini oching.",
+      "iosInstall": "iPhone va iPad’da avval IHSP’ni Bosh ekranga qo‘shing, so‘ng u yerdan ochib, push-bildirishnomalarni yoqing.",
+      "denied": "Bu sayt uchun bildirishnomalar bloklangan. Ularni brauzer yoki telefon sozlamalarida ruxsat bering va qayting.",
+      "unavailable": "Push-bildirishnomalar serverda hali yoqilmagan.",
+      "failed": "Bu qurilmada push-bildirishnomalarni o‘zgartirib bo‘lmadi. Qayta urinib ko‘ring."
     }
   },
   "assistant": {
@@ -511,7 +559,8 @@
       "actions": "Javob amallari",
       "addChat": "Chatni daftarga qoʻshish",
       "shareChat": "Chatni ulashish",
-      "feedbackFailed": "Bahoni yuborib boʻlmadi."
+      "feedbackFailed": "Bahoni yuborib boʻlmadi.",
+      "sendWithoutWeb": "Internetdan qidirmasdan yuborish"
     },
     "composer": {
       "label": "Xabar",
@@ -536,7 +585,14 @@
       "guidedOff": "Bosqichma-bosqich oʻrganishni oʻchirish",
       "stop": "Toʻxtatish",
       "offline": "Internet yoʻq",
-      "noNotebooks": "Hozircha daftarlar yoʻq"
+      "noNotebooks": "Hozircha daftarlar yoʻq",
+      "tools": "Vositalar",
+      "web": "Internetdan qidirish",
+      "webLeft": "{count} ta qoldi",
+      "webQuota": "Bugun {limit} tadan {remaining} ta qidiruv qoldi",
+      "webNone": "Bugungi qidiruvlar tugadi. {time} da yangilanadi.",
+      "webOff": "Internetdan qidirishni oʻchirish",
+      "webBadge": "Veb"
     },
     "attach": {
       "title": "Fayllarni biriktirish",
@@ -665,6 +721,13 @@
     "pane": {
       "title": "Chat nomi",
       "options": "Chat amallari"
+    },
+    "web": {
+      "sources": "Manbalar · {count}",
+      "chip": "Veb-manba {n}: {title}",
+      "open": "Sahifani ochish",
+      "list": "Javobda ishlatilgan veb-sahifalar",
+      "more": "{site} va yana {count} ta"
     }
   },
   "files": {
@@ -929,7 +992,7 @@
         "titleTooLong": "Nomi juda uzun.",
         "descriptionTooLong": "Tavsif juda uzun.",
         "cardsRequired": "Kamida bitta kartochka qo‘shing.",
-        "tooMany": "To‘plamda ko‘pi bilan 500 ta kartochka bo‘ladi."
+        "tooMany": "To‘plamda koʻpi bilan 500 ta kartochka bo‘ladi."
       }
     },
     "import": {

@@ -12,6 +12,7 @@ import { visibleTodayCards, type TodayCardId } from "../utils/today-cards"
 import { AlertsCard } from "./alerts-card"
 import { AnnouncementsCard } from "./announcements-card"
 import { DueCard } from "./due-card"
+import { ExamCountdownCard } from "./exam-countdown-card"
 import { GetStartedCard } from "./get-started-card"
 import { NewMarksCard } from "./new-marks-card"
 import { NowNextCard } from "./now-next-card"
@@ -34,6 +35,7 @@ export function TodayPage() {
   return (
     <PageContainer title={t("title")} description={f.date(now, { weekday: "long", day: "numeric", month: "long" })}>
       <GetStartedCard />
+      <ExamCountdownCard />
       <QueryState query={today}>
         {(data) => {
           const cards: Record<TodayCardId, ReactNode> = {

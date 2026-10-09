@@ -1,5 +1,5 @@
 /** WEB-29, BOT-13, UF-WEB-17: settings, notification settings, Today cards. */
-import { describe, expect, test } from "bun:test"
+import { afterEach, describe, expect, test } from "bun:test"
 import { apiUrl, server, teacherMe, userMe } from "@ihsp/test-utils"
 import {
   NotificationSettingsForm,
@@ -10,6 +10,10 @@ import {
 } from "@ihsp/features-core"
 import { screen, waitFor } from "@testing-library/react"
 import { HttpResponse, http } from "msw"
+import {
+  resetServiceWorkerRegistration,
+  trackServiceWorkerRegistration,
+} from "../features/pwa/utils/service-worker-registration"
 import { SettingsPage } from "../features/settings/components/settings-page"
 import { configureTests, renderSp, setValue, studentWith } from "./helpers"
 
@@ -198,6 +202,44 @@ describe("NotificationSettingsForm", () => {
 
     expect(await screen.findByText("Too many requests. Wait a little and try again.")).toBeInTheDocument()
     await waitFor(() => expect(screen.getByRole("switch", { name: "Notify me about new marks" })).toBeChecked())
+  })
+})
+
+function define(target: object, name: string, value: unknown) {
+  Object.defineProperty(target, name, { value, configurable: true, writable: true })
+}
+
+describe("push notifications on this device", () => {
+  afterEach(() => {
+    resetServiceWorkerRegistration()
+    delete (window as unknown as Record<string, unknown>).PushManager
+    delete (window as unknown as Record<string, unknown>).Notification
+    delete (window.navigator as unknown as Record<string, unknown>).serviceWorker
+  })
+
+  test("the settings page offers the switch and explains why it cannot be used in a plain browser tab", async () => {
+    renderSp(<SettingsPage />, { route: "/settings/" })
+
+    expect(await screen.findByRole("switch", { name: "Push notifications on this device" })).toBeInTheDocument()
+    expect(await screen.findByText("This browser cannot show push notifications.")).toBeInTheDocument()
+  })
+
+  test("uses the registration of the app's service worker", async () => {
+    define(
+      window,
+      "PushManager",
+      class PushManagerStub {
+        readonly stub = true
+      },
+    )
+    define(window, "Notification", { permission: "default", requestPermission: async () => "granted" })
+    define(window.navigator, "serviceWorker", {})
+    const registration = { pushManager: { getSubscription: async () => null } } as unknown as ServiceWorkerRegistration
+    trackServiceWorkerRegistration(Promise.resolve(registration))
+
+    renderSp(<SettingsPage />, { route: "/settings/" })
+
+    expect(await screen.findByText(/Get your notifications on this device/)).toBeInTheDocument()
   })
 })
 

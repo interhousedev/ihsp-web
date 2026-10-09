@@ -7,11 +7,15 @@ window.__ENV__ = {
   STAFF_URL: "http://localhost:3003",
   ADMIN_URL: "http://localhost:3004",
   LMS_URL: "http://localhost:3005",
+  LIBRARY_URL: "http://localhost:3008",
   SHARE_URL: "http://localhost:3006/ai",
   SHORT_LINKS_URL: "http://localhost:3006",
   ROOMS_URL: "http://localhost:8000",
   MCP_URL: "http://localhost:8000/mcp",
   BOT_USERNAME: "ihspbot",
   OAUTH_CLIENT_ID: "sp",
+  // "pwa" (with OAUTH_CLIENT_ID "app", served on port 3007) turns this build into the installable app.
+  APP_MODE: "sp",
+  APP_URL: "http://localhost:3007",
   STORAGE_ORIGIN: "http://localhost:9000",
 };

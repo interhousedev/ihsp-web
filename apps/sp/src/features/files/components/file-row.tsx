@@ -1,9 +1,10 @@
 "use client"
 
 import type { FileItem } from "@ihsp/api"
+import { AddToNotebookMenu } from "@ihsp/features-core"
 import { useFormatters, useT } from "@ihsp/i18n"
 import { Button, Card, CardContent } from "@ihsp/ui"
-import { IconDownload, IconFile, IconPencil, IconTrash } from "@tabler/icons-react"
+import { IconDownload, IconFile, IconNotebook, IconPencil, IconTrash } from "@tabler/icons-react"
 import { toast } from "sonner"
 import { formatBytes } from "../utils/format-bytes"
 import { openFile } from "../utils/open-file"
@@ -19,8 +20,11 @@ type FileRowProps = {
 /** A file as a card that works at 360 px and on desktop: name, details, status, usage and actions. */
 export function FileRow({ file, onRename, onDelete }: FileRowProps) {
   const t = useT("files.row")
+  const tNotebook = useT("assistant.addToNotebook")
   const format = useFormatters()
   const usable = file.status === "ready"
+  // A notebook can only read a file that has extracted text.
+  const hasText = usable && file.text_bytes !== null
 
   async function download() {
     try {
@@ -50,6 +54,22 @@ export function FileRow({ file, onRename, onDelete }: FileRowProps) {
               <IconDownload aria-hidden />
               {t("download")}
             </Button>
+          ) : null}
+          {hasText ? (
+            <AddToNotebookMenu
+              input={{ kind: "file", file_id: file.id }}
+              trigger={
+                <Button
+                  type="button"
+                  variant="outline"
+                  className="min-h-11"
+                  aria-label={tNotebook("itemLabel", { title: file.name })}
+                >
+                  <IconNotebook aria-hidden />
+                  {tNotebook("title")}
+                </Button>
+              }
+            />
           ) : null}
           <Button
             type="button"

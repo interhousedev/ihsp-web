@@ -7,21 +7,26 @@
 // query differs from the hand-written type of that endpoint function; fix the type or report the backend deviation.
 
 import type { paths } from "./generated/openapi-served"
-import type { getAiChat, getAiChats, getAiUsage, patchAiChat, postAiChatMessages, postAiChatToolCallApprove, postAiChatToolCallReject, postAiChats } from "./endpoints/ai"
+import type { getAiChat, getAiChats, getAiUsage, getAiWebSearch, patchAiChat, postAiChatMessages, postAiChatRegenerate, postAiChatToolCallApprove, postAiChatToolCallReject, postAiChats } from "./endpoints/ai"
+import type { getAdminAssessments, getMeAssessments, getMeSubjectPlanner, getStaffAssessments, patchAdminAssessment, patchStaffAssessment, postAdminAssessment, postMeAssessment, postStaffAssessment } from "./endpoints/assessments"
 import type { getAdminBroadcast, getAdminBroadcasts, patchAdminBroadcast, postAdminBroadcastCancel, postAdminBroadcastSend, postAdminBroadcasts, postAdminBroadcastsAudienceCount } from "./endpoints/broadcasts"
 import type { deleteStaffLessonHomework, getAdminAttendance, getAdminAttendanceMissing, getMeAttendance, getMeHomework, getMeLesson, getMeToday, getStaffGroupAttendance, getStaffGroupStudents, getStaffJournal, getStaffJournalOptions, getStaffLesson, getStaffToday, postStaffJournalToggle, putMeHomeworkDone, putMeHomeworkNote, putStaffLessonAttendance, putStaffLessonAttendanceExcuse, putStaffLessonHomework, putStaffLessonTopic } from "./endpoints/classwork"
 import type { getAdminDashboard, getAdminGroupsStats, getAdminStudent, getAdminTeacherProfile, getMeAlerts, getMeSearch, postMeCalendarToken } from "./endpoints/composition"
+import type { getCourseSteps, getNotebookUsageOf, postApplyArtifact, postApplyPreview, postCourseWorkspace } from "./endpoints/course-workspace"
 import type { deleteFile, getFile, getFileUrl, getMeFiles, getMeStorage, patchFile, postFileComplete, postFiles } from "./endpoints/files"
-import type { getMeFlashcardSet, getMeFlashcardSetStudy, getMeFlashcardSets, patchMeFlashcardSet, postMeFlashcardReview, postMeFlashcardSets, postMeFlashcardSetsCopy, putMeFlashcardSetCards } from "./endpoints/flashcards"
+import type { getMeFlashcardSet, getMeFlashcardSetStudy, getMeFlashcardSets, getMeFlashcardSetsStats, patchMeFlashcardSet, postMeFlashcardReview, postMeFlashcardSets, postMeFlashcardSetsCopy, putMeFlashcardSetCards } from "./endpoints/flashcards"
 import type { deleteIdMe, getIdActivation, getIdConsent, getIdLogin, getIdLogout, getIdMcpScopes, getIdMe, getIdMeActivity, getIdMeConnectors, getIdMeSessions, getIdMeTelegram, patchIdMePreferences, patchIdMeTelegram, postIdActivation, postIdConsent, postIdLogin, postIdLoginOtp, postIdLoginOtpRequest, postIdMeConnectors, postIdMeEmailChangeConfirm, postIdMeEmisPassword, postIdMeOtpDisable, postIdMeOtpEnableConfirm, postIdRecoveryOtpConfirm, postIdTelegramLogin, postIdTelegramOtpRequest, postIdTelegramStatus } from "./endpoints/id"
 import type { getAdminAudit, getAdminOauthClients, getAdminTeachers, getAdminUser, getAdminUsers, patchAdminTeacher, postAdminOauthClientVerify, postAdminTeacherDeactivate, postAdminTeachers, postAdminUserBlock, postAdminUserMailResume, postAdminUserMailSuspend, postAdminUserResetPassword, postAdminUserRoles, postAdminUserUnblock } from "./endpoints/id-admin"
+import type { getLibraryFileUrl, getLibraryItem, getLibraryItemText, getLibraryItems, getLibrarySanctions, getLibrarySubjects, getManageBook, getManageBooks, getManageQueue, getMyUploads, getUniLibraryRecord, getUniLibrarySearch, getUniLibraryStatus, getUniLibraryTaxonomies, postLibrarySanction, postManageBook, postManageBookFile, postManageImport, postMaterial, postMaterialFiles, postMaterialSubmit, postMaterialVersion, postModeration, postSuggestion, postUniLibraryPin } from "./endpoints/library"
 import type { getAdminModerationQueue, getAdminModerationSearch, getLessonResources, getMeLinks, postAdminLinkDisable, postAdminLinkDismissReports, postLessonResourceHide, postLessonResources, postLinkRevoke, postLinks, postShares } from "./endpoints/links"
 import type { getLmsCourseCompare, getLmsCourseDraft, getLmsCoursePending, getLmsCoursePreviewStep, getLmsCourseStaff, getLmsCourseVersion, getLmsCourseVersions, getLmsStepDiff, getLmsStepDraft, getLmsStepHistory, patchLmsCourseSettings, patchLmsCourseStaff, postLmsCourseDiscard, postLmsCourseDraftOutline, postLmsCourseInviteCode, postLmsCoursePublish, postLmsCourseStaff, postLmsCourseSteps, postLmsCourseVersionRestore, postLmsCourses, postLmsStepCheckpoints, postLmsStepDiscard, postLmsStepRestore, putLmsCourseDraftMeta, putLmsStepDraft } from "./endpoints/lms-authoring"
 import type { getLmsAttempt, getLmsCourse, getLmsCourseStep, getLmsCourseStudents, getLmsCourses, getLmsMyCourses, getLmsStepCardsNext, postLmsAttemptOverride, postLmsAttemptSubmit, postLmsCourseEnroll, postLmsJoin, postLmsStepBlockAttempts, postLmsStepCardReview, postLmsStepViewed, putLmsAttemptAnswers } from "./endpoints/lms-learning"
 import type { getAdminSyncRuns, getMeGrades, getMeGradesDay, getMeRecordBook, getMeSubject, getMeSubjects, postAdminSyncRun } from "./endpoints/marks"
+import type { getArtifact, getArtifacts, getNotebook, getNotebookChat, getNotebookLabels, getNotebookSearch, getNotebookSource, getNotebookSources, getNotebookUsage, getNotebooks, getPassage, getSourcePassages, patchArtifact, patchNotebook, patchNotebookLabel, patchNotebookSource, postArtifact, postArtifactAsSource, postArtifactCancel, postArtifactFlashcardSet, postArtifactRetry, postArtifactSlidesRevise, postNotebook, postNotebookDiscover, postNotebookLabel, postNotebookLabelsAuto, postNotebookMessage, postNotebookRegenerate, postNotebookSourceSync, postNotebookSources, postNotebookSourcesSelect, postSaveNote, putArtifactSlides, putNotebookSourceLabels } from "./endpoints/notebooks"
 import type { getNotifications, getNotificationsUnreadCount } from "./endpoints/notifications"
 import type { postOauthLogout, postOauthRefresh, postOauthTelegram, postOauthToken, postOauthTokenHook } from "./endpoints/oauth"
 import type { getPublicShare, postPublicReports } from "./endpoints/public"
+import type { getPushConfig, postPushSubscription } from "./endpoints/push"
 import type { getInternalEmisProfile, getInternalEmisRatings, getInternalEmisSubjects, postIdReclaimEmail, postIdReclaimEmis, postIdRegisterComplete, postIdRegisterEmail, postIdRegisterEmis } from "./endpoints/registration"
 import type { getAdminGroup, getAdminGroups, getAdminLessons, getAdminRooms, getAdminStudents, getAdminSubjects, getAdminTerms, getAdminTimetable, getMeProfile, getMeTimetable, getStaffGroup, getStaffGroups, getStaffTimetable, patchAdminGroup, patchAdminLesson, patchAdminRoom, patchAdminSubject, patchAdminTerm, patchAdminTimetable, postAdminGroups, postAdminLessons, postAdminRoomArchive, postAdminRoomMerge, postAdminRoomRegeneratePin, postAdminStudentsImport, postAdminStudentsImportConfirm, postAdminSubjects, postAdminTerms, postAdminTimetable, postAdminTimetableCheck, postAdminTimetableCopy, putAdminGroupSubgroups, putStaffGroupSubgroups } from "./endpoints/schedule"
 
@@ -54,6 +59,10 @@ export const served_patchAiChat: Awaited<ReturnType<typeof patchAiChat>> = gen_p
 declare const gen_postAiChatMessages: ResponseOf<"/v1/ai/chats/{chat_id}/messages", "post">
 export const served_postAiChatMessages: Awaited<ReturnType<typeof postAiChatMessages>> = gen_postAiChatMessages
 
+// POST /v1/ai/chats/{chat_id}/regenerate — postAiChatRegenerate
+declare const gen_postAiChatRegenerate: ResponseOf<"/v1/ai/chats/{chat_id}/regenerate", "post">
+export const served_postAiChatRegenerate: Awaited<ReturnType<typeof postAiChatRegenerate>> = gen_postAiChatRegenerate
+
 // POST /v1/ai/chats/{chat_id}/tool-calls/{call_id}/approve — postAiChatToolCallApprove
 declare const gen_postAiChatToolCallApprove: ResponseOf<"/v1/ai/chats/{chat_id}/tool-calls/{call_id}/approve", "post">
 export const served_postAiChatToolCallApprove: Awaited<ReturnType<typeof postAiChatToolCallApprove>> = gen_postAiChatToolCallApprove
@@ -65,6 +74,46 @@ export const served_postAiChatToolCallReject: Awaited<ReturnType<typeof postAiCh
 // GET /v1/ai/usage — getAiUsage
 declare const gen_getAiUsage: ResponseOf<"/v1/ai/usage", "get">
 export const served_getAiUsage: Awaited<ReturnType<typeof getAiUsage>> = gen_getAiUsage
+
+// GET /v1/ai/web-search — getAiWebSearch
+declare const gen_getAiWebSearch: ResponseOf<"/v1/ai/web-search", "get">
+export const served_getAiWebSearch: Awaited<ReturnType<typeof getAiWebSearch>> = gen_getAiWebSearch
+
+// GET /v1/me/assessments — getMeAssessments
+declare const gen_getMeAssessments: ResponseOf<"/v1/me/assessments", "get">
+export const served_getMeAssessments: Awaited<ReturnType<typeof getMeAssessments>> = gen_getMeAssessments
+
+// POST /v1/me/assessments — postMeAssessment
+declare const gen_postMeAssessment: ResponseOf<"/v1/me/assessments", "post">
+export const served_postMeAssessment: Awaited<ReturnType<typeof postMeAssessment>> = gen_postMeAssessment
+
+// GET /v1/me/subjects/{subject_id}/planner — getMeSubjectPlanner
+declare const gen_getMeSubjectPlanner: ResponseOf<"/v1/me/subjects/{subject_id}/planner", "get">
+export const served_getMeSubjectPlanner: Awaited<ReturnType<typeof getMeSubjectPlanner>> = gen_getMeSubjectPlanner
+
+// GET /v1/staff/assessments — getStaffAssessments
+declare const gen_getStaffAssessments: ResponseOf<"/v1/staff/assessments", "get">
+export const served_getStaffAssessments: Awaited<ReturnType<typeof getStaffAssessments>> = gen_getStaffAssessments
+
+// POST /v1/staff/assessments — postStaffAssessment
+declare const gen_postStaffAssessment: ResponseOf<"/v1/staff/assessments", "post">
+export const served_postStaffAssessment: Awaited<ReturnType<typeof postStaffAssessment>> = gen_postStaffAssessment
+
+// PATCH /v1/staff/assessments/{assessment_id} — patchStaffAssessment
+declare const gen_patchStaffAssessment: ResponseOf<"/v1/staff/assessments/{assessment_id}", "patch">
+export const served_patchStaffAssessment: Awaited<ReturnType<typeof patchStaffAssessment>> = gen_patchStaffAssessment
+
+// GET /v1/admin/assessments — getAdminAssessments
+declare const gen_getAdminAssessments: ResponseOf<"/v1/admin/assessments", "get">
+export const served_getAdminAssessments: Awaited<ReturnType<typeof getAdminAssessments>> = gen_getAdminAssessments
+
+// POST /v1/admin/assessments — postAdminAssessment
+declare const gen_postAdminAssessment: ResponseOf<"/v1/admin/assessments", "post">
+export const served_postAdminAssessment: Awaited<ReturnType<typeof postAdminAssessment>> = gen_postAdminAssessment
+
+// PATCH /v1/admin/assessments/{assessment_id} — patchAdminAssessment
+declare const gen_patchAdminAssessment: ResponseOf<"/v1/admin/assessments/{assessment_id}", "patch">
+export const served_patchAdminAssessment: Awaited<ReturnType<typeof patchAdminAssessment>> = gen_patchAdminAssessment
 
 // GET /v1/admin/broadcasts — getAdminBroadcasts
 declare const gen_getAdminBroadcasts: ResponseOf<"/v1/admin/broadcasts", "get">
@@ -202,6 +251,26 @@ export const served_getAdminStudent: Awaited<ReturnType<typeof getAdminStudent>>
 declare const gen_getAdminTeacherProfile: ResponseOf<"/v1/admin/teachers/{user_id}/profile", "get">
 export const served_getAdminTeacherProfile: Awaited<ReturnType<typeof getAdminTeacherProfile>> = gen_getAdminTeacherProfile
 
+// POST /v1/notebooks/course-workspaces — postCourseWorkspace
+declare const gen_postCourseWorkspace: ResponseOf<"/v1/notebooks/course-workspaces", "post">
+export const served_postCourseWorkspace: Awaited<ReturnType<typeof postCourseWorkspace>> = gen_postCourseWorkspace
+
+// GET /v1/notebooks/{notebook_id}/usage — getNotebookUsageOf
+declare const gen_getNotebookUsageOf: ResponseOf<"/v1/notebooks/{notebook_id}/usage", "get">
+export const served_getNotebookUsageOf: Awaited<ReturnType<typeof getNotebookUsageOf>> = gen_getNotebookUsageOf
+
+// GET /v1/notebooks/{notebook_id}/course-steps — getCourseSteps
+declare const gen_getCourseSteps: ResponseOf<"/v1/notebooks/{notebook_id}/course-steps", "get">
+export const served_getCourseSteps: Awaited<ReturnType<typeof getCourseSteps>> = gen_getCourseSteps
+
+// POST /v1/notebooks/{notebook_id}/artifacts/{artifact_id}/apply-preview — postApplyPreview
+declare const gen_postApplyPreview: ResponseOf<"/v1/notebooks/{notebook_id}/artifacts/{artifact_id}/apply-preview", "post">
+export const served_postApplyPreview: Awaited<ReturnType<typeof postApplyPreview>> = gen_postApplyPreview
+
+// POST /v1/notebooks/{notebook_id}/artifacts/{artifact_id}/apply — postApplyArtifact
+declare const gen_postApplyArtifact: ResponseOf<"/v1/notebooks/{notebook_id}/artifacts/{artifact_id}/apply", "post">
+export const served_postApplyArtifact: Awaited<ReturnType<typeof postApplyArtifact>> = gen_postApplyArtifact
+
 // POST /v1/files — postFiles
 declare const gen_postFiles: ResponseOf<"/v1/files", "post">
 export const served_postFiles: Awaited<ReturnType<typeof postFiles>> = gen_postFiles
@@ -241,6 +310,10 @@ export const served_getMeFlashcardSets: Awaited<ReturnType<typeof getMeFlashcard
 // POST /v1/me/flashcard-sets — postMeFlashcardSets
 declare const gen_postMeFlashcardSets: ResponseOf<"/v1/me/flashcard-sets", "post">
 export const served_postMeFlashcardSets: Awaited<ReturnType<typeof postMeFlashcardSets>> = gen_postMeFlashcardSets
+
+// GET /v1/me/flashcard-sets/stats — getMeFlashcardSetsStats
+declare const gen_getMeFlashcardSetsStats: ResponseOf<"/v1/me/flashcard-sets/stats", "get">
+export const served_getMeFlashcardSetsStats: Awaited<ReturnType<typeof getMeFlashcardSetsStats>> = gen_getMeFlashcardSetsStats
 
 // GET /v1/me/flashcard-sets/{set_id} — getMeFlashcardSet
 declare const gen_getMeFlashcardSet: ResponseOf<"/v1/me/flashcard-sets/{set_id}", "get">
@@ -433,6 +506,106 @@ export const served_postIdMeEmisPassword: Awaited<ReturnType<typeof postIdMeEmis
 // DELETE /v1/id/me — deleteIdMe
 declare const gen_deleteIdMe: ResponseOf<"/v1/id/me", "delete">
 export const served_deleteIdMe: Awaited<ReturnType<typeof deleteIdMe>> = gen_deleteIdMe
+
+// GET /v1/library/items — getLibraryItems
+declare const gen_getLibraryItems: ResponseOf<"/v1/library/items", "get">
+export const served_getLibraryItems: Awaited<ReturnType<typeof getLibraryItems>> = gen_getLibraryItems
+
+// GET /v1/library/items/{id_or_slug} — getLibraryItem
+declare const gen_getLibraryItem: ResponseOf<"/v1/library/items/{id_or_slug}", "get">
+export const served_getLibraryItem: Awaited<ReturnType<typeof getLibraryItem>> = gen_getLibraryItem
+
+// GET /v1/library/items/{item_id}/files/{file_id}/url — getLibraryFileUrl
+declare const gen_getLibraryFileUrl: ResponseOf<"/v1/library/items/{item_id}/files/{file_id}/url", "get">
+export const served_getLibraryFileUrl: Awaited<ReturnType<typeof getLibraryFileUrl>> = gen_getLibraryFileUrl
+
+// GET /v1/library/items/{item_id}/text — getLibraryItemText
+declare const gen_getLibraryItemText: ResponseOf<"/v1/library/items/{item_id}/text", "get">
+export const served_getLibraryItemText: Awaited<ReturnType<typeof getLibraryItemText>> = gen_getLibraryItemText
+
+// GET /v1/library/subjects — getLibrarySubjects
+declare const gen_getLibrarySubjects: ResponseOf<"/v1/library/subjects", "get">
+export const served_getLibrarySubjects: Awaited<ReturnType<typeof getLibrarySubjects>> = gen_getLibrarySubjects
+
+// GET /v1/library/external/unilibrary/search — getUniLibrarySearch
+declare const gen_getUniLibrarySearch: ResponseOf<"/v1/library/external/unilibrary/search", "get">
+export const served_getUniLibrarySearch: Awaited<ReturnType<typeof getUniLibrarySearch>> = gen_getUniLibrarySearch
+
+// GET /v1/library/external/unilibrary/{external_id} — getUniLibraryRecord
+declare const gen_getUniLibraryRecord: ResponseOf<"/v1/library/external/unilibrary/{external_id}", "get">
+export const served_getUniLibraryRecord: Awaited<ReturnType<typeof getUniLibraryRecord>> = gen_getUniLibraryRecord
+
+// POST /v1/library/external/unilibrary/{external_id}/item — postUniLibraryPin
+declare const gen_postUniLibraryPin: ResponseOf<"/v1/library/external/unilibrary/{external_id}/item", "post">
+export const served_postUniLibraryPin: Awaited<ReturnType<typeof postUniLibraryPin>> = gen_postUniLibraryPin
+
+// GET /v1/library/external/unilibrary/taxonomies — getUniLibraryTaxonomies
+declare const gen_getUniLibraryTaxonomies: ResponseOf<"/v1/library/external/unilibrary/taxonomies", "get">
+export const served_getUniLibraryTaxonomies: Awaited<ReturnType<typeof getUniLibraryTaxonomies>> = gen_getUniLibraryTaxonomies
+
+// POST /v1/library/materials — postMaterial
+declare const gen_postMaterial: ResponseOf<"/v1/library/materials", "post">
+export const served_postMaterial: Awaited<ReturnType<typeof postMaterial>> = gen_postMaterial
+
+// POST /v1/library/materials/{item_id}/files — postMaterialFiles
+declare const gen_postMaterialFiles: ResponseOf<"/v1/library/materials/{item_id}/files", "post">
+export const served_postMaterialFiles: Awaited<ReturnType<typeof postMaterialFiles>> = gen_postMaterialFiles
+
+// POST /v1/library/materials/{item_id}/submit — postMaterialSubmit
+declare const gen_postMaterialSubmit: ResponseOf<"/v1/library/materials/{item_id}/submit", "post">
+export const served_postMaterialSubmit: Awaited<ReturnType<typeof postMaterialSubmit>> = gen_postMaterialSubmit
+
+// POST /v1/library/materials/{item_id}/versions — postMaterialVersion
+declare const gen_postMaterialVersion: ResponseOf<"/v1/library/materials/{item_id}/versions", "post">
+export const served_postMaterialVersion: Awaited<ReturnType<typeof postMaterialVersion>> = gen_postMaterialVersion
+
+// GET /v1/me/library/uploads — getMyUploads
+declare const gen_getMyUploads: ResponseOf<"/v1/me/library/uploads", "get">
+export const served_getMyUploads: Awaited<ReturnType<typeof getMyUploads>> = gen_getMyUploads
+
+// POST /v1/library/suggestions — postSuggestion
+declare const gen_postSuggestion: ResponseOf<"/v1/library/suggestions", "post">
+export const served_postSuggestion: Awaited<ReturnType<typeof postSuggestion>> = gen_postSuggestion
+
+// GET /v1/manage/library/queue — getManageQueue
+declare const gen_getManageQueue: ResponseOf<"/v1/manage/library/queue", "get">
+export const served_getManageQueue: Awaited<ReturnType<typeof getManageQueue>> = gen_getManageQueue
+
+// POST /v1/manage/library/items/{item_id}/{action} — postModeration
+declare const gen_postModeration: ResponseOf<"/v1/manage/library/items/{item_id}/{action}", "post">
+export const served_postModeration: Awaited<ReturnType<typeof postModeration>> = gen_postModeration
+
+// GET /v1/manage/library/books — getManageBooks
+declare const gen_getManageBooks: ResponseOf<"/v1/manage/library/books", "get">
+export const served_getManageBooks: Awaited<ReturnType<typeof getManageBooks>> = gen_getManageBooks
+
+// GET /v1/manage/library/books/{book_id} — getManageBook
+declare const gen_getManageBook: ResponseOf<"/v1/manage/library/books/{book_id}", "get">
+export const served_getManageBook: Awaited<ReturnType<typeof getManageBook>> = gen_getManageBook
+
+// POST /v1/manage/library/books — postManageBook
+declare const gen_postManageBook: ResponseOf<"/v1/manage/library/books", "post">
+export const served_postManageBook: Awaited<ReturnType<typeof postManageBook>> = gen_postManageBook
+
+// POST /v1/manage/library/books/{book_id}/files — postManageBookFile
+declare const gen_postManageBookFile: ResponseOf<"/v1/manage/library/books/{book_id}/files", "post">
+export const served_postManageBookFile: Awaited<ReturnType<typeof postManageBookFile>> = gen_postManageBookFile
+
+// POST /v1/manage/library/import — postManageImport
+declare const gen_postManageImport: ResponseOf<"/v1/manage/library/import", "post">
+export const served_postManageImport: Awaited<ReturnType<typeof postManageImport>> = gen_postManageImport
+
+// GET /v1/admin/library/sanctions — getLibrarySanctions
+declare const gen_getLibrarySanctions: ResponseOf<"/v1/admin/library/sanctions", "get">
+export const served_getLibrarySanctions: Awaited<ReturnType<typeof getLibrarySanctions>> = gen_getLibrarySanctions
+
+// POST /v1/admin/library/sanctions — postLibrarySanction
+declare const gen_postLibrarySanction: ResponseOf<"/v1/admin/library/sanctions", "post">
+export const served_postLibrarySanction: Awaited<ReturnType<typeof postLibrarySanction>> = gen_postLibrarySanction
+
+// GET /v1/admin/library/unilibrary/status — getUniLibraryStatus
+declare const gen_getUniLibraryStatus: ResponseOf<"/v1/admin/library/unilibrary/status", "get">
+export const served_getUniLibraryStatus: Awaited<ReturnType<typeof getUniLibraryStatus>> = gen_getUniLibraryStatus
 
 // POST /v1/links — postLinks
 declare const gen_postLinks: ResponseOf<"/v1/links", "post">
@@ -666,6 +839,142 @@ export const served_getAdminSyncRuns: Awaited<ReturnType<typeof getAdminSyncRuns
 declare const gen_postAdminSyncRun: ResponseOf<"/v1/admin/sync/run", "post">
 export const served_postAdminSyncRun: Awaited<ReturnType<typeof postAdminSyncRun>> = gen_postAdminSyncRun
 
+// GET /v1/notebooks — getNotebooks
+declare const gen_getNotebooks: ResponseOf<"/v1/notebooks", "get">
+export const served_getNotebooks: Awaited<ReturnType<typeof getNotebooks>> = gen_getNotebooks
+
+// POST /v1/notebooks — postNotebook
+declare const gen_postNotebook: ResponseOf<"/v1/notebooks", "post">
+export const served_postNotebook: Awaited<ReturnType<typeof postNotebook>> = gen_postNotebook
+
+// GET /v1/notebooks/usage — getNotebookUsage
+declare const gen_getNotebookUsage: ResponseOf<"/v1/notebooks/usage", "get">
+export const served_getNotebookUsage: Awaited<ReturnType<typeof getNotebookUsage>> = gen_getNotebookUsage
+
+// GET /v1/notebooks/{notebook_id} — getNotebook
+declare const gen_getNotebook: ResponseOf<"/v1/notebooks/{notebook_id}", "get">
+export const served_getNotebook: Awaited<ReturnType<typeof getNotebook>> = gen_getNotebook
+
+// PATCH /v1/notebooks/{notebook_id} — patchNotebook
+declare const gen_patchNotebook: ResponseOf<"/v1/notebooks/{notebook_id}", "patch">
+export const served_patchNotebook: Awaited<ReturnType<typeof patchNotebook>> = gen_patchNotebook
+
+// GET /v1/notebooks/{notebook_id}/sources — getNotebookSources
+declare const gen_getNotebookSources: ResponseOf<"/v1/notebooks/{notebook_id}/sources", "get">
+export const served_getNotebookSources: Awaited<ReturnType<typeof getNotebookSources>> = gen_getNotebookSources
+
+// POST /v1/notebooks/{notebook_id}/sources — postNotebookSources
+declare const gen_postNotebookSources: ResponseOf<"/v1/notebooks/{notebook_id}/sources", "post">
+export const served_postNotebookSources: Awaited<ReturnType<typeof postNotebookSources>> = gen_postNotebookSources
+
+// GET /v1/notebooks/{notebook_id}/sources/{source_id} — getNotebookSource
+declare const gen_getNotebookSource: ResponseOf<"/v1/notebooks/{notebook_id}/sources/{source_id}", "get">
+export const served_getNotebookSource: Awaited<ReturnType<typeof getNotebookSource>> = gen_getNotebookSource
+
+// PATCH /v1/notebooks/{notebook_id}/sources/{source_id} — patchNotebookSource
+declare const gen_patchNotebookSource: ResponseOf<"/v1/notebooks/{notebook_id}/sources/{source_id}", "patch">
+export const served_patchNotebookSource: Awaited<ReturnType<typeof patchNotebookSource>> = gen_patchNotebookSource
+
+// POST /v1/notebooks/{notebook_id}/sources/select — postNotebookSourcesSelect
+declare const gen_postNotebookSourcesSelect: ResponseOf<"/v1/notebooks/{notebook_id}/sources/select", "post">
+export const served_postNotebookSourcesSelect: Awaited<ReturnType<typeof postNotebookSourcesSelect>> = gen_postNotebookSourcesSelect
+
+// POST /v1/notebooks/{notebook_id}/sources/{source_id}/sync — postNotebookSourceSync
+declare const gen_postNotebookSourceSync: ResponseOf<"/v1/notebooks/{notebook_id}/sources/{source_id}/sync", "post">
+export const served_postNotebookSourceSync: Awaited<ReturnType<typeof postNotebookSourceSync>> = gen_postNotebookSourceSync
+
+// GET /v1/notebooks/{notebook_id}/sources/{source_id}/passages — getSourcePassages
+declare const gen_getSourcePassages: ResponseOf<"/v1/notebooks/{notebook_id}/sources/{source_id}/passages", "get">
+export const served_getSourcePassages: Awaited<ReturnType<typeof getSourcePassages>> = gen_getSourcePassages
+
+// GET /v1/notebooks/{notebook_id}/passages/{passage_id} — getPassage
+declare const gen_getPassage: ResponseOf<"/v1/notebooks/{notebook_id}/passages/{passage_id}", "get">
+export const served_getPassage: Awaited<ReturnType<typeof getPassage>> = gen_getPassage
+
+// GET /v1/notebooks/{notebook_id}/search — getNotebookSearch
+declare const gen_getNotebookSearch: ResponseOf<"/v1/notebooks/{notebook_id}/search", "get">
+export const served_getNotebookSearch: Awaited<ReturnType<typeof getNotebookSearch>> = gen_getNotebookSearch
+
+// POST /v1/notebooks/{notebook_id}/discover — postNotebookDiscover
+declare const gen_postNotebookDiscover: ResponseOf<"/v1/notebooks/{notebook_id}/discover", "post">
+export const served_postNotebookDiscover: Awaited<ReturnType<typeof postNotebookDiscover>> = gen_postNotebookDiscover
+
+// GET /v1/notebooks/{notebook_id}/labels — getNotebookLabels
+declare const gen_getNotebookLabels: ResponseOf<"/v1/notebooks/{notebook_id}/labels", "get">
+export const served_getNotebookLabels: Awaited<ReturnType<typeof getNotebookLabels>> = gen_getNotebookLabels
+
+// POST /v1/notebooks/{notebook_id}/labels — postNotebookLabel
+declare const gen_postNotebookLabel: ResponseOf<"/v1/notebooks/{notebook_id}/labels", "post">
+export const served_postNotebookLabel: Awaited<ReturnType<typeof postNotebookLabel>> = gen_postNotebookLabel
+
+// PATCH /v1/notebooks/{notebook_id}/labels/{label_id} — patchNotebookLabel
+declare const gen_patchNotebookLabel: ResponseOf<"/v1/notebooks/{notebook_id}/labels/{label_id}", "patch">
+export const served_patchNotebookLabel: Awaited<ReturnType<typeof patchNotebookLabel>> = gen_patchNotebookLabel
+
+// PUT /v1/notebooks/{notebook_id}/sources/{source_id}/labels — putNotebookSourceLabels
+declare const gen_putNotebookSourceLabels: ResponseOf<"/v1/notebooks/{notebook_id}/sources/{source_id}/labels", "put">
+export const served_putNotebookSourceLabels: Awaited<ReturnType<typeof putNotebookSourceLabels>> = gen_putNotebookSourceLabels
+
+// POST /v1/notebooks/{notebook_id}/labels/auto — postNotebookLabelsAuto
+declare const gen_postNotebookLabelsAuto: ResponseOf<"/v1/notebooks/{notebook_id}/labels/auto", "post">
+export const served_postNotebookLabelsAuto: Awaited<ReturnType<typeof postNotebookLabelsAuto>> = gen_postNotebookLabelsAuto
+
+// GET /v1/notebooks/{notebook_id}/chat — getNotebookChat
+declare const gen_getNotebookChat: ResponseOf<"/v1/notebooks/{notebook_id}/chat", "get">
+export const served_getNotebookChat: Awaited<ReturnType<typeof getNotebookChat>> = gen_getNotebookChat
+
+// POST /v1/notebooks/{notebook_id}/chat/messages — postNotebookMessage
+declare const gen_postNotebookMessage: ResponseOf<"/v1/notebooks/{notebook_id}/chat/messages", "post">
+export const served_postNotebookMessage: Awaited<ReturnType<typeof postNotebookMessage>> = gen_postNotebookMessage
+
+// POST /v1/notebooks/{notebook_id}/chat/regenerate — postNotebookRegenerate
+declare const gen_postNotebookRegenerate: ResponseOf<"/v1/notebooks/{notebook_id}/chat/regenerate", "post">
+export const served_postNotebookRegenerate: Awaited<ReturnType<typeof postNotebookRegenerate>> = gen_postNotebookRegenerate
+
+// POST /v1/notebooks/{notebook_id}/chat/messages/{message_id}/save-note — postSaveNote
+declare const gen_postSaveNote: ResponseOf<"/v1/notebooks/{notebook_id}/chat/messages/{message_id}/save-note", "post">
+export const served_postSaveNote: Awaited<ReturnType<typeof postSaveNote>> = gen_postSaveNote
+
+// GET /v1/notebooks/{notebook_id}/artifacts — getArtifacts
+declare const gen_getArtifacts: ResponseOf<"/v1/notebooks/{notebook_id}/artifacts", "get">
+export const served_getArtifacts: Awaited<ReturnType<typeof getArtifacts>> = gen_getArtifacts
+
+// POST /v1/notebooks/{notebook_id}/artifacts — postArtifact
+declare const gen_postArtifact: ResponseOf<"/v1/notebooks/{notebook_id}/artifacts", "post">
+export const served_postArtifact: Awaited<ReturnType<typeof postArtifact>> = gen_postArtifact
+
+// GET /v1/notebooks/{notebook_id}/artifacts/{artifact_id} — getArtifact
+declare const gen_getArtifact: ResponseOf<"/v1/notebooks/{notebook_id}/artifacts/{artifact_id}", "get">
+export const served_getArtifact: Awaited<ReturnType<typeof getArtifact>> = gen_getArtifact
+
+// PATCH /v1/notebooks/{notebook_id}/artifacts/{artifact_id} — patchArtifact
+declare const gen_patchArtifact: ResponseOf<"/v1/notebooks/{notebook_id}/artifacts/{artifact_id}", "patch">
+export const served_patchArtifact: Awaited<ReturnType<typeof patchArtifact>> = gen_patchArtifact
+
+// POST /v1/notebooks/{notebook_id}/artifacts/{artifact_id}/cancel — postArtifactCancel
+declare const gen_postArtifactCancel: ResponseOf<"/v1/notebooks/{notebook_id}/artifacts/{artifact_id}/cancel", "post">
+export const served_postArtifactCancel: Awaited<ReturnType<typeof postArtifactCancel>> = gen_postArtifactCancel
+
+// POST /v1/notebooks/{notebook_id}/artifacts/{artifact_id}/retry — postArtifactRetry
+declare const gen_postArtifactRetry: ResponseOf<"/v1/notebooks/{notebook_id}/artifacts/{artifact_id}/retry", "post">
+export const served_postArtifactRetry: Awaited<ReturnType<typeof postArtifactRetry>> = gen_postArtifactRetry
+
+// POST /v1/notebooks/{notebook_id}/artifacts/{artifact_id}/save-as-source — postArtifactAsSource
+declare const gen_postArtifactAsSource: ResponseOf<"/v1/notebooks/{notebook_id}/artifacts/{artifact_id}/save-as-source", "post">
+export const served_postArtifactAsSource: Awaited<ReturnType<typeof postArtifactAsSource>> = gen_postArtifactAsSource
+
+// POST /v1/notebooks/{notebook_id}/artifacts/{artifact_id}/flashcard-set — postArtifactFlashcardSet
+declare const gen_postArtifactFlashcardSet: ResponseOf<"/v1/notebooks/{notebook_id}/artifacts/{artifact_id}/flashcard-set", "post">
+export const served_postArtifactFlashcardSet: Awaited<ReturnType<typeof postArtifactFlashcardSet>> = gen_postArtifactFlashcardSet
+
+// PUT /v1/notebooks/{notebook_id}/artifacts/{artifact_id}/slides — putArtifactSlides
+declare const gen_putArtifactSlides: ResponseOf<"/v1/notebooks/{notebook_id}/artifacts/{artifact_id}/slides", "put">
+export const served_putArtifactSlides: Awaited<ReturnType<typeof putArtifactSlides>> = gen_putArtifactSlides
+
+// POST /v1/notebooks/{notebook_id}/artifacts/{artifact_id}/slides/revise — postArtifactSlidesRevise
+declare const gen_postArtifactSlidesRevise: ResponseOf<"/v1/notebooks/{notebook_id}/artifacts/{artifact_id}/slides/revise", "post">
+export const served_postArtifactSlidesRevise: Awaited<ReturnType<typeof postArtifactSlidesRevise>> = gen_postArtifactSlidesRevise
+
 // GET /v1/notifications — getNotifications
 declare const gen_getNotifications: ResponseOf<"/v1/notifications", "get">
 export const served_getNotifications: Awaited<ReturnType<typeof getNotifications>> = gen_getNotifications
@@ -701,6 +1010,14 @@ export const served_getPublicShare: Awaited<ReturnType<typeof getPublicShare>> =
 // POST /v1/public/reports — postPublicReports
 declare const gen_postPublicReports: ResponseOf<"/v1/public/reports", "post">
 export const served_postPublicReports: Awaited<ReturnType<typeof postPublicReports>> = gen_postPublicReports
+
+// GET /v1/push/config — getPushConfig
+declare const gen_getPushConfig: ResponseOf<"/v1/push/config", "get">
+export const served_getPushConfig: Awaited<ReturnType<typeof getPushConfig>> = gen_getPushConfig
+
+// POST /v1/me/push-subscriptions — postPushSubscription
+declare const gen_postPushSubscription: ResponseOf<"/v1/me/push-subscriptions", "post">
+export const served_postPushSubscription: Awaited<ReturnType<typeof postPushSubscription>> = gen_postPushSubscription
 
 // POST /v1/id/register/emis — postIdRegisterEmis
 declare const gen_postIdRegisterEmis: ResponseOf<"/v1/id/register/emis", "post">

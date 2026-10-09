@@ -20,12 +20,13 @@ import { LabeledField } from "../../shared/components/labeled-field"
 import { SelectField } from "../../shared/components/select-field"
 import { useAdminMutation } from "../../shared/hooks/use-admin-mutation"
 import { TOUCH } from "../../shared/utils/touch"
-import { emptyTermForm, termInput, termToForm, validateTerm, type TermForm } from "../utils/term-form"
+import { controlIssues, emptyTermForm, termInput, termToForm, validateTerm, type TermForm } from "../utils/term-form"
 import { BellsEditor } from "./bells-editor"
+import { ControlWeeksEditor } from "./control-weeks-editor"
 import { DaysEditor } from "./days-editor"
 
 /**
- * Create or edit a term (UF-ADM-05): academic year, half, dates, bell schedule, holidays and moved days.
+ * Create or edit a term (UF-ADM-05): academic year, half, dates, control weeks, bell schedule, holidays and moved days.
  * `term` null creates a term that starts from the bells of `template` (the current term).
  */
 export function TermEditorDialog({
@@ -52,7 +53,7 @@ export function TermEditorDialog({
 
   const issues = validateTerm(form)
   const save = useAdminMutation({
-    mutationFn: () => (term ? patchAdminTerm(term.id, termInput(form)) : postAdminTerms(termInput(form))),
+    mutationFn: () => (term ? patchAdminTerm(term.id, termInput(form, term)) : postAdminTerms(termInput(form))),
     invalidate: [keys.admin.terms()],
     success: term ? t("saved") : t("created"),
     onSuccess: () => onOpenChange(false),
@@ -115,6 +116,14 @@ export function TermEditorDialog({
               />
             </LabeledField>
           </div>
+
+          <ControlWeeksEditor
+            value={form.control_periods}
+            onChange={(control_periods) => setForm({ ...form, control_periods })}
+            termStart={form.starts_on}
+            termEnd={form.ends_on}
+            issues={showIssues ? controlIssues(form) : {}}
+          />
 
           <section className="flex flex-col gap-2">
             <h3 className="text-sm font-semibold">{t("bells")}</h3>

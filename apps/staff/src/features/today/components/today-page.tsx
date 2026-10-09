@@ -6,6 +6,7 @@ import { PageContainer } from "@ihsp/ui"
 import { useQuery } from "@tanstack/react-query"
 import { QueryState } from "../../shared/components/query-state"
 import { useNow } from "../../shared/hooks/use-now"
+import { ExamSuggestionsCard } from "./exam-suggestions-card"
 import { GetStartedCard } from "./get-started-card"
 import { NeedsAttentionCard } from "./needs-attention-card"
 import { NowNextCard } from "./now-next-card"
@@ -21,6 +22,7 @@ export function TodayPage() {
   return (
     <PageContainer title={t("title")} description={f.date(now, { weekday: "long", day: "numeric", month: "long" })}>
       <GetStartedCard />
+      <ExamSuggestionsCard />
       <QueryState query={query} rows={4}>
         {(today) => (
           <div className="grid grid-cols-1 gap-4 md:grid-cols-2">

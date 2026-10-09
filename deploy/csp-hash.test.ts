@@ -1,5 +1,5 @@
 import { describe, expect, it } from "bun:test"
-import { buildCspMeta, hashScript, injectCsp, inlineScriptHashes } from "./csp-hash"
+import { APP_DIRECTIVES, APPS, buildCspMeta, hashScript, injectCsp, inlineScriptHashes } from "./csp-hash"
 
 // printf '%s' "console.log(1)" | openssl dgst -sha256 -binary | base64
 const HASH_CONSOLE_LOG_1 = "sha256-CihokcEcBW4atb/CW/XWsvWwbTjqwQlE9nj9ii5ww5M="
@@ -59,6 +59,31 @@ describe("buildCspMeta", () => {
   })
 })
 
+describe("apps", () => {
+  it("hashes the exports of every app, the library included", () => {
+    expect([...APPS].toSorted()).toEqual(["admin", "id", "library", "lms", "share", "sp", "staff"])
+  })
+
+  it("adds a directive to the page policy of the library only", () => {
+    expect(Object.keys(APP_DIRECTIVES)).toEqual(["library"])
+    expect(APP_DIRECTIVES.library).toBe("worker-src 'self' blob:")
+  })
+})
+
+describe("buildCspMeta with the directives of an app", () => {
+  it("appends them after script-src, so the library's PDF.js worker may start from a blob: URL", () => {
+    const meta = buildCspMeta([`'${HASH_CONSOLE_LOG_1}'`], APP_DIRECTIVES.library)
+    expect(meta).toBe(
+      `<meta http-equiv="Content-Security-Policy" content="script-src 'self' '${HASH_CONSOLE_LOG_1}' https://telegram.org; worker-src 'self' blob:">`,
+    )
+  })
+
+  it("is the plain script-src policy when the app adds nothing", () => {
+    expect(buildCspMeta([`'${HASH_CONSOLE_LOG_1}'`], "")).toBe(buildCspMeta([`'${HASH_CONSOLE_LOG_1}'`]))
+    expect(buildCspMeta([`'${HASH_CONSOLE_LOG_1}'`], APP_DIRECTIVES.sp)).not.toContain("worker-src")
+  })
+})
+
 describe("injectCsp", () => {
   it("inserts the meta tag as the first child of <head> with the hash of the inline script", () => {
     const { html, hashCount } = injectCsp(page("<script>console.log(1)</script>"))
@@ -67,6 +92,12 @@ describe("injectCsp", () => {
       `<head><meta http-equiv="Content-Security-Policy" content="script-src 'self' '${HASH_CONSOLE_LOG_1}'`,
     )
     expect(html).toContain("<header>h</header>")
+  })
+
+  it("puts the directives of the app into the inserted policy", () => {
+    const { html } = injectCsp(page("<script>console.log(1)</script>"), APP_DIRECTIVES.library)
+    expect(html).toContain("https://telegram.org; worker-src 'self' blob:\">")
+    expect(html.match(/http-equiv="Content-Security-Policy"/g)).toHaveLength(1)
   })
 
   it("is idempotent", () => {

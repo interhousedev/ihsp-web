@@ -15,6 +15,20 @@ export type Bell = {
   source: BellSource
 }
 
+/** What a class is, from the EMIS class type. `midterm` and `final` are EMIS exam weeks. */
+export type LessonKind = "lecture" | "practice" | "midterm" | "final" | "other"
+
+/** Who wrote a lesson topic: `emis` = the topic EMIS sent (a hint), `manual` = a person; null = no topic. */
+export type TopicSource = "emis" | "manual"
+
+/** `emis`: imported from EMIS and kept equal to it; editing it by hand makes it `manual`. */
+export type EntrySource = "manual" | "emis"
+
+/** The control weeks Administration sets per term: two midterm controls and one final; unset ones are missing/null. */
+export type ControlName = "midterm_1" | "midterm_2" | "final"
+export type ControlPeriod = { start: string; end: string }
+export type ControlPeriods = Partial<Record<ControlName, ControlPeriod | null>>
+
 export type TermInput = {
   academic_year: string
   half: 1 | 2
@@ -23,9 +37,15 @@ export type TermInput = {
   bells: Bell[]
   non_study_days: string[]
   moved_days: { date: string; follows_weekday: number }[]
+  /** Optional on input (omitted = unchanged on PATCH, none on POST). */
+  control_periods?: ControlPeriods
 }
 
-export type Term = TermInput & { id: string; is_current: boolean }
+export type Term = Omit<TermInput, "control_periods"> & {
+  id: string
+  is_current: boolean
+  control_periods: ControlPeriods
+}
 
 export type GroupItem = {
   id: string
@@ -97,6 +117,7 @@ export type TimetableEntry = {
   audience: AudienceItem[]
   valid_from: string
   valid_to: string | null
+  source: EntrySource
 }
 
 export type Conflict = {
@@ -104,6 +125,8 @@ export type Conflict = {
   with_entry_id: string | null
   with_lesson_id: string | null
   description: string
+  /** In which weeks the other entry runs; null when the clash is with a lesson. */
+  week_parity: "every" | "odd" | "even" | null
 }
 
 export type LessonItem = {
@@ -120,6 +143,8 @@ export type LessonItem = {
   is_overridden: boolean
   changes: Record<string, [unknown, unknown]> | null
   topic: string | null
+  kind: LessonKind
+  topic_source: TopicSource | null
   has_homework: boolean
   attendance_submitted: boolean
 }

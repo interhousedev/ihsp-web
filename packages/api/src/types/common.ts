@@ -1,6 +1,6 @@
 // Shared primitives of backend/FINAL_PLAN.md § API contract → Conventions and Schemas.
 
-export type Role = "student" | "teacher" | "admin" | "lms_admin"
+export type Role = "student" | "teacher" | "admin" | "lms_admin" | "librarian"
 
 export type PersonRef = { id: string; first_name: string; last_name: string }
 /** `name` is in the caller's locale with fallback uz -> ru -> en. */

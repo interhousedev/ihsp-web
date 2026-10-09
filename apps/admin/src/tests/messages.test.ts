@@ -143,6 +143,10 @@ describe("keys used in the code", () => {
         "bellTime",
         "bellWeekdays",
         "bellDuplicate",
+        "controlIncomplete",
+        "controlOrder",
+        "controlOutside",
+        "controlSequence",
       ],
       "timetable.editor.conflictKind.${conflict.kind}": ["teacher", "room", "audience"],
       "timetable.entity.${view}": ["group", "teacher", "room"],
@@ -184,7 +188,18 @@ describe("keys used in the code", () => {
   })
 
   test("the error types the admin pages handle have messages", () => {
-    for (const type of ["common.conflict", "common.validation", "id.user-not-found"]) {
+    for (const type of [
+      "common.conflict",
+      "common.validation",
+      "common.forbidden",
+      "id.user-not-found",
+      "academic.term-control-periods-invalid",
+      "academic.assessment-not-found",
+      "academic.not-assessment-teacher",
+      "academic.assessment-subject-not-found",
+      "academic.invalid-assessment",
+      "academic.assessment-exists",
+    ]) {
       expect(available.has(`errors.${type}`), type).toBe(true)
     }
   })

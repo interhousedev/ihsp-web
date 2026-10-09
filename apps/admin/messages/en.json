@@ -21,6 +21,7 @@
     "terms": "Terms & bells",
     "timetable": "Timetable",
     "lessons": "Lessons",
+    "exams": "Exams",
     "attendance": "Attendance",
     "monitoring": "Monitoring",
     "broadcasts": "Broadcasts",
@@ -39,6 +40,11 @@
       "noGroups": "There are no groups yet.",
       "whole": "Whole group",
       "subgroup": "Subgroup {number}"
+    },
+    "controls": {
+      "midterm_1": "Midterm 1",
+      "midterm_2": "Midterm 2",
+      "final": "Final"
     }
   },
   "status": {
@@ -578,7 +584,19 @@
         "noBells": "Add at least one period.",
         "bellTime": "Every period needs a start time that is before its end time.",
         "bellWeekdays": "Every period needs at least one weekday.",
-        "bellDuplicate": "A period appears twice on the same weekday."
+        "bellDuplicate": "A period appears twice on the same weekday.",
+        "controlIncomplete": "A control week needs both a first and a last day.",
+        "controlOrder": "A control week must end on or after the day it starts.",
+        "controlOutside": "A control week must lie inside the term.",
+        "controlSequence": "Each control week must start after the previous one ends."
+      },
+      "controls": {
+        "title": "Control weeks",
+        "hint": "The weeks of the two midterm controls and the final control. Teachers give each subject a date inside its week.",
+        "start": "{name}: first day",
+        "end": "{name}: last day",
+        "clear": "Clear {name}",
+        "clearShort": "Clear"
       }
     },
     "bells": {
@@ -604,6 +622,11 @@
       "addMoved": "Add moved day",
       "movedLine": "{date} follows {weekday}",
       "removeDay": "Remove {date}"
+    },
+    "controls": {
+      "title": "Control weeks",
+      "chip": "{name}: {period}",
+      "notSet": "not set"
     }
   },
   "timetable": {
@@ -772,6 +795,124 @@
       "title": "Lesson",
       "missing": "No lesson was chosen. Open one from the lessons list.",
       "back": "Lessons"
+    }
+  },
+  "exams": {
+    "title": "Exams",
+    "description": "Midterm and final controls of every group. Confirm uncertain dates, set missing ones and add controls.",
+    "newAction": "New exam",
+    "empty": "No exams match these filters.",
+    "toConfirm": "To confirm: {count}",
+    "toConfirmHint": "Dates from EMIS or a head student that nobody has confirmed yet. Click to show only these.",
+    "nothingToConfirm": "No dates are waiting for confirmation.",
+    "filters": {
+      "from": "From date",
+      "to": "To date",
+      "group": "Group",
+      "allGroups": "All groups",
+      "subject": "Subject",
+      "allSubjects": "All subjects",
+      "kind": "Kind",
+      "allKinds": "All kinds",
+      "control": "Control week",
+      "allControls": "All control weeks",
+      "controlOption": "{name} · {period}",
+      "status": "Status",
+      "allStatuses": "Planned and not confirmed",
+      "source": "Source",
+      "allSources": "Any source",
+      "undated": "Show control weeks without a date"
+    },
+    "kind": {
+      "midterm": "Midterm",
+      "final": "Final",
+      "other": "Other"
+    },
+    "status": {
+      "planned": "Planned",
+      "tentative": "Not confirmed",
+      "cancelled": "Cancelled",
+      "undated": "Date not set"
+    },
+    "source": {
+      "teacher": "Teacher",
+      "admin": "Administration",
+      "emis": "EMIS",
+      "head_student": "Head student"
+    },
+    "columns": {
+      "date": "Date",
+      "subject": "Subject",
+      "groups": "Groups",
+      "kind": "Kind",
+      "time": "Time",
+      "room": "Room",
+      "status": "Status",
+      "source": "Source",
+      "setBy": "Set by",
+      "note": "Note",
+      "actions": "Actions"
+    },
+    "csv": {
+      "week": "Control week",
+      "control": "Control",
+      "title": "Title"
+    },
+    "actions": {
+      "edit": "Edit",
+      "editLabel": "Edit {subject} on {date}",
+      "confirm": "Confirm",
+      "confirmLabel": "Confirm {subject} on {date}",
+      "dismiss": "Dismiss",
+      "dismissLabel": "Dismiss {subject} on {date}",
+      "cancel": "Cancel exam",
+      "cancelLabel": "Cancel {subject} on {date}",
+      "setDate": "Set date",
+      "setDateLabel": "Set the date of {subject} for {groups}"
+    },
+    "confirmed": "Date confirmed",
+    "dialog": {
+      "createTitle": "New exam",
+      "createDescription": "One exam of a subject for one or more groups.",
+      "editTitle": "Edit {subject}",
+      "editDescription": "Saving a date that was not confirmed confirms it.",
+      "setDateTitle": "Set the date of {subject}",
+      "setDateDescription": "{control} for {groups}. Only this subject in this group gets the date.",
+      "subject": "Subject",
+      "choose": "Choose",
+      "audience": "Groups",
+      "kind": "Kind",
+      "control": "Control week",
+      "controlAuto": "By the date",
+      "controlHint": "Without a choice the week follows the date.",
+      "weekHint": "Week: {period}",
+      "date": "Date",
+      "time": "Time",
+      "timeHint": "Tashkent time. Leave empty if it is not known yet.",
+      "room": "Room",
+      "title": "Title",
+      "note": "Note",
+      "cancel": "Cancel",
+      "create": "Add exam",
+      "save": "Save changes",
+      "setDate": "Set date",
+      "created": "Exam added",
+      "saved": "Exam saved",
+      "dateSet": "Date set",
+      "issues": {
+        "subject": "Choose a subject.",
+        "audience": "Choose at least one group.",
+        "date": "Choose the date.",
+        "time": "Enter the time as hours and minutes."
+      }
+    },
+    "dismiss": {
+      "dismissTitle": "Dismiss this date?",
+      "cancelTitle": "Cancel this exam?",
+      "description": "{subject} on {date} for {groups} is marked as cancelled and disappears from the calendars of students and teachers.",
+      "keep": "Keep",
+      "dismissed": "Date dismissed",
+      "cancelled": "Exam cancelled"
     }
   },
   "attendance": {

@@ -58,6 +58,8 @@ export type UserPreferences = {
   lessons_links_lead_min: number
   lessons_prompt_enabled: boolean
   mail_forward_to_telegram: boolean
+  /** Web Push on the account's devices (each device is switched on in its own settings). */
+  notify_push: boolean
   today_cards: string[]
   onboarding_dismissed: string[]
   seen_marks_at: string | null

@@ -31,6 +31,7 @@ export function useNav(): { groups: NavGroup[] } {
             { title: t("terms"), url: "/terms/", icon: "terms" },
             { title: t("timetable"), url: "/timetable/", icon: "timetable" },
             { title: t("lessons"), url: "/lessons/", icon: "calendarEvent" },
+            { title: t("exams"), url: "/exams/", icon: "forms" },
           ],
         },
         {

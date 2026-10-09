@@ -11,9 +11,10 @@ const VARIANT = {
   changed: "secondary",
   removed: "destructive",
   mcp: "outline",
+  ai: "outline",
 } as const satisfies Record<OutlineBadgeKind, "default" | "secondary" | "destructive" | "outline">
 
-/** "New", "Changed", "Removed" and "Via MCP" marks of steps (LMS-7, UF-LMS-05). */
+/** "New", "Changed", "Removed" and "Via MCP" and "Via AI" marks of steps (LMS-7, UF-LMS-05). */
 export function OutlineBadge({ kind }: { kind: OutlineBadgeKind | null | undefined }) {
   const t = useT("badges")
   if (!kind) return null

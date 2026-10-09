@@ -42,7 +42,7 @@ describe("semester grades", () => {
   test("a subject row opens the Marks tab of the subject", async () => {
     renderSp(<GradesPage />, { route: "/grades/" })
 
-    const link = await screen.findByRole("link", { name: /Physics/ })
+    const link = await screen.findByRole("link", { name: "Physics" })
 
     expect(link.getAttribute("href")).toMatch(/^\/subjects\/view\/?\?id=.+&tab=marks&semester=4$/)
   })

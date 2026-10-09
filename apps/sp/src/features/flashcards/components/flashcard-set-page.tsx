@@ -1,6 +1,6 @@
 "use client"
 
-import { DeckOverview, ShareDialog } from "@ihsp/features-core"
+import { AddToNotebookMenu, DeckOverview, ShareDialog } from "@ihsp/features-core"
 import { useT } from "@ihsp/i18n"
 import { ConfirmDialog, Icons, PageContainer, StateView } from "@ihsp/ui"
 import Link from "next/link"
@@ -72,6 +72,9 @@ export function FlashcardSetPage() {
         onDescription={() => setDescriptionOpen(true)}
         onShare={() => setShareOpen(true)}
       />
+      <div className="flex justify-center">
+        <AddToNotebookMenu input={{ kind: "flashcard_set", set_id: detail.id }} />
+      </div>
 
       <SetOptionsDialog
         deck={detail}

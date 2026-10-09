@@ -6,38 +6,48 @@
 // query differs from the hand-written type of that endpoint function; fix the type or report the backend deviation.
 
 import type { paths } from "./generated/openapi"
-import type { getAiChat, getAiChats, getAiUsage, patchAiChat, postAiChatMessages, postAiChatToolCallApprove, postAiChatToolCallReject, postAiChats } from "./endpoints/ai"
+import type { getAiChat, getAiChats, getAiUsage, getAiWebSearch, patchAiChat, postAiChatMessages, postAiChatRegenerate, postAiChatToolCallApprove, postAiChatToolCallReject, postAiChats } from "./endpoints/ai"
+import type { getAdminAssessments, getMeAssessments, getMeSubjectPlanner, getStaffAssessments, patchAdminAssessment, patchStaffAssessment, postAdminAssessment, postMeAssessment, postStaffAssessment } from "./endpoints/assessments"
 import type { getAdminBroadcast, getAdminBroadcasts, patchAdminBroadcast, postAdminBroadcastCancel, postAdminBroadcastSend, postAdminBroadcasts, postAdminBroadcastsAudienceCount } from "./endpoints/broadcasts"
 import type { deleteStaffLessonHomework, getAdminAttendance, getAdminAttendanceMissing, getMeAttendance, getMeHomework, getMeLesson, getMeToday, getStaffGroupAttendance, getStaffGroupStudents, getStaffJournal, getStaffJournalOptions, getStaffLesson, getStaffToday, postStaffJournalToggle, putMeHomeworkDone, putMeHomeworkNote, putStaffLessonAttendance, putStaffLessonAttendanceExcuse, putStaffLessonHomework, putStaffLessonTopic } from "./endpoints/classwork"
 import type { getAdminDashboard, getAdminGroupsStats, getAdminStudent, getAdminTeacherProfile, getMeAlerts, getMeSearch, postMeCalendarToken } from "./endpoints/composition"
+import type { getCourseSteps, getNotebookUsageOf, postApplyArtifact, postApplyPreview, postCourseWorkspace } from "./endpoints/course-workspace"
 import type { deleteFile, getFile, getFileUrl, getMeFiles, getMeStorage, patchFile, postFileComplete, postFiles } from "./endpoints/files"
-import type { getMeFlashcardSet, getMeFlashcardSetStudy, getMeFlashcardSets, patchMeFlashcardSet, postMeFlashcardReview, postMeFlashcardSets, postMeFlashcardSetsCopy, putMeFlashcardSetCards } from "./endpoints/flashcards"
+import type { getMeFlashcardSet, getMeFlashcardSetStudy, getMeFlashcardSets, getMeFlashcardSetsStats, patchMeFlashcardSet, postMeFlashcardReview, postMeFlashcardSets, postMeFlashcardSetsCopy, putMeFlashcardSetCards } from "./endpoints/flashcards"
 import type { deleteIdMe, getIdActivation, getIdConsent, getIdLogin, getIdLogout, getIdMcpScopes, getIdMe, getIdMeActivity, getIdMeConnectors, getIdMeSessions, getIdMeTelegram, patchIdMePreferences, patchIdMeTelegram, postIdActivation, postIdConsent, postIdLogin, postIdLoginOtp, postIdLoginOtpRequest, postIdMeConnectors, postIdMeEmailChangeConfirm, postIdMeEmisPassword, postIdMeOtpDisable, postIdMeOtpEnableConfirm, postIdRecoveryOtpConfirm, postIdTelegramLogin, postIdTelegramOtpRequest, postIdTelegramStatus } from "./endpoints/id"
 import type { getAdminAudit, getAdminOauthClients, getAdminTeachers, getAdminUser, getAdminUsers, patchAdminTeacher, postAdminOauthClientVerify, postAdminTeacherDeactivate, postAdminTeachers, postAdminUserBlock, postAdminUserMailResume, postAdminUserMailSuspend, postAdminUserResetPassword, postAdminUserRoles, postAdminUserUnblock } from "./endpoints/id-admin"
+import type { getLibraryFileUrl, getLibraryItem, getLibraryItemText, getLibraryItems, getLibrarySanctions, getLibrarySubjects, getManageBook, getManageBooks, getManageQueue, getMyUploads, getUniLibraryRecord, getUniLibrarySearch, getUniLibraryStatus, getUniLibraryTaxonomies, postLibrarySanction, postManageBook, postManageBookFile, postManageImport, postMaterial, postMaterialFiles, postMaterialSubmit, postMaterialVersion, postModeration, postSuggestion, postUniLibraryPin } from "./endpoints/library"
 import type { getAdminModerationQueue, getAdminModerationSearch, getLessonResources, getMeLinks, postAdminLinkDisable, postAdminLinkDismissReports, postLessonResourceHide, postLessonResources, postLinkRevoke, postLinks, postShares } from "./endpoints/links"
 import type { getLmsCourseCompare, getLmsCourseDraft, getLmsCoursePending, getLmsCoursePreviewStep, getLmsCourseStaff, getLmsCourseVersion, getLmsCourseVersions, getLmsStepDiff, getLmsStepDraft, getLmsStepHistory, patchLmsCourseSettings, patchLmsCourseStaff, postLmsCourseDiscard, postLmsCourseDraftOutline, postLmsCourseInviteCode, postLmsCoursePublish, postLmsCourseStaff, postLmsCourseSteps, postLmsCourseVersionRestore, postLmsCourses, postLmsStepCheckpoints, postLmsStepDiscard, postLmsStepRestore, putLmsCourseDraftMeta, putLmsStepDraft } from "./endpoints/lms-authoring"
 import type { getLmsAttempt, getLmsCourse, getLmsCourseStep, getLmsCourseStudents, getLmsCourses, getLmsMyCourses, getLmsStepCardsNext, postLmsAttemptOverride, postLmsAttemptSubmit, postLmsCourseEnroll, postLmsJoin, postLmsStepBlockAttempts, postLmsStepCardReview, postLmsStepViewed, putLmsAttemptAnswers } from "./endpoints/lms-learning"
 import type { getAdminSyncRuns, getMeGrades, getMeGradesDay, getMeRecordBook, getMeSubject, getMeSubjects, postAdminSyncRun } from "./endpoints/marks"
+import type { getArtifact, getArtifacts, getNotebook, getNotebookChat, getNotebookLabels, getNotebookSearch, getNotebookSource, getNotebookSources, getNotebookUsage, getNotebooks, getPassage, getSourcePassages, patchArtifact, patchNotebook, patchNotebookLabel, patchNotebookSource, postArtifact, postArtifactAsSource, postArtifactCancel, postArtifactFlashcardSet, postArtifactRetry, postArtifactSlidesRevise, postNotebook, postNotebookDiscover, postNotebookLabel, postNotebookLabelsAuto, postNotebookMessage, postNotebookRegenerate, postNotebookSourceSync, postNotebookSources, postNotebookSourcesSelect, postSaveNote, putArtifactSlides, putNotebookSourceLabels } from "./endpoints/notebooks"
 import type { getNotifications, getNotificationsUnreadCount } from "./endpoints/notifications"
 import type { postOauthLogout, postOauthRefresh, postOauthTelegram, postOauthToken, postOauthTokenHook } from "./endpoints/oauth"
 import type { getPublicShare, postPublicReports } from "./endpoints/public"
+import type { getPushConfig, postPushSubscription } from "./endpoints/push"
 import type { getInternalEmisProfile, getInternalEmisRatings, getInternalEmisSubjects, postIdReclaimEmail, postIdReclaimEmis, postIdRegisterComplete, postIdRegisterEmail, postIdRegisterEmis } from "./endpoints/registration"
 import type { getAdminGroup, getAdminGroups, getAdminLessons, getAdminRooms, getAdminStudents, getAdminSubjects, getAdminTerms, getAdminTimetable, getMeProfile, getMeTimetable, getStaffGroup, getStaffGroups, getStaffTimetable, patchAdminGroup, patchAdminLesson, patchAdminRoom, patchAdminSubject, patchAdminTerm, patchAdminTimetable, postAdminGroups, postAdminLessons, postAdminRoomArchive, postAdminRoomMerge, postAdminRoomRegeneratePin, postAdminStudentsImport, postAdminStudentsImportConfirm, postAdminSubjects, postAdminTerms, postAdminTimetable, postAdminTimetableCheck, postAdminTimetableCopy, putAdminGroupSubgroups, putStaffGroupSubgroups } from "./endpoints/schedule"
-import type { ChatCreateBody, ChatMessageBody, ChatPatchBody, ChatsParams, ToolCallRejectBody, UsageParams } from "./types/ai"
+import type { ChatCreateBody, ChatMessageBody, ChatPatchBody, ChatsParams, MessageFeedbackBody, ToolCallRejectBody, UsageParams } from "./types/ai"
+import type { AssessmentCreateBody, AssessmentPatchBody, AssessmentProposalBody, AssessmentsParams, PlannerParams, StaffAssessmentsParams } from "./types/assessments"
 import type { AudienceCountBody, BroadcastInput, BroadcastPatchBody, BroadcastSendBody, BroadcastsParams } from "./types/broadcasts"
 import type { AdminAttendanceParams, AttendanceExcuseBody, AttendanceSubmitBody, GroupAttendanceParams, HomeworkDoneBody, HomeworkListParams, HomeworkNoteBody, JournalParams, JournalToggleBody, MissingAttendanceParams, StaffHomeworkBody, StaffTopicBody, StudentAttendanceParams } from "./types/classwork"
 import type { SearchParams } from "./types/composition"
+import type { ApplyBody, CourseWorkspaceBody } from "./types/course-workspace"
 import type { FileCreateBody, FileRenameBody, FileUrlParams, MyFilesParams } from "./types/files"
-import type { FlashcardCardsBody, FlashcardCopyBody, FlashcardReviewBody, FlashcardSetCreateBody, FlashcardSetPatchBody } from "./types/flashcards"
+import type { FlashcardCardsBody, FlashcardCopyBody, FlashcardReviewBody, FlashcardSetCreateBody, FlashcardSetPatchBody, FlashcardStatsParams } from "./types/flashcards"
 import type { ActivationBody, ActivationEmailBody, ActivityParams, ConnectorCreateBody, ConsentBody, ConsentOtpBody, DeleteAccountBody, EmailChangeBody, EmailChangeConfirmBody, EmisPasswordBody, LoginBody, LoginOtpBody, LoginOtpRequestBody, OtpDisableBody, OtpEnableBody, OtpEnableConfirmBody, PasswordChangeBody, RecoveryLoginBody, RecoveryOtpCancelBody, RecoveryOtpConfirmBody, RecoveryOtpRequestBody, RecoveryPasswordConfirmBody, RecoveryPasswordRequestBody, TelegramLoginBody, TelegramOtpRequestBody, TelegramPatchBody, TelegramStatusBody, UserPreferencesPatch } from "./types/id"
 import type { AdminAuditParams, AdminTeachersParams, AdminUsersParams, BlockUserBody, MailSuspendBody, OauthClientVerifyBody, TeacherCreateBody, TeacherPatchBody, UserRolesBody } from "./types/id-admin"
+import type { BookFileBody, BookInput, BookRowsParams, ImportBody, ItemTextParams, ItemsParams, LibraryReportBody, MaterialFilesBody, MaterialInput, ModerationBody, PinExternalBody, QueueParams, ReportResolveBody, SanctionBody, SuggestionBody, UniLibrarySearchParams, UploadsParams } from "./types/library"
 import type { LinkCreateBody, LinkDisableBody, ModerationQueueParams, ModerationSearchParams, MyLinksParams, ResourceCreateBody, ResourceHideBody, ShareCreateBody } from "./types/links"
 import type { CheckpointBody, CourseCreateBody, CourseSettingsBody, CourseStaffBody, CourseStaffPatchBody, DraftMetaBody, OutlineOpsBody, PublishBody, RestoreRevisionBody, StepCreateBody, StepDraftBody, VersionCompareParams } from "./types/lms-authoring"
 import type { AttemptAnswersBody, AttemptOverrideBody, AttemptStartParams, CourseCatalogParams, CourseJoinBody, LmsCardReviewBody } from "./types/lms-learning"
 import type { SemesterParams, SyncRunBody, SyncRunsParams } from "./types/marks"
+import type { ArtifactCreate, ArtifactPatchBody, ArtifactProgressBody, ArtifactsParams, DiscoverBody, LabelCreateBody, LabelPatchBody, NotebookCreateBody, NotebookFeedbackBody, NotebookMessageBody, NotebookPatchBody, NotebooksParams, PassageParams, PassagesParams, SaveNoteBody, SlidesPutBody, SlidesReviseBody, SourceLabelsBody, SourcePatchBody, SourceSearchParams, SourcesAddBody, SourcesSelectBody } from "./types/notebooks"
 import type { NotificationsParams } from "./types/notifications"
 import type { OauthLogoutBody, OauthRefreshBody, OauthTelegramBody, OauthTokenBody } from "./types/oauth"
 import type { ReportBody } from "./types/public"
+import type { PushSubscriptionBody, PushUnsubscribeBody } from "./types/push"
 import type { EmisRatingsParams, ReclaimCompleteBody, ReclaimEmailBody, ReclaimEmisBody, RegisterCompleteBody, RegisterEmailBody, RegisterEmisBody } from "./types/registration"
 import type { AdminGroupsParams, AdminLessonsParams, AdminRoomsParams, AdminStudentsParams, AdminSubjectsParams, AdminTimetableParams, ExtraLessonInput, GroupCreateBody, GroupPatchBody, LessonPatchBody, RoomMergeBody, RoomRenameBody, SubgroupAssignmentsBody, SubjectCreateBody, SubjectPatchBody, TermInput, TermPatch, TimetableCopyBody, TimetableEntryInput, TimetablePatchBody, TimetableRangeParams } from "./types/schedule"
 
@@ -102,6 +112,16 @@ export const response_postAiChatMessages: ResponseOf<"/v1/ai/chats/{chat_id}/mes
 declare const req_postAiChatMessages: ChatMessageBody
 export const request_postAiChatMessages: RequestOf<"/v1/ai/chats/{chat_id}/messages", "post"> = req_postAiChatMessages
 
+// POST /v1/ai/chats/{chat_id}/regenerate — postAiChatRegenerate
+declare const res_postAiChatRegenerate: Awaited<ReturnType<typeof postAiChatRegenerate>>
+export const response_postAiChatRegenerate: ResponseOf<"/v1/ai/chats/{chat_id}/regenerate", "post"> = res_postAiChatRegenerate
+
+// POST /v1/ai/chats/{chat_id}/messages/{seq}/feedback — postAiChatMessageFeedback
+// no JSON success response (204, CSV, calendar or HTML): only the route is checked
+export type route_postAiChatMessageFeedback = OperationOf<"/v1/ai/chats/{chat_id}/messages/{seq}/feedback", "post">
+declare const req_postAiChatMessageFeedback: MessageFeedbackBody
+export const request_postAiChatMessageFeedback: RequestOf<"/v1/ai/chats/{chat_id}/messages/{seq}/feedback", "post"> = req_postAiChatMessageFeedback
+
 // POST /v1/ai/chats/{chat_id}/tool-calls/{call_id}/approve — postAiChatToolCallApprove
 declare const res_postAiChatToolCallApprove: Awaited<ReturnType<typeof postAiChatToolCallApprove>>
 export const response_postAiChatToolCallApprove: ResponseOf<"/v1/ai/chats/{chat_id}/tool-calls/{call_id}/approve", "post"> = res_postAiChatToolCallApprove
@@ -117,6 +137,72 @@ declare const res_getAiUsage: Awaited<ReturnType<typeof getAiUsage>>
 export const response_getAiUsage: ResponseOf<"/v1/ai/usage", "get"> = res_getAiUsage
 declare const query_getAiUsage: UsageParams
 export const query_ok_getAiUsage: QueryOf<"/v1/ai/usage", "get"> = query_getAiUsage
+
+// GET /v1/ai/web-search — getAiWebSearch
+declare const res_getAiWebSearch: Awaited<ReturnType<typeof getAiWebSearch>>
+export const response_getAiWebSearch: ResponseOf<"/v1/ai/web-search", "get"> = res_getAiWebSearch
+
+// GET /v1/me/assessments — getMeAssessments
+declare const res_getMeAssessments: Awaited<ReturnType<typeof getMeAssessments>>
+export const response_getMeAssessments: ResponseOf<"/v1/me/assessments", "get"> = res_getMeAssessments
+declare const query_getMeAssessments: AssessmentsParams
+export const query_ok_getMeAssessments: QueryOf<"/v1/me/assessments", "get"> = query_getMeAssessments
+
+// POST /v1/me/assessments — postMeAssessment
+declare const res_postMeAssessment: Awaited<ReturnType<typeof postMeAssessment>>
+export const response_postMeAssessment: ResponseOf<"/v1/me/assessments", "post"> = res_postMeAssessment
+declare const req_postMeAssessment: AssessmentProposalBody
+export const request_postMeAssessment: RequestOf<"/v1/me/assessments", "post"> = req_postMeAssessment
+
+// GET /v1/me/subjects/{subject_id}/planner — getMeSubjectPlanner
+declare const res_getMeSubjectPlanner: Awaited<ReturnType<typeof getMeSubjectPlanner>>
+export const response_getMeSubjectPlanner: ResponseOf<"/v1/me/subjects/{subject_id}/planner", "get"> = res_getMeSubjectPlanner
+declare const query_getMeSubjectPlanner: PlannerParams
+export const query_ok_getMeSubjectPlanner: QueryOf<"/v1/me/subjects/{subject_id}/planner", "get"> = query_getMeSubjectPlanner
+
+// GET /v1/staff/assessments — getStaffAssessments
+declare const res_getStaffAssessments: Awaited<ReturnType<typeof getStaffAssessments>>
+export const response_getStaffAssessments: ResponseOf<"/v1/staff/assessments", "get"> = res_getStaffAssessments
+declare const query_getStaffAssessments: StaffAssessmentsParams
+export const query_ok_getStaffAssessments: QueryOf<"/v1/staff/assessments", "get"> = query_getStaffAssessments
+
+// POST /v1/staff/assessments — postStaffAssessment
+declare const res_postStaffAssessment: Awaited<ReturnType<typeof postStaffAssessment>>
+export const response_postStaffAssessment: ResponseOf<"/v1/staff/assessments", "post"> = res_postStaffAssessment
+declare const req_postStaffAssessment: AssessmentCreateBody
+export const request_postStaffAssessment: RequestOf<"/v1/staff/assessments", "post"> = req_postStaffAssessment
+
+// PATCH /v1/staff/assessments/{assessment_id} — patchStaffAssessment
+declare const res_patchStaffAssessment: Awaited<ReturnType<typeof patchStaffAssessment>>
+export const response_patchStaffAssessment: ResponseOf<"/v1/staff/assessments/{assessment_id}", "patch"> = res_patchStaffAssessment
+declare const req_patchStaffAssessment: AssessmentPatchBody
+export const request_patchStaffAssessment: RequestOf<"/v1/staff/assessments/{assessment_id}", "patch"> = req_patchStaffAssessment
+
+// DELETE /v1/staff/assessments/{assessment_id} — deleteStaffAssessment
+// no JSON success response (204, CSV, calendar or HTML): only the route is checked
+export type route_deleteStaffAssessment = OperationOf<"/v1/staff/assessments/{assessment_id}", "delete">
+
+// GET /v1/admin/assessments — getAdminAssessments
+declare const res_getAdminAssessments: Awaited<ReturnType<typeof getAdminAssessments>>
+export const response_getAdminAssessments: ResponseOf<"/v1/admin/assessments", "get"> = res_getAdminAssessments
+declare const query_getAdminAssessments: StaffAssessmentsParams
+export const query_ok_getAdminAssessments: QueryOf<"/v1/admin/assessments", "get"> = query_getAdminAssessments
+
+// POST /v1/admin/assessments — postAdminAssessment
+declare const res_postAdminAssessment: Awaited<ReturnType<typeof postAdminAssessment>>
+export const response_postAdminAssessment: ResponseOf<"/v1/admin/assessments", "post"> = res_postAdminAssessment
+declare const req_postAdminAssessment: AssessmentCreateBody
+export const request_postAdminAssessment: RequestOf<"/v1/admin/assessments", "post"> = req_postAdminAssessment
+
+// PATCH /v1/admin/assessments/{assessment_id} — patchAdminAssessment
+declare const res_patchAdminAssessment: Awaited<ReturnType<typeof patchAdminAssessment>>
+export const response_patchAdminAssessment: ResponseOf<"/v1/admin/assessments/{assessment_id}", "patch"> = res_patchAdminAssessment
+declare const req_patchAdminAssessment: AssessmentPatchBody
+export const request_patchAdminAssessment: RequestOf<"/v1/admin/assessments/{assessment_id}", "patch"> = req_patchAdminAssessment
+
+// DELETE /v1/admin/assessments/{assessment_id} — deleteAdminAssessment
+// no JSON success response (204, CSV, calendar or HTML): only the route is checked
+export type route_deleteAdminAssessment = OperationOf<"/v1/admin/assessments/{assessment_id}", "delete">
 
 // GET /v1/admin/broadcasts — getAdminBroadcasts
 declare const res_getAdminBroadcasts: Awaited<ReturnType<typeof getAdminBroadcasts>>
@@ -318,6 +404,32 @@ export const response_getAdminStudent: ResponseOf<"/v1/admin/students/{user_id}"
 declare const res_getAdminTeacherProfile: Awaited<ReturnType<typeof getAdminTeacherProfile>>
 export const response_getAdminTeacherProfile: ResponseOf<"/v1/admin/teachers/{user_id}/profile", "get"> = res_getAdminTeacherProfile
 
+// POST /v1/notebooks/course-workspaces — postCourseWorkspace
+declare const res_postCourseWorkspace: Awaited<ReturnType<typeof postCourseWorkspace>>
+export const response_postCourseWorkspace: ResponseOf<"/v1/notebooks/course-workspaces", "post"> = res_postCourseWorkspace
+declare const req_postCourseWorkspace: CourseWorkspaceBody
+export const request_postCourseWorkspace: RequestOf<"/v1/notebooks/course-workspaces", "post"> = req_postCourseWorkspace
+
+// GET /v1/notebooks/{notebook_id}/usage — getNotebookUsageOf
+declare const res_getNotebookUsageOf: Awaited<ReturnType<typeof getNotebookUsageOf>>
+export const response_getNotebookUsageOf: ResponseOf<"/v1/notebooks/{notebook_id}/usage", "get"> = res_getNotebookUsageOf
+
+// GET /v1/notebooks/{notebook_id}/course-steps — getCourseSteps
+declare const res_getCourseSteps: Awaited<ReturnType<typeof getCourseSteps>>
+export const response_getCourseSteps: ResponseOf<"/v1/notebooks/{notebook_id}/course-steps", "get"> = res_getCourseSteps
+
+// POST /v1/notebooks/{notebook_id}/artifacts/{artifact_id}/apply-preview — postApplyPreview
+declare const res_postApplyPreview: Awaited<ReturnType<typeof postApplyPreview>>
+export const response_postApplyPreview: ResponseOf<"/v1/notebooks/{notebook_id}/artifacts/{artifact_id}/apply-preview", "post"> = res_postApplyPreview
+declare const req_postApplyPreview: ApplyBody
+export const request_postApplyPreview: RequestOf<"/v1/notebooks/{notebook_id}/artifacts/{artifact_id}/apply-preview", "post"> = req_postApplyPreview
+
+// POST /v1/notebooks/{notebook_id}/artifacts/{artifact_id}/apply — postApplyArtifact
+declare const res_postApplyArtifact: Awaited<ReturnType<typeof postApplyArtifact>>
+export const response_postApplyArtifact: ResponseOf<"/v1/notebooks/{notebook_id}/artifacts/{artifact_id}/apply", "post"> = res_postApplyArtifact
+declare const req_postApplyArtifact: ApplyBody
+export const request_postApplyArtifact: RequestOf<"/v1/notebooks/{notebook_id}/artifacts/{artifact_id}/apply", "post"> = req_postApplyArtifact
+
 // POST /v1/files — postFiles
 declare const res_postFiles: Awaited<ReturnType<typeof postFiles>>
 export const response_postFiles: ResponseOf<"/v1/files", "post"> = res_postFiles
@@ -367,6 +479,12 @@ declare const res_postMeFlashcardSets: Awaited<ReturnType<typeof postMeFlashcard
 export const response_postMeFlashcardSets: ResponseOf<"/v1/me/flashcard-sets", "post"> = res_postMeFlashcardSets
 declare const req_postMeFlashcardSets: FlashcardSetCreateBody
 export const request_postMeFlashcardSets: RequestOf<"/v1/me/flashcard-sets", "post"> = req_postMeFlashcardSets
+
+// GET /v1/me/flashcard-sets/stats — getMeFlashcardSetsStats
+declare const res_getMeFlashcardSetsStats: Awaited<ReturnType<typeof getMeFlashcardSetsStats>>
+export const response_getMeFlashcardSetsStats: ResponseOf<"/v1/me/flashcard-sets/stats", "get"> = res_getMeFlashcardSetsStats
+declare const query_getMeFlashcardSetsStats: FlashcardStatsParams
+export const query_ok_getMeFlashcardSetsStats: QueryOf<"/v1/me/flashcard-sets/stats", "get"> = query_getMeFlashcardSetsStats
 
 // GET /v1/me/flashcard-sets/{set_id} — getMeFlashcardSet
 declare const res_getMeFlashcardSet: Awaited<ReturnType<typeof getMeFlashcardSet>>
@@ -714,6 +832,154 @@ export const request_deleteIdMe: RequestOf<"/v1/id/me", "delete"> = req_deleteId
 // no JSON success response (204, CSV, calendar or HTML): only the route is checked
 export type route_postIdMeStepUp = OperationOf<"/v1/id/me/step-up", "post">
 
+// GET /v1/library/items — getLibraryItems
+declare const res_getLibraryItems: Awaited<ReturnType<typeof getLibraryItems>>
+export const response_getLibraryItems: ResponseOf<"/v1/library/items", "get"> = res_getLibraryItems
+declare const query_getLibraryItems: ItemsParams
+export const query_ok_getLibraryItems: QueryOf<"/v1/library/items", "get"> = query_getLibraryItems
+
+// GET /v1/library/items/{id_or_slug} — getLibraryItem
+declare const res_getLibraryItem: Awaited<ReturnType<typeof getLibraryItem>>
+export const response_getLibraryItem: ResponseOf<"/v1/library/items/{id_or_slug}", "get"> = res_getLibraryItem
+
+// GET /v1/library/items/{item_id}/files/{file_id}/url — getLibraryFileUrl
+declare const res_getLibraryFileUrl: Awaited<ReturnType<typeof getLibraryFileUrl>>
+export const response_getLibraryFileUrl: ResponseOf<"/v1/library/items/{item_id}/files/{file_id}/url", "get"> = res_getLibraryFileUrl
+
+// GET /v1/library/items/{item_id}/text — getLibraryItemText
+declare const res_getLibraryItemText: Awaited<ReturnType<typeof getLibraryItemText>>
+export const response_getLibraryItemText: ResponseOf<"/v1/library/items/{item_id}/text", "get"> = res_getLibraryItemText
+declare const query_getLibraryItemText: ItemTextParams
+export const query_ok_getLibraryItemText: QueryOf<"/v1/library/items/{item_id}/text", "get"> = query_getLibraryItemText
+
+// GET /v1/library/subjects — getLibrarySubjects
+declare const res_getLibrarySubjects: Awaited<ReturnType<typeof getLibrarySubjects>>
+export const response_getLibrarySubjects: ResponseOf<"/v1/library/subjects", "get"> = res_getLibrarySubjects
+
+// GET /v1/library/external/unilibrary/search — getUniLibrarySearch
+declare const res_getUniLibrarySearch: Awaited<ReturnType<typeof getUniLibrarySearch>>
+export const response_getUniLibrarySearch: ResponseOf<"/v1/library/external/unilibrary/search", "get"> = res_getUniLibrarySearch
+declare const query_getUniLibrarySearch: UniLibrarySearchParams
+export const query_ok_getUniLibrarySearch: QueryOf<"/v1/library/external/unilibrary/search", "get"> = query_getUniLibrarySearch
+
+// GET /v1/library/external/unilibrary/{external_id} — getUniLibraryRecord
+declare const res_getUniLibraryRecord: Awaited<ReturnType<typeof getUniLibraryRecord>>
+export const response_getUniLibraryRecord: ResponseOf<"/v1/library/external/unilibrary/{external_id}", "get"> = res_getUniLibraryRecord
+
+// POST /v1/library/external/unilibrary/{external_id}/item — postUniLibraryPin
+declare const res_postUniLibraryPin: Awaited<ReturnType<typeof postUniLibraryPin>>
+export const response_postUniLibraryPin: ResponseOf<"/v1/library/external/unilibrary/{external_id}/item", "post"> = res_postUniLibraryPin
+declare const req_postUniLibraryPin: PinExternalBody
+export const request_postUniLibraryPin: RequestOf<"/v1/library/external/unilibrary/{external_id}/item", "post"> = req_postUniLibraryPin
+
+// GET /v1/library/external/unilibrary/taxonomies — getUniLibraryTaxonomies
+declare const res_getUniLibraryTaxonomies: Awaited<ReturnType<typeof getUniLibraryTaxonomies>>
+export const response_getUniLibraryTaxonomies: ResponseOf<"/v1/library/external/unilibrary/taxonomies", "get"> = res_getUniLibraryTaxonomies
+
+// POST /v1/library/materials — postMaterial
+declare const res_postMaterial: Awaited<ReturnType<typeof postMaterial>>
+export const response_postMaterial: ResponseOf<"/v1/library/materials", "post"> = res_postMaterial
+declare const req_postMaterial: MaterialInput
+export const request_postMaterial: RequestOf<"/v1/library/materials", "post"> = req_postMaterial
+
+// POST /v1/library/materials/{item_id}/files — postMaterialFiles
+declare const res_postMaterialFiles: Awaited<ReturnType<typeof postMaterialFiles>>
+export const response_postMaterialFiles: ResponseOf<"/v1/library/materials/{item_id}/files", "post"> = res_postMaterialFiles
+declare const req_postMaterialFiles: MaterialFilesBody
+export const request_postMaterialFiles: RequestOf<"/v1/library/materials/{item_id}/files", "post"> = req_postMaterialFiles
+
+// POST /v1/library/materials/{item_id}/submit — postMaterialSubmit
+declare const res_postMaterialSubmit: Awaited<ReturnType<typeof postMaterialSubmit>>
+export const response_postMaterialSubmit: ResponseOf<"/v1/library/materials/{item_id}/submit", "post"> = res_postMaterialSubmit
+
+// POST /v1/library/materials/{item_id}/versions — postMaterialVersion
+declare const res_postMaterialVersion: Awaited<ReturnType<typeof postMaterialVersion>>
+export const response_postMaterialVersion: ResponseOf<"/v1/library/materials/{item_id}/versions", "post"> = res_postMaterialVersion
+declare const req_postMaterialVersion: MaterialInput
+export const request_postMaterialVersion: RequestOf<"/v1/library/materials/{item_id}/versions", "post"> = req_postMaterialVersion
+
+// DELETE /v1/library/materials/{item_id} — deleteMaterial
+// no JSON success response (204, CSV, calendar or HTML): only the route is checked
+export type route_deleteMaterial = OperationOf<"/v1/library/materials/{item_id}", "delete">
+
+// GET /v1/me/library/uploads — getMyUploads
+declare const res_getMyUploads: Awaited<ReturnType<typeof getMyUploads>>
+export const response_getMyUploads: ResponseOf<"/v1/me/library/uploads", "get"> = res_getMyUploads
+declare const query_getMyUploads: UploadsParams
+export const query_ok_getMyUploads: QueryOf<"/v1/me/library/uploads", "get"> = query_getMyUploads
+
+// POST /v1/library/suggestions — postSuggestion
+declare const res_postSuggestion: Awaited<ReturnType<typeof postSuggestion>>
+export const response_postSuggestion: ResponseOf<"/v1/library/suggestions", "post"> = res_postSuggestion
+declare const req_postSuggestion: SuggestionBody
+export const request_postSuggestion: RequestOf<"/v1/library/suggestions", "post"> = req_postSuggestion
+
+// POST /v1/library/items/{item_id}/report — postItemReport
+// no JSON success response (204, CSV, calendar or HTML): only the route is checked
+export type route_postItemReport = OperationOf<"/v1/library/items/{item_id}/report", "post">
+declare const req_postItemReport: LibraryReportBody
+export const request_postItemReport: RequestOf<"/v1/library/items/{item_id}/report", "post"> = req_postItemReport
+
+// GET /v1/manage/library/queue — getManageQueue
+declare const res_getManageQueue: Awaited<ReturnType<typeof getManageQueue>>
+export const response_getManageQueue: ResponseOf<"/v1/manage/library/queue", "get"> = res_getManageQueue
+declare const query_getManageQueue: QueueParams
+export const query_ok_getManageQueue: QueryOf<"/v1/manage/library/queue", "get"> = query_getManageQueue
+
+// POST /v1/manage/library/items/{item_id}/{action} — postModeration
+declare const res_postModeration: Awaited<ReturnType<typeof postModeration>>
+export const response_postModeration: ResponseOf<"/v1/manage/library/items/{item_id}/{action}", "post"> = res_postModeration
+declare const req_postModeration: ModerationBody
+export const request_postModeration: RequestOf<"/v1/manage/library/items/{item_id}/{action}", "post"> = req_postModeration
+
+// POST /v1/manage/library/reports/{report_id}/resolve — postReportResolve
+// no JSON success response (204, CSV, calendar or HTML): only the route is checked
+export type route_postReportResolve = OperationOf<"/v1/manage/library/reports/{report_id}/resolve", "post">
+declare const req_postReportResolve: ReportResolveBody
+export const request_postReportResolve: RequestOf<"/v1/manage/library/reports/{report_id}/resolve", "post"> = req_postReportResolve
+
+// GET /v1/manage/library/books — getManageBooks
+declare const res_getManageBooks: Awaited<ReturnType<typeof getManageBooks>>
+export const response_getManageBooks: ResponseOf<"/v1/manage/library/books", "get"> = res_getManageBooks
+declare const query_getManageBooks: BookRowsParams
+export const query_ok_getManageBooks: QueryOf<"/v1/manage/library/books", "get"> = query_getManageBooks
+
+// GET /v1/manage/library/books/{book_id} — getManageBook
+declare const res_getManageBook: Awaited<ReturnType<typeof getManageBook>>
+export const response_getManageBook: ResponseOf<"/v1/manage/library/books/{book_id}", "get"> = res_getManageBook
+
+// POST /v1/manage/library/books — postManageBook
+declare const res_postManageBook: Awaited<ReturnType<typeof postManageBook>>
+export const response_postManageBook: ResponseOf<"/v1/manage/library/books", "post"> = res_postManageBook
+declare const req_postManageBook: BookInput
+export const request_postManageBook: RequestOf<"/v1/manage/library/books", "post"> = req_postManageBook
+
+// POST /v1/manage/library/books/{book_id}/files — postManageBookFile
+declare const res_postManageBookFile: Awaited<ReturnType<typeof postManageBookFile>>
+export const response_postManageBookFile: ResponseOf<"/v1/manage/library/books/{book_id}/files", "post"> = res_postManageBookFile
+declare const req_postManageBookFile: BookFileBody
+export const request_postManageBookFile: RequestOf<"/v1/manage/library/books/{book_id}/files", "post"> = req_postManageBookFile
+
+// POST /v1/manage/library/import — postManageImport
+declare const res_postManageImport: Awaited<ReturnType<typeof postManageImport>>
+export const response_postManageImport: ResponseOf<"/v1/manage/library/import", "post"> = res_postManageImport
+declare const req_postManageImport: ImportBody
+export const request_postManageImport: RequestOf<"/v1/manage/library/import", "post"> = req_postManageImport
+
+// GET /v1/admin/library/sanctions — getLibrarySanctions
+declare const res_getLibrarySanctions: Awaited<ReturnType<typeof getLibrarySanctions>>
+export const response_getLibrarySanctions: ResponseOf<"/v1/admin/library/sanctions", "get"> = res_getLibrarySanctions
+
+// POST /v1/admin/library/sanctions — postLibrarySanction
+declare const res_postLibrarySanction: Awaited<ReturnType<typeof postLibrarySanction>>
+export const response_postLibrarySanction: ResponseOf<"/v1/admin/library/sanctions", "post"> = res_postLibrarySanction
+declare const req_postLibrarySanction: SanctionBody
+export const request_postLibrarySanction: RequestOf<"/v1/admin/library/sanctions", "post"> = req_postLibrarySanction
+
+// GET /v1/admin/library/unilibrary/status — getUniLibraryStatus
+declare const res_getUniLibraryStatus: Awaited<ReturnType<typeof getUniLibraryStatus>>
+export const response_getUniLibraryStatus: ResponseOf<"/v1/admin/library/unilibrary/status", "get"> = res_getUniLibraryStatus
+
 // POST /v1/links — postLinks
 declare const res_postLinks: Awaited<ReturnType<typeof postLinks>>
 export const response_postLinks: ResponseOf<"/v1/links", "post"> = res_postLinks
@@ -1020,6 +1286,214 @@ export const response_postAdminSyncRun: ResponseOf<"/v1/admin/sync/run", "post">
 declare const req_postAdminSyncRun: SyncRunBody
 export const request_postAdminSyncRun: RequestOf<"/v1/admin/sync/run", "post"> = req_postAdminSyncRun
 
+// GET /v1/notebooks — getNotebooks
+declare const res_getNotebooks: Awaited<ReturnType<typeof getNotebooks>>
+export const response_getNotebooks: ResponseOf<"/v1/notebooks", "get"> = res_getNotebooks
+declare const query_getNotebooks: NotebooksParams
+export const query_ok_getNotebooks: QueryOf<"/v1/notebooks", "get"> = query_getNotebooks
+
+// POST /v1/notebooks — postNotebook
+declare const res_postNotebook: Awaited<ReturnType<typeof postNotebook>>
+export const response_postNotebook: ResponseOf<"/v1/notebooks", "post"> = res_postNotebook
+declare const req_postNotebook: NotebookCreateBody
+export const request_postNotebook: RequestOf<"/v1/notebooks", "post"> = req_postNotebook
+
+// GET /v1/notebooks/usage — getNotebookUsage
+declare const res_getNotebookUsage: Awaited<ReturnType<typeof getNotebookUsage>>
+export const response_getNotebookUsage: ResponseOf<"/v1/notebooks/usage", "get"> = res_getNotebookUsage
+
+// GET /v1/notebooks/{notebook_id} — getNotebook
+declare const res_getNotebook: Awaited<ReturnType<typeof getNotebook>>
+export const response_getNotebook: ResponseOf<"/v1/notebooks/{notebook_id}", "get"> = res_getNotebook
+
+// PATCH /v1/notebooks/{notebook_id} — patchNotebook
+declare const res_patchNotebook: Awaited<ReturnType<typeof patchNotebook>>
+export const response_patchNotebook: ResponseOf<"/v1/notebooks/{notebook_id}", "patch"> = res_patchNotebook
+declare const req_patchNotebook: NotebookPatchBody
+export const request_patchNotebook: RequestOf<"/v1/notebooks/{notebook_id}", "patch"> = req_patchNotebook
+
+// DELETE /v1/notebooks/{notebook_id} — deleteNotebook
+// no JSON success response (204, CSV, calendar or HTML): only the route is checked
+export type route_deleteNotebook = OperationOf<"/v1/notebooks/{notebook_id}", "delete">
+
+// GET /v1/notebooks/{notebook_id}/sources — getNotebookSources
+declare const res_getNotebookSources: Awaited<ReturnType<typeof getNotebookSources>>
+export const response_getNotebookSources: ResponseOf<"/v1/notebooks/{notebook_id}/sources", "get"> = res_getNotebookSources
+
+// POST /v1/notebooks/{notebook_id}/sources — postNotebookSources
+declare const res_postNotebookSources: Awaited<ReturnType<typeof postNotebookSources>>
+export const response_postNotebookSources: ResponseOf<"/v1/notebooks/{notebook_id}/sources", "post"> = res_postNotebookSources
+declare const req_postNotebookSources: SourcesAddBody
+export const request_postNotebookSources: RequestOf<"/v1/notebooks/{notebook_id}/sources", "post"> = req_postNotebookSources
+
+// GET /v1/notebooks/{notebook_id}/sources/{source_id} — getNotebookSource
+declare const res_getNotebookSource: Awaited<ReturnType<typeof getNotebookSource>>
+export const response_getNotebookSource: ResponseOf<"/v1/notebooks/{notebook_id}/sources/{source_id}", "get"> = res_getNotebookSource
+
+// PATCH /v1/notebooks/{notebook_id}/sources/{source_id} — patchNotebookSource
+declare const res_patchNotebookSource: Awaited<ReturnType<typeof patchNotebookSource>>
+export const response_patchNotebookSource: ResponseOf<"/v1/notebooks/{notebook_id}/sources/{source_id}", "patch"> = res_patchNotebookSource
+declare const req_patchNotebookSource: SourcePatchBody
+export const request_patchNotebookSource: RequestOf<"/v1/notebooks/{notebook_id}/sources/{source_id}", "patch"> = req_patchNotebookSource
+
+// POST /v1/notebooks/{notebook_id}/sources/select — postNotebookSourcesSelect
+declare const res_postNotebookSourcesSelect: Awaited<ReturnType<typeof postNotebookSourcesSelect>>
+export const response_postNotebookSourcesSelect: ResponseOf<"/v1/notebooks/{notebook_id}/sources/select", "post"> = res_postNotebookSourcesSelect
+declare const req_postNotebookSourcesSelect: SourcesSelectBody
+export const request_postNotebookSourcesSelect: RequestOf<"/v1/notebooks/{notebook_id}/sources/select", "post"> = req_postNotebookSourcesSelect
+
+// POST /v1/notebooks/{notebook_id}/sources/{source_id}/sync — postNotebookSourceSync
+declare const res_postNotebookSourceSync: Awaited<ReturnType<typeof postNotebookSourceSync>>
+export const response_postNotebookSourceSync: ResponseOf<"/v1/notebooks/{notebook_id}/sources/{source_id}/sync", "post"> = res_postNotebookSourceSync
+
+// DELETE /v1/notebooks/{notebook_id}/sources/{source_id} — deleteNotebookSource
+// no JSON success response (204, CSV, calendar or HTML): only the route is checked
+export type route_deleteNotebookSource = OperationOf<"/v1/notebooks/{notebook_id}/sources/{source_id}", "delete">
+
+// GET /v1/notebooks/{notebook_id}/sources/{source_id}/passages — getSourcePassages
+declare const res_getSourcePassages: Awaited<ReturnType<typeof getSourcePassages>>
+export const response_getSourcePassages: ResponseOf<"/v1/notebooks/{notebook_id}/sources/{source_id}/passages", "get"> = res_getSourcePassages
+declare const query_getSourcePassages: PassagesParams
+export const query_ok_getSourcePassages: QueryOf<"/v1/notebooks/{notebook_id}/sources/{source_id}/passages", "get"> = query_getSourcePassages
+
+// GET /v1/notebooks/{notebook_id}/passages/{passage_id} — getPassage
+declare const res_getPassage: Awaited<ReturnType<typeof getPassage>>
+export const response_getPassage: ResponseOf<"/v1/notebooks/{notebook_id}/passages/{passage_id}", "get"> = res_getPassage
+declare const query_getPassage: PassageParams
+export const query_ok_getPassage: QueryOf<"/v1/notebooks/{notebook_id}/passages/{passage_id}", "get"> = query_getPassage
+
+// GET /v1/notebooks/{notebook_id}/search — getNotebookSearch
+declare const res_getNotebookSearch: Awaited<ReturnType<typeof getNotebookSearch>>
+export const response_getNotebookSearch: ResponseOf<"/v1/notebooks/{notebook_id}/search", "get"> = res_getNotebookSearch
+declare const query_getNotebookSearch: SourceSearchParams
+export const query_ok_getNotebookSearch: QueryOf<"/v1/notebooks/{notebook_id}/search", "get"> = query_getNotebookSearch
+
+// POST /v1/notebooks/{notebook_id}/discover — postNotebookDiscover
+declare const res_postNotebookDiscover: Awaited<ReturnType<typeof postNotebookDiscover>>
+export const response_postNotebookDiscover: ResponseOf<"/v1/notebooks/{notebook_id}/discover", "post"> = res_postNotebookDiscover
+declare const req_postNotebookDiscover: DiscoverBody
+export const request_postNotebookDiscover: RequestOf<"/v1/notebooks/{notebook_id}/discover", "post"> = req_postNotebookDiscover
+
+// GET /v1/notebooks/{notebook_id}/labels — getNotebookLabels
+declare const res_getNotebookLabels: Awaited<ReturnType<typeof getNotebookLabels>>
+export const response_getNotebookLabels: ResponseOf<"/v1/notebooks/{notebook_id}/labels", "get"> = res_getNotebookLabels
+
+// POST /v1/notebooks/{notebook_id}/labels — postNotebookLabel
+declare const res_postNotebookLabel: Awaited<ReturnType<typeof postNotebookLabel>>
+export const response_postNotebookLabel: ResponseOf<"/v1/notebooks/{notebook_id}/labels", "post"> = res_postNotebookLabel
+declare const req_postNotebookLabel: LabelCreateBody
+export const request_postNotebookLabel: RequestOf<"/v1/notebooks/{notebook_id}/labels", "post"> = req_postNotebookLabel
+
+// PATCH /v1/notebooks/{notebook_id}/labels/{label_id} — patchNotebookLabel
+declare const res_patchNotebookLabel: Awaited<ReturnType<typeof patchNotebookLabel>>
+export const response_patchNotebookLabel: ResponseOf<"/v1/notebooks/{notebook_id}/labels/{label_id}", "patch"> = res_patchNotebookLabel
+declare const req_patchNotebookLabel: LabelPatchBody
+export const request_patchNotebookLabel: RequestOf<"/v1/notebooks/{notebook_id}/labels/{label_id}", "patch"> = req_patchNotebookLabel
+
+// DELETE /v1/notebooks/{notebook_id}/labels/{label_id} — deleteNotebookLabel
+// no JSON success response (204, CSV, calendar or HTML): only the route is checked
+export type route_deleteNotebookLabel = OperationOf<"/v1/notebooks/{notebook_id}/labels/{label_id}", "delete">
+
+// PUT /v1/notebooks/{notebook_id}/sources/{source_id}/labels — putNotebookSourceLabels
+declare const res_putNotebookSourceLabels: Awaited<ReturnType<typeof putNotebookSourceLabels>>
+export const response_putNotebookSourceLabels: ResponseOf<"/v1/notebooks/{notebook_id}/sources/{source_id}/labels", "put"> = res_putNotebookSourceLabels
+declare const req_putNotebookSourceLabels: SourceLabelsBody
+export const request_putNotebookSourceLabels: RequestOf<"/v1/notebooks/{notebook_id}/sources/{source_id}/labels", "put"> = req_putNotebookSourceLabels
+
+// POST /v1/notebooks/{notebook_id}/labels/auto — postNotebookLabelsAuto
+declare const res_postNotebookLabelsAuto: Awaited<ReturnType<typeof postNotebookLabelsAuto>>
+export const response_postNotebookLabelsAuto: ResponseOf<"/v1/notebooks/{notebook_id}/labels/auto", "post"> = res_postNotebookLabelsAuto
+
+// GET /v1/notebooks/{notebook_id}/chat — getNotebookChat
+declare const res_getNotebookChat: Awaited<ReturnType<typeof getNotebookChat>>
+export const response_getNotebookChat: ResponseOf<"/v1/notebooks/{notebook_id}/chat", "get"> = res_getNotebookChat
+
+// POST /v1/notebooks/{notebook_id}/chat/messages — postNotebookMessage
+declare const res_postNotebookMessage: Awaited<ReturnType<typeof postNotebookMessage>>
+export const response_postNotebookMessage: ResponseOf<"/v1/notebooks/{notebook_id}/chat/messages", "post"> = res_postNotebookMessage
+declare const req_postNotebookMessage: NotebookMessageBody
+export const request_postNotebookMessage: RequestOf<"/v1/notebooks/{notebook_id}/chat/messages", "post"> = req_postNotebookMessage
+
+// POST /v1/notebooks/{notebook_id}/chat/regenerate — postNotebookRegenerate
+declare const res_postNotebookRegenerate: Awaited<ReturnType<typeof postNotebookRegenerate>>
+export const response_postNotebookRegenerate: ResponseOf<"/v1/notebooks/{notebook_id}/chat/regenerate", "post"> = res_postNotebookRegenerate
+
+// DELETE /v1/notebooks/{notebook_id}/chat — deleteNotebookChat
+// no JSON success response (204, CSV, calendar or HTML): only the route is checked
+export type route_deleteNotebookChat = OperationOf<"/v1/notebooks/{notebook_id}/chat", "delete">
+
+// POST /v1/notebooks/{notebook_id}/chat/messages/{message_id}/feedback — postNotebookFeedback
+// no JSON success response (204, CSV, calendar or HTML): only the route is checked
+export type route_postNotebookFeedback = OperationOf<"/v1/notebooks/{notebook_id}/chat/messages/{message_id}/feedback", "post">
+declare const req_postNotebookFeedback: NotebookFeedbackBody
+export const request_postNotebookFeedback: RequestOf<"/v1/notebooks/{notebook_id}/chat/messages/{message_id}/feedback", "post"> = req_postNotebookFeedback
+
+// POST /v1/notebooks/{notebook_id}/chat/messages/{message_id}/save-note — postSaveNote
+declare const res_postSaveNote: Awaited<ReturnType<typeof postSaveNote>>
+export const response_postSaveNote: ResponseOf<"/v1/notebooks/{notebook_id}/chat/messages/{message_id}/save-note", "post"> = res_postSaveNote
+declare const req_postSaveNote: SaveNoteBody
+export const request_postSaveNote: RequestOf<"/v1/notebooks/{notebook_id}/chat/messages/{message_id}/save-note", "post"> = req_postSaveNote
+
+// GET /v1/notebooks/{notebook_id}/artifacts — getArtifacts
+declare const res_getArtifacts: Awaited<ReturnType<typeof getArtifacts>>
+export const response_getArtifacts: ResponseOf<"/v1/notebooks/{notebook_id}/artifacts", "get"> = res_getArtifacts
+declare const query_getArtifacts: ArtifactsParams
+export const query_ok_getArtifacts: QueryOf<"/v1/notebooks/{notebook_id}/artifacts", "get"> = query_getArtifacts
+
+// POST /v1/notebooks/{notebook_id}/artifacts — postArtifact
+declare const res_postArtifact: Awaited<ReturnType<typeof postArtifact>>
+export const response_postArtifact: ResponseOf<"/v1/notebooks/{notebook_id}/artifacts", "post"> = res_postArtifact
+declare const req_postArtifact: ArtifactCreate
+export const request_postArtifact: RequestOf<"/v1/notebooks/{notebook_id}/artifacts", "post"> = req_postArtifact
+
+// GET /v1/notebooks/{notebook_id}/artifacts/{artifact_id} — getArtifact
+declare const res_getArtifact: Awaited<ReturnType<typeof getArtifact>>
+export const response_getArtifact: ResponseOf<"/v1/notebooks/{notebook_id}/artifacts/{artifact_id}", "get"> = res_getArtifact
+
+// PATCH /v1/notebooks/{notebook_id}/artifacts/{artifact_id} — patchArtifact
+declare const res_patchArtifact: Awaited<ReturnType<typeof patchArtifact>>
+export const response_patchArtifact: ResponseOf<"/v1/notebooks/{notebook_id}/artifacts/{artifact_id}", "patch"> = res_patchArtifact
+declare const req_patchArtifact: ArtifactPatchBody
+export const request_patchArtifact: RequestOf<"/v1/notebooks/{notebook_id}/artifacts/{artifact_id}", "patch"> = req_patchArtifact
+
+// DELETE /v1/notebooks/{notebook_id}/artifacts/{artifact_id} — deleteArtifact
+// no JSON success response (204, CSV, calendar or HTML): only the route is checked
+export type route_deleteArtifact = OperationOf<"/v1/notebooks/{notebook_id}/artifacts/{artifact_id}", "delete">
+
+// POST /v1/notebooks/{notebook_id}/artifacts/{artifact_id}/cancel — postArtifactCancel
+declare const res_postArtifactCancel: Awaited<ReturnType<typeof postArtifactCancel>>
+export const response_postArtifactCancel: ResponseOf<"/v1/notebooks/{notebook_id}/artifacts/{artifact_id}/cancel", "post"> = res_postArtifactCancel
+
+// POST /v1/notebooks/{notebook_id}/artifacts/{artifact_id}/retry — postArtifactRetry
+declare const res_postArtifactRetry: Awaited<ReturnType<typeof postArtifactRetry>>
+export const response_postArtifactRetry: ResponseOf<"/v1/notebooks/{notebook_id}/artifacts/{artifact_id}/retry", "post"> = res_postArtifactRetry
+
+// PUT /v1/notebooks/{notebook_id}/artifacts/{artifact_id}/progress — putArtifactProgress
+// no JSON success response (204, CSV, calendar or HTML): only the route is checked
+export type route_putArtifactProgress = OperationOf<"/v1/notebooks/{notebook_id}/artifacts/{artifact_id}/progress", "put">
+declare const req_putArtifactProgress: ArtifactProgressBody
+export const request_putArtifactProgress: RequestOf<"/v1/notebooks/{notebook_id}/artifacts/{artifact_id}/progress", "put"> = req_putArtifactProgress
+
+// POST /v1/notebooks/{notebook_id}/artifacts/{artifact_id}/save-as-source — postArtifactAsSource
+declare const res_postArtifactAsSource: Awaited<ReturnType<typeof postArtifactAsSource>>
+export const response_postArtifactAsSource: ResponseOf<"/v1/notebooks/{notebook_id}/artifacts/{artifact_id}/save-as-source", "post"> = res_postArtifactAsSource
+
+// POST /v1/notebooks/{notebook_id}/artifacts/{artifact_id}/flashcard-set — postArtifactFlashcardSet
+declare const res_postArtifactFlashcardSet: Awaited<ReturnType<typeof postArtifactFlashcardSet>>
+export const response_postArtifactFlashcardSet: ResponseOf<"/v1/notebooks/{notebook_id}/artifacts/{artifact_id}/flashcard-set", "post"> = res_postArtifactFlashcardSet
+
+// PUT /v1/notebooks/{notebook_id}/artifacts/{artifact_id}/slides — putArtifactSlides
+declare const res_putArtifactSlides: Awaited<ReturnType<typeof putArtifactSlides>>
+export const response_putArtifactSlides: ResponseOf<"/v1/notebooks/{notebook_id}/artifacts/{artifact_id}/slides", "put"> = res_putArtifactSlides
+declare const req_putArtifactSlides: SlidesPutBody
+export const request_putArtifactSlides: RequestOf<"/v1/notebooks/{notebook_id}/artifacts/{artifact_id}/slides", "put"> = req_putArtifactSlides
+
+// POST /v1/notebooks/{notebook_id}/artifacts/{artifact_id}/slides/revise — postArtifactSlidesRevise
+declare const res_postArtifactSlidesRevise: Awaited<ReturnType<typeof postArtifactSlidesRevise>>
+export const response_postArtifactSlidesRevise: ResponseOf<"/v1/notebooks/{notebook_id}/artifacts/{artifact_id}/slides/revise", "post"> = res_postArtifactSlidesRevise
+declare const req_postArtifactSlidesRevise: SlidesReviseBody
+export const request_postArtifactSlidesRevise: RequestOf<"/v1/notebooks/{notebook_id}/artifacts/{artifact_id}/slides/revise", "post"> = req_postArtifactSlidesRevise
+
 // GET /v1/notifications — getNotifications
 declare const res_getNotifications: Awaited<ReturnType<typeof getNotifications>>
 export const response_getNotifications: ResponseOf<"/v1/notifications", "get"> = res_getNotifications
@@ -1075,6 +1549,22 @@ declare const res_postPublicReports: Awaited<ReturnType<typeof postPublicReports
 export const response_postPublicReports: ResponseOf<"/v1/public/reports", "post"> = res_postPublicReports
 declare const req_postPublicReports: ReportBody
 export const request_postPublicReports: RequestOf<"/v1/public/reports", "post"> = req_postPublicReports
+
+// GET /v1/push/config — getPushConfig
+declare const res_getPushConfig: Awaited<ReturnType<typeof getPushConfig>>
+export const response_getPushConfig: ResponseOf<"/v1/push/config", "get"> = res_getPushConfig
+
+// POST /v1/me/push-subscriptions — postPushSubscription
+declare const res_postPushSubscription: Awaited<ReturnType<typeof postPushSubscription>>
+export const response_postPushSubscription: ResponseOf<"/v1/me/push-subscriptions", "post"> = res_postPushSubscription
+declare const req_postPushSubscription: PushSubscriptionBody
+export const request_postPushSubscription: RequestOf<"/v1/me/push-subscriptions", "post"> = req_postPushSubscription
+
+// DELETE /v1/me/push-subscriptions — deletePushSubscription
+// no JSON success response (204, CSV, calendar or HTML): only the route is checked
+export type route_deletePushSubscription = OperationOf<"/v1/me/push-subscriptions", "delete">
+declare const req_deletePushSubscription: PushUnsubscribeBody
+export const request_deletePushSubscription: RequestOf<"/v1/me/push-subscriptions", "delete"> = req_deletePushSubscription
 
 // POST /v1/id/register/emis — postIdRegisterEmis
 declare const res_postIdRegisterEmis: Awaited<ReturnType<typeof postIdRegisterEmis>>

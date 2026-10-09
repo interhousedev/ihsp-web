@@ -58,6 +58,7 @@ describe("app frame", () => {
       "Grades",
       "Attendance",
       "Homework",
+      "Exams",
       "Assistant",
       "Flash cards",
       "My files",

@@ -8,7 +8,7 @@ import { screen, within } from "@testing-library/react"
 import { platformKeysFor } from "./platform-keys"
 import { usePlatformLinks } from "./use-platform-links"
 
-function setClient(client: "id" | "sp" | "staff" | "admin" | "lms" | "share") {
+function setClient(client: "id" | "sp" | "staff" | "admin" | "lms" | "share" | "library") {
   window.__ENV__ = { ...(window.__ENV__ as object), OAUTH_CLIENT_ID: client }
   resetConfig()
 }
@@ -18,7 +18,10 @@ function Links({ onLinks }: { onLinks: (links: PlatformLink[]) => void }) {
   return null
 }
 
-function linksFor(roles: Role[], client: "id" | "sp" | "staff" | "admin" | "lms" | "share" = "sp"): PlatformLink[] {
+function linksFor(
+  roles: Role[],
+  client: "id" | "sp" | "staff" | "admin" | "lms" | "share" | "library" = "sp",
+): PlatformLink[] {
   setClient(client)
   let seen: PlatformLink[] = []
   renderWithProviders(<Links onLinks={(links) => (seen = links)} />, { session: { user: { ...userMe, roles } } })
@@ -26,21 +29,26 @@ function linksFor(roles: Role[], client: "id" | "sp" | "staff" | "admin" | "lms"
 }
 
 describe("platformKeysFor", () => {
-  it("gives a student SP, LMS and ID", () => {
-    expect(platformKeysFor(["student"])).toEqual(["sp", "lms", "id"])
+  it("gives a student SP, LMS, the Library and ID", () => {
+    expect(platformKeysFor(["student"])).toEqual(["sp", "lms", "library", "id"])
   })
 
-  it("gives a teacher Staff, LMS and ID", () => {
-    expect(platformKeysFor(["teacher"])).toEqual(["staff", "lms", "id"])
+  it("gives a teacher Staff, LMS, the Library and ID", () => {
+    expect(platformKeysFor(["teacher"])).toEqual(["staff", "lms", "library", "id"])
   })
 
-  it("gives an admin Admin, LMS and ID, and Staff only when the admin is also a teacher", () => {
-    expect(platformKeysFor(["admin"])).toEqual(["admin", "lms", "id"])
-    expect(platformKeysFor(["admin", "teacher"])).toEqual(["staff", "admin", "lms", "id"])
+  it("gives an admin Admin, LMS, the Library and ID, and Staff only when the admin is also a teacher", () => {
+    expect(platformKeysFor(["admin"])).toEqual(["admin", "lms", "library", "id"])
+    expect(platformKeysFor(["admin", "teacher"])).toEqual(["staff", "admin", "lms", "library", "id"])
   })
 
-  it("gives an LMS administrator LMS and ID", () => {
-    expect(platformKeysFor(["lms_admin"])).toEqual(["lms", "id"])
+  it("gives an LMS administrator LMS, the Library and ID", () => {
+    expect(platformKeysFor(["lms_admin"])).toEqual(["lms", "library", "id"])
+  })
+
+  it("gives a librarian the Library and ID, and adds up with the student roles", () => {
+    expect(platformKeysFor(["librarian"])).toEqual(["library", "id"])
+    expect(platformKeysFor(["student", "librarian"])).toEqual(["sp", "lms", "library", "id"])
   })
 
   it("always offers the account", () => {
@@ -55,8 +63,20 @@ describe("usePlatformLinks", () => {
     expect(links.map((link) => [link.key, link.name, link.description, link.href])).toEqual([
       ["sp", "SP", "Student portal", "http://localhost:3002"],
       ["lms", "LMS", "Courses", "http://localhost:3005"],
+      ["library", "Library", "Books & materials", "http://localhost:3008"],
       ["id", "ID", "Account & security", "http://localhost:3001"],
     ])
+  })
+
+  it("leaves the Library out when its address is not configured", () => {
+    window.__ENV__ = { ...(window.__ENV__ as object), LIBRARY_URL: "" }
+    resetConfig()
+    let seen: PlatformLink[] = []
+    renderWithProviders(<Links onLinks={(links) => (seen = links)} />, {
+      session: { user: { ...userMe, roles: ["student"] } },
+    })
+
+    expect(seen.map((link) => link.key)).toEqual(["sp", "lms", "id"])
   })
 
   it("marks only the app the user is in", () => {

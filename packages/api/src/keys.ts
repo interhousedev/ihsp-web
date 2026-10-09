@@ -32,6 +32,7 @@ export const keys = {
     audit: (filters?: object) => ["admin", "audit", params(filters)] as const,
     oauthClients: () => ["admin", "oauth-clients"] as const,
     terms: () => ["admin", "terms"] as const,
+    assessments: (filters?: object) => ["admin", "assessments", params(filters)] as const,
     groups: {
       all: () => ["admin", "groups"] as const,
       list: (filters?: object) => ["admin", "groups", "list", params(filters)] as const,
@@ -66,6 +67,7 @@ export const keys = {
   staff: {
     all: () => ["staff"] as const,
     today: () => ["staff", "today"] as const,
+    assessments: (filters?: object) => ["staff", "assessments", params(filters)] as const,
     timetable: (filters?: object) => ["staff", "timetable", params(filters)] as const,
     lesson: (id: string) => ["staff", "lessons", id] as const,
     groups: {
@@ -91,6 +93,9 @@ export const keys = {
     grades: (filters?: object) => ["me", "grades", params(filters)] as const,
     gradesDay: (date?: string) => ["me", "grades", "day", date ?? null] as const,
     recordBook: () => ["me", "record-book"] as const,
+    assessments: (filters?: object) => ["me", "assessments", params(filters)] as const,
+    planner: (subjectId: string, filters?: object) =>
+      ["me", "subjects", subjectId, "planner", params(filters)] as const,
     alerts: () => ["me", "alerts"] as const,
     search: (q: string) => ["me", "search", q] as const,
     storage: () => ["me", "storage"] as const,
@@ -110,11 +115,18 @@ export const keys = {
     list: (filters?: object) => ["notifications", "list", params(filters)] as const,
     unreadCount: () => ["notifications", "unread-count"] as const,
   },
+  push: {
+    config: () => ["push", "config"] as const,
+  },
   ai: {
     all: () => ["ai"] as const,
     chats: (filters?: object) => ["ai", "chats", params(filters)] as const,
     chat: (id: string) => ["ai", "chats", id] as const,
-    usage: (assistant?: string) => ["ai", "usage", assistant ?? null] as const,
+    usage: (assistant?: string, courseId?: string) =>
+      courseId
+        ? (["ai", "usage", assistant ?? null, courseId] as const)
+        : (["ai", "usage", assistant ?? null] as const),
+    webSearch: () => ["ai", "web-search"] as const,
   },
   flashcards: {
     all: () => ["flashcards"] as const,
@@ -149,14 +161,56 @@ export const keys = {
     list: (filters?: object) => ["notebooks", "list", params(filters)] as const,
     detail: (id: string) => ["notebooks", "detail", id] as const,
     usage: () => ["notebooks", "usage"] as const,
+    /** The budget that applies to one notebook (the course pool for a course workspace). */
+    usageOf: (id: string) => ["notebooks", "usage", id] as const,
+    courseWorkspace: (courseId: string) => ["notebooks", "course-workspace", courseId] as const,
+    courseSteps: (id: string) => ["notebooks", id, "course-steps"] as const,
     sources: (id: string) => ["notebooks", id, "sources"] as const,
     source: (id: string, sourceId: string) => ["notebooks", id, "sources", sourceId] as const,
     passages: (id: string, sourceId: string) => ["notebooks", id, "sources", sourceId, "passages"] as const,
     passage: (id: string, passageId: string, context?: number) =>
       ["notebooks", id, "passages", passageId, context ?? null] as const,
     chat: (id: string) => ["notebooks", id, "chat"] as const,
+    search: (id: string, q: string) => ["notebooks", id, "search", q] as const,
+    labels: (id: string) => ["notebooks", id, "labels"] as const,
     artifacts: (id: string, filters?: object) => ["notebooks", id, "artifacts", params(filters)] as const,
     artifact: (id: string, artifactId: string) => ["notebooks", id, "artifact", artifactId] as const,
+  },
+  library: {
+    all: () => ["library"] as const,
+    items: (filters?: object) => ["library", "items", params(filters)] as const,
+    item: (idOrSlug: string) => ["library", "item", idOrSlug] as const,
+    text: (id: string, filters?: object) => ["library", "item", id, "text", params(filters)] as const,
+    subjects: (all?: boolean) => ["library", "subjects", all ? "all" : "used"] as const,
+    topics: (subjectId?: string) => ["library", "topics", subjectId ?? null] as const,
+    collections: () => ["library", "collections"] as const,
+    collection: (id: string) => ["library", "collections", id] as const,
+    readingLists: (filters?: object) => ["library", "reading-lists", params(filters)] as const,
+    readingList: (id: string) => ["library", "reading-lists", id] as const,
+    unilibrary: {
+      all: () => ["library", "unilibrary"] as const,
+      search: (filters?: object) => ["library", "unilibrary", "search", params(filters)] as const,
+      taxonomies: () => ["library", "unilibrary", "taxonomies"] as const,
+    },
+    me: () => ["library", "me"] as const,
+    shelf: (filters?: object) => ["library", "me", "shelf", params(filters)] as const,
+    annotations: (filters?: object) => ["library", "me", "annotations", params(filters)] as const,
+    uploads: (filters?: object) => ["library", "me", "uploads", params(filters)] as const,
+    manage: {
+      all: () => ["library", "manage"] as const,
+      queue: (filters: object) => ["library", "manage", "queue", filters] as const,
+      books: (filters?: object) => ["library", "manage", "books", params(filters)] as const,
+      book: (id: string) => ["library", "manage", "books", id] as const,
+      topics: (subjectId?: string) => ["library", "manage", "topics", subjectId ?? null] as const,
+      collections: () => ["library", "manage", "collections"] as const,
+      stats: (filters?: object) => ["library", "manage", "stats", params(filters)] as const,
+    },
+    admin: {
+      settings: () => ["library", "admin", "settings"] as const,
+      feeds: () => ["library", "admin", "feeds"] as const,
+      fieldMap: () => ["library", "admin", "field-map"] as const,
+      status: () => ["library", "admin", "status"] as const,
+    },
   },
   public: {
     share: (slug: string) => ["public", "shares", slug] as const,

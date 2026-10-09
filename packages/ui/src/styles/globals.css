@@ -5,6 +5,9 @@
 /* Self-hosted variable Inter with the Latin, Latin Extended and Cyrillic subsets (uz, ru, en). */
 @import "@fontsource-variable/inter/wght.css";
 
+/* KaTeX for formulas in Markdown: the stylesheet and its fonts are bundled with the app (CSP `font-src 'self'`). */
+@import "katex/dist/katex.min.css";
+
 /* Class names used by the shared packages (ui, auth, features-core). The app's own src is detected automatically. */
 @source '../../../';
 
@@ -567,5 +570,34 @@ body {
     animation: none;
     background-image: none;
     -webkit-text-fill-color: currentColor;
+  }
+}
+
+/* Formulas (KaTeX): fraction bars and rules take the text colour, not the --border colour every element gets above. */
+.katex * {
+  border-color: currentColor;
+}
+
+/* Markdown spoilers (`||text||`, markdown-spoiler.tsx): a dotted veil over the hidden text, drifting unless motion is
+   reduced. */
+@keyframes spoiler-drift {
+  to {
+    background-position: 10px 5px;
+  }
+}
+
+@utility spoiler-veil {
+  background-color: color-mix(in oklch, var(--muted-foreground) 30%, transparent);
+  background-image: radial-gradient(
+    circle,
+    color-mix(in oklch, var(--foreground) 55%, transparent) 0.8px,
+    transparent 1.3px
+  );
+  background-size: 5px 5px;
+  -webkit-box-decoration-break: clone;
+  box-decoration-break: clone;
+
+  @media (prefers-reduced-motion: no-preference) {
+    animation: spoiler-drift 2.5s linear infinite;
   }
 }

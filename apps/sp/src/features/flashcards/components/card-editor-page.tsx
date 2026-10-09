@@ -43,6 +43,8 @@ function CreateDeck() {
   const errorMessage = useErrorMessage()
   const router = useRouter()
   const create = useCreateFlashcardSet()
+  // `?title=` fills in the title, e.g. "Mathematics — exam" from the exam preparation page.
+  const initialTitle = useSearchParams().get("title") ?? ""
 
   function submit(values: CardEditorValues, practice: boolean) {
     create.mutate(
@@ -64,6 +66,7 @@ function CreateDeck() {
     <div className="flex min-w-0 flex-1 flex-col px-4 pt-2 pb-6 md:px-6 md:pt-4">
       <CardEditor
         mode="create"
+        initialTitle={initialTitle}
         cancelHref="/flashcards/"
         isSubmitting={create.isPending}
         error={create.isError ? errorMessage(create.error) : undefined}

@@ -24,7 +24,8 @@
     "new": "Yangi",
     "changed": "O'zgargan",
     "removed": "O'chirilgan",
-    "mcp": "MCP orqali"
+    "mcp": "MCP orqali",
+    "ai": "AI orqali"
   },
   "courseCard": {
     "invite": "Faqat taklif bilan",
@@ -186,6 +187,7 @@
     "label": "Kurs vositalari",
     "courseTools": "Kurs vositalari",
     "outline": "Tuzilma",
+    "workspace": "AI ish maydoni",
     "preview": "Ko'rib chiqish",
     "publish": "Nashr qilish",
     "versions": "Versiyalar",
@@ -282,10 +284,93 @@
     "discardDescription": "Qadam nashr qilingan versiyaga qaytadi. Saqlangan va saqlanmagan qoralama tahrirlari yo'qoladi."
   },
   "markdownEditor": {
-    "write": "Yozish",
-    "preview": "Ko'rish",
-    "previewLabel": "Tayyor ko'rinish",
-    "empty": "Ko'rsatadigan narsa yo'q."
+    "write": "Matn",
+    "preview": "Koʻrinish",
+    "split": "Yonma-yon",
+    "view": "Koʻrinish turi",
+    "previewLabel": "Talabalar koʻradigan koʻrinish",
+    "empty": "Hozircha koʻrsatadigan narsa yoʻq.",
+    "placeholder": "Matnni shu yerga yozing. Bezash uchun soʻzlarni belgilang.",
+    "hint": "Matnni bezash uchun uni belgilang. Alt+F10 bezash tugmalariga, Escape esa matnga qaytaradi.",
+    "toolbar": "Matnni bezash",
+    "selectionToolbar": "Belgilangan matnni bezash",
+    "bold": "Qalin",
+    "italic": "Kursiv",
+    "underline": "Tagiga chizilgan",
+    "strike": "Ustidan chizilgan",
+    "code": "Kod",
+    "spoiler": "Spoyler (bosilguncha yashirin)",
+    "link": "Havola",
+    "quote": "Iqtibos",
+    "equation": "Formula",
+    "heading1": "1-sarlavha",
+    "heading2": "2-sarlavha",
+    "heading3": "3-sarlavha",
+    "bulletList": "Belgili roʻyxat",
+    "orderedList": "Raqamli roʻyxat",
+    "codeBlock": "Kod bloki",
+    "displayEquation": "Alohida qatordagi formula",
+    "help": "Bezash boʻyicha yordam",
+    "helpTitle": "Bezash qanday ishlaydi",
+    "helpIntro": "Matn Markdown koʻrinishida saqlanadi. Soʻzlarni belgilab, tugma yoki tugmalar birikmasini bosing yoki belgilarni oʻzingiz yozing.",
+    "helpSyntax": "Siz yozasiz",
+    "helpResult": "Talabalar koʻradi",
+    "helpExamples": {
+      "bold": "qalin",
+      "italic": "kursiv",
+      "underline": "tagiga chizilgan",
+      "strike": "ustidan chizilgan",
+      "code": "kod",
+      "spoiler": "bosilguncha yashirin",
+      "link": "havola",
+      "inlineMath": "matn ichidagi formula",
+      "displayMath": "alohida qatordagi formula",
+      "dollar": "dollar belgisi",
+      "heading": "sarlavha",
+      "list": "roʻyxat bandi",
+      "quote": "iqtibos"
+    },
+    "helpParagraphs": "Xatboshilar orasida boʻsh qator qoldiring: bitta qator koʻchirish boʻshliq sifatida koʻrsatiladi.",
+    "helpPrices": "Yolgʻiz $ ($5 kabi narx) matnligicha qoladi. Ishonch uchun \\$ deb yozing.",
+    "shortcuts": "Tugmalar birikmalari",
+    "equationDialog": {
+      "title": "Formula qoʻshish",
+      "editTitle": "Formulani tahrirlash",
+      "description": "Formulani LaTeX tilida yozing. Koʻrinish uni talabalar koʻradigan holda koʻrsatadi.",
+      "latex": "LaTeX",
+      "placement": "Joylashuvi",
+      "inline": "Matn ichida",
+      "display": "Alohida qatorda",
+      "templates": "Andozalar",
+      "fraction": "Kasr",
+      "root": "Ildiz",
+      "power": "Daraja",
+      "subscript": "Indeks",
+      "sum": "Yigʻindi",
+      "integral": "Integral",
+      "limit": "Limit",
+      "matrix": "Matritsa",
+      "insertTemplate": "«{name}» qoʻshish: {latex}",
+      "preview": "Koʻrinish",
+      "previewEmpty": "Formula shu yerda koʻrinadi.",
+      "loading": "Koʻrinish yuklanmoqda…",
+      "error": "Formulada xato bor: {message}",
+      "cannotWrite": "Bu formulani matnga yozib boʻlmaydi. Undagi teskari chiziqsiz $ belgilarini olib tashlang.",
+      "insert": "Qoʻshish",
+      "save": "Saqlash",
+      "cancel": "Bekor qilish"
+    },
+    "linkDialog": {
+      "title": "Havola qoʻshish",
+      "editTitle": "Havolani tahrirlash",
+      "text": "Matn",
+      "textHint": "Manzil koʻrinishi uchun boʻsh qoldiring.",
+      "url": "Manzil",
+      "invalidUrl": "Veb-manzil (https://…), pochta (mailto:…) yoki shu saytdagi sahifani (/…) kiriting.",
+      "save": "Saqlash",
+      "remove": "Havolani olib tashlash",
+      "cancel": "Bekor qilish"
+    }
   },
   "testBuilder": {
     "settings": "Test sozlamalari",
@@ -477,7 +562,8 @@
     "reviewAgain": "Qayta ko'rib chiqish",
     "discardAll": "Barcha o'zgarishlarni bekor qilish",
     "discardTitle": "Barcha kutilayotgan o'zgarishlar bekor qilinsinmi?",
-    "discardDescription": "Qoralama nashr qilingan versiyaga qaytadi: barcha qadamlar va tuzilma. Buni ortga qaytarib bo'lmaydi."
+    "discardDescription": "Qoralama nashr qilingan versiyaga qaytadi: barcha qadamlar va tuzilma. Buni ortga qaytarib bo'lmaydi.",
+    "viaAi": "AI orqali"
   },
   "versions": {
     "title": "Versiyalar",
@@ -633,5 +719,8 @@
     "publicHint": "Istalgan kishi kursni topib, yozilishi mumkin.",
     "inviteHint": "Talabalar kod yoki havola orqali qo'shiladi.",
     "create": "Kurs yaratish"
+  },
+  "workspace": {
+    "openFailed": "AI ish maydonini ochib boʻlmadi"
   }
 }

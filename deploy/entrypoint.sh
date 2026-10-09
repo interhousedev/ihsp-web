@@ -19,9 +19,11 @@ set -euo pipefail
 # SITE HOSTNAMES:
 #   APP_HOST_ID          - ID/OAuth service host (default: id.localhost)
 #   APP_HOST_SP          - Student portal host (default: sp.localhost)
-#   APP_HOST_STAFF       - Staff portal host (default: staff.localhost)
+#   APP_HOST_APP         - Installable PWA host: the sp build with its own env.js (default: app.localhost)
+#   APP_HOST_STAFF      - Staff portal host (default: staff.localhost)
 #   APP_HOST_ADMIN       - Admin platform host (default: admin.localhost)
 #   APP_HOST_LMS         - LMS platform host (default: lms.localhost)
+#   APP_HOST_LIBRARY     - Library host (default: library.localhost)
 #   APP_HOST_SHARE       - Public share viewer host (default: s.localhost)
 #   API_HOST             - API service host (default: api.localhost)
 #   MCP_HOST             - MCP server host (default: mcp.localhost)
@@ -44,15 +46,21 @@ set -euo pipefail
 #   IHSP_WEB_ID_URL          - ID app base for login redirects (default: http://localhost:3001)
 #   IHSP_WEB_HYDRA_URL       - OAuth provider base (default: http://localhost:4444)
 #   IHSP_WEB_SP_URL          - Student app URL (default: http://localhost:3002)
-#   IHSP_WEB_STAFF_URL       - Staff app URL (default: http://localhost:3003)
+#   IHSP_WEB_APP_URL         - Installable PWA URL (default: http://localhost:3007)
+#   IHSP_WEB_STAFF_URL      - Staff app URL (default: http://localhost:3003)
 #   IHSP_WEB_ADMIN_URL       - Admin app URL (default: http://localhost:3004)
 #   IHSP_WEB_LMS_URL         - LMS app URL (default: http://localhost:3005)
+#   IHSP_WEB_LIBRARY_URL     - Library app URL (default: http://localhost:3008)
 #   IHSP_WEB_SHARE_URL       - Share viewer base (default: http://localhost:3006/ai)
 #   IHSP_WEB_SHORT_LINKS_URL - Short links host (default: http://localhost:3006)
 #   IHSP_WEB_ROOMS_URL       - Room page backend (default: http://localhost:8000)
 #   IHSP_WEB_MCP_URL         - MCP endpoint (default: http://localhost:8000/mcp)
 #   IHSP_BOT_USERNAME        - Telegram bot username (default: ihspbot)
-#   IHSP_STORAGE_ORIGIN      - File presigned URL origin (default: http://localhost:8000)
+#   IHSP_STORAGE_ORIGIN      - File presigned URL origin (default: http://localhost:8000); also in the
+#                              img-src and connect-src of the library site's CSP header
+#
+# The apps differ in two env.js values that are not variables of this image: OAUTH_CLIENT_ID is the
+# app name, and APP_MODE is "sp" for every app but the PWA host, which gets "pwa" (and client "app").
 #
 # Every ${VAR} used in deploy/env.js.template, deploy/sites/* and deploy/snippets/* must be in
 # ENV_JS_VARS / NGINX_VARS below (deploy/docker.test.ts checks it).
@@ -74,9 +82,11 @@ default APP_ENV prod
 default LISTEN_PORT 80
 default APP_HOST_ID id.localhost
 default APP_HOST_SP sp.localhost
+default APP_HOST_APP app.localhost
 default APP_HOST_STAFF staff.localhost
 default APP_HOST_ADMIN admin.localhost
 default APP_HOST_LMS lms.localhost
+default APP_HOST_LIBRARY library.localhost
 default APP_HOST_SHARE s.localhost
 default API_HOST api.localhost
 default MCP_HOST mcp.localhost
@@ -92,9 +102,11 @@ default IHSP_WEB_API_URL http://localhost:8000
 default IHSP_WEB_ID_URL http://localhost:3001
 default IHSP_WEB_HYDRA_URL http://localhost:4444
 default IHSP_WEB_SP_URL http://localhost:3002
+default IHSP_WEB_APP_URL http://localhost:3007
 default IHSP_WEB_STAFF_URL http://localhost:3003
 default IHSP_WEB_ADMIN_URL http://localhost:3004
 default IHSP_WEB_LMS_URL http://localhost:3005
+default IHSP_WEB_LIBRARY_URL http://localhost:3008
 default IHSP_WEB_SHARE_URL http://localhost:3006/ai
 default IHSP_WEB_SHORT_LINKS_URL http://localhost:3006
 default IHSP_WEB_ROOMS_URL http://localhost:8000
@@ -109,15 +121,20 @@ fi
 
 # Variables envsubst may replace. Single quotes on purpose: envsubst, not the shell, expands them.
 # shellcheck disable=SC2016
-ENV_JS_VARS='${APP_ENV} ${IHSP_WEB_API_URL} ${IHSP_WEB_ID_URL} ${IHSP_WEB_HYDRA_URL} ${IHSP_WEB_SP_URL} ${IHSP_WEB_STAFF_URL} ${IHSP_WEB_ADMIN_URL} ${IHSP_WEB_LMS_URL} ${IHSP_WEB_SHARE_URL} ${IHSP_WEB_SHORT_LINKS_URL} ${IHSP_WEB_ROOMS_URL} ${IHSP_WEB_MCP_URL} ${IHSP_BOT_USERNAME} ${OAUTH_CLIENT_ID} ${IHSP_STORAGE_ORIGIN}'
+ENV_JS_VARS='${APP_ENV} ${APP_MODE} ${IHSP_WEB_API_URL} ${IHSP_WEB_ID_URL} ${IHSP_WEB_HYDRA_URL} ${IHSP_WEB_SP_URL} ${IHSP_WEB_APP_URL} ${IHSP_WEB_STAFF_URL} ${IHSP_WEB_ADMIN_URL} ${IHSP_WEB_LMS_URL} ${IHSP_WEB_LIBRARY_URL} ${IHSP_WEB_SHARE_URL} ${IHSP_WEB_SHORT_LINKS_URL} ${IHSP_WEB_ROOMS_URL} ${IHSP_WEB_MCP_URL} ${IHSP_BOT_USERNAME} ${OAUTH_CLIENT_ID} ${IHSP_STORAGE_ORIGIN}'
 # shellcheck disable=SC2016
-NGINX_VARS='${LISTEN_PORT} ${APP_HOST_ID} ${APP_HOST_SP} ${APP_HOST_STAFF} ${APP_HOST_ADMIN} ${APP_HOST_LMS} ${APP_HOST_SHARE} ${API_HOST} ${MCP_HOST} ${ROOT_HOST} ${HYDRA_UPSTREAM} ${IDENTITY_UPSTREAM} ${API_UPSTREAM} ${BOT_UPSTREAM} ${BACKEND_UPSTREAM} ${CSP_CONNECT_SRC} ${CSP_IMG_SRC} ${IHSP_WEB_SP_URL}'
+NGINX_VARS='${LISTEN_PORT} ${APP_HOST_ID} ${APP_HOST_SP} ${APP_HOST_APP} ${APP_HOST_STAFF} ${APP_HOST_ADMIN} ${APP_HOST_LMS} ${APP_HOST_LIBRARY} ${APP_HOST_SHARE} ${API_HOST} ${MCP_HOST} ${ROOT_HOST} ${HYDRA_UPSTREAM} ${IDENTITY_UPSTREAM} ${API_UPSTREAM} ${BOT_UPSTREAM} ${BACKEND_UPSTREAM} ${CSP_CONNECT_SRC} ${CSP_IMG_SRC} ${IHSP_STORAGE_ORIGIN} ${IHSP_WEB_SP_URL}'
 
 # Render env.js for each app (share loads /ai/env.js: its out/ is mounted at /srv/share/ai)
-for app in id sp staff admin lms; do
-  OAUTH_CLIENT_ID="$app" envsubst "$ENV_JS_VARS" < "$ENV_JS_TEMPLATE" > "$SRV_DIR/$app/env.js"
+for app in id sp staff admin lms library; do
+  APP_MODE="sp" OAUTH_CLIENT_ID="$app" envsubst "$ENV_JS_VARS" < "$ENV_JS_TEMPLATE" > "$SRV_DIR/$app/env.js"
 done
-OAUTH_CLIENT_ID="share" envsubst "$ENV_JS_VARS" < "$ENV_JS_TEMPLATE" > "$SRV_DIR/share/ai/env.js"
+APP_MODE="sp" OAUTH_CLIENT_ID="share" envsubst "$ENV_JS_VARS" < "$ENV_JS_TEMPLATE" > "$SRV_DIR/share/ai/env.js"
+
+# The installable PWA is the sp build on a second host (sites/app.conf) with its own env.js. It is
+# rendered outside the static export (/srv/sp keeps the env.js of the sp host).
+mkdir -p "$SRV_DIR/app-env"
+APP_MODE="pwa" OAUTH_CLIENT_ID="app" envsubst "$ENV_JS_VARS" < "$ENV_JS_TEMPLATE" > "$SRV_DIR/app-env/env.js"
 
 # render_dir SRC_DIR DST_DIR: render every *.conf template of SRC_DIR into DST_DIR
 render_dir() {

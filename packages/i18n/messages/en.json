@@ -113,7 +113,9 @@
   },
   "markdown": {
     "externalLink": "Opens {url}",
-    "imageBlocked": "Image not shown: {alt}"
+    "imageBlocked": "Image not shown: {alt}",
+    "spoiler": "Hidden text, press to reveal",
+    "mathError": "Formula error: {message}"
   },
   "calendar": {
     "previousWeek": "Previous week",
@@ -159,6 +161,10 @@
     "lms": {
       "name": "LMS",
       "description": "Courses"
+    },
+    "library": {
+      "name": "Library",
+      "description": "Books & materials"
     },
     "id": {
       "name": "ID",
@@ -261,6 +267,23 @@
       "tool-arguments": "The assistant sent invalid arguments to a tool.",
       "tool-failed": "The assistant tool could not complete the request."
     },
+    "library": {
+      "not-found": "This item is not available.",
+      "not-supported": "This action is not available for UniLibrary books.",
+      "rights-incomplete": "Fill in the rights information before publishing.",
+      "visibility-conflict": "This book cannot be public with this rights class.",
+      "text-unavailable": "This item is a scan without text.",
+      "list-too-long": "A reading list can have at most 100 entries.",
+      "own-item": "You uploaded this. Another librarian must approve it.",
+      "not-editable": "This item cannot be edited in its current state.",
+      "file-too-large": "The file is too large.",
+      "too-many-pages": "The file has too many pages.",
+      "duplicate": "This file is already in the library.",
+      "rate-limited": "Too many uploads or reports. Try again later.",
+      "banned": "You cannot upload to the library right now.",
+      "external-disabled": "UniLibrary is not available.",
+      "external-unavailable": "UniLibrary is not responding. Try again later."
+    },
     "links": {
       "blocked-url": "This address cannot be shortened.",
       "invalid-target": "Provide either a web address or a file, as the link type requires.",
@@ -351,6 +374,7 @@
       "term-bells-invalid": "The bell schedule is invalid: each period may appear once per weekday and must end after it starts.",
       "term-non-study-day-invalid": "A non-study day must fall inside the term.",
       "term-moved-day-invalid": "A moved day must follow a weekday from Monday to Saturday.",
+      "term-control-periods-invalid": "A control week is invalid: it must start on or before its end, lie inside the term and come after the previous control.",
       "no-term-for-date": "No term contains this date.",
       "no-bell": "The term has no bell for period {period} on this day.",
       "group-not-found": "Group not found.",
@@ -379,7 +403,13 @@
       "journal-not-found": "This journal is not available to you.",
       "not-lesson-teacher": "Only the lesson's teacher or Administration can do this.",
       "not-curator": "You are not the curator of this group.",
-      "topic-too-long": "A topic can have up to {max} characters."
+      "topic-too-long": "A topic can have up to {max} characters.",
+      "assessment-not-found": "This exam was not found.",
+      "not-assessment-teacher": "Only a teacher of this subject in this group or Administration can do this.",
+      "not-head-student": "Only the head student of the group can suggest an exam date.",
+      "assessment-subject-not-found": "This subject was not found.",
+      "invalid-assessment": "The exam is not valid. Check the group, the subject and the date.",
+      "assessment-exists": "This group already has an exam of this subject, kind and date."
     },
     "homework": {
       "not-found": "This lesson has no homework.",
@@ -410,6 +440,11 @@
     },
     "bot": {
       "file-too-large": "This file is larger than 20 MB, so the bot cannot take it. Upload it in the staff portal."
+    },
+    "web-search": {
+      "disabled": "Web search is turned off.",
+      "quota-exceeded": "No web searches left today.",
+      "unavailable": "Web search is not available right now."
     }
   },
   "notifications": {
@@ -465,6 +500,19 @@
       "title": "Mail",
       "forward": "Forward new mail to Telegram",
       "forwardHint": "Messages to your IHSP mailbox arrive in the bot."
+    },
+    "push": {
+      "title": "Push notifications",
+      "label": "Push notifications on this device",
+      "checking": "Checking this device…",
+      "off": "Get your notifications on this device even when the app is closed. The switches above choose which ones.",
+      "on": "This device gets your notifications, as Telegram does. The switches above choose which ones.",
+      "unsupported": "This browser cannot show push notifications.",
+      "noWorker": "Open the installed IHSP app to turn push notifications on for this device.",
+      "iosInstall": "On iPhone and iPad, add IHSP to the Home Screen first, then open it from there to turn push notifications on.",
+      "denied": "Notifications are blocked for this site. Allow them in the browser or phone settings, then come back.",
+      "unavailable": "Push notifications are not switched on on the server yet.",
+      "failed": "Could not change push notifications on this device. Try again."
     }
   },
   "assistant": {
@@ -511,7 +559,8 @@
       "actions": "Answer actions",
       "addChat": "Add chat to notebook",
       "shareChat": "Share chat",
-      "feedbackFailed": "Could not send your feedback."
+      "feedbackFailed": "Could not send your feedback.",
+      "sendWithoutWeb": "Send without web search"
     },
     "composer": {
       "label": "Message",
@@ -536,7 +585,14 @@
       "guidedOff": "Turn off guided learning",
       "stop": "Stop",
       "offline": "You are offline",
-      "noNotebooks": "No notebooks yet"
+      "noNotebooks": "No notebooks yet",
+      "tools": "Tools",
+      "web": "Web search",
+      "webLeft": "{count} left",
+      "webQuota": "{remaining} of {limit} web searches left today",
+      "webNone": "No web searches left today. Resets at {time}.",
+      "webOff": "Turn off web search",
+      "webBadge": "Web"
     },
     "attach": {
       "title": "Attach files",
@@ -665,6 +721,13 @@
     "pane": {
       "title": "Chat title",
       "options": "Chat options"
+    },
+    "web": {
+      "sources": "Sources · {count}",
+      "chip": "Web source {n}: {title}",
+      "open": "Open page",
+      "list": "Web pages used for this answer",
+      "more": "{site} and {count} more"
     }
   },
   "files": {

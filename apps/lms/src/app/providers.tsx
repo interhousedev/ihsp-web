@@ -3,7 +3,7 @@
 import { AuthProvider } from "@ihsp/auth"
 import { ConfigGate } from "@ihsp/config"
 import { ThemePreferenceSync } from "@ihsp/features-core"
-import { I18nProvider, type Locale, type Messages } from "@ihsp/i18n"
+import { I18nProvider, mergeMessages, type Locale, type Messages } from "@ihsp/i18n"
 import { AppThemeProvider, createQueryClient } from "@ihsp/ui"
 import { QueryClientProvider } from "@tanstack/react-query"
 import { NuqsAdapter } from "nuqs/adapters/next/app"
@@ -11,8 +11,17 @@ import { useState, type ReactNode } from "react"
 
 /** The path of the import is literal, so the bundler includes exactly the three message files of this app. */
 async function loadAppMessages(locale: Locale): Promise<Messages> {
-  const messages = await import(`../../messages/${locale}.json`)
-  return messages.default as Messages
+  // The workspace of a course reuses the notebooks screens of `@ihsp/features-core`; their texts live next to the
+  // student app's (`apps/sp/messages/<locale>/notebooks*.json`).
+  const [app, notebooks, course] = await Promise.all([
+    import(`../../messages/${locale}.json`),
+    import(`../../../sp/messages/${locale}/notebooks.json`),
+    import(`../../../sp/messages/${locale}/notebooks.course.json`),
+  ])
+  return mergeMessages(
+    mergeMessages(app.default as Messages, notebooks.default as Messages),
+    course.default as Messages,
+  )
 }
 
 /**

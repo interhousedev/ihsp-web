@@ -17,7 +17,8 @@
     "e2e/.report/**",
     "packages/api/src/contract-check*.ts",
     "playwright-report/**",
-    "deploy/**/*.conf"
+    "deploy/**/*.conf",
+    "apps/sp/public/sw.js"
   ],
   "settings": {
     "jsx-a11y": {

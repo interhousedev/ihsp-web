@@ -4,7 +4,8 @@
   "private": true,
   "scripts": {
     "dev": "next dev -p 3002",
-    "build": "next build",
+    "build": "bun run build:sw && next build",
+    "build:sw": "bun build src/features/pwa/sw/sw.ts --outfile public/sw.js --target browser --minify",
     "typecheck": "tsc --noEmit",
     "test": "bun test --timeout 30000 --preload ../../packages/test-utils/src/preload.ts"
   },
