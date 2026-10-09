@@ -1,0 +1,26 @@
+{
+  "app": {
+    "name": "Библиотека",
+    "description": "Книги, учебники и учебные материалы лицея"
+  },
+  "nav": {
+    "home": "Главная",
+    "browse": "Каталог",
+    "lists": "Списки чтения",
+    "my": "Моя библиотека",
+    "upload": "Добавить материал",
+    "groupLibrary": "Библиотека",
+    "groupMine": "Для меня",
+    "groupManage": "Библиотекарь",
+    "queue": "Очередь проверки",
+    "books": "Книги",
+    "topics": "Темы",
+    "manageCollections": "Подборки",
+    "reports": "Жалобы",
+    "stats": "Статистика",
+    "unilibrary": "UniLibrary"
+  },
+  "shell": {
+    "signIn": "Войти"
+  }
+}

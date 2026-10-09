@@ -1,0 +1,406 @@
+{
+  "upload": {
+    "title": "Add a material",
+    "description": "Share notes, worksheets and other study materials with the lyceum.",
+    "continueTitle": "Continue your upload",
+    "resubmitTitle": "Fix and resubmit",
+    "editTitle": "Edit your material",
+    "back": "Back",
+    "next": "Next",
+    "saveDraft": "Save as draft",
+    "submit": "Submit",
+    "resubmit": "Resubmit",
+    "steps": {
+      "label": "Upload steps",
+      "progress": "Step {current} of {total}: {name}",
+      "kind": "Kind of file",
+      "details": "About the material",
+      "files": "Content",
+      "licence": "Licence and rules",
+      "review": "Review and submit"
+    },
+    "kind": {
+      "heading": "What are you adding?",
+      "markdown": "Markdown note",
+      "markdownHint": "Type the text here. Formulas like $x^2$ work.",
+      "pdf": "PDF file",
+      "pdfHint": "A PDF you already have on your device.",
+      "photos": "Photos",
+      "photosHint": "Take pictures of paper notes. They are combined into one PDF, up to 20.",
+      "required": "Choose what you are adding.",
+      "suggestTitle": "Looking for a published book?",
+      "suggestText": "Books are added by librarians. Suggest one and they will look at it.",
+      "suggestButton": "Suggest a book"
+    },
+    "details": {
+      "titleLabel": "Title",
+      "titleRequired": "Write a title.",
+      "descriptionLabel": "Description",
+      "descriptionHint": "What it covers and who it helps. Optional.",
+      "subjectsLabel": "Subjects",
+      "subjectsHint": "Choose every subject the material is about.",
+      "subjectRequired": "Choose at least one subject.",
+      "subjectsError": "Subjects could not be loaded. Reload the page and try again.",
+      "topicsLabel": "Topics",
+      "topicsHint": "Optional. Topics of the chosen subjects.",
+      "topicsError": "Topics could not be loaded.",
+      "noTopics": "No topics for this subject yet.",
+      "yearsLabel": "Year of study",
+      "year": "Year {year}",
+      "yearRequired": "Choose at least one year.",
+      "typeLabel": "Type",
+      "languageLabel": "Language",
+      "fixedAfterSave": "Subjects, year, type and language cannot be changed once the draft is saved."
+    },
+    "files": {
+      "markdownHeading": "Write your note",
+      "markdownLabel": "Text of the note (Markdown)",
+      "pdfHeading": "Choose the PDF",
+      "officeHeading": "Choose the file",
+      "photosHeading": "Take or choose photos",
+      "existingPhotos": "The saved material already has a file of {pages} pages. Add new photos to replace it.",
+      "problem": {
+        "bodyRequired": "Write some text first.",
+        "pdfRequired": "Choose a file.",
+        "photosRequired": "Add at least one photo."
+      }
+    },
+    "markdownEditor": {
+      "toolbar": "Formatting",
+      "view": "View",
+      "write": "Write",
+      "preview": "Preview",
+      "previewLabel": "Preview of the note",
+      "empty": "Nothing to preview yet.",
+      "hint": "Markdown. Formulas: $x^2$ in a line, $$ … $$ in a block. Ctrl+B bold, Ctrl+I italic.",
+      "placeholder": {
+        "text": "text",
+        "formula": "x^2",
+        "url": "https://"
+      },
+      "tool": {
+        "bold": "Bold",
+        "italic": "Italic",
+        "heading": "Heading",
+        "bullet": "Bulleted list",
+        "numbered": "Numbered list",
+        "quote": "Quote",
+        "link": "Link",
+        "code": "Code",
+        "math": "Formula in a line",
+        "mathBlock": "Formula in a block"
+      }
+    },
+    "photos": {
+      "group": "Photos of the material",
+      "camera": "Take a photo",
+      "cameraMore": "Take another photo",
+      "gallery": "Choose from gallery",
+      "count": "{count} of {max} photos",
+      "hint": "Up to {max} photos, in reading order. They become one PDF. Move them with the arrows or drag the handle.",
+      "tooMany": "Only {max} photos fit. {dropped} more were not added.",
+      "noCrop": "Cropping is not available here. If you need it, crop the picture in your camera app first.",
+      "list": "Photos in order",
+      "label": "Photo {n} of {count}",
+      "alt": "Photo {n}",
+      "reorder": "Drag photo {n} to change its place",
+      "up": "Move photo {n} up",
+      "down": "Move photo {n} down",
+      "rotate": "Turn photo {n} by 90 degrees",
+      "remove": "Remove photo {n}",
+      "added": "{count, plural, one {# photo added} other {# photos added}}",
+      "moved": "Photo {n} moved to position {to} of {count}.",
+      "removed": "Photo {n} removed."
+    },
+    "pdf": {
+      "choose": "Choose a PDF",
+      "chooseOffice": "Choose a file",
+      "replace": "Choose another file",
+      "remove": "Remove",
+      "hint": "PDF, up to {size} and {pages} pages.",
+      "hintOffice": "PDF, DOCX or PPTX, up to {size}. DOCX and PPTX are offered as downloads.",
+      "current": "The saved file stays unless you choose another",
+      "pages": "{count, plural, one {# page} other {# pages}}",
+      "tooLarge": "This file is larger than {size}. The library will probably refuse it."
+    },
+    "licence": {
+      "heading": "Licence and visibility",
+      "lyceumOnly": "Only people with a lyceum account can see this material. All rights stay with you.",
+      "makePublic": "Make it public",
+      "makePublicHint": "Anyone can see it, also without signing in. It needs a Creative Commons licence.",
+      "openLicence": "Creative Commons licence",
+      "openLicenceHint": "Pick the licence under which others may reuse your work.",
+      "licenceRequired": "Choose a licence.",
+      "name": {
+        "cc_by": "CC BY",
+        "cc_by_sa": "CC BY-SA",
+        "cc_by_nc": "CC BY-NC",
+        "cc_by_nc_sa": "CC BY-NC-SA"
+      },
+      "text": {
+        "cc_by": "Others may reuse it if they credit you.",
+        "cc_by_sa": "Others may reuse it if they credit you and share their version under the same licence.",
+        "cc_by_nc": "Others may reuse it, not for money, if they credit you.",
+        "cc_by_nc_sa": "Others may reuse it, not for money, if they credit you and share their version under the same licence."
+      }
+    },
+    "review": {
+      "kind": "Kind",
+      "title": "Title",
+      "description": "Description",
+      "subjects": "Subjects",
+      "years": "Year of study",
+      "type": "Type",
+      "language": "Language",
+      "content": "Content",
+      "visibility": "Visible to",
+      "kindName": {
+        "markdown": "Markdown note",
+        "pdf": "PDF file",
+        "photos": "Photos"
+      },
+      "markdownContent": "{count, plural, one {# character of text} other {# characters of text}}",
+      "photosContent": "{count, plural, one {# photo} other {# photos}}, combined into one PDF",
+      "keptContent": "The saved file ({size}) stays",
+      "lyceumOnly": "Lyceum users only",
+      "publicWith": "Public, {licence}"
+    },
+    "progress": {
+      "saving": "Saving the draft…",
+      "uploading": "Sending file {current} of {total}…",
+      "attaching": "Attaching the files…",
+      "submitting": "Submitting…"
+    },
+    "problem": {
+      "title": "Something went wrong",
+      "duplicateTitle": "This file is already in the library",
+      "duplicateText": "The same file or text has been uploaded before. Choose another file, or look at the existing item.",
+      "openExisting": "Open the existing item",
+      "tooLargeTitle": "The file is too large",
+      "tooLargeText": "A file can be up to {size}. Choose a smaller file or split it.",
+      "tooManyPagesTitle": "Too many pages",
+      "tooManyPagesText": "A file can have at most {pages} pages. Split it or send fewer pages.",
+      "notEditableTitle": "This material can no longer be changed",
+      "notEditableText": "Its status does not allow changes now. Look at your uploads.",
+      "myUploads": "Open My uploads",
+      "rejectedTitle": "A file was refused",
+      "rejectedText": "The file did not pass the check: {reason}."
+    },
+    "blocked": {
+      "bannedTitle": "You cannot upload right now",
+      "bannedUntil": "Uploading is blocked until {date}.",
+      "bannedForever": "Uploading is blocked and no end date is set.",
+      "bannedHint": "If you think this is a mistake, ask a librarian or the Administration.",
+      "rateLimitedTitle": "Upload limit reached",
+      "rateLimitedAt": "You can upload {limit, plural, one {# material} other {# materials}} a day. You can upload again after {time}.",
+      "resetsAt": "You can upload again after {time}.",
+      "rateLimitedLater": "You have reached the upload limit. Try again later.",
+      "retry": "Try again",
+      "myUploads": "My uploads",
+      "browse": "Browse the library"
+    },
+    "done": {
+      "publishedTitle": "Published",
+      "publishedText": "Your material is in the library now.",
+      "reviewTitle": "Sent for review",
+      "view": "View in the library",
+      "myUploads": "My uploads",
+      "another": "Add another material"
+    },
+    "edit": {
+      "statusNote": "Status: {status}. Changes to the title, description, topics and text are saved when you press Save.",
+      "body": "Text of the note",
+      "save": "Save",
+      "saving": "Saving…",
+      "saved": "Saved.",
+      "cancel": "Cancel",
+      "view": "View in the library"
+    },
+    "notEditable": {
+      "title": "This material cannot be changed",
+      "text": "“{title}” has the status “{status}”. You can start a new upload instead.",
+      "newUpload": "Start a new upload",
+      "myUploads": "My uploads"
+    },
+    "suggest": {
+      "title": "Suggest a book",
+      "description": "Tell the librarians about a book the library should have. They will look at it.",
+      "titleLabel": "Title of the book",
+      "titleRequired": "Write the title.",
+      "urlLabel": "Link (optional)",
+      "urlInvalid": "Enter a link that starts with http:// or https://",
+      "noteLabel": "Note (optional)",
+      "noteHint": "{count} of {max}",
+      "send": "Send suggestion",
+      "thanks": "Thanks. A librarian will look at it."
+    }
+  },
+  "material": {
+    "upload": {
+      "attest": "I made this myself or I am allowed to share it. It has no personal data and no questions or answers of a control that has not finished.",
+      "attestRequired": "Tick the box to confirm.",
+      "teacherNote": "It will be published at once.",
+      "studentNote": "A librarian will review it, usually within 2 school days.",
+      "librarianNote": "Another librarian will review it, usually within 2 school days.",
+      "policyTitle": "What belongs here",
+      "policy": {
+        "made": "You made it, or you may share it.",
+        "noScans": "No scans of copyrighted books.",
+        "noPersonal": "No personal data: phone numbers, social media names, class lists or marks.",
+        "noHomework": "No answers to current homework.",
+        "noExam": "No questions or answers of a control that has not finished yet.",
+        "noAds": "No adverts."
+      }
+    }
+  },
+  "listEditor": {
+    "newTitle": "New reading list",
+    "editTitle": "Edit reading list",
+    "description": "Write a list of books and materials for your students.",
+    "save": "Save list",
+    "saving": "Saving…",
+    "saved": "The list was saved.",
+    "cancel": "Cancel",
+    "delete": "Delete list",
+    "deleteTitle": "Delete this list?",
+    "deleteText": "“{title}” and all its entries will be removed.",
+    "deleted": "The list was deleted.",
+    "fixProblems": "Some fields need your attention. They are marked above.",
+    "readOnlyTitle": "You can read this list but not change it",
+    "readOnlyText": "“{title}” belongs to another teacher or librarian.",
+    "openList": "Open the list",
+    "allLists": "All lists",
+    "settings": {
+      "heading": "About the list",
+      "titleLabel": "Title",
+      "titleRequired": "Write a title.",
+      "descriptionLabel": "Description (optional)",
+      "scopeLabel": "Who is it for?",
+      "scope": {
+        "subject": "A subject",
+        "groups": "Groups",
+        "school": "The whole lyceum"
+      },
+      "scopeHint": {
+        "subject": "Students of a subject, for one year of study or both.",
+        "groups": "Only the groups you choose.",
+        "school": "Every student of the lyceum."
+      },
+      "groupsLabel": "Groups",
+      "groupsRequired": "Choose at least one group.",
+      "groupsError": "Groups could not be loaded.",
+      "retry": "Try again",
+      "groupsUnavailable": "Your account cannot list groups yet, so lists for groups are not available.",
+      "noGroups": "You have no groups to choose from.",
+      "subjectLabel": "Subject",
+      "subjectOptional": "Subject (optional)",
+      "subjectRequired": "Choose a subject.",
+      "noSubject": "No subject",
+      "yearLabel": "Year of study",
+      "anyYear": "Every year",
+      "year": "Year {year}",
+      "termLabel": "Term",
+      "wholeYear": "Whole year",
+      "term": "Term {half}",
+      "statusLabel": "Status",
+      "status": {
+        "draft": "Draft",
+        "published": "Published",
+        "archived": "Archived"
+      },
+      "statusHint": {
+        "draft": "Only you and the librarians see it.",
+        "published": "Students can see it.",
+        "archived": "Hidden from students."
+      }
+    },
+    "entries": {
+      "heading": "Entries",
+      "count": "{count} of {max} entries",
+      "empty": "No entries yet. Search the library below, or add a link.",
+      "limit": "The list is full: {max} entries is the most."
+    },
+    "entry": {
+      "list": "Entries in order",
+      "position": "Entry {n} of {count}",
+      "reorder": "Drag {name} to change its place",
+      "up": "Move {name} up",
+      "down": "Move {name} down",
+      "remove": "Remove {name}",
+      "moved": "Entry {n} moved to position {to} of {count}.",
+      "link": "Link",
+      "untitledLink": "Link without a title",
+      "linkTitle": "Title of the link",
+      "linkUrl": "Address",
+      "importance": "Importance of {name}",
+      "details": "Pages, week, due date and note",
+      "pageFrom": "First page of {name}",
+      "pageTo": "Last page of {name}",
+      "week": "Week or term label for {name}",
+      "weekPlaceholder": "Week 3",
+      "due": "Due date for {name}",
+      "note": "Note for {name}",
+      "noteHint": "{count} of {max}",
+      "problem": {
+        "titleRequired": "Write a title for the link.",
+        "urlInvalid": "Enter an address that starts with http:// or https://",
+        "pagesInvalid": "Pages must be whole numbers, and the first page cannot come after the last."
+      }
+    },
+    "search": {
+      "title": "Add from the library",
+      "label": "Search books and materials",
+      "placeholder": "Title, author or topic",
+      "hint": "Type at least {count} letters.",
+      "source": "Where to search",
+      "library": "Library",
+      "results": "Search results",
+      "count": "{count, plural, one {# result} other {# results}}",
+      "none": "Nothing found.",
+      "add": "Add",
+      "addNamed": "Add {title}",
+      "added": "Added",
+      "error": "The search failed.",
+      "externalError": "UniLibrary could not be reached.",
+      "retry": "Try again",
+      "full": "The list is full.",
+      "addedAnnounce": "Added “{title}”. {count, plural, one {# entry} other {# entries}} in the list."
+    },
+    "link": {
+      "title": "Add a link",
+      "titleLabel": "Title of the link",
+      "titleRequired": "Write a title.",
+      "urlLabel": "Address",
+      "urlInvalid": "Enter an address that starts with http:// or https://",
+      "add": "Add the link"
+    }
+  },
+  "myUploads": {
+    "label": "My uploads",
+    "filter": "Filter by status",
+    "all": "All",
+    "add": "Add a material",
+    "empty": "You have not uploaded anything yet.",
+    "emptyFiltered": "No uploads with this status.",
+    "showAll": "Show all",
+    "list": "Your uploads",
+    "loadMore": "Load more",
+    "loadingMore": "Loading…",
+    "queuePosition": "Place {position} in the review queue",
+    "editNamed": "Edit {title}",
+    "resubmit": "Resubmit",
+    "resubmitNamed": "Resubmit {title}",
+    "resubmitted": "Sent for review again.",
+    "deleteDraft": "Delete draft",
+    "deleteNamed": "Delete draft {title}",
+    "withdrawNamed": "Withdraw {title}",
+    "deleteDraftTitle": "Delete this draft?",
+    "deleteDraftText": "The draft and its files will be deleted. This cannot be undone.",
+    "deleted": "The draft was deleted.",
+    "reasonCode": {
+      "withdrawn_by_owner": "You withdrew it",
+      "reported": "Held after reports",
+      "superseded": "Replaced by a newer version"
+    }
+  }
+}
