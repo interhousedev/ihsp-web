@@ -1,0 +1,17 @@
+{
+  "assistant": {
+    "composer": {
+      "studyTools": {
+        "label": "Oʻqish vositalari",
+        "flashcards": "Kartochkalar yaratish",
+        "quiz": "Test tuzish",
+        "explain": "Bosqichma-bosqich tushuntirish",
+        "conspect": "Konspekt tuzish",
+        "flashcardsPrompt": "Quyidagi mavzu boʻyicha kartochkalar tuz: ",
+        "quizPrompt": "Quyidagi mavzu boʻyicha 10 ta savoldan iborat test tuz: ",
+        "explainPrompt": "Bosqichma-bosqich tushuntir: ",
+        "conspectPrompt": "Quyidagi mavzu boʻyicha konspekt (tuzilgan oʻquv yozuvlari) tuz: "
+      }
+    }
+  }
+}

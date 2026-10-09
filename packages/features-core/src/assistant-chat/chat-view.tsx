@@ -8,6 +8,7 @@ import Link from "next/link"
 import { useMemo, useState } from "react"
 import { ChatComposer } from "./chat-composer"
 import { ChatMessage } from "./chat-message"
+import { hiddenCallsPerMessage } from "./hidden-calls"
 import { limitState } from "./limit-info"
 import { ShareDialog } from "./share-dialog"
 import { useChat, useDecideToolCall, useSendMessage, useUsage } from "./use-assistant-queries"
@@ -20,16 +21,6 @@ type ChatViewProps = {
 }
 
 const NO_MESSAGES: ChatMessageView[] = []
-
-/** For every message, the tool calls that an earlier message already shows. */
-function hiddenCallsPerMessage(messages: ChatMessageView[]): ReadonlySet<string>[] {
-  const seen = new Set<string>()
-  return messages.map((message) => {
-    const hidden = new Set(seen)
-    for (const call of message.tool_calls) seen.add(call.id)
-    return hidden
-  })
-}
 
 /** One chat: messages, approval cards, the input with its limit notice, and the usage bar. */
 export function ChatView({ chatId, assistant, basePath }: ChatViewProps) {

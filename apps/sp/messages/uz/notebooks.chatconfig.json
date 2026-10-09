@@ -1,0 +1,25 @@
+{
+  "notebooks": {
+    "config": {
+      "presets": {
+        "label": "Tayyor sozlamalar",
+        "balanced": "Muvozanatli",
+        "tutor": "Repetitor",
+        "exam": "Imtihonga tayyorgarlik",
+        "simple": "Oddiy soʻzlar bilan",
+        "depth": "Batafsil",
+        "prompt": {
+          "exam": "Imtihon oluvchining nazorat roʻyxati kabi javob ber: avval asosiy faktlar va atamalar, keyin imtihonda tushishi mumkin boʻlgan savollar va keng tarqalgan xatolar.",
+          "simple": "Oddiy soʻzlar, qisqa gaplar va kundalik misollar bilan tushuntir; murakkab atamalarsiz tushuntir, kerak boʻlsa ularni izohla.",
+          "depth": "Fikr yuritish, istisno holatlar va misollar bilan puxta, batafsil tushuntirib ber."
+        }
+      },
+      "goal": {
+        "label": "Maqsad",
+        "placeholder": "Nima ustida ishlayapsiz?",
+        "hint": "Ixtiyoriy. Javoblar shunga moslab beriladi.",
+        "left": "{count} ta belgi qoldi"
+      }
+    }
+  }
+}

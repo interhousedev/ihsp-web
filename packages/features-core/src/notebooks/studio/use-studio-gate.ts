@@ -1,0 +1,57 @@
+"use client"
+
+import type { ArtifactKind, NotebookDetail, NotebookUsage } from "@ihsp/api"
+import { useFormatters, useT } from "@ihsp/i18n"
+import { useOnline } from "@ihsp/ui"
+import { useCallback } from "react"
+import { quotaKeyFor, quotaReached } from "../lib/artifact-kinds"
+import { notebookLimit, useNotebookUsage } from "../api/use-notebook-usage"
+
+export type GateReason = "offline" | "readonly" | "sources" | "limit" | "quota"
+export type Gate = { reason: GateReason; message: string }
+
+/**
+ * Why generation is blocked right now (docs/reference/notebooklm.md § 5.4.4, § 5.6): the browser is offline, no ready
+ * source is selected, a token budget is used up, or the daily count of that kind is used up. `null` means free to go.
+ */
+export function useStudioGate(notebook: NotebookDetail) {
+  const t = useT("notebooks")
+  const root = useT()
+  const format = useFormatters()
+  const online = useOnline()
+  const usage = useNotebookUsage(notebook.id)
+  const data = usage.data
+
+  const general = useCallback((): Gate | null => {
+    if (!online) return { reason: "offline", message: root("state.offlineTitle") }
+    if (notebook.can_write === false) return { reason: "readonly", message: t("course.readOnlyStudio") }
+    if (notebook.selected_source_count === 0) return { reason: "sources", message: t("studio.needSources") }
+    const limit = notebookLimit(data)
+    if (limit.reached) {
+      const time = limit.resetsAt ? format.time(limit.resetsAt) : "—"
+      return { reason: "limit", message: t(limit.scope === "session" ? "limit.session" : "limit.day", { time }) }
+    }
+    return null
+  }, [online, notebook.can_write, notebook.selected_source_count, data, format, t, root])
+
+  const forKind = useCallback(
+    (kind: ArtifactKind): Gate | null => {
+      const blocked = general()
+      if (blocked) return blocked
+      if (!quotaReached(data, kind)) return null
+      const overallFull = data !== undefined && data.quotas.artifacts.used >= data.quotas.artifacts.limit
+      const label = overallFull || quotaKeyFor(kind) === "artifacts" ? t("kind.artifacts") : t(`kind.${kind}`)
+      return { reason: "quota", message: t("limit.quota", { kind: label }) }
+    },
+    [general, data, t],
+  )
+
+  return { usage, forKind }
+}
+
+/** True when the study materials count of today is above 70 % of the daily limit (the hint under the tiles). */
+export function quotaHintVisible(usage: NotebookUsage | undefined): boolean {
+  if (!usage) return false
+  const { used, limit } = usage.quotas.artifacts
+  return limit > 0 && used / limit > 0.7
+}

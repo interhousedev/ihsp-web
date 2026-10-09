@@ -1,0 +1,20 @@
+{
+  "notebooks": {
+    "discover": {
+      "back": "Manbalarga qaytish",
+      "count": "{count} ta natija",
+      "submit": "Internetdan qidirish",
+      "mode": "Qidiruv turi",
+      "selectAll": "Hammasini tanlash",
+      "selectNone": "Tanlovni bekor qilish",
+      "open": "«{title}» sahifasini yangi oynada ochish",
+      "queries": "Qidiruv soʻrovlari"
+    },
+    "sources": {
+      "inText": "Matn ichida",
+      "inTextLoading": "Matn ichidan qidirilmoqda…",
+      "searchCount": "{count} ta manba topildi",
+      "clearSearch": "Qidiruvni tozalash"
+    }
+  }
+}

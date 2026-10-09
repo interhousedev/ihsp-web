@@ -1,0 +1,20 @@
+{
+  "notebooks": {
+    "discover": {
+      "back": "Назад к источникам",
+      "count": "{count, plural, one {# результат} few {# результата} many {# результатов} other {# результата}}",
+      "submit": "Искать в интернете",
+      "mode": "Тип поиска",
+      "selectAll": "Выбрать все",
+      "selectNone": "Снять выбор",
+      "open": "Открыть «{title}» в новой вкладке",
+      "queries": "Поисковые запросы"
+    },
+    "sources": {
+      "inText": "В тексте",
+      "inTextLoading": "Ищем в тексте…",
+      "searchCount": "{count, plural, one {Найден # источник} few {Найдено # источника} many {Найдено # источников} other {Найдено # источника}}",
+      "clearSearch": "Очистить поиск"
+    }
+  }
+}

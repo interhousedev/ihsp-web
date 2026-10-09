@@ -1,0 +1,21 @@
+{
+  "notebooks": {
+    "chat": {
+      "showLessQuestions": "Show less"
+    },
+    "combine": {
+      "action": "Combine selected notes",
+      "hint": "Select at least two notes to combine them.",
+      "title": "Combine notes",
+      "description": "The selected notes become one new note. Each one keeps its title as a heading.",
+      "titleLabel": "Title of the new note",
+      "defaultTitle": "Notes · {title}",
+      "fallbackTitle": "Combined notes",
+      "listLabel": "Notes to combine",
+      "unselect": "Unselect the original notes",
+      "cancel": "Cancel",
+      "submit": "Combine",
+      "working": "Combining…"
+    }
+  }
+}

@@ -1,0 +1,355 @@
+import { afterEach, describe, expect, it } from "bun:test"
+import type { ArtifactCreate, ArtifactItem, NotebookDetail } from "@ihsp/api"
+import { apiUrl, artifactGenerating, nbIds, notebookDetail, notebookUsageLimitReached, server } from "@ihsp/test-utils"
+import { act, screen, waitFor, within } from "@testing-library/react"
+import type { UserEvent } from "@testing-library/user-event"
+import { HttpResponse, http } from "msw"
+import { allowSlowRenders, renderNotebook } from "../test-support"
+import { StudioPanel } from "./studio-panel"
+
+allowSlowRenders()
+
+const ARTIFACTS_URL = apiUrl(`/v1/notebooks/${nbIds.notebook}/artifacts`)
+
+function captureCreates(): ArtifactCreate[] {
+  const bodies: ArtifactCreate[] = []
+  server.use(
+    http.post(ARTIFACTS_URL, async ({ request }) => {
+      const body = (await request.json()) as ArtifactCreate
+      bodies.push(body)
+      const item: ArtifactItem = {
+        ...artifactGenerating,
+        id: `new-${bodies.length}`,
+        kind: body.kind,
+        status: "queued",
+      }
+      return HttpResponse.json(item, { status: 202 })
+    }),
+  )
+  return bodies
+}
+
+/** Clicks the pencil of a tile and returns the form dialog. */
+async function openForm(user: UserEvent, tileLabel: string): Promise<HTMLElement> {
+  await user.click(await screen.findByRole("button", { name: `Customize ${tileLabel}` }))
+  return screen.findByRole("dialog", { name: `Customize ${tileLabel}` })
+}
+
+function group(dialog: HTMLElement, name: string): HTMLElement {
+  return within(dialog).getByRole("group", { name })
+}
+
+async function generate(user: UserEvent, dialog: HTMLElement): Promise<void> {
+  await user.click(within(dialog).getByRole("button", { name: "Generate" }))
+}
+
+const originalWidth = window.innerWidth
+afterEach(() => {
+  window.innerWidth = originalWidth
+})
+
+describe("Customize dialogs: one form per kind", () => {
+  it("conspect: detail, style, language and focus end up in the request", async () => {
+    const bodies = captureCreates()
+    const { user } = renderNotebook(<StudioPanel notebook={notebookDetail} />)
+    const dialog = await openForm(user, "Conspect")
+
+    await user.click(within(group(dialog, "Detail")).getByRole("button", { name: "Long" }))
+    await user.click(within(group(dialog, "Style")).getByRole("button", { name: "Cornell notes" }))
+    await user.selectOptions(within(dialog).getByRole("combobox", { name: "Language" }), "ru")
+    await user.click(within(dialog).getByRole("textbox", { name: "What should it focus on? (optional)" }))
+    await user.paste("Only the Calvin cycle")
+    await generate(user, dialog)
+
+    await waitFor(() => expect(bodies).toHaveLength(1))
+    expect(bodies[0]).toEqual({
+      kind: "report",
+      options: { format: "conspect", detail: "long", style: "cornell", language: "ru" },
+      prompt: "Only the Calvin cycle",
+    })
+  })
+
+  it("mind map: overview or detailed", async () => {
+    const bodies = captureCreates()
+    const { user } = renderNotebook(<StudioPanel notebook={notebookDetail} />)
+    const dialog = await openForm(user, "Mind map")
+
+    expect(within(group(dialog, "Detail")).getByRole("button", { name: "Overview" })).toHaveAttribute(
+      "aria-pressed",
+      "true",
+    )
+    await user.click(within(group(dialog, "Detail")).getByRole("button", { name: "Detailed" }))
+    await generate(user, dialog)
+
+    await waitFor(() => expect(bodies).toHaveLength(1))
+    expect(bodies[0]).toEqual({ kind: "mind_map", options: { detail: "detailed" } })
+  })
+
+  it("flash cards: number and difficulty", async () => {
+    const bodies = captureCreates()
+    const { user } = renderNotebook(<StudioPanel notebook={notebookDetail} />)
+    const dialog = await openForm(user, "Flash cards")
+
+    await user.click(within(group(dialog, "Number")).getByRole("button", { name: "More" }))
+    await user.click(within(group(dialog, "Difficulty")).getByRole("button", { name: "Hard" }))
+    await generate(user, dialog)
+
+    await waitFor(() => expect(bodies).toHaveLength(1))
+    expect(bodies[0]).toEqual({ kind: "flashcards", options: { count: "more", difficulty: "hard" } })
+  })
+
+  it("quiz: number, difficulty and question types", async () => {
+    const bodies = captureCreates()
+    const { user } = renderNotebook(<StudioPanel notebook={notebookDetail} />)
+    const dialog = await openForm(user, "Quiz")
+
+    await user.click(within(group(dialog, "Number")).getByRole("button", { name: "Fewer" }))
+    await user.click(within(group(dialog, "Difficulty")).getByRole("button", { name: "Easy" }))
+    await user.click(within(dialog).getByRole("checkbox", { name: "Multiple choice" }))
+    await generate(user, dialog)
+
+    await waitFor(() => expect(bodies).toHaveLength(1))
+    expect(bodies[0]).toEqual({
+      kind: "quiz",
+      options: { count: "fewer", difficulty: "easy", types: ["single", "true_false"] },
+    })
+  })
+
+  it("quiz: needs at least one question type", async () => {
+    const { user } = renderNotebook(<StudioPanel notebook={notebookDetail} />)
+    const dialog = await openForm(user, "Quiz")
+
+    for (const name of ["Single choice", "Multiple choice", "True / false"]) {
+      await user.click(within(dialog).getByRole("checkbox", { name }))
+    }
+
+    expect(within(dialog).getByRole("alert")).toHaveTextContent("Choose at least one type")
+    expect(within(dialog).getByRole("button", { name: "Generate" })).toBeDisabled()
+
+    await user.click(within(dialog).getByRole("checkbox", { name: "True / false" }))
+    expect(within(dialog).getByRole("button", { name: "Generate" })).toBeEnabled()
+  })
+
+  it("data table: the maximum number of rows stays between 10 and 40", async () => {
+    const bodies = captureCreates()
+    const { user } = renderNotebook(<StudioPanel notebook={notebookDetail} />)
+    const dialog = await openForm(user, "Data table")
+
+    const rows = within(dialog).getByRole("spinbutton", { name: "Maximum rows" })
+    expect(rows).toHaveValue(25)
+    await user.clear(rows)
+    await user.type(rows, "99")
+    await user.click(within(dialog).getByRole("textbox", { name: "What should it focus on? (optional)" }))
+    await user.paste("Columns: year, event, place")
+    await generate(user, dialog)
+
+    await waitFor(() => expect(bodies).toHaveLength(1))
+    expect(bodies[0]).toEqual({
+      kind: "data_table",
+      options: { max_rows: 40 },
+      prompt: "Columns: year, event, place",
+    })
+  })
+
+  it("slide deck: format and length", async () => {
+    const bodies = captureCreates()
+    const { user } = renderNotebook(<StudioPanel notebook={notebookDetail} />)
+    const dialog = await openForm(user, "Slide deck")
+
+    await user.click(within(group(dialog, "Format")).getByRole("button", { name: "Detailed deck" }))
+    await user.click(within(group(dialog, "Length")).getByRole("button", { name: "Long" }))
+    await generate(user, dialog)
+
+    await waitFor(() => expect(bodies).toHaveLength(1))
+    expect(bodies[0]).toEqual({ kind: "slides", options: { format: "detailed", length: "long" } })
+  })
+
+  it("infographic: orientation, detail and one of five styles", async () => {
+    const bodies = captureCreates()
+    const { user } = renderNotebook(<StudioPanel notebook={notebookDetail} />)
+    const dialog = await openForm(user, "Infographic")
+
+    const styles = within(group(dialog, "Style")).getAllByRole("button")
+    expect(styles.map((button) => button.textContent)).toEqual(["Clean", "Sketch", "Bento", "Scientific", "Playful"])
+    await user.click(within(group(dialog, "Orientation")).getByRole("button", { name: "Landscape" }))
+    await user.click(within(group(dialog, "Detail")).getByRole("button", { name: "Concise" }))
+    await user.click(within(group(dialog, "Style")).getByRole("button", { name: "Playful" }))
+    await generate(user, dialog)
+
+    await waitFor(() => expect(bodies).toHaveLength(1))
+    expect(bodies[0]).toEqual({
+      kind: "infographic",
+      options: { orientation: "landscape", detail: "concise", style: "playful" },
+    })
+  })
+
+  it("keeps the chosen button pressed and never switches the last one off", async () => {
+    const { user } = renderNotebook(<StudioPanel notebook={notebookDetail} />)
+    const dialog = await openForm(user, "Flash cards")
+    const standard = within(group(dialog, "Number")).getByRole("button", { name: "Standard" })
+
+    await user.click(standard)
+
+    expect(standard).toHaveAttribute("aria-pressed", "true")
+  })
+})
+
+describe("Customize dialogs: common fields", () => {
+  it("leaves the language out for Auto and sends an explicit one", async () => {
+    const bodies = captureCreates()
+    const { user } = renderNotebook(<StudioPanel notebook={notebookDetail} />)
+    const dialog = await openForm(user, "Mind map")
+    const language = within(dialog).getByRole("combobox", { name: "Language" })
+
+    expect(language).toHaveValue("auto")
+    expect(
+      within(language)
+        .getAllByRole("option")
+        .map((option) => option.textContent),
+    ).toEqual(["Auto", "Oʻzbekcha", "Русский", "English"])
+    await generate(user, dialog)
+    await waitFor(() => expect(bodies).toHaveLength(1))
+    expect(bodies[0]).toEqual({ kind: "mind_map", options: { detail: "overview" } })
+
+    const again = await openForm(user, "Mind map")
+    await user.selectOptions(within(again).getByRole("combobox", { name: "Language" }), "uz")
+    await generate(user, again)
+    await waitFor(() => expect(bodies).toHaveLength(2))
+    expect(bodies[1]).toEqual({ kind: "mind_map", options: { detail: "overview", language: "uz" } })
+  })
+
+  it("limits the focus text to 1000 characters and counts them", async () => {
+    const { user } = renderNotebook(<StudioPanel notebook={notebookDetail} />)
+    const dialog = await openForm(user, "Quiz")
+    const focus = within(dialog).getByRole("textbox", { name: "What should it focus on? (optional)" })
+
+    expect(focus).toHaveAttribute("maxlength", "1000")
+    expect(within(dialog).getByText("0 / 1000")).toBeInTheDocument()
+    await user.click(focus)
+    await user.paste("Photosynthesis")
+    expect(within(dialog).getByText("14 / 1000")).toBeInTheDocument()
+  })
+
+  it("shows how many sources are used and jumps to the Sources tab", async () => {
+    const { user, actions } = renderNotebook(<StudioPanel notebook={notebookDetail} />)
+    const dialog = await openForm(user, "Quiz")
+
+    expect(within(dialog).getByText("Using 3 sources")).toBeInTheDocument()
+    await user.click(within(dialog).getByRole("button", { name: "Change" }))
+
+    expect(actions.showTab).toHaveBeenCalledWith("sources")
+    await waitFor(() => expect(screen.queryByRole("dialog")).not.toBeInTheDocument())
+  })
+
+  it("starts from the defaults every time it opens: closing keeps nothing", async () => {
+    const { user } = renderNotebook(<StudioPanel notebook={notebookDetail} />)
+    const first = await openForm(user, "Flash cards")
+    await user.click(within(group(first, "Number")).getByRole("button", { name: "More" }))
+    await user.click(within(first).getByRole("textbox", { name: "What should it focus on? (optional)" }))
+    await user.paste("Dates only")
+    await user.click(within(first).getByRole("button", { name: "Cancel" }))
+    await waitFor(() => expect(screen.queryByRole("dialog")).not.toBeInTheDocument())
+
+    const second = await openForm(user, "Flash cards")
+
+    expect(within(group(second, "Number")).getByRole("button", { name: "Standard" })).toHaveAttribute(
+      "aria-pressed",
+      "true",
+    )
+    expect(within(second).getByRole("textbox", { name: "What should it focus on? (optional)" })).toHaveValue("")
+  })
+
+  it("sends nothing when the dialog is cancelled", async () => {
+    const bodies = captureCreates()
+    const { user } = renderNotebook(<StudioPanel notebook={notebookDetail} />)
+    const dialog = await openForm(user, "Quiz")
+
+    await user.click(within(dialog).getByRole("button", { name: "Cancel" }))
+
+    await waitFor(() => expect(screen.queryByRole("dialog")).not.toBeInTheDocument())
+    expect(bodies).toHaveLength(0)
+  })
+
+  it("keeps the dialog open and shows the error when starting fails", async () => {
+    server.use(
+      http.post(ARTIFACTS_URL, () =>
+        HttpResponse.json(
+          {
+            type: "notebooks/quota-exceeded",
+            title: "Quota",
+            status: 429,
+            message_key: "notebooks-quota-exceeded",
+            params: { kind: "quiz", limit: 20, resets_at: "2026-10-08T00:00:00Z" },
+          },
+          { status: 429, headers: { "Content-Type": "application/problem+json" } },
+        ),
+      ),
+    )
+    const { user } = renderNotebook(<StudioPanel notebook={notebookDetail} />)
+    const dialog = await openForm(user, "Quiz")
+
+    await generate(user, dialog)
+
+    expect(await within(dialog).findByRole("alert")).toHaveTextContent("Daily limit for “Quiz” reached.")
+    expect(screen.getByRole("dialog", { name: "Customize Quiz" })).toBeInTheDocument()
+  })
+
+  it("can open the form without a selected source but cannot generate", async () => {
+    const noSources: NotebookDetail = { ...notebookDetail, selected_source_count: 0 }
+    const { user } = renderNotebook(<StudioPanel notebook={noSources} />)
+    const dialog = await openForm(user, "Quiz")
+
+    expect(within(dialog).getByText("Using 0 sources")).toBeInTheDocument()
+    expect(within(dialog).getByRole("button", { name: "Generate" })).toBeDisabled()
+    expect(within(dialog).getByText("Add and select a source first")).toBeInTheDocument()
+  })
+
+  it("cannot generate while the browser is offline", async () => {
+    const { user } = renderNotebook(<StudioPanel notebook={notebookDetail} />)
+    const dialog = await openForm(user, "Quiz")
+    expect(within(dialog).getByRole("button", { name: "Generate" })).toBeEnabled()
+
+    Object.defineProperty(window.navigator, "onLine", { configurable: true, get: () => false })
+    act(() => {
+      window.dispatchEvent(new Event("offline"))
+    })
+
+    await waitFor(() => expect(within(dialog).getByRole("button", { name: "Generate" })).toBeDisabled())
+    expect(within(dialog).getByText("You are offline")).toBeInTheDocument()
+    Object.defineProperty(window.navigator, "onLine", { configurable: true, get: () => true })
+    act(() => {
+      window.dispatchEvent(new Event("online"))
+    })
+  })
+
+  it("cannot generate when the budget is used up and says when it resets", async () => {
+    server.use(http.get(apiUrl("/v1/notebooks/usage"), () => HttpResponse.json(notebookUsageLimitReached)))
+    const { user } = renderNotebook(<StudioPanel notebook={notebookDetail} />)
+    const dialog = await openForm(user, "Quiz")
+
+    expect(await within(dialog).findByText(/Daily limit reached, resets at \d\d:\d\d\./)).toBeInTheDocument()
+    expect(within(dialog).getByRole("button", { name: "Generate" })).toBeDisabled()
+  })
+
+  it("opens the report picker from the pencil of the Reports tile", async () => {
+    const { user } = renderNotebook(<StudioPanel notebook={notebookDetail} />)
+
+    await user.click(await screen.findByRole("button", { name: "Customize Reports" }))
+
+    expect(await screen.findByRole("dialog", { name: "Choose a report format" })).toBeInTheDocument()
+  })
+
+  it("is a bottom sheet on a phone and works the same", async () => {
+    window.innerWidth = 390
+    const bodies = captureCreates()
+    const { user } = renderNotebook(<StudioPanel notebook={notebookDetail} />)
+    const dialog = await openForm(user, "Flash cards")
+
+    expect(dialog.getAttribute("data-slot")).toContain("drawer")
+    await user.click(within(group(dialog, "Difficulty")).getByRole("button", { name: "Easy" }))
+    await generate(user, dialog)
+
+    await waitFor(() => expect(bodies).toHaveLength(1))
+    expect(bodies[0]).toEqual({ kind: "flashcards", options: { count: "standard", difficulty: "easy" } })
+  })
+})

@@ -1,0 +1,53 @@
+"use client"
+
+import type { SourceItem } from "@ihsp/api"
+import { useT } from "@ihsp/i18n"
+import { cn } from "@ihsp/ui"
+import { IconAlertTriangle, IconLoader2 } from "@tabler/icons-react"
+import { useFailureText } from "./use-failure-text"
+
+type SourceStatusLineProps = {
+  source: Pick<SourceItem, "status" | "failure">
+  className?: string
+}
+
+/**
+ * The line under a title when a source is not `ready`: Waiting… / Reading… (spinner), Could not read: reason,
+ * Not available, Outdated. Renders nothing for a ready source. Icons and words, never colour alone.
+ */
+export function SourceStatusLine({ source, className }: SourceStatusLineProps) {
+  const t = useT("notebooks")
+  const failureText = useFailureText()
+  const reason = failureText(source.failure)
+
+  switch (source.status) {
+    case "ready":
+      return null
+    case "pending":
+    case "processing":
+      return (
+        <span className={cn("text-muted-foreground flex items-center gap-1 text-xs", className)}>
+          <IconLoader2 aria-hidden className="size-3.5 shrink-0 animate-spin motion-reduce:animate-none" />
+          {t(`status.${source.status}`)}
+        </span>
+      )
+    case "failed":
+      return (
+        <span className={cn("flex items-start gap-1 text-xs text-amber-700 dark:text-amber-400", className)}>
+          <IconAlertTriangle aria-hidden className="mt-px size-3.5 shrink-0" />
+          <span className="min-w-0">{reason ? t("status.failedReason", { reason }) : t("status.failed")}</span>
+        </span>
+      )
+    case "unavailable":
+      return (
+        <span className={cn("flex items-start gap-1 text-xs text-amber-700 dark:text-amber-400", className)}>
+          <IconAlertTriangle aria-hidden className="mt-px size-3.5 shrink-0" />
+          <span className="min-w-0">
+            {reason ? t("status.unavailableReason", { reason }) : t("status.unavailable")}
+          </span>
+        </span>
+      )
+    case "stale":
+      return <span className={cn("text-muted-foreground text-xs", className)}>{t("status.stale")}</span>
+  }
+}

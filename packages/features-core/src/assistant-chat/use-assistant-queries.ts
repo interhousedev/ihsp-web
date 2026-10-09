@@ -7,7 +7,9 @@ import {
   getAiUsageQuery,
   keys,
   patchAiChat,
+  postAiChatMessageFeedback,
   postAiChatMessages,
+  postAiChatRegenerate,
   postAiChatToolCallApprove,
   postAiChatToolCallReject,
   postAiChats,
@@ -19,24 +21,26 @@ import {
   type TurnResult,
 } from "@ihsp/api"
 import { useMutation, useQuery, useQueryClient, type QueryClient } from "@tanstack/react-query"
+import { useRefreshWebQuota } from "../web-search"
 import { applyTurn } from "./apply-turn"
 
 const CHATS_LIMIT = 100
 
-function chatsQueryOptions(assistant: AssistantKind) {
-  return getAiChatsQuery({ assistant, limit: CHATS_LIMIT })
+function chatsQueryOptions(assistant: AssistantKind, courseId?: string) {
+  return getAiChatsQuery({ assistant, limit: CHATS_LIMIT, ...(courseId ? { course_id: courseId } : {}) })
 }
 
-export function useChats(assistant: AssistantKind) {
-  return useQuery(chatsQueryOptions(assistant))
+/** The caller's chats of an assistant; the author assistant lists the chats of one course (`courseId`). */
+export function useChats(assistant: AssistantKind, courseId?: string) {
+  return useQuery(chatsQueryOptions(assistant, courseId))
 }
 
 export function useChat(id: string | null) {
   return useQuery({ ...getAiChatQuery(id ?? ""), enabled: id !== null })
 }
 
-export function useUsage(assistant: AssistantKind) {
-  return useQuery(getAiUsageQuery({ assistant }))
+export function useUsage(assistant: AssistantKind, courseId?: string) {
+  return useQuery(getAiUsageQuery({ assistant, ...(courseId ? { course_id: courseId } : {}) }))
 }
 
 function refreshChatList(queryClient: QueryClient, assistant: AssistantKind) {
@@ -48,15 +52,34 @@ function storeTurn(queryClient: QueryClient, assistant: AssistantKind, chatId: s
     current ? applyTurn(current, turn) : current,
   )
   queryClient.setQueryData(keys.ai.usage(assistant), turn.usage)
+  // The author assistant's budget is read per course: refresh whatever course it was read for.
+  if (assistant === "lms_author") void queryClient.invalidateQueries({ queryKey: keys.ai.usage(assistant) })
   void refreshChatList(queryClient, assistant)
 }
 
-export function useCreateChat(assistant: AssistantKind) {
+export type ChatTier = "fast" | "smart"
+
+export type CreateChatInput = { tier?: ChatTier }
+
+export function useCreateChat(assistant: AssistantKind, courseId?: string) {
   const queryClient = useQueryClient()
-  return useMutation<ChatItem, unknown, void>({
-    mutationFn: () => postAiChats({ assistant }),
+  return useMutation<ChatItem, unknown, CreateChatInput | undefined>({
+    mutationFn: (input) =>
+      postAiChats({
+        assistant,
+        ...(input?.tier ? { tier: input.tier } : {}),
+        ...(courseId ? { course_id: courseId } : {}),
+      }),
     onSuccess: () => refreshChatList(queryClient, assistant),
   })
+}
+
+const SEARCH_LIMIT = 20
+
+/** Server-side title search for the search dialog (`GET /ai/chats?q=`); idle while `q` is empty. */
+export function useSearchChats(assistant: AssistantKind, q: string) {
+  const term = q.trim()
+  return useQuery({ ...getAiChatsQuery({ assistant, q: term, limit: SEARCH_LIMIT }), enabled: term !== "" })
 }
 
 export function useRenameChat(assistant: AssistantKind) {
@@ -92,13 +115,30 @@ export function useDeleteChat(assistant: AssistantKind) {
   })
 }
 
-export type SendMessageInput = { text: string; fileIds: string[] }
+export type SendMessageInput = {
+  text: string
+  fileIds: string[]
+  /** Answer with a web search (`web_search: true`); left out of the body when false. */
+  webSearch?: boolean
+  /** Aborts the request (the stop button). */
+  signal?: AbortSignal
+}
 
 export function useSendMessage(chatId: string, assistant: AssistantKind) {
   const queryClient = useQueryClient()
+  const refreshWebQuota = useRefreshWebQuota()
   return useMutation<TurnResult, unknown, SendMessageInput>({
-    mutationFn: ({ text, fileIds }) => postAiChatMessages(chatId, { text, file_ids: fileIds }),
+    mutationFn: ({ text, fileIds, webSearch, signal }) =>
+      postAiChatMessages(
+        chatId,
+        { text, file_ids: fileIds, ...(webSearch ? { web_search: true } : {}) },
+        signal ? { signal } : undefined,
+      ),
     onSuccess: (turn) => storeTurn(queryClient, assistant, chatId, turn),
+    // A search spends the quota (and a refusal means it changed): read today's searches again either way.
+    onSettled: (_turn, _error, input) => {
+      if (input.webSearch) void refreshWebQuota()
+    },
     onError: (error) => {
       // At the limit the usage bar must show the real numbers and the input must lock.
       if (isApiError(error) && error.type === "ai/limit-reached") {
@@ -124,5 +164,28 @@ export function useDecideToolCall(chatId: string, assistant: AssistantKind) {
       // Expired, superseded or already decided in another tab: show the server's version of the chat.
       void queryClient.invalidateQueries({ queryKey: keys.ai.chat(chatId) })
     },
+  })
+}
+
+/** Answers the last user message again; the new answer replaces the one with the same `seq` (P1b). */
+export function useRegenerate(chatId: string, assistant: AssistantKind) {
+  const queryClient = useQueryClient()
+  return useMutation<TurnResult, unknown, void>({
+    mutationFn: () => postAiChatRegenerate(chatId),
+    onSuccess: (turn) => storeTurn(queryClient, assistant, chatId, turn),
+    onError: (error) => {
+      if (isApiError(error) && error.type === "ai/limit-reached") {
+        void queryClient.invalidateQueries({ queryKey: keys.ai.usage(assistant) })
+      }
+    },
+  })
+}
+
+export type FeedbackInput = { seq: number; rating: "up" | "down" }
+
+/** Thumbs up or down on an assistant message (P1b). */
+export function useFeedback(chatId: string) {
+  return useMutation<unknown, unknown, FeedbackInput>({
+    mutationFn: ({ seq, rating }) => postAiChatMessageFeedback(chatId, seq, { rating }),
   })
 }

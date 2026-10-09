@@ -3,8 +3,10 @@
 import type { ChatMessageView, ToolCallView as ToolCall } from "@ihsp/api"
 import { useT } from "@ihsp/i18n"
 import { Markdown } from "@ihsp/ui"
+import { WebSourcesRow } from "../notebooks/chat/web-sources-row"
 import { FileChip } from "./file-chip"
 import { ToolCallView } from "./tool-call-view"
+import { useWebRenderText } from "./use-web-render-text"
 
 type ChatMessageProps = {
   message: ChatMessageView
@@ -20,6 +22,7 @@ export function ChatMessage({ message, hiddenCallIds, busy, onApprove, onReject 
   const t = useT("assistant.message")
   const isUser = message.role === "user"
   const calls: ToolCall[] = message.tool_calls.filter((call) => !hiddenCallIds.has(call.id))
+  const renderText = useWebRenderText(message.web)
 
   return (
     <article
@@ -42,9 +45,10 @@ export function ChatMessage({ message, hiddenCallIds, busy, onApprove, onReject 
               : "bg-muted max-w-[min(100%,42rem)] rounded-2xl rounded-bl-sm px-3 py-2 text-sm break-words"
           }
         >
-          {isUser ? message.text : <Markdown>{message.text}</Markdown>}
+          {isUser ? message.text : <Markdown renderText={renderText}>{message.text}</Markdown>}
         </div>
       ) : null}
+      {isUser ? null : <WebSourcesRow web={message.web} text={message.text} />}
       {message.file_ids.length > 0 ? (
         <div className="flex max-w-full flex-wrap justify-end gap-1">
           {message.file_ids.map((id) => (
