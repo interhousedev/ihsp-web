@@ -94,7 +94,10 @@ describe("uploading materials", () => {
     const draft = await postMaterial(materialInput)
 
     await expect(postMaterialSubmit(draft.id ?? "")).rejects.toMatchObject({ status: 422 })
-    await expect(postMaterial({ ...materialInput, attested: false })).rejects.toMatchObject({ status: 422 })
+    // `attested: false` saves a draft (MaterialInput: "may be false until submit"); submitting it is the 422
+    const unattested = await postMaterial({ ...materialInput, attested: false })
+    expect(unattested.status).toBe("draft")
+    await expect(postMaterialSubmit(unattested.id ?? "")).rejects.toMatchObject({ status: 422 })
     await expect(postMaterial({ ...materialInput, title: " " })).rejects.toMatchObject({ status: 422 })
   })
 

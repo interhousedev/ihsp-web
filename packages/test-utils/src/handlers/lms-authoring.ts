@@ -1,6 +1,7 @@
 import type {
   CheckpointBody,
   CourseCreateBody,
+  CourseCreator,
   CourseSettingsBody,
   CourseStaffBody,
   CourseStaffPatchBody,
@@ -30,7 +31,7 @@ import {
 } from "../fixtures/lms-authoring"
 import { courseStaff, stepViewTest } from "../fixtures/lms-learning"
 import { FIXTURE_NOW, persons } from "../fixtures/world"
-import { apiUrl, nextId, noContent, notFound, param, problem, query, readJson } from "./utils"
+import { apiUrl, nextId, noContent, notFound, paginate, param, problem, query, readJson } from "./utils"
 
 /** Applies outline operations to a copy of the outline (sections and steps are matched by id). */
 export function applyOutlineOps(outline: OutlineSection[], ops: OutlineOp[]): OutlineSection[] {
@@ -66,6 +67,18 @@ export function applyOutlineOps(outline: OutlineSection[], ops: OutlineOp[]): Ou
 
 function stepDraftFor(id: string): StepDraft | undefined {
   return stepDrafts.find((draft) => draft.step_id === id)
+}
+
+/** A `lms_creator` row for a fixture person. */
+function creatorFor(person: { id: string; first_name: string; last_name: string }): CourseCreator {
+  return {
+    id: person.id,
+    login: `${person.last_name}.${person.first_name}`.toLowerCase(),
+    first_name: person.first_name,
+    last_name: person.last_name,
+    middle_name: null,
+    status: "active",
+  }
 }
 
 export const lmsAuthoringHandlers = [
@@ -222,6 +235,19 @@ export const lmsAuthoringHandlers = [
       status: body.status ?? courseDraft.status,
     })
   }),
+  // LMS admin: the people who hold `lms_creator` (teachers and admins only; a student is `422`).
+  http.get(apiUrl("/v1/staff/lms/creators"), ({ request }) =>
+    HttpResponse.json(paginate([creatorFor(persons.rakhimov), creatorFor(persons.smirnova)], request)),
+  ),
+  http.put(apiUrl("/v1/staff/lms/creators/:userId"), ({ params }) => {
+    const person = Object.values(persons).find((item) => item.id === param(params, "userId"))
+    if (!person) return problem(404, "id/user-not-found", "No user with this id")
+    if (person.id === persons.student.id) {
+      return problem(422, "id/course-creator-not-staff", "Only teachers and administrators can create courses")
+    }
+    return HttpResponse.json(creatorFor(person))
+  }),
+  http.delete(apiUrl("/v1/staff/lms/creators/:userId"), () => noContent()),
   http.post(apiUrl("/v1/lms/courses/:id/invite-code"), () => HttpResponse.json({ invite_code: "NX4R8T" })),
   http.get(apiUrl("/v1/lms/courses/:id/preview/steps/:stepId"), ({ params }) => {
     const draft = stepDraftFor(param(params, "stepId")) ?? stepDraftText
