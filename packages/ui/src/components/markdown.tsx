@@ -96,31 +96,41 @@ function Pre({ node, children }: { node?: HastNode; children?: ReactNode }) {
   return <MarkdownCodeBlock language={language}>{children}</MarkdownCodeBlock>
 }
 
+/** Full class names so Tailwind finds them; the keys are the palette of `TEXT_COLORS`. */
+const COLOR_CLASSES: Record<string, string | undefined> = {
+  red: "text-red-600 dark:text-red-400",
+  orange: "text-orange-600 dark:text-orange-400",
+  green: "text-green-600 dark:text-green-400",
+  blue: "text-blue-600 dark:text-blue-400",
+  purple: "text-purple-600 dark:text-purple-400",
+  gray: "text-gray-500 dark:text-gray-400",
+}
+
 const components: Components = {
   a: ({ href, children }) => <MarkdownLink href={href}>{children}</MarkdownLink>,
   img: ({ src, alt }) => <MarkdownImage src={src} alt={alt} />,
-  h1: ({ children }) => (
-    <h2 className="mt-4 mb-2 text-xl font-semibold first:mt-0">
+  h1: ({ children, ...props }) => (
+    <h2 className="mt-4 mb-2 text-xl font-semibold first:mt-0 data-[align=center]:text-center data-[align=right]:text-end" {...omitNode(props)}>
       <Inline>{children}</Inline>
     </h2>
   ),
-  h2: ({ children }) => (
-    <h3 className="mt-4 mb-2 text-lg font-semibold first:mt-0">
+  h2: ({ children, ...props }) => (
+    <h3 className="mt-4 mb-2 text-lg font-semibold first:mt-0 data-[align=center]:text-center data-[align=right]:text-end" {...omitNode(props)}>
       <Inline>{children}</Inline>
     </h3>
   ),
-  h3: ({ children }) => (
-    <h4 className="mt-3 mb-1 text-base font-semibold first:mt-0">
+  h3: ({ children, ...props }) => (
+    <h4 className="mt-3 mb-1 text-base font-semibold first:mt-0 data-[align=center]:text-center data-[align=right]:text-end" {...omitNode(props)}>
       <Inline>{children}</Inline>
     </h4>
   ),
-  h4: ({ children }) => (
-    <h5 className="mt-3 mb-1 text-sm font-semibold first:mt-0">
+  h4: ({ children, ...props }) => (
+    <h5 className="mt-3 mb-1 text-sm font-semibold first:mt-0 data-[align=center]:text-center data-[align=right]:text-end" {...omitNode(props)}>
       <Inline>{children}</Inline>
     </h5>
   ),
   p: ({ children, ...props }) => (
-    <p className="my-2 leading-relaxed first:mt-0 last:mb-0" {...omitNode(props)}>
+    <p className="my-2 leading-relaxed first:mt-0 last:mb-0 data-[align=center]:text-center data-[align=right]:text-end" {...omitNode(props)}>
       <Inline>{children}</Inline>
     </p>
   ),
@@ -173,7 +183,11 @@ const components: Components = {
     </u>
   ),
   span: ({ node, children }) =>
-    node?.properties.dataSpoiler !== undefined ? (
+    typeof node?.properties.dataColor === "string" ? (
+      <span className={COLOR_CLASSES[node.properties.dataColor]}>
+        <Inline>{children}</Inline>
+      </span>
+    ) : node?.properties.dataSpoiler !== undefined ? (
       <MarkdownSpoiler>
         <Inline>{children}</Inline>
       </MarkdownSpoiler>

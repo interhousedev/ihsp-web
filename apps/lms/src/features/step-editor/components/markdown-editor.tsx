@@ -2,6 +2,7 @@
 
 import { useT } from "@ihsp/i18n"
 import { cn, Markdown, Textarea, useIsMobile } from "@ihsp/ui"
+import { IconCode } from "@tabler/icons-react"
 import {
   type ClipboardEvent,
   type FocusEvent,
@@ -26,7 +27,9 @@ import { indexMarkdown, type InlineFormat } from "../utils/markdown/markdown-ind
 import { type Formula, formulaAt, insertFormula, mathAt } from "../utils/markdown/math-format"
 import type { TextState } from "../utils/markdown/text-state"
 import { matchesShortcut } from "../utils/shortcut-label"
-import { BlockToolbar } from "./block-toolbar"
+import { insertImage, insertTable, setAlignment, setColor, alignmentAt, colorAt } from "../utils/markdown/rich-format"
+import { BlockToolbar, type Paragraph } from "./block-toolbar"
+import { ImageUploadButton } from "./image-upload-button"
 import { EditorViewSwitch, type EditorView } from "./editor-view-switch"
 import { EquationDialog } from "./equation-dialog"
 import { LinkDialog } from "./link-dialog"
@@ -67,8 +70,12 @@ export function MarkdownEditor({
   const textarea = useRef<HTMLTextAreaElement>(null)
   const { selection, sync, read, apply } = useMarkdownTextarea(textarea, value, onChange)
   const [chosenView, setChosenView] = useState<EditorView | null>(null)
+  /** Source mode: the raw markup in a monospace field, without the formatting toolbar and preview. */
+  const [source, setSource] = useState(false)
+  const [uploadError, setUploadError] = useState<string | null>(null)
   const views: readonly EditorView[] = isMobile ? ["write", "preview"] : ["write", "split", "preview"]
-  const view: EditorView = chosenView && views.includes(chosenView) ? chosenView : isMobile ? "write" : "split"
+  const chosen: EditorView = chosenView && views.includes(chosenView) ? chosenView : isMobile ? "write" : "split"
+  const view: EditorView = source ? "write" : chosen
   const [focused, setFocused] = useState(false)
   /** The selection on which Escape hid the floating toolbar; a new selection shows it again. */
   const [dismissedAt, setDismissedAt] = useState<string | null>(null)
@@ -96,10 +103,12 @@ export function MarkdownEditor({
   )
   const inCodeBlock = codeBlockAt(state, index) !== null
   const linked = linkAt(state, index) !== null
+  const alignment = useMemo(() => alignmentAt({ text: value, start: state.start, end: state.end }), [value, state.start, state.end])
+  const color = useMemo(() => colorAt({ text: value, start: state.start, end: state.end }), [value, state.start, state.end])
   const writing = view !== "preview" && !disabled
   const selectionKey = `${state.start}:${state.end}`
   const dismissed = dismissedAt === selectionKey
-  const showFloating = writing && focused && !dismissed && dialog === null && state.start !== state.end
+  const showFloating = writing && !source && focused && !dismissed && dialog === null && state.start !== state.end
 
   useLayoutEffect(() => {
     const area = textarea.current
@@ -128,6 +137,23 @@ export function MarkdownEditor({
 
   function block(action: BlockFormat) {
     apply(toggleBlock(read(), action))
+  }
+
+  function paragraph(next: Paragraph) {
+    const current = blocks.has("heading1") ? "heading1" : blocks.has("heading2") ? "heading2" : blocks.has("heading3") ? "heading3" : null
+    if (next === "paragraph") {
+      if (current) block(current)
+    } else if (current !== next) block(next)
+  }
+
+  function history(command: "undo" | "redo") {
+    textarea.current?.focus()
+    try {
+      document.execCommand(command)
+    } catch {
+      /* the browser keeps its own history; nothing to do without it */
+    }
+    sync()
   }
 
   function openEquation(display: boolean) {
@@ -214,18 +240,52 @@ export function MarkdownEditor({
       className="bg-background focus-within:border-ring focus-within:ring-ring/50 rounded-lg border transition-[box-shadow,border-color] focus-within:ring-3"
     >
       <div className="flex flex-wrap items-center gap-1 border-b p-1">
-        <BlockToolbar
-          toolbarRef={blockBar}
-          active={blocks}
-          inCodeBlock={inCodeBlock}
-          disabled={!writing}
-          onBlock={block}
-          onCodeBlock={() => apply(toggleCodeBlock(read()))}
-          onDisplayEquation={() => openEquation(true)}
-          onEscape={() => textarea.current?.focus()}
-        />
+        {source ? null : (
+          <BlockToolbar
+            toolbarRef={blockBar}
+            blocks={blocks}
+            inline={inline}
+            inCodeBlock={inCodeBlock}
+            linked={linked}
+            align={alignment}
+            color={color}
+            disabled={!writing}
+            onBlock={block}
+            onParagraph={paragraph}
+            onFormat={format}
+            onUndo={() => history("undo")}
+            onRedo={() => history("redo")}
+            onColor={(next) => apply(setColor(read(), next))}
+            onAlign={(next) => apply(setAlignment(read(), next))}
+            onLink={openLink}
+            onUnlink={() => apply(removeLink(read()))}
+            onImage={
+              <ImageUploadButton
+                disabled={!writing}
+                onError={setUploadError}
+                onUploaded={(file) => {
+                  setUploadError(null)
+                  apply(insertImage(read(), file.name.replace(/\.[^.]+$/, ""), `/files/${file.id}`))
+                }}
+              />
+            }
+            onEquation={() => openEquation(true)}
+            onTable={() => apply(insertTable(read()))}
+            onCodeBlock={() => apply(toggleCodeBlock(read()))}
+            onEscape={() => textarea.current?.focus()}
+          />
+        )}
         <div className="ms-auto flex items-center gap-1">
-          <EditorViewSwitch view={view} views={views} onChange={setChosenView} />
+          {source ? null : <EditorViewSwitch view={view} views={views} onChange={setChosenView} />}
+          <button
+            type="button"
+            aria-pressed={source}
+            onClick={() => setSource((on) => !on)}
+            className="text-muted-foreground aria-pressed:bg-primary/10 aria-pressed:text-primary focus-visible:ring-ring/50 inline-flex min-h-11 items-center gap-1.5 rounded-md border px-2.5 text-xs font-medium outline-none focus-visible:ring-2 md:pointer-fine:min-h-7"
+          >
+            <IconCode aria-hidden className="size-3.5" />
+            {t("source")}
+          </button>
           <MarkdownHelp />
         </div>
       </div>
@@ -251,7 +311,7 @@ export function MarkdownEditor({
             spellCheck
             placeholder={t("placeholder")}
             aria-describedby={hintId}
-            className="max-h-[70vh] min-h-40 resize-y rounded-none border-0 bg-transparent px-3 py-2.5 leading-relaxed shadow-none focus-visible:ring-0 dark:bg-transparent"
+            className={cn("max-h-[70vh] min-h-40 resize-y rounded-none border-0 bg-transparent px-3 py-2.5 leading-relaxed shadow-none focus-visible:ring-0 dark:bg-transparent", source && "font-mono text-xs")}
           />
           <p id={hintId} className="sr-only">
             {t("hint")}
@@ -287,6 +347,11 @@ export function MarkdownEditor({
           </section>
         ) : null}
       </div>
+      {uploadError ? (
+        <p role="alert" className="text-destructive border-t px-3 py-1.5 text-xs">
+          {uploadError}
+        </p>
+      ) : null}
       {dialog?.kind === "equation" ? (
         <EquationDialog
           initial={dialog.formula}

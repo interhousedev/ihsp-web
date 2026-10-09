@@ -46,7 +46,7 @@ describe("step editor: conflict", () => {
     server.use(errorHandlers.conflictStepDraft)
     const { user } = renderStepEditor()
     await editTitle(user, "My title")
-    await user.click(screen.getByRole("button", { name: "Save" }))
+    await user.tab() // leaving the field saves (blur autosave)
 
     const dialog = await screen.findByRole("dialog")
     expect(within(dialog).getByText("This step was changed by someone else")).toBeInTheDocument()
@@ -82,7 +82,7 @@ describe("step editor: conflict", () => {
     )
     const { user } = renderStepEditor()
     await editTitle(user, "My title")
-    await user.click(screen.getByRole("button", { name: "Save" }))
+    await user.tab() // leaving the field saves (blur autosave)
     const dialog = await screen.findByRole("dialog")
     expect(within(dialog).getByText(/Timur Rakhimov|Rakhimov Timur/)).toBeInTheDocument()
     await user.click(within(dialog).getByRole("button", { name: "Take theirs" }))
@@ -95,7 +95,7 @@ describe("step editor: conflict", () => {
     server.use(errorHandlers.conflictStepDraft)
     const { user } = renderStepEditor()
     await editTitle(user, "My title")
-    await user.click(screen.getByRole("button", { name: "Save" }))
+    await user.tab() // leaving the field saves (blur autosave)
     const dialog = await screen.findByRole("dialog")
     await user.click(within(dialog).getByRole("button", { name: "Close and copy by hand" }))
     await waitFor(() => expect(screen.queryByRole("dialog")).not.toBeInTheDocument())
@@ -144,7 +144,7 @@ describe("step editor: saving", () => {
     server.use(http.put(apiUrl("/v1/lms/steps/:id/draft"), () => HttpResponse.error()))
     const { user } = renderStepEditor(60_000)
     await editTitle(user, "Offline title")
-    await user.click(screen.getByRole("button", { name: "Save" }))
+    await user.tab() // leaving the field saves (blur autosave)
     expect(await screen.findByText("Offline · changes are kept in this browser")).toBeInTheDocument()
     expect(window.localStorage.getItem(bufferKey)).toContain("Offline title")
 
@@ -164,7 +164,42 @@ describe("step editor: saving", () => {
     expect(screen.getByLabelText("Step title")).toHaveValue("Derivative rules quiz")
     await user.click(screen.getByRole("button", { name: "Restore them" }))
     expect(screen.getByLabelText("Step title")).toHaveValue("Left behind")
-    expect(screen.getByText("Unsaved changes")).toBeInTheDocument()
+    expect(screen.getByText("Saving…")).toBeInTheDocument()
+  })
+})
+
+describe("step editor: autosave", () => {
+  it("has no Save button and saves once after the author pauses", async () => {
+    const bodies = recordSaves()
+    const { user } = renderStepEditor(150)
+    await editTitle(user, "Typed")
+    expect(screen.queryByRole("button", { name: "Save" })).toBeNull()
+    await waitFor(() => expect(bodies.at(-1)?.content.title).toBe("Typed"))
+    expect(await screen.findByText("Saved")).toBeInTheDocument()
+  })
+
+  it("shows Saving… while an edit waits for the save and the error when it fails", async () => {
+    server.use(
+      http.put(apiUrl("/v1/lms/steps/:id/draft"), () =>
+        HttpResponse.json(
+          { type: "common/internal", title: "Server error", status: 500 },
+          { status: 500, headers: { "Content-Type": "application/problem+json" } },
+        ),
+      ),
+    )
+    const { user } = renderStepEditor(60_000)
+    await user.type(await screen.findByLabelText("Step title"), "x")
+    expect(screen.getByText("Saving…")).toBeInTheDocument()
+    await user.tab()
+    expect(await screen.findByText("Could not save")).toBeInTheDocument()
+  })
+
+  it("saves pending edits when the editor is left", async () => {
+    const bodies = recordSaves()
+    const { user, unmount } = renderStepEditor(60_000)
+    await editTitle(user, "Route change")
+    unmount()
+    await waitFor(() => expect(bodies.at(-1)?.content.title).toBe("Route change"))
   })
 })
 
@@ -186,7 +221,7 @@ describe("step editor: test builder", () => {
     // The new question is incomplete, which the editor says before publishing.
     expect(screen.getByTestId("content-issues")).toHaveTextContent("Block 1, question 4: the question text is empty.")
 
-    await user.click(screen.getByRole("button", { name: "Save" }))
+    await user.tab() // leaving the field saves (blur autosave)
     await waitFor(() => expect(bodies).toHaveLength(1))
     const block = bodies[0]?.content.blocks[0]
     expect(block?.type).toBe("test")
@@ -198,7 +233,7 @@ describe("step editor: test builder", () => {
 
     // A second save after more typing sends the real ids.
     await user.type(screen.getAllByLabelText("Question (Markdown)")[3] as HTMLElement, "New question?")
-    await user.click(screen.getByRole("button", { name: "Save" }))
+    await user.tab() // leaving the field saves (blur autosave)
     await waitFor(() => expect(bodies).toHaveLength(2))
     const second = bodies[1]?.content.blocks[0]
     if (second?.type !== "test") throw new Error("expected a test block")

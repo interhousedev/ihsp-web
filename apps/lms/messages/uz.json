@@ -104,7 +104,8 @@
     "kind": {
       "text": "material",
       "test": "test",
-      "flashcards": "kartochkalar"
+      "flashcards": "kartochkalar",
+      "video": "video"
     },
     "status": {
       "passed": "o'tilgan",
@@ -127,7 +128,9 @@
     "editCourse": "Kursni tahrirlash",
     "myCourses": "Mening kurslarim",
     "sidebarUnavailable": "Kurs mundarijasini yuklab bo'lmadi.",
-    "lessonNavigation": "Dars navigatsiyasi"
+    "lessonNavigation": "Dars navigatsiyasi",
+    "video": "Video",
+    "videoUnavailable": "Bu videoni ko'rsatib bo'lmaydi."
   },
   "test": {
     "title": "Test",
@@ -167,7 +170,17 @@
     "incorrect": "Noto'g'ri",
     "yourAnswer": "Sizning javobingiz",
     "noAnswer": "javob yo'q",
-    "correctAnswer": "To'g'ri javob"
+    "correctAnswer": "To'g'ri javob",
+    "moveUp": "Yuqoriga: {item}",
+    "moveDown": "Pastga: {item}",
+    "matchFor": "{item} uchun moslik",
+    "choose": "Tanlang...",
+    "cell": "{row} / {column}",
+    "blank": "{number}-bo'sh joy",
+    "formulaPlaceholder": "Sizning ifodangiz",
+    "formulaVariables": "O'zgaruvchilar: {names}",
+    "reviewedByTeacher": "Bu javobni o'qituvchi baholaydi.",
+    "codeOutput": "Dasturingiz chiqishi"
   },
   "cards": {
     "title": "Kartochkalar",
@@ -253,7 +266,6 @@
       "unchanged": "O'zgarmagan"
     },
     "viaMcp": "MCP orqali",
-    "save": "Saqlash",
     "checkpoint": "Nazorat nuqtasini saqlash",
     "history": "Tarix",
     "discard": "O'zgarishlarni bekor qilish",
@@ -271,7 +283,8 @@
     "blockTypes": {
       "text": "Matn",
       "test": "Test",
-      "flashcards": "Kartochkalar"
+      "flashcards": "Kartochkalar",
+      "video": "Video"
     },
     "markdownLabel": "{number}-blok Markdown matni",
     "moveBlockUp": "{number}-blokni yuqoriga",
@@ -281,7 +294,83 @@
     "removeBlockDescription": "Blok qoralamadan o'chiriladi. Uni tarix orqali qaytarish mumkin.",
     "removeBlockConfirm": "O'chirish",
     "discardTitle": "Bu qadam o'zgarishlari bekor qilinsinmi?",
-    "discardDescription": "Qadam nashr qilingan versiyaga qaytadi. Saqlangan va saqlanmagan qoralama tahrirlari yo'qoladi."
+    "discardDescription": "Qadam nashr qilingan versiyaga qaytadi. Saqlangan va saqlanmagan qoralama tahrirlari yo'qoladi.",
+    "typePicker": {
+      "title": "Qadam turini tanlang",
+      "description": "Yangi blok nima bo'lishini tanlang. Savol turini keyin o'zgartirish mumkin.",
+      "groups": {
+        "materials": "Materiallar",
+        "tests": "Test topshiriqlari",
+        "answers": "Javob kiritiladigan topshiriqlar"
+      },
+      "types": {
+        "text": {
+          "title": "Matn",
+          "description": "Formatlash va formulalar bilan dars matni"
+        },
+        "video": {
+          "title": "Video",
+          "description": "Havola orqali video"
+        },
+        "flashcards": {
+          "title": "Kartochkalar",
+          "description": "Oraliqli takrorlash bilan kartochkalar"
+        },
+        "test": {
+          "title": "Test",
+          "description": "Urinishlar va o'tish balli bilan bir nechta savol"
+        },
+        "choice": {
+          "title": "Tanlovli topshiriq",
+          "description": "Bitta yoki bir nechta to'g'ri variantni tanlash"
+        },
+        "sorting": {
+          "title": "Saralash",
+          "description": "Elementlarni to'g'ri tartibga qo'yish"
+        },
+        "matching": {
+          "title": "Moslashtirish",
+          "description": "Ikki ro'yxat elementlarini moslashtirish"
+        },
+        "table": {
+          "title": "Jadval",
+          "description": "Jadvalning to'g'ri kataklarini belgilash"
+        },
+        "blanks": {
+          "title": "Bo'sh joylarni to'ldirish",
+          "description": "Matndagi bo'sh joylarni to'ldirish"
+        },
+        "string": {
+          "title": "Satr",
+          "description": "So'z yoki ibora: aniq yoki regulyar ifoda bo'yicha"
+        },
+        "number": {
+          "title": "Son",
+          "description": "Ruxsat etilgan xatolik bilan son"
+        },
+        "random_number": {
+          "title": "Tasodifiy hosil qilinadigan son",
+          "description": "Har bir talabada o'zgaruvchilarning o'z qiymatlari"
+        },
+        "formula": {
+          "title": "Matematik formula",
+          "description": "Ramziy yoki qiymatlar bo'yicha tekshiriladigan ifoda"
+        },
+        "code": {
+          "title": "Dasturlash",
+          "description": "Kod javobi: chiqish solishtiriladi yoki qo'lda baholanadi"
+        },
+        "free": {
+          "title": "Erkin javob",
+          "description": "O'qituvchi baholaydigan batafsil javob"
+        }
+      }
+    },
+    "video": {
+      "url": "Video havolasi",
+      "urlHint": "YouTube, Vimeo yoki video faylga to'g'ridan-to'g'ri havola.",
+      "caption": "Izoh (ixtiyoriy)"
+    }
   },
   "markdownEditor": {
     "write": "Matn",
@@ -293,6 +382,28 @@
     "placeholder": "Matnni shu yerga yozing. Bezash uchun soʻzlarni belgilang.",
     "hint": "Matnni bezash uchun uni belgilang. Alt+F10 bezash tugmalariga, Escape esa matnga qaytaradi.",
     "toolbar": "Matnni bezash",
+    "undo": "Bekor qilish",
+    "redo": "Qaytarish",
+    "paragraphStyle": "Xatboshi uslubi",
+    "paragraph": "Oddiy matn",
+    "textColor": "Matn rangi",
+    "alignLeft": "Chap tomonga",
+    "alignCenter": "Markazga",
+    "alignRight": "Oʻng tomonga",
+    "unlink": "Havolani olib tashlash",
+    "image": "Rasm yuklash",
+    "imageFile": "Rasm fayli",
+    "imageRejected": "Rasm qabul qilinmadi",
+    "table": "Jadval qoʻshish",
+    "source": "Manba",
+    "colors": {
+      "red": "Qizil",
+      "orange": "Toʻq sariq",
+      "green": "Yashil",
+      "blue": "Koʻk",
+      "purple": "Binafsha",
+      "gray": "Kulrang"
+    },
     "selectionToolbar": "Belgilangan matnni bezash",
     "bold": "Qalin",
     "italic": "Kursiv",
@@ -399,7 +510,15 @@
       "single": "Bitta variant",
       "multiple": "Bir nechta variant",
       "text": "Matnli javob",
-      "number": "Son"
+      "number": "Son",
+      "sorting": "Saralash",
+      "matching": "Moslashtirish",
+      "table": "Jadval",
+      "blanks": "Bo'sh joylarni to'ldirish",
+      "random_number": "Tasodifiy hosil qilinadigan son",
+      "formula": "Matematik formula",
+      "code": "Dasturlash",
+      "free": "Erkin javob"
     },
     "points": "Ball",
     "prompt": "Savol (Markdown)",
@@ -423,7 +542,53 @@
     "caseSensitive": "Harf registrini hisobga olish",
     "correctValue": "To'g'ri qiymat",
     "tolerance": "Og'ish chegarasi",
-    "toleranceHint": "Shu masofadagi javob to'g'ri hisoblanadi."
+    "toleranceHint": "Shu masofadagi javob to'g'ri hisoblanadi.",
+    "sortingHint": "Elementlarni to'g'ri tartibda yozing. Talabalar ularni aralashtirilgan holda ko'radi.",
+    "itemText": "{number}-element",
+    "moveItemUp": "{number}-elementni yuqoriga",
+    "moveItemDown": "{number}-elementni pastga",
+    "removeItem": "{number}-elementni o'chirish",
+    "addItem": "Element qo'shish",
+    "matchingHint": "Har bir qator juftlik: chap element va unga mos o'ng element.",
+    "pairLeft": "{number}-chap element",
+    "pairRight": "{number}-o'ng element",
+    "removePair": "{number}-juftlikni o'chirish",
+    "addPair": "Juftlik qo'shish",
+    "tableHint": "Talaba belgilashi kerak bo'lgan kataklarni belgilang.",
+    "columnTitle": "{number}-ustun",
+    "rowTitle": "{number}-qator",
+    "cellCorrect": "{row}-qator, {column}-ustun to'g'ri",
+    "removeRow": "{number}-qatorni o'chirish",
+    "addRow": "Qator qo'shish",
+    "addColumn": "Ustun qo'shish",
+    "removeColumn": "Oxirgi ustunni o'chirish",
+    "blanksHint": "Savol matnida bo'sh joylar o'rniga '{{'1'}}', '{{'2'}}' ... yozing. Har bir bo'sh joy uchun ruxsat etilgan javoblarni har qatorga bittadan yozing.",
+    "blankNumber": "{number}-bo'sh joy",
+    "removeBlank": "{number}-bo'sh joyni o'chirish",
+    "blankAccepted": "{number}-bo'sh joyning ruxsat etilgan javoblari",
+    "blankRegex": "{number}-bo'sh joyning regulyar ifodasi",
+    "addBlank": "Bo'sh joy qo'shish",
+    "randomHint": "Har bir talaba o'zgaruvchilarning tasodifiy qiymatlarini oladi. Qiymatni ko'rsatish uchun savolda '{'nom'}' yozing.",
+    "variableName": "{number}-o'zgaruvchi nomi",
+    "variableMin": "{number}-o'zgaruvchi minimumi",
+    "variableMax": "{number}-o'zgaruvchi maksimumi",
+    "variableInteger": "Butun sonlar",
+    "removeVariable": "{number}-o'zgaruvchini o'chirish",
+    "addVariable": "O'zgaruvchi qo'shish",
+    "answerFormula": "Javob formulasi",
+    "answerFormulaHint": "+ - * / ^, qavslar, sqrt, sin, cos, ln, abs, pi ishlatish mumkin.",
+    "expectedExpression": "To'g'ri ifoda",
+    "expectedExpressionHint": "Talabaning ifodasi shunga teng bo'lsa qabul qilinadi.",
+    "formulaVariables": "O'zgaruvchilar (vergul bilan)",
+    "compareMode": "Solishtirish",
+    "modeSymbolic": "Ramziy (ekvivalent shakllar)",
+    "modeNumeric": "Sonli (nuqtalar bo'yicha)",
+    "codeHint": "Kod ishga tushirilmaydi. Talaba ko'rsatgan chiqishni solishtirish uchun kutilgan chiqishni kiriting yoki qo'lda baholash uchun bo'sh qoldiring.",
+    "codeLanguage": "Til",
+    "codeStarter": "Boshlang'ich kod",
+    "expectedOutputs": "Kutilgan chiqish",
+    "expectedOutputsHint": "Bir nechta ruxsat etilgan chiqishni uchta chiziqcha (---) qatori bilan ajrating.",
+    "freeHint": "Bu javobni o'qituvchi qo'lda baholaydi."
   },
   "cardsBuilder": {
     "card": "{number}-kartochka",
@@ -447,14 +612,22 @@
       "no-answers": "{block}-blok, {question}-savol: qabul qilinadigan javob yoki muntazam ifoda qo'shing.",
       "no-questions": "{block}-blok: testda savollar yo'q.",
       "pool-too-large": "{block}-blok: tanlov savollar sonidan katta.",
-      "empty-card": "{block}-blok: kartochkaning bir tomoni bo'sh."
+      "empty-card": "{block}-blok: kartochkaning bir tomoni bo'sh.",
+      "empty-video": "{block}-blok: video havolasi bo'sh.",
+      "too-few-items": "{block}-blok, {question}-savol: kamida ikkita juftlik qo'shing.",
+      "empty-item": "{block}-blok, {question}-savol: element bo'sh.",
+      "no-table": "{block}-blok, {question}-savol: jadval tuzing va to'g'ri kataklarni belgilang.",
+      "no-blanks": "{block}-blok, {question}-savol: bo'sh joy qo'shing.",
+      "no-formula": "{block}-blok, {question}-savol: formula bo'sh.",
+      "no-variables": "{block}-blok, {question}-savol: o'zgaruvchi qo'shing."
     }
   },
   "blocks": {
     "types": {
       "text": "Matn",
       "test": "Test",
-      "flashcards": "Kartochkalar"
+      "flashcards": "Kartochkalar",
+      "video": "Video"
     },
     "untitled": "Nomsiz qadam",
     "noBlocks": "Bloklar yo'q.",
@@ -465,7 +638,15 @@
       "single": "Bitta variant",
       "multiple": "Bir nechta variant",
       "text": "Matnli javob",
-      "number": "Son"
+      "number": "Son",
+      "sorting": "Saralash",
+      "matching": "Moslashtirish",
+      "table": "Jadval",
+      "blanks": "Bo'sh joylarni to'ldirish",
+      "random_number": "Tasodifiy hosil qilinadigan son",
+      "formula": "Matematik formula",
+      "code": "Dasturlash",
+      "free": "Erkin javob"
     },
     "points": "{count, plural, one {# ball} other {# ball}}",
     "correct": "To'g'ri",
@@ -489,7 +670,10 @@
       "after_submit": "yuborgandan keyin",
       "after_pass": "o'tgandan keyin",
       "after_last_attempt": "oxirgi urinishdan keyin"
-    }
+    },
+    "tableSummary": "{rows} x {columns} jadval, {marked} ta belgilangan",
+    "randomSummary": "Javob: {formula} (o'zgaruvchilar: {count})",
+    "emptyVideo": "Video havolasi yo'q."
   },
   "diff": {
     "live": "Nashr qilingan versiya",

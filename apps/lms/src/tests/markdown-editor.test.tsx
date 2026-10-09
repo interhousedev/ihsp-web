@@ -100,9 +100,10 @@ describe("markdown editor: floating toolbar", () => {
     await screen.findByTestId("selection-toolbar")
 
     await user.keyboard("{Alt>}{F10}{/Alt}")
-    expect(screen.getByRole("button", { name: "Bold" })).toHaveFocus()
+    const floating = screen.getByRole("toolbar", { name: "Format the selected text" })
+    expect(within(floating).getByRole("button", { name: "Bold" })).toHaveFocus()
     await user.keyboard("{ArrowRight}")
-    expect(screen.getByRole("button", { name: "Italic" })).toHaveFocus()
+    expect(within(floating).getByRole("button", { name: "Italic" })).toHaveFocus()
     await user.keyboard("{Enter}")
     await waitFor(() => expect(textarea).toHaveValue("*word*"))
     expect(textarea).toHaveFocus()
@@ -153,10 +154,10 @@ describe("markdown editor: block toolbar", () => {
     select(textarea, 2)
     const toolbar = screen.getByRole("toolbar", { name: "Text formatting" })
 
-    await user.click(within(toolbar).getByRole("button", { name: "Heading 2" }))
+    await user.selectOptions(within(toolbar).getByRole("combobox", { name: "Paragraph style" }), "heading2")
 
     await waitFor(() => expect(textarea).toHaveValue("## Title\ntext"))
-    expect(within(toolbar).getByRole("button", { name: "Heading 2" })).toHaveAttribute("aria-pressed", "true")
+    expect(within(toolbar).getByRole("combobox", { name: "Paragraph style" })).toHaveValue("heading2")
   })
 
   it("turns selected lines into a numbered list and back", async () => {

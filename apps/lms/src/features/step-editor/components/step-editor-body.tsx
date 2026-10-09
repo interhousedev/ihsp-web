@@ -50,7 +50,7 @@ export function StepEditorBody({
   })
 
   return (
-    <div className="flex flex-col gap-4">
+    <div className="flex flex-col gap-4" onBlurCapture={canEdit ? editor.flush : undefined}>
       <div className="flex flex-wrap items-center justify-between gap-2">
         <LinkButton href={hrefs.edit(draft.course_id)} variant="ghost" className="min-h-11 md:min-h-8">
           <Icons.chevronLeft aria-hidden />
@@ -68,14 +68,6 @@ export function StepEditorBody({
         <div className="ms-auto flex flex-wrap items-center gap-2">
           {canEdit ? (
             <>
-              <Button
-                onClick={() => void editor.save()}
-                disabled={!editor.dirty || editor.busy}
-                className="min-h-11 md:min-h-8"
-              >
-                <Icons.check aria-hidden />
-                {t("save")}
-              </Button>
               <Button variant="outline" onClick={() => setCheckpointOpen(true)} className="min-h-11 md:min-h-8">
                 {t("checkpoint")}
               </Button>

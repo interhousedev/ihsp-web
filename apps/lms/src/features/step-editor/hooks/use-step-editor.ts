@@ -18,16 +18,20 @@ import { AUTOSAVE_INTERVAL_MS, type SaveStatus } from "../../editor/utils/save-s
 import { jsonEqual } from "../../shared/utils/block-diff"
 import { remapIds } from "../utils/content-ops"
 
+/** Pause after the last edit before the draft is saved. */
+const AUTOSAVE_DEBOUNCE_MS = 1500
+
 type Phase = "idle" | "saving" | "offline" | "error" | "conflict"
 
 /**
- * The working copy of a step draft: edits, Save and autosave (30 s), the optimistic-lock version, the conflict with
+ * The working copy of a step draft: edits and continuous autosave (debounced after each edit, on blur, when the tab is
+ * hidden and when the editor unmounts, with a retry tick as a safety net), the optimistic-lock version, the conflict with
  * another editor (Keep mine / Take theirs, LMS-13), the offline buffer and the keys that keep inputs mounted while the
  * server swaps placeholder ids for real ones.
  */
 export function useStepEditor(
   draft: StepDraft,
-  { canEdit, autosaveMs = AUTOSAVE_INTERVAL_MS }: { canEdit: boolean; autosaveMs?: number },
+  { canEdit, autosaveMs, debounceMs }: { canEdit: boolean; autosaveMs?: number; debounceMs?: number },
 ) {
   const stepId = draft.step_id
   const queryClient = useQueryClient()
@@ -118,8 +122,39 @@ export function useStepEditor(
     }
   }, [canEdit, keyOf, queryClient, stepId])
 
+  const saveRef = useRef(save)
+  useEffect(() => {
+    saveRef.current = save
+  })
+  const delay = debounceMs ?? autosaveMs ?? AUTOSAVE_DEBOUNCE_MS
+
+  // Debounced save: every edit restarts the timer, so typing saves once the author pauses.
+  useEffect(() => {
+    if (!canEdit || !dirty || phase === "conflict") return
+    const timer = window.setTimeout(() => void saveRef.current(), delay)
+    return () => window.clearTimeout(timer)
+  }, [canEdit, content, delay, dirty, phase])
+
+  // Leaving the page (route change, tab hidden) saves what is pending; one draft per step, updated in place.
+  useEffect(() => {
+    if (!canEdit) return
+    const hidden = () => {
+      if (document.visibilityState === "hidden" && phaseRef.current !== "conflict") void saveRef.current()
+    }
+    document.addEventListener("visibilitychange", hidden)
+    return () => {
+      document.removeEventListener("visibilitychange", hidden)
+      if (phaseRef.current !== "conflict") void saveRef.current()
+    }
+  }, [canEdit])
+
+  /** Saves now when something is pending (a blur in the editor). */
+  const flush = useCallback(() => {
+    if (phaseRef.current !== "conflict") void saveRef.current()
+  }, [])
+
   useAutosave({
-    intervalMs: autosaveMs,
+    intervalMs: autosaveMs ?? AUTOSAVE_INTERVAL_MS,
     enabled: canEdit,
     onTick: () => {
       if (phaseRef.current !== "conflict") void save()
@@ -172,7 +207,8 @@ export function useStepEditor(
     setRestorable(null)
   }, [key])
 
-  const status: SaveStatus = phase === "idle" ? (dirty ? "dirty" : "saved") : phase
+  // Edits waiting for the debounce count as "saving": the author never has to press anything.
+  const status: SaveStatus = phase === "idle" ? (dirty ? "saving" : "saved") : phase
 
   return {
     content,
@@ -181,6 +217,7 @@ export function useStepEditor(
     status,
     error,
     save,
+    flush,
     keyOf,
     conflict,
     conflictOpen,

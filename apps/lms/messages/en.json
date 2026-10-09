@@ -104,7 +104,8 @@
     "kind": {
       "text": "reading",
       "test": "quiz",
-      "flashcards": "flash cards"
+      "flashcards": "flash cards",
+      "video": "video"
     },
     "status": {
       "passed": "passed",
@@ -127,7 +128,9 @@
     "editCourse": "Edit the course",
     "myCourses": "My courses",
     "sidebarUnavailable": "The course contents could not be loaded.",
-    "lessonNavigation": "Lesson navigation"
+    "lessonNavigation": "Lesson navigation",
+    "video": "Video",
+    "videoUnavailable": "This video cannot be shown."
   },
   "test": {
     "title": "Test",
@@ -167,7 +170,17 @@
     "incorrect": "Incorrect",
     "yourAnswer": "Your answer",
     "noAnswer": "no answer",
-    "correctAnswer": "Correct answer"
+    "correctAnswer": "Correct answer",
+    "moveUp": "Move {item} up",
+    "moveDown": "Move {item} down",
+    "matchFor": "Match for {item}",
+    "choose": "Choose...",
+    "cell": "{row} / {column}",
+    "blank": "Blank {number}",
+    "formulaPlaceholder": "Your expression",
+    "formulaVariables": "Variables: {names}",
+    "reviewedByTeacher": "A teacher will grade this answer.",
+    "codeOutput": "Output of your program"
   },
   "cards": {
     "title": "Flash cards",
@@ -253,7 +266,6 @@
       "unchanged": "Unchanged"
     },
     "viaMcp": "Via MCP",
-    "save": "Save",
     "checkpoint": "Save checkpoint",
     "history": "History",
     "discard": "Discard changes",
@@ -271,7 +283,8 @@
     "blockTypes": {
       "text": "Text",
       "test": "Test",
-      "flashcards": "Flash cards"
+      "flashcards": "Flash cards",
+      "video": "Video"
     },
     "markdownLabel": "Markdown of block {number}",
     "moveBlockUp": "Move block {number} up",
@@ -281,7 +294,83 @@
     "removeBlockDescription": "The block is removed from the draft. Use the history to get it back.",
     "removeBlockConfirm": "Delete",
     "discardTitle": "Discard changes of this step?",
-    "discardDescription": "The step goes back to the live version. Unsaved and saved draft edits are lost."
+    "discardDescription": "The step goes back to the live version. Unsaved and saved draft edits are lost.",
+    "typePicker": {
+      "title": "Choose a step type",
+      "description": "Pick what the new block is. You can change a question's type later.",
+      "groups": {
+        "materials": "Materials",
+        "tests": "Test tasks",
+        "answers": "Tasks with a typed answer"
+      },
+      "types": {
+        "text": {
+          "title": "Text",
+          "description": "Lesson text with formatting and formulas"
+        },
+        "video": {
+          "title": "Video",
+          "description": "A video by link"
+        },
+        "flashcards": {
+          "title": "Flash cards",
+          "description": "Cards studied with spaced repetition"
+        },
+        "test": {
+          "title": "Test",
+          "description": "Several questions with attempts and a passing score"
+        },
+        "choice": {
+          "title": "Choice",
+          "description": "Pick one or several correct options"
+        },
+        "sorting": {
+          "title": "Sorting",
+          "description": "Put the items in the right order"
+        },
+        "matching": {
+          "title": "Matching",
+          "description": "Match the items of two lists"
+        },
+        "table": {
+          "title": "Table",
+          "description": "Mark the right cells of a table"
+        },
+        "blanks": {
+          "title": "Fill in the blanks",
+          "description": "Fill the gaps in a text"
+        },
+        "string": {
+          "title": "Text answer",
+          "description": "A word or phrase, exact or by regular expression"
+        },
+        "number": {
+          "title": "Number",
+          "description": "A number, with a tolerance"
+        },
+        "random_number": {
+          "title": "Generated number",
+          "description": "Variables get random values for each student"
+        },
+        "formula": {
+          "title": "Math formula",
+          "description": "An expression checked symbolically or by values"
+        },
+        "code": {
+          "title": "Programming",
+          "description": "A code answer; output compared or graded by hand"
+        },
+        "free": {
+          "title": "Free answer",
+          "description": "A long answer graded by a teacher"
+        }
+      }
+    },
+    "video": {
+      "url": "Video link",
+      "urlHint": "YouTube, Vimeo or a direct link to a video file.",
+      "caption": "Caption (optional)"
+    }
   },
   "markdownEditor": {
     "write": "Write",
@@ -293,6 +382,28 @@
     "placeholder": "Write the text here. Select words to format them.",
     "hint": "Select text to format it. Alt+F10 moves to the formatting buttons, Escape back to the text.",
     "toolbar": "Text formatting",
+    "undo": "Undo",
+    "redo": "Redo",
+    "paragraphStyle": "Paragraph style",
+    "paragraph": "Paragraph",
+    "textColor": "Text colour",
+    "alignLeft": "Align left",
+    "alignCenter": "Align centre",
+    "alignRight": "Align right",
+    "unlink": "Remove link",
+    "image": "Upload image",
+    "imageFile": "Image file",
+    "imageRejected": "This image was rejected",
+    "table": "Insert table",
+    "source": "Source",
+    "colors": {
+      "red": "Red",
+      "orange": "Orange",
+      "green": "Green",
+      "blue": "Blue",
+      "purple": "Purple",
+      "gray": "Gray"
+    },
     "selectionToolbar": "Format the selected text",
     "bold": "Bold",
     "italic": "Italic",
@@ -399,7 +510,15 @@
       "single": "Single choice",
       "multiple": "Multiple choice",
       "text": "Text answer",
-      "number": "Number"
+      "number": "Number",
+      "sorting": "Sorting",
+      "matching": "Matching",
+      "table": "Table",
+      "blanks": "Fill in the blanks",
+      "random_number": "Generated number",
+      "formula": "Math formula",
+      "code": "Programming",
+      "free": "Free answer"
     },
     "points": "Points",
     "prompt": "Question (Markdown)",
@@ -423,7 +542,53 @@
     "caseSensitive": "Case sensitive",
     "correctValue": "Correct value",
     "tolerance": "Tolerance",
-    "toleranceHint": "An answer within this distance counts as correct."
+    "toleranceHint": "An answer within this distance counts as correct.",
+    "sortingHint": "List the items in the correct order. Students see them shuffled.",
+    "itemText": "Item {number}",
+    "moveItemUp": "Move item {number} up",
+    "moveItemDown": "Move item {number} down",
+    "removeItem": "Remove item {number}",
+    "addItem": "Add item",
+    "matchingHint": "Each row is a pair: the left item and the right item that belongs to it.",
+    "pairLeft": "Left item {number}",
+    "pairRight": "Right item {number}",
+    "removePair": "Remove pair {number}",
+    "addPair": "Add pair",
+    "tableHint": "Tick the cells students must mark.",
+    "columnTitle": "Column {number}",
+    "rowTitle": "Row {number}",
+    "cellCorrect": "Row {row}, column {column} is correct",
+    "removeRow": "Remove row {number}",
+    "addRow": "Add row",
+    "addColumn": "Add column",
+    "removeColumn": "Remove last column",
+    "blanksHint": "Write '{{'1'}}', '{{'2'}}' ... in the question where the blanks go. List the accepted answers of each blank, one per line.",
+    "blankNumber": "Blank {number}",
+    "removeBlank": "Remove blank {number}",
+    "blankAccepted": "Accepted answers of blank {number}",
+    "blankRegex": "Regular expression of blank {number}",
+    "addBlank": "Add blank",
+    "randomHint": "Each student gets random values of the variables. Use '{'name'}' in the question to show a value.",
+    "variableName": "Variable {number} name",
+    "variableMin": "Variable {number} minimum",
+    "variableMax": "Variable {number} maximum",
+    "variableInteger": "Integers",
+    "removeVariable": "Remove variable {number}",
+    "addVariable": "Add variable",
+    "answerFormula": "Formula of the answer",
+    "answerFormulaHint": "Use + - * / ^, parentheses, sqrt, sin, cos, ln, abs, pi.",
+    "expectedExpression": "Correct expression",
+    "expectedExpressionHint": "The student's expression is accepted when it equals this one.",
+    "formulaVariables": "Variables (comma separated)",
+    "compareMode": "Comparison",
+    "modeSymbolic": "Symbolic (equivalent forms)",
+    "modeNumeric": "Numeric (sample points)",
+    "codeHint": "Code is not run. Give expected outputs to compare the output a student reports, or leave them empty to grade by hand.",
+    "codeLanguage": "Language",
+    "codeStarter": "Starter code",
+    "expectedOutputs": "Expected outputs",
+    "expectedOutputsHint": "Separate several accepted outputs with a line of three dashes (---).",
+    "freeHint": "A teacher grades this answer by hand."
   },
   "cardsBuilder": {
     "card": "Card {number}",
@@ -447,14 +612,22 @@
       "no-answers": "Block {block}, question {question}: add an accepted answer or a regular expression.",
       "no-questions": "Block {block}: the test has no questions.",
       "pool-too-large": "Block {block}: the pool is larger than the number of questions.",
-      "empty-card": "Block {block}: a card has an empty side."
+      "empty-card": "Block {block}: a card has an empty side.",
+      "empty-video": "Block {block}: the video link is empty.",
+      "too-few-items": "Block {block}, question {question}: add at least two pairs.",
+      "empty-item": "Block {block}, question {question}: an item is empty.",
+      "no-table": "Block {block}, question {question}: build a table and tick the correct cells.",
+      "no-blanks": "Block {block}, question {question}: add a blank.",
+      "no-formula": "Block {block}, question {question}: the formula is empty.",
+      "no-variables": "Block {block}, question {question}: add a variable."
     }
   },
   "blocks": {
     "types": {
       "text": "Text",
       "test": "Test",
-      "flashcards": "Flash cards"
+      "flashcards": "Flash cards",
+      "video": "Video"
     },
     "untitled": "Untitled step",
     "noBlocks": "No blocks.",
@@ -465,7 +638,15 @@
       "single": "Single choice",
       "multiple": "Multiple choice",
       "text": "Text answer",
-      "number": "Number"
+      "number": "Number",
+      "sorting": "Sorting",
+      "matching": "Matching",
+      "table": "Table",
+      "blanks": "Fill in the blanks",
+      "random_number": "Generated number",
+      "formula": "Math formula",
+      "code": "Programming",
+      "free": "Free answer"
     },
     "points": "{count, plural, one {# point} other {# points}}",
     "correct": "Correct",
@@ -489,7 +670,10 @@
       "after_submit": "after submitting",
       "after_pass": "after passing",
       "after_last_attempt": "after the last attempt"
-    }
+    },
+    "tableSummary": "Table {rows} x {columns}, {marked} marked",
+    "randomSummary": "Answer: {formula} ({count} variables)",
+    "emptyVideo": "No video link."
   },
   "diff": {
     "live": "Live version",

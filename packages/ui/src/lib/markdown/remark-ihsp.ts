@@ -4,7 +4,7 @@ import { type InlineMath, mathFromMarkdown } from "mdast-util-math"
 import type { Processor, Transformer } from "unified"
 import { mathSyntax } from "./math-syntax"
 import { spoilerFromMarkdown, spoilerSyntax } from "./spoiler-syntax"
-import { pairUnderlineTags } from "./underline-tags"
+import { applyAlignment, pairUnderlineTags } from "./underline-tags"
 
 /**
  * The IHSP additions to GFM, shared by the renderer and the editor (use after `remark-gfm`):
@@ -23,6 +23,7 @@ function remarkIhspPlugin(this: Processor): Transformer<Root, Root> {
   return (tree, file) => {
     adjustInlineMath(tree, String(file.value), false)
     pairUnderlineTags(tree)
+    applyAlignment(tree)
   }
 }
 
