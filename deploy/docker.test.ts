@@ -511,6 +511,13 @@ describe.skipIf(!haveTools)("entrypoint.sh rendering", () => {
     },
   )
 
+  it("treats an unset PWA_APPS as none (no unbound variable under set -u)", () => {
+    const run = runEntrypoint({})
+    expect(run.stderr).not.toContain("unbound variable")
+    expect(run.exitCode).toBe(0)
+    for (const app of ["lms", "library", "staff", "admin"]) expect(run.envJs(app)).toContain('APP_MODE: "sp"')
+  })
+
   it("PWA_APPS lists one app at a time", () => {
     const run = runEntrypoint({ PWA_APPS: "lms" })
     expect(run.exitCode).toBe(0)
