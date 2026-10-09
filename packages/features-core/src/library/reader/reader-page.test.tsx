@@ -77,7 +77,7 @@ describe("ReaderPage: opening", () => {
     expect(await screen.findByText("This item is not available")).toBeInTheDocument()
   })
 
-  it("never opens a UniLibrary record: not available while it is off, and link-only when it is on", async () => {
+  it("does not open a UniLibrary record while UniLibrary is off", async () => {
     renderPdf(`/read/?item=${libIds.extPinned}`)
     expect(await screen.findByText("This item is not available")).toBeInTheDocument()
   })
@@ -164,9 +164,9 @@ describe("ReaderPage: highlights and notes", () => {
 
     await waitFor(async () => {
       const items = await stored(libIds.bookPhysics10)
-      expect(items.some((a) => a.quote === "Velocity on page 5." && a.color === "green" && a.kind === "highlight")).toBe(
-        true,
-      )
+      expect(
+        items.some((a) => a.quote === "Velocity on page 5." && a.color === "green" && a.kind === "highlight"),
+      ).toBe(true)
     })
     await user.click(await openNotesButton())
     const panel = await screen.findByRole("complementary", { name: "Notes and highlights" })
@@ -198,7 +198,9 @@ describe("ReaderPage: highlights and notes", () => {
     await waitFor(async () => {
       const items = await stored(libIds.bookPhysics10)
       expect(
-        items.some((a) => a.kind === "note" && a.note === "Check the units" && a.color === "blue" && "page" in a.locator),
+        items.some(
+          (a) => a.kind === "note" && a.note === "Check the units" && a.color === "blue" && "page" in a.locator,
+        ),
       ).toBe(true)
     })
   })
@@ -515,7 +517,12 @@ describe("ReaderPage: other formats", () => {
     })
 
     await waitFor(() => expect(epub.last()?.handle.marks.length).toBeGreaterThan(0))
-    expect(epub.last()!.handle.marks.map((mark) => mark.kind).toSorted()).toEqual(["bookmark", "highlight", "note"])
+    expect(
+      epub
+        .last()!
+        .handle.marks.map((mark) => mark.kind)
+        .toSorted(),
+    ).toEqual(["bookmark", "highlight", "note"])
   })
 
   it("highlights a selection inside an EPUB with its CFI", async () => {
@@ -534,7 +541,11 @@ describe("ReaderPage: other formats", () => {
       const items = await stored(libIds.bookOtkanKunlar)
       expect(
         items.some(
-          (a) => a.color === "blue" && "cfi" in a.locator && a.locator.cfi.startsWith("epubcfi(") && a.locator.progress === 0.4,
+          (a) =>
+            a.color === "blue" &&
+            "cfi" in a.locator &&
+            a.locator.cfi.startsWith("epubcfi(") &&
+            a.locator.progress === 0.4,
         ),
       ).toBe(true)
     })

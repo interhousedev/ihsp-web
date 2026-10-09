@@ -9,7 +9,8 @@ import { MyLibraryPage } from "./my-library-page"
 allowSlowRenders()
 afterEach(() => setLibraryActor("student"))
 
-const renderMy = (tab?: string, extra = "") => renderLibrary(<MyLibraryPage />, { route: `/my/${tab ? `?tab=${tab}${extra}` : ""}` })
+const renderMy = (tab?: string, extra = "") =>
+  renderLibrary(<MyLibraryPage />, { route: `/my/${tab ? `?tab=${tab}${extra}` : ""}` })
 
 describe("MyLibraryPage: tabs", () => {
   it("opens on Continue and lists the tabs of the design without an Offline tab", async () => {
@@ -145,7 +146,9 @@ describe("MyLibraryPage: Notes", () => {
 
     await user.type(screen.getByRole("searchbox", { name: "Search notes" }), "derivative")
 
-    await waitFor(() => expect(screen.queryByRole("region", { name: libDetails.bookOtkanKunlar.title })).not.toBeInTheDocument())
+    await waitFor(() =>
+      expect(screen.queryByRole("region", { name: libDetails.bookOtkanKunlar.title })).not.toBeInTheDocument(),
+    )
     expect(screen.getByText("Compare with the derivative from the maths lesson.")).toBeInTheDocument()
     expect(screen.getByText(/1 note/)).toBeInTheDocument()
   })
@@ -165,7 +168,9 @@ describe("MyLibraryPage: Notes", () => {
 
     await user.click(screen.getByRole("button", { name: "Pink" }))
 
-    await waitFor(() => expect(screen.queryByRole("region", { name: libDetails.bookOtkanKunlar.title })).toBeInTheDocument())
+    await waitFor(() =>
+      expect(screen.queryByRole("region", { name: libDetails.bookOtkanKunlar.title })).toBeInTheDocument(),
+    )
     expect(screen.getByText("A net force produces acceleration.")).toBeInTheDocument()
     expect(screen.queryByText("The velocity of a body is the rate of change of its position.")).not.toBeInTheDocument()
   })

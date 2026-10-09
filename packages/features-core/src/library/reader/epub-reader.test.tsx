@@ -1,6 +1,7 @@
 import { describe, expect, it, mock } from "bun:test"
-import { libDetails } from "@ihsp/test-utils"
+import { libDetails, server } from "@ihsp/test-utils"
 import { act, screen, waitFor } from "@testing-library/react"
+import { HttpResponse, http } from "msw"
 import { createRef } from "react"
 import { allowSlowRenders, renderLibrary } from "../test-support"
 import { EpubReader } from "./epub-reader"
@@ -38,7 +39,21 @@ function annotation(overrides: Partial<ViewAnnotation>): ViewAnnotation {
   }
 }
 
-function setup(overrides: Partial<ReaderViewProps> = {}, loadEngine?: () => Promise<ReturnType<typeof createFakeEpub>["engine"]>) {
+/** The book is downloaded once from the presigned URL; the content does not matter to the fake engine. */
+function serveBook() {
+  server.use(
+    http.get(
+      "https://storage.test/library/files/book.epub",
+      () => new HttpResponse("PK-fake-epub", { headers: { "Content-Type": "application/epub+zip" } }),
+    ),
+  )
+}
+
+function setup(
+  overrides: Partial<ReaderViewProps> = {},
+  loadEngine?: () => Promise<ReturnType<typeof createFakeEpub>["engine"]>,
+) {
+  serveBook()
   const fake = createFakeEpub()
   const positions: ReaderPosition[] = []
   const selections: (ReaderSelection | null)[] = []
@@ -144,7 +159,11 @@ describe("EpubReader", () => {
     await waitFor(() => expect(fake.last()).not.toBeNull())
 
     rerender(
-      <EpubReader {...props} settings={{ ...DEFAULT_SETTINGS, fontSize: 140, flow: "scrolled" }} loadEngine={async () => fake.engine} />,
+      <EpubReader
+        {...props}
+        settings={{ ...DEFAULT_SETTINGS, fontSize: 140, flow: "scrolled" }}
+        loadEngine={async () => fake.engine}
+      />,
     )
 
     await waitFor(() => expect(fake.last()!.handle.style).toMatchObject({ fontSize: 140, flow: "scrolled" }))

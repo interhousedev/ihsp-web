@@ -1,8 +1,10 @@
 import { describe, expect, it } from "bun:test"
 import { isTypingTarget, keyAction } from "./reader-keys"
 
-const press = (key: string, modifiers: Partial<{ shiftKey: boolean; ctrlKey: boolean; metaKey: boolean; altKey: boolean }> = {}) =>
-  keyAction({ key, shiftKey: false, ctrlKey: false, metaKey: false, altKey: false, ...modifiers })
+const press = (
+  key: string,
+  modifiers: Partial<{ shiftKey: boolean; ctrlKey: boolean; metaKey: boolean; altKey: boolean }> = {},
+) => keyAction({ key, shiftKey: false, ctrlKey: false, metaKey: false, altKey: false, ...modifiers })
 
 describe("keyAction", () => {
   it("maps the arrows and page keys to turning pages", () => {
@@ -45,14 +47,14 @@ describe("keyAction", () => {
   })
 })
 
-describe("isTypingTarget", () => {
-  function make(html: string): Element {
-    const host = document.createElement("div")
-    host.innerHTML = html
-    document.body.append(host)
-    return host.firstElementChild!.querySelector("[data-target]") ?? host.firstElementChild!
-  }
+function make(html: string): Element {
+  const host = document.createElement("div")
+  host.innerHTML = html
+  document.body.append(host)
+  return host.firstElementChild!.querySelector("[data-target]") ?? host.firstElementChild!
+}
 
+describe("isTypingTarget", () => {
   it("is true for fields and for anything inside a dialog, a menu or a slider", () => {
     expect(isTypingTarget(make("<input />"))).toBe(true)
     expect(isTypingTarget(make("<textarea></textarea>"))).toBe(true)

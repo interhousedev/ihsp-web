@@ -93,7 +93,12 @@ describe("useProgressSaver", () => {
       http.put(apiUrl("/v1/me/library/progress/:itemId"), () => {
         calls += 1
         return HttpResponse.json(
-          { type: "library/not-supported", title: "Not supported", status: 409, message_key: "errors.library.not-supported" },
+          {
+            type: "library/not-supported",
+            title: "Not supported",
+            status: 409,
+            message_key: "errors.library.not-supported",
+          },
           { status: 409, headers: { "Content-Type": "application/problem+json" } },
         )
       }),
