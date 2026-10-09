@@ -105,6 +105,30 @@ describe("step editor: conflict", () => {
   })
 })
 
+describe("step editor: changed by AI", () => {
+  it("shows the Via AI badge when the pending draft was changed by AI", async () => {
+    server.use(
+      http.get(apiUrl("/v1/lms/steps/:id/draft"), () =>
+        HttpResponse.json({ ...stepDraftTest, status: "changed", updated_via: "ai" } satisfies StepDraft),
+      ),
+    )
+    renderStepEditor()
+    expect(await screen.findByText("Via AI")).toBeTruthy()
+    expect(screen.queryByText("Via MCP")).toBeNull()
+  })
+
+  it("shows no AI badge for a draft edited by hand", async () => {
+    server.use(
+      http.get(apiUrl("/v1/lms/steps/:id/draft"), () =>
+        HttpResponse.json({ ...stepDraftTest, updated_via: "ui" } satisfies StepDraft),
+      ),
+    )
+    renderStepEditor()
+    await screen.findByLabelText("Step title")
+    expect(screen.queryByText("Via AI")).toBeNull()
+  })
+})
+
 describe("step editor: saving", () => {
   it("autosaves changes and clears the offline buffer", async () => {
     const bodies = recordSaves()

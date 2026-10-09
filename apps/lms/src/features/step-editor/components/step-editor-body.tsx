@@ -6,6 +6,7 @@ import { Alert, AlertDescription, Badge, Button, ConfirmDialog, Field, FieldLabe
 import { useMutation } from "@tanstack/react-query"
 import { useState } from "react"
 import { SaveIndicator } from "../../editor/components/save-indicator"
+import { OutlineBadge } from "../../shared/components/outline-badge"
 import { hrefs } from "../../shared/utils/hrefs"
 import { useStepEditor } from "../hooks/use-step-editor"
 import { AddBlockBar } from "./add-block-bar"
@@ -58,6 +59,7 @@ export function StepEditorBody({
         <div className="flex items-center gap-2">
           {draft.status !== "unchanged" ? <Badge variant="secondary">{t(`status.${draft.status}`)}</Badge> : null}
           {draft.updated_via === "mcp" ? <Badge variant="outline">{t("viaMcp")}</Badge> : null}
+          {draft.updated_via === "ai" ? <OutlineBadge kind="ai" /> : null}
         </div>
       </div>
 
