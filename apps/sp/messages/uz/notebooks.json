@@ -83,7 +83,11 @@
       "limitNear": "Manbalar limiti deyarli tugadi.",
       "selectFailed": "Tanlovni oʻzgartirib boʻlmadi.",
       "search": "Manbalardan qidirish",
-      "searchEmpty": "«{query}» boʻyicha hech narsa topilmadi"
+      "searchEmpty": "«{query}» boʻyicha hech narsa topilmadi",
+      "inText": "Matn ichida",
+      "inTextLoading": "Matn ichidan qidirilmoqda…",
+      "searchCount": "{count} ta manba topildi",
+      "clearSearch": "Qidiruvni tozalash"
     },
     "group": {
       "file": "Fayllar",
@@ -258,7 +262,8 @@
       "legend": "① manbalaringiz · 🌐 veb-sahifalar",
       "showMoreQuestions": "Yana koʻrsatish",
       "webOn": "Internetdan qidirish yoqilgan",
-      "webOff": "Internetdan qidirishni oʻchirish"
+      "webOff": "Internetdan qidirishni oʻchirish",
+      "showLessQuestions": "Kamroq koʻrsatish"
     },
     "citation": {
       "label": "{n}-manba",
@@ -297,7 +302,26 @@
       },
       "customLabel": "Uslub boʻyicha koʻrsatma",
       "customHint": "U manbalar va havolalar haqidagi qoidalarni bekor qilmaydi.",
-      "customCount": "{count}/{max}"
+      "customCount": "{count}/{max}",
+      "presets": {
+        "label": "Tayyor sozlamalar",
+        "balanced": "Muvozanatli",
+        "tutor": "Repetitor",
+        "exam": "Imtihonga tayyorgarlik",
+        "simple": "Oddiy soʻzlar bilan",
+        "depth": "Batafsil",
+        "prompt": {
+          "exam": "Imtihon oluvchining nazorat roʻyxati kabi javob ber: avval asosiy faktlar va atamalar, keyin imtihonda tushishi mumkin boʻlgan savollar va keng tarqalgan xatolar.",
+          "simple": "Oddiy soʻzlar, qisqa gaplar va kundalik misollar bilan tushuntir; murakkab atamalarsiz tushuntir, kerak boʻlsa ularni izohla.",
+          "depth": "Fikr yuritish, istisno holatlar va misollar bilan puxta, batafsil tushuntirib ber."
+        }
+      },
+      "goal": {
+        "label": "Maqsad",
+        "placeholder": "Nima ustida ishlayapsiz?",
+        "hint": "Ixtiyoriy. Javoblar shunga moslab beriladi.",
+        "left": "{count} ta belgi qoldi"
+      }
     },
     "studio": {
       "title": "Studiya",
@@ -693,7 +717,29 @@
       "already": "Allaqachon manbalarda",
       "add": "{count} ta manba qoʻshish",
       "searching": "Qidirilmoqda… taxminan 20 soniya",
-      "blocked": "Bu sayt sahifalarini oʻqishga ruxsat bermaydi. Uni oching va matnni qoʻyib qoʻying."
+      "blocked": "Bu sayt sahifalarini oʻqishga ruxsat bermaydi. Uni oching va matnni qoʻyib qoʻying.",
+      "back": "Manbalarga qaytish",
+      "count": "{count} ta natija",
+      "submit": "Internetdan qidirish",
+      "mode": "Qidiruv turi",
+      "selectAll": "Hammasini tanlash",
+      "selectNone": "Tanlovni bekor qilish",
+      "open": "«{title}» sahifasini yangi oynada ochish",
+      "queries": "Qidiruv soʻrovlari"
+    },
+    "combine": {
+      "action": "Tanlangan qaydlarni birlashtirish",
+      "hint": "Birlashtirish uchun kamida ikkita qayd tanlang.",
+      "title": "Qaydlarni birlashtirish",
+      "description": "Tanlangan qaydlar bitta yangi qaydga aylanadi. Har birining sarlavhasi boʻlim sarlavhasi boʻlib qoladi.",
+      "titleLabel": "Yangi qayd sarlavhasi",
+      "defaultTitle": "Qaydlar · {title}",
+      "fallbackTitle": "Birlashtirilgan qaydlar",
+      "listLabel": "Birlashtiriladigan qaydlar",
+      "unselect": "Asl qaydlarning tanlovini bekor qilish",
+      "cancel": "Bekor qilish",
+      "submit": "Birlashtirish",
+      "working": "Birlashtirilmoqda…"
     }
   },
   "errors": {

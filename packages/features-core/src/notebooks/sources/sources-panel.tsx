@@ -154,12 +154,7 @@ export function SourcesPanel({ notebook, onCollapse }: SourcesPanelProps) {
             {sources.isSuccess && items.length === 0 ? <SourcesEmpty notebookId={notebookId} /> : null}
             <SourceList sources={shown} flat={flat} renderRow={row} onToggleGroup={toggleGroup} />
             {search.open ? (
-              <SourceSearchResults
-                active={search.active}
-                query={search.query}
-                titleMatches={shown}
-                text={textSearch}
-              />
+              <SourceSearchResults active={search.active} query={search.query} titleMatches={shown} text={textSearch} />
             ) : null}
           </>
         )}

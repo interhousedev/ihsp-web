@@ -12,7 +12,11 @@ describe("presetPatch", () => {
     expect(presetPatch("balanced", prompts)).toEqual({ style: "default", custom_prompt: null, length: "default" })
     expect(presetPatch("tutor", prompts)).toEqual({ style: "learning_guide", custom_prompt: null, length: "default" })
     expect(presetPatch("exam", prompts)).toEqual({ style: "custom", custom_prompt: prompts.exam, length: "default" })
-    expect(presetPatch("simple", prompts)).toEqual({ style: "custom", custom_prompt: prompts.simple, length: "shorter" })
+    expect(presetPatch("simple", prompts)).toEqual({
+      style: "custom",
+      custom_prompt: prompts.simple,
+      length: "shorter",
+    })
     expect(presetPatch("depth", prompts)).toEqual({ style: "custom", custom_prompt: prompts.depth, length: "longer" })
   })
 
@@ -57,7 +61,11 @@ describe("presetOf", () => {
   })
 
   it("matches the texts of the language in use only", () => {
-    const russian: ChatPresetPrompts = { exam: "Отвечай как экзаменатор.", simple: "Простыми словами.", depth: "Подробно." }
+    const russian: ChatPresetPrompts = {
+      exam: "Отвечай как экзаменатор.",
+      simple: "Простыми словами.",
+      depth: "Подробно.",
+    }
     const fromRussian = presetPatch("exam", russian)
 
     expect(presetOf(fromRussian, russian)).toBe("exam")

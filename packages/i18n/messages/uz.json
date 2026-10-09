@@ -592,7 +592,18 @@
       "webQuota": "Bugun {limit} tadan {remaining} ta qidiruv qoldi",
       "webNone": "Bugungi qidiruvlar tugadi. {time} da yangilanadi.",
       "webOff": "Internetdan qidirishni oʻchirish",
-      "webBadge": "Veb"
+      "webBadge": "Veb",
+      "studyTools": {
+        "label": "Oʻqish vositalari",
+        "flashcards": "Kartochkalar yaratish",
+        "quiz": "Test tuzish",
+        "explain": "Bosqichma-bosqich tushuntirish",
+        "conspect": "Konspekt tuzish",
+        "flashcardsPrompt": "Quyidagi mavzu boʻyicha kartochkalar tuz: ",
+        "quizPrompt": "Quyidagi mavzu boʻyicha 10 ta savoldan iborat test tuz: ",
+        "explainPrompt": "Bosqichma-bosqich tushuntir: ",
+        "conspectPrompt": "Quyidagi mavzu boʻyicha konspekt (tuzilgan oʻquv yozuvlari) tuz: "
+      }
     },
     "attach": {
       "title": "Fayllarni biriktirish",
@@ -727,7 +738,8 @@
       "chip": "Veb-manba {n}: {title}",
       "open": "Sahifani ochish",
       "list": "Javobda ishlatilgan veb-sahifalar",
-      "more": "{site} va yana {count} ta"
+      "more": "{site} va yana {count} ta",
+      "copySources": "Manbalar:"
     }
   },
   "files": {

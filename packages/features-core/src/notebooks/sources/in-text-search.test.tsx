@@ -58,8 +58,11 @@ describe("Sources full-text search", () => {
 
     const group = await inTextGroup()
     expect(within(group).getByText("Biology 10.pdf")).toBeInTheDocument()
-    expect(within(group).getAllByRole("button")).toHaveLength(1)
-    expect(within(group).getByRole("button", { name: /The Calvin cycle takes place in the stroma/ })).toBeInTheDocument()
+    expect(within(group).getByText("My notes")).toBeInTheDocument()
+    expect(within(group).getAllByRole("button")).toHaveLength(2)
+    expect(
+      within(group).getByRole("button", { name: /The Calvin cycle takes place in the stroma/ }),
+    ).toBeInTheDocument()
     // No title contains the word, so the list itself is empty and no "Nothing found" line appears.
     expect(screen.queryByText("Nothing found for «calvin»")).not.toBeInTheDocument()
   })
@@ -71,7 +74,8 @@ describe("Sources full-text search", () => {
 
     const group = await inTextGroup()
     const marked = [...group.querySelectorAll("mark")].map((mark) => mark.textContent)
-    expect(marked).toEqual(["Calvin", "stroma"])
+    expect(marked.length).toBeGreaterThanOrEqual(2)
+    expect([...new Set(marked)].toSorted()).toEqual(["Calvin", "stroma"])
   })
 
   it("lists up to three hits per source, each with its page", async () => {

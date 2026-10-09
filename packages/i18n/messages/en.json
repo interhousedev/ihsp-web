@@ -592,7 +592,18 @@
       "webQuota": "{remaining} of {limit} web searches left today",
       "webNone": "No web searches left today. Resets at {time}.",
       "webOff": "Turn off web search",
-      "webBadge": "Web"
+      "webBadge": "Web",
+      "studyTools": {
+        "label": "Study tools",
+        "flashcards": "Make flash cards",
+        "quiz": "Make a quiz",
+        "explain": "Explain step by step",
+        "conspect": "Make a conspect",
+        "flashcardsPrompt": "Make flash cards about: ",
+        "quizPrompt": "Make a quiz of 10 questions about: ",
+        "explainPrompt": "Explain step by step: ",
+        "conspectPrompt": "Write a conspect (structured study notes) on: "
+      }
     },
     "attach": {
       "title": "Attach files",
@@ -727,7 +738,8 @@
       "chip": "Web source {n}: {title}",
       "open": "Open page",
       "list": "Web pages used for this answer",
-      "more": "{site} and {count} more"
+      "more": "{site} and {count} more",
+      "copySources": "Sources:"
     }
   },
   "files": {

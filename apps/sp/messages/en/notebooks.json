@@ -83,7 +83,11 @@
       "limitNear": "The source limit is almost reached.",
       "selectFailed": "Could not change the selection.",
       "search": "Search sources",
-      "searchEmpty": "Nothing found for «{query}»"
+      "searchEmpty": "Nothing found for «{query}»",
+      "inText": "In the text",
+      "inTextLoading": "Searching in the text…",
+      "searchCount": "{count, plural, one {# source found} other {# sources found}}",
+      "clearSearch": "Clear search"
     },
     "group": {
       "file": "Files",
@@ -258,7 +262,8 @@
       "legend": "① your sources · 🌐 web pages",
       "showMoreQuestions": "Show more",
       "webOn": "Web search is on",
-      "webOff": "Turn off web search"
+      "webOff": "Turn off web search",
+      "showLessQuestions": "Show less"
     },
     "citation": {
       "label": "Source {n}",
@@ -297,7 +302,26 @@
       },
       "customLabel": "Style instruction",
       "customHint": "It never overrides the rules about sources and citations.",
-      "customCount": "{count} of {max}"
+      "customCount": "{count} of {max}",
+      "presets": {
+        "label": "Presets",
+        "balanced": "Balanced",
+        "tutor": "Tutor",
+        "exam": "Exam prep",
+        "simple": "Simple words",
+        "depth": "In depth",
+        "prompt": {
+          "exam": "Answer like an examiner's checklist: the key facts and definitions first, then likely exam questions and common mistakes.",
+          "simple": "Explain in plain, simple words with short sentences and everyday examples; avoid jargon, or explain it when unavoidable.",
+          "depth": "Give a thorough, detailed explanation with reasoning, edge cases and examples."
+        }
+      },
+      "goal": {
+        "label": "Goal",
+        "placeholder": "What are you working on?",
+        "hint": "Optional. Answers are shaped to help with it.",
+        "left": "{count, plural, one {# character left} other {# characters left}}"
+      }
     },
     "studio": {
       "title": "Studio",
@@ -693,7 +717,29 @@
       "already": "Already in sources",
       "add": "{count, plural, one {Add # source} other {Add # sources}}",
       "searching": "Searching… about 20 seconds",
-      "blocked": "This site does not allow reading its pages. Open it and paste the text instead."
+      "blocked": "This site does not allow reading its pages. Open it and paste the text instead.",
+      "back": "Back to sources",
+      "count": "{count, plural, one {# result} other {# results}}",
+      "submit": "Search the web",
+      "mode": "Search type",
+      "selectAll": "Select all",
+      "selectNone": "Clear selection",
+      "open": "Open «{title}» in a new tab",
+      "queries": "Searched for"
+    },
+    "combine": {
+      "action": "Combine selected notes",
+      "hint": "Select at least two notes to combine them.",
+      "title": "Combine notes",
+      "description": "The selected notes become one new note. Each one keeps its title as a heading.",
+      "titleLabel": "Title of the new note",
+      "defaultTitle": "Notes · {title}",
+      "fallbackTitle": "Combined notes",
+      "listLabel": "Notes to combine",
+      "unselect": "Unselect the original notes",
+      "cancel": "Cancel",
+      "submit": "Combine",
+      "working": "Combining…"
     }
   },
   "errors": {

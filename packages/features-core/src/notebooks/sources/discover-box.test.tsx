@@ -1,5 +1,5 @@
 import { describe, expect, it } from "bun:test"
-import { keys, type DiscoverBody } from "@ihsp/api"
+import { keys, type DiscoverBody, type DiscoverResponse } from "@ihsp/api"
 import {
   apiUrl,
   courseWorkspaceReadOnly,
@@ -39,7 +39,7 @@ async function typeQuery(user: ReturnType<typeof renderPanel>["user"], text: str
 }
 
 /** Captures the body of the next Discover request of the empty notebook and answers with the fixture. */
-function captureDiscover(response: unknown = discoverResponse) {
+function captureDiscover(response: DiscoverResponse = discoverResponse) {
   const captured: { body: DiscoverBody | null } = { body: null }
   server.use(
     http.post(discoverUrl(notebookEmptyDetail.id), async ({ request }) => {

@@ -115,9 +115,11 @@ describe("DiscoverResults", () => {
       await search(user, { deep: true })
 
       const queries = screen.getByRole("list", { name: "Searched for" })
-      expect(within(queries).getAllByRole("listitem").map((item) => item.textContent)).toEqual(
-        discoverDeepResponse.queries,
-      )
+      expect(
+        within(queries)
+          .getAllByRole("listitem")
+          .map((item) => item.textContent),
+      ).toEqual(discoverDeepResponse.queries)
     })
 
     it("shows skeleton rows while it searches and says how long a deep search takes", async () => {
@@ -296,7 +298,9 @@ describe("DiscoverResults", () => {
       await user.click(screen.getByRole("button", { name: "Select all" }))
 
       expect(screen.getByRole("button", { name: "Add 0 sources" })).toBeDisabled()
-      expect(screen.getByText("This notebook has reached the source limit. Remove a source to add more.")).toBeInTheDocument()
+      expect(
+        screen.getByText("This notebook has reached the source limit. Remove a source to add more."),
+      ).toBeInTheDocument()
     })
   })
 })

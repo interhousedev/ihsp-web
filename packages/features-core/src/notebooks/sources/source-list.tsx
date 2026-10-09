@@ -18,7 +18,9 @@ type SourceListProps = {
 export function SourceList({ sources, flat, renderRow, onToggleGroup }: SourceListProps) {
   if (sources.length === 0) return null
   if (flat) {
-    return <ul className="flex flex-col gap-0.5">{sources.toSorted((a, b) => a.position - b.position).map(renderRow)}</ul>
+    return (
+      <ul className="flex flex-col gap-0.5">{sources.toSorted((a, b) => a.position - b.position).map(renderRow)}</ul>
+    )
   }
   return (
     <div className="flex flex-col gap-2">

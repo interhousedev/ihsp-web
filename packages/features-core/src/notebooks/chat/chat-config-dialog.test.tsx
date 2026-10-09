@@ -83,7 +83,13 @@ describe("ChatConfigDialog", () => {
 
     await waitFor(() =>
       expect(patch.body).toEqual({
-        chat_config: { style: "custom", custom_prompt: "Explain like I am 12", length: "default", language: "auto", goal: null },
+        chat_config: {
+          style: "custom",
+          custom_prompt: "Explain like I am 12",
+          length: "default",
+          language: "auto",
+          goal: null,
+        },
       }),
     )
   })
@@ -144,13 +150,11 @@ describe("ChatConfigDialog: presets", () => {
     renderDialog()
 
     const group = await screen.findByRole("group", { name: "Presets" })
-    expect(within(group).getAllByRole("button").map((button) => button.textContent)).toEqual([
-      "Balanced",
-      "Tutor",
-      "Exam prep",
-      "Simple words",
-      "In depth",
-    ])
+    expect(
+      within(group)
+        .getAllByRole("button")
+        .map((button) => button.textContent),
+    ).toEqual(["Balanced", "Tutor", "Exam prep", "Simple words", "In depth"])
     expect(pressed("Balanced")).toBe("true")
     expect(pressed("Tutor")).toBe("false")
   })
@@ -159,7 +163,8 @@ describe("ChatConfigDialog: presets", () => {
     renderDialog({ style: "default", custom_prompt: null, length: "shorter", language: "ru" })
 
     await screen.findByRole("group", { name: "Presets" })
-    for (const name of ["Balanced", "Tutor", "Exam prep", "Simple words", "In depth"]) expect(pressed(name)).toBe("false")
+    for (const name of ["Balanced", "Tutor", "Exam prep", "Simple words", "In depth"])
+      expect(pressed(name)).toBe("false")
   })
 
   it("presses a preset that was saved earlier, whatever the language and goal are", async () => {

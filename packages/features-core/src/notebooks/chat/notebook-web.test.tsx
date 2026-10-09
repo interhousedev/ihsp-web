@@ -215,9 +215,7 @@ describe("NotebookChat: web search failures", () => {
   })
 
   it("does the same on 503 with the unavailable text", async () => {
-    server.use(
-      http.post(chatUrl("/messages"), () => problem(503, "web-search/unavailable"), { once: true }),
-    )
+    server.use(http.post(chatUrl("/messages"), () => problem(503, "web-search/unavailable"), { once: true }))
     const { user } = await renderChat()
     await screen.findByRole("article", { name: "Assistant" })
     await user.click(await screen.findByRole("button", WEB_BUTTON))
@@ -254,9 +252,7 @@ describe("NotebookChat: web search failures", () => {
   })
 
   it("does not offer Send without web search for other failures", async () => {
-    server.use(
-      http.post(chatUrl("/messages"), () => problem(422, "notebooks/no-sources-selected"), { once: true }),
-    )
+    server.use(http.post(chatUrl("/messages"), () => problem(422, "notebooks/no-sources-selected"), { once: true }))
     const { user } = await renderChat()
     await screen.findByRole("article", { name: "Assistant" })
     await user.click(await screen.findByRole("button", WEB_BUTTON))
