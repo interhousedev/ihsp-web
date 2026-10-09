@@ -10,7 +10,9 @@ const ALIGN_TAG = /<\/?align-(?:left|center|right)>/g
 const LINE_PREFIX = /^(\s*(?:>\s?)*(?:#{1,6}\s+|[-*+]\s+|\d+[.)]\s+)?)/
 
 /** The colour span around the selection, if the selection sits inside one (same line). */
-function colorSpanAt(state: TextState): { start: number; open: number; close: number; end: number; color: string } | null {
+function colorSpanAt(
+  state: TextState,
+): { start: number; open: number; close: number; end: number; color: string } | null {
   const { text, start, end } = state
   const lineStart = text.lastIndexOf("\n", start - 1) + 1
   const before = text.slice(lineStart, start)
@@ -59,7 +61,8 @@ function lineRanges(state: TextState): { from: number; to: number }[] {
   for (const line of state.text.slice(from, to).split("\n")) {
     const trimmed = line.trim()
     const inRaw = raw.some((block) => block.start <= position && position < block.end)
-    if (trimmed !== "" && !inRaw && !trimmed.startsWith("|")) ranges.push({ from: position, to: position + line.length })
+    if (trimmed !== "" && !inRaw && !trimmed.startsWith("|"))
+      ranges.push({ from: position, to: position + line.length })
     position += line.length + 1
   }
   return ranges

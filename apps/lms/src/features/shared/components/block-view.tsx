@@ -64,6 +64,35 @@ function QuestionSummary({ question, index }: { question: Question; index: numbe
           {t("numberAnswer", { value: question.answer.value ?? 0, tolerance: question.answer.tolerance ?? 0 })}
         </p>
       ) : null}
+      {question.pairs ? (
+        <ul className="mt-2 flex flex-col gap-1 text-sm">
+          {question.pairs.map((pair) => (
+            <li key={pair.id}>
+              {pair.left} - {pair.right}
+            </li>
+          ))}
+        </ul>
+      ) : null}
+      {question.table ? (
+        <p className="mt-2 text-sm">
+          {t("tableSummary", {
+            rows: question.table.rows.length,
+            columns: question.table.columns.length,
+            marked: question.table.correct.flat().filter(Boolean).length,
+          })}
+        </p>
+      ) : null}
+      {question.blanks ? (
+        <p className="mt-2 text-sm">
+          {t("accepted")}: {question.blanks.map((blank) => blank.accepted[0] ?? blank.regex ?? "-").join(" | ")}
+        </p>
+      ) : null}
+      {question.random ? (
+        <p className="mt-2 text-sm">
+          {t("randomSummary", { formula: question.random.formula, count: question.random.variables.length })}
+        </p>
+      ) : null}
+      {question.formula ? <p className="mt-2 font-mono text-sm">{question.formula.expression}</p> : null}
       {question.explanation ? (
         <p className="text-muted-foreground mt-2 text-xs">
           {t("explanation")}: {question.explanation}
@@ -81,6 +110,14 @@ export function BlockView({ block }: { block: Block }) {
       <p className="text-muted-foreground text-sm italic">{t("emptyText")}</p>
     ) : (
       <Markdown>{block.markdown}</Markdown>
+    )
+  }
+  if (block.type === "video") {
+    return (
+      <p className="text-sm break-all">
+        {block.url || t("emptyVideo")}
+        {block.caption ? ` · ${block.caption}` : ""}
+      </p>
     )
   }
   if (block.type === "flashcards") {

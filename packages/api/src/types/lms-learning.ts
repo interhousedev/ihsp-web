@@ -75,6 +75,15 @@ export type StepView = {
     | { id: string; type: "text"; markdown: string; passed: boolean }
     | {
         id: string
+        type: "video"
+        source: "link" | "upload"
+        url: string
+        file_id: string | null
+        caption: string
+        passed: boolean
+      }
+    | {
+        id: string
         type: "test"
         rules: {
           questions: number
@@ -99,7 +108,20 @@ export type StepView = {
   points_earned: number
 }
 
-export type Answer = { option_ids?: string[]; text?: string; number?: number }
+/**
+ * One answer; the field depends on the question type: `option_ids` (choice, and sorting in the student's order),
+ * `text` (text, formula, free; the source for code), `number`, `pairs` (matching: left id to right id), `cells`
+ * (table: `"row:column"`), `texts` (blanks), `output` (code).
+ */
+export type Answer = {
+  option_ids?: string[]
+  text?: string
+  number?: number
+  pairs?: Record<string, string>
+  cells?: string[]
+  texts?: string[]
+  output?: string
+}
 
 export type AttemptView = {
   id: string
@@ -114,6 +136,15 @@ export type AttemptView = {
     points: number
     /** Null for text and number questions. */
     options?: { id: string; text: string }[] | null
+    /** Matching: the left items in order and the right items shuffled for this attempt. */
+    lefts?: { id: string; text: string }[] | null
+    rights?: { id: string; text: string }[] | null
+    table?: { rows: string[]; columns: string[] } | null
+    /** Fill blanks: how many `{{n}}` blanks the prompt has. */
+    blanks?: number | null
+    /** Formula: the variable names allowed in the answer. */
+    variables?: string[] | null
+    code?: { language: string; starter: string; auto: boolean } | null
   }[]
   answers: Record<string, Answer>
   submitted_at: string | null

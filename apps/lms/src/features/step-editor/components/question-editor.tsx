@@ -7,6 +7,16 @@ import { useId } from "react"
 import { QUESTION_TYPES, changeQuestionType, type QuestionType } from "../utils/content-ops"
 import { AnswerConfigEditor } from "./answer-config-editor"
 import { OptionListEditor } from "./option-list-editor"
+import {
+  BlanksFields,
+  CodeFields,
+  FormulaFields,
+  FreeFields,
+  MatchingFields,
+  RandomFields,
+  SortingFields,
+  TableFields,
+} from "./type-fields"
 
 /** One question of a test: type, prompt, points, answer data, explanation. */
 export function QuestionEditor({
@@ -125,6 +135,22 @@ export function QuestionEditor({
           keyOf={keyOf}
           onChange={(options) => onChange({ ...question, options })}
         />
+      ) : question.type === "sorting" ? (
+        <SortingFields question={question} onChange={onChange} keyOf={keyOf} />
+      ) : question.type === "matching" ? (
+        <MatchingFields question={question} onChange={onChange} keyOf={keyOf} />
+      ) : question.type === "table" ? (
+        <TableFields question={question} onChange={onChange} keyOf={keyOf} />
+      ) : question.type === "blanks" ? (
+        <BlanksFields question={question} onChange={onChange} keyOf={keyOf} />
+      ) : question.type === "random_number" ? (
+        <RandomFields question={question} onChange={onChange} keyOf={keyOf} />
+      ) : question.type === "formula" ? (
+        <FormulaFields question={question} onChange={onChange} keyOf={keyOf} />
+      ) : question.type === "code" ? (
+        <CodeFields question={question} onChange={onChange} keyOf={keyOf} />
+      ) : question.type === "free" ? (
+        <FreeFields />
       ) : (
         <AnswerConfigEditor
           type={question.type}

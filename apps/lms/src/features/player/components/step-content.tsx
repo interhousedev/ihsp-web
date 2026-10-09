@@ -5,6 +5,7 @@ import { Markdown } from "@ihsp/ui"
 import { useEffect, useRef } from "react"
 import { FlashcardsBlock } from "./flashcards-block"
 import { TestBlock } from "./test-block"
+import { VideoBlock } from "./video-block"
 
 type Block = StepView["blocks"][number]
 
@@ -43,6 +44,8 @@ export function StepContent({
         <Markdown key={block.id} className="text-base">
           {block.markdown}
         </Markdown>
+      ) : block.type === "video" ? (
+        <VideoBlock key={block.id} url={block.url} caption={block.caption} />
       ) : block.type === "test" ? (
         <TestBlock key={block.id} courseId={courseId} stepId={stepId} block={block} preview={preview} slug={slug} />
       ) : (

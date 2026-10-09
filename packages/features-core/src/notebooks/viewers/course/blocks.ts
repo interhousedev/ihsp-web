@@ -46,13 +46,18 @@ function fromDraft(block: DraftBlock): DisplayBlock {
 
 function fromLms(block: Block): DisplayBlock {
   if (block.type === "text") return { type: "text", markdown: block.markdown }
+  if (block.type === "video") return { type: "text", markdown: block.url }
   if (block.type === "flashcards")
     return { type: "flashcards", cards: block.cards.map(({ front, back }) => ({ front, back })) }
   return {
     type: "test",
     passingScore: block.config.passing_score_pct,
     questions: block.questions.map((question) => ({
-      type: question.type,
+      // the preview knows the four basic kinds; the richer step types show as a text answer
+      type:
+        question.type === "single" || question.type === "multiple" || question.type === "number"
+          ? question.type
+          : "text",
       prompt: question.prompt,
       explanation: question.explanation,
       options: (question.options ?? []).map(({ text, correct }) => ({ text, correct })),

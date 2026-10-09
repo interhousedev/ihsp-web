@@ -4,6 +4,15 @@ import type { Answer } from "@ihsp/api"
 import { useT } from "@ihsp/i18n"
 import { Input, Markdown } from "@ihsp/ui"
 import type { AttemptQuestion } from "../utils/answers"
+import {
+  BlanksInput,
+  CodeInput,
+  FormulaInput,
+  FreeInput,
+  MatchingInput,
+  SortingInput,
+  TableInput,
+} from "./question-inputs"
 
 /** One question of an open attempt. It holds no correctness: the browser never gets it before submitting (LMS-17). */
 export function QuestionField({
@@ -22,6 +31,7 @@ export function QuestionField({
   const t = useT("test")
   const selected = answer?.option_ids ?? []
   const legendId = `question-${question.id}`
+  const shared = { question, answer, onChange, labelledBy: legendId }
 
   return (
     <fieldset className="flex flex-col gap-2 rounded-lg border p-3" disabled={disabled} aria-labelledby={legendId}>
@@ -80,7 +90,7 @@ export function QuestionField({
         />
       ) : null}
 
-      {question.type === "number" ? (
+      {question.type === "number" || question.type === "random_number" ? (
         <Input
           type="number"
           inputMode="decimal"
@@ -92,6 +102,13 @@ export function QuestionField({
           className="h-11 md:h-8"
         />
       ) : null}
+      {question.type === "sorting" ? <SortingInput {...shared} /> : null}
+      {question.type === "matching" ? <MatchingInput {...shared} /> : null}
+      {question.type === "table" ? <TableInput {...shared} /> : null}
+      {question.type === "blanks" ? <BlanksInput {...shared} /> : null}
+      {question.type === "formula" ? <FormulaInput {...shared} /> : null}
+      {question.type === "free" ? <FreeInput {...shared} /> : null}
+      {question.type === "code" ? <CodeInput {...shared} /> : null}
     </fieldset>
   )
 }

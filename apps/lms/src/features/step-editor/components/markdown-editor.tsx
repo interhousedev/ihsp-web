@@ -103,8 +103,14 @@ export function MarkdownEditor({
   )
   const inCodeBlock = codeBlockAt(state, index) !== null
   const linked = linkAt(state, index) !== null
-  const alignment = useMemo(() => alignmentAt({ text: value, start: state.start, end: state.end }), [value, state.start, state.end])
-  const color = useMemo(() => colorAt({ text: value, start: state.start, end: state.end }), [value, state.start, state.end])
+  const alignment = useMemo(
+    () => alignmentAt({ text: value, start: state.start, end: state.end }),
+    [value, state.start, state.end],
+  )
+  const color = useMemo(
+    () => colorAt({ text: value, start: state.start, end: state.end }),
+    [value, state.start, state.end],
+  )
   const writing = view !== "preview" && !disabled
   const selectionKey = `${state.start}:${state.end}`
   const dismissed = dismissedAt === selectionKey
@@ -140,7 +146,13 @@ export function MarkdownEditor({
   }
 
   function paragraph(next: Paragraph) {
-    const current = blocks.has("heading1") ? "heading1" : blocks.has("heading2") ? "heading2" : blocks.has("heading3") ? "heading3" : null
+    const current = blocks.has("heading1")
+      ? "heading1"
+      : blocks.has("heading2")
+        ? "heading2"
+        : blocks.has("heading3")
+          ? "heading3"
+          : null
     if (next === "paragraph") {
       if (current) block(current)
     } else if (current !== next) block(next)
@@ -311,7 +323,10 @@ export function MarkdownEditor({
             spellCheck
             placeholder={t("placeholder")}
             aria-describedby={hintId}
-            className={cn("max-h-[70vh] min-h-40 resize-y rounded-none border-0 bg-transparent px-3 py-2.5 leading-relaxed shadow-none focus-visible:ring-0 dark:bg-transparent", source && "font-mono text-xs")}
+            className={cn(
+              "max-h-[70vh] min-h-40 resize-y rounded-none border-0 bg-transparent px-3 py-2.5 leading-relaxed shadow-none focus-visible:ring-0 dark:bg-transparent",
+              source && "font-mono text-xs",
+            )}
           />
           <p id={hintId} className="sr-only">
             {t("hint")}

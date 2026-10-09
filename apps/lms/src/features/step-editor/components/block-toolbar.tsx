@@ -110,7 +110,13 @@ export function BlockToolbar({
   return (
     <div ref={toolbarRef} className="order-last w-full min-w-0 overflow-x-auto md:order-none md:w-auto md:flex-1">
       <EditorToolbar label={t("toolbar")} onEscape={onEscape} className="gap-0 md:gap-0.5">
-        <ToolbarButton label={t("undo")} icon={IconArrowBackUp} disabled={disabled} onPress={onUndo} shortcut={{ key: "z" }} />
+        <ToolbarButton
+          label={t("undo")}
+          icon={IconArrowBackUp}
+          disabled={disabled}
+          onPress={onUndo}
+          shortcut={{ key: "z" }}
+        />
         <ToolbarButton
           label={t("redo")}
           icon={IconArrowForwardUp}
@@ -134,10 +140,38 @@ export function BlockToolbar({
           <option value="heading3">{t("heading3")}</option>
         </select>
         <Divider />
-        <ToolbarButton label={t("bold")} icon={IconBold} pressed={inline.has("bold")} disabled={disabled} shortcut={shortcutOf("bold")} onPress={() => onFormat("bold")} />
-        <ToolbarButton label={t("italic")} icon={IconItalic} pressed={inline.has("italic")} disabled={disabled} shortcut={shortcutOf("italic")} onPress={() => onFormat("italic")} />
-        <ToolbarButton label={t("underline")} icon={IconUnderline} pressed={inline.has("underline")} disabled={disabled} shortcut={shortcutOf("underline")} onPress={() => onFormat("underline")} />
-        <ToolbarButton label={t("code")} icon={IconCode} pressed={inline.has("code")} disabled={disabled} shortcut={shortcutOf("code")} onPress={() => onFormat("code")} />
+        <ToolbarButton
+          label={t("bold")}
+          icon={IconBold}
+          pressed={inline.has("bold")}
+          disabled={disabled}
+          shortcut={shortcutOf("bold")}
+          onPress={() => onFormat("bold")}
+        />
+        <ToolbarButton
+          label={t("italic")}
+          icon={IconItalic}
+          pressed={inline.has("italic")}
+          disabled={disabled}
+          shortcut={shortcutOf("italic")}
+          onPress={() => onFormat("italic")}
+        />
+        <ToolbarButton
+          label={t("underline")}
+          icon={IconUnderline}
+          pressed={inline.has("underline")}
+          disabled={disabled}
+          shortcut={shortcutOf("underline")}
+          onPress={() => onFormat("underline")}
+        />
+        <ToolbarButton
+          label={t("code")}
+          icon={IconCode}
+          pressed={inline.has("code")}
+          disabled={disabled}
+          shortcut={shortcutOf("code")}
+          onPress={() => onFormat("code")}
+        />
         <Divider />
         <div role="group" aria-label={t("textColor")} className="flex shrink-0 items-center">
           {COLORS.map((name) => (
@@ -155,26 +189,85 @@ export function BlockToolbar({
             >
               <span
                 aria-hidden
-                className={cn("size-3.5 rounded-full ring-offset-1 ring-offset-background", SWATCH[name], color === name && "ring-foreground ring-2")}
+                className={cn(
+                  "size-3.5 rounded-full ring-offset-1 ring-offset-background",
+                  SWATCH[name],
+                  color === name && "ring-foreground ring-2",
+                )}
               />
             </button>
           ))}
         </div>
         <Divider />
-        <ToolbarButton label={t("orderedList")} icon={IconListNumbers} pressed={blocks.has("orderedList")} disabled={disabled} onPress={() => onBlock("orderedList")} />
-        <ToolbarButton label={t("bulletList")} icon={IconList} pressed={blocks.has("bulletList")} disabled={disabled} onPress={() => onBlock("bulletList")} />
-        <ToolbarButton label={t("quote")} icon={IconQuote} pressed={blocks.has("quote")} disabled={disabled} onPress={() => onBlock("quote")} />
+        <ToolbarButton
+          label={t("orderedList")}
+          icon={IconListNumbers}
+          pressed={blocks.has("orderedList")}
+          disabled={disabled}
+          onPress={() => onBlock("orderedList")}
+        />
+        <ToolbarButton
+          label={t("bulletList")}
+          icon={IconList}
+          pressed={blocks.has("bulletList")}
+          disabled={disabled}
+          onPress={() => onBlock("bulletList")}
+        />
+        <ToolbarButton
+          label={t("quote")}
+          icon={IconQuote}
+          pressed={blocks.has("quote")}
+          disabled={disabled}
+          onPress={() => onBlock("quote")}
+        />
         <Divider />
-        <ToolbarButton label={t("alignLeft")} icon={IconAlignLeft} pressed={align === "left"} disabled={disabled} onPress={() => onAlign("left")} />
-        <ToolbarButton label={t("alignCenter")} icon={IconAlignCenter} pressed={align === "center"} disabled={disabled} onPress={() => onAlign("center")} />
-        <ToolbarButton label={t("alignRight")} icon={IconAlignRight} pressed={align === "right"} disabled={disabled} onPress={() => onAlign("right")} />
+        <ToolbarButton
+          label={t("alignLeft")}
+          icon={IconAlignLeft}
+          pressed={align === "left"}
+          disabled={disabled}
+          onPress={() => onAlign("left")}
+        />
+        <ToolbarButton
+          label={t("alignCenter")}
+          icon={IconAlignCenter}
+          pressed={align === "center"}
+          disabled={disabled}
+          onPress={() => onAlign("center")}
+        />
+        <ToolbarButton
+          label={t("alignRight")}
+          icon={IconAlignRight}
+          pressed={align === "right"}
+          disabled={disabled}
+          onPress={() => onAlign("right")}
+        />
         <Divider />
-        <ToolbarButton label={t("link")} icon={IconLink} pressed={linked} disabled={disabled} shortcut={shortcutOf("link")} onPress={onLink} />
+        <ToolbarButton
+          label={t("link")}
+          icon={IconLink}
+          pressed={linked}
+          disabled={disabled}
+          shortcut={shortcutOf("link")}
+          onPress={onLink}
+        />
         <ToolbarButton label={t("unlink")} icon={IconLinkOff} disabled={disabled || !linked} onPress={onUnlink} />
         {onImage}
-        <ToolbarButton label={t("displayEquation")} icon={IconSum} disabled={disabled} shortcut={shortcutOf("equation")} onPress={onEquation} />
+        <ToolbarButton
+          label={t("displayEquation")}
+          icon={IconSum}
+          disabled={disabled}
+          shortcut={shortcutOf("equation")}
+          onPress={onEquation}
+        />
         <ToolbarButton label={t("table")} icon={IconTable} disabled={disabled} onPress={onTable} />
-        <ToolbarButton label={t("codeBlock")} icon={IconSourceCode} pressed={inCodeBlock} disabled={disabled} onPress={onCodeBlock} />
+        <ToolbarButton
+          label={t("codeBlock")}
+          icon={IconSourceCode}
+          pressed={inCodeBlock}
+          disabled={disabled}
+          onPress={onCodeBlock}
+        />
         {trailing}
       </EditorToolbar>
     </div>

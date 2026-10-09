@@ -8,6 +8,7 @@ import { moveItem, updateBlock } from "../utils/content-ops"
 import { BlockCard } from "./block-card"
 import { FlashcardsBlockEditor } from "./flashcards-block-editor"
 import { MarkdownEditor } from "./markdown-editor"
+import { VideoBlockEditor } from "./video-block-editor"
 import { TestBlockEditor } from "./test-block-editor"
 
 /** The blocks of the step in order, each with its editor (text, test builder, flash cards). */
@@ -51,6 +52,7 @@ export function BlockList({
                 label={t("markdownLabel", { number: index + 1 })}
               />
             ) : null}
+            {block.type === "video" ? <VideoBlockEditor block={block} onChange={replace} /> : null}
             {block.type === "test" ? <TestBlockEditor block={block} keyOf={keyOf} onChange={replace} /> : null}
             {block.type === "flashcards" ? (
               <FlashcardsBlockEditor block={block} keyOf={keyOf} onChange={replace} />

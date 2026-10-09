@@ -14,9 +14,23 @@ export type TestConfig = {
   show_answers: "never" | "after_submit" | "after_pass" | "after_last_attempt"
 }
 
+export type QuestionType =
+  | "single"
+  | "multiple"
+  | "text"
+  | "number"
+  | "sorting"
+  | "matching"
+  | "table"
+  | "blanks"
+  | "random_number"
+  | "formula"
+  | "free"
+  | "code"
+
 export type Question = {
   id: string
-  type: "single" | "multiple" | "text" | "number"
+  type: QuestionType
   prompt: string
   points: number
   explanation: string | null
@@ -28,10 +42,27 @@ export type Question = {
     value?: number
     tolerance?: number
   }
+  /** Matching: the left item and its right match. */
+  pairs?: { id: string; left: string; right: string }[]
+  /** Table: `correct[row][column]` marks the cells to tick. */
+  table?: { rows: string[]; columns: string[]; correct: boolean[][] }
+  /** Fill blanks: blank `n` is `{{n}}` (1-based) in the prompt. */
+  blanks?: { id: string; accepted: string[]; regex?: string | null; case_sensitive?: boolean }[]
+  /** Random numeric: each attempt draws the variables; `{name}` in the prompt shows the value. */
+  random?: {
+    variables: { name: string; min: number; max: number; integer: boolean }[]
+    formula: string
+    tolerance: number
+  }
+  /** Math formula: compared by value at sample points. */
+  formula?: { expression: string; variables: string[]; mode: "symbolic" | "numeric"; tolerance: number }
+  /** Programming: no code is run; the reported output is compared, or a reviewer scores it. */
+  code?: { language: string; starter: string; expected_outputs: string[] }
 }
 
 export type Block =
   | { id: string; type: "text"; markdown: string }
+  | { id: string; type: "video"; source: "link" | "upload"; url: string; file_id: string | null; caption: string }
   | { id: string; type: "test"; config: TestConfig; questions: Question[] }
   | { id: string; type: "flashcards"; cards: { id: string; front: string; back: string }[] }
 

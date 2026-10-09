@@ -1,13 +1,32 @@
-import type { Block, Question, StepContent, TestConfig } from "@ihsp/api"
+import type { Block, Question, QuestionType, StepContent, TestConfig } from "@ihsp/api"
 
+export type { QuestionType }
 export type TestBlock = Extract<Block, { type: "test" }>
 export type TextBlock = Extract<Block, { type: "text" }>
+export type VideoBlock = Extract<Block, { type: "video" }>
 export type FlashcardsBlock = Extract<Block, { type: "flashcards" }>
-export type QuestionType = Question["type"]
 export type QuestionOption = NonNullable<Question["options"]>[number]
 export type Card = FlashcardsBlock["cards"][number]
 
-export const QUESTION_TYPES: readonly QuestionType[] = ["single", "multiple", "text", "number"]
+export const QUESTION_TYPES: readonly QuestionType[] = [
+  "single",
+  "multiple",
+  "sorting",
+  "matching",
+  "table",
+  "blanks",
+  "text",
+  "number",
+  "random_number",
+  "formula",
+  "code",
+  "free",
+]
+
+/** Question types whose answer data is the `options` list (sorting keeps the items in the correct order). */
+export function usesOptions(type: QuestionType): boolean {
+  return type === "single" || type === "multiple" || type === "sorting"
+}
 export const SHOW_ANSWERS: readonly TestConfig["show_answers"][] = [
   "never",
   "after_submit",
@@ -45,11 +64,44 @@ export function newOption(): QuestionOption {
   return { id: newTempId(), text: "", correct: false, pinned: false }
 }
 
+export function newPair(): NonNullable<Question["pairs"]>[number] {
+  return { id: newTempId(), left: "", right: "" }
+}
+
+export function newBlank(): NonNullable<Question["blanks"]>[number] {
+  return { id: newTempId(), accepted: [""], regex: null, case_sensitive: false }
+}
+
+export function newVariable(name = "a"): NonNullable<Question["random"]>["variables"][number] {
+  return { name, min: 1, max: 10, integer: true }
+}
+
 export function newQuestion(type: QuestionType = "single"): Question {
   const base = { id: newTempId(), type, prompt: "", points: 1, explanation: null }
   if (type === "single" || type === "multiple")
     return { ...base, options: [{ ...newOption(), correct: true }, newOption()] }
+  if (type === "sorting") return { ...base, options: [newOption(), newOption()] }
+  if (type === "matching") return { ...base, pairs: [newPair(), newPair()] }
+  if (type === "table")
+    return {
+      ...base,
+      table: {
+        rows: ["", ""],
+        columns: ["", ""],
+        correct: [
+          [true, false],
+          [false, true],
+        ],
+      },
+    }
+  if (type === "blanks") return { ...base, prompt: "{{1}}", blanks: [newBlank()] }
   if (type === "text") return { ...base, answer: { accepted: [""], regex: null, case_sensitive: false } }
+  if (type === "random_number")
+    return { ...base, random: { variables: [newVariable("a"), newVariable("b")], formula: "a + b", tolerance: 0 } }
+  if (type === "formula")
+    return { ...base, formula: { expression: "", variables: ["x"], mode: "symbolic", tolerance: 0.000001 } }
+  if (type === "code") return { ...base, code: { language: "python", starter: "", expected_outputs: [] } }
+  if (type === "free") return base
   return { ...base, answer: { value: 0, tolerance: 0 } }
 }
 
@@ -59,6 +111,10 @@ export function newTextBlock(): TextBlock {
 
 export function newTestBlock(): TestBlock {
   return { id: newTempId(), type: "test", config: { ...DEFAULT_TEST_CONFIG }, questions: [newQuestion("single")] }
+}
+
+export function newVideoBlock(): VideoBlock {
+  return { id: newTempId(), type: "video", source: "link", url: "", file_id: null, caption: "" }
 }
 
 export function newFlashcardsBlock(): FlashcardsBlock {
@@ -79,8 +135,9 @@ export function changeQuestionType(question: Question, type: QuestionType): Ques
     points: question.points,
     explanation: question.explanation,
   }
-  if (type === "single" || type === "multiple") {
+  if (type === "single" || type === "multiple" || type === "sorting") {
     let options = question.options ?? newQuestion(type).options ?? []
+    if (type === "sorting") options = options.map((option) => ({ ...option, correct: false }))
     if (type === "single") {
       // a single choice has exactly one correct option
       const firstCorrect = options.findIndex((option) => option.correct)
@@ -88,7 +145,8 @@ export function changeQuestionType(question: Question, type: QuestionType): Ques
     }
     return { ...base, options }
   }
-  return { ...base, answer: newQuestion(type).answer }
+  const fresh = newQuestion(type)
+  return { ...fresh, ...base, prompt: base.prompt === "" ? fresh.prompt : base.prompt }
 }
 
 export function moveItem<T>(list: readonly T[], from: number, to: number): T[] {
@@ -125,6 +183,8 @@ export function remapIds(
         const otherQuestion = other.questions[questionIndex]
         pair(question, otherQuestion)
         question.options?.forEach((option, optionIndex) => pair(option, otherQuestion?.options?.[optionIndex]))
+        question.pairs?.forEach((item, itemIndex) => pair(item, otherQuestion?.pairs?.[itemIndex]))
+        question.blanks?.forEach((item, itemIndex) => pair(item, otherQuestion?.blanks?.[itemIndex]))
       })
     } else if (block.type === "flashcards" && other?.type === "flashcards") {
       block.cards.forEach((card, cardIndex) => pair(card, other.cards[cardIndex]))
@@ -145,6 +205,8 @@ export function remapIds(
             ...(question.options
               ? { options: question.options.map((option) => ({ ...option, id: swap(option.id) })) }
               : {}),
+            ...(question.pairs ? { pairs: question.pairs.map((item) => ({ ...item, id: swap(item.id) })) } : {}),
+            ...(question.blanks ? { blanks: question.blanks.map((item) => ({ ...item, id: swap(item.id) })) } : {}),
           })),
         }
       }
@@ -167,6 +229,13 @@ export type ContentIssueCode =
   | "no-questions"
   | "pool-too-large"
   | "empty-card"
+  | "empty-video"
+  | "too-few-items"
+  | "empty-item"
+  | "no-table"
+  | "no-blanks"
+  | "no-formula"
+  | "no-variables"
 
 export type ContentIssue = { code: ContentIssueCode; blockId: string; questionId?: string }
 
@@ -192,8 +261,43 @@ export function validateContent(content: StepContent): ContentIssue[] {
         } else if (question.type === "text") {
           const accepted = (question.answer?.accepted ?? []).filter((item) => item.trim() !== "")
           if (accepted.length === 0 && !question.answer?.regex) issues.push({ code: "no-answers", ...at })
+        } else if (question.type === "matching") {
+          const pairs = question.pairs ?? []
+          if (pairs.length < 2) issues.push({ code: "too-few-items", ...at })
+          if (pairs.some((item) => item.left.trim() === "" || item.right.trim() === ""))
+            issues.push({ code: "empty-item", ...at })
+        } else if (question.type === "table") {
+          const table = question.table
+          if (
+            !table ||
+            table.rows.length === 0 ||
+            table.columns.length === 0 ||
+            !table.correct.some((r) => r.some(Boolean))
+          )
+            issues.push({ code: "no-table", ...at })
+          else if ([...table.rows, ...table.columns].some((title) => title.trim() === ""))
+            issues.push({ code: "empty-item", ...at })
+        } else if (question.type === "blanks") {
+          const blanks = question.blanks ?? []
+          if (blanks.length === 0) issues.push({ code: "no-blanks", ...at })
+          else if (blanks.some((item) => item.accepted.every((value) => value.trim() === "") && !item.regex))
+            issues.push({ code: "no-answers", ...at })
+        } else if (question.type === "random_number") {
+          if ((question.random?.variables ?? []).length === 0) issues.push({ code: "no-variables", ...at })
+          if ((question.random?.formula ?? "").trim() === "") issues.push({ code: "no-formula", ...at })
+        } else if (question.type === "formula") {
+          if ((question.formula?.expression ?? "").trim() === "") issues.push({ code: "no-formula", ...at })
+        } else if (question.type === "number" && question.answer?.value === undefined) {
+          issues.push({ code: "no-answers", ...at })
+        }
+        if (question.type === "sorting") {
+          const options = question.options ?? []
+          if (options.length < 2) issues.push({ code: "too-few-options", ...at })
+          if (options.some((option) => option.text.trim() === "")) issues.push({ code: "empty-option", ...at })
         }
       }
+    } else if (block.type === "video") {
+      if (block.url.trim() === "" && !block.file_id) issues.push({ code: "empty-video", blockId: block.id })
     } else if (block.type === "flashcards") {
       if (block.cards.some((card) => card.front.trim() === "" || card.back.trim() === "")) {
         issues.push({ code: "empty-card", blockId: block.id })
