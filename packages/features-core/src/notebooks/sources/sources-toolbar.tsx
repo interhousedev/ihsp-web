@@ -1,8 +1,23 @@
 "use client"
 
 import { useT } from "@ihsp/i18n"
-import { Button } from "@ihsp/ui"
-import { IconCategory, IconList, IconRefresh, IconSearch } from "@tabler/icons-react"
+import {
+  Button,
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuRadioGroup,
+  DropdownMenuRadioItem,
+  DropdownMenuTrigger,
+} from "@ihsp/ui"
+import {
+  IconCategory,
+  IconList,
+  IconLoader2,
+  IconRefresh,
+  IconSearch,
+  IconTag,
+  IconTagStarred,
+} from "@tabler/icons-react"
 import type { RefObject } from "react"
 import type { SelectionState } from "../lib/sort-sources"
 import { SelectionCheckbox } from "./selection-checkbox"
@@ -15,6 +30,20 @@ export type SearchToggle = {
   buttonRef: RefObject<HTMLButtonElement | null>
 }
 
+/** How the list is grouped once the notebook has topic labels. */
+export type GroupBy = "type" | "topic" | "none"
+
+/** The "Group by" menu (Type, Topic, None) that replaces the flat toggle when the notebook has topic labels. */
+export type GroupByControl = { value: GroupBy; onChange: (value: GroupBy) => void }
+
+/** The "Auto-label" button: labels the selected, ready sources by topic in the background. */
+export type AutoLabelControl = {
+  busy: boolean
+  /** No selected, ready source: nothing to label. */
+  disabled: boolean
+  onStart: () => void
+}
+
 type SourcesToolbarProps = {
   selection: SelectionState
   hasStale: boolean
@@ -25,12 +54,18 @@ type SourcesToolbarProps = {
   canFlat: boolean
   flat: boolean
   search: SearchToggle
+  /** Absent for read-only course staff. */
+  autoLabel?: AutoLabelControl
+  groupBy?: GroupByControl
   onSyncAll: () => void
   onToggleAll: (selected: boolean) => void
   onToggleFlat: () => void
 }
 
-/** Sync outdated, search, grouped / flat toggle and the tri-state "Select all sources" checkbox. */
+/**
+ * Auto-label, sync outdated, search, grouped / flat toggle (a Group by menu with topic labels) and the tri-state
+ * "Select all sources" checkbox.
+ */
 export function SourcesToolbar({
   selection,
   hasStale,
@@ -39,6 +74,8 @@ export function SourcesToolbar({
   canFlat,
   flat,
   search,
+  autoLabel,
+  groupBy,
   onSyncAll,
   onToggleAll,
   onToggleFlat,
@@ -46,6 +83,25 @@ export function SourcesToolbar({
   const t = useT("notebooks")
   return (
     <div className="flex items-center gap-1 px-3 md:px-4">
+      {autoLabel ? (
+        <Button
+          type="button"
+          variant="ghost"
+          size="icon"
+          className="size-11 md:size-8"
+          aria-label={autoLabel.busy ? t("sources.autoLabeling") : t("sources.autoLabel")}
+          title={autoLabel.disabled && !autoLabel.busy ? t("sources.autoLabelNeedsSelection") : t("sources.autoLabel")}
+          aria-busy={autoLabel.busy}
+          disabled={autoLabel.busy || autoLabel.disabled}
+          onClick={autoLabel.onStart}
+        >
+          {autoLabel.busy ? (
+            <IconLoader2 aria-hidden className="animate-spin motion-reduce:animate-none" />
+          ) : (
+            <IconTagStarred aria-hidden />
+          )}
+        </Button>
+      ) : null}
       {hasStale ? (
         <Button
           type="button"
@@ -73,7 +129,9 @@ export function SourcesToolbar({
       >
         <IconSearch aria-hidden />
       </Button>
-      {canFlat ? (
+      {groupBy ? (
+        <GroupByMenu control={groupBy} />
+      ) : canFlat ? (
         <Button
           type="button"
           variant="ghost"
@@ -100,5 +158,41 @@ export function SourcesToolbar({
         />
       </div>
     </div>
+  )
+}
+
+function GroupByMenu({ control }: { control: GroupByControl }) {
+  const t = useT("notebooks")
+  const Icon = control.value === "topic" ? IconTag : control.value === "none" ? IconList : IconCategory
+  return (
+    <DropdownMenu>
+      <DropdownMenuTrigger
+        render={
+          <Button
+            type="button"
+            variant="ghost"
+            size="icon"
+            className="size-11 md:size-8"
+            aria-label={t("sources.groupBy")}
+            title={t("sources.groupBy")}
+          />
+        }
+      >
+        <Icon aria-hidden />
+      </DropdownMenuTrigger>
+      <DropdownMenuContent align="start" className="w-48">
+        <DropdownMenuRadioGroup value={control.value} onValueChange={(value) => control.onChange(value as GroupBy)}>
+          <DropdownMenuRadioItem value="type" className="min-h-11 md:min-h-8" closeOnClick>
+            {t("sources.groupByType")}
+          </DropdownMenuRadioItem>
+          <DropdownMenuRadioItem value="topic" className="min-h-11 md:min-h-8" closeOnClick>
+            {t("sources.groupByTopic")}
+          </DropdownMenuRadioItem>
+          <DropdownMenuRadioItem value="none" className="min-h-11 md:min-h-8" closeOnClick>
+            {t("sources.groupByNone")}
+          </DropdownMenuRadioItem>
+        </DropdownMenuRadioGroup>
+      </DropdownMenuContent>
+    </DropdownMenu>
   )
 }

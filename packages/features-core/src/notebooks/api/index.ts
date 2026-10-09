@@ -1,5 +1,6 @@
 export * from "./use-notebooks"
 export * from "./use-sources"
+export * from "./use-labels"
 export * from "./use-notebook-chat"
 export * from "./use-artifacts"
 export * from "./use-notebook-usage"

@@ -46,6 +46,7 @@ export function DiscoverBox({ flow, compact }: DiscoverBoxProps) {
 
   return (
     <div className="px-3 md:px-4">
+      {/* oxlint-disable-next-line jsx-a11y/no-noninteractive-element-interactions -- the form only watches focus enter and leave its fields */}
       <form
         role="search"
         aria-label={t("discover.placeholder")}

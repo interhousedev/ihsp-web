@@ -6,8 +6,9 @@ import { Button, StateView } from "@ihsp/ui"
 import { IconLayoutSidebarLeftCollapse, IconPlus } from "@tabler/icons-react"
 import { useState } from "react"
 import { toast } from "sonner"
-import { useSelectSource, useSelectSources, useSources } from "../api"
+import { useAutoLabel, useLabels, useSelectSource, useSelectSources, useSources } from "../api"
 import { canShowFlat, isUsable, selectionState } from "../lib/sort-sources"
+import { groupByTopic } from "../lib/topic-groups"
 import { useWorkspace } from "../workspace-context"
 import { DiscoverBox } from "./discover-box"
 import { DiscoverResults } from "./discover-results"
@@ -19,7 +20,7 @@ import { SourceSearchResults } from "./source-search-results"
 import { SourcesEmpty } from "./sources-empty"
 import { SourcesLimit } from "./sources-limit"
 import { SourcesSkeleton } from "./sources-skeleton"
-import { SourcesToolbar } from "./sources-toolbar"
+import { SourcesToolbar, type GroupBy } from "./sources-toolbar"
 import { useDiscover } from "./use-discover"
 import { useSourceActions } from "./use-source-actions"
 import { useSourceSearch } from "./use-source-search"
@@ -46,8 +47,14 @@ export function SourcesPanel({ notebook, onCollapse }: SourcesPanelProps) {
   const selectMany = useSelectSources(notebookId)
   const actions = useSourceActions(notebookId)
   const discover = useDiscover(notebookId)
+  const labels = useLabels(notebookId)
   // `null` follows the default: flat while the list is short and of one kind, grouped otherwise.
   const [flatChoice, setFlatChoice] = useState<boolean | null>(null)
+  // With topic labels the Group by menu decides; `null` follows the default, the topics.
+  const [groupChoice, setGroupChoice] = useState<GroupBy | null>(null)
+  const autoLabel = useAutoLabel(notebookId, (ok) => {
+    if (ok) setGroupChoice(null)
+  })
 
   const readOnly = notebook.can_write === false
   const items = sources.data ?? []
@@ -55,7 +62,11 @@ export function SourcesPanel({ notebook, onCollapse }: SourcesPanelProps) {
   const textSearch = useTextSearch(notebookId, search.open ? search.text : "")
   const shown = search.shown
   const flatAllowed = canShowFlat(items)
-  const flat = flatAllowed && (flatChoice ?? true)
+  const topicLabels = labels.data?.items ?? []
+  const groupBy: GroupBy | null = topicLabels.length > 0 ? (groupChoice ?? "topic") : null
+  const flat = groupBy ? groupBy === "none" : flatAllowed && (flatChoice ?? true)
+  const topics =
+    groupBy === "topic" ? { notebookId, groups: groupByTopic(shown, topicLabels, !search.active), readOnly } : undefined
   const stale = items.filter((source) => source.status === "stale")
   const selectionFailed = () => toast.error(t("sources.selectFailed"))
 
@@ -130,12 +141,27 @@ export function SourcesPanel({ notebook, onCollapse }: SourcesPanelProps) {
             canFlat={flatAllowed}
             flat={flat}
             search={{ open: search.open, onToggle: search.toggle, buttonRef: search.buttonRef }}
+            autoLabel={
+              readOnly
+                ? undefined
+                : {
+                    busy: autoLabel.busy,
+                    disabled: !items.some((source) => source.selected && source.status === "ready"),
+                    onStart: autoLabel.start,
+                  }
+            }
+            groupBy={groupBy ? { value: groupBy, onChange: setGroupChoice } : undefined}
             onSyncAll={() => void actions.syncMany(stale)}
             onToggleAll={toggleAll}
             onToggleFlat={() => setFlatChoice(!flat)}
           />
           {search.open ? <SourceSearchBar text={search.text} onChange={search.setText} onClose={search.close} /> : null}
         </>
+      ) : null}
+      {autoLabel.failed && !readOnly ? (
+        <p role="alert" className="text-destructive px-4 text-xs">
+          {t("sources.autoLabelFailed")}
+        </p>
       ) : null}
       {actions.syncError ? (
         <p role="alert" className="text-destructive px-4 text-xs">
@@ -152,7 +178,7 @@ export function SourcesPanel({ notebook, onCollapse }: SourcesPanelProps) {
               <StateView state="error" error={sources.error} onRetry={() => void sources.refetch()} />
             ) : null}
             {sources.isSuccess && items.length === 0 ? <SourcesEmpty notebookId={notebookId} /> : null}
-            <SourceList sources={shown} flat={flat} renderRow={row} onToggleGroup={toggleGroup} />
+            <SourceList sources={shown} flat={flat} topics={topics} renderRow={row} onToggleGroup={toggleGroup} />
             {search.open ? (
               <SourceSearchResults active={search.active} query={search.query} titleMatches={shown} text={textSearch} />
             ) : null}
