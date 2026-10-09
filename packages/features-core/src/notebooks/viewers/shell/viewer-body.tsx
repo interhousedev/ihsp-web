@@ -32,7 +32,5 @@ export function ViewerBody({ notebookId, artifact }: { notebookId: string; artif
       return <CoursePlanViewer notebookId={notebookId} artifact={artifact} />
     case "lesson_draft":
       return <LessonDraftViewer notebookId={notebookId} artifact={artifact} />
-    case "audio_overview":
-      return null
   }
 }

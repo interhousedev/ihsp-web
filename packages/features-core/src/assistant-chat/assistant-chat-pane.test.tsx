@@ -30,7 +30,7 @@ function renderPane(chatId: string) {
 }
 
 function message(seq: number, role: "user" | "assistant", text: string): ChatMessageView {
-  return { seq, role, text, file_ids: [], tool_calls: [], created_at: "2026-10-05T17:20:00Z", web: [] }
+  return { seq, role, text, file_ids: [], tool_calls: [], created_at: "2026-10-05T17:20:00Z", web: [], feedback: null }
 }
 
 function serveChat(messages: ChatMessageView[]) {

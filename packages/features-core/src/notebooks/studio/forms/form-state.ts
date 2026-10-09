@@ -1,5 +1,4 @@
 import type {
-  ArtifactKind,
   CoursePlanOptions,
   DataTableOptions,
   FlashcardsOptions,
@@ -102,12 +101,8 @@ export type FormState =
   | SlidesState
   | InfographicState
 
-/** Kinds that have a form (audio is phase 3). */
+/** Kinds that have a form: every Studio kind (there is no audio overview). */
 export type FormKind = FormState["kind"]
-
-export function hasForm(kind: ArtifactKind): kind is FormKind {
-  return kind !== "audio_overview"
-}
 
 const EMPTY: CommonState = { language: "auto", focus: "" }
 

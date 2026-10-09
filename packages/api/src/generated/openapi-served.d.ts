@@ -9912,11 +9912,7 @@ export interface components {
             id: string;
             /** Name */
             name: string;
-            /**
-             * Purpose
-             * @enum {string}
-             */
-            purpose: "ai_upload" | "link" | "mail";
+            purpose: components["schemas"]["FilePurpose"];
             /** Reject Reason */
             reject_reason: string | null;
             /**

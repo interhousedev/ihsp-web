@@ -92,6 +92,7 @@ export const messageUser: ChatMessageView = {
   tool_calls: [],
   created_at: "2026-10-07T04:48:00Z",
   web: [],
+  feedback: null,
 }
 
 export const messageAssistantPending: ChatMessageView = {
@@ -102,6 +103,7 @@ export const messageAssistantPending: ChatMessageView = {
   tool_calls: [toolCallLookup, toolCallPending],
   created_at: "2026-10-07T04:50:00Z",
   web: [],
+  feedback: null,
 }
 
 export const chatDetailPending: ChatDetail = {
@@ -139,6 +141,7 @@ export function turnResultFor(chat: ChatItem, text: string, nextSeq = 3): TurnRe
         tool_calls: [],
         created_at: "2026-10-07T05:12:00Z",
         web: [],
+        feedback: null,
       },
       {
         seq: nextSeq + 1,
@@ -148,6 +151,7 @@ export function turnResultFor(chat: ChatItem, text: string, nextSeq = 3): TurnRe
         tool_calls: [],
         created_at: "2026-10-07T05:12:05Z",
         web: [],
+        feedback: null,
       },
     ],
     status: "done",
@@ -167,6 +171,7 @@ export const turnResultApproved: TurnResult = {
       tool_calls: [{ ...toolCallPending, status: "done", expires_at: null }],
       created_at: "2026-10-07T05:13:00Z",
       web: [],
+      feedback: null,
     },
   ],
   status: "done",
@@ -186,6 +191,7 @@ export function turnResultRejected(reason: string | null): TurnResult {
         tool_calls: [{ ...toolCallPending, status: "rejected", reject_reason: reason, expires_at: null }],
         created_at: "2026-10-07T05:13:00Z",
         web: [],
+        feedback: null,
       },
     ],
     status: "done",
@@ -242,6 +248,7 @@ export const messageAssistantWeb: ChatMessageView = {
   tool_calls: [],
   created_at: "2026-10-07T05:14:00Z",
   web: webResults,
+  feedback: null,
 }
 
 /** Result of a turn sent with the web switch on. */

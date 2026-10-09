@@ -11,7 +11,7 @@ import { CoursePlanForm } from "./forms/course-plan-form"
 import { DataTableForm } from "./forms/data-table-form"
 import { FlashcardsForm } from "./forms/flashcards-form"
 import { FocusField } from "./forms/focus-field"
-import { formProblem, hasForm, initialState, type FormKind, type FormState } from "./forms/form-state"
+import { formProblem, initialState, type FormKind, type FormState } from "./forms/form-state"
 import { InfographicForm } from "./forms/infographic-form"
 import { LessonDraftForm } from "./forms/lesson-draft-form"
 import { LanguageField } from "./forms/language-field"
@@ -35,8 +35,6 @@ export type CustomizeDialogProps = {
 
 /** The per-kind form of the pencil button. Closing keeps nothing: the next opening starts from the defaults. */
 export function CustomizeDialog({ kind, ...rest }: CustomizeDialogProps) {
-  // Audio overviews are not offered and have no form.
-  if (!hasForm(kind)) return null
   return <CustomizeForm kind={kind} {...rest} />
 }
 

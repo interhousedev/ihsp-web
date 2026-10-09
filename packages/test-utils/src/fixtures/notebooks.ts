@@ -276,6 +276,10 @@ export const notebookDetail: NotebookDetail = {
   updated_at: "2026-10-07T04:30:00Z",
   course_id: null,
   can_write: true,
+  origin: "manual",
+  subject_id: null,
+  lesson_id: null,
+  auto: null,
   chat_config: { style: "default", custom_prompt: null, length: "default", language: "auto" },
   summary: {
     summary:
@@ -305,6 +309,10 @@ export const notebookPinnedDetail: NotebookDetail = {
   updated_at: "2026-10-06T09:00:00Z",
   course_id: null,
   can_write: true,
+  origin: "manual",
+  subject_id: null,
+  lesson_id: null,
+  auto: null,
   chat_config: { style: "learning_guide", custom_prompt: null, length: "shorter", language: "ru" },
   summary: null,
   summary_status: "none",
@@ -323,6 +331,10 @@ export const notebookEmptyDetail: NotebookDetail = {
   updated_at: "2026-10-07T05:00:00Z",
   course_id: null,
   can_write: true,
+  origin: "manual",
+  subject_id: null,
+  lesson_id: null,
+  auto: null,
   chat_config: { style: "default", custom_prompt: null, length: "default", language: "auto" },
   summary: null,
   summary_status: "none",
@@ -340,6 +352,11 @@ export function notebookItemOf(detail: NotebookDetail): NotebookItem {
     source_count: detail.source_count,
     last_opened_at: detail.last_opened_at,
     updated_at: detail.updated_at,
+    origin: detail.origin,
+    subject_id: detail.subject_id,
+    lesson_id: detail.lesson_id,
+    course_id: detail.course_id,
+    can_write: detail.can_write,
   }
 }
 
@@ -461,6 +478,7 @@ export function notebookTurn(
     },
     assistant_message: { ...assistant, id: uuid(34, 101 + userSeq), seq: userSeq + 1, source_ids: sourceIds },
     usage: notebookUsage,
+    action: null,
   }
 }
 
@@ -965,8 +983,6 @@ export function artifactDetailOf(item: ArtifactItem): ArtifactDetail {
       return { ...item, kind: "slides", content: ready ? slidesContent : null, ...extra }
     case "infographic":
       return { ...item, kind: "infographic", content: ready ? infographicContent : null, ...extra }
-    case "audio_overview":
-      return { ...item, kind: "audio_overview", content: null, ...extra }
     case "course_plan":
     case "lesson_draft":
       return courseArtifactDetailOf(item)
@@ -990,8 +1006,6 @@ export function artifactTitleOf(kind: ArtifactKind, format: ArtifactItem["format
       return "Photosynthesis"
     case "infographic":
       return "Photosynthesis at a glance"
-    case "audio_overview":
-      return "Photosynthesis: deep dive"
     case "course_plan":
       return "Mechanics for Grade 10"
     case "lesson_draft":

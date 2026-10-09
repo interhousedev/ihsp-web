@@ -86,8 +86,6 @@ function kindLines(item: ArtifactItem): OptionLine[] {
         ...(options.include_flashcards ? [{ labelKey: "opt.includeCards.label", valueKeys: ["opt.yes"] }] : []),
       ]
     }
-    case "audio_overview":
-      return []
   }
 }
 

@@ -13,7 +13,6 @@ import {
 } from "./build-create"
 import {
   formProblem,
-  hasForm,
   initialState,
   type DataTableState,
   type FlashcardsState,
@@ -33,8 +32,6 @@ describe("initialState + buildCreate = the default request of a tile", () => {
 
   for (const tile of tiles) {
     it(tile.id, () => {
-      expect(hasForm(tile.kind)).toBe(true)
-      if (!hasForm(tile.kind)) return
       expect(buildCreate(initialState(tile.kind, tile.format))).toEqual(defaultCreate(tile))
     })
   }

@@ -12,10 +12,10 @@ const DEBOUNCE_MS = 500
  * .../progress`; the last state is also sent when the viewer closes. The cached artifact gets the state at once, so
  * reopening the viewer starts where the student left off even before the server answered.
  */
-export function useDebouncedProgress(notebookId: string, artifactId: string): (state: object) => void {
+export function useDebouncedProgress(notebookId: string, artifactId: string): (state: Record<string, unknown>) => void {
   const queryClient = useQueryClient()
   const { mutate } = useSaveProgress(notebookId, artifactId)
-  const pending = useRef<object | null>(null)
+  const pending = useRef<Record<string, unknown> | null>(null)
   const timer = useRef<ReturnType<typeof setTimeout> | null>(null)
 
   const flush = useCallback(() => {
@@ -33,7 +33,7 @@ export function useDebouncedProgress(notebookId: string, artifactId: string): (s
   }, [artifactId, mutate, notebookId, queryClient])
 
   const save = useCallback(
-    (state: object) => {
+    (state: Record<string, unknown>) => {
       pending.current = state
       if (timer.current !== null) clearTimeout(timer.current)
       timer.current = setTimeout(flush, DEBOUNCE_MS)

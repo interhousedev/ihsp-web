@@ -63,6 +63,8 @@ export type ChatMessageView = {
   created_at: string
   /** Pages of the message's web search; `⟦w1⟧` chips in `text` point at them. */
   web: WebResult[]
+  /** The caller's rating of an assistant message; `null` until they rate it. */
+  feedback: "up" | "down" | null
 }
 
 export type ChatDetail = ChatItem & { messages: ChatMessageView[]; shared: boolean }

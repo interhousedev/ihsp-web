@@ -96,7 +96,7 @@ export function ArtifactViewer({ notebookId, artifactId }: ArtifactViewerProps) 
           <ArtifactPending notebookId={notebookId} artifact={artifact} onRetried={() => void refetch()} />
         ) : null}
         {artifact && artifact.status === "ready" ? (
-          artifact.content === null && artifact.kind !== "audio_overview" ? (
+          artifact.content === null ? (
             <ViewerEmpty />
           ) : (
             <ViewerBody notebookId={notebookId} artifact={artifact} />

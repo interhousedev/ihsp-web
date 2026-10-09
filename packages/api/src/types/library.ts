@@ -38,7 +38,9 @@ export type ItemVisibility = "public" | "lyceum" | "hidden"
 export type Rights = "public_domain" | "open_license" | "permission" | "official"
 export type Importance = "essential" | "recommended" | "further"
 
-export interface ItemCard {
+// Plain `type` aliases (not interfaces): the OpenAPI schema of the card/detail/queue row/TOC entry is free-form
+// (`additionalProperties`), and only a type alias is assignable to an index-signature type (contract check).
+export type ItemCard = {
   id: string | null // null for an external record that is not stored yet
   slug: string | null
   kind: ItemKind
@@ -87,7 +89,7 @@ export interface ItemFile {
   toc: TocEntry[]
 }
 
-export interface TocEntry {
+export type TocEntry = {
   title: string
   page?: number
   href?: string
@@ -113,7 +115,7 @@ export interface ItemProgress {
   percent: number
 }
 
-export interface ItemDetail extends ItemCard {
+export type ItemDetail = ItemCard & {
   status: ItemStatus
   /** A `StatusReasonCode` or free text. */
   status_reason: StatusReasonCode | (string & Record<never, never>) | null
@@ -150,13 +152,13 @@ export interface MaterialInput {
   topic_ids: string[]
   years_of_study: number[]
   type: ItemType
-  language: string
+  language: ItemLanguage
   licence: "all_rights_reserved" | "cc_by" | "cc_by_sa" | "cc_by_nc" | "cc_by_nc_sa"
   body_md?: string
   attested: boolean
 }
 
-export interface QueueRow {
+export type QueueRow = {
   item: ItemCard
   kind: "student_material" | "teacher_material" | "suggestion" | "report" | "rights"
   uploader?: { name: string; cohort: string; role: string }
@@ -487,7 +489,7 @@ export interface ReportResolveBody {
   action: ReportResolveAction
 }
 /** Ids a queue row needs to act on (added to § 7.5's `QueueRow`; absent on rows the contract defines without them). */
-export interface QueueRowIds {
+export type QueueRowIds = {
   report_ids?: string[]
   suggestion?: { id: string; title: string; url: string | null; note: string | null; user_name: string }
 }

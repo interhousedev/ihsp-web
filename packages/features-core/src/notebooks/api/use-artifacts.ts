@@ -116,7 +116,7 @@ export function useRetryArtifact(notebookId: string) {
 
 /** Flash cards and quiz progress (at most 16 KB). The viewer debounces the calls. */
 export function useSaveProgress(notebookId: string, artifactId: string) {
-  return useMutation<unknown, unknown, object>({
+  return useMutation<unknown, unknown, Record<string, unknown>>({
     mutationFn: (state) => putArtifactProgress(notebookId, artifactId, { state }),
   })
 }

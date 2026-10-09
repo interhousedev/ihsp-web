@@ -94,8 +94,6 @@ export function defaultCreate(tile: Pick<StudioTile, "kind" | "format">): Artifa
       return { kind: "slides", options: { format: "presenter", length: "default" } }
     case "infographic":
       return { kind: "infographic", options: { orientation: "portrait", detail: "standard", style: "clean" } }
-    case "audio_overview":
-      return { kind: "audio_overview", options: { format: "deep_dive", length: "default" } }
     case "course_plan":
       return { kind: "course_plan", options: { depth: "overview" } }
     case "lesson_draft":
@@ -122,8 +120,8 @@ export function isActive(item: Pick<ArtifactItem, "status">): boolean {
 export const LIST_ICON = IconListDetails
 
 /** Daily quota kinds the usage endpoint reports; every other kind counts against `artifacts` only. */
-export function quotaKeyFor(kind: ArtifactKind): "artifacts" | "audio_overview" | "slides" | "infographic" {
-  return kind === "audio_overview" || kind === "slides" || kind === "infographic" ? kind : "artifacts"
+export function quotaKeyFor(kind: ArtifactKind): "artifacts" | "slides" | "infographic" {
+  return kind === "slides" || kind === "infographic" ? kind : "artifacts"
 }
 
 /** True when the per-kind or the overall daily count of `kind` is used up. */

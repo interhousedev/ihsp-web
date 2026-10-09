@@ -41,6 +41,10 @@ export const courseWorkspaceDetail: NotebookDetail = {
   updated_at: "2026-10-07T04:30:00Z",
   course_id: courseIds.course,
   can_write: true,
+  origin: "course",
+  subject_id: null,
+  lesson_id: null,
+  auto: null,
   chat_config: { style: "default", custom_prompt: null, length: "default", language: "auto" },
   summary: null,
   summary_status: "none",
@@ -274,6 +278,7 @@ export const authorMessageUser: ChatMessageView = {
   tool_calls: [],
   created_at: "2026-10-07T04:48:00Z",
   web: [],
+  feedback: null,
 }
 
 export const authorMessagePending: ChatMessageView = {
@@ -309,6 +314,7 @@ export const authorMessagePending: ChatMessageView = {
   ],
   created_at: "2026-10-07T04:50:00Z",
   web: [],
+  feedback: null,
 }
 
 export const authorChatDetail: ChatDetail = {
@@ -343,6 +349,7 @@ export const authorTurnApproved: TurnResult = {
       ],
       created_at: "2026-10-07T05:13:00Z",
       web: [],
+      feedback: null,
     },
   ],
   status: "done",

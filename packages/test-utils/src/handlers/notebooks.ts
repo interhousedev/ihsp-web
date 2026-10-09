@@ -720,6 +720,7 @@ export const notebooksHandlers = [
           error: {
             type: "notebooks/source-duplicate",
             title: "Already added",
+            status: 409,
             message_key: "notebooks.source-duplicate",
             params: {},
           },

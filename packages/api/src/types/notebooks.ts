@@ -89,6 +89,8 @@ export type NotebookSummary = {
   suggested_questions: string[]
   generated_at: string
 }
+/** How a notebook came to be: made by hand, kept in sync with a subject or a lesson, or the workspace of an LMS course. */
+export type NotebookOrigin = "manual" | "subject_auto" | "lesson_auto" | "course"
 export type NotebookItem = {
   id: string
   title: string
@@ -97,12 +99,25 @@ export type NotebookItem = {
   source_count: number
   last_opened_at: string | null
   updated_at: string
-}
-export type NotebookDetail = NotebookItem & {
+  origin: NotebookOrigin
+  /** The subject a `subject_auto` notebook follows; null otherwise. */
+  subject_id: string | null
+  /** The lesson a `lesson_auto` notebook follows; null otherwise. */
+  lesson_id: string | null
   /** The LMS course this notebook is the workspace of; null for a student's own notebook. */
   course_id: string | null
   /** False for staff who may only read the workspace (`view_drafts`); true for owners of personal notebooks. */
   can_write: boolean
+}
+/** Sync settings of an automatic notebook (`NotebookDetail.auto`). */
+export type AutoSettings = {
+  excluded_refs: { ref_key: string; title: string }[]
+  include_classmates: boolean
+  synced_at: string | null
+}
+export type NotebookDetail = NotebookItem & {
+  /** Sync settings; null for a notebook that is not automatic. */
+  auto: AutoSettings | null
   chat_config: ChatConfig
   summary: NotebookSummary | null
   summary_status: "none" | "stale" | "building" | "ready" | "failed"
@@ -141,13 +156,13 @@ export type NotebookTurn = {
   user_message: NotebookMessage
   assistant_message: NotebookMessage
   usage: NotebookUsage
-  action?: ArtifactCreate | null // P2: the assistant proposes a Studio output; the web shows an action card
+  action: ArtifactCreate | null // P2: the assistant proposes a Studio output; the web shows an action card
 }
 export type AddSourcesResult = {
   items: SourceItem[]
   rejected: {
     index: number
-    error: { type: string; title: string; message_key: string; params: Record<string, unknown> }
+    error: { type: string; title: string; status: number; message_key: string; params: Record<string, unknown> }
   }[]
 }
 
@@ -170,7 +185,6 @@ export type ArtifactKind =
   | "data_table"
   | "slides"
   | "infographic"
-  | "audio_overview"
   | "course_plan"
   | "lesson_draft"
 export type ReportFormat = "conspect" | "study_guide" | "briefing" | "faq" | "timeline" | "article" | "custom"
@@ -198,10 +212,6 @@ export type InfographicOptions = CommonOptions & {
   detail?: "concise" | "standard" | "detailed"
   style?: "clean" | "sketch" | "bento" | "scientific" | "playful"
 }
-export type AudioOptions = CommonOptions & {
-  format?: "deep_dive" | "brief" | "critique" | "debate"
-  length?: "shorter" | "default" | "longer"
-}
 export type ArtifactOptions =
   | ReportOptions
   | MindMapOptions
@@ -210,7 +220,6 @@ export type ArtifactOptions =
   | DataTableOptions
   | SlidesOptions
   | InfographicOptions
-  | AudioOptions
   | CoursePlanOptions
   | LessonDraftOptions
 
@@ -222,7 +231,6 @@ export type ArtifactCreate = { prompt?: string } & (
   | { kind: "data_table"; options?: DataTableOptions }
   | { kind: "slides"; options?: SlidesOptions }
   | { kind: "infographic"; options?: InfographicOptions }
-  | { kind: "audio_overview"; options?: AudioOptions }
   | { kind: "course_plan"; options?: CoursePlanOptions }
   | { kind: "lesson_draft"; options?: LessonDraftOptions }
 )
@@ -316,13 +324,6 @@ export type InfographicContent = {
   footer: string | null
   blocks: InfographicBlock[]
 }
-export type AudioContent = {
-  title: string
-  format: "deep_dive" | "brief" | "critique" | "debate"
-  language: string
-  turns: { speaker: "host_a" | "host_b" | "narrator"; text: string; refs: string[] }[]
-  duration_ms: number | null
-}
 export type AssetItem = { idx: number; kind: "audio_turn"; duration_ms: number; bytes: number }
 
 type Detail<K extends ArtifactKind, C> = ArtifactItem & { kind: K; content: C | null }
@@ -334,10 +335,9 @@ export type ArtifactDetail = (
   | Detail<"data_table", DataTableContent>
   | Detail<"slides", SlidesContent>
   | Detail<"infographic", InfographicContent>
-  | Detail<"audio_overview", AudioContent>
   | Detail<"course_plan", CoursePlanContent>
   | Detail<"lesson_draft", LessonDraftContent>
-) & { refs_index: RefsIndex; source_map: Record<string, string>; progress_state: unknown | null; assets: AssetItem[] }
+) & { refs_index: RefsIndex; source_map: Record<string, string>; progress_state: Record<string, unknown> | null; assets: AssetItem[] }
 
 // --- Additions: request bodies, query parameters and stream events (§ 4.3, § 3.3.6) ---
 
@@ -354,7 +354,7 @@ export type NotebookFeedbackBody = { rating: "up" | "down"; comment?: string }
 export type SaveNoteBody = { title?: string }
 export type ArtifactsParams = { kind?: ArtifactKind; status?: ArtifactStatus }
 export type ArtifactPatchBody = { title: string }
-export type ArtifactProgressBody = { state: object }
+export type ArtifactProgressBody = { state: Record<string, unknown> }
 export type FlashcardSetResult = { set_id: string; created: boolean }
 export type SlidesPutBody = { slides: Slide[] }
 export type SlidesReviseBody = { changes: { slide_id: string; instruction: string }[] }
@@ -376,7 +376,7 @@ export type LabelItem = {
   origin: LabelOrigin
   source_count: number
 }
-export type LabelsAuto = { status: "idle" | "running" | "failed"; finished_at: string | null }
+export type LabelsAuto = { status: "idle" | "running" | "failed"; finished_at: string | null; error: string | null }
 export type LabelsResponse = { items: LabelItem[]; auto: LabelsAuto }
 export type LabelCreateBody = { name: string; emoji: string }
 export type LabelPatchBody = { name?: string; emoji?: string }

@@ -212,6 +212,7 @@ describe("DiscoverResults", () => {
                   error: {
                     type: "notebooks/source-unsupported",
                     title: "Unsupported",
+                    status: 422,
                     message_key: "notebooks-source-unsupported",
                     params: { hint: "blocked" },
                   },
@@ -250,6 +251,7 @@ describe("DiscoverResults", () => {
                   error: {
                     type: "notebooks/source-duplicate",
                     title: "Already added",
+                    status: 409,
                     message_key: "notebooks.source-duplicate",
                     params: {},
                   },

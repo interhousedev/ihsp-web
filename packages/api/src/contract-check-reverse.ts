@@ -17,9 +17,9 @@ import type { deleteFile, getFile, getFileUrl, getMeFiles, getMeStorage, patchFi
 import type { getMeFlashcardSet, getMeFlashcardSetStudy, getMeFlashcardSets, getMeFlashcardSetsStats, patchMeFlashcardSet, postMeFlashcardReview, postMeFlashcardSets, postMeFlashcardSetsCopy, putMeFlashcardSetCards } from "./endpoints/flashcards"
 import type { deleteIdMe, getIdActivation, getIdConsent, getIdLogin, getIdLogout, getIdMcpScopes, getIdMe, getIdMeActivity, getIdMeConnectors, getIdMeSessions, getIdMeTelegram, patchIdMePreferences, patchIdMeTelegram, postIdActivation, postIdConsent, postIdLogin, postIdLoginOtp, postIdLoginOtpRequest, postIdMeConnectors, postIdMeEmailChangeConfirm, postIdMeEmisPassword, postIdMeOtpDisable, postIdMeOtpEnableConfirm, postIdRecoveryOtpConfirm, postIdTelegramLogin, postIdTelegramOtpRequest, postIdTelegramStatus } from "./endpoints/id"
 import type { getAdminAudit, getAdminOauthClients, getAdminTeachers, getAdminUser, getAdminUsers, patchAdminTeacher, postAdminOauthClientVerify, postAdminTeacherDeactivate, postAdminTeachers, postAdminUserBlock, postAdminUserMailResume, postAdminUserMailSuspend, postAdminUserResetPassword, postAdminUserRoles, postAdminUserUnblock } from "./endpoints/id-admin"
-import type { getAnnotations, getAnnotationsExport, getLibraryCollection, getLibraryCollections, getLibraryFileUrl, getLibraryItem, getLibraryItemText, getLibraryItems, getLibrarySanctions, getLibrarySubjects, getLibraryTopics, getManageBook, getManageBooks, getManageQueue, getManageStats, getManageTopics, getMeLibrary, getMyUploads, getReadingList, getReadingLists, getShelf, getUniLibraryRecord, getUniLibrarySearch, getUniLibraryStatus, getUniLibraryTaxonomies, postAnnotation, postAnnotationsSync, postLibrarySanction, postManageBook, postManageBookFile, postManageImport, postMaterial, postMaterialFiles, postMaterialSubmit, postMaterialVersion, postModeration, postReadingList, postSuggestion, postUniLibraryPin, putReadingListItems, putShelfEntry } from "./endpoints/library"
+import type { getAnnotations, getAnnotationsExport, getLibraryCollection, getLibraryCollections, getLibraryFileUrl, getLibraryItem, getLibraryItemText, getLibraryItems, getLibraryMyGroups, getLibrarySanctions, getLibrarySubjects, getLibraryTopics, getManageBook, getManageBooks, getManageQueue, getManageStats, getManageTopics, getMeLibrary, getMyUploads, getReadingList, getReadingLists, getShelf, getUniLibraryRecord, getUniLibrarySearch, getUniLibraryStatus, getUniLibraryTaxonomies, patchMaterial, postAnnotation, postAnnotationsSync, postLibrarySanction, postManageBook, postManageBookFile, postManageImport, postMaterial, postMaterialFiles, postMaterialSubmit, postMaterialVersion, postModeration, postReadingList, postSuggestion, postUniLibraryPin, putReadingListItems, putShelfEntry } from "./endpoints/library"
 import type { getAdminModerationQueue, getAdminModerationSearch, getLessonResources, getMeLinks, postAdminLinkDisable, postAdminLinkDismissReports, postLessonResourceHide, postLessonResources, postLinkRevoke, postLinks, postShares } from "./endpoints/links"
-import type { getLmsCourseCompare, getLmsCourseDraft, getLmsCoursePending, getLmsCoursePreviewStep, getLmsCourseStaff, getLmsCourseVersion, getLmsCourseVersions, getLmsStepDiff, getLmsStepDraft, getLmsStepHistory, patchLmsCourseSettings, patchLmsCourseStaff, postLmsCourseDiscard, postLmsCourseDraftOutline, postLmsCourseInviteCode, postLmsCoursePublish, postLmsCourseStaff, postLmsCourseSteps, postLmsCourseVersionRestore, postLmsCourses, postLmsStepCheckpoints, postLmsStepDiscard, postLmsStepRestore, putLmsCourseDraftMeta, putLmsStepDraft } from "./endpoints/lms-authoring"
+import type { getLmsCourseCompare, getLmsCourseDraft, getLmsCoursePending, getLmsCoursePreviewStep, getLmsCourseStaff, getLmsCourseVersion, getLmsCourseVersions, getLmsCreators, getLmsStepDiff, getLmsStepDraft, getLmsStepHistory, patchLmsCourseSettings, patchLmsCourseStaff, postLmsCourseDiscard, postLmsCourseDraftOutline, postLmsCourseInviteCode, postLmsCoursePublish, postLmsCourseStaff, postLmsCourseSteps, postLmsCourseVersionRestore, postLmsCourses, postLmsStepCheckpoints, postLmsStepDiscard, postLmsStepRestore, putLmsCourseDraftMeta, putLmsCreator, putLmsStepDraft } from "./endpoints/lms-authoring"
 import type { getLmsAttempt, getLmsCourse, getLmsCourseStep, getLmsCourseStudents, getLmsCourses, getLmsMyCourses, getLmsStepCardsNext, postLmsAttemptOverride, postLmsAttemptSubmit, postLmsCourseEnroll, postLmsJoin, postLmsStepBlockAttempts, postLmsStepCardReview, postLmsStepViewed, putLmsAttemptAnswers } from "./endpoints/lms-learning"
 import type { getAdminSyncRuns, getMeGrades, getMeGradesDay, getMeRecordBook, getMeSubject, getMeSubjects, postAdminSyncRun } from "./endpoints/marks"
 import type { getArtifact, getArtifacts, getNotebook, getNotebookChat, getNotebookLabels, getNotebookSearch, getNotebookSource, getNotebookSources, getNotebookUsage, getNotebooks, getPassage, getSourcePassages, patchArtifact, patchNotebook, patchNotebookLabel, patchNotebookSource, postArtifact, postArtifactAsSource, postArtifactCancel, postArtifactFlashcardSet, postArtifactRetry, postArtifactSlidesRevise, postNotebook, postNotebookDiscover, postNotebookLabel, postNotebookLabelsAuto, postNotebookMessage, postNotebookRegenerate, postNotebookSourceSync, postNotebookSources, postNotebookSourcesSelect, postSaveNote, putArtifactSlides, putNotebookSourceLabels } from "./endpoints/notebooks"
@@ -599,6 +599,10 @@ export const served_postAnnotationsSync: Awaited<ReturnType<typeof postAnnotatio
 declare const gen_getAnnotationsExport: ResponseOf<"/v1/me/library/annotations/export", "get">
 export const served_getAnnotationsExport: Awaited<ReturnType<typeof getAnnotationsExport>> = gen_getAnnotationsExport
 
+// GET /v1/library/my-groups — getLibraryMyGroups
+declare const gen_getLibraryMyGroups: ResponseOf<"/v1/library/my-groups", "get">
+export const served_getLibraryMyGroups: Awaited<ReturnType<typeof getLibraryMyGroups>> = gen_getLibraryMyGroups
+
 // POST /v1/library/materials — postMaterial
 declare const gen_postMaterial: ResponseOf<"/v1/library/materials", "post">
 export const served_postMaterial: Awaited<ReturnType<typeof postMaterial>> = gen_postMaterial
@@ -610,6 +614,10 @@ export const served_postMaterialFiles: Awaited<ReturnType<typeof postMaterialFil
 // POST /v1/library/materials/{item_id}/submit — postMaterialSubmit
 declare const gen_postMaterialSubmit: ResponseOf<"/v1/library/materials/{item_id}/submit", "post">
 export const served_postMaterialSubmit: Awaited<ReturnType<typeof postMaterialSubmit>> = gen_postMaterialSubmit
+
+// PATCH /v1/library/materials/{item_id} — patchMaterial
+declare const gen_patchMaterial: ResponseOf<"/v1/library/materials/{item_id}", "patch">
+export const served_patchMaterial: Awaited<ReturnType<typeof patchMaterial>> = gen_patchMaterial
 
 // POST /v1/library/materials/{item_id}/versions — postMaterialVersion
 declare const gen_postMaterialVersion: ResponseOf<"/v1/library/materials/{item_id}/versions", "post">
@@ -718,6 +726,14 @@ export const served_postAdminLinkDismissReports: Awaited<ReturnType<typeof postA
 // POST /v1/lms/courses — postLmsCourses
 declare const gen_postLmsCourses: ResponseOf<"/v1/lms/courses", "post">
 export const served_postLmsCourses: Awaited<ReturnType<typeof postLmsCourses>> = gen_postLmsCourses
+
+// GET /v1/staff/lms/creators — getLmsCreators
+declare const gen_getLmsCreators: ResponseOf<"/v1/staff/lms/creators", "get">
+export const served_getLmsCreators: Awaited<ReturnType<typeof getLmsCreators>> = gen_getLmsCreators
+
+// PUT /v1/staff/lms/creators/{user_id} — putLmsCreator
+declare const gen_putLmsCreator: ResponseOf<"/v1/staff/lms/creators/{user_id}", "put">
+export const served_putLmsCreator: Awaited<ReturnType<typeof putLmsCreator>> = gen_putLmsCreator
 
 // GET /v1/lms/courses/{course_id}/draft — getLmsCourseDraft
 declare const gen_getLmsCourseDraft: ResponseOf<"/v1/lms/courses/{course_id}/draft", "get">

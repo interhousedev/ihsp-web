@@ -91,6 +91,7 @@ export const aiHandlers = [
           tool_calls: [],
           created_at: FIXTURE_NOW,
           web: [],
+          feedback: null,
         },
       ],
       status: "done",

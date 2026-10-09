@@ -16,9 +16,9 @@ import type { deleteFile, getFile, getFileUrl, getMeFiles, getMeStorage, patchFi
 import type { getMeFlashcardSet, getMeFlashcardSetStudy, getMeFlashcardSets, getMeFlashcardSetsStats, patchMeFlashcardSet, postMeFlashcardReview, postMeFlashcardSets, postMeFlashcardSetsCopy, putMeFlashcardSetCards } from "./endpoints/flashcards"
 import type { deleteIdMe, getIdActivation, getIdConsent, getIdLogin, getIdLogout, getIdMcpScopes, getIdMe, getIdMeActivity, getIdMeConnectors, getIdMeSessions, getIdMeTelegram, patchIdMePreferences, patchIdMeTelegram, postIdActivation, postIdConsent, postIdLogin, postIdLoginOtp, postIdLoginOtpRequest, postIdMeConnectors, postIdMeEmailChangeConfirm, postIdMeEmisPassword, postIdMeOtpDisable, postIdMeOtpEnableConfirm, postIdRecoveryOtpConfirm, postIdTelegramLogin, postIdTelegramOtpRequest, postIdTelegramStatus } from "./endpoints/id"
 import type { getAdminAudit, getAdminOauthClients, getAdminTeachers, getAdminUser, getAdminUsers, patchAdminTeacher, postAdminOauthClientVerify, postAdminTeacherDeactivate, postAdminTeachers, postAdminUserBlock, postAdminUserMailResume, postAdminUserMailSuspend, postAdminUserResetPassword, postAdminUserRoles, postAdminUserUnblock } from "./endpoints/id-admin"
-import type { getAnnotations, getAnnotationsExport, getLibraryCollection, getLibraryCollections, getLibraryFileUrl, getLibraryItem, getLibraryItemText, getLibraryItems, getLibrarySanctions, getLibrarySubjects, getLibraryTopics, getManageBook, getManageBooks, getManageQueue, getManageStats, getManageTopics, getMeLibrary, getMyUploads, getReadingList, getReadingLists, getShelf, getUniLibraryRecord, getUniLibrarySearch, getUniLibraryStatus, getUniLibraryTaxonomies, postAnnotation, postAnnotationsSync, postLibrarySanction, postManageBook, postManageBookFile, postManageImport, postMaterial, postMaterialFiles, postMaterialSubmit, postMaterialVersion, postModeration, postReadingList, postSuggestion, postUniLibraryPin, putReadingListItems, putShelfEntry } from "./endpoints/library"
+import type { getAnnotations, getAnnotationsExport, getLibraryCollection, getLibraryCollections, getLibraryFileUrl, getLibraryItem, getLibraryItemText, getLibraryItems, getLibraryMyGroups, getLibrarySanctions, getLibrarySubjects, getLibraryTopics, getManageBook, getManageBooks, getManageQueue, getManageStats, getManageTopics, getMeLibrary, getMyUploads, getReadingList, getReadingLists, getShelf, getUniLibraryRecord, getUniLibrarySearch, getUniLibraryStatus, getUniLibraryTaxonomies, patchMaterial, postAnnotation, postAnnotationsSync, postLibrarySanction, postManageBook, postManageBookFile, postManageImport, postMaterial, postMaterialFiles, postMaterialSubmit, postMaterialVersion, postModeration, postReadingList, postSuggestion, postUniLibraryPin, putReadingListItems, putShelfEntry } from "./endpoints/library"
 import type { getAdminModerationQueue, getAdminModerationSearch, getLessonResources, getMeLinks, postAdminLinkDisable, postAdminLinkDismissReports, postLessonResourceHide, postLessonResources, postLinkRevoke, postLinks, postShares } from "./endpoints/links"
-import type { getLmsCourseCompare, getLmsCourseDraft, getLmsCoursePending, getLmsCoursePreviewStep, getLmsCourseStaff, getLmsCourseVersion, getLmsCourseVersions, getLmsStepDiff, getLmsStepDraft, getLmsStepHistory, patchLmsCourseSettings, patchLmsCourseStaff, postLmsCourseDiscard, postLmsCourseDraftOutline, postLmsCourseInviteCode, postLmsCoursePublish, postLmsCourseStaff, postLmsCourseSteps, postLmsCourseVersionRestore, postLmsCourses, postLmsStepCheckpoints, postLmsStepDiscard, postLmsStepRestore, putLmsCourseDraftMeta, putLmsStepDraft } from "./endpoints/lms-authoring"
+import type { getLmsCourseCompare, getLmsCourseDraft, getLmsCoursePending, getLmsCoursePreviewStep, getLmsCourseStaff, getLmsCourseVersion, getLmsCourseVersions, getLmsCreators, getLmsStepDiff, getLmsStepDraft, getLmsStepHistory, patchLmsCourseSettings, patchLmsCourseStaff, postLmsCourseDiscard, postLmsCourseDraftOutline, postLmsCourseInviteCode, postLmsCoursePublish, postLmsCourseStaff, postLmsCourseSteps, postLmsCourseVersionRestore, postLmsCourses, postLmsStepCheckpoints, postLmsStepDiscard, postLmsStepRestore, putLmsCourseDraftMeta, putLmsCreator, putLmsStepDraft } from "./endpoints/lms-authoring"
 import type { getLmsAttempt, getLmsCourse, getLmsCourseStep, getLmsCourseStudents, getLmsCourses, getLmsMyCourses, getLmsStepCardsNext, postLmsAttemptOverride, postLmsAttemptSubmit, postLmsCourseEnroll, postLmsJoin, postLmsStepBlockAttempts, postLmsStepCardReview, postLmsStepViewed, putLmsAttemptAnswers } from "./endpoints/lms-learning"
 import type { getAdminSyncRuns, getMeGrades, getMeGradesDay, getMeRecordBook, getMeSubject, getMeSubjects, postAdminSyncRun } from "./endpoints/marks"
 import type { getArtifact, getArtifacts, getNotebook, getNotebookChat, getNotebookLabels, getNotebookSearch, getNotebookSource, getNotebookSources, getNotebookUsage, getNotebooks, getPassage, getSourcePassages, patchArtifact, patchNotebook, patchNotebookLabel, patchNotebookSource, postArtifact, postArtifactAsSource, postArtifactCancel, postArtifactFlashcardSet, postArtifactRetry, postArtifactSlidesRevise, postNotebook, postNotebookDiscover, postNotebookLabel, postNotebookLabelsAuto, postNotebookMessage, postNotebookRegenerate, postNotebookSourceSync, postNotebookSources, postNotebookSourcesSelect, postSaveNote, putArtifactSlides, putNotebookSourceLabels } from "./endpoints/notebooks"
@@ -32,13 +32,14 @@ import type { ChatCreateBody, ChatMessageBody, ChatPatchBody, ChatsParams, Messa
 import type { AssessmentCreateBody, AssessmentPatchBody, AssessmentProposalBody, AssessmentsParams, PlannerParams, StaffAssessmentsParams } from "./types/assessments"
 import type { AudienceCountBody, BroadcastInput, BroadcastPatchBody, BroadcastSendBody, BroadcastsParams } from "./types/broadcasts"
 import type { AdminAttendanceParams, AttendanceExcuseBody, AttendanceSubmitBody, GroupAttendanceParams, HomeworkDoneBody, HomeworkListParams, HomeworkNoteBody, JournalParams, JournalToggleBody, MissingAttendanceParams, StaffHomeworkBody, StaffTopicBody, StudentAttendanceParams } from "./types/classwork"
+import type { PageParams } from "./types/common"
 import type { SearchParams } from "./types/composition"
 import type { ApplyBody, CourseWorkspaceBody } from "./types/course-workspace"
 import type { FileCreateBody, FileRenameBody, FileUrlParams, MyFilesParams } from "./types/files"
 import type { FlashcardCardsBody, FlashcardCopyBody, FlashcardReviewBody, FlashcardSetCreateBody, FlashcardSetPatchBody, FlashcardStatsParams } from "./types/flashcards"
 import type { ActivationBody, ActivationEmailBody, ActivityParams, ConnectorCreateBody, ConsentBody, ConsentOtpBody, DeleteAccountBody, EmailChangeBody, EmailChangeConfirmBody, EmisPasswordBody, LoginBody, LoginOtpBody, LoginOtpRequestBody, OtpDisableBody, OtpEnableBody, OtpEnableConfirmBody, PasswordChangeBody, RecoveryLoginBody, RecoveryOtpCancelBody, RecoveryOtpConfirmBody, RecoveryOtpRequestBody, RecoveryPasswordConfirmBody, RecoveryPasswordRequestBody, TelegramLoginBody, TelegramOtpRequestBody, TelegramPatchBody, TelegramStatusBody, UserPreferencesPatch } from "./types/id"
 import type { AdminAuditParams, AdminTeachersParams, AdminUsersParams, BlockUserBody, MailSuspendBody, OauthClientVerifyBody, TeacherCreateBody, TeacherPatchBody, UserRolesBody } from "./types/id-admin"
-import type { AnnotationInput, AnnotationsParams, AnnotationsSyncBody, BookFileBody, BookInput, BookRowsParams, ImportBody, ItemTextParams, ItemsParams, LibraryReportBody, MaterialFilesBody, MaterialInput, ModerationBody, PinExternalBody, ProgressBody, QueueParams, ReadingListInput, ReadingListsParams, ReportResolveBody, SanctionBody, ShelfParams, SuggestionBody, UniLibrarySearchParams, UploadsParams } from "./types/library"
+import type { AnnotationInput, AnnotationsParams, AnnotationsSyncBody, BookFileBody, BookInput, BookRowsParams, ImportBody, ItemTextParams, ItemsParams, LibraryReportBody, MaterialFilesBody, MaterialInput, MaterialPatchBody, ModerationBody, PinExternalBody, ProgressBody, QueueParams, ReadingListInput, ReadingListsParams, ReportResolveBody, SanctionBody, ShelfParams, SuggestionBody, UniLibrarySearchParams, UploadsParams } from "./types/library"
 import type { LinkCreateBody, LinkDisableBody, ModerationQueueParams, ModerationSearchParams, MyLinksParams, ResourceCreateBody, ResourceHideBody, ShareCreateBody } from "./types/links"
 import type { CheckpointBody, CourseCreateBody, CourseSettingsBody, CourseStaffBody, CourseStaffPatchBody, DraftMetaBody, OutlineOpsBody, PublishBody, RestoreRevisionBody, StepCreateBody, StepDraftBody, VersionCompareParams } from "./types/lms-authoring"
 import type { AttemptAnswersBody, AttemptOverrideBody, AttemptStartParams, CourseCatalogParams, CourseJoinBody, LmsCardReviewBody } from "./types/lms-learning"
@@ -962,6 +963,10 @@ export type route_deleteAnnotation = OperationOf<"/v1/me/library/annotations/{an
 declare const res_getAnnotationsExport: Awaited<ReturnType<typeof getAnnotationsExport>>
 export const response_getAnnotationsExport: ResponseOf<"/v1/me/library/annotations/export", "get"> = res_getAnnotationsExport
 
+// GET /v1/library/my-groups — getLibraryMyGroups
+declare const res_getLibraryMyGroups: Awaited<ReturnType<typeof getLibraryMyGroups>>
+export const response_getLibraryMyGroups: ResponseOf<"/v1/library/my-groups", "get"> = res_getLibraryMyGroups
+
 // POST /v1/library/materials — postMaterial
 declare const res_postMaterial: Awaited<ReturnType<typeof postMaterial>>
 export const response_postMaterial: ResponseOf<"/v1/library/materials", "post"> = res_postMaterial
@@ -977,6 +982,12 @@ export const request_postMaterialFiles: RequestOf<"/v1/library/materials/{item_i
 // POST /v1/library/materials/{item_id}/submit — postMaterialSubmit
 declare const res_postMaterialSubmit: Awaited<ReturnType<typeof postMaterialSubmit>>
 export const response_postMaterialSubmit: ResponseOf<"/v1/library/materials/{item_id}/submit", "post"> = res_postMaterialSubmit
+
+// PATCH /v1/library/materials/{item_id} — patchMaterial
+declare const res_patchMaterial: Awaited<ReturnType<typeof patchMaterial>>
+export const response_patchMaterial: ResponseOf<"/v1/library/materials/{item_id}", "patch"> = res_patchMaterial
+declare const req_patchMaterial: MaterialPatchBody
+export const request_patchMaterial: RequestOf<"/v1/library/materials/{item_id}", "patch"> = req_patchMaterial
 
 // POST /v1/library/materials/{item_id}/versions — postMaterialVersion
 declare const res_postMaterialVersion: Awaited<ReturnType<typeof postMaterialVersion>>
@@ -1147,6 +1158,20 @@ declare const res_postLmsCourses: Awaited<ReturnType<typeof postLmsCourses>>
 export const response_postLmsCourses: ResponseOf<"/v1/lms/courses", "post"> = res_postLmsCourses
 declare const req_postLmsCourses: CourseCreateBody
 export const request_postLmsCourses: RequestOf<"/v1/lms/courses", "post"> = req_postLmsCourses
+
+// GET /v1/staff/lms/creators — getLmsCreators
+declare const res_getLmsCreators: Awaited<ReturnType<typeof getLmsCreators>>
+export const response_getLmsCreators: ResponseOf<"/v1/staff/lms/creators", "get"> = res_getLmsCreators
+declare const query_getLmsCreators: PageParams
+export const query_ok_getLmsCreators: QueryOf<"/v1/staff/lms/creators", "get"> = query_getLmsCreators
+
+// PUT /v1/staff/lms/creators/{user_id} — putLmsCreator
+declare const res_putLmsCreator: Awaited<ReturnType<typeof putLmsCreator>>
+export const response_putLmsCreator: ResponseOf<"/v1/staff/lms/creators/{user_id}", "put"> = res_putLmsCreator
+
+// DELETE /v1/staff/lms/creators/{user_id} — deleteLmsCreator
+// no JSON success response (204, CSV, calendar or HTML): only the route is checked
+export type route_deleteLmsCreator = OperationOf<"/v1/staff/lms/creators/{user_id}", "delete">
 
 // GET /v1/lms/courses/{course_id}/draft — getLmsCourseDraft
 declare const res_getLmsCourseDraft: Awaited<ReturnType<typeof getLmsCourseDraft>>
