@@ -11,3 +11,6 @@ coverage/
 
 # Bundled by `bun run build:sw` from apps/sp/src/features/pwa/sw/sw.ts
 apps/sp/public/sw.js
+
+# Bundled by `bun run build:sw` from packages/features-core/src/pwa/sw/generic.ts
+apps/lms/public/sw.js

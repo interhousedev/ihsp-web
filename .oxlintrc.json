@@ -18,7 +18,8 @@
     "packages/api/src/contract-check*.ts",
     "playwright-report/**",
     "deploy/**/*.conf",
-    "apps/sp/public/sw.js"
+    "apps/sp/public/sw.js",
+    "apps/lms/public/sw.js"
   ],
   "settings": {
     "jsx-a11y": {
