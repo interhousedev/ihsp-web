@@ -13,6 +13,7 @@ import { itemHref } from "../utils/hrefs"
 import type { ReaderEngines } from "./lib/load-engines"
 import { parseLocator, readStoredFraction, readStoredPosition } from "./lib/locator"
 import { pickFile } from "./lib/pick-file"
+import { serverProgressOf } from "./lib/server-progress"
 import { ReaderFrame } from "./reader-frame"
 
 /** Answers that mean "you cannot read this" without saying why (not found, hidden, not for the lyceum, UniLibrary). */
@@ -31,8 +32,12 @@ function Opening({
 }) {
   // Decided once per file: later changes of the address (a moved page) must not reopen the book.
   const [place] = useState(() => {
+    // The address wins, then the position the server saved (any device), then the one kept on this device.
+    const server = serverProgressOf(item, file.id)
     const locator =
-      parseLocator({ page: params.get("page"), loc: params.get("loc") }) ?? readStoredPosition(item.id!, file.id)
+      parseLocator({ page: params.get("page"), loc: params.get("loc") }) ??
+      server?.locator ??
+      readStoredPosition(item.id!, file.id)
     const stored = readStoredFraction(item.id!, file.id)
     const known = item.progress_percent ? item.progress_percent / 100 : null
     return { locator, fraction: locator ? null : (stored ?? known) }
