@@ -12,7 +12,7 @@
     "seeAll": "Hammasini koʻrish",
     "items": "{count, plural, one {# ta material} other {# ta material}}",
     "signInTitle": "Koʻproq koʻrish uchun kiring",
-    "signInText": "Litsey kitoblarini ochish, javon yuritish va oʻqish roʻyxatlarini koʻrish uchun kiring.",
+    "signInText": "Litsey kitoblarini ochish va javon yuritish uchun kiring.",
     "signIn": "Kirish",
     "empty": "Kutubxonada hozircha hech narsa yoʻq.",
     "emptyAction": "Katalogni ochish"
@@ -45,7 +45,12 @@
       "language": "Til",
       "uploader": "Yuklaganlar",
       "hasText": "Faqat qidiriladigan matnli",
-      "shelf": "Mening javonimda"
+      "shelf": "Mening javonimda",
+      "tag": "Teg",
+      "tagPlaceholder": "Teg kiriting",
+      "tagSuggestions": "Teglar",
+      "noTags": "«{value}» tegi yoʻq. Shu teg boʻyicha filtrlash uchun Enter bosing.",
+      "clearTag": "Olib tashlash"
     },
     "year": "{year}-kurs",
     "uploader": {
@@ -79,7 +84,7 @@
     "edit": "Tahrirlash",
     "withdraw": "Eʼlondan olish",
     "withdrawConfirmTitle": "Material eʼlondan olinsinmi?",
-    "withdrawConfirmText": "U kutubxonada koʻrinmaydi. Boshqa oʻquvchilarning javon yozuvlari va izohlari qoladi.",
+    "withdrawConfirmText": "U kutubxonadan ketadi. Boshqa oʻquvchilarning javon yozuvlari va izohlari qoladi.",
     "withdrawn": "Material eʼlondan olindi.",
     "uploadedBy": "Yukladi: {name}, {cohort}",
     "uploadedByTeacher": "Yukladi: {name}",
@@ -99,7 +104,7 @@
     "yearsOfStudy": "Kurs",
     "noText": "Bu matnsiz skan, shuning uchun qidiruv va daftarlar undan foydalana olmaydi.",
     "removed": "Bu material olib tashlangan",
-    "removedHint": "Javondagi yozuvingiz qoladi, lekin materialni endi ochib boʻlmaydi.",
+    "removedHint": "Javonda qoladi, lekin ochib boʻlmaydi.",
     "ownerPanel": "Sizning yuklaganingiz",
     "status": {
       "label": "Holati",
@@ -114,9 +119,7 @@
     },
     "reviewerMessage": "Tekshiruvchining xabari",
     "reason": "Sabab",
-    "coverAlt": "Muqova: {title}",
-    "noCover": "Muqova yoʻq",
-    "fullTextHit": "Matndan topildi"
+    "noCover": "Muqova yoʻq"
   },
   "type": {
     "textbook": "Darslik",
@@ -165,7 +168,6 @@
     "universityLevel": "Oliy taʼlim darajasidagi material",
     "unavailable": "UniLibrary javob bermayapti. Saqlangan natijalar koʻrsatilmoqda.",
     "gone": "UniLibraryʼda endi mavjud emas",
-    "noNotebook": "UniLibrary kitoblarini daftarga qoʻshib boʻlmaydi.",
     "field": "Yoʻnalish",
     "type": "UniLibraryʼdagi turi",
     "keywords": "Kalit soʻzlar",
@@ -189,7 +191,7 @@
   },
   "report": {
     "title": "Shikoyat qilish",
-    "description": "Kutubxonachiga bu materialda nima notoʻgʻri ekanini ayting. Muallif kim shikoyat qilganini koʻrmaydi.",
+    "description": "Kutubxonachiga nima notoʻgʻriligini ayting. Muallif shikoyat qilganni koʻrmaydi.",
     "reasonLabel": "Sabab",
     "reason": {
       "wrong_content": "Mazmunda xato",
@@ -228,8 +230,6 @@
     "due": "Muddati: {date}",
     "open": "Ochish",
     "openLink": "Havolani ochish",
-    "readState": "Oʻqish holati: {title}",
-    "notStarted": "Boshlanmagan",
     "draft": "Qoralama",
     "archived": "Arxivda",
     "groupBy": "Guruhlash",
@@ -240,13 +240,13 @@
   "notebook": {
     "addTo": "Daftarga qoʻshish",
     "title": "Daftarga qoʻshish",
-    "description": "Daftar shundan keyin bu material haqidagi savollarga javob berib, uning betlariga havola qiladi.",
+    "description": "Daftar u haqida javob berib, betlariga havola qiladi.",
     "choose": "Daftar",
     "newNotebook": "Yangi daftar",
     "noNotebooks": "Sizda hozircha daftarlar yoʻq. Yangisi yaratiladi.",
     "whole": "Butun material",
     "range": "Betlar",
-    "rangeHint": "Butun darslik bitta manba uchun juda uzun boʻlishi mumkin. Kerakli bobni tanlang.",
+    "rangeHint": "Butun darslik juda uzun boʻlishi mumkin. Bobni tanlang.",
     "from": "Boshlanish beti",
     "to": "Tugash beti",
     "toc": "Boblar",

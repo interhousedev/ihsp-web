@@ -35,6 +35,7 @@ export function TopicDialog({ target, onClose }: { target: TopicTarget | null; o
   const [name, setName] = useState<Localized>(emptyLocalized())
   const [slug, setSlug] = useState("")
   const [year, setYear] = useState("")
+  const [code, setCode] = useState("")
   const [attempted, setAttempted] = useState(false)
 
   useEffect(() => {
@@ -44,10 +45,12 @@ export function TopicDialog({ target, onClose }: { target: TopicTarget | null; o
       setName(target.topic.name)
       setSlug(target.topic.slug)
       setYear(target.topic.year_of_study ? String(target.topic.year_of_study) : "")
+      setCode(target.topic.code ?? "")
     } else {
       setName(emptyLocalized())
       setSlug("")
       setYear("")
+      setCode("")
     }
   }, [target])
 
@@ -56,7 +59,12 @@ export function TopicDialog({ target, onClose }: { target: TopicTarget | null; o
       if (!target) throw new Error("no target")
       const yearOfStudy = year ? Number(year) : null
       if (target.mode === "edit") {
-        return patchManageTopic(target.topic.id, { name, slug: slug.trim() || undefined, year_of_study: yearOfStudy })
+        return patchManageTopic(target.topic.id, {
+          name,
+          slug: slug.trim() || undefined,
+          year_of_study: yearOfStudy,
+          code: code.trim() || null,
+        })
       }
       return postManageTopic({
         subject_id: target.subjectId,
@@ -64,6 +72,7 @@ export function TopicDialog({ target, onClose }: { target: TopicTarget | null; o
         name,
         ...(slug.trim() ? { slug: slug.trim() } : {}),
         year_of_study: yearOfStudy,
+        code: code.trim() || null,
       })
     },
     onSuccess: async () => {
@@ -105,6 +114,18 @@ export function TopicDialog({ target, onClose }: { target: TopicTarget | null; o
               onChange={(event) => setSlug(event.target.value)}
             />
             <p className="text-muted-foreground text-xs">{t("slugHint")}</p>
+          </div>
+          <div className="flex flex-col gap-1.5">
+            <Label htmlFor={`${id}-code`}>{t("code")}</Label>
+            <Input
+              id={`${id}-code`}
+              value={code}
+              maxLength={40}
+              placeholder="УДК 37"
+              className="min-h-11 md:min-h-8"
+              onChange={(event) => setCode(event.target.value)}
+            />
+            <p className="text-muted-foreground text-xs">{t("codeHint")}</p>
           </div>
           <div className="flex flex-col gap-1.5">
             <Label htmlFor={`${id}-year`}>{t("year")}</Label>

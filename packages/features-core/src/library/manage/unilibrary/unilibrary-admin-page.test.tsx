@@ -30,7 +30,7 @@ describe("UniLibraryAdminPage: settings", () => {
     const settings = await screen.findByRole("region", { name: "Settings" })
     expect(within(settings).getByText("Off")).toBeInTheDocument()
     expect(
-      within(settings).getByText(/UniLibrary is off by default\. While it is off, nothing from UniLibrary shows/),
+      within(settings).getByText(/Off by default\. While off, nothing from UniLibrary shows/),
     ).toBeInTheDocument()
     expect(within(settings).getByRole("switch", { name: "Enable UniLibrary" })).not.toBeChecked()
     expect(within(settings).getByRole("switch", { name: "Show anonymous cards" })).not.toBeChecked()

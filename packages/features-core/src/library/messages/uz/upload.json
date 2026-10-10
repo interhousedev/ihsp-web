@@ -23,12 +23,10 @@
       "markdown": "Markdown qayd",
       "markdownHint": "Matnni shu yerga yozing. $x^2$ kabi formulalar ishlaydi.",
       "pdf": "PDF fayl",
-      "pdfHint": "Qurilmangizda bor PDF.",
       "photos": "Suratlar",
-      "photosHint": "Qogʻoz konspektlarni suratga oling. Suratlar bitta PDFga birlashtiriladi, 20 tagacha.",
       "required": "Nima qoʻshayotganingizni tanlang.",
       "suggestTitle": "Tayyor kitob izlayapsizmi?",
-      "suggestText": "Kitoblarni kutubxonachilar qoʻshadi. Kitob taklif qiling, ular koʻrib chiqadi.",
+      "suggestText": "Kitob taklif qiling, kutubxonachilar koʻrib chiqadi.",
       "suggestButton": "Kitob taklif qilish"
     },
     "details": {
@@ -49,7 +47,7 @@
       "yearRequired": "Kamida bitta kursni tanlang.",
       "typeLabel": "Turi",
       "languageLabel": "Til",
-      "fixedAfterSave": "Qoralama saqlangach, fanlar, kurs, tur va tilni oʻzgartirib boʻlmaydi."
+      "fixedAfterSave": "Qoralama saqlangach oʻzgartirib boʻlmaydi."
     },
     "files": {
       "markdownHeading": "Qaydni yozing",
@@ -57,7 +55,7 @@
       "pdfHeading": "PDFni tanlang",
       "officeHeading": "Faylni tanlang",
       "photosHeading": "Suratga oling yoki tanlang",
-      "existingPhotos": "Saqlangan materialda {pages} betlik fayl bor. Uni almashtirish uchun yangi suratlar qoʻshing.",
+      "existingPhotos": "Saqlangan fayl: {pages} bet. Yangi suratlar uni almashtiradi.",
       "problem": {
         "bodyRequired": "Avval matn yozing.",
         "pdfRequired": "Faylni tanlang.",
@@ -96,9 +94,9 @@
       "cameraMore": "Yana suratga olish",
       "gallery": "Galereyadan tanlash",
       "count": "{count} / {max} ta surat",
-      "hint": "{max} tagacha surat, oʻqish tartibida. Ular bitta PDF boʻladi. Tartibini strelkalar bilan yoki sudrab oʻzgartiring.",
+      "hint": "{max} tagacha surat, oʻqish tartibida, bitta PDF.",
       "tooMany": "{max} tadan ortiq surat sigʻmaydi. Qoʻshilmaganlari: {dropped}.",
-      "noCrop": "Bu yerda qirqish mavjud emas. Kerak boʻlsa, avval suratni kamera ilovasida qirqing.",
+      "noCrop": "Qirqish yoʻq. Avval kamera ilovasida qirqing.",
       "list": "Suratlar tartib bilan",
       "label": "{count} tadan {n}-surat",
       "alt": "{n}-surat",
@@ -117,16 +115,16 @@
       "replace": "Boshqa fayl tanlash",
       "remove": "Olib tashlash",
       "hint": "PDF, {size} gacha va {pages} betgacha.",
-      "hintOffice": "PDF, DOCX yoki PPTX, {size} gacha. DOCX va PPTXni faqat yuklab olish mumkin.",
+      "hintOffice": "PDF, DOCX yoki PPTX, {size} gacha. DOCX va PPTX faqat yuklab olish uchun.",
       "current": "Boshqa fayl tanlamaguningizcha saqlangan fayl qoladi",
       "pages": "{count, plural, one {# bet} other {# bet}}",
-      "tooLarge": "Bu fayl {size} dan katta. Kutubxona uni ehtimol qabul qilmaydi."
+      "tooLarge": "{size} dan katta. Kutubxona ehtimol qabul qilmaydi."
     },
     "licence": {
       "heading": "Litsenziya va koʻrinish",
-      "lyceumOnly": "Materialni faqat litsey akkauntiga ega foydalanuvchilar koʻradi. Barcha huquqlar sizda qoladi.",
+      "lyceumOnly": "Faqat litsey akkauntlari koʻradi. Barcha huquqlar sizda.",
       "makePublic": "Ochiq qilish",
-      "makePublicHint": "Uni hamma koʻra oladi, tizimga kirmasdan ham. Creative Commons litsenziyasi kerak.",
+      "makePublicHint": "Hamma koʻradi. Creative Commons litsenziyasi kerak.",
       "openLicence": "Creative Commons litsenziyasi",
       "openLicenceHint": "Boshqalar ishingizdan foydalanishi mumkin boʻlgan litsenziyani tanlang.",
       "licenceRequired": "Litsenziyani tanlang.",
@@ -138,9 +136,9 @@
       },
       "text": {
         "cc_by": "Boshqalar sizni muallif sifatida koʻrsatsa, materialdan foydalanishi mumkin.",
-        "cc_by_sa": "Boshqalar sizni muallif sifatida koʻrsatsa va oʻz variantini xuddi shu litsenziya bilan tarqatsa, foydalanishi mumkin.",
+        "cc_by_sa": "Muallif koʻrsatilsa, xuddi shu litsenziya bilan foydalanish mumkin.",
         "cc_by_nc": "Boshqalar sizni muallif sifatida koʻrsatsa, tijoratdan tashqari maqsadlarda foydalanishi mumkin.",
-        "cc_by_nc_sa": "Boshqalar sizni muallif sifatida koʻrsatsa va oʻz variantini xuddi shu litsenziya bilan tarqatsa, tijoratdan tashqari maqsadlarda foydalanishi mumkin."
+        "cc_by_nc_sa": "Muallif koʻrsatilsa, tijoratsiz va xuddi shu litsenziya bilan foydalanish mumkin."
       }
     },
     "review": {
@@ -173,7 +171,7 @@
     "problem": {
       "title": "Nimadir xato ketdi",
       "duplicateTitle": "Bu fayl kutubxonada allaqachon bor",
-      "duplicateText": "Xuddi shu fayl yoki matn avval yuklangan. Boshqa fayl tanlang yoki mavjud materialni koʻring.",
+      "duplicateText": "Bu fayl yoki matn avval yuklangan. Boshqasini tanlang.",
       "openExisting": "Mavjud materialni ochish",
       "tooLargeTitle": "Fayl juda katta",
       "tooLargeText": "Fayl {size} dan oshmasligi kerak. Kichikroq fayl tanlang yoki uni boʻlib yuboring.",
@@ -185,13 +183,13 @@
       "rejectedTitle": "Fayl rad etildi",
       "rejectedText": "Fayl tekshiruvdan oʻtmadi: {reason}.",
       "attestationTitle": "Avval bayonotni tasdiqlang",
-      "attestationText": "Qoralamani busiz ham saqlash mumkin, lekin material tekshiruvga faqat uni oʻzingiz tayyorlaganingizni yoki ulashishga haqqingiz borligini tasdiqlagandan soʻng yuboriladi. Katakchani belgilab, qayta yuboring."
+      "attestationText": "Materialni oʻzingiz tayyorlaganingizni yoki ulashishga haqqingiz borligini tasdiqlang va qayta yuboring."
     },
     "blocked": {
       "bannedTitle": "Hozir yuklay olmaysiz",
       "bannedUntil": "Yuklash {date} gacha yopilgan.",
       "bannedForever": "Yuklash yopilgan, muddati koʻrsatilmagan.",
-      "bannedHint": "Agar bu xato deb hisoblasangiz, kutubxonachi yoki maʼmuriyatga yozing.",
+      "bannedHint": "Xato deb oʻylaysizmi? Kutubxonachiga yozing.",
       "rateLimitedTitle": "Yuklash limitiga yetildi",
       "rateLimitedAt": "Kuniga {limit, plural, one {# ta material} other {# ta material}} yuklash mumkin. {time} dan keyin yana yuklay olasiz.",
       "resetsAt": "{time} dan keyin yana yuklay olasiz.",
@@ -209,7 +207,7 @@
       "another": "Yana material qoʻshish"
     },
     "edit": {
-      "statusNote": "Holati: {status}. Nom, tavsif, mavzular va matndagi oʻzgarishlar “Saqlash” tugmasi bosilganda saqlanadi.",
+      "statusNote": "Holati: {status}. Oʻzgarishlar “Saqlash” bosilganda saqlanadi.",
       "body": "Qayd matni",
       "save": "Saqlash",
       "saving": "Saqlanmoqda…",
@@ -225,23 +223,24 @@
     },
     "suggest": {
       "title": "Kitob taklif qilish",
-      "titleLabel": "Kitob nomi",
-      "titleRequired": "Nomini yozing.",
-      "urlLabel": "Havola (ixtiyoriy)",
-      "urlInvalid": "http:// yoki https:// bilan boshlanadigan havolani kiriting",
-      "noteLabel": "Izoh (ixtiyoriy)",
+      "intro": "Kutubxonada hali yoʻq kitobni taklif qiling. Kutubxonachi uni tekshiradi va mos boʻlsa qoʻshadi. Bilganingizni toʻldiring: nomi va kamida bitta muallif kerak.",
+      "sourceTitle": "Qayerdan topish mumkin",
+      "linkLabel": "Havola (ixtiyoriy)",
+      "linkHint": "Kitobni oʻqish yoki sotib olish mumkin boʻlgan sahifa, https:// bilan boshlanadi",
+      "linkInvalid": "http:// yoki https:// bilan boshlanadigan havola kiriting",
+      "noteLabel": "Kutubxonachi uchun izoh (ixtiyoriy)",
       "noteHint": "{count} / {max}",
       "send": "Taklifni yuborish",
-      "thanks": "Rahmat. Kutubxonachi koʻrib chiqadi."
+      "thanks": "Rahmat. Kutubxonachi uni koʻrib chiqadi."
     }
   },
   "material": {
     "upload": {
-      "attest": "Buni oʻzim tayyorlaganman yoki ulashishga haqqim bor. Unda shaxsiy maʼlumotlar va hali tugamagan nazoratning savollari yoki javoblari yoʻq.",
+      "attest": "Buni oʻzim tayyorlaganman yoki ulashishga haqqim bor. Unda shaxsiy maʼlumot va tugamagan nazorat savollari yoki javoblari yoʻq.",
       "attestRequired": "Tasdiqlash uchun belgi qoʻying.",
       "teacherNote": "Darhol eʼlon qilinadi.",
       "studentNote": "Kutubxonachi koʻrib chiqadi, odatda 2 oʻquv kun ichida.",
-      "librarianNote": "Boshqa kutubxonachi koʻrib chiqadi, odatda 2 oʻquv kun ichida.",
+      "librarianNote": "Kutubxonachi koʻrib chiqadi, odatda 2 oʻquv kunda.",
       "policyTitle": "Bu yerga nima mos",
       "policy": {
         "made": "Buni oʻzingiz tayyorlagansiz yoki ulashishga haqqingiz bor.",
@@ -289,7 +288,7 @@
       "groupsRequired": "Kamida bitta guruhni tanlang.",
       "groupsError": "Guruhlarni yuklab boʻlmadi.",
       "retry": "Qayta urinish",
-      "groupsUnavailable": "Akkauntingiz bilan guruhlar roʻyxatini hozircha olib boʻlmaydi, shuning uchun guruhlar uchun roʻyxatlar mavjud emas.",
+      "groupsUnavailable": "Guruhlar roʻyxati akkauntingiz uchun mavjud emas.",
       "noGroups": "Tanlash uchun guruhlaringiz yoʻq.",
       "subjectLabel": "Fan",
       "subjectOptional": "Fan (ixtiyoriy)",
@@ -343,7 +342,7 @@
       "problem": {
         "titleRequired": "Havola nomini yozing.",
         "urlInvalid": "http:// yoki https:// bilan boshlanadigan manzilni kiriting",
-        "pagesInvalid": "Betlar butun son boʻlishi kerak, birinchi bet oxirgisidan keyin boʻlishi mumkin emas."
+        "pagesInvalid": "Betlar butun son, birinchisi oxirgisidan keyin emas."
       }
     },
     "search": {

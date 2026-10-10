@@ -21,6 +21,7 @@ const parsers = {
   source: parseAsStringLiteral(BROWSE_SOURCES).withDefault("all"),
   subject: parseAsString,
   topic: parseAsString,
+  tag: parseAsString,
   year: parseAsInteger,
   type: parseAsString,
   lang: parseAsString,
@@ -50,6 +51,7 @@ export function toItemsParams(state: BrowseState): ItemsParams {
   if (state.source !== "all") params.source = state.source
   if (state.subject) params.subject_id = state.subject
   if (state.topic) params.topic_id = state.topic
+  if (state.tag) params.tag = state.tag
   if (state.year) params.year_of_study = state.year
   if (state.type) params.type = state.type as ItemType
   if (state.lang) params.language = state.lang
@@ -67,6 +69,7 @@ export function countActiveFilters(state: BrowseState): number {
     [
       state.subject,
       state.topic,
+      state.tag,
       state.year,
       state.type,
       state.lang,

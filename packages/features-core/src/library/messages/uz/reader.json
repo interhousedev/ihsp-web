@@ -34,7 +34,7 @@
     "document": "Hujjat matni",
     "view": "Oʻqish oynasi",
     "unsupported": "Bu faylni brauzerda oʻqib boʻlmaydi.",
-    "fixedLayout": "Bu EPUBda betlar qatʼiy joylashtirilgan, oʻqish oynasi buni hozircha qoʻllab-quvvatlamaydi. Boshqa ilovada oʻqish uchun faylni yuklab oling.",
+    "fixedLayout": "Qatʼiy joylashuv hozircha qoʻllanmaydi. Faylni yuklab oling.",
     "noText": "Bu matnsiz skan, shuning uchun qidiruv va daftarlar undan foydalana olmaydi.",
     "addBookmark": "Joyga xatchoʻp qoʻyish",
     "removeBookmark": "Xatchoʻpni olib tashlash",
@@ -163,7 +163,7 @@
       "uploads": "Mening yuklamalarim"
     },
     "continue": {
-      "empty": "Siz hali kitob oʻqishni boshlamagansiz. Katalogdan birini oching.",
+      "empty": "Hali kitob boshlanmagan.",
       "action": "Oʻqishni davom ettirish"
     },
     "shelf": {
@@ -172,7 +172,7 @@
       "empty": "Javoningiz boʻsh. Katalogdan kitob qoʻshing.",
       "emptyFiltered": "Javonda bu holatdagi kitob yoʻq.",
       "removed": "Endi mavjud emas",
-      "removedHint": "Material kutubxonadan olib tashlangan. Uni javondan olib tashlashingiz mumkin.",
+      "removedHint": "Kutubxonadan olib tashlangan. Javondan olib tashlashingiz mumkin.",
       "removeEntry": "Javondan olib tashlash"
     },
     "lists": {
@@ -197,7 +197,7 @@
     "exportItem": "Shu materialni eksport qilish",
     "exportName": "Kutubxona izohlari",
     "exported": "Izohlar eksport qilindi.",
-    "empty": "Hozircha izohlar yoʻq. Kitobni oching, matnni tanlang va belgilang.",
+    "empty": "Izohlar hozircha yoʻq.",
     "emptyFiltered": "Soʻrovingizga mos izohlar yoʻq.",
     "count": "{count, plural, one {# ta izoh} other {# ta izoh}}",
     "open": "Oʻqish oynasida ochish",

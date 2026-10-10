@@ -1,4 +1,4 @@
-import { describe, expect, it } from "bun:test"
+import { afterEach, describe, expect, it } from "bun:test"
 import { isTypingTarget, keyAction } from "./reader-keys"
 
 const press = (
@@ -53,6 +53,11 @@ function make(html: string): Element {
   document.body.append(host)
   return host.firstElementChild!.querySelector("[data-target]") ?? host.firstElementChild!
 }
+
+// The fixtures live in document.body; clear them so other suites never see a leftover dialog.
+afterEach(() => {
+  document.body.replaceChildren()
+})
 
 describe("isTypingTarget", () => {
   it("is true for fields and for anything inside a dialog, a menu or a slider", () => {

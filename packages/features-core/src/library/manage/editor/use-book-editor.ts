@@ -2,6 +2,7 @@
 
 import {
   getManageBookQuery,
+  getManageSuggestionQuery,
   isApiError,
   keys,
   patchManageBook,
@@ -18,7 +19,7 @@ import { useRouter } from "next/navigation"
 import { useEffect, useMemo, useRef, useState } from "react"
 import { toast } from "sonner"
 import { manageBookEditHref } from "../../utils/hrefs"
-import { emptyForm, formFromInput, inputFromForm, sameForm, type BookForm } from "./book-form"
+import { emptyForm, formFromInput, formFromSuggestion, inputFromForm, sameForm, type BookForm } from "./book-form"
 import { localChecklist, validateForm, type ChecklistItem } from "./book-form-checks"
 import { useLeaveGuard } from "./use-leave-guard"
 
@@ -34,7 +35,7 @@ export function formatOf(name: string): ItemFile["format"] {
  * (create or patch, with a queued file), the three actions (Publish, Unpublish, Take down) and the checklist.
  * A saved book is the server's `BookDraft`; a new book (`id === null`) starts from `initialTitle`.
  */
-export function useBookEditor(id: string | null, initialTitle: string) {
+export function useBookEditor(id: string | null, initialTitle: string, fromSuggestion: string | null = null) {
   const t = useT("library.manage.editor")
   const errorMessage = useErrorMessage()
   const queryClient = useQueryClient()
@@ -48,6 +49,19 @@ export function useBookEditor(id: string | null, initialTitle: string) {
 
   const dirty = !sameForm(form, baseline) || pendingFile !== null
   useLeaveGuard(dirty, t("leaveConfirm"))
+
+  // A new book started from a suggestion: its form is prefilled once (unsaved, so the leave guard applies).
+  const suggestion = useQuery({
+    ...getManageSuggestionQuery(fromSuggestion ?? ""),
+    enabled: id === null && !!fromSuggestion,
+  })
+  const prefilled = useRef(false)
+  useEffect(() => {
+    const book = suggestion.data?.book
+    if (!book || prefilled.current) return
+    prefilled.current = true
+    setForm(formFromSuggestion(book))
+  }, [suggestion.data])
 
   // Load the saved book into the form, unless the librarian is in the middle of an edit.
   const loaded = useRef(0)

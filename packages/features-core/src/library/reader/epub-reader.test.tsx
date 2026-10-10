@@ -229,7 +229,7 @@ describe("EpubReader", () => {
       },
     }))
 
-    expect(await screen.findByText(/fixed page layout/)).toBeInTheDocument()
+    expect(await screen.findByText(/Fixed page layout/)).toBeInTheDocument()
   })
 
   it("shows an error with a retry for any other failure", async () => {

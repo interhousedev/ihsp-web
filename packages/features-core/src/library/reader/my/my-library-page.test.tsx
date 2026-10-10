@@ -55,7 +55,7 @@ describe("MyLibraryPage: Continue", () => {
     setLibraryActor({ id: "00000000-0000-4000-8000-0000000000aa", roles: ["student"], name: "New S." })
     renderMy("continue")
 
-    expect(await screen.findByText(/have not started a book/)).toBeInTheDocument()
+    expect(await screen.findByText(/No book started yet/)).toBeInTheDocument()
     expect(screen.getByRole("link", { name: "Browse the catalogue" })).toBeInTheDocument()
   })
 })
@@ -179,7 +179,7 @@ describe("MyLibraryPage: Notes", () => {
     setLibraryActor({ id: "00000000-0000-4000-8000-0000000000ab", roles: ["student"], name: "New S." })
     renderMy("notes")
 
-    expect(await screen.findByText(/You have no notes yet/)).toBeInTheDocument()
+    expect(await screen.findByText(/No notes yet/)).toBeInTheDocument()
     expect(screen.getByRole("button", { name: "Export to Markdown" })).toBeDisabled()
   })
 

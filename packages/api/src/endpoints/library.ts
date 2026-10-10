@@ -62,6 +62,12 @@ import type {
   ShelfParams,
   ShelfState,
   SuggestionBody,
+  SuggestionDetail,
+  SubjectInput,
+  SubjectPatch,
+  ManageSubject,
+  TagSuggestion,
+  TopicPatch,
   Topic,
   TopicInput,
   UniLibrarySearchParams,
@@ -129,6 +135,26 @@ export const getLibrarySubjectsQuery = (params?: { all?: boolean }) =>
   queryOptions({
     queryKey: keys.library.subjects(params?.all),
     queryFn: ({ signal }) => getLibrarySubjects(params, { signal }),
+  })
+
+/** GET /v1/library/authors?q — fuzzy author names (Latin and Cyrillic spellings meet); `q` may be empty. */
+export function getLibraryAuthors(q: string, opts?: RequestOptions): Promise<string[]> {
+  return api.get<string[]>("/v1/library/authors", { ...opts, query: { q } })
+}
+export const getLibraryAuthorsQuery = (q: string) =>
+  queryOptions({
+    queryKey: keys.library.authors(q),
+    queryFn: ({ signal }) => getLibraryAuthors(q, { signal }),
+  })
+
+/** GET /v1/library/tags?q&limit — existing tags; with an empty `q` the most used ones. */
+export function getLibraryTags(params: { q: string; limit?: number }, opts?: RequestOptions): Promise<TagSuggestion[]> {
+  return api.get<TagSuggestion[]>("/v1/library/tags", { ...opts, query: params })
+}
+export const getLibraryTagsQuery = (params: { q: string; limit?: number }) =>
+  queryOptions({
+    queryKey: keys.library.tags(params.q, params.limit),
+    queryFn: ({ signal }) => getLibraryTags(params, { signal }),
   })
 
 /** GET /v1/library/topics?subject_id — the topic tree of a subject. */
@@ -468,12 +494,41 @@ export const getManageTopicsQuery = (params?: { subject_id?: string }) =>
 export function postManageTopic(body: TopicInput, opts?: RequestOptions): Promise<ManageTopic> {
   return api.post<ManageTopic>("/v1/manage/library/topics", body, opts)
 }
-export function patchManageTopic(id: string, body: Partial<TopicInput>, opts?: RequestOptions): Promise<ManageTopic> {
+export function patchManageTopic(id: string, body: TopicPatch, opts?: RequestOptions): Promise<ManageTopic> {
   return api.patch<ManageTopic>(`/v1/manage/library/topics/${seg(id)}`, body, opts)
 }
 export function deleteManageTopic(id: string, opts?: RequestOptions): Promise<NoContent> {
   return api.delete<NoContent>(`/v1/manage/library/topics/${seg(id)}`, opts)
 }
+
+/** GET /v1/manage/library/subjects — the whole subject tree, archived ones included. */
+export function getManageSubjects(opts?: RequestOptions): Promise<ManageSubject[]> {
+  return api.get<ManageSubject[]>("/v1/manage/library/subjects", opts)
+}
+export const getManageSubjectsQuery = () =>
+  queryOptions({
+    queryKey: keys.library.manage.subjects(),
+    queryFn: ({ signal }) => getManageSubjects({ signal }),
+  })
+export function postManageSubject(body: SubjectInput, opts?: RequestOptions): Promise<ManageSubject> {
+  return api.post<ManageSubject>("/v1/manage/library/subjects", body, opts)
+}
+export function patchManageSubject(id: string, body: SubjectPatch, opts?: RequestOptions): Promise<ManageSubject> {
+  return api.patch<ManageSubject>(`/v1/manage/library/subjects/${seg(id)}`, body, opts)
+}
+export function deleteManageSubject(id: string, opts?: RequestOptions): Promise<NoContent> {
+  return api.delete<NoContent>(`/v1/manage/library/subjects/${seg(id)}`, opts)
+}
+
+/** GET /v1/manage/library/suggestions/{id} — a student's suggestion with the book form they filled in. */
+export function getManageSuggestion(id: string, opts?: RequestOptions): Promise<SuggestionDetail> {
+  return api.get<SuggestionDetail>(`/v1/manage/library/suggestions/${seg(id)}`, opts)
+}
+export const getManageSuggestionQuery = (id: string) =>
+  queryOptions({
+    queryKey: keys.library.manage.suggestion(id),
+    queryFn: ({ signal }) => getManageSuggestion(id, { signal }),
+  })
 
 /** GET /v1/manage/library/collections. */
 export function getManageCollections(opts?: RequestOptions): Promise<ManageCollection[]> {

@@ -12,7 +12,7 @@
     "seeAll": "See all",
     "items": "{count, plural, one {# item} other {# items}}",
     "signInTitle": "Sign in to see more",
-    "signInText": "Sign in to open lyceum books, keep a shelf and see reading lists.",
+    "signInText": "Sign in to open lyceum books and keep a shelf.",
     "signIn": "Sign in",
     "empty": "The library has no items yet.",
     "emptyAction": "Browse the catalogue"
@@ -45,7 +45,12 @@
       "language": "Language",
       "uploader": "Uploaded by",
       "hasText": "Only items with searchable text",
-      "shelf": "On my shelf"
+      "shelf": "On my shelf",
+      "tag": "Tag",
+      "tagPlaceholder": "Type a tag",
+      "tagSuggestions": "Tags",
+      "noTags": "No tag “{value}”. Press Enter to filter by it.",
+      "clearTag": "Remove"
     },
     "year": "Year {year}",
     "uploader": {
@@ -79,7 +84,7 @@
     "edit": "Edit",
     "withdraw": "Withdraw",
     "withdrawConfirmTitle": "Withdraw this material?",
-    "withdrawConfirmText": "It will no longer be visible in the library. Your shelf entries and notes of other readers stay.",
+    "withdrawConfirmText": "It leaves the library. Shelf entries and notes of other readers stay.",
     "withdrawn": "The material was withdrawn.",
     "uploadedBy": "Uploaded by {name}, {cohort}",
     "uploadedByTeacher": "Uploaded by {name}",
@@ -99,7 +104,7 @@
     "yearsOfStudy": "Year of study",
     "noText": "This item is a scan without text, so search and notebooks cannot use it.",
     "removed": "This item was removed",
-    "removedHint": "Your shelf entry stays, but the item cannot be opened any more.",
+    "removedHint": "It stays on your shelf but cannot be opened.",
     "ownerPanel": "Your upload",
     "status": {
       "label": "Status",
@@ -114,9 +119,7 @@
     },
     "reviewerMessage": "Message from the reviewer",
     "reason": "Reason",
-    "coverAlt": "Cover of {title}",
-    "noCover": "No cover",
-    "fullTextHit": "Found in the text"
+    "noCover": "No cover"
   },
   "tag": {
     "unilibrary": "UniLibrary",
@@ -144,7 +147,6 @@
     "universityLevel": "University-level material",
     "unavailable": "UniLibrary is not responding. Showing saved results.",
     "gone": "No longer available on UniLibrary",
-    "noNotebook": "UniLibrary books cannot be added to a notebook.",
     "field": "Field",
     "type": "UniLibrary type",
     "keywords": "Keywords",
@@ -168,7 +170,7 @@
   },
   "report": {
     "title": "Report",
-    "description": "Tell a librarian what is wrong with this item. The owner will not see who reported it.",
+    "description": "Tell a librarian what is wrong. The owner will not see who reported.",
     "reasonLabel": "Reason",
     "reason": {
       "wrong_content": "Mistake in the content",
@@ -207,8 +209,6 @@
     "due": "Due {date}",
     "open": "Open",
     "openLink": "Open link",
-    "readState": "Read status of {title}",
-    "notStarted": "Not started",
     "draft": "Draft",
     "archived": "Archived",
     "groupBy": "Group by",
@@ -219,13 +219,13 @@
   "notebook": {
     "addTo": "Add to notebook",
     "title": "Add to a notebook",
-    "description": "The notebook can then answer questions about this item and cite its pages.",
+    "description": "The notebook can then answer questions about it and cite its pages.",
     "choose": "Notebook",
     "newNotebook": "New notebook",
     "noNotebooks": "You have no notebooks yet. A new one will be created.",
     "whole": "Whole item",
     "range": "Pages",
-    "rangeHint": "A whole textbook can be too long for one source. Choose the chapter you need.",
+    "rangeHint": "A whole textbook may be too long. Choose a chapter.",
     "from": "From page",
     "to": "To page",
     "toc": "Chapters",

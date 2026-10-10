@@ -64,6 +64,7 @@ export function BrowsePage() {
             void setState({
               subject: null,
               topic: null,
+              tag: null,
               year: null,
               type: null,
               lang: null,

@@ -1,6 +1,12 @@
 "use client"
 
-import { getLibrarySubjectsQuery, getLibraryTopicsQuery, type ItemType, type Topic } from "@ihsp/api"
+import {
+  getLibrarySubjectsQuery,
+  getLibraryTagsQuery,
+  getLibraryTopicsQuery,
+  type ItemType,
+  type Topic,
+} from "@ihsp/api"
 import { useT } from "@ihsp/i18n"
 import {
   Button,
@@ -17,7 +23,8 @@ import {
 } from "@ihsp/ui"
 import { IconAdjustmentsHorizontal } from "@ihsp/ui"
 import { useQuery } from "@tanstack/react-query"
-import { useState, type ReactNode } from "react"
+import { useId, useState, type ReactNode } from "react"
+import { SuggestInput, useDebouncedValue, type SuggestOption } from "../utils/suggest-input"
 import { useLibraryAccess } from "../hooks/use-library-access"
 import { useUniLibraryEnabled } from "../hooks/use-uni-library"
 import { BROWSE_SOURCES, countActiveFilters, type BrowseState } from "./use-browse-state"
@@ -94,6 +101,45 @@ function Field({ label, id, children }: { label: string; id: string; children: R
   )
 }
 
+/** The tag filter: a tag picked from the suggestions (or typed and entered), shown as a chip that clears it. */
+function TagFilter({ tag, onChange }: { tag: string | null; onChange: (tag: string | null) => void }) {
+  const t = useT("library.browse")
+  const id = useId()
+  const [draft, setDraft] = useState("")
+  const query = useDebouncedValue(draft.trim())
+  const found = useQuery(getLibraryTagsQuery({ q: query, limit: 8 }))
+  const options: SuggestOption[] = (found.data ?? []).map((row) => ({ value: row.name, hint: String(row.item_count) }))
+  function choose(value: string) {
+    setDraft("")
+    onChange(value)
+  }
+  return (
+    <Field id={`${id}-tag`} label={t("filter.tag")}>
+      {tag ? (
+        <div className="flex items-center justify-between gap-2 rounded-md border px-3 py-1 text-sm">
+          <span className="truncate">{tag}</span>
+          <Button type="button" variant="ghost" className="min-h-11 md:min-h-8" onClick={() => onChange(null)}>
+            {t("filter.clearTag")}
+          </Button>
+        </div>
+      ) : (
+        <SuggestInput
+          id={`${id}-tag`}
+          label={t("filter.tag")}
+          value={draft}
+          onChange={setDraft}
+          options={options}
+          placeholder={t("filter.tagPlaceholder")}
+          listLabel={t("filter.tagSuggestions")}
+          noMatchesText={t("filter.noTags", { value: draft.trim() })}
+          onPick={(option) => choose(option.value)}
+          onSubmitText={choose}
+        />
+      )}
+    </Field>
+  )
+}
+
 function FilterFields({ state, onChange }: { state: BrowseState; onChange: (patch: Patch) => void }) {
   const t = useT("library.browse")
   const library = useT("library")
@@ -139,6 +185,7 @@ function FilterFields({ state, onChange }: { state: BrowseState; onChange: (patc
           </NativeSelect>
         </Field>
       ) : null}
+      <TagFilter tag={state.tag} onChange={(tag) => onChange({ tag })} />
       <Field id="filter-year" label={t("filter.year")}>
         <NativeSelect
           id="filter-year"

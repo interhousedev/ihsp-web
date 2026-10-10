@@ -34,7 +34,7 @@
     "document": "Document text",
     "view": "Reader",
     "unsupported": "This file cannot be read in the browser.",
-    "fixedLayout": "This EPUB has a fixed page layout, which the reader does not support yet. Download it to read it elsewhere.",
+    "fixedLayout": "Fixed page layout is not supported yet. Download the file to read it.",
     "noText": "This item is a scan without text, so search and notebooks cannot use it.",
     "addBookmark": "Bookmark this place",
     "removeBookmark": "Remove the bookmark",
@@ -163,7 +163,7 @@
       "uploads": "My uploads"
     },
     "continue": {
-      "empty": "You have not started a book yet. Open one from the catalogue.",
+      "empty": "No book started yet.",
       "action": "Continue reading"
     },
     "shelf": {
@@ -172,7 +172,7 @@
       "empty": "Your shelf is empty. Add books from the catalogue.",
       "emptyFiltered": "Nothing on the shelf in this state.",
       "removed": "No longer available",
-      "removedHint": "The item was removed from the library. You can take it off your shelf.",
+      "removedHint": "Removed from the library. You can take it off your shelf.",
       "removeEntry": "Remove from shelf"
     },
     "lists": {
@@ -197,7 +197,7 @@
     "exportItem": "Export this item",
     "exportName": "Library notes",
     "exported": "Notes exported.",
-    "empty": "You have no notes yet. Open a book, select text and highlight it.",
+    "empty": "No notes yet.",
     "emptyFiltered": "No notes match your search.",
     "count": "{count, plural, one {# note} other {# notes}}",
     "open": "Open in the reader",

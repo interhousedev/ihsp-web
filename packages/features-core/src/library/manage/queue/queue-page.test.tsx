@@ -79,7 +79,9 @@ describe("QueuePage: tabs and list", () => {
     expect(within(preview).getByText("Good for the olympiad group.")).toBeInTheDocument()
     expect(within(preview).getByText("Jasur I., 2025")).toBeInTheDocument()
     const draft = screen.getByRole("link", { name: "Create a book draft" })
-    expect(draft.getAttribute("href")).toMatch(/^\/manage\/books\/edit\/?\?title=Atom%20physics%20workbook$/)
+    expect(draft.getAttribute("href")).toMatch(
+      /^\/manage\/books\/edit\/?\?title=Atom%20physics%20workbook(&suggestion=[^&]+)?$/,
+    )
   })
 
   it("links a rights row to the book editor", async () => {

@@ -3,7 +3,7 @@
 import { useLibraryAccess } from "@ihsp/features-core"
 import { useT } from "@ihsp/i18n"
 import { filterNavGroups, type BottomNavItem, type NavGroup } from "@ihsp/ui"
-import { IconBookmarks, IconBooks, IconCategory, IconFlag, IconInbox, IconListDetails } from "@ihsp/ui"
+import { IconBookmarks, IconBooks, IconCategory, IconFlag, IconInbox, IconListDetails, IconSitemap } from "@ihsp/ui"
 import { useMemo } from "react"
 
 /**
@@ -33,6 +33,7 @@ export function useNav(): { groups: NavGroup[]; bottom: BottomNavItem[] } {
           { title: t("queue"), url: "/manage/queue/", icon: IconInbox, visible: canManage },
           { title: t("books"), url: "/manage/books/", icon: IconBooks, visible: canManage },
           { title: t("topics"), url: "/manage/topics/", icon: IconCategory, visible: canManage },
+          { title: t("subjects"), url: "/manage/subjects/", icon: IconSitemap, visible: canManage },
           {
             title: t("manageCollections"),
             url: "/manage/collections/",

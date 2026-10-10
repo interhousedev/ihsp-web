@@ -11,6 +11,8 @@ function topic(id: string, parent: string | null, position: number): ManageTopic
     slug: id,
     position,
     year_of_study: null,
+    code: null,
+    archived: false,
   }
 }
 

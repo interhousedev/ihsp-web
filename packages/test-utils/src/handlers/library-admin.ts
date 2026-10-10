@@ -5,7 +5,11 @@ import type {
   ItemStatus,
   LibraryStats,
   ManageCollection,
+  ManageSubject,
   ManageTopic,
+  SubjectInput,
+  SubjectPatch,
+  TopicPatch,
   Sanction,
   SanctionBody,
   TopicInput,
@@ -96,6 +100,8 @@ export const libraryAdminHandlers = [
       slug: body.slug ?? slugify(body.name?.en ?? ""),
       position: Math.max(0, ...state.topics.map((t) => t.position)) + 1,
       year_of_study: body.year_of_study ?? null,
+      code: null,
+      archived: false,
     }
     state.topics.push(topic)
     return HttpResponse.json(topic, { status: 201 })
@@ -107,7 +113,7 @@ export const libraryAdminHandlers = [
     const index = state.topics.findIndex((t) => t.id === param(params, "id"))
     const current = state.topics[index]
     if (!current) return notFound("Topic")
-    const body = await readJson<Partial<TopicInput>>(request)
+    const body = await readJson<TopicPatch>(request)
     if (body.name !== undefined && !hasNames(body.name)) return invalid("name", "Names in uz, ru and en are required")
     const next: ManageTopic = {
       ...current,
@@ -115,6 +121,9 @@ export const libraryAdminHandlers = [
       slug: body.slug ?? current.slug,
       parent_id: body.parent_id === undefined ? current.parent_id : body.parent_id,
       year_of_study: body.year_of_study === undefined ? current.year_of_study : body.year_of_study,
+      code: body.code === undefined ? current.code : body.code,
+      position: body.position ?? current.position,
+      archived: body.archived ?? current.archived,
     }
     state.topics[index] = next
     return HttpResponse.json(next)
@@ -132,6 +141,80 @@ export const libraryAdminHandlers = [
       stored.detail = { ...stored.detail, topics: stored.detail.topics.filter((t) => !gone.has(t.id)) }
     }
     return noContent()
+  }),
+
+  // --- Subjects (the librarian's tree) ---
+  http.get(apiUrl("/v1/manage/library/subjects"), ({ request }) => {
+    const actor = staffOnly(request)
+    if (actor instanceof Response) return actor
+    return HttpResponse.json([...state.subjects].toSorted((a, b) => a.position - b.position))
+  }),
+
+  http.post(apiUrl("/v1/manage/library/subjects"), async ({ request }) => {
+    const actor = staffOnly(request)
+    if (actor instanceof Response) return actor
+    const body = await readJson<SubjectInput>(request)
+    if (!hasNames(body.name)) return invalid("name", "Names in uz, ru and en are required")
+    if (body.parent_id && !state.subjects.some((s) => s.id === body.parent_id)) {
+      return invalid("parent_id", "Unknown parent subject")
+    }
+    const subject: ManageSubject = {
+      id: newId(),
+      parent_id: body.parent_id ?? null,
+      name: body.name as ManageSubject["name"],
+      slug: body.slug ?? (body.name?.en ?? "").toLowerCase().replace(/[^a-z0-9]+/g, "-"),
+      code: body.code ?? null,
+      position: Math.max(-1, ...state.subjects.map((s) => s.position)) + 1,
+      archived: false,
+    }
+    state.subjects.push(subject)
+    return HttpResponse.json(subject, { status: 201 })
+  }),
+
+  http.patch(apiUrl("/v1/manage/library/subjects/:id"), async ({ params, request }) => {
+    const actor = staffOnly(request)
+    if (actor instanceof Response) return actor
+    const index = state.subjects.findIndex((s) => s.id === param(params, "id"))
+    const current = state.subjects[index]
+    if (!current) return notFound("Subject")
+    const body = await readJson<SubjectPatch>(request)
+    if (body.name !== undefined && !hasNames(body.name)) return invalid("name", "Names in uz, ru and en are required")
+    const next: ManageSubject = {
+      ...current,
+      name: body.name ?? current.name,
+      slug: body.slug ?? current.slug,
+      parent_id: body.parent_id === undefined ? current.parent_id : body.parent_id,
+      code: body.code === undefined ? current.code : body.code,
+      position: body.position ?? current.position,
+      archived: body.archived ?? current.archived,
+    }
+    state.subjects[index] = next
+    return HttpResponse.json(next)
+  }),
+
+  http.delete(apiUrl("/v1/manage/library/subjects/:id"), ({ params, request }) => {
+    const actor = staffOnly(request)
+    if (actor instanceof Response) return actor
+    const id = param(params, "id")
+    if (!state.subjects.some((s) => s.id === id)) return notFound("Subject")
+    state.subjects = state.subjects.filter((s) => s.id !== id)
+    return noContent()
+  }),
+
+  // --- Suggestions (the librarian's view of a student's book form) ---
+  http.get(apiUrl("/v1/manage/library/suggestions/:id"), ({ params, request }) => {
+    const actor = staffOnly(request)
+    if (actor instanceof Response) return actor
+    const found = state.suggestions.find((s) => s.id === param(params, "id"))
+    if (!found) return notFound("Suggestion")
+    return HttpResponse.json({
+      id: found.id,
+      title: found.title,
+      url: found.url,
+      note: found.note,
+      status: "new",
+      book: found.book,
+    })
   }),
 
   // --- Collections ---

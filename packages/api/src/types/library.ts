@@ -224,6 +224,7 @@ export type ItemsParams = {
   source?: ItemSource
   subject_id?: string
   topic_id?: string
+  tag?: string
   year_of_study?: number
   type?: ItemType
   language?: string
@@ -249,6 +250,14 @@ export type ItemText = { pages: { page: number; text: string }[] }
  */
 export interface LibrarySubject {
   id: string
+  name: string
+  item_count: number
+  parent_id?: string | null
+  code?: string | null
+}
+
+/** `GET /library/tags` — an existing tag and how many published items carry it. */
+export interface TagSuggestion {
   name: string
   item_count: number
 }
@@ -447,11 +456,42 @@ export interface LibraryGroup {
 }
 
 /** `POST /library/suggestions`. */
+/** The book form as a student suggests it (`SuggestedBookBody`): no rights, visibility or files. */
+export interface SuggestedBook {
+  title: string
+  subtitle?: string | null
+  authors: string[]
+  translators?: string[]
+  language: ItemLanguage
+  year_published?: number | null
+  publisher?: string | null
+  isbn?: string | null
+  type: ItemType
+  description?: string | null
+  years_of_study?: number[]
+  subjects?: BookSubjectInput[]
+  topics?: BookTopicInput[]
+  tags?: string[]
+  cover_file_id?: string | null
+}
+
+/** `POST /library/suggestions`: a title, and from the book editor the whole `book` form. */
 export interface SuggestionBody {
   title: string
   url?: string
   file_id?: string
   note?: string
+  book?: SuggestedBook | null
+}
+
+/** `GET /manage/library/suggestions/{id}`. */
+export interface SuggestionDetail {
+  id: string
+  title: string
+  url: string | null
+  note: string | null
+  status: "new" | "accepted" | "declined"
+  book: SuggestedBook | null
 }
 
 /** `POST /library/items/{id}/report`. */
@@ -535,13 +575,14 @@ export interface BookInput {
   years_of_study: number[]
   subjects: BookSubjectInput[]
   topics: BookTopicInput[]
-  rights?: Rights
+  rights: Rights
   licence?: string | null
   rights_basis?: RightsBasis
   rights_proof_file_id?: string | null
   cover_file_id?: string | null
   visibility: ItemVisibility
   download_allowed: boolean
+  tags?: string[]
 }
 export type BookAction = "publish" | "unpublish" | "takedown"
 export interface BookActionBody {
@@ -587,6 +628,18 @@ export interface TopicInput {
   name: { uz: string; ru: string; en: string }
   slug?: string
   year_of_study?: number | null
+  code?: string | null
+}
+/** `PATCH /manage/library/topics/{id}`: only the sent keys change; `archived` hides a topic without deleting it. */
+export interface TopicPatch {
+  subject_id?: string
+  parent_id?: string | null
+  name?: { uz: string; ru: string; en: string }
+  slug?: string
+  year_of_study?: number | null
+  code?: string | null
+  position?: number
+  archived?: boolean
 }
 export interface ManageTopic {
   id: string
@@ -596,6 +649,32 @@ export interface ManageTopic {
   slug: string
   position: number
   year_of_study: number | null
+  code: string | null
+  archived: boolean
+}
+/** A subject of the librarian's tree (`/manage/library/subjects`). */
+export interface ManageSubject {
+  id: string
+  parent_id: string | null
+  name: { uz: string; ru: string; en: string }
+  slug: string
+  code: string | null
+  position: number
+  archived: boolean
+}
+export interface SubjectInput {
+  name: { uz: string; ru: string; en: string }
+  parent_id?: string | null
+  slug?: string
+  code?: string | null
+}
+export interface SubjectPatch {
+  name?: { uz: string; ru: string; en: string }
+  parent_id?: string | null
+  slug?: string
+  code?: string | null
+  position?: number
+  archived?: boolean
 }
 export interface CollectionInput {
   title: { uz: string; ru: string; en: string }

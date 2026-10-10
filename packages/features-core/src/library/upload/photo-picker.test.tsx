@@ -41,7 +41,7 @@ describe("PhotoPicker", () => {
     expect(screen.getByTestId("photo-gallery-input")).not.toHaveAttribute("capture")
     expect(screen.getByRole("button", { name: "Take a photo" })).toBeInTheDocument()
     expect(screen.getByRole("button", { name: "Choose from gallery" })).toBeInTheDocument()
-    expect(screen.getByText(/Cropping is not available here/)).toBeInTheDocument()
+    expect(screen.getByText(/No cropping here/)).toBeInTheDocument()
   })
 
   it("adds several shots one after another and numbers them", () => {

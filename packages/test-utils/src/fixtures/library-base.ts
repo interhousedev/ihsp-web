@@ -152,6 +152,8 @@ export const libManageTopics: ManageTopic[] = topicSeeds.map(([id, subject, pare
   slug: en.toLowerCase().replaceAll(" ", "-"),
   position: index + 1,
   year_of_study: parent === null ? null : 1,
+  code: null,
+  archived: false,
 }))
 
 /** Builds the topic trees (English names) for the public `GET /library/topics`. */

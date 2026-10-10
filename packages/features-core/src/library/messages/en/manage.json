@@ -23,7 +23,39 @@
       "year": "Year of study",
       "anyYear": "Any year",
       "save": "Save",
-      "deleteTextChildren": "“{name}” and all the topics below it will be deleted. Items lose these tags."
+      "deleteTextChildren": "“{name}” and all the topics below it will be deleted. Items lose these tags.",
+      "code": "Code (ББК or УДК)",
+      "codeHint": "Optional. The library classification code.",
+      "archived": "Archived",
+      "archive": "Archive {name}",
+      "restore": "Restore {name}",
+      "moveUp": "Move {name} up",
+      "moveDown": "Move {name} down"
+    },
+    "subjects": {
+      "title": "Subjects",
+      "add": "Add subject",
+      "addChild": "Add a subject under {name}",
+      "addTitle": "Add subject",
+      "addChildTitle": "Add a subject under this one",
+      "editTitle": "Edit subject",
+      "edit": "Edit {name}",
+      "archive": "Archive {name}",
+      "restore": "Restore {name}",
+      "archived": "Archived",
+      "moveUp": "Move {name} up",
+      "moveDown": "Move {name} down",
+      "empty": "No subjects yet.",
+      "treeLabel": "Subject tree",
+      "namesRequired": "Write the name in Uzbek, Russian and English.",
+      "name": "Name",
+      "code": "Code (ББК or УДК)",
+      "codeHint": "Optional. The library classification code, for example ББК 74 or УДК 37.",
+      "parent": "Under",
+      "parentTop": "Top level",
+      "slug": "Short name for addresses",
+      "slugHint": "Optional. Leave it empty to make it from the English name.",
+      "save": "Save"
     },
     "collections": {
       "title": "Collections",
@@ -90,7 +122,7 @@
         "length": "Waiting",
         "oldest": "Oldest",
         "average": "Average wait",
-        "slow": "The oldest item has waited more than 2 school days. Review it first.",
+        "slow": "The oldest item waited over 2 school days.",
         "serviceLevel": "Goal: a decision within 2 school days."
       }
     },
@@ -98,11 +130,11 @@
       "title": "UniLibrary",
       "settings": {
         "title": "Settings",
-        "explanation": "UniLibrary is off by default. While it is off, nothing from UniLibrary shows anywhere in the library: no source chip, no filter, no cards, no “More from UniLibrary”, and the server makes no calls to it.",
+        "explanation": "Off by default. While off, nothing from UniLibrary shows and the server makes no calls to it.",
         "enable": "Enable UniLibrary",
-        "enableHint": "Show UniLibrary cards in search and on item pages. Readers open the books on UniLibrary itself.",
+        "enableHint": "Show UniLibrary cards in search and on item pages.",
         "anonymous": "Show anonymous cards",
-        "anonymousHint": "Let visitors who are not signed in see UniLibrary cards too. It works only while UniLibrary is enabled.",
+        "anonymousHint": "Also for visitors who are not signed in.",
         "save": "Save settings",
         "unsaved": "Unsaved changes",
         "on": "On",
@@ -120,8 +152,8 @@
         },
         "breakerHint": {
           "closed": "Calls go to UniLibrary as usual.",
-          "open": "Too many calls failed. Saved results are shown for a minute before it tries again.",
-          "half_open": "One test call is going through to see if UniLibrary is back."
+          "open": "Too many calls failed. Saved results show for a minute.",
+          "half_open": "One test call is going through."
         },
         "cache": {
           "hits": "Served from cache",
@@ -143,12 +175,12 @@
       },
       "coming": {
         "title": "Feeds and mapping are coming.",
-        "text": "Periodic feeds and the subject-to-field mapping are not part of this version. Search on demand works as soon as UniLibrary is enabled."
+        "text": "Periodic feeds and subject mapping are not in this version."
       }
     },
     "sanctions": {
       "title": "Warnings and upload bans",
-      "description": "After upheld reports, warn a user or ban them from uploading. The decision is audited and the user sees it.",
+      "description": "Warn a user or ban uploads after upheld reports. The user sees the decision.",
       "userId": "User id",
       "userIdHint": "The id from the user's page in Users and roles.",
       "userIdInvalid": "Enter the user id as a UUID, for example 0b8e6a52-6f4e-4a62-9e0f-5a1d3c2b4e7f.",
@@ -193,8 +225,8 @@
     },
     "import": {
       "title": "Bulk import of books",
-      "description": "Upload a CSV with one row per book. Good rows become drafts; rows with errors are listed so you can fix them.",
-      "columns": "Columns: file name, title, authors, language, year, type, rights and its basis, subjects, topics. Upload the book files first.",
+      "description": "Upload a CSV with one row per book. Rows with errors are listed.",
+      "columns": "Columns: file name, title, authors, language, year, type, rights and basis, subjects, topics. Upload the files first.",
       "zone": "CSV file",
       "hint": "Drop a CSV file here or choose it.",
       "choose": "Choose CSV",
@@ -228,7 +260,7 @@
       "unpublish": "Unpublish",
       "takedown": "Take down",
       "takedownTitle": "Take this book down",
-      "takedownDescription": "The book disappears from the library. The reason is kept for the audit; the file is kept, and shelves and notes keep the title.",
+      "takedownDescription": "The book leaves the library. The reason is kept for the audit.",
       "done": {
         "publish": "The book is published.",
         "unpublish": "The book is unpublished.",
@@ -244,7 +276,7 @@
       "primaryFile": "Main file",
       "pages": "{count, plural, one {# page} other {# pages}}",
       "cover": "Cover",
-      "coverHint": "A JPG or PNG image. Without a cover the book cannot be published.",
+      "coverHint": "JPG or PNG. Required to publish.",
       "coverChoose": "Choose a cover",
       "coverReplace": "Replace the cover",
       "coverNew": "New cover: {name}",
@@ -256,7 +288,7 @@
       "addEntry": "Add",
       "removeEntry": "Remove {name}",
       "language": "Language and script",
-      "languageHint": "Uzbek in Latin and in Cyrillic script are different choices.",
+      "languageHint": "Uzbek in Latin and Cyrillic are separate choices.",
       "type": "Type",
       "year": "Year of publication",
       "publisher": "Publisher",
@@ -301,11 +333,9 @@
       "visibility": {
         "label": "Who can see the book",
         "lyceum": "Lyceum only",
-        "lyceumHint": "Signed-in lyceum users.",
         "public": "Public",
-        "publicHint": "Anyone on the internet.",
         "download": "Allow download",
-        "downloadHint": "Readers may save the file. Follow the permission or the basis.",
+        "downloadHint": "Readers may save the file.",
         "title": "Who can see the book"
       },
       "checklist": {
@@ -317,7 +347,7 @@
         "todo": "to do",
         "text_status": {
           "label": "The file has been checked",
-          "hint": "Attach a PDF or EPUB and wait until its text is ready (or marked as a scan)."
+          "hint": "Attach a PDF or EPUB and wait for its text."
         },
         "cover": {
           "label": "Cover is present",
@@ -327,6 +357,23 @@
           "label": "At least one subject",
           "hint": "Add a subject, or put the book into a collection."
         }
+      },
+      "authorsHint": "Start typing: Latin and Cyrillic spellings find each other.",
+      "authorsPlaceholder": "Type an author’s name",
+      "authorSuggestions": "Authors",
+      "tags": "Tags",
+      "tagsHint": "Keywords that help search. Pick one that is already used, or type a new one.",
+      "tagsPlaceholder": "Type a tag",
+      "tagSuggestions": "Tags",
+      "tagCount": "{count, plural, one {# item} other {# items}}",
+      "noSuggestions": "Nothing found. Press Enter to add “{value}”.",
+      "rights": "Rights",
+      "rightsHint": "Who may publish this text. Publishing needs the details checked by a librarian.",
+      "rightsOptions": {
+        "official": "Official, by agreement with the school or publisher",
+        "open_license": "Open licence",
+        "public_domain": "Public domain",
+        "permission": "With the rights holder’s permission"
       }
     },
     "title": "Librarian area",
@@ -366,7 +413,7 @@
       },
       "listLabel": "{tab}: items",
       "selectHint": "Choose an item to see it here.",
-      "shortcutsHint": "Keys: j and k move, a approves, c requests changes, r rejects, h holds.",
+      "shortcutsHint": "j/k move, a approve, c changes, r reject, h hold.",
       "kind": {
         "student_material": "Student material",
         "teacher_material": "Teacher material",
@@ -394,7 +441,7 @@
       "dialog": {
         "request-changes": {
           "title": "Request changes",
-          "description": "Tell the owner what to fix in “{title}”. They will see this message.",
+          "description": "Tell the owner what to fix in “{title}”.",
           "confirm": "Send request"
         },
         "reject": {
@@ -404,12 +451,12 @@
         },
         "hold": {
           "title": "Hold for review",
-          "description": "“{title}” will be hidden from readers until you decide. The owner will see your reason.",
+          "description": "“{title}” is hidden until you decide. The owner sees your reason.",
           "confirm": "Hold"
         },
         "unpublish": {
           "title": "Unpublish this item",
-          "description": "“{title}” will be removed from the library. The owner will see your reason.",
+          "description": "“{title}” leaves the library. The owner sees your reason.",
           "confirm": "Unpublish"
         },
         "restore": {
@@ -435,17 +482,19 @@
         "statusReason": "Reason on record",
         "suggestedBy": "Suggested by",
         "suggestionLink": "Link",
-        "suggestionNote": "Note"
+        "suggestionNote": "Note",
+        "suggestedBook": "The book, as the student filled it in",
+        "suggestedTags": "Tags"
       }
     },
     "resolve": {
       "title": "Resolve reports",
-      "description": "Decide what happens to “{title}”. The decision covers every open report of this item.",
+      "description": "The decision covers every open report of “{title}”.",
       "decision": "Decision",
       "action": {
         "dismiss": {
           "label": "Dismiss",
-          "hint": "The reports were wrong. The item stays public, or comes back if it was held."
+          "hint": "Reports were wrong. The item stays public or comes back."
         },
         "hold": {
           "label": "Hold",

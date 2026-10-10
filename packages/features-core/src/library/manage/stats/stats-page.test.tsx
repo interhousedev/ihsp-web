@@ -45,7 +45,7 @@ describe("StatsPage", () => {
   it("warns when the oldest item has waited longer than two school days", async () => {
     renderStats()
 
-    expect(await screen.findByText(/waited more than 2 school days/)).toBeInTheDocument()
+    expect(await screen.findByText(/waited over 2 school days/)).toBeInTheDocument()
   })
 
   it("shows no warning for a short queue", async () => {
@@ -57,7 +57,7 @@ describe("StatsPage", () => {
     renderStats()
 
     expect(await screen.findByText("Goal: a decision within 2 school days.")).toBeInTheDocument()
-    expect(screen.queryByText(/waited more than 2 school days/)).not.toBeInTheDocument()
+    expect(screen.queryByText(/waited over 2 school days/)).not.toBeInTheDocument()
   })
 
   it("shows empty states for empty lists", async () => {

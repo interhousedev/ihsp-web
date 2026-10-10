@@ -19,6 +19,7 @@ export type BrowseParams = {
   source?: "all" | "book" | "material" | "external"
   subject?: string
   topic?: string
+  tag?: string
   year?: number | string
   type?: string
   lang?: string
@@ -39,6 +40,7 @@ export const collectionHref = (id: string) => withQuery("/collections/view/", { 
 
 export const uploadHref = () => "/upload/"
 export const uploadEditHref = (id: string) => withQuery("/upload/edit/", { id })
+export const uploadSuggestHref = () => "/upload/suggest/"
 export type MyLibraryTab = "continue" | "shelf" | "notes" | "lists" | "uploads"
 export const myHref = (tab?: MyLibraryTab) => withQuery("/my/", { tab })
 
@@ -46,6 +48,7 @@ export const manageQueueHref = (tab?: string) => withQuery("/manage/queue/", { t
 export const manageBooksHref = () => "/manage/books/"
 export const manageBookEditHref = (id?: string) => withQuery("/manage/books/edit/", { id })
 export const manageTopicsHref = () => "/manage/topics/"
+export const manageSubjectsHref = () => "/manage/subjects/"
 export const manageCollectionsHref = () => "/manage/collections/"
 export const manageReportsHref = () => "/manage/reports/"
 export const manageStatsHref = () => "/manage/stats/"

@@ -9,7 +9,9 @@ import type {
   ItemCard,
   ItemDetail,
   ManageCollection,
+  ManageSubject,
   ManageTopic,
+  SuggestedBook,
   ProgressBody,
   ReadingListDetail,
   ReadingListEntry,
@@ -81,6 +83,7 @@ export type StoredSuggestion = {
   title: string
   url: string | null
   note: string | null
+  book: SuggestedBook | null
   createdAt: string
 }
 export type ShelfRow = { itemId: string; state: ShelfState; finishedAt: string | null; updatedAt: string; seq: number }
@@ -104,6 +107,7 @@ export type LibraryState = {
   users: Map<string, UserState>
   lists: Map<string, StoredList>
   topics: ManageTopic[]
+  subjects: ManageSubject[]
   collections: ManageCollection[]
   reports: StoredReport[]
   suggestions: StoredSuggestion[]
@@ -172,6 +176,15 @@ function freshState(): LibraryState {
     users: new Map([[libActors.student.id, seededUser()]]),
     lists: new Map(libReadingLists.map((detail) => [detail.id, listFromDetail(detail)])),
     topics: structuredClone(libManageTopics),
+    subjects: Object.values(libSubjects).map((subject, position) => ({
+      id: subject.id,
+      parent_id: null,
+      name: { uz: subject.name, ru: subject.name, en: subject.name },
+      slug: subject.name.toLowerCase(),
+      code: null,
+      position,
+      archived: false,
+    })),
     collections: structuredClone(libManageCollections),
     reports: [
       seedReport(libIds.reportWrongContent, libIds.matPublished, ids.student2, "wrong_content"),
@@ -187,6 +200,7 @@ function freshState(): LibraryState {
             title: suggestion.title,
             url: suggestion.url,
             note: suggestion.note,
+            book: null,
             createdAt: "2026-10-05T10:00:00Z",
           },
         ]

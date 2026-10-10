@@ -1,6 +1,13 @@
 "use client"
 
-import { deleteManageTopic, getLibrarySubjectsQuery, getManageTopicsQuery, keys } from "@ihsp/api"
+import {
+  deleteManageTopic,
+  getLibrarySubjectsQuery,
+  getManageTopicsQuery,
+  keys,
+  patchManageTopic,
+  type ManageTopic,
+} from "@ihsp/api"
 import { useErrorMessage, useFormatters, useT } from "@ihsp/i18n"
 import { Button, ConfirmDialog, Label, NativeSelect, NativeSelectOption, PageContainer, StateView } from "@ihsp/ui"
 import { IconPlus } from "@ihsp/ui"
@@ -10,6 +17,7 @@ import { pickLocalized } from "../shared/localized-fields"
 import { TopicDialog, type TopicTarget } from "./topic-dialog"
 import { TopicTreeNode } from "./topic-node"
 import { buildTopicTree, descendantCount, type TopicNode } from "./topic-tree"
+import { reorderPatches } from "../shared/tree"
 
 /**
  * `/manage/topics/`: the topic tree of one subject. Add a topic at the top or under another, edit its names (Uzbek,
@@ -27,6 +35,23 @@ export function TopicsPage() {
   const tree = useMemo(() => buildTopicTree(topics.data ?? []), [topics.data])
   const [target, setTarget] = useState<TopicTarget | null>(null)
   const [deleting, setDeleting] = useState<TopicNode | null>(null)
+
+  const change = useMutation({
+    mutationFn: (run: () => Promise<unknown>) => run(),
+    onSuccess: async () => {
+      await queryClient.invalidateQueries({ queryKey: keys.library.all() })
+    },
+  })
+
+  function move(node: ManageTopic, direction: -1 | 1) {
+    const patches = reorderPatches(topics.data ?? [], node.id, direction)
+    if (patches.length === 0) return
+    change.mutate(() => Promise.all(patches.map((patch) => patchManageTopic(patch.id, { position: patch.position }))))
+  }
+
+  function archive(node: ManageTopic) {
+    change.mutate(() => patchManageTopic(node.id, { archived: !node.archived }))
+  }
 
   const remove = useMutation({
     mutationFn: (node: TopicNode) => deleteManageTopic(node.id),
@@ -98,13 +123,18 @@ export function TopicsPage() {
             />
           ) : (
             <ul aria-label={t("treeLabel", { subject: subjectName })} className="flex flex-col gap-2">
-              {tree.map((node) => (
+              {tree.map((node, index) => (
                 <TopicTreeNode
                   key={node.id}
                   node={node}
+                  first={index === 0}
+                  last={index === tree.length - 1}
+                  busy={change.isPending}
                   onAdd={(parent) => subjectId && setTarget({ mode: "create", subjectId, parent })}
                   onEdit={(topic) => setTarget({ mode: "edit", topic })}
                   onDelete={setDeleting}
+                  onMove={move}
+                  onArchive={archive}
                 />
               ))}
             </ul>
@@ -112,6 +142,11 @@ export function TopicsPage() {
         </div>
       )}
 
+      {change.isError ? (
+        <p role="alert" className="text-destructive text-sm">
+          {errorMessage(change.error)}
+        </p>
+      ) : null}
       <TopicDialog target={target} onClose={() => setTarget(null)} />
       <ConfirmDialog
         open={deleting !== null}

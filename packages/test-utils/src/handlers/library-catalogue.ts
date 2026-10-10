@@ -196,10 +196,43 @@ function entryProblem(actor: LibraryActor, entry: ReadingListItemInput): Respons
 
 // - - - Handlers - - -
 
+const normalizeName = (text: string): string =>
+  text
+    .normalize("NFKD")
+    .replace(/[\u0300-\u036f]/g, "")
+    .toLowerCase()
+    .replace(/[^a-z0-9\u0400-\u04ff]+/g, "")
+
 export const libraryCatalogueHandlers = [
   http.get(apiUrl("/v1/library/items"), ({ request }) => {
     const actor = actorOf(request)
     return HttpResponse.json(paginate(searchCards(actor, query(request)), request))
+  }),
+
+  /** Author names of the books in the store that match `q` (a loose match here; the server also matches across scripts). */
+  http.get(apiUrl("/v1/library/authors"), ({ request }) => {
+    const q = normalizeName(query(request).get("q") ?? "")
+    const names = new Set<string>()
+    for (const stored of state.items.values()) {
+      for (const name of stored.detail.author_label ? stored.detail.author_label.split(", ") : []) names.add(name)
+    }
+    return HttpResponse.json([...names].filter((name) => q === "" || normalizeName(name).includes(q)).slice(0, 20))
+  }),
+
+  /** Tags of the books in the store, most used first; `q` narrows them. */
+  http.get(apiUrl("/v1/library/tags"), ({ request }) => {
+    const params = query(request)
+    const q = normalizeName(params.get("q") ?? "")
+    const limit = Number(params.get("limit") ?? 8)
+    const counts = new Map<string, number>()
+    for (const stored of state.items.values()) {
+      for (const tag of stored.input?.tags ?? []) counts.set(tag, (counts.get(tag) ?? 0) + 1)
+    }
+    const rows = [...counts]
+      .filter(([name]) => q === "" || normalizeName(name).includes(q))
+      .map(([name, item_count]) => ({ name, item_count }))
+      .toSorted((a, b) => b.item_count - a.item_count || a.name.localeCompare(b.name))
+    return HttpResponse.json(rows.slice(0, limit))
   }),
 
   /** Subjects that have visible items; `?all=1` lists every subject (counts may be 0), for pickers. */

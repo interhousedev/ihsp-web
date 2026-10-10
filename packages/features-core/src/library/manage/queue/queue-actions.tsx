@@ -45,9 +45,13 @@ const VARIANT: Record<ModerationAction, "default" | "outline" | "destructive"> =
   unpublish: "destructive",
 }
 
-/** The link that starts a book from a suggestion: the editor with the title prefilled. */
-export function draftFromSuggestionHref(title: string): string {
-  return `${manageBookEditHref()}?title=${encodeURIComponent(title)}`
+/**
+ * The link that starts a book from a suggestion: the editor with the title prefilled, and with `suggestion` the whole
+ * book form the student filled in.
+ */
+export function draftFromSuggestionHref(title: string, suggestionId?: string): string {
+  const suggestion = suggestionId ? `&suggestion=${encodeURIComponent(suggestionId)}` : ""
+  return `${manageBookEditHref()}?title=${encodeURIComponent(title)}${suggestion}`
 }
 
 /**
@@ -93,7 +97,7 @@ export function QueueActions({
           return (
             <Link
               key={action}
-              href={draftFromSuggestionHref(row.suggestion?.title ?? row.item.title)}
+              href={draftFromSuggestionHref(row.suggestion?.title ?? row.item.title, row.suggestion?.id)}
               className={buttonVariants({ className: "min-h-11 md:min-h-8" })}
             >
               <IconPlus aria-hidden />

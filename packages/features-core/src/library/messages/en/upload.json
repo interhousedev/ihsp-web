@@ -23,12 +23,10 @@
       "markdown": "Markdown note",
       "markdownHint": "Type the text here. Formulas like $x^2$ work.",
       "pdf": "PDF file",
-      "pdfHint": "A PDF you already have on your device.",
       "photos": "Photos",
-      "photosHint": "Take pictures of paper notes. They are combined into one PDF, up to 20.",
       "required": "Choose what you are adding.",
       "suggestTitle": "Looking for a published book?",
-      "suggestText": "Books are added by librarians. Suggest one and they will look at it.",
+      "suggestText": "Suggest a book. Librarians will look at it.",
       "suggestButton": "Suggest a book"
     },
     "details": {
@@ -49,7 +47,7 @@
       "yearRequired": "Choose at least one year.",
       "typeLabel": "Type",
       "languageLabel": "Language",
-      "fixedAfterSave": "Subjects, year, type and language cannot be changed once the draft is saved."
+      "fixedAfterSave": "Cannot be changed after the draft is saved."
     },
     "files": {
       "markdownHeading": "Write your note",
@@ -57,7 +55,7 @@
       "pdfHeading": "Choose the PDF",
       "officeHeading": "Choose the file",
       "photosHeading": "Take or choose photos",
-      "existingPhotos": "The saved material already has a file of {pages} pages. Add new photos to replace it.",
+      "existingPhotos": "The saved file has {pages} pages. New photos replace it.",
       "problem": {
         "bodyRequired": "Write some text first.",
         "pdfRequired": "Choose a file.",
@@ -96,9 +94,9 @@
       "cameraMore": "Take another photo",
       "gallery": "Choose from gallery",
       "count": "{count} of {max} photos",
-      "hint": "Up to {max} photos, in reading order. They become one PDF. Move them with the arrows or drag the handle.",
+      "hint": "Up to {max} photos in reading order, combined into one PDF.",
       "tooMany": "Only {max} photos fit. {dropped} more were not added.",
-      "noCrop": "Cropping is not available here. If you need it, crop the picture in your camera app first.",
+      "noCrop": "No cropping here. Crop in your camera app first.",
       "list": "Photos in order",
       "label": "Photo {n} of {count}",
       "alt": "Photo {n}",
@@ -117,16 +115,16 @@
       "replace": "Choose another file",
       "remove": "Remove",
       "hint": "PDF, up to {size} and {pages} pages.",
-      "hintOffice": "PDF, DOCX or PPTX, up to {size}. DOCX and PPTX are offered as downloads.",
+      "hintOffice": "PDF, DOCX or PPTX, up to {size}. DOCX and PPTX are download only.",
       "current": "The saved file stays unless you choose another",
       "pages": "{count, plural, one {# page} other {# pages}}",
-      "tooLarge": "This file is larger than {size}. The library will probably refuse it."
+      "tooLarge": "Larger than {size}. The library will probably refuse it."
     },
     "licence": {
       "heading": "Licence and visibility",
-      "lyceumOnly": "Only people with a lyceum account can see this material. All rights stay with you.",
+      "lyceumOnly": "Only lyceum accounts can see it. All rights stay with you.",
       "makePublic": "Make it public",
-      "makePublicHint": "Anyone can see it, also without signing in. It needs a Creative Commons licence.",
+      "makePublicHint": "Visible to anyone. Needs a Creative Commons licence.",
       "openLicence": "Creative Commons licence",
       "openLicenceHint": "Pick the licence under which others may reuse your work.",
       "licenceRequired": "Choose a licence.",
@@ -138,9 +136,9 @@
       },
       "text": {
         "cc_by": "Others may reuse it if they credit you.",
-        "cc_by_sa": "Others may reuse it if they credit you and share their version under the same licence.",
+        "cc_by_sa": "Reuse with credit, under the same licence.",
         "cc_by_nc": "Others may reuse it, not for money, if they credit you.",
-        "cc_by_nc_sa": "Others may reuse it, not for money, if they credit you and share their version under the same licence."
+        "cc_by_nc_sa": "Non-commercial reuse with credit, under the same licence."
       }
     },
     "review": {
@@ -173,7 +171,7 @@
     "problem": {
       "title": "Something went wrong",
       "duplicateTitle": "This file is already in the library",
-      "duplicateText": "The same file or text has been uploaded before. Choose another file, or look at the existing item.",
+      "duplicateText": "This file or text was uploaded before. Choose another.",
       "openExisting": "Open the existing item",
       "tooLargeTitle": "The file is too large",
       "tooLargeText": "A file can be up to {size}. Choose a smaller file or split it.",
@@ -185,13 +183,13 @@
       "rejectedTitle": "A file was refused",
       "rejectedText": "The file did not pass the check: {reason}.",
       "attestationTitle": "Confirm the statement first",
-      "attestationText": "A draft can be saved without it, but it is sent for review only after you confirm that you made the material or may share it. Tick the box and submit again."
+      "attestationText": "Confirm that you made it or may share it, then submit again."
     },
     "blocked": {
       "bannedTitle": "You cannot upload right now",
       "bannedUntil": "Uploading is blocked until {date}.",
       "bannedForever": "Uploading is blocked and no end date is set.",
-      "bannedHint": "If you think this is a mistake, ask a librarian or the Administration.",
+      "bannedHint": "Think it is a mistake? Ask a librarian.",
       "rateLimitedTitle": "Upload limit reached",
       "rateLimitedAt": "You can upload {limit, plural, one {# material} other {# materials}} a day. You can upload again after {time}.",
       "resetsAt": "You can upload again after {time}.",
@@ -209,7 +207,7 @@
       "another": "Add another material"
     },
     "edit": {
-      "statusNote": "Status: {status}. Changes to the title, description, topics and text are saved when you press Save.",
+      "statusNote": "Status: {status}. Changes are saved when you press Save.",
       "body": "Text of the note",
       "save": "Save",
       "saving": "Saving…",
@@ -225,11 +223,12 @@
     },
     "suggest": {
       "title": "Suggest a book",
-      "titleLabel": "Title of the book",
-      "titleRequired": "Write the title.",
-      "urlLabel": "Link (optional)",
-      "urlInvalid": "Enter a link that starts with http:// or https://",
-      "noteLabel": "Note (optional)",
+      "intro": "Suggest a book that is not in the library yet. A librarian checks it and adds it if it fits. Fill in what you know; the title and at least one author are needed.",
+      "sourceTitle": "Where to find it",
+      "linkLabel": "Link (optional)",
+      "linkHint": "A page where the book can be read or bought, starting with https://",
+      "linkInvalid": "Enter a link that starts with http:// or https://",
+      "noteLabel": "Note for the librarian (optional)",
       "noteHint": "{count} of {max}",
       "send": "Send suggestion",
       "thanks": "Thanks. A librarian will look at it."
@@ -237,11 +236,11 @@
   },
   "material": {
     "upload": {
-      "attest": "I made this myself or I am allowed to share it. It has no personal data and no questions or answers of a control that has not finished.",
+      "attest": "I made this or may share it. It has no personal data and no questions or answers of an unfinished control.",
       "attestRequired": "Tick the box to confirm.",
       "teacherNote": "It will be published at once.",
       "studentNote": "A librarian will review it, usually within 2 school days.",
-      "librarianNote": "Another librarian will review it, usually within 2 school days.",
+      "librarianNote": "A librarian reviews it, usually within 2 school days.",
       "policyTitle": "What belongs here",
       "policy": {
         "made": "You made it, or you may share it.",
@@ -289,7 +288,7 @@
       "groupsRequired": "Choose at least one group.",
       "groupsError": "Groups could not be loaded.",
       "retry": "Try again",
-      "groupsUnavailable": "Your account cannot list groups yet, so lists for groups are not available.",
+      "groupsUnavailable": "Lists for groups are not available for your account.",
       "noGroups": "You have no groups to choose from.",
       "subjectLabel": "Subject",
       "subjectOptional": "Subject (optional)",
@@ -343,7 +342,7 @@
       "problem": {
         "titleRequired": "Write a title for the link.",
         "urlInvalid": "Enter an address that starts with http:// or https://",
-        "pagesInvalid": "Pages must be whole numbers, and the first page cannot come after the last."
+        "pagesInvalid": "Pages must be whole numbers, first not after last."
       }
     },
     "search": {

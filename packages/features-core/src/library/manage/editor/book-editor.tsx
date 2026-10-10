@@ -14,19 +14,45 @@ import { BookFileSection } from "./book-file-section"
 import { BookMetadataFields } from "./book-metadata-fields"
 import { BookSubjectsTopics } from "./book-subjects-topics"
 import { PublishChecklist } from "./publish-checklist"
+import { SuggestBookEditor } from "./suggest-book-editor"
 import { VisibilityPanel } from "./visibility-panel"
 import { useBookEditor } from "./use-book-editor"
 
 /**
  * The book editor (§ 3.4, § 9.2): file and cover, metadata, subjects and topics with page ranges, visibility,
  * visibility and download, the publish checklist, and Save, Publish, Unpublish and Take down. `id === null` is a new
- * book (`initialTitle` prefills the title, for a draft started from a suggestion).
+ * book (`initialTitle` prefills the title, for a draft started from a suggestion). `mode="suggest"` is the same editor
+ * for students: details, subjects and topics, then a link and a note, sent to the librarians' queue.
  */
-export function BookEditor({ id, initialTitle = "" }: { id: string | null; initialTitle?: string }) {
+export function BookEditor({
+  id,
+  initialTitle = "",
+  fromSuggestion = null,
+  mode = "manage",
+}: {
+  id: string | null
+  initialTitle?: string
+  /** A new book started from a student's suggestion (`?suggestion=`): its form is prefilled. */
+  fromSuggestion?: string | null
+  mode?: "manage" | "suggest"
+}) {
+  if (mode === "suggest") return <SuggestBookEditor initialTitle={initialTitle} />
+  return <ManageBookEditor id={id} initialTitle={initialTitle} fromSuggestion={fromSuggestion} />
+}
+
+function ManageBookEditor({
+  id,
+  initialTitle,
+  fromSuggestion,
+}: {
+  id: string | null
+  initialTitle: string
+  fromSuggestion: string | null
+}) {
   const t = useT("library.manage.editor")
   const status = useT("library.item.status")
   const reasonText = useReasonText()
-  const editor = useBookEditor(id, initialTitle)
+  const editor = useBookEditor(id, initialTitle, fromSuggestion)
   const [coverName, setCoverName] = useState<string | null>(null)
 
   if (id !== null && editor.loading) {

@@ -360,6 +360,7 @@ export const libraryMeHandlers = [
       title: body.title,
       url: body.url ?? null,
       note: body.note ?? null,
+      book: body.book ?? null,
       createdAt: stamp(),
     })
     return new HttpResponse(null, { status: 201 })

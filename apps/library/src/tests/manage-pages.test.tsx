@@ -10,6 +10,7 @@ import CollectionsPage from "../app/manage/collections/page"
 import QueuePage from "../app/manage/queue/page"
 import ReportsPage from "../app/manage/reports/page"
 import StatsPage from "../app/manage/stats/page"
+import SubjectsPage from "../app/manage/subjects/page"
 import TopicsPage from "../app/manage/topics/page"
 import UniLibraryPage from "../app/manage/unilibrary/page"
 import { renderLibraryApp } from "./helpers"
@@ -24,6 +25,7 @@ const LIBRARIAN_PAGES: [route: string, Page: ComponentType, heading: string][] =
   ["/manage/books/", BooksPage, "Books"],
   ["/manage/books/edit/", BooksEditPage, "New book"],
   ["/manage/topics/", TopicsPage, "Topics"],
+  ["/manage/subjects/", SubjectsPage, "Subjects"],
   ["/manage/collections/", CollectionsPage, "Collections"],
   ["/manage/reports/", ReportsPage, "Reports"],
   ["/manage/stats/", StatsPage, "Statistics"],

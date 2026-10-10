@@ -31,7 +31,7 @@ describe("UploadEditPage: continue a draft", () => {
 
     expect(await screen.findByLabelText("Title")).toHaveValue("Kinematics formula sheet")
     expect(
-      screen.getByText("Subjects, year, type and language cannot be changed once the draft is saved."),
+      screen.getByText("Cannot be changed after the draft is saved."),
     ).toBeInTheDocument()
     expect(screen.getByRole("group", { name: "Physics" })).toBeInTheDocument()
     expect(screen.queryByRole("checkbox", { name: "Year 1" })).not.toBeInTheDocument()
@@ -58,7 +58,7 @@ describe("UploadEditPage: continue a draft", () => {
     // The draft was saved without the attestation: it is asked for again before the material is sent.
     await user.click(screen.getByRole("button", { name: "Submit" }))
     expect(await screen.findByText("Tick the box to confirm.")).toBeInTheDocument()
-    await user.click(screen.getByRole("checkbox", { name: /I made this myself/ }))
+    await user.click(screen.getByRole("checkbox", { name: /I made this or may share it/ }))
     await user.click(screen.getByRole("button", { name: "Submit" }))
 
     expect(await screen.findByText("Sent for review")).toBeInTheDocument()

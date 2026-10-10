@@ -34,7 +34,7 @@ async function fillDetails(user: Rendered["user"]) {
 }
 
 async function attest(user: Rendered["user"]) {
-  await user.click(await screen.findByRole("checkbox", { name: /I made this myself/ }))
+  await user.click(await screen.findByRole("checkbox", { name: /I made this or may share it/ }))
 }
 
 const photo = (name: string) => new File([`bytes of ${name}`], name, { type: "image/jpeg" })
@@ -173,7 +173,7 @@ describe("UploadWizard: steps and validation", () => {
 
     const alert = await screen.findByRole("alert")
     expect(alert).toHaveTextContent("Confirm the statement first")
-    expect(alert).toHaveTextContent("Tick the box and submit again.")
+    expect(alert).toHaveTextContent("Confirm that you made it or may share it, then submit again.")
   })
 
   it("offers no Creative Commons licence and no public option to a student", async () => {
@@ -183,7 +183,7 @@ describe("UploadWizard: steps and validation", () => {
     await user.type(screen.getByRole("textbox", { name: "Text of the note (Markdown)" }), "Newton")
     await next(user)
 
-    expect(await screen.findByText(/Only people with a lyceum account/)).toBeInTheDocument()
+    expect(await screen.findByText(/Only lyceum accounts can see it/)).toBeInTheDocument()
     expect(screen.queryByRole("checkbox", { name: /Make it public/ })).not.toBeInTheDocument()
     expect(screen.queryByRole("radio", { name: /CC BY/ })).not.toBeInTheDocument()
   })
@@ -298,7 +298,7 @@ describe("UploadWizard: submitting", () => {
 
     fireEvent.change(await screen.findByTestId("pdf-input"), { target: { files: [big] } })
 
-    expect(screen.getByRole("alert")).toHaveTextContent("This file is larger than 20 MB")
+    expect(screen.getByRole("alert")).toHaveTextContent("Larger than 20 MB. The library will probably refuse it.")
     expect(screen.getByText(/PDF, up to 20 MB and 60 pages/)).toBeInTheDocument()
     await next(user)
     expect(await screen.findByRole("heading", { level: 2, name: "Licence and rules" })).toBeInTheDocument()
@@ -447,31 +447,10 @@ describe("UploadWizard: blocked and refused uploads", () => {
 })
 
 describe("UploadWizard: suggest a book", () => {
-  it("sends a suggestion with a title, a link and a note", async () => {
-    const bodies: unknown[] = []
-    server.use(
-      http.post(apiUrl("/v1/library/suggestions"), async ({ request }) => {
-        bodies.push(await request.clone().json())
-      }),
-    )
-    const { user } = renderWizard()
-
-    await user.click(screen.getByRole("button", { name: "Suggest a book" }))
-    const dialog = await screen.findByRole("dialog", { name: "Suggest a book" })
-    await user.click(within(dialog).getByRole("button", { name: "Send suggestion" }))
-    expect(within(dialog).getByText("Write the title.")).toBeInTheDocument()
-
-    await user.type(within(dialog).getByLabelText("Title of the book"), "Otkan kunlar")
-    await user.type(within(dialog).getByLabelText("Link (optional)"), "not a link")
-    await user.click(within(dialog).getByRole("button", { name: "Send suggestion" }))
-    expect(within(dialog).getByText(/Enter a link that starts with http/)).toBeInTheDocument()
-
-    await user.clear(within(dialog).getByLabelText("Link (optional)"))
-    await user.type(within(dialog).getByLabelText("Link (optional)"), "https://example.org/book")
-    await user.click(within(dialog).getByRole("button", { name: "Send suggestion" }))
-
-    await waitFor(() => expect(screen.queryByRole("dialog", { name: "Suggest a book" })).not.toBeInTheDocument())
-    expect(bodies).toEqual([{ title: "Otkan kunlar", url: "https://example.org/book" }])
+  it("links to the book editor in suggest mode", () => {
+    renderWizard()
+    expect(screen.getByRole("link", { name: "Suggest a book" }).getAttribute("href")).toMatch(/^\/upload\/suggest\/?$/)
+    expect(screen.queryByRole("dialog", { name: "Suggest a book" })).not.toBeInTheDocument()
   })
 })
 

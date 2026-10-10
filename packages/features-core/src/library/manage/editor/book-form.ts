@@ -1,4 +1,4 @@
-import type { BookInput, BookSubjectInput, ItemLanguage, ItemType } from "@ihsp/api"
+import type { BookInput, BookSubjectInput, ItemLanguage, ItemType, Rights, SuggestedBook } from "@ihsp/api"
 
 /** The types a book can have (materials have their own). */
 export const BOOK_TYPES: readonly ItemType[] = [
@@ -18,6 +18,7 @@ export const BOOK_TYPES: readonly ItemType[] = [
 export const BOOK_LANGUAGES: readonly ItemLanguage[] = ["uz_latn", "uz_cyrl", "ru", "en", "qq", "other"]
 export const SUBJECT_ROLES: readonly BookSubjectInput["role"][] = ["textbook", "core", "supplementary", "reference"]
 export const YEARS_OF_STUDY: readonly number[] = [1, 2]
+export const RIGHTS: readonly Rights[] = ["official", "open_license", "public_domain", "permission"]
 
 export type TopicRow = { topic_id: string; page_from: string; page_to: string }
 
@@ -27,11 +28,13 @@ export type BookForm = {
   subtitle: string
   authors: string[]
   translators: string[]
+  tags: string[]
   language: ItemLanguage
   yearPublished: string
   publisher: string
   isbn: string
   type: ItemType
+  rights: Rights
   description: string
   yearsOfStudy: number[]
   subjects: BookSubjectInput[]
@@ -48,11 +51,13 @@ export function emptyForm(title = ""): BookForm {
     subtitle: "",
     authors: [],
     translators: [],
+    tags: [],
     language: "uz_latn",
     yearPublished: "",
     publisher: "",
     isbn: "",
     type: "textbook",
+    rights: "official",
     description: "",
     yearsOfStudy: [],
     subjects: [],
@@ -75,11 +80,13 @@ export function formFromInput(input: BookInput, coverUrl: string | null): BookFo
     subtitle: text(input.subtitle),
     authors: input.authors,
     translators: input.translators ?? [],
+    tags: input.tags ?? [],
     language: input.language,
     yearPublished: text(input.year_published),
     publisher: text(input.publisher),
     isbn: text(input.isbn),
     type: input.type,
+    rights: input.rights ?? "official",
     description: text(input.description),
     yearsOfStudy: input.years_of_study,
     subjects: input.subjects,
@@ -92,6 +99,30 @@ export function formFromInput(input: BookInput, coverUrl: string | null): BookFo
     coverUrl,
     visibility: input.visibility === "public" ? "public" : "lyceum",
     downloadAllowed: input.download_allowed,
+  }
+}
+
+/** The form a librarian starts from a student's suggestion (the book part of `GET /manage/library/suggestions/{id}`). */
+export function formFromSuggestion(book: SuggestedBook): BookForm {
+  return {
+    ...emptyForm(book.title),
+    subtitle: text(book.subtitle),
+    authors: book.authors,
+    translators: book.translators ?? [],
+    tags: book.tags ?? [],
+    language: book.language,
+    yearPublished: text(book.year_published),
+    publisher: text(book.publisher),
+    isbn: text(book.isbn),
+    type: book.type,
+    description: text(book.description),
+    yearsOfStudy: book.years_of_study ?? [],
+    subjects: book.subjects ?? [],
+    topics: (book.topics ?? []).map((row) => ({
+      topic_id: row.topic_id,
+      page_from: text(row.page_from),
+      page_to: text(row.page_to),
+    })),
   }
 }
 
@@ -114,6 +145,7 @@ export function inputFromForm(form: BookForm): BookInput {
     publisher: orNull(form.publisher),
     isbn: orNull(form.isbn),
     type: form.type,
+    rights: form.rights,
     description: orNull(form.description),
     years_of_study: form.yearsOfStudy,
     subjects: form.subjects,
@@ -123,6 +155,28 @@ export function inputFromForm(form: BookForm): BookInput {
     cover_file_id: form.coverFileId,
     visibility: form.visibility,
     download_allowed: form.downloadAllowed,
+    tags: form.tags,
+  }
+}
+
+/** The book form as a student's suggestion (`POST /library/suggestions`, `book`): the same fields without files and rights. */
+export function suggestedFromForm(form: BookForm): SuggestedBook {
+  const input = inputFromForm(form)
+  return {
+    title: input.title,
+    subtitle: input.subtitle,
+    authors: input.authors,
+    translators: input.translators,
+    language: input.language,
+    year_published: input.year_published,
+    publisher: input.publisher,
+    isbn: input.isbn,
+    type: input.type,
+    description: input.description,
+    years_of_study: input.years_of_study,
+    subjects: input.subjects,
+    topics: input.topics,
+    tags: form.tags,
   }
 }
 

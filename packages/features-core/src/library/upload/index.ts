@@ -3,7 +3,6 @@
 export { MarkdownEditor } from "./markdown-editor"
 export { MyUploads } from "./my-uploads"
 export { PhotoPicker } from "./photo-picker"
-export { SuggestDialog } from "./suggest-dialog"
 export { UploadEditPage } from "./upload-edit-page"
 export { UploadPage } from "./upload-page"
 export { UploadStatusBadge } from "./upload-status-badge"

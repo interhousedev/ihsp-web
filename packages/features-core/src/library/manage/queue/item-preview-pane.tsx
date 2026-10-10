@@ -1,7 +1,14 @@
 "use client"
 
 import { useReasonText } from "../../upload/reason-text"
-import { getLibraryItemQuery, type ItemDetail, type ManageQueueRow } from "@ihsp/api"
+import {
+  getLibraryItemQuery,
+  getLibrarySubjectsQuery,
+  getManageSuggestionQuery,
+  type ItemDetail,
+  type ManageQueueRow,
+  type SuggestedBook,
+} from "@ihsp/api"
 import { useFormatters, useT } from "@ihsp/i18n"
 import { Badge, Skeleton, formatBytes } from "@ihsp/ui"
 import { IconAlertTriangle, IconExternalLink, IconUserOff } from "@ihsp/ui"
@@ -39,15 +46,60 @@ function FileList({ detail }: { detail: ItemDetail }) {
   )
 }
 
+/** The book form a student filled in: what the librarian needs to turn the suggestion into a draft. */
+function SuggestedBookFacts({ book }: { book: SuggestedBook }) {
+  const t = useT("library.manage.queue.preview")
+  const item = useT("library.item")
+  const type = useT("library.type")
+  const language = useT("library.browse.language")
+  const subjects = useQuery(getLibrarySubjectsQuery({ all: true }))
+  const names = new Map((subjects.data ?? []).map((subject) => [subject.id, subject.name]))
+  const subjectNames = book.subjects?.map((row) => names.get(row.subject_id) ?? row.subject_id) ?? []
+  const facts: [string, string | null][] = [
+    [item("authors"), book.authors.join(", ")],
+    [item("type"), type(book.type)],
+    [item("language"), language(book.language)],
+    [item("year"), book.year_published ? String(book.year_published) : null],
+    [item("publisher"), book.publisher ?? null],
+    [item("isbn"), book.isbn ?? null],
+    [item("subjects"), subjectNames.join(", ") || null],
+    [t("suggestedTags"), book.tags?.join(", ") || null],
+  ]
+  return (
+    <dl className="grid gap-x-4 gap-y-2 text-sm sm:grid-cols-[max-content_1fr]">
+      {facts
+        .filter((fact): fact is [string, string] => fact[1] !== null && fact[1] !== "")
+        .map(([label, value]) => (
+          <div key={label} className="contents">
+            <dt className="text-muted-foreground">{label}</dt>
+            <dd className="break-words">{value}</dd>
+          </div>
+        ))}
+      {book.description ? (
+        <div className="sm:col-span-2">
+          <dt className="text-muted-foreground">{t("description")}</dt>
+          <dd className="mt-1 break-words whitespace-pre-line">{book.description}</dd>
+        </div>
+      ) : null}
+    </dl>
+  )
+}
+
 function SuggestionBlock({ row }: { row: ManageQueueRow }) {
   const t = useT("library.manage.queue.preview")
   const suggestion = row.suggestion
+  const detail = useQuery({ ...getManageSuggestionQuery(suggestion?.id ?? ""), enabled: !!suggestion })
   if (!suggestion) return null
   return (
     <div className="flex flex-col gap-3">
       <Section title={t("suggestedBy")}>
         <p className="text-sm">{suggestion.user_name}</p>
       </Section>
+      {detail.data?.book ? (
+        <Section title={t("suggestedBook")}>
+          <SuggestedBookFacts book={detail.data.book} />
+        </Section>
+      ) : null}
       {suggestion.url ? (
         <Section title={t("suggestionLink")}>
           <a

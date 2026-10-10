@@ -1,10 +1,10 @@
 "use client"
 
 import { useT } from "@ihsp/i18n"
-import { Button, cn } from "@ihsp/ui"
-import { IconBook2, IconCamera, IconFileTypePdf, IconMarkdown, type Icon } from "@ihsp/ui"
-import { useState } from "react"
-import { SuggestDialog } from "./suggest-dialog"
+import { cn } from "@ihsp/ui"
+import { IconBook2, IconCamera, IconFileTypePdf, IconMarkdown, type Icon, buttonVariants } from "@ihsp/ui"
+import Link from "next/link"
+import { uploadSuggestHref } from "../utils/hrefs"
 import type { StepProps } from "./step-props"
 import { UPLOAD_KINDS, type UploadKind } from "./upload-config"
 
@@ -13,7 +13,6 @@ const KIND_ICON: Record<UploadKind, Icon> = { markdown: IconMarkdown, pdf: IconF
 /** Step 1: a Markdown note, a PDF, or photos of paper notes. The page also offers "Suggest a book". */
 export function StepKind({ values, onChange, showProblems }: StepProps) {
   const t = useT("library.upload.kind")
-  const [suggesting, setSuggesting] = useState(false)
   const missing = showProblems && values.kind === null
   return (
     <div className="flex flex-col gap-6">
@@ -65,11 +64,10 @@ export function StepKind({ values, onChange, showProblems }: StepProps) {
           </p>
           <p className="text-muted-foreground text-sm">{t("suggestText")}</p>
         </div>
-        <Button type="button" variant="outline" className="min-h-11" onClick={() => setSuggesting(true)}>
+        <Link href={uploadSuggestHref()} className={buttonVariants({ variant: "outline", className: "min-h-11" })}>
           {t("suggestButton")}
-        </Button>
+        </Link>
       </div>
-      <SuggestDialog open={suggesting} onOpenChange={setSuggesting} />
     </div>
   )
 }
