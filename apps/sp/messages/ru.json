@@ -24,15 +24,6 @@
     "groupInbox": "Входящие",
     "groupAccount": "Аккаунт"
   },
-  "search": {
-    "sections": {
-      "subjects": "Предметы",
-      "lessons": "Занятия",
-      "homework": "Домашние задания",
-      "files": "Файлы",
-      "flashcardSets": "Наборы карточек"
-    }
-  },
   "attendanceStates": {
     "present": "Присутствовал",
     "absent": "Отсутствовал",
@@ -319,7 +310,6 @@
       },
       "upload": "Загрузить файл",
       "pickFromFiles": "Или выберите из «Моих файлов»",
-      "noFiles": "В «Моих файлах» пока нет готовых файлов.",
       "url": "Адрес ссылки",
       "addLink": "Добавить ссылку"
     },

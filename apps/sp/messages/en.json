@@ -24,15 +24,6 @@
     "groupInbox": "Inbox",
     "groupAccount": "Account"
   },
-  "search": {
-    "sections": {
-      "subjects": "Subjects",
-      "lessons": "Lessons",
-      "homework": "Homework",
-      "files": "Files",
-      "flashcardSets": "Flash card sets"
-    }
-  },
   "attendanceStates": {
     "present": "Present",
     "absent": "Absent",
@@ -319,7 +310,6 @@
       },
       "upload": "Upload a file",
       "pickFromFiles": "Or pick from My files",
-      "noFiles": "No ready files in My files yet.",
       "url": "Link address",
       "addLink": "Add link"
     },

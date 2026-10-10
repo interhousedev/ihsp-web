@@ -20,7 +20,7 @@ import {
 } from "@ihsp/api"
 import { useQueryClient } from "@tanstack/react-query"
 import { useCallback, useRef, useState } from "react"
-import { useRefreshWebQuota, webSearchFailure, type WebSearchFailure } from "../../web-search"
+import { webSearchFailure, type WebSearchFailure } from "../../web-search"
 import { parseSlashText } from "../../assistant-chat/slash-commands"
 import { storeNotebookTurn } from "../api"
 import { abortable } from "./abortable"
@@ -92,7 +92,6 @@ const nextTask = () => new Promise<void>((resolve) => setTimeout(resolve, 0))
  */
 export function useChatTurn(notebookId: string): ChatTurn {
   const queryClient = useQueryClient()
-  const refreshWebQuota = useRefreshWebQuota()
   const [pending, setPending] = useState<PendingTurn | null>(null)
   const [running, setRunning] = useState(false)
   const [error, setError] = useState<unknown>(null)
@@ -258,10 +257,10 @@ export function useChatTurn(notebookId: string): ChatTurn {
         stopTimer()
         release()
         // A web search spends from today's quota, also when the answer failed or was stopped.
-        if (usedWeb) void refreshWebQuota()
+        if (usedWeb) void queryClient.invalidateQueries({ queryKey: keys.ai.webSearch() })
       }
     },
-    [notebookId, queryClient, refreshWebQuota],
+    [notebookId, queryClient],
   )
 
   const send = useCallback((text: string, options: SendOptions = {}) => run({ kind: "send", text, options }), [run])

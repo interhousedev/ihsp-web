@@ -24,15 +24,6 @@
     "groupInbox": "Kelganlar",
     "groupAccount": "Hisob"
   },
-  "search": {
-    "sections": {
-      "subjects": "Fanlar",
-      "lessons": "Darslar",
-      "homework": "Uy vazifalari",
-      "files": "Fayllar",
-      "flashcardSets": "Kartochkalar toʻplamlari"
-    }
-  },
   "attendanceStates": {
     "present": "Qatnashgan",
     "absent": "Qatnashmagan",
@@ -319,7 +310,6 @@
       },
       "upload": "Fayl yuklash",
       "pickFromFiles": "Yoki “Mening fayllarim”dan tanlang",
-      "noFiles": "“Mening fayllarim”da hali tayyor fayllar yoʻq.",
       "url": "Havola manzili",
       "addLink": "Havola qoʻshish"
     },
