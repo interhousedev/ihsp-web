@@ -1,0 +1,175 @@
+/** Task 3.5: the phone bottom bar, the installed app without a sidebar, the apps hub anchors and linked titles. */
+import { afterEach, beforeEach, describe, expect, spyOn, test } from "bun:test"
+import { apiUrl, filePdf, resourceMaterial, server, setTestRoute, userMe } from "@ihsp/test-utils"
+import { act, screen, waitFor, within } from "@testing-library/react"
+import { HttpResponse, http } from "msw"
+import { FileRow } from "../features/files/components/file-row"
+import { ResourceList } from "../features/lessons/components/resource-list"
+import { AppsHub } from "../features/pwa/components/apps-hub"
+import { setRuntimeConfig } from "../features/pwa/__tests__/pwa-test-support"
+import { BottomBarEditor } from "../features/settings/components/bottom-bar-editor"
+import { SpShell } from "../features/shell/components/sp-shell"
+import {
+  BOTTOM_BAR_PREFIX,
+  DEFAULT_BOTTOM_BAR,
+  normalizeBottomBar,
+  readBottomBar,
+  writeBottomBar,
+} from "../features/shell/utils/bottom-bar"
+import { configureTests, renderSp, setViewportWidth } from "./helpers"
+
+configureTests()
+
+beforeEach(() => {
+  window.localStorage.clear()
+  setRuntimeConfig("sp")
+})
+afterEach(() => {
+  setViewportWidth(1280)
+  window.history.replaceState(null, "", "/")
+  setRuntimeConfig("sp")
+})
+
+describe("bottom bar config", () => {
+  test("keeps known pages in order, drops duplicates and falls back to the defaults", () => {
+    expect(normalizeBottomBar(["grades", "x", "grades", "today"])).toEqual(["grades", "today"])
+    expect(normalizeBottomBar([])).toEqual([...DEFAULT_BOTTOM_BAR])
+    expect(normalizeBottomBar(["today", "timetable", "grades", "homework", "files"])).toHaveLength(4)
+  })
+
+  test("is stored next to the other account entries", () => {
+    const entries = writeBottomBar(["welcome", `${BOTTOM_BAR_PREFIX}today`], ["files", "grades"])
+    expect(entries).toEqual(["welcome", `${BOTTOM_BAR_PREFIX}files,grades`])
+    expect(readBottomBar(entries)).toEqual(["files", "grades"])
+    expect(readBottomBar(["welcome"])).toBeNull()
+  })
+
+  test("a change in Settings is saved in the account and on the device", async () => {
+    const bodies: Record<string, unknown>[] = []
+    server.use(
+      http.patch(apiUrl("/v1/id/me/preferences"), async ({ request }) => {
+        const body = (await request.json()) as Record<string, unknown>
+        bodies.push(body)
+        return HttpResponse.json({ ...userMe.preferences, ...body })
+      }),
+    )
+    const { user } = renderSp(<BottomBarEditor />, { route: "/settings/" })
+
+    await user.click(await screen.findByRole("button", { name: "Move right: Today" }))
+
+    await waitFor(() =>
+      expect(bodies).toEqual([{ onboarding_dismissed: [`${BOTTOM_BAR_PREFIX}timetable,today,grades,homework`] }]),
+    )
+    const stored = window.localStorage.getItem(`ihsp:sp:bottom-bar:${userMe.id}`)
+    expect(JSON.parse(stored ?? "[]")).toEqual(["timetable", "today", "grades", "homework"])
+  })
+
+  test("the bar shows the saved pages and More", async () => {
+    window.localStorage.setItem(`ihsp:sp:bottom-bar:${userMe.id}`, JSON.stringify(["files", "grades"]))
+    setViewportWidth(360)
+    renderSp(
+      <SpShell>
+        <p>page body</p>
+      </SpShell>,
+    )
+
+    await screen.findByText("page body")
+    const bar = screen.getByRole("navigation", { name: "Quick navigation" })
+    expect(
+      within(bar)
+        .getAllByRole("link")
+        .map((link) => link.getAttribute("href")),
+    ).toEqual(["/files", "/grades"])
+    expect(within(bar).getByRole("button", { name: "More" })).toBeInTheDocument()
+  })
+
+  test("the tab of the current page is marked", async () => {
+    setViewportWidth(360)
+    renderSp(
+      <SpShell>
+        <p>page body</p>
+      </SpShell>,
+      { route: "/timetable/" },
+    )
+    await screen.findByText("page body")
+    const bar = screen.getByRole("navigation", { name: "Quick navigation" })
+
+    expect(within(bar).getByRole("link", { name: "Timetable" }).getAttribute("aria-current")).toBe("page")
+    setTestRoute("/")
+  })
+
+  test("a tab is a link to its page", async () => {
+    setViewportWidth(360)
+    const { user } = renderSp(
+      <SpShell>
+        <p>page body</p>
+      </SpShell>,
+    )
+    await screen.findByText("page body")
+    const bar = screen.getByRole("navigation", { name: "Quick navigation" })
+
+    const tab = within(bar).getByRole("link", { name: "Timetable" })
+    expect(tab.getAttribute("href")).toBe("/timetable")
+    expect(tab.getAttribute("aria-current")).toBeNull()
+    await user.click(tab)
+  })
+})
+
+describe("installed app on a phone", () => {
+  test("has no sidebar toggle in pwa mode, but has it in a browser", async () => {
+    setViewportWidth(360)
+    setRuntimeConfig("pwa", { APP_URL: "http://localhost:3007" })
+    const pwa = renderSp(
+      <SpShell>
+        <p>page body</p>
+      </SpShell>,
+    )
+    await screen.findByText("page body")
+    expect(screen.queryByRole("button", { name: "Toggle the sidebar" })).not.toBeInTheDocument()
+    expect(screen.getByRole("navigation", { name: "Quick navigation" })).toBeInTheDocument()
+    pwa.unmount()
+
+    setRuntimeConfig("sp")
+    renderSp(
+      <SpShell>
+        <p>page body</p>
+      </SpShell>,
+    )
+    await screen.findByText("page body")
+    expect(screen.getByRole("button", { name: "Toggle the sidebar" })).toBeInTheDocument()
+  })
+})
+
+describe("apps hub anchors", () => {
+  test("scrolls to and highlights the card named by the address", async () => {
+    setRuntimeConfig("pwa", { APP_URL: "http://localhost:3007" })
+    const scroll = spyOn(Element.prototype, "scrollIntoView").mockImplementation(() => undefined)
+
+    renderSp(<AppsHub />)
+    act(() => {
+      window.history.replaceState(null, "", "/#install-lms")
+      window.dispatchEvent(new HashChangeEvent("hashchange"))
+    })
+
+    await waitFor(() => expect(document.getElementById("install-lms")?.getAttribute("data-highlighted")).toBe("true"))
+    expect(document.getElementById("install-library")?.getAttribute("data-highlighted")).toBe("false")
+    expect(scroll).toHaveBeenCalled()
+  })
+})
+
+describe("linked titles", () => {
+  test("a lesson material title links to the material", () => {
+    renderSp(<ResourceList items={[resourceMaterial]} />)
+
+    expect(screen.getByRole("link", { name: resourceMaterial.title })).toHaveAttribute(
+      "href",
+      resourceMaterial.short_url,
+    )
+  })
+
+  test("a file name links to the file in the list", () => {
+    renderSp(<FileRow file={filePdf} onRename={() => undefined} onDelete={() => undefined} />)
+
+    expect(screen.getByRole("link", { name: filePdf.name })).toHaveAttribute("href", `/files/#file-${filePdf.id}`)
+  })
+})

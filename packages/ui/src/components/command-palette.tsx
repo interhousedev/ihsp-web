@@ -136,7 +136,14 @@ export function CommandPalette({ nav = [], search, onNavigate, trigger }: Comman
                 {group.items.map((result) => (
                   <CommandItem key={result.id} value={`${result.section} ${result.id}`} onSelect={() => go(result.url)}>
                     <NavIconView icon={result.icon} />
-                    <span className="truncate">{result.title}</span>
+                    <a
+                      href={result.url}
+                      tabIndex={-1}
+                      className="truncate"
+                      onClick={(event) => event.preventDefault()}
+                    >
+                      {result.title}
+                    </a>
                     {result.subtitle ? (
                       <span className="text-muted-foreground ms-auto truncate text-xs">{result.subtitle}</span>
                     ) : null}

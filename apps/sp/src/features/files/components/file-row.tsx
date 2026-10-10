@@ -7,7 +7,7 @@ import { Button, Card, CardContent } from "@ihsp/ui"
 import { IconDownload, IconFile, IconNotebook, IconPencil, IconTrash } from "@ihsp/ui"
 import { toast } from "sonner"
 import { formatBytes } from "../utils/format-bytes"
-import { openFile } from "../utils/open-file"
+import { fileHref, openFile } from "../utils/open-file"
 import { FileStatusBadge } from "./file-status-badge"
 import { UsedByList } from "./used-by-list"
 
@@ -35,12 +35,27 @@ export function FileRow({ file, onRename, onDelete }: FileRowProps) {
   }
 
   return (
-    <Card data-file-id={file.id}>
+    <Card data-file-id={file.id} id={`file-${file.id}`}>
       <CardContent className="flex flex-col gap-3">
         <div className="flex items-start gap-3">
           <IconFile className="text-muted-foreground mt-0.5 size-5 shrink-0" aria-hidden />
           <div className="min-w-0 flex-1">
-            <h3 className="text-sm font-medium break-words">{file.name}</h3>
+            <h3 className="text-sm font-medium break-words">
+              {usable ? (
+                <a
+                  href={fileHref(file.id)}
+                  className="hover:underline"
+                  onClick={(event) => {
+                    event.preventDefault()
+                    void download()
+                  }}
+                >
+                  {file.name}
+                </a>
+              ) : (
+                file.name
+              )}
+            </h3>
             <p className="text-muted-foreground text-xs">
               {file.content_type} · {formatBytes(file.byte_size)} · {format.date(file.created_at)}
             </p>

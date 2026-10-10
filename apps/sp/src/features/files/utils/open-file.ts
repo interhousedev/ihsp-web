@@ -6,3 +6,8 @@ export async function openFile(file: FileItem): Promise<void> {
   const url = await resolveFileUrl(file.id, opensInline(file.content_type))
   window.open(url, "_blank", "noopener,noreferrer")
 }
+
+/** Where a file lives in the list (its card anchor); the title link opens the file itself on click. */
+export function fileHref(fileId: string): string {
+  return `/files/#file-${fileId}`
+}

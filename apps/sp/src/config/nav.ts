@@ -47,7 +47,6 @@ export function useNav(): { groups: NavGroup[]; bottom: BottomNavItem[] } {
         {
           label: t("groupAccount"),
           items: [
-            { title: t("profile"), url: "/profile/", icon: "profile" },
             { title: t("settings"), url: "/settings/", icon: "settings" },
           ],
         },

@@ -4,6 +4,7 @@ import { useAuthStore } from "@ihsp/auth"
 import { getConfig, type AppEnv } from "@ihsp/config"
 import { useT } from "@ihsp/i18n"
 import type { PlatformLink } from "@ihsp/ui"
+import { installAppUrl, isPwaMode } from "../pwa/utils/app-mode"
 import { platformKeysFor, type PlatformKey } from "./platform-keys"
 
 const URL_KEYS: Record<PlatformKey, keyof AppEnv> = {
@@ -13,6 +14,14 @@ const URL_KEYS: Record<PlatformKey, keyof AppEnv> = {
   lms: "LMS_URL",
   library: "LIBRARY_URL",
   id: "ID_URL",
+}
+
+/** Apps that are installed separately: in the installed app their links go to the apps hub, to the app's install steps. */
+const HUB_ANCHORS: readonly PlatformKey[] = ["lms", "library", "staff", "admin"]
+
+/** `https://app.ihsu.uz` + `lms` → `https://app.ihsu.uz/#install-lms`. */
+export function installAnchorUrl(hub: string, key: PlatformKey): string {
+  return `${hub.replace(/\/+$/, "")}/#install-${key}`
 }
 
 /**
@@ -26,6 +35,7 @@ export function usePlatformLinks(): PlatformLink[] {
   if (!roles) return []
 
   const config = getConfig()
+  const hub = isPwaMode() ? installAppUrl() : null
   // An optional address (`LIBRARY_URL`) that is not configured hides its entry.
   return platformKeysFor(roles)
     .filter((key) => config[URL_KEYS[key]])
@@ -33,7 +43,7 @@ export function usePlatformLinks(): PlatformLink[] {
       key,
       name: t(`${key}.name`),
       description: t(`${key}.description`),
-      href: String(config[URL_KEYS[key]]),
+      href: hub && HUB_ANCHORS.includes(key) ? installAnchorUrl(hub, key) : String(config[URL_KEYS[key]]),
       // The installable app (client `app`) is the student portal in another host.
       current: (config.OAUTH_CLIENT_ID === "app" ? "sp" : config.OAUTH_CLIENT_ID) === key,
     }))

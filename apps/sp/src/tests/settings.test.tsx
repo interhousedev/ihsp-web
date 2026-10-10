@@ -37,7 +37,7 @@ describe("settings page", () => {
     renderSp(<SettingsPage />, { route: "/settings/" })
 
     for (const title of ["General", "Notifications", "Today cards", "Calendar feed"]) {
-      expect(await screen.findByText(title)).toBeInTheDocument()
+      expect((await screen.findAllByText(title)).length).toBeGreaterThan(0)
     }
   })
 

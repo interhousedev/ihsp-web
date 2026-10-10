@@ -79,7 +79,6 @@ describe("app frame", () => {
       "My files",
       "Links & shares",
       "Notifications",
-      "Profile",
       "Settings",
     ]) {
       expect(screen.getAllByRole("link", { name }).length).toBeGreaterThan(0)

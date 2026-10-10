@@ -39,7 +39,11 @@ export function ResourceList({
             <Icons.links className="text-muted-foreground size-5 shrink-0" aria-hidden />
           )}
           <div className="min-w-0 flex-1">
-            <p className="truncate text-sm font-medium">{item.title}</p>
+            <p className="truncate text-sm font-medium">
+              <a href={item.short_url} target="_blank" rel="noopener noreferrer" className="hover:underline">
+                {item.title}
+              </a>
+            </p>
             <p className="text-muted-foreground truncate text-xs">
               {[
                 fullName(item.author),

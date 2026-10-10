@@ -84,6 +84,23 @@ describe("usePlatformLinks", () => {
     expect(seen.map((link) => link.key)).toEqual(["sp", "lms", "id"])
   })
 
+  it("sends the separately installed apps to their install steps on the apps hub in the installed app", () => {
+    window.__ENV__ = { ...(window.__ENV__ as object), APP_MODE: "pwa", APP_URL: "https://app.ihsu.uz/" }
+    try {
+      const links = linksFor(["student"], "sp")
+
+      expect(links.map((link) => [link.key, link.href])).toEqual([
+        ["sp", "http://localhost:3002"],
+        ["lms", "https://app.ihsu.uz/#install-lms"],
+        ["library", "https://app.ihsu.uz/#install-library"],
+        ["id", "http://localhost:3001"],
+      ])
+    } finally {
+      window.__ENV__ = { ...(window.__ENV__ as object), APP_MODE: "sp", APP_URL: undefined }
+      resetConfig()
+    }
+  })
+
   it("marks only the app the user is in", () => {
     const links = linksFor(["admin", "teacher"], "admin")
 

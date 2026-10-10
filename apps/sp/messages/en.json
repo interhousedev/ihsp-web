@@ -766,6 +766,14 @@
     },
     "calendar": {
       "title": "Calendar feed"
+    },
+    "bottomNav": {
+      "title": "Bottom menu",
+      "description": "Pick up to four pages for the bottom bar and put them in order.",
+      "slots": "{count} of {max} pages in the bar",
+      "show": "In the bottom bar: {page}",
+      "moveUp": "Move left: {page}",
+      "moveDown": "Move right: {page}"
     }
   }
 }

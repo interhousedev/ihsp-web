@@ -766,6 +766,14 @@
     },
     "calendar": {
       "title": "Kalendar"
+    },
+    "bottomNav": {
+      "title": "Pastki menyu",
+      "description": "Pastki panel uchun toʻrttagacha sahifani tanlang va tartiblang.",
+      "slots": "Panelda {count} / {max} ta sahifa",
+      "show": "Pastki panelda: {page}",
+      "moveUp": "Chapga: {page}",
+      "moveDown": "Oʻngga: {page}"
     }
   }
 }

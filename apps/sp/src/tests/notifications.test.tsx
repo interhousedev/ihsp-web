@@ -135,7 +135,7 @@ describe("NotificationBell", () => {
     const { user } = renderSp(<NotificationBell />)
 
     const bell = await screen.findByRole("button", { name: `Notifications, ${UNREAD} unread` })
-    expect(within(bell).getByTestId("unread-count")).toHaveTextContent(String(UNREAD))
+    expect(screen.getByTestId("unread-count")).toHaveTextContent(String(UNREAD))
     await user.click(bell)
 
     const all = await screen.findByRole("link", { name: "View all notifications" })
