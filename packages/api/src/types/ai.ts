@@ -26,6 +26,8 @@ export type WebResult = {
   why: string
   /** True when the answer cites this page. */
   cited: boolean
+  /** `db`: from the platform's own database (shown as "Из базы IHSP"). */
+  origin?: "web" | "db"
 }
 
 /** `GET /v1/ai/web-search`: whether web search is on and today's searches (a Discover deep run costs `deep_cost`). */

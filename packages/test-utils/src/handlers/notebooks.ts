@@ -307,6 +307,8 @@ function sourceFromInput(
       return { item: { ...base, id, kind: "note", title: input.title, ref: {} }, body: input.body_md }
     case "url":
       return { item: { ...base, id, kind: "url", title: input.title ?? input.url, ref: { url: input.url } } }
+    case "library_item":
+      return { item: { ...base, id, kind: "text", title: "Library item", ref: { item_id: input.item_id } } }
   }
 }
 

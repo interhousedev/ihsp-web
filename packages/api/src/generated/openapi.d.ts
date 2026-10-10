@@ -5589,7 +5589,9 @@ export interface paths {
         };
         /**
          * Download Artifact
-         * @description Download a ready output as a file: report .docx, table .xlsx, slides .pptx.
+         * @description Download a ready output: report .docx, table .xlsx, slides .pptx, the rest .md.
+         *
+         *     Every kind can also be asked for as ``json``.
          */
         get: operations["download_artifact_v1_notebooks__notebook_id__artifacts__artifact_id__download_get"];
         put?: never;
@@ -5674,6 +5676,26 @@ export interface paths {
          * @description Add a report to the notebook's sources as a note.
          */
         post: operations["save_as_source_v1_notebooks__notebook_id__artifacts__artifact_id__save_as_source_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/notebooks/{notebook_id}/artifacts/{artifact_id}/save-to-files": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Save To Files
+         * @description Save a copy of a ready output as a file in "My files".
+         */
+        post: operations["save_to_files_v1_notebooks__notebook_id__artifacts__artifact_id__save_to_files_post"];
         delete?: never;
         options?: never;
         head?: never;
@@ -6810,6 +6832,30 @@ export interface paths {
         get: operations["suggest_next_section_v1_staff_library_book_plans_next_get"];
         put?: never;
         post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/staff/lms/courses/{course_id}/broadcasts": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * List Broadcasts
+         * @description Return the newest broadcasts of the course; same access as sending.
+         */
+        get: operations["list_broadcasts_v1_staff_lms_courses__course_id__broadcasts_get"];
+        put?: never;
+        /**
+         * Send Broadcast
+         * @description Notify every enrolled student (in the app, by Web Push and in Telegram).
+         */
+        post: operations["send_broadcast_v1_staff_lms_courses__course_id__broadcasts_post"];
         delete?: never;
         options?: never;
         head?: never;
@@ -9083,6 +9129,51 @@ export interface components {
             review: number;
         };
         /**
+         * CourseBroadcastBody
+         * @description POST /v1/staff/lms/courses/{id}/broadcasts: the message for the students.
+         */
+        CourseBroadcastBody: {
+            /** Body */
+            body: string;
+            /** Title */
+            title: string;
+        };
+        /**
+         * CourseBroadcastResponse
+         * @description One sent course broadcast.
+         */
+        CourseBroadcastResponse: {
+            /**
+             * Author Id
+             * Format: uuid
+             */
+            author_id: string;
+            /** Body */
+            body: string;
+            /**
+             * Course Id
+             * Format: uuid
+             */
+            course_id: string;
+            /**
+             * Created At
+             * Format: date-time
+             */
+            created_at: string;
+            /**
+             * Id
+             * Format: uuid
+             */
+            id: string;
+            /**
+             * Recipients
+             * @description Students notified; only known right after sending.
+             */
+            recipients?: number | null;
+            /** Title */
+            title: string;
+        };
+        /**
          * CourseCreatorResponse
          * @description CourseCreator: a person who holds the `lms_creator` role.
          */
@@ -9753,6 +9844,16 @@ export interface components {
         DiscoverResultResponse: {
             /** Already Added */
             already_added: boolean;
+            /**
+             * Origin
+             * @default web
+             * @enum {string}
+             */
+            origin?: "web" | "db";
+            /** Ref Id */
+            ref_id?: string | null;
+            /** Ref Kind */
+            ref_kind?: ("library_item" | "notebook_source") | null;
             /** Site */
             site: string;
             /** Snippet */
@@ -14853,6 +14954,31 @@ export interface components {
             lock_version: number;
         };
         /**
+         * SaveToFilesBody
+         * @description Save a ready output into the caller's files.
+         */
+        SaveToFilesBody: {
+            /** Format */
+            format?: ("docx" | "xlsx" | "pptx" | "md") | null;
+        };
+        /**
+         * SavedFileResponse
+         * @description The file that was created from an output.
+         */
+        SavedFileResponse: {
+            /** Byte Size */
+            byte_size: number;
+            /** Content Type */
+            content_type: string;
+            /**
+             * Id
+             * Format: uuid
+             */
+            id: string;
+            /** Name */
+            name: string;
+        };
+        /**
          * ScanResponse
          * @description Findings of the scan job.
          */
@@ -15643,7 +15769,7 @@ export interface components {
              * Blocks
              * @description Blocks in reading order.
              */
-            blocks: (components["schemas"]["TextBlockInput"] | components["schemas"]["TestBlockInput"] | components["schemas"]["FlashcardsBlockInput"])[];
+            blocks: (components["schemas"]["TextBlockInput"] | components["schemas"]["VideoBlockInput"] | components["schemas"]["TestBlockInput"] | components["schemas"]["FlashcardsBlockInput"])[];
             /**
              * Title
              * @description Step title, without numbering.
@@ -17672,6 +17798,28 @@ export interface components {
             url?: string;
         };
         /**
+         * VideoBlockInput
+         * @description A video block: a link (YouTube, Vimeo or a direct file URL).
+         */
+        VideoBlockInput: {
+            /**
+             * Caption
+             * @description Caption, optional.
+             * @default
+             */
+            caption?: string;
+            /**
+             * @description discriminator enum property added by openapi-typescript
+             * @enum {string}
+             */
+            type: "video";
+            /**
+             * Url
+             * @description Video link, https only.
+             */
+            url: string;
+        };
+        /**
          * Visibility
          * @description Who may see a published item.
          * @enum {string}
@@ -17713,6 +17861,12 @@ export interface components {
             cited: boolean;
             /** N */
             n: number;
+            /**
+             * Origin
+             * @default web
+             * @enum {string}
+             */
+            origin?: "web" | "db";
             /** Site */
             site: string;
             /** Snippet */
@@ -29739,7 +29893,7 @@ export interface operations {
     download_artifact_v1_notebooks__notebook_id__artifacts__artifact_id__download_get: {
         parameters: {
             query?: {
-                format?: ("docx" | "xlsx" | "pptx") | null;
+                format?: ("docx" | "xlsx" | "pptx" | "md" | "json") | null;
             };
             header?: never;
             path: {
@@ -29887,6 +30041,42 @@ export interface operations {
                 };
                 content: {
                     "application/json": components["schemas"]["SourceItemResponse"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    save_to_files_v1_notebooks__notebook_id__artifacts__artifact_id__save_to_files_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                notebook_id: string;
+                artifact_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: {
+            content: {
+                "application/json": components["schemas"]["SaveToFilesBody"] | null;
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["SavedFileResponse"];
                 };
             };
             /** @description Validation Error */
@@ -31945,6 +32135,72 @@ export interface operations {
                 };
                 content: {
                     "application/json": components["schemas"]["NextSuggestionResponse"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    list_broadcasts_v1_staff_lms_courses__course_id__broadcasts_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                course_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["CourseBroadcastResponse"][];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    send_broadcast_v1_staff_lms_courses__course_id__broadcasts_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                course_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["CourseBroadcastBody"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["CourseBroadcastResponse"];
                 };
             };
             /** @description Validation Error */

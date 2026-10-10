@@ -21,10 +21,10 @@ import type { getAdminAudit, getAdminOauthClients, getAdminTeachers, getAdminUse
 import type { getAdminInsights } from "./endpoints/insights"
 import type { getAnnotations, getAnnotationsExport, getLibraryCollection, getLibraryCollections, getLibraryFileUrl, getLibraryItem, getLibraryItemText, getLibraryItems, getLibraryMyGroups, getLibrarySanctions, getLibrarySubjects, getLibraryTopics, getManageBook, getManageBooks, getManageQueue, getManageStats, getManageTopics, getMeLibrary, getMyUploads, getReadingList, getReadingLists, getShelf, getUniLibraryRecord, getUniLibrarySearch, getUniLibraryStatus, getUniLibraryTaxonomies, patchMaterial, postAnnotation, postAnnotationsSync, postLibrarySanction, postManageBook, postManageBookFile, postManageImport, postMaterial, postMaterialFiles, postMaterialSubmit, postMaterialVersion, postModeration, postReadingList, postSuggestion, postUniLibraryPin, putReadingListItems, putShelfEntry } from "./endpoints/library"
 import type { getAdminModerationQueue, getAdminModerationSearch, getLessonResources, getMeLinks, postAdminLinkDisable, postAdminLinkDismissReports, postLessonResourceHide, postLessonResources, postLinkRevoke, postLinks, postShares } from "./endpoints/links"
-import type { getLmsCourseCompare, getLmsCourseDraft, getLmsCoursePending, getLmsCoursePreviewStep, getLmsCourseStaff, getLmsCourseVersion, getLmsCourseVersions, getLmsCreators, getLmsStepDiff, getLmsStepDraft, getLmsStepHistory, patchLmsCourseSettings, patchLmsCourseStaff, postLmsCourseDiscard, postLmsCourseDraftOutline, postLmsCourseInviteCode, postLmsCoursePublish, postLmsCourseStaff, postLmsCourseSteps, postLmsCourseVersionRestore, postLmsCourses, postLmsStepCheckpoints, postLmsStepDiscard, postLmsStepRestore, putLmsCourseDraftMeta, putLmsCreator, putLmsStepDraft } from "./endpoints/lms-authoring"
+import type { getLmsCourseBroadcasts, getLmsCourseCompare, getLmsCourseDraft, getLmsCoursePending, getLmsCoursePreviewStep, getLmsCourseStaff, getLmsCourseVersion, getLmsCourseVersions, getLmsCreators, getLmsStepDiff, getLmsStepDraft, getLmsStepHistory, patchLmsCourseSettings, patchLmsCourseStaff, postLmsCourseBroadcast, postLmsCourseDiscard, postLmsCourseDraftOutline, postLmsCourseInviteCode, postLmsCoursePublish, postLmsCourseStaff, postLmsCourseSteps, postLmsCourseVersionRestore, postLmsCourses, postLmsStepCheckpoints, postLmsStepDiscard, postLmsStepRestore, putLmsCourseDraftMeta, putLmsCreator, putLmsStepDraft } from "./endpoints/lms-authoring"
 import type { getLmsAttempt, getLmsCourse, getLmsCourseStep, getLmsCourseStudents, getLmsCourses, getLmsMyCourses, getLmsStepCardsNext, postLmsAttemptOverride, postLmsAttemptSubmit, postLmsCourseEnroll, postLmsJoin, postLmsStepBlockAttempts, postLmsStepCardReview, postLmsStepViewed, putLmsAttemptAnswers } from "./endpoints/lms-learning"
 import type { getAdminSyncRuns, getMeGrades, getMeGradesDay, getMeLessonResults, getMeRecordBook, getMeSubject, getMeSubjectLessons, getMeSubjects, postAdminSyncRun } from "./endpoints/marks"
-import type { getArtifact, getArtifacts, getNotebook, getNotebookAutoSubject, getNotebookChat, getNotebookLabels, getNotebookSearch, getNotebookSource, getNotebookSources, getNotebookUsage, getNotebooks, getPassage, getSourcePassages, patchArtifact, patchNotebook, patchNotebookLabel, patchNotebookSource, postArtifact, postArtifactAsSource, postArtifactAttachToLesson, postArtifactCancel, postArtifactFlashcardSet, postArtifactRetry, postArtifactSlidesRevise, postNotebook, postNotebookAutoSubject, postNotebookDiscover, postNotebookLabel, postNotebookLabelsAuto, postNotebookMessage, postNotebookRegenerate, postNotebookSourceSync, postNotebookSources, postNotebookSourcesSelect, postSaveNote, putArtifactSlides, putNotebookSourceLabels } from "./endpoints/notebooks"
+import type { getArtifact, getArtifacts, getNotebook, getNotebookAutoSubject, getNotebookChat, getNotebookLabels, getNotebookSearch, getNotebookSource, getNotebookSources, getNotebookUsage, getNotebooks, getPassage, getSourcePassages, patchArtifact, patchNotebook, patchNotebookLabel, patchNotebookSource, postArtifact, postArtifactAsSource, postArtifactAttachToLesson, postArtifactCancel, postArtifactFlashcardSet, postArtifactRetry, postArtifactSaveToFiles, postArtifactSlidesRevise, postNotebook, postNotebookAutoSubject, postNotebookDiscover, postNotebookLabel, postNotebookLabelsAuto, postNotebookMessage, postNotebookRegenerate, postNotebookSourceSync, postNotebookSources, postNotebookSourcesSelect, postSaveNote, putArtifactSlides, putNotebookSourceLabels } from "./endpoints/notebooks"
 import type { getNotifications, getNotificationsUnreadCount } from "./endpoints/notifications"
 import type { postOauthLogout, postOauthRefresh, postOauthTelegram, postOauthToken, postOauthTokenHook } from "./endpoints/oauth"
 import type { getPublicShare, postPublicReports } from "./endpoints/public"
@@ -849,6 +849,14 @@ export const served_postLmsCourseInviteCode: Awaited<ReturnType<typeof postLmsCo
 declare const gen_getLmsCoursePreviewStep: ResponseOf<"/v1/lms/courses/{course_id}/preview/steps/{step_id}", "get">
 export const served_getLmsCoursePreviewStep: Awaited<ReturnType<typeof getLmsCoursePreviewStep>> = gen_getLmsCoursePreviewStep
 
+// POST /v1/staff/lms/courses/{course_id}/broadcasts — postLmsCourseBroadcast
+declare const gen_postLmsCourseBroadcast: ResponseOf<"/v1/staff/lms/courses/{course_id}/broadcasts", "post">
+export const served_postLmsCourseBroadcast: Awaited<ReturnType<typeof postLmsCourseBroadcast>> = gen_postLmsCourseBroadcast
+
+// GET /v1/staff/lms/courses/{course_id}/broadcasts — getLmsCourseBroadcasts
+declare const gen_getLmsCourseBroadcasts: ResponseOf<"/v1/staff/lms/courses/{course_id}/broadcasts", "get">
+export const served_getLmsCourseBroadcasts: Awaited<ReturnType<typeof getLmsCourseBroadcasts>> = gen_getLmsCourseBroadcasts
+
 // GET /v1/lms/courses — getLmsCourses
 declare const gen_getLmsCourses: ResponseOf<"/v1/lms/courses", "get">
 export const served_getLmsCourses: Awaited<ReturnType<typeof getLmsCourses>> = gen_getLmsCourses
@@ -1076,6 +1084,10 @@ export const served_postArtifactRetry: Awaited<ReturnType<typeof postArtifactRet
 // POST /v1/notebooks/{notebook_id}/artifacts/{artifact_id}/save-as-source — postArtifactAsSource
 declare const gen_postArtifactAsSource: ResponseOf<"/v1/notebooks/{notebook_id}/artifacts/{artifact_id}/save-as-source", "post">
 export const served_postArtifactAsSource: Awaited<ReturnType<typeof postArtifactAsSource>> = gen_postArtifactAsSource
+
+// POST /v1/notebooks/{notebook_id}/artifacts/{artifact_id}/save-to-files — postArtifactSaveToFiles
+declare const gen_postArtifactSaveToFiles: ResponseOf<"/v1/notebooks/{notebook_id}/artifacts/{artifact_id}/save-to-files", "post">
+export const served_postArtifactSaveToFiles: Awaited<ReturnType<typeof postArtifactSaveToFiles>> = gen_postArtifactSaveToFiles
 
 // POST /v1/notebooks/{notebook_id}/artifacts/{artifact_id}/attach-to-lesson — postArtifactAttachToLesson
 declare const gen_postArtifactAttachToLesson: ResponseOf<"/v1/notebooks/{notebook_id}/artifacts/{artifact_id}/attach-to-lesson", "post">
