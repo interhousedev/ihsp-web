@@ -20,6 +20,7 @@ import { RolesEditor } from "./roles-editor"
 import { SetPasswordDialog } from "./set-password-dialog"
 import { SessionList } from "./session-list"
 import { TelegramAccounts } from "./telegram-accounts"
+import { UserPhotoSection } from "./user-photo-section"
 
 function Section({ title, children }: { title: string; children: ReactNode }) {
   return (
@@ -76,6 +77,9 @@ function DetailBody({ user }: { user: AdminUserDetail }) {
         <Section title={t("roles")}>
           <RolesEditor user={user} />
         </Section>
+        {user.roles.includes("teacher") ? (
+          <UserPhotoSection userId={user.id} name={name} photoUrl={user.photo_url} />
+        ) : null}
         <Section title={t("mail")}>
           <MailActions user={user} />
         </Section>

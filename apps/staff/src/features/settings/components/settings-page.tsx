@@ -2,11 +2,12 @@
 
 import type { Role } from "@ihsp/api"
 import { useSession } from "@ihsp/auth"
-import { getStaffMeContacts, keys, putStaffMeContacts } from "@ihsp/api"
-import { NotificationSettingsForm, TeacherContactsForm } from "@ihsp/features-core"
+import { deleteStaffMePhoto, getStaffMeContacts, keys, putStaffMeContacts, putStaffMePhoto } from "@ihsp/api"
+import { NotificationSettingsForm, PhotoField, TeacherContactsForm } from "@ihsp/features-core"
 import { AppLockSection } from "@ihsp/features-core/pwa/lock"
 import { useT } from "@ihsp/i18n"
 import { PageContainer } from "@ihsp/ui"
+import { useState } from "react"
 import { GeneralSettings } from "./general-settings"
 import { SettingsSection } from "./settings-section"
 import { TelegramCard } from "./telegram-card"
@@ -18,7 +19,10 @@ const NOTIFICATION_ROLES: Role[] = ["teacher"]
 export function SettingsPage() {
   const t = useT("settings")
   const { session } = useSession()
+  const [photoUrl, setPhotoUrl] = useState<string | null | undefined>(undefined)
   if (!session) return null
+  const { user } = session
+  const name = [user.last_name, user.first_name, user.middle_name].filter(Boolean).join(" ")
 
   return (
     <PageContainer title={t("title")}>
@@ -29,6 +33,14 @@ export function SettingsPage() {
           </SettingsSection>
           <SettingsSection title={t("telegram.title")}>
             <TelegramCard />
+          </SettingsSection>
+          <SettingsSection title={t("photo.title")} description={t("photo.description")}>
+            <PhotoField
+              name={name}
+              photoUrl={photoUrl === undefined ? user.photo_url : photoUrl}
+              onUpload={async (file) => setPhotoUrl((await putStaffMePhoto(file)).photo_url)}
+              onRemove={async () => setPhotoUrl((await deleteStaffMePhoto()).photo_url)}
+            />
           </SettingsSection>
           <SettingsSection title={t("contacts.title")} description={t("contacts.description")}>
             <TeacherContactsForm

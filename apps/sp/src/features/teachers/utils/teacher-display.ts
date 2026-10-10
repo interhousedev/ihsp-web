@@ -1,8 +1,17 @@
 import type { MyTeacher, TeacherContacts, TeacherLesson } from "@ihsp/api"
-import { todayIso } from "@ihsp/i18n"
 
 export const TEACHERS_HREF = "/teachers/"
 export const teacherHref = (id: string) => `/teachers/view/?id=${encodeURIComponent(id)}`
+/** A subject's page (Overview). */
+export const subjectHref = (id: string) => `/subjects/view/?id=${encodeURIComponent(id)}`
+/** A subject's page on its Lessons tab, where the teacher's classes are listed. */
+export const subjectLessonsHref = (id: string) => `/subjects/view/?id=${encodeURIComponent(id)}&tab=lessons`
+
+/** A lesson's page. */
+export const lessonHref = (id: string) => `/lessons/view/?id=${encodeURIComponent(id)}`
+/** Where a teacher's class leads: its lesson page when it is a stored lesson, else the subject's Lessons tab. */
+export const classHref = (lesson: Pick<TeacherLesson, "lesson_id" | "subject_id">) =>
+  lesson.lesson_id ? lessonHref(lesson.lesson_id) : subjectLessonsHref(lesson.subject_id)
 
 export function teacherName(teacher: Pick<MyTeacher, "first_name" | "last_name" | "middle_name">): string {
   return [teacher.last_name, teacher.first_name, teacher.middle_name].filter(Boolean).join(" ")
@@ -29,29 +38,7 @@ export function contactChips(contacts: TeacherContacts): ContactChip[] {
   return chips
 }
 
-export type TeacherStatus =
-  | { kind: "now"; room: string | null }
-  | { kind: "next"; startsAt: string; room: string | null; today: boolean }
-  | { kind: "none" }
-
-/** "Now" while a lesson runs; the next lesson when it is today or later; otherwise nothing is left today. */
-export function teacherStatus(
-  teacher: Pick<MyTeacher, "teaching_now" | "current" | "next">,
-  now: Date = new Date(),
-): TeacherStatus {
-  if (teacher.teaching_now && teacher.current) return { kind: "now", room: teacher.current.room }
-  if (!teacher.next) return { kind: "none" }
-  return {
-    kind: "next",
-    startsAt: teacher.next.starts_at,
-    room: teacher.next.room,
-    today: teacher.next.date === todayIso(now),
-  }
-}
-
-/** The week's lessons grouped by ISO weekday (1 to 7). */
-export function lessonsByWeekday(week: TeacherLesson[]): Map<number, TeacherLesson[]> {
-  const days = new Map<number, TeacherLesson[]>()
-  for (const lesson of week) days.set(lesson.weekday, [...(days.get(lesson.weekday) ?? []), lesson])
-  return days
+/** The class to show first: the one running now, otherwise the next one, otherwise the first of the next two weeks. */
+export function nearestLesson(teacher: Pick<MyTeacher, "current" | "next" | "upcoming">): TeacherLesson | null {
+  return teacher.current ?? teacher.next ?? teacher.upcoming[0] ?? null
 }

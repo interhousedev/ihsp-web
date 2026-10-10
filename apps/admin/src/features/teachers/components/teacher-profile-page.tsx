@@ -25,6 +25,7 @@ import { useAdminMutation } from "../../shared/hooks/use-admin-mutation"
 import { fullNameWithMiddle } from "../../shared/utils/names"
 import { TOUCH } from "../../shared/utils/touch"
 import { SetPasswordDialog } from "../../users/components/set-password-dialog"
+import { UserPhotoSection } from "../../users/components/user-photo-section"
 import { EditTeacherDialog } from "./edit-teacher-dialog"
 import { TeacherContactsSection } from "./teacher-contacts-section"
 
@@ -82,6 +83,8 @@ function ProfileBody({ data }: { data: TeacherProfile }) {
           {t("openInUsers")}
         </Link>
       </div>
+
+      <UserPhotoSection userId={user.id} name={name} photoUrl={user.photo_url} />
 
       <TeacherContactsSection teacherId={user.id} />
 
