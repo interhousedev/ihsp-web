@@ -1,6 +1,6 @@
 "use client"
 
-import type { MarkItem, SubjectLessonRow } from "@ihsp/api"
+import type { SubjectLessonRow } from "@ihsp/api"
 import { useErrorMessage, useFormatters, useT } from "@ihsp/i18n"
 import { Badge, Button, Icons, MarkBadge, StateView } from "@ihsp/ui"
 import Link from "next/link"
@@ -8,20 +8,16 @@ import { useState } from "react"
 import { QueryState } from "../../shared/components/query-state"
 import { PAST_STEP, useOpenSubjectNotebook, useSubjectLessons } from "../hooks/use-subject-hub"
 
-/** Green when present, dark orange when late, dark red when absent: the same dots as in the calendar. */
-export function AttendanceDot({ state }: { state: SubjectLessonRow["attendance"] }) {
+/** Dark red for an absence, dark orange for a late arrival. A present lesson shows nothing. */
+export function LessonAttendanceBadge({ state }: { state: SubjectLessonRow["attendance"] }) {
   const t = useT("subjects.hub.attendance")
-  if (state === null) return null
-  const colour = state === "present" ? "bg-green-600" : state === "late" ? "bg-orange-700" : "bg-red-800"
-  const text =
-    state === "late"
-      ? "text-orange-700 dark:text-orange-400"
-      : state === "absent"
-        ? "text-red-800 dark:text-red-400"
-        : ""
+  if (state !== "absent" && state !== "late") return null
+  const colour = state === "absent" ? "bg-red-800 dark:bg-red-700" : "bg-orange-700 dark:bg-orange-600"
   return (
-    <span className={`flex items-center gap-1 text-xs font-medium ${text}`} data-attendance={state}>
-      <span className={`size-2.5 rounded-full ${colour}`} aria-hidden />
+    <span
+      className={`inline-flex items-center rounded-md px-2 py-0.5 text-xs font-semibold text-white ${colour}`}
+      data-attendance={state}
+    >
       {t(state)}
     </span>
   )
@@ -29,19 +25,16 @@ export function AttendanceDot({ state }: { state: SubjectLessonRow["attendance"]
 
 function LessonRow({
   row,
-  marks,
   onAsk,
   asking,
 }: {
   row: SubjectLessonRow
-  marks: readonly MarkItem[]
   onAsk: (row: SubjectLessonRow) => void
   asking: boolean
 }) {
   const t = useT("subjects.hub")
   const f = useFormatters()
   const tm = useT("subjects.marks")
-  const shown = marks.length > 0 ? marks : row.mark !== null ? [{ value: row.mark, type: "lesson" as const }] : []
   return (
     <li
       className="flex flex-col gap-2 rounded-lg border p-3 data-[attendance=absent]:border-red-800 data-[attendance=late]:border-orange-700"
@@ -56,14 +49,14 @@ function LessonRow({
           <span className="text-sm font-medium">
             {f.date(row.date, { weekday: "short", day: "numeric", month: "short" })} · {f.time(row.starts_at)}
           </span>
-          <span className="flex items-center gap-2">
-            {shown.map((mark, index) => (
+          <span className="flex flex-wrap items-center gap-2">
+            {row.marks.map((mark, index) => (
               <span key={`${mark.type}-${index}`} className="flex items-center gap-1" data-mark-type={mark.type}>
                 <span className="text-muted-foreground text-xs">{tm(`type.${mark.type}`)}</span>
                 <MarkBadge mark={mark.value} size="sm" />
               </span>
             ))}
-            <AttendanceDot state={row.attendance} />
+            <LessonAttendanceBadge state={row.attendance} />
           </span>
         </span>
         <span className="text-muted-foreground text-sm break-words">{row.topic ?? t("noTopic")}</span>
@@ -90,18 +83,17 @@ function LessonRow({
 
 /**
  * The subject hub (UF-WEB-05): the notebook of the subject, then one list of lessons built around now: the latest
- * past lessons with mark and attendance, "show more" for older ones, and the next 14 days. Each lesson can be asked
- * about in the subject notebook.
+ * past lessons with their marks and attendance, "show more" for older ones, and the next 14 days. `semester` is the
+ * semester the subject page shows, so the list and its marks come from the same term. Each lesson can be asked about
+ * in the subject notebook.
  */
-export function SubjectHub({ subjectId, marks }: { subjectId: string; marks: readonly MarkItem[] }) {
+export function SubjectHub({ subjectId, semester }: { subjectId: string; semester: number }) {
   const t = useT("subjects.hub")
   const errorMessage = useErrorMessage()
   const [pastLimit, setPastLimit] = useState(PAST_STEP)
-  const query = useSubjectLessons(subjectId, pastLimit)
+  const query = useSubjectLessons(subjectId, semester, pastLimit)
   const open = useOpenSubjectNotebook(subjectId)
   const f = useFormatters()
-
-  const marksOf = (row: SubjectLessonRow) => marks.filter((mark) => mark.lesson_id === row.lesson_id)
 
   function ask(row: SubjectLessonRow) {
     const when = f.date(row.date, { day: "numeric", month: "long" })
@@ -131,13 +123,7 @@ export function SubjectHub({ subjectId, marks }: { subjectId: string; marks: rea
                   </h2>
                   <ul className="flex flex-col gap-2">
                     {past.map((row) => (
-                      <LessonRow
-                        key={row.lesson_id}
-                        row={row}
-                        marks={marksOf(row)}
-                        onAsk={ask}
-                        asking={open.isPending}
-                      />
+                      <LessonRow key={row.lesson_id} row={row} onAsk={ask} asking={open.isPending} />
                     ))}
                   </ul>
                   {data.has_more_past ? (
@@ -160,13 +146,7 @@ export function SubjectHub({ subjectId, marks }: { subjectId: string; marks: rea
                 ) : (
                   <ul className="flex flex-col gap-2">
                     {upcoming.map((row) => (
-                      <LessonRow
-                        key={row.lesson_id}
-                        row={row}
-                        marks={marksOf(row)}
-                        onAsk={ask}
-                        asking={open.isPending}
-                      />
+                      <LessonRow key={row.lesson_id} row={row} onAsk={ask} asking={open.isPending} />
                     ))}
                   </ul>
                 )}

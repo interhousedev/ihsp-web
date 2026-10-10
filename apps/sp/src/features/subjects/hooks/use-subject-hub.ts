@@ -7,10 +7,17 @@ import { askLessonHref, leaveLessonDraft } from "../utils/ask-lesson"
 
 export const PAST_STEP = 10
 
-/** The subject hub list around now; `pastLimit` grows by `PAST_STEP` with every "show more". */
-export function useSubjectLessons(subjectId: string | null, pastLimit: number) {
+/**
+ * The subject hub list around now, in `semester` (the subject page's semester; the current one when unset).
+ * `pastLimit` grows by `PAST_STEP` with every "show more".
+ */
+export function useSubjectLessons(subjectId: string | null, semester: number | undefined, pastLimit: number) {
   return useQuery({
-    ...getMeSubjectLessonsQuery(subjectId ?? "", { around: "now", past_limit: pastLimit }),
+    ...getMeSubjectLessonsQuery(subjectId ?? "", {
+      around: "now",
+      past_limit: pastLimit,
+      ...(semester ? { semester } : {}),
+    }),
     enabled: subjectId !== null,
     placeholderData: (previous) => previous,
   })

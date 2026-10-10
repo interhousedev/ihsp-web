@@ -1,6 +1,9 @@
 // Academic — marks and sync (backend § API contract → "Academic — marks and sync (B5)" and Schemas).
 
 import type { AttendanceState, PageParams, PersonRef, SubjectRef } from "./common"
+
+/** A teacher of a subject: the person with the photo link (the student marks view). */
+export type SubjectTeacher = PersonRef & { photo_url: string | null }
 import type { ResourceItem } from "./links"
 import type { LessonItem } from "./schedule"
 
@@ -15,7 +18,7 @@ export type MarkItem = {
 
 export type SubjectCard = {
   subject: SubjectRef
-  teachers: PersonRef[]
+  teachers: SubjectTeacher[]
   semester_mark: number | null
   emis_rating: number | null
   absences: number
@@ -25,7 +28,7 @@ export type SubjectCard = {
 export type SubjectDetail = {
   subject: SubjectRef
   semester: number
-  teachers: PersonRef[]
+  teachers: SubjectTeacher[]
   averages: { lesson: number | null; midterm: number | null; final: number | null }
   semester_mark: number | null
   emis_rating: number | null
@@ -39,13 +42,16 @@ export type SubjectDetail = {
   materials: ResourceItem[]
 }
 
+/** One mark placed on a lesson of the subject hub list (all marks of the lesson, not only the first). */
+export type SubjectLessonMark = { type: "lesson" | "midterm" | "final"; value: number }
+
 export type SubjectLessonRow = {
   lesson_id: string
   date: string
   starts_at: string
   kind: LessonItem["kind"]
   topic: string | null
-  mark: number | null
+  marks: SubjectLessonMark[]
   attendance: "present" | "absent" | "late" | null
   materials_count: number
   past: boolean

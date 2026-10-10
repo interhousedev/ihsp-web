@@ -24,7 +24,9 @@ function subjectLessonRows(subjectId: string, now: number) {
         starts_at: lesson.starts_at,
         kind: lesson.kind,
         topic: lesson.topic,
-        mark: past ? (marks.find((item) => item.lesson_id === lesson.id)?.value ?? null) : null,
+        marks: past
+          ? marks.filter((item) => item.lesson_id === lesson.id).map((item) => ({ type: item.type, value: item.value }))
+          : [],
         attendance: past ? ("present" as const) : null,
         materials_count: 0,
         past,

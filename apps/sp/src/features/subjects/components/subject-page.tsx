@@ -42,7 +42,7 @@ export function SubjectPage() {
               <SubjectOverviewTab detail={detail} />
             </TabsContent>
             <TabsContent value="lessons" className="pt-2">
-              <SubjectHub subjectId={detail.subject.id} marks={detail.marks} />
+              <SubjectHub subjectId={detail.subject.id} semester={detail.semester} />
             </TabsContent>
             <TabsContent value="materials" className="pt-2">
               <SubjectMaterialsTab detail={detail} />
