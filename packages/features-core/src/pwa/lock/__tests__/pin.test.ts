@@ -11,7 +11,7 @@ import {
   registerWrongPin,
   withRelock,
   verifyPin,
-} from "../utils/pin"
+} from "../pin"
 
 /** Few rounds: these tests are about the logic, not the cost. */
 const FAST = 1000

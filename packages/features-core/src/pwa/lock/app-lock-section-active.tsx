@@ -2,12 +2,11 @@
 
 import { useAuthStore } from "@ihsp/auth"
 import { useT } from "@ihsp/i18n"
-import { Button } from "@ihsp/ui"
-import { useState } from "react"
-import { SettingsSection } from "../../settings/components/settings-section"
-import { usePinRecord } from "../hooks/use-pin-record"
-import { withRelock } from "../utils/pin"
-import { writePinRecord } from "../utils/pin-storage"
+import { useId, useState } from "react"
+import { Button, Card, CardContent, CardDescription, CardHeader, CardTitle } from "@ihsp/ui"
+import { usePinRecord } from "./use-pin-record"
+import { withRelock } from "./pin"
+import { writePinRecord } from "./pin-storage"
 import { AppLockForm, type AppLockMode } from "./app-lock-form"
 import { RelockSelect } from "./relock-select"
 
@@ -16,11 +15,18 @@ export function AppLockSectionActive() {
   const t = useT("pwa")
   const userId = useAuthStore((state) => state.user?.id ?? null)
   const record = usePinRecord(userId)
+  const titleId = useId()
   const [mode, setMode] = useState<AppLockMode | null>(null)
   if (!userId) return null
 
   return (
-    <SettingsSection title={t("lock.settings.title")} description={t("lock.settings.description")}>
+    <section aria-labelledby={titleId}>
+      <Card>
+        <CardHeader>
+          <CardTitle id={titleId}>{t("lock.settings.title")}</CardTitle>
+          <CardDescription>{t("lock.settings.description")}</CardDescription>
+        </CardHeader>
+        <CardContent>
       <p role="status" className="text-sm font-medium">
         {record ? t("lock.settings.on") : t("lock.settings.off")}
       </p>
@@ -54,6 +60,8 @@ export function AppLockSectionActive() {
           )}
         </div>
       )}
-    </SettingsSection>
+    </CardContent>
+      </Card>
+    </section>
   )
 }

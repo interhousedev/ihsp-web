@@ -1,6 +1,7 @@
 import type { LinkItem } from "@ihsp/api"
 
-export type LinkKindFilter = "all" | LinkItem["kind"]
+/** Filter chips cover the kinds sp shows today; `artifact` has no chip or label yet. */
+export type LinkKindFilter = "all" | Exclude<LinkItem["kind"], "artifact">
 
 export const KIND_FILTERS = ["all", "url", "file", "chat", "flashcard_set"] as const satisfies readonly LinkKindFilter[]
 

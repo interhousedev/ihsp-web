@@ -10,9 +10,9 @@ import {
   shouldLockOnReturn,
   writeActiveMarker,
   type RelockOption,
-} from "../utils/lock-policy"
-import { PIN_STORAGE_PREFIX, clearPinRecord, pinStorageKey, readPinRecord, writePinRecord } from "../utils/pin-storage"
-import { createPinRecord } from "../utils/pin"
+} from "../lock-policy"
+import { PIN_STORAGE_PREFIX, clearPinRecord, pinStorageKey, readPinRecord, writePinRecord } from "../pin-storage"
+import { createPinRecord } from "../pin"
 
 const MINUTE = 60 * 1000
 const DELAYS: [RelockOption, number][] = [

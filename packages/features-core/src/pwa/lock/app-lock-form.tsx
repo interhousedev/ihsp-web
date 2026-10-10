@@ -4,8 +4,8 @@ import { useT } from "@ihsp/i18n"
 import { Button, Label, PasswordInput } from "@ihsp/ui"
 import { useId, useState, type FormEvent } from "react"
 import { toast } from "sonner"
-import { PIN_ITERATIONS, createPinRecord, isValidPin, verifyPin, type PinRecord } from "../utils/pin"
-import { clearPinRecord, writePinRecord } from "../utils/pin-storage"
+import { PIN_ITERATIONS, createPinRecord, isValidPin, verifyPin, type PinRecord } from "./pin"
+import { clearPinRecord, writePinRecord } from "./pin-storage"
 
 export type AppLockMode = "set" | "change" | "remove"
 

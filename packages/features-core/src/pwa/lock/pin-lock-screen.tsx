@@ -3,9 +3,9 @@
 import { useT } from "@ihsp/i18n"
 import { Button, ConfirmDialog, Icons } from "@ihsp/ui"
 import { useEffect, useRef, useState } from "react"
-import { usePinSignOut } from "../hooks/use-pin-sign-out"
-import { attemptsLeft, registerRightPin, registerWrongPin, verifyPin, type PinRecord } from "../utils/pin"
-import { writePinRecord } from "../utils/pin-storage"
+import { usePinSignOut } from "./use-pin-sign-out"
+import { attemptsLeft, registerRightPin, registerWrongPin, verifyPin, type PinRecord } from "./pin"
+import { writePinRecord } from "./pin-storage"
 import { PinDots } from "./pin-dots"
 import { PinKeypad } from "./pin-keypad"
 

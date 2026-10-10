@@ -92,16 +92,8 @@ describe("keys used in the code", () => {
   test("the keys built at run time have messages for every value", () => {
     expect([...dynamic].toSorted()).toEqual([
       "pwa.benefits.${key}",
-      "pwa.lock.settings.errors.${error}",
-      "pwa.lock.settings.relock.options.${option}",
     ])
     for (const value of ["fast", "offline", "session", "push"]) expect(en.has(`pwa.benefits.${value}`)).toBe(true)
-    for (const value of ["immediately", "1m", "5m", "15m", "1h", "never"]) {
-      expect(en.has(`pwa.lock.settings.relock.options.${value}`)).toBe(true)
-    }
-    for (const value of ["length", "mismatch", "wrong", "storage"]) {
-      expect(en.has(`pwa.lock.settings.errors.${value}`)).toBe(true)
-    }
   })
 
   test("every message is used somewhere", () => {
@@ -109,8 +101,7 @@ describe("keys used in the code", () => {
       (key) =>
         !used.has(key) &&
         !key.startsWith("pwa.benefits.") &&
-        !key.startsWith("pwa.lock.settings.errors.") &&
-        !key.startsWith("pwa.lock.settings.relock.options."),
+        !key.startsWith("pwa.lock."),
     )
     expect(unused).toEqual([])
   })

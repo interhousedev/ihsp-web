@@ -74,3 +74,4 @@ export {
   type ForcedReload,
 } from "./utils/update-guard"
 export * from "./sw"
+export * from "./lock"

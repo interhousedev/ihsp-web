@@ -3,7 +3,7 @@
 import { useT } from "@ihsp/i18n"
 import { Label, NativeSelect, NativeSelectOption } from "@ihsp/ui"
 import { useId } from "react"
-import { RELOCK_OPTIONS, isRelockOption, type RelockOption } from "../utils/lock-policy"
+import { RELOCK_OPTIONS, isRelockOption, type RelockOption } from "./lock-policy"
 
 /** "Ask for the PIN again": how long the app may be in the background before it locks. */
 export function RelockSelect({ value, onChange }: { value: RelockOption; onChange: (value: RelockOption) => void }) {
