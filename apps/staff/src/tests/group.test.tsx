@@ -128,7 +128,7 @@ describe("students", () => {
     const card = await screen.findByRole("dialog")
     expect(within(card).getByText("Qodirov Sardor")).toBeInTheDocument()
     expect(within(card).getByText("Not registered")).toBeInTheDocument()
-    expect(within(card).getByText(/sees the lessons of both subgroups/)).toBeInTheDocument()
+    expect(within(card).getByText(/Sees both subgroups until you assign one/)).toBeInTheDocument()
     expect(within(card).getByRole("link", { name: "Assign a subgroup" })).toBeInTheDocument()
   })
 

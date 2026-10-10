@@ -88,7 +88,7 @@ describe("recovery", () => {
 
     await findHeading("OTP reset scheduled")
     // 2026-10-08T05:12:00Z is 10:12 in Asia/Tashkent.
-    expect(screen.getByText(/OTP will be reset on 8 Oct 2026(,| at) 10:12/)).toBeInTheDocument()
+    expect(screen.getByText(/OTP is reset on 8 Oct 2026(,| at) 10:12/)).toBeInTheDocument()
   })
 
   test("forgot login shows one neutral message", async () => {

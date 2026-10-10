@@ -2,7 +2,9 @@
 
 import type { Role } from "@ihsp/api"
 import { useSession } from "@ihsp/auth"
-import { NotificationSettingsForm } from "@ihsp/features-core"
+import { getStaffMeContacts, keys, putStaffMeContacts } from "@ihsp/api"
+import { NotificationSettingsForm, TeacherContactsForm } from "@ihsp/features-core"
+import { AppLockSection } from "@ihsp/features-core/pwa/lock"
 import { useT } from "@ihsp/i18n"
 import { PageContainer } from "@ihsp/ui"
 import { GeneralSettings } from "./general-settings"
@@ -28,6 +30,14 @@ export function SettingsPage() {
           <SettingsSection title={t("telegram.title")}>
             <TelegramCard />
           </SettingsSection>
+          <SettingsSection title={t("contacts.title")} description={t("contacts.description")}>
+            <TeacherContactsForm
+              queryKey={keys.staff.contacts()}
+              load={(signal) => getStaffMeContacts({ signal })}
+              save={putStaffMeContacts}
+            />
+          </SettingsSection>
+          <AppLockSection />
         </div>
         <SettingsSection title={t("notifications.title")}>
           <NotificationSettingsForm roles={NOTIFICATION_ROLES} showPush={false} />

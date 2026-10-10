@@ -186,6 +186,8 @@ describe("keys used in the code", () => {
       "broadcasts.audience.role.${role}": roles,
       "broadcasts.status.${value}": ["draft", "scheduled", "sending", "sent", "cancelled"],
       "files.picker.types.${value}": ["pdf", "doc", "sheet", "slides", "text", "image"],
+      "files.drive.types.${entry.id}": ["all", "documents", "images", "video", "presentations", "spreadsheets", "pdf"],
+      "assistant.sidebar.folders.${folder}": ["subject", "course", "mine"],
       "lessonDetail.header.fields.${change.field}": ["room", "teacher", "subject", "date", "period"],
       "lessons.status.${lesson.status}": ["scheduled", "cancelled"],
       "moderation.kind.${item.link.kind}": ["url", "file", "chat", "flashcard_set"],

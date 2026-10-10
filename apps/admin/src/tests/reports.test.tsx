@@ -94,7 +94,7 @@ describe("teachers", () => {
     setValue(screen.getByLabelText(/^Email/), "other@example.org")
     await user.click(screen.getByRole("button", { name: "Create account" }))
 
-    expect(await screen.findByRole("alert")).toHaveTextContent("A teacher with this name already exists.")
+    expect(await screen.findByRole("alert")).toHaveTextContent("A teacher with this name exists.")
     expect(created).toBe(0)
 
     await user.click(screen.getByRole("button", { name: "Create anyway" }))

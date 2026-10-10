@@ -133,7 +133,7 @@
       "subgroupNotSet": "Not set",
       "subgroupNumber": "Subgroup {number}",
       "absenceRate": "Absence rate",
-      "gpa": "GPA",
+      "gpa": "GPA (out of 5)",
       "attention": "Needs attention",
       "headStudent": "Head student: {name}",
       "noHeadStudent": "No head student",
@@ -154,7 +154,7 @@
       "flagHints": {
         "absences": "The absence rate is above the threshold.",
         "gpa_drop": "The GPA is lower than in the previous semester.",
-        "no_subgroup": "The student sees the lessons of both subgroups until you assign one."
+        "no_subgroup": "Sees both subgroups until you assign one."
       }
     },
     "subgroups": {
@@ -282,7 +282,7 @@
     "dismissDialog": {
       "titleSuggestion": "Dismiss this suggestion?",
       "titleCancel": "Cancel this exam?",
-      "textSuggestion": "{subject}, {date}. The suggestion is removed and will not come back.",
+      "textSuggestion": "{subject}, {date}. The suggestion will not come back.",
       "textCancel": "{subject}, {date}. Students will no longer see this exam.",
       "confirmSuggestion": "Dismiss",
       "confirmCancel": "Cancel exam",
@@ -344,7 +344,7 @@
     },
     "telegram": {
       "title": "Telegram",
-      "notLinked": "Telegram is not linked. Notifications arrive only on the web.",
+      "notLinked": "Telegram is not linked. Notifications arrive on the web only.",
       "linked": "Linked",
       "blocked": "Bot blocked",
       "link": "Link Telegram",

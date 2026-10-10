@@ -281,7 +281,7 @@ describe("set the date of a control week", () => {
 
     expect(within(dialog).getByRole("heading", { name: "Set the date of English" })).toBeInTheDocument()
     expect(
-      within(dialog).getByText("Midterm 1 for 2TN2. Only this subject in this group gets the date."),
+      within(dialog).getByText("Midterm 1 for 2TN2."),
     ).toBeInTheDocument()
     expect(within(dialog).queryByLabelText(/^Subject/)).not.toBeInTheDocument()
     expect(within(dialog).queryByRole("checkbox")).not.toBeInTheDocument()

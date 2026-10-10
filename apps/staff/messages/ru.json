@@ -133,7 +133,7 @@
       "subgroupNotSet": "Не задана",
       "subgroupNumber": "Подгруппа {number}",
       "absenceRate": "Доля пропусков",
-      "gpa": "GPA",
+      "gpa": "GPA (из 5)",
       "attention": "Требует внимания",
       "headStudent": "Староста: {name}",
       "noHeadStudent": "Старосты нет",
@@ -154,7 +154,7 @@
       "flagHints": {
         "absences": "Доля пропусков выше порога.",
         "gpa_drop": "GPA ниже, чем в прошлом семестре.",
-        "no_subgroup": "Студент видит занятия обеих подгрупп, пока вы не назначите подгруппу."
+        "no_subgroup": "Видит обе подгруппы, пока вы не назначите."
       }
     },
     "subgroups": {
@@ -282,7 +282,7 @@
     "dismissDialog": {
       "titleSuggestion": "Отклонить предложение?",
       "titleCancel": "Отменить контроль?",
-      "textSuggestion": "{subject}, {date}. Предложение будет удалено и больше не появится.",
+      "textSuggestion": "{subject}, {date}. Предложение больше не появится.",
       "textCancel": "{subject}, {date}. Студенты больше не увидят этот контроль.",
       "confirmSuggestion": "Отклонить",
       "confirmCancel": "Отменить контроль",
@@ -344,7 +344,7 @@
     },
     "telegram": {
       "title": "Telegram",
-      "notLinked": "Telegram не подключён. Уведомления приходят только в веб-версию.",
+      "notLinked": "Telegram не подключён. Уведомления только в вебе.",
       "linked": "Подключён",
       "blocked": "Бот заблокирован",
       "link": "Подключить Telegram",

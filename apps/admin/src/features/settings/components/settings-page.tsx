@@ -8,6 +8,7 @@ import {
   type PlatformSettings,
   type PlatformSettingsBody,
 } from "@ihsp/api"
+import { AppLockSection } from "@ihsp/features-core/pwa/lock"
 import { useT } from "@ihsp/i18n"
 import { Badge, Button, Card, CardContent, CardHeader, CardTitle, Input, PageContainer } from "@ihsp/ui"
 import { useQuery } from "@tanstack/react-query"
@@ -126,6 +127,9 @@ function SettingsForm({ settings }: { settings: PlatformSettings }) {
           ))}
         </ul>
       </section>
+      <div className="max-w-2xl">
+        <AppLockSection />
+      </div>
     </PageContainer>
   )
 }

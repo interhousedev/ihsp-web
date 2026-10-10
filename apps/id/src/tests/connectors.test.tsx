@@ -71,8 +71,8 @@ describe("new connector page", () => {
     renderId(<NewConnectorPage />, { route: "/connectors/new/", session: LOGGED_IN })
 
     fireEvent.change(await screen.findByLabelText("Server"), { target: { value: "lms" } })
-    expect(await screen.findByText("Read courses, steps, versions and attempts.")).toBeInTheDocument()
-    expect(screen.getByText("Edit modules, lessons and steps only, not the course itself.")).toBeInTheDocument()
+    expect(await screen.findByText("Read courses, steps and attempts.")).toBeInTheDocument()
+    expect(screen.getByText("Edit modules, lessons and steps.")).toBeInTheDocument()
     fireEvent.click(await screen.findByText("Module editor"))
     await fillField("Name", "Mod")
     await clickButton("Create connector")

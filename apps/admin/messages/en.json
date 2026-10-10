@@ -85,7 +85,7 @@
     "sessionsRevoked": "Sessions revoked",
     "block": "Block",
     "blockTitle": "Block {name}?",
-    "blockDescription": "All sessions, refresh tokens and connectors stop working and the bot stops serving their Telegram accounts. Tell the user why in the reason.",
+    "blockDescription": "Sessions, tokens and connectors stop working. Give the user the reason.",
     "blocked": "{name} is blocked",
     "unblock": "Unblock",
     "unblocked": "{name} is unblocked"
@@ -174,7 +174,7 @@
     },
     "grades": {
       "semester": "Semester {semester}",
-      "gpa": "GPA {gpa}",
+      "gpa": "GPA {gpa} / 5",
       "synced": "synced {date}",
       "empty": "No grades yet.",
       "subject": "Subject",
@@ -214,7 +214,7 @@
       "noRows": "No rows.",
       "line": "line {line}",
       "unchanged": "Unchanged rows: {count}",
-      "conflictsHint": "{count} conflicting rows are skipped. Fix them in the file and upload it again to import them.",
+      "conflictsHint": "{count} conflicting rows are skipped. Fix them in the file and upload again.",
       "confirm": "Import {count} rows",
       "discard": "Discard",
       "done": "Import finished",
@@ -252,13 +252,13 @@
       "firstName": "First name",
       "middleName": "Middle name",
       "email": "Email",
-      "duplicate": "A teacher with this name already exists. Create another account only if it is a different person.",
+      "duplicate": "A teacher with this name exists. Create another only for a different person.",
       "create": "Create account",
       "createAnyway": "Create anyway",
       "createdTitle": "Teacher account created",
       "createdLogin": "Login: {login}",
       "activationLink": "Activation link",
-      "activationHint": "Give this link to the teacher if the email does not arrive. It is shown only once.",
+      "activationHint": "Give this link to the teacher if the email does not arrive. Shown once.",
       "openProfile": "Open the teacher profile",
       "createAnother": "Create another"
     },
@@ -273,11 +273,12 @@
       "saved": "Teacher saved"
     },
     "profile": {
+      "contacts": "Public contacts",
       "back": "Teachers",
       "edit": "Edit",
       "deactivate": "Deactivate",
       "deactivateTitle": "Deactivate {name}?",
-      "deactivateDescription": "Sessions are revoked and future lessons are flagged for a new teacher.",
+      "deactivateDescription": "Sessions end. Future lessons are flagged for a new teacher.",
       "deactivated": "{name} is deactivated",
       "openInUsers": "Open in Users & roles",
       "curatedGroups": "Curated groups",
@@ -317,7 +318,7 @@
       "save": "Save roles",
       "saved": "Roles of {name} saved",
       "confirmTitle": "Change roles?",
-      "confirmDescription": "The user is logged out everywhere. A new Administration member has to set up a one-time code at the next login."
+      "confirmDescription": "The user is logged out everywhere. A new Administration member sets up a one-time code at next login."
     },
     "status": {
       "active": "Active",
@@ -338,7 +339,7 @@
       "lastLogin": "Last login {date}",
       "neverLoggedIn": "Never logged in",
       "access": "Access",
-      "resetOnlyAdmins": "Passwords and codes can be reset here for Administration members only.",
+      "resetOnlyAdmins": "Reset is available for Administration members only.",
       "roles": "Roles",
       "mail": "Mail",
       "telegram": "Telegram accounts",
@@ -350,7 +351,7 @@
     "reset": {
       "password": "Reset password",
       "passwordTitle": "Reset the password of {name}?",
-      "passwordDescription": "The old password stops working. You get a one-time activation link to hand over.",
+      "passwordDescription": "The old password stops working. You get a one-time activation link.",
       "otp": "Reset one-time code",
       "otpTitle": "Reset the one-time code of {name}?",
       "otpDescription": "The user sets up the one-time code again at the next login.",
@@ -365,7 +366,7 @@
       "stateSuspended": "Sending suspended",
       "suspend": "Suspend sending",
       "suspendTitle": "Suspend sending from the mailbox of {name}?",
-      "suspendDescription": "The bot refuses to send from this mailbox and explains why. Receiving keeps working.",
+      "suspendDescription": "The bot refuses to send from this mailbox. Receiving keeps working.",
       "reason": "Reason",
       "suspended": "Sending from the mailbox of {name} is suspended",
       "resume": "Resume sending",
@@ -400,7 +401,7 @@
     },
     "setPassword": {
       "title": "Set password: {name}",
-      "description": "The user can sign in with this password; current sessions end. Hand the password over in person.",
+      "description": "Current sessions end. Hand the password over in person.",
       "password": "New password",
       "rules": "At least 8 characters with a digit, a lower and an upper case letter.",
       "requireChange": "Change at first login",
@@ -429,7 +430,7 @@
       "subgroups": "Subgroups set",
       "unregistered": "Not registered",
       "attendance": "Attendance",
-      "gpa": "Average GPA",
+      "gpa": "Average GPA (out of 5)",
       "curator": "Curator",
       "status": "Status"
     },
@@ -506,7 +507,7 @@
   },
   "rooms": {
     "title": "Rooms",
-    "empty": "No rooms yet. They appear when a room is used in the timetable.",
+    "empty": "No rooms yet.",
     "copyLink": "Copy link",
     "copyPin": "Copy PIN",
     "pinOf": "PIN of room {name}",
@@ -541,13 +542,13 @@
     },
     "pin": {
       "title": "Regenerate the PIN of room {name}?",
-      "description": "The old PIN and existing bookmarks stop working at once. The new PIN goes out with the next lesson message.",
+      "description": "The old PIN and bookmarks stop working at once.",
       "confirm": "Regenerate PIN",
       "done": "New PIN created"
     },
     "merge": {
       "title": "Merge room {name} into another room",
-      "description": "Use this when a typo created a room. Its lessons move to the room you choose, and this room is archived.",
+      "description": "Lessons move to the room you choose. This room is archived.",
       "target": "Merge into",
       "choose": "Choose a room",
       "cancel": "Cancel",
@@ -556,7 +557,7 @@
     },
     "archive": {
       "title": "Archive room {name}?",
-      "description": "Lessons this week: {count}. Archive a room only when no lesson uses it any more.",
+      "description": "Lessons this week: {count}. Archive only an unused room.",
       "confirm": "Archive",
       "done": "Room archived"
     }
@@ -658,7 +659,7 @@
       "room": "There are no rooms yet."
     },
     "noTerms": "Create a term first.",
-    "emptyTimetable": "This timetable is empty. Click a cell to add the first entry.",
+    "emptyTimetable": "Empty. Click a cell to add the first entry.",
     "copyFromTerm": "Copy from another term",
     "gridCaption": "Weekly timetable",
     "period": "Period",
@@ -694,7 +695,7 @@
       "noTeacher": "No teacher yet",
       "room": "Room",
       "audience": "Audience",
-      "splitSuggestion": "This subject can be divided. Create two entries, one for each subgroup?",
+      "splitSuggestion": "Create two entries, one per subgroup?",
       "split": "Split into subgroups",
       "splitNext": "Save subgroup 1, then the same form opens for subgroup 2.",
       "validFrom": "Valid from",
@@ -702,7 +703,7 @@
       "noEnd": "No end date",
       "clear": "Clear",
       "checking": "Checking for conflicts…",
-      "checkFailed": "The conflict check failed. Saving is checked again on the server.",
+      "checkFailed": "Conflict check failed. The server checks again on save.",
       "noConflicts": "No conflicts.",
       "conflictsTitle": "Conflicts: {count}",
       "conflictKind": {
@@ -716,7 +717,7 @@
       "created": "Entry created",
       "delete": "Delete entry",
       "deleteTitle": "Delete this entry?",
-      "deleteDescription": "Future generated lessons of this entry are removed. Lessons changed by hand stay.",
+      "deleteDescription": "Future lessons of this entry are removed. Hand-edited lessons stay.",
       "deleted": "Entry deleted",
       "openLesson": "Open lesson"
     }
@@ -770,7 +771,7 @@
       "noTeacher": "No teacher",
       "room": "Room",
       "topic": "Topic",
-      "notifyHint": "Students and the teachers of this lesson get a \"Lesson changed\" notification.",
+      "notifyHint": "Students and teachers get a notification.",
       "cancel": "Cancel",
       "save": "Save changes",
       "saved": "Lesson changed"
@@ -801,7 +802,7 @@
     "newAction": "New exam",
     "empty": "No exams match these filters.",
     "toConfirm": "To confirm: {count}",
-    "toConfirmHint": "Dates from EMIS or a head student that nobody has confirmed yet. Click to show only these.",
+    "toConfirmHint": "Unconfirmed dates. Click to show only these.",
     "nothingToConfirm": "No dates are waiting for confirmation.",
     "filters": {
       "from": "From date",
@@ -873,7 +874,7 @@
       "createTitle": "New exam",
       "editTitle": "Edit {subject}",
       "setDateTitle": "Set the date of {subject}",
-      "setDateDescription": "{control} for {groups}. Only this subject in this group gets the date.",
+      "setDateDescription": "{control} for {groups}.",
       "subject": "Subject",
       "choose": "Choose",
       "audience": "Groups",
@@ -904,7 +905,7 @@
     "dismiss": {
       "dismissTitle": "Dismiss this date?",
       "cancelTitle": "Cancel this exam?",
-      "description": "{subject} on {date} for {groups} is marked as cancelled and disappears from the calendars of students and teachers.",
+      "description": "{subject} on {date} for {groups} is marked cancelled and leaves all calendars.",
       "keep": "Keep",
       "dismissed": "Date dismissed",
       "cancelled": "Exam cancelled"
@@ -1004,7 +1005,7 @@
       "back": "Broadcasts",
       "scheduledFor": "Scheduled for {date}",
       "createdByAssistant": "Draft created by the assistant",
-      "assistantDraft": "The assistant created this draft. Review it; only a person can send it.",
+      "assistantDraft": "Created by the assistant. Review it; only a person can send.",
       "readOnly": "This broadcast can no longer be edited.",
       "titleLabel": "Title",
       "textLabel": "Text",
@@ -1036,7 +1037,7 @@
       "scheduledDone": "Broadcast scheduled",
       "cancelScheduled": "Cancel sending",
       "cancelTitle": "Cancel this scheduled broadcast?",
-      "cancelDescription": "It will not be sent. You can still keep the text as a cancelled broadcast.",
+      "cancelDescription": "It will not be sent. The text is kept.",
       "cancelledDone": "Broadcast cancelled"
     },
     "schedule": {
@@ -1077,7 +1078,7 @@
     "disable": "Disable",
     "disableFor": "Disable link {slug}",
     "disableTitle": "Disable link {slug}?",
-    "disableDescription": "The link shows a disabled page. The content is kept as evidence.",
+    "disableDescription": "The link shows a disabled page. Content is kept as evidence.",
     "reason": "Reason",
     "disabledDone": "Link disabled",
     "dismiss": "Dismiss reports",
@@ -1097,7 +1098,7 @@
       "runAll": "Sync everyone now",
       "runOne": "Sync this student now",
       "confirmAllTitle": "Start a sync for all students?",
-      "confirmAllDescription": "It uses EMIS requests for every student and can take several minutes.",
+      "confirmAllDescription": "Makes EMIS requests for every student; may take minutes.",
       "confirmOneTitle": "Start a sync for this student?",
       "confirmOneDescription": "Marks and profile of this student are updated from EMIS.",
       "run": "Start sync",
@@ -1133,10 +1134,10 @@
   },
   "assistant": {
     "page": {
-      "description": "Ask about people, the timetable and attendance. Every change needs your approval."
+      "description": "Ask about people, timetable and attendance. Changes need your approval."
     },
     "chat": {
-      "emptyChat": "Ask a question to start. I can look up people, the timetable, attendance and marks, and prepare changes for your approval."
+      "emptyChat": "Ask a question to start."
     },
     "approval": {
       "reasonPlaceholder": "Why not? For example: use room 310 instead"
@@ -1190,7 +1191,7 @@
     "defaultLanguage": "Default interface language",
     "changePasswordOnLogin": "Ask to change a password set by an administrator",
     "changePasswordFlagOn": "Changing the password at login is enabled on the server.",
-    "changePasswordFlagOff": "Changing the password at login is off on the server (IHSP_FEATURES__CHANGE_PASSWORD_ON_LOGIN).",
+    "changePasswordFlagOff": "Off on the server (IHSP_FEATURES__CHANGE_PASSWORD_ON_LOGIN).",
     "save": "Save",
     "saved": "Settings saved",
     "features": "Server features",

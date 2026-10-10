@@ -13,7 +13,7 @@
     "recoveryEmailHint": "Kodlar va xavfsizlik xabarlari shu manzilga yuboriladi.",
     "emisLogin": "EMIS logini",
     "emisPassword": "EMIS paroli",
-    "emisPasswordHint": "Parol shifrlangan holda saqlanadi va faqat EMISʼdan baholar va dars jadvalini olish uchun ishlatiladi.",
+    "emisPasswordHint": "Shifrlangan holda saqlanadi. Faqat baholar va jadval uchun.",
     "passwordRules": {
       "title": "Parol talablari",
       "length": "Kamida 8 ta belgi",
@@ -33,7 +33,7 @@
     },
     "missingChallenge": {
       "title": "Sahifani ilovadan oching",
-      "description": "Kirish, rozilik va chiqish sahifalari IHSP ilovasidagi «Kirish» tugmasi orqali ochiladi. Kerakli ilovadan boshlang.",
+      "description": "Sahifani IHSP ilovasidagi «Kirish» tugmasidan oching.",
       "action": "Hisob xavfsizligini ochish"
     },
     "stepUp": {
@@ -167,7 +167,7 @@
   },
   "register": {
     "title": "EMIS orqali roʻyxatdan oʻtish",
-    "description": "EMIS login va parolingizni kiriting. Biz ularni EMISʼda tekshirib, ismingiz va guruhingizni olamiz.",
+    "description": "Ism va guruhni olish uchun EMIS login va parolini kiriting.",
     "submit": "Davom etish",
     "haveAccount": "Menda hisob bor",
     "linked": {
@@ -181,7 +181,7 @@
       "name": "Ism",
       "group": "Guruh",
       "login": "Sizning loginingiz",
-      "imported": "Maʼmuriyat IHSPʼga {name} ({group}) talabasini allaqachon qoʻshgan. Agar bu siz boʻlsangiz, quyida tasdiqlang.",
+      "imported": "Maʼmuriyat {name} ({group}) ni qoʻshgan. Siz boʻlsangiz, tasdiqlang.",
       "isThisYou": "Ha, bu men",
       "submit": "Kodni pochtaga yuborish"
     },
@@ -200,7 +200,7 @@
   },
   "reclaim": {
     "title": "Hisobni qaytarish",
-    "description": "Kirish huquqini yoʻqotdingizmi? Hisobni qaytarish uchun EMIS login va parolini kiriting. Hisobning barcha seanslari, konnektorlari va Telegram ulanishlari tugatiladi.",
+    "description": "Hisobni qaytarish uchun EMIS login va parolini kiriting. Barcha seans, konnektor va Telegram ulanishlari tugatiladi.",
     "submit": "Davom etish",
     "backToLogin": "Kirishga qaytish",
     "password": {
@@ -254,14 +254,14 @@
     },
     "otp": {
       "title": "OTPʼni tiklash",
-      "description": "Telegramni yoʻqotdingizmi? Loginingizni kiriting. Kodni tiklash pochtangizga yuboramiz.",
+      "description": "Loginni kiriting. Kodni tiklash pochtasiga yuboramiz.",
       "request": "Kod yuborish",
       "confirmTitle": "Tiklashni tasdiqlang",
       "neutral": "Agar hisob mavjud boʻlsa, tiklash pochtasiga kod yubordik.",
       "confirm": "OTPʼni tiklash",
       "doneTitle": "OTPʼni tiklash rejalashtirildi",
-      "doneDescription": "OTP {when} da tiklanadi. Shundan soʻng barcha Telegram ulanishlari olib tashlanadi.",
-      "cancelHint": "Ulangan Telegram hisoblariga «Bekor qilish» tugmali xabar yuborildi. Agar bu siz boʻlmasangiz, uni bosing."
+      "doneDescription": "OTP {when} da tiklanadi. Barcha Telegram ulanishlari olib tashlanadi.",
+      "cancelHint": "Siz boʻlmasangiz, Telegramdagi xabarda «Bekor qilish» ni bosing."
     },
     "login": {
       "title": "Loginni unutdingizmi?",
@@ -345,7 +345,7 @@
       "revoke": "Chiqish",
       "revokeOthers": "Boshqa qurilmalardan chiqish",
       "revokeOthersTitle": "Boshqa qurilmalardan chiqasizmi?",
-      "revokeOthersDescription": "Boshqa qurilmalar keyingi soʻrovda tizimdan chiqariladi. Bu qurilmada hisobingizda qolasiz.",
+      "revokeOthersDescription": "Boshqa qurilmalar chiqariladi. Bu qoladi.",
       "amr": {
         "pwd": "parol",
         "otp": "OTP",
@@ -355,7 +355,7 @@
     "telegram": {
       "title": "Telegram hisoblari",
       "linkTitle": "Telegramni ulash",
-      "linkDescription": "Botni oching, «Kirish» tugmasini bosing va u yerda tizimga kiring. Hisob avtomatik ulanadi.",
+      "linkDescription": "Botni oching, «Kirish» ni bosing va u yerda kiring.",
       "link": "Botni ochish",
       "qr": "Botni ochadigan QR kod",
       "empty": "Hali birorta Telegram hisobi ulanmagan.",
@@ -364,13 +364,13 @@
       "otpDelivery": "OTP kodlarini shu yerga yuborish",
       "unlink": "Ajratish",
       "unlinkTitle": "{name} ni ajratasizmi?",
-      "unlinkDescription": "Bu Telegram hisobi kodlar va xabarnomalarni olmaydi hamda botdan chiqariladi.",
-      "unlinkLastChannel": "Bu oxirgi OTP kanali. OTP bilan kirish uchun kanal qolmaydi: tiklash pochtasini yoqing yoki OTP bilan kirishni oʻchiring."
+      "unlinkDescription": "Kod va xabarnomalar kelmaydi, botdan chiqariladi.",
+      "unlinkLastChannel": "Oxirgi OTP kanali. Tiklash pochtasini yoqing yoki OTP bilan kirishni oʻchiring."
     },
     "otp": {
       "title": "OTP bilan kirish",
       "enabled": "OTP bilan kirish yoqilgan. Kodlar ulangan Telegram hisoblaringizga yuboriladi.",
-      "enabledWithEmail": "OTP bilan kirish yoqilgan. Kodlar ulangan Telegram hisoblaringizga va tiklash pochtasiga yuboriladi.",
+      "enabledWithEmail": "OTP bilan kirish yoqilgan. Kodlar Telegram va tiklash pochtasiga yuboriladi.",
       "enableTitle": "OTP bilan kirishni yoqish",
       "enableDescription": "Kodlar qayerga yuborilishini tanlang. Tasdiqlash uchun sinov kodini yuboramiz.",
       "channels": "Kanallar",
@@ -391,7 +391,7 @@
     "email": {
       "title": "Tiklash uchun pochta",
       "current": "Hozirgi: {email}",
-      "hint": "Parolingiz va yangi manzilni kiriting. Unga kod yuboramiz.",
+      "hint": "Parol va yangi manzilni kiriting. Unga kod yuboramiz.",
       "new": "Yangi pochta",
       "send": "Kod yuborish",
       "codeSent": "6 xonali kodni {email} manziliga yubordik.",
@@ -462,7 +462,7 @@
       },
       "thirtyDays": "Hisob darhol yopiladi. Shaxsiy maʼlumotlar 30 kundan keyin oʻchiriladi.",
       "confirmTitle": "Tasdiqlash",
-      "confirmDescription": "Parolingizni va OTP bilan kirish yoqilgan boʻlsa, yuborilgan kodni kiriting.",
+      "confirmDescription": "Parolni va OTP yoqilgan boʻlsa, kodni kiriting.",
       "submit": "Hisobimni oʻchirish",
       "dialogTitle": "Hisobni oʻchirasizmi?",
       "dialogDescription": "Hamma qurilmalardan chiqarilasiz. Buni bekor qilib boʻlmaydi.",
@@ -512,10 +512,10 @@
       "timetable_viewer": "Dars jadvalini koʻrish"
     },
     "scopeHints": {
-      "lms_courses_read": "Kurslar, qadamlar, versiyalar va urinishlarni oʻqish.",
-      "lms_courses_write": "Kurs yaratish, nomi va tavsifini oʻzgartirish.",
-      "lms_courses_delete": "Kurslarni oʻchirish (arxivlash).",
-      "lms_modules_write": "Faqat modul, dars va qadamlarni tahrirlash, kursning oʻzini emas."
+      "lms_courses_read": "Kurs, qadam va urinishlarni oʻqish.",
+      "lms_courses_write": "Kurs yaratish va tahrirlash.",
+      "lms_courses_delete": "Kurslarni arxivlash.",
+      "lms_modules_write": "Modul, dars va qadamlarni tahrirlash."
     },
     "new": {
       "action": "Yangi konnektor",
@@ -543,7 +543,7 @@
       "title": "«{name}» konnektori yaratildi",
       "description": "Uni quyidagi sozlamalar bilan AI ilovangizga qoʻshing.",
       "onceTitle": "Tokenni hozir nusxalang",
-      "once": "Token faqat bir marta koʻrsatiladi. Yoʻqotsangiz, konnektorni bekor qilib, yangisini yarating.",
+      "once": "Bir marta koʻrsatiladi. Yoʻqotsangiz, konnektorni bekor qilib, yangisini yarating.",
       "token": "Token",
       "copyToken": "Tokenni nusxalash",
       "config": "Konfiguratsiya",

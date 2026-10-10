@@ -134,3 +134,17 @@ describe("a plain website", () => {
     expect(screen.queryByRole("button", { name: "Install the app" })).not.toBeInTheDocument()
   })
 })
+
+describe("app lock (optional, off by default)", () => {
+  test("the settings card is offered in the installed app and absent on the website", async () => {
+    const { AppLockSection } = await import("@ihsp/features-core/pwa/lock")
+    setMode("web")
+    const first = renderAdmin(<AppLockSection />)
+    expect(screen.queryByText("App lock")).not.toBeInTheDocument()
+    first.unmount()
+
+    setMode("pwa")
+    renderAdmin(<AppLockSection />)
+    expect(await screen.findByText("App lock is off.")).toBeInTheDocument()
+  })
+})

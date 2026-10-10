@@ -125,6 +125,8 @@ describe("keys used in the code", () => {
       "exams.kinds.${kind}": ["midterm", "final", "other"],
       "files.picker.types.${value}": ["pdf", "doc", "sheet", "slides", "text", "image"],
       "exams.sources.${item.source}": ["teacher", "admin", "emis", "head_student"],
+      "notebooks.list.folders.${key}": ["subject", "course", "mine"],
+      "files.drive.types.${entry.id}": ["all", "documents", "images", "video", "presentations", "spreadsheets", "pdf"],
     }
     const unknown = [...dynamic.keys()].filter((key) => !(key in expected))
     expect(unknown).toEqual([])

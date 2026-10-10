@@ -133,7 +133,7 @@
       "subgroupNotSet": "Belgilanmagan",
       "subgroupNumber": "{number}-kichik guruh",
       "absenceRate": "Qoldirish ulushi",
-      "gpa": "GPA",
+      "gpa": "GPA (5 dan)",
       "attention": "Eʼtibor talab qiladi",
       "headStudent": "Guruh sardori: {name}",
       "noHeadStudent": "Sardor yoʻq",
@@ -154,7 +154,7 @@
       "flagHints": {
         "absences": "Qoldirish ulushi chegaradan yuqori.",
         "gpa_drop": "GPA oldingi semestrdagidan past.",
-        "no_subgroup": "Siz kichik guruh belgilamaguningizcha talaba ikkala kichik guruh darslarini koʻradi."
+        "no_subgroup": "Belgilamaguningizcha ikkala kichik guruhni koʻradi."
       }
     },
     "subgroups": {
@@ -282,7 +282,7 @@
     "dismissDialog": {
       "titleSuggestion": "Taklif rad etilsinmi?",
       "titleCancel": "Nazorat bekor qilinsinmi?",
-      "textSuggestion": "{subject}, {date}. Taklif olib tashlanadi va qayta paydo boʻlmaydi.",
+      "textSuggestion": "{subject}, {date}. Taklif qayta chiqmaydi.",
       "textCancel": "{subject}, {date}. Talabalar bu nazoratni boshqa koʻrmaydi.",
       "confirmSuggestion": "Rad etish",
       "confirmCancel": "Nazoratni bekor qilish",
@@ -344,7 +344,7 @@
     },
     "telegram": {
       "title": "Telegram",
-      "notLinked": "Telegram ulanmagan. Bildirishnomalar faqat veb-versiyada keladi.",
+      "notLinked": "Telegram ulanmagan. Xabarnomalar faqat vebda.",
       "linked": "Ulangan",
       "blocked": "Bot bloklangan",
       "link": "Telegramni ulash",

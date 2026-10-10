@@ -4,6 +4,7 @@ import { AuthProvider } from "@ihsp/auth"
 import { ConfigGate } from "@ihsp/config"
 import { ThemePreferenceSync } from "@ihsp/features-core"
 import { PwaRuntime } from "@ihsp/features-core/pwa"
+import { PinGate } from "@ihsp/features-core/pwa/lock"
 import { I18nProvider, type Locale, type Messages } from "@ihsp/i18n"
 import { AppThemeProvider, createQueryClient } from "@ihsp/ui"
 import { QueryClientProvider } from "@tanstack/react-query"
@@ -30,7 +31,9 @@ export function Providers({ children }: { children: ReactNode }) {
             <AppThemeProvider>
               <AuthProvider>
                 <PwaRuntime />
-                <ThemePreferenceSync>{children}</ThemePreferenceSync>
+                <ThemePreferenceSync>
+                  <PinGate>{children}</PinGate>
+                </ThemePreferenceSync>
               </AuthProvider>
             </AppThemeProvider>
           </NuqsAdapter>

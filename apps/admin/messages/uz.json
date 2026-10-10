@@ -85,7 +85,7 @@
     "sessionsRevoked": "Seanslar tugatildi",
     "block": "Bloklash",
     "blockTitle": "{name} bloklansinmi?",
-    "blockDescription": "Barcha seanslar, yangilash tokenlari va konnektorlar ishlamay qoladi, bot uning Telegram akkauntlariga xizmat koʻrsatmaydi. Sababni foydalanuvchiga tushuntiring.",
+    "blockDescription": "Seans, token va konnektorlar ishlamaydi. Sababni yozing.",
     "blocked": "{name} bloklandi",
     "unblock": "Blokdan chiqarish",
     "unblocked": "{name} blokdan chiqarildi"
@@ -174,7 +174,7 @@
     },
     "grades": {
       "semester": "{semester}-semestr",
-      "gpa": "GPA {gpa}",
+      "gpa": "GPA {gpa} / 5",
       "synced": "{date} da sinxronlangan",
       "empty": "Hozircha baholar yoʻq.",
       "subject": "Fan",
@@ -252,13 +252,13 @@
       "firstName": "Ism",
       "middleName": "Otasining ismi",
       "email": "Pochta",
-      "duplicate": "Bunday ismli oʻqituvchi allaqachon bor. Boshqa odam boʻlsagina yana akkaunt yarating.",
+      "duplicate": "Bunday ismli oʻqituvchi bor. Faqat boshqa odam uchun yarating.",
       "create": "Akkaunt yaratish",
       "createAnyway": "Baribir yaratish",
       "createdTitle": "Oʻqituvchi akkaunti yaratildi",
       "createdLogin": "Login: {login}",
       "activationLink": "Faollashtirish havolasi",
-      "activationHint": "Xat kelmasa, bu havolani oʻqituvchiga bering. U faqat bir marta koʻrsatiladi.",
+      "activationHint": "Xat kelmasa, havolani oʻqituvchiga bering. Bir marta koʻrsatiladi.",
       "openProfile": "Oʻqituvchi profilini ochish",
       "createAnother": "Yana yaratish"
     },
@@ -273,11 +273,12 @@
       "saved": "Oʻqituvchi saqlandi"
     },
     "profile": {
+      "contacts": "Talabalar uchun aloqa",
       "back": "Oʻqituvchilar",
       "edit": "Tahrirlash",
       "deactivate": "Faolsizlantirish",
       "deactivateTitle": "{name} faolsizlantirilsinmi?",
-      "deactivateDescription": "Seanslar tugatiladi, kelgusi darslar yangi oʻqituvchi kerakligi bilan belgilanadi.",
+      "deactivateDescription": "Seanslar tugaydi, kelgusi darslar yangi oʻqituvchi kerakligi bilan belgilanadi.",
       "deactivated": "{name} faolsizlantirildi",
       "openInUsers": "“Foydalanuvchilar va rollar” da ochish",
       "curatedGroups": "Kuratorlik guruhlari",
@@ -317,7 +318,7 @@
       "save": "Rollarni saqlash",
       "saved": "{name} rollari saqlandi",
       "confirmTitle": "Rollar oʻzgartirilsinmi?",
-      "confirmDescription": "Foydalanuvchi hamma joydan chiqariladi. Maʼmuriyatning yangi aʼzosi keyingi kirishda bir martalik kodni sozlaydi."
+      "confirmDescription": "Foydalanuvchi hamma joydan chiqariladi. Maʼmuriyatning yangi aʼzosi kirishda bir martalik kod sozlaydi."
     },
     "status": {
       "active": "Faol",
@@ -338,7 +339,7 @@
       "lastLogin": "Oxirgi kirish: {date}",
       "neverLoggedIn": "Hali kirmagan",
       "access": "Kirish huquqi",
-      "resetOnlyAdmins": "Parol va kodni bu yerda faqat Maʼmuriyat aʼzolari uchun tiklash mumkin.",
+      "resetOnlyAdmins": "Tiklash faqat Maʼmuriyat aʼzolari uchun.",
       "roles": "Rollar",
       "mail": "Pochta",
       "telegram": "Telegram akkauntlari",
@@ -350,7 +351,7 @@
     "reset": {
       "password": "Parolni tiklash",
       "passwordTitle": "{name} paroli tiklansinmi?",
-      "passwordDescription": "Eski parol ishlamay qoladi. Topshirish uchun bir martalik faollashtirish havolasini olasiz.",
+      "passwordDescription": "Eski parol ishlamaydi. Bir martalik faollashtirish havolasini olasiz.",
       "otp": "Bir martalik kodni tiklash",
       "otpTitle": "{name} ning bir martalik kodi tiklansinmi?",
       "otpDescription": "Foydalanuvchi keyingi kirishda bir martalik kodni qayta sozlaydi.",
@@ -365,7 +366,7 @@
       "stateSuspended": "Yuborish toʻxtatilgan",
       "suspend": "Yuborishni toʻxtatish",
       "suspendTitle": "{name} pochtasidan yuborish toʻxtatilsinmi?",
-      "suspendDescription": "Bot bu qutidan xat yuborishdan bosh tortadi va sababini tushuntiradi. Xat qabul qilish davom etadi.",
+      "suspendDescription": "Bot bu qutidan xat yubormaydi. Qabul qilish davom etadi.",
       "reason": "Sabab",
       "suspended": "{name} pochtasidan yuborish toʻxtatildi",
       "resume": "Yuborishni tiklash",
@@ -400,7 +401,7 @@
     },
     "setPassword": {
       "title": "Parol oʻrnatish: {name}",
-      "description": "Foydalanuvchi shu parol bilan kira oladi; joriy sessiyalar tugaydi. Parolni shaxsan topshiring.",
+      "description": "Joriy seanslar tugaydi. Parolni shaxsan topshiring.",
       "password": "Yangi parol",
       "rules": "Kamida 8 belgi: raqam, kichik va bosh harf bilan.",
       "requireChange": "Birinchi kirishda almashtirilsin",
@@ -429,7 +430,7 @@
       "subgroups": "Kichik guruhlar belgilangan",
       "unregistered": "Roʻyxatdan oʻtmaganlar",
       "attendance": "Davomat",
-      "gpa": "Oʻrtacha GPA",
+      "gpa": "Oʻrtacha GPA (5 dan)",
       "curator": "Kurator",
       "status": "Holati"
     },
@@ -506,7 +507,7 @@
   },
   "rooms": {
     "title": "Xonalar",
-    "empty": "Hozircha xonalar yoʻq. Ular dars jadvalida xona koʻrsatilganda paydo boʻladi.",
+    "empty": "Hozircha xonalar yoʻq.",
     "copyLink": "Havolani nusxalash",
     "copyPin": "PIN ni nusxalash",
     "pinOf": "{name} xonasining PIN kodi",
@@ -541,13 +542,13 @@
     },
     "pin": {
       "title": "{name} xonasi uchun yangi PIN yaratilsinmi?",
-      "description": "Eski PIN va xatchoʻplar darhol ishlamay qoladi. Yangi PIN keyingi dars xabari bilan yuboriladi.",
+      "description": "Eski PIN va xatchoʻplar darhol ishlamaydi.",
       "confirm": "Yangi PIN yaratish",
       "done": "Yangi PIN yaratildi"
     },
     "merge": {
       "title": "{name} xonasini boshqasiga birlashtirish",
-      "description": "Imlo xatosi tufayli ortiqcha xona paydo boʻlsa foydalaning. Uning darslari tanlangan xonaga oʻtadi, bu xona arxivga oʻtkaziladi.",
+      "description": "Darslar tanlangan xonaga oʻtadi, bu xona arxivlanadi.",
       "target": "Birlashtirish",
       "choose": "Xonani tanlang",
       "cancel": "Bekor qilish",
@@ -556,7 +557,7 @@
     },
     "archive": {
       "title": "{name} xonasi arxivga oʻtkazilsinmi?",
-      "description": "Shu haftadagi darslar: {count}. Xonani faqat undan boshqa hech kim foydalanmasa arxivga oʻtkazing.",
+      "description": "Shu haftadagi darslar: {count}. Faqat ishlatilmayotgan xonani arxivlang.",
       "confirm": "Arxivga oʻtkazish",
       "done": "Xona arxivga oʻtkazildi"
     }
@@ -658,7 +659,7 @@
       "room": "Hozircha xonalar yoʻq."
     },
     "noTerms": "Avval semestr yarating.",
-    "emptyTimetable": "Jadval boʻsh. Birinchi yozuvni qoʻshish uchun katakni bosing.",
+    "emptyTimetable": "Boʻsh. Yozuv qoʻshish uchun katakni bosing.",
     "copyFromTerm": "Boshqa semestrdan nusxalash",
     "gridCaption": "Haftalik dars jadvali",
     "period": "Dars",
@@ -694,7 +695,7 @@
       "noTeacher": "Hozircha oʻqituvchi yoʻq",
       "room": "Xona",
       "audience": "Kimlar uchun",
-      "splitSuggestion": "Bu fanni boʻlish mumkin. Har bir kichik guruh uchun bittadan ikkita yozuv yaratilsinmi?",
+      "splitSuggestion": "Kichik guruh uchun bittadan ikkita yozuv yaratilsinmi?",
       "split": "Kichik guruhlarga boʻlish",
       "splitNext": "1-kichik guruhni saqlang, soʻng xuddi shu shakl 2-kichik guruh uchun ochiladi.",
       "validFrom": "Qachondan amal qiladi",
@@ -702,7 +703,7 @@
       "noEnd": "Tugash sanasi yoʻq",
       "clear": "Tozalash",
       "checking": "Nizolar tekshirilmoqda…",
-      "checkFailed": "Nizolarni tekshirib boʻlmadi. Saqlashda server yozuvni yana tekshiradi.",
+      "checkFailed": "Tekshiruv amalga oshmadi. Server saqlashda tekshiradi.",
       "noConflicts": "Nizolar yoʻq.",
       "conflictsTitle": "Nizolar: {count}",
       "conflictKind": {
@@ -716,7 +717,7 @@
       "created": "Yozuv yaratildi",
       "delete": "Yozuvni oʻchirish",
       "deleteTitle": "Bu yozuv oʻchirilsinmi?",
-      "deleteDescription": "Bu yozuvning kelgusi darslari oʻchiriladi. Qoʻlda oʻzgartirilgan darslar qoladi.",
+      "deleteDescription": "Kelgusi darslar oʻchiriladi. Qoʻlda oʻzgartirilganlari qoladi.",
       "deleted": "Yozuv oʻchirildi",
       "openLesson": "Darsni ochish"
     }
@@ -770,7 +771,7 @@
       "noTeacher": "Oʻqituvchisiz",
       "room": "Xona",
       "topic": "Mavzu",
-      "notifyHint": "Talabalar va dars oʻqituvchilari “Dars oʻzgartirildi” xabarini oladi.",
+      "notifyHint": "Talabalar va oʻqituvchilar xabarnoma oladi.",
       "cancel": "Bekor qilish",
       "save": "Oʻzgarishlarni saqlash",
       "saved": "Dars oʻzgartirildi"
@@ -801,7 +802,7 @@
     "newAction": "Yangi imtihon",
     "empty": "Bu filtrlar boʻyicha imtihonlar yoʻq.",
     "toConfirm": "Tasdiqlash kerak: {count}",
-    "toConfirmHint": "EMIS yoki guruh sardori taklif qilgan va hali hech kim tasdiqlamagan sanalar. Faqat shularni koʻrsatish uchun bosing.",
+    "toConfirmHint": "Tasdiqlanmagan sanalar. Faqat shularni koʻrsatish uchun bosing.",
     "nothingToConfirm": "Tasdiqlashni kutayotgan sanalar yoʻq.",
     "filters": {
       "from": "Sanadan",
@@ -873,7 +874,7 @@
       "createTitle": "Yangi imtihon",
       "editTitle": "Tahrirlash: {subject}",
       "setDateTitle": "Sana belgilash: {subject}",
-      "setDateDescription": "{control}, {groups}. Sana faqat shu guruhdagi shu fanga beriladi.",
+      "setDateDescription": "{control}, {groups}.",
       "subject": "Fan",
       "choose": "Tanlang",
       "audience": "Guruhlar",
@@ -904,7 +905,7 @@
     "dismiss": {
       "dismissTitle": "Bu sana rad etilsinmi?",
       "cancelTitle": "Bu imtihon bekor qilinsinmi?",
-      "description": "{subject}, {date}, {groups}: imtihon bekor qilingan deb belgilanadi va talabalar hamda oʻqituvchilar kalendaridan yoʻqoladi.",
+      "description": "{subject}, {date}, {groups}: imtihon bekor qilinadi va kalendarlardan yoʻqoladi.",
       "keep": "Qoldirish",
       "dismissed": "Sana rad etildi",
       "cancelled": "Imtihon bekor qilindi"
@@ -1004,7 +1005,7 @@
       "back": "Xabarnomalar",
       "scheduledFor": "{date} ga rejalashtirilgan",
       "createdByAssistant": "Qoralamani yordamchi yaratgan",
-      "assistantDraft": "Bu qoralamani yordamchi yaratgan. Uni tekshiring: xabarnomani faqat inson yubora oladi.",
+      "assistantDraft": "Yordamchi yaratgan. Tekshiring: faqat inson yubora oladi.",
       "readOnly": "Bu xabarnomani endi oʻzgartirib boʻlmaydi.",
       "titleLabel": "Sarlavha",
       "textLabel": "Matn",
@@ -1036,7 +1037,7 @@
       "scheduledDone": "Xabarnoma rejalashtirildi",
       "cancelScheduled": "Yuborishni bekor qilish",
       "cancelTitle": "Rejalashtirilgan xabarnoma bekor qilinsinmi?",
-      "cancelDescription": "U yuborilmaydi. Matn bekor qilingan xabarnomada qoladi.",
+      "cancelDescription": "Yuborilmaydi. Matn saqlanadi.",
       "cancelledDone": "Xabarnoma bekor qilindi"
     },
     "schedule": {
@@ -1077,7 +1078,7 @@
     "disable": "Oʻchirish",
     "disableFor": "{slug} havolasini oʻchirish",
     "disableTitle": "{slug} havolasi oʻchirilsinmi?",
-    "disableDescription": "Havola “oʻchirilgan” sahifasini koʻrsatadi. Mazmuni dalil sifatida saqlanadi.",
+    "disableDescription": "Havola “oʻchirilgan” sahifasini koʻrsatadi. Mazmun saqlanadi.",
     "reason": "Sabab",
     "disabledDone": "Havola oʻchirildi",
     "dismiss": "Shikoyatlarni bekor qilish",
@@ -1097,7 +1098,7 @@
       "runAll": "Hammasini hozir sinxronlash",
       "runOne": "Bu talabani hozir sinxronlash",
       "confirmAllTitle": "Barcha talabalar uchun sinxronizatsiya boshlansinmi?",
-      "confirmAllDescription": "U har bir talaba uchun EMIS ga soʻrov yuboradi va bir necha daqiqa davom etishi mumkin.",
+      "confirmAllDescription": "Har bir talaba uchun EMIS soʻrovi, bir necha daqiqa olishi mumkin.",
       "confirmOneTitle": "Bu talaba uchun sinxronizatsiya boshlansinmi?",
       "confirmOneDescription": "Talabaning baholari va profili EMIS dan yangilanadi.",
       "run": "Boshlash",
@@ -1133,10 +1134,10 @@
   },
   "assistant": {
     "page": {
-      "description": "Odamlar, dars jadvali va davomat haqida soʻrang. Har bir oʻzgarish sizning tasdigʻingizni talab qiladi."
+      "description": "Odamlar, jadval va davomat haqida soʻrang. Oʻzgarishlar tasdiqni talab qiladi."
     },
     "chat": {
-      "emptyChat": "Boshlash uchun savol bering. Men odamlar, dars jadvali, davomat va baholarni koʻra olaman va oʻzgarishlarni tasdigʻingiz uchun tayyorlayman."
+      "emptyChat": "Boshlash uchun savol bering."
     },
     "approval": {
       "reasonPlaceholder": "Nega yoʻq? Masalan: 310-xonadan foydalan"
@@ -1190,7 +1191,7 @@
     "defaultLanguage": "Standart interfeys tili",
     "changePasswordOnLogin": "Administrator oʻrnatgan parolni almashtirishni soʻrash",
     "changePasswordFlagOn": "Kirishda parolni almashtirish serverda yoqilgan.",
-    "changePasswordFlagOff": "Kirishda parolni almashtirish serverda oʻchirilgan (IHSP_FEATURES__CHANGE_PASSWORD_ON_LOGIN).",
+    "changePasswordFlagOff": "Serverda oʻchirilgan (IHSP_FEATURES__CHANGE_PASSWORD_ON_LOGIN).",
     "save": "Saqlash",
     "saved": "Sozlamalar saqlandi",
     "features": "Server funksiyalari",

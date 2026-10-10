@@ -13,7 +13,7 @@
     "recoveryEmailHint": "We send codes and security notices to this address.",
     "emisLogin": "EMIS login",
     "emisPassword": "EMIS password",
-    "emisPasswordHint": "It is stored encrypted and used only to load your marks and schedule from EMIS.",
+    "emisPasswordHint": "Stored encrypted. Used only to load your marks and schedule.",
     "passwordRules": {
       "title": "Password rules",
       "length": "At least 8 characters",
@@ -33,7 +33,7 @@
     },
     "missingChallenge": {
       "title": "Open this page from an app",
-      "description": "Login, consent and logout pages open from the Log in button of an IHSP app. Start from the app you want to use.",
+      "description": "Open this page from the Log in button of an IHSP app.",
       "action": "Open account security"
     },
     "stepUp": {
@@ -167,7 +167,7 @@
   },
   "register": {
     "title": "Register with EMIS",
-    "description": "Enter your EMIS login and password. We check them in EMIS and import your name and group.",
+    "description": "Enter your EMIS login and password to import your name and group.",
     "submit": "Continue",
     "haveAccount": "I already have an account",
     "linked": {
@@ -181,7 +181,7 @@
       "name": "Name",
       "group": "Group",
       "login": "Your login",
-      "imported": "Administration already added {name} ({group}) to IHSP. If this is you, confirm below.",
+      "imported": "Administration already added {name} ({group}). If this is you, confirm.",
       "isThisYou": "Yes, this is me",
       "submit": "Send code to the email"
     },
@@ -200,7 +200,7 @@
   },
   "reclaim": {
     "title": "Reclaim an account",
-    "description": "Lost access? Enter your EMIS login and password to take your account back. Every session, connector and Telegram link of the account is signed out.",
+    "description": "Enter your EMIS login and password to take your account back. All sessions, connectors and Telegram links are signed out.",
     "submit": "Continue",
     "backToLogin": "Back to login",
     "password": {
@@ -254,14 +254,14 @@
     },
     "otp": {
       "title": "Reset OTP",
-      "description": "Lost your Telegram? Enter your login. We send a code to your recovery email.",
+      "description": "Enter your login. We send a code to your recovery email.",
       "request": "Send code",
       "confirmTitle": "Confirm the reset",
       "neutral": "If the account exists, we sent a code to its recovery email.",
       "confirm": "Reset OTP",
       "doneTitle": "OTP reset scheduled",
-      "doneDescription": "OTP will be reset on {when}. Then every Telegram link is removed.",
-      "cancelHint": "Linked Telegram accounts got a message with a Cancel button. Press it if this was not you."
+      "doneDescription": "OTP is reset on {when}. All Telegram links are removed.",
+      "cancelHint": "Press Cancel in the Telegram message if this was not you."
     },
     "login": {
       "title": "Forgot your login?",
@@ -345,7 +345,7 @@
       "revoke": "Log out",
       "revokeOthers": "Log out everywhere else",
       "revokeOthersTitle": "Log out everywhere else?",
-      "revokeOthersDescription": "Every other device is logged out on its next request. This device stays logged in.",
+      "revokeOthersDescription": "Other devices are logged out. This one stays.",
       "amr": {
         "pwd": "password",
         "otp": "OTP",
@@ -355,7 +355,7 @@
     "telegram": {
       "title": "Telegram accounts",
       "linkTitle": "Link Telegram",
-      "linkDescription": "Open the bot, press Log in and log in there. The account is linked automatically.",
+      "linkDescription": "Open the bot, press Log in and log in there.",
       "link": "Open the bot",
       "qr": "QR code that opens the bot",
       "empty": "No Telegram accounts are linked yet.",
@@ -364,13 +364,13 @@
       "otpDelivery": "Send OTP codes here",
       "unlink": "Unlink",
       "unlinkTitle": "Unlink {name}?",
-      "unlinkDescription": "This Telegram account stops getting codes and notifications and is logged out of the bot.",
-      "unlinkLastChannel": "This is the last OTP channel. OTP login will have no channel: enable the recovery email or disable OTP login."
+      "unlinkDescription": "It stops getting codes and notifications and is logged out of the bot.",
+      "unlinkLastChannel": "Last OTP channel. Enable the recovery email or disable OTP login."
     },
     "otp": {
       "title": "OTP login",
       "enabled": "OTP login is on. Codes go to your linked Telegram accounts.",
-      "enabledWithEmail": "OTP login is on. Codes go to your linked Telegram accounts and the recovery email.",
+      "enabledWithEmail": "OTP login is on. Codes go to Telegram and the recovery email.",
       "enableTitle": "Turn on OTP login",
       "enableDescription": "Choose where the codes go. We send a test code to confirm.",
       "channels": "Channels",
@@ -462,7 +462,7 @@
       },
       "thirtyDays": "Your account is closed at once. Personal data is removed after 30 days.",
       "confirmTitle": "Confirm",
-      "confirmDescription": "Enter your password and, if OTP login is on, the code we send you.",
+      "confirmDescription": "Enter your password and, if OTP login is on, the code.",
       "submit": "Delete my account",
       "dialogTitle": "Delete your account?",
       "dialogDescription": "You are logged out everywhere and cannot undo this.",
@@ -512,10 +512,10 @@
       "timetable_viewer": "Timetable viewer"
     },
     "scopeHints": {
-      "lms_courses_read": "Read courses, steps, versions and attempts.",
-      "lms_courses_write": "Create courses and change their title and description.",
-      "lms_courses_delete": "Delete (archive) courses.",
-      "lms_modules_write": "Edit modules, lessons and steps only, not the course itself."
+      "lms_courses_read": "Read courses, steps and attempts.",
+      "lms_courses_write": "Create and edit courses.",
+      "lms_courses_delete": "Archive courses.",
+      "lms_modules_write": "Edit modules, lessons and steps."
     },
     "new": {
       "action": "New connector",
@@ -543,7 +543,7 @@
       "title": "Connector {name} created",
       "description": "Add it to your AI app with the settings below.",
       "onceTitle": "Copy the token now",
-      "once": "The token is shown only once. If you lose it, revoke the connector and create a new one.",
+      "once": "Shown only once. If lost, revoke the connector and create a new one.",
       "token": "Token",
       "copyToken": "Copy token",
       "config": "Configuration",

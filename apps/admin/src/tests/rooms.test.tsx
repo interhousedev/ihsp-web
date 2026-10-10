@@ -32,7 +32,7 @@ describe("rooms page", () => {
     await user.click(screen.getByRole("button", { name: "Regenerate the PIN of room 101" }))
 
     const dialog = await screen.findByRole("alertdialog")
-    expect(within(dialog).getByText(/old PIN and existing bookmarks stop working/)).toBeInTheDocument()
+    expect(within(dialog).getByText(/The old PIN and bookmarks stop working at once/)).toBeInTheDocument()
     expect(regenerated).toBeNull()
 
     await user.click(within(dialog).getByRole("button", { name: "Regenerate PIN" }))

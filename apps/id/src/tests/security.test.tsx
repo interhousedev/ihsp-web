@@ -114,7 +114,7 @@ describe("Telegram accounts", () => {
 
     await user.click(await findButton("Unlink"))
 
-    expect(await screen.findByText(/This is the last OTP channel/)).toBeInTheDocument()
+    expect(await screen.findByText(/Last OTP channel\./)).toBeInTheDocument()
   })
 })
 
