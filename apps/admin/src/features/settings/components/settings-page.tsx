@@ -24,6 +24,33 @@ const LOCALES: readonly PlatformLocale[] = ["uz", "ru", "en"]
 const SCHOOL_NAME_MAX = 120
 const SUPPORT_CONTACT_MAX = 255
 
+/** The feature flags of the backend (`FeaturesSettings`) that have a translated name and description. */
+const KNOWN_FEATURES = [
+  "notebooks",
+  "ai_assistant",
+  "flashcards",
+  "lms",
+  "mail",
+  "push",
+  "emis_sync",
+  "library",
+  "web_search",
+  "vector_search",
+  "change_password_on_login",
+] as const
+
+type KnownFeature = (typeof KNOWN_FEATURES)[number]
+
+function isKnownFeature(key: string): key is KnownFeature {
+  return (KNOWN_FEATURES as readonly string[]).includes(key)
+}
+
+/** `web_search` becomes `Web search`: the name of a flag this page has no translated text for. */
+export function prettifyKey(key: string): string {
+  const words = key.replace(/_/g, " ").trim()
+  return words.charAt(0).toUpperCase() + words.slice(1)
+}
+
 function toForm(settings: PlatformSettings): PlatformSettingsBody {
   return {
     school_name: settings.school_name,
@@ -51,7 +78,7 @@ function SettingsForm({ settings }: { settings: PlatformSettings }) {
     onSuccess: (data) => setForm(toForm(data)),
   })
 
-  const featureNames = Object.keys(settings.features).sort()
+  const featureKeys = Object.keys(settings.features).sort()
   return (
     <PageContainer title={t("title")}>
       <form
@@ -117,12 +144,20 @@ function SettingsForm({ settings }: { settings: PlatformSettings }) {
       </form>
       <section className="flex max-w-2xl flex-col gap-2">
         <h2 className="text-base font-semibold">{t("features")}</h2>
-        <ul className="flex flex-wrap gap-2">
-          {featureNames.map((name) => (
-            <li key={name}>
-              <Badge variant={settings.features[name] ? "secondary" : "outline"}>
-                {name}: {settings.features[name] ? t("on") : t("off")}
-              </Badge>
+        <ul className="grid gap-2">
+          {featureKeys.map((key) => (
+            <li key={key} className="flex flex-col gap-1 rounded-lg border p-3">
+              <div className="flex flex-wrap items-center justify-between gap-2">
+                <span className="text-sm font-medium">
+                  {isKnownFeature(key) ? t(`featureLabels.${key}`) : prettifyKey(key)}
+                </span>
+                <Badge variant={settings.features[key] ? "secondary" : "outline"}>
+                  {settings.features[key] ? t("on") : t("off")}
+                </Badge>
+              </div>
+              {isKnownFeature(key) ? (
+                <p className="text-muted-foreground text-xs">{t(`featureDescriptions.${key}`)}</p>
+              ) : null}
             </li>
           ))}
         </ul>

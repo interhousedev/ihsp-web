@@ -1,6 +1,6 @@
 "use client"
 
-import { postAdminUserMailResume, postAdminUserMailSuspend, type AdminUser } from "@ihsp/api"
+import { postAdminUserMailResume, postAdminUserMailSuspend, type AdminUserDetail } from "@ihsp/api"
 import { useT } from "@ihsp/i18n"
 import { Badge, Button } from "@ihsp/ui"
 import { useState } from "react"
@@ -11,7 +11,7 @@ import { TOUCH } from "../../shared/utils/touch"
 import { userInvalidations } from "./block-actions"
 
 /** Suspend or resume sending from the user's mailbox (MAIL-8, UF-ADM-15); receiving keeps working. */
-export function MailActions({ user }: { user: AdminUser }) {
+export function MailActions({ user }: { user: AdminUserDetail }) {
   const t = useT("users.mail")
   const [open, setOpen] = useState(false)
   const name = fullNameWithMiddle(user)
@@ -31,7 +31,7 @@ export function MailActions({ user }: { user: AdminUser }) {
   return (
     <div className="flex flex-col gap-3">
       <div className="flex items-center gap-2 text-sm">
-        <span className="text-muted-foreground">{user.login ? `${user.login}@mail` : t("noMailbox")}</span>
+        <span className="text-muted-foreground">{user.mailbox ? user.mailbox : t("noMailbox")}</span>
         <Badge variant={user.mail_suspended ? "destructive" : "secondary"}>
           {user.mail_suspended ? t("stateSuspended") : t("stateActive")}
         </Badge>

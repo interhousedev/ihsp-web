@@ -7453,6 +7453,8 @@ export interface components {
             login: string | null;
             /** Mail Suspended */
             mail_suspended: boolean;
+            /** Mailbox */
+            mailbox?: string | null;
             /** Middle Name */
             middle_name: string | null;
             /**

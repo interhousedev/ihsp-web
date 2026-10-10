@@ -18,9 +18,26 @@ describe("platform settings", () => {
 
     expect(await screen.findByLabelText("School name")).toHaveValue("")
     expect(screen.getByLabelText("Default interface language")).toHaveValue("ru")
-    expect(screen.getByText("notebooks: on")).toBeInTheDocument()
-    expect(screen.getByText("change_password_on_login: off")).toBeInTheDocument()
+    const notebooks = screen.getByText("Notebooks").closest("li") as HTMLElement
+    expect(within(notebooks).getByText("on")).toBeInTheDocument()
+    expect(within(notebooks).getByText(/AI notebooks for study materials/)).toBeInTheDocument()
+    const password = screen.getByText("Password change at login").closest("li") as HTMLElement
+    expect(within(password).getByText("off")).toBeInTheDocument()
+    expect(document.body.textContent).not.toContain("IHSP_")
+    expect(document.body.textContent).not.toContain("change_password_on_login")
     expect(screen.getByRole("button", { name: "Save" })).toBeDisabled()
+  })
+
+  test("a flag without a translated name shows its key in sentence case", async () => {
+    server.use(
+      http.get(apiUrl("/v1/admin/settings"), () =>
+        HttpResponse.json({ ...platformSettings, features: { ...platformSettings.features, brand_new_flag: true } }),
+      ),
+    )
+    renderAdmin(<SettingsPage />, { route: "/settings/" })
+
+    const row = (await screen.findByText("Brand new flag")).closest("li") as HTMLElement
+    expect(within(row).getByText("on")).toBeInTheDocument()
   })
 
   test("saving sends every setting", async () => {

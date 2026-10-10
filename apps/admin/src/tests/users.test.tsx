@@ -225,4 +225,38 @@ describe("user detail", () => {
     await waitUntil(() => body !== undefined, "no request")
     expect(body).toEqual({ reason: "Spam complaints" })
   })
+
+  test("a student's mailbox shows the full address and known audit codes read as names", async () => {
+    const event = (id: string, type: string) => ({
+      id,
+      type,
+      ip: null,
+      user_agent: null,
+      actor: null,
+      created_at: "2026-10-07T03:00:00Z",
+      metadata: {},
+    })
+    server.use(
+      http.get(apiUrl("/v1/admin/users/:id"), () =>
+        HttpResponse.json({
+          ...adminStudentUser,
+          mailbox: "brastilov.aleksey@mail.ihsu.uz",
+          telegram: [],
+          sessions: [],
+          recent_audit: [
+            event("0000000b-0000-4000-8000-000000000001", "login.success"),
+            event("0000000b-0000-4000-8000-000000000002", "password.changed"),
+            event("0000000b-0000-4000-8000-000000000003", "vendor.custom_event"),
+          ],
+        }),
+      ),
+    )
+    renderAdmin(<UserDetailPage />, { route: `/users/view/?id=${ids.student}` })
+
+    expect(await screen.findByText("brastilov.aleksey@mail.ihsu.uz")).toBeInTheDocument()
+    expect(screen.getByText("Signed in")).toBeInTheDocument()
+    expect(screen.getByText("Password changed")).toBeInTheDocument()
+    expect(screen.getByText("vendor.custom_event")).toBeInTheDocument()
+    expect(screen.queryByText("login.success")).not.toBeInTheDocument()
+  })
 })

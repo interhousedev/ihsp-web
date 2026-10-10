@@ -20,6 +20,8 @@ export type AdminUser = {
 }
 
 export type AdminUserDetail = AdminUser & {
+  /** The full student address (`login@<mail domain>`); null for non-students. */
+  mailbox?: string | null
   telegram: TelegramAccount[]
   sessions: SessionItem[]
   recent_audit: AuditItem[]
