@@ -28,15 +28,14 @@
     }
   },
   "app": {
-    "name": "Портал студента IHSP"
+    "name": "my.iht"
   },
   "nav": {
     "short": {
       "today": "Сегодня",
-      "timetable": "Уроки",
+      "timetable": "Календарь",
       "subjects": "Предметы",
       "grades": "Оценки",
-      "attendance": "Посещ.",
       "homework": "Задания",
       "exams": "Экзамены",
       "assistant": "Помощник",
@@ -48,10 +47,9 @@
       "settings": "Настройки"
     },
     "today": "Сегодня",
-    "timetable": "Расписание",
+    "timetable": "Календарь",
     "subjects": "Предметы",
     "grades": "Оценки",
-    "attendance": "Посещаемость",
     "homework": "Домашние задания",
     "exams": "Экзамены",
     "teachers": "Мои преподаватели",
@@ -235,9 +233,20 @@
     }
   },
   "timetable": {
-    "title": "Расписание",
+    "title": "Календарь",
+    "views": {
+      "day": "День",
+      "week": "Неделя",
+      "month": "Месяц"
+    },
+    "viewsLabel": "Вид календаря",
+    "today": "Сегодня",
+    "previousMonth": "Предыдущий месяц",
+    "nextMonth": "Следующий месяц",
+    "legend": "Цвета посещаемости",
+    "freeGap": "Окно: {minutes} мин",
+    "breakGap": "Перемена: {minutes} мин",
     "days": "Дни недели",
-    "period": "Пара {number}",
     "room": "Ауд. {name}",
     "now": "Сейчас",
     "cancelled": "Отменено",
@@ -345,7 +354,7 @@
   "lesson": {
     "title": "Урок",
     "notFound": "Урок не найден.",
-    "backToTimetable": "Расписание",
+    "backToTimetable": "Календарь",
     "cancelled": "Отменено",
     "date": "Дата",
     "time": "Время",
@@ -661,19 +670,16 @@
     }
   },
   "attendance": {
-    "title": "Посещаемость",
-    "period": "Период",
-    "from": "С",
-    "to": "По",
-    "currentTerm": "Текущий семестр",
+    "overviewTitle": "Посещаемость",
     "thisMonth": "Этот месяц",
-    "last30": "Последние 30 дней",
+    "semester": "Семестр",
+    "semesterAbsences": "Пропуски",
+    "semesterExcused": "По уважительной",
+    "semesterLessons": "Уроки",
     "notTaken": "{count, plural, one {# урок без отметки посещаемости, он не учитывается.} few {# урока без отметки посещаемости, они не учитываются.} many {# уроков без отметки посещаемости, они не учитываются.} other {# урока без отметки посещаемости, они не учитываются.}}",
     "summaryTitle": "Сводка по предметам",
-    "noSummary": "За этот период нет уроков с отметкой посещаемости.",
-    "calendarTitle": "Календарь",
+    "noSummary": "За этот семестр нет уроков с отметкой посещаемости.",
     "missedTitle": "Пропущенные уроки",
-    "missedOn": "Пропущено {date}",
     "summary": {
       "subject": "Предмет",
       "absences": "Пропуски",
@@ -682,7 +688,7 @@
       "rate": "Доля пропусков"
     },
     "calendar": {
-      "label": "Календарь пропусков",
+      "label": "Календарь посещаемости",
       "previousMonth": "Предыдущий месяц",
       "nextMonth": "Следующий месяц",
       "dayWithAbsences": "{date}: {count, plural, one {# пропуск} few {# пропуска} many {# пропусков} other {# пропуска}}"

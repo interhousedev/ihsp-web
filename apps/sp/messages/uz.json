@@ -28,15 +28,14 @@
     }
   },
   "app": {
-    "name": "IHSP talaba portali"
+    "name": "my.iht"
   },
   "nav": {
     "short": {
       "today": "Bugun",
-      "timetable": "Jadval",
+      "timetable": "Taqvim",
       "subjects": "Fanlar",
       "grades": "Baholar",
-      "attendance": "Davomat",
       "homework": "Vazifa",
       "exams": "Imtihon",
       "assistant": "Yordamchi",
@@ -48,10 +47,9 @@
       "settings": "Sozlama"
     },
     "today": "Bugun",
-    "timetable": "Dars jadvali",
+    "timetable": "Taqvim",
     "subjects": "Fanlar",
     "grades": "Baholar",
-    "attendance": "Davomat",
     "homework": "Uy vazifalari",
     "exams": "Imtihonlar",
     "teachers": "Oʻqituvchilarim",
@@ -235,9 +233,20 @@
     }
   },
   "timetable": {
-    "title": "Dars jadvali",
+    "title": "Taqvim",
+    "views": {
+      "day": "Kun",
+      "week": "Hafta",
+      "month": "Oy"
+    },
+    "viewsLabel": "Taqvim koʻrinishi",
+    "today": "Bugun",
+    "previousMonth": "Oldingi oy",
+    "nextMonth": "Keyingi oy",
+    "legend": "Davomat ranglari",
+    "freeGap": "Boʻsh vaqt: {minutes} daq",
+    "breakGap": "Tanaffus: {minutes} daq",
     "days": "Hafta kunlari",
-    "period": "{number}-juftlik",
     "room": "{name}-xona",
     "now": "Hozir",
     "cancelled": "Bekor qilingan",
@@ -345,7 +354,7 @@
   "lesson": {
     "title": "Dars",
     "notFound": "Dars topilmadi.",
-    "backToTimetable": "Dars jadvali",
+    "backToTimetable": "Taqvim",
     "cancelled": "Bekor qilingan",
     "date": "Sana",
     "time": "Vaqt",
@@ -661,19 +670,16 @@
     }
   },
   "attendance": {
-    "title": "Davomat",
-    "period": "Davr",
-    "from": "Boshlanishi",
-    "to": "Tugashi",
-    "currentTerm": "Joriy semestr",
+    "overviewTitle": "Davomat",
     "thisMonth": "Shu oy",
-    "last30": "Oxirgi 30 kun",
+    "semester": "Semestr",
+    "semesterAbsences": "Qoldirilgan",
+    "semesterExcused": "Sababli",
+    "semesterLessons": "Darslar",
     "notTaken": "{count, plural, other {# ta darsda davomat hali belgilanmagan, ular hisobga olinmaydi.}}",
     "summaryTitle": "Fanlar boʻyicha xulosa",
-    "noSummary": "Bu davrda davomat belgilangan darslar yoʻq.",
-    "calendarTitle": "Kalendar",
+    "noSummary": "Bu semestrda davomat belgilangan darslar yoʻq.",
     "missedTitle": "Qoldirilgan darslar",
-    "missedOn": "{date} kuni qoldirilgan",
     "summary": {
       "subject": "Fan",
       "absences": "Qoldirilgan",
@@ -682,7 +688,7 @@
       "rate": "Qoldirish ulushi"
     },
     "calendar": {
-      "label": "Qoldirilgan darslar kalendari",
+      "label": "Davomat kalendari",
       "previousMonth": "Oldingi oy",
       "nextMonth": "Keyingi oy",
       "dayWithAbsences": "{date}: {count, plural, other {# ta dars qoldirilgan}}"

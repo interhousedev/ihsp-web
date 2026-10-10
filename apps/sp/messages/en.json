@@ -28,15 +28,14 @@
     }
   },
   "app": {
-    "name": "IHSP Student Portal"
+    "name": "my.iht"
   },
   "nav": {
     "short": {
       "today": "Today",
-      "timetable": "Timetable",
+      "timetable": "Calendar",
       "subjects": "Subjects",
       "grades": "Grades",
-      "attendance": "Absences",
       "homework": "Tasks",
       "exams": "Exams",
       "assistant": "Assistant",
@@ -48,10 +47,9 @@
       "settings": "Settings"
     },
     "today": "Today",
-    "timetable": "Timetable",
+    "timetable": "Calendar",
     "subjects": "Subjects",
     "grades": "Grades",
-    "attendance": "Attendance",
     "homework": "Homework",
     "exams": "Exams",
     "teachers": "My teachers",
@@ -235,9 +233,20 @@
     }
   },
   "timetable": {
-    "title": "Timetable",
+    "title": "Calendar",
+    "views": {
+      "day": "Day",
+      "week": "Week",
+      "month": "Month"
+    },
+    "viewsLabel": "Calendar view",
+    "today": "Today",
+    "previousMonth": "Previous month",
+    "nextMonth": "Next month",
+    "legend": "Attendance colours",
+    "freeGap": "Free: {minutes} min",
+    "breakGap": "Break: {minutes} min",
     "days": "Days of the week",
-    "period": "Period {number}",
     "room": "Room {name}",
     "now": "Now",
     "cancelled": "Cancelled",
@@ -345,7 +354,7 @@
   "lesson": {
     "title": "Lesson",
     "notFound": "Lesson not found.",
-    "backToTimetable": "Timetable",
+    "backToTimetable": "Calendar",
     "cancelled": "Cancelled",
     "date": "Date",
     "time": "Time",
@@ -661,19 +670,16 @@
     }
   },
   "attendance": {
-    "title": "Attendance",
-    "period": "Period",
-    "from": "From",
-    "to": "To",
-    "currentTerm": "Current term",
+    "overviewTitle": "Attendance",
     "thisMonth": "This month",
-    "last30": "Last 30 days",
+    "semester": "This semester",
+    "semesterAbsences": "Absences",
+    "semesterExcused": "Excused",
+    "semesterLessons": "Lessons",
     "notTaken": "{count, plural, one {# lesson has no attendance taken yet and is not counted.} other {# lessons have no attendance taken yet and are not counted.}}",
     "summaryTitle": "Summary by subject",
-    "noSummary": "No lessons with attendance in this period.",
-    "calendarTitle": "Calendar",
+    "noSummary": "No lessons with attendance this semester.",
     "missedTitle": "Missed lessons",
-    "missedOn": "Missed on {date}",
     "summary": {
       "subject": "Subject",
       "absences": "Absences",
@@ -682,7 +688,7 @@
       "rate": "Absence rate"
     },
     "calendar": {
-      "label": "Absence calendar",
+      "label": "Attendance calendar",
       "previousMonth": "Previous month",
       "nextMonth": "Next month",
       "dayWithAbsences": "{date}: {count, plural, one {# absence} other {# absences}}"

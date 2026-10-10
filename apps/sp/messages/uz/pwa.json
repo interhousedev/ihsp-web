@@ -1,12 +1,12 @@
 {
   "pwa": {
     "landing": {
-      "title": "IHSP ni bosh ekranga qoʻshing",
+      "title": "My IHT ni bosh ekranga qoʻshing",
       "subtitle": "Ilovani oʻrnating va telefoningizdagi boshqa ilovalar kabi bir bosishda oching."
     },
     "benefits": {
       "fast": "Bir bosishda toʻliq ekranda ochiladi",
-      "offline": "Dars jadvali, uy vazifalari va baholar internetsiz ham ishlaydi",
+      "offline": "Taqvim, uy vazifalari va baholar internetsiz ham ishlaydi",
       "session": "Hisobga kirish 90 kungacha saqlanadi",
       "push": "Yangi baholar haqida bildirishnoma olish uchun oʻrnating"
     },
@@ -15,14 +15,14 @@
       "busy": "Oʻrnatilmoqda…"
     },
     "installed": {
-      "title": "IHSP oʻrnatildi",
+      "title": "My IHT oʻrnatildi",
       "text": "Uni bosh ekrandan oching."
     },
     "ios": {
       "title": "iPhone yoki iPad’ga oʻrnatish",
       "step1": "Brauzer panelidagi «Ulashish» tugmasini bosing",
       "step2": "Pastga aylantiring va «Bosh ekranga qoʻshish» ni bosing",
-      "step3": "«Qoʻshish» ni bosing. IHSP bosh ekranda paydo boʻladi.",
+      "step3": "«Qoʻshish» ni bosing. My IHT bosh ekranda paydo boʻladi.",
       "openInSafari": "Bu brauzer ilovani bosh ekranga qoʻsha olmaydi. Sahifani Safari’da oching va qayta urinib koʻring.",
       "pushNote": "iPhone’da bildirishnomalar faqat ilova oʻrnatilgandan keyin ishlaydi."
     },
@@ -31,22 +31,22 @@
         "title": "Brauzer menyusi orqali oʻrnatish",
         "step1": "Brauzer menyusini oching (uchta nuqta)",
         "step2": "«Ilovani oʻrnatish» yoki «Bosh ekranga qoʻshish» ni tanlang",
-        "step3": "Tasdiqlang. IHSP bosh ekranda paydo boʻladi."
+        "step3": "Tasdiqlang. My IHT bosh ekranda paydo boʻladi."
       }
     },
     "desktop": {
-      "title": "IHSP ni telefoningizda oching",
+      "title": "My IHT ni telefoningizda oching",
       "scan": "Telefon kamerasini kodga qarating, soʻng ilovani bosh ekranga qoʻshing.",
-      "qrLabel": "IHSP ilovasi manzili yozilgan QR kod",
+      "qrLabel": "My IHT ilovasi manzili yozilgan QR kod",
       "address": "Yoki telefonda {url} manzilini oching."
     },
     "telegram": {
       "open": "Telegram’da ochish",
-      "hint": "Telegram qulayroqmi? IHSP mini-ilovasi u yerda oʻrnatmasdan ishlaydi."
+      "hint": "Telegram qulayroqmi? My IHT mini-ilovasi u yerda oʻrnatmasdan ishlaydi."
     },
     "continue": "Brauzerda davom etish",
     "hub": {
-      "title": "IHSP ning boshqa ilovalari",
+      "title": "IHT ning boshqa ilovalari",
       "subtitle": "Har bir ilova alohida oʻrnatiladi: uni oching va bosh ekranga qoʻshing.",
       "install": "Oʻrnatish",
       "installLabel": "{name} ilovasini oʻrnatish",

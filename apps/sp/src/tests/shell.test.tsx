@@ -68,10 +68,9 @@ describe("app frame", () => {
     await screen.findByText("page body")
 
     for (const name of [
-      "Timetable",
+      "Calendar",
       "Subjects",
       "Grades",
-      "Attendance",
       "Homework",
       "Exams",
       "Assistant",
@@ -85,7 +84,20 @@ describe("app frame", () => {
     }
   })
 
-  test("the phone bottom bar has Today, Timetable, Grades, Homework and More", async () => {
+  test("the calendar holds the attendance, so there is no Attendance item", async () => {
+    renderSp(
+      <SpShell>
+        <p>page body</p>
+      </SpShell>,
+    )
+
+    await screen.findByText("page body")
+
+    expect(screen.queryAllByRole("link", { name: "Attendance" })).toHaveLength(0)
+    expect(screen.queryAllByRole("link", { name: "Timetable" })).toHaveLength(0)
+  })
+
+  test("the phone bottom bar has Today, Calendar, Grades, Homework and More", async () => {
     setViewportWidth(360)
     renderSp(
       <SpShell>
@@ -98,6 +110,7 @@ describe("app frame", () => {
 
     expect(bar.querySelectorAll("a")).toHaveLength(4)
     expect(bar.textContent).toContain("Today")
+    expect(bar.textContent).toContain("Calendar")
     expect(bar.textContent).toContain("More")
   })
 

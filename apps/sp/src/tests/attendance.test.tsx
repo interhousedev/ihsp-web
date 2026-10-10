@@ -1,9 +1,9 @@
-/** WEB-17, UF-WEB-12: the student's own attendance. */
+/** WEB-17, UF-WEB-12: the student's attendance on the calendar: the month, the counts and the summary. */
 import { afterEach, beforeEach, describe, expect, test } from "bun:test"
-import { apiUrl, server, studentAttendance } from "@ihsp/test-utils"
+import { apiUrl, lessonId, server, studentAttendance } from "@ihsp/test-utils"
 import { screen, waitFor, within } from "@testing-library/react"
 import { HttpResponse, http } from "msw"
-import { AttendancePage } from "../features/attendance/components/attendance-page"
+import { TimetablePage } from "../features/timetable/components/timetable-page"
 import { monthGrid, shiftMonth } from "../features/attendance/utils/month-grid"
 import { configureTests, freezeTime, renderSp, setViewportWidth, unfreezeTime } from "./helpers"
 
@@ -18,75 +18,11 @@ afterEach(() => {
   setViewportWidth(1280)
 })
 
-describe("attendance page", () => {
-  test("says how many lessons have no attendance taken yet", async () => {
-    renderSp(<AttendancePage />, { route: "/attendance/" })
+/** The month of the calendar: the address opens it (today's month without a `day`). */
+const MONTH = "/timetable/?view=month"
 
-    expect(await screen.findByTestId("not-taken")).toHaveTextContent(
-      "1 lesson has no attendance taken yet and is not counted.",
-    )
-  })
-
-  test("the summary lists absences, excused, lessons and the rate of each subject", async () => {
-    renderSp(<AttendancePage />, { route: "/attendance/" })
-
-    const table = await screen.findByRole("table")
-    const rows = within(table).getAllByRole("row")
-
-    expect(rows).toHaveLength(studentAttendance.summary.length + 1)
-    const math = within(rows.find((row) => within(row).queryByText("Mathematics")) as HTMLElement)
-    expect(math.getByText("14%")).toBeInTheDocument()
-  })
-
-  test("on a phone the summary is a list of cards", async () => {
-    setViewportWidth(360)
-    renderSp(<AttendancePage />, { route: "/attendance/" })
-
-    await screen.findByText("Summary by subject")
-
-    expect(await screen.findAllByText(/Absences: \d/)).toHaveLength(studentAttendance.summary.length)
-    expect(screen.queryByRole("table")).not.toBeInTheDocument()
-  })
-
-  test("lists every missed lesson, newest first, with excused ones marked", async () => {
-    renderSp(<AttendancePage />, { route: "/attendance/" })
-
-    const list = await screen.findByRole("heading", { name: "Missed lessons" })
-    const items = within(list.parentElement as HTMLElement).getAllByRole("link")
-
-    expect(items).toHaveLength(studentAttendance.missed.length)
-    expect(within(items[0] as HTMLElement).getByText("Chemistry")).toBeInTheDocument()
-    expect(screen.getAllByText("Excused")).not.toHaveLength(0)
-  })
-
-  test("tapping a day of the calendar shows only its missed lessons", async () => {
-    const { user } = renderSp(<AttendancePage />, { route: "/attendance/" })
-
-    await screen.findByText("Missed lessons")
-    await user.click(await screen.findByRole("button", { name: /^6 October: 1 absence$/ }))
-
-    expect(await screen.findByRole("heading", { name: "Missed on 6 October" })).toBeInTheDocument()
-    expect(screen.getAllByRole("link")).toHaveLength(1)
-  })
-
-  test("a period choice asks for that period", async () => {
-    const requests: string[] = []
-    server.use(
-      http.get(apiUrl("/v1/me/attendance"), ({ request }) => {
-        requests.push(new URL(request.url).search)
-        return HttpResponse.json(studentAttendance)
-      }),
-    )
-    const { user } = renderSp(<AttendancePage />, { route: "/attendance/" })
-
-    await screen.findByText("Missed lessons")
-    await user.click(screen.getByRole("button", { name: "Last 30 days" }))
-
-    await waitFor(() => expect(requests.at(-1)).toBe("?from=2026-09-08&to=2026-10-07"))
-    expect(requests[0]).toBe("")
-  })
-
-  test("the calendar marks an absent day with a red dot and a late day with a dark orange dot", async () => {
+describe("month view of the calendar", () => {
+  test("the days carry the attendance: a red dot for absences, an orange dot for late, a green dot for present", async () => {
     server.use(
       http.get(apiUrl("/v1/me/attendance"), () =>
         HttpResponse.json({ ...studentAttendance, days: [{ date: "2026-10-06", absences: 1 }] }),
@@ -104,7 +40,7 @@ describe("attendance page", () => {
         ]),
       ),
     )
-    renderSp(<AttendancePage />, { route: "/attendance/" })
+    renderSp(<TimetablePage />, { route: MONTH })
 
     const late = await waitFor(async () => {
       const day = await screen.findByRole("button", { name: "5 October" })
@@ -118,19 +54,109 @@ describe("attendance page", () => {
     expect(absent.querySelector('[data-dot="absent"]')).toHaveClass("bg-red-800")
     expect(absent.querySelector('[data-dot="late"]')).toBeNull()
 
-    expect(screen.getByRole("button", { name: "2 October" }).querySelector("[data-dot]")).toBeNull()
+    expect(screen.getByRole("button", { name: "2 October" }).querySelector('[data-dot="present"]')).toHaveClass(
+      "bg-green-600",
+    )
   })
 
-  test("a period without absences shows the friendly message", async () => {
+  test("tapping a day opens it in the day view", async () => {
+    const { user } = renderSp(<TimetablePage />, { route: MONTH })
+
+    await user.click(await screen.findByRole("button", { name: /^6 October: 1 absence$/ }))
+
+    expect(await screen.findByRole("button", { name: /^Tuesday/ })).toHaveAttribute("aria-pressed", "true")
+    expect(screen.queryByText("Missed lessons")).not.toBeInTheDocument()
+  })
+
+  test("the month lists the lessons missed in it, newest first", async () => {
+    renderSp(<TimetablePage />, { route: MONTH })
+
+    await screen.findByRole("heading", { name: "Missed lessons" })
+
+    // The fixture has one missed lesson in October (6 October, Chemistry); the others are in September.
+    const links = screen.getAllByRole("link")
+    expect(links).toHaveLength(1)
+    expect(within(links[0] as HTMLElement).getByText("Chemistry")).toBeInTheDocument()
+  })
+
+  test("the month follows the address and can be changed", async () => {
+    const { user } = renderSp(<TimetablePage />, { route: "/timetable/?view=month&day=2026-12-03" })
+
+    expect(await screen.findByRole("heading", { name: "December 2026" })).toBeInTheDocument()
+    await user.click(screen.getByRole("button", { name: "Next month" }))
+    expect(await screen.findByRole("heading", { name: "January 2027" })).toBeInTheDocument()
+  })
+
+  test("the month counts show the absent, late and present lessons of the month", async () => {
+    server.use(
+      http.get(apiUrl("/v1/me/lesson-results"), () =>
+        HttpResponse.json([
+          { lesson_id: lessonId(1, 1), attendance: "present", mark: null },
+          { lesson_id: lessonId(1, 2), attendance: "present", mark: null },
+          { lesson_id: lessonId(2, 1), attendance: "late", mark: null },
+          { lesson_id: lessonId(2, 2), attendance: "absent", mark: null },
+          { lesson_id: lessonId(3, 1), attendance: "absent", mark: null },
+        ]),
+      ),
+    )
+    renderSp(<TimetablePage />, { route: MONTH })
+
+    const month = (await screen.findByRole("heading", { name: "This month October 2026" })).parentElement as HTMLElement
+    expect(month).toHaveTextContent("Absent2")
+    expect(month).toHaveTextContent("Late1")
+    expect(month).toHaveTextContent("Present2")
+  })
+
+  test("the semester totals come from the summary of the term", async () => {
+    renderSp(<TimetablePage />, { route: MONTH })
+
+    const semester = (await screen.findByRole("heading", { name: "This semester" })).parentElement as HTMLElement
+    // Absences 5 (2+0+1+0+1+1), excused 1, lessons 62 (14+12+10+8+9+9).
+    expect(within(semester).getByText("5")).toBeInTheDocument()
+    expect(within(semester).getByText("1")).toBeInTheDocument()
+    expect(within(semester).getByText("62")).toBeInTheDocument()
+  })
+
+  test("the summary lists absences, excused, lessons and the rate of each subject", async () => {
+    renderSp(<TimetablePage />, { route: MONTH })
+
+    const table = await screen.findByRole("table")
+    const rows = within(table).getAllByRole("row")
+
+    expect(rows).toHaveLength(studentAttendance.summary.length + 1)
+    const math = within(rows.find((row) => within(row).queryByText("Mathematics")) as HTMLElement)
+    expect(math.getByText("14%")).toBeInTheDocument()
+  })
+
+  test("on a phone the summary is a list of cards", async () => {
+    setViewportWidth(360)
+    renderSp(<TimetablePage />, { route: MONTH })
+
+    await screen.findByText("Summary by subject")
+
+    expect(await screen.findAllByText(/Absences: \d/)).toHaveLength(studentAttendance.summary.length)
+    expect(screen.queryByRole("table")).not.toBeInTheDocument()
+  })
+
+  test("says how many lessons have no attendance taken yet", async () => {
+    renderSp(<TimetablePage />, { route: MONTH })
+
+    expect(await screen.findByTestId("not-taken")).toHaveTextContent(
+      "1 lesson has no attendance taken yet and is not counted.",
+    )
+  })
+
+  test("a semester without attendance shows the friendly message", async () => {
     server.use(
       http.get(apiUrl("/v1/me/attendance"), () =>
         HttpResponse.json({ from: "2026-09-02", to: "2026-10-07", summary: [], days: [], missed: [], not_taken: 0 }),
       ),
     )
-    renderSp(<AttendancePage />, { route: "/attendance/" })
+    renderSp(<TimetablePage />, { route: MONTH })
 
-    expect(await screen.findByText("No missed lessons.")).toBeInTheDocument()
+    expect(await screen.findByText("No lessons with attendance this semester.")).toBeInTheDocument()
     expect(screen.queryByTestId("not-taken")).not.toBeInTheDocument()
+    expect(screen.getByText("No missed lessons.")).toBeInTheDocument()
   })
 })
 
@@ -148,15 +174,10 @@ describe("month grid", () => {
     expect(shiftMonth("2026-01", -1)).toBe("2025-12")
   })
 
-  test("the calendar opens on the current month when the period ends in the future", async () => {
-    server.use(
-      http.get(apiUrl("/v1/me/attendance"), () =>
-        HttpResponse.json({ from: "2026-09-02", to: "2026-12-20", summary: [], days: [], missed: [], not_taken: 0 }),
-      ),
-    )
-    renderSp(<AttendancePage />, { route: "/attendance/" })
+  test("the calendar opens on the month of the day in the address", async () => {
+    renderSp(<TimetablePage />, { route: "/timetable/?view=month&day=2026-12-20" })
 
-    expect(await screen.findByText("October 2026")).toBeInTheDocument()
-    expect(screen.queryByText("December 2026")).not.toBeInTheDocument()
+    expect(await screen.findByRole("heading", { name: "December 2026" })).toBeInTheDocument()
+    expect(screen.queryByRole("heading", { name: "October 2026" })).not.toBeInTheDocument()
   })
 })

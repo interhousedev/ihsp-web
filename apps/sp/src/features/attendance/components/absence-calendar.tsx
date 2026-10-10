@@ -4,37 +4,41 @@ import { getMeLessonResultsQuery, getMeTimetableQuery, type StudentAttendance } 
 import { addDays, todayIso, useFormatters, useT } from "@ihsp/i18n"
 import { Button, Icons, cn } from "@ihsp/ui"
 import { useQuery } from "@tanstack/react-query"
-import { useMemo, useState } from "react"
+import { useMemo } from "react"
+import { isWeekend } from "../../timetable/utils/week"
+import { dayStatus } from "../utils/lesson-states"
 import { lateDays } from "../utils/late-days"
-import { monthGrid, monthOf, monthRange, shiftMonth } from "../utils/month-grid"
+import { monthGrid, monthRange, shiftMonth } from "../utils/month-grid"
+import { STATE_TONE } from "../utils/state-tone"
 
 /**
- * A month calendar with the days that have absences marked (red dot) and the days the student was late (orange dot),
- * the same colours as the timetable; tapping a day with absences selects it (WEB-17, UF-WEB-12).
+ * The month of the calendar with the attendance on the days: a red dot for the days with absences, an orange dot for
+ * the days the student was late, a green dot for the days with only present lessons (the colours of the lesson
+ * blocks). Every day can be tapped; `onSelect` opens it. The month is the page's (`?day=` keeps it in the address).
  */
 export function AbsenceCalendar({
   days,
-  to,
-  selected,
+  month,
+  onMonthChange,
   onSelect,
 }: {
   days: StudentAttendance["days"]
-  /** The end of the period: the calendar opens on its month. */
-  to: string
-  selected: string | null
-  onSelect: (date: string | null) => void
+  /** `2026-10` */
+  month: string
+  onMonthChange: (month: string) => void
+  onSelect: (date: string) => void
 }) {
   const t = useT("attendance.calendar")
   const f = useFormatters()
-  const [month, setMonth] = useState(monthOf(to < todayIso() ? to : todayIso()))
   const absences = new Map(days.map((day) => [day.date, day.absences]))
   const today = todayIso()
   const weeks = monthGrid(month)
-  // Late is not in the day counts: it comes from the lesson results of the month, dated by the timetable.
+  // Late and present come from the lesson results of the month, dated by the timetable.
   const range = monthRange(month)
   const lessons = useQuery(getMeTimetableQuery(range)).data
   const results = useQuery(getMeLessonResultsQuery(range)).data
   const late = useMemo(() => lateDays(lessons ?? [], results ?? []), [lessons, results])
+  const status = useMemo(() => dayStatus(lessons ?? [], results ?? []), [lessons, results])
   // Any Monday gives the seven weekday names in the user's language.
   const weekdayLabels = Array.from({ length: 7 }, (_, index) => f.weekday(addDays("2026-10-05", index), "short"))
 
@@ -46,7 +50,7 @@ export function AbsenceCalendar({
           size="icon"
           className="size-11 md:size-8"
           aria-label={t("previousMonth")}
-          onClick={() => setMonth(shiftMonth(month, -1))}
+          onClick={() => onMonthChange(shiftMonth(month, -1))}
         >
           <Icons.chevronLeft aria-hidden />
         </Button>
@@ -58,7 +62,7 @@ export function AbsenceCalendar({
           size="icon"
           className="size-11 md:size-8"
           aria-label={t("nextMonth")}
-          onClick={() => setMonth(shiftMonth(month, 1))}
+          onClick={() => onMonthChange(shiftMonth(month, 1))}
         >
           <Icons.chevronRight aria-hidden />
         </Button>
@@ -73,32 +77,33 @@ export function AbsenceCalendar({
           if (date === null) return <span key={`empty-${index}`} aria-hidden />
           const count = absences.get(date) ?? 0
           const isLate = late.has(date)
+          const isPresent = !isLate && count === 0 && status.get(date) === "present"
+          const plain = f.date(date, { day: "numeric", month: "long" })
           return (
             <Button
               key={date}
-              variant={selected === date ? "default" : "ghost"}
-              aria-pressed={selected === date}
-              aria-label={
-                count > 0
-                  ? t("dayWithAbsences", { date: f.date(date, { day: "numeric", month: "long" }), count })
-                  : f.date(date, { day: "numeric", month: "long" })
-              }
-              disabled={count === 0}
+              variant="ghost"
+              aria-label={count > 0 ? t("dayWithAbsences", { date: plain, count }) : plain}
               className={cn(
                 "relative h-11 px-0 md:h-9",
                 date === today && "ring-primary ring-1",
-                count === 0 && !isLate && "opacity-60",
+                // Saturday and Sunday have no lessons: the cells stay tappable but look empty.
+                isWeekend(date) && "text-muted-foreground/60",
+                count === 0 && !isLate && !isPresent && "opacity-60",
               )}
-              onClick={() => onSelect(selected === date ? null : date)}
+              onClick={() => onSelect(date)}
             >
               <span className="tabular-nums">{Number(date.slice(8))}</span>
-              {count > 0 || isLate ? (
+              {count > 0 || isLate || isPresent ? (
                 <span aria-hidden className="absolute bottom-1 left-1/2 flex -translate-x-1/2 gap-0.5">
                   {count > 0 ? (
-                    <span data-dot="absent" className="size-1.5 rounded-full bg-red-800 dark:bg-red-500" />
+                    <span data-dot="absent" className={cn("size-1.5 rounded-full", STATE_TONE.absent.dot)} />
                   ) : null}
                   {isLate ? (
-                    <span data-dot="late" className="size-1.5 rounded-full bg-orange-700 dark:bg-orange-500" />
+                    <span data-dot="late" className={cn("size-1.5 rounded-full", STATE_TONE.late.dot)} />
+                  ) : null}
+                  {isPresent ? (
+                    <span data-dot="present" className={cn("size-1.5 rounded-full", STATE_TONE.present.dot)} />
                   ) : null}
                 </span>
               ) : null}

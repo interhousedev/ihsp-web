@@ -124,7 +124,6 @@ describe("keys used in the code", () => {
         "timetable",
         "subjects",
         "grades",
-        "attendance",
         "homework",
         "exams",
         "assistant",

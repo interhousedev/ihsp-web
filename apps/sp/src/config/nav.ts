@@ -7,13 +7,14 @@ import { useMemo } from "react"
 
 /**
  * Sidebar groups and the phone bottom bar (WEB-2): Home, Academics, Study tools (pages by the study-tools task),
- * Inbox and Account. The bar has Today, Timetable, Grades and Homework; "More" is added by the shell.
+ * Inbox and Account. The calendar (`/timetable/`, titled Calendar) also holds the attendance. The bar has Today,
+ * Calendar, Grades and Homework; "More" is added by the shell.
  */
 export function useNav(): { groups: NavGroup[]; bottom: BottomNavItem[] } {
   const t = useT("nav")
   return useMemo(() => {
     const today = { title: t("today"), url: "/", icon: "today", match: "exact" } as const
-    const timetable = { title: t("timetable"), url: "/timetable/", icon: "timetable" } as const
+    const timetable = { title: t("timetable"), url: "/timetable/", icon: "calendar" } as const
     const grades = { title: t("grades"), url: "/grades/", icon: "grades" } as const
     const homework = { title: t("homework"), url: "/homework/", icon: "homework" } as const
     return {
@@ -25,7 +26,6 @@ export function useNav(): { groups: NavGroup[]; bottom: BottomNavItem[] } {
             timetable,
             { title: t("subjects"), url: "/subjects/", icon: "subjects" },
             grades,
-            { title: t("attendance"), url: "/attendance/", icon: "attendance" },
             homework,
             { title: t("exams"), url: "/exams/", icon: "calendarEvent" },
             { title: t("teachers"), url: "/teachers/", icon: IconUserCircle },

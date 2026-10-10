@@ -116,7 +116,7 @@ describe("bottom bar config", () => {
     await screen.findByText("page body")
     const bar = screen.getByRole("navigation", { name: "Quick navigation" })
 
-    expect(within(bar).getByRole("link", { name: "Timetable" }).getAttribute("aria-current")).toBe("page")
+    expect(within(bar).getByRole("link", { name: "Calendar" }).getAttribute("aria-current")).toBe("page")
     setTestRoute("/")
   })
 
@@ -130,7 +130,7 @@ describe("bottom bar config", () => {
     await screen.findByText("page body")
     const bar = screen.getByRole("navigation", { name: "Quick navigation" })
 
-    const tab = within(bar).getByRole("link", { name: "Timetable" })
+    const tab = within(bar).getByRole("link", { name: "Calendar" })
     expect(tab.getAttribute("href")).toBe("/timetable")
     expect(tab.getAttribute("aria-current")).toBeNull()
     await user.click(tab)

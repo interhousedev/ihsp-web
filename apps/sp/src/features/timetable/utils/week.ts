@@ -1,5 +1,5 @@
 import type { LessonItem } from "@ihsp/api"
-import { addDays, compareIso, startOfWeek, todayIso } from "@ihsp/i18n"
+import { addDays, compareIso } from "@ihsp/i18n"
 
 export function isIsoDate(value: string | null | undefined): value is string {
   return (
@@ -7,45 +7,33 @@ export function isIsoDate(value: string | null | undefined): value is string {
   )
 }
 
-/** The Monday of a `?week=` value; a missing or broken value gives this week. */
-export function mondayOf(value: string | null | undefined): string {
-  return startOfWeek(isIsoDate(value) ? value : todayIso())
+/** Saturday and Sunday: no lessons, so the calendar does not draw them in the week or the day views. */
+export function isWeekend(date: string): boolean {
+  const weekday = new Date(`${date}T00:00:00Z`).getUTCDay()
+  return weekday === 0 || weekday === 6
 }
 
-/** `[monday, sunday]` as the `from` / `to` of `GET /v1/me/timetable`. */
+/** The date itself on a study day; a Saturday or Sunday gives the Monday after it, so the calendar opens on lessons. */
+export function studyDayOf(date: string): string {
+  let day = date
+  while (isWeekend(day)) day = addDays(day, 1)
+  return day
+}
+
+/** `[monday, friday]` as the `from` / `to` of `GET /v1/me/timetable`: the study week has five days. */
 export function weekRange(monday: string): { from: string; to: string } {
-  return { from: monday, to: addDays(monday, 6) }
+  return { from: monday, to: addDays(monday, 4) }
 }
 
-export type Period = { period: number; starts_at: string; ends_at: string }
-
-/** The periods that have a lesson this week, with the bell times of the first lesson found in each. */
-export function periodsOf(lessons: readonly LessonItem[]): Period[] {
-  const byPeriod = new Map<number, Period>()
-  for (const lesson of lessons) {
-    if (!byPeriod.has(lesson.period)) {
-      byPeriod.set(lesson.period, { period: lesson.period, starts_at: lesson.starts_at, ends_at: lesson.ends_at })
-    }
-  }
-  return [...byPeriod.values()].toSorted((a, b) => a.period - b.period)
+/** The five study days of the week that starts on `monday`: Monday to Friday. */
+export function weekDays(monday: string): string[] {
+  return Array.from({ length: 5 }, (_, index) => addDays(monday, index))
 }
 
 export function lessonsOn(lessons: readonly LessonItem[], date: string): LessonItem[] {
   return lessons
     .filter((lesson) => lesson.date === date)
     .toSorted((a, b) => a.period - b.period || compareIso(a.starts_at, b.starts_at))
-}
-
-export function lessonsAt(lessons: readonly LessonItem[], date: string, period: number): LessonItem[] {
-  return lessonsOn(lessons, date).filter((lesson) => lesson.period === period)
-}
-
-/** The day shown on phones: `?day=` when it is inside the week, otherwise today (if in the week) or Monday. */
-export function selectedDay(monday: string, requested: string | null | undefined): string {
-  const days = Array.from({ length: 7 }, (_, index) => addDays(monday, index))
-  if (isIsoDate(requested) && days.includes(requested)) return requested
-  const today = todayIso()
-  return days.includes(today) ? today : monday
 }
 
 /** Subgroups named in the audience of a lesson (`[1]`, `[1, 2]` or `[]` for the whole group). */

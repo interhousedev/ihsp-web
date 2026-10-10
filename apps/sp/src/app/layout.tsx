@@ -7,8 +7,8 @@ import type { ReactNode } from "react"
 import { Providers } from "./providers"
 
 export const metadata: Metadata = {
-  title: "IHSP Student Portal",
-  description: "Timetable, grades, homework and study tools",
+  title: "my.iht",
+  description: "Calendar, grades, homework and study tools",
 }
 
 export const viewport: Viewport = {

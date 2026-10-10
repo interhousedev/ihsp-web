@@ -1,12 +1,8 @@
 "use client"
 
-import { AttendancePage } from "@/features/attendance/components/attendance-page"
-import { SpShell } from "@/features/shell/components/sp-shell"
+import { AttendanceRedirect } from "@/features/attendance/components/attendance-redirect"
 
+/** Attendance now lives in the calendar; this address only redirects there. */
 export default function Page() {
-  return (
-    <SpShell>
-      <AttendancePage />
-    </SpShell>
-  )
+  return <AttendanceRedirect />
 }
