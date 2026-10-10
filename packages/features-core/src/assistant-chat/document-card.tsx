@@ -27,7 +27,7 @@ function lessonLabel(lesson: LessonItem): string {
 
 /** "Прикрепить к уроку": a teacher picks one of today's lessons and the file becomes its material. */
 function AttachMenu({ fileId }: { fileId: string }) {
-  const t = useT("notebooks")
+  const t = useT("assistant")
   const lessons = useQuery(getStaffTodayQuery())
   const attach = useMutation({
     mutationFn: (lessonId: string) =>
@@ -67,7 +67,7 @@ function AttachMenu({ fileId }: { fileId: string }) {
 
 /** A document made by the assistant: file name, size, a download and (for staff) "Attach to a lesson". */
 export function DocumentCard({ document: doc }: DocumentCardProps) {
-  const t = useT("notebooks")
+  const t = useT("assistant")
   const { session } = useSession()
   const isStaff = session?.user.roles.includes("teacher") ?? false
 

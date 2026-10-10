@@ -42,7 +42,7 @@ describe("lesson page", () => {
     expect(screen.getByLabelText("Homework text")).toHaveValue("Solve problems 14-17 on page 52")
     expect(within(section("materials")).getByText("kinematics-notes.pdf")).toBeInTheDocument()
     expect(section("attendance")).toBeInTheDocument()
-    expect(screen.getByRole("button", { name: /Ismoilov Jasur/ })).toBeInTheDocument()
+    expect(screen.getByRole("checkbox", { name: /Ismoilov Jasur/ })).toBeInTheDocument()
   })
 
   test("goes back to the lessons list", async () => {
@@ -97,7 +97,7 @@ describe("editing as Administration", () => {
     )
     const { user } = renderAdmin(<LessonViewPage />, { route: ROUTE })
 
-    await user.click(await screen.findByRole("button", { name: /Ismoilov Jasur/ }))
+    await user.click(await screen.findByRole("checkbox", { name: /Ismoilov Jasur/ }))
     await user.click(within(section("attendance")).getByRole("button", { name: "Submit attendance" }))
 
     await waitFor(() => expect(bodies).toHaveLength(1))
@@ -116,7 +116,7 @@ describe("editing as Administration", () => {
     )
     renderAdmin(<LessonViewPage />, { route: ROUTE })
 
-    expect(await screen.findByRole("button", { name: /Ismoilov Jasur/ })).toBeEnabled()
+    expect(await screen.findByRole("checkbox", { name: /Ismoilov Jasur/ })).toBeEnabled()
     expect(screen.queryByText(/7-day window has passed/)).not.toBeInTheDocument()
   })
 

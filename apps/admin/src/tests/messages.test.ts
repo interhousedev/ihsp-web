@@ -185,6 +185,7 @@ describe("keys used in the code", () => {
       "attendance.report.views.${view}": views,
       "broadcasts.audience.role.${role}": roles,
       "broadcasts.status.${value}": ["draft", "scheduled", "sending", "sent", "cancelled"],
+      "files.picker.types.${value}": ["pdf", "doc", "sheet", "slides", "text", "image"],
       "lessonDetail.header.fields.${change.field}": ["room", "teacher", "subject", "date", "period"],
       "lessons.status.${lesson.status}": ["scheduled", "cancelled"],
       "moderation.kind.${item.link.kind}": ["url", "file", "chat", "flashcard_set"],
