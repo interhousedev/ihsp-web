@@ -19,7 +19,8 @@
     "groupInbox": "Kiruvchilar",
     "groupSettings": "Hisob",
     "studentSearch": "Talaba qidirish",
-    "notebooks": "Bloknotlar"
+    "notebooks": "Bloknotlar",
+    "mail": "Pochta"
   },
   "audience": {
     "subgroup": "{group} · {number}-kichik guruh"
@@ -113,6 +114,8 @@
     "noTopic": "Mavzusiz",
     "notTaken": "Belgilanmagan",
     "absentMark": "Y",
+    "lateMark": "K",
+    "late": "kech qoldi",
     "excusedMark": "S",
     "absent": "yoʻq",
     "excused": "sababli",
@@ -324,6 +327,10 @@
     }
   },
   "settings": {
+    "contacts": {
+      "title": "Aloqa",
+      "description": "Talabalaringizga «Oʻqituvchilarim» boʻlimida koʻrinadi."
+    },
     "title": "Sozlamalar",
     "general": {
       "title": "Til va mavzu",

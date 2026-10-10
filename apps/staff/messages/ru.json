@@ -19,7 +19,8 @@
     "groupInbox": "Входящие",
     "groupSettings": "Аккаунт",
     "studentSearch": "Поиск студента",
-    "notebooks": "Блокноты"
+    "notebooks": "Блокноты",
+    "mail": "Почта"
   },
   "audience": {
     "subgroup": "{group} · подгруппа {number}"
@@ -113,6 +114,8 @@
     "noTopic": "Без темы",
     "notTaken": "Не отмечено",
     "absentMark": "Н",
+    "lateMark": "О",
+    "late": "опоздал",
     "excusedMark": "У",
     "absent": "отсутствует",
     "excused": "уважительная причина",
@@ -324,6 +327,10 @@
     }
   },
   "settings": {
+    "contacts": {
+      "title": "Контакты",
+      "description": "Показываются вашим студентам в разделе «Мои преподаватели»."
+    },
     "title": "Настройки",
     "general": {
       "title": "Язык и тема",

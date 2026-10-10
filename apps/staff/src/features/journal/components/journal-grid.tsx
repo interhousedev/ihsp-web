@@ -98,7 +98,13 @@ export function JournalGrid({ journal, params }: { journal: Journal; params: Jou
                         notTaken={notTaken}
                         onToggle={() =>
                           toggle.mutate(
-                            { lessonId: lesson.id, studentId: student.user_id, absent: !cell.absent },
+                            {
+                              lessonId: lesson.id,
+                              studentId: student.user_id,
+                              // present -> absent -> late -> present
+                              absent: !cell.absent && !cell.late,
+                              late: cell.absent,
+                            },
                             { onError: (error) => toast.error(errorMessage(error)) },
                           )
                         }

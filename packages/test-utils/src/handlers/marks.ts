@@ -58,7 +58,8 @@ export const marksHandlers = [
         .filter((lesson) => lesson.date >= from && lesson.date <= to && new Date(lesson.starts_at).getTime() < now)
         .map((lesson, index) => ({
           lesson_id: lesson.id,
-          attendance: index % 4 === 3 ? ("absent" as const) : ("present" as const),
+          attendance:
+            index % 4 === 3 ? ("absent" as const) : index % 5 === 2 ? ("late" as const) : ("present" as const),
           mark: marks.find((item) => item.lesson_id === lesson.id)?.value ?? null,
         })),
     )

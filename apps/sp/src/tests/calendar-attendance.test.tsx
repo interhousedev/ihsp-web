@@ -30,11 +30,16 @@ describe("timetable attendance dots", () => {
     }
   })
 
-  test("present is a green dot and absent a red one", async () => {
+  test("present is a green check; absent and late tint the whole block", async () => {
     renderSp(<TimetablePage />, { route: "/timetable/" })
 
     await waitFor(() => expect(screen.getAllByRole("img", { name: "Present" }).length).toBeGreaterThan(0))
-    expect(screen.getAllByRole("img", { name: "Present" })[0]?.className).toContain("bg-green-600")
-    expect(screen.getAllByRole("img", { name: "Absent" })[0]?.className).toContain("bg-red-600")
+    expect(screen.getAllByRole("img", { name: "Present" })[0]?.getAttribute("class")).toContain("text-green-600")
+    const absent = screen.getAllByRole("img", { name: "Absent" })[0]?.closest("a")
+    expect(absent?.getAttribute("data-attendance")).toBe("absent")
+    expect(absent?.className).toContain("bg-red-800")
+    const late = screen.getAllByRole("img", { name: "Late" })[0]?.closest("a")
+    expect(late?.getAttribute("data-attendance")).toBe("late")
+    expect(late?.className).toContain("bg-orange-700")
   })
 })

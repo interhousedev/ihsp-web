@@ -77,7 +77,7 @@ describe("journal", () => {
 
     await waitFor(() =>
       expect(captured.bodies).toEqual([
-        { lesson_id: firstLesson.id, student_id: ids.student3, absent: true, base_version: 3 },
+        { lesson_id: firstLesson.id, student_id: ids.student3, absent: true, late: false, base_version: 3 },
       ]),
     )
     await waitFor(() => expect(cell).toHaveAttribute("aria-pressed", "true"))
@@ -90,8 +90,15 @@ describe("journal", () => {
       lesson_id: firstLesson.id,
       student_id: ids.student3,
       absent: false,
+      late: true,
       base_version: 4,
     })
+    await waitFor(() => expect(cell).toHaveAccessibleName(/: late$/))
+
+    await user.click(cell)
+
+    await waitFor(() => expect(captured.bodies).toHaveLength(3))
+    expect(captured.bodies[2]).toMatchObject({ absent: false, late: false })
   })
 
   test("the absence count of the student follows the toggle", async () => {

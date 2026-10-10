@@ -114,6 +114,7 @@ export const classworkHandlers = [
     if (!lesson) return notFound("Lesson")
     const body = await readJson<AttendanceSubmitBody>(request)
     const absent = new Set(body.absent ?? [])
+    const late = new Set(body.late ?? [])
     return HttpResponse.json({
       ...lesson.attendance,
       submitted: true,
@@ -121,7 +122,8 @@ export const classworkHandlers = [
       roster: lesson.attendance.roster.map((item) => ({
         ...item,
         absent: absent.has(item.user_id),
-        counted: item.counted || absent.has(item.user_id),
+        late: late.has(item.user_id),
+        counted: item.counted || absent.has(item.user_id) || late.has(item.user_id),
       })),
       submitted_at: FIXTURE_NOW,
       submitted_by: lesson.lesson.teacher,

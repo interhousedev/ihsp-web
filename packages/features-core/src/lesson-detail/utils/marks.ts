@@ -11,7 +11,8 @@ export type SheetRosterItem = RosterItem & { counted?: boolean }
  * present). A student without a subgroup who is not counted yet starts as `none` and counts only when marked
  * (ACA-2): `present` goes to `present_unassigned`, `absent` to `absent`.
  */
-export type Mark = "present" | "absent" | "none"
+export type Mark = "present" | "late" | "absent" | "none"
+export type AttendanceMark = "present" | "late" | "absent"
 export type Marks = Record<string, Mark>
 
 export function rosterOf(sheet: AttendanceSheet): SheetRosterItem[] {
@@ -33,6 +34,7 @@ export function initialMarks(sheet: AttendanceSheet): Marks {
   const marks: Marks = {}
   for (const item of rosterOf(sheet)) {
     if (item.absent) marks[item.user_id] = "absent"
+    else if (item.late) marks[item.user_id] = "late"
     else if (isUncounted(item, sheet)) marks[item.user_id] = "none"
     else marks[item.user_id] = "present"
   }
@@ -45,13 +47,13 @@ export function sameMarks(a: Marks, b: Marks): boolean {
   return true
 }
 
-/** Tap on a student of the audience: present becomes absent and back. */
-export function toggleAbsent(marks: Marks, userId: string): Marks {
-  return { ...marks, [userId]: marks[userId] === "absent" ? "present" : "absent" }
+/** The segmented control of a student of the audience picks exactly one of the three states. */
+export function setMark(marks: Marks, userId: string, mark: AttendanceMark): Marks {
+  return { ...marks, [userId]: mark }
 }
 
-/** Present / Absent buttons of an uncounted student: tapping the active one clears the mark. */
-export function setUnassignedMark(marks: Marks, userId: string, mark: "present" | "absent"): Marks {
+/** The buttons of an uncounted student: tapping the active one clears the mark. */
+export function setUnassignedMark(marks: Marks, userId: string, mark: AttendanceMark): Marks {
   return { ...marks, [userId]: marks[userId] === mark ? "none" : mark }
 }
 
@@ -68,19 +70,25 @@ export function absentCount(marks: Marks): number {
   return Object.values(marks).filter((mark) => mark === "absent").length
 }
 
+export function lateCount(marks: Marks): number {
+  return Object.values(marks).filter((mark) => mark === "late").length
+}
+
 /**
  * The body of `PUT /v1/staff/lessons/{id}/attendance`: exactly the list the teacher saw. Students without a subgroup
  * who are present go to `present_unassigned` (also the already counted ones, so they stay in the saved roster).
  */
 export function buildSubmitBody(marks: Marks, sheet: AttendanceSheet, baseVersion: number): AttendanceSubmitBody {
   const absent: string[] = []
+  const late: string[] = []
   const presentUnassigned: string[] = []
   for (const item of rosterOf(sheet)) {
     const mark = marks[item.user_id] ?? "none"
     if (mark === "absent") absent.push(item.user_id)
+    else if (mark === "late") late.push(item.user_id)
     else if (mark === "present" && item.subgroup_unset) presentUnassigned.push(item.user_id)
   }
-  return { absent, present_unassigned: presentUnassigned, base_version: baseVersion }
+  return { absent, late, present_unassigned: presentUnassigned, base_version: baseVersion }
 }
 
 export type RosterSection = { key: string; heading: string | null; uncounted: boolean; items: SheetRosterItem[] }

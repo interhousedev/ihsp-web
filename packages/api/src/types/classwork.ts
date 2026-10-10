@@ -63,6 +63,8 @@ export type RosterItem = {
   group_name: string
   subgroup_unset: boolean
   absent: boolean
+  /** Came late: counts as present for every rate. */
+  late: boolean
   excused: boolean
   excuse_comment: string | null
   /**
@@ -105,8 +107,9 @@ export type Journal = {
     user_id: string
     first_name: string
     last_name: string
-    cells: { lesson_id: string; absent: boolean; excused: boolean; marks: number[] }[]
+    cells: { lesson_id: string; absent: boolean; late: boolean; excused: boolean; marks: number[] }[]
     absences: number
+    lates: number
     semester_mark: number | null
   }[]
 }
@@ -145,6 +148,7 @@ export type StaffTopicBody = { topic: string }
 /** `present_unassigned` lists students without a subgroup who attended a subgroup lesson (ACA-2). */
 export type AttendanceSubmitBody = {
   absent: string[]
+  late: string[]
   present_unassigned: string[]
   base_version: number
 }
@@ -156,6 +160,7 @@ export type JournalToggleBody = {
   lesson_id: string
   student_id: string
   absent: boolean
+  late?: boolean
   base_version: number
 }
 export type JournalToggleResult = { attendance_version: number }

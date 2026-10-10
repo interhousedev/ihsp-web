@@ -2,7 +2,15 @@
 
 import type { AttendanceSheet } from "@ihsp/api"
 import { useCallback, useEffect, useState } from "react"
-import { everyonePresent, initialMarks, sameMarks, setUnassignedMark, toggleAbsent, type Marks } from "../utils/marks"
+import {
+  everyonePresent,
+  initialMarks,
+  sameMarks,
+  setMark,
+  setUnassignedMark,
+  type AttendanceMark,
+  type Marks,
+} from "../utils/marks"
 
 type Draft = {
   /** What the teacher sees now. */
@@ -35,13 +43,14 @@ export function useAttendanceDraft(sheet: AttendanceSheet) {
   const dirty = !sameMarks(draft.marks, draft.baseMarks)
   const stale = draft.baseVersion !== sheet.version && dirty
 
-  const toggle = useCallback(
-    (userId: string) => setDraft((current) => ({ ...current, marks: toggleAbsent(current.marks, userId) })),
+  const mark = useCallback(
+    (userId: string, next: AttendanceMark) =>
+      setDraft((current) => ({ ...current, marks: setMark(current.marks, userId, next) })),
     [],
   )
   const setUnassigned = useCallback(
-    (userId: string, mark: "present" | "absent") =>
-      setDraft((current) => ({ ...current, marks: setUnassignedMark(current.marks, userId, mark) })),
+    (userId: string, next: AttendanceMark) =>
+      setDraft((current) => ({ ...current, marks: setUnassignedMark(current.marks, userId, next) })),
     [],
   )
   const markEveryonePresent = useCallback(
@@ -62,7 +71,7 @@ export function useAttendanceDraft(sheet: AttendanceSheet) {
     baseVersion: draft.baseVersion,
     dirty,
     stale,
-    toggle,
+    mark,
     setUnassigned,
     markEveryonePresent,
     reset,

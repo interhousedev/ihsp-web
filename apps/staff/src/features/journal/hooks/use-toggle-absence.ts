@@ -22,6 +22,7 @@ export function useToggleAbsence(params: JournalParams) {
         lesson_id: change.lessonId,
         student_id: change.studentId,
         absent: change.absent,
+        late: change.late ?? false,
         base_version: version,
       })
     },

@@ -1,4 +1,17 @@
 {
+  "teacherContacts": {
+    "title": "Aloqa",
+    "telegram": "Telegram",
+    "phone": "Telefon",
+    "email": "Elektron pochta",
+    "office": "Xona",
+    "officeHours": "Qabul vaqti",
+    "note": "Izoh",
+    "save": "Saqlash",
+    "saved": "Aloqa maʼlumotlari saqlandi",
+    "saveFailed": "Aloqa maʼlumotlarini saqlab boʻlmadi",
+    "invalid": "Telegram nomi, telefon va pochtani tekshiring"
+  },
   "common": {
     "appName": "IHSP",
     "loading": "Yuklanmoqda…",
@@ -834,6 +847,41 @@
       "previous": "Oldingi",
       "next": "Keyingi",
       "page": "{page}-sahifa"
+    },
+    "drive": {
+      "title": "Fayllarim",
+      "search": "Nomi boʻyicha qidirish",
+      "type": "Fayl turi",
+      "types": {
+        "all": "Barcha turlar",
+        "documents": "Hujjatlar",
+        "images": "Rasmlar",
+        "video": "Video",
+        "presentations": "Taqdimotlar",
+        "spreadsheets": "Jadvallar",
+        "pdf": "PDF"
+      },
+      "sort": "Tartib",
+      "recent": "Avval yangilari",
+      "older": "Avval eskilari",
+      "view": "Koʻrinish",
+      "grid": "Katak",
+      "list": "Roʻyxat",
+      "upload": "Yuklash",
+      "drop": "Yuklash uchun fayllarni tashlang",
+      "uploading": "{count, plural, one {# fayl yuklanmoqda…} other {# fayl yuklanmoqda…}}",
+      "rejected": "“{name}” fayli qabul qilinmadi.",
+      "empty": "Fayl topilmadi.",
+      "files": "Fayllar",
+      "loadMore": "Yana koʻrsatish",
+      "preview": "Koʻrib chiqish",
+      "noPreview": "Koʻrish uchun faylni bosing.",
+      "selected": "{count, plural, =0 {Hech narsa tanlanmagan} other {# ta tanlandi}}",
+      "cancel": "Bekor qilish",
+      "confirm": "Tanlash",
+      "size": "Hajmi",
+      "kind": "Turi",
+      "added": "Qoʻshilgan"
     }
   },
   "lessonDetail": {
@@ -940,11 +988,10 @@
       "absent": "Yoʻq",
       "excused": "Sababli",
       "everyonePresent": "Hamma bor",
-      "hint": "Hamma bor deb belgilangan. Kelmaganlarning belgisini olib tashlang.",
+      "hint": "Hamma bor deb belgilangan. Kech qolgan va kelmaganlarni belgilang.",
       "notTaken": "Bu darsda davomat belgilanmagan.",
       "submittedAt": "Yuborilgan: {time}.",
       "submittedBy": "Yuborilgan: {time}, belgilagan: {name}.",
-      "summary": "Bor: {present} / {total}",
       "submit": "Davomatni yuborish",
       "saveChanges": "Oʻzgarishlarni saqlash",
       "saving": "Saqlanmoqda…",
@@ -969,8 +1016,10 @@
         "review": "Joriy roʻyxatni koʻrsatish",
         "keepMine": "Belgilarimni qoldirish"
       },
-      "absentCount": "yoʻq: {count}",
-      "presentFor": "Bor: {name}"
+      "absentCount": "{count} ta yoʻq",
+      "lateCount": "{count} ta kech qoldi",
+      "presentCount": "{count} ta bor",
+      "late": "Kech qoldi"
     },
     "audience": {
       "subgroup": "{group} · {number}-kichik guruh"
@@ -1157,5 +1206,12 @@
     "sent": "Xat yuborildi",
     "failed": "Xat yuborilmadi.",
     "recipientsHelp": "Manzillarni vergul bilan ajrating."
+  },
+  "mailPage": {
+    "title": "Pochta",
+    "compose": "Yangi xat",
+    "sent": "Yuborilganlar",
+    "empty": "Siz hali xat yubormagansiz.",
+    "loadMore": "Yana koʻrsatish"
   }
 }

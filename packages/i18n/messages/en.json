@@ -1,4 +1,17 @@
 {
+  "teacherContacts": {
+    "title": "Contacts",
+    "telegram": "Telegram",
+    "phone": "Phone",
+    "email": "Email",
+    "office": "Office / room",
+    "officeHours": "Office hours",
+    "note": "Note",
+    "save": "Save",
+    "saved": "Contacts saved",
+    "saveFailed": "Could not save the contacts",
+    "invalid": "Check the Telegram name, phone and email"
+  },
   "common": {
     "appName": "IHSP",
     "loading": "Loading…",
@@ -834,6 +847,41 @@
       "previous": "Previous",
       "next": "Next",
       "page": "Page {page}"
+    },
+    "drive": {
+      "title": "My files",
+      "search": "Search by name",
+      "type": "File type",
+      "types": {
+        "all": "All types",
+        "documents": "Documents",
+        "images": "Images",
+        "video": "Video",
+        "presentations": "Presentations",
+        "spreadsheets": "Spreadsheets",
+        "pdf": "PDF"
+      },
+      "sort": "Order",
+      "recent": "Recent first",
+      "older": "Older first",
+      "view": "View",
+      "grid": "Grid",
+      "list": "List",
+      "upload": "Upload",
+      "drop": "Drop files to upload",
+      "uploading": "{count, plural, one {Uploading # file…} other {Uploading # files…}}",
+      "rejected": "{name} was not accepted.",
+      "empty": "No files found.",
+      "files": "Files",
+      "loadMore": "Load more",
+      "preview": "Preview",
+      "noPreview": "Click a file to preview it.",
+      "selected": "{count, plural, =0 {Nothing selected} one {# selected} other {# selected}}",
+      "cancel": "Cancel",
+      "confirm": "Select",
+      "size": "Size",
+      "kind": "Type",
+      "added": "Added"
     }
   },
   "lessonDetail": {
@@ -940,11 +988,10 @@
       "absent": "Absent",
       "excused": "Excused",
       "everyonePresent": "Everyone present",
-      "hint": "Everyone is ticked as present. Untick the students who were absent.",
+      "hint": "Everyone starts as present. Mark who was late or absent.",
       "notTaken": "Attendance was not taken for this lesson.",
       "submittedAt": "Submitted {time}.",
       "submittedBy": "Submitted {time} by {name}.",
-      "summary": "Present: {present} of {total}",
       "submit": "Submit attendance",
       "saveChanges": "Save changes",
       "saving": "Saving…",
@@ -969,8 +1016,10 @@
         "review": "Show the current list",
         "keepMine": "Keep my marks"
       },
-      "absentCount": "{count, plural, one {# absent} other {# absent}}",
-      "presentFor": "Present: {name}"
+      "absentCount": "{count} absent",
+      "lateCount": "{count, plural, one {# late} other {# late}}",
+      "presentCount": "{count} present",
+      "late": "Late"
     },
     "audience": {
       "subgroup": "{group} · subgroup {number}"
@@ -1157,5 +1206,12 @@
     "sent": "Email sent",
     "failed": "The email was not sent.",
     "recipientsHelp": "Separate addresses with commas."
+  },
+  "mailPage": {
+    "title": "Email",
+    "compose": "New email",
+    "sent": "Sent",
+    "empty": "You have not sent any emails yet.",
+    "loadMore": "Show more"
   }
 }

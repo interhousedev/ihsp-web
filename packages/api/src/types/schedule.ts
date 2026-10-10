@@ -155,6 +155,7 @@ export type LessonItem = {
   attendance_submitted: boolean
   /** Students marked absent; `null` while no attendance sheet was submitted. */
   absent_count?: number | null
+  late_count?: number | null
 }
 
 export type ExtraLessonInput = {

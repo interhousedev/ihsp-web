@@ -30,7 +30,7 @@ describe("lesson page", () => {
     expect(screen.getByText("Worked example on YouTube")).toBeInTheDocument()
     expect(screen.getByLabelText("Homework text")).toHaveValue("Solve problems 14-17 on page 52")
     expect(section("attendance")).toBeInTheDocument()
-    expect(screen.getByRole("checkbox", { name: /Ismoilov Jasur/ })).toBeInTheDocument()
+    expect(screen.getByRole("radiogroup", { name: /Ismoilov Jasur/ })).toBeInTheDocument()
   })
 
   test("without ?id= it asks to pick a lesson", async () => {

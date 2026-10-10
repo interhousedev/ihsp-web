@@ -57,38 +57,58 @@ function captureSubmit(): { bodies: unknown[] } {
   return captured
 }
 
+function radio(name: RegExp | string, state: "Present" | "Late" | "Absent") {
+  return within(screen.getByRole("radiogroup", { name })).getByRole("radio", { name: state })
+}
+
 describe("attendance sheet", () => {
-  test("everyone starts ticked; unticking a student and submitting sends absent and base_version", async () => {
+  test("everyone starts present; marking a student absent and submitting sends absent and base_version", async () => {
     const captured = captureSubmit()
     const { user } = renderStaff(<Harness />)
 
-    const row = await screen.findByRole("checkbox", { name: /Ismoilov Jasur/ })
-    expect(row).toBeChecked()
-    expect(screen.getByText(/^Present: 3 of 3/)).toBeInTheDocument()
+    await screen.findByRole("radiogroup", { name: /Ismoilov Jasur/ })
+    expect(radio(/Ismoilov Jasur/, "Present")).toBeChecked()
+    expect(screen.getByText(/^3 present/)).toBeInTheDocument()
 
-    await user.click(row)
-    expect(row).not.toBeChecked()
-    expect(screen.getByText(/^Present: 2 of 3 · 1 absent/)).toBeInTheDocument()
+    await user.click(radio(/Ismoilov Jasur/, "Absent"))
+    expect(radio(/Ismoilov Jasur/, "Absent")).toBeChecked()
+    expect(screen.getByText(/^2 present · 1 absent/)).toBeInTheDocument()
 
     await user.click(screen.getByRole("button", { name: "Submit attendance" }))
 
     await waitFor(() =>
-      expect(captured.bodies).toEqual([{ absent: [ids.student2], present_unassigned: [], base_version: 3 }]),
+      expect(captured.bodies).toEqual([{ absent: [ids.student2], late: [], present_unassigned: [], base_version: 3 }]),
     )
     expect(await screen.findByRole("button", { name: "Save changes" })).toBeDisabled()
   })
 
-  test("clicking the row (the name) does not toggle anything; only the tick does", async () => {
+  test("late counts as present in the summary and is sent in the late list", async () => {
+    const captured = captureSubmit()
     const { user } = renderStaff(<Harness />)
-    const tick = await screen.findByRole("checkbox", { name: /Ismoilov Jasur/ })
+    await screen.findByRole("radiogroup", { name: /Ismoilov Jasur/ })
 
     await user.click(screen.getByText("Ismoilov Jasur"))
-    expect(tick).toBeChecked()
-    expect(screen.getByText(/^Present: 3 of 3/)).toBeInTheDocument()
+    expect(radio(/Ismoilov Jasur/, "Present")).toBeChecked()
 
-    await user.click(tick)
-    expect(tick).not.toBeChecked()
-    expect(screen.getByText(/^Present: 2 of 3 · 1 absent/)).toBeInTheDocument()
+    await user.click(radio(/Ismoilov Jasur/, "Late"))
+    expect(screen.getByText(/^2 present · 1 late/)).toBeInTheDocument()
+
+    await user.click(screen.getByRole("button", { name: "Submit attendance" }))
+
+    await waitFor(() =>
+      expect(captured.bodies).toEqual([{ absent: [], late: [ids.student2], present_unassigned: [], base_version: 3 }]),
+    )
+  })
+
+  test("the arrow keys move between the states", async () => {
+    const { user } = renderStaff(<Harness />)
+    await screen.findByRole("radiogroup", { name: /Ismoilov Jasur/ })
+
+    radio(/Ismoilov Jasur/, "Present").focus()
+    await user.keyboard("{ArrowRight}")
+    expect(radio(/Ismoilov Jasur/, "Late")).toBeChecked()
+    await user.keyboard("{ArrowRight}")
+    expect(radio(/Ismoilov Jasur/, "Absent")).toBeChecked()
   })
 
   test("students without a subgroup are listed separately and count only when marked", async () => {
@@ -99,14 +119,14 @@ describe("attendance sheet", () => {
     const unassigned = screen.getByRole("listitem", { name: "Qodirov Sardor" })
     expect(screen.getByText(/1 student not counted/)).toBeInTheDocument()
 
-    await user.click(within(unassigned).getByRole("button", { name: "Present" }))
-    expect(within(unassigned).getByRole("button", { name: "Present" })).toHaveAttribute("aria-pressed", "true")
+    await user.click(within(unassigned).getByRole("radio", { name: "Present" }))
+    expect(within(unassigned).getByRole("radio", { name: "Present" })).toBeChecked()
     expect(screen.queryByText(/not counted/)).not.toBeInTheDocument()
 
     await user.click(screen.getByRole("button", { name: "Submit attendance" }))
 
     await waitFor(() =>
-      expect(captured.bodies).toEqual([{ absent: [], present_unassigned: [ids.student4], base_version: 3 }]),
+      expect(captured.bodies).toEqual([{ absent: [], late: [], present_unassigned: [ids.student4], base_version: 3 }]),
     )
   })
 
@@ -116,7 +136,7 @@ describe("attendance sheet", () => {
 
     await user.click(await screen.findByRole("button", { name: "Submit attendance" }))
 
-    await waitFor(() => expect(captured.bodies).toEqual([{ absent: [], present_unassigned: [], base_version: 3 }]))
+    await waitFor(() => expect(captured.bodies).toEqual([{ absent: [], late: [], present_unassigned: [], base_version: 3 }]))
   })
 
   test("a student the backend counted (counted flag) is a normal row", async () => {
@@ -125,15 +145,16 @@ describe("attendance sheet", () => {
     )
     renderStaff(<AttendanceSheetView lesson={lessonData.lesson} sheet={{ ...attendanceSheet, roster }} />)
 
-    expect(await screen.findByRole("checkbox", { name: /Qodirov Sardor/ })).toBeChecked()
+    await screen.findByRole("radiogroup", { name: /Qodirov Sardor/ })
+    expect(radio(/Qodirov Sardor/, "Present")).toBeChecked()
     expect(screen.queryByText("Students without a subgroup")).not.toBeInTheDocument()
-    expect(screen.getByText(/^Present: 4 of 4/)).toBeInTheDocument()
+    expect(screen.getByText(/^4 present/)).toBeInTheDocument()
   })
 
   test("a 409 shows the conflict dialog with the current list; keeping my marks submits against the new version", async () => {
     const { user } = renderStaff(<Harness />)
-    const row = await screen.findByRole("checkbox", { name: /Ismoilov Jasur/ })
-    await user.click(row)
+    await screen.findByRole("radiogroup", { name: /Ismoilov Jasur/ })
+    await user.click(radio(/Ismoilov Jasur/, "Absent"))
     server.use(errorHandlers.conflictAttendance)
 
     await user.click(screen.getByRole("button", { name: "Submit attendance" }))
@@ -145,18 +166,19 @@ describe("attendance sheet", () => {
     const captured = captureSubmit()
     await user.click(within(dialog).getByRole("button", { name: "Keep my marks" }))
     await waitFor(() => expect(screen.queryByRole("dialog")).not.toBeInTheDocument())
-    expect(screen.getByRole("checkbox", { name: /Ismoilov Jasur/ })).not.toBeChecked()
+    expect(radio(/Ismoilov Jasur/, "Absent")).toBeChecked()
 
     await user.click(screen.getByRole("button", { name: "Submit attendance" }))
 
     await waitFor(() =>
-      expect(captured.bodies).toEqual([{ absent: [ids.student2], present_unassigned: [], base_version: 4 }]),
+      expect(captured.bodies).toEqual([{ absent: [ids.student2], late: [], present_unassigned: [], base_version: 4 }]),
     )
   })
 
   test("a 409 lets the teacher review the current list instead", async () => {
     const { user } = renderStaff(<Harness />)
-    await user.click(await screen.findByRole("checkbox", { name: /Ismoilov Jasur/ }))
+    await screen.findByRole("radiogroup", { name: /Ismoilov Jasur/ })
+    await user.click(radio(/Ismoilov Jasur/, "Absent"))
     server.use(errorHandlers.conflictAttendance)
 
     await user.click(screen.getByRole("button", { name: "Submit attendance" }))
@@ -164,7 +186,7 @@ describe("attendance sheet", () => {
     await user.click(within(dialog).getByRole("button", { name: "Show the current list" }))
 
     await waitFor(() => expect(screen.queryByRole("dialog")).not.toBeInTheDocument())
-    expect(screen.getByRole("checkbox", { name: /Ismoilov Jasur/ })).toBeChecked()
+    expect(radio(/Ismoilov Jasur/, "Present")).toBeChecked()
   })
 
   test("the sheet is read-only after the 7-day window", async () => {
@@ -173,7 +195,7 @@ describe("attendance sheet", () => {
     )
 
     expect(await screen.findByText(/7-day window has passed/)).toBeInTheDocument()
-    expect(screen.queryByRole("checkbox", { name: /Ismoilov Jasur/ })).not.toBeInTheDocument()
+    expect(screen.queryByRole("radiogroup", { name: /Ismoilov Jasur/ })).not.toBeInTheDocument()
     expect(screen.queryByRole("button", { name: "Submit attendance" })).not.toBeInTheDocument()
     expect(screen.queryByRole("button", { name: "Save changes" })).not.toBeInTheDocument()
     expect(screen.queryByRole("button", { name: "Everyone present" })).not.toBeInTheDocument()
@@ -198,12 +220,13 @@ describe("attendance sheet", () => {
 
   test("Everyone present clears the absences", async () => {
     const { user } = renderStaff(<AttendanceSheetView lesson={lessonData.lesson} sheet={attendanceSheet} />)
-    await user.click(await screen.findByRole("checkbox", { name: /Ismoilov Jasur/ }))
-    expect(screen.getByRole("checkbox", { name: /Ismoilov Jasur/ })).not.toBeChecked()
+    await screen.findByRole("radiogroup", { name: /Ismoilov Jasur/ })
+    await user.click(radio(/Ismoilov Jasur/, "Absent"))
+    expect(radio(/Ismoilov Jasur/, "Absent")).toBeChecked()
 
     await user.click(screen.getByRole("button", { name: "Everyone present" }))
 
-    expect(screen.getByRole("checkbox", { name: /Ismoilov Jasur/ })).toBeChecked()
+    expect(radio(/Ismoilov Jasur/, "Present")).toBeChecked()
   })
 })
 
@@ -228,7 +251,7 @@ describe("attendance marks", () => {
     }
     expect(buildSubmitBody(marks, attendanceSheet, 7)).toEqual({
       absent: [ids.student3],
-      present_unassigned: [ids.student4],
+      late: [], present_unassigned: [ids.student4],
       base_version: 7,
     })
   })

@@ -19,7 +19,8 @@
     "groupInbox": "Inbox",
     "groupSettings": "Account",
     "studentSearch": "Find a student",
-    "notebooks": "Notebooks"
+    "notebooks": "Notebooks",
+    "mail": "Email"
   },
   "audience": {
     "subgroup": "{group} · subgroup {number}"
@@ -113,6 +114,8 @@
     "noTopic": "No topic",
     "notTaken": "Not taken",
     "absentMark": "A",
+    "lateMark": "L",
+    "late": "late",
     "excusedMark": "E",
     "absent": "absent",
     "excused": "excused",
@@ -324,6 +327,10 @@
     }
   },
   "settings": {
+    "contacts": {
+      "title": "Contacts",
+      "description": "Shown to your students on My teachers."
+    },
     "title": "Settings",
     "general": {
       "title": "Language and theme",

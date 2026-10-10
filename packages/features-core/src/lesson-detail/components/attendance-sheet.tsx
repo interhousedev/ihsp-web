@@ -11,7 +11,7 @@ import { useAttendanceDraft } from "../hooks/use-attendance-draft"
 import { useSubmitAttendance } from "../hooks/use-submit-attendance"
 import { applyAttendanceSheet } from "../utils/cache"
 import { conflictingSheet, isLessonCancelled, isWindowClosed } from "../utils/conflict"
-import { absentCount, buildSubmitBody, isUncounted, rosterOf, rosterSections } from "../utils/marks"
+import { absentCount, buildSubmitBody, lateCount, isUncounted, rosterOf, rosterSections } from "../utils/marks"
 import { AttendanceConflictDialog } from "./attendance-conflict-dialog"
 import { RosterRow } from "./roster-row"
 import { UncountedRow } from "./uncounted-row"
@@ -41,6 +41,7 @@ export function AttendanceSheetView({ lesson, sheet }: { lesson: LessonItem; she
   ).length
   const total = counted.length + markedUncounted
   const absent = absentCount(draft.marks)
+  const late = lateCount(draft.marks)
   const unmarkedCount = rosterOf(sheet).filter(
     (item) => isUncounted(item, sheet) && (draft.marks[item.user_id] ?? "none") === "none",
   ).length
@@ -151,7 +152,7 @@ export function AttendanceSheetView({ lesson, sheet }: { lesson: LessonItem; she
                         item={item}
                         mark={draft.marks[item.user_id] ?? "present"}
                         readOnly={readOnly}
-                        onToggle={() => draft.toggle(item.user_id)}
+                        onMark={(mark) => draft.mark(item.user_id, mark)}
                       />
                     ),
                   )}
@@ -161,8 +162,13 @@ export function AttendanceSheetView({ lesson, sheet }: { lesson: LessonItem; she
           )}
 
           <p className="text-sm font-medium" aria-live="polite">
-            {t("summary", { present: total - absent, total })}
-            {absent > 0 ? ` · ${t("absentCount", { count: absent })}` : null}
+            {[
+              t("presentCount", { count: total - absent - late }),
+              late > 0 ? t("lateCount", { count: late }) : null,
+              absent > 0 ? t("absentCount", { count: absent }) : null,
+            ]
+              .filter(Boolean)
+              .join(" · ")}
             {unmarkedCount > 0 ? ` · ${t("unassigned.notCounted", { count: unmarkedCount })}` : null}
           </p>
 
