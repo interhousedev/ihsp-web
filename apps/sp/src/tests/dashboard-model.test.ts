@@ -1,84 +1,126 @@
-/** The dashboard model: allowed sizes, packing, moving, colours with readable text. */
-import { describe, expect, test } from "bun:test";
+/** The Today dashboard model: packing, sizes, colour contrast and the layout merge. */
+import { describe, expect, test } from "bun:test"
+import type { DashboardWidget, DashboardWidgetKind, DashboardWidgetSize } from "@ihsp/api"
 import {
-  PALETTE,
-  WIDGET_SIZES,
   addWidget,
   colorWidget,
   contrastRatio,
-  moveWidget,
-  inOrder,
+  pack,
   removeWidget,
   resizeWidget,
+  spanOf,
   textOn,
-} from "../features/today/dashboard/model";
+  WIDGET_SIZES,
+  withTodayWidgets,
+  type Widget,
+} from "../features/today/dashboard/model"
 
-describe("dashboard model", () => {
-  test("adding gives the first allowed size and packs without overlaps", () => {
-    let widgets = addWidget([], "timetable");
-    widgets = addWidget(widgets, "homework");
-    widgets = addWidget(widgets, "marks");
+let counter = 0
 
-    expect(widgets.map((w) => w.size)).toEqual(["2x1", "1x1", "1x1"]);
-    expect(widgets.map((w) => [w.x, w.y])).toEqual([
-      [0, 0],
-      [2, 0],
-      [3, 0],
-    ]);
-  });
+function widget(kind: DashboardWidgetKind, size: DashboardWidgetSize, extra: Partial<Widget> = {}): Widget {
+  counter += 1
+  return {
+    id: `00000000-0000-4000-8000-${String(counter).padStart(12, "0")}`,
+    kind,
+    size,
+    x: 0,
+    y: 0,
+    color: null,
+    config: { layout: "2" },
+    text_color: null,
+    ...extra,
+  }
+}
 
-  test("resizing only accepts sizes the kind allows", () => {
-    const [timetable] = addWidget([], "timetable");
-    expect(WIDGET_SIZES.timetable).not.toContain("1x1");
+function cells(widgets: readonly Widget[]): string[] {
+  return widgets.flatMap((w) => {
+    const { cols, rows } = spanOf(w.size)
+    return Array.from({ length: cols * rows }, (_, i) => `${w.x + (i % cols)},${w.y + Math.floor(i / cols)}`)
+  })
+}
 
-    expect(resizeWidget([timetable!], timetable!.id, "1x1")[0]?.size).toBe(
-      "2x1",
-    );
-    expect(resizeWidget([timetable!], timetable!.id, "2x4")[0]?.size).toBe(
-      "2x4",
-    );
-  });
+describe("dashboard packing", () => {
+  test("pack places widgets without overlap in a 4-column grid, in the given order", () => {
+    const packed = pack([
+      widget("today_lessons", "2x2"),
+      widget("homework", "2x1"),
+      widget("semester_summary", "1x1"),
+      widget("announcements", "2x4"),
+    ])
 
-  test("a wider tile pushes the next one to the next row", () => {
-    let widgets = addWidget(addWidget([], "homework"), "marks");
-    widgets = resizeWidget(widgets, widgets[0]!.id, "2x2");
-    widgets = addWidget(widgets, "exams");
+    expect(new Set(cells(packed)).size).toBe(cells(packed).length)
+    expect(packed.every((w) => w.x >= 0 && w.x + spanOf(w.size).cols <= 4)).toBe(true)
+    expect(packed[0]).toMatchObject({ x: 0, y: 0 })
+    expect(packed[1]).toMatchObject({ x: 2, y: 0 })
+  })
 
-    expect(widgets.map((w) => [w.x, w.y])).toEqual([
-      [0, 0],
-      [2, 0],
-      [3, 0],
-    ]);
-  });
+  test("addWidget uses the first allowed size and appends at the end", () => {
+    const added = addWidget([widget("next_lesson", "2x1")], "today_lessons")
+    const last = added[added.length - 1]
 
-  test("moving reorders and removing closes the gap", () => {
-    const widgets = addWidget(
-      addWidget(addWidget([], "homework"), "marks"),
-      "exams",
-    );
-    const [a, b, c] = widgets;
-    const moved = moveWidget(widgets, c!.id, 0);
+    expect(last?.kind).toBe("today_lessons")
+    expect(last?.size).toBe(WIDGET_SIZES.today_lessons[0])
+  })
 
-    expect(inOrder(moved).map((w) => w.id)).toEqual([c!.id, a!.id, b!.id]);
-    expect(removeWidget(moved, a!.id).map((w) => w.id)).toEqual([c!.id, b!.id]);
-  });
+  test("removeWidget closes the gap it leaves", () => {
+    const first = widget("next_lesson", "2x1")
+    const second = widget("alerts", "2x1")
+    const left = removeWidget([first, second], first.id)
 
-  test("text is white on black, black on white and readable on every palette colour", () => {
-    expect(textOn("#000000")).toBe("#FFFFFF");
-    expect(textOn("#FFFFFF")).toBe("#000000");
-    for (const color of PALETTE)
-      expect(contrastRatio(color, textOn(color))).toBeGreaterThanOrEqual(4.5);
-  });
+    expect(left).toHaveLength(1)
+    expect(left[0]).toMatchObject({ id: second.id, x: 0, y: 0 })
+  })
+})
 
-  test("colouring a widget sets its text colour and clearing removes both", () => {
-    const widgets = addWidget([], "homework");
-    const id = widgets[0]!.id;
+describe("dashboard sizes", () => {
+  test("resizeWidget accepts only a size the kind allows", () => {
+    const w = widget("today_lessons", "2x2")
 
-    const dark = colorWidget(widgets, id, "#000000");
-    expect(dark[0]).toMatchObject({ color: "#000000", text_color: "#FFFFFF" });
-    expect(colorWidget(dark, id, null)[0]).toMatchObject({
-      color: null,
-      text_color: null,
-    });
-  });
-});
+    expect(resizeWidget([w], w.id, "1x1")[0]?.size).toBe("2x2")
+    expect(resizeWidget([w], w.id, "2x4")[0]?.size).toBe("2x4")
+  })
+
+  test("every kind has at least one size and the adaptive kinds take 1x1, 2x1 and 2x2", () => {
+    for (const kind of ["upcoming_controls", "next_lesson", "semester_summary", "alerts"] as const) {
+      expect(WIDGET_SIZES[kind]).toEqual(expect.arrayContaining(["1x1", "2x1", "2x2"]))
+    }
+  })
+})
+
+describe("dashboard colour", () => {
+  test("colorWidget stores the readable text colour and clears it with the colour", () => {
+    const w = widget("alerts", "2x1")
+    const dark = colorWidget([w], w.id, "#007AFF")[0]
+    expect(dark?.color).toBe("#007AFF")
+    expect(dark?.text_color).toBe(textOn("#007AFF"))
+
+    const cleared = colorWidget([dark as Widget], w.id, null)[0]
+    expect(cleared?.text_color).toBeNull()
+  })
+
+  test("textOn picks the text with the higher contrast", () => {
+    expect(contrastRatio("#FFFFFF", textOn("#FFFFFF"))).toBeGreaterThanOrEqual(4.5)
+    expect(textOn("#1C1C1E")).toBe("#FFFFFF")
+  })
+})
+
+describe("layout merge", () => {
+  test("a layout without the mark gets every missing Today kind once, and is marked", () => {
+    const legacy: DashboardWidget[] = [
+      { ...widget("homework", "2x1"), config: {} },
+      { ...widget("marks", "2x1"), config: {} },
+    ]
+    const merged = withTodayWidgets(legacy)
+    const kinds = merged.map((w) => w.kind)
+
+    expect(new Set(kinds).size).toBe(kinds.length)
+    expect(kinds).toEqual(expect.arrayContaining(["next_lesson", "upcoming_controls", "announcements", "get_started"]))
+    expect(merged.every((w) => w.config.layout === "2")).toBe(true)
+    expect(withTodayWidgets(merged)).toEqual(merged)
+  })
+
+  test("a marked layout keeps the widgets the student removed", () => {
+    const marked = [widget("homework", "2x1")]
+    expect(withTodayWidgets(marked)).toEqual(marked)
+  })
+})

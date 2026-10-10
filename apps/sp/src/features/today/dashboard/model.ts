@@ -22,7 +22,57 @@ export const WIDGET_SIZES: Record<
   notebook_prompt: ["2x1", "2x2"],
   attendance: ["1x1", "2x1"],
   clock_next_lesson: ["1x1", "2x1", "2x2"],
+  upcoming_controls: ["2x1", "1x1", "2x2"],
+  next_lesson: ["2x1", "1x1", "2x2"],
+  today_lessons: ["2x2", "2x1", "2x4"],
+  semester_summary: ["1x1", "2x1", "2x2"],
+  announcements: ["2x1", "2x2", "2x4"],
+  new_marks: ["1x1", "2x1", "2x2"],
+  alerts: ["2x1", "1x1", "2x2"],
+  get_started: ["2x1", "2x2"],
 };
+
+/** The catalogue groups (`today.dashboard.groups.<id>`) and the kinds in each. */
+export const WIDGET_GROUPS: readonly {
+  id: "study" | "control" | "news" | "tools";
+  kinds: readonly DashboardWidgetKind[];
+}[] = [
+  {
+    id: "study",
+    kinds: [
+      "next_lesson",
+      "today_lessons",
+      "timetable",
+      "clock_next_lesson",
+      "homework",
+      "semester_summary",
+      "marks",
+      "new_marks",
+      "attendance",
+    ],
+  },
+  { id: "control", kinds: ["upcoming_controls", "exams", "alerts"] },
+  { id: "news", kinds: ["announcements"] },
+  {
+    id: "tools",
+    kinds: ["flashcards_due", "notebook_prompt", "get_started"],
+  },
+];
+
+/** The kinds that replaced the fixed sections of Today; a layout saved before them gets them appended once. */
+export const TODAY_KINDS: readonly DashboardWidgetKind[] = [
+  "next_lesson",
+  "upcoming_controls",
+  "today_lessons",
+  "semester_summary",
+  "announcements",
+  "new_marks",
+  "alerts",
+  "get_started",
+];
+
+/** Config entry every widget of a migrated layout carries (the backend default sets it too). */
+export const LAYOUT_MARK = { key: "layout", value: "2" } as const;
 
 export const WIDGET_KINDS = Object.keys(WIDGET_SIZES) as DashboardWidgetKind[];
 
@@ -165,6 +215,33 @@ export function moveWidget(
   ordered.splice(from, 1);
   ordered.splice(Math.max(0, Math.min(toIndex, ordered.length)), 0, moved);
   return pack(ordered);
+}
+
+/**
+ * Migration on read: a layout saved before the Today sections became widgets gets the missing ones appended, once.
+ * Every widget then carries `config.layout = "2"`, so later loads (and widgets the student removed) are left alone.
+ * An empty saved layout stays empty.
+ */
+export function withTodayWidgets(widgets: readonly Widget[]): Widget[] {
+  if (
+    widgets.length === 0 ||
+    widgets.some((w) => w.config[LAYOUT_MARK.key] === LAYOUT_MARK.value)
+  )
+    return [...widgets];
+  const mark = { [LAYOUT_MARK.key]: LAYOUT_MARK.value };
+  const present = new Set(widgets.map((w) => w.kind));
+  const marked = inOrder(widgets).map((w) => ({
+    ...w,
+    config: { ...w.config, ...mark },
+  }));
+  let result: Widget[] = marked;
+  for (const kind of TODAY_KINDS) {
+    if (present.has(kind) || result.length >= MAX_WIDGETS) continue;
+    result = addWidget(result, kind).map((w) =>
+      w.config[LAYOUT_MARK.key] ? w : { ...w, config: mark },
+    );
+  }
+  return result;
 }
 
 /** What the server stores: no computed text colour. */

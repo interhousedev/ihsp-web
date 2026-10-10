@@ -2,10 +2,15 @@
 
 import { getMeDashboardQuery, keys, putMeDashboard } from "@ihsp/api";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import { toSaveBody, type Widget } from "./model";
+import { toSaveBody, withTodayWidgets, type Widget } from "./model";
 
+function migrate(layout: { version: number; widgets: Widget[] }) {
+  return { ...layout, widgets: withTodayWidgets(layout.widgets) };
+}
+
+/** The stored layout with the Today widgets appended once when it predates them (see `withTodayWidgets`). */
 export function useDashboard() {
-  return useQuery(getMeDashboardQuery());
+  return useQuery({ ...getMeDashboardQuery(), select: migrate });
 }
 
 /** Saves the edited widgets with the version they were read at; the answer replaces the cached layout. */
