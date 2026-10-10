@@ -267,6 +267,51 @@ describe("NotebookChat: answer actions", () => {
     expect(actions.showTab).toHaveBeenCalledWith("studio")
   })
 
+  it("switches the quick action notice to ready once the item is done", async () => {
+    const item = {
+      id: "new-map",
+      notebook_id: nbIds.notebook,
+      kind: "mind_map",
+      format: null,
+      title: "Map",
+      status: "queued",
+      error: null,
+      options: {},
+      prompt: null,
+      source_count: 3,
+      sampled: false,
+      unread: false,
+      progress: null,
+      has_assets: false,
+      parent_id: null,
+      flashcard_set_id: null,
+      created_at: "2026-10-07T05:00:00Z",
+      finished_at: null,
+    }
+    let status = "queued"
+    let posted = false
+    server.use(
+      http.post(apiUrl(`/v1/notebooks/${nbIds.notebook}/artifacts`), () => {
+        posted = true
+        return HttpResponse.json(item, { status: 202 })
+      }),
+      http.get(apiUrl(`/v1/notebooks/${nbIds.notebook}/artifacts`), () =>
+        HttpResponse.json(posted ? [{ ...item, status }] : []),
+      ),
+    )
+    const { user, queryClient } = await renderChat()
+
+    await user.click(await screen.findByRole("button", { name: "Mind map" }))
+    expect(await screen.findByText("“Mind map” is being created.")).toBeInTheDocument()
+
+    status = "ready"
+    await queryClient.invalidateQueries()
+
+    expect(await screen.findByText("“Mind map” is ready.")).toBeInTheDocument()
+    expect(screen.queryByText("“Mind map” is being created.")).not.toBeInTheDocument()
+    expect(screen.getByRole("button", { name: "Open Studio" })).toBeInTheDocument()
+  })
+
   it("shows the busy state of a chip while an item of its kind is being created", async () => {
     await renderChat()
 

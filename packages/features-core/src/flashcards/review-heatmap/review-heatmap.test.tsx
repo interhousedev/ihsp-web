@@ -86,4 +86,12 @@ describe("ReviewHeatmap (Anki's calendar under the deck list)", () => {
 
     expect(screen.queryByRole("button", { name: "Previous year" })).not.toBeInTheDocument()
   })
+
+  it("fills its parent width so a centering column cannot clip the scroller", () => {
+    renderWithProviders(<ReviewHeatmap stats={flashcardStats} today={TODAY} />)
+
+    const section = screen.getByRole("region")
+    expect(section).toHaveClass("w-full", "min-w-0")
+    expect(screen.getByTestId("review-heatmap")).toHaveClass("overflow-x-auto", "w-full")
+  })
 })

@@ -267,12 +267,16 @@
       "quick": {
         "label": "Oʻquv materiallarini yaratish",
         "started": "«{kind}» yaratilmoqda.",
+        "ready": "«{kind}» tayyor.",
+        "failed": "«{kind}» yaratib bo‘lmadi.",
         "open": "Studiyani ochish"
       },
       "action": {
         "title": "«{kind}» yaratilsinmi?",
         "focus": "Yoʻnalish: {prompt}",
-        "created": "«{kind}» yaratilmoqda."
+        "created": "«{kind}» yaratilmoqda.",
+        "ready": "«{kind}» tayyor.",
+        "failed": "«{kind}» yaratib bo‘lmadi."
       },
       "web": "Internetdan ham qidirish",
       "legend": "① manbalaringiz · 🌐 veb-sahifalar",

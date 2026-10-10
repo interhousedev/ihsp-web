@@ -7,7 +7,7 @@ import { IconSparkles } from "@ihsp/ui"
 import { useId, useState } from "react"
 import { useCreateArtifact } from "../api"
 import { artifactKindKey, useNotebookErrorMessage } from "../lib"
-import { useWorkspace } from "../workspace-context"
+import { ArtifactNotice } from "./artifact-notice"
 
 /** Option names whose values have labels under `notebooks.opt.<name>.<value>`. */
 const LABELLED_OPTIONS = ["count", "difficulty", "detail", "style"] as const
@@ -53,9 +53,8 @@ export function ActionCard({ notebookId, create, onDismiss }: ActionCardProps) {
   const tc = useT("common")
   const titleId = useId()
   const errorMessage = useNotebookErrorMessage()
-  const workspace = useWorkspace()
   const mutation = useCreateArtifact(notebookId)
-  const [created, setCreated] = useState(false)
+  const [created, setCreated] = useState<string | null>(null)
 
   const kind = kindLabel(t, create)
   const options = describeOptions(t, create)
@@ -85,24 +84,14 @@ export function ActionCard({ notebookId, create, onDismiss }: ActionCardProps) {
         </div>
       </div>
       {created ? (
-        <p role="status" className="text-muted-foreground flex flex-wrap items-center gap-x-2 text-sm">
-          {t("chat.action.created", { kind })}
-          <Button
-            type="button"
-            variant="link"
-            className="h-auto min-h-11 p-0 md:min-h-0"
-            onClick={() => workspace.showTab("studio")}
-          >
-            {t("chat.quick.open")}
-          </Button>
-        </p>
+        <ArtifactNotice notebookId={notebookId} artifactId={created} kind={kind} scope="chat.action" />
       ) : (
         <div className="flex flex-wrap gap-2">
           <Button
             type="button"
             className="min-h-11 md:min-h-8"
             disabled={mutation.isPending}
-            onClick={() => mutation.mutate(create, { onSuccess: () => setCreated(true) })}
+            onClick={() => mutation.mutate(create, { onSuccess: (item) => setCreated(item.id) })}
           >
             {mutation.isPending ? <Spinner aria-hidden /> : null}
             {tc("create")}

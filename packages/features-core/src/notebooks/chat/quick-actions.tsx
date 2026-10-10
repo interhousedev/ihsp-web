@@ -6,7 +6,7 @@ import { Button, Spinner } from "@ihsp/ui"
 import { useState } from "react"
 import { useArtifacts, useCreateArtifact, useNotebookUsage, notebookLimit } from "../api"
 import { STUDIO_TILES, defaultCreate, isActive, quotaReached, useNotebookErrorMessage, type StudioTile } from "../lib"
-import { useWorkspace } from "../workspace-context"
+import { ArtifactNotice } from "./artifact-notice"
 
 const QUICK_TILES: readonly StudioTile["id"][] = ["conspect", "mind_map", "quiz", "flashcards"]
 
@@ -32,11 +32,10 @@ export function QuickActions({ notebookId, disabled }: QuickActionsProps) {
   const t = useT("notebooks.chat")
   const tk = useT("notebooks.kind")
   const errorMessage = useNotebookErrorMessage()
-  const workspace = useWorkspace()
-  const create = useCreateArtifact(notebookId)
+    const create = useCreateArtifact(notebookId)
   const artifacts = useArtifacts(notebookId)
   const usage = useNotebookUsage(notebookId)
-  const [started, setStarted] = useState<StudioTile | null>(null)
+  const [started, setStarted] = useState<{ tile: StudioTile; artifactId: string } | null>(null)
   const [starting, setStarting] = useState<StudioTile["id"] | null>(null)
   const limited = notebookLimit(usage.data).reached
 
@@ -44,7 +43,7 @@ export function QuickActions({ notebookId, disabled }: QuickActionsProps) {
     setStarted(null)
     setStarting(tile.id)
     create.mutate(defaultCreate(tile), {
-      onSuccess: () => setStarted(tile),
+      onSuccess: (item) => setStarted({ tile, artifactId: item.id }),
       onSettled: () => setStarting(null),
     })
   }
@@ -75,17 +74,12 @@ export function QuickActions({ notebookId, disabled }: QuickActionsProps) {
         })}
       </ul>
       {started ? (
-        <p role="status" className="text-muted-foreground flex flex-wrap items-center gap-x-2 text-sm">
-          {t("quick.started", { kind: tk(started.labelKey) })}
-          <Button
-            type="button"
-            variant="link"
-            className="h-auto min-h-11 p-0 md:min-h-0"
-            onClick={() => workspace.showTab("studio")}
-          >
-            {t("quick.open")}
-          </Button>
-        </p>
+        <ArtifactNotice
+          notebookId={notebookId}
+          artifactId={started.artifactId}
+          kind={tk(started.tile.labelKey)}
+          scope="chat.quick"
+        />
       ) : null}
       {create.isError ? (
         <p role="alert" className="text-destructive text-sm">

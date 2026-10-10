@@ -60,7 +60,7 @@ export function ReviewHeatmap({ stats, onYearChange, today = todayIso(), classNa
   }
 
   return (
-    <section className={cn("flex min-w-0 flex-col items-center gap-2", className)} aria-label={t("title")}>
+    <section className={cn("flex w-full min-w-0 max-w-full flex-col items-center gap-2", className)} aria-label={t("title")}>
       {onYearChange ? (
         <div className="flex items-center gap-1">
           <Button

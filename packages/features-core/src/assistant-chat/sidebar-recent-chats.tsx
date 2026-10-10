@@ -7,6 +7,7 @@ import { SidebarChatRow } from "./sidebar-chat-row"
 import { useChats } from "./use-assistant-queries"
 import type { ChatActions } from "./use-chat-actions"
 import { useAssistantScope } from "./assistant-context"
+import { isUntitledChat } from "./untitled-chat"
 
 const PAGE = 20
 
@@ -26,7 +27,8 @@ export function SidebarRecentChats({ activeChatId, basePath, actions, onNavigate
   const chats = useChats(assistant)
   const [visible, setVisible] = useState(PAGE)
 
-  const items = chats.data?.items ?? []
+  // A chat without a message still carries the placeholder title; it is not worth a row (the open one stays).
+  const items = (chats.data?.items ?? []).filter((chat) => chat.id === activeChatId || !isUntitledChat(chat.title))
 
   return (
     <section aria-labelledby="assistant-recent-heading" className="flex flex-col gap-1">

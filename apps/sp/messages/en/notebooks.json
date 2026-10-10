@@ -267,12 +267,16 @@
       "quick": {
         "label": "Create study materials",
         "started": "“{kind}” is being created.",
+        "ready": "“{kind}” is ready.",
+        "failed": "“{kind}” could not be created.",
         "open": "Open Studio"
       },
       "action": {
         "title": "Create “{kind}”?",
         "focus": "Focus: {prompt}",
-        "created": "“{kind}” is being created."
+        "created": "“{kind}” is being created.",
+        "ready": "“{kind}” is ready.",
+        "failed": "“{kind}” could not be created."
       },
       "web": "Search the web too",
       "legend": "① your sources · 🌐 web pages",
