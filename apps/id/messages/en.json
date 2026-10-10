@@ -523,8 +523,16 @@
       "revision": "Revision",
       "course_reviewer": "Course reviewer",
       "course_author": "Course author",
+      "module_editor": "Module editor",
+      "course_manager": "Course manager",
       "attendance_analyst": "Attendance analyst",
       "timetable_viewer": "Timetable viewer"
+    },
+    "scopeHints": {
+      "lms_courses_read": "Read courses, steps, versions and attempts.",
+      "lms_courses_write": "Create courses and change their title and description.",
+      "lms_courses_delete": "Delete (archive) courses.",
+      "lms_modules_write": "Edit modules, lessons and steps only, not the course itself."
     },
     "new": {
       "action": "New connector",

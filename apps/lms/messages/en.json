@@ -859,6 +859,19 @@
     "failed": "Not passed",
     "review": "Review"
   },
+  "broadcasts": {
+    "historyTitle": "Updates sent to students",
+    "open": "Send an update",
+    "empty": "No updates sent yet.",
+    "dialogTitle": "Update the students",
+    "dialogDescription": "Every enrolled student gets a notification in the app, on their devices and in Telegram.",
+    "titleLabel": "Title",
+    "bodyLabel": "Message",
+    "bodyHint": "{used} of {max} characters",
+    "send": "Send to students",
+    "close": "Close",
+    "sent": "Sent to {count, plural, one {# student} other {# students}}."
+  },
   "attempt": {
     "title": "Attempt review",
     "backToStudents": "Back to students",

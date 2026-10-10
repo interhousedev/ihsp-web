@@ -1,4 +1,5 @@
 import type {
+  CourseBroadcast,
   CourseDraft,
   PendingChanges,
   RevisionItem,
@@ -199,3 +200,16 @@ export const versionCompare: VersionCompare = {
     },
   ],
 }
+
+/** One update that was already sent to the students of the fixture course. */
+export const courseBroadcasts: CourseBroadcast[] = [
+  {
+    id: "0000000c-0000-4000-8000-0000000000b1",
+    course_id: ids.course,
+    author_id: ids.teacherRakhimov,
+    title: "Week 3 is online",
+    body: "New lessons on derivatives are open.\nTake the quiz by Friday.",
+    created_at: "2026-10-05T09:00:00Z",
+    recipients: null,
+  },
+]

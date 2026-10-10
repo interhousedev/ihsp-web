@@ -859,6 +859,19 @@
     "failed": "O'tmadi",
     "review": "Tekshirish"
   },
+  "broadcasts": {
+    "historyTitle": "Talabalarga yuborilgan yangilanishlar",
+    "open": "Yangilanish yuborish",
+    "empty": "Hozircha yangilanish yuborilmagan.",
+    "dialogTitle": "Talabalarni yangilash",
+    "dialogDescription": "Kursga yozilgan har bir talaba ilovada, qurilmalarida va Telegramda bildirishnoma oladi.",
+    "titleLabel": "Sarlavha",
+    "bodyLabel": "Xabar",
+    "bodyHint": "{used} / {max} belgi",
+    "send": "Talabalarga yuborish",
+    "close": "Yopish",
+    "sent": "{count} talabaga yuborildi."
+  },
   "attempt": {
     "title": "Urinishni tekshirish",
     "backToStudents": "Talabalarga qaytish",

@@ -27,3 +27,8 @@ export function humanizeKey(key: string): string {
   const text = key.replace(/[-_]+/g, " ").trim()
   return text.charAt(0).toUpperCase() + text.slice(1)
 }
+
+/** `lms.modules.write` -> `lms_modules_write`: message keys cannot contain dots. */
+export function scopeHintKey(scope: string): string {
+  return `connectors.scopeHints.${scope.replace(/[.:]/g, "_")}`
+}

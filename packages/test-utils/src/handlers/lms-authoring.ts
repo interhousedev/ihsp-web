@@ -1,5 +1,7 @@
 import type {
   CheckpointBody,
+  CourseBroadcast,
+  CourseBroadcastBody,
   CourseCreateBody,
   CourseCreator,
   CourseSettingsBody,
@@ -17,6 +19,7 @@ import type {
 } from "@ihsp/api"
 import { HttpResponse, http } from "msw"
 import {
+  courseBroadcasts,
   courseDraft,
   pendingChanges,
   revisionItems,
@@ -173,6 +176,20 @@ export const lmsAuthoringHandlers = [
   http.get(apiUrl("/v1/lms/steps/:id/diff"), () => HttpResponse.json(stepDiff)),
 
   // --- Course pending changes, publishing, versions ---
+  http.get(apiUrl("/v1/staff/lms/courses/:id/broadcasts"), () => HttpResponse.json(courseBroadcasts)),
+  http.post(apiUrl("/v1/staff/lms/courses/:id/broadcasts"), async ({ params, request }) => {
+    const body = await readJson<CourseBroadcastBody>(request)
+    const created: CourseBroadcast = {
+      id: nextId(36),
+      course_id: param(params, "id"),
+      author_id: persons.rakhimov.id,
+      title: body.title ?? "",
+      body: body.body ?? "",
+      created_at: FIXTURE_NOW,
+      recipients: 12,
+    }
+    return HttpResponse.json(created satisfies CourseBroadcast, { status: 201 })
+  }),
   http.get(apiUrl("/v1/lms/courses/:id/pending"), () => HttpResponse.json(pendingChanges satisfies PendingChanges)),
   http.post(apiUrl("/v1/lms/courses/:id/publish"), async ({ request }) => {
     const body = await readJson<PublishBody>(request)

@@ -151,14 +151,21 @@ export const scopeCatalog: ScopeCatalog = {
       roles: ["admin", "lms_admin", "student", "teacher"],
       scopes: [
         {
-          scope: "courses:read",
+          scope: "lms.courses.read",
           tools: ["list_courses", "get_course", "get_step", "list_pending_changes", "list_versions", "list_attempts"],
         },
+        { scope: "lms.courses.write", tools: ["create_course", "update_course"] },
+        { scope: "lms.courses.delete", tools: ["delete_course"] },
         {
-          scope: "courses:draft",
+          scope: "lms.modules.write",
           tools: [
+            "create_module",
+            "update_module",
+            "delete_module",
             "create_section",
             "create_step",
+            "update_step",
+            "delete_step",
             "add_text_block",
             "add_test_block",
             "add_question",
@@ -167,8 +174,13 @@ export const scopeCatalog: ScopeCatalog = {
         },
       ],
       presets: [
-        { key: "course-reviewer", scopes: ["courses:read"] },
-        { key: "course-author", scopes: ["courses:read", "courses:draft"] },
+        { key: "course-reviewer", scopes: ["lms.courses.read"] },
+        { key: "module-editor", scopes: ["lms.courses.read", "lms.modules.write"] },
+        { key: "course-author", scopes: ["lms.courses.read", "lms.courses.write", "lms.modules.write"] },
+        {
+          key: "course-manager",
+          scopes: ["lms.courses.read", "lms.courses.write", "lms.courses.delete", "lms.modules.write"],
+        },
       ],
     },
     {

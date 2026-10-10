@@ -60,6 +60,27 @@ describe("new connector page", () => {
     })
   })
 
+  test("the LMS server offers a module-editor preset that grants no course scope", async () => {
+    let body = null as Record<string, unknown> | null
+    server.use(
+      http.post(apiUrl("/v1/id/me/connectors"), async ({ request }) => {
+        body = (await request.json()) as Record<string, unknown>
+        return HttpResponse.json({ connector: { ...connectors[0], name: "Mod" }, token: connectorToken })
+      }),
+    )
+    renderId(<NewConnectorPage />, { route: "/connectors/new/", session: LOGGED_IN })
+
+    fireEvent.change(await screen.findByLabelText("Server"), { target: { value: "lms" } })
+    expect(await screen.findByText("Read courses, steps, versions and attempts.")).toBeInTheDocument()
+    expect(screen.getByText("Edit modules, lessons and steps only, not the course itself.")).toBeInTheDocument()
+    fireEvent.click(await screen.findByText("Module editor"))
+    await fillField("Name", "Mod")
+    await clickButton("Create connector")
+
+    await screen.findByTestId("connector-token")
+    expect(body?.scopes).toEqual(["lms.courses.read", "lms.modules.write"])
+  })
+
   test("a connector without a name or scope is not sent", async () => {
     renderId(<NewConnectorPage />, { route: "/connectors/new/", session: LOGGED_IN })
 

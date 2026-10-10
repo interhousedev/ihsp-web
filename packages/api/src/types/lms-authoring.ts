@@ -161,6 +161,20 @@ export type CourseCreator = {
 
 // --- Request bodies and query parameters ---
 
+/** `POST /v1/staff/lms/courses/{id}/broadcasts`: an update for the enrolled students (title up to 120, text up to 2000). */
+export type CourseBroadcastBody = { title: string; body: string }
+
+/** A sent course broadcast; `recipients` is known only in the answer to the POST. */
+export type CourseBroadcast = {
+  id: string
+  course_id: string
+  author_id: string
+  title: string
+  body: string
+  created_at: string
+  recipients?: number | null
+}
+
 export type CourseCreateBody = { title: string; slug: string; visibility: "public" | "invite" }
 export type DraftMetaBody = { title: string; description: string; lock_version: number }
 export type OutlineOpsBody = { ops: OutlineOp[]; lock_version: number }

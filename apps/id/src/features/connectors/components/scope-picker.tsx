@@ -4,7 +4,7 @@ import type { ScopeCatalog } from "@ihsp/api"
 import { Label, RadioGroup, RadioGroupItem } from "@ihsp/ui"
 import { CheckboxRow } from "../../shared/components/checkbox-row"
 import { useTr } from "../../shared/hooks/use-tr"
-import { humanizeKey } from "../utils/connector-config"
+import { humanizeKey, scopeHintKey } from "../utils/connector-config"
 
 const CUSTOM = "custom"
 
@@ -67,6 +67,9 @@ export function ScopePicker({ entry, scopes, preset, onPreset, onScopes }: Scope
             onCheckedChange={(checked) => toggle(item.scope, checked)}
           >
             <code className="text-sm font-medium break-all">{item.scope}</code>
+            {t.has(scopeHintKey(item.scope)) ? (
+              <span className="text-xs">{t(scopeHintKey(item.scope))}</span>
+            ) : null}
             <span className="text-muted-foreground text-xs">
               {t("consent.tools", { tools: item.tools.join(", ") })}
             </span>

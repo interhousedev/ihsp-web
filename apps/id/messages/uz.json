@@ -523,8 +523,16 @@
       "revision": "Takrorlash",
       "course_reviewer": "Kurs taqrizchisi",
       "course_author": "Kurs muallifi",
+      "module_editor": "Modul muharriri",
+      "course_manager": "Kurslarni boshqarish",
       "attendance_analyst": "Davomat tahlilchisi",
       "timetable_viewer": "Dars jadvalini ko‘rish"
+    },
+    "scopeHints": {
+      "lms_courses_read": "Kurslar, qadamlar, versiyalar va urinishlarni oʻqish.",
+      "lms_courses_write": "Kurs yaratish, nomi va tavsifini oʻzgartirish.",
+      "lms_courses_delete": "Kurslarni oʻchirish (arxivlash).",
+      "lms_modules_write": "Faqat modul, dars va qadamlarni tahrirlash, kursning oʻzini emas."
     },
     "new": {
       "action": "Yangi konnektor",

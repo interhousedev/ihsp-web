@@ -523,8 +523,16 @@
       "revision": "Повторение",
       "course_reviewer": "Рецензент курса",
       "course_author": "Автор курса",
+      "module_editor": "Редактор модулей",
+      "course_manager": "Управление курсами",
       "attendance_analyst": "Аналитик посещаемости",
       "timetable_viewer": "Просмотр расписания"
+    },
+    "scopeHints": {
+      "lms_courses_read": "Чтение курсов, шагов, версий и попыток.",
+      "lms_courses_write": "Создание курсов и изменение названия и описания.",
+      "lms_courses_delete": "Удаление (архивация) курсов.",
+      "lms_modules_write": "Правка только модулей, уроков и шагов, но не самого курса."
     },
     "new": {
       "action": "Новый коннектор",

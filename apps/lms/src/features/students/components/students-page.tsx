@@ -11,6 +11,7 @@ import { hrefs } from "../../shared/utils/hrefs"
 import { personName } from "../../shared/utils/people"
 import { can } from "../../shared/utils/permissions"
 import { LinkButton } from "../../shared/components/link-button"
+import { CourseBroadcastHistory } from "../../admin/components/course-broadcast-history"
 
 function StudentCard({
   student,
@@ -79,6 +80,7 @@ export function StudentsPage({ courseId }: { courseId: string }) {
           search={search}
           onSearch={setSearch}
           canReadDraft={can(permissions, "edit") || can(permissions, "view_drafts")}
+          canBroadcast={can(permissions, "publish") || can(permissions, "manage_staff")}
         />
       )}
     </EditorFrame>
@@ -91,12 +93,14 @@ function StudentsBody({
   search,
   onSearch,
   canReadDraft,
+  canBroadcast,
 }: {
   courseId: string
   students: UseQueryResult<CourseStudent[]>
   search: string
   onSearch: (value: string) => void
   canReadDraft: boolean
+  canBroadcast: boolean
 }) {
   const t = useT("students")
   const draft = useQuery({ ...getLmsCourseDraftQuery(courseId), enabled: canReadDraft, retry: false })
@@ -133,6 +137,7 @@ function StudentsBody({
           )
         }}
       </QueryState>
+      {canBroadcast ? <CourseBroadcastHistory courseId={courseId} /> : null}
     </div>
   )
 }

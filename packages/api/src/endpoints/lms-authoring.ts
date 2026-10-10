@@ -6,6 +6,8 @@ import { queryOptions, seg, type RequestOptions } from "../query"
 import type { NoContent, Page, PageParams } from "../types/common"
 import type {
   CheckpointBody,
+  CourseBroadcast,
+  CourseBroadcastBody,
   CourseCreateBody,
   CourseCreator,
   CourseDraft,
@@ -267,3 +269,22 @@ export const getLmsCoursePreviewStepQuery = (courseId: string, stepId: string) =
 // --- Names used by the app plans ---
 
 export const postCourse = postLmsCourses
+
+/** POST /v1/staff/lms/courses/{id}/broadcasts — course publish or manage_staff (or lms_admin); notifies the enrolled students. */
+export function postLmsCourseBroadcast(
+  courseId: string,
+  body: CourseBroadcastBody,
+  opts?: RequestOptions,
+): Promise<CourseBroadcast> {
+  return api.post<CourseBroadcast>(`/v1/staff/lms/courses/${seg(courseId)}/broadcasts`, body, opts)
+}
+
+/** GET /v1/staff/lms/courses/{id}/broadcasts — the broadcasts sent to the course, newest first. */
+export function getLmsCourseBroadcasts(courseId: string, opts?: RequestOptions): Promise<CourseBroadcast[]> {
+  return api.get<CourseBroadcast[]>(`/v1/staff/lms/courses/${seg(courseId)}/broadcasts`, opts)
+}
+export const getLmsCourseBroadcastsQuery = (courseId: string) =>
+  queryOptions({
+    queryKey: keys.lms.broadcasts(courseId),
+    queryFn: ({ signal }) => getLmsCourseBroadcasts(courseId, { signal }),
+  })
