@@ -486,8 +486,3 @@ export function CodeFields({ question, onChange }: Props) {
   )
 }
 
-/** Free answer: nothing to configure; a teacher scores it. */
-export function FreeFields() {
-  const t = useT("testBuilder")
-  return <p className="text-muted-foreground text-sm">{t("freeHint")}</p>
-}

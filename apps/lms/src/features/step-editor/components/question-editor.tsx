@@ -11,7 +11,6 @@ import {
   BlanksFields,
   CodeFields,
   FormulaFields,
-  FreeFields,
   MatchingFields,
   RandomFields,
   SortingFields,
@@ -149,9 +148,7 @@ export function QuestionEditor({
         <FormulaFields question={question} onChange={onChange} keyOf={keyOf} />
       ) : question.type === "code" ? (
         <CodeFields question={question} onChange={onChange} keyOf={keyOf} />
-      ) : question.type === "free" ? (
-        <FreeFields />
-      ) : (
+      ) : question.type === "free" ? null : (
         <AnswerConfigEditor
           type={question.type}
           answer={question.answer}

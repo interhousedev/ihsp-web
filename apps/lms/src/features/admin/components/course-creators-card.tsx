@@ -17,7 +17,6 @@ import {
   Button,
   Card,
   CardContent,
-  CardDescription,
   CardHeader,
   CardTitle,
   ConfirmDialog,
@@ -72,7 +71,6 @@ export function CourseCreatorsCard() {
     <Card className="max-w-lg">
       <CardHeader>
         <CardTitle>{t("creators.title")}</CardTitle>
-        <CardDescription>{t("creators.description")}</CardDescription>
       </CardHeader>
       <CardContent className="flex flex-col gap-4">
         <form onSubmit={search} className="flex flex-col gap-2" role="search">

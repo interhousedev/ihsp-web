@@ -16,7 +16,7 @@ export function MyCoursesPage() {
   const courses = useQuery(getLmsMyCoursesQuery())
   return (
     <StepikScope>
-      <PageContainer title={t("title")} description={t("description")}>
+      <PageContainer title={t("title")}>
         <QueryState
           query={courses}
           isEmpty={(data) => data.enrolled.length === 0 && data.managed.length === 0}

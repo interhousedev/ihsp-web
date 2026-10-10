@@ -26,7 +26,7 @@ export function StatsPage() {
   const number = new Intl.NumberFormat(locale)
 
   return (
-    <PageContainer title={t("title")} description={t("description")}>
+    <PageContainer title={t("title")}>
       <div role="group" aria-label={t("range")} className="flex flex-wrap items-end gap-3">
         <div className="flex flex-col gap-1.5">
           <Label htmlFor="stats-from">{t("from")}</Label>

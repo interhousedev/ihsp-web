@@ -2,7 +2,6 @@
   "manage": {
     "topics": {
       "title": "Mavzular",
-      "description": "Har bir fanning mavzular daraxti. Kitob va materiallar shu mavzular bilan belgilanadi.",
       "add": "Mavzu qoʻshish",
       "subject": "Fan",
       "empty": "“{subject}” fanida hali mavzular yoʻq.",
@@ -28,7 +27,6 @@
     },
     "collections": {
       "title": "Toʻplamlar",
-      "description": "Oʻquvchilar bosh sahifada koʻradigan tanlab olingan materiallar toʻplamlari.",
       "add": "Yangi toʻplam",
       "empty": "Hozircha toʻplamlar yoʻq.",
       "listLabel": "Toʻplamlar",
@@ -68,7 +66,6 @@
     },
     "stats": {
       "title": "Statistika",
-      "description": "Kutubxonadan qanday foydalanilmoqda va kutubxonachilar qanchalik tez javob bermoqda.",
       "range": "Davr",
       "from": "Boshlanishi",
       "to": "Tugashi",
@@ -99,7 +96,6 @@
     },
     "unilibrary": {
       "title": "UniLibrary",
-      "description": "UniLibrary — yozuvlarini havolali kartochkalar sifatida koʻrsatish mumkin boʻlgan davlat xizmati. Siz uni shu yerda yoqmaguningizcha u oʻchiq turadi.",
       "settings": {
         "title": "Sozlamalar",
         "explanation": "UniLibrary odatda oʻchiq. U oʻchiq ekan, kutubxonada UniLibrary dan hech narsa koʻrsatilmaydi: manba belgisi ham, filtr ham, kartochkalar ham, “UniLibrary’dan yana” boʻlimi ham yoʻq, server esa unga murojaat qilmaydi.",
@@ -170,7 +166,6 @@
     },
     "books": {
       "title": "Kitoblar",
-      "description": "Kutubxonaning oʻz kitoblari: huquqlar, fayllar, fanlar va eʼlon qilish.",
       "new": "Yangi kitob",
       "import": "Ommaviy import",
       "filters": "Kitoblarni topish",
@@ -217,7 +212,6 @@
     "editor": {
       "newTitle": "Yangi kitob",
       "editTitle": "Kitobni tahrirlash",
-      "pageDescription": "Maʼlumotlar, huquq asosi va fayllarni toʻldiring, soʻng eʼlon qiling.",
       "back": "Kitoblar roʻyxatiga",
       "viewPublic": "Kitob sahifasini ochish",
       "statusLabel": "Holat",
@@ -424,7 +418,6 @@
     },
     "queue": {
       "title": "Koʻrib chiqish navbati",
-      "description": "Oʻquvchi va oʻqituvchilar yuborganini tekshiring, shikoyatlar, kitob huquqlari va takliflarni koʻrib chiqing.",
       "tabsLabel": "Navbat boʻlimlari",
       "tab": {
         "review": "Koʻrib chiqish uchun",
@@ -541,7 +534,6 @@
     },
     "reports": {
       "title": "Shikoyatlar",
-      "description": "Oʻquvchilar shikoyat qilgan materiallar. Har birini ikki oʻquv kun ichida hal qiling.",
       "section": {
         "open": "Ochiq shikoyatlar",
         "held": "Shikoyatdan keyin toʻxtatilgan"

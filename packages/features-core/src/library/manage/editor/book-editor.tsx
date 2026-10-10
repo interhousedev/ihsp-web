@@ -54,7 +54,6 @@ export function BookEditor({ id, initialTitle = "" }: { id: string | null; initi
   return (
     <PageContainer
       title={id ? form.title || t("editTitle") : t("newTitle")}
-      description={t("pageDescription")}
       actions={
         <>
           <Link

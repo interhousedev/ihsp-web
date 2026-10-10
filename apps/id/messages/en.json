@@ -298,7 +298,6 @@
   },
   "security": {
     "title": "Security",
-    "description": "Your password, OTP, Telegram, sessions and connected apps.",
     "profile": "Account",
     "on": "On",
     "off": "Off",
@@ -312,28 +311,19 @@
     },
     "cards": {
       "password": "Password",
-      "passwordHint": "Change your password.",
       "otp": "OTP login",
-      "otpHint": "Log in with a one-time code.",
       "telegram": "Telegram",
-      "telegramHint": "Linked accounts and OTP delivery.",
       "telegramCount": "Linked: {count}",
       "email": "Recovery email",
       "emailMissing": "No email set",
       "sessions": "Sessions",
-      "sessionsHint": "Devices where you are logged in.",
       "activity": "Activity",
-      "activityHint": "Logins and security changes.",
       "emis": "EMIS account",
-      "emisHint": "The password IHSP uses to read EMIS.",
       "emisActive": "Working",
       "emisNeedsReauth": "Needs a new password",
       "connectors": "Connectors",
-      "connectorsHint": "Give AI apps access to your data.",
       "appearance": "Appearance",
-      "appearanceHint": "Light, dark or system theme.",
-      "delete": "Delete account",
-      "deleteHint": "Remove your account and data."
+      "delete": "Delete account"
     },
     "emisBanner": {
       "title": "EMIS rejected the saved password",
@@ -342,7 +332,6 @@
     },
     "sessions": {
       "title": "Sessions",
-      "description": "Devices where you are logged in. Log out of any you do not recognise.",
       "empty": "No active sessions.",
       "current": "This device",
       "deviceOn": "{browser} on {os}",
@@ -360,7 +349,6 @@
     },
     "telegram": {
       "title": "Telegram accounts",
-      "description": "Telegram accounts linked to your account get notifications and OTP codes.",
       "linkTitle": "Link Telegram",
       "linkDescription": "Open the bot, press Log in and log in there. The account is linked automatically.",
       "link": "Open the bot",
@@ -376,7 +364,6 @@
     },
     "otp": {
       "title": "OTP login",
-      "description": "Log in with a one-time code instead of a password.",
       "enabled": "OTP login is on. Codes go to your linked Telegram accounts.",
       "enabledWithEmail": "OTP login is on. Codes go to your linked Telegram accounts and the recovery email.",
       "enableTitle": "Turn on OTP login",
@@ -398,7 +385,6 @@
     },
     "email": {
       "title": "Recovery email",
-      "description": "Codes and security notices go to this address.",
       "current": "Current: {email}",
       "hint": "Enter your password and the new address. We send a code to it.",
       "new": "New email",
@@ -415,7 +401,6 @@
     },
     "activity": {
       "title": "Activity",
-      "description": "Recent security events of your account.",
       "empty": "No events yet.",
       "more": "Load more",
       "by": "By {name}",
@@ -449,7 +434,6 @@
     },
     "emis": {
       "title": "EMIS account",
-      "description": "IHSP reads your marks from EMIS with a saved password.",
       "formTitle": "Update the EMIS password",
       "formDescription": "We check the new password in EMIS before saving it.",
       "submit": "Check and save",
@@ -457,7 +441,6 @@
     },
     "delete": {
       "title": "Delete account",
-      "description": "This removes your account and personal data.",
       "deletedTitle": "What is deleted",
       "items": {
         "account": "Your account and profile",
@@ -484,18 +467,13 @@
   },
   "appearance": {
     "title": "Appearance",
-    "description": "Choose how IHSP looks. The choice is saved in your account and used on every IHSP platform.",
     "theme": "Theme",
     "light": "Light",
-    "lightHint": "Always use the light theme.",
     "dark": "Dark",
-    "darkHint": "Always use the dark theme.",
-    "system": "System",
-    "systemHint": "Follow the setting of this device."
+    "system": "System"
   },
   "connectors": {
     "title": "Connectors",
-    "description": "AI apps that can use your IHSP data through MCP.",
     "empty": "No connectors yet.",
     "createdAt": "Created",
     "lastUsed": "Last used",
@@ -537,7 +515,6 @@
     "new": {
       "action": "New connector",
       "pageTitle": "New connector",
-      "pageDescription": "Create a token for an AI app.",
       "title": "Connector settings",
       "description": "Choose the server, what the app may do and for how long.",
       "noServers": "No MCP server is available for your roles.",

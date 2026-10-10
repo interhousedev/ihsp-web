@@ -44,7 +44,7 @@ export function EmisPasswordPage() {
   })
 
   return (
-    <PageContainer title={t("security.emis.title")} description={t("security.emis.description")}>
+    <PageContainer title={t("security.emis.title")}>
       <QueryBoundary query={me}>
         {(user) => (
           <div className="grid gap-4">

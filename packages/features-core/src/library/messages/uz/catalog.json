@@ -1,7 +1,6 @@
 {
   "home": {
     "title": "Kutubxona",
-    "description": "Litseyning kitoblari, darsliklari va oʻquv materiallari",
     "searchLabel": "Kutubxonadan qidirish",
     "search": "Kitob, material, muallif va mavzularni qidirish",
     "searchButton": "Qidirish",
@@ -226,7 +225,6 @@
   },
   "readingList": {
     "title": "Oʻqish roʻyxatlari",
-    "description": "Oʻqituvchilaringiz tuzgan kitob va materiallar roʻyxatlari",
     "empty": "Oʻqish roʻyxatlari hozircha yoʻq.",
     "new": "Yangi roʻyxat",
     "edit": "Roʻyxatni tahrirlash",

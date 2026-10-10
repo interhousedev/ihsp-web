@@ -1,7 +1,6 @@
 {
   "upload": {
     "title": "Material qoʻshish",
-    "description": "Litsey bilan konspekt, ish varaqalari va boshqa oʻquv materiallarini ulashing.",
     "continueTitle": "Yuklashni davom ettirish",
     "resubmitTitle": "Tuzatib, qayta yuborish",
     "editTitle": "Materialni tahrirlash",
@@ -226,7 +225,6 @@
     },
     "suggest": {
       "title": "Kitob taklif qilish",
-      "description": "Kutubxonada boʻlishi kerak boʻlgan kitob haqida kutubxonachilarga ayting. Ular koʻrib chiqadi.",
       "titleLabel": "Kitob nomi",
       "titleRequired": "Nomini yozing.",
       "urlLabel": "Havola (ixtiyoriy)",
@@ -258,7 +256,6 @@
   "listEditor": {
     "newTitle": "Yangi oʻqish roʻyxati",
     "editTitle": "Oʻqish roʻyxatini tahrirlash",
-    "description": "Oʻquvchilaringiz uchun kitob va materiallar roʻyxatini tuzing.",
     "save": "Roʻyxatni saqlash",
     "saving": "Saqlanmoqda…",
     "saved": "Roʻyxat saqlandi.",

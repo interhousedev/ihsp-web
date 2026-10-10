@@ -24,7 +24,7 @@ export function ActivityPage() {
   const items = query.data?.pages.flatMap((page) => page.items) ?? []
 
   return (
-    <PageContainer title={t("security.activity.title")} description={t("security.activity.description")}>
+    <PageContainer title={t("security.activity.title")}>
       <ActivityHelp />
       {query.isPending ? <StateView state="loading" /> : null}
       {query.isError ? <StateView state="error" error={query.error} onRetry={() => void query.refetch()} /> : null}

@@ -12,7 +12,7 @@ export function DeleteAccountPage() {
   const t = useTr()
   const me = useQuery(getIdMeQuery())
   return (
-    <PageContainer title={t("security.delete.title")} description={t("security.delete.description")}>
+    <PageContainer title={t("security.delete.title")}>
       <QueryBoundary query={me}>{(user) => <DeleteAccountForm user={user} />}</QueryBoundary>
     </PageContainer>
   )

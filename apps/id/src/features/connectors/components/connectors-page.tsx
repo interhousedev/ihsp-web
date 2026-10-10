@@ -15,7 +15,6 @@ export function ConnectorsPage() {
   return (
     <PageContainer
       title={t("connectors.title")}
-      description={t("connectors.description")}
       actions={<LinkButton href="/connectors/new/">{t("connectors.new.action")}</LinkButton>}
     >
       <QueryBoundary query={query}>

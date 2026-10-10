@@ -1,7 +1,6 @@
 {
   "home": {
     "title": "Library",
-    "description": "Books, textbooks and study materials of the lyceum",
     "searchLabel": "Search the library",
     "search": "Search books, materials, authors, topics",
     "searchButton": "Search",
@@ -205,7 +204,6 @@
   },
   "readingList": {
     "title": "Reading lists",
-    "description": "Lists of books and materials written by your teachers",
     "empty": "No reading lists yet.",
     "new": "New list",
     "edit": "Edit list",

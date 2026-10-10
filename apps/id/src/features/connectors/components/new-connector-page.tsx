@@ -31,7 +31,7 @@ export function NewConnectorPage() {
   }
 
   return (
-    <PageContainer title={t("connectors.new.pageTitle")} description={t("connectors.new.pageDescription")}>
+    <PageContainer title={t("connectors.new.pageTitle")}>
       {leaving ? <StateView state="loading" /> : null}
       {created ? <ConnectorTokenView created={created} onDone={finish} /> : null}
       {!created && !leaving ? (

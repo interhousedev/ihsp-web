@@ -1,7 +1,6 @@
 {
   "upload": {
     "title": "Add a material",
-    "description": "Share notes, worksheets and other study materials with the lyceum.",
     "continueTitle": "Continue your upload",
     "resubmitTitle": "Fix and resubmit",
     "editTitle": "Edit your material",
@@ -226,7 +225,6 @@
     },
     "suggest": {
       "title": "Suggest a book",
-      "description": "Tell the librarians about a book the library should have. They will look at it.",
       "titleLabel": "Title of the book",
       "titleRequired": "Write the title.",
       "urlLabel": "Link (optional)",
@@ -258,7 +256,6 @@
   "listEditor": {
     "newTitle": "New reading list",
     "editTitle": "Edit reading list",
-    "description": "Write a list of books and materials for your students.",
     "save": "Save list",
     "saving": "Saving…",
     "saved": "The list was saved.",

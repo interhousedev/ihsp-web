@@ -16,7 +16,7 @@ export function OtpSettingsPage() {
   const updateMe = useUpdateMe()
 
   return (
-    <PageContainer title={t("security.otp.title")} description={t("security.otp.description")}>
+    <PageContainer title={t("security.otp.title")}>
       <QueryBoundary query={me}>
         {(user) =>
           user.otp_enabled ? (

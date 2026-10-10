@@ -16,7 +16,6 @@ export function SessionsPage() {
   return (
     <PageContainer
       title={t("security.sessions.title")}
-      description={t("security.sessions.description")}
       actions={<RevokeOthersButton disabled={!hasOthers} />}
     >
       <QueryBoundary query={query}>

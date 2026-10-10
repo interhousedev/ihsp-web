@@ -21,7 +21,6 @@ export function ReadingListsPage() {
   return (
     <PageContainer
       title={t("title")}
-      description={t("description")}
       actions={
         canWriteLists ? (
           <Link href={listEditHref()} className={buttonVariants({ className: "min-h-11 md:min-h-8" })}>

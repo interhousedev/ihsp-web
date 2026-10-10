@@ -58,7 +58,7 @@ export function AdminPage() {
   }
 
   return (
-    <PageContainer title={t("title")} description={t("description")}>
+    <PageContainer title={t("title")}>
       <Card className="max-w-lg">
         <CardContent>
           <form onSubmit={submit} className="flex flex-col gap-4" noValidate>

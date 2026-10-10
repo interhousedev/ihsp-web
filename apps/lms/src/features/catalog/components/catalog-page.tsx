@@ -25,7 +25,6 @@ export function CatalogPage() {
     <StepikScope>
       <PageContainer
         title={t("title")}
-        description={t("description")}
         actions={
           <LinkButton href={hrefs.join()} variant="outline" className="min-h-11 md:min-h-8">
             <Icons.links aria-hidden />

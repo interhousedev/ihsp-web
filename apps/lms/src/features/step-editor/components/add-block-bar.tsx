@@ -2,7 +2,7 @@
 
 import type { Block } from "@ihsp/api"
 import { useT } from "@ihsp/i18n"
-import { Button, Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, Icons } from "@ihsp/ui"
+import { Button, Dialog, DialogContent, DialogHeader, DialogTitle, Icons } from "@ihsp/ui"
 import { useState } from "react"
 import { STEP_TYPES, STEP_TYPE_GROUPS } from "../utils/step-types"
 
@@ -19,7 +19,6 @@ export function AddBlockBar({ onAdd }: { onAdd: (block: Block) => void }) {
       <DialogContent className="max-h-[90dvh] overflow-y-auto sm:max-w-3xl">
         <DialogHeader>
           <DialogTitle>{t("typePicker.title")}</DialogTitle>
-          <DialogDescription>{t("typePicker.description")}</DialogDescription>
         </DialogHeader>
         <div className="flex flex-col gap-5">
           {STEP_TYPE_GROUPS.map((group) => (

@@ -5,7 +5,7 @@ import type { ComponentType, ReactNode } from "react"
 type SecurityCardProps = {
   href: string
   title: string
-  description: string
+  description?: string
   icon: ComponentType<{ className?: string }>
   /** A badge or short status shown under the title. */
   status?: ReactNode
@@ -21,7 +21,7 @@ export function SecurityCard({ href, title, description, icon: Icon, status, des
           <Icon className={`mt-0.5 size-5 shrink-0 ${destructive ? "text-destructive" : "text-muted-foreground"}`} />
           <div className="grid min-w-0 gap-1">
             <CardTitle className="text-base">{title}</CardTitle>
-            <CardDescription>{description}</CardDescription>
+            {description ? <CardDescription>{description}</CardDescription> : null}
           </div>
         </CardHeader>
         {status ? <CardContent>{status}</CardContent> : null}

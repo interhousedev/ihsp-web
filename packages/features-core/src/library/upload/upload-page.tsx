@@ -10,7 +10,7 @@ export function UploadPage() {
   const t = useT("library.upload")
   const [round, setRound] = useState(0)
   return (
-    <PageContainer title={t("title")} description={t("description")}>
+    <PageContainer title={t("title")}>
       <UploadWizard key={round} onAnother={() => setRound((current) => current + 1)} />
     </PageContainer>
   )

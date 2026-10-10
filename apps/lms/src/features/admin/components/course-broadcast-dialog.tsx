@@ -8,8 +8,7 @@ import {
   Button,
   Dialog,
   DialogContent,
-  DialogDescription,
-  DialogFooter,
+    DialogFooter,
   DialogHeader,
   DialogTitle,
   Field,
@@ -73,7 +72,6 @@ export function CourseBroadcastDialog({
         <form onSubmit={submit} className="flex flex-col gap-4">
           <DialogHeader>
             <DialogTitle>{t("dialogTitle")}</DialogTitle>
-            <DialogDescription>{t("dialogDescription")}</DialogDescription>
           </DialogHeader>
 
           {sent ? (

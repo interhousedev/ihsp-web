@@ -7,8 +7,7 @@ import {
   Button,
   Dialog,
   DialogContent,
-  DialogDescription,
-  DialogFooter,
+    DialogFooter,
   DialogHeader,
   DialogTitle,
   Field,
@@ -48,7 +47,6 @@ export function AddStepDialog({
         <form onSubmit={submit} className="flex flex-col gap-4">
           <DialogHeader>
             <DialogTitle>{t("addStepTitle")}</DialogTitle>
-            <DialogDescription>{t("addStepDescription")}</DialogDescription>
           </DialogHeader>
           <Field>
             <FieldLabel htmlFor="new-step-title">{t("stepTitle")}</FieldLabel>

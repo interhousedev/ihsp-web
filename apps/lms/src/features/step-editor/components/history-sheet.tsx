@@ -10,7 +10,6 @@ import {
   ConfirmDialog,
   Sheet,
   SheetContent,
-  SheetDescription,
   SheetHeader,
   SheetTitle,
 } from "@ihsp/ui"
@@ -53,7 +52,6 @@ export function HistorySheet({
         <SheetContent className="w-full overflow-y-auto sm:max-w-md">
           <SheetHeader>
             <SheetTitle>{t("title")}</SheetTitle>
-            <SheetDescription>{t("description")}</SheetDescription>
           </SheetHeader>
           <div className="flex flex-col gap-3 px-4 pb-4">
             {restore.isError ? (

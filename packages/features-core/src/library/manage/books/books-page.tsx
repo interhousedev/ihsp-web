@@ -50,7 +50,6 @@ export function BooksPage() {
   return (
     <PageContainer
       title={t("title")}
-      description={t("description")}
       actions={
         <>
           <Button type="button" variant="outline" className="min-h-11 md:min-h-8" onClick={() => setImporting(true)}>

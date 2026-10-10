@@ -29,7 +29,7 @@ export function EmailChangePage() {
   const [step, setStep] = useState<Step>({ kind: "form" })
 
   return (
-    <PageContainer title={t("security.email.title")} description={t("security.email.description")}>
+    <PageContainer title={t("security.email.title")}>
       <QueryBoundary query={me}>
         {(user) => (
           <Card>

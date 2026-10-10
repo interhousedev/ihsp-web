@@ -6,8 +6,7 @@ import {
   Button,
   Dialog,
   DialogContent,
-  DialogDescription,
-  DialogFooter,
+    DialogFooter,
   DialogHeader,
   DialogTitle,
   Input,
@@ -68,7 +67,6 @@ export function SuggestDialog({ open, onOpenChange }: { open: boolean; onOpenCha
       <DialogContent>
         <DialogHeader>
           <DialogTitle>{t("title")}</DialogTitle>
-          <DialogDescription>{t("description")}</DialogDescription>
         </DialogHeader>
         <form
           noValidate

@@ -298,7 +298,6 @@
   },
   "security": {
     "title": "Xavfsizlik",
-    "description": "Parol, OTP, Telegram, seanslar va ulangan ilovalar.",
     "profile": "Hisob",
     "on": "Yoqilgan",
     "off": "O‘chirilgan",
@@ -312,28 +311,19 @@
     },
     "cards": {
       "password": "Parol",
-      "passwordHint": "Parolni o‘zgartirish.",
       "otp": "OTP bilan kirish",
-      "otpHint": "Bir martalik kod bilan kirish.",
       "telegram": "Telegram",
-      "telegramHint": "Ulangan hisoblar va OTP yetkazish.",
       "telegramCount": "Ulangan: {count}",
       "email": "Tiklash uchun pochta",
       "emailMissing": "Pochta ko‘rsatilmagan",
       "sessions": "Seanslar",
-      "sessionsHint": "Tizimga kirgan qurilmalaringiz.",
       "activity": "Faollik",
-      "activityHint": "Kirishlar va xavfsizlik o‘zgarishlari.",
       "emis": "EMIS hisobi",
-      "emisHint": "IHSP EMIS’ni o‘qiydigan parol.",
       "emisActive": "Ishlayapti",
       "emisNeedsReauth": "Yangi parol kerak",
       "connectors": "Konnektorlar",
-      "connectorsHint": "AI ilovalariga ma’lumotlaringizdan foydalanishga ruxsat.",
       "appearance": "Ko‘rinish",
-      "appearanceHint": "Yorug‘, qorong‘i yoki tizim mavzusi.",
-      "delete": "Hisobni o‘chirish",
-      "deleteHint": "Hisob va ma’lumotlarni o‘chirish."
+      "delete": "Hisobni o‘chirish"
     },
     "emisBanner": {
       "title": "EMIS saqlangan parolni qabul qilmadi",
@@ -342,7 +332,6 @@
     },
     "sessions": {
       "title": "Seanslar",
-      "description": "Tizimga kirgan qurilmalaringiz. Notanish seanslardan chiqing.",
       "empty": "Faol seanslar yo‘q.",
       "current": "Bu qurilma",
       "deviceOn": "{browser}, {os}",
@@ -360,7 +349,6 @@
     },
     "telegram": {
       "title": "Telegram hisoblari",
-      "description": "Ulangan Telegram hisoblari xabarnomalar va OTP kodlarini oladi.",
       "linkTitle": "Telegramni ulash",
       "linkDescription": "Botni oching, «Kirish» tugmasini bosing va u yerda tizimga kiring. Hisob avtomatik ulanadi.",
       "link": "Botni ochish",
@@ -376,7 +364,6 @@
     },
     "otp": {
       "title": "OTP bilan kirish",
-      "description": "Parol o‘rniga bir martalik kod bilan kirish.",
       "enabled": "OTP bilan kirish yoqilgan. Kodlar ulangan Telegram hisoblaringizga yuboriladi.",
       "enabledWithEmail": "OTP bilan kirish yoqilgan. Kodlar ulangan Telegram hisoblaringizga va tiklash pochtasiga yuboriladi.",
       "enableTitle": "OTP bilan kirishni yoqish",
@@ -398,7 +385,6 @@
     },
     "email": {
       "title": "Tiklash uchun pochta",
-      "description": "Kodlar va xavfsizlik xabarlari shu manzilga yuboriladi.",
       "current": "Hozirgi: {email}",
       "hint": "Parolingiz va yangi manzilni kiriting. Unga kod yuboramiz.",
       "new": "Yangi pochta",
@@ -415,7 +401,6 @@
     },
     "activity": {
       "title": "Faollik",
-      "description": "Hisobingizdagi so‘nggi xavfsizlik hodisalari.",
       "empty": "Hozircha hodisalar yo‘q.",
       "more": "Yana yuklash",
       "by": "Bajargan: {name}",
@@ -449,7 +434,6 @@
     },
     "emis": {
       "title": "EMIS hisobi",
-      "description": "IHSP baholaringizni EMIS’dan saqlangan parol bilan oladi.",
       "formTitle": "EMIS parolini yangilash",
       "formDescription": "Saqlashdan oldin yangi parolni EMIS’da tekshiramiz.",
       "submit": "Tekshirish va saqlash",
@@ -457,7 +441,6 @@
     },
     "delete": {
       "title": "Hisobni o‘chirish",
-      "description": "Hisobingiz va shaxsiy ma’lumotlaringiz o‘chiriladi.",
       "deletedTitle": "Nima o‘chiriladi",
       "items": {
         "account": "Hisobingiz va profilingiz",
@@ -484,18 +467,13 @@
   },
   "appearance": {
     "title": "Ko‘rinish",
-    "description": "IHSP qanday ko‘rinishini tanlang. Tanlov hisobingizda saqlanadi va IHSPning barcha platformalarida amal qiladi.",
     "theme": "Mavzu",
     "light": "Yorug‘",
-    "lightHint": "Doim yorug‘ mavzu.",
     "dark": "Qorong‘i",
-    "darkHint": "Doim qorong‘i mavzu.",
-    "system": "Tizim",
-    "systemHint": "Ushbu qurilma sozlamasiga amal qiladi."
+    "system": "Tizim"
   },
   "connectors": {
     "title": "Konnektorlar",
-    "description": "MCP orqali IHSP ma’lumotlaringizdan foydalana oladigan AI ilovalari.",
     "empty": "Hozircha konnektorlar yo‘q.",
     "createdAt": "Yaratilgan",
     "lastUsed": "Oxirgi foydalanish",
@@ -537,7 +515,6 @@
     "new": {
       "action": "Yangi konnektor",
       "pageTitle": "Yangi konnektor",
-      "pageDescription": "AI ilovasi uchun token yarating.",
       "title": "Konnektor sozlamalari",
       "description": "Serverni, ilova nimalarni qila olishini va qancha muddatga ekanini tanlang.",
       "noServers": "Rollaringiz uchun mavjud MCP serveri yo‘q.",

@@ -42,20 +42,17 @@ export function SecurityOverview({ user }: { user: UserMe }) {
           href="/security/password/"
           icon={IconKey}
           title={t("security.cards.password")}
-          description={t("security.cards.passwordHint")}
         />
         <SecurityCard
           href="/security/otp/"
           icon={IconDeviceMobileMessage}
           title={t("security.cards.otp")}
-          description={t("security.cards.otpHint")}
           status={<OnOffBadge on={user.otp_enabled} onLabel={t("security.on")} offLabel={t("security.off")} />}
         />
         <SecurityCard
           href="/security/telegram/"
           icon={IconBrandTelegram}
           title={t("security.cards.telegram")}
-          description={t("security.cards.telegramHint")}
           status={<Badge variant="outline">{t("security.cards.telegramCount", { count: user.telegram.length })}</Badge>}
         />
         <SecurityCard
@@ -68,20 +65,17 @@ export function SecurityOverview({ user }: { user: UserMe }) {
           href="/security/sessions/"
           icon={IconDevices}
           title={t("security.cards.sessions")}
-          description={t("security.cards.sessionsHint")}
         />
         <SecurityCard
           href="/security/activity/"
           icon={IconActivity}
           title={t("security.cards.activity")}
-          description={t("security.cards.activityHint")}
         />
         {isStudent ? (
           <SecurityCard
             href="/security/emis/"
             icon={IconSchool}
             title={t("security.cards.emis")}
-            description={t("security.cards.emisHint")}
             status={
               user.emis_status === "needs_reauth" ? (
                 <Badge variant="destructive">{t("security.cards.emisNeedsReauth")}</Badge>
@@ -95,13 +89,11 @@ export function SecurityOverview({ user }: { user: UserMe }) {
           href="/connectors/"
           icon={IconPlugConnected}
           title={t("security.cards.connectors")}
-          description={t("security.cards.connectorsHint")}
         />
         <SecurityCard
           href="/appearance/"
           icon={IconPalette}
           title={t("security.cards.appearance")}
-          description={t("security.cards.appearanceHint")}
         />
         {isStudent ? (
           <SecurityCard
@@ -109,7 +101,6 @@ export function SecurityOverview({ user }: { user: UserMe }) {
             icon={IconTrash}
             destructive
             title={t("security.cards.delete")}
-            description={t("security.cards.deleteHint")}
           />
         ) : null}
       </div>

@@ -2,7 +2,6 @@
   "manage": {
     "topics": {
       "title": "Topics",
-      "description": "The topic tree of each subject. Books and materials are tagged with these topics.",
       "add": "Add topic",
       "subject": "Subject",
       "empty": "{subject} has no topics yet.",
@@ -28,7 +27,6 @@
     },
     "collections": {
       "title": "Collections",
-      "description": "Curated groups of items that readers see on the home page.",
       "add": "New collection",
       "empty": "There are no collections yet.",
       "listLabel": "Collections",
@@ -68,7 +66,6 @@
     },
     "stats": {
       "title": "Statistics",
-      "description": "How the library is used and how fast the librarians answer.",
       "range": "Period",
       "from": "From",
       "to": "To",
@@ -99,7 +96,6 @@
     },
     "unilibrary": {
       "title": "UniLibrary",
-      "description": "UniLibrary is a state service whose records can be shown as link-only cards. It is switched off until you turn it on here.",
       "settings": {
         "title": "Settings",
         "explanation": "UniLibrary is off by default. While it is off, nothing from UniLibrary shows anywhere in the library: no source chip, no filter, no cards, no “More from UniLibrary”, and the server makes no calls to it.",
@@ -170,7 +166,6 @@
     },
     "books": {
       "title": "Books",
-      "description": "The library's own books: rights, files, subjects and publishing.",
       "new": "New book",
       "import": "Bulk import",
       "filters": "Find books",
@@ -217,7 +212,6 @@
     "editor": {
       "newTitle": "New book",
       "editTitle": "Edit book",
-      "pageDescription": "Fill in the details, the rights basis and the files, then publish.",
       "back": "Back to books",
       "viewPublic": "Open the book page",
       "statusLabel": "Status",
@@ -424,7 +418,6 @@
     },
     "queue": {
       "title": "Review queue",
-      "description": "Check what students and teachers sent, handle reports, book rights and suggestions.",
       "tabsLabel": "Queue sections",
       "tab": {
         "review": "To review",
@@ -541,7 +534,6 @@
     },
     "reports": {
       "title": "Reports",
-      "description": "Items readers reported. Decide each one within two school days.",
       "section": {
         "open": "Open reports",
         "held": "Held after reports"

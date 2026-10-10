@@ -16,7 +16,7 @@ export function TelegramLinksPage() {
   const accounts = useQuery({ ...getIdMeTelegramQuery(), refetchInterval: POLL_MS })
   const me = useQuery(getIdMeQuery())
   return (
-    <PageContainer title={t("security.telegram.title")} description={t("security.telegram.description")}>
+    <PageContainer title={t("security.telegram.title")}>
       <LinkTelegramCard />
       <QueryBoundary query={accounts}>
         {(items) => {

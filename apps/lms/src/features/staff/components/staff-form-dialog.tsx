@@ -8,8 +8,7 @@ import {
   Button,
   Dialog,
   DialogContent,
-  DialogDescription,
-  DialogFooter,
+    DialogFooter,
   DialogHeader,
   DialogTitle,
   Field,
@@ -90,7 +89,6 @@ export function StaffFormDialog({
         <form onSubmit={submit} className="flex flex-col gap-4">
           <DialogHeader>
             <DialogTitle>{mode === "add" ? t("addTitle") : t("editTitle")}</DialogTitle>
-            <DialogDescription>{mode === "add" ? t("addDescription") : t("editDescription")}</DialogDescription>
           </DialogHeader>
 
           {mode === "add" ? (

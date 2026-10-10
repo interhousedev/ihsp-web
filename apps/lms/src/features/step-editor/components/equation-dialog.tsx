@@ -5,8 +5,7 @@ import {
   Button,
   Dialog,
   DialogContent,
-  DialogDescription,
-  DialogFooter,
+    DialogFooter,
   DialogHeader,
   DialogTitle,
   Field,
@@ -94,7 +93,6 @@ export function EquationDialog({
         <form onSubmit={submit} className="flex flex-col gap-4">
           <DialogHeader>
             <DialogTitle>{editing ? t("editTitle") : t("title")}</DialogTitle>
-            <DialogDescription>{t("description")}</DialogDescription>
           </DialogHeader>
 
           <fieldset className="flex flex-col gap-2">

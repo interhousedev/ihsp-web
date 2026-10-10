@@ -8,7 +8,7 @@ import { ThemeChoiceGroup } from "./theme-choice-group"
 export function AppearancePage() {
   const t = useTr()
   return (
-    <PageContainer title={t("appearance.title")} description={t("appearance.description")}>
+    <PageContainer title={t("appearance.title")}>
       <Card className="max-w-xl">
         <CardContent>
           <ThemeChoiceGroup />

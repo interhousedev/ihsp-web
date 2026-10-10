@@ -15,7 +15,7 @@ import { StatusPanel } from "./status-panel"
 export function UniLibraryAdminPage() {
   const t = useT("library.manage.unilibrary")
   return (
-    <PageContainer title={t("title")} description={t("description")}>
+    <PageContainer title={t("title")}>
       <div className="flex max-w-4xl flex-col gap-6">
         <SettingsPanel />
         <StatusPanel />

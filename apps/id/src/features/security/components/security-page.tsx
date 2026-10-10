@@ -12,7 +12,7 @@ export function SecurityPage() {
   const t = useTr()
   const me = useQuery(getIdMeQuery())
   return (
-    <PageContainer title={t("security.title")} description={t("security.description")}>
+    <PageContainer title={t("security.title")}>
       <QueryBoundary query={me}>{(user) => <SecurityOverview user={user} />}</QueryBoundary>
     </PageContainer>
   )

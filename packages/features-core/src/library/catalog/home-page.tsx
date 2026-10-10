@@ -103,7 +103,7 @@ export function LibraryHomePage() {
   const continueCards = useVisibleCards(me.data?.continue).slice(0, 3)
 
   return (
-    <PageContainer title={t("title")} description={t("description")}>
+    <PageContainer title={t("title")}>
       <SearchBox />
 
       {status === "anonymous" ? (

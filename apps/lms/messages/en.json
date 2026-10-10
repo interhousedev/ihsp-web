@@ -35,7 +35,6 @@
   },
   "catalog": {
     "title": "Courses",
-    "description": "Pick a course and start learning.",
     "enterCode": "Enter invite code",
     "searchLabel": "Search courses",
     "searchPlaceholder": "Search by title or description",
@@ -44,7 +43,6 @@
   },
   "my": {
     "title": "My courses",
-    "description": "Courses you study and courses you manage.",
     "enrolled": "Studying",
     "managed": "Managing",
     "noneEnrolled": "You are not enrolled in any course yet.",
@@ -78,20 +76,16 @@
     "invite": "Invite only",
     "yourProgress": "Your progress",
     "progressPoints": "{earned} of {total} points",
-    "progressLessons": "{done} of {total} lessons",
-    "facts": "Course facts",
-    "lessonNumber": "Lesson {number}"
+    "facts": "Course facts"
   },
   "join": {
     "title": "Join a course",
-    "description": "Enter the invite code you received from the course staff.",
     "codeLabel": "Invite code",
     "submit": "Join",
     "invalid": "Invite not valid. Check the code or ask for a new one."
   },
   "player": {
     "title": "Lesson",
-    "backToCourse": "Back to the course",
     "backToEditor": "Back to the editor",
     "completed": "Completed",
     "emptyStep": "This step has no content yet.",
@@ -239,7 +233,6 @@
     "addSection": "Add section",
     "addStep": "Add step",
     "addStepTitle": "New step",
-    "addStepDescription": "The step is created empty; you can add blocks next.",
     "stepTitle": "Step title",
     "sectionTitle": "Section title",
     "dragStep": "Drag step {title}",
@@ -297,7 +290,6 @@
     "discardDescription": "The step goes back to the live version. Unsaved and saved draft edits are lost.",
     "typePicker": {
       "title": "Choose a step type",
-      "description": "Pick what the new block is. You can change a question's type later.",
       "groups": {
         "materials": "Materials",
         "tests": "Test tasks",
@@ -447,7 +439,6 @@
     "equationDialog": {
       "title": "Insert an equation",
       "editTitle": "Edit the equation",
-      "description": "Write the formula in LaTeX. The preview shows it the way students will see it.",
       "latex": "LaTeX",
       "placement": "Placement",
       "inline": "In the text",
@@ -587,8 +578,7 @@
     "codeLanguage": "Language",
     "codeStarter": "Starter code",
     "expectedOutputs": "Expected outputs",
-    "expectedOutputsHint": "Separate several accepted outputs with a line of three dashes (---).",
-    "freeHint": "A teacher grades this answer by hand."
+    "expectedOutputsHint": "Separate several accepted outputs with a line of three dashes (---)."
   },
   "cardsBuilder": {
     "card": "Card {number}",
@@ -708,7 +698,6 @@
   },
   "history": {
     "title": "Step history",
-    "description": "Published versions and checkpoints of this step, newest first.",
     "empty": "No history yet.",
     "kinds": {
       "publish": "Published",
@@ -794,9 +783,7 @@
     "empty": "No staff yet.",
     "add": "Add staff member",
     "addTitle": "Add staff member",
-    "addDescription": "Enter the login of the person, pick a role and the permissions.",
     "editTitle": "Edit staff member",
-    "editDescription": "Change the role, permissions, visibility and order.",
     "login": "Login",
     "loginPlaceholder": "last.first",
     "preset": "Role preset",
@@ -864,7 +851,6 @@
     "open": "Send an update",
     "empty": "No updates sent yet.",
     "dialogTitle": "Update the students",
-    "dialogDescription": "Every enrolled student gets a notification in the app, on their devices and in Telegram.",
     "titleLabel": "Title",
     "bodyLabel": "Message",
     "bodyHint": "{used} of {max} characters",
@@ -904,7 +890,6 @@
   },
   "admin": {
     "title": "Create a course",
-    "description": "The course starts with an empty draft and is invisible to students until it is published.",
     "courseTitle": "Title",
     "titleRequired": "Enter a title.",
     "slug": "Address",
@@ -918,7 +903,6 @@
     "create": "Create course",
     "creators": {
       "title": "Course creators",
-      "description": "People who can create courses. They own what they create and edit only the courses they own or were added to.",
       "search": "Find a teacher or administrator",
       "searchButton": "Search",
       "noResults": "No teacher or administrator found.",

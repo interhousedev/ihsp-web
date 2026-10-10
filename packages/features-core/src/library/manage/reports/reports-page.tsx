@@ -63,7 +63,7 @@ export function ReportsPage() {
   const actions = useQueueActions(target?.tab ?? "reports")
 
   return (
-    <PageContainer title={t("title")} description={t("description")}>
+    <PageContainer title={t("title")}>
       <div role="status" aria-live="polite" className="text-sm font-medium">
         {actions.status?.tone === "ok" ? actions.status.text : null}
       </div>

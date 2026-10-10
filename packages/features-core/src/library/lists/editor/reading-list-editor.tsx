@@ -33,7 +33,7 @@ export function ReadingListEditor() {
 
   if (!id) {
     return (
-      <PageContainer title={t("newTitle")} description={t("description")}>
+      <PageContainer title={t("newTitle")}>
         <ListEditorForm key="new" />
       </PageContainer>
     )

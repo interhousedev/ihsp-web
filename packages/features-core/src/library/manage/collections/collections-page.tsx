@@ -39,7 +39,7 @@ export function CollectionsPage() {
   )
 
   return (
-    <PageContainer title={t("title")} description={t("description")} actions={add}>
+    <PageContainer title={t("title")} actions={add}>
       {list.isPending ? (
         <StateView state="loading" rows={3} />
       ) : list.isError ? (

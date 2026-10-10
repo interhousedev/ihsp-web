@@ -48,7 +48,7 @@ export function JoinPage() {
 
   return (
     <StepikScope>
-      <PageContainer title={t("title")} description={t("description")}>
+      <PageContainer title={t("title")}>
         <Card className="max-w-md">
           <CardContent>
             <form onSubmit={submit} className="flex flex-col gap-4" noValidate>

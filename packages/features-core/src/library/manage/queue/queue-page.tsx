@@ -97,7 +97,7 @@ export function QueuePage() {
   )
 
   return (
-    <PageContainer title={t("title")} description={t("description")}>
+    <PageContainer title={t("title")}>
       <QueueTabs tab={tab} counts={counts} onTabChange={changeTab} />
 
       <div role="status" aria-live="polite" className="text-sm font-medium">
