@@ -115,6 +115,11 @@ export function StudioPanel({ notebook, onCollapse }: StudioPanelProps) {
             {note}
           </p>
         ))}
+        {notebook.selected_source_count === 0 ? (
+          <p role="status" className="text-xs text-amber-900 dark:text-amber-100">
+            {t("studio.noSources")}
+          </p>
+        ) : null}
         {quotas && quotaHintVisible(usage) ? (
           <p className="text-muted-foreground text-xs">
             {t("usage.materials", { used: quotas.used, limit: quotas.limit })}

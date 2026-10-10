@@ -2,7 +2,7 @@
 
 import type { NotebookDetail } from "@ihsp/api"
 import { useFormatters, useT } from "@ihsp/i18n"
-import { Badge, Button, Textarea, cn, useOnline } from "@ihsp/ui"
+import { Badge, Button, Textarea, useOnline } from "@ihsp/ui"
 import { IconArrowUp, IconPlayerStopFilled, IconSettings, IconWorld, IconX } from "@ihsp/ui"
 import { useEffect, useId, useLayoutEffect, useRef, useState, type KeyboardEvent } from "react"
 import { slashText, type SlashName } from "../../assistant-chat/slash-commands"
@@ -70,7 +70,7 @@ export function NotebookComposer({
   const readOnly = notebook.can_write === false
   const locked = limit.reached || !online || readOnly
   const slash = useSlashInput({ text, setText, command, setCommand, fieldRef, disabled: locked })
-  const canSend = !locked && !noSources && !running && (text.trim().length > 0 || command !== null)
+  const canSend = !locked && !running && (text.trim().length > 0 || command !== null)
 
   // The assistant sidebar writes a draft before it opens this chat; take it once.
   useEffect(() => {
@@ -156,6 +156,14 @@ export function NotebookComposer({
             {ts("offlineTitle")}
           </p>
         ) : null}
+        {noSources ? (
+          <p
+            role="status"
+            className="rounded-lg border border-amber-300 bg-amber-50 px-3 py-2 text-sm text-amber-900 dark:border-amber-800 dark:bg-amber-950/50 dark:text-amber-100"
+          >
+            {t("chat.noSources")}
+          </p>
+        ) : null}
         <div className="bg-background focus-within:border-ring relative focus-within:ring-ring/30 flex flex-col gap-1 rounded-3xl border px-3 py-2 shadow-xs focus-within:ring-3">
           {slash.menu ? <SlashMenu {...slash.menu} /> : null}
           {webOn || command ? (
@@ -224,10 +232,10 @@ export function NotebookComposer({
               <Button
                 type="button"
                 variant="ghost"
-                className={cn("min-h-11 rounded-full px-3", noSources && "text-destructive hover:text-destructive")}
+                className="min-h-11 rounded-full px-3"
                 onClick={() => workspace.showTab("sources")}
               >
-                {noSources ? t("chat.noSources") : t("chat.sourcesCount", { count: notebook.selected_source_count })}
+                {t("chat.sourcesCount", { count: notebook.selected_source_count })}
               </Button>
               {running ? (
                 <Button

@@ -139,6 +139,11 @@ function CustomizeForm({
         onChange={(focus) => setState({ ...state, focus })}
       />
       <SourcesLine count={notebook.selected_source_count} onNavigate={() => onOpenChange(false)} />
+      {notebook.selected_source_count === 0 ? (
+        <p role="status" className="text-sm text-amber-900 dark:text-amber-100">
+          {t("studio.noSources")}
+        </p>
+      ) : null}
       {blocked ? (
         <p role="status" className="text-muted-foreground text-sm">
           {blocked.message}
