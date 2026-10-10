@@ -89,19 +89,20 @@ describe("step buttons", () => {
 })
 
 describe("course progress", () => {
-  it("counts points when the course has tests", () => {
-    expect(courseProgress(coursePage)).toEqual({ kind: "points", earned: 2, total: 3, percent: 67 })
+  it("drives the bar by completed lessons and keeps points beside it", () => {
+    const page: CoursePage = { ...coursePage, points_total: 5, points_earned: 0, steps_completed: 2, steps_count: 3 }
+    expect(courseProgress(page)).toEqual({
+      done: 2,
+      total: 3,
+      percent: 67,
+      points: { earned: 0, total: 5 },
+    })
   })
 
-  it("counts lessons when the course has no tests", () => {
+  it("has no points for a course without tests", () => {
     const text: CoursePage = { ...coursePage, points_total: 0, points_earned: 0, steps_completed: 1, steps_count: 4 }
-    expect(courseProgress(text)).toEqual({ kind: "lessons", done: 1, total: 4, percent: 25 })
-    expect(courseProgress({ ...text, steps_count: 0, steps_completed: 0 })).toEqual({
-      kind: "lessons",
-      done: 0,
-      total: 0,
-      percent: 0,
-    })
+    expect(courseProgress(text)).toEqual({ done: 1, total: 4, percent: 25, points: null })
+    expect(courseProgress({ ...text, steps_count: 0, steps_completed: 0 })?.percent).toBe(0)
   })
 
   it("is empty for someone who is not enrolled", () => {

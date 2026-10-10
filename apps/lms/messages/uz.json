@@ -76,6 +76,7 @@
     "invite": "Faqat taklif bilan",
     "yourProgress": "Sizning natijangiz",
     "progressPoints": "{total} balldan {earned} ball",
+    "progressLessons": "{total} darsdan {done} dars",
     "facts": "Kurs haqida raqamlarda"
   },
   "join": {
@@ -107,7 +108,7 @@
     },
     "stepsPassed": "{total} ta qadamdan {passed} tasi oʻtildi",
     "pointsReceived": "{total} balldan {earned} ball olindi",
-    "courseProgressPoints": "Kurs boʻyicha natija: {earned}/{total}",
+    "courseProgressPoints": "{earned}/{total} ball",
     "courseProgressLessons": "Kurs boʻyicha natija: {done}/{total} dars",
     "lessonCompleted": "Dars tugatilgan",
     "noLessons": "Kursda hali darslar yoʻq.",
@@ -182,8 +183,8 @@
     "previewNote": "Kartochkalarni yozilgan talabalar oʻrganadi; natija har bir talaba uchun alohida saqlanadi."
   },
   "saveState": {
+    "draftSaved": "Qoralama saqlandi",
     "saved": "Saqlandi",
-    "savedPending": "Saqlandi · {count, plural, =0 {kutilayotgan oʻzgarishlar yoʻq} one {# ta kutilayotgan oʻzgarish} other {# ta kutilayotgan oʻzgarish}}",
     "dirty": "Saqlanmagan oʻzgarishlar bor",
     "saving": "Saqlanmoqda…",
     "offline": "Aloqa yoʻq · oʻzgarishlar shu brauzerda saqlanadi",
@@ -206,6 +207,8 @@
     "save": "Saqlash",
     "readOnly": "Qoralamani koʻrishingiz mumkin, lekin oʻzgartira olmaysiz.",
     "reviewPending": "Kutilayotgan oʻzgarishlarni koʻrib chiqish",
+    "unpublished": "{count, plural, one {# ta nashr etilmagan oʻzgarish} other {# ta nashr etilmagan oʻzgarish}}",
+    "publishAction": "Nashr etish",
     "bufferFound": "Shu brauzerda oldingi seansdagi saqlanmagan oʻzgarishlar topildi.",
     "bufferRestore": "Tiklash",
     "bufferDiscard": "Tashlab yuborish",
@@ -252,7 +255,7 @@
   },
   "stepEditor": {
     "untitled": "Nomsiz qadam",
-    "backToOutline": "Tuzilmaga qaytish",
+    "stepNumber": "{number}-qadam",
     "status": {
       "new": "Yangi",
       "changed": "Oʻzgargan",

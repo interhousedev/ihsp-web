@@ -51,20 +51,11 @@ export function StepEditorBody({
 
   return (
     <div className="flex flex-col gap-4" onBlurCapture={canEdit ? editor.flush : undefined}>
-      <div className="flex flex-wrap items-center justify-between gap-2">
-        <LinkButton href={hrefs.edit(draft.course_id)} variant="ghost" className="min-h-11 md:min-h-8">
-          <Icons.chevronLeft aria-hidden />
-          {t("backToOutline")}
-        </LinkButton>
-        <div className="flex items-center gap-2">
-          {draft.status !== "unchanged" ? <Badge variant="secondary">{t(`status.${draft.status}`)}</Badge> : null}
-          {draft.updated_via === "mcp" ? <Badge variant="outline">{t("viaMcp")}</Badge> : null}
-          {draft.updated_via === "ai" ? <OutlineBadge kind="ai" /> : null}
-        </div>
-      </div>
-
       <div className="flex flex-wrap items-center gap-2">
         <SaveIndicator status={editor.status} />
+        {draft.status !== "unchanged" ? <Badge variant="secondary">{t(`status.${draft.status}`)}</Badge> : null}
+        {draft.updated_via === "mcp" ? <Badge variant="outline">{t("viaMcp")}</Badge> : null}
+        {draft.updated_via === "ai" ? <OutlineBadge kind="ai" /> : null}
         <div className="ms-auto flex flex-wrap items-center gap-2">
           {canEdit ? (
             <>

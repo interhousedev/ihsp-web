@@ -1,8 +1,7 @@
 "use client"
 
 import { useT } from "@ihsp/i18n"
-import { Button, Icons } from "@ihsp/ui"
-import Link from "next/link"
+import { LinkButton } from "../../shared/components/link-button"
 import { QueryState } from "../../shared/components/query-state"
 import { hrefs } from "../../shared/utils/hrefs"
 import { can } from "../../shared/utils/permissions"
@@ -21,27 +20,22 @@ function EditorBody({ draft, autosaveMs }: { draft: CourseDraft; autosaveMs?: nu
   const editor = useMetaEditor(draft, { canEdit, autosaveMs })
   return (
     <div className="flex flex-col gap-6">
-      <div className="flex flex-wrap items-center justify-between gap-3">
-        <div className="flex flex-wrap items-center gap-3">
-          <SaveIndicator status={editor.status} pending={draft.pending_count} />
-          {draft.pending_count > 0 && can(draft.my_permissions, "publish") ? (
-            <Link href={hrefs.publish(draft.id)} className="text-primary text-sm underline-offset-2 hover:underline">
-              {t("reviewPending")}
-            </Link>
-          ) : null}
-        </div>
+      <div className="flex flex-wrap items-center justify-between gap-x-4 gap-y-2">
         {canEdit ? (
-          <Button
-            onClick={() => void editor.save()}
-            disabled={!editor.dirty || editor.busy}
-            className="min-h-11 md:min-h-8"
-          >
-            <Icons.check aria-hidden />
-            {t("save")}
-          </Button>
+          <SaveIndicator status={editor.status} draft />
         ) : (
           <p className="text-muted-foreground text-sm">{t("readOnly")}</p>
         )}
+        {draft.pending_count > 0 ? (
+          <div className="flex flex-wrap items-center gap-3">
+            <span className="text-sm">{t("unpublished", { count: draft.pending_count })}</span>
+            {can(draft.my_permissions, "publish") ? (
+              <LinkButton href={hrefs.publish(draft.id)} variant="outline" className="min-h-11 md:min-h-8">
+                {t("publishAction")}
+              </LinkButton>
+            ) : null}
+          </div>
+        ) : null}
       </div>
       <MetaForm draft={draft} editor={editor} canEdit={canEdit} />
       <section aria-labelledby="editor-outline" className="flex flex-col gap-3">

@@ -76,6 +76,7 @@
     "invite": "Invite only",
     "yourProgress": "Your progress",
     "progressPoints": "{earned} of {total} points",
+    "progressLessons": "{done} of {total} lessons",
     "facts": "Course facts"
   },
   "join": {
@@ -107,7 +108,7 @@
     },
     "stepsPassed": "{passed} out of {total} steps passed",
     "pointsReceived": "{earned} out of {total} points received",
-    "courseProgressPoints": "Course progress: {earned}/{total}",
+    "courseProgressPoints": "{earned}/{total} points",
     "courseProgressLessons": "Course progress: {done}/{total} lessons",
     "lessonCompleted": "Lesson completed",
     "noLessons": "The course has no lessons yet.",
@@ -182,8 +183,8 @@
     "previewNote": "Studying is for enrolled students; progress is kept per student."
   },
   "saveState": {
+    "draftSaved": "Draft saved",
     "saved": "Saved",
-    "savedPending": "Saved · {count, plural, =0 {no pending changes} one {# pending change} other {# pending changes}}",
     "dirty": "Unsaved changes",
     "saving": "Saving…",
     "offline": "Offline · changes are kept in this browser",
@@ -206,6 +207,8 @@
     "save": "Save",
     "readOnly": "You can view the draft but not change it.",
     "reviewPending": "Review pending changes",
+    "unpublished": "{count, plural, one {# unpublished change} other {# unpublished changes}}",
+    "publishAction": "Publish",
     "bufferFound": "Unsaved changes from an earlier session were found in this browser.",
     "bufferRestore": "Restore them",
     "bufferDiscard": "Discard",
@@ -252,7 +255,7 @@
   },
   "stepEditor": {
     "untitled": "Untitled step",
-    "backToOutline": "Back to the outline",
+    "stepNumber": "Step {number}",
     "status": {
       "new": "New",
       "changed": "Changed",

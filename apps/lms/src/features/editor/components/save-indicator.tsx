@@ -4,11 +4,10 @@ import { useT } from "@ihsp/i18n"
 import { Icons, cn } from "@ihsp/ui"
 import type { SaveStatus } from "../utils/save-status"
 
-/** "Saved · 12 pending changes", "Unsaved changes", "Saving…", "Offline · kept in this browser" (UF-LMS-08, step 3). */
-export function SaveIndicator({ status, pending }: { status: SaveStatus; pending?: number }) {
+/** "Draft saved", "Unsaved changes", "Saving…", "Offline · kept in this browser" (UF-LMS-08, step 3). */
+export function SaveIndicator({ status, draft }: { status: SaveStatus; draft?: boolean }) {
   const t = useT("saveState")
-  const text =
-    status === "saved" ? (pending === undefined ? t("saved") : t("savedPending", { count: pending })) : t(status)
+  const text = status === "saved" && draft ? t("draftSaved") : t(status)
   const warning = status === "offline" || status === "error" || status === "conflict"
   return (
     <span

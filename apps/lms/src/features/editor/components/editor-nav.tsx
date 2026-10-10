@@ -38,25 +38,36 @@ export function EditorNav({
     { key: "students", href: hrefs.students(courseId), visible: can(permissions, "review") },
   ]
   return (
-    <nav aria-label={t("label")} className="-mx-1 overflow-x-auto">
-      <ul className="flex min-w-max gap-1 px-1">
-        {items
-          .filter((item) => item.visible)
-          .map((item) => (
-            <li key={item.key}>
-              <Link
-                href={item.href}
-                aria-current={item.key === current ? "page" : undefined}
-                className={cn(
-                  "text-muted-foreground hover:bg-muted flex min-h-11 items-center rounded-lg px-3 text-sm font-medium md:min-h-8",
-                  item.key === current && "bg-muted text-foreground",
-                )}
-              >
-                {t(item.key)}
-              </Link>
-            </li>
-          ))}
-      </ul>
-    </nav>
+    <div className="relative -mx-1">
+      <nav aria-label={t("label")} className="overflow-x-auto [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
+        <ul className="flex min-w-max gap-1 px-4">
+          {items
+            .filter((item) => item.visible)
+            .map((item) => (
+              <li key={item.key}>
+                <Link
+                  href={item.href}
+                  aria-current={item.key === current ? "page" : undefined}
+                  className={cn(
+                    "text-muted-foreground hover:bg-muted flex min-h-11 items-center rounded-lg px-3 text-sm font-medium md:min-h-8",
+                    item.key === current && "bg-muted text-foreground",
+                  )}
+                >
+                  {t(item.key)}
+                </Link>
+              </li>
+            ))}
+        </ul>
+      </nav>
+      <span
+        aria-hidden
+        data-testid="nav-fade"
+        className="from-background pointer-events-none absolute inset-y-0 start-0 w-4 bg-gradient-to-r to-transparent rtl:bg-gradient-to-l"
+      />
+      <span
+        aria-hidden
+        className="from-background pointer-events-none absolute inset-y-0 end-0 w-6 bg-gradient-to-l to-transparent rtl:bg-gradient-to-r"
+      />
+    </div>
   )
 }

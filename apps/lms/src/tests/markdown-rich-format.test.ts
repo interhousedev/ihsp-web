@@ -1,5 +1,12 @@
 import { describe, expect, it } from "bun:test"
-import { alignmentAt, colorAt, insertImage, insertTable, setAlignment, setColor } from "../features/step-editor/utils/markdown/rich-format"
+import {
+  alignmentAt,
+  colorAt,
+  insertImage,
+  insertTable,
+  setAlignment,
+  setColor,
+} from "../features/step-editor/utils/markdown/rich-format"
 
 const at = (text: string, start: number, end = start) => ({ text, start, end })
 

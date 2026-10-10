@@ -32,14 +32,17 @@ export function CoursePromoCard({ page }: { page: CoursePage }) {
           <Progress value={progress.percent} aria-label={t("progress")} className="gap-1.5">
             <span className="text-sm font-medium">{t("yourProgress")}</span>
             <span className="text-muted-foreground ms-auto text-sm tabular-nums">
-              {progress.kind === "points"
-                ? t("progressPoints", {
-                    earned: formatPoints(progress.earned, format.locale),
-                    total: formatPoints(progress.total, format.locale),
-                  })
-                : `${progress.percent}%`}
+              {t("progressLessons", { done: progress.done, total: progress.total })}
             </span>
           </Progress>
+        ) : null}
+        {page.enrolled && progress?.points ? (
+          <p className="text-muted-foreground -mt-2 text-sm tabular-nums">
+            {t("progressPoints", {
+              earned: formatPoints(progress.points.earned, format.locale),
+              total: formatPoints(progress.points.total, format.locale),
+            })}
+          </p>
         ) : null}
 
         {page.enrolled && next ? (

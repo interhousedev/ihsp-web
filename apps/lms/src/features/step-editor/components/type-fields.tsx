@@ -485,4 +485,3 @@ export function CodeFields({ question, onChange }: Props) {
     </div>
   )
 }
-

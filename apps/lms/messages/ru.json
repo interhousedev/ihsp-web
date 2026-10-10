@@ -76,6 +76,7 @@
     "invite": "По приглашению",
     "yourProgress": "Ваш прогресс",
     "progressPoints": "{earned} из {total} баллов",
+    "progressLessons": "{done} из {total} уроков",
     "facts": "О курсе в цифрах"
   },
   "join": {
@@ -107,7 +108,7 @@
     },
     "stepsPassed": "Пройдено шагов: {passed} из {total}",
     "pointsReceived": "Получено баллов: {earned} из {total}",
-    "courseProgressPoints": "Прогресс по курсу: {earned}/{total}",
+    "courseProgressPoints": "{earned}/{total} баллов",
     "courseProgressLessons": "Прогресс по курсу: {done}/{total} уроков",
     "lessonCompleted": "Урок пройден",
     "noLessons": "В курсе пока нет уроков.",
@@ -182,8 +183,8 @@
     "previewNote": "Изучать карточки могут записанные студенты; прогресс хранится для каждого студента."
   },
   "saveState": {
+    "draftSaved": "Черновик сохранён",
     "saved": "Сохранено",
-    "savedPending": "Сохранено · {count, plural, =0 {нет несохранённых изменений} one {# ожидающее изменение} few {# ожидающих изменения} many {# ожидающих изменений} other {# ожидающих изменения}}",
     "dirty": "Есть несохранённые изменения",
     "saving": "Сохранение…",
     "offline": "Нет связи · изменения хранятся в этом браузере",
@@ -206,6 +207,8 @@
     "save": "Сохранить",
     "readOnly": "Вы можете смотреть черновик, но не менять его.",
     "reviewPending": "Проверить ожидающие изменения",
+    "unpublished": "{count, plural, one {# неопубликованное изменение} few {# неопубликованных изменения} many {# неопубликованных изменений} other {# неопубликованных изменения}}",
+    "publishAction": "Опубликовать",
     "bufferFound": "В этом браузере найдены несохранённые изменения прошлого сеанса.",
     "bufferRestore": "Восстановить",
     "bufferDiscard": "Отбросить",
@@ -252,7 +255,7 @@
   },
   "stepEditor": {
     "untitled": "Шаг без названия",
-    "backToOutline": "К структуре",
+    "stepNumber": "Шаг {number}",
     "status": {
       "new": "Новый",
       "changed": "Изменён",

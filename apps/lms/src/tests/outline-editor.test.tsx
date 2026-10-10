@@ -1,7 +1,7 @@
 import { describe, expect, it, setDefaultTimeout } from "bun:test"
 import type { DragEndEvent } from "@dnd-kit/core"
 import { apiUrl, courseDraft, courseOutline, ids, server } from "@ihsp/test-utils"
-import { renderHook, screen, waitFor } from "@testing-library/react"
+import { renderHook, screen, waitFor, within } from "@testing-library/react"
 import { HttpResponse, http } from "msw"
 import { CourseEditorPage } from "../features/editor/components/course-editor-page"
 import { useOutlineDnd } from "../features/editor/hooks/use-outline-dnd"
@@ -44,7 +44,7 @@ describe("course editor outline", () => {
   it("shows the save state, the badges and the steps of the draft", async () => {
     renderEditor()
     expect(await screen.findByText("Derivative rules quiz")).toBeInTheDocument()
-    expect(await screen.findByText("Saved · 2 pending changes")).toBeInTheDocument()
+    expect(await screen.findByText("Draft saved")).toBeInTheDocument()
     expect(screen.getByText("Changed")).toBeInTheDocument()
     expect(screen.getByText("New")).toBeInTheDocument()
     expect(screen.getByRole("link", { name: "Derivative rules quiz" })).toHaveAttribute(
@@ -141,5 +141,18 @@ describe("course editor outline", () => {
     // the default session is the demo student, who is not on the course staff
     renderEditor({})
     expect(await screen.findByText("No access")).toBeInTheDocument()
+  })
+})
+
+describe("course editor status", () => {
+  it("shows a saved draft and the unpublished changes with a Publish link, and no Save button", async () => {
+    renderEditor()
+    expect(await screen.findByText("Draft saved")).toBeInTheDocument()
+    expect(screen.queryByRole("button", { name: "Save" })).toBeNull()
+    const pending = screen.getByText(/unpublished change/)
+    expect(within(pending.parentElement as HTMLElement).getByRole("link", { name: "Publish" })).toHaveAttribute(
+      "href",
+      expect.stringContaining("publish"),
+    )
   })
 })

@@ -152,7 +152,9 @@ describe("step player: the course sidebar", () => {
         .getAttribute("aria-current"),
     ).toBeNull()
     expect(within(nav).getByLabelText("Lesson completed")).toBeInTheDocument()
-    expect(screen.getByRole("progressbar", { name: "Course progress: 2/3" })).toBeInTheDocument()
+    expect(
+      screen.getByRole("progressbar", { name: /Course progress: \d+\/\d+ lessons · 2\/3 points/ }),
+    ).toBeInTheDocument()
     expect(screen.getByText("Derivatives 101")).toBeInTheDocument()
   })
 
