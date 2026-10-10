@@ -2,7 +2,8 @@
 
 import type { WebResult } from "@ihsp/api"
 import { useT } from "@ihsp/i18n"
-import { IconArrowUpRight } from "@tabler/icons-react"
+import { IconArrowUpRight } from "@ihsp/ui"
+import { PlatformBadge } from "./platform-badge"
 
 /** The hover card of a web chip: for each page its title, site, two lines of the snippet, the address and a link. */
 export function WebCitationCard({ results }: { results: readonly WebResult[] }) {
@@ -12,7 +13,10 @@ export function WebCitationCard({ results }: { results: readonly WebResult[] }) 
       {results.map((result) => (
         <li key={result.n} className="flex min-w-0 flex-col gap-1">
           <p className="text-xs font-medium break-words">{result.title}</p>
-          <p className="text-muted-foreground text-xs">{result.site}</p>
+          <p className="text-muted-foreground flex items-center gap-1.5 text-xs">
+            {result.site}
+            <PlatformBadge origin={result.origin} />
+          </p>
           <p className="line-clamp-2 text-sm break-words">{result.snippet}</p>
           <p className="text-muted-foreground text-xs break-all">{result.url}</p>
           <a

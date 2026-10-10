@@ -3,9 +3,10 @@
 import type { WebResult } from "@ihsp/api"
 import { useT } from "@ihsp/i18n"
 import { Button, cn } from "@ihsp/ui"
-import { IconChevronDown, IconWorld } from "@tabler/icons-react"
+import { IconChevronDown, IconWorld } from "@ihsp/ui"
 import { useId, useState } from "react"
 import { citedWebNumbers } from "../lib/citations"
+import { PlatformBadge } from "./platform-badge"
 
 type WebSourcesRowProps = {
   /** The pages the web search found for the answer. */
@@ -64,7 +65,10 @@ export function WebSourcesRow({ web, text }: WebSourcesRowProps) {
                 >
                   {page.title}
                 </a>
-                <span className="text-muted-foreground text-xs">{page.site}</span>
+                <span className="text-muted-foreground flex items-center gap-1.5 text-xs">
+                  {page.site}
+                  <PlatformBadge origin={page.origin} />
+                </span>
                 <span className="text-muted-foreground truncate text-xs">{page.snippet}</span>
               </div>
             </li>

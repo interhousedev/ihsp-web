@@ -3,8 +3,9 @@
 import type { DiscoverResult } from "@ihsp/api"
 import { useT } from "@ihsp/i18n"
 import { Checkbox, cn } from "@ihsp/ui"
-import { IconAlertTriangle, IconExternalLink } from "@tabler/icons-react"
+import { IconAlertTriangle, IconExternalLink } from "@ihsp/ui"
 import { useId } from "react"
+import { PlatformBadge } from "../chat/platform-badge"
 
 type DiscoverResultRowProps = {
   result: DiscoverResult
@@ -55,7 +56,9 @@ export function DiscoverResultRow({ result, checked, taken, full, refusal, onTog
         onCheckedChange={onToggle}
       />
       <span className="flex min-w-0 flex-1 flex-col gap-0.5">
-        <span className="text-sm font-medium break-words">{result.title}</span>
+        <span className="text-sm font-medium break-words">
+          {result.title} <PlatformBadge origin={result.origin} className="align-middle" />
+        </span>
         <span id={detailsId} className="text-muted-foreground flex min-w-0 flex-col gap-0.5 text-xs">
           <span className="truncate">{details}</span>
           <span className="line-clamp-2 break-words">{result.snippet}</span>

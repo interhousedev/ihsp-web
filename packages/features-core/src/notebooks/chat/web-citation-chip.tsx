@@ -3,8 +3,9 @@
 import type { WebResult } from "@ihsp/api"
 import { useT } from "@ihsp/i18n"
 import { HoverCard, HoverCardContent, HoverCardTrigger, cn } from "@ihsp/ui"
-import { IconWorld } from "@tabler/icons-react"
+import { IconWorld } from "@ihsp/ui"
 import { WebCitationCard } from "./web-citation-card"
+import { PlatformBadge } from "./platform-badge"
 
 type WebCitationChipProps = {
   /** The numbers of one `⟦w1,3⟧` marker. */
@@ -51,6 +52,7 @@ export function WebCitationChip({ numbers, web, className }: WebCitationChipProp
       >
         <IconWorld className="size-3 shrink-0" aria-hidden />
         <span className="min-w-0 truncate">{first.site}</span>
+        <PlatformBadge origin={first.origin} className="h-3.5" />
         {more > 0 ? <span className="shrink-0 tabular-nums">{`+${more}`}</span> : null}
       </HoverCardTrigger>
       <HoverCardContent className="w-80 max-w-[calc(100vw-2rem)]" side="top">
