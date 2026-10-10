@@ -7,16 +7,18 @@ import { useRouter } from "next/navigation"
 import { useState, type ReactNode } from "react"
 import { limitState } from "./limit-info"
 import { storePendingTurn } from "./pending-turn"
+import { slashInfo, type SlashName } from "./slash-commands"
 import { PillComposer, type PillSendOptions } from "./pill-composer"
 import { useCreateChat, useUsage, type ChatTier } from "./use-assistant-queries"
 import { writeWebSwitch } from "./use-web-switch"
+import { useAssistantScope } from "./assistant-context"
 
-const CHIPS = ["explain", "cards", "quiz", "due", "plan", "notebook"] as const
+const CHIPS = ["explain", "cards", "quiz", "summary", "mindmap", "table"] as const satisfies readonly SlashName[]
 const CHIPS_SHOWN = 4
 const GREETINGS = 4
 const CHIPS_STORAGE_KEY = "ihsp.assistant.chips"
 
-/** Which of the six chips come first: moves on by one on every visit so all of them get seen. */
+/** Which of the six command chips come first: moves on by one on every visit so all of them get seen. */
 function nextChipOffset(): number {
   try {
     const visits = Number(window.localStorage.getItem(CHIPS_STORAGE_KEY) ?? "0")
@@ -32,26 +34,30 @@ type AssistantHomeProps = {
   basePath: string
   /** Sidebar buttons of the workspace for the top bar. */
   navButtons: ReactNode
+  /** Compact usage meter (phones, hidden sidebar). */
+  trailing?: ReactNode
 }
 
 /**
  * `/assistant/`: a greeting, the pill composer and suggestion chips. The first message creates the chat, leaves its
  * text for the chat page (`sessionStorage`) and opens `<basePath>/chat/?id=…`, where the turn runs.
  */
-export function AssistantHome({ basePath, navButtons }: AssistantHomeProps) {
+export function AssistantHome({ basePath, navButtons, trailing }: AssistantHomeProps) {
   const t = useT("assistant")
   const router = useRouter()
   const errorMessage = useErrorMessage()
   const { session } = useSession()
-  const usage = useUsage("student")
-  const createChat = useCreateChat("student")
+  const { assistant } = useAssistantScope()
+  const usage = useUsage(assistant)
+  const createChat = useCreateChat(assistant)
   const [greeting] = useState(() => 1 + Math.floor(Math.random() * GREETINGS))
   const [chipOffset] = useState(nextChipOffset)
   const [tier, setTier] = useState<ChatTier>("fast")
-  const [prefill, setPrefill] = useState<{ key: number; text: string } | null>(null)
+  const [prefill, setPrefill] = useState<{ key: number; command: SlashName } | null>(null)
   const [error, setError] = useState<unknown>(null)
 
   const name = session?.user.first_name ?? ""
+  const tSlash = useT("assistant.slash")
   const chips = Array.from(
     { length: CHIPS_SHOWN },
     (_, index) => CHIPS[(chipOffset + index) % CHIPS.length] ?? "explain",
@@ -75,7 +81,10 @@ export function AssistantHome({ basePath, navButtons }: AssistantHomeProps) {
 
   return (
     <div className="flex min-h-0 min-w-0 flex-1 flex-col">
-      <div className="flex h-14 shrink-0 items-center gap-1 px-2 md:px-4">{navButtons}</div>
+      <div className="flex h-14 shrink-0 items-center gap-1 px-2 md:px-4">
+        {navButtons}
+        <span className="ms-auto">{trailing}</span>
+      </div>
       <div className="flex min-h-0 flex-1 flex-col items-center justify-center overflow-y-auto px-4 pb-14">
         <div className="flex w-full max-w-3xl flex-col gap-8">
           <h2 className="text-center text-3xl font-medium tracking-tight text-balance md:text-5xl">
@@ -98,17 +107,22 @@ export function AssistantHome({ basePath, navButtons }: AssistantHomeProps) {
             ) : null}
           </div>
           <ul aria-label={t("home.chips")} className="hidden flex-wrap justify-center gap-2 md:flex">
-            {chips.map((chip) => (
-              <li key={chip}>
-                <button
-                  type="button"
-                  className="bg-background hover:bg-muted focus-visible:ring-ring/50 min-h-11 rounded-full border px-4 text-sm outline-none focus-visible:ring-3 md:min-h-10"
-                  onClick={() => setPrefill((current) => ({ key: (current?.key ?? 0) + 1, text: t(`chip.${chip}`) }))}
-                >
-                  {t(`chip.${chip}`)}
-                </button>
-              </li>
-            ))}
+            {chips.map((chip) => {
+              const Icon = slashInfo(chip).icon
+              return (
+                <li key={chip}>
+                  <button
+                    type="button"
+                    title={tSlash(`${chip}.hint`)}
+                    className="bg-background hover:bg-muted focus-visible:ring-ring/50 inline-flex min-h-11 items-center gap-2 rounded-full border px-4 text-sm outline-none focus-visible:ring-3 md:min-h-10"
+                    onClick={() => setPrefill((current) => ({ key: (current?.key ?? 0) + 1, command: chip }))}
+                  >
+                    <Icon className="text-primary size-4" aria-hidden />
+                    {tSlash(`${chip}.title`)}
+                  </button>
+                </li>
+              )
+            })}
           </ul>
         </div>
       </div>

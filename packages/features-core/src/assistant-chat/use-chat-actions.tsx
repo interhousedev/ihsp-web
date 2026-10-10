@@ -8,6 +8,7 @@ import { toast } from "sonner"
 import { RenameChatDialog } from "./rename-chat-dialog"
 import { ShareDialog } from "./share-dialog"
 import { useDeleteChat, useRenameChat } from "./use-assistant-queries"
+import { useAssistantScope } from "./assistant-context"
 
 export type ChatActions = {
   renameChat: (chat: ChatItem) => void
@@ -26,8 +27,9 @@ type UseChatActionsOptions = {
  */
 export function useChatActions({ onDeleted }: UseChatActionsOptions = {}): ChatActions & { dialogs: ReactNode } {
   const t = useT("assistant.list")
-  const rename = useRenameChat("student")
-  const remove = useDeleteChat("student")
+  const { assistant } = useAssistantScope()
+  const rename = useRenameChat(assistant)
+  const remove = useDeleteChat(assistant)
   const [renaming, setRenaming] = useState<ChatItem | null>(null)
   const [sharing, setSharing] = useState<ChatItem | null>(null)
   const [deleting, setDeleting] = useState<ChatItem | null>(null)

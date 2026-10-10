@@ -11,16 +11,22 @@ import { AttachFilesDialog } from "./attach-files-dialog"
 import { ComposerPlusMenu } from "./composer-plus-menu"
 import { ComposerUpload, type ComposerUploadHandle } from "./composer-upload"
 import { FileChip } from "./file-chip"
+import { useAssistantScope } from "./assistant-context"
 import { withGuidedHint } from "./guided-hint"
 import type { LimitState } from "./limit-info"
+import { SlashChip, SlashMenu } from "./slash-menu"
+import { slashText, type SlashCall, type SlashName } from "./slash-commands"
 import { TierPicker } from "./tier-picker"
 import type { ChatTier } from "./use-assistant-queries"
+import { useSlashInput } from "./use-slash-input"
 import { useWebSwitch } from "./use-web-switch"
 
 /** What the student chose besides the text; the composer passes it only while a choice is on. */
 export type PillSendOptions = {
   /** The web-search switch was on: send the message with `web_search: true`. */
   webSearch?: boolean
+  /** The message is a slash command; `text` then is its short form (`/cards photosynthesis`). */
+  command?: SlashCall
 }
 
 /** What the page can ask of the composer after a send (a web search failure). */
@@ -50,8 +56,8 @@ export type PillComposerProps = {
   placeholder: string
   /** The model class picker; only the home composer shows it (a chat keeps the tier it was created with). */
   tier?: { value: ChatTier; onChange: (tier: ChatTier) => void }
-  /** Fills the field from outside (a suggestion chip): a new `key` replaces the text and focuses the field. */
-  prefill?: { key: number; text: string } | null
+  /** Fills the field from outside (a suggestion chip): a new `key` sets the command chip (or the text) and focuses. */
+  prefill?: { key: number; command?: SlashName; text?: string } | null
   autoFocus?: boolean
 }
 
@@ -82,26 +88,29 @@ export function PillComposer({
 }: PillComposerProps) {
   const t = useT("assistant.composer")
   const tRoot = useT("assistant")
+  const tSlash = useT("assistant.slash")
   const format = useFormatters()
   const router = useRouter()
+  const { features } = useAssistantScope()
   const online = useOnline()
   const inputId = useId()
   const inputRef = useRef<HTMLTextAreaElement>(null)
   const uploadRef = useRef<ComposerUploadHandle>(null)
   const [text, setText] = useState("")
+  const [command, setCommand] = useState<SlashName | null>(null)
   const [files, setFiles] = useState<FileItem[]>([])
   const [guided, setGuided] = useState(false)
   const [pickerOpen, setPickerOpen] = useState(false)
-  const [fillKey, setFillKey] = useState(0)
+  const slash = useSlashInput({ text, setText, command, setCommand, fieldRef: inputRef, disabled: false })
   const [web, setWeb] = useWebSwitch(chatId)
   const webQuota = useWebQuota()
   // The last draft that came back after a failed send, with the text that was sent for it.
   const returned = useRef<{ draft: string; sent: string } | null>(null)
 
   // A switch that was left on stays off-screen (and unsent) while the server has web search turned off.
-  const webOn = web && webQuota.enabled
+  const webOn = web && webQuota.enabled && features.plus
   const locked = limit.reached || !online
-  const canSend = !locked && !sending && text.trim().length > 0
+  const canSend = !locked && !sending && (text.trim().length > 0 || command !== null)
   const stoppable = sending && onStop !== undefined
 
   useEffect(() => {
@@ -110,14 +119,17 @@ export function PillComposer({
 
   const prefillKey = prefill?.key
   const prefillText = prefill?.text
+  const prefillCommand = prefill?.command
   useEffect(() => {
-    if (prefillKey === undefined || prefillText === undefined) return
-    setText(prefillText)
+    if (prefillKey === undefined) return
+    if (prefillCommand) setCommand(prefillCommand)
+    if (prefillText !== undefined) setText(prefillText)
     const field = inputRef.current
     if (!field) return
     field.focus()
-    field.setSelectionRange(prefillText.length, prefillText.length)
-  }, [prefillKey, prefillText])
+    const end = (prefillText ?? "").length
+    field.setSelectionRange(end, end)
+  }, [prefillKey, prefillText, prefillCommand])
 
   useImperativeHandle(
     ref,
@@ -134,33 +146,30 @@ export function PillComposer({
     [setWeb],
   )
 
-  // A study tool filled the field: the caret goes to the end so the student continues typing.
-  useEffect(() => {
-    const field = inputRef.current
-    if (fillKey === 0 || !field) return
-    field.focus()
-    field.setSelectionRange(field.value.length, field.value.length)
-  }, [fillKey])
-
   async function submit() {
     if (!canSend) return
-    const draft = { text: text.trim(), files }
+    const draft = { text: text.trim(), files, command }
     returned.current = null
     setText("")
+    setCommand(null)
     setFiles([])
-    const sentText = guided ? withGuidedHint(t("guidedHint"), draft.text) : draft.text
-    const sent = await (webOn ? onSend(sentText, draft.files, { webSearch: true }) : onSend(sentText, draft.files))
+    const call: SlashCall | null = draft.command ? { name: draft.command, args: draft.text } : null
+    const sentText = call ? slashText(call) : guided ? withGuidedHint(t("guidedHint"), draft.text) : draft.text
+    const options: PillSendOptions = { ...(webOn ? { webSearch: true } : {}), ...(call ? { command: call } : {}) }
+    const sent = await (Object.keys(options).length > 0
+      ? onSend(sentText, draft.files, options)
+      : onSend(sentText, draft.files))
     if (!sent) {
       returned.current = { draft: draft.text, sent: sentText }
       setText((current) => (current === "" ? draft.text : current))
+      setCommand((current) => current ?? draft.command)
       setFiles((current) => (current.length === 0 ? draft.files : current))
     }
   }
 
-  function fillTemplate(template: string) {
-    const start = `${template.trimEnd()} `
-    setText((current) => (current.trim() === "" ? start : `${start}${current.trimStart()}`))
-    setFillKey((key) => key + 1)
+  /** A command from the "+" menu: the chip goes in and the field takes the arguments. */
+  function pickCommand(name: SlashName) {
+    slash.pick(name)
   }
 
   function addFiles(added: FileItem[]) {
@@ -178,6 +187,7 @@ export function PillComposer({
   }
 
   function onKeyDown(event: KeyboardEvent<HTMLTextAreaElement>) {
+    if (slash.onKeyDown(event)) return
     if (event.key !== "Enter" || event.shiftKey || event.nativeEvent.isComposing) return
     if (isTouchDevice()) return
     event.preventDefault()
@@ -213,12 +223,14 @@ export function PillComposer({
       <ComposerUpload ref={uploadRef} disabled={locked} onUploaded={(file) => addFiles([file])} />
       <div
         className={cn(
-          "bg-muted/50 focus-within:border-ring focus-within:ring-ring/30 flex flex-col gap-1 rounded-[1.75rem] border p-1.5 transition-shadow focus-within:ring-3 motion-reduce:transition-none",
+          "bg-muted/50 focus-within:border-ring relative focus-within:ring-ring/30 flex flex-col gap-1 rounded-[1.75rem] border p-1.5 transition-shadow focus-within:ring-3 motion-reduce:transition-none",
           locked && "opacity-70",
         )}
       >
-        {files.length > 0 || guided || webOn ? (
+        {slash.menu ? <SlashMenu {...slash.menu} /> : null}
+        {files.length > 0 || guided || webOn || command ? (
           <div className="flex flex-wrap items-center gap-1 px-2 pt-1" aria-label={t("attached")} role="group">
+            {command ? <SlashChip name={command} onRemove={() => setCommand(null)} /> : null}
             {guided ? (
               <Badge variant="secondary" className="gap-1 pe-0.5">
                 <IconSchool className="size-3.5" aria-hidden />
@@ -257,19 +269,23 @@ export function PillComposer({
           </div>
         ) : null}
         <div className="flex items-end gap-1">
-          <ComposerPlusMenu
-            disabled={locked}
-            guided={guided}
-            onGuidedChange={setGuided}
-            web={webOn}
-            onWebChange={setWeb}
-            webQuota={webQuota}
-            onStudyTool={fillTemplate}
-            fieldRef={inputRef}
-            onUpload={() => uploadRef.current?.open()}
-            onPickFiles={() => setPickerOpen(true)}
-            onAskNotebook={askNotebook}
-          />
+          {features.plus ? (
+            <ComposerPlusMenu
+              disabled={locked}
+              guided={guided}
+              onGuidedChange={setGuided}
+              web={webOn}
+              onWebChange={setWeb}
+              webQuota={webQuota}
+              onStudyTool={pickCommand}
+              fieldRef={inputRef}
+              onUpload={() => uploadRef.current?.open()}
+              onPickFiles={() => setPickerOpen(true)}
+              onAskNotebook={askNotebook}
+            />
+          ) : (
+            <span className="w-2 shrink-0" aria-hidden />
+          )}
           <label htmlFor={inputId} className="sr-only">
             {t("label")}
           </label>
@@ -280,10 +296,19 @@ export function PillComposer({
             value={text}
             rows={1}
             disabled={locked}
-            placeholder={locked ? (online ? t("disabledPlaceholder") : t("offline")) : placeholder}
+            placeholder={
+              locked
+                ? online
+                  ? t("disabledPlaceholder")
+                  : t("offline")
+                : command
+                  ? tSlash(`${command}.args`)
+                  : placeholder
+            }
             className="placeholder:text-muted-foreground field-sizing-content max-h-40 min-h-11 min-w-0 flex-1 resize-none bg-transparent px-1 py-2.5 text-base outline-none disabled:cursor-not-allowed md:text-sm"
-            onChange={(event) => setText(event.target.value)}
+            onChange={(event) => slash.onTextChange(event.target.value)}
             onKeyDown={onKeyDown}
+            {...slash.fieldProps}
           />
           {tier ? <TierPicker value={tier.value} onChange={tier.onChange} disabled={locked} /> : null}
           {stoppable ? (
@@ -317,7 +342,9 @@ export function PillComposer({
             : t("webQuota", { remaining: webQuota.remaining, limit: webQuota.quota.limit })}
         </p>
       ) : null}
-      <p className="text-muted-foreground px-4 text-center text-xs">{tRoot("disclaimer")}</p>
+      <p className="text-muted-foreground hidden truncate px-4 text-center text-[11px] sm:block">
+        {tRoot("disclaimer")}
+      </p>
       <AttachFilesDialog
         open={pickerOpen}
         onOpenChange={setPickerOpen}

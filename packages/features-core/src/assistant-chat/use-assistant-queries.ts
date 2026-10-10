@@ -120,6 +120,8 @@ export type SendMessageInput = {
   fileIds: string[]
   /** Answer with a web search (`web_search: true`); left out of the body when false. */
   webSearch?: boolean
+  /** A slash command: the server maps it to a prompt or tool; `text` is then only what the chat shows meanwhile. */
+  command?: { name: string; args: string }
   /** Aborts the request (the stop button). */
   signal?: AbortSignal
 }
@@ -128,10 +130,15 @@ export function useSendMessage(chatId: string, assistant: AssistantKind) {
   const queryClient = useQueryClient()
   const refreshWebQuota = useRefreshWebQuota()
   return useMutation<TurnResult, unknown, SendMessageInput>({
-    mutationFn: ({ text, fileIds, webSearch, signal }) =>
+    mutationFn: ({ text, fileIds, webSearch, command, signal }) =>
       postAiChatMessages(
         chatId,
-        { text, file_ids: fileIds, ...(webSearch ? { web_search: true } : {}) },
+        {
+          text: command ? "" : text,
+          file_ids: fileIds,
+          ...(command ? { command: command.name, args: command.args } : {}),
+          ...(webSearch ? { web_search: true } : {}),
+        },
         signal ? { signal } : undefined,
       ),
     onSuccess: (turn) => storeTurn(queryClient, assistant, chatId, turn),

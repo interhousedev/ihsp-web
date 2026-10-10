@@ -9,12 +9,14 @@ import { useRouter } from "next/navigation"
 import { useEffect, useRef, useState, type ReactNode } from "react"
 import { toast } from "sonner"
 import { useWebSearchErrorMessage, webSearchFailure } from "../web-search"
+import { useAssistantScope } from "./assistant-context"
+import { parseSlashText } from "./slash-commands"
 import { ChatMessageList, type PendingMessage } from "./chat-message-list"
 import { ChatPaneHeader } from "./chat-pane-header"
 import { limitState } from "./limit-info"
 import type { Rating } from "./message-actions"
 import { takePendingTurn } from "./pending-turn"
-import { PillComposer, type PillComposerHandle, type PillSendOptions } from "./pill-composer"
+import { PillComposer, type PillComposerHandle, type PillComposerProps, type PillSendOptions } from "./pill-composer"
 import {
   useChat,
   useDecideToolCall,
@@ -25,13 +27,24 @@ import {
 } from "./use-assistant-queries"
 import { useChatActions } from "./use-chat-actions"
 import { useStickToBottom } from "./use-stick-to-bottom"
-import { UsageBar } from "./usage-bar"
 
 type AssistantChatPaneProps = {
   chatId: string
   basePath: string
   /** Sidebar buttons of the workspace for the header (history sheet on phones, show the sidebar when hidden). */
   navButtons: ReactNode
+  /** Compact usage meter for the top bar (phones, hidden sidebar). */
+  trailing?: ReactNode
+  /** Without the top bar (the author assistant has its own chat picker above). */
+  bare?: boolean
+  /** Shown in the empty conversation (starter chips). */
+  empty?: ReactNode
+  /** The composer placeholder; the assistant's by default. */
+  placeholder?: string
+  /** Fills the composer from outside (starter chips, command chips). */
+  prefill?: PillComposerProps["prefill"]
+  /** After an approved tool call finished (the author assistant refreshes the editor). */
+  onToolApproved?: () => void
 }
 
 function isAbort(error: unknown, signal: AbortSignal): boolean {
@@ -43,17 +56,28 @@ function isAbort(error: unknown, signal: AbortSignal): boolean {
  * indicator, scroll-to-latest), approval cards, the pill composer with a stop button, and the usage bar.
  * It also runs the first message that the home composer left in `sessionStorage` (`ihsp.assistant.pending.<id>`).
  */
-export function AssistantChatPane({ chatId, basePath, navButtons }: AssistantChatPaneProps) {
+export function AssistantChatPane({
+  chatId,
+  basePath,
+  navButtons,
+  trailing,
+  bare = false,
+  empty,
+  placeholder,
+  prefill,
+  onToolApproved,
+}: AssistantChatPaneProps) {
+  const { assistant, courseId, features } = useAssistantScope()
   const t = useT("assistant")
   const router = useRouter()
   const queryClient = useQueryClient()
   const errorMessage = useErrorMessage()
   const webErrorMessage = useWebSearchErrorMessage()
   const chat = useChat(chatId)
-  const usage = useUsage("student")
-  const send = useSendMessage(chatId, "student")
-  const decide = useDecideToolCall(chatId, "student")
-  const regenerate = useRegenerate(chatId, "student")
+  const usage = useUsage(assistant, courseId)
+  const send = useSendMessage(chatId, assistant)
+  const decide = useDecideToolCall(chatId, assistant)
+  const regenerate = useRegenerate(chatId, assistant)
   const feedback = useFeedback(chatId)
   const [pending, setPending] = useState<PendingMessage | null>(null)
   const [actionError, setActionError] = useState<unknown>(null)
@@ -84,8 +108,16 @@ export function AssistantChatPane({ chatId, basePath, navButtons }: AssistantCha
     setActionError(null)
     setWebFailed(null)
     setPending({ text, fileIds })
+    // A slash command goes to the agent as {command, args}; it maps the command to its prompt or tool.
+    const call = parseSlashText(text)
     try {
-      await send.mutateAsync({ text, fileIds, webSearch, signal: controller.signal })
+      await send.mutateAsync({
+        text,
+        fileIds,
+        webSearch,
+        ...(call ? { command: call } : {}),
+        signal: controller.signal,
+      })
       return true
     } catch (error) {
       if (isAbort(error, controller.signal)) {
@@ -133,7 +165,7 @@ export function AssistantChatPane({ chatId, basePath, navButtons }: AssistantCha
 
   function handleApprove(callId: string) {
     setActionError(null)
-    decide.mutate({ callId, decision: "approve" })
+    decide.mutate({ callId, decision: "approve" }, { onSuccess: () => onToolApproved?.() })
   }
 
   function handleReject(callId: string, reason: string | undefined) {
@@ -173,8 +205,16 @@ export function AssistantChatPane({ chatId, basePath, navButtons }: AssistantCha
 
   return (
     <section aria-label={detail.title} className="flex min-h-0 min-w-0 flex-1 flex-col">
-      <ChatPaneHeader chat={detail} homeHref={`${basePath}/`} navButtons={navButtons} actions={actions} />
-      {detail.shared ? (
+      {bare ? null : (
+        <ChatPaneHeader
+          chat={detail}
+          homeHref={`${basePath}/`}
+          navButtons={navButtons}
+          actions={actions}
+          trailing={trailing}
+        />
+      )}
+      {detail.shared && features.share ? (
         <Alert className="mx-auto mt-2 w-[calc(100%-2rem)] max-w-3xl">
           <IconShare aria-hidden />
           <AlertDescription>{t("chat.sharedBanner")}</AlertDescription>
@@ -195,6 +235,7 @@ export function AssistantChatPane({ chatId, basePath, navButtons }: AssistantCha
             onRate={handleRate}
             onRegenerate={handleRegenerate}
           />
+          {detail.messages.length === 0 && pending === null ? empty : null}
         </div>
         {atBottom ? null : (
           <Button
@@ -235,9 +276,9 @@ export function AssistantChatPane({ chatId, basePath, navButtons }: AssistantCha
             limit={limit}
             onSend={handleSend}
             onStop={() => abort.current?.abort()}
-            placeholder={t("composer.placeholder")}
+            placeholder={placeholder ?? t("composer.placeholder")}
+            prefill={prefill}
           />
-          <UsageBar usage={usage.data} />
         </div>
       </div>
       {actions.dialogs}

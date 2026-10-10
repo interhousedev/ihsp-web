@@ -24,7 +24,8 @@ function renderDialog(
   return Object.assign(result, { onOpenChange })
 }
 
-const pressed = (name: string) => screen.getByRole("button", { name }).getAttribute("aria-pressed")
+const style = (name: string) => within(screen.getByRole("group", { name: "Style" })).getByRole("button", { name })
+const length = (name: string) => within(screen.getByRole("group", { name: "Response length" })).getByRole("button", { name })
 
 function capturePatch() {
   const captured: { body: unknown } = { body: undefined }
@@ -42,9 +43,9 @@ describe("ChatConfigDialog", () => {
     renderDialog({ style: "learning_guide", custom_prompt: null, length: "shorter", language: "ru" })
 
     expect(await screen.findByRole("dialog", { name: "Configure chat" })).toBeInTheDocument()
-    expect(screen.getByRole("radio", { name: /Learning guide/ })).toBeChecked()
-    expect(screen.getByRole("radio", { name: /Default/ })).not.toBeChecked()
-    expect(screen.getByRole("button", { name: "Shorter" })).toHaveAttribute("aria-pressed", "true")
+    expect(style("Learning guide")).toHaveAttribute("aria-pressed", "true")
+    expect(style("Default")).toHaveAttribute("aria-pressed", "false")
+    expect(length("Shorter")).toHaveAttribute("aria-pressed", "true")
     expect(screen.getByRole("combobox", { name: "Answer language" })).toHaveValue("ru")
     expect(screen.queryByRole("textbox", { name: "Style instruction" })).not.toBeInTheDocument()
   })
@@ -53,8 +54,8 @@ describe("ChatConfigDialog", () => {
     const patch = capturePatch()
     const { user, onOpenChange } = renderDialog()
 
-    await user.click(await screen.findByRole("radio", { name: /Learning guide/ }))
-    await user.click(screen.getByRole("button", { name: "Longer" }))
+    await user.click(await screen.findByRole("button", { name: "Learning guide" }))
+    await user.click(length("Longer"))
     await user.selectOptions(screen.getByRole("combobox", { name: "Answer language" }), "uz")
     await user.click(screen.getByRole("button", { name: "Save" }))
 
@@ -70,7 +71,7 @@ describe("ChatConfigDialog", () => {
     const patch = capturePatch()
     const { user } = renderDialog()
 
-    await user.click(await screen.findByRole("radio", { name: /Custom/ }))
+    await user.click(await screen.findByRole("button", { name: "Custom" }))
     const field = screen.getByRole("textbox", { name: "Style instruction" })
     expect(field).toHaveAttribute("maxlength", "1000")
     expect(screen.getByText("0 of 1000")).toBeInTheDocument()
@@ -105,7 +106,7 @@ describe("ChatConfigDialog", () => {
     )
     const { user, onOpenChange } = renderDialog()
 
-    await user.click(await screen.findByRole("radio", { name: /Learning guide/ }))
+    await user.click(await screen.findByRole("button", { name: "Learning guide" }))
     await user.click(screen.getByRole("button", { name: "Save" }))
 
     expect(await screen.findByRole("alert")).toHaveTextContent("This notebook, source or item was not found.")
@@ -127,7 +128,7 @@ describe("ChatConfigDialog", () => {
     const { user } = await renderChat()
 
     await user.click(screen.getByRole("button", { name: "Configure chat" }))
-    await user.click(await screen.findByRole("radio", { name: /Learning guide/ }))
+    await user.click(await screen.findByRole("button", { name: "Learning guide" }))
     await user.click(screen.getByRole("button", { name: "Save" }))
 
     await waitFor(() =>
@@ -139,130 +140,17 @@ describe("ChatConfigDialog", () => {
   })
 })
 
-const EXAM_PROMPT =
-  "Answer like an examiner's checklist: the key facts and definitions first, then likely exam questions and common mistakes."
-const SIMPLE_PROMPT =
-  "Explain in plain, simple words with short sentences and everyday examples; avoid jargon, or explain it when unavoidable."
-const DEPTH_PROMPT = "Give a thorough, detailed explanation with reasoning, edge cases and examples."
-
-describe("ChatConfigDialog: presets", () => {
-  it("shows five presets and presses the one the saved configuration matches", async () => {
+describe("ChatConfigDialog: compact layout", () => {
+  it("has no presets and no style cards: goal, style, length and language only", async () => {
     renderDialog()
 
-    const group = await screen.findByRole("group", { name: "Presets" })
-    expect(
-      within(group)
-        .getAllByRole("button")
-        .map((button) => button.textContent),
-    ).toEqual(["Balanced", "Tutor", "Exam prep", "Simple words", "In depth"])
-    expect(pressed("Balanced")).toBe("true")
-    expect(pressed("Tutor")).toBe("false")
-  })
-
-  it("presses no preset for a configuration that no preset makes", async () => {
-    renderDialog({ style: "default", custom_prompt: null, length: "shorter", language: "ru" })
-
-    await screen.findByRole("group", { name: "Presets" })
-    for (const name of ["Balanced", "Tutor", "Exam prep", "Simple words", "In depth"])
-      expect(pressed(name)).toBe("false")
-  })
-
-  it("presses a preset that was saved earlier, whatever the language and goal are", async () => {
-    renderDialog({ style: "learning_guide", custom_prompt: null, length: "default", language: "uz", goal: "Biology" })
-
-    await screen.findByRole("group", { name: "Presets" })
-    expect(pressed("Tutor")).toBe("true")
-  })
-
-  it("fills the style for Tutor and the style, text and length for the custom presets", async () => {
-    const { user } = renderDialog()
-
-    await user.click(await screen.findByRole("button", { name: "Tutor" }))
-    expect(screen.getByRole("radio", { name: /Learning guide/ })).toBeChecked()
-    expect(pressed("Tutor")).toBe("true")
-    expect(pressed("Balanced")).toBe("false")
-
-    await user.click(screen.getByRole("button", { name: "Exam prep" }))
-    expect(screen.getByRole("radio", { name: /Custom/ })).toBeChecked()
-    expect(screen.getByRole("textbox", { name: "Style instruction" })).toHaveValue(EXAM_PROMPT)
-    expect(pressed("Default")).toBe("true")
-    expect(pressed("Exam prep")).toBe("true")
-
-    await user.click(screen.getByRole("button", { name: "Simple words" }))
-    expect(screen.getByRole("textbox", { name: "Style instruction" })).toHaveValue(SIMPLE_PROMPT)
-    expect(pressed("Shorter")).toBe("true")
-
-    await user.click(screen.getByRole("button", { name: "In depth" }))
-    expect(screen.getByRole("textbox", { name: "Style instruction" })).toHaveValue(DEPTH_PROMPT)
-    expect(pressed("Longer")).toBe("true")
-
-    await user.click(screen.getByRole("button", { name: "Balanced" }))
-    expect(screen.getByRole("radio", { name: /Default/ })).toBeChecked()
-    expect(screen.queryByRole("textbox", { name: "Style instruction" })).not.toBeInTheDocument()
-    expect(pressed("Default")).toBe("true")
-  })
-
-  it("keeps the pressed preset when it is clicked again", async () => {
-    const { user } = renderDialog()
-
-    await user.click(await screen.findByRole("button", { name: "Exam prep" }))
-    await user.click(screen.getByRole("button", { name: "Exam prep" }))
-
-    expect(pressed("Exam prep")).toBe("true")
-    expect(screen.getByRole("textbox", { name: "Style instruction" })).toHaveValue(EXAM_PROMPT)
-  })
-
-  it("lets go of the preset when the text, the length or the style is changed, and takes it back on an exact match", async () => {
-    const { user } = renderDialog()
-    await user.click(await screen.findByRole("button", { name: "Exam prep" }))
-
-    const field = screen.getByRole("textbox", { name: "Style instruction" })
-    await user.click(field)
-    await user.keyboard(" More.")
-    expect(pressed("Exam prep")).toBe("false")
-    await user.keyboard("{Backspace>6/}")
-    expect(field).toHaveValue(EXAM_PROMPT)
-    expect(pressed("Exam prep")).toBe("true")
-
-    await user.click(screen.getByRole("button", { name: "Longer" }))
-    expect(pressed("Exam prep")).toBe("false")
-    expect(pressed("In depth")).toBe("false")
-    await user.click(screen.getByRole("button", { name: "Default" }))
-    expect(pressed("Exam prep")).toBe("true")
-
-    await user.click(screen.getByRole("radio", { name: /Learning guide/ }))
-    expect(pressed("Exam prep")).toBe("false")
-    expect(pressed("Tutor")).toBe("true")
-  })
-
-  it("saves the whole configuration a preset filled, keeping the language and the goal", async () => {
-    const patch = capturePatch()
-    const { user } = renderDialog({ ...notebookDetail.chat_config, language: "ru", goal: "Pass biology" })
-
-    await user.click(await screen.findByRole("button", { name: "Simple words" }))
-    await user.click(screen.getByRole("button", { name: "Save" }))
-
-    await waitFor(() =>
-      expect(patch.body).toEqual({
-        chat_config: {
-          style: "custom",
-          custom_prompt: SIMPLE_PROMPT,
-          length: "shorter",
-          language: "ru",
-          goal: "Pass biology",
-        },
-      }),
-    )
-  })
-
-  it("fills the instruction in the language of the interface", async () => {
-    const { user } = renderDialog(undefined, { locale: "ru" })
-
-    await user.click(await screen.findByRole("button", { name: "К экзамену" }))
-
-    const field = screen.getByRole("textbox", { name: "Инструкция по стилю" })
-    expect((field as HTMLTextAreaElement).value).toStartWith("Отвечай как чек-лист экзаменатора")
-    expect(pressed("К экзамену")).toBe("true")
+    await screen.findByRole("dialog", { name: "Configure chat" })
+    expect(screen.queryByRole("group", { name: "Presets" })).not.toBeInTheDocument()
+    expect(screen.queryByRole("radio")).not.toBeInTheDocument()
+    expect(within(screen.getByRole("group", { name: "Style" })).getAllByRole("button")).toHaveLength(3)
+    expect(within(screen.getByRole("group", { name: "Response length" })).getAllByRole("button")).toHaveLength(3)
+    expect(screen.getByRole("textbox", { name: "Goal" })).toBeInTheDocument()
+    expect(screen.getByRole("combobox", { name: "Answer language" })).toBeInTheDocument()
   })
 })
 
@@ -342,9 +230,8 @@ describe("ChatConfigDialog: course workspace", () => {
     expect(screen.queryByRole("button", { name: "Save" })).not.toBeInTheDocument()
     expect(screen.getByText("You can read this workspace but not change it.")).toBeInTheDocument()
     expect(screen.getByRole("textbox", { name: "Goal" })).toBeDisabled()
-    expect(screen.getByRole("button", { name: "Tutor" })).toBeDisabled()
-    expect(screen.getByRole("button", { name: "Longer" })).toBeDisabled()
-    expect(screen.getByRole("radio", { name: /Learning guide/ })).toHaveAttribute("aria-disabled", "true")
+    expect(style("Learning guide")).toBeDisabled()
+    expect(length("Longer")).toBeDisabled()
     expect(screen.getByRole("combobox", { name: "Answer language" })).toBeDisabled()
     expect(patch.body).toBeUndefined()
   })

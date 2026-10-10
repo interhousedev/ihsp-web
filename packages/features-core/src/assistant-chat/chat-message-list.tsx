@@ -48,7 +48,16 @@ export function ChatMessageList({
   const hidden = useMemo(() => hiddenCallsPerMessage(messages), [messages])
 
   const pendingView: ChatMessageView | null = pending
-    ? { seq: -1, role: "user", text: pending.text, file_ids: pending.fileIds, tool_calls: [], created_at: "", web: [], feedback: null }
+    ? {
+        seq: -1,
+        role: "user",
+        text: pending.text,
+        file_ids: pending.fileIds,
+        tool_calls: [],
+        created_at: "",
+        web: [],
+        feedback: null,
+      }
     : null
 
   return (

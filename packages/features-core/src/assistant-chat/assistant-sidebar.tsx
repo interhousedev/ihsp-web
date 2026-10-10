@@ -13,6 +13,7 @@ import { SidebarUsage } from "./sidebar-usage"
 import { useUsage } from "./use-assistant-queries"
 import { useChatActions } from "./use-chat-actions"
 import { notebookUrl } from "./use-add-to-notebook"
+import { useAssistantScope } from "./assistant-context"
 
 type AssistantSidebarProps = {
   basePath: string
@@ -22,13 +23,22 @@ type AssistantSidebarProps = {
   onNavigate: () => void
   /** Desktop only: shows the collapse button. */
   onCollapse?: () => void
+  /** Show the usage meter in the sidebar (desktop); the phone sheet has the compact one in the top bar. */
+  inline?: boolean
 }
 
 /** Left column of the assistant: New chat, Search chats, Notebooks, Recent chats and the usage ring. */
-export function AssistantSidebar({ basePath, activeChatId, onNavigate, onCollapse }: AssistantSidebarProps) {
+export function AssistantSidebar({
+  basePath,
+  activeChatId,
+  onNavigate,
+  onCollapse,
+  inline = false,
+}: AssistantSidebarProps) {
   const t = useT("assistant")
   const router = useRouter()
-  const usage = useUsage("student")
+  const { assistant, features } = useAssistantScope()
+  const usage = useUsage(assistant)
   const [searchOpen, setSearchOpen] = useState(false)
   const actions = useChatActions({
     onDeleted: (id) => {
@@ -69,10 +79,10 @@ export function AssistantSidebar({ basePath, activeChatId, onNavigate, onCollaps
         {t("sidebar.search")}
       </button>
       <div className="flex min-h-0 flex-1 flex-col gap-4 overflow-y-auto py-2">
-        <SidebarNotebooks onNavigate={onNavigate} />
+        {features.notebooks ? <SidebarNotebooks onNavigate={onNavigate} /> : null}
         <SidebarRecentChats activeChatId={activeChatId} basePath={basePath} actions={actions} onNavigate={onNavigate} />
       </div>
-      <SidebarUsage usage={usage.data} />
+      {inline ? <SidebarUsage usage={usage.data} /> : null}
       <ChatSearchDialog
         open={searchOpen}
         onOpenChange={setSearchOpen}

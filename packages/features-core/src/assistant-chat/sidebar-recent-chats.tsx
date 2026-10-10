@@ -6,6 +6,7 @@ import { useState } from "react"
 import { SidebarChatRow } from "./sidebar-chat-row"
 import { useChats } from "./use-assistant-queries"
 import type { ChatActions } from "./use-chat-actions"
+import { useAssistantScope } from "./assistant-context"
 
 const PAGE = 20
 
@@ -21,7 +22,8 @@ export function SidebarRecentChats({ activeChatId, basePath, actions, onNavigate
   const t = useT("assistant.sidebar")
   const tCommon = useT("common")
   const errorMessage = useErrorMessage()
-  const chats = useChats("student")
+  const { assistant } = useAssistantScope()
+  const chats = useChats(assistant)
   const [visible, setVisible] = useState(PAGE)
 
   const items = chats.data?.items ?? []

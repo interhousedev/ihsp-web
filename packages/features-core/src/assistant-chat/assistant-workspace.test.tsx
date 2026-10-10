@@ -29,12 +29,7 @@ describe("AssistantWorkspace: home", () => {
     const greeting = await screen.findByRole("heading", { level: 2, name: GREETING })
     expect(greeting).toHaveTextContent("Aleksey")
     const chips = within(screen.getByRole("list", { name: "Suggestions" })).getAllByRole("button")
-    expect(chips.map((chip) => chip.textContent)).toEqual([
-      "Explain a topic simply",
-      "Make flash cards from my file",
-      "Quiz me on my last lesson",
-      "What is due tomorrow?",
-    ])
+    expect(chips.map((chip) => chip.textContent)).toEqual(["Explain", "Flash cards", "Quiz", "Conspect"])
   })
 
   it("rotates the chips on the next visit", async () => {
@@ -45,15 +40,10 @@ describe("AssistantWorkspace: home", () => {
     renderWorkspace()
 
     const chips = within(await screen.findByRole("list", { name: "Suggestions" })).getAllByRole("button")
-    expect(chips.map((chip) => chip.textContent)).toEqual([
-      "Make flash cards from my file",
-      "Quiz me on my last lesson",
-      "What is due tomorrow?",
-      "Plan my study week",
-    ])
+    expect(chips.map((chip) => chip.textContent)).toEqual(["Flash cards", "Quiz", "Conspect", "Mind map"])
   })
 
-  it("fills the composer with a chip without sending it", async () => {
+  it("puts the command chip into the composer without sending it", async () => {
     let created = 0
     server.use(
       http.post(apiUrl("/v1/ai/chats"), () => {
@@ -63,9 +53,10 @@ describe("AssistantWorkspace: home", () => {
     )
     const { user } = renderWorkspace()
 
-    await user.click(await screen.findByRole("button", { name: "Quiz me on my last lesson" }))
+    await user.click(await screen.findByRole("button", { name: "Quiz" }))
 
-    expect(screen.getByRole("textbox", { name: "Message" })).toHaveValue("Quiz me on my last lesson")
+    expect(document.querySelector('[data-slash-chip="quiz"]')).not.toBeNull()
+    expect(screen.getByRole("textbox", { name: "Message" })).toHaveValue("")
     expect(created).toBe(0)
     expect(testRouter.push).not.toHaveBeenCalled()
   })
@@ -306,13 +297,16 @@ describe("AssistantWorkspace: sidebar", () => {
     await waitFor(() => expect(body).toEqual({ items: [{ kind: "chat", chat_id: ids.chat2 }] }))
   })
 
-  it("shows the usage ring and opens the usage bar", async () => {
+  it("shows the usage once in the sidebar and in a compact popover from the top bar", async () => {
     const { user } = renderWorkspace()
+
+    const sidebar = await screen.findByRole("group", { name: "Assistant usage" })
+    expect(within(sidebar).getByText("12k / 100k")).toBeInTheDocument()
+    expect(screen.getAllByRole("group", { name: "Assistant usage" })).toHaveLength(1)
 
     await user.click(await screen.findByRole("button", { name: "Assistant usage, 16% used" }))
 
-    const usage = await screen.findByRole("group", { name: "Assistant usage" })
-    expect(within(usage).getByText("12k / 100k")).toBeInTheDocument()
+    expect(await screen.findAllByRole("group", { name: "Assistant usage" })).toHaveLength(2)
   })
 
   it("collapses to a button that brings the sidebar back, and remembers the choice", async () => {

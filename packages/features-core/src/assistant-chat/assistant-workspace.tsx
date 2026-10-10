@@ -1,17 +1,21 @@
 "use client"
 
+import type { AssistantKind } from "@ihsp/api"
 import { useT } from "@ihsp/i18n"
 import { Sheet, SheetContent, SheetDescription, SheetHeader, SheetTitle } from "@ihsp/ui"
 import { useSearchParams } from "next/navigation"
 import { useEffect, useState } from "react"
+import { AssistantProvider, useAssistantScope } from "./assistant-context"
 import { AssistantChatPane } from "./assistant-chat-pane"
 import { AssistantHome } from "./assistant-home"
 import { AssistantSidebar } from "./assistant-sidebar"
+import { UsageButton } from "./sidebar-usage"
+import { useUsage } from "./use-assistant-queries"
 import { useSidebarCollapsed } from "./use-sidebar-collapsed"
 import { WorkspaceNavButtons } from "./workspace-nav-buttons"
 
 export type AssistantWorkspaceProps = {
-  assistant: "student"
+  assistant: Exclude<AssistantKind, "lms_author">
   /** Route of the assistant section; the chat page is `<basePath>/chat/?id=`. */
   basePath: string
 }
@@ -26,11 +30,23 @@ function isEditable(target: EventTarget | null): boolean {
  * smaller screens, and the home or the open chat (`?id=`) as the main area. Fill the height you give it
  * (`h-full`); the page wraps it in `<Suspense>` because it reads `useSearchParams`.
  */
-export function AssistantWorkspace({ basePath }: AssistantWorkspaceProps) {
+export function AssistantWorkspace({ assistant, basePath }: AssistantWorkspaceProps) {
+  return (
+    <AssistantProvider assistant={assistant}>
+      <WorkspaceBody basePath={basePath} />
+    </AssistantProvider>
+  )
+}
+
+function WorkspaceBody({ basePath }: { basePath: string }) {
   const t = useT("assistant")
   const chatId = useSearchParams().get("id")
   const [collapsed, setCollapsed] = useSidebarCollapsed()
   const [sheetOpen, setSheetOpen] = useState(false)
+  const { assistant } = useAssistantScope()
+  const usage = useUsage(assistant)
+  // The sidebar shows the meter in full; wherever it is not on screen, a compact one sits in the top bar.
+  const trailing = <UsageButton usage={usage.data} className={collapsed ? undefined : "lg:hidden"} />
 
   // `/` jumps to the composer unless the student is typing somewhere.
   useEffect(() => {
@@ -58,6 +74,7 @@ export function AssistantWorkspace({ basePath }: AssistantWorkspaceProps) {
       {collapsed ? null : (
         <aside className="bg-muted/30 hidden w-70 shrink-0 border-e lg:block">
           <AssistantSidebar
+            inline
             basePath={basePath}
             activeChatId={chatId}
             onNavigate={() => setSheetOpen(false)}
@@ -67,9 +84,15 @@ export function AssistantWorkspace({ basePath }: AssistantWorkspaceProps) {
       )}
       <div className="flex min-h-0 min-w-0 flex-1 flex-col">
         {chatId ? (
-          <AssistantChatPane key={chatId} chatId={chatId} basePath={basePath} navButtons={navButtons} />
+          <AssistantChatPane
+            key={chatId}
+            chatId={chatId}
+            basePath={basePath}
+            navButtons={navButtons}
+            trailing={trailing}
+          />
         ) : (
-          <AssistantHome basePath={basePath} navButtons={navButtons} />
+          <AssistantHome basePath={basePath} navButtons={navButtons} trailing={trailing} />
         )}
       </div>
       <Sheet open={sheetOpen} onOpenChange={setSheetOpen}>

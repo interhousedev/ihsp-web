@@ -43,12 +43,12 @@ describe("AuthorChat", () => {
     const starters = within(await screen.findByRole("list", { name: "Ideas to start with" }))
     await user.click(starters.getByRole("button", { name: "Plan a course" }))
 
-    expect(screen.getByRole("textbox", { name: "Message to the author assistant" })).toHaveValue("Plan a course on ")
+    expect(screen.getByRole("textbox", { name: "Message" })).toHaveValue("Plan a course on ")
   })
 
   it("sends a message and shows the answer", async () => {
     const { user } = renderAuthor()
-    const field = await screen.findByRole("textbox", { name: "Message to the author assistant" })
+    const field = await screen.findByRole("textbox", { name: "Message" })
 
     await user.type(field, "Add a test")
     await user.click(screen.getByRole("button", { name: "Send" }))

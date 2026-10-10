@@ -10,32 +10,23 @@ import {
   Label,
   NativeSelect,
   NativeSelectOption,
-  RadioGroup,
-  RadioGroupItem,
   Textarea,
   ToggleGroup,
   ToggleGroupItem,
 } from "@ihsp/ui"
 import { useId, useState } from "react"
 import { useUpdateNotebook } from "../api"
-import {
-  CHAT_PRESETS,
-  presetOf,
-  presetPatch,
-  useNotebookErrorMessage,
-  type ChatPresetId,
-  type ChatPresetPrompts,
-} from "../lib"
+import { useNotebookErrorMessage } from "../lib"
 
 export const MAX_CUSTOM_PROMPT = 1000
 /** What the student is working on; the backend keeps at most this many characters (`chat_config.goal`). */
 export const MAX_GOAL = 300
 
 const STYLES = [
-  { value: "default", label: "style.default.label", hint: "style.default.hint" },
-  { value: "learning_guide", label: "style.learning_guide.label", hint: "style.learning_guide.hint" },
-  { value: "custom", label: "style.custom", hint: null },
-] as const satisfies readonly { value: ChatStyle; label: string; hint: string | null }[]
+  { value: "default", label: "style.default.label" },
+  { value: "learning_guide", label: "style.learning_guide.label" },
+  { value: "custom", label: "style.custom" },
+] as const satisfies readonly { value: ChatStyle; label: string }[]
 
 const LENGTHS = ["default", "shorter", "longer"] as const satisfies readonly ChatConfig["length"][]
 const LANGUAGES = ["auto", "uz", "ru", "en"] as const satisfies readonly ChatConfig["language"][]
@@ -46,8 +37,8 @@ type ChatConfigFormProps = {
 }
 
 /**
- * The body of the Configure chat dialog: preset buttons, the goal, style cards, response length and answer language.
- * A preset only fills style, instruction and length; what is saved is the configuration on the screen. Course staff who
+ * The body of the Configure chat dialog: the goal, the style (three segments), the answer length (three segments) and
+ * the answer language (a small select). Course staff who
  * may only read the workspace (`can_write === false`) see the configuration but cannot change it. Mounted per opening.
  */
 export function ChatConfigForm({ notebook, onClose }: ChatConfigFormProps) {
@@ -68,20 +59,6 @@ export function ChatConfigForm({ notebook, onClose }: ChatConfigFormProps) {
   const prompt = customPrompt.trim()
   const canSave = !readOnly && !update.isPending && (style !== "custom" || prompt !== "")
 
-  const prompts: ChatPresetPrompts = {
-    exam: t("presets.prompt.exam"),
-    simple: t("presets.prompt.simple"),
-    depth: t("presets.prompt.depth"),
-  }
-  const preset = presetOf({ style, custom_prompt: customPrompt, length }, prompts)
-
-  function applyPreset(id: ChatPresetId) {
-    const patch = presetPatch(id, prompts)
-    setStyle(patch.style)
-    setCustomPrompt(patch.custom_prompt ?? "")
-    setLength(patch.length)
-  }
-
   function save() {
     if (!canSave) return
     const text = goal.trim()
@@ -101,7 +78,7 @@ export function ChatConfigForm({ notebook, onClose }: ChatConfigFormProps) {
 
   return (
     <form
-      className="flex min-w-0 flex-col gap-4"
+      className="flex min-w-0 flex-col gap-3.5"
       onSubmit={(event) => {
         event.preventDefault()
         save()
@@ -112,29 +89,6 @@ export function ChatConfigForm({ notebook, onClose }: ChatConfigFormProps) {
       </DialogHeader>
 
       {readOnly ? <p className="text-muted-foreground text-sm">{tcourse("readOnlySources")}</p> : null}
-
-      <div className="flex flex-col gap-2">
-        <span id={`${ids}-presets`} className="text-sm font-medium">
-          {t("presets.label")}
-        </span>
-        <ToggleGroup
-          value={preset ? [preset] : []}
-          variant="outline"
-          disabled={readOnly}
-          aria-labelledby={`${ids}-presets`}
-          className="w-full flex-wrap"
-          onValueChange={(values) => {
-            const next = CHAT_PRESETS.find((item) => item.id === values[0])
-            if (next) applyPreset(next.id)
-          }}
-        >
-          {CHAT_PRESETS.map((item) => (
-            <ToggleGroupItem key={item.id} value={item.id} className="min-h-11 grow px-3 md:min-h-8">
-              {t(`presets.${item.id}`)}
-            </ToggleGroupItem>
-          ))}
-        </ToggleGroup>
-      </div>
 
       <div className="flex flex-col gap-1.5">
         <Label htmlFor={`${ids}-goal`}>{t("goal.label")}</Label>
@@ -154,23 +108,28 @@ export function ChatConfigForm({ notebook, onClose }: ChatConfigFormProps) {
         </p>
       </div>
 
-      <fieldset className="flex flex-col gap-2">
-        <legend className="mb-2 text-sm font-medium">{t("style.label")}</legend>
-        <RadioGroup value={style} disabled={readOnly} onValueChange={(value) => setStyle(value as ChatStyle)}>
+      <div className="flex flex-col gap-2">
+        <span id={`${ids}-style`} className="text-sm font-medium">
+          {t("style.label")}
+        </span>
+        <ToggleGroup
+          value={[style]}
+          variant="outline"
+          disabled={readOnly}
+          aria-labelledby={`${ids}-style`}
+          className="w-full"
+          onValueChange={(values) => {
+            const next = STYLES.find((option) => option.value === values[0])
+            if (next) setStyle(next.value)
+          }}
+        >
           {STYLES.map((option) => (
-            <Label
-              key={option.value}
-              htmlFor={`${ids}-${option.value}`}
-              className="has-data-checked:border-primary has-data-checked:bg-primary/5 flex min-h-11 cursor-pointer items-start gap-3 rounded-lg border p-3 font-normal"
-            >
-              <RadioGroupItem id={`${ids}-${option.value}`} value={option.value} className="mt-0.5" />
-              <span className="flex min-w-0 flex-col gap-0.5">
-                <span className="text-sm font-medium">{t(option.label)}</span>
-                {option.hint ? <span className="text-muted-foreground text-xs">{t(option.hint)}</span> : null}
-              </span>
-            </Label>
+            <ToggleGroupItem key={option.value} value={option.value} className="min-h-11 flex-1 px-2 md:min-h-8">
+              {t(option.label)}
+            </ToggleGroupItem>
           ))}
-        </RadioGroup>
+        </ToggleGroup>
+        {style === "custom" ? null : <p className="text-muted-foreground text-xs">{t(`style.${style}.hint`)}</p>}
         {style === "custom" ? (
           <div className="flex flex-col gap-1">
             <Textarea
@@ -180,7 +139,7 @@ export function ChatConfigForm({ notebook, onClose }: ChatConfigFormProps) {
               disabled={readOnly}
               aria-label={t("customLabel")}
               placeholder={t("custom.placeholder")}
-              className="min-h-24 resize-y"
+              className="min-h-20 resize-y"
               onChange={(event) => setCustomPrompt(event.target.value)}
             />
             <p className="text-muted-foreground flex justify-between gap-2 text-xs">
@@ -191,7 +150,7 @@ export function ChatConfigForm({ notebook, onClose }: ChatConfigFormProps) {
             </p>
           </div>
         ) : null}
-      </fieldset>
+      </div>
 
       <div className="flex flex-col gap-2">
         <span id={`${ids}-length`} className="text-sm font-medium">
@@ -216,13 +175,13 @@ export function ChatConfigForm({ notebook, onClose }: ChatConfigFormProps) {
         </ToggleGroup>
       </div>
 
-      <div className="flex flex-col gap-2">
+      <div className="flex items-center justify-between gap-3">
         <Label htmlFor={`${ids}-language`}>{t("language.label")}</Label>
         <NativeSelect
           id={`${ids}-language`}
           value={language}
           disabled={readOnly}
-          className="w-full"
+          className="min-h-11 w-40 md:min-h-8"
           onChange={(event) => {
             const next = LANGUAGES.find((value) => value === event.target.value)
             if (next) setLanguage(next)

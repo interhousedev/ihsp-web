@@ -5,6 +5,9 @@ import { useFormatters, useT } from "@ihsp/i18n"
 import { Badge, Button, Textarea, cn, useOnline } from "@ihsp/ui"
 import { IconArrowUp, IconPlayerStopFilled, IconSettings, IconWorld, IconX } from "@tabler/icons-react"
 import { useEffect, useId, useLayoutEffect, useRef, useState, type KeyboardEvent } from "react"
+import { slashText, type SlashName } from "../../assistant-chat/slash-commands"
+import { SlashChip, SlashMenu } from "../../assistant-chat/slash-menu"
+import { useSlashInput } from "../../assistant-chat/use-slash-input"
 import { useWebQuota } from "../../web-search"
 import type { NotebookLimit } from "../api"
 import { useWorkspace } from "../workspace-context"
@@ -51,6 +54,7 @@ export function NotebookComposer({
   const t = useT("notebooks")
   const ts = useT("state")
   const tc = useT("assistant.composer")
+  const tSlash = useT("assistant.slash")
   const webQuota = useWebQuota()
   const format = useFormatters()
   const workspace = useWorkspace()
@@ -58,13 +62,15 @@ export function NotebookComposer({
   const inputId = useId()
   const fieldRef = useRef<HTMLTextAreaElement>(null)
   const [text, setText] = useState("")
+  const [command, setCommand] = useState<SlashName | null>(null)
   const [configOpen, setConfigOpen] = useState(false)
   const restoredText = useRef<string | null>(null)
 
   const noSources = notebook.selected_source_count === 0
   const readOnly = notebook.can_write === false
   const locked = limit.reached || !online || readOnly
-  const canSend = !locked && !noSources && !running && text.trim().length > 0
+  const slash = useSlashInput({ text, setText, command, setCommand, fieldRef, disabled: locked })
+  const canSend = !locked && !noSources && !running && (text.trim().length > 0 || command !== null)
 
   // The assistant sidebar writes a draft before it opens this chat; take it once.
   useEffect(() => {
@@ -101,12 +107,14 @@ export function NotebookComposer({
 
   function submit() {
     if (!canSend) return
-    const value = text.trim()
+    const value = command ? slashText({ name: command, args: text.trim() }) : text.trim()
     setText("")
+    setCommand(null)
     onSend(value, { webSearch })
   }
 
   function onKeyDown(event: KeyboardEvent<HTMLTextAreaElement>) {
+    if (slash.onKeyDown(event)) return
     if (event.key !== "Enter" || event.shiftKey || event.nativeEvent.isComposing) return
     if (isTouchDevice()) return
     event.preventDefault()
@@ -148,21 +156,25 @@ export function NotebookComposer({
             {ts("offlineTitle")}
           </p>
         ) : null}
-        <div className="bg-background focus-within:border-ring focus-within:ring-ring/30 flex flex-col gap-1 rounded-3xl border px-3 py-2 shadow-xs focus-within:ring-3">
-          {webOn ? (
+        <div className="bg-background focus-within:border-ring relative focus-within:ring-ring/30 flex flex-col gap-1 rounded-3xl border px-3 py-2 shadow-xs focus-within:ring-3">
+          {slash.menu ? <SlashMenu {...slash.menu} /> : null}
+          {webOn || command ? (
             <div className="flex flex-wrap items-center gap-1 pt-1">
-              <Badge variant="secondary" className="gap-1 pe-0.5">
-                <IconWorld aria-hidden />
-                {tc("webBadge")}
-                <button
-                  type="button"
-                  className="hover:bg-background focus-visible:ring-ring inline-flex size-6 items-center justify-center rounded-full outline-hidden focus-visible:ring-2"
-                  aria-label={t("chat.webOff")}
-                  onClick={() => onWebChange(false)}
-                >
-                  <IconX className="size-3.5" aria-hidden />
-                </button>
-              </Badge>
+              {command ? <SlashChip name={command} onRemove={() => setCommand(null)} /> : null}
+              {webOn ? (
+                <Badge variant="secondary" className="gap-1 pe-0.5">
+                  <IconWorld aria-hidden />
+                  {tc("webBadge")}
+                  <button
+                    type="button"
+                    className="hover:bg-background focus-visible:ring-ring inline-flex size-6 items-center justify-center rounded-full outline-hidden focus-visible:ring-2"
+                    aria-label={t("chat.webOff")}
+                    onClick={() => onWebChange(false)}
+                  >
+                    <IconX className="size-3.5" aria-hidden />
+                  </button>
+                </Badge>
+              ) : null}
             </div>
           ) : null}
           <label htmlFor={inputId} className="sr-only">
@@ -175,10 +187,11 @@ export function NotebookComposer({
             value={text}
             rows={1}
             disabled={locked}
-            placeholder={t("chat.placeholder")}
+            placeholder={command ? tSlash(`${command}.args`) : t("chat.placeholder")}
             className="field-sizing-fixed max-h-40 min-h-11 resize-none border-0 bg-transparent px-1 shadow-none focus-visible:ring-0 dark:bg-transparent"
-            onChange={(event) => setText(event.target.value)}
+            onChange={(event) => slash.onTextChange(event.target.value)}
             onKeyDown={onKeyDown}
+            {...slash.fieldProps}
           />
           <div className="flex items-center justify-between gap-2">
             <Button
@@ -247,7 +260,7 @@ export function NotebookComposer({
             {webLine}
           </p>
         ) : null}
-        <p className="text-muted-foreground text-center text-xs">{t("chat.disclaimer")}</p>
+        <p className="text-muted-foreground hidden truncate text-center text-[11px] sm:block">{t("chat.disclaimer")}</p>
       </form>
       {/* Outside of the form: events of a portal bubble through React, and the dialog has a form of its own. */}
       <ChatConfigDialog notebook={notebook} open={configOpen} onOpenChange={setConfigOpen} />

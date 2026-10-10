@@ -21,6 +21,7 @@ import {
 import { useQueryClient } from "@tanstack/react-query"
 import { useCallback, useRef, useState } from "react"
 import { useRefreshWebQuota, webSearchFailure, type WebSearchFailure } from "../../web-search"
+import { parseSlashText } from "../../assistant-chat/slash-commands"
 import { storeNotebookTurn } from "../api"
 import { abortable } from "./abortable"
 import { answerIsStored, lastSeq, optimisticUserMessage, questionIsPending, type PendingTurn } from "./pending-turn"
@@ -292,8 +293,11 @@ export function useChatTurn(notebookId: string): ChatTurn {
 
 function toBody(request: Extract<TurnRequest, { kind: "send" }>): NotebookMessageBody {
   const { text, options } = request
+  // A slash command goes to the server as {command, args}; it turns the command into the question.
+  const call = parseSlashText(text)
   return {
-    text,
+    text: call ? "" : text,
+    ...(call ? { command: call.name, args: call.args } : {}),
     ...(options.sourceIds ? { source_ids: options.sourceIds } : {}),
     ...(options.anchor ? { anchor: options.anchor } : {}),
     ...(options.webSearch ? { web_search: true } : {}),

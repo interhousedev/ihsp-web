@@ -10,6 +10,7 @@ import { toast } from "sonner"
 import { ChatMenuItems } from "./chat-menu-items"
 import { useRenameChat } from "./use-assistant-queries"
 import type { ChatActions } from "./use-chat-actions"
+import { useAssistantScope } from "./assistant-context"
 
 const MAX_TITLE_LENGTH = 120
 
@@ -20,13 +21,16 @@ type ChatPaneHeaderProps = {
   /** Sidebar buttons of the workspace (history sheet on phones, open the sidebar when it is hidden). */
   navButtons: ReactNode
   actions: ChatActions
+  /** Compact usage meter (phones, hidden sidebar). */
+  trailing?: ReactNode
 }
 
 /** Top bar of a chat: back arrow (phones), title (click to rename), ⋮ menu. */
-export function ChatPaneHeader({ chat, homeHref, navButtons, actions }: ChatPaneHeaderProps) {
+export function ChatPaneHeader({ chat, homeHref, navButtons, actions, trailing }: ChatPaneHeaderProps) {
   const t = useT("assistant")
   const errorMessage = useErrorMessage()
-  const rename = useRenameChat("student")
+  const { assistant } = useAssistantScope()
+  const rename = useRenameChat(assistant)
   const [editing, setEditing] = useState(false)
   // Enter closes the field, and a browser may then report a blur for the removed field: save once.
   const settled = useRef(false)
@@ -88,6 +92,7 @@ export function ChatPaneHeader({ chat, homeHref, navButtons, actions }: ChatPane
           </button>
         )}
       </h2>
+      {trailing}
       <DropdownMenu>
         <DropdownMenuTrigger
           render={

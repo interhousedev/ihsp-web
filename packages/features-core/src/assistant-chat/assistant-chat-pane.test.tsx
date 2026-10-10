@@ -473,11 +473,11 @@ describe("AssistantChatPane: limits, stop and offline", () => {
     expect(screen.getByRole("button", { name: "Add" })).toBeDisabled()
   })
 
-  it("shows the usage bar under the composer", async () => {
+  it("does not repeat the usage meter under the composer (it lives in the sidebar)", async () => {
     renderPane(ids.chat2)
+    await screen.findByText("Explain Newton's second law")
 
-    const usage = await screen.findByRole("group", { name: "Assistant usage" })
-    expect(within(usage).getByText("48k / 300k")).toBeInTheDocument()
+    expect(screen.queryByRole("group", { name: "Assistant usage" })).not.toBeInTheDocument()
   })
 
   it("locks the composer when the server answers ai/limit-reached", async () => {

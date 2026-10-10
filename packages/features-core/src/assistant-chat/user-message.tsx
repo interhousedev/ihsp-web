@@ -7,6 +7,8 @@ import { IconChevronDown, IconChevronUp, IconSchool } from "@tabler/icons-react"
 import { useId, useState } from "react"
 import { FileChip } from "./file-chip"
 import { splitGuidedHint } from "./guided-hint"
+import { SlashChip } from "./slash-menu"
+import { parseSlashText } from "./slash-commands"
 
 const LONG_LINES = 6
 const LONG_CHARACTERS = 400
@@ -23,12 +25,14 @@ export function UserMessage({ message }: { message: ChatMessageView }) {
   const bodyId = useId()
   const [expanded, setExpanded] = useState(false)
 
-  const { guided, text } = splitGuidedHint(tComposer("guidedHint"), message.text)
+  const slash = parseSlashText(message.text)
+  const { guided, text: plain } = splitGuidedHint(tComposer("guidedHint"), slash ? "" : message.text)
+  const text = slash ? slash.args : plain
   const long = isLongText(text)
 
   return (
     <article aria-label={t("you")} data-role="user" className="flex min-w-0 flex-col items-end gap-2">
-      {text ? (
+      {text || slash ? (
         <div className="bg-muted text-foreground flex max-w-[min(100%,36rem)] flex-col items-start gap-1 rounded-3xl rounded-br-lg px-4 py-2.5 text-base md:text-sm">
           {guided ? (
             <Badge variant="secondary" className="gap-1">
@@ -36,13 +40,16 @@ export function UserMessage({ message }: { message: ChatMessageView }) {
               {tComposer("guided")}
             </Badge>
           ) : null}
-          <p
-            id={bodyId}
-            data-clamped={long && !expanded ? "true" : "false"}
-            className={`break-words whitespace-pre-wrap ${long && !expanded ? "line-clamp-4" : ""}`}
-          >
-            {text}
-          </p>
+          {slash ? <SlashChip name={slash.name} /> : null}
+          {text ? (
+            <p
+              id={bodyId}
+              data-clamped={long && !expanded ? "true" : "false"}
+              className={`break-words whitespace-pre-wrap ${long && !expanded ? "line-clamp-4" : ""}`}
+            >
+              {text}
+            </p>
+          ) : null}
           {long ? (
             <button
               type="button"

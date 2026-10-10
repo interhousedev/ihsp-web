@@ -422,50 +422,86 @@ describe("PillComposer: web search switch", () => {
   })
 })
 
-describe("PillComposer: study tools", () => {
+describe("PillComposer: study tools and slash commands", () => {
   const TOOLS = [
-    ["Make flash cards", "Make flash cards about: "],
-    ["Make a quiz", "Make a quiz of 10 questions about: "],
-    ["Explain step by step", "Explain step by step: "],
-    ["Make a conspect", "Write a conspect (structured study notes) on: "],
+    ["Flash cards", "cards"],
+    ["Quiz", "quiz"],
+    ["Explain", "explain"],
+    ["Conspect", "summary"],
   ] as const
 
-  it.each(TOOLS)("%s fills the empty field with its template and focuses it", async (label, template) => {
+  it.each(TOOLS)("%s inserts its command chip and focuses the field", async (label, name) => {
     const { user } = renderComposer()
 
     await openMenu(user)
     await user.click(screen.getByRole("menuitem", { name: "Study tools" }))
     await loose.click(await screen.findByRole("menuitem", { name: label }))
 
-    const field = screen.getByRole("textbox", { name: "Message" })
-    await waitFor(() => expect(field).toHaveValue(template))
-    await waitFor(() => expect(field).toHaveFocus())
-    expect((field as HTMLTextAreaElement).selectionStart).toBe(template.length)
+    expect(document.querySelector(`[data-slash-chip="${name}"]`)).not.toBeNull()
+    await waitFor(() => expect(screen.getByRole("textbox", { name: "Message" })).toHaveFocus())
+    expect(screen.getByRole("textbox", { name: "Message" })).toHaveValue("")
   })
 
-  it("puts the template before what the student already typed", async () => {
-    const { user } = renderComposer()
-    await typeInto(user, "photosynthesis")
-
-    await openMenu(user)
-    await user.click(screen.getByRole("menuitem", { name: "Study tools" }))
-    await loose.click(await screen.findByRole("menuitem", { name: "Make a quiz" }))
-
-    await waitFor(() =>
-      expect(screen.getByRole("textbox", { name: "Message" })).toHaveValue(
-        "Make a quiz of 10 questions about: photosynthesis",
-      ),
-    )
-  })
-
-  it("sends the filled template like any other text", async () => {
+  it("sends the chip and the arguments as the short form with a command option", async () => {
     const { user, onSend } = renderComposer()
     await openMenu(user)
     await user.click(screen.getByRole("menuitem", { name: "Study tools" }))
-    await loose.click(await screen.findByRole("menuitem", { name: "Explain step by step" }))
+    await loose.click(await screen.findByRole("menuitem", { name: "Explain" }))
     await waitFor(() => expect(screen.getByRole("textbox", { name: "Message" })).toHaveFocus())
     await user.keyboard("integrals{Enter}")
 
-    await waitFor(() => expect(onSend).toHaveBeenCalledWith("Explain step by step: integrals", []))
+    await waitFor(() =>
+      expect(onSend).toHaveBeenCalledWith("/explain integrals", [], {
+        command: { name: "explain", args: "integrals" },
+      }),
+    )
+  })
+
+  it("opens the command menu on / and narrows it as you type", async () => {
+    const { user } = renderComposer()
+    await user.click(screen.getByRole("textbox", { name: "Message" }))
+
+    await user.keyboard("/")
+    expect(await screen.findAllByRole("option")).toHaveLength(11)
+
+    await user.keyboard("ca")
+    const options = screen.getAllByRole("option")
+    expect(options).toHaveLength(1)
+    expect(options[0]).toHaveTextContent("/cards")
+  })
+
+  it("moves with the arrows, picks with Enter and removes the chip with Backspace", async () => {
+    const { user, onSend } = renderComposer()
+    await user.click(screen.getByRole("textbox", { name: "Message" }))
+
+    await user.keyboard("/{ArrowDown}{Enter}")
+    expect(document.querySelector('[data-slash-chip="cards"]')).not.toBeNull()
+    expect(screen.queryByRole("listbox")).not.toBeInTheDocument()
+    expect(onSend).not.toHaveBeenCalled()
+
+    await user.keyboard("{Backspace}")
+    expect(document.querySelector("[data-slash-chip]")).toBeNull()
+  })
+
+  it("closes the menu with Escape and says so when nothing matches", async () => {
+    const { user } = renderComposer()
+    await user.click(screen.getByRole("textbox", { name: "Message" }))
+
+    await user.keyboard("/xyz")
+    expect(await screen.findByText("No such command")).toBeInTheDocument()
+
+    await user.clear(screen.getByRole("textbox", { name: "Message" }))
+    await user.keyboard("/{Escape}")
+    expect(screen.queryByRole("listbox")).not.toBeInTheDocument()
+  })
+
+  it("turns a typed /quiz followed by a space into the chip", async () => {
+    const { user } = renderComposer()
+    await user.click(screen.getByRole("textbox", { name: "Message" }))
+
+    await user.keyboard("/quiz ")
+
+    expect(document.querySelector('[data-slash-chip="quiz"]')).not.toBeNull()
+    expect(screen.getByRole("textbox", { name: "Message" })).toHaveValue("")
   })
 })

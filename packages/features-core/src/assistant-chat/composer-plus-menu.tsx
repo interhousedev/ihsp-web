@@ -16,26 +16,15 @@ import {
   DropdownMenuSubTrigger,
   DropdownMenuTrigger,
 } from "@ihsp/ui"
-import {
-  IconBooks,
-  IconCards,
-  IconFiles,
-  IconListCheck,
-  IconListNumbers,
-  IconNotebook,
-  IconNotes,
-  IconPlus,
-  IconSchool,
-  IconUpload,
-  IconWorld,
-  type Icon,
-} from "@tabler/icons-react"
+import { IconBooks, IconFiles, IconNotebook, IconPlus, IconSchool, IconUpload, IconWorld } from "@tabler/icons-react"
 import { useRef, type RefObject } from "react"
 import { useNotebooks } from "../notebooks/api"
+import { slashInfo, type SlashName } from "./slash-commands"
 import type { WebQuotaState } from "../web-search"
 
 const ITEM_CLASS = "min-h-11 md:min-h-8"
 const PICKER_NOTEBOOKS = 8
+const STUDY_TOOLS = ["cards", "quiz", "summary", "mindmap", "explain"] as const satisfies readonly SlashName[]
 
 function NotebookPickerItems({ onPick }: { onPick: (notebook: NotebookItem) => void }) {
   const t = useT("assistant.composer")
@@ -69,18 +58,17 @@ function NotebookPickerItems({ onPick }: { onPick: (notebook: NotebookItem) => v
 }
 
 type StudyToolItemProps = {
-  icon: Icon
-  label: string
-  /** The text that goes into the field when the item is picked. */
-  prompt: string
-  onPick: (prompt: string) => void
+  name: SlashName
+  onPick: (name: SlashName) => void
 }
 
-function StudyToolItem({ icon: ToolIcon, label, prompt, onPick }: StudyToolItemProps) {
+function StudyToolItem({ name, onPick }: StudyToolItemProps) {
+  const t = useT("assistant.slash")
+  const ToolIcon = slashInfo(name).icon
   return (
-    <DropdownMenuItem className={ITEM_CLASS} onClick={() => onPick(prompt)}>
+    <DropdownMenuItem className={ITEM_CLASS} onClick={() => onPick(name)}>
       <ToolIcon aria-hidden />
-      {label}
+      {t(`${name}.title`)}
     </DropdownMenuItem>
   )
 }
@@ -93,8 +81,8 @@ type ComposerPlusMenuProps = {
   web: boolean
   onWebChange: (web: boolean) => void
   webQuota: WebQuotaState
-  /** A study tool was picked: the composer puts the localized template into the field. */
-  onStudyTool: (template: string) => void
+  /** A study tool was picked: the composer puts its command chip in front of the field. */
+  onStudyTool: (name: SlashName) => void
   /** The message field: it gets the focus back after a study tool filled it (otherwise the "+" button does). */
   fieldRef: RefObject<HTMLElement | null>
   onUpload: () => void
@@ -122,9 +110,9 @@ export function ComposerPlusMenu({
   const t = useT("assistant.composer")
   const toolPicked = useRef(false)
 
-  function pickTool(template: string) {
+  function pickTool(name: SlashName) {
     toolPicked.current = true
-    onStudyTool(template)
+    onStudyTool(name)
   }
 
   return (
@@ -193,30 +181,9 @@ export function ComposerPlusMenu({
               {t("studyTools.label")}
             </DropdownMenuSubTrigger>
             <DropdownMenuSubContent className="w-56">
-              <StudyToolItem
-                icon={IconCards}
-                label={t("studyTools.flashcards")}
-                prompt={t("studyTools.flashcardsPrompt")}
-                onPick={pickTool}
-              />
-              <StudyToolItem
-                icon={IconListCheck}
-                label={t("studyTools.quiz")}
-                prompt={t("studyTools.quizPrompt")}
-                onPick={pickTool}
-              />
-              <StudyToolItem
-                icon={IconListNumbers}
-                label={t("studyTools.explain")}
-                prompt={t("studyTools.explainPrompt")}
-                onPick={pickTool}
-              />
-              <StudyToolItem
-                icon={IconNotes}
-                label={t("studyTools.conspect")}
-                prompt={t("studyTools.conspectPrompt")}
-                onPick={pickTool}
-              />
+              {STUDY_TOOLS.map((name) => (
+                <StudyToolItem key={name} name={name} onPick={pickTool} />
+              ))}
             </DropdownMenuSubContent>
           </DropdownMenuSub>
           <DropdownMenuCheckboxItem className={ITEM_CLASS} checked={guided} onCheckedChange={onGuidedChange}>

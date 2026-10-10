@@ -2,7 +2,17 @@
 
 import type { ChatItem, ChatMessageView } from "@ihsp/api"
 import { useT } from "@ihsp/i18n"
-import { Button, DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger, cn } from "@ihsp/ui"
+import {
+  Button,
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+  Tooltip,
+  TooltipContent,
+  TooltipTrigger,
+  cn,
+} from "@ihsp/ui"
 import {
   IconCheck,
   IconCopy,
@@ -14,9 +24,10 @@ import {
   IconThumbUp,
   IconThumbUpFilled,
 } from "@tabler/icons-react"
-import { useEffect, useRef, useState } from "react"
+import { useEffect, useRef, useState, type ComponentProps } from "react"
 import { copyTextWithSources } from "../notebooks/lib/citations"
 import { copyText } from "../notebooks/lib/download"
+import { useAssistantScope } from "./assistant-context"
 import { AddToNotebookSubMenu } from "./add-to-notebook-menu"
 import type { ChatActions } from "./use-chat-actions"
 
@@ -35,7 +46,23 @@ type MessageActionsProps = {
   onRegenerate: () => void
 }
 
-const BUTTON_CLASS = "text-muted-foreground size-11 md:size-8"
+const BUTTON_CLASS = "text-muted-foreground size-10 md:size-8"
+
+/** An icon button with a tooltip (hover and keyboard focus) that repeats its accessible name. */
+function ActionButton({ label, children, ...props }: ComponentProps<typeof Button> & { label: string }) {
+  return (
+    <Tooltip>
+      <TooltipTrigger
+        render={
+          <Button type="button" variant="ghost" size="icon" className={BUTTON_CLASS} aria-label={label} {...props} />
+        }
+      >
+        {children}
+      </TooltipTrigger>
+      <TooltipContent>{label}</TooltipContent>
+    </Tooltip>
+  )
+}
 const COPIED_MS = 2000
 
 /** Like, dislike, regenerate (last answer only), copy as Markdown (web markers as `[w1]` plus the URLs), and ⋯ More. */
@@ -51,6 +78,7 @@ export function MessageActions({
 }: MessageActionsProps) {
   const t = useT("assistant.message")
   const tw = useT("assistant.web")
+  const { features } = useAssistantScope()
   const [copied, setCopied] = useState(false)
   const timer = useRef<ReturnType<typeof setTimeout> | null>(null)
 
@@ -73,70 +101,53 @@ export function MessageActions({
       role="group"
       aria-label={t("actions")}
       className={cn(
-        "-ms-2 flex items-center gap-0.5 transition-opacity focus-within:opacity-100 motion-reduce:transition-none",
+        "-ms-2 flex flex-wrap items-center gap-1 transition-opacity focus-within:opacity-100 motion-reduce:transition-none",
         isLast ? "opacity-100" : "pointer-coarse:opacity-100 opacity-0 group-hover/message:opacity-100",
       )}
     >
-      <Button
-        type="button"
-        variant="ghost"
-        size="icon"
-        className={BUTTON_CLASS}
-        aria-label={t("like")}
-        aria-pressed={rating === "up"}
-        onClick={() => onRate(message.seq, "up")}
-      >
+      <ActionButton label={t("like")} aria-pressed={rating === "up"} onClick={() => onRate(message.seq, "up")}>
         {rating === "up" ? <IconThumbUpFilled aria-hidden /> : <IconThumbUp aria-hidden />}
-      </Button>
-      <Button
-        type="button"
-        variant="ghost"
-        size="icon"
-        className={BUTTON_CLASS}
-        aria-label={t("dislike")}
-        aria-pressed={rating === "down"}
-        onClick={() => onRate(message.seq, "down")}
-      >
+      </ActionButton>
+      <ActionButton label={t("dislike")} aria-pressed={rating === "down"} onClick={() => onRate(message.seq, "down")}>
         {rating === "down" ? <IconThumbDownFilled aria-hidden /> : <IconThumbDown aria-hidden />}
-      </Button>
+      </ActionButton>
       {isLast ? (
-        <Button
-          type="button"
-          variant="ghost"
-          size="icon"
-          className={BUTTON_CLASS}
-          aria-label={t("regenerate")}
-          disabled={busy}
-          onClick={onRegenerate}
-        >
+        <ActionButton label={t("regenerate")} disabled={busy} onClick={onRegenerate}>
           <IconRefresh aria-hidden />
-        </Button>
+        </ActionButton>
       ) : null}
-      <Button
-        type="button"
-        variant="ghost"
-        size="icon"
-        className={BUTTON_CLASS}
-        aria-label={copied ? t("copied") : t("copy")}
-        title={copied ? t("copied") : t("copy")}
-        onClick={() => void copy()}
-      >
+      <ActionButton label={copied ? t("copied") : t("copy")} onClick={() => void copy()}>
         {copied ? <IconCheck aria-hidden /> : <IconCopy aria-hidden />}
-      </Button>
-      <DropdownMenu>
-        <DropdownMenuTrigger
-          render={<Button type="button" variant="ghost" size="icon" className={BUTTON_CLASS} aria-label={t("more")} />}
-        >
-          <IconDots aria-hidden />
-        </DropdownMenuTrigger>
-        <DropdownMenuContent align="start" className="w-56">
-          <AddToNotebookSubMenu input={{ kind: "chat", chat_id: chat.id }} label={t("addChat")} />
-          <DropdownMenuItem className="min-h-11 md:min-h-8" onClick={() => actions.shareChat(chat)}>
-            <IconShare aria-hidden />
-            {t("shareChat")}
-          </DropdownMenuItem>
-        </DropdownMenuContent>
-      </DropdownMenu>
+      </ActionButton>
+      {features.notebooks || features.share ? (
+        <DropdownMenu>
+          <Tooltip>
+            <TooltipTrigger
+              render={
+                <DropdownMenuTrigger
+                  render={
+                    <Button type="button" variant="ghost" size="icon" className={BUTTON_CLASS} aria-label={t("more")} />
+                  }
+                />
+              }
+            >
+              <IconDots aria-hidden />
+            </TooltipTrigger>
+            <TooltipContent>{t("more")}</TooltipContent>
+          </Tooltip>
+          <DropdownMenuContent align="start" className="w-56">
+            {features.notebooks ? (
+              <AddToNotebookSubMenu input={{ kind: "chat", chat_id: chat.id }} label={t("addChat")} />
+            ) : null}
+            {features.share ? (
+              <DropdownMenuItem className="min-h-11 md:min-h-8" onClick={() => actions.shareChat(chat)}>
+                <IconShare aria-hidden />
+                {t("shareChat")}
+              </DropdownMenuItem>
+            ) : null}
+          </DropdownMenuContent>
+        </DropdownMenu>
+      ) : null}
     </div>
   )
 }

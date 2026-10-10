@@ -7,6 +7,7 @@ import { IconMessage } from "@tabler/icons-react"
 import { useMemo, useState } from "react"
 import { useNotebooks } from "../notebooks/api"
 import { useChats, useSearchChats } from "./use-assistant-queries"
+import { useAssistantScope } from "./assistant-context"
 
 const SEARCH_DELAY_MS = 250
 const IDLE_CHATS = 8
@@ -32,9 +33,10 @@ export function ChatSearchDialog({ open, onOpenChange, onOpenChat, onOpenNoteboo
   const [query, setQuery] = useState("")
   const needle = query.trim().toLocaleLowerCase()
   const debounced = useDebounce(query.trim(), SEARCH_DELAY_MS)
-  const chats = useChats("student")
+  const { assistant } = useAssistantScope()
+  const chats = useChats(assistant)
   const notebooks = useNotebooks()
-  const remote = useSearchChats("student", open ? debounced : "")
+  const remote = useSearchChats(assistant, open ? debounced : "")
 
   const chatHits = useMemo(() => {
     const all = chats.data?.items ?? []
