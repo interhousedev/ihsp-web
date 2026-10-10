@@ -334,6 +334,8 @@
         "label": "Kitobni kim koʻradi",
         "lyceum": "Faqat litsey",
         "public": "Hamma uchun",
+        "lyceumHint": "Faqat litsey oʻquvchilari va xodimlari koʻradi.",
+        "publicHint": "Hamma koʻradi, mehmonlar ham.",
         "download": "Yuklab olishga ruxsat",
         "downloadHint": "Oʻquvchilar faylni saqlashi mumkin.",
         "title": "Kitobni kim koʻradi"

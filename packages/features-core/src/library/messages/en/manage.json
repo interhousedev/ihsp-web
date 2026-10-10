@@ -334,6 +334,8 @@
         "label": "Who can see the book",
         "lyceum": "Lyceum only",
         "public": "Public",
+        "lyceumHint": "Only lyceum students and staff see it.",
+        "publicHint": "Anyone can see it, including visitors.",
         "download": "Allow download",
         "downloadHint": "Readers may save the file.",
         "title": "Who can see the book"

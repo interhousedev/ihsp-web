@@ -27,7 +27,12 @@ function Header({ item }: { item: ItemDetail }) {
   const material = item.material
   return (
     <div className="flex flex-col gap-4 sm:flex-row">
-      <CoverImage src={item.cover_url} className="aspect-[3/4] w-40 shrink-0 self-center rounded-lg sm:self-start" />
+      <CoverImage
+        src={item.cover_url}
+        title={item.title}
+        author={item.author_label}
+        className="aspect-[3/4] w-40 shrink-0 self-center rounded-lg sm:self-start"
+      />
       <div className="flex min-w-0 flex-1 flex-col gap-2">
         <div className="flex flex-wrap items-center gap-2">
           <SourceTag source={item.tag.source} />

@@ -27,7 +27,7 @@ export function ContinueRow({ items }: { items: readonly ItemCard[] }) {
                 href={readHref({ item: id })}
                 className="bg-card hover:bg-muted/50 focus-visible:ring-ring flex min-h-20 items-center gap-3 rounded-xl border p-3 focus-visible:ring-2"
               >
-                <CoverImage src={item.cover_url} className="h-16 w-12 shrink-0 rounded" />
+                <CoverImage src={item.cover_url} title={item.title} className="h-16 w-12 shrink-0 rounded" />
                 <span className="flex min-w-0 flex-1 flex-col gap-1.5">
                   <span className="line-clamp-2 text-sm font-medium break-words">{item.title}</span>
                   <Progress value={item.progress_percent ?? 0} aria-label={item.title}>

@@ -104,7 +104,7 @@ export function SuggestBookEditor({ initialTitle = "" }: { initialTitle?: string
           <h2 id="suggest-subjects-title" className="text-lg font-semibold">
             {editor("subjectsAndTopics")}
           </h2>
-          <BookSubjectsTopics form={form} issues={issues} disabled={send.isPending} onChange={update} />
+          <BookSubjectsTopics form={form} issues={issues} disabled={send.isPending} onChange={update} mode="suggest" />
         </section>
 
         <section aria-labelledby="suggest-source-title" className="flex flex-col gap-4 rounded-xl border p-4">

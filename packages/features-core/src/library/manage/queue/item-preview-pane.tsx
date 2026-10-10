@@ -149,7 +149,9 @@ export function ItemPreviewPane({
   return (
     <article aria-label={t("title")} className="flex min-w-0 flex-col gap-4">
       <header className="flex gap-3">
-        {id ? <CoverImage src={row.item.cover_url} className="h-28 w-20 shrink-0 rounded-md" /> : null}
+        {id ? (
+          <CoverImage src={row.item.cover_url} title={row.item.title} className="h-28 w-20 shrink-0 rounded-md" />
+        ) : null}
         <div className="flex min-w-0 flex-col gap-1.5">
           <div className="flex flex-wrap items-center gap-1.5">
             {id ? (

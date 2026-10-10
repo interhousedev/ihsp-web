@@ -64,6 +64,8 @@ export function ItemCardView({
     >
       <CoverImage
         src={item.cover_url}
+        title={item.title}
+        author={item.author_label}
         className={cn("shrink-0 rounded-md", list ? "h-28 w-20" : "aspect-[3/4] w-full max-h-64")}
       />
       <div className="flex min-w-0 flex-1 flex-col gap-1.5">

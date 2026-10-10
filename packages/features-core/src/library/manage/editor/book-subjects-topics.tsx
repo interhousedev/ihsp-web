@@ -18,17 +18,22 @@ function flatten(topics: readonly Topic[], depth = 0): FlatTopic[] {
   ])
 }
 
-/** Subjects with their role for the book, and topics (of those subjects) with optional page ranges. */
+/**
+ * Subjects with their role for the book, and topics (of those subjects) with optional page ranges. In `suggest` mode
+ * (a student's form) the heading comes from the section around it, and the "needed to publish" hint is left out.
+ */
 export function BookSubjectsTopics({
   form,
   issues,
   disabled,
   onChange,
+  mode = "manage",
 }: {
   form: BookForm
   issues: FormIssues
   disabled: boolean
   onChange: (patch: Partial<BookForm>) => void
+  mode?: "manage" | "suggest"
 }) {
   const t = useT("library.manage.editor")
   const roles = useT("library.manage.editor.subjectRole")
@@ -45,11 +50,15 @@ export function BookSubjectsTopics({
   if (subjects.isPending || topics.isPending) return <Skeleton className="h-32 w-full rounded-xl" />
 
   return (
-    <fieldset disabled={disabled} className="flex min-w-0 flex-col gap-6">
-      <legend className="sr-only">{t("subjectsAndTopics")}</legend>
+    <fieldset
+      disabled={disabled}
+      aria-labelledby={mode === "suggest" ? "suggest-subjects-title" : undefined}
+      className="flex min-w-0 flex-col gap-6"
+    >
+      {mode === "manage" ? <legend className="sr-only">{t("subjectsAndTopics")}</legend> : null}
       <div className="flex flex-col gap-2">
         <h3 className="text-sm font-medium">{t("subjects")}</h3>
-        <p className="text-muted-foreground text-xs">{t("subjectsHint")}</p>
+        {mode === "manage" ? <p className="text-muted-foreground text-xs">{t("subjectsHint")}</p> : null}
         {form.subjects.length === 0 ? <p className="text-muted-foreground text-sm">{t("noSubjects")}</p> : null}
         <ul className="flex flex-col gap-2">
           {form.subjects.map((row, index) => (

@@ -1,4 +1,6 @@
+import { readFileSync } from "node:fs"
 import { describe, expect, it } from "bun:test"
+import { UPLOAD_KINDS } from "../upload/upload-config"
 import en from "./en/index"
 import ru from "./ru/index"
 import uz from "./uz/index"
@@ -57,4 +59,44 @@ describe("library messages", () => {
     }
     expect(values(en as Tree).every((text) => text.trim() !== "")).toBe(true)
   })
+
+  // The keys a component reads: `t("...")` literals, `t(value)` for the values it lists, and `${value}Hint` templates.
+  const readKeys = (file: string, names: readonly string[]): string[] => {
+    const source = readFileSync(new URL(file, import.meta.url), "utf8")
+    const literal = [...source.matchAll(/\bt\("([^"]+)"\)/g)].map((match) => match[1] ?? "")
+    const templated = [...source.matchAll(/\bt\(`\$\{\w+\}(\w+)`\)/g)].flatMap((match) =>
+      names.map((name) => `${name}${match[1] ?? ""}`),
+    )
+    return [...new Set([...literal, ...templated, ...names])]
+  }
+  const screens = [
+    {
+      name: "book visibility",
+      keys: readKeys("../manage/editor/visibility-fields.tsx", ["lyceum", "public"]),
+      area: "manage.editor.visibility",
+    },
+    { name: "upload kind", keys: readKeys("../upload/step-kind.tsx", UPLOAD_KINDS), area: "upload.kind" },
+  ] as const
+
+  for (const screen of screens) {
+    it(`${screen.name}: every key the component reads exists in uz, ru and en`, () => {
+      const missing = Object.entries({ en, ru, uz }).flatMap(([locale, messages]) =>
+        screen.keys
+          .map((key) => `${screen.area}.${key}`)
+          .filter((path) => {
+            const text = valueAt((messages as { library: Tree }).library, path)
+            return text.trim() === ""
+          })
+          .map((path) => `${locale}:${path}`),
+      )
+      expect(missing).toEqual([])
+    })
+  }
 })
+
+/** The text at a dotted path, or "" when it is missing or not a message. */
+function valueAt(tree: Tree, path: string): string {
+  let node: string | Tree | undefined = tree
+  for (const part of path.split(".")) node = typeof node === "object" ? node[part] : undefined
+  return typeof node === "string" ? node : ""
+}
