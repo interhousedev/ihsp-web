@@ -2,7 +2,12 @@ import type { Block, StepContent } from "@ihsp/api"
 
 export type DiffStatus = "same" | "added" | "removed" | "changed"
 
-export type BlockDiffRow = { id: string; status: DiffStatus; live: Block | null; draft: Block | null }
+export type BlockDiffRow = {
+  id: string
+  status: DiffStatus
+  live: Block | null
+  draft: Block | null
+}
 
 function isRecord(value: unknown): value is Record<string, unknown> {
   return typeof value === "object" && value !== null && !Array.isArray(value)
@@ -49,7 +54,12 @@ export function diffBlocks(live: StepContent | null, draft: StepContent): BlockD
         break
       }
     }
-    rows.splice(anchor + 1, 0, { id: block.id, status: "removed", live: block, draft: null })
+    rows.splice(anchor + 1, 0, {
+      id: block.id,
+      status: "removed",
+      live: block,
+      draft: null,
+    })
   })
 
   return rows

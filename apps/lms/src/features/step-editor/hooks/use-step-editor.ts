@@ -93,7 +93,10 @@ export function useStepEditor(
     setPhase("saving")
     setError(null)
     try {
-      const saved = await putLmsStepDraft(stepId, { content: sent, lock_version: lockRef.current })
+      const saved = await putLmsStepDraft(stepId, {
+        content: sent,
+        lock_version: lockRef.current,
+      })
       lockRef.current = saved.lock_version
       const unchanged = editCount.current === sentCount
       const remapped = remapIds(contentRef.current, sent, saved.content)
@@ -104,13 +107,22 @@ export function useStepEditor(
       setDirty(!unchanged)
       setPhase("idle")
       queryClient.setQueryData(keys.lms.stepDraft(stepId), saved)
-      void queryClient.invalidateQueries({ queryKey: keys.lms.draft(saved.course_id) })
-      void queryClient.invalidateQueries({ queryKey: keys.lms.pending(saved.course_id) })
+      void queryClient.invalidateQueries({
+        queryKey: keys.lms.draft(saved.course_id),
+      })
+      void queryClient.invalidateQueries({
+        queryKey: keys.lms.pending(saved.course_id),
+      })
     } catch (caught) {
       setError(caught)
       const theirs = getConflictTheirs<StepDraft>(caught)
       if (theirs || (isApiError(caught) && caught.type === "common/conflict")) {
-        const other = theirs ?? (await queryClient.fetchQuery({ ...getLmsStepDraftQuery(stepId), staleTime: 0 }))
+        const other =
+          theirs ??
+          (await queryClient.fetchQuery({
+            ...getLmsStepDraftQuery(stepId),
+            staleTime: 0,
+          }))
         if (other) setConflict(other)
         setConflictOpen(true)
         setPhase("conflict")
@@ -177,8 +189,12 @@ export function useStepEditor(
       setRestorable(null)
       clearBuffer(key)
       queryClient.setQueryData(keys.lms.stepDraft(stepId), next)
-      void queryClient.invalidateQueries({ queryKey: keys.lms.draft(next.course_id) })
-      void queryClient.invalidateQueries({ queryKey: keys.lms.pending(next.course_id) })
+      void queryClient.invalidateQueries({
+        queryKey: keys.lms.draft(next.course_id),
+      })
+      void queryClient.invalidateQueries({
+        queryKey: keys.lms.pending(next.course_id),
+      })
     },
     [key, queryClient, stepId],
   )

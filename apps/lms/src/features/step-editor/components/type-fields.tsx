@@ -16,7 +16,11 @@ import {
 import { useId } from "react"
 import { moveItem, newBlank, newOption, newPair, newVariable } from "../utils/content-ops"
 
-type Props = { question: Question; onChange: (question: Question) => void; keyOf: (id: string) => string }
+type Props = {
+  question: Question
+  onChange: (question: Question) => void
+  keyOf: (id: string) => string
+}
 
 const ROW = "flex items-center gap-2"
 
@@ -197,7 +201,10 @@ export function TableFields({ question, onChange }: Props) {
                   <td key={column} className="p-1 text-center">
                     <input
                       type="checkbox"
-                      aria-label={t("cellCorrect", { row: row + 1, column: column + 1 })}
+                      aria-label={t("cellCorrect", {
+                        row: row + 1,
+                        column: column + 1,
+                      })}
                       checked={table.correct[row]?.[column] ?? false}
                       onChange={(event) =>
                         set(
@@ -288,7 +295,12 @@ export function BlanksFields({ question, onChange, keyOf }: Props) {
               onChange={(event) =>
                 set(
                   blanks.map((b) =>
-                    b.id === blank.id ? { ...b, regex: event.target.value === "" ? null : event.target.value } : b,
+                    b.id === blank.id
+                      ? {
+                          ...b,
+                          regex: event.target.value === "" ? null : event.target.value,
+                        }
+                      : b,
                   ),
                 )
               }
@@ -309,7 +321,10 @@ export function RandomFields({ question, onChange }: Props) {
   const spec = question.random ?? { variables: [], formula: "", tolerance: 0 }
   const set = (next: typeof spec) => onChange({ ...question, random: next })
   const setVar = (index: number, patch: Partial<(typeof spec.variables)[number]>) =>
-    set({ ...spec, variables: spec.variables.map((v, i) => (i === index ? { ...v, ...patch } : v)) })
+    set({
+      ...spec,
+      variables: spec.variables.map((v, i) => (i === index ? { ...v, ...patch } : v)),
+    })
   return (
     <div className="flex flex-col gap-3">
       <p className="text-muted-foreground text-xs">{t("randomHint")}</p>
@@ -349,7 +364,12 @@ export function RandomFields({ question, onChange }: Props) {
             </label>
             <RemoveButton
               label={t("removeVariable", { number: index + 1 })}
-              onClick={() => set({ ...spec, variables: spec.variables.filter((_, i) => i !== index) })}
+              onClick={() =>
+                set({
+                  ...spec,
+                  variables: spec.variables.filter((_, i) => i !== index),
+                })
+              }
             />
           </li>
         ))}
@@ -357,7 +377,10 @@ export function RandomFields({ question, onChange }: Props) {
       <AddButton
         label={t("addVariable")}
         onClick={() =>
-          set({ ...spec, variables: [...spec.variables, newVariable(String.fromCharCode(97 + spec.variables.length))] })
+          set({
+            ...spec,
+            variables: [...spec.variables, newVariable(String.fromCharCode(97 + spec.variables.length))],
+          })
         }
       />
       <div className="grid gap-3 sm:grid-cols-[1fr_8rem]">
@@ -392,7 +415,12 @@ export function RandomFields({ question, onChange }: Props) {
 export function FormulaFields({ question, onChange }: Props) {
   const t = useT("testBuilder")
   const id = useId()
-  const spec = question.formula ?? { expression: "", variables: ["x"], mode: "symbolic" as const, tolerance: 0.000001 }
+  const spec = question.formula ?? {
+    expression: "",
+    variables: ["x"],
+    mode: "symbolic" as const,
+    tolerance: 0.000001,
+  }
   const set = (next: typeof spec) => onChange({ ...question, formula: next })
   return (
     <div className="grid gap-3 sm:grid-cols-2">
@@ -428,7 +456,12 @@ export function FormulaFields({ question, onChange }: Props) {
         <NativeSelect
           id={`${id}-mode`}
           value={spec.mode}
-          onChange={(event) => set({ ...spec, mode: event.target.value === "numeric" ? "numeric" : "symbolic" })}
+          onChange={(event) =>
+            set({
+              ...spec,
+              mode: event.target.value === "numeric" ? "numeric" : "symbolic",
+            })
+          }
           className="w-full"
         >
           <NativeSelectOption value="symbolic">{t("modeSymbolic")}</NativeSelectOption>
@@ -443,7 +476,11 @@ export function FormulaFields({ question, onChange }: Props) {
 export function CodeFields({ question, onChange }: Props) {
   const t = useT("testBuilder")
   const id = useId()
-  const spec = question.code ?? { language: "python", starter: "", expected_outputs: [] }
+  const spec = question.code ?? {
+    language: "python",
+    starter: "",
+    expected_outputs: [],
+  }
   const set = (next: typeof spec) => onChange({ ...question, code: next })
   return (
     <div className="flex flex-col gap-3">
@@ -475,7 +512,10 @@ export function CodeFields({ question, onChange }: Props) {
           id={`${id}-out`}
           value={spec.expected_outputs.join("\n---\n")}
           onChange={(event) =>
-            set({ ...spec, expected_outputs: event.target.value === "" ? [] : event.target.value.split("\n---\n") })
+            set({
+              ...spec,
+              expected_outputs: event.target.value === "" ? [] : event.target.value.split("\n---\n"),
+            })
           }
           rows={3}
           className="font-mono"

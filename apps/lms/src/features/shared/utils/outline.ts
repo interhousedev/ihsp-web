@@ -1,6 +1,12 @@
 import type { OutlineSection } from "@ihsp/api"
 
-export type FlatStep = { step_id: string; title: string; sectionId: string; sectionTitle: string; completed: boolean }
+export type FlatStep = {
+  step_id: string
+  title: string
+  sectionId: string
+  sectionTitle: string
+  completed: boolean
+}
 
 /** The steps of all sections in reading order. */
 export function flattenOutline(outline: readonly OutlineSection[]): FlatStep[] {
@@ -24,7 +30,12 @@ export function continueStep(outline: readonly OutlineSection[]): FlatStep | nul
 export function neighbours(
   outline: readonly OutlineSection[],
   stepId: string,
-): { previous: FlatStep | null; next: FlatStep | null; position: number; total: number } {
+): {
+  previous: FlatStep | null
+  next: FlatStep | null
+  position: number
+  total: number
+} {
   const steps = flattenOutline(outline)
   const index = steps.findIndex((step) => step.step_id === stepId)
   return {

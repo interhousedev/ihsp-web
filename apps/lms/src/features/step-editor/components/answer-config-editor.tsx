@@ -35,7 +35,10 @@ export function AnswerConfigEditor({
             step="any"
             value={current.value ?? ""}
             onChange={(event) =>
-              onChange({ ...current, value: event.target.value === "" ? undefined : Number(event.target.value) })
+              onChange({
+                ...current,
+                value: event.target.value === "" ? undefined : Number(event.target.value),
+              })
             }
             className="h-11 md:h-8"
           />
@@ -49,7 +52,10 @@ export function AnswerConfigEditor({
             min={0}
             value={current.tolerance ?? 0}
             onChange={(event) =>
-              onChange({ ...current, tolerance: event.target.value === "" ? 0 : Number(event.target.value) })
+              onChange({
+                ...current,
+                tolerance: event.target.value === "" ? 0 : Number(event.target.value),
+              })
             }
             className="h-11 md:h-8"
           />
@@ -76,7 +82,12 @@ export function AnswerConfigEditor({
         <Input
           id={regexId}
           value={current.regex ?? ""}
-          onChange={(event) => onChange({ ...current, regex: event.target.value === "" ? null : event.target.value })}
+          onChange={(event) =>
+            onChange({
+              ...current,
+              regex: event.target.value === "" ? null : event.target.value,
+            })
+          }
           className="h-11 font-mono md:h-8"
         />
         <FieldDescription>{t("regexHint")}</FieldDescription>

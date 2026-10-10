@@ -35,7 +35,10 @@ export function HistorySheet({
   const t = useT("history")
   const format = useFormatters()
   const errorMessage = useErrorMessage()
-  const history = useQuery({ ...getLmsStepHistoryQuery(stepId), enabled: open })
+  const history = useQuery({
+    ...getLmsStepHistoryQuery(stepId),
+    enabled: open,
+  })
   const [target, setTarget] = useState<RevisionItem | null>(null)
   const restore = useMutation<StepDraft, unknown, string>({
     mutationFn: (revisionId) => postLmsStepRestore(stepId, { revision_id: revisionId }),

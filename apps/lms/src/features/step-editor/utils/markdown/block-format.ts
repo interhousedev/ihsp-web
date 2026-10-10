@@ -125,10 +125,16 @@ function lineEdits(all: Target[], format: BlockFormat, off: boolean, text: strin
     const { quote, indent, marker, heading } = target.line
     if (format === "bulletList" || format === "orderedList") {
       const next = off ? "" : format === "bulletList" ? "- " : `${number++}. `
-      edits.set(position, { cut: (quote + indent + marker).length, prefix: quote + indent + next })
+      edits.set(position, {
+        cut: (quote + indent + marker).length,
+        prefix: quote + indent + next,
+      })
     } else {
       const next = off ? "" : `${"#".repeat(Number(format.slice(-1)))} `
-      edits.set(position, { cut: (quote + indent + marker + heading).length, prefix: quote + indent + marker + next })
+      edits.set(position, {
+        cut: (quote + indent + marker + heading).length,
+        prefix: quote + indent + marker + next,
+      })
     }
   })
   return edits
@@ -182,7 +188,12 @@ function rebuild(
   const rows: Row[] = all.map((target, position) => {
     const edit = edits.get(position) ?? null
     const text = edit ? edit.prefix + target.line.text.slice(edit.cut) : target.line.text
-    return { before: target.line, after: parseLine(text, 0), edit, continuation: target.continuation }
+    return {
+      before: target.line,
+      after: parseLine(text, 0),
+      edit,
+      continuation: target.continuation,
+    }
   })
   const first = rows[0]
   const last = rows.at(-1)

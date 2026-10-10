@@ -36,7 +36,10 @@ export function ConflictDialog({
           <DialogTitle>{t("title")}</DialogTitle>
           <DialogDescription>
             {theirs.updated_at
-              ? t("description", { who, time: format.dateTime(theirs.updated_at) })
+              ? t("description", {
+                  who,
+                  time: format.dateTime(theirs.updated_at),
+                })
               : t("descriptionNoTime", { who })}
           </DialogDescription>
         </DialogHeader>

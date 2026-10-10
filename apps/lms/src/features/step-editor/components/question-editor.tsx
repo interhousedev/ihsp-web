@@ -109,7 +109,10 @@ export function QuestionEditor({
             step="any"
             value={question.points}
             onChange={(event) =>
-              onChange({ ...question, points: event.target.value === "" ? 0 : Number(event.target.value) })
+              onChange({
+                ...question,
+                points: event.target.value === "" ? 0 : Number(event.target.value),
+              })
             }
             className="h-11 md:h-8"
           />
@@ -162,7 +165,10 @@ export function QuestionEditor({
           id={explanationId}
           value={question.explanation ?? ""}
           onChange={(event) =>
-            onChange({ ...question, explanation: event.target.value === "" ? null : event.target.value })
+            onChange({
+              ...question,
+              explanation: event.target.value === "" ? null : event.target.value,
+            })
           }
           rows={2}
         />

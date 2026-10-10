@@ -37,6 +37,19 @@ export const lmsLearningHandlers = [
     const step = stepViews.find((item) => item.step_id === param(params, "stepId"))
     return step ? HttpResponse.json(step) : notFound("Step")
   }),
+  // Streams of uploaded videos: the file id in the URL is the block id, so tests can tell the calls apart.
+  http.get(apiUrl("/v1/lms/courses/:courseId/steps/:stepId/blocks/:blockId/video"), ({ params }) =>
+    HttpResponse.json({
+      url: `https://storage.test/video/${param(params, "blockId")}.mp4?sig=1`,
+      expires_in: 900,
+    }),
+  ),
+  http.get(apiUrl("/v1/lms/courses/:courseId/preview/steps/:stepId/blocks/:blockId/video"), ({ params }) =>
+    HttpResponse.json({
+      url: `https://storage.test/draft/${param(params, "blockId")}.mp4?sig=1`,
+      expires_in: 900,
+    }),
+  ),
   http.post(apiUrl("/v1/lms/steps/:stepId/viewed"), ({ params }) =>
     HttpResponse.json({ ...stepProgress, step_id: param(params, "stepId") }),
   ),
@@ -45,7 +58,11 @@ export const lmsLearningHandlers = [
   ),
   http.put(apiUrl("/v1/lms/attempts/:id/answers"), async ({ params, request }) => {
     const body = await readJson<AttemptAnswersBody>(request)
-    return HttpResponse.json({ ...attemptView, id: param(params, "id"), answers: body.answers ?? {} })
+    return HttpResponse.json({
+      ...attemptView,
+      id: param(params, "id"),
+      answers: body.answers ?? {},
+    })
   }),
   http.post(apiUrl("/v1/lms/attempts/:id/submit"), ({ params }) =>
     HttpResponse.json({ ...attemptResultPassed, id: param(params, "id") }),

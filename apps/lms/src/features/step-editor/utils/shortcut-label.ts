@@ -25,7 +25,14 @@ export function shortcutAria(shortcut: Shortcut): string {
  * too, so shortcuts work with Cyrillic keyboard layouts (Ctrl+B types "и" there).
  */
 export function matchesShortcut(
-  event: { key: string; code: string; metaKey: boolean; ctrlKey: boolean; altKey: boolean; shiftKey: boolean },
+  event: {
+    key: string
+    code: string
+    metaKey: boolean
+    ctrlKey: boolean
+    altKey: boolean
+    shiftKey: boolean
+  },
   shortcut: Shortcut,
 ): boolean {
   if (event.altKey || !(event.metaKey || event.ctrlKey) || event.shiftKey !== Boolean(shortcut.shift)) return false

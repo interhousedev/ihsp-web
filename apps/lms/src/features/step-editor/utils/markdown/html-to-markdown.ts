@@ -119,7 +119,10 @@ function isFormatted(block: Block): boolean {
 function walk(parent: Node, context: Context, builder: Builder): void {
   for (const node of Array.from(parent.childNodes)) {
     if (node.nodeType === Node.TEXT_NODE) {
-      builder.runs.push({ text: (node.textContent ?? "").replace(/\s+/g, " "), ...context })
+      builder.runs.push({
+        text: (node.textContent ?? "").replace(/\s+/g, " "),
+        ...context,
+      })
     } else if (node instanceof Element) {
       element(node, context, builder)
     }
@@ -130,7 +133,12 @@ function element(node: Element, context: Context, builder: Builder): void {
   const tag = node.tagName.toLowerCase()
   if (SKIPPED.has(tag) || (node.getAttribute("aria-hidden") === "true" && !node.classList.contains("katex"))) return
   if (node.classList.contains("katex")) {
-    builder.runs.push({ text: formulaOf(node), formats: new Set(), href: null, raw: true })
+    builder.runs.push({
+      text: formulaOf(node),
+      formats: new Set(),
+      href: null,
+      raw: true,
+    })
     return
   }
   if (tag === "br") {
@@ -140,12 +148,20 @@ function element(node: Element, context: Context, builder: Builder): void {
   const level = /^h([1-6])$/.exec(tag)?.[1]
   if (level) {
     builder.flush()
-    builder.blocks.push({ type: "heading", level: Math.min(3, Number(level)), runs: inlineRuns(node, context) })
+    builder.blocks.push({
+      type: "heading",
+      level: Math.min(3, Number(level)),
+      runs: inlineRuns(node, context),
+    })
     return
   }
   if (tag === "pre") {
     builder.flush()
-    builder.blocks.push({ type: "code", text: (node.textContent ?? "").replace(/\n$/, ""), language: languageOf(node) })
+    builder.blocks.push({
+      type: "code",
+      text: (node.textContent ?? "").replace(/\n$/, ""),
+      language: languageOf(node),
+    })
     return
   }
   if (tag === "hr") {

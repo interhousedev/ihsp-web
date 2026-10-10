@@ -62,6 +62,9 @@ export type CoursePage = CourseCard & {
   points_earned: number | null
 }
 
+/** A presigned GET of an uploaded lesson video (the storage answers `Range` requests, so seeking works). */
+export type VideoStream = { url: string; expires_in: number }
+
 /**
  * A step ("lesson") as a student sees it. Its blocks are the squares of the step strip; `passed` is the green fill: a
  * text block once the lesson was viewed, a test block once an attempt passed, a flash card block once every card was
@@ -98,7 +101,13 @@ export type StepView = {
         points_total: number
         points_earned: number
       }
-    | { id: string; type: "flashcards"; cards_count: number; due: number; passed: boolean }
+    | {
+        id: string
+        type: "flashcards"
+        cards_count: number
+        due: number
+        passed: boolean
+      }
   )[]
   completed: boolean
   preview: boolean
@@ -207,7 +216,11 @@ export type AttemptReview = AttemptResult & {
 export type MyCourses = { enrolled: CourseCard[]; managed: CourseCard[] }
 
 /** `POST /v1/lms/steps/{step_id}/viewed` returns `StepProgressItem`, which the contract does not define. */
-export type StepProgressItem = { step_id: string; viewed_at: string | null; completed: boolean }
+export type StepProgressItem = {
+  step_id: string
+  viewed_at: string | null
+  completed: boolean
+}
 
 // --- Request bodies and query parameters ---
 

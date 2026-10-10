@@ -43,7 +43,10 @@ export function TestBlockEditor({
                 })
               }
               onRemove={() =>
-                onChange({ ...block, questions: block.questions.filter((item) => item.id !== question.id) })
+                onChange({
+                  ...block,
+                  questions: block.questions.filter((item) => item.id !== question.id),
+                })
               }
             />
           ))}
@@ -52,7 +55,12 @@ export function TestBlockEditor({
           type="button"
           variant="outline"
           size="sm"
-          onClick={() => onChange({ ...block, questions: [...block.questions, newQuestion("single")] })}
+          onClick={() =>
+            onChange({
+              ...block,
+              questions: [...block.questions, newQuestion("single")],
+            })
+          }
           className="w-fit min-h-11 md:min-h-7"
         >
           <Icons.add aria-hidden />

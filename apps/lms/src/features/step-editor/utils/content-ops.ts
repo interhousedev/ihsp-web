@@ -69,7 +69,12 @@ export function newPair(): NonNullable<Question["pairs"]>[number] {
 }
 
 export function newBlank(): NonNullable<Question["blanks"]>[number] {
-  return { id: newTempId(), accepted: [""], regex: null, case_sensitive: false }
+  return {
+    id: newTempId(),
+    accepted: [""],
+    regex: null,
+    case_sensitive: false,
+  }
 }
 
 export function newVariable(name = "a"): NonNullable<Question["random"]>["variables"][number] {
@@ -77,9 +82,18 @@ export function newVariable(name = "a"): NonNullable<Question["random"]>["variab
 }
 
 export function newQuestion(type: QuestionType = "single"): Question {
-  const base = { id: newTempId(), type, prompt: "", points: 1, explanation: null }
+  const base = {
+    id: newTempId(),
+    type,
+    prompt: "",
+    points: 1,
+    explanation: null,
+  }
   if (type === "single" || type === "multiple")
-    return { ...base, options: [{ ...newOption(), correct: true }, newOption()] }
+    return {
+      ...base,
+      options: [{ ...newOption(), correct: true }, newOption()],
+    }
   if (type === "sorting") return { ...base, options: [newOption(), newOption()] }
   if (type === "matching") return { ...base, pairs: [newPair(), newPair()] }
   if (type === "table")
@@ -95,12 +109,35 @@ export function newQuestion(type: QuestionType = "single"): Question {
       },
     }
   if (type === "blanks") return { ...base, prompt: "{{1}}", blanks: [newBlank()] }
-  if (type === "text") return { ...base, answer: { accepted: [""], regex: null, case_sensitive: false } }
+  if (type === "text")
+    return {
+      ...base,
+      answer: { accepted: [""], regex: null, case_sensitive: false },
+    }
   if (type === "random_number")
-    return { ...base, random: { variables: [newVariable("a"), newVariable("b")], formula: "a + b", tolerance: 0 } }
+    return {
+      ...base,
+      random: {
+        variables: [newVariable("a"), newVariable("b")],
+        formula: "a + b",
+        tolerance: 0,
+      },
+    }
   if (type === "formula")
-    return { ...base, formula: { expression: "", variables: ["x"], mode: "symbolic", tolerance: 0.000001 } }
-  if (type === "code") return { ...base, code: { language: "python", starter: "", expected_outputs: [] } }
+    return {
+      ...base,
+      formula: {
+        expression: "",
+        variables: ["x"],
+        mode: "symbolic",
+        tolerance: 0.000001,
+      },
+    }
+  if (type === "code")
+    return {
+      ...base,
+      code: { language: "python", starter: "", expected_outputs: [] },
+    }
   if (type === "free") return base
   return { ...base, answer: { value: 0, tolerance: 0 } }
 }
@@ -110,15 +147,31 @@ export function newTextBlock(): TextBlock {
 }
 
 export function newTestBlock(): TestBlock {
-  return { id: newTempId(), type: "test", config: { ...DEFAULT_TEST_CONFIG }, questions: [newQuestion("single")] }
+  return {
+    id: newTempId(),
+    type: "test",
+    config: { ...DEFAULT_TEST_CONFIG },
+    questions: [newQuestion("single")],
+  }
 }
 
 export function newVideoBlock(): VideoBlock {
-  return { id: newTempId(), type: "video", source: "link", url: "", file_id: null, caption: "" }
+  return {
+    id: newTempId(),
+    type: "video",
+    source: "link",
+    url: "",
+    file_id: null,
+    caption: "",
+  }
 }
 
 export function newFlashcardsBlock(): FlashcardsBlock {
-  return { id: newTempId(), type: "flashcards", cards: [{ id: newTempId(), front: "", back: "" }] }
+  return {
+    id: newTempId(),
+    type: "flashcards",
+    cards: [{ id: newTempId(), front: "", back: "" }],
+  }
 }
 
 export function newCard(): Card {
@@ -141,12 +194,19 @@ export function changeQuestionType(question: Question, type: QuestionType): Ques
     if (type === "single") {
       // a single choice has exactly one correct option
       const firstCorrect = options.findIndex((option) => option.correct)
-      options = options.map((option, index) => ({ ...option, correct: index === firstCorrect }))
+      options = options.map((option, index) => ({
+        ...option,
+        correct: index === firstCorrect,
+      }))
     }
     return { ...base, options }
   }
   const fresh = newQuestion(type)
-  return { ...fresh, ...base, prompt: base.prompt === "" ? fresh.prompt : base.prompt }
+  return {
+    ...fresh,
+    ...base,
+    prompt: base.prompt === "" ? fresh.prompt : base.prompt,
+  }
 }
 
 export function moveItem<T>(list: readonly T[], from: number, to: number): T[] {
@@ -158,7 +218,10 @@ export function moveItem<T>(list: readonly T[], from: number, to: number): T[] {
 }
 
 export function updateBlock(content: StepContent, blockId: string, update: (block: Block) => Block): StepContent {
-  return { ...content, blocks: content.blocks.map((block) => (block.id === blockId ? update(block) : block)) }
+  return {
+    ...content,
+    blocks: content.blocks.map((block) => (block.id === blockId ? update(block) : block)),
+  }
 }
 
 /**
@@ -203,15 +266,38 @@ export function remapIds(
             ...question,
             id: swap(question.id),
             ...(question.options
-              ? { options: question.options.map((option) => ({ ...option, id: swap(option.id) })) }
+              ? {
+                  options: question.options.map((option) => ({
+                    ...option,
+                    id: swap(option.id),
+                  })),
+                }
               : {}),
-            ...(question.pairs ? { pairs: question.pairs.map((item) => ({ ...item, id: swap(item.id) })) } : {}),
-            ...(question.blanks ? { blanks: question.blanks.map((item) => ({ ...item, id: swap(item.id) })) } : {}),
+            ...(question.pairs
+              ? {
+                  pairs: question.pairs.map((item) => ({
+                    ...item,
+                    id: swap(item.id),
+                  })),
+                }
+              : {}),
+            ...(question.blanks
+              ? {
+                  blanks: question.blanks.map((item) => ({
+                    ...item,
+                    id: swap(item.id),
+                  })),
+                }
+              : {}),
           })),
         }
       }
       if (block.type === "flashcards") {
-        return { ...block, id: swap(block.id), cards: block.cards.map((card) => ({ ...card, id: swap(card.id) })) }
+        return {
+          ...block,
+          id: swap(block.id),
+          cards: block.cards.map((card) => ({ ...card, id: swap(card.id) })),
+        }
       }
       return { ...block, id: swap(block.id) }
     }),
@@ -237,7 +323,11 @@ export type ContentIssueCode =
   | "no-formula"
   | "no-variables"
 
-export type ContentIssue = { code: ContentIssueCode; blockId: string; questionId?: string }
+export type ContentIssue = {
+  code: ContentIssueCode
+  blockId: string
+  questionId?: string
+}
 
 /** Problems an author should fix before publishing; saving a draft is still allowed. */
 export function validateContent(content: StepContent): ContentIssue[] {

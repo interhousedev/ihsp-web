@@ -6,7 +6,11 @@ import { IconColumns, IconEye, IconPencil } from "@ihsp/ui"
 
 export type EditorView = "write" | "split" | "preview"
 
-const ICONS = { write: IconPencil, split: IconColumns, preview: IconEye } as const
+const ICONS = {
+  write: IconPencil,
+  split: IconColumns,
+  preview: IconEye,
+} as const
 
 /** Write, side by side (wide screens only) or Preview: a segmented switch of pressed buttons. */
 export function EditorViewSwitch({

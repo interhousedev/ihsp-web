@@ -10,15 +10,23 @@ const ALIGN_TAG = /<\/?align-(?:left|center|right)>/g
 const LINE_PREFIX = /^(\s*(?:>\s?)*(?:#{1,6}\s+|[-*+]\s+|\d+[.)]\s+)?)/
 
 /** The colour span around the selection, if the selection sits inside one (same line). */
-function colorSpanAt(
-  state: TextState,
-): { start: number; open: number; close: number; end: number; color: string } | null {
+function colorSpanAt(state: TextState): {
+  start: number
+  open: number
+  close: number
+  end: number
+  color: string
+} | null {
   const { text, start, end } = state
   const lineStart = text.lastIndexOf("\n", start - 1) + 1
   const before = text.slice(lineStart, start)
   let found: { index: number; length: number; color: string } | null = null
   for (const match of before.matchAll(COLOR_OPEN)) {
-    found = { index: lineStart + match.index, length: match[0].length, color: match[1] ?? "" }
+    found = {
+      index: lineStart + match.index,
+      length: match[0].length,
+      color: match[1] ?? "",
+    }
   }
   if (!found) return null
   const contentStart = found.index + found.length
@@ -27,7 +35,13 @@ function colorSpanAt(
   const lineEnd = text.indexOf("\n", end)
   if (close === -1 || (lineEnd !== -1 && close > lineEnd)) return null
   if (text.slice(end, close).includes("<span")) return null
-  return { start: found.index, open: contentStart, close, end: close + "</span>".length, color: found.color }
+  return {
+    start: found.index,
+    open: contentStart,
+    close,
+    end: close + "</span>".length,
+    color: found.color,
+  }
 }
 
 /** The colour of the text at the selection, or null. */

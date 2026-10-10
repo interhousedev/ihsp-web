@@ -13,9 +13,18 @@ export function encloses(span: { start: number; end: number }, state: TextState)
 }
 
 /** What the link dialog starts with: the link at the selection, or the selected text. */
-export function linkDraftAt(state: TextState): { text: string; url: string; editing: boolean } {
+export function linkDraftAt(state: TextState): {
+  text: string
+  url: string
+  editing: boolean
+} {
   const link = linkAt(state)
-  if (link) return { text: state.text.slice(link.contentStart, link.contentEnd), url: link.url, editing: true }
+  if (link)
+    return {
+      text: state.text.slice(link.contentStart, link.contentEnd),
+      url: link.url,
+      editing: true,
+    }
   return {
     text: state.text
       .slice(state.start, state.end)
@@ -76,7 +85,11 @@ export function applyLink(state: TextState, text: string, url: string): TextStat
   const shown = text.trim() === "" ? url.replace(/^mailto:/i, "") : text.trim()
   const written = `[${label(shown)}](${linkDestination(url)})`
   const caret = from + written.length
-  return { text: state.text.slice(0, from) + written + state.text.slice(to), start: caret, end: caret }
+  return {
+    text: state.text.slice(0, from) + written + state.text.slice(to),
+    start: caret,
+    end: caret,
+  }
 }
 
 /** Turns the link at the selection back into its text. */

@@ -45,7 +45,17 @@ export function StepContent({
           {block.markdown}
         </Markdown>
       ) : block.type === "video" ? (
-        <VideoBlock key={block.id} url={block.url} caption={block.caption} />
+        <VideoBlock
+          key={block.id}
+          url={block.url}
+          caption={block.caption}
+          source={block.source}
+          fileId={block.file_id}
+          blockId={block.id}
+          courseId={courseId}
+          stepId={stepId}
+          preview={preview}
+        />
       ) : block.type === "test" ? (
         <TestBlock key={block.id} courseId={courseId} stepId={stepId} block={block} preview={preview} slug={slug} />
       ) : (

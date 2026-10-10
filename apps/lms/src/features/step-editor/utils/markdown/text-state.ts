@@ -68,7 +68,11 @@ export function replacementBetween(before: string, after: string): Replacement |
   while (suffix < shorter - prefix && before[before.length - 1 - suffix] === after[after.length - 1 - suffix]) {
     suffix++
   }
-  return { from: prefix, to: before.length - suffix, insert: after.slice(prefix, after.length - suffix) }
+  return {
+    from: prefix,
+    to: before.length - suffix,
+    insert: after.slice(prefix, after.length - suffix),
+  }
 }
 
 /** The start offsets of the lines touched by `[start, end)` (a selection ending at a line start skips that line). */

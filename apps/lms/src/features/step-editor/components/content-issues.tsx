@@ -28,7 +28,10 @@ export function ContentIssues({ content }: { content: StepContent }) {
                     block: blockNumber(issue.blockId),
                     question: questionNumber(issue.blockId, issue.questionId),
                   })
-                : t(`codes.${issue.code}`, { block: blockNumber(issue.blockId), question: 0 })}
+                : t(`codes.${issue.code}`, {
+                    block: blockNumber(issue.blockId),
+                    question: 0,
+                  })}
             </li>
           ))}
         </ul>

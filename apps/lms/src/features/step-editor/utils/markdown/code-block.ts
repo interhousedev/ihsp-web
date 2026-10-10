@@ -54,7 +54,11 @@ function wrapCodeBlock(state: TextState): TextState {
   if (lines.every((line) => line.slice(prefix.length).trim() === "")) {
     const block = `${prefix}${fence}\n${prefix}\n${prefix}${fence}`
     const caret = from + prefix.length + fence.length + 1 + prefix.length
-    return { text: text.slice(0, from) + block + text.slice(to), start: caret, end: caret }
+    return {
+      text: text.slice(0, from) + block + text.slice(to),
+      start: caret,
+      end: caret,
+    }
   }
   return applyChanges(state, [
     { from, to: from, insert: `${prefix}${fence}\n` },

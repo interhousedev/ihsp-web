@@ -125,7 +125,12 @@ export function StepEditorBody({
         <Input
           id="step-title"
           value={editor.content.title}
-          onChange={(event) => editor.edit((current) => ({ ...current, title: event.target.value }))}
+          onChange={(event) =>
+            editor.edit((current) => ({
+              ...current,
+              title: event.target.value,
+            }))
+          }
           disabled={!canEdit}
           maxLength={200}
           className="h-11 md:h-8"
@@ -135,10 +140,21 @@ export function StepEditorBody({
       <ContentIssues content={editor.content} />
 
       {editor.content.blocks.length === 0 ? <p className="text-muted-foreground text-sm">{t("noBlocks")}</p> : null}
-      <BlockList content={editor.content} keyOf={editor.keyOf} edit={canEdit ? editor.edit : () => undefined} />
+      <BlockList
+        content={editor.content}
+        keyOf={editor.keyOf}
+        edit={canEdit ? editor.edit : () => undefined}
+        courseId={draft.course_id}
+        stepId={draft.step_id}
+      />
       {canEdit ? (
         <AddBlockBar
-          onAdd={(block) => editor.edit((current) => ({ ...current, blocks: [...current.blocks, block] }))}
+          onAdd={(block) =>
+            editor.edit((current) => ({
+              ...current,
+              blocks: [...current.blocks, block],
+            }))
+          }
         />
       ) : null}
 

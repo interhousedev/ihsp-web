@@ -61,7 +61,10 @@ function QuestionSummary({ question, index }: { question: Question; index: numbe
       ) : null}
       {question.type === "number" && question.answer ? (
         <p className="mt-2 text-sm">
-          {t("numberAnswer", { value: question.answer.value ?? 0, tolerance: question.answer.tolerance ?? 0 })}
+          {t("numberAnswer", {
+            value: question.answer.value ?? 0,
+            tolerance: question.answer.tolerance ?? 0,
+          })}
         </p>
       ) : null}
       {question.pairs ? (
@@ -89,7 +92,10 @@ function QuestionSummary({ question, index }: { question: Question; index: numbe
       ) : null}
       {question.random ? (
         <p className="mt-2 text-sm">
-          {t("randomSummary", { formula: question.random.formula, count: question.random.variables.length })}
+          {t("randomSummary", {
+            formula: question.random.formula,
+            count: question.random.variables.length,
+          })}
         </p>
       ) : null}
       {question.formula ? <p className="mt-2 font-mono text-sm">{question.formula.expression}</p> : null}

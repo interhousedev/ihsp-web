@@ -16,7 +16,10 @@ export function FlashcardsBlockEditor({
 }) {
   const t = useT("cardsBuilder")
   const update = (index: number, patch: Partial<FlashcardsBlock["cards"][number]>) =>
-    onChange({ ...block, cards: block.cards.map((card, i) => (i === index ? { ...card, ...patch } : card)) })
+    onChange({
+      ...block,
+      cards: block.cards.map((card, i) => (i === index ? { ...card, ...patch } : card)),
+    })
   return (
     <div className="flex flex-col gap-3">
       <ol className="flex flex-col gap-3">
@@ -30,7 +33,12 @@ export function FlashcardsBlockEditor({
                   variant="ghost"
                   size="icon"
                   disabled={index === 0}
-                  onClick={() => onChange({ ...block, cards: moveItem(block.cards, index, index - 1) })}
+                  onClick={() =>
+                    onChange({
+                      ...block,
+                      cards: moveItem(block.cards, index, index - 1),
+                    })
+                  }
                   aria-label={t("moveUp", { number: index + 1 })}
                   className="size-11 md:size-8"
                 >
@@ -41,7 +49,12 @@ export function FlashcardsBlockEditor({
                   variant="ghost"
                   size="icon"
                   disabled={index === block.cards.length - 1}
-                  onClick={() => onChange({ ...block, cards: moveItem(block.cards, index, index + 1) })}
+                  onClick={() =>
+                    onChange({
+                      ...block,
+                      cards: moveItem(block.cards, index, index + 1),
+                    })
+                  }
                   aria-label={t("moveDown", { number: index + 1 })}
                   className="size-11 md:size-8"
                 >
@@ -51,7 +64,12 @@ export function FlashcardsBlockEditor({
                   type="button"
                   variant="ghost"
                   size="icon"
-                  onClick={() => onChange({ ...block, cards: block.cards.filter((_, i) => i !== index) })}
+                  onClick={() =>
+                    onChange({
+                      ...block,
+                      cards: block.cards.filter((_, i) => i !== index),
+                    })
+                  }
                   aria-label={t("remove", { number: index + 1 })}
                   className="size-11 md:size-8"
                 >

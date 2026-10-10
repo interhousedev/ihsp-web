@@ -20,6 +20,7 @@ import type {
   MyCourses,
   StepProgressItem,
   StepView,
+  VideoStream,
 } from "../types/lms-learning"
 
 /** GET /v1/lms/courses?query — bearer; published public courses. */
@@ -37,7 +38,10 @@ export function getLmsMyCourses(opts?: RequestOptions): Promise<MyCourses> {
   return api.get<MyCourses>("/v1/lms/my-courses", opts)
 }
 export const getLmsMyCoursesQuery = () =>
-  queryOptions({ queryKey: keys.lms.myCourses(), queryFn: ({ signal }) => getLmsMyCourses({ signal }) })
+  queryOptions({
+    queryKey: keys.lms.myCourses(),
+    queryFn: ({ signal }) => getLmsMyCourses({ signal }),
+  })
 
 /** Courses the user manages (`my-courses.managed`), for the connector course picker. */
 export async function listMyManagedCourses(opts?: RequestOptions): Promise<CourseCard[]> {
@@ -49,7 +53,10 @@ export function getLmsCourse(slug: string, opts?: RequestOptions): Promise<Cours
   return api.get<CoursePage>(`/v1/lms/courses/${seg(slug)}`, opts)
 }
 export const getLmsCourseQuery = (slug: string) =>
-  queryOptions({ queryKey: keys.lms.course(slug), queryFn: ({ signal }) => getLmsCourse(slug, { signal }) })
+  queryOptions({
+    queryKey: keys.lms.course(slug),
+    queryFn: ({ signal }) => getLmsCourse(slug, { signal }),
+  })
 
 /** POST /v1/lms/courses/{id}/enroll — bearer; public courses only. */
 export function postLmsCourseEnroll(id: string, opts?: RequestOptions): Promise<CoursePage> {
@@ -69,6 +76,42 @@ export const getLmsCourseStepQuery = (courseId: string, stepId: string) =>
   queryOptions({
     queryKey: keys.lms.step(courseId, stepId),
     queryFn: ({ signal }) => getLmsCourseStep(courseId, stepId, { signal }),
+  })
+
+/** GET /v1/lms/courses/{id}/steps/{step_id}/blocks/{block_id}/video — enrolled or course staff; short-lived stream URL. */
+export function getLmsStepVideo(
+  courseId: string,
+  stepId: string,
+  blockId: string,
+  opts?: RequestOptions,
+): Promise<VideoStream> {
+  return api.get<VideoStream>(
+    `/v1/lms/courses/${seg(courseId)}/steps/${seg(stepId)}/blocks/${seg(blockId)}/video`,
+    opts,
+  )
+}
+export const getLmsStepVideoQuery = (courseId: string, stepId: string, blockId: string) =>
+  queryOptions({
+    queryKey: keys.lms.video(courseId, stepId, blockId),
+    queryFn: ({ signal }) => getLmsStepVideo(courseId, stepId, blockId, { signal }),
+  })
+
+/** GET /v1/lms/courses/{id}/preview/steps/{step_id}/blocks/{block_id}/video — course:view_drafts; stream URL of a draft. */
+export function getLmsPreviewStepVideo(
+  courseId: string,
+  stepId: string,
+  blockId: string,
+  opts?: RequestOptions,
+): Promise<VideoStream> {
+  return api.get<VideoStream>(
+    `/v1/lms/courses/${seg(courseId)}/preview/steps/${seg(stepId)}/blocks/${seg(blockId)}/video`,
+    opts,
+  )
+}
+export const getLmsPreviewStepVideoQuery = (courseId: string, stepId: string, blockId: string) =>
+  queryOptions({
+    queryKey: keys.lms.previewVideo(courseId, stepId, blockId),
+    queryFn: ({ signal }) => getLmsPreviewStepVideo(courseId, stepId, blockId, { signal }),
   })
 
 /** POST /v1/lms/steps/{step_id}/viewed — enrolled. */
@@ -141,7 +184,10 @@ export function getLmsAttempt(id: string, opts?: RequestOptions): Promise<Attemp
   return api.get<AttemptReview>(`/v1/lms/attempts/${seg(id)}`, opts)
 }
 export const getLmsAttemptQuery = (id: string) =>
-  queryOptions({ queryKey: keys.lms.attempt(id), queryFn: ({ signal }) => getLmsAttempt(id, { signal }) })
+  queryOptions({
+    queryKey: keys.lms.attempt(id),
+    queryFn: ({ signal }) => getLmsAttempt(id, { signal }),
+  })
 
 /** POST /v1/lms/attempts/{id}/override — course:review. */
 export function postLmsAttemptOverride(

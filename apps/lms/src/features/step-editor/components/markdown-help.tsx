@@ -7,7 +7,11 @@ import { EDITOR_SHORTCUTS } from "../utils/editor-shortcuts"
 import { shortcutLabel } from "../utils/shortcut-label"
 
 /** The Markdown an author can type, each with how students see it (rendered by the same `Markdown`). */
-const EXAMPLES: { key: string; source: (word: string) => string; rendered?: boolean }[] = [
+const EXAMPLES: {
+  key: string
+  source: (word: string) => string
+  rendered?: boolean
+}[] = [
   { key: "bold", source: (word) => `**${word}**` },
   { key: "italic", source: (word) => `*${word}*` },
   { key: "underline", source: (word) => `<u>${word}</u>` },

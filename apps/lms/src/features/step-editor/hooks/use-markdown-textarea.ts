@@ -54,7 +54,11 @@ export function useMarkdownTextarea(
   const read = useCallback((): TextState => {
     const textarea = ref.current
     if (!textarea) return { text: value, start: value.length, end: value.length }
-    return { text: textarea.value, start: textarea.selectionStart, end: textarea.selectionEnd }
+    return {
+      text: textarea.value,
+      start: textarea.selectionStart,
+      end: textarea.selectionEnd,
+    }
   }, [ref, value])
 
   /** Writes a transform result into the textarea and selects what it says. */

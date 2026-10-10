@@ -16,7 +16,11 @@ export function BlockList({
   content,
   keyOf,
   edit,
+  courseId,
+  stepId,
 }: {
+  courseId?: string
+  stepId?: string
   content: StepContent
   keyOf: (id: string) => string
   edit: (update: (content: StepContent) => StepContent) => void
@@ -52,7 +56,9 @@ export function BlockList({
                 label={t("markdownLabel", { number: index + 1 })}
               />
             ) : null}
-            {block.type === "video" ? <VideoBlockEditor block={block} onChange={replace} /> : null}
+            {block.type === "video" ? (
+              <VideoBlockEditor block={block} onChange={replace} courseId={courseId} stepId={stepId} />
+            ) : null}
             {block.type === "test" ? <TestBlockEditor block={block} keyOf={keyOf} onChange={replace} /> : null}
             {block.type === "flashcards" ? (
               <FlashcardsBlockEditor block={block} keyOf={keyOf} onChange={replace} />
@@ -69,7 +75,10 @@ export function BlockList({
         destructive
         onConfirm={() => {
           if (removing)
-            edit((current) => ({ ...current, blocks: current.blocks.filter((block) => block.id !== removing.id) }))
+            edit((current) => ({
+              ...current,
+              blocks: current.blocks.filter((block) => block.id !== removing.id),
+            }))
           setRemoving(null)
         }}
       />

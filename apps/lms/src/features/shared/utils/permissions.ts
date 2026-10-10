@@ -7,11 +7,19 @@ export const ALL_PERMISSIONS: readonly CoursePermission[] = ["edit", "publish", 
 /** Role presets of the staff form (LMS-5): the role text and the permissions it fills in. */
 export const ROLE_PRESETS = [
   { key: "owner", role: "Owner", permissions: ALL_PERMISSIONS },
-  { key: "teacher", role: "Teacher", permissions: ["edit", "publish", "review", "view_drafts"] },
+  {
+    key: "teacher",
+    role: "Teacher",
+    permissions: ["edit", "publish", "review", "view_drafts"],
+  },
   { key: "reviewer", role: "Reviewer", permissions: ["review"] },
   { key: "support", role: "Support", permissions: ["review"] },
   { key: "tester", role: "Tester", permissions: ["view_drafts"] },
-] as const satisfies readonly { key: string; role: string; permissions: readonly CoursePermission[] }[]
+] as const satisfies readonly {
+  key: string
+  role: string
+  permissions: readonly CoursePermission[]
+}[]
 
 /** LMS admins can do everything; other users have the permissions of their staff row. */
 export function resolvePermissions(

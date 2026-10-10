@@ -24,7 +24,11 @@ export function mathAt(state: TextState, index: MarkdownIndex = indexMarkdown(st
 export function formulaAt(state: TextState, display: boolean): Formula & { editing: boolean } {
   const span = mathAt(state)
   if (span) return { latex: span.value, display: span.display, editing: true }
-  return { latex: state.text.slice(state.start, state.end).trim(), display, editing: false }
+  return {
+    latex: state.text.slice(state.start, state.end).trim(),
+    display,
+    editing: false,
+  }
 }
 
 /**
@@ -39,7 +43,11 @@ export function insertFormula(state: TextState, formula: Formula): TextState | n
   if (latex === "") return null
   const index = indexMarkdown(state.text)
   const span = mathAt(state, index)
-  const target: Target = span ?? { start: state.start, end: state.end, block: false }
+  const target: Target = span ?? {
+    start: state.start,
+    end: state.end,
+    block: false,
+  }
   const inSentence = span !== null && !span.block
   const result =
     formula.display && !inSentence
@@ -88,7 +96,11 @@ function writeBlock(text: string, target: Target, latex: string): TextState {
   const caret = lineStart + lines.join("\n").length
   if (tail.trim() !== "") lines.push(prefix + tail.trimStart())
   const written = lines.join("\n")
-  return { text: text.slice(0, lineStart) + written + text.slice(lineEnd), start: caret, end: caret }
+  return {
+    text: text.slice(0, lineStart) + written + text.slice(lineEnd),
+    start: caret,
+    end: caret,
+  }
 }
 
 /** The formula that ends at the caret must be exactly the one written. */

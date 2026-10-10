@@ -2,14 +2,18 @@
 
 import type { PageParams } from "./common"
 
-export type UsedBy = { kind: "link" | "lesson" | "chat"; id: string; label: string }
+export type UsedBy = {
+  kind: "link" | "lesson" | "chat"
+  id: string
+  label: string
+}
 
 export type FileItem = {
   id: string
   name: string
   content_type: string
   byte_size: number
-  purpose: "ai_upload" | "link" | "mail" | "library_book" | "library_cover" | "library_material"
+  purpose: "ai_upload" | "link" | "mail" | "library_book" | "library_cover" | "library_material" | "lms_video"
   status: "pending" | "processing" | "ready" | "rejected" | "deleted"
   reject_reason: string | null
   text_bytes: number | null
@@ -20,7 +24,13 @@ export type FileItem = {
 }
 
 /** Purposes a client may upload for. */
-export type FileUploadPurpose = "ai_upload" | "link" | "library_book" | "library_cover" | "library_material"
+export type FileUploadPurpose =
+  | "ai_upload"
+  | "link"
+  | "library_book"
+  | "library_cover"
+  | "library_material"
+  | "lms_video"
 
 export type FileCreateBody = {
   name: string
@@ -31,7 +41,11 @@ export type FileCreateBody = {
 }
 
 /** Presigned upload target: `PUT` the bytes to `url` with exactly these `headers`. */
-export type FileUploadTarget = { url: string; method: "PUT"; headers: Record<string, string> }
+export type FileUploadTarget = {
+  url: string
+  method: "PUT"
+  headers: Record<string, string>
+}
 export type FileCreateResponse = { file: FileItem; upload: FileUploadTarget }
 
 export type FileUrlParams = { disposition?: "inline" | "attachment" }

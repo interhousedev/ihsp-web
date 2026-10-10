@@ -25,7 +25,10 @@ export function stepHeading(
 
 function StepEditorFrame({ data, autosaveMs }: { data: StepDraft; autosaveMs?: number }) {
   const t = useT("stepEditor")
-  const course = useQuery({ ...getLmsCourseDraftQuery(data.course_id), retry: false })
+  const course = useQuery({
+    ...getLmsCourseDraftQuery(data.course_id),
+    retry: false,
+  })
   const title = stepHeading(data, course.data?.outline, (number) => t("stepNumber", { number }), t("untitled"))
   return (
     <EditorFrame courseId={data.course_id} current="outline" title={title} requires={["edit", "view_drafts"]}>
@@ -39,7 +42,11 @@ function StepEditorFrame({ data, autosaveMs }: { data: StepDraft; autosaveMs?: n
 /** `/edit/step/?id=`: loads the step draft, then checks the course permissions and shows the editor. */
 export function StepEditorPage({ stepId, autosaveMs }: { stepId: string; autosaveMs?: number }) {
   const t = useT("stepEditor")
-  const draft = useQuery({ ...getLmsStepDraftQuery(stepId), staleTime: 0, gcTime: 0 })
+  const draft = useQuery({
+    ...getLmsStepDraftQuery(stepId),
+    staleTime: 0,
+    gcTime: 0,
+  })
   return (
     <QueryState query={draft} rows={4}>
       {(data) => <StepEditorFrame data={data} autosaveMs={autosaveMs} />}

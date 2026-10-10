@@ -112,28 +112,56 @@ function record(node: Nodes, index: MarkdownIndex): void {
   if (format) index.formats.push({ format, ...spanOf(node, index.text) })
   switch (node.type) {
     case "text":
-      index.leaves.push({ start: startOf(node), end: endOf(node), value: node.value, atomic: false })
+      index.leaves.push({
+        start: startOf(node),
+        end: endOf(node),
+        value: node.value,
+        atomic: false,
+      })
       break
     case "inlineCode": {
       const span = codeSpan(index.text, startOf(node), endOf(node))
-      index.leaves.push({ start: span.contentStart, end: span.contentEnd, value: node.value, atomic: true })
+      index.leaves.push({
+        start: span.contentStart,
+        end: span.contentEnd,
+        value: node.value,
+        atomic: true,
+      })
       break
     }
     case "paragraph":
     case "heading":
     case "tableCell":
-      index.containers.push({ type: node.type, children: node.children, ...spanOf(node, index.text) })
+      index.containers.push({
+        type: node.type,
+        children: node.children,
+        ...spanOf(node, index.text),
+      })
       break
     case "link":
-      index.links.push({ url: node.url, inline: index.text[startOf(node)] === "[", ...spanOf(node, index.text) })
+      index.links.push({
+        url: node.url,
+        inline: index.text[startOf(node)] === "[",
+        ...spanOf(node, index.text),
+      })
       break
     case "inlineMath":
       index.math.push(mathSpan(node, isDisplayInlineMath(node, index.text), false))
-      index.leaves.push({ start: startOf(node), end: endOf(node), value: node.value, atomic: true })
+      index.leaves.push({
+        start: startOf(node),
+        end: endOf(node),
+        value: node.value,
+        atomic: true,
+      })
       break
     case "math":
       index.math.push(mathSpan(node, true, true))
-      index.rawBlocks.push({ kind: "math", start: startOf(node), end: endOf(node), fenced: true })
+      index.rawBlocks.push({
+        kind: "math",
+        start: startOf(node),
+        end: endOf(node),
+        fenced: true,
+      })
       break
     case "code":
       index.rawBlocks.push({
@@ -146,8 +174,19 @@ function record(node: Nodes, index: MarkdownIndex): void {
     case "html":
       // Inline HTML other than paired `<u>` tags is shown as text; an HTML block is left alone like code.
       if (isInline(node, index.text)) {
-        index.leaves.push({ start: startOf(node), end: endOf(node), value: node.value, atomic: true })
-      } else index.rawBlocks.push({ kind: "html", start: startOf(node), end: endOf(node), fenced: false })
+        index.leaves.push({
+          start: startOf(node),
+          end: endOf(node),
+          value: node.value,
+          atomic: true,
+        })
+      } else
+        index.rawBlocks.push({
+          kind: "html",
+          start: startOf(node),
+          end: endOf(node),
+          fenced: false,
+        })
       break
     default:
       break
@@ -159,7 +198,13 @@ function sourceOf(node: Nodes, text: string): string {
 }
 
 function mathSpan(node: Nodes & { value: string }, display: boolean, block: boolean): MathSpan {
-  return { start: startOf(node), end: endOf(node), value: node.value, display, block }
+  return {
+    start: startOf(node),
+    end: endOf(node),
+    value: node.value,
+    display,
+    block,
+  }
 }
 
 /** Inline HTML sits inside a paragraph; an HTML block starts its own line. */
@@ -177,7 +222,13 @@ function spanOf(node: Nodes, text: string): Span {
   const children = "children" in node ? node.children : []
   const first = children[0]
   const last = children.at(-1)
-  if (first && last) return { start, end, contentStart: startOf(first), contentEnd: endOf(last) }
+  if (first && last)
+    return {
+      start,
+      end,
+      contentStart: startOf(first),
+      contentEnd: endOf(last),
+    }
   if (node.type === "underline") {
     // `<u></u>`: the content is the empty gap between the tags.
     const gap = text.indexOf(">", start) + 1

@@ -28,7 +28,11 @@ const TEMPLATES = [
   { name: "sum", latex: "\\sum_{i=1}^{n} a_i", select: "a_i" },
   { name: "integral", latex: "\\int_{a}^{b} f(x)\\,dx", select: "f(x)" },
   { name: "limit", latex: "\\lim_{x \\to 0} f(x)", select: "f(x)" },
-  { name: "matrix", latex: "\\begin{pmatrix} a & b \\\\ c & d \\end{pmatrix}", select: "a" },
+  {
+    name: "matrix",
+    latex: "\\begin{pmatrix} a & b \\\\ c & d \\end{pmatrix}",
+    select: "a",
+  },
 ] as const
 
 /**
@@ -132,7 +136,10 @@ export function EquationDialog({
                   type="button"
                   variant="outline"
                   onClick={() => insertTemplate(template)}
-                  aria-label={t("insertTemplate", { name: t(template.name), latex: template.latex })}
+                  aria-label={t("insertTemplate", {
+                    name: t(template.name),
+                    latex: template.latex,
+                  })}
                   title={template.latex}
                   className="h-auto min-h-11 flex-col gap-0.5 py-1.5 md:pointer-fine:min-h-8"
                 >

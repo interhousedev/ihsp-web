@@ -80,7 +80,10 @@ export function MarkdownEditor({
   /** The selection on which Escape hid the floating toolbar; a new selection shows it again. */
   const [dismissedAt, setDismissedAt] = useState<string | null>(null)
   const [dialog, setDialog] = useState<OpenDialog | null>(null)
-  const [floatingAt, setFloatingAt] = useState<{ top: number; left: number } | null>(null)
+  const [floatingAt, setFloatingAt] = useState<{
+    top: number
+    left: number
+  } | null>(null)
   const textBox = useRef<HTMLDivElement>(null)
   const floating = useRef<HTMLDivElement>(null)
   const blockBar = useRef<HTMLDivElement>(null)
@@ -170,12 +173,21 @@ export function MarkdownEditor({
 
   function openEquation(display: boolean) {
     const draft = formulaAt(read(), display)
-    setDialog({ kind: "equation", formula: { latex: draft.latex, display: draft.display }, editing: draft.editing })
+    setDialog({
+      kind: "equation",
+      formula: { latex: draft.latex, display: draft.display },
+      editing: draft.editing,
+    })
   }
 
   function openLink() {
     const draft = linkDraftAt(read())
-    setDialog({ kind: "link", text: draft.text, url: draft.url, editing: draft.editing })
+    setDialog({
+      kind: "link",
+      text: draft.text,
+      url: draft.url,
+      editing: draft.editing,
+    })
   }
 
   /** Applies an edit once the dialog has closed and the text has its focus back. */
@@ -405,5 +417,9 @@ function pasteBlocks(state: TextState, markdown: string): TextState {
   const after = multiline && lineAfter.trim() !== "" ? "\n\n" : ""
   const inserted = before + markdown + after
   const caret = start + before.length + markdown.length
-  return { text: text.slice(0, start) + inserted + text.slice(end), start: caret, end: caret }
+  return {
+    text: text.slice(0, start) + inserted + text.slice(end),
+    start: caret,
+    end: caret,
+  }
 }

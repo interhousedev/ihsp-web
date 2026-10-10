@@ -28,7 +28,11 @@ export function continueList(state: TextState): TextState | null {
   }
   const insert = `\n${line.quote}${line.indent}${nextMarker(line.marker, line.rest)}`
   const caret = start + insert.length
-  return { text: text.slice(0, start) + insert + text.slice(end), start: caret, end: caret }
+  return {
+    text: text.slice(0, start) + insert + text.slice(end),
+    start: caret,
+    end: caret,
+  }
 }
 
 function nextMarker(marker: string, rest: string): string {

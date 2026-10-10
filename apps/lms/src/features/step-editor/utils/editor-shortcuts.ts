@@ -4,7 +4,10 @@ import type { Shortcut } from "./shortcut-label"
 export type ShortcutAction = InlineFormat | "link" | "equation"
 
 /** The editor's keyboard shortcuts (⌘ on Apple devices, Ctrl elsewhere). */
-export const EDITOR_SHORTCUTS: readonly { action: ShortcutAction; shortcut: Shortcut }[] = [
+export const EDITOR_SHORTCUTS: readonly {
+  action: ShortcutAction
+  shortcut: Shortcut
+}[] = [
   { action: "bold", shortcut: { key: "b" } },
   { action: "italic", shortcut: { key: "i" } },
   { action: "underline", shortcut: { key: "u" } },

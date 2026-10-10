@@ -21,7 +21,15 @@ const MARKERS: Record<Exclude<InlineFormat, "code">, readonly [string, string]> 
 
 type Marked = InlineFormat | "link"
 
-const BITS: Record<Marked, number> = { bold: 1, italic: 2, underline: 4, strike: 8, code: 16, spoiler: 32, link: 64 }
+const BITS: Record<Marked, number> = {
+  bold: 1,
+  italic: 2,
+  underline: 4,
+  strike: 8,
+  code: 16,
+  spoiler: 32,
+  link: 64,
+}
 const MARKED: readonly Marked[] = [...INLINE_FORMATS, "link"]
 
 interface Range {
@@ -270,7 +278,10 @@ function collectSegments(children: PhrasingContent[], range: Range, widen: boole
     current = null
     collectSegments(
       inner,
-      { from: Math.max(range.from, startOf(first)), to: Math.min(range.to, endOf(last)) },
+      {
+        from: Math.max(range.from, startOf(first)),
+        to: Math.min(range.to, endOf(last)),
+      },
       widen,
       out,
     )
@@ -332,7 +343,15 @@ function visibleText(index: MarkdownIndex): string {
 
 /** How many visible characters each format covers in `[from, to)`. */
 function countFormats(index: MarkdownIndex, mask: Uint8Array, from: number, to: number): Record<Marked, number> {
-  const counts = { bold: 0, italic: 0, underline: 0, strike: 0, code: 0, spoiler: 0, link: 0 }
+  const counts = {
+    bold: 0,
+    italic: 0,
+    underline: 0,
+    strike: 0,
+    code: 0,
+    spoiler: 0,
+    link: 0,
+  }
   for (const offset of visibleOffsets(index, from, to)) {
     for (const format of MARKED) if (((mask[offset] ?? 0) & BITS[format]) !== 0) counts[format]++
   }
