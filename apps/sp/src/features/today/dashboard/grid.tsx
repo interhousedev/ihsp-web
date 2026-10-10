@@ -2,9 +2,8 @@
 
 import { useT } from "@ihsp/i18n"
 import { Icons } from "@ihsp/ui"
-import { useEffect, useState } from "react"
+import { type CSSProperties, useEffect, useState } from "react"
 import { inOrder, spanOf, type Widget } from "./model"
-import { ROW_HEIGHT } from "./widget-frame"
 import { WIDGET_VIEWS } from "./widgets"
 
 /** Arrow keys on a selected tile move it one place. */
@@ -16,8 +15,8 @@ const KEY_STEP: Record<string, number> = {
 }
 
 /**
- * The widgets on a 2-column (phone) or 4-column (desktop) grid. In edit mode a tile is selected with a click or tap and
- * moved by dragging (mouse, pen or finger: pointer events) or with the arrow keys.
+ * The widgets in one column (phone) or on a 4-column grid (desktop); each row is as tall as its content. In edit mode a
+ * tile is selected with a click or tap and moved by dragging (mouse, pen or finger: pointer events) or with the arrow keys.
  */
 export function DashboardGrid({
   widgets,
@@ -58,8 +57,7 @@ export function DashboardGrid({
 
   return (
     <div
-      className="grid grid-flow-dense grid-cols-2 gap-3 md:grid-cols-4"
-      style={{ gridAutoRows: ROW_HEIGHT }}
+      className="grid auto-rows-min grid-flow-dense grid-cols-1 items-start gap-3 md:grid-cols-4"
       data-testid="dashboard-grid"
     >
       {ordered.map((widget, index) => {
@@ -70,8 +68,8 @@ export function DashboardGrid({
           <div
             key={widget.id}
             data-tile-id={widget.id}
-            className={`relative min-w-0 ${dragId === widget.id ? "opacity-60" : ""}`}
-            style={{ gridColumn: `span ${cols}`, gridRow: `span ${rows}` }}
+            className={`relative min-w-0 md:[grid-column:span_var(--cols)] md:[grid-row:span_var(--rows)] ${dragId === widget.id ? "opacity-60" : ""}`}
+            style={{ "--cols": cols, "--rows": rows } as CSSProperties}
           >
             <View widget={widget} editing={editing} />
             {editing ? (

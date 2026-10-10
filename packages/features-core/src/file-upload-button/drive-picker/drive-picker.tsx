@@ -223,7 +223,8 @@ export function DrivePicker({
           />
         </div>
 
-        <div className="grid min-h-0 flex-1 gap-3 md:grid-cols-[1fr_16rem]">
+        {/* Phones: the list takes the room left and the preview sits below it; desktop: a column beside the list. */}
+        <div className="grid min-h-0 flex-1 grid-rows-[minmax(0,1fr)_auto] gap-3 md:grid-cols-[1fr_16rem] md:grid-rows-[minmax(0,1fr)]">
           <div
             className={cn(
               "relative min-h-0 overflow-y-auto rounded-lg border p-2",
@@ -318,7 +319,7 @@ export function DrivePicker({
               ) : null}
             </div>
           </div>
-          <aside className="hidden min-h-0 overflow-y-auto md:block" aria-label={t("preview")}>
+          <aside className="max-h-[40dvh] min-h-0 overflow-y-auto md:max-h-none" aria-label={t("preview")}>
             {shown ? <FilePreview file={shown} /> : <p className="text-muted-foreground text-sm">{t("noPreview")}</p>}
           </aside>
         </div>

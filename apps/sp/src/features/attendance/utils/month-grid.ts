@@ -29,3 +29,10 @@ export function monthGrid(month: string): (string | null)[][] {
 export function firstOfMonth(date: string): string {
   return `${monthOf(date)}-01`
 }
+
+/** The first and the last day of a month: `2026-10` gives 2026-10-01 and 2026-10-31. */
+export function monthRange(month: string): { from: string; to: string } {
+  const [year = 1970, mon = 1] = month.split("-").map(Number)
+  const length = new Date(Date.UTC(year, mon, 0)).getUTCDate()
+  return { from: `${month}-01`, to: `${month}-${String(length).padStart(2, "0")}` }
+}

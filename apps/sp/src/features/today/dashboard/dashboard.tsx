@@ -7,7 +7,16 @@ import { useCallback, useState } from "react"
 import { AddWidget } from "./editor/add-widget"
 import { WidgetEditor } from "./editor/widget-editor"
 import { DashboardGrid } from "./grid"
-import { addWidget, colorWidget, inOrder, moveWidget, removeWidget, resizeWidget, type Widget } from "./model"
+import {
+  addWidget,
+  colorWidget,
+  inOrder,
+  moveWidget,
+  removeWidget,
+  resizeWidget,
+  shownWidgets,
+  type Widget,
+} from "./model"
 import { useDashboard, useSaveDashboard } from "./use-dashboard"
 
 /**
@@ -31,7 +40,7 @@ export function Dashboard() {
 
   if (!query.data) return null
   const editing = draft !== null
-  const widgets = draft ?? query.data.widgets
+  const widgets = draft ?? shownWidgets(query.data.widgets)
   const selected = draft?.find((widget) => widget.id === selectedId) ?? null
 
   const finish = () => {
@@ -77,7 +86,12 @@ export function Dashboard() {
               </Button>
             </>
           ) : (
-            <Button type="button" variant="outline" size="sm" onClick={() => setDraft(inOrder(query.data.widgets))}>
+            <Button
+              type="button"
+              variant="outline"
+              size="sm"
+              onClick={() => setDraft(inOrder(shownWidgets(query.data.widgets)))}
+            >
               <Icons.edit aria-hidden />
               {t("edit")}
             </Button>

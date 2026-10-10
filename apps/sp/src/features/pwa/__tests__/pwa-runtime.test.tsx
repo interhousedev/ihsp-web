@@ -1,6 +1,6 @@
 /** The background work of the installed app: worker messages, the session bridge and the offline start. */
 import { afterEach, beforeEach, describe, expect, mock, test } from "bun:test"
-import { useAuthStore } from "@ihsp/auth"
+import { setSessionHint, useAuthStore } from "@ihsp/auth"
 import { apiUrl, server, userMe } from "@ihsp/test-utils"
 import { act, waitFor } from "@testing-library/react"
 import { HttpResponse, http } from "msw"
@@ -139,6 +139,8 @@ describe("starting without the network", () => {
   })
 
   test("when the network comes back the session is refreshed with the cookie", async () => {
+    // The remembered user signed in on this browser before, so the session hint is there.
+    setSessionHint()
     fakeServiceWorker()
     startOffline()
     await waitFor(() => expect(useAuthStore.getState().token?.access_token).toBe(OFFLINE_TOKEN))

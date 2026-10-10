@@ -1,12 +1,15 @@
 import type { NotebookItem } from "@ihsp/api"
 
-/** The three folders notebooks are grouped into: subject (and other automatic) notebooks, LMS courses, the user's own. */
+/**
+ * The three folders notebooks are grouped into: subject (and other automatic) notebooks, LMS course notebooks (the
+ * course's own and each student's copy of it), the user's own.
+ */
 export type NotebookFolder = "subject" | "course" | "mine"
 
 export const NOTEBOOK_FOLDERS: readonly NotebookFolder[] = ["subject", "course", "mine"]
 
 export function notebookFolderOf(notebook: Pick<NotebookItem, "origin">): NotebookFolder {
-  if (notebook.origin === "course") return "course"
+  if (notebook.origin === "course" || notebook.origin === "course_student") return "course"
   if (notebook.origin === "subject_auto" || notebook.origin === "lesson_auto") return "subject"
   return "mine"
 }

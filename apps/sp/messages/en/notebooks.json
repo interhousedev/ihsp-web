@@ -7,9 +7,9 @@
       "empty": "No notebooks yet.",
       "folders": {
         "all": "All",
-        "subject": "Subject notebooks",
-        "course": "Course notebooks",
-        "mine": "My notebooks"
+        "subject": "Subject Notebooks",
+        "course": "LMS Notebooks",
+        "mine": "My Notebooks"
       },
       "showMore": "Show more",
       "sources": "{count, plural, one {# source} other {# sources}}",

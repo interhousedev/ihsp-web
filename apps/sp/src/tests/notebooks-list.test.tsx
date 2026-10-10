@@ -144,7 +144,9 @@ describe("new notebook", () => {
     )
     const { user } = await renderList()
 
-    const tile = within(screen.getByRole("list")).getByRole("button", { name: "New notebook" })
+    const tile = within(screen.getByRole("list", { name: "My Notebooks" })).getByRole("button", {
+      name: "New notebook",
+    })
     await user.click(tile)
 
     await waitFor(() => expect(testRouter.push).toHaveBeenCalledWith("/notebooks/view/?id=nb-new&add=1"))
@@ -165,7 +167,9 @@ describe("new notebook", () => {
     server.use(http.post(apiUrl("/v1/notebooks"), () => problem(500, "server/error", "Boom")))
     const { user } = await renderList()
 
-    await user.click(within(screen.getByRole("list")).getByRole("button", { name: "New notebook" }))
+    await user.click(
+      within(screen.getByRole("list", { name: "My Notebooks" })).getByRole("button", { name: "New notebook" }),
+    )
 
     expect((await screen.findAllByRole("alert")).length).toBeGreaterThan(0)
     expect(testRouter.push).not.toHaveBeenCalled()
@@ -312,28 +316,39 @@ describe("card menu", () => {
 })
 
 describe("notebooks list folders", () => {
-  test("30 subject notebooks: filter chips show counts and filter the grid", async () => {
+  test("30 subject notebooks: three folders with their counts; the subject folder starts collapsed and opens", async () => {
     const base = (await import("@ihsp/test-utils")).notebookItems[0]
-    const make = (n: number, origin: "subject_auto" | "course" | "manual", label: string) =>
+    const make = (n: number, origin: "subject_auto" | "course" | "course_student" | "manual", label: string) =>
       Array.from({ length: n }, (_, i) => ({
         ...base,
-        id: `0000000${origin === "subject_auto" ? 1 : origin === "course" ? 2 : 3}-0000-4000-8000-${String(i).padStart(12, "0")}`,
+        id: `0000000${{ subject_auto: 1, course: 2, manual: 3, course_student: 4 }[origin]}-0000-4000-8000-${String(i).padStart(12, "0")}`,
         title: `${label} ${i + 1}`,
         origin,
         pinned: false,
       }))
-    const items = [...make(30, "subject_auto", "Subj"), ...make(3, "course", "Crs"), ...make(2, "manual", "Own")]
+    const items = [
+      ...make(30, "subject_auto", "Subj"),
+      ...make(2, "course", "Crs"),
+      ...make(1, "course_student", "Stu"),
+      ...make(2, "manual", "Own"),
+    ]
     server.use(http.get(apiUrl("/v1/notebooks"), () => HttpResponse.json({ items, next_cursor: null })))
     const { user } = renderNotebooksSp(<NotebooksPage />, { route: PATH })
-    await screen.findByRole("link", { name: /Subj 1(?!\d)/ })
+    await screen.findByRole("heading", { name: /Subject Notebooks\s*30/ })
 
-    expect(screen.getByRole("button", { name: "All (35)" })).toBeInTheDocument()
-    expect(screen.getByRole("button", { name: "Subject notebooks (30)" })).toBeInTheDocument()
-    await user.click(screen.getByRole("button", { name: "Course notebooks (3)" }))
-    expect(screen.getAllByRole("link", { name: /Crs 1(?!\d)/ }).length).toBeGreaterThan(0)
-    expect(screen.queryByRole("link", { name: /Subj 1(?!\d)/ })).toBeNull()
-    await user.click(screen.getByRole("button", { name: "My notebooks (2)" }))
-    expect(screen.getAllByRole("link", { name: /Own 2(?!\d)/ }).length).toBeGreaterThan(0)
-    expect(screen.queryByRole("link", { name: /Crs 1(?!\d)/ })).toBeNull()
+    expect(screen.getByRole("heading", { name: /Subject Notebooks\s*30/ })).toBeInTheDocument()
+    expect(screen.getByRole("heading", { name: /LMS Notebooks\s*3/ })).toBeInTheDocument()
+    expect(screen.getByRole("heading", { name: /My Notebooks\s*2/ })).toBeInTheDocument()
+    const subject = screen.getByRole("button", { name: /Subject Notebooks/ })
+    expect(subject).toHaveAttribute("aria-expanded", "false")
+    expect(screen.queryByRole("link", { name: /Subj \d+/ })).toBeNull()
+    expect(screen.getByRole("button", { name: /LMS Notebooks/ })).toHaveAttribute("aria-expanded", "true")
+    expect(screen.getByRole("button", { name: /My Notebooks/ })).toHaveAttribute("aria-expanded", "true")
+
+    await user.click(subject)
+
+    expect(subject).toHaveAttribute("aria-expanded", "true")
+    expect(screen.getAllByRole("link", { name: /Subj \d+/ })).toHaveLength(30)
+    expect(screen.getAllByRole("link", { name: /Stu 1(?!\d)/ })).toHaveLength(1)
   })
 })

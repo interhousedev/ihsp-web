@@ -2,11 +2,12 @@
 import { afterEach, beforeEach, describe, expect, test } from "bun:test"
 import { apiUrl, dashboardLayout, server } from "@ihsp/test-utils"
 import type { DashboardWidget, DashboardWidgetKind } from "@ihsp/api"
-import { screen, within } from "@testing-library/react"
+import { screen, waitFor, within } from "@testing-library/react"
 import { HttpResponse, http } from "msw"
 import { Dashboard } from "../features/today/dashboard/dashboard"
 import {
   LAYOUT_MARK,
+  RETIRED_KINDS,
   TODAY_KINDS,
   WIDGET_GROUPS,
   WIDGET_KINDS,
@@ -79,6 +80,25 @@ async function waitForTile(kind: string): Promise<HTMLElement> {
   throw new Error(`no ${kind} tile`)
 }
 
+describe("needs attention", () => {
+  test("a student does not see the EMIS sync failure, the other alerts stay", async () => {
+    server.use(
+      http.get(apiUrl("/v1/me/alerts"), () =>
+        HttpResponse.json([
+          { kind: "sync_failed", params: {}, action_url: "/grades/" },
+          { kind: "no_subgroup", params: {}, action_url: "/profile/" },
+        ]),
+      ),
+    )
+    layoutOf(widget("alerts", "2x1"))
+    renderSp(<Dashboard />)
+
+    const tile = await waitForTile("alerts")
+    await within(tile).findByText("Subgroup not set")
+    expect(within(tile).queryByText("EMIS sync failed")).toBeNull()
+  })
+})
+
 describe("the Today layout", () => {
   test("a saved layout from before gets the new widgets once", async () => {
     renderSp(<Dashboard />)
@@ -107,9 +127,10 @@ describe("the Today layout", () => {
     expect(withTodayWidgets([])).toEqual([])
   })
 
-  test("every kind has sizes, a catalogue group and no widget kind is in two groups", () => {
+  test("every kind has sizes, a catalogue group (the retired ones excepted) and no kind is in two groups", () => {
     const grouped = WIDGET_GROUPS.flatMap((g) => g.kinds)
-    expect([...grouped].sort()).toEqual([...WIDGET_KINDS].sort())
+    expect(grouped.toSorted()).toEqual(WIDGET_KINDS.filter((kind) => !RETIRED_KINDS.includes(kind)).toSorted())
+    expect(grouped.some((kind) => RETIRED_KINDS.includes(kind))).toBe(false)
     expect(new Set(grouped).size).toBe(grouped.length)
     expect(WIDGET_GROUPS.map((g) => g.id)).toEqual(["study", "control", "news", "tools"])
   })
@@ -124,10 +145,32 @@ describe("the Today layout", () => {
       expect(within(catalogue).getByRole("heading", { name })).toBeInTheDocument()
   })
 
-  test("the grid is 2 columns on a phone and 4 on a desktop", async () => {
+  test("the grid is one column on a phone and 4 on a desktop, with rows as tall as their content", async () => {
     renderSp(<Dashboard />)
     const grid = await screen.findByTestId("dashboard-grid")
-    expect(grid.className).toContain("grid-cols-2")
+    expect(grid.className).toContain("grid-cols-1")
     expect(grid.className).toContain("md:grid-cols-4")
+    expect(grid.className).toContain("auto-rows-min")
+    expect(grid.className).toContain("items-start")
+  })
+
+  test("a retired kind left in a saved layout is not shown, and an edit drops it", async () => {
+    const bodies: { widgets: { kind: DashboardWidgetKind }[] }[] = []
+    server.use(
+      http.put(apiUrl("/v1/me/dashboard"), async ({ request }) => {
+        const body = (await request.json()) as { version: number; widgets: { kind: DashboardWidgetKind }[] }
+        bodies.push(body)
+        return HttpResponse.json({ version: body.version + 1, widgets: body.widgets })
+      }),
+    )
+    const { user } = renderSp(<Dashboard />)
+    await waitForTile("next_lesson")
+    for (const kind of RETIRED_KINDS) expect(document.querySelector(`[data-widget-kind="${kind}"]`)).toBeNull()
+
+    await user.click(await screen.findByRole("button", { name: "Edit" }))
+    await user.click(screen.getByRole("button", { name: "Done" }))
+
+    await waitFor(() => expect(bodies).toHaveLength(1))
+    expect(bodies[0]?.widgets.some((w) => RETIRED_KINDS.includes(w.kind))).toBe(false)
   })
 })

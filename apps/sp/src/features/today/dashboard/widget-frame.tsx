@@ -4,9 +4,6 @@ import Link from "next/link"
 import type { CSSProperties, ReactNode } from "react"
 import type { Widget } from "./model"
 
-/** Row height of the grid; a 1x1 tile is a square on a phone. */
-export const ROW_HEIGHT = "7.5rem"
-
 /** The tile: its size in grid cells, its colour with a readable text colour, and a link to the page it summarises. */
 export function WidgetFrame({
   widget,

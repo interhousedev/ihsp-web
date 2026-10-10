@@ -86,6 +86,41 @@ describe("attendance page", () => {
     expect(requests[0]).toBe("")
   })
 
+  test("the calendar marks an absent day with a red dot and a late day with a dark orange dot", async () => {
+    server.use(
+      http.get(apiUrl("/v1/me/attendance"), () =>
+        HttpResponse.json({ ...studentAttendance, days: [{ date: "2026-10-06", absences: 1 }] }),
+      ),
+      http.get(apiUrl("/v1/me/timetable"), () =>
+        HttpResponse.json([
+          { id: "lesson-late", date: "2026-10-05" },
+          { id: "lesson-present", date: "2026-10-02" },
+        ]),
+      ),
+      http.get(apiUrl("/v1/me/lesson-results"), () =>
+        HttpResponse.json([
+          { lesson_id: "lesson-late", attendance: "late", mark: null },
+          { lesson_id: "lesson-present", attendance: "present", mark: null },
+        ]),
+      ),
+    )
+    renderSp(<AttendancePage />, { route: "/attendance/" })
+
+    const late = await waitFor(async () => {
+      const day = await screen.findByRole("button", { name: "5 October" })
+      if (!day.querySelector('[data-dot="late"]')) throw new Error("no late dot yet")
+      return day
+    })
+    expect(late.querySelector('[data-dot="late"]')).toHaveClass("bg-orange-700")
+    expect(late.querySelector('[data-dot="absent"]')).toBeNull()
+
+    const absent = screen.getByRole("button", { name: /^6 October: 1 absence$/ })
+    expect(absent.querySelector('[data-dot="absent"]')).toHaveClass("bg-red-800")
+    expect(absent.querySelector('[data-dot="late"]')).toBeNull()
+
+    expect(screen.getByRole("button", { name: "2 October" }).querySelector("[data-dot]")).toBeNull()
+  })
+
   test("a period without absences shows the friendly message", async () => {
     server.use(
       http.get(apiUrl("/v1/me/attendance"), () =>

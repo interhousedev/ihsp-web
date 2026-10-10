@@ -25,24 +25,26 @@ export const WIDGET_SIZES: Record<DashboardWidgetKind, readonly DashboardWidgetS
   get_started: ["2x1", "2x2"],
 }
 
-/** The catalogue groups (`today.dashboard.groups.<id>`) and the kinds in each. */
+/**
+ * Kinds that repeat a card Today keeps: Up next (next lesson), Schedule (today's lessons) and Marks (semester).
+ * They are not shown and not offered in the catalogue; a saved layout that still holds them is shown without them,
+ * and the next save drops them.
+ */
+export const RETIRED_KINDS: readonly DashboardWidgetKind[] = ["clock_next_lesson", "timetable", "marks"]
+
+/** The widgets Today shows: the saved ones minus the retired kinds. */
+export function shownWidgets(widgets: readonly Widget[]): Widget[] {
+  return widgets.filter((widget) => !RETIRED_KINDS.includes(widget.kind))
+}
+
+/** The catalogue groups (`today.dashboard.groups.<id>`) and the kinds in each; retired kinds are not listed. */
 export const WIDGET_GROUPS: readonly {
   id: "study" | "control" | "news" | "tools"
   kinds: readonly DashboardWidgetKind[]
 }[] = [
   {
     id: "study",
-    kinds: [
-      "next_lesson",
-      "today_lessons",
-      "timetable",
-      "clock_next_lesson",
-      "homework",
-      "semester_summary",
-      "marks",
-      "new_marks",
-      "attendance",
-    ],
+    kinds: ["next_lesson", "today_lessons", "homework", "semester_summary", "new_marks", "attendance"],
   },
   { id: "control", kinds: ["upcoming_controls", "exams", "alerts"] },
   { id: "news", kinds: ["announcements"] },

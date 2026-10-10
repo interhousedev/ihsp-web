@@ -5,25 +5,23 @@ import { useFormatters, useT } from "@ihsp/i18n"
 import { fileKindOf, formatFileSize } from "./file-kind"
 import { FileKindIcon, useInlineUrl } from "./file-visual"
 
-/** Preview pane: the image, the first page of a PDF or the video poster; metadata for everything else. */
+/**
+ * Preview pane of the picker: an image as a thumbnail; every other file (PDF, slides, sheets, video, text) as its type
+ * icon, with the name, size, type and date.
+ */
 export function FilePreview({ file }: { file: FileItem }) {
   const t = useT("files.drive")
   const format = useFormatters()
-  const kind = fileKindOf(file)
-  const url = useInlineUrl(file.id, kind === "image" || kind === "pdf" || kind === "video")
+  const isImage = fileKindOf(file) === "image"
+  const url = useInlineUrl(file.id, isImage)
   return (
     <div className="flex min-h-0 flex-col gap-3" data-testid="drive-preview">
-      <div className="bg-muted flex aspect-[4/3] w-full items-center justify-center overflow-hidden rounded-lg border">
-        {kind === "image" && url ? <img src={url} alt={file.name} className="size-full object-contain" /> : null}
-        {kind === "pdf" && url ? (
-          <iframe title={file.name} src={`${url}#page=1&toolbar=0&navpanes=0`} className="size-full" />
-        ) : null}
-        {kind === "video" && url ? (
-          <video src={`${url}#t=0.1`} preload="metadata" muted playsInline className="size-full object-contain" />
-        ) : null}
-        {!url || (kind !== "image" && kind !== "pdf" && kind !== "video") ? (
-          <FileKindIcon file={file} className="text-muted-foreground size-12" />
-        ) : null}
+      <div className="bg-muted text-muted-foreground flex aspect-[4/3] max-h-48 w-full items-center justify-center overflow-hidden rounded-lg border md:max-h-none">
+        {isImage && url ? (
+          <img src={url} alt={file.name} className="size-full object-contain" />
+        ) : (
+          <FileKindIcon file={file} className="size-12" />
+        )}
       </div>
       <div className="min-w-0">
         <p className="truncate font-medium" title={file.name}>

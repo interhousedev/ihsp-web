@@ -11,7 +11,8 @@ import { BigNumber, Lines, listRows } from "./shared"
 export function AlertsWidget({ widget, editing }: { widget: Widget; editing?: boolean }) {
   const t = useT("today.alerts")
   const d = useT("today.dashboard")
-  const alerts = useAlerts().data ?? []
+  // EMIS sync status is staff information: a student does not see it as an attention item.
+  const alerts = (useAlerts().data ?? []).filter((alert) => alert.kind !== "sync_failed")
   const text = (alert: (typeof alerts)[number]) => t(`short.${alert.kind}`, { count: numberParam(alert, "count") })
   return (
     <WidgetFrame widget={widget} editing={editing} title={t("title")} href={alerts[0]?.action_url ?? "/settings/"}>

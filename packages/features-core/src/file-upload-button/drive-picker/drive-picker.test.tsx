@@ -1,8 +1,9 @@
 import { describe, expect, it, mock, setDefaultTimeout } from "bun:test"
 import type { FileItem } from "@ihsp/api"
-import { apiUrl, filePdf, renderWithProviders, server } from "@ihsp/test-utils"
-import { configure, fireEvent, screen, waitFor } from "@testing-library/react"
+import { apiUrl, fileImage, filePdf, renderWithProviders, server } from "@ihsp/test-utils"
+import { configure, fireEvent, screen, waitFor, within } from "@testing-library/react"
 import { HttpResponse, http } from "msw"
+import { formatFileSize } from "./file-kind"
 import { DrivePicker } from "./drive-picker"
 
 configure({ asyncUtilTimeout: 8000 })
@@ -133,5 +134,34 @@ describe("DrivePicker", () => {
     })
 
     await waitFor(() => expect(screen.getByText("1 selected")).toBeInTheDocument())
+  })
+
+  it("previews an image as a thumbnail, and any other file as its icon with name, size and type", async () => {
+    const image: FileItem = { ...fileImage, name: "lab-setup.jpg" }
+    server.use(listing([image, ...files(1)]))
+    renderPicker()
+
+    fireEvent.click(await screen.findByRole("button", { name: "lab-setup.jpg" }))
+    const thumb = await within(await screen.findByTestId("drive-preview")).findByRole("img", { name: "lab-setup.jpg" })
+    expect(thumb.getAttribute("src")).toContain("disposition=inline")
+
+    fireEvent.click(screen.getByRole("button", { name: "file-0.pdf" }))
+    await waitFor(() => expect(screen.getByTestId("drive-preview")).toHaveTextContent("file-0.pdf"))
+    const preview = screen.getByTestId("drive-preview")
+    expect(preview.querySelector("img")).toBeNull()
+    expect(preview.querySelector("iframe")).toBeNull()
+    expect(within(preview).getByText(formatFileSize(filePdf.byte_size))).toBeInTheDocument()
+    expect(within(preview).getByText("application/pdf")).toBeInTheDocument()
+  })
+
+  it("the preview comes after the list in the page, so on a phone it sits below the list", async () => {
+    server.use(listing(files(2)))
+    renderPicker()
+
+    const list = await screen.findByRole("list", { name: "Files" })
+    const preview = screen.getByRole("complementary", { name: "Preview" })
+    expect(preview).not.toHaveClass("hidden")
+    // DOCUMENT_POSITION_FOLLOWING: the preview is after the list.
+    expect(list.compareDocumentPosition(preview) & 4).toBe(4)
   })
 })
