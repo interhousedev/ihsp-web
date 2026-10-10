@@ -50,6 +50,9 @@ import type {
   SourcesAddBody,
   SourcesSelectBody,
   NotebooksParams,
+  SubjectMaterial,
+  SubjectMaterialCreateBody,
+  SubjectMaterialGroup,
 } from "../types/notebooks"
 
 // - - - Notebooks - - -
@@ -491,4 +494,47 @@ export function postArtifactSlidesRevise(
   opts?: RequestOptions,
 ): Promise<ArtifactItem> {
   return api.post<ArtifactItem>(`/v1/notebooks/${seg(id)}/artifacts/${seg(artifactId)}/slides/revise`, body, opts)
+}
+
+// --- Default materials of a subject (admin) ---
+
+/** GET /v1/admin/subject-materials — admin; the default materials of every EMIS subject id, grouped, by id. */
+export function getAdminSubjectMaterialGroups(opts?: RequestOptions): Promise<SubjectMaterialGroup[]> {
+  return api.get<SubjectMaterialGroup[]>("/v1/admin/subject-materials", opts)
+}
+export const getAdminSubjectMaterialGroupsQuery = () =>
+  queryOptions({
+    queryKey: keys.admin.subjectMaterials.groups(),
+    queryFn: ({ signal }) => getAdminSubjectMaterialGroups({ signal }),
+  })
+
+/** GET /v1/admin/subject-materials/{id} — admin; the default materials of one EMIS subject id, by position. */
+export function getAdminSubjectMaterials(eduSubjectId: number, opts?: RequestOptions): Promise<SubjectMaterial[]> {
+  return api.get<SubjectMaterial[]>(`/v1/admin/subject-materials/${seg(eduSubjectId)}`, opts)
+}
+export const getAdminSubjectMaterialsQuery = (eduSubjectId: number) =>
+  queryOptions({
+    queryKey: keys.admin.subjectMaterials.list(eduSubjectId),
+    queryFn: ({ signal }) => getAdminSubjectMaterials(eduSubjectId, { signal }),
+  })
+
+/**
+ * POST /v1/admin/subject-materials/{id} — admin; `201`. `409 notebooks/default-material-exists | -limit` (30 per
+ * subject), `422 notebooks/default-material-invalid`.
+ */
+export function postAdminSubjectMaterial(
+  eduSubjectId: number,
+  body: SubjectMaterialCreateBody,
+  opts?: RequestOptions,
+): Promise<SubjectMaterial> {
+  return api.post<SubjectMaterial>(`/v1/admin/subject-materials/${seg(eduSubjectId)}`, body, opts)
+}
+
+/** DELETE /v1/admin/subject-materials/{id}/{material_id} — admin; `204`, `404 notebooks/default-material-not-found`. */
+export function deleteAdminSubjectMaterial(
+  eduSubjectId: number,
+  materialId: string,
+  opts?: RequestOptions,
+): Promise<NoContent> {
+  return api.delete<NoContent>(`/v1/admin/subject-materials/${seg(eduSubjectId)}/${seg(materialId)}`, opts)
 }

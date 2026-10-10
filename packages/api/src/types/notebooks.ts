@@ -570,3 +570,34 @@ export type AttachedResource = {
   title: string
   short_url: string
 }
+
+// --- Default materials of a subject (admin): every student's subject notebook gets a copy. ---
+
+/** What a default material points at. */
+export type SubjectMaterialKind = "file" | "link" | "library_item"
+/** One default material of an EMIS subject id (`edu_subject_id`). */
+export type SubjectMaterial = {
+  id: string
+  edu_subject_id: number
+  kind: SubjectMaterialKind
+  title: string
+  /** Only for `kind: "link"`. */
+  url: string | null
+  /** Only for `kind: "file"`. */
+  file_id: string | null
+  /** Only for `kind: "library_item"`. */
+  library_item_id: string | null
+  position: number
+  created_at: string
+}
+/** The default materials of one EMIS subject id. */
+export type SubjectMaterialGroup = { edu_subject_id: number; materials: SubjectMaterial[] }
+/** Exactly the target that `kind` names is given: `url`, `file_id` or `library_item_id`. */
+export type SubjectMaterialCreateBody = {
+  kind: SubjectMaterialKind
+  /** 1–255 characters. */
+  title: string
+  url?: string | null
+  file_id?: string | null
+  library_item_id?: string | null
+}
