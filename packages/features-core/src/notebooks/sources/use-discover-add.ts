@@ -1,6 +1,6 @@
 "use client"
 
-import type { AddSourcesResult, DiscoverResult } from "@ihsp/api"
+import type { AddSourcesResult, DiscoverResult, SourceInput } from "@ihsp/api"
 import { useT } from "@ihsp/i18n"
 import { useState } from "react"
 import { useAddSources, useSources } from "../api"
@@ -14,6 +14,15 @@ type Rejected = AddSourcesResult["rejected"][number]["error"]
  * Pages are told apart by their URL. Refused pages keep their message on their row; added ones turn into
  * "Already in sources" and `add` resolves to `true` when every chosen page went through.
  */
+/** The source to create for a result: a `db` result goes in by reference, anything else as a `url`. */
+export function sourceFor(result: DiscoverResult): SourceInput {
+  if (result.origin === "db" && result.ref_kind === "library_item" && result.ref_id) {
+    return { kind: "library_item", item_id: result.ref_id }
+  }
+  if (result.origin === "db") return { kind: "text", title: result.title, text: result.snippet }
+  return { kind: "url", url: result.url, title: result.title }
+}
+
 export function useDiscoverAdd(notebookId: string, results: readonly DiscoverResult[]) {
   const t = useT("notebooks")
   const sources = useSources(notebookId)
@@ -55,7 +64,7 @@ export function useDiscoverAdd(notebookId: string, results: readonly DiscoverRes
     setRefusals(new Map())
     try {
       const outcome = await adder.mutateAsync(
-        chosen.map((result) => ({ kind: "url", url: result.url, title: result.title })),
+        chosen.map(sourceFor),
       )
       const refused = new Map(
         outcome.rejected.flatMap((entry) => {
