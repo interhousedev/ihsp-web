@@ -1,18 +1,32 @@
 "use client"
 
-import type { SubjectCard as SubjectCardData } from "@ihsp/api"
+import type { CurriculumSubject, SubjectCard as SubjectCardData } from "@ihsp/api"
+import { SubjectTypeBadge } from "@ihsp/features-core"
 import { useFormatters, useT } from "@ihsp/i18n"
-import { Card, CardContent, MarkBadge } from "@ihsp/ui"
+import { Card, CardContent, MarkBadge, cn } from "@ihsp/ui"
 import Link from "next/link"
 import { shortName } from "../../shared/utils/people"
 
-/** A subject of the semester (WEB-7): teachers, semester mark, EMIS rating, absences and the next lesson. */
-export function SubjectCard({ card, semester }: { card: SubjectCardData; semester: number | undefined }) {
+/**
+ * A subject of the semester (WEB-7): teachers, semester mark, EMIS rating, absences and the next lesson. With the
+ * curriculum of the group it also has the subject type and the study hours of the semester.
+ */
+export function SubjectCard({
+  card,
+  semester,
+  curriculumSubject = null,
+}: {
+  card: SubjectCardData
+  semester: number | undefined
+  curriculumSubject?: CurriculumSubject | null
+}) {
   const t = useT("subjects")
+  const tc = useT("curriculum")
   const f = useFormatters()
   const query = new URLSearchParams({ id: card.subject.id })
   if (semester) query.set("semester", String(semester))
   const next = card.next_lesson
+  const hours = curriculumSubject?.study_hours ?? null
 
   return (
     <li>
@@ -27,10 +41,11 @@ export function SubjectCard({ card, semester }: { card: SubjectCardData; semeste
               <div className="min-w-0">
                 <h2 className="text-base font-semibold break-words">{card.subject.name}</h2>
                 <p className="text-muted-foreground truncate text-xs">{card.teachers.map(shortName).join(", ")}</p>
+                <SubjectTypeBadge typeId={curriculumSubject?.subject_type_id} className="mt-1.5" />
               </div>
               <MarkBadge mark={card.semester_mark} size="lg" />
             </div>
-            <dl className="grid grid-cols-2 gap-2 text-xs">
+            <dl className={cn("grid gap-2 text-xs", hours === null ? "grid-cols-2" : "grid-cols-3")}>
               <div>
                 <dt className="text-muted-foreground">{t("emisRating")}</dt>
                 <dd className="text-sm font-medium">{card.emis_rating ?? "–"}</dd>
@@ -39,6 +54,12 @@ export function SubjectCard({ card, semester }: { card: SubjectCardData; semeste
                 <dt className="text-muted-foreground">{t("absences")}</dt>
                 <dd className="text-sm font-medium">{card.absences}</dd>
               </div>
+              {hours === null ? null : (
+                <div>
+                  <dt className="text-muted-foreground">{tc("studyHours")}</dt>
+                  <dd className="text-sm font-medium">{tc("hours", { count: hours })}</dd>
+                </div>
+              )}
             </dl>
             <p className="text-muted-foreground text-xs">
               {next
