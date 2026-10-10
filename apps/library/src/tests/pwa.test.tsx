@@ -78,7 +78,7 @@ describe("the files of the installable Library", () => {
     }
 
     expect(pkg.scripts["build:sw"]).toContain("features-core/src/pwa/sw/generic.ts")
-    expect(pkg.scripts.build).toStartWith("bun run build:sw")
+    expect(pkg.scripts.build).toContain("bun run build:sw && next build")
   })
 })
 
