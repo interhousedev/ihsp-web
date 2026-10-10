@@ -535,9 +535,9 @@ export interface BookInput {
   years_of_study: number[]
   subjects: BookSubjectInput[]
   topics: BookTopicInput[]
-  rights: Rights
+  rights?: Rights
   licence?: string | null
-  rights_basis: RightsBasis
+  rights_basis?: RightsBasis
   rights_proof_file_id?: string | null
   cover_file_id?: string | null
   visibility: ItemVisibility

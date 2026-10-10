@@ -6,12 +6,11 @@ import { ItemCardView } from "./item-card"
 import { ItemGrid } from "./item-grid"
 
 describe("ItemCardView", () => {
-  it("links the title to the item page and tags a book with its rights", () => {
+  it("links the title to the item page and tags a book", () => {
     renderLibrary(<ItemCardView item={libCards.bookOpenPhysics} />)
 
     expect(screen.getByRole("link", { name: libCards.bookOpenPhysics.title }).getAttribute("href")).toContain("/item")
     expect(screen.getByText("Library book")).toBeInTheDocument()
-    expect(screen.getByText("Open licence (CC BY-SA 4.0)")).toBeInTheDocument()
   })
 
   it("shows 'Uploaded by Aziza K., 2025' for a student and the teacher's name alone for a teacher", () => {

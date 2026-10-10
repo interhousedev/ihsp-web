@@ -172,18 +172,6 @@
     "empty": "UniLibraryʼdan hech narsa topilmadi.",
     "error": "UniLibrary bilan aloqa oʻrnatib boʻlmadi."
   },
-  "rights": {
-    "title": "Huquqlar",
-    "public_domain": "Ommaviy mulk",
-    "open_license": "Ochiq litsenziya ({licence})",
-    "permission": "Huquq egasining ruxsati bilan joylangan",
-    "official": "Rasmiy darslik",
-    "licenceFallback": "ochiq",
-    "attribution": "Mualliflik",
-    "downloadAllowed": "Bu kitobni yuklab olish mumkin.",
-    "downloadDenied": "Faqat kutubxonada oʻqish mumkin: yuklab olish ruxsat etilmagan.",
-    "lyceumOnly": "Faqat litsey foydalanuvchilari uchun."
-  },
   "shelf": {
     "add": "Javonga qoʻshish",
     "remove": "Javondan olib tashlash",

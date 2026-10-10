@@ -3,7 +3,16 @@ import { refreshedTokenResponse, server, setTestRoute, tokenResponse, userMe } f
 import { HttpResponse, delay, http } from "msw"
 import { navigation } from "../navigation"
 import { clearSessionHint, setSessionHint } from "../session-hint"
-import { bootstrapSession, configureApiClient, handleCallback, login, refresh, resetAuthState } from "../session"
+import {
+  bootstrapSession,
+  configureApiClient,
+  handleCallback,
+  login,
+  refresh,
+  resetAuthState,
+  silentSignInPending,
+  trySilentSignIn,
+} from "../session"
 import { setSession, useAuthStore } from "../store"
 
 const API = "http://localhost:8000"
@@ -221,5 +230,38 @@ describe("restoring the session", () => {
 
     expect(await refresh()).toBe(true)
     expect(useAuthStore.getState().status).toBe("authenticated")
+  })
+})
+
+describe("silent single sign-on (prompt=none)", () => {
+  beforeEach(() => window.sessionStorage.removeItem("ihsp.oauth.silent"))
+
+  it("asks Hydra with prompt=none once per browser session, even without the hint", async () => {
+    clearSessionHint()
+    const replace = quiet().replace
+
+    await trySilentSignIn()
+    await trySilentSignIn()
+
+    expect(replace).toHaveBeenCalledTimes(1)
+    expect(new URL(String(replace.mock.calls[0]?.[0])).searchParams.get("prompt")).toBe("none")
+    expect(silentSignInPending()).toBe(false)
+  })
+
+  it("login_required leaves the visitor anonymous, with no error, on the page they came from", async () => {
+    quiet()
+    await login("/browse/", { silent: true })
+    setTestRoute("/auth/callback/?error=login_required&state=x")
+
+    await expect(handleCallback()).resolves.toBe("/browse/")
+    expect(useAuthStore.getState().status).toBe("anonymous")
+  })
+
+  it("an ordinary login does not send prompt=none", async () => {
+    const { replace } = quiet()
+
+    await login("/")
+
+    expect(new URL(String(replace.mock.calls[0]?.[0])).searchParams.has("prompt")).toBe(false)
   })
 })

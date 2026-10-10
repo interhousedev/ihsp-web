@@ -16,6 +16,8 @@ export {
   resetAuthState,
   retryBootstrap,
   safeReturnTo,
+  silentSignInPending,
+  trySilentSignIn,
   type LoginOptions,
 } from "./session"
 export { getSession, resetAuthStore, setSession, useAuthStore, type AuthStatus, type Session } from "./store"

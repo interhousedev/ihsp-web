@@ -26,7 +26,7 @@ const STATUSES: readonly ItemStatus[] = ["draft", "published", "held", "unpublis
 const PAGE_SIZE = 25
 
 /**
- * `/manage/books/`: the librarian's table of library books (title, rights, status, visibility, text status), a search
+ * `/manage/books/`: the librarian's table of library books (title, status, visibility, text status), a search
  * box, a status filter, **New book** and **Bulk import**.
  */
 export function BooksPage() {

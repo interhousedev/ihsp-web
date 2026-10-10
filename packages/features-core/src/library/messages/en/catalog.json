@@ -151,18 +151,6 @@
     "empty": "Nothing found on UniLibrary.",
     "error": "UniLibrary could not be reached."
   },
-  "rights": {
-    "title": "Rights",
-    "public_domain": "Public domain",
-    "open_license": "Open licence ({licence})",
-    "permission": "Shared with the rights holder's permission",
-    "official": "Official textbook",
-    "licenceFallback": "open",
-    "attribution": "Attribution",
-    "downloadAllowed": "You may download this book.",
-    "downloadDenied": "Reading in the library only: downloads are not allowed.",
-    "lyceumOnly": "Only for lyceum users."
-  },
   "shelf": {
     "add": "Add to shelf",
     "remove": "Remove from shelf",

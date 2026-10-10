@@ -16,15 +16,13 @@ import {
 import { IconArrowDown, IconArrowUp, IconArrowsSort } from "@ihsp/ui"
 import Link from "next/link"
 import { useMemo, useState } from "react"
-import { RightsBadge } from "../../catalog/rights-badge"
 import { manageBookEditHref } from "../../utils/hrefs"
 
-type SortKey = "title" | "rights" | "status" | "updated"
+type SortKey = "title" | "status" | "updated"
 type Sort = { key: SortKey; direction: "asc" | "desc" }
 
 const SORT_VALUE: Record<SortKey, (row: BookRow) => string> = {
   title: (row) => row.item.title.toLowerCase(),
-  rights: (row) => row.rights,
   status: (row) => row.status,
   updated: (row) => row.updated_at,
 }
@@ -100,7 +98,6 @@ export function BooksTable({ rows }: { rows: readonly BookRow[] }) {
             <p className="text-muted-foreground text-xs">{row.item.author_label}</p>
             <div className="flex flex-wrap items-center gap-1.5">
               <StatusBadge row={row} />
-              <RightsBadge rights={row.rights} licence={row.item.book?.licence} />
               <Badge variant="outline">{cells.visibility(row.visibility)}</Badge>
               <Badge variant="outline">{cells.textStatus(row.text_status)}</Badge>
             </div>
@@ -116,7 +113,6 @@ export function BooksTable({ rows }: { rows: readonly BookRow[] }) {
       <TableHeader>
         <TableRow>
           <SortHead column="title" sort={sort} onSort={onSort} />
-          <SortHead column="rights" sort={sort} onSort={onSort} />
           <SortHead column="status" sort={sort} onSort={onSort} />
           <TableHead scope="col">{t("column.visibility")}</TableHead>
           <TableHead scope="col">{t("column.text")}</TableHead>
@@ -130,9 +126,7 @@ export function BooksTable({ rows }: { rows: readonly BookRow[] }) {
               <RowLink row={row} />
               <div className="text-muted-foreground text-xs">{row.item.author_label}</div>
             </TableCell>
-            <TableCell>
-              <RightsBadge rights={row.rights} licence={row.item.book?.licence} />
-            </TableCell>
+            <TableCell></TableCell>
             <TableCell>
               <StatusBadge row={row} />
             </TableCell>

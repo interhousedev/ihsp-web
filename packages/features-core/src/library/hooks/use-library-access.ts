@@ -28,7 +28,7 @@ export type LibraryAccess = {
  */
 export function useLibraryAccess(): LibraryAccess {
   const { status, session } = useSession()
-  useSilentSignIn()
+  useSilentSignIn({ always: true })
   const roles = session?.user.roles
   return useMemo(() => {
     const list: readonly Role[] = roles ?? []

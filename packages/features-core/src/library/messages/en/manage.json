@@ -296,61 +296,7 @@
         "titleRequired": "Write a title.",
         "authorsRequired": "Add at least one author.",
         "yearInvalid": "Use a year with up to four digits.",
-        "notYetPublic": "This work is not in the public domain yet. It becomes free on 1 January {year}.",
-        "urlInvalid": "Enter a full web address that starts with https://.",
-        "dateInvalid": "Use the date format YYYY-MM-DD.",
         "rangeInvalid": "The first page must not be after the last page."
-      },
-      "rights": {
-        "title": "Rights",
-        "intro": "A book cannot be published without a rights class and the basis for it.",
-        "class": {
-          "label": "Rights class",
-          "public_domain": {
-            "label": "Public domain",
-            "hint": "The author died more than 70 years ago, or an anonymous work was first published more than 50 years ago, or an official document or folklore."
-          },
-          "open_license": {
-            "label": "Open licence",
-            "hint": "CC BY, CC BY-SA, CC BY-NC, CC BY-NC-SA, CC0 and similar."
-          },
-          "permission": {
-            "label": "Permission of the rights holder",
-            "hint": "The rights holder allows the lyceum to host it. Lyceum only."
-          },
-          "official": {
-            "label": "Official textbook",
-            "hint": "A textbook of the ministry or a state publisher with a documented basis. Lyceum only."
-          }
-        },
-        "basis": {
-          "label": "How is it free?",
-          "death": "The author's death year",
-          "anonymous": "Anonymous work: year of first publication",
-          "other": "Official document or folklore (no year)"
-        },
-        "deathYear": "Year the author died",
-        "firstPublishedYear": "Year of first publication",
-        "since": "Public domain since {year}",
-        "rule": "Rule used",
-        "ruleHint": "For example: the author died in 1938, so the work is free from 1 January 2009.",
-        "licence": "Licence",
-        "licenceHint": "Choose from the list or type the code, for example CC BY-SA 4.0.",
-        "sourceUrl": "Link to the licence statement",
-        "sourceUrlHint": "The page at the source that shows the licence.",
-        "attribution": "Attribution text",
-        "attributionHint": "Shown with the book, as the licence requires.",
-        "proof": "Proof of permission",
-        "proofHint": "Upload the written permission (a PDF or a photo).",
-        "proofChoose": "Choose the proof",
-        "proofAttached": "Proof attached: {name}",
-        "proofOnFile": "A proof of permission is on file.",
-        "scope": "Scope of the permission",
-        "scopeHint": "What the rights holder allows, for example hosting for lyceum members.",
-        "expiry": "Permission expires on",
-        "expiryHint": "A reminder is sent 60 days before.",
-        "reference": "Reference",
-        "referenceHint": "The order of the ministry or the publisher's permission."
       },
       "visibility": {
         "label": "Who can see the book",
@@ -358,9 +304,9 @@
         "lyceumHint": "Signed-in lyceum users.",
         "public": "Public",
         "publicHint": "Anyone on the internet.",
-        "lyceumOnly": "This rights class can only be shown to lyceum users.",
         "download": "Allow download",
-        "downloadHint": "Readers may save the file. Follow the permission or the basis."
+        "downloadHint": "Readers may save the file. Follow the permission or the basis.",
+        "title": "Who can see the book"
       },
       "checklist": {
         "title": "Publish checklist",
@@ -369,10 +315,6 @@
         "unsaved": "Shown for your unsaved changes.",
         "done": "done",
         "todo": "to do",
-        "rights": {
-          "label": "Rights are complete",
-          "hint": "Choose a rights class and fill in its basis."
-        },
         "text_status": {
           "label": "The file has been checked",
           "hint": "Attach a PDF or EPUB and wait until its text is ready (or marked as a scan)."
@@ -385,18 +327,6 @@
           "label": "At least one subject",
           "hint": "Add a subject, or put the book into a collection."
         }
-      },
-      "missing": {
-        "rights_basis_author_death_year": "Year the author died",
-        "rights_basis_first_published_year": "Year of first publication",
-        "rights_basis_rule": "Rule used",
-        "licence": "Licence",
-        "rights_basis_source_url": "Link to the licence statement",
-        "rights_basis_attribution": "Attribution text",
-        "rights_proof_file_id": "Proof of permission",
-        "rights_basis_permission_scope": "Scope of the permission",
-        "rights_basis_permission_expires_on": "Permission expires on",
-        "rights_basis_reference": "Reference"
       }
     },
     "title": "Librarian area",

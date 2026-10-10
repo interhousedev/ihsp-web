@@ -36,13 +36,12 @@ describe("ItemPage: UniLibrary record", () => {
 })
 
 describe("ItemPage: book", () => {
-  it("shows the actions, the rights box and the contents of a lyceum textbook", async () => {
+  it("shows the actions and the contents of a lyceum textbook", async () => {
     renderItem(libIds.bookPhysics10)
 
     expect(await screen.findByRole("heading", { level: 1, name: libDetails.bookPhysics10.title })).toBeInTheDocument()
     expect(screen.getByRole("link", { name: "Read" }).getAttribute("href")).toContain("item=")
     expect(screen.getByRole("button", { name: "Add to notebook" })).toBeInTheDocument()
-    expect(screen.getByRole("heading", { name: "Rights" })).toBeInTheDocument()
     expect(screen.getByRole("heading", { name: "Contents" })).toBeInTheDocument()
     // The official textbook may not be downloaded.
     expect(screen.queryByRole("button", { name: "Download" })).not.toBeInTheDocument()

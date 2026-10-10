@@ -32,7 +32,13 @@ function Header() {
 function Frame({ children }: { children: ReactNode }) {
   const nav = useNav()
   return (
-    <AppShell headerLeading={<HistoryButtons />} nav={nav.groups} bottomNav={nav.bottom} brand={<LibraryBrand />} header={<Header />}>
+    <AppShell
+      headerLeading={<HistoryButtons />}
+      nav={nav.groups}
+      bottomNav={nav.bottom}
+      brand={<LibraryBrand />}
+      header={<Header />}
+    >
       <Suspense fallback={<PageLoading />}>{children}</Suspense>
     </AppShell>
   )

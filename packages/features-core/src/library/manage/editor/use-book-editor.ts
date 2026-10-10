@@ -19,7 +19,7 @@ import { useEffect, useMemo, useRef, useState } from "react"
 import { toast } from "sonner"
 import { manageBookEditHref } from "../../utils/hrefs"
 import { emptyForm, formFromInput, inputFromForm, sameForm, type BookForm } from "./book-form"
-import { localChecklist, missingRights, validateForm, type ChecklistItem } from "./book-form-checks"
+import { localChecklist, validateForm, type ChecklistItem } from "./book-form-checks"
 import { useLeaveGuard } from "./use-leave-guard"
 
 /** A book file uploaded before the book exists: attached right after the first save. */
@@ -34,7 +34,7 @@ export function formatOf(name: string): ItemFile["format"] {
  * (create or patch, with a queued file), the three actions (Publish, Unpublish, Take down) and the checklist.
  * A saved book is the server's `BookDraft`; a new book (`id === null`) starts from `initialTitle`.
  */
-export function useBookEditor(id: string | null, initialTitle: string, today: Date) {
+export function useBookEditor(id: string | null, initialTitle: string) {
   const t = useT("library.manage.editor")
   const errorMessage = useErrorMessage()
   const queryClient = useQueryClient()
@@ -60,7 +60,7 @@ export function useBookEditor(id: string | null, initialTitle: string, today: Da
     setBaseline(next)
   }, [draftQuery.data, draftQuery.dataUpdatedAt, dirty])
 
-  const issues = useMemo(() => validateForm(form, today), [form, today])
+  const issues = useMemo(() => validateForm(form), [form])
   const blocked = Object.keys(issues).length > 0 || form.title.trim() === "" || form.authors.length === 0
 
   function update(patch: Partial<BookForm>) {
@@ -76,25 +76,16 @@ export function useBookEditor(id: string | null, initialTitle: string, today: Da
     const items =
       server && !dirty
         ? server
-        : localChecklist(
-            form,
-            {
-              present: pendingFile !== null || primary !== undefined,
-              textOk: pendingFile !== null || primary?.text_status === "ready" || primary?.text_status === "no_text",
-            },
-            today,
-          )
+        : localChecklist(form, {
+            present: pendingFile !== null || primary !== undefined,
+            textOk: pendingFile !== null || primary?.text_status === "ready" || primary?.text_status === "no_text",
+          })
     // The API's `422` names what failed even when the saved checklist looked fine.
     return items.map((item) => ({
       ...item,
-      ok:
-        item.ok &&
-        !(item.key === "rights"
-          ? missing.some((key) => !["text_status", "cover", "subjects"].includes(key))
-          : missing.includes(item.key)),
+      ok: item.ok && !missing.includes(item.key),
     }))
-  }, [draftQuery.data?.checklist, dirty, form, pendingFile, primary, missing, today])
-  const missingFields = missing.length > 0 ? missing : missingRights(form)
+  }, [draftQuery.data?.checklist, dirty, form, pendingFile, primary, missing])
 
   function invalidate() {
     return queryClient.invalidateQueries({ queryKey: keys.library.manage.all() })
@@ -170,7 +161,6 @@ export function useBookEditor(id: string | null, initialTitle: string, today: Da
     issues,
     blocked,
     checklist,
-    missingFields,
     pendingFile,
     files,
     save,

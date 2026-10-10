@@ -28,6 +28,8 @@ const LOGOUT_HOLD_MS = 30_000
 const PENDING_KEY = "ihsp.oauth.pending"
 const ATTEMPTS_KEY = "ihsp.oauth.attempts"
 const RETRY_KEY = "ihsp.oauth.retry"
+/** Set when this browser session has tried a silent single sign-on, so it is tried once and never loops. */
+const SILENT_KEY = "ihsp.oauth.silent"
 const CALLBACK_PATH = "/auth/callback/"
 
 /** More automatic logins than this within `LOOP_WINDOW_MS` mean the login "succeeds" but the app is still unauthorised. */
@@ -40,10 +42,17 @@ const LOOP_WINDOW_MS = 60_000
  * exchanged, a duplicated tab, an old link) is restarted the same way; it also ignores a foreign code.
  */
 const RESTARTABLE_ERRORS = new Set(["request_forbidden"])
+/** Answers of a `prompt=none` request when there is nothing to sign in with: the visitor simply stays anonymous. */
+const SILENT_ERRORS = new Set([
+  "login_required",
+  "interaction_required",
+  "consent_required",
+  "account_selection_required",
+])
 /** A restart is allowed once per this time, so a login that keeps failing ends with a message and not a loop. */
 const RESTART_WINDOW_MS = 120_000
 
-type Pending = { state: string; nonce: string; verifier: string; returnTo: string }
+type Pending = { state: string; nonce: string; verifier: string; returnTo: string; silent?: boolean }
 
 // - - - Module state (one tab) - - -
 
@@ -172,6 +181,8 @@ async function establishSession(response: TokenResponse): Promise<void> {
 // - - - Login (authorization code + PKCE) - - -
 
 export type LoginOptions = {
+  /** `prompt=none`: sign in only when the platform session is already active; otherwise return anonymous, no error. */
+  silent?: boolean
   /** A click of the user ("Log in again"): not limited by the loop guard, and it resets the guard. */
   manual?: boolean
 }
@@ -201,7 +212,13 @@ async function startLogin(returnTo: string, options: LoginOptions): Promise<void
   const verifier = generateCodeVerifier()
   const state = randomString(32)
   const nonce = randomString(32)
-  writePending({ state, nonce, verifier, returnTo: safeReturnTo(returnTo) })
+  writePending({
+    state,
+    nonce,
+    verifier,
+    returnTo: safeReturnTo(returnTo),
+    ...(options.silent ? { silent: true } : {}),
+  })
 
   const url = new URL("/oauth2/auth", config.HYDRA_URL)
   url.search = new URLSearchParams({
@@ -214,6 +231,7 @@ async function startLogin(returnTo: string, options: LoginOptions): Promise<void
     nonce,
     code_challenge: await codeChallengeS256(verifier),
     code_challenge_method: "S256",
+    ...(options.silent ? { prompt: "none" } : {}),
   }).toString()
   navigation.replace(url.toString())
 }
@@ -236,6 +254,11 @@ async function runCallback(): Promise<string> {
   const failure = params.get("error")
   if (failure) {
     writePending(null)
+    if (pending?.silent && SILENT_ERRORS.has(failure)) {
+      clearLoginBookkeeping()
+      useAuthStore.getState().setAnonymous()
+      return safeReturnTo(pending.returnTo)
+    }
     if (RESTARTABLE_ERRORS.has(failure)) {
       const restarted = await restartLogin(pending?.returnTo)
       if (restarted) return restarted
@@ -351,6 +374,30 @@ export function bootstrapSession(): Promise<void> {
     if (!ok && !store.networkError && store.status === "loading") store.setAnonymous()
   })()
   return bootstrapInflight
+}
+
+/** True when this browser session has not tried a silent single sign-on yet. */
+export function silentSignInPending(): boolean {
+  try {
+    return window.sessionStorage.getItem(SILENT_KEY) !== "1"
+  } catch {
+    return false
+  }
+}
+
+/**
+ * Signs the visitor in silently (`prompt=none`) when the platform has an active session, at most once per browser
+ * session (remembered in sessionStorage, set before the redirect, so a failure or a reload never loops). Without an
+ * active session the visitor stays anonymous and nothing is shown.
+ */
+export async function trySilentSignIn(): Promise<void> {
+  if (!silentSignInPending() || isMiniApp()) return
+  try {
+    window.sessionStorage.setItem(SILENT_KEY, "1")
+  } catch {
+    return
+  }
+  await login(undefined, { silent: true })
 }
 
 /** After a network failure at start: try again. */

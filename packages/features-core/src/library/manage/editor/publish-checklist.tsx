@@ -5,34 +5,20 @@ import { IconCircleCheck, IconCircleX } from "@ihsp/ui"
 import { useId } from "react"
 import type { ChecklistItem } from "./book-form-checks"
 
-/** next-intl types keys from a message file; the missing keys come from the API at run time. */
-type LooseTranslator = { (key: string): string; has: (key: string) => boolean }
-
-const NOT_RIGHTS = new Set(["text_status", "cover", "subjects"])
-
-/** The rights fields the API or the form named, without the three other checklist keys. */
-export const rightsFieldsOf = (missing: readonly string[]): string[] => missing.filter((key) => !NOT_RIGHTS.has(key))
-
 /**
- * The publish checklist (§ 3.4): rights complete, text status known, cover present, at least one subject. Red items
- * say what to do; the rights item lists the fields still empty (from the form, or from `422 library/rights-incomplete`).
+ * The publish checklist: text status known, cover present, at least one subject. Red items say what to do.
  */
 export function PublishChecklist({
   items,
-  missing,
   stale,
 }: {
   items: readonly ChecklistItem[]
-  /** Field names still missing (`rights_basis.rule`, `licence`, ...). */
-  missing: readonly string[]
   /** The checklist comes from the form (unsaved changes), not from the saved book. */
   stale: boolean
 }) {
   const t = useT("library.manage.editor.checklist")
-  const names = useT("library.manage.editor.missing") as unknown as LooseTranslator
   const id = useId()
   const allOk = items.every((item) => item.ok)
-  const rightsMissing = rightsFieldsOf(missing)
   return (
     <section aria-labelledby={`${id}-title`} className="flex flex-col gap-3 rounded-xl border p-4">
       <div>
@@ -56,14 +42,6 @@ export function PublishChecklist({
                 <span className="sr-only">: {item.ok ? t("done") : t("todo")}</span>
               </span>
               {!item.ok ? <span className="text-muted-foreground text-xs">{t(`${item.key}.hint`)}</span> : null}
-              {!item.ok && item.key === "rights" && rightsMissing.length > 0 ? (
-                <ul className="text-muted-foreground mt-1 list-disc ps-5 text-xs">
-                  {rightsMissing.map((key) => {
-                    const messageKey = key.replace(/\./g, "_")
-                    return <li key={key}>{names.has(messageKey) ? names(messageKey) : key}</li>
-                  })}
-                </ul>
-              ) : null}
             </div>
           </li>
         ))}

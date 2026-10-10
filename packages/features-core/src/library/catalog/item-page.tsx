@@ -18,7 +18,6 @@ import { ItemContents } from "./item-contents"
 import { ItemDetails } from "./item-details"
 import { ItemOwnerPanel } from "./item-owner-panel"
 import { NotAvailable } from "./not-available"
-import { RightsBox } from "./rights-box"
 import { SourceTag } from "./source-tag"
 
 const EXTERNAL_DESCRIPTION_MAX = 600
@@ -169,7 +168,6 @@ function StoredView({ item }: { item: ItemDetail }) {
         </p>
       ) : null}
       {item.description ? <p className="text-sm whitespace-pre-line">{item.description}</p> : null}
-      {item.kind === "book" ? <RightsBox item={item} /> : null}
       {file && item.id && item.can.read ? <ItemContents itemId={item.id} file={file} /> : null}
       <Topics item={item} />
       <ReadingLists item={item} />
@@ -197,7 +195,11 @@ export function ItemPage() {
   const { status } = useLibraryAccess()
   // Not before the silent restore ends: an early request goes out without the token, gets a visitor's 404 (logged in
   // the console) and is repeated once the session is known.
-  const query = useQuery({ ...getLibraryItemQuery(id ?? ""), enabled: Boolean(id) && status !== "loading", retry: false })
+  const query = useQuery({
+    ...getLibraryItemQuery(id ?? ""),
+    enabled: Boolean(id) && status !== "loading",
+    retry: false,
+  })
   if (!id) return <NotAvailable />
   const hidden = query.isError && isApiError(query.error) && (query.error.status === 404 || query.error.status === 403)
   // While the session is still being restored a hidden answer may be only the visitor's view: do not flash "sign in".

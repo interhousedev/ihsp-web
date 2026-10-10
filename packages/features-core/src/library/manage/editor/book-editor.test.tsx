@@ -29,7 +29,6 @@ describe("BookEditor: a saved book", () => {
     expect(await screen.findByDisplayValue("Gʻazallar")).toBeInTheDocument()
     expect(screen.getByRole("heading", { name: "Gʻazallar" })).toBeInTheDocument()
     expect(await screen.findByText("Everything is ready. You can publish.")).toBeInTheDocument()
-    expect(screen.getByText("Public domain since 1572")).toBeInTheDocument()
     expect(screen.getByRole("button", { name: "Unpublish" })).toBeInTheDocument()
     expect(screen.getByRole("button", { name: "Take down" })).toBeInTheDocument()
     expect(screen.queryByRole("button", { name: "Publish" })).not.toBeInTheDocument()
@@ -39,17 +38,15 @@ describe("BookEditor: a saved book", () => {
     const { user } = editBook(libIds.bookDraft)
     await screen.findByDisplayValue("Kimyo masalalari")
 
-    await waitFor(() => expect(checklistItem(/Rights are complete/)).toHaveAttribute("data-ok", "false"))
+    await waitFor(() => expect(checklistItem(/Cover is present/)).toHaveAttribute("data-ok", "false"))
     expect(checklistItem(/Cover is present/)).toHaveAttribute("data-ok", "false")
     expect(checklistItem(/The file has been checked/)).toHaveAttribute("data-ok", "false")
     expect(checklistItem(/^At least one subject$/)).toHaveAttribute("data-ok", "true")
 
     await user.click(screen.getByRole("button", { name: "Publish" }))
 
-    const rights = checklistItem(/Rights are complete/)
-    expect(await within(rights).findByText("Licence")).toBeInTheDocument()
-    expect(within(rights).getByText("Link to the licence statement")).toBeInTheDocument()
-    expect(within(rights).getByText("Attribution text")).toBeInTheDocument()
+    await waitFor(() => expect(checklistItem(/Cover is present/)).toHaveAttribute("data-ok", "false"))
+    expect(screen.queryByText(/Rights are complete/)).not.toBeInTheDocument()
   })
 
   it("unpublishes and publishes a complete book again", async () => {
@@ -163,60 +160,21 @@ describe("BookEditor: a new book", () => {
     expect(String(testRouter.replace.mock.calls[0]?.[0])).toMatch(/^\/manage\/books\/edit\/?\?id=/)
   })
 
-  it("computes 'Public domain since' from the death year and refuses a year that is not free yet", async () => {
+  it("offers only who sees the book: no rights class or reasoning fields", async () => {
     const { user } = renderEditor("")
-    const year = await screen.findByLabelText(/^Year the author died/)
+    await screen.findByRole("group", { name: "Who can see the book" })
 
-    await user.type(year, "1938")
-    expect(await screen.findByText("Public domain since 2009")).toBeInTheDocument()
-
-    await user.clear(year)
-    await user.type(year, "2000")
-    expect(
-      await screen.findByText(/not in the public domain yet\. It becomes free on 1 January 2071/),
-    ).toBeInTheDocument()
-    expect(screen.queryByText(/^Public domain since/)).not.toBeInTheDocument()
-    expect(screen.getByRole("button", { name: "Create book" })).toBeDisabled()
-  })
-
-  it("uses the 51-year rule for an anonymous work", async () => {
-    const { user } = renderEditor("")
-    await user.click(await screen.findByRole("radio", { name: "Anonymous work: year of first publication" }))
-
-    await user.type(screen.getByLabelText(/^Year of first publication/), "1950")
-
-    expect(await screen.findByText("Public domain since 2001")).toBeInTheDocument()
-  })
-
-  it("changes the rights fields with the class and keeps public visibility for the classes that allow it", async () => {
-    const { user } = renderEditor("")
-    await screen.findByRole("radio", { name: /Public domain/ })
-
-    await user.click(screen.getByRole("radio", { name: /Open licence/ }))
-    expect(screen.getByLabelText(/^Licence/)).toBeInTheDocument()
-    expect(screen.getByLabelText(/^Link to the licence statement/)).toBeInTheDocument()
-    expect(screen.getByLabelText(/^Attribution text/)).toBeInTheDocument()
+    expect(screen.queryByText(/Rights class/)).not.toBeInTheDocument()
     expect(screen.queryByLabelText(/^Year the author died/)).not.toBeInTheDocument()
+    expect(screen.queryByLabelText(/^Applied rule/)).not.toBeInTheDocument()
     await user.click(screen.getByRole("radio", { name: /^Public\s+Anyone/ }))
     expect(screen.getByRole("radio", { name: /^Public\s+Anyone/ })).toBeChecked()
-
-    await user.click(screen.getByRole("radio", { name: /Permission of the rights holder/ }))
-    expect(screen.getByRole("group", { name: "Proof of permission" })).toBeInTheDocument()
-    expect(screen.getByLabelText(/^Scope of the permission/)).toBeInTheDocument()
-    expect(screen.getByLabelText(/^Permission expires on/)).toBeInTheDocument()
-    expect(screen.getByRole("radio", { name: /^Public\s+Anyone/ })).toBeDisabled()
-    expect(screen.getByRole("radio", { name: /^Lyceum only\s+Signed-in/ })).toBeChecked()
-
-    await user.click(screen.getByRole("radio", { name: /Official textbook/ }))
-    expect(screen.getByLabelText(/^Reference/)).toBeInTheDocument()
-    expect(screen.getByRole("radio", { name: /^Public\s+Anyone/ })).toBeDisabled()
   })
 
   it("shows the local checklist for a book that is not saved yet", async () => {
     renderEditor("")
 
     await screen.findByRole("heading", { name: "Publish checklist" })
-    expect(checklistItem(/Rights are complete/)).toHaveAttribute("data-ok", "false")
     expect(checklistItem(/Cover is present/)).toHaveAttribute("data-ok", "false")
     expect(checklistItem(/^At least one subject$/)).toHaveAttribute("data-ok", "false")
   })

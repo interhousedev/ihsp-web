@@ -106,10 +106,7 @@ export function LibraryHomePage() {
       <SearchBox />
 
       {status === "anonymous" ? (
-        <section
-          aria-labelledby="home-signin-title"
-          className="bg-muted/40 flex flex-col gap-1 rounded-xl border p-4"
-        >
+        <section aria-labelledby="home-signin-title" className="bg-muted/40 flex flex-col gap-1 rounded-xl border p-4">
           <div>
             <h2 id="home-signin-title" className="font-semibold">
               {t("signInTitle")}

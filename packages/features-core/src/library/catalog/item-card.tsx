@@ -10,7 +10,6 @@ import { itemHref } from "../utils/hrefs"
 import { AccessChip } from "./access-chip"
 import { cardRouteId } from "./card-utils"
 import { CoverImage } from "./cover-image"
-import { RightsBadge } from "./rights-badge"
 import { SourceTag } from "./source-tag"
 
 /** "Uploaded by Aziza K., 2025" for students, the teacher's name alone otherwise. */
@@ -78,11 +77,6 @@ export function ItemCardView({
         <h3 className="text-sm leading-snug">{title}</h3>
         {item.author_label ? <p className="text-muted-foreground line-clamp-1 text-xs">{item.author_label}</p> : null}
         {item.material ? <UploadedBy material={item.material} /> : null}
-        {item.book ? (
-          <div>
-            <RightsBadge rights={item.book.rights} licence={item.book.licence} />
-          </div>
-        ) : null}
         {external ? (
           <div className="flex flex-wrap items-center gap-1.5">
             <AccessChip access={external.access} />

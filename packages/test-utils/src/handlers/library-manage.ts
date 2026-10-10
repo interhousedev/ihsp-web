@@ -55,7 +55,6 @@ import { apiUrl, noContent, paginate, param, problem, query, readJson } from "./
 const QUEUE_TABS: QueueTab[] = ["review", "reports", "held", "rights", "suggestions"]
 const MODERATION_ACTIONS: ModerationAction[] = ["approve", "request-changes", "reject", "hold", "restore", "unpublish"]
 const BOOK_ACTIONS: BookAction[] = ["publish", "unpublish", "takedown"]
-const RIGHTS_CLASSES = ["public_domain", "open_license", "permission", "official"]
 const EXPIRY_WINDOW_DAYS = 60
 const DAY_MS = 86_400_000
 
@@ -78,14 +77,14 @@ function rightsNeedAttention(stored: StoredItem): boolean {
     return false
   if (
     rightsMissing(
-      input.rights,
+      input.rights ?? "official",
       { ...input.rights_basis },
       { proofFileId: input.rights_proof_file_id, licence: input.licence },
     ).length > 0
   ) {
     return true
   }
-  const expires = input.rights === "permission" ? input.rights_basis.permission_expires_on : null
+  const expires = input.rights === "permission" ? input.rights_basis?.permission_expires_on : null
   if (!expires) return false
   const days = (Date.parse(expires) - Date.parse(FIXTURE_TODAY)) / DAY_MS
   return days <= EXPIRY_WINDOW_DAYS
@@ -212,20 +211,9 @@ function bookSlug(title: string, id: string): string {
     .replace(/^-+|-+$/g, "")}-${id.slice(-4)}`
 }
 
-/** `422 library/visibility-conflict` when a rights class forbids `public` (permission and official are lyceum-only). */
-function visibilityConflict(input: BookInput): Response | null {
-  if (input.visibility === "public" && (input.rights === "permission" || input.rights === "official")) {
-    return problem(422, "library/visibility-conflict", "This rights class cannot be public", {
-      params: { rights: input.rights, visibility: input.visibility },
-    })
-  }
-  return null
-}
-
 function validateBook(input: Partial<BookInput>): Response | null {
   if (!input.title?.trim()) return invalid("title", "A title is required")
   if (!input.authors || input.authors.length === 0) return invalid("authors", "At least one author is required")
-  if (!input.rights || !RIGHTS_CLASSES.includes(input.rights)) return invalid("rights", "Unknown rights class")
   return null
 }
 
@@ -258,10 +246,10 @@ function bookDetail(id: string, input: BookInput, base: ItemDetail | null): Item
     visibility: input.visibility,
     status: base?.status ?? "draft",
     tag: { source: "book", label: "Library book" },
-    book: { rights: input.rights, licence: input.licence ?? null, download_allowed: input.download_allowed },
+    book: { rights: input.rights ?? "official", licence: input.licence ?? null, download_allowed: input.download_allowed },
     rights_box: {
-      text: RIGHTS_TEXT[input.rights] ?? "",
-      attribution: input.rights_basis.attribution ?? null,
+      text: RIGHTS_TEXT[input.rights ?? "official"] ?? "",
+      attribution: input.rights_basis?.attribution ?? null,
       download_allowed: input.download_allowed,
     },
     files: base?.files ?? [],
@@ -286,21 +274,13 @@ function newBook(input: BookInput): StoredItem {
   return stored
 }
 
-/** The publish checklist: `rights`, `text_status`, `cover`, `subjects`. */
+/** The publish checklist: `text_status`, `cover`, `subjects`. */
 function checklistOf(stored: StoredItem): { key: string; ok: boolean }[] {
   const input = stored.input
   const d = stored.detail
-  const rightsOk =
-    !!input &&
-    rightsMissing(
-      input.rights,
-      { ...input.rights_basis },
-      { proofFileId: input.rights_proof_file_id, licence: input.licence },
-    ).length === 0
   const primary = d.files.find((f) => f.is_primary) ?? d.files[0]
   const inCollection = state.collections.some((c) => !!d.id && c.item_ids.includes(d.id))
   return [
-    { key: "rights", ok: rightsOk },
     { key: "text_status", ok: !!primary && (primary.text_status === "ready" || primary.text_status === "no_text") },
     { key: "cover", ok: !!d.cover_url },
     { key: "subjects", ok: (input?.subjects.length ?? 0) > 0 || inCollection },
@@ -309,21 +289,9 @@ function checklistOf(stored: StoredItem): { key: string; ok: boolean }[] {
 
 /** What `params.missing` of `library/rights-incomplete` lists: rights fields, `text_status`, `cover`, `subjects`. */
 function missingOf(stored: StoredItem): string[] {
-  const input = stored.input
   const missing: string[] = []
   for (const check of checklistOf(stored)) {
-    if (check.ok) continue
-    if (check.key === "rights" && input) {
-      missing.push(
-        ...rightsMissing(
-          input.rights,
-          { ...input.rights_basis },
-          { proofFileId: input.rights_proof_file_id, licence: input.licence },
-        ),
-      )
-    } else {
-      missing.push(check.key)
-    }
+    if (!check.ok) missing.push(check.key)
   }
   return missing
 }
@@ -446,7 +414,7 @@ export const libraryManageHandlers = [
     const actor = staffOnly(request)
     if (actor instanceof Response) return actor
     const input = (await readJson<BookInput>(request)) as BookInput
-    const failure = validateBook(input) ?? visibilityConflict(input)
+    const failure = validateBook(input)
     if (failure) return failure
     const stored = newBook({
       ...input,
@@ -465,7 +433,7 @@ export const libraryManageHandlers = [
     const stored = findBook(param(params, "id"))
     if (!stored?.input) return itemNotFound()
     const merged: BookInput = { ...stored.input, ...(await readJson<BookInput>(request)) }
-    const failure = validateBook(merged) ?? visibilityConflict(merged)
+    const failure = validateBook(merged)
     if (failure) return failure
     stored.input = merged
     stored.detail = bookDetail(stored.detail.id ?? "", merged, stored.detail)
@@ -483,8 +451,6 @@ export const libraryManageHandlers = [
     const status = stored.detail.status
     if (action === "publish") {
       if (status === "published") return notEditable({ status, action })
-      const conflict = visibilityConflict(stored.input)
-      if (conflict) return conflict
       const missing = missingOf(stored)
       if (missing.length > 0) {
         return problem(422, "library/rights-incomplete", "The book cannot be published yet", { params: { missing } })

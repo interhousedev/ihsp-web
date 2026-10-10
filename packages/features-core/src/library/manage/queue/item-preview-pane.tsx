@@ -9,7 +9,6 @@ import { useQuery } from "@tanstack/react-query"
 import Link from "next/link"
 import type { ReactNode } from "react"
 import { CoverImage } from "../../catalog/cover-image"
-import { RightsBadge } from "../../catalog/rights-badge"
 import { SourceTag } from "../../catalog/source-tag"
 import { itemHref, readHref } from "../../utils/hrefs"
 
@@ -107,7 +106,6 @@ export function ItemPreviewPane({
               <Badge variant="outline">{queue("kind.suggestion")}</Badge>
             )}
             {detail.data ? <Badge variant="secondary">{status(detail.data.status)}</Badge> : null}
-            {row.item.book ? <RightsBadge rights={row.item.book.rights} licence={row.item.book.licence} /> : null}
           </div>
           <h2 className="text-lg leading-snug font-semibold break-words">{title}</h2>
           {id ? (

@@ -15,11 +15,11 @@ function renderBooks() {
 }
 
 describe("BooksPage", () => {
-  it("lists the books in a table with headers, rights, status, visibility and text status", async () => {
+  it("lists the books in a table with headers, status, visibility and text status", async () => {
     renderBooks()
 
     const table = await screen.findByRole("table")
-    for (const name of ["Title", "Rights", "Status", "Visibility", "Text", "Updated"]) {
+    for (const name of ["Title", "Status", "Visibility", "Text", "Updated"]) {
       expect(within(table).getByRole("columnheader", { name: new RegExp(`^${name}`) })).toBeInTheDocument()
     }
     expect(within(table).getByRole("link", { name: /Physics 10: Mechanics/ })).toHaveAttribute(

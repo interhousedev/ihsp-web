@@ -296,61 +296,7 @@
         "titleRequired": "Nomini yozing.",
         "authorsRequired": "Kamida bitta muallif qoʻshing.",
         "yearInvalid": "Yilni toʻrt raqamgacha yozing.",
-        "notYetPublic": "Bu asar hali ommaviy mulk emas. U {year}-yil 1-yanvardan erkin boʻladi.",
-        "urlInvalid": "https:// bilan boshlanuvchi toʻliq manzilni kiriting.",
-        "dateInvalid": "Sana formatidan foydalaning: YYYY-MM-DD.",
         "rangeInvalid": "Birinchi bet oxirgi betdan keyin boʻlmasligi kerak."
-      },
-      "rights": {
-        "title": "Huquqlar",
-        "intro": "Huquq sinfi va uning asosisiz kitobni eʼlon qilib boʻlmaydi.",
-        "class": {
-          "label": "Huquq sinfi",
-          "public_domain": {
-            "label": "Ommaviy mulk",
-            "hint": "Muallif 70 yildan ortiq oldin vafot etgan, yoki nomsiz asar 50 yildan ortiq oldin birinchi marta nashr etilgan, yoki rasmiy hujjat yoki folklor."
-          },
-          "open_license": {
-            "label": "Ochiq litsenziya",
-            "hint": "CC BY, CC BY-SA, CC BY-NC, CC BY-NC-SA, CC0 va shunga oʻxshashlar."
-          },
-          "permission": {
-            "label": "Huquq egasining ruxsati",
-            "hint": "Huquq egasi litseyga joylashga ruxsat bergan. Faqat litsey uchun."
-          },
-          "official": {
-            "label": "Rasmiy darslik",
-            "hint": "Vazirlik yoki davlat nashriyotining hujjatlashtirilgan asosli darsligi. Faqat litsey uchun."
-          }
-        },
-        "basis": {
-          "label": "Nima uchun kitob erkin?",
-          "death": "Muallifning vafot etgan yili",
-          "anonymous": "Nomsiz asar: birinchi nashr yili",
-          "other": "Rasmiy hujjat yoki folklor (yilsiz)"
-        },
-        "deathYear": "Muallif vafot etgan yil",
-        "firstPublishedYear": "Birinchi nashr yili",
-        "since": "{year}-yildan ommaviy mulk",
-        "rule": "Qoʻllangan qoida",
-        "ruleHint": "Masalan: muallif 1938-yilda vafot etgan, shuning uchun asar 2009-yil 1-yanvardan erkin.",
-        "licence": "Litsenziya",
-        "licenceHint": "Roʻyxatdan tanlang yoki kodni yozing, masalan CC BY-SA 4.0.",
-        "sourceUrl": "Litsenziya matniga havola",
-        "sourceUrlHint": "Manbadagi litsenziya koʻrsatilgan sahifa.",
-        "attribution": "Mualliflikni koʻrsatish matni",
-        "attributionHint": "Litsenziya talab qilganidek, kitob bilan birga koʻrsatiladi.",
-        "proof": "Ruxsat isboti",
-        "proofHint": "Yozma ruxsatni yuklang (PDF yoki surat).",
-        "proofChoose": "Isbotni tanlash",
-        "proofAttached": "Isbot biriktirildi: {name}",
-        "proofOnFile": "Ruxsat isboti saqlangan.",
-        "scope": "Ruxsat doirasi",
-        "scopeHint": "Huquq egasi nimaga ruxsat bergan, masalan litsey aʼzolari uchun joylash.",
-        "expiry": "Ruxsat amal qilish muddati",
-        "expiryHint": "Eslatma 60 kun oldin yuboriladi.",
-        "reference": "Asosga havola",
-        "referenceHint": "Vazirlik buyrugʻi yoki nashriyot ruxsati."
       },
       "visibility": {
         "label": "Kitobni kim koʻradi",
@@ -358,9 +304,9 @@
         "lyceumHint": "Tizimga kirgan litsey foydalanuvchilari.",
         "public": "Hamma uchun",
         "publicHint": "Internetdagi istalgan kishi.",
-        "lyceumOnly": "Bu huquq sinfini faqat litsey foydalanuvchilariga koʻrsatish mumkin.",
         "download": "Yuklab olishga ruxsat",
-        "downloadHint": "Oʻquvchilar faylni saqlashi mumkin. Ruxsat yoki asosga amal qiling."
+        "downloadHint": "Oʻquvchilar faylni saqlashi mumkin. Ruxsat yoki asosga amal qiling.",
+        "title": "Kitobni kim koʻradi"
       },
       "checklist": {
         "title": "Eʼlon qilish roʻyxati",
@@ -369,10 +315,6 @@
         "unsaved": "Saqlanmagan oʻzgarishlaringiz uchun koʻrsatilmoqda.",
         "done": "bajarilgan",
         "todo": "bajarish kerak",
-        "rights": {
-          "label": "Huquqlar rasmiylashtirilgan",
-          "hint": "Huquq sinfini tanlang va uning asosini toʻldiring."
-        },
         "text_status": {
           "label": "Fayl tekshirilgan",
           "hint": "PDF yoki EPUB biriktiring va matn tayyor boʻlishini (yoki skan deb belgilanishini) kuting."
@@ -385,18 +327,6 @@
           "label": "Kamida bitta fan bor",
           "hint": "Fan qoʻshing yoki kitobni toʻplamga joylang."
         }
-      },
-      "missing": {
-        "rights_basis_author_death_year": "Muallif vafot etgan yil",
-        "rights_basis_first_published_year": "Birinchi nashr yili",
-        "rights_basis_rule": "Qoʻllangan qoida",
-        "licence": "Litsenziya",
-        "rights_basis_source_url": "Litsenziya matniga havola",
-        "rights_basis_attribution": "Mualliflikni koʻrsatish matni",
-        "rights_proof_file_id": "Ruxsat isboti",
-        "rights_basis_permission_scope": "Ruxsat doirasi",
-        "rights_basis_permission_expires_on": "Ruxsat amal qilish muddati",
-        "rights_basis_reference": "Asosga havola"
       }
     },
     "title": "Kutubxonachi boʻlimi",

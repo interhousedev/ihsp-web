@@ -14,11 +14,11 @@ import { BookFileSection } from "./book-file-section"
 import { BookMetadataFields } from "./book-metadata-fields"
 import { BookSubjectsTopics } from "./book-subjects-topics"
 import { PublishChecklist } from "./publish-checklist"
-import { RightsPanel } from "./rights-panel"
+import { VisibilityPanel } from "./visibility-panel"
 import { useBookEditor } from "./use-book-editor"
 
 /**
- * The book editor (§ 3.4, § 9.2): file and cover, metadata, subjects and topics with page ranges, the rights panel,
+ * The book editor (§ 3.4, § 9.2): file and cover, metadata, subjects and topics with page ranges, visibility,
  * visibility and download, the publish checklist, and Save, Publish, Unpublish and Take down. `id === null` is a new
  * book (`initialTitle` prefills the title, for a draft started from a suggestion).
  */
@@ -26,8 +26,7 @@ export function BookEditor({ id, initialTitle = "" }: { id: string | null; initi
   const t = useT("library.manage.editor")
   const status = useT("library.item.status")
   const reasonText = useReasonText()
-  const [today] = useState(() => new Date())
-  const editor = useBookEditor(id, initialTitle, today)
+  const editor = useBookEditor(id, initialTitle)
   const [coverName, setCoverName] = useState<string | null>(null)
 
   if (id !== null && editor.loading) {
@@ -124,9 +123,9 @@ export function BookEditor({ id, initialTitle = "" }: { id: string | null; initi
           <BookSubjectsTopics form={form} issues={issues} disabled={busy} onChange={update} />
         </section>
 
-        <RightsPanel form={form} issues={issues} disabled={busy} today={today} onChange={update} />
+        <VisibilityPanel form={form} disabled={busy} onChange={update} />
 
-        <PublishChecklist items={editor.checklist} missing={editor.missingFields} stale={editor.dirty && id !== null} />
+        <PublishChecklist items={editor.checklist} stale={editor.dirty && id !== null} />
 
         <BookActions
           status={state}
