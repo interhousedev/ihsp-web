@@ -2,7 +2,6 @@
 
 import {
   deleteLessonResource,
-  getMeFilesQuery,
   getMeLessonQuery,
   keys,
   postLessonResources,
@@ -13,11 +12,6 @@ import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query"
 
 export function useLesson(id: string | null) {
   return useQuery({ ...getMeLessonQuery(id ?? ""), enabled: id !== null })
-}
-
-/** Files the student can pick for an attachment: everything in My files. */
-export function useMyFiles(enabled: boolean) {
-  return useQuery({ ...getMeFilesQuery({ limit: 100 }), enabled })
 }
 
 /** `POST /v1/lessons/{id}/resources` as an attachment (WEB-10): a file from My files, a fresh upload or a URL. */

@@ -39,6 +39,35 @@ export type SubjectDetail = {
   materials: ResourceItem[]
 }
 
+export type SubjectLessonRow = {
+  lesson_id: string
+  date: string
+  starts_at: string
+  kind: LessonItem["kind"]
+  topic: string | null
+  mark: number | null
+  attendance: "present" | "absent" | "late" | null
+  materials_count: number
+  past: boolean
+}
+
+export type LessonResult = {
+  lesson_id: string
+  attendance: "present" | "absent" | "late" | null
+  mark: number | null
+}
+
+export type SubjectLessonList = { items: SubjectLessonRow[]; has_more_past: boolean }
+
+/** `around=now`: the latest `past_limit` past lessons (after `past_offset`), then the next `upcoming_days` days. */
+export type SubjectLessonsParams = {
+  around?: "now"
+  semester?: number
+  past_limit?: number
+  past_offset?: number
+  upcoming_days?: number
+}
+
 export type SemesterGrades = {
   semester: number
   gpa: number | null

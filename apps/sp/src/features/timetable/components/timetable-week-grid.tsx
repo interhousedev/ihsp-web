@@ -1,6 +1,6 @@
 "use client"
 
-import type { LessonItem } from "@ihsp/api"
+import type { LessonItem, LessonResult } from "@ihsp/api"
 import { addDays, todayIso, useFormatters, useT } from "@ihsp/i18n"
 import { CalendarGrid, type CalendarGridColumn } from "@ihsp/ui"
 import { lessonsAt, periodsOf } from "../utils/week"
@@ -12,11 +12,13 @@ export function TimetableWeekGrid({
   lessons,
   now,
   showSubgroup,
+  results,
 }: {
   monday: string
   lessons: LessonItem[]
   now: number
   showSubgroup: boolean
+  results?: ReadonlyMap<string, LessonResult>
 }) {
   const t = useT("timetable")
   const f = useFormatters()
@@ -44,7 +46,13 @@ export function TimetableWeekGrid({
       renderCell={(rowKey, columnKey) => (
         <div className="flex flex-col gap-1.5">
           {lessonsAt(lessons, columnKey, Number(rowKey)).map((lesson) => (
-            <TimetableLessonCard key={lesson.id} lesson={lesson} now={now} showSubgroup={showSubgroup} />
+            <TimetableLessonCard
+              key={lesson.id}
+              lesson={lesson}
+              now={now}
+              showSubgroup={showSubgroup}
+              result={results?.get(lesson.id)}
+            />
           ))}
         </div>
       )}

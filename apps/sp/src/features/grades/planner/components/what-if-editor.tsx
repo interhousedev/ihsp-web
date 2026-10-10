@@ -6,7 +6,7 @@ import { Button, Label, NativeSelect, NativeSelectOption } from "@ihsp/ui"
 import { useId, useState } from "react"
 import { PageSection } from "../../../exams/components/page-section"
 import { usePlannerLabels } from "../hooks/use-planner-labels"
-import { MAX_WHAT_IF, WHAT_IF_MARKS, WHAT_IF_TYPES, type WhatIfMark } from "../utils/what-if"
+import { WHAT_IF_MARKS, WHAT_IF_TYPES, type WhatIfMark } from "../utils/what-if"
 import { addWhatIf, canAddWhatIf, removeWhatIf } from "../utils/what-if-list"
 import { WhatIfChips } from "./what-if-chips"
 
@@ -80,7 +80,6 @@ export function WhatIfEditor({ marks, onChange }: { marks: WhatIfMark[]; onChang
           {t("add")}
         </Button>
       </div>
-      {canAdd ? null : <p className="text-muted-foreground text-xs">{t("full", { max: MAX_WHAT_IF })}</p>}
       <WhatIfChips marks={marks} onRemove={(index) => onChange(removeWhatIf(marks, index))} />
     </PageSection>
   )

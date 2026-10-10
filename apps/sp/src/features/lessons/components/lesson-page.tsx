@@ -12,6 +12,7 @@ import { BackLink } from "../../shared/components/back-link"
 import { QueryState } from "../../shared/components/query-state"
 import { useDeleteAttachment, useLesson } from "../hooks/use-lesson"
 import { AddAttachmentDialog } from "./add-attachment-dialog"
+import { LessonActions } from "./lesson-actions"
 import { LessonHeader } from "./lesson-header"
 import { ResourceList } from "./resource-list"
 
@@ -38,6 +39,7 @@ function LessonContent({ data }: { data: StudentLesson }) {
   return (
     <div className="flex flex-col gap-6">
       <LessonHeader lesson={data.lesson} />
+      <LessonActions lesson={data.lesson} />
 
       <Section title={t("materials")}>
         {data.materials.length === 0 ? (

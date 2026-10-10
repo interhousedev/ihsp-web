@@ -252,8 +252,8 @@ describe("what-if marks", () => {
     ).toEqual(["midterm:4", "lesson:5"])
   })
 
-  test("marks run from 2 to 5 and at most 20 can be tried", () => {
+  test("marks run from 2 to 5 and the old 20-mark cap is gone", () => {
     expect(WHAT_IF_MARKS).toEqual([5, 4, 3, 2])
-    expect(MAX_WHAT_IF).toBe(20)
+    expect(MAX_WHAT_IF).toBeGreaterThan(50)
   })
 })

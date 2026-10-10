@@ -69,8 +69,8 @@
       "title": "Yangi baholar",
       "type": {
         "lesson": "Dars",
-        "midterm": "Oraliq nazorat",
-        "final": "Yakuniy"
+        "midterm": "Oraliq nazorat (ON)",
+        "final": "Yakuniy nazorat (YaN)"
       }
     },
     "semester": {
@@ -140,7 +140,7 @@
       "remove": "Oʻchirish",
       "editTile": "Tanlash: {title}",
       "conflict": "Vidjetlar boshqa qurilmada oʻzgartirilgan. Tahrir saqlanmadi, qayta urinib koʻring.",
-      "noLesson": "Bugun boshqa dars yoʻq.",
+      "noLesson": "Keyingi dars yoʻq.",
       "noLessons": "Bugun dars yoʻq.",
       "noExams": "Yaqin orada nazorat yoʻq.",
       "homeworkDue": "bajarish kerak",
@@ -227,8 +227,8 @@
       "averages": "Oʻrtacha baholar",
       "type": {
         "lesson": "Darslar",
-        "midterm": "Oraliq nazorat",
-        "final": "Yakuniy"
+        "midterm": "Oraliq nazorat (ON)",
+        "final": "Yakuniy nazorat (YaN)"
       }
     },
     "lessons": {
@@ -243,13 +243,43 @@
       "type": {
         "all": "Hammasi",
         "lesson": "Dars",
-        "midterm": "Oraliq nazorat",
-        "final": "Yakuniy"
-      }
+        "midterm": "Oraliq nazorat (ON)",
+        "final": "Yakuniy nazorat (YaN)"
+      },
+      "openLesson": "{date} kungi darsni ochish"
     },
     "materials": {
       "search": "Materiallarni qidirish",
       "empty": "Materiallar topilmadi."
+    },
+    "hub": {
+      "title": "Markaz",
+      "notebook": {
+        "title": "Fan daftari",
+        "description": "Yordamchidan shu fanning materiallari va darslari haqida soʻrang.",
+        "open": "Daftarni ochish"
+      },
+      "past": "Soʻnggi darslar",
+      "upcoming": "Keyingi 14 kun",
+      "noUpcoming": "Keyingi 14 kunda dars yoʻq.",
+      "empty": "Hozircha dars yoʻq.",
+      "showMore": "Yana koʻrsatish",
+      "noTopic": "Mavzu hali yoʻq",
+      "askAi": "Bu dars haqida AIdan soʻrash",
+      "question": "{date} kungi dars haqida aytib ber: {topic}",
+      "materials": "{count, plural, one {# material} other {# material}}",
+      "kind": {
+        "lecture": "Maʼruza",
+        "practice": "Amaliyot",
+        "midterm": "Oraliq nazorat (ON)",
+        "final": "Yakuniy nazorat (YaN)",
+        "other": "Dars"
+      },
+      "attendance": {
+        "present": "Qatnashdi",
+        "absent": "Qatnashmadi",
+        "late": "Kechikdi"
+      }
     }
   },
   "lesson": {
@@ -292,7 +322,8 @@
       "noFiles": "“Mening fayllarim”da hali tayyor fayllar yoʻq.",
       "url": "Havola manzili",
       "addLink": "Havola qoʻshish"
-    }
+    },
+    "toSubject": "Fan: {subject}"
   },
   "grades": {
     "title": "Baholar",
@@ -310,8 +341,8 @@
     "semester": {
       "subject": "Fan",
       "lessonAvg": "Darslar",
-      "midtermAvg": "Oraliq",
-      "finalAvg": "Yakuniy",
+      "midtermAvg": "ON",
+      "finalAvg": "YaN",
       "semesterMark": "Semestr",
       "emisRating": "EMIS",
       "gpa": "GPA",
@@ -330,8 +361,8 @@
       "unmatched": "Darssiz baholar",
       "type": {
         "lesson": "Dars",
-        "midterm": "Oraliq nazorat",
-        "final": "Yakuniy"
+        "midterm": "Oraliq nazorat (ON)",
+        "final": "Yakuniy nazorat (YaN)"
       }
     },
     "record": {
@@ -355,7 +386,7 @@
         "title": "Hozirgi baholaringiz",
         "lesson": "Dars baholari",
         "midterm": "Oraliq nazoratlar",
-        "final": "Yakuniy",
+        "final": "Yakuniy nazorat (YaN)",
         "marks": "{count, plural, other {# ta baho}}",
         "average": "oʻrtacha {value}",
         "semesterMark": "Hozirgi semestr bahosi",
@@ -417,11 +448,10 @@
         "empty": "Hali baho qoʻshilmagan.",
         "chip": "{type}: {mark}",
         "remove": "Olib tashlash: {type}, {mark}",
-        "limit": "Eng koʻpi bilan {max} ta baho sinab koʻrish mumkin.",
         "types": {
           "lesson": "Dars",
-          "midterm": "Oraliq nazorat",
-          "final": "Yakuniy"
+          "midterm": "Oraliq nazorat (ON)",
+          "final": "Yakuniy nazorat (YaN)"
         }
       }
     }
@@ -441,8 +471,8 @@
     "kind": {
       "midterm1": "1-oraliq nazorat",
       "midterm2": "2-oraliq nazorat",
-      "midterm": "Oraliq nazorat",
-      "final": "Yakuniy nazorat",
+      "midterm": "Oraliq nazorat (ON)",
+      "final": "Yakuniy nazorat (YaN)",
       "other": "Nazorat"
     },
     "name": "{control} · {subject}",
@@ -528,8 +558,8 @@
     "noSubject": "Rejani Baholar sahifasidagi fandan oching.",
     "type": {
       "lesson": "Darslar",
-      "midterm": "Oraliq",
-      "final": "Yakuniy"
+      "midterm": "Oraliq nazorat (ON)",
+      "final": "Yakuniy nazorat (YaN)"
     },
     "summary": {
       "title": "Baholaringiz",
@@ -593,16 +623,15 @@
       "markLabel": "Baho",
       "types": {
         "lesson": "Dars",
-        "midterm": "Oraliq",
-        "final": "Yakuniy"
+        "midterm": "Oraliq nazorat (ON)",
+        "final": "Yakuniy nazorat (YaN)"
       },
       "add": "Qoʻshish",
       "reset": "Tozalash",
       "list": "Siz sinayotgan baholar",
       "item": "{type} {value}",
       "remove": "Olib tashlash: {type} {value}",
-      "empty": "Hali hech narsa sinalmadi.",
-      "full": "Bir vaqtda koʻpi bilan {max} ta baho sinash mumkin."
+      "empty": "Hali hech narsa sinalmadi."
     }
   },
   "attendance": {

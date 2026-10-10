@@ -9,7 +9,7 @@ import { useState } from "react"
 type TypeFilter = "all" | MarkItem["type"]
 const FILTERS: readonly TypeFilter[] = ["all", "lesson", "midterm", "final"]
 
-/** All marks of the subject with date and type, filterable by type (WEB-13). */
+/** All marks of the subject with date and type, filterable by type (WEB-13); a mark opens its lesson. */
 export function SubjectMarksTab({ detail }: { detail: SubjectDetail }) {
   const t = useT("subjects.marks")
   const f = useFormatters()
@@ -45,7 +45,17 @@ export function SubjectMarksTab({ detail }: { detail: SubjectDetail }) {
               key={`${mark.date}-${mark.type}-${index}`}
               className="flex min-h-11 items-center gap-3 rounded-lg border p-2"
             >
-              <MarkBadge mark={mark.value} size="lg" />
+              {mark.lesson_id ? (
+                <Link
+                  href={`/lessons/view/?id=${encodeURIComponent(mark.lesson_id)}`}
+                  aria-label={t("openLesson", { date: f.date(mark.date, { day: "numeric", month: "long" }) })}
+                  className="focus-visible:ring-ring flex min-h-11 items-center rounded-md outline-none focus-visible:ring-2"
+                >
+                  <MarkBadge mark={mark.value} size="lg" />
+                </Link>
+              ) : (
+                <MarkBadge mark={mark.value} size="lg" />
+              )}
               <span className="min-w-0 flex-1 text-sm">
                 <span className="font-medium">{t(`type.${mark.type}`)}</span>
                 <span className="text-muted-foreground block text-xs">

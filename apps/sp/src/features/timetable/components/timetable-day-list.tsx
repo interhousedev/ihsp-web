@@ -1,6 +1,6 @@
 "use client"
 
-import type { LessonItem } from "@ihsp/api"
+import type { LessonItem, LessonResult } from "@ihsp/api"
 import { addDays, todayIso, useFormatters, useT } from "@ihsp/i18n"
 import { Button, StateView, cn } from "@ihsp/ui"
 import { lessonsOn } from "../utils/week"
@@ -14,6 +14,7 @@ export function TimetableDayList({
   lessons,
   now,
   showSubgroup,
+  results,
 }: {
   monday: string
   day: string
@@ -21,6 +22,7 @@ export function TimetableDayList({
   lessons: LessonItem[]
   now: number
   showSubgroup: boolean
+  results?: ReadonlyMap<string, LessonResult>
 }) {
   const t = useT("timetable")
   const f = useFormatters()
@@ -54,7 +56,13 @@ export function TimetableDayList({
         <ul className="flex flex-col gap-2">
           {items.map((lesson) => (
             <li key={lesson.id}>
-              <TimetableLessonCard lesson={lesson} now={now} showTime showSubgroup={showSubgroup} />
+              <TimetableLessonCard
+                lesson={lesson}
+                now={now}
+                showTime
+                showSubgroup={showSubgroup}
+                result={results?.get(lesson.id)}
+              />
             </li>
           ))}
         </ul>

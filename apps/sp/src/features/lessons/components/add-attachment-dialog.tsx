@@ -1,7 +1,7 @@
 "use client"
 
 import type { FileItem } from "@ihsp/api"
-import { FileUploadButton } from "@ihsp/features-core"
+import { FilePicker, FileUploadButton } from "@ihsp/features-core"
 import { useErrorMessage, useT } from "@ihsp/i18n"
 import {
   Button,
@@ -13,15 +13,13 @@ import {
   DialogTrigger,
   Icons,
   Input,
-  StateView,
   Tabs,
   TabsContent,
   TabsList,
   TabsTrigger,
 } from "@ihsp/ui"
 import { useState } from "react"
-import { formatBytes } from "../../shared/utils/format-bytes"
-import { useAddAttachment, useMyFiles } from "../hooks/use-lesson"
+import { useAddAttachment } from "../hooks/use-lesson"
 
 /**
  * "Add attachment" (WEB-10, UF-WEB-07): a file (upload or pick from My files) or a link, for lessons of the
@@ -33,7 +31,6 @@ export function AddAttachmentDialog({ lessonId }: { lessonId: string }) {
   const [open, setOpen] = useState(false)
   const [url, setUrl] = useState("")
   const add = useAddAttachment(lessonId)
-  const files = useMyFiles(open)
 
   function finish() {
     setOpen(false)
@@ -48,8 +45,6 @@ export function AddAttachmentDialog({ lessonId }: { lessonId: string }) {
   function attachUrl() {
     add.mutate({ kind: "url", target_url: url.trim() }, { onSuccess: finish })
   }
-
-  const ready = files.data?.items.filter((file) => file.status === "ready") ?? []
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>
@@ -74,23 +69,7 @@ export function AddAttachmentDialog({ lessonId }: { lessonId: string }) {
           <TabsContent value="file" className="flex flex-col gap-3 pt-3">
             <FileUploadButton purpose="link" onUploaded={attachFile} label={t("upload")} />
             <p className="text-sm font-medium">{t("pickFromFiles")}</p>
-            {files.isPending ? <StateView state="loading" rows={2} /> : null}
-            {files.isSuccess && ready.length === 0 ? <StateView state="empty" emptyText={t("noFiles")} /> : null}
-            <ul className="flex max-h-56 flex-col gap-1 overflow-y-auto">
-              {ready.map((file) => (
-                <li key={file.id}>
-                  <Button
-                    variant="ghost"
-                    className="h-auto min-h-11 w-full justify-between gap-3 py-2 text-left"
-                    disabled={add.isPending}
-                    onClick={() => attachFile(file)}
-                  >
-                    <span className="min-w-0 truncate">{file.name}</span>
-                    <span className="text-muted-foreground shrink-0 text-xs">{formatBytes(file.byte_size)}</span>
-                  </Button>
-                </li>
-              ))}
-            </ul>
+            <FilePicker onPick={attachFile} disabled={add.isPending} enabled={open} />
           </TabsContent>
           <TabsContent value="link" className="pt-3">
             <form

@@ -69,8 +69,8 @@
       "title": "New marks",
       "type": {
         "lesson": "Lesson",
-        "midterm": "Midterm",
-        "final": "Final"
+        "midterm": "Midterm (PC)",
+        "final": "Final (FC)"
       }
     },
     "semester": {
@@ -140,7 +140,7 @@
       "remove": "Remove",
       "editTile": "Select {title}",
       "conflict": "The widgets were changed on another device. Your edit was not saved; try again.",
-      "noLesson": "No more lessons today.",
+      "noLesson": "Nothing up next.",
       "noLessons": "No lessons today.",
       "noExams": "No controls soon.",
       "homeworkDue": "to do",
@@ -227,8 +227,8 @@
       "averages": "Averages",
       "type": {
         "lesson": "Lessons",
-        "midterm": "Midterm",
-        "final": "Final"
+        "midterm": "Midterm (PC)",
+        "final": "Final (FC)"
       }
     },
     "lessons": {
@@ -243,13 +243,43 @@
       "type": {
         "all": "All",
         "lesson": "Lesson",
-        "midterm": "Midterm",
-        "final": "Final"
-      }
+        "midterm": "Midterm (PC)",
+        "final": "Final (FC)"
+      },
+      "openLesson": "Open the lesson of {date}"
     },
     "materials": {
       "search": "Search materials",
       "empty": "No materials found."
+    },
+    "hub": {
+      "title": "Hub",
+      "notebook": {
+        "title": "Subject notebook",
+        "description": "Ask the assistant about this subject's materials and lessons.",
+        "open": "Open notebook"
+      },
+      "past": "Recent lessons",
+      "upcoming": "Next 14 days",
+      "noUpcoming": "No lessons in the next 14 days.",
+      "empty": "No lessons yet.",
+      "showMore": "Show more",
+      "noTopic": "No topic yet",
+      "askAi": "Ask AI about this lesson",
+      "question": "Tell me about the lesson on {date}: {topic}",
+      "materials": "{count, plural, one {# material} other {# materials}}",
+      "kind": {
+        "lecture": "Lecture",
+        "practice": "Practice",
+        "midterm": "Midterm (PC)",
+        "final": "Final (FC)",
+        "other": "Lesson"
+      },
+      "attendance": {
+        "present": "Present",
+        "absent": "Absent",
+        "late": "Late"
+      }
     }
   },
   "lesson": {
@@ -292,7 +322,8 @@
       "noFiles": "No ready files in My files yet.",
       "url": "Link address",
       "addLink": "Add link"
-    }
+    },
+    "toSubject": "Subject: {subject}"
   },
   "grades": {
     "title": "Grades",
@@ -310,8 +341,8 @@
     "semester": {
       "subject": "Subject",
       "lessonAvg": "Lessons",
-      "midtermAvg": "Midterm",
-      "finalAvg": "Final",
+      "midtermAvg": "PC",
+      "finalAvg": "FC",
       "semesterMark": "Semester mark",
       "emisRating": "EMIS",
       "gpa": "GPA",
@@ -330,8 +361,8 @@
       "unmatched": "Marks without a lesson",
       "type": {
         "lesson": "Lesson",
-        "midterm": "Midterm",
-        "final": "Final"
+        "midterm": "Midterm (PC)",
+        "final": "Final (FC)"
       }
     },
     "record": {
@@ -355,7 +386,7 @@
         "title": "Your marks now",
         "lesson": "Lesson marks",
         "midterm": "Midterms",
-        "final": "Final",
+        "final": "Final (FC)",
         "marks": "{count, plural, one {# mark} other {# marks}}",
         "average": "average {value}",
         "semesterMark": "Semester mark now",
@@ -417,11 +448,10 @@
         "empty": "No marks added yet.",
         "chip": "{type}: {mark}",
         "remove": "Remove {type}: {mark}",
-        "limit": "You can try up to {max} marks.",
         "types": {
           "lesson": "Lesson",
-          "midterm": "Midterm",
-          "final": "Final"
+          "midterm": "Midterm (PC)",
+          "final": "Final (FC)"
         }
       }
     }
@@ -441,8 +471,8 @@
     "kind": {
       "midterm1": "Midterm 1",
       "midterm2": "Midterm 2",
-      "midterm": "Midterm",
-      "final": "Final",
+      "midterm": "Midterm (PC)",
+      "final": "Final (FC)",
       "other": "Control"
     },
     "name": "{control} · {subject}",
@@ -528,8 +558,8 @@
     "noSubject": "Open the planner from a subject on the Grades page.",
     "type": {
       "lesson": "Lessons",
-      "midterm": "Midterm",
-      "final": "Final"
+      "midterm": "Midterm (PC)",
+      "final": "Final (FC)"
     },
     "summary": {
       "title": "Your marks",
@@ -593,16 +623,15 @@
       "markLabel": "Mark",
       "types": {
         "lesson": "Lesson",
-        "midterm": "Midterm",
-        "final": "Final"
+        "midterm": "Midterm (PC)",
+        "final": "Final (FC)"
       },
       "add": "Add",
       "reset": "Reset",
       "list": "Marks you are trying",
       "item": "{type} {value}",
       "remove": "Remove {type} {value}",
-      "empty": "No marks tried yet.",
-      "full": "You can try up to {max} marks at once."
+      "empty": "No marks tried yet."
     }
   },
   "attendance": {

@@ -2,6 +2,7 @@
 import { afterEach, describe, expect, test } from "bun:test"
 import { apiUrl, emptySearchResults, errorHandlers, searchResults, server, teacherMe } from "@ihsp/test-utils"
 import { getMeToday, getMeTodayQuery } from "@ihsp/api"
+import { studentRoutes, toPaletteResults } from "@ihsp/features-core"
 import { screen, waitFor } from "@testing-library/react"
 import { useQuery } from "@tanstack/react-query"
 import { HttpResponse, http } from "msw"
@@ -13,7 +14,6 @@ import {
   isPersistedQueryKey,
 } from "../features/offline/utils/persisted-queries"
 import { SpShell } from "../features/shell/components/sp-shell"
-import { toPaletteResults } from "../features/shell/utils/search-results"
 import { configureTests, renderSp, setValue, setViewportWidth } from "./helpers"
 
 configureTests()
@@ -26,6 +26,9 @@ const LABELS = {
   homework: "Homework",
   files: "Files",
   flashcardSets: "Flash card sets",
+  notebooks: "Notebooks",
+  marks: "Marks",
+  libraryItems: "Library",
 }
 const FORMAT = { date: (value: string) => value }
 
@@ -102,19 +105,24 @@ describe("app frame", () => {
 
 describe("search", () => {
   test("results are grouped by section and link to their pages", () => {
-    const results = toPaletteResults(searchResults, LABELS, FORMAT)
+    const results = toPaletteResults(searchResults, LABELS, FORMAT, studentRoutes("http://library.localhost"))
 
     expect(results.map((item) => item.section)).toEqual([
       ...Array(1).fill("Subjects"),
       ...Array(searchResults.lessons.length).fill("Lessons"),
       "Homework",
-      "Files",
+      "Marks",
+      "Notebooks",
       "Flash card sets",
+      "Files",
+      "Library",
     ])
+    expect(results.find((item) => item.section === "Notebooks")?.url).toMatch(/^\/notebooks\/view\/\?id=/)
+    expect(results.find((item) => item.section === "Library")?.url).toMatch(/^http:\/\/library\.localhost\/item\/\?id=/)
     expect(results[0]?.url).toMatch(/^\/subjects\/view\/\?id=/)
     expect(results.find((item) => item.section === "Lessons")?.url).toMatch(/^\/lessons\/view\/\?id=/)
     expect(results.find((item) => item.section === "Flash card sets")?.url).toMatch(/^\/flashcards\/set\/\?id=/)
-    expect(toPaletteResults(emptySearchResults, LABELS, FORMAT)).toEqual([])
+    expect(toPaletteResults(emptySearchResults, LABELS, FORMAT, studentRoutes())).toEqual([])
   })
 
   test("typing in the palette searches the server and shows grouped results", async () => {
@@ -136,7 +144,7 @@ describe("search", () => {
     setValue(input, "phys")
 
     await waitFor(() => expect(queries).toEqual(["phys"]))
-    for (const heading of ["Subjects", "Lessons", "Homework", "Files", "Flash card sets"]) {
+    for (const heading of ["Subjects", "Lessons", "Homework", "Marks", "Notebooks", "Flash card sets", "Files"]) {
       expect((await screen.findAllByText(heading)).length).toBeGreaterThan(0)
     }
   })

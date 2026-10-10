@@ -99,11 +99,12 @@ describe("what-if marks", () => {
     expect(removeWhatIf(marks, 7)).toEqual(marks)
   })
 
-  test("at most 20 marks fit; the 21st is refused", () => {
+  test("50 marks are accepted; only a high safety limit stops the list", () => {
+    const many = Array.from({ length: 50 }, () => ({ type: "lesson", value: 5 }) as WhatIfMark)
     const full = Array.from({ length: MAX_WHAT_IF }, () => ({ type: "lesson", value: 5 }) as WhatIfMark)
-    expect(canAddWhatIf(marks)).toBe(true)
+    expect(canAddWhatIf(many)).toBe(true)
+    expect(addWhatIf(many, { type: "final", value: 2 })).toHaveLength(51)
     expect(canAddWhatIf(full)).toBe(false)
-    expect(addWhatIf(full, { type: "final", value: 2 })).toHaveLength(MAX_WHAT_IF)
   })
 
   test("the request lists them as type:value in the order they were added", () => {

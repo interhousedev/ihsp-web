@@ -156,7 +156,7 @@ describe("NotificationSettingsForm", () => {
     const bodies = recordPatches()
     const { user } = renderSp(<NotificationSettingsForm roles={["student"]} />)
 
-    await user.click(await screen.findByRole("checkbox", { name: "Final" }))
+    await user.click(await screen.findByRole("checkbox", { name: "Final (FC)" }))
     await waitFor(() => expect(bodies).toEqual([{ marks_types: ["lesson", "midterm"] }]))
     await user.click(screen.getByRole("checkbox", { name: "2" }))
 

@@ -10,7 +10,10 @@ import type {
   SemesterGrades,
   SemesterParams,
   SubjectCard,
+  LessonResult,
   SubjectDetail,
+  SubjectLessonList,
+  SubjectLessonsParams,
   SyncRunBody,
   SyncRunItem,
   SyncRunsParams,
@@ -38,6 +41,36 @@ export const getMeSubjectQuery = (subjectId: string, params?: SemesterParams) =>
   queryOptions({
     queryKey: keys.me.subject(subjectId, params),
     queryFn: ({ signal }) => getMeSubject(subjectId, params, { signal }),
+  })
+
+/** GET /v1/me/subjects/{subject_id}/lessons?around=now — student; the subject hub list. */
+export function getMeSubjectLessons(
+  subjectId: string,
+  params?: SubjectLessonsParams,
+  opts?: RequestOptions,
+): Promise<SubjectLessonList> {
+  return api.get<SubjectLessonList>(`/v1/me/subjects/${seg(subjectId)}/lessons`, {
+    ...opts,
+    query: { around: "now", ...params },
+  })
+}
+export const getMeSubjectLessonsQuery = (subjectId: string, params?: SubjectLessonsParams) =>
+  queryOptions({
+    queryKey: keys.me.subjectLessons(subjectId, params),
+    queryFn: ({ signal }) => getMeSubjectLessons(subjectId, params, { signal }),
+  })
+
+/** GET /v1/me/lesson-results?from&to — student; attendance and mark of lessons that already started (calendar dots). */
+export function getMeLessonResults(
+  params: { from: string; to: string },
+  opts?: RequestOptions,
+): Promise<LessonResult[]> {
+  return api.get<LessonResult[]>("/v1/me/lesson-results", { ...opts, query: params })
+}
+export const getMeLessonResultsQuery = (params: { from: string; to: string }) =>
+  queryOptions({
+    queryKey: keys.me.lessonResults(params),
+    queryFn: ({ signal }) => getMeLessonResults(params, { signal }),
   })
 
 /** GET /v1/me/grades?semester — student. */

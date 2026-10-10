@@ -1,8 +1,8 @@
 "use client"
 
-import type { LessonItem } from "@ihsp/api"
+import type { LessonItem, LessonResult } from "@ihsp/api"
 import { useFormatters, useT } from "@ihsp/i18n"
-import { Badge, cn } from "@ihsp/ui"
+import { Badge, MarkBadge, cn } from "@ihsp/ui"
 import Link from "next/link"
 import { describeChanges } from "../../shared/utils/describe-changes"
 import { isLessonNow } from "../../shared/utils/period-times"
@@ -18,6 +18,7 @@ export function TimetableLessonCard({
   now,
   showTime = false,
   showSubgroup = false,
+  result,
 }: {
   lesson: LessonItem
   now: number
@@ -25,13 +26,18 @@ export function TimetableLessonCard({
   showTime?: boolean
   /** The student has no subgroup, so lessons of both subgroups are listed and marked (UF-WEB-03 1a). */
   showSubgroup?: boolean
+  /** Attendance and mark; shown only for lessons that started before `now`. */
+  result?: LessonResult
 }) {
   const t = useT("timetable")
+  const ta = useT("attendanceStates")
   const f = useFormatters()
   const cancelled = lesson.status === "cancelled"
   const current = isLessonNow(lesson, now)
   const changes = describeChanges(lesson.changes)
   const subgroups = showSubgroup ? subgroupsOf(lesson) : []
+  const started = Date.parse(lesson.starts_at) < now
+  const shown = started && !cancelled ? result : undefined
 
   return (
     <Link
@@ -59,6 +65,17 @@ export function TimetableLessonCard({
           .join(" · ")}
       </span>
       {lesson.topic ? <span className="text-muted-foreground line-clamp-2 text-xs">{lesson.topic}</span> : null}
+      {shown && (shown.attendance !== null || shown.mark !== null) ? (
+        <span className="flex items-center gap-2" data-testid="lesson-result">
+          {shown.attendance === "present" ? (
+            <span className="size-2.5 rounded-full bg-green-600" role="img" aria-label={ta("present")} />
+          ) : null}
+          {shown.attendance === "absent" ? (
+            <span className="size-2.5 rounded-full bg-red-600" role="img" aria-label={ta("absent")} />
+          ) : null}
+          {shown.mark !== null ? <MarkBadge mark={shown.mark} size="sm" /> : null}
+        </span>
+      ) : null}
       <span className="flex flex-wrap gap-1">
         {cancelled ? <Badge variant="destructive">{t("cancelled")}</Badge> : null}
         {current ? <Badge>{t("now")}</Badge> : null}

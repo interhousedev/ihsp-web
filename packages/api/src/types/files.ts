@@ -41,7 +41,17 @@ export type FileRenameBody = { name: string }
 /** Where the deleted file was used. */
 export type FileDeleteResponse = { used_by: UsedBy[] }
 
-export type MyFilesParams = PageParams & { purpose?: "ai_upload" | "link" | "mail" }
+export type FileTypeFilter = "pdf" | "doc" | "sheet" | "slides" | "text" | "image"
+
+/** `page`/`page_size` give numbered paging (`next_cursor` is then the next page number). */
+export type MyFilesParams = PageParams & {
+  purpose?: "ai_upload" | "link" | "mail"
+  q?: string
+  type?: FileTypeFilter
+  sort?: "recent" | "older"
+  page?: number
+  page_size?: number
+}
 
 export type StorageInfo = {
   used_bytes: number

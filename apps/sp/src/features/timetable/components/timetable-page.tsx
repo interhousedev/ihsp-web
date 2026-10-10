@@ -1,10 +1,11 @@
 "use client"
 
-import { getMeProfileQuery, getMeTimetableQuery } from "@ihsp/api"
+import { getMeLessonResultsQuery, getMeProfileQuery, getMeTimetableQuery } from "@ihsp/api"
 import { useT } from "@ihsp/i18n"
 import { Alert, AlertDescription, PageContainer, useIsMobile } from "@ihsp/ui"
 import { useQuery } from "@tanstack/react-query"
 import { parseAsString, useQueryState } from "nuqs"
+import { useMemo } from "react"
 import { CalendarFeedDialog } from "../../calendar-feed/components/calendar-feed-dialog"
 import { QueryState } from "../../shared/components/query-state"
 import { useNow } from "../../shared/hooks/use-now"
@@ -26,6 +27,8 @@ export function TimetablePage() {
   const monday = mondayOf(weekParam)
   const day = selectedDay(monday, dayParam)
   const query = useQuery(getMeTimetableQuery(weekRange(monday)))
+  const resultRows = useQuery(getMeLessonResultsQuery(weekRange(monday))).data
+  const results = useMemo(() => new Map((resultRows ?? []).map((row) => [row.lesson_id, row])), [resultRows])
   const profile = useQuery(getMeProfileQuery())
   const subgroupUnset = profile.data?.subgroup === null
 
@@ -56,11 +59,12 @@ export function TimetablePage() {
                   lessons={lessons}
                   now={now}
                   showSubgroup={hint}
+                  results={results}
                 />
               ) : lessons.length === 0 ? (
                 <p className="text-muted-foreground text-sm">{t("noLessonsWeek")}</p>
               ) : (
-                <TimetableWeekGrid monday={monday} lessons={lessons} now={now} showSubgroup={hint} />
+                <TimetableWeekGrid monday={monday} lessons={lessons} now={now} showSubgroup={hint} results={results} />
               )}
             </>
           )

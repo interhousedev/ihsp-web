@@ -427,7 +427,7 @@ describe("what-if marks", () => {
 
       addMark("final", 4)
 
-      expect(await screen.findByText("Final 4")).toBeInTheDocument()
+      expect(await screen.findByText("Final (FC) 4")).toBeInTheDocument()
       await waitFor(() => expect(requests.urls).toHaveLength(2))
       expect(whatIfOf(requests.urls[1])).toEqual(["final:4"])
       expect(screen.queryByText("No marks tried yet.")).not.toBeInTheDocument()
@@ -442,7 +442,7 @@ describe("what-if marks", () => {
       await renderPlanner()
 
       addMark("midterm", 5)
-      await screen.findByText("Midterm 5")
+      await screen.findByText("Midterm (PC) 5")
       addMark("lesson", 3)
       await screen.findByText("Lesson 3")
 
@@ -468,17 +468,17 @@ describe("what-if marks", () => {
     try {
       await renderPlanner()
       addMark("midterm", 5)
-      await screen.findByText("Midterm 5")
+      await screen.findByText("Midterm (PC) 5")
       addMark("final", 2)
-      await screen.findByText("Final 2")
+      await screen.findByText("Final (FC) 2")
       await waitFor(() => expect(requests.urls).toHaveLength(3))
 
-      fireEvent.click(screen.getByRole("button", { name: "Remove Midterm 5" }))
+      fireEvent.click(screen.getByRole("button", { name: "Remove Midterm (PC) 5" }))
 
-      await waitFor(() => expect(screen.queryByText("Midterm 5")).not.toBeInTheDocument())
+      await waitFor(() => expect(screen.queryByText("Midterm (PC) 5")).not.toBeInTheDocument())
       await waitFor(() => expect(requests.urls).toHaveLength(4))
       expect(whatIfOf(requests.urls[3])).toEqual(["final:2"])
-      expect(screen.getByText("Final 2")).toBeInTheDocument()
+      expect(screen.getByText("Final (FC) 2")).toBeInTheDocument()
     } finally {
       requests.stop()
     }
@@ -501,9 +501,9 @@ describe("what-if marks", () => {
     try {
       await renderPlanner()
       addMark("midterm", 3)
-      await screen.findByText("Midterm 3")
+      await screen.findByText("Midterm (PC) 3")
       addMark("final", 3)
-      await screen.findByText("Final 3")
+      await screen.findByText("Final (FC) 3")
       await waitFor(() => expect(requests.urls).toHaveLength(3))
 
       fireEvent.click(screen.getByRole("button", { name: "Reset" }))
@@ -556,7 +556,7 @@ describe("what-if marks", () => {
     addMark("final", 2)
 
     // The old prediction is still there, marked busy, and no loading placeholder replaced the page.
-    await screen.findByText("Final 2")
+    await screen.findByText("Final (FC) 2")
     expect(screen.getByTestId("planner-predicted")).toHaveTextContent("4.56")
     expect(screen.getByTestId("planner-predicted").closest("[aria-live]")).toHaveAttribute("aria-busy", "true")
     expect(screen.getByRole("heading", { level: 1, name: "Mathematics" })).toBeInTheDocument()
@@ -576,19 +576,19 @@ describe("what-if marks", () => {
 
     addMark("final", 2)
 
-    const remove = await screen.findByRole("button", { name: "Remove Final 2" })
+    const remove = await screen.findByRole("button", { name: "Remove Final (FC) 2" })
     await waitFor(() => expect(screen.queryByTestId("planner-predicted")).not.toBeInTheDocument())
     fireEvent.click(remove)
     expect(await screen.findByTestId("planner-predicted")).toHaveTextContent("4.56")
   })
 
-  test("at most 20 marks fit: the 21st cannot be added", async () => {
+  test("there is no 20-mark cap: 25 marks can be tried and Add stays enabled", async () => {
     await renderPlanner()
-    for (let index = 0; index < 20; index++) addMark("lesson", 5)
+    for (let index = 0; index < 25; index++) addMark("lesson", 5)
 
-    await waitFor(() => expect(screen.getAllByRole("button", { name: "Remove Lesson 5" })).toHaveLength(20))
-    expect(screen.getByRole("button", { name: "Add" })).toBeDisabled()
-    expect(screen.getByText("You can try up to 20 marks at once.")).toBeInTheDocument()
+    await waitFor(() => expect(screen.getAllByRole("button", { name: "Remove Lesson 5" })).toHaveLength(25))
+    expect(screen.getByRole("button", { name: "Add" })).not.toBeDisabled()
+    expect(screen.queryByText(/marks at once/)).not.toBeInTheDocument()
   })
 })
 

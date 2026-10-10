@@ -51,7 +51,7 @@ describe("subjects page", () => {
 
 describe("subject page", () => {
   test("Overview shows teachers, semester mark, EMIS rating, absence rate and the three averages", async () => {
-    renderSp(<SubjectPage />, { route: PHYSICS })
+    renderSp(<SubjectPage />, { route: `${PHYSICS}&tab=overview` })
 
     expect(await screen.findByRole("heading", { name: "Physics" })).toBeInTheDocument()
     expect(screen.getByText("Semester 4")).toBeInTheDocument()
@@ -61,15 +61,12 @@ describe("subject page", () => {
     expect(screen.getByText("Averages")).toBeInTheDocument()
   })
 
-  test("Lessons lists the lessons newest first with topic, attendance and homework", async () => {
-    renderSp(<SubjectPage />, { route: `${PHYSICS}&tab=lessons` })
+  test("the hub opens first and lists lessons around now with their topic", async () => {
+    renderSp(<SubjectPage />, { route: PHYSICS })
 
-    const links = await screen.findAllByRole("link", { name: /Physics|topic|No topic/ })
-    const dates = links.map((link) => link.textContent ?? "")
-
-    expect(dates.length).toBe(subjectDetailPhysics.lessons.length)
-    expect(screen.getByText("Solve problems 14-17 on page 52")).toBeInTheDocument()
-    expect(screen.getAllByText("Not taken yet").length).toBeGreaterThan(0)
+    expect(await screen.findByRole("region", { name: "Recent lessons" })).toBeInTheDocument()
+    expect(screen.getByRole("region", { name: "Next 14 days" })).toBeInTheDocument()
+    expect(screen.getAllByText(/topic of/).length).toBeGreaterThan(0)
   })
 
   test("Marks can be filtered by type", async () => {
@@ -77,7 +74,7 @@ describe("subject page", () => {
 
     const all = await screen.findAllByRole("listitem")
     expect(all).toHaveLength(subjectDetailPhysics.marks.length)
-    await user.click(screen.getByRole("button", { name: "Midterm" }))
+    await user.click(screen.getByRole("button", { name: "Midterm (PC)" }))
 
     await waitFor(() => expect(screen.getAllByRole("listitem")).toHaveLength(1))
   })
