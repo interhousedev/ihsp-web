@@ -16,6 +16,7 @@ import { broadcastLogout } from "./channel"
 import { holdLogin, loginHeld, releaseLoginHold } from "./login-hold"
 import { AuthError } from "./errors"
 import { navigation } from "./navigation"
+import { clearSessionHint, hasSessionHint, setSessionHint } from "./session-hint"
 import { codeChallengeS256, generateCodeVerifier, randomString } from "./pkce"
 import { getSession, resetAuthStore, useAuthStore } from "./store"
 
@@ -165,6 +166,7 @@ async function establishSession(response: TokenResponse): Promise<void> {
     throw new AuthError("no-session", cause instanceof Error ? cause.message : null)
   }
   store.setAuthenticated()
+  setSessionHint()
 }
 
 // - - - Login (authorization code + PKCE) - - -
@@ -286,6 +288,7 @@ async function exchangeCookie(): Promise<boolean> {
     if (hadUser) {
       applyToken(response)
       useAuthStore.getState().setAuthenticated()
+      setSessionHint()
     } else {
       await establishSession(response)
     }
@@ -342,7 +345,8 @@ export function bootstrapSession(): Promise<void> {
   // The callback page owns the session: it signs in with the code. A refresh next to it would race with the exchange.
   if (window.location.pathname.startsWith(CALLBACK_PATH)) return Promise.resolve()
   bootstrapInflight ??= (async () => {
-    const ok = await refresh()
+    // Never signed in here (no hint) and not a mini app: the refresh would only produce a 401.
+    const ok = !isMiniApp() && !hasSessionHint() ? false : await refresh()
     const store = useAuthStore.getState()
     if (!ok && !store.networkError && store.status === "loading") store.setAnonymous()
   })()
@@ -362,6 +366,7 @@ export function retryBootstrap(): Promise<void> {
 export async function logout(): Promise<void> {
   const { logout_url } = await postOauthLogout({ client_id: getConfig().OAUTH_CLIENT_ID })
   holdLogin(LOGOUT_HOLD_MS)
+  clearSessionHint()
   useAuthStore.getState().clear()
   broadcastLogout()
   navigation.assign(logout_url)

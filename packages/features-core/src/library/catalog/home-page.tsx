@@ -20,7 +20,6 @@ import { browseHref, collectionHref, listsHref } from "../utils/hrefs"
 import { ContinueRow } from "./continue-row"
 import { CoverImage } from "./cover-image"
 import { ItemGrid } from "./item-grid"
-import { SignInLink } from "./sign-in-link"
 
 function SectionTitle({ id, children, href, more }: { id: string; children: string; href?: string; more?: string }) {
   return (
@@ -109,7 +108,7 @@ export function LibraryHomePage() {
       {status === "anonymous" ? (
         <section
           aria-labelledby="home-signin-title"
-          className="bg-muted/40 flex flex-wrap items-center justify-between gap-3 rounded-xl border p-4"
+          className="bg-muted/40 flex flex-col gap-1 rounded-xl border p-4"
         >
           <div>
             <h2 id="home-signin-title" className="font-semibold">
@@ -117,7 +116,6 @@ export function LibraryHomePage() {
             </h2>
             <p className="text-muted-foreground text-sm">{t("signInText")}</p>
           </div>
-          <SignInLink variant="default" />
         </section>
       ) : null}
 

@@ -16,14 +16,16 @@ export type UniLibraryAvailability = "loading" | "enabled" | "disabled"
  * service is down", so the source stays visible and its blocks show their own saved-results or error state.
  */
 export function useUniLibraryAvailability(): UniLibraryAvailability {
-  const { status } = useLibraryAccess()
+  const { status, signedIn } = useLibraryAccess()
   const query = useQuery({
     ...getUniLibraryTaxonomiesQuery(),
     // After the session restore, so the probe carries the token when there is one.
-    enabled: status !== "loading",
+    enabled: signedIn,
     retry: false,
     staleTime: 5 * 60_000,
   })
+  // The route needs a login (a visitor would only get 401), so a visitor never sees UniLibrary parts.
+  if (status === "anonymous") return "disabled"
   if (query.isSuccess) return "enabled"
   if (query.isError) {
     return isApiError(query.error) && query.error.type === "library/external-unavailable" ? "enabled" : "disabled"

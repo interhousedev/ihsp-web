@@ -1,7 +1,7 @@
 "use client"
 
 import type { Role } from "@ihsp/api"
-import { hasRole, useSession } from "@ihsp/auth"
+import { hasRole, useSession, useSilentSignIn } from "@ihsp/auth"
 import { useMemo } from "react"
 
 export type LibraryAccess = {
@@ -28,6 +28,7 @@ export type LibraryAccess = {
  */
 export function useLibraryAccess(): LibraryAccess {
   const { status, session } = useSession()
+  useSilentSignIn()
   const roles = session?.user.roles
   return useMemo(() => {
     const list: readonly Role[] = roles ?? []

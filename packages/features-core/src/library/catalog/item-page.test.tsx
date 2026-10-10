@@ -75,6 +75,13 @@ describe("ItemPage: book", () => {
     await waitFor(() => expect(screen.getByRole("button", { name: "Sign in to read this item." })).toBeInTheDocument())
   })
 
+  it("shows a signed-in user a plain not-found state for a missing item, without Sign in", async () => {
+    renderItem("00000000-0000-0000-0000-000000000000")
+
+    expect(await screen.findByText("This item is not available")).toBeInTheDocument()
+    expect(screen.queryByRole("button", { name: "Sign in to read this item." })).not.toBeInTheDocument()
+  })
+
   it("has no accessibility violations", async () => {
     const { container } = renderItem(libIds.bookPhysics10)
     await screen.findByRole("heading", { level: 1, name: libDetails.bookPhysics10.title })

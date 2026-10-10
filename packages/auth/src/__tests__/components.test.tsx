@@ -11,6 +11,7 @@ import { AuthProvider } from "../auth-provider"
 import { navigation } from "../navigation"
 import { RequireAuth } from "../require-auth"
 import { configureApiClient, login, resetAuthState } from "../session"
+import { clearSessionHint, setSessionHint } from "../session-hint"
 
 const API = "http://localhost:8000"
 const PENDING_KEY = "ihsp.oauth.pending"
@@ -27,6 +28,7 @@ function unauthorized() {
 }
 
 beforeEach(() => {
+  clearSessionHint()
   resetAuthState()
   configureApiClient()
 })
@@ -87,7 +89,30 @@ describe("RequireAuth", () => {
     expect(screen.queryByText("secret")).not.toBeInTheDocument()
   })
 
+  it("sends no refresh request when this browser never signed in, but goes to the login", async () => {
+    let refreshes = 0
+    server.use(
+      http.post(`${API}/v1/oauth/refresh`, () => {
+        refreshes += 1
+        return unauthorized()
+      }),
+    )
+    const replace = spyOn(navigation, "replace").mockImplementation(() => undefined)
+    render(
+      <Providers>
+        <AuthProvider>
+          <RequireAuth>
+            <p>secret</p>
+          </RequireAuth>
+        </AuthProvider>
+      </Providers>,
+    )
+    await waitFor(() => expect(replace).toHaveBeenCalled())
+    expect(refreshes).toBe(0)
+  })
+
   it("shows the page without any redirect when the refresh cookie is good", async () => {
+    setSessionHint()
     server.use(http.post(`${API}/v1/oauth/refresh`, () => HttpResponse.json(refreshedTokenResponse)))
     const replace = spyOn(navigation, "replace").mockImplementation(() => undefined)
 

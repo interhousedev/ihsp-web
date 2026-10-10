@@ -1,5 +1,5 @@
 import { describe, expect, it } from "bun:test"
-import { libCards, libExternalCards, setUniLibrary } from "@ihsp/test-utils"
+import { libCards, libExternalCards, server, setUniLibrary } from "@ihsp/test-utils"
 import { screen, waitFor } from "@testing-library/react"
 import { allowSlowRenders, renderLibrary, renderLibraryAnonymous } from "../test-support"
 import { useUniLibraryAvailability, useVisibleCards } from "./use-uni-library"
@@ -42,6 +42,18 @@ describe("useUniLibraryAvailability", () => {
     renderLibraryAnonymous(<Availability />)
 
     await waitFor(() => expect(screen.getByText("state: disabled")).toBeInTheDocument())
+  })
+
+  it("does not call the UniLibrary route for a visitor at all", async () => {
+    let calls = 0
+    server.events.on("request:start", ({ request }) => {
+      if (request.url.includes("/library/external/unilibrary/taxonomies")) calls += 1
+    })
+    renderLibraryAnonymous(<Availability />)
+
+    await waitFor(() => expect(screen.getByText("state: disabled")).toBeInTheDocument())
+    server.events.removeAllListeners()
+    expect(calls).toBe(0)
   })
 })
 

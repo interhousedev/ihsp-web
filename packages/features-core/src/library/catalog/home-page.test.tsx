@@ -26,7 +26,8 @@ describe("LibraryHomePage", () => {
     renderLibraryAnonymous(<LibraryHomePage />)
 
     await waitFor(() => expect(screen.getByRole("heading", { name: "Sign in to see more" })).toBeInTheDocument())
-    expect(screen.getAllByRole("button", { name: "Sign in" }).length).toBeGreaterThan(0)
+    // The header offers the one Sign in button; the card only explains.
+    expect(screen.queryByRole("button", { name: "Sign in" })).not.toBeInTheDocument()
     expect(screen.queryByRole("heading", { name: "Continue reading" })).not.toBeInTheDocument()
     expect(await screen.findByRole("heading", { name: "Recently added" })).toBeInTheDocument()
   })

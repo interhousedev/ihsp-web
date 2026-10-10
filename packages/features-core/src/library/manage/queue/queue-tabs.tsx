@@ -23,7 +23,7 @@ export function QueueTabs({
       <TabsList
         variant="line"
         aria-label={t("tabsLabel")}
-        className="h-auto w-full justify-start gap-1 overflow-x-auto border-b pb-1"
+        className="h-auto w-full min-w-0 max-w-full justify-start gap-1 overflow-x-auto overflow-y-hidden border-b pb-1 [scrollbar-width:none]"
       >
         {QUEUE_TABS.map((name) => {
           const count = counts[name]
@@ -31,7 +31,7 @@ export function QueueTabs({
             <TabsTrigger
               key={name}
               value={name}
-              className="min-h-11 flex-none flex-col gap-0 px-3 md:min-h-9 md:flex-row md:gap-1.5"
+              className="min-h-11 shrink-0 flex-none flex-col gap-0 px-3 whitespace-nowrap md:min-h-9 md:flex-row md:gap-1.5"
             >
               <span className="flex items-center gap-1.5">
                 {t(`tab.${name}`)}

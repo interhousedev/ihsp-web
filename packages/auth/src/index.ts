@@ -20,5 +20,6 @@ export {
 } from "./session"
 export { getSession, resetAuthStore, setSession, useAuthStore, type AuthStatus, type Session } from "./store"
 export { TelegramAutoLogin } from "./telegram-auto-login"
-export { useSession } from "./use-session"
+export { useSession, useSilentSignIn } from "./use-session"
+export { clearSessionHint, hasSessionHint, setSessionHint } from "./session-hint"
 export { base64Url, codeChallengeS256, generateCodeVerifier, randomString } from "./pkce"

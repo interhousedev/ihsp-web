@@ -2,6 +2,7 @@ import { beforeEach, describe, expect, it, spyOn } from "bun:test"
 import { refreshedTokenResponse, server, setTestRoute, tokenResponse, userMe } from "@ihsp/test-utils"
 import { HttpResponse, delay, http } from "msw"
 import { navigation } from "../navigation"
+import { clearSessionHint, setSessionHint } from "../session-hint"
 import { bootstrapSession, configureApiClient, handleCallback, login, refresh, resetAuthState } from "../session"
 import { setSession, useAuthStore } from "../store"
 
@@ -24,6 +25,7 @@ function unauthorized() {
 }
 
 beforeEach(() => {
+  setSessionHint()
   resetAuthState()
   configureApiClient()
 })
@@ -159,6 +161,26 @@ describe("restoring the session", () => {
     await bootstrapSession()
 
     expect(useAuthStore.getState().status).toBe("anonymous")
+  })
+
+  it("sends no refresh request without a sign-in hint, and restores the session with one", async () => {
+    let refreshes = 0
+    server.use(
+      http.post(`${API}/v1/oauth/refresh`, () => {
+        refreshes += 1
+        return HttpResponse.json(refreshedTokenResponse)
+      }),
+    )
+    clearSessionHint()
+    await bootstrapSession()
+    expect(refreshes).toBe(0)
+    expect(useAuthStore.getState().status).toBe("anonymous")
+
+    resetAuthState()
+    setSessionHint()
+    await bootstrapSession()
+    expect(refreshes).toBe(1)
+    expect(useAuthStore.getState().status).toBe("authenticated")
   })
 
   it("never restores a session on the callback page, which owns the session", async () => {

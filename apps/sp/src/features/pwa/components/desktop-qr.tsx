@@ -3,10 +3,13 @@
 import { useT } from "@ihsp/i18n"
 import { QrCode } from "@ihsp/ui"
 import { installAppUrl } from "../utils/app-mode"
+import { looksLikePhone } from "../utils/phone-like"
 
 /** On a computer the app is installed from a phone: a QR code opens this address there. */
 export function DesktopQr() {
   const t = useT("pwa")
+  // Already on a phone: nothing to scan.
+  if (looksLikePhone({ userAgent: navigator.userAgent, maxTouchPoints: navigator.maxTouchPoints, matchMedia: (q) => window.matchMedia(q) })) return null
   const address = `${installAppUrl() ?? window.location.origin}/`
   return (
     <section className="flex flex-col items-center gap-3 text-center" aria-labelledby="pwa-platform-title">

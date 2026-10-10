@@ -194,9 +194,12 @@ export function ItemView({ item }: { item: ItemDetail }) {
 export function ItemPage() {
   const params = useSearchParams()
   const id = params.get("id")
+  const { status } = useLibraryAccess()
   const query = useQuery({ ...getLibraryItemQuery(id ?? ""), enabled: Boolean(id), retry: false })
   if (!id) return <NotAvailable />
-  if (query.isPending) {
+  const hidden = query.isError && isApiError(query.error) && (query.error.status === 404 || query.error.status === 403)
+  // While the session is still being restored a hidden answer may be only the visitor's view: do not flash "sign in".
+  if (query.isPending || (hidden && status === "loading")) {
     return (
       <div role="status" aria-busy="true" className="flex flex-col gap-4 px-4 pt-4 md:px-6">
         <Skeleton className="h-48 w-full rounded-xl" />

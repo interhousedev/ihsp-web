@@ -1,4 +1,5 @@
 import { holdLogin } from "./login-hold"
+import { clearSessionHint } from "./session-hint"
 import { useAuthStore } from "./store"
 
 const CHANNEL_NAME = "ihsp-auth"
@@ -25,6 +26,7 @@ const RELOAD_DELAY_MS = 1500
 function onMessage(event: MessageEvent<Message>): void {
   if (event.data?.type !== "logout") return
   holdLogin(RELOAD_DELAY_MS * 2)
+  clearSessionHint()
   useAuthStore.getState().clear()
   if (typeof window !== "undefined") window.setTimeout(() => window.location.reload(), RELOAD_DELAY_MS)
 }
