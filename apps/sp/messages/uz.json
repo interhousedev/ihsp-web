@@ -161,7 +161,6 @@
   },
   "timetable": {
     "title": "Dars jadvali",
-    "description": "Haftalik darslaringiz",
     "days": "Hafta kunlari",
     "period": "{number}-juftlik",
     "room": "{name}-xona",
@@ -183,7 +182,7 @@
   "calendarFeed": {
     "subscribe": "Kalendarga obuna boʻlish",
     "title": "Kalendarga obuna boʻlish",
-    "intro": "Shaxsiy havola butun semestr darslaringizni Google Kalendar, Apple Kalendar yoki boshqa ilovada koʻrsatadi. Havolasi borlar dars jadvalingizni koʻra oladi, shuning uchun uni hech kimga bermang. Yangi havola eskisini oʻchiradi.",
+    "intro": "Taqvim ilovalari uchun dars jadvalingizning shaxsiy havolasi. Havolasi borlar darslaringizni koʻradi, shuning uchun uni bermang. Yangi havola eskisini oʻchiradi.",
     "create": "Havola yaratish",
     "shownOnce": "Havolani hoziroq nusxalang. U faqat bir marta koʻrsatiladi.",
     "feedUrl": "Kalendar havolasi",
@@ -196,7 +195,6 @@
   },
   "subjects": {
     "title": "Fanlar",
-    "description": "Semestr fanlari va baholaringiz",
     "empty": "Bu semestrda fanlar yoʻq.",
     "notFound": "Fan topilmadi.",
     "semesterLabel": "{number}-semestr",
@@ -247,7 +245,6 @@
       "title": "Markaz",
       "notebook": {
         "title": "Fan daftari",
-        "description": "Yordamchidan shu fanning materiallari va darslari haqida soʻrang.",
         "open": "Daftarni ochish"
       },
       "past": "Soʻnggi darslar",
@@ -303,7 +300,6 @@
     "attach": {
       "button": "Ilova qoʻshish",
       "title": "Ilova qoʻshish",
-      "description": "Fayl yoki havolani guruhdoshlaringiz va oʻqituvchi bilan ulashing.",
       "tabs": {
         "file": "Fayl",
         "link": "Havola"
@@ -317,7 +313,6 @@
   },
   "grades": {
     "title": "Baholar",
-    "description": "Baholar, GPA va yozuv daftarchasi",
     "tabs": {
       "semester": "Semestr",
       "day": "Kunlar boʻyicha",
@@ -368,7 +363,6 @@
     "planner": {
       "link": "Reja",
       "title": "Baho rejalashtiruvchi",
-      "description": "Kerakli bahoga chiqish uchun qolgan nazoratlarda nima kerak.",
       "back": "Baholar",
       "semester": "{number}-semestr",
       "noSubject": "Baholarni rejalashtirish uchun “Baholar” sahifasida fanni tanlang.",
@@ -448,8 +442,7 @@
   },
   "exams": {
     "title": "Imtihonlar",
-    "description": "Oraliq va yakuniy nazoratlar hamda ularning sanalari.",
-    "empty": "Hozircha nazoratlar yoʻq. Sanalar oʻqituvchilar yoki maʼmuriyat belgilaganda shu yerda paydo boʻladi.",
+    "empty": "Nazoratlar hali yoʻq.",
     "upcoming": "Yaqinlashayotgan",
     "past": "Oʻtgan",
     "noUpcoming": "Yaqinlashayotgan nazoratlar yoʻq.",
@@ -501,7 +494,6 @@
     },
     "decks": {
       "title": "Sizning kollodalaringiz",
-      "hint": "Nomida fan nomi bor kollodalar.",
       "empty": "Bu fan boʻyicha hali kollodalar yoʻq.",
       "create": "Kolloda yaratish",
       "newTitle": "{subject} — imtihon",
@@ -522,7 +514,7 @@
     "suggest": {
       "button": "Sana taklif qilish",
       "title": "Nazorat sanasini taklif qilish",
-      "description": "Guruhingizda oraliq yoki yakuniy nazorat qachon boʻlishini taklif qiling. Oʻqituvchi yoki maʼmuriyat tasdiqlamaguncha sana “Tasdiqlanmagan” boʻlib qoladi.",
+      "description": "Guruhingizning oraliq yoki yakuniy nazorati.",
       "subject": "Fan",
       "subjectPlaceholder": "Fanni tanlang",
       "kind": "Nazorat",
@@ -561,8 +553,7 @@
         "lesson": "Dars baholari hali yoʻq",
         "midterm": "Oraliq nazorat hali yoʻq",
         "final": "Yakuniy nazorat hali yoʻq"
-      },
-      "missingHint": "Semestr bahosi — baholari bor qismlarning oʻrtachasi."
+      }
     },
     "prediction": {
       "title": "Semestr bahosi prognozi",
@@ -608,7 +599,6 @@
     },
     "whatIf": {
       "title": "Boshqa baholarni sinab koʻring",
-      "hint": "Olishingiz mumkin boʻlgan baholarni qoʻshing va nima oʻzgarishini koʻring. Hech narsa saqlanmaydi va hech kimga yuborilmaydi.",
       "typeLabel": "Turi",
       "markLabel": "Baho",
       "types": {
@@ -626,7 +616,6 @@
   },
   "attendance": {
     "title": "Davomat",
-    "description": "Davr uchun qoldirgan darslaringiz",
     "period": "Davr",
     "from": "Boshlanishi",
     "to": "Tugashi",
@@ -653,17 +642,15 @@
       "dayWithAbsences": "{date}: {count, plural, other {# ta dars qoldirilgan}}"
     },
     "missed": {
-      "empty": "Qoldirilgan darslar yoʻq. Ajoyib.",
+      "empty": "Qoldirilgan darslar yoʻq.",
       "absent": "Qoldirilgan",
       "excused": "Sababli"
     }
   },
   "homework": {
     "title": "Uy vazifalari",
-    "description": "Bajarilgan vazifalarni belgilang. Belgilar va qaydlarni faqat siz koʻrasiz.",
     "overdue": {
-      "title": "Muddati oʻtgan",
-      "description": "Bu vazifalarning topshirish muddati oʻtib ketgan. Avval shularni bajaring."
+      "title": "Muddati oʻtgan"
     },
     "overdueBy": "{count, plural, other {Muddati # kun oʻtgan}}",
     "tabs": {
@@ -672,7 +659,7 @@
       "done": "Bajarilgan"
     },
     "empty": {
-      "upcoming": "Topshiriladigan vazifa yoʻq. Ajoyib.",
+      "upcoming": "Topshiriladigan vazifa yoʻq.",
       "later": "Keyinroq uchun reja yoʻq.",
       "done": "Hozircha bajarilgan vazifalar yoʻq."
     },
@@ -693,7 +680,6 @@
   },
   "profile": {
     "title": "Profil",
-    "description": "Hisobingiz bir joyda",
     "security": "Xavfsizlik sozlamalari",
     "account": {
       "title": "Hisob",
@@ -731,7 +717,6 @@
   },
   "settings": {
     "title": "Sozlamalar",
-    "description": "Til, mavzu, bildirishnomalar va “Bugun” sahifasi",
     "general": {
       "title": "Umumiy",
       "language": "Til",
@@ -744,13 +729,11 @@
     },
     "notifications": {
       "title": "Bildirishnomalar",
-      "description": "Botdagi bilan bir xil sozlamalar. Oʻzgarishlar darhol saqlanadi va keyingi sinxronlashda ishlatiladi.",
-      "noTelegram": "Bildirishnomalar Telegramga yuboriladi. Ularni olish uchun Telegram hisobingizni ulang. Saytdagi bildirishnomalar markazi bunsiz ham ishlaydi.",
+      "noTelegram": "Bildirishnomalar Telegramga yuboriladi. Olish uchun uni ulang.",
       "linkTelegram": "Telegramni ulash"
     },
     "today": {
       "title": "“Bugun” kartochkalari",
-      "description": "“Bugun” sahifasi kartochkalarini koʻrsating, yashiring va tartiblang.",
       "show": "Kartochkani koʻrsatish: {card}",
       "moveUp": "Yuqoriga: {card}",
       "moveDown": "Pastga: {card}",
@@ -769,7 +752,6 @@
     },
     "bottomNav": {
       "title": "Pastki menyu",
-      "description": "Pastki panel uchun toʻrttagacha sahifani tanlang va tartiblang.",
       "slots": "Panelda {count} / {max} ta sahifa",
       "show": "Pastki panelda: {page}",
       "moveUp": "Chapga: {page}",

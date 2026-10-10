@@ -27,7 +27,6 @@ export function WhatIfEditor({ marks, onChange }: { marks: WhatIfMark[]; onChang
   return (
     <PageSection
       title={t("title")}
-      hint={t("hint")}
       action={
         <Button
           type="button"

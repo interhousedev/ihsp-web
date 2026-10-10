@@ -20,7 +20,6 @@ export function SubjectsPage() {
   return (
     <PageContainer
       title={t("title")}
-      description={t("description")}
       actions={
         <SemesterSwitcher
           value={selected}

@@ -47,7 +47,7 @@ export function LinksPage() {
   )
 
   return (
-    <PageContainer title={t("title")} description={t("description")} actions={newButton}>
+    <PageContainer title={t("title")} actions={newButton}>
       <KindFilter value={kind} onChange={(value) => void setKind(value)} />
       {links.isPending ? <StateView state="loading" rows={3} /> : null}
       {links.isError ? <StateView state="error" error={links.error} onRetry={() => void links.refetch()} /> : null}

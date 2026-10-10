@@ -58,7 +58,7 @@ export function FlashcardSetsPage() {
   }
 
   return (
-    <PageContainer title={t("title")} description={t("description")}>
+    <PageContainer title={t("title")}>
       {decks.isPending ? <StateView state="loading" rows={3} /> : null}
       {decks.isError ? <StateView state="error" error={decks.error} onRetry={() => void decks.refetch()} /> : null}
       {decks.isSuccess ? (

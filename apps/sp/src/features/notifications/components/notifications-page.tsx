@@ -8,7 +8,7 @@ import { PageContainer } from "@ihsp/ui"
 export function NotificationsPage() {
   const t = useT("notifications")
   return (
-    <PageContainer title={t("title")} description={t("description")}>
+    <PageContainer title={t("title")}>
       <NotificationCenter />
     </PageContainer>
   )

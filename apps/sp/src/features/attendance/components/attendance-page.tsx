@@ -37,7 +37,7 @@ export function AttendancePage() {
   }
 
   return (
-    <PageContainer title={t("title")} description={t("description")}>
+    <PageContainer title={t("title")}>
       <section aria-label={t("period")} className="flex flex-wrap items-end gap-3">
         <label className="flex min-w-40 flex-1 flex-col gap-1 text-xs font-medium sm:flex-none">
           {t("from")}

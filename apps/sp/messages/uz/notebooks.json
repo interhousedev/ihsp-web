@@ -2,10 +2,9 @@
   "notebooks": {
     "list": {
       "title": "Daftarlar",
-      "description": "Manbalarni toʻplang va havolali javoblar, konspektlar, testlar va boshqalarni oling.",
       "new": "Yangi daftar",
       "search": "Daftarlarni qidirish",
-      "empty": "Hozircha daftarlar yoʻq. Daftar yarating va birinchi manbani qoʻshing.",
+      "empty": "Daftarlar hali yoʻq.",
       "sources": "{count} ta manba",
       "noResults": "«{query}» soʻrovi boʻyicha daftarlar topilmadi.",
       "meta": "{sources} · {when}"
@@ -60,7 +59,7 @@
       "generating": "Hozir yaratilmoqda: {count}/{limit}",
       "kinds": "Kunlik cheklar",
       "quota": "{kind}: bugun {used}/{limit}",
-      "note": "Sessiya cheki 5 soat davomida asta-sekin tiklanadi, kunlik chek yarim tunda yangilanadi. Allaqachon yaratilgan materiallarni oʻqish cheklarni sarflamaydi."
+      "note": "Sessiya cheki 5 soat ichida tiklanadi, kunlik chek yarim tunda yangilanadi. Tayyor materiallarni koʻrish cheklarni sarflamaydi."
     },
     "menu": {
       "configureChat": "Chatni sozlash"
@@ -73,7 +72,7 @@
       "limit": "{count}/{limit} manba",
       "empty": {
         "title": "Birinchi manbani qoʻshing",
-        "description": "Fayl yuklang, dars materialini yoki chatni qoʻshing yoki matn joylang. Javoblar va oʻquv materiallari ular asosida boʻladi.",
+        "description": "Fayl yuklang, dars materiali yoki chatni qoʻshing yoki matn joylang.",
         "fromFiles": "«Mening fayllarim»dan"
       },
       "collapse": "Manbalar panelini yigʻish",
@@ -344,7 +343,7 @@
       "title": "Studiya",
       "empty": {
         "title": "Studiya natijalari shu yerda saqlanadi.",
-        "description": "Manbalarni qoʻshgach, konspekt, test, aql xaritasi va boshqalarni yaratish uchun tugmalardan foydalaning."
+        "description": "Oʻquv materiallari yaratish uchun manbalar qoʻshing."
       },
       "addNote": "Qayd qoʻshish",
       "needSources": "Avval manbani qoʻshing va tanlang",
@@ -788,7 +787,7 @@
       "action": "Tanlangan qaydlarni birlashtirish",
       "hint": "Birlashtirish uchun kamida ikkita qayd tanlang.",
       "title": "Qaydlarni birlashtirish",
-      "description": "Tanlangan qaydlar bitta yangi qaydga aylanadi. Har birining sarlavhasi boʻlim sarlavhasi boʻlib qoladi.",
+      "description": "Tanlangan qaydlar bittaga birlashadi; sarlavhalari boʻlim sarlavhasi boʻladi.",
       "titleLabel": "Yangi qayd sarlavhasi",
       "defaultTitle": "Qaydlar · {title}",
       "fallbackTitle": "Birlashtirilgan qaydlar",

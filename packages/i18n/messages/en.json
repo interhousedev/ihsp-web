@@ -454,7 +454,6 @@
   },
   "notifications": {
     "title": "Notifications",
-    "description": "Everything that was sent to you",
     "filters": {
       "all": "All",
       "activity": "Activity",
@@ -530,8 +529,7 @@
       "attachFailed": "Could not attach the file."
     },
     "page": {
-      "title": "Assistant",
-      "description": "Ask about your timetable, homework and marks, or make flash cards from your files."
+      "title": "Assistant"
     },
     "list": {
       "title": "Chats",

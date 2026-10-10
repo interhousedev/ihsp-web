@@ -14,7 +14,7 @@ export function GradesPage() {
   const t = useT("grades")
   const [tab, setTab] = useQueryState("tab", parseAsStringLiteral(TABS).withDefault("semester"))
   return (
-    <PageContainer title={t("title")} description={t("description")}>
+    <PageContainer title={t("title")}>
       <Tabs value={tab} onValueChange={(value) => void setTab(TABS.find((item) => item === value) ?? "semester")}>
         <TabsList className="h-auto min-h-11 w-full md:w-fit">
           {TABS.map((value) => (

@@ -32,7 +32,7 @@ export function NotebooksPage() {
   const items = notebooks.data?.items ?? []
 
   return (
-    <PageContainer title={t("list.title")} description={t("list.description")} actions={<NewNotebookButton />}>
+    <PageContainer title={t("list.title")} actions={<NewNotebookButton />}>
       <div className="relative max-w-md">
         <IconSearch
           aria-hidden

@@ -22,7 +22,7 @@ export function FilesPage() {
   const items = files.data?.pages.flatMap((page) => page.items) ?? []
 
   return (
-    <PageContainer title={t("title")} description={t("description")}>
+    <PageContainer title={t("title")}>
       <StorageCard />
       <div className="w-full max-w-md">
         <FileUploadButton

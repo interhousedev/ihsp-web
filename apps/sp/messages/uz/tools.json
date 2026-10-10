@@ -2,7 +2,6 @@
   "files": {
     "page": {
       "title": "Mening fayllarim",
-      "description": "Yordamchi va qisqa havolalar uchun fayllar. Semestr fayllari u tugagach o‘chiriladi.",
       "upload": "Fayllarni yuklash",
       "empty": "Hozircha fayllar yo‘q. Birinchisini yuklang.",
       "loadMore": "Yana ko‘rsatish"
@@ -51,7 +50,6 @@
   "flashcards": {
     "page": {
       "title": "Kartochkalar",
-      "description": "Kollodalarni Anki kabi o‘rganing: kartochkalar unutishingiz arafasida qaytadi.",
       "allDecks": "Barcha kollodalar",
       "missing": "Kolloda topilmadi.",
       "importFailed": "Faylni o‘qib bo‘lmadi.",
@@ -66,7 +64,6 @@
     },
     "options": {
       "title": "Sozlamalar: {title}",
-      "description": "Bu kollodaning nomi, tavsifi va kunlik limitlari.",
       "titleLabel": "Nomi",
       "descriptionLabel": "Tavsif",
       "newPerDay": "Kuniga yangi kartochkalar",
@@ -94,7 +91,6 @@
   "links": {
     "page": {
       "title": "Havolalar va ulashishlar",
-      "description": "Qisqa havolalar, fayllar va siz ochiq qilgan ulashishlar.",
       "new": "Yangi qisqa havola",
       "empty": "Hozircha havolalar yo‘q.",
       "loadMore": "Yana ko‘rsatish",
@@ -143,7 +139,6 @@
     },
     "new": {
       "title": "Yangi qisqa havola",
-      "description": "Veb-manzilni qisqartiring yoki fayllaringizdan birini ulashing.",
       "mode": "Havola nimaga olib boradi",
       "mode_url": "Veb-manzil",
       "mode_file": "Fayl",

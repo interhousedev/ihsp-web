@@ -2,7 +2,6 @@
   "files": {
     "page": {
       "title": "My files",
-      "description": "Files for the assistant and short links. Files of a term are deleted after it ends.",
       "upload": "Upload files",
       "empty": "No files yet. Upload your first file.",
       "loadMore": "Load more"
@@ -51,7 +50,6 @@
   "flashcards": {
     "page": {
       "title": "Flash cards",
-      "description": "Study decks like in Anki: cards come back when you are about to forget them.",
       "allDecks": "All decks",
       "missing": "This deck was not found.",
       "importFailed": "Could not read the file.",
@@ -66,7 +64,6 @@
     },
     "options": {
       "title": "Options: {title}",
-      "description": "Name, description and the daily limits of this deck.",
       "titleLabel": "Title",
       "descriptionLabel": "Description",
       "newPerDay": "New cards per day",
@@ -94,7 +91,6 @@
   "links": {
     "page": {
       "title": "Links and shares",
-      "description": "Short links, files and shares you made public.",
       "new": "New short link",
       "empty": "You have no links yet.",
       "loadMore": "Load more",
@@ -143,7 +139,6 @@
     },
     "new": {
       "title": "New short link",
-      "description": "Shorten a web address or share one of your files.",
       "mode": "Link target",
       "mode_url": "Web address",
       "mode_file": "File",

@@ -454,7 +454,6 @@
   },
   "notifications": {
     "title": "Bildirishnomalar",
-    "description": "Sizga yuborilgan hamma narsa",
     "filters": {
       "all": "Hammasi",
       "activity": "Faollik",
@@ -530,8 +529,7 @@
       "attachFailed": "Faylni biriktirib boʻlmadi."
     },
     "page": {
-      "title": "Yordamchi",
-      "description": "Dars jadvali, uy vazifalari va baholar haqida soʻrang yoki fayllaringizdan kartochkalar yarating."
+      "title": "Yordamchi"
     },
     "list": {
       "title": "Suhbatlar",

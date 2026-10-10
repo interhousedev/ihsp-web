@@ -94,7 +94,7 @@ describe("attendance page", () => {
     )
     renderSp(<AttendancePage />, { route: "/attendance/" })
 
-    expect(await screen.findByText("No missed lessons. Nice.")).toBeInTheDocument()
+    expect(await screen.findByText("No missed lessons.")).toBeInTheDocument()
     expect(screen.queryByTestId("not-taken")).not.toBeInTheDocument()
   })
 })

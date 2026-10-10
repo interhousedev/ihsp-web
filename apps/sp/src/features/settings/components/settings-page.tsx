@@ -28,16 +28,16 @@ export function SettingsPage() {
   const isHeadStudent = profile.data?.head_student?.id === session.user.id
 
   return (
-    <PageContainer title={t("title")} description={t("description")}>
+    <PageContainer title={t("title")}>
       <div className="grid grid-cols-1 gap-4 lg:grid-cols-2">
         <div className="flex flex-col gap-4">
           <SettingsSection title={t("general.title")}>
             <GeneralSettings />
           </SettingsSection>
-          <SettingsSection title={t("bottomNav.title")} description={t("bottomNav.description")}>
+          <SettingsSection title={t("bottomNav.title")}>
             <BottomBarEditor />
           </SettingsSection>
-          <SettingsSection title={t("today.title")} description={t("today.description")}>
+          <SettingsSection title={t("today.title")}>
             <TodayCardsEditor />
           </SettingsSection>
           <SettingsSection title={t("calendar.title")}>
@@ -45,7 +45,7 @@ export function SettingsPage() {
           </SettingsSection>
           <AppLockSection />
         </div>
-        <SettingsSection title={t("notifications.title")} description={t("notifications.description")}>
+        <SettingsSection title={t("notifications.title")}>
           <TelegramHint />
           <NotificationSettingsForm
             roles={session.user.roles}

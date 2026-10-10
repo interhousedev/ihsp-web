@@ -95,7 +95,6 @@ export function SubjectHub({ subjectId }: { subjectId: string }) {
       <section className="flex flex-wrap items-center justify-between gap-3 rounded-lg border p-3">
         <div className="min-w-0">
           <h2 className="text-sm font-semibold">{t("notebook.title")}</h2>
-          <p className="text-muted-foreground text-xs">{t("notebook.description")}</p>
         </div>
         <Button className="min-h-11 md:min-h-8" disabled={open.isPending} onClick={() => open.mutate({})}>
           <Icons.journal aria-hidden />

@@ -52,7 +52,7 @@ describe("Homework page", () => {
 
     await waitFor(() => expect(seen.bodies).toEqual([{ done: true }]))
     expect(seen.lessons).toEqual([homeworkMath.lesson_id])
-    expect(await screen.findByText("Nothing due. Nice.")).toBeInTheDocument()
+    expect(await screen.findByText("Nothing due.")).toBeInTheDocument()
     expect(screen.queryByText(homeworkMath.text)).not.toBeInTheDocument()
   })
 

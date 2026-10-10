@@ -37,7 +37,6 @@ export function ProfilePage() {
   return (
     <PageContainer
       title={t("title")}
-      description={t("description")}
       actions={<LinkButton href={`${getConfig().ID_URL}/security/`}>{t("security")}</LinkButton>}
     >
       <ProfileSections />

@@ -38,7 +38,6 @@ export function ExamsPage() {
   return (
     <PageContainer
       title={t("title")}
-      description={t("description")}
       actions={isHeadStudent ? <SuggestExamDialog /> : undefined}
     >
       <QueryState query={query} rows={4} isEmpty={(data) => data.items.length === 0} emptyText={t("empty")}>

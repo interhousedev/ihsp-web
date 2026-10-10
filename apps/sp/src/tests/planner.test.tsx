@@ -96,9 +96,6 @@ describe("planner header and marks", () => {
     await renderPlanner()
 
     expect(screen.getByTestId("planner-missing")).toHaveTextContent("Final not yet")
-    expect(
-      screen.getByText("The semester mark is the average of the parts that already have marks."),
-    ).toBeInTheDocument()
   })
 
   test("the line names several missing kinds and nothing is said when none is missing", async () => {

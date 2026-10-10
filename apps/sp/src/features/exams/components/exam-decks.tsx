@@ -42,7 +42,6 @@ export function ExamDecks({ subject }: { subject: { name: string; short_name: st
   return (
     <PageSection
       title={t("title")}
-      hint={t("hint")}
       action={
         <LinkButton href={newDeckHref(t("newTitle", { subject: subject.name }))} variant="default">
           {t("create")}

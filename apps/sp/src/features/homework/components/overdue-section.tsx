@@ -29,7 +29,6 @@ export function OverdueSection() {
         </h2>
         {query.data ? <Badge variant="destructive">{query.data.length}</Badge> : null}
       </div>
-      <p className="text-muted-foreground text-sm">{t("overdue.description")}</p>
       <QueryState query={query}>
         {(items) => (
           <ul className="flex flex-col gap-2">

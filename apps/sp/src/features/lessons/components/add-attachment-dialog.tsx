@@ -7,7 +7,6 @@ import {
   Button,
   Dialog,
   DialogContent,
-  DialogDescription,
   DialogHeader,
   DialogTitle,
   DialogTrigger,
@@ -55,7 +54,6 @@ export function AddAttachmentDialog({ lessonId }: { lessonId: string }) {
       <DialogContent className="max-h-[90dvh] overflow-y-auto sm:max-w-md">
         <DialogHeader>
           <DialogTitle>{t("title")}</DialogTitle>
-          <DialogDescription>{t("description")}</DialogDescription>
         </DialogHeader>
         <Tabs defaultValue="file">
           <TabsList className="h-auto min-h-11 w-full">

@@ -101,7 +101,7 @@ describe("settings page", () => {
   test("a student without Telegram is told where notifications go", async () => {
     renderSp(<SettingsPage />, { route: "/settings/", session: { user: { ...userMe, telegram: [] } } })
 
-    expect(await screen.findByText(/Notifications are sent to Telegram/)).toBeInTheDocument()
+    expect(await screen.findByText(/Notifications go to Telegram/)).toBeInTheDocument()
     expect(screen.getByRole("link", { name: "Link Telegram" }).getAttribute("href")).toBe(
       "http://localhost:3001/security/telegram/",
     )
@@ -112,7 +112,7 @@ describe("settings page", () => {
 
     await screen.findByText("Calendar feed")
 
-    expect(screen.queryByText(/Notifications are sent to Telegram/)).not.toBeInTheDocument()
+    expect(screen.queryByText(/Notifications go to Telegram/)).not.toBeInTheDocument()
   })
 
   test("the calendar feed is created on demand", async () => {

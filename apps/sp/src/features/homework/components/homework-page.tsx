@@ -20,7 +20,7 @@ export function HomeworkPage() {
   const query = useHomeworkList(tab)
 
   return (
-    <PageContainer title={t("title")} description={t("description")}>
+    <PageContainer title={t("title")}>
       <OverdueSection />
       <Tabs value={tab} onValueChange={(value) => void setTab(TABS.find((item) => item === value) ?? "upcoming")}>
         <TabsList className="h-auto min-h-11 w-full md:w-fit">

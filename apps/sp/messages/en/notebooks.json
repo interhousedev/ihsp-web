@@ -2,10 +2,9 @@
   "notebooks": {
     "list": {
       "title": "Notebooks",
-      "description": "Collect sources and get cited answers, study guides, quizzes and more.",
       "new": "New notebook",
       "search": "Search notebooks",
-      "empty": "No notebooks yet. Create one and add your first source.",
+      "empty": "No notebooks yet.",
       "sources": "{count, plural, one {# source} other {# sources}}",
       "noResults": "No notebooks match “{query}”.",
       "meta": "{sources} · {when}"
@@ -60,7 +59,7 @@
       "generating": "Being created now: {count} of {limit}",
       "kinds": "Daily limits",
       "quota": "{kind}: {used} of {limit} today",
-      "note": "The session limit refills gradually over 5 hours and the daily limit resets at midnight. Reading what you have already made never uses the limits."
+      "note": "The session limit refills over 5 hours; the daily limit resets at midnight. Viewing existing items is free."
     },
     "menu": {
       "configureChat": "Configure chat"
@@ -73,7 +72,7 @@
       "limit": "{count} of {limit} sources",
       "empty": {
         "title": "Add your first source",
-        "description": "Upload a file, add a lesson material or a chat, or paste text. Answers and study materials will be based on them.",
+        "description": "Upload a file, add a lesson material or chat, or paste text.",
         "fromFiles": "From My files"
       },
       "collapse": "Collapse the sources panel",
@@ -344,7 +343,7 @@
       "title": "Studio",
       "empty": {
         "title": "Studio results will be saved here.",
-        "description": "After adding sources, use the buttons to create a conspect, a quiz, a mind map and more."
+        "description": "Add sources to create study materials."
       },
       "addNote": "Add note",
       "needSources": "Add and select a source first",
@@ -788,7 +787,7 @@
       "action": "Combine selected notes",
       "hint": "Select at least two notes to combine them.",
       "title": "Combine notes",
-      "description": "The selected notes become one new note. Each one keeps its title as a heading.",
+      "description": "The selected notes become one note; each title becomes a heading.",
       "titleLabel": "Title of the new note",
       "defaultTitle": "Notes · {title}",
       "fallbackTitle": "Combined notes",

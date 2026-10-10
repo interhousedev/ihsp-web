@@ -24,12 +24,9 @@ export function PlannerSummary({ planner }: { planner: SubjectPlanner }) {
           {planner.semester_mark === null ? t("noSemesterMark") : formatMean(planner.semester_mark)}
         </p>
         {planner.missing.length > 0 ? (
-          <>
-            <p className="text-sm font-medium" data-testid="planner-missing">
-              {planner.missing.map((type) => labels.missing(type)).join(" · ")}
-            </p>
-            <p className="text-muted-foreground text-xs">{t("missingHint")}</p>
-          </>
+          <p className="text-sm font-medium" data-testid="planner-missing">
+            {planner.missing.map((type) => labels.missing(type)).join(" · ")}
+          </p>
         ) : null}
       </div>
     </PageSection>

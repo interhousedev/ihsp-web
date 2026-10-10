@@ -7,7 +7,6 @@ import {
   Button,
   Dialog,
   DialogContent,
-  DialogDescription,
   DialogFooter,
   DialogHeader,
   DialogTitle,
@@ -86,7 +85,6 @@ export function NewLinkDialog({ open, onOpenChange }: NewLinkDialogProps) {
         >
           <DialogHeader>
             <DialogTitle>{t("title")}</DialogTitle>
-            <DialogDescription>{t("description")}</DialogDescription>
           </DialogHeader>
 
           <div role="group" aria-label={t("mode")} className="grid grid-cols-2 gap-2">

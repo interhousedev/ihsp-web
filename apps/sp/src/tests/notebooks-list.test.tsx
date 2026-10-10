@@ -87,7 +87,7 @@ describe("notebooks list", () => {
       }),
     )
     const { user } = renderNotebooksSp(<NotebooksPage />, { route: PATH })
-    await screen.findByText("No notebooks yet. Create one and add your first source.")
+    await screen.findByText("No notebooks yet.")
 
     await user.type(screen.getByRole("searchbox", { name: "Search notebooks" }), "zzz")
 
@@ -111,7 +111,7 @@ describe("notebooks list", () => {
     server.use(http.get(apiUrl("/v1/notebooks"), () => HttpResponse.json({ items: [], next_cursor: null })))
     renderNotebooksSp(<NotebooksPage />, { route: PATH })
 
-    expect(await screen.findByText("No notebooks yet. Create one and add your first source.")).toBeInTheDocument()
+    expect(await screen.findByText("No notebooks yet.")).toBeInTheDocument()
     expect(screen.getAllByRole("button", { name: "New notebook" }).length).toBeGreaterThan(0)
   })
 
@@ -129,7 +129,7 @@ describe("notebooks list", () => {
     failing = false
     await user.click(retry)
 
-    expect(await screen.findByText("No notebooks yet. Create one and add your first source.")).toBeInTheDocument()
+    expect(await screen.findByText("No notebooks yet.")).toBeInTheDocument()
   })
 })
 

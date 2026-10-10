@@ -33,7 +33,7 @@ export function TimetablePage() {
   const subgroupUnset = profile.data?.subgroup === null
 
   return (
-    <PageContainer title={t("title")} description={t("description")} actions={<CalendarFeedDialog />}>
+    <PageContainer title={t("title")} actions={<CalendarFeedDialog />}>
       <WeekSwitcher
         monday={monday}
         onChange={(next) => {
