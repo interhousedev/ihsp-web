@@ -898,6 +898,14 @@
       "deleteFailed": "Mavzuni oʻchirib boʻlmadi.",
       "deleteTitle": "Bu mavzu oʻchirilsinmi?",
       "deleteDescription": "Mavzu oʻchiriladi. Uning manbalari daftarda qoladi."
+    },
+    "documents": {
+      "download": "Yuklab olish .{format}",
+      "downloadFailed": "Faylni yuklab olib boʻlmadi.",
+      "attach": "Darsga biriktirish",
+      "noLessons": "Bugun biriktirish uchun darslar yoʻq.",
+      "attached": "Fayl darsga biriktirildi.",
+      "attachFailed": "Faylni biriktirib boʻlmadi."
     }
   },
   "errors": {

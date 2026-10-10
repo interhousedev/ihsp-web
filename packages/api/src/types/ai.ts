@@ -39,6 +39,14 @@ export type WebQuota = {
   deep_cost: number
 }
 
+/** A document made by the `make_document` tool; shown as a file card with a download. */
+export type DocumentCard = {
+  file_id: string
+  name: string
+  kind: "docx" | "xlsx" | "pptx"
+  size: number
+}
+
 export type ToolCallView = {
   id: string
   tool: string
@@ -52,6 +60,8 @@ export type ToolCallView = {
   } | null
   reject_reason: string | null
   expires_at: string | null
+  /** Set for a finished `make_document` call. */
+  document?: DocumentCard | null
 }
 
 export type ChatMessageView = {
@@ -70,8 +80,9 @@ export type ChatMessageView = {
 export type ChatDetail = ChatItem & { messages: ChatMessageView[]; shared: boolean }
 
 export type UsageInfo = {
-  session: { used: number; limit: number; resets_at: string | null }
-  day: { used: number; limit: number; resets_at: string | null }
+  /** `limit: null`: no cap (Administration). */
+  session: { used: number; limit: number | null; resets_at: string | null }
+  day: { used: number; limit: number | null; resets_at: string | null }
 }
 
 export type TurnResult = {
@@ -85,7 +96,14 @@ export type ChatsParams = PageParams & { assistant?: AssistantKind; q?: string; 
 /** `tier` picks the model class of a new chat (P2): `fast` (default) or `smart`. */
 export type ChatCreateBody = { assistant: AssistantKind; tier?: "fast" | "smart"; course_id?: string }
 export type ChatPatchBody = { title: string }
-export type ChatMessageBody = { text: string; file_ids: string[]; web_search?: boolean }
+/** `command` + `args` is a slash command (`cards`, `quiz`, ...) that the server maps to a prompt or tool; `text` may then be empty. */
+export type ChatMessageBody = {
+  text: string
+  file_ids: string[]
+  web_search?: boolean
+  command?: string
+  args?: string
+}
 export type ToolCallRejectBody = { reason?: string }
 export type MessageFeedbackBody = { rating: "up" | "down"; comment?: string }
 /** The author assistant's budget is read per course (the server checks `edit` on it). */

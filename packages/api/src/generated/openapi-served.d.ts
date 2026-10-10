@@ -488,6 +488,26 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/v1/admin/insights": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get Insights
+         * @description System health, daily usage and the marks histogram for the report pages.
+         */
+        get: operations["get_insights_v1_admin_insights_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/v1/admin/lessons": {
         parameters: {
             query?: never;
@@ -4470,6 +4490,30 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/v1/me/dashboard": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get Dashboard
+         * @description Return the user's dashboard, or the default one at version 0.
+         */
+        get: operations["get_dashboard_v1_me_dashboard_get"];
+        /**
+         * Put Dashboard
+         * @description Save the dashboard; 409 when the version is not the stored one.
+         */
+        put: operations["put_dashboard_v1_me_dashboard_put"];
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/v1/me/files": {
         parameters: {
             query?: never;
@@ -4479,7 +4523,7 @@ export interface paths {
         };
         /**
          * List My Files
-         * @description Return one page of files, newest first.
+         * @description Return one page of files; `page`/`page_size` give numbered paging.
          */
         get: operations["list_my_files_v1_me_files_get"];
         put?: never;
@@ -4742,6 +4786,26 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/v1/me/lesson-results": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * List Lesson Results
+         * @description Return attendance and the mark of each lesson that has already started.
+         */
+        get: operations["list_lesson_results_v1_me_lesson_results_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/v1/me/lessons/{id}": {
         parameters: {
             query?: never;
@@ -4994,6 +5058,26 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/v1/me/outbound-mail": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Send Outbound Mail
+         * @description Send an email to anyone from the platform; one attachment from My files.
+         */
+        post: operations["send_outbound_mail_v1_me_outbound_mail_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/v1/me/profile": {
         parameters: {
             query?: never;
@@ -5130,6 +5214,26 @@ export interface paths {
          * @description Return one subject with its lessons, marks and materials.
          */
         get: operations["get_subject_v1_me_subjects__subject_id__get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/me/subjects/{subject_id}/lessons": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * List Subject Lessons
+         * @description Return the latest past lessons, then the next `upcoming_days` of lessons.
+         */
+        get: operations["list_subject_lessons_v1_me_subjects__subject_id__lessons_get"];
         put?: never;
         post?: never;
         delete?: never;
@@ -5436,6 +5540,26 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/v1/notebooks/{notebook_id}/artifacts/{artifact_id}/attach-to-lesson": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Attach Artifact
+         * @description Render a report, table or slides as a file and add it to the teacher's lesson.
+         */
+        post: operations["attach_artifact_v1_notebooks__notebook_id__artifacts__artifact_id__attach_to_lesson_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/v1/notebooks/{notebook_id}/artifacts/{artifact_id}/cancel": {
         parameters: {
             query?: never;
@@ -5450,6 +5574,26 @@ export interface paths {
          * @description Stop an output that is queued or generating.
          */
         post: operations["cancel_artifact_v1_notebooks__notebook_id__artifacts__artifact_id__cancel_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/notebooks/{notebook_id}/artifacts/{artifact_id}/download": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Download Artifact
+         * @description Download a ready output as a file: report .docx, table .xlsx, slides .pptx.
+         */
+        get: operations["download_artifact_v1_notebooks__notebook_id__artifacts__artifact_id__download_get"];
+        put?: never;
+        post?: never;
         delete?: never;
         options?: never;
         head?: never;
@@ -7521,6 +7665,43 @@ export interface components {
             short_name: string;
         };
         /**
+         * AttachArtifactBody
+         * @description Attach a ready output to a lesson as a file.
+         */
+        AttachArtifactBody: {
+            /**
+             * Lesson Id
+             * Format: uuid
+             */
+            lesson_id: string;
+            /**
+             * Role
+             * @default material
+             * @enum {string}
+             */
+            role: "material" | "attachment";
+        };
+        /**
+         * AttachedResourceResponse
+         * @description The lesson resource that was created from an output.
+         */
+        AttachedResourceResponse: {
+            /**
+             * Lesson Id
+             * Format: uuid
+             */
+            lesson_id: string;
+            /**
+             * Link Id
+             * Format: uuid
+             */
+            link_id: string;
+            /** Short Url */
+            short_url: string;
+            /** Title */
+            title: string;
+        };
+        /**
          * AttendanceLessonResponse
          * @description A lesson of today with attendance and homework badges.
          */
@@ -7733,10 +7914,18 @@ export interface components {
          * Bell
          * @description Start and end of one period on some weekdays (jsonb of Term.bells).
          *
-         *     ``source`` says who set the bell: Administration (``manual``) or the EMIS
-         *     ``class-hours`` sync (``emis``), which keeps its bells equal to EMIS.
+         *     ``source`` says who set the bell: the EMIS ``class-hours`` sync (``emis``, the
+         *     default, kept equal to EMIS), Administration for a period of their own
+         *     (``manual``; EMIS replaces it when it lists the period) or Administration
+         *     overriding an EMIS period (``override``: time and weekdays stay, the sync leaves
+         *     them alone). ``emis_start`` and ``emis_end`` remember what EMIS says for the
+         *     period, so an override can be reset.
          */
         "Bell-Input": {
+            /** Emis End */
+            emis_end?: string | null;
+            /** Emis Start */
+            emis_start?: string | null;
             /**
              * End
              * Format: time
@@ -7749,7 +7938,7 @@ export interface components {
              * @default manual
              * @enum {string}
              */
-            source: "manual" | "emis";
+            source: "manual" | "emis" | "override";
             /**
              * Start
              * Format: time
@@ -7762,10 +7951,18 @@ export interface components {
          * Bell
          * @description Start and end of one period on some weekdays (jsonb of Term.bells).
          *
-         *     ``source`` says who set the bell: Administration (``manual``) or the EMIS
-         *     ``class-hours`` sync (``emis``), which keeps its bells equal to EMIS.
+         *     ``source`` says who set the bell: the EMIS ``class-hours`` sync (``emis``, the
+         *     default, kept equal to EMIS), Administration for a period of their own
+         *     (``manual``; EMIS replaces it when it lists the period) or Administration
+         *     overriding an EMIS period (``override``: time and weekdays stay, the sync leaves
+         *     them alone). ``emis_start`` and ``emis_end`` remember what EMIS says for the
+         *     period, so an override can be reset.
          */
         "Bell-Output": {
+            /** Emis End */
+            emis_end?: string | null;
+            /** Emis Start */
+            emis_start?: string | null;
             /** End */
             end: string;
             /** Period */
@@ -7775,11 +7972,41 @@ export interface components {
              * @default manual
              * @enum {string}
              */
-            source: "manual" | "emis";
+            source: "manual" | "emis" | "override";
             /** Start */
             start: string;
             /** Weekdays */
             weekdays: number[];
+        };
+        /**
+         * Blank
+         * @description One blank of a fill-in-the-blanks question, marked ``{{n}}`` (1-based) in the prompt.
+         */
+        Blank: {
+            /** Accepted */
+            accepted?: string[];
+            /**
+             * Case Sensitive
+             * @default false
+             */
+            case_sensitive: boolean;
+            /**
+             * Id
+             * @default
+             */
+            id: string;
+            /** Regex */
+            regex?: string | null;
+        };
+        /**
+         * BlankInput
+         * @description One blank of a fill-in-the-blanks question (``{{1}}``, ``{{2}}`` in the prompt).
+         */
+        BlankInput: {
+            /** Accepted */
+            accepted?: string[];
+            /** Regex */
+            regex?: string | null;
         };
         /**
          * BlockAnswer
@@ -7881,7 +8108,7 @@ export interface components {
              * Type
              * @enum {string}
              */
-            type: "single" | "multiple" | "text" | "number";
+            type: "single" | "multiple" | "text" | "number" | "sorting" | "matching" | "table" | "blanks" | "random_number" | "formula" | "free" | "code";
         } & {
             [key: string]: unknown;
         };
@@ -8556,6 +8783,24 @@ export interface components {
         CodeBody: {
             /** Code */
             code: string;
+        };
+        /**
+         * CodeSpec
+         * @description A code question: no execution; the output is compared or the answer is graded by hand.
+         */
+        CodeSpec: {
+            /** Expected Outputs */
+            expected_outputs?: string[];
+            /**
+             * Language
+             * @default python
+             */
+            language: string;
+            /**
+             * Starter
+             * @default
+             */
+            starter: string;
         };
         /**
          * CollectionDetailResponse
@@ -9277,6 +9522,16 @@ export interface components {
             user_id: string;
         };
         /**
+         * DashboardResponse
+         * @description The layout; version 0 is the default one (never saved).
+         */
+        DashboardResponse: {
+            /** Version */
+            version: number;
+            /** Widgets */
+            widgets: components["schemas"]["WidgetResponse"][];
+        };
+        /**
          * DataTableCreate
          * @description A data table.
          */
@@ -9304,6 +9559,19 @@ export interface components {
             max_rows: number;
             /** Source Ids */
             source_ids?: string[] | null;
+        };
+        /**
+         * DayCount
+         * @description One calendar day (Tashkent) and a count.
+         */
+        DayCount: {
+            /** Count */
+            count: number;
+            /**
+             * Date
+             * Format: date
+             */
+            date: string;
         };
         /**
          * DayCountResponse
@@ -9495,6 +9763,26 @@ export interface components {
             url: string;
             /** Why */
             why: string;
+        };
+        /**
+         * DocumentCardResponse
+         * @description A document the assistant made (shown as a file card).
+         */
+        DocumentCardResponse: {
+            /**
+             * File Id
+             * Format: uuid
+             */
+            file_id: string;
+            /**
+             * Kind
+             * @enum {string}
+             */
+            kind: "docx" | "xlsx" | "pptx";
+            /** Name */
+            name: string;
+            /** Size */
+            size: number;
         };
         /**
          * DownloadUrlResponse
@@ -10096,6 +10384,30 @@ export interface components {
             source_ids?: string[] | null;
         };
         /**
+         * FormulaSpec
+         * @description The expected expression of a math formula question.
+         */
+        FormulaSpec: {
+            /**
+             * Expression
+             * @default
+             */
+            expression: string;
+            /**
+             * Mode
+             * @default symbolic
+             * @enum {string}
+             */
+            mode: "symbolic" | "numeric";
+            /**
+             * Tolerance
+             * @default 0.000001
+             */
+            tolerance: number;
+            /** Variables */
+            variables?: string[];
+        };
+        /**
          * GradeRow
          * @description A subject row of the grade table.
          */
@@ -10186,8 +10498,12 @@ export interface components {
         GroupPatchBody: {
             /** Curator Id */
             curator_id?: string | null;
+            /** Current Semester */
+            current_semester?: number | null;
             /** Head Student Id */
             head_student_id?: string | null;
+            /** Name */
+            name?: string | null;
             /** Status */
             status?: ("active" | "archived") | null;
         };
@@ -10415,6 +10731,20 @@ export interface components {
              * @enum {string}
              */
             style: "clean" | "sketch" | "bento" | "scientific" | "playful";
+        };
+        /**
+         * InsightsResponse
+         * @description GET /v1/admin/insights.
+         */
+        InsightsResponse: {
+            /**
+             * Generated At
+             * Format: date-time
+             */
+            generated_at: string;
+            marks: components["schemas"]["MarksInsights"];
+            system: components["schemas"]["SystemHealth"];
+            usage: components["schemas"]["UsageInsights"];
         };
         /**
          * IntervalsResponse
@@ -10683,20 +11013,40 @@ export interface components {
          * @description `Answer`: the chosen options, a text or a number (one of them per question).
          */
         LearningAnswerBody: {
+            /** Cells */
+            cells?: string[] | null;
             /** Number */
             number?: number | null;
             /** Option Ids */
             option_ids?: string[] | null;
+            /** Output */
+            output?: string | null;
+            /** Pairs */
+            pairs?: {
+                [key: string]: string;
+            } | null;
             /** Text */
             text?: string | null;
+            /** Texts */
+            texts?: string[] | null;
         };
         /**
          * LearningAttemptQuestionView
          * @description A question of an attempt, without any correctness data.
          */
         LearningAttemptQuestionView: {
+            /** Blanks */
+            blanks?: number | null;
+            /** Code */
+            code?: {
+                [key: string]: unknown;
+            } | null;
             /** Id */
             id: string;
+            /** Lefts */
+            lefts?: {
+                [key: string]: string;
+            }[] | null;
             /** Options */
             options?: {
                 [key: string]: string;
@@ -10705,8 +11055,18 @@ export interface components {
             points: number;
             /** Prompt */
             prompt: string;
+            /** Rights */
+            rights?: {
+                [key: string]: string;
+            }[] | null;
+            /** Table */
+            table?: {
+                [key: string]: string[];
+            } | null;
             /** Type */
             type: string;
+            /** Variables */
+            variables?: string[] | null;
         };
         /**
          * LearningAttemptResultView
@@ -11165,7 +11525,7 @@ export interface components {
          */
         LearningStepView: {
             /** Blocks */
-            blocks: (components["schemas"]["LearningTextBlockView"] | components["schemas"]["LearningQuizBlockView"] | components["schemas"]["LearningFlashcardsBlockView"])[];
+            blocks: (components["schemas"]["LearningTextBlockView"] | components["schemas"]["LearningVideoBlockView"] | components["schemas"]["LearningQuizBlockView"] | components["schemas"]["LearningFlashcardsBlockView"])[];
             /**
              * Blocks Passed
              * @default 0
@@ -11251,6 +11611,38 @@ export interface components {
              * @enum {string}
              */
             type: "text";
+        };
+        /**
+         * LearningVideoBlockView
+         * @description A video block of a step.
+         */
+        LearningVideoBlockView: {
+            /**
+             * Caption
+             * @default
+             */
+            caption: string;
+            /** File Id */
+            file_id?: string | null;
+            /** Id */
+            id: string;
+            /**
+             * Passed
+             * @default false
+             */
+            passed: boolean;
+            /**
+             * Source
+             * @enum {string}
+             */
+            source: "link" | "upload";
+            /**
+             * @description discriminator enum property added by openapi-typescript
+             * @enum {string}
+             */
+            type: "video";
+            /** Url */
+            url: string;
         };
         /**
          * LessonDraftCreate
@@ -11426,6 +11818,21 @@ export interface components {
             link_id: string;
         };
         /**
+         * LessonResultRow
+         * @description Attendance and mark of one lesson that has started (calendar dot).
+         */
+        LessonResultRow: {
+            /** Attendance */
+            attendance: ("present" | "absent" | "late") | null;
+            /**
+             * Lesson Id
+             * Format: uuid
+             */
+            lesson_id: string;
+            /** Mark */
+            mark: number | null;
+        };
+        /**
          * LibraryItemInput
          * @description A library book or material, or a page range of one of its files.
          *
@@ -11475,6 +11882,25 @@ export interface components {
             reason: components["schemas"]["ReportReason"];
             /** Text */
             text?: string | null;
+        };
+        /**
+         * LibrarySearchItemResponse
+         * @description `LibrarySearchItem`: a library item the user may see.
+         */
+        LibrarySearchItemResponse: {
+            /** Author Label */
+            author_label: string;
+            /**
+             * Id
+             * Format: uuid
+             */
+            id: string;
+            /** Kind */
+            kind: string;
+            /** Slug */
+            slug: string | null;
+            /** Title */
+            title: string;
         };
         /**
          * LibraryStatsResponse
@@ -11781,6 +12207,34 @@ export interface components {
             type: "lesson" | "midterm" | "final";
             /** Value */
             value: number;
+        };
+        /**
+         * MarkSearchItemResponse
+         * @description `MarkSearchItem`: a recent mark of a subject whose name matched.
+         */
+        MarkSearchItemResponse: {
+            /**
+             * Date
+             * Format: date
+             */
+            date: string;
+            /** Lesson Id */
+            lesson_id: string | null;
+            subject: components["schemas"]["app__interfaces__http__v1__composition__shared_schemas__SubjectRefResponse"];
+            /** Type */
+            type: string;
+            /** Value */
+            value: number;
+        };
+        /**
+         * MarksInsights
+         * @description How many marks of each value (2 to 5) exist.
+         */
+        MarksInsights: {
+            /** Distribution */
+            distribution: {
+                [key: string]: number;
+            };
         };
         /**
          * MaterialBlockSchema
@@ -12221,6 +12675,25 @@ export interface components {
          * @enum {string}
          */
         NotebookOrigin: "manual" | "subject_auto" | "lesson_auto" | "course";
+        /**
+         * NotebookSearchItemResponse
+         * @description `NotebookSearchItem`: a notebook whose title or a source title matched.
+         */
+        NotebookSearchItemResponse: {
+            /** Emoji */
+            emoji: string | null;
+            /**
+             * Id
+             * Format: uuid
+             */
+            id: string;
+            /** Matched Sources */
+            matched_sources: string[];
+            /** Source Count */
+            source_count: number;
+            /** Title */
+            title: string;
+        };
         /**
          * NotebookSummary
          * @description `notebooks.summary` (§ 3.2.6).
@@ -12680,6 +13153,31 @@ export interface components {
             items: components["schemas"]["UploadRowResponse"][];
             /** Next Cursor */
             next_cursor?: string | null;
+        };
+        /**
+         * Pair
+         * @description A left item and its right match of a matching question.
+         */
+        Pair: {
+            /**
+             * Id
+             * @default
+             */
+            id: string;
+            /** Left */
+            left: string;
+            /** Right */
+            right: string;
+        };
+        /**
+         * PairInput
+         * @description A matching pair: a left item and the right item that belongs to it.
+         */
+        PairInput: {
+            /** Left */
+            left: string;
+            /** Right */
+            right: string;
         };
         /**
          * PassageDetailResponse
@@ -13296,8 +13794,12 @@ export interface components {
          */
         Question: {
             answer?: components["schemas"]["AnswerConfig"] | null;
+            /** Blanks */
+            blanks?: components["schemas"]["Blank"][] | null;
+            code?: components["schemas"]["CodeSpec"] | null;
             /** Explanation */
             explanation?: string | null;
+            formula?: components["schemas"]["FormulaSpec"] | null;
             /**
              * Id
              * @default
@@ -13305,6 +13807,8 @@ export interface components {
             id: string;
             /** Options */
             options?: components["schemas"]["Option"][] | null;
+            /** Pairs */
+            pairs?: components["schemas"]["Pair"][] | null;
             /**
              * Points
              * @default 1
@@ -13312,11 +13816,13 @@ export interface components {
             points: number;
             /** Prompt */
             prompt: string;
+            random?: components["schemas"]["RandomSpec"] | null;
+            table?: components["schemas"]["TableSpec"] | null;
             /**
              * Type
              * @enum {string}
              */
-            type: "single" | "multiple" | "text" | "number";
+            type: "single" | "multiple" | "text" | "number" | "sorting" | "matching" | "table" | "blanks" | "random_number" | "formula" | "free" | "code";
         };
         /**
          * QuestionInput
@@ -13328,6 +13834,8 @@ export interface components {
              * @description For text: accepted exact answers.
              */
             accepted_answers?: string[] | null;
+            /** Blanks */
+            blanks?: components["schemas"]["BlankInput"][] | null;
             /**
              * Case Sensitive
              * @description For text: compare case-sensitively.
@@ -13335,10 +13843,42 @@ export interface components {
              */
             case_sensitive: boolean;
             /**
+             * Columns
+             * @description Table columns.
+             */
+            columns?: string[] | null;
+            /**
+             * Correct Cells
+             * @description For table: the (row, column) cells to mark, 0-based.
+             */
+            correct_cells?: [
+                number,
+                number
+            ][] | null;
+            /** Expected Outputs */
+            expected_outputs?: string[] | null;
+            /**
              * Explanation
              * @description Shown after answering, if allowed.
              */
             explanation?: string | null;
+            /**
+             * Expression
+             * @description For formula: the correct expression.
+             */
+            expression?: string | null;
+            /** Expression Variables */
+            expression_variables?: string[] | null;
+            /**
+             * Formula
+             * @description For random_number: answer formula.
+             */
+            formula?: string | null;
+            /**
+             * Items
+             * @description For sorting: items in order.
+             */
+            items?: string[] | null;
             /**
              * Number
              * @description For number: the right value.
@@ -13349,6 +13889,11 @@ export interface components {
              * @description For single and multiple: at least two options.
              */
             options?: components["schemas"]["OptionInput"][] | null;
+            /**
+             * Pairs
+             * @description For matching: at least two pairs.
+             */
+            pairs?: components["schemas"]["PairInput"][] | null;
             /**
              * Points
              * @description Score for a right answer.
@@ -13366,6 +13911,11 @@ export interface components {
              */
             regex?: string | null;
             /**
+             * Rows
+             * @description Table rows.
+             */
+            rows?: string[] | null;
+            /**
              * Tolerance
              * @description For number: allowed difference.
              * @default 0
@@ -13373,10 +13923,15 @@ export interface components {
             tolerance: number;
             /**
              * Type
-             * @description single: one correct option; multiple: several; text; number.
+             * @description single: one correct option; multiple: several; text; number; sorting: `items` in the right order; matching: `pairs`; table: `rows`, `columns`, `correct_cells`; blanks: `blanks`; random_number: `variables` and `formula`; formula: `expression`; code: optional `expected_outputs`; free: graded by a teacher.
              * @enum {string}
              */
-            type: "single" | "multiple" | "text" | "number";
+            type: "single" | "multiple" | "text" | "number" | "sorting" | "matching" | "table" | "blanks" | "random_number" | "formula" | "free" | "code";
+            /**
+             * Variables
+             * @description For random_number.
+             */
+            variables?: components["schemas"]["VariableInput"][] | null;
         };
         QueueRowResponse: {
             [key: string]: unknown;
@@ -13492,6 +14047,24 @@ export interface components {
             resets_at: string;
             /** Used */
             used: number;
+        };
+        /**
+         * RandomSpec
+         * @description Variables and the formula of the answer; each attempt draws its own values.
+         */
+        RandomSpec: {
+            /**
+             * Formula
+             * @default
+             */
+            formula: string;
+            /**
+             * Tolerance
+             * @default 0.01
+             */
+            tolerance: number;
+            /** Variables */
+            variables?: components["schemas"]["Variable"][];
         };
         /**
          * Rating
@@ -14253,6 +14826,16 @@ export interface components {
             user_id: string;
         };
         /**
+         * SaveDashboardRequest
+         * @description Replace the layout if `version` is the stored one.
+         */
+        SaveDashboardRequest: {
+            /** Version */
+            version: number;
+            /** Widgets */
+            widgets: components["schemas"]["Widget"][];
+        };
+        /**
          * SaveNoteBody
          * @description `POST /notebooks/{id}/chat/messages/{mid}/save-note`.
          */
@@ -14345,6 +14928,12 @@ export interface components {
             homework: components["schemas"]["app__interfaces__http__v1__composition__shared_schemas__HomeworkItemResponse"][];
             /** Lessons */
             lessons: components["schemas"]["app__interfaces__http__v1__composition__shared_schemas__LessonItemResponse"][];
+            /** Library Items */
+            library_items: components["schemas"]["LibrarySearchItemResponse"][];
+            /** Marks */
+            marks: components["schemas"]["MarkSearchItemResponse"][];
+            /** Notebooks */
+            notebooks: components["schemas"]["NotebookSearchItemResponse"][];
             /** Subjects */
             subjects: components["schemas"]["app__interfaces__http__v1__composition__shared_schemas__SubjectRefResponse"][];
         };
@@ -14411,6 +15000,32 @@ export interface components {
         SendBroadcastBody: {
             /** Scheduled At */
             scheduled_at?: string | null;
+        };
+        /**
+         * SendOutboundRequest
+         * @description `SendOutboundMail`: an email composed in the dialog.
+         */
+        SendOutboundRequest: {
+            /** Attachment File Id */
+            attachment_file_id?: string | null;
+            /** Body */
+            body: string;
+            /** Subject */
+            subject: string;
+            /** To */
+            to: string[];
+        };
+        /**
+         * SendOutboundResponse
+         * @description `OutboundMailSent`: what was sent.
+         */
+        SendOutboundResponse: {
+            /** Attachment Name */
+            attachment_name: string | null;
+            /** Message Id */
+            message_id: string;
+            /** To */
+            to: string[];
         };
         /**
          * SendReclaimEmailBody
@@ -14699,6 +15314,8 @@ export interface components {
          * @description `SourceDetail`: the item plus guide, text of a note and cited passages.
          */
         SourceDetailResponse: {
+            /** Ai Unsupported */
+            ai_unsupported: boolean;
             /** Body Md */
             body_md: string | null;
             /** Citations */
@@ -14722,6 +15339,8 @@ export interface components {
             kind: components["schemas"]["SourceKind"];
             /** Label Ids */
             label_ids: string[];
+            /** Modality */
+            modality: string;
             /**
              * Notebook Id
              * Format: uuid
@@ -14774,6 +15393,8 @@ export interface components {
          * @description `SourceItem`.
          */
         SourceItemResponse: {
+            /** Ai Unsupported */
+            ai_unsupported: boolean;
             /**
              * Created At
              * Format: date-time
@@ -14790,6 +15411,8 @@ export interface components {
             kind: components["schemas"]["SourceKind"];
             /** Label Ids */
             label_ids: string[];
+            /** Modality */
+            modality: string;
             /**
              * Notebook Id
              * Format: uuid
@@ -14989,7 +15612,7 @@ export interface components {
          */
         "StepContent-Input": {
             /** Blocks */
-            blocks?: (components["schemas"]["TextBlock-Input"] | components["schemas"]["TestBlock-Input"] | components["schemas"]["FlashcardsBlock-Input"])[];
+            blocks?: (components["schemas"]["TextBlock-Input"] | components["schemas"]["VideoBlock-Input"] | components["schemas"]["TestBlock-Input"] | components["schemas"]["FlashcardsBlock-Input"])[];
             /** Title */
             title: string;
         };
@@ -14999,7 +15622,7 @@ export interface components {
          */
         "StepContent-Output": {
             /** Blocks */
-            blocks?: (components["schemas"]["app__modules__lms__domain__step_content__TextBlock"] | components["schemas"]["app__modules__lms__domain__step_content__TestBlock"] | components["schemas"]["app__modules__lms__domain__step_content__FlashcardsBlock"])[];
+            blocks?: (components["schemas"]["app__modules__lms__domain__step_content__TextBlock"] | components["schemas"]["app__modules__lms__domain__step_content__VideoBlock"] | components["schemas"]["app__modules__lms__domain__step_content__TestBlock"] | components["schemas"]["app__modules__lms__domain__step_content__FlashcardsBlock"])[];
             /** Title */
             title: string;
         };
@@ -15069,7 +15692,7 @@ export interface components {
          */
         StepPreviewResponse: {
             /** Current Blocks */
-            current_blocks: (components["schemas"]["app__interfaces__http__v1__notebooks__schemas_apply__TextBlock"] | components["schemas"]["app__interfaces__http__v1__notebooks__schemas_apply__TestBlock"] | components["schemas"]["app__interfaces__http__v1__notebooks__schemas_apply__FlashcardsBlock"])[] | null;
+            current_blocks: (components["schemas"]["app__interfaces__http__v1__notebooks__schemas_apply__TextBlock"] | components["schemas"]["app__interfaces__http__v1__notebooks__schemas_apply__VideoBlock"] | components["schemas"]["app__interfaces__http__v1__notebooks__schemas_apply__TestBlock"] | components["schemas"]["app__interfaces__http__v1__notebooks__schemas_apply__FlashcardsBlock"])[] | null;
             /** Lock Version */
             lock_version: number | null;
             /**
@@ -15078,7 +15701,7 @@ export interface components {
              */
             mode: "append" | "replace";
             /** New Blocks */
-            new_blocks: (components["schemas"]["app__interfaces__http__v1__notebooks__schemas_apply__TextBlock"] | components["schemas"]["app__interfaces__http__v1__notebooks__schemas_apply__TestBlock"] | components["schemas"]["app__interfaces__http__v1__notebooks__schemas_apply__FlashcardsBlock"])[];
+            new_blocks: (components["schemas"]["app__interfaces__http__v1__notebooks__schemas_apply__TextBlock"] | components["schemas"]["app__interfaces__http__v1__notebooks__schemas_apply__VideoBlock"] | components["schemas"]["app__interfaces__http__v1__notebooks__schemas_apply__TestBlock"] | components["schemas"]["app__interfaces__http__v1__notebooks__schemas_apply__FlashcardsBlock"])[];
             /** Step Id */
             step_id: string | null;
             /** Title */
@@ -15097,6 +15720,20 @@ export interface components {
             term_id: string | null;
             /** Used Bytes */
             used_bytes: number;
+        };
+        /**
+         * StorageUsage
+         * @description Bytes and files of ready uploads.
+         */
+        StorageUsage: {
+            /** By Scope */
+            by_scope: {
+                [key: string]: number;
+            };
+            /** Bytes */
+            bytes: number;
+            /** Files */
+            files: number;
         };
         /**
          * Student360ProfileResponse
@@ -15424,6 +16061,53 @@ export interface components {
             topic_source?: ("emis" | "manual") | null;
         };
         /**
+         * SubjectLessonListResponse
+         * @description Latest past lessons first, then the upcoming ones.
+         */
+        SubjectLessonListResponse: {
+            /** Has More Past */
+            has_more_past: boolean;
+            /** Items */
+            items: components["schemas"]["SubjectLessonRow"][];
+        };
+        /**
+         * SubjectLessonRow
+         * @description One row of the subject hub lesson list.
+         */
+        SubjectLessonRow: {
+            /** Attendance */
+            attendance: ("present" | "absent" | "late") | null;
+            /**
+             * Date
+             * Format: date
+             */
+            date: string;
+            /**
+             * Kind
+             * @default other
+             * @enum {string}
+             */
+            kind: "lecture" | "practice" | "midterm" | "final" | "other";
+            /**
+             * Lesson Id
+             * Format: uuid
+             */
+            lesson_id: string;
+            /** Mark */
+            mark: number | null;
+            /** Materials Count */
+            materials_count: number;
+            /** Past */
+            past: boolean;
+            /**
+             * Starts At
+             * Format: date-time
+             */
+            starts_at: string;
+            /** Topic */
+            topic: string | null;
+        };
+        /**
          * SubjectNameBody
          * @description Names of a subject in the three languages (empty string = not set).
          */
@@ -15635,6 +16319,36 @@ export interface components {
             items: components["schemas"]["app__interfaces__http__v1__admin_sync__schemas__SyncRunItemResponse"][];
             /** Next Cursor */
             next_cursor?: string | null;
+        };
+        /**
+         * SystemHealth
+         * @description What answers right now.
+         */
+        SystemHealth: {
+            /** Db */
+            db: boolean;
+            /** Failed Logins 24H */
+            failed_logins_24h: number;
+            /** Logins 24H */
+            logins_24h: number;
+            /** Queue Lag */
+            queue_lag: number | null;
+            /** Queue Pending */
+            queue_pending: number | null;
+            /** Redis */
+            redis: boolean;
+        };
+        /**
+         * TableSpec
+         * @description A grid of a table question: the cells to mark are ``correct[row][column]``.
+         */
+        TableSpec: {
+            /** Columns */
+            columns?: string[];
+            /** Correct */
+            correct?: boolean[][];
+            /** Rows */
+            rows?: string[];
         };
         /**
          * TaxonomyEntryResponse
@@ -16188,6 +16902,7 @@ export interface components {
              * @enum {string}
              */
             access: "read" | "write";
+            document?: components["schemas"]["DocumentCardResponse"] | null;
             /** Expires At */
             expires_at: string | null;
             /** Id */
@@ -16593,6 +17308,17 @@ export interface components {
             session: components["schemas"]["app__interfaces__http__v1__ai__schemas__UsagePartResponse"];
         };
         /**
+         * UsageInsights
+         * @description Daily activity of the last 14 days (zero-filled).
+         */
+        UsageInsights: {
+            /** Ai Tokens */
+            ai_tokens: components["schemas"]["DayCount"][];
+            /** Sign Ins */
+            sign_ins: components["schemas"]["DayCount"][];
+            storage: components["schemas"]["StorageUsage"];
+        };
+        /**
          * UsedBy
          * @description Where a file is used.
          */
@@ -16797,6 +17523,40 @@ export interface components {
             type: string;
         };
         /**
+         * Variable
+         * @description A random variable of a generated numeric question.
+         */
+        Variable: {
+            /**
+             * Integer
+             * @default true
+             */
+            integer: boolean;
+            /** Max */
+            max: number;
+            /** Min */
+            min: number;
+            /** Name */
+            name: string;
+        };
+        /**
+         * VariableInput
+         * @description A random variable of a generated numeric question.
+         */
+        VariableInput: {
+            /**
+             * Integer
+             * @default true
+             */
+            integer: boolean;
+            /** Max */
+            max: number;
+            /** Min */
+            min: number;
+            /** Name */
+            name: string;
+        };
+        /**
          * VerifyBody
          * @description POST /v1/admin/oauth-clients/{client_id}/verify.
          */
@@ -16878,6 +17638,40 @@ export interface components {
             published_by: components["schemas"]["PersonRefView"];
         };
         /**
+         * VideoBlock
+         * @description A video: a link (YouTube, Vimeo, direct file) or an uploaded file.
+         */
+        "VideoBlock-Input": {
+            /**
+             * Caption
+             * @default
+             */
+            caption: string;
+            /** File Id */
+            file_id?: string | null;
+            /**
+             * Id
+             * @default
+             */
+            id: string;
+            /**
+             * Source
+             * @default link
+             * @enum {string}
+             */
+            source: "link" | "upload";
+            /**
+             * @description discriminator enum property added by openapi-typescript
+             * @enum {string}
+             */
+            type: "video";
+            /**
+             * Url
+             * @default
+             */
+            url: string;
+        };
+        /**
          * Visibility
          * @description Who may see a published item.
          * @enum {string}
@@ -16929,6 +17723,73 @@ export interface components {
             url: string;
             /** Why */
             why: string;
+        };
+        /**
+         * Widget
+         * @description One tile of the dashboard grid.
+         */
+        Widget: {
+            /** Color */
+            color?: string | null;
+            /**
+             * Config
+             * @default {}
+             */
+            config: {
+                [key: string]: string;
+            };
+            /**
+             * Id
+             * Format: uuid
+             */
+            id: string;
+            /**
+             * Kind
+             * @enum {string}
+             */
+            kind: "timetable" | "homework" | "marks" | "exams" | "flashcards_due" | "notebook_prompt" | "attendance" | "clock_next_lesson";
+            /**
+             * Size
+             * @enum {string}
+             */
+            size: "1x1" | "1x2" | "2x1" | "2x2" | "2x4";
+            /** X */
+            x: number;
+            /** Y */
+            y: number;
+        };
+        /**
+         * WidgetResponse
+         * @description A widget with the computed text colour.
+         */
+        WidgetResponse: {
+            /** Color */
+            color?: string | null;
+            /** Config */
+            config?: {
+                [key: string]: string;
+            };
+            /**
+             * Id
+             * Format: uuid
+             */
+            id: string;
+            /**
+             * Kind
+             * @enum {string}
+             */
+            kind: "timetable" | "homework" | "marks" | "exams" | "flashcards_due" | "notebook_prompt" | "attendance" | "clock_next_lesson";
+            /**
+             * Size
+             * @enum {string}
+             */
+            size: "1x1" | "1x2" | "2x1" | "2x2" | "2x4";
+            /** Text Color */
+            text_color: string | null;
+            /** X */
+            x: number;
+            /** Y */
+            y: number;
         };
         /**
          * AudienceBody
@@ -17039,6 +17900,8 @@ export interface components {
          * @description LessonItem.
          */
         app__interfaces__http__v1__admin_schedule__shared_schemas__LessonItemResponse: {
+            /** Absent Count */
+            absent_count?: number | null;
             /** Attendance Submitted */
             attendance_submitted: boolean;
             /** Audience */
@@ -17228,9 +18091,19 @@ export interface components {
          * @description POST /v1/ai/chats/{id}/messages.
          */
         app__interfaces__http__v1__ai__schemas__SendMessageBody: {
+            /**
+             * Args
+             * @default
+             */
+            args: string;
+            /** Command */
+            command?: string | null;
             /** File Ids */
             file_ids?: string[];
-            /** Text */
+            /**
+             * Text
+             * @default
+             */
             text: string;
             /**
              * Web Search
@@ -17244,7 +18117,7 @@ export interface components {
          */
         app__interfaces__http__v1__ai__schemas__UsagePartResponse: {
             /** Limit */
-            limit: number;
+            limit: number | null;
             /** Resets At */
             resets_at: string | null;
             /** Used */
@@ -18269,6 +19142,42 @@ export interface components {
             [key: string]: unknown;
         };
         /**
+         * VideoBlock
+         * @description A video block (a link or an uploaded file).
+         */
+        app__interfaces__http__v1__notebooks__schemas_apply__VideoBlock: {
+            /**
+             * Caption
+             * @default
+             */
+            caption: string;
+            /** File Id */
+            file_id?: string | null;
+            /**
+             * Id
+             * @default
+             */
+            id: string;
+            /**
+             * Source
+             * @default link
+             * @enum {string}
+             */
+            source: "link" | "upload";
+            /**
+             * @description discriminator enum property added by openapi-typescript
+             * @enum {string}
+             */
+            type: "video";
+            /**
+             * Url
+             * @default
+             */
+            url: string;
+        } & {
+            [key: string]: unknown;
+        };
+        /**
          * SendMessageBody
          * @description `POST /notebooks/{id}/chat/messages`.
          *
@@ -18278,9 +19187,19 @@ export interface components {
         app__interfaces__http__v1__notebooks__schemas_chat__SendMessageBody: {
             /** Anchor */
             anchor?: (components["schemas"]["AnchorPassages"] | components["schemas"]["AnchorText"]) | null;
+            /**
+             * Args
+             * @default
+             */
+            args: string;
+            /** Command */
+            command?: string | null;
             /** Source Ids */
             source_ids?: string[] | null;
-            /** Text */
+            /**
+             * Text
+             * @default
+             */
             text: string;
             /**
              * Web Search
@@ -18379,6 +19298,40 @@ export interface components {
              * @enum {string}
              */
             type: "text";
+        };
+        /**
+         * VideoBlock
+         * @description A video: a link (YouTube, Vimeo, direct file) or an uploaded file.
+         */
+        app__modules__lms__domain__step_content__VideoBlock: {
+            /**
+             * Caption
+             * @default
+             */
+            caption: string;
+            /** File Id */
+            file_id?: string | null;
+            /**
+             * Id
+             * @default
+             */
+            id: string;
+            /**
+             * Source
+             * @default link
+             * @enum {string}
+             */
+            source: "link" | "upload";
+            /**
+             * @description discriminator enum property added by openapi-typescript
+             * @enum {string}
+             */
+            type: "video";
+            /**
+             * Url
+             * @default
+             */
+            url: string;
         };
     };
     responses: never;
@@ -19312,6 +20265,26 @@ export interface operations {
                 };
                 content: {
                     "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    get_insights_v1_admin_insights_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["InsightsResponse"];
                 };
             };
         };
@@ -26649,12 +27622,70 @@ export interface operations {
             };
         };
     };
+    get_dashboard_v1_me_dashboard_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["DashboardResponse"];
+                };
+            };
+        };
+    };
+    put_dashboard_v1_me_dashboard_put: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["SaveDashboardRequest"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["DashboardResponse"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
     list_my_files_v1_me_files_get: {
         parameters: {
             query?: {
                 purpose?: components["schemas"]["FilePurpose"] | null;
                 cursor?: string | null;
                 limit?: number;
+                q?: string | null;
+                type?: ("pdf" | "doc" | "sheet" | "slides" | "text" | "image") | null;
+                sort?: "recent" | "older";
+                page?: number | null;
+                page_size?: number | null;
             };
             header?: never;
             path?: never;
@@ -27146,6 +28177,38 @@ export interface operations {
                 };
                 content: {
                     "application/json": components["schemas"]["app__interfaces__http__v1__me_classwork__schemas__HomeworkItemResponse"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    list_lesson_results_v1_me_lesson_results_get: {
+        parameters: {
+            query: {
+                from: string;
+                to: string;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["LessonResultRow"][];
                 };
             };
             /** @description Validation Error */
@@ -27652,6 +28715,39 @@ export interface operations {
             };
         };
     };
+    send_outbound_mail_v1_me_outbound_mail_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["SendOutboundRequest"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["SendOutboundResponse"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
     get_profile_v1_me_profile_get: {
         parameters: {
             query?: never;
@@ -27858,6 +28954,43 @@ export interface operations {
                 };
                 content: {
                     "application/json": components["schemas"]["SubjectDetailResponse"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    list_subject_lessons_v1_me_subjects__subject_id__lessons_get: {
+        parameters: {
+            query?: {
+                around?: "now";
+                semester?: number | null;
+                past_limit?: number;
+                past_offset?: number;
+                upcoming_days?: number;
+            };
+            header?: never;
+            path: {
+                subject_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["SubjectLessonListResponse"];
                 };
             };
             /** @description Validation Error */
@@ -28535,6 +29668,42 @@ export interface operations {
             };
         };
     };
+    attach_artifact_v1_notebooks__notebook_id__artifacts__artifact_id__attach_to_lesson_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                notebook_id: string;
+                artifact_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["AttachArtifactBody"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["AttachedResourceResponse"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
     cancel_artifact_v1_notebooks__notebook_id__artifacts__artifact_id__cancel_post: {
         parameters: {
             query?: never;
@@ -28554,6 +29723,40 @@ export interface operations {
                 };
                 content: {
                     "application/json": components["schemas"]["ArtifactItemResponse"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    download_artifact_v1_notebooks__notebook_id__artifacts__artifact_id__download_get: {
+        parameters: {
+            query?: {
+                format?: ("docx" | "xlsx" | "pptx") | null;
+            };
+            header?: never;
+            path: {
+                notebook_id: string;
+                artifact_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/octet-stream": unknown;
                 };
             };
             /** @description Validation Error */

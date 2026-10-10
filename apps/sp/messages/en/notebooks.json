@@ -898,6 +898,14 @@
       "deleteFailed": "Could not delete the label.",
       "deleteTitle": "Delete this label?",
       "deleteDescription": "The label is removed. Its sources stay in the notebook."
+    },
+    "documents": {
+      "download": "Download .{format}",
+      "downloadFailed": "Could not download the file.",
+      "attach": "Attach to lesson",
+      "noLessons": "No lessons today to attach to.",
+      "attached": "Attached to the lesson.",
+      "attachFailed": "Could not attach the file."
     }
   },
   "errors": {

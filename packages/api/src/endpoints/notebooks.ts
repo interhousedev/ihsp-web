@@ -38,6 +38,8 @@ import type {
   SlidesPutBody,
   SlidesReviseBody,
   SourceDetail,
+  AttachArtifactBody,
+  AttachedResource,
   SourceItem,
   SourceLabelsBody,
   SourcePatchBody,
@@ -61,6 +63,21 @@ export const getNotebooksQuery = (params?: NotebooksParams) =>
 export function postNotebook(body?: NotebookCreateBody, opts?: RequestOptions): Promise<NotebookDetail> {
   return api.post<NotebookDetail>("/v1/notebooks", body ?? {}, opts)
 }
+
+/** POST /v1/notebooks/auto/subject/{subject_id} — student; gets or creates the notebook of a subject. */
+export function postNotebookAutoSubject(subjectId: string, opts?: RequestOptions): Promise<NotebookDetail> {
+  return api.post<NotebookDetail>(`/v1/notebooks/auto/subject/${seg(subjectId)}`, undefined, opts)
+}
+
+/** GET /v1/notebooks/auto/subject/{subject_id} — student; the notebook of a subject if it exists (404 otherwise). */
+export function getNotebookAutoSubject(subjectId: string, opts?: RequestOptions): Promise<NotebookDetail> {
+  return api.get<NotebookDetail>(`/v1/notebooks/auto/subject/${seg(subjectId)}`, opts)
+}
+export const getNotebookAutoSubjectQuery = (subjectId: string) =>
+  queryOptions({
+    queryKey: ["notebooks", "auto", "subject", subjectId] as const,
+    queryFn: ({ signal }) => getNotebookAutoSubject(subjectId, { signal }),
+  })
 
 /** GET /v1/notebooks/usage — budget (session and day) and the quota counters. */
 export function getNotebookUsage(opts?: RequestOptions): Promise<NotebookUsage> {
@@ -332,6 +349,20 @@ export const getArtifactQuery = (id: string, artifactId: string) =>
     queryFn: ({ signal }) => getArtifact(id, artifactId, { signal }),
   })
 
+/** GET /v1/notebooks/{id}/artifacts/{aid}/download — a ready report (.docx), table (.xlsx) or deck (.pptx). */
+export function getArtifactDownload(
+  id: string,
+  artifactId: string,
+  format: "docx" | "xlsx" | "pptx",
+  opts?: RequestOptions,
+): Promise<Blob> {
+  return api.get<Blob>(`/v1/notebooks/${seg(id)}/artifacts/${seg(artifactId)}/download`, {
+    ...opts,
+    query: { format },
+    responseType: "blob",
+  })
+}
+
 /** PATCH /v1/notebooks/{id}/artifacts/{aid} — rename. */
 export function patchArtifact(
   id: string,
@@ -370,6 +401,20 @@ export function putArtifactProgress(
 /** POST /v1/notebooks/{id}/artifacts/{aid}/save-as-source — reports; `201`. */
 export function postArtifactAsSource(id: string, artifactId: string, opts?: RequestOptions): Promise<SourceItem> {
   return api.post<SourceItem>(`/v1/notebooks/${seg(id)}/artifacts/${seg(artifactId)}/save-as-source`, undefined, opts)
+}
+
+/** POST /v1/notebooks/{id}/artifacts/{aid}/attach-to-lesson — teachers; a report, table or slides as a lesson file; `201`. */
+export function postArtifactAttachToLesson(
+  id: string,
+  artifactId: string,
+  body: AttachArtifactBody,
+  opts?: RequestOptions,
+): Promise<AttachedResource> {
+  return api.post<AttachedResource>(
+    `/v1/notebooks/${seg(id)}/artifacts/${seg(artifactId)}/attach-to-lesson`,
+    body,
+    opts,
+  )
 }
 
 /** POST /v1/notebooks/{id}/artifacts/{aid}/flashcard-set — flash cards; idempotent. */

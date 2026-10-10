@@ -435,3 +435,7 @@ export type NotebookStreamEvent =
   | { event: "web"; data: { results: WebResult[] } }
   | { event: "done"; data: NotebookStreamDone }
   | { event: "error"; data: { type?: string; title?: string; message_key?: string; params?: Record<string, unknown> } }
+
+export type AttachArtifactBody = { lesson_id: string; role?: "material" | "attachment" }
+/** The lesson resource made from a Studio output. */
+export type AttachedResource = { link_id: string; lesson_id: string; title: string; short_url: string }

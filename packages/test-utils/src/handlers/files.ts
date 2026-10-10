@@ -111,8 +111,26 @@ export const filesHandlers = [
     return HttpResponse.json({ used_by: file.used_by })
   }),
   http.get(apiUrl("/v1/me/files"), ({ request }) => {
-    const purpose = query(request).get("purpose")
-    const items = [...fileItems, ...created.values()].filter((item) => !purpose || item.purpose === purpose)
+    const search = query(request)
+    const purpose = search.get("purpose")
+    const q = search.get("q")?.toLowerCase() ?? ""
+    const type = search.get("type")
+    const typeOf = (contentType: string) =>
+      contentType === "application/pdf" ? "pdf" : contentType.startsWith("image/") ? "image" : "other"
+    const items = [...fileItems, ...created.values()]
+      .filter((item) => !purpose || item.purpose === purpose)
+      .filter((item) => q === "" || item.name.toLowerCase().includes(q))
+      .filter((item) => !type || typeOf(item.content_type) === type)
+      .toSorted((a, b) =>
+        search.get("sort") === "older" ? a.created_at.localeCompare(b.created_at) : b.created_at.localeCompare(a.created_at),
+      )
+    const page = search.get("page")
+    if (page) {
+      const size = Number(search.get("page_size") ?? 20)
+      const number = Number(page)
+      const slice = items.slice((number - 1) * size, number * size)
+      return HttpResponse.json({ items: slice, next_cursor: number * size < items.length ? String(number + 1) : null })
+    }
     return HttpResponse.json(paginate(items, request))
   }),
   http.get(apiUrl("/v1/me/storage"), () => HttpResponse.json(storageInfo)),

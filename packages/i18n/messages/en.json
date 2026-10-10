@@ -219,7 +219,6 @@
       "email-taken": "This email already belongs to another account.",
       "email-locked": "The email of an activated account cannot be changed here.",
       "otp-no-channel": "There is no channel to send a code to. Link Telegram or confirm your email.",
-      "otp-mandatory": "One-time codes cannot be turned off for Administration.",
       "self-action-forbidden": "You cannot do this to your own account.",
       "invalid-status": "The account status does not allow this action.",
       "activation-invalid": "This link has expired or was already used. Ask Administration for a new one.",
@@ -353,7 +352,10 @@
       "no-recipients": "Add at least one recipient.",
       "too-many-recipients": "An email can have at most {limit} recipients.",
       "too-large": "The email is too large to send. The limit is 25 MB.",
-      "not-inbound": "Only received emails can be marked as spam."
+      "not-inbound": "Only received emails can be marked as spam.",
+      "outbound-disabled": "Sending email from the platform is switched off.",
+      "outbound-failed": "The email could not be sent. Try again later.",
+      "attachment-not-found": "The attached file was not found in your files."
     },
     "admin": {
       "broadcast-not-found": "Broadcast not found.",
@@ -477,8 +479,8 @@
       "someSubjects": "Only the ticked subjects are included.",
       "type": {
         "lesson": "Lesson",
-        "midterm": "Midterm",
-        "final": "Final"
+        "midterm": "Midterm (PC)",
+        "final": "Final (FC)"
       }
     },
     "alerts": {
@@ -594,15 +596,7 @@
       "webOff": "Turn off web search",
       "webBadge": "Web",
       "studyTools": {
-        "label": "Study tools",
-        "flashcards": "Make flash cards",
-        "quiz": "Make a quiz",
-        "explain": "Explain step by step",
-        "conspect": "Make a conspect",
-        "flashcardsPrompt": "Make flash cards about: ",
-        "quizPrompt": "Make a quiz of 10 questions about: ",
-        "explainPrompt": "Explain step by step: ",
-        "conspectPrompt": "Write a conspect (structured study notes) on: "
+        "label": "Study tools"
       }
     },
     "attach": {
@@ -703,14 +697,6 @@
       "placeholder": "Ask the assistant",
       "chips": "Suggestions"
     },
-    "chip": {
-      "explain": "Explain a topic simply",
-      "cards": "Make flash cards from my file",
-      "quiz": "Quiz me on my last lesson",
-      "due": "What is due tomorrow?",
-      "plan": "Plan my study week",
-      "notebook": "Make a notebook from my file"
-    },
     "disclaimer": "The assistant is AI and can make mistakes. Check important information.",
     "addToNotebook": {
       "title": "Add to notebook",
@@ -740,6 +726,66 @@
       "list": "Web pages used for this answer",
       "more": "{site} and {count} more",
       "copySources": "Sources:"
+    },
+    "slash": {
+      "menu": "Commands",
+      "empty": "No such command",
+      "remove": "Remove command /{name}",
+      "goal": {
+        "title": "Goal",
+        "hint": "Set what this chat is for",
+        "args": "Describe your goal"
+      },
+      "cards": {
+        "title": "Flash cards",
+        "hint": "Make flash cards on a topic or file",
+        "args": "Topic or file"
+      },
+      "quiz": {
+        "title": "Quiz",
+        "hint": "Quiz me with an answer key",
+        "args": "Topic or file"
+      },
+      "summary": {
+        "title": "Conspect",
+        "hint": "Structured study notes",
+        "args": "Topic or file"
+      },
+      "mindmap": {
+        "title": "Mind map",
+        "hint": "A branching outline of a topic",
+        "args": "Topic"
+      },
+      "slides": {
+        "title": "Slides",
+        "hint": "Plan a slide deck",
+        "args": "Topic"
+      },
+      "report": {
+        "title": "Report",
+        "hint": "A short written report",
+        "args": "Topic"
+      },
+      "table": {
+        "title": "Table",
+        "hint": "Compare facts in a table",
+        "args": "Subject"
+      },
+      "explain": {
+        "title": "Explain",
+        "hint": "Explain simply, step by step",
+        "args": "What to explain"
+      },
+      "translate": {
+        "title": "Translate",
+        "hint": "Translate a text",
+        "args": "Language and text"
+      },
+      "help": {
+        "title": "Help",
+        "hint": "What the commands do",
+        "args": "Anything to add"
+      }
     }
   },
   "files": {
@@ -757,6 +803,27 @@
       "infected": "a virus or malware was found",
       "too_large": "the file is too large",
       "empty": "the file is empty"
+    },
+    "picker": {
+      "search": "Search files by name",
+      "type": "File type",
+      "allTypes": "All types",
+      "types": {
+        "pdf": "PDF",
+        "doc": "Documents",
+        "sheet": "Spreadsheets",
+        "slides": "Slides",
+        "text": "Text",
+        "image": "Images"
+      },
+      "sort": "Order",
+      "recent": "Recent first",
+      "older": "Older first",
+      "empty": "No files found.",
+      "pagination": "File pages",
+      "previous": "Previous",
+      "next": "Next",
+      "page": "Page {page}"
     }
   },
   "lessonDetail": {
@@ -856,11 +923,11 @@
       "absent": "Absent",
       "excused": "Excused",
       "everyonePresent": "Everyone present",
-      "hint": "Everyone is marked present. Tap the students who were absent.",
+      "hint": "Everyone is ticked as present. Untick the students who were absent.",
       "notTaken": "Attendance was not taken for this lesson.",
       "submittedAt": "Submitted {time}.",
       "submittedBy": "Submitted {time} by {name}.",
-      "summary": "Absent: {absent} of {total}",
+      "summary": "Present: {present} of {total}",
       "submit": "Submit attendance",
       "saveChanges": "Save changes",
       "saving": "Saving…",
@@ -884,7 +951,9 @@
         "noAbsences": "Nobody is absent.",
         "review": "Show the current list",
         "keepMine": "Keep my marks"
-      }
+      },
+      "absentCount": "{count, plural, one {# absent} other {# absent}}",
+      "presentFor": "Present: {name}"
     },
     "audience": {
       "subgroup": "{group} · subgroup {number}"
@@ -1040,5 +1109,36 @@
       "iosHint": "Tap the Share button in Safari, then Add to Home Screen.",
       "manualHint": "Open the browser menu and choose Install app or Add to Home screen."
     }
+  },
+  "paletteSearch": {
+    "sections": {
+      "subjects": "Subjects",
+      "lessons": "Lessons",
+      "homework": "Homework",
+      "files": "Files",
+      "flashcardSets": "Flash card sets",
+      "notebooks": "Notebooks",
+      "marks": "Marks",
+      "libraryItems": "Library"
+    }
+  },
+  "composeMail": {
+    "open": "Write an email",
+    "title": "New email",
+    "description": "The email is sent from the platform. Replies go to the address you give in the text.",
+    "to": "To",
+    "toPlaceholder": "name@example.org, another@example.org",
+    "subject": "Subject",
+    "body": "Message",
+    "attachment": "Attachment",
+    "attach": "Attach a file from My files",
+    "removeAttachment": "Remove attachment",
+    "chooseFile": "Choose a file",
+    "send": "Send",
+    "sending": "Sending…",
+    "cancel": "Cancel",
+    "sent": "Email sent",
+    "failed": "The email was not sent.",
+    "recipientsHelp": "Separate addresses with commas."
   }
 }

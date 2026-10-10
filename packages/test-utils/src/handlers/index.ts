@@ -3,6 +3,7 @@ import { assessmentsHandlers } from "./assessments"
 import { broadcastsHandlers } from "./broadcasts"
 import { classworkHandlers } from "./classwork"
 import { compositionHandlers } from "./composition"
+import { dashboardHandlers } from "./dashboard"
 import { filesHandlers } from "./files"
 import { flashcardsHandlers } from "./flashcards"
 import { idHandlers } from "./id"
@@ -52,6 +53,7 @@ export {
   broadcastsHandlers,
   classworkHandlers,
   compositionHandlers,
+  dashboardHandlers,
   filesHandlers,
   flashcardsHandlers,
   idAdminHandlers,
@@ -94,6 +96,7 @@ export const allHandlers = [
   ...webSearchHandlers,
   ...aiHandlers,
   ...flashcardsHandlers,
+  ...dashboardHandlers,
   ...notebooksHandlers,
   ...lmsLearningHandlers,
   ...lmsAuthoringHandlers,

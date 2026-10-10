@@ -520,6 +520,9 @@ function finishAutoRun(notebook: StoredNotebook, labels: LabelsState): void {
 }
 
 export const notebooksHandlers = [
+  // The notebook of a subject (get or create); the subject hub opens it.
+  http.post(apiUrl("/v1/notebooks/auto/subject/:subjectId"), () => HttpResponse.json(notebookDetail)),
+  http.get(apiUrl("/v1/notebooks/auto/subject/:subjectId"), () => HttpResponse.json(notebookDetail)),
   // - - - Course workspaces - - -
   http.post(apiUrl("/v1/notebooks/course-workspaces"), () =>
     HttpResponse.json({ ...courseWorkspaceOpened, can_write: !courseReadOnly }),

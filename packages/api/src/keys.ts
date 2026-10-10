@@ -54,6 +54,7 @@ export const keys = {
     },
     syncRuns: (filters?: object) => ["admin", "sync-runs", params(filters)] as const,
     dashboard: () => ["admin", "dashboard"] as const,
+    insights: () => ["admin", "insights"] as const,
     broadcasts: {
       all: () => ["admin", "broadcasts"] as const,
       list: (filters?: object) => ["admin", "broadcasts", "list", params(filters)] as const,
@@ -90,6 +91,9 @@ export const keys = {
     attendance: (filters?: object) => ["me", "attendance", params(filters)] as const,
     subjects: (filters?: object) => ["me", "subjects", params(filters)] as const,
     subject: (id: string, filters?: object) => ["me", "subjects", id, params(filters)] as const,
+    lessonResults: (filters?: object) => ["me", "lessons", "results", params(filters)] as const,
+    subjectLessons: (id: string, filters?: object) =>
+      ["me", "subjects", id, "lessons", params(filters)] as const,
     grades: (filters?: object) => ["me", "grades", params(filters)] as const,
     gradesDay: (date?: string) => ["me", "grades", "day", date ?? null] as const,
     recordBook: () => ["me", "record-book"] as const,
@@ -127,6 +131,9 @@ export const keys = {
         ? (["ai", "usage", assistant ?? null, courseId] as const)
         : (["ai", "usage", assistant ?? null] as const),
     webSearch: () => ["ai", "web-search"] as const,
+  },
+  dashboard: {
+    layout: () => ["dashboard"] as const,
   },
   flashcards: {
     all: () => ["flashcards"] as const,

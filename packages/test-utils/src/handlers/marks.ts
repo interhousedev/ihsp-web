@@ -12,7 +12,57 @@ import {
 import { ids, weekLessons } from "../fixtures/world"
 import { accepted, apiUrl, notFound, paginate, param, query } from "./utils"
 
+/** The subject hub list: the latest past lessons first, then the next 14 days; attendance and marks only when past. */
+function subjectLessonRows(subjectId: string, now: number) {
+  const rows = weekLessons
+    .filter((lesson) => lesson.subject.id === subjectId)
+    .map((lesson) => {
+      const past = new Date(lesson.starts_at).getTime() < now
+      return {
+        lesson_id: lesson.id,
+        date: lesson.date,
+        starts_at: lesson.starts_at,
+        kind: lesson.kind,
+        topic: lesson.topic,
+        mark: past ? (marks.find((item) => item.lesson_id === lesson.id)?.value ?? null) : null,
+        attendance: past ? ("present" as const) : null,
+        materials_count: 0,
+        past,
+      }
+    })
+  return rows
+}
+
 export const marksHandlers = [
+  http.get(apiUrl("/v1/me/subjects/:subjectId/lessons"), ({ params, request }) => {
+    const subjectId = param(params, "subjectId")
+    if (!findSubjectCard(subjectId)) return notFound("Subject")
+    const search = query(request)
+    const limit = Number(search.get("past_limit") ?? 10)
+    const offset = Number(search.get("past_offset") ?? 0)
+    const rows = subjectLessonRows(subjectId, Date.now())
+    const past = rows.filter((row) => row.past).toSorted((a, b) => b.starts_at.localeCompare(a.starts_at))
+    const upcoming = rows.filter((row) => !row.past).toSorted((a, b) => a.starts_at.localeCompare(b.starts_at))
+    return HttpResponse.json({
+      items: [...past.slice(offset, offset + limit), ...(offset === 0 ? upcoming : [])],
+      has_more_past: past.length > offset + limit,
+    })
+  }),
+  http.get(apiUrl("/v1/me/lesson-results"), ({ request }) => {
+    const search = query(request)
+    const from = search.get("from") ?? ""
+    const to = search.get("to") ?? "9999-12-31"
+    const now = Date.now()
+    return HttpResponse.json(
+      weekLessons
+        .filter((lesson) => lesson.date >= from && lesson.date <= to && new Date(lesson.starts_at).getTime() < now)
+        .map((lesson, index) => ({
+          lesson_id: lesson.id,
+          attendance: index % 4 === 3 ? ("absent" as const) : ("present" as const),
+          mark: marks.find((item) => item.lesson_id === lesson.id)?.value ?? null,
+        })),
+    )
+  }),
   http.get(apiUrl("/v1/me/subjects"), () => HttpResponse.json(subjectCards)),
   http.get(apiUrl("/v1/me/subjects/:subjectId"), ({ params, request }) => {
     const subjectId = param(params, "subjectId")
