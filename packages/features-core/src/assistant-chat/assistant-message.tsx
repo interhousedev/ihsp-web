@@ -3,7 +3,7 @@
 import type { ChatItem, ChatMessageView, ToolCallView as ToolCall } from "@ihsp/api"
 import { useT } from "@ihsp/i18n"
 import { Markdown } from "@ihsp/ui"
-import { IconSparkles } from "@tabler/icons-react"
+import { IconSparkles } from "@ihsp/ui"
 import { WebSourcesRow } from "../notebooks/chat/web-sources-row"
 import { MessageActions, type Rating } from "./message-actions"
 import { ToolCallView } from "./tool-call-view"

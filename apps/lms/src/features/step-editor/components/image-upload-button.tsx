@@ -2,7 +2,7 @@
 
 import { uploadFile, type FileItem } from "@ihsp/api"
 import { useErrorMessage, useT } from "@ihsp/i18n"
-import { IconLoader2, IconPhoto } from "@tabler/icons-react"
+import { IconLoader2, IconPhoto } from "@ihsp/ui"
 import { type ChangeEvent, useRef, useState } from "react"
 import { ToolbarButton } from "./toolbar-button"
 

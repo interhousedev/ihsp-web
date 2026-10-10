@@ -3,7 +3,7 @@
 import type { SourceItem } from "@ihsp/api"
 import { useT } from "@ihsp/i18n"
 import { Button, DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger, cn } from "@ihsp/ui"
-import { IconDots, IconExternalLink, IconPencil, IconRefresh, IconTrash } from "@tabler/icons-react"
+import { IconDots, IconExternalLink, IconPencil, IconRefresh, IconTrash } from "@ihsp/ui"
 import { canSync } from "./source-rules"
 
 type SourceActionsMenuProps = {

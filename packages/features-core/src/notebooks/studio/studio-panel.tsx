@@ -3,7 +3,7 @@
 import type { ArtifactItem, ArtifactKind, NotebookDetail, ReportFormat } from "@ihsp/api"
 import { useT } from "@ihsp/i18n"
 import { Button } from "@ihsp/ui"
-import { IconLayoutSidebarRightCollapse, IconNotes } from "@tabler/icons-react"
+import { IconLayoutSidebarRightCollapse, IconNotes } from "@ihsp/ui"
 import { useId, useState } from "react"
 import { useCreateArtifact } from "../api/use-artifacts"
 import { defaultCreate, isActive, studioTilesFor, type StudioTile as StudioTileDef } from "../lib/artifact-kinds"

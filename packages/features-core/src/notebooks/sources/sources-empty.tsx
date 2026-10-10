@@ -2,7 +2,7 @@
 
 import { useT } from "@ihsp/i18n"
 import { Button } from "@ihsp/ui"
-import { IconFiles, IconFileUpload } from "@tabler/icons-react"
+import { IconFiles, IconFileUpload } from "@ihsp/ui"
 import { FileUploadButton } from "../../file-upload-button"
 import { useWorkspace } from "../workspace-context"
 import { UploadDropZone } from "./upload-drop-zone"

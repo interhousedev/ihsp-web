@@ -16,7 +16,7 @@ import {
   DrawerTitle,
   useIsMobile,
 } from "@ihsp/ui"
-import { IconX } from "@tabler/icons-react"
+import { IconX } from "@ihsp/ui"
 import { AddSourcesBody } from "./add-sources-body"
 
 export type AddSourcesDialogProps = {

@@ -2,7 +2,7 @@
 
 import type { ArtifactDetail, ReportContent } from "@ihsp/api"
 import { useT } from "@ihsp/i18n"
-import { IconCheck, IconCopy, IconDownload, IconFilePlus, IconPrinter } from "@tabler/icons-react"
+import { IconCheck, IconCopy, IconDownload, IconFilePlus, IconPrinter } from "@ihsp/ui"
 import { toast } from "sonner"
 import { useSaveArtifactAsSource } from "../../api/use-artifacts"
 import { markersToBrackets } from "../../lib/citations"

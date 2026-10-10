@@ -3,7 +3,7 @@
 import { uploadFile, type FileItem, type FileUploadPurpose } from "@ihsp/api"
 import { useErrorMessage, useT } from "@ihsp/i18n"
 import { Button, Progress } from "@ihsp/ui"
-import { IconAlertTriangle, IconPaperclip, IconUpload, IconX } from "@tabler/icons-react"
+import { IconAlertTriangle, IconPaperclip, IconUpload, IconX } from "@ihsp/ui"
 import { useRef, useState, type ChangeEvent } from "react"
 import { useRejectReason } from "./use-reject-reason"
 

@@ -2,7 +2,7 @@
 
 import type { NotebookMessage as Message } from "@ihsp/api"
 import { useT } from "@ihsp/i18n"
-import { IconSparkles } from "@tabler/icons-react"
+import { IconSparkles } from "@ihsp/ui"
 import { citedNumbers, citedWebNumbers } from "../lib/citations"
 import { ActionCard } from "./action-card"
 import { CitedMarkdown } from "./cited-markdown"

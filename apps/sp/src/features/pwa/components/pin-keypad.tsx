@@ -1,7 +1,7 @@
 "use client"
 
 import { useT } from "@ihsp/i18n"
-import { IconBackspace } from "@tabler/icons-react"
+import { IconBackspace } from "@ihsp/ui"
 
 const DIGITS = ["1", "2", "3", "4", "5", "6", "7", "8", "9"] as const
 const KEY =

@@ -11,7 +11,7 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@ihsp/ui"
-import { IconDotsVertical } from "@tabler/icons-react"
+import { IconDotsVertical } from "@ihsp/ui"
 import { useRouter } from "next/navigation"
 import { useState } from "react"
 import { useDeleteNotebook, useDeleteNotebookChat } from "../api"

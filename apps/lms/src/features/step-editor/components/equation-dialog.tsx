@@ -16,7 +16,7 @@ import {
   Textarea,
   useKatex,
 } from "@ihsp/ui"
-import { IconAlertTriangle } from "@tabler/icons-react"
+import { IconAlertTriangle } from "@ihsp/ui"
 import { type FormEvent, type KeyboardEvent, type RefObject, useId, useRef, useState } from "react"
 import type { Formula } from "../utils/markdown/math-format"
 

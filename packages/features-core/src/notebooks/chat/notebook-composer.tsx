@@ -3,7 +3,7 @@
 import type { NotebookDetail } from "@ihsp/api"
 import { useFormatters, useT } from "@ihsp/i18n"
 import { Badge, Button, Textarea, cn, useOnline } from "@ihsp/ui"
-import { IconArrowUp, IconPlayerStopFilled, IconSettings, IconWorld, IconX } from "@tabler/icons-react"
+import { IconArrowUp, IconPlayerStopFilled, IconSettings, IconWorld, IconX } from "@ihsp/ui"
 import { useEffect, useId, useLayoutEffect, useRef, useState, type KeyboardEvent } from "react"
 import { slashText, type SlashName } from "../../assistant-chat/slash-commands"
 import { SlashChip, SlashMenu } from "../../assistant-chat/slash-menu"

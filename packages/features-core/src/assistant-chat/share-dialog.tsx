@@ -17,7 +17,7 @@ import {
   Label,
   StateView,
 } from "@ihsp/ui"
-import { IconAlertTriangle } from "@tabler/icons-react"
+import { IconAlertTriangle } from "@ihsp/ui"
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query"
 import { useId, useState } from "react"
 import { toast } from "sonner"

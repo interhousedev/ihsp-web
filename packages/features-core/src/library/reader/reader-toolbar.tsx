@@ -2,7 +2,7 @@
 
 import { useT } from "@ihsp/i18n"
 import { Button, OfflineBadge, buttonVariants, cn } from "@ihsp/ui"
-import { IconArrowLeft, IconDotsVertical, IconHighlight, IconList, IconSearch, IconSettings } from "@tabler/icons-react"
+import { IconArrowLeft, IconDotsVertical, IconHighlight, IconList, IconSearch, IconSettings } from "@ihsp/ui"
 import Link from "next/link"
 
 export type ReaderToolbarProps = {

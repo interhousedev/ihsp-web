@@ -2,7 +2,7 @@
 
 import { useErrorMessage, useT } from "@ihsp/i18n"
 import { Button, Input, Spinner } from "@ihsp/ui"
-import { IconSearch, IconX } from "@tabler/icons-react"
+import { IconSearch, IconX } from "@ihsp/ui"
 import { useEffect, useRef, useState } from "react"
 import { ReaderSheet } from "./reader-sheet"
 import type { SearchHit } from "./reader-types"

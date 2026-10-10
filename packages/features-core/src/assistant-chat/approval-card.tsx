@@ -3,7 +3,7 @@
 import type { ToolCallView } from "@ihsp/api"
 import { useFormatters, useT } from "@ihsp/i18n"
 import { Badge, Button, Label, Textarea } from "@ihsp/ui"
-import { IconAlertTriangle, IconCheck, IconX } from "@tabler/icons-react"
+import { IconAlertTriangle, IconCheck, IconX } from "@ihsp/ui"
 import { useId, useState } from "react"
 
 const MAX_REASON_LENGTH = 500

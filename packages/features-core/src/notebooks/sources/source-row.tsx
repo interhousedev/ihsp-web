@@ -3,7 +3,7 @@
 import type { SourceItem } from "@ihsp/api"
 import { useT } from "@ihsp/i18n"
 import { Button, cn } from "@ihsp/ui"
-import { IconRefresh } from "@tabler/icons-react"
+import { IconRefresh } from "@ihsp/ui"
 import { SourceKindIcon } from "../lib/source-icons"
 import { isUsable } from "../lib/sort-sources"
 import { SelectionCheckbox } from "./selection-checkbox"

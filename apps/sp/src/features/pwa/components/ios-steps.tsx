@@ -1,7 +1,7 @@
 "use client"
 
 import { useT } from "@ihsp/i18n"
-import { IconSquarePlus, IconShare2, IconCheck } from "@tabler/icons-react"
+import { IconSquarePlus, IconShare2, IconCheck } from "@ihsp/ui"
 import { StepList } from "./step-list"
 
 /** Safari on iPhone and iPad has no install button: Share → Add to Home Screen. */

@@ -3,7 +3,7 @@
 import type { ChatMessageView } from "@ihsp/api"
 import { useT } from "@ihsp/i18n"
 import { Badge } from "@ihsp/ui"
-import { IconChevronDown, IconChevronUp, IconSchool } from "@tabler/icons-react"
+import { IconChevronDown, IconChevronUp, IconSchool } from "@ihsp/ui"
 import { useId, useState } from "react"
 import { FileChip } from "./file-chip"
 import { splitGuidedHint } from "./guided-hint"

@@ -11,7 +11,7 @@ import {
   DropdownMenuTrigger,
   cn,
 } from "@ihsp/ui"
-import { IconBookmark, IconBookmarkFilled, IconCheck, IconChevronDown } from "@tabler/icons-react"
+import { IconBookmark, IconBookmarkFilled, IconCheck, IconChevronDown } from "@ihsp/ui"
 import { useLibraryAccess } from "../hooks/use-library-access"
 import type { ShelfSubject } from "./card-utils"
 import { SignInLink } from "./sign-in-link"

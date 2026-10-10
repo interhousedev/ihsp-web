@@ -3,7 +3,7 @@
 import type { ManageQueueRow } from "@ihsp/api"
 import { useFormatters, useT } from "@ihsp/i18n"
 import { Badge, cn } from "@ihsp/ui"
-import { IconAlertTriangle, IconFlag, IconUserOff } from "@tabler/icons-react"
+import { IconAlertTriangle, IconFlag, IconUserOff } from "@ihsp/ui"
 import { SourceTag } from "../../catalog/source-tag"
 
 /** One selectable row of the queue: title, kind, uploader and cohort, age, scan findings, reports. */

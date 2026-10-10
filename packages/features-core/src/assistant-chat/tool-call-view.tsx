@@ -1,7 +1,7 @@
 "use client"
 
 import type { ToolCallView as ToolCall } from "@ihsp/api"
-import { IconSearch } from "@tabler/icons-react"
+import { IconSearch } from "@ihsp/ui"
 import { ApprovalCard } from "./approval-card"
 import { DocumentCard } from "./document-card"
 

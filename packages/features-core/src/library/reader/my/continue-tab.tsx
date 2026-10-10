@@ -3,7 +3,7 @@
 import { getMeLibraryQuery } from "@ihsp/api"
 import { useT } from "@ihsp/i18n"
 import { StateView, buttonVariants } from "@ihsp/ui"
-import { IconBook } from "@tabler/icons-react"
+import { IconBook } from "@ihsp/ui"
 import { useQuery } from "@tanstack/react-query"
 import Link from "next/link"
 import { cardKey, cardRouteId, ItemCardView } from "../../catalog"

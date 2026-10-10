@@ -2,7 +2,7 @@
 
 import { useT } from "@ihsp/i18n"
 import { cn } from "@ihsp/ui"
-import { IconCheck, IconCircleCheck, IconCircleX } from "@tabler/icons-react"
+import { IconCheck, IconCircleCheck, IconCircleX } from "@ihsp/ui"
 
 type OptionState = {
   /** The option is part of the student's answer (or, before checking, of the current choice). */

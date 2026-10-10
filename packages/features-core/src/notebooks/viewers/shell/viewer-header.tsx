@@ -2,7 +2,7 @@
 
 import { useT } from "@ihsp/i18n"
 import { Button } from "@ihsp/ui"
-import { IconArrowLeft } from "@tabler/icons-react"
+import { IconArrowLeft } from "@ihsp/ui"
 import type { ReactNode } from "react"
 import { useWorkspace } from "../../workspace-context"
 import { useFocusHeading } from "./use-focus-heading"

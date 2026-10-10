@@ -3,7 +3,7 @@
 import type { BookAction, ItemStatus } from "@ihsp/api"
 import { useErrorMessage, useT } from "@ihsp/i18n"
 import { Badge, Button } from "@ihsp/ui"
-import { IconDeviceFloppy, IconEyeOff, IconSend, IconTrashX } from "@tabler/icons-react"
+import { IconDeviceFloppy, IconEyeOff, IconSend, IconTrashX } from "@ihsp/ui"
 import { useState } from "react"
 import { ReasonDialog } from "../shared/reason-dialog"
 

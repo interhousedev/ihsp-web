@@ -2,7 +2,7 @@
 
 import { useT } from "@ihsp/i18n"
 import { Button } from "@ihsp/ui"
-import { IconArrowLeft } from "@tabler/icons-react"
+import { IconArrowLeft } from "@ihsp/ui"
 import { DiscoverPicker } from "./discover-picker"
 import { DiscoverResultsSkeleton } from "./discover-results-skeleton"
 import type { DiscoverFlow } from "./use-discover"

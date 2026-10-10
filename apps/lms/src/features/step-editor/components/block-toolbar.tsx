@@ -20,7 +20,7 @@ import {
   IconSourceCode,
   IconTable,
   IconUnderline,
-} from "@tabler/icons-react"
+} from "@ihsp/ui"
 import { type Ref, type ReactNode } from "react"
 import { shortcutOf } from "../utils/editor-shortcuts"
 import type { BlockFormat } from "../utils/markdown/block-format"

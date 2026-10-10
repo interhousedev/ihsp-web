@@ -2,7 +2,7 @@
 
 import { useT } from "@ihsp/i18n"
 import { Button, Input, Label } from "@ihsp/ui"
-import { IconPlus, IconX } from "@tabler/icons-react"
+import { IconPlus, IconX } from "@ihsp/ui"
 import { useId, useState } from "react"
 
 /** A list of short texts (authors, translators): type a name, press Enter or Add; each entry has a remove button. */

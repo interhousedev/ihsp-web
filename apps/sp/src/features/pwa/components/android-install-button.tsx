@@ -2,7 +2,7 @@
 
 import { useT } from "@ihsp/i18n"
 import { Button } from "@ihsp/ui"
-import { IconDownload } from "@tabler/icons-react"
+import { IconDownload } from "@ihsp/ui"
 import { useState } from "react"
 import type { InstallOutcome } from "../hooks/use-install-prompt"
 

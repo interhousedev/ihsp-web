@@ -11,7 +11,7 @@ import {
   IconQuote,
   IconStrikethrough,
   IconUnderline,
-} from "@tabler/icons-react"
+} from "@ihsp/ui"
 import type { Ref } from "react"
 import { shortcutOf } from "../utils/editor-shortcuts"
 import type { InlineFormat } from "../utils/markdown/markdown-index"

@@ -11,7 +11,7 @@ import {
   IconSchool,
   IconShieldLock,
   IconTrash,
-} from "@tabler/icons-react"
+} from "@ihsp/ui"
 import type { Translate } from "../features/shared/hooks/use-tr"
 
 /**

@@ -3,7 +3,7 @@
 import type { NotebookDetail, SourceItem } from "@ihsp/api"
 import { useT } from "@ihsp/i18n"
 import { Button, StateView } from "@ihsp/ui"
-import { IconLayoutSidebarLeftCollapse, IconPlus } from "@tabler/icons-react"
+import { IconLayoutSidebarLeftCollapse, IconPlus } from "@ihsp/ui"
 import { useState } from "react"
 import { toast } from "sonner"
 import { useAutoLabel, useLabels, useSelectSource, useSelectSources, useSources } from "../api"

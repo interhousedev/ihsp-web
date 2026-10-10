@@ -2,7 +2,7 @@
 
 import { useT } from "@ihsp/i18n"
 import { Button } from "@ihsp/ui"
-import { IconEdit, IconLayoutSidebarLeftCollapse, IconSearch } from "@tabler/icons-react"
+import { IconEdit, IconLayoutSidebarLeftCollapse, IconSearch } from "@ihsp/ui"
 import Link from "next/link"
 import { useRouter } from "next/navigation"
 import { useState } from "react"

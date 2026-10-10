@@ -13,7 +13,7 @@ import {
   IconPlugConnected,
   IconSchool,
   IconTrash,
-} from "@tabler/icons-react"
+} from "@ihsp/ui"
 import { useTr } from "../../shared/hooks/use-tr"
 import { EmisReauthBanner } from "./emis-reauth-banner"
 import { OnOffBadge } from "./on-off-badge"

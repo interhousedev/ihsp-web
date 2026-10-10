@@ -2,7 +2,7 @@
 
 import { useT } from "@ihsp/i18n"
 import { Button } from "@ihsp/ui"
-import { IconTrophy } from "@tabler/icons-react"
+import { IconTrophy } from "@ihsp/ui"
 import type { RestartMode } from "./deck-state"
 
 type DeckResultsProps = {

@@ -2,7 +2,7 @@
 
 import { useT } from "@ihsp/i18n"
 import { cn } from "@ihsp/ui"
-import { IconColumns, IconEye, IconPencil } from "@tabler/icons-react"
+import { IconColumns, IconEye, IconPencil } from "@ihsp/ui"
 
 export type EditorView = "write" | "split" | "preview"
 

@@ -3,7 +3,7 @@
 import type { ManageQueueRow } from "@ihsp/api"
 import { useFormatters, useT } from "@ihsp/i18n"
 import { Badge, Button, buttonVariants } from "@ihsp/ui"
-import { IconFlagCheck } from "@tabler/icons-react"
+import { IconFlagCheck } from "@ihsp/ui"
 import Link from "next/link"
 import { SourceTag } from "../../catalog/source-tag"
 import { itemHref, manageQueueHref } from "../../utils/hrefs"

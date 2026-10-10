@@ -3,7 +3,7 @@
 import { useLibraryAccess } from "@ihsp/features-core"
 import { useT } from "@ihsp/i18n"
 import { filterNavGroups, type BottomNavItem, type NavGroup } from "@ihsp/ui"
-import { IconBookmarks, IconBooks, IconCategory, IconFlag, IconInbox, IconListDetails } from "@tabler/icons-react"
+import { IconBookmarks, IconBooks, IconCategory, IconFlag, IconInbox, IconListDetails } from "@ihsp/ui"
 import { useMemo } from "react"
 
 /**

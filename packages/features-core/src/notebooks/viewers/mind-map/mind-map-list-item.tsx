@@ -3,7 +3,7 @@
 import type { RefsIndex } from "@ihsp/api"
 import { useT } from "@ihsp/i18n"
 import { Button, cn } from "@ihsp/ui"
-import { IconChevronRight } from "@tabler/icons-react"
+import { IconChevronRight } from "@ihsp/ui"
 import { useId } from "react"
 import { RefChips } from "../../chat/ref-chips"
 import type { TreeNode } from "../../lib/tree"

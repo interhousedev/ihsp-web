@@ -2,7 +2,7 @@
 
 import type { SourceSearchGroup } from "@ihsp/api"
 import { useT } from "@ihsp/i18n"
-import { IconLoader2 } from "@tabler/icons-react"
+import { IconLoader2 } from "@ihsp/ui"
 import { useWorkspace } from "../workspace-context"
 import { InTextSource } from "./in-text-source"
 

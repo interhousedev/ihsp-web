@@ -32,7 +32,7 @@ export function SemesterSwitcher({
         if (next !== null) onChange(Number(next))
       }}
     >
-      <SelectTrigger aria-label={t("semester.switcher")} className={className ?? "min-h-11 w-44 md:min-h-8"}>
+      <SelectTrigger aria-label={t("semester.switcher")} className={className ?? "min-h-11 w-44 rounded-full border-transparent bg-muted hover:bg-muted/70 md:min-h-8"}>
         <SelectValue />
       </SelectTrigger>
       <SelectContent>

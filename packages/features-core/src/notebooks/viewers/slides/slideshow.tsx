@@ -3,7 +3,7 @@
 import type { Slide } from "@ihsp/api"
 import { useT } from "@ihsp/i18n"
 import { Button, Icons } from "@ihsp/ui"
-import { IconNotes } from "@tabler/icons-react"
+import { IconNotes } from "@ihsp/ui"
 import { useEffect, useRef } from "react"
 import { NotesPanel } from "./notes-panel"
 import { SlideView } from "./slide-view"

@@ -1,7 +1,7 @@
 "use client"
 
 import { useT } from "@ihsp/i18n"
-import { IconSparkles } from "@tabler/icons-react"
+import { IconSparkles } from "@ihsp/ui"
 
 /** "Thinking…" line shown while a turn runs; it pulses, and stands still with `prefers-reduced-motion`. */
 export function ThinkingIndicator() {

@@ -20,7 +20,7 @@ import {
   DropdownMenuSubTrigger,
   DropdownMenuTrigger,
 } from "./dropdown-menu"
-import { IconCheck } from "@tabler/icons-react"
+import { IconCheck } from "../icons"
 
 function Menubar({ className, ...props }: MenubarPrimitive.Props) {
   return (

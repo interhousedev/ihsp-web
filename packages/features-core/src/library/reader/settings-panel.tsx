@@ -2,7 +2,7 @@
 
 import { useT } from "@ihsp/i18n"
 import { Button, ToggleGroup, ToggleGroupItem } from "@ihsp/ui"
-import { IconMinus, IconPlus } from "@tabler/icons-react"
+import { IconMinus, IconPlus } from "@ihsp/ui"
 import {
   FONT_SIZE_RANGE,
   LINE_HEIGHTS,

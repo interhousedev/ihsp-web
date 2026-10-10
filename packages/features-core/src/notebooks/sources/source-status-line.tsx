@@ -3,7 +3,7 @@
 import type { SourceItem } from "@ihsp/api"
 import { useT } from "@ihsp/i18n"
 import { cn } from "@ihsp/ui"
-import { IconAlertTriangle, IconLoader2 } from "@tabler/icons-react"
+import { IconAlertTriangle, IconLoader2 } from "@ihsp/ui"
 import { useFailureText } from "./use-failure-text"
 
 type SourceStatusLineProps = {

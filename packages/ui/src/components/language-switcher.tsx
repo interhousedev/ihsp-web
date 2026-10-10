@@ -3,6 +3,7 @@
 import { LOCALES, LOCALE_NAMES, isLocale, setLocale, useLocale, useT, type Locale } from "@ihsp/i18n"
 import { Icons } from "./icons"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "./ui/select"
+import { cn } from "../lib/utils"
 
 /**
  * Language picker (uz, ru, en). It applies the language at once and remembers it in `localStorage`; pass `onChange`
@@ -23,7 +24,7 @@ export function LanguageSwitcher({ onChange, className }: { onChange?: (locale: 
         onChange?.(value)
       }}
     >
-      <SelectTrigger aria-label={t("locale.switcher")} className={className}>
+      <SelectTrigger aria-label={t("locale.switcher")} className={cn("rounded-full border-transparent bg-muted hover:bg-muted/70", className)}>
         <Icons.globe className="text-muted-foreground size-4" aria-hidden />
         <SelectValue />
       </SelectTrigger>

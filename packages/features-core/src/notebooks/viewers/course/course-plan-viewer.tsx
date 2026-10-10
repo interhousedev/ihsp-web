@@ -3,7 +3,7 @@
 import type { CoursePlan, CoursePlanContent } from "@ihsp/api"
 import { useT } from "@ihsp/i18n"
 import { Button, Input, Textarea } from "@ihsp/ui"
-import { IconArrowDown, IconArrowUp, IconPlus, IconRestore, IconTrash } from "@tabler/icons-react"
+import { IconArrowDown, IconArrowUp, IconPlus, IconRestore, IconTrash } from "@ihsp/ui"
 import { useId, useMemo, useState } from "react"
 import type { ViewerProps } from "../viewer-props"
 import { ApplyButton } from "./apply-button"

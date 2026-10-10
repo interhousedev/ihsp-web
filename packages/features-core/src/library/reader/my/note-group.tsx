@@ -3,7 +3,7 @@
 import type { Annotation } from "@ihsp/api"
 import { useFormatters, useT } from "@ihsp/i18n"
 import { Button, Skeleton, buttonVariants, cn } from "@ihsp/ui"
-import { IconBookmark, IconFileExport, IconHighlight, IconPencil } from "@tabler/icons-react"
+import { IconBookmark, IconFileExport, IconHighlight, IconPencil } from "@ihsp/ui"
 import Link from "next/link"
 import { COLOR_BORDER, COLOR_ICONS, COLOR_TEXT } from "../lib/colors"
 import { isPageLocator, locatorToHrefParams } from "../lib/locator"

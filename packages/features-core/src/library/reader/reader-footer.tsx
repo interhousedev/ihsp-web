@@ -2,7 +2,7 @@
 
 import { useT } from "@ihsp/i18n"
 import { Button, Progress, ProgressIndicator, ProgressTrack } from "@ihsp/ui"
-import { IconBookmark, IconBookmarkFilled, IconChevronLeft, IconChevronRight, IconHighlight } from "@tabler/icons-react"
+import { IconBookmark, IconBookmarkFilled, IconChevronLeft, IconChevronRight, IconHighlight } from "@ihsp/ui"
 import type { ReaderPosition } from "./reader-types"
 
 export type ReaderFooterProps = {

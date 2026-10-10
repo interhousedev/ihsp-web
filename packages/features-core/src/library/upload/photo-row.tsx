@@ -4,7 +4,7 @@ import { useSortable } from "@dnd-kit/sortable"
 import { CSS } from "@dnd-kit/utilities"
 import { useT } from "@ihsp/i18n"
 import { Button, Icons, cn, formatBytes } from "@ihsp/ui"
-import { IconArrowDown, IconArrowUp, IconRotateClockwise } from "@tabler/icons-react"
+import { IconArrowDown, IconArrowUp, IconRotateClockwise } from "@ihsp/ui"
 import type { KeyboardEvent } from "react"
 import type { PhotoItem } from "./material-values"
 

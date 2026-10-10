@@ -3,7 +3,7 @@
 import type { DataTableContent } from "@ihsp/api"
 import { useLocale, useT } from "@ihsp/i18n"
 import { useIsMobile } from "@ihsp/ui"
-import { IconCopy, IconDownload } from "@tabler/icons-react"
+import { IconCopy, IconDownload } from "@ihsp/ui"
 import { useMemo, useState } from "react"
 import { downloadText, fileNameFor } from "../lib/download"
 import { SortControls } from "./data-table/sort-controls"

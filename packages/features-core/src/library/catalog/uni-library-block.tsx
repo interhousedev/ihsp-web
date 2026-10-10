@@ -3,7 +3,7 @@
 import { getUniLibrarySearchQuery, isApiError } from "@ihsp/api"
 import { useT } from "@ihsp/i18n"
 import { Skeleton, buttonVariants } from "@ihsp/ui"
-import { IconBuildingBank } from "@tabler/icons-react"
+import { IconBuildingBank } from "@ihsp/ui"
 import { useQuery } from "@tanstack/react-query"
 import Link from "next/link"
 import { useUniLibraryEnabled } from "../hooks/use-uni-library"

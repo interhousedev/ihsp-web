@@ -12,7 +12,7 @@ import {
   DrawerTitle,
   useIsMobile,
 } from "@ihsp/ui"
-import { IconX } from "@tabler/icons-react"
+import { IconX } from "@ihsp/ui"
 import { useEffect, useRef } from "react"
 import { RefChips } from "../../chat/ref-chips"
 import { cardPlacement } from "./card-placement"

@@ -2,7 +2,7 @@
 
 import { useT } from "@ihsp/i18n"
 import { cn } from "@ihsp/ui"
-import { IconAlertTriangle } from "@tabler/icons-react"
+import { IconAlertTriangle } from "@ihsp/ui"
 import { LIMIT_WARN_RATIO, SOURCE_LIMIT } from "./constants"
 
 /** The quiet "12 of 50 sources" footer; amber (with an icon and a hint) from 90 % of the limit. */

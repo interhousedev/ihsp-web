@@ -12,7 +12,7 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@ihsp/ui"
-import { IconDotsVertical } from "@tabler/icons-react"
+import { IconDotsVertical } from "@ihsp/ui"
 import { useState } from "react"
 import { toast } from "sonner"
 import { RenameNotebookDialog } from "./rename-notebook-dialog"

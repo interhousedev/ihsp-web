@@ -3,7 +3,7 @@
 import type { NotebookDetail } from "@ihsp/api"
 import { useT } from "@ihsp/i18n"
 import { Button, Markdown, Skeleton, cn } from "@ihsp/ui"
-import { IconCopy, IconPin, IconThumbDown, IconThumbUp } from "@tabler/icons-react"
+import { IconCopy, IconPin, IconThumbDown, IconThumbUp } from "@ihsp/ui"
 import { useState } from "react"
 import { toast } from "sonner"
 import { useAddSources } from "../api"

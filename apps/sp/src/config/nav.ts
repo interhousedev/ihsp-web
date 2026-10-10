@@ -2,7 +2,7 @@
 
 import { useT } from "@ihsp/i18n"
 import type { BottomNavItem, NavGroup } from "@ihsp/ui"
-import { IconNotebook } from "@tabler/icons-react"
+import { IconNotebook } from "@ihsp/ui"
 import { useMemo } from "react"
 
 /**

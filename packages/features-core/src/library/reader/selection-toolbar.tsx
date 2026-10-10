@@ -3,7 +3,7 @@
 import type { AnnotationColor } from "@ihsp/api"
 import { useT } from "@ihsp/i18n"
 import { Button, cn, useIsMobile } from "@ihsp/ui"
-import { IconCopy, IconNotebook, IconPencil, IconX } from "@tabler/icons-react"
+import { IconCopy, IconNotebook, IconPencil, IconX } from "@ihsp/ui"
 import { ANNOTATION_COLORS, COLOR_ICONS, COLOR_TEXT } from "./lib/colors"
 import type { ReaderSelection } from "./reader-types"
 

@@ -14,7 +14,7 @@ import { Separator } from "./separator"
 import { Sheet, SheetContent, SheetDescription, SheetHeader, SheetTitle } from "./sheet"
 import { Skeleton } from "./skeleton"
 import { Tooltip, TooltipContent, TooltipTrigger } from "./tooltip"
-import { IconLayoutSidebar } from "@tabler/icons-react"
+import { IconLayoutSidebar } from "../icons"
 
 const SIDEBAR_STORAGE_KEY = "ihsp.sidebar"
 const SIDEBAR_WIDTH = "16rem"

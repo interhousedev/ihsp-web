@@ -3,7 +3,7 @@
 import type { NotebookDetail, NotebookMessage as Message } from "@ihsp/api"
 import { useT } from "@ihsp/i18n"
 import { Button, StateView, useOnline } from "@ihsp/ui"
-import { IconArrowDown } from "@tabler/icons-react"
+import { IconArrowDown } from "@ihsp/ui"
 import { useCallback, useEffect, useRef } from "react"
 import { useWebSearchErrorMessage } from "../../web-search"
 import { notebookLimit, useNotebookChat, useNotebookUsage } from "../api"

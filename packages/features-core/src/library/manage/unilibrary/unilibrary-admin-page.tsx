@@ -2,7 +2,7 @@
 
 import { useT } from "@ihsp/i18n"
 import { PageContainer } from "@ihsp/ui"
-import { IconInfoCircle } from "@tabler/icons-react"
+import { IconInfoCircle } from "@ihsp/ui"
 import { SanctionsForm } from "./sanctions-form"
 import { SettingsPanel } from "./settings-panel"
 import { StatusPanel } from "./status-panel"

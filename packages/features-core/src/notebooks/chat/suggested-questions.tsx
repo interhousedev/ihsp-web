@@ -2,7 +2,7 @@
 
 import { useT } from "@ihsp/i18n"
 import { Button, cn } from "@ihsp/ui"
-import { IconChevronDown } from "@tabler/icons-react"
+import { IconChevronDown } from "@ihsp/ui"
 import { useId, useState } from "react"
 import { QuestionChip } from "./question-chip"
 

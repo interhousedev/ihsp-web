@@ -2,7 +2,7 @@
 
 import { useT } from "@ihsp/i18n"
 import { cn, Markdown, Textarea, useIsMobile } from "@ihsp/ui"
-import { IconCode } from "@tabler/icons-react"
+import { IconCode } from "@ihsp/ui"
 import {
   type ClipboardEvent,
   type FocusEvent,

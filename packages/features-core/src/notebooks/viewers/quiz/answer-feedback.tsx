@@ -3,7 +3,7 @@
 import type { QuizQuestion, RefsIndex } from "@ihsp/api"
 import { useT } from "@ihsp/i18n"
 import { Button, cn } from "@ihsp/ui"
-import { IconCircleCheck, IconCircleX, IconMessageQuestion } from "@tabler/icons-react"
+import { IconCircleCheck, IconCircleX, IconMessageQuestion } from "@ihsp/ui"
 import { RefChips } from "../../chat/ref-chips"
 
 type AnswerFeedbackProps = {

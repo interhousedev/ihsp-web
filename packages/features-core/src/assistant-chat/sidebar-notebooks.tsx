@@ -2,7 +2,7 @@
 
 import { useErrorMessage, useT } from "@ihsp/i18n"
 import { Button, Skeleton, cn } from "@ihsp/ui"
-import { IconBook2, IconPlus } from "@tabler/icons-react"
+import { IconBook2, IconPlus } from "@ihsp/ui"
 import Link from "next/link"
 import { usePathname, useRouter, useSearchParams } from "next/navigation"
 import { toast } from "sonner"

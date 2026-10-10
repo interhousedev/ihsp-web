@@ -2,7 +2,7 @@
 
 import { useT } from "@ihsp/i18n"
 import { Button, DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@ihsp/ui"
-import { IconArrowMerge, IconDots } from "@tabler/icons-react"
+import { IconArrowMerge, IconDots } from "@ihsp/ui"
 import { useId, useState } from "react"
 import { useLoadedNotebook, useSources } from "../api"
 import { useWorkspace } from "../workspace-context"

@@ -2,7 +2,7 @@
 
 import { useT } from "@ihsp/i18n"
 import { Button } from "@ihsp/ui"
-import { IconCircleCheck, IconCircleX, IconPlayerSkipForward } from "@tabler/icons-react"
+import { IconCircleCheck, IconCircleX, IconPlayerSkipForward } from "@ihsp/ui"
 import type { ReactNode } from "react"
 import type { QuizSummary } from "./quiz-state"
 

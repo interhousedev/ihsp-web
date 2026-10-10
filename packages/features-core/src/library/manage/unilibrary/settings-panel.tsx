@@ -3,7 +3,7 @@
 import { getUniLibrarySettingsQuery, keys, putUniLibrarySettings } from "@ihsp/api"
 import { useErrorMessage, useT } from "@ihsp/i18n"
 import { Badge, Button, Skeleton, StateView, Switch } from "@ihsp/ui"
-import { IconDeviceFloppy } from "@tabler/icons-react"
+import { IconDeviceFloppy } from "@ihsp/ui"
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query"
 import { useEffect, useId, useState } from "react"
 import { toast } from "sonner"

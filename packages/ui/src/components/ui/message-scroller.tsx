@@ -10,7 +10,7 @@ import {
 
 import { cn } from "../../lib/utils"
 import { Button } from "./button"
-import { IconArrowDown } from "@tabler/icons-react"
+import { IconArrowDown } from "../icons"
 
 function MessageScrollerProvider(props: React.ComponentProps<typeof MessageScrollerPrimitive.Provider>) {
   return <MessageScrollerPrimitive.Provider {...props} />

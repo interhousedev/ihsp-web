@@ -3,7 +3,7 @@
 import type { SourceItem, SourceKind } from "@ihsp/api"
 import { useT } from "@ihsp/i18n"
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@ihsp/ui"
-import { IconChevronDown } from "@tabler/icons-react"
+import { IconChevronDown } from "@ihsp/ui"
 import type { ReactNode } from "react"
 import { isUsable, selectionState } from "../lib/sort-sources"
 import { CombineNotesMenu } from "./combine-notes-menu"

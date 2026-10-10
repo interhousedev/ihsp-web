@@ -2,7 +2,7 @@
 
 import { useT } from "@ihsp/i18n"
 import { Button, Icons } from "@ihsp/ui"
-import { IconCopy, IconNotes, IconPlayerPlay, IconPrinter } from "@tabler/icons-react"
+import { IconCopy, IconNotes, IconPlayerPlay, IconPrinter } from "@ihsp/ui"
 
 /** Icon-only 44 px buttons on phones (the text stays for screen readers), icon and text from `sm`. */
 const ICON_ON_PHONE = "min-h-11 min-w-11 sm:min-h-8 sm:min-w-0 md:min-h-8"

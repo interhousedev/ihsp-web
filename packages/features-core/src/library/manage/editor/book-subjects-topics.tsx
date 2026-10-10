@@ -3,7 +3,7 @@
 import { getLibrarySubjectsQuery, getLibraryTopicsQuery, type Topic } from "@ihsp/api"
 import { useT } from "@ihsp/i18n"
 import { Button, Input, NativeSelect, NativeSelectOption, Skeleton } from "@ihsp/ui"
-import { IconPlus, IconTrash } from "@tabler/icons-react"
+import { IconPlus, IconTrash } from "@ihsp/ui"
 import { useQuery } from "@tanstack/react-query"
 import { useMemo } from "react"
 import { SUBJECT_ROLES, type BookForm } from "./book-form"

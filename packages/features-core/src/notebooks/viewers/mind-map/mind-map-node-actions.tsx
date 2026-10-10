@@ -3,7 +3,7 @@
 import type { MindMapNode, RefsIndex } from "@ihsp/api"
 import { useT } from "@ihsp/i18n"
 import { Button, cn } from "@ihsp/ui"
-import { IconBook2, IconMessageCircleQuestion } from "@tabler/icons-react"
+import { IconBook2, IconMessageCircleQuestion } from "@ihsp/ui"
 import type { ReactNode } from "react"
 import { useNodeActions } from "./use-node-actions"
 

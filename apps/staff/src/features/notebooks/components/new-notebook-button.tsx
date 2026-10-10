@@ -3,7 +3,7 @@
 import { useCreateNotebook, useNotebookErrorMessage } from "@ihsp/features-core"
 import { useT } from "@ihsp/i18n"
 import { Button, cn } from "@ihsp/ui"
-import { IconPlus } from "@tabler/icons-react"
+import { IconPlus } from "@ihsp/ui"
 import { useRouter } from "next/navigation"
 import { notebookHref } from "../utils/hrefs"
 

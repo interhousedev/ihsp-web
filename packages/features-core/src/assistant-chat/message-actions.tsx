@@ -23,7 +23,7 @@ import {
   IconThumbDownFilled,
   IconThumbUp,
   IconThumbUpFilled,
-} from "@tabler/icons-react"
+} from "@ihsp/ui"
 import { useEffect, useRef, useState, type ComponentProps } from "react"
 import { copyTextWithSources } from "../notebooks/lib/citations"
 import { copyText } from "../notebooks/lib/download"

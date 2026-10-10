@@ -17,7 +17,7 @@ import {
   NativeSelectOption,
   cn,
 } from "@ihsp/ui"
-import { IconNotebook } from "@tabler/icons-react"
+import { IconNotebook } from "@ihsp/ui"
 import { useMutation, useQuery } from "@tanstack/react-query"
 import { useState } from "react"
 import { toast } from "sonner"

@@ -3,7 +3,7 @@
 import { useT } from "@ihsp/i18n"
 import { isMiniApp } from "@ihsp/telegram"
 import type { UserMenuItem } from "@ihsp/ui"
-import { IconDeviceMobile } from "@tabler/icons-react"
+import { IconDeviceMobile } from "@ihsp/ui"
 import { installAppUrl, isPwaMode } from "../utils/app-mode"
 
 /**

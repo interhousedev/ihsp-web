@@ -3,7 +3,7 @@
 import { getLibraryFileUrl, type ItemDetail, type ItemFile } from "@ihsp/api"
 import { useErrorMessage, useT } from "@ihsp/i18n"
 import { Button, buttonVariants } from "@ihsp/ui"
-import { IconBook, IconDownload, IconFlag } from "@tabler/icons-react"
+import { IconBook, IconDownload, IconFlag } from "@ihsp/ui"
 import { useMutation } from "@tanstack/react-query"
 import Link from "next/link"
 import { useState } from "react"

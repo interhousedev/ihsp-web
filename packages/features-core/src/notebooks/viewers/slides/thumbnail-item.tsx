@@ -3,7 +3,7 @@
 import type { Slide } from "@ihsp/api"
 import { useT } from "@ihsp/i18n"
 import { cn } from "@ihsp/ui"
-import { IconPencil } from "@tabler/icons-react"
+import { IconPencil } from "@ihsp/ui"
 import type { CSSProperties, ReactNode, Ref } from "react"
 import { SlideView } from "./slide-view"
 import { slideName } from "./slide-deck-state"

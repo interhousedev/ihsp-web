@@ -12,7 +12,7 @@ import {
   IconListTree,
   IconZoomIn,
   IconZoomOut,
-} from "@tabler/icons-react"
+} from "@ihsp/ui"
 import type { ComponentType, SVGProps } from "react"
 
 export type MindMapView = "map" | "outline"

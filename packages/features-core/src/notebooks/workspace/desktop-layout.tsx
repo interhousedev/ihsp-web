@@ -3,7 +3,7 @@
 import type { NotebookDetail } from "@ihsp/api"
 import { useT } from "@ihsp/i18n"
 import { ResizableHandle, ResizablePanel, ResizablePanelGroup } from "@ihsp/ui"
-import { IconBooks, IconWand } from "@tabler/icons-react"
+import { IconBooks, IconWand } from "@ihsp/ui"
 import { useDefaultLayout, type LayoutStorage } from "react-resizable-panels"
 import type { AskRequest } from "../types"
 import { CenterPane } from "./center-pane"

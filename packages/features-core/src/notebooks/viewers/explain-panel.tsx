@@ -13,7 +13,7 @@ import {
   cn,
   useIsMobile,
 } from "@ihsp/ui"
-import { IconX } from "@tabler/icons-react"
+import { IconX } from "@ihsp/ui"
 import { CitedMarkdown } from "../chat/cited-markdown"
 import { useNotebookErrorMessage } from "../lib/use-notebook-error"
 import type { Explain } from "./use-explain"

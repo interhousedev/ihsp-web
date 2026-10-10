@@ -2,7 +2,7 @@
 
 import { useT } from "@ihsp/i18n"
 import { Button, DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@ihsp/ui"
-import { IconDots, IconPencil, IconTrash } from "@tabler/icons-react"
+import { IconDots, IconPencil, IconTrash } from "@ihsp/ui"
 
 type LabelMenuProps = {
   /** The name of the topic, for the button label. */

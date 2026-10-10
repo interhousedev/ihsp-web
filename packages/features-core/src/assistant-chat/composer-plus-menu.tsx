@@ -16,7 +16,7 @@ import {
   DropdownMenuSubTrigger,
   DropdownMenuTrigger,
 } from "@ihsp/ui"
-import { IconBooks, IconFiles, IconNotebook, IconPlus, IconSchool, IconUpload, IconWorld } from "@tabler/icons-react"
+import { IconBooks, IconFiles, IconNotebook, IconPlus, IconSchool, IconUpload, IconWorld } from "@ihsp/ui"
 import { useRef, type RefObject } from "react"
 import { useNotebooks } from "../notebooks/api"
 import { slashInfo, type SlashName } from "./slash-commands"

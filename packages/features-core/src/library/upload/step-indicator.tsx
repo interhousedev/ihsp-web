@@ -2,7 +2,7 @@
 
 import { useT } from "@ihsp/i18n"
 import { Progress, cn } from "@ihsp/ui"
-import { IconCheck } from "@tabler/icons-react"
+import { IconCheck } from "@ihsp/ui"
 import type { StepId } from "./material-values"
 
 /**

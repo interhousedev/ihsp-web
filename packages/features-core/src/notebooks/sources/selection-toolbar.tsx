@@ -2,7 +2,7 @@
 
 import { useT } from "@ihsp/i18n"
 import { Button } from "@ihsp/ui"
-import { IconQuote } from "@tabler/icons-react"
+import { IconQuote } from "@ihsp/ui"
 import type { TextSelection } from "./use-text-selection"
 
 const TOOLBAR_HALF_WIDTH = 80

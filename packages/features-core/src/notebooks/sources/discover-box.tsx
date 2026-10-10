@@ -2,7 +2,7 @@
 
 import { useFormatters, useT } from "@ihsp/i18n"
 import { Button, Input, NativeSelect, NativeSelectOption } from "@ihsp/ui"
-import { IconArrowRight, IconLoader2 } from "@tabler/icons-react"
+import { IconArrowRight, IconLoader2 } from "@ihsp/ui"
 import { useId, useState, type FocusEvent, type FormEvent } from "react"
 import { useWebQuota } from "../../web-search"
 import { MIN_SEARCH_LENGTH } from "./constants"

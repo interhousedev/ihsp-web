@@ -2,7 +2,7 @@
 
 import type { NotebookDetail } from "@ihsp/api"
 import { useT } from "@ihsp/i18n"
-import { IconBooks, IconWand } from "@tabler/icons-react"
+import { IconBooks, IconWand } from "@ihsp/ui"
 import type { ReactNode } from "react"
 import { useArtifacts } from "../api"
 import type { SidePane } from "./use-pane-state"

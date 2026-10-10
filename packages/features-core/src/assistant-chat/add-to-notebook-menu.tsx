@@ -15,7 +15,7 @@ import {
   DropdownMenuSubTrigger,
   DropdownMenuTrigger,
 } from "@ihsp/ui"
-import { IconNotebook, IconPlus } from "@tabler/icons-react"
+import { IconNotebook, IconPlus } from "@ihsp/ui"
 import { isValidElement, type ReactNode } from "react"
 import { useAddToNotebook } from "./use-add-to-notebook"
 

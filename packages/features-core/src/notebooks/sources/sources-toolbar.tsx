@@ -17,7 +17,7 @@ import {
   IconSearch,
   IconTag,
   IconTagStarred,
-} from "@tabler/icons-react"
+} from "@ihsp/ui"
 import type { RefObject } from "react"
 import type { SelectionState } from "../lib/sort-sources"
 import { SelectionCheckbox } from "./selection-checkbox"

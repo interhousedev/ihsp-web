@@ -3,7 +3,7 @@
 import type { QuizQuestion, RefsIndex } from "@ihsp/api"
 import { useT } from "@ihsp/i18n"
 import { Button } from "@ihsp/ui"
-import { IconChevronLeft, IconCircleCheck, IconCircleX, IconPlayerSkipForward } from "@tabler/icons-react"
+import { IconChevronLeft, IconCircleCheck, IconCircleX, IconPlayerSkipForward } from "@ihsp/ui"
 import { useId } from "react"
 import { RefChips } from "../../chat/ref-chips"
 import { OptionList } from "./option-list"

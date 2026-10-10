@@ -14,7 +14,7 @@ import {
   buttonVariants,
   useDebounce,
 } from "@ihsp/ui"
-import { IconFileImport, IconPlus } from "@tabler/icons-react"
+import { IconFileImport, IconPlus } from "@ihsp/ui"
 import { useInfiniteQuery } from "@tanstack/react-query"
 import Link from "next/link"
 import { useState } from "react"

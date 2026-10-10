@@ -13,7 +13,7 @@ import {
   IconPlus,
   IconTrashX,
   IconX,
-} from "@tabler/icons-react"
+} from "@ihsp/ui"
 import Link from "next/link"
 import type { ComponentType } from "react"
 import { manageBookEditHref } from "../../utils/hrefs"

@@ -2,7 +2,7 @@
 
 import { useT } from "@ihsp/i18n"
 import { Input, Label, Textarea, cn } from "@ihsp/ui"
-import { IconCircleCheck } from "@tabler/icons-react"
+import { IconCircleCheck } from "@ihsp/ui"
 import { useId } from "react"
 import { RIGHTS_CLASSES, type BasisKind, type BookForm } from "./book-form"
 import type { FormIssues } from "./book-form-checks"

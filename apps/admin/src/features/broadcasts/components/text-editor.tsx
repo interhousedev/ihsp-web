@@ -2,7 +2,7 @@
 
 import { useT } from "@ihsp/i18n"
 import { Button, Textarea } from "@ihsp/ui"
-import { IconBold, IconItalic, IconLink, IconUnderline } from "@tabler/icons-react"
+import { IconBold, IconItalic, IconLink, IconUnderline } from "@ihsp/ui"
 import { useRef } from "react"
 import { TEXT_MAX, wrapSelection } from "../utils/broadcast-form"
 

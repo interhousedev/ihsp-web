@@ -1,7 +1,7 @@
 import { useT } from "@ihsp/i18n"
 
 import { cn } from "../../lib/utils"
-import { IconLoader } from "@tabler/icons-react"
+import { IconLoader } from "../icons"
 
 function Spinner({ className, ...props }: React.ComponentProps<"svg">) {
   const t = useT()

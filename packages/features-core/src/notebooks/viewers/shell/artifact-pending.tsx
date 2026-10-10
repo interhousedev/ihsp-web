@@ -3,7 +3,7 @@
 import type { ArtifactDetail } from "@ihsp/api"
 import { useT } from "@ihsp/i18n"
 import { Button } from "@ihsp/ui"
-import { IconAlertTriangle, IconLoader2, IconPlayerStop } from "@tabler/icons-react"
+import { IconAlertTriangle, IconLoader2, IconPlayerStop } from "@ihsp/ui"
 import { useRetryArtifact } from "../../api/use-artifacts"
 import { useNotebookErrorMessage } from "../../lib/use-notebook-error"
 import { ViewerProgress } from "../progress-bar"

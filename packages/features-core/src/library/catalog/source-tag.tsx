@@ -3,7 +3,7 @@
 import type { ItemCard } from "@ihsp/api"
 import { useT } from "@ihsp/i18n"
 import { Badge, cn } from "@ihsp/ui"
-import { IconBook, IconBuildingBank, IconFileText } from "@tabler/icons-react"
+import { IconBook, IconBuildingBank, IconFileText } from "@ihsp/ui"
 
 const TONE: Record<ItemCard["tag"]["source"], string> = {
   // UniLibrary has its own colour so it is never mistaken for the lyceum's own content.

@@ -15,7 +15,7 @@ import {
   IconSchool,
   IconWorld,
   type Icon,
-} from "@tabler/icons-react"
+} from "@ihsp/ui"
 
 type IconInput = { kind: SourceKind; title?: string }
 

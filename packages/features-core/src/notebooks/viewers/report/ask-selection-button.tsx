@@ -2,7 +2,7 @@
 
 import { useT } from "@ihsp/i18n"
 import { Button } from "@ihsp/ui"
-import { IconMessageQuestion } from "@tabler/icons-react"
+import { IconMessageQuestion } from "@ihsp/ui"
 import { useWorkspace } from "../../workspace-context"
 
 /**

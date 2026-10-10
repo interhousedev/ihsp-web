@@ -3,7 +3,7 @@
 import type { ItemCard } from "@ihsp/api"
 import { useT } from "@ihsp/i18n"
 import { Button, buttonVariants, cn } from "@ihsp/ui"
-import { IconExternalLink, IconFlag } from "@tabler/icons-react"
+import { IconExternalLink, IconFlag } from "@ihsp/ui"
 import { useState } from "react"
 import { useLibraryAccess } from "../hooks/use-library-access"
 import { ReportDialog } from "./report-dialog"

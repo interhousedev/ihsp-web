@@ -14,7 +14,7 @@ import {
   IconQuote,
   IconSum,
   type Icon,
-} from "@tabler/icons-react"
+} from "@ihsp/ui"
 import { useId, useLayoutEffect, useRef, useState, type KeyboardEvent } from "react"
 import { applyFormat, type FormatAction } from "./markdown-format"
 import { MARKDOWN_MAX } from "./upload-config"

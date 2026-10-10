@@ -1,7 +1,7 @@
 "use client"
 
 import { cn } from "@ihsp/ui"
-import { IconCheck } from "@tabler/icons-react"
+import { IconCheck } from "@ihsp/ui"
 import type { TextTier } from "./slide-deck-state"
 
 /** Type size of the running text of a slide by how much text the slide has (see `textTier`). */

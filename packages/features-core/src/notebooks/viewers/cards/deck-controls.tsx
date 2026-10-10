@@ -2,7 +2,7 @@
 
 import { useT } from "@ihsp/i18n"
 import { Button } from "@ihsp/ui"
-import { IconCheck, IconChevronLeft, IconChevronRight, IconX } from "@tabler/icons-react"
+import { IconCheck, IconChevronLeft, IconChevronRight, IconX } from "@ihsp/ui"
 import type { Verdict } from "./deck-state"
 
 type DeckControlsProps = {

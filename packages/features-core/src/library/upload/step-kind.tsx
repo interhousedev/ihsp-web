@@ -2,7 +2,7 @@
 
 import { useT } from "@ihsp/i18n"
 import { Button, cn } from "@ihsp/ui"
-import { IconBook2, IconCamera, IconFileTypePdf, IconMarkdown, type Icon } from "@tabler/icons-react"
+import { IconBook2, IconCamera, IconFileTypePdf, IconMarkdown, type Icon } from "@ihsp/ui"
 import { useState } from "react"
 import { SuggestDialog } from "./suggest-dialog"
 import type { StepProps } from "./step-props"

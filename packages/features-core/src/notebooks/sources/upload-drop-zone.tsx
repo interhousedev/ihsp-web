@@ -2,7 +2,7 @@
 
 import { useT } from "@ihsp/i18n"
 import { Button, cn } from "@ihsp/ui"
-import { IconAlertTriangle, IconLoader2, IconX } from "@tabler/icons-react"
+import { IconAlertTriangle, IconLoader2, IconX } from "@ihsp/ui"
 import { useState, type DragEvent, type ReactNode } from "react"
 import type { NotebookUploader, UploadRow } from "./use-upload-to-notebook"
 

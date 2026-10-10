@@ -5,7 +5,7 @@ import { DayPicker, getDefaultClassNames, type DayButton, type Locale } from "re
 
 import { cn } from "../../lib/utils"
 import { Button, buttonVariants } from "./button"
-import { IconChevronLeft, IconChevronRight, IconChevronDown } from "@tabler/icons-react"
+import { IconChevronLeft, IconChevronRight, IconChevronDown } from "../icons"
 
 function Calendar({
   className,

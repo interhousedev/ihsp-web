@@ -2,7 +2,7 @@
 
 import { useT } from "@ihsp/i18n"
 import { Button, Input } from "@ihsp/ui"
-import { IconSearch, IconX } from "@tabler/icons-react"
+import { IconSearch, IconX } from "@ihsp/ui"
 import { useEffect, useRef, type KeyboardEvent } from "react"
 
 type SourceSearchBarProps = {

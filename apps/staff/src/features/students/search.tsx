@@ -2,7 +2,7 @@
 
 import { useT } from "@ihsp/i18n"
 import { Badge, Input, MarkBadge, PageContainer, StateView } from "@ihsp/ui"
-import { IconSearch } from "@tabler/icons-react"
+import { IconSearch } from "@ihsp/ui"
 import Link from "next/link"
 import { parseAsString, useQueryState } from "nuqs"
 import { useTeacherStudents } from "./hooks/use-teacher-students"

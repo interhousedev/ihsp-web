@@ -3,7 +3,7 @@
 import type { ChatDetail } from "@ihsp/api"
 import { useErrorMessage, useT } from "@ihsp/i18n"
 import { Button, DropdownMenu, DropdownMenuContent, DropdownMenuTrigger, Input } from "@ihsp/ui"
-import { IconArrowLeft, IconDotsVertical } from "@tabler/icons-react"
+import { IconArrowLeft, IconDotsVertical } from "@ihsp/ui"
 import Link from "next/link"
 import { useRef, useState, type KeyboardEvent, type ReactNode } from "react"
 import { toast } from "sonner"

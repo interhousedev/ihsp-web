@@ -3,7 +3,7 @@
 import type { LinkItem } from "@ihsp/api"
 import { useT } from "@ihsp/i18n"
 import { Button, ConfirmDialog, PageContainer, StateView } from "@ihsp/ui"
-import { IconPlus } from "@tabler/icons-react"
+import { IconPlus } from "@ihsp/ui"
 import { parseAsStringLiteral, useQueryState } from "nuqs"
 import { useState } from "react"
 import { toast } from "sonner"

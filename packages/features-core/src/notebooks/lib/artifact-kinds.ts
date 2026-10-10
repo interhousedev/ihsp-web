@@ -13,7 +13,7 @@ import {
   IconSitemap,
   IconTable,
   type Icon,
-} from "@tabler/icons-react"
+} from "@ihsp/ui"
 
 /** One button of the Studio tile grid. `conspect` is a report with its own tile; `report` opens the format picker. */
 export type StudioTileId =

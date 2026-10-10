@@ -1,7 +1,7 @@
 "use client"
 
 import { useT } from "@ihsp/i18n"
-import { IconSparkles } from "@tabler/icons-react"
+import { IconSparkles } from "@ihsp/ui"
 import { CitedMarkdown } from "./cited-markdown"
 import type { PendingTurn } from "./pending-turn"
 

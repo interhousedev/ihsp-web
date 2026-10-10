@@ -2,7 +2,7 @@
 
 import { useT } from "@ihsp/i18n"
 import { buttonVariants, cn } from "@ihsp/ui"
-import { IconCards, IconExternalLink } from "@tabler/icons-react"
+import { IconCards, IconExternalLink } from "@ihsp/ui"
 import Link from "next/link"
 import { toast } from "sonner"
 import { useSaveFlashcardSet } from "../../api/use-artifacts"

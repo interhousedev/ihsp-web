@@ -3,7 +3,7 @@
 import type { ChatItem } from "@ihsp/api"
 import { useT } from "@ihsp/i18n"
 import { Button, DropdownMenu, DropdownMenuContent, DropdownMenuTrigger, cn } from "@ihsp/ui"
-import { IconDots } from "@tabler/icons-react"
+import { IconDots } from "@ihsp/ui"
 import Link from "next/link"
 import { ChatMenuItems } from "./chat-menu-items"
 import type { ChatActions } from "./use-chat-actions"

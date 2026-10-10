@@ -2,7 +2,7 @@
 
 import { useT } from "@ihsp/i18n"
 import { Button } from "@ihsp/ui"
-import { IconCheck, IconCopy } from "@tabler/icons-react"
+import { IconCheck, IconCopy } from "@ihsp/ui"
 import { useEffect, useRef, useState } from "react"
 import { toast } from "sonner"
 

@@ -3,7 +3,7 @@
 import { keys, type FileItem } from "@ihsp/api"
 import { useErrorMessage, useT } from "@ihsp/i18n"
 import { Alert, AlertDescription, Button, StateView } from "@ihsp/ui"
-import { IconArrowDown, IconShare } from "@tabler/icons-react"
+import { IconArrowDown, IconShare } from "@ihsp/ui"
 import { useQueryClient } from "@tanstack/react-query"
 import { useRouter } from "next/navigation"
 import { useEffect, useRef, useState, type ReactNode } from "react"

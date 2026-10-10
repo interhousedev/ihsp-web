@@ -3,7 +3,7 @@
 import type { NotebookMessage } from "@ihsp/api"
 import { useT } from "@ihsp/i18n"
 import { Button, cn } from "@ihsp/ui"
-import { IconCopy, IconPin, IconRefresh, IconThumbDown, IconThumbUp } from "@tabler/icons-react"
+import { IconCopy, IconPin, IconRefresh, IconThumbDown, IconThumbUp } from "@ihsp/ui"
 import { toast } from "sonner"
 import { useMessageFeedback, useSaveToNote } from "../api"
 import { copyText, copyTextWithSources } from "../lib"

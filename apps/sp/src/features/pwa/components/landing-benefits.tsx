@@ -1,7 +1,7 @@
 "use client"
 
 import { useT } from "@ihsp/i18n"
-import { IconBell, IconBolt, IconShieldLock, IconWifiOff } from "@tabler/icons-react"
+import { IconBell, IconBolt, IconShieldLock, IconWifiOff } from "@ihsp/ui"
 
 const BENEFITS = [
   { key: "fast", icon: IconBolt },

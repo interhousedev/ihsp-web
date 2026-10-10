@@ -2,7 +2,7 @@
 
 import type { ItemDetail } from "@ihsp/api"
 import { useT } from "@ihsp/i18n"
-import { IconScale } from "@tabler/icons-react"
+import { IconScale } from "@ihsp/ui"
 import { RightsBadge } from "./rights-badge"
 
 /** The rights box of a book page: class, the statement, attribution and what the reader may do with the file. */

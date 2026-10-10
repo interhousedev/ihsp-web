@@ -12,7 +12,7 @@ import {
 import { SortableContext, sortableKeyboardCoordinates, verticalListSortingStrategy } from "@dnd-kit/sortable"
 import { useT } from "@ihsp/i18n"
 import { Button } from "@ihsp/ui"
-import { IconCamera, IconPhoto } from "@tabler/icons-react"
+import { IconCamera, IconPhoto } from "@ihsp/ui"
 import { useRef, useState, type ChangeEvent } from "react"
 import type { PhotoItem } from "./material-values"
 import { PhotoRow } from "./photo-row"

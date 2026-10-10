@@ -2,7 +2,7 @@
 
 import type { ArtifactKind, ApplyResult, CoursePlan, LessonDraft } from "@ihsp/api"
 import { useT } from "@ihsp/i18n"
-import { IconArrowBigDownLine } from "@tabler/icons-react"
+import { IconArrowBigDownLine } from "@ihsp/ui"
 import { useState } from "react"
 import { ToolbarButton } from "../toolbar-button"
 import { ApplyDialog } from "./apply-dialog"

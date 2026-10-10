@@ -1,5 +1,5 @@
 import type { AnnotationColor } from "@ihsp/api"
-import { IconCircleFilled, IconSquareFilled, IconStarFilled, IconTriangleFilled } from "@tabler/icons-react"
+import { IconCircleFilled, IconSquareFilled, IconStarFilled, IconTriangleFilled } from "@ihsp/ui"
 import type { ComponentType } from "react"
 
 // The four highlight colours. They also differ by a shape, so colour is never the only signal

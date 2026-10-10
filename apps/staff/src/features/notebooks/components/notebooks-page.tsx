@@ -3,7 +3,7 @@
 import { useNotebooks } from "@ihsp/features-core"
 import { useT } from "@ihsp/i18n"
 import { Input, PageContainer, Skeleton, StateView, useDebounce } from "@ihsp/ui"
-import { IconSearch } from "@tabler/icons-react"
+import { IconSearch } from "@ihsp/ui"
 import { useState } from "react"
 import { NewNotebookButton } from "./new-notebook-button"
 import { NotebookCard } from "./notebook-card"

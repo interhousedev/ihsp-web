@@ -6,7 +6,7 @@ import { Combobox as ComboboxPrimitive } from "@base-ui/react"
 import { cn } from "../../lib/utils"
 import { Button } from "./button"
 import { InputGroup, InputGroupAddon, InputGroupButton, InputGroupInput } from "./input-group"
-import { IconChevronDown, IconX, IconCheck } from "@tabler/icons-react"
+import { IconChevronDown, IconX, IconCheck } from "../icons"
 
 const Combobox = ComboboxPrimitive.Root
 

@@ -1,7 +1,7 @@
 "use client"
 
 import { useT } from "@ihsp/i18n"
-import { IconCircleCheck, IconCircleX } from "@tabler/icons-react"
+import { IconCircleCheck, IconCircleX } from "@ihsp/ui"
 import { useId } from "react"
 import type { ChecklistItem } from "./book-form-checks"
 

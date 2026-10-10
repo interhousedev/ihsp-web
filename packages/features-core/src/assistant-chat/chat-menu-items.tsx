@@ -3,7 +3,7 @@
 import type { ChatItem } from "@ihsp/api"
 import { useT } from "@ihsp/i18n"
 import { DropdownMenuItem, DropdownMenuSeparator } from "@ihsp/ui"
-import { IconPencil, IconShare, IconTrash } from "@tabler/icons-react"
+import { IconPencil, IconShare, IconTrash } from "@ihsp/ui"
 import { useAssistantScope } from "./assistant-context"
 import { AddToNotebookSubMenu } from "./add-to-notebook-menu"
 import type { ChatActions } from "./use-chat-actions"

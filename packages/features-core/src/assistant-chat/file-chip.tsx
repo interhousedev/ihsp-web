@@ -2,7 +2,7 @@
 
 import { getFileQuery, resolveFileUrl, type FileItem } from "@ihsp/api"
 import { useT } from "@ihsp/i18n"
-import { IconFile, IconX } from "@tabler/icons-react"
+import { IconFile, IconX } from "@ihsp/ui"
 import { useQuery } from "@tanstack/react-query"
 import { toast } from "sonner"
 

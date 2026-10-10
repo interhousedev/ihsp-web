@@ -3,7 +3,7 @@
 import type { ArtifactCreate } from "@ihsp/api"
 import { useT } from "@ihsp/i18n"
 import { Button, Spinner } from "@ihsp/ui"
-import { IconSparkles } from "@tabler/icons-react"
+import { IconSparkles } from "@ihsp/ui"
 import { useId, useState } from "react"
 import { useCreateArtifact } from "../api"
 import { artifactKindKey, useNotebookErrorMessage } from "../lib"

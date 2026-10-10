@@ -3,7 +3,7 @@
 import { keys } from "@ihsp/api"
 import { useErrorMessage, useT } from "@ihsp/i18n"
 import { Button, NativeSelect, NativeSelectOption, StateView } from "@ihsp/ui"
-import { IconMessagePlus } from "@tabler/icons-react"
+import { IconMessagePlus } from "@ihsp/ui"
 import { useQueryClient } from "@tanstack/react-query"
 import { useEffect, useId, useRef, useState } from "react"
 import { AssistantProvider } from "../../assistant-chat/assistant-context"

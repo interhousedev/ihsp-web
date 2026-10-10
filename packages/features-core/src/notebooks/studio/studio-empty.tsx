@@ -2,7 +2,7 @@
 
 import { useT } from "@ihsp/i18n"
 import { Empty, EmptyDescription, EmptyHeader, EmptyMedia, EmptyTitle } from "@ihsp/ui"
-import { IconSparkles, IconWand } from "@tabler/icons-react"
+import { IconSparkles, IconWand } from "@ihsp/ui"
 
 /** "Studio results will be saved here.": a wand with sparkles and a line about what to do next. */
 export function StudioEmpty() {

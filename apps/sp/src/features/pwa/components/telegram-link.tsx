@@ -3,7 +3,7 @@
 import { getConfig } from "@ihsp/config"
 import { useT } from "@ihsp/i18n"
 import { buttonVariants } from "@ihsp/ui"
-import { IconBrandTelegram } from "@tabler/icons-react"
+import { IconBrandTelegram } from "@ihsp/ui"
 
 /** The Telegram mini app is the other way in: no install, the same portal inside the bot. */
 export function TelegramLink() {

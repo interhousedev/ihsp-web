@@ -3,7 +3,7 @@
 import type { ReportContent } from "@ihsp/api"
 import { useT } from "@ihsp/i18n"
 import { Button, Collapsible, CollapsibleContent, CollapsibleTrigger, cn } from "@ihsp/ui"
-import { IconChevronDown } from "@tabler/icons-react"
+import { IconChevronDown } from "@ihsp/ui"
 import { useState } from "react"
 import { anchorId, scrollToHeading } from "./heading-anchors"
 

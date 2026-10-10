@@ -2,7 +2,7 @@
 
 import { useT } from "@ihsp/i18n"
 import { Button, Icons } from "@ihsp/ui"
-import { IconCopy, IconDownload, IconMaximize, IconPrinter } from "@tabler/icons-react"
+import { IconCopy, IconDownload, IconMaximize, IconPrinter } from "@ihsp/ui"
 import { MAX_ZOOM, MIN_ZOOM } from "./fit-scale"
 
 /** Icon-only 44 px buttons on phones (the text stays for screen readers), icon and text from `sm`. */

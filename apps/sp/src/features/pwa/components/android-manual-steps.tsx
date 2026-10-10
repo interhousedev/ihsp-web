@@ -1,7 +1,7 @@
 "use client"
 
 import { useT } from "@ihsp/i18n"
-import { IconCheck, IconDeviceMobileDown, IconDotsVertical } from "@tabler/icons-react"
+import { IconCheck, IconDeviceMobileDown, IconDotsVertical } from "@ihsp/ui"
 import { StepList } from "./step-list"
 
 /** Android browsers that did not offer the install dialog (Firefox, Samsung Internet, or a dialog that was dismissed). */

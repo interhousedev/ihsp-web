@@ -15,7 +15,7 @@ import {
   SheetTitle,
   cn,
 } from "@ihsp/ui"
-import { IconAdjustmentsHorizontal } from "@tabler/icons-react"
+import { IconAdjustmentsHorizontal } from "@ihsp/ui"
 import { useQuery } from "@tanstack/react-query"
 import { useState, type ReactNode } from "react"
 import { useLibraryAccess } from "../hooks/use-library-access"

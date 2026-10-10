@@ -2,7 +2,7 @@
 
 import { useFormatters, useT } from "@ihsp/i18n"
 import { Badge, Button } from "@ihsp/ui"
-import { IconPencil, IconPlus, IconTrash } from "@tabler/icons-react"
+import { IconPencil, IconPlus, IconTrash } from "@ihsp/ui"
 import { pickLocalized } from "../shared/localized-fields"
 import type { TopicNode } from "./topic-tree"
 

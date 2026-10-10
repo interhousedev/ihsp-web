@@ -3,7 +3,7 @@
 import { deleteManageTopic, getLibrarySubjectsQuery, getManageTopicsQuery, keys } from "@ihsp/api"
 import { useErrorMessage, useFormatters, useT } from "@ihsp/i18n"
 import { Button, ConfirmDialog, Label, NativeSelect, NativeSelectOption, PageContainer, StateView } from "@ihsp/ui"
-import { IconPlus } from "@tabler/icons-react"
+import { IconPlus } from "@ihsp/ui"
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query"
 import { useMemo, useState } from "react"
 import { pickLocalized } from "../shared/localized-fields"

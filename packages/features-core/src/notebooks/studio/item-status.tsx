@@ -3,7 +3,7 @@
 import type { ArtifactItem } from "@ihsp/api"
 import { useFormatters, useT } from "@ihsp/i18n"
 import { Progress, Spinner } from "@ihsp/ui"
-import { IconAlertTriangle } from "@tabler/icons-react"
+import { IconAlertTriangle } from "@ihsp/ui"
 import { isActive } from "../lib/artifact-kinds"
 
 /** Text of a failed item: the reason for its error code (`notebooks.artifactError.<code>`, else the generic one). */

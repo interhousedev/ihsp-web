@@ -11,7 +11,7 @@ import {
   IconTable,
   IconTarget,
   type Icon,
-} from "@tabler/icons-react"
+} from "@ihsp/ui"
 
 /**
  * The slash commands of every AI composer (assistant and notebook chat). The client only offers and sends them as

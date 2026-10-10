@@ -12,7 +12,7 @@ import {
   EmptyTitle,
   cn,
 } from "@ihsp/ui"
-import { IconBookmark, IconHighlight, IconPencil, IconRefresh, IconTrash } from "@tabler/icons-react"
+import { IconBookmark, IconHighlight, IconPencil, IconRefresh, IconTrash } from "@ihsp/ui"
 import { useEffect, useRef, useState } from "react"
 import { byPosition } from "./lib/annotation-order"
 import { COLOR_BORDER, COLOR_ICONS, COLOR_TEXT } from "./lib/colors"

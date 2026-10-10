@@ -2,7 +2,7 @@
 
 import { useT } from "@ihsp/i18n"
 import { Button, Icons, formatBytes } from "@ihsp/ui"
-import { IconFileTypePdf, IconUpload } from "@tabler/icons-react"
+import { IconFileTypePdf, IconUpload } from "@ihsp/ui"
 import { useId, useRef, type ChangeEvent } from "react"
 import type { UploadLimits } from "./upload-config"
 

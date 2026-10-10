@@ -10,7 +10,7 @@ import {
 import { useSession } from "@ihsp/auth"
 import { useT } from "@ihsp/i18n"
 import { Button, DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@ihsp/ui"
-import { IconDownload, IconFileTypeDoc, IconLink } from "@tabler/icons-react"
+import { IconDownload, IconFileTypeDoc, IconLink } from "@ihsp/ui"
 import { useMutation, useQuery } from "@tanstack/react-query"
 import { toast } from "sonner"
 

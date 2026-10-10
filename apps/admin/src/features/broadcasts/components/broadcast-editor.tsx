@@ -12,7 +12,7 @@ import {
 import { FileUploadButton } from "@ihsp/features-core"
 import { useFormatters, useT } from "@ihsp/i18n"
 import { Alert, AlertDescription, Button, ConfirmDialog, Input, PageContainer } from "@ihsp/ui"
-import { IconX } from "@tabler/icons-react"
+import { IconX } from "@ihsp/ui"
 import { useRouter } from "next/navigation"
 import { useState } from "react"
 import { BackLink } from "../../shared/components/back-link"

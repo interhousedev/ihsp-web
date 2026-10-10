@@ -2,7 +2,7 @@
 
 import { useT } from "@ihsp/i18n"
 import { Markdown, cn } from "@ihsp/ui"
-import { IconCards, IconChecklist, IconCheck } from "@tabler/icons-react"
+import { IconCards, IconChecklist, IconCheck } from "@ihsp/ui"
 import type { DisplayBlock, DisplayQuestion } from "./blocks"
 
 function Question({ question, index }: { question: DisplayQuestion; index: number }) {

@@ -3,7 +3,7 @@
 import type { SourceDetail } from "@ihsp/api"
 import { useT } from "@ihsp/i18n"
 import { Button, Collapsible, CollapsibleContent, CollapsibleTrigger, Markdown } from "@ihsp/ui"
-import { IconChevronDown, IconCornerDownRight, IconLoader2, IconSparkles } from "@tabler/icons-react"
+import { IconChevronDown, IconCornerDownRight, IconLoader2, IconSparkles } from "@ihsp/ui"
 import { useWorkspace } from "../workspace-context"
 import { hasGuideKind } from "./source-rules"
 

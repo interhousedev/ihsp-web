@@ -3,7 +3,7 @@
 import type { FileItem } from "@ihsp/api"
 import { useErrorMessage, useT } from "@ihsp/i18n"
 import { Alert, AlertDescription, ConfirmDialog } from "@ihsp/ui"
-import { IconAlertTriangle } from "@tabler/icons-react"
+import { IconAlertTriangle } from "@ihsp/ui"
 import { toast } from "sonner"
 import { useDeleteFile } from "../hooks/use-my-files"
 import { UsedByList } from "./used-by-list"

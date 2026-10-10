@@ -3,7 +3,7 @@
 import { deleteManageCollection, getManageCollectionsQuery, keys, type ManageCollection } from "@ihsp/api"
 import { useErrorMessage, useFormatters, useT } from "@ihsp/i18n"
 import { Badge, Button, ConfirmDialog, PageContainer, StateView } from "@ihsp/ui"
-import { IconPencil, IconPlus, IconTrash } from "@tabler/icons-react"
+import { IconPencil, IconPlus, IconTrash } from "@ihsp/ui"
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query"
 import { useState } from "react"
 import { CoverImage } from "../../catalog/cover-image"

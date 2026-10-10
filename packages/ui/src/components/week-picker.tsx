@@ -26,11 +26,11 @@ export function WeekPicker({
   })
 
   return (
-    <div className={cn("flex items-center gap-1", className)}>
+    <div className={cn("bg-muted flex items-center gap-1 rounded-full p-0.5", className)}>
       <Button
-        variant="outline"
+        variant="ghost"
         size="icon"
-        className="size-11 md:size-8"
+        className="size-11 rounded-full md:size-8"
         onClick={() => onChange(addDays(monday, -7))}
         aria-label={t("calendar.previousWeek")}
       >
@@ -40,9 +40,9 @@ export function WeekPicker({
         {range}
       </span>
       <Button
-        variant="outline"
+        variant="ghost"
         size="icon"
-        className="size-11 md:size-8"
+        className="size-11 rounded-full md:size-8"
         onClick={() => onChange(addDays(monday, 7))}
         aria-label={t("calendar.nextWeek")}
       >

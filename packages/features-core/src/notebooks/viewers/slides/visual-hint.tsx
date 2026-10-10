@@ -1,7 +1,7 @@
 "use client"
 
 import { useT } from "@ihsp/i18n"
-import { IconPhoto } from "@tabler/icons-react"
+import { IconPhoto } from "@ihsp/ui"
 
 /** A dashed placeholder where the presenter could add a picture; shown in edit mode only. */
 export function VisualHint({ hint }: { hint: string }) {

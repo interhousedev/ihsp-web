@@ -9,8 +9,8 @@ import {
   IconNews,
   IconPencil,
   IconTimeline,
-} from "@tabler/icons-react"
-import type { Icon } from "@tabler/icons-react"
+} from "@ihsp/ui"
+import type { Icon } from "@ihsp/ui"
 import { ResponsiveDialog } from "./responsive-dialog"
 
 /** The report formats of the picker; the conspect has its own tile. */

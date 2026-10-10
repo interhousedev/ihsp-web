@@ -3,7 +3,7 @@
 import { getReadingListQuery, getReadingListsQuery, isApiError } from "@ihsp/api"
 import { useT } from "@ihsp/i18n"
 import { PageContainer, StateView, buttonVariants } from "@ihsp/ui"
-import { IconPlus } from "@tabler/icons-react"
+import { IconPlus } from "@ihsp/ui"
 import { useQuery } from "@tanstack/react-query"
 import Link from "next/link"
 import { useSearchParams } from "next/navigation"

@@ -2,7 +2,7 @@
 
 import { useT } from "@ihsp/i18n"
 import { buttonVariants } from "@ihsp/ui"
-import { IconBook2, IconBooks, IconSchool, IconShieldLock, IconUsers } from "@tabler/icons-react"
+import { IconBook2, IconBooks, IconSchool, IconShieldLock, IconUsers } from "@ihsp/ui"
 import type { ComponentType } from "react"
 import { useHubApps, type HubAppKey } from "../hooks/use-hub-apps"
 

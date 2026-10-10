@@ -2,7 +2,7 @@
 
 import { useT } from "@ihsp/i18n"
 import { Button, Skeleton, StateView, cn } from "@ihsp/ui"
-import { IconArrowLeft, IconPencil, IconQuote } from "@tabler/icons-react"
+import { IconArrowLeft, IconPencil, IconQuote } from "@ihsp/ui"
 import { useEffect, useId, useRef } from "react"
 import { SourceKindIcon } from "../lib/source-icons"
 import { useWorkspace } from "../workspace-context"

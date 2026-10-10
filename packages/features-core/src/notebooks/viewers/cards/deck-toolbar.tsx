@@ -9,7 +9,7 @@ import {
   IconMessageQuestion,
   IconRefresh,
   IconTrash,
-} from "@tabler/icons-react"
+} from "@ihsp/ui"
 import type { ReactNode } from "react"
 import { ToolbarButton } from "../toolbar-button"
 

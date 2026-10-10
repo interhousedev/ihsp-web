@@ -3,7 +3,7 @@
 import { getLmsCourseQuery, getLmsMyCoursesQuery, type CourseCard } from "@ihsp/api"
 import { useT } from "@ihsp/i18n"
 import { Collapsible, CollapsibleContent, CollapsibleTrigger, StateView } from "@ihsp/ui"
-import { IconChevronDown } from "@tabler/icons-react"
+import { IconChevronDown } from "@ihsp/ui"
 import { useQuery } from "@tanstack/react-query"
 import { useState } from "react"
 import { SourceKindIcon } from "../lib/source-icons"

@@ -2,7 +2,7 @@
 
 import { useT } from "@ihsp/i18n"
 import { Button } from "@ihsp/ui"
-import { IconLoader2 } from "@tabler/icons-react"
+import { IconLoader2 } from "@ihsp/ui"
 
 type DiscoverFooterProps = {
   count: number

@@ -2,7 +2,7 @@
 
 import { useT } from "@ihsp/i18n"
 import type { UserMenuItem } from "@ihsp/ui"
-import { IconDeviceMobileDown } from "@tabler/icons-react"
+import { IconDeviceMobileDown } from "@ihsp/ui"
 import { useState } from "react"
 import { toast } from "sonner"
 import { isPwaMode } from "../utils/app-mode"

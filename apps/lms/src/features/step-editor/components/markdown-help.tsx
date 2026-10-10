@@ -2,7 +2,7 @@
 
 import { useT } from "@ihsp/i18n"
 import { Button, Kbd, Markdown, Popover, PopoverContent, PopoverTrigger } from "@ihsp/ui"
-import { IconHelp } from "@tabler/icons-react"
+import { IconHelp } from "@ihsp/ui"
 import { EDITOR_SHORTCUTS } from "../utils/editor-shortcuts"
 import { shortcutLabel } from "../utils/shortcut-label"
 

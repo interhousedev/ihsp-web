@@ -1,7 +1,7 @@
 "use client"
 
 import { useT } from "@ihsp/i18n"
-import { IconAlertTriangle } from "@tabler/icons-react"
+import { IconAlertTriangle } from "./icons"
 import { useLayoutEffect, useRef, useState } from "react"
 import { describeMathError, MATH_OPTIONS, useKatex } from "../hooks/use-katex"
 import { cn } from "../lib/utils"

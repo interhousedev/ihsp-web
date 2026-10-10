@@ -3,7 +3,7 @@
 import type { SourceDetail } from "@ihsp/api"
 import { useT } from "@ihsp/i18n"
 import { Button, Input, Label, Textarea } from "@ihsp/ui"
-import { IconArrowLeft, IconLoader2 } from "@tabler/icons-react"
+import { IconArrowLeft, IconLoader2 } from "@ihsp/ui"
 import { useId, useState } from "react"
 import { useAddSources, useUpdateSource } from "../api"
 import { CitedMarkdown } from "../chat"

@@ -17,7 +17,7 @@ import {
   TableHeader,
   TableRow,
 } from "@ihsp/ui"
-import { IconCircleCheck, IconFileImport } from "@tabler/icons-react"
+import { IconCircleCheck, IconFileImport } from "@ihsp/ui"
 import { useMutation, useQueryClient } from "@tanstack/react-query"
 import { useState } from "react"
 import { UploadZone } from "../editor/upload-zone"

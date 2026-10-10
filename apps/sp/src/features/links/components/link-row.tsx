@@ -4,7 +4,7 @@ import type { LinkItem } from "@ihsp/api"
 import { useFormatters, useT } from "@ihsp/i18n"
 import { CopyLinkButton } from "@ihsp/features-core"
 import { Badge, Button, Card, CardContent } from "@ihsp/ui"
-import { IconBan, IconTrash } from "@tabler/icons-react"
+import { IconBan, IconTrash } from "@ihsp/ui"
 import Link from "next/link"
 import { canDelete, canRevoke, linkName, linkStatus } from "../utils/link-display"
 

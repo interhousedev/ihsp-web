@@ -3,7 +3,7 @@
 import type { ChatItem, NotebookItem } from "@ihsp/api"
 import { useT } from "@ihsp/i18n"
 import { Command, CommandDialog, CommandGroup, CommandInput, CommandItem, CommandList, useDebounce } from "@ihsp/ui"
-import { IconMessage } from "@tabler/icons-react"
+import { IconMessage } from "@ihsp/ui"
 import { useMemo, useState } from "react"
 import { useNotebooks } from "../notebooks/api"
 import { useChats, useSearchChats } from "./use-assistant-queries"

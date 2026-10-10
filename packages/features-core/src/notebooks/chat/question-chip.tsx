@@ -1,7 +1,7 @@
 "use client"
 
 import { cn } from "@ihsp/ui"
-import { IconCornerDownRight } from "@tabler/icons-react"
+import { IconCornerDownRight } from "@ihsp/ui"
 
 type QuestionChipProps = {
   text: string

@@ -2,7 +2,7 @@
 
 import type { NotebookItem } from "@ihsp/api"
 import { useFormatters, useT } from "@ihsp/i18n"
-import { IconPinFilled } from "@tabler/icons-react"
+import { IconPinFilled } from "@ihsp/ui"
 import Link from "next/link"
 import { notebookHref } from "../utils/hrefs"
 import { NotebookCardMenu } from "./notebook-card-menu"

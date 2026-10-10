@@ -1,6 +1,6 @@
 "use client"
 
-import { IconCircle, IconCircleCheckFilled } from "@tabler/icons-react"
+import { IconCircle, IconCircleCheckFilled } from "@ihsp/ui"
 import { useTr } from "../hooks/use-tr"
 import { checkPassword, PASSWORD_RULES, type PasswordRule } from "../utils/password-rules"
 

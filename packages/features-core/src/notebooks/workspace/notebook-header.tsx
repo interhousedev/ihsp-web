@@ -2,7 +2,7 @@
 
 import type { NotebookDetail } from "@ihsp/api"
 import { useT } from "@ihsp/i18n"
-import { IconArrowLeft } from "@tabler/icons-react"
+import { IconArrowLeft } from "@ihsp/ui"
 import Link from "next/link"
 import { useState, type ReactNode } from "react"
 import { useUpdateNotebook } from "../api"

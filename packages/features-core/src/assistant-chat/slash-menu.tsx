@@ -2,7 +2,7 @@
 
 import { useT } from "@ihsp/i18n"
 import { cn } from "@ihsp/ui"
-import { IconX } from "@tabler/icons-react"
+import { IconX } from "@ihsp/ui"
 import { useEffect, useRef } from "react"
 import { slashInfo, type SlashCommandInfo, type SlashName } from "./slash-commands"
 

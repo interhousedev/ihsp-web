@@ -112,7 +112,22 @@ import {
   IconX,
 } from "@tabler/icons-react"
 
+// The only module allowed to import "@tabler/icons-react"; everything else imports icons from here (or "@ihsp/ui").
+export * from "@tabler/icons-react"
+
 export type Icon = React.ComponentType<IconProps>
+
+/** Unified icon tokens: one stroke weight and three sizes. */
+export const ICON_STROKE = 1.75
+export const ICON_SIZES = { sm: 16, md: 20, lg: 24 } as const
+export type IconSize = keyof typeof ICON_SIZES
+type RegistryIconProps = Omit<IconProps, "size"> & { name: keyof typeof Icons; size?: IconSize }
+
+/** Renders a registry icon with the unified stroke and size tokens. */
+export function RegistryIcon({ name, size = "sm", stroke = ICON_STROKE, ...props }: RegistryIconProps) {
+  const Cmp = Icons[name]
+  return <Cmp size={ICON_SIZES[size]} stroke={stroke} aria-hidden="true" {...props} />
+}
 
 export const Icons = {
   // General

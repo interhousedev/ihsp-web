@@ -3,7 +3,7 @@
 import type { ItemCard } from "@ihsp/api"
 import { useT } from "@ihsp/i18n"
 import { Progress, ProgressIndicator, ProgressTrack, cn } from "@ihsp/ui"
-import { IconExternalLink } from "@tabler/icons-react"
+import { IconExternalLink } from "@ihsp/ui"
 import Link from "next/link"
 import type { ReactNode } from "react"
 import { itemHref } from "../utils/hrefs"

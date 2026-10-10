@@ -9,7 +9,7 @@ import {
   DropdownMenuRadioItem,
   DropdownMenuTrigger,
 } from "@ihsp/ui"
-import { IconChevronDown } from "@tabler/icons-react"
+import { IconChevronDown } from "@ihsp/ui"
 import type { ChatTier } from "./use-assistant-queries"
 
 const TIERS: ChatTier[] = ["fast", "smart"]

@@ -10,7 +10,7 @@ import {
 } from "@ihsp/api"
 import { useErrorMessage, useT } from "@ihsp/i18n"
 import { Button, Input, StateView, ToggleGroup, ToggleGroupItem, useDebounce } from "@ihsp/ui"
-import { IconFileExport } from "@tabler/icons-react"
+import { IconFileExport } from "@ihsp/ui"
 import { useInfiniteQuery, useMutation, useQueries } from "@tanstack/react-query"
 import { useMemo, useState } from "react"
 import { toast } from "sonner"

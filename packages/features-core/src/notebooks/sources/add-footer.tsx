@@ -2,7 +2,7 @@
 
 import { useT } from "@ihsp/i18n"
 import { Button } from "@ihsp/ui"
-import { IconAlertTriangle, IconLoader2 } from "@tabler/icons-react"
+import { IconAlertTriangle, IconLoader2 } from "@ihsp/ui"
 import type { Rejection } from "./use-add-submit"
 
 type AddFooterProps = {

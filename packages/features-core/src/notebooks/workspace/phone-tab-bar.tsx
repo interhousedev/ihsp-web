@@ -2,7 +2,7 @@
 
 import { useT } from "@ihsp/i18n"
 import { cn } from "@ihsp/ui"
-import { IconBooks, IconMessageCircle, IconWand } from "@tabler/icons-react"
+import { IconBooks, IconMessageCircle, IconWand } from "@ihsp/ui"
 import { useRef, type KeyboardEvent } from "react"
 import type { WorkspaceTab } from "../types"
 import { WORKSPACE_TABS } from "./use-workspace-state"

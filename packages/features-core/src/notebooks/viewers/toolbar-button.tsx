@@ -1,7 +1,7 @@
 "use client"
 
 import { Button, cn } from "@ihsp/ui"
-import type { Icon } from "@tabler/icons-react"
+import type { Icon } from "@ihsp/ui"
 import type { ComponentProps } from "react"
 
 type ToolbarButtonProps = Omit<ComponentProps<typeof Button>, "children" | "variant" | "size"> & {

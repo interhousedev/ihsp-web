@@ -3,7 +3,7 @@
 import { keys, postMaterialSubmit, type UploadRow } from "@ihsp/api"
 import { useErrorMessage, useT } from "@ihsp/i18n"
 import { Button, buttonVariants } from "@ihsp/ui"
-import { IconPencil, IconSend } from "@tabler/icons-react"
+import { IconPencil, IconSend } from "@ihsp/ui"
 import { useMutation, useQueryClient } from "@tanstack/react-query"
 import Link from "next/link"
 import { toast } from "sonner"

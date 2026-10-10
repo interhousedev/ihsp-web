@@ -1,7 +1,7 @@
 "use client"
 
 import { useT } from "@ihsp/i18n"
-import { IconCircleCheck } from "@tabler/icons-react"
+import { IconCircleCheck } from "@ihsp/ui"
 
 /** Shown after the install dialog was accepted: the app lives on the home screen now. */
 export function InstalledNotice() {

@@ -3,7 +3,7 @@
 import { getMeSubjectQuery, getMeSubjectsQuery, type ResourceItem, type SubjectDetail } from "@ihsp/api"
 import { useFormatters, useT } from "@ihsp/i18n"
 import { NativeSelect, NativeSelectOption, StateView } from "@ihsp/ui"
-import { IconLink } from "@tabler/icons-react"
+import { IconLink } from "@ihsp/ui"
 import { useQuery } from "@tanstack/react-query"
 import { useId } from "react"
 import { SourceKindIcon } from "../lib/source-icons"

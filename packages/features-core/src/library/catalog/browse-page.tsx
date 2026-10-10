@@ -2,7 +2,7 @@
 
 import { useT } from "@ihsp/i18n"
 import { Button, Icons, Input, PageContainer, ToggleGroup, ToggleGroupItem } from "@ihsp/ui"
-import { IconLayoutGrid, IconList } from "@tabler/icons-react"
+import { IconLayoutGrid, IconList } from "@ihsp/ui"
 import { useEffect, useState } from "react"
 import { useUniLibraryAvailability } from "../hooks/use-uni-library"
 import { CatalogueResults, ExternalResults } from "./browse-results"

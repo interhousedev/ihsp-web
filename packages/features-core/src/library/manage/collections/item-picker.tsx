@@ -3,7 +3,7 @@
 import { getLibraryItemsQuery, type ItemCard } from "@ihsp/api"
 import { useT } from "@ihsp/i18n"
 import { Button, Input, Label, Skeleton, useDebounce } from "@ihsp/ui"
-import { IconArrowDown, IconArrowUp, IconPlus, IconX } from "@tabler/icons-react"
+import { IconArrowDown, IconArrowUp, IconPlus, IconX } from "@ihsp/ui"
 import { useQuery } from "@tanstack/react-query"
 import { useId, useState } from "react"
 import { SourceTag } from "../../catalog/source-tag"

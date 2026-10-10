@@ -2,7 +2,7 @@
 
 import { useT } from "@ihsp/i18n"
 import { Button } from "@ihsp/ui"
-import { IconHistory, IconLayoutSidebarLeftExpand } from "@tabler/icons-react"
+import { IconHistory, IconLayoutSidebarLeftExpand } from "@ihsp/ui"
 
 type WorkspaceNavButtonsProps = {
   /** The desktop sidebar is hidden. */

@@ -3,7 +3,7 @@ import type { Icons } from "../icons"
 
 export type IconName = keyof typeof Icons
 export type IconComponent = ComponentType<{ className?: string }>
-/** A name from the shared `Icons` registry or any icon component (for example one from `@tabler/icons-react`). */
+/** A name from the shared `Icons` registry or any icon component (for example an `Icon*` component exported by the ui icons registry). */
 export type NavIcon = IconName | IconComponent
 
 export type NavItem = {

@@ -2,7 +2,7 @@
 
 import { useErrorMessage, useT } from "@ihsp/i18n"
 import { Button, Spinner } from "@ihsp/ui"
-import { IconDownload } from "@tabler/icons-react"
+import { IconDownload } from "@ihsp/ui"
 import { useState } from "react"
 import { toast } from "sonner"
 import { TOUCH } from "../utils/touch"

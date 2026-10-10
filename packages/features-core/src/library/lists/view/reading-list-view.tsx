@@ -3,7 +3,7 @@
 import type { ReadingListDetail, ReadingListEntry } from "@ihsp/api"
 import { useFormatters, useT } from "@ihsp/i18n"
 import { Badge, Button, Progress, ProgressIndicator, ProgressTrack, buttonVariants } from "@ihsp/ui"
-import { IconExternalLink, IconPencil } from "@tabler/icons-react"
+import { IconExternalLink, IconPencil } from "@ihsp/ui"
 import Link from "next/link"
 import { useState } from "react"
 import { ImportanceBadge } from "../../catalog/importance-badge"

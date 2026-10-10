@@ -2,7 +2,7 @@
 
 import { useT } from "@ihsp/i18n"
 import { Button, cn } from "@ihsp/ui"
-import { IconChevronDown, IconChevronUp } from "@tabler/icons-react"
+import { IconChevronDown, IconChevronUp } from "@ihsp/ui"
 import { useState } from "react"
 
 const LONG_CHARS = 400

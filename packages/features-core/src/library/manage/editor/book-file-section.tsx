@@ -3,7 +3,7 @@
 import type { FileItem, ItemFile } from "@ihsp/api"
 import { useErrorMessage, useT } from "@ihsp/i18n"
 import { Badge, formatBytes } from "@ihsp/ui"
-import { IconCircleCheck } from "@tabler/icons-react"
+import { IconCircleCheck } from "@ihsp/ui"
 import { CoverImage } from "../../catalog/cover-image"
 import type { BookForm } from "./book-form"
 import type { PendingFile } from "./use-book-editor"

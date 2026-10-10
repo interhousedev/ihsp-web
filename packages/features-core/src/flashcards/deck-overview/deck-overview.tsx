@@ -2,7 +2,7 @@
 
 import type { FlashcardStats } from "@ihsp/api"
 import { useT } from "@ihsp/i18n"
-import { Button, buttonVariants, cn } from "@ihsp/ui"
+import { Button, buttonVariants, cn, Icons, ICON_SIZES, IconBulb, IconSparkles, IconClockHour4 } from "@ihsp/ui"
 import Link from "next/link"
 import { ReviewHeatmap } from "../review-heatmap"
 import { COUNT_COLORS, type CountQueue } from "../utils/count-colors"
@@ -25,10 +25,10 @@ export type DeckOverviewProps = {
   className?: string
 }
 
-const QUEUES: readonly { queue: CountQueue; label: "new" | "learning" | "toReview" }[] = [
-  { queue: "new", label: "new" },
-  { queue: "learning", label: "learning" },
-  { queue: "review", label: "toReview" },
+const QUEUES: readonly { queue: CountQueue; label: "new" | "learning" | "toReview"; icon: typeof IconSparkles }[] = [
+  { queue: "new", label: "new", icon: IconSparkles },
+  { queue: "learning", label: "learning", icon: IconBulb },
+  { queue: "review", label: "toReview", icon: IconClockHour4 },
 ]
 
 /**
@@ -51,12 +51,12 @@ export function DeckOverview({
 }: DeckOverviewProps) {
   const t = useT("flashcards.overview")
   const nothingToStudy = counts.new + counts.learning + counts.review === 0
-  const buttonClass = "min-h-11 rounded-full px-5 text-xs font-semibold tracking-wide uppercase md:min-h-9"
+  const buttonClass = "min-h-11 gap-2 rounded-full bg-muted/60 px-4 text-sm font-medium md:min-h-9"
   const bottom = [
-    { key: "options", label: t("options"), onClick: onOptions },
-    { key: "editCards", label: t("editCards"), onClick: onEditCards },
-    { key: "description", label: t("description"), onClick: onDescription },
-    { key: "share", label: t("share"), onClick: onShare },
+    { key: "options", label: t("options"), icon: Icons.settings, onClick: onOptions },
+    { key: "editCards", label: t("editCards"), icon: Icons.edit, onClick: onEditCards },
+    { key: "description", label: t("description"), icon: Icons.post, onClick: onDescription },
+    { key: "share", label: t("share"), icon: Icons.share, onClick: onShare },
   ].filter((item) => item.onClick)
 
   return (
@@ -70,9 +70,12 @@ export function DeckOverview({
       </header>
 
       <dl className="grid w-full max-w-56 grid-cols-[1fr_auto] gap-x-6 gap-y-1 text-sm" aria-label={t("countsLabel")}>
-        {QUEUES.map(({ queue, label }) => (
+        {QUEUES.map(({ queue, label, icon: QueueIcon }) => (
           <div key={queue} className="col-span-2 grid grid-cols-subgrid">
-            <dt>{t(label)}:</dt>
+            <dt className="flex items-center gap-1.5">
+              <QueueIcon size={ICON_SIZES.sm} stroke={1.75} className={COUNT_COLORS[queue]} aria-hidden />
+              {t(label)}:
+            </dt>
             <dd className={cn("text-end font-semibold tabular-nums", COUNT_COLORS[queue])} data-queue={queue}>
               {counts[queue]}
             </dd>
@@ -89,7 +92,7 @@ export function DeckOverview({
           href={studyHref}
           className={cn(
             buttonVariants({ size: "lg" }),
-            "h-12 w-full max-w-md rounded-xl text-sm font-bold tracking-wide uppercase",
+            "h-12 w-full max-w-md rounded-xl text-sm font-semibold",
           )}
         >
           {t("studyNow")}
@@ -102,6 +105,7 @@ export function DeckOverview({
         <div className="flex flex-wrap justify-center gap-2">
           {bottom.map((item) => (
             <Button key={item.key} type="button" variant="outline" className={buttonClass} onClick={item.onClick}>
+              <item.icon size={ICON_SIZES.sm} stroke={1.75} aria-hidden />
               {item.label}
             </Button>
           ))}

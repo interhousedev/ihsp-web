@@ -3,7 +3,7 @@
 import type { SourceItem } from "@ihsp/api"
 import { useT } from "@ihsp/i18n"
 import { Button } from "@ihsp/ui"
-import { IconRefresh } from "@tabler/icons-react"
+import { IconRefresh } from "@ihsp/ui"
 import { SourceStatusLine } from "./source-status-line"
 
 type SourceBannerProps = {

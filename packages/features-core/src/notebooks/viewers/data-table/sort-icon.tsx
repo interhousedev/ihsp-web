@@ -1,4 +1,4 @@
-import { IconArrowDown, IconArrowUp, IconArrowsSort } from "@tabler/icons-react"
+import { IconArrowDown, IconArrowUp, IconArrowsSort } from "@ihsp/ui"
 import type { SortState } from "./sort-rows"
 
 /** The arrow on a sortable header: both ways while unsorted, up for ascending, down for descending. */

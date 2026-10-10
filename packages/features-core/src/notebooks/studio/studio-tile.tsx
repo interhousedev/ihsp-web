@@ -2,7 +2,7 @@
 
 import { useT } from "@ihsp/i18n"
 import { Spinner, cn } from "@ihsp/ui"
-import { IconPencil } from "@tabler/icons-react"
+import { IconPencil } from "@ihsp/ui"
 import type { StudioTile as StudioTileDef } from "../lib/artifact-kinds"
 
 export type StudioTileProps = {

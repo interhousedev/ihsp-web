@@ -14,7 +14,7 @@ import {
   NativeSelectOption,
   cn,
 } from "@ihsp/ui"
-import { IconAlertTriangle, IconCheck, IconExternalLink } from "@tabler/icons-react"
+import { IconAlertTriangle, IconCheck, IconExternalLink } from "@ihsp/ui"
 import { useEffect, useId, useMemo, useRef, useState } from "react"
 import { useApplyArtifact, useApplyPreview, useCourseSteps } from "../../api/use-course-workspace"
 import { useNotebookErrorMessage } from "../../lib/use-notebook-error"

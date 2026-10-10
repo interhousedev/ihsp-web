@@ -3,7 +3,7 @@
 import type { FileItem, NotebookItem } from "@ihsp/api"
 import { useFormatters, useT } from "@ihsp/i18n"
 import { Badge, Button, OfflineBadge, cn, useOnline } from "@ihsp/ui"
-import { IconArrowUp, IconPlayerStop, IconSchool, IconWorld, IconX } from "@tabler/icons-react"
+import { IconArrowUp, IconPlayerStop, IconSchool, IconWorld, IconX } from "@ihsp/ui"
 import { useRouter } from "next/navigation"
 import { useEffect, useId, useImperativeHandle, useRef, useState, type KeyboardEvent, type Ref } from "react"
 import { useWebQuota } from "../web-search"

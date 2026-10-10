@@ -6,7 +6,7 @@ import { Dialog as SheetPrimitive } from "@base-ui/react/dialog"
 
 import { cn } from "../../lib/utils"
 import { Button } from "./button"
-import { IconX } from "@tabler/icons-react"
+import { IconX } from "../icons"
 
 function Sheet({ ...props }: SheetPrimitive.Root.Props) {
   return <SheetPrimitive.Root data-slot="sheet" {...props} />
