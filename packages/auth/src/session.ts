@@ -254,6 +254,12 @@ async function runCallback(): Promise<string> {
   const failure = params.get("error")
   if (failure) {
     writePending(null)
+    // The platform session is active, but Hydra remembers consent per app and this app has none yet. An ordinary
+    // login passes through without a form: Hydra skips the login and first-party consent is accepted automatically.
+    if (pending?.silent && failure === "consent_required") {
+      const restarted = await restartLogin(pending.returnTo)
+      if (restarted) return restarted
+    }
     if (pending?.silent && SILENT_ERRORS.has(failure)) {
       clearLoginBookkeeping()
       useAuthStore.getState().setAnonymous()
@@ -304,6 +310,9 @@ async function exchangeTelegram(): Promise<boolean> {
 }
 
 async function exchangeCookie(): Promise<boolean> {
+  // No hint: this browser has never signed in here, so the refresh would only produce a 401 (every anonymous API call
+  // asks for a token). Single sign-on (`trySilentSignIn`) signs a visitor in; it sets the hint on success.
+  if (!hasSessionHint()) return false
   const before = useAuthStore.getState().token
   try {
     const response = await postOauthRefresh({ client_id: getConfig().OAUTH_CLIENT_ID })

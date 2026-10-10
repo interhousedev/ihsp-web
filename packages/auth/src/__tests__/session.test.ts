@@ -14,6 +14,7 @@ import {
   safeReturnTo,
 } from "../session"
 import { getSession, setSession, useAuthStore } from "../store"
+import { clearSessionHint, setSessionHint } from "../session-hint"
 
 const API = "http://localhost:8000"
 const PENDING_KEY = "ihsp.oauth.pending"
@@ -27,6 +28,7 @@ function lastRedirect(replace: ReturnType<typeof spyOn<typeof navigation, "repla
 }
 
 beforeEach(() => {
+  setSessionHint()
   resetAuthState()
   configureApiClient()
 })
@@ -168,6 +170,21 @@ describe("safeReturnTo", () => {
 })
 
 describe("refresh and getAccessToken", () => {
+  it("an anonymous visitor without the hint sends no refresh and gets no token", async () => {
+    let refreshes = 0
+    server.use(
+      http.post(`${API}/v1/oauth/refresh`, () => {
+        refreshes += 1
+        return HttpResponse.json(refreshedTokenResponse)
+      }),
+    )
+    clearSessionHint()
+
+    expect(await getAccessToken()).toBeNull()
+    expect(await refresh()).toBe(false)
+    expect(refreshes).toBe(0)
+  })
+
   it("concurrent getAccessToken calls trigger one refresh and share the token", async () => {
     let refreshes = 0
     server.use(

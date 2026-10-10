@@ -257,6 +257,20 @@ describe("silent single sign-on (prompt=none)", () => {
     expect(useAuthStore.getState().status).toBe("anonymous")
   })
 
+  it("consent_required (signed in elsewhere, first visit here) continues with an ordinary login", async () => {
+    const { replace } = quiet()
+    await login("/browse/", { silent: true })
+    setTestRoute("/auth/callback/?error=consent_required&state=x")
+
+    void handleCallback()
+    await new Promise((resolve) => setTimeout(resolve, 20))
+
+    expect(replace).toHaveBeenCalledTimes(2)
+    const retry = new URL(String(replace.mock.calls[1]?.[0]))
+    expect(retry.searchParams.has("prompt")).toBe(false)
+    expect(readPending().returnTo).toBe("/browse/")
+  })
+
   it("an ordinary login does not send prompt=none", async () => {
     const { replace } = quiet()
 
