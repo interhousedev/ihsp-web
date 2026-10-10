@@ -173,6 +173,7 @@ export const libUniSearchPage2: UniLibrarySearchResult = {
 }
 
 export const libUniTaxonomy: UniLibraryTaxonomy = {
+  enabled: true,
   types: [
     { id: 9, name: "Darslik" },
     { id: 2, name: "Oʻquv qoʻllanma" },

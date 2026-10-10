@@ -1,5 +1,5 @@
 import { describe, expect, it } from "bun:test"
-import { libDetails, libExternalPinnedDetail, libIds, setUniLibrary } from "@ihsp/test-utils"
+import { libDetails, libExternalPinnedDetail, libIds, server, setUniLibrary } from "@ihsp/test-utils"
 import { screen, waitFor } from "@testing-library/react"
 import axe from "axe-core"
 import { allowSlowRenders, renderLibrary, renderLibraryAnonymous } from "../test-support"
@@ -80,6 +80,18 @@ describe("ItemPage: book", () => {
 
     expect(await screen.findByText("This item is not available")).toBeInTheDocument()
     expect(screen.queryByRole("button", { name: "Sign in to read this item." })).not.toBeInTheDocument()
+  })
+
+  it("asks for an item once, after the session restore, not before it", async () => {
+    let calls = 0
+    server.events.on("request:start", ({ request }) => {
+      if (request.url.includes("/v1/library/items/")) calls += 1
+    })
+    renderItem("00000000-0000-0000-0000-000000000000")
+
+    expect(await screen.findByText("This item is not available")).toBeInTheDocument()
+    server.events.removeAllListeners()
+    expect(calls).toBe(1)
   })
 
   it("has no accessibility violations", async () => {

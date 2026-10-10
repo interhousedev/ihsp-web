@@ -254,7 +254,8 @@ describe("UniLibrary is dormant by default", () => {
     await expect(getUniLibrarySearch({ q: "fizika" })).rejects.toMatchObject(disabled)
     await expect(getUniLibraryRecord("355186")).rejects.toMatchObject(disabled)
     await expect(postUniLibraryPin("355186", { category: 1 })).rejects.toMatchObject(disabled)
-    await expect(getUniLibraryTaxonomies()).rejects.toMatchObject(disabled)
+    // The taxonomies are the web's on/off probe: 200 with empty lists, not a 404 in the console.
+    await expect(getUniLibraryTaxonomies()).resolves.toMatchObject({ enabled: false, types: [], access: [] })
   })
 
   test("the catalogue never returns external cards, even for source=external", async () => {

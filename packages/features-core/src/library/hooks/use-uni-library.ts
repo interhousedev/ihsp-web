@@ -10,8 +10,8 @@ export type UniLibraryAvailability = "loading" | "enabled" | "disabled"
 /**
  * UniLibrary is a dormant, flag-controlled source (`LIBRARY__UNILIBRARY_ENABLED`, off by default): when the API says
  * it is off, **nothing** from UniLibrary may show: no source chip, no "More from UniLibrary" block, no cards, no filter
- * option. The API says so with `404 library/external-disabled` on every `/library/external/unilibrary/*` route; the
- * cached taxonomies request is the cheapest probe. While the answer is not known the state is `loading`, which the UI
+ * option. The API says so with `404 library/external-disabled` on every `/library/external/unilibrary/*` route, except
+ * the taxonomies, which answer `200 {enabled: false}`; the cached taxonomies request is the cheapest probe. While the answer is not known the state is `loading`, which the UI
  * treats like `disabled` (no flash of UniLibrary parts). A `503 library/external-unavailable` means "on, but the
  * service is down", so the source stays visible and its blocks show their own saved-results or error state.
  */
@@ -26,7 +26,8 @@ export function useUniLibraryAvailability(): UniLibraryAvailability {
   })
   // The route needs a login (a visitor would only get 401), so a visitor never sees UniLibrary parts.
   if (status === "anonymous") return "disabled"
-  if (query.isSuccess) return "enabled"
+  // A switched-off UniLibrary answers 200 with `enabled: false` (no 404 in the console).
+  if (query.isSuccess) return query.data.enabled ? "enabled" : "disabled"
   if (query.isError) {
     return isApiError(query.error) && query.error.type === "library/external-unavailable" ? "enabled" : "disabled"
   }

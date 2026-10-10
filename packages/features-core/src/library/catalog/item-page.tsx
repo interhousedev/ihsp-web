@@ -195,7 +195,9 @@ export function ItemPage() {
   const params = useSearchParams()
   const id = params.get("id")
   const { status } = useLibraryAccess()
-  const query = useQuery({ ...getLibraryItemQuery(id ?? ""), enabled: Boolean(id), retry: false })
+  // Not before the silent restore ends: an early request goes out without the token, gets a visitor's 404 (logged in
+  // the console) and is repeated once the session is known.
+  const query = useQuery({ ...getLibraryItemQuery(id ?? ""), enabled: Boolean(id) && status !== "loading", retry: false })
   if (!id) return <NotAvailable />
   const hidden = query.isError && isApiError(query.error) && (query.error.status === 404 || query.error.status === 403)
   // While the session is still being restored a hidden answer may be only the visitor's view: do not flash "sign in".

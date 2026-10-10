@@ -137,6 +137,10 @@ export const libraryExternalHandlers = [
   }),
 
   http.get(apiUrl("/v1/library/external/unilibrary/taxonomies"), ({ request }) => {
+    // Switched off: 200 with empty lists, like the API (no 404 in the console).
+    if (!state.unilibrary.enabled) {
+      return HttpResponse.json({ enabled: false, types: [], fields: [], languages: [], access: [] })
+    }
     const actor = gate(request, { breaker: false })
     return actor instanceof Response ? actor : HttpResponse.json(libUniTaxonomy)
   }),

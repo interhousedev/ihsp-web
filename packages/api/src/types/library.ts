@@ -366,6 +366,8 @@ export interface UniLibraryTaxonomy {
   fields: { id: number; name: string }[]
   languages: { id: number; name: string }[]
   access: { id: UniLibraryAccessFilter; name: string }[]
+  /** False while UniLibrary is switched off (the lists are then empty). */
+  enabled: boolean
 }
 
 /** `GET /me/library`. */

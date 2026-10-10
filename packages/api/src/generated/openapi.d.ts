@@ -17172,6 +17172,8 @@ export interface components {
         UniLibraryTaxonomyResponse: {
             /** Access */
             access: components["schemas"]["AccessOptionResponse"][];
+            /** Enabled */
+            enabled: boolean;
             /** Fields */
             fields: components["schemas"]["TaxonomyEntryResponse"][];
             /** Languages */
