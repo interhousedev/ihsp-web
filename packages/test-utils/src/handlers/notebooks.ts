@@ -935,6 +935,42 @@ export const notebooksHandlers = [
     entry.polls = 0
     return HttpResponse.json(entry.item, { status: 202 })
   }),
+  http.get(apiUrl("/v1/notebooks/:id/artifacts/:aid/download"), ({ params, request }) => {
+    const entry = find(param(params, "id"))?.artifacts.find((a) => a.item.id === param(params, "aid"))
+    if (!entry) return notFound("Artifact")
+    const format = query(request).get("format") ?? "md"
+    return new HttpResponse(`# ${entry.item.title}\n`, {
+      headers: { "Content-Disposition": `attachment; filename="${entry.item.title}.${format}"` },
+    })
+  }),
+  http.post(apiUrl("/v1/notebooks/:id/artifacts/:aid/save-to-files"), async ({ params, request }) => {
+    const entry = find(param(params, "id"))?.artifacts.find((a) => a.item.id === param(params, "aid"))
+    if (!entry) return notFound("Artifact")
+    const format = (await readJson<{ format?: string }>(request)).format ?? "md"
+    return HttpResponse.json(
+      {
+        id: nextId(35),
+        name: `${entry.item.title}.${format}`,
+        content_type: "application/octet-stream",
+        byte_size: 1024,
+      },
+      { status: 201 },
+    )
+  }),
+  http.post(apiUrl("/v1/notebooks/:id/artifacts/:aid/attach-to-lesson"), async ({ params, request }) => {
+    const entry = find(param(params, "id"))?.artifacts.find((a) => a.item.id === param(params, "aid"))
+    if (!entry) return notFound("Artifact")
+    const body = await readJson<{ lesson_id: string }>(request)
+    return HttpResponse.json(
+      {
+        link_id: nextId(36),
+        lesson_id: body.lesson_id,
+        title: entry.item.title,
+        short_url: "https://s.localhost/f/abc",
+      },
+      { status: 201 },
+    )
+  }),
   http.put(apiUrl("/v1/notebooks/:id/artifacts/:aid/progress"), async ({ params, request }) => {
     const entry = find(param(params, "id"))?.artifacts.find((a) => a.item.id === param(params, "aid"))
     if (!entry) return notFound("Artifact")
