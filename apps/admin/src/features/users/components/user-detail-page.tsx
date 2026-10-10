@@ -2,19 +2,22 @@
 
 import { getAdminUser, keys, type AdminUserDetail } from "@ihsp/api"
 import { useFormatters, useT } from "@ihsp/i18n"
-import { PageContainer, StateView } from "@ihsp/ui"
+import { Button, PageContainer, StateView } from "@ihsp/ui"
 import { useQuery } from "@tanstack/react-query"
 import { parseAsString, useQueryState } from "nuqs"
-import type { ReactNode } from "react"
+import { useState, type ReactNode } from "react"
 import { BackLink } from "../../shared/components/back-link"
 import { QueryState } from "../../shared/components/query-state"
 import { StatusBadge } from "../../shared/components/status-badge"
 import { fullNameWithMiddle } from "../../shared/utils/names"
+import { TOUCH } from "../../shared/utils/touch"
 import { AuditList } from "./audit-list"
 import { BlockActions } from "./block-actions"
 import { CredentialResetActions } from "./credential-reset-actions"
+import { EditUserDialog } from "./edit-user-dialog"
 import { MailActions } from "./mail-actions"
 import { RolesEditor } from "./roles-editor"
+import { SetPasswordDialog } from "./set-password-dialog"
 import { SessionList } from "./session-list"
 import { TelegramAccounts } from "./telegram-accounts"
 
@@ -32,11 +35,25 @@ function DetailBody({ user }: { user: AdminUserDetail }) {
   const f = useFormatters()
   const name = fullNameWithMiddle(user)
   const isAdmin = user.roles.includes("admin")
+  const [editOpen, setEditOpen] = useState(false)
+  const [passwordOpen, setPasswordOpen] = useState(false)
   return (
     <PageContainer
       title={name}
       description={[user.login, user.recovery_email].filter(Boolean).join(" · ")}
-      actions={<BackLink href="/users/" label={t("back")} />}
+      actions={
+        <>
+          <BackLink href="/users/" label={t("back")} />
+          <Button type="button" variant="outline" className={TOUCH} onClick={() => setEditOpen(true)}>
+            {t("edit")}
+          </Button>
+          {isAdmin ? null : (
+            <Button type="button" variant="outline" className={TOUCH} onClick={() => setPasswordOpen(true)}>
+              {t("setPassword")}
+            </Button>
+          )}
+        </>
+      }
     >
       <div className="flex flex-wrap items-center gap-x-4 gap-y-1 text-sm">
         <StatusBadge status={user.status} />
@@ -72,6 +89,8 @@ function DetailBody({ user }: { user: AdminUserDetail }) {
           <AuditList events={user.recent_audit} />
         </Section>
       </div>
+      <EditUserDialog user={user} open={editOpen} onOpenChange={setEditOpen} />
+      <SetPasswordDialog userId={user.id} name={name} open={passwordOpen} onOpenChange={setPasswordOpen} />
     </PageContainer>
   )
 }

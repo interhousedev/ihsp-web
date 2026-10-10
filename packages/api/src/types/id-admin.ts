@@ -14,6 +14,7 @@ export type AdminUser = {
   emis_status: string | null
   recovery_email: string | null
   mail_suspended: boolean
+  password_change_required?: boolean
   created_at: string | null
   last_login_at: string | null
 }
@@ -33,6 +34,10 @@ export type AdminTeachersParams = PageParams & { query?: string; status?: UserSt
 export type BlockUserBody = { reason: string }
 export type UserRolesBody = { grant: Role[]; revoke: Role[] }
 export type ResetPasswordResponse = { activation_url: string }
+/** `PATCH /v1/admin/users/{id}`: omitted keeps; a blank middle name clears it. */
+export type UserPatchBody = { last_name?: string; first_name?: string; middle_name?: string; email?: string }
+/** `POST /v1/admin/users/{id}/set-password`. */
+export type SetPasswordBody = { password: string; require_change?: boolean }
 export type MailSuspendBody = { reason: string }
 
 export type TeacherCreateBody = {
@@ -60,3 +65,16 @@ export type OauthClientItem = {
   last_used_at: string | null
 }
 export type OauthClientVerifyBody = { verified: boolean }
+
+export type PlatformLocale = "uz" | "ru" | "en"
+
+/** `PUT /v1/admin/settings` body: every editable setting. */
+export type PlatformSettingsBody = {
+  school_name: string
+  support_contact: string
+  change_password_on_login: boolean
+  default_language: PlatformLocale
+}
+
+/** `GET /v1/admin/settings`: the editable settings and the read-only feature flags. */
+export type PlatformSettings = PlatformSettingsBody & { features: Record<string, boolean> }

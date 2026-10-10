@@ -204,6 +204,7 @@ describe("keys used in the code", () => {
         "controlOutside",
         "controlSequence",
       ],
+      "settings.languages.${locale}": ["uz", "ru", "en"],
       "timetable.editor.conflictKind.${conflict.kind}": ["teacher", "room", "audience"],
       "timetable.entity.${view}": ["group", "teacher", "room"],
       "timetable.noEntities.${view}": ["group", "teacher", "room"],

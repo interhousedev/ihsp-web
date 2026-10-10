@@ -119,6 +119,11 @@
       "sent": "We sent a code to: {channels}.",
       "submit": "Confirm",
       "back": "Back to the password"
+    },
+    "passwordChange": {
+      "title": "Choose a new password",
+      "description": "An administrator set your password. Choose your own to continue.",
+      "submit": "Save and continue"
     }
   },
   "loginOtp": {

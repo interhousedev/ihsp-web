@@ -27,7 +27,8 @@
     "broadcasts": "Рассылки",
     "moderation": "Модерация",
     "assistant": "Ассистент",
-    "reports": "Отчёты"
+    "reports": "Отчёты",
+    "settings": "Настройки"
   },
   "shared": {
     "filters": "Фильтры",
@@ -284,7 +285,8 @@
       "missingAttendance": "Уроки без посещаемости",
       "missingCount": "Не отмечено",
       "noMissing": "Всё отмечено.",
-      "timetable": "Расписание на эту неделю"
+      "timetable": "Расписание на эту неделю",
+      "setPassword": "Задать пароль"
     }
   },
   "users": {
@@ -341,7 +343,9 @@
       "mail": "Почта",
       "telegram": "Аккаунты Telegram",
       "sessions": "Сессии",
-      "audit": "Последние события аудита"
+      "audit": "Последние события аудита",
+      "edit": "Изменить",
+      "setPassword": "Задать пароль"
     },
     "reset": {
       "password": "Сбросить пароль",
@@ -383,6 +387,26 @@
       "unverify": "Снять отметку",
       "verifiedDone": "{name} отмечен проверенным",
       "unverifiedDone": "С {name} снята отметка проверенного"
+    },
+    "edit": {
+      "title": "Изменить пользователя",
+      "lastName": "Фамилия",
+      "firstName": "Имя",
+      "middleName": "Отчество",
+      "email": "Почта",
+      "cancel": "Отмена",
+      "save": "Сохранить",
+      "saved": "Пользователь сохранён"
+    },
+    "setPassword": {
+      "title": "Задать пароль: {name}",
+      "description": "Пользователь сможет войти с этим паролем; текущие сессии завершатся. Передайте пароль лично.",
+      "password": "Новый пароль",
+      "rules": "От 8 символов, с цифрой, строчной и заглавной буквой.",
+      "requireChange": "Сменить при первом входе",
+      "cancel": "Отмена",
+      "save": "Задать пароль",
+      "saved": "Пароль {name} задан"
     }
   },
   "groups": {
@@ -1155,6 +1179,27 @@
       "marksTitle": "Распределение оценок",
       "marksCount": "Оценок",
       "noMarks": "Оценок пока нет."
+    }
+  },
+  "settings": {
+    "title": "Настройки",
+    "school": "Школа",
+    "schoolName": "Название школы",
+    "supportContact": "Контакт поддержки",
+    "defaults": "Значения по умолчанию",
+    "defaultLanguage": "Язык интерфейса по умолчанию",
+    "changePasswordOnLogin": "Просить сменить пароль, заданный администратором",
+    "changePasswordFlagOn": "Смена пароля при входе включена на сервере.",
+    "changePasswordFlagOff": "Смена пароля при входе выключена на сервере (IHSP_FEATURES__CHANGE_PASSWORD_ON_LOGIN).",
+    "save": "Сохранить",
+    "saved": "Настройки сохранены",
+    "features": "Функции сервера",
+    "on": "вкл",
+    "off": "выкл",
+    "languages": {
+      "uz": "Oʻzbekcha",
+      "ru": "Русский",
+      "en": "English"
     }
   }
 }

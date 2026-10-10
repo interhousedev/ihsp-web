@@ -3,6 +3,7 @@ import type {
   ConsentBody,
   EmailChangeConfirmBody,
   LoginBody,
+  LoginPasswordBody,
   LoginOtpBody,
   OtpEnableBody,
   TelegramLoginBody,
@@ -21,6 +22,7 @@ import {
   consentInfo,
   loginInfo,
   loginResultRedirect,
+  loginResultPasswordChange,
   loginResultSecondFactor,
   scopeCatalog,
   sessionItems,
@@ -55,6 +57,7 @@ function loginOutcome(login: string | undefined, password: string | undefined): 
     return problem(401, "auth/unauthorized", "Invalid login or password")
   }
   if (login === "second.factor") return HttpResponse.json(loginResultSecondFactor)
+  if (login === "must.change") return HttpResponse.json(loginResultPasswordChange)
   return HttpResponse.json(loginResultRedirect)
 }
 
@@ -70,6 +73,15 @@ export const idHandlers = [
   http.post(apiUrl("/v1/id/login"), async ({ request }) => {
     const body = await readJson<LoginBody>(request)
     return loginOutcome(body.login, body.password)
+  }),
+  http.post(apiUrl("/v1/id/login/password"), async ({ request }) => {
+    const body = await readJson<LoginPasswordBody>(request)
+    if (body.new_password === "Same-Password-1") {
+      return problem(422, "id/password-policy", "The new password must differ", {
+        params: { errors: ["id-password-unchanged"] },
+      })
+    }
+    return HttpResponse.json(loginResultRedirect)
   }),
   http.post(apiUrl("/v1/id/login/otp/request"), () => HttpResponse.json({ sent: true }, { status: 202 })),
   http.post(apiUrl("/v1/id/login/otp"), async ({ request }) => {

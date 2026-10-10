@@ -27,7 +27,8 @@
     "broadcasts": "Broadcasts",
     "moderation": "Moderation",
     "assistant": "Assistant",
-    "reports": "Reports"
+    "reports": "Reports",
+    "settings": "Settings"
   },
   "shared": {
     "filters": "Filters",
@@ -284,7 +285,8 @@
       "missingAttendance": "Lessons without attendance",
       "missingCount": "Not submitted",
       "noMissing": "Nothing is missing.",
-      "timetable": "Timetable of this week"
+      "timetable": "Timetable of this week",
+      "setPassword": "Set password"
     }
   },
   "users": {
@@ -341,7 +343,9 @@
       "mail": "Mail",
       "telegram": "Telegram accounts",
       "sessions": "Sessions",
-      "audit": "Recent audit events"
+      "audit": "Recent audit events",
+      "edit": "Edit",
+      "setPassword": "Set password"
     },
     "reset": {
       "password": "Reset password",
@@ -383,6 +387,26 @@
       "unverify": "Remove verification",
       "verifiedDone": "{name} is verified",
       "unverifiedDone": "{name} is no longer verified"
+    },
+    "edit": {
+      "title": "Edit user",
+      "lastName": "Last name",
+      "firstName": "First name",
+      "middleName": "Middle name",
+      "email": "Email",
+      "cancel": "Cancel",
+      "save": "Save",
+      "saved": "User saved"
+    },
+    "setPassword": {
+      "title": "Set password: {name}",
+      "description": "The user can sign in with this password; current sessions end. Hand the password over in person.",
+      "password": "New password",
+      "rules": "At least 8 characters with a digit, a lower and an upper case letter.",
+      "requireChange": "Change at first login",
+      "cancel": "Cancel",
+      "save": "Set password",
+      "saved": "Password of {name} set"
     }
   },
   "groups": {
@@ -1155,6 +1179,27 @@
       "marksTitle": "Marks distribution",
       "marksCount": "Marks",
       "noMarks": "No marks yet."
+    }
+  },
+  "settings": {
+    "title": "Settings",
+    "school": "School",
+    "schoolName": "School name",
+    "supportContact": "Support contact",
+    "defaults": "Defaults",
+    "defaultLanguage": "Default interface language",
+    "changePasswordOnLogin": "Ask to change a password set by an administrator",
+    "changePasswordFlagOn": "Changing the password at login is enabled on the server.",
+    "changePasswordFlagOff": "Changing the password at login is off on the server (IHSP_FEATURES__CHANGE_PASSWORD_ON_LOGIN).",
+    "save": "Save",
+    "saved": "Settings saved",
+    "features": "Server features",
+    "on": "on",
+    "off": "off",
+    "languages": {
+      "uz": "Oʻzbekcha",
+      "ru": "Русский",
+      "en": "English"
     }
   }
 }

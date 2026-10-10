@@ -27,7 +27,8 @@
     "broadcasts": "Xabarnomalar",
     "moderation": "Moderatsiya",
     "assistant": "Yordamchi",
-    "reports": "Hisobotlar"
+    "reports": "Hisobotlar",
+    "settings": "Sozlamalar"
   },
   "shared": {
     "filters": "Filtrlar",
@@ -284,7 +285,8 @@
       "missingAttendance": "Davomati belgilanmagan darslar",
       "missingCount": "Belgilanmagan",
       "noMissing": "Hammasi belgilangan.",
-      "timetable": "Shu haftaning dars jadvali"
+      "timetable": "Shu haftaning dars jadvali",
+      "setPassword": "Parol oʻrnatish"
     }
   },
   "users": {
@@ -341,7 +343,9 @@
       "mail": "Pochta",
       "telegram": "Telegram akkauntlari",
       "sessions": "Seanslar",
-      "audit": "Soʻnggi audit hodisalari"
+      "audit": "Soʻnggi audit hodisalari",
+      "edit": "Tahrirlash",
+      "setPassword": "Parol oʻrnatish"
     },
     "reset": {
       "password": "Parolni tiklash",
@@ -383,6 +387,26 @@
       "unverify": "Belgini olib tashlash",
       "verifiedDone": "{name} tasdiqlangan deb belgilandi",
       "unverifiedDone": "{name} dan tasdiqlangan belgisi olib tashlandi"
+    },
+    "edit": {
+      "title": "Foydalanuvchini tahrirlash",
+      "lastName": "Familiya",
+      "firstName": "Ism",
+      "middleName": "Otasining ismi",
+      "email": "Pochta",
+      "cancel": "Bekor qilish",
+      "save": "Saqlash",
+      "saved": "Foydalanuvchi saqlandi"
+    },
+    "setPassword": {
+      "title": "Parol oʻrnatish: {name}",
+      "description": "Foydalanuvchi shu parol bilan kira oladi; joriy sessiyalar tugaydi. Parolni shaxsan topshiring.",
+      "password": "Yangi parol",
+      "rules": "Kamida 8 belgi: raqam, kichik va bosh harf bilan.",
+      "requireChange": "Birinchi kirishda almashtirilsin",
+      "cancel": "Bekor qilish",
+      "save": "Parol oʻrnatish",
+      "saved": "{name} uchun parol oʻrnatildi"
     }
   },
   "groups": {
@@ -1155,6 +1179,27 @@
       "marksTitle": "Baholar taqsimoti",
       "marksCount": "Baholar",
       "noMarks": "Baholar hali yoʻq."
+    }
+  },
+  "settings": {
+    "title": "Sozlamalar",
+    "school": "Maktab",
+    "schoolName": "Maktab nomi",
+    "supportContact": "Qoʻllab-quvvatlash aloqasi",
+    "defaults": "Standart qiymatlar",
+    "defaultLanguage": "Standart interfeys tili",
+    "changePasswordOnLogin": "Administrator oʻrnatgan parolni almashtirishni soʻrash",
+    "changePasswordFlagOn": "Kirishda parolni almashtirish serverda yoqilgan.",
+    "changePasswordFlagOff": "Kirishda parolni almashtirish serverda oʻchirilgan (IHSP_FEATURES__CHANGE_PASSWORD_ON_LOGIN).",
+    "save": "Saqlash",
+    "saved": "Sozlamalar saqlandi",
+    "features": "Server funksiyalari",
+    "on": "yoq",
+    "off": "oʻch",
+    "languages": {
+      "uz": "Oʻzbekcha",
+      "ru": "Русский",
+      "en": "English"
     }
   }
 }

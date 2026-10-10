@@ -20,10 +20,12 @@ type PasswordLoginFormProps = {
   challenge: string
   info: LoginInfo
   onSecondFactor: (credentials: PasswordCredentials, factor: SecondFactor) => void
+  /** The password was set by an administrator and must be replaced; the ticket finishes the login. */
+  onPasswordChange: (ticket: string) => void
 }
 
 /** UF-ID-02: login and password. **Log in with OTP** is always shown (ID-13), so it never reveals who has OTP. */
-export function PasswordLoginForm({ challenge, info, onSecondFactor }: PasswordLoginFormProps) {
+export function PasswordLoginForm({ challenge, info, onSecondFactor, onPasswordChange }: PasswordLoginFormProps) {
   const t = useTr()
   const schema = useMemo(
     () =>
@@ -42,7 +44,7 @@ export function PasswordLoginForm({ challenge, info, onSecondFactor }: PasswordL
         password: value.password,
         remember: value.remember,
       }),
-    onSuccess: (result, value) => applyLoginResult(result, (factor) => onSecondFactor(value, factor)),
+    onSuccess: (result, value) => applyLoginResult(result, (factor) => onSecondFactor(value, factor), onPasswordChange),
     onError: (error) => {
       followChallengeUsed(error)
     },

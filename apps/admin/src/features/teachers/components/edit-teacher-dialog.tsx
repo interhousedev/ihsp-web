@@ -1,6 +1,6 @@
 "use client"
 
-import { keys, patchAdminTeacher, type AdminUser } from "@ihsp/api"
+import { keys, patchAdminUser, type AdminUser } from "@ihsp/api"
 import { useT } from "@ihsp/i18n"
 import { Button, Dialog, DialogContent, DialogFooter, DialogHeader, DialogTitle, Input } from "@ihsp/ui"
 import { useEffect, useState } from "react"
@@ -34,7 +34,7 @@ export function EditTeacherDialog({
 
   const save = useAdminMutation({
     mutationFn: () =>
-      patchAdminTeacher(teacher.id, {
+      patchAdminUser(teacher.id, {
         ...(lastName.trim() !== teacher.last_name ? { last_name: lastName.trim() } : {}),
         ...(firstName.trim() !== teacher.first_name ? { first_name: firstName.trim() } : {}),
         ...(middleName.trim() !== (teacher.middle_name ?? "") ? { middle_name: middleName.trim() } : {}),

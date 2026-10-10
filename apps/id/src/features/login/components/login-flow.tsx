@@ -7,6 +7,7 @@ import { useTr } from "../../shared/hooks/use-tr"
 import { useClientHint } from "../hooks/use-client-hint"
 import { useLoginInfo } from "../hooks/use-login-info"
 import type { SecondFactor } from "../utils/login-result"
+import { NewPasswordForm } from "./new-password-form"
 import { PasswordLoginForm, type PasswordCredentials } from "./password-login-form"
 import { SecondFactorForm } from "./second-factor-form"
 
@@ -18,6 +19,7 @@ export function LoginFlow({ challenge }: { challenge: string }) {
   const hint = useClientHint()
   const { query, redirecting } = useLoginInfo(challenge, { enabled: hint === null })
   const [secondFactor, setSecondFactor] = useState<SecondFactorState | null>(null)
+  const [passwordTicket, setPasswordTicket] = useState<string | null>(null)
 
   if (redirecting) return <FlowSkeleton />
   const info = hint ?? query.data
@@ -25,6 +27,7 @@ export function LoginFlow({ challenge }: { challenge: string }) {
     if (!query.isError) return <FlowSkeleton />
     return <RequestFailed title={t("login.unavailable")} error={query.error} onRetry={() => void query.refetch()} />
   }
+  if (passwordTicket) return <NewPasswordForm challenge={challenge} ticket={passwordTicket} />
   if (secondFactor) {
     return (
       <SecondFactorForm
@@ -41,6 +44,7 @@ export function LoginFlow({ challenge }: { challenge: string }) {
       challenge={challenge}
       info={info}
       onSecondFactor={(credentials, factor) => setSecondFactor({ credentials, factor })}
+      onPasswordChange={setPasswordTicket}
     />
   )
 }

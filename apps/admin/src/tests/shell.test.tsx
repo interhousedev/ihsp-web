@@ -37,6 +37,7 @@ describe("app frame", () => {
       Broadcasts: "/broadcasts/",
       Moderation: "/moderation/",
       Assistant: "/assistant/",
+      Settings: "/settings/",
     }
     for (const [name, href] of Object.entries(expected)) {
       const links = screen.getAllByRole("link", { name })

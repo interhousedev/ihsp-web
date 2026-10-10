@@ -24,6 +24,7 @@ import { StatusBadge } from "../../shared/components/status-badge"
 import { useAdminMutation } from "../../shared/hooks/use-admin-mutation"
 import { fullNameWithMiddle } from "../../shared/utils/names"
 import { TOUCH } from "../../shared/utils/touch"
+import { SetPasswordDialog } from "../../users/components/set-password-dialog"
 import { EditTeacherDialog } from "./edit-teacher-dialog"
 
 function Section({ title, children }: { title: string; children: React.ReactNode }) {
@@ -39,6 +40,7 @@ function ProfileBody({ data }: { data: TeacherProfile }) {
   const t = useT("teachers.profile")
   const [editOpen, setEditOpen] = useState(false)
   const [deactivateOpen, setDeactivateOpen] = useState(false)
+  const [passwordOpen, setPasswordOpen] = useState(false)
   const { user } = data
   const name = fullNameWithMiddle(user)
 
@@ -58,6 +60,9 @@ function ProfileBody({ data }: { data: TeacherProfile }) {
           <BackLink href="/teachers/" label={t("back")} />
           <Button type="button" variant="outline" className={TOUCH} onClick={() => setEditOpen(true)}>
             {t("edit")}
+          </Button>
+          <Button type="button" variant="outline" className={TOUCH} onClick={() => setPasswordOpen(true)}>
+            {t("setPassword")}
           </Button>
           {user.status !== "deactivated" ? (
             <Button type="button" variant="destructive" className={TOUCH} onClick={() => setDeactivateOpen(true)}>
@@ -117,6 +122,7 @@ function ProfileBody({ data }: { data: TeacherProfile }) {
       </Section>
 
       <EditTeacherDialog teacher={user} open={editOpen} onOpenChange={setEditOpen} />
+      <SetPasswordDialog userId={user.id} name={name} open={passwordOpen} onOpenChange={setPasswordOpen} />
       <ConfirmDialog
         open={deactivateOpen}
         onOpenChange={setDeactivateOpen}

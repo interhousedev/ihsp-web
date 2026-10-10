@@ -119,6 +119,11 @@
       "sent": "Kodni yubordik: {channels}.",
       "submit": "Tasdiqlash",
       "back": "Parolga qaytish"
+    },
+    "passwordChange": {
+      "title": "Yangi parol tanlang",
+      "description": "Parolni administrator oʻrnatgan. Davom etish uchun oʻz parolingizni tanlang.",
+      "submit": "Saqlash va davom etish"
     }
   },
   "loginOtp": {

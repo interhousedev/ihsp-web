@@ -14,7 +14,11 @@ export type LoginInfo = {
 export type LoginResult = {
   redirect_to: string | null
   second_factor: { method: "otp"; ticket: string; channels: ("telegram" | "email")[] } | null
+  /** Set when an administrator chose the password and the deployment asks for a new one at login. */
+  password_change?: { ticket: string } | null
 }
+
+export type LoginPasswordBody = { login_challenge: string; ticket: string; new_password: string }
 
 export type ConsentInfo = {
   client_id: string

@@ -41,6 +41,32 @@ describe("login page", () => {
     await waitFor(() => expect(redirectToMock).toHaveBeenCalledWith(loginResultRedirect.redirect_to))
   })
 
+  test("a password set by an administrator asks for a new one before the redirect", async () => {
+    renderId(<LoginPage />, { route: ROUTE })
+
+    await submitCredentials("must.change", "Temp-Pass-1")
+    await findHeading("Choose a new password")
+    expect(redirectToMock).not.toHaveBeenCalled()
+    await fillField("New password", "Own-Secret-2")
+    await fillField("Repeat the password", "Own-Secret-2")
+    await clickButton("Save and continue")
+
+    await waitFor(() => expect(redirectToMock).toHaveBeenCalledWith(loginResultRedirect.redirect_to))
+  })
+
+  test("the new password step refuses a mismatch without calling the server", async () => {
+    renderId(<LoginPage />, { route: ROUTE })
+
+    await submitCredentials("must.change", "Temp-Pass-1")
+    await findHeading("Choose a new password")
+    await fillField("New password", "Own-Secret-2")
+    await fillField("Repeat the password", "Other-Secret-3")
+    await clickButton("Save and continue")
+
+    expect(await screen.findByText("The passwords do not match.")).toBeInTheDocument()
+    expect(redirectToMock).not.toHaveBeenCalled()
+  })
+
   test("Log in with OTP is always shown and keeps the challenge", async () => {
     renderId(<LoginPage />, { route: ROUTE })
 

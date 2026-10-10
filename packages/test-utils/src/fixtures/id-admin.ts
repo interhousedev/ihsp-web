@@ -1,4 +1,4 @@
-import type { AdminUser, AdminUserDetail, OauthClientItem } from "@ihsp/api"
+import type { AdminUser, AdminUserDetail, OauthClientItem, PlatformSettings } from "@ihsp/api"
 import { auditItems, sessionItems, telegramAccounts } from "./id"
 import { ids, persons } from "./world"
 
@@ -106,3 +106,12 @@ export const resetPasswordResponse = {
 }
 
 export const teacherActivationUrl = "http://localhost:3001/activate/?token=teacher-token-1"
+
+/** `GET /v1/admin/settings`: nothing saved yet, so the defaults. */
+export const platformSettings: PlatformSettings = {
+  school_name: "",
+  support_contact: "",
+  change_password_on_login: false,
+  default_language: "ru",
+  features: { notebooks: true, ai_assistant: true, lms: true, change_password_on_login: false },
+}

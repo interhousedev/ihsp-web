@@ -108,6 +108,13 @@ export const loginResultRedirect: LoginResult = {
   second_factor: null,
 }
 
+/** Password accepted, but an administrator chose it: the client asks for a new one. */
+export const loginResultPasswordChange: LoginResult = {
+  redirect_to: null,
+  second_factor: null,
+  password_change: { ticket: "pw-ticket-1" },
+}
+
 /** Password accepted, second factor required. */
 export const loginResultSecondFactor: LoginResult = {
   redirect_to: null,

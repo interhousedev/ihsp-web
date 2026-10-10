@@ -3,9 +3,13 @@ import type {
   BlockUserBody,
   MailSuspendBody,
   OauthClientVerifyBody,
+  PlatformSettings,
+  PlatformSettingsBody,
+  SetPasswordBody,
   Role,
   TeacherCreateBody,
   TeacherPatchBody,
+  UserPatchBody,
   UserRolesBody,
 } from "@ihsp/api"
 import { HttpResponse, http } from "msw"
@@ -16,10 +20,11 @@ import {
   adminUserDetail,
   adminUsers,
   oauthClients,
+  platformSettings,
   resetPasswordResponse,
   teacherActivationUrl,
 } from "../fixtures/id-admin"
-import { apiUrl, matches, nextId, noContent, notFound, paginate, param, query, readJson } from "./utils"
+import { apiUrl, matches, nextId, noContent, notFound, paginate, param, problem, query, readJson } from "./utils"
 
 function findUser(id: string): AdminUser | undefined {
   return [...adminUsers, ...adminTeachers].find((user) => user.id === id)
@@ -65,6 +70,32 @@ export const idAdminHandlers = [
     const roles = user.roles.filter((role) => !(body.revoke ?? []).includes(role))
     for (const role of body.grant ?? []) if (!roles.includes(role)) roles.push(role)
     return HttpResponse.json({ ...user, roles })
+  }),
+  http.patch(apiUrl("/v1/admin/users/:id"), async ({ params, request }) => {
+    const user = findUser(param(params, "id"))
+    if (!user) return notFound("User")
+    const body = await readJson<UserPatchBody>(request)
+    if (body.email === "taken@example.org") {
+      return problem(409, "id/email-taken", "This email already belongs to another account.")
+    }
+    return HttpResponse.json({
+      ...user,
+      first_name: body.first_name ?? user.first_name,
+      last_name: body.last_name ?? user.last_name,
+      middle_name: body.middle_name ?? user.middle_name,
+      recovery_email: body.email ?? user.recovery_email,
+    })
+  }),
+  http.post(apiUrl("/v1/admin/users/:id/set-password"), async ({ params, request }) => {
+    if (!findUser(param(params, "id"))) return notFound("User")
+    const body = await readJson<SetPasswordBody>(request)
+    if ((body.password ?? "").length < 8) return problem(422, "id/password-policy", "Password too weak")
+    return noContent()
+  }),
+  http.get(apiUrl("/v1/admin/settings"), () => HttpResponse.json(platformSettings)),
+  http.put(apiUrl("/v1/admin/settings"), async ({ request }) => {
+    const body = await readJson<PlatformSettingsBody>(request)
+    return HttpResponse.json({ ...platformSettings, ...body } satisfies PlatformSettings)
   }),
   http.post(apiUrl("/v1/admin/users/:id/sessions/revoke"), () => noContent()),
   http.post(apiUrl("/v1/admin/users/:id/reset-password"), () => HttpResponse.json(resetPasswordResponse)),

@@ -1,5 +1,5 @@
 import { describe, expect, it, setDefaultTimeout } from "bun:test"
-import type { CourseBroadcastBody } from "@ihsp/api"
+import type { CourseBroadcastBody, CourseBroadcastPatchBody } from "@ihsp/api"
 import { apiUrl, ids, server } from "@ihsp/test-utils"
 import { screen } from "@testing-library/react"
 import { HttpResponse, http } from "msw"
@@ -40,6 +40,47 @@ describe("course broadcasts", () => {
 
     expect(await screen.findByText("Sent to 12 students.")).toBeInTheDocument()
     expect(body).toEqual({ title: "Exam moved", body: "The exam is on Friday." })
+  })
+
+  it("edits a sent update and marks it as edited", async () => {
+    let patch = null as CourseBroadcastPatchBody | null
+    let edited = false
+    server.use(
+      http.get(apiUrl("/v1/staff/lms/courses/:id/broadcasts"), () =>
+        HttpResponse.json([
+          {
+            id: "0000000c-0000-4000-8000-0000000000b1",
+            course_id: ids.course,
+            author_id: ids.teacherRakhimov,
+            title: edited ? "Week 3 moved" : "Week 3 is online",
+            body: "New lessons on derivatives are open.",
+            created_at: "2026-10-05T09:00:00Z",
+            updated_at: edited ? "2026-10-06T09:00:00Z" : null,
+          },
+        ]),
+      ),
+      http.patch(apiUrl("/v1/staff/lms/courses/:id/broadcasts/:bid"), async ({ request }) => {
+        patch = await readBody<CourseBroadcastPatchBody>(request)
+        edited = true
+        return HttpResponse.json({ ok: true })
+      }),
+    )
+    const { user } = renderLms(<StudentsPage courseId={ids.course} />, {
+      route: `/edit/students/?id=${ids.course}`,
+      session: authorSession,
+    })
+    expect(await screen.findByText("Week 3 is online")).toBeInTheDocument()
+    expect(screen.queryByText(/edited/)).not.toBeInTheDocument()
+
+    await user.click(await screen.findByRole("button", { name: "Edit" }))
+    const title = await screen.findByLabelText("Title")
+    await user.clear(title)
+    await user.type(title, "Week 3 moved")
+    await user.click(screen.getByRole("button", { name: "Save" }))
+
+    expect(await screen.findByText("Week 3 moved")).toBeInTheDocument()
+    expect(patch).toEqual({ title: "Week 3 moved" })
+    expect(await screen.findByText(/edited/)).toBeInTheDocument()
   })
 
   it("does not send an empty update", async () => {

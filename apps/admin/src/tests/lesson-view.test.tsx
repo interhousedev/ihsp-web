@@ -42,7 +42,7 @@ describe("lesson page", () => {
     expect(screen.getByLabelText("Homework text")).toHaveValue("Solve problems 14-17 on page 52")
     expect(within(section("materials")).getByText("kinematics-notes.pdf")).toBeInTheDocument()
     expect(section("attendance")).toBeInTheDocument()
-    expect(screen.getByRole("checkbox", { name: /Ismoilov Jasur/ })).toBeInTheDocument()
+    expect(screen.getByRole("radiogroup", { name: /Ismoilov Jasur/ })).toBeInTheDocument()
   })
 
   test("goes back to the lessons list", async () => {
@@ -97,7 +97,8 @@ describe("editing as Administration", () => {
     )
     const { user } = renderAdmin(<LessonViewPage />, { route: ROUTE })
 
-    await user.click(await screen.findByRole("checkbox", { name: /Ismoilov Jasur/ }))
+    const group = await screen.findByRole("radiogroup", { name: /Ismoilov Jasur/ })
+    await user.click(within(group).getByRole("radio", { name: "Absent" }))
     await user.click(within(section("attendance")).getByRole("button", { name: "Submit attendance" }))
 
     await waitFor(() => expect(bodies).toHaveLength(1))
@@ -116,7 +117,8 @@ describe("editing as Administration", () => {
     )
     renderAdmin(<LessonViewPage />, { route: ROUTE })
 
-    expect(await screen.findByRole("checkbox", { name: /Ismoilov Jasur/ })).toBeEnabled()
+    const group = await screen.findByRole("radiogroup", { name: /Ismoilov Jasur/ })
+    expect(within(group).getByRole("radio", { name: "Present" })).toBeEnabled()
     expect(screen.queryByText(/7-day window has passed/)).not.toBeInTheDocument()
   })
 
