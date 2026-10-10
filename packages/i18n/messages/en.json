@@ -12,8 +12,21 @@
     "saveFailed": "Could not save the contacts",
     "invalid": "Check the Telegram name, phone and email"
   },
+  "teacherPhoto": {
+    "label": "Photo",
+    "hint": "JPEG or PNG, up to 5 MB.",
+    "upload": "Upload photo",
+    "replace": "Replace photo",
+    "remove": "Remove photo",
+    "uploading": "Uploading…",
+    "saved": "Photo saved",
+    "removed": "Photo removed",
+    "wrongType": "Choose a JPEG or PNG image.",
+    "tooLarge": "The photo is larger than 5 MB.",
+    "alt": "Photo of {name}"
+  },
   "common": {
-    "appName": "IHSP",
+    "appName": "IHT",
     "loading": "Loading…",
     "retry": "Try again",
     "cancel": "Cancel",
@@ -123,7 +136,7 @@
     "forbiddenDescription": "Your account does not have access to this page.",
     "telegramLoading": "Logging you in with Telegram…",
     "telegramTitle": "Log in in the bot first",
-    "telegramDescription": "This Telegram account is not linked to an IHSP account yet. Open the bot, press Log in and come back.",
+    "telegramDescription": "This Telegram account is not linked to an IHT account yet. Open the bot, press Log in and come back.",
     "telegramOpenBot": "Open @{bot}",
     "telegramFailed": "We could not log you in with Telegram."
   },
@@ -160,30 +173,30 @@
     "menu": "Account menu"
   },
   "platforms": {
-    "title": "IHSP platforms",
+    "title": "IHT platforms",
     "current": "(current)",
     "sp": {
-      "name": "SP",
+      "name": "my.iht",
       "description": "Student portal"
     },
     "staff": {
-      "name": "Staff",
+      "name": "IHT Учителям",
       "description": "Teacher workspace"
     },
     "admin": {
-      "name": "Admin",
+      "name": "admin.iht",
       "description": "Administration"
     },
     "lms": {
-      "name": "LMS",
+      "name": "lms.iht",
       "description": "Courses"
     },
     "library": {
-      "name": "Library",
+      "name": "library.iht",
       "description": "Books & materials"
     },
     "id": {
-      "name": "ID",
+      "name": "IHT ID",
       "description": "Account & security"
     }
   },
@@ -216,7 +229,7 @@
     },
     "id": {
       "admin-reset-forbidden": "Only an administrator can reset this account.",
-      "emis-already-linked": "This EMIS account is already linked to another IHSP account.",
+      "emis-already-linked": "This EMIS account is already linked to another IHT account.",
       "user-not-found": "No user with this login was found.",
       "wrong-institution": "This EMIS account belongs to another institution.",
       "registration-expired": "This session has expired. Please start again.",
@@ -242,7 +255,10 @@
       "unknown-client": "Unknown application.",
       "hydra-unavailable": "The sign-in service is not responding. Try again later.",
       "email-unavailable": "The email could not be sent. Try again later.",
-      "login-taken": "This login is already taken."
+      "login-taken": "This login is already taken.",
+      "photo-too-large": "The photo is larger than 5 MB.",
+      "photo-type-not-allowed": "Only JPEG or PNG photos are accepted.",
+      "photo-empty": "The photo file is empty."
     },
     "telegram": {
       "linked-elsewhere": "This Telegram account is already linked to another user."
@@ -391,7 +407,7 @@
       "term-dates-invalid": "A term must start before it ends.",
       "term-bells-invalid": "The bell schedule is invalid: each period may appear once per weekday and must end after it starts.",
       "term-non-study-day-invalid": "A non-study day must fall inside the term.",
-      "term-moved-day-invalid": "A moved day must follow a weekday from Monday to Saturday.",
+      "term-moved-day-invalid": "A moved day must follow a weekday from Monday to Friday, and Saturday is never a study day.",
       "term-control-periods-invalid": "A control week is invalid: it must start on or before its end, lie inside the term and come after the previous control.",
       "no-term-for-date": "No term contains this date.",
       "no-bell": "The term has no bell for period {period} on this day.",
@@ -414,6 +430,7 @@
       "room-merge-invalid": "A room cannot be merged into itself or into an archived room.",
       "entry-not-found": "Timetable entry not found.",
       "entry-invalid": "The timetable entry is not valid.",
+      "entry-not-school-day": "Lessons are held Monday to Friday, so a Saturday slot cannot be added.",
       "lesson-not-found": "This lesson was not found.",
       "import-invalid": "The file cannot be read as a student list.",
       "import-expired": "The import preview has expired. Upload the file again.",
@@ -463,6 +480,12 @@
       "disabled": "Web search is turned off.",
       "quota-exceeded": "No web searches left today.",
       "unavailable": "Web search is not available right now."
+    },
+    "notebooks": {
+      "default-material-exists": "This material is already a default material of the subject.",
+      "default-material-invalid": "This file, link or book cannot be a default material. Check it and try again.",
+      "default-material-limit": "The subject already has the maximum number of default materials.",
+      "default-material-not-found": "This default material was not found."
     }
   },
   "notifications": {
@@ -516,7 +539,7 @@
     "mail": {
       "title": "Mail",
       "forward": "Forward new mail to Telegram",
-      "forwardHint": "Messages to your IHSP mailbox arrive in the bot."
+      "forwardHint": "Messages to your IHT mailbox arrive in the bot."
     },
     "push": {
       "title": "Push notifications",
@@ -525,8 +548,8 @@
       "off": "Get your notifications on this device even when the app is closed. The switches above choose which ones.",
       "on": "This device gets your notifications, as Telegram does. The switches above choose which ones.",
       "unsupported": "This browser cannot show push notifications.",
-      "noWorker": "Open the installed IHSP app to turn push notifications on for this device.",
-      "iosInstall": "On iPhone and iPad, add IHSP to the Home Screen first, then open it from there to turn push notifications on.",
+      "noWorker": "Open the installed IHT app to turn push notifications on for this device.",
+      "iosInstall": "On iPhone and iPad, add IHT to the Home Screen first, then open it from there to turn push notifications on.",
       "denied": "Notifications are blocked for this site. Allow them in the browser or phone settings, then come back.",
       "unavailable": "Push notifications are not switched on on the server yet.",
       "failed": "Could not change push notifications on this device. Try again."
@@ -747,7 +770,7 @@
     "web": {
       "sources": "Sources · {count}",
       "chip": "Web source {n}: {title}",
-      "fromDb": "From IHSP",
+      "fromDb": "From IHT",
       "open": "Open page",
       "list": "Web pages used for this answer",
       "more": "{site} and {count} more",
@@ -1163,10 +1186,10 @@
   "pwa": {
     "update": {
       "available": "Update available",
-      "description": "A new version of IHSP is ready.",
+      "description": "A new version of IHT is ready.",
       "reload": "Reload",
       "forced": {
-        "title": "Updating IHSP",
+        "title": "Updating IHT",
         "text": "This takes a few seconds."
       }
     },
@@ -1176,7 +1199,7 @@
       "manualHint": "Open the browser menu and choose Install app or Add to Home screen."
     },
     "lock": {
-      "title": "IHSP is locked",
+      "title": "IHT is locked",
       "prompt": "Enter your PIN",
       "wrong": "Wrong PIN. {count, plural, one {# attempt} other {# attempts}} left.",
       "lockedOut": "Too many wrong attempts. Signing you out…",
@@ -1264,5 +1287,45 @@
     "sent": "Sent",
     "empty": "You have not sent any emails yet.",
     "loadMore": "Show more"
+  },
+  "curriculum": {
+    "title": "Curriculum",
+    "empty": "The curriculum of your group has not been loaded yet.",
+    "updated": "Updated {date}",
+    "speciality": "Speciality",
+    "direction": "Direction",
+    "eduForm": "Form of study",
+    "language": "Language of instruction",
+    "ratingScale": "Rating scale",
+    "scale": {
+      "range": "{min, number}–{max, number}",
+      "from": "from {min, number}",
+      "to": "up to {max, number}"
+    },
+    "semesters": "Semesters",
+    "semester": "Semester {number}",
+    "current": "Current",
+    "period": "{from} – {to}",
+    "exams": "Exams",
+    "vocational": "Vocational subjects",
+    "studyHours": "Study hours",
+    "hours": "{count, number} h",
+    "noSubjects": "No subjects in this semester.",
+    "types": {
+      "general": "General education",
+      "inDepth": "In-depth",
+      "vocational": "Vocational",
+      "unified": "Unified"
+    },
+    "table": {
+      "subject": "Subject",
+      "type": "Type",
+      "hours": "Total hours",
+      "classHours": "Class hours",
+      "independentHours": "Independent hours",
+      "separated": "Separated",
+      "yes": "Yes",
+      "no": "No"
+    }
   }
 }

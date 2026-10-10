@@ -11,7 +11,7 @@ describe("PlatformBadge", () => {
   it("shows the badge for a source from the database", () => {
     renderNotebook(<PlatformBadge origin="db" />)
 
-    expect(screen.getByText("From IHSP")).toBeInTheDocument()
+    expect(screen.getByText("From IHT")).toBeInTheDocument()
   })
 
   it("shows nothing for a web page", () => {
@@ -23,6 +23,6 @@ describe("PlatformBadge", () => {
   it("marks a database source in the chip card but not a web one", () => {
     renderNotebook(<WebCitationCard results={[{ ...webResults[0]!, origin: "db" }, webResults[1]!]} />)
 
-    expect(screen.getAllByText("From IHSP")).toHaveLength(1)
+    expect(screen.getAllByText("From IHT")).toHaveLength(1)
   })
 })

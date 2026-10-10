@@ -1,6 +1,6 @@
 {
   "app": {
-    "name": "IHSP Boshqaruv"
+    "name": "admin.iht"
   },
   "nav": {
     "main": "Asosiy",
@@ -506,7 +506,18 @@
       "noSubgroup": "Kichik guruhsiz",
       "yes": "Ha",
       "no": "Yoʻq",
-      "semesterField": "Semestr"
+      "semesterField": "Semestr",
+      "tabs": {
+        "overview": "Umumiy",
+        "curriculum": "Oʻquv reja"
+      }
+    },
+    "curriculum": {
+      "sync": "EMIS bilan sinxronlash",
+      "syncing": "Oʻquv reja EMIS dan yuklanmoqda…",
+      "synced": "Oʻquv reja EMIS dan yangilandi.",
+      "noStudent": "Hech narsa sinxronlanmadi: guruhda oʻquv rejani olish uchun EMIS akkaunti ishlatiladigan talaba yoʻq.",
+      "empty": "Bu guruh uchun oʻquv reja hali saqlanmagan. Yuklash uchun «EMIS bilan sinxronlash» tugmasini bosing."
     }
   },
   "subjects": {
@@ -527,6 +538,7 @@
       "shortName": "Qisqa nomi",
       "emis": "EMIS ID",
       "canBeDivided": "Boʻlinadi",
+      "materials": "Materiallar",
       "actions": "Amallar"
     },
     "dialog": {
@@ -542,6 +554,52 @@
       "save": "Saqlash",
       "created": "Fan yaratildi",
       "saved": "Fan saqlandi"
+    },
+    "materials": {
+      "open": "{name} fanining standart materiallari: {count}",
+      "openNoEmis": "{name} fanining standart materiallari: EMIS ID kerak",
+      "needEmis": "EMIS ID kerak",
+      "title": "Standart materiallar: {label}",
+      "description": "Har bir oʻquvchining shu fan boʻyicha daftariga bu materiallarning nusxasi qoʻshiladi. EMIS dagi fan ID si: {id}.",
+      "emisLabel": "EMIS ID {id}",
+      "listLabel": "Standart materiallar",
+      "empty": "Standart materiallar hali yoʻq.",
+      "kind": {
+        "file": "Fayl",
+        "link": "Havola",
+        "library_item": "Kutubxona kitobi"
+      },
+      "remove": "{title} ni olib tashlash",
+      "removeAsk": "Material olib tashlansinmi?",
+      "removeConfirm": "Olib tashlash",
+      "removeConfirmFor": "{title} ni olib tashlashni tasdiqlash",
+      "keep": "Qoldirish",
+      "removed": "Material olib tashlandi",
+      "add": {
+        "heading": "Material qoʻshish",
+        "kind": "Turi",
+        "titleLabel": "Nomi",
+        "upload": "Fayl tanlash",
+        "fileChosen": "Fayl: {name}",
+        "urlLabel": "Havola",
+        "searchLabel": "Kutubxonadan qidirish",
+        "searchHint": "Kitob yoki muallif nomining kamida ikkita harfini kiriting.",
+        "searchNone": "Hech narsa topilmadi.",
+        "searchResults": "Kutubxonadan qidiruv natijalari",
+        "pick": "Tanlash",
+        "picked": "Tanlandi",
+        "pickFor": "{title} ni tanlash",
+        "bookChosen": "Kitob: {title}",
+        "submit": "Material qoʻshish",
+        "added": "Material qoʻshildi"
+      },
+      "byId": {
+        "heading": "EMIS ID boʻyicha materiallar",
+        "hint": "Roʻyxatda hali yoʻq fan uchun.",
+        "id": "EMIS dagi fan ID si",
+        "label": "Nomi (ixtiyoriy)",
+        "open": "Materiallarni ochish"
+      }
     }
   },
   "rooms": {

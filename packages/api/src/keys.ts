@@ -40,8 +40,14 @@ export const keys = {
       list: (filters?: object) => ["admin", "groups", "list", params(filters)] as const,
       detail: (id: string) => ["admin", "groups", "detail", id] as const,
       stats: () => ["admin", "groups", "stats"] as const,
+      curriculum: (id: string) => ["admin", "groups", "curriculum", id] as const,
     },
     subjects: (filters?: object) => ["admin", "subjects", params(filters)] as const,
+    subjectMaterials: {
+      all: () => ["admin", "subject-materials"] as const,
+      groups: () => ["admin", "subject-materials", "groups"] as const,
+      list: (eduSubjectId: number) => ["admin", "subject-materials", "list", eduSubjectId] as const,
+    },
     rooms: (filters?: object) => ["admin", "rooms", params(filters)] as const,
     timetable: (filters: object) => ["admin", "timetable", filters] as const,
     lessons: (filters?: object) => ["admin", "lessons", params(filters)] as const,
@@ -99,6 +105,7 @@ export const keys = {
     grades: (filters?: object) => ["me", "grades", params(filters)] as const,
     gradesDay: (date?: string) => ["me", "grades", "day", date ?? null] as const,
     recordBook: () => ["me", "record-book"] as const,
+    curriculum: () => ["me", "curriculum"] as const,
     assessments: (filters?: object) => ["me", "assessments", params(filters)] as const,
     planner: (subjectId: string, filters?: object) =>
       ["me", "subjects", subjectId, "planner", params(filters)] as const,
@@ -109,6 +116,8 @@ export const keys = {
     outboundMail: (filters?: object) => ["me", "outbound-mail", params(filters)] as const,
     links: (filters?: object) => ["me", "links", params(filters)] as const,
     teachers: () => ["me", "teachers"] as const,
+    teacher: (id: string) => ["me", "teachers", id] as const,
+    teacherTimetable: (id: string, filters?: object) => ["me", "teachers", id, "timetable", params(filters)] as const,
   },
   lessons: {
     detail: (id: string) => ["lessons", id] as const,

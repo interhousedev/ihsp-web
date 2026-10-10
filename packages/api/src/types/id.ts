@@ -84,6 +84,8 @@ export type UserMe = {
   otp_via_email: boolean
   emis_status: "active" | "needs_reauth" | null
   mailbox: string | null
+  /** A link to the account's own photo; null when there is none. */
+  photo_url: string | null
   preferences: UserPreferences
   telegram: TelegramAccount[]
 }

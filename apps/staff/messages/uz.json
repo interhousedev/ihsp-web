@@ -1,6 +1,6 @@
 {
   "app": {
-    "name": "IHSP oʻqituvchi portali"
+    "name": "IHT Учителям"
   },
   "nav": {
     "today": "Bugun",
@@ -330,6 +330,10 @@
     "contacts": {
       "title": "Aloqa",
       "description": "Talabalaringizga «Oʻqituvchilarim» boʻlimida koʻrinadi."
+    },
+    "photo": {
+      "title": "Profil surati",
+      "description": "Bu surat oʻquvchilaringizga «Mening oʻqituvchilarim» boʻlimida koʻrinadi. JPEG yoki PNG, 5 MB gacha."
     },
     "title": "Sozlamalar",
     "general": {

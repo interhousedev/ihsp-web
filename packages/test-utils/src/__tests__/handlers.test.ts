@@ -231,8 +231,10 @@ describe("schedule", () => {
     const refused = await failure(postAdminTimetable(entry))
     expect([refused.status, refused.type]).toEqual([409, "common/conflict"])
     expect(Array.isArray(refused.params.conflicts)).toBe(true)
-    const free = await postAdminTimetable({ ...(entry as object), weekday: 6, period: 6 } as never)
-    expect([free.weekday, free.period, free.teacher?.id]).toEqual([6, 6, fx.ids.teacherRakhimov])
+    const free = await postAdminTimetable({ ...(entry as object), weekday: 5, period: 6 } as never)
+    expect([free.weekday, free.period, free.teacher?.id]).toEqual([5, 6, fx.ids.teacherRakhimov])
+    const saturday = await failure(postAdminTimetable({ ...(entry as object), weekday: 6, period: 6 } as never))
+    expect([saturday.status, saturday.type]).toEqual([422, "academic/entry-not-school-day"])
     expect(
       (await getAdminTimetable({ teacher_id: fx.ids.teacherRakhimov } as never)).every(
         (item) => item.teacher?.id === fx.ids.teacherRakhimov,
@@ -251,7 +253,7 @@ describe("schedule", () => {
   })
 
   test("the student timetable hides lessons of the other subgroup and lessons without a teacher", async () => {
-    const mine = await getMeTimetable({ from: "2026-10-05", to: "2026-10-10" } as never)
+    const mine = await getMeTimetable({ from: "2026-10-05", to: "2026-10-09" } as never)
     expect(mine.length).toBeGreaterThan(0)
     expect(mine.some((lesson) => lesson.id === fx.teacherNeededLesson.id)).toBe(false)
     expect(mine.every((lesson) => lesson.audience.every((item) => item.subgroup !== 2))).toBe(true)

@@ -3,6 +3,7 @@ import { assessmentsHandlers } from "./assessments"
 import { broadcastsHandlers } from "./broadcasts"
 import { classworkHandlers } from "./classwork"
 import { compositionHandlers } from "./composition"
+import { curriculumHandlers } from "./curriculum"
 import { dashboardHandlers } from "./dashboard"
 import { filesHandlers } from "./files"
 import { flashcardsHandlers } from "./flashcards"
@@ -20,6 +21,7 @@ import { publicHandlers } from "./public"
 import { pushHandlers } from "./push"
 import { registrationHandlers } from "./registration"
 import { scheduleHandlers } from "./schedule"
+import { subjectMaterialsHandlers } from "./subject-materials"
 import { teachersHandlers } from "./teachers"
 import { webSearchHandlers } from "./web-search"
 
@@ -45,7 +47,8 @@ export {
   setUniLibrary,
   type LibraryActorSpec,
 } from "./library"
-export { resetTeacherContacts } from "./teachers"
+export { resetSubjectMaterialsState } from "./subject-materials"
+export { resetTeacherContacts, resetTeacherPhotos, teacherPhotoUploads, type TeacherPhotoUpload } from "./teachers"
 export { pushSubscriptions, resetPushSubscriptions } from "./push"
 export { currentWebQuota, resetWebSearchState, setWebQuota, spendWebSearch } from "./web-search"
 export { apiUrl, notFound, paginate, problem } from "./utils"
@@ -55,6 +58,7 @@ export {
   broadcastsHandlers,
   classworkHandlers,
   compositionHandlers,
+  curriculumHandlers,
   dashboardHandlers,
   filesHandlers,
   flashcardsHandlers,
@@ -72,6 +76,7 @@ export {
   pushHandlers,
   registrationHandlers,
   scheduleHandlers,
+  subjectMaterialsHandlers,
   teachersHandlers,
   webSearchHandlers,
 }
@@ -87,6 +92,7 @@ export const allHandlers = [
   ...idAdminHandlers,
   ...registrationHandlers,
   ...scheduleHandlers,
+  ...curriculumHandlers,
   ...teachersHandlers,
   ...classworkHandlers,
   ...marksHandlers,
@@ -105,4 +111,5 @@ export const allHandlers = [
   ...lmsLearningHandlers,
   ...lmsAuthoringHandlers,
   ...libraryHandlers,
+  ...subjectMaterialsHandlers,
 ]

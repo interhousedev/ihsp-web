@@ -13,6 +13,7 @@ import type { getAdminBroadcast, getAdminBroadcasts, patchAdminBroadcast, postAd
 import type { deleteStaffLessonHomework, getAdminAttendance, getAdminAttendanceMissing, getMeAttendance, getMeHomework, getMeLesson, getMeToday, getStaffGroupAttendance, getStaffGroupStudents, getStaffJournal, getStaffJournalOptions, getStaffLesson, getStaffToday, postStaffJournalToggle, putMeHomeworkDone, putMeHomeworkNote, putStaffLessonAttendance, putStaffLessonAttendanceExcuse, putStaffLessonHomework, putStaffLessonTopic } from "./endpoints/classwork"
 import type { getAdminDashboard, getAdminGroupsStats, getAdminStudent, getAdminTeacherProfile, getMeAlerts, getMeOutboundMail, getMeSearch, postMeCalendarToken, postMeOutboundMail } from "./endpoints/composition"
 import type { getCourseSteps, getNotebookUsageOf, postApplyArtifact, postApplyPreview, postCourseNotebook, postCourseWorkspace } from "./endpoints/course-workspace"
+import type { getAdminGroupCurriculum, getMeCurriculum, postAdminGroupCurriculumSync } from "./endpoints/curriculum"
 import type { getMeDashboard, putMeDashboard } from "./endpoints/dashboard"
 import type { deleteFile, getFile, getFileUrl, getMeFiles, getMeStorage, patchFile, postFileComplete, postFiles } from "./endpoints/files"
 import type { getMeFlashcardSet, getMeFlashcardSetStudy, getMeFlashcardSets, getMeFlashcardSetsStats, patchMeFlashcardSet, postMeFlashcardReview, postMeFlashcardSets, postMeFlashcardSetsCopy, putMeFlashcardSetCards } from "./endpoints/flashcards"
@@ -24,14 +25,14 @@ import type { getAdminModerationQueue, getAdminModerationSearch, getLessonResour
 import type { getLmsCourseBroadcasts, getLmsCourseCompare, getLmsCourseDraft, getLmsCoursePending, getLmsCoursePreviewStep, getLmsCourseStaff, getLmsCourseVersion, getLmsCourseVersions, getLmsCreators, getLmsStepDiff, getLmsStepDraft, getLmsStepHistory, patchLmsCourseBroadcast, patchLmsCourseSettings, patchLmsCourseStaff, postLmsCourseBroadcast, postLmsCourseDiscard, postLmsCourseDraftOutline, postLmsCourseInviteCode, postLmsCoursePublish, postLmsCourseStaff, postLmsCourseSteps, postLmsCourseVersionRestore, postLmsCourses, postLmsStepCheckpoints, postLmsStepDiscard, postLmsStepRestore, putLmsCourseDraftMeta, putLmsCreator, putLmsStepDraft } from "./endpoints/lms-authoring"
 import type { getLmsAttempt, getLmsCourse, getLmsCourseStep, getLmsCourseStudents, getLmsCourses, getLmsMyCourses, getLmsPreviewStepVideo, getLmsStepCardsNext, getLmsStepVideo, postLmsAttemptOverride, postLmsAttemptSubmit, postLmsCourseEnroll, postLmsJoin, postLmsStepBlockAttempts, postLmsStepCardReview, postLmsStepViewed, putLmsAttemptAnswers } from "./endpoints/lms-learning"
 import type { getAdminSyncRuns, getMeGrades, getMeGradesDay, getMeLessonResults, getMeRecordBook, getMeSubject, getMeSubjectLessons, getMeSubjects, postAdminSyncRun } from "./endpoints/marks"
-import type { getArtifact, getArtifacts, getNotebook, getNotebookAutoSubject, getNotebookChat, getNotebookLabels, getNotebookSearch, getNotebookSource, getNotebookSources, getNotebookUsage, getNotebooks, getPassage, getSourcePassages, patchArtifact, patchNotebook, patchNotebookLabel, patchNotebookSource, postArtifact, postArtifactAsSource, postArtifactAttachToLesson, postArtifactCancel, postArtifactFlashcardSet, postArtifactRetry, postArtifactSaveToFiles, postArtifactSlidesRevise, postNotebook, postNotebookAutoSubject, postNotebookDiscover, postNotebookLabel, postNotebookLabelsAuto, postNotebookMessage, postNotebookRegenerate, postNotebookSourceSync, postNotebookSources, postNotebookSourcesSelect, postSaveNote, putArtifactSlides, putNotebookSourceLabels } from "./endpoints/notebooks"
+import type { getAdminSubjectMaterialGroups, getAdminSubjectMaterials, getArtifact, getArtifacts, getNotebook, getNotebookAutoSubject, getNotebookChat, getNotebookLabels, getNotebookSearch, getNotebookSource, getNotebookSources, getNotebookUsage, getNotebooks, getPassage, getSourcePassages, patchArtifact, patchNotebook, patchNotebookLabel, patchNotebookSource, postAdminSubjectMaterial, postArtifact, postArtifactAsSource, postArtifactAttachToLesson, postArtifactCancel, postArtifactFlashcardSet, postArtifactRetry, postArtifactSaveToFiles, postArtifactSlidesRevise, postNotebook, postNotebookAutoSubject, postNotebookDiscover, postNotebookLabel, postNotebookLabelsAuto, postNotebookMessage, postNotebookRegenerate, postNotebookSourceSync, postNotebookSources, postNotebookSourcesSelect, postSaveNote, putArtifactSlides, putNotebookSourceLabels } from "./endpoints/notebooks"
 import type { getNotifications, getNotificationsUnreadCount } from "./endpoints/notifications"
 import type { postOauthLogout, postOauthRefresh, postOauthTelegram, postOauthToken, postOauthTokenHook } from "./endpoints/oauth"
 import type { getPublicShare, postPublicReports } from "./endpoints/public"
 import type { getPushConfig, postPushSubscription } from "./endpoints/push"
 import type { getInternalEmisProfile, getInternalEmisRatings, getInternalEmisSubjects, postIdReclaimEmail, postIdReclaimEmis, postIdRegisterComplete, postIdRegisterEmail, postIdRegisterEmis } from "./endpoints/registration"
 import type { getAdminGroup, getAdminGroups, getAdminLessons, getAdminRooms, getAdminStudents, getAdminSubjects, getAdminTerms, getAdminTimetable, getMeProfile, getMeTimetable, getStaffGroup, getStaffGroups, getStaffTimetable, patchAdminGroup, patchAdminLesson, patchAdminRoom, patchAdminSubject, patchAdminTerm, patchAdminTimetable, postAdminGroups, postAdminLessons, postAdminRoomArchive, postAdminRoomMerge, postAdminRoomRegeneratePin, postAdminStudentsImport, postAdminStudentsImportConfirm, postAdminSubjects, postAdminTerms, postAdminTimetable, postAdminTimetableCheck, postAdminTimetableCopy, putAdminGroupSubgroups, putStaffGroupSubgroups } from "./endpoints/schedule"
-import type { getAdminTeacherContacts, getMeTeachers, getStaffMeContacts, putAdminTeacherContacts, putStaffMeContacts } from "./endpoints/teachers"
+import type { deleteAdminUserPhoto, deleteStaffMePhoto, getAdminTeacherContacts, getMeTeacher, getMeTeacherTimetable, getMeTeachers, getStaffMeContacts, putAdminTeacherContacts, putAdminUserPhoto, putStaffMeContacts, putStaffMePhoto } from "./endpoints/teachers"
 
 type Method = "get" | "post" | "put" | "patch" | "delete"
 type OperationOf<P extends keyof paths, M extends Method> = paths[P] extends Record<M, infer O> ? O : never
@@ -285,6 +286,18 @@ export const served_postApplyPreview: Awaited<ReturnType<typeof postApplyPreview
 // POST /v1/notebooks/{notebook_id}/artifacts/{artifact_id}/apply — postApplyArtifact
 declare const gen_postApplyArtifact: ResponseOf<"/v1/notebooks/{notebook_id}/artifacts/{artifact_id}/apply", "post">
 export const served_postApplyArtifact: Awaited<ReturnType<typeof postApplyArtifact>> = gen_postApplyArtifact
+
+// GET /v1/me/curriculum — getMeCurriculum
+declare const gen_getMeCurriculum: ResponseOf<"/v1/me/curriculum", "get">
+export const served_getMeCurriculum: Awaited<ReturnType<typeof getMeCurriculum>> = gen_getMeCurriculum
+
+// GET /v1/admin/groups/{group_id}/curriculum — getAdminGroupCurriculum
+declare const gen_getAdminGroupCurriculum: ResponseOf<"/v1/admin/groups/{group_id}/curriculum", "get">
+export const served_getAdminGroupCurriculum: Awaited<ReturnType<typeof getAdminGroupCurriculum>> = gen_getAdminGroupCurriculum
+
+// POST /v1/admin/groups/{group_id}/curriculum/sync — postAdminGroupCurriculumSync
+declare const gen_postAdminGroupCurriculumSync: ResponseOf<"/v1/admin/groups/{group_id}/curriculum/sync", "post">
+export const served_postAdminGroupCurriculumSync: Awaited<ReturnType<typeof postAdminGroupCurriculumSync>> = gen_postAdminGroupCurriculumSync
 
 // GET /v1/me/dashboard — getMeDashboard
 declare const gen_getMeDashboard: ResponseOf<"/v1/me/dashboard", "get">
@@ -1158,6 +1171,18 @@ export const served_putArtifactSlides: Awaited<ReturnType<typeof putArtifactSlid
 declare const gen_postArtifactSlidesRevise: ResponseOf<"/v1/notebooks/{notebook_id}/artifacts/{artifact_id}/slides/revise", "post">
 export const served_postArtifactSlidesRevise: Awaited<ReturnType<typeof postArtifactSlidesRevise>> = gen_postArtifactSlidesRevise
 
+// GET /v1/admin/subject-materials — getAdminSubjectMaterialGroups
+declare const gen_getAdminSubjectMaterialGroups: ResponseOf<"/v1/admin/subject-materials", "get">
+export const served_getAdminSubjectMaterialGroups: Awaited<ReturnType<typeof getAdminSubjectMaterialGroups>> = gen_getAdminSubjectMaterialGroups
+
+// GET /v1/admin/subject-materials/{edu_subject_id} — getAdminSubjectMaterials
+declare const gen_getAdminSubjectMaterials: ResponseOf<"/v1/admin/subject-materials/{edu_subject_id}", "get">
+export const served_getAdminSubjectMaterials: Awaited<ReturnType<typeof getAdminSubjectMaterials>> = gen_getAdminSubjectMaterials
+
+// POST /v1/admin/subject-materials/{edu_subject_id} — postAdminSubjectMaterial
+declare const gen_postAdminSubjectMaterial: ResponseOf<"/v1/admin/subject-materials/{edu_subject_id}", "post">
+export const served_postAdminSubjectMaterial: Awaited<ReturnType<typeof postAdminSubjectMaterial>> = gen_postAdminSubjectMaterial
+
 // GET /v1/notifications — getNotifications
 declare const gen_getNotifications: ResponseOf<"/v1/notifications", "get">
 export const served_getNotifications: Awaited<ReturnType<typeof getNotifications>> = gen_getNotifications
@@ -1370,6 +1395,14 @@ export const served_getStaffTimetable: Awaited<ReturnType<typeof getStaffTimetab
 declare const gen_getMeTeachers: ResponseOf<"/v1/me/teachers", "get">
 export const served_getMeTeachers: Awaited<ReturnType<typeof getMeTeachers>> = gen_getMeTeachers
 
+// GET /v1/me/teachers/{teacher_id} — getMeTeacher
+declare const gen_getMeTeacher: ResponseOf<"/v1/me/teachers/{teacher_id}", "get">
+export const served_getMeTeacher: Awaited<ReturnType<typeof getMeTeacher>> = gen_getMeTeacher
+
+// GET /v1/me/teachers/{teacher_id}/timetable — getMeTeacherTimetable
+declare const gen_getMeTeacherTimetable: ResponseOf<"/v1/me/teachers/{teacher_id}/timetable", "get">
+export const served_getMeTeacherTimetable: Awaited<ReturnType<typeof getMeTeacherTimetable>> = gen_getMeTeacherTimetable
+
 // GET /v1/staff/me/contacts — getStaffMeContacts
 declare const gen_getStaffMeContacts: ResponseOf<"/v1/staff/me/contacts", "get">
 export const served_getStaffMeContacts: Awaited<ReturnType<typeof getStaffMeContacts>> = gen_getStaffMeContacts
@@ -1378,6 +1411,14 @@ export const served_getStaffMeContacts: Awaited<ReturnType<typeof getStaffMeCont
 declare const gen_putStaffMeContacts: ResponseOf<"/v1/staff/me/contacts", "put">
 export const served_putStaffMeContacts: Awaited<ReturnType<typeof putStaffMeContacts>> = gen_putStaffMeContacts
 
+// PUT /v1/staff/me/photo — putStaffMePhoto
+declare const gen_putStaffMePhoto: ResponseOf<"/v1/staff/me/photo", "put">
+export const served_putStaffMePhoto: Awaited<ReturnType<typeof putStaffMePhoto>> = gen_putStaffMePhoto
+
+// DELETE /v1/staff/me/photo — deleteStaffMePhoto
+declare const gen_deleteStaffMePhoto: ResponseOf<"/v1/staff/me/photo", "delete">
+export const served_deleteStaffMePhoto: Awaited<ReturnType<typeof deleteStaffMePhoto>> = gen_deleteStaffMePhoto
+
 // GET /v1/admin/teacher-contacts/{id} — getAdminTeacherContacts
 declare const gen_getAdminTeacherContacts: ResponseOf<"/v1/admin/teacher-contacts/{id}", "get">
 export const served_getAdminTeacherContacts: Awaited<ReturnType<typeof getAdminTeacherContacts>> = gen_getAdminTeacherContacts
@@ -1385,4 +1426,12 @@ export const served_getAdminTeacherContacts: Awaited<ReturnType<typeof getAdminT
 // PUT /v1/admin/teacher-contacts/{id} — putAdminTeacherContacts
 declare const gen_putAdminTeacherContacts: ResponseOf<"/v1/admin/teacher-contacts/{id}", "put">
 export const served_putAdminTeacherContacts: Awaited<ReturnType<typeof putAdminTeacherContacts>> = gen_putAdminTeacherContacts
+
+// PUT /v1/admin/users/{id}/photo — putAdminUserPhoto
+declare const gen_putAdminUserPhoto: ResponseOf<"/v1/admin/users/{id}/photo", "put">
+export const served_putAdminUserPhoto: Awaited<ReturnType<typeof putAdminUserPhoto>> = gen_putAdminUserPhoto
+
+// DELETE /v1/admin/users/{id}/photo — deleteAdminUserPhoto
+declare const gen_deleteAdminUserPhoto: ResponseOf<"/v1/admin/users/{id}/photo", "delete">
+export const served_deleteAdminUserPhoto: Awaited<ReturnType<typeof deleteAdminUserPhoto>> = gen_deleteAdminUserPhoto
 

@@ -4,12 +4,14 @@
       "title": "My teachers",
       "empty": "No teachers yet. They appear once your timetable has lessons."
     },
-    "status": {
-      "now": "Now: lesson in {room}",
-      "nowNoRoom": "Now: lesson",
-      "next": "Next: {when}, room {room}",
-      "nextNoRoom": "Next: {when}",
-      "none": "No lessons today"
+    "card": {
+      "nearest": "Next class",
+      "now": "Now",
+      "none": "No classes in the next two weeks",
+      "upcoming": "Next two weeks",
+      "showAll": "Show all ({count})",
+      "showLess": "Show less",
+      "room": "room {room}"
     },
     "contacts": {
       "title": "Contacts",
@@ -20,11 +22,16 @@
     },
     "detail": {
       "back": "Teachers",
-      "week": "This week",
-      "noLessons": "No lessons this week",
+      "subjects": "Subjects",
+      "timetable": "Timetable",
+      "previousWeek": "Previous week",
+      "nextWeek": "Next week",
+      "thisWeek": "This week",
+      "yourGroup": "Your group",
+      "cancelled": "Cancelled",
       "noLessonsDay": "No lessons",
-      "room": "room {room}",
-      "notFound": "Teacher not found"
+      "notFound": "Teacher not found",
+      "room": "room {room}"
     }
   },
   "app": {

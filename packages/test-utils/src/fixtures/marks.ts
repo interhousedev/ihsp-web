@@ -1,10 +1,12 @@
 import type {
   DayGrades,
   MarkItem,
+  PersonRef,
   RecordBook,
   SemesterGrades,
   SubjectCard,
   SubjectDetail,
+  SubjectTeacher,
   SyncRunItem,
 } from "@ihsp/api"
 import { resourceItems } from "./links"
@@ -44,9 +46,12 @@ export const marks: MarkItem[] = [
 
 export const newMarks: MarkItem[] = marks.filter((item) => item.date === "2026-10-06")
 
+/** A subject teacher of the marks views: the person with no photo (`photo_url` is null). */
+const subjectTeacher = (person: PersonRef): SubjectTeacher => ({ ...person, photo_url: null })
+
 export const subjectCards: SubjectCard[] = (Object.keys(subjectRefs) as SubjectKey[]).map((key) => ({
   subject: subjectRefs[key],
-  teachers: [teacherOf[key]],
+  teachers: [subjectTeacher(teacherOf[key])],
   semester_mark: {
     math: 4.6,
     physics: 4.8,
@@ -177,7 +182,7 @@ export const recordBook: RecordBook = {
 export const subjectDetailPhysics: SubjectDetail = {
   subject: subjectRefs.physics,
   semester: SEMESTER,
-  teachers: [persons.kalandarova],
+  teachers: [subjectTeacher(persons.kalandarova)],
   averages: { lesson: 4.5, midterm: 5, final: null },
   semester_mark: 4.8,
   emis_rating: 5,

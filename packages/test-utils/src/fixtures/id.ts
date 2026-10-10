@@ -58,6 +58,7 @@ export const userMe: UserMe = {
   otp_via_email: false,
   emis_status: "active",
   mailbox: "brastilov.aleksey@mail.ihsu.uz",
+  photo_url: null,
   preferences: userPreferences,
   telegram: telegramAccounts,
 }

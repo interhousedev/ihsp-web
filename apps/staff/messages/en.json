@@ -1,6 +1,6 @@
 {
   "app": {
-    "name": "IHSP Staff"
+    "name": "IHT Учителям"
   },
   "nav": {
     "today": "Today",
@@ -330,6 +330,10 @@
     "contacts": {
       "title": "Contacts",
       "description": "Shown to your students on My teachers."
+    },
+    "photo": {
+      "title": "Profile photo",
+      "description": "Shown to your students on My teachers. JPEG or PNG, up to 5 MB."
     },
     "title": "Settings",
     "general": {

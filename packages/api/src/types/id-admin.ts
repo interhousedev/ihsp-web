@@ -15,6 +15,8 @@ export type AdminUser = {
   recovery_email: string | null
   mail_suspended: boolean
   password_change_required?: boolean
+  /** Link to the profile photo, valid for an hour; null when there is none. */
+  photo_url: string | null
   created_at: string | null
   last_login_at: string | null
 }

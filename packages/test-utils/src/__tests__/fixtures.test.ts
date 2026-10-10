@@ -21,12 +21,13 @@ describe("world", () => {
     for (const id of values) expect(id).toMatch(/^[0-9a-f]{8}-0000-4000-8000-[0-9a-f]{12}$/)
   })
 
-  test("the fixture week runs from Monday 5 to Saturday 10 October 2026 and today is Wednesday", () => {
+  test("the fixture week runs from Monday 5 to Friday 9 October 2026 and today is Wednesday", () => {
     expect(fx.FIXTURE_TODAY).toBe("2026-10-07")
     expect(new Date(`${fx.FIXTURE_WEEK_START}T00:00:00Z`).getUTCDay()).toBe(1)
     expect(new Date(`${fx.FIXTURE_TODAY}T00:00:00Z`).getUTCDay()).toBe(3)
     expect(fx.weekDates[1]).toBe("2026-10-05")
-    expect(fx.weekDates[6]).toBe("2026-10-10")
+    expect(fx.weekDates[5]).toBe("2026-10-09")
+    expect(fx.weekDates[6]).toBeUndefined()
   })
 
   test("atTashkent converts to UTC with the +05:00 offset", () => {

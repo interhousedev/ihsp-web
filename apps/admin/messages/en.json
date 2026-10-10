@@ -1,6 +1,6 @@
 {
   "app": {
-    "name": "IHSP Admin"
+    "name": "admin.iht"
   },
   "nav": {
     "main": "Main",
@@ -506,7 +506,18 @@
       "noSubgroup": "No subgroup",
       "yes": "Yes",
       "no": "No",
-      "semesterField": "Semester"
+      "semesterField": "Semester",
+      "tabs": {
+        "overview": "Overview",
+        "curriculum": "Curriculum"
+      }
+    },
+    "curriculum": {
+      "sync": "Sync from EMIS",
+      "syncing": "Loading the curriculum from EMIS…",
+      "synced": "The curriculum was updated from EMIS.",
+      "noStudent": "Nothing was synced: the group has no student whose EMIS account can be used to fetch the curriculum.",
+      "empty": "No curriculum is stored for this group yet. Use “Sync from EMIS” to load it."
     }
   },
   "subjects": {
@@ -527,6 +538,7 @@
       "shortName": "Short name",
       "emis": "EMIS ID",
       "canBeDivided": "Can be divided",
+      "materials": "Materials",
       "actions": "Actions"
     },
     "dialog": {
@@ -542,6 +554,52 @@
       "save": "Save",
       "created": "Subject created",
       "saved": "Subject saved"
+    },
+    "materials": {
+      "open": "Default materials of {name}: {count}",
+      "openNoEmis": "Default materials of {name}: EMIS ID needed",
+      "needEmis": "EMIS ID needed",
+      "title": "Default materials: {label}",
+      "description": "Every student's notebook for this subject gets a copy of these materials. EMIS subject ID: {id}.",
+      "emisLabel": "EMIS ID {id}",
+      "listLabel": "Default materials",
+      "empty": "No default materials yet.",
+      "kind": {
+        "file": "File",
+        "link": "Link",
+        "library_item": "Library book"
+      },
+      "remove": "Remove {title}",
+      "removeAsk": "Remove this material?",
+      "removeConfirm": "Remove",
+      "removeConfirmFor": "Confirm removal of {title}",
+      "keep": "Keep",
+      "removed": "Material removed",
+      "add": {
+        "heading": "Add material",
+        "kind": "Type",
+        "titleLabel": "Title",
+        "upload": "Choose file",
+        "fileChosen": "File: {name}",
+        "urlLabel": "Link",
+        "searchLabel": "Search the library",
+        "searchHint": "Type at least two letters of a title or an author.",
+        "searchNone": "Nothing found.",
+        "searchResults": "Library search results",
+        "pick": "Select",
+        "picked": "Selected",
+        "pickFor": "Select {title}",
+        "bookChosen": "Book: {title}",
+        "submit": "Add material",
+        "added": "Material added"
+      },
+      "byId": {
+        "heading": "Materials by EMIS ID",
+        "hint": "For a subject that is not in the list yet.",
+        "id": "EMIS subject ID",
+        "label": "Name (optional)",
+        "open": "Open materials"
+      }
     }
   },
   "rooms": {

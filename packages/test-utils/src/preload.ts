@@ -37,8 +37,16 @@ const { resetAuthState } = await import("@ihsp/auth")
 const { resetConfig } = await import("@ihsp/config")
 const { TEST_ENV } = await import("./fixtures/env")
 const { server } = await import("./server")
-const { resetAssessments, resetCreatedFiles, resetLibraryState, resetNotebooksState, resetWebSearchState } =
-  await import("./handlers")
+const {
+  resetAssessments,
+  resetCreatedFiles,
+  resetLibraryState,
+  resetNotebooksState,
+  resetSubjectMaterialsState,
+  resetTeacherContacts,
+  resetTeacherPhotos,
+  resetWebSearchState,
+} = await import("./handlers")
 const { resetTestRouter, testNavigation } = await import("./router")
 
 // `next/navigation` needs the Next.js app router; tests drive routes with `setTestRoute` and assert on `testRouter`.
@@ -69,6 +77,9 @@ afterEach(() => {
   resetNotebooksState()
   resetWebSearchState()
   resetLibraryState()
+  resetSubjectMaterialsState()
+  resetTeacherContacts()
+  resetTeacherPhotos()
   resetAssessments()
   window.localStorage.clear()
   window.sessionStorage.clear()

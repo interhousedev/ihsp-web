@@ -31,7 +31,7 @@ async function startRegistration(page: Page): Promise<string> {
     await page.getByLabel("EMIS password", { exact: true }).fill(FAKE_EMIS_PASSWORD)
     await page.getByRole("button", { name: "Continue" }).click()
     const profile = heading(page, "Is this you?")
-    const taken = page.getByText(/already has an IHSP account/)
+    const taken = page.getByText(/already has an IHT account/)
     await expect(profile.or(taken)).toBeVisible()
     rememberCandidateUsed(index)
     if (await profile.isVisible()) return emisLogin

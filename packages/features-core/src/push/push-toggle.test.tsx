@@ -59,7 +59,7 @@ describe("states that cannot be switched", () => {
 
     renderToggle(null)
 
-    expect(await screen.findByText(/add IHSP to the Home Screen first/)).toBeInTheDocument()
+    expect(await screen.findByText(/add IHT to the Home Screen first/)).toBeInTheDocument()
     expectDisabled(await toggle())
   })
 
@@ -68,7 +68,7 @@ describe("states that cannot be switched", () => {
 
     renderToggle(null)
 
-    expect(await screen.findByText(/Open the installed IHSP app/)).toBeInTheDocument()
+    expect(await screen.findByText(/Open the installed IHT app/)).toBeInTheDocument()
     expectDisabled(await toggle())
   })
 

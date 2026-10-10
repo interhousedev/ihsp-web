@@ -66,10 +66,10 @@ describe("usePlatformLinks", () => {
     const links = linksFor(["student"])
 
     expect(links.map((link) => [link.key, link.name, link.description, link.href])).toEqual([
-      ["sp", "SP", "Student portal", "http://localhost:3002"],
-      ["lms", "LMS", "Courses", "http://localhost:3005"],
-      ["library", "Library", "Books & materials", "http://localhost:3008"],
-      ["id", "ID", "Account & security", "http://localhost:3001"],
+      ["sp", "my.iht", "Student portal", "http://localhost:3002"],
+      ["lms", "lms.iht", "Courses", "http://localhost:3005"],
+      ["library", "library.iht", "Books & materials", "http://localhost:3008"],
+      ["id", "IHT ID", "Account & security", "http://localhost:3001"],
     ])
   })
 
@@ -135,15 +135,15 @@ describe("UserMenu with platform links", () => {
     await user.click(screen.getByRole("button", { name: "Account menu" }))
 
     const menu = await screen.findByRole("menu")
-    const lms = within(menu).getByRole("menuitem", { name: /LMS/ })
+    const lms = within(menu).getByRole("menuitem", { name: /lms\.iht/ })
     expect(lms).toHaveAttribute("aria-current", "page")
     expect(lms).toHaveTextContent("Courses")
-    const staff = within(menu).getByRole("menuitem", { name: /Staff/ })
+    const staff = within(menu).getByRole("menuitem", { name: /Учителям/ })
     expect(staff).toHaveAttribute("href", "http://localhost:3003")
     expect(staff).not.toHaveAttribute("target")
     expect(staff).not.toHaveAttribute("aria-current")
-    expect(within(menu).getByRole("menuitem", { name: /ID/ })).toHaveAttribute("href", "http://localhost:3001")
-    expect(within(menu).queryByRole("menuitem", { name: /Admin/ })).not.toBeInTheDocument()
-    expect(within(menu).queryByRole("menuitem", { name: /SP/ })).not.toBeInTheDocument()
+    expect(within(menu).getByRole("menuitem", { name: /IHT ID/ })).toHaveAttribute("href", "http://localhost:3001")
+    expect(within(menu).queryByRole("menuitem", { name: /admin\.iht/ })).not.toBeInTheDocument()
+    expect(within(menu).queryByRole("menuitem", { name: /my\.iht/ })).not.toBeInTheDocument()
   })
 })

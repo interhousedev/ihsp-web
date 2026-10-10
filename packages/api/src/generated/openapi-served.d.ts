@@ -44,6 +44,26 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/internal/emis/{user_id}/curriculum": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get Curriculum
+         * @description Return the student's whole curriculum: semesters, hours per subject, exams.
+         */
+        get: operations["get_curriculum_internal_emis__user_id__curriculum_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/internal/emis/{user_id}/profile": {
         parameters: {
             query?: never;
@@ -466,6 +486,46 @@ export interface paths {
          * @description Set the curator, head student or status; null clears curator and head.
          */
         patch: operations["update_group_v1_admin_groups__group_id__patch"];
+        trace?: never;
+    };
+    "/v1/admin/groups/{group_id}/curriculum": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get Curriculum
+         * @description Return the group's EMIS curriculum, or null when none is stored yet.
+         */
+        get: operations["get_curriculum_v1_admin_groups__group_id__curriculum_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/admin/groups/{group_id}/curriculum/sync": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Sync Curriculum
+         * @description Read the curriculum from EMIS now and return what is stored for the group.
+         */
+        post: operations["sync_curriculum_v1_admin_groups__group_id__curriculum_sync_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
         trace?: never;
     };
     "/v1/admin/groups/{group_id}/subgroups": {
@@ -1036,6 +1096,70 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/v1/admin/subject-materials": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * List All Default Materials
+         * @description The default materials of every EMIS subject id, grouped, by id.
+         */
+        get: operations["list_all_default_materials_v1_admin_subject_materials_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/admin/subject-materials/{edu_subject_id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * List Default Materials
+         * @description The default materials of one EMIS subject id, in their order.
+         */
+        get: operations["list_default_materials_v1_admin_subject_materials__edu_subject_id__get"];
+        put?: never;
+        /**
+         * Add Default Material
+         * @description Add a file, link or library item every student's subject notebook gets.
+         */
+        post: operations["add_default_material_v1_admin_subject_materials__edu_subject_id__post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/admin/subject-materials/{edu_subject_id}/{material_id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post?: never;
+        /**
+         * Remove Default Material
+         * @description Remove a default material; the copies students have follow on their sync.
+         */
+        delete: operations["remove_default_material_v1_admin_subject_materials__edu_subject_id___material_id__delete"];
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/v1/admin/subjects": {
         parameters: {
             query?: never;
@@ -1461,6 +1585,30 @@ export interface paths {
          */
         post: operations["post_mail_suspend_v1_admin_users__id__mail_suspend_post"];
         delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/admin/users/{id}/photo": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        /**
+         * Put Photo
+         * @description Replace the user's photo (JPEG or PNG, up to 5 MB).
+         */
+        put: operations["put_photo_v1_admin_users__id__photo_put"];
+        post?: never;
+        /**
+         * Delete Photo
+         * @description Remove the user's photo; nothing happens when there is none.
+         */
+        delete: operations["delete_photo_v1_admin_users__id__photo_delete"];
         options?: never;
         head?: never;
         patch?: never;
@@ -4730,6 +4878,26 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/v1/me/curriculum": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get Curriculum
+         * @description Return the curriculum of the student's group, or null when none is stored.
+         */
+        get: operations["get_curriculum_v1_me_curriculum_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/v1/me/dashboard": {
         parameters: {
             query?: never;
@@ -5518,6 +5686,46 @@ export interface paths {
          * @description Teachers of the student's groups with contacts, status and the week.
          */
         get: operations["get_my_teachers_v1_me_teachers_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/me/teachers/{teacher_id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get My Teacher
+         * @description One teacher of the student: 404 if the teacher does not teach the caller.
+         */
+        get: operations["get_my_teacher_v1_me_teachers__teacher_id__get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/me/teachers/{teacher_id}/timetable": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get My Teacher Timetable
+         * @description All lessons of the teacher between two dates (default: a week from today).
+         */
+        get: operations["get_my_teacher_timetable_v1_me_teachers__teacher_id__timetable_get"];
         put?: never;
         post?: never;
         delete?: never;
@@ -7239,6 +7447,30 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/v1/staff/me/photo": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        /**
+         * Put My Photo
+         * @description Replace the caller's photo (JPEG or PNG, up to 5 MB).
+         */
+        put: operations["put_my_photo_v1_staff_me_photo_put"];
+        post?: never;
+        /**
+         * Delete My Photo
+         * @description Remove the caller's photo; nothing happens when there is none.
+         */
+        delete: operations["delete_my_photo_v1_staff_me_photo_delete"];
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/v1/staff/timetable": {
         parameters: {
             query?: never;
@@ -7462,6 +7694,8 @@ export interface components {
              * @default false
              */
             password_change_required: boolean;
+            /** Photo Url */
+            photo_url?: string | null;
             /** Recent Audit */
             recent_audit: components["schemas"]["app__interfaces__http__v1__id__schemas__AuditItemResponse"][];
             /** Recovery Email */
@@ -8500,6 +8734,16 @@ export interface components {
         };
         /** Body_import_preview_v1_admin_students_import_post */
         Body_import_preview_v1_admin_students_import_post: {
+            /** File */
+            file: string;
+        };
+        /** Body_put_my_photo_v1_staff_me_photo_put */
+        Body_put_my_photo_v1_staff_me_photo_put: {
+            /** File */
+            file: string;
+        };
+        /** Body_put_photo_v1_admin_users__id__photo_put */
+        Body_put_photo_v1_admin_users__id__photo_put: {
             /** File */
             file: string;
         };
@@ -9988,6 +10232,128 @@ export interface components {
             user_id: string;
         };
         /**
+         * CurriculumDirectionResponse
+         * @description The education direction.
+         */
+        CurriculumDirectionResponse: {
+            /** Code */
+            code: string | null;
+            /** Emis Id */
+            emis_id: number | null;
+            /** Name */
+            name: string | null;
+        };
+        /**
+         * CurriculumExtraResponse
+         * @description An exam or a vocational subject.
+         */
+        CurriculumExtraResponse: {
+            name: components["schemas"]["CurriculumNameResponse"];
+            /** Study Hours */
+            study_hours: number | null;
+        };
+        /**
+         * CurriculumNameResponse
+         * @description A name in the three languages; a language EMIS left empty is ``""``.
+         */
+        CurriculumNameResponse: {
+            /** En */
+            en: string;
+            /** Ru */
+            ru: string;
+            /** Uz */
+            uz: string;
+        };
+        /**
+         * CurriculumRatingScaleResponse
+         * @description The rating scale of the curriculum.
+         */
+        CurriculumRatingScaleResponse: {
+            /** Max */
+            max: number | null;
+            /** Min */
+            min: number | null;
+        };
+        /**
+         * CurriculumResponse
+         * @description The EMIS curriculum of a group.
+         */
+        CurriculumResponse: {
+            /** Current Semester */
+            current_semester: number | null;
+            direction: components["schemas"]["CurriculumDirectionResponse"] | null;
+            /** Edu Form */
+            edu_form: string | null;
+            /** Emis Curriculum Id */
+            emis_curriculum_id: number;
+            /** Exams */
+            exams: components["schemas"]["CurriculumExtraResponse"][];
+            /**
+             * Fetched At
+             * Format: date-time
+             */
+            fetched_at: string;
+            /** Language Code */
+            language_code: string | null;
+            /** Name */
+            name: string;
+            rating_scale: components["schemas"]["CurriculumRatingScaleResponse"] | null;
+            /** Semesters */
+            semesters: components["schemas"]["CurriculumSemesterResponse"][];
+            speciality: components["schemas"]["CurriculumNameResponse"] | null;
+            /** Vocational Subjects */
+            vocational_subjects: components["schemas"]["CurriculumExtraResponse"][];
+        };
+        /**
+         * CurriculumSemesterResponse
+         * @description A semester with its dates (null when only the subjects mention it).
+         */
+        CurriculumSemesterResponse: {
+            /** Ends On */
+            ends_on: string | null;
+            /** Is Current */
+            is_current: boolean;
+            /** Number */
+            number: number;
+            /** Starts On */
+            starts_on: string | null;
+            /** Subjects */
+            subjects: components["schemas"]["CurriculumSubjectResponse"][];
+        };
+        /**
+         * CurriculumSubjectResponse
+         * @description A subject of a semester; ``subject_id`` is null while no subject row exists.
+         */
+        CurriculumSubjectResponse: {
+            /** Class Hours */
+            class_hours: number | null;
+            /** Emis Subject Id */
+            emis_subject_id: number;
+            /** Independent Hours */
+            independent_hours: number | null;
+            /** Is Separated */
+            is_separated: boolean;
+            name: components["schemas"]["CurriculumNameResponse"];
+            /** Study Hours */
+            study_hours: number | null;
+            /** Subject Id */
+            subject_id: string | null;
+            /** Subject Type Id */
+            subject_type_id: number | null;
+        };
+        /**
+         * CurriculumSyncResponse
+         * @description The result of POST /v1/admin/groups/{id}/curriculum/sync.
+         */
+        CurriculumSyncResponse: {
+            curriculum: components["schemas"]["CurriculumResponse"] | null;
+            /**
+             * Status
+             * @enum {string}
+             */
+            status: "synced" | "no_student";
+        };
+        /**
          * DashboardResponse
          * @description The layout; version 0 is the default one (never saved).
          */
@@ -10139,6 +10505,12 @@ export interface components {
             /** Topic Source */
             topic_source?: ("emis" | "manual") | null;
         };
+        /**
+         * DefaultMaterialKind
+         * @description Where a default material's text comes from.
+         * @enum {string}
+         */
+        DefaultMaterialKind: "file" | "link" | "library_item";
         /**
          * DeleteAccountBody
          * @description Confirmation of an account deletion.
@@ -10332,6 +10704,78 @@ export interface components {
             topic: components["schemas"]["EmisTopicResponse"] | null;
         };
         /**
+         * EmisCurriculumItemResponse
+         * @description EmisCurriculumItem: an exam or a vocational subject.
+         */
+        EmisCurriculumItemResponse: {
+            /** Emis Id */
+            emis_id: number | null;
+            name: components["schemas"]["EmisNameResponse"];
+            /** Study Hours */
+            study_hours: number | null;
+        };
+        /**
+         * EmisCurriculumResponse
+         * @description EmisCurriculum: the group's curriculum with ISO dates.
+         */
+        EmisCurriculumResponse: {
+            direction: components["schemas"]["EmisDirectionResponse"] | null;
+            /** Edu Form */
+            edu_form: string | null;
+            /** Emis Id */
+            emis_id: number;
+            end_year: components["schemas"]["EmisYearResponse"] | null;
+            /** Exams */
+            exams: components["schemas"]["EmisCurriculumItemResponse"][];
+            /** Language Code */
+            language_code: string | null;
+            /** Name */
+            name: string;
+            /** Rating Max */
+            rating_max: number | null;
+            /** Rating Min */
+            rating_min: number | null;
+            /** Semester Subjects */
+            semester_subjects: components["schemas"]["EmisSemesterSubjectResponse"][];
+            /** Semesters */
+            semesters: components["schemas"]["EmisSemesterDatesResponse"][];
+            /** Semesters Count */
+            semesters_count: number | null;
+            speciality: components["schemas"]["EmisNameResponse"] | null;
+            start_year: components["schemas"]["EmisYearResponse"] | null;
+            /** Status */
+            status: string | null;
+            /** Subjects */
+            subjects: components["schemas"]["EmisCurriculumSubjectResponse"][];
+            /** Vocational Subjects */
+            vocational_subjects: components["schemas"]["EmisCurriculumItemResponse"][];
+        };
+        /**
+         * EmisCurriculumSubjectResponse
+         * @description EmisCurriculumSubject.
+         */
+        EmisCurriculumSubjectResponse: {
+            /** Emis Subject Id */
+            emis_subject_id: number;
+            name: components["schemas"]["EmisNameResponse"];
+            /** Study Hours */
+            study_hours: number | null;
+            /** Subject Type Id */
+            subject_type_id: number | null;
+        };
+        /**
+         * EmisDirectionResponse
+         * @description EmisDirection.
+         */
+        EmisDirectionResponse: {
+            /** Code */
+            code: string | null;
+            /** Emis Id */
+            emis_id: number | null;
+            /** Name */
+            name: string | null;
+        };
+        /**
          * EmisMarkResponse
          * @description EmisMark.
          */
@@ -10351,6 +10795,18 @@ export interface components {
          * @enum {string}
          */
         EmisMarkType: "lesson" | "midterm" | "final";
+        /**
+         * EmisNameResponse
+         * @description EmisName: a language EMIS left empty is ``""``.
+         */
+        EmisNameResponse: {
+            /** En */
+            en: string;
+            /** Ru */
+            ru: string;
+            /** Uz */
+            uz: string;
+        };
         /**
          * EmisPasswordResponse
          * @description The EMIS link state after the update.
@@ -10385,6 +10841,45 @@ export interface components {
             last_name: string;
             /** Middle Name */
             middle_name: string | null;
+        };
+        /**
+         * EmisSemesterDatesResponse
+         * @description EmisSemesterDates: ``number`` is 1-based, the dates are ISO.
+         */
+        EmisSemesterDatesResponse: {
+            /**
+             * Ends On
+             * Format: date
+             */
+            ends_on: string;
+            /** Number */
+            number: number;
+            /**
+             * Starts On
+             * Format: date
+             */
+            starts_on: string;
+        };
+        /**
+         * EmisSemesterSubjectResponse
+         * @description EmisSemesterSubject.
+         */
+        EmisSemesterSubjectResponse: {
+            /** Class Hours */
+            class_hours: number | null;
+            /** Emis Subject Id */
+            emis_subject_id: number;
+            /** Independent Hours */
+            independent_hours: number | null;
+            /** Is Separated */
+            is_separated: boolean;
+            name: components["schemas"]["EmisNameResponse"];
+            /** Semester Number */
+            semester_number: number;
+            /** Study Hours */
+            study_hours: number | null;
+            /** Subject Type Id */
+            subject_type_id: number | null;
         };
         /**
          * EmisSubjectRatingsResponse
@@ -10445,6 +10940,20 @@ export interface components {
             topic_file_url: string | null;
             /** Video Url */
             video_url: string | null;
+        };
+        /**
+         * EmisYearResponse
+         * @description EmisYear: the dates are ISO ``YYYY-MM-DD``.
+         */
+        EmisYearResponse: {
+            /** Code */
+            code: string | null;
+            /** From Date */
+            from_date: string | null;
+            /** Name */
+            name: string | null;
+            /** To Date */
+            to_date: string | null;
         };
         /**
          * ExcludedRefResponse
@@ -10694,7 +11203,7 @@ export interface components {
          * @description Why a file was uploaded.
          * @enum {string}
          */
-        FilePurpose: "ai_upload" | "link" | "mail" | "library_book" | "library_cover" | "library_material" | "lms_video";
+        FilePurpose: "ai_upload" | "link" | "mail" | "library_book" | "library_cover" | "library_material" | "lms_video" | "user_photo";
         /**
          * FileStatus
          * @description Lifecycle of a stored file (README -> Models -> File).
@@ -13001,10 +13510,16 @@ export interface components {
             /** Middle Name */
             middle_name: string | null;
             next: components["schemas"]["TeacherLessonResponse"] | null;
+            /** Photo Url */
+            photo_url: string | null;
+            /** Subject Refs */
+            subject_refs: components["schemas"]["TeacherSubjectRefResponse"][];
             /** Subjects */
             subjects: string[];
             /** Teaching Now */
             teaching_now: boolean;
+            /** Upcoming */
+            upcoming: components["schemas"]["TeacherLessonResponse"][];
             /** Week */
             week: components["schemas"]["TeacherLessonResponse"][];
         };
@@ -16782,6 +17297,19 @@ export interface components {
             items: components["schemas"]["SubjectLessonRow"][];
         };
         /**
+         * SubjectLessonMark
+         * @description One mark placed on a lesson of the subject hub list.
+         */
+        SubjectLessonMark: {
+            /**
+             * Type
+             * @enum {string}
+             */
+            type: "lesson" | "midterm" | "final";
+            /** Value */
+            value: number;
+        };
+        /**
          * SubjectLessonRow
          * @description One row of the subject hub lesson list.
          */
@@ -16804,8 +17332,8 @@ export interface components {
              * Format: uuid
              */
             lesson_id: string;
-            /** Mark */
-            mark: number | null;
+            /** Marks */
+            marks: components["schemas"]["SubjectLessonMark"][];
             /** Materials Count */
             materials_count: number;
             /** Past */
@@ -16817,6 +17345,63 @@ export interface components {
             starts_at: string;
             /** Topic */
             topic: string | null;
+        };
+        /**
+         * SubjectMaterialCreateBody
+         * @description Body of POST /v1/admin/subject-materials/{edu_subject_id}.
+         *
+         *     Exactly the target that `kind` names is given: a file id, a link or a library
+         *     item id.
+         */
+        SubjectMaterialCreateBody: {
+            /** File Id */
+            file_id?: string | null;
+            kind: components["schemas"]["DefaultMaterialKind"];
+            /** Library Item Id */
+            library_item_id?: string | null;
+            /** Title */
+            title: string;
+            /** Url */
+            url?: string | null;
+        };
+        /**
+         * SubjectMaterialGroupResponse
+         * @description The default materials of one EMIS subject id.
+         */
+        SubjectMaterialGroupResponse: {
+            /** Edu Subject Id */
+            edu_subject_id: number;
+            /** Materials */
+            materials: components["schemas"]["SubjectMaterialResponse"][];
+        };
+        /**
+         * SubjectMaterialResponse
+         * @description One default material of an EMIS subject id.
+         */
+        SubjectMaterialResponse: {
+            /**
+             * Created At
+             * Format: date-time
+             */
+            created_at: string;
+            /** Edu Subject Id */
+            edu_subject_id: number;
+            /** File Id */
+            file_id: string | null;
+            /**
+             * Id
+             * Format: uuid
+             */
+            id: string;
+            kind: components["schemas"]["DefaultMaterialKind"];
+            /** Library Item Id */
+            library_item_id: string | null;
+            /** Position */
+            position: number;
+            /** Title */
+            title: string;
+            /** Url */
+            url: string | null;
         };
         /**
          * SubjectNameBody
@@ -17205,6 +17790,8 @@ export interface components {
             ends_at: string;
             /** Group */
             group: string | null;
+            /** Lesson Id */
+            lesson_id: string | null;
             /** Room */
             room: string | null;
             /**
@@ -17214,6 +17801,11 @@ export interface components {
             starts_at: string;
             /** Subject */
             subject: string;
+            /**
+             * Subject Id
+             * Format: uuid
+             */
+            subject_id: string;
             /** Weekday */
             weekday: number;
         };
@@ -17243,6 +17835,62 @@ export interface components {
             /** Timetable Week */
             timetable_week: components["schemas"]["app__interfaces__http__v1__composition__shared_schemas__LessonItemResponse"][];
             user: components["schemas"]["app__interfaces__http__v1__composition__shared_schemas__AdminUserResponse"];
+        };
+        /**
+         * TeacherSlotResponse
+         * @description One lesson in a teacher's timetable: no student data.
+         */
+        TeacherSlotResponse: {
+            /**
+             * Date
+             * Format: date
+             */
+            date: string;
+            /**
+             * Ends At
+             * Format: date-time
+             */
+            ends_at: string;
+            /** Group */
+            group: string | null;
+            /**
+             * Id
+             * Format: uuid
+             */
+            id: string;
+            /** Lesson Id */
+            lesson_id: string | null;
+            /** Mine */
+            mine: boolean;
+            /** Room */
+            room: string | null;
+            /**
+             * Starts At
+             * Format: date-time
+             */
+            starts_at: string;
+            /** Status */
+            status: string;
+            /**
+             * Subject Id
+             * Format: uuid
+             */
+            subject_id: string;
+            /** Subject Name */
+            subject_name: string;
+        };
+        /**
+         * TeacherSubjectRefResponse
+         * @description A subject a teacher teaches the student.
+         */
+        TeacherSubjectRefResponse: {
+            /**
+             * Id
+             * Format: uuid
+             */
+            id: string;
+            /** Name */
+            name: string;
         };
         /**
          * TelegramLinkedResponse
@@ -18259,6 +18907,8 @@ export interface components {
             otp_enabled: boolean;
             /** Otp Via Email */
             otp_via_email: boolean;
+            /** Photo Url */
+            photo_url: string | null;
             preferences: components["schemas"]["UserPreferences"];
             /** Recovery Email */
             recovery_email: string | null;
@@ -18282,6 +18932,17 @@ export interface components {
             last_name?: string | null;
             /** Middle Name */
             middle_name?: string | null;
+        };
+        /**
+         * UserPhotoResponse
+         * @description The profile photo of a user after it was set or removed.
+         */
+        UserPhotoResponse: {
+            /**
+             * Photo Url
+             * @description Link to the photo, valid for an hour; null when there is none.
+             */
+            photo_url: string | null;
         };
         /**
          * UserPreferences
@@ -19013,6 +19674,8 @@ export interface components {
              * @default false
              */
             password_change_required: boolean;
+            /** Photo Url */
+            photo_url?: string | null;
             /** Recovery Email */
             recovery_email: string | null;
             /** Roles */
@@ -19923,7 +20586,7 @@ export interface components {
         };
         /**
          * PersonRef
-         * @description A person: id and names.
+         * @description A person: id, names and, for the teachers of a subject, a photo.
          */
         app__interfaces__http__v1__me_marks__schemas__PersonRef: {
             /** First Name */
@@ -19935,6 +20598,8 @@ export interface components {
             id: string;
             /** Last Name */
             last_name: string;
+            /** Photo Url */
+            photo_url?: string | null;
         };
         /**
          * ResourceItem
@@ -20325,6 +20990,37 @@ export interface operations {
                 };
                 content: {
                     "application/json": components["schemas"]["EmisClassHourResponse"][];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    get_curriculum_internal_emis__user_id__curriculum_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                user_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["EmisCurriculumResponse"];
                 };
             };
             /** @description Validation Error */
@@ -21155,6 +21851,68 @@ export interface operations {
                 };
                 content: {
                     "application/json": components["schemas"]["GroupDetailResponse"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    get_curriculum_v1_admin_groups__group_id__curriculum_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                group_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["CurriculumResponse"] | null;
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    sync_curriculum_v1_admin_groups__group_id__curriculum_sync_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                group_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["CurriculumSyncResponse"];
                 };
             };
             /** @description Validation Error */
@@ -22213,6 +22971,122 @@ export interface operations {
             };
         };
     };
+    list_all_default_materials_v1_admin_subject_materials_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["SubjectMaterialGroupResponse"][];
+                };
+            };
+        };
+    };
+    list_default_materials_v1_admin_subject_materials__edu_subject_id__get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                edu_subject_id: number;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["SubjectMaterialResponse"][];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    add_default_material_v1_admin_subject_materials__edu_subject_id__post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                edu_subject_id: number;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["SubjectMaterialCreateBody"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["SubjectMaterialResponse"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    remove_default_material_v1_admin_subject_materials__edu_subject_id___material_id__delete: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                edu_subject_id: number;
+                material_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            204: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
     list_subjects_v1_admin_subjects_get: {
         parameters: {
             query?: {
@@ -23083,6 +23957,72 @@ export interface operations {
                 };
                 content: {
                     "application/json": components["schemas"]["app__interfaces__http__v1__admin_users__schemas__AdminUserResponse"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    put_photo_v1_admin_users__id__photo_put: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "multipart/form-data": components["schemas"]["Body_put_photo_v1_admin_users__id__photo_put"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["UserPhotoResponse"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    delete_photo_v1_admin_users__id__photo_delete: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["UserPhotoResponse"];
                 };
             };
             /** @description Validation Error */
@@ -29054,6 +29994,26 @@ export interface operations {
             };
         };
     };
+    get_curriculum_v1_me_curriculum_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["CurriculumResponse"] | null;
+                };
+            };
+        };
+    };
     get_dashboard_v1_me_dashboard_get: {
         parameters: {
             query?: never;
@@ -30519,6 +31479,71 @@ export interface operations {
                 };
                 content: {
                     "application/json": components["schemas"]["MyTeacherResponse"][];
+                };
+            };
+        };
+    };
+    get_my_teacher_v1_me_teachers__teacher_id__get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                teacher_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["MyTeacherResponse"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    get_my_teacher_timetable_v1_me_teachers__teacher_id__timetable_get: {
+        parameters: {
+            query?: {
+                from?: string | null;
+                to?: string | null;
+            };
+            header?: never;
+            path: {
+                teacher_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["TeacherSlotResponse"][];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
                 };
             };
         };
@@ -33753,6 +34778,59 @@ export interface operations {
                 };
                 content: {
                     "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    put_my_photo_v1_staff_me_photo_put: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "multipart/form-data": components["schemas"]["Body_put_my_photo_v1_staff_me_photo_put"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["UserPhotoResponse"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    delete_my_photo_v1_staff_me_photo_delete: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["UserPhotoResponse"];
                 };
             };
         };

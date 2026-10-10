@@ -4,12 +4,14 @@
       "title": "Oʻqituvchilarim",
       "empty": "Hozircha oʻqituvchilar yoʻq. Dars jadvalida darslar paydo boʻlganda koʻrinadi."
     },
-    "status": {
-      "now": "Hozir: {room}-xonada dars",
-      "nowNoRoom": "Hozir: dars",
-      "next": "Keyingi: {when}, {room}-xona",
-      "nextNoRoom": "Keyingi: {when}",
-      "none": "Bugun darslar yoʻq"
+    "card": {
+      "nearest": "Yaqin dars",
+      "now": "Hozir",
+      "none": "Keyingi ikki haftada darslar yoʻq",
+      "upcoming": "Keyingi ikki hafta",
+      "showAll": "Hammasini koʻrsatish ({count})",
+      "showLess": "Yigʻish",
+      "room": "xona {room}"
     },
     "contacts": {
       "title": "Aloqa",
@@ -20,11 +22,16 @@
     },
     "detail": {
       "back": "Oʻqituvchilar",
-      "week": "Shu hafta",
-      "noLessons": "Bu hafta darslar yoʻq",
+      "subjects": "Fanlar",
+      "timetable": "Dars jadvali",
+      "previousWeek": "Oldingi hafta",
+      "nextWeek": "Keyingi hafta",
+      "thisWeek": "Joriy hafta",
+      "yourGroup": "Sizning guruhingiz",
+      "cancelled": "Bekor qilindi",
       "noLessonsDay": "Dars yoʻq",
-      "room": "{room}-xona",
-      "notFound": "Oʻqituvchi topilmadi"
+      "notFound": "Oʻqituvchi topilmadi",
+      "room": "{room}-xona"
     }
   },
   "app": {

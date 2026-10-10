@@ -13,6 +13,7 @@ export const adminStudentUser: AdminUser = {
   emis_status: "active",
   recovery_email: "aleksey@example.org",
   mail_suspended: false,
+  photo_url: null,
   created_at: "2026-09-03T07:00:00Z",
   last_login_at: "2026-10-07T03:00:00Z",
 }
@@ -28,6 +29,7 @@ export const adminTeacherUser: AdminUser = {
   emis_status: null,
   recovery_email: "kalandarova@example.org",
   mail_suspended: false,
+  photo_url: null,
   created_at: "2026-08-28T10:00:00Z",
   last_login_at: "2026-10-07T02:45:00Z",
 }
@@ -43,6 +45,7 @@ export const adminAdminUser: AdminUser = {
   emis_status: null,
   recovery_email: "admin@example.org",
   mail_suspended: false,
+  photo_url: null,
   created_at: "2026-08-20T10:00:00Z",
   last_login_at: "2026-10-07T01:30:00Z",
 }
@@ -58,6 +61,7 @@ export const adminBlockedUser: AdminUser = {
   emis_status: "needs_reauth",
   recovery_email: null,
   mail_suspended: true,
+  photo_url: null,
   created_at: "2026-09-04T07:00:00Z",
   last_login_at: "2026-09-30T09:10:00Z",
 }
