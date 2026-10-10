@@ -62,6 +62,8 @@ export type UserPreferences = {
   notify_push: boolean
   today_cards: string[]
   onboarding_dismissed: string[]
+  /** The sp phone bottom bar: up to 4 destination ids, `null` until the user picks. */
+  bottom_nav: string[] | null
   seen_marks_at: string | null
 }
 

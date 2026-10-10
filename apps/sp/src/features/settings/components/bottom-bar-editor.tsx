@@ -31,9 +31,7 @@ export function BottomBarEditor() {
                 checked={selected}
                 disabled={(!selected && full) || (selected && ids.length === 1)}
                 aria-label={t("show", { page: name })}
-                onCheckedChange={(on) =>
-                  save(on ? [...ids, id] : ids.filter((other: DestinationId) => other !== id))
-                }
+                onCheckedChange={(on) => save(on ? [...ids, id] : ids.filter((other: DestinationId) => other !== id))}
               />
               <span className="min-w-0 flex-1 text-sm font-medium">{name}</span>
               <Button

@@ -13,10 +13,10 @@ import {
   BOTTOM_BAR_PREFIX,
   DEFAULT_BOTTOM_BAR,
   normalizeBottomBar,
-  readBottomBar,
-  writeBottomBar,
+  dropLegacyBottomBar,
+  readLegacyBottomBar,
 } from "../features/shell/utils/bottom-bar"
-import { configureTests, renderSp, setViewportWidth } from "./helpers"
+import { configureTests, renderSp, setViewportWidth, studentWith } from "./helpers"
 
 configureTests()
 
@@ -37,11 +37,35 @@ describe("bottom bar config", () => {
     expect(normalizeBottomBar(["today", "timetable", "grades", "homework", "files"])).toHaveLength(4)
   })
 
-  test("is stored next to the other account entries", () => {
-    const entries = writeBottomBar(["welcome", `${BOTTOM_BAR_PREFIX}today`], ["files", "grades"])
-    expect(entries).toEqual(["welcome", `${BOTTOM_BAR_PREFIX}files,grades`])
-    expect(readBottomBar(entries)).toEqual(["files", "grades"])
-    expect(readBottomBar(["welcome"])).toBeNull()
+  test("reads and drops the legacy account entry", () => {
+    const entries = ["welcome", `${BOTTOM_BAR_PREFIX}files,grades`]
+    expect(readLegacyBottomBar(entries)).toEqual(["files", "grades"])
+    expect(dropLegacyBottomBar(entries)).toEqual(["welcome"])
+    expect(readLegacyBottomBar(["welcome"])).toBeNull()
+  })
+
+  test("the legacy entry is moved to bottom_nav once", async () => {
+    const bodies: Record<string, unknown>[] = []
+    const session = studentWith({ onboarding_dismissed: ["welcome", `${BOTTOM_BAR_PREFIX}files,grades`] })
+    server.use(
+      http.get(apiUrl("/v1/id/me"), () => HttpResponse.json(session.user)),
+      http.patch(apiUrl("/v1/id/me/preferences"), async ({ request }) => {
+        const body = (await request.json()) as Record<string, unknown>
+        bodies.push(body)
+        return HttpResponse.json({ ...userMe.preferences, ...body })
+      }),
+    )
+    setViewportWidth(360)
+    renderSp(
+      <SpShell>
+        <p>page body</p>
+      </SpShell>,
+      { session },
+    )
+    await screen.findByText("page body")
+    await waitFor(() =>
+      expect(bodies).toEqual([{ bottom_nav: ["files", "grades"], onboarding_dismissed: ["welcome"] }]),
+    )
   })
 
   test("a change in Settings is saved in the account and on the device", async () => {
@@ -57,9 +81,7 @@ describe("bottom bar config", () => {
 
     await user.click(await screen.findByRole("button", { name: "Move right: Today" }))
 
-    await waitFor(() =>
-      expect(bodies).toEqual([{ onboarding_dismissed: [`${BOTTOM_BAR_PREFIX}timetable,today,grades,homework`] }]),
-    )
+    await waitFor(() => expect(bodies).toEqual([{ bottom_nav: ["timetable", "today", "grades", "homework"] }]))
     const stored = window.localStorage.getItem(`ihsp:sp:bottom-bar:${userMe.id}`)
     expect(JSON.parse(stored ?? "[]")).toEqual(["timetable", "today", "grades", "homework"])
   })

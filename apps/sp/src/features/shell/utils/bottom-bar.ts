@@ -44,7 +44,7 @@ export const MAX_BOTTOM_TABS = 4
 
 export const DEFAULT_BOTTOM_BAR: readonly DestinationId[] = ["today", "timetable", "grades", "homework"]
 
-/** Account-preference entry that carries the choice (inside `onboarding_dismissed`, which the server stores as a plain list). */
+/** Legacy account entry that carried the choice inside `onboarding_dismissed`; read once, then moved to `bottom_nav`. */
 export const BOTTOM_BAR_PREFIX = "bottom-nav:"
 
 export function isDestinationId(value: string): value is DestinationId {
@@ -59,17 +59,16 @@ export function normalizeBottomBar(ids: readonly string[]): DestinationId[] {
   return list.length > 0 ? list : [...DEFAULT_BOTTOM_BAR]
 }
 
-/** `["bottom-nav:today,grades"]` → `["today","grades"]`; `null` when the account has no choice yet. */
-export function readBottomBar(entries: readonly string[] | undefined): DestinationId[] | null {
+/** The legacy `["bottom-nav:today,grades"]` entry as `["today","grades"]`; `null` when there is none. */
+export function readLegacyBottomBar(entries: readonly string[] | undefined): DestinationId[] | null {
   const entry = entries?.find((value) => value.startsWith(BOTTOM_BAR_PREFIX))
   if (entry === undefined) return null
   return normalizeBottomBar(entry.slice(BOTTOM_BAR_PREFIX.length).split(","))
 }
 
-/** The preference list with the bar's entry replaced, other entries kept. */
-export function writeBottomBar(entries: readonly string[] | undefined, ids: readonly DestinationId[]): string[] {
-  const others = (entries ?? []).filter((value) => !value.startsWith(BOTTOM_BAR_PREFIX))
-  return [...others, `${BOTTOM_BAR_PREFIX}${ids.join(",")}`]
+/** The preference list without the legacy bottom bar entry. */
+export function dropLegacyBottomBar(entries: readonly string[] | undefined): string[] {
+  return (entries ?? []).filter((value) => !value.startsWith(BOTTOM_BAR_PREFIX))
 }
 
 export function bottomBarStorageKey(userId: string): string {

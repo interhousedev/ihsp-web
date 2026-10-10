@@ -30,6 +30,7 @@ export const userPreferences: UserPreferences = {
   notify_push: true,
   today_cards: ["now", "timeline", "due", "marks", "semester", "announcements", "alerts"],
   onboarding_dismissed: [],
+  bottom_nav: null,
   seen_marks_at: null,
 }
 

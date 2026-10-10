@@ -25,8 +25,18 @@ export function ProfileMenu() {
       name={name}
       subtitle={login}
       items={[
-        { key: "profile", title: t("profile"), icon: "profile", href: "/profile/" },
-        { key: "settings", title: t("settings"), icon: "settings", href: "/settings/" },
+        {
+          key: "profile",
+          title: t("profile"),
+          icon: "profile",
+          href: "/profile/",
+        },
+        {
+          key: "settings",
+          title: t("settings"),
+          icon: "settings",
+          href: "/settings/",
+        },
         ...(installItem ? [installItem] : []),
       ]}
       platforms={platforms}

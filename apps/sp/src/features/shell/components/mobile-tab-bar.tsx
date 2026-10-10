@@ -34,7 +34,10 @@ export function MobileTabBar({ groups }: { groups: NavGroup[] }) {
   })
   const tabUrls = new Set(tabs.map((item) => item.url))
   const rest = groups
-    .map((group) => ({ ...group, items: group.items.filter((item) => !tabUrls.has(item.url)) }))
+    .map((group) => ({
+      ...group,
+      items: group.items.filter((item) => !tabUrls.has(item.url)),
+    }))
     .filter((group) => group.items.length > 0)
 
   return (

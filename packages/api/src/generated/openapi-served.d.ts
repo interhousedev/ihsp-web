@@ -13614,6 +13614,8 @@ export interface components {
             alerts_mark_below?: number | null;
             /** Alerts Semester Mark Below */
             alerts_semester_mark_below?: number | null;
+            /** Bottom Nav */
+            bottom_nav?: string[] | null;
             /** Lessons Links Lead Min */
             lessons_links_lead_min?: number | null;
             /** Lessons Prompt Enabled */
@@ -17550,6 +17552,8 @@ export interface components {
             alerts_mark_below?: number | null;
             /** Alerts Semester Mark Below */
             alerts_semester_mark_below?: number | null;
+            /** Bottom Nav */
+            bottom_nav?: string[] | null;
             /**
              * Lessons Links Lead Min
              * @default 5
