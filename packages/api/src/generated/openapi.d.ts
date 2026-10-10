@@ -19800,6 +19800,8 @@ export interface components {
             mail_suspended: boolean;
             /** Middle Name */
             middle_name: string | null;
+            /** Photo Url */
+            photo_url?: string | null;
             /** Recovery Email */
             recovery_email: string | null;
             /** Roles */
