@@ -6,7 +6,6 @@ import {
   Button,
   Dialog,
   DialogContent,
-  DialogDescription,
   DialogFooter,
   DialogHeader,
   DialogTitle,
@@ -61,7 +60,6 @@ export function CreateGroupDialog({ open, onOpenChange }: { open: boolean; onOpe
         >
           <DialogHeader>
             <DialogTitle>{t("title")}</DialogTitle>
-            <DialogDescription>{t("description")}</DialogDescription>
           </DialogHeader>
           <LabeledField label={t("name")} htmlFor="group-name" required>
             <Input
@@ -72,7 +70,7 @@ export function CreateGroupDialog({ open, onOpenChange }: { open: boolean; onOpe
               onChange={(event) => setName(event.target.value)}
             />
           </LabeledField>
-          <LabeledField label={t("emisId")} htmlFor="group-emis" description={t("emisHint")}>
+          <LabeledField label={t("emisId")} htmlFor="group-emis">
             <Input
               id="group-emis"
               inputMode="numeric"

@@ -16,7 +16,7 @@ export function DashboardPage() {
   const query = useQuery(getAdminDashboardQuery())
   const today = todayIso()
   return (
-    <PageContainer title={t("title")} description={t("description")}>
+    <PageContainer title={t("title")}>
       <QueryState query={query} rows={4}>
         {(data) => (
           <div className="flex flex-col gap-4">

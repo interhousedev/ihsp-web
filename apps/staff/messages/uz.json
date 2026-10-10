@@ -72,13 +72,11 @@
     "examSuggestions": {
       "title": "Tasdiqlanadigan nazorat sanalari",
       "summary": "{count, plural, one {# nazorat sanasini tasdiqlash kerak} other {# nazorat sanasini tasdiqlash kerak}}",
-      "hint": "Bu sanalarni EMIS va guruh sardorlari taklif qilgan. Siz tasdiqlamaguningizcha talabalar ularni taxminiy deb koʻradi.",
       "review": "Koʻrib chiqish"
     }
   },
   "timetable": {
     "title": "Dars jadvali",
-    "description": "Hafta davomidagi darslaringiz",
     "days": "Hafta kunlari",
     "period": "{number}-juftlik",
     "periodHeader": "Juftlik",
@@ -105,7 +103,6 @@
   },
   "journal": {
     "title": "Jurnal",
-    "description": "Sinfning darslar boʻyicha qoldirilgan darslari va EMIS baholari",
     "pick": "Fan va auditoriya",
     "noOptions": "Jurnal uchun hozircha darslar yoʻq.",
     "noLessons": "Bu semestrda hozircha darslar yoʻq.",
@@ -121,14 +118,13 @@
     "excused": "sababli",
     "present": "bor",
     "cellLabel": "{name}, {date}: {state}",
-    "hint": "Dars oʻtganidan keyin 7 kun ichida yoʻqlikni belgilash yoki olib tashlash uchun katakni bosing. Darsni ochish uchun sanani bosing."
+    "hint": "Yoʻqlikni darsdan keyin 7 kun ichida oʻzgartirish mumkin."
   },
   "group": {
     "noGroup": "Siz guruhga rahbarlik qilmaysiz.",
     "pickGroup": "Guruh",
     "students": {
       "title": "Talabalar",
-      "description": "Guruhingiz: kichik guruh, qoldirilgan darslar ulushi va semestr GPA",
       "student": "Talaba",
       "subgroup": "Kichik guruh",
       "subgroupNotSet": "Belgilanmagan",
@@ -160,8 +156,6 @@
     },
     "subgroups": {
       "title": "Kichik guruhlar",
-      "description": "Har bir talabani 1- yoki 2-kichik guruhga belgilang",
-      "hint": "Oʻzgarishlar kelgusi darslarga taʼsir qiladi. Kichik guruhsiz talabalar tepada.",
       "empty": "Guruhda talabalar yoʻq.",
       "select": "Tanlash: {name}",
       "selectAll": "Hammasini tanlash",
@@ -181,12 +175,10 @@
     },
     "attendance": {
       "title": "Guruh davomati",
-      "description": "Guruhingizning davr boʻyicha qoldirgan darslari",
       "from": "Dan",
       "to": "Gacha",
       "export": "CSV sifatida yuklash",
       "empty": "Bu davr uchun maʼlumot yoʻq.",
-      "notTakenHint": "Davomat belgilanmagan darslar alohida hisoblanadi va qatnashgan deb olinmaydi.",
       "views": {
         "student": "Talabalar boʻyicha",
         "subject": "Fanlar boʻyicha",
@@ -224,7 +216,6 @@
   },
   "exams": {
     "title": "Nazoratlar",
-    "description": "Fanlaringiz boʻyicha oraliq va yakuniy nazoratlar, nazorat haftalari kesimida",
     "noGroups": "Siz hali birorta guruhda dars bermaysiz.",
     "pickGroup": "Guruh",
     "groupOption": "{name} (tasdiqlash kerak: {count})",
@@ -271,7 +262,6 @@
     },
     "suggestions": {
       "title": "Tasdiqlash uchun taklif etilgan sanalar",
-      "hint": "Bu sanalar hali tasdiqlanmagan. Har birini tasdiqlamaguncha, oʻzgartirmaguncha yoki rad etmaguncha talabalar ularni taxminiy deb koʻradi.",
       "fromEmis": "EMIS darsidan",
       "fromHeadStudent": "Guruh sardori taklif qilgan",
       "confirmAsIs": "Shundayligicha tasdiqlash",
@@ -323,7 +313,6 @@
       "timeHint": "Ixtiyoriy, Toshkent vaqti.",
       "roomPlaceholder": "Masalan, 204",
       "titlePlaceholder": "Masalan, Algebra va funksiyalar",
-      "noteHint": "Talabalar izohni tayyorgarlik sahifasida koʻradi.",
       "validation": {
         "subject": "Fanni tanlang.",
         "date": "Sanani tanlang.",
@@ -336,7 +325,6 @@
   },
   "settings": {
     "title": "Sozlamalar",
-    "description": "Til, mavzu, Telegram va bildirishnomalar",
     "general": {
       "title": "Til va mavzu",
       "language": "Til",
@@ -349,7 +337,6 @@
     },
     "telegram": {
       "title": "Telegram",
-      "description": "Dars havolalari va eslatmalar bot orqali keladi.",
       "notLinked": "Telegram ulanmagan. Bildirishnomalar faqat veb-versiyada keladi.",
       "linked": "Ulangan",
       "blocked": "Bot bloklangan",
@@ -357,13 +344,11 @@
       "manage": "Telegram hisoblarini boshqarish"
     },
     "notifications": {
-      "title": "Bildirishnomalar",
-      "description": "Darhol saqlanadi."
+      "title": "Bildirishnomalar"
     }
   },
   "students": {
     "title": "Talaba qidirish",
-    "description": "Fanlaringiz va guruhlaringizdagi talabani toping va uning baholari, davomati va darslarini oching.",
     "search": "Ism boʻyicha qidirish",
     "noStudents": "Hozircha talabalaringiz yoʻq.",
     "noResults": "“{query}” boʻyicha hech kim topilmadi.",
@@ -386,7 +371,6 @@
   "staffNotebooks": {
     "attach": "Darsga biriktirish",
     "attachTitle": "Darsga biriktirish",
-    "attachDescription": "“{title}” darsga talabalar ochishi mumkin boʻlgan fayl sifatida qoʻshiladi.",
     "loading": "Darslaringiz yuklanmoqda…",
     "noLessons": "Bu davrda darslaringiz yoʻq.",
     "period": "{number}-juftlik",

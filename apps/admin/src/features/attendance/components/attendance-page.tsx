@@ -13,7 +13,7 @@ export function AttendancePage() {
   const t = useT("attendance")
   const [tab, setTab] = useQueryState("tab", parseAsStringLiteral(TABS).withDefault("report"))
   return (
-    <PageContainer title={t("title")} description={t("description")}>
+    <PageContainer title={t("title")}>
       <Tabs
         value={tab}
         onValueChange={(value) => void setTab(value === "report" ? null : (value as (typeof TABS)[number]))}

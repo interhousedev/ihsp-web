@@ -12,7 +12,7 @@ import { ExamsScope } from "./exams-scope"
 export function ExamsPage() {
   const t = useT("exams")
   return (
-    <PageContainer title={t("title")} description={t("description")}>
+    <PageContainer title={t("title")}>
       <ExamsScope>{(group) => <ExamsOfGroup key={group.id} group={group} />}</ExamsScope>
     </PageContainer>
   )

@@ -48,7 +48,6 @@ export function ImportPage() {
   return (
     <PageContainer
       title={t("title")}
-      description={t("description")}
       actions={<BackLink href="/students/" label={t("back")} />}
     >
       <form
@@ -59,7 +58,7 @@ export function ImportPage() {
           if (file) upload.mutate(file)
         }}
       >
-        <LabeledField label={t("file")} htmlFor="import-file" description={t("fileHint")}>
+        <LabeledField label={t("file")} htmlFor="import-file">
           <Input id="import-file" ref={inputRef} type="file" accept=".csv,text/csv" className={TOUCH} />
         </LabeledField>
         <div>

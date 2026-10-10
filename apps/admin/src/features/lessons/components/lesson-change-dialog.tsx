@@ -9,7 +9,6 @@ import {
   DatePicker,
   Dialog,
   DialogContent,
-  DialogDescription,
   DialogFooter,
   DialogHeader,
   DialogTitle,
@@ -100,7 +99,6 @@ export function LessonChangeDialog({ lesson, onClose }: { lesson: LessonItem; on
         >
           <DialogHeader>
             <DialogTitle>{t("title", { subject: lesson.subject.name })}</DialogTitle>
-            <DialogDescription>{t("description")}</DialogDescription>
           </DialogHeader>
           <LabeledField label={t("status")} htmlFor="lesson-status">
             <SelectField
@@ -143,7 +141,7 @@ export function LessonChangeDialog({ lesson, onClose }: { lesson: LessonItem; on
               onChange={(value) => set("teacher_id", value)}
             />
           </LabeledField>
-          <LabeledField label={t("room")} htmlFor="lesson-room" description={t("roomHint")}>
+          <LabeledField label={t("room")} htmlFor="lesson-room">
             <Input
               id="lesson-room"
               list={roomListId}

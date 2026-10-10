@@ -15,7 +15,7 @@ export function ReportsPage() {
   const labels = { health: t("tabs.health"), usage: t("tabs.usage"), academic: t("tabs.academic") }
   const [tab, setTab] = useQueryState("tab", parseAsStringLiteral(TABS).withDefault("health"))
   return (
-    <PageContainer title={t("title")} description={t("description")}>
+    <PageContainer title={t("title")}>
       <Tabs
         value={tab}
         onValueChange={(value) => void setTab(value === "health" ? null : (value as (typeof TABS)[number]))}

@@ -72,13 +72,11 @@
     "examSuggestions": {
       "title": "Exam dates to confirm",
       "summary": "{count, plural, one {# exam date to confirm} other {# exam dates to confirm}}",
-      "hint": "EMIS and head students suggested these dates. Students see them as tentative until you confirm them.",
       "review": "Review"
     }
   },
   "timetable": {
     "title": "Timetable",
-    "description": "Your lessons for the week",
     "days": "Days of the week",
     "period": "Period {number}",
     "periodHeader": "Period",
@@ -105,7 +103,6 @@
   },
   "journal": {
     "title": "Journal",
-    "description": "Absences and EMIS marks of a class, lesson by lesson",
     "pick": "Subject and audience",
     "noOptions": "You have no lessons to show in the journal yet.",
     "noLessons": "No lessons in this term yet.",
@@ -121,14 +118,13 @@
     "excused": "excused",
     "present": "present",
     "cellLabel": "{name}, {date}: {state}",
-    "hint": "Tap a cell to mark or clear an absence within 7 days of the lesson. Tap a date to open the lesson."
+    "hint": "Absences can be changed for 7 days after the lesson."
   },
   "group": {
     "noGroup": "You do not curate a group.",
     "pickGroup": "Group",
     "students": {
       "title": "Students",
-      "description": "Your group with subgroup, absence rate and semester GPA",
       "student": "Student",
       "subgroup": "Subgroup",
       "subgroupNotSet": "Not set",
@@ -160,8 +156,6 @@
     },
     "subgroups": {
       "title": "Subgroups",
-      "description": "Assign each student to subgroup 1 or 2",
-      "hint": "Changes apply to future lessons. Students without a subgroup are on top.",
       "empty": "No students in this group.",
       "select": "Select {name}",
       "selectAll": "Select all",
@@ -181,12 +175,10 @@
     },
     "attendance": {
       "title": "Group attendance",
-      "description": "Absences of your group for a date range",
       "from": "From",
       "to": "To",
       "export": "Export CSV",
       "empty": "No data for this range.",
-      "notTakenHint": "Lessons without attendance are counted separately and never as present.",
       "views": {
         "student": "Per student",
         "subject": "Per subject",
@@ -224,7 +216,6 @@
   },
   "exams": {
     "title": "Exams",
-    "description": "Midterm and final controls of your subjects, by control week",
     "noGroups": "You do not teach any group yet.",
     "pickGroup": "Group",
     "groupOption": "{name} ({count} to confirm)",
@@ -271,7 +262,6 @@
     },
     "suggestions": {
       "title": "Suggested dates to confirm",
-      "hint": "These dates are not confirmed yet. Students see them as tentative until you confirm, change or dismiss each one.",
       "fromEmis": "From EMIS lesson",
       "fromHeadStudent": "Suggested by the head student",
       "confirmAsIs": "Confirm as is",
@@ -323,7 +313,6 @@
       "timeHint": "Optional, Tashkent time.",
       "roomPlaceholder": "For example 204",
       "titlePlaceholder": "For example Algebra and functions",
-      "noteHint": "Students see the note on their preparation page.",
       "validation": {
         "subject": "Choose a subject.",
         "date": "Choose a date.",
@@ -336,7 +325,6 @@
   },
   "settings": {
     "title": "Settings",
-    "description": "Language, theme, Telegram and notifications",
     "general": {
       "title": "Language and theme",
       "language": "Language",
@@ -349,7 +337,6 @@
     },
     "telegram": {
       "title": "Telegram",
-      "description": "Lesson links and prompts come through the bot.",
       "notLinked": "Telegram is not linked. Notifications arrive only on the web.",
       "linked": "Linked",
       "blocked": "Bot blocked",
@@ -357,13 +344,11 @@
       "manage": "Manage Telegram accounts"
     },
     "notifications": {
-      "title": "Notifications",
-      "description": "Saved at once."
+      "title": "Notifications"
     }
   },
   "students": {
     "title": "Find a student",
-    "description": "Search every student of your subjects and groups, then open their marks, attendance and lessons.",
     "search": "Search by name",
     "noStudents": "You have no students yet.",
     "noResults": "No students match “{query}”.",
@@ -386,7 +371,6 @@
   "staffNotebooks": {
     "attach": "Attach to lesson",
     "attachTitle": "Attach to a lesson",
-    "attachDescription": "“{title}” is added to the lesson as a file that students can open.",
     "loading": "Loading your lessons…",
     "noLessons": "You have no lessons in this period.",
     "period": "Period {number}",

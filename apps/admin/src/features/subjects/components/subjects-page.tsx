@@ -76,7 +76,6 @@ export function SubjectsPage() {
   return (
     <PageContainer
       title={t("title")}
-      description={t("description")}
       actions={
         <Button
           type="button"

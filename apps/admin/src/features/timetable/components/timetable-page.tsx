@@ -105,7 +105,6 @@ export function TimetablePage() {
   return (
     <PageContainer
       title={t("title")}
-      description={t("description")}
       actions={
         term ? (
           <Button type="button" variant="outline" className={TOUCH} onClick={() => setCopyOpen(true)}>

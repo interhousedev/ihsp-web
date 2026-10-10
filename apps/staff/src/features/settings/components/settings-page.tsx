@@ -19,17 +19,17 @@ export function SettingsPage() {
   if (!session) return null
 
   return (
-    <PageContainer title={t("title")} description={t("description")}>
+    <PageContainer title={t("title")}>
       <div className="grid grid-cols-1 gap-4 lg:grid-cols-2">
         <div className="flex flex-col gap-4">
           <SettingsSection title={t("general.title")}>
             <GeneralSettings />
           </SettingsSection>
-          <SettingsSection title={t("telegram.title")} description={t("telegram.description")}>
+          <SettingsSection title={t("telegram.title")}>
             <TelegramCard />
           </SettingsSection>
         </div>
-        <SettingsSection title={t("notifications.title")} description={t("notifications.description")}>
+        <SettingsSection title={t("notifications.title")}>
           <NotificationSettingsForm roles={NOTIFICATION_ROLES} showPush={false} />
         </SettingsSection>
       </div>

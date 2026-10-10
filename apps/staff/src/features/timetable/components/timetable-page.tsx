@@ -27,7 +27,7 @@ export function TimetablePage() {
   const query = useQuery(getStaffTimetableQuery(weekRange(monday)))
 
   return (
-    <PageContainer title={t("title")} description={t("description")}>
+    <PageContainer title={t("title")}>
       <WeekSwitcher
         monday={monday}
         onChange={(next) => {

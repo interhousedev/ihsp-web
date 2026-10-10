@@ -2,7 +2,7 @@
 
 import { postAdminTimetableCopy, type Term } from "@ihsp/api"
 import { useT } from "@ihsp/i18n"
-import { Button, Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle } from "@ihsp/ui"
+import { Button, Dialog, DialogContent, DialogFooter, DialogHeader, DialogTitle } from "@ihsp/ui"
 import { useEffect, useState } from "react"
 import { LabeledField } from "../../shared/components/labeled-field"
 import { SelectField } from "../../shared/components/select-field"
@@ -51,7 +51,6 @@ export function CopyTermDialog({
         >
           <DialogHeader>
             <DialogTitle>{t("title", { year: target.academic_year, half: target.half })}</DialogTitle>
-            <DialogDescription>{t("description")}</DialogDescription>
           </DialogHeader>
           <LabeledField label={t("from")} htmlFor="copy-from" required>
             <SelectField

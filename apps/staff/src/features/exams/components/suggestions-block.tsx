@@ -16,7 +16,6 @@ export function SuggestionsBlock({ count, children }: { count: number; children:
         <h2 id={headingId} className="text-base font-semibold">
           {t("title")} <span className="text-muted-foreground font-normal">({count})</span>
         </h2>
-        <p className="text-muted-foreground text-sm">{t("hint")}</p>
       </div>
       <ul className="flex flex-col gap-2">{children}</ul>
     </section>

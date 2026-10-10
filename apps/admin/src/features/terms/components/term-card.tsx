@@ -15,12 +15,10 @@ import { EmisBadge } from "./emis-badge"
  */
 export function TermCard({ term, onEdit }: { term: Term; onEdit: () => void }) {
   const t = useT("terms")
-  const tBells = useT("terms.bells")
   const tControls = useT("terms.controls")
   const controlLabel = useControlLabel()
   const f = useFormatters()
   const periods = [...term.bells].toSorted((a, b) => a.period - b.period || (a.weekdays[0] ?? 0) - (b.weekdays[0] ?? 0))
-  const hasEmis = term.bells.some((bell) => bell.source === "emis")
   return (
     <Card>
       <CardHeader>
@@ -64,7 +62,6 @@ export function TermCard({ term, onEdit }: { term: Term; onEdit: () => void }) {
             </li>
           ))}
         </ul>
-        {hasEmis ? <p className="text-muted-foreground text-xs">{tBells("emisHint")}</p> : null}
         <p className="text-muted-foreground">
           {t("counts", { holidays: term.non_study_days.length, moved: term.moved_days.length })}
         </p>

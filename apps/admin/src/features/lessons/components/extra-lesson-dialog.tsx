@@ -9,7 +9,6 @@ import {
   DatePicker,
   Dialog,
   DialogContent,
-  DialogDescription,
   DialogFooter,
   DialogHeader,
   DialogTitle,
@@ -87,7 +86,6 @@ export function ExtraLessonDialog({ open, onOpenChange }: { open: boolean; onOpe
         >
           <DialogHeader>
             <DialogTitle>{t("title")}</DialogTitle>
-            <DialogDescription>{t("description")}</DialogDescription>
           </DialogHeader>
           <div className="grid gap-4 sm:grid-cols-2">
             <LabeledField label={t("date")} htmlFor="extra-date" required>
@@ -120,7 +118,7 @@ export function ExtraLessonDialog({ open, onOpenChange }: { open: boolean; onOpe
               onChange={setTeacherId}
             />
           </LabeledField>
-          <LabeledField label={t("room")} htmlFor="extra-room" description={t("roomHint")}>
+          <LabeledField label={t("room")} htmlFor="extra-room">
             <Input
               id="extra-room"
               list={roomListId}

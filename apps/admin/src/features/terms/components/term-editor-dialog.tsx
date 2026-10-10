@@ -9,7 +9,6 @@ import {
   DatePicker,
   Dialog,
   DialogContent,
-  DialogDescription,
   DialogFooter,
   DialogHeader,
   DialogTitle,
@@ -77,11 +76,10 @@ export function TermEditorDialog({
         >
           <DialogHeader>
             <DialogTitle>{term ? t("editTitle", { year: term.academic_year }) : t("createTitle")}</DialogTitle>
-            <DialogDescription>{t("description")}</DialogDescription>
           </DialogHeader>
 
           <div className="grid gap-4 sm:grid-cols-2">
-            <LabeledField label={t("year")} htmlFor="term-year" description={t("yearHint")} required>
+            <LabeledField label={t("year")} htmlFor="term-year" required>
               <Input
                 id="term-year"
                 value={form.academic_year}

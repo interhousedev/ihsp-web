@@ -50,7 +50,6 @@ function SubgroupEditor({ group }: { group: GroupItem }) {
 
         return (
           <>
-            <p className="text-muted-foreground text-sm">{t("hint")}</p>
             <div className="flex flex-wrap items-center gap-2 rounded-lg border p-2">
               <label className="flex min-h-11 items-center gap-2 text-sm md:min-h-8">
                 <Checkbox
@@ -140,7 +139,7 @@ function SubgroupEditor({ group }: { group: GroupItem }) {
 export function SubgroupsPage() {
   const t = useT("group.subgroups")
   return (
-    <PageContainer title={t("title")} description={t("description")}>
+    <PageContainer title={t("title")}>
       <GroupScope>{(group) => <SubgroupEditor key={group.id} group={group} />}</GroupScope>
     </PageContainer>
   )

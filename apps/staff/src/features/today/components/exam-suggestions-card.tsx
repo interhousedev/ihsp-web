@@ -20,7 +20,6 @@ export function ExamSuggestionsCard() {
   return (
     <TodayCard title={t("title")} action={<LinkButton href={href}>{t("review")}</LinkButton>}>
       <p className="text-sm font-medium">{t("summary", { count: items.length })}</p>
-      <p className="text-muted-foreground text-xs">{t("hint")}</p>
     </TodayCard>
   )
 }

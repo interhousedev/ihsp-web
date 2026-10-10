@@ -139,7 +139,7 @@ export function ModerationPage() {
   )
 
   return (
-    <PageContainer title={t("title")} description={t("description")}>
+    <PageContainer title={t("title")}>
       <PagedTable
         source={source}
         columns={columns}

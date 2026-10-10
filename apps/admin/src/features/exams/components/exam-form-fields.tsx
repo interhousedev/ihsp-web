@@ -102,7 +102,7 @@ export function ExamFormFields({
             }}
           />
         </LabeledField>
-        <LabeledField label={t("control")} htmlFor="exam-control" description={t("controlHint")}>
+        <LabeledField label={t("control")} htmlFor="exam-control">
           <SelectField
             id="exam-control"
             value={form.control}

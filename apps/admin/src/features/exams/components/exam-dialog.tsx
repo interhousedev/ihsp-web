@@ -92,11 +92,9 @@ export function ExamDialog({
         ? t("editTitle", { subject })
         : t("setDateTitle", { subject })
   const description =
-    mode === "create"
-      ? t("createDescription")
-      : mode === "edit"
-        ? t("editDescription")
-        : t("setDateDescription", { control: item?.control ? controlLabel(item.control) : "", groups })
+    mode === "setDate"
+      ? t("setDateDescription", { control: item?.control ? controlLabel(item.control) : "", groups })
+      : null
 
   return (
     <Dialog
@@ -122,7 +120,7 @@ export function ExamDialog({
         >
           <DialogHeader>
             <DialogTitle>{title}</DialogTitle>
-            <DialogDescription>{description}</DialogDescription>
+            {description ? <DialogDescription>{description}</DialogDescription> : null}
           </DialogHeader>
 
           <ExamFormFields

@@ -28,7 +28,7 @@ export function StudentSearch() {
   const found = searchStudents(students, query)
 
   return (
-    <PageContainer title={t("title")} description={t("description")}>
+    <PageContainer title={t("title")}>
       <div className="relative max-w-md">
         <IconSearch
           aria-hidden

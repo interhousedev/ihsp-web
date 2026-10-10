@@ -13,7 +13,7 @@ export function UsersPage() {
   const t = useT("users")
   const [tab, setTab] = useQueryState("tab", parseAsStringLiteral(TABS).withDefault("users"))
   return (
-    <PageContainer title={t("title")} description={t("description")}>
+    <PageContainer title={t("title")}>
       <Tabs
         value={tab}
         onValueChange={(value) => void setTab(value === "users" ? null : (value as (typeof TABS)[number]))}

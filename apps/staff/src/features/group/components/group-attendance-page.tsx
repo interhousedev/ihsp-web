@@ -80,7 +80,6 @@ function ReportOfGroup({ group }: { group: GroupItem }) {
           ))}
         </TabsList>
       </Tabs>
-      <p className="text-muted-foreground text-xs">{t("notTakenHint")}</p>
       <QueryState query={query} rows={4} isEmpty={(report) => report.rows.length === 0} emptyText={t("empty")}>
         {(report) => (
           <AttendanceReportView report={report} onExcuse={(row) => setExcuse({ id: row.key, label: row.label })} />
@@ -98,7 +97,7 @@ function ReportOfGroup({ group }: { group: GroupItem }) {
 export function GroupAttendancePage() {
   const t = useT("group.attendance")
   return (
-    <PageContainer title={t("title")} description={t("description")}>
+    <PageContainer title={t("title")}>
       <GroupScope>{(group) => <ReportOfGroup key={group.id} group={group} />}</GroupScope>
     </PageContainer>
   )

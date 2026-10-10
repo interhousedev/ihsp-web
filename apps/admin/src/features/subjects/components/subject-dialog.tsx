@@ -6,7 +6,6 @@ import {
   Button,
   Dialog,
   DialogContent,
-  DialogDescription,
   DialogFooter,
   DialogHeader,
   DialogTitle,
@@ -79,7 +78,6 @@ export function SubjectDialog({
         >
           <DialogHeader>
             <DialogTitle>{subject ? t("editTitle") : t("createTitle")}</DialogTitle>
-            <DialogDescription>{t("description")}</DialogDescription>
           </DialogHeader>
           <LabeledField label={t("nameUz")} htmlFor="subject-uz" required>
             <Input
@@ -114,7 +112,7 @@ export function SubjectDialog({
               onChange={(event) => set("short")(event.target.value)}
             />
           </LabeledField>
-          <LabeledField label={t("emisId")} htmlFor="subject-emis" description={t("emisHint")}>
+          <LabeledField label={t("emisId")} htmlFor="subject-emis">
             <Input
               id="subject-emis"
               inputMode="numeric"

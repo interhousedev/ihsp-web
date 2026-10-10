@@ -36,7 +36,6 @@ export function ControlWeeksEditor({
   return (
     <section className="flex flex-col gap-2">
       <h3 className="text-sm font-semibold">{t("title")}</h3>
-      <p className="text-muted-foreground text-xs">{t("hint")}</p>
       <ul className="flex flex-col gap-3">
         {CONTROL_NAMES.map((name) => {
           const { start, end } = value[name]

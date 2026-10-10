@@ -91,7 +91,6 @@
   },
   "dashboard": {
     "title": "Dashboard",
-    "description": "What needs action today.",
     "lessonsToday": "Lessons today",
     "cancelledToday": "Cancelled today",
     "teacherNeeded": "Lessons without a teacher",
@@ -112,7 +111,6 @@
   },
   "students": {
     "title": "Students",
-    "description": "Search students and open their full profile.",
     "empty": "No students match these filters.",
     "importAction": "Import from CSV",
     "notSelected": "Choose a student from the list.",
@@ -206,10 +204,8 @@
     },
     "import": {
       "title": "Import students",
-      "description": "Upload a CSV exported from EMIS: last name, first name, middle name, group and EMIS student ID.",
       "back": "Students",
       "file": "CSV file",
-      "fileHint": "Nothing changes until you confirm the preview.",
       "uploadPreview": "Show preview",
       "new": "New students",
       "changed": "Changes",
@@ -226,7 +222,6 @@
   },
   "teachers": {
     "title": "Teachers",
-    "description": "Teacher accounts, their timetable and missing attendance.",
     "new": "New teacher",
     "empty": "No teachers match these filters.",
     "notSelected": "Choose a teacher from the list.",
@@ -251,13 +246,11 @@
     },
     "create": {
       "title": "New teacher",
-      "description": "Create the account; the teacher activates it with a link.",
       "back": "Teachers",
       "lastName": "Last name",
       "firstName": "First name",
       "middleName": "Middle name",
       "email": "Email",
-      "emailHint": "The activation link is sent to this address.",
       "duplicate": "A teacher with this name already exists. Create another account only if it is a different person.",
       "create": "Create account",
       "createAnyway": "Create anyway",
@@ -296,7 +289,6 @@
   },
   "users": {
     "title": "Users & roles",
-    "description": "Block users, change roles, reset credentials and manage OAuth clients.",
     "empty": "No users match these filters.",
     "notSelected": "Choose a user from the list.",
     "mailSuspended": "Mail suspended",
@@ -395,7 +387,6 @@
   },
   "groups": {
     "title": "Groups",
-    "description": "Groups with students, subgroups, attendance and average GPA.",
     "new": "New group",
     "empty": "No groups yet.",
     "notSelected": "Choose a group from the list.",
@@ -420,10 +411,8 @@
     },
     "create": {
       "title": "New group",
-      "description": "Groups usually come from EMIS. Add one by hand with its EMIS group ID.",
       "name": "Name",
       "emisId": "EMIS group ID",
-      "emisHint": "Optional. Links the group to EMIS.",
       "semester": "Current semester",
       "cancel": "Cancel",
       "submit": "Create group",
@@ -458,7 +447,6 @@
   },
   "subjects": {
     "title": "Subjects",
-    "description": "Subjects from EMIS and subjects added by hand.",
     "new": "New subject",
     "empty": "No subjects match.",
     "notInEmis": "Not in EMIS",
@@ -480,13 +468,11 @@
     "dialog": {
       "createTitle": "New subject",
       "editTitle": "Edit subject",
-      "description": "Names are shown to students and teachers in their language.",
       "nameUz": "Name in Uzbek",
       "nameRu": "Name in Russian",
       "nameEn": "Name in English",
       "shortName": "Short name",
       "emisId": "EMIS subject ID",
-      "emisHint": "Links the subject to its EMIS subject.",
       "canBeDivided": "Can be divided into subgroups",
       "cancel": "Cancel",
       "save": "Save",
@@ -496,7 +482,6 @@
   },
   "rooms": {
     "title": "Rooms",
-    "description": "Rooms created from the timetable, with their link and PIN.",
     "empty": "No rooms yet. They appear when a room is used in the timetable.",
     "copyLink": "Copy link",
     "copyPin": "Copy PIN",
@@ -525,7 +510,6 @@
     },
     "rename": {
       "title": "Rename room {name}",
-      "description": "The address of the room page changes with the name.",
       "name": "New name",
       "cancel": "Cancel",
       "submit": "Rename",
@@ -555,7 +539,6 @@
   },
   "terms": {
     "title": "Terms & bells",
-    "description": "Terms, the bell schedule, non-study days and moved study days.",
     "new": "New term",
     "empty": "No terms yet.",
     "edit": "Edit",
@@ -567,9 +550,7 @@
     "editor": {
       "createTitle": "New term",
       "editTitle": "Edit term {year}",
-      "description": "Terms cannot overlap. Changing a bell time updates future lessons only.",
       "year": "Academic year",
-      "yearHint": "For example 2026/2027",
       "half": "Half",
       "half1": "First half",
       "half2": "Second half",
@@ -595,7 +576,6 @@
       },
       "controls": {
         "title": "Control weeks",
-        "hint": "The weeks of the two midterm controls and the final control. Teachers give each subject a date inside its week.",
         "start": "{name}: first day",
         "end": "{name}: last day",
         "clear": "Clear {name}",
@@ -618,11 +598,9 @@
     },
     "days": {
       "nonStudy": "Non-study days",
-      "nonStudyHint": "Holidays when there are no lessons.",
       "pickHoliday": "Choose a date",
       "addHoliday": "Add day",
       "moved": "Moved study days",
-      "movedHint": "A date that follows the timetable of another weekday.",
       "pickMoved": "Choose a date",
       "follows": "Follows the timetable of",
       "addMoved": "Add moved day",
@@ -637,7 +615,6 @@
   },
   "timetable": {
     "title": "Timetable",
-    "description": "The weekly timetable by group, teacher or room.",
     "term": "Term",
     "termLabel": "{year}, half {half}",
     "view": "View",
@@ -670,7 +647,6 @@
     },
     "copy": {
       "title": "Copy into {year}, half {half}",
-      "description": "Entries of the chosen term are copied here. Check them and adjust what changed.",
       "from": "Copy from",
       "choose": "Choose a term",
       "termLabel": "{year}, half {half}",
@@ -693,14 +669,12 @@
       "teacher": "Teacher",
       "noTeacher": "No teacher yet",
       "room": "Room",
-      "roomHint": "Pick a room or type a new name to create it.",
       "audience": "Audience",
       "splitSuggestion": "This subject can be divided. Create two entries, one for each subgroup?",
       "split": "Split into subgroups",
       "splitNext": "Save subgroup 1, then the same form opens for subgroup 2.",
       "validFrom": "Valid from",
       "validTo": "Valid until",
-      "validToHint": "Leave empty for the whole term.",
       "noEnd": "No end date",
       "clear": "Clear",
       "checking": "Checking for conflicts…",
@@ -725,7 +699,6 @@
   },
   "lessons": {
     "title": "Lessons",
-    "description": "Search lessons and change single ones.",
     "extraAction": "Extra lesson",
     "empty": "No lessons match these filters.",
     "changeAction": "Change",
@@ -763,7 +736,6 @@
     },
     "change": {
       "title": "Change {subject}",
-      "description": "Changes are marked as made by hand, so the timetable will not overwrite them.",
       "status": "Status",
       "scheduled": "Scheduled",
       "cancelled": "Cancelled",
@@ -773,7 +745,6 @@
       "teacher": "Teacher",
       "noTeacher": "No teacher",
       "room": "Room",
-      "roomHint": "Pick a room or type a new name to create it.",
       "topic": "Topic",
       "notifyHint": "Students and the teachers of this lesson get a \"Lesson changed\" notification.",
       "cancel": "Cancel",
@@ -782,7 +753,6 @@
     },
     "extra": {
       "title": "Extra lesson",
-      "description": "A lesson outside the weekly timetable.",
       "date": "Date",
       "period": "Period",
       "subject": "Subject",
@@ -790,7 +760,6 @@
       "teacher": "Teacher",
       "noTeacher": "No teacher yet",
       "room": "Room",
-      "roomHint": "Pick a room or type a new name to create it.",
       "audience": "Audience",
       "topic": "Topic",
       "cancel": "Cancel",
@@ -805,7 +774,6 @@
   },
   "exams": {
     "title": "Exams",
-    "description": "Midterm and final controls of every group. Confirm uncertain dates, set missing ones and add controls.",
     "newAction": "New exam",
     "empty": "No exams match these filters.",
     "toConfirm": "To confirm: {count}",
@@ -879,9 +847,7 @@
     "confirmed": "Date confirmed",
     "dialog": {
       "createTitle": "New exam",
-      "createDescription": "One exam of a subject for one or more groups.",
       "editTitle": "Edit {subject}",
-      "editDescription": "Saving a date that was not confirmed confirms it.",
       "setDateTitle": "Set the date of {subject}",
       "setDateDescription": "{control} for {groups}. Only this subject in this group gets the date.",
       "subject": "Subject",
@@ -890,7 +856,6 @@
       "kind": "Kind",
       "control": "Control week",
       "controlAuto": "By the date",
-      "controlHint": "Without a choice the week follows the date.",
       "weekHint": "Week: {period}",
       "date": "Date",
       "time": "Time",
@@ -923,7 +888,6 @@
   },
   "attendance": {
     "title": "Attendance",
-    "description": "Absences by group, student, subject or teacher, and lessons without attendance.",
     "from": "From date",
     "to": "To date",
     "currentTerm": "Current term",
@@ -964,7 +928,6 @@
   },
   "broadcasts": {
     "title": "Broadcasts",
-    "description": "Messages to students, teachers and staff in Telegram and on the web.",
     "new": "New broadcast",
     "empty": "No broadcasts yet.",
     "deliveryLine": "Sent {sent}, failed {failed}, blocked {blocked}",
@@ -1014,14 +977,12 @@
     },
     "editor": {
       "newTitle": "New broadcast",
-      "description": "Write the message, choose who gets it, send a preview to yourself, then send it.",
       "back": "Broadcasts",
       "scheduledFor": "Scheduled for {date}",
       "createdByAssistant": "Draft created by the assistant",
       "assistantDraft": "The assistant created this draft. Review it; only a person can send it.",
       "readOnly": "This broadcast can no longer be edited.",
       "titleLabel": "Title",
-      "titleHint": "Shown in the notification center on the web.",
       "textLabel": "Text",
       "formatting": "Formatting",
       "bold": "Bold",
@@ -1056,7 +1017,6 @@
     },
     "schedule": {
       "title": "Schedule the broadcast",
-      "description": "Choose when it goes out. You can edit or cancel it until it starts.",
       "when": "Send at",
       "hint": "Time in Tashkent.",
       "past": "Choose a time in the future.",
@@ -1066,7 +1026,6 @@
   },
   "moderation": {
     "title": "Moderation",
-    "description": "Reported links, newest and most reported first.",
     "search": "Search",
     "searchPlaceholder": "Short ID, share URL or login",
     "emptyQueue": "No reported links.",
@@ -1103,7 +1062,6 @@
   },
   "monitoring": {
     "title": "Monitoring",
-    "description": "EMIS sync runs and the audit log.",
     "tabs": {
       "sync": "EMIS sync",
       "audit": "Audit log"
@@ -1162,7 +1120,6 @@
   },
   "reports": {
     "title": "Reports",
-    "description": "System health, usage and academic figures.",
     "tabs": {
       "health": "System",
       "usage": "Usage",

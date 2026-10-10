@@ -31,14 +31,12 @@ describe("term card", () => {
 
     expect(screen.getAllByText("EMIS")).toHaveLength(emisBells.length)
     expect(screen.getAllByTitle(HINT)).toHaveLength(emisBells.length)
-    expect(screen.getByText(HINT)).toBeInTheDocument()
   })
 
   test("shows no badge and no hint for bells set by hand", () => {
     renderAdmin(<TermCard term={currentTerm} onEdit={() => undefined} />)
 
     expect(screen.queryByText("EMIS")).not.toBeInTheDocument()
-    expect(screen.queryByText(HINT)).not.toBeInTheDocument()
   })
 
   test("in a mixed term only the EMIS periods get the badge", () => {

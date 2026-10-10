@@ -170,7 +170,6 @@ export function LessonsPage() {
   return (
     <PageContainer
       title={t("title")}
-      description={t("description")}
       actions={
         <Button type="button" className={TOUCH} onClick={() => setExtraOpen(true)}>
           <Icons.add aria-hidden />

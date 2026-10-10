@@ -14,7 +14,6 @@ import {
   ConfirmDialog,
   Dialog,
   DialogContent,
-  DialogDescription,
   DialogFooter,
   DialogHeader,
   DialogTitle,
@@ -52,7 +51,6 @@ function RenameDialog({ room, onClose }: { room: Room; onClose: () => void }) {
         >
           <DialogHeader>
             <DialogTitle>{t("title", { name: room.name })}</DialogTitle>
-            <DialogDescription>{t("description")}</DialogDescription>
           </DialogHeader>
           <LabeledField label={t("name")} htmlFor="room-name" required>
             <Input
@@ -99,7 +97,6 @@ function MergeDialog({ room, rooms, onClose }: { room: Room; rooms: Room[]; onCl
         >
           <DialogHeader>
             <DialogTitle>{t("title", { name: room.name })}</DialogTitle>
-            <DialogDescription>{t("description")}</DialogDescription>
           </DialogHeader>
           <LabeledField label={t("target")} htmlFor="room-merge-target" required>
             <SelectField

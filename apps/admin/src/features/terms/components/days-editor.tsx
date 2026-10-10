@@ -31,7 +31,6 @@ export function DaysEditor({
     <div className="grid gap-6 md:grid-cols-2">
       <section className="flex flex-col gap-2">
         <h4 className="text-sm font-semibold">{t("nonStudy")}</h4>
-        <p className="text-muted-foreground text-xs">{t("nonStudyHint")}</p>
         <ul className="flex flex-col gap-1">
           {nonStudyDays.map((day) => (
             <li key={day} className="flex items-center justify-between gap-2 rounded-md border px-3 py-1 text-sm">
@@ -73,7 +72,6 @@ export function DaysEditor({
 
       <section className="flex flex-col gap-2">
         <h4 className="text-sm font-semibold">{t("moved")}</h4>
-        <p className="text-muted-foreground text-xs">{t("movedHint")}</p>
         <ul className="flex flex-col gap-1">
           {movedDays.map((day) => (
             <li key={day.date} className="flex items-center justify-between gap-2 rounded-md border px-3 py-1 text-sm">

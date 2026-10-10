@@ -13,7 +13,7 @@ export function MonitoringPage() {
   const t = useT("monitoring")
   const [tab, setTab] = useQueryState("tab", parseAsStringLiteral(TABS).withDefault("sync"))
   return (
-    <PageContainer title={t("title")} description={t("description")}>
+    <PageContainer title={t("title")}>
       <Tabs
         value={tab}
         onValueChange={(value) => void setTab(value === "sync" ? null : (value as (typeof TABS)[number]))}

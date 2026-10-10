@@ -111,7 +111,6 @@ export function BroadcastEditor({ item }: { item: BroadcastItem | null }) {
   return (
     <PageContainer
       title={title}
-      description={t("description")}
       actions={<BackLink href="/broadcasts/" label={t("back")} />}
     >
       {item ? (
@@ -143,7 +142,7 @@ export function BroadcastEditor({ item }: { item: BroadcastItem | null }) {
             if (valid && editable) save.mutate()
           }}
         >
-          <LabeledField label={t("titleLabel")} htmlFor="broadcast-title" description={t("titleHint")} required>
+          <LabeledField label={t("titleLabel")} htmlFor="broadcast-title" required>
             <Input
               id="broadcast-title"
               value={form.title}

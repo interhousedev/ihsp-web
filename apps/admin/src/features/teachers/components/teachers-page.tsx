@@ -87,7 +87,6 @@ export function TeachersPage() {
   return (
     <PageContainer
       title={t("title")}
-      description={t("description")}
       actions={
         <Link href="/teachers/new/" className={buttonVariants({ className: TOUCH })}>
           <Icons.add aria-hidden />

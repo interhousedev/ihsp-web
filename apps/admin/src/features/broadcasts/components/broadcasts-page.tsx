@@ -83,7 +83,6 @@ export function BroadcastsPage() {
   return (
     <PageContainer
       title={t("title")}
-      description={t("description")}
       actions={
         <Link href="/broadcasts/edit/" className={buttonVariants({ className: TOUCH })}>
           <Icons.add aria-hidden />

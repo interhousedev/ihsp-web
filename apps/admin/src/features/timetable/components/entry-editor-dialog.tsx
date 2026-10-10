@@ -219,7 +219,7 @@ export function EntryEditorDialog({
               </LabeledField>
             </div>
 
-            <LabeledField label={t("room")} htmlFor="entry-room" description={t("roomHint")}>
+            <LabeledField label={t("room")} htmlFor="entry-room">
               <Input
                 id="entry-room"
                 list={roomListId}
@@ -273,7 +273,7 @@ export function EntryEditorDialog({
               <LabeledField label={t("validFrom")} htmlFor="entry-from" required>
                 <DatePicker id="entry-from" value={form.valid_from} onChange={(date) => set("valid_from", date)} />
               </LabeledField>
-              <LabeledField label={t("validTo")} htmlFor="entry-to" description={t("validToHint")}>
+              <LabeledField label={t("validTo")} htmlFor="entry-to">
                 <div className="flex gap-2">
                   <DatePicker
                     id="entry-to"

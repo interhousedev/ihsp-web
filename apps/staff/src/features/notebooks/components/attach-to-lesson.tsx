@@ -6,7 +6,6 @@ import {
   Button,
   Dialog,
   DialogContent,
-  DialogDescription,
   DialogHeader,
   DialogTitle,
   DialogTrigger,
@@ -51,7 +50,6 @@ export function AttachToLesson({ notebookId, artifactId }: { notebookId: string;
       <DialogContent className="max-h-[90dvh] overflow-y-auto sm:max-w-md">
         <DialogHeader>
           <DialogTitle>{t("attachTitle")}</DialogTitle>
-          <DialogDescription>{t("attachDescription", { title: artifact.data.title })}</DialogDescription>
         </DialogHeader>
         {open ? <LessonChoices notebookId={notebookId} artifactId={artifactId} onDone={() => setOpen(false)} /> : null}
       </DialogContent>

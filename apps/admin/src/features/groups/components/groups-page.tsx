@@ -88,7 +88,6 @@ export function GroupsPage() {
   return (
     <PageContainer
       title={t("title")}
-      description={t("description")}
       actions={
         <Button type="button" className={TOUCH} onClick={() => setCreateOpen(true)}>
           <Icons.add aria-hidden />

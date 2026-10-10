@@ -109,7 +109,6 @@ export function NewTeacherPage() {
   return (
     <PageContainer
       title={t("title")}
-      description={t("description")}
       actions={<BackLink href="/teachers/" label={t("back")} />}
     >
       <form
@@ -146,7 +145,7 @@ export function NewTeacherPage() {
             onChange={(event) => update("middle_name", event.target.value)}
           />
         </LabeledField>
-        <LabeledField label={t("email")} htmlFor="teacher-email" description={t("emailHint")} required>
+        <LabeledField label={t("email")} htmlFor="teacher-email" required>
           <Input
             id="teacher-email"
             type="email"

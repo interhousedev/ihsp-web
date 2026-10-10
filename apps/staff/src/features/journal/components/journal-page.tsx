@@ -48,7 +48,6 @@ export function JournalPage() {
   return (
     <PageContainer
       title={t("title")}
-      description={t("description")}
       actions={
         <Button
           variant="outline"

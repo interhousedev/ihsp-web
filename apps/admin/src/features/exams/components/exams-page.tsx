@@ -54,7 +54,6 @@ export function ExamsPage() {
   return (
     <PageContainer
       title={t("title")}
-      description={t("description")}
       actions={
         <Button type="button" className={TOUCH} onClick={() => setDialog({ mode: "create", item: null })}>
           <Icons.add aria-hidden />

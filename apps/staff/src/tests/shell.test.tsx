@@ -119,7 +119,7 @@ describe("settings page", () => {
     renderStaff(<SettingsPage />)
 
     expect(await screen.findByText(/Telegram is not linked/)).toBeInTheDocument()
-    const section = screen.getByText("Lesson links and prompts come through the bot.").closest("section") as HTMLElement
+    const section = screen.getByText(/Telegram is not linked/).closest("section") as HTMLElement
     expect(hrefOf(within(section).getByRole("link", { name: "Link Telegram" }))).toBe(
       "http://localhost:3001/security/telegram/",
     )

@@ -67,7 +67,7 @@ function StudentsOfGroup({ group }: { group: GroupItem }) {
 export function StudentsPage() {
   const t = useT("group.students")
   return (
-    <PageContainer title={t("title")} description={t("description")}>
+    <PageContainer title={t("title")}>
       <GroupScope>{(group) => <StudentsOfGroup group={group} />}</GroupScope>
     </PageContainer>
   )

@@ -279,7 +279,7 @@ export function ExamForm({
       </form.AppField>
       <form.AppField name="note">
         {(field) => (
-          <field.TextareaField label={t("fields.note")} description={t("noteHint")} rows={3} maxLength={NOTE_MAX} />
+          <field.TextareaField label={t("fields.note")} rows={3} maxLength={NOTE_MAX} />
         )}
       </form.AppField>
 

@@ -297,7 +297,6 @@ describe("group attendance", () => {
         .getAllByRole("cell")
         .map((cell) => cell.textContent),
     ).toEqual(["Brastilov Aleksey", "5", "1", "60", "8%", "2"])
-    expect(screen.getByText(/never as present/)).toBeInTheDocument()
   })
 
   test("switching the view asks for it", async () => {
