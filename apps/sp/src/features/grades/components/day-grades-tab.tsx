@@ -37,7 +37,7 @@ export function DayGradesTab() {
           size="icon"
           className="size-11 md:size-8"
           aria-label={t("next")}
-          disabled={date >= today}
+          disabled={shiftStudyDay(date, 1) > today}
           onClick={() => void setDate(shiftStudyDay(date, 1))}
         >
           <Icons.chevronRight aria-hidden />

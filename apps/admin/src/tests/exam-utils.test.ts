@@ -74,7 +74,7 @@ describe("exam filters to request parameters", () => {
   test("a control week asks for the dates of that week", () => {
     expect(examParams({ ...NO_FILTERS, control: "midterm_2" }, controlPeriods)).toEqual({
       from: "2026-11-16",
-      to: "2026-11-21",
+      to: "2026-11-20",
     })
   })
 
@@ -84,7 +84,7 @@ describe("exam filters to request parameters", () => {
       controlPeriods,
     )
 
-    expect(params).toEqual({ from: "2026-10-14", to: "2026-10-17" })
+    expect(params).toEqual({ from: "2026-10-14", to: "2026-10-16" })
   })
 
   test("a control week that is not set in the term adds no dates", () => {
@@ -329,7 +329,7 @@ describe("exam CSV", () => {
       "Algebra and functions",
       "Chapters 1–4; bring a calculator.",
     ])
-    expect(rows[2]?.slice(0, 3)).toEqual(["", "2026-10-12 – 2026-10-17", "English"])
+    expect(rows[2]?.slice(0, 3)).toEqual(["", "2026-10-12 – 2026-10-16", "English"])
     expect(rows[2]?.[8]).toBe("status:undated")
   })
 })

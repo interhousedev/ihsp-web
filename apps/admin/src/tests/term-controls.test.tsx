@@ -30,7 +30,7 @@ describe("term form: control weeks", () => {
   test("a term loaded from the API shows its weeks and leaves the missing ones empty", () => {
     const form = termToForm({ ...currentTerm, control_periods: { midterm_1: controlPeriods.midterm_1 } })
 
-    expect(form.control_periods.midterm_1).toEqual({ start: "2026-10-12", end: "2026-10-17" })
+    expect(form.control_periods.midterm_1).toEqual({ start: "2026-10-12", end: "2026-10-16" })
     expect(form.control_periods.midterm_2).toEqual({ start: null, end: null })
     expect(form.control_periods.final).toEqual({ start: null, end: null })
   })
@@ -158,9 +158,9 @@ describe("term card: control weeks", () => {
   test("lists each week as a chip with its dates", () => {
     renderAdmin(<TermCard term={currentTerm} onEdit={() => undefined} />)
 
-    expect(screen.getByText("Midterm 1: 12–17 Oct")).toBeInTheDocument()
-    expect(screen.getByText("Midterm 2: 16–21 Nov")).toBeInTheDocument()
-    expect(screen.getByText("Final (FC): 14–19 Dec")).toBeInTheDocument()
+    expect(screen.getByText("Midterm 1: 12–16 Oct")).toBeInTheDocument()
+    expect(screen.getByText("Midterm 2: 16–20 Nov")).toBeInTheDocument()
+    expect(screen.getByText("Final (FC): 14–18 Dec")).toBeInTheDocument()
   })
 
   test("says 'not set' for a week Administration has not set", () => {
@@ -171,7 +171,7 @@ describe("term card: control weeks", () => {
       />,
     )
 
-    expect(screen.getByText("Midterm 1: 12–17 Oct")).toBeInTheDocument()
+    expect(screen.getByText("Midterm 1: 12–16 Oct")).toBeInTheDocument()
     expect(screen.getByText("Midterm 2: not set")).toBeInTheDocument()
     expect(screen.getByText("Final (FC): not set")).toBeInTheDocument()
   })
@@ -208,7 +208,7 @@ describe("term editor: control weeks", () => {
 
     expect(within(dialog).getByRole("heading", { name: "Control weeks" })).toBeInTheDocument()
     expect(within(dialog).getByRole("button", { name: "Midterm 1: first day" })).toHaveTextContent("12 Oct 2026")
-    expect(within(dialog).getByRole("button", { name: "Midterm 1: last day" })).toHaveTextContent("17 Oct 2026")
+    expect(within(dialog).getByRole("button", { name: "Midterm 1: last day" })).toHaveTextContent("16 Oct 2026")
     expect(within(dialog).getByRole("button", { name: "Final (FC): first day" })).toHaveTextContent("14 Dec 2026")
   })
 

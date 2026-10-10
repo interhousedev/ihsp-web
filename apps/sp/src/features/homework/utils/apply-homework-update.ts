@@ -1,6 +1,7 @@
 import { keys, type HomeworkItem, type StudentLesson, type StudentToday } from "@ihsp/api"
-import { addDays, todayIso } from "@ihsp/i18n"
+import { todayIso } from "@ihsp/i18n"
 import type { QueryClient } from "@tanstack/react-query"
+import { shiftStudyDay } from "../../grades/utils/study-days"
 
 export type HomeworkStatus = "overdue" | "upcoming" | "later" | "done"
 
@@ -15,7 +16,7 @@ function sameItem(a: HomeworkItem, b: HomeworkItem): boolean {
  */
 export function bucketOf(item: HomeworkItem, nextStudyDay: string | null): "overdue" | "upcoming" | "later" {
   if (item.days_overdue > 0) return "overdue"
-  const limit = nextStudyDay ?? addDays(todayIso(), 1)
+  const limit = nextStudyDay ?? shiftStudyDay(todayIso(), 1)
   return item.due_date !== null && item.due_date <= limit ? "upcoming" : "later"
 }
 

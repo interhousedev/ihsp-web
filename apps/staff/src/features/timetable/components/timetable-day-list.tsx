@@ -1,12 +1,12 @@
 "use client"
 
 import type { LessonItem } from "@ihsp/api"
-import { addDays, todayIso, useFormatters, useT } from "@ihsp/i18n"
+import { todayIso, useFormatters, useT } from "@ihsp/i18n"
 import { Button, StateView, cn } from "@ihsp/ui"
-import { lessonsOn } from "../utils/week"
+import { lessonsOn, weekDays } from "../utils/week"
 import { TimetableLessonCard } from "./timetable-lesson-card"
 
-/** One day of the week as a list with a day selector (phone default, UF-STF-03). */
+/** One day of the week as a list with a Mon–Fri day selector (phone default, UF-STF-03). */
 export function TimetableDayList({
   monday,
   day,
@@ -23,12 +23,12 @@ export function TimetableDayList({
   const t = useT("timetable")
   const f = useFormatters()
   const today = todayIso()
-  const days = Array.from({ length: 7 }, (_, index) => addDays(monday, index))
+  const days = weekDays(monday)
   const items = lessonsOn(lessons, day)
 
   return (
     <div className="flex flex-col gap-3">
-      <div role="group" aria-label={t("days")} className="grid grid-cols-7 gap-1">
+      <div role="group" aria-label={t("days")} className="grid grid-cols-5 gap-1">
         {days.map((date) => (
           <Button
             key={date}

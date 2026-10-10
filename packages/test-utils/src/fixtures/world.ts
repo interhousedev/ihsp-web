@@ -109,12 +109,12 @@ export const teacherOf: Record<SubjectKey, PersonRef> = {
 // --- Time ---
 
 export const bells: Bell[] = [
-  { period: 1, start: "08:30", end: "09:15", weekdays: [1, 2, 3, 4, 5, 6], source: "manual" },
-  { period: 2, start: "09:25", end: "10:10", weekdays: [1, 2, 3, 4, 5, 6], source: "manual" },
-  { period: 3, start: "10:20", end: "11:05", weekdays: [1, 2, 3, 4, 5, 6], source: "manual" },
-  { period: 4, start: "11:25", end: "12:10", weekdays: [1, 2, 3, 4, 5, 6], source: "manual" },
-  { period: 5, start: "12:20", end: "13:05", weekdays: [1, 2, 3, 4, 5, 6], source: "manual" },
-  { period: 6, start: "13:15", end: "14:00", weekdays: [1, 2, 3, 4, 5, 6], source: "manual" },
+  { period: 1, start: "08:30", end: "09:15", weekdays: [1, 2, 3, 4, 5], source: "manual" },
+  { period: 2, start: "09:25", end: "10:10", weekdays: [1, 2, 3, 4, 5], source: "manual" },
+  { period: 3, start: "10:20", end: "11:05", weekdays: [1, 2, 3, 4, 5], source: "manual" },
+  { period: 4, start: "11:25", end: "12:10", weekdays: [1, 2, 3, 4, 5], source: "manual" },
+  { period: 5, start: "12:20", end: "13:05", weekdays: [1, 2, 3, 4, 5], source: "manual" },
+  { period: 6, start: "13:15", end: "14:00", weekdays: [1, 2, 3, 4, 5], source: "manual" },
 ]
 
 /** The same six periods as the EMIS `class-hours` sync stores them: read-only for Administration. */
@@ -130,14 +130,13 @@ export function atTashkent(date: string, time: string): string {
   return new Date(Date.UTC(year, month - 1, day, hours - 5, minutes)).toISOString().replace(".000Z", "Z")
 }
 
-/** Dates of the fixture week, Monday 5 October to Saturday 10 October 2026, keyed by ISO weekday. */
+/** Dates of the fixture week, Monday 5 October to Friday 9 October 2026, keyed by ISO weekday. */
 export const weekDates: Record<number, string> = {
   1: "2026-10-05",
   2: "2026-10-06",
   3: "2026-10-07",
   4: "2026-10-08",
   5: "2026-10-09",
-  6: "2026-10-10",
 }
 
 // --- Audience ---
@@ -179,8 +178,6 @@ export const weekPattern: Slot[] = [
   { weekday: 5, period: 2, subject: "informatics", room: "klaster", subgroup: 1 },
   { weekday: 5, period: 3, subject: "history", room: "r101", subgroup: null },
   { weekday: 5, period: 4, subject: "physics", room: "r102", subgroup: null },
-  { weekday: 6, period: 1, subject: "math", room: "r101", subgroup: null },
-  { weekday: 6, period: 2, subject: "physics", room: "r102", subgroup: null },
 ]
 
 export function audienceOf(subgroup: 1 | 2 | null): AudienceItem {
@@ -227,7 +224,7 @@ export function makeLesson(slot: Slot, overrides: LessonOverrides = {}): LessonI
   }
 }
 
-/** All lessons of the fixture week (Mon 5 Oct to Sat 10 Oct); topics and homework flags set for the past ones. */
+/** All lessons of the fixture week (Mon 5 Oct to Fri 9 Oct); topics and homework flags set for the past ones. */
 export const weekLessons: LessonItem[] = weekPattern.map((slot) => {
   const past = slot.weekday < 3 || (slot.weekday === 3 && slot.period <= 2)
   const homework = slot.weekday === 3 && slot.subject === "physics"

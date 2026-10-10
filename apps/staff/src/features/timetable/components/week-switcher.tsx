@@ -10,7 +10,7 @@ export function WeekSwitcher({ monday, onChange }: { monday: string; onChange: (
   const thisWeek = startOfWeek(todayIso())
   const range = t("weekRange", {
     start: f.date(monday, { day: "numeric", month: "short" }),
-    end: f.date(addDays(monday, 6), { day: "numeric", month: "short" }),
+    end: f.date(addDays(monday, 4), { day: "numeric", month: "short" }),
   })
 
   return (

@@ -30,10 +30,10 @@ describe("profile menu", () => {
 
     const menu = await openMenu(user)
 
-    expect(within(menu).getByRole("menuitem", { name: /Admin/ })).toHaveAttribute("aria-current", "page")
-    expect(within(menu).getByRole("menuitem", { name: /LMS/ })).toHaveAttribute("href", "http://localhost:3005")
-    expect(within(menu).getByRole("menuitem", { name: /ID/ })).toHaveAttribute("href", "http://localhost:3001")
-    expect(within(menu).queryByRole("menuitem", { name: /Staff/ })).not.toBeInTheDocument()
+    expect(within(menu).getByRole("menuitem", { name: /admin\.iht/ })).toHaveAttribute("aria-current", "page")
+    expect(within(menu).getByRole("menuitem", { name: /lms\.iht/ })).toHaveAttribute("href", "http://localhost:3005")
+    expect(within(menu).getByRole("menuitem", { name: /IHT ID/ })).toHaveAttribute("href", "http://localhost:3001")
+    expect(within(menu).queryByRole("menuitem", { name: /Учителям/ })).not.toBeInTheDocument()
   })
 
   test("an administrator who also teaches gets the link to Staff as well", async () => {
@@ -47,6 +47,6 @@ describe("profile menu", () => {
 
     const menu = await openMenu(user)
 
-    expect(within(menu).getByRole("menuitem", { name: /Staff/ })).toHaveAttribute("href", "http://localhost:3003")
+    expect(within(menu).getByRole("menuitem", { name: /Учителям/ })).toHaveAttribute("href", "http://localhost:3003")
   })
 })

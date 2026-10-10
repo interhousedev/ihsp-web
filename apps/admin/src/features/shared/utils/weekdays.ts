@@ -1,5 +1,5 @@
-/** ISO weekdays used by the API: 1 = Monday ... 6 = Saturday. Study days are Monday to Saturday. */
-export const STUDY_WEEKDAYS = [1, 2, 3, 4, 5, 6] as const
+/** ISO weekdays used by the API: 1 = Monday ... 7 = Sunday. Study days are Monday to Friday. */
+export const STUDY_WEEKDAYS = [1, 2, 3, 4, 5] as const
 
 /**
  * A date (2026-10-05 is a Monday) with the given ISO weekday, so weekday names come from the user's locale

@@ -106,7 +106,7 @@ describe("exams list", () => {
     const english = rowOf("English", "Midterm 1")
 
     expect(within(english).getByText("Date not set yet")).toBeInTheDocument()
-    expect(english).toHaveTextContent("Control week 12–17 Oct")
+    expect(english).toHaveTextContent("Control week 12–16 Oct")
     expect(english).toHaveTextContent("in 5 days")
   })
 
@@ -251,7 +251,7 @@ describe("preparation page", () => {
     renderSp(<ExamPage />, { route: view(assessmentIds.englishWeek) })
 
     expect(await screen.findByText("Date not set yet")).toBeInTheDocument()
-    expect(screen.getByText("12–17 Oct")).toBeInTheDocument()
+    expect(screen.getByText("12–16 Oct")).toBeInTheDocument()
     expect(screen.getByTestId("exam-countdown")).toHaveTextContent("in 5 days")
   })
 

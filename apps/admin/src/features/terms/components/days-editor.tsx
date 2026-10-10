@@ -9,7 +9,10 @@ import { TOUCH, TOUCH_ICON } from "../../shared/utils/touch"
 
 type Moved = { date: string; follows_weekday: number }
 
-/** Holidays (non-study days) and moved study days such as "Saturday 14.12 follows Monday" (ACA-4, ADM-18). */
+/**
+ * Holidays (non-study days) and moved study days such as "Sunday 13.12 follows Monday" (ACA-4, ADM-18). The date
+ * pickers are generic: the API rejects a moved day on a Saturday and says so.
+ */
 export function DaysEditor({
   nonStudyDays,
   movedDays,

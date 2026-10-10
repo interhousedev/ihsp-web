@@ -56,7 +56,7 @@ export function TimetableGrid({ term, entries, view, onAdd, onOpen }: Props) {
               <th scope="row" className="p-2 text-start font-medium">
                 <span>{period}</span>
                 <span className="text-muted-foreground block text-xs font-normal">
-                  {bellTime(term, period, 1) ?? bellTime(term, period, 6) ?? ""}
+                  {STUDY_WEEKDAYS.map((weekday) => bellTime(term, period, weekday)).find((time) => time !== null) ?? ""}
                 </span>
               </th>
               {STUDY_WEEKDAYS.map((weekday) => {

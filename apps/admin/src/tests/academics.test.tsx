@@ -183,7 +183,7 @@ describe("timetable page", () => {
 
     expect(await screen.findByRole("columnheader", { name: "Monday" })).toBeInTheDocument()
     expect((await screen.findAllByRole("button", { name: /^Edit entry Mathematics/ })).length).toBeGreaterThan(0)
-    expect(screen.getByRole("button", { name: "Add an entry on Saturday, period 6" })).toBeInTheDocument()
+    expect(screen.getByRole("button", { name: "Add an entry on Friday, period 6" })).toBeInTheDocument()
   })
 
   test("on a phone the grid becomes one card per weekday", async () => {

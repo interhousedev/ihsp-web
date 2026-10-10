@@ -31,7 +31,7 @@ describe("bell weekday toggles", () => {
     const buttons = Array.from(group.querySelectorAll("button"))
     const pressed = buttons.filter((button) => button.getAttribute("aria-pressed") === "true")
     expect(pressed).toHaveLength(2)
-    expect(buttons).toHaveLength(6)
+    expect(buttons).toHaveLength(5)
     for (const button of buttons) {
       const on = button.getAttribute("aria-pressed") === "true"
       expect(button.className.includes("aria-pressed:bg-primary")).toBe(true)

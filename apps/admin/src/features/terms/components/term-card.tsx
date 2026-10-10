@@ -7,6 +7,7 @@ import { useControlLabel } from "../../shared/hooks/use-control-label"
 import { CONTROL_NAMES } from "../../shared/utils/controls"
 import { formatPeriod } from "../../shared/utils/period"
 import { TOUCH } from "../../shared/utils/touch"
+import { STUDY_WEEKDAYS } from "../../shared/utils/weekdays"
 import { EmisBadge } from "./emis-badge"
 
 /**
@@ -54,7 +55,7 @@ export function TermCard({ term, onEdit }: { term: Term; onEdit: () => void }) {
             <li key={`${bell.period}-${index}`} className="text-muted-foreground flex flex-wrap items-center gap-x-1.5">
               <span>
                 {t("bell", { period: bell.period, start: bell.start, end: bell.end })}
-                {bell.weekdays.length < 6
+                {STUDY_WEEKDAYS.some((weekday) => !bell.weekdays.includes(weekday))
                   ? ` · ${bell.weekdays.map((weekday) => f.weekday(`2026-10-${String(4 + weekday).padStart(2, "0")}`, "short")).join(", ")}`
                   : ""}
               </span>

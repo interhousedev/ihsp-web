@@ -4,7 +4,7 @@ import { apiUrl, makeLesson, server, weekLessons } from "@ihsp/test-utils"
 import { screen, within } from "@testing-library/react"
 import { HttpResponse, http } from "msw"
 import { TimetablePage } from "../features/timetable/components/timetable-page"
-import { lessonsAt, mondayOf, periodsOf, selectedDay } from "../features/timetable/utils/week"
+import { lessonsAt, mondayOf, periodsOf, selectedDay, weekDays, weekRange } from "../features/timetable/utils/week"
 import { configureTests, freezeTime, hrefOf, renderStaff, setViewportWidth, unfreezeTime } from "./helpers"
 
 configureTests()
@@ -24,9 +24,85 @@ describe("timetable page", () => {
 
     const table = await screen.findByRole("table")
 
-    expect(within(table).getAllByRole("columnheader").length).toBeGreaterThanOrEqual(7)
     expect(within(table).getByText("Period 1")).toBeInTheDocument()
     expect(within(table).getAllByText("Physics").length).toBeGreaterThan(0)
+  })
+
+  test("the week grid has exactly five day columns, Monday to Friday", async () => {
+    renderStaff(<TimetablePage />, { route: "/timetable/" })
+
+    const table = await screen.findByRole("table")
+    // The first column header is the empty corner cell above the periods.
+    const [, ...dayHeaders] = within(table).getAllByRole("columnheader")
+
+    expect(dayHeaders.map((header) => header.textContent)).toEqual([
+      "Mon5 Oct",
+      "Tue6 Oct",
+      "Wed7 Oct",
+      "Thu8 Oct",
+      "Fri9 Oct",
+    ])
+    expect(within(table).queryByText(/^(Sat|Sun)/)).not.toBeInTheDocument()
+  })
+
+  test("the timetable is requested for Monday to Friday only", async () => {
+    let requested: URL | null = null
+    server.use(
+      http.get(apiUrl("/v1/staff/timetable"), ({ request }) => {
+        requested = new URL(request.url)
+        return HttpResponse.json(weekLessons)
+      }),
+    )
+    renderStaff(<TimetablePage />, { route: "/timetable/" })
+
+    await screen.findByRole("table")
+
+    expect(requested).not.toBeNull()
+    expect((requested as unknown as URL).searchParams.get("from")).toBe("2026-10-05")
+    expect((requested as unknown as URL).searchParams.get("to")).toBe("2026-10-09")
+  })
+
+  test("the week label ends on Friday", async () => {
+    renderStaff(<TimetablePage />, { route: "/timetable/" })
+
+    expect(await screen.findByText("5 Oct – 9 Oct")).toBeInTheDocument()
+  })
+
+  test("lessons dated on a Saturday or Sunday are not drawn", async () => {
+    const monday = makeLesson({ weekday: 1, period: 1, subject: "math", room: "r101", subgroup: null })
+    const saturday = makeLesson(
+      { weekday: 1, period: 6, subject: "physics", room: "r102", subgroup: null },
+      { id: "00000000-0000-4000-8000-0000000005a7", date: "2026-10-10" },
+    )
+    const sunday = makeLesson(
+      { weekday: 1, period: 6, subject: "physics", room: "r102", subgroup: null },
+      { id: "00000000-0000-4000-8000-0000000005a8", date: "2026-10-11" },
+    )
+    server.use(http.get(apiUrl("/v1/staff/timetable"), () => HttpResponse.json([monday, saturday, sunday])))
+    renderStaff(<TimetablePage />, { route: "/timetable/" })
+
+    const table = await screen.findByRole("table")
+
+    expect(within(table).getAllByText("Mathematics")).toHaveLength(1)
+    expect(within(table).queryByText("Physics")).not.toBeInTheDocument()
+    // The period that only the weekend lessons use gets no empty row, and there is still no weekend column.
+    expect(within(table).queryByText("Period 6")).not.toBeInTheDocument()
+    expect(within(table).getAllByRole("columnheader")).toHaveLength(6)
+  })
+
+  test("a week with lessons only on Saturday shows an empty grid, not an error", async () => {
+    const saturday = makeLesson(
+      { weekday: 1, period: 2, subject: "physics", room: "r102", subgroup: null },
+      { id: "00000000-0000-4000-8000-0000000005a9", date: "2026-10-10" },
+    )
+    server.use(http.get(apiUrl("/v1/staff/timetable"), () => HttpResponse.json([saturday])))
+    renderStaff(<TimetablePage />, { route: "/timetable/" })
+
+    const table = await screen.findByRole("table")
+
+    expect(within(table).queryByText("Physics")).not.toBeInTheDocument()
+    expect(within(table).queryByText(/Period \d/)).not.toBeInTheDocument()
+    expect(screen.queryByRole("alert")).not.toBeInTheDocument()
   })
 
   test("a past lesson without attendance gets a warning badge; one with attendance does not", async () => {
@@ -115,7 +191,16 @@ describe("timetable page", () => {
 
     const days = await screen.findByRole("group", { name: "Days of the week" })
 
-    expect(within(days).getAllByRole("button")).toHaveLength(7)
+    const buttons = within(days).getAllByRole("button")
+
+    expect(buttons).toHaveLength(5)
+    expect(buttons.map((button) => button.getAttribute("aria-label"))).toEqual([
+      "Monday 5 October",
+      "Tuesday 6 October",
+      "Wednesday 7 October",
+      "Thursday 8 October",
+      "Friday 9 October",
+    ])
     expect(screen.queryByRole("table")).not.toBeInTheDocument()
     expect(screen.getAllByText(/Physics/).length).toBeGreaterThan(0)
   })
@@ -138,6 +223,17 @@ describe("week helpers", () => {
     expect(selectedDay("2026-10-05", null)).toBe("2026-10-07")
     expect(selectedDay("2026-10-12", null)).toBe("2026-10-12")
     expect(selectedDay("2026-10-05", "2026-10-09")).toBe("2026-10-09")
+  })
+
+  test("the school week is Monday to Friday", () => {
+    expect(weekDays("2026-10-05")).toEqual(["2026-10-05", "2026-10-06", "2026-10-07", "2026-10-08", "2026-10-09"])
+    expect(weekRange("2026-10-05")).toEqual({ from: "2026-10-05", to: "2026-10-09" })
+  })
+
+  test("a ?day= on the weekend is ignored: today (if in the week) or Monday", () => {
+    expect(selectedDay("2026-10-05", "2026-10-10")).toBe("2026-10-07")
+    expect(selectedDay("2026-10-05", "2026-10-11")).toBe("2026-10-07")
+    expect(selectedDay("2026-10-12", "2026-10-17")).toBe("2026-10-12")
   })
 
   test("periods and cells", () => {

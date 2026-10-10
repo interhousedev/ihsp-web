@@ -3,7 +3,7 @@ import type { ControlPeriod } from "@ihsp/api"
 type DateFormat = (value: string, options?: Intl.DateTimeFormatOptions) => string
 
 /**
- * A week as short as it can be read: `12–17 Oct`, `28 Oct – 2 Nov`, or with the years when it crosses New Year.
+ * A week as short as it can be read: `12–16 Oct`, `28 Oct – 1 Nov`, or with the years when it crosses New Year.
  * `format` is `useFormatters().date`.
  */
 export function formatPeriod(format: DateFormat, period: ControlPeriod): string {

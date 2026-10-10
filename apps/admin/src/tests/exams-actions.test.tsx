@@ -284,7 +284,7 @@ describe("set the date of a control week", () => {
     expect(within(dialog).queryByLabelText(/^Subject/)).not.toBeInTheDocument()
     expect(within(dialog).queryByRole("checkbox")).not.toBeInTheDocument()
     expect(within(dialog).getByLabelText("Control week")).toHaveValue("midterm_1")
-    expect(within(dialog).getByText("Week: 12–17 Oct")).toBeInTheDocument()
+    expect(within(dialog).getByText("Week: 12–16 Oct")).toBeInTheDocument()
   })
 
   test("creates the control with the row's subject, group, kind and week", async () => {
@@ -497,7 +497,7 @@ describe("export", () => {
       await waitUntil(() => blob !== null, "no file")
       const text = await (blob as unknown as Blob).text()
       expect(text).toContain(
-        ",2026-10-12 – 2026-10-17,English,2TN2,Midterm (PC),Midterm 1,,,Date not set,Administration,",
+        ",2026-10-12 – 2026-10-16,English,2TN2,Midterm (PC),Midterm 1,,,Date not set,Administration,",
       )
     } finally {
       URL.createObjectURL = originalCreate

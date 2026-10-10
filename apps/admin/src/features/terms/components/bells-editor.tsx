@@ -8,8 +8,8 @@ import { TOUCH } from "../../shared/utils/touch"
 import { BellRow } from "./bell-row"
 
 /**
- * Periods with start and end times and the weekdays they apply to. A different time on Saturday is a second row
- * with the same period number and only Saturday selected (ACA-4). EMIS times are the defaults: changing the time or
+ * Periods with start and end times and the weekdays they apply to. A different time on Friday is a second row
+ * with the same period number and only Friday selected (ACA-4). EMIS times are the defaults: changing the time or
  * the weekdays of an EMIS period makes it an override (`source: "override"`) that the sync leaves alone, and the row
  * menu resets it to EMIS. New periods are always by hand.
  */

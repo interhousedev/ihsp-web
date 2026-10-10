@@ -27,7 +27,7 @@ export const broadcastScheduled: BroadcastItem = {
   ...broadcastDraft,
   id: "0000000d-0000-4000-8000-000000000002",
   title: "Parents' meeting",
-  text: "Parents' meeting on Saturday at 10:00.",
+  text: "Parents' meeting on Friday at 10:00.",
   audience: audienceEveryone,
   status: "scheduled",
   scheduled_at: "2026-10-09T05:00:00Z",

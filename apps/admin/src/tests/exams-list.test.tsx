@@ -202,7 +202,7 @@ describe("exam filters", () => {
 
     await user.selectOptions(await screen.findByRole("combobox", { name: "Control week" }), "midterm_2")
 
-    await watcher.waitFor((params) => params.get("from") === "2026-11-16" && params.get("to") === "2026-11-21")
+    await watcher.waitFor((params) => params.get("from") === "2026-11-16" && params.get("to") === "2026-11-20")
     expect(await within(table()).findByText("History")).toBeInTheDocument()
     await waitUntil(() => within(table()).queryByText("Algebra and functions") === null, "the other weeks stay")
   })
@@ -216,9 +216,9 @@ describe("exam filters", () => {
       .map((option) => option.textContent)
     expect(labels).toEqual([
       "All control weeks",
-      "Midterm 1 · 12–17 Oct",
-      "Midterm 2 · 16–21 Nov",
-      "Final (FC) · 14–19 Dec",
+      "Midterm 1 · 12–16 Oct",
+      "Midterm 2 · 16–20 Nov",
+      "Final (FC) · 14–18 Dec",
     ])
   })
 
@@ -271,7 +271,7 @@ describe("control weeks without a date", () => {
     await watcher.waitFor((params) => params.get("undated") === "true")
     await within(table()).findByText("English")
     const row = within(rowOf("English"))
-    expect(row.getByText("12–17 Oct")).toBeInTheDocument()
+    expect(row.getByText("12–16 Oct")).toBeInTheDocument()
     expect(row.getByText("Midterm 1")).toBeInTheDocument()
     expect(row.getByText("Date not set")).toBeInTheDocument()
     expect(row.getByRole("button", { name: "Set the date of English for 2TN2" })).toBeInTheDocument()

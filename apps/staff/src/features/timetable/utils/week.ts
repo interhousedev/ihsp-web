@@ -12,9 +12,17 @@ export function mondayOf(value: string | null | undefined): string {
   return startOfWeek(isIsoDate(value) ? value : todayIso())
 }
 
-/** `[monday, sunday]` as the `from` / `to` of `GET /v1/staff/timetable`. */
+/** The school week is Monday to Friday (the lyceum does not study on Saturdays). */
+export const SCHOOL_DAYS = 5
+
+/** The five school days of the week that starts on `monday`, Monday first. */
+export function weekDays(monday: string): string[] {
+  return Array.from({ length: SCHOOL_DAYS }, (_, index) => addDays(monday, index))
+}
+
+/** `[monday, friday]` as the `from` / `to` of `GET /v1/staff/timetable`. */
 export function weekRange(monday: string): { from: string; to: string } {
-  return { from: monday, to: addDays(monday, 6) }
+  return { from: monday, to: addDays(monday, SCHOOL_DAYS - 1) }
 }
 
 export type Period = { period: number; starts_at: string; ends_at: string }
@@ -42,7 +50,7 @@ export function lessonsAt(lessons: readonly LessonItem[], date: string, period: 
 
 /** The day shown on phones: `?day=` when it is inside the week, otherwise today (if in the week) or Monday. */
 export function selectedDay(monday: string, requested: string | null | undefined): string {
-  const days = Array.from({ length: 7 }, (_, index) => addDays(monday, index))
+  const days = weekDays(monday)
   if (isIsoDate(requested) && days.includes(requested)) return requested
   const today = todayIso()
   return days.includes(today) ? today : monday

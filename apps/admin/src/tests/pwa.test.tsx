@@ -51,8 +51,8 @@ describe("the files of the installable Admin", () => {
   test("the manifest names the app and uses its own id", () => {
     const manifest = JSON.parse(readFileSync(join(PUBLIC, "manifest.webmanifest"), "utf8")) as Record<string, unknown>
 
-    expect(manifest.name).toBe("IHSP Admin")
-    expect(manifest.short_name).toBe("Admin")
+    expect(manifest.name).toBe("admin.iht")
+    expect(manifest.short_name).toBe("admin.iht")
     expect(manifest.id).toBe("/?app=admin")
     expect(manifest.scope).toBe("/")
     expect(manifest.display).toBe("standalone")
@@ -85,11 +85,11 @@ describe("the files of the installable Admin", () => {
 describe("pwa mode", () => {
   test("the head script adds the manifest link and the app name for iOS", () => {
     setMode("pwa")
-    new Function(createPwaHeadScript("IHSP Admin"))()
+    new Function(createPwaHeadScript("admin.iht"))()
 
     expect(document.head.querySelector("link[rel=manifest]")?.getAttribute("href")).toBe("/manifest.webmanifest")
     expect(document.head.querySelector("meta[name=apple-mobile-web-app-title]")?.getAttribute("content")).toBe(
-      "IHSP Admin",
+      "admin.iht",
     )
   })
 
@@ -119,7 +119,7 @@ describe("a plain website", () => {
   test("adds no manifest, registers nothing and offers no install entry", async () => {
     setMode("web")
     env.NODE_ENV = "production"
-    new Function(createPwaHeadScript("IHSP Admin"))()
+    new Function(createPwaHeadScript("admin.iht"))()
 
     renderAdmin(
       <>

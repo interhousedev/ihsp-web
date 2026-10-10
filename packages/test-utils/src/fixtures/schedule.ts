@@ -37,7 +37,7 @@ export const currentTerm: Term = {
   ends_on: "2026-12-30",
   bells,
   non_study_days: ["2026-10-01"],
-  moved_days: [{ date: "2026-10-31", follows_weekday: 1 }],
+  moved_days: [{ date: "2026-10-30", follows_weekday: 1 }],
   control_periods: controlPeriods,
   is_current: true,
 }

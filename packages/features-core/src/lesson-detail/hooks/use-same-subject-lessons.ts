@@ -14,7 +14,7 @@ export function useSameSubjectLessons(
 ): { lessons: LessonItem[]; isPending: boolean } {
   const monday = startOfWeek(lesson.date)
   const query = useQuery({
-    ...getStaffTimetableQuery({ from: monday, to: addDays(monday, 6) }),
+    ...getStaffTimetableQuery({ from: monday, to: addDays(monday, 4) }),
     enabled,
   })
   const lessons = (query.data ?? [])

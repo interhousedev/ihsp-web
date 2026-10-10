@@ -4,9 +4,9 @@ import type { SubjectKey } from "./world"
 
 /** The control weeks Administration set for the current term (2026-2027 half 1). */
 export const controlPeriods: ControlPeriods = {
-  midterm_1: { start: "2026-10-12", end: "2026-10-17" },
-  midterm_2: { start: "2026-11-16", end: "2026-11-21" },
-  final: { start: "2026-12-14", end: "2026-12-19" },
+  midterm_1: { start: "2026-10-12", end: "2026-10-16" },
+  midterm_2: { start: "2026-11-16", end: "2026-11-20" },
+  final: { start: "2026-12-14", end: "2026-12-18" },
 }
 
 /** Whole days from the fixture "today" (2026-10-07) to a date. */

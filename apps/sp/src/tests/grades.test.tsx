@@ -96,10 +96,12 @@ describe("grades by day", () => {
     expect(await screen.findByText("No marks on this day.")).toBeInTheDocument()
   })
 
-  test("the arrows skip Sundays", () => {
-    expect(shiftStudyDay("2026-10-05", -1)).toBe("2026-10-03")
-    expect(shiftStudyDay("2026-10-03", 1)).toBe("2026-10-05")
+  test("the arrows skip Saturdays and Sundays", () => {
+    expect(shiftStudyDay("2026-10-05", -1)).toBe("2026-10-02")
+    expect(shiftStudyDay("2026-10-02", 1)).toBe("2026-10-05")
     expect(shiftStudyDay("2026-10-06", 1)).toBe("2026-10-07")
+    expect(shiftStudyDay("2026-10-10", -1)).toBe("2026-10-09")
+    expect(shiftStudyDay("2026-10-10", 1)).toBe("2026-10-12")
   })
 })
 

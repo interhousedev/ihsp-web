@@ -24,9 +24,9 @@ describe("profile menu", () => {
     await user.click(await screen.findByRole("button", { name: "Account menu" }))
 
     const menu = await screen.findByRole("menu")
-    expect(within(menu).getByRole("menuitem", { name: /Staff/ })).toHaveAttribute("aria-current", "page")
-    expect(within(menu).getByRole("menuitem", { name: /LMS/ })).toHaveAttribute("href", "http://localhost:3005")
-    expect(within(menu).getByRole("menuitem", { name: /ID/ })).toHaveAttribute("href", "http://localhost:3001")
-    expect(within(menu).queryByRole("menuitem", { name: /SP|Admin/ })).not.toBeInTheDocument()
+    expect(within(menu).getByRole("menuitem", { name: /Учителям/ })).toHaveAttribute("aria-current", "page")
+    expect(within(menu).getByRole("menuitem", { name: /lms\.iht/ })).toHaveAttribute("href", "http://localhost:3005")
+    expect(within(menu).getByRole("menuitem", { name: /IHT ID/ })).toHaveAttribute("href", "http://localhost:3001")
+    expect(within(menu).queryByRole("menuitem", { name: /my\.iht|admin\.iht/ })).not.toBeInTheDocument()
   })
 })

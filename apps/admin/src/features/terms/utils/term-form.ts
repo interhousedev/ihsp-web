@@ -1,6 +1,7 @@
 import type { Bell, ControlName, ControlPeriods, Term, TermInput } from "@ihsp/api"
 import { minutesOfDay } from "@ihsp/i18n"
 import { CONTROL_NAMES } from "../../shared/utils/controls"
+import { STUDY_WEEKDAYS } from "../../shared/utils/weekdays"
 
 /** One control week while it is edited: both dates empty = not set. */
 export type ControlRange = { start: string | null; end: string | null }
@@ -39,6 +40,20 @@ export function emptyControlForm(): ControlForm {
   return { midterm_1: { ...NO_RANGE }, midterm_2: { ...NO_RANGE }, final: { ...NO_RANGE } }
 }
 
+/**
+ * The bells of a stored term as the form holds them. Terms saved before the lyceum dropped Saturday may still list it:
+ * the API rejects bells on it and the editor has no chip for it, so it is left out here (a bell that only had
+ * Saturday goes with it) and the next save writes the school week only.
+ */
+function schoolWeekBells(bells: Bell[]): Bell[] {
+  return bells
+    .map((bell) => ({
+      ...bell,
+      weekdays: bell.weekdays.filter((day) => STUDY_WEEKDAYS.some((study) => study === day)),
+    }))
+    .filter((bell) => bell.weekdays.length > 0)
+}
+
 export function emptyTermForm(template?: Term): TermForm {
   return {
     academic_year: "",
@@ -47,9 +62,7 @@ export function emptyTermForm(template?: Term): TermForm {
     ends_on: null,
     // A new term starts from the template's times, which Administration now owns: copies are by hand, even when the
     // template's bells came from EMIS (the sync replaces the periods EMIS lists once the term is current).
-    bells: template
-      ? template.bells.map((bell) => ({ ...bell, weekdays: [...bell.weekdays], source: "manual" as const }))
-      : [],
+    bells: template ? schoolWeekBells(template.bells).map((bell) => ({ ...bell, source: "manual" as const })) : [],
     non_study_days: [],
     moved_days: [],
     // The weeks differ every term, so they are never copied from the template.
@@ -63,7 +76,7 @@ export function termToForm(term: Term): TermForm {
     half: term.half,
     starts_on: term.starts_on,
     ends_on: term.ends_on,
-    bells: term.bells.map((bell) => ({ ...bell, weekdays: [...bell.weekdays] })),
+    bells: schoolWeekBells(term.bells),
     non_study_days: [...term.non_study_days],
     moved_days: term.moved_days.map((day) => ({ ...day })),
     control_periods: {

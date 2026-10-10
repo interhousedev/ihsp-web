@@ -93,6 +93,15 @@ function entryFromInput(input: Partial<TimetableEntryInput>, id: string): Timeta
   }
 }
 
+/** The lyceum teaches Monday to Friday (ISO weekdays 1 to 5); a missing weekday defaults to Monday. */
+function isSchoolWeekday(weekday: number | undefined): boolean {
+  return weekday === undefined || (Number.isInteger(weekday) && weekday >= 1 && weekday <= 5)
+}
+
+function notSchoolDay(): Response {
+  return problem(422, "academic/entry-not-school-day", "Lessons are held Monday to Friday")
+}
+
 /** Monday period 1 is taken by Rakhimov T. (Mathematics), so entering him there again is a teacher conflict. */
 function conflictsFor(input: Partial<TimetableEntryInput>) {
   const clash = input.teacher_id === ids.teacherRakhimov && input.weekday === 1 && input.period === 1
@@ -271,6 +280,7 @@ export const scheduleHandlers = [
   http.post(apiUrl("/v1/admin/timetable/copy"), () => HttpResponse.json({ created: timetableEntries.length })),
   http.post(apiUrl("/v1/admin/timetable"), async ({ request }) => {
     const body = await readJson<TimetableEntryInput>(request)
+    if (!isSchoolWeekday(body.weekday)) return notSchoolDay()
     const conflicts = conflictsFor(body)
     if (conflicts.length > 0) {
       return problem(409, "common/conflict", "The timetable entry conflicts with another one", {
@@ -283,6 +293,7 @@ export const scheduleHandlers = [
     const entry = timetableEntries.find((item) => item.id === param(params, "id"))
     if (!entry) return notFound("Timetable entry")
     const body = await readJson<TimetablePatchBody>(request)
+    if (body.weekday !== undefined && !isSchoolWeekday(body.weekday)) return notSchoolDay()
     return HttpResponse.json({
       ...entry,
       weekday: body.weekday ?? entry.weekday,

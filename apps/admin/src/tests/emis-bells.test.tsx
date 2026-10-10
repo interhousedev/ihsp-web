@@ -15,7 +15,7 @@ const HINT = "Synced from EMIS class hours"
 
 /** Period 1 from EMIS, period 7 set by hand: the usual mix after a sync. */
 const mixed: Bell[] = [
-  { period: 1, start: "08:30", end: "09:15", weekdays: [1, 2, 3, 4, 5, 6], source: "emis" },
+  { period: 1, start: "08:30", end: "09:15", weekdays: [1, 2, 3, 4, 5], source: "emis" },
   { period: 7, start: "14:10", end: "14:55", weekdays: [1, 2, 3, 4, 5], source: "manual" },
 ]
 
@@ -88,18 +88,18 @@ describe("bells editor", () => {
     ])
   })
 
-  test("Saturday can be deselected on an EMIS bell", () => {
+  test("Friday can be deselected on an EMIS bell", () => {
     const { onChange } = renderEditor(mixed)
     const emisRow = screen.getAllByRole("listitem")[0] as HTMLElement
-    const saturday = within(within(emisRow).getByRole("group", { name: "Weekdays of period 1" })).getAllByRole(
+    const friday = within(within(emisRow).getByRole("group", { name: "Weekdays of period 1" })).getAllByRole(
       "button",
-    )[5] as HTMLElement
-    expect(saturday).toHaveAttribute("aria-pressed", "true")
+    )[4] as HTMLElement
+    expect(friday).toHaveAttribute("aria-pressed", "true")
 
-    fireEvent.click(saturday)
+    fireEvent.click(friday)
 
     expect(onChange).toHaveBeenLastCalledWith([
-      { ...mixed[0], weekdays: [1, 2, 3, 4, 5], source: "override", emis_start: "08:30", emis_end: "09:15" },
+      { ...mixed[0], weekdays: [1, 2, 3, 4], source: "override", emis_start: "08:30", emis_end: "09:15" },
       mixed[1],
     ])
   })
@@ -126,7 +126,7 @@ describe("bells editor", () => {
         period: 1,
         start: "08:30",
         end: "09:15",
-        weekdays: [1, 2, 3, 4, 5, 6],
+        weekdays: [1, 2, 3, 4, 5],
         source: "emis",
         emis_start: null,
         emis_end: null,
@@ -142,11 +142,11 @@ describe("bells editor", () => {
     setValue(within(manualRow).getByLabelText("Start"), "14:20")
     expect(onChange).toHaveBeenLastCalledWith([mixed[0], { ...mixed[1], start: "14:20" }])
 
-    const saturday = within(within(manualRow).getByRole("group", { name: "Weekdays of period 7" })).getAllByRole(
+    const friday = within(within(manualRow).getByRole("group", { name: "Weekdays of period 7" })).getAllByRole(
       "button",
-    )[5] as HTMLElement
-    fireEvent.click(saturday)
-    expect(onChange).toHaveBeenLastCalledWith([mixed[0], { ...mixed[1], weekdays: [1, 2, 3, 4, 5, 6] }])
+    )[4] as HTMLElement
+    fireEvent.click(friday)
+    expect(onChange).toHaveBeenLastCalledWith([mixed[0], { ...mixed[1], weekdays: [1, 2, 3, 4] }])
 
     await user.click(within(manualRow).getByRole("button", { name: "Actions for period 7" }))
     await user.click(await screen.findByRole("menuitem", { name: "Remove period 7" }))
@@ -160,7 +160,7 @@ describe("bells editor", () => {
 
     expect(onChange).toHaveBeenLastCalledWith([
       ...mixed,
-      { period: 8, start: "", end: "", weekdays: [1, 2, 3, 4, 5, 6], source: "manual" },
+      { period: 8, start: "", end: "", weekdays: [1, 2, 3, 4, 5], source: "manual" },
     ])
   })
 

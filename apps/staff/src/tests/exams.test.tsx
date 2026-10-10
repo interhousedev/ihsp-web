@@ -269,10 +269,10 @@ describe("exams page", () => {
     const row = rowOf(midterm1, "English")
 
     expect(within(row).getByText("Date not set")).toBeInTheDocument()
-    expect(row).toHaveTextContent("Control week 12 Oct – 17 Oct")
+    expect(row).toHaveTextContent("Control week 12 Oct – 16 Oct")
     expect(within(row).getByRole("button", { name: "Set date: English" })).toBeInTheDocument()
     expect(within(row).queryByRole("button", { name: /Edit/ })).not.toBeInTheDocument()
-    expect(within(midterm1).getByText("12 Oct – 17 Oct", { selector: "span" })).toBeInTheDocument()
+    expect(within(midterm1).getByText("12 Oct – 16 Oct", { selector: "span" })).toBeInTheDocument()
   })
 
   test("a suggestion shows where it came from, with the date and the note", async () => {
@@ -536,7 +536,7 @@ describe("exams page", () => {
     expect(within(dialog).getByLabelText("Subject")).toHaveValue(ids.english)
     expect(within(dialog).getByLabelText("Control week")).toHaveValue("midterm_1")
     expect(within(dialog).getByLabelText("Kind")).toHaveValue("midterm")
-    expect(within(dialog).getByText("Control week: 12 Oct – 17 Oct")).toBeInTheDocument()
+    expect(within(dialog).getByText("Control week: 12 Oct – 16 Oct")).toBeInTheDocument()
     await pickDay(user, dialog, 14)
     await user.click(within(dialog).getByRole("button", { name: "Save" }))
 
