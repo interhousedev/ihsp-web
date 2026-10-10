@@ -2,7 +2,7 @@
 import { describe, expect, test } from "bun:test"
 import { apiUrl, notificationItems, server } from "@ihsp/test-utils"
 import { NotificationBell, NotificationCenter } from "@ihsp/features-core"
-import { screen, waitFor, within } from "@testing-library/react"
+import { screen, waitFor } from "@testing-library/react"
 import { HttpResponse, http } from "msw"
 import { configureTests, renderSp } from "./helpers"
 

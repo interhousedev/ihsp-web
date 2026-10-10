@@ -1,4 +1,32 @@
 {
+  "teachers": {
+    "page": {
+      "title": "My teachers",
+      "empty": "No teachers yet. They appear once your timetable has lessons."
+    },
+    "status": {
+      "now": "Now: lesson in {room}",
+      "nowNoRoom": "Now: lesson",
+      "next": "Next: {when}, room {room}",
+      "nextNoRoom": "Next: {when}",
+      "none": "No lessons today"
+    },
+    "contacts": {
+      "title": "Contacts",
+      "none": "No contacts yet",
+      "office": "Room {office}",
+      "copy": "Copy",
+      "copyFailed": "Could not copy"
+    },
+    "detail": {
+      "back": "Teachers",
+      "week": "This week",
+      "noLessons": "No lessons this week",
+      "noLessonsDay": "No lessons",
+      "room": "room {room}",
+      "notFound": "Teacher not found"
+    }
+  },
   "app": {
     "name": "IHSP Student Portal"
   },
@@ -26,6 +54,7 @@
     "attendance": "Attendance",
     "homework": "Homework",
     "exams": "Exams",
+    "teachers": "My teachers",
     "assistant": "Assistant",
     "notebooks": "Notebooks",
     "flashcards": "Flash cards",
@@ -38,7 +67,8 @@
     "groupAcademics": "Academics",
     "groupStudyTools": "Study tools",
     "groupInbox": "Inbox",
-    "groupAccount": "Account"
+    "groupAccount": "Account",
+    "mail": "Email"
   },
   "attendanceStates": {
     "late": "Late",
@@ -84,7 +114,7 @@
     "semester": {
       "title": "This semester",
       "titleNumber": "Semester {number}",
-      "gpa": "GPA",
+      "gpa": "GPA (out of 5)",
       "absences": "Absences",
       "change": "{change} vs last semester",
       "importing": "Importing your marks from EMIS…",
@@ -108,6 +138,13 @@
         "files_expiring": "Open My files",
         "pending_approvals": "Review",
         "sync_failed": "Open grades"
+      },
+      "short": {
+        "emis_reauth": "Update your EMIS password",
+        "no_subgroup": "Subgroup not set",
+        "files_expiring": "{count, plural, one {# file expiring} other {# files expiring}}",
+        "pending_approvals": "{count, plural, one {# action to approve} other {# actions to approve}}",
+        "sync_failed": "EMIS sync failed"
       }
     },
     "getStarted": {
@@ -152,7 +189,7 @@
       "noLessons": "No lessons today.",
       "noExams": "No controls soon.",
       "homeworkDue": "to do",
-      "gpa": "GPA",
+      "gpa": "GPA (out of 5)",
       "cardsDue": "cards due",
       "absences": "absences",
       "anySubject": "your subject",
@@ -164,7 +201,15 @@
         "flashcards_due": "Flash cards",
         "notebook_prompt": "Study idea",
         "attendance": "Attendance",
-        "clock_next_lesson": "Up next"
+        "clock_next_lesson": "Up next",
+        "upcoming_controls": "Upcoming controls",
+        "next_lesson": "Next lesson",
+        "today_lessons": "Today's lessons",
+        "semester_summary": "Semester",
+        "announcements": "Announcements",
+        "new_marks": "New marks",
+        "alerts": "Needs attention",
+        "get_started": "Get started"
       },
       "notebookPrompt": {
         "templates": {
@@ -173,7 +218,20 @@
           "2": "Summarise the last lesson of {subject}",
           "3": "Explain the hardest topic of {subject} simply"
         }
-      }
+      },
+      "groups": {
+        "study": "Study",
+        "control": "Control",
+        "news": "News",
+        "tools": "Tools"
+      },
+      "noAnnouncements": "No announcements.",
+      "noNewMarks": "No new marks.",
+      "newMarks": "new marks",
+      "noAlerts": "Nothing needs attention.",
+      "alertsCount": "to look at",
+      "allSet": "All set.",
+      "stepsLeft": "steps left"
     }
   },
   "timetable": {
@@ -222,10 +280,12 @@
     "tabs": {
       "overview": "Overview",
       "lessons": "Lessons",
-      "marks": "Marks",
       "materials": "Materials"
     },
     "overview": {
+      "planner": "Mark planner",
+      "openNotebook": "Open notebook",
+      "notebook": "Subject notebook",
       "teachers": "Teachers",
       "semesterMark": "Semester mark",
       "emisRating": "EMIS rating",
@@ -243,16 +303,11 @@
       "homework": "Homework"
     },
     "marks": {
-      "filter": "Mark type",
-      "empty": "No marks yet.",
-      "lesson": "Open lesson",
       "type": {
-        "all": "All",
         "lesson": "Lesson",
         "midterm": "Midterm (PC)",
         "final": "Final (FC)"
-      },
-      "openLesson": "Open the lesson of {date}"
+      }
     },
     "materials": {
       "search": "Search materials",
@@ -322,7 +377,7 @@
         "link": "Link"
       },
       "upload": "Upload a file",
-      "pickFromFiles": "Or pick from My files",
+      "pickFromFiles": "Choose from My files",
       "url": "Link address",
       "addLink": "Add link"
     },
@@ -347,7 +402,7 @@
       "finalAvg": "FC",
       "semesterMark": "Semester mark",
       "emisRating": "EMIS",
-      "gpa": "GPA",
+      "gpa": "GPA (out of 5)",
       "marksCount": "{count, plural, one {# mark} other {# marks}}",
       "updated": "Updated {when}",
       "importing": "Importing your marks from EMIS…",
@@ -370,8 +425,8 @@
     "record": {
       "chartTitle": "GPA by semester",
       "chartLabel": "Line chart of GPA by semester",
-      "gpa": "GPA",
-      "gpaList": "GPA of each semester",
+      "gpa": "GPA (out of 5)",
+      "gpaList": "GPA of each semester (out of 5)",
       "semesterShort": "S{number}",
       "semesterLabel": "Semester {number}",
       "emisRating": "EMIS",
@@ -428,19 +483,8 @@
         "final": "Lowest final",
         "notReachable": "not reachable"
       },
-      "assumptions": {
-        "title": "What this is based on",
-        "rounding": "The semester mark is the mean of the lesson, midterm and final averages that have marks, rounded once (half up) to 2 decimals. A mark is reached at the mark minus 0.5: 4.50 gives a 5.",
-        "controlsPerSemester": "A semester has {midterms, plural, one {# midterm} other {# midterms}} and {finals, plural, one {# final} other {# finals}}.",
-        "sameMarkOnRemaining": "A needed mark is the same on every remaining control of its kind.",
-        "pendingAsLessonAverage": "A control without a mark counts as {mark}, your lesson average rounded to a whole mark.",
-        "pendingAsLessonAverageNoMark": "A control without a mark counts as your lesson average rounded to a whole mark.",
-        "noLessonMarks": "You have no lesson marks yet, so nothing can be predicted.",
-        "whatIf": "{count, plural, one {# what-if mark is} other {# what-if marks are}} counted as if you had received them."
-      },
       "whatIf": {
         "title": "What if…",
-        "description": "Try marks you have not received yet and see what changes. Nothing is saved.",
         "type": "Type of mark",
         "mark": "Mark",
         "add": "Add",
@@ -500,12 +544,6 @@
       "room": "Room",
       "week": "Control week",
       "note": "Note",
-      "explain": {
-        "emis": "This date comes from EMIS, which is not always right. It stays unconfirmed until a teacher or the administration confirms it.",
-        "headStudent": "Your head student suggested this date. It stays unconfirmed until a teacher or the administration confirms it.",
-        "tentative": "This date is not confirmed yet. A teacher or the administration will confirm it.",
-        "undated": "No teacher has set a date for this subject yet. The control takes place during this week."
-      },
       "planner": "Mark planner",
       "practice": "Practice quiz"
     },
@@ -604,15 +642,6 @@
         "final": "Lowest final",
         "notReachable": "Not reachable"
       }
-    },
-    "assumptions": {
-      "title": "What the numbers rest on",
-      "rounding": "The semester mark is rounded once, half up, to two decimals; 4.50 counts as a 5.",
-      "controls_per_semester": "A semester has 2 midterms and 1 final.",
-      "same_mark_on_remaining": "Each target assumes the same mark on all remaining controls of a kind.",
-      "pending_as_lesson_average": "A control without a mark counts as your lesson average, rounded to a whole mark.",
-      "no_lesson_marks": "There are no lesson marks yet, so nothing can be predicted.",
-      "what_if": "The marks you try out here are included. They are not real and are not saved."
     },
     "whatIf": {
       "title": "Try other marks",

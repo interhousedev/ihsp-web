@@ -6,19 +6,6 @@ import { Card, CardContent } from "@ihsp/ui"
 import { useExamLabels } from "../hooks/use-exam-labels"
 import { ExamBadges } from "./exam-badges"
 
-/** Why a date is not final: one line per reason (the source of a tentative date, a week without a date). */
-function useExplanations(item: AssessmentItem): string[] {
-  const explain = useT("exams.view.explain")
-  const lines: string[] = []
-  if (!item.has_date) lines.push(explain("undated"))
-  if (item.status === "tentative") {
-    if (item.source === "emis") lines.push(explain("emis"))
-    else if (item.source === "head_student") lines.push(explain("headStudent"))
-    else lines.push(explain("tentative"))
-  }
-  return lines
-}
-
 function Fact({ label, children }: { label: string; children: string }) {
   return (
     <div className="flex flex-col gap-0.5">
@@ -33,7 +20,6 @@ export function ExamSummary({ item }: { item: AssessmentItem }) {
   const t = useT("exams.view")
   const f = useFormatters()
   const labels = useExamLabels()
-  const explanations = useExplanations(item)
   return (
     <Card>
       <CardContent className="flex flex-col gap-4">
@@ -46,11 +32,6 @@ export function ExamSummary({ item }: { item: AssessmentItem }) {
             {labels.countdown(item)}
           </p>
         </div>
-        {explanations.map((line) => (
-          <p key={line} className="text-muted-foreground text-sm">
-            {line}
-          </p>
-        ))}
         <dl className="grid grid-cols-2 gap-3 md:grid-cols-4">
           {item.has_date ? (
             <Fact label={t("date")}>

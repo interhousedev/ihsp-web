@@ -1,10 +1,10 @@
 "use client"
 
-import type { PlannerAssumption, PlannerMarkType, PlannerTargetStatus } from "@ihsp/api"
+import type { PlannerMarkType, PlannerTargetStatus } from "@ihsp/api"
 import { useT } from "@ihsp/i18n"
 import { useMemo } from "react"
 
-/** The words of the planner that depend on a code of the answer (a kind of mark, a target status, an assumption). */
+/** The words of the planner that depend on a code of the answer (a kind of mark, a target status). */
 export type PlannerLabels = {
   /** "Lessons", "Midterm", "Final": the heading of an average. */
   type: (type: PlannerMarkType) => string
@@ -14,8 +14,6 @@ export type PlannerLabels = {
   missing: (type: PlannerMarkType) => string
   /** "Secured", "Needs marks", "Out of reach", "Not known yet" */
   status: (status: PlannerTargetStatus) => string
-  /** One line for each assumption code. */
-  assumption: (code: PlannerAssumption) => string
 }
 
 export function usePlannerLabels(): PlannerLabels {
@@ -38,20 +36,11 @@ export function usePlannerLabels(): PlannerLabels {
       not_reachable: t("target.status.not_reachable"),
       unknown: t("target.status.unknown"),
     }
-    const assumptions = {
-      rounding: t("assumptions.rounding"),
-      controls_per_semester: t("assumptions.controls_per_semester"),
-      same_mark_on_remaining: t("assumptions.same_mark_on_remaining"),
-      pending_as_lesson_average: t("assumptions.pending_as_lesson_average"),
-      no_lesson_marks: t("assumptions.no_lesson_marks"),
-      what_if: t("assumptions.what_if"),
-    }
     return {
       type: (type) => types[type],
       tryType: (type) => tryTypes[type],
       missing: (type) => missing[type],
       status: (status) => statuses[status],
-      assumption: (code) => assumptions[code],
     }
   }, [t])
 }

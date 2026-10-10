@@ -45,57 +45,6 @@
       "hint": "Telegram qulayroqmi? IHSP mini-ilovasi u yerda oʻrnatmasdan ishlaydi."
     },
     "continue": "Brauzerda davom etish",
-    "lock": {
-      "title": "IHSP qulflangan",
-      "prompt": "PIN-kodni kiriting",
-      "wrong": "PIN-kod notoʻgʻri. {count} ta urinish qoldi.",
-      "lockedOut": "Notoʻgʻri urinishlar juda koʻp. Hisobdan chiqilmoqda…",
-      "signOutFailed": "Hisobdan chiqib boʻlmadi. Ulanishni tekshiring: ilova qulflangan holda qoladi va internet paydo boʻlganda qayta urinadi.",
-      "retry": "Qayta urinish",
-      "forgot": "PIN-kodni unutdingizmi?",
-      "forgotTitle": "PIN-kodni unutdingizmi?",
-      "forgotText": "Siz bu qurilmada hisobdan chiqasiz va PIN-kod oʻchiriladi. Qayta kirish uchun parolingizdan foydalanishingiz mumkin.",
-      "forgotConfirm": "Chiqish",
-      "delete": "Oxirgi raqamni oʻchirish",
-      "digits": "PIN-kod: {total} ta raqamdan {filled} tasi kiritildi",
-      "settings": {
-        "title": "Ilovani qulflash",
-        "description": "Ilova ochilganda va u fonda siz tanlagan vaqt turgandan keyin PIN-kod soʻrash.",
-        "off": "Qulf oʻchirilgan.",
-        "on": "Qulf yoqilgan.",
-        "set": "PIN-kod oʻrnatish",
-        "change": "PIN-kodni almashtirish",
-        "remove": "Oʻchirish",
-        "current": "Joriy PIN-kod",
-        "new": "Yangi PIN-kod (4–6 raqam)",
-        "repeat": "Yangi PIN-kodni takrorlang",
-        "save": "Saqlash",
-        "cancel": "Bekor qilish",
-        "errors": {
-          "length": "PIN-kod 4–6 raqamdan iborat boʻlishi kerak.",
-          "mismatch": "PIN-kodlar mos kelmadi.",
-          "wrong": "PIN-kod notoʻgʻri.",
-          "storage": "PIN-kodni bu qurilmada saqlab boʻlmadi."
-        },
-        "done": {
-          "set": "Qulf yoqildi.",
-          "change": "PIN-kod almashtirildi.",
-          "remove": "Qulf oʻchirildi."
-        },
-        "relock": {
-          "title": "PIN-kodni qayta soʻrash",
-          "hint": "Ilova PIN-kodni qayta soʻramasdan oldin fonda qancha turishi mumkin. Ilova ishga tushganda PIN-kod har doim soʻraladi.",
-          "options": {
-            "immediately": "Darhol",
-            "1m": "1 daqiqadan keyin",
-            "5m": "5 daqiqadan keyin",
-            "15m": "15 daqiqadan keyin",
-            "1h": "1 soatdan keyin",
-            "never": "Faqat ilova ishga tushganda"
-          }
-        }
-      }
-    },
     "hub": {
       "title": "IHSP ning boshqa ilovalari",
       "subtitle": "Har bir ilova alohida oʻrnatiladi: uni oching va bosh ekranga qoʻshing.",

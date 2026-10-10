@@ -5,6 +5,13 @@
       "new": "Yangi daftar",
       "search": "Daftarlarni qidirish",
       "empty": "Daftarlar hali yoʻq.",
+      "folders": {
+        "all": "Barchasi",
+        "subject": "Fan daftarlari",
+        "course": "Kurs daftarlari",
+        "mine": "Mening daftarlarim"
+      },
+      "showMore": "Yana koʻrsatish",
       "sources": "{count} ta manba",
       "noResults": "«{query}» soʻrovi boʻyicha daftarlar topilmadi.",
       "meta": "{sources} · {when}"
@@ -160,7 +167,6 @@
       "alreadyAdded": "Allaqachon qoʻshilgan",
       "noText": "Oʻqiladigan matn yoʻq",
       "rejected": "{title}: {reason}",
-      "description": "Daftar nimaga asoslanib javob berishini tanlang.",
       "tabs": "Manba turlari",
       "selected": "{count} ta tanlandi",
       "full": "Daftarda manbalar limitiga yetildi. Yangisini qoʻshish uchun birini olib tashlang.",
@@ -170,7 +176,8 @@
       "files": {
         "search": "Fayllardan qidirish",
         "empty": "Hozircha fayllar yoʻq. Birinchisini yuklang.",
-        "noMatch": "Fayllar topilmadi."
+        "noMatch": "Fayllar topilmadi.",
+        "browse": "Barcha fayllarim"
       },
       "chats": {
         "empty": "Hozircha chatlar yoʻq. Avval yordamchi bilan suhbatlashing, keyin chatni shu yerga qoʻshing."
@@ -240,7 +247,7 @@
     "chat": {
       "placeholder": "Manbalar haqida savol bering yoki biror narsa yaratishni soʻrang",
       "sourcesCount": "{count} ta manba",
-      "noSources": "Kamida bitta manbani tanlang",
+      "noSources": "Manbalar tanlanmagan — javob materiallarga tayanmaydi",
       "disclaimer": "Javoblar xato boʻlishi mumkin. Ularni manbalar bilan solishtiring.",
       "thinking": "Manbalaringiz oʻqilmoqda…",
       "stop": "Toʻxtatish",
@@ -294,11 +301,9 @@
       "title": "Chatni sozlash",
       "style": {
         "default": {
-          "hint": "Tadqiqot va gʻoyalar uchun.",
           "label": "Standart"
         },
         "learning_guide": {
-          "hint": "Savol beradi va bosqichma-bosqich tushuntiradi.",
           "label": "Murabbiy"
         },
         "custom": "Oʻz uslubi",
@@ -321,7 +326,6 @@
         "en": "English"
       },
       "customLabel": "Uslub boʻyicha koʻrsatma",
-      "customHint": "U manbalar va havolalar haqidagi qoidalarni bekor qilmaydi.",
       "customCount": "{count}/{max}",
       "presets": {
         "label": "Tayyor sozlamalar",
@@ -339,7 +343,6 @@
       "goal": {
         "label": "Maqsad",
         "placeholder": "Nima ustida ishlayapsiz?",
-        "hint": "Ixtiyoriy. Javoblar shunga moslab beriladi.",
         "left": "{count} ta belgi qoldi"
       }
     },
@@ -350,7 +353,7 @@
         "description": "Oʻquv materiallari yaratish uchun manbalar qoʻshing."
       },
       "addNote": "Qayd qoʻshish",
-      "needSources": "Avval manbani qoʻshing va tanlang",
+      "noSources": "Manbalar tanlanmagan — javob materiallarga tayanmaydi",
       "customize": "Sozlash: {kind}",
       "collapse": "Studiyani yigʻish",
       "tiles": "Oʻquv materiallarini yaratish",
@@ -793,7 +796,6 @@
       "action": "Tanlangan qaydlarni birlashtirish",
       "hint": "Birlashtirish uchun kamida ikkita qayd tanlang.",
       "title": "Qaydlarni birlashtirish",
-      "description": "Tanlangan qaydlar bittaga birlashadi; sarlavhalari boʻlim sarlavhasi boʻladi.",
       "titleLabel": "Yangi qayd sarlavhasi",
       "defaultTitle": "Qaydlar · {title}",
       "fallbackTitle": "Birlashtirilgan qaydlar",

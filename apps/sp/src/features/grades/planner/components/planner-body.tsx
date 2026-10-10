@@ -8,7 +8,6 @@ import { QueryState } from "../../../shared/components/query-state"
 import { usePlanner } from "../hooks/use-planner"
 import { gradesHref } from "../utils/hrefs"
 import type { WhatIfMark } from "../utils/what-if"
-import { PlannerAssumptions } from "./planner-assumptions"
 import { PlannerPrediction } from "./planner-prediction"
 import { PlannerSummary } from "./planner-summary"
 import { PlannerTargets } from "./planner-targets"
@@ -40,7 +39,6 @@ export function PlannerBody({ subjectId, semester }: { subjectId: string; semest
           )}
         </QueryState>
         <WhatIfEditor marks={marks} onChange={setMarks} />
-        {planner ? <PlannerAssumptions assumptions={planner.assumptions} /> : null}
       </div>
     </PageContainer>
   )

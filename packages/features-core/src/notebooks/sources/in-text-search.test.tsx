@@ -10,7 +10,7 @@ import {
   setCourseWorkspaceReadOnly,
 } from "@ihsp/test-utils"
 import { screen, waitFor, within } from "@testing-library/react"
-import { HttpResponse, http } from "msw"
+import { http } from "msw"
 import { allowSlowRenders, renderNotebook } from "../test-support"
 import { SourcesPanel } from "./sources-panel"
 

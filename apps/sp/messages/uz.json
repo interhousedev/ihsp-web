@@ -1,4 +1,32 @@
 {
+  "teachers": {
+    "page": {
+      "title": "Oʻqituvchilarim",
+      "empty": "Hozircha oʻqituvchilar yoʻq. Dars jadvalida darslar paydo boʻlganda koʻrinadi."
+    },
+    "status": {
+      "now": "Hozir: {room}-xonada dars",
+      "nowNoRoom": "Hozir: dars",
+      "next": "Keyingi: {when}, {room}-xona",
+      "nextNoRoom": "Keyingi: {when}",
+      "none": "Bugun darslar yoʻq"
+    },
+    "contacts": {
+      "title": "Aloqa",
+      "none": "Aloqa maʼlumotlari hali yoʻq",
+      "office": "{office}-xona",
+      "copy": "Nusxa olish",
+      "copyFailed": "Nusxa olib boʻlmadi"
+    },
+    "detail": {
+      "back": "Oʻqituvchilar",
+      "week": "Shu hafta",
+      "noLessons": "Bu hafta darslar yoʻq",
+      "noLessonsDay": "Dars yoʻq",
+      "room": "{room}-xona",
+      "notFound": "Oʻqituvchi topilmadi"
+    }
+  },
   "app": {
     "name": "IHSP talaba portali"
   },
@@ -26,6 +54,7 @@
     "attendance": "Davomat",
     "homework": "Uy vazifalari",
     "exams": "Imtihonlar",
+    "teachers": "Oʻqituvchilarim",
     "assistant": "Yordamchi",
     "notebooks": "Daftarlar",
     "flashcards": "Kartochkalar",
@@ -38,7 +67,8 @@
     "groupAcademics": "Oʻqish",
     "groupStudyTools": "Oʻqish vositalari",
     "groupInbox": "Kelganlar",
-    "groupAccount": "Hisob"
+    "groupAccount": "Hisob",
+    "mail": "Pochta"
   },
   "attendanceStates": {
     "late": "Kech qoldi",
@@ -84,7 +114,7 @@
     "semester": {
       "title": "Shu semestr",
       "titleNumber": "{number}-semestr",
-      "gpa": "GPA",
+      "gpa": "GPA (5 dan)",
       "absences": "Qoldirilgan darslar",
       "change": "oʻtgan semestrga nisbatan {change}",
       "importing": "Baholaringiz EMIS’dan yuklanmoqda…",
@@ -108,6 +138,13 @@
         "files_expiring": "Fayllarimni ochish",
         "pending_approvals": "Koʻrib chiqish",
         "sync_failed": "Baholarni ochish"
+      },
+      "short": {
+        "emis_reauth": "EMIS parolini yangilang",
+        "no_subgroup": "Kichik guruh belgilanmagan",
+        "files_expiring": "{count, plural, one {# fayl oʻchadi} other {# fayl oʻchadi}}",
+        "pending_approvals": "{count, plural, one {# amal tasdiqlashni kutmoqda} other {# amal tasdiqlashni kutmoqda}}",
+        "sync_failed": "EMIS sinxronizatsiyasi muvaffaqiyatsiz"
       }
     },
     "getStarted": {
@@ -152,7 +189,7 @@
       "noLessons": "Bugun dars yoʻq.",
       "noExams": "Yaqin orada nazorat yoʻq.",
       "homeworkDue": "bajarish kerak",
-      "gpa": "GPA",
+      "gpa": "GPA (5 dan)",
       "cardsDue": "takrorlanadigan kartochka",
       "absences": "qoldirilgan dars",
       "anySubject": "faningiz",
@@ -164,7 +201,15 @@
         "flashcards_due": "Kartochkalar",
         "notebook_prompt": "Oʻqish gʻoyasi",
         "attendance": "Davomat",
-        "clock_next_lesson": "Keyingi dars"
+        "clock_next_lesson": "Keyingi dars",
+        "upcoming_controls": "Yaqin nazoratlar",
+        "next_lesson": "Keyingi dars",
+        "today_lessons": "Bugungi darslar",
+        "semester_summary": "Semestr",
+        "announcements": "Eʼlonlar",
+        "new_marks": "Yangi baholar",
+        "alerts": "Eʼtibor kerak",
+        "get_started": "Boshlash"
       },
       "notebookPrompt": {
         "templates": {
@@ -173,7 +218,20 @@
           "2": "“{subject}” fanining oxirgi darsini qisqacha aytib ber",
           "3": "“{subject}” fanining eng qiyin mavzusini oddiy tushuntir"
         }
-      }
+      },
+      "groups": {
+        "study": "Oʻqish",
+        "control": "Nazorat",
+        "news": "Yangiliklar",
+        "tools": "Asboblar"
+      },
+      "noAnnouncements": "Eʼlonlar yoʻq.",
+      "noNewMarks": "Yangi baholar yoʻq.",
+      "newMarks": "yangi baho",
+      "noAlerts": "Eʼtibor talab qiladigan narsa yoʻq.",
+      "alertsCount": "koʻrish kerak",
+      "allSet": "Hammasi tayyor.",
+      "stepsLeft": "qadam qoldi"
     }
   },
   "timetable": {
@@ -222,10 +280,12 @@
     "tabs": {
       "overview": "Umumiy",
       "lessons": "Darslar",
-      "marks": "Baholar",
       "materials": "Materiallar"
     },
     "overview": {
+      "planner": "Baho rejalashtirgichi",
+      "openNotebook": "Bloknotni ochish",
+      "notebook": "Fan bloknoti",
       "teachers": "Oʻqituvchilar",
       "semesterMark": "Semestr bahosi",
       "emisRating": "EMIS reytingi",
@@ -243,16 +303,11 @@
       "homework": "Vazifa"
     },
     "marks": {
-      "filter": "Baho turi",
-      "empty": "Hozircha baholar yoʻq.",
-      "lesson": "Darsni ochish",
       "type": {
-        "all": "Hammasi",
         "lesson": "Dars",
         "midterm": "Oraliq nazorat (ON)",
         "final": "Yakuniy nazorat (YaN)"
-      },
-      "openLesson": "{date} kungi darsni ochish"
+      }
     },
     "materials": {
       "search": "Materiallarni qidirish",
@@ -322,7 +377,7 @@
         "link": "Havola"
       },
       "upload": "Fayl yuklash",
-      "pickFromFiles": "Yoki “Mening fayllarim”dan tanlang",
+      "pickFromFiles": "“Fayllarim”dan tanlash",
       "url": "Havola manzili",
       "addLink": "Havola qoʻshish"
     },
@@ -347,7 +402,7 @@
       "finalAvg": "YaN",
       "semesterMark": "Semestr",
       "emisRating": "EMIS",
-      "gpa": "GPA",
+      "gpa": "GPA (5 dan)",
       "marksCount": "{count, plural, other {# ta baho}}",
       "updated": "Yangilandi: {when}",
       "importing": "Baholaringiz EMIS’dan yuklanmoqda…",
@@ -370,8 +425,8 @@
     "record": {
       "chartTitle": "Semestrlar boʻyicha GPA",
       "chartLabel": "Semestrlar boʻyicha GPA chiziqli diagrammasi",
-      "gpa": "GPA",
-      "gpaList": "Har bir semestr GPA’si",
+      "gpa": "GPA (5 dan)",
+      "gpaList": "Har bir semestr GPA’si (5 dan)",
       "semesterShort": "S{number}",
       "semesterLabel": "{number}-semestr",
       "emisRating": "EMIS",
@@ -428,19 +483,8 @@
         "final": "Eng past yakuniy",
         "notReachable": "erishib boʻlmaydi"
       },
-      "assumptions": {
-        "title": "Hisob nimaga asoslangan",
-        "rounding": "Semestr bahosi — baho qoʻyilgan dars, oraliq va yakuniy oʻrtachalarning oʻrtachasi, bir marta (yarmidan yuqoriga) 2 xonagacha yaxlitlanadi. Baho oʻrtacha bahodan 0.5 kam boʻlmaganda olinadi: 4.50 — 5 baho.",
-        "controlsPerSemester": "Semestrda {midterms, plural, other {# ta oraliq nazorat}} va {finals, plural, other {# ta yakuniy nazorat}} bor.",
-        "sameMarkOnRemaining": "Kerakli baho shu turdagi har bir qolgan nazorat uchun bir xil.",
-        "pendingAsLessonAverage": "Bahosiz nazorat {mark} deb hisoblanadi: dars baholarining butunga yaxlitlangan oʻrtachasi.",
-        "pendingAsLessonAverageNoMark": "Bahosiz nazorat dars baholarining butunga yaxlitlangan oʻrtachasi deb hisoblanadi.",
-        "noLessonMarks": "Hozircha dars baholari yoʻq, shuning uchun taxmin qilib boʻlmaydi.",
-        "whatIf": "Sinov baholari hisobga olindi: {count}. Ular siz olgandek hisoblanadi."
-      },
       "whatIf": {
         "title": "Agar… boʻlsa",
-        "description": "Hali olmagan baholaringizni sinab koʻring va nima oʻzgarishini koʻring. Hech narsa saqlanmaydi.",
         "type": "Baho turi",
         "mark": "Baho",
         "add": "Qoʻshish",
@@ -500,12 +544,6 @@
       "room": "Xona",
       "week": "Nazorat haftasi",
       "note": "Izoh",
-      "explain": {
-        "emis": "Bu sana EMIS’dan olingan, EMIS esa har doim ham toʻgʻri emas. Oʻqituvchi yoki maʼmuriyat tasdiqlamaguncha sana tasdiqlanmagan hisoblanadi.",
-        "headStudent": "Bu sanani guruh sardori taklif qilgan. Oʻqituvchi yoki maʼmuriyat tasdiqlamaguncha sana tasdiqlanmagan hisoblanadi.",
-        "tentative": "Bu sana hali tasdiqlanmagan. Uni oʻqituvchi yoki maʼmuriyat tasdiqlaydi.",
-        "undated": "Oʻqituvchi bu fan uchun hali sana belgilamagan. Nazorat shu hafta ichida oʻtadi."
-      },
       "planner": "Baho rejalashtiruvchi",
       "practice": "Mashq testi"
     },
@@ -604,15 +642,6 @@
         "final": "Yakuniy kamida",
         "notReachable": "Erishib boʻlmaydi"
       }
-    },
-    "assumptions": {
-      "title": "Hisob-kitob nimaga asoslangan",
-      "rounding": "Semestr bahosi bir marta, yarmidan yuqoriga qarab, ikki xonagacha yaxlitlanadi; 4.50 — bu 5.",
-      "controls_per_semester": "Semestrda 2 ta oraliq va 1 ta yakuniy nazorat bor.",
-      "same_mark_on_remaining": "Hisob bir turdagi qolgan barcha nazoratlarga bir xil baho olinadi deb qilinadi.",
-      "pending_as_lesson_average": "Bahosiz nazorat sizning dars oʻrtacha bahongiz (butun songa yaxlitlangan) deb hisoblanadi.",
-      "no_lesson_marks": "Dars baholari hali yoʻq, shuning uchun prognoz tuzib boʻlmaydi.",
-      "what_if": "Hisobga bu yerda sinab koʻrayotgan baholaringiz ham kiradi. Ular haqiqiy emas va saqlanmaydi."
     },
     "whatIf": {
       "title": "Boshqa baholarni sinab koʻring",

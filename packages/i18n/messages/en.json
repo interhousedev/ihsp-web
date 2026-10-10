@@ -623,7 +623,6 @@
     },
     "attach": {
       "title": "Attach files",
-      "description": "Choose files from My files for the assistant to read.",
       "empty": "You have no ready files yet.",
       "notReadable": "too large or not readable for the assistant",
       "attached": "already attached",
@@ -665,8 +664,6 @@
     "share": {
       "titleChat": "Share this chat",
       "titleSet": "Share this set",
-      "descriptionChat": "Anyone with the link can read this chat without logging in. Tool results are not shown.",
-      "descriptionSet": "Anyone with the link can study or copy this set. Later edits are visible through the link.",
       "warning": "The assistant’s answers may contain personal data such as marks and absences.",
       "includeFuture": "Include future messages",
       "snapshotHint": "Snapshot: messages up to now. The choice cannot be changed later.",
@@ -698,6 +695,12 @@
       "search": "Search chats",
       "notebooks": "Notebooks",
       "newNotebook": "New notebook",
+      "folders": {
+        "subject": "Subject notebooks",
+        "course": "Course notebooks",
+        "mine": "My notebooks"
+      },
+      "showAllFolder": "Show all ({count})",
       "allNotebooks": "All notebooks",
       "recent": "Recent",
       "showMore": "Show more",
@@ -939,7 +942,6 @@
     "add": {
       "button": "Add material",
       "title": "Add to the lesson",
-      "description": "A file goes straight to storage; a link is checked and titled automatically.",
       "kind": "Add as",
       "role": {
         "material": "Material",
@@ -1064,7 +1066,6 @@
     },
     "getShared": {
       "title": "Get a shared deck",
-      "description": "Paste the link of a shared deck. It is copied to your decks with fresh progress.",
       "label": "Share link or code",
       "invalid": "This is not a share link.",
       "cancel": "Cancel",
@@ -1144,7 +1145,6 @@
     },
     "import": {
       "title": "Import cards",
-      "hint": "Paste one card per line, with the term and the definition separated by a tab. You can also choose a .txt, .csv or .tsv file.",
       "textLabel": "Cards to import",
       "placeholder": "Term\tDefinition",
       "separator": "Between term and definition",
@@ -1174,6 +1174,57 @@
       "install": "Install the app",
       "iosHint": "Tap the Share button in Safari, then Add to Home Screen.",
       "manualHint": "Open the browser menu and choose Install app or Add to Home screen."
+    },
+    "lock": {
+      "title": "IHSP is locked",
+      "prompt": "Enter your PIN",
+      "wrong": "Wrong PIN. {count, plural, one {# attempt} other {# attempts}} left.",
+      "lockedOut": "Too many wrong attempts. Signing you out…",
+      "signOutFailed": "Could not sign you out. Check your connection: the app stays locked and tries again when you are online.",
+      "retry": "Try again",
+      "forgot": "Forgot PIN?",
+      "forgotTitle": "Forgot your PIN?",
+      "forgotText": "You will be signed out on this device and the PIN will be removed. You can sign in again with your password.",
+      "forgotConfirm": "Sign out",
+      "delete": "Delete the last digit",
+      "digits": "PIN, {filled} of {total} digits entered",
+      "settings": {
+        "title": "App lock",
+        "description": "Ask for a PIN when the app is opened, and again after it was in the background for the time you choose.",
+        "off": "App lock is off.",
+        "on": "App lock is on.",
+        "set": "Set a PIN",
+        "change": "Change PIN",
+        "remove": "Turn off",
+        "current": "Current PIN",
+        "new": "New PIN (4 to 6 digits)",
+        "repeat": "Repeat the new PIN",
+        "save": "Save",
+        "cancel": "Cancel",
+        "errors": {
+          "length": "The PIN must be 4 to 6 digits.",
+          "mismatch": "The PINs do not match.",
+          "wrong": "Wrong PIN.",
+          "storage": "The PIN could not be saved on this device."
+        },
+        "done": {
+          "set": "App lock is on.",
+          "change": "PIN changed.",
+          "remove": "App lock is off."
+        },
+        "relock": {
+          "title": "Ask for the PIN again",
+          "hint": "How long the app may stay in the background before it asks for the PIN. It always asks when the app starts.",
+          "options": {
+            "immediately": "Immediately",
+            "1m": "After 1 minute",
+            "5m": "After 5 minutes",
+            "15m": "After 15 minutes",
+            "1h": "After 1 hour",
+            "never": "Only when the app starts"
+          }
+        }
+      }
     }
   },
   "paletteSearch": {

@@ -4,6 +4,7 @@ import {
   apiUrl,
   assessmentIds,
   assessments,
+  dashboardLayout,
   flashcardSets,
   ids,
   server,
@@ -16,7 +17,7 @@ import { HttpResponse, http } from "msw"
 import { ExamPage } from "../features/exams/components/exam-page"
 import { ExamsPage } from "../features/exams/components/exams-page"
 import { TodayPage } from "../features/today/components/today-page"
-import { configureTests, findCard, freezeTime, queryCard, renderSp, setValue, unfreezeTime } from "./helpers"
+import { configureTests, findCard, freezeTime, renderSp, setValue, unfreezeTime } from "./helpers"
 
 configureTests()
 
@@ -240,25 +241,17 @@ describe("preparation page", () => {
     expect(screen.queryByText("Not confirmed")).not.toBeInTheDocument()
   })
 
-  test("an EMIS date is marked Not confirmed with a one-line reason", async () => {
+  test("an EMIS date is marked Not confirmed", async () => {
     renderSp(<ExamPage />, { route: view(assessmentIds.physicsEmis) })
 
     expect(await screen.findByText("Not confirmed")).toBeInTheDocument()
-    expect(screen.getByText(/This date comes from EMIS/)).toBeInTheDocument()
   })
 
-  test("a date a head student suggested says so", async () => {
-    renderSp(<ExamPage />, { route: view(assessmentIds.historyHead) })
-
-    expect(await screen.findByText(/Your head student suggested this date/)).toBeInTheDocument()
-  })
-
-  test("a week without a date shows the control week and why", async () => {
+  test("a week without a date shows the control week", async () => {
     renderSp(<ExamPage />, { route: view(assessmentIds.englishWeek) })
 
     expect(await screen.findByText("Date not set yet")).toBeInTheDocument()
     expect(screen.getByText("12–17 Oct")).toBeInTheDocument()
-    expect(screen.getByText(/No teacher has set a date for this subject yet/)).toBeInTheDocument()
     expect(screen.getByTestId("exam-countdown")).toHaveTextContent("in 5 days")
   })
 
@@ -460,7 +453,24 @@ describe("preparation page", () => {
   })
 })
 
-describe("Today countdown card", () => {
+/** The Today dashboard with the controls widget at 2x2 (the 2x1 default shows only the nearest one). */
+function useBigControls() {
+  const base = dashboardLayout.widgets[0] as (typeof dashboardLayout.widgets)[number]
+  server.use(
+    http.get(apiUrl("/v1/me/dashboard"), () =>
+      HttpResponse.json({
+        version: 1,
+        widgets: [
+          { ...base, id: "0000000d-0000-4000-8000-0000000000a1", kind: "upcoming_controls", size: "2x2", config: { layout: "2" } },
+        ],
+      }),
+    ),
+  )
+}
+
+describe("Today controls widget", () => {
+  beforeEach(useBigControls)
+
   test("shows the nearest dated control big and the rest in a short list", async () => {
     renderSp(<TodayPage />)
 
@@ -468,7 +478,6 @@ describe("Today countdown card", () => {
     const next = within(card).getByTestId("exam-next")
 
     expect(next).toHaveTextContent("Midterm 1 · Mathematics · in 7 days")
-    expect(hrefOf(next.closest("a"))).toBe(path(`/exams/view/?id=${assessmentIds.mathMidterm}`))
     const rest = within(card).getAllByTestId("exam-next-item")
     expect(rest.map((item) => item.textContent)).toEqual([
       expect.stringContaining("Physics"),
@@ -489,12 +498,12 @@ describe("Today countdown card", () => {
     expect(within(card).getAllByText("Date not set yet")).toHaveLength(2)
   })
 
-  test("All exams opens the exams list", async () => {
+  test("the tile opens the exams list", async () => {
     renderSp(<TodayPage />)
 
     const card = await findCard("Controls coming up")
 
-    expect(hrefOf(within(card).getByRole("link", { name: "All exams" }))).toBe(path("/exams/"))
+    expect(hrefOf(within(card).getByRole("link"))).toBe(path("/exams/"))
   })
 
   test("asks for the next 14 days from today", async () => {
@@ -513,20 +522,19 @@ describe("Today countdown card", () => {
     expect([search.get("from"), search.get("to")]).toEqual(["2026-10-07", "2026-10-21"])
   })
 
-  test("is not shown when there is nothing in 14 days", async () => {
+  test("says there is nothing soon when there is nothing in 14 days", async () => {
     server.use(http.get(apiUrl("/v1/me/assessments"), () => HttpResponse.json({ items: [] })))
     renderSp(<TodayPage />)
 
-    await findCard("Next lesson")
-    await waitFor(() => expect(queryCard("Controls coming up")).toBeNull())
+    const card = await findCard("Controls coming up")
+    expect(within(card).getByText("No controls soon.")).toBeInTheDocument()
   })
 
-  test("is not shown when the request fails, and the rest of Today stays", async () => {
+  test("says there is nothing soon when the request fails, and the rest of Today stays", async () => {
     server.use(http.get(apiUrl("/v1/me/assessments"), () => HttpResponse.json({}, { status: 500 })))
     renderSp(<TodayPage />)
 
-    await findCard("Next lesson")
-
-    expect(queryCard("Controls coming up")).toBeNull()
+    const card = await findCard("Controls coming up")
+    expect(within(card).getByText("No controls soon.")).toBeInTheDocument()
   })
 })

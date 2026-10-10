@@ -3,6 +3,7 @@ import { describe, expect, test } from "bun:test";
 import { apiUrl, dashboardLayout, problem, server } from "@ihsp/test-utils";
 import { screen, waitFor, within } from "@testing-library/react";
 import { HttpResponse, http } from "msw";
+import { TODAY_KINDS } from "../features/today/dashboard/model";
 import { Dashboard } from "../features/today/dashboard/dashboard";
 import { configureTests, renderSp } from "./helpers";
 
@@ -68,7 +69,10 @@ describe("Dashboard widgets", () => {
     await waitFor(() => expect(bodies).toHaveLength(1));
     expect(bodies[0]?.version).toBe(dashboardLayout.version);
     const saved = bodies[0]?.widgets ?? [];
-    expect(saved).toHaveLength(dashboardLayout.widgets.length + 1);
+    // the saved layout also carries the Today widgets appended on read, plus the new schedule tile
+    expect(saved).toHaveLength(
+      dashboardLayout.widgets.length + TODAY_KINDS.length + 1,
+    );
     expect(saved.find((w) => w.kind === "timetable")).toMatchObject({
       size: "2x2",
       color: "#1C1C1E",

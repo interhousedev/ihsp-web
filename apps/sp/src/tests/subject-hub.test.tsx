@@ -12,7 +12,7 @@ configureTests()
 beforeEach(freezeTime)
 afterEach(unfreezeTime)
 
-const HUB = `/subjects/view/?id=${ids.physics}&semester=4`
+const HUB = `/subjects/view/?id=${ids.physics}&semester=4&tab=lessons`
 
 describe("subject hub", () => {
   test("lists the recent past lessons first and the upcoming ones after, never both mixed", async () => {

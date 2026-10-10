@@ -623,7 +623,6 @@
     },
     "attach": {
       "title": "Fayllarni biriktirish",
-      "description": "Yordamchi oʻqishi uchun “Mening fayllarim”dan fayllarni tanlang.",
       "empty": "Hozircha tayyor fayllar yoʻq.",
       "notReadable": "yordamchi uchun juda katta yoki oʻqib boʻlmaydi",
       "attached": "allaqachon biriktirilgan",
@@ -665,8 +664,6 @@
     "share": {
       "titleChat": "Suhbatni ulashish",
       "titleSet": "Toʻplamni ulashish",
-      "descriptionChat": "Havolasi bor har kim suhbatni kirmasdan oʻqiy oladi. Vositalar natijalari koʻrsatilmaydi.",
-      "descriptionSet": "Havolasi bor har kim toʻplamni oʻrganishi yoki nusxalashi mumkin. Keyingi oʻzgarishlar havola orqali koʻrinadi.",
       "warning": "Yordamchining javoblarida baholar va qoldirilgan darslar kabi shaxsiy ma’lumotlar boʻlishi mumkin.",
       "includeFuture": "Keyingi xabarlarni ham qoʻshish",
       "snapshotHint": "Surat: hozirgacha yozilgan xabarlar. Tanlovni keyin oʻzgartirib boʻlmaydi.",
@@ -698,6 +695,12 @@
       "search": "Chatlarni qidirish",
       "notebooks": "Daftarlar",
       "newNotebook": "Yangi daftar",
+      "folders": {
+        "subject": "Fan daftarlari",
+        "course": "Kurs daftarlari",
+        "mine": "Mening daftarlarim"
+      },
+      "showAllFolder": "Barchasini koʻrsatish ({count})",
       "allNotebooks": "Barcha daftarlar",
       "recent": "Oxirgilar",
       "showMore": "Yana koʻrsatish",
@@ -939,7 +942,6 @@
     "add": {
       "button": "Material qoʻshish",
       "title": "Darsga qoʻshish",
-      "description": "Fayl toʻgʻridan-toʻgʻri xotiraga yuklanadi, havola tekshiriladi va avtomatik nomlanadi.",
       "kind": "Quyidagi sifatida qoʻshish",
       "role": {
         "material": "Material",
@@ -1064,7 +1066,6 @@
     },
     "getShared": {
       "title": "Ulashilgan kollodani olish",
-      "description": "Ulashilgan kolloda havolasini joylashtiring. U natijasiz holda kollodalaringizga nusxalanadi.",
       "label": "Havola yoki kod",
       "invalid": "Bu ulashish havolasi emas.",
       "cancel": "Bekor qilish",
@@ -1144,7 +1145,6 @@
     },
     "import": {
       "title": "Kartochkalarni import qilish",
-      "hint": "Har qatorga bitta kartochka joylashtiring: atama va ta’rif tab bilan ajratilgan. .txt, .csv yoki .tsv faylni ham tanlash mumkin.",
       "textLabel": "Import qilinadigan kartochkalar",
       "placeholder": "Atama\tTa’rif",
       "separator": "Atama va ta’rif orasida",
@@ -1174,6 +1174,57 @@
       "install": "Ilovani oʻrnatish",
       "iosHint": "Safari’da “Ulashish” tugmasini bosing, soʻng “Bosh ekranga qoʻshish”ni tanlang.",
       "manualHint": "Brauzer menyusini oching va “Ilovani oʻrnatish” yoki “Bosh ekranga qoʻshish”ni tanlang."
+    },
+    "lock": {
+      "title": "IHSP qulflangan",
+      "prompt": "PIN-kodni kiriting",
+      "wrong": "PIN-kod notoʻgʻri. {count} ta urinish qoldi.",
+      "lockedOut": "Notoʻgʻri urinishlar juda koʻp. Hisobdan chiqilmoqda…",
+      "signOutFailed": "Hisobdan chiqib boʻlmadi. Ulanishni tekshiring: ilova qulflangan holda qoladi va internet paydo boʻlganda qayta urinadi.",
+      "retry": "Qayta urinish",
+      "forgot": "PIN-kodni unutdingizmi?",
+      "forgotTitle": "PIN-kodni unutdingizmi?",
+      "forgotText": "Siz bu qurilmada hisobdan chiqasiz va PIN-kod oʻchiriladi. Qayta kirish uchun parolingizdan foydalanishingiz mumkin.",
+      "forgotConfirm": "Chiqish",
+      "delete": "Oxirgi raqamni oʻchirish",
+      "digits": "PIN-kod: {total} ta raqamdan {filled} tasi kiritildi",
+      "settings": {
+        "title": "Ilovani qulflash",
+        "description": "Ilova ochilganda va u fonda siz tanlagan vaqt turgandan keyin PIN-kod soʻrash.",
+        "off": "Qulf oʻchirilgan.",
+        "on": "Qulf yoqilgan.",
+        "set": "PIN-kod oʻrnatish",
+        "change": "PIN-kodni almashtirish",
+        "remove": "Oʻchirish",
+        "current": "Joriy PIN-kod",
+        "new": "Yangi PIN-kod (4–6 raqam)",
+        "repeat": "Yangi PIN-kodni takrorlang",
+        "save": "Saqlash",
+        "cancel": "Bekor qilish",
+        "errors": {
+          "length": "PIN-kod 4–6 raqamdan iborat boʻlishi kerak.",
+          "mismatch": "PIN-kodlar mos kelmadi.",
+          "wrong": "PIN-kod notoʻgʻri.",
+          "storage": "PIN-kodni bu qurilmada saqlab boʻlmadi."
+        },
+        "done": {
+          "set": "Qulf yoqildi.",
+          "change": "PIN-kod almashtirildi.",
+          "remove": "Qulf oʻchirildi."
+        },
+        "relock": {
+          "title": "PIN-kodni qayta soʻrash",
+          "hint": "Ilova PIN-kodni qayta soʻramasdan oldin fonda qancha turishi mumkin. Ilova ishga tushganda PIN-kod har doim soʻraladi.",
+          "options": {
+            "immediately": "Darhol",
+            "1m": "1 daqiqadan keyin",
+            "5m": "5 daqiqadan keyin",
+            "15m": "15 daqiqadan keyin",
+            "1h": "1 soatdan keyin",
+            "never": "Faqat ilova ishga tushganda"
+          }
+        }
+      }
     }
   },
   "paletteSearch": {

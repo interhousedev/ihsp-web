@@ -6,6 +6,7 @@ import { Badge } from "@ihsp/ui"
 
 const VARIANT: Record<AttendanceState, "default" | "secondary" | "destructive" | "outline"> = {
   present: "secondary",
+  late: "outline",
   absent: "destructive",
   excused: "outline",
   not_taken: "outline",

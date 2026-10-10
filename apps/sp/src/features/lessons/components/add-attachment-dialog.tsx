@@ -1,7 +1,7 @@
 "use client"
 
 import type { FileItem } from "@ihsp/api"
-import { FilePicker, FileUploadButton } from "@ihsp/features-core"
+import { DrivePicker } from "@ihsp/features-core"
 import { useErrorMessage, useT } from "@ihsp/i18n"
 import {
   Button,
@@ -29,6 +29,7 @@ export function AddAttachmentDialog({ lessonId }: { lessonId: string }) {
   const errorMessage = useErrorMessage()
   const [open, setOpen] = useState(false)
   const [url, setUrl] = useState("")
+  const [picking, setPicking] = useState(false)
   const add = useAddAttachment(lessonId)
 
   function finish() {
@@ -37,8 +38,14 @@ export function AddAttachmentDialog({ lessonId }: { lessonId: string }) {
     add.reset()
   }
 
-  function attachFile(file: FileItem) {
-    add.mutate({ kind: "file", file_id: file.id }, { onSuccess: finish })
+  async function attachFiles(files: FileItem[]) {
+    try {
+      for (const file of files) await add.mutateAsync({ kind: "file", file_id: file.id })
+      setPicking(false)
+      finish()
+    } catch {
+      setPicking(false)
+    }
   }
 
   function attachUrl() {
@@ -65,9 +72,17 @@ export function AddAttachmentDialog({ lessonId }: { lessonId: string }) {
             </TabsTrigger>
           </TabsList>
           <TabsContent value="file" className="flex flex-col gap-3 pt-3">
-            <FileUploadButton purpose="link" onUploaded={attachFile} label={t("upload")} />
-            <p className="text-sm font-medium">{t("pickFromFiles")}</p>
-            <FilePicker onPick={attachFile} disabled={add.isPending} enabled={open} />
+            <Button className="min-h-11 md:min-h-8" disabled={add.isPending} onClick={() => setPicking(true)}>
+              {t("pickFromFiles")}
+            </Button>
+            <DrivePicker
+              open={picking}
+              onOpenChange={setPicking}
+              multiple
+              uploadPurpose="link"
+              busy={add.isPending}
+              onSelect={(files) => void attachFiles(files)}
+            />
           </TabsContent>
           <TabsContent value="link" className="pt-3">
             <form

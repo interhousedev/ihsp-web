@@ -325,44 +325,6 @@ describe("targets", () => {
   })
 })
 
-describe("assumptions", () => {
-  test("one translated line for each code the planner sent", async () => {
-    await renderPlanner()
-
-    const list = within(screen.getByTestId("planner-assumptions"))
-    expect(list.getAllByRole("listitem")).toHaveLength(3)
-    expect(
-      list.getByText("The semester mark is rounded once, half up, to two decimals; 4.50 counts as a 5."),
-    ).toBeInTheDocument()
-    expect(list.getByText("A semester has 2 midterms and 1 final.")).toBeInTheDocument()
-    expect(
-      list.getByText("A control without a mark counts as your lesson average, rounded to a whole mark."),
-    ).toBeInTheDocument()
-  })
-
-  test("every code has a line", async () => {
-    answer({
-      assumptions: [
-        "rounding",
-        "controls_per_semester",
-        "same_mark_on_remaining",
-        "pending_as_lesson_average",
-        "no_lesson_marks",
-        "what_if",
-      ],
-    })
-    await renderPlanner()
-
-    const list = within(screen.getByTestId("planner-assumptions"))
-    expect(list.getAllByRole("listitem")).toHaveLength(6)
-    expect(list.getByText("Each target assumes the same mark on all remaining controls of a kind.")).toBeInTheDocument()
-    expect(list.getByText("There are no lesson marks yet, so nothing can be predicted.")).toBeInTheDocument()
-    expect(
-      list.getByText("The marks you try out here are included. They are not real and are not saved."),
-    ).toBeInTheDocument()
-  })
-})
-
 describe("request", () => {
   test("asks for the subject of the address, without a semester or what-if marks", async () => {
     const requests = recordPlannerRequests()
@@ -449,15 +411,6 @@ describe("what-if marks", () => {
     } finally {
       requests.stop()
     }
-  })
-
-  test("the answer shows the what-if assumption line once a mark is tried", async () => {
-    await renderPlanner()
-    expect(screen.queryByText(/The marks you try out here are included/)).not.toBeInTheDocument()
-
-    addMark("final", 5)
-
-    expect(await screen.findByText(/The marks you try out here are included/)).toBeInTheDocument()
   })
 
   test("a chip's remove button drops that mark and asks again without it", async () => {

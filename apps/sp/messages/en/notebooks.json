@@ -5,6 +5,13 @@
       "new": "New notebook",
       "search": "Search notebooks",
       "empty": "No notebooks yet.",
+      "folders": {
+        "all": "All",
+        "subject": "Subject notebooks",
+        "course": "Course notebooks",
+        "mine": "My notebooks"
+      },
+      "showMore": "Show more",
       "sources": "{count, plural, one {# source} other {# sources}}",
       "noResults": "No notebooks match “{query}”.",
       "meta": "{sources} · {when}"
@@ -160,7 +167,6 @@
       "alreadyAdded": "Already added",
       "noText": "No readable text",
       "rejected": "{title}: {reason}",
-      "description": "Choose what this notebook should learn from.",
       "tabs": "Source types",
       "selected": "{count} selected",
       "full": "This notebook has reached the source limit. Remove a source to add more.",
@@ -170,7 +176,8 @@
       "files": {
         "search": "Search files",
         "empty": "You have no files yet. Upload one to get started.",
-        "noMatch": "No files match your search."
+        "noMatch": "No files match your search.",
+        "browse": "All my files"
       },
       "chats": {
         "empty": "No chats yet. Talk to the assistant first, then add the chat here."
@@ -240,7 +247,7 @@
     "chat": {
       "placeholder": "Ask a question about your sources or ask to create something",
       "sourcesCount": "{count, plural, one {# source} other {# sources}}",
-      "noSources": "Select at least one source",
+      "noSources": "No sources selected — the answer will not rely on your materials",
       "disclaimer": "Answers can be wrong. Check them against your sources.",
       "thinking": "Reading your sources…",
       "stop": "Stop",
@@ -294,11 +301,9 @@
       "title": "Configure chat",
       "style": {
         "default": {
-          "hint": "For research and brainstorming.",
           "label": "Default"
         },
         "learning_guide": {
-          "hint": "A tutor that asks questions and explains step by step.",
           "label": "Learning guide"
         },
         "custom": "Custom",
@@ -321,7 +326,6 @@
         "en": "English"
       },
       "customLabel": "Style instruction",
-      "customHint": "It never overrides the rules about sources and citations.",
       "customCount": "{count} of {max}",
       "presets": {
         "label": "Presets",
@@ -339,7 +343,6 @@
       "goal": {
         "label": "Goal",
         "placeholder": "What are you working on?",
-        "hint": "Optional. Answers are shaped to help with it.",
         "left": "{count, plural, one {# character left} other {# characters left}}"
       }
     },
@@ -350,7 +353,7 @@
         "description": "Add sources to create study materials."
       },
       "addNote": "Add note",
-      "needSources": "Add and select a source first",
+      "noSources": "No sources selected — the answer will not rely on your materials",
       "customize": "Customize {kind}",
       "collapse": "Collapse Studio",
       "tiles": "Create study materials",
@@ -793,7 +796,6 @@
       "action": "Combine selected notes",
       "hint": "Select at least two notes to combine them.",
       "title": "Combine notes",
-      "description": "The selected notes become one note; each title becomes a heading.",
       "titleLabel": "Title of the new note",
       "defaultTitle": "Notes · {title}",
       "fallbackTitle": "Combined notes",
