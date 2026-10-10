@@ -17,7 +17,9 @@
     "groupTeaching": "Teaching",
     "groupMyGroup": "My group",
     "groupInbox": "Inbox",
-    "groupSettings": "Account"
+    "groupSettings": "Account",
+    "studentSearch": "Find a student",
+    "notebooks": "Notebooks"
   },
   "audience": {
     "subgroup": "{group} · subgroup {number}"
@@ -92,7 +94,9 @@
       "subject": "Subject",
       "date": "Date",
       "period": "Period"
-    }
+    },
+    "attendanceTaken": "Attendance taken",
+    "attendanceTakenAbsent": "{count, plural, one {Taken · # absent} other {Taken · # absent}}"
   },
   "lesson": {
     "title": "Lesson",
@@ -234,12 +238,12 @@
     "controls": {
       "midterm_1": "Midterm 1",
       "midterm_2": "Midterm 2",
-      "final": "Final",
+      "final": "Final (FC)",
       "other": "Other"
     },
     "kinds": {
-      "midterm": "Midterm",
-      "final": "Final",
+      "midterm": "Midterm (PC)",
+      "final": "Final (FC)",
       "other": "Other"
     },
     "status": {
@@ -356,5 +360,38 @@
       "title": "Notifications",
       "description": "Saved at once."
     }
+  },
+  "students": {
+    "title": "Find a student",
+    "description": "Search every student of your subjects and groups, then open their marks, attendance and lessons.",
+    "search": "Search by name",
+    "noStudents": "You have no students yet.",
+    "noResults": "No students match “{query}”.",
+    "count": "{count, plural, one {# student} other {# students}}",
+    "absences": "{count, plural, one {# absence} other {# absences}}",
+    "profile": "Student",
+    "back": "Find a student",
+    "notFound": "This student was not found among your groups.",
+    "attendance": "Attendance",
+    "attendanceSummary": "{absences, plural, one {# absence} other {# absences}} in {lessons, plural, one {# lesson with attendance taken} other {# lessons with attendance taken}}",
+    "marks": "Marks by subject",
+    "semester": "Semester",
+    "noMarks": "No marks yet.",
+    "recentLessons": "Recent lessons",
+    "noLessons": "No lessons yet.",
+    "materials": "Lesson materials",
+    "absent": "Absent",
+    "excused": "Excused"
+  },
+  "staffNotebooks": {
+    "attach": "Attach to lesson",
+    "attachTitle": "Attach to a lesson",
+    "attachDescription": "“{title}” is added to the lesson as a file that students can open.",
+    "loading": "Loading your lessons…",
+    "noLessons": "You have no lessons in this period.",
+    "period": "Period {number}",
+    "attached": "Added to the lesson",
+    "openLesson": "Open the lesson",
+    "done": "Done"
   }
 }

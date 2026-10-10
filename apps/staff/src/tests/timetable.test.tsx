@@ -53,6 +53,26 @@ describe("timetable page", () => {
     expect(within(card as HTMLElement).getByText("Attendance missing")).toBeInTheDocument()
   })
 
+  test("a past lesson with attendance shows a green marker with the absent count; a future one shows nothing", async () => {
+    const taken = makeLesson(
+      { weekday: 1, period: 2, subject: "physics", room: "r102", subgroup: null },
+      { attendance_submitted: true, absent_count: 3 },
+    )
+    const future = makeLesson(
+      { weekday: 5, period: 4, subject: "physics", room: "r102", subgroup: null },
+      { attendance_submitted: false },
+    )
+    server.use(http.get(apiUrl("/v1/staff/timetable"), () => HttpResponse.json([taken, future])))
+    renderStaff(<TimetablePage />, { route: "/timetable/" })
+
+    const table = await screen.findByRole("table")
+
+    const markers = within(table).getAllByTestId("attendance-taken")
+    expect(markers).toHaveLength(1)
+    expect(markers[0]).toHaveTextContent("Taken · 3 absent")
+    expect(within(table).queryByText("Attendance missing")).not.toBeInTheDocument()
+  })
+
   test("a lesson opens its page", async () => {
     renderStaff(<TimetablePage />, { route: "/timetable/" })
 

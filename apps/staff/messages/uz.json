@@ -17,7 +17,9 @@
     "groupTeaching": "Dars berish",
     "groupMyGroup": "Mening guruhim",
     "groupInbox": "Kiruvchilar",
-    "groupSettings": "Hisob"
+    "groupSettings": "Hisob",
+    "studentSearch": "Talaba qidirish",
+    "notebooks": "Bloknotlar"
   },
   "audience": {
     "subgroup": "{group} · {number}-kichik guruh"
@@ -92,7 +94,9 @@
       "subject": "Fan",
       "date": "Sana",
       "period": "Juftlik"
-    }
+    },
+    "attendanceTaken": "Davomat belgilangan",
+    "attendanceTakenAbsent": "Belgilangan · yoʻq: {count}"
   },
   "lesson": {
     "title": "Dars",
@@ -234,12 +238,12 @@
     "controls": {
       "midterm_1": "Oraliq nazorat 1",
       "midterm_2": "Oraliq nazorat 2",
-      "final": "Yakuniy nazorat",
+      "final": "Yakuniy nazorat (YaN)",
       "other": "Boshqa"
     },
     "kinds": {
-      "midterm": "Oraliq nazorat",
-      "final": "Yakuniy nazorat",
+      "midterm": "Oraliq nazorat (ON)",
+      "final": "Yakuniy nazorat (YaN)",
       "other": "Boshqa"
     },
     "status": {
@@ -356,5 +360,38 @@
       "title": "Bildirishnomalar",
       "description": "Darhol saqlanadi."
     }
+  },
+  "students": {
+    "title": "Talaba qidirish",
+    "description": "Fanlaringiz va guruhlaringizdagi talabani toping va uning baholari, davomati va darslarini oching.",
+    "search": "Ism boʻyicha qidirish",
+    "noStudents": "Hozircha talabalaringiz yoʻq.",
+    "noResults": "“{query}” boʻyicha hech kim topilmadi.",
+    "count": "{count, plural, one {# talaba} other {# talaba}}",
+    "absences": "{count, plural, one {# dars qoldirgan} other {# dars qoldirgan}}",
+    "profile": "Talaba",
+    "back": "Talaba qidirish",
+    "notFound": "Bu talaba guruhlaringizdan topilmadi.",
+    "attendance": "Davomat",
+    "attendanceSummary": "Davomat belgilangan {lessons} ta darsda {absences} ta qoldirilgan",
+    "marks": "Fanlar boʻyicha baholar",
+    "semester": "Semestr",
+    "noMarks": "Hozircha baholar yoʻq.",
+    "recentLessons": "Oxirgi darslar",
+    "noLessons": "Hozircha darslar yoʻq.",
+    "materials": "Dars materiallari",
+    "absent": "Yoʻq",
+    "excused": "Sababli"
+  },
+  "staffNotebooks": {
+    "attach": "Darsga biriktirish",
+    "attachTitle": "Darsga biriktirish",
+    "attachDescription": "“{title}” darsga talabalar ochishi mumkin boʻlgan fayl sifatida qoʻshiladi.",
+    "loading": "Darslaringiz yuklanmoqda…",
+    "noLessons": "Bu davrda darslaringiz yoʻq.",
+    "period": "{number}-juftlik",
+    "attached": "Darsga qoʻshildi",
+    "openLesson": "Darsni ochish",
+    "done": "Tayyor"
   }
 }

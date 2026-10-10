@@ -45,7 +45,9 @@ function argumentNames(text: string): string[] {
 const en = flatten(messages.en)
 const ru = flatten(messages.ru)
 const uz = flatten(messages.uz)
-const available = flatten(mergeMessages(shared as Messages, messages.en))
+/** The notebook texts come from the student app's file (see `app/providers.tsx`). */
+const notebookTexts = JSON.parse(readFileSync(join(ROOT, "apps/sp/messages/en/notebooks.json"), "utf8")) as Messages
+const available = flatten(mergeMessages(mergeMessages(shared as Messages, notebookTexts), messages.en))
 
 describe("message files", () => {
   test("uz and ru have exactly the keys of en", () => {
@@ -121,6 +123,7 @@ describe("keys used in the code", () => {
       "exams.controls.${control}": ["midterm_1", "midterm_2", "final"],
       "exams.kinds.${item.kind}": ["midterm", "final", "other"],
       "exams.kinds.${kind}": ["midterm", "final", "other"],
+      "files.picker.types.${value}": ["pdf", "doc", "sheet", "slides", "text", "image"],
       "exams.sources.${item.source}": ["teacher", "admin", "emis", "head_student"],
     }
     const unknown = [...dynamic.keys()].filter((key) => !(key in expected))

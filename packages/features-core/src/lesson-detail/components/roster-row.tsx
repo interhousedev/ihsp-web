@@ -1,12 +1,12 @@
 "use client"
 
 import { useT } from "@ihsp/i18n"
-import { Badge, cn } from "@ihsp/ui"
+import { Badge, Checkbox, cn } from "@ihsp/ui"
 import { fullName } from "../utils/people"
 import type { Mark, SheetRosterItem } from "../utils/marks"
 
 /**
- * One student of the audience: a tap toggles "absent" (everyone starts present). In a read-only sheet the row is
+ * One student of the audience: an explicit tick says "present" (everyone starts ticked, unticking marks the student absent; the row itself does nothing). In a read-only sheet the row is
  * plain text with the state and the excuse, if the curator gave one.
  */
 export function RosterRow({
@@ -47,23 +47,24 @@ export function RosterRow({
   }
 
   return (
-    <li>
-      <button
-        type="button"
-        aria-pressed={absent}
-        onClick={onToggle}
-        data-absent={absent}
-        className={cn(
-          "focus-visible:ring-ring flex min-h-11 w-full items-center justify-between gap-3 rounded-lg border p-2 text-start outline-none focus-visible:ring-2",
-          absent ? "border-destructive/50 bg-destructive/5" : "hover:bg-accent",
-        )}
-      >
-        <span className="flex min-w-0 flex-col">
-          <span className="truncate text-sm">{name}</span>
-          {comment}
-        </span>
-        {state}
-      </button>
+    <li
+      data-absent={absent}
+      className={cn(
+        "flex min-h-11 items-center gap-3 rounded-lg border p-2",
+        absent ? "border-destructive/50 bg-destructive/5" : "bg-background",
+      )}
+    >
+      <Checkbox
+        checked={!absent}
+        aria-label={t("presentFor", { name })}
+        className="size-5 shrink-0 rounded-md"
+        onCheckedChange={() => onToggle()}
+      />
+      <span className="flex min-w-0 flex-1 flex-col">
+        <span className="truncate text-sm">{name}</span>
+        {comment}
+      </span>
+      {state}
     </li>
   )
 }

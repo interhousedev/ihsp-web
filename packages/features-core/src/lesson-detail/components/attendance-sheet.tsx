@@ -36,6 +36,11 @@ export function AttendanceSheetView({ lesson, sheet }: { lesson: LessonItem; she
   const readOnly = !sheet.editable || cancelled
   const sections = rosterSections(sheet)
   const counted = rosterOf(sheet).filter((item) => !isUncounted(item, sheet))
+  const markedUncounted = rosterOf(sheet).filter(
+    (item) => isUncounted(item, sheet) && (draft.marks[item.user_id] ?? "none") !== "none",
+  ).length
+  const total = counted.length + markedUncounted
+  const absent = absentCount(draft.marks)
   const unmarkedCount = rosterOf(sheet).filter(
     (item) => isUncounted(item, sheet) && (draft.marks[item.user_id] ?? "none") === "none",
   ).length
@@ -156,7 +161,8 @@ export function AttendanceSheetView({ lesson, sheet }: { lesson: LessonItem; she
           )}
 
           <p className="text-sm font-medium" aria-live="polite">
-            {t("summary", { absent: absentCount(draft.marks), total: counted.length })}
+            {t("summary", { present: total - absent, total })}
+            {absent > 0 ? ` · ${t("absentCount", { count: absent })}` : null}
             {unmarkedCount > 0 ? ` · ${t("unassigned.notCounted", { count: unmarkedCount })}` : null}
           </p>
 

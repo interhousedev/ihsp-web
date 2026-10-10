@@ -254,7 +254,7 @@ describe("exams page", () => {
     expect(mathRow).toHaveTextContent("Room 204")
     expect(mathRow).toHaveTextContent("Chapters 1–4; bring a calculator.")
     expect(within(await section("Midterm 2")).getByText("Not confirmed")).toBeInTheDocument()
-    const final = await section("Final")
+    const final = await section("Final (FC)")
     expect(within(final).getByText("Administration")).toBeInTheDocument()
     expect(final).toHaveTextContent("Room Klaster")
     const other = await section("Other")
@@ -598,7 +598,7 @@ describe("exams page", () => {
     await waitFor(() => expect(screen.queryByRole("region", { name: "Midterm 2" })).not.toBeInTheDocument())
     expect(rowOf(await section("Midterm 1"), "Mathematics")).toBeInTheDocument()
     expect(within(await section("Midterm 1")).queryByText("English")).not.toBeInTheDocument()
-    expect(within(await section("Final")).getByText("Mathematics")).toBeInTheDocument()
+    expect(within(await section("Final (FC)")).getByText("Mathematics")).toBeInTheDocument()
     expect(screen.queryByRole("region", { name: /Suggested dates to confirm/ })).not.toBeInTheDocument()
   })
 

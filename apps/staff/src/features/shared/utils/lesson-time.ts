@@ -15,6 +15,14 @@ export function isAttendanceMissing(
   return lesson.status !== "cancelled" && !lesson.attendance_submitted && Date.parse(lesson.ends_at) < now
 }
 
+/** A lesson that has ended and has its attendance sheet: shown as a green marker with the absent count. */
+export function isAttendanceTaken(
+  lesson: Pick<LessonItem, "ends_at" | "status" | "attendance_submitted">,
+  now: number,
+): boolean {
+  return lesson.status !== "cancelled" && lesson.attendance_submitted && Date.parse(lesson.ends_at) < now
+}
+
 /** Link to the lesson page; `hash` jumps to a section (`attendance`, `homework`, `materials`). */
 export function lessonHref(id: string, hash?: "attendance" | "homework" | "materials", add?: "material"): string {
   const query = add ? `?id=${encodeURIComponent(id)}&add=${add}` : `?id=${encodeURIComponent(id)}`

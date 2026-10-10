@@ -6,7 +6,7 @@ import { Badge, Icons, cn } from "@ihsp/ui"
 import Link from "next/link"
 import { useAudienceLabel } from "../../shared/hooks/use-audience-label"
 import { describeChanges } from "../../shared/utils/describe-changes"
-import { isAttendanceMissing, isLessonNow, lessonHref } from "../../shared/utils/lesson-time"
+import { isAttendanceMissing, isAttendanceTaken, isLessonNow, lessonHref } from "../../shared/utils/lesson-time"
 
 /**
  * One lesson of the timetable (STF-3): subject, audience, room; cancelled lessons are struck through, changed lessons
@@ -28,6 +28,7 @@ export function TimetableLessonCard({
   const cancelled = lesson.status === "cancelled"
   const current = isLessonNow(lesson, now)
   const missing = isAttendanceMissing(lesson, now)
+  const taken = isAttendanceTaken(lesson, now)
   const changes = describeChanges(lesson.changes)
 
   return (
@@ -57,6 +58,16 @@ export function TimetableLessonCard({
       <span className="flex flex-wrap gap-1">
         {cancelled ? <Badge variant="destructive">{t("cancelled")}</Badge> : null}
         {current ? <Badge>{t("now")}</Badge> : null}
+        {taken ? (
+          <Badge
+            variant="secondary"
+            data-testid="attendance-taken"
+            className="bg-emerald-100 text-emerald-800 dark:bg-emerald-950 dark:text-emerald-300"
+          >
+            <Icons.check aria-hidden />
+            {lesson.absent_count ? t("attendanceTakenAbsent", { count: lesson.absent_count }) : t("attendanceTaken")}
+          </Badge>
+        ) : null}
         {missing ? (
           <Badge variant="destructive">
             <Icons.warning aria-hidden />

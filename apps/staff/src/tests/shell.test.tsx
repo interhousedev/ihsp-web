@@ -38,6 +38,8 @@ describe("app frame", () => {
       "Today",
       "Timetable",
       "Journal",
+      "Find a student",
+      "Notebooks",
       "Students",
       "Subgroups",
       "Attendance",

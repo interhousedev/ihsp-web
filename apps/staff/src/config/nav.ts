@@ -2,6 +2,7 @@
 
 import { useT } from "@ihsp/i18n"
 import type { BottomNavItem, NavGroup } from "@ihsp/ui"
+import { IconNotebook } from "@tabler/icons-react"
 import { useMemo } from "react"
 import { useCuratedGroups } from "../features/shell/hooks/use-curated-groups"
 
@@ -17,9 +18,11 @@ export function useNav(): { groups: NavGroup[]; bottom: BottomNavItem[] } {
     const timetable = { title: t("timetable"), url: "/timetable/", icon: "timetable" } as const
     const journal = { title: t("journal"), url: "/journal/", icon: "journal" } as const
     const exams = { title: t("exams"), url: "/group/exams/", icon: "calendarEvent" } as const
+    const studentSearch = { title: t("studentSearch"), url: "/students/", icon: "search" } as const
+    const notebooks = { title: t("notebooks"), url: "/notebooks/", icon: IconNotebook } as const
     const groups: NavGroup[] = [
       { label: t("groupHome"), items: [today] },
-      { label: t("groupTeaching"), items: [timetable, journal, exams] },
+      { label: t("groupTeaching"), items: [timetable, journal, studentSearch, notebooks, exams] },
     ]
     if (isCurator) {
       groups.push({

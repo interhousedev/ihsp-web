@@ -58,17 +58,17 @@ function captureSubmit(): { bodies: unknown[] } {
 }
 
 describe("attendance sheet", () => {
-  test("everyone starts present; tapping a student and submitting sends absent and base_version", async () => {
+  test("everyone starts ticked; unticking a student and submitting sends absent and base_version", async () => {
     const captured = captureSubmit()
     const { user } = renderStaff(<Harness />)
 
-    const row = await screen.findByRole("button", { name: /Ismoilov Jasur/ })
-    expect(row).toHaveAttribute("aria-pressed", "false")
-    expect(screen.getByText(/^Absent: 0 of 3/)).toBeInTheDocument()
+    const row = await screen.findByRole("checkbox", { name: /Ismoilov Jasur/ })
+    expect(row).toBeChecked()
+    expect(screen.getByText(/^Present: 3 of 3/)).toBeInTheDocument()
 
     await user.click(row)
-    expect(row).toHaveAttribute("aria-pressed", "true")
-    expect(screen.getByText(/^Absent: 1 of 3/)).toBeInTheDocument()
+    expect(row).not.toBeChecked()
+    expect(screen.getByText(/^Present: 2 of 3 · 1 absent/)).toBeInTheDocument()
 
     await user.click(screen.getByRole("button", { name: "Submit attendance" }))
 
@@ -76,6 +76,19 @@ describe("attendance sheet", () => {
       expect(captured.bodies).toEqual([{ absent: [ids.student2], present_unassigned: [], base_version: 3 }]),
     )
     expect(await screen.findByRole("button", { name: "Save changes" })).toBeDisabled()
+  })
+
+  test("clicking the row (the name) does not toggle anything; only the tick does", async () => {
+    const { user } = renderStaff(<Harness />)
+    const tick = await screen.findByRole("checkbox", { name: /Ismoilov Jasur/ })
+
+    await user.click(screen.getByText("Ismoilov Jasur"))
+    expect(tick).toBeChecked()
+    expect(screen.getByText(/^Present: 3 of 3/)).toBeInTheDocument()
+
+    await user.click(tick)
+    expect(tick).not.toBeChecked()
+    expect(screen.getByText(/^Present: 2 of 3 · 1 absent/)).toBeInTheDocument()
   })
 
   test("students without a subgroup are listed separately and count only when marked", async () => {
@@ -112,14 +125,14 @@ describe("attendance sheet", () => {
     )
     renderStaff(<AttendanceSheetView lesson={lessonData.lesson} sheet={{ ...attendanceSheet, roster }} />)
 
-    expect(await screen.findByRole("button", { name: /Qodirov Sardor/ })).toHaveAttribute("aria-pressed", "false")
+    expect(await screen.findByRole("checkbox", { name: /Qodirov Sardor/ })).toBeChecked()
     expect(screen.queryByText("Students without a subgroup")).not.toBeInTheDocument()
-    expect(screen.getByText(/^Absent: 0 of 4/)).toBeInTheDocument()
+    expect(screen.getByText(/^Present: 4 of 4/)).toBeInTheDocument()
   })
 
   test("a 409 shows the conflict dialog with the current list; keeping my marks submits against the new version", async () => {
     const { user } = renderStaff(<Harness />)
-    const row = await screen.findByRole("button", { name: /Ismoilov Jasur/ })
+    const row = await screen.findByRole("checkbox", { name: /Ismoilov Jasur/ })
     await user.click(row)
     server.use(errorHandlers.conflictAttendance)
 
@@ -132,7 +145,7 @@ describe("attendance sheet", () => {
     const captured = captureSubmit()
     await user.click(within(dialog).getByRole("button", { name: "Keep my marks" }))
     await waitFor(() => expect(screen.queryByRole("dialog")).not.toBeInTheDocument())
-    expect(screen.getByRole("button", { name: /Ismoilov Jasur/ })).toHaveAttribute("aria-pressed", "true")
+    expect(screen.getByRole("checkbox", { name: /Ismoilov Jasur/ })).not.toBeChecked()
 
     await user.click(screen.getByRole("button", { name: "Submit attendance" }))
 
@@ -143,7 +156,7 @@ describe("attendance sheet", () => {
 
   test("a 409 lets the teacher review the current list instead", async () => {
     const { user } = renderStaff(<Harness />)
-    await user.click(await screen.findByRole("button", { name: /Ismoilov Jasur/ }))
+    await user.click(await screen.findByRole("checkbox", { name: /Ismoilov Jasur/ }))
     server.use(errorHandlers.conflictAttendance)
 
     await user.click(screen.getByRole("button", { name: "Submit attendance" }))
@@ -151,7 +164,7 @@ describe("attendance sheet", () => {
     await user.click(within(dialog).getByRole("button", { name: "Show the current list" }))
 
     await waitFor(() => expect(screen.queryByRole("dialog")).not.toBeInTheDocument())
-    expect(screen.getByRole("button", { name: /Ismoilov Jasur/ })).toHaveAttribute("aria-pressed", "false")
+    expect(screen.getByRole("checkbox", { name: /Ismoilov Jasur/ })).toBeChecked()
   })
 
   test("the sheet is read-only after the 7-day window", async () => {
@@ -160,7 +173,7 @@ describe("attendance sheet", () => {
     )
 
     expect(await screen.findByText(/7-day window has passed/)).toBeInTheDocument()
-    expect(screen.queryByRole("button", { name: /Ismoilov Jasur/ })).not.toBeInTheDocument()
+    expect(screen.queryByRole("checkbox", { name: /Ismoilov Jasur/ })).not.toBeInTheDocument()
     expect(screen.queryByRole("button", { name: "Submit attendance" })).not.toBeInTheDocument()
     expect(screen.queryByRole("button", { name: "Save changes" })).not.toBeInTheDocument()
     expect(screen.queryByRole("button", { name: "Everyone present" })).not.toBeInTheDocument()
@@ -185,12 +198,12 @@ describe("attendance sheet", () => {
 
   test("Everyone present clears the absences", async () => {
     const { user } = renderStaff(<AttendanceSheetView lesson={lessonData.lesson} sheet={attendanceSheet} />)
-    await user.click(await screen.findByRole("button", { name: /Ismoilov Jasur/ }))
-    expect(screen.getByRole("button", { name: /Ismoilov Jasur/ })).toHaveAttribute("aria-pressed", "true")
+    await user.click(await screen.findByRole("checkbox", { name: /Ismoilov Jasur/ }))
+    expect(screen.getByRole("checkbox", { name: /Ismoilov Jasur/ })).not.toBeChecked()
 
     await user.click(screen.getByRole("button", { name: "Everyone present" }))
 
-    expect(screen.getByRole("button", { name: /Ismoilov Jasur/ })).toHaveAttribute("aria-pressed", "false")
+    expect(screen.getByRole("checkbox", { name: /Ismoilov Jasur/ })).toBeChecked()
   })
 })
 
