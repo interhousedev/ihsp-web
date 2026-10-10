@@ -23,6 +23,49 @@ export type SearchResults = {
   homework: Omit<HomeworkItem, "days_overdue">[]
   files: FileItem[]
   flashcard_sets: FlashcardSearchItem[]
+  /** Notebooks whose title or a source title matched. */
+  notebooks: NotebookSearchItem[]
+  /** Recent marks of the subjects whose name matched (students). */
+  marks: MarkSearchItem[]
+  library_items: LibrarySearchItem[]
+}
+
+export type NotebookSearchItem = {
+  id: string
+  title: string
+  emoji: string | null
+  source_count: number
+  matched_sources: string[]
+}
+
+export type MarkSearchItem = {
+  subject: SubjectRef
+  type: string
+  value: number
+  date: string
+  lesson_id: string | null
+}
+
+export type LibrarySearchItem = {
+  id: string
+  slug: string | null
+  title: string
+  author_label: string
+  kind: string
+}
+
+export type SendOutboundMailBody = {
+  to: string[]
+  subject: string
+  body: string
+  /** A file from My files. */
+  attachment_file_id?: string | null
+}
+
+export type OutboundMailSent = {
+  message_id: string
+  to: string[]
+  attachment_name: string | null
 }
 
 export type AdminDashboard = {

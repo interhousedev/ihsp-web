@@ -33,7 +33,7 @@ export type CommandPaletteProps = {
   nav?: NavGroup[]
   /** Server search (`getMeSearch`), called after a short pause with at least 2 characters. */
   search?: (query: string) => Promise<CommandPaletteResult[]>
-  /** Defaults to `router.push`. */
+  /** Defaults to `router.push` (`window.location.assign` for an absolute `https://` URL of another app). */
   onNavigate?: (url: string) => void
   /** Trigger button; a search icon button by default. */
   trigger?: ReactNode
@@ -112,6 +112,7 @@ export function CommandPalette({ nav = [], search, onNavigate, trigger }: Comman
     setOpen(false)
     setQuery("")
     if (onNavigate) onNavigate(url)
+    else if (/^https?:\/\//.test(url)) window.location.assign(url)
     else router.push(url)
   }
 

@@ -6,10 +6,12 @@ import { queryOptions, seg, type RequestOptions } from "../query"
 import type {
   AdminDashboard,
   Alert,
+  OutboundMailSent,
   CalendarTokenResponse,
   GroupStat,
   SearchParams,
   SearchResults,
+  SendOutboundMailBody,
   Student360,
   TeacherProfile,
 } from "../types/composition"
@@ -30,6 +32,11 @@ export const getMeSearchQuery = (params: SearchParams) =>
     queryKey: keys.me.search(params.q),
     queryFn: ({ signal }) => getMeSearch(params, { signal }),
   })
+
+/** POST /v1/me/outbound-mail — bearer; one email to anyone, optionally with a file from My files. */
+export function postMeOutboundMail(body: SendOutboundMailBody, opts?: RequestOptions): Promise<OutboundMailSent> {
+  return api.post<OutboundMailSent>("/v1/me/outbound-mail", body, opts)
+}
 
 /** POST /v1/me/calendar-token — student; the URL is shown once and the token rotates. */
 export function postMeCalendarToken(opts?: RequestOptions): Promise<CalendarTokenResponse> {

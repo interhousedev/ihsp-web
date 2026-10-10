@@ -5,6 +5,7 @@ import {
   calendarTokenResponse,
   emptySearchResults,
   groupStats,
+  insights,
   searchResults,
   student360,
   teacherProfile,
@@ -19,12 +20,17 @@ export const compositionHandlers = [
     const q = query(request).get("q") ?? ""
     return HttpResponse.json(q === "nothing" || q.length === 0 ? emptySearchResults : searchResults)
   }),
+  http.post(apiUrl("/v1/me/outbound-mail"), async ({ request }) => {
+    const body = (await request.json()) as { to: string[] }
+    return HttpResponse.json({ message_id: "<mail-1@ihsu.uz>", to: body.to, attachment_name: null })
+  }),
   http.post(apiUrl("/v1/me/calendar-token"), () => HttpResponse.json(calendarTokenResponse)),
   http.get(
     apiUrl("/ical/:token.ics"),
     () => new HttpResponse(icalBody, { headers: { "Content-Type": "text/calendar; charset=utf-8" } }),
   ),
   http.get(apiUrl("/v1/admin/dashboard"), () => HttpResponse.json(adminDashboard)),
+  http.get(apiUrl("/v1/admin/insights"), () => HttpResponse.json(insights)),
   http.get(apiUrl("/v1/admin/groups/stats"), () => HttpResponse.json(groupStats)),
   http.get(apiUrl("/v1/admin/students/:userId"), ({ params }) =>
     param(params, "userId") === student360.profile.user_id ? HttpResponse.json(student360) : notFound("Student"),
