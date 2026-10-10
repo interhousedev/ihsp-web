@@ -8,6 +8,14 @@ export const metadata: Metadata = {
   title: "IHT shares",
   description: "Shared assistant chats and flash card sets",
   robots: { index: false, follow: false },
+  // The app is served under `/ai` (basePath); Next does not prefix metadata icon paths.
+  icons: {
+    icon: [
+      { url: "/ai/favicon.ico", sizes: "any" },
+      { url: "/ai/icons/icon-192.png", type: "image/png", sizes: "192x192" },
+    ],
+    apple: "/ai/icons/apple-touch-icon.png",
+  },
 }
 
 export const viewport: Viewport = {

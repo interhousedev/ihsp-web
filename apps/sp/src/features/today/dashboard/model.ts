@@ -32,9 +32,22 @@ export const WIDGET_SIZES: Record<DashboardWidgetKind, readonly DashboardWidgetS
  */
 export const RETIRED_KINDS: readonly DashboardWidgetKind[] = ["clock_next_lesson", "timetable", "marks"]
 
-/** The widgets Today shows: the saved ones minus the retired kinds. */
+/** A kind that may repeat: each notebook prompt points at its own notebook (`config.notebook_id`). */
+export const REPEATABLE_KINDS: readonly DashboardWidgetKind[] = ["notebook_prompt"]
+
+/**
+ * The widgets Today shows: the saved ones minus the retired kinds, and of a kind that takes one tile only its first
+ * tile (the catalogue can add a kind already on the board; the backend keeps the same first tile when it saves).
+ */
 export function shownWidgets(widgets: readonly Widget[]): Widget[] {
-  return widgets.filter((widget) => !RETIRED_KINDS.includes(widget.kind))
+  const seen = new Set<DashboardWidgetKind>()
+  return widgets.filter((widget) => {
+    if (RETIRED_KINDS.includes(widget.kind)) return false
+    if (REPEATABLE_KINDS.includes(widget.kind)) return true
+    if (seen.has(widget.kind)) return false
+    seen.add(widget.kind)
+    return true
+  })
 }
 
 /** The catalogue groups (`today.dashboard.groups.<id>`) and the kinds in each; retired kinds are not listed. */

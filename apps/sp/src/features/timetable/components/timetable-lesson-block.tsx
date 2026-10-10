@@ -7,7 +7,7 @@ import Link from "next/link"
 import { STATE_TONE } from "../../attendance/utils/state-tone"
 import { describeChanges } from "../../shared/utils/describe-changes"
 import { isLessonNow } from "../../shared/utils/period-times"
-import { shortName } from "../../shared/utils/people"
+import { fullName, shortName } from "../../shared/utils/people"
 import { subgroupsOf } from "../utils/week"
 
 /**
@@ -42,10 +42,18 @@ export function TimetableLessonBlock({
     lesson.room?.name ? t("room", { name: lesson.room.name }) : null,
     lesson.teacher ? shortName(lesson.teacher) : null,
   ]
+  // The full subject, time, room and teacher: the tooltip for a block narrowed by an overlapping lesson.
+  const details = [
+    lesson.subject.name,
+    `${f.time(lesson.starts_at)}–${f.time(lesson.ends_at)}`,
+    lesson.room?.name ? t("room", { name: lesson.room.name }) : null,
+    lesson.teacher ? fullName(lesson.teacher) : null,
+  ]
 
   return (
     <Link
       href={`/lessons/view/?id=${encodeURIComponent(lesson.id)}`}
+      title={details.filter(Boolean).join(" · ")}
       data-current={current}
       data-cancelled={cancelled}
       data-attendance={attendance ?? undefined}
@@ -57,7 +65,9 @@ export function TimetableLessonBlock({
       )}
     >
       <span className="flex min-w-0 items-start justify-between gap-1">
-        <span className={cn("min-w-0 truncate font-medium", cancelled && "line-through")}>{lesson.subject.name}</span>
+        <span className={cn("line-clamp-2 min-w-0 font-medium break-words", cancelled && "line-through")}>
+          {lesson.subject.name}
+        </span>
         {attendance === "present" ? (
           <Icons.check
             className="size-3.5 shrink-0 text-green-600 dark:text-green-400"

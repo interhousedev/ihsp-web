@@ -102,6 +102,26 @@ describe("calendar week view", () => {
     expect(slotOf("lesson-b").style.left).toBe("50%")
   })
 
+  test("a block narrowed by an overlapping lesson keeps its full subject, time and room in a tooltip", async () => {
+    server.use(
+      http.get(apiUrl("/v1/me/timetable"), () =>
+        HttpResponse.json([
+          makeLesson({ weekday: 3, period: 3, subject: "english", room: "r204", subgroup: 1 }, { id: "lesson-a" }),
+          makeLesson(
+            { weekday: 3, period: 3, subject: "informatics", room: "klaster", subgroup: 2 },
+            { id: "lesson-b" },
+          ),
+        ]),
+      ),
+    )
+    renderSp(<TimetablePage />, { route: "/timetable/" })
+    await screen.findByText("10:00")
+
+    expect(blockOf("lesson-a").getAttribute("title")).toBe("English · 10:20–11:05 · Room 204 · Smirnova Elena")
+    // The name of the link stays the content of the block, not the tooltip.
+    expect(within(blockOf("lesson-a")).getByText("English")).toBeInTheDocument()
+  })
+
   test("a changed lesson shows what changed", async () => {
     const changed = makeLesson(
       { weekday: 3, period: 1, subject: "math", room: "r101", subgroup: null },

@@ -8,6 +8,13 @@ import { Providers } from "./providers"
 export const metadata: Metadata = {
   title: "library.iht",
   description: "Books, textbooks and study materials of the lyceum",
+  icons: {
+    icon: [
+      { url: "/favicon.ico", sizes: "any" },
+      { url: "/icons/icon-192.png", type: "image/png", sizes: "192x192" },
+    ],
+    apple: "/icons/apple-touch-icon.png",
+  },
 }
 
 /** The head script of the installable app (`APP_MODE=pwa`): manifest link, iOS tags, install prompt catcher. */

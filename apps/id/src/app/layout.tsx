@@ -8,6 +8,13 @@ import { Providers } from "./providers"
 export const metadata: Metadata = {
   title: "IHT ID",
   description: "Log in, registration and account security",
+  icons: {
+    icon: [
+      { url: "/favicon.ico", sizes: "any" },
+      { url: "/icons/icon-192.png", type: "image/png", sizes: "192x192" },
+    ],
+    apple: "/icons/apple-touch-icon.png",
+  },
 }
 
 export const viewport: Viewport = {

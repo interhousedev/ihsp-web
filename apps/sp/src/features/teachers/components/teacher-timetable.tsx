@@ -6,6 +6,7 @@ import { Badge, Button, Icons, cn } from "@ihsp/ui"
 import { parseAsString, useQueryState } from "nuqs"
 import Link from "next/link"
 import { QueryState } from "../../shared/components/query-state"
+import { studyDayOf } from "../../timetable/utils/week"
 import { useTeacherTimetable } from "../hooks/use-my-teacher"
 import { lessonHref } from "../utils/teacher-display"
 
@@ -14,6 +15,7 @@ const WEEKDAYS = [0, 1, 2, 3, 4] as const
 
 /**
  * The teacher's lessons in every group, Monday to Friday of one week (`?week=` any day of it; this week by default).
+ * On a weekend "this week" is the week after, as in the calendar (`studyDayOf`).
  * The student's own group is highlighted; the other groups are muted and show their group name.
  */
 export function TeacherTimetable({ teacherId }: { teacherId: string }) {
@@ -21,7 +23,7 @@ export function TeacherTimetable({ teacherId }: { teacherId: string }) {
   const format = useFormatters()
   const [week, setWeek] = useQueryState("week", parseAsString)
   const today = todayIso()
-  const thisMonday = startOfWeek(today)
+  const thisMonday = startOfWeek(studyDayOf(today))
   const monday = week && ISO_DATE.test(week) ? startOfWeek(week) : thisMonday
   const friday = addDays(monday, 4)
   const days = WEEKDAYS.map((offset) => addDays(monday, offset))

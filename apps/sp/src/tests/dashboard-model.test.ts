@@ -8,6 +8,7 @@ import {
   pack,
   removeWidget,
   resizeWidget,
+  shownWidgets,
   spanOf,
   textOn,
   WIDGET_SIZES,
@@ -122,5 +123,26 @@ describe("layout merge", () => {
   test("a marked layout keeps the widgets the student removed", () => {
     const marked = [widget("homework", "2x1")]
     expect(withTodayWidgets(marked)).toEqual(marked)
+  })
+})
+
+describe("shown widgets", () => {
+  test("a kind that takes one tile shows its first tile only; notebook prompts may repeat", () => {
+    const first = widget("flashcards_due", "1x1")
+
+    const shown = shownWidgets([
+      widget("next_lesson", "2x1"),
+      first,
+      widget("flashcards_due", "2x1"),
+      widget("notebook_prompt", "2x1", { config: { notebook_id: "a" } }),
+      widget("notebook_prompt", "2x1", { config: { notebook_id: "b" } }),
+    ])
+
+    expect(shown.map((w) => w.kind)).toEqual(["next_lesson", "flashcards_due", "notebook_prompt", "notebook_prompt"])
+    expect(shown.find((w) => w.kind === "flashcards_due")?.id).toBe(first.id)
+  })
+
+  test("retired kinds are not shown", () => {
+    expect(shownWidgets([widget("marks", "2x1"), widget("homework", "2x1")]).map((w) => w.kind)).toEqual(["homework"])
   })
 })

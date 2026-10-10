@@ -1,5 +1,5 @@
 /** My teachers: the cards (photo, subject links, nearest class, next two weeks, contacts), the profile page with the timetable, and the helpers. */
-import { afterEach, beforeEach, describe, expect, test } from "bun:test"
+import { afterEach, beforeEach, describe, expect, setSystemTime, test } from "bun:test"
 import { apiUrl, ids, myTeacherOf, server } from "@ihsp/test-utils"
 import type { MyTeacher, TeacherContacts, TeacherLesson } from "@ihsp/api"
 import { fireEvent, screen, waitFor, within } from "@testing-library/react"
@@ -206,6 +206,23 @@ describe("teacher profile", () => {
 
     fireEvent.click(screen.getByRole("button", { name: "This week" }))
     await waitFor(() => expect(ranges.at(-1)).toBe("2026-10-05"))
+  })
+
+  test("on a weekend this week is the week after, as in the calendar", async () => {
+    setSystemTime(new Date("2026-10-10T05:12:00Z")) // Saturday 10 October, 10:12 in Tashkent
+    const ranges: string[] = []
+    serveOne(WITH_PHOTO)
+    server.use(
+      http.get(apiUrl(`/v1/me/teachers/${ids.teacherKalandarova}/timetable`), ({ request }) => {
+        ranges.push(new URL(request.url).searchParams.get("from") ?? "")
+        return HttpResponse.json([])
+      }),
+    )
+    renderSp(<TeacherPage />, { route: `/teachers/view/?id=${ids.teacherKalandarova}` })
+    await screen.findAllByTestId("teacher-day")
+
+    expect(ranges[0]).toBe("2026-10-12")
+    expect(screen.getByRole("button", { name: "This week" })).toBeDisabled()
   })
 
   test("says when the teacher is not found", async () => {
