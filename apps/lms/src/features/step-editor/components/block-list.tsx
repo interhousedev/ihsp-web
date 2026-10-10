@@ -70,7 +70,6 @@ export function BlockList({
         open={removing !== null}
         onOpenChange={(open) => !open && setRemoving(null)}
         title={t("removeBlockTitle")}
-        description={t("removeBlockDescription")}
         confirmLabel={t("removeBlockConfirm")}
         destructive
         onConfirm={() => {

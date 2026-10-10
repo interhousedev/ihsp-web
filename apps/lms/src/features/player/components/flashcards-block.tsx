@@ -32,7 +32,6 @@ export function FlashcardsBlock({
         <CardContent className="flex flex-col gap-1">
           <h3 className="text-base font-semibold">{t("title")}</h3>
           <p className="text-muted-foreground text-sm">{t("count", { count: block.cards_count })}</p>
-          <p className="text-muted-foreground text-xs">{t("previewNote")}</p>
         </CardContent>
       </Card>
     )

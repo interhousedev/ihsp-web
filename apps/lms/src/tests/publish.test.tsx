@@ -25,7 +25,7 @@ describe("publish page", () => {
     expect(cards).toHaveAttribute("data-change", "added")
     expect(within(cards as HTMLElement).getByText("Via MCP")).toBeInTheDocument()
     expect(screen.getByText("1 added, 1 changed, 0 removed.")).toBeInTheDocument()
-    expect(screen.getByText("The outline (sections or order of steps) changed.")).toBeInTheDocument()
+    expect(screen.getByText("The outline (modules or order of steps) changed.")).toBeInTheDocument()
   })
 
   it("publishes with the draft_seq the list was loaded with and the note", async () => {

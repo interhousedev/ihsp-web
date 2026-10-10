@@ -29,7 +29,6 @@ export function InviteCodeCard({ courseId, canReadDraft }: { courseId: string; c
     <Card>
       <CardContent className="flex flex-col gap-3">
         <h2 className="text-base font-semibold">{t("inviteTitle")}</h2>
-        <p className="text-muted-foreground text-sm">{t("inviteDescription")}</p>
         {code ? (
           <div className="flex flex-wrap items-center gap-2">
             <code className="bg-muted rounded px-3 py-2 font-mono text-lg tracking-widest" aria-label={t("inviteCode")}>
@@ -55,7 +54,6 @@ export function InviteCodeCard({ courseId, canReadDraft }: { courseId: string; c
           open={confirm}
           onOpenChange={setConfirm}
           title={t("rotateTitle")}
-          description={t("rotateDescription")}
           confirmLabel={t("rotate")}
           destructive
           loading={rotate.isPending}

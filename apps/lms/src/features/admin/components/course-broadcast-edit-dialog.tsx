@@ -65,7 +65,6 @@ export function CourseBroadcastEditDialog({
         <form onSubmit={submit} className="flex flex-col gap-4">
           <DialogHeader>
             <DialogTitle>{t("editTitle")}</DialogTitle>
-            <DialogDescription>{t("editHint")}</DialogDescription>
           </DialogHeader>
 
           <Field>

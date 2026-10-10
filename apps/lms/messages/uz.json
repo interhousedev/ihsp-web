@@ -229,28 +229,28 @@
   },
   "outline": {
     "title": "Tuzilma",
-    "empty": "Tuzilma boʻsh. Boshlash uchun boʻlim qoʻshing.",
+    "empty": "Tuzilma boʻsh. Boshlash uchun modul qoʻshing.",
     "emptySection": "Qadamni shu yerga tashlang",
-    "newSection": "Yangi boʻlim",
-    "newSectionPlaceholder": "Boʻlim nomi",
-    "addSection": "Boʻlim qoʻshish",
+    "newSection": "Yangi modul",
+    "newSectionPlaceholder": "Modul nomi",
+    "addSection": "Modul qoʻshish",
     "addStep": "Qadam qoʻshish",
     "addStepTitle": "Yangi qadam",
     "stepTitle": "Qadam nomi",
-    "sectionTitle": "Boʻlim nomi",
+    "sectionTitle": "Modul nomi",
     "dragStep": "«{title}» qadamini sudrash",
-    "dragSection": "«{title}» boʻlimini sudrash",
+    "dragSection": "«{title}» modulini sudrash",
     "moveStepUp": "«{title}» qadamini yuqoriga",
     "moveStepDown": "«{title}» qadamini pastga",
-    "moveSectionUp": "«{title}» boʻlimini yuqoriga",
-    "moveSectionDown": "«{title}» boʻlimini pastga",
-    "renameSection": "«{title}» boʻlimi nomini oʻzgartirish",
+    "moveSectionUp": "«{title}» modulini yuqoriga",
+    "moveSectionDown": "«{title}» modulini pastga",
+    "renameSection": "«{title}» moduli nomini oʻzgartirish",
     "removeStep": "«{title}» qadamini olib tashlash",
-    "removeSection": "«{title}» boʻlimini olib tashlash (faqat boʻsh boʻlsa)",
+    "removeSection": "«{title}» modulini olib tashlash (faqat boʻsh boʻlsa)",
     "removeStepTitle": "Bu qadam olib tashlansinmi?",
     "removeStepDescription": "«{title}» qoralama tuzilmasidan chiqadi. Talabalar nashrgacha uni koʻradi; versiyadan tiklash mumkin.",
-    "removeSectionTitle": "Bu boʻlim olib tashlansinmi?",
-    "removeSectionDescription": "Boʻsh «{title}» boʻlimi qoralamadan olib tashlanadi.",
+    "removeSectionTitle": "Bu modul olib tashlansinmi?",
+    "removeSectionDescription": "Boʻsh «{title}» moduli qoralamadan olib tashlanadi.",
     "remove": "Olib tashlash"
   },
   "stepEditor": {
@@ -287,7 +287,6 @@
     "moveBlockDown": "{number}-blokni pastga",
     "removeBlock": "{number}-blokni oʻchirish",
     "removeBlockTitle": "Bu blok oʻchirilsinmi?",
-    "removeBlockDescription": "Blok qoralamadan oʻchiriladi. Uni tarix orqali qaytarish mumkin.",
     "removeBlockConfirm": "Oʻchirish",
     "discardTitle": "Bu qadam oʻzgarishlari bekor qilinsinmi?",
     "discardDescription": "Qadam nashr qilingan versiyaga qaytadi. Saqlangan va saqlanmagan qoralama tahrirlari yoʻqoladi.",
@@ -305,7 +304,7 @@
         },
         "video": {
           "title": "Video",
-          "description": "Havola orqali video"
+          "description": "Video fayl yoki havola"
         },
         "flashcards": {
           "title": "Kartochkalar",
@@ -363,8 +362,17 @@
     },
     "video": {
       "url": "Video havolasi",
-      "urlHint": "YouTube, Vimeo yoki video faylga toʻgʻridan-toʻgʻri havola.",
-      "caption": "Izoh (ixtiyoriy)"
+      "caption": "Izoh (ixtiyoriy)",
+      "upload": "Video yuklash",
+      "replace": "Videoni almashtirish",
+      "remove": "Videoni oʻchirish",
+      "file": "Video fayl (MP4, WebM yoki MOV)",
+      "uploading": "Yuklanmoqda: {name}",
+      "cancel": "Bekor qilish",
+      "progress": "Yuklash jarayoni",
+      "rejected": "Fayl video sifatida qabul qilinmadi.",
+      "preview": "Videoni koʻrish",
+      "previewUnavailable": "Koʻrish hozircha mavjud emas."
     }
   },
   "markdownEditor": {
@@ -418,7 +426,6 @@
     "displayEquation": "Alohida qatordagi formula",
     "help": "Bezash boʻyicha yordam",
     "helpTitle": "Bezash qanday ishlaydi",
-    "helpIntro": "Matn Markdown koʻrinishida saqlanadi. Soʻzlarni belgilab, tugma yoki tugmalar birikmasini bosing yoki belgilarni oʻzingiz yozing.",
     "helpSyntax": "Siz yozasiz",
     "helpResult": "Talabalar koʻradi",
     "helpExamples": {
@@ -436,8 +443,6 @@
       "list": "roʻyxat bandi",
       "quote": "iqtibos"
     },
-    "helpParagraphs": "Xatboshilar orasida boʻsh qator qoldiring: bitta qator koʻchirish boʻshliq sifatida koʻrsatiladi.",
-    "helpPrices": "Yolgʻiz $ ($5 kabi narx) matnligicha qoladi. Ishonch uchun \\$ deb yozing.",
     "shortcuts": "Tugmalar birikmalari",
     "equationDialog": {
       "title": "Formula qoʻshish",
@@ -469,7 +474,6 @@
       "title": "Havola qoʻshish",
       "editTitle": "Havolani tahrirlash",
       "text": "Matn",
-      "textHint": "Manzil koʻrinishi uchun boʻsh qoldiring.",
       "url": "Manzil",
       "invalidUrl": "Veb-manzil (https://…), pochta (mailto:…) yoki shu saytdagi sahifani (/…) kiriting.",
       "save": "Saqlash",
@@ -480,14 +484,10 @@
   "testBuilder": {
     "settings": "Test sozlamalari",
     "maxAttempts": "Urinishlar chegarasi",
-    "maxAttemptsHint": "Boʻsh — cheklanmagan.",
     "passingScore": "Oʻtish bali, %",
     "poolSize": "Urinishdagi savollar soni",
-    "poolSizeHint": "Boʻsh — barcha savollar; aks holda shuncha savoldan tasodifiy tanlov.",
     "timeLimit": "Vaqt chegarasi, daqiqa",
-    "timeLimitHint": "Boʻsh — chegarasiz.",
     "cooldown": "Urinishlar orasidagi tanaffus, daqiqa",
-    "cooldownHint": "Boʻsh — tanaffussiz.",
     "showAnswers": "Toʻgʻri javoblarni koʻrsatish",
     "showAnswersOptions": {
       "never": "Hech qachon",
@@ -530,25 +530,20 @@
     "moveOptionDown": "{number}-variantni pastga",
     "removeOption": "{number}-variantni oʻchirish",
     "acceptedAnswers": "Qabul qilinadigan javoblar",
-    "acceptedHint": "Har qatorda bittadan. Chetdagi boʻshliqlarsiz solishtiriladi.",
     "regex": "Muntazam ifoda (ixtiyoriy)",
     "regexHint": "Javob toʻliq mos kelishi kerak. Vaqt chegarasi bilan bajariladi.",
     "caseSensitive": "Harf registrini hisobga olish",
     "correctValue": "Toʻgʻri qiymat",
     "tolerance": "Ogʻish chegarasi",
-    "toleranceHint": "Shu masofadagi javob toʻgʻri hisoblanadi.",
-    "sortingHint": "Elementlarni toʻgʻri tartibda yozing. Talabalar ularni aralashtirilgan holda koʻradi.",
     "itemText": "{number}-element",
     "moveItemUp": "{number}-elementni yuqoriga",
     "moveItemDown": "{number}-elementni pastga",
     "removeItem": "{number}-elementni oʻchirish",
     "addItem": "Element qoʻshish",
-    "matchingHint": "Har bir qator juftlik: chap element va unga mos oʻng element.",
     "pairLeft": "{number}-chap element",
     "pairRight": "{number}-oʻng element",
     "removePair": "{number}-juftlikni oʻchirish",
     "addPair": "Juftlik qoʻshish",
-    "tableHint": "Talaba belgilashi kerak boʻlgan kataklarni belgilang.",
     "columnTitle": "{number}-ustun",
     "rowTitle": "{number}-qator",
     "cellCorrect": "{row}-qator, {column}-ustun toʻgʻri",
@@ -572,7 +567,6 @@
     "answerFormula": "Javob formulasi",
     "answerFormulaHint": "+ - * / ^, qavslar, sqrt, sin, cos, ln, abs, pi ishlatish mumkin.",
     "expectedExpression": "Toʻgʻri ifoda",
-    "expectedExpressionHint": "Talabaning ifodasi shunga teng boʻlsa qabul qilinadi.",
     "formulaVariables": "Oʻzgaruvchilar (vergul bilan)",
     "compareMode": "Solishtirish",
     "modeSymbolic": "Ramziy (ekvivalent shakllar)",
@@ -711,14 +705,13 @@
     "noLabel": "Nomsiz",
     "restore": "Tiklash",
     "restoreTitle": "Bu versiya tiklansinmi?",
-    "restoreDescription": "Uning mazmuni bu qadam qoralamasining oʻrnini egallaydi.",
     "restoreDescriptionUnsaved": "Uning mazmuni bu qadam qoralamasining oʻrnini egallaydi. Saqlanmagan tahrirlar yoʻqoladi."
   },
   "publish": {
     "title": "Nashr qilish",
     "noPending": "Kutilayotgan oʻzgarishlar yoʻq.",
     "summary": "Qoʻshilgan: {added}, oʻzgargan: {changed}, oʻchirilgan: {removed}.",
-    "outlineChanged": "Tuzilma (boʻlimlar yoki qadamlar tartibi) oʻzgargan.",
+    "outlineChanged": "Tuzilma (modullar yoki qadamlar tartibi) oʻzgargan.",
     "changes": {
       "added": "Qoʻshilgan",
       "changed": "Oʻzgargan",
@@ -729,7 +722,6 @@
     "hideDiff": "Farqni yashirish",
     "note": "Izoh (ixtiyoriy)",
     "notePlaceholder": "3-savol tuzatildi, amaliy qadam qoʻshildi",
-    "noteHint": "Versiyalar roʻyxatida koʻrsatiladi.",
     "publish": "Nashr qilish",
     "cannotPublish": "Nashr qilish uchun nashr huquqi kerak.",
     "published": "{number}-versiya nashr qilindi. Talabalar uni hozir koʻradi.",
@@ -748,11 +740,9 @@
     "empty": "Hali hech narsa nashr qilinmagan.",
     "select": "{number}-versiyani solishtirish uchun tanlash",
     "compareSelected": "Tanlanganlarni solishtirish",
-    "compareHint": "Ikkita versiyani tanlang.",
     "view": "Ochish",
     "restore": "Tiklash",
     "restoreTitle": "{number}-versiya tiklansinmi?",
-    "restoreDescription": "Uning tuzilmasi va qadamlari qoralamaga kutilayotgan oʻzgarishlar sifatida koʻchiriladi. Nashr qilmaguningizcha talabalar uchun hech narsa oʻzgarmaydi. Tarix saqlanadi.",
     "restored": "Versiya qoralamaga koʻchirildi.",
     "reviewPending": "Kutilayotgan oʻzgarishlarni koʻrib chiqish",
     "added": "qoʻshilgan: {count}",
@@ -761,8 +751,7 @@
     "outlineChanged": "tuzilma oʻzgargan",
     "noChanges": "oʻzgarishlar yoʻq",
     "backToVersions": "Barcha versiyalar",
-    "emptySection": "Bu boʻlimda qadamlar yoʻq.",
-    "readOnlyNote": "Faqat oʻqish uchun. Shu versiyadan davom etish uchun uni roʻyxatdan tiklang."
+    "emptySection": "Bu modulda qadamlar yoʻq."
   },
   "compare": {
     "title": "{a}-versiya va {b}-versiya",
@@ -799,7 +788,6 @@
       "tester": "Sinovchi"
     },
     "role": "Kurs sahifasida koʻrinadigan rol",
-    "roleHint": "Erkin matn, masalan «Oʻqituvchi yordamchisi».",
     "permissions": "Huquqlar",
     "permissionNames": {
       "edit": "Tahrirlash",
@@ -823,16 +811,13 @@
     "edit": "Oʻzgartirish",
     "remove": "Olib tashlash",
     "removeTitle": "Aʼzo olib tashlansinmi?",
-    "removeDescription": "{name} kurs vositalariga darhol ruxsatini yoʻqotadi.",
     "inviteTitle": "Taklif kodi",
-    "inviteDescription": "Talabalar shu kod yoki havola orqali qoʻshiladi. Yangi kod eskisini bekor qiladi.",
     "inviteCode": "Taklif kodi",
     "copyCode": "Kodni nusxalash",
     "copyLink": "Havolani nusxalash",
     "noCode": "Kod bu yerda koʻrsatilmaydi. Koʻrish uchun yangisini yarating.",
     "rotate": "Yangi kod yaratish",
     "rotateTitle": "Yangi taklif kodi yaratilsinmi?",
-    "rotateDescription": "Eski kod va havola ishlamay qoladi.",
     "addSubmit": "Qoʻshish"
   },
   "students": {
@@ -859,7 +844,12 @@
     "bodyHint": "{used} / {max} belgi",
     "send": "Talabalarga yuborish",
     "close": "Yopish",
-    "sent": "{count} talabaga yuborildi."
+    "sent": "{count} talabaga yuborildi.",
+    "edit": "Tahrirlash",
+    "edited": "tahrirlangan",
+    "editTitle": "Yangilanishni tahrirlash",
+    "save": "Saqlash",
+    "saved": "Yangilanish oʻzgartirildi."
   },
   "attempt": {
     "title": "Urinishni tekshirish",
@@ -901,8 +891,6 @@
     "visibility": "Koʻrinish",
     "visibilityPublic": "Ochiq",
     "visibilityInvite": "Faqat taklif bilan",
-    "publicHint": "Istalgan kishi kursni topib, yozilishi mumkin.",
-    "inviteHint": "Talabalar kod yoki havola orqali qoʻshiladi.",
     "create": "Kurs yaratish",
     "creators": {
       "title": "Kurs mualliflari",
@@ -915,8 +903,7 @@
       "empty": "Bu rol hali hech kimga berilmagan.",
       "list": "Hozirgi kurs mualliflari",
       "remove": "Olib tashlash",
-      "removeTitle": "Kurs muallifini olib tashlaysizmi?",
-      "removeDescription": "{name} endi kurs yarata olmaydi. Yaratilgan kurslari oʻzgarishsiz qoladi."
+      "removeTitle": "Kurs muallifini olib tashlaysizmi?"
     }
   },
   "workspace": {

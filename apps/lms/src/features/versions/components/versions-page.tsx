@@ -42,7 +42,6 @@ export function VersionsPage({ courseId }: { courseId: string }) {
                 {t("compareSelected")}
               </Button>
             )}
-            <span className="text-muted-foreground text-xs">{t("compareHint")}</span>
           </div>
           <QueryState query={versions} isEmpty={(items) => items.length === 0} emptyText={t("empty")}>
             {(items) => (

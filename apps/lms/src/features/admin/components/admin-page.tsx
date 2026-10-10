@@ -105,7 +105,6 @@ export function AdminPage() {
                 <NativeSelectOption value="public">{t("visibilityPublic")}</NativeSelectOption>
                 <NativeSelectOption value="invite">{t("visibilityInvite")}</NativeSelectOption>
               </NativeSelect>
-              <FieldDescription>{visibility === "public" ? t("publicHint") : t("inviteHint")}</FieldDescription>
             </Field>
             {create.isError ? (
               <Alert variant="destructive">

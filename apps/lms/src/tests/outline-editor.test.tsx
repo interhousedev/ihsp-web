@@ -97,8 +97,8 @@ describe("course editor outline", () => {
       }),
     )
     const { user } = renderEditor()
-    await user.type(await screen.findByLabelText("New section"), "Homework")
-    await user.click(screen.getByRole("button", { name: "Add section" }))
+    await user.type(await screen.findByLabelText("New module"), "Homework")
+    await user.click(screen.getByRole("button", { name: "Add module" }))
     await waitFor(() =>
       expect(body).toEqual({ ops: [{ op: "add_section", title: "Homework" }], lock_version: courseDraft.lock_version }),
     )
@@ -134,7 +134,7 @@ describe("course editor outline", () => {
     expect(await screen.findByText("Derivative rules quiz")).toBeInTheDocument()
     expect(screen.getByText("You can view the draft but not change it.")).toBeInTheDocument()
     expect(screen.queryByRole("button", { name: /Move step/ })).not.toBeInTheDocument()
-    expect(screen.queryByRole("button", { name: "Add section" })).not.toBeInTheDocument()
+    expect(screen.queryByRole("button", { name: "Add module" })).not.toBeInTheDocument()
   })
 
   it("denies people who are not course staff", async () => {

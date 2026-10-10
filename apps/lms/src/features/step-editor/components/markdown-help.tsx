@@ -48,7 +48,6 @@ export function MarkdownHelp() {
       <PopoverContent align="end" className="max-h-[70vh] w-[min(24rem,calc(100vw-2rem))] overflow-y-auto">
         <div className="flex flex-col gap-3 text-sm">
           <p className="font-medium">{t("helpTitle")}</p>
-          <p className="text-muted-foreground">{t("helpIntro")}</p>
           <table className="w-full text-start text-xs">
             <thead>
               <tr className="text-muted-foreground">
@@ -77,8 +76,6 @@ export function MarkdownHelp() {
               })}
             </tbody>
           </table>
-          <p className="text-muted-foreground text-xs">{t("helpParagraphs")}</p>
-          <p className="text-muted-foreground text-xs">{t("helpPrices")}</p>
           <div className="flex flex-col gap-1">
             <p className="font-medium">{t("shortcuts")}</p>
             <ul className="grid grid-cols-2 gap-x-3 gap-y-1 text-xs">

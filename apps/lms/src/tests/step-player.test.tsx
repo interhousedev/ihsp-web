@@ -405,7 +405,6 @@ describe("step player: flash cards (Anki's study screen)", () => {
     renderPlayer(ids.courseStepCards, "preview")
 
     expect(await screen.findByText("4 cards")).toBeInTheDocument()
-    expect(screen.getByText("Studying is for enrolled students; progress is kept per student.")).toBeInTheDocument()
     expect(screen.queryByRole("button", { name: "Show answer" })).not.toBeInTheDocument()
     expect(asked).toBe(false)
   })

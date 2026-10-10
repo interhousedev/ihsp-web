@@ -62,7 +62,6 @@ function VersionBody({
           </li>
         ))}
       </ol>
-      <p className="text-muted-foreground text-xs">{t("readOnlyNote")}</p>
     </article>
   )
 }

@@ -160,7 +160,6 @@ export function CourseCreatorsCard() {
           open={removing !== null}
           onOpenChange={(open) => !open && setRemoving(null)}
           title={t("creators.removeTitle")}
-          description={removing ? t("creators.removeDescription", { name: personName(removing) }) : undefined}
           confirmLabel={t("creators.remove")}
           destructive
           loading={remove.isPending}

@@ -56,7 +56,6 @@ export function SortingFields({ question, onChange, keyOf }: Props) {
   const set = (next: typeof options) => onChange({ ...question, options: next })
   return (
     <div className="flex flex-col gap-2">
-      <p className="text-muted-foreground text-xs">{t("sortingHint")}</p>
       <ol className="flex flex-col gap-2">
         {options.map((option, index) => (
           <li key={keyOf(option.id)} className={ROW}>
@@ -111,7 +110,6 @@ export function MatchingFields({ question, onChange, keyOf }: Props) {
   const set = (next: typeof pairs) => onChange({ ...question, pairs: next })
   return (
     <div className="flex flex-col gap-2">
-      <p className="text-muted-foreground text-xs">{t("matchingHint")}</p>
       <ul className="flex flex-col gap-2">
         {pairs.map((pair, index) => (
           <li key={keyOf(pair.id)} className={ROW}>
@@ -155,7 +153,6 @@ export function TableFields({ question, onChange }: Props) {
     )
   return (
     <div className="flex flex-col gap-2">
-      <p className="text-muted-foreground text-xs">{t("tableHint")}</p>
       <div className="overflow-x-auto">
         <table className="text-sm">
           <thead>
@@ -432,7 +429,6 @@ export function FormulaFields({ question, onChange }: Props) {
           onChange={(event) => set({ ...spec, expression: event.target.value })}
           className="h-11 font-mono md:h-8"
         />
-        <FieldDescription>{t("expectedExpressionHint")}</FieldDescription>
       </Field>
       <Field>
         <FieldLabel htmlFor={`${id}-vars`}>{t("formulaVariables")}</FieldLabel>

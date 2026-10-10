@@ -49,7 +49,6 @@ export function RestoreVersionButton({ courseId, number }: { courseId: string; n
         open={open}
         onOpenChange={setOpen}
         title={t("restoreTitle", { number })}
-        description={t("restoreDescription")}
         confirmLabel={t("restore")}
         loading={restore.isPending}
         onConfirm={() => restore.mutate()}

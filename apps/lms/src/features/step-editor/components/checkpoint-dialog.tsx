@@ -46,7 +46,6 @@ export function CheckpointDialog({
         <form onSubmit={submit} className="flex flex-col gap-4">
           <DialogHeader>
             <DialogTitle>{t("title")}</DialogTitle>
-            <DialogDescription>{t("description")}</DialogDescription>
           </DialogHeader>
           <Field>
             <FieldLabel htmlFor="checkpoint-label">{t("label")}</FieldLabel>

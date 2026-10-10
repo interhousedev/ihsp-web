@@ -82,7 +82,6 @@ export function VideoBlockEditor({
             disabled={busy}
             className="h-11 md:h-8"
           />
-          <FieldDescription>{t("video.urlHint")}</FieldDescription>
         </Field>
       )}
 

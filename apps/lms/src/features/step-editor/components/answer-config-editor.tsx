@@ -59,7 +59,6 @@ export function AnswerConfigEditor({
             }
             className="h-11 md:h-8"
           />
-          <FieldDescription>{t("toleranceHint")}</FieldDescription>
         </Field>
       </div>
     )
@@ -75,7 +74,6 @@ export function AnswerConfigEditor({
           onChange={(event) => onChange({ ...current, accepted: event.target.value.split("\n") })}
           rows={3}
         />
-        <FieldDescription>{t("acceptedHint")}</FieldDescription>
       </Field>
       <Field>
         <FieldLabel htmlFor={regexId}>{t("regex")}</FieldLabel>

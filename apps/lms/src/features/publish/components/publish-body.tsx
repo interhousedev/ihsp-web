@@ -156,7 +156,6 @@ export function PublishBody({
               placeholder={t("notePlaceholder")}
               disabled={!canPublish}
             />
-            <FieldDescription>{t("noteHint")}</FieldDescription>
           </Field>
           <div className="flex flex-wrap items-center gap-2">
             <Button

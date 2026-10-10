@@ -57,7 +57,6 @@ describe("versions", () => {
     expect(await screen.findByText("A short course on limits and derivatives.")).toBeInTheDocument()
     expect(screen.getByText("Introduction")).toBeInTheDocument()
     expect(screen.getByText("Derivative rules quiz")).toBeInTheDocument()
-    expect(screen.getByText(/Read-only/)).toBeInTheDocument()
     expect(screen.getByRole("button", { name: "Restore" })).toBeInTheDocument()
   })
 })

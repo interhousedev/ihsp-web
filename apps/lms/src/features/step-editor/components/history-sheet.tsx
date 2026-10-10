@@ -97,7 +97,7 @@ export function HistorySheet({
         open={target !== null}
         onOpenChange={(next) => !next && setTarget(null)}
         title={t("restoreTitle")}
-        description={hasUnsavedEdits ? t("restoreDescriptionUnsaved") : t("restoreDescription")}
+        description={hasUnsavedEdits ? t("restoreDescriptionUnsaved") : undefined}
         confirmLabel={t("restore")}
         loading={restore.isPending}
         onConfirm={() => {

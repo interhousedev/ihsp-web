@@ -9,7 +9,6 @@ import {
   DialogHeader,
   DialogTitle,
   Field,
-  FieldDescription,
   FieldError,
   FieldLabel,
   Input,
@@ -67,10 +66,8 @@ export function LinkDialog({
               id={`${id}-text`}
               value={text}
               onChange={(event) => setText(event.target.value)}
-              aria-describedby={`${id}-text-hint`}
               className="h-11 md:h-8"
             />
-            <FieldDescription id={`${id}-text-hint`}>{t("textHint")}</FieldDescription>
           </Field>
           <Field data-invalid={invalid || undefined}>
             <FieldLabel htmlFor={`${id}-url`}>{t("url")}</FieldLabel>

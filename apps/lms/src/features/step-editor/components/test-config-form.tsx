@@ -37,7 +37,6 @@ export function TestConfigForm({ config, onChange }: { config: TestConfig; onCha
       <legend className="sr-only">{t("settings")}</legend>
       <NullableNumberInput
         label={t("maxAttempts")}
-        hint={t("maxAttemptsHint")}
         value={config.max_attempts}
         min={1}
         onChange={(max_attempts) => onChange({ ...config, max_attempts })}
@@ -51,21 +50,18 @@ export function TestConfigForm({ config, onChange }: { config: TestConfig; onCha
       />
       <NullableNumberInput
         label={t("poolSize")}
-        hint={t("poolSizeHint")}
         value={config.pool_size}
         min={1}
         onChange={(pool_size) => onChange({ ...config, pool_size })}
       />
       <NullableNumberInput
         label={t("timeLimit")}
-        hint={t("timeLimitHint")}
         value={secondsToMinutes(config.time_limit_sec)}
         min={1}
         onChange={(minutes) => onChange({ ...config, time_limit_sec: minutesToSeconds(minutes) })}
       />
       <NullableNumberInput
         label={t("cooldown")}
-        hint={t("cooldownHint")}
         value={secondsToMinutes(config.cooldown_sec)}
         min={0}
         onChange={(minutes) => onChange({ ...config, cooldown_sec: minutesToSeconds(minutes) })}

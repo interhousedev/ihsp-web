@@ -229,28 +229,28 @@
   },
   "outline": {
     "title": "Outline",
-    "empty": "The outline is empty. Add a section to start.",
+    "empty": "The outline is empty. Add a module to start.",
     "emptySection": "Drop a step here",
-    "newSection": "New section",
-    "newSectionPlaceholder": "Section title",
-    "addSection": "Add section",
+    "newSection": "New module",
+    "newSectionPlaceholder": "Module title",
+    "addSection": "Add module",
     "addStep": "Add step",
     "addStepTitle": "New step",
     "stepTitle": "Step title",
-    "sectionTitle": "Section title",
+    "sectionTitle": "Module title",
     "dragStep": "Drag step {title}",
-    "dragSection": "Drag section {title}",
+    "dragSection": "Drag module {title}",
     "moveStepUp": "Move step {title} up",
     "moveStepDown": "Move step {title} down",
-    "moveSectionUp": "Move section {title} up",
-    "moveSectionDown": "Move section {title} down",
-    "renameSection": "Rename section {title}",
+    "moveSectionUp": "Move module {title} up",
+    "moveSectionDown": "Move module {title} down",
+    "renameSection": "Rename module {title}",
     "removeStep": "Remove step {title}",
-    "removeSection": "Remove section {title} (only when empty)",
+    "removeSection": "Remove module {title} (only when empty)",
     "removeStepTitle": "Remove this step?",
     "removeStepDescription": "\"{title}\" leaves the draft. Students see this after you publish; restore it from a version if needed.",
-    "removeSectionTitle": "Remove this section?",
-    "removeSectionDescription": "The empty section \"{title}\" is removed from the draft.",
+    "removeSectionTitle": "Remove this module?",
+    "removeSectionDescription": "The empty module \"{title}\" is removed from the draft.",
     "remove": "Remove"
   },
   "stepEditor": {
@@ -287,7 +287,6 @@
     "moveBlockDown": "Move block {number} down",
     "removeBlock": "Delete block {number}",
     "removeBlockTitle": "Delete this block?",
-    "removeBlockDescription": "The block is removed from the draft. Use the history to get it back.",
     "removeBlockConfirm": "Delete",
     "discardTitle": "Discard changes of this step?",
     "discardDescription": "The step goes back to the live version. Unsaved and saved draft edits are lost.",
@@ -305,7 +304,7 @@
         },
         "video": {
           "title": "Video",
-          "description": "A video by link"
+          "description": "A video file or a link"
         },
         "flashcards": {
           "title": "Flash cards",
@@ -363,8 +362,17 @@
     },
     "video": {
       "url": "Video link",
-      "urlHint": "YouTube, Vimeo or a direct link to a video file.",
-      "caption": "Caption (optional)"
+      "caption": "Caption (optional)",
+      "upload": "Upload video",
+      "replace": "Replace video",
+      "remove": "Remove video",
+      "file": "Video file (MP4, WebM or MOV)",
+      "uploading": "Uploading {name}",
+      "cancel": "Cancel",
+      "progress": "Upload progress",
+      "rejected": "The file was not accepted as a video.",
+      "preview": "Video preview",
+      "previewUnavailable": "The preview cannot be shown yet."
     }
   },
   "markdownEditor": {
@@ -418,7 +426,6 @@
     "displayEquation": "Equation on its own line",
     "help": "Formatting help",
     "helpTitle": "How formatting works",
-    "helpIntro": "The text is saved as Markdown. Select words and use the buttons or shortcuts, or type the marks yourself.",
     "helpSyntax": "You type",
     "helpResult": "Students see",
     "helpExamples": {
@@ -436,8 +443,6 @@
       "list": "a list item",
       "quote": "a quote"
     },
-    "helpParagraphs": "Leave an empty line between paragraphs: a single line break is shown as a space.",
-    "helpPrices": "A lone $ (a price like $5) stays text. Write \\$ to be sure.",
     "shortcuts": "Shortcuts",
     "equationDialog": {
       "title": "Insert an equation",
@@ -469,7 +474,6 @@
       "title": "Add a link",
       "editTitle": "Edit the link",
       "text": "Text",
-      "textHint": "Leave empty to show the address.",
       "url": "Address",
       "invalidUrl": "Enter a web address (https://…), an email (mailto:…) or a page of this site (/…).",
       "save": "Save",
@@ -480,14 +484,10 @@
   "testBuilder": {
     "settings": "Test settings",
     "maxAttempts": "Attempts limit",
-    "maxAttemptsHint": "Empty means unlimited.",
     "passingScore": "Passing score, %",
     "poolSize": "Questions per attempt",
-    "poolSizeHint": "Empty means all questions; otherwise a random pool of this size.",
     "timeLimit": "Time limit, minutes",
-    "timeLimitHint": "Empty means no limit.",
     "cooldown": "Pause between attempts, minutes",
-    "cooldownHint": "Empty means no pause.",
     "showAnswers": "Show correct answers",
     "showAnswersOptions": {
       "never": "Never",
@@ -530,25 +530,20 @@
     "moveOptionDown": "Move option {number} down",
     "removeOption": "Delete option {number}",
     "acceptedAnswers": "Accepted answers",
-    "acceptedHint": "One per line. Compared without surrounding spaces.",
     "regex": "Regular expression (optional)",
-    "regexHint": "The whole answer must match. Runs with a time limit.",
+    "regexHint": "The whole answer must match.",
     "caseSensitive": "Case sensitive",
     "correctValue": "Correct value",
     "tolerance": "Tolerance",
-    "toleranceHint": "An answer within this distance counts as correct.",
-    "sortingHint": "List the items in the correct order. Students see them shuffled.",
     "itemText": "Item {number}",
     "moveItemUp": "Move item {number} up",
     "moveItemDown": "Move item {number} down",
     "removeItem": "Remove item {number}",
     "addItem": "Add item",
-    "matchingHint": "Each row is a pair: the left item and the right item that belongs to it.",
     "pairLeft": "Left item {number}",
     "pairRight": "Right item {number}",
     "removePair": "Remove pair {number}",
     "addPair": "Add pair",
-    "tableHint": "Tick the cells students must mark.",
     "columnTitle": "Column {number}",
     "rowTitle": "Row {number}",
     "cellCorrect": "Row {row}, column {column} is correct",
@@ -556,13 +551,13 @@
     "addRow": "Add row",
     "addColumn": "Add column",
     "removeColumn": "Remove last column",
-    "blanksHint": "Write '{{'1'}}', '{{'2'}}' ... in the question where the blanks go. List the accepted answers of each blank, one per line.",
+    "blanksHint": "Mark blanks as '{{'1'}}', '{{'2'}}'. One accepted answer per line.",
     "blankNumber": "Blank {number}",
     "removeBlank": "Remove blank {number}",
     "blankAccepted": "Accepted answers of blank {number}",
     "blankRegex": "Regular expression of blank {number}",
     "addBlank": "Add blank",
-    "randomHint": "Each student gets random values of the variables. Use '{'name'}' in the question to show a value.",
+    "randomHint": "Use '{'name'}' for a variable value.",
     "variableName": "Variable {number} name",
     "variableMin": "Variable {number} minimum",
     "variableMax": "Variable {number} maximum",
@@ -570,18 +565,17 @@
     "removeVariable": "Remove variable {number}",
     "addVariable": "Add variable",
     "answerFormula": "Formula of the answer",
-    "answerFormulaHint": "Use + - * / ^, parentheses, sqrt, sin, cos, ln, abs, pi.",
+    "answerFormulaHint": "Use + - * / ^, sqrt, sin, cos, ln, abs, pi.",
     "expectedExpression": "Correct expression",
-    "expectedExpressionHint": "The student's expression is accepted when it equals this one.",
     "formulaVariables": "Variables (comma separated)",
     "compareMode": "Comparison",
     "modeSymbolic": "Symbolic (equivalent forms)",
     "modeNumeric": "Numeric (sample points)",
-    "codeHint": "Code is not run. Give expected outputs to compare the output a student reports, or leave them empty to grade by hand.",
+    "codeHint": "Code is not run. Empty outputs mean manual grading.",
     "codeLanguage": "Language",
     "codeStarter": "Starter code",
     "expectedOutputs": "Expected outputs",
-    "expectedOutputsHint": "Separate several accepted outputs with a line of three dashes (---)."
+    "expectedOutputsHint": "Separate outputs with ---."
   },
   "cardsBuilder": {
     "card": "Card {number}",
@@ -711,14 +705,13 @@
     "noLabel": "No name",
     "restore": "Restore",
     "restoreTitle": "Restore this revision?",
-    "restoreDescription": "Its content replaces the draft of this step.",
-    "restoreDescriptionUnsaved": "Its content replaces the draft of this step. Edits you have not saved are lost."
+    "restoreDescriptionUnsaved": "Unsaved edits are lost."
   },
   "publish": {
     "title": "Publish",
     "noPending": "There are no pending changes.",
     "summary": "{added} added, {changed} changed, {removed} removed.",
-    "outlineChanged": "The outline (sections or order of steps) changed.",
+    "outlineChanged": "The outline (modules or order of steps) changed.",
     "changes": {
       "added": "Added",
       "changed": "Changed",
@@ -729,7 +722,6 @@
     "hideDiff": "Hide diff",
     "note": "Note (optional)",
     "notePlaceholder": "Fixed question 3, added practice step",
-    "noteHint": "Shown in the version list.",
     "publish": "Publish",
     "cannotPublish": "You need the publish permission to publish.",
     "published": "Published as version {number}. Students see it now.",
@@ -748,11 +740,9 @@
     "empty": "Nothing has been published yet.",
     "select": "Select version {number} for comparing",
     "compareSelected": "Compare selected",
-    "compareHint": "Select two versions.",
     "view": "View",
     "restore": "Restore",
     "restoreTitle": "Restore version {number}?",
-    "restoreDescription": "Its outline and steps are copied into the draft as pending changes. Nothing changes for students until you publish. History is kept.",
     "restored": "The version is in the draft now.",
     "reviewPending": "Review pending changes",
     "added": "{count} added",
@@ -761,8 +751,7 @@
     "outlineChanged": "outline changed",
     "noChanges": "no changes",
     "backToVersions": "All versions",
-    "emptySection": "No steps in this section.",
-    "readOnlyNote": "Read-only. Restore this version from the list to continue from it."
+    "emptySection": "No steps in this module."
   },
   "compare": {
     "title": "Version {a} and version {b}",
@@ -799,7 +788,6 @@
       "tester": "Tester"
     },
     "role": "Role shown on the course page",
-    "roleHint": "Free text, for example Assistant teacher.",
     "permissions": "Permissions",
     "permissionNames": {
       "edit": "Edit",
@@ -823,16 +811,13 @@
     "edit": "Edit",
     "remove": "Remove",
     "removeTitle": "Remove this staff member?",
-    "removeDescription": "{name} loses access to the course tools at once.",
     "inviteTitle": "Invite code",
-    "inviteDescription": "Students join with this code or link. A new code invalidates the old one.",
     "inviteCode": "Invite code",
     "copyCode": "Copy code",
     "copyLink": "Copy link",
     "noCode": "The code is not shown here. Create a new one to see it.",
     "rotate": "Create new code",
     "rotateTitle": "Create a new invite code?",
-    "rotateDescription": "The old code and link stop working.",
     "addSubmit": "Add"
   },
   "students": {
@@ -859,7 +844,12 @@
     "bodyHint": "{used} of {max} characters",
     "send": "Send to students",
     "close": "Close",
-    "sent": "Sent to {count, plural, one {# student} other {# students}}."
+    "sent": "Sent to {count, plural, one {# student} other {# students}}.",
+    "edit": "Edit",
+    "edited": "edited",
+    "editTitle": "Edit the update",
+    "save": "Save",
+    "saved": "Update changed."
   },
   "attempt": {
     "title": "Attempt review",
@@ -896,13 +886,11 @@
     "courseTitle": "Title",
     "titleRequired": "Enter a title.",
     "slug": "Address",
-    "slugHint": "Latin letters, digits and dashes, 3 to 60 characters. It cannot be changed later.",
+    "slugHint": "Latin letters, digits, dashes. Cannot be changed later.",
     "slugInvalid": "Use 3 to 60 Latin letters, digits or dashes.",
     "visibility": "Visibility",
     "visibilityPublic": "Public",
     "visibilityInvite": "Invite only",
-    "publicHint": "Anyone can find and enroll.",
-    "inviteHint": "Students join with an invite code or link.",
     "create": "Create course",
     "creators": {
       "title": "Course creators",
@@ -915,8 +903,7 @@
       "empty": "Nobody has been given this role yet.",
       "list": "Current course creators",
       "remove": "Remove",
-      "removeTitle": "Remove this course creator?",
-      "removeDescription": "{name} will no longer be able to create courses. Their existing courses stay as they are."
+      "removeTitle": "Remove this course creator?"
     }
   },
   "workspace": {

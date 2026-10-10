@@ -132,7 +132,6 @@ export function StaffFormDialog({
               maxLength={40}
               className="h-11 md:h-8"
             />
-            <FieldDescription>{t("roleHint")}</FieldDescription>
           </Field>
 
           <fieldset className="flex flex-col gap-1">

@@ -12,7 +12,7 @@ export function PreviewBanner({ backHref }: { backHref: string }) {
       <Icons.info aria-hidden />
       <AlertDescription className="flex flex-wrap items-center gap-x-3 gap-y-2">
         <span>
-          <strong>{t("previewBanner")}</strong> {t("previewNote")}
+          <strong>{t("previewBanner")}</strong>
         </span>
         <LinkButton href={backHref} size="sm" variant="outline" className="min-h-11 md:min-h-7">
           <Icons.chevronLeft aria-hidden />

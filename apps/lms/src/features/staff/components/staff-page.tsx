@@ -187,7 +187,6 @@ export function StaffPage({ courseId }: { courseId: string }) {
               open={removing !== null}
               onOpenChange={(open) => !open && setRemoving(null)}
               title={t("removeTitle")}
-              description={removing ? t("removeDescription", { name: personName(removing.user) }) : undefined}
               confirmLabel={t("remove")}
               destructive
               loading={remove.isPending}
