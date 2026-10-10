@@ -17,3 +17,6 @@ apps/lms/public/sw.js
 apps/library/public/sw.js
 apps/staff/public/sw.js
 apps/admin/public/sw.js
+
+# Copied from pdfjs-dist by `bun run copy:pdfjs` (apps/library/scripts/copy-pdfjs.mjs)
+apps/library/public/pdfjs/

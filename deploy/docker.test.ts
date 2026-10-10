@@ -185,6 +185,8 @@ describe("templates", () => {
     expect(csp).toContain("img-src ${CSP_IMG_SRC} ${IHSP_STORAGE_ORIGIN} https://api.unilibrary.uz;")
     // presigned PDF/EPUB downloads with HTTP Range
     expect(csp).toContain("connect-src ${CSP_CONNECT_SRC} ${IHSP_STORAGE_ORIGIN};")
+    expect(csp).toContain("style-src 'self' 'unsafe-inline' blob:;")
+    expect(csp).toContain("font-src 'self' blob:;")
     expect(csp).toContain("worker-src 'self' blob:;")
     expect(csp).toContain("object-src 'none'")
     expect(csp).toContain("frame-ancestors 'self' https://web.telegram.org")
@@ -193,7 +195,7 @@ describe("templates", () => {
       cspDirectives(cspHeader(read("snippets", "security-headers.conf"))).map((d) => [d.split(" ")[0]!, d]),
     )
     const ownDirectives = new Map(cspDirectives(csp).map((d) => [d.split(" ")[0]!, d]))
-    const changed = ["img-src", "connect-src", "worker-src"]
+    const changed = ["img-src", "connect-src", "worker-src", "style-src", "font-src"]
     expect([...ownDirectives.keys()].filter((name) => !others.has(name))).toEqual(["worker-src"])
     for (const [name, directive] of others) {
       if (!changed.includes(name)) expect({ name, directive: ownDirectives.get(name) }).toEqual({ name, directive })
