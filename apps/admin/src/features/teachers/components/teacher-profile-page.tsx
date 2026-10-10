@@ -26,6 +26,7 @@ import { fullNameWithMiddle } from "../../shared/utils/names"
 import { TOUCH } from "../../shared/utils/touch"
 import { SetPasswordDialog } from "../../users/components/set-password-dialog"
 import { EditTeacherDialog } from "./edit-teacher-dialog"
+import { TeacherContactsSection } from "./teacher-contacts-section"
 
 function Section({ title, children }: { title: string; children: React.ReactNode }) {
   return (
@@ -81,6 +82,8 @@ function ProfileBody({ data }: { data: TeacherProfile }) {
           {t("openInUsers")}
         </Link>
       </div>
+
+      <TeacherContactsSection teacherId={user.id} />
 
       <Section title={t("curatedGroups")}>
         {data.curated_groups.length === 0 ? (
