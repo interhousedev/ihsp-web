@@ -24,6 +24,7 @@ describe("semester grades", () => {
 
     expect(await screen.findByRole("table")).toBeInTheDocument()
     expect(screen.getByText("4.10")).toBeInTheDocument()
+    expect(screen.getByText("GPA (out of 5)")).toBeInTheDocument()
     const rows = screen.getAllByRole("row")
     expect(rows).toHaveLength(semesterGrades.rows.length + 1)
     const physics = within(rows.find((row) => within(row).queryByText("Physics")) as HTMLElement)

@@ -1,6 +1,6 @@
 "use client"
 
-import type { SubjectLessonRow } from "@ihsp/api"
+import type { MarkItem, SubjectLessonRow } from "@ihsp/api"
 import { useErrorMessage, useFormatters, useT } from "@ihsp/i18n"
 import { Badge, Button, Icons, MarkBadge, StateView } from "@ihsp/ui"
 import Link from "next/link"
@@ -8,13 +8,14 @@ import { useState } from "react"
 import { QueryState } from "../../shared/components/query-state"
 import { PAST_STEP, useOpenSubjectNotebook, useSubjectLessons } from "../hooks/use-subject-hub"
 
-/** Green when present, red when absent: the same two dots as in the calendar. */
+/** Green when present, dark orange when late, dark red when absent: the same dots as in the calendar. */
 export function AttendanceDot({ state }: { state: SubjectLessonRow["attendance"] }) {
   const t = useT("subjects.hub.attendance")
   if (state === null) return null
-  const colour = state === "present" ? "bg-green-600" : state === "late" ? "bg-amber-500" : "bg-red-600"
+  const colour = state === "present" ? "bg-green-600" : state === "late" ? "bg-orange-700" : "bg-red-800"
+  const text = state === "late" ? "text-orange-700 dark:text-orange-400" : state === "absent" ? "text-red-800 dark:text-red-400" : ""
   return (
-    <span className="flex items-center gap-1 text-xs" data-attendance={state}>
+    <span className={`flex items-center gap-1 text-xs font-medium ${text}`} data-attendance={state}>
       <span className={`size-2.5 rounded-full ${colour}`} aria-hidden />
       {t(state)}
     </span>
@@ -23,17 +24,25 @@ export function AttendanceDot({ state }: { state: SubjectLessonRow["attendance"]
 
 function LessonRow({
   row,
+  marks,
   onAsk,
   asking,
 }: {
   row: SubjectLessonRow
+  marks: readonly MarkItem[]
   onAsk: (row: SubjectLessonRow) => void
   asking: boolean
 }) {
   const t = useT("subjects.hub")
   const f = useFormatters()
+  const tm = useT("subjects.marks")
+  const shown = marks.length > 0 ? marks : row.mark !== null ? [{ value: row.mark, type: "lesson" as const }] : []
   return (
-    <li className="flex flex-col gap-2 rounded-lg border p-3" data-past={row.past}>
+    <li
+      className="flex flex-col gap-2 rounded-lg border p-3 data-[attendance=absent]:border-red-800 data-[attendance=late]:border-orange-700"
+      data-past={row.past}
+      data-attendance={row.attendance ?? undefined}
+    >
       <Link
         href={`/lessons/view/?id=${encodeURIComponent(row.lesson_id)}`}
         className="hover:bg-accent focus-visible:ring-ring -m-1 flex min-h-11 flex-col gap-1 rounded-md p-1 outline-none focus-visible:ring-2"
@@ -43,7 +52,12 @@ function LessonRow({
             {f.date(row.date, { weekday: "short", day: "numeric", month: "short" })} · {f.time(row.starts_at)}
           </span>
           <span className="flex items-center gap-2">
-            {row.mark !== null ? <MarkBadge mark={row.mark} size="sm" /> : null}
+            {shown.map((mark, index) => (
+              <span key={`${mark.type}-${index}`} className="flex items-center gap-1" data-mark-type={mark.type}>
+                <span className="text-muted-foreground text-xs">{tm(`type.${mark.type}`)}</span>
+                <MarkBadge mark={mark.value} size="sm" />
+              </span>
+            ))}
             <AttendanceDot state={row.attendance} />
           </span>
         </span>
@@ -74,13 +88,15 @@ function LessonRow({
  * past lessons with mark and attendance, "show more" for older ones, and the next 14 days. Each lesson can be asked
  * about in the subject notebook.
  */
-export function SubjectHub({ subjectId }: { subjectId: string }) {
+export function SubjectHub({ subjectId, marks }: { subjectId: string; marks: readonly MarkItem[] }) {
   const t = useT("subjects.hub")
   const errorMessage = useErrorMessage()
   const [pastLimit, setPastLimit] = useState(PAST_STEP)
   const query = useSubjectLessons(subjectId, pastLimit)
   const open = useOpenSubjectNotebook(subjectId)
   const f = useFormatters()
+
+  const marksOf = (row: SubjectLessonRow) => marks.filter((mark) => mark.lesson_id === row.lesson_id)
 
   function ask(row: SubjectLessonRow) {
     const when = f.date(row.date, { day: "numeric", month: "long" })
@@ -92,15 +108,6 @@ export function SubjectHub({ subjectId }: { subjectId: string }) {
 
   return (
     <div className="flex flex-col gap-4">
-      <section className="flex flex-wrap items-center justify-between gap-3 rounded-lg border p-3">
-        <div className="min-w-0">
-          <h2 className="text-sm font-semibold">{t("notebook.title")}</h2>
-        </div>
-        <Button className="min-h-11 md:min-h-8" disabled={open.isPending} onClick={() => open.mutate({})}>
-          <Icons.journal aria-hidden />
-          {t("notebook.open")}
-        </Button>
-      </section>
       {open.isError ? (
         <p role="alert" className="text-destructive text-sm">
           {errorMessage(open.error)}
@@ -124,7 +131,7 @@ export function SubjectHub({ subjectId }: { subjectId: string }) {
                   </h2>
                   <ul className="flex flex-col gap-2">
                     {past.map((row) => (
-                      <LessonRow key={row.lesson_id} row={row} onAsk={ask} asking={open.isPending} />
+                      <LessonRow key={row.lesson_id} row={row} marks={marksOf(row)} onAsk={ask} asking={open.isPending} />
                     ))}
                   </ul>
                   {data.has_more_past ? (
@@ -147,7 +154,7 @@ export function SubjectHub({ subjectId }: { subjectId: string }) {
                 ) : (
                   <ul className="flex flex-col gap-2">
                     {upcoming.map((row) => (
-                      <LessonRow key={row.lesson_id} row={row} onAsk={ask} asking={open.isPending} />
+                      <LessonRow key={row.lesson_id} row={row} marks={marksOf(row)} onAsk={ask} asking={open.isPending} />
                     ))}
                   </ul>
                 )}

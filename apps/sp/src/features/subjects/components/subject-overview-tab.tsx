@@ -1,8 +1,10 @@
 "use client"
 
 import type { SubjectDetail } from "@ihsp/api"
-import { useT } from "@ihsp/i18n"
-import { MarkBadge, Stat } from "@ihsp/ui"
+import { useErrorMessage, useT } from "@ihsp/i18n"
+import { Button, Icons, MarkBadge, Stat } from "@ihsp/ui"
+import { useOpenSubjectNotebook } from "../hooks/use-subject-hub"
+import { LinkButton } from "../../shared/components/link-button"
 import { fullName } from "../../shared/utils/people"
 
 function percent(value: number | null): string {
@@ -12,8 +14,29 @@ function percent(value: number | null): string {
 /** Overview (WEB-8): teachers, semester mark with its averages, EMIS rating and absence rate. */
 export function SubjectOverviewTab({ detail }: { detail: SubjectDetail }) {
   const t = useT("subjects.overview")
+  const errorMessage = useErrorMessage()
+  const open = useOpenSubjectNotebook(detail.subject.id)
+  const planner = `/grades/plan/?subject=${encodeURIComponent(detail.subject.id)}&semester=${detail.semester}`
   return (
     <div className="flex flex-col gap-4">
+      <section className="flex flex-wrap items-center justify-between gap-3 rounded-lg border p-3">
+        <h2 className="text-sm font-semibold">{t("notebook")}</h2>
+        <div className="flex flex-wrap gap-2">
+          <LinkButton href={planner}>
+            <Icons.grades aria-hidden />
+            {t("planner")}
+          </LinkButton>
+          <Button className="min-h-11 md:min-h-8" disabled={open.isPending} onClick={() => open.mutate({})}>
+            <Icons.journal aria-hidden />
+            {t("openNotebook")}
+          </Button>
+        </div>
+      </section>
+      {open.isError ? (
+        <p role="alert" className="text-destructive text-sm">
+          {errorMessage(open.error)}
+        </p>
+      ) : null}
       <section aria-labelledby="subject-teachers">
         <h2 id="subject-teachers" className="mb-1 text-sm font-semibold">
           {t("teachers")}

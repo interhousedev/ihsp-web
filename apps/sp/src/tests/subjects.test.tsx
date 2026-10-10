@@ -50,8 +50,8 @@ describe("subjects page", () => {
 })
 
 describe("subject page", () => {
-  test("Overview shows teachers, semester mark, EMIS rating, absence rate and the three averages", async () => {
-    renderSp(<SubjectPage />, { route: `${PHYSICS}&tab=overview` })
+  test("Overview is the default tab and shows teachers, semester mark, EMIS rating, absence rate and averages", async () => {
+    renderSp(<SubjectPage />, { route: PHYSICS })
 
     expect(await screen.findByRole("heading", { name: "Physics" })).toBeInTheDocument()
     expect(screen.getByText("Semester 4")).toBeInTheDocument()
@@ -59,24 +59,64 @@ describe("subject page", () => {
     expect(screen.getByText("4.8")).toBeInTheDocument()
     expect(screen.getByText("0%")).toBeInTheDocument()
     expect(screen.getByText("Averages")).toBeInTheDocument()
+    expect(screen.getByRole("tab", { name: "Overview", selected: true })).toBeInTheDocument()
+    expect(screen.queryByRole("tab", { name: "Marks" })).not.toBeInTheDocument()
   })
 
-  test("the hub opens first and lists lessons around now with their topic", async () => {
+  test("Overview has the planner and notebook buttons", async () => {
     renderSp(<SubjectPage />, { route: PHYSICS })
+
+    const planner = await screen.findByRole("link", { name: "Mark planner" })
+    expect(planner.getAttribute("href")).toBe(`/grades/plan?subject=${ids.physics}&semester=4`)
+    expect(screen.getByRole("button", { name: "Open notebook" })).toBeInTheDocument()
+  })
+
+  test("Lessons list past and upcoming lessons around now with their topic", async () => {
+    renderSp(<SubjectPage />, { route: `${PHYSICS}&tab=lessons` })
 
     expect(await screen.findByRole("region", { name: "Recent lessons" })).toBeInTheDocument()
     expect(screen.getByRole("region", { name: "Next 14 days" })).toBeInTheDocument()
     expect(screen.getAllByText(/topic of/).length).toBeGreaterThan(0)
   })
 
-  test("Marks can be filtered by type", async () => {
-    const { user } = renderSp(<SubjectPage />, { route: `${PHYSICS}&tab=marks` })
+  test("a lesson shows its marks with type, late in dark orange and absent in dark red", async () => {
+    const row = (n: number, attendance: "present" | "late" | "absent") => ({
+      lesson_id: `0000000${n}-0000-4000-8000-000000000001`,
+      date: `2026-10-0${n}`,
+      starts_at: `2026-10-0${n}T09:00:00Z`,
+      kind: "lecture",
+      topic: `Row ${n}`,
+      mark: null,
+      attendance,
+      materials_count: 0,
+      past: true,
+    })
+    server.use(
+      http.get(apiUrl(`/v1/me/subjects/${ids.physics}/lessons`), () =>
+        HttpResponse.json({ items: [row(1, "present"), row(2, "late"), row(3, "absent")], has_more_past: false }),
+      ),
+      http.get(apiUrl(`/v1/me/subjects/${ids.physics}`), () =>
+        HttpResponse.json({
+          ...subjectDetailPhysics,
+          marks: [
+            { value: 4, type: "lesson", date: "2026-10-02", lesson_id: "00000002-0000-4000-8000-000000000001" },
+            { value: 5, type: "midterm", date: "2026-10-02", lesson_id: "00000002-0000-4000-8000-000000000001" },
+          ],
+        }),
+      ),
+    )
+    renderSp(<SubjectPage />, { route: `${PHYSICS}&tab=lessons` })
 
-    const all = await screen.findAllByRole("listitem")
-    expect(all).toHaveLength(subjectDetailPhysics.marks.length)
-    await user.click(screen.getByRole("button", { name: "Midterm (PC)" }))
-
-    await waitFor(() => expect(screen.getAllByRole("listitem")).toHaveLength(1))
+    const late = (await screen.findByText("Row 2")).closest("li")
+    expect(late).toHaveAttribute("data-attendance", "late")
+    expect(within(late as HTMLElement).getByText("Late").closest("[data-attendance]")?.className).toContain(
+      "text-orange-700",
+    )
+    expect(within(late as HTMLElement).getByText("Midterm (PC)")).toBeInTheDocument()
+    expect(within(late as HTMLElement).getAllByText("Lesson").length).toBeGreaterThan(0)
+    const absent = screen.getByText("Row 3").closest("li") as HTMLElement
+    expect(absent).toHaveAttribute("data-attendance", "absent")
+    expect(within(absent).getByText("Absent").closest("[data-attendance]")?.className).toContain("text-red-800")
   })
 
   test("Materials can be searched by name", async () => {
