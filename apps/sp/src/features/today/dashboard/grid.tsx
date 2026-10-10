@@ -3,6 +3,7 @@
 import { useT } from "@ihsp/i18n"
 import { Icons } from "@ihsp/ui"
 import { type CSSProperties, useEffect, useState } from "react"
+import { TileColor } from "./editor/tile-color"
 import { inOrder, spanOf, type Widget } from "./model"
 import { WIDGET_VIEWS } from "./widgets"
 
@@ -17,6 +18,7 @@ const KEY_STEP: Record<string, number> = {
 /**
  * The widgets in one column (phone) or on a 4-column grid (desktop); each row is as tall as its content. In edit mode a
  * tile is selected with a click or tap and moved by dragging (mouse, pen or finger: pointer events) or with the arrow keys.
+ * The selected tile carries its palette button (`TileColor`), which opens the colour popover next to the tile.
  */
 export function DashboardGrid({
   widgets,
@@ -24,12 +26,14 @@ export function DashboardGrid({
   selectedId,
   onSelect,
   onMove,
+  onColor,
 }: {
   widgets: readonly Widget[]
   editing: boolean
   selectedId: string | null
   onSelect: (id: string) => void
   onMove: (id: string, toIndex: number) => void
+  onColor: (id: string, color: string | null) => void
 }) {
   const t = useT("today.dashboard")
   const ordered = inOrder(widgets)
@@ -91,8 +95,17 @@ export function DashboardGrid({
                 style={{ touchAction: "none" }}
                 className={`focus-visible:ring-ring absolute inset-0 z-10 cursor-grab rounded-3xl outline-none focus-visible:ring-2 ${selected ? "ring-primary ring-4" : ""}`}
               >
-                <Icons.gripVertical aria-hidden className="absolute top-2 right-2 size-4 opacity-60" />
+                {selected ? null : (
+                  <Icons.gripVertical aria-hidden className="absolute top-2 right-2 size-4 opacity-60" />
+                )}
               </button>
+            ) : null}
+            {editing && selected ? (
+              <TileColor
+                color={widget.color}
+                onColor={(color) => onColor(widget.id, color)}
+                className="absolute top-2 right-2 z-20"
+              />
             ) : null}
           </div>
         )

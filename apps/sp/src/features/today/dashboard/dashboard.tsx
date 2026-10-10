@@ -37,6 +37,7 @@ export function Dashboard() {
     setDraft((current) => (current ? fn(current) : current))
   }, [])
   const onMove = useCallback((id: string, to: number) => change((w) => moveWidget(w, id, to)), [change])
+  const onColor = useCallback((id: string, color: string | null) => change((w) => colorWidget(w, id, color)), [change])
 
   if (!query.data) return null
   const editing = draft !== null
@@ -117,12 +118,12 @@ export function Dashboard() {
         selectedId={selectedId}
         onSelect={setSelectedId}
         onMove={onMove}
+        onColor={onColor}
       />
       {editing && selected ? (
         <WidgetEditor
           widget={selected}
           onResize={(size: DashboardWidgetSize) => change((w) => resizeWidget(w, selected.id, size))}
-          onColor={(color) => change((w) => colorWidget(w, selected.id, color))}
           onRemove={() => {
             change((w) => removeWidget(w, selected.id))
             setSelectedId(null)

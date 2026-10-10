@@ -29,13 +29,9 @@ export function DayGradesTab() {
         >
           <Icons.chevronLeft aria-hidden />
         </Button>
-        <DatePicker
-          value={date}
-          max={today}
-          aria-label={t("pick")}
-          onChange={(next) => void setDate(next)}
-          className="min-w-44"
-        />
+        <div data-testid="day-date" className="w-44 shrink-0">
+          <DatePicker value={date} max={today} aria-label={t("pick")} onChange={(next) => void setDate(next)} />
+        </div>
         <Button
           variant="outline"
           size="icon"
@@ -65,8 +61,8 @@ export function DayGradesTab() {
                     <span className="text-muted-foreground w-12 shrink-0 text-xs tabular-nums">
                       {f.time(lesson.starts_at)}
                     </span>
-                    <span className="min-w-0 flex-1 text-sm font-medium">{lesson.subject.name}</span>
-                    <span className="flex items-center gap-1">
+                    <span className="min-w-24 flex-1 text-sm font-medium break-words">{lesson.subject.name}</span>
+                    <span className="flex flex-wrap items-center justify-end gap-1">
                       {marks.map((mark, index) => (
                         <MarkBadge key={`${mark.type}-${index}`} mark={mark.value} size="lg" />
                       ))}
@@ -87,7 +83,7 @@ export function DayGradesTab() {
                       className="flex min-h-11 items-center gap-3 rounded-lg border p-2"
                     >
                       <MarkBadge mark={mark.value} size="lg" />
-                      <span className="text-sm">
+                      <span className="min-w-0 text-sm break-words">
                         {mark.subject.name} · {t(`type.${mark.type}`)}
                       </span>
                     </li>

@@ -76,6 +76,15 @@ describe("grades by day", () => {
     expect(screen.getByText(/History/)).toBeInTheDocument()
   })
 
+  test("the date is a compact fixed-width box that does not stretch across the row", async () => {
+    renderSp(<GradesPage />, { route: "/grades/?tab=day&date=2026-10-06" })
+
+    const box = await screen.findByTestId("day-date")
+    expect(box.className).toContain("w-44")
+    expect(box.className).toContain("shrink-0")
+    expect(within(box).getByRole("button", { name: "Pick a date" }).className).toContain("w-full")
+  })
+
   test("a day without marks shows the empty state", async () => {
     server.use(
       http.get(apiUrl("/v1/me/grades/day"), () =>

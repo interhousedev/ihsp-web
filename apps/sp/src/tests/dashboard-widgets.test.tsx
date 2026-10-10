@@ -15,6 +15,13 @@ function tile(kind: string): HTMLElement {
   return found
 }
 
+/** The grid cell of a tile: the tile itself and, while it is selected in edit mode, its palette button. */
+function tileBox(kind: string): HTMLElement {
+  const box = tile(kind).closest<HTMLElement>("[data-tile-id]")
+  if (!box) throw new Error(`no ${kind} tile box`)
+  return box
+}
+
 describe("Dashboard widgets", () => {
   test("shows the saved widgets with their colours and readable text", async () => {
     renderSp(<Dashboard />)
@@ -50,9 +57,10 @@ describe("Dashboard widgets", () => {
     await user.click(within(editor).getByRole("button", { name: "2x2" }))
     expect(tile("notebook_prompt")).toHaveAttribute("data-widget-size", "2x2")
 
-    await user.click(within(editor).getByRole("button", { name: "#FFCC00" }))
+    await user.click(within(tileBox("notebook_prompt")).getByRole("button", { name: "Colour" }))
+    await user.click(screen.getByRole("button", { name: "#FFCC00" }))
     expect(tile("notebook_prompt")).toHaveAttribute("data-text-color", "#000000")
-    await user.click(within(editor).getByRole("button", { name: "#1C1C1E" }))
+    await user.click(screen.getByRole("button", { name: "#1C1C1E" }))
     expect(tile("notebook_prompt")).toHaveAttribute("data-text-color", "#FFFFFF")
 
     await user.click(screen.getByRole("button", { name: "Done" }))
@@ -69,6 +77,57 @@ describe("Dashboard widgets", () => {
     })
     expect(saved.every((w) => !("text_color" in w))).toBe(true)
     await screen.findByRole("button", { name: "Edit" })
+  })
+
+  test("the colour is picked in a popover on the selected tile, and Escape closes it and returns focus", async () => {
+    const { user } = renderSp(<Dashboard />)
+
+    await user.click(await screen.findByRole("button", { name: "Edit" }))
+    await user.click(screen.getByRole("button", { name: "Select Tasks" }))
+
+    const editor = screen.getByRole("region", { name: "Widget settings" })
+    expect(within(editor).queryByRole("group", { name: "Colour" })).toBeNull()
+    expect(screen.getAllByRole("button", { name: "Colour" })).toHaveLength(1)
+
+    const palette = within(tileBox("homework")).getByRole("button", { name: "Colour" })
+    await user.click(palette)
+    expect(palette).toHaveAttribute("aria-expanded", "true")
+    expect(
+      within(screen.getByRole("group", { name: "Colour" })).getByRole("button", { name: "#34C759" }),
+    ).toBeInTheDocument()
+
+    await user.keyboard("{Escape}")
+    await waitFor(() => expect(screen.queryByRole("button", { name: "#34C759" })).toBeNull())
+    expect(palette).toHaveFocus()
+  })
+
+  test("the palette button is on the selected tile only, and a colour picked there is saved", async () => {
+    const bodies: { widgets: Record<string, unknown>[] }[] = []
+    server.use(
+      http.put(apiUrl("/v1/me/dashboard"), async ({ request }) => {
+        const body = (await request.json()) as { version: number; widgets: Record<string, unknown>[] }
+        bodies.push(body)
+        return HttpResponse.json({ version: body.version + 1, widgets: body.widgets })
+      }),
+    )
+    const { user } = renderSp(<Dashboard />)
+
+    await user.click(await screen.findByRole("button", { name: "Edit" }))
+    await user.click(screen.getByRole("button", { name: "Select Tasks" }))
+    expect(within(tileBox("homework")).getByRole("button", { name: "Colour" })).toBeInTheDocument()
+    expect(within(tileBox("next_lesson")).queryByRole("button", { name: "Colour" })).toBeNull()
+
+    await user.click(within(tileBox("homework")).getByRole("button", { name: "Colour" }))
+    await user.click(screen.getByRole("button", { name: "#34C759" }))
+    expect(tile("homework")).toHaveAttribute("data-text-color", "#000000")
+
+    await user.click(screen.getByRole("button", { name: "Default colour" }))
+    expect(tile("homework")).not.toHaveAttribute("data-text-color")
+    await user.click(screen.getByRole("button", { name: "#34C759" }))
+
+    await user.click(screen.getByRole("button", { name: "Done" }))
+    await waitFor(() => expect(bodies).toHaveLength(1))
+    expect(bodies[0]?.widgets.find((w) => w.kind === "homework")).toMatchObject({ color: "#34C759" })
   })
 
   test("deletes a widget", async () => {

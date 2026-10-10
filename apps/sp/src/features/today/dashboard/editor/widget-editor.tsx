@@ -4,18 +4,18 @@ import type { DashboardWidgetSize } from "@ihsp/api"
 import { useT } from "@ihsp/i18n"
 import { Button, Icons } from "@ihsp/ui"
 import { WIDGET_SIZES, type Widget } from "../model"
-import { ColorPicker } from "./color-picker"
 
-/** The controls of the selected tile: size (only the sizes its kind allows), colour and delete. */
+/**
+ * The controls of the selected tile: size (only the sizes its kind allows) and delete. The colour is picked on the tile
+ * itself (`TileColor`), next to the tile it changes.
+ */
 export function WidgetEditor({
   widget,
   onResize,
-  onColor,
   onRemove,
 }: {
   widget: Widget
   onResize: (size: DashboardWidgetSize) => void
-  onColor: (color: string | null) => void
   onRemove: () => void
 }) {
   const t = useT("today.dashboard")
@@ -36,7 +36,6 @@ export function WidgetEditor({
           </Button>
         ))}
       </div>
-      <ColorPicker value={widget.color} onChange={onColor} />
       <Button type="button" variant="destructive" size="sm" className="self-start" onClick={onRemove}>
         <Icons.trash aria-hidden />
         {t("remove")}
