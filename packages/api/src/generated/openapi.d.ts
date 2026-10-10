@@ -8567,7 +8567,8 @@ export interface components {
             licence?: string | null;
             /** Publisher */
             publisher?: string | null;
-            rights: components["schemas"]["Rights"];
+            /** @default official */
+            rights?: components["schemas"]["Rights"];
             rights_basis?: components["schemas"]["RightsBasisSchema"];
             /** Rights Proof File Id */
             rights_proof_file_id?: string | null;
