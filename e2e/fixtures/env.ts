@@ -3,9 +3,9 @@
 const env = process.env
 const local = env.E2E_STACK === "local"
 
-export type AppKey = "id" | "sp" | "staff" | "admin" | "lms"
+export type AppKey = "id" | "sp" | "staff" | "admin" | "lms" | "library"
 
-const DEV_PORT: Record<AppKey, number> = { id: 3001, sp: 3002, staff: 3003, admin: 3004, lms: 3005 }
+const DEV_PORT: Record<AppKey, number> = { id: 3001, sp: 3002, staff: 3003, admin: 3004, lms: 3005, library: 3008 }
 
 function appUrl(app: AppKey): string {
   const override = env[`E2E_${app.toUpperCase()}_URL`]
@@ -19,6 +19,7 @@ export const URLS = {
   staff: appUrl("staff"),
   admin: appUrl("admin"),
   lms: appUrl("lms"),
+  library: appUrl("library"),
   /** The share viewer lives under `/ai` (static export `basePath`). */
   share: (env.E2E_SHARE_URL ?? (local ? "http://s.localhost/ai" : "http://localhost:3006/ai")).replace(/\/+$/, ""),
   api: (env.E2E_API_URL ?? (local ? "http://api.localhost" : "http://localhost:8000")).replace(/\/+$/, ""),

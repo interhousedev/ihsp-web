@@ -61,3 +61,11 @@ export const FAKE_EMIS_PASSWORD = "password"
 
 /** Password a newly registered e2e student sets. */
 export const REGISTERED_PASSWORD = "E2eStudent1"
+
+/** Librarian of the demo library (backend seed `tursunov.sardor`). */
+export const LIBRARIAN: Account = {
+  login: "tursunov.sardor",
+  password: "LibrarianDemo1",
+  role: "teacher",
+  apps: ["id", "library"],
+}
