@@ -3,6 +3,7 @@
 import {
   deleteNotebook,
   getNotebookQuery,
+  getNotebooks,
   getNotebooksQuery,
   keys,
   patchNotebook,
@@ -13,13 +14,48 @@ import {
   type NotebookPatchBody,
   type Page,
 } from "@ihsp/api"
-import { useMutation, useQuery, useQueryClient, type QueryClient } from "@tanstack/react-query"
-import { useState } from "react"
+import { useInfiniteQuery, useMutation, useQuery, useQueryClient, type QueryClient } from "@tanstack/react-query"
+import { useEffect, useMemo, useState } from "react"
 import { createSummaryPoll } from "../lib/summary-poll"
 
 /** The student's notebooks, pinned first (`q` filters by title on the server). */
 export function useNotebooks(q?: string, enabled = true) {
   return useQuery({ ...getNotebooksQuery({ q: q?.trim() || undefined, limit: 100 }), enabled })
+}
+
+const PAGE_LIMIT = 100
+
+/**
+ * Every notebook the student has (`q` filters by title on the server), fetched page by page until the server has no
+ * more, so counts and the folder lists stay correct past one page. Kept apart from `useNotebooks`' list cache, so
+ * optimistic updates on a single page never see the paged shape.
+ */
+export function useAllNotebooks(q?: string, enabled = true) {
+  const term = q?.trim() || undefined
+  const query = useInfiniteQuery({
+    queryKey: [...keys.notebooks.all(), "pages", term ?? ""] as const,
+    queryFn: ({ pageParam, signal }) =>
+      getNotebooks({ q: term, cursor: pageParam, limit: PAGE_LIMIT }, { signal }),
+    initialPageParam: undefined as string | undefined,
+    getNextPageParam: (last) => last.next_cursor ?? undefined,
+    enabled,
+  })
+  const { hasNextPage, isFetchingNextPage, isFetchNextPageError, fetchNextPage } = query
+  useEffect(() => {
+    // A failed page stops the walk; the caller shows the error and the list keeps what it has.
+    if (enabled && hasNextPage && !isFetchingNextPage && !isFetchNextPageError) void fetchNextPage()
+  }, [enabled, hasNextPage, isFetchingNextPage, isFetchNextPageError, fetchNextPage])
+  const items = useMemo(() => query.data?.pages.flatMap((page) => page.items) ?? [], [query.data])
+  return {
+    items,
+    isPending: query.isPending,
+    isSuccess: query.isSuccess,
+    isError: query.isError,
+    error: query.error,
+    refetch: query.refetch,
+    /** More pages are still arriving (the counts are not final yet). */
+    loadingMore: (hasNextPage === true && !isFetchNextPageError) || isFetchingNextPage,
+  }
 }
 
 /**
@@ -45,6 +81,7 @@ export function useLoadedNotebook(id: string | null) {
 }
 
 function refreshLists(queryClient: QueryClient) {
+  void queryClient.invalidateQueries({ queryKey: [...keys.notebooks.all(), "pages"] })
   return queryClient.invalidateQueries({ queryKey: [...keys.notebooks.all(), "list"] })
 }
 

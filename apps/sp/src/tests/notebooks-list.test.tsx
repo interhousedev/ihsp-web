@@ -310,3 +310,30 @@ describe("card menu", () => {
     expect(screen.getByRole("link", { name: /Photosynthesis/, hidden: true })).toBeInTheDocument()
   })
 })
+
+describe("notebooks list folders", () => {
+  test("30 subject notebooks: filter chips show counts and filter the grid", async () => {
+    const base = (await import("@ihsp/test-utils")).notebookItems[0]
+    const make = (n: number, origin: "subject_auto" | "course" | "manual", label: string) =>
+      Array.from({ length: n }, (_, i) => ({
+        ...base,
+        id: `0000000${origin === "subject_auto" ? 1 : origin === "course" ? 2 : 3}-0000-4000-8000-${String(i).padStart(12, "0")}`,
+        title: `${label} ${i + 1}`,
+        origin,
+        pinned: false,
+      }))
+    const items = [...make(30, "subject_auto", "Subj"), ...make(3, "course", "Crs"), ...make(2, "manual", "Own")]
+    server.use(http.get(apiUrl("/v1/notebooks"), () => HttpResponse.json({ items, next_cursor: null })))
+    const { user } = renderNotebooksSp(<NotebooksPage />, { route: PATH })
+    await screen.findByRole("link", { name: /Subj 1(?!\d)/ })
+
+    expect(screen.getByRole("button", { name: "All (35)" })).toBeInTheDocument()
+    expect(screen.getByRole("button", { name: "Subject notebooks (30)" })).toBeInTheDocument()
+    await user.click(screen.getByRole("button", { name: "Course notebooks (3)" }))
+    expect(screen.getAllByRole("link", { name: /Crs 1(?!\d)/ }).length).toBeGreaterThan(0)
+    expect(screen.queryByRole("link", { name: /Subj 1(?!\d)/ })).toBeNull()
+    await user.click(screen.getByRole("button", { name: "My notebooks (2)" }))
+    expect(screen.getAllByRole("link", { name: /Own 2(?!\d)/ }).length).toBeGreaterThan(0)
+    expect(screen.queryByRole("link", { name: /Crs 1(?!\d)/ })).toBeNull()
+  })
+})
