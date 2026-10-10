@@ -17,11 +17,11 @@ function fakeCacheStorage(names: string[]) {
 
 describe("purgeShellCaches", () => {
   test("deletes the cached pages and keeps assets, answers and other scripts' caches", async () => {
-    const { storage, deleted } = fakeCacheStorage(["ihsp-shell-v1", "ihsp-static-v1", "ihsp-api-v1-u1", "workbox-x"])
+    const { storage, deleted } = fakeCacheStorage(["ihsp-shell-v2", "ihsp-static-v2", "ihsp-api-v2-u1", "workbox-x"])
 
     await purgeShellCaches(storage)
 
-    expect(deleted).toEqual(["ihsp-shell-v1"])
+    expect(deleted).toEqual(["ihsp-shell-v2"])
   })
 
   test("is fine without the Cache API", async () => {
@@ -35,7 +35,7 @@ function setup(registration: Partial<ServiceWorkerRegistration> | undefined) {
     getRegistration: async () => registration,
     addEventListener: (_type: string, listener: () => void) => listeners.push(listener),
   } as unknown as ServiceWorkerContainer
-  const { storage, deleted } = fakeCacheStorage(["ihsp-shell-v1"])
+  const { storage, deleted } = fakeCacheStorage(["ihsp-shell-v2"])
   const calls: string[] = []
   const deps: UpdateDeps = {
     reload: () => calls.push("reload"),
@@ -53,7 +53,7 @@ describe("applyUpdate", () => {
     await applyUpdate(deps)
 
     expect(calls).toEqual(["clearStored", "reload"])
-    expect(deleted).toEqual(["ihsp-shell-v1"])
+    expect(deleted).toEqual(["ihsp-shell-v2"])
   })
 
   test("a waiting worker is told to take over, and the page reloads once it has", async () => {

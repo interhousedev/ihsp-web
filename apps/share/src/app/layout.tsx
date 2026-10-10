@@ -5,7 +5,7 @@ import type { ReactNode } from "react"
 import { Providers } from "./providers"
 
 export const metadata: Metadata = {
-  title: "IHSP shares",
+  title: "IHT shares",
   description: "Shared assistant chats and flash card sets",
   robots: { index: false, follow: false },
 }

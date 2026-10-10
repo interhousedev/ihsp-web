@@ -7,12 +7,12 @@ import type { ReactNode } from "react"
 import { Providers } from "./providers"
 
 export const metadata: Metadata = {
-  title: "IHSP Staff",
+  title: "IHT Учителям",
   description: "Lessons, attendance and journal for teachers",
 }
 
 /** The head script of the installable app (`APP_MODE=pwa`): manifest link, iOS tags, install prompt catcher. */
-const PWA_HEAD_SCRIPT = createPwaHeadScript("IHSP Staff")
+const PWA_HEAD_SCRIPT = createPwaHeadScript("IHT Учителям")
 
 export const viewport: Viewport = {
   width: "device-width",

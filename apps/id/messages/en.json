@@ -1,6 +1,6 @@
 {
   "idCommon": {
-    "brand": "IHSP",
+    "brand": "IHT ID",
     "working": "Please wait…",
     "loading": "Loading…",
     "code": "Code",
@@ -33,7 +33,7 @@
     },
     "missingChallenge": {
       "title": "Open this page from an app",
-      "description": "Open this page from the Log in button of an IHSP app.",
+      "description": "Open this page from the Log in button of an IHT app.",
       "action": "Open account security"
     },
     "stepUp": {
@@ -66,7 +66,7 @@
     },
     "id": {
       "wrong-institution": "Only Interhouse students can register. This EMIS account belongs to another institution.",
-      "emis-already-linked": "This EMIS account already has an IHSP account.",
+      "emis-already-linked": "This EMIS account already has an IHT account.",
       "user-not-found": "No user with this login was found.",
       "admin-reset-forbidden": "This account can only be reset by another Administration member. Contact Administration."
     },
@@ -75,7 +75,7 @@
       "unavailable": "EMIS is not responding. Try again later."
     },
     "telegram": {
-      "linked-elsewhere": "This Telegram account is already linked to another IHSP account. Log out there first."
+      "linked-elsewhere": "This Telegram account is already linked to another IHT account. Log out there first."
     }
   },
   "idNav": {
@@ -142,7 +142,7 @@
   },
   "consent": {
     "title": "Allow {client}?",
-    "description": "This application asks for access to your IHSP account.",
+    "description": "This application asks for access to your IHT account.",
     "verified": "Verified",
     "unverified": "Unverified",
     "unverifiedWarning": "Administration has not verified this application. Allow it only if you trust it.",
@@ -194,7 +194,7 @@
     "done": {
       "title": "Account created",
       "description": "Your login is {login}. Use it with the password you just set.",
-      "open": "Open IHSP",
+      "open": "Open IHT",
       "backToTelegram": "Back to Telegram login"
     }
   },
@@ -271,7 +271,7 @@
     }
   },
   "miniApp": {
-    "title": "Log in to IHSP",
+    "title": "Log in to IHT",
     "description": "Log in to link this Telegram account.",
     "submit": "Log in",
     "register": "Register with EMIS",

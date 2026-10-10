@@ -13,7 +13,7 @@ export type PushPayload = {
   type: string | null
 }
 
-export const DEFAULT_TITLE = "IHSP"
+export const DEFAULT_TITLE = "IHT"
 export const NOTIFICATION_ICON = "/icons/icon-192.png"
 export const NOTIFICATION_BADGE = "/icons/badge-96.png"
 
@@ -64,7 +64,7 @@ export function notificationOptions(payload: PushPayload): {
 export type ClickTarget = { kind: "app"; url: string } | { kind: "external"; url: string }
 
 /**
- * The backend builds links on the portal host (`https://sp.ihsu.uz/grades/`); in the installed app they open on the app host,
+ * The backend builds links on the portal host (`https://my.ihsu.uz/grades/`); in the installed app they open on the app host,
  * in the same window. A link to another site opens as a new window; anything that is not a web address goes home.
  */
 export function clickTarget(url: unknown, ownOrigin: string, portalOrigin: string | null): ClickTarget {

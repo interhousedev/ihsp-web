@@ -105,7 +105,7 @@ describe("registration", () => {
 
     await submitEmis("linked")
 
-    expect(await screen.findByText("This EMIS account already has an IHSP account.")).toBeInTheDocument()
+    expect(await screen.findByText("This EMIS account already has an IHT account.")).toBeInTheDocument()
     expect(await findLink("Reset the password")).toBeInTheDocument()
     expect(await findLink("Reclaim the account with EMIS")).toBeInTheDocument()
     expect(await findLink("Log in")).toBeInTheDocument()

@@ -4,8 +4,8 @@ import { registerServiceWorker, serviceWorkerUrl } from "../utils/register-servi
 
 describe("serviceWorkerUrl", () => {
   test("carries the API and portal origins in the query", () => {
-    expect(serviceWorkerUrl("https://api.ihsu.uz", "https://sp.ihsu.uz")).toBe(
-      "/sw.js?api=https%3A%2F%2Fapi.ihsu.uz&sp=https%3A%2F%2Fsp.ihsu.uz",
+    expect(serviceWorkerUrl("https://api.ihsu.uz", "https://my.ihsu.uz")).toBe(
+      "/sw.js?api=https%3A%2F%2Fapi.ihsu.uz&sp=https%3A%2F%2Fmy.ihsu.uz",
     )
   })
 })
@@ -18,13 +18,13 @@ describe("registerServiceWorker", () => {
 
     const result = await registerServiceWorker({
       apiUrl: "https://api.ihsu.uz",
-      portalUrl: "https://sp.ihsu.uz",
+      portalUrl: "https://my.ihsu.uz",
       container: { register },
       production: true,
     })
 
     expect(result).toBe(registration)
-    expect(register).toHaveBeenCalledWith("/sw.js?api=https%3A%2F%2Fapi.ihsu.uz&sp=https%3A%2F%2Fsp.ihsu.uz", {
+    expect(register).toHaveBeenCalledWith("/sw.js?api=https%3A%2F%2Fapi.ihsu.uz&sp=https%3A%2F%2Fmy.ihsu.uz", {
       scope: "/",
       updateViaCache: "none",
     })
@@ -63,7 +63,7 @@ describe("registerServiceWorker", () => {
     expect(
       await registerServiceWorker({
         apiUrl: "https://api.ihsu.uz",
-        portalUrl: "https://sp.ihsu.uz",
+        portalUrl: "https://my.ihsu.uz",
         container: { register },
         production: true,
       }),

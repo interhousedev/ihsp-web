@@ -64,7 +64,7 @@ export type AppEnv = {
   APP_MODE: "web" | "sp" | "pwa"
   /** Address of the installable app (`https://app.ihsu.uz`); the portal links to it. Absent when there is none. */
   APP_URL?: string
-  /** Address of the library (`https://library.ihsu.uz`); the profile menus link to it. Absent when there is none. */
+  /** Address of the library (`https://lib.ihsu.uz`); the profile menus link to it. Absent when there is none. */
   LIBRARY_URL?: string
   STORAGE_ORIGIN: string
   SENTRY_DSN?: string

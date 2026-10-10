@@ -126,7 +126,7 @@ describe("mini app login", () => {
     await fillField("Password", "Secret123")
     await clickButton("Log in")
 
-    expect(await screen.findByText(/already linked to another IHSP account/)).toBeInTheDocument()
+    expect(await screen.findByText(/already linked to another IHT account/)).toBeInTheDocument()
   })
 
   test("the registration link keeps init_data for the way back", async () => {

@@ -1,6 +1,6 @@
 {
   "idCommon": {
-    "brand": "IHSP",
+    "brand": "IHT ID",
     "working": "Biroz kuting…",
     "loading": "Yuklanmoqda…",
     "code": "Kod",
@@ -33,7 +33,7 @@
     },
     "missingChallenge": {
       "title": "Sahifani ilovadan oching",
-      "description": "Sahifani IHSP ilovasidagi «Kirish» tugmasidan oching.",
+      "description": "Sahifani IHT ilovasidagi «Kirish» tugmasidan oching.",
       "action": "Hisob xavfsizligini ochish"
     },
     "stepUp": {
@@ -66,7 +66,7 @@
     },
     "id": {
       "wrong-institution": "Faqat Interhouse talabalari roʻyxatdan oʻta oladi. Bu EMIS hisobi boshqa muassasaga tegishli.",
-      "emis-already-linked": "Bu EMIS hisobi uchun IHSP hisobi allaqachon mavjud.",
+      "emis-already-linked": "Bu EMIS hisobi uchun IHT hisobi allaqachon mavjud.",
       "user-not-found": "Bunday loginli foydalanuvchi topilmadi.",
       "admin-reset-forbidden": "Bu hisobni faqat Maʼmuriyatning boshqa aʼzosi tiklay oladi. Maʼmuriyatga murojaat qiling."
     },
@@ -75,7 +75,7 @@
       "unavailable": "EMIS javob bermayapti. Keyinroq urinib koʻring."
     },
     "telegram": {
-      "linked-elsewhere": "Bu Telegram hisobi boshqa IHSP hisobiga ulangan. Avval oʻsha yerdan chiqing."
+      "linked-elsewhere": "Bu Telegram hisobi boshqa IHT hisobiga ulangan. Avval oʻsha yerdan chiqing."
     }
   },
   "idNav": {
@@ -142,7 +142,7 @@
   },
   "consent": {
     "title": "«{client}» ga ruxsat berasizmi?",
-    "description": "Ilova IHSP hisobingizga kirish huquqini soʻramoqda.",
+    "description": "Ilova IHT hisobingizga kirish huquqini soʻramoqda.",
     "verified": "Tekshirilgan",
     "unverified": "Tekshirilmagan",
     "unverifiedWarning": "Maʼmuriyat bu ilovani tekshirmagan. Unga ishonsangizgina ruxsat bering.",
@@ -194,7 +194,7 @@
     "done": {
       "title": "Hisob yaratildi",
       "description": "Loginingiz: {login}. U bilan va hozir kiritgan parolingiz bilan kiring.",
-      "open": "IHSPʼni ochish",
+      "open": "IHTʼni ochish",
       "backToTelegram": "Telegram orqali kirishga qaytish"
     }
   },
@@ -271,7 +271,7 @@
     }
   },
   "miniApp": {
-    "title": "IHSPʼga kirish",
+    "title": "IHTʼga kirish",
     "description": "Bu Telegram hisobini ulash uchun kiring.",
     "submit": "Kirish",
     "register": "EMIS orqali roʻyxatdan oʻtish",

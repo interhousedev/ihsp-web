@@ -52,7 +52,7 @@ describe("the gate", () => {
         <button type="button">app</button>
       </PinGate>,
     )
-    expect(screen.queryByText("IHSP is locked")).not.toBeInTheDocument()
+    expect(screen.queryByText("IHT is locked")).not.toBeInTheDocument()
     unmount()
 
     writePinRecord(userMe.id, await createPinRecord("4821", 1000))
@@ -61,6 +61,6 @@ describe("the gate", () => {
         <button type="button">app</button>
       </PinGate>,
     )
-    expect(await screen.findByText("IHSP is locked")).toBeInTheDocument()
+    expect(await screen.findByText("IHT is locked")).toBeInTheDocument()
   })
 })

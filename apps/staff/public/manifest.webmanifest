@@ -1,8 +1,8 @@
 {
   "id": "/?app=staff",
-  "name": "IHSP Staff",
-  "short_name": "Staff",
-  "description": "Lessons, attendance and journal for teachers of the International Higher School Platform.",
+  "name": "IHT Учителям",
+  "short_name": "IHT Учителям",
+  "description": "Lessons, attendance and journal for teachers of International House Tashkent.",
   "start_url": "/",
   "scope": "/",
   "display": "standalone",

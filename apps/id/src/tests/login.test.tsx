@@ -132,15 +132,15 @@ describe("login page", () => {
         return problem(500, "common/internal", "must not be asked")
       }),
     )
-    renderId(<LoginPage />, { route: `${ROUTE}&client_id=staff&client_name=IHSP+staff` })
+    renderId(<LoginPage />, { route: `${ROUTE}&client_id=staff&client_name=IHT+staff` })
 
-    expect(await screen.findByText("to continue to IHSP staff")).toBeInTheDocument()
+    expect(await screen.findByText("to continue to IHT staff")).toBeInTheDocument()
     expect(screen.getByLabelText("Password")).toBeInTheDocument()
     expect(requests).toBe(0)
   })
 
   test("a hinted form still logs in and follows redirect_to", async () => {
-    renderId(<LoginPage />, { route: `${ROUTE}&client_id=sp&client_name=IHSP+sp` })
+    renderId(<LoginPage />, { route: `${ROUTE}&client_id=sp&client_name=IHT+sp` })
 
     await submitCredentials("brastilov.aleksey", "Secret123")
 

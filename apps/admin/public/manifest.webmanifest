@@ -1,8 +1,8 @@
 {
   "id": "/?app=admin",
-  "name": "IHSP Admin",
-  "short_name": "Admin",
-  "description": "Administration of people, timetable and communication of the International Higher School Platform.",
+  "name": "admin.iht",
+  "short_name": "admin.iht",
+  "description": "Administration of people, timetable and communication of International House Tashkent.",
   "start_url": "/",
   "scope": "/",
   "display": "standalone",

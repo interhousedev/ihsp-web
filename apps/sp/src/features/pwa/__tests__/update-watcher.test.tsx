@@ -62,7 +62,7 @@ describe("a build below min_supported (forced update)", () => {
 
     renderWatcher()
 
-    expect(await screen.findByRole("alert")).toHaveTextContent("Updating IHSP")
+    expect(await screen.findByRole("alert")).toHaveTextContent("Updating IHT")
     await waitFor(() => expect(reloads).toBe(1))
     expect(window.localStorage.getItem(PERSIST_STORAGE_KEY)).toBeNull()
   })
@@ -74,7 +74,7 @@ describe("a build below min_supported (forced update)", () => {
     renderWatcher()
 
     expect(await screen.findByText("Update available")).toBeInTheDocument()
-    expect(screen.queryByText("Updating IHSP")).not.toBeInTheDocument()
+    expect(screen.queryByText("Updating IHT")).not.toBeInTheDocument()
     expect(reloads).toBe(0)
   })
 })
@@ -85,7 +85,7 @@ describe("a build below latest (optional update)", () => {
     const { user } = renderWatcher()
 
     expect(await screen.findByText("Update available")).toBeInTheDocument()
-    expect(screen.getByText("A new version of IHSP is ready.")).toBeInTheDocument()
+    expect(screen.getByText("A new version of IHT is ready.")).toBeInTheDocument()
     expect(reloads).toBe(0)
     await user.click(screen.getByRole("button", { name: "Reload" }))
 

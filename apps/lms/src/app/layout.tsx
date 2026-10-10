@@ -7,12 +7,12 @@ import type { ReactNode } from "react"
 import { Providers } from "./providers"
 
 export const metadata: Metadata = {
-  title: "IHSP LMS",
+  title: "lms.iht",
   description: "Courses, tests and course editor",
 }
 
 /** The head script of the installable app (`APP_MODE=pwa`): manifest link, iOS tags, install prompt catcher. */
-const PWA_HEAD_SCRIPT = createPwaHeadScript("IHSP LMS")
+const PWA_HEAD_SCRIPT = createPwaHeadScript("IHT Courses")
 
 export const viewport: Viewport = {
   width: "device-width",

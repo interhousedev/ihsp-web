@@ -6,7 +6,7 @@ import type { ReactNode } from "react"
 import { Providers } from "./providers"
 
 export const metadata: Metadata = {
-  title: "IHSP App Template",
+  title: "IHT App Template",
   description: "Copy this folder to start an app",
 }
 

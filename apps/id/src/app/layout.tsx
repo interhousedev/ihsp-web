@@ -6,7 +6,7 @@ import type { ReactNode } from "react"
 import { Providers } from "./providers"
 
 export const metadata: Metadata = {
-  title: "IHSP ID",
+  title: "IHT ID",
   description: "Log in, registration and account security",
 }
 

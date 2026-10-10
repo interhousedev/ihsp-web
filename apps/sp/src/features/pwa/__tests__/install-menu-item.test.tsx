@@ -48,12 +48,12 @@ describe("Install the app in the profile menu", () => {
 })
 
 describe("platform links in the installed app", () => {
-  test("the app is the student portal on another host: SP is marked as current", async () => {
+  test("the app is the student portal on another host: my.iht is marked as current", async () => {
     setRuntimeConfig("pwa", { APP_URL: "https://app.ihsu.uz" })
 
     await openMenu()
 
     const menu = await screen.findByRole("menu")
-    expect(within(menu).getByRole("menuitem", { name: /SP/ })).toHaveAttribute("aria-current", "page")
+    expect(within(menu).getByRole("menuitem", { name: /my\.iht/ })).toHaveAttribute("aria-current", "page")
   })
 })

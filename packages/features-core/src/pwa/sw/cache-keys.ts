@@ -9,7 +9,7 @@ import { cacheNames, isOwnCache, isPwaAppId, type PwaAppId } from "./cache-names
  * Bump to make every installed worker drop all its caches at the next activation (the worker file changes too, which is
  * what makes browsers install it). Page-driven updates (`/v1/app/version`) do not need this.
  */
-export const SW_CACHE_VERSION = "v1"
+export const SW_CACHE_VERSION = "v2"
 
 /** A cached API answer older than this is not shown any more (the stored query cache of the page has the same limit). */
 export const API_MAX_STALE_MS = 7 * 24 * 60 * 60 * 1000
@@ -163,7 +163,7 @@ export function apiOriginFromSearch(search: string): string | null {
   return originFromSearch(search, "api")
 }
 
-/** The portal origin the page put in the registration address (`&sp=https%3A%2F%2Fsp.ihsu.uz`); push links point there. */
+/** The portal origin the page put in the registration address (`&sp=https%3A%2F%2Fmy.ihsu.uz`); push links point there. */
 export function portalOriginFromSearch(search: string): string | null {
   return originFromSearch(search, "sp")
 }

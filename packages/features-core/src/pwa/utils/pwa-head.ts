@@ -23,5 +23,5 @@ export function createPwaHeadScript(title: string): string {
   return `try{var e=window.__ENV__;if(e&&e.APP_MODE==='pwa'){var h=document.head;var a=function(t,o){var n=document.createElement(t);for(var k in o)n.setAttribute(k,o[k]);h.appendChild(n)};a('link',{rel:'manifest',href:'${MANIFEST_PATH}'});a('link',{rel:'apple-touch-icon',href:'${APPLE_TOUCH_ICON_PATH}'});a('meta',{name:'theme-color',content:'${PWA_THEME_COLOR_LIGHT}',media:'(prefers-color-scheme: light)'});a('meta',{name:'theme-color',content:'${PWA_THEME_COLOR_DARK}',media:'(prefers-color-scheme: dark)'});a('meta',{name:'apple-mobile-web-app-capable',content:'yes'});a('meta',{name:'mobile-web-app-capable',content:'yes'});a('meta',{name:'apple-mobile-web-app-title',content:${name}});a('meta',{name:'apple-mobile-web-app-status-bar-style',content:'default'});window.addEventListener('beforeinstallprompt',function(v){v.preventDefault();window.${INSTALL_PROMPT_GLOBAL}=v;window.dispatchEvent(new Event('${INSTALL_PROMPT_EVENT}'))})}}catch(x){}`
 }
 
-/** The head script of the student app ("IHSP" under the home screen icon). */
-export const PWA_HEAD_SCRIPT = createPwaHeadScript("IHSP")
+/** The head script of the student app ("My IHT" under the home screen icon). */
+export const PWA_HEAD_SCRIPT = createPwaHeadScript("My IHT")

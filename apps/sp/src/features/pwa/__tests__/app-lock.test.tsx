@@ -60,7 +60,7 @@ describe("at launch", () => {
   test("the app is covered by the lock screen and cannot be reached", () => {
     renderApp()
 
-    expect(screen.getByRole("dialog", { name: "IHSP is locked" })).toBeInTheDocument()
+    expect(screen.getByRole("dialog", { name: "IHT is locked" })).toBeInTheDocument()
     expect(screen.getByText("Enter your PIN")).toBeInTheDocument()
     expect(screen.getByText(APP).closest("[inert]")).not.toBeNull()
   })
@@ -179,7 +179,7 @@ describe("after 5 minutes in the background", () => {
     setSystemTime(new Date(Date.now() + (RELOCK_DELAY_MS["5m"] as number)))
     act(comeBack)
 
-    expect(await screen.findByRole("dialog", { name: "IHSP is locked" })).toBeInTheDocument()
+    expect(await screen.findByRole("dialog", { name: "IHT is locked" })).toBeInTheDocument()
     await typePin(user, PIN)
     await waitFor(() => expect(screen.queryByRole("dialog")).not.toBeInTheDocument())
   })
@@ -217,7 +217,7 @@ describe("ask for the PIN again: every option", () => {
       setSystemTime(new Date(Date.now() + delay))
       act(comeBack)
 
-      expect(await screen.findByRole("dialog", { name: "IHSP is locked" })).toBeInTheDocument()
+      expect(await screen.findByRole("dialog", { name: "IHT is locked" })).toBeInTheDocument()
     })
 
     if (delay > 0) {
@@ -248,7 +248,7 @@ describe("ask for the PIN again: every option", () => {
     running.unmount()
     window.sessionStorage.clear()
     renderApp()
-    expect(screen.getByRole("dialog", { name: "IHSP is locked" })).toBeInTheDocument()
+    expect(screen.getByRole("dialog", { name: "IHT is locked" })).toBeInTheDocument()
   })
 
   test("a record with every option is read back with that option", async () => {
@@ -310,7 +310,7 @@ describe("signing out", () => {
 
     await waitFor(() => expect(screen.queryByText(/You will be signed out on this device/)).not.toBeInTheDocument())
     expect(readPinRecord(userMe.id)).not.toBeNull()
-    expect(screen.getByRole("dialog", { name: "IHSP is locked" })).toBeInTheDocument()
+    expect(screen.getByRole("dialog", { name: "IHT is locked" })).toBeInTheDocument()
   })
 
   test("offline, the sign-out fails: the app stays locked, keeps the PIN and retries when the network is back", async () => {
@@ -324,7 +324,7 @@ describe("signing out", () => {
     expect(await screen.findByText(/Could not sign you out/)).toBeInTheDocument()
     expect(readPinRecord(userMe.id)).not.toBeNull()
     expect(assign).not.toHaveBeenCalled()
-    expect(screen.getByRole("dialog", { name: "IHSP is locked" })).toBeInTheDocument()
+    expect(screen.getByRole("dialog", { name: "IHT is locked" })).toBeInTheDocument()
 
     server.use(http.post(apiUrl("/v1/oauth/logout"), () => HttpResponse.json(logoutResponse)))
     act(() => void window.dispatchEvent(new Event("online")))

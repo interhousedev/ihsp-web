@@ -133,7 +133,7 @@ describe("LibraryShell", () => {
     await user.click(await screen.findByRole("button", { name: "Account menu" }))
 
     const menu = await screen.findByRole("menu")
-    expect(within(menu).getByRole("menuitem", { name: /Library/ })).toHaveAttribute("aria-current", "page")
-    expect(within(menu).getByRole("menuitem", { name: /Staff/ })).toHaveAttribute("href", "http://localhost:3003")
+    expect(within(menu).getByRole("menuitem", { name: /library\.iht/ })).toHaveAttribute("aria-current", "page")
+    expect(within(menu).getByRole("menuitem", { name: /Учителям/ })).toHaveAttribute("href", "http://localhost:3003")
   })
 })

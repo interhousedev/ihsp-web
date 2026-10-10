@@ -24,9 +24,9 @@ describe("profile menu", () => {
     await user.click(await screen.findByRole("button", { name: "Account menu" }))
 
     const menu = await screen.findByRole("menu")
-    expect(within(menu).getByRole("menuitem", { name: /LMS/ })).toHaveAttribute("aria-current", "page")
-    expect(within(menu).getByRole("menuitem", { name: /ID/ })).toHaveAttribute("href", "http://localhost:3001")
-    expect(within(menu).queryByRole("menuitem", { name: /SP|Staff|Admin/ })).not.toBeInTheDocument()
+    expect(within(menu).getByRole("menuitem", { name: /lms\.iht/ })).toHaveAttribute("aria-current", "page")
+    expect(within(menu).getByRole("menuitem", { name: /IHT ID/ })).toHaveAttribute("href", "http://localhost:3001")
+    expect(within(menu).queryByRole("menuitem", { name: /my\.iht|Учителям|admin\.iht/ })).not.toBeInTheDocument()
   })
 
   test("a teacher also sees Staff", async () => {
@@ -41,6 +41,6 @@ describe("profile menu", () => {
     await user.click(await screen.findByRole("button", { name: "Account menu" }))
 
     const menu = await screen.findByRole("menu")
-    expect(within(menu).getByRole("menuitem", { name: /Staff/ })).toHaveAttribute("href", "http://localhost:3003")
+    expect(within(menu).getByRole("menuitem", { name: /Учителям/ })).toHaveAttribute("href", "http://localhost:3003")
   })
 })

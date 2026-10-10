@@ -2,7 +2,7 @@ import { getConfig } from "@ihsp/config"
 
 /**
  * True when the app runs as an installable app: `APP_MODE=pwa` in its `/env.js`. Every app can: the student app on the
- * app host (`app.ihsu.uz`, the same static build as the portal), the others on their own hosts. On `sp.ihsu.uz`, in the
+ * app host (`app.ihsu.uz`, the same static build as the portal), the others on their own hosts. On `my.ihsu.uz`, in the
  * Telegram mini app and on a plain website it is false, and nothing of this feature is active.
  * False as well when the runtime config is not there (prerendering, a broken deployment).
  */

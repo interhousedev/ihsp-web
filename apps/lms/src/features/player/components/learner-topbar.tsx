@@ -28,7 +28,8 @@ export function LearnerTopBar({ strip, onOpenContents }: { strip: ReactNode; onO
         href={hrefs.catalog()}
         className="hidden h-11 w-60 shrink-0 items-center gap-2 rounded-md px-3 text-lg font-semibold outline-none focus-visible:ring-2 focus-visible:ring-(--stepik-green) lg:flex"
       >
-        <Icons.logo aria-hidden className="size-6 text-(--stepik-green)" />
+        {/* oxlint-disable-next-line nextjs/no-img-element -- static export, the logo is a plain file of /public */}
+        <img src="/icons/logo.svg" alt="" width={24} height={24} className="size-6 shrink-0 rounded-md" />
         <span className="truncate">{app("name")}</span>
       </Link>
       <div className="min-w-0 flex-1">{strip}</div>

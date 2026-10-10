@@ -48,7 +48,7 @@ describe("install page (pwa mode, browser tab)", () => {
     renderGate()
 
     expect(screen.getByText(APP)).toBeInTheDocument()
-    expect(screen.queryByText("Add IHSP to your home screen")).not.toBeInTheDocument()
+    expect(screen.queryByText("Add My IHT to your home screen")).not.toBeInTheDocument()
   })
 
   test("the installed app (standalone) shows the app", () => {
@@ -57,7 +57,7 @@ describe("install page (pwa mode, browser tab)", () => {
     renderGate()
 
     expect(screen.getByText(APP)).toBeInTheDocument()
-    expect(screen.queryByText("Add IHSP to your home screen")).not.toBeInTheDocument()
+    expect(screen.queryByText("Add My IHT to your home screen")).not.toBeInTheDocument()
   })
 
   test("an iPhone home screen app (navigator.standalone) shows the app", () => {
@@ -73,11 +73,11 @@ describe("install page (pwa mode, browser tab)", () => {
 
     renderGate()
 
-    expect(screen.getByRole("heading", { level: 1, name: "Add IHSP to your home screen" })).toBeInTheDocument()
+    expect(screen.getByRole("heading", { level: 1, name: "Add My IHT to your home screen" })).toBeInTheDocument()
     expect(screen.getByRole("heading", { name: "Install on iPhone or iPad" })).toBeInTheDocument()
     expect(screen.getByText("Tap the Share button in the browser bar")).toBeInTheDocument()
     expect(screen.getByText("Scroll down and tap Add to Home Screen")).toBeInTheDocument()
-    expect(screen.getByText("Tap Add. IHSP appears on your home screen.")).toBeInTheDocument()
+    expect(screen.getByText("Tap Add. My IHT appears on your home screen.")).toBeInTheDocument()
     expect(screen.queryByText(APP)).not.toBeInTheDocument()
     expect(screen.queryByRole("button", { name: "Install the app" })).not.toBeInTheDocument()
   })
@@ -123,7 +123,7 @@ describe("install page (pwa mode, browser tab)", () => {
       window.dispatchEvent(new Event("appinstalled"))
     })
 
-    expect(await screen.findByText("IHSP is installed")).toBeInTheDocument()
+    expect(await screen.findByText("My IHT is installed")).toBeInTheDocument()
     expect(screen.queryByRole("button", { name: "Install the app" })).not.toBeInTheDocument()
   })
 
@@ -141,8 +141,8 @@ describe("install page (pwa mode, browser tab)", () => {
 
     renderGate()
 
-    expect(screen.getByRole("heading", { name: "Open IHSP on your phone" })).toBeInTheDocument()
-    expect(screen.getByRole("img", { name: "QR code with the address of the IHSP app" })).toBeInTheDocument()
+    expect(screen.getByRole("heading", { name: "Open My IHT on your phone" })).toBeInTheDocument()
+    expect(screen.getByRole("img", { name: "QR code with the address of the My IHT app" })).toBeInTheDocument()
     expect(screen.getByText("Or open https://app.ihsu.uz/ on your phone.")).toBeInTheDocument()
     expect(screen.queryByRole("button", { name: "Install the app" })).not.toBeInTheDocument()
   })

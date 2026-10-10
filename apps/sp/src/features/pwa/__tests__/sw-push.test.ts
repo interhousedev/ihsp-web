@@ -11,14 +11,14 @@ import {
 } from "../sw/push"
 
 const APP = "https://app.ihsu.uz"
-const PORTAL = "https://sp.ihsu.uz"
+const PORTAL = "https://my.ihsu.uz"
 
 describe("parsePushPayload", () => {
   test("reads the fields the backend sends", () => {
     const raw = JSON.stringify({
       title: "New mark",
       body: "Mathematics: 5",
-      url: "https://sp.ihsu.uz/grades/",
+      url: "https://my.ihsu.uz/grades/",
       tag: "marks",
       notification_id: "n-1",
       type: "marks",
@@ -27,7 +27,7 @@ describe("parsePushPayload", () => {
     expect(parsePushPayload(raw)).toEqual({
       title: "New mark",
       body: "Mathematics: 5",
-      url: "https://sp.ihsu.uz/grades/",
+      url: "https://my.ihsu.uz/grades/",
       tag: "marks",
       notificationId: "n-1",
       type: "marks",
@@ -82,7 +82,7 @@ describe("notificationOptions", () => {
 
 describe("clickTarget", () => {
   test("a portal link opens on the app host, in the app", () => {
-    expect(clickTarget("https://sp.ihsu.uz/grades/?term=2#top", APP, PORTAL)).toEqual({
+    expect(clickTarget("https://my.ihsu.uz/grades/?term=2#top", APP, PORTAL)).toEqual({
       kind: "app",
       url: `${APP}/grades/?term=2#top`,
     })
@@ -107,13 +107,13 @@ describe("clickTarget", () => {
   })
 
   test("without a known portal, a portal link is another site", () => {
-    expect(clickTarget("https://sp.ihsu.uz/grades/", APP, null).kind).toBe("external")
+    expect(clickTarget("https://my.ihsu.uz/grades/", APP, null).kind).toBe("external")
   })
 })
 
 describe("portalOriginFromSearch", () => {
   test("reads the portal origin from the registration address", () => {
-    expect(portalOriginFromSearch("?api=x&sp=https%3A%2F%2Fsp.ihsu.uz%2F")).toBe(PORTAL)
+    expect(portalOriginFromSearch("?api=x&sp=https%3A%2F%2Fmy.ihsu.uz%2F")).toBe(PORTAL)
     expect(portalOriginFromSearch("?api=x")).toBeNull()
     expect(portalOriginFromSearch("?sp=nope")).toBeNull()
   })

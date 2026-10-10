@@ -12,23 +12,23 @@ describe("AppsHub", () => {
 
     const items = screen.getAllByRole("listitem")
     expect(items).toHaveLength(5)
-    expect(within(items[0] as HTMLElement).getByText("SP")).toBeInTheDocument()
+    expect(within(items[0] as HTMLElement).getByText("my.iht")).toBeInTheDocument()
     expect(within(items[0] as HTMLElement).getByText("Install with the steps above")).toBeInTheDocument()
-    expect(screen.getByRole("link", { name: "Install LMS" })).toHaveAttribute("href", "http://localhost:3005")
-    expect(screen.getByRole("link", { name: "Install Library" })).toHaveAttribute("href", "http://localhost:3008")
-    expect(screen.getByRole("link", { name: "Install Staff" })).toHaveAttribute("href", "http://localhost:3003")
-    expect(screen.getByRole("link", { name: "Install Admin" })).toHaveAttribute("href", "http://localhost:3004")
+    expect(screen.getByRole("link", { name: "Install lms.iht" })).toHaveAttribute("href", "http://localhost:3005")
+    expect(screen.getByRole("link", { name: "Install library.iht" })).toHaveAttribute("href", "http://localhost:3008")
+    expect(screen.getByRole("link", { name: "Install IHT Учителям" })).toHaveAttribute("href", "http://localhost:3003")
+    expect(screen.getByRole("link", { name: "Install admin.iht" })).toHaveAttribute("href", "http://localhost:3004")
   })
 
   test("marks Staff and Admin as for staff, and nobody else", () => {
     renderPwa(<AppsHub />)
 
     expect(screen.getAllByText("For staff")).toHaveLength(2)
-    for (const name of ["Staff", "Admin"]) {
+    for (const name of ["IHT Учителям", "admin.iht"]) {
       const item = screen.getByRole("link", { name: `Install ${name}` }).closest("li") as HTMLElement
       expect(within(item).getByText("For staff")).toBeInTheDocument()
     }
-    const lms = screen.getByRole("link", { name: "Install LMS" }).closest("li") as HTMLElement
+    const lms = screen.getByRole("link", { name: "Install lms.iht" }).closest("li") as HTMLElement
     expect(within(lms).queryByText("For staff")).not.toBeInTheDocument()
   })
 
@@ -37,7 +37,7 @@ describe("AppsHub", () => {
 
     renderPwa(<AppsHub />)
 
-    expect(screen.queryByRole("link", { name: "Install Library" })).not.toBeInTheDocument()
+    expect(screen.queryByRole("link", { name: "Install library.iht" })).not.toBeInTheDocument()
     expect(screen.getAllByRole("listitem")).toHaveLength(4)
   })
 })

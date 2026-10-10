@@ -222,8 +222,8 @@ describe("install", () => {
 
     await dispatch("install")
 
-    const shell = await cache("ihsp-shell-v1")
-    const assets = await cache("ihsp-static-v1")
+    const shell = await cache("ihsp-shell-v2")
+    const assets = await cache("ihsp-static-v2")
     for (const path of ["/", "/timetable/", "/homework/", "/grades/", "/offline.html", "/env.js"]) {
       expect(await shell.match(`${ORIGIN}${path}`)).toBeDefined()
     }
@@ -248,7 +248,7 @@ describe("install", () => {
 
     await dispatch("install")
 
-    expect([...(await cache("ihsp-shell-v1")).entries.keys()]).toEqual([])
+    expect([...(await cache("ihsp-shell-v2")).entries.keys()]).toEqual([])
   })
 
   test("does not take over by itself: an update waits for the page to say so", async () => {
@@ -264,10 +264,10 @@ describe("activate", () => {
     for (const name of [
       "ihsp-shell-v0",
       "ihsp-static-v0",
-      "ihsp-api-v1-u2",
-      "ihsp-shell-v1",
-      "ihsp-static-v1",
-      "ihsp-api-v1-u1",
+      "ihsp-api-v2-u2",
+      "ihsp-shell-v2",
+      "ihsp-static-v2",
+      "ihsp-api-v2-u1",
       "other-script",
     ]) {
       await storage.open(name)
@@ -276,7 +276,7 @@ describe("activate", () => {
     await dispatch("activate")
 
     expect([...storage.stores.keys()].toSorted()).toEqual(
-      ["ihsp-api-v1-u1", "ihsp-meta", "ihsp-shell-v1", "ihsp-static-v1", "other-script"].toSorted(),
+      ["ihsp-api-v2-u1", "ihsp-meta", "ihsp-shell-v2", "ihsp-static-v2", "other-script"].toSorted(),
     )
     expect(claimed).toBe(1)
   })
@@ -301,7 +301,7 @@ describe("static files: cache first", () => {
 
     await fetchEvent(get(`${ORIGIN}/_next/static/chunks/missing.js`))
 
-    expect((await cache("ihsp-static-v1")).entries.size).toBe(0)
+    expect((await cache("ihsp-static-v2")).entries.size).toBe(0)
   })
 
   test("what is not ours is left to the browser", async () => {
@@ -326,7 +326,7 @@ describe("pages: network first", () => {
     const { response } = await navigate(`${ORIGIN}/grades/?term=2`)
 
     expect(await response?.text()).toBe("<html>fresh</html>")
-    expect(await (await cache("ihsp-shell-v1")).match(`${ORIGIN}/grades/`)).toBeDefined()
+    expect(await (await cache("ihsp-shell-v2")).match(`${ORIGIN}/grades/`)).toBeDefined()
   })
 
   test("offline, a visited page comes from the cache (entity pages share one entry)", async () => {
@@ -342,7 +342,7 @@ describe("pages: network first", () => {
   })
 
   test("offline, a page never visited shows the offline page", async () => {
-    await (await cache("ihsp-shell-v1")).put(`${ORIGIN}/offline.html`, text("<html>you are offline</html>"))
+    await (await cache("ihsp-shell-v2")).put(`${ORIGIN}/offline.html`, text("<html>you are offline</html>"))
     network = () => {
       throw new TypeError("offline")
     }
@@ -358,7 +358,7 @@ describe("pages: network first", () => {
     const { response } = await navigate(`${ORIGIN}/grades/`)
 
     expect(response?.status).toBe(502)
-    expect((await cache("ihsp-shell-v1")).entries.size).toBe(0)
+    expect((await cache("ihsp-shell-v2")).entries.size).toBe(0)
   })
 
   test("env.js is network first too: offline, the stored one starts the app", async () => {
@@ -392,7 +392,7 @@ describe("API answers: stale while revalidate, per user", () => {
 
     await fetchEvent(get(today))
 
-    expect(await (await cache("ihsp-api-v1-u1")).match(today)).toBeDefined()
+    expect(await (await cache("ihsp-api-v2-u1")).match(today)).toBeDefined()
   })
 
   test("the next request is answered from the cache at once and revalidated; a changed answer is announced to the page", async () => {
@@ -406,7 +406,7 @@ describe("API answers: stale while revalidate, per user", () => {
 
     expect(await response?.text()).toBe('{"lessons":[1]}')
     expect(posted).toEqual([{ type: SW_EVENT.apiUpdated, url: today }])
-    expect(await (await (await cache("ihsp-api-v1-u1")).match(today))?.text()).toBe('{"lessons":[1,2]}')
+    expect(await (await (await cache("ihsp-api-v2-u1")).match(today))?.text()).toBe('{"lessons":[1,2]}')
   })
 
   test("an unchanged answer is not announced", async () => {
@@ -448,7 +448,7 @@ describe("API answers: stale while revalidate, per user", () => {
 
     await fetchEvent(get(today))
 
-    expect((await cache("ihsp-api-v1-u1")).entries.size).toBe(0)
+    expect((await cache("ihsp-api-v2-u1")).entries.size).toBe(0)
   })
 
   test("another user on the same phone never sees the first user's answers", async () => {
@@ -462,7 +462,7 @@ describe("API answers: stale while revalidate, per user", () => {
     }
 
     await expect(fetchEvent(get(today))).rejects.toThrow(TypeError)
-    expect(storage.stores.has("ihsp-api-v1-u1")).toBe(false)
+    expect(storage.stores.has("ihsp-api-v2-u1")).toBe(false)
   })
 
   test("only today, timetable, homework and grades are kept", async () => {
@@ -480,7 +480,7 @@ describe("API answers: stale while revalidate, per user", () => {
     for (const path of ["/v1/id/me", "/v1/me/files", "/v1/notifications", "/v1/app/version"]) {
       expect((await fetchEvent(get(`${API}${path}`))).response).toBeUndefined()
     }
-    expect((await cache("ihsp-api-v1-u1")).entries.size).toBe(4)
+    expect((await cache("ihsp-api-v2-u1")).entries.size).toBe(4)
   })
 
   test("a change that succeeded drops the stored answers, so the next read is fresh", async () => {
@@ -491,7 +491,7 @@ describe("API answers: stale while revalidate, per user", () => {
 
     await fetchEvent(get(`${API}/v1/me/lessons/7/homework/done`, { method: "PUT", body: "{}" }))
 
-    expect(storage.stores.has("ihsp-api-v1-u1")).toBe(false)
+    expect(storage.stores.has("ihsp-api-v2-u1")).toBe(false)
   })
 
   test("a change that failed keeps them", async () => {
@@ -502,7 +502,7 @@ describe("API answers: stale while revalidate, per user", () => {
 
     await fetchEvent(get(`${API}/v1/me/lessons/7/homework/done`, { method: "PUT", body: "{}" }))
 
-    expect((await cache("ihsp-api-v1-u1")).entries.size).toBe(1)
+    expect((await cache("ihsp-api-v2-u1")).entries.size).toBe(1)
   })
 
   test("refreshing the token is not a change", async () => {
@@ -513,7 +513,7 @@ describe("API answers: stale while revalidate, per user", () => {
     const { response } = await fetchEvent(get(`${API}/v1/oauth/refresh`, { method: "POST", body: "{}" }))
 
     expect(response).toBeUndefined()
-    expect((await cache("ihsp-api-v1-u1")).entries.size).toBe(1)
+    expect((await cache("ihsp-api-v2-u1")).entries.size).toBe(1)
   })
 })
 
@@ -531,13 +531,13 @@ describe("messages from the page", () => {
   })
 
   test("purge-shell drops the stored pages and keeps the assets", async () => {
-    await (await cache("ihsp-shell-v1")).put(`${ORIGIN}/`, text("page"))
-    await (await cache("ihsp-static-v1")).put(`${ORIGIN}/_next/static/a.js`, text("js"))
+    await (await cache("ihsp-shell-v2")).put(`${ORIGIN}/`, text("page"))
+    await (await cache("ihsp-static-v2")).put(`${ORIGIN}/_next/static/a.js`, text("js"))
 
     await message({ type: SW_MESSAGE.purgeShell })
 
-    expect(storage.stores.has("ihsp-shell-v1")).toBe(false)
-    expect(storage.stores.has("ihsp-static-v1")).toBe(true)
+    expect(storage.stores.has("ihsp-shell-v2")).toBe(false)
+    expect(storage.stores.has("ihsp-static-v2")).toBe(true)
   })
 
   test("skip-waiting lets a waiting worker take over", async () => {
@@ -588,7 +588,7 @@ describe("push", () => {
     await dispatch("push", { data: null })
 
     expect(shown.length).toBe(1)
-    expect(shown[0]?.title).toBe("IHSP")
+    expect(shown[0]?.title).toBe("IHT")
   })
 })
 

@@ -25,8 +25,8 @@ describe("account menu", () => {
     await user.click(await screen.findByRole("button", { name: "Account menu" }))
 
     const menu = await screen.findByRole("menu")
-    expect(within(menu).getByRole("menuitem", { name: /ID/ })).toHaveAttribute("aria-current", "page")
-    expect(within(menu).getByRole("menuitem", { name: /SP/ })).toHaveAttribute("href", "http://localhost:3002")
-    expect(within(menu).getByRole("menuitem", { name: /LMS/ })).toHaveAttribute("href", "http://localhost:3005")
+    expect(within(menu).getByRole("menuitem", { name: /IHT ID/ })).toHaveAttribute("aria-current", "page")
+    expect(within(menu).getByRole("menuitem", { name: /my\.iht/ })).toHaveAttribute("href", "http://localhost:3002")
+    expect(within(menu).getByRole("menuitem", { name: /lms\.iht/ })).toHaveAttribute("href", "http://localhost:3005")
   })
 })

@@ -1,13 +1,13 @@
 {
   "id": "/",
-  "name": "IHSP",
-  "short_name": "IHSP",
-  "description": "Timetable, grades, homework and study tools of the International Higher School Platform.",
+  "name": "My IHT",
+  "short_name": "My IHT",
+  "description": "Calendar, grades, homework and study tools of International House Tashkent.",
   "start_url": "/",
   "scope": "/",
   "display": "standalone",
-  "background_color": "#ffffff",
-  "theme_color": "#ffffff",
+  "background_color": "#273D88",
+  "theme_color": "#273D88",
   "categories": ["education"],
   "icons": [
     { "src": "/icons/icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any" },

@@ -14,10 +14,10 @@ function request(url: string, overrides: Partial<RequestFacts> = {}): RequestFac
 
 describe("cache names", () => {
   test("the student app keeps its names, every other app puts its id in", () => {
-    expect(createCacheKeys("sp").shellCacheName()).toBe("ihsp-shell-v1")
-    expect(createCacheKeys("lms").shellCacheName()).toBe("ihsp-lms-shell-v1")
-    expect(createCacheKeys("library").staticCacheName()).toBe("ihsp-library-static-v1")
-    expect(createCacheKeys("staff").apiCacheName("u-1")).toBe("ihsp-staff-api-v1-u-1")
+    expect(createCacheKeys("sp").shellCacheName()).toBe("ihsp-shell-v2")
+    expect(createCacheKeys("lms").shellCacheName()).toBe("ihsp-lms-shell-v2")
+    expect(createCacheKeys("library").staticCacheName()).toBe("ihsp-library-static-v2")
+    expect(createCacheKeys("staff").apiCacheName("u-1")).toBe("ihsp-staff-api-v2-u-1")
     expect(createCacheKeys("admin").metaCache).toBe("ihsp-admin-meta")
   })
 
@@ -61,13 +61,13 @@ describe("classifyRequest without API answers to keep (every app but the student
 
 describe("registerServiceWorker", () => {
   test("names the app in the address", async () => {
-    expect(serviceWorkerUrl("https://api.ihsu.uz", "https://sp.ihsu.uz", "lms")).toBe(
-      "/sw.js?api=https%3A%2F%2Fapi.ihsu.uz&sp=https%3A%2F%2Fsp.ihsu.uz&app=lms",
+    expect(serviceWorkerUrl("https://api.ihsu.uz", "https://my.ihsu.uz", "lms")).toBe(
+      "/sw.js?api=https%3A%2F%2Fapi.ihsu.uz&sp=https%3A%2F%2Fmy.ihsu.uz&app=lms",
     )
     const register = mock(async () => ({}) as ServiceWorkerRegistration)
     await registerServiceWorker({
       apiUrl: "https://api.ihsu.uz",
-      portalUrl: "https://sp.ihsu.uz",
+      portalUrl: "https://my.ihsu.uz",
       appId: "staff",
       container: { register },
       production: true,
@@ -79,7 +79,7 @@ describe("registerServiceWorker", () => {
 function runHeadScript(mode: string): void {
   document.head.innerHTML = ""
   window.__ENV__ = { APP_MODE: mode }
-  new Function(createPwaHeadScript("IHSP LMS"))()
+  new Function(createPwaHeadScript("IHT Courses"))()
 }
 
 describe("createPwaHeadScript", () => {
@@ -90,7 +90,7 @@ describe("createPwaHeadScript", () => {
     run("pwa")
     expect(document.head.querySelector("link[rel=manifest]")?.getAttribute("href")).toBe("/manifest.webmanifest")
     expect(document.head.querySelector("meta[name=apple-mobile-web-app-title]")?.getAttribute("content")).toBe(
-      "IHSP LMS",
+      "IHT Courses",
     )
   })
 })
