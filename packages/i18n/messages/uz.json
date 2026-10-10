@@ -762,7 +762,7 @@
         "args": "Mavzu yoki fayl"
       },
       "mindmap": {
-        "title": "Mindmap",
+        "title": "Aqliy xarita",
         "hint": "Mavzuning shoxlangan sxemasi",
         "args": "Mavzu"
       },
@@ -901,7 +901,14 @@
       "period": "{number}-juftlik",
       "tabs": {
         "file": "Fayl",
-        "link": "Havola"
+        "link": "Havola",
+        "notebook": "Daftardan"
+      },
+      "notebook": {
+        "label": "Daftar",
+        "pick": "Daftarni tanlang",
+        "none": "Bu daftarda tayyor hisobot, jadval yoki slaydlar yoʻq.",
+        "noNotebooks": "Hozircha daftarlar yoʻq."
       },
       "upload": "Fayl tanlash",
       "url": "Havola manzili",

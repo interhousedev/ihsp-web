@@ -1,7 +1,7 @@
 /** STF-4 to STF-8, UF-STF-04, UF-STF-05, UF-STF-08: the lesson page. */
 import { describe, expect, test } from "bun:test"
 import type { StaffLesson } from "@ihsp/api"
-import { apiUrl, ids, lessonId, resourceAttachment, resourceMaterial, server, staffLessonFor } from "@ihsp/test-utils"
+import { apiUrl, ids, lessonId, nbIds, resourceAttachment, resourceMaterial, server, staffLessonFor } from "@ihsp/test-utils"
 import { fireEvent, screen, waitFor, within } from "@testing-library/react"
 import { HttpResponse, http } from "msw"
 import { LessonPage } from "../features/lessons/components/lesson-page"
@@ -246,6 +246,33 @@ describe("materials and attachments", () => {
     await waitFor(() =>
       expect(bodies).toEqual([{ role: "attachment", kind: "url", target_url: "https://example.org/slides" }]),
     )
+  })
+
+  test("Add material: the selected role is pressed, and a notebook output is attached to the lesson", async () => {
+    const bodies: unknown[] = []
+    server.use(
+      http.post(apiUrl("/v1/notebooks/:id/artifacts/:aid/attach-to-lesson"), async ({ request, params }) => {
+        bodies.push({ ...((await request.json()) as object), aid: params.aid })
+        return HttpResponse.json(
+          { link_id: "l1", lesson_id: lessonId(1, 1), title: "Report.docx", short_url: "https://go.test/r" },
+          { status: 201 },
+        )
+      }),
+    )
+    const { user } = renderStaff(<LessonPage />, { route: ROUTE })
+
+    await user.click(await screen.findByRole("button", { name: "Add material" }))
+    const dialog = await screen.findByRole("dialog")
+    expect(within(dialog).getByRole("button", { name: "Material" })).toHaveAttribute("aria-pressed", "true")
+    await user.click(within(dialog).getByRole("button", { name: "Attachment" }))
+    expect(within(dialog).getByRole("button", { name: "Attachment" })).toHaveAttribute("aria-pressed", "true")
+    expect(within(dialog).getByRole("button", { name: "Material" })).toHaveAttribute("aria-pressed", "false")
+    await user.click(within(dialog).getByRole("tab", { name: "From notebook" }))
+    await user.selectOptions(await within(dialog).findByLabelText("Pick a notebook"), nbIds.notebook)
+    await user.click(await within(dialog).findByRole("button", { name: "Photosynthesis: conspect" }))
+
+    await waitFor(() => expect(bodies).toHaveLength(1))
+    expect(bodies[0]).toMatchObject({ role: "attachment", aid: nbIds.report })
   })
 
   test("?add=material opens the dialog (the Today quick action)", async () => {

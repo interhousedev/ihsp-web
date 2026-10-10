@@ -25,6 +25,7 @@ import { useState } from "react"
 import { toast } from "sonner"
 import { useAudienceLabel } from "../hooks/use-audience-label"
 import { FileUploadButton } from "../../file-upload-button"
+import { NotebookSource } from "./notebook-source"
 import { useAddResource } from "../hooks/use-lesson-mutations"
 import { useSameSubjectLessons } from "../hooks/use-same-subject-lessons"
 
@@ -147,6 +148,11 @@ export function AddMaterialDialog({
             <TabsTrigger value="link" className="min-h-11">
               {t("tabs.link")}
             </TabsTrigger>
+            {canAlsoAdd ? (
+              <TabsTrigger value="notebook" className="min-h-11">
+                {t("tabs.notebook")}
+              </TabsTrigger>
+            ) : null}
           </TabsList>
           <TabsContent value="file" className="flex flex-col gap-3 pt-3">
             <FileUploadButton
@@ -178,6 +184,18 @@ export function AddMaterialDialog({
               </Button>
             </form>
           </TabsContent>
+          {canAlsoAdd ? (
+            <TabsContent value="notebook" className="pt-3">
+              <NotebookSource
+                lessonId={lesson.id}
+                role={role}
+                onAttached={() => {
+                  toast.success(t("added"))
+                  changeOpen(false)
+                }}
+              />
+            </TabsContent>
+          ) : null}
         </Tabs>
         {add.isError ? (
           <p role="alert" className="text-destructive text-sm">

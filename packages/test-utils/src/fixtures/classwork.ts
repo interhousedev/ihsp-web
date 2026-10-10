@@ -287,8 +287,8 @@ export const staffToday: StaffToday = {
 }
 
 export const journalOptions: JournalOption[] = [
-  { subject: subjectRefs.physics, audience_key: "2tn2", label: "Physics · 2TN2" },
-  { subject: subjectRefs.english, audience_key: "2tn2:1", label: "English · 2TN2 subgroup 1" },
+  { subject: subjectRefs.physics, audience_key: "2tn2", label: "2TN2" },
+  { subject: subjectRefs.english, audience_key: "2tn2:1", label: "2TN2 subgroup 1" },
 ]
 
 const physicsLessons = weekLessons.filter((lesson) => lesson.subject.id === ids.physics)

@@ -901,7 +901,14 @@
       "period": "period {number}",
       "tabs": {
         "file": "File",
-        "link": "Link"
+        "link": "Link",
+        "notebook": "From notebook"
+      },
+      "notebook": {
+        "label": "Notebook",
+        "pick": "Pick a notebook",
+        "none": "No ready reports, tables or slides in this notebook.",
+        "noNotebooks": "No notebooks yet."
       },
       "upload": "Choose a file",
       "url": "Link address",

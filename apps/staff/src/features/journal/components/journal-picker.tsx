@@ -4,7 +4,7 @@ import type { JournalOption } from "@ihsp/api"
 import { useT } from "@ihsp/i18n"
 import { NativeSelect } from "@ihsp/ui"
 import { useId } from "react"
-import { optionValue, parseOptionValue } from "../utils/selection"
+import { optionLabel, optionValue, parseOptionValue } from "../utils/selection"
 
 /** Picks the subject and audience the teacher teaches (UF-STF-07 step 1), e.g. "Physics · 2TN2 · subgroup 1". */
 export function JournalPicker({
@@ -34,7 +34,7 @@ export function JournalPicker({
       >
         {options.map((option) => (
           <option key={optionValue(option)} value={optionValue(option)}>
-            {option.label}
+            {optionLabel(option)}
           </option>
         ))}
       </NativeSelect>

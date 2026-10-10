@@ -55,7 +55,7 @@ export function JournalGrid({ journal, params }: { journal: Journal; params: Jou
                     </span>
                     <span className="text-muted-foreground line-clamp-2 text-xs">{lesson.topic ?? t("noTopic")}</span>
                     {notTaken ? (
-                      <Badge variant="outline" className="text-[10px]">
+                      <Badge variant="outline" className="text-xs">
                         {t("notTaken")}
                       </Badge>
                     ) : null}

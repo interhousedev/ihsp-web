@@ -99,3 +99,10 @@ export function marksOf(entry: StudentEntry): { date: string; mark: number }[] {
     .flatMap((cell) => cell.marks.map((mark) => ({ date: dates.get(cell.lesson_id) ?? "", mark })))
     .sort((a, b) => a.date.localeCompare(b.date))
 }
+
+/** Subjects of a student, then the distinct audiences, shown under the name: "Physics, Chemistry · 2TN2". */
+export function subjectsLine(summary: StudentSummary): string {
+  const subjects = [...new Set(summary.entries.map((entry) => entry.option.subject.name))]
+  const groups = [...new Set(summary.entries.map((entry) => entry.option.label))]
+  return `${subjects.join(", ")} · ${groups.join(", ")}`
+}

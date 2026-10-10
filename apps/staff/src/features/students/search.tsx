@@ -6,15 +6,10 @@ import { IconSearch } from "@ihsp/ui"
 import Link from "next/link"
 import { parseAsString, useQueryState } from "nuqs"
 import { useTeacherStudents } from "./hooks/use-teacher-students"
-import { nameOf, searchStudents, type StudentSummary } from "./utils"
+import { nameOf, searchStudents, subjectsLine } from "./utils"
 
 export function studentHref(id: string): string {
   return `/students/view/?id=${encodeURIComponent(id)}`
-}
-
-/** Subjects of a student, shown under the name: "Physics · 2TN2". */
-function subjectsLine(student: StudentSummary): string {
-  return student.entries.map((entry) => entry.option.label).join(" · ")
 }
 
 /**

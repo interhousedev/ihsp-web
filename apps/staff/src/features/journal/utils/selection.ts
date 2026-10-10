@@ -22,3 +22,8 @@ export function selectedOption(
   const match = options.find((option) => option.subject.id === subject && option.audience_key === audience)
   return match ?? options[0] ?? null
 }
+
+/** "Physics · 2TN2": the subject and the audience, which the backend `label` alone does not name. */
+export function optionLabel(option: Pick<JournalOption, "subject" | "label">): string {
+  return `${option.subject.name} · ${option.label}`
+}

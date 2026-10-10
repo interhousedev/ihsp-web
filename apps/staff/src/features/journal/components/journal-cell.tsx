@@ -43,7 +43,7 @@ export function JournalCell({
       ))}
       {!cell.absent && cell.marks.length === 0 ? (
         <span className="text-muted-foreground text-xs" aria-hidden>
-          {notTaken ? "" : "·"}
+          {notTaken ? "–" : "·"}
         </span>
       ) : null}
     </span>

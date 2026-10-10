@@ -7,6 +7,7 @@ import { useQueries } from "@tanstack/react-query"
 import Link from "next/link"
 import { parseAsString, useQueryState } from "nuqs"
 import { BackLink } from "../shared/components/back-link"
+import { optionLabel } from "../journal/utils/selection"
 import { lessonHref } from "../shared/utils/lesson-time"
 import { useTeacherStudents } from "./hooks/use-teacher-students"
 import { attendanceOf, marksOf, nameOf, recentLessons, type StudentSummary } from "./utils"
@@ -74,14 +75,16 @@ function SubjectMarks({ entry }: { entry: StudentSummary["entries"][number] }) {
   return (
     <li className="flex flex-col gap-1.5 py-2.5 first:pt-0 last:pb-0">
       <div className="flex items-center justify-between gap-2">
-        <span className="text-sm font-medium">{entry.option.label}</span>
+        <span className="text-sm font-medium">{optionLabel(entry.option)}</span>
         <span className="flex items-center gap-2 text-xs">
           <span className="text-muted-foreground">{t("semester")}</span>
           <MarkBadge mark={entry.student.semester_mark} size="sm" />
         </span>
       </div>
       <div className="flex flex-wrap items-center gap-1.5">
-        {marks.length === 0 ? <span className="text-muted-foreground text-xs">{t("noMarks")}</span> : null}
+        {marks.length === 0 ? <span className="text-muted-foreground text-xs">
+            {entry.student.semester_mark !== null ? t("noLessonMarks") : t("noMarks")}
+          </span> : null}
         {marks.map((item, index) => (
           <span key={index} className="flex items-center gap-1" title={item.date}>
             <MarkBadge mark={item.mark} size="sm" />
