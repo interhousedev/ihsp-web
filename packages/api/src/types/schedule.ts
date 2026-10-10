@@ -2,8 +2,11 @@
 
 import type { DateRangeParams, PageParams, PersonRef, RoomRefLite, SubjectRef } from "./common"
 
-/** Who set a bell: Administration by hand, or the EMIS `class-hours` sync, which keeps its bells equal to EMIS. */
-export type BellSource = "manual" | "emis"
+/**
+ * Who set a bell: the EMIS `class-hours` sync (`emis`, the default), Administration for a period of their own
+ * (`manual`) or Administration overriding an EMIS period (`override`: the sync leaves it alone).
+ */
+export type BellSource = "manual" | "emis" | "override"
 
 export type Bell = {
   period: number
@@ -13,6 +16,9 @@ export type Bell = {
   /** 1..6 */
   weekdays: number[]
   source: BellSource
+  /** What EMIS says for the period, kept so an override can be reset. */
+  emis_start?: string | null
+  emis_end?: string | null
 }
 
 /** What a class is, from the EMIS class type. `midterm` and `final` are EMIS exam weeks. */
@@ -147,6 +153,8 @@ export type LessonItem = {
   topic_source: TopicSource | null
   has_homework: boolean
   attendance_submitted: boolean
+  /** Students marked absent; `null` while no attendance sheet was submitted. */
+  absent_count?: number | null
 }
 
 export type ExtraLessonInput = {
@@ -214,6 +222,8 @@ export type GroupPatchBody = {
   curator_id?: string | null
   head_student_id?: string | null
   status?: "active" | "archived"
+  name?: string
+  current_semester?: number
 }
 export type AdminGroupsParams = { status?: "active" | "archived" }
 

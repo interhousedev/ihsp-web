@@ -26,7 +26,8 @@
     "monitoring": "Monitoring",
     "broadcasts": "Broadcasts",
     "moderation": "Moderation",
-    "assistant": "Assistant"
+    "assistant": "Assistant",
+    "reports": "Reports"
   },
   "shared": {
     "filters": "Filters",
@@ -44,7 +45,7 @@
     "controls": {
       "midterm_1": "Midterm 1",
       "midterm_2": "Midterm 2",
-      "final": "Final"
+      "final": "Final (FC)"
     }
   },
   "status": {
@@ -179,8 +180,8 @@
       "empty": "No grades yet.",
       "subject": "Subject",
       "lesson": "Lessons",
-      "midterm": "Midterm",
-      "final": "Final",
+      "midterm": "Midterm (PC)",
+      "final": "Final (FC)",
       "semesterMark": "Semester mark",
       "emisRating": "EMIS rating",
       "count": "Marks"
@@ -443,7 +444,7 @@
       "saveSubgroups": "Save subgroups ({count})",
       "subgroupsSaved": "Subgroups saved",
       "noStudents": "There are no students in this group yet.",
-      "name": "Student",
+      "name": "Name",
       "statusColumn": "Status",
       "registered": "Registered",
       "subgroup": "Subgroup",
@@ -451,7 +452,8 @@
       "subgroupNumber": "Subgroup {number}",
       "noSubgroup": "No subgroup",
       "yes": "Yes",
-      "no": "No"
+      "no": "No",
+      "semesterField": "Semester"
     }
   },
   "subjects": {
@@ -574,7 +576,6 @@
       "starts": "Starts on",
       "ends": "Ends on",
       "bells": "Bell schedule",
-      "bellsHint": "For another time on Saturday add a second row with the same period and only Saturday.",
       "cancel": "Cancel",
       "save": "Save term",
       "created": "Term created",
@@ -610,7 +611,10 @@
       "add": "Add period",
       "emis": "EMIS",
       "emisHint": "Synced from EMIS class hours",
-      "emisNote": "Periods marked EMIS are synced from EMIS class hours, so they cannot be changed here. Periods without the mark can be edited."
+      "overridden": "Edited",
+      "overriddenHint": "Differs from EMIS ({start}–{end})",
+      "reset": "Reset to EMIS",
+      "rowMenu": "Actions for period {period}"
     },
     "days": {
       "nonStudy": "Non-study days",
@@ -826,8 +830,8 @@
       "undated": "Show control weeks without a date"
     },
     "kind": {
-      "midterm": "Midterm",
-      "final": "Final",
+      "midterm": "Midterm (PC)",
+      "final": "Final (FC)",
       "other": "Other"
     },
     "status": {
@@ -1154,6 +1158,46 @@
     },
     "approval": {
       "reasonPlaceholder": "Why not? For example: use room 310 instead"
+    }
+  },
+  "reports": {
+    "title": "Reports",
+    "description": "System health, usage and academic figures.",
+    "tabs": {
+      "health": "System",
+      "usage": "Usage",
+      "academic": "Academic"
+    },
+    "health": {
+      "up": "Up",
+      "down": "Down",
+      "database": "Database",
+      "redis": "Redis",
+      "queueWaiting": "Jobs waiting",
+      "queueHint": "{count} running",
+      "failedLogins": "Failed sign-ins, 24 h",
+      "loginsHint": "{failed} of {total} attempts",
+      "updated": "Updated {time}"
+    },
+    "usage": {
+      "storage": "Storage",
+      "files": "{count} files",
+      "signInsToday": "Sign-ins today",
+      "tokensToday": "Assistant tokens today",
+      "tokensTotal": "Assistant tokens",
+      "last14": "last 14 days",
+      "signIns": "Active users per day",
+      "users": "Users",
+      "tokens": "Assistant tokens per day",
+      "tokensLabel": "Tokens"
+    },
+    "academic": {
+      "attendanceTitle": "Attendance by group",
+      "attendanceRate": "Attendance",
+      "noAttendance": "No attendance data yet.",
+      "marksTitle": "Marks distribution",
+      "marksCount": "Marks",
+      "noMarks": "No marks yet."
     }
   }
 }

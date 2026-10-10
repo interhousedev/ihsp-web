@@ -4,8 +4,8 @@ import type { UsageInfo } from "@ihsp/api"
 export type LimitState = { reached: false } | { reached: true; scope: "session" | "day"; resetsAt: string | null }
 
 /** Share of a budget that is used, 0 to 100. */
-export function usagePercent(used: number, limit: number): number {
-  if (limit <= 0) return 0
+export function usagePercent(used: number, limit: number | null): number {
+  if (limit === null || limit <= 0) return 0
   return Math.max(0, Math.min(100, Math.round((used / limit) * 100)))
 }
 
@@ -15,8 +15,9 @@ export function usagePercent(used: number, limit: number): number {
  */
 export function limitState(usage: UsageInfo | undefined): LimitState {
   if (!usage) return { reached: false }
-  const sessionFull = usage.session.limit > 0 && usage.session.used >= usage.session.limit
-  const dayFull = usage.day.limit > 0 && usage.day.used >= usage.day.limit
+  const sessionFull =
+    usage.session.limit !== null && usage.session.limit > 0 && usage.session.used >= usage.session.limit
+  const dayFull = usage.day.limit !== null && usage.day.limit > 0 && usage.day.used >= usage.day.limit
   if (!sessionFull && !dayFull) return { reached: false }
   const dayReset = usage.day.resets_at
   const sessionReset = usage.session.resets_at ?? dayReset

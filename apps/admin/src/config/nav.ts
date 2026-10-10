@@ -38,6 +38,7 @@ export function useNav(): { groups: NavGroup[] } {
           label: t("groupReports"),
           items: [
             { title: t("attendance"), url: "/attendance/", icon: "attendance" },
+            { title: t("reports"), url: "/reports/", icon: "reports" },
             { title: t("monitoring"), url: "/monitoring/", icon: "monitoring" },
           ],
         },

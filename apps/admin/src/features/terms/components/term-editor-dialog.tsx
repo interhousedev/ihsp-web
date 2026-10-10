@@ -127,7 +127,6 @@ export function TermEditorDialog({
 
           <section className="flex flex-col gap-2">
             <h3 className="text-sm font-semibold">{t("bells")}</h3>
-            <p className="text-muted-foreground text-xs">{t("bellsHint")}</p>
             <BellsEditor bells={form.bells} onChange={(bells) => setForm({ ...form, bells })} />
           </section>
 

@@ -473,7 +473,7 @@ describe("export", () => {
       const lines = text.replace(/^﻿/, "").split("\r\n")
       expect(lines[0]).toBe("Date,Control week,Subject,Groups,Kind,Control,Time,Room,Status,Source,Set by,Title,Note")
       expect(lines).toContain(
-        '2026-10-14,,Mathematics,2TN2,Midterm,Midterm 1,09:00,204,Planned,Teacher,Rakhimov Timur,Algebra and functions,"Chapters 1–4; bring a calculator."',
+        '2026-10-14,,Mathematics,2TN2,Midterm (PC),Midterm 1,09:00,204,Planned,Teacher,Rakhimov Timur,Algebra and functions,"Chapters 1–4; bring a calculator."',
       )
       // The header and the five dated controls that are not cancelled.
       expect(lines).toHaveLength(6)
@@ -498,7 +498,7 @@ describe("export", () => {
 
       await waitUntil(() => blob !== null, "no file")
       const text = await (blob as unknown as Blob).text()
-      expect(text).toContain(",2026-10-12 – 2026-10-17,English,2TN2,Midterm,Midterm 1,,,Date not set,Administration,")
+      expect(text).toContain(",2026-10-12 – 2026-10-17,English,2TN2,Midterm (PC),Midterm 1,,,Date not set,Administration,")
     } finally {
       URL.createObjectURL = originalCreate
     }

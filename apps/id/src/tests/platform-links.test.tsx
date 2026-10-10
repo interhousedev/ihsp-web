@@ -30,4 +30,3 @@ describe("account menu", () => {
     expect(within(menu).getByRole("menuitem", { name: /LMS/ })).toHaveAttribute("href", "http://localhost:3005")
   })
 })
-

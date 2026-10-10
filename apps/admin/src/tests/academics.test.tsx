@@ -84,6 +84,25 @@ describe("groups", () => {
     await waitUntil(() => body !== undefined, "no request")
     expect(body).toEqual({ curator_id: ids.teacherRakhimov })
   })
+
+  test("the name and the semester of a group can be changed", async () => {
+    let body: unknown
+    server.use(
+      http.patch(apiUrl(`/v1/admin/groups/${ids.group2TN2}`), async ({ request }) => {
+        body = await request.json()
+        return HttpResponse.json({ id: ids.group2TN2 })
+      }),
+    )
+    const { user } = renderAdmin(<GroupDetailPage />, { route: `/groups/view/?id=${ids.group2TN2}` })
+    await screen.findByRole("heading", { name: "2TN2" })
+
+    setValue(screen.getByLabelText("Name"), "2TN9")
+    await user.selectOptions(screen.getByLabelText("Semester"), "6")
+    await user.click(screen.getByRole("button", { name: "Save" }))
+
+    await waitUntil(() => body !== undefined, "no request")
+    expect(body).toEqual({ name: "2TN9", current_semester: 6 })
+  })
 })
 
 describe("subjects", () => {

@@ -1,4 +1,4 @@
-/** ACA-4, ADM-18, UF-ADM-05: bells synced from EMIS class hours carry an EMIS badge and are read-only. */
+/** ACA-4, ADM-18, UF-ADM-05: EMIS class hours are the default bells; Administration can override time and weekdays. */
 import { describe, expect, mock, test } from "bun:test"
 import type { Bell } from "@ihsp/api"
 import { apiUrl, bells, currentTerm, emisBells, previousTerm, server } from "@ihsp/test-utils"
@@ -12,8 +12,6 @@ import { configureTests, renderAdmin, setValue, waitUntil } from "./helpers"
 configureTests()
 
 const HINT = "Synced from EMIS class hours"
-const NOTE =
-  "Periods marked EMIS are synced from EMIS class hours, so they cannot be changed here. Periods without the mark can be edited."
 
 /** Period 1 from EMIS, period 7 set by hand: the usual mix after a sync. */
 const mixed: Bell[] = [
@@ -61,23 +59,86 @@ describe("term card", () => {
 })
 
 describe("bells editor", () => {
-  test("an EMIS bell has the badge, a note and fields that cannot be changed", () => {
+  test("an EMIS bell has the badge and every field except the period number can be changed", () => {
     renderEditor(mixed)
 
-    expect(screen.getByText(NOTE)).toBeInTheDocument()
     expect(screen.getAllByText("EMIS")).toHaveLength(1)
     const [emisRow, manualRow] = screen.getAllByRole("listitem") as [HTMLElement, HTMLElement]
-    for (const label of ["Period", "Start", "End"]) {
-      expect(within(emisRow).getByLabelText(label)).toBeDisabled()
-      expect(within(manualRow).getByLabelText(label)).toBeEnabled()
-    }
+    expect(within(emisRow).getByLabelText("Period")).toBeDisabled()
+    expect(within(manualRow).getByLabelText("Period")).toBeEnabled()
+    for (const label of ["Start", "End"]) expect(within(emisRow).getByLabelText(label)).toBeEnabled()
     const days = within(emisRow).getByRole("group", { name: "Weekdays of period 1" })
-    for (const day of within(days).getAllByRole("button")) expect(day).toBeDisabled()
-    expect(within(emisRow).queryByRole("button", { name: "Remove period 1" })).not.toBeInTheDocument()
+    for (const day of within(days).getAllByRole("button")) expect(day).toBeEnabled()
   })
 
-  test("a bell set by hand stays editable: times, weekdays and removing", () => {
+  test("there are no explanatory paragraphs above the rows", () => {
+    renderEditor(mixed)
+
+    expect(screen.queryByText(/cannot be changed here/)).not.toBeInTheDocument()
+    expect(screen.queryByText(/second row/)).not.toBeInTheDocument()
+  })
+
+  test("changing the time of an EMIS bell makes it an override and remembers the EMIS time", () => {
     const { onChange } = renderEditor(mixed)
+    const emisRow = screen.getAllByRole("listitem")[0] as HTMLElement
+
+    setValue(within(emisRow).getByLabelText("End"), "09:00")
+
+    expect(onChange).toHaveBeenLastCalledWith([
+      { ...mixed[0], end: "09:00", source: "override", emis_start: "08:30", emis_end: "09:15" },
+      mixed[1],
+    ])
+  })
+
+  test("Saturday can be deselected on an EMIS bell", () => {
+    const { onChange } = renderEditor(mixed)
+    const emisRow = screen.getAllByRole("listitem")[0] as HTMLElement
+    const saturday = within(within(emisRow).getByRole("group", { name: "Weekdays of period 1" })).getAllByRole(
+      "button",
+    )[5] as HTMLElement
+    expect(saturday).toHaveAttribute("aria-pressed", "true")
+
+    fireEvent.click(saturday)
+
+    expect(onChange).toHaveBeenLastCalledWith([
+      { ...mixed[0], weekdays: [1, 2, 3, 4, 5], source: "override", emis_start: "08:30", emis_end: "09:15" },
+      mixed[1],
+    ])
+  })
+
+  test("Reset to EMIS in the row menu restores the EMIS time and all weekdays", async () => {
+    const overridden: Bell = {
+      period: 1,
+      start: "08:30",
+      end: "09:00",
+      weekdays: [1, 2, 3],
+      source: "override",
+      emis_start: "08:30",
+      emis_end: "09:15",
+    }
+    const onChange = mock((_bells: Bell[]) => undefined)
+    const { user } = renderAdmin(<BellsEditor bells={[overridden]} onChange={onChange} />)
+    expect(screen.getByText("Edited")).toBeInTheDocument()
+
+    await user.click(screen.getByRole("button", { name: "Actions for period 1" }))
+    await user.click(await screen.findByRole("menuitem", { name: "Reset to EMIS" }))
+
+    expect(onChange).toHaveBeenLastCalledWith([
+      {
+        period: 1,
+        start: "08:30",
+        end: "09:15",
+        weekdays: [1, 2, 3, 4, 5, 6],
+        source: "emis",
+        emis_start: null,
+        emis_end: null,
+      },
+    ])
+  })
+
+  test("a bell set by hand stays editable: times, weekdays and removing from the menu", async () => {
+    const onChange = mock((_bells: Bell[]) => undefined)
+    const { user } = renderAdmin(<BellsEditor bells={mixed} onChange={onChange} />)
     const manualRow = screen.getAllByRole("listitem")[1] as HTMLElement
 
     setValue(within(manualRow).getByLabelText("Start"), "14:20")
@@ -89,7 +150,8 @@ describe("bells editor", () => {
     fireEvent.click(saturday)
     expect(onChange).toHaveBeenLastCalledWith([mixed[0], { ...mixed[1], weekdays: [1, 2, 3, 4, 5, 6] }])
 
-    fireEvent.click(within(manualRow).getByRole("button", { name: "Remove period 7" }))
+    await user.click(within(manualRow).getByRole("button", { name: "Actions for period 7" }))
+    await user.click(await screen.findByRole("menuitem", { name: "Remove period 7" }))
     expect(onChange).toHaveBeenLastCalledWith([mixed[0]])
   })
 
@@ -104,18 +166,17 @@ describe("bells editor", () => {
     ])
   })
 
-  test("without EMIS bells there is no badge or note and every row can be edited", () => {
+  test("without EMIS bells there is no badge and every row can be edited", () => {
     renderEditor(bells)
 
     expect(screen.queryByText("EMIS")).not.toBeInTheDocument()
-    expect(screen.queryByText(NOTE)).not.toBeInTheDocument()
     expect(screen.getAllByLabelText("Start").every((field) => !(field as HTMLInputElement).disabled)).toBe(true)
-    expect(screen.getAllByRole("button", { name: /^Remove period/ })).toHaveLength(bells.length)
+    expect(screen.getAllByRole("button", { name: /^Actions for period/ })).toHaveLength(bells.length)
   })
 })
 
 describe("term editor", () => {
-  test("editing a term with EMIS bells locks them and saves them unchanged with their source", async () => {
+  test("editing a term with EMIS bells keeps them unchanged with their source when nothing is touched", async () => {
     let body: { bells: Bell[]; academic_year: string } | undefined
     server.use(
       http.patch(apiUrl("/v1/admin/terms/:id"), async ({ request }) => {
@@ -128,11 +189,10 @@ describe("term editor", () => {
 
     await user.click(screen.getAllByRole("button", { name: "Edit" })[1] as HTMLElement)
     const dialog = await screen.findByRole("dialog")
-    expect(within(dialog).getByText(NOTE)).toBeInTheDocument()
     expect(
       within(dialog)
         .getAllByLabelText("Start")
-        .every((field) => (field as HTMLInputElement).disabled),
+        .every((field) => !(field as HTMLInputElement).disabled),
     ).toBe(true)
     setValue(within(dialog).getByLabelText(/^Academic year/), "2025-2026 (revised)")
     await user.click(within(dialog).getByRole("button", { name: "Save term" }))

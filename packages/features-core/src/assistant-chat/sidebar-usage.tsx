@@ -28,24 +28,38 @@ function UsageRing({ percent }: { percent: number }) {
   )
 }
 
-/** Footer of the sidebar: a ring with the larger of the two budgets (session, day) that opens the usage bar. */
+function percentOf(usage: UsageInfo): number {
+  return Math.max(usagePercent(usage.session.used, usage.session.limit), usagePercent(usage.day.used, usage.day.limit))
+}
+
+/** Footer of the desktop sidebar: the one place where the two budgets (session, day) are shown in full. */
 export function SidebarUsage({ usage }: { usage: UsageInfo | undefined }) {
-  const t = useT("assistant")
-  if (!usage) return null
-  const percent = Math.max(
-    usagePercent(usage.session.used, usage.session.limit),
-    usagePercent(usage.day.used, usage.day.limit),
+  if (!usage || (usage.session.limit === null && usage.day.limit === null)) return null
+  return (
+    <div className="shrink-0 border-t px-3 pt-3 pb-1">
+      <UsageBar usage={usage} stacked />
+    </div>
   )
+}
+
+/** Compact meter for phones and a hidden sidebar: a ring that opens the same two budgets in a popover. */
+export function UsageButton({ usage, className }: { usage: UsageInfo | undefined; className?: string }) {
+  const t = useT("assistant")
+  if (!usage || (usage.session.limit === null && usage.day.limit === null)) return null
+  const percent = percentOf(usage)
   return (
     <Popover>
       <PopoverTrigger
-        className="hover:bg-muted focus-visible:ring-ring/50 flex min-h-11 w-full items-center gap-3 rounded-full px-3 text-sm outline-none focus-visible:ring-3"
+        className={cn(
+          "hover:bg-muted focus-visible:ring-ring/50 flex size-11 shrink-0 items-center justify-center rounded-full outline-none focus-visible:ring-3",
+          className,
+        )}
         aria-label={t("sidebar.usageRing", { percent })}
+        title={t("usage.title")}
       >
         <UsageRing percent={percent} />
-        <span className="text-muted-foreground">{t("usage.title")}</span>
       </PopoverTrigger>
-      <PopoverContent side="top" align="start" className="w-72">
+      <PopoverContent side="bottom" align="end" className="w-72">
         <UsageBar usage={usage} />
       </PopoverContent>
     </Popover>

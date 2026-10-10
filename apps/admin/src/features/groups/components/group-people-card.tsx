@@ -2,7 +2,7 @@
 
 import { keys, patchAdminGroup, type GroupDetail } from "@ihsp/api"
 import { useT } from "@ihsp/i18n"
-import { Button, Card, CardContent, CardHeader, CardTitle } from "@ihsp/ui"
+import { Button, Card, CardContent, CardHeader, CardTitle, Input } from "@ihsp/ui"
 import { useEffect, useState } from "react"
 import { LabeledField } from "../../shared/components/labeled-field"
 import { SelectField } from "../../shared/components/select-field"
@@ -17,19 +17,31 @@ export function GroupPeopleCard({ group }: { group: GroupDetail }) {
   const teachers = useTeacherOptions()
   const [curatorId, setCuratorId] = useState(group.curator?.id ?? "")
   const [headId, setHeadId] = useState(group.head_student?.id ?? "")
+  const [name, setName] = useState(group.name)
+  const [semester, setSemester] = useState(group.current_semester ? String(group.current_semester) : "")
   const [status, setStatus] = useState<GroupDetail["status"]>(group.status)
 
   useEffect(() => {
     setCuratorId(group.curator?.id ?? "")
     setHeadId(group.head_student?.id ?? "")
     setStatus(group.status)
+    setName(group.name)
+    setSemester(group.current_semester ? String(group.current_semester) : "")
   }, [group])
 
+  const nameChanged = name.trim() !== group.name && name.trim() !== ""
+  const semesterChanged = semester !== "" && semester !== String(group.current_semester ?? "")
   const changed =
-    curatorId !== (group.curator?.id ?? "") || headId !== (group.head_student?.id ?? "") || status !== group.status
+    nameChanged ||
+    semesterChanged ||
+    curatorId !== (group.curator?.id ?? "") ||
+    headId !== (group.head_student?.id ?? "") ||
+    status !== group.status
   const save = useAdminMutation({
     mutationFn: () =>
       patchAdminGroup(group.id, {
+        ...(nameChanged ? { name: name.trim() } : {}),
+        ...(semesterChanged ? { current_semester: Number(semester) } : {}),
         ...(curatorId !== (group.curator?.id ?? "") ? { curator_id: curatorId || null } : {}),
         ...(headId !== (group.head_student?.id ?? "") ? { head_student_id: headId || null } : {}),
         ...(status !== group.status ? { status } : {}),
@@ -44,6 +56,24 @@ export function GroupPeopleCard({ group }: { group: GroupDetail }) {
         <CardTitle>{t("people")}</CardTitle>
       </CardHeader>
       <CardContent className="grid gap-4 sm:grid-cols-2">
+        <LabeledField label={t("name")} htmlFor="group-name">
+          <Input
+            id="group-name"
+            value={name}
+            maxLength={64}
+            className={TOUCH}
+            onChange={(e) => setName(e.target.value)}
+          />
+        </LabeledField>
+        <LabeledField label={t("semesterField")} htmlFor="group-semester">
+          <SelectField
+            id="group-semester"
+            value={semester}
+            emptyLabel={t("none")}
+            options={Array.from({ length: 8 }, (_, index) => ({ value: String(index + 1), label: String(index + 1) }))}
+            onChange={setSemester}
+          />
+        </LabeledField>
         <LabeledField label={t("curator")} htmlFor="group-curator">
           <SelectField
             id="group-curator"

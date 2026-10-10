@@ -78,7 +78,7 @@ describe("exams list", () => {
     await renderList()
 
     const row = within(rowOf("Mechanics"))
-    expect(row.getByText("Midterm")).toBeInTheDocument()
+    expect(row.getByText("Midterm (PC)")).toBeInTheDocument()
     expect(row.getByText("EMIS")).toBeInTheDocument()
     // Time, room, author and note are all unknown.
     expect(row.getAllByText("—")).toHaveLength(4)
@@ -214,7 +214,7 @@ describe("exam filters", () => {
     const labels = within(select)
       .getAllByRole("option")
       .map((option) => option.textContent)
-    expect(labels).toEqual(["All control weeks", "Midterm 1 · 12–17 Oct", "Midterm 2 · 16–21 Nov", "Final · 14–19 Dec"])
+    expect(labels).toEqual(["All control weeks", "Midterm 1 · 12–17 Oct", "Midterm 2 · 16–21 Nov", "Final (FC) · 14–19 Dec"])
   })
 
   test("filters in the address are applied and shown", async () => {

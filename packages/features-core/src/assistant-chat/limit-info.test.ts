@@ -61,3 +61,15 @@ describe("usage formatting", () => {
     expect(formatTokens(1_500_000)).toBe("1.5M")
   })
 })
+
+describe("no caps (Administration)", () => {
+  const unlimited = usage({ session: { used: 5_000_000, limit: null }, day: { used: 9_000_000, limit: null } })
+
+  it("never locks the input", () => {
+    expect(limitState(unlimited)).toEqual({ reached: false })
+  })
+
+  it("has no percentage to show", () => {
+    expect(usagePercent(5_000_000, null)).toBe(0)
+  })
+})

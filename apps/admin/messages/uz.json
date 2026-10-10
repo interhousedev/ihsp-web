@@ -26,7 +26,8 @@
     "monitoring": "Monitoring",
     "broadcasts": "Xabarnomalar",
     "moderation": "Moderatsiya",
-    "assistant": "Yordamchi"
+    "assistant": "Yordamchi",
+    "reports": "Hisobotlar"
   },
   "shared": {
     "filters": "Filtrlar",
@@ -44,7 +45,7 @@
     "controls": {
       "midterm_1": "Oraliq nazorat 1",
       "midterm_2": "Oraliq nazorat 2",
-      "final": "Yakuniy nazorat"
+      "final": "Yakuniy nazorat (YaN)"
     }
   },
   "status": {
@@ -179,8 +180,8 @@
       "empty": "Hozircha baholar yo‘q.",
       "subject": "Fan",
       "lesson": "Darslar",
-      "midterm": "Oraliq nazorat",
-      "final": "Yakuniy",
+      "midterm": "Oraliq nazorat (ON)",
+      "final": "Yakuniy nazorat (YaN)",
       "semesterMark": "Semestr bahosi",
       "emisRating": "EMIS reytingi",
       "count": "Baholar"
@@ -443,7 +444,7 @@
       "saveSubgroups": "Kichik guruhlarni saqlash ({count})",
       "subgroupsSaved": "Kichik guruhlar saqlandi",
       "noStudents": "Bu guruhda hozircha talabalar yo‘q.",
-      "name": "Talaba",
+      "name": "Nomi",
       "statusColumn": "Holati",
       "registered": "Ro‘yxatdan o‘tgan",
       "subgroup": "Kichik guruh",
@@ -451,7 +452,8 @@
       "subgroupNumber": "{number}-kichik guruh",
       "noSubgroup": "Kichik guruhsiz",
       "yes": "Ha",
-      "no": "Yo‘q"
+      "no": "Yo‘q",
+      "semesterField": "Semestr"
     }
   },
   "subjects": {
@@ -574,7 +576,6 @@
       "starts": "Boshlanishi",
       "ends": "Tugashi",
       "bells": "Qo‘ng‘iroqlar jadvali",
-      "bellsHint": "Shanba kuni boshqa vaqt uchun xuddi shu dars raqami va faqat shanba bilan ikkinchi qator qo‘shing.",
       "cancel": "Bekor qilish",
       "save": "Semestrni saqlash",
       "created": "Semestr yaratildi",
@@ -610,7 +611,10 @@
       "add": "Dars qo‘shish",
       "emis": "EMIS",
       "emisHint": "EMIS dars soatlaridan sinxronlangan",
-      "emisNote": "EMIS belgisi bor darslar EMIS dars soatlaridan sinxronlanadi, shuning uchun ularni bu yerda o‘zgartirib bo‘lmaydi. Belgisiz darslarni tahrirlash mumkin."
+      "overridden": "O‘zgartirilgan",
+      "overriddenHint": "EMIS dan farq qiladi ({start}–{end})",
+      "reset": "EMIS ga qaytarish",
+      "rowMenu": "{period}-dars amallari"
     },
     "days": {
       "nonStudy": "Dam olish kunlari",
@@ -826,8 +830,8 @@
       "undated": "Sanasi yo‘q nazorat haftalarini ko‘rsatish"
     },
     "kind": {
-      "midterm": "Oraliq nazorat",
-      "final": "Yakuniy nazorat",
+      "midterm": "Oraliq nazorat (ON)",
+      "final": "Yakuniy nazorat (YaN)",
       "other": "Boshqa"
     },
     "status": {
@@ -1154,6 +1158,46 @@
     },
     "approval": {
       "reasonPlaceholder": "Nega yo‘q? Masalan: 310-xonadan foydalan"
+    }
+  },
+  "reports": {
+    "title": "Hisobotlar",
+    "description": "Tizim holati, foydalanish va o‘quv ko‘rsatkichlari.",
+    "tabs": {
+      "health": "Tizim",
+      "usage": "Foydalanish",
+      "academic": "O‘quv"
+    },
+    "health": {
+      "up": "Ishlayapti",
+      "down": "Mavjud emas",
+      "database": "Ma’lumotlar bazasi",
+      "redis": "Redis",
+      "queueWaiting": "Navbatdagi vazifalar",
+      "queueHint": "{count} bajarilmoqda",
+      "failedLogins": "24 soatdagi muvaffaqiyatsiz kirishlar",
+      "loginsHint": "{total} urinishdan {failed} tasi",
+      "updated": "Yangilandi: {time}"
+    },
+    "usage": {
+      "storage": "Xotira",
+      "files": "Fayllar: {count}",
+      "signInsToday": "Bugungi kirishlar",
+      "tokensToday": "Bugungi yordamchi tokenlari",
+      "tokensTotal": "Yordamchi tokenlari",
+      "last14": "14 kun",
+      "signIns": "Kunlik faol foydalanuvchilar",
+      "users": "Foydalanuvchilar",
+      "tokens": "Kunlik yordamchi tokenlari",
+      "tokensLabel": "Tokenlar"
+    },
+    "academic": {
+      "attendanceTitle": "Guruhlar bo‘yicha davomat",
+      "attendanceRate": "Davomat",
+      "noAttendance": "Davomat ma’lumotlari hali yo‘q.",
+      "marksTitle": "Baholar taqsimoti",
+      "marksCount": "Baholar",
+      "noMarks": "Baholar hali yo‘q."
     }
   }
 }

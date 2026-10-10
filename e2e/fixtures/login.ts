@@ -1,5 +1,5 @@
 /**
- * Real login through Hydra: open an app, get redirected to the login app, type the credentials (Administration also
+ * Real login through Hydra: open an app, get redirected to the login app, type the credentials (an account with OTP on also
  * types the one-time code it finds in Mailpit), come back to the app signed in.
  */
 
@@ -16,15 +16,20 @@ export type LoginOptions = {
   otpCode?: string
 }
 
-/** Fills the login form of the login app and submits it; handles the second factor of Administration. */
+/** Fills the login form of the login app and submits it; handles the code step when the account has OTP on. */
 export async function submitLoginForm(page: Page, account: Account, options: { otpCode?: string } = {}): Promise<void> {
   const since = Date.now()
   await page.getByLabel("Login", { exact: true }).fill(account.login)
   await page.getByLabel("Password", { exact: true }).fill(account.password)
   await page.getByRole("button", { name: "Log in", exact: true }).click()
 
-  if (account.role === "admin") {
-    await expect(page.getByRole("heading", { name: "Enter the code" })).toBeVisible()
+  // OTP is optional: the code step only follows when the account turned it on (the demo admin has it off).
+  const codeStep = page.getByRole("heading", { name: "Enter the code" })
+  const next = await Promise.race([
+    codeStep.waitFor({ timeout: 15_000 }).then(() => "code" as const),
+    page.waitForURL((url) => !url.pathname.startsWith("/login"), { timeout: 15_000 }).then(() => "done" as const),
+  ]).catch(() => "done" as const)
+  if (next === "code") {
     const code = options.otpCode ?? (await waitForCode({ since, to: account.email }))
     await page.getByLabel("Code", { exact: true }).fill(code)
     await page.getByRole("button", { name: "Confirm", exact: true }).click()

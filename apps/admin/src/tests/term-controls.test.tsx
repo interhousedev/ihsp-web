@@ -160,7 +160,7 @@ describe("term card: control weeks", () => {
 
     expect(screen.getByText("Midterm 1: 12–17 Oct")).toBeInTheDocument()
     expect(screen.getByText("Midterm 2: 16–21 Nov")).toBeInTheDocument()
-    expect(screen.getByText("Final: 14–19 Dec")).toBeInTheDocument()
+    expect(screen.getByText("Final (FC): 14–19 Dec")).toBeInTheDocument()
   })
 
   test("says 'not set' for a week Administration has not set", () => {
@@ -173,7 +173,7 @@ describe("term card: control weeks", () => {
 
     expect(screen.getByText("Midterm 1: 12–17 Oct")).toBeInTheDocument()
     expect(screen.getByText("Midterm 2: not set")).toBeInTheDocument()
-    expect(screen.getByText("Final: not set")).toBeInTheDocument()
+    expect(screen.getByText("Final (FC): not set")).toBeInTheDocument()
   })
 
   test("a week that crosses a month shows both months", () => {
@@ -209,7 +209,7 @@ describe("term editor: control weeks", () => {
     expect(within(dialog).getByRole("heading", { name: "Control weeks" })).toBeInTheDocument()
     expect(within(dialog).getByRole("button", { name: "Midterm 1: first day" })).toHaveTextContent("12 Oct 2026")
     expect(within(dialog).getByRole("button", { name: "Midterm 1: last day" })).toHaveTextContent("17 Oct 2026")
-    expect(within(dialog).getByRole("button", { name: "Final: first day" })).toHaveTextContent("14 Dec 2026")
+    expect(within(dialog).getByRole("button", { name: "Final (FC): first day" })).toHaveTextContent("14 Dec 2026")
   })
 
   test("saving without touching the weeks does not send them", async () => {
@@ -238,7 +238,7 @@ describe("term editor: control weeks", () => {
     )
     const { user, dialog } = await openEditor()
 
-    await pickDate(user, within(dialog).getByRole("button", { name: "Final: last day" }), "2026-12-20")
+    await pickDate(user, within(dialog).getByRole("button", { name: "Final (FC): last day" }), "2026-12-20")
     await user.click(within(dialog).getByRole("button", { name: "Save term" }))
 
     await waitUntil(() => body !== undefined, "no request")
@@ -318,7 +318,7 @@ describe("term editor: control weeks", () => {
     )
     const { user, dialog } = await openEditor()
 
-    await user.click(within(dialog).getByRole("button", { name: "Clear Final" }))
+    await user.click(within(dialog).getByRole("button", { name: "Clear Final (FC)" }))
     await user.click(within(dialog).getByRole("button", { name: "Save term" }))
 
     expect(

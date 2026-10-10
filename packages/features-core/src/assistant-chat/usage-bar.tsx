@@ -8,7 +8,7 @@ import { formatTokens, usagePercent } from "./limit-info"
 type UsageRowProps = {
   label: string
   used: number
-  limit: number
+  limit: number | null
   resetsAt: string | null
   resetLabel: string
 }
@@ -21,7 +21,7 @@ function UsageRow({ label, used, limit, resetsAt, resetLabel }: UsageRowProps) {
       <div className="flex items-baseline justify-between gap-2 text-xs">
         <span className="font-medium">{label}</span>
         <span className={full ? "text-destructive font-medium" : "text-muted-foreground"}>
-          {formatTokens(used)} / {formatTokens(limit)}
+          {limit === null ? formatTokens(used) : `${formatTokens(used)} / ${formatTokens(limit)}`}
         </span>
       </div>
       <Progress
@@ -35,12 +35,18 @@ function UsageRow({ label, used, limit, resetsAt, resetLabel }: UsageRowProps) {
 }
 
 /** Remaining assistant budget under the input: session (5 hours) and day (AI-8). */
-export function UsageBar({ usage }: { usage: UsageInfo | undefined }) {
+export function UsageBar({ usage, stacked = false }: { usage: UsageInfo | undefined; stacked?: boolean }) {
   const t = useT("assistant.usage")
   const format = useFormatters()
   if (!usage) return null
+  // Administration has no caps: nothing to meter.
+  if (usage.session.limit === null && usage.day.limit === null) return null
   return (
-    <div className="flex flex-col gap-2 sm:flex-row sm:gap-4" aria-label={t("title")} role="group">
+    <div
+      className={stacked ? "flex flex-col gap-3" : "flex flex-col gap-2 sm:flex-row sm:gap-4"}
+      aria-label={t("title")}
+      role="group"
+    >
       <UsageRow
         label={t("session")}
         used={usage.session.used}
