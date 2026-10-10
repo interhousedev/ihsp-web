@@ -33,9 +33,9 @@ export function ChatSearchDialog({ open, onOpenChange, onOpenChat, onOpenNoteboo
   const [query, setQuery] = useState("")
   const needle = query.trim().toLocaleLowerCase()
   const debounced = useDebounce(query.trim(), SEARCH_DELAY_MS)
-  const { assistant } = useAssistantScope()
+  const { assistant, features } = useAssistantScope()
   const chats = useChats(assistant)
-  const notebooks = useNotebooks()
+  const notebooks = useNotebooks(undefined, features.notebooks)
   const remote = useSearchChats(assistant, open ? debounced : "")
 
   const chatHits = useMemo(() => {
@@ -58,7 +58,7 @@ export function ChatSearchDialog({ open, onOpenChange, onOpenChat, onOpenNoteboo
     setQuery("")
   }
 
-  const loading = chats.isPending || notebooks.isPending
+  const loading = chats.isPending || (features.notebooks && notebooks.isPending)
   const settled = needle === "" || (debounced.toLocaleLowerCase() === needle && !remote.isFetching)
   const nothing = !loading && settled && chatHits.length === 0 && notebookHits.length === 0
 

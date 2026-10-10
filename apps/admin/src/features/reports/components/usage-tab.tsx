@@ -40,18 +40,18 @@ function DayChart({
       <CardContent>
         <ChartContainer config={config} className="h-48 w-full" role="img" aria-label={title}>
           {kind === "bar" ? (
-            <BarChart data={rows} margin={{ left: 0, right: 8, top: 8 }}>
+            <BarChart data={rows} margin={{ left: 4, right: 8, top: 8 }}>
               <CartesianGrid vertical={false} />
               <XAxis dataKey="day" tickLine={false} axisLine={false} interval="preserveStartEnd" minTickGap={24} />
-              <YAxis width={32} tickLine={false} axisLine={false} allowDecimals={false} />
+              <YAxis width={40} tickLine={false} axisLine={false} allowDecimals={false} />
               <ChartTooltip content={<ChartTooltipContent />} />
               <Bar dataKey="count" fill="var(--color-count)" radius={3} />
             </BarChart>
           ) : (
-            <AreaChart data={rows} margin={{ left: 0, right: 8, top: 8 }}>
+            <AreaChart data={rows} margin={{ left: 4, right: 8, top: 8 }}>
               <CartesianGrid vertical={false} />
               <XAxis dataKey="day" tickLine={false} axisLine={false} interval="preserveStartEnd" minTickGap={24} />
-              <YAxis width={36} tickLine={false} axisLine={false} tickFormatter={formatCount} />
+              <YAxis width={48} tickLine={false} axisLine={false} tickFormatter={formatCount} />
               <ChartTooltip content={<ChartTooltipContent />} />
               <Area
                 dataKey="count"

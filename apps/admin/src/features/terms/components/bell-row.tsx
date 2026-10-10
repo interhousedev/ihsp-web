@@ -11,6 +11,7 @@ import {
   DropdownMenuTrigger,
   Icons,
   Input,
+  Toggle,
 } from "@ihsp/ui"
 import { STUDY_WEEKDAYS, weekdayDate } from "../../shared/utils/weekdays"
 import { TOUCH, TOUCH_ICON } from "../../shared/utils/touch"
@@ -80,17 +81,16 @@ export function BellRow({
         {STUDY_WEEKDAYS.map((weekday) => {
           const on = bell.weekdays.includes(weekday)
           return (
-            <Button
+            <Toggle
               key={weekday}
-              type="button"
               size="sm"
-              variant={on ? "default" : "outline"}
-              aria-pressed={on}
-              className="min-h-11 min-w-11 md:min-h-8 md:min-w-9"
-              onClick={() => toggleWeekday(weekday)}
+              variant="outline"
+              pressed={on}
+              onPressedChange={() => toggleWeekday(weekday)}
+              className="min-h-11 min-w-11 md:min-h-8 md:min-w-9 aria-pressed:border-primary aria-pressed:bg-primary aria-pressed:text-primary-foreground aria-pressed:hover:bg-primary/90 text-muted-foreground"
             >
               {f.weekday(weekdayDate(weekday), "short")}
-            </Button>
+            </Toggle>
           )
         })}
       </div>

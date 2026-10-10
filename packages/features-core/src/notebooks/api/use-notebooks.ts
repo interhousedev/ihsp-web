@@ -18,8 +18,8 @@ import { useState } from "react"
 import { createSummaryPoll } from "../lib/summary-poll"
 
 /** The student's notebooks, pinned first (`q` filters by title on the server). */
-export function useNotebooks(q?: string) {
-  return useQuery(getNotebooksQuery({ q: q?.trim() || undefined, limit: 100 }))
+export function useNotebooks(q?: string, enabled = true) {
+  return useQuery({ ...getNotebooksQuery({ q: q?.trim() || undefined, limit: 100 }), enabled })
 }
 
 /**

@@ -47,7 +47,7 @@ export function AssistantHome({ basePath, navButtons, trailing }: AssistantHomeP
   const router = useRouter()
   const errorMessage = useErrorMessage()
   const { session } = useSession()
-  const { assistant } = useAssistantScope()
+  const { assistant, features } = useAssistantScope()
   const usage = useUsage(assistant)
   const createChat = useCreateChat(assistant)
   const [greeting] = useState(() => 1 + Math.floor(Math.random() * GREETINGS))
@@ -58,9 +58,11 @@ export function AssistantHome({ basePath, navButtons, trailing }: AssistantHomeP
 
   const name = session?.user.first_name ?? ""
   const tSlash = useT("assistant.slash")
+  // Study chips (cards, quiz, summary, mind map, table) belong to the student assistant.
+  const pool = features.notebooks ? CHIPS : CHIPS.filter((chip) => chip === "explain")
   const chips = Array.from(
-    { length: CHIPS_SHOWN },
-    (_, index) => CHIPS[(chipOffset + index) % CHIPS.length] ?? "explain",
+    { length: Math.min(CHIPS_SHOWN, pool.length) },
+    (_, index) => pool[(chipOffset + index) % pool.length] ?? "explain",
   )
 
   async function handleSend(text: string, files: FileItem[], options?: PillSendOptions): Promise<boolean> {

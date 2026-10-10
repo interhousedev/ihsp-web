@@ -18,10 +18,11 @@ import { QueryState } from "../../shared/components/query-state"
 import { percent } from "../utils"
 
 const MARK_COLORS: Record<string, string> = {
-  "2": "var(--chart-5)",
-  "3": "var(--chart-4)",
-  "4": "var(--chart-2)",
-  "5": "var(--chart-1)",
+  // Fixed mid-tone hues: the theme's chart colours can be near-white (or near-black) and vanish on the card.
+  "2": "oklch(0.64 0.21 25)",
+  "3": "oklch(0.76 0.16 70)",
+  "4": "oklch(0.62 0.17 255)",
+  "5": "oklch(0.66 0.17 150)",
 }
 
 function AttendanceChart() {
