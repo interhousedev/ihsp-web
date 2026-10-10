@@ -257,6 +257,7 @@
     "remove": "Remove"
   },
   "stepEditor": {
+    "backToCourse": "Back to course",
     "untitled": "Untitled step",
     "stepNumber": "Step {number}",
     "status": {

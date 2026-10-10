@@ -257,6 +257,7 @@
     "remove": "Olib tashlash"
   },
   "stepEditor": {
+    "backToCourse": "Kursga qaytish",
     "untitled": "Nomsiz qadam",
     "stepNumber": "{number}-qadam",
     "status": {

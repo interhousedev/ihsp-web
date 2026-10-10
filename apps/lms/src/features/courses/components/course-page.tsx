@@ -2,7 +2,7 @@
 
 import { getLmsCourseQuery, type CoursePage as CoursePageData } from "@ihsp/api"
 import { useFormatters, useT } from "@ihsp/i18n"
-import { Alert, AlertDescription, Icons, PageContainer } from "@ihsp/ui"
+import { Alert, AlertDescription, Icons, PageContainer, Skeleton } from "@ihsp/ui"
 import { useQuery } from "@tanstack/react-query"
 import { QueryState } from "../../shared/components/query-state"
 import { StaffList } from "../../shared/components/staff-list"
@@ -61,6 +61,23 @@ function CourseBody({ page }: { page: CoursePageData }) {
   )
 }
 
+/** The page frame while the course loads: a title-sized skeleton instead of a placeholder heading, then the rows. */
+function CoursePageLoading() {
+  return (
+    <div className="flex min-w-0 flex-1 flex-col gap-4 px-4 pt-2 pb-6 md:px-6 md:pt-4" aria-busy="true">
+      <Skeleton className="h-8 w-2/3 rounded-md md:h-9" />
+      <div className="grid items-start gap-6 lg:grid-cols-[minmax(0,1fr)_20rem]">
+        <div className="flex flex-col gap-3">
+          {Array.from({ length: 4 }, (_, index) => (
+            <Skeleton key={index} className="h-16 w-full rounded-lg" />
+          ))}
+        </div>
+        <Skeleton className="h-64 w-full rounded-xl" />
+      </div>
+    </div>
+  )
+}
+
 /**
  * `/course/?slug=`: the promo page of a course, like Stepik's: the title, the about text, the syllabus with completion
  * and "new / changed" marks, the staff, and a side card with the Join course or Continue button.
@@ -70,11 +87,15 @@ export function CoursePage({ slug }: { slug: string }) {
   const page = useQuery(getLmsCourseQuery(slug))
   return (
     <StepikScope>
-      <PageContainer title={page.data?.title ?? t("title")}>
-        <QueryState query={page} rows={4}>
-          {(data) => <CourseBody page={data} />}
-        </QueryState>
-      </PageContainer>
+      {page.isPending && page.data === undefined ? (
+        <CoursePageLoading />
+      ) : (
+        <PageContainer title={page.data?.title ?? t("title")}>
+          <QueryState query={page} rows={4}>
+            {(data) => <CourseBody page={data} />}
+          </QueryState>
+        </PageContainer>
+      )}
     </StepikScope>
   )
 }

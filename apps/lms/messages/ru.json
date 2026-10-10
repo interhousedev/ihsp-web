@@ -257,6 +257,7 @@
     "remove": "Убрать"
   },
   "stepEditor": {
+    "backToCourse": "Назад к курсу",
     "untitled": "Шаг без названия",
     "stepNumber": "Шаг {number}",
     "status": {

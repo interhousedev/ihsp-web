@@ -3,6 +3,7 @@ import type { StepContent, StepDraft, StepDraftBody } from "@ihsp/api"
 import { apiUrl, errorHandlers, ids, server, stepContentTest, stepDraftTest } from "@ihsp/test-utils"
 import { fireEvent, screen, waitFor, within } from "@testing-library/react"
 import { HttpResponse, http } from "msw"
+import en from "../../messages/en.json"
 import { StepEditorPage } from "../features/step-editor/components/step-editor-page"
 import { authorSession, readBody, renderLms } from "./helpers"
 
@@ -40,6 +41,18 @@ async function editTitle(user: ReturnType<typeof renderStepEditor>["user"], titl
   await user.clear(field)
   await user.type(field, title)
 }
+
+describe("step editor: back link", () => {
+  it("links back to the course the step belongs to", async () => {
+    renderStepEditor()
+
+    const link = await screen.findByRole("link", { name: en.stepEditor.backToCourse })
+    // The test router normalises the trailing slash of the static route; the query names the course.
+    const href = new URL(link.getAttribute("href") ?? "", "http://lms.test")
+    expect(href.pathname).toMatch(/^\/edit\/?$/)
+    expect(href.searchParams.get("id")).toBe(stepDraftTest.course_id)
+  })
+})
 
 describe("step editor: conflict", () => {
   it("opens the conflict dialog on 409 and keeps my version with the other editor's lock_version", async () => {

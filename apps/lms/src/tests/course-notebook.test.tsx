@@ -1,7 +1,8 @@
 import { describe, expect, it, setDefaultTimeout } from "bun:test"
-import { apiUrl, coursePage, coursePageNotEnrolled, server, testRouter } from "@ihsp/test-utils"
+import { apiUrl, coursePage, coursePageNotEnrolled, problem, server, testRouter } from "@ihsp/test-utils"
 import { screen, waitFor } from "@testing-library/react"
 import { HttpResponse, http } from "msw"
+import en from "../../messages/en.json"
 import { CoursePage } from "../features/courses/components/course-page"
 import { CourseNotebooksPage } from "../features/notebooks/components/course-notebooks-page"
 import { renderLms } from "./helpers"
@@ -25,6 +26,17 @@ function notebook(id: string, origin: string, title: string) {
     can_write: true,
   }
 }
+
+describe("course page loading", () => {
+  it("shows a skeleton, not the placeholder heading, until the course arrives", async () => {
+    server.use(http.get(apiUrl("/v1/lms/courses/:slug"), () => new Promise<Response>(() => {})))
+    const { container } = renderLms(<CoursePage slug={coursePage.slug} />)
+
+    expect(container.querySelector('[aria-busy="true"]')).not.toBeNull()
+    expect(screen.queryByRole("heading", { level: 1 })).toBeNull()
+    expect(screen.queryByRole("heading", { name: en.course.title })).toBeNull()
+  })
+})
 
 describe("course notebook button", () => {
   it("opens the student's notebook of an enrolled course", async () => {
@@ -71,5 +83,14 @@ describe("notebooks page", () => {
     // The test router normalises the trailing slash of the static route; the query names the notebook.
     expect(link.getAttribute("href")).toMatch(/^\/notebooks\/view\/?\?id=nb-course-1$/)
     expect(screen.queryByText("My notes")).toBeNull()
+  })
+
+  it("shows the empty state, not an error, to a user the API does not list notebooks for (admin: 403)", async () => {
+    server.use(http.get(apiUrl("/v1/notebooks"), () => problem(403, "auth/forbidden", "Access denied")))
+    renderLms(<CourseNotebooksPage />)
+
+    expect(await screen.findByText(en.courseNotebooks.empty)).toBeInTheDocument()
+    // The error state offers a retry button; the empty state does not.
+    expect(screen.queryByRole("button")).toBeNull()
   })
 })

@@ -1,6 +1,6 @@
 "use client"
 
-import type { NotebookItem } from "@ihsp/api"
+import { isApiError, type NotebookItem } from "@ihsp/api"
 import { useAllNotebooks } from "@ihsp/features-core"
 import { useFormatters, useT } from "@ihsp/i18n"
 import { Icons, PageContainer, Skeleton, StateView } from "@ihsp/ui"
@@ -44,6 +44,9 @@ export function CourseNotebooksPage() {
     () => notebooks.items.filter((notebook) => notebook.origin === "course_student"),
     [notebooks.items],
   )
+  // The API lists notebooks for students and teachers only; any other signed-in user (an admin) gets 403 and has none.
+  const notAllowed = notebooks.isError && isApiError(notebooks.error) && notebooks.error.status === 403
+  const showEmpty = (notebooks.isSuccess || notAllowed) && courseNotebooks.length === 0
 
   return (
     <PageContainer title={t("title")}>
@@ -56,10 +59,10 @@ export function CourseNotebooksPage() {
           ))}
         </ul>
       ) : null}
-      {notebooks.isError ? (
+      {notebooks.isError && !notAllowed ? (
         <StateView state="error" error={notebooks.error} onRetry={() => void notebooks.refetch()} />
       ) : null}
-      {notebooks.isSuccess && courseNotebooks.length === 0 ? <StateView state="empty" emptyText={t("empty")} /> : null}
+      {showEmpty ? <StateView state="empty" emptyText={t("empty")} /> : null}
       {courseNotebooks.length > 0 ? (
         <ul className={GRID}>
           {courseNotebooks.map((notebook) => (

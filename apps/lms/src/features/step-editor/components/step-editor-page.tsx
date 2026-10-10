@@ -2,9 +2,12 @@
 
 import { getLmsCourseDraftQuery, getLmsStepDraftQuery, type StepDraft } from "@ihsp/api"
 import { useT } from "@ihsp/i18n"
+import { Icons } from "@ihsp/ui"
 import { useQuery } from "@tanstack/react-query"
 import { EditorFrame } from "../../editor/components/editor-frame"
+import { LinkButton } from "../../shared/components/link-button"
 import { QueryState } from "../../shared/components/query-state"
+import { hrefs } from "../../shared/utils/hrefs"
 import { can } from "../../shared/utils/permissions"
 import { StepEditorBody } from "./step-editor-body"
 
@@ -31,7 +34,18 @@ function StepEditorFrame({ data, autosaveMs }: { data: StepDraft; autosaveMs?: n
   })
   const title = stepHeading(data, course.data?.outline, (number) => t("stepNumber", { number }), t("untitled"))
   return (
-    <EditorFrame courseId={data.course_id} current="outline" title={title} requires={["edit", "view_drafts"]}>
+    <EditorFrame
+      courseId={data.course_id}
+      current="outline"
+      title={title}
+      requires={["edit", "view_drafts"]}
+      actions={
+        <LinkButton href={hrefs.edit(data.course_id)} variant="outline" className="min-h-11 md:min-h-8">
+          <Icons.chevronLeft aria-hidden />
+          {t("backToCourse")}
+        </LinkButton>
+      }
+    >
       {(permissions) => (
         <StepEditorBody key={data.step_id} draft={data} canEdit={can(permissions, "edit")} autosaveMs={autosaveMs} />
       )}
@@ -41,7 +55,6 @@ function StepEditorFrame({ data, autosaveMs }: { data: StepDraft; autosaveMs?: n
 
 /** `/edit/step/?id=`: loads the step draft, then checks the course permissions and shows the editor. */
 export function StepEditorPage({ stepId, autosaveMs }: { stepId: string; autosaveMs?: number }) {
-  const t = useT("stepEditor")
   const draft = useQuery({
     ...getLmsStepDraftQuery(stepId),
     staleTime: 0,
