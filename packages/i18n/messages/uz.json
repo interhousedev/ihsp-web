@@ -75,7 +75,10 @@
     "bottom": "Tezkor navigatsiya",
     "more": "Yana",
     "moreTitle": "Barcha boʻlimlar",
-    "toggleSidebar": "Yon menyuni koʻrsatish yoki yashirish"
+    "toggleSidebar": "Yon menyuni koʻrsatish yoki yashirish",
+    "back": "Orqaga",
+    "forward": "Oldinga",
+    "recentPages": "Oxirgi sahifalar"
   },
   "table": {
     "columns": "Ustunlar",
@@ -518,6 +521,14 @@
     }
   },
   "assistant": {
+    "documents": {
+      "download": "Yuklab olish .{format}",
+      "downloadFailed": "Faylni yuklab olib boʻlmadi.",
+      "attach": "Darsga biriktirish",
+      "noLessons": "Bugun biriktirish uchun darslar yoʻq.",
+      "attached": "Fayl darsga biriktirildi.",
+      "attachFailed": "Faylni biriktirib boʻlmadi."
+    },
     "page": {
       "title": "Yordamchi",
       "description": "Dars jadvali, uy vazifalari va baholar haqida soʻrang yoki fayllaringizdan kartochkalar yarating."
@@ -722,6 +733,7 @@
     "web": {
       "sources": "Manbalar · {count}",
       "chip": "Veb-manba {n}: {title}",
+      "fromDb": "IHSP bazasidan",
       "open": "Sahifani ochish",
       "list": "Javobda ishlatilgan veb-sahifalar",
       "more": "{site} va yana {count} ta",

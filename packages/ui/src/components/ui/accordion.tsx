@@ -1,6 +1,7 @@
 import { Accordion as AccordionPrimitive } from "@base-ui/react/accordion"
 
 import { cn } from "../../lib/utils"
+import { MOTION } from "../../lib/motion"
 import { IconChevronDown, IconChevronUp } from "../icons"
 
 function Accordion({ className, ...props }: AccordionPrimitive.Root.Props) {
@@ -42,7 +43,7 @@ function AccordionContent({ className, children, ...props }: AccordionPrimitive.
   return (
     <AccordionPrimitive.Panel
       data-slot="accordion-content"
-      className="overflow-hidden text-sm data-open:animate-accordion-down data-closed:animate-accordion-up"
+      className={cn(MOTION.collapse, "overflow-hidden text-sm data-open:animate-accordion-down data-closed:animate-accordion-up")}
       {...props}
     >
       <div

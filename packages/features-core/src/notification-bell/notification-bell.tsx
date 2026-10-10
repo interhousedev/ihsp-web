@@ -2,7 +2,7 @@
 
 import { getNotificationsUnreadCountQuery } from "@ihsp/api"
 import { useT } from "@ihsp/i18n"
-import { Button, Icons, Popover, PopoverContent, PopoverTrigger } from "@ihsp/ui"
+import { IconButton, Icons, Popover, PopoverContent, PopoverTrigger } from "@ihsp/ui"
 import { useQuery } from "@tanstack/react-query"
 import Link from "next/link"
 import { useState } from "react"
@@ -21,19 +21,17 @@ export function NotificationBell() {
 
   return (
     <Popover open={open} onOpenChange={setOpen}>
-      <PopoverTrigger
-        render={<Button variant="ghost" size="icon" className="relative size-11 md:size-8" aria-label={label} />}
-      >
-        <Icons.notification aria-hidden />
+      <span className="relative inline-flex">
+        <PopoverTrigger render={<IconButton icon={Icons.notification} aria-label={label} />} />
         {count > 0 ? (
           <span
             data-testid="unread-count"
-            className="bg-primary text-primary-foreground absolute end-1 top-1 min-w-4 rounded-full px-1 text-center text-[10px] leading-4 font-semibold"
+            className="bg-primary text-primary-foreground pointer-events-none absolute end-0 top-0 min-w-4 rounded-full px-1 text-center text-[10px] leading-4 font-semibold"
           >
             {count > 99 ? "99+" : count}
           </span>
         ) : null}
-      </PopoverTrigger>
+      </span>
       <PopoverContent align="end" className="max-h-[75dvh] w-[min(24rem,calc(100vw-2rem))] gap-3 overflow-y-auto p-3">
         <NotificationCenter compact />
         <Link

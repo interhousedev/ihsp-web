@@ -1,6 +1,7 @@
 "use client"
 
 import { RequireAuth, RequireRole } from "@ihsp/auth"
+import { HistoryButtons } from "@ihsp/features-core"
 import { AppShell } from "@ihsp/ui"
 import { Suspense, type ReactNode } from "react"
 import { useNav } from "../../../config/nav"
@@ -26,6 +27,7 @@ export function SpShell({ children, hideBottomNav = false }: { children: ReactNo
             nav={nav.groups}
             bottomNav={hideBottomNav ? undefined : nav.bottom}
             brand={<SpBrand />}
+            headerLeading={<HistoryButtons />}
             header={<ShellHeader nav={nav.groups} />}
           >
             <Suspense fallback={<PageLoading />}>{children}</Suspense>

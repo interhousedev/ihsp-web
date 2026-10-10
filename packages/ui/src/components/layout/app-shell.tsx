@@ -14,8 +14,14 @@ export type AppShellProps = {
   nav: NavGroup[]
   /** Phone bottom bar (sp, staff). With it the last slot is "More" with the full navigation. */
   bottomNav?: BottomNavItem[]
+  /** A bottom bar of the app's own (replaces `bottomNav`), shown under 768 px; the page gets room for it. */
+  bottomBar?: ReactNode
+  /** False drops the phone sidebar sheet and its toggle (apps that navigate with their own bottom bar). Default true. */
+  mobileSidebar?: boolean
   /** Right side of the top bar: search, notification bell, profile menu. */
   header?: ReactNode
+  /** Left of the top bar, right after the sidebar toggle: history back/forward buttons. */
+  headerLeading?: ReactNode
   /** Top of the sidebar: logo and app name. */
   brand?: ReactNode
   /** Bottom of the sidebar: the user block. */
@@ -33,11 +39,29 @@ function CloseSheetOnNavigate() {
   return null
 }
 
+/** The sidebar toggle; with `mobileSidebar` off it is not rendered under 768 px (there is no sheet to open). */
+function ShellSidebarTrigger({ mobileSidebar }: { mobileSidebar: boolean }) {
+  const t = useT()
+  const { isMobile } = useSidebar()
+  if (isMobile && !mobileSidebar) return null
+  return <SidebarTrigger className="-ml-1 size-11 md:size-8" aria-label={t("nav.toggleSidebar")} />
+}
+
 /**
  * The page frame: sidebar from 768 px, a sheet plus an optional bottom bar on phones, safe-area insets
  * (notches and Telegram's header) applied to the top bar and the bottom bar.
  */
-export function AppShell({ nav, bottomNav, header, brand, sidebarFooter, children }: AppShellProps) {
+export function AppShell({
+  nav,
+  bottomNav,
+  bottomBar,
+  mobileSidebar = true,
+  header,
+  brand,
+  sidebarFooter,
+  headerLeading,
+  children,
+}: AppShellProps) {
   const t = useT()
   return (
     <SidebarProvider>
@@ -52,20 +76,21 @@ export function AppShell({ nav, bottomNav, header, brand, sidebarFooter, childre
       <SidebarInset id="main-content" tabIndex={-1} className="min-w-0 scroll-mt-16">
         <header className="bg-background/80 sticky top-0 z-20 flex shrink-0 items-center justify-between gap-2 px-3 pt-[var(--safe-top)] backdrop-blur-md md:px-4">
           <div className="flex h-14 items-center gap-2 md:h-14">
-            <SidebarTrigger className="-ml-1 size-11 md:size-8" aria-label={t("nav.toggleSidebar")} />
+            <ShellSidebarTrigger mobileSidebar={mobileSidebar} />
             <Separator orientation="vertical" className="mr-1 hidden h-4 data-vertical:self-center md:block" />
+            {headerLeading}
           </div>
           <div className="flex h-14 min-w-0 items-center gap-2">{header}</div>
         </header>
         <div
           className={cn(
             "flex min-w-0 flex-1 flex-col",
-            bottomNav && "pb-[calc(var(--bottom-nav-height)+var(--safe-bottom))] md:pb-0",
+            (bottomNav || bottomBar) && "pb-[calc(var(--bottom-nav-height)+var(--safe-bottom))] md:pb-0",
           )}
         >
           {children}
         </div>
-        {bottomNav ? <BottomNav items={bottomNav} more={nav} /> : null}
+        {bottomBar ?? (bottomNav ? <BottomNav items={bottomNav} more={nav} /> : null)}
       </SidebarInset>
     </SidebarProvider>
   )

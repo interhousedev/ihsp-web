@@ -3,13 +3,15 @@
 import { useTheme } from "next-themes"
 import { Toaster as Sonner, ToasterProps } from "sonner"
 
+import { MOTION } from "../../lib/motion"
+
 const Toaster = ({ ...props }: ToasterProps) => {
   const { theme = "system" } = useTheme()
 
   return (
     <Sonner
       theme={theme as ToasterProps["theme"]}
-      className="toaster group"
+      className={`toaster group ${MOTION.toast}`}
       style={
         {
           "--normal-bg": "var(--popover)",

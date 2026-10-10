@@ -138,6 +138,7 @@ export type { Spoiler as MdastSpoiler, Underline as MdastUnderline } from "./lib
 export { markdownRemarkPlugins, parseMarkdown } from "./lib/markdown/parse-markdown"
 export { ALIGNMENTS, TEXT_COLORS, type Alignment, type TextColor } from "./lib/markdown/underline-tags"
 export { isDisplayInlineMath } from "./lib/markdown/remark-ihsp"
+export * from "./lib/motion"
 export * from "./lib/parsers"
 export * from "./lib/query-client"
 export * from "./lib/theme-transition"

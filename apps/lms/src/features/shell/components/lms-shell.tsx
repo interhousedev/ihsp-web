@@ -1,6 +1,7 @@
 "use client"
 
 import { RequireAuth } from "@ihsp/auth"
+import { HistoryButtons } from "@ihsp/features-core"
 import { AppShell, OfflineBadge } from "@ihsp/ui"
 import { Suspense, type ReactNode } from "react"
 import { useNav } from "../../../config/nav"
@@ -20,6 +21,7 @@ export function LmsShell({ children }: { children: ReactNode }) {
         nav={nav.groups}
         bottomNav={nav.bottom}
         brand={<LmsBrand />}
+        headerLeading={<HistoryButtons />}
         header={
           <>
             <OfflineBadge />

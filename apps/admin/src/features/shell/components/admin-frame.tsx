@@ -1,6 +1,7 @@
 "use client"
 
 import { RequireAuth, RequireRole } from "@ihsp/auth"
+import { HistoryButtons } from "@ihsp/features-core"
 import { AppShell, StateView, ThemeToggle } from "@ihsp/ui"
 import { Suspense, type ReactNode } from "react"
 import { useNav } from "../../../config/nav"
@@ -27,6 +28,7 @@ export function AdminFrame({ children }: { children: ReactNode }) {
         <AppShell
           nav={nav.groups}
           brand={<AdminBrand />}
+          headerLeading={<HistoryButtons />}
           header={
             <>
               <ThemeToggle />

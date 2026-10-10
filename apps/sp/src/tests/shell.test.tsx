@@ -46,6 +46,18 @@ describe("app frame", () => {
     expect(screen.getByRole("button", { name: "Account menu" })).toBeInTheDocument()
   })
 
+  test("has history back and forward buttons next to the sidebar toggle, disabled on a fresh history", async () => {
+    renderSp(
+      <SpShell>
+        <p>page body</p>
+      </SpShell>,
+    )
+
+    await screen.findByText("page body")
+    expect(screen.getByRole("button", { name: "Back" })).toBeDisabled()
+    expect(screen.getByRole("button", { name: "Forward" })).toBeDisabled()
+  })
+
   test("the sidebar groups follow the app navigation", async () => {
     renderSp(
       <SpShell>

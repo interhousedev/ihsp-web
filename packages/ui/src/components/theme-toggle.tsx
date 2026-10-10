@@ -5,8 +5,7 @@ import { useCallback, type MouseEvent } from "react"
 import { startThemeTransition } from "../lib/theme-transition"
 import { Icons } from "./icons"
 import { useThemeChoice } from "./themes/theme-choice"
-import { Button } from "./ui/button"
-import { Tooltip, TooltipContent, TooltipTrigger } from "./ui/tooltip"
+import { IconButton } from "./ui/icon-button"
 
 /** Light/dark switch (44 px touch target on phones). The choice is saved in the account when one is logged in. */
 export function ThemeToggle() {
@@ -22,21 +21,6 @@ export function ThemeToggle() {
   )
 
   return (
-    <Tooltip>
-      <TooltipTrigger
-        render={
-          <Button
-            variant="secondary"
-            size="icon"
-            className="size-11 md:size-8"
-            onClick={toggle}
-            aria-label={t("theme.toggle")}
-          />
-        }
-      >
-        <Icons.brightness />
-      </TooltipTrigger>
-      <TooltipContent>{t("theme.toggle")}</TooltipContent>
-    </Tooltip>
+    <IconButton icon={Icons.brightness} onClick={toggle} aria-label={t("theme.toggle")} />
   )
 }

@@ -75,7 +75,10 @@
     "bottom": "Quick navigation",
     "more": "More",
     "moreTitle": "All sections",
-    "toggleSidebar": "Toggle the sidebar"
+    "toggleSidebar": "Toggle the sidebar",
+    "back": "Back",
+    "forward": "Forward",
+    "recentPages": "Recent pages"
   },
   "table": {
     "columns": "Columns",
@@ -518,6 +521,14 @@
     }
   },
   "assistant": {
+    "documents": {
+      "download": "Download .{format}",
+      "downloadFailed": "Could not download the file.",
+      "attach": "Attach to lesson",
+      "noLessons": "No lessons today to attach to.",
+      "attached": "Attached to the lesson.",
+      "attachFailed": "Could not attach the file."
+    },
     "page": {
       "title": "Assistant",
       "description": "Ask about your timetable, homework and marks, or make flash cards from your files."
@@ -722,6 +733,7 @@
     "web": {
       "sources": "Sources · {count}",
       "chip": "Web source {n}: {title}",
+      "fromDb": "From IHSP",
       "open": "Open page",
       "list": "Web pages used for this answer",
       "more": "{site} and {count} more",

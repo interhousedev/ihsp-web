@@ -7,7 +7,7 @@ import { useDebounce } from "../hooks/use-debounce"
 import { Icons } from "./icons"
 import { NavIconView } from "./layout/nav-icon"
 import type { NavGroup, NavIcon } from "./layout/nav-types"
-import { Button } from "./ui/button"
+import { IconButton } from "./ui/icon-button"
 import {
   Command,
   CommandDialog,
@@ -119,15 +119,7 @@ export function CommandPalette({ nav = [], search, onNavigate, trigger }: Comman
   return (
     <>
       {trigger ?? (
-        <Button
-          variant="outline"
-          size="icon"
-          className="size-11 md:size-8"
-          onClick={() => setOpen(true)}
-          aria-label={t("command.open")}
-        >
-          <Icons.search aria-hidden />
-        </Button>
+        <IconButton icon={Icons.search} variant="ghost" onClick={() => setOpen(true)} aria-label={t("command.open")} />
       )}
       <CommandDialog
         open={open}

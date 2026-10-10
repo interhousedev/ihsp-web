@@ -1,6 +1,7 @@
 "use client"
 
 import { RequireAuth, RequireRole } from "@ihsp/auth"
+import { HistoryButtons } from "@ihsp/features-core"
 import { AppShell } from "@ihsp/ui"
 import { Suspense, type ReactNode } from "react"
 import { useNav } from "../../../config/nav"
@@ -29,7 +30,7 @@ export function StaffShell({ children }: { children: ReactNode }) {
 function StaffFrame({ children }: { children: ReactNode }) {
   const nav = useNav()
   return (
-    <AppShell nav={nav.groups} bottomNav={nav.bottom} brand={<StaffBrand />} header={<ShellHeader nav={nav.groups} />}>
+    <AppShell headerLeading={<HistoryButtons />} nav={nav.groups} bottomNav={nav.bottom} brand={<StaffBrand />} header={<ShellHeader nav={nav.groups} />}>
       <Suspense fallback={<PageLoading />}>{children}</Suspense>
     </AppShell>
   )

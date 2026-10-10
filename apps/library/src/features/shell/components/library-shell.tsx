@@ -2,7 +2,7 @@
 
 import type { Role } from "@ihsp/api"
 import { RequireAuth, RequireRole } from "@ihsp/auth"
-import { useLibraryAccess } from "@ihsp/features-core"
+import { HistoryButtons, useLibraryAccess } from "@ihsp/features-core"
 import { AppShell, OfflineBadge } from "@ihsp/ui"
 import { Suspense, type ReactNode } from "react"
 import { useNav } from "../../../config/nav"
@@ -32,7 +32,7 @@ function Header() {
 function Frame({ children }: { children: ReactNode }) {
   const nav = useNav()
   return (
-    <AppShell nav={nav.groups} bottomNav={nav.bottom} brand={<LibraryBrand />} header={<Header />}>
+    <AppShell headerLeading={<HistoryButtons />} nav={nav.groups} bottomNav={nav.bottom} brand={<LibraryBrand />} header={<Header />}>
       <Suspense fallback={<PageLoading />}>{children}</Suspense>
     </AppShell>
   )
