@@ -35,7 +35,12 @@ describe("ComposeMailDialog", () => {
     fireEvent.click(send)
 
     await waitFor(() =>
-      expect(sent).toEqual({ to: ["teacher@example.org"], subject: "Question", body: "Hello", attachment_file_id: null }),
+      expect(sent).toEqual({
+        to: ["teacher@example.org"],
+        subject: "Question",
+        body: "Hello",
+        attachment_file_id: null,
+      }),
     )
   })
 
