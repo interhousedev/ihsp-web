@@ -90,7 +90,7 @@
     "completed": "Completed",
     "emptyStep": "This step has no content yet.",
     "previewBanner": "Preview.",
-    "previewNote": "You see the draft as students will after publishing. Test attempts here are not counted.",
+    "previewNote": "Students will see the draft like this after publishing. Test attempts are not counted.",
     "contents": "Course contents",
     "openContents": "Open course contents",
     "stepsOfLesson": "Steps of this lesson",
@@ -245,7 +245,7 @@
     "removeStep": "Remove step {title}",
     "removeSection": "Remove section {title} (only when empty)",
     "removeStepTitle": "Remove this step?",
-    "removeStepDescription": "\"{title}\" leaves the outline of the draft. Students keep it until you publish; you can restore it from a version.",
+    "removeStepDescription": "\"{title}\" leaves the draft. Students see this after you publish; restore it from a version if needed.",
     "removeSectionTitle": "Remove this section?",
     "removeSectionDescription": "The empty section \"{title}\" is removed from the draft.",
     "remove": "Remove"
@@ -679,8 +679,8 @@
   },
   "conflict": {
     "title": "This step was changed by someone else",
-    "description": "{who} saved this step at {time}. Choose which version to keep; nothing is overwritten until you do.",
-    "descriptionNoTime": "{who} saved this step. Choose which version to keep; nothing is overwritten until you do.",
+    "description": "{who} saved this step at {time}. Choose a version to keep; nothing is overwritten until you do.",
+    "descriptionNoTime": "{who} saved this step. Choose a version to keep; nothing is overwritten until you do.",
     "mcpClient": "An MCP client",
     "someone": "Another editor",
     "theirs": "Their version",
@@ -822,7 +822,7 @@
     "removeTitle": "Remove this staff member?",
     "removeDescription": "{name} loses access to the course tools at once.",
     "inviteTitle": "Invite code",
-    "inviteDescription": "Students of an invite-only course join with this code or link. A new code makes the old one invalid.",
+    "inviteDescription": "Students join with this code or link. A new code invalidates the old one.",
     "inviteCode": "Invite code",
     "copyCode": "Copy code",
     "copyLink": "Copy link",
@@ -884,7 +884,7 @@
   "preview": {
     "title": "Preview draft",
     "banner": "Preview.",
-    "note": "This is the course as students will see it after publishing. Test attempts here are not counted.",
+    "note": "Students will see the course like this after publishing. Test attempts are not counted.",
     "start": "Start preview",
     "empty": "The draft has no steps yet."
   },

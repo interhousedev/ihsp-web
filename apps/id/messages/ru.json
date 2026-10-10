@@ -105,7 +105,7 @@
     "withOtp": "Войти по OTP",
     "forgotPassword": "Забыли пароль?",
     "forgotLogin": "Забыли логин?",
-    "register": "Зарегистрироваться через EMIS",
+    "register": "Регистрация через EMIS",
     "cantGetIn": "Не удаётся войти? Вернуть аккаунт через EMIS",
     "helpLinks": "Помощь со входом",
     "backToApp": "Вернуться в приложение",
@@ -269,7 +269,7 @@
     "title": "Вход в IHSP",
     "description": "Войдите, чтобы привязать этот аккаунт Telegram.",
     "submit": "Войти",
-    "register": "Зарегистрироваться через EMIS",
+    "register": "Регистрация через EMIS",
     "registered": "Аккаунт создан. Войдите как {login}.",
     "unavailable": "Не удалось проверить этот аккаунт Telegram",
     "outside": {
@@ -338,8 +338,8 @@
       "unknownDevice": "Неизвестное устройство",
       "lastSeen": "Активность: {when}",
       "revoke": "Выйти",
-      "revokeOthers": "Выйти на всех остальных",
-      "revokeOthersTitle": "Выйти на всех остальных устройствах?",
+      "revokeOthers": "Выйти на других устройствах",
+      "revokeOthersTitle": "Выйти на других устройствах?",
       "revokeOthersDescription": "Остальные устройства выйдут при следующем запросе. На этом устройстве вы останетесь в аккаунте.",
       "amr": {
         "pwd": "пароль",

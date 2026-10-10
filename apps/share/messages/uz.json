@@ -5,29 +5,29 @@
     "sharedBy": "Ulashgan: {name}",
     "notFound": {
       "title": "Havola topilmadi",
-      "description": "Bunday havola yo‘q yoki o‘chirilgan."
+      "description": "Bunday havola yoʻq yoki oʻchirilgan."
     },
     "gone": {
-      "title": "Havola o‘chirilgan",
+      "title": "Havola oʻchirilgan",
       "description": "Muallif bu havolani bekor qilgan."
     },
     "chat": {
       "publicBanner": "Havola orqali ochiq",
-      "empty": "Bu chatda xabarlar yo‘q.",
+      "empty": "Bu chatda xabarlar yoʻq.",
       "messages": "Xabarlar",
       "assistant": "Yordamchi"
     },
     "flashcards": {
       "publicBanner": "Havola orqali ochiq",
       "count": "{count, plural, one {# ta kartochka} other {# ta kartochka}}",
-      "study": "O‘rganish",
+      "study": "Oʻrganish",
       "copy": "Kollodalarimga nusxalash",
-      "empty": "Bu to‘plamda kartochkalar yo‘q.",
+      "empty": "Bu toʻplamda kartochkalar yoʻq.",
       "cardsLabel": "Kartochkalar",
       "cardN": "{n}-kartochka",
       "front": "Old tomoni",
       "back": "Orqa tomoni",
-      "studyAgain": "Yana o‘rganish",
+      "studyAgain": "Yana oʻrganish",
       "backToList": "Kartochkalarga qaytish"
     },
     "report": {
@@ -37,7 +37,7 @@
       "reasons": {
         "phishing": "Fishing yoki soxta",
         "malware": "Zararli dastur",
-        "personal_data": "Shaxsiy ma’lumotlar",
+        "personal_data": "Shaxsiy maʼlumotlar",
         "offensive": "Haqoratli mazmun",
         "other": "Boshqa"
       },
@@ -45,8 +45,8 @@
       "cancel": "Bekor qilish",
       "submit": "Shikoyat yuborish",
       "sending": "Yuborilmoqda…",
-      "success": "Rahmat. Ma’muriyat bu havolani ko‘rib chiqadi.",
-      "failed": "Shikoyatni yuborib bo‘lmadi. Keyinroq urinib ko‘ring."
+      "success": "Rahmat. Maʼmuriyat bu havolani koʻrib chiqadi.",
+      "failed": "Shikoyatni yuborib boʻlmadi. Keyinroq urinib koʻring."
     }
   }
 }

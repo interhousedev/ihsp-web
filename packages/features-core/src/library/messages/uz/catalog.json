@@ -152,24 +152,24 @@
     "external": "UniLibrary"
   },
   "unilibrary": {
-    "open": "UniLibrary’da ochish",
-    "howTo": "Bu kitobni UniLibrary’da, u yerda tizimga kirgach, oʻqiysiz.",
-    "description": "UniLibrary’dagi tavsif",
+    "open": "UniLibraryʼda ochish",
+    "howTo": "Bu kitobni UniLibraryʼda, u yerda tizimga kirgach, oʻqiysiz.",
+    "description": "UniLibraryʼdagi tavsif",
     "access": {
       "open": "Ochiq deb belgilangan",
       "partial": "Qisman ochiq",
       "closed": "Soʻrov boʻyicha kirish"
     },
-    "more": "UniLibrary’dan yana",
-    "seeAll": "UniLibrary’dagi barcha natijalar",
+    "more": "UniLibraryʼdan yana",
+    "seeAll": "UniLibraryʼdagi barcha natijalar",
     "universityLevel": "Oliy taʼlim darajasidagi material",
     "unavailable": "UniLibrary javob bermayapti. Saqlangan natijalar koʻrsatilmoqda.",
-    "gone": "UniLibrary’da endi mavjud emas",
+    "gone": "UniLibraryʼda endi mavjud emas",
     "noNotebook": "UniLibrary kitoblarini daftarga qoʻshib boʻlmaydi.",
     "field": "Yoʻnalish",
-    "type": "UniLibrary’dagi turi",
+    "type": "UniLibraryʼdagi turi",
     "keywords": "Kalit soʻzlar",
-    "empty": "UniLibrary’dan hech narsa topilmadi.",
+    "empty": "UniLibraryʼdan hech narsa topilmadi.",
     "error": "UniLibrary bilan aloqa oʻrnatib boʻlmadi."
   },
   "rights": {

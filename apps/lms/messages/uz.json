@@ -60,7 +60,7 @@
     "edit": "Tahrirlash",
     "previewDraft": "Qoralamani koʻrish",
     "progress": "Natija",
-    "updatedNote": "Kurs {date} kuni yangilandi. {count, plural, one {# dars yangi yoki oʻzgargan} other {# dars yangi yoki oʻzgargan}}; tugatgan darslaringiz tugatilgan boʻlib qoladi.",
+    "updatedNote": "Kurs {date} kuni yangilandi. {count, plural, one {# dars yangi yoki oʻzgargan} other {# dars yangi yoki oʻzgargan}}; tugatilgan darslar tugatilgan boʻlib qoladi.",
     "lastUpdated": "Oxirgi yangilanish: {date}",
     "staff": "Kurs jamoasi",
     "noStaff": "Jamoa koʻrsatilmagan.",
@@ -90,7 +90,7 @@
     "completed": "Tugatilgan",
     "emptyStep": "Bu qadamda hali mazmun yoʻq.",
     "previewBanner": "Koʻrib chiqish.",
-    "previewNote": "Siz qoralamani talabalar nashrdan keyin koʻradigan shaklda koʻryapsiz. Bu yerdagi test urinishlari hisobga olinmaydi.",
+    "previewNote": "Qoralama nashrdan keyin talabalarga shunday koʻrinadi. Test urinishlari hisobga olinmaydi.",
     "contents": "Kurs mundarijasi",
     "openContents": "Kurs mundarijasini ochish",
     "stepsOfLesson": "Dars qadamlari",
@@ -149,7 +149,7 @@
     "answered": "Javob berildi: {done} / {total}",
     "saving": "Saqlanmoqda…",
     "saved": "Javoblar saqlandi",
-    "saveFailed": "Javoblarni saqlab boʻlmadi. Ular shu sahifada qoldi; yana urinib koʻring.",
+    "saveFailed": "Javoblarni saqlab boʻlmadi. Ular sahifada qoldi, qayta urinib koʻring.",
     "timeLeft": "Qolgan vaqt",
     "submit": "Yuborish",
     "questionNumber": "{number}-savol",
@@ -661,7 +661,7 @@
       "after_pass": "oʻtgandan keyin",
       "after_last_attempt": "oxirgi urinishdan keyin"
     },
-    "tableSummary": "{rows} x {columns} jadval, {marked} ta belgilangan",
+    "tableSummary": "Jadval {rows}×{columns}, {marked} ta belgilangan",
     "randomSummary": "Javob: {formula} (oʻzgaruvchilar: {count})",
     "emptyVideo": "Video havolasi yoʻq."
   },
@@ -679,8 +679,8 @@
   },
   "conflict": {
     "title": "Bu qadamni boshqa kishi oʻzgartirgan",
-    "description": "{who} bu qadamni {time} da saqladi. Qaysi versiya qolishini tanlang; tanlamaguningizcha hech narsa ustiga yozilmaydi.",
-    "descriptionNoTime": "{who} bu qadamni saqladi. Qaysi versiya qolishini tanlang; tanlamaguningizcha hech narsa ustiga yozilmaydi.",
+    "description": "{who} bu qadamni {time} da saqladi. Versiyani tanlang: tanlamaguncha hech narsa ustiga yozilmaydi.",
+    "descriptionNoTime": "{who} bu qadamni saqladi. Versiyani tanlang: tanlamaguncha hech narsa ustiga yozilmaydi.",
     "mcpClient": "MCP mijozi",
     "someone": "Boshqa muharrir",
     "theirs": "Boshqasining versiyasi",
@@ -704,10 +704,10 @@
       "checkpoint": "Nazorat nuqtasi",
       "preview": "Koʻrib chiqish"
     },
-    "published": "Nashrda boʻlgan",
+    "published": "Nashr etilgan",
     "noLabel": "Nomsiz",
     "restore": "Tiklash",
-    "restoreTitle": "Bu tahrir tiklansinmi?",
+    "restoreTitle": "Bu versiya tiklansinmi?",
     "restoreDescription": "Uning mazmuni bu qadam qoralamasining oʻrnini egallaydi.",
     "restoreDescriptionUnsaved": "Uning mazmuni bu qadam qoralamasining oʻrnini egallaydi. Saqlanmagan tahrirlar yoʻqoladi."
   },
@@ -822,7 +822,7 @@
     "removeTitle": "Aʼzo olib tashlansinmi?",
     "removeDescription": "{name} kurs vositalariga darhol ruxsatini yoʻqotadi.",
     "inviteTitle": "Taklif kodi",
-    "inviteDescription": "«Faqat taklif bilan» kursining talabalari shu kod yoki havola orqali qoʻshiladi. Yangi kod eskisini yaroqsiz qiladi.",
+    "inviteDescription": "Talabalar shu kod yoki havola orqali qoʻshiladi. Yangi kod eskisini bekor qiladi.",
     "inviteCode": "Taklif kodi",
     "copyCode": "Kodni nusxalash",
     "copyLink": "Havolani nusxalash",
@@ -847,7 +847,7 @@
     "review": "Tekshirish"
   },
   "broadcasts": {
-    "historyTitle": "Talabalarga yuborilgan yangilanishlar",
+    "historyTitle": "Yuborilgan yangilanishlar",
     "open": "Yangilanish yuborish",
     "empty": "Hozircha yangilanish yuborilmagan.",
     "dialogTitle": "Talabalarni yangilash",
@@ -884,7 +884,7 @@
   "preview": {
     "title": "Qoralamani koʻrib chiqish",
     "banner": "Koʻrib chiqish.",
-    "note": "Talabalar kursni nashrdan keyin shunday koʻradi. Bu yerdagi test urinishlari hisobga olinmaydi.",
+    "note": "Nashrdan keyin talabalar kursni shunday koʻradi. Test urinishlari hisobga olinmaydi.",
     "start": "Koʻrib chiqishni boshlash",
     "empty": "Qoralamada hali qadamlar yoʻq."
   },
@@ -893,7 +893,7 @@
     "courseTitle": "Nomi",
     "titleRequired": "Nomni kiriting.",
     "slug": "Manzil",
-    "slugHint": "Lotin harflari, raqamlar va chiziqchalar, 3 dan 60 gacha belgi. Keyin oʻzgartirib boʻlmaydi.",
+    "slugHint": "Lotin harflari, raqamlar va chiziqcha, 3–60 belgi. Keyin oʻzgartirib boʻlmaydi.",
     "slugInvalid": "3 dan 60 gacha lotin harfi, raqam yoki chiziqcha.",
     "visibility": "Koʻrinish",
     "visibilityPublic": "Ochiq",

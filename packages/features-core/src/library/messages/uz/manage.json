@@ -98,7 +98,7 @@
       "title": "UniLibrary",
       "settings": {
         "title": "Sozlamalar",
-        "explanation": "UniLibrary odatda oʻchiq. U oʻchiq ekan, kutubxonada UniLibrary dan hech narsa koʻrsatilmaydi: manba belgisi ham, filtr ham, kartochkalar ham, “UniLibrary’dan yana” boʻlimi ham yoʻq, server esa unga murojaat qilmaydi.",
+        "explanation": "UniLibrary odatda oʻchiq. U oʻchiq ekan, kutubxonada UniLibrary dan hech narsa koʻrsatilmaydi: manba belgisi ham, filtr ham, kartochkalar ham, “UniLibraryʼdan yana” boʻlimi ham yoʻq, server esa unga murojaat qilmaydi.",
         "enable": "UniLibrary ni yoqish",
         "enableHint": "UniLibrary kartochkalarini qidiruvda va material sahifalarida koʻrsatish. Kitoblarni oʻquvchilar UniLibrary ning oʻzida ochadi.",
         "anonymous": "Anonim kartochkalarni koʻrsatish",
