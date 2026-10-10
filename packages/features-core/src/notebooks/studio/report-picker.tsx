@@ -2,14 +2,7 @@
 
 import type { ReportFormat } from "@ihsp/api"
 import { useT } from "@ihsp/i18n"
-import {
-  IconFileText,
-  IconListDetails,
-  IconMessageQuestion,
-  IconNews,
-  IconPencil,
-  IconTimeline,
-} from "@ihsp/ui"
+import { IconFileText, IconListDetails, IconMessageQuestion, IconNews, IconPencil, IconTimeline } from "@ihsp/ui"
 import type { Icon } from "@ihsp/ui"
 import { ResponsiveDialog } from "./responsive-dialog"
 

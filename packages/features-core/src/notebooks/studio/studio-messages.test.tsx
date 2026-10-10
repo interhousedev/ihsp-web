@@ -73,7 +73,9 @@ describe("Studio messages", () => {
       expect(rawKeys()).toEqual([])
       unmount()
 
-      renderNotebook(<UsageDialog open onOpenChange={() => undefined} />, { locale })
+      renderNotebook(<UsageDialog open onOpenChange={() => undefined} />, {
+        locale,
+      })
       await waitFor(() => expect(screen.getAllByRole("progressbar").length).toBe(2))
       expect(rawKeys()).toEqual([])
     })

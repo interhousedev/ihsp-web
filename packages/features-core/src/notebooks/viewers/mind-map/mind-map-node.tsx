@@ -15,6 +15,8 @@ type MindMapNodeProps = {
   onSelect: (id: string) => void
   onToggle: (id: string) => void
   onFocusNode: (id: string) => void
+  /** Double click: edit the label in place. */
+  onEdit: (id: string) => void
   registerNode: (id: string, element: SVGGElement | null) => void
 }
 
@@ -30,6 +32,7 @@ export const MindMapNode = memo(function MindMapNode({
   onSelect,
   onToggle,
   onFocusNode,
+  onEdit,
   registerNode,
 }: MindMapNodeProps) {
   const isRoot = item.branch === null
@@ -53,6 +56,7 @@ export const MindMapNode = memo(function MindMapNode({
       className="group/node cursor-pointer outline-none"
       transform={`translate(${item.x} ${item.y})`}
       onClick={() => onSelect(item.id)}
+      onDoubleClick={() => onEdit(item.id)}
       onFocus={() => onFocusNode(item.id)}
     >
       <rect

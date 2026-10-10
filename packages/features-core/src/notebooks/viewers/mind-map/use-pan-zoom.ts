@@ -24,7 +24,10 @@ export function usePanZoom(bounds: Bounds) {
     elementRef.current = node
     setElement(node)
   }, [])
-  const [state, setState] = useState<PanZoomState>({ transform: IDENTITY, animated: false })
+  const [state, setState] = useState<PanZoomState>({
+    transform: IDENTITY,
+    animated: false,
+  })
   const [dragging, setDragging] = useState(false)
   const [size, setSize] = useState<Size>(FALLBACK_SIZE)
 
@@ -104,11 +107,17 @@ export function usePanZoom(bounds: Bounds) {
   )
 
   const getTransform = useCallback(() => transformRef.current, [])
-  const { wasDragged } = useCanvasGestures({ element, getTransform, commit, setDragging })
+  const { wasDragged } = useCanvasGestures({
+    element,
+    getTransform,
+    commit,
+    setDragging,
+  })
 
   return {
     /** Callback ref for the canvas element. */
     attach,
+    element,
     transform: state.transform,
     animated: state.animated && !dragging,
     dragging,

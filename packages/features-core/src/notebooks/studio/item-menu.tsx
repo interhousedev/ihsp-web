@@ -10,12 +10,13 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@ihsp/ui"
-import { IconDotsVertical } from "@tabler/icons-react"
+import { IconDotsVertical } from "@ihsp/ui"
 import Link from "next/link"
 import { isActive } from "../lib/artifact-kinds"
-import { documentFormat, type DocumentFormat } from "./document-format"
+import { ArtifactExportItems } from "./artifact-export-items"
 
 export type ItemMenuProps = {
+  notebookId: string
   item: ArtifactItem
   /** Name of the item for the button label. */
   title: string
@@ -23,29 +24,26 @@ export type ItemMenuProps = {
   onViewPrompt: () => void
   onAddAsSource: () => void
   onSaveSet: () => void
-  /** Download the output as an Office file. */
-  onDownload?: (format: DocumentFormat) => void
   onCancel: () => void
   onDelete: () => void
 }
 
 const ITEM_CLASS = "min-h-11 md:min-h-8"
 
-/** The ⋮ menu of a Studio item; the entries depend on the state and the kind (downloads live in the viewers). */
+/** The ⋮ menu of a Studio item; the entries depend on the state and the kind (download, share and add to my files included). */
 export function ItemMenu({
+  notebookId,
   item,
   title,
   onRename,
   onViewPrompt,
   onAddAsSource,
   onSaveSet,
-  onDownload,
   onCancel,
   onDelete,
 }: ItemMenuProps) {
   const t = useT("notebooks")
   const ready = item.status === "ready"
-  const format = ready && onDownload ? documentFormat(item.kind) : null
 
   return (
     <DropdownMenu>
@@ -76,11 +74,6 @@ export function ItemMenu({
             {t("item.addAsSource")}
           </DropdownMenuItem>
         ) : null}
-        {format ? (
-          <DropdownMenuItem className={ITEM_CLASS} onClick={() => onDownload?.(format)}>
-            {t("documents.download", { format })}
-          </DropdownMenuItem>
-        ) : null}
         {ready && item.kind === "flashcards" ? (
           item.flashcard_set_id ? (
             <DropdownMenuItem
@@ -95,6 +88,10 @@ export function ItemMenu({
             </DropdownMenuItem>
           )
         ) : null}
+        <ArtifactExportItems
+          notebookId={notebookId}
+          item={{ id: item.id, kind: item.kind, status: item.status, title }}
+        />
         {isActive(item) ? (
           <DropdownMenuItem className={ITEM_CLASS} onClick={onCancel}>
             {t("studio.cancel")}

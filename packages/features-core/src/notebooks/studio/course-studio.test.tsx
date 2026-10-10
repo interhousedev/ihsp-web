@@ -36,7 +36,9 @@ function captureCreates(): ArtifactCreate[] {
 }
 
 function renderPanel(notebook: NotebookDetail = courseWorkspaceDetail) {
-  return renderNotebook(<StudioPanel notebook={notebook} />, { actions: { notebookId: notebook.id } })
+  return renderNotebook(<StudioPanel notebook={notebook} />, {
+    actions: { notebookId: notebook.id },
+  })
 }
 
 describe("StudioPanel in a course workspace", () => {
@@ -59,7 +61,10 @@ describe("StudioPanel in a course workspace", () => {
     await user.click(await screen.findByRole("button", { name: "Course plan" }))
 
     await waitFor(() => expect(bodies).toHaveLength(1))
-    expect(bodies[0]).toEqual({ kind: "course_plan", options: { depth: "overview" } })
+    expect(bodies[0]).toEqual({
+      kind: "course_plan",
+      options: { depth: "overview" },
+    })
   })
 
   it("starts a quiz of a workspace as a normal quiz request", async () => {
@@ -80,13 +85,21 @@ describe("StudioPanel in a course workspace", () => {
     const dialog = await screen.findByRole("dialog")
     await user.selectOptions(within(dialog).getByLabelText("Write it for"), courseIds.stepKinematics)
     await user.click(within(dialog).getByRole("button", { name: "Long" }))
-    await user.click(within(dialog).getByRole("checkbox", { name: "Add a test with questions" }))
+    await user.click(
+      within(dialog).getByRole("checkbox", {
+        name: "Add a test with questions",
+      }),
+    )
     await user.click(within(dialog).getByRole("button", { name: "Generate" }))
 
     await waitFor(() => expect(bodies).toHaveLength(1))
     expect(bodies[0]).toEqual({
       kind: "lesson_draft",
-      options: { step_id: courseIds.stepKinematics, length: "long", include_test: true },
+      options: {
+        step_id: courseIds.stepKinematics,
+        length: "long",
+        include_test: true,
+      },
     })
   })
 

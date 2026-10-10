@@ -176,7 +176,7 @@ export function layoutMindMap(
   return { nodes: positioned, edges, bounds: boundsOf(positioned) }
 }
 
-function boundsOf(items: readonly PositionedNode[]): Bounds {
+export function boundsOf(items: readonly PositionedNode[]): Bounds {
   if (items.length === 0) return EMPTY_BOUNDS
   let minX = Infinity
   let minY = Infinity

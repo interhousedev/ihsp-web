@@ -46,7 +46,12 @@ function kindLines(item: ArtifactItem): OptionLine[] {
         ...line("opt.count.label", "count", options.count),
         ...line("opt.difficulty.label", "difficulty", options.difficulty),
         ...(options.types && options.types.length > 0
-          ? [{ labelKey: "opt.types.label", valueKeys: options.types.map((type) => `opt.types.${type}`) }]
+          ? [
+              {
+                labelKey: "opt.types.label",
+                valueKeys: options.types.map((type) => `opt.types.${type}`),
+              },
+            ]
           : []),
       ]
     }
@@ -75,7 +80,12 @@ function kindLines(item: ArtifactItem): OptionLine[] {
         ...line("opt.planDepth.label", "planDepth", options.depth),
         ...(options.sections_hint === undefined
           ? []
-          : [{ labelKey: "opt.sectionsHint.label", text: String(options.sections_hint) }]),
+          : [
+              {
+                labelKey: "opt.sectionsHint.label",
+                text: String(options.sections_hint),
+              },
+            ]),
       ]
     }
     case "lesson_draft": {

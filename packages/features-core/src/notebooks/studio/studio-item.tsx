@@ -19,7 +19,6 @@ import { useWorkspace } from "../workspace-context"
 import { ItemMenu } from "./item-menu"
 import { ItemStatus } from "./item-status"
 import { RenameArtifactDialog } from "./rename-artifact-dialog"
-import { useDownloadArtifact } from "./use-download-artifact"
 import { useKindLabel } from "./use-kind-label"
 import { ViewPromptDialog } from "./view-prompt-dialog"
 
@@ -44,7 +43,6 @@ export function StudioItem({ item, notebookId }: StudioItemProps) {
   const remove = useDeleteArtifact(notebookId)
   const addAsSource = useSaveArtifactAsSource(notebookId)
   const saveSet = useSaveFlashcardSet(notebookId)
-  const download = useDownloadArtifact(notebookId)
 
   const fallback = kindLabel(item)
   const title = item.title || fallback
@@ -71,7 +69,10 @@ export function StudioItem({ item, notebookId }: StudioItemProps) {
           item.status === "failed" && "text-destructive",
         )}
       >
-        {createElement(artifactIcon(item), { className: "size-5", "aria-hidden": true })}
+        {createElement(artifactIcon(item), {
+          className: "size-5",
+          "aria-hidden": true,
+        })}
       </span>
       <span className="flex min-w-0 flex-1 flex-col gap-0.5">
         <span className="flex items-center gap-1.5">
@@ -116,17 +117,23 @@ export function StudioItem({ item, notebookId }: StudioItemProps) {
         ) : null}
       </div>
       <ItemMenu
+        notebookId={notebookId}
         item={item}
         title={title}
         onRename={() => setDialog("rename")}
         onViewPrompt={() => setDialog("prompt")}
         onAddAsSource={() =>
-          addAsSource.mutate(item.id, { onSuccess: () => toast.success(t("studio.addedAsSource")), onError: fail })
+          addAsSource.mutate(item.id, {
+            onSuccess: () => toast.success(t("studio.addedAsSource")),
+            onError: fail,
+          })
         }
         onSaveSet={() =>
-          saveSet.mutate(item.id, { onSuccess: () => toast.success(t("studio.setSaved")), onError: fail })
+          saveSet.mutate(item.id, {
+            onSuccess: () => toast.success(t("studio.setSaved")),
+            onError: fail,
+          })
         }
-        onDownload={(format) => download.mutate({ artifactId: item.id, title, format }, { onError: fail })}
         onCancel={() => cancel.mutate(item.id, { onError: fail })}
         onDelete={() => setDialog("delete")}
       />

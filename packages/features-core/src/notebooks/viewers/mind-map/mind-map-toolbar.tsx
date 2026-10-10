@@ -4,12 +4,14 @@ import { useT } from "@ihsp/i18n"
 import { Button, cn } from "@ihsp/ui"
 import {
   IconArrowsMaximize,
+  IconArrowsMinimize,
   IconCopy,
   IconDownload,
   IconFileText,
   IconFocusCentered,
   IconFoldUp,
   IconListTree,
+  IconNote,
   IconZoomIn,
   IconZoomOut,
 } from "@ihsp/ui"
@@ -32,6 +34,9 @@ type MindMapToolbarProps = {
   onDownloadPng: () => void
   onDownloadOutline: () => void
   onCopyOutline: () => void
+  /** «Сжать»: the automatic layout again. */
+  onTidy: () => void
+  onAddBlock: () => void
 }
 
 type ToolButtonProps = {
@@ -72,6 +77,8 @@ export function MindMapToolbar({
   onDownloadPng,
   onDownloadOutline,
   onCopyOutline,
+  onTidy,
+  onAddBlock,
 }: MindMapToolbarProps) {
   const t = useT("notebooks")
   return (
@@ -91,6 +98,8 @@ export function MindMapToolbar({
           <ToolButton label={t("mindmap.fit")} icon={IconFocusCentered} onClick={onFit} />
           <ToolButton label={t("mindmap.zoomIn")} icon={IconZoomIn} onClick={onZoomIn} />
           <ToolButton label={t("mindmap.zoomOut")} icon={IconZoomOut} onClick={onZoomOut} />
+          <ToolButton label={t("mindmap.addBlock")} icon={IconNote} onClick={onAddBlock} />
+          <ToolButton label={t("mindmap.tidy")} icon={IconArrowsMinimize} onClick={onTidy} />
         </>
       ) : null}
       <ToolButton label={t("mindmap.expandAll")} icon={IconArrowsMaximize} onClick={onExpandAll} />

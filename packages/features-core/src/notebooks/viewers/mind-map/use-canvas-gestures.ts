@@ -18,6 +18,15 @@ type GestureArgs = {
   setDragging: (dragging: boolean) => void
 }
 
+/** A pointer that goes down on a pill or a block drags it; only the rest of the canvas pans. */
+function startsOnDraggable(target: EventTarget | null): boolean {
+  if (!(target instanceof Element)) return false
+  return (
+    target.closest("[data-node-id], [data-block-id]") !== null &&
+    target.closest('[data-slot="mind-map-toggle"]') === null
+  )
+}
+
 function distanceBetween(a: Point, b: Point): number {
   return Math.hypot(a.x - b.x, a.y - b.y)
 }
@@ -58,9 +67,16 @@ export function useCanvasGestures({ element, getTransform, commit, setDragging }
 
     function onPointerDown(event: PointerEvent) {
       if (event.pointerType === "mouse" && event.button !== 0) return
+      if (startsOnDraggable(event.target)) return
       const point = localPoint(event)
       pointers.set(event.pointerId, point)
-      if (pointers.size === 1) gesture = { kind: "pan", start: point, origin: getTransform(), moved: false }
+      if (pointers.size === 1)
+        gesture = {
+          kind: "pan",
+          start: point,
+          origin: getTransform(),
+          moved: false,
+        }
       else if (pointers.size === 2) startPinch()
     }
 
@@ -80,7 +96,14 @@ export function useCanvasGestures({ element, getTransform, commit, setDragging }
           // Capture only once the gesture is a drag, so that a plain click still reaches the node under the finger.
           target.setPointerCapture?.(event.pointerId)
         }
-        commit({ ...gesture.origin, x: gesture.origin.x + dx, y: gesture.origin.y + dy }, false)
+        commit(
+          {
+            ...gesture.origin,
+            x: gesture.origin.x + dx,
+            y: gesture.origin.y + dy,
+          },
+          false,
+        )
       } else if (gesture.kind === "pinch") {
         const [first, second] = [...pointers.values()]
         if (!first || !second) return

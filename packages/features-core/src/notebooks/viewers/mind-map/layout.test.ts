@@ -7,10 +7,16 @@ function node(id: string, parent_id: string | null, label = id): MindMapNode {
 }
 
 /** Every pill is 100 x 40 unless its label is longer than 10 characters (then 200 wide). */
-const measure: MeasureNode = (item) => ({ width: item.label.length > 10 ? 200 : 100, height: 40 })
+const measure: MeasureNode = (item) => ({
+  width: item.label.length > 10 ? 200 : 100,
+  height: 40,
+})
 const options = { columnGap: 50, rowGap: 10 }
 /** Node c is much taller than the others. */
-const tallC: MeasureNode = (item) => ({ width: 100, height: item.id === "c" ? 120 : 30 })
+const tallC: MeasureNode = (item) => ({
+  width: 100,
+  height: item.id === "c" ? 120 : 30,
+})
 
 //        a
 //      /   \
@@ -40,10 +46,25 @@ describe("layoutMindMap", () => {
   test("puts the root at the left and one column per depth", () => {
     const layout = layoutMindMap(known, new Set(), measure, options)
 
-    expect(find(layout, "a")).toMatchObject({ x: 0, depth: 0, parentId: null, branch: null })
-    expect(find(layout, "b")).toMatchObject({ x: 150, depth: 1, parentId: "a", branch: 0 })
+    expect(find(layout, "a")).toMatchObject({
+      x: 0,
+      depth: 0,
+      parentId: null,
+      branch: null,
+    })
+    expect(find(layout, "b")).toMatchObject({
+      x: 150,
+      depth: 1,
+      parentId: "a",
+      branch: 0,
+    })
     expect(find(layout, "c")).toMatchObject({ x: 150, depth: 1, branch: 1 })
-    expect(find(layout, "d")).toMatchObject({ x: 300, depth: 2, parentId: "b", branch: 0 })
+    expect(find(layout, "d")).toMatchObject({
+      x: 300,
+      depth: 2,
+      parentId: "b",
+      branch: 0,
+    })
     expect(find(layout, "e")).toMatchObject({ x: 300, depth: 2, branch: 0 })
   })
 
@@ -89,9 +110,18 @@ describe("layoutMindMap", () => {
 
     expect(layout.nodes.map((item) => item.id)).toEqual(["a", "b", "c"])
     expect(layout.edges.map((item) => item.to)).toEqual(["b", "c"])
-    expect(find(layout, "b")).toMatchObject({ hasChildren: true, collapsed: true })
-    expect(find(layout, "c")).toMatchObject({ hasChildren: false, collapsed: false })
-    expect(find(layout, "a")).toMatchObject({ hasChildren: true, collapsed: false })
+    expect(find(layout, "b")).toMatchObject({
+      hasChildren: true,
+      collapsed: true,
+    })
+    expect(find(layout, "c")).toMatchObject({
+      hasChildren: false,
+      collapsed: false,
+    })
+    expect(find(layout, "a")).toMatchObject({
+      hasChildren: true,
+      collapsed: false,
+    })
   })
 
   test("collapsing shrinks the bounds and recentres the parent", () => {
@@ -165,13 +195,24 @@ describe("layoutMindMap", () => {
 
     expect(layout.nodes).toHaveLength(1)
     expect(layout.edges).toEqual([])
-    expect(layout.nodes[0]).toMatchObject({ x: 0, y: 0, hasChildren: false, collapsed: false, depth: 0 })
+    expect(layout.nodes[0]).toMatchObject({
+      x: 0,
+      y: 0,
+      hasChildren: false,
+      collapsed: false,
+      depth: 0,
+    })
     expect(layout.bounds).toEqual({ x: 0, y: 0, width: 100, height: 40 })
   })
 
   test("an empty or rootless map has an empty layout", () => {
     expect(layoutMindMap([], new Set(), measure).nodes).toEqual([])
-    expect(layoutMindMap([node("b", "a")], new Set(), measure).bounds).toEqual({ x: 0, y: 0, width: 0, height: 0 })
+    expect(layoutMindMap([node("b", "a")], new Set(), measure).bounds).toEqual({
+      x: 0,
+      y: 0,
+      width: 0,
+      height: 0,
+    })
   })
 
   test("uses the default gaps without options", () => {

@@ -14,7 +14,15 @@ export function cardPlacement(anchor: Bounds, size: Size): CSSProperties {
   const left = Math.min(Math.max(centred, CARD_MARGIN), Math.max(CARD_MARGIN, size.width - width - CARD_MARGIN))
   const below = anchor.y + anchor.height + CARD_GAP
   if (below + CARD_HEIGHT_ESTIMATE <= size.height || anchor.y - CARD_GAP - CARD_HEIGHT_ESTIMATE < 0) {
-    return { left, top: Math.min(Math.max(below, CARD_MARGIN), Math.max(CARD_MARGIN, size.height - 96)), width }
+    return {
+      left,
+      top: Math.min(Math.max(below, CARD_MARGIN), Math.max(CARD_MARGIN, size.height - 96)),
+      width,
+    }
   }
-  return { left, bottom: Math.max(CARD_MARGIN, size.height - anchor.y + CARD_GAP), width }
+  return {
+    left,
+    bottom: Math.max(CARD_MARGIN, size.height - anchor.y + CARD_GAP),
+    width,
+  }
 }

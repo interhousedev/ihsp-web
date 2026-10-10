@@ -46,11 +46,28 @@ function UsageBody({ usage }: { usage: NotebookUsage }) {
   const t = useT("notebooks")
   const { artifacts, slides, infographic } = usage.quotas
   const counters = [
-    { id: "artifacts", text: t("usage.materials", { used: artifacts.used, limit: artifacts.limit }) },
-    { id: "slides", text: t("usage.quota", { kind: t("kind.slides"), used: slides.used, limit: slides.limit }) },
+    {
+      id: "artifacts",
+      text: t("usage.materials", {
+        used: artifacts.used,
+        limit: artifacts.limit,
+      }),
+    },
+    {
+      id: "slides",
+      text: t("usage.quota", {
+        kind: t("kind.slides"),
+        used: slides.used,
+        limit: slides.limit,
+      }),
+    },
     {
       id: "infographic",
-      text: t("usage.quota", { kind: t("kind.infographic"), used: infographic.used, limit: infographic.limit }),
+      text: t("usage.quota", {
+        kind: t("kind.infographic"),
+        used: infographic.used,
+        limit: infographic.limit,
+      }),
     },
   ]
 
@@ -65,7 +82,12 @@ function UsageBody({ usage }: { usage: NotebookUsage }) {
             <li key={counter.id}>{counter.text}</li>
           ))}
         </ul>
-        <p className="text-sm">{t("usage.generating", { count: usage.generating, limit: usage.generating_limit })}</p>
+        <p className="text-sm">
+          {t("usage.generating", {
+            count: usage.generating,
+            limit: usage.generating_limit,
+          })}
+        </p>
       </div>
       <p className="text-muted-foreground text-xs">{t("usage.note")}</p>
     </>

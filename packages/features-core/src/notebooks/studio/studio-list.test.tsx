@@ -164,7 +164,10 @@ describe("StudioList: failed items", () => {
   })
 
   it("uses the generic reason for an unknown error code", async () => {
-    listOf({ ...artifactFailed, error: { code: "something_new", message_key: "x", params: {} } })
+    listOf({
+      ...artifactFailed,
+      error: { code: "something_new", message_key: "x", params: {} },
+    })
     renderNotebook(<StudioPanel notebook={notebookDetail} />)
 
     expect(await within(await row("Flash cards")).findByText("Could not create this material.")).toBeInTheDocument()
@@ -189,7 +192,15 @@ describe("StudioList: item menu", () => {
 
     await openMenu(user, "Photosynthesis: conspect")
 
-    expect(menuItemNames()).toEqual(["Rename", "View prompt", "Add as source", "Download .docx", "Delete"])
+    expect(menuItemNames()).toEqual([
+      "Rename",
+      "View prompt",
+      "Add as source",
+      "Download .docx",
+      "Share",
+      "Add to my files",
+      "Delete",
+    ])
   })
 
   it("renames an item", async () => {
@@ -198,7 +209,10 @@ describe("StudioList: item menu", () => {
     server.use(
       http.patch(`${ARTIFACTS_URL}/:aid`, async ({ request }) => {
         sent = await request.json()
-        return HttpResponse.json({ ...artifactMindMap, title: "Photosynthesis map" })
+        return HttpResponse.json({
+          ...artifactMindMap,
+          title: "Photosynthesis map",
+        })
       }),
     )
     const { user } = renderNotebook(<StudioPanel notebook={notebookDetail} />)
@@ -215,7 +229,11 @@ describe("StudioList: item menu", () => {
     await user.click(within(dialog).getByRole("button", { name: "Save" }))
 
     await waitFor(() => expect(sent).toEqual({ title: "Photosynthesis map" }))
-    expect(await screen.findByRole("button", { name: /^Photosynthesis map 3 sources/ })).toBeInTheDocument()
+    expect(
+      await screen.findByRole("button", {
+        name: /^Photosynthesis map 3 sources/,
+      }),
+    ).toBeInTheDocument()
     await waitFor(() => expect(screen.queryByRole("dialog")).not.toBeInTheDocument())
   })
 
@@ -284,7 +302,15 @@ describe("StudioList: item menu", () => {
     await row("Photosynthesis: cards")
 
     await openMenu(user, "Photosynthesis: cards")
-    expect(menuItemNames()).toEqual(["Rename", "View prompt", "Save as flash card set", "Delete"])
+    expect(menuItemNames()).toEqual([
+      "Rename",
+      "View prompt",
+      "Save as flash card set",
+      "Download .md",
+      "Share",
+      "Add to my files",
+      "Delete",
+    ])
     await user.click(screen.getByRole("menuitem", { name: "Save as flash card set" }))
 
     await waitFor(() => expect(success).toHaveBeenCalledWith("Flash card set saved"))
@@ -311,7 +337,11 @@ describe("StudioList: item menu", () => {
     server.use(
       http.post(`${ARTIFACTS_URL}/:aid/cancel`, ({ params }) => {
         canceled.push(String(params.aid))
-        return HttpResponse.json({ ...artifactGenerating, status: "canceled", progress: null })
+        return HttpResponse.json({
+          ...artifactGenerating,
+          status: "canceled",
+          progress: null,
+        })
       }),
     )
     const { user } = renderNotebook(<StudioPanel notebook={notebookDetail} />)
@@ -338,7 +368,9 @@ describe("StudioList: item menu", () => {
 
     await openMenu(user, "Photosynthesis")
     await user.click(await screen.findByRole("menuitem", { name: "Delete" }))
-    const confirm = await screen.findByRole("alertdialog", { name: "Delete this item?" })
+    const confirm = await screen.findByRole("alertdialog", {
+      name: "Delete this item?",
+    })
     expect(deleted).toHaveLength(0)
 
     await user.click(within(confirm).getByRole("button", { name: "Cancel" }))
@@ -347,7 +379,11 @@ describe("StudioList: item menu", () => {
 
     await openMenu(user, "Photosynthesis")
     await user.click(await screen.findByRole("menuitem", { name: "Delete" }))
-    await user.click(within(await screen.findByRole("alertdialog")).getByRole("button", { name: "Delete" }))
+    await user.click(
+      within(await screen.findByRole("alertdialog")).getByRole("button", {
+        name: "Delete",
+      }),
+    )
 
     await waitFor(() => expect(deleted).toEqual([artifactMindMap.id]))
     await waitFor(() => expect(screen.queryByText("Photosynthesis", { exact: true })).not.toBeInTheDocument())
@@ -360,8 +396,17 @@ describe("StudioList: item menu", () => {
     server.use(
       http.post(`${ARTIFACTS_URL}/:aid/save-as-source`, () =>
         HttpResponse.json(
-          { type: "notebooks/source-limit", title: "Limit", status: 409, message_key: "x", params: {} },
-          { status: 409, headers: { "Content-Type": "application/problem+json" } },
+          {
+            type: "notebooks/source-limit",
+            title: "Limit",
+            status: 409,
+            message_key: "x",
+            params: {},
+          },
+          {
+            status: 409,
+            headers: { "Content-Type": "application/problem+json" },
+          },
         ),
       ),
     )

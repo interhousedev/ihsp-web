@@ -99,7 +99,10 @@ function CustomizeForm({
 
   const blocked = gate.forKind(kind)
   const problem = formProblem(state)
-  const label = kindLabel({ kind, format: kind === "report" ? (format ?? "conspect") : null })
+  const label = kindLabel({
+    kind,
+    format: kind === "report" ? (format ?? "conspect") : null,
+  })
 
   const submit = () => {
     create.mutate(buildCreate(state), { onSuccess: () => onOpenChange(false) })

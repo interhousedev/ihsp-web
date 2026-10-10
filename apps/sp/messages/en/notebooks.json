@@ -558,7 +558,16 @@
       "toolbar": "Mind map tools",
       "canvas": "Mind map: {title}",
       "outline": "Mind map outline: {title}",
-      "details": "Details of {label}"
+      "details": "Details of {label}",
+      "tidy": "Tidy up",
+      "addBlock": "Text block",
+      "addChild": "Add child",
+      "addSibling": "Add sibling",
+      "edit": "Edit",
+      "delete": "Delete",
+      "editLabel": "Node text",
+      "newNode": "New idea",
+      "newBlock": "Note"
     },
     "cards": {
       "flip": "Flip card",
@@ -906,6 +915,13 @@
       "noLessons": "No lessons today to attach to.",
       "attached": "Attached to the lesson.",
       "attachFailed": "Could not attach the file."
+    },
+    "export": {
+      "download": "Download .{format}",
+      "share": "Share",
+      "addToFiles": "Add to my files",
+      "savedToFiles": "Saved to My files: {name}",
+      "linkCopied": "Link copied"
     }
   },
   "errors": {

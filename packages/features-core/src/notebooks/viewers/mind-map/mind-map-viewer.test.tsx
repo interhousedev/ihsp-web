@@ -173,8 +173,20 @@ describe("MindMapViewer: details", () => {
   it("skips unknown labels, and omits the anchor when none is known", async () => {
     const nodes: MindMapNode[] = [
       { id: "r", parent_id: null, label: "Root", note: "", refs: ["S1:P1"] },
-      { id: "a", parent_id: "r", label: "Mixed", note: "Some", refs: ["S9:P9", "S1:P3", "S1:P3"] },
-      { id: "b", parent_id: "r", label: "Unknown", note: "None", refs: ["S9:P9"] },
+      {
+        id: "a",
+        parent_id: "r",
+        label: "Mixed",
+        note: "Some",
+        refs: ["S9:P9", "S1:P3", "S1:P3"],
+      },
+      {
+        id: "b",
+        parent_id: "r",
+        label: "Unknown",
+        note: "None",
+        refs: ["S9:P9"],
+      },
     ]
     const { user, actions } = renderViewer(mindMapArtifact({ title: "T", nodes }))
 
@@ -188,7 +200,9 @@ describe("MindMapViewer: details", () => {
     await user.click(node("Unknown"))
     expect(buttons("Show sources")).toBeDisabled()
     await user.click(buttons("Ask in chat"))
-    expect(actions.ask).toHaveBeenLastCalledWith({ text: "Explain “Unknown” using my sources." })
+    expect(actions.ask).toHaveBeenLastCalledWith({
+      text: "Explain “Unknown” using my sources.",
+    })
   })
 
   it("toggles the details from the node and closes them with the close button", async () => {
@@ -196,9 +210,17 @@ describe("MindMapViewer: details", () => {
 
     await user.click(node("Chloroplast"))
     expect(screen.getByRole("dialog")).toBeInTheDocument()
-    await user.click(within(screen.getByRole("dialog")).getByRole("button", { name: "Expand" }))
+    await user.click(
+      within(screen.getByRole("dialog")).getByRole("button", {
+        name: "Expand",
+      }),
+    )
     expect(node("Chloroplast")).toHaveAttribute("aria-expanded", "true")
-    expect(within(screen.getByRole("dialog")).getByRole("button", { name: "Collapse" })).toBeInTheDocument()
+    expect(
+      within(screen.getByRole("dialog")).getByRole("button", {
+        name: "Collapse",
+      }),
+    ).toBeInTheDocument()
 
     await user.click(within(screen.getByRole("dialog")).getByRole("button", { name: "Close" }))
     expect(screen.queryByRole("dialog")).not.toBeInTheDocument()
@@ -384,9 +406,14 @@ describe("MindMapViewer: pan and zoom", () => {
     if (!canvas) throw new Error("no canvas")
     const initial = transformOf()
 
-    fireEvent.pointerDown(item, { pointerId: 1, clientX: 100, clientY: 100, button: 0 })
-    fireEvent.pointerMove(item, { pointerId: 1, clientX: 160, clientY: 130 })
-    fireEvent.pointerUp(item, { pointerId: 1, clientX: 160, clientY: 130 })
+    fireEvent.pointerDown(canvas, {
+      pointerId: 1,
+      clientX: 100,
+      clientY: 100,
+      button: 0,
+    })
+    fireEvent.pointerMove(canvas, { pointerId: 1, clientX: 160, clientY: 130 })
+    fireEvent.pointerUp(canvas, { pointerId: 1, clientX: 160, clientY: 130 })
     fireEvent.click(item)
 
     expect(transformOf()).not.toBe(initial)
@@ -410,7 +437,9 @@ describe("MindMapViewer: outline view", () => {
 
     expect(buttons("Outline view")).toHaveAttribute("aria-pressed", "true")
     expect(screen.queryByRole("tree")).not.toBeInTheDocument()
-    const list = screen.getByRole("list", { name: /Mind map outline: Photosynthesis/ })
+    const list = screen.getByRole("list", {
+      name: /Mind map outline: Photosynthesis/,
+    })
     expect(within(list).getByText("Photosynthesis")).toBeInTheDocument()
     expect(within(list).getByText("Chloroplast")).toBeInTheDocument()
     expect(within(list).queryByText("Thylakoids")).not.toBeInTheDocument()
@@ -443,13 +472,21 @@ describe("MindMapViewer: outline view", () => {
 
     const row = document.querySelector<HTMLElement>('[data-node-id="n4"]')
     if (!row) throw new Error("no row")
-    await user.click(within(row).getAllByRole("button", { name: "Ask in chat" })[0] as HTMLElement)
+    await user.click(
+      within(row).getAllByRole("button", {
+        name: "Ask in chat",
+      })[0] as HTMLElement,
+    )
     expect(actions.ask).toHaveBeenCalledWith({
       text: "Explain “Calvin cycle” using my sources.",
       anchor: { kind: "passages", ids: [passageId(1, 5)] },
     })
 
-    await user.click(within(row).getAllByRole("button", { name: "Show sources" })[0] as HTMLElement)
+    await user.click(
+      within(row).getAllByRole("button", {
+        name: "Show sources",
+      })[0] as HTMLElement,
+    )
     expect(actions.openSource).toHaveBeenCalledWith(nbIds.sourceFile, passageId(1, 5))
   })
 
@@ -552,7 +589,13 @@ describe("MindMapViewer: downloads", () => {
 function bigMap(): MindMapContent {
   const nodes: MindMapNode[] = [{ id: "root", parent_id: null, label: "Root", note: "", refs: [] }]
   for (let branch = 0; branch < 6; branch++) {
-    nodes.push({ id: `b${branch}`, parent_id: "root", label: `Branch ${branch}`, note: "", refs: [] })
+    nodes.push({
+      id: `b${branch}`,
+      parent_id: "root",
+      label: `Branch ${branch}`,
+      note: "",
+      refs: [],
+    })
     for (let child = 0; child < 3; child++) {
       nodes.push({
         id: `b${branch}c${child}`,

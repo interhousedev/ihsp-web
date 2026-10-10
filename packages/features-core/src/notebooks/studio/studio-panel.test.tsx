@@ -18,7 +18,10 @@ allowSlowRenders()
 
 const ARTIFACTS_URL = apiUrl(`/v1/notebooks/${nbIds.notebook}/artifacts`)
 
-const noSources: NotebookDetail = { ...notebookDetail, selected_source_count: 0 }
+const noSources: NotebookDetail = {
+  ...notebookDetail,
+  selected_source_count: 0,
+}
 
 function problem(status: number, type: string, params: Record<string, unknown> = {}) {
   return HttpResponse.json(
@@ -53,7 +56,10 @@ function useUsage(usage: NotebookUsage) {
 }
 
 function setOnline(online: boolean) {
-  Object.defineProperty(window.navigator, "onLine", { configurable: true, get: () => online })
+  Object.defineProperty(window.navigator, "onLine", {
+    configurable: true,
+    get: () => online,
+  })
   window.dispatchEvent(new Event(online ? "online" : "offline"))
 }
 
@@ -114,16 +120,26 @@ describe("StudioPanel: tiles", () => {
     await waitFor(() => expect(bodies).toHaveLength(1))
     expect(bodies[0]).toEqual({
       kind: "quiz",
-      options: { count: "standard", difficulty: "medium", types: ["single", "multiple", "true_false"] },
+      options: {
+        count: "standard",
+        difficulty: "medium",
+        types: ["single", "multiple", "true_false"],
+      },
     })
 
     await user.click(tile("Conspect"))
     await waitFor(() => expect(bodies).toHaveLength(2))
-    expect(bodies[1]).toEqual({ kind: "report", options: { format: "conspect", detail: "standard", style: "outline" } })
+    expect(bodies[1]).toEqual({
+      kind: "report",
+      options: { format: "conspect", detail: "standard", style: "outline" },
+    })
 
     await user.click(tile("Data table"))
     await waitFor(() => expect(bodies).toHaveLength(3))
-    expect(bodies[2]).toEqual({ kind: "data_table", options: { max_rows: 25 } })
+    expect(bodies[2]).toEqual({
+      kind: "data_table",
+      options: { max_rows: 25 },
+    })
   })
 
   it("shows the new item at the top of the list right away", async () => {
@@ -163,7 +179,9 @@ describe("StudioPanel: reports", () => {
 
     await user.click(tile("Reports"))
 
-    const dialog = await screen.findByRole("dialog", { name: "Choose a report format" })
+    const dialog = await screen.findByRole("dialog", {
+      name: "Choose a report format",
+    })
     for (const format of ["Study guide", "Briefing", "FAQ", "Timeline", "Article", "Create your own"]) {
       expect(within(dialog).getByRole("button", { name: new RegExp(`^${format}`) })).toBeInTheDocument()
     }
@@ -177,14 +195,19 @@ describe("StudioPanel: reports", () => {
     await user.click(tile("Reports"))
     await user.click(await screen.findByRole("button", { name: /^Briefing/ }))
 
-    const form = await screen.findByRole("dialog", { name: "Customize Briefing" })
+    const form = await screen.findByRole("dialog", {
+      name: "Customize Briefing",
+    })
     // A conspect has a style; a briefing does not.
     expect(within(form).queryByRole("group", { name: "Style" })).not.toBeInTheDocument()
     await user.click(within(form).getByRole("button", { name: "Long" }))
     await user.click(within(form).getByRole("button", { name: "Generate" }))
 
     await waitFor(() => expect(bodies).toHaveLength(1))
-    expect(bodies[0]).toEqual({ kind: "report", options: { format: "briefing", detail: "long" } })
+    expect(bodies[0]).toEqual({
+      kind: "report",
+      options: { format: "briefing", detail: "long" },
+    })
     await waitFor(() => expect(screen.queryByRole("dialog")).not.toBeInTheDocument())
   })
 
@@ -195,11 +218,15 @@ describe("StudioPanel: reports", () => {
     await user.click(tile("Reports"))
     await user.click(await screen.findByRole("button", { name: /^Create your own/ }))
 
-    const form = await screen.findByRole("dialog", { name: "Customize Create your own" })
+    const form = await screen.findByRole("dialog", {
+      name: "Customize Create your own",
+    })
     const generate = within(form).getByRole("button", { name: "Generate" })
     expect(generate).toBeDisabled()
 
-    const task = within(form).getByRole("textbox", { name: "What should the report contain?" })
+    const task = within(form).getByRole("textbox", {
+      name: "What should the report contain?",
+    })
     await user.click(task)
     await user.paste("Compare the two stages in a table")
     expect(generate).toBeEnabled()
@@ -230,7 +257,11 @@ describe("StudioPanel: limits and errors", () => {
       ...notebookUsage,
       budget: {
         ...notebookUsage.budget,
-        session: { used: 1_500_000, limit: 1_500_000, resets_at: "2026-10-07T08:00:00Z" },
+        session: {
+          used: 1_500_000,
+          limit: 1_500_000,
+          resets_at: "2026-10-07T08:00:00Z",
+        },
       },
     })
     renderNotebook(<StudioPanel notebook={notebookDetail} />)
@@ -241,7 +272,10 @@ describe("StudioPanel: limits and errors", () => {
   it("disables only the slide deck tile when its daily count is used up", async () => {
     useUsage({
       ...notebookUsage,
-      quotas: { ...notebookUsage.quotas, slides: { used: 6, limit: 6, resets_at: "2026-10-08T00:00:00Z" } },
+      quotas: {
+        ...notebookUsage.quotas,
+        slides: { used: 6, limit: 6, resets_at: "2026-10-08T00:00:00Z" },
+      },
     })
     renderNotebook(<StudioPanel notebook={notebookDetail} />)
 
@@ -254,7 +288,10 @@ describe("StudioPanel: limits and errors", () => {
   it("disables every tile when the overall daily count is used up", async () => {
     useUsage({
       ...notebookUsage,
-      quotas: { ...notebookUsage.quotas, artifacts: { used: 20, limit: 20, resets_at: "2026-10-08T00:00:00Z" } },
+      quotas: {
+        ...notebookUsage.quotas,
+        artifacts: { used: 20, limit: 20, resets_at: "2026-10-08T00:00:00Z" },
+      },
     })
     renderNotebook(<StudioPanel notebook={notebookDetail} />)
 
@@ -270,7 +307,10 @@ describe("StudioPanel: limits and errors", () => {
 
     useUsage({
       ...notebookUsage,
-      quotas: { ...notebookUsage.quotas, artifacts: { used: 15, limit: 20, resets_at: "2026-10-08T00:00:00Z" } },
+      quotas: {
+        ...notebookUsage.quotas,
+        artifacts: { used: 15, limit: 20, resets_at: "2026-10-08T00:00:00Z" },
+      },
     })
     renderNotebook(<StudioPanel notebook={notebookDetail} />)
     expect(await screen.findByText("Study materials: 15 of 20 today")).toBeInTheDocument()

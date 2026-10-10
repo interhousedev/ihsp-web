@@ -1,5 +1,6 @@
 "use client"
 
+import type { ArtifactItem } from "@ihsp/api"
 import { useT } from "@ihsp/i18n"
 import {
   Button,
@@ -9,9 +10,10 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@ihsp/ui"
-import { IconDotsVertical } from "@tabler/icons-react"
+import { IconDotsVertical } from "@ihsp/ui"
 import { useState } from "react"
 import { useDeleteArtifact } from "../../api/use-artifacts"
+import { ArtifactExportItems } from "../../studio/artifact-export-items"
 import { useNotebookErrorMessage } from "../../lib/use-notebook-error"
 import { RenameArtifactDialog } from "./rename-artifact-dialog"
 
@@ -19,12 +21,14 @@ type ItemMenuProps = {
   notebookId: string
   artifactId: string
   title: string
+  kind: ArtifactItem["kind"]
+  status: ArtifactItem["status"]
   /** Called after the item was deleted (the shell closes the viewer). */
   onDeleted: () => void
 }
 
-/** The ⋮ menu of the viewer header: Rename (dialog) and Delete (confirmation). */
-export function ItemMenu({ notebookId, artifactId, title, onDeleted }: ItemMenuProps) {
+/** The ⋮ menu of the viewer header: Rename (dialog), Download / Share / Add to my files and Delete (confirmation). */
+export function ItemMenu({ notebookId, artifactId, title, kind, status, onDeleted }: ItemMenuProps) {
   const t = useT("notebooks")
   const common = useT()
   const errorMessage = useNotebookErrorMessage()
@@ -52,6 +56,7 @@ export function ItemMenu({ notebookId, artifactId, title, onDeleted }: ItemMenuP
           <DropdownMenuItem className="min-h-11 md:min-h-8" onClick={() => setRenaming(true)}>
             {t("card.rename")}
           </DropdownMenuItem>
+          <ArtifactExportItems notebookId={notebookId} item={{ id: artifactId, kind, status, title }} />
           <DropdownMenuItem
             variant="destructive"
             className="min-h-11 md:min-h-8"

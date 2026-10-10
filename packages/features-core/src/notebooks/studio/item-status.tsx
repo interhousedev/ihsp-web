@@ -42,7 +42,10 @@ export function ItemStatus({ item }: { item: ArtifactItem }) {
   if (item.status === "canceled") return <span className="text-muted-foreground text-xs">{t("studio.canceled")}</span>
   return (
     <span className="text-muted-foreground text-xs">
-      {t("studio.itemSubtitle", { count: item.source_count, time: format.relative(item.created_at) })}
+      {t("studio.itemSubtitle", {
+        count: item.source_count,
+        time: format.relative(item.created_at),
+      })}
     </span>
   )
 }

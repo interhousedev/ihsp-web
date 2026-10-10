@@ -35,7 +35,11 @@ export function fitTransform(bounds: Bounds, size: Size, padding = FIT_PADDING):
 export function zoomAt(transform: Transform, factor: number, at: Point): Transform {
   const k = clampScale(transform.k * factor)
   const ratio = k / transform.k
-  return { x: at.x - (at.x - transform.x) * ratio, y: at.y - (at.y - transform.y) * ratio, k }
+  return {
+    x: at.x - (at.x - transform.x) * ratio,
+    y: at.y - (at.y - transform.y) * ratio,
+    k,
+  }
 }
 
 /** The screen box of a world box. */

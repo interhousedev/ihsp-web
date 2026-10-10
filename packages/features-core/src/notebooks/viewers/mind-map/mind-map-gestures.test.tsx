@@ -35,7 +35,11 @@ const node = (name: string) => screen.getByRole("treeitem", { name })
 
 /** `useIsMobile` reads `window.innerWidth`; other test files may have replaced it with a plain value, so set it so. */
 function setViewportWidth(width: number): void {
-  Object.defineProperty(window, "innerWidth", { configurable: true, writable: true, value: width })
+  Object.defineProperty(window, "innerWidth", {
+    configurable: true,
+    writable: true,
+    value: width,
+  })
   act(() => {
     window.dispatchEvent(new Event("resize"))
   })
@@ -48,13 +52,31 @@ describe("MindMapViewer: gestures", () => {
     renderViewer()
     const initial = scaleOf()
 
-    fireEvent.pointerDown(canvas(), { pointerId: 1, clientX: 100, clientY: 100, button: 0 })
-    fireEvent.pointerDown(canvas(), { pointerId: 2, clientX: 200, clientY: 100, button: 0 })
-    fireEvent.pointerMove(canvas(), { pointerId: 2, clientX: 300, clientY: 100 })
+    fireEvent.pointerDown(canvas(), {
+      pointerId: 1,
+      clientX: 100,
+      clientY: 100,
+      button: 0,
+    })
+    fireEvent.pointerDown(canvas(), {
+      pointerId: 2,
+      clientX: 200,
+      clientY: 100,
+      button: 0,
+    })
+    fireEvent.pointerMove(canvas(), {
+      pointerId: 2,
+      clientX: 300,
+      clientY: 100,
+    })
     const zoomedIn = scaleOf()
     expect(zoomedIn).toBeGreaterThan(initial)
 
-    fireEvent.pointerMove(canvas(), { pointerId: 2, clientX: 120, clientY: 100 })
+    fireEvent.pointerMove(canvas(), {
+      pointerId: 2,
+      clientX: 120,
+      clientY: 100,
+    })
     expect(scaleOf()).toBeLessThan(zoomedIn)
 
     fireEvent.pointerUp(canvas(), { pointerId: 2 })
@@ -65,8 +87,18 @@ describe("MindMapViewer: gestures", () => {
     renderViewer()
     const initial = transformOf()
 
-    fireEvent.pointerDown(canvas(), { pointerId: 1, clientX: 100, clientY: 100, button: 2, pointerType: "mouse" })
-    fireEvent.pointerMove(canvas(), { pointerId: 1, clientX: 200, clientY: 200 })
+    fireEvent.pointerDown(canvas(), {
+      pointerId: 1,
+      clientX: 100,
+      clientY: 100,
+      button: 2,
+      pointerType: "mouse",
+    })
+    fireEvent.pointerMove(canvas(), {
+      pointerId: 1,
+      clientX: 200,
+      clientY: 200,
+    })
     fireEvent.pointerUp(canvas(), { pointerId: 1 })
 
     expect(transformOf()).toBe(initial)
@@ -103,7 +135,12 @@ describe("MindMapViewer: gestures", () => {
     renderViewer()
     const before = node("Calvin cycle").getAttribute("transform")
 
-    fireEvent.pointerDown(canvas(), { pointerId: 1, clientX: 10, clientY: 10, button: 0 })
+    fireEvent.pointerDown(canvas(), {
+      pointerId: 1,
+      clientX: 10,
+      clientY: 10,
+      button: 0,
+    })
     fireEvent.pointerMove(canvas(), { pointerId: 1, clientX: 80, clientY: 90 })
     fireEvent.pointerUp(canvas(), { pointerId: 1 })
 
@@ -117,7 +154,12 @@ describe("MindMapViewer: gestures", () => {
     await user.click(screen.getByRole("button", { name: "Zoom in" }))
     expect(viewportGroup()?.getAttribute("class")).toContain("motion-safe:transition-transform")
 
-    fireEvent.pointerDown(canvas(), { pointerId: 1, clientX: 10, clientY: 10, button: 0 })
+    fireEvent.pointerDown(canvas(), {
+      pointerId: 1,
+      clientX: 10,
+      clientY: 10,
+      button: 0,
+    })
     fireEvent.pointerMove(canvas(), { pointerId: 1, clientX: 80, clientY: 90 })
     expect(viewportGroup()?.getAttribute("class") ?? "").not.toContain("transition")
     fireEvent.pointerUp(canvas(), { pointerId: 1 })

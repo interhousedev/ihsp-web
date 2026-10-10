@@ -4,6 +4,7 @@ import type { MindMapNode, RefsIndex } from "@ihsp/api"
 import { useT } from "@ihsp/i18n"
 import { Button } from "@ihsp/ui"
 import { RefChips } from "../../chat/ref-chips"
+import { MindMapEditActions, type NodeEditHandlers } from "./mind-map-edit-actions"
 import { MindMapNodeActions } from "./mind-map-node-actions"
 
 type MindMapDetailsBodyProps = {
@@ -13,10 +14,11 @@ type MindMapDetailsBodyProps = {
   expanded: boolean | null
   onToggle: () => void
   onAsked: () => void
+  edit?: NodeEditHandlers
 }
 
 /** The note, source chips and actions of one node (the same in the popover card and the phone sheet). */
-export function MindMapDetailsBody({ node, refsIndex, expanded, onToggle, onAsked }: MindMapDetailsBodyProps) {
+export function MindMapDetailsBody({ node, refsIndex, expanded, onToggle, onAsked, edit }: MindMapDetailsBodyProps) {
   const t = useT("notebooks")
   return (
     <>
@@ -29,6 +31,7 @@ export function MindMapDetailsBody({ node, refsIndex, expanded, onToggle, onAske
           </Button>
         ) : null}
       </MindMapNodeActions>
+      {edit ? <MindMapEditActions {...edit} /> : null}
     </>
   )
 }

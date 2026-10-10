@@ -42,7 +42,10 @@ export function StudioPanel({ notebook, onCollapse }: StudioPanelProps) {
   const create = useCreateArtifact(notebook.id)
 
   const [picking, setPicking] = useState(false)
-  const [target, setTarget] = useState<CustomizeTarget>({ kind: "report", format: "conspect" })
+  const [target, setTarget] = useState<CustomizeTarget>({
+    kind: "report",
+    format: "conspect",
+  })
   const [customizing, setCustomizing] = useState(false)
 
   const tiles = studioTilesFor(notebook)
@@ -62,7 +65,11 @@ export function StudioPanel({ notebook, onCollapse }: StudioPanelProps) {
   }
   const edit = (tile: StudioTileDef) => {
     if (tile.id === "report") setPicking(true)
-    else customize({ kind: tile.kind, ...(tile.format ? { format: tile.format } : {}) })
+    else
+      customize({
+        kind: tile.kind,
+        ...(tile.format ? { format: tile.format } : {}),
+      })
   }
 
   const usage = gate.usage.data

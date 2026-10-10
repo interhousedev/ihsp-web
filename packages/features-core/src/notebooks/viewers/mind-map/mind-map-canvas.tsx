@@ -4,6 +4,7 @@ import { useT } from "@ihsp/i18n"
 import { cn } from "@ihsp/ui"
 import type { MouseEvent } from "react"
 import type { MindMapLayout } from "./layout"
+import type { PlacedBlock } from "./positions"
 import { MindMapGraph } from "./mind-map-graph"
 import { transformCss } from "./transform"
 import type { useMindMapNavigation } from "./use-mind-map-navigation"
@@ -14,13 +15,16 @@ type MindMapCanvasProps = {
   layout: MindMapLayout
   panZoom: ReturnType<typeof usePanZoom>
   nav: ReturnType<typeof useMindMapNavigation>
+  blocks: readonly PlacedBlock[]
+  onEdit: (id: string) => void
+  onEditBlock: (id: string) => void
 }
 
 /**
  * The pannable, zoomable SVG. The whole map hangs in one group whose transform follows the pointer; the graph inside is
  * memoized, so dragging never re-renders the nodes. The SVG is a `tree` (see the keyboard model in `keyboard-nav.ts`).
  */
-export function MindMapCanvas({ title, layout, panZoom, nav }: MindMapCanvasProps) {
+export function MindMapCanvas({ title, layout, panZoom, nav, blocks, onEdit, onEditBlock }: MindMapCanvasProps) {
   const t = useT("notebooks")
 
   function onBackgroundClick(event: MouseEvent<SVGSVGElement>) {
@@ -53,6 +57,9 @@ export function MindMapCanvas({ title, layout, panZoom, nav }: MindMapCanvasProp
             onSelect={nav.onSelect}
             onToggle={nav.onToggle}
             onFocusNode={nav.onFocusNode}
+            onEdit={onEdit}
+            blocks={blocks}
+            onEditBlock={onEditBlock}
             registerNode={nav.registerNode}
           />
         </g>

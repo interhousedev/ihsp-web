@@ -3,7 +3,9 @@
 import { memo } from "react"
 import { branchColor } from "./branch-colors"
 import type { MindMapLayout } from "./layout"
+import { MindMapBlock } from "./mind-map-block"
 import { MindMapNode } from "./mind-map-node"
+import type { PlacedBlock } from "./positions"
 
 type MindMapGraphProps = {
   layout: MindMapLayout
@@ -12,6 +14,9 @@ type MindMapGraphProps = {
   onSelect: (id: string) => void
   onToggle: (id: string) => void
   onFocusNode: (id: string) => void
+  onEdit: (id: string) => void
+  blocks: readonly PlacedBlock[]
+  onEditBlock: (id: string) => void
   registerNode: (id: string, element: SVGGElement | null) => void
 }
 
@@ -26,6 +31,9 @@ export const MindMapGraph = memo(function MindMapGraph({
   onSelect,
   onToggle,
   onFocusNode,
+  onEdit,
+  blocks,
+  onEditBlock,
   registerNode,
 }: MindMapGraphProps) {
   return (
@@ -52,8 +60,14 @@ export const MindMapGraph = memo(function MindMapGraph({
             onSelect={onSelect}
             onToggle={onToggle}
             onFocusNode={onFocusNode}
+            onEdit={onEdit}
             registerNode={registerNode}
           />
+        ))}
+      </g>
+      <g data-slot="mind-map-blocks">
+        {blocks.map((block) => (
+          <MindMapBlock key={block.id} block={block} onEdit={onEditBlock} />
         ))}
       </g>
     </>

@@ -29,7 +29,12 @@ export function useStudioGate(notebook: NotebookDetail) {
     const limit = notebookLimit(data)
     if (limit.reached) {
       const time = limit.resetsAt ? format.time(limit.resetsAt) : "—"
-      return { reason: "limit", message: t(limit.scope === "session" ? "limit.session" : "limit.day", { time }) }
+      return {
+        reason: "limit",
+        message: t(limit.scope === "session" ? "limit.session" : "limit.day", {
+          time,
+        }),
+      }
     }
     return null
   }, [online, notebook.can_write, notebook.selected_source_count, data, format, t, root])

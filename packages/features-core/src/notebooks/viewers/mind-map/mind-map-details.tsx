@@ -18,6 +18,7 @@ import { RefChips } from "../../chat/ref-chips"
 import { cardPlacement } from "./card-placement"
 import type { Bounds, PositionedNode } from "./layout"
 import { MindMapDetailsBody } from "./mind-map-details-body"
+import { MindMapEditActions, type NodeEditHandlers } from "./mind-map-edit-actions"
 import { MindMapNodeActions } from "./mind-map-node-actions"
 import type { Size } from "./transform"
 
@@ -29,13 +30,14 @@ type MindMapDetailsProps = {
   size: Size
   onToggle: () => void
   onClose: () => void
+  edit?: NodeEditHandlers
 }
 
 /**
  * The details of a clicked node: its note, source chips, **Ask in chat** and **Show sources**. A small card next to
  * the node on a desktop, a bottom sheet on a phone. Esc closes it and the focus returns to the node.
  */
-export function MindMapDetails({ item, refsIndex, anchor, size, onToggle, onClose }: MindMapDetailsProps) {
+export function MindMapDetails({ item, refsIndex, anchor, size, onToggle, onClose, edit }: MindMapDetailsProps) {
   const t = useT("notebooks")
   const isMobile = useIsMobile()
   const cardRef = useRef<HTMLDivElement | null>(null)
@@ -79,6 +81,7 @@ export function MindMapDetails({ item, refsIndex, anchor, size, onToggle, onClos
                 </Button>
               ) : null}
             </MindMapNodeActions>
+            {edit ? <MindMapEditActions {...edit} /> : null}
           </DrawerFooter>
         </DrawerContent>
       </Drawer>
@@ -108,7 +111,14 @@ export function MindMapDetails({ item, refsIndex, anchor, size, onToggle, onClos
           <IconX aria-hidden />
         </Button>
       </div>
-      <MindMapDetailsBody node={node} refsIndex={refsIndex} expanded={expanded} onToggle={onToggle} onAsked={onClose} />
+      <MindMapDetailsBody
+        node={node}
+        refsIndex={refsIndex}
+        expanded={expanded}
+        onToggle={onToggle}
+        onAsked={onClose}
+        edit={edit}
+      />
     </div>
   )
 }

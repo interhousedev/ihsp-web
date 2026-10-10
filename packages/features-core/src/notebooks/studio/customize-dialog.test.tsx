@@ -55,16 +55,29 @@ describe("Customize dialogs: one form per kind", () => {
     const dialog = await openForm(user, "Conspect")
 
     await user.click(within(group(dialog, "Detail")).getByRole("button", { name: "Long" }))
-    await user.click(within(group(dialog, "Style")).getByRole("button", { name: "Cornell notes" }))
+    await user.click(
+      within(group(dialog, "Style")).getByRole("button", {
+        name: "Cornell notes",
+      }),
+    )
     await user.selectOptions(within(dialog).getByRole("combobox", { name: "Language" }), "ru")
-    await user.click(within(dialog).getByRole("textbox", { name: "What should it focus on? (optional)" }))
+    await user.click(
+      within(dialog).getByRole("textbox", {
+        name: "What should it focus on? (optional)",
+      }),
+    )
     await user.paste("Only the Calvin cycle")
     await generate(user, dialog)
 
     await waitFor(() => expect(bodies).toHaveLength(1))
     expect(bodies[0]).toEqual({
       kind: "report",
-      options: { format: "conspect", detail: "long", style: "cornell", language: "ru" },
+      options: {
+        format: "conspect",
+        detail: "long",
+        style: "cornell",
+        language: "ru",
+      },
       prompt: "Only the Calvin cycle",
     })
   })
@@ -82,7 +95,10 @@ describe("Customize dialogs: one form per kind", () => {
     await generate(user, dialog)
 
     await waitFor(() => expect(bodies).toHaveLength(1))
-    expect(bodies[0]).toEqual({ kind: "mind_map", options: { detail: "detailed" } })
+    expect(bodies[0]).toEqual({
+      kind: "mind_map",
+      options: { detail: "detailed" },
+    })
   })
 
   it("flash cards: number and difficulty", async () => {
@@ -95,7 +111,10 @@ describe("Customize dialogs: one form per kind", () => {
     await generate(user, dialog)
 
     await waitFor(() => expect(bodies).toHaveLength(1))
-    expect(bodies[0]).toEqual({ kind: "flashcards", options: { count: "more", difficulty: "hard" } })
+    expect(bodies[0]).toEqual({
+      kind: "flashcards",
+      options: { count: "more", difficulty: "hard" },
+    })
   })
 
   it("quiz: number, difficulty and question types", async () => {
@@ -111,7 +130,11 @@ describe("Customize dialogs: one form per kind", () => {
     await waitFor(() => expect(bodies).toHaveLength(1))
     expect(bodies[0]).toEqual({
       kind: "quiz",
-      options: { count: "fewer", difficulty: "easy", types: ["single", "true_false"] },
+      options: {
+        count: "fewer",
+        difficulty: "easy",
+        types: ["single", "true_false"],
+      },
     })
   })
 
@@ -135,11 +158,17 @@ describe("Customize dialogs: one form per kind", () => {
     const { user } = renderNotebook(<StudioPanel notebook={notebookDetail} />)
     const dialog = await openForm(user, "Data table")
 
-    const rows = within(dialog).getByRole("spinbutton", { name: "Maximum rows" })
+    const rows = within(dialog).getByRole("spinbutton", {
+      name: "Maximum rows",
+    })
     expect(rows).toHaveValue(25)
     await user.clear(rows)
     await user.type(rows, "99")
-    await user.click(within(dialog).getByRole("textbox", { name: "What should it focus on? (optional)" }))
+    await user.click(
+      within(dialog).getByRole("textbox", {
+        name: "What should it focus on? (optional)",
+      }),
+    )
     await user.paste("Columns: year, event, place")
     await generate(user, dialog)
 
@@ -156,12 +185,19 @@ describe("Customize dialogs: one form per kind", () => {
     const { user } = renderNotebook(<StudioPanel notebook={notebookDetail} />)
     const dialog = await openForm(user, "Slide deck")
 
-    await user.click(within(group(dialog, "Format")).getByRole("button", { name: "Detailed deck" }))
+    await user.click(
+      within(group(dialog, "Format")).getByRole("button", {
+        name: "Detailed deck",
+      }),
+    )
     await user.click(within(group(dialog, "Length")).getByRole("button", { name: "Long" }))
     await generate(user, dialog)
 
     await waitFor(() => expect(bodies).toHaveLength(1))
-    expect(bodies[0]).toEqual({ kind: "slides", options: { format: "detailed", length: "long" } })
+    expect(bodies[0]).toEqual({
+      kind: "slides",
+      options: { format: "detailed", length: "long" },
+    })
   })
 
   it("infographic: orientation, detail and one of five styles", async () => {
@@ -171,7 +207,11 @@ describe("Customize dialogs: one form per kind", () => {
 
     const styles = within(group(dialog, "Style")).getAllByRole("button")
     expect(styles.map((button) => button.textContent)).toEqual(["Clean", "Sketch", "Bento", "Scientific", "Playful"])
-    await user.click(within(group(dialog, "Orientation")).getByRole("button", { name: "Landscape" }))
+    await user.click(
+      within(group(dialog, "Orientation")).getByRole("button", {
+        name: "Landscape",
+      }),
+    )
     await user.click(within(group(dialog, "Detail")).getByRole("button", { name: "Concise" }))
     await user.click(within(group(dialog, "Style")).getByRole("button", { name: "Playful" }))
     await generate(user, dialog)
@@ -179,14 +219,20 @@ describe("Customize dialogs: one form per kind", () => {
     await waitFor(() => expect(bodies).toHaveLength(1))
     expect(bodies[0]).toEqual({
       kind: "infographic",
-      options: { orientation: "landscape", detail: "concise", style: "playful" },
+      options: {
+        orientation: "landscape",
+        detail: "concise",
+        style: "playful",
+      },
     })
   })
 
   it("keeps the chosen button pressed and never switches the last one off", async () => {
     const { user } = renderNotebook(<StudioPanel notebook={notebookDetail} />)
     const dialog = await openForm(user, "Flash cards")
-    const standard = within(group(dialog, "Number")).getByRole("button", { name: "Standard" })
+    const standard = within(group(dialog, "Number")).getByRole("button", {
+      name: "Standard",
+    })
 
     await user.click(standard)
 
@@ -209,19 +255,27 @@ describe("Customize dialogs: common fields", () => {
     ).toEqual(["Auto", "Oʻzbekcha", "Русский", "English"])
     await generate(user, dialog)
     await waitFor(() => expect(bodies).toHaveLength(1))
-    expect(bodies[0]).toEqual({ kind: "mind_map", options: { detail: "overview" } })
+    expect(bodies[0]).toEqual({
+      kind: "mind_map",
+      options: { detail: "overview" },
+    })
 
     const again = await openForm(user, "Mind map")
     await user.selectOptions(within(again).getByRole("combobox", { name: "Language" }), "uz")
     await generate(user, again)
     await waitFor(() => expect(bodies).toHaveLength(2))
-    expect(bodies[1]).toEqual({ kind: "mind_map", options: { detail: "overview", language: "uz" } })
+    expect(bodies[1]).toEqual({
+      kind: "mind_map",
+      options: { detail: "overview", language: "uz" },
+    })
   })
 
   it("limits the focus text to 1000 characters and counts them", async () => {
     const { user } = renderNotebook(<StudioPanel notebook={notebookDetail} />)
     const dialog = await openForm(user, "Quiz")
-    const focus = within(dialog).getByRole("textbox", { name: "What should it focus on? (optional)" })
+    const focus = within(dialog).getByRole("textbox", {
+      name: "What should it focus on? (optional)",
+    })
 
     expect(focus).toHaveAttribute("maxlength", "1000")
     expect(within(dialog).getByText("0 / 1000")).toBeInTheDocument()
@@ -245,7 +299,11 @@ describe("Customize dialogs: common fields", () => {
     const { user } = renderNotebook(<StudioPanel notebook={notebookDetail} />)
     const first = await openForm(user, "Flash cards")
     await user.click(within(group(first, "Number")).getByRole("button", { name: "More" }))
-    await user.click(within(first).getByRole("textbox", { name: "What should it focus on? (optional)" }))
+    await user.click(
+      within(first).getByRole("textbox", {
+        name: "What should it focus on? (optional)",
+      }),
+    )
     await user.paste("Dates only")
     await user.click(within(first).getByRole("button", { name: "Cancel" }))
     await waitFor(() => expect(screen.queryByRole("dialog")).not.toBeInTheDocument())
@@ -256,7 +314,11 @@ describe("Customize dialogs: common fields", () => {
       "aria-pressed",
       "true",
     )
-    expect(within(second).getByRole("textbox", { name: "What should it focus on? (optional)" })).toHaveValue("")
+    expect(
+      within(second).getByRole("textbox", {
+        name: "What should it focus on? (optional)",
+      }),
+    ).toHaveValue("")
   })
 
   it("sends nothing when the dialog is cancelled", async () => {
@@ -279,9 +341,16 @@ describe("Customize dialogs: common fields", () => {
             title: "Quota",
             status: 429,
             message_key: "notebooks-quota-exceeded",
-            params: { kind: "quiz", limit: 20, resets_at: "2026-10-08T00:00:00Z" },
+            params: {
+              kind: "quiz",
+              limit: 20,
+              resets_at: "2026-10-08T00:00:00Z",
+            },
           },
-          { status: 429, headers: { "Content-Type": "application/problem+json" } },
+          {
+            status: 429,
+            headers: { "Content-Type": "application/problem+json" },
+          },
         ),
       ),
     )
@@ -295,7 +364,10 @@ describe("Customize dialogs: common fields", () => {
   })
 
   it("can open the form without a selected source but cannot generate", async () => {
-    const noSources: NotebookDetail = { ...notebookDetail, selected_source_count: 0 }
+    const noSources: NotebookDetail = {
+      ...notebookDetail,
+      selected_source_count: 0,
+    }
     const { user } = renderNotebook(<StudioPanel notebook={noSources} />)
     const dialog = await openForm(user, "Quiz")
 
@@ -309,14 +381,20 @@ describe("Customize dialogs: common fields", () => {
     const dialog = await openForm(user, "Quiz")
     expect(within(dialog).getByRole("button", { name: "Generate" })).toBeEnabled()
 
-    Object.defineProperty(window.navigator, "onLine", { configurable: true, get: () => false })
+    Object.defineProperty(window.navigator, "onLine", {
+      configurable: true,
+      get: () => false,
+    })
     act(() => {
       window.dispatchEvent(new Event("offline"))
     })
 
     await waitFor(() => expect(within(dialog).getByRole("button", { name: "Generate" })).toBeDisabled())
     expect(within(dialog).getByText("You are offline")).toBeInTheDocument()
-    Object.defineProperty(window.navigator, "onLine", { configurable: true, get: () => true })
+    Object.defineProperty(window.navigator, "onLine", {
+      configurable: true,
+      get: () => true,
+    })
     act(() => {
       window.dispatchEvent(new Event("online"))
     })
@@ -350,6 +428,9 @@ describe("Customize dialogs: common fields", () => {
     await generate(user, dialog)
 
     await waitFor(() => expect(bodies).toHaveLength(1))
-    expect(bodies[0]).toEqual({ kind: "flashcards", options: { count: "standard", difficulty: "easy" } })
+    expect(bodies[0]).toEqual({
+      kind: "flashcards",
+      options: { count: "standard", difficulty: "easy" },
+    })
   })
 })

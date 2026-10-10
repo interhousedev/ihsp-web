@@ -38,7 +38,9 @@ describe("UsageDialog", () => {
     useUsage(notebookUsage)
     renderDialog()
 
-    const session = await screen.findByRole("progressbar", { name: "This session" })
+    const session = await screen.findByRole("progressbar", {
+      name: "This session",
+    })
     expect(session).toHaveAttribute("aria-valuenow", "8")
     const day = screen.getByRole("progressbar", { name: "Today" })
     expect(day).toHaveAttribute("aria-valuenow", "10")
@@ -74,13 +76,23 @@ describe("UsageDialog", () => {
     useUsage({
       ...notebookUsage,
       budget: {
-        session: { used: 1_200_000, limit: 1_500_000, resets_at: "2026-10-07T08:00:00Z" },
-        day: { used: 400_000, limit: 4_000_000, resets_at: "2026-10-08T00:00:00Z" },
+        session: {
+          used: 1_200_000,
+          limit: 1_500_000,
+          resets_at: "2026-10-07T08:00:00Z",
+        },
+        day: {
+          used: 400_000,
+          limit: 4_000_000,
+          resets_at: "2026-10-08T00:00:00Z",
+        },
       },
     })
     renderDialog()
 
-    const session = await screen.findByRole("progressbar", { name: "This session" })
+    const session = await screen.findByRole("progressbar", {
+      name: "This session",
+    })
     expect(session.className).toContain("bg-amber-500")
     expect(screen.getByRole("progressbar", { name: "Today" }).className).not.toContain("bg-amber-500")
   })

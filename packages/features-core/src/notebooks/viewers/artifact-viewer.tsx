@@ -3,7 +3,7 @@
 import { keys } from "@ihsp/api"
 import { useT } from "@ihsp/i18n"
 import { StateView } from "@ihsp/ui"
-import { IconInfoCircle } from "@tabler/icons-react"
+import { IconInfoCircle } from "@ihsp/ui"
 import { useQueryClient } from "@tanstack/react-query"
 import { useEffect, useId, useState } from "react"
 import { useArtifact } from "../api/use-artifacts"
@@ -44,7 +44,9 @@ export function ArtifactViewer({ notebookId, artifactId }: ArtifactViewerProps) 
   const settled = artifact ? `${artifact.id}:${artifact.status}` : null
   useEffect(() => {
     if (settled === null) return
-    void queryClient.invalidateQueries({ queryKey: keys.notebooks.artifacts(notebookId) })
+    void queryClient.invalidateQueries({
+      queryKey: keys.notebooks.artifacts(notebookId),
+    })
   }, [queryClient, notebookId, settled])
 
   const active = status === "queued" || status === "generating"
@@ -69,6 +71,8 @@ export function ArtifactViewer({ notebookId, artifactId }: ArtifactViewerProps) 
               notebookId={notebookId}
               artifactId={artifact.id}
               title={artifact.title}
+              kind={artifact.kind}
+              status={artifact.status}
               onDeleted={() => {
                 setRemoved(true)
                 closeViewer()
