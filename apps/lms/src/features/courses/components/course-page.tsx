@@ -7,6 +7,7 @@ import { useQuery } from "@tanstack/react-query"
 import { QueryState } from "../../shared/components/query-state"
 import { StaffList } from "../../shared/components/staff-list"
 import { StepikScope } from "../../shared/components/stepik-scope"
+import { CourseNotebookButton } from "./course-notebook-button"
 import { CourseOutline } from "./course-outline"
 import { CoursePromoCard } from "./course-promo-card"
 
@@ -27,6 +28,8 @@ function CourseBody({ page }: { page: CoursePageData }) {
             </AlertDescription>
           </Alert>
         ) : null}
+
+        {page.enrolled ? <CourseNotebookButton courseId={page.id} /> : null}
 
         {page.description ? (
           <section aria-labelledby="course-about" className="flex flex-col gap-3">

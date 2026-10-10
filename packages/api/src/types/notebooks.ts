@@ -130,7 +130,7 @@ export type NotebookSummary = {
 };
 /** How a notebook came to be: made by hand, kept in sync with a subject or a lesson, or the workspace of an LMS course. */
 export type NotebookOrigin =
-  "manual" | "subject_auto" | "lesson_auto" | "course";
+  "manual" | "subject_auto" | "lesson_auto" | "course" | "course_student";
 export type NotebookItem = {
   id: string;
   title: string;

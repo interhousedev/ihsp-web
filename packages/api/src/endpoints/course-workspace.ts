@@ -11,11 +11,16 @@ import type {
   CourseWorkspace,
   CourseWorkspaceBody,
 } from "../types/course-workspace"
-import type { NotebookUsage } from "../types/notebooks"
+import type { NotebookItem, NotebookUsage } from "../types/notebooks"
 
 /** POST /v1/notebooks/course-workspaces — get-or-create the workspace of a course (creating needs `edit`). */
 export function postCourseWorkspace(body: CourseWorkspaceBody, opts?: RequestOptions): Promise<CourseWorkspace> {
   return api.post<CourseWorkspace>("/v1/notebooks/course-workspaces", body, opts)
+}
+
+/** POST /v1/notebooks/course/{course_id} — the enrolled student's notebook of a course (created when missing). */
+export function postCourseNotebook(courseId: string, opts?: RequestOptions): Promise<NotebookItem> {
+  return api.post<NotebookItem>(`/v1/notebooks/course/${seg(courseId)}`, undefined, opts)
 }
 
 /** GET /v1/notebooks/{id}/usage — the budget and quotas of the pool that applies to this notebook. */

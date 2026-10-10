@@ -5,11 +5,13 @@ import {
   keys,
   postApplyArtifact,
   postApplyPreview,
+  postCourseNotebook,
   postCourseWorkspace,
   type ApplyBody,
   type ApplyPreview,
   type ApplyResult,
   type CourseWorkspace,
+  type NotebookItem,
 } from "@ihsp/api"
 import { useMutation, useQuery, useQueryClient, type QueryClient } from "@tanstack/react-query"
 
@@ -17,6 +19,13 @@ import { useMutation, useQuery, useQueryClient, type QueryClient } from "@tansta
 export function useOpenCourseWorkspace() {
   return useMutation<CourseWorkspace, unknown, string>({
     mutationFn: (courseId) => postCourseWorkspace({ course_id: courseId }),
+  })
+}
+
+/** Get-or-create the caller's own notebook of an LMS course they are enrolled in (its materials are the sources). */
+export function useOpenCourseNotebook() {
+  return useMutation<NotebookItem, unknown, string>({
+    mutationFn: (courseId) => postCourseNotebook(courseId),
   })
 }
 

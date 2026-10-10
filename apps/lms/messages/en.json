@@ -6,6 +6,7 @@
     "catalog": "Catalog",
     "my": "My courses",
     "join": "Enter code",
+    "notebooks": "Notebooks",
     "admin": "Create course",
     "groupLearn": "Learn",
     "groupManage": "Manage"
@@ -77,7 +78,9 @@
     "yourProgress": "Your progress",
     "progressPoints": "{earned} of {total} points",
     "progressLessons": "{done} of {total} lessons",
-    "facts": "Course facts"
+    "facts": "Course facts",
+    "notebook": "Course notebook",
+    "notebookFailed": "The course notebook could not be opened. Try again."
   },
   "join": {
     "title": "Join a course",
@@ -905,6 +908,13 @@
       "remove": "Remove",
       "removeTitle": "Remove this course creator?"
     }
+  },
+  "courseNotebooks": {
+    "title": "Notebooks",
+    "empty": "No course notebooks yet. Each course you join gets one.",
+    "sources": "{count, plural, one {# source} other {# sources}}",
+    "meta": "{sources} · opened {when}",
+    "hint": "A course notebook follows the course: its lessons, videos, files and library items are its sources, and they update when the course is published."
   },
   "workspace": {
     "openFailed": "The AI workspace could not be opened"
