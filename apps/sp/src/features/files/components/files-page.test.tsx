@@ -46,7 +46,7 @@ describe("FilesPage: quota and list (UF-WEB-18, WEB-21, FILE-5, FILE-6)", () => 
     const pdf = rowOf("kinematics-notes.pdf")
     expect(within(pdf).getByText("Ready for assistant")).toBeInTheDocument()
     expect(within(pdf).getByText("Chat: Kinematics revision")).toBeInTheDocument()
-    expect(within(pdf).getByText("Lesson: Physics, 7 Oct")).toBeInTheDocument()
+    expect(await within(pdf).findByText("Lesson: Physics, 7 October")).toBeInTheDocument()
     expect(within(rowOf("installer.exe")).getByText("Rejected: This type of file is not allowed.")).toBeInTheDocument()
     expect(within(rowOf("lab-setup.jpg")).getByText("Link: lab-setup.jpg")).toBeInTheDocument()
   })
@@ -224,7 +224,7 @@ describe("FilesPage: rename, download, delete (UF-WEB-18 step 4)", () => {
 
     expect(within(dialog).getByText("This file is used. These items will stop working:")).toBeInTheDocument()
     expect(within(dialog).getByText("Chat: Kinematics revision")).toBeInTheDocument()
-    expect(within(dialog).getByText("Lesson: Physics, 7 Oct")).toBeInTheDocument()
+    expect(await within(dialog).findByText("Lesson: Physics, 7 October")).toBeInTheDocument()
     expect(deleted).toBe("")
 
     await user.click(within(dialog).getByRole("button", { name: "Delete" }))

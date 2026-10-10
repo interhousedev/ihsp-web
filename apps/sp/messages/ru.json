@@ -3,6 +3,22 @@
     "name": "Портал студента IHSP"
   },
   "nav": {
+    "short": {
+      "today": "Сегодня",
+      "timetable": "Уроки",
+      "subjects": "Предметы",
+      "grades": "Оценки",
+      "attendance": "Посещ.",
+      "homework": "Задания",
+      "exams": "Экзамены",
+      "assistant": "Помощник",
+      "notebooks": "Блокноты",
+      "flashcards": "Карточки",
+      "files": "Файлы",
+      "links": "Ссылки",
+      "notifications": "Уведомл.",
+      "settings": "Настройки"
+    },
     "today": "Сегодня",
     "timetable": "Расписание",
     "subjects": "Предметы",
@@ -25,6 +41,7 @@
     "groupAccount": "Аккаунт"
   },
   "attendanceStates": {
+    "late": "Опоздал",
     "present": "Присутствовал",
     "absent": "Отсутствовал",
     "excused": "По уважительной причине",

@@ -14,14 +14,14 @@ export function GradesCards({ grades }: { grades: SemesterGrades }) {
   return (
     <ul className="flex flex-col gap-3">
       {grades.rows.map((row) => (
-        <li key={row.subject.id} data-testid="grade-card" className="flex flex-col gap-1">
-          {/* oxlint-disable-next-line jsx-a11y/control-has-associated-label -- the card text is the link name */}
-          <Link
-            href={subjectMarksHref(row.subject.id, grades.semester)}
-            className="focus-visible:ring-ring block rounded-xl outline-none focus-visible:ring-2"
-          >
-            <Card size="sm">
-              <CardContent className="flex flex-col gap-2">
+        <li key={row.subject.id} data-testid="grade-card">
+          <Card size="sm">
+            <CardContent className="flex flex-col gap-2">
+              {/* oxlint-disable-next-line jsx-a11y/control-has-associated-label -- the card text is the link name */}
+              <Link
+                href={subjectMarksHref(row.subject.id, grades.semester)}
+                className="focus-visible:ring-ring flex flex-col gap-2 rounded-lg outline-none focus-visible:ring-2"
+              >
                 <div className="flex items-center justify-between gap-3">
                   <span className="font-semibold break-words">{row.subject.name}</span>
                   <MarkBadge mark={row.semester_mark} size="lg" />
@@ -41,17 +41,17 @@ export function GradesCards({ grades }: { grades: SemesterGrades }) {
                     </div>
                   ))}
                 </dl>
-              </CardContent>
-            </Card>
-          </Link>
-          <LinkButton
-            href={plannerHref(row.subject.id, grades.semester)}
-            variant="ghost"
-            className="self-end"
-            aria-label={t("planFor", { subject: row.subject.name })}
-          >
-            {t("plan")}
-          </LinkButton>
+              </Link>
+              <LinkButton
+                href={plannerHref(row.subject.id, grades.semester)}
+                variant="ghost"
+                className="self-end"
+                aria-label={t("planFor", { subject: row.subject.name })}
+              >
+                {t("plan")}
+              </LinkButton>
+            </CardContent>
+          </Card>
         </li>
       ))}
     </ul>

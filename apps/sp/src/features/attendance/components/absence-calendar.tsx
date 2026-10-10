@@ -21,7 +21,7 @@ export function AbsenceCalendar({
 }) {
   const t = useT("attendance.calendar")
   const f = useFormatters()
-  const [month, setMonth] = useState(monthOf(to))
+  const [month, setMonth] = useState(monthOf(to < todayIso() ? to : todayIso()))
   const absences = new Map(days.map((day) => [day.date, day.absences]))
   const today = todayIso()
   const weeks = monthGrid(month)

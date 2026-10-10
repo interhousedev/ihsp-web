@@ -38,7 +38,7 @@ export function SemesterGradesTab() {
       <QueryState query={query} rows={4}>
         {(grades) => (
           <>
-            <Stat label={t("gpa")} value={grades.gpa === null ? "–" : grades.gpa.toFixed(2)} className="max-w-xs" />
+            <Stat label={t("gpa")} value={grades.gpa === null ? "–" : grades.gpa.toFixed(2)} className="md:max-w-xs" />
             {grades.synced_at === null && grades.rows.length === 0 ? (
               <p className="text-muted-foreground text-sm">{t("importing")}</p>
             ) : grades.rows.length === 0 ? (

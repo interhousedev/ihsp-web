@@ -73,6 +73,9 @@ export function TimetableLessonCard({
           {shown.attendance === "absent" ? (
             <span className="size-2.5 rounded-full bg-red-600" role="img" aria-label={ta("absent")} />
           ) : null}
+          {shown.attendance === "late" ? (
+            <span className="size-2.5 rounded-full bg-amber-500" role="img" aria-label={ta("late")} />
+          ) : null}
           {shown.mark !== null ? <MarkBadge mark={shown.mark} size="sm" /> : null}
         </span>
       ) : null}

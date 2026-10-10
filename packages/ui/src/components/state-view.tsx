@@ -16,6 +16,8 @@ export type StateViewProps = {
   emptyText?: string
   /** For `error`: the failed request's error; its API `type` picks the message (`errors.<type>`). */
   error?: unknown
+  /** Icon for `empty` (e.g. `<Icons.files aria-hidden />`); defaults to the registry's inbox. */
+  icon?: ReactNode
   /** Optional call to action under an empty state. */
   action?: ReactNode
   /** Skeleton rows shown for `loading` (default 3). */
@@ -40,7 +42,7 @@ function LoadingState({ rows, className }: { rows: number; className?: string })
 }
 
 /** The four non-content states of every page: loading skeleton, empty, error with retry, offline. */
-export function StateView({ state, onRetry, emptyText, error, action, rows = 3, className }: StateViewProps) {
+export function StateView({ state, onRetry, emptyText, error, action, icon, rows = 3, className }: StateViewProps) {
   const t = useT()
   const errorMessage = useErrorMessage()
 
@@ -48,7 +50,7 @@ export function StateView({ state, onRetry, emptyText, error, action, rows = 3, 
 
   const view = {
     empty: {
-      icon: <Icons.circle aria-hidden />,
+      icon: icon ?? <Icons.inbox aria-hidden />,
       title: emptyText ?? t("state.emptyTitle"),
       description: emptyText ? undefined : t("state.emptyDescription"),
     },

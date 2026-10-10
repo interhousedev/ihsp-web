@@ -112,4 +112,16 @@ describe("month grid", () => {
     expect(shiftMonth("2026-12", 1)).toBe("2027-01")
     expect(shiftMonth("2026-01", -1)).toBe("2025-12")
   })
+
+  test("the calendar opens on the current month when the period ends in the future", async () => {
+    server.use(
+      http.get(apiUrl("/v1/me/attendance"), () =>
+        HttpResponse.json({ from: "2026-09-02", to: "2026-12-20", summary: [], days: [], missed: [], not_taken: 0 }),
+      ),
+    )
+    renderSp(<AttendancePage />, { route: "/attendance/" })
+
+    expect(await screen.findByText("October 2026")).toBeInTheDocument()
+    expect(screen.queryByText("December 2026")).not.toBeInTheDocument()
+  })
 })

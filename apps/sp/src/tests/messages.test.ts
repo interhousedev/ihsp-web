@@ -119,6 +119,22 @@ describe("keys used in the code", () => {
 
   test("the keys built at run time have messages for every value", () => {
     const expected: Record<string, string[]> = {
+      "nav.short.${id}": [
+        "today",
+        "timetable",
+        "subjects",
+        "grades",
+        "attendance",
+        "homework",
+        "exams",
+        "assistant",
+        "notebooks",
+        "flashcards",
+        "files",
+        "links",
+        "notifications",
+        "settings",
+      ],
       "notifications.filters.${value}": ["all", "activity", "announcements"],
       "notificationSettings.marks.type.${value}": ["lesson", "midterm", "final"],
       "today.alerts.actions.${alert.kind}": [

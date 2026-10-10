@@ -23,6 +23,7 @@
       "label": "Qayerda ishlatilgan",
       "link": "Havola",
       "lesson": "Dars",
+      "lessonUnknown": "dars",
       "chat": "Suhbat"
     },
     "row": {

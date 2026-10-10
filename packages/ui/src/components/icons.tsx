@@ -1,5 +1,6 @@
 import {
   IconActivity,
+  IconInbox,
   IconCopy,
   IconWorld,
   IconBook,
@@ -132,6 +133,7 @@ export function RegistryIcon({ name, size = "sm", stroke = ICON_STROKE, ...props
 export const Icons = {
   // General
   alertCircle: IconAlertCircle,
+  inbox: IconInbox,
   warning: IconAlertTriangle,
   arrowRight: IconArrowRight,
   check: IconCheck,

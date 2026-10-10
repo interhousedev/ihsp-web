@@ -47,6 +47,19 @@ describe("toPaletteResults", () => {
     expect(rows.some((row) => row.section === "Library")).toBe(false)
   })
 
+  it("does not repeat the subject when a lesson has no topic", () => {
+    const lesson = searchResults.lessons[0]!
+    const rows = toPaletteResults(
+      { ...emptySearchResults, lessons: [{ ...lesson, topic: null }] },
+      LABELS,
+      FORMAT,
+      studentRoutes(""),
+    )
+
+    expect(rows[0]?.title).toBe(lesson.subject.name)
+    expect(rows[0]?.subtitle).toBe(lesson.date)
+  })
+
   it("returns nothing for empty results", () => {
     expect(toPaletteResults(emptySearchResults, LABELS, FORMAT, studentRoutes("https://library.test"))).toEqual([])
   })

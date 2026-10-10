@@ -13,7 +13,7 @@ export function ReviewStatsSummary({ stats }: { stats: FlashcardStats }) {
     { key: "currentStreak", value: t("days", { count: stats.current_streak }) },
   ] as const
   return (
-    <dl className="text-muted-foreground flex flex-wrap justify-center gap-x-4 gap-y-1 text-center text-xs">
+    <dl className="text-muted-foreground flex w-full flex-wrap justify-center gap-x-4 gap-y-1 text-center text-xs">
       {items.map((item) => (
         <div key={item.key} className="flex gap-1">
           <dt>{t(item.key)}:</dt>

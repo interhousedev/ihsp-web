@@ -23,6 +23,7 @@
       "label": "Used in",
       "link": "Link",
       "lesson": "Lesson",
+      "lessonUnknown": "lesson",
       "chat": "Chat"
     },
     "row": {

@@ -3,6 +3,22 @@
     "name": "IHSP talaba portali"
   },
   "nav": {
+    "short": {
+      "today": "Bugun",
+      "timetable": "Jadval",
+      "subjects": "Fanlar",
+      "grades": "Baholar",
+      "attendance": "Davomat",
+      "homework": "Vazifa",
+      "exams": "Imtihon",
+      "assistant": "Yordamchi",
+      "notebooks": "Daftar",
+      "flashcards": "Kartalar",
+      "files": "Fayllar",
+      "links": "Havolalar",
+      "notifications": "Xabarlar",
+      "settings": "Sozlama"
+    },
     "today": "Bugun",
     "timetable": "Dars jadvali",
     "subjects": "Fanlar",
@@ -25,6 +41,7 @@
     "groupAccount": "Hisob"
   },
   "attendanceStates": {
+    "late": "Kech qoldi",
     "present": "Qatnashgan",
     "absent": "Qatnashmagan",
     "excused": "Sababli",

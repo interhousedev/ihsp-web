@@ -30,7 +30,7 @@ export function MobileTabBar({ groups }: { groups: NavGroup[] }) {
   }, [groups])
   const tabs = ids.flatMap((id) => {
     const item = byUrl.get(DESTINATION_URLS[id])
-    return item ? [item] : []
+    return item ? [{ ...item, short: t(`nav.short.${id}`) }] : []
   })
   const tabUrls = new Set(tabs.map((item) => item.url))
   const rest = groups
@@ -58,7 +58,7 @@ export function MobileTabBar({ groups }: { groups: NavGroup[] }) {
               className={cn(itemClass, active ? "text-primary" : "text-muted-foreground")}
             >
               <NavIconView icon={item.icon} className="size-6" />
-              <span className="max-w-full truncate">{item.title}</span>
+              <span className="max-w-full truncate">{item.short}</span>
             </Link>
           )
         })}

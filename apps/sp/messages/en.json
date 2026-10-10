@@ -3,6 +3,22 @@
     "name": "IHSP Student Portal"
   },
   "nav": {
+    "short": {
+      "today": "Today",
+      "timetable": "Timetable",
+      "subjects": "Subjects",
+      "grades": "Grades",
+      "attendance": "Absences",
+      "homework": "Tasks",
+      "exams": "Exams",
+      "assistant": "Assistant",
+      "notebooks": "Notebooks",
+      "flashcards": "Cards",
+      "files": "Files",
+      "links": "Links",
+      "notifications": "Alerts",
+      "settings": "Settings"
+    },
     "today": "Today",
     "timetable": "Timetable",
     "subjects": "Subjects",
@@ -25,6 +41,7 @@
     "groupAccount": "Account"
   },
   "attendanceStates": {
+    "late": "Late",
     "present": "Present",
     "absent": "Absent",
     "excused": "Excused",

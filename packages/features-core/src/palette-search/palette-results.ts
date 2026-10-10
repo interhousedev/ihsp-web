@@ -84,7 +84,7 @@ export function toPaletteResults(
       rows.push({
         id: `lesson-${item.id}`,
         title: item.topic ?? item.subject.name,
-        subtitle: `${item.subject.name} · ${format.date(item.date)}`,
+        subtitle: item.topic ? `${item.subject.name} · ${format.date(item.date)}` : format.date(item.date),
         section: labels.lessons,
         url: lesson(item.id),
         icon: "timetable",

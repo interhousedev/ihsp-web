@@ -3,7 +3,7 @@
 import type { FlashcardStats } from "@ihsp/api"
 import { todayIso, useFormatters, useT } from "@ihsp/i18n"
 import { Button, Icons, cn } from "@ihsp/ui"
-import { useMemo } from "react"
+import { useEffect, useMemo, useRef } from "react"
 import { buildHeatmapWeeks, monthStarts, type HeatmapLevel } from "../utils/heatmap"
 import { ReviewStatsSummary } from "./review-stats-summary"
 
@@ -35,6 +35,19 @@ export function ReviewHeatmap({ stats, onYearChange, today = todayIso(), classNa
   const firstYear = stats.first_review_date ? Number(stats.first_review_date.slice(0, 4)) : thisYear
   const weeks = useMemo(() => buildHeatmapWeeks(stats.year, stats.days, today), [stats.year, stats.days, today])
   const months = useMemo(() => monthStarts(weeks), [weeks])
+  const scroller = useRef<HTMLDivElement>(null)
+
+  // Start scrolled so the current month (today's column, or the end of a past year) is in view.
+  useEffect(() => {
+    const el = scroller.current
+    if (!el) return
+    const target = el.querySelector<HTMLElement>(`[data-date="${today}"]`)
+    if (target && stats.year === thisYear) {
+      el.scrollLeft = Math.max(0, target.offsetLeft - el.clientWidth / 2)
+    } else {
+      el.scrollLeft = el.scrollWidth
+    }
+  }, [today, stats.year, thisYear, weeks.length])
 
   const weekdayLabels = Array.from({ length: 7 }, (_, index) => {
     const day = new Date(Date.UTC(2024, 0, 1 + index)).toISOString().slice(0, 10)
@@ -91,10 +104,11 @@ export function ReviewHeatmap({ stats, onYearChange, today = todayIso(), classNa
       <div
         role="img"
         aria-label={t("summary", { year: stats.year, count: stats.total_reviews, days: stats.days_studied })}
-        className="max-w-full overflow-x-auto pb-1"
+        ref={scroller}
+        className="relative w-full max-w-full overflow-x-auto pb-1"
         data-testid="review-heatmap"
       >
-        <div className="flex gap-1">
+        <div className="mx-auto flex w-max gap-1">
           <div className="text-muted-foreground flex flex-col gap-1 pe-1 text-[10px] leading-3" aria-hidden>
             {weekdayLabels.map((label, index) => (
               <span key={index} className="flex h-3 items-center">

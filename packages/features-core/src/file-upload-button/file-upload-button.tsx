@@ -2,7 +2,7 @@
 
 import { uploadFile, type FileItem, type FileUploadPurpose } from "@ihsp/api"
 import { useErrorMessage, useT } from "@ihsp/i18n"
-import { Button, Progress } from "@ihsp/ui"
+import { Button, Progress, cn } from "@ihsp/ui"
 import { IconAlertTriangle, IconPaperclip, IconUpload, IconX } from "@ihsp/ui"
 import { useRef, useState, type ChangeEvent } from "react"
 import { useRejectReason } from "./use-reject-reason"
@@ -24,6 +24,7 @@ export type FileUploadButtonProps = {
   /** Paperclip button without text (the label stays as the accessible name). */
   iconOnly?: boolean
   variant?: "default" | "outline" | "secondary" | "ghost"
+  className?: string
 }
 
 type UploadRow = {
@@ -47,6 +48,7 @@ export function FileUploadButton({
   label,
   iconOnly = false,
   variant = "outline",
+  className,
 }: FileUploadButtonProps) {
   const t = useT("files.upload")
   const errorMessage = useErrorMessage()
@@ -110,7 +112,7 @@ export function FileUploadButton({
         type="button"
         variant={variant}
         size={iconOnly ? "icon" : "default"}
-        className={iconOnly ? "size-11" : "min-h-11 px-4"}
+        className={cn(iconOnly ? "size-11" : "min-h-11 px-4", className)}
         disabled={disabled}
         aria-label={iconOnly ? text : undefined}
         onClick={() => inputRef.current?.click()}

@@ -24,8 +24,9 @@ export function FilesPage() {
   return (
     <PageContainer title={t("title")}>
       <StorageCard />
-      <div className="w-full max-w-md">
+      <div>
         <FileUploadButton
+          className="rounded-full px-5"
           purpose="ai_upload"
           multiple
           label={t("upload")}

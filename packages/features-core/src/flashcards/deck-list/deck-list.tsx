@@ -65,7 +65,7 @@ export function DeckList({
   const fileInput = useRef<HTMLInputElement>(null)
   const [sharedOpen, setSharedOpen] = useState(false)
   const hasGear = Boolean(onDeckOptions || onDeckEdit || onDeckDelete)
-  const buttonClass = "min-h-11 rounded-full px-5 text-xs font-semibold tracking-wide uppercase md:min-h-9"
+  const buttonClass = "min-h-11 rounded-full px-5 text-xs font-semibold md:min-h-9"
 
   return (
     <div className={cn("mx-auto flex w-full max-w-3xl flex-col gap-6", className)}>
