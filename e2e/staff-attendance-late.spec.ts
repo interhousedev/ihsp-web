@@ -31,7 +31,10 @@ test("attendance: mark a student late and another absent", async ({ page }) => {
     await expect(page.getByRole("region", { name: "Attendance" })).toBeVisible()
     await page.getByRole("button", { name: "Everyone present" }).click()
     const group = (s: { last_name: string; first_name: string }) =>
-      page.getByRole("radiogroup", { name: new RegExp(`${s.last_name}`) }).filter({ hasText: s.first_name }).first()
+      page
+        .getByRole("radiogroup", { name: new RegExp(`${s.last_name}`) })
+        .filter({ hasText: s.first_name })
+        .first()
 
     await group(a).getByRole("radio", { name: "Late" }).click()
     await expect(group(a).getByRole("radio", { name: "Late" })).toHaveAttribute("aria-checked", "true")

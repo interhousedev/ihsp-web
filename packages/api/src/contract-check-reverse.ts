@@ -11,18 +11,18 @@ import type { getAiChat, getAiChats, getAiUsage, getAiWebSearch, patchAiChat, po
 import type { getAdminAssessments, getMeAssessments, getMeSubjectPlanner, getStaffAssessments, patchAdminAssessment, patchStaffAssessment, postAdminAssessment, postMeAssessment, postStaffAssessment } from "./endpoints/assessments"
 import type { getAdminBroadcast, getAdminBroadcasts, patchAdminBroadcast, postAdminBroadcastCancel, postAdminBroadcastSend, postAdminBroadcasts, postAdminBroadcastsAudienceCount } from "./endpoints/broadcasts"
 import type { deleteStaffLessonHomework, getAdminAttendance, getAdminAttendanceMissing, getMeAttendance, getMeHomework, getMeLesson, getMeToday, getStaffGroupAttendance, getStaffGroupStudents, getStaffJournal, getStaffJournalOptions, getStaffLesson, getStaffToday, postStaffJournalToggle, putMeHomeworkDone, putMeHomeworkNote, putStaffLessonAttendance, putStaffLessonAttendanceExcuse, putStaffLessonHomework, putStaffLessonTopic } from "./endpoints/classwork"
-import type { getAdminDashboard, getAdminGroupsStats, getAdminStudent, getAdminTeacherProfile, getMeAlerts, getMeSearch, postMeCalendarToken, postMeOutboundMail } from "./endpoints/composition"
-import type { getCourseSteps, getNotebookUsageOf, postApplyArtifact, postApplyPreview, postCourseWorkspace } from "./endpoints/course-workspace"
+import type { getAdminDashboard, getAdminGroupsStats, getAdminStudent, getAdminTeacherProfile, getMeAlerts, getMeOutboundMail, getMeSearch, postMeCalendarToken, postMeOutboundMail } from "./endpoints/composition"
+import type { getCourseSteps, getNotebookUsageOf, postApplyArtifact, postApplyPreview, postCourseNotebook, postCourseWorkspace } from "./endpoints/course-workspace"
 import type { getMeDashboard, putMeDashboard } from "./endpoints/dashboard"
 import type { deleteFile, getFile, getFileUrl, getMeFiles, getMeStorage, patchFile, postFileComplete, postFiles } from "./endpoints/files"
 import type { getMeFlashcardSet, getMeFlashcardSetStudy, getMeFlashcardSets, getMeFlashcardSetsStats, patchMeFlashcardSet, postMeFlashcardReview, postMeFlashcardSets, postMeFlashcardSetsCopy, putMeFlashcardSetCards } from "./endpoints/flashcards"
-import type { deleteIdMe, getIdActivation, getIdConsent, getIdLogin, getIdLogout, getIdMcpScopes, getIdMe, getIdMeActivity, getIdMeConnectors, getIdMeSessions, getIdMeTelegram, patchIdMePreferences, patchIdMeTelegram, postIdActivation, postIdConsent, postIdLogin, postIdLoginOtp, postIdLoginOtpRequest, postIdMeConnectors, postIdMeEmailChangeConfirm, postIdMeEmisPassword, postIdMeOtpDisable, postIdMeOtpEnableConfirm, postIdRecoveryOtpConfirm, postIdTelegramLogin, postIdTelegramOtpRequest, postIdTelegramStatus } from "./endpoints/id"
-import type { getAdminAudit, getAdminOauthClients, getAdminTeachers, getAdminUser, getAdminUsers, patchAdminTeacher, postAdminOauthClientVerify, postAdminTeacherDeactivate, postAdminTeachers, postAdminUserBlock, postAdminUserMailResume, postAdminUserMailSuspend, postAdminUserResetPassword, postAdminUserRoles, postAdminUserUnblock } from "./endpoints/id-admin"
+import type { deleteIdMe, getIdActivation, getIdConsent, getIdLogin, getIdLogout, getIdMcpScopes, getIdMe, getIdMeActivity, getIdMeConnectors, getIdMeSessions, getIdMeTelegram, patchIdMePreferences, patchIdMeTelegram, postIdActivation, postIdConsent, postIdLogin, postIdLoginOtp, postIdLoginOtpRequest, postIdLoginPassword, postIdMeConnectors, postIdMeEmailChangeConfirm, postIdMeEmisPassword, postIdMeOtpDisable, postIdMeOtpEnableConfirm, postIdRecoveryOtpConfirm, postIdTelegramLogin, postIdTelegramOtpRequest, postIdTelegramStatus } from "./endpoints/id"
+import type { getAdminAudit, getAdminOauthClients, getAdminSettings, getAdminTeachers, getAdminUser, getAdminUsers, patchAdminTeacher, patchAdminUser, postAdminOauthClientVerify, postAdminTeacherDeactivate, postAdminTeachers, postAdminUserBlock, postAdminUserMailResume, postAdminUserMailSuspend, postAdminUserResetPassword, postAdminUserRoles, postAdminUserUnblock, putAdminSettings } from "./endpoints/id-admin"
 import type { getAdminInsights } from "./endpoints/insights"
-import type { getAnnotations, getAnnotationsExport, getLibraryCollection, getLibraryCollections, getLibraryFileUrl, getLibraryItem, getLibraryItemText, getLibraryItems, getLibraryMyGroups, getLibrarySanctions, getLibrarySubjects, getLibraryTopics, getManageBook, getManageBooks, getManageQueue, getManageStats, getManageTopics, getMeLibrary, getMyUploads, getReadingList, getReadingLists, getShelf, getUniLibraryRecord, getUniLibrarySearch, getUniLibraryStatus, getUniLibraryTaxonomies, patchMaterial, postAnnotation, postAnnotationsSync, postLibrarySanction, postManageBook, postManageBookFile, postManageImport, postMaterial, postMaterialFiles, postMaterialSubmit, postMaterialVersion, postModeration, postReadingList, postSuggestion, postUniLibraryPin, putReadingListItems, putShelfEntry } from "./endpoints/library"
+import type { getAnnotations, getAnnotationsExport, getLibraryAuthors, getLibraryCollection, getLibraryCollections, getLibraryFileUrl, getLibraryItem, getLibraryItemText, getLibraryItems, getLibraryMyGroups, getLibrarySanctions, getLibrarySubjects, getLibraryTags, getLibraryTopics, getManageBook, getManageBooks, getManageQueue, getManageStats, getManageSubjects, getManageSuggestion, getManageTopics, getMeLibrary, getMyUploads, getReadingList, getReadingLists, getShelf, getUniLibraryRecord, getUniLibrarySearch, getUniLibraryStatus, getUniLibraryTaxonomies, patchMaterial, postAnnotation, postAnnotationsSync, postLibrarySanction, postManageBook, postManageBookFile, postManageImport, postMaterial, postMaterialFiles, postMaterialSubmit, postMaterialVersion, postModeration, postReadingList, postSuggestion, postUniLibraryPin, putReadingListItems, putShelfEntry } from "./endpoints/library"
 import type { getAdminModerationQueue, getAdminModerationSearch, getLessonResources, getMeLinks, postAdminLinkDisable, postAdminLinkDismissReports, postLessonResourceHide, postLessonResources, postLinkRevoke, postLinks, postShares } from "./endpoints/links"
-import type { getLmsCourseBroadcasts, getLmsCourseCompare, getLmsCourseDraft, getLmsCoursePending, getLmsCoursePreviewStep, getLmsCourseStaff, getLmsCourseVersion, getLmsCourseVersions, getLmsCreators, getLmsStepDiff, getLmsStepDraft, getLmsStepHistory, patchLmsCourseSettings, patchLmsCourseStaff, postLmsCourseBroadcast, postLmsCourseDiscard, postLmsCourseDraftOutline, postLmsCourseInviteCode, postLmsCoursePublish, postLmsCourseStaff, postLmsCourseSteps, postLmsCourseVersionRestore, postLmsCourses, postLmsStepCheckpoints, postLmsStepDiscard, postLmsStepRestore, putLmsCourseDraftMeta, putLmsCreator, putLmsStepDraft } from "./endpoints/lms-authoring"
-import type { getLmsAttempt, getLmsCourse, getLmsCourseStep, getLmsCourseStudents, getLmsCourses, getLmsMyCourses, getLmsStepCardsNext, postLmsAttemptOverride, postLmsAttemptSubmit, postLmsCourseEnroll, postLmsJoin, postLmsStepBlockAttempts, postLmsStepCardReview, postLmsStepViewed, putLmsAttemptAnswers } from "./endpoints/lms-learning"
+import type { getLmsCourseBroadcasts, getLmsCourseCompare, getLmsCourseDraft, getLmsCoursePending, getLmsCoursePreviewStep, getLmsCourseStaff, getLmsCourseVersion, getLmsCourseVersions, getLmsCreators, getLmsStepDiff, getLmsStepDraft, getLmsStepHistory, patchLmsCourseBroadcast, patchLmsCourseSettings, patchLmsCourseStaff, postLmsCourseBroadcast, postLmsCourseDiscard, postLmsCourseDraftOutline, postLmsCourseInviteCode, postLmsCoursePublish, postLmsCourseStaff, postLmsCourseSteps, postLmsCourseVersionRestore, postLmsCourses, postLmsStepCheckpoints, postLmsStepDiscard, postLmsStepRestore, putLmsCourseDraftMeta, putLmsCreator, putLmsStepDraft } from "./endpoints/lms-authoring"
+import type { getLmsAttempt, getLmsCourse, getLmsCourseStep, getLmsCourseStudents, getLmsCourses, getLmsMyCourses, getLmsPreviewStepVideo, getLmsStepCardsNext, getLmsStepVideo, postLmsAttemptOverride, postLmsAttemptSubmit, postLmsCourseEnroll, postLmsJoin, postLmsStepBlockAttempts, postLmsStepCardReview, postLmsStepViewed, putLmsAttemptAnswers } from "./endpoints/lms-learning"
 import type { getAdminSyncRuns, getMeGrades, getMeGradesDay, getMeLessonResults, getMeRecordBook, getMeSubject, getMeSubjectLessons, getMeSubjects, postAdminSyncRun } from "./endpoints/marks"
 import type { getArtifact, getArtifacts, getNotebook, getNotebookAutoSubject, getNotebookChat, getNotebookLabels, getNotebookSearch, getNotebookSource, getNotebookSources, getNotebookUsage, getNotebooks, getPassage, getSourcePassages, patchArtifact, patchNotebook, patchNotebookLabel, patchNotebookSource, postArtifact, postArtifactAsSource, postArtifactAttachToLesson, postArtifactCancel, postArtifactFlashcardSet, postArtifactRetry, postArtifactSaveToFiles, postArtifactSlidesRevise, postNotebook, postNotebookAutoSubject, postNotebookDiscover, postNotebookLabel, postNotebookLabelsAuto, postNotebookMessage, postNotebookRegenerate, postNotebookSourceSync, postNotebookSources, postNotebookSourcesSelect, postSaveNote, putArtifactSlides, putNotebookSourceLabels } from "./endpoints/notebooks"
 import type { getNotifications, getNotificationsUnreadCount } from "./endpoints/notifications"
@@ -31,6 +31,7 @@ import type { getPublicShare, postPublicReports } from "./endpoints/public"
 import type { getPushConfig, postPushSubscription } from "./endpoints/push"
 import type { getInternalEmisProfile, getInternalEmisRatings, getInternalEmisSubjects, postIdReclaimEmail, postIdReclaimEmis, postIdRegisterComplete, postIdRegisterEmail, postIdRegisterEmis } from "./endpoints/registration"
 import type { getAdminGroup, getAdminGroups, getAdminLessons, getAdminRooms, getAdminStudents, getAdminSubjects, getAdminTerms, getAdminTimetable, getMeProfile, getMeTimetable, getStaffGroup, getStaffGroups, getStaffTimetable, patchAdminGroup, patchAdminLesson, patchAdminRoom, patchAdminSubject, patchAdminTerm, patchAdminTimetable, postAdminGroups, postAdminLessons, postAdminRoomArchive, postAdminRoomMerge, postAdminRoomRegeneratePin, postAdminStudentsImport, postAdminStudentsImportConfirm, postAdminSubjects, postAdminTerms, postAdminTimetable, postAdminTimetableCheck, postAdminTimetableCopy, putAdminGroupSubgroups, putStaffGroupSubgroups } from "./endpoints/schedule"
+import type { getAdminTeacherContacts, getMeTeachers, getStaffMeContacts, putAdminTeacherContacts, putStaffMeContacts } from "./endpoints/teachers"
 
 type Method = "get" | "post" | "put" | "patch" | "delete"
 type OperationOf<P extends keyof paths, M extends Method> = paths[P] extends Record<M, infer O> ? O : never
@@ -237,6 +238,10 @@ export const served_getMeSearch: Awaited<ReturnType<typeof getMeSearch>> = gen_g
 declare const gen_postMeOutboundMail: ResponseOf<"/v1/me/outbound-mail", "post">
 export const served_postMeOutboundMail: Awaited<ReturnType<typeof postMeOutboundMail>> = gen_postMeOutboundMail
 
+// GET /v1/me/outbound-mail — getMeOutboundMail
+declare const gen_getMeOutboundMail: ResponseOf<"/v1/me/outbound-mail", "get">
+export const served_getMeOutboundMail: Awaited<ReturnType<typeof getMeOutboundMail>> = gen_getMeOutboundMail
+
 // POST /v1/me/calendar-token — postMeCalendarToken
 declare const gen_postMeCalendarToken: ResponseOf<"/v1/me/calendar-token", "post">
 export const served_postMeCalendarToken: Awaited<ReturnType<typeof postMeCalendarToken>> = gen_postMeCalendarToken
@@ -260,6 +265,10 @@ export const served_getAdminTeacherProfile: Awaited<ReturnType<typeof getAdminTe
 // POST /v1/notebooks/course-workspaces — postCourseWorkspace
 declare const gen_postCourseWorkspace: ResponseOf<"/v1/notebooks/course-workspaces", "post">
 export const served_postCourseWorkspace: Awaited<ReturnType<typeof postCourseWorkspace>> = gen_postCourseWorkspace
+
+// POST /v1/notebooks/course/{course_id} — postCourseNotebook
+declare const gen_postCourseNotebook: ResponseOf<"/v1/notebooks/course/{course_id}", "post">
+export const served_postCourseNotebook: Awaited<ReturnType<typeof postCourseNotebook>> = gen_postCourseNotebook
 
 // GET /v1/notebooks/{notebook_id}/usage — getNotebookUsageOf
 declare const gen_getNotebookUsageOf: ResponseOf<"/v1/notebooks/{notebook_id}/usage", "get">
@@ -361,6 +370,10 @@ export const served_getAdminUsers: Awaited<ReturnType<typeof getAdminUsers>> = g
 declare const gen_getAdminUser: ResponseOf<"/v1/admin/users/{id}", "get">
 export const served_getAdminUser: Awaited<ReturnType<typeof getAdminUser>> = gen_getAdminUser
 
+// PATCH /v1/admin/users/{id} — patchAdminUser
+declare const gen_patchAdminUser: ResponseOf<"/v1/admin/users/{id}", "patch">
+export const served_patchAdminUser: Awaited<ReturnType<typeof patchAdminUser>> = gen_patchAdminUser
+
 // POST /v1/admin/users/{id}/block — postAdminUserBlock
 declare const gen_postAdminUserBlock: ResponseOf<"/v1/admin/users/{id}/block", "post">
 export const served_postAdminUserBlock: Awaited<ReturnType<typeof postAdminUserBlock>> = gen_postAdminUserBlock
@@ -413,6 +426,14 @@ export const served_getAdminOauthClients: Awaited<ReturnType<typeof getAdminOaut
 declare const gen_postAdminOauthClientVerify: ResponseOf<"/v1/admin/oauth-clients/{client_id}/verify", "post">
 export const served_postAdminOauthClientVerify: Awaited<ReturnType<typeof postAdminOauthClientVerify>> = gen_postAdminOauthClientVerify
 
+// GET /v1/admin/settings — getAdminSettings
+declare const gen_getAdminSettings: ResponseOf<"/v1/admin/settings", "get">
+export const served_getAdminSettings: Awaited<ReturnType<typeof getAdminSettings>> = gen_getAdminSettings
+
+// PUT /v1/admin/settings — putAdminSettings
+declare const gen_putAdminSettings: ResponseOf<"/v1/admin/settings", "put">
+export const served_putAdminSettings: Awaited<ReturnType<typeof putAdminSettings>> = gen_putAdminSettings
+
 // GET /v1/id/login — getIdLogin
 declare const gen_getIdLogin: ResponseOf<"/v1/id/login", "get">
 export const served_getIdLogin: Awaited<ReturnType<typeof getIdLogin>> = gen_getIdLogin
@@ -424,6 +445,10 @@ export const served_postIdLogin: Awaited<ReturnType<typeof postIdLogin>> = gen_p
 // POST /v1/id/login/otp/request — postIdLoginOtpRequest
 declare const gen_postIdLoginOtpRequest: ResponseOf<"/v1/id/login/otp/request", "post">
 export const served_postIdLoginOtpRequest: Awaited<ReturnType<typeof postIdLoginOtpRequest>> = gen_postIdLoginOtpRequest
+
+// POST /v1/id/login/password — postIdLoginPassword
+declare const gen_postIdLoginPassword: ResponseOf<"/v1/id/login/password", "post">
+export const served_postIdLoginPassword: Awaited<ReturnType<typeof postIdLoginPassword>> = gen_postIdLoginPassword
 
 // POST /v1/id/login/otp — postIdLoginOtp
 declare const gen_postIdLoginOtp: ResponseOf<"/v1/id/login/otp", "post">
@@ -544,6 +569,14 @@ export const served_getLibraryItemText: Awaited<ReturnType<typeof getLibraryItem
 // GET /v1/library/subjects — getLibrarySubjects
 declare const gen_getLibrarySubjects: ResponseOf<"/v1/library/subjects", "get">
 export const served_getLibrarySubjects: Awaited<ReturnType<typeof getLibrarySubjects>> = gen_getLibrarySubjects
+
+// GET /v1/library/authors — getLibraryAuthors
+declare const gen_getLibraryAuthors: ResponseOf<"/v1/library/authors", "get">
+export const served_getLibraryAuthors: Awaited<ReturnType<typeof getLibraryAuthors>> = gen_getLibraryAuthors
+
+// GET /v1/library/tags — getLibraryTags
+declare const gen_getLibraryTags: ResponseOf<"/v1/library/tags", "get">
+export const served_getLibraryTags: Awaited<ReturnType<typeof getLibraryTags>> = gen_getLibraryTags
 
 // GET /v1/library/topics — getLibraryTopics
 declare const gen_getLibraryTopics: ResponseOf<"/v1/library/topics", "get">
@@ -680,6 +713,14 @@ export const served_postManageImport: Awaited<ReturnType<typeof postManageImport
 // GET /v1/manage/library/topics — getManageTopics
 declare const gen_getManageTopics: ResponseOf<"/v1/manage/library/topics", "get">
 export const served_getManageTopics: Awaited<ReturnType<typeof getManageTopics>> = gen_getManageTopics
+
+// GET /v1/manage/library/subjects — getManageSubjects
+declare const gen_getManageSubjects: ResponseOf<"/v1/manage/library/subjects", "get">
+export const served_getManageSubjects: Awaited<ReturnType<typeof getManageSubjects>> = gen_getManageSubjects
+
+// GET /v1/manage/library/suggestions/{suggestion_id} — getManageSuggestion
+declare const gen_getManageSuggestion: ResponseOf<"/v1/manage/library/suggestions/{suggestion_id}", "get">
+export const served_getManageSuggestion: Awaited<ReturnType<typeof getManageSuggestion>> = gen_getManageSuggestion
 
 // GET /v1/manage/library/stats — getManageStats
 declare const gen_getManageStats: ResponseOf<"/v1/manage/library/stats", "get">
@@ -853,6 +894,10 @@ export const served_getLmsCoursePreviewStep: Awaited<ReturnType<typeof getLmsCou
 declare const gen_postLmsCourseBroadcast: ResponseOf<"/v1/staff/lms/courses/{course_id}/broadcasts", "post">
 export const served_postLmsCourseBroadcast: Awaited<ReturnType<typeof postLmsCourseBroadcast>> = gen_postLmsCourseBroadcast
 
+// PATCH /v1/staff/lms/courses/{course_id}/broadcasts/{broadcast_id} — patchLmsCourseBroadcast
+declare const gen_patchLmsCourseBroadcast: ResponseOf<"/v1/staff/lms/courses/{course_id}/broadcasts/{broadcast_id}", "patch">
+export const served_patchLmsCourseBroadcast: Awaited<ReturnType<typeof patchLmsCourseBroadcast>> = gen_patchLmsCourseBroadcast
+
 // GET /v1/staff/lms/courses/{course_id}/broadcasts — getLmsCourseBroadcasts
 declare const gen_getLmsCourseBroadcasts: ResponseOf<"/v1/staff/lms/courses/{course_id}/broadcasts", "get">
 export const served_getLmsCourseBroadcasts: Awaited<ReturnType<typeof getLmsCourseBroadcasts>> = gen_getLmsCourseBroadcasts
@@ -880,6 +925,14 @@ export const served_postLmsJoin: Awaited<ReturnType<typeof postLmsJoin>> = gen_p
 // GET /v1/lms/courses/{course_id}/steps/{step_id} — getLmsCourseStep
 declare const gen_getLmsCourseStep: ResponseOf<"/v1/lms/courses/{course_id}/steps/{step_id}", "get">
 export const served_getLmsCourseStep: Awaited<ReturnType<typeof getLmsCourseStep>> = gen_getLmsCourseStep
+
+// GET /v1/lms/courses/{course_id}/steps/{step_id}/blocks/{block_id}/video — getLmsStepVideo
+declare const gen_getLmsStepVideo: ResponseOf<"/v1/lms/courses/{course_id}/steps/{step_id}/blocks/{block_id}/video", "get">
+export const served_getLmsStepVideo: Awaited<ReturnType<typeof getLmsStepVideo>> = gen_getLmsStepVideo
+
+// GET /v1/lms/courses/{course_id}/preview/steps/{step_id}/blocks/{block_id}/video — getLmsPreviewStepVideo
+declare const gen_getLmsPreviewStepVideo: ResponseOf<"/v1/lms/courses/{course_id}/preview/steps/{step_id}/blocks/{block_id}/video", "get">
+export const served_getLmsPreviewStepVideo: Awaited<ReturnType<typeof getLmsPreviewStepVideo>> = gen_getLmsPreviewStepVideo
 
 // POST /v1/lms/steps/{step_id}/viewed — postLmsStepViewed
 declare const gen_postLmsStepViewed: ResponseOf<"/v1/lms/steps/{step_id}/viewed", "post">
@@ -1312,4 +1365,24 @@ export const served_getMeTimetable: Awaited<ReturnType<typeof getMeTimetable>> =
 // GET /v1/staff/timetable — getStaffTimetable
 declare const gen_getStaffTimetable: ResponseOf<"/v1/staff/timetable", "get">
 export const served_getStaffTimetable: Awaited<ReturnType<typeof getStaffTimetable>> = gen_getStaffTimetable
+
+// GET /v1/me/teachers — getMeTeachers
+declare const gen_getMeTeachers: ResponseOf<"/v1/me/teachers", "get">
+export const served_getMeTeachers: Awaited<ReturnType<typeof getMeTeachers>> = gen_getMeTeachers
+
+// GET /v1/staff/me/contacts — getStaffMeContacts
+declare const gen_getStaffMeContacts: ResponseOf<"/v1/staff/me/contacts", "get">
+export const served_getStaffMeContacts: Awaited<ReturnType<typeof getStaffMeContacts>> = gen_getStaffMeContacts
+
+// PUT /v1/staff/me/contacts — putStaffMeContacts
+declare const gen_putStaffMeContacts: ResponseOf<"/v1/staff/me/contacts", "put">
+export const served_putStaffMeContacts: Awaited<ReturnType<typeof putStaffMeContacts>> = gen_putStaffMeContacts
+
+// GET /v1/admin/teacher-contacts/{id} — getAdminTeacherContacts
+declare const gen_getAdminTeacherContacts: ResponseOf<"/v1/admin/teacher-contacts/{id}", "get">
+export const served_getAdminTeacherContacts: Awaited<ReturnType<typeof getAdminTeacherContacts>> = gen_getAdminTeacherContacts
+
+// PUT /v1/admin/teacher-contacts/{id} — putAdminTeacherContacts
+declare const gen_putAdminTeacherContacts: ResponseOf<"/v1/admin/teacher-contacts/{id}", "put">
+export const served_putAdminTeacherContacts: Awaited<ReturnType<typeof putAdminTeacherContacts>> = gen_putAdminTeacherContacts
 

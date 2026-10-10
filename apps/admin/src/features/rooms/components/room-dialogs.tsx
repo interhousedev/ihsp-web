@@ -9,16 +9,7 @@ import {
   type Room,
 } from "@ihsp/api"
 import { useT } from "@ihsp/i18n"
-import {
-  Button,
-  ConfirmDialog,
-  Dialog,
-  DialogContent,
-  DialogFooter,
-  DialogHeader,
-  DialogTitle,
-  Input,
-} from "@ihsp/ui"
+import { Button, ConfirmDialog, Dialog, DialogContent, DialogFooter, DialogHeader, DialogTitle, Input } from "@ihsp/ui"
 import { useState } from "react"
 import { LabeledField } from "../../shared/components/labeled-field"
 import { SelectField } from "../../shared/components/select-field"

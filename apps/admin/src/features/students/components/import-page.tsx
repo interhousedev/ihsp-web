@@ -46,10 +46,7 @@ export function ImportPage() {
   })
 
   return (
-    <PageContainer
-      title={t("title")}
-      actions={<BackLink href="/students/" label={t("back")} />}
-    >
+    <PageContainer title={t("title")} actions={<BackLink href="/students/" label={t("back")} />}>
       <form
         className="flex max-w-xl flex-col gap-3"
         onSubmit={(event) => {

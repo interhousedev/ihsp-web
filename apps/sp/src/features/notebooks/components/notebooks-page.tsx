@@ -1,6 +1,12 @@
 "use client"
 
-import { groupNotebooks, NOTEBOOK_FOLDERS, parseNotebookFolder, useAllNotebooks, type NotebookFolder } from "@ihsp/features-core"
+import {
+  groupNotebooks,
+  NOTEBOOK_FOLDERS,
+  parseNotebookFolder,
+  useAllNotebooks,
+  type NotebookFolder,
+} from "@ihsp/features-core"
 import { useT } from "@ihsp/i18n"
 import { Button, Input, PageContainer, Skeleton, StateView, cn, useDebounce } from "@ihsp/ui"
 import { IconSearch } from "@ihsp/ui"
@@ -100,7 +106,12 @@ export function NotebooksPage() {
         </ul>
       ) : null}
       {filtered.length > visible ? (
-        <Button type="button" variant="outline" className="min-h-11 self-center" onClick={() => setVisible((n) => n + PAGE_SIZE)}>
+        <Button
+          type="button"
+          variant="outline"
+          className="min-h-11 self-center"
+          onClick={() => setVisible((n) => n + PAGE_SIZE)}
+        >
           {t("list.showMore")} ({filtered.length - visible})
         </Button>
       ) : null}

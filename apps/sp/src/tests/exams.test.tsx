@@ -461,7 +461,13 @@ function useBigControls() {
       HttpResponse.json({
         version: 1,
         widgets: [
-          { ...base, id: "0000000d-0000-4000-8000-0000000000a1", kind: "upcoming_controls", size: "2x2", config: { layout: "2" } },
+          {
+            ...base,
+            id: "0000000d-0000-4000-8000-0000000000a1",
+            kind: "upcoming_controls",
+            size: "2x2",
+            config: { layout: "2" },
+          },
         ],
       }),
     ),

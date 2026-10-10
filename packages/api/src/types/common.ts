@@ -26,7 +26,7 @@ export type RedirectResponse = { redirect_to: string }
 export type ReviewRating = "again" | "hard" | "medium" | "easy"
 
 /** Marks and attendance state of a student at a lesson. */
-export type AttendanceState = "present" | "absent" | "excused" | "not_taken"
+export type AttendanceState = "present" | "late" | "absent" | "excused" | "not_taken"
 
 /** Subgroup number of a group, or no subgroup. */
 export type Subgroup = 1 | 2 | null

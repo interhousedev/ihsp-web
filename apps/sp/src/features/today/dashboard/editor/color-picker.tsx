@@ -1,23 +1,13 @@
-"use client";
+"use client"
 
-import { useT } from "@ihsp/i18n";
-import { PALETTE, textOn } from "../model";
+import { useT } from "@ihsp/i18n"
+import { PALETTE, textOn } from "../model"
 
 /** Tile colours; the text colour of the tile follows the colour (black or white, whichever reads better). */
-export function ColorPicker({
-  value,
-  onChange,
-}: {
-  value: string | null;
-  onChange: (color: string | null) => void;
-}) {
-  const t = useT("today.dashboard");
+export function ColorPicker({ value, onChange }: { value: string | null; onChange: (color: string | null) => void }) {
+  const t = useT("today.dashboard")
   return (
-    <div
-      role="group"
-      aria-label={t("color")}
-      className="flex flex-wrap items-center gap-2"
-    >
+    <div role="group" aria-label={t("color")} className="flex flex-wrap items-center gap-2">
       <button
         type="button"
         aria-label={t("colorDefault")}
@@ -38,5 +28,5 @@ export function ColorPicker({
         />
       ))}
     </div>
-  );
+  )
 }

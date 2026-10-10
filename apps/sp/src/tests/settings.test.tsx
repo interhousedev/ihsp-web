@@ -15,7 +15,7 @@ import {
   trackServiceWorkerRegistration,
 } from "../features/pwa/utils/service-worker-registration"
 import { SettingsPage } from "../features/settings/components/settings-page"
-import { configureTests, renderSp, setValue, studentWith } from "./helpers"
+import { configureTests, renderSp, setValue } from "./helpers"
 
 configureTests()
 
@@ -33,10 +33,10 @@ function recordPatches(): Record<string, unknown>[] {
 }
 
 describe("settings page", () => {
-  test("has the general, notification, Today cards and calendar sections", async () => {
+  test("has the general, notification and calendar sections", async () => {
     renderSp(<SettingsPage />, { route: "/settings/" })
 
-    for (const title of ["General", "Notifications", "Today cards", "Calendar feed"]) {
+    for (const title of ["General", "Notifications", "Calendar feed"]) {
       expect((await screen.findAllByText(title)).length).toBeGreaterThan(0)
     }
   })
@@ -53,49 +53,6 @@ describe("settings page", () => {
     await user.click(await screen.findByRole("button", { name: "Dark" }))
 
     await waitFor(() => expect(bodies).toEqual([{ theme: "dark" }]))
-  })
-
-  test("hiding a Today card saves the remaining cards in order", async () => {
-    const bodies = recordPatches()
-    const { user } = renderSp(<SettingsPage />, { route: "/settings/" })
-
-    await user.click(await screen.findByRole("switch", { name: "Show card: Alerts" }))
-
-    await waitFor(() =>
-      expect(bodies).toEqual([{ today_cards: ["now", "timeline", "due", "marks", "semester", "announcements"] }]),
-    )
-  })
-
-  test("moving a Today card up changes the saved order", async () => {
-    const bodies = recordPatches()
-    const { user } = renderSp(<SettingsPage />, { route: "/settings/" })
-
-    await user.click(await screen.findByRole("button", { name: "Move up: Today's lessons" }))
-
-    await waitFor(() =>
-      expect(bodies).toEqual([
-        { today_cards: ["timeline", "now", "due", "marks", "semester", "announcements", "alerts"] },
-      ]),
-    )
-  })
-
-  test("a hidden card can be shown again at the end", async () => {
-    const bodies = recordPatches()
-    const { user } = renderSp(<SettingsPage />, {
-      route: "/settings/",
-      session: studentWith({ today_cards: ["now", "due"] }),
-    })
-
-    await user.click(await screen.findByRole("switch", { name: "Show card: Alerts" }))
-
-    await waitFor(() => expect(bodies).toEqual([{ today_cards: ["now", "due", "alerts"] }]))
-  })
-
-  test("the first and last visible cards cannot move beyond the ends", async () => {
-    renderSp(<SettingsPage />, { route: "/settings/" })
-
-    expect(await screen.findByRole("button", { name: "Move up: Now / Next lesson" })).toBeDisabled()
-    expect(screen.getByRole("button", { name: "Move down: Alerts" })).toBeDisabled()
   })
 
   test("a student without Telegram is told where notifications go", async () => {

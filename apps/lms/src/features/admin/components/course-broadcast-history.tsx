@@ -40,10 +40,7 @@ export function CourseBroadcastHistory({ courseId }: { courseId: string }) {
                     <div className="flex flex-wrap items-center gap-x-2 gap-y-1">
                       <span className="text-muted-foreground text-xs">{format.dateTime(item.created_at)}</span>
                       {item.updated_at ? (
-                        <span
-                          className="text-muted-foreground text-xs italic"
-                          title={format.dateTime(item.updated_at)}
-                        >
+                        <span className="text-muted-foreground text-xs italic" title={format.dateTime(item.updated_at)}>
                           · {t("edited")}
                         </span>
                       ) : null}

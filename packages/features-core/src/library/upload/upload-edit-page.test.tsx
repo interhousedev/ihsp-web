@@ -30,9 +30,7 @@ describe("UploadEditPage: continue a draft", () => {
     await next(user)
 
     expect(await screen.findByLabelText("Title")).toHaveValue("Kinematics formula sheet")
-    expect(
-      screen.getByText("Cannot be changed after the draft is saved."),
-    ).toBeInTheDocument()
+    expect(screen.getByText("Cannot be changed after the draft is saved.")).toBeInTheDocument()
     expect(screen.getByRole("group", { name: "Physics" })).toBeInTheDocument()
     expect(screen.queryByRole("checkbox", { name: "Year 1" })).not.toBeInTheDocument()
   })

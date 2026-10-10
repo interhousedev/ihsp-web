@@ -433,7 +433,6 @@ describe("books", () => {
 
     expect(ready.checklist.every((c) => c.ok)).toBe(true)
     expect(draft.checklist).toEqual([
-      { key: "rights", ok: false },
       { key: "text_status", ok: false },
       { key: "cover", ok: false },
       { key: "subjects", ok: true },
@@ -441,12 +440,12 @@ describe("books", () => {
     expect(draft.input.rights).toBe("open_license")
   })
 
-  test("publishing an incomplete book is 422 library/rights-incomplete with params.missing", async () => {
+  test("publishing an incomplete book is 422 library/rights-incomplete (no rights fields) with params.missing", async () => {
     setLibraryActor("librarian")
 
     await expect(postManageBookAction(libIds.bookDraft, "publish")).rejects.toMatchObject({
       ...problem("library/rights-incomplete", 422),
-      params: { missing: ["licence", "rights_basis.source_url", "rights_basis.attribution", "text_status", "cover"] },
+      params: { missing: ["text_status", "cover"] },
     })
   })
 
@@ -473,17 +472,6 @@ describe("books", () => {
     await expect(postManageBookAction(id, "takedown")).rejects.toMatchObject({ status: 422 })
     expect((await postManageBookAction(id, "takedown", { reason: "copyright" })).status_reason).toBe("copyright")
     expect((await getLibraryItems({ q: "biologiya" })).items).toEqual([])
-  })
-
-  test("public with permission or official rights is 422 library/visibility-conflict", async () => {
-    setLibraryActor("librarian")
-
-    await expect(postManageBook(input({ rights: "permission", visibility: "public" }))).rejects.toMatchObject(
-      problem("library/visibility-conflict", 422),
-    )
-    await expect(patchManageBook(libIds.bookOlympiad, { visibility: "public" })).rejects.toMatchObject({
-      type: "library/visibility-conflict",
-    })
   })
 
   test("patching a book rebuilds its detail", async () => {

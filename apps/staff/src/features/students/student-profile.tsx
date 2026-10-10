@@ -82,9 +82,11 @@ function SubjectMarks({ entry }: { entry: StudentSummary["entries"][number] }) {
         </span>
       </div>
       <div className="flex flex-wrap items-center gap-1.5">
-        {marks.length === 0 ? <span className="text-muted-foreground text-xs">
+        {marks.length === 0 ? (
+          <span className="text-muted-foreground text-xs">
             {entry.student.semester_mark !== null ? t("noLessonMarks") : t("noMarks")}
-          </span> : null}
+          </span>
+        ) : null}
         {marks.map((item, index) => (
           <span key={index} className="flex items-center gap-1" title={item.date}>
             <MarkBadge mark={item.mark} size="sm" />

@@ -52,6 +52,16 @@ export function LinkRow({ link, onRevoke, onDelete }: LinkRowProps) {
         </p>
         <div className="flex flex-wrap gap-2">
           <CopyLinkButton value={link.url} label={t("copy")} />
+          {link.kind === "artifact" ? (
+            <a
+              href={link.url}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="hover:bg-muted inline-flex min-h-11 items-center rounded-lg border px-4 text-sm font-medium"
+            >
+              {t("open")}
+            </a>
+          ) : null}
           {canRevoke(link) ? (
             <Button
               type="button"

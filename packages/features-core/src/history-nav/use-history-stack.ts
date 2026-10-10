@@ -48,13 +48,19 @@ export function canGoForward(state: HistoryState): boolean {
 }
 
 /** The last `limit` entries before the current one (most recent first) or the next ones after it. */
-export function recentBack(state: HistoryState, limit: number = HISTORY_RECENT): { entry: HistoryEntry; index: number }[] {
+export function recentBack(
+  state: HistoryState,
+  limit: number = HISTORY_RECENT,
+): { entry: HistoryEntry; index: number }[] {
   const out: { entry: HistoryEntry; index: number }[] = []
   for (let i = state.index - 1; i >= 0 && out.length < limit; i--) out.push({ entry: state.entries[i]!, index: i })
   return out
 }
 
-export function recentForward(state: HistoryState, limit: number = HISTORY_RECENT): { entry: HistoryEntry; index: number }[] {
+export function recentForward(
+  state: HistoryState,
+  limit: number = HISTORY_RECENT,
+): { entry: HistoryEntry; index: number }[] {
   const out: { entry: HistoryEntry; index: number }[] = []
   for (let i = state.index + 1; i < state.entries.length && out.length < limit; i++)
     out.push({ entry: state.entries[i]!, index: i })
@@ -101,11 +107,12 @@ export function useHistoryStack() {
       pending.current = null
       return
     }
-    const record = () => setState((prev) => {
-      const next = pushEntry(prev, { url, title: document.title || pathname })
-      if (next !== prev) save(next)
-      return next
-    })
+    const record = () =>
+      setState((prev) => {
+        const next = pushEntry(prev, { url, title: document.title || pathname })
+        if (next !== prev) save(next)
+        return next
+      })
     record()
     // Next updates document.title after the route commits; refresh the entry's title once it has.
     const timer = window.setTimeout(record, 300)

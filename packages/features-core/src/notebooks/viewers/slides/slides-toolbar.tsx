@@ -1,22 +1,22 @@
-"use client";
+"use client"
 
-import { useT } from "@ihsp/i18n";
-import { Button, Icons, IconButton } from "@ihsp/ui";
-import { OverflowMenu } from "../overflow-menu";
-import { useSharedViewer } from "../shared-viewer";
-import { IconCopy, IconNotes, IconPlayerPlay, IconPrinter } from "@ihsp/ui";
+import { useT } from "@ihsp/i18n"
+import { Button, Icons, IconButton } from "@ihsp/ui"
+import { OverflowMenu } from "../overflow-menu"
+import { useSharedViewer } from "../shared-viewer"
+import { IconCopy, IconNotes, IconPlayerPlay, IconPrinter } from "@ihsp/ui"
 
-export type DeckMode = "view" | "edit" | "revise";
+export type DeckMode = "view" | "edit" | "revise"
 
 type SlidesToolbarProps = {
-  mode: DeckMode;
-  notesOpen: boolean;
-  onMode: (mode: DeckMode) => void;
-  onToggleNotes: () => void;
-  onStart: () => void;
-  onCopyOutline: () => void;
-  onPrint: () => void;
-};
+  mode: DeckMode
+  notesOpen: boolean
+  onMode: (mode: DeckMode) => void
+  onToggleNotes: () => void
+  onStart: () => void
+  onCopyOutline: () => void
+  onPrint: () => void
+}
 
 /** One row: Start slideshow, Edit, Revise, Speaker notes, and a "⋯" menu with Copy outline and Print / PDF. */
 export function SlidesToolbar({
@@ -28,8 +28,8 @@ export function SlidesToolbar({
   onCopyOutline,
   onPrint,
 }: SlidesToolbarProps) {
-  const t = useT("notebooks.slides");
-  const shared = useSharedViewer();
+  const t = useT("notebooks.slides")
+  const shared = useSharedViewer()
   return (
     <div
       role="toolbar"
@@ -91,5 +91,5 @@ export function SlidesToolbar({
         ]}
       />
     </div>
-  );
+  )
 }

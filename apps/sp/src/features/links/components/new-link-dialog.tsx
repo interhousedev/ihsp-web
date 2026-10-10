@@ -3,16 +3,7 @@
 import { getMeFilesQuery, type FileItem, type LinkCreateBody } from "@ihsp/api"
 import { FileUploadButton } from "@ihsp/features-core"
 import { useErrorMessage, useT } from "@ihsp/i18n"
-import {
-  Button,
-  Dialog,
-  DialogContent,
-  DialogFooter,
-  DialogHeader,
-  DialogTitle,
-  Input,
-  Label,
-} from "@ihsp/ui"
+import { Button, Dialog, DialogContent, DialogFooter, DialogHeader, DialogTitle, Input, Label } from "@ihsp/ui"
 import { useQuery, useQueryClient } from "@tanstack/react-query"
 import { useId, useState } from "react"
 import { toast } from "sonner"

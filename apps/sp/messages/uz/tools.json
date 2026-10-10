@@ -111,7 +111,8 @@
       "url": "Havolalar",
       "file": "Fayllar",
       "chat": "Suhbatlar",
-      "flashcard_set": "Kartochkalar"
+      "flashcard_set": "Kartochkalar",
+      "artifact": "Bloknot materiallari"
     },
     "row": {
       "kind": {
@@ -119,6 +120,7 @@
         "file": "Fayl",
         "chat": "Suhbat",
         "flashcard_set": "Kartochkalar",
+        "artifact": "Bloknot materiallari",
         "lesson": "Dars ilovasi"
       },
       "status": {
@@ -132,6 +134,7 @@
       "created": "{date} da yaratilgan",
       "expires": "{date} gacha amal qiladi",
       "copy": "Nusxalash",
+      "open": "Ochish",
       "revoke": "Bekor qilish",
       "revokeLabel": "{name} ni bekor qilish",
       "delete": "O‘chirish",

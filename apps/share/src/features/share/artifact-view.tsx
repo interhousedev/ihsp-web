@@ -1,6 +1,6 @@
-"use client";
+"use client"
 
-import type { ArtifactDetail, PublicShare } from "@ihsp/api";
+import type { ArtifactDetail, PublicShare } from "@ihsp/api"
 import {
   DataTableViewer,
   FlashcardsViewer,
@@ -10,17 +10,13 @@ import {
   ReportViewer,
   SharedViewerProvider,
   SlidesViewer,
-} from "@ihsp/features-core";
-import { StateView } from "@ihsp/ui";
+} from "@ihsp/features-core"
+import { StateView } from "@ihsp/ui"
 
-type Shared = NonNullable<PublicShare["artifact"]>;
+type Shared = NonNullable<PublicShare["artifact"]>
 
 /** The output the viewers expect, made from the public share: ready, no sources, no saved progress. */
-function toArtifact(
-  share: PublicShare,
-  shared: Shared,
-  slug: string,
-): ArtifactDetail {
+function toArtifact(share: PublicShare, shared: Shared, slug: string): ArtifactDetail {
   return {
     id: slug,
     notebook_id: "",
@@ -45,27 +41,27 @@ function toArtifact(
     source_map: {},
     progress_state: null,
     assets: [],
-  } as unknown as ArtifactDetail;
+  } as unknown as ArtifactDetail
 }
 
 function Viewer({ artifact }: { artifact: ArtifactDetail }) {
   switch (artifact.kind) {
     case "report":
-      return <ReportViewer notebookId="" artifact={artifact} />;
+      return <ReportViewer notebookId="" artifact={artifact} />
     case "mind_map":
-      return <MindMapViewer notebookId="" artifact={artifact} />;
+      return <MindMapViewer notebookId="" artifact={artifact} />
     case "flashcards":
-      return <FlashcardsViewer notebookId="" artifact={artifact} />;
+      return <FlashcardsViewer notebookId="" artifact={artifact} />
     case "quiz":
-      return <QuizViewer notebookId="" artifact={artifact} />;
+      return <QuizViewer notebookId="" artifact={artifact} />
     case "data_table":
-      return <DataTableViewer notebookId="" artifact={artifact} />;
+      return <DataTableViewer notebookId="" artifact={artifact} />
     case "slides":
-      return <SlidesViewer notebookId="" artifact={artifact} />;
+      return <SlidesViewer notebookId="" artifact={artifact} />
     case "infographic":
-      return <InfographicViewer notebookId="" artifact={artifact} />;
+      return <InfographicViewer notebookId="" artifact={artifact} />
     default:
-      return <StateView state="empty" emptyText="" />;
+      return <StateView state="empty" emptyText="" />
   }
 }
 
@@ -73,19 +69,13 @@ function Viewer({ artifact }: { artifact: ArtifactDetail }) {
  * A shared Studio output, read-only: the notebook viewer of its kind (slides, mind map, report, flash cards, quiz,
  * infographic, table). Nothing is saved: a quiz can be taken and a deck studied, the progress stays in the page.
  */
-export function ArtifactView({
-  share,
-  slug,
-}: {
-  share: PublicShare;
-  slug: string;
-}) {
-  if (!share.artifact) return null;
+export function ArtifactView({ share, slug }: { share: PublicShare; slug: string }) {
+  if (!share.artifact) return null
   return (
     <div className="bg-card min-w-0 overflow-hidden rounded-xl border">
       <SharedViewerProvider>
         <Viewer artifact={toArtifact(share, share.artifact, slug)} />
       </SharedViewerProvider>
     </div>
-  );
+  )
 }

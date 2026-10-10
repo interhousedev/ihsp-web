@@ -170,7 +170,9 @@ test("NB share a Studio output: a visitor sees it read-only, the owner downloads
     await sourcesReady(page, notebook.id)
     await openNotebook(page, notebook.id)
     await generateTile(page, "Conspect")
-    const menu = studioItems(page).first().getByRole("button", { name: /^Actions for/ })
+    const menu = studioItems(page)
+      .first()
+      .getByRole("button", { name: /^Actions for/ })
 
     // Share: the link is created by `POST /v1/shares`; a visitor without a session opens it.
     await menu.click()
@@ -191,7 +193,10 @@ test("NB share a Studio output: a visitor sees it read-only, the owner downloads
     // Download: the native Office file of the output.
     await menu.click()
     const download = page.waitForEvent("download")
-    await page.getByRole("menuitem", { name: /^Download \./ }).first().click()
+    await page
+      .getByRole("menuitem", { name: /^Download \./ })
+      .first()
+      .click()
     const file = await download
     expect(file.suggestedFilename()).toMatch(/\.(docx|xlsx|pptx|md|csv|png)$/)
   } finally {

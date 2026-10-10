@@ -35,7 +35,13 @@ export function useNav(): { groups: NavGroup[]; bottom: BottomNavItem[] } {
       })
     }
     groups.push(
-      { label: t("groupInbox"), items: [{ title: t("notifications"), url: "/notifications/", icon: "notification" }] },
+      {
+        label: t("groupInbox"),
+        items: [
+          { title: t("notifications"), url: "/notifications/", icon: "notification" },
+          { title: t("mail"), url: "/mail/", icon: "mail" },
+        ],
+      },
       { label: t("groupSettings"), items: [{ title: t("settings"), url: "/settings/", icon: "settings" }] },
     )
     const bottom: BottomNavItem[] = [today, timetable, journal]

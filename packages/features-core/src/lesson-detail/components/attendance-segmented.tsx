@@ -35,7 +35,12 @@ export function AttendanceSegmented({
   const selected = OPTIONS.findIndex((option) => option.value === mark)
 
   function onKeyDown(event: KeyboardEvent<HTMLButtonElement>, index: number) {
-    const step = event.key === "ArrowRight" || event.key === "ArrowDown" ? 1 : event.key === "ArrowLeft" || event.key === "ArrowUp" ? -1 : 0
+    const step =
+      event.key === "ArrowRight" || event.key === "ArrowDown"
+        ? 1
+        : event.key === "ArrowLeft" || event.key === "ArrowUp"
+          ? -1
+          : 0
     if (step === 0) return
     event.preventDefault()
     const next = (index + step + OPTIONS.length) % OPTIONS.length

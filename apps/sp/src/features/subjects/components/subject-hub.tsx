@@ -13,7 +13,12 @@ export function AttendanceDot({ state }: { state: SubjectLessonRow["attendance"]
   const t = useT("subjects.hub.attendance")
   if (state === null) return null
   const colour = state === "present" ? "bg-green-600" : state === "late" ? "bg-orange-700" : "bg-red-800"
-  const text = state === "late" ? "text-orange-700 dark:text-orange-400" : state === "absent" ? "text-red-800 dark:text-red-400" : ""
+  const text =
+    state === "late"
+      ? "text-orange-700 dark:text-orange-400"
+      : state === "absent"
+        ? "text-red-800 dark:text-red-400"
+        : ""
   return (
     <span className={`flex items-center gap-1 text-xs font-medium ${text}`} data-attendance={state}>
       <span className={`size-2.5 rounded-full ${colour}`} aria-hidden />
@@ -113,12 +118,7 @@ export function SubjectHub({ subjectId, marks }: { subjectId: string; marks: rea
           {errorMessage(open.error)}
         </p>
       ) : null}
-      <QueryState
-        query={query}
-        isEmpty={(data) => data.items.length === 0}
-        emptyText={t("empty")}
-        rows={4}
-      >
+      <QueryState query={query} isEmpty={(data) => data.items.length === 0} emptyText={t("empty")} rows={4}>
         {(data) => {
           const past = data.items.filter((row) => row.past)
           const upcoming = data.items.filter((row) => !row.past)
@@ -131,7 +131,13 @@ export function SubjectHub({ subjectId, marks }: { subjectId: string; marks: rea
                   </h2>
                   <ul className="flex flex-col gap-2">
                     {past.map((row) => (
-                      <LessonRow key={row.lesson_id} row={row} marks={marksOf(row)} onAsk={ask} asking={open.isPending} />
+                      <LessonRow
+                        key={row.lesson_id}
+                        row={row}
+                        marks={marksOf(row)}
+                        onAsk={ask}
+                        asking={open.isPending}
+                      />
                     ))}
                   </ul>
                   {data.has_more_past ? (
@@ -154,7 +160,13 @@ export function SubjectHub({ subjectId, marks }: { subjectId: string; marks: rea
                 ) : (
                   <ul className="flex flex-col gap-2">
                     {upcoming.map((row) => (
-                      <LessonRow key={row.lesson_id} row={row} marks={marksOf(row)} onAsk={ask} asking={open.isPending} />
+                      <LessonRow
+                        key={row.lesson_id}
+                        row={row}
+                        marks={marksOf(row)}
+                        onAsk={ask}
+                        asking={open.isPending}
+                      />
                     ))}
                   </ul>
                 )}

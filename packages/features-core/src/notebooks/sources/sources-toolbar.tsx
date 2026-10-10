@@ -9,15 +9,7 @@ import {
   DropdownMenuRadioItem,
   DropdownMenuTrigger,
 } from "@ihsp/ui"
-import {
-  IconCategory,
-  IconList,
-  IconLoader2,
-  IconRefresh,
-  IconSearch,
-  IconTag,
-  IconTagStarred,
-} from "@ihsp/ui"
+import { IconCategory, IconList, IconLoader2, IconRefresh, IconSearch, IconTag, IconTagStarred } from "@ihsp/ui"
 import type { RefObject } from "react"
 import type { SelectionState } from "../lib/sort-sources"
 import { SelectionCheckbox } from "./selection-checkbox"

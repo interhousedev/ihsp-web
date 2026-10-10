@@ -2,16 +2,7 @@
 
 import { getMeFilesQuery, type FileItem } from "@ihsp/api"
 import { useT } from "@ihsp/i18n"
-import {
-  Button,
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogFooter,
-  DialogHeader,
-  DialogTitle,
-  StateView,
-} from "@ihsp/ui"
+import { Button, Dialog, DialogContent, DialogFooter, DialogHeader, DialogTitle, StateView } from "@ihsp/ui"
 import { useQuery } from "@tanstack/react-query"
 import { useState } from "react"
 
@@ -56,7 +47,6 @@ export function AttachFilesDialog({ open, onOpenChange, attachedIds, onPick }: A
       <DialogContent>
         <DialogHeader>
           <DialogTitle>{t("title")}</DialogTitle>
-          <DialogDescription>{t("description")}</DialogDescription>
         </DialogHeader>
         {files.isPending ? <StateView state="loading" rows={3} /> : null}
         {files.isError ? <StateView state="error" error={files.error} onRetry={() => void files.refetch()} /> : null}

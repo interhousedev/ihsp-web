@@ -1,23 +1,23 @@
-"use client";
+"use client"
 
-import type { MindMapNode, RefsIndex } from "@ihsp/api";
-import { useT } from "@ihsp/i18n";
-import { Button, cn } from "@ihsp/ui";
-import { IconBook2, IconMessageCircleQuestion } from "@ihsp/ui";
-import type { ReactNode } from "react";
-import { useNodeActions } from "./use-node-actions";
+import type { MindMapNode, RefsIndex } from "@ihsp/api"
+import { useT } from "@ihsp/i18n"
+import { Button, cn } from "@ihsp/ui"
+import { IconBook2, IconMessageCircleQuestion } from "@ihsp/ui"
+import type { ReactNode } from "react"
+import { useNodeActions } from "./use-node-actions"
 
 type MindMapNodeActionsProps = {
-  node: MindMapNode;
-  refsIndex: RefsIndex;
+  node: MindMapNode
+  refsIndex: RefsIndex
   /** `sm` for the dense outline rows. */
-  size?: "default" | "sm";
+  size?: "default" | "sm"
   /** Runs after Ask in chat (the details close because the chat takes over). */
-  onAsked?: () => void;
+  onAsked?: () => void
   /** Extra buttons after the two actions. */
-  children?: ReactNode;
-  className?: string;
-};
+  children?: ReactNode
+  className?: string
+}
 
 /** **Ask in chat** and **Show sources** for one node (the details card, the phone sheet and the outline rows). */
 export function MindMapNodeActions({
@@ -28,10 +28,9 @@ export function MindMapNodeActions({
   children,
   className,
 }: MindMapNodeActionsProps) {
-  const t = useT("notebooks");
-  const { hasSources, askAbout, showSources, shared } =
-    useNodeActions(refsIndex);
-  const touch = size === "sm" ? "min-h-11 md:min-h-7" : "min-h-11 md:min-h-8";
+  const t = useT("notebooks")
+  const { hasSources, askAbout, showSources, shared } = useNodeActions(refsIndex)
+  const touch = size === "sm" ? "min-h-11 md:min-h-7" : "min-h-11 md:min-h-8"
 
   return (
     <div className={cn("flex flex-wrap items-center gap-2", className)}>
@@ -42,8 +41,8 @@ export function MindMapNodeActions({
             size={size === "sm" ? "sm" : "default"}
             className={touch}
             onClick={() => {
-              askAbout(node);
-              onAsked?.();
+              askAbout(node)
+              onAsked?.()
             }}
           >
             <IconMessageCircleQuestion aria-hidden />
@@ -64,5 +63,5 @@ export function MindMapNodeActions({
       )}
       {children}
     </div>
-  );
+  )
 }

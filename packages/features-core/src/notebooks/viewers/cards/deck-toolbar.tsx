@@ -1,6 +1,6 @@
-"use client";
+"use client"
 
-import { useT } from "@ihsp/i18n";
+import { useT } from "@ihsp/i18n"
 import {
   IconArrowsShuffle,
   IconBulb,
@@ -9,28 +9,28 @@ import {
   IconMessageQuestion,
   IconRefresh,
   IconTrash,
-} from "@ihsp/ui";
-import type { ReactNode } from "react";
-import { ToolbarButton } from "../toolbar-button";
+} from "@ihsp/ui"
+import type { ReactNode } from "react"
+import { ToolbarButton } from "../toolbar-button"
 
 type DeckToolbarProps = {
   /** There is a card on the screen (not the results, not an empty deck). */
-  hasCard: boolean;
+  hasCard: boolean
   /** The current card has a hint that was not shown yet. */
-  canHint: boolean;
-  canRestart: boolean;
-  hasCards: boolean;
-  onShuffle: () => void;
-  onDelete: () => void;
-  onRestart: () => void;
-  onHint: () => void;
+  canHint: boolean
+  canRestart: boolean
+  hasCards: boolean
+  onShuffle: () => void
+  onDelete: () => void
+  onRestart: () => void
+  onHint: () => void
   /** Missing in a shared view: the Explain button is hidden. */
-  onExplain?: (() => void) | undefined;
-  onCsv: () => void;
-  onCopy: () => void;
+  onExplain?: (() => void) | undefined
+  onCsv: () => void
+  onCopy: () => void
   /** The "Save as flash card set" button or the "Open set" link. */
-  bridge?: ReactNode;
-};
+  bridge?: ReactNode
+}
 
 /** Shuffle, Delete card, Restart, Hint, Explain, Download CSV, Copy and the set bridge. Icons only on phones. */
 export function DeckToolbar({
@@ -47,13 +47,9 @@ export function DeckToolbar({
   onCopy,
   bridge,
 }: DeckToolbarProps) {
-  const t = useT("notebooks");
+  const t = useT("notebooks")
   return (
-    <div
-      role="group"
-      aria-label={t("viewers.cards.tools")}
-      className="flex flex-wrap justify-center gap-2"
-    >
+    <div role="group" aria-label={t("viewers.cards.tools")} className="flex flex-wrap justify-center gap-2">
       <ToolbarButton
         compact
         icon={IconArrowsShuffle}
@@ -61,27 +57,9 @@ export function DeckToolbar({
         disabled={!hasCard}
         onClick={onShuffle}
       />
-      <ToolbarButton
-        compact
-        icon={IconTrash}
-        label={t("cards.delete")}
-        disabled={!hasCard}
-        onClick={onDelete}
-      />
-      <ToolbarButton
-        compact
-        icon={IconRefresh}
-        label={t("cards.restart")}
-        disabled={!canRestart}
-        onClick={onRestart}
-      />
-      <ToolbarButton
-        compact
-        icon={IconBulb}
-        label={t("cards.hint")}
-        disabled={!canHint}
-        onClick={onHint}
-      />
+      <ToolbarButton compact icon={IconTrash} label={t("cards.delete")} disabled={!hasCard} onClick={onDelete} />
+      <ToolbarButton compact icon={IconRefresh} label={t("cards.restart")} disabled={!canRestart} onClick={onRestart} />
+      <ToolbarButton compact icon={IconBulb} label={t("cards.hint")} disabled={!canHint} onClick={onHint} />
       {onExplain ? (
         <ToolbarButton
           compact
@@ -91,21 +69,9 @@ export function DeckToolbar({
           onClick={onExplain}
         />
       ) : null}
-      <ToolbarButton
-        compact
-        icon={IconDownload}
-        label={t("cards.csv")}
-        disabled={!hasCards}
-        onClick={onCsv}
-      />
-      <ToolbarButton
-        compact
-        icon={IconCopy}
-        label={t("viewers.cards.copy")}
-        disabled={!hasCards}
-        onClick={onCopy}
-      />
+      <ToolbarButton compact icon={IconDownload} label={t("cards.csv")} disabled={!hasCards} onClick={onCsv} />
+      <ToolbarButton compact icon={IconCopy} label={t("viewers.cards.copy")} disabled={!hasCards} onClick={onCopy} />
       {bridge}
     </div>
-  );
+  )
 }

@@ -14,6 +14,8 @@ describe("looksLikePhone", () => {
   test("a narrow touch screen is a phone, a wide one is not", () => {
     const narrow = media(["(pointer: coarse)", "(max-width: 820px)"])
     expect(looksLikePhone({ userAgent: desktopUa, maxTouchPoints: 5, matchMedia: narrow })).toBe(true)
-    expect(looksLikePhone({ userAgent: desktopUa, maxTouchPoints: 5, matchMedia: media(["(pointer: coarse)"]) })).toBe(false)
+    expect(looksLikePhone({ userAgent: desktopUa, maxTouchPoints: 5, matchMedia: media(["(pointer: coarse)"]) })).toBe(
+      false,
+    )
   })
 })

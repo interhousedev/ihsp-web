@@ -172,8 +172,13 @@ export type CourseBroadcast = {
   title: string
   body: string
   created_at: string
+  /** Set once the broadcast was edited (the "изменено" marker). */
+  updated_at?: string | null
   recipients?: number | null
 }
+
+/** `PATCH /v1/staff/lms/courses/{id}/broadcasts/{bid}`: the author or a course admin; omitted keeps. */
+export type CourseBroadcastPatchBody = { title?: string; body?: string }
 
 export type CourseCreateBody = { title: string; slug: string; visibility: "public" | "invite" }
 export type DraftMetaBody = { title: string; description: string; lock_version: number }

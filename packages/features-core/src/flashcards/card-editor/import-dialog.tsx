@@ -1,17 +1,7 @@
 "use client"
 
 import { useT } from "@ihsp/i18n"
-import {
-  Button,
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogFooter,
-  DialogHeader,
-  DialogTitle,
-  Label,
-  Textarea,
-} from "@ihsp/ui"
+import { Button, Dialog, DialogContent, DialogFooter, DialogHeader, DialogTitle, Label, Textarea } from "@ihsp/ui"
 import { useId, useMemo, useRef, useState } from "react"
 import { detectSeparator, parseImport, type ImportSeparator, type ImportedCard } from "../utils/parse-import"
 
@@ -51,7 +41,6 @@ export function ImportDialog({ open, onOpenChange, onImport }: ImportDialogProps
       <DialogContent className="sm:max-w-xl">
         <DialogHeader>
           <DialogTitle>{t("title")}</DialogTitle>
-          <DialogDescription>{t("hint")}</DialogDescription>
         </DialogHeader>
         <div className="flex flex-col gap-3">
           <Label htmlFor={textId} className="sr-only">

@@ -20,6 +20,7 @@ import { publicHandlers } from "./public"
 import { pushHandlers } from "./push"
 import { registrationHandlers } from "./registration"
 import { scheduleHandlers } from "./schedule"
+import { teachersHandlers } from "./teachers"
 import { webSearchHandlers } from "./web-search"
 
 export { errorHandlers } from "./errors"
@@ -44,6 +45,7 @@ export {
   setUniLibrary,
   type LibraryActorSpec,
 } from "./library"
+export { resetTeacherContacts } from "./teachers"
 export { pushSubscriptions, resetPushSubscriptions } from "./push"
 export { currentWebQuota, resetWebSearchState, setWebQuota, spendWebSearch } from "./web-search"
 export { apiUrl, notFound, paginate, problem } from "./utils"
@@ -70,6 +72,7 @@ export {
   pushHandlers,
   registrationHandlers,
   scheduleHandlers,
+  teachersHandlers,
   webSearchHandlers,
 }
 
@@ -84,6 +87,7 @@ export const allHandlers = [
   ...idAdminHandlers,
   ...registrationHandlers,
   ...scheduleHandlers,
+  ...teachersHandlers,
   ...classworkHandlers,
   ...marksHandlers,
   ...assessmentsHandlers,

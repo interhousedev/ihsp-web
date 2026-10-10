@@ -1,7 +1,16 @@
 /** STF-4 to STF-8, UF-STF-04, UF-STF-05, UF-STF-08: the lesson page. */
 import { describe, expect, test } from "bun:test"
 import type { StaffLesson } from "@ihsp/api"
-import { apiUrl, ids, lessonId, nbIds, resourceAttachment, resourceMaterial, server, staffLessonFor } from "@ihsp/test-utils"
+import {
+  apiUrl,
+  ids,
+  lessonId,
+  nbIds,
+  resourceAttachment,
+  resourceMaterial,
+  server,
+  staffLessonFor,
+} from "@ihsp/test-utils"
 import { fireEvent, screen, waitFor, within } from "@testing-library/react"
 import { HttpResponse, http } from "msw"
 import { LessonPage } from "../features/lessons/components/lesson-page"

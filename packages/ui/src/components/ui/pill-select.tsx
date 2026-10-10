@@ -20,7 +20,12 @@ function PillSelect({ className, icon: Icon, children, ...props }: PillSelectPro
       )}
     >
       {Icon ? (
-        <Icon size={16} stroke={1.75} className="pointer-events-none absolute left-2.5 text-muted-foreground" aria-hidden />
+        <Icon
+          size={16}
+          stroke={1.75}
+          className="pointer-events-none absolute left-2.5 text-muted-foreground"
+          aria-hidden
+        />
       ) : null}
       <select
         data-slot="pill-select-control"

@@ -38,11 +38,7 @@ export function SecurityOverview({ user }: { user: UserMe }) {
         ))}
       </section>
       <div className="grid gap-3 sm:grid-cols-2 xl:grid-cols-3">
-        <SecurityCard
-          href="/security/password/"
-          icon={IconKey}
-          title={t("security.cards.password")}
-        />
+        <SecurityCard href="/security/password/" icon={IconKey} title={t("security.cards.password")} />
         <SecurityCard
           href="/security/otp/"
           icon={IconDeviceMobileMessage}
@@ -61,16 +57,8 @@ export function SecurityOverview({ user }: { user: UserMe }) {
           title={t("security.cards.email")}
           description={user.recovery_email ?? t("security.cards.emailMissing")}
         />
-        <SecurityCard
-          href="/security/sessions/"
-          icon={IconDevices}
-          title={t("security.cards.sessions")}
-        />
-        <SecurityCard
-          href="/security/activity/"
-          icon={IconActivity}
-          title={t("security.cards.activity")}
-        />
+        <SecurityCard href="/security/sessions/" icon={IconDevices} title={t("security.cards.sessions")} />
+        <SecurityCard href="/security/activity/" icon={IconActivity} title={t("security.cards.activity")} />
         {isStudent ? (
           <SecurityCard
             href="/security/emis/"
@@ -85,23 +73,10 @@ export function SecurityOverview({ user }: { user: UserMe }) {
             }
           />
         ) : null}
-        <SecurityCard
-          href="/connectors/"
-          icon={IconPlugConnected}
-          title={t("security.cards.connectors")}
-        />
-        <SecurityCard
-          href="/appearance/"
-          icon={IconPalette}
-          title={t("security.cards.appearance")}
-        />
+        <SecurityCard href="/connectors/" icon={IconPlugConnected} title={t("security.cards.connectors")} />
+        <SecurityCard href="/appearance/" icon={IconPalette} title={t("security.cards.appearance")} />
         {isStudent ? (
-          <SecurityCard
-            href="/security/delete/"
-            icon={IconTrash}
-            destructive
-            title={t("security.cards.delete")}
-          />
+          <SecurityCard href="/security/delete/" icon={IconTrash} destructive title={t("security.cards.delete")} />
         ) : null}
       </div>
     </div>

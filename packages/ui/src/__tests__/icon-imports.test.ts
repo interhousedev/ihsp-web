@@ -21,7 +21,9 @@ describe("icon registry", () => {
     const offenders = [join(webRoot, "apps"), join(webRoot, "packages")]
       .flatMap((d) => walk(d))
       .filter((f) => f !== allowed && f !== import.meta.path)
-      .filter((f) => /from\s+["']@tabler\/icons-react["']|import\(["']@tabler\/icons-react["']\)/.test(readFileSync(f, "utf8")))
+      .filter((f) =>
+        /from\s+["']@tabler\/icons-react["']|import\(["']@tabler\/icons-react["']\)/.test(readFileSync(f, "utf8")),
+      )
       .map((f) => relative(webRoot, f))
     expect(offenders).toEqual([])
   })

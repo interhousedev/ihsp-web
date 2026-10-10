@@ -137,5 +137,9 @@ function SettingsForm({ settings }: { settings: PlatformSettings }) {
 /** Platform settings (admin): the school info and safe defaults that change without a deploy, plus the feature flags. */
 export function SettingsPage() {
   const query = useQuery(getAdminSettingsQuery())
-  return <QueryState query={query} rows={4}>{(settings) => <SettingsForm settings={settings} />}</QueryState>
+  return (
+    <QueryState query={query} rows={4}>
+      {(settings) => <SettingsForm settings={settings} />}
+    </QueryState>
+  )
 }

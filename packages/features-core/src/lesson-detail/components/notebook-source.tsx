@@ -83,7 +83,11 @@ export function NotebookSource({
           </li>
         ))}
       </ul>
-      {attach.isError ? <p role="alert" className="text-destructive text-sm">{errorMessage(attach.error)}</p> : null}
+      {attach.isError ? (
+        <p role="alert" className="text-destructive text-sm">
+          {errorMessage(attach.error)}
+        </p>
+      ) : null}
     </div>
   )
 }

@@ -778,21 +778,6 @@
       "noTelegram": "Bildirishnomalar Telegramga yuboriladi. Olish uchun uni ulang.",
       "linkTelegram": "Telegramni ulash"
     },
-    "today": {
-      "title": "“Bugun” kartochkalari",
-      "show": "Kartochkani koʻrsatish: {card}",
-      "moveUp": "Yuqoriga: {card}",
-      "moveDown": "Pastga: {card}",
-      "cards": {
-        "now": "Hozirgi / keyingi dars",
-        "timeline": "Bugungi darslar",
-        "due": "Keyingi oʻquv kuniga topshirish",
-        "marks": "Yangi baholar",
-        "semester": "Shu semestr",
-        "announcements": "Eʼlonlar",
-        "alerts": "Ogohlantirishlar"
-      }
-    },
     "calendar": {
       "title": "Kalendar"
     },

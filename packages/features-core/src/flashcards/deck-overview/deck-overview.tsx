@@ -90,10 +90,7 @@ export function DeckOverview({
       ) : (
         <Link
           href={studyHref}
-          className={cn(
-            buttonVariants({ size: "lg" }),
-            "h-12 w-full max-w-md rounded-xl text-sm font-semibold",
-          )}
+          className={cn(buttonVariants({ size: "lg" }), "h-12 w-full max-w-md rounded-xl text-sm font-semibold")}
         >
           {t("studyNow")}
         </Link>

@@ -12,6 +12,8 @@ import type {
   SearchParams,
   SearchResults,
   SendOutboundMailBody,
+  SentMailPage,
+  SentMailParams,
   Student360,
   TeacherProfile,
 } from "../types/composition"
@@ -37,6 +39,16 @@ export const getMeSearchQuery = (params: SearchParams) =>
 export function postMeOutboundMail(body: SendOutboundMailBody, opts?: RequestOptions): Promise<OutboundMailSent> {
   return api.post<OutboundMailSent>("/v1/me/outbound-mail", body, opts)
 }
+
+/** GET /v1/me/outbound-mail?limit&before — bearer; the emails the caller sent from the platform, newest first. */
+export function getMeOutboundMail(params?: SentMailParams, opts?: RequestOptions): Promise<SentMailPage> {
+  return api.get<SentMailPage>("/v1/me/outbound-mail", { ...opts, query: params })
+}
+export const getMeOutboundMailQuery = (params?: SentMailParams) =>
+  queryOptions({
+    queryKey: keys.me.outboundMail(params),
+    queryFn: ({ signal }) => getMeOutboundMail(params, { signal }),
+  })
 
 /** POST /v1/me/calendar-token — student; the URL is shown once and the token rotates. */
 export function postMeCalendarToken(opts?: RequestOptions): Promise<CalendarTokenResponse> {

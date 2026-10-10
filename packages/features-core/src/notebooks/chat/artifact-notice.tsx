@@ -26,7 +26,14 @@ export function ArtifactNotice({ notebookId, artifactId, kind, scope }: Artifact
   const workspace = useWorkspace()
   const artifacts = useArtifacts(notebookId)
   const item = artifacts.data?.find((current) => current.id === artifactId)
-  const state = !item || isActive(item) ? (scope === "chat.quick" ? "started" : "created") : item.status === "failed" ? "failed" : "ready"
+  const state =
+    !item || isActive(item)
+      ? scope === "chat.quick"
+        ? "started"
+        : "created"
+      : item.status === "failed"
+        ? "failed"
+        : "ready"
   return (
     <p
       role="status"

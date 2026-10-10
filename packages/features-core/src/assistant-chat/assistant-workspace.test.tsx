@@ -168,8 +168,24 @@ describe("AssistantWorkspace: sidebar", () => {
       http.get(apiUrl("/v1/ai/chats"), () =>
         HttpResponse.json({
           items: [
-            { id: ids.chat, assistant: "student", title: "Kinematics revision", last_message_at: "2026-10-07T05:12:00Z", pending_approvals: 0, course_id: null, tier: "fast" },
-            { id: ids.chat2, assistant: "student", title: "New chat", last_message_at: "2026-10-07T05:13:00Z", pending_approvals: 0, course_id: null, tier: "fast" },
+            {
+              id: ids.chat,
+              assistant: "student",
+              title: "Kinematics revision",
+              last_message_at: "2026-10-07T05:12:00Z",
+              pending_approvals: 0,
+              course_id: null,
+              tier: "fast",
+            },
+            {
+              id: ids.chat2,
+              assistant: "student",
+              title: "New chat",
+              last_message_at: "2026-10-07T05:13:00Z",
+              pending_approvals: 0,
+              course_id: null,
+              tier: "fast",
+            },
           ],
           next_cursor: null,
         }),

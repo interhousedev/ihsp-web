@@ -49,7 +49,12 @@ describe("file picker", () => {
     server.use(
       http.get(apiUrl("/v1/me/files"), ({ request }) => {
         const search = new URL(request.url).searchParams
-        requests.push({ q: search.get("q"), type: search.get("type"), sort: search.get("sort"), page: search.get("page") })
+        requests.push({
+          q: search.get("q"),
+          type: search.get("type"),
+          sort: search.get("sort"),
+          page: search.get("page"),
+        })
         return HttpResponse.json({ items: [filePdf], next_cursor: null })
       }),
     )
@@ -60,8 +65,6 @@ describe("file picker", () => {
     await user.selectOptions(screen.getByLabelText("File type"), "pdf")
     await user.selectOptions(screen.getByLabelText("Order"), "older")
 
-    await waitFor(() =>
-      expect(requests.at(-1)).toEqual({ q: "report", type: "pdf", sort: "older", page: "1" }),
-    )
+    await waitFor(() => expect(requests.at(-1)).toEqual({ q: "report", type: "pdf", sort: "older", page: "1" }))
   })
 })

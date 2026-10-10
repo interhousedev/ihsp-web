@@ -1,9 +1,9 @@
-"use client";
+"use client"
 
-import { createContext, useContext, type ReactNode } from "react";
-import { WorkspaceProvider, type WorkspaceActions } from "../workspace-context";
+import { createContext, useContext, type ReactNode } from "react"
+import { WorkspaceProvider, type WorkspaceActions } from "../workspace-context"
 
-const SharedViewerContext = createContext(false);
+const SharedViewerContext = createContext(false)
 
 const NO_ACTIONS: WorkspaceActions = {
   notebookId: "",
@@ -14,7 +14,7 @@ const NO_ACTIONS: WorkspaceActions = {
   ask: () => undefined,
   openAddSources: () => undefined,
   openNoteEditor: () => undefined,
-};
+}
 
 /**
  * Marks the viewers inside as a public, read-only view of a shared output: nothing is saved (progress, edits), and the
@@ -26,10 +26,10 @@ export function SharedViewerProvider({ children }: { children: ReactNode }) {
     <SharedViewerContext.Provider value={true}>
       <WorkspaceProvider value={NO_ACTIONS}>{children}</WorkspaceProvider>
     </SharedViewerContext.Provider>
-  );
+  )
 }
 
 /** True inside `SharedViewerProvider`. */
 export function useSharedViewer(): boolean {
-  return useContext(SharedViewerContext);
+  return useContext(SharedViewerContext)
 }

@@ -1,21 +1,17 @@
-"use client";
+"use client"
 
-import {
-  getMeAlertsQuery,
-  getMeTodayQuery,
-  getNotificationsQuery,
-} from "@ihsp/api";
-import { useQuery } from "@tanstack/react-query";
+import { getMeAlertsQuery, getMeTodayQuery, getNotificationsQuery } from "@ihsp/api"
+import { useQuery } from "@tanstack/react-query"
 
 export function useToday() {
-  return useQuery(getMeTodayQuery());
+  return useQuery(getMeTodayQuery())
 }
 
 /** Alerts and announcements are extras: when they fail, the rest of Today still shows. */
 export function useAlerts() {
-  return useQuery(getMeAlertsQuery());
+  return useQuery(getMeAlertsQuery())
 }
 
 export function useAnnouncements() {
-  return useQuery(getNotificationsQuery({ filter: "announcements", limit: 3 }));
+  return useQuery(getNotificationsQuery({ filter: "announcements", limit: 3 }))
 }

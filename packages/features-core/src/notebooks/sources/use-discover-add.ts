@@ -63,9 +63,7 @@ export function useDiscoverAdd(notebookId: string, results: readonly DiscoverRes
     setError(null)
     setRefusals(new Map())
     try {
-      const outcome = await adder.mutateAsync(
-        chosen.map(sourceFor),
-      )
+      const outcome = await adder.mutateAsync(chosen.map(sourceFor))
       const refused = new Map(
         outcome.rejected.flatMap((entry) => {
           const result = chosen[entry.index]

@@ -20,7 +20,5 @@ export function ThemeToggle() {
     [resolvedTheme, setTheme],
   )
 
-  return (
-    <IconButton icon={Icons.brightness} onClick={toggle} aria-label={t("theme.toggle")} />
-  )
+  return <IconButton icon={Icons.brightness} onClick={toggle} aria-label={t("theme.toggle")} />
 }

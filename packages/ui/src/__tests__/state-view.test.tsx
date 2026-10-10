@@ -6,7 +6,9 @@ import { StateView } from "../components/state-view"
 
 describe("StateView empty", () => {
   it("shows the icon passed in", () => {
-    renderWithProviders(<StateView state="empty" emptyText="No files" icon={<Icons.alertCircle data-testid="given" />} />)
+    renderWithProviders(
+      <StateView state="empty" emptyText="No files" icon={<Icons.alertCircle data-testid="given" />} />,
+    )
     expect(screen.getByTestId("given")).toBeInTheDocument()
   })
 

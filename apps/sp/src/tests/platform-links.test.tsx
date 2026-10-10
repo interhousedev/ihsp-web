@@ -31,4 +31,3 @@ describe("profile menu", () => {
     expect(within(menu).queryByRole("menuitem", { name: /Staff|Admin/ })).not.toBeInTheDocument()
   })
 })
-

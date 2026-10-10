@@ -67,9 +67,7 @@ export function ScopePicker({ entry, scopes, preset, onPreset, onScopes }: Scope
             onCheckedChange={(checked) => toggle(item.scope, checked)}
           >
             <code className="text-sm font-medium break-all">{item.scope}</code>
-            {t.has(scopeHintKey(item.scope)) ? (
-              <span className="text-xs">{t(scopeHintKey(item.scope))}</span>
-            ) : null}
+            {t.has(scopeHintKey(item.scope)) ? <span className="text-xs">{t(scopeHintKey(item.scope))}</span> : null}
             <span className="text-muted-foreground text-xs">
               {t("consent.tools", { tools: item.tools.join(", ") })}
             </span>

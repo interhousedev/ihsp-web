@@ -246,7 +246,11 @@ function bookDetail(id: string, input: BookInput, base: ItemDetail | null): Item
     visibility: input.visibility,
     status: base?.status ?? "draft",
     tag: { source: "book", label: "Library book" },
-    book: { rights: input.rights ?? "official", licence: input.licence ?? null, download_allowed: input.download_allowed },
+    book: {
+      rights: input.rights ?? "official",
+      licence: input.licence ?? null,
+      download_allowed: input.download_allowed,
+    },
     rights_box: {
       text: RIGHTS_TEXT[input.rights ?? "official"] ?? "",
       attribution: input.rights_basis?.attribution ?? null,

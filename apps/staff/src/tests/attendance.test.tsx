@@ -136,7 +136,9 @@ describe("attendance sheet", () => {
 
     await user.click(await screen.findByRole("button", { name: "Submit attendance" }))
 
-    await waitFor(() => expect(captured.bodies).toEqual([{ absent: [], late: [], present_unassigned: [], base_version: 3 }]))
+    await waitFor(() =>
+      expect(captured.bodies).toEqual([{ absent: [], late: [], present_unassigned: [], base_version: 3 }]),
+    )
   })
 
   test("a student the backend counted (counted flag) is a normal row", async () => {
@@ -251,7 +253,8 @@ describe("attendance marks", () => {
     }
     expect(buildSubmitBody(marks, attendanceSheet, 7)).toEqual({
       absent: [ids.student3],
-      late: [], present_unassigned: [ids.student4],
+      late: [],
+      present_unassigned: [ids.student4],
       base_version: 7,
     })
   })

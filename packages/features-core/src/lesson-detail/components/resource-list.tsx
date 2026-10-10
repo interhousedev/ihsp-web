@@ -45,12 +45,7 @@ export function ResourceList({
           )}
           <div className="min-w-0 flex-1">
             <p className="flex flex-wrap items-center gap-2 text-sm font-medium">
-              <a
-                href={item.short_url}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="truncate hover:underline"
-              >
+              <a href={item.short_url} target="_blank" rel="noopener noreferrer" className="truncate hover:underline">
                 {item.title}
               </a>
               {item.hidden ? <Badge variant="outline">{t("hidden")}</Badge> : null}

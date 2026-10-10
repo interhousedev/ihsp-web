@@ -27,7 +27,9 @@ describe("SidebarNotebooks folders", () => {
     const course = document.querySelector('[data-folder="course"]') as HTMLElement
     const mine = document.querySelector('[data-folder="mine"]') as HTMLElement
     expect(within(subject).getAllByRole("link").length).toBe(6)
-    expect(within(subject).getByRole("link", { name: "Show all (30)" }).getAttribute("href")).toContain("folder=subject")
+    expect(within(subject).getByRole("link", { name: "Show all (30)" }).getAttribute("href")).toContain(
+      "folder=subject",
+    )
     expect(within(subject).getByRole("button", { name: /Subject notebooks/ })).toHaveTextContent("30")
     expect(within(course).getAllByRole("link").length).toBe(6)
     expect(within(course).getByRole("button", { name: /Course notebooks/ })).toHaveTextContent("7")
@@ -47,7 +49,9 @@ describe("SidebarNotebooks folders", () => {
     server.use(
       http.get(apiUrl("/v1/notebooks"), ({ request }) => {
         const cursor = new URL(request.url).searchParams.get("cursor")
-        return HttpResponse.json(cursor === null ? { items: first, next_cursor: "page-2" } : { items: second, next_cursor: null })
+        return HttpResponse.json(
+          cursor === null ? { items: first, next_cursor: "page-2" } : { items: second, next_cursor: null },
+        )
       }),
     )
     renderNotebook(<SidebarNotebooks onNavigate={() => {}} />, { route: "/assistant/" })

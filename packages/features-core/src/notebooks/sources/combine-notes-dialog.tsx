@@ -7,7 +7,6 @@ import {
   Checkbox,
   Dialog,
   DialogContent,
-  DialogDescription,
   DialogFooter,
   DialogHeader,
   DialogTitle,
@@ -73,7 +72,6 @@ export function CombineNotesDialog({ notebookId, notes, open, onOpenChange }: Co
         >
           <DialogHeader>
             <DialogTitle>{t("combine.title")}</DialogTitle>
-            <DialogDescription>{t("combine.description")}</DialogDescription>
           </DialogHeader>
           <div className="flex flex-col gap-1">
             <Label htmlFor={titleId}>{t("combine.titleLabel")}</Label>

@@ -25,7 +25,10 @@ export function ThemeSelector() {
           if (value !== null) setActiveTheme(value)
         }}
       >
-        <SelectTrigger id="theme-selector" className="justify-start rounded-full border-transparent bg-muted hover:bg-muted/70 *:data-[slot=select-value]:w-24">
+        <SelectTrigger
+          id="theme-selector"
+          className="justify-start rounded-full border-transparent bg-muted hover:bg-muted/70 *:data-[slot=select-value]:w-24"
+        >
           <span className="text-muted-foreground">
             <Icons.palette />
           </span>

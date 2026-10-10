@@ -20,6 +20,7 @@ export const compositionHandlers = [
     const q = query(request).get("q") ?? ""
     return HttpResponse.json(q === "nothing" || q.length === 0 ? emptySearchResults : searchResults)
   }),
+  http.get(apiUrl("/v1/me/outbound-mail"), () => HttpResponse.json({ items: [], next_before: null })),
   http.post(apiUrl("/v1/me/outbound-mail"), async ({ request }) => {
     const body = (await request.json()) as { to: string[] }
     return HttpResponse.json({ message_id: "<mail-1@ihsu.uz>", to: body.to, attachment_name: null })

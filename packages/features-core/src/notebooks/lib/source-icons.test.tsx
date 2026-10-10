@@ -5,8 +5,17 @@ import { sourceIcon } from "./source-icons"
 describe("sourceIcon", () => {
   test("every kind, library books and notes included, has an icon", () => {
     const kinds: SourceKind[] = [
-      "file", "chat", "lesson_resource", "flashcard_set", "lms_step",
-      "text", "note", "url", "web_result", "library_item", "library_notes",
+      "file",
+      "chat",
+      "lesson_resource",
+      "flashcard_set",
+      "lms_step",
+      "text",
+      "note",
+      "url",
+      "web_result",
+      "library_item",
+      "library_notes",
     ]
     for (const kind of kinds) expect(sourceIcon({ kind }).Icon).toBeDefined()
   })

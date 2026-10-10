@@ -111,7 +111,8 @@
       "url": "Links",
       "file": "Files",
       "chat": "Chats",
-      "flashcard_set": "Flash cards"
+      "flashcard_set": "Flash cards",
+      "artifact": "Notebook materials"
     },
     "row": {
       "kind": {
@@ -119,6 +120,7 @@
         "file": "File",
         "chat": "Chat",
         "flashcard_set": "Flash cards",
+        "artifact": "Notebook materials",
         "lesson": "Lesson attachment"
       },
       "status": {
@@ -132,6 +134,7 @@
       "created": "created {date}",
       "expires": "expires {date}",
       "copy": "Copy",
+      "open": "Open",
       "revoke": "Revoke",
       "revokeLabel": "Revoke {name}",
       "delete": "Delete",

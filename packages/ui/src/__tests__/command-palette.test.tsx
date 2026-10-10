@@ -23,7 +23,10 @@ describe("groupResults", () => {
 })
 
 describe("CommandPalette", () => {
-  async function openAndType(search: (query: string) => Promise<CommandPaletteResult[]>, onNavigate = mock((_url: string) => {})) {
+  async function openAndType(
+    search: (query: string) => Promise<CommandPaletteResult[]>,
+    onNavigate = mock((_url: string) => {}),
+  ) {
     const view = renderWithProviders(<CommandPalette search={search} onNavigate={onNavigate} />, {})
     fireEvent.click(await screen.findByRole("button", { name: "Open search" }))
     fireEvent.change(await screen.findByPlaceholderText("Type a command or search…"), { target: { value: "photosyn" } })

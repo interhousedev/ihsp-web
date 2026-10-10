@@ -1,17 +1,7 @@
 "use client"
 
 import { useT } from "@ihsp/i18n"
-import {
-  Button,
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogFooter,
-  DialogHeader,
-  DialogTitle,
-  Input,
-  Label,
-} from "@ihsp/ui"
+import { Button, Dialog, DialogContent, DialogFooter, DialogHeader, DialogTitle, Input, Label } from "@ihsp/ui"
 import { useId, useState } from "react"
 import { parseShareInput } from "../utils/share-input"
 
@@ -53,7 +43,6 @@ export function GetSharedDialog({ open, onOpenChange, onSubmit }: GetSharedDialo
         >
           <DialogHeader>
             <DialogTitle>{t("title")}</DialogTitle>
-            <DialogDescription>{t("description")}</DialogDescription>
           </DialogHeader>
           <div className="flex flex-col gap-1">
             <Label htmlFor={inputId}>{t("label")}</Label>

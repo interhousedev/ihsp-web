@@ -14,11 +14,17 @@ function CollapsibleTrigger({ ...props }: CollapsiblePrimitive.Trigger.Props) {
 }
 
 function CollapsibleContent({ className, ...props }: CollapsiblePrimitive.Panel.Props) {
-  return <CollapsiblePrimitive.Panel
+  return (
+    <CollapsiblePrimitive.Panel
       data-slot="collapsible-content"
-      className={cn(MOTION.collapse, "h-(--collapsible-panel-height) overflow-hidden transition-[height,opacity] data-ending-style:h-0 data-ending-style:opacity-0 data-starting-style:h-0 data-starting-style:opacity-0", className)}
+      className={cn(
+        MOTION.collapse,
+        "h-(--collapsible-panel-height) overflow-hidden transition-[height,opacity] data-ending-style:h-0 data-ending-style:opacity-0 data-starting-style:h-0 data-starting-style:opacity-0",
+        className,
+      )}
       {...props}
     />
+  )
 }
 
 export { Collapsible, CollapsibleTrigger, CollapsibleContent }

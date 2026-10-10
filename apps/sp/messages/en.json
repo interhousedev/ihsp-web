@@ -778,21 +778,6 @@
       "noTelegram": "Notifications go to Telegram. Link it to receive them.",
       "linkTelegram": "Link Telegram"
     },
-    "today": {
-      "title": "Today cards",
-      "show": "Show card: {card}",
-      "moveUp": "Move up: {card}",
-      "moveDown": "Move down: {card}",
-      "cards": {
-        "now": "Now / Next lesson",
-        "timeline": "Today's lessons",
-        "due": "Due next study day",
-        "marks": "New marks",
-        "semester": "This semester",
-        "announcements": "Announcements",
-        "alerts": "Alerts"
-      }
-    },
     "calendar": {
       "title": "Calendar feed"
     },

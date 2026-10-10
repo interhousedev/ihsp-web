@@ -3,7 +3,7 @@
 import { useT } from "@ihsp/i18n"
 import { Input, NativeSelect, NativeSelectOption, Textarea, cn } from "@ihsp/ui"
 import { useId } from "react"
-import { BOOK_LANGUAGES, BOOK_TYPES, RIGHTS, YEARS_OF_STUDY, type BookForm } from "./book-form"
+import { BOOK_LANGUAGES, BOOK_TYPES, YEARS_OF_STUDY, type BookForm } from "./book-form"
 import type { FormIssues } from "./book-form-checks"
 import { FieldRow } from "./field-row"
 import { StringListField } from "./string-list-field"
@@ -102,20 +102,6 @@ export function BookMetadataFields({
           {BOOK_TYPES.map((value) => (
             <NativeSelectOption key={value} value={value}>
               {type(value)}
-            </NativeSelectOption>
-          ))}
-        </NativeSelect>
-      </FieldRow>
-      <FieldRow id={`${id}-rights`} label={t("rights")} hint={t("rightsHint")}>
-        <NativeSelect
-          id={`${id}-rights`}
-          value={form.rights}
-          className="w-full"
-          onChange={(event) => onChange({ rights: event.target.value as BookForm["rights"] })}
-        >
-          {RIGHTS.map((value) => (
-            <NativeSelectOption key={value} value={value}>
-              {t(`rightsOptions.${value}`)}
             </NativeSelectOption>
           ))}
         </NativeSelect>

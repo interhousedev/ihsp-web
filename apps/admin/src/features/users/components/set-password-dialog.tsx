@@ -2,7 +2,16 @@
 
 import { keys, postAdminUserSetPassword } from "@ihsp/api"
 import { useT } from "@ihsp/i18n"
-import { Button, Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, Input } from "@ihsp/ui"
+import {
+  Button,
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+  Input,
+} from "@ihsp/ui"
 import { useEffect, useState } from "react"
 import { CheckField } from "../../shared/components/check-field"
 import { LabeledField } from "../../shared/components/labeled-field"

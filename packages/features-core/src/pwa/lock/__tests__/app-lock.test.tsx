@@ -47,12 +47,20 @@ describe("the Settings card", () => {
 
 describe("the gate", () => {
   test("covers the app when the user has a PIN, and not when there is none", async () => {
-    const { unmount } = renderWithProviders(<PinGate><button type="button">app</button></PinGate>)
+    const { unmount } = renderWithProviders(
+      <PinGate>
+        <button type="button">app</button>
+      </PinGate>,
+    )
     expect(screen.queryByText("IHSP is locked")).not.toBeInTheDocument()
     unmount()
 
     writePinRecord(userMe.id, await createPinRecord("4821", 1000))
-    renderWithProviders(<PinGate><button type="button">app</button></PinGate>)
+    renderWithProviders(
+      <PinGate>
+        <button type="button">app</button>
+      </PinGate>,
+    )
     expect(await screen.findByText("IHSP is locked")).toBeInTheDocument()
   })
 })

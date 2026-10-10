@@ -8,6 +8,7 @@ import type {
   CheckpointBody,
   CourseBroadcast,
   CourseBroadcastBody,
+  CourseBroadcastPatchBody,
   CourseCreateBody,
   CourseCreator,
   CourseDraft,
@@ -277,6 +278,16 @@ export function postLmsCourseBroadcast(
   opts?: RequestOptions,
 ): Promise<CourseBroadcast> {
   return api.post<CourseBroadcast>(`/v1/staff/lms/courses/${seg(courseId)}/broadcasts`, body, opts)
+}
+
+/** PATCH /v1/staff/lms/courses/{id}/broadcasts/{bid} — the author or a course admin; the students' notifications update in place. */
+export function patchLmsCourseBroadcast(
+  courseId: string,
+  broadcastId: string,
+  body: CourseBroadcastPatchBody,
+  opts?: RequestOptions,
+): Promise<CourseBroadcast> {
+  return api.patch<CourseBroadcast>(`/v1/staff/lms/courses/${seg(courseId)}/broadcasts/${seg(broadcastId)}`, body, opts)
 }
 
 /** GET /v1/staff/lms/courses/{id}/broadcasts — the broadcasts sent to the course, newest first. */

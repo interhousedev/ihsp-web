@@ -102,8 +102,7 @@ export function ChatConfigForm({ notebook, onClose }: ChatConfigFormProps) {
           className="min-h-16 resize-y"
           onChange={(event) => setGoal(event.target.value)}
         />
-        <p className="text-muted-foreground flex justify-between gap-2 text-xs">
-          <span>{t("goal.hint")}</span>
+        <p className="text-muted-foreground flex justify-end gap-2 text-xs">
           <span className="shrink-0 tabular-nums">{t("goal.left", { count: MAX_GOAL - goal.length })}</span>
         </p>
       </div>
@@ -129,7 +128,6 @@ export function ChatConfigForm({ notebook, onClose }: ChatConfigFormProps) {
             </ToggleGroupItem>
           ))}
         </ToggleGroup>
-        {style === "custom" ? null : <p className="text-muted-foreground text-xs">{t(`style.${style}.hint`)}</p>}
         {style === "custom" ? (
           <div className="flex flex-col gap-1">
             <Textarea
@@ -142,8 +140,7 @@ export function ChatConfigForm({ notebook, onClose }: ChatConfigFormProps) {
               className="min-h-20 resize-y"
               onChange={(event) => setCustomPrompt(event.target.value)}
             />
-            <p className="text-muted-foreground flex justify-between gap-2 text-xs">
-              <span>{t("customHint")}</span>
+            <p className="text-muted-foreground flex justify-end gap-2 text-xs">
               <span className="shrink-0 tabular-nums">
                 {t("customCount", { count: customPrompt.length, max: MAX_CUSTOM_PROMPT })}
               </span>

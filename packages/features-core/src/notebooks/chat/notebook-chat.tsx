@@ -46,8 +46,7 @@ export function NotebookChat({ notebook, pendingAsk, onAskHandled }: NotebookCha
   const [web, setWeb] = useWebSwitch(notebook.id)
 
   const limit = notebookLimit(usage.data)
-  const canAsk =
-    online && !limit.reached && notebook.selected_source_count > 0 && !running && notebook.can_write !== false
+  const canAsk = online && !limit.reached && !running && notebook.can_write !== false
 
   const saved = chat.data?.messages ?? NO_MESSAGES
   const visible = pending?.replaced ? saved.filter((message) => message.id !== pending.replaced?.id) : saved

@@ -2,10 +2,10 @@
 
 import { getMeFilesQuery, type FileItem } from "@ihsp/api"
 import { useFormatters, useT } from "@ihsp/i18n"
-import { Input, StateView } from "@ihsp/ui"
+import { Button, Input, StateView } from "@ihsp/ui"
 import { useQuery } from "@tanstack/react-query"
 import { useState } from "react"
-import { FileUploadButton } from "../../file-upload-button"
+import { DrivePicker, FileUploadButton } from "../../file-upload-button"
 import { SourceKindIcon } from "../lib/source-icons"
 import type { FilesTabProps } from "./add-types"
 import { PickRow } from "./pick-row"
@@ -25,6 +25,7 @@ export function PickFilesTab({ sources, selection, full, uploader }: FilesTabPro
   const formatBytes = useFormatBytes()
   const files = useQuery(getMeFilesQuery({ limit: 100 }))
   const [search, setSearch] = useState("")
+  const [browsing, setBrowsing] = useState(false)
 
   const added = new Set(sources.filter((source) => source.kind === "file").map((source) => refValue(source, "file_id")))
   const ready = (files.data?.items ?? []).filter((file) => file.status === "ready")
@@ -46,6 +47,9 @@ export function PickFilesTab({ sources, selection, full, uploader }: FilesTabPro
           className="h-11 flex-1 md:h-8"
           onChange={(event) => setSearch(event.target.value)}
         />
+        <Button type="button" variant="outline" className="min-h-11 md:min-h-8" onClick={() => setBrowsing(true)}>
+          {t("add.files.browse")}
+        </Button>
         <FileUploadButton
           purpose="ai_upload"
           multiple
@@ -53,6 +57,20 @@ export function PickFilesTab({ sources, selection, full, uploader }: FilesTabPro
           onUploaded={(file) => void uploader.addFile(file)}
         />
       </div>
+      <DrivePicker
+        open={browsing}
+        onOpenChange={setBrowsing}
+        multiple
+        uploadPurpose="ai_upload"
+        onSelect={(picked) => {
+          for (const file of picked) {
+            const key = `file:${file.id}`
+            if (added.has(file.id) || selection.has(key) || !hasReadableText(file)) continue
+            selection.toggle({ key, input: { kind: "file", file_id: file.id }, label: file.name })
+          }
+          setBrowsing(false)
+        }}
+      />
       <p className="text-muted-foreground text-xs">{t("add.drop")}</p>
       {files.isPending ? <StateView state="loading" rows={3} /> : null}
       {files.isError ? <StateView state="error" error={files.error} onRetry={() => void files.refetch()} /> : null}

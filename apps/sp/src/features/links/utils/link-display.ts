@@ -1,9 +1,16 @@
 import type { LinkItem } from "@ihsp/api"
 
-/** Filter chips cover the kinds sp shows today; `artifact` has no chip or label yet. */
-export type LinkKindFilter = "all" | Exclude<LinkItem["kind"], "artifact">
+/** Filter chips: every kind of link; `artifact` is shared notebook studio material. */
+export type LinkKindFilter = "all" | LinkItem["kind"]
 
-export const KIND_FILTERS = ["all", "url", "file", "chat", "flashcard_set"] as const satisfies readonly LinkKindFilter[]
+export const KIND_FILTERS = [
+  "all",
+  "url",
+  "file",
+  "chat",
+  "flashcard_set",
+  "artifact",
+] as const satisfies readonly LinkKindFilter[]
 
 export type LinkStatus = "active" | "revoked" | "disabled" | "expired"
 
@@ -22,7 +29,7 @@ export function linkName(link: LinkItem): string {
 
 /** Shares (chats, flash card sets) are revoked; short links are deleted (UF-WEB-26). */
 export function isShare(link: LinkItem): boolean {
-  return link.kind === "chat" || link.kind === "flashcard_set"
+  return link.kind === "chat" || link.kind === "flashcard_set" || link.kind === "artifact"
 }
 
 export function canRevoke(link: LinkItem, now?: number): boolean {

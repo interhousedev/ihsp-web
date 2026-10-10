@@ -2,6 +2,7 @@ import type {
   CheckpointBody,
   CourseBroadcast,
   CourseBroadcastBody,
+  CourseBroadcastPatchBody,
   CourseCreateBody,
   CourseCreator,
   CourseSettingsBody,
@@ -189,6 +190,17 @@ export const lmsAuthoringHandlers = [
       recipients: 12,
     }
     return HttpResponse.json(created satisfies CourseBroadcast, { status: 201 })
+  }),
+  http.patch(apiUrl("/v1/staff/lms/courses/:id/broadcasts/:broadcastId"), async ({ params, request }) => {
+    const existing = courseBroadcasts.find((item) => item.id === param(params, "broadcastId"))
+    if (!existing) return notFound("Broadcast")
+    const body = await readJson<CourseBroadcastPatchBody>(request)
+    return HttpResponse.json({
+      ...existing,
+      title: body.title ?? existing.title,
+      body: body.body ?? existing.body,
+      updated_at: FIXTURE_NOW,
+    } satisfies CourseBroadcast)
   }),
   http.get(apiUrl("/v1/lms/courses/:id/pending"), () => HttpResponse.json(pendingChanges satisfies PendingChanges)),
   http.post(apiUrl("/v1/lms/courses/:id/publish"), async ({ request }) => {

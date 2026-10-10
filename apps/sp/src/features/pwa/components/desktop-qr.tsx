@@ -9,7 +9,14 @@ import { looksLikePhone } from "../utils/phone-like"
 export function DesktopQr() {
   const t = useT("pwa")
   // Already on a phone: nothing to scan.
-  if (looksLikePhone({ userAgent: navigator.userAgent, maxTouchPoints: navigator.maxTouchPoints, matchMedia: (q) => window.matchMedia(q) })) return null
+  if (
+    looksLikePhone({
+      userAgent: navigator.userAgent,
+      maxTouchPoints: navigator.maxTouchPoints,
+      matchMedia: (q) => window.matchMedia(q),
+    })
+  )
+    return null
   const address = `${installAppUrl() ?? window.location.origin}/`
   return (
     <section className="flex flex-col items-center gap-3 text-center" aria-labelledby="pwa-platform-title">

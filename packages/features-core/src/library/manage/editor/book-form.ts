@@ -1,4 +1,4 @@
-import type { BookInput, BookSubjectInput, ItemLanguage, ItemType, Rights, SuggestedBook } from "@ihsp/api"
+import type { BookInput, BookSubjectInput, ItemLanguage, ItemType, SuggestedBook } from "@ihsp/api"
 
 /** The types a book can have (materials have their own). */
 export const BOOK_TYPES: readonly ItemType[] = [
@@ -18,7 +18,6 @@ export const BOOK_TYPES: readonly ItemType[] = [
 export const BOOK_LANGUAGES: readonly ItemLanguage[] = ["uz_latn", "uz_cyrl", "ru", "en", "qq", "other"]
 export const SUBJECT_ROLES: readonly BookSubjectInput["role"][] = ["textbook", "core", "supplementary", "reference"]
 export const YEARS_OF_STUDY: readonly number[] = [1, 2]
-export const RIGHTS: readonly Rights[] = ["official", "open_license", "public_domain", "permission"]
 
 export type TopicRow = { topic_id: string; page_from: string; page_to: string }
 
@@ -34,7 +33,6 @@ export type BookForm = {
   publisher: string
   isbn: string
   type: ItemType
-  rights: Rights
   description: string
   yearsOfStudy: number[]
   subjects: BookSubjectInput[]
@@ -57,7 +55,6 @@ export function emptyForm(title = ""): BookForm {
     publisher: "",
     isbn: "",
     type: "textbook",
-    rights: "official",
     description: "",
     yearsOfStudy: [],
     subjects: [],
@@ -86,7 +83,6 @@ export function formFromInput(input: BookInput, coverUrl: string | null): BookFo
     publisher: text(input.publisher),
     isbn: text(input.isbn),
     type: input.type,
-    rights: input.rights ?? "official",
     description: text(input.description),
     yearsOfStudy: input.years_of_study,
     subjects: input.subjects,
@@ -145,7 +141,8 @@ export function inputFromForm(form: BookForm): BookInput {
     publisher: orNull(form.publisher),
     isbn: orNull(form.isbn),
     type: form.type,
-    rights: form.rights,
+    // Not edited in the UI; the server derives rights. Dropped once the contract makes it optional.
+    rights: "official",
     description: orNull(form.description),
     years_of_study: form.yearsOfStudy,
     subjects: form.subjects,

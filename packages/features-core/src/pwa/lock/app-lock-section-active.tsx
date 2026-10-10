@@ -27,40 +27,43 @@ export function AppLockSectionActive() {
           <CardDescription>{t("lock.settings.description")}</CardDescription>
         </CardHeader>
         <CardContent>
-      <p role="status" className="text-sm font-medium">
-        {record ? t("lock.settings.on") : t("lock.settings.off")}
-      </p>
-      {record && !mode ? (
-        <RelockSelect value={record.relock} onChange={(relock) => writePinRecord(userId, withRelock(record, relock))} />
-      ) : null}
-      {mode ? (
-        <AppLockForm
-          key={mode}
-          mode={mode}
-          userId={userId}
-          record={record}
-          onDone={() => setMode(null)}
-          onCancel={() => setMode(null)}
-        />
-      ) : (
-        <div className="mt-3 flex flex-wrap gap-2">
-          {record ? (
-            <>
-              <Button variant="outline" className="min-h-11" onClick={() => setMode("change")}>
-                {t("lock.settings.change")}
-              </Button>
-              <Button variant="outline" className="min-h-11" onClick={() => setMode("remove")}>
-                {t("lock.settings.remove")}
-              </Button>
-            </>
+          <p role="status" className="text-sm font-medium">
+            {record ? t("lock.settings.on") : t("lock.settings.off")}
+          </p>
+          {record && !mode ? (
+            <RelockSelect
+              value={record.relock}
+              onChange={(relock) => writePinRecord(userId, withRelock(record, relock))}
+            />
+          ) : null}
+          {mode ? (
+            <AppLockForm
+              key={mode}
+              mode={mode}
+              userId={userId}
+              record={record}
+              onDone={() => setMode(null)}
+              onCancel={() => setMode(null)}
+            />
           ) : (
-            <Button className="min-h-11" onClick={() => setMode("set")}>
-              {t("lock.settings.set")}
-            </Button>
+            <div className="mt-3 flex flex-wrap gap-2">
+              {record ? (
+                <>
+                  <Button variant="outline" className="min-h-11" onClick={() => setMode("change")}>
+                    {t("lock.settings.change")}
+                  </Button>
+                  <Button variant="outline" className="min-h-11" onClick={() => setMode("remove")}>
+                    {t("lock.settings.remove")}
+                  </Button>
+                </>
+              ) : (
+                <Button className="min-h-11" onClick={() => setMode("set")}>
+                  {t("lock.settings.set")}
+                </Button>
+              )}
+            </div>
           )}
-        </div>
-      )}
-    </CardContent>
+        </CardContent>
       </Card>
     </section>
   )

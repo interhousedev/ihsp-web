@@ -25,7 +25,8 @@ function renderDialog(
 }
 
 const style = (name: string) => within(screen.getByRole("group", { name: "Style" })).getByRole("button", { name })
-const length = (name: string) => within(screen.getByRole("group", { name: "Response length" })).getByRole("button", { name })
+const length = (name: string) =>
+  within(screen.getByRole("group", { name: "Response length" })).getByRole("button", { name })
 
 function capturePatch() {
   const captured: { body: unknown } = { body: undefined }

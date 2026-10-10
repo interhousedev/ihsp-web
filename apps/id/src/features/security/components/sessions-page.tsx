@@ -14,10 +14,7 @@ export function SessionsPage() {
   const query = useQuery(getIdMeSessionsQuery())
   const hasOthers = (query.data ?? []).some((session) => !session.current)
   return (
-    <PageContainer
-      title={t("security.sessions.title")}
-      actions={<RevokeOthersButton disabled={!hasOthers} />}
-    >
+    <PageContainer title={t("security.sessions.title")} actions={<RevokeOthersButton disabled={!hasOthers} />}>
       <QueryBoundary query={query}>
         {(sessions) =>
           sessions.length === 0 ? (

@@ -55,7 +55,7 @@ export type FileRenameBody = { name: string }
 /** Where the deleted file was used. */
 export type FileDeleteResponse = { used_by: UsedBy[] }
 
-export type FileTypeFilter = "pdf" | "doc" | "sheet" | "slides" | "text" | "image"
+export type FileTypeFilter = "pdf" | "doc" | "sheet" | "slides" | "text" | "image" | "video"
 
 /** `page`/`page_size` give numbered paging (`next_cursor` is then the next page number). */
 export type MyFilesParams = PageParams & {

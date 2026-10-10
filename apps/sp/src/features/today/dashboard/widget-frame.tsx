@@ -1,11 +1,11 @@
-"use client";
+"use client"
 
-import Link from "next/link";
-import type { CSSProperties, ReactNode } from "react";
-import type { Widget } from "./model";
+import Link from "next/link"
+import type { CSSProperties, ReactNode } from "react"
+import type { Widget } from "./model"
 
 /** Row height of the grid; a 1x1 tile is a square on a phone. */
-export const ROW_HEIGHT = "7.5rem";
+export const ROW_HEIGHT = "7.5rem"
 
 /** The tile: its size in grid cells, its colour with a readable text colour, and a link to the page it summarises. */
 export function WidgetFrame({
@@ -15,27 +15,21 @@ export function WidgetFrame({
   editing,
   children,
 }: {
-  widget: Widget;
-  title: string;
-  href?: string;
-  editing?: boolean;
-  children: ReactNode;
+  widget: Widget
+  title: string
+  href?: string
+  editing?: boolean
+  children: ReactNode
 }) {
-  const style: CSSProperties = {
-    ...(widget.color
-      ? { backgroundColor: widget.color, color: widget.text_color ?? undefined }
-      : {}),
-  };
+  const style: CSSProperties = widget.color
+    ? { backgroundColor: widget.color, color: widget.text_color ?? undefined }
+    : {}
   const body = (
     <>
-      <span className="flex items-center gap-1 text-xs font-medium opacity-80">
-        {title}
-      </span>
-      <div className="flex min-h-0 flex-1 flex-col gap-1 overflow-hidden">
-        {children}
-      </div>
+      <span className="flex items-center gap-1 text-xs font-medium opacity-80">{title}</span>
+      <div className="flex min-h-0 flex-1 flex-col gap-1 overflow-hidden">{children}</div>
     </>
-  );
+  )
   return (
     <section
       aria-label={title}
@@ -57,5 +51,5 @@ export function WidgetFrame({
         <div className="flex h-full flex-col gap-1">{body}</div>
       )}
     </section>
-  );
+  )
 }

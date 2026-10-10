@@ -122,7 +122,9 @@ export const filesHandlers = [
       .filter((item) => q === "" || item.name.toLowerCase().includes(q))
       .filter((item) => !type || typeOf(item.content_type) === type)
       .toSorted((a, b) =>
-        search.get("sort") === "older" ? a.created_at.localeCompare(b.created_at) : b.created_at.localeCompare(a.created_at),
+        search.get("sort") === "older"
+          ? a.created_at.localeCompare(b.created_at)
+          : b.created_at.localeCompare(a.created_at),
       )
     const page = search.get("page")
     if (page) {

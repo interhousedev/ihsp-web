@@ -32,7 +32,7 @@ export function QuickActions({ notebookId, disabled }: QuickActionsProps) {
   const t = useT("notebooks.chat")
   const tk = useT("notebooks.kind")
   const errorMessage = useNotebookErrorMessage()
-    const create = useCreateArtifact(notebookId)
+  const create = useCreateArtifact(notebookId)
   const artifacts = useArtifacts(notebookId)
   const usage = useNotebookUsage(notebookId)
   const [started, setStarted] = useState<{ tile: StudioTile; artifactId: string } | null>(null)

@@ -20,7 +20,8 @@ describe("Today page", () => {
     await findCard("Next lesson")
 
     const outside = [...document.querySelectorAll("section")].filter(
-      (section) => !section.hasAttribute("data-widget-id") && section.getAttribute("aria-labelledby") !== "dashboard-title",
+      (section) =>
+        !section.hasAttribute("data-widget-id") && section.getAttribute("aria-labelledby") !== "dashboard-title",
     )
     expect(outside).toHaveLength(0)
     for (const title of ["Today's lessons", "Semester 4", "Announcements", "Needs your attention", "New marks"]) {

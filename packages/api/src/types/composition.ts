@@ -62,6 +62,21 @@ export type SendOutboundMailBody = {
   attachment_file_id?: string | null
 }
 
+export type SentMailItem = {
+  id: string
+  to: string[]
+  subject: string
+  snippet: string
+  sent_at: string
+  status: string
+  attachment_name: string | null
+}
+
+/** `next_before` is the `before` of the next page; null on the last one. */
+export type SentMailPage = { items: SentMailItem[]; next_before: string | null }
+
+export type SentMailParams = { limit?: number; before?: string }
+
 export type OutboundMailSent = {
   message_id: string
   to: string[]

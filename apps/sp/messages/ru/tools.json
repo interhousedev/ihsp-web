@@ -111,7 +111,8 @@
       "url": "Ссылки",
       "file": "Файлы",
       "chat": "Чаты",
-      "flashcard_set": "Карточки"
+      "flashcard_set": "Карточки",
+      "artifact": "Материалы блокнота"
     },
     "row": {
       "kind": {
@@ -119,6 +120,7 @@
         "file": "Файл",
         "chat": "Чат",
         "flashcard_set": "Карточки",
+        "artifact": "Материалы блокнота",
         "lesson": "Вложение урока"
       },
       "status": {
@@ -132,6 +134,7 @@
       "created": "создана {date}",
       "expires": "действует до {date}",
       "copy": "Копировать",
+      "open": "Открыть",
       "revoke": "Отозвать",
       "revokeLabel": "Отозвать {name}",
       "delete": "Удалить",

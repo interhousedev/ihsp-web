@@ -24,28 +24,35 @@ type IconButtonProps = Omit<React.ComponentProps<typeof Button>, "size" | "child
     icon: React.ComponentType<{ size?: number; stroke?: number; "aria-hidden"?: boolean }>
   }
 
-function IconButton({ icon: Icon, size = "md", variant = "ghost", className, "aria-label": label, ...props }: IconButtonProps) {
+function IconButton({
+  icon: Icon,
+  size = "md",
+  variant = "ghost",
+  className,
+  "aria-label": label,
+  ...props
+}: IconButtonProps) {
   const px = sizeToIcon[size ?? "md"]
   return (
     <TooltipProvider>
-    <Tooltip>
-      <TooltipTrigger
-        render={
-          <Button
-            type="button"
-            variant={variant}
-            size="icon"
-            data-slot="icon-button"
-            aria-label={label}
-            className={cn(iconButtonVariants({ size }), className)}
-            {...props}
-          />
-        }
-      >
-        <Icon size={px} stroke={1.75} aria-hidden />
-      </TooltipTrigger>
-      <TooltipContent>{label}</TooltipContent>
-    </Tooltip>
+      <Tooltip>
+        <TooltipTrigger
+          render={
+            <Button
+              type="button"
+              variant={variant}
+              size="icon"
+              data-slot="icon-button"
+              aria-label={label}
+              className={cn(iconButtonVariants({ size }), className)}
+              {...props}
+            />
+          }
+        >
+          <Icon size={px} stroke={1.75} aria-hidden />
+        </TooltipTrigger>
+        <TooltipContent>{label}</TooltipContent>
+      </Tooltip>
     </TooltipProvider>
   )
 }

@@ -160,11 +160,11 @@ describe("BookEditor: a new book", () => {
     expect(String(testRouter.replace.mock.calls[0]?.[0])).toMatch(/^\/manage\/books\/edit\/?\?id=/)
   })
 
-  it("offers who sees the book and the rights class, but no reasoning fields", async () => {
+  it("offers who sees the book, but no reasoning fields", async () => {
     const { user } = renderEditor("")
     await screen.findByRole("group", { name: "Who can see the book" })
 
-    expect(screen.getByRole("combobox", { name: "Rights" })).toHaveValue("official")
+    expect(screen.queryByRole("combobox", { name: "Rights" })).not.toBeInTheDocument()
     expect(screen.queryByLabelText(/^Year the author died/)).not.toBeInTheDocument()
     expect(screen.queryByLabelText(/^Applied rule/)).not.toBeInTheDocument()
     await user.click(screen.getByRole("radio", { name: /^Public/ }))

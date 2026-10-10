@@ -2,7 +2,7 @@
 
 import { useT } from "@ihsp/i18n"
 import type { BottomNavItem, NavGroup } from "@ihsp/ui"
-import { IconNotebook } from "@ihsp/ui"
+import { IconNotebook, IconUserCircle } from "@ihsp/ui"
 import { useMemo } from "react"
 
 /**
@@ -28,6 +28,7 @@ export function useNav(): { groups: NavGroup[]; bottom: BottomNavItem[] } {
             { title: t("attendance"), url: "/attendance/", icon: "attendance" },
             homework,
             { title: t("exams"), url: "/exams/", icon: "calendarEvent" },
+            { title: t("teachers"), url: "/teachers/", icon: IconUserCircle },
           ],
         },
         {
@@ -42,13 +43,14 @@ export function useNav(): { groups: NavGroup[]; bottom: BottomNavItem[] } {
         },
         {
           label: t("groupInbox"),
-          items: [{ title: t("notifications"), url: "/notifications/", icon: "notification" }],
+          items: [
+            { title: t("notifications"), url: "/notifications/", icon: "notification" },
+            { title: t("mail"), url: "/mail/", icon: "mail" },
+          ],
         },
         {
           label: t("groupAccount"),
-          items: [
-            { title: t("settings"), url: "/settings/", icon: "settings" },
-          ],
+          items: [{ title: t("settings"), url: "/settings/", icon: "settings" }],
         },
       ],
       bottom: [today, timetable, grades, homework],

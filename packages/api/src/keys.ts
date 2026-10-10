@@ -19,6 +19,7 @@ export const keys = {
   },
   admin: {
     all: () => ["admin"] as const,
+    teacherContacts: (id: string) => ["admin", "teacher-contacts", id] as const,
     users: {
       all: () => ["admin", "users"] as const,
       list: (filters?: object) => ["admin", "users", "list", params(filters)] as const,
@@ -31,6 +32,7 @@ export const keys = {
     },
     audit: (filters?: object) => ["admin", "audit", params(filters)] as const,
     oauthClients: () => ["admin", "oauth-clients"] as const,
+    settings: () => ["admin", "settings"] as const,
     terms: () => ["admin", "terms"] as const,
     assessments: (filters?: object) => ["admin", "assessments", params(filters)] as const,
     groups: {
@@ -67,6 +69,7 @@ export const keys = {
   },
   staff: {
     all: () => ["staff"] as const,
+    contacts: () => ["staff", "contacts"] as const,
     today: () => ["staff", "today"] as const,
     assessments: (filters?: object) => ["staff", "assessments", params(filters)] as const,
     timetable: (filters?: object) => ["staff", "timetable", params(filters)] as const,
@@ -92,8 +95,7 @@ export const keys = {
     subjects: (filters?: object) => ["me", "subjects", params(filters)] as const,
     subject: (id: string, filters?: object) => ["me", "subjects", id, params(filters)] as const,
     lessonResults: (filters?: object) => ["me", "lessons", "results", params(filters)] as const,
-    subjectLessons: (id: string, filters?: object) =>
-      ["me", "subjects", id, "lessons", params(filters)] as const,
+    subjectLessons: (id: string, filters?: object) => ["me", "subjects", id, "lessons", params(filters)] as const,
     grades: (filters?: object) => ["me", "grades", params(filters)] as const,
     gradesDay: (date?: string) => ["me", "grades", "day", date ?? null] as const,
     recordBook: () => ["me", "record-book"] as const,
@@ -104,7 +106,9 @@ export const keys = {
     search: (q: string) => ["me", "search", q] as const,
     storage: () => ["me", "storage"] as const,
     files: (filters?: object) => ["me", "files", params(filters)] as const,
+    outboundMail: (filters?: object) => ["me", "outbound-mail", params(filters)] as const,
     links: (filters?: object) => ["me", "links", params(filters)] as const,
+    teachers: () => ["me", "teachers"] as const,
   },
   lessons: {
     detail: (id: string) => ["lessons", id] as const,
@@ -149,6 +153,10 @@ export const keys = {
     myCourses: () => ["lms", "my-courses"] as const,
     course: (slug: string) => ["lms", "course", slug] as const,
     step: (courseId: string, stepId: string) => ["lms", "course", courseId, "steps", stepId] as const,
+    video: (courseId: string, stepId: string, blockId: string) =>
+      ["lms", "course", courseId, "steps", stepId, "video", blockId] as const,
+    previewVideo: (courseId: string, stepId: string, blockId: string) =>
+      ["lms", "course", courseId, "preview", stepId, "video", blockId] as const,
     attempt: (id: string) => ["lms", "attempts", id] as const,
     cardNext: (stepId: string, blockId: string) => ["lms", "steps", stepId, "cards", blockId] as const,
     students: (courseId: string) => ["lms", "course", courseId, "students"] as const,
@@ -192,6 +200,8 @@ export const keys = {
     text: (id: string, filters?: object) => ["library", "item", id, "text", params(filters)] as const,
     subjects: (all?: boolean) => ["library", "subjects", all ? "all" : "used"] as const,
     topics: (subjectId?: string) => ["library", "topics", subjectId ?? null] as const,
+    authors: (q: string) => ["library", "authors", q] as const,
+    tags: (q: string, limit?: number) => ["library", "tags", q, limit ?? null] as const,
     collections: () => ["library", "collections"] as const,
     collection: (id: string) => ["library", "collections", id] as const,
     readingLists: (filters?: object) => ["library", "reading-lists", params(filters)] as const,
@@ -212,6 +222,8 @@ export const keys = {
       books: (filters?: object) => ["library", "manage", "books", params(filters)] as const,
       book: (id: string) => ["library", "manage", "books", id] as const,
       topics: (subjectId?: string) => ["library", "manage", "topics", subjectId ?? null] as const,
+      subjects: () => ["library", "manage", "subjects"] as const,
+      suggestion: (id: string) => ["library", "manage", "suggestions", id] as const,
       collections: () => ["library", "manage", "collections"] as const,
       stats: (filters?: object) => ["library", "manage", "stats", params(filters)] as const,
     },

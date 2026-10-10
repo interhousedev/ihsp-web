@@ -2,15 +2,7 @@
 
 import { getArtifactQuery, getStaffTimetableQuery, type LessonItem } from "@ihsp/api"
 import { addDays, todayIso, useErrorMessage, useFormatters, useT } from "@ihsp/i18n"
-import {
-  Button,
-  Dialog,
-  DialogContent,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
-  Icons,
-} from "@ihsp/ui"
+import { Button, Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger, Icons } from "@ihsp/ui"
 import { useQuery } from "@tanstack/react-query"
 import Link from "next/link"
 import { useState } from "react"

@@ -16,9 +16,8 @@ import { BottomBarEditor } from "./bottom-bar-editor"
 import { GeneralSettings } from "./general-settings"
 import { SettingsSection } from "./settings-section"
 import { TelegramHint } from "./telegram-hint"
-import { TodayCardsEditor } from "./today-cards-editor"
 
-/** Settings (WEB-29, UF-WEB-17): language and theme, notifications (as BOT-13), Today cards and the calendar feed. */
+/** Settings (WEB-29, UF-WEB-17): language and theme, notifications (as BOT-13), the calendar feed. */
 export function SettingsPage() {
   const t = useT("settings")
   const tProfile = useT("profile")
@@ -36,9 +35,6 @@ export function SettingsPage() {
           </SettingsSection>
           <SettingsSection title={t("bottomNav.title")}>
             <BottomBarEditor />
-          </SettingsSection>
-          <SettingsSection title={t("today.title")}>
-            <TodayCardsEditor />
           </SettingsSection>
           <SettingsSection title={t("calendar.title")}>
             <CalendarFeedPanel />

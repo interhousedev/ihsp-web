@@ -15,10 +15,14 @@ import type {
   MailSuspendBody,
   OauthClientItem,
   OauthClientVerifyBody,
+  PlatformSettings,
+  PlatformSettingsBody,
   ResetPasswordResponse,
+  SetPasswordBody,
   TeacherCreateBody,
   TeacherCreated,
   TeacherPatchBody,
+  UserPatchBody,
   UserRolesBody,
 } from "../types/id-admin"
 
@@ -38,6 +42,16 @@ export function getAdminUser(id: string, opts?: RequestOptions): Promise<AdminUs
 }
 export const getAdminUserQuery = (id: string) =>
   queryOptions({ queryKey: keys.admin.users.detail(id), queryFn: ({ signal }) => getAdminUser(id, { signal }) })
+
+/** PATCH /v1/admin/users/{id} — admin; display name and email of any user (409 when the email is taken). */
+export function patchAdminUser(id: string, body: UserPatchBody, opts?: RequestOptions): Promise<AdminUser> {
+  return api.patch<AdminUser>(`/v1/admin/users/${seg(id)}`, body, opts)
+}
+
+/** POST /v1/admin/users/{id}/set-password — admin; `204`. Sets the (initial) password and ends the sessions. */
+export function postAdminUserSetPassword(id: string, body: SetPasswordBody, opts?: RequestOptions): Promise<NoContent> {
+  return api.post<NoContent>(`/v1/admin/users/${seg(id)}/set-password`, body, opts)
+}
 
 /** POST /v1/admin/users/{id}/block — admin. */
 export function postAdminUserBlock(id: string, body: BlockUserBody, opts?: RequestOptions): Promise<AdminUser> {
@@ -134,3 +148,15 @@ export function postAdminOauthClientVerify(
 
 export const listAdminUsers = getAdminUsers
 export const listAudit = getAdminAudit
+
+/** GET /v1/admin/settings — admin; the runtime platform settings and the feature flags. */
+export function getAdminSettings(opts?: RequestOptions): Promise<PlatformSettings> {
+  return api.get<PlatformSettings>("/v1/admin/settings", opts)
+}
+export const getAdminSettingsQuery = () =>
+  queryOptions({ queryKey: keys.admin.settings(), queryFn: ({ signal }) => getAdminSettings({ signal }) })
+
+/** PUT /v1/admin/settings — admin; saves every editable setting. */
+export function putAdminSettings(body: PlatformSettingsBody, opts?: RequestOptions): Promise<PlatformSettings> {
+  return api.put<PlatformSettings>("/v1/admin/settings", body, opts)
+}

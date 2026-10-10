@@ -15,7 +15,9 @@ export function parseNotebookFolder(value: string | null | undefined): NotebookF
   return NOTEBOOK_FOLDERS.find((folder) => folder === value) ?? null
 }
 
-export function groupNotebooks<T extends Pick<NotebookItem, "origin">>(items: readonly T[]): Record<NotebookFolder, T[]> {
+export function groupNotebooks<T extends Pick<NotebookItem, "origin">>(
+  items: readonly T[],
+): Record<NotebookFolder, T[]> {
   const groups: Record<NotebookFolder, T[]> = { subject: [], course: [], mine: [] }
   for (const item of items) groups[notebookFolderOf(item)].push(item)
   return groups

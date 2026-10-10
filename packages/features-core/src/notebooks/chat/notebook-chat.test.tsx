@@ -349,13 +349,16 @@ describe("NotebookChat: composer", () => {
     expect(messageField()).toHaveAttribute("data-notebook-composer")
   })
 
-  it("asks to select a source and cannot send without one", async () => {
+  it("warns that no source is selected but still lets the student send", async () => {
     const { user } = await renderChat({ notebook: { ...notebookDetail, selected_source_count: 0 } })
 
-    expect(await screen.findByRole("button", { name: "Select at least one source" })).toBeInTheDocument()
+    expect(
+      await screen.findByText("No sources selected — the answer will not rely on your materials"),
+    ).toBeInTheDocument()
+    expect(screen.getByRole("button", { name: "0 sources" })).toBeInTheDocument()
     await enter(user, "Hello")
-    expect(screen.getByRole("button", { name: "Send" })).toBeDisabled()
-    expect(screen.queryByRole("button", { name: "Which factors limit photosynthesis?" })).toBeDisabled()
+    expect(screen.getByRole("button", { name: "Send" })).toBeEnabled()
+    expect(screen.queryByRole("button", { name: "Which factors limit photosynthesis?" })).toBeEnabled()
   })
 
   it("keeps Send grey until there is text, sends on Enter and clears the field", async () => {

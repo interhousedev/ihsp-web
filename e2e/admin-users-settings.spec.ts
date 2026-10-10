@@ -37,7 +37,10 @@ test("users: edit the name of a user, then set a password by hand", async ({ pag
   await loginAs(page, ADMIN, "admin", { path: "/users/" })
   await expect(heading(page, "Users & roles", 1)).toBeVisible()
   await page.getByPlaceholder("Name or login").fill(STUDENT_FIRST_YEAR.login)
-  await page.getByRole("link", { name: /Ergashev/ }).first().click()
+  await page
+    .getByRole("link", { name: /Ergashev/ })
+    .first()
+    .click()
   await expect(page).toHaveURL(new RegExp(`${URLS.admin}/users/view/\\?id=`))
   await a11y(page, testInfo, { label: "admin user detail" })
 

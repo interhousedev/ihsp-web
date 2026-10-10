@@ -932,6 +932,30 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/v1/admin/settings": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get Settings
+         * @description Return the runtime settings and the feature flags.
+         */
+        get: operations["get_settings_v1_admin_settings_get"];
+        /**
+         * Put Settings
+         * @description Save every editable setting.
+         */
+        put: operations["put_settings_v1_admin_settings_put"];
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/v1/admin/students": {
         parameters: {
             query?: never;
@@ -1089,6 +1113,30 @@ export interface paths {
          */
         get: operations["list_runs_v1_admin_sync_runs_get"];
         put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/admin/teacher-contacts/{id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get Teacher Contacts
+         * @description A teacher's public contacts (admin).
+         */
+        get: operations["get_teacher_contacts_v1_admin_teacher_contacts__id__get"];
+        /**
+         * Put Teacher Contacts
+         * @description Replace a teacher's public contacts (admin).
+         */
+        put: operations["put_teacher_contacts_v1_admin_teacher_contacts__id__put"];
         post?: never;
         delete?: never;
         options?: never;
@@ -1351,7 +1399,11 @@ export interface paths {
         delete?: never;
         options?: never;
         head?: never;
-        patch?: never;
+        /**
+         * Patch User
+         * @description Edit the display name and the email of any user.
+         */
+        patch: operations["patch_user_v1_admin_users__id__patch"];
         trace?: never;
     };
     "/v1/admin/users/{id}/block": {
@@ -1488,6 +1540,26 @@ export interface paths {
          * @description Revoke every session of the user.
          */
         post: operations["post_revoke_sessions_v1_admin_users__id__sessions_revoke_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/admin/users/{id}/set-password": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Post Set Password
+         * @description Set the password (initial password of a teacher); sessions end.
+         */
+        post: operations["post_set_password_v1_admin_users__id__set_password_post"];
         delete?: never;
         options?: never;
         head?: never;
@@ -1964,6 +2036,26 @@ export interface paths {
          * @description Never reveals whether the account exists or has OTP enabled (ID-13).
          */
         post: operations["request_login_otp_v1_id_login_otp_request_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/id/login/password": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Post Login Password
+         * @description Set the new password, then finish the login.
+         */
+        post: operations["post_login_password_v1_id_login_password_post"];
         delete?: never;
         options?: never;
         head?: never;
@@ -2746,6 +2838,26 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/v1/library/authors": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Search Authors
+         * @description Existing author names that match `q` (Latin and Cyrillic spellings meet).
+         */
+        get: operations["search_authors_v1_library_authors_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/v1/library/book-plans": {
         parameters: {
             query?: never;
@@ -3226,6 +3338,26 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/v1/library/tags": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Search Tags
+         * @description Existing tags that match `q`, or the most used ones when `q` is empty.
+         */
+        get: operations["search_tags_v1_library_tags_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/v1/library/topics": {
         parameters: {
             query?: never;
@@ -3590,6 +3722,26 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/v1/lms/courses/{course_id}/preview/steps/{step_id}/blocks/{block_id}/video": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Preview Video
+         * @description Return a stream URL of the draft's uploaded video (needs `view_drafts`).
+         */
+        get: operations["preview_video_v1_lms_courses__course_id__preview_steps__step_id__blocks__block_id__video_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/v1/lms/courses/{course_id}/publish": {
         parameters: {
             query?: never;
@@ -3710,6 +3862,26 @@ export interface paths {
          * @description Return the live step without correct answers, with the caller's state.
          */
         get: operations["get_step_v1_lms_courses__course_id__steps__step_id__get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/lms/courses/{course_id}/steps/{step_id}/blocks/{block_id}/video": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get Video Stream
+         * @description Return a presigned GET URL of an uploaded video (enrolled or staff).
+         */
+        get: operations["get_video_stream_v1_lms_courses__course_id__steps__step_id__blocks__block_id__video_get"];
         put?: never;
         post?: never;
         delete?: never;
@@ -4330,6 +4502,74 @@ export interface paths {
          * @description Opens, readers, queue times and the rest, for the last 30 days by default.
          */
         get: operations["get_library_stats_v1_manage_library_stats_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/manage/library/subjects": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * List Manage Subjects
+         * @description Every subject with all names, archived ones included.
+         */
+        get: operations["list_manage_subjects_v1_manage_library_subjects_get"];
+        put?: never;
+        /**
+         * Create Subject
+         * @description Create a subject (librarians and Administration).
+         */
+        post: operations["create_subject_v1_manage_library_subjects_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/manage/library/subjects/{subject_id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post?: never;
+        /**
+         * Delete Subject
+         * @description Delete an unused subject without children; others are archived.
+         */
+        delete: operations["delete_subject_v1_manage_library_subjects__subject_id__delete"];
+        options?: never;
+        head?: never;
+        /**
+         * Update Subject
+         * @description Change the sent fields: rename, re-code, nest, reorder, archive.
+         */
+        patch: operations["update_subject_v1_manage_library_subjects__subject_id__patch"];
+        trace?: never;
+    };
+    "/v1/manage/library/suggestions/{suggestion_id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get Suggestion
+         * @description One suggestion with the form the suggester filled in.
+         */
+        get: operations["get_suggestion_v1_manage_library_suggestions__suggestion_id__get"];
         put?: never;
         post?: never;
         delete?: never;
@@ -5065,7 +5305,11 @@ export interface paths {
             path?: never;
             cookie?: never;
         };
-        get?: never;
+        /**
+         * List Sent Mail
+         * @description The emails the caller sent from the platform, newest first.
+         */
+        get: operations["list_sent_mail_v1_me_outbound_mail_get"];
         put?: never;
         /**
          * Send Outbound Mail
@@ -5262,6 +5506,26 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/v1/me/teachers": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get My Teachers
+         * @description Teachers of the student's groups with contacts, status and the week.
+         */
+        get: operations["get_my_teachers_v1_me_teachers_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/v1/me/timetable": {
         parameters: {
             query?: never;
@@ -5388,6 +5652,29 @@ export interface paths {
          * @description Get or create the AI workspace of a course (creating it needs ``edit``).
          */
         post: operations["open_course_workspace_v1_notebooks_course_workspaces_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/notebooks/course/{course_id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Open Course Notebook
+         * @description Get or create the caller's notebook of a course they are enrolled in.
+         *
+         *     The course materials are its sources; a stranger or an unpublished course gets
+         *     the 404 of a missing notebook.
+         */
+        post: operations["open_course_notebook_v1_notebooks_course__course_id__post"];
         delete?: never;
         options?: never;
         head?: never;
@@ -5589,7 +5876,9 @@ export interface paths {
         };
         /**
          * Download Artifact
-         * @description Download a ready output: report .docx, table .xlsx, slides .pptx, the rest .md.
+         * @description Download a ready output in its native file.
+         *
+         *     Report and quiz .docx, table .xlsx, slides .pptx, flash cards .csv, the rest .md.
          *
          *     Every kind can also be asked for as ``json``.
          */
@@ -6862,6 +7151,26 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/v1/staff/lms/courses/{course_id}/broadcasts/{broadcast_id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        /**
+         * Patch Broadcast
+         * @description Change the title or text; the students' notifications update in place.
+         */
+        patch: operations["patch_broadcast_v1_staff_lms_courses__course_id__broadcasts__broadcast_id__patch"];
+        trace?: never;
+    };
     "/v1/staff/lms/creators": {
         parameters: {
             query?: never;
@@ -6901,6 +7210,30 @@ export interface paths {
          * @description Revoke `lms_creator` (LMS admins only); the person's courses stay theirs.
          */
         delete: operations["remove_creator_v1_staff_lms_creators__user_id__delete"];
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/staff/me/contacts": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get My Contacts
+         * @description The caller's own public contacts.
+         */
+        get: operations["get_my_contacts_v1_staff_me_contacts_get"];
+        /**
+         * Put My Contacts
+         * @description Replace the caller's public contacts.
+         */
+        put: operations["put_my_contacts_v1_staff_me_contacts_put"];
+        post?: never;
+        delete?: never;
         options?: never;
         head?: never;
         patch?: never;
@@ -7122,6 +7455,11 @@ export interface components {
             mail_suspended: boolean;
             /** Middle Name */
             middle_name: string | null;
+            /**
+             * Password Change Required
+             * @default false
+             */
+            password_change_required: boolean;
             /** Recent Audit */
             recent_audit: components["schemas"]["app__interfaces__http__v1__id__schemas__AuditItemResponse"][];
             /** Recovery Email */
@@ -8237,6 +8575,8 @@ export interface components {
             subjects: components["schemas"]["BookSubjectInput"][];
             /** Subtitle */
             subtitle?: string | null;
+            /** Tags */
+            tags?: string[];
             /** Title */
             title: string;
             /** Topics */
@@ -8278,6 +8618,8 @@ export interface components {
             subjects?: components["schemas"]["BookSubjectInput"][] | null;
             /** Subtitle */
             subtitle?: string | null;
+            /** Tags */
+            tags?: string[] | null;
             /** Title */
             title?: string | null;
             /** Topics */
@@ -9139,6 +9481,16 @@ export interface components {
             title: string;
         };
         /**
+         * CourseBroadcastPatch
+         * @description PATCH /v1/staff/lms/courses/{id}/broadcasts/{bid}: the fields to change.
+         */
+        CourseBroadcastPatch: {
+            /** Body */
+            body?: string | null;
+            /** Title */
+            title?: string | null;
+        };
+        /**
          * CourseBroadcastResponse
          * @description One sent course broadcast.
          */
@@ -9172,6 +9524,11 @@ export interface components {
             recipients?: number | null;
             /** Title */
             title: string;
+            /**
+             * Updated At
+             * @description Set once the broadcast was edited (the marker).
+             */
+            updated_at?: string | null;
         };
         /**
          * CourseCreatorResponse
@@ -9518,7 +9875,7 @@ export interface components {
              * Kind
              * @enum {string}
              */
-            kind: "chat" | "flashcard_set";
+            kind: "chat" | "flashcard_set" | "artifact";
             /** Share Mode */
             share_mode?: ("snapshot" | "live") | null;
             /**
@@ -9540,10 +9897,25 @@ export interface components {
             title: string;
         };
         /**
+         * CreateSubjectBody
+         * @description `SubjectInput`.
+         */
+        CreateSubjectBody: {
+            /** Code */
+            code?: string | null;
+            name: components["schemas"]["NamesBody"];
+            /** Parent Id */
+            parent_id?: string | null;
+            /** Slug */
+            slug?: string | null;
+        };
+        /**
          * CreateTopicBody
          * @description `TopicInput`.
          */
         CreateTopicBody: {
+            /** Code */
+            code?: string | null;
             name: components["schemas"]["NamesBody"];
             /** Parent Id */
             parent_id?: string | null;
@@ -10319,7 +10691,7 @@ export interface components {
          * @description Why a file was uploaded.
          * @enum {string}
          */
-        FilePurpose: "ai_upload" | "link" | "mail" | "library_book" | "library_cover" | "library_material";
+        FilePurpose: "ai_upload" | "link" | "mail" | "library_book" | "library_cover" | "library_material" | "lms_video";
         /**
          * FileStatus
          * @description Lifecycle of a stored file (README -> Models -> File).
@@ -10978,6 +11350,11 @@ export interface components {
             /** Excused */
             excused: boolean;
             /**
+             * Late
+             * @default false
+             */
+            late: boolean;
+            /**
              * Lesson Id
              * Format: uuid
              */
@@ -11046,6 +11423,11 @@ export interface components {
             first_name: string;
             /** Last Name */
             last_name: string;
+            /**
+             * Lates
+             * @default 0
+             */
+            lates: number;
             /** Semester Mark */
             semester_mark: number | null;
             /**
@@ -12035,6 +12417,8 @@ export interface components {
          * @description `LibrarySubject`: a subject with its number of visible items.
          */
         LibrarySubjectSchema: {
+            /** Code */
+            code?: string | null;
             /**
              * Id
              * Format: uuid
@@ -12044,6 +12428,8 @@ export interface components {
             item_count: number;
             /** Name */
             name: string;
+            /** Parent Id */
+            parent_id?: string | null;
         };
         /**
          * LinkItem
@@ -12071,7 +12457,7 @@ export interface components {
              * Kind
              * @enum {string}
              */
-            kind: "url" | "file" | "chat" | "flashcard_set";
+            kind: "url" | "file" | "chat" | "flashcard_set" | "artifact";
             /** Lesson Id */
             lesson_id: string | null;
             /** Revoked At */
@@ -12200,9 +12586,10 @@ export interface components {
         };
         /**
          * LoginResultResponse
-         * @description Either a redirect or a second factor.
+         * @description A redirect, a second factor, or a forced password change.
          */
         LoginResultResponse: {
+            password_change?: components["schemas"]["PasswordChangeResponse"] | null;
             /** Redirect To */
             redirect_to?: string | null;
             second_factor?: components["schemas"]["SecondFactorResponse"] | null;
@@ -12239,10 +12626,39 @@ export interface components {
             title: components["schemas"]["NamesResponse"];
         };
         /**
+         * ManageSubjectResponse
+         * @description `ManageSubject`: a node of the librarian's subject tree (flat, `parent_id`).
+         */
+        ManageSubjectResponse: {
+            /** Archived */
+            archived: boolean;
+            /** Code */
+            code: string | null;
+            /**
+             * Id
+             * Format: uuid
+             */
+            id: string;
+            name: components["schemas"]["NamesResponse"];
+            /** Parent Id */
+            parent_id: string | null;
+            /** Position */
+            position: number;
+            /** Slug */
+            slug: string;
+        };
+        /**
          * ManageTopicResponse
          * @description `ManageTopic`: all three names, for the editor.
          */
         ManageTopicResponse: {
+            /**
+             * Archived
+             * @default false
+             */
+            archived: boolean;
+            /** Code */
+            code?: string | null;
             /**
              * Id
              * Format: uuid
@@ -12564,6 +12980,32 @@ export interface components {
             follows_weekday: number;
         };
         /**
+         * MyTeacherResponse
+         * @description A teacher of the student.
+         */
+        MyTeacherResponse: {
+            contacts: components["schemas"]["TeacherContacts"];
+            current: components["schemas"]["TeacherLessonResponse"] | null;
+            /** First Name */
+            first_name: string;
+            /**
+             * Id
+             * Format: uuid
+             */
+            id: string;
+            /** Last Name */
+            last_name: string;
+            /** Middle Name */
+            middle_name: string | null;
+            next: components["schemas"]["TeacherLessonResponse"] | null;
+            /** Subjects */
+            subjects: string[];
+            /** Teaching Now */
+            teaching_now: boolean;
+            /** Week */
+            week: components["schemas"]["TeacherLessonResponse"][];
+        };
+        /**
          * NamesBody
          * @description Names in the three languages of the lyceum.
          */
@@ -12613,6 +13055,18 @@ export interface components {
             connector: components["schemas"]["ConnectorResponse"];
             /** Token */
             token: string;
+        };
+        /**
+         * NewPasswordLoginBody
+         * @description POST /v1/id/login/password: finish a login with a new password.
+         */
+        NewPasswordLoginBody: {
+            /** Login Challenge */
+            login_challenge: string;
+            /** New Password */
+            new_password: string;
+            /** Ticket */
+            ticket: string;
         };
         /**
          * NextSectionResponse
@@ -12775,7 +13229,7 @@ export interface components {
          * @description How a notebook came to be: written by the student or kept up by the system.
          * @enum {string}
          */
-        NotebookOrigin: "manual" | "subject_auto" | "lesson_auto" | "course";
+        NotebookOrigin: "manual" | "subject_auto" | "lesson_auto" | "course" | "course_student";
         /**
          * NotebookSearchItemResponse
          * @description `NotebookSearchItem`: a notebook whose title or a source title matched.
@@ -13326,6 +13780,14 @@ export interface components {
             title: string;
         };
         /**
+         * PasswordChangeResponse
+         * @description The password was set by an administrator: send a new one with the ticket.
+         */
+        PasswordChangeResponse: {
+            /** Ticket */
+            ticket: string;
+        };
+        /**
          * PasswordConfirmBody
          * @description POST /v1/id/recovery/password/confirm.
          */
@@ -13602,6 +14064,47 @@ export interface components {
             value: number;
         };
         /**
+         * PlatformSettingsBody
+         * @description PUT /v1/admin/settings: every editable setting.
+         */
+        PlatformSettingsBody: {
+            /** Change Password On Login */
+            change_password_on_login: boolean;
+            /**
+             * Default Language
+             * @enum {string}
+             */
+            default_language: "uz" | "ru" | "en";
+            /** School Name */
+            school_name: string;
+            /** Support Contact */
+            support_contact: string;
+        };
+        /**
+         * PlatformSettingsResponse
+         * @description The editable settings plus the read-only feature flags.
+         */
+        PlatformSettingsResponse: {
+            /** Change Password On Login */
+            change_password_on_login: boolean;
+            /**
+             * Default Language
+             * @enum {string}
+             */
+            default_language: "uz" | "ru" | "en";
+            /**
+             * Features
+             * @description Feature flags of the deployment (IHSP_FEATURES__*); read-only.
+             */
+            features: {
+                [key: string]: boolean;
+            };
+            /** School Name */
+            school_name: string;
+            /** Support Contact */
+            support_contact: string;
+        };
+        /**
          * PreferencesPatchBody
          * @description PATCH /v1/id/me/preferences: any subset of UserPreferences.
          */
@@ -13794,6 +14297,7 @@ export interface components {
          * @description What anyone with the share link sees.
          */
         PublicShare: {
+            artifact?: components["schemas"]["SharedArtifact"] | null;
             /** Author First Name */
             author_first_name: string;
             chat: components["schemas"]["SharedChat"] | null;
@@ -13807,7 +14311,7 @@ export interface components {
              * Kind
              * @enum {string}
              */
-            kind: "chat" | "flashcard_set";
+            kind: "chat" | "flashcard_set" | "artifact";
             /** Title */
             title: string;
         };
@@ -14568,7 +15072,7 @@ export interface components {
              * Purpose
              * @enum {string}
              */
-            purpose: "ai_upload" | "link" | "library_book" | "library_cover" | "library_material";
+            purpose: "ai_upload" | "link" | "library_book" | "library_cover" | "library_material" | "lms_video";
             /** Sha256 B64 */
             sha256_b64: string;
             /** Size */
@@ -14860,6 +15364,11 @@ export interface components {
             group_name: string;
             /** Last Name */
             last_name: string;
+            /**
+             * Late
+             * @default false
+             */
+            late: boolean;
             /** Position */
             position: number;
             /** Subgroup Unset */
@@ -15182,6 +15691,42 @@ export interface components {
             registration_token: string;
         };
         /**
+         * SentMailItemOut
+         * @description `SentMailItem`: one email the user sent.
+         */
+        SentMailItemOut: {
+            /** Attachment Name */
+            attachment_name: string | null;
+            /**
+             * Id
+             * Format: uuid
+             */
+            id: string;
+            /**
+             * Sent At
+             * Format: date-time
+             */
+            sent_at: string;
+            /** Snippet */
+            snippet: string;
+            /** Status */
+            status: string;
+            /** Subject */
+            subject: string;
+            /** To */
+            to: string[];
+        };
+        /**
+         * SentMailPageOut
+         * @description `SentMailPage`: sent emails; `next_before` is the `before` of the next page.
+         */
+        SentMailPageOut: {
+            /** Items */
+            items: components["schemas"]["SentMailItemOut"][];
+            /** Next Before */
+            next_before: string | null;
+        };
+        /**
          * SentResponse
          * @description Always the same answer, whether or not a code was sent.
          */
@@ -15298,6 +15843,20 @@ export interface components {
             refs: components["schemas"]["LessonRefBody"][];
         };
         /**
+         * SetPasswordBody
+         * @description POST /v1/admin/users/{id}/set-password.
+         */
+        SetPasswordBody: {
+            /** Password */
+            password: string;
+            /**
+             * Require Change
+             * @description Ask the user to change it at the next login (when IHSP_FEATURES__CHANGE_PASSWORD_ON_LOGIN is on).
+             * @default true
+             */
+            require_change: boolean;
+        };
+        /**
          * SetSourceLabelsBody
          * @description PUT /v1/notebooks/{id}/sources/{sid}/labels: at most 3 labels (a typed error).
          */
@@ -15322,6 +15881,22 @@ export interface components {
             cover_file_id?: string | null;
             status?: components["schemas"]["CourseStatus"] | null;
             visibility?: components["schemas"]["app__modules__lms__domain__authoring__enums__Visibility"] | null;
+        };
+        /**
+         * SharedArtifact
+         * @description A shared Studio output: its kind and the content the viewers render.
+         */
+        SharedArtifact: {
+            /** Content */
+            content: {
+                [key: string]: unknown;
+            };
+            /** Kind */
+            kind: string;
+            /** Options */
+            options: {
+                [key: string]: unknown;
+            };
         };
         /**
          * SharedCard
@@ -15959,7 +16534,7 @@ export interface components {
              * My Attendance
              * @enum {string}
              */
-            my_attendance: "present" | "absent" | "excused" | "not_taken";
+            my_attendance: "present" | "late" | "absent" | "excused" | "not_taken";
             /** My Mark */
             my_mark: components["schemas"]["MarkItemResponse"][];
         };
@@ -16074,6 +16649,11 @@ export interface components {
             absences: number;
             /** Emis Rating */
             emis_rating: number | null;
+            /**
+             * Lates
+             * @default 0
+             */
+            lates: number;
             next_lesson: components["schemas"]["LessonItem"] | null;
             /** Semester Mark */
             semester_mark: number | null;
@@ -16130,7 +16710,7 @@ export interface components {
              * Attendance
              * @enum {string}
              */
-            attendance: "present" | "absent" | "excused" | "not_taken";
+            attendance: "present" | "late" | "absent" | "excused" | "not_taken";
             /** Attendance Submitted */
             attendance_submitted: boolean;
             /** Audience */
@@ -16379,14 +16959,51 @@ export interface components {
             absent: string[];
             /** Base Version */
             base_version: number;
+            /** Late */
+            late?: string[];
             /** Present Unassigned */
             present_unassigned?: string[];
         };
         /**
+         * SuggestedBookBody
+         * @description `SuggestedBook`: the book form without the librarian-only fields.
+         */
+        SuggestedBookBody: {
+            /** Authors */
+            authors?: string[];
+            /** Cover File Id */
+            cover_file_id?: string | null;
+            /** Description */
+            description?: string | null;
+            /** Isbn */
+            isbn?: string | null;
+            language: components["schemas"]["ItemLanguage"];
+            /** Publisher */
+            publisher?: string | null;
+            /** Subjects */
+            subjects?: components["schemas"]["BookSubjectInput"][];
+            /** Subtitle */
+            subtitle?: string | null;
+            /** Tags */
+            tags?: string[];
+            /** Title */
+            title: string;
+            /** Topics */
+            topics?: components["schemas"]["BookTopicInput"][];
+            /** Translators */
+            translators?: string[];
+            type: components["schemas"]["ItemType"];
+            /** Year Published */
+            year_published?: number | null;
+            /** Years Of Study */
+            years_of_study?: number[];
+        };
+        /**
          * SuggestionBody
-         * @description `POST /library/suggestions`.
+         * @description `POST /library/suggestions`: a title and, from the editor, the whole form.
          */
         SuggestionBody: {
+            book?: components["schemas"]["SuggestedBookBody"] | null;
             /** File Id */
             file_id?: string | null;
             /** Note */
@@ -16397,10 +17014,30 @@ export interface components {
             url?: string | null;
         };
         /**
+         * SuggestionDetailResponse
+         * @description `SuggestionDetail`: one suggestion as the editor prefills a book from it.
+         */
+        SuggestionDetailResponse: {
+            book?: components["schemas"]["SuggestedBookBody"] | null;
+            /**
+             * Id
+             * Format: uuid
+             */
+            id: string;
+            /** Note */
+            note: string | null;
+            status: components["schemas"]["SuggestionStatus"];
+            /** Title */
+            title: string;
+            /** Url */
+            url: string | null;
+        };
+        /**
          * SuggestionResponse
          * @description A book suggestion in the queue.
          */
         SuggestionResponse: {
+            book?: components["schemas"]["SuggestedBookBody"] | null;
             /**
              * Id
              * Format: uuid
@@ -16415,6 +17052,12 @@ export interface components {
             /** User Name */
             user_name: string;
         };
+        /**
+         * SuggestionStatus
+         * @description State of a book suggestion.
+         * @enum {string}
+         */
+        SuggestionStatus: "new" | "accepted" | "declined";
         /**
          * SummaryStatus
          * @description State of a notebook's automatic summary.
@@ -16479,6 +17122,16 @@ export interface components {
             rows?: string[];
         };
         /**
+         * TagSuggestionSchema
+         * @description `TagSuggestion`: an existing tag and how many published items carry it.
+         */
+        TagSuggestionSchema: {
+            /** Item Count */
+            item_count: number;
+            /** Name */
+            name: string;
+        };
+        /**
          * TaxonomyEntryResponse
          * @description A type, field or language of UniLibrary.
          */
@@ -16487,6 +17140,24 @@ export interface components {
             id: number;
             /** Name */
             name: string;
+        };
+        /**
+         * TeacherContacts
+         * @description A teacher's public contacts, shown to the students they teach.
+         */
+        TeacherContacts: {
+            /** Email */
+            email?: string | null;
+            /** Note */
+            note?: string | null;
+            /** Office */
+            office?: string | null;
+            /** Office Hours */
+            office_hours?: string | null;
+            /** Phone */
+            phone?: string | null;
+            /** Telegram */
+            telegram?: string | null;
         };
         /**
          * TeacherCreateBody
@@ -16513,6 +17184,35 @@ export interface components {
             /** Activation Url */
             activation_url: string;
             user: components["schemas"]["app__interfaces__http__v1__admin_users__schemas__AdminUserResponse"];
+        };
+        /**
+         * TeacherLessonResponse
+         * @description One lesson of a teacher.
+         */
+        TeacherLessonResponse: {
+            /**
+             * Date
+             * Format: date
+             */
+            date: string;
+            /**
+             * Ends At
+             * Format: date-time
+             */
+            ends_at: string;
+            /** Group */
+            group: string | null;
+            /** Room */
+            room: string | null;
+            /**
+             * Starts At
+             * Format: date-time
+             */
+            starts_at: string;
+            /** Subject */
+            subject: string;
+            /** Weekday */
+            weekday: number;
         };
         /**
          * TeacherPatchBody
@@ -16972,6 +17672,11 @@ export interface components {
             /** Base Version */
             base_version: number;
             /**
+             * Late
+             * @default false
+             */
+            late: boolean;
+            /**
              * Lesson Id
              * Format: uuid
              */
@@ -17329,13 +18034,36 @@ export interface components {
             show_on_page?: boolean | null;
         };
         /**
+         * UpdateSubjectBody
+         * @description `Partial<SubjectInput>` with the archive flag and the position among siblings.
+         */
+        UpdateSubjectBody: {
+            /** Archived */
+            archived?: boolean | null;
+            /** Code */
+            code?: string | null;
+            name?: components["schemas"]["NamesBody"] | null;
+            /** Parent Id */
+            parent_id?: string | null;
+            /** Position */
+            position?: number | null;
+            /** Slug */
+            slug?: string | null;
+        };
+        /**
          * UpdateTopicBody
          * @description `Partial<TopicInput>`: only the keys that were sent are applied.
          */
         UpdateTopicBody: {
+            /** Archived */
+            archived?: boolean | null;
+            /** Code */
+            code?: string | null;
             name?: components["schemas"]["NamesBody"] | null;
             /** Parent Id */
             parent_id?: string | null;
+            /** Position */
+            position?: number | null;
             /** Slug */
             slug?: string | null;
             /** Subject Id */
@@ -17539,6 +18267,20 @@ export interface components {
             telegram: components["schemas"]["app__interfaces__http__v1__id__schemas__TelegramAccountResponse"][];
         };
         /**
+         * UserPatchBody
+         * @description PATCH /v1/admin/users/{id}: display name and email (omitted keeps).
+         */
+        UserPatchBody: {
+            /** Email */
+            email?: string | null;
+            /** First Name */
+            first_name?: string | null;
+            /** Last Name */
+            last_name?: string | null;
+            /** Middle Name */
+            middle_name?: string | null;
+        };
+        /**
          * UserPreferences
          * @description User settings (README → Models → User → preferences).
          */
@@ -17556,6 +18298,8 @@ export interface components {
             alerts_semester_mark_below?: number | null;
             /** Bottom Nav */
             bottom_nav?: string[] | null;
+            /** @default {} */
+            contacts: components["schemas"]["TeacherContacts"];
             /**
              * Lessons Links Lead Min
              * @default 5
@@ -17826,6 +18570,26 @@ export interface components {
             url: string;
         };
         /**
+         * VideoStreamResponse
+         * @description A short-lived URL that streams an uploaded video.
+         */
+        VideoStreamResponse: {
+            /** Expires In */
+            expires_in: number;
+            /** Url */
+            url: string;
+        };
+        /**
+         * VideoStreamView
+         * @description A short-lived URL that streams an uploaded video (supports ``Range``).
+         */
+        VideoStreamView: {
+            /** Expires In */
+            expires_in: number;
+            /** Url */
+            url: string;
+        };
+        /**
          * Visibility
          * @description Who may see a published item.
          * @enum {string}
@@ -17907,7 +18671,7 @@ export interface components {
              * Kind
              * @enum {string}
              */
-            kind: "timetable" | "homework" | "marks" | "exams" | "flashcards_due" | "notebook_prompt" | "attendance" | "clock_next_lesson";
+            kind: "timetable" | "homework" | "marks" | "exams" | "flashcards_due" | "notebook_prompt" | "attendance" | "clock_next_lesson" | "upcoming_controls" | "next_lesson" | "today_lessons" | "semester_summary" | "announcements" | "new_marks" | "alerts" | "get_started";
             /**
              * Size
              * @enum {string}
@@ -17938,7 +18702,7 @@ export interface components {
              * Kind
              * @enum {string}
              */
-            kind: "timetable" | "homework" | "marks" | "exams" | "flashcards_due" | "notebook_prompt" | "attendance" | "clock_next_lesson";
+            kind: "timetable" | "homework" | "marks" | "exams" | "flashcards_due" | "notebook_prompt" | "attendance" | "clock_next_lesson" | "upcoming_controls" | "next_lesson" | "today_lessons" | "semester_summary" | "announcements" | "new_marks" | "alerts" | "get_started";
             /**
              * Size
              * @enum {string}
@@ -18095,6 +18859,8 @@ export interface components {
              * @enum {string}
              */
             kind: "lecture" | "practice" | "midterm" | "final" | "other";
+            /** Late Count */
+            late_count?: number | null;
             /** Period */
             period: number;
             room: components["schemas"]["app__interfaces__http__v1__admin_schedule__shared_schemas__RoomRefLiteResponse"] | null;
@@ -18239,6 +19005,11 @@ export interface components {
             mail_suspended: boolean;
             /** Middle Name */
             middle_name: string | null;
+            /**
+             * Password Change Required
+             * @default false
+             */
+            password_change_required: boolean;
             /** Recovery Email */
             recovery_email: string | null;
             /** Roles */
@@ -21253,6 +22024,59 @@ export interface operations {
             };
         };
     };
+    get_settings_v1_admin_settings_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["PlatformSettingsResponse"];
+                };
+            };
+        };
+    };
+    put_settings_v1_admin_settings_put: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["PlatformSettingsBody"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["PlatformSettingsResponse"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
     list_students_v1_admin_students_get: {
         parameters: {
             query?: {
@@ -21537,6 +22361,72 @@ export interface operations {
                 };
                 content: {
                     "application/json": components["schemas"]["SyncRunPageResponse"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    get_teacher_contacts_v1_admin_teacher_contacts__id__get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["TeacherContacts"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    put_teacher_contacts_v1_admin_teacher_contacts__id__put: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["TeacherContacts"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["TeacherContacts"];
                 };
             };
             /** @description Validation Error */
@@ -22067,6 +22957,41 @@ export interface operations {
             };
         };
     };
+    patch_user_v1_admin_users__id__patch: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["UserPatchBody"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["app__interfaces__http__v1__admin_users__schemas__AdminUserResponse"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
     post_block_v1_admin_users__id__block_post: {
         parameters: {
             query?: never;
@@ -22273,6 +23198,39 @@ export interface operations {
             cookie?: never;
         };
         requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            204: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    post_set_password_v1_admin_users__id__set_password_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["SetPasswordBody"];
+            };
+        };
         responses: {
             /** @description Successful Response */
             204: {
@@ -23231,6 +24189,39 @@ export interface operations {
                 };
                 content: {
                     "application/json": components["schemas"]["SentResponse"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    post_login_password_v1_id_login_password_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["NewPasswordLoginBody"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["LoginResultResponse"];
                 };
             };
             /** @description Validation Error */
@@ -24504,6 +25495,37 @@ export interface operations {
             };
         };
     };
+    search_authors_v1_library_authors_get: {
+        parameters: {
+            query?: {
+                q?: string;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": string[];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
     get_book_plan_v1_library_book_plans_get: {
         parameters: {
             query: {
@@ -24782,6 +25804,7 @@ export interface operations {
                 source?: components["schemas"]["ItemSource"];
                 subject_id?: string | null;
                 topic_id?: string | null;
+                tag?: string | null;
                 year_of_study?: number | null;
                 type?: components["schemas"]["ItemType"] | null;
                 language?: string | null;
@@ -25456,6 +26479,38 @@ export interface operations {
             };
         };
     };
+    search_tags_v1_library_tags_get: {
+        parameters: {
+            query?: {
+                q?: string;
+                limit?: number;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["TagSuggestionSchema"][];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
     list_topics_v1_library_topics_get: {
         parameters: {
             query?: {
@@ -26069,6 +27124,39 @@ export interface operations {
             };
         };
     };
+    preview_video_v1_lms_courses__course_id__preview_steps__step_id__blocks__block_id__video_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                course_id: string;
+                step_id: string;
+                block_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["VideoStreamResponse"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
     publish_course_v1_lms_courses__course_id__publish_post: {
         parameters: {
             query?: never;
@@ -26325,6 +27413,39 @@ export interface operations {
                 };
                 content: {
                     "application/json": components["schemas"]["LearningStepView"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    get_video_stream_v1_lms_courses__course_id__steps__step_id__blocks__block_id__video_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                course_id: string;
+                step_id: string;
+                block_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["VideoStreamView"];
                 };
             };
             /** @description Validation Error */
@@ -27486,6 +28607,154 @@ export interface operations {
             };
         };
     };
+    list_manage_subjects_v1_manage_library_subjects_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ManageSubjectResponse"][];
+                };
+            };
+        };
+    };
+    create_subject_v1_manage_library_subjects_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["CreateSubjectBody"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ManageSubjectResponse"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    delete_subject_v1_manage_library_subjects__subject_id__delete: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                subject_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            204: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    update_subject_v1_manage_library_subjects__subject_id__patch: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                subject_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["UpdateSubjectBody"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ManageSubjectResponse"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    get_suggestion_v1_manage_library_suggestions__suggestion_id__get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                suggestion_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["SuggestionDetailResponse"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
     decide_suggestion_v1_manage_library_suggestions__suggestion_id___decision__post: {
         parameters: {
             query?: never;
@@ -27842,7 +29111,7 @@ export interface operations {
                 cursor?: string | null;
                 limit?: number;
                 q?: string | null;
-                type?: ("pdf" | "doc" | "sheet" | "slides" | "text" | "image") | null;
+                type?: ("pdf" | "doc" | "sheet" | "slides" | "text" | "image" | "video") | null;
                 sort?: "recent" | "older";
                 page?: number | null;
                 page_size?: number | null;
@@ -28844,7 +30113,7 @@ export interface operations {
     list_my_links_v1_me_links_get: {
         parameters: {
             query?: {
-                kind?: ("url" | "file" | "chat" | "flashcard_set") | null;
+                kind?: ("url" | "file" | "chat" | "flashcard_set" | "artifact") | null;
                 target_id?: string | null;
                 cursor?: string | null;
                 limit?: number;
@@ -28862,6 +30131,38 @@ export interface operations {
                 };
                 content: {
                     "application/json": components["schemas"]["LinkPageResponse"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    list_sent_mail_v1_me_outbound_mail_get: {
+        parameters: {
+            query?: {
+                limit?: number;
+                before?: string | null;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["SentMailPageOut"];
                 };
             };
             /** @description Validation Error */
@@ -29199,6 +30500,26 @@ export interface operations {
             };
         };
     };
+    get_my_teachers_v1_me_teachers_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["MyTeacherResponse"][];
+                };
+            };
+        };
+    };
     get_timetable_v1_me_timetable_get: {
         parameters: {
             query?: {
@@ -29257,6 +30578,7 @@ export interface operations {
                 q?: string | null;
                 cursor?: string | null;
                 limit?: number;
+                origin?: components["schemas"]["NotebookOrigin"] | null;
             };
             header?: never;
             path?: never;
@@ -29461,6 +30783,37 @@ export interface operations {
                 };
                 content: {
                     "application/json": components["schemas"]["CourseWorkspaceResponse"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    open_course_notebook_v1_notebooks_course__course_id__post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                course_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["NotebookItemResponse"];
                 };
             };
             /** @description Validation Error */
@@ -29899,7 +31252,7 @@ export interface operations {
     download_artifact_v1_notebooks__notebook_id__artifacts__artifact_id__download_get: {
         parameters: {
             query?: {
-                format?: ("docx" | "xlsx" | "pptx" | "md" | "json") | null;
+                format?: ("docx" | "xlsx" | "pptx" | "csv" | "md" | "json") | null;
             };
             header?: never;
             path: {
@@ -32220,6 +33573,42 @@ export interface operations {
             };
         };
     };
+    patch_broadcast_v1_staff_lms_courses__course_id__broadcasts__broadcast_id__patch: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                course_id: string;
+                broadcast_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["CourseBroadcastPatch"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["CourseBroadcastResponse"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
     list_creators_v1_staff_lms_creators_get: {
         parameters: {
             query?: {
@@ -32300,6 +33689,59 @@ export interface operations {
                     [name: string]: unknown;
                 };
                 content?: never;
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    get_my_contacts_v1_staff_me_contacts_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["TeacherContacts"];
+                };
+            };
+        };
+    };
+    put_my_contacts_v1_staff_me_contacts_put: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["TeacherContacts"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["TeacherContacts"];
+                };
             };
             /** @description Validation Error */
             422: {

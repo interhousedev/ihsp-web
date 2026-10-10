@@ -34,7 +34,12 @@ async function infographicPng(artifact: Extract<ArtifactDetail, { kind: "infogra
     const draw = (contentScale: number) =>
       flushSync(() =>
         root.render(
-          <InfographicCanvas content={content} orientation={orientation} variant={variant} contentScale={contentScale} />,
+          <InfographicCanvas
+            content={content}
+            orientation={orientation}
+            variant={variant}
+            contentScale={contentScale}
+          />,
         ),
       )
     draw(1)

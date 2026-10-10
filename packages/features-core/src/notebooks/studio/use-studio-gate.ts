@@ -7,12 +7,11 @@ import { useCallback } from "react"
 import { quotaKeyFor, quotaReached } from "../lib/artifact-kinds"
 import { notebookLimit, useNotebookUsage } from "../api/use-notebook-usage"
 
-export type GateReason = "offline" | "readonly" | "sources" | "limit" | "quota"
+export type GateReason = "offline" | "readonly" | "limit" | "quota"
 export type Gate = { reason: GateReason; message: string }
 
 /**
- * Why generation is blocked right now (docs/reference/notebooklm.md § 5.4.4, § 5.6): the browser is offline, no ready
- * source is selected, a token budget is used up, or the daily count of that kind is used up. `null` means free to go.
+ * Why generation is blocked right now (docs/reference/notebooklm.md § 5.4.4, § 5.6): the browser is offline, a token budget is used up, or the daily count of that kind is used up. `null` means free to go.
  */
 export function useStudioGate(notebook: NotebookDetail) {
   const t = useT("notebooks")
@@ -25,7 +24,6 @@ export function useStudioGate(notebook: NotebookDetail) {
   const general = useCallback((): Gate | null => {
     if (!online) return { reason: "offline", message: root("state.offlineTitle") }
     if (notebook.can_write === false) return { reason: "readonly", message: t("course.readOnlyStudio") }
-    if (notebook.selected_source_count === 0) return { reason: "sources", message: t("studio.needSources") }
     const limit = notebookLimit(data)
     if (limit.reached) {
       const time = limit.resetsAt ? format.time(limit.resetsAt) : "—"
@@ -37,7 +35,7 @@ export function useStudioGate(notebook: NotebookDetail) {
       }
     }
     return null
-  }, [online, notebook.can_write, notebook.selected_source_count, data, format, t, root])
+  }, [online, notebook.can_write, data, format, t, root])
 
   const forKind = useCallback(
     (kind: ArtifactKind): Gate | null => {

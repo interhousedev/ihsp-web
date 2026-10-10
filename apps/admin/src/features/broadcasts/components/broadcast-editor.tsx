@@ -109,10 +109,7 @@ export function BroadcastEditor({ item }: { item: BroadcastItem | null }) {
   const title = item ? item.title : t("newTitle")
 
   return (
-    <PageContainer
-      title={title}
-      actions={<BackLink href="/broadcasts/" label={t("back")} />}
-    >
+    <PageContainer title={title} actions={<BackLink href="/broadcasts/" label={t("back")} />}>
       {item ? (
         <div className="flex flex-wrap items-center gap-3 text-sm">
           <StatusBadge status={item.status} />

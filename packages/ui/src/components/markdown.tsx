@@ -110,27 +110,42 @@ const components: Components = {
   a: ({ href, children }) => <MarkdownLink href={href}>{children}</MarkdownLink>,
   img: ({ src, alt }) => <MarkdownImage src={src} alt={alt} />,
   h1: ({ children, ...props }) => (
-    <h2 className="mt-4 mb-2 text-xl font-semibold first:mt-0 data-[align=center]:text-center data-[align=right]:text-end" {...omitNode(props)}>
+    <h2
+      className="mt-4 mb-2 text-xl font-semibold first:mt-0 data-[align=center]:text-center data-[align=right]:text-end"
+      {...omitNode(props)}
+    >
       <Inline>{children}</Inline>
     </h2>
   ),
   h2: ({ children, ...props }) => (
-    <h3 className="mt-4 mb-2 text-lg font-semibold first:mt-0 data-[align=center]:text-center data-[align=right]:text-end" {...omitNode(props)}>
+    <h3
+      className="mt-4 mb-2 text-lg font-semibold first:mt-0 data-[align=center]:text-center data-[align=right]:text-end"
+      {...omitNode(props)}
+    >
       <Inline>{children}</Inline>
     </h3>
   ),
   h3: ({ children, ...props }) => (
-    <h4 className="mt-3 mb-1 text-base font-semibold first:mt-0 data-[align=center]:text-center data-[align=right]:text-end" {...omitNode(props)}>
+    <h4
+      className="mt-3 mb-1 text-base font-semibold first:mt-0 data-[align=center]:text-center data-[align=right]:text-end"
+      {...omitNode(props)}
+    >
       <Inline>{children}</Inline>
     </h4>
   ),
   h4: ({ children, ...props }) => (
-    <h5 className="mt-3 mb-1 text-sm font-semibold first:mt-0 data-[align=center]:text-center data-[align=right]:text-end" {...omitNode(props)}>
+    <h5
+      className="mt-3 mb-1 text-sm font-semibold first:mt-0 data-[align=center]:text-center data-[align=right]:text-end"
+      {...omitNode(props)}
+    >
       <Inline>{children}</Inline>
     </h5>
   ),
   p: ({ children, ...props }) => (
-    <p className="my-2 leading-relaxed first:mt-0 last:mb-0 data-[align=center]:text-center data-[align=right]:text-end" {...omitNode(props)}>
+    <p
+      className="my-2 leading-relaxed first:mt-0 last:mb-0 data-[align=center]:text-center data-[align=right]:text-end"
+      {...omitNode(props)}
+    >
       <Inline>{children}</Inline>
     </p>
   ),

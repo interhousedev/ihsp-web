@@ -10,7 +10,6 @@ import {
   ConfirmDialog,
   Dialog,
   DialogContent,
-  DialogDescription,
   DialogHeader,
   DialogTitle,
   Input,
@@ -141,7 +140,6 @@ export function ShareDialog({ open, onOpenChange, kind, targetId }: ShareDialogP
         <DialogContent className="max-h-[90dvh] overflow-y-auto">
           <DialogHeader>
             <DialogTitle>{kind === "chat" ? t("titleChat") : t("titleSet")}</DialogTitle>
-            <DialogDescription>{kind === "chat" ? t("descriptionChat") : t("descriptionSet")}</DialogDescription>
           </DialogHeader>
 
           {kind === "chat" ? (

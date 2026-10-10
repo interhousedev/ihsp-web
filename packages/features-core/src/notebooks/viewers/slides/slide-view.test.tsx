@@ -11,7 +11,10 @@ describe("SlideView", () => {
     render(<SlideView slide={slide} />)
 
     expect(screen.getByRole("heading", { name: "Agenda" })).toBeInTheDocument()
-    expect(screen.getAllByRole("listitem").map((item) => item.textContent)).toEqual(["1Light reactions", "2Calvin cycle"])
+    expect(screen.getAllByRole("listitem").map((item) => item.textContent)).toEqual([
+      "1Light reactions",
+      "2Calvin cycle",
+    ])
   })
 
   it("does not crash on a layout this build does not know", () => {

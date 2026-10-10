@@ -363,7 +363,7 @@ describe("Customize dialogs: common fields", () => {
     expect(screen.getByRole("dialog", { name: "Customize Quiz" })).toBeInTheDocument()
   })
 
-  it("can open the form without a selected source but cannot generate", async () => {
+  it("can generate without a selected source and shows a warning instead", async () => {
     const noSources: NotebookDetail = {
       ...notebookDetail,
       selected_source_count: 0,
@@ -372,8 +372,10 @@ describe("Customize dialogs: common fields", () => {
     const dialog = await openForm(user, "Quiz")
 
     expect(within(dialog).getByText("Using 0 sources")).toBeInTheDocument()
-    expect(within(dialog).getByRole("button", { name: "Generate" })).toBeDisabled()
-    expect(within(dialog).getByText("Add and select a source first")).toBeInTheDocument()
+    expect(within(dialog).getByRole("button", { name: "Generate" })).toBeEnabled()
+    expect(
+      within(dialog).getByText("No sources selected — the answer will not rely on your materials"),
+    ).toBeInTheDocument()
   })
 
   it("cannot generate while the browser is offline", async () => {

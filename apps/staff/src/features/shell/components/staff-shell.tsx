@@ -30,7 +30,13 @@ export function StaffShell({ children }: { children: ReactNode }) {
 function StaffFrame({ children }: { children: ReactNode }) {
   const nav = useNav()
   return (
-    <AppShell headerLeading={<HistoryButtons />} nav={nav.groups} bottomNav={nav.bottom} brand={<StaffBrand />} header={<ShellHeader nav={nav.groups} />}>
+    <AppShell
+      headerLeading={<HistoryButtons />}
+      nav={nav.groups}
+      bottomNav={nav.bottom}
+      brand={<StaffBrand />}
+      header={<ShellHeader nav={nav.groups} />}
+    >
       <Suspense fallback={<PageLoading />}>{children}</Suspense>
     </AppShell>
   )

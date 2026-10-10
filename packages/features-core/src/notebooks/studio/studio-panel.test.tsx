@@ -92,10 +92,12 @@ describe("StudioPanel: tiles", () => {
     expect(await screen.findByRole("list", { name: "Studio items" })).toBeInTheDocument()
   })
 
-  it("disables every tile and says why when no source is selected", async () => {
+  it("keeps every tile enabled and warns when no source is selected", async () => {
     renderNotebook(<StudioPanel notebook={noSources} />)
 
-    expect(await screen.findByText("Add and select a source first")).toBeInTheDocument()
+    expect(
+      await screen.findByText("No sources selected — the answer will not rely on your materials"),
+    ).toBeInTheDocument()
     for (const label of [
       "Slide deck",
       "Mind map",
@@ -106,8 +108,7 @@ describe("StudioPanel: tiles", () => {
       "Infographic",
       "Data table",
     ]) {
-      expect(tile(label)).toBeDisabled()
-      expect(tile(label)).toHaveAttribute("title", "Add and select a source first")
+      expect(tile(label)).toBeEnabled()
     }
   })
 

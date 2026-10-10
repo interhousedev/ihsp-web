@@ -107,10 +107,7 @@ export function NewTeacherPage() {
   }
 
   return (
-    <PageContainer
-      title={t("title")}
-      actions={<BackLink href="/teachers/" label={t("back")} />}
-    >
+    <PageContainer title={t("title")} actions={<BackLink href="/teachers/" label={t("back")} />}>
       <form
         className="flex max-w-xl flex-col gap-4"
         onSubmit={(event) => {

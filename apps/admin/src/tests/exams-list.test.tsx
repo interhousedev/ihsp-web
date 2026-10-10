@@ -214,7 +214,12 @@ describe("exam filters", () => {
     const labels = within(select)
       .getAllByRole("option")
       .map((option) => option.textContent)
-    expect(labels).toEqual(["All control weeks", "Midterm 1 · 12–17 Oct", "Midterm 2 · 16–21 Nov", "Final (FC) · 14–19 Dec"])
+    expect(labels).toEqual([
+      "All control weeks",
+      "Midterm 1 · 12–17 Oct",
+      "Midterm 2 · 16–21 Nov",
+      "Final (FC) · 14–19 Dec",
+    ])
   })
 
   test("filters in the address are applied and shown", async () => {

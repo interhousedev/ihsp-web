@@ -7,7 +7,7 @@ function html(body: string): Response {
 }
 
 export const publicHandlers = [
-  // `kq7x2m9a` is a shared chat, `zr5t8w1c` a shared flash card set, `gone0000` was removed (`410`); other slugs are `404`.
+  // `kq7x2m9a` is a shared chat, `zr5t8w1c` a shared flash card set, `a-quiz0001` and `a-report01` shared Studio outputs, `gone0000` was removed (`410`); other slugs are `404`.
   http.get(apiUrl("/v1/public/shares/:slug"), ({ params }) => {
     const slug = param(params, "slug")
     if (slug === publicShareGoneSlug) return problem(410, "common/gone", "This link was removed")

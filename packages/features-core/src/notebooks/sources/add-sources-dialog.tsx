@@ -5,13 +5,11 @@ import {
   Button,
   Dialog,
   DialogContent,
-  DialogDescription,
   DialogHeader,
   DialogTitle,
   Drawer,
   DrawerClose,
   DrawerContent,
-  DrawerDescription,
   DrawerHeader,
   DrawerTitle,
   useIsMobile,
@@ -42,7 +40,6 @@ export function AddSourcesDialog({ notebookId, open, onOpenChange }: AddSourcesD
           <DrawerHeader className="flex-row items-start justify-between gap-2 text-start">
             <div className="flex min-w-0 flex-col gap-0.5">
               <DrawerTitle>{t("add.title")}</DrawerTitle>
-              <DrawerDescription>{t("add.description")}</DrawerDescription>
             </div>
             <DrawerClose
               render={
@@ -62,7 +59,6 @@ export function AddSourcesDialog({ notebookId, open, onOpenChange }: AddSourcesD
       <DialogContent className="flex h-[min(40rem,90dvh)] max-h-[90dvh] flex-col gap-3 sm:max-w-2xl">
         <DialogHeader>
           <DialogTitle>{t("add.title")}</DialogTitle>
-          <DialogDescription>{t("add.description")}</DialogDescription>
         </DialogHeader>
         {body}
       </DialogContent>

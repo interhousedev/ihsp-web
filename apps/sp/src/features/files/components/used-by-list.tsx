@@ -11,7 +11,9 @@ function LessonUse({ id, fallback }: { id: string; fallback: string }) {
   const t = useT("files.usedBy")
   const f = useFormatters()
   const lesson = useQuery(getMeLessonQuery(id)).data?.lesson
-  const text = lesson ? `${lesson.subject.name}, ${f.date(lesson.starts_at, { day: "numeric", month: "long" })}` : fallback
+  const text = lesson
+    ? `${lesson.subject.name}, ${f.date(lesson.starts_at, { day: "numeric", month: "long" })}`
+    : fallback
   return (
     <Link href={`/lessons/view/?id=${encodeURIComponent(id)}`} className="truncate hover:underline">
       {t("lesson")}: {text}

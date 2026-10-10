@@ -28,11 +28,23 @@ export const searchResults: SearchResults = {
   files: [filePdf],
   flashcard_sets: [flashcardSetPhysics],
   notebooks: [
-    { id: "00000000-0000-4000-8000-0000000000a1", title: "Physics 9", emoji: null, source_count: 2, matched_sources: ["Optics.pdf"] },
+    {
+      id: "00000000-0000-4000-8000-0000000000a1",
+      title: "Physics 9",
+      emoji: null,
+      source_count: 2,
+      matched_sources: ["Optics.pdf"],
+    },
   ],
   marks: [{ subject: subjectRefs.physics, type: "current", value: 5, date: "2026-10-07", lesson_id: null }],
   library_items: [
-    { id: "00000000-0000-4000-8000-0000000000b1", slug: "physics-textbook", title: "Physics textbook", author_label: "I. Savelyev", kind: "book" },
+    {
+      id: "00000000-0000-4000-8000-0000000000b1",
+      slug: "physics-textbook",
+      title: "Physics textbook",
+      author_label: "I. Savelyev",
+      kind: "book",
+    },
   ],
 }
 

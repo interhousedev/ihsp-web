@@ -1,50 +1,34 @@
-"use client";
+"use client"
 
-import type { PublicShare } from "@ihsp/api";
-import { useT } from "@ihsp/i18n";
-import { Badge, Markdown, cn } from "@ihsp/ui";
+import type { PublicShare } from "@ihsp/api"
+import { useT } from "@ihsp/i18n"
+import { Badge, Markdown, cn } from "@ihsp/ui"
 
-type ChatMessages = NonNullable<PublicShare["chat"]>["messages"];
+type ChatMessages = NonNullable<PublicShare["chat"]>["messages"]
 
 /** The conversation of a shared chat: author's messages, assistant answers and the notes of looked-up data. */
-export function ChatView({
-  messages,
-  authorName,
-}: {
-  messages: ChatMessages;
-  authorName: string;
-}) {
-  const t = useT("share.chat");
+export function ChatView({ messages, authorName }: { messages: ChatMessages; authorName: string }) {
+  const t = useT("share.chat")
   return (
     <div className="flex flex-col gap-4">
       <Badge variant="secondary" className="w-fit">
         {t("publicBanner")}
       </Badge>
       {messages.length === 0 ? (
-        <p className="text-muted-foreground py-8 text-center text-sm">
-          {t("empty")}
-        </p>
+        <p className="text-muted-foreground py-8 text-center text-sm">{t("empty")}</p>
       ) : (
         <ol aria-label={t("messages")} className="flex flex-col gap-4">
           {messages.map((message, index) => {
-            const fromAuthor = message.role === "user";
+            const fromAuthor = message.role === "user"
             return (
-              <li
-                key={index}
-                className={cn(
-                  "flex flex-col gap-1",
-                  fromAuthor ? "items-end" : "items-start",
-                )}
-              >
+              <li key={index} className={cn("flex flex-col gap-1", fromAuthor ? "items-end" : "items-start")}>
                 <span className="text-muted-foreground text-xs font-medium">
                   {fromAuthor ? authorName : t("assistant")}
                 </span>
                 <div
                   className={cn(
                     "max-w-full min-w-0 rounded-2xl border px-4 py-3 text-sm break-words sm:max-w-[85%]",
-                    fromAuthor
-                      ? "bg-primary text-primary-foreground border-transparent"
-                      : "bg-card",
+                    fromAuthor ? "bg-primary text-primary-foreground border-transparent" : "bg-card",
                   )}
                 >
                   <Markdown>{message.text}</Markdown>
@@ -57,10 +41,10 @@ export function ChatView({
                   </ul>
                 ) : null}
               </li>
-            );
+            )
           })}
         </ol>
       )}
     </div>
-  );
+  )
 }

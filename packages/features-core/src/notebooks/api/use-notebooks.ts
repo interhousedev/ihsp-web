@@ -34,8 +34,7 @@ export function useAllNotebooks(q?: string, enabled = true) {
   const term = q?.trim() || undefined
   const query = useInfiniteQuery({
     queryKey: [...keys.notebooks.all(), "pages", term ?? ""] as const,
-    queryFn: ({ pageParam, signal }) =>
-      getNotebooks({ q: term, cursor: pageParam, limit: PAGE_LIMIT }, { signal }),
+    queryFn: ({ pageParam, signal }) => getNotebooks({ q: term, cursor: pageParam, limit: PAGE_LIMIT }, { signal }),
     initialPageParam: undefined as string | undefined,
     getNextPageParam: (last) => last.next_cursor ?? undefined,
     enabled,

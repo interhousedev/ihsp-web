@@ -2,15 +2,7 @@ import { beforeEach, describe, expect, it } from "bun:test"
 import { renderWithProviders, setTestRoute, resetTestRouter, testRouter } from "@ihsp/test-utils"
 import { act, screen } from "@testing-library/react"
 import { HistoryButtons } from "./history-buttons"
-import {
-  EMPTY_HISTORY,
-  HISTORY_CAP,
-  canGoBack,
-  canGoForward,
-  goBack,
-  goForward,
-  pushEntry,
-} from "./use-history-stack"
+import { EMPTY_HISTORY, HISTORY_CAP, canGoBack, canGoForward, goBack, goForward, pushEntry } from "./use-history-stack"
 
 const e = (n: number | string) => ({ url: `/p${n}/`, title: `Page ${n}` })
 
@@ -61,10 +53,7 @@ describe("HistoryButtons", () => {
   })
 
   it("enables back after a stored previous page and steps to it", async () => {
-    window.sessionStorage.setItem(
-      "ihsp:history-nav",
-      JSON.stringify({ entries: [e(1), e(2)], index: 1 }),
-    )
+    window.sessionStorage.setItem("ihsp:history-nav", JSON.stringify({ entries: [e(1), e(2)], index: 1 }))
     renderWithProviders(<HistoryButtons />, { route: "/p2/" })
     const back = await screen.findByRole("button", { name: /back: page 1/i })
     expect(back).not.toBeDisabled()

@@ -62,7 +62,9 @@ export function TimetableLessonCard({
         </span>
       ) : null}
       <span className={cn("font-medium", cancelled && "line-through")}>{lesson.subject.name}</span>
-      <span className={cn("text-muted-foreground text-xs", attendance && attendance !== "present" && "text-current/80")}>
+      <span
+        className={cn("text-muted-foreground text-xs", attendance && attendance !== "present" && "text-current/80")}
+      >
         {[
           lesson.room?.name ? t("room", { name: lesson.room.name }) : null,
           lesson.teacher ? shortName(lesson.teacher) : null,

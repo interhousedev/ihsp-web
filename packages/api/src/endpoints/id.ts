@@ -27,6 +27,7 @@ import type {
   LoginOtpBody,
   LoginOtpRequestBody,
   LoginOtpRequestResponse,
+  LoginPasswordBody,
   LoginResult,
   OtpDisableBody,
   OtpEnableBody,
@@ -80,6 +81,11 @@ export function postIdLoginOtpRequest(
   opts?: RequestOptions,
 ): Promise<LoginOtpRequestResponse> {
   return api.post<LoginOtpRequestResponse>("/v1/id/login/otp/request", body, { ...opts, auth: "none" })
+}
+
+/** POST /v1/id/login/password — none; sets the new password of a forced change and finishes the login. */
+export function postIdLoginPassword(body: LoginPasswordBody, opts?: RequestOptions): Promise<LoginResult> {
+  return api.post<LoginResult>("/v1/id/login/password", body, { ...opts, auth: "none" })
 }
 
 /** POST /v1/id/login/otp — none. */
@@ -350,6 +356,7 @@ export const getLoginInfo = getIdLogin
 export const postLogin = postIdLogin
 export const postLoginOtpRequest = postIdLoginOtpRequest
 export const postLoginOtp = postIdLoginOtp
+export const postLoginPassword = postIdLoginPassword
 export const getConsentInfo = getIdConsent
 export const postConsent = postIdConsent
 export const postConsentOtp = postIdConsentOtp

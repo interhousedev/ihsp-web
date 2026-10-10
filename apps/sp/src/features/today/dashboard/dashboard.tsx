@@ -1,22 +1,14 @@
-"use client";
+"use client"
 
-import type { DashboardWidgetKind, DashboardWidgetSize } from "@ihsp/api";
-import { useT } from "@ihsp/i18n";
-import { Button, Icons } from "@ihsp/ui";
-import { useCallback, useState } from "react";
-import { AddWidget } from "./editor/add-widget";
-import { WidgetEditor } from "./editor/widget-editor";
-import { DashboardGrid } from "./grid";
-import {
-  addWidget,
-  colorWidget,
-  inOrder,
-  moveWidget,
-  removeWidget,
-  resizeWidget,
-  type Widget,
-} from "./model";
-import { useDashboard, useSaveDashboard } from "./use-dashboard";
+import type { DashboardWidgetKind, DashboardWidgetSize } from "@ihsp/api"
+import { useT } from "@ihsp/i18n"
+import { Button, Icons } from "@ihsp/ui"
+import { useCallback, useState } from "react"
+import { AddWidget } from "./editor/add-widget"
+import { WidgetEditor } from "./editor/widget-editor"
+import { DashboardGrid } from "./grid"
+import { addWidget, colorWidget, inOrder, moveWidget, removeWidget, resizeWidget, type Widget } from "./model"
+import { useDashboard, useSaveDashboard } from "./use-dashboard"
 
 /**
  * The widget grid on Today. "Edit" starts a draft (add from the catalogue, select a tile to resize, recolour or delete it,
@@ -24,54 +16,48 @@ import { useDashboard, useSaveDashboard } from "./use-dashboard";
  * Today works without it.
  */
 export function Dashboard() {
-  const t = useT("today.dashboard");
-  const query = useDashboard();
-  const save = useSaveDashboard();
-  const [draft, setDraft] = useState<Widget[] | null>(null);
-  const [selectedId, setSelectedId] = useState<string | null>(null);
-  const [adding, setAdding] = useState(false);
-  const [conflict, setConflict] = useState(false);
+  const t = useT("today.dashboard")
+  const query = useDashboard()
+  const save = useSaveDashboard()
+  const [draft, setDraft] = useState<Widget[] | null>(null)
+  const [selectedId, setSelectedId] = useState<string | null>(null)
+  const [adding, setAdding] = useState(false)
+  const [conflict, setConflict] = useState(false)
 
   const change = useCallback((fn: (widgets: readonly Widget[]) => Widget[]) => {
-    setDraft((current) => (current ? fn(current) : current));
-  }, []);
-  const onMove = useCallback(
-    (id: string, to: number) => change((w) => moveWidget(w, id, to)),
-    [change],
-  );
+    setDraft((current) => (current ? fn(current) : current))
+  }, [])
+  const onMove = useCallback((id: string, to: number) => change((w) => moveWidget(w, id, to)), [change])
 
-  if (!query.data) return null;
-  const editing = draft !== null;
-  const widgets = draft ?? query.data.widgets;
-  const selected = draft?.find((widget) => widget.id === selectedId) ?? null;
+  if (!query.data) return null
+  const editing = draft !== null
+  const widgets = draft ?? query.data.widgets
+  const selected = draft?.find((widget) => widget.id === selectedId) ?? null
 
   const finish = () => {
-    setDraft(null);
-    setSelectedId(null);
-    setAdding(false);
-  };
+    setDraft(null)
+    setSelectedId(null)
+    setAdding(false)
+  }
   const done = () => {
-    if (!draft) return;
+    if (!draft) return
     save.mutate(
       { version: query.data.version, widgets: draft },
       {
         onSuccess: () => {
-          setConflict(false);
-          finish();
+          setConflict(false)
+          finish()
         },
         onError: () => {
-          setConflict(true);
-          finish();
+          setConflict(true)
+          finish()
         },
       },
-    );
-  };
+    )
+  }
 
   return (
-    <section
-      aria-labelledby="dashboard-title"
-      className="mb-4 flex flex-col gap-3"
-    >
+    <section aria-labelledby="dashboard-title" className="mb-4 flex flex-col gap-3">
       <div className="flex items-center justify-between gap-2">
         <h2 id="dashboard-title" className="text-base font-semibold">
           {t("title")}
@@ -79,34 +65,19 @@ export function Dashboard() {
         <div className="flex gap-2">
           {editing ? (
             <>
-              <Button
-                type="button"
-                variant="outline"
-                size="sm"
-                onClick={() => setAdding((open) => !open)}
-              >
+              <Button type="button" variant="outline" size="sm" onClick={() => setAdding((open) => !open)}>
                 <Icons.plusCircle aria-hidden />
                 {t("add")}
               </Button>
               <Button type="button" variant="ghost" size="sm" onClick={finish}>
                 {t("cancel")}
               </Button>
-              <Button
-                type="button"
-                size="sm"
-                disabled={save.isPending}
-                onClick={done}
-              >
+              <Button type="button" size="sm" disabled={save.isPending} onClick={done}>
                 {t("done")}
               </Button>
             </>
           ) : (
-            <Button
-              type="button"
-              variant="outline"
-              size="sm"
-              onClick={() => setDraft(inOrder(query.data.widgets))}
-            >
+            <Button type="button" variant="outline" size="sm" onClick={() => setDraft(inOrder(query.data.widgets))}>
               <Icons.edit aria-hidden />
               {t("edit")}
             </Button>
@@ -121,8 +92,8 @@ export function Dashboard() {
       {editing && adding ? (
         <AddWidget
           onAdd={(kind: DashboardWidgetKind) => {
-            change((w) => addWidget(w, kind));
-            setAdding(false);
+            change((w) => addWidget(w, kind))
+            setAdding(false)
           }}
         />
       ) : null}
@@ -136,16 +107,14 @@ export function Dashboard() {
       {editing && selected ? (
         <WidgetEditor
           widget={selected}
-          onResize={(size: DashboardWidgetSize) =>
-            change((w) => resizeWidget(w, selected.id, size))
-          }
+          onResize={(size: DashboardWidgetSize) => change((w) => resizeWidget(w, selected.id, size))}
           onColor={(color) => change((w) => colorWidget(w, selected.id, color))}
           onRemove={() => {
-            change((w) => removeWidget(w, selected.id));
-            setSelectedId(null);
+            change((w) => removeWidget(w, selected.id))
+            setSelectedId(null)
           }}
         />
       ) : null}
     </section>
-  );
+  )
 }

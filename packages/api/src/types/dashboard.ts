@@ -9,6 +9,14 @@ export type DashboardWidgetKind =
   | "notebook_prompt"
   | "attendance"
   | "clock_next_lesson"
+  | "upcoming_controls"
+  | "next_lesson"
+  | "today_lessons"
+  | "semester_summary"
+  | "announcements"
+  | "new_marks"
+  | "alerts"
+  | "get_started"
 
 /** Columns x rows on a 4-column grid (2 columns on a phone). */
 export type DashboardWidgetSize = "1x1" | "1x2" | "2x1" | "2x2" | "2x4"

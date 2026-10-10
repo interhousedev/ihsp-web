@@ -90,18 +90,13 @@ describe("keys used in the code", () => {
   })
 
   test("the keys built at run time have messages for every value", () => {
-    expect([...dynamic].toSorted()).toEqual([
-      "pwa.benefits.${key}",
-    ])
+    expect([...dynamic].toSorted()).toEqual(["pwa.benefits.${key}"])
     for (const value of ["fast", "offline", "session", "push"]) expect(en.has(`pwa.benefits.${value}`)).toBe(true)
   })
 
   test("every message is used somewhere", () => {
     const unused = [...en.keys()].filter(
-      (key) =>
-        !used.has(key) &&
-        !key.startsWith("pwa.benefits.") &&
-        !key.startsWith("pwa.lock."),
+      (key) => !used.has(key) && !key.startsWith("pwa.benefits.") && !key.startsWith("pwa.lock."),
     )
     expect(unused).toEqual([])
   })

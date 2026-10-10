@@ -36,10 +36,7 @@ export function ExamsPage() {
   const query = useExams()
   const isHeadStudent = useIsHeadStudent()
   return (
-    <PageContainer
-      title={t("title")}
-      actions={isHeadStudent ? <SuggestExamDialog /> : undefined}
-    >
+    <PageContainer title={t("title")} actions={isHeadStudent ? <SuggestExamDialog /> : undefined}>
       <QueryState query={query} rows={4} isEmpty={(data) => data.items.length === 0} emptyText={t("empty")}>
         {(data) => <ExamsContent items={data.items} />}
       </QueryState>

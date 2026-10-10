@@ -109,9 +109,11 @@ describe("subject page", () => {
 
     const late = (await screen.findByText("Row 2")).closest("li")
     expect(late).toHaveAttribute("data-attendance", "late")
-    expect(within(late as HTMLElement).getByText("Late").closest("[data-attendance]")?.className).toContain(
-      "text-orange-700",
-    )
+    expect(
+      within(late as HTMLElement)
+        .getByText("Late")
+        .closest("[data-attendance]")?.className,
+    ).toContain("text-orange-700")
     expect(within(late as HTMLElement).getByText("Midterm (PC)")).toBeInTheDocument()
     expect(within(late as HTMLElement).getAllByText("Lesson").length).toBeGreaterThan(0)
     const absent = screen.getByText("Row 3").closest("li") as HTMLElement

@@ -23,8 +23,7 @@ export function NewPasswordForm({ challenge, ticket }: NewPasswordFormProps) {
     [t],
   )
   const mutation = useMutation({
-    mutationFn: (password: string) =>
-      postLoginPassword({ login_challenge: challenge, ticket, new_password: password }),
+    mutationFn: (password: string) => postLoginPassword({ login_challenge: challenge, ticket, new_password: password }),
     onSuccess: (result) => applyLoginResult(result, () => undefined),
     onError: (error) => {
       followChallengeUsed(error)
