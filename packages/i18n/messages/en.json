@@ -225,7 +225,8 @@
     },
     "emis": {
       "auth-failed": "EMIS did not accept this login and password.",
-      "unavailable": "EMIS is not available right now. Try again later."
+      "unavailable": "EMIS is not available right now. Try again later.",
+      "credentials-missing": "No working EMIS login is stored for this account. Sign in again to link EMIS."
     },
     "id": {
       "admin-reset-forbidden": "Only an administrator can reset this account.",
@@ -415,6 +416,7 @@
       "group-name-invalid": "Enter a group name.",
       "group-name-taken": "An active group named {name} already exists.",
       "group-emis-id-taken": "Another group is already linked to this EMIS group.",
+      "curriculum-no-emis-student": "No student of this group has a working EMIS login yet.",
       "curator-not-teacher": "The curator must be a teacher.",
       "head-student-invalid": "The head student must be an active student of this group.",
       "not-group-curator": "Only the curator of this group or Administration can do this.",

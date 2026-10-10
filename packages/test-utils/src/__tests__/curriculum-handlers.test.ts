@@ -37,10 +37,13 @@ describe("curriculum handlers", () => {
     expect((error as ApiError).status).toBe(404)
   })
 
-  test("POST /v1/admin/groups/{id}/curriculum/sync: synced with the curriculum, or no_student without one", async () => {
+  test("POST /v1/admin/groups/{id}/curriculum/sync: synced with the curriculum, or 409 without a usable student", async () => {
     const synced = await postAdminGroupCurriculumSync(ids.group2TN2)
     expect(synced.status).toBe("synced")
     expect((synced.curriculum as CurriculumView).emis_curriculum_id).toBe(curriculumView.emis_curriculum_id)
-    expect(await postAdminGroupCurriculumSync(ids.group1TN1)).toEqual({ status: "no_student", curriculum: null })
+    const error = await postAdminGroupCurriculumSync(ids.group1TN1).catch((cause: unknown) => cause)
+    expect(error).toBeInstanceOf(ApiError)
+    expect((error as ApiError).status).toBe(409)
+    expect((error as ApiError).type).toBe("academic/curriculum-no-emis-student")
   })
 })

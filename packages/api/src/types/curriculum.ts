@@ -23,7 +23,10 @@ export type CurriculumHoursItem = Schemas["CurriculumExtraResponse"]
 
 export type CurriculumView = Schemas["CurriculumResponse"]
 
-/** `no_student`: the group has no student with an EMIS login to fetch the curriculum with. */
+/**
+ * Only `synced` comes back from the sync: a group without a student who has an EMIS login answers
+ * `409 academic/curriculum-no-emis-student` instead (`no_student` is left over in the generated schema).
+ */
 export type CurriculumSyncStatus = Schemas["CurriculumSyncResponse"]["status"]
 
 export type CurriculumSyncResult = Schemas["CurriculumSyncResponse"]

@@ -13,6 +13,7 @@ import { TOUCH } from "../../shared/utils/touch"
 export function GroupCurriculumTab({ groupId }: { groupId: string }) {
   const t = useT("groups.curriculum")
   const query = useQuery(getAdminGroupCurriculumQuery(groupId))
+  // A failed sync (409 when no student has an EMIS login, or 503) is toasted with its own message.
   const sync = useAdminMutation({
     mutationFn: () => postAdminGroupCurriculumSync(groupId),
     invalidate: [keys.admin.groups.curriculum(groupId)],
@@ -29,9 +30,9 @@ export function GroupCurriculumTab({ groupId }: { groupId: string }) {
             {t("syncing")}
           </p>
         ) : null}
-        {sync.data ? (
-          <Alert role="status" variant={sync.data.status === "synced" ? "default" : "destructive"}>
-            <AlertDescription>{sync.data.status === "synced" ? t("synced") : t("noStudent")}</AlertDescription>
+        {sync.isSuccess ? (
+          <Alert role="status">
+            <AlertDescription>{t("synced")}</AlertDescription>
           </Alert>
         ) : null}
       </div>

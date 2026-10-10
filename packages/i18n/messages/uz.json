@@ -225,7 +225,8 @@
     },
     "emis": {
       "auth-failed": "EMIS bu login va parolni qabul qilmadi.",
-      "unavailable": "EMIS hozir ishlamayapti. Keyinroq urinib koʻring."
+      "unavailable": "EMIS hozir ishlamayapti. Keyinroq urinib koʻring.",
+      "credentials-missing": "Bu hisob uchun ishlaydigan EMIS kirish maʼlumoti saqlanmagan. EMIS ni ulash uchun qayta kiring."
     },
     "id": {
       "admin-reset-forbidden": "Bu hisobni faqat administrator tiklay oladi.",
@@ -415,6 +416,7 @@
       "group-name-invalid": "Guruh nomini kiriting.",
       "group-name-taken": "{name} nomli faol guruh allaqachon mavjud.",
       "group-emis-id-taken": "Boshqa guruh bu EMIS guruhi bilan allaqachon bogʻlangan.",
+      "curriculum-no-emis-student": "Bu guruh oʻquvchilarining hech birida hozircha ishlaydigan EMIS kirish maʼlumoti yoʻq.",
       "curator-not-teacher": "Kurator oʻqituvchi boʻlishi kerak.",
       "head-student-invalid": "Guruh sardori shu guruhning faol talabasi boʻlishi kerak.",
       "not-group-curator": "Buni faqat guruh kuratori yoki ma’muriyat qila oladi.",

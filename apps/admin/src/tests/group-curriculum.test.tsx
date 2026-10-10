@@ -1,9 +1,10 @@
 /** The Curriculum tab of the group page: the curriculum stored from EMIS and the "Sync from EMIS" button. */
-import { describe, expect, test } from "bun:test"
+import { describe, expect, spyOn, test } from "bun:test"
 import type { CurriculumView } from "@ihsp/api"
 import { apiUrl, curriculumView, ids, server } from "@ihsp/test-utils"
 import { screen, within } from "@testing-library/react"
 import { HttpResponse, http } from "msw"
+import { toast } from "sonner"
 import { GroupDetailPage } from "../features/groups/components/group-detail-page"
 import { configureTests, renderAdmin, waitUntil } from "./helpers"
 
@@ -106,16 +107,21 @@ describe("group page: Curriculum tab", () => {
     await waitUntil(() => !(button as HTMLButtonElement).disabled, "the button stays disabled")
   })
 
-  test("Sync from EMIS: no_student says nothing was synced and keeps what is stored", async () => {
-    const { user } = renderAdmin(<GroupDetailPage />, { route: `/groups/view/?id=${ids.group1TN1}&tab=curriculum` })
-    await screen.findByText(/No curriculum is stored/)
+  test("Sync from EMIS: a group without a usable EMIS login shows the 409 message and keeps what is stored", async () => {
+    const error = spyOn(toast, "error").mockImplementation(() => "")
+    try {
+      const { user } = renderAdmin(<GroupDetailPage />, { route: `/groups/view/?id=${ids.group1TN1}&tab=curriculum` })
+      await screen.findByText(/No curriculum is stored/)
 
-    await user.click(screen.getByRole("button", { name: "Sync from EMIS" }))
+      await user.click(screen.getByRole("button", { name: "Sync from EMIS" }))
 
-    const result = await screen.findByText(/Nothing was synced/)
-    expect(result.closest("[role=status]")).not.toBeNull()
-    expect(screen.queryByText("The curriculum was updated from EMIS.")).not.toBeInTheDocument()
-    expect(screen.getByText(/No curriculum is stored/)).toBeInTheDocument()
+      await waitUntil(() => error.mock.calls.length > 0, "no error shown")
+      expect(error).toHaveBeenCalledWith("No student of this group has a working EMIS login yet.")
+      expect(screen.queryByText("The curriculum was updated from EMIS.")).not.toBeInTheDocument()
+      expect(screen.getByText(/No curriculum is stored/)).toBeInTheDocument()
+    } finally {
+      error.mockRestore()
+    }
   })
 
   test("a failed sync re-enables the button and shows no success message", async () => {

@@ -516,7 +516,6 @@
       "sync": "EMIS bilan sinxronlash",
       "syncing": "Oʻquv reja EMIS dan yuklanmoqda…",
       "synced": "Oʻquv reja EMIS dan yangilandi.",
-      "noStudent": "Hech narsa sinxronlanmadi: guruhda oʻquv rejani olish uchun EMIS akkaunti ishlatiladigan talaba yoʻq.",
       "empty": "Bu guruh uchun oʻquv reja hali saqlanmagan. Yuklash uchun «EMIS bilan sinxronlash» tugmasini bosing."
     }
   },

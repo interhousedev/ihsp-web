@@ -516,7 +516,6 @@
       "sync": "Sync from EMIS",
       "syncing": "Loading the curriculum from EMIS…",
       "synced": "The curriculum was updated from EMIS.",
-      "noStudent": "Nothing was synced: the group has no student whose EMIS account can be used to fetch the curriculum.",
       "empty": "No curriculum is stored for this group yet. Use “Sync from EMIS” to load it."
     }
   },
