@@ -125,6 +125,47 @@
           "action": "Open settings"
         }
       }
+    },
+    "dashboard": {
+      "title": "My widgets",
+      "edit": "Edit",
+      "done": "Done",
+      "cancel": "Cancel",
+      "add": "Add widget",
+      "catalog": "Widget catalogue",
+      "editor": "Widget settings",
+      "size": "Size",
+      "color": "Colour",
+      "colorDefault": "Default colour",
+      "remove": "Remove",
+      "editTile": "Select {title}",
+      "conflict": "The widgets were changed on another device. Your edit was not saved; try again.",
+      "noLesson": "No more lessons today.",
+      "noLessons": "No lessons today.",
+      "noExams": "No controls soon.",
+      "homeworkDue": "to do",
+      "gpa": "GPA",
+      "cardsDue": "cards due",
+      "absences": "absences",
+      "anySubject": "your subject",
+      "kinds": {
+        "timetable": "Schedule",
+        "homework": "Tasks",
+        "marks": "Marks",
+        "exams": "Exams",
+        "flashcards_due": "Flash cards",
+        "notebook_prompt": "Study idea",
+        "attendance": "Attendance",
+        "clock_next_lesson": "Up next"
+      },
+      "notebookPrompt": {
+        "templates": {
+          "0": "Prepare for the midterm in {subject} with flash cards",
+          "1": "Quiz me on {subject}",
+          "2": "Summarise the last lesson of {subject}",
+          "3": "Explain the hardest topic of {subject} simply"
+        }
+      }
     }
   },
   "timetable": {

@@ -11,6 +11,8 @@ export const SOURCE_GROUP_ORDER: readonly SourceKind[] = [
   "text",
   "url",
   "web_result",
+  "library_item",
+  "library_notes",
 ]
 
 export type SourceGroup = { kind: SourceKind; sources: SourceItem[] }

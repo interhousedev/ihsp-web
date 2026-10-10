@@ -9,6 +9,13 @@ describe("groupSources", () => {
     expect(groups.map((group) => group.kind)).toEqual(["file", "chat", "lesson_resource", "text"])
   })
 
+  test("shows library books and notes instead of dropping them", () => {
+    const book = { ...sourceFile, id: "l1", kind: "library_item" as const }
+    const notes = { ...sourceFile, id: "l2", kind: "library_notes" as const }
+
+    expect(groupSources([notes, book]).map((group) => group.kind)).toEqual(["library_item", "library_notes"])
+  })
+
   test("keeps the position order inside a group", () => {
     const second = { ...sourceFile, id: "f2", position: 9 }
     const first = { ...sourceFile, id: "f1", position: 2 }

@@ -7,7 +7,7 @@ import { IconAlertTriangle, IconLoader2 } from "@tabler/icons-react"
 import { useFailureText } from "./use-failure-text"
 
 type SourceStatusLineProps = {
-  source: Pick<SourceItem, "status" | "failure">
+  source: Pick<SourceItem, "status" | "failure"> & { ai_unsupported?: boolean }
   className?: string
 }
 
@@ -20,9 +20,19 @@ export function SourceStatusLine({ source, className }: SourceStatusLineProps) {
   const failureText = useFailureText()
   const reason = failureText(source.failure)
 
+  const unsupported = source.ai_unsupported ? (
+    <span
+      data-testid="ai-unsupported"
+      className={cn("flex items-start gap-1 text-xs text-amber-700 dark:text-amber-400", className)}
+    >
+      <IconAlertTriangle aria-hidden className="mt-px size-3.5 shrink-0" />
+      <span className="min-w-0">{t("status.aiUnsupported")}</span>
+    </span>
+  ) : null
+
   switch (source.status) {
     case "ready":
-      return null
+      return unsupported
     case "pending":
     case "processing":
       return (
@@ -48,6 +58,11 @@ export function SourceStatusLine({ source, className }: SourceStatusLineProps) {
         </span>
       )
     case "stale":
-      return <span className={cn("text-muted-foreground text-xs", className)}>{t("status.stale")}</span>
+      return (
+        <>
+          <span className={cn("text-muted-foreground text-xs", className)}>{t("status.stale")}</span>
+          {unsupported}
+        </>
+      )
   }
 }

@@ -125,6 +125,47 @@
           "action": "Sozlamalarni ochish"
         }
       }
+    },
+    "dashboard": {
+      "title": "Mening vidjetlarim",
+      "edit": "Tahrirlash",
+      "done": "Tayyor",
+      "cancel": "Bekor qilish",
+      "add": "Vidjet qoʻshish",
+      "catalog": "Vidjetlar katalogi",
+      "editor": "Vidjet sozlamalari",
+      "size": "Oʻlcham",
+      "color": "Rang",
+      "colorDefault": "Standart rang",
+      "remove": "Oʻchirish",
+      "editTile": "Tanlash: {title}",
+      "conflict": "Vidjetlar boshqa qurilmada oʻzgartirilgan. Tahrir saqlanmadi, qayta urinib koʻring.",
+      "noLesson": "Bugun boshqa dars yoʻq.",
+      "noLessons": "Bugun dars yoʻq.",
+      "noExams": "Yaqin orada nazorat yoʻq.",
+      "homeworkDue": "bajarish kerak",
+      "gpa": "GPA",
+      "cardsDue": "takrorlanadigan kartochka",
+      "absences": "qoldirilgan dars",
+      "anySubject": "faningiz",
+      "kinds": {
+        "timetable": "Jadval",
+        "homework": "Vazifalar",
+        "marks": "Baholar",
+        "exams": "Nazoratlar",
+        "flashcards_due": "Kartochkalar",
+        "notebook_prompt": "Oʻqish gʻoyasi",
+        "attendance": "Davomat",
+        "clock_next_lesson": "Keyingi dars"
+      },
+      "notebookPrompt": {
+        "templates": {
+          "0": "“{subject}” fanidan oraliq nazoratga kartochkalar bilan tayyorlan",
+          "1": "“{subject}” fanidan bilimimni tekshir",
+          "2": "“{subject}” fanining oxirgi darsini qisqacha aytib ber",
+          "3": "“{subject}” fanining eng qiyin mavzusini oddiy tushuntir"
+        }
+      }
     }
   },
   "timetable": {

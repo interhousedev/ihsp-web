@@ -105,9 +105,13 @@
       "lms_step": "Kurs qadamlari",
       "note": "Qaydlar",
       "text": "Joylangan matn",
-      "url": "Veb-sahifalar"
+      "url": "Veb-sahifalar",
+      "web_result": "Qidiruv natijalari",
+      "library_item": "Kutubxona",
+      "library_notes": "Kutubxona qaydlari"
     },
     "status": {
+      "aiUnsupported": "AI ishlatmaydi: format qo‘llab-quvvatlanmaydi",
       "pending": "Kutilmoqda…",
       "processing": "Oʻqilmoqda…",
       "failed": "Oʻqib boʻlmadi",

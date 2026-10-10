@@ -22,7 +22,7 @@ function Field({ label, children }: { label: string; children: ReactNode }) {
   )
 }
 
-const TEXT_LAYOUTS: readonly Slide["layout"][] = ["title", "section", "bullets", "summary"]
+const TEXT_LAYOUTS: readonly Slide["layout"][] = ["title", "agenda", "section", "bullets", "summary"]
 
 /** Edit fields for the selected slide; which ones appear depends on its layout. The stage above shows the result. */
 export function SlideEditor({ slide, number, onPatch }: SlideEditorProps) {

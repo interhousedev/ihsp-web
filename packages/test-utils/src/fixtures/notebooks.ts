@@ -149,6 +149,8 @@ export const sourceFile: SourceItem = {
   stale: false,
   has_guide: true,
   label_ids: [],
+  modality: "text",
+  ai_unsupported: false,
   synced_at: "2026-10-07T04:00:00Z",
   created_at: "2026-10-07T03:59:00Z",
 }
@@ -169,6 +171,8 @@ export const sourceLesson: SourceItem = {
   stale: false,
   has_guide: true,
   label_ids: [],
+  modality: "text",
+  ai_unsupported: false,
   synced_at: "2026-10-07T04:01:00Z",
   created_at: "2026-10-07T04:00:00Z",
 }
@@ -189,6 +193,8 @@ export const sourceText: SourceItem = {
   stale: false,
   has_guide: false,
   label_ids: [],
+  modality: "text",
+  ai_unsupported: false,
   synced_at: "2026-10-07T04:02:00Z",
   created_at: "2026-10-07T04:02:00Z",
 }
@@ -210,6 +216,8 @@ export const sourceFailed: SourceItem = {
   stale: false,
   has_guide: false,
   label_ids: [],
+  modality: "text",
+  ai_unsupported: false,
   synced_at: null,
   created_at: "2026-10-07T04:03:00Z",
 }
@@ -231,6 +239,8 @@ export const sourceStale: SourceItem = {
   stale: true,
   has_guide: false,
   label_ids: [],
+  modality: "text",
+  ai_unsupported: false,
   synced_at: "2026-10-06T10:00:00Z",
   created_at: "2026-10-06T10:00:00Z",
 }

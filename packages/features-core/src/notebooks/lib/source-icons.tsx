@@ -2,6 +2,7 @@
 
 import type { SourceKind } from "@ihsp/api"
 import {
+  IconBook2,
   IconBooks,
   IconCards,
   IconClipboardText,
@@ -37,8 +38,11 @@ export function sourceIcon({ kind, title = "" }: IconInput): { Icon: Icon; class
     note: { Icon: IconNote, className: "text-yellow-600 dark:text-yellow-400" },
     url: { Icon: IconWorld, className: "text-sky-600 dark:text-sky-400" },
     web_result: { Icon: IconWorld, className: "text-sky-600 dark:text-sky-400" },
+    library_item: { Icon: IconBook2, className: "text-rose-600 dark:text-rose-400" },
+    library_notes: { Icon: IconNote, className: "text-rose-600 dark:text-rose-400" },
   }
-  return byKind[kind]
+  // A kind this build does not know yet must not crash the page.
+  return byKind[kind] ?? { Icon: IconFile, className: "text-muted-foreground" }
 }
 
 /** The kind icon as an element (decorative; the row carries the text). */

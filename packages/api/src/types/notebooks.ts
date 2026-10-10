@@ -14,6 +14,8 @@ export type SourceKind =
   | "note"
   | "url"
   | "web_result"
+  | "library_item"
+  | "library_notes"
 export type SourceStatus = "pending" | "processing" | "ready" | "failed" | "unavailable" | "stale"
 export type SourceFailure =
   | "unsupported_type"
@@ -56,6 +58,10 @@ export type SourceItem = {
   has_guide: boolean
   /** The topic labels of the source (`LabelItem.id`), at most 3. */
   label_ids: string[]
+  /** The input kind of the source: text, image, audio, video or pdf. */
+  modality: string
+  /** The model does not read this kind: the source stays in the notebook but is not sent to it. */
+  ai_unsupported: boolean
   synced_at: string | null
   created_at: string
 }
@@ -298,7 +304,7 @@ export type DataTableContent = {
 }
 export type Slide = {
   id: string
-  layout: "title" | "section" | "bullets" | "two_columns" | "quote" | "table" | "summary"
+  layout: "title" | "agenda" | "section" | "bullets" | "two_columns" | "quote" | "table" | "summary"
   title: string
   bullets?: string[]
   body?: string
@@ -337,7 +343,12 @@ export type ArtifactDetail = (
   | Detail<"infographic", InfographicContent>
   | Detail<"course_plan", CoursePlanContent>
   | Detail<"lesson_draft", LessonDraftContent>
-) & { refs_index: RefsIndex; source_map: Record<string, string>; progress_state: Record<string, unknown> | null; assets: AssetItem[] }
+) & {
+  refs_index: RefsIndex
+  source_map: Record<string, string>
+  progress_state: Record<string, unknown> | null
+  assets: AssetItem[]
+}
 
 // --- Additions: request bodies, query parameters and stream events (§ 4.3, § 3.3.6) ---
 
@@ -349,7 +360,15 @@ export type SourcesAddBody = { items: SourceInput[] }
 export type SourcePatchBody = { title?: string; selected?: boolean; body_md?: string }
 export type PassagesParams = { cursor?: string; limit?: number }
 export type PassageParams = { context?: number }
-export type NotebookMessageBody = { text: string; source_ids?: string[]; anchor?: Anchor; web_search?: boolean }
+/** `command` + `args` is a slash command that the server turns into the question; `text` may then be empty. */
+export type NotebookMessageBody = {
+  text: string
+  source_ids?: string[]
+  anchor?: Anchor
+  web_search?: boolean
+  command?: string
+  args?: string
+}
 export type NotebookFeedbackBody = { rating: "up" | "down"; comment?: string }
 export type SaveNoteBody = { title?: string }
 export type ArtifactsParams = { kind?: ArtifactKind; status?: ArtifactStatus }

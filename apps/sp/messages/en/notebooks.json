@@ -105,9 +105,13 @@
       "lms_step": "Course steps",
       "note": "Notes",
       "text": "Pasted text",
-      "url": "Web pages"
+      "url": "Web pages",
+      "web_result": "Web results",
+      "library_item": "Library",
+      "library_notes": "Library notes"
     },
     "status": {
+      "aiUnsupported": "Not used by the AI: unsupported format",
       "pending": "Waiting…",
       "processing": "Reading…",
       "failed": "Could not read",

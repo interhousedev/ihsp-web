@@ -258,6 +258,8 @@ function sourceFromInput(
     stale: false,
     has_guide: false,
     label_ids: [],
+    modality: "text",
+    ai_unsupported: false,
     synced_at: null,
     created_at: FIXTURE_NOW,
   }

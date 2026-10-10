@@ -2,6 +2,7 @@
 
 import type { Slide } from "@ihsp/api"
 import type { ComponentType } from "react"
+import { AgendaSlide } from "./layouts/agenda-slide"
 import { BulletsSlide } from "./layouts/bullets-slide"
 import type { LayoutProps } from "./layouts/layout-props"
 import { QuoteSlide } from "./layouts/quote-slide"
@@ -16,6 +17,7 @@ import { VisualHint } from "./visual-hint"
 
 const LAYOUTS: Record<Slide["layout"], ComponentType<LayoutProps>> = {
   title: TitleSlide,
+  agenda: AgendaSlide,
   section: SectionSlide,
   bullets: BulletsSlide,
   two_columns: TwoColumnsSlide,
@@ -34,7 +36,8 @@ type SlideViewProps = {
 
 /** One slide, drawn in HTML for its layout. Used for the stage, the thumbnails, the slideshow and the print stack. */
 export function SlideView({ slide, deckSubtitle, showHint = false, className }: SlideViewProps) {
-  const Layout = LAYOUTS[slide.layout]
+  // A layout this build does not know is drawn as plain bullets instead of crashing the viewer.
+  const Layout = LAYOUTS[slide.layout] ?? BulletsSlide
   const hint = showHint && slide.visual_hint ? <VisualHint hint={slide.visual_hint} /> : null
   return (
     <SlideFrame data-layout={slide.layout} className={className}>
