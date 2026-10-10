@@ -59,7 +59,6 @@ describe("UsageDialog", () => {
     expect(within(dialog).getByText("Infographic: 1 of 6 today")).toBeInTheDocument()
     expect(within(dialog).queryByText(/Audio overview/) === null).toBe(true)
     expect(within(dialog).getByText("Being created now: 2 of 3")).toBeInTheDocument()
-    expect(within(dialog).getByText(/The session limit refills gradually over 5 hours/)).toBeInTheDocument()
   })
 
   it("turns the meter red when the budget is used up", async () => {

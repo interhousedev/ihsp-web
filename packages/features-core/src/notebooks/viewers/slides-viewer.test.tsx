@@ -509,7 +509,8 @@ describe("SlidesViewer: print and copy", () => {
     window.print = print
     const { user } = renderViewer()
 
-    await user.click(screen.getByRole("button", { name: "Print / PDF" }))
+    await user.click(screen.getByRole("button", { name: "More actions" }))
+    await user.click(await screen.findByRole("menuitem", { name: "Print / PDF" }))
 
     expect(print).toHaveBeenCalledTimes(1)
   })
@@ -528,7 +529,8 @@ describe("SlidesViewer: print and copy", () => {
   it("copies the outline", async () => {
     const { user } = renderViewer()
 
-    await user.click(screen.getByRole("button", { name: "Copy outline" }))
+    await user.click(screen.getByRole("button", { name: "More actions" }))
+    await user.click(await screen.findByRole("menuitem", { name: "Copy outline" }))
 
     await waitFor(async () => expect(await navigator.clipboard.readText()).toContain("2. Two stages"))
     const text = await navigator.clipboard.readText()

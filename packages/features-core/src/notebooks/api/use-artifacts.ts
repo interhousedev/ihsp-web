@@ -23,6 +23,7 @@ import {
   type SourceItem,
 } from "@ihsp/api"
 import { useMutation, useQuery, useQueryClient, type QueryClient } from "@tanstack/react-query"
+import { useEffect } from "react"
 import { isActive } from "../lib/artifact-kinds"
 
 const POLL_MS = 3000
@@ -32,15 +33,26 @@ export function useArtifacts(notebookId: string) {
   return useQuery({
     ...getArtifactsQuery(notebookId),
     refetchInterval: (query) => ((query.state.data ?? []).some(isActive) ? POLL_MS : false),
+    // A hidden tab must not freeze a "generating" row; the list catches up while the user is away.
+    refetchIntervalInBackground: true,
+    refetchOnWindowFocus: (query) => (query.state.data ?? []).some(isActive),
   })
 }
 
 /** One artifact with its content; the server marks it viewed. */
 export function useArtifact(notebookId: string, artifactId: string | null) {
-  return useQuery({
+  const queryClient = useQueryClient()
+  const query = useQuery({
     ...getArtifactQuery(notebookId, artifactId ?? ""),
     enabled: artifactId !== null && artifactId !== "",
   })
+  const loadedId = query.data?.id
+  // Loading the detail marks it viewed on the server, and finishing may have happened while the list was not polled:
+  // read the list again so the "new" dot and the "generating" line follow.
+  useEffect(() => {
+    if (loadedId) void queryClient.invalidateQueries({ queryKey: keys.notebooks.artifacts(notebookId) })
+  }, [loadedId, notebookId, queryClient])
+  return query
 }
 
 function setListCache(queryClient: QueryClient, notebookId: string, update: (items: ArtifactItem[]) => ArtifactItem[]) {

@@ -9,7 +9,7 @@ import {
   type LabelsResponse,
 } from "@ihsp/api"
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query"
-import { useEffect, useRef } from "react"
+import { useEffect, useRef, useState } from "react"
 
 const POLL_MS = 2000
 
@@ -42,9 +42,12 @@ export function useAutoLabel(notebookId: string, onFinished?: (ok: boolean) => v
   const previous = useRef(status)
   const finished = useRef(onFinished)
   finished.current = onFinished
+  // A failed run left over from earlier is not an error on load; only a run seen going on in this session is.
+  const [runFailed, setRunFailed] = useState(false)
 
   const start = useMutation({
     mutationFn: () => postNotebookLabelsAuto(notebookId),
+    onMutate: () => setRunFailed(false),
     onSuccess: () => {
       queryClient.setQueryData<LabelsResponse>(keys.notebooks.labels(notebookId), (current) =>
         current ? { ...current, auto: { ...current.auto, status: "running" } } : current,
@@ -56,6 +59,7 @@ export function useAutoLabel(notebookId: string, onFinished?: (ok: boolean) => v
   useEffect(() => {
     if (previous.current === "running" && status !== "running") {
       void queryClient.invalidateQueries({ queryKey: keys.notebooks.sources(notebookId) })
+      setRunFailed(status === "failed")
       finished.current?.(status === "idle")
     }
     previous.current = status
@@ -64,7 +68,7 @@ export function useAutoLabel(notebookId: string, onFinished?: (ok: boolean) => v
   return {
     start: () => start.mutate(),
     busy: start.isPending || status === "running",
-    failed: start.isError || (status === "failed" && !start.isPending),
+    failed: start.isError || (runFailed && !start.isPending),
   }
 }
 

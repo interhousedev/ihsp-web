@@ -2,7 +2,7 @@
 
 import type { SourceItem, SourceKind } from "@ihsp/api"
 import { useT } from "@ihsp/i18n"
-import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@ihsp/ui"
+import { Collapsible, CollapsibleContent, CollapsibleTrigger, cn } from "@ihsp/ui"
 import { IconChevronDown } from "@ihsp/ui"
 import type { ReactNode } from "react"
 import { isUsable, selectionState } from "../lib/sort-sources"
@@ -45,7 +45,12 @@ export function SourceGroup({
     <Collapsible defaultOpen className="flex flex-col">
       <div className="flex items-center">
         {renaming ?? (
-          <CollapsibleTrigger className="text-muted-foreground hover:text-foreground focus-visible:ring-ring group/trigger flex min-h-11 min-w-0 flex-1 items-center gap-1 rounded-lg px-2 text-start text-xs font-medium tracking-wide uppercase outline-hidden focus-visible:ring-2 md:min-h-8">
+          <CollapsibleTrigger
+            className={cn(
+              "text-muted-foreground hover:text-foreground focus-visible:ring-ring group/trigger flex min-h-11 min-w-0 flex-1 items-center gap-1 rounded-lg px-2 text-start text-xs font-medium outline-hidden focus-visible:ring-2 md:min-h-8",
+              !topicName && "tracking-wide uppercase",
+            )}
+          >
             <IconChevronDown
               aria-hidden
               className="size-4 shrink-0 -rotate-90 transition-transform group-data-panel-open/trigger:rotate-0 motion-reduce:transition-none"

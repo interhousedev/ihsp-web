@@ -112,7 +112,8 @@ describe("MindMapViewer: editing", () => {
     drag(label("Calvin cycle"), 90, 90)
     expect(at(label("Calvin cycle"))).not.toEqual(before)
 
-    await user.click(screen.getByRole("button", { name: "Tidy up" }))
+    await user.click(screen.getByRole("button", { name: "More actions" }))
+    await user.click(await screen.findByRole("menuitem", { name: "Tidy up" }))
 
     expect(at(label("Calvin cycle"))).toEqual(before)
     await waitFor(() => expect(saved.at(-1)?.state.positions).toEqual({}))
@@ -211,7 +212,8 @@ describe("MindMapViewer: editing", () => {
     const saved = recordProgress()
     const { user } = renderViewer()
 
-    await user.click(screen.getByRole("button", { name: "Text block" }))
+    await user.click(screen.getByRole("button", { name: "More actions" }))
+    await user.click(await screen.findByRole("menuitem", { name: "Text block" }))
     const field = await screen.findByRole("textbox", { name: "Node text" })
     await user.clear(field)
     await user.type(field, "Remember this{Enter}")

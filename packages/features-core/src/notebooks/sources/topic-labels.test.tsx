@@ -10,7 +10,7 @@ import {
   setCourseWorkspaceReadOnly,
 } from "@ihsp/test-utils"
 import { screen, waitFor, within } from "@testing-library/react"
-import { http } from "msw"
+import { http, HttpResponse } from "msw"
 import { allowSlowRenders, renderNotebook } from "../test-support"
 import { SourcesPanel } from "./sources-panel"
 
@@ -182,6 +182,19 @@ describe("Sources panel: Auto-label", () => {
     await until(() => !(screen.getByRole("checkbox", { name: "Biology 10.pdf" }) as HTMLInputElement).checked)
 
     expect(screen.getByRole("button", { name: "Label sources by topic" })).toBeDisabled()
+  })
+
+  it("does not show an error on load for a failed run from before", async () => {
+    server.use(
+      http.get(apiUrl(`/v1/notebooks/${nbIds.notebook}/labels`), () =>
+        HttpResponse.json({ items: [], auto: { status: "failed", finished_at: null, error: "boom" } }),
+      ),
+    )
+    renderPanel()
+    await screen.findByRole("checkbox", { name: "Biology 10.pdf" })
+    await new Promise((resolve) => setTimeout(resolve, 100))
+
+    expect(screen.queryByRole("alert")).not.toBeInTheDocument()
   })
 
   it("says so when the run cannot be started", async () => {

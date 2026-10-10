@@ -1,11 +1,9 @@
 "use client"
 
 import { useT } from "@ihsp/i18n"
-import { Button, Icons } from "@ihsp/ui"
+import { Button, Icons, IconButton } from "@ihsp/ui"
+import { OverflowMenu } from "../overflow-menu"
 import { IconCopy, IconNotes, IconPlayerPlay, IconPrinter } from "@ihsp/ui"
-
-/** Icon-only 44 px buttons on phones (the text stays for screen readers), icon and text from `sm`. */
-const ICON_ON_PHONE = "min-h-11 min-w-11 sm:min-h-8 sm:min-w-0 md:min-h-8"
 
 export type DeckMode = "view" | "edit" | "revise"
 
@@ -19,7 +17,7 @@ type SlidesToolbarProps = {
   onPrint: () => void
 }
 
-/** Start slideshow, Edit, Revise, Speaker notes, Copy outline, Print / PDF. */
+/** One row: Start slideshow, Edit, Revise, Speaker notes, and a "⋯" menu with Copy outline and Print / PDF. */
 export function SlidesToolbar({
   mode,
   notesOpen,
@@ -31,7 +29,7 @@ export function SlidesToolbar({
 }: SlidesToolbarProps) {
   const t = useT("notebooks.slides")
   return (
-    <div role="toolbar" aria-label={t("slideshow")} className="flex flex-wrap items-center gap-2">
+    <div role="toolbar" aria-label={t("slideshow")} className="flex flex-nowrap items-center gap-2 overflow-x-auto [&>*]:shrink-0 px-3 py-1 md:px-0">
       <Button type="button" className="min-h-11 md:min-h-8" onClick={onStart}>
         <IconPlayerPlay aria-hidden />
         {t("start")}
@@ -56,32 +54,22 @@ export function SlidesToolbar({
         <Icons.sparkles aria-hidden />
         {t("revise")}
       </Button>
-      <Button
-        type="button"
+      <IconButton
+        icon={IconNotes}
         variant={notesOpen ? "secondary" : "outline"}
-        className={ICON_ON_PHONE}
+        className="size-11 md:size-8"
         aria-pressed={notesOpen}
         aria-keyshortcuts="N"
-        title={t("notes")}
+        aria-label={t("notes")}
         onClick={onToggleNotes}
-      >
-        <IconNotes aria-hidden />
-        <span className="sr-only sm:not-sr-only">{t("notes")}</span>
-      </Button>
-      <Button
-        type="button"
-        variant="outline"
-        className={ICON_ON_PHONE}
-        title={t("copyOutline")}
-        onClick={onCopyOutline}
-      >
-        <IconCopy aria-hidden />
-        <span className="sr-only sm:not-sr-only">{t("copyOutline")}</span>
-      </Button>
-      <Button type="button" variant="outline" className={ICON_ON_PHONE} title={t("print")} onClick={onPrint}>
-        <IconPrinter aria-hidden />
-        <span className="sr-only sm:not-sr-only">{t("print")}</span>
-      </Button>
+      />
+      <OverflowMenu
+        label={t("more")}
+        items={[
+          { key: "copy", label: t("copyOutline"), icon: IconCopy, onSelect: onCopyOutline },
+          { key: "print", label: t("print"), icon: IconPrinter, onSelect: onPrint },
+        ]}
+      />
     </div>
   )
 }

@@ -49,6 +49,12 @@ const transformOf = () => viewport()?.style.transform ?? ""
 const scaleOf = () => Number(/scale\(([\d.]+)\)/.exec(transformOf())?.[1])
 const buttons = (name: RegExp | string) => screen.getByRole("button", { name })
 
+/** Picks an entry of the toolbar's "⋯" menu. */
+async function more(user: { click: (element: Element) => Promise<void> }, name: string) {
+  await user.click(buttons("More actions"))
+  await user.click(await screen.findByRole("menuitem", { name }))
+}
+
 afterEach(() => {
   window.location.hash = ""
 })
@@ -119,11 +125,11 @@ describe("MindMapViewer: tree", () => {
   it("expands all and collapses all", async () => {
     const { user } = renderViewer()
 
-    await user.click(buttons("Expand all"))
+    await more(user, "Expand all")
     expect(screen.getAllByRole("treeitem")).toHaveLength(12)
     expect(node("CO2 fixation")).toBeInTheDocument()
 
-    await user.click(buttons("Collapse all"))
+    await more(user, "Collapse all")
     expect(screen.getAllByRole("treeitem")).toHaveLength(5)
     expect(node("Photosynthesis")).toHaveAttribute("aria-expanded", "true")
     expect(node("Calvin cycle")).toHaveAttribute("aria-expanded", "false")
@@ -330,10 +336,10 @@ describe("MindMapViewer: keyboard", () => {
 
   it("hands the tab stop back to the root when the focused branch disappears", async () => {
     const { user } = renderViewer()
-    await user.click(buttons("Expand all"))
+    await more(user, "Expand all")
     focusNode("Thylakoids")
 
-    await user.click(buttons("Collapse all"))
+    await more(user, "Collapse all")
 
     expect(node("Photosynthesis")).toHaveAttribute("tabindex", "0")
   })
@@ -444,7 +450,7 @@ describe("MindMapViewer: outline view", () => {
     expect(within(list).getByText("Chloroplast")).toBeInTheDocument()
     expect(within(list).queryByText("Thylakoids")).not.toBeInTheDocument()
 
-    await user.click(buttons("Expand all"))
+    await more(user, "Expand all")
     for (const label of mindMapContent.nodes.map((item) => item.label)) {
       expect(within(list).getAllByText(label).length).toBeGreaterThan(0)
     }
@@ -516,12 +522,26 @@ describe("MindMapViewer: outline view", () => {
   })
 })
 
+describe("MindMapViewer: toolbar", () => {
+  it("keeps one row and moves the secondary actions into a labelled menu", async () => {
+    const { user } = renderViewer()
+
+    expect(document.querySelector("[data-slot=mind-map-toolbar]")).toHaveClass("flex-nowrap")
+    expect(screen.queryByRole("button", { name: "Download image" })).not.toBeInTheDocument()
+    await user.click(buttons("More actions"))
+
+    expect(await screen.findByRole("menuitem", { name: "Download image" })).toBeInTheDocument()
+    expect(screen.getByRole("menuitem", { name: "Download text" })).toBeInTheDocument()
+    expect(screen.getByRole("menuitem", { name: "Expand all" })).toBeInTheDocument()
+  })
+})
+
 describe("MindMapViewer: downloads", () => {
   it("downloads the outline as Markdown", async () => {
     const spy = spyOn(download, "downloadText").mockImplementation(() => undefined)
     const { user } = renderViewer()
 
-    await user.click(buttons("Download outline (.md)"))
+    await more(user, "Download text")
 
     expect(spy).toHaveBeenCalledTimes(1)
     const [filename, content, mime] = spy.mock.calls[0] ?? []
@@ -548,7 +568,7 @@ describe("MindMapViewer: downloads", () => {
     try {
       const { user } = renderViewer()
 
-      await user.click(buttons("Download PNG"))
+      await more(user, "Download image")
 
       await waitFor(() => expect(spy).toHaveBeenCalledWith("photosynthesis.png", blob))
       expect(drawn).toHaveLength(1)
@@ -564,7 +584,7 @@ describe("MindMapViewer: downloads", () => {
     const spy = spyOn(download, "downloadBlob").mockImplementation(() => undefined)
     const { user } = renderViewer()
 
-    await user.click(buttons("Download PNG"))
+    await more(user, "Download image")
 
     expect(await screen.findByRole("alert")).toHaveTextContent("Could not create the PNG in this browser.")
     expect(spy).not.toHaveBeenCalled()
@@ -579,7 +599,7 @@ describe("MindMapViewer: downloads", () => {
     const { user } = renderViewer()
     const writeText = spyOn(navigator.clipboard, "writeText").mockResolvedValue(undefined)
 
-    await user.click(buttons("Copy outline"))
+    await more(user, "Copy outline")
 
     await waitFor(() => expect(writeText).toHaveBeenCalledTimes(1))
     expect(String(writeText.mock.calls[0]?.[0])).toContain("- Photosynthesis\n  - Chloroplast")
@@ -624,7 +644,7 @@ describe("MindMapViewer: a 60-node map", () => {
     expect(screen.getAllByRole("treeitem")).toHaveLength(7)
 
     const started = performance.now()
-    await user.click(buttons("Expand all"))
+    await more(user, "Expand all")
 
     expect(screen.getAllByRole("treeitem")).toHaveLength(60)
     expect(performance.now() - started).toBeLessThan(5000)

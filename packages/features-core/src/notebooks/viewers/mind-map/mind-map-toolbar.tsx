@@ -1,7 +1,7 @@
 "use client"
 
 import { useT } from "@ihsp/i18n"
-import { Button, cn } from "@ihsp/ui"
+import { IconButton, cn } from "@ihsp/ui"
 import {
   IconArrowsMaximize,
   IconArrowsMinimize,
@@ -15,7 +15,8 @@ import {
   IconZoomIn,
   IconZoomOut,
 } from "@ihsp/ui"
-import type { ComponentType, SVGProps } from "react"
+import type { ComponentProps, ComponentType, SVGProps } from "react"
+import { OverflowMenu, type OverflowItem } from "../overflow-menu"
 
 export type MindMapView = "map" | "outline"
 
@@ -46,20 +47,16 @@ type ToolButtonProps = {
   pressed?: boolean
 }
 
-function ToolButton({ label, icon: Icon, onClick, pressed }: ToolButtonProps) {
+function ToolButton({ label, icon, onClick, pressed }: ToolButtonProps) {
   return (
-    <Button
-      type="button"
+    <IconButton
+      icon={icon as ComponentProps<typeof IconButton>["icon"]}
       variant={pressed ? "secondary" : "ghost"}
-      size="icon"
       className="size-11 md:size-8"
       aria-label={label}
-      title={label}
       aria-pressed={pressed}
       onClick={onClick}
-    >
-      <Icon aria-hidden />
-    </Button>
+    />
   )
 }
 
@@ -81,16 +78,29 @@ export function MindMapToolbar({
   onAddBlock,
 }: MindMapToolbarProps) {
   const t = useT("notebooks")
+  const items: OverflowItem[] = [
+    ...(view === "map"
+      ? [
+          { key: "add", label: t("mindmap.addBlock"), icon: IconNote, onSelect: onAddBlock },
+          { key: "tidy", label: t("mindmap.tidy"), icon: IconArrowsMinimize, onSelect: onTidy },
+        ]
+      : []),
+    { key: "expand", label: t("mindmap.expandAll"), icon: IconArrowsMaximize, onSelect: onExpandAll },
+    { key: "collapse", label: t("mindmap.collapseAll"), icon: IconFoldUp, onSelect: onCollapseAll },
+    { key: "png", label: t("mindmap.download"), icon: IconDownload, onSelect: onDownloadPng },
+    { key: "md", label: t("mindmap.downloadOutline"), icon: IconFileText, onSelect: onDownloadOutline },
+    ...(showCopy ? [{ key: "copy", label: t("mindmap.copyOutline"), icon: IconCopy, onSelect: onCopyOutline }] : []),
+  ]
   return (
     <div
       role="group"
       aria-label={t("mindmap.toolbar")}
       data-slot="mind-map-toolbar"
       className={cn(
-        "bg-background/90 flex flex-wrap items-center gap-0.5 rounded-xl border p-1 shadow-sm backdrop-blur",
+        "bg-background/90 flex flex-nowrap items-center gap-0.5 rounded-xl border p-1.5 md:p-1 shadow-sm backdrop-blur",
         floating
-          ? "absolute end-3 top-3 z-10 max-w-[calc(100%-1.5rem)] justify-end"
-          : "sticky top-0 z-10 m-2 w-fit max-w-[calc(100%-1rem)] self-end",
+          ? "absolute end-3 top-3 z-10 max-w-[calc(100%-1.5rem)] justify-end overflow-x-auto"
+          : "sticky top-0 z-10 m-2 w-fit max-w-[calc(100%-1rem)] self-end overflow-x-auto",
       )}
     >
       {view === "map" ? (
@@ -98,21 +108,15 @@ export function MindMapToolbar({
           <ToolButton label={t("mindmap.fit")} icon={IconFocusCentered} onClick={onFit} />
           <ToolButton label={t("mindmap.zoomIn")} icon={IconZoomIn} onClick={onZoomIn} />
           <ToolButton label={t("mindmap.zoomOut")} icon={IconZoomOut} onClick={onZoomOut} />
-          <ToolButton label={t("mindmap.addBlock")} icon={IconNote} onClick={onAddBlock} />
-          <ToolButton label={t("mindmap.tidy")} icon={IconArrowsMinimize} onClick={onTidy} />
         </>
       ) : null}
-      <ToolButton label={t("mindmap.expandAll")} icon={IconArrowsMaximize} onClick={onExpandAll} />
-      <ToolButton label={t("mindmap.collapseAll")} icon={IconFoldUp} onClick={onCollapseAll} />
       <ToolButton
         label={t("mindmap.listView")}
         icon={IconListTree}
         onClick={onToggleView}
         pressed={view === "outline"}
       />
-      <ToolButton label={t("mindmap.download")} icon={IconDownload} onClick={onDownloadPng} />
-      <ToolButton label={t("mindmap.downloadOutline")} icon={IconFileText} onClick={onDownloadOutline} />
-      {showCopy ? <ToolButton label={t("mindmap.copyOutline")} icon={IconCopy} onClick={onCopyOutline} /> : null}
+      <OverflowMenu label={t("mindmap.more")} items={items} />
     </div>
   )
 }

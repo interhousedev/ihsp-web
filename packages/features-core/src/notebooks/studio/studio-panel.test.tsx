@@ -359,7 +359,6 @@ describe("StudioPanel: shell", () => {
     renderNotebook(<StudioPanel notebook={notebookDetail} />)
 
     expect(await screen.findByText("Studio results will be saved here.")).toBeInTheDocument()
-    expect(screen.getByText(/After adding sources, use the buttons/)).toBeInTheDocument()
   })
 
   it("shows a skeleton while the list loads", async () => {

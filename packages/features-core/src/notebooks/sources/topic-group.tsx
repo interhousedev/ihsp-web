@@ -1,6 +1,7 @@
 "use client"
 
 import type { SourceItem } from "@ihsp/api"
+import { labelEmoji } from "../lib/label-emoji"
 import { useT } from "@ihsp/i18n"
 import { ConfirmDialog } from "@ihsp/ui"
 import { useState, type ReactNode } from "react"
@@ -28,7 +29,7 @@ export function TopicGroup({ notebookId, group, readOnly, onToggleGroup, renderR
   const rename = useRenameLabel(notebookId)
   const remove = useDeleteLabel(notebookId)
   const { label, sources } = group
-  const name = label ? `${label.emoji} ${label.name}` : t("label.other")
+  const name = label ? `${labelEmoji(label)} ${label.name}` : t("label.other")
 
   function confirmDelete() {
     if (!label) return
