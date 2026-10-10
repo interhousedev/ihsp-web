@@ -19,6 +19,7 @@ import { useWorkspace } from "../workspace-context"
 import { ItemMenu } from "./item-menu"
 import { ItemStatus } from "./item-status"
 import { RenameArtifactDialog } from "./rename-artifact-dialog"
+import { useDownloadArtifact } from "./use-download-artifact"
 import { useKindLabel } from "./use-kind-label"
 import { ViewPromptDialog } from "./view-prompt-dialog"
 
@@ -43,6 +44,7 @@ export function StudioItem({ item, notebookId }: StudioItemProps) {
   const remove = useDeleteArtifact(notebookId)
   const addAsSource = useSaveArtifactAsSource(notebookId)
   const saveSet = useSaveFlashcardSet(notebookId)
+  const download = useDownloadArtifact(notebookId)
 
   const fallback = kindLabel(item)
   const title = item.title || fallback
@@ -124,6 +126,7 @@ export function StudioItem({ item, notebookId }: StudioItemProps) {
         onSaveSet={() =>
           saveSet.mutate(item.id, { onSuccess: () => toast.success(t("studio.setSaved")), onError: fail })
         }
+        onDownload={(format) => download.mutate({ artifactId: item.id, title, format }, { onError: fail })}
         onCancel={() => cancel.mutate(item.id, { onError: fail })}
         onDelete={() => setDialog("delete")}
       />

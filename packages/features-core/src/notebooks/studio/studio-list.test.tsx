@@ -189,7 +189,7 @@ describe("StudioList: item menu", () => {
 
     await openMenu(user, "Photosynthesis: conspect")
 
-    expect(menuItemNames()).toEqual(["Rename", "View prompt", "Add as source", "Delete"])
+    expect(menuItemNames()).toEqual(["Rename", "View prompt", "Add as source", "Download .docx", "Delete"])
   })
 
   it("renames an item", async () => {

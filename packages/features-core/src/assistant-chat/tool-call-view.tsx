@@ -3,6 +3,7 @@
 import type { ToolCallView as ToolCall } from "@ihsp/api"
 import { IconSearch } from "@tabler/icons-react"
 import { ApprovalCard } from "./approval-card"
+import { DocumentCard } from "./document-card"
 
 type ToolCallViewProps = {
   call: ToolCall
@@ -13,6 +14,7 @@ type ToolCallViewProps = {
 
 /** Read tools are one-line "Looked up …" notes (AI-2); write tools are approval cards. */
 export function ToolCallView({ call, busy, onApprove, onReject }: ToolCallViewProps) {
+  if (call.document) return <DocumentCard document={call.document} />
   if (call.access === "read" || (!call.preview && call.status === "done")) {
     return (
       <p className="text-muted-foreground flex items-center gap-1.5 text-xs italic" data-tool-note={call.tool}>

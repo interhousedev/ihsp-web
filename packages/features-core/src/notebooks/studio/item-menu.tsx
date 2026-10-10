@@ -13,6 +13,7 @@ import {
 import { IconDotsVertical } from "@tabler/icons-react"
 import Link from "next/link"
 import { isActive } from "../lib/artifact-kinds"
+import { documentFormat, type DocumentFormat } from "./document-format"
 
 export type ItemMenuProps = {
   item: ArtifactItem
@@ -22,6 +23,8 @@ export type ItemMenuProps = {
   onViewPrompt: () => void
   onAddAsSource: () => void
   onSaveSet: () => void
+  /** Download the output as an Office file. */
+  onDownload?: (format: DocumentFormat) => void
   onCancel: () => void
   onDelete: () => void
 }
@@ -36,11 +39,13 @@ export function ItemMenu({
   onViewPrompt,
   onAddAsSource,
   onSaveSet,
+  onDownload,
   onCancel,
   onDelete,
 }: ItemMenuProps) {
   const t = useT("notebooks")
   const ready = item.status === "ready"
+  const format = ready && onDownload ? documentFormat(item.kind) : null
 
   return (
     <DropdownMenu>
@@ -69,6 +74,11 @@ export function ItemMenu({
         {ready && item.kind === "report" ? (
           <DropdownMenuItem className={ITEM_CLASS} onClick={onAddAsSource}>
             {t("item.addAsSource")}
+          </DropdownMenuItem>
+        ) : null}
+        {format ? (
+          <DropdownMenuItem className={ITEM_CLASS} onClick={() => onDownload?.(format)}>
+            {t("documents.download", { format })}
           </DropdownMenuItem>
         ) : null}
         {ready && item.kind === "flashcards" ? (
