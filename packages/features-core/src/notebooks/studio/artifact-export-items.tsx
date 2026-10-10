@@ -3,7 +3,7 @@
 import { type ArtifactItem } from "@ihsp/api"
 import { useT } from "@ihsp/i18n"
 import { DropdownMenuItem, DropdownMenuSeparator } from "@ihsp/ui"
-import { exportFormat } from "./document-format"
+import { downloadFormats } from "./document-format"
 import { useArtifactExport } from "./use-artifact-export"
 
 type ArtifactExportItemsProps = {
@@ -13,18 +13,20 @@ type ArtifactExportItemsProps = {
 
 const ITEM_CLASS = "min-h-11 md:min-h-8"
 
-/** Download, Share and Add to my files for a ready output: put inside a `DropdownMenuContent`. */
+/** Download (the native file, and an optional second one), Share (a public link) and Add to my files for a ready output: put inside a `DropdownMenuContent`. */
 export function ArtifactExportItems({ notebookId, item }: ArtifactExportItemsProps) {
   const t = useT("notebooks")
   const actions = useArtifactExport(notebookId)
-  const format = exportFormat(item.kind)
-  if (item.status !== "ready" || !format) return null
+  const formats = downloadFormats(item.kind)
+  if (item.status !== "ready" || formats.length === 0) return null
   return (
     <>
       <DropdownMenuSeparator />
-      <DropdownMenuItem className={ITEM_CLASS} onClick={() => void actions.download(item)}>
-        {t("export.download", { format })}
-      </DropdownMenuItem>
+      {formats.map((format) => (
+        <DropdownMenuItem key={format} className={ITEM_CLASS} onClick={() => void actions.download(item, format)}>
+          {t("export.download", { format })}
+        </DropdownMenuItem>
+      ))}
       <DropdownMenuItem className={ITEM_CLASS} onClick={() => void actions.share(item)}>
         {t("export.share")}
       </DropdownMenuItem>

@@ -21,7 +21,7 @@ export type ResourceItem = {
 export type LinkItem = {
   id: string
   slug: string
-  kind: "url" | "file" | "chat" | "flashcard_set"
+  kind: "url" | "file" | "chat" | "flashcard_set" | "artifact"
   /** Full short or share URL. */
   url: string
   target_url: string | null
@@ -53,7 +53,7 @@ export type LinkCreateBody = { kind: "url" | "file"; target_url?: string; file_i
 export type MyLinksParams = PageParams & { kind?: LinkItem["kind"]; target_id?: string }
 
 export type ShareCreateBody = {
-  kind: "chat" | "flashcard_set"
+  kind: "chat" | "flashcard_set" | "artifact"
   target_id: string
   share_mode?: "snapshot" | "live"
   expires_at?: string

@@ -235,6 +235,7 @@ export const attendanceSheet: AttendanceSheet = {
     group_name: "2TN2",
     subgroup_unset: student.subgroup === null,
     absent: false,
+    late: false,
     excused: false,
     excuse_comment: null,
     counted: student.subgroup !== null,
@@ -311,10 +312,12 @@ export const journal: Journal = {
     cells: physicsLessons.map((lesson) => ({
       lesson_id: lesson.id,
       absent: index === 1 && lesson.date === "2026-10-05",
+      late: false,
       excused: false,
       marks: index === 0 && lesson.date === "2026-10-05" ? [4] : [],
     })),
     absences: index === 1 ? 1 : 0,
+    lates: 0,
     semester_mark: index === 0 ? 4.8 : null,
   })),
 }

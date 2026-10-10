@@ -1,20 +1,22 @@
 "use client"
 
-import { getArtifactDownload, postArtifactSaveToFiles, postLinks, type ArtifactItem } from "@ihsp/api"
+import { getArtifact, getArtifactDownload, postArtifactSaveToFiles, postShares, type ArtifactItem } from "@ihsp/api"
 import { useT } from "@ihsp/i18n"
 import { useQueryClient } from "@tanstack/react-query"
 import { useCallback } from "react"
 import { toast } from "sonner"
 import { copyText } from "../lib/download"
 import { useNotebookErrorMessage } from "../lib/use-notebook-error"
-import { documentFileName, exportFormat, saveBlob } from "./document-format"
+import { artifactPng } from "./artifact-png"
+import { documentFileName, downloadFormats, filesFormat, saveBlob, type DownloadFormat } from "./document-format"
 
 type Target = Pick<ArtifactItem, "id" | "kind"> & { title: string }
 
 /**
- * Download, share and "add to my files" of a ready output. A download fetches the file; "add to my files" stores a
- * copy through the files module; sharing stores that copy and makes a short link to it (the links module), which is
- * copied to the clipboard. Every action answers with a toast.
+ * Download, share and "add to my files" of a ready output. A download fetches the native file (the browser draws the
+ * PNG of a mind map or an infographic); "add to my files" stores a copy through the files module; sharing makes a public
+ * read-only link to the output itself (the links module, revocable in "My links"), which is copied to the clipboard.
+ * Every action answers with a toast.
  */
 export function useArtifactExport(notebookId: string) {
   const t = useT("notebooks")
@@ -23,11 +25,15 @@ export function useArtifactExport(notebookId: string) {
   const fail = useCallback((error: unknown) => toast.error(errorMessage(error)), [errorMessage])
 
   const download = useCallback(
-    async ({ id, kind, title }: Target) => {
-      const format = exportFormat(kind)
+    async ({ id, kind, title }: Target, wanted?: DownloadFormat) => {
+      const format = wanted ?? downloadFormats(kind)[0]
       if (!format) return
       try {
-        saveBlob(documentFileName(title, format), await getArtifactDownload(notebookId, id, format))
+        const blob =
+          format === "png"
+            ? await artifactPng(await getArtifact(notebookId, id))
+            : await getArtifactDownload(notebookId, id, format)
+        saveBlob(documentFileName(title, format), blob)
       } catch (error) {
         fail(error)
       }
@@ -37,7 +43,7 @@ export function useArtifactExport(notebookId: string) {
 
   const saveToFiles = useCallback(
     async ({ id, kind }: Target) => {
-      const format = exportFormat(kind)
+      const format = filesFormat(kind)
       if (!format) return
       try {
         const file = await postArtifactSaveToFiles(notebookId, id, { format })
@@ -53,22 +59,16 @@ export function useArtifactExport(notebookId: string) {
   )
 
   const share = useCallback(
-    async ({ id, kind }: Target) => {
-      const format = exportFormat(kind)
-      if (!format) return
+    async ({ id }: Target) => {
       try {
-        const file = await postArtifactSaveToFiles(notebookId, id, { format })
-        const link = await postLinks({ kind: "file", file_id: file.id })
-        void queryClient.invalidateQueries({
-          queryKey: ["me", "files"] as const,
-        })
+        const link = await postShares({ kind: "artifact", target_id: id })
         if (await copyText(link.url)) toast.success(t("export.linkCopied"))
         else toast.success(link.url)
       } catch (error) {
         fail(error)
       }
     },
-    [notebookId, queryClient, t, fail],
+    [t, fail],
   )
 
   return { download, saveToFiles, share }

@@ -306,7 +306,7 @@ describe("StudioList: item menu", () => {
       "Rename",
       "View prompt",
       "Save as flash card set",
-      "Download .md",
+      "Download .csv",
       "Share",
       "Add to my files",
       "Delete",

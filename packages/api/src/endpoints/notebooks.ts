@@ -547,11 +547,11 @@ export const getArtifactQuery = (id: string, artifactId: string) =>
     queryFn: ({ signal }) => getArtifact(id, artifactId, { signal }),
   });
 
-/** GET /v1/notebooks/{id}/artifacts/{aid}/download — a ready report (.docx), table (.xlsx), deck (.pptx), else Markdown; `json` for any. */
+/** GET /v1/notebooks/{id}/artifacts/{aid}/download — a ready report or quiz (.docx), table (.xlsx), deck (.pptx), flash cards (.csv), else Markdown; `json` for any. */
 export function getArtifactDownload(
   id: string,
   artifactId: string,
-  format?: "docx" | "xlsx" | "pptx" | "md" | "json",
+  format?: "docx" | "xlsx" | "pptx" | "csv" | "md" | "json",
   opts?: RequestOptions,
 ): Promise<Blob> {
   return api.get<Blob>(

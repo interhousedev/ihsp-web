@@ -20,7 +20,7 @@ type QuestionViewProps = {
   onChoose: (optionId: string) => void
   onCheck: () => void
   onHint: () => void
-  onExplain: () => void
+  onExplain?: (() => void) | undefined
 }
 
 /** One question: the text, a hint, the options, Check (multiple choice) and, once answered, the feedback. */
