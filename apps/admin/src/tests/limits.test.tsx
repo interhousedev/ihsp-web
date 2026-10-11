@@ -13,7 +13,7 @@ describe("limits and usage", () => {
     renderAdmin(<LimitsPage />, { route: "/limits/" })
 
     expect(await screen.findByText("Cost this month")).toBeInTheDocument()
-    expect(screen.getByText("Daily cost by feature")).toBeInTheDocument()
+    expect(await screen.findByText("Daily cost by feature")).toBeInTheDocument()
     expect(screen.getByText("Cost by model")).toBeInTheDocument()
     expect(screen.getByText("Cost by role")).toBeInTheDocument()
     expect(screen.getByText("Aziza Karimova")).toBeInTheDocument()

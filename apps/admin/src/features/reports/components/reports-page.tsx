@@ -1,11 +1,14 @@
 "use client"
 
 import { useT } from "@ihsp/i18n"
-import { PageContainer, Tabs, TabsList, TabsTrigger } from "@ihsp/ui"
+import { PageContainer, Skeleton, Tabs, TabsList, TabsTrigger } from "@ihsp/ui"
 import { parseAsStringLiteral, useQueryState } from "nuqs"
-import { AcademicTab } from "./academic-tab"
+import { lazy, Suspense } from "react"
 import { HealthTab } from "./health-tab"
-import { UsageTab } from "./usage-tab"
+
+/** The two chart tabs carry Recharts, so they arrive in their own chunks when first opened. */
+const UsageTab = lazy(() => import("./usage-tab").then((m) => ({ default: m.UsageTab })))
+const AcademicTab = lazy(() => import("./academic-tab").then((m) => ({ default: m.AcademicTab })))
 
 const TABS = ["health", "usage", "academic"] as const
 
@@ -28,7 +31,13 @@ export function ReportsPage() {
           ))}
         </TabsList>
       </Tabs>
-      {tab === "health" ? <HealthTab /> : tab === "usage" ? <UsageTab /> : <AcademicTab />}
+      {tab === "health" ? (
+        <HealthTab />
+      ) : (
+        <Suspense fallback={<Skeleton className="h-72 w-full rounded-xl" />}>
+          {tab === "usage" ? <UsageTab /> : <AcademicTab />}
+        </Suspense>
+      )}
     </PageContainer>
   )
 }

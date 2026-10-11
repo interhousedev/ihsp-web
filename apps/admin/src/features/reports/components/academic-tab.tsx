@@ -2,16 +2,8 @@
 
 import { getAdminGroupsQuery, getAdminGroupsStatsQuery, getAdminInsightsQuery } from "@ihsp/api"
 import { useT } from "@ihsp/i18n"
-import {
-  Card,
-  CardContent,
-  CardHeader,
-  CardTitle,
-  ChartContainer,
-  ChartTooltip,
-  ChartTooltipContent,
-  type ChartConfig,
-} from "@ihsp/ui"
+import { Card, CardContent, CardHeader, CardTitle } from "@ihsp/ui"
+import { ChartContainer, ChartTooltip, ChartTooltipContent, type ChartConfig } from "@ihsp/ui/chart"
 import { useQueries, useQuery } from "@tanstack/react-query"
 import { Bar, BarChart, CartesianGrid, Cell, XAxis, YAxis } from "recharts"
 import { QueryState } from "../../shared/components/query-state"

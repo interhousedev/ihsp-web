@@ -50,8 +50,8 @@ describe("reports page", () => {
 
     expect(await screen.findByText("5.0 GB")).toBeInTheDocument()
     expect(screen.getByText("321 files")).toBeInTheDocument()
-    expect(screen.getByRole("img", { name: "Active users per day" })).toBeInTheDocument()
-    expect(screen.getByRole("img", { name: "Assistant tokens per day" })).toBeInTheDocument()
+    expect(await screen.findByRole("img", { name: "Active users per day" })).toBeInTheDocument()
+    expect(await screen.findByRole("img", { name: "Assistant tokens per day" })).toBeInTheDocument()
   })
 
   test("the academic tab shows the marks distribution", async () => {

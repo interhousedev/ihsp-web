@@ -1,31 +1,13 @@
 "use client"
 
-import type { RecordBook } from "@ihsp/api"
 import { useT } from "@ihsp/i18n"
-import { ChartContainer, ChartTooltip, ChartTooltipContent, MarkBadge, Stat, type ChartConfig } from "@ihsp/ui"
-import { CartesianGrid, Line, LineChart, XAxis, YAxis } from "recharts"
+import { MarkBadge, Skeleton, Stat } from "@ihsp/ui"
+import { lazy, Suspense } from "react"
 import { QueryState } from "../../shared/components/query-state"
 import { useRecordBook } from "../hooks/use-grades"
 
-function GpaChart({ book }: { book: RecordBook }) {
-  const t = useT("grades.record")
-  const config = { gpa: { label: t("gpa"), color: "var(--chart-1)" } } satisfies ChartConfig
-  const data = book.semesters.map((semester) => ({
-    semester: t("semesterShort", { number: semester.semester }),
-    gpa: semester.gpa,
-  }))
-  return (
-    <ChartContainer config={config} className="h-56 w-full" role="img" aria-label={t("chartLabel")}>
-      <LineChart data={data} margin={{ left: 0, right: 12, top: 8 }}>
-        <CartesianGrid vertical={false} />
-        <XAxis dataKey="semester" tickLine={false} axisLine={false} />
-        <YAxis domain={[2, 5]} tickCount={4} width={28} tickLine={false} axisLine={false} />
-        <ChartTooltip content={<ChartTooltipContent />} />
-        <Line dataKey="gpa" type="monotone" stroke="var(--color-gpa)" strokeWidth={2} dot connectNulls />
-      </LineChart>
-    </ChartContainer>
-  )
-}
+/** Recharts arrives in its own chunk when the tab shows a book; a box of the chart's height holds its place. */
+const GpaChart = lazy(() => import("./gpa-chart"))
 
 /** The record book (WEB-15, UF-WEB-11): a GPA line across semesters and the marks of every semester. */
 export function RecordBookTab() {
@@ -39,7 +21,9 @@ export function RecordBookTab() {
             <h2 id="record-chart" className="text-base font-semibold">
               {t("chartTitle")}
             </h2>
-            <GpaChart book={book} />
+            <Suspense fallback={<Skeleton className="h-56 w-full" />}>
+              <GpaChart book={book} />
+            </Suspense>
             <ul className="grid grid-cols-2 gap-2 md:grid-cols-4" aria-label={t("gpaList")}>
               {book.semesters.map((semester) => (
                 <li key={semester.semester} data-testid="record-semester-gpa">

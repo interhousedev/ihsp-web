@@ -2,17 +2,8 @@
 
 import { getAdminInsightsQuery, type DayCount } from "@ihsp/api"
 import { useFormatters, useT } from "@ihsp/i18n"
-import {
-  Card,
-  CardContent,
-  CardHeader,
-  CardTitle,
-  ChartContainer,
-  ChartTooltip,
-  ChartTooltipContent,
-  Stat,
-  type ChartConfig,
-} from "@ihsp/ui"
+import { Card, CardContent, CardHeader, CardTitle, Stat } from "@ihsp/ui"
+import { ChartContainer, ChartTooltip, ChartTooltipContent, type ChartConfig } from "@ihsp/ui/chart"
 import { useQuery } from "@tanstack/react-query"
 import { Area, AreaChart, Bar, BarChart, CartesianGrid, XAxis, YAxis } from "recharts"
 import { QueryState } from "../../shared/components/query-state"

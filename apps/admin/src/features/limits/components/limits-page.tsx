@@ -2,14 +2,18 @@
 
 import { getAdminAiUsageQuery } from "@ihsp/api"
 import { useT } from "@ihsp/i18n"
-import { Button, PageContainer } from "@ihsp/ui"
+import { Button, PageContainer, Skeleton } from "@ihsp/ui"
 import { useQuery } from "@tanstack/react-query"
 import { parseAsStringLiteral, useQueryState } from "nuqs"
+import { lazy, Suspense } from "react"
 import { QueryState } from "../../shared/components/query-state"
 import { rangeOf, RANGES, todayIso, type RangeKey } from "../utils"
 import { ExtensionsSection } from "./extensions-section"
 import { LimitsEditor } from "./limits-editor"
-import { DailyCostCard, DistributionCard, TopUsersCard, UsageSummary } from "./usage-report"
+import { DistributionCard, TopUsersCard, UsageSummary } from "./usage-report"
+
+/** The only card with a chart: Recharts arrives in its own chunk once the usage rows are there. */
+const DailyCostCard = lazy(() => import("./daily-cost-card"))
 
 /** Limits & usage: what the AI costs and who uses it, the limits (with per-user extensions). */
 export function LimitsPage() {
@@ -42,7 +46,11 @@ export function LimitsPage() {
       </QueryState>
       <div className="grid gap-4 lg:grid-cols-2">
         <QueryState query={daily} rows={2}>
-          {(usage) => <DailyCostCard rows={usage.rows} />}
+          {(usage) => (
+            <Suspense fallback={<Skeleton className="h-72 w-full rounded-xl" />}>
+              <DailyCostCard rows={usage.rows} />
+            </Suspense>
+          )}
         </QueryState>
         <QueryState query={models} rows={2}>
           {(usage) => <DistributionCard title={t("charts.byModel")} rows={usage.rows} label={(key) => key} />}

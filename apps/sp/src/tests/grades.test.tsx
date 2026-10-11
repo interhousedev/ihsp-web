@@ -118,7 +118,7 @@ describe("record book", () => {
       expect.stringContaining("3.90"),
       expect.stringContaining("4.10"),
     ])
-    expect(screen.getByRole("img", { name: "Line chart of GPA by semester" })).toBeInTheDocument()
+    expect(await screen.findByRole("img", { name: "Line chart of GPA by semester" })).toBeInTheDocument()
     expect(screen.getAllByRole("heading", { level: 3 })).toHaveLength(4)
   })
 })
