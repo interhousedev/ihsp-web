@@ -18,6 +18,9 @@ export function DataTablePagination<TData>({
   ...props
 }: DataTablePaginationProps<TData>) {
   const t = useT()
+  const pageCount = table.getPageCount()
+  const countKnown = pageCount !== -1
+  const page = table.getState().pagination.pageIndex + 1
   return (
     <div
       className={cn("flex w-full flex-wrap items-center justify-between gap-2 overflow-auto p-1 sm:gap-8", className)}
@@ -31,9 +34,9 @@ export function DataTablePagination<TData>({
               total: table.getFilteredRowModel().rows.length,
             })}
           </>
-        ) : (
+        ) : countKnown ? (
           <>{t("table.total", { total: table.getFilteredRowModel().rows.length })}</>
-        )}
+        ) : null}
       </div>
       <div className="flex items-center gap-2 sm:gap-6 lg:gap-8">
         <div className="hidden items-center space-x-2 sm:flex">
@@ -44,7 +47,10 @@ export function DataTablePagination<TData>({
               table.setPageSize(Number(value))
             }}
           >
-            <SelectTrigger aria-label={t("table.rowsPerPage")} className="h-8 min-h-11 w-[4.5rem] md:min-h-8 [&[data-size]]:h-8">
+            <SelectTrigger
+              aria-label={t("table.rowsPerPage")}
+              className="h-8 min-h-11 w-[4.5rem] md:min-h-8 [&[data-size]]:h-8"
+            >
               <SelectValue placeholder={table.getState().pagination.pageSize} />
             </SelectTrigger>
             <SelectContent side="top">
@@ -59,19 +65,21 @@ export function DataTablePagination<TData>({
           </Select>
         </div>
         <div className="flex items-center justify-center text-sm font-medium whitespace-nowrap">
-          {t("table.pageOf", { page: table.getState().pagination.pageIndex + 1, pages: table.getPageCount() })}
+          {countKnown ? t("table.pageOf", { page, pages: pageCount }) : t("table.pageOnly", { page })}
         </div>
         <div className="flex items-center space-x-1">
-          <Button
-            aria-label={t("table.first")}
-            variant="outline"
-            size="icon"
-            className="hidden lg:flex"
-            onClick={() => table.setPageIndex(0)}
-            disabled={!table.getCanPreviousPage()}
-          >
-            <Icons.chevronsLeft />
-          </Button>
+          {countKnown ? (
+            <Button
+              aria-label={t("table.first")}
+              variant="outline"
+              size="icon"
+              className="hidden lg:flex"
+              onClick={() => table.setPageIndex(0)}
+              disabled={!table.getCanPreviousPage()}
+            >
+              <Icons.chevronsLeft />
+            </Button>
+          ) : null}
           <Button
             aria-label={t("table.previous")}
             variant="outline"
@@ -92,16 +100,18 @@ export function DataTablePagination<TData>({
           >
             <Icons.chevronRight />
           </Button>
-          <Button
-            aria-label={t("table.last")}
-            variant="outline"
-            size="icon"
-            className="hidden lg:flex"
-            onClick={() => table.setPageIndex(table.getPageCount() - 1)}
-            disabled={!table.getCanNextPage()}
-          >
-            <Icons.chevronsRight />
-          </Button>
+          {countKnown ? (
+            <Button
+              aria-label={t("table.last")}
+              variant="outline"
+              size="icon"
+              className="hidden lg:flex"
+              onClick={() => table.setPageIndex(pageCount - 1)}
+              disabled={!table.getCanNextPage()}
+            >
+              <Icons.chevronsRight />
+            </Button>
+          ) : null}
         </div>
       </div>
     </div>

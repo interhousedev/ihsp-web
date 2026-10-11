@@ -1,7 +1,7 @@
 "use client"
 
 import { useErrorMessage, useT } from "@ihsp/i18n"
-import { Button, Icons } from "@ihsp/ui"
+import { Button, ConfirmDialog, Icons } from "@ihsp/ui"
 import { useRef, useState } from "react"
 import { toast } from "sonner"
 import { PHOTO_ACCEPT, photoProblem } from "./photo-rules"
@@ -30,6 +30,7 @@ export function PhotoField({ name, photoUrl, onUpload, onRemove }: PhotoFieldPro
   const input = useRef<HTMLInputElement>(null)
   const [pending, setPending] = useState<Pending>(null)
   const [failure, setFailure] = useState<string | null>(null)
+  const [confirmingRemove, setConfirmingRemove] = useState(false)
 
   async function run(kind: Exclude<Pending, null>, action: () => Promise<unknown>, done: string) {
     setPending(kind)
@@ -80,7 +81,7 @@ export function PhotoField({ name, photoUrl, onUpload, onRemove }: PhotoFieldPro
               variant="ghost"
               className="min-h-11 md:min-h-8"
               disabled={pending !== null}
-              onClick={() => void run("remove", onRemove, t("removed"))}
+              onClick={() => setConfirmingRemove(true)}
             >
               {pending === "remove" ? (
                 <Icons.spinner aria-hidden className="animate-spin" />
@@ -114,6 +115,19 @@ export function PhotoField({ name, photoUrl, onUpload, onRemove }: PhotoFieldPro
           </p>
         ) : null}
       </div>
+      <ConfirmDialog
+        open={confirmingRemove}
+        onOpenChange={setConfirmingRemove}
+        title={t("removeTitle")}
+        description={t("removeDescription")}
+        confirmLabel={t("remove")}
+        destructive
+        loading={pending === "remove"}
+        onConfirm={async () => {
+          await run("remove", onRemove, t("removed"))
+          setConfirmingRemove(false)
+        }}
+      />
     </div>
   )
 }

@@ -1,7 +1,7 @@
 /** The teacher's own profile photo in settings: upload, refusal of a wrong file, and removal. */
 import { describe, expect, test } from "bun:test"
 import { teacherPhotoUploads } from "@ihsp/test-utils"
-import { fireEvent, screen } from "@testing-library/react"
+import { fireEvent, screen, within } from "@testing-library/react"
 import { SettingsPage } from "../features/settings/components/settings-page"
 import { configureTests, renderStaff } from "./helpers"
 
@@ -19,6 +19,8 @@ describe("teacher's own photo in settings", () => {
     expect(teacherPhotoUploads()).toEqual([{ owner: "me", name: "me.jpg", type: "image/jpeg", size: 4096 }])
 
     await user.click(screen.getByRole("button", { name: "Remove photo" }))
+    const confirm = await screen.findByRole("alertdialog")
+    await user.click(within(confirm).getByRole("button", { name: "Remove photo" }))
 
     expect(await screen.findByRole("button", { name: "Upload photo" })).toBeInTheDocument()
     expect(screen.queryByRole("img", { name: /^Photo of / })).toBeNull()

@@ -50,8 +50,7 @@ export function StepReview({
   if (values.kind === "markdown") content = t("markdownContent", { count: values.body.length })
   else if (values.kind === "photos" && values.photos.length > 0)
     content = t("photosContent", { count: values.photos.length })
-  else if (values.kind === "pdf" && values.pdf)
-    content = `${values.pdf.name} (${formatBytes(values.pdf.size)})`
+  else if (values.kind === "pdf" && values.pdf) content = `${values.pdf.name} (${formatBytes(values.pdf.size)})`
   else if (existingFile) content = t("keptContent", { size: formatBytes(existingFile.byte_size) })
   else content = "–"
 

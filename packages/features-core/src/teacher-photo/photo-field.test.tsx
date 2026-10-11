@@ -1,6 +1,6 @@
 import { describe, expect, it } from "bun:test"
 import { renderWithProviders } from "@ihsp/test-utils"
-import { fireEvent, screen, waitFor } from "@testing-library/react"
+import { fireEvent, screen, waitFor, within } from "@testing-library/react"
 import { PhotoField } from "./photo-field"
 import { PHOTO_MAX_BYTES, photoProblem } from "./photo-rules"
 import { TeacherAvatar } from "./teacher-avatar"
@@ -125,7 +125,7 @@ describe("PhotoField", () => {
     expect(await screen.findByRole("alert")).toHaveTextContent("Only JPEG or PNG photos are accepted.")
   })
 
-  it("removes the photo through the remove button", async () => {
+  it("asks for confirmation before removing the photo and removes it on confirm", async () => {
     let removed = 0
     renderField({
       photoUrl: PHOTO,
@@ -136,7 +136,32 @@ describe("PhotoField", () => {
     })
 
     fireEvent.click(screen.getByRole("button", { name: "Remove photo" }))
+    expect(removed).toBe(0)
+    const dialog = await screen.findByRole("alertdialog")
+    expect(dialog).toHaveTextContent("Remove the photo?")
+
+    fireEvent.click(within(dialog).getByRole("button", { name: "Remove photo" }))
 
     await waitFor(() => expect(removed).toBe(1))
+    await waitFor(() => expect(screen.queryByRole("alertdialog")).toBeNull())
+  })
+
+  it("keeps the photo when the removal is cancelled", async () => {
+    let removed = 0
+    renderField({
+      photoUrl: PHOTO,
+      onRemove: async () => {
+        removed += 1
+        return { photo_url: null }
+      },
+    })
+
+    fireEvent.click(screen.getByRole("button", { name: "Remove photo" }))
+    const dialog = await screen.findByRole("alertdialog")
+    fireEvent.click(within(dialog).getByRole("button", { name: "Cancel" }))
+
+    await waitFor(() => expect(screen.queryByRole("alertdialog")).toBeNull())
+    expect(removed).toBe(0)
+    expect(screen.getByRole("img", { name: "Photo of Kalandarova Gavxar" })).toBeInTheDocument()
   })
 })

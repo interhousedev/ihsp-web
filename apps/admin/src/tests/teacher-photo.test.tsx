@@ -9,7 +9,7 @@ import {
   server,
   teacherPhotoUploads,
 } from "@ihsp/test-utils"
-import { fireEvent, screen } from "@testing-library/react"
+import { fireEvent, screen, within } from "@testing-library/react"
 import { HttpResponse, http } from "msw"
 import { TeacherProfilePage } from "../features/teachers/components/teacher-profile-page"
 import { UserDetailPage } from "../features/users/components/user-detail-page"
@@ -38,6 +38,8 @@ describe("teacher profile photo", () => {
     ])
 
     await user.click(screen.getByRole("button", { name: "Remove photo" }))
+    const confirm = await screen.findByRole("alertdialog")
+    await user.click(within(confirm).getByRole("button", { name: "Remove photo" }))
 
     expect(await screen.findByRole("button", { name: "Upload photo" })).toBeInTheDocument()
     expect(screen.queryByRole("img", { name: `Photo of ${KALANDAROVA}` })).toBeNull()

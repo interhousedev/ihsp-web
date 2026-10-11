@@ -21,6 +21,8 @@
     "uploading": "Yuklanmoqda…",
     "saved": "Surat saqlandi",
     "removed": "Surat oʻchirildi",
+    "removeTitle": "Surat oʻchirilsinmi?",
+    "removeDescription": "Surat darhol oʻchiriladi. Keyin yangisini yuklash mumkin.",
     "wrongType": "JPEG yoki PNG rasmini tanlang.",
     "tooLarge": "Surat 5 MB dan katta.",
     "alt": "{name} surati"
@@ -113,6 +115,7 @@
     "columns": "Ustunlar",
     "rowsPerPage": "Sahifadagi qatorlar",
     "pageOf": "{pages} sahifadan {page}-sahifa",
+    "pageOnly": "{page}-sahifa",
     "noResults": "Natija yoʻq.",
     "selectedOf": "{total} qatordan {selected} tasi tanlangan.",
     "first": "Birinchi sahifa",

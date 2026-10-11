@@ -21,6 +21,8 @@
     "uploading": "Uploading…",
     "saved": "Photo saved",
     "removed": "Photo removed",
+    "removeTitle": "Remove the photo?",
+    "removeDescription": "The photo is removed at once. You can upload a new one afterwards.",
     "wrongType": "Choose a JPEG or PNG image.",
     "tooLarge": "The photo is larger than 5 MB.",
     "alt": "Photo of {name}"
@@ -113,6 +115,7 @@
     "columns": "Columns",
     "rowsPerPage": "Rows per page",
     "pageOf": "Page {page} of {pages}",
+    "pageOnly": "Page {page}",
     "noResults": "No results.",
     "selectedOf": "{selected} of {total} row(s) selected.",
     "first": "First page",

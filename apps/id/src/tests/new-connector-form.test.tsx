@@ -57,7 +57,9 @@ describe("NewConnectorForm", () => {
   })
 
   test("an API error is shown and nothing is reported", async () => {
-    server.use(http.post(apiUrl("/v1/id/me/connectors"), () => problem(429, "common/rate-limited", { retry_after: 300 })))
+    server.use(
+      http.post(apiUrl("/v1/id/me/connectors"), () => problem(429, "common/rate-limited", { retry_after: 300 })),
+    )
     const onCreated = mock(() => undefined)
     const { user } = renderId(<NewConnectorForm catalog={scopeCatalog} user={userMe} onCreated={onCreated} />)
 
@@ -95,10 +97,9 @@ describe("NewConnectorForm", () => {
       ],
     }
     const onCreated = mock(() => undefined)
-    const { user } = renderId(
-      <NewConnectorForm catalog={catalog as never} user={adminMe} onCreated={onCreated} />,
-      { session: { access_token: "admin-token", user: adminMe } },
-    )
+    const { user } = renderId(<NewConnectorForm catalog={catalog as never} user={adminMe} onCreated={onCreated} />, {
+      session: { access_token: "admin-token", user: adminMe },
+    })
 
     await user.click(await screen.findByText("admin:people.read"))
     await fillField("Name", "Ops")

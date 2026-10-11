@@ -21,6 +21,8 @@
     "uploading": "Загрузка…",
     "saved": "Фото сохранено",
     "removed": "Фото удалено",
+    "removeTitle": "Удалить фото?",
+    "removeDescription": "Фото будет удалено сразу. Потом можно загрузить новое.",
     "wrongType": "Выберите изображение JPEG или PNG.",
     "tooLarge": "Фото больше 5 МБ.",
     "alt": "Фото: {name}"
@@ -113,6 +115,7 @@
     "columns": "Столбцы",
     "rowsPerPage": "Строк на странице",
     "pageOf": "Страница {page} из {pages}",
+    "pageOnly": "Страница {page}",
     "noResults": "Нет результатов.",
     "selectedOf": "Выбрано строк: {selected} из {total}.",
     "first": "Первая страница",

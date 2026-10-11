@@ -187,7 +187,12 @@ export function DataTableSliderFilter<TData>({ column, title }: DataTableSliderF
             onValueChange={onSliderValueChange}
           />
         </div>
-        <Button aria-label={t("table.clearFilter", { title: title ?? "" })} variant="outline" size="sm" onClick={onReset}>
+        <Button
+          aria-label={t("table.clearFilter", { title: title ?? "" })}
+          variant="outline"
+          size="sm"
+          onClick={onReset}
+        >
           {t("common.clear")}
         </Button>
       </PopoverContent>

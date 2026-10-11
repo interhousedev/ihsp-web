@@ -67,7 +67,9 @@ describe("calendar feed panel", () => {
     expect(bodies).toHaveLength(1)
     await user.click(screen.getByRole("button", { name: "Regenerate" }))
 
-    await waitFor(() => expect(screen.getByLabelText("Calendar feed link")).toHaveValue("https://ihsp.test/ical/token-2.ics"))
+    await waitFor(() =>
+      expect(screen.getByLabelText("Calendar feed link")).toHaveValue("https://ihsp.test/ical/token-2.ics"),
+    )
     expect(bodies).toHaveLength(2)
     expect(screen.queryByText("Regenerate the link?")).toBeNull()
   })

@@ -13,7 +13,13 @@ allowSlowTests()
 
 const start = {
   registration_token: "reg-token-1",
-  profile: { first_name: "Aleksey", last_name: "Brastilov", middle_name: "Olegovich", group_name: "2TN2", login: "brastilov.aleksey" },
+  profile: {
+    first_name: "Aleksey",
+    last_name: "Brastilov",
+    middle_name: "Olegovich",
+    group_name: "2TN2",
+    login: "brastilov.aleksey",
+  },
   imported_match: null,
 }
 
@@ -38,7 +44,10 @@ describe("RegisterProfileStep", () => {
 
     await waitFor(() => expect(onSent).toHaveBeenCalledTimes(1))
     expect(body).toEqual({ registration_token: "reg-token-1", email: "aleksey@example.org" })
-    expect((onSent.mock.calls[0] as unknown[])[0]).toMatchObject({ password: "Secret123", email: "aleksey@example.org" })
+    expect((onSent.mock.calls[0] as unknown[])[0]).toMatchObject({
+      password: "Secret123",
+      email: "aleksey@example.org",
+    })
   })
 
   test("mismatching passwords are not sent", async () => {
@@ -63,7 +72,9 @@ describe("RegisterProfileStep", () => {
   })
 
   test("a rejected email shows the error and stays on the step", async () => {
-    server.use(http.post(apiUrl("/v1/id/register/email"), () => problem(429, "common/rate-limited", { retry_after: 60 })))
+    server.use(
+      http.post(apiUrl("/v1/id/register/email"), () => problem(429, "common/rate-limited", { retry_after: 60 })),
+    )
     const onSent = mock(() => undefined)
     renderId(<RegisterProfileStep start={start} onSent={onSent} />)
 
@@ -123,7 +134,13 @@ describe("RegisterCodeStep", () => {
     )
     const onCompleted = mock(() => undefined)
     renderId(
-      <RegisterCodeStep {...props} confirmImport={false} loginChallenge={null} onBack={() => undefined} onCompleted={onCompleted} />,
+      <RegisterCodeStep
+        {...props}
+        confirmImport={false}
+        loginChallenge={null}
+        onBack={() => undefined}
+        onCompleted={onCompleted}
+      />,
     )
 
     await fillField("Code", "123456")
