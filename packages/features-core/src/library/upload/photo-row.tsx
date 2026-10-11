@@ -85,7 +85,7 @@ export function PhotoRow({
       <div className="min-w-0 flex-1">
         <p className="text-sm font-medium">{t("label", { n, count })}</p>
         <p className="text-muted-foreground truncate text-xs">
-          {photo.file.name} · {formatBytes(photo.file.size, { decimals: 1 })}
+          {photo.file.name} · {formatBytes(photo.file.size)}
         </p>
       </div>
       <div className="flex flex-wrap items-center gap-1">

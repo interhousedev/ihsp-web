@@ -81,7 +81,7 @@ export function FilePick({
           <IconFileTypePdf className="size-6 shrink-0" aria-hidden />
           <div className="min-w-0 flex-1">
             <p className="truncate text-sm font-medium">{file.name}</p>
-            <p className="text-muted-foreground text-xs">{formatBytes(file.size, { decimals: 1 })}</p>
+            <p className="text-muted-foreground text-xs">{formatBytes(file.size)}</p>
           </div>
           <Button type="button" variant="ghost" className="text-destructive min-h-11" onClick={() => onChange(null)}>
             <Icons.trash aria-hidden />
@@ -95,7 +95,7 @@ export function FilePick({
             <p className="text-sm font-medium">{t("current")}</p>
             <p className="text-muted-foreground text-xs">
               {existing.pages ? `${t("pages", { count: existing.pages })} · ` : ""}
-              {formatBytes(existing.bytes, { decimals: 1 })}
+              {formatBytes(existing.bytes)}
             </p>
           </div>
         </div>

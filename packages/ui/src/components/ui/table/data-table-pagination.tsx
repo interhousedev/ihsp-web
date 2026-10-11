@@ -44,7 +44,7 @@ export function DataTablePagination<TData>({
               table.setPageSize(Number(value))
             }}
           >
-            <SelectTrigger aria-label={t("table.rowsPerPage")} className="h-8 w-[4.5rem] [&[data-size]]:h-8">
+            <SelectTrigger aria-label={t("table.rowsPerPage")} className="h-8 min-h-11 w-[4.5rem] md:min-h-8 [&[data-size]]:h-8">
               <SelectValue placeholder={table.getState().pagination.pageSize} />
             </SelectTrigger>
             <SelectContent side="top">
@@ -66,7 +66,7 @@ export function DataTablePagination<TData>({
             aria-label={t("table.first")}
             variant="outline"
             size="icon"
-            className="hidden size-8 lg:flex"
+            className="hidden lg:flex"
             onClick={() => table.setPageIndex(0)}
             disabled={!table.getCanPreviousPage()}
           >
@@ -76,7 +76,7 @@ export function DataTablePagination<TData>({
             aria-label={t("table.previous")}
             variant="outline"
             size="icon"
-            className="size-11 md:size-8"
+            className="size-8"
             onClick={() => table.previousPage()}
             disabled={!table.getCanPreviousPage()}
           >
@@ -86,7 +86,7 @@ export function DataTablePagination<TData>({
             aria-label={t("table.next")}
             variant="outline"
             size="icon"
-            className="size-11 md:size-8"
+            className="size-8"
             onClick={() => table.nextPage()}
             disabled={!table.getCanNextPage()}
           >
@@ -96,7 +96,7 @@ export function DataTablePagination<TData>({
             aria-label={t("table.last")}
             variant="outline"
             size="icon"
-            className="hidden size-8 lg:flex"
+            className="hidden lg:flex"
             onClick={() => table.setPageIndex(table.getPageCount() - 1)}
             disabled={!table.getCanNextPage()}
           >

@@ -1,4 +1,4 @@
-import { isMiniApp } from "@ihsp/telegram"
+import { isMiniApp } from "@ihsp/telegram/core"
 import { detectPlatform, isInAppBrowser, isStandaloneDisplay, type Platform } from "./platform"
 
 /** What the page knows about the browser it runs in; read once per visit. */

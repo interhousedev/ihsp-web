@@ -2,7 +2,7 @@
 
 import type { ItemCard } from "@ihsp/api"
 import { useT } from "@ihsp/i18n"
-import { Button, buttonVariants, cn } from "@ihsp/ui"
+import { Button, buttonVariants, cn, safeHttpUrl } from "@ihsp/ui"
 import { IconExternalLink, IconFlag } from "@ihsp/ui"
 import { useState } from "react"
 import { useLibraryAccess } from "../hooks/use-library-access"
@@ -21,11 +21,12 @@ export function ExternalActions({ item, className }: { item: ItemCard; className
   const [reporting, setReporting] = useState(false)
   const external = item.external
   if (!external) return null
+  const viewUrl = safeHttpUrl(external.view_url)
   return (
     <div className={cn("flex flex-wrap items-center gap-2", className)}>
-      {external.gone ? null : (
+      {external.gone || !viewUrl ? null : (
         <a
-          href={external.view_url}
+          href={viewUrl}
           target="_blank"
           rel="noopener noreferrer"
           className={buttonVariants({ className: "min-h-11 md:min-h-8" })}

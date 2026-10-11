@@ -5,20 +5,20 @@ export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs))
 }
 
-export function formatBytes(
-  bytes: number,
-  opts: {
-    decimals?: number
-    sizeType?: "accurate" | "normal"
-  } = {},
-) {
-  const { decimals = 0, sizeType = "normal" } = opts
+const BYTE_UNITS = ["B", "KB", "MB", "GB", "TB"] as const
 
-  const sizes = ["Bytes", "KB", "MB", "GB", "TB"]
-  const accurateSizes = ["Bytes", "KiB", "MiB", "GiB", "TiB"]
-  if (bytes === 0) return "0 Byte"
-  const i = Math.floor(Math.log(bytes) / Math.log(1024))
-  return `${(bytes / Math.pow(1024, i)).toFixed(decimals)} ${
-    sizeType === "accurate" ? (accurateSizes[i] ?? "Bytest") : (sizes[i] ?? "Bytes")
-  }`
+/**
+ * The one file-size formatter of the platform: `1536` becomes `1.5 KB`, `20971520` becomes `20 MB` (binary units, at
+ * most one decimal, whole bytes below 1 KB); units are the same in every language.
+ */
+export function formatBytes(bytes: number): string {
+  let value = Math.max(0, bytes)
+  let unit = 0
+  while (value >= 1024 && unit < BYTE_UNITS.length - 1) {
+    value /= 1024
+    unit += 1
+  }
+  if (unit === 0) return `${Math.round(value)} ${BYTE_UNITS[0]}`
+  const rounded = value.toFixed(1)
+  return `${rounded.endsWith(".0") ? rounded.slice(0, -2) : rounded} ${BYTE_UNITS[unit]}`
 }

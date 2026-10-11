@@ -2,7 +2,7 @@
 
 import { getConfig } from "@ihsp/config"
 import { useT } from "@ihsp/i18n"
-import { isMiniApp } from "@ihsp/telegram"
+import { isMiniApp } from "@ihsp/telegram/core"
 import {
   Button,
   Empty,

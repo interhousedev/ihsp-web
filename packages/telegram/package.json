@@ -8,6 +8,7 @@
   "types": "./src/index.ts",
   "exports": {
     ".": "./src/index.ts",
+    "./core": "./src/core.ts",
     "./sdk-loader": "./src/sdk-loader.ts"
   },
   "scripts": {

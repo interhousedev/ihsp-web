@@ -72,7 +72,10 @@
     "settings": "Настройки",
     "notFoundTitle": "Страница не найдена",
     "notFoundDescription": "Такой страницы нет или она была перемещена.",
-    "goHome": "На главную"
+    "goHome": "На главную",
+    "morePages": "Ещё страницы",
+    "previousSlide": "Предыдущий слайд",
+    "nextSlide": "Следующий слайд"
   },
   "state": {
     "loadingTitle": "Загрузка",
@@ -503,7 +506,8 @@
     "unread": "Не прочитано",
     "bell": "Уведомления",
     "bellWithCount": "Уведомления, непрочитанных: {count}",
-    "viewAll": "Все уведомления"
+    "viewAll": "Все уведомления",
+    "markRead": "Отметить прочитанным"
   },
   "notificationSettings": {
     "saving": "Сохраняем…",
@@ -848,7 +852,12 @@
       "percent": "{percent}%",
       "checking": "Проверка…",
       "rejected": "Отклонён: {reason}",
-      "dismiss": "Скрыть"
+      "dismiss": "Скрыть",
+      "dropHere": "Отпустите файлы здесь",
+      "dragHint": "Перетащите файлы сюда или нажмите, чтобы выбрать",
+      "limit": "До {size} на файл",
+      "remove": "Удалить файл",
+      "tooMany": "{count, plural, one {Можно загрузить только один файл за раз} other {Можно загрузить не более {count} файлов}}"
     },
     "reasons": {
       "unknown": "файл не прошёл проверку",

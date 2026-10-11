@@ -72,7 +72,10 @@
     "settings": "Settings",
     "notFoundTitle": "Page not found",
     "notFoundDescription": "The page you are looking for does not exist or was moved.",
-    "goHome": "Go to the start page"
+    "goHome": "Go to the start page",
+    "morePages": "More pages",
+    "previousSlide": "Previous slide",
+    "nextSlide": "Next slide"
   },
   "state": {
     "loadingTitle": "Loading",
@@ -503,7 +506,8 @@
     "unread": "Unread",
     "bell": "Notifications",
     "bellWithCount": "Notifications, {count} unread",
-    "viewAll": "View all notifications"
+    "viewAll": "View all notifications",
+    "markRead": "Mark as read"
   },
   "notificationSettings": {
     "saving": "Saving…",
@@ -848,7 +852,12 @@
       "percent": "{percent}%",
       "checking": "Checking…",
       "rejected": "Rejected: {reason}",
-      "dismiss": "Dismiss"
+      "dismiss": "Dismiss",
+      "dropHere": "Drop the files here",
+      "dragHint": "Drag and drop files here, or click to select",
+      "limit": "Up to {size} per file",
+      "remove": "Remove file",
+      "tooMany": "{count, plural, one {Only one file can be uploaded at a time} other {Up to {count} files can be uploaded}}"
     },
     "reasons": {
       "unknown": "the file did not pass the check",

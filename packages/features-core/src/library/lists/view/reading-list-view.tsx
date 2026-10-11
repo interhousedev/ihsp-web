@@ -2,7 +2,7 @@
 
 import type { ReadingListDetail, ReadingListEntry } from "@ihsp/api"
 import { useFormatters, useT } from "@ihsp/i18n"
-import { Badge, Button, Progress, ProgressIndicator, ProgressTrack, buttonVariants } from "@ihsp/ui"
+import { Badge, Button, Progress, ProgressIndicator, ProgressTrack, buttonVariants, safeHttpUrl } from "@ihsp/ui"
 import { IconExternalLink, IconPencil } from "@ihsp/ui"
 import Link from "next/link"
 import { useState } from "react"
@@ -28,6 +28,7 @@ function EntryRow({ entry }: { entry: ReadingListEntry }) {
   if (card?.kind === "external" && !uniLibrary) return null
 
   const title = card?.title ?? entry.title ?? entry.url ?? ""
+  const externalUrl = safeHttpUrl(entry.url)
   const pages =
     entry.page_from !== null ? t("pages", { from: entry.page_from, to: entry.page_to ?? entry.page_from }) : null
   const href = card ? (card.id || card.slug ? itemHref((card.id ?? card.slug)!) : null) : null
@@ -43,9 +44,9 @@ function EntryRow({ entry }: { entry: ReadingListEntry }) {
             <Link href={href} className="font-medium break-words hover:underline">
               {title}
             </Link>
-          ) : entry.url ? (
+          ) : externalUrl ? (
             <a
-              href={entry.url}
+              href={externalUrl}
               target="_blank"
               rel="noopener noreferrer"
               className="inline-flex items-center gap-1 font-medium break-words hover:underline"

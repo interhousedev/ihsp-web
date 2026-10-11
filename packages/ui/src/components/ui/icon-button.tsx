@@ -12,7 +12,12 @@ const sizeToIcon = { sm: ICON_SIZES.sm, md: ICON_SIZES.sm, lg: ICON_SIZES.md } a
 
 const iconButtonVariants = cva("shrink-0", {
   variants: {
-    size: { sm: "size-7", md: "size-8", lg: "size-10" },
+    // 44 px on phones, the compact size from `md` (same rule as `Button`).
+    size: {
+      sm: "size-7 min-h-11 min-w-11 md:min-h-7 md:min-w-7",
+      md: "size-8 min-h-11 min-w-11 md:min-h-8 md:min-w-8",
+      lg: "size-10 min-h-11 min-w-11 md:min-h-10 md:min-w-10",
+    },
   },
   defaultVariants: { size: "md" },
 })

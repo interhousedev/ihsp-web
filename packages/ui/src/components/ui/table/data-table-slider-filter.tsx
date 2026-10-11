@@ -1,5 +1,6 @@
 "use client"
 
+import { useT } from "@ihsp/i18n"
 import type { Column } from "@tanstack/react-table"
 import * as React from "react"
 
@@ -30,6 +31,7 @@ interface DataTableSliderFilterProps<TData> {
 }
 
 export function DataTableSliderFilter<TData>({ column, title }: DataTableSliderFilterProps<TData>) {
+  const t = useT()
   const id = React.useId()
 
   const columnFilterValue = getIsValidRange(column.getFilterValue())
@@ -185,8 +187,8 @@ export function DataTableSliderFilter<TData>({ column, title }: DataTableSliderF
             onValueChange={onSliderValueChange}
           />
         </div>
-        <Button aria-label={`Clear ${title} filter`} variant="outline" size="sm" onClick={onReset}>
-          Clear
+        <Button aria-label={t("table.clearFilter", { title: title ?? "" })} variant="outline" size="sm" onClick={onReset}>
+          {t("common.clear")}
         </Button>
       </PopoverContent>
     </Popover>

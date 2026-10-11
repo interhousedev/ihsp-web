@@ -11,7 +11,8 @@ import {
   type TokenResponse,
 } from "@ihsp/api"
 import { getConfig } from "@ihsp/config"
-import { getInitDataRaw, isMiniApp } from "@ihsp/telegram"
+import { safeHttpUrl } from "@ihsp/ui"
+import { getInitDataRaw, isMiniApp } from "@ihsp/telegram/core"
 import { broadcastLogout } from "./channel"
 import { holdLogin, loginHeld, releaseLoginHold } from "./login-hold"
 import { AuthError } from "./errors"
@@ -52,7 +53,7 @@ const SILENT_ERRORS = new Set([
 /** A restart is allowed once per this time, so a login that keeps failing ends with a message and not a loop. */
 const RESTART_WINDOW_MS = 120_000
 
-type Pending = { state: string; nonce: string; verifier: string; returnTo: string; silent?: boolean }
+type Pending = { state: string; verifier: string; returnTo: string; silent?: boolean }
 
 // - - - Module state (one tab) - - -
 
@@ -77,10 +78,21 @@ function currentPath(): string {
   return `${window.location.pathname}${window.location.search}`
 }
 
-/** Only same-origin paths are followed after login (no open redirect), and never the callback page itself. */
+/**
+ * Only same-origin paths are followed after login (no open redirect), and never the callback page itself. The value is
+ * parsed as a URL so that `//host`, `/\\host` (a backslash is a slash to the WHATWG parser) and `https://host` all
+ * resolve to a foreign origin and are refused.
+ */
 export function safeReturnTo(value: string | null | undefined): string {
-  if (!value || !value.startsWith("/") || value.startsWith("//") || value.startsWith(CALLBACK_PATH)) return "/"
-  return value
+  if (!value || !value.startsWith("/")) return "/"
+  let url: URL
+  try {
+    url = new URL(value, window.location.origin)
+  } catch {
+    return "/"
+  }
+  if (url.origin !== window.location.origin || url.pathname.startsWith(CALLBACK_PATH)) return "/"
+  return `${url.pathname}${url.search}${url.hash}`
 }
 
 function readPending(): Pending | null {
@@ -188,7 +200,9 @@ export type LoginOptions = {
 }
 
 /**
- * Starts the login: PKCE verifier, `state` and `nonce` go to sessionStorage and the browser is sent to Hydra.
+ * Starts the login: PKCE verifier and `state` go to sessionStorage and the browser is sent to Hydra. No `nonce` is
+ * sent: the SPA never receives an `id_token` (the code is exchanged by the backend), so there is nothing to check it
+ * against; PKCE plus `state` protect the code flow.
  * The current page is replaced in the history (`location.replace`), so Back never lands on a page that would start
  * the login again. Calling it twice at once (React strict mode, two guards) starts one login. An automatic login that
  * keeps coming back unauthorised (4 times in a minute) is refused with `AuthError("login-loop")`.
@@ -211,10 +225,8 @@ async function startLogin(returnTo: string, options: LoginOptions): Promise<void
   const config = getConfig()
   const verifier = generateCodeVerifier()
   const state = randomString(32)
-  const nonce = randomString(32)
   writePending({
     state,
-    nonce,
     verifier,
     returnTo: safeReturnTo(returnTo),
     ...(options.silent ? { silent: true } : {}),
@@ -228,7 +240,6 @@ async function startLogin(returnTo: string, options: LoginOptions): Promise<void
     audience: "ihsp-api",
     redirect_uri: `${window.location.origin}${CALLBACK_PATH}`,
     state,
-    nonce,
     code_challenge: await codeChallengeS256(verifier),
     code_challenge_method: "S256",
     ...(options.silent ? { prompt: "none" } : {}),
@@ -418,14 +429,17 @@ export function retryBootstrap(): Promise<void> {
 
 // - - - Logout - - -
 
-/** `POST /v1/oauth/logout`, drops the tokens (here and in other tabs) and goes to the `logout_url` from Hydra. */
+/**
+ * `POST /v1/oauth/logout`, drops the tokens (here and in other tabs) and goes to the `logout_url` from Hydra. The URL
+ * is followed only when it is an `http(s)` address; anything else ends at the start page.
+ */
 export async function logout(): Promise<void> {
   const { logout_url } = await postOauthLogout({ client_id: getConfig().OAUTH_CLIENT_ID })
   holdLogin(LOGOUT_HOLD_MS)
   clearSessionHint()
   useAuthStore.getState().clear()
   broadcastLogout()
-  navigation.assign(logout_url)
+  navigation.assign(safeHttpUrl(logout_url) ?? "/")
 }
 
 // - - - API client wiring - - -

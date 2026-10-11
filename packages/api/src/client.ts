@@ -138,7 +138,10 @@ export function createApiClient(options: ApiClientOptions): ApiClient {
     if (response.status === 401 && (req.auth ?? "bearer") === "bearer") {
       const refreshed = await refreshOnce()
       if (refreshed) response = await send(req)
-      if (!refreshed || response.status === 401) options.onUnauthorized()
+      // A 401 from another host (`baseUrl` override: short links, rooms) says nothing about our session.
+      if ((!refreshed || response.status === 401) && (req.baseUrl === undefined || req.baseUrl === resolveBase())) {
+        options.onUnauthorized()
+      }
     }
     if (!response.ok) throw await parseApiError(response)
     if (req.responseType === "stream") return response as T

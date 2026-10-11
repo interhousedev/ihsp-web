@@ -72,7 +72,10 @@
     "settings": "Sozlamalar",
     "notFoundTitle": "Sahifa topilmadi",
     "notFoundDescription": "Bunday sahifa yoʻq yoki koʻchirilgan.",
-    "goHome": "Bosh sahifaga"
+    "goHome": "Bosh sahifaga",
+    "morePages": "Yana sahifalar",
+    "previousSlide": "Oldingi slayd",
+    "nextSlide": "Keyingi slayd"
   },
   "state": {
     "loadingTitle": "Yuklanmoqda",
@@ -503,7 +506,8 @@
     "unread": "Oʻqilmagan",
     "bell": "Bildirishnomalar",
     "bellWithCount": "Bildirishnomalar, oʻqilmagan: {count}",
-    "viewAll": "Barcha bildirishnomalar"
+    "viewAll": "Barcha bildirishnomalar",
+    "markRead": "Oʻqilgan deb belgilash"
   },
   "notificationSettings": {
     "saving": "Saqlanmoqda…",
@@ -848,7 +852,12 @@
       "percent": "{percent}%",
       "checking": "Tekshirilmoqda…",
       "rejected": "Rad etildi: {reason}",
-      "dismiss": "Yopish"
+      "dismiss": "Yopish",
+      "dropHere": "Fayllarni shu yerga tashlang",
+      "dragHint": "Fayllarni shu yerga tashlang yoki tanlash uchun bosing",
+      "limit": "Har bir fayl {size} gacha",
+      "remove": "Faylni olib tashlash",
+      "tooMany": "{count, plural, one {Bir vaqtda faqat bitta fayl yuklash mumkin} other {Koʻpi bilan {count} fayl yuklash mumkin}}"
     },
     "reasons": {
       "unknown": "fayl tekshiruvdan oʻtmadi",

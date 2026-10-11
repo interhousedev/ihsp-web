@@ -1,5 +1,6 @@
 "use client"
 
+import { useT } from "@ihsp/i18n"
 import { Icons } from "./icons"
 import * as React from "react"
 import Dropzone, { type DropzoneProps, type FileRejection } from "react-dropzone"
@@ -103,6 +104,8 @@ export function FileUploader(props: FileUploaderProps) {
     ...dropzoneProps
   } = props
 
+  const t = useT()
+
   const [files, setFiles] = useControllableState({
     prop: valueProp,
     onChange: onValueChange,
@@ -111,12 +114,12 @@ export function FileUploader(props: FileUploaderProps) {
   const onDrop = React.useCallback(
     (acceptedFiles: File[], rejectedFiles: FileRejection[]) => {
       if (!multiple && maxFiles === 1 && acceptedFiles.length > 1) {
-        toast.error("Cannot upload more than 1 file at a time")
+        toast.error(t("files.upload.tooMany", { count: 1 }))
         return
       }
 
       if ((files?.length ?? 0) + acceptedFiles.length > maxFiles) {
-        toast.error(`Cannot upload more than ${maxFiles} files`)
+        toast.error(t("files.upload.tooMany", { count: maxFiles }))
         return
       }
 
@@ -150,7 +153,7 @@ export function FileUploader(props: FileUploaderProps) {
       }
     },
 
-    [files, maxFiles, multiple, onUpload, setFiles],
+    [files, maxFiles, multiple, onUpload, setFiles, t],
   )
 
   function onRemove(index: number) {
@@ -203,7 +206,7 @@ export function FileUploader(props: FileUploaderProps) {
                 <div className="rounded-full border border-dashed p-3">
                   <Icons.upload className="text-muted-foreground size-7" aria-hidden="true" />
                 </div>
-                <p className="text-muted-foreground font-medium">Drop the files here</p>
+                <p className="text-muted-foreground font-medium">{t("files.upload.dropHere")}</p>
               </div>
             ) : (
               <div className="flex flex-col items-center justify-center gap-4 sm:px-5">
@@ -211,15 +214,9 @@ export function FileUploader(props: FileUploaderProps) {
                   <Icons.upload className="text-muted-foreground size-7" aria-hidden="true" />
                 </div>
                 <div className="space-y-px">
-                  <p className="text-muted-foreground font-medium">
-                    Drag {`'n'`} drop files here, or click to select files
-                  </p>
+                  <p className="text-muted-foreground font-medium">{t("files.upload.dragHint")}</p>
                   <p className="text-muted-foreground/70 text-sm">
-                    You can upload
-                    {maxFiles > 1
-                      ? ` ${maxFiles === Infinity ? "multiple" : maxFiles}
-                      files (up to ${formatBytes(maxSize)} each)`
-                      : ` a file with ${formatBytes(maxSize)}`}
+                    {t("files.upload.limit", { size: formatBytes(maxSize) })}
                   </p>
                 </div>
               </div>
@@ -247,6 +244,7 @@ interface FileCardProps {
 }
 
 function FileCard({ file, progress, onRemove }: FileCardProps) {
+  const t = useT()
   return (
     <div className="relative flex items-center space-x-4">
       <div className="flex flex-1 space-x-4">
@@ -278,7 +276,7 @@ function FileCard({ file, progress, onRemove }: FileCardProps) {
           className="size-8 rounded-full"
         >
           <Icons.close className="text-muted-foreground" />
-          <span className="sr-only">Remove file</span>
+          <span className="sr-only">{t("files.upload.remove")}</span>
         </Button>
       </div>
     </div>

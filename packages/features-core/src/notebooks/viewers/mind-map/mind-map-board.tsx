@@ -2,7 +2,7 @@
 
 import type { MindMapContent, RefsIndex } from "@ihsp/api"
 import { useT } from "@ihsp/i18n"
-import { isMiniApp } from "@ihsp/telegram"
+import { isMiniApp } from "@ihsp/telegram/core"
 import { useCallback, useMemo, useRef, useState } from "react"
 import { DEFAULT_COLUMN_GAP } from "./layout"
 import { MindMapCanvas } from "./mind-map-canvas"

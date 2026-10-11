@@ -12,7 +12,13 @@ export function hasRole(userRoles: readonly Role[] | undefined, role: Role | rea
   return wanted.some((item) => userRoles?.includes(item))
 }
 
-/** Shows `children` when the logged-in user has one of the roles, otherwise `fallback` (a "No access" screen). */
+/**
+ * Shows `children` when the logged-in user has one of the roles, otherwise `fallback` (a "No access" screen).
+ *
+ * This is a UI guard only: the roles come from `GET /v1/id/me` and a user can bypass it with devtools. It hides screens
+ * that would only fail; the protection is the backend, which checks `require_roles` plus the per-use-case rules on
+ * every route. Never rely on this component for security.
+ */
 export function RequireRole({
   role,
   children,

@@ -1,7 +1,7 @@
 "use client"
 
 import { useT } from "@ihsp/i18n"
-import { isMiniApp } from "@ihsp/telegram"
+import { isMiniApp } from "@ihsp/telegram/core"
 import type { UserMenuItem } from "@ihsp/ui"
 import { IconDeviceMobile } from "@ihsp/ui"
 import { installAppUrl, isPwaMode } from "../utils/app-mode"

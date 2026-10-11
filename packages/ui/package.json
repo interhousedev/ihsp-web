@@ -8,6 +8,7 @@
   "types": "./src/index.ts",
   "exports": {
     ".": "./src/index.ts",
+    "./chart": "./src/components/ui/chart.tsx",
     "./styles": "./src/styles/globals.css",
     "./styles/*": "./src/styles/*",
     "./theme-init": "./src/components/themes/theme-init-script.ts"

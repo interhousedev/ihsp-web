@@ -1,7 +1,7 @@
 "use client"
 
 import type { NotebookDetail } from "@ihsp/api"
-import { useBackButton } from "@ihsp/telegram"
+import { useBackButton } from "@ihsp/telegram/core"
 import { useCallback, useEffect, useRef, useState } from "react"
 import { useRouter } from "next/navigation"
 import { CitationNavigationProvider } from "../chat/use-citation-navigation"

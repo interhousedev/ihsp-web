@@ -2,7 +2,7 @@
 
 import { getLibraryFileUrl, type ItemDetail, type ItemFile } from "@ihsp/api"
 import { useErrorMessage, useT } from "@ihsp/i18n"
-import { Button, buttonVariants } from "@ihsp/ui"
+import { Button, buttonVariants, safeHttpUrl } from "@ihsp/ui"
 import { IconBook, IconDownload, IconFlag } from "@ihsp/ui"
 import { useMutation } from "@tanstack/react-query"
 import Link from "next/link"
@@ -35,7 +35,10 @@ export function ItemActions({ item }: { item: ItemDetail }) {
 
   const download = useMutation({
     mutationFn: () => getLibraryFileUrl(id!, file!.id),
-    onSuccess: (target) => window.location.assign(target.url),
+    onSuccess: (target) => {
+      const url = safeHttpUrl(target.url)
+      if (url) window.location.assign(url)
+    },
     onError: (error) => toast.error(errorMessage(error)),
   })
   if (!id) return null

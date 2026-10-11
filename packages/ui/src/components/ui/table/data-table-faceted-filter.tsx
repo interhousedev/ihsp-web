@@ -1,5 +1,6 @@
 "use client"
 
+import { useT } from "@ihsp/i18n"
 import type { Option } from "../../../types/data-table"
 import type { Column } from "@tanstack/react-table"
 import { Icons } from "../../icons"
@@ -34,6 +35,7 @@ export function DataTableFacetedFilter<TData, TValue>({
   options,
   multiple,
 }: DataTableFacetedFilterProps<TData, TValue>) {
+  const t = useT()
   const [open, setOpen] = React.useState(false)
 
   const columnFilterValue = column?.getFilterValue()
@@ -104,7 +106,7 @@ export function DataTableFacetedFilter<TData, TValue>({
         <Command>
           <CommandInput placeholder={title} />
           <CommandList className="max-h-full">
-            <CommandEmpty>No results found.</CommandEmpty>
+            <CommandEmpty>{t("table.noResults")}</CommandEmpty>
             <CommandGroup className="max-h-[18.75rem] overflow-x-hidden overflow-y-auto">
               {options.map((option) => {
                 const isSelected = selectedValues.has(option.value)

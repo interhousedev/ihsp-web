@@ -1,4 +1,5 @@
 import { afterEach, describe, expect, it } from "bun:test"
+import { DEFAULT_LOCALE, LOCALE_STORAGE_KEY } from "@ihsp/i18n"
 import { THEME_INIT_SCRIPT } from "../components/themes/theme-init-script"
 
 const html = document.documentElement
@@ -11,6 +12,8 @@ afterEach(() => {
   html.className = ""
   html.removeAttribute("data-theme")
   html.style.colorScheme = ""
+  html.removeAttribute("lang")
+  window.localStorage.clear()
 })
 
 describe("THEME_INIT_SCRIPT", () => {
@@ -40,6 +43,21 @@ describe("THEME_INIT_SCRIPT", () => {
     window.matchMedia = original
 
     expect(html.classList.contains("dark")).toBe(true)
+  })
+
+  it("sets the document language from the stored locale, DEFAULT_LOCALE otherwise", () => {
+    expect(THEME_INIT_SCRIPT).toContain(`'${LOCALE_STORAGE_KEY}'`)
+
+    runInitScript()
+    expect(html.lang).toBe(DEFAULT_LOCALE)
+
+    window.localStorage.setItem(LOCALE_STORAGE_KEY, "en")
+    runInitScript()
+    expect(html.lang).toBe("en")
+
+    window.localStorage.setItem(LOCALE_STORAGE_KEY, "xx")
+    runInitScript()
+    expect(html.lang).toBe(DEFAULT_LOCALE)
   })
 
   it("keeps painting the saved color palette", () => {

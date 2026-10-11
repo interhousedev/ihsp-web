@@ -10,7 +10,7 @@ import {
   type SuggestedBook,
 } from "@ihsp/api"
 import { useFormatters, useT } from "@ihsp/i18n"
-import { Badge, Skeleton, formatBytes } from "@ihsp/ui"
+import { Badge, Skeleton, formatBytes, safeHttpUrl } from "@ihsp/ui"
 import { IconAlertTriangle, IconExternalLink, IconUserOff } from "@ihsp/ui"
 import { useQuery } from "@tanstack/react-query"
 import Link from "next/link"
@@ -90,6 +90,7 @@ function SuggestionBlock({ row }: { row: ManageQueueRow }) {
   const suggestion = row.suggestion
   const detail = useQuery({ ...getManageSuggestionQuery(suggestion?.id ?? ""), enabled: !!suggestion })
   if (!suggestion) return null
+  const suggestionUrl = safeHttpUrl(suggestion.url)
   return (
     <div className="flex flex-col gap-3">
       <Section title={t("suggestedBy")}>
@@ -100,15 +101,15 @@ function SuggestionBlock({ row }: { row: ManageQueueRow }) {
           <SuggestedBookFacts book={detail.data.book} />
         </Section>
       ) : null}
-      {suggestion.url ? (
+      {suggestionUrl ? (
         <Section title={t("suggestionLink")}>
           <a
-            href={suggestion.url}
+            href={suggestionUrl}
             target="_blank"
             rel="noopener noreferrer"
             className="text-primary inline-flex min-h-11 items-center gap-1 text-sm break-all underline-offset-4 hover:underline md:min-h-8"
           >
-            {suggestion.url}
+            {suggestionUrl}
             <IconExternalLink className="size-4 shrink-0" aria-hidden />
           </a>
         </Section>

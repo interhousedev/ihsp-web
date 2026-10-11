@@ -1,3 +1,6 @@
+"use client"
+
+import { useT } from "@ihsp/i18n"
 import * as React from "react"
 
 import { cn } from "../../lib/utils"
@@ -45,11 +48,13 @@ function PaginationLink({ className, isActive, size = "icon", ...props }: Pagina
 
 function PaginationPrevious({
   className,
-  text = "Previous",
+  text,
   ...props
 }: React.ComponentProps<typeof PaginationLink> & { text?: string }) {
+  const t = useT()
+  text ??= t("common.previous")
   return (
-    <PaginationLink aria-label="Go to previous page" size="default" className={cn("pl-1.5!", className)} {...props}>
+    <PaginationLink aria-label={t("table.previous")} size="default" className={cn("pl-1.5!", className)} {...props}>
       <IconChevronLeft data-icon="inline-start" />
       <span className="hidden sm:block">{text}</span>
     </PaginationLink>
@@ -58,11 +63,13 @@ function PaginationPrevious({
 
 function PaginationNext({
   className,
-  text = "Next",
+  text,
   ...props
 }: React.ComponentProps<typeof PaginationLink> & { text?: string }) {
+  const t = useT()
+  text ??= t("common.next")
   return (
-    <PaginationLink aria-label="Go to next page" size="default" className={cn("pr-1.5!", className)} {...props}>
+    <PaginationLink aria-label={t("table.next")} size="default" className={cn("pr-1.5!", className)} {...props}>
       <span className="hidden sm:block">{text}</span>
       <IconChevronRight data-icon="inline-end" />
     </PaginationLink>
@@ -70,6 +77,7 @@ function PaginationNext({
 }
 
 function PaginationEllipsis({ className, ...props }: React.ComponentProps<"span">) {
+  const t = useT()
   return (
     <span
       aria-hidden
@@ -78,7 +86,7 @@ function PaginationEllipsis({ className, ...props }: React.ComponentProps<"span"
       {...props}
     >
       <IconDots />
-      <span className="sr-only">More pages</span>
+      <span className="sr-only">{t("common.morePages")}</span>
     </span>
   )
 }

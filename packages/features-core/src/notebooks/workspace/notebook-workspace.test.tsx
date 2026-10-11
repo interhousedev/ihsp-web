@@ -16,9 +16,9 @@ mock.module("./panes", paneMocks)
 
 // Telegram's own Back button only exists inside the Mini App; the test keeps the handler the workspace registers.
 let pressBack: () => void = () => undefined
-const telegram = await import("@ihsp/telegram")
+const telegram = await import("@ihsp/telegram/core")
 const realTelegram = { ...telegram }
-mock.module("@ihsp/telegram", () => ({
+mock.module("@ihsp/telegram/core", () => ({
   ...realTelegram,
   useBackButton: (onBack: () => void) => {
     pressBack = onBack
@@ -26,7 +26,7 @@ mock.module("@ihsp/telegram", () => ({
 }))
 afterAll(() => {
   mock.module("./panes", () => realPanes)
-  mock.module("@ihsp/telegram", () => realTelegram)
+  mock.module("@ihsp/telegram/core", () => realTelegram)
 })
 const { NotebookWorkspace } = await import("./notebook-workspace")
 

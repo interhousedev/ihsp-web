@@ -19,7 +19,7 @@ import { clearSessionHint, setSessionHint } from "../session-hint"
 const API = "http://localhost:8000"
 const PENDING_KEY = "ihsp.oauth.pending"
 
-function readPending(): { state: string; verifier: string; nonce: string; returnTo: string } {
+function readPending(): { state: string; verifier: string; returnTo: string } {
   return JSON.parse(window.sessionStorage.getItem(PENDING_KEY) ?? "null")
 }
 
@@ -50,7 +50,7 @@ describe("login", () => {
     expect(url.searchParams.get("code_challenge_method")).toBe("S256")
     expect(url.searchParams.get("state")).toBe(pending.state)
     expect(url.searchParams.get("state")).toHaveLength(32)
-    expect(url.searchParams.get("nonce")).toHaveLength(32)
+    expect(url.searchParams.get("nonce")).toBeNull()
     expect(url.searchParams.get("code_challenge")).toBe(await codeChallengeS256(pending.verifier))
     expect(pending.returnTo).toBe("/grades/")
   })
@@ -164,6 +164,9 @@ describe("safeReturnTo", () => {
     expect(safeReturnTo("/grades/?tab=day")).toBe("/grades/?tab=day")
     expect(safeReturnTo("https://evil.example/")).toBe("/")
     expect(safeReturnTo("//evil.example/")).toBe("/")
+    expect(safeReturnTo("/\\evil.example/")).toBe("/")
+    expect(safeReturnTo("/\\/evil.example/")).toBe("/")
+    expect(safeReturnTo("/a/b/?x=1#frag")).toBe("/a/b/?x=1#frag")
     expect(safeReturnTo("/auth/callback/?code=1")).toBe("/")
     expect(safeReturnTo(null)).toBe("/")
   })
@@ -259,6 +262,15 @@ describe("logout", () => {
     expect(getSession()).toBeNull()
     expect(useAuthStore.getState().status).toBe("anonymous")
     expect(assign).toHaveBeenCalledWith(logoutResponse.logout_url)
+  })
+
+  it("goes to the start page when the logout_url is not an http(s) address", async () => {
+    server.use(http.post(`${API}/v1/oauth/logout`, () => HttpResponse.json({ logout_url: "javascript:alert(1)" })))
+    const assign = spyOn(navigation, "assign").mockImplementation(() => undefined)
+
+    await logout()
+
+    expect(assign).toHaveBeenCalledWith("/")
   })
 
   it("does not start a login while the logout navigates away (it would win against the end-session URL)", async () => {

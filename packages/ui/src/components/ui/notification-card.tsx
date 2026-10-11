@@ -1,5 +1,6 @@
 "use client"
 
+import { useT } from "@ihsp/i18n"
 import type { FC } from "react"
 import { Icons } from "../icons"
 import { cn } from "../../lib/utils"
@@ -76,6 +77,7 @@ export const NotificationCard: FC<NotificationCardProps> = ({
   loadingActionId,
   className,
 }) => {
+  const t = useT()
   const isUnread = status === "unread"
 
   return (
@@ -118,7 +120,7 @@ export const NotificationCard: FC<NotificationCardProps> = ({
                 "rounded-lg p-1.5 transition-colors",
                 "text-muted-foreground hover:bg-accent hover:text-foreground",
               )}
-              aria-label="Mark as read"
+              aria-label={t("notifications.markRead")}
             >
               <Icons.check size={16} />
             </button>

@@ -63,6 +63,18 @@ describe("api client", () => {
     expect(unauthorized).toBe(1)
   })
 
+  test("a 401 from another host (baseUrl override) does not end the session", async () => {
+    let unauthorized = 0
+    const { api, refreshes } = client([new Response(null, { status: 401 }), new Response(null, { status: 401 })], {
+      onUnauthorized: () => {
+        unauthorized += 1
+      },
+    })
+    await expect(api.get("/v1/rooms/x", { baseUrl: "http://other.test" })).rejects.toBeDefined()
+    expect(refreshes()).toBe(1)
+    expect(unauthorized).toBe(0)
+  })
+
   test("application/problem+json becomes an ApiError with type, status and params", async () => {
     const { api } = client([
       json(

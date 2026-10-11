@@ -2,7 +2,7 @@
 
 import { getMe, keys, type UserMe } from "@ihsp/api"
 import { getSession, useAuthStore } from "@ihsp/auth"
-import { isMiniApp } from "@ihsp/telegram"
+import { isMiniApp } from "@ihsp/telegram/core"
 import { isThemeChoice, useTheme } from "@ihsp/ui"
 import { useQueryClient } from "@tanstack/react-query"
 import { useEffect, useRef } from "react"
