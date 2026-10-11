@@ -1329,7 +1329,12 @@
   "limits": {
     "title": "Limits & usage",
     "description": "AI limits, what the models cost and who uses them.",
-    "range": { "7": "7 days", "30": "30 days", "90": "90 days", "month": "This month" },
+    "range": {
+      "7": "7 days",
+      "30": "30 days",
+      "90": "90 days",
+      "month": "This month"
+    },
     "cards": {
       "monthCost": "Cost this month",
       "rangeCost": "Cost in the range",
@@ -1391,7 +1396,13 @@
       "unchanged": "Nothing to save",
       "invalid": "Enter a whole number from {min} to {max}.",
       "failed": "The limits could not be saved",
-      "unit": { "tokens": "tokens", "count": "times", "steps": "steps", "hours": "hours", "bytes": "bytes" },
+      "unit": {
+        "tokens": "tokens",
+        "count": "times",
+        "steps": "steps",
+        "hours": "hours",
+        "bytes": "bytes"
+      },
       "period": {
         "session": "per session",
         "day": "per day",
@@ -1473,7 +1484,10 @@
         "label": "Audio overviews per day",
         "hint": "0 switches the counter off; audio overviews are not built yet."
       },
-      "nb_slides_per_day": { "label": "Slide decks per day", "hint": "Slide decks a student may generate each day." },
+      "nb_slides_per_day": {
+        "label": "Slide decks per day",
+        "hint": "Slide decks a student may generate each day."
+      },
       "nb_infographics_per_day": {
         "label": "Infographics per day",
         "hint": "Infographics a student may generate each day."
@@ -1497,6 +1511,10 @@
       "web_search_per_day_student": {
         "label": "Web searches per day",
         "hint": "Searches a student may start each Tashkent day; 0 turns web search off."
+      },
+      "web_search_local_min_new": {
+        "label": "New saved pages before Exa",
+        "hint": "If this many new saved pages match a search, they answer it without calling Exa or using the student's quota; 0 always calls Exa."
       },
       "web_search_max_results": {
         "label": "Pages per chat search",

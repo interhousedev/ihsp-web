@@ -1329,7 +1329,12 @@
   "limits": {
     "title": "Limitlar va xarajatlar",
     "description": "Sun'iy intellekt limitlari, modellar narxi va ulardan kim foydalanayotgani.",
-    "range": { "7": "7 kun", "30": "30 kun", "90": "90 kun", "month": "Bu oy" },
+    "range": {
+      "7": "7 kun",
+      "30": "30 kun",
+      "90": "90 kun",
+      "month": "Bu oy"
+    },
     "cards": {
       "monthCost": "Bu oydagi xarajat",
       "rangeCost": "Davrdagi xarajat",
@@ -1391,8 +1396,20 @@
       "unchanged": "Saqlanadigan o'zgarish yo'q",
       "invalid": "{min} dan {max} gacha butun son kiriting.",
       "failed": "Limitlarni saqlab bo'lmadi",
-      "unit": { "tokens": "token", "count": "marta", "steps": "qadam", "hours": "soat", "bytes": "bayt" },
-      "period": { "session": "sessiyada", "day": "kuniga", "week": "haftasiga", "minute": "daqiqada", "hour": "soatda" }
+      "unit": {
+        "tokens": "token",
+        "count": "marta",
+        "steps": "qadam",
+        "hours": "soat",
+        "bytes": "bayt"
+      },
+      "period": {
+        "session": "sessiyada",
+        "day": "kuniga",
+        "week": "haftasiga",
+        "minute": "daqiqada",
+        "hour": "soatda"
+      }
     },
     "extensions": {
       "title": "Foydalanuvchi kengaytmalari",
@@ -1467,7 +1484,10 @@
         "label": "Audio sharhlar kuniga",
         "hint": "0 hisoblagichni o'chiradi; audio sharhlar hali tayyorlanmaydi."
       },
-      "nb_slides_per_day": { "label": "Slaydlar kuniga", "hint": "O'quvchi har kuni yarata oladigan slaydlar." },
+      "nb_slides_per_day": {
+        "label": "Slaydlar kuniga",
+        "hint": "O'quvchi har kuni yarata oladigan slaydlar."
+      },
       "nb_infographics_per_day": {
         "label": "Infografika kuniga",
         "hint": "O'quvchi har kuni yarata oladigan infografikalar."
@@ -1491,6 +1511,10 @@
       "web_search_per_day_student": {
         "label": "Internet qidiruvi kuniga",
         "hint": "O'quvchi har kuni (Toshkent vaqti) boshlashi mumkin bo'lgan qidiruvlar; 0 o'chiradi."
+      },
+      "web_search_local_min_new": {
+        "label": "Exa'dan oldin yangi saqlangan sahifalar",
+        "hint": "Shuncha yangi saqlangan sahifa so'rovga mos kelsa, javob Exa'siz va o'quvchi limitini sarflamasdan ulardan tuziladi; 0 — har doim Exa."
       },
       "web_search_max_results": {
         "label": "Chat qidiruvidagi sahifalar",
