@@ -207,14 +207,15 @@ export type AddSourcesResult = {
 
 export type UsagePart = {
   used: number
-  limit: number
+  /** `null`: unlimited (staff). */
+  limit: number | null
   resets_at: string | null
 }
 export type NotebookUsage = {
   budget: { session: UsagePart; day: UsagePart }
   quotas: Record<
     "artifacts" | "audio_overview" | "slides" | "infographic",
-    { used: number; limit: number; resets_at: string }
+    { used: number; limit: number | null; resets_at: string }
   >
   generating: number
   generating_limit: number

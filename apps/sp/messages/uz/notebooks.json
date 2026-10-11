@@ -60,6 +60,7 @@
       "session": "Shu sessiya",
       "day": "Bugun",
       "resets": "{time} da yangilanadi",
+      "unlimited": "Cheklovsiz",
       "materials": "Bugungi materiallar: {used}/{limit}",
       "description": "Sunʼiy intellekt yordamida qancha material yaratishingiz mumkin.",
       "used": "Ishlatilgan: {percent}%",

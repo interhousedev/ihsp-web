@@ -1,3 +1,4 @@
+import { adminAiHandlers } from "./admin-ai"
 import { aiHandlers } from "./ai"
 import { assessmentsHandlers } from "./assessments"
 import { broadcastsHandlers } from "./broadcasts"
@@ -28,6 +29,7 @@ import { webSearchHandlers } from "./web-search"
 export { errorHandlers } from "./errors"
 export { applyOutlineOps } from "./lms-authoring"
 export { resetAssessments } from "./assessments"
+export { resetAdminAiState } from "./admin-ai"
 export { resetCreatedFiles, storedObjects } from "./files"
 export {
   notebookFixtureSources,
@@ -53,6 +55,7 @@ export { pushSubscriptions, resetPushSubscriptions } from "./push"
 export { currentWebQuota, resetWebSearchState, setWebQuota, spendWebSearch } from "./web-search"
 export { apiUrl, notFound, paginate, problem } from "./utils"
 export {
+  adminAiHandlers,
   aiHandlers,
   assessmentsHandlers,
   broadcastsHandlers,
@@ -104,6 +107,7 @@ export const allHandlers = [
   ...pushHandlers,
   ...broadcastsHandlers,
   ...webSearchHandlers,
+  ...adminAiHandlers,
   ...aiHandlers,
   ...flashcardsHandlers,
   ...dashboardHandlers,

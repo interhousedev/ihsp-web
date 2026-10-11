@@ -122,7 +122,7 @@ export function StudioPanel({ notebook, onCollapse }: StudioPanelProps) {
         ) : null}
         {quotas && quotaHintVisible(usage) ? (
           <p className="text-muted-foreground text-xs">
-            {t("usage.materials", { used: quotas.used, limit: quotas.limit })}
+            {t("usage.materials", { used: quotas.used, limit: quotas.limit ?? 0 })}
           </p>
         ) : null}
         {create.isError ? (

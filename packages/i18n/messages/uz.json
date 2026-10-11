@@ -628,6 +628,8 @@
       "tier": {
         "fast": "Tezkor",
         "smart": "Aqlli",
+        "smartLeft": "Aqlli: bu hafta {limit} tadan {left} tasi qoldi",
+        "smartNoneLeft": "Aqlli: bu haftalik so'rovlar tugadi, {date} kuni yangilanadi",
         "label": "Javob rejimi"
       },
       "guidedHint": "Bosqichma-bosqich oʻrganish: bosqichma-bosqich tushuntir, menga savollar ber va toʻliq javob berishdan oldin tushunganimni tekshir.",

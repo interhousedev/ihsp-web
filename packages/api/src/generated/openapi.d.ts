@@ -144,6 +144,114 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/v1/admin/ai/limit-extensions": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * List Extensions
+         * @description Every extension, or only the one of a student.
+         */
+        get: operations["list_extensions_v1_admin_ai_limit_extensions_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/admin/ai/limit-extensions/students": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Search Students
+         * @description Students whose name or login matches (up to 20).
+         */
+        get: operations["search_students_v1_admin_ai_limit_extensions_students_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/admin/ai/limit-extensions/{user_id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        /**
+         * Put Extension
+         * @description Create or replace a student's extension (multiplier or values, to a date).
+         */
+        put: operations["put_extension_v1_admin_ai_limit_extensions__user_id__put"];
+        post?: never;
+        /**
+         * Delete Extension
+         * @description Remove the extension of a student.
+         */
+        delete: operations["delete_extension_v1_admin_ai_limit_extensions__user_id__delete"];
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/admin/ai/limits": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get Limits
+         * @description Every editable AI limit with its value and environment default.
+         */
+        get: operations["get_limits_v1_admin_ai_limits_get"];
+        /**
+         * Put Limits
+         * @description Change some limits; null resets a limit to its environment value.
+         */
+        put: operations["put_limits_v1_admin_ai_limits_put"];
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/admin/ai/usage": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get Usage
+         * @description Tokens, calls and cost of a date range, grouped (Tashkent dates).
+         */
+        get: operations["get_usage_v1_admin_ai_usage_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/v1/admin/assessments": {
         parameters: {
             query?: never;
@@ -10981,6 +11089,65 @@ export interface components {
             student_id: string;
         };
         /**
+         * ExtensionBody
+         * @description PUT /v1/admin/ai/limit-extensions/{user_id}: create or replace an extension.
+         */
+        ExtensionBody: {
+            /** Expires On */
+            expires_on?: string | null;
+            /** Multiplier */
+            multiplier?: number | null;
+            /**
+             * Note
+             * @default
+             */
+            note?: string;
+            /** Values */
+            values?: {
+                [key: string]: number;
+            };
+        };
+        /**
+         * ExtensionOut
+         * @description One extension with the student it is for.
+         */
+        ExtensionOut: {
+            /** Active */
+            active: boolean;
+            /** Expires On */
+            expires_on: string | null;
+            /** Login */
+            login: string | null;
+            /** Multiplier */
+            multiplier: number | null;
+            /** Note */
+            note: string;
+            /**
+             * Updated At
+             * Format: date-time
+             */
+            updated_at: string;
+            /**
+             * User Id
+             * Format: uuid
+             */
+            user_id: string;
+            /** User Name */
+            user_name: string;
+            /** Values */
+            values: {
+                [key: string]: number;
+            };
+        };
+        /**
+         * ExtensionsResponse
+         * @description GET /v1/admin/ai/limit-extensions.
+         */
+        ExtensionsResponse: {
+            /** Items */
+            items: components["schemas"]["ExtensionOut"][];
+        };
+        /**
          * ExternalAccess
          * @description Access class of an external record (`resource_modifier_id` 1, 2, 3).
          * @enum {string}
@@ -12944,6 +13111,64 @@ export interface components {
             parent_id?: string | null;
         };
         /**
+         * LimitItem
+         * @description One editable limit: its value in force, its environment value and its bounds.
+         */
+        LimitItem: {
+            /**
+             * Default
+             * @description The environment's value; a reset gives it back.
+             */
+            default: number | null;
+            /**
+             * Description
+             * @description The settings' description (English).
+             */
+            description: string;
+            /** Group */
+            group: string;
+            /** Key */
+            key: string;
+            /** Label Key */
+            label_key: string;
+            /** Maximum */
+            maximum: number;
+            /** Minimum */
+            minimum: number;
+            /** Overridden */
+            overridden: boolean;
+            /**
+             * Period
+             * @description session, day, week, minute or hour; null if standing.
+             */
+            period: string | null;
+            /**
+             * Unit
+             * @description tokens, count, steps, hours or bytes.
+             */
+            unit: string;
+            /** Value */
+            value: number | null;
+        };
+        /**
+         * LimitsBody
+         * @description PUT /v1/admin/ai/limits: the limits to change; null resets one to its default.
+         */
+        LimitsBody: {
+            /** Limits */
+            limits: {
+                [key: string]: number | null;
+            };
+        };
+        /**
+         * LimitsResponse
+         * @description GET and PUT /v1/admin/ai/limits.
+         */
+        LimitsResponse: {
+            /** Limits */
+            limits: components["schemas"]["LimitItem"][];
+        };
+        /**
          * LinkItem
          * @description A short link, share or lesson resource owned by the caller.
          */
@@ -13442,6 +13667,22 @@ export interface components {
             items: components["schemas"]["ModerationItem"][];
             /** Next Cursor */
             next_cursor: string | null;
+        };
+        /**
+         * MonthOut
+         * @description Month to date and the projection to the end of the month.
+         */
+        MonthOut: {
+            /** Cost Usd */
+            cost_usd: number;
+            /** Days Elapsed */
+            days_elapsed: number;
+            /** Days In Month */
+            days_in_month: number;
+            /** Month */
+            month: string;
+            /** Projected Usd */
+            projected_usd: number;
         };
         /**
          * MoveSection
@@ -15163,8 +15404,11 @@ export interface components {
          * @description Daily count of outputs of one counter.
          */
         QuotaResponse: {
-            /** Limit */
-            limit: number;
+            /**
+             * Limit
+             * @description Null when unlimited (staff).
+             */
+            limit: number | null;
             /**
              * Resets At
              * Format: date-time
@@ -17057,6 +17301,21 @@ export interface components {
             my_mark: components["schemas"]["MarkItemResponse"][];
         };
         /**
+         * StudentOut
+         * @description A student found by name or login (for the extension picker).
+         */
+        StudentOut: {
+            /**
+             * Id
+             * Format: uuid
+             */
+            id: string;
+            /** Login */
+            login: string | null;
+            /** Name */
+            name: string;
+        };
+        /**
          * StudentProfileResponse
          * @description StudentProfile.
          */
@@ -17103,6 +17362,14 @@ export interface components {
             semester: components["schemas"]["SemesterCardResponse"];
             /** Synced At */
             synced_at: string | null;
+        };
+        /**
+         * StudentsResponse
+         * @description GET /v1/admin/ai/limit-extensions/students.
+         */
+        StudentsResponse: {
+            /** Items */
+            items: components["schemas"]["StudentOut"][];
         };
         /**
          * StudyCardResponse
@@ -18414,6 +18681,35 @@ export interface components {
             opens: number;
         };
         /**
+         * TopUserOut
+         * @description A user with the largest cost in the range.
+         */
+        TopUserOut: {
+            /** Cached */
+            cached: number;
+            /** Calls */
+            calls: number;
+            /** Cost Usd */
+            cost_usd: number;
+            /** Failed */
+            failed: number;
+            /** Login */
+            login: string | null;
+            /** Name */
+            name: string;
+            /** Role */
+            role: string;
+            /** Tokens In */
+            tokens_in: number;
+            /** Tokens Out */
+            tokens_out: number;
+            /**
+             * User Id
+             * Format: uuid
+             */
+            user_id: string;
+        };
+        /**
          * TopicRefSchema
          * @description A topic the item feeds, with the page range.
          */
@@ -18453,6 +18749,24 @@ export interface components {
             subject_id: string;
             /** Year Of Study */
             year_of_study: number | null;
+        };
+        /**
+         * TotalsOut
+         * @description Sums of the ledger: tokens, calls, failed calls and cost in US dollars.
+         */
+        TotalsOut: {
+            /** Cached */
+            cached: number;
+            /** Calls */
+            calls: number;
+            /** Cost Usd */
+            cost_usd: number;
+            /** Failed */
+            failed: number;
+            /** Tokens In */
+            tokens_in: number;
+            /** Tokens Out */
+            tokens_out: number;
         };
         /**
          * TurnResultResponse
@@ -18815,6 +19129,12 @@ export interface components {
         UsageInfoResponse: {
             day: components["schemas"]["app__interfaces__http__v1__ai__schemas__UsagePartResponse"];
             session: components["schemas"]["app__interfaces__http__v1__ai__schemas__UsagePartResponse"];
+            /** Smart Limit */
+            smart_limit?: number | null;
+            /** Smart Remaining */
+            smart_remaining?: number | null;
+            /** Smart Resets At */
+            smart_resets_at?: string | null;
         };
         /**
          * UsageInsights
@@ -18826,6 +19146,63 @@ export interface components {
             /** Sign Ins */
             sign_ins: components["schemas"]["DayCount"][];
             storage: components["schemas"]["StorageUsage"];
+        };
+        /**
+         * UsageResponse
+         * @description GET /v1/admin/ai/usage.
+         */
+        UsageResponse: {
+            /**
+             * From
+             * Format: date
+             */
+            from: string;
+            /**
+             * Generated At
+             * Format: date-time
+             */
+            generated_at: string;
+            /**
+             * Group By
+             * @enum {string}
+             */
+            group_by: "day" | "task" | "model" | "role" | "feature" | "user";
+            month: components["schemas"]["MonthOut"];
+            /** Rows */
+            rows: components["schemas"]["UsageRowOut"][];
+            /**
+             * To
+             * Format: date
+             */
+            to: string;
+            today: components["schemas"]["TotalsOut"];
+            /** Top Users */
+            top_users: components["schemas"]["TopUserOut"][];
+            totals: components["schemas"]["TotalsOut"];
+        };
+        /**
+         * UsageRowOut
+         * @description One group of the report (a day, a task, a model, ...).
+         */
+        UsageRowOut: {
+            /** Cached */
+            cached: number;
+            /** Calls */
+            calls: number;
+            /** Cost By Feature */
+            cost_by_feature: {
+                [key: string]: number;
+            };
+            /** Cost Usd */
+            cost_usd: number;
+            /** Failed */
+            failed: number;
+            /** Key */
+            key: string;
+            /** Tokens In */
+            tokens_in: number;
+            /** Tokens Out */
+            tokens_out: number;
         };
         /**
          * UsedBy
@@ -19272,12 +19649,18 @@ export interface components {
             deep_cost: number;
             /** Enabled */
             enabled: boolean;
-            /** Limit */
-            limit: number;
+            /**
+             * Limit
+             * @description Searches a day; null when unlimited (staff).
+             */
+            limit: number | null;
             /** Max Results */
             max_results: number;
-            /** Remaining */
-            remaining: number;
+            /**
+             * Remaining
+             * @description Searches left today; null when unlimited.
+             */
+            remaining: number | null;
             /**
              * Resets At
              * Format: date-time
@@ -20813,8 +21196,11 @@ export interface components {
          * @description Weighted tokens used against a limit.
          */
         app__interfaces__http__v1__notebooks__schemas_common__UsagePartResponse: {
-            /** Limit */
-            limit: number;
+            /**
+             * Limit
+             * @description Null when unlimited (staff).
+             */
+            limit: number | null;
             /** Resets At */
             resets_at: string | null;
             /** Used */
@@ -21153,6 +21539,218 @@ export interface operations {
                 };
                 content: {
                     "application/json": components["schemas"]["EmisClassResponse"][];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    list_extensions_v1_admin_ai_limit_extensions_get: {
+        parameters: {
+            query?: {
+                user_id?: string | null;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ExtensionsResponse"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    search_students_v1_admin_ai_limit_extensions_students_get: {
+        parameters: {
+            query: {
+                q: string;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["StudentsResponse"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    put_extension_v1_admin_ai_limit_extensions__user_id__put: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                user_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["ExtensionBody"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ExtensionOut"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    delete_extension_v1_admin_ai_limit_extensions__user_id__delete: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                user_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            204: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    get_limits_v1_admin_ai_limits_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["LimitsResponse"];
+                };
+            };
+        };
+    };
+    put_limits_v1_admin_ai_limits_put: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["LimitsBody"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["LimitsResponse"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    get_usage_v1_admin_ai_usage_get: {
+        parameters: {
+            query?: {
+                from?: string | null;
+                to?: string | null;
+                group_by?: "day" | "task" | "model" | "role" | "feature" | "user";
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["UsageResponse"];
                 };
             };
             /** @description Validation Error */

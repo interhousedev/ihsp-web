@@ -34,8 +34,10 @@ export type WebResult = {
 export type WebQuota = {
   enabled: boolean
   used: number
-  limit: number
-  remaining: number
+  /** `null`: unlimited (staff). */
+  limit: number | null
+  /** `null`: unlimited (staff). */
+  remaining: number | null
   resets_at: string
   max_results: number
   deep_cost: number
@@ -85,6 +87,10 @@ export type UsageInfo = {
   /** `limit: null`: no cap (Administration). */
   session: { used: number; limit: number | null; resets_at: string | null }
   day: { used: number; limit: number | null; resets_at: string | null }
+  /** Smart-tier messages left this week (Monday to Monday, Tashkent); `null`: unlimited (staff) or no smart tier. */
+  smart_remaining?: number | null
+  smart_limit?: number | null
+  smart_resets_at?: string | null
 }
 
 export type TurnResult = {

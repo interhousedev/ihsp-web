@@ -45,6 +45,7 @@ const {
   resetSubjectMaterialsState,
   resetTeacherContacts,
   resetTeacherPhotos,
+  resetAdminAiState,
   resetWebSearchState,
 } = await import("./handlers")
 const { resetTestRouter, testNavigation } = await import("./router")
@@ -76,6 +77,7 @@ afterEach(() => {
   resetCreatedFiles()
   resetNotebooksState()
   resetWebSearchState()
+  resetAdminAiState()
   resetLibraryState()
   resetSubjectMaterialsState()
   resetTeacherContacts()

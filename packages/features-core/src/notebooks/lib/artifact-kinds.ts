@@ -124,10 +124,15 @@ export function quotaKeyFor(kind: ArtifactKind): "artifacts" | "slides" | "infog
   return kind === "slides" || kind === "infographic" ? kind : "artifacts"
 }
 
+/** A daily count is used up when it has a limit (null is unlimited) and has reached it. */
+function partFull(part: { used: number; limit: number | null }): boolean {
+  return part.limit !== null && part.used >= part.limit
+}
+
 /** True when the per-kind or the overall daily count of `kind` is used up. */
 export function quotaReached(usage: NotebookUsage | undefined, kind: ArtifactKind): boolean {
   if (!usage) return false
   const overall = usage.quotas.artifacts
   const own = usage.quotas[quotaKeyFor(kind)]
-  return overall.used >= overall.limit || own.used >= own.limit
+  return partFull(overall) || partFull(own)
 }

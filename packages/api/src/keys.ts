@@ -63,6 +63,10 @@ export const keys = {
     syncRuns: (filters?: object) => ["admin", "sync-runs", params(filters)] as const,
     dashboard: () => ["admin", "dashboard"] as const,
     insights: () => ["admin", "insights"] as const,
+    aiLimits: () => ["admin", "ai", "limits"] as const,
+    aiUsage: (filters?: object) => ["admin", "ai", "usage", params(filters)] as const,
+    aiExtensions: (filters?: object) => ["admin", "ai", "extensions", params(filters)] as const,
+    aiStudents: (q: string) => ["admin", "ai", "students", q] as const,
     broadcasts: {
       all: () => ["admin", "broadcasts"] as const,
       list: (filters?: object) => ["admin", "broadcasts", "list", params(filters)] as const,

@@ -6,6 +6,7 @@
 // query differs from the hand-written type of that endpoint function; fix the type or report the backend deviation.
 
 import type { paths } from "./generated/openapi"
+import type { getAdminAiExtensions, getAdminAiLimits, getAdminAiStudents, getAdminAiUsage, putAdminAiExtension, putAdminAiLimits } from "./endpoints/admin-ai"
 import type { getAiChat, getAiChats, getAiUsage, getAiWebSearch, patchAiChat, postAiChatMessages, postAiChatRegenerate, postAiChatToolCallApprove, postAiChatToolCallReject, postAiChats } from "./endpoints/ai"
 import type { getAdminAssessments, getMeAssessments, getMeSubjectPlanner, getStaffAssessments, patchAdminAssessment, patchStaffAssessment, postAdminAssessment, postMeAssessment, postStaffAssessment } from "./endpoints/assessments"
 import type { getAdminBroadcast, getAdminBroadcasts, patchAdminBroadcast, postAdminBroadcastCancel, postAdminBroadcastSend, postAdminBroadcasts, postAdminBroadcastsAudienceCount } from "./endpoints/broadcasts"
@@ -32,6 +33,7 @@ import type { getPushConfig, postPushSubscription } from "./endpoints/push"
 import type { getInternalEmisProfile, getInternalEmisRatings, getInternalEmisSubjects, postIdReclaimEmail, postIdReclaimEmis, postIdRegisterComplete, postIdRegisterEmail, postIdRegisterEmis } from "./endpoints/registration"
 import type { getAdminGroup, getAdminGroups, getAdminLessons, getAdminRooms, getAdminStudents, getAdminSubjects, getAdminTerms, getAdminTimetable, getMeProfile, getMeTimetable, getStaffGroup, getStaffGroups, getStaffTimetable, patchAdminGroup, patchAdminLesson, patchAdminRoom, patchAdminSubject, patchAdminTerm, patchAdminTimetable, postAdminGroups, postAdminLessons, postAdminRoomArchive, postAdminRoomMerge, postAdminRoomRegeneratePin, postAdminStudentsImport, postAdminStudentsImportConfirm, postAdminSubjects, postAdminTerms, postAdminTimetable, postAdminTimetableCheck, postAdminTimetableCopy, putAdminGroupSubgroups, putStaffGroupSubgroups } from "./endpoints/schedule"
 import type { deleteAdminUserPhoto, deleteStaffMePhoto, getAdminTeacherContacts, getMeTeacher, getMeTeacherTimetable, getMeTeachers, getStaffMeContacts, putAdminTeacherContacts, putAdminUserPhoto, putStaffMeContacts, putStaffMePhoto } from "./endpoints/teachers"
+import type { AdminUsageParams, ExtensionBody, ExtensionsParams, LimitsBody } from "./types/admin-ai"
 import type { ChatCreateBody, ChatMessageBody, ChatPatchBody, ChatsParams, MessageFeedbackBody, ToolCallRejectBody, UsageParams } from "./types/ai"
 import type { AssessmentCreateBody, AssessmentPatchBody, AssessmentProposalBody, AssessmentsParams, PlannerParams, StaffAssessmentsParams } from "./types/assessments"
 import type { AudienceCountBody, BroadcastInput, BroadcastPatchBody, BroadcastSendBody, BroadcastsParams } from "./types/broadcasts"
@@ -86,6 +88,42 @@ type RequestOf<P extends keyof paths, M extends Method> =
 /** The query parameters of an operation. */
 type QueryOf<P extends keyof paths, M extends Method> =
   OperationOf<P, M> extends { parameters: { query?: infer Q } } ? NonNullable<Q> : never
+
+// GET /v1/admin/ai/limits — getAdminAiLimits
+declare const res_getAdminAiLimits: Awaited<ReturnType<typeof getAdminAiLimits>>
+export const response_getAdminAiLimits: ResponseOf<"/v1/admin/ai/limits", "get"> = res_getAdminAiLimits
+
+// PUT /v1/admin/ai/limits — putAdminAiLimits
+declare const res_putAdminAiLimits: Awaited<ReturnType<typeof putAdminAiLimits>>
+export const response_putAdminAiLimits: ResponseOf<"/v1/admin/ai/limits", "put"> = res_putAdminAiLimits
+declare const req_putAdminAiLimits: LimitsBody
+export const request_putAdminAiLimits: RequestOf<"/v1/admin/ai/limits", "put"> = req_putAdminAiLimits
+
+// GET /v1/admin/ai/usage — getAdminAiUsage
+declare const res_getAdminAiUsage: Awaited<ReturnType<typeof getAdminAiUsage>>
+export const response_getAdminAiUsage: ResponseOf<"/v1/admin/ai/usage", "get"> = res_getAdminAiUsage
+declare const query_getAdminAiUsage: AdminUsageParams
+export const query_ok_getAdminAiUsage: QueryOf<"/v1/admin/ai/usage", "get"> = query_getAdminAiUsage
+
+// GET /v1/admin/ai/limit-extensions — getAdminAiExtensions
+declare const res_getAdminAiExtensions: Awaited<ReturnType<typeof getAdminAiExtensions>>
+export const response_getAdminAiExtensions: ResponseOf<"/v1/admin/ai/limit-extensions", "get"> = res_getAdminAiExtensions
+declare const query_getAdminAiExtensions: ExtensionsParams
+export const query_ok_getAdminAiExtensions: QueryOf<"/v1/admin/ai/limit-extensions", "get"> = query_getAdminAiExtensions
+
+// GET /v1/admin/ai/limit-extensions/students — getAdminAiStudents
+declare const res_getAdminAiStudents: Awaited<ReturnType<typeof getAdminAiStudents>>
+export const response_getAdminAiStudents: ResponseOf<"/v1/admin/ai/limit-extensions/students", "get"> = res_getAdminAiStudents
+
+// PUT /v1/admin/ai/limit-extensions/{user_id} — putAdminAiExtension
+declare const res_putAdminAiExtension: Awaited<ReturnType<typeof putAdminAiExtension>>
+export const response_putAdminAiExtension: ResponseOf<"/v1/admin/ai/limit-extensions/{user_id}", "put"> = res_putAdminAiExtension
+declare const req_putAdminAiExtension: ExtensionBody
+export const request_putAdminAiExtension: RequestOf<"/v1/admin/ai/limit-extensions/{user_id}", "put"> = req_putAdminAiExtension
+
+// DELETE /v1/admin/ai/limit-extensions/{user_id} — deleteAdminAiExtension
+// no JSON success response (204, CSV, calendar or HTML): only the route is checked
+export type route_deleteAdminAiExtension = OperationOf<"/v1/admin/ai/limit-extensions/{user_id}", "delete">
 
 // GET /v1/ai/chats — getAiChats
 declare const res_getAiChats: Awaited<ReturnType<typeof getAiChats>>

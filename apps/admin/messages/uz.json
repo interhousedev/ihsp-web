@@ -28,7 +28,8 @@
     "moderation": "Moderatsiya",
     "assistant": "Yordamchi",
     "reports": "Hisobotlar",
-    "settings": "Sozlamalar"
+    "settings": "Sozlamalar",
+    "limits": "Limitlar va xarajatlar"
   },
   "shared": {
     "filters": "Filtrlar",
@@ -1323,6 +1324,198 @@
       "uz": "Oʻzbekcha",
       "ru": "Русский",
       "en": "English"
+    }
+  },
+  "limits": {
+    "title": "Limitlar va xarajatlar",
+    "description": "Sun'iy intellekt limitlari, modellar narxi va ulardan kim foydalanayotgani.",
+    "range": { "7": "7 kun", "30": "30 kun", "90": "90 kun", "month": "Bu oy" },
+    "cards": {
+      "monthCost": "Bu oydagi xarajat",
+      "rangeCost": "Davrdagi xarajat",
+      "projected": "Oy uchun prognoz",
+      "tokensToday": "Bugungi tokenlar",
+      "callsToday": "Bugungi so'rovlar",
+      "failed": "xato: {count}"
+    },
+    "charts": {
+      "daily": "Funksiyalar bo'yicha kunlik xarajat",
+      "byModel": "Modellar bo'yicha xarajat",
+      "byRole": "Rollar bo'yicha xarajat",
+      "empty": "Bu davrda pullik so'rovlar bo'lmagan.",
+      "usd": "USD"
+    },
+    "features": {
+      "assistant": "Yordamchi",
+      "notebook_chat": "Bloknot suhbati",
+      "notebook_prep": "Manba tahlili",
+      "studio": "Studiya",
+      "lms_author": "Kurs muallifi",
+      "web_search": "Internet qidiruvi",
+      "embedding": "Ma'no bo'yicha qidiruv",
+      "academic": "Fan nomlari",
+      "other": "Boshqa"
+    },
+    "roles": {
+      "student": "O'quvchilar",
+      "teacher": "O'qituvchilar",
+      "admin": "Administratorlar",
+      "staff": "Boshqa xodimlar",
+      "system": "Tizim vazifalari"
+    },
+    "top": {
+      "title": "Eng faol foydalanuvchilar",
+      "user": "Foydalanuvchi",
+      "role": "Rol",
+      "calls": "So'rovlar",
+      "tokens": "Tokenlar",
+      "cost": "Xarajat",
+      "empty": "Bu davrda pullik so'rovlar bo'lmagan."
+    },
+    "editor": {
+      "title": "Limitlar",
+      "description": "O'zgarishlar taxminan 30 soniyada kuchga kiradi. Xodimlar cheklanmaydi.",
+      "groups": {
+        "assistant": "Yordamchi",
+        "smart": "Aqlli yordamchi",
+        "notebooks": "Bloknotlar va Studiya",
+        "web_search": "Internet qidiruvi",
+        "lms": "Kurs muallifligi"
+      },
+      "value": "Qiymat",
+      "default": "Standart: {value}",
+      "changed": "O'zgartirilgan",
+      "reset": "Standartga qaytarish",
+      "save": "O'zgarishlarni saqlash",
+      "saved": "Limitlar saqlandi",
+      "unchanged": "Saqlanadigan o'zgarish yo'q",
+      "invalid": "{min} dan {max} gacha butun son kiriting.",
+      "failed": "Limitlarni saqlab bo'lmadi",
+      "unit": { "tokens": "token", "count": "marta", "steps": "qadam", "hours": "soat", "bytes": "bayt" },
+      "period": { "session": "sessiyada", "day": "kuniga", "week": "haftasiga", "minute": "daqiqada", "hour": "soatda" }
+    },
+    "extensions": {
+      "title": "Foydalanuvchi kengaytmalari",
+      "description": "Bitta o'quvchi limitini ko'paytirish: ko'paytirgich yoki belgilangan qiymatlar, sanagacha.",
+      "add": "Kengaytma qo'shish",
+      "empty": "Hozircha kengaytmalar yo'q.",
+      "active": "Amalda",
+      "expired": "Muddati o'tgan",
+      "until": "{date} gacha",
+      "forever": "muddatsiz",
+      "multiplier": "×{value}",
+      "values": "Belgilangan qiymatlar",
+      "remove": "O'chirish",
+      "removed": "Kengaytma o'chirildi",
+      "saved": "Kengaytma saqlandi",
+      "badge": "Sun'iy intellekt limitlari {date} gacha kengaytirilgan",
+      "badgeForever": "Sun'iy intellekt limitlari kengaytirilgan",
+      "dialog": {
+        "title": "O'quvchi limitlarini kengaytirish",
+        "search": "Ism yoki login (kamida 2 harf)",
+        "noResults": "O'quvchilar topilmadi.",
+        "student": "O'quvchi",
+        "change": "Almashtirish",
+        "mode": "Turi",
+        "multiplier": "Ko'paytirgich",
+        "custom": "Belgilangan qiymatlar",
+        "customHint": "Faqat oshirmoqchi bo'lgan limitlarni kiriting; qolganlari o'zgarmaydi.",
+        "expires": "Amal qilish muddati (ixtiyoriy)",
+        "note": "Izoh (nima uchun, qancha muddat)",
+        "save": "Kengaytmani saqlash",
+        "need": "Ko'paytirgich tanlang yoki kamida bitta qiymat kiriting."
+      }
+    },
+    "fields": {
+      "ai_text_max_bytes": {
+        "label": "Yordamchi uchun eng katta fayl",
+        "hint": "Yordamchi fayl vositasi bilan ocha oladigan eng katta matn."
+      },
+      "ai_session_hours": {
+        "label": "Sessiya davomiyligi",
+        "hint": "Token sessiyasi davom etadigan soatlar; undan keyingi birinchi xabar yangisini boshlaydi."
+      },
+      "ai_session_tokens_student": {
+        "label": "Yordamchi tokenlari sessiyada",
+        "hint": "O'quvchi sessiyada sarflashi mumkin bo'lgan model tokenlari (model vazni bilan hisoblanadi)."
+      },
+      "ai_daily_tokens_student": {
+        "label": "Yordamchi tokenlari kuniga",
+        "hint": "O'quvchi yordamchi bilan har kuni (Toshkent vaqti) sarflashi mumkin bo'lgan tokenlar."
+      },
+      "ai_max_tool_steps": {
+        "label": "Javobdagi vosita qadamlari",
+        "hint": "Bitta yordamchi javobida modelga eng ko'p murojaatlar (vosita aylanmalari)."
+      },
+      "ai_smart_requests_per_week_student": {
+        "label": "Haftasiga aqlli xabarlar",
+        "hint": "O'quvchi haftada (dushanbadan) aqlli modelga yubora oladigan xabarlar. 0 o'chiradi."
+      },
+      "nb_session_tokens_student": {
+        "label": "Bloknot tokenlari sessiyada",
+        "hint": "Bloknotlarda sessiya uchun og'irlangan tokenlar (kirish + 0,1 × kesh + 5 × chiqish)."
+      },
+      "nb_daily_tokens_student": {
+        "label": "Bloknot tokenlari kuniga",
+        "hint": "O'quvchi har kuni ishlatishi mumkin bo'lgan og'irlangan bloknot tokenlari."
+      },
+      "nb_artifacts_per_day": {
+        "label": "Studiya natijalari kuniga",
+        "hint": "O'quvchi har kuni boshlashi mumkin bo'lgan Studiya natijalari (konspekt, test, slayd va h.k.)."
+      },
+      "nb_audio_per_day": {
+        "label": "Audio sharhlar kuniga",
+        "hint": "0 hisoblagichni o'chiradi; audio sharhlar hali tayyorlanmaydi."
+      },
+      "nb_slides_per_day": { "label": "Slaydlar kuniga", "hint": "O'quvchi har kuni yarata oladigan slaydlar." },
+      "nb_infographics_per_day": {
+        "label": "Infografika kuniga",
+        "hint": "O'quvchi har kuni yarata oladigan infografikalar."
+      },
+      "nb_concurrent_artifacts": {
+        "label": "Bir vaqtda tayyorlanadigan natijalar",
+        "hint": "O'quvchi bir vaqtning o'zida nechta Studiya natijasini yaratishi mumkin."
+      },
+      "nb_chat_per_minute": {
+        "label": "Bloknotda savollar daqiqada",
+        "hint": "O'quvchi bloknot suhbatiga har daqiqada bera oladigan savollar."
+      },
+      "nb_source_adds_per_hour": {
+        "label": "Soatiga qo'shiladigan manbalar",
+        "hint": "O'quvchi bloknotlarga soatiga qo'sha oladigan manbalar."
+      },
+      "nb_search_per_minute": {
+        "label": "Manbalarda qidiruv daqiqada",
+        "hint": "Bloknot manbalarida daqiqada to'liq matn qidiruvlari."
+      },
+      "web_search_per_day_student": {
+        "label": "Internet qidiruvi kuniga",
+        "hint": "O'quvchi har kuni (Toshkent vaqti) boshlashi mumkin bo'lgan qidiruvlar; 0 o'chiradi."
+      },
+      "web_search_max_results": {
+        "label": "Chat qidiruvidagi sahifalar",
+        "hint": "Bitta qidiruv chat javobi uchun saqlaydigan sahifalar."
+      },
+      "web_search_discover_results": {
+        "label": "Discover qidiruvidagi sahifalar",
+        "hint": "Har bir Discover qidiruvi qaytaradigan sahifalar."
+      },
+      "web_search_deep_queries": {
+        "label": "Chuqur Discover so'rovlari",
+        "hint": "Chuqur ishga tushirish qiladigan qidiruvlar; kunlik kvotadan shuncha sarflanadi."
+      },
+      "web_search_deep_results": {
+        "label": "Chuqur ishdan keyin qoladigan sahifalar",
+        "hint": "Chuqur Discover tartiblangandan keyin saqlaydigan eng yaxshi sahifalar."
+      },
+      "lms_ai_chat_per_minute": {
+        "label": "Muallif yordamchisiga xabarlar daqiqada",
+        "hint": "Kurs muallifi yordamchiga har daqiqada yubora oladigan xabarlar."
+      },
+      "lms_ai_max_tool_steps": {
+        "label": "Muallif yordamchisi vosita qadamlari",
+        "hint": "Muallif yordamchisining bitta javobida modelga eng ko'p murojaatlar."
+      }
     }
   }
 }

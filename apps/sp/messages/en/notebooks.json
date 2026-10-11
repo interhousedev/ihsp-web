@@ -60,6 +60,7 @@
       "session": "This session",
       "day": "Today",
       "resets": "Resets at {time}",
+      "unlimited": "No limit",
       "materials": "Study materials: {used} of {limit} today",
       "description": "How much you can create with the AI.",
       "used": "{percent}% used",

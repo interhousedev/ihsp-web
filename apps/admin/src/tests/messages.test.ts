@@ -8,6 +8,43 @@ import { messages } from "./helpers"
 
 const ROOT = join(import.meta.dir, "..", "..", "..", "..")
 /** Feature flags of the platform settings page that have a translated name and description. */
+const LIMIT_FEATURES = [
+  "assistant",
+  "notebook_chat",
+  "notebook_prep",
+  "studio",
+  "lms_author",
+  "web_search",
+  "embedding",
+  "academic",
+  "other",
+]
+const LIMIT_ROLES = ["student", "teacher", "admin", "staff", "system"]
+const LIMIT_FIELDS = [
+  "ai_text_max_bytes",
+  "ai_session_hours",
+  "ai_session_tokens_student",
+  "ai_daily_tokens_student",
+  "ai_max_tool_steps",
+  "ai_smart_requests_per_week_student",
+  "nb_session_tokens_student",
+  "nb_daily_tokens_student",
+  "nb_artifacts_per_day",
+  "nb_audio_per_day",
+  "nb_slides_per_day",
+  "nb_infographics_per_day",
+  "nb_concurrent_artifacts",
+  "nb_chat_per_minute",
+  "nb_source_adds_per_hour",
+  "nb_search_per_minute",
+  "web_search_per_day_student",
+  "web_search_max_results",
+  "web_search_discover_results",
+  "web_search_deep_queries",
+  "web_search_deep_results",
+  "lms_ai_chat_per_minute",
+  "lms_ai_max_tool_steps",
+]
 const FEATURE_FLAGS = [
   "notebooks",
   "ai_assistant",
@@ -293,6 +330,14 @@ describe("keys used in the code", () => {
       "timetable.noEntities.${view}": ["group", "teacher", "room"],
       "timetable.parityShort.${entry.week_parity}": ["odd", "even"],
       "timetable.views.${item}": ["group", "teacher", "room"],
+      "limits.features.${name}": LIMIT_FEATURES,
+      "limits.roles.${user.role}": LIMIT_ROLES,
+      "limits.roles.${key}": LIMIT_ROLES,
+      "limits.fields.${item.key}.label": LIMIT_FIELDS,
+      "limits.fields.${item.key}.hint": LIMIT_FIELDS,
+      "limits.editor.groups.${group}": ["assistant", "smart", "notebooks", "web_search", "lms"],
+      "limits.editor.unit.${item.unit}": ["tokens", "steps", "hours", "bytes"],
+      "limits.editor.period.${item.period}": ["session", "day", "week", "minute", "hour"],
       "users.roles.${role}": [...roles, "lms_creator", "librarian"],
       "users.status.${value}": ["active", "pending_activation", "blocked", "deactivated"],
     }

@@ -628,6 +628,8 @@
       "tier": {
         "fast": "Fast",
         "smart": "Smart",
+        "smartLeft": "Smart: {left} of {limit} left this week",
+        "smartNoneLeft": "Smart: none left, resets {date}",
         "label": "Answer mode"
       },
       "guidedHint": "Guided learning: explain step by step, ask me questions and check my understanding before giving the full answer.",

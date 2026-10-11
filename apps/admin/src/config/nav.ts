@@ -51,6 +51,7 @@ export function useNav(): { groups: NavGroup[] } {
           items: [
             { title: t("moderation"), url: "/moderation/", icon: "moderation" },
             { title: t("assistant"), url: "/assistant/", icon: "assistant" },
+            { title: t("limits"), url: "/limits/", icon: "adjustments" },
             { title: t("settings"), url: "/settings/", icon: "settings" },
           ],
         },

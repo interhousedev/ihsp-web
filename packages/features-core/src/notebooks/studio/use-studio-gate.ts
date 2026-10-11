@@ -42,7 +42,8 @@ export function useStudioGate(notebook: NotebookDetail) {
       const blocked = general()
       if (blocked) return blocked
       if (!quotaReached(data, kind)) return null
-      const overallFull = data !== undefined && data.quotas.artifacts.used >= data.quotas.artifacts.limit
+      const overall = data?.quotas.artifacts
+      const overallFull = overall !== undefined && overall.limit !== null && overall.used >= overall.limit
       const label = overallFull || quotaKeyFor(kind) === "artifacts" ? t("kind.artifacts") : t(`kind.${kind}`)
       return { reason: "quota", message: t("limit.quota", { kind: label }) }
     },
@@ -56,5 +57,5 @@ export function useStudioGate(notebook: NotebookDetail) {
 export function quotaHintVisible(usage: NotebookUsage | undefined): boolean {
   if (!usage) return false
   const { used, limit } = usage.quotas.artifacts
-  return limit > 0 && used / limit > 0.7
+  return limit !== null && limit > 0 && used / limit > 0.7
 }

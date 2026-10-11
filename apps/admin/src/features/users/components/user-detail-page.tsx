@@ -6,6 +6,7 @@ import { Button, PageContainer, StateView } from "@ihsp/ui"
 import { useQuery } from "@tanstack/react-query"
 import { parseAsString, useQueryState } from "nuqs"
 import { useState, type ReactNode } from "react"
+import { ExtensionBadge } from "../../limits/components/extension-badge"
 import { BackLink } from "../../shared/components/back-link"
 import { QueryState } from "../../shared/components/query-state"
 import { StatusBadge } from "../../shared/components/status-badge"
@@ -58,6 +59,7 @@ function DetailBody({ user }: { user: AdminUserDetail }) {
     >
       <div className="flex flex-wrap items-center gap-x-4 gap-y-1 text-sm">
         <StatusBadge status={user.status} />
+        <ExtensionBadge userId={user.id} />
         <span className="text-muted-foreground">
           {user.created_at ? t("created", { date: f.date(user.created_at) }) : null}
         </span>

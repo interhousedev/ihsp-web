@@ -7,6 +7,7 @@
 // query differs from the hand-written type of that endpoint function; fix the type or report the backend deviation.
 
 import type { paths } from "./generated/openapi-served"
+import type { getAdminAiExtensions, getAdminAiLimits, getAdminAiStudents, getAdminAiUsage, putAdminAiExtension, putAdminAiLimits } from "./endpoints/admin-ai"
 import type { getAiChat, getAiChats, getAiUsage, getAiWebSearch, patchAiChat, postAiChatMessages, postAiChatRegenerate, postAiChatToolCallApprove, postAiChatToolCallReject, postAiChats } from "./endpoints/ai"
 import type { getAdminAssessments, getMeAssessments, getMeSubjectPlanner, getStaffAssessments, patchAdminAssessment, patchStaffAssessment, postAdminAssessment, postMeAssessment, postStaffAssessment } from "./endpoints/assessments"
 import type { getAdminBroadcast, getAdminBroadcasts, patchAdminBroadcast, postAdminBroadcastCancel, postAdminBroadcastSend, postAdminBroadcasts, postAdminBroadcastsAudienceCount } from "./endpoints/broadcasts"
@@ -42,6 +43,30 @@ type SuccessJson<P extends keyof paths, M extends Method> =
 
 /** The JSON body of the 200/201/202 response of an operation, exactly as the backend declares it. */
 type ResponseOf<P extends keyof paths, M extends Method> = SuccessJson<P, M>
+
+// GET /v1/admin/ai/limits — getAdminAiLimits
+declare const gen_getAdminAiLimits: ResponseOf<"/v1/admin/ai/limits", "get">
+export const served_getAdminAiLimits: Awaited<ReturnType<typeof getAdminAiLimits>> = gen_getAdminAiLimits
+
+// PUT /v1/admin/ai/limits — putAdminAiLimits
+declare const gen_putAdminAiLimits: ResponseOf<"/v1/admin/ai/limits", "put">
+export const served_putAdminAiLimits: Awaited<ReturnType<typeof putAdminAiLimits>> = gen_putAdminAiLimits
+
+// GET /v1/admin/ai/usage — getAdminAiUsage
+declare const gen_getAdminAiUsage: ResponseOf<"/v1/admin/ai/usage", "get">
+export const served_getAdminAiUsage: Awaited<ReturnType<typeof getAdminAiUsage>> = gen_getAdminAiUsage
+
+// GET /v1/admin/ai/limit-extensions — getAdminAiExtensions
+declare const gen_getAdminAiExtensions: ResponseOf<"/v1/admin/ai/limit-extensions", "get">
+export const served_getAdminAiExtensions: Awaited<ReturnType<typeof getAdminAiExtensions>> = gen_getAdminAiExtensions
+
+// GET /v1/admin/ai/limit-extensions/students — getAdminAiStudents
+declare const gen_getAdminAiStudents: ResponseOf<"/v1/admin/ai/limit-extensions/students", "get">
+export const served_getAdminAiStudents: Awaited<ReturnType<typeof getAdminAiStudents>> = gen_getAdminAiStudents
+
+// PUT /v1/admin/ai/limit-extensions/{user_id} — putAdminAiExtension
+declare const gen_putAdminAiExtension: ResponseOf<"/v1/admin/ai/limit-extensions/{user_id}", "put">
+export const served_putAdminAiExtension: Awaited<ReturnType<typeof putAdminAiExtension>> = gen_putAdminAiExtension
 
 // GET /v1/ai/chats — getAiChats
 declare const gen_getAiChats: ResponseOf<"/v1/ai/chats", "get">

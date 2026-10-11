@@ -28,7 +28,8 @@
     "moderation": "Moderation",
     "assistant": "Assistant",
     "reports": "Reports",
-    "settings": "Settings"
+    "settings": "Settings",
+    "limits": "Limits & usage"
   },
   "shared": {
     "filters": "Filters",
@@ -1323,6 +1324,204 @@
       "uz": "Oʻzbekcha",
       "ru": "Русский",
       "en": "English"
+    }
+  },
+  "limits": {
+    "title": "Limits & usage",
+    "description": "AI limits, what the models cost and who uses them.",
+    "range": { "7": "7 days", "30": "30 days", "90": "90 days", "month": "This month" },
+    "cards": {
+      "monthCost": "Cost this month",
+      "rangeCost": "Cost in the range",
+      "projected": "Projected for the month",
+      "tokensToday": "Tokens today",
+      "callsToday": "Calls today",
+      "failed": "{count} failed"
+    },
+    "charts": {
+      "daily": "Daily cost by feature",
+      "byModel": "Cost by model",
+      "byRole": "Cost by role",
+      "empty": "No paid calls in this period.",
+      "usd": "USD"
+    },
+    "features": {
+      "assistant": "Assistant",
+      "notebook_chat": "Notebook chat",
+      "notebook_prep": "Source guides",
+      "studio": "Studio",
+      "lms_author": "Course author",
+      "web_search": "Web search",
+      "embedding": "Search by meaning",
+      "academic": "Subject names",
+      "other": "Other"
+    },
+    "roles": {
+      "student": "Students",
+      "teacher": "Teachers",
+      "admin": "Administrators",
+      "staff": "Other staff",
+      "system": "System jobs"
+    },
+    "top": {
+      "title": "Top users",
+      "user": "User",
+      "role": "Role",
+      "calls": "Calls",
+      "tokens": "Tokens",
+      "cost": "Cost",
+      "empty": "No paid calls in this period."
+    },
+    "editor": {
+      "title": "Limits",
+      "description": "Changes take effect within about 30 seconds. Staff are not limited.",
+      "groups": {
+        "assistant": "Assistant",
+        "smart": "Smart assistant",
+        "notebooks": "Notebooks & Studio",
+        "web_search": "Web search",
+        "lms": "LMS authoring"
+      },
+      "value": "Value",
+      "default": "Default: {value}",
+      "changed": "Changed",
+      "reset": "Reset",
+      "save": "Save changes",
+      "saved": "Limits saved",
+      "unchanged": "Nothing to save",
+      "invalid": "Enter a whole number from {min} to {max}.",
+      "failed": "The limits could not be saved",
+      "unit": { "tokens": "tokens", "count": "times", "steps": "steps", "hours": "hours", "bytes": "bytes" },
+      "period": {
+        "session": "per session",
+        "day": "per day",
+        "week": "per week",
+        "minute": "per minute",
+        "hour": "per hour"
+      }
+    },
+    "extensions": {
+      "title": "User extensions",
+      "description": "Raise the limits of one student, by a multiplier or fixed values, until a date.",
+      "add": "Add extension",
+      "empty": "No extensions yet.",
+      "active": "Active",
+      "expired": "Expired",
+      "until": "until {date}",
+      "forever": "no end date",
+      "multiplier": "×{value}",
+      "values": "Fixed values",
+      "remove": "Remove",
+      "removed": "Extension removed",
+      "saved": "Extension saved",
+      "badge": "AI limits extended until {date}",
+      "badgeForever": "AI limits extended",
+      "dialog": {
+        "title": "Extend a student's limits",
+        "search": "Name or login (2+ letters)",
+        "noResults": "No students found.",
+        "student": "Student",
+        "change": "Change",
+        "mode": "Grant",
+        "multiplier": "Multiplier",
+        "custom": "Fixed values",
+        "customHint": "Set only the limits to raise; the others stay as they are.",
+        "expires": "Valid until (optional)",
+        "note": "Note (why, for how long)",
+        "save": "Save extension",
+        "need": "Choose a multiplier or set at least one value."
+      }
+    },
+    "fields": {
+      "ai_text_max_bytes": {
+        "label": "Largest file for the assistant",
+        "hint": "The biggest extracted text the assistant can open with its file tool."
+      },
+      "ai_session_hours": {
+        "label": "Session length",
+        "hint": "Hours a token session lasts; the next message after it starts a new one."
+      },
+      "ai_session_tokens_student": {
+        "label": "Assistant tokens per session",
+        "hint": "Model tokens a student may spend per session (weighted by the model's budget weight)."
+      },
+      "ai_daily_tokens_student": {
+        "label": "Assistant tokens per day",
+        "hint": "Model tokens a student may spend with the assistant each Tashkent day."
+      },
+      "ai_max_tool_steps": {
+        "label": "Tool steps per answer",
+        "hint": "Most model requests (tool rounds) in one assistant answer."
+      },
+      "ai_smart_requests_per_week_student": {
+        "label": "Smart messages per week",
+        "hint": "Messages a student may send to the smart model each week (Monday to Monday). 0 turns it off."
+      },
+      "nb_session_tokens_student": {
+        "label": "Notebook tokens per session",
+        "hint": "Weighted tokens per session in notebooks (input + 0.1 × cached + 5 × output)."
+      },
+      "nb_daily_tokens_student": {
+        "label": "Notebook tokens per day",
+        "hint": "Weighted notebook tokens a student may use each Tashkent day."
+      },
+      "nb_artifacts_per_day": {
+        "label": "Studio outputs per day",
+        "hint": "Studio outputs (reports, quizzes, slides and so on) a student may start each day."
+      },
+      "nb_audio_per_day": {
+        "label": "Audio overviews per day",
+        "hint": "0 switches the counter off; audio overviews are not built yet."
+      },
+      "nb_slides_per_day": { "label": "Slide decks per day", "hint": "Slide decks a student may generate each day." },
+      "nb_infographics_per_day": {
+        "label": "Infographics per day",
+        "hint": "Infographics a student may generate each day."
+      },
+      "nb_concurrent_artifacts": {
+        "label": "Outputs in progress at once",
+        "hint": "Studio outputs one student may have generating together."
+      },
+      "nb_chat_per_minute": {
+        "label": "Notebook questions per minute",
+        "hint": "Questions a student may ask the notebook chat each minute."
+      },
+      "nb_source_adds_per_hour": {
+        "label": "Sources added per hour",
+        "hint": "Sources a student may add to notebooks each hour."
+      },
+      "nb_search_per_minute": {
+        "label": "Source searches per minute",
+        "hint": "Full-text searches in notebook sources each minute."
+      },
+      "web_search_per_day_student": {
+        "label": "Web searches per day",
+        "hint": "Searches a student may start each Tashkent day; 0 turns web search off."
+      },
+      "web_search_max_results": {
+        "label": "Pages per chat search",
+        "hint": "Pages one search keeps for a chat answer."
+      },
+      "web_search_discover_results": {
+        "label": "Pages per Discover search",
+        "hint": "Pages each Discover search returns."
+      },
+      "web_search_deep_queries": {
+        "label": "Queries in a deep Discover run",
+        "hint": "Searches a deep run makes; it costs this many from the daily quota."
+      },
+      "web_search_deep_results": {
+        "label": "Pages kept after a deep run",
+        "hint": "Best pages a deep Discover run keeps after ranking."
+      },
+      "lms_ai_chat_per_minute": {
+        "label": "Author assistant messages per minute",
+        "hint": "Messages a course author may send to the assistant each minute."
+      },
+      "lms_ai_max_tool_steps": {
+        "label": "Author assistant tool steps",
+        "hint": "Most model requests in one author assistant answer."
+      }
     }
   }
 }
