@@ -1,4 +1,5 @@
-# Build stage
+# Build stage: only the static exports leave it (see the nginx stage). Nothing else of the builder
+# (node_modules, sources, bun itself) reaches the image.
 FROM oven/bun:1.3-alpine AS builder
 
 WORKDIR /app
@@ -27,14 +28,19 @@ RUN bun run build
 COPY deploy/csp-hash.ts ./deploy/csp-hash.ts
 RUN bun deploy/csp-hash.ts
 
-# nginx stage
-FROM nginx:1.27-alpine
+# nginx stage: the unprivileged nginx image (runs as uid 101, listens on 8080). Identical to the nginx
+# stage of deploy/Dockerfile.prebuilt, which backend/tests/deploy checks.
+FROM nginxinc/nginx-unprivileged:1.27-alpine
 
-# Install curl for health checks
-RUN apk add --no-cache curl bash gettext
+# Build steps run as root; the container runs as the nginx user (see USER below) and everything it
+# ships stays root-owned and read-only for it
+USER root
+
+# envsubst (from gettext) is part of the base image; fail the build here, not at container start, if not
+RUN command -v envsubst >/dev/null
 
 # nginx config: nginx.conf as is; sites and snippets are templates that entrypoint.sh renders
-# with envsubst into /etc/nginx/conf.d and /etc/nginx/snippets at every start
+# with envsubst into /tmp/ihsp/nginx at every start
 COPY deploy/nginx.conf /etc/nginx/nginx.conf
 COPY deploy/sites/ /app/templates/sites/
 COPY deploy/snippets/ /app/templates/snippets/
@@ -55,10 +61,14 @@ COPY deploy/entrypoint.sh /app/entrypoint.sh
 
 RUN chmod +x /app/entrypoint.sh
 
-# LISTEN_PORT (default 80) is the only port; TLS is terminated by the edge nginx in front of this image
-EXPOSE 80
+# LISTEN_PORT (default 8080) is the only port; TLS is terminated by the edge nginx in front of this image
+EXPOSE 8080
 
+# busybox wget is in the base image; curl is not installed
 HEALTHCHECK --interval=10s --timeout=3s --start-period=5s --retries=5 \
-  CMD curl -fsS "http://127.0.0.1:${LISTEN_PORT:-80}/health" || exit 1
+  CMD wget -q -O /dev/null "http://127.0.0.1:${LISTEN_PORT:-8080}/health"
+
+STOPSIGNAL SIGQUIT
+USER 101
 
 ENTRYPOINT ["/app/entrypoint.sh"]

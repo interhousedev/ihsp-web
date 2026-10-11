@@ -120,6 +120,42 @@ describe("Docker build inputs", () => {
     expect(dockerfile.indexOf("ENV NEXT_PUBLIC_APP_VERSION=")).toBeGreaterThan(arg)
     expect(dockerfile.indexOf("ENV NEXT_PUBLIC_APP_VERSION=")).toBeLessThan(dockerfile.indexOf("RUN bun run build"))
   })
+
+  it("the nginx stages run unprivileged on 8080 with busybox wget (no curl, bash or apk packages)", () => {
+    for (const name of ["Dockerfile", "Dockerfile.prebuilt"]) {
+      const text = read(name)
+      expect(text).toContain("FROM nginxinc/nginx-unprivileged:1.27-alpine\n")
+      expect(text).toContain("EXPOSE 8080\n")
+      expect(text).toContain("USER 101\n")
+      expect(text).toContain("CMD wget -q -O /dev/null")
+      expect(text).not.toMatch(/apk add|CMD curl|CMD bash/)
+    }
+  })
+
+  it("entrypoint.sh is POSIX sh (the image has no bash) and listens on 8080 by default", () => {
+    const script = read("entrypoint.sh")
+    expect(script.split("\n")[0]).toBe("#!/bin/sh")
+    for (const bashism of [/\[\[/, /pipefail/, /^\s*local\s/m, /\$\{!/, /\$\{[A-Za-z_]+\/\//]) {
+      expect(script).not.toMatch(bashism)
+    }
+    expect(script).toContain("default LISTEN_PORT 8080")
+  })
+
+  it("every site serves its rendered env.js from /tmp/ihsp/env (the export stays read-only)", () => {
+    const aliases: Record<string, string> = {
+      "sp.conf": "sp",
+      "id.conf": "id",
+      "staff.conf": "staff",
+      "admin.conf": "admin",
+      "lms.conf": "lms",
+      "library.conf": "library",
+      "app.conf": "app-env",
+      "share.conf": "share/ai",
+    }
+    for (const [file, dir] of Object.entries(aliases)) {
+      expect(read("sites", file)).toContain(`alias /tmp/ihsp/env/${dir}/env.js;`)
+    }
+  })
 })
 
 describe("nginx.conf", () => {
@@ -157,7 +193,7 @@ describe("templates", () => {
       const text = fs.readFileSync(path.join(sitesDir, file), "utf-8")
       expect(text).not.toMatch(/listen\s+(\[::\]:)?\d+/)
       expect(text).toContain("listen ${LISTEN_PORT}")
-      expect(text).toContain("include /etc/nginx/snippets/health.conf;")
+      expect(text).toContain("include /tmp/ihsp/nginx/snippets/health.conf;")
     }
     const health = read("snippets", "health.conf")
     expect(health).toContain("location = /health")
@@ -258,7 +294,7 @@ describe("library.conf (library host)", () => {
     if (body === undefined) throw new Error(`library.conf has no location ${matcher}`)
     return body
   }
-  const securityHeaders = "include /etc/nginx/snippets/security-headers-library.conf;"
+  const securityHeaders = "include /tmp/ihsp/nginx/snippets/security-headers-library.conf;"
 
   it("serves /srv/library on APP_HOST_LIBRARY with the library's security headers", () => {
     expect(library).toContain("server_name ${APP_HOST_LIBRARY};")
@@ -324,7 +360,7 @@ describe("app.conf (installable PWA host)", () => {
     if (body === undefined) throw new Error(`app.conf has no location ${matcher}`)
     return body
   }
-  const securityHeaders = "include /etc/nginx/snippets/security-headers.conf;"
+  const securityHeaders = "include /tmp/ihsp/nginx/snippets/security-headers.conf;"
 
   it("serves the sp build on APP_HOST_APP", () => {
     expect(app).toContain("server_name ${APP_HOST_APP};")
@@ -334,10 +370,10 @@ describe("app.conf (installable PWA host)", () => {
 
   it("serves its own env.js from outside the static export, never the one of the sp host", () => {
     const env = block("= /env.js")
-    expect(env).toContain("alias /srv/app-env/env.js;")
+    expect(env).toContain("alias /tmp/ihsp/env/app-env/env.js;")
     expect(env).toContain('add_header Cache-Control "no-store";')
     // where entrypoint.sh renders it
-    expect(read("entrypoint.sh")).toContain('"$SRV_DIR/app-env/env.js"')
+    expect(read("entrypoint.sh")).toContain("render_env app-env pwa app")
   })
 
   it("serves /_next/static/ as immutable for a year", () => {
@@ -388,10 +424,10 @@ describe("app.conf (installable PWA host)", () => {
 })
 
 // Renders the templates with the real entrypoint.sh (and the real envsubst) into a temp dir; nginx is a stub.
-// One run starts bash and one envsubst per template and env.js (a few seconds on a busy machine), and some
+// One run starts sh and one envsubst per template and env.js (a few seconds on a busy machine), and some
 // tests run it twice: more than bun's default 5 s.
 setDefaultTimeout(30_000)
-const haveTools = Boolean(Bun.which("envsubst")) && Boolean(Bun.which("bash"))
+const haveTools = Boolean(Bun.which("envsubst")) && Boolean(Bun.which("sh"))
 const tempDirs: string[] = []
 afterEach(() => {
   for (const dir of tempDirs.splice(0)) fs.rmSync(dir, { recursive: true, force: true })
@@ -402,25 +438,24 @@ function runEntrypoint(env: Record<string, string>) {
   tempDirs.push(root)
   const bin = path.join(root, "bin")
   const nginxDir = path.join(root, "nginx")
-  const srv = path.join(root, "srv")
+  const envDir = path.join(root, "env")
   const templates = path.join(root, "templates")
   fs.mkdirSync(bin)
+  // a file left by an earlier start: the entrypoint starts from a clean slate
   fs.mkdirSync(path.join(nginxDir, "conf.d"), { recursive: true })
-  fs.writeFileSync(path.join(nginxDir, "conf.d", "default.conf"), "# stale file from the base image\n")
-  for (const app of ["id", "sp", "staff", "admin", "lms", "library", "share/ai"])
-    fs.mkdirSync(path.join(srv, app), { recursive: true })
+  fs.writeFileSync(path.join(nginxDir, "conf.d", "stale.conf"), "# stale file from an earlier start\n")
   fs.mkdirSync(templates)
   fs.symlinkSync(sitesDir, path.join(templates, "sites"))
   fs.symlinkSync(snippetsDir, path.join(templates, "snippets"))
   const nginxLog = path.join(root, "nginx.log")
   fs.writeFileSync(path.join(bin, "nginx"), `#!/bin/sh\necho "$@" >> '${nginxLog}'\n`, { mode: 0o755 })
 
-  const result = Bun.spawnSync(["bash", path.join(deployDir, "entrypoint.sh")], {
+  const result = Bun.spawnSync(["sh", path.join(deployDir, "entrypoint.sh")], {
     env: {
       PATH: `${bin}:${process.env.PATH ?? "/usr/bin:/bin"}`,
       TEMPLATES_DIR: templates,
       NGINX_DIR: nginxDir,
-      SRV_DIR: srv,
+      ENV_DIR: envDir,
       ENV_JS_TEMPLATE: path.join(deployDir, "env.js.template"),
       ...env,
     },
@@ -433,7 +468,7 @@ function runEntrypoint(env: Record<string, string>) {
     conf: (name: string) => file("nginx", "conf.d", name),
     snippet: (name: string) => file("nginx", "snippets", name),
     exists: (...parts: string[]) => fs.existsSync(path.join(root, ...parts)),
-    envJs: (...parts: string[]) => file("srv", ...parts, "env.js"),
+    envJs: (...parts: string[]) => file("env", ...parts, "env.js"),
   }
 }
 
@@ -445,12 +480,12 @@ describe.skipIf(!haveTools)("entrypoint.sh rendering", () => {
     expect(run.nginxCalls).toEqual(["-t", "-g daemon off;"])
 
     expect(run.exists("nginx", "conf.d", "default.conf")).toBe(true)
-    expect(run.conf("default.conf")).not.toContain("stale file")
-    expect(run.conf("sp.conf")).toContain("listen 80;")
+    expect(run.exists("nginx", "conf.d", "stale.conf")).toBe(false)
+    expect(run.conf("sp.conf")).toContain("listen 8080;")
     expect(run.conf("sp.conf")).toContain("server_name sp.localhost;")
-    expect(run.conf("app.conf")).toContain("listen 80;")
+    expect(run.conf("app.conf")).toContain("listen 8080;")
     expect(run.conf("app.conf")).toContain("server_name app.localhost;")
-    expect(run.conf("library.conf")).toContain("listen 80;")
+    expect(run.conf("library.conf")).toContain("listen 8080;")
     expect(run.conf("library.conf")).toContain("server_name library.localhost;")
     expect(run.snippet("proxy-hydra.conf")).toContain("proxy_pass http://hydra:4444;")
     expect(run.snippet("proxy-identity.conf")).toContain("proxy_pass http://identity:8001;")
@@ -483,7 +518,7 @@ describe.skipIf(!haveTools)("entrypoint.sh rendering", () => {
     for (const app of ["id", "staff", "admin", "lms", "library", "share/ai"]) {
       expect(run.envJs(app)).toContain('APP_MODE: "sp"')
     }
-    expect(run.exists("srv", "app")).toBe(false)
+    expect(run.exists("env", "app")).toBe(false)
   })
 
   it("PWA_APPS turns the listed apps into installable ones on their own host, and only those", () => {
@@ -536,7 +571,7 @@ describe.skipIf(!haveTools)("entrypoint.sh rendering", () => {
     expect(run.envJs("sp")).toContain('APP_URL: "https://app.example.test"')
   })
 
-  it("renders the library's own env.js (client library, sp mode) into /srv/library", () => {
+  it("renders the library's own env.js (client library, sp mode) into its env directory", () => {
     const run = runEntrypoint({})
     expect(run.exitCode).toBe(0)
     expect(run.envJs("library")).toContain('OAUTH_CLIENT_ID: "library"')
@@ -627,6 +662,13 @@ describe.skipIf(!haveTools)("entrypoint.sh rendering", () => {
     const run = runEntrypoint({ LISTEN_PORT: "http" })
     expect(run.exitCode).not.toBe(0)
     expect(run.stderr).toContain("LISTEN_PORT")
+    expect(run.nginxCalls).toEqual([])
+  })
+
+  it("rejects a privileged LISTEN_PORT: the container runs as an unprivileged user", () => {
+    const run = runEntrypoint({ LISTEN_PORT: "80" })
+    expect(run.exitCode).not.toBe(0)
+    expect(run.stderr).toContain("LISTEN_PORT must be a port from 1024 to 65535")
     expect(run.nginxCalls).toEqual([])
   })
 })
