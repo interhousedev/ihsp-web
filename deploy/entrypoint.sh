@@ -166,6 +166,20 @@ app_mode() {
   esac
 }
 
+# env.js is rendered with envsubst into JavaScript string literals ("${VAR}"). A value with a double
+# quote, a backslash or a control character (a newline) would end the literal: the script would not
+# parse (every page broken) or run what follows. Such a value is a configuration mistake and stops the
+# container here, where it is seen, instead of at the first page load.
+# shellcheck disable=SC2016 # the ${} are stripped, not expanded
+for name in $(printf '%s' "$ENV_JS_VARS" | tr -d '${}'); do
+  eval "value=\${$name:-}"
+  # shellcheck disable=SC2154 # value is set by the eval above
+  if [ "$(printf '%s' "$value" | LC_ALL=C tr -d '"\\[:cntrl:]')" != "$value" ]; then
+    echo "entrypoint: $name must not contain a double quote, a backslash or a control character" >&2
+    exit 1
+  fi
+done
+
 # render_env SUBDIR APP_MODE CLIENT: env.js of one app into $ENV_DIR/SUBDIR/env.js
 render_env() {
   mkdir -p "$ENV_DIR/$1"

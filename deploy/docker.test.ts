@@ -124,7 +124,7 @@ describe("Docker build inputs", () => {
   it("the nginx stages run unprivileged on 8080 with busybox wget (no curl, bash or apk packages)", () => {
     for (const name of ["Dockerfile", "Dockerfile.prebuilt"]) {
       const text = read(name)
-      expect(text).toContain("FROM nginxinc/nginx-unprivileged:1.27-alpine\n")
+      expect(text).toContain("FROM nginxinc/nginx-unprivileged:1.28.2-alpine\n")
       expect(text).toContain("EXPOSE 8080\n")
       expect(text).toContain("USER 101\n")
       expect(text).toContain("CMD wget -q -O /dev/null")
@@ -210,12 +210,29 @@ describe("templates", () => {
     expect(csp).toContain("object-src 'none'")
   })
 
+  it("security headers: every fetch directive without a default-src fallback is closed", () => {
+    for (const snippet of ["security-headers.conf", "security-headers-library.conf"]) {
+      const directives = new Map(cspDirectives(cspHeader(read("snippets", snippet))).map((d) => [d.split(" ")[0]!, d]))
+      expect(directives.get("frame-src")).toBe("frame-src 'none'")
+      expect(directives.get("form-action")).toBe("form-action 'self'")
+      expect(directives.get("manifest-src")).toBe("manifest-src 'self'")
+      expect(directives.get("media-src")).toBe("media-src 'self' blob: ${IHSP_STORAGE_ORIGIN}")
+      expect(directives.get("worker-src")).toMatch(/^worker-src 'self'( blob:)?$/)
+    }
+  })
+
+  it("security headers: no X-Frame-Options next to frame-ancestors", () => {
+    for (const snippet of ["security-headers.conf", "security-headers-library.conf"]) {
+      expect(read("snippets", snippet)).not.toMatch(/^add_header X-Frame-Options/m)
+    }
+  })
+
   it("security headers of the library: the same as the others plus the reader's img-src, connect-src and worker-src", () => {
     const library = read("snippets", "security-headers-library.conf")
     const csp = cspHeader(library)
     expect(csp).not.toContain("script-src")
     expect(csp).not.toContain("default-src")
-    expect(csp).not.toContain("frame-src")
+    expect(csp).toContain("frame-src 'none'")
     expect(csp).not.toContain("https://telegram.org")
     // covers hot-linked from UniLibrary, covers and files from the storage origin
     expect(csp).toContain("img-src ${CSP_IMG_SRC} ${IHSP_STORAGE_ORIGIN} https://api.unilibrary.uz;")
@@ -232,7 +249,7 @@ describe("templates", () => {
     )
     const ownDirectives = new Map(cspDirectives(csp).map((d) => [d.split(" ")[0]!, d]))
     const changed = ["img-src", "connect-src", "worker-src", "style-src", "font-src"]
-    expect([...ownDirectives.keys()].filter((name) => !others.has(name))).toEqual(["worker-src"])
+    expect([...ownDirectives.keys()].filter((name) => !others.has(name))).toEqual([])
     for (const [name, directive] of others) {
       if (!changed.includes(name)) expect({ name, directive: ownDirectives.get(name) }).toEqual({ name, directive })
     }
@@ -242,7 +259,7 @@ describe("templates", () => {
     expect(plain(read("snippets", "security-headers-library.conf"))).toEqual(
       plain(read("snippets", "security-headers.conf")),
     )
-    expect(plain(read("snippets", "security-headers.conf"))).toHaveLength(4)
+    expect(plain(read("snippets", "security-headers.conf"))).toHaveLength(3)
   })
 
   it("api.conf sends identity, oauth and admin users/teachers/audit to identity", () => {
@@ -632,10 +649,10 @@ describe.skipIf(!haveTools)("entrypoint.sh rendering", () => {
     expect(prodHeader).toContain(
       "connect-src 'self' https://api.ihsu.test https://storage.ihsu.test https://storage.ihsu.test;",
     )
-    // the other sites keep the shared policy: no UniLibrary, no worker-src
+    // the other sites keep the shared policy: no UniLibrary, no blob: workers
     const shared = cspHeader(prod.snippet("security-headers.conf"))
     expect(shared).not.toContain("unilibrary")
-    expect(shared).not.toContain("worker-src")
+    expect(shared).toContain("worker-src 'self';")
   })
 
   it("renders host names, upstreams and env.js values from the environment", () => {
@@ -670,5 +687,17 @@ describe.skipIf(!haveTools)("entrypoint.sh rendering", () => {
     expect(run.exitCode).not.toBe(0)
     expect(run.stderr).toContain("LISTEN_PORT must be a port from 1024 to 65535")
     expect(run.nginxCalls).toEqual([])
+  })
+
+  it("refuses an env.js value that would break out of its JavaScript string literal", () => {
+    for (const value of ['ihsp"bot', "ihsp\\bot", "ihsp\nbot"]) {
+      const run = runEntrypoint({ IHSP_BOT_USERNAME: value })
+      expect(run.exitCode).toBe(1)
+      expect(run.stderr).toContain("IHSP_BOT_USERNAME must not contain a double quote")
+      expect(run.nginxCalls).toEqual([])
+    }
+    const ok = runEntrypoint({ IHSP_BOT_USERNAME: "ihsp_bot-2026" })
+    expect(ok.exitCode).toBe(0)
+    expect(ok.envJs("sp")).toContain('BOT_USERNAME: "ihsp_bot-2026",')
   })
 })

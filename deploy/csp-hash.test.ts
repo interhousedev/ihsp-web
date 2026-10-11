@@ -50,12 +50,18 @@ describe("buildCspMeta", () => {
   it("carries script-src only (the rest is the nginx header)", () => {
     const meta = buildCspMeta([`'${HASH_CONSOLE_LOG_1}'`])
     expect(meta).toBe(
-      `<meta http-equiv="Content-Security-Policy" content="script-src 'self' '${HASH_CONSOLE_LOG_1}' https://telegram.org">`,
+      `<meta http-equiv="Content-Security-Policy" content="script-src 'self' '${HASH_CONSOLE_LOG_1}' https://telegram.org/js/telegram-web-app.js">`,
     )
     for (const directive of ["default-src", "connect-src", "img-src", "frame-ancestors", "style-src"]) {
       expect(meta).not.toContain(directive)
     }
     expect(meta).not.toContain("unsafe-inline")
+  })
+
+  it("allows the Telegram SDK file only, not the whole telegram.org origin", () => {
+    const meta = buildCspMeta([])
+    expect(meta).toContain(" https://telegram.org/js/telegram-web-app.js")
+    expect(meta).not.toMatch(/https:\/\/telegram\.org[" ]/)
   })
 })
 
@@ -74,7 +80,7 @@ describe("buildCspMeta with the directives of an app", () => {
   it("appends them after script-src, so the library's PDF.js worker may start from a blob: URL", () => {
     const meta = buildCspMeta([`'${HASH_CONSOLE_LOG_1}'`], APP_DIRECTIVES.library)
     expect(meta).toBe(
-      `<meta http-equiv="Content-Security-Policy" content="script-src 'self' '${HASH_CONSOLE_LOG_1}' https://telegram.org; worker-src 'self' blob:">`,
+      `<meta http-equiv="Content-Security-Policy" content="script-src 'self' '${HASH_CONSOLE_LOG_1}' https://telegram.org/js/telegram-web-app.js; worker-src 'self' blob:">`,
     )
   })
 
@@ -96,7 +102,7 @@ describe("injectCsp", () => {
 
   it("puts the directives of the app into the inserted policy", () => {
     const { html } = injectCsp(page("<script>console.log(1)</script>"), APP_DIRECTIVES.library)
-    expect(html).toContain("https://telegram.org; worker-src 'self' blob:\">")
+    expect(html).toContain("https://telegram.org/js/telegram-web-app.js; worker-src 'self' blob:\">")
     expect(html.match(/http-equiv="Content-Security-Policy"/g)).toHaveLength(1)
   })
 

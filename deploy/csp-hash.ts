@@ -49,11 +49,18 @@ export function inlineScriptHashes(html: string): string[] {
 }
 
 /**
+ * The one external script a page may load: the Telegram SDK (packages/telegram/src/sdk-loader.ts), as a
+ * path source rather than the whole origin. A CSP path matches the request path exactly, query string
+ * ignored, so the `?64` version suffix of the loader is fine.
+ */
+export const TELEGRAM_SDK_SOURCE = "https://telegram.org/js/telegram-web-app.js"
+
+/**
  * The policy inserted into each page: scripts from the same origin, Telegram's SDK and the hashed inline
  * scripts, plus the app's own directives (`APP_DIRECTIVES`) when it has any.
  */
 export function buildCspMeta(hashes: string[], extraDirectives = ""): string {
-  const sources = ["'self'", ...hashes, "https://telegram.org"].join(" ")
+  const sources = ["'self'", ...hashes, TELEGRAM_SDK_SOURCE].join(" ")
   const policy = [`script-src ${sources}`, extraDirectives].filter((part) => part !== "").join("; ")
   return `<meta http-equiv="Content-Security-Policy" content="${policy}">`
 }
