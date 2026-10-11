@@ -12,7 +12,12 @@ export function slugFromPathname(pathname: string): string | null {
   const rest = parts[0] === BASE_PATH ? parts.slice(1) : parts
   const slug = rest[0]
   if (!slug || rest.length > 1 || RESERVED.has(slug)) return null
-  return decodeURIComponent(slug)
+  try {
+    return decodeURIComponent(slug)
+  } catch {
+    // Malformed percent-encoding (`/ai/%E0%A4%A`) is "Link not found", not a blank page.
+    return null
+  }
 }
 
 /**

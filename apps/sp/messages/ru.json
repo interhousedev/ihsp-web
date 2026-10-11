@@ -37,6 +37,9 @@
   "app": {
     "name": "my.iht"
   },
+  "offline": {
+    "updated": "Обновлено {when}"
+  },
   "nav": {
     "short": {
       "today": "Сегодня",

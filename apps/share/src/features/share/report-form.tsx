@@ -16,13 +16,14 @@ export function ReportForm({ slug }: { slug: string }) {
   const reasonId = useId()
   const commentId = useId()
   const [open, setOpen] = useState(false)
-  const [reason, setReason] = useState<ReportReason>("other")
+  // No reason is chosen until the user picks one, so a stray tap cannot file "Phishing or fake".
+  const [reason, setReason] = useState<ReportReason | "">("")
   const [comment, setComment] = useState("")
   const report = useMutation({
-    mutationFn: () =>
+    mutationFn: (chosen: ReportReason) =>
       postPublicReports({
         slug,
-        reason,
+        reason: chosen,
         comment: comment.trim() === "" ? undefined : comment.trim(),
       }),
   })
@@ -48,7 +49,7 @@ export function ReportForm({ slug }: { slug: string }) {
       className="bg-card flex flex-col gap-4 rounded-xl border p-4"
       onSubmit={(event) => {
         event.preventDefault()
-        report.mutate()
+        if (reason !== "") report.mutate(reason)
       }}
     >
       <h2 className="text-base font-semibold">{t("title")}</h2>
@@ -59,9 +60,13 @@ export function ReportForm({ slug }: { slug: string }) {
         <NativeSelect
           id={reasonId}
           value={reason}
+          required
           className="min-h-11 w-full"
-          onChange={(event) => setReason(event.target.value as ReportReason)}
+          onChange={(event) => setReason(event.target.value as ReportReason | "")}
         >
+          <NativeSelectOption value="" disabled>
+            {t("reasonPlaceholder")}
+          </NativeSelectOption>
           {REASONS.map((value) => (
             <NativeSelectOption key={value} value={value}>
               {t(`reasons.${value}`)}
@@ -90,7 +95,13 @@ export function ReportForm({ slug }: { slug: string }) {
         <Button type="button" variant="ghost" className="min-h-11" onClick={() => setOpen(false)}>
           {t("cancel")}
         </Button>
-        <LoadingButton type="submit" className="min-h-11" loading={report.isPending} loadingLabel={t("sending")}>
+        <LoadingButton
+          type="submit"
+          className="min-h-11"
+          disabled={reason === ""}
+          loading={report.isPending}
+          loadingLabel={t("sending")}
+        >
           {t("submit")}
         </LoadingButton>
       </div>

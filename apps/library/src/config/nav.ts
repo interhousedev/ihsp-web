@@ -7,7 +7,8 @@ import { IconBookmarks, IconBooks, IconCategory, IconFlag, IconInbox, IconListDe
 import { useMemo } from "react"
 
 /**
- * Sidebar groups and the phone bottom bar (Home, Browse, My library, then "More" from the shell). Titles are translated
+ * Sidebar groups and the phone bottom bar (Home, Browse, My library, the review Queue for librarians, then "More" from
+ * the shell). Titles are translated
  * here, so the hook runs in a component. Visitors see only the public entries; `AppShell` does not filter by role, so
  * the hook does it with the session roles.
  */
@@ -48,6 +49,7 @@ export function useNav(): { groups: NavGroup[]; bottom: BottomNavItem[] } {
     ]
     const bottom: BottomNavItem[] = [home, browse]
     if (signedIn) bottom.push({ title: t("my"), url: "/my/", icon: IconBookmarks })
+    if (canManage) bottom.push({ title: t("queue"), url: "/manage/queue/", icon: IconInbox })
     return { groups: filterNavGroups(groups, roles), bottom }
   }, [t, signedIn, roles, canManage, isAdmin])
 }

@@ -97,6 +97,7 @@
   "login": {
     "title": "Вход",
     "description": "чтобы продолжить в «{client}»",
+    "descriptionPending": "чтобы продолжить",
     "unavailable": "Не удалось открыть страницу входа",
     "login": "Логин",
     "password": "Пароль",
@@ -106,7 +107,8 @@
     "forgotPassword": "Забыли пароль?",
     "forgotLogin": "Забыли логин?",
     "register": "Регистрация через EMIS",
-    "cantGetIn": "Не удаётся войти? Вернуть аккаунт через EMIS",
+    "cantGetIn": "Вернуть аккаунт через EMIS",
+    "help": "Не удаётся войти?",
     "helpLinks": "Помощь со входом",
     "backToApp": "Вернуться в приложение",
     "channel": {

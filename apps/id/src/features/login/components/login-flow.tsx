@@ -17,12 +17,13 @@ type SecondFactorState = { credentials: PasswordCredentials; factor: SecondFacto
 export function LoginFlow({ challenge }: { challenge: string }) {
   const t = useTr()
   const hint = useClientHint()
-  const { query, redirecting } = useLoginInfo(challenge, { enabled: hint === null })
+  // The hint only draws the form early; the client name and `skip` always come from the server.
+  const { query, redirecting } = useLoginInfo(challenge)
   const [secondFactor, setSecondFactor] = useState<SecondFactorState | null>(null)
   const [passwordTicket, setPasswordTicket] = useState<string | null>(null)
 
   if (redirecting) return <FlowSkeleton />
-  const info = hint ?? query.data
+  const info = query.data ?? hint
   if (!info) {
     if (!query.isError) return <FlowSkeleton />
     return <RequestFailed title={t("login.unavailable")} error={query.error} onRetry={() => void query.refetch()} />

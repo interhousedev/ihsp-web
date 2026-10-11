@@ -2,7 +2,7 @@
 import { beforeEach, describe, expect, test } from "bun:test"
 import { apiUrl, loginResultRedirect, problem, server } from "@ihsp/test-utils"
 import { screen, waitFor } from "@testing-library/react"
-import { http } from "msw"
+import { HttpResponse, http } from "msw"
 import { LoginPage } from "../features/login/components/login-page"
 import { clickButton, fillField, findHeading, findLink, renderId, allowSlowTests } from "./helpers"
 import { redirectToMock } from "./redirect-mock"
@@ -124,19 +124,54 @@ describe("login page", () => {
     await waitFor(() => expect(redirectToMock).toHaveBeenCalledWith("http://localhost:3002/after"))
   })
 
-  test("the form is drawn at once when the address says which client asks (no login request, no skeleton)", async () => {
-    let requests = 0
+  test("the form is drawn at once when the address says which client asks, and the name comes from the server", async () => {
+    let release: () => void = () => undefined
+    const gate = new Promise<void>((resolve) => {
+      release = resolve
+    })
     server.use(
-      http.get(apiUrl("/v1/id/login"), () => {
-        requests += 1
-        return problem(500, "common/internal", "must not be asked")
+      http.get(apiUrl("/v1/id/login"), async () => {
+        await gate
+        return HttpResponse.json({
+          client_id: "staff",
+          client_name: "IHT staff",
+          skip: false,
+          requires_second_factor: false,
+          redirect_to: null,
+        })
       }),
     )
-    renderId(<LoginPage />, { route: `${ROUTE}&client_id=staff&client_name=IHT+staff` })
+    renderId(<LoginPage />, { route: `${ROUTE}&client_id=staff&client_name=Microsoft+365` })
 
+    expect(await screen.findByLabelText("Password")).toBeInTheDocument()
+    expect(screen.getByText("to continue")).toBeInTheDocument()
+    expect(screen.queryByText(/Microsoft/)).not.toBeInTheDocument()
+    release()
     expect(await screen.findByText("to continue to IHT staff")).toBeInTheDocument()
-    expect(screen.getByLabelText("Password")).toBeInTheDocument()
-    expect(requests).toBe(0)
+    expect(screen.queryByText(/Microsoft/)).not.toBeInTheDocument()
+  })
+
+  test("the login field is focused on a desktop and the recovery links sit behind one button", async () => {
+    renderId(<LoginPage />, { route: ROUTE })
+
+    const login = await screen.findByLabelText("Login")
+    await waitFor(() => expect(login).toHaveFocus())
+    expect(screen.queryByText("Forgot password?")).not.toBeInTheDocument()
+    await clickButton("Can't get in?")
+    expect(await findLink("Forgot password?")).toBeInTheDocument()
+    expect(await findLink("Reclaim the account with EMIS")).toBeInTheDocument()
+  })
+
+  test("a failed login moves focus to the alert", async () => {
+    server.use(
+      http.post(apiUrl("/v1/id/login"), () => problem(401, "auth/invalid-credentials", "Wrong login or password")),
+    )
+    renderId(<LoginPage />, { route: ROUTE })
+
+    await submitCredentials("brastilov.aleksey", "wrong")
+
+    const alert = await screen.findByRole("alert")
+    await waitFor(() => expect(alert).toHaveFocus())
   })
 
   test("a hinted form still logs in and follows redirect_to", async () => {

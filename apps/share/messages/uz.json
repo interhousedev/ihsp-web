@@ -3,6 +3,7 @@
     "brand": "IHT — havolalar",
     "loading": "Yuklanmoqda…",
     "sharedBy": "Ulashgan: {name}",
+    "openApp": "my.iht ni ochish",
     "notFound": {
       "title": "Havola topilmadi",
       "description": "Bunday havola yoʻq yoki oʻchirilgan."
@@ -22,6 +23,7 @@
       "count": "{count, plural, one {# ta kartochka} other {# ta kartochka}}",
       "study": "Oʻrganish",
       "copy": "Kollodalarimga nusxalash",
+      "copySignIn": "Kollodalarimga nusxalash (kirish kerak)",
       "empty": "Bu toʻplamda kartochkalar yoʻq.",
       "cardsLabel": "Kartochkalar",
       "cardN": "{n}-kartochka",
@@ -34,6 +36,7 @@
       "open": "Havola ustidan shikoyat",
       "title": "Havola ustidan shikoyat",
       "reason": "Sabab",
+      "reasonPlaceholder": "Sababni tanlang",
       "reasons": {
         "phishing": "Fishing yoki soxta",
         "malware": "Zararli dastur",

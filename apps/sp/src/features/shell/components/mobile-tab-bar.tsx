@@ -5,7 +5,7 @@ import { Icons, isActivePath, NavIconView, Sheet, SheetContent, SheetHeader, She
 import type { NavGroup, NavItem } from "@ihsp/ui"
 import Link from "next/link"
 import { usePathname } from "next/navigation"
-import { useMemo, useState } from "react"
+import { useEffect, useMemo, useRef, useState } from "react"
 import { useBottomBar } from "../hooks/use-bottom-bar"
 import { DESTINATION_URLS } from "../utils/bottom-bar"
 
@@ -22,6 +22,16 @@ export function MobileTabBar({ groups }: { groups: NavGroup[] }) {
   const pathname = usePathname()
   const [moreOpen, setMoreOpen] = useState(false)
   const { ids } = useBottomBar()
+  const moreNav = useRef<HTMLElement>(null)
+
+  // The sheet lists every other page: the current one is scrolled into the middle, so the student finds the place at once.
+  useEffect(() => {
+    if (!moreOpen) return
+    const frame = requestAnimationFrame(() => {
+      moreNav.current?.querySelector<HTMLElement>('[aria-current="page"]')?.scrollIntoView?.({ block: "center" })
+    })
+    return () => cancelAnimationFrame(frame)
+  }, [moreOpen])
 
   const byUrl = useMemo(() => {
     const map = new Map<string, NavItem>()
@@ -78,7 +88,7 @@ export function MobileTabBar({ groups }: { groups: NavGroup[] }) {
           <SheetHeader>
             <SheetTitle>{t("nav.moreTitle")}</SheetTitle>
           </SheetHeader>
-          <nav aria-label={t("nav.main")} className="flex flex-col gap-4 px-4 pb-4">
+          <nav ref={moreNav} aria-label={t("nav.main")} className="flex flex-col gap-4 px-4 pb-4">
             {rest.map((group, index) => (
               <div key={group.label ?? index} className="flex flex-col gap-1">
                 {group.label ? (

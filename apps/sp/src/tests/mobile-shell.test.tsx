@@ -135,6 +135,31 @@ describe("bottom bar config", () => {
     expect(tab.getAttribute("aria-current")).toBeNull()
     await user.click(tab)
   })
+
+  test("the More sheet scrolls the current page into view", async () => {
+    setViewportWidth(360)
+    const scrolled: Element[] = []
+    const original = Element.prototype.scrollIntoView
+    Element.prototype.scrollIntoView = function (this: Element) {
+      scrolled.push(this)
+    }
+    try {
+      const { user } = renderSp(
+        <SpShell>
+          <p>page body</p>
+        </SpShell>,
+        { route: "/exams/" },
+      )
+      await screen.findByText("page body")
+      await user.click(screen.getByRole("button", { name: "More" }))
+
+      const current = await screen.findByRole("link", { name: "Exams", current: "page" })
+      await waitFor(() => expect(scrolled).toContain(current))
+    } finally {
+      Element.prototype.scrollIntoView = original
+      setTestRoute("/")
+    }
+  })
 })
 
 describe("installed app on a phone", () => {

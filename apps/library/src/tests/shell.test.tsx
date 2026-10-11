@@ -19,16 +19,29 @@ function expectLabels(labels: string[], wanted: string[]): void {
 
 /** The sidebar entries come from `useNav`; the sidebar itself is a sheet on the phone-sized test window. */
 function NavProbe() {
-  const { groups } = useNav()
+  const { groups, bottom } = useNav()
   return (
-    <ul aria-label="nav probe">
-      {groups
-        .flatMap((group) => group.items)
-        .map((item) => (
+    <>
+      <ul aria-label="nav probe">
+        {groups
+          .flatMap((group) => group.items)
+          .map((item) => (
+            <li key={item.url}>{item.title}</li>
+          ))}
+      </ul>
+      <ul aria-label="bottom probe">
+        {bottom.map((item) => (
           <li key={item.url}>{item.title}</li>
         ))}
-    </ul>
+      </ul>
+    </>
   )
+}
+
+function bottomLabels(): string[] {
+  return within(screen.getByRole("list", { name: "bottom probe" }))
+    .getAllByRole("listitem")
+    .map((item) => item.textContent ?? "")
 }
 
 function navLabels(): string[] {
@@ -74,6 +87,7 @@ describe("LibraryShell", () => {
     expectLabels(labels, ["Home", "Browse", "My library", "Add a material", "Reading lists"])
     expect(labels).not.toContain("Review queue")
     expect(labels).not.toContain("UniLibrary")
+    expect(bottomLabels()).toEqual(["Home", "Browse", "My library"])
   })
 
   it("shows a librarian the Manage entries, and only an administrator the UniLibrary page", async () => {
@@ -88,6 +102,7 @@ describe("LibraryShell", () => {
     await screen.findByText("page body")
     expectLabels(navLabels(), ["Review queue", "Books", "Topics", "Collections", "Reports", "Statistics"])
     expect(navLabels()).not.toContain("UniLibrary")
+    expect(bottomLabels()).toEqual(["Home", "Browse", "My library", "Review queue"])
     librarian.unmount()
 
     renderLibraryApp(

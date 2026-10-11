@@ -97,6 +97,7 @@
   "login": {
     "title": "Kirish",
     "description": "«{client}» ga davom etish uchun",
+    "descriptionPending": "davom etish uchun",
     "unavailable": "Kirish sahifasini ochib boʻlmadi",
     "login": "Login",
     "password": "Parol",
@@ -106,7 +107,8 @@
     "forgotPassword": "Parolni unutdingizmi?",
     "forgotLogin": "Loginni unutdingizmi?",
     "register": "EMIS orqali roʻyxatdan oʻtish",
-    "cantGetIn": "Kira olmayapsizmi? EMIS orqali hisobni qaytaring",
+    "cantGetIn": "EMIS orqali hisobni qaytaring",
+    "help": "Kira olmayapsizmi?",
     "helpLinks": "Kirish boʻyicha yordam",
     "backToApp": "Ilovaga qaytish",
     "channel": {

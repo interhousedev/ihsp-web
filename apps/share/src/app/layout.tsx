@@ -1,5 +1,6 @@
 import "@ihsp/ui/styles"
 import { THEME_INIT_SCRIPT } from "@ihsp/ui/theme-init"
+import { LANG_INIT_SCRIPT } from "./lang-init"
 import type { Metadata, Viewport } from "next"
 import type { ReactNode } from "react"
 import { Providers } from "./providers"
@@ -30,10 +31,11 @@ export const viewport: Viewport = {
  */
 export default function RootLayout({ children }: { children: ReactNode }) {
   return (
-    <html lang="ru" data-theme="vercel" suppressHydrationWarning>
+    <html lang="uz" data-theme="vercel" suppressHydrationWarning>
       <head>
         <script src="/ai/env.js" />
         <script dangerouslySetInnerHTML={{ __html: THEME_INIT_SCRIPT }} />
+        <script dangerouslySetInnerHTML={{ __html: LANG_INIT_SCRIPT }} />
       </head>
       <body className="bg-background text-foreground min-h-dvh overflow-x-hidden font-sans antialiased">
         <Providers>{children}</Providers>

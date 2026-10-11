@@ -97,6 +97,7 @@
   "login": {
     "title": "Log in",
     "description": "to continue to {client}",
+    "descriptionPending": "to continue",
     "unavailable": "We could not open this login",
     "login": "Login",
     "password": "Password",
@@ -106,7 +107,8 @@
     "forgotPassword": "Forgot password?",
     "forgotLogin": "Forgot login?",
     "register": "Register with EMIS",
-    "cantGetIn": "Can't get in? Reclaim with EMIS",
+    "cantGetIn": "Reclaim the account with EMIS",
+    "help": "Can't get in?",
     "helpLinks": "Help with login",
     "backToApp": "Back to the app",
     "channel": {

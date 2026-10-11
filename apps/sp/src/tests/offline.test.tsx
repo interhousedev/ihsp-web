@@ -106,6 +106,11 @@ describe("QueryPersistence", () => {
   })
 })
 
+/** A cache entry as `newestCachedAt` reads it. */
+function cached(queryKey: unknown[], dataUpdatedAt: number) {
+  return { queryKey, state: { dataUpdatedAt } }
+}
+
 describe("OfflineIndicator", () => {
   test("shows the badge after a network error and hides it after a success", async () => {
     const queryClient = createTestQueryClient()
@@ -142,9 +147,10 @@ describe("OfflineIndicator", () => {
   })
 
   test("the age is the newest fetch among the offline pages only", () => {
-    const query = (key: unknown[], dataUpdatedAt: number) => ({ queryKey: key, state: { dataUpdatedAt } })
     expect(newestCachedAt([])).toBeNull()
-    expect(newestCachedAt([query(["me", "messages"], 500)])).toBeNull()
-    expect(newestCachedAt([query(["me", "today"], 100), query(["me", "grades"], 300), query(["me", "messages"], 500)])).toBe(300)
+    expect(newestCachedAt([cached(["me", "messages"], 500)])).toBeNull()
+    expect(
+      newestCachedAt([cached(["me", "today"], 100), cached(["me", "grades"], 300), cached(["me", "messages"], 500)]),
+    ).toBe(300)
   })
 })

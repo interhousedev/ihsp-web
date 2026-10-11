@@ -1,6 +1,7 @@
 "use client"
 
 import type { PublicShare } from "@ihsp/api"
+import { useAuthStore } from "@ihsp/auth"
 import { getConfig } from "@ihsp/config"
 import { useT } from "@ihsp/i18n"
 import { Badge, Button, Markdown, buttonVariants } from "@ihsp/ui"
@@ -13,6 +14,8 @@ type Cards = NonNullable<PublicShare["flashcards"]>["cards"]
 export function FlashcardsView({ cards, slug }: { cards: Cards; slug: string }) {
   const t = useT("share.flashcards")
   const [studying, setStudying] = useState(false)
+  // A visitor without a session lands on the login first: the label says so.
+  const signedIn = useAuthStore((state) => state.user !== null)
   const copyUrl = `${getConfig().SP_URL}/flashcards/copy/?share=${encodeURIComponent(slug)}`
 
   if (studying) return <StudyMode cards={cards} onExit={() => setStudying(false)} />
@@ -34,7 +37,7 @@ export function FlashcardsView({ cards, slug }: { cards: Cards; slug: string }) 
             className: "min-h-11",
           })}
         >
-          {t("copy")}
+          {signedIn ? t("copy") : t("copySignIn")}
         </a>
       </div>
       {cards.length === 0 ? (

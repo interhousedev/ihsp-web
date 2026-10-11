@@ -10,6 +10,7 @@ import { FlowCard } from "../../shared/components/flow-card"
 import { TextLink } from "../../shared/components/text-link"
 import { useTr } from "../../shared/hooks/use-tr"
 import { followChallengeUsed, withChallenge } from "../../shared/utils/challenge"
+import { isTouchDevice } from "../../shared/utils/is-touch-device"
 import { requiredText } from "../../shared/utils/schemas"
 
 type OtpRequestFormProps = { challenge: string; clientName: string; onSent: (login: string) => void }
@@ -62,6 +63,7 @@ export function OtpRequestForm({ challenge, clientName, onSent }: OtpRequestForm
               autoCapitalize="none"
               autoCorrect="off"
               spellCheck={false}
+              autoFocus={!isTouchDevice()}
               className="h-11 text-base"
             />
           )}

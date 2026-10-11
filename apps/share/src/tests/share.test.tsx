@@ -20,6 +20,10 @@ describe("slug from the path", () => {
     expect(slugFromPathname("/ai/")).toBeNull()
     expect(slugFromPathname("/ai/a/b/")).toBeNull()
   })
+
+  test("malformed percent-encoding is no slug (Link not found, not a blank page)", () => {
+    expect(slugFromPathname("/ai/%E0%A4%A/")).toBeNull()
+  })
 })
 
 describe("shared chat", () => {
@@ -37,6 +41,17 @@ describe("shared chat", () => {
     expect(screen.getByText("Explain uniform motion")).toBeInTheDocument()
     expect(screen.getByText("Looked up your timetable")).toBeInTheDocument()
     expect(screen.getByText("Assistant")).toBeInTheDocument()
+  })
+
+  test("names the share in the tab title and offers the student app in a footer link and the brand", async () => {
+    renderShare(<ShareViewer />, { route: shareRoute("kq7x2m9a") })
+
+    await screen.findByRole("heading", { name: "Kinematics revision", hidden: true })
+    await waitFor(() => expect(document.title).toBe("Kinematics revision"))
+    expect(screen.getByRole("link", { name: "Open my.iht", hidden: true }).getAttribute("href")).toBe(
+      getConfig().SP_URL,
+    )
+    expect(screen.getByRole("link", { name: "IHT shares", hidden: true }).getAttribute("href")).toBe(getConfig().SP_URL)
   })
 })
 
@@ -66,7 +81,7 @@ describe("shared flash cards", () => {
       }),
     ).toBeInTheDocument()
     const copy = screen.getByRole("link", {
-      name: "Copy to my decks",
+      name: "Copy to my decks (sign in)",
       hidden: true,
     })
     expect(copy.getAttribute("href")).toBe(`${getConfig().SP_URL}/flashcards/copy/?share=zr5t8w1c`)
@@ -147,7 +162,7 @@ describe("shared flash cards", () => {
 
     expect(
       await screen.findByRole("link", {
-        name: "Copy to my decks",
+        name: "Copy to my decks (sign in)",
         hidden: true,
       }),
     ).toBeInTheDocument()
@@ -250,9 +265,18 @@ describe("report", () => {
         hidden: true,
       }),
     )
+    fireEvent.change(await screen.findByLabelText("Reason"), { target: { value: "other" } })
     fireEvent.click(await screen.findByRole("button", { name: "Send report", hidden: true }))
 
     expect(await screen.findByRole("alert")).toBeInTheDocument()
+  })
+
+  test("no reason is chosen until the user picks one", async () => {
+    renderShare(<ShareViewer />, { route: shareRoute("kq7x2m9a") })
+    fireEvent.click(await screen.findByRole("button", { name: "Report this link", hidden: true }))
+
+    expect(await screen.findByLabelText("Reason")).toHaveValue("")
+    expect(screen.getByRole("button", { name: "Send report", hidden: true })).toBeDisabled()
   })
 })
 

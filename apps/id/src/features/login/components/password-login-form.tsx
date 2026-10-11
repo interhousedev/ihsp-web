@@ -9,6 +9,7 @@ import { FlowCard } from "../../shared/components/flow-card"
 import { LinkButton } from "../../shared/components/link-button"
 import { useTr } from "../../shared/hooks/use-tr"
 import { followChallengeUsed, withChallenge } from "../../shared/utils/challenge"
+import { isTouchDevice } from "../../shared/utils/is-touch-device"
 import { requiredText } from "../../shared/utils/schemas"
 import { applyLoginResult, type SecondFactor } from "../utils/login-result"
 import { LoginError } from "./login-error"
@@ -60,7 +61,9 @@ export function PasswordLoginForm({ challenge, info, onSecondFactor, onPasswordC
   return (
     <FlowCard
       title={t("login.title")}
-      description={t("login.description", { client: info.client_name })}
+      description={
+        info.client_name ? t("login.description", { client: info.client_name }) : t("login.descriptionPending")
+      }
       footer={<LoginLinks challenge={challenge} />}
     >
       <form
@@ -79,6 +82,7 @@ export function PasswordLoginForm({ challenge, info, onSecondFactor, onPasswordC
               autoCapitalize="none"
               autoCorrect="off"
               spellCheck={false}
+              autoFocus={!isTouchDevice()}
               className="h-11 text-base"
             />
           )}

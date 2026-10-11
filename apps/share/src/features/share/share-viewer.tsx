@@ -1,9 +1,11 @@
 "use client"
 
 import { getPublicShareQuery, isApiError, type PublicShare } from "@ihsp/api"
+import { getConfig } from "@ihsp/config"
 import { useFormatters, useT } from "@ihsp/i18n"
-import { StateView } from "@ihsp/ui"
+import { StateView, buttonVariants } from "@ihsp/ui"
 import { useQuery } from "@tanstack/react-query"
+import { useEffect } from "react"
 import { ArtifactView } from "./artifact-view"
 import { ChatView } from "./chat-view"
 import { FlashcardsView } from "./flashcards-view"
@@ -15,6 +17,10 @@ import { useShareSlug } from "./use-share-slug"
 function ShareContent({ share, slug }: { share: PublicShare; slug: string }) {
   const t = useT("share")
   const f = useFormatters()
+  // The tab, the history and link previews name the share, not the app.
+  useEffect(() => {
+    document.title = share.title
+  }, [share.title])
   return (
     <>
       <div className="flex flex-col gap-1">
@@ -36,6 +42,12 @@ function ShareContent({ share, slug }: { share: PublicShare; slug: string }) {
       ) : null}
       {share.kind === "artifact" && share.artifact ? <ArtifactView share={share} slug={slug} /> : null}
       <footer className="mt-auto flex flex-col gap-2 border-t pt-4">
+        <a
+          href={getConfig().SP_URL}
+          className={buttonVariants({ variant: "outline", className: "min-h-11 self-start" })}
+        >
+          {t("openApp")}
+        </a>
         <ReportForm slug={slug} />
       </footer>
     </>
