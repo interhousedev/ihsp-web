@@ -27,12 +27,12 @@ export function currentWebQuota(): WebQuota {
 /** `404 web-search/disabled` or `429 web-search/quota-exceeded` when a search of `cost` is not possible, else spends it. */
 export function spendWebSearch(cost = 1): Response | null {
   if (!quota.enabled) return problem(404, "web-search/disabled", "Web search is turned off")
-  if (quota.remaining < cost) {
+  if (quota.remaining !== null && quota.remaining < cost) {
     return problem(429, "web-search/quota-exceeded", "No web searches left today", {
       params: { limit: quota.limit, left: quota.remaining, needed: cost, resets_at: quota.resets_at },
     })
   }
-  quota = { ...quota, used: quota.used + cost, remaining: quota.remaining - cost }
+  quota = { ...quota, used: quota.used + cost, remaining: quota.remaining === null ? null : quota.remaining - cost }
   return null
 }
 

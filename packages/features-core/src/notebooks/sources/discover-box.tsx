@@ -99,7 +99,9 @@ export function DiscoverBox({ flow, compact }: DiscoverBoxProps) {
             <p id={quotaId} role="status" className="text-muted-foreground text-xs">
               {spent
                 ? composer("webNone", { time: format.time(quota.resets_at) })
-                : composer("webQuota", { remaining, limit: quota.limit })}
+                : quota.limit === null
+                  ? null
+                  : composer("webQuota", { remaining: remaining ?? 0, limit: quota.limit })}
             </p>
           </div>
         ) : null}
