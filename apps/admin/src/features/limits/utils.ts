@@ -24,10 +24,13 @@ export function rangeOf(range: RangeKey, today: string): { from: string; to: str
   return { from: addDays(today, -(Number(range) - 1)), to: today }
 }
 
-/** US dollars: whole cents from a dollar up, finer below (the daily cost of one call is often a fraction). */
-export function usd(value: number): string {
+/**
+ * US dollars in the admin's locale: whole cents from a dollar up, finer below (the daily cost of one call is often a
+ * fraction). `locale` is the one of `useFormatters()`.
+ */
+export function usd(value: number, locale = "en"): string {
   const fine = value > 0 && value < 1
-  return new Intl.NumberFormat("en-US", {
+  return new Intl.NumberFormat(locale, {
     style: "currency",
     currency: "USD",
     minimumFractionDigits: 2,
@@ -35,14 +38,14 @@ export function usd(value: number): string {
   }).format(value)
 }
 
-/** A count with thousands separators, or in thousands and millions when it is large. */
-export function compact(value: number): string {
-  return new Intl.NumberFormat("en-US", { notation: value >= 10_000 ? "compact" : "standard" }).format(value)
+/** A count with the locale's thousands separators, or in thousands and millions when it is large. */
+export function compact(value: number, locale = "en"): string {
+  return new Intl.NumberFormat(locale, { notation: value >= 10_000 ? "compact" : "standard" }).format(value)
 }
 
-/** The whole number of a limit with thousands separators. */
-export function number(value: number | null): string {
-  return value === null ? "—" : value.toLocaleString("en-US")
+/** The whole number of a limit with the locale's thousands separators. */
+export function number(value: number | null, locale = "en"): string {
+  return value === null ? "—" : new Intl.NumberFormat(locale).format(value)
 }
 
 /** Tokens of one row: the input and output sides together. */

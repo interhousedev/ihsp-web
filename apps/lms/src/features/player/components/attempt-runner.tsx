@@ -9,7 +9,7 @@ import {
   type AttemptView,
 } from "@ihsp/api"
 import { useErrorMessage, useT } from "@ihsp/i18n"
-import { Alert, AlertDescription, Badge, Button, Spinner, cn } from "@ihsp/ui"
+import { Alert, AlertDescription, Badge, LoadingButton, cn } from "@ihsp/ui"
 import { useCallback, useEffect, useRef, useState } from "react"
 import { formatCountdown } from "../../shared/utils/time"
 import { useCountdown } from "../hooks/use-countdown"
@@ -180,10 +180,9 @@ export function AttemptRunner({
       ) : null}
 
       <div className="flex justify-end">
-        <Button onClick={() => void submit()} disabled={submitting} className="min-h-11 md:min-h-8">
-          {submitting ? <Spinner aria-hidden /> : null}
+        <LoadingButton onClick={() => void submit()} loading={submitting} className="min-h-11 md:min-h-8">
           {t("submit")}
-        </Button>
+        </LoadingButton>
       </div>
     </section>
   )

@@ -11,7 +11,7 @@ import { PagedTable } from "../../shared/components/paged-table"
 import { useFilterState } from "../../shared/hooks/use-filter-state"
 import { useGroupOptions, useTeacherOptions } from "../../shared/hooks/use-lookups"
 import { SERVER_PAGE_SIZE, usePagedList } from "../../shared/hooks/use-paged-list"
-import { actionsCol, col } from "../../shared/utils/columns"
+import { actionsCol, col, selectCol } from "../../shared/utils/columns"
 import { downloadCsv } from "../../shared/utils/csv"
 import { fetchAllPages } from "../../shared/utils/fetch-all-pages"
 import { audienceLabel, fullName } from "../../shared/utils/names"
@@ -24,6 +24,7 @@ const FILTER_KEYS = ["from", "to", "group_id", "teacher_id", "status", "teacher_
 /** Lessons list with filters, a change dialog per lesson and extra lessons (ADM-10, UF-ADM-07). */
 export function LessonsPage() {
   const t = useT("lessons")
+  const tSel = useT("shared.selection")
   const f = useFormatters()
   const filters = useFilterState(FILTER_KEYS)
   const groups = useGroupOptions()
@@ -90,35 +91,65 @@ export function LessonsPage() {
 
   const columns = useMemo(
     () => [
-      col<LessonItem>("date", t("columns.date"), (lesson) => (
-        <span className="font-medium">{f.date(lesson.date, { weekday: "short", day: "numeric", month: "short" })}</span>
-      )),
+      selectCol<LessonItem>({
+        all: tSel("selectAll"),
+        row: (lesson) => tSel("selectRow", { name: `${lesson.subject.name}, ${f.date(lesson.date)}` }),
+      }),
+      col<LessonItem>(
+        "date",
+        t("columns.date"),
+        (lesson) => (
+          <span className="font-medium">
+            {f.date(lesson.date, { weekday: "short", day: "numeric", month: "short" })}
+          </span>
+        ),
+        { sort: (lesson) => `${lesson.date} ${lesson.starts_at}` },
+      ),
       col<LessonItem>(
         "time",
         t("columns.time"),
         (lesson) => `${lesson.period}. ${f.time(lesson.starts_at)}–${f.time(lesson.ends_at)}`,
+        { sort: (lesson) => lesson.period },
       ),
-      col<LessonItem>("subject", t("columns.subject"), (lesson) => (
-        <Link
-          href={`/lessons/view/?id=${encodeURIComponent(lesson.id)}`}
-          className="underline-offset-4 hover:underline"
-        >
-          {lesson.subject.name}
-        </Link>
-      )),
-      col<LessonItem>("teacher", t("columns.teacher"), (lesson) =>
-        lesson.teacher ? fullName(lesson.teacher) : <Badge variant="destructive">{t("teacherNeeded")}</Badge>,
+      col<LessonItem>(
+        "subject",
+        t("columns.subject"),
+        (lesson) => (
+          <Link
+            href={`/lessons/view/?id=${encodeURIComponent(lesson.id)}`}
+            className="underline-offset-4 hover:underline"
+          >
+            {lesson.subject.name}
+          </Link>
+        ),
+        { sort: (lesson) => lesson.subject.name },
       ),
-      col<LessonItem>("room", t("columns.room"), (lesson) => lesson.room?.name ?? "—"),
-      col<LessonItem>("audience", t("columns.audience"), (lesson) => audienceLabel(lesson.audience)),
-      col<LessonItem>("status", t("columns.status"), (lesson) => (
-        <span className="flex flex-wrap gap-1">
-          <Badge variant={lesson.status === "cancelled" ? "destructive" : "secondary"}>
-            {t(`status.${lesson.status}`)}
-          </Badge>
-          {lesson.is_overridden ? <Badge variant="outline">{t("changed")}</Badge> : null}
-        </span>
-      )),
+      col<LessonItem>(
+        "teacher",
+        t("columns.teacher"),
+        (lesson) =>
+          lesson.teacher ? fullName(lesson.teacher) : <Badge variant="destructive">{t("teacherNeeded")}</Badge>,
+        { sort: (lesson) => (lesson.teacher ? fullName(lesson.teacher) : null) },
+      ),
+      col<LessonItem>("room", t("columns.room"), (lesson) => lesson.room?.name ?? "—", {
+        sort: (lesson) => lesson.room?.name,
+      }),
+      col<LessonItem>("audience", t("columns.audience"), (lesson) => audienceLabel(lesson.audience), {
+        sort: (lesson) => audienceLabel(lesson.audience),
+      }),
+      col<LessonItem>(
+        "status",
+        t("columns.status"),
+        (lesson) => (
+          <span className="flex flex-wrap gap-1">
+            <Badge variant={lesson.status === "cancelled" ? "destructive" : "secondary"}>
+              {t(`status.${lesson.status}`)}
+            </Badge>
+            {lesson.is_overridden ? <Badge variant="outline">{t("changed")}</Badge> : null}
+          </span>
+        ),
+        { sort: (lesson) => lesson.status },
+      ),
       actionsCol<LessonItem>(t("columns.actions"), (lesson) => (
         <>
           <Link
@@ -140,11 +171,10 @@ export function LessonsPage() {
         </>
       )),
     ],
-    [f, t],
+    [f, t, tSel],
   )
 
-  async function exportCsv() {
-    const rows = await fetchAllPages((cursor) => getAdminLessons({ ...params, cursor, limit: SERVER_PAGE_SIZE }))
+  function lessonsCsv(rows: LessonItem[]) {
     downloadCsv("lessons.csv", [
       [
         t("columns.date"),
@@ -167,6 +197,10 @@ export function LessonsPage() {
     ])
   }
 
+  async function exportCsv() {
+    lessonsCsv(await fetchAllPages((cursor) => getAdminLessons({ ...params, cursor, limit: SERVER_PAGE_SIZE })))
+  }
+
   return (
     <PageContainer
       title={t("title")}
@@ -182,6 +216,9 @@ export function LessonsPage() {
         columns={columns}
         getRowId={(lesson) => lesson.id}
         emptyText={t("empty")}
+        renderSelectionActions={(selected) => (
+          <ExportButton label={tSel("exportSelected")} onExport={async () => lessonsCsv(selected)} />
+        )}
         toolbar={
           <ListToolbar
             filters={toolbarFilters}

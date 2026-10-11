@@ -1,17 +1,19 @@
 "use client"
 
-import { getAdminUsers, keys, type AdminUser, type Role } from "@ihsp/api"
+import { getAdminUsers, keys, postAdminUserBlock, type AdminUser, type Role } from "@ihsp/api"
 import { useFormatters, useT } from "@ihsp/i18n"
-import { Badge } from "@ihsp/ui"
+import { Badge, Button } from "@ihsp/ui"
 import Link from "next/link"
-import { useMemo } from "react"
+import { useMemo, useState } from "react"
 import { ExportButton } from "../../shared/components/export-button"
 import { ListToolbar, type ToolbarFilter } from "../../shared/components/list-toolbar"
 import { PagedTable } from "../../shared/components/paged-table"
+import { ReasonDialog } from "../../shared/components/reason-dialog"
 import { StatusBadge } from "../../shared/components/status-badge"
+import { useAdminMutation } from "../../shared/hooks/use-admin-mutation"
 import { useFilterState } from "../../shared/hooks/use-filter-state"
 import { SERVER_PAGE_SIZE, usePagedList } from "../../shared/hooks/use-paged-list"
-import { col } from "../../shared/utils/columns"
+import { col, selectCol } from "../../shared/utils/columns"
 import { downloadCsv } from "../../shared/utils/csv"
 import { fetchAllPages } from "../../shared/utils/fetch-all-pages"
 import { fullNameWithMiddle } from "../../shared/utils/names"
@@ -25,10 +27,28 @@ function isRole(value: string | null): value is Role {
   return value !== null && (ROLES as readonly string[]).includes(value)
 }
 
-/** Users & roles list (ADM-5): search, role and status filters. */
+type Blocking = { users: AdminUser[]; clear: () => void }
+
+/** Users & roles list (ADM-5): search, role and status filters; selected users can be exported or blocked together. */
 export function UsersList() {
   const t = useT("users")
+  const tSel = useT("shared.selection")
+  const tAccount = useT("account")
   const f = useFormatters()
+  const [blocking, setBlocking] = useState<Blocking | null>(null)
+  const blockSelected = useAdminMutation<{ users: AdminUser[]; reason: string }, number>({
+    mutationFn: async ({ users, reason }) => {
+      const open = users.filter((user) => user.status !== "blocked")
+      for (const user of open) await postAdminUserBlock(user.id, { reason })
+      return open.length
+    },
+    invalidate: [keys.admin.users.all(), keys.admin.students.all(), keys.admin.teachers.all()],
+    success: (count) => tSel("blockSelectedDone", { count }),
+    onSuccess: () => {
+      blocking?.clear()
+      setBlocking(null)
+    },
+  })
   const filters = useFilterState(FILTER_KEYS)
   const params = useMemo(
     () => ({
@@ -65,39 +85,60 @@ export function UsersList() {
 
   const columns = useMemo(
     () => [
-      col<AdminUser>("name", t("columns.name"), (user) => (
-        <Link
-          href={`/users/view/?id=${encodeURIComponent(user.id)}`}
-          className="font-medium underline-offset-4 hover:underline"
-        >
-          {fullNameWithMiddle(user)}
-        </Link>
-      )),
-      col<AdminUser>("login", t("columns.login"), (user) => user.login ?? "—"),
-      col<AdminUser>("roles", t("columns.roles"), (user) => (
-        <span className="flex flex-wrap gap-1">
-          {user.roles.map((role) => (
-            <Badge key={role} variant={role === "admin" ? "default" : "outline"}>
-              {t(`roles.${role}`)}
-            </Badge>
-          ))}
-        </span>
-      )),
-      col<AdminUser>("status", t("columns.status"), (user) => (
-        <span className="flex flex-wrap gap-1">
-          <StatusBadge status={user.status} />
-          {user.mail_suspended ? <Badge variant="destructive">{t("mailSuspended")}</Badge> : null}
-        </span>
-      )),
-      col<AdminUser>("last_login", t("columns.lastLogin"), (user) =>
-        user.last_login_at ? f.dateTime(user.last_login_at) : "—",
+      selectCol<AdminUser>({
+        all: tSel("selectAll"),
+        row: (user) => tSel("selectRow", { name: fullNameWithMiddle(user) }),
+      }),
+      col<AdminUser>(
+        "name",
+        t("columns.name"),
+        (user) => (
+          <Link
+            href={`/users/view/?id=${encodeURIComponent(user.id)}`}
+            className="font-medium underline-offset-4 hover:underline"
+          >
+            {fullNameWithMiddle(user)}
+          </Link>
+        ),
+        { sort: fullNameWithMiddle },
+      ),
+      col<AdminUser>("login", t("columns.login"), (user) => user.login ?? "—", { sort: (user) => user.login }),
+      col<AdminUser>(
+        "roles",
+        t("columns.roles"),
+        (user) => (
+          <span className="flex flex-wrap gap-1">
+            {user.roles.map((role) => (
+              <Badge key={role} variant={role === "admin" ? "default" : "outline"}>
+                {t(`roles.${role}`)}
+              </Badge>
+            ))}
+          </span>
+        ),
+        { sort: (user) => user.roles.map((role) => t(`roles.${role}`)).join(" ") },
+      ),
+      col<AdminUser>(
+        "status",
+        t("columns.status"),
+        (user) => (
+          <span className="flex flex-wrap gap-1">
+            <StatusBadge status={user.status} />
+            {user.mail_suspended ? <Badge variant="destructive">{t("mailSuspended")}</Badge> : null}
+          </span>
+        ),
+        { sort: (user) => user.status },
+      ),
+      col<AdminUser>(
+        "last_login",
+        t("columns.lastLogin"),
+        (user) => (user.last_login_at ? f.dateTime(user.last_login_at) : "—"),
+        { sort: (user) => user.last_login_at },
       ),
     ],
-    [f, t],
+    [f, t, tSel],
   )
 
-  async function exportCsv() {
-    const rows = await fetchAllPages((cursor) => getAdminUsers({ ...params, cursor, limit: SERVER_PAGE_SIZE }))
+  function usersCsv(rows: AdminUser[]) {
     downloadCsv("users.csv", [
       [t("columns.name"), t("columns.login"), t("columns.roles"), t("columns.status"), t("columns.lastLogin")],
       ...rows.map((user) => [
@@ -110,23 +151,54 @@ export function UsersList() {
     ])
   }
 
+  async function exportCsv() {
+    usersCsv(await fetchAllPages((cursor) => getAdminUsers({ ...params, cursor, limit: SERVER_PAGE_SIZE })))
+  }
+
   return (
-    <PagedTable
-      source={source}
-      columns={columns}
-      getRowId={(user) => user.id}
-      emptyText={t("empty")}
-      toolbar={
-        <ListToolbar
-          filters={toolbarFilters}
-          values={filters.values}
-          onChange={(key, value) => filters.set(key as (typeof FILTER_KEYS)[number], value)}
-          onReset={filters.reset}
-          active={filters.active}
-        >
-          <ExportButton onExport={exportCsv} />
-        </ListToolbar>
-      }
-    />
+    <>
+      <PagedTable
+        source={source}
+        columns={columns}
+        getRowId={(user) => user.id}
+        emptyText={t("empty")}
+        renderSelectionActions={(selected, clear) => (
+          <>
+            <ExportButton label={tSel("exportSelected")} onExport={async () => usersCsv(selected)} />
+            <Button
+              type="button"
+              variant="destructive"
+              disabled={selected.every((user) => user.status === "blocked")}
+              onClick={() => setBlocking({ users: selected, clear })}
+            >
+              {tSel("blockSelected")}
+            </Button>
+          </>
+        )}
+        toolbar={
+          <ListToolbar
+            filters={toolbarFilters}
+            values={filters.values}
+            onChange={(key, value) => filters.set(key as (typeof FILTER_KEYS)[number], value)}
+            onReset={filters.reset}
+            active={filters.active}
+          >
+            <ExportButton onExport={exportCsv} />
+          </ListToolbar>
+        }
+      />
+      <ReasonDialog
+        open={blocking !== null}
+        onOpenChange={(open) => !open && setBlocking(null)}
+        title={tSel("blockSelectedTitle", { count: blocking?.users.length ?? 0 })}
+        description={tAccount("blockDescription")}
+        confirmLabel={tAccount("block")}
+        reasonLabel={tAccount("reason")}
+        loading={blockSelected.isPending}
+        onSubmit={(reason) => {
+          if (blocking) blockSelected.mutate({ users: blocking.users, reason })
+        }}
+      />
+    </>
   )
 }

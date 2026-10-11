@@ -17,7 +17,7 @@ import {
   Input,
   NativeSelect,
   NativeSelectOption,
-  Spinner,
+  LoadingButton,
   Switch,
 } from "@ihsp/ui"
 import { useState, type FormEvent } from "react"
@@ -187,10 +187,9 @@ export function StaffFormDialog({
             <Button type="button" variant="outline" onClick={() => onOpenChange(false)} className="min-h-11 md:min-h-8">
               {tc("cancel")}
             </Button>
-            <Button type="submit" disabled={!valid || pending} className="min-h-11 md:min-h-8">
-              {pending ? <Spinner aria-hidden /> : null}
+            <LoadingButton type="submit" disabled={!valid} className="min-h-11 md:min-h-8" loading={pending}>
               {mode === "add" ? t("addSubmit") : tc("save")}
-            </Button>
+            </LoadingButton>
           </DialogFooter>
         </form>
       </DialogContent>

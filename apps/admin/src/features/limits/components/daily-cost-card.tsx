@@ -39,7 +39,12 @@ export default function DailyCostCard({ rows }: { rows: UsageRow[] }) {
             <BarChart data={data} margin={{ left: 4, right: 8, top: 8 }}>
               <CartesianGrid vertical={false} />
               <XAxis dataKey="day" tickLine={false} axisLine={false} interval="preserveStartEnd" minTickGap={24} />
-              <YAxis width={56} tickLine={false} axisLine={false} tickFormatter={(value) => usd(Number(value))} />
+              <YAxis
+                width={56}
+                tickLine={false}
+                axisLine={false}
+                tickFormatter={(value) => usd(Number(value), f.locale)}
+              />
               <ChartTooltip content={<ChartTooltipContent />} />
               {features.map((name) => (
                 <Bar key={name} dataKey={name} stackId="cost" fill={`var(--color-${name})`} />

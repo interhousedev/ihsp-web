@@ -2,7 +2,7 @@
 
 import { getAdminTeachers, keys, postAdminTeachers, type TeacherCreated } from "@ihsp/api"
 import { useT } from "@ihsp/i18n"
-import { Alert, AlertDescription, Button, CopyButton, Input, PageContainer, Spinner } from "@ihsp/ui"
+import { Alert, AlertDescription, Button, CopyButton, Input, PageContainer, LoadingButton } from "@ihsp/ui"
 import Link from "next/link"
 import { useState } from "react"
 import { BackLink } from "../../shared/components/back-link"
@@ -158,10 +158,9 @@ export function NewTeacherPage() {
           </Alert>
         ) : null}
         <div>
-          <Button type="submit" className={TOUCH} disabled={!valid || create.isPending}>
-            {create.isPending ? <Spinner aria-hidden /> : null}
+          <LoadingButton type="submit" className={TOUCH} disabled={!valid} loading={create.isPending}>
             {duplicate ? t("createAnyway") : t("create")}
-          </Button>
+          </LoadingButton>
         </div>
       </form>
     </PageContainer>

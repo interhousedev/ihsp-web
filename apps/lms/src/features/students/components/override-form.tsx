@@ -2,7 +2,7 @@
 
 import { keys, postLmsAttemptOverride, type AttemptReview } from "@ihsp/api"
 import { useErrorMessage, useT } from "@ihsp/i18n"
-import { Alert, AlertDescription, Button, Field, FieldLabel, Input, Spinner, Textarea } from "@ihsp/ui"
+import { Alert, AlertDescription, Field, FieldLabel, Input, LoadingButton, Textarea } from "@ihsp/ui"
 import { useMutation, useQueryClient } from "@tanstack/react-query"
 import { useState, type FormEvent } from "react"
 
@@ -68,10 +68,9 @@ export function OverrideForm({ attempt, courseId }: { attempt: AttemptReview; co
         </Alert>
       ) : null}
       <div>
-        <Button type="submit" disabled={!valid || override.isPending} className="min-h-11 md:min-h-8">
-          {override.isPending ? <Spinner aria-hidden /> : null}
+        <LoadingButton type="submit" disabled={!valid} className="min-h-11 md:min-h-8" loading={override.isPending}>
           {t("overrideSubmit")}
-        </Button>
+        </LoadingButton>
       </div>
     </form>
   )

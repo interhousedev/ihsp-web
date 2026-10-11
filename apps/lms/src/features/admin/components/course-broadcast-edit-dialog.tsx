@@ -16,7 +16,7 @@ import {
   FieldDescription,
   FieldLabel,
   Input,
-  Spinner,
+  LoadingButton,
   Textarea,
 } from "@ihsp/ui"
 import { useMutation, useQueryClient } from "@tanstack/react-query"
@@ -100,10 +100,14 @@ export function CourseBroadcastEditDialog({
             <Button type="button" variant="outline" onClick={onClose} className="min-h-11 md:min-h-8">
               {t("close")}
             </Button>
-            <Button type="submit" disabled={!valid || !changed || save.isPending} className="min-h-11 md:min-h-8">
-              {save.isPending ? <Spinner aria-hidden /> : null}
+            <LoadingButton
+              type="submit"
+              disabled={!valid || !changed}
+              className="min-h-11 md:min-h-8"
+              loading={save.isPending}
+            >
               {t("save")}
-            </Button>
+            </LoadingButton>
           </DialogFooter>
         </form>
       </DialogContent>

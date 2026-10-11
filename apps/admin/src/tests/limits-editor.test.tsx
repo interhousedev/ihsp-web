@@ -42,6 +42,14 @@ describe("limits helpers", () => {
     expect(compact(3_400_000)).toBe("3.4M")
     expect(number(600_000)).toBe("600,000")
     expect(number(null)).toBe("—")
+  })
+
+  test("the formats follow the admin's locale", () => {
+    expect(number(600_000, "ru")).toBe(new Intl.NumberFormat("ru").format(600_000))
+    expect(number(600_000, "ru")).not.toContain(",")
+    expect(usd(1234.5, "ru")).toContain("1")
+    expect(usd(1234.5, "ru")).not.toBe("$1,234.50")
+    expect(compact(12_000, "ru")).toBe(new Intl.NumberFormat("ru", { notation: "compact" }).format(12_000))
     expect(tokens({ tokens_in: 120, tokens_out: 30 })).toBe(150)
   })
 })
@@ -67,11 +75,7 @@ describe("changesOf", () => {
   })
 
   test("text, decimals, negatives and out-of-range values are errors for that field only", () => {
-    const result = changesOf(
-      [tokensLimit, hours],
-      { [tokensLimit.key]: "12.5", [hours.key]: "721" },
-      invalid,
-    )
+    const result = changesOf([tokensLimit, hours], { [tokensLimit.key]: "12.5", [hours.key]: "721" }, invalid)
     expect(result.errors).toEqual({ [tokensLimit.key]: `bad ${tokensLimit.key}`, [hours.key]: `bad ${hours.key}` })
     expect(result.body.limits).toEqual({})
     expect(changesOf([tokensLimit], { [tokensLimit.key]: "-1" }, invalid).errors).not.toEqual({})
@@ -147,7 +151,7 @@ describe("limits editor", () => {
 })
 
 describe("user extensions", () => {
-  test("an existing extension shows its grant, its end date and its note, and can be removed", async () => {
+  test("an existing extension shows its grant, its end date and its note, and can be removed after a confirmation", async () => {
     let removed: string | undefined
     server.use(
       http.delete(apiUrl("/v1/admin/ai/limit-extensions/:id"), ({ params }) => {
@@ -162,6 +166,10 @@ describe("user extensions", () => {
     expect(screen.getByText("Active")).toBeInTheDocument()
 
     await user.click(screen.getByRole("button", { name: "Remove" }))
+    const dialog = await screen.findByRole("alertdialog")
+    expect(within(dialog).getByText("Remove the extension of Bobur Rashidov?")).toBeInTheDocument()
+    expect(removed).toBeUndefined()
+    await user.click(within(dialog).getByRole("button", { name: "Remove" }))
 
     await waitUntil(() => removed !== undefined, "no delete request")
     expect(removed).toBe("01a1276c-6b4c-73e1-8076-000000000102")

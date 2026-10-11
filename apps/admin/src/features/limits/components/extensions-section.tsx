@@ -19,6 +19,7 @@ import {
   CardContent,
   CardHeader,
   CardTitle,
+  ConfirmDialog,
   Dialog,
   DialogContent,
   DialogFooter,
@@ -72,13 +73,15 @@ export function ExtensionsSection() {
   )
 }
 
-/** One extension in the list, with its state and a remove button. */
+/** One extension in the list, with its state and a remove button (removal is confirmed first). */
 export function ExtensionRow({ item }: { item: ExtensionItem }) {
   const t = useT("limits")
+  const [confirming, setConfirming] = useState(false)
   const remove = useAdminMutation<void, void>({
     mutationFn: () => deleteAdminAiExtension(item.user_id),
     invalidate: [keys.admin.aiExtensions()],
     success: t("extensions.removed"),
+    onSuccess: () => setConfirming(false),
   })
   const grant =
     item.multiplier !== null
@@ -101,10 +104,20 @@ export function ExtensionRow({ item }: { item: ExtensionItem }) {
       </div>
       <div className="flex items-center gap-2">
         <span className="text-xs">{item.active ? t("extensions.active") : t("extensions.expired")}</span>
-        <Button type="button" size="sm" variant="ghost" disabled={remove.isPending} onClick={() => remove.mutate()}>
+        <Button type="button" size="sm" variant="ghost" disabled={remove.isPending} onClick={() => setConfirming(true)}>
           {t("extensions.remove")}
         </Button>
       </div>
+      <ConfirmDialog
+        open={confirming}
+        onOpenChange={setConfirming}
+        title={t("extensions.removeTitle", { name: item.user_name })}
+        description={t("extensions.removeDescription")}
+        confirmLabel={t("extensions.remove")}
+        destructive
+        loading={remove.isPending}
+        onConfirm={() => remove.mutate()}
+      />
     </li>
   )
 }

@@ -6,6 +6,7 @@ import { Alert, AlertDescription, Badge, Button, ConfirmDialog, Field, FieldLabe
 import { useMutation } from "@tanstack/react-query"
 import { useState } from "react"
 import { SaveIndicator } from "../../editor/components/save-indicator"
+import { useLeaveGuard } from "../../editor/hooks/use-leave-guard"
 import { OutlineBadge } from "../../shared/components/outline-badge"
 import { hrefs } from "../../shared/utils/hrefs"
 import { useStepEditor } from "../hooks/use-step-editor"
@@ -30,6 +31,12 @@ export function StepEditorBody({
   const t = useT("stepEditor")
   const errorMessage = useErrorMessage()
   const editor = useStepEditor(draft, { canEdit, autosaveMs })
+  const tEditor = useT("editor")
+  useLeaveGuard({
+    flush: editor.flush,
+    confirmWhen: canEdit && editor.dirty && editor.status !== "saving" && editor.status !== "saved",
+    message: tEditor("leaveUnsaved"),
+  })
   const [checkpointOpen, setCheckpointOpen] = useState(false)
   const [historyOpen, setHistoryOpen] = useState(false)
   const [discardOpen, setDiscardOpen] = useState(false)

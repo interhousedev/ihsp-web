@@ -14,3 +14,17 @@ export function useConfirmExam() {
     success: t("confirmed"),
   })
 }
+
+/** Confirms every selected date that is still "not confirmed" (`tentative`), one request each; the toast counts them. */
+export function useConfirmExams() {
+  const t = useT("shared.selection")
+  return useAdminMutation<StaffAssessmentItem[], number>({
+    mutationFn: async (items) => {
+      const open = items.filter((item) => item.has_date && item.status === "tentative")
+      for (const item of open) await patchAdminAssessment(item.id, { status: "planned" })
+      return open.length
+    },
+    invalidate: [EXAMS_QUERY_PREFIX],
+    success: (count) => t("confirmSelectedDone", { count }),
+  })
+}

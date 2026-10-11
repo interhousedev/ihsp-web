@@ -10,7 +10,7 @@ import {
   type StepView,
 } from "@ihsp/api"
 import { useErrorMessage, useFormatters, useT } from "@ihsp/i18n"
-import { Alert, AlertDescription, Badge, Button, Card, CardContent, Spinner } from "@ihsp/ui"
+import { Alert, AlertDescription, Badge, Card, CardContent, LoadingButton } from "@ihsp/ui"
 import { useMutation, useQueryClient } from "@tanstack/react-query"
 import { useCallback, useState } from "react"
 import { secondsToMinutes } from "../../shared/utils/time"
@@ -155,14 +155,14 @@ export function TestBlock({
             ) : null}
 
             <div className="flex flex-wrap items-center gap-2">
-              <Button
+              <LoadingButton
                 onClick={() => start.mutate()}
-                disabled={start.isPending || noAttemptsLeft}
+                disabled={noAttemptsLeft}
+                loading={start.isPending}
                 className="min-h-11 md:min-h-8"
               >
-                {start.isPending ? <Spinner aria-hidden /> : null}
                 {block.open_attempt_id ? t("continue") : finished || best ? t("again") : t("start")}
-              </Button>
+              </LoadingButton>
               {noAttemptsLeft ? <span className="text-muted-foreground text-sm">{t("noAttemptsLeft")}</span> : null}
             </div>
           </>

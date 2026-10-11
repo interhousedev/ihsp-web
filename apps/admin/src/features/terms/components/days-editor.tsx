@@ -1,13 +1,14 @@
 "use client"
 
 import { useFormatters, useT } from "@ihsp/i18n"
-import { Button, DatePicker, Icons } from "@ihsp/ui"
+import { Button, ConfirmDialog, DatePicker, Icons } from "@ihsp/ui"
 import { useState } from "react"
 import { SelectField } from "../../shared/components/select-field"
 import { STUDY_WEEKDAYS, weekdayDate } from "../../shared/utils/weekdays"
 import { TOUCH, TOUCH_ICON } from "../../shared/utils/touch"
 
 type Moved = { date: string; follows_weekday: number }
+type Removal = { kind: "holiday" | "moved"; date: string }
 
 /**
  * Holidays (non-study days) and moved study days such as "Sunday 13.12 follows Monday" (ACA-4, ADM-18). The date
@@ -29,6 +30,14 @@ export function DaysEditor({
   const [holiday, setHoliday] = useState<string | null>(null)
   const [movedDate, setMovedDate] = useState<string | null>(null)
   const [follows, setFollows] = useState("1")
+  const [removal, setRemoval] = useState<Removal | null>(null)
+
+  function confirmRemoval() {
+    if (!removal) return
+    if (removal.kind === "holiday") onNonStudyChange(nonStudyDays.filter((item) => item !== removal.date))
+    else onMovedChange(movedDays.filter((item) => item.date !== removal.date))
+    setRemoval(null)
+  }
 
   return (
     <div className="grid gap-6 md:grid-cols-2">
@@ -44,7 +53,7 @@ export function DaysEditor({
                 size="icon"
                 className={TOUCH_ICON}
                 aria-label={t("removeDay", { date: f.date(day) })}
-                onClick={() => onNonStudyChange(nonStudyDays.filter((item) => item !== day))}
+                onClick={() => setRemoval({ kind: "holiday", date: day })}
               >
                 <Icons.close aria-hidden />
               </Button>
@@ -90,7 +99,7 @@ export function DaysEditor({
                 size="icon"
                 className={TOUCH_ICON}
                 aria-label={t("removeDay", { date: f.date(day.date) })}
-                onClick={() => onMovedChange(movedDays.filter((item) => item.date !== day.date))}
+                onClick={() => setRemoval({ kind: "moved", date: day.date })}
               >
                 <Icons.close aria-hidden />
               </Button>
@@ -133,6 +142,15 @@ export function DaysEditor({
           </Button>
         </div>
       </section>
+      <ConfirmDialog
+        open={removal !== null}
+        onOpenChange={(open) => !open && setRemoval(null)}
+        title={t("removeTitle", { date: removal ? f.date(removal.date) : "" })}
+        description={t("removeDescription")}
+        confirmLabel={t("removeDay", { date: removal ? f.date(removal.date) : "" })}
+        destructive
+        onConfirm={confirmRemoval}
+      />
     </div>
   )
 }

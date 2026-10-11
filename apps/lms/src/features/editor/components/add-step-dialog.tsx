@@ -13,7 +13,7 @@ import {
   Field,
   FieldLabel,
   Input,
-  Spinner,
+  LoadingButton,
 } from "@ihsp/ui"
 import { useState, type FormEvent } from "react"
 
@@ -67,10 +67,14 @@ export function AddStepDialog({
             <Button type="button" variant="outline" onClick={() => onOpenChange(false)} className="min-h-11 md:min-h-8">
               {tc("cancel")}
             </Button>
-            <Button type="submit" disabled={pending || title.trim() === ""} className="min-h-11 md:min-h-8">
-              {pending ? <Spinner aria-hidden /> : null}
+            <LoadingButton
+              type="submit"
+              disabled={title.trim() === ""}
+              className="min-h-11 md:min-h-8"
+              loading={pending}
+            >
               {t("addStep")}
-            </Button>
+            </LoadingButton>
           </DialogFooter>
         </form>
       </DialogContent>

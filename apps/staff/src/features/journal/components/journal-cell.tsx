@@ -5,12 +5,15 @@ import { useT } from "@ihsp/i18n"
 import { MarkBadge, cn } from "@ihsp/ui"
 
 const lateCell = "rounded-md bg-orange-600/20 ring-1 ring-orange-600/50"
+const failedCell = "rounded-md ring-2 ring-destructive"
 
 type Cell = Journal["students"][number]["cells"][number]
 
 /**
  * One cell of the journal (UF-STF-07): "absent" and the EMIS marks (read-only). Inside the 7-day window the cell is a
- * button that cycles the student's mark (present, absent, late); older lessons are plain text.
+ * button that cycles the student's mark (present, absent, late); older lessons are plain text. The cell is one stop of
+ * the grid's roving focus (`tabIndex`, `onFocus`); the grid handles the arrow keys. A change the server refused keeps
+ * a red ring (`failed`) until the cell is changed successfully.
  */
 export function JournalCell({
   cell,
@@ -18,6 +21,10 @@ export function JournalCell({
   date,
   editable,
   notTaken,
+  failed = false,
+  tabIndex = -1,
+  position,
+  onFocus,
   onToggle,
 }: {
   cell: Cell
@@ -25,6 +32,11 @@ export function JournalCell({
   date: string
   editable: boolean
   notTaken: boolean
+  failed?: boolean
+  tabIndex?: 0 | -1
+  /** Row and column of the cell in the grid (zero-based), for the keyboard navigation. */
+  position?: { row: number; col: number }
+  onFocus?: () => void
   onToggle: () => void
 }) {
   const t = useT("journal")
@@ -57,13 +69,19 @@ export function JournalCell({
   )
   const state = cell.absent ? (cell.excused ? t("excused") : t("absent")) : cell.late ? t("late") : t("present")
   const label = t("cellLabel", { name: studentName, date, state })
+  const positionAttrs = position ? { "data-row": position.row, "data-col": position.col } : {}
 
   if (!editable) {
     return (
       <div
         aria-label={label}
         role="img"
-        className={cn("flex min-h-11 min-w-11 items-center justify-center", cell.late && lateCell)}
+        tabIndex={tabIndex}
+        {...positionAttrs}
+        className={cn(
+          "focus-visible:ring-ring flex min-h-11 min-w-11 items-center justify-center rounded-md outline-none focus-visible:ring-2",
+          cell.late && lateCell,
+        )}
       >
         {content}
       </div>
@@ -73,11 +91,17 @@ export function JournalCell({
     <button
       type="button"
       aria-pressed={cell.absent || cell.late}
-      aria-label={label}
+      aria-label={failed ? `${label} · ${t("notSaved")}` : label}
+      title={failed ? t("notSaved") : undefined}
+      data-failed={failed || undefined}
+      tabIndex={tabIndex}
+      onFocus={onFocus}
       onClick={onToggle}
+      {...positionAttrs}
       className={cn(
         "hover:bg-accent focus-visible:ring-ring flex min-h-11 min-w-11 items-center justify-center rounded-md outline-none focus-visible:ring-2",
         cell.late && lateCell,
+        failed && failedCell,
       )}
     >
       {content}

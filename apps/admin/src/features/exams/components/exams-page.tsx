@@ -9,7 +9,7 @@ import { ListToolbar } from "../../shared/components/list-toolbar"
 import { PagedTable } from "../../shared/components/paged-table"
 import { useArrayList } from "../../shared/hooks/use-paged-list"
 import { TOUCH } from "../../shared/utils/touch"
-import { useConfirmExam } from "../hooks/use-confirm-exam"
+import { useConfirmExam, useConfirmExams } from "../hooks/use-confirm-exam"
 import { useExamColumns } from "../hooks/use-exam-columns"
 import { useExamList } from "../hooks/use-exam-list"
 import { useExamToolbarFilters } from "../hooks/use-exam-toolbar-filters"
@@ -30,11 +30,13 @@ type DialogState = { mode: ExamDialogMode; item: StaffAssessmentItem | null }
  */
 export function ExamsPage() {
   const t = useT("exams")
+  const tSel = useT("shared.selection")
   const { filters, params, periods, query } = useExamList()
   const source = useArrayList(query)
   const toolbarFilters = useExamToolbarFilters(periods)
   const tentative = useTentativeCount()
   const confirm = useConfirmExam()
+  const confirmMany = useConfirmExams()
   const exportCsv = useExportExams(params, selectedControl(filters.values.control))
   const [dialog, setDialog] = useState<DialogState | null>(null)
   const [dismissing, setDismissing] = useState<StaffAssessmentItem | null>(null)
@@ -66,6 +68,16 @@ export function ExamsPage() {
         columns={columns}
         getRowId={(item) => item.id}
         emptyText={t("empty")}
+        renderSelectionActions={(selected, clear) => (
+          <Button
+            type="button"
+            className={TOUCH}
+            disabled={confirmMany.isPending || !selected.some((item) => item.has_date && item.status === "tentative")}
+            onClick={() => confirmMany.mutate(selected, { onSuccess: clear })}
+          >
+            {tSel("confirmSelected")}
+          </Button>
+        )}
         toolbar={
           <div className="flex flex-col gap-3">
             <ExamsToConfirmChip

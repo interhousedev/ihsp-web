@@ -1,27 +1,28 @@
 "use client"
 
 import type { UsageResponse, UsageRow, UsageTopUser } from "@ihsp/api"
-import { useT } from "@ihsp/i18n"
+import { useFormatters, useT } from "@ihsp/i18n"
 import { Card, CardContent, CardHeader, CardTitle, Stat } from "@ihsp/ui"
 import { compact, tokens, usd } from "../utils"
 
 /** The four numbers of today and the month, as cards. */
 export function UsageSummary({ usage }: { usage: UsageResponse }) {
   const t = useT("limits")
+  const f = useFormatters()
   return (
     <div className="grid grid-cols-2 gap-3 lg:grid-cols-4">
       <Stat
         label={t("cards.monthCost")}
-        value={usd(usage.month.cost_usd)}
-        hint={`${t("cards.projected")}: ${usd(usage.month.projected_usd)}`}
+        value={usd(usage.month.cost_usd, f.locale)}
+        hint={`${t("cards.projected")}: ${usd(usage.month.projected_usd, f.locale)}`}
       />
       <Stat
         label={t("cards.tokensToday")}
-        value={compact(tokens(usage.today))}
+        value={compact(tokens(usage.today), f.locale)}
         hint={usage.today.failed > 0 ? t("cards.failed", { count: usage.today.failed }) : undefined}
       />
-      <Stat label={t("cards.callsToday")} value={compact(usage.today.calls)} />
-      <Stat label={t("cards.rangeCost")} value={usd(usage.totals.cost_usd)} />
+      <Stat label={t("cards.callsToday")} value={compact(usage.today.calls, f.locale)} />
+      <Stat label={t("cards.rangeCost")} value={usd(usage.totals.cost_usd, f.locale)} />
     </div>
   )
 }
@@ -37,6 +38,7 @@ export function DistributionCard({
   label: (key: string) => string
 }) {
   const t = useT("limits")
+  const f = useFormatters()
   const sorted = rows.toSorted((a, b) => b.cost_usd - a.cost_usd)
   const largest = sorted[0]?.cost_usd ?? 0
   return (
@@ -54,7 +56,7 @@ export function DistributionCard({
                   <div className="flex flex-wrap justify-between gap-x-3 text-sm">
                     <span className="min-w-0 break-all">{label(row.key)}</span>
                     <span className="text-muted-foreground tabular-nums">
-                      {usd(row.cost_usd)} · {compact(row.calls)}
+                      {usd(row.cost_usd, f.locale)} · {compact(row.calls, f.locale)}
                     </span>
                   </div>
                   <div className="bg-muted h-2 overflow-hidden rounded-full">
@@ -77,6 +79,7 @@ export function DistributionCard({
 /** The users with the largest cost of the range. */
 export function TopUsersCard({ users }: { users: UsageTopUser[] }) {
   const t = useT("limits")
+  const f = useFormatters()
   return (
     <Card>
       <CardHeader>
@@ -105,9 +108,9 @@ export function TopUsersCard({ users }: { users: UsageTopUser[] }) {
                       {user.login ? <div className="text-muted-foreground text-xs">{user.login}</div> : null}
                     </td>
                     <td className="py-2 pe-3">{t.has(`roles.${user.role}`) ? t(`roles.${user.role}`) : user.role}</td>
-                    <td className="py-2 pe-3 text-end tabular-nums">{compact(user.calls)}</td>
-                    <td className="py-2 pe-3 text-end tabular-nums">{compact(tokens(user))}</td>
-                    <td className="py-2 text-end tabular-nums">{usd(user.cost_usd)}</td>
+                    <td className="py-2 pe-3 text-end tabular-nums">{compact(user.calls, f.locale)}</td>
+                    <td className="py-2 pe-3 text-end tabular-nums">{compact(tokens(user), f.locale)}</td>
+                    <td className="py-2 text-end tabular-nums">{usd(user.cost_usd, f.locale)}</td>
                   </tr>
                 ))}
               </tbody>

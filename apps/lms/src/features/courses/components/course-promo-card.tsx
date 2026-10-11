@@ -2,7 +2,8 @@
 
 import type { CoursePage } from "@ihsp/api"
 import { useErrorMessage, useFormatters, useT } from "@ihsp/i18n"
-import { Alert, AlertDescription, Button, Card, CardContent, Icons, Progress, Spinner } from "@ihsp/ui"
+import { Alert, AlertDescription, Card, CardContent, Icons, LoadingButton, Progress } from "@ihsp/ui"
+import { toast } from "sonner"
 import { CourseCover } from "../../shared/components/course-cover"
 import { LinkButton } from "../../shared/components/link-button"
 import { courseProgress, formatPoints } from "../../shared/utils/course-progress"
@@ -51,10 +52,13 @@ export function CoursePromoCard({ page }: { page: CoursePage }) {
           </LinkButton>
         ) : null}
         {!page.enrolled && page.visibility === "public" ? (
-          <Button onClick={() => enroll.mutate(page.id)} disabled={enroll.isPending} className={CTA}>
-            {enroll.isPending ? <Spinner aria-hidden /> : null}
+          <LoadingButton
+            onClick={() => enroll.mutate(page.id, { onSuccess: () => toast.success(t("enrolled")) })}
+            loading={enroll.isPending}
+            className={CTA}
+          >
             {t("enroll")}
-          </Button>
+          </LoadingButton>
         ) : null}
         {!page.enrolled && page.visibility === "invite" ? (
           <LinkButton href={hrefs.join()} className={CTA}>

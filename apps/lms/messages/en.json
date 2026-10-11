@@ -80,7 +80,8 @@
     "progressLessons": "{done} of {total} lessons",
     "facts": "Course facts",
     "notebook": "Course notebook",
-    "notebookFailed": "The course notebook could not be opened. Try again."
+    "notebookFailed": "The course notebook could not be opened. Try again.",
+    "enrolled": "You joined the course"
   },
   "join": {
     "title": "Join a course",
@@ -228,7 +229,8 @@
     "visibilityInvite": "Invite only",
     "status": "Status",
     "statusActive": "Active",
-    "statusArchived": "Archived"
+    "statusArchived": "Archived",
+    "leaveUnsaved": "Your latest edits could not be saved yet. They are kept in this browser. Leave the page anyway?"
   },
   "outline": {
     "title": "Outline",
@@ -709,7 +711,8 @@
     "noLabel": "No name",
     "restore": "Restore",
     "restoreTitle": "Restore this revision?",
-    "restoreDescriptionUnsaved": "Unsaved edits are lost."
+    "restoreDescriptionUnsaved": "Unsaved edits are lost.",
+    "description": "Published revisions and checkpoints of this step, newest first."
   },
   "publish": {
     "title": "Publish",
@@ -822,7 +825,10 @@
     "noCode": "The code is not shown here. Create a new one to see it.",
     "rotate": "Create new code",
     "rotateTitle": "Create a new invite code?",
-    "addSubmit": "Add"
+    "addSubmit": "Add",
+    "added": "{name} added to the staff",
+    "updated": "{name} updated",
+    "removed": "{name} removed from the staff"
   },
   "students": {
     "title": "Students",
@@ -907,7 +913,9 @@
       "empty": "Nobody has been given this role yet.",
       "list": "Current course creators",
       "remove": "Remove",
-      "removeTitle": "Remove this course creator?"
+      "removeTitle": "Remove this course creator?",
+      "added": "{name} can create courses now",
+      "removed": "{name} is no longer a course creator"
     }
   },
   "courseNotebooks": {

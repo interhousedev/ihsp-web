@@ -6,6 +6,7 @@ import { QueryState } from "../../shared/components/query-state"
 import { hrefs } from "../../shared/utils/hrefs"
 import { can } from "../../shared/utils/permissions"
 import { useCourseDraft } from "../hooks/use-course-draft"
+import { useLeaveGuard } from "../hooks/use-leave-guard"
 import { useMetaEditor } from "../hooks/use-meta-editor"
 import { CourseSettingsCard } from "./course-settings-card"
 import { EditorFrame } from "./editor-frame"
@@ -18,6 +19,14 @@ function EditorBody({ draft, autosaveMs }: { draft: CourseDraft; autosaveMs?: nu
   const t = useT("editor")
   const canEdit = can(draft.my_permissions, "edit")
   const editor = useMetaEditor(draft, { canEdit, autosaveMs })
+  useLeaveGuard({
+    flush: editor.flush,
+    confirmWhen:
+      canEdit &&
+      editor.dirty &&
+      (editor.status === "offline" || editor.status === "error" || editor.status === "conflict"),
+    message: t("leaveUnsaved"),
+  })
   return (
     <div className="flex flex-col gap-6">
       <div className="flex flex-wrap items-center justify-between gap-x-4 gap-y-2">

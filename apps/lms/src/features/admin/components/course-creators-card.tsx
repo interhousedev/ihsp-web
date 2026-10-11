@@ -27,6 +27,7 @@ import {
 } from "@ihsp/ui"
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query"
 import { useState, type FormEvent } from "react"
+import { toast } from "sonner"
 import { QueryState } from "../../shared/components/query-state"
 import { personName } from "../../shared/utils/people"
 
@@ -50,12 +51,19 @@ export function CourseCreatorsCard() {
   const found = useQuery({ ...getAdminUsersQuery({ query: term, limit: 20 }), enabled: term !== "" })
 
   const refresh = () => void queryClient.invalidateQueries({ queryKey: keys.lms.creators() })
-  const add = useMutation<CourseCreator, unknown, string>({ mutationFn: (id) => putLmsCreator(id), onSuccess: refresh })
-  const remove = useMutation<unknown, unknown, string>({
-    mutationFn: (id) => deleteLmsCreator(id),
-    onSuccess: () => {
+  const add = useMutation<CourseCreator, unknown, string>({
+    mutationFn: (id) => putLmsCreator(id),
+    onSuccess: (creator) => {
+      refresh()
+      toast.success(t("creators.added", { name: personName(creator) }))
+    },
+  })
+  const remove = useMutation<unknown, unknown, CourseCreator>({
+    mutationFn: (creator) => deleteLmsCreator(creator.id),
+    onSuccess: (_result, creator) => {
       setRemoving(null)
       refresh()
+      toast.success(t("creators.removed", { name: personName(creator) }))
     },
   })
 
@@ -164,7 +172,7 @@ export function CourseCreatorsCard() {
           destructive
           loading={remove.isPending}
           onConfirm={() => {
-            if (removing) remove.mutate(removing.id)
+            if (removing) remove.mutate(removing)
           }}
         />
       </CardContent>

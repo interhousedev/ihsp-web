@@ -121,7 +121,10 @@
     "excused": "excused",
     "present": "present",
     "cellLabel": "{name}, {date}: {state}",
-    "hint": "Absences can be changed for 7 days after the lesson."
+    "hint": "Absences can be changed for 7 days after the lesson.",
+    "conflictReloaded": "Someone else changed this lesson; the journal was reloaded.",
+    "notSaved": "Not saved",
+    "keysHint": "Use the arrow keys to move between cells; Space or Enter changes the mark."
   },
   "group": {
     "noGroup": "You do not curate a group.",

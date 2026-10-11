@@ -12,7 +12,7 @@ import { StatusBadge } from "../../shared/components/status-badge"
 import { useFilterState } from "../../shared/hooks/use-filter-state"
 import { SERVER_PAGE_SIZE, usePagedList } from "../../shared/hooks/use-paged-list"
 import { useGroupOptions } from "../../shared/hooks/use-lookups"
-import { col } from "../../shared/utils/columns"
+import { col, selectCol } from "../../shared/utils/columns"
 import { downloadCsv } from "../../shared/utils/csv"
 import { fetchAllPages } from "../../shared/utils/fetch-all-pages"
 import { fullName } from "../../shared/utils/names"
@@ -22,6 +22,7 @@ import { STUDENT_FILTER_KEYS, studentParams } from "../utils/student-params"
 /** Students list (ADM-3, UF-ADM-03): search and filters in the URL, rows open the Student 360 page, CSV export. */
 export function StudentsPage() {
   const t = useT("students")
+  const tSel = useT("shared.selection")
   const f = useFormatters()
   const filters = useFilterState(STUDENT_FILTER_KEYS)
   const groups = useGroupOptions()
@@ -87,33 +88,59 @@ export function StudentsPage() {
 
   const columns = useMemo(
     () => [
-      col<StudentItem>("name", t("columns.name"), (student) => (
-        <Link
-          href={`/students/view/?id=${encodeURIComponent(student.user_id)}`}
-          className="font-medium underline-offset-4 hover:underline"
-        >
-          {fullName(student)}
-        </Link>
-      )),
-      col<StudentItem>("login", t("columns.login"), (student) => student.login ?? "—"),
-      col<StudentItem>("group", t("columns.group"), (student) => student.group?.name ?? "—"),
-      col<StudentItem>("subgroup", t("columns.subgroup"), (student) => student.subgroup ?? "—"),
-      col<StudentItem>("status", t("columns.status"), (student) => <StatusBadge status={student.status} />),
-      col<StudentItem>("emis", t("columns.emis"), (student) => <StatusBadge status={student.emis_status} />),
-      col<StudentItem>("registered", t("columns.registered"), (student) => (
-        <Badge variant={student.registered ? "secondary" : "outline"}>
-          {student.registered ? t("registered.yes") : t("registered.no")}
-        </Badge>
-      )),
-      col<StudentItem>("synced", t("columns.synced"), (student) =>
-        student.synced_at ? f.dateTime(student.synced_at) : "—",
+      selectCol<StudentItem>({
+        all: tSel("selectAll"),
+        row: (student) => tSel("selectRow", { name: fullName(student) }),
+      }),
+      col<StudentItem>(
+        "name",
+        t("columns.name"),
+        (student) => (
+          <Link
+            href={`/students/view/?id=${encodeURIComponent(student.user_id)}`}
+            className="font-medium underline-offset-4 hover:underline"
+          >
+            {fullName(student)}
+          </Link>
+        ),
+        { sort: fullName },
+      ),
+      col<StudentItem>("login", t("columns.login"), (student) => student.login ?? "—", {
+        sort: (student) => student.login,
+      }),
+      col<StudentItem>("group", t("columns.group"), (student) => student.group?.name ?? "—", {
+        sort: (student) => student.group?.name,
+      }),
+      col<StudentItem>("subgroup", t("columns.subgroup"), (student) => student.subgroup ?? "—", {
+        sort: (student) => student.subgroup,
+      }),
+      col<StudentItem>("status", t("columns.status"), (student) => <StatusBadge status={student.status} />, {
+        sort: (student) => student.status,
+      }),
+      col<StudentItem>("emis", t("columns.emis"), (student) => <StatusBadge status={student.emis_status} />, {
+        sort: (student) => student.emis_status,
+      }),
+      col<StudentItem>(
+        "registered",
+        t("columns.registered"),
+        (student) => (
+          <Badge variant={student.registered ? "secondary" : "outline"}>
+            {student.registered ? t("registered.yes") : t("registered.no")}
+          </Badge>
+        ),
+        { sort: (student) => student.registered },
+      ),
+      col<StudentItem>(
+        "synced",
+        t("columns.synced"),
+        (student) => (student.synced_at ? f.dateTime(student.synced_at) : "—"),
+        { sort: (student) => student.synced_at },
       ),
     ],
-    [f, t],
+    [f, t, tSel],
   )
 
-  async function exportCsv() {
-    const rows = await fetchAllPages((cursor) => getAdminStudents({ ...params, cursor, limit: SERVER_PAGE_SIZE }))
+  function studentsCsv(rows: StudentItem[]) {
     downloadCsv("students.csv", [
       [
         t("columns.name"),
@@ -136,6 +163,10 @@ export function StudentsPage() {
     ])
   }
 
+  async function exportCsv() {
+    studentsCsv(await fetchAllPages((cursor) => getAdminStudents({ ...params, cursor, limit: SERVER_PAGE_SIZE })))
+  }
+
   return (
     <PageContainer
       title={t("title")}
@@ -151,6 +182,9 @@ export function StudentsPage() {
         columns={columns}
         getRowId={(student) => student.user_id}
         emptyText={t("empty")}
+        renderSelectionActions={(selected) => (
+          <ExportButton label={tSel("exportSelected")} onExport={async () => studentsCsv(selected)} />
+        )}
         toolbar={
           <ListToolbar
             filters={toolbarFilters}

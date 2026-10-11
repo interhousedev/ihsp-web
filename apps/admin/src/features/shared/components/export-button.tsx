@@ -1,7 +1,7 @@
 "use client"
 
 import { useErrorMessage, useT } from "@ihsp/i18n"
-import { Button, Spinner } from "@ihsp/ui"
+import { LoadingButton } from "@ihsp/ui"
 import { IconDownload } from "@ihsp/ui"
 import { useState } from "react"
 import { toast } from "sonner"
@@ -25,9 +25,9 @@ export function ExportButton({ onExport, label }: { onExport: () => Promise<void
   }
 
   return (
-    <Button type="button" variant="outline" className={TOUCH} disabled={busy} onClick={() => void run()}>
-      {busy ? <Spinner aria-hidden /> : <IconDownload aria-hidden />}
+    <LoadingButton type="button" variant="outline" className={TOUCH} loading={busy} onClick={() => void run()}>
+      <IconDownload aria-hidden />
       {label ?? t("exportCsv")}
-    </Button>
+    </LoadingButton>
   )
 }

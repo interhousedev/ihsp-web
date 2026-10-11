@@ -1,7 +1,8 @@
-import { describe, expect, it, setDefaultTimeout } from "bun:test"
+import { describe, expect, it, setDefaultTimeout, spyOn } from "bun:test"
 import { apiUrl, ids, server, versionCompare } from "@ihsp/test-utils"
 import { screen, waitFor, within } from "@testing-library/react"
 import { HttpResponse, http } from "msw"
+import { toast } from "sonner"
 import { ComparePage } from "../features/versions/components/compare-page"
 import { VersionViewPage } from "../features/versions/components/version-view-page"
 import { VersionsPage } from "../features/versions/components/versions-page"
@@ -24,6 +25,7 @@ describe("versions", () => {
   })
 
   it("compares two selected versions and restores one after a confirmation", async () => {
+    const success = spyOn(toast, "success").mockImplementation(() => "")
     let restored = null as string | null
     server.use(
       http.post(apiUrl("/v1/lms/courses/:id/versions/:number/restore"), ({ params }) => {
@@ -46,7 +48,10 @@ describe("versions", () => {
     const dialog = await screen.findByRole("alertdialog")
     await user.click(within(dialog).getByRole("button", { name: "Restore" }))
     await waitFor(() => expect(restored).toBe("1"))
-    expect(await screen.findByText("The version is in the draft now.")).toBeInTheDocument()
+    await waitFor(() => expect(success).toHaveBeenCalled())
+    expect(success.mock.calls[0]?.[0]).toBe("The version is in the draft now.")
+    expect(success.mock.calls[0]?.[1]).toMatchObject({ action: { label: "Review pending changes" } })
+    success.mockRestore()
   })
 
   it("opens one version read-only with its outline", async () => {

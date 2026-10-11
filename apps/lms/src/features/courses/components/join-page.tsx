@@ -5,14 +5,13 @@ import { useErrorMessage, useT } from "@ihsp/i18n"
 import {
   Alert,
   AlertDescription,
-  Button,
   Card,
   CardContent,
   Field,
   FieldLabel,
   Input,
   PageContainer,
-  Spinner,
+  LoadingButton,
 } from "@ihsp/ui"
 import { useMutation, useQueryClient } from "@tanstack/react-query"
 import { useRouter, useSearchParams } from "next/navigation"
@@ -69,10 +68,14 @@ export function JoinPage() {
                   <AlertDescription>{invalid ? t("invalid") : errorMessage(join.error)}</AlertDescription>
                 </Alert>
               ) : null}
-              <Button type="submit" disabled={join.isPending || code.trim() === ""} className="min-h-11 md:min-h-8">
-                {join.isPending ? <Spinner aria-hidden /> : null}
+              <LoadingButton
+                type="submit"
+                disabled={code.trim() === ""}
+                className="min-h-11 md:min-h-8"
+                loading={join.isPending}
+              >
                 {t("submit")}
-              </Button>
+              </LoadingButton>
             </form>
           </CardContent>
         </Card>

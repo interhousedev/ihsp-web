@@ -8,7 +8,7 @@ import {
   type ImportPreview,
 } from "@ihsp/api"
 import { useErrorMessage, useT } from "@ihsp/i18n"
-import { Alert, AlertDescription, Button, Input, PageContainer, Spinner } from "@ihsp/ui"
+import { Alert, AlertDescription, Button, Input, LoadingButton, PageContainer } from "@ihsp/ui"
 import { useRef, useState } from "react"
 import { BackLink } from "../../shared/components/back-link"
 import { LabeledField } from "../../shared/components/labeled-field"
@@ -59,10 +59,9 @@ export function ImportPage() {
           <Input id="import-file" ref={inputRef} type="file" accept=".csv,text/csv" className={TOUCH} />
         </LabeledField>
         <div>
-          <Button type="submit" className={TOUCH} disabled={upload.isPending}>
-            {upload.isPending ? <Spinner aria-hidden /> : null}
+          <LoadingButton type="submit" className={TOUCH} loading={upload.isPending}>
             {t("uploadPreview")}
-          </Button>
+          </LoadingButton>
         </div>
       </form>
 
@@ -81,15 +80,14 @@ export function ImportPage() {
             </Alert>
           ) : null}
           <div className="flex flex-wrap gap-2">
-            <Button
+            <LoadingButton
               type="button"
               className={TOUCH}
-              disabled={confirm.isPending}
+              loading={confirm.isPending}
               onClick={() => confirm.mutate(preview.import_id)}
             >
-              {confirm.isPending ? <Spinner aria-hidden /> : null}
               {t("confirm", { count: preview.new.length + preview.changed.length })}
-            </Button>
+            </LoadingButton>
             <Button type="button" variant="outline" className={TOUCH} onClick={() => setPreview(null)}>
               {t("discard")}
             </Button>

@@ -48,7 +48,21 @@
       "midterm_1": "Midterm 1",
       "midterm_2": "Midterm 2",
       "final": "Final (FC)"
-    }
+    },
+    "selection": {
+      "region": "Selected rows",
+      "count": "{count, plural, one {# selected} other {# selected}}",
+      "clear": "Clear selection",
+      "selectAll": "Select all rows on this page",
+      "selectRow": "Select {name}",
+      "exportSelected": "Export selected",
+      "blockSelected": "Block selected",
+      "blockSelectedTitle": "Block {count, plural, one {# user} other {# users}}?",
+      "blockSelectedDone": "{count, plural, one {# user blocked} other {# users blocked}}",
+      "confirmSelected": "Confirm selected",
+      "confirmSelectedDone": "{count, plural, one {# date confirmed} other {# dates confirmed}}"
+    },
+    "sortedNote": "Sorting orders the rows loaded so far."
   },
   "status": {
     "active": "Active",
@@ -727,7 +741,9 @@
       "follows": "Follows the timetable of",
       "addMoved": "Add moved day",
       "movedLine": "{date} follows {weekday}",
-      "removeDay": "Remove {date}"
+      "removeDay": "Remove {date}",
+      "removeTitle": "Remove {date}?",
+      "removeDescription": "The change applies when the term is saved."
     },
     "controls": {
       "title": "Control weeks",
@@ -1143,7 +1159,8 @@
       "hint": "Time in Tashkent.",
       "past": "Choose a time in the future.",
       "cancel": "Cancel",
-      "submit": "Schedule"
+      "submit": "Schedule",
+      "description": "The time is Tashkent time (UTC+5)."
     }
   },
   "moderation": {
@@ -1441,7 +1458,9 @@
         "note": "Note (why, for how long)",
         "save": "Save extension",
         "need": "Choose a multiplier or set at least one value."
-      }
+      },
+      "removeTitle": "Remove the extension of {name}?",
+      "removeDescription": "The student's limits go back to the defaults at once."
     },
     "fields": {
       "ai_text_max_bytes": {

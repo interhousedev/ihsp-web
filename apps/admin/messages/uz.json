@@ -48,7 +48,21 @@
       "midterm_1": "Oraliq nazorat 1",
       "midterm_2": "Oraliq nazorat 2",
       "final": "Yakuniy nazorat (YaN)"
-    }
+    },
+    "selection": {
+      "region": "Tanlangan qatorlar",
+      "count": "{count, plural, one {# tanlandi} other {# tanlandi}}",
+      "clear": "Tanlovni bekor qilish",
+      "selectAll": "Bu sahifadagi barcha qatorlarni tanlash",
+      "selectRow": "{name} ni tanlash",
+      "exportSelected": "Tanlanganlarni eksport qilish",
+      "blockSelected": "Tanlanganlarni bloklash",
+      "blockSelectedTitle": "{count, plural, one {# foydalanuvchi} other {# foydalanuvchi}} bloklansinmi?",
+      "blockSelectedDone": "{count, plural, one {# foydalanuvchi bloklandi} other {# foydalanuvchi bloklandi}}",
+      "confirmSelected": "Tanlanganlarni tasdiqlash",
+      "confirmSelectedDone": "{count, plural, one {# sana tasdiqlandi} other {# sana tasdiqlandi}}"
+    },
+    "sortedNote": "Saralash hozircha yuklangan qatorlarni tartiblaydi."
   },
   "status": {
     "active": "Faol",
@@ -727,7 +741,9 @@
       "follows": "Qaysi kun darslari oʻtadi",
       "addMoved": "Koʻchirish qoʻshish",
       "movedLine": "{date}: “{weekday}” kuni darslari",
-      "removeDay": "{date} ni oʻchirish"
+      "removeDay": "{date} ni oʻchirish",
+      "removeTitle": "{date} oʻchirilsinmi?",
+      "removeDescription": "Oʻzgarish semestr saqlanganda kuchga kiradi."
     },
     "controls": {
       "title": "Nazorat haftalari",
@@ -1143,7 +1159,8 @@
       "hint": "Toshkent vaqti bilan.",
       "past": "Kelajakdagi vaqtni tanlang.",
       "cancel": "Bekor qilish",
-      "submit": "Rejalashtirish"
+      "submit": "Rejalashtirish",
+      "description": "Vaqt Toshkent vaqti bilan (UTC+5)."
     }
   },
   "moderation": {
@@ -1441,7 +1458,9 @@
         "note": "Izoh (nima uchun, qancha muddat)",
         "save": "Kengaytmani saqlash",
         "need": "Ko'paytirgich tanlang yoki kamida bitta qiymat kiriting."
-      }
+      },
+      "removeTitle": "{name} uchun kengaytma oʻchirilsinmi?",
+      "removeDescription": "Talabaning limitlari darhol standart holatga qaytadi."
     },
     "fields": {
       "ai_text_max_bytes": {

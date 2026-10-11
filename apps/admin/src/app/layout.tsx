@@ -28,12 +28,13 @@ export const viewport: Viewport = {
 
 /**
  * Static root layout (no cookies, no headers). `/env.js` is a plain blocking script, so `window.__ENV__` exists
- * before any app code runs; the locale is applied on the client by `I18nProvider`. The PWA head script only acts when
+ * before any app code runs. `THEME_INIT_SCRIPT` sets `<html lang>` from the stored locale before first paint (`uz` by default, the
+ * primary locale; `I18nProvider` keeps it in step afterwards). The PWA head script only acts when
  * `APP_MODE` is `pwa`.
  */
 export default function RootLayout({ children }: { children: ReactNode }) {
   return (
-    <html lang="ru" data-theme="vercel" suppressHydrationWarning>
+    <html lang="uz" data-theme="vercel" suppressHydrationWarning>
       <head>
         <script src="/env.js" />
         <script dangerouslySetInnerHTML={{ __html: PWA_HEAD_SCRIPT }} />

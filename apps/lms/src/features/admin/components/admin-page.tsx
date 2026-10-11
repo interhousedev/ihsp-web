@@ -6,7 +6,6 @@ import { useErrorMessage, useT } from "@ihsp/i18n"
 import {
   Alert,
   AlertDescription,
-  Button,
   Card,
   CardContent,
   Field,
@@ -17,7 +16,7 @@ import {
   NativeSelect,
   NativeSelectOption,
   PageContainer,
-  Spinner,
+  LoadingButton,
 } from "@ihsp/ui"
 import { useMutation } from "@tanstack/react-query"
 import { useRouter } from "next/navigation"
@@ -111,10 +110,9 @@ export function AdminPage() {
                 <AlertDescription>{errorMessage(create.error)}</AlertDescription>
               </Alert>
             ) : null}
-            <Button type="submit" disabled={create.isPending} className="min-h-11 md:min-h-8">
-              {create.isPending ? <Spinner aria-hidden /> : null}
+            <LoadingButton type="submit" className="min-h-11 md:min-h-8" loading={create.isPending}>
               {t("create")}
-            </Button>
+            </LoadingButton>
           </form>
         </CardContent>
       </Card>

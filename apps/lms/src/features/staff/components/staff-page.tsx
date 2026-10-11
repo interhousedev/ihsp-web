@@ -12,6 +12,7 @@ import { useErrorMessage, useT } from "@ihsp/i18n"
 import { Alert, AlertDescription, Badge, Button, Card, CardContent, ConfirmDialog, Icons } from "@ihsp/ui"
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query"
 import { useState } from "react"
+import { toast } from "sonner"
 import { EditorFrame } from "../../editor/components/editor-frame"
 import { QueryState } from "../../shared/components/query-state"
 import { personName } from "../../shared/utils/people"
@@ -37,9 +38,10 @@ export function StaffPage({ courseId }: { courseId: string }) {
 
   const add = useMutation<CourseStaffItem, unknown, StaffFormValues>({
     mutationFn: (values) => postLmsCourseStaff(courseId, values),
-    onSuccess: () => {
+    onSuccess: (item) => {
       setAdding(false)
       refresh()
+      toast.success(t("added", { name: personName(item.user) }))
     },
   })
   const update = useMutation<CourseStaffItem, unknown, { userId: string; values: StaffFormValues }>({
@@ -50,16 +52,18 @@ export function StaffPage({ courseId }: { courseId: string }) {
         show_on_page: values.show_on_page,
         position: values.position,
       }),
-    onSuccess: () => {
+    onSuccess: (item) => {
       setEditing(null)
       refresh()
+      toast.success(t("updated", { name: personName(item.user) }))
     },
   })
-  const remove = useMutation<unknown, unknown, string>({
-    mutationFn: (userId) => deleteLmsCourseStaff(courseId, userId),
-    onSuccess: () => {
+  const remove = useMutation<unknown, unknown, CourseStaffItem>({
+    mutationFn: (item) => deleteLmsCourseStaff(courseId, item.user.id),
+    onSuccess: (_result, item) => {
       setRemoving(null)
       refresh()
+      toast.success(t("removed", { name: personName(item.user) }))
     },
   })
 
@@ -191,7 +195,7 @@ export function StaffPage({ courseId }: { courseId: string }) {
               destructive
               loading={remove.isPending}
               onConfirm={() => {
-                if (removing) remove.mutate(removing.user.id)
+                if (removing) remove.mutate(removing)
               }}
             />
           </div>

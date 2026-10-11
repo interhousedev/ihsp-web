@@ -11,13 +11,21 @@ import { useDraftActions } from "./use-course-draft"
 type Meta = { title: string; description: string }
 type Phase = "idle" | "saving" | "offline" | "error" | "conflict"
 
+/** Pause after the last edit before the draft is saved. */
+const SAVE_DEBOUNCE_MS = 1500
+
 /**
- * The title and description of the course draft: local edits, Save, autosave every 30 seconds, the offline buffer and
- * the conflict choice (Keep mine / Take theirs). Outline operations are saved at once and do not go through here.
+ * The title and description of the course draft: local edits saved on their own (a short pause after the last edit,
+ * when the tab is hidden, when the editor unmounts, and a 30-second tick as a safety net), the offline buffer and the
+ * conflict choice (Keep mine / Take theirs). Outline operations are saved at once and do not go through here.
  */
 export function useMetaEditor(
   draft: CourseDraft,
-  { canEdit, autosaveMs = AUTOSAVE_INTERVAL_MS }: { canEdit: boolean; autosaveMs?: number },
+  {
+    canEdit,
+    autosaveMs = AUTOSAVE_INTERVAL_MS,
+    debounceMs = SAVE_DEBOUNCE_MS,
+  }: { canEdit: boolean; autosaveMs?: number; debounceMs?: number },
 ) {
   const queryClient = useQueryClient()
   const actions = useDraftActions(draft.id)
@@ -76,12 +84,40 @@ export function useMetaEditor(
     }
   }, [actions.meta, canEdit])
 
+  const saveRef = useRef(save)
+  useEffect(() => {
+    saveRef.current = save
+  })
+
+  /** Saves now when something is pending and no conflict waits for a choice. */
+  const flush = useCallback(() => {
+    if (latest.current.phase !== "conflict") void saveRef.current()
+  }, [])
+
+  // Debounced save: every edit restarts the timer, so typing saves once the author pauses.
+  useEffect(() => {
+    if (!canEdit || !dirty || phase === "conflict") return
+    const timer = window.setTimeout(() => void saveRef.current(), debounceMs)
+    return () => window.clearTimeout(timer)
+  }, [canEdit, debounceMs, dirty, phase, title, description])
+
+  // Leaving the page (route change, tab hidden) saves what is pending.
+  useEffect(() => {
+    if (!canEdit) return
+    const hidden = () => {
+      if (document.visibilityState === "hidden") flush()
+    }
+    document.addEventListener("visibilitychange", hidden)
+    return () => {
+      document.removeEventListener("visibilitychange", hidden)
+      flush()
+    }
+  }, [canEdit, flush])
+
   useAutosave({
     intervalMs: autosaveMs,
     enabled: canEdit,
-    onTick: () => {
-      if (latest.current.phase !== "conflict") void save()
-    },
+    onTick: flush,
   })
   useWarnBeforeUnload(dirty)
 
@@ -122,6 +158,7 @@ export function useMetaEditor(
     status,
     error,
     save,
+    flush,
     keepMine,
     takeTheirs,
     restorable,

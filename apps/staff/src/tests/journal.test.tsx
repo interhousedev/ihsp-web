@@ -4,6 +4,7 @@ import type { Journal } from "@ihsp/api"
 import { apiUrl, ids, journal, server, weekLessons } from "@ihsp/test-utils"
 import { screen, waitFor, within } from "@testing-library/react"
 import { HttpResponse, http } from "msw"
+import { toast } from "sonner"
 import { JournalPage } from "../features/journal/components/journal-page"
 import { applyToggle } from "../features/journal/utils/apply-toggle"
 import { optionValue, parseOptionValue, selectedOption } from "../features/journal/utils/selection"
@@ -113,7 +114,8 @@ describe("journal", () => {
     await waitFor(() => expect(within(row).getAllByRole("cell").at(-2)).toHaveTextContent("1"))
   })
 
-  test("a failed toggle is rolled back and shown", async () => {
+  test("a failed toggle is rolled back, the cell is marked and a conflict is worded as such", async () => {
+    const error = spyOn(toast, "error").mockImplementation(() => "")
     server.use(
       http.post(apiUrl("/v1/staff/journal/toggle"), () =>
         HttpResponse.json({ type: "common/conflict", status: 409, title: "Conflict" }, { status: 409 }),
@@ -126,6 +128,47 @@ describe("journal", () => {
     await user.click(cell)
 
     await waitFor(() => expect(cell).toHaveAttribute("aria-pressed", "false"))
+    await waitFor(() => {
+      if (cell.getAttribute("data-failed") !== "true") throw new Error("cell not marked")
+    })
+    expect(cell).toHaveAccessibleName(/· Not saved$/)
+    expect(error).toHaveBeenCalledWith("Someone else changed this lesson; the journal was reloaded.")
+    error.mockRestore()
+  })
+
+  test("the grid is one tab stop and the arrow keys move between cells", async () => {
+    const { user } = renderStaff(<JournalPage />, { route: "/journal/" })
+
+    const table = await grid()
+    expect(within(table).getByRole("grid", { name: "Journal" })).toBeInTheDocument()
+    const cells = within(table).getAllByRole("button")
+    const tabbable = cells.filter((cell) => cell.getAttribute("tabindex") === "0")
+    expect(tabbable).toHaveLength(1)
+    const first = tabbable[0] as HTMLElement
+    expect(first).toHaveAttribute("data-row", "0")
+    expect(first).toHaveAttribute("data-col", "0")
+
+    first.focus()
+    await user.keyboard("{ArrowRight}")
+    expect(document.activeElement).toHaveAttribute("data-col", "1")
+    expect(document.activeElement).toHaveAttribute("data-row", "0")
+    await user.keyboard("{ArrowDown}")
+    expect(document.activeElement).toHaveAttribute("data-row", "1")
+    await user.keyboard("{End}")
+    expect(document.activeElement).toHaveAttribute("data-col", String(journal.lessons.length - 1))
+    await user.keyboard("{Home}")
+    expect(document.activeElement).toHaveAttribute("data-col", "0")
+    await user.keyboard("{ArrowUp}")
+    expect(document.activeElement).toHaveAttribute("data-row", "0")
+    // The focused cell is now the tab stop; the others left the tab order.
+    expect(
+      within(table)
+        .getAllByRole("button")
+        .filter((cell) => cell.getAttribute("tabindex") === "0"),
+    ).toHaveLength(1)
+    expect(within(table).getByRole("grid", { name: "Journal" })).toHaveAccessibleDescription(
+      "Use the arrow keys to move between cells; Space or Enter changes the mark.",
+    )
   })
 
   test("cells of lessons older than 7 days are read-only", async () => {

@@ -80,7 +80,8 @@
     "progressLessons": "{total} darsdan {done} dars",
     "facts": "Kurs haqida raqamlarda",
     "notebook": "Kurs bloknoti",
-    "notebookFailed": "Kurs bloknotini ochib boʻlmadi. Qayta urinib koʻring."
+    "notebookFailed": "Kurs bloknotini ochib boʻlmadi. Qayta urinib koʻring.",
+    "enrolled": "Siz kursga yozildingiz"
   },
   "join": {
     "title": "Kursga qoʻshilish",
@@ -228,7 +229,8 @@
     "visibilityInvite": "Faqat taklif bilan",
     "status": "Holat",
     "statusActive": "Faol",
-    "statusArchived": "Arxivda"
+    "statusArchived": "Arxivda",
+    "leaveUnsaved": "Oxirgi tahrirlar hali saqlanmadi. Ular shu brauzerda saqlanib qoladi. Baribir sahifadan chiqilsinmi?"
   },
   "outline": {
     "title": "Tuzilma",
@@ -709,7 +711,8 @@
     "noLabel": "Nomsiz",
     "restore": "Tiklash",
     "restoreTitle": "Bu versiya tiklansinmi?",
-    "restoreDescriptionUnsaved": "Uning mazmuni bu qadam qoralamasining oʻrnini egallaydi. Saqlanmagan tahrirlar yoʻqoladi."
+    "restoreDescriptionUnsaved": "Uning mazmuni bu qadam qoralamasining oʻrnini egallaydi. Saqlanmagan tahrirlar yoʻqoladi.",
+    "description": "Bu qadamning nashr qilingan versiyalari va nazorat nuqtalari, eng yangisi yuqorida."
   },
   "publish": {
     "title": "Nashr qilish",
@@ -822,7 +825,10 @@
     "noCode": "Kod bu yerda koʻrsatilmaydi. Koʻrish uchun yangisini yarating.",
     "rotate": "Yangi kod yaratish",
     "rotateTitle": "Yangi taklif kodi yaratilsinmi?",
-    "addSubmit": "Qoʻshish"
+    "addSubmit": "Qoʻshish",
+    "added": "{name} jamoaga qoʻshildi",
+    "updated": "{name}: oʻzgarishlar saqlandi",
+    "removed": "{name} jamoadan olib tashlandi"
   },
   "students": {
     "title": "Talabalar",
@@ -907,7 +913,9 @@
       "empty": "Bu rol hali hech kimga berilmagan.",
       "list": "Hozirgi kurs mualliflari",
       "remove": "Olib tashlash",
-      "removeTitle": "Kurs muallifini olib tashlaysizmi?"
+      "removeTitle": "Kurs muallifini olib tashlaysizmi?",
+      "added": "{name} endi kurs yarata oladi",
+      "removed": "{name} endi kurs yaratuvchisi emas"
     }
   },
   "courseNotebooks": {

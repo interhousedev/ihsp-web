@@ -8,7 +8,7 @@ import {
   type LimitsBody,
   type LimitsResponse,
 } from "@ihsp/api"
-import { useT } from "@ihsp/i18n"
+import { useFormatters, useT } from "@ihsp/i18n"
 import { Button, Card, CardContent, CardHeader, CardTitle, Input, Label } from "@ihsp/ui"
 import { useQuery } from "@tanstack/react-query"
 import { useState } from "react"
@@ -80,6 +80,7 @@ export function changesOf(
 
 function LimitsForm({ limits: initial }: { limits: LimitItem[] }) {
   const t = useT("limits")
+  const f = useFormatters()
   const [items, setItems] = useState(initial)
   const [draft, setDraft] = useState(() => toDraft(initial))
   const [errors, setErrors] = useState<Record<string, string>>({})
@@ -124,7 +125,7 @@ function LimitsForm({ limits: initial }: { limits: LimitItem[] }) {
                     </Label>
                     <p className="text-muted-foreground text-xs">{hintOf(t, item)}</p>
                     <p className="text-muted-foreground text-xs tabular-nums">
-                      {t("editor.default", { value: number(item.default) })}
+                      {t("editor.default", { value: number(item.default, f.locale) })}
                       {unitText(t, item) ? ` · ${unitText(t, item)}` : ""}
                       {item.overridden ? ` · ${t("editor.changed")}` : ""}
                     </p>

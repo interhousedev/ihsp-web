@@ -121,7 +121,10 @@
     "excused": "sababli",
     "present": "bor",
     "cellLabel": "{name}, {date}: {state}",
-    "hint": "Yoʻqlikni darsdan keyin 7 kun ichida oʻzgartirish mumkin."
+    "hint": "Yoʻqlikni darsdan keyin 7 kun ichida oʻzgartirish mumkin.",
+    "conflictReloaded": "Bu darsni boshqa kimdir oʻzgartirdi; jurnal qayta yuklandi.",
+    "notSaved": "Saqlanmadi",
+    "keysHint": "Katakchalar orasida strelkalar bilan yuring; probel yoki Enter belgini oʻzgartiradi."
   },
   "group": {
     "noGroup": "Siz guruhga rahbarlik qilmaysiz.",

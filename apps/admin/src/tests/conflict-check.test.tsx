@@ -147,7 +147,9 @@ describe("timetable entry editor, editing", () => {
     const confirm = await screen.findByRole("alertdialog")
     expect(deleted).toBe(false)
     await user.click(
-      Array.from(confirm.querySelectorAll("button")).find((button) => button.textContent === "Delete entry") as HTMLElement,
+      Array.from(confirm.querySelectorAll("button")).find(
+        (button) => button.textContent === "Delete entry",
+      ) as HTMLElement,
     )
 
     await waitUntil(() => deleted, "no delete request")

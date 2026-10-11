@@ -23,6 +23,7 @@ import {
   DialogHeader,
   DialogTitle,
   Input,
+  LoadingButton,
   Spinner,
 } from "@ihsp/ui"
 import { useEffect, useId, useMemo, useState } from "react"
@@ -324,10 +325,9 @@ export function EntryEditorDialog({
               <Button type="button" variant="outline" className={TOUCH} onClick={onClose}>
                 {t("cancel")}
               </Button>
-              <Button type="submit" className={TOUCH} disabled={!canSave}>
-                {save.isPending ? <Spinner aria-hidden /> : null}
+              <LoadingButton type="submit" className={TOUCH} disabled={!canSave} loading={save.isPending}>
                 {t("save")}
-              </Button>
+              </LoadingButton>
             </DialogFooter>
           </form>
         </DialogContent>

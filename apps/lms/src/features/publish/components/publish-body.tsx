@@ -20,7 +20,7 @@ import {
   FieldDescription,
   FieldLabel,
   Icons,
-  Spinner,
+  LoadingButton,
   Textarea,
 } from "@ihsp/ui"
 import { useMutation, useQueryClient } from "@tanstack/react-query"
@@ -158,14 +158,14 @@ export function PublishBody({
             />
           </Field>
           <div className="flex flex-wrap items-center gap-2">
-            <Button
+            <LoadingButton
               onClick={() => publish.mutate()}
-              disabled={!hasPending || !canPublish || publish.isPending}
+              disabled={!hasPending || !canPublish}
+              loading={publish.isPending}
               className="min-h-11 md:min-h-8"
             >
-              {publish.isPending ? <Spinner aria-hidden /> : null}
               {t("publish")}
-            </Button>
+            </LoadingButton>
             {canDiscard ? (
               <Button
                 variant="outline"
