@@ -8708,7 +8708,9 @@ export interface components {
         };
         /**
          * Blank
-         * @description One blank of a fill-in-the-blanks question, marked ``{{n}}`` (1-based) in the prompt.
+         * @description One blank of a fill-in-the-blanks question.
+         *
+         *     Marked ``{{n}}`` (1-based) in the prompt.
          */
         Blank: {
             /** Accepted */
@@ -9529,7 +9531,9 @@ export interface components {
         };
         /**
          * CodeSpec
-         * @description A code question: no execution; the output is compared or the answer is graded by hand.
+         * @description A code question: no execution.
+         *
+         *     The output is compared, or the answer is graded by hand.
          */
         CodeSpec: {
             /** Expected Outputs */
@@ -18901,7 +18905,7 @@ export interface components {
         };
         /**
          * UpdateLabelBody
-         * @description PATCH /v1/notebooks/{id}/labels/{label_id}: only the keys that were sent apply.
+         * @description PATCH /v1/notebooks/{id}/labels/{label_id}: only the sent keys apply.
          */
         UpdateLabelBody: {
             /** Emoji */
