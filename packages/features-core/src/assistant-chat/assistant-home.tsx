@@ -4,11 +4,12 @@ import type { FileItem } from "@ihsp/api"
 import { useSession } from "@ihsp/auth"
 import { useErrorMessage, useT } from "@ihsp/i18n"
 import { useRouter } from "next/navigation"
-import { useState, type ReactNode } from "react"
+import { useEffect, useState, type ReactNode } from "react"
 import { limitState } from "./limit-info"
 import { storePendingTurn } from "./pending-turn"
 import { slashInfo, type SlashName } from "./slash-commands"
 import { PillComposer, type PillSendOptions } from "./pill-composer"
+import { smartState } from "./limit-info"
 import { useCreateChat, useUsage, type ChatTier } from "./use-assistant-queries"
 import { writeWebSwitch } from "./use-web-switch"
 import { useAssistantScope } from "./assistant-context"
@@ -53,6 +54,12 @@ export function AssistantHome({ basePath, navButtons, trailing }: AssistantHomeP
   const [greeting] = useState(() => 1 + Math.floor(Math.random() * GREETINGS))
   const [chipOffset] = useState(nextChipOffset)
   const [tier, setTier] = useState<ChatTier>("fast")
+  const smart = smartState(usage.data)
+  const smartOut = smart !== null && smart.remaining <= 0
+  // The week's smart requests ran out while the picker was on smart: the next chat starts on fast.
+  useEffect(() => {
+    if (smartOut && tier === "smart") setTier("fast")
+  }, [smartOut, tier])
   const [prefill, setPrefill] = useState<{ key: number; command: SlashName } | null>(null)
   const [error, setError] = useState<unknown>(null)
 
@@ -98,7 +105,7 @@ export function AssistantHome({ basePath, navButtons, trailing }: AssistantHomeP
               limit={limitState(usage.data)}
               onSend={handleSend}
               placeholder={t("home.placeholder")}
-              tier={{ value: tier, onChange: setTier }}
+              tier={{ value: tier, onChange: setTier, smart }}
               prefill={prefill}
               autoFocus
             />

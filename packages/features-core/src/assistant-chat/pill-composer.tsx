@@ -17,6 +17,7 @@ import type { LimitState } from "./limit-info"
 import { SlashChip, SlashMenu } from "./slash-menu"
 import { slashText, type SlashCall, type SlashName } from "./slash-commands"
 import { TierPicker } from "./tier-picker"
+import type { SmartState } from "./limit-info"
 import type { ChatTier } from "./use-assistant-queries"
 import { useSlashInput } from "./use-slash-input"
 import { useWebSwitch } from "./use-web-switch"
@@ -55,7 +56,7 @@ export type PillComposerProps = {
   onStop?: () => void
   placeholder: string
   /** The model class picker; only the home composer shows it (a chat keeps the tier it was created with). */
-  tier?: { value: ChatTier; onChange: (tier: ChatTier) => void }
+  tier?: { value: ChatTier; onChange: (tier: ChatTier) => void; smart?: SmartState }
   /** Fills the field from outside (a suggestion chip): a new `key` sets the command chip (or the text) and focuses. */
   prefill?: { key: number; command?: SlashName; text?: string } | null
   autoFocus?: boolean
@@ -310,7 +311,9 @@ export function PillComposer({
             onKeyDown={onKeyDown}
             {...slash.fieldProps}
           />
-          {tier ? <TierPicker value={tier.value} onChange={tier.onChange} disabled={locked} /> : null}
+          {tier ? (
+            <TierPicker value={tier.value} onChange={tier.onChange} disabled={locked} smart={tier.smart ?? null} />
+          ) : null}
           {stoppable ? (
             <Button
               type="button"
@@ -334,12 +337,12 @@ export function PillComposer({
           )}
         </div>
       </div>
-      {webOn && webQuota.quota ? (
+      {webOn && webQuota.quota && webQuota.quota.limit !== null ? (
         <p role="status" className="text-muted-foreground flex items-center justify-center gap-1.5 px-4 text-xs">
           <IconWorld className="size-3.5 shrink-0" aria-hidden />
           {webQuota.spent
             ? t("webNone", { time: webResetTime })
-            : t("webQuota", { remaining: webQuota.remaining, limit: webQuota.quota.limit })}
+            : t("webQuota", { remaining: webQuota.remaining ?? 0, limit: webQuota.quota.limit })}
         </p>
       ) : null}
       <p className="text-muted-foreground hidden truncate px-4 text-center text-[11px] sm:block">

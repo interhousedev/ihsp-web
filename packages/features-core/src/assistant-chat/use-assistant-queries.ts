@@ -148,7 +148,7 @@ export function useSendMessage(chatId: string, assistant: AssistantKind) {
     },
     onError: (error) => {
       // At the limit the usage bar must show the real numbers and the input must lock.
-      if (isApiError(error) && error.type === "ai/limit-reached") {
+      if (isApiError(error) && (error.type === "ai/limit-reached" || error.type === "ai/smart-weekly-limit")) {
         void queryClient.invalidateQueries({ queryKey: keys.ai.usage(assistant) })
       }
     },

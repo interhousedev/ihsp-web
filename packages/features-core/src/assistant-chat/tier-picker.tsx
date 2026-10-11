@@ -1,6 +1,6 @@
 "use client"
 
-import { useT } from "@ihsp/i18n"
+import { useFormatters, useT } from "@ihsp/i18n"
 import {
   Button,
   DropdownMenu,
@@ -10,6 +10,7 @@ import {
   DropdownMenuTrigger,
 } from "@ihsp/ui"
 import { IconChevronDown } from "@ihsp/ui"
+import type { SmartState } from "./limit-info"
 import type { ChatTier } from "./use-assistant-queries"
 
 const TIERS: ChatTier[] = ["fast", "smart"]
@@ -18,12 +19,27 @@ type TierPickerProps = {
   value: ChatTier
   onChange: (tier: ChatTier) => void
   disabled?: boolean
+  /** The smart requests left this week; null when the user has no weekly limit (the line is hidden). */
+  smart?: SmartState
 }
 
-/** `Fast ⌄` / `Smart`: the model class of a new chat (`POST /ai/chats` `tier`). */
-export function TierPicker({ value, onChange, disabled = false }: TierPickerProps) {
+/**
+ * `Fast ⌄` / `Smart`: the model class of a new chat (`POST /ai/chats` `tier`). The smart line shows the requests left
+ * this week; at zero the smart option is disabled until the week resets.
+ */
+export function TierPicker({ value, onChange, disabled = false, smart = null }: TierPickerProps) {
   const t = useT("assistant.composer.tier")
+  const format = useFormatters()
   const label = t(value)
+  const smartExhausted = smart !== null && smart.remaining <= 0
+  const smartLine = (): string => {
+    if (smart === null) return t("smart")
+    if (smartExhausted) {
+      const date = smart.resetsAt ? format.date(smart.resetsAt, { day: "numeric", month: "short" }) : ""
+      return t("smartNoneLeft", { date })
+    }
+    return t("smartLeft", { left: smart.remaining, limit: smart.limit })
+  }
 
   return (
     <DropdownMenu>
@@ -44,8 +60,13 @@ export function TierPicker({ value, onChange, disabled = false }: TierPickerProp
       <DropdownMenuContent align="end" side="top" className="w-40">
         <DropdownMenuRadioGroup value={value} onValueChange={(next) => onChange(next === "smart" ? "smart" : "fast")}>
           {TIERS.map((tier) => (
-            <DropdownMenuRadioItem key={tier} value={tier} className="min-h-11 md:min-h-8">
-              {t(tier)}
+            <DropdownMenuRadioItem
+              key={tier}
+              value={tier}
+              disabled={tier === "smart" && smartExhausted}
+              className="min-h-11 md:min-h-8"
+            >
+              {tier === "smart" ? smartLine() : t(tier)}
             </DropdownMenuRadioItem>
           ))}
         </DropdownMenuRadioGroup>
