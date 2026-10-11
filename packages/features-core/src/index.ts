@@ -1,4 +1,4 @@
-// @ihsp/features-core: features shared by several apps (web/FINAL_PLAN.md § 3.6).
+// @ihsp/features-core: features shared by several apps.
 // Each folder owns its `index.ts`: notification-* by W2, assistant-chat and file-upload-button by W3,
 // platform-links and theme-preference-sync by the shell work, push (Web Push on this device) by the PUSH work.
 

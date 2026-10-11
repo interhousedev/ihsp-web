@@ -1,4 +1,4 @@
-// @ihsp/api: fetch client, typed endpoint functions, query keys and types for backend/FINAL_PLAN.md § API contract.
+// @ihsp/api: fetch client, typed endpoint functions, query keys and types for backend/openapi/openapi.json.
 
 export * from "./client"
 export * from "./errors"

@@ -350,7 +350,7 @@ export function postIdMeStepUp(opts?: RequestOptions): Promise<NoContent> {
   return api.post<NoContent>("/v1/id/me/step-up", undefined, opts)
 }
 
-// --- Names used by the app plans (web/FINAL_PLAN.md § 3.2 and § 4 page tables) ---
+// --- Names used by the apps ---
 
 export const getLoginInfo = getIdLogin
 export const postLogin = postIdLogin

@@ -9,7 +9,7 @@ import { configureTests, hrefOf, renderAdmin } from "./helpers"
 configureTests()
 
 describe("app frame", () => {
-  test("the sidebar follows the README table: Home, People, Academics, Reports, Communication, Tools", async () => {
+  test("the sidebar follows the spec table: Home, People, Academics, Reports, Communication, Tools", async () => {
     renderAdmin(
       <AdminFrame>
         <p>page body</p>

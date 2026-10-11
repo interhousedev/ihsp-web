@@ -5,7 +5,7 @@ import type { NavGroup } from "@ihsp/ui"
 import { useMemo } from "react"
 
 /**
- * Sidebar of the admin app, as in the README table: Home, People, Academics, Reports, Communication, Tools.
+ * Sidebar of the admin app, as in the spec table: Home, People, Academics, Reports, Communication, Tools.
  * Administration works on a desktop or a tablet, so there is no phone bottom bar; the sidebar opens as a sheet.
  */
 export function useNav(): { groups: NavGroup[] } {

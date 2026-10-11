@@ -44,7 +44,7 @@ export const envSchema = z.object({
   SENTRY_DSN: optionalText,
 })
 
-/** Runtime configuration rendered into `/env.js` at container start (`web/PLAN.md` → Runtime configuration). */
+/** Runtime configuration rendered into `/env.js` at container start (docs/reference/architecture.md, Runtime configuration and CSP). */
 export type AppEnv = {
   APP_ENV: "dev" | "test" | "prod"
   API_URL: string

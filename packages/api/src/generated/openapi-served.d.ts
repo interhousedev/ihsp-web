@@ -11373,7 +11373,7 @@ export interface components {
         FilePurpose: "ai_upload" | "link" | "mail" | "library_book" | "library_cover" | "library_material" | "lms_video" | "user_photo";
         /**
          * FileStatus
-         * @description Lifecycle of a stored file (README -> Models -> File).
+         * @description Lifecycle of a stored file (spec -> Models -> File).
          * @enum {string}
          */
         FileStatus: "pending" | "processing" | "ready" | "rejected" | "deleted";
@@ -19323,7 +19323,7 @@ export interface components {
         };
         /**
          * UserPreferences
-         * @description User settings (README → Models → User → preferences).
+         * @description User settings (spec → Models → User → preferences).
          */
         UserPreferences: {
             /**

@@ -85,7 +85,7 @@ export {
 }
 
 /**
- * Handlers for every endpoint of backend/FINAL_PLAN.md § API contract, matched against `TEST_API_URL`.
+ * Handlers for every endpoint of backend/openapi/openapi.json, matched against `TEST_API_URL`.
  * `compositionHandlers` come first so `GET /v1/admin/groups/stats` is not taken for `GET /v1/admin/groups/:id`.
  */
 export const allHandlers = [

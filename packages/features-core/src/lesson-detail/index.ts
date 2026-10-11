@@ -1,4 +1,4 @@
-// The lesson page shared by the staff app and the admin app (web/FINAL_PLAN.md § 3.6): sections, hooks and the
+// The lesson page shared by the staff app and the admin app: sections, hooks and the
 // attendance helpers other staff screens (the curator's excuse dialog) use.
 export { AttendanceSheetView } from "./components/attendance-sheet"
 export { LessonDetail } from "./components/lesson-detail"

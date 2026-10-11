@@ -1,4 +1,4 @@
-// Shared primitives of backend/FINAL_PLAN.md § API contract → Conventions and Schemas.
+// Shared primitives of backend/openapi/openapi.json.
 
 export type Role = "student" | "teacher" | "admin" | "lms_admin" | "lms_creator" | "librarian"
 

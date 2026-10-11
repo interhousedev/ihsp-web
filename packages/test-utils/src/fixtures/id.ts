@@ -133,7 +133,7 @@ export const consentInfo: ConsentInfo = {
   redirect_to: null,
 }
 
-/** The scope catalog of `GET /v1/id/mcp-scopes` as the backend serves it (README MCP-8). */
+/** The scope catalog of `GET /v1/id/mcp-scopes` as the backend serves it (spec MCP-8). */
 export const scopeCatalog: ScopeCatalog = {
   servers: [
     {

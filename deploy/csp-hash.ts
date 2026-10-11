@@ -1,6 +1,6 @@
 #!/usr/bin/env bun
 /**
- * Per-page script policy for the static export (`web/PLAN.md` → Runtime configuration).
+ * Per-page script policy for the static export (docs/reference/architecture.md, Runtime configuration and CSP).
  *
  * Static Next.js pages contain inline scripts, so `script-src` can't be a fixed nginx header (no
  * `'unsafe-inline'` allowed). After `next build` this script hashes every inline script of every
