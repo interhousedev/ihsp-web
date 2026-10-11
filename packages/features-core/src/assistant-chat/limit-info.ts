@@ -31,6 +31,17 @@ export function limitState(usage: UsageInfo | undefined): LimitState {
     : { reached: true, scope: "day", resetsAt: dayReset }
 }
 
+/**
+ * The smart requests of this week, or null when the user has no weekly limit (staff) or the backend does not
+ * report one. `resetsAt` is the Monday 00:00 (Tashkent) when the count starts again.
+ */
+export type SmartState = { remaining: number; limit: number; resetsAt: string | null } | null
+
+export function smartState(usage: UsageInfo | undefined): SmartState {
+  if (!usage || usage.smart_remaining == null || usage.smart_limit == null) return null
+  return { remaining: usage.smart_remaining, limit: usage.smart_limit, resetsAt: usage.smart_resets_at ?? null }
+}
+
 /** Tokens as `12k` or `1.2M`, for the usage bar. */
 export function formatTokens(value: number): string {
   if (value >= 1_000_000) return `${(value / 1_000_000).toFixed(1).replace(/\.0$/, "")}M`

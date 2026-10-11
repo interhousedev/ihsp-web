@@ -1,0 +1,175 @@
+"use client"
+
+import type { UsageResponse, UsageRow, UsageTopUser } from "@ihsp/api"
+import { useFormatters, useT } from "@ihsp/i18n"
+import {
+  Card,
+  CardContent,
+  CardHeader,
+  CardTitle,
+  ChartContainer,
+  ChartTooltip,
+  ChartTooltipContent,
+  Stat,
+  type ChartConfig,
+} from "@ihsp/ui"
+import { Bar, BarChart, CartesianGrid, XAxis, YAxis } from "recharts"
+import { compact, tokens, usd } from "../utils"
+
+const FEATURE_COLORS = ["var(--chart-1)", "var(--chart-2)", "var(--chart-3)", "var(--chart-4)", "var(--chart-5)"]
+
+/** The four numbers of today and the month, as cards. */
+export function UsageSummary({ usage }: { usage: UsageResponse }) {
+  const t = useT("limits")
+  return (
+    <div className="grid grid-cols-2 gap-3 lg:grid-cols-4">
+      <Stat
+        label={t("cards.monthCost")}
+        value={usd(usage.month.cost_usd)}
+        hint={`${t("cards.projected")}: ${usd(usage.month.projected_usd)}`}
+      />
+      <Stat
+        label={t("cards.tokensToday")}
+        value={compact(tokens(usage.today))}
+        hint={usage.today.failed > 0 ? t("cards.failed", { count: usage.today.failed }) : undefined}
+      />
+      <Stat label={t("cards.callsToday")} value={compact(usage.today.calls)} />
+      <Stat label={t("cards.rangeCost")} value={usd(usage.totals.cost_usd)} />
+    </div>
+  )
+}
+
+/** Daily cost of the range, stacked by product feature. */
+export function DailyCostCard({ rows }: { rows: UsageRow[] }) {
+  const t = useT("limits")
+  const f = useFormatters()
+  const features = [...new Set(rows.flatMap((row) => Object.keys(row.cost_by_feature)))]
+  const config: ChartConfig = Object.fromEntries(
+    features.map((name, index) => [
+      name,
+      { label: t.has(`features.${name}`) ? t(`features.${name}`) : name, color: FEATURE_COLORS[index % 5] },
+    ]),
+  )
+  const data = rows.map((row) => ({
+    day: f.date(row.key, { day: "numeric", month: "short" }),
+    ...row.cost_by_feature,
+  }))
+  const total = rows.reduce((sum, row) => sum + row.cost_usd, 0)
+  return (
+    <Card>
+      <CardHeader>
+        <CardTitle className="text-base">{t("charts.daily")}</CardTitle>
+      </CardHeader>
+      <CardContent>
+        {total > 0 ? (
+          <ChartContainer config={config} className="h-56 w-full" role="img" aria-label={t("charts.daily")}>
+            <BarChart data={data} margin={{ left: 4, right: 8, top: 8 }}>
+              <CartesianGrid vertical={false} />
+              <XAxis dataKey="day" tickLine={false} axisLine={false} interval="preserveStartEnd" minTickGap={24} />
+              <YAxis width={56} tickLine={false} axisLine={false} tickFormatter={(value) => usd(Number(value))} />
+              <ChartTooltip content={<ChartTooltipContent />} />
+              {features.map((name) => (
+                <Bar key={name} dataKey={name} stackId="cost" fill={`var(--color-${name})`} />
+              ))}
+            </BarChart>
+          </ChartContainer>
+        ) : (
+          <p className="text-muted-foreground py-10 text-center text-sm">{t("charts.empty")}</p>
+        )}
+      </CardContent>
+    </Card>
+  )
+}
+
+/** Cost per key (a model or a role) as bars, largest first. */
+export function DistributionCard({
+  title,
+  rows,
+  label,
+}: {
+  title: string
+  rows: UsageRow[]
+  label: (key: string) => string
+}) {
+  const t = useT("limits")
+  const sorted = rows.toSorted((a, b) => b.cost_usd - a.cost_usd)
+  const largest = sorted[0]?.cost_usd ?? 0
+  return (
+    <Card>
+      <CardHeader>
+        <CardTitle className="text-base">{title}</CardTitle>
+      </CardHeader>
+      <CardContent>
+        {largest > 0 ? (
+          <ul className="flex flex-col gap-3">
+            {sorted
+              .filter((row) => row.calls > 0)
+              .map((row) => (
+                <li key={row.key} className="flex flex-col gap-1">
+                  <div className="flex flex-wrap justify-between gap-x-3 text-sm">
+                    <span className="min-w-0 break-all">{label(row.key)}</span>
+                    <span className="text-muted-foreground tabular-nums">
+                      {usd(row.cost_usd)} · {compact(row.calls)}
+                    </span>
+                  </div>
+                  <div className="bg-muted h-2 overflow-hidden rounded-full">
+                    <div
+                      className="bg-primary h-2 rounded-full"
+                      style={{ width: `${(row.cost_usd / largest) * 100}%` }}
+                    />
+                  </div>
+                </li>
+              ))}
+          </ul>
+        ) : (
+          <p className="text-muted-foreground py-6 text-center text-sm">{t("charts.empty")}</p>
+        )}
+      </CardContent>
+    </Card>
+  )
+}
+
+/** The users with the largest cost of the range. */
+export function TopUsersCard({ users }: { users: UsageTopUser[] }) {
+  const t = useT("limits")
+  return (
+    <Card>
+      <CardHeader>
+        <CardTitle className="text-base">{t("top.title")}</CardTitle>
+      </CardHeader>
+      <CardContent>
+        {users.length === 0 ? (
+          <p className="text-muted-foreground py-6 text-center text-sm">{t("top.empty")}</p>
+        ) : (
+          <div className="overflow-x-auto">
+            <table className="w-full min-w-[30rem] text-sm">
+              <thead>
+                <tr className="text-muted-foreground text-start text-xs">
+                  <th className="py-2 pe-3 text-start font-medium">{t("top.user")}</th>
+                  <th className="py-2 pe-3 text-start font-medium">{t("top.role")}</th>
+                  <th className="py-2 pe-3 text-end font-medium">{t("top.calls")}</th>
+                  <th className="py-2 pe-3 text-end font-medium">{t("top.tokens")}</th>
+                  <th className="py-2 text-end font-medium">{t("top.cost")}</th>
+                </tr>
+              </thead>
+              <tbody>
+                {users.map((user) => (
+                  <tr key={user.user_id} className="border-t">
+                    <td className="py-2 pe-3">
+                      <div className="font-medium">{user.name}</div>
+                      {user.login ? <div className="text-muted-foreground text-xs">{user.login}</div> : null}
+                    </td>
+                    <td className="py-2 pe-3">{t.has(`roles.${user.role}`) ? t(`roles.${user.role}`) : user.role}</td>
+                    <td className="py-2 pe-3 text-end tabular-nums">{compact(user.calls)}</td>
+                    <td className="py-2 pe-3 text-end tabular-nums">{compact(tokens(user))}</td>
+                    <td className="py-2 text-end tabular-nums">{usd(user.cost_usd)}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        )}
+      </CardContent>
+    </Card>
+  )
+}

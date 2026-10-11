@@ -14,7 +14,9 @@ export type UsageDialogProps = {
 
 /** Used share of a budget, 0 to 100. */
 function percentOf(part: UsagePart): number {
-  return part.limit > 0 ? Math.min(100, Math.max(0, Math.round((part.used / part.limit) * 100))) : 0
+  return part.limit !== null && part.limit > 0
+    ? Math.min(100, Math.max(0, Math.round((part.used / part.limit) * 100)))
+    : 0
 }
 
 function Meter({ label, part }: { label: string; part: UsagePart }) {
@@ -33,7 +35,9 @@ function Meter({ label, part }: { label: string; part: UsagePart }) {
         )}
       >
         <ProgressLabel>{label}</ProgressLabel>
-        <span className="text-muted-foreground ms-auto text-sm tabular-nums">{t("usage.used", { percent })}</span>
+        <span className="text-muted-foreground ms-auto text-sm tabular-nums">
+          {part.limit === null ? t("usage.unlimited") : t("usage.used", { percent })}
+        </span>
       </Progress>
       {part.resets_at ? (
         <p className="text-muted-foreground text-xs">{t("usage.resets", { time: format.time(part.resets_at) })}</p>
@@ -50,7 +54,7 @@ function UsageBody({ usage }: { usage: NotebookUsage }) {
       id: "artifacts",
       text: t("usage.materials", {
         used: artifacts.used,
-        limit: artifacts.limit,
+        limit: artifacts.limit ?? t("usage.unlimited"),
       }),
     },
     {
@@ -58,7 +62,7 @@ function UsageBody({ usage }: { usage: NotebookUsage }) {
       text: t("usage.quota", {
         kind: t("kind.slides"),
         used: slides.used,
-        limit: slides.limit,
+        limit: slides.limit ?? t("usage.unlimited"),
       }),
     },
     {
@@ -66,7 +70,7 @@ function UsageBody({ usage }: { usage: NotebookUsage }) {
       text: t("usage.quota", {
         kind: t("kind.infographic"),
         used: infographic.used,
-        limit: infographic.limit,
+        limit: infographic.limit ?? t("usage.unlimited"),
       }),
     },
   ]

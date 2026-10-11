@@ -25,8 +25,8 @@ export type NotebookLimit = { reached: false } | { reached: true; scope: "sessio
 export function notebookLimit(usage: NotebookUsage | undefined): NotebookLimit {
   if (!usage) return { reached: false }
   const { session, day } = usage.budget
-  const sessionFull = session.limit > 0 && session.used >= session.limit
-  const dayFull = day.limit > 0 && day.used >= day.limit
+  const sessionFull = session.limit !== null && session.limit > 0 && session.used >= session.limit
+  const dayFull = day.limit !== null && day.limit > 0 && day.used >= day.limit
   if (!sessionFull && !dayFull) return { reached: false }
   if (sessionFull && dayFull) {
     return Date.parse(session.resets_at ?? "") > Date.parse(day.resets_at ?? "")
@@ -41,6 +41,8 @@ export function notebookLimit(usage: NotebookUsage | undefined): NotebookLimit {
 /** The largest used share of the two budgets, 0 to 100 (the header ring turns amber at 80 and red at 100). */
 export function usageRatio(usage: NotebookUsage | undefined): number {
   if (!usage) return 0
-  const ratios = [usage.budget.session, usage.budget.day].map((part) => (part.limit > 0 ? part.used / part.limit : 0))
+  const ratios = [usage.budget.session, usage.budget.day].map((part) =>
+    part.limit !== null && part.limit > 0 ? part.used / part.limit : 0,
+  )
   return Math.min(100, Math.round(Math.max(...ratios) * 100))
 }

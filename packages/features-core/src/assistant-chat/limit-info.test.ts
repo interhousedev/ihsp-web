@@ -1,6 +1,6 @@
 import { describe, expect, it } from "bun:test"
 import type { UsageInfo } from "@ihsp/api"
-import { formatTokens, limitState, usagePercent } from "./limit-info"
+import { formatTokens, limitState, smartState, usagePercent } from "./limit-info"
 
 function usage(
   overrides: { session?: Partial<UsageInfo["session"]>; day?: Partial<UsageInfo["day"]> } = {},
@@ -71,5 +71,24 @@ describe("no caps (Administration)", () => {
 
   it("has no percentage to show", () => {
     expect(usagePercent(5_000_000, null)).toBe(0)
+  })
+})
+
+describe("smartState", () => {
+  it("reads the smart requests of the week", () => {
+    const state = smartState({
+      ...usage(),
+      smart_remaining: 2,
+      smart_limit: 3,
+      smart_resets_at: "2026-10-11T19:00:00Z",
+    })
+
+    expect(state).toEqual({ remaining: 2, limit: 3, resetsAt: "2026-10-11T19:00:00Z" })
+  })
+
+  it("is null for an unlimited user (staff) or an older backend", () => {
+    expect(smartState({ ...usage(), smart_remaining: null, smart_limit: null, smart_resets_at: null })).toBeNull()
+    expect(smartState(usage())).toBeNull()
+    expect(smartState(undefined)).toBeNull()
   })
 })
