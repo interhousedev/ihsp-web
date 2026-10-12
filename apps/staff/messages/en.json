@@ -20,7 +20,8 @@
     "groupSettings": "Account",
     "studentSearch": "Find a student",
     "notebooks": "Notebooks",
-    "mail": "Email"
+    "mail": "Email",
+    "subjects": "Subjects"
   },
   "audience": {
     "subgroup": "{group} · subgroup {number}"
@@ -392,5 +393,59 @@
     "attached": "Added to the lesson",
     "openLesson": "Open the lesson",
     "done": "Done"
+  },
+  "subjects": {
+    "title": "Subjects",
+    "description": "The subjects you teach this term, with their groups and materials.",
+    "empty": "You have no subjects this term.",
+    "noId": "Choose a subject from the list.",
+    "notTaught": "You do not teach this subject.",
+    "back": "All subjects",
+    "groups": {
+      "heading": "Groups",
+      "divided": "Divided: subgroup {subgroups}",
+      "openNotebook": "Open notebook",
+      "createNotebook": "Create notebook",
+      "creatingNotebook": "Creating…",
+      "lessons": "Next lessons",
+      "noLessons": "No lessons in the next weeks.",
+      "period": "period {number}",
+      "timetable": "Open timetable"
+    },
+    "materials": {
+      "heading": "Materials",
+      "tier": {
+        "admin": "Administration materials",
+        "adminHint": "Set by the school for everyone who studies this subject. You cannot change them.",
+        "mine": "My materials for this subject",
+        "mineHint": "Shared with all the groups you teach this subject to.",
+        "groups": "Materials for one group",
+        "groupsHint": "Shared only with that group (or subgroup)."
+      },
+      "empty": "Nothing here yet.",
+      "emptyAdmin": "The administration has not added materials.",
+      "emptyGroups": "You have no groups for this subject.",
+      "groupHalf": "{group} · subgroup {number}",
+      "remove": "Remove {title}",
+      "kind": {
+        "file": "File",
+        "link": "Link",
+        "library_item": "Library book"
+      },
+      "add": {
+        "kind": "Kind of material",
+        "headingMine": "Add a material for all my groups",
+        "headingGroup": "Add a material for {group}",
+        "chooseFile": "Choose a file",
+        "fileChosen": "File: {name}",
+        "urlLabel": "Web address",
+        "searchLabel": "Search the library",
+        "searchNone": "No books found.",
+        "pickBook": "Choose",
+        "bookChosen": "Book: {title}",
+        "titleLabel": "Title",
+        "submit": "Add material"
+      }
+    }
   }
 }

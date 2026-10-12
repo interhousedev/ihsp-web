@@ -25,7 +25,7 @@ import type { getAdminModerationQueue, getAdminModerationSearch, getLessonResour
 import type { getLmsCourseBroadcasts, getLmsCourseCompare, getLmsCourseDraft, getLmsCoursePending, getLmsCoursePreviewStep, getLmsCourseStaff, getLmsCourseVersion, getLmsCourseVersions, getLmsCreators, getLmsStepDiff, getLmsStepDraft, getLmsStepHistory, patchLmsCourseBroadcast, patchLmsCourseSettings, patchLmsCourseStaff, postLmsCourseBroadcast, postLmsCourseDiscard, postLmsCourseDraftOutline, postLmsCourseInviteCode, postLmsCoursePublish, postLmsCourseStaff, postLmsCourseSteps, postLmsCourseVersionRestore, postLmsCourses, postLmsStepCheckpoints, postLmsStepDiscard, postLmsStepRestore, putLmsCourseDraftMeta, putLmsCreator, putLmsStepDraft } from "./endpoints/lms-authoring"
 import type { getLmsAttempt, getLmsCourse, getLmsCourseStep, getLmsCourseStudents, getLmsCourses, getLmsMyCourses, getLmsPreviewStepVideo, getLmsStepCardsNext, getLmsStepVideo, postLmsAttemptOverride, postLmsAttemptSubmit, postLmsCourseEnroll, postLmsJoin, postLmsStepBlockAttempts, postLmsStepCardReview, postLmsStepViewed, putLmsAttemptAnswers } from "./endpoints/lms-learning"
 import type { getAdminSyncRuns, getMeGrades, getMeGradesDay, getMeLessonResults, getMeRecordBook, getMeSubject, getMeSubjectLessons, getMeSubjects, postAdminSyncRun } from "./endpoints/marks"
-import type { getAdminSubjectMaterialGroups, getAdminSubjectMaterials, getArtifact, getArtifacts, getNotebook, getNotebookAutoSubject, getNotebookChat, getNotebookLabels, getNotebookSearch, getNotebookSource, getNotebookSourceFileUrl, getNotebookSources, getNotebookSubjectSlots, getNotebookUsage, getNotebooks, getPassage, getSourcePassages, patchArtifact, patchNotebook, patchNotebookLabel, patchNotebookSource, postAdminSubjectMaterial, postArtifact, postArtifactAsSource, postArtifactAttachToLesson, postArtifactCancel, postArtifactFlashcardSet, postArtifactRetry, postArtifactSaveToFiles, postArtifactSlidesRevise, postNotebook, postNotebookAutoSubject, postNotebookDiscover, postNotebookLabel, postNotebookLabelsAuto, postNotebookMessage, postNotebookRegenerate, postNotebookSourceSync, postNotebookSources, postNotebookSourcesSelect, postSaveNote, putArtifactSlides, putNotebookSourceLabels } from "./endpoints/notebooks"
+import type { getAdminSubjectMaterialGroups, getAdminSubjectMaterials, getArtifact, getArtifacts, getNotebook, getNotebookAutoSubject, getNotebookChat, getNotebookLabels, getNotebookSearch, getNotebookSource, getNotebookSourceFileUrl, getNotebookSources, getNotebookSubjectSlots, getNotebookUsage, getNotebooks, getPassage, getSourcePassages, getStaffSubjectMaterials, getStaffSubjects, patchArtifact, patchNotebook, patchNotebookLabel, patchNotebookSource, postAdminSubjectMaterial, postArtifact, postArtifactAsSource, postArtifactAttachToLesson, postArtifactCancel, postArtifactFlashcardSet, postArtifactRetry, postArtifactSaveToFiles, postArtifactSlidesRevise, postNotebook, postNotebookAutoSubject, postNotebookDiscover, postNotebookLabel, postNotebookLabelsAuto, postNotebookMessage, postNotebookRegenerate, postNotebookSourceSync, postNotebookSources, postNotebookSourcesSelect, postSaveNote, postStaffSubjectMaterial, putArtifactSlides, putNotebookSourceLabels } from "./endpoints/notebooks"
 import type { getNotifications, getNotificationsUnreadCount } from "./endpoints/notifications"
 import type { postOauthLogout, postOauthRefresh, postOauthTelegram, postOauthToken, postOauthTokenHook } from "./endpoints/oauth"
 import type { getPublicShare, postPublicReports } from "./endpoints/public"
@@ -51,7 +51,7 @@ import type { LinkCreateBody, LinkDisableBody, ModerationQueueParams, Moderation
 import type { CheckpointBody, CourseBroadcastBody, CourseBroadcastPatchBody, CourseCreateBody, CourseSettingsBody, CourseStaffBody, CourseStaffPatchBody, DraftMetaBody, OutlineOpsBody, PublishBody, RestoreRevisionBody, StepCreateBody, StepDraftBody, VersionCompareParams } from "./types/lms-authoring"
 import type { AttemptAnswersBody, AttemptOverrideBody, AttemptStartParams, CourseCatalogParams, CourseJoinBody, LmsCardReviewBody } from "./types/lms-learning"
 import type { SemesterParams, SubjectLessonsParams, SyncRunBody, SyncRunsParams } from "./types/marks"
-import type { ArtifactCreate, ArtifactPatchBody, ArtifactProgressBody, ArtifactsParams, AttachArtifactBody, DiscoverBody, LabelCreateBody, LabelPatchBody, NotebookCreateBody, NotebookFeedbackBody, NotebookMessageBody, NotebookPatchBody, NotebooksParams, PassageParams, PassagesParams, SaveNoteBody, SaveToFilesBody, SlidesPutBody, SlidesReviseBody, SourceLabelsBody, SourcePatchBody, SourceSearchParams, SourcesAddBody, SourcesSelectBody, SubjectMaterialCreateBody } from "./types/notebooks"
+import type { ArtifactCreate, ArtifactPatchBody, ArtifactProgressBody, ArtifactsParams, AttachArtifactBody, DiscoverBody, LabelCreateBody, LabelPatchBody, NotebookCreateBody, NotebookFeedbackBody, NotebookMessageBody, NotebookPatchBody, NotebooksParams, PassageParams, PassagesParams, SaveNoteBody, SaveToFilesBody, SlidesPutBody, SlidesReviseBody, SourceLabelsBody, SourcePatchBody, SourceSearchParams, SourcesAddBody, SourcesSelectBody, StaffSubjectMaterialCreateBody, SubjectMaterialCreateBody } from "./types/notebooks"
 import type { NotificationsParams } from "./types/notifications"
 import type { OauthLogoutBody, OauthRefreshBody, OauthTelegramBody, OauthTokenBody } from "./types/oauth"
 import type { ReportBody } from "./types/public"
@@ -1828,6 +1828,24 @@ export const request_postAdminSubjectMaterial: RequestOf<"/v1/admin/subject-mate
 // DELETE /v1/admin/subject-materials/{edu_subject_id}/{material_id} — deleteAdminSubjectMaterial
 // no JSON success response (204, CSV, calendar or HTML): only the route is checked
 export type route_deleteAdminSubjectMaterial = OperationOf<"/v1/admin/subject-materials/{edu_subject_id}/{material_id}", "delete">
+
+// GET /v1/staff/subjects — getStaffSubjects
+declare const res_getStaffSubjects: Awaited<ReturnType<typeof getStaffSubjects>>
+export const response_getStaffSubjects: ResponseOf<"/v1/staff/subjects", "get"> = res_getStaffSubjects
+
+// GET /v1/staff/subjects/{subject_id}/materials — getStaffSubjectMaterials
+declare const res_getStaffSubjectMaterials: Awaited<ReturnType<typeof getStaffSubjectMaterials>>
+export const response_getStaffSubjectMaterials: ResponseOf<"/v1/staff/subjects/{subject_id}/materials", "get"> = res_getStaffSubjectMaterials
+
+// POST /v1/staff/subjects/{subject_id}/materials — postStaffSubjectMaterial
+declare const res_postStaffSubjectMaterial: Awaited<ReturnType<typeof postStaffSubjectMaterial>>
+export const response_postStaffSubjectMaterial: ResponseOf<"/v1/staff/subjects/{subject_id}/materials", "post"> = res_postStaffSubjectMaterial
+declare const req_postStaffSubjectMaterial: StaffSubjectMaterialCreateBody
+export const request_postStaffSubjectMaterial: RequestOf<"/v1/staff/subjects/{subject_id}/materials", "post"> = req_postStaffSubjectMaterial
+
+// DELETE /v1/staff/subjects/{subject_id}/materials/{material_id} — deleteStaffSubjectMaterial
+// no JSON success response (204, CSV, calendar or HTML): only the route is checked
+export type route_deleteStaffSubjectMaterial = OperationOf<"/v1/staff/subjects/{subject_id}/materials/{material_id}", "delete">
 
 // GET /v1/notifications — getNotifications
 declare const res_getNotifications: Awaited<ReturnType<typeof getNotifications>>

@@ -20,7 +20,8 @@
     "groupSettings": "Hisob",
     "studentSearch": "Talaba qidirish",
     "notebooks": "Bloknotlar",
-    "mail": "Pochta"
+    "mail": "Pochta",
+    "subjects": "Fanlar"
   },
   "audience": {
     "subgroup": "{group} · {number}-kichik guruh"
@@ -392,5 +393,59 @@
     "attached": "Darsga qoʻshildi",
     "openLesson": "Darsni ochish",
     "done": "Tayyor"
+  },
+  "subjects": {
+    "title": "Fanlar",
+    "description": "Bu semestrda siz o'qitadigan fanlar, guruhlar va materiallar.",
+    "empty": "Bu semestrda sizda fanlar yo'q.",
+    "noId": "Ro'yxatdan fanni tanlang.",
+    "notTaught": "Siz bu fanni o'qitmaysiz.",
+    "back": "Barcha fanlar",
+    "groups": {
+      "heading": "Guruhlar",
+      "divided": "Bo'lingan: {subgroups}-kichik guruh",
+      "openNotebook": "Daftarni ochish",
+      "createNotebook": "Daftar yaratish",
+      "creatingNotebook": "Yaratilmoqda…",
+      "lessons": "Yaqin darslar",
+      "noLessons": "Yaqin haftalarda dars yo'q.",
+      "period": "{number}-juftlik",
+      "timetable": "Jadvalni ochish"
+    },
+    "materials": {
+      "heading": "Materiallar",
+      "tier": {
+        "admin": "Ma'muriyat materiallari",
+        "adminHint": "Maktab bu fanni o'rganuvchilar uchun belgilagan. Ularni o'zgartirib bo'lmaydi.",
+        "mine": "Mening fan materiallarim",
+        "mineHint": "Bu fanni o'qitadigan barcha guruhlaringizga ko'rinadi.",
+        "groups": "Bitta guruh uchun materiallar",
+        "groupsHint": "Faqat shu guruhga (yoki kichik guruhga) ko'rinadi."
+      },
+      "empty": "Hozircha bo'sh.",
+      "emptyAdmin": "Ma'muriyat material qo'shmagan.",
+      "emptyGroups": "Bu fan bo'yicha guruhlaringiz yo'q.",
+      "groupHalf": "{group} · {number}-kichik guruh",
+      "remove": "O'chirish: {title}",
+      "kind": {
+        "file": "Fayl",
+        "link": "Havola",
+        "library_item": "Kutubxona kitobi"
+      },
+      "add": {
+        "kind": "Material turi",
+        "headingMine": "Barcha guruhlarim uchun material qo'shish",
+        "headingGroup": "{group} uchun material qo'shish",
+        "chooseFile": "Fayl tanlash",
+        "fileChosen": "Fayl: {name}",
+        "urlLabel": "Veb manzil",
+        "searchLabel": "Kutubxonadan qidirish",
+        "searchNone": "Kitob topilmadi.",
+        "pickBook": "Tanlash",
+        "bookChosen": "Kitob: {title}",
+        "titleLabel": "Sarlavha",
+        "submit": "Material qo'shish"
+      }
+    }
   }
 }

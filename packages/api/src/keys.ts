@@ -186,6 +186,11 @@ export const keys = {
     creators: () => ["lms", "creators"] as const,
     preview: (courseId: string, stepId: string) => ["lms", "course", courseId, "preview", stepId] as const,
   },
+  staffSubjects: {
+    all: () => ["staff-subjects"] as const,
+    list: () => ["staff-subjects", "list"] as const,
+    materials: (subjectId: string) => ["staff-subjects", "materials", subjectId] as const,
+  },
   notebooks: {
     all: () => ["notebooks"] as const,
     list: (filters?: object) => ["notebooks", "list", params(filters)] as const,

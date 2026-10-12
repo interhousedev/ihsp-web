@@ -624,3 +624,24 @@ export type SubjectMaterialCreateBody = {
   file_id?: string | null
   library_item_id?: string | null
 }
+
+// --- A teacher's subjects and the materials they keep for them (staff) ---
+
+/** A group, or one subgroup (1 or 2), a teacher teaches a subject to. */
+export type StaffSubjectGroup = { group_id: string; group_name: string; subgroup: number | null }
+/** A subject the teacher teaches this term, with its groups. */
+export type StaffSubject = { subject_id: string; name: string; groups: StaffSubjectGroup[] }
+/** A material of one group (and subgroup) of the teacher. */
+export type StaffGroupMaterial = SubjectMaterial & { group_id: string; group_name: string; subgroup: number | null }
+/** The three tiers: administration (read-only), the teacher's for all their groups, per group. */
+export type StaffSubjectMaterials = {
+  subject: StaffSubject
+  admin: SubjectMaterial[]
+  mine: SubjectMaterial[]
+  groups: StaffGroupMaterial[]
+}
+/** A material for all the teacher's groups, or with `group_id` (and `subgroup` 1 or 2) for one group. */
+export type StaffSubjectMaterialCreateBody = SubjectMaterialCreateBody & {
+  group_id?: string | null
+  subgroup?: number | null
+}

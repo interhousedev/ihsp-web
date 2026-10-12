@@ -7626,6 +7626,70 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/v1/staff/subjects": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * List Staff Subjects
+         * @description The subjects the teacher teaches this term, each with its groups.
+         */
+        get: operations["list_staff_subjects_v1_staff_subjects_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/staff/subjects/{subject_id}/materials": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get Staff Subject Materials
+         * @description The administration (read-only), own and per-group materials of a subject.
+         */
+        get: operations["get_staff_subject_materials_v1_staff_subjects__subject_id__materials_get"];
+        put?: never;
+        /**
+         * Add Staff Subject Material
+         * @description Add a material for all the teacher's groups, or for one group (`group_id`).
+         */
+        post: operations["add_staff_subject_material_v1_staff_subjects__subject_id__materials_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/staff/subjects/{subject_id}/materials/{material_id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post?: never;
+        /**
+         * Remove Staff Subject Material
+         * @description Remove one of the teacher's own materials; notebooks follow on their sync.
+         */
+        delete: operations["remove_staff_subject_material_v1_staff_subjects__subject_id__materials__material_id__delete"];
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/v1/staff/timetable": {
         parameters: {
             query?: never;
@@ -17070,6 +17134,44 @@ export interface components {
             items: components["schemas"]["StaffAssessmentItem"][];
         };
         /**
+         * StaffGroupMaterialResponse
+         * @description A material of one group (and subgroup).
+         */
+        StaffGroupMaterialResponse: {
+            /**
+             * Created At
+             * Format: date-time
+             */
+            created_at: string;
+            /** Edu Subject Id */
+            edu_subject_id: number;
+            /** File Id */
+            file_id: string | null;
+            /**
+             * Group Id
+             * Format: uuid
+             */
+            group_id: string;
+            /** Group Name */
+            group_name: string;
+            /**
+             * Id
+             * Format: uuid
+             */
+            id: string;
+            kind: components["schemas"]["DefaultMaterialKind"];
+            /** Library Item Id */
+            library_item_id: string | null;
+            /** Position */
+            position: number;
+            /** Subgroup */
+            subgroup: number | null;
+            /** Title */
+            title: string;
+            /** Url */
+            url: string | null;
+        };
+        /**
          * StaffHomeworkResponse
          * @description Homework of a lesson as the teacher sees it.
          */
@@ -17093,6 +17195,68 @@ export interface components {
             lesson: components["schemas"]["app__interfaces__http__v1__me_classwork__schemas__LessonItemResponse"];
             /** Materials */
             materials: components["schemas"]["ResourceItemResponse"][];
+        };
+        /**
+         * StaffSubjectGroupResponse
+         * @description A group, or a subgroup, the teacher teaches a subject to.
+         */
+        StaffSubjectGroupResponse: {
+            /**
+             * Group Id
+             * Format: uuid
+             */
+            group_id: string;
+            /** Group Name */
+            group_name: string;
+            /** Subgroup */
+            subgroup: number | null;
+        };
+        /**
+         * StaffSubjectMaterialCreateBody
+         * @description A material for all the teacher's groups, or (with `group_id`) for one group.
+         */
+        StaffSubjectMaterialCreateBody: {
+            /** File Id */
+            file_id?: string | null;
+            /** Group Id */
+            group_id?: string | null;
+            kind: components["schemas"]["DefaultMaterialKind"];
+            /** Library Item Id */
+            library_item_id?: string | null;
+            /** Subgroup */
+            subgroup?: number | null;
+            /** Title */
+            title: string;
+            /** Url */
+            url?: string | null;
+        };
+        /**
+         * StaffSubjectMaterialsResponse
+         * @description The three tiers of a subject: administration, mine, per group.
+         */
+        StaffSubjectMaterialsResponse: {
+            /** Admin */
+            admin: components["schemas"]["SubjectMaterialResponse"][];
+            /** Groups */
+            groups: components["schemas"]["StaffGroupMaterialResponse"][];
+            /** Mine */
+            mine: components["schemas"]["SubjectMaterialResponse"][];
+            subject: components["schemas"]["StaffSubjectResponse"];
+        };
+        /**
+         * StaffSubjectResponse
+         * @description A subject the teacher teaches this term.
+         */
+        StaffSubjectResponse: {
+            /** Groups */
+            groups: components["schemas"]["StaffSubjectGroupResponse"][];
+            /** Name */
+            name: string;
+            /**
+             * Subject Id
+             * Format: uuid
+             */
+            subject_id: string;
         };
         /**
          * StaffTodayResponse
@@ -35596,6 +35760,122 @@ export interface operations {
                 };
                 content: {
                     "application/json": components["schemas"]["UserPhotoResponse"];
+                };
+            };
+        };
+    };
+    list_staff_subjects_v1_staff_subjects_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["StaffSubjectResponse"][];
+                };
+            };
+        };
+    };
+    get_staff_subject_materials_v1_staff_subjects__subject_id__materials_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                subject_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["StaffSubjectMaterialsResponse"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    add_staff_subject_material_v1_staff_subjects__subject_id__materials_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                subject_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["StaffSubjectMaterialCreateBody"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["SubjectMaterialResponse"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    remove_staff_subject_material_v1_staff_subjects__subject_id__materials__material_id__delete: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                subject_id: string;
+                material_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            204: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
                 };
             };
         };

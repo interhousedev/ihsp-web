@@ -42,6 +42,7 @@ const {
   resetCreatedFiles,
   resetLibraryState,
   resetNotebooksState,
+  resetStaffSubjectsState,
   resetSubjectMaterialsState,
   resetTeacherContacts,
   resetTeacherPhotos,
@@ -80,6 +81,7 @@ afterEach(() => {
   resetAdminAiState()
   resetLibraryState()
   resetSubjectMaterialsState()
+  resetStaffSubjectsState()
   resetTeacherContacts()
   resetTeacherPhotos()
   resetAssessments()

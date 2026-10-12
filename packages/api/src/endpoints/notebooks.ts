@@ -56,6 +56,9 @@ import type {
   SubjectMaterial,
   SubjectMaterialCreateBody,
   SubjectMaterialGroup,
+  StaffSubject,
+  StaffSubjectMaterialCreateBody,
+  StaffSubjectMaterials,
 } from "../types/notebooks"
 
 // - - - Notebooks - - -
@@ -576,4 +579,48 @@ export function deleteAdminSubjectMaterial(
   opts?: RequestOptions,
 ): Promise<NoContent> {
   return api.delete<NoContent>(`/v1/admin/subject-materials/${seg(eduSubjectId)}/${seg(materialId)}`, opts)
+}
+
+// --- A teacher's subjects and materials (staff) ---
+
+/** GET /v1/staff/subjects — teacher; the subjects taught this term, each with its groups and subgroups. */
+export function getStaffSubjects(opts?: RequestOptions): Promise<StaffSubject[]> {
+  return api.get<StaffSubject[]>("/v1/staff/subjects", opts)
+}
+export const getStaffSubjectsQuery = () =>
+  queryOptions({
+    queryKey: keys.staffSubjects.list(),
+    queryFn: ({ signal }) => getStaffSubjects({ signal }),
+  })
+
+/** GET /v1/staff/subjects/{id}/materials — teacher; administration (read-only), own and per-group materials. `403 notebooks/subject-not-taught`. */
+export function getStaffSubjectMaterials(subjectId: string, opts?: RequestOptions): Promise<StaffSubjectMaterials> {
+  return api.get<StaffSubjectMaterials>(`/v1/staff/subjects/${seg(subjectId)}/materials`, opts)
+}
+export const getStaffSubjectMaterialsQuery = (subjectId: string) =>
+  queryOptions({
+    queryKey: keys.staffSubjects.materials(subjectId),
+    queryFn: ({ signal }) => getStaffSubjectMaterials(subjectId, { signal }),
+  })
+
+/**
+ * POST /v1/staff/subjects/{id}/materials — teacher; `201`. Without `group_id` for all the teacher's groups of the
+ * subject, with it for one group (or subgroup). `403 notebooks/subject-not-taught`, `409 ...default-material-exists |
+ * -limit`, `422 ...default-material-invalid`.
+ */
+export function postStaffSubjectMaterial(
+  subjectId: string,
+  body: StaffSubjectMaterialCreateBody,
+  opts?: RequestOptions,
+): Promise<SubjectMaterial> {
+  return api.post<SubjectMaterial>(`/v1/staff/subjects/${seg(subjectId)}/materials`, body, opts)
+}
+
+/** DELETE /v1/staff/subjects/{id}/materials/{material_id} — teacher, own materials only; `204`, `404`. */
+export function deleteStaffSubjectMaterial(
+  subjectId: string,
+  materialId: string,
+  opts?: RequestOptions,
+): Promise<NoContent> {
+  return api.delete<NoContent>(`/v1/staff/subjects/${seg(subjectId)}/materials/${seg(materialId)}`, opts)
 }
