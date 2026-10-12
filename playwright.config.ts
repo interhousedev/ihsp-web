@@ -3,7 +3,7 @@ import { defineConfig, devices } from "@playwright/test"
 /**
  * End-to-end suite (task I3). It drives the real apps against the real backend:
  *
- *   backend/scripts/dev.sh all      # + worker, scheduler, bot (fake modes); `python -m app seed-demo` once
+ *   iht-backend scripts/dev.sh all      # + worker, scheduler, bot (fake modes); `python -m app seed-demo` once
  *   cd web && bunx playwright test  # starts the seven `bun run dev` servers itself (or reuses running ones)
  *
  * Environment:

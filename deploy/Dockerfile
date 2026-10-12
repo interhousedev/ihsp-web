@@ -29,7 +29,7 @@ COPY deploy/csp-hash.ts ./deploy/csp-hash.ts
 RUN bun deploy/csp-hash.ts
 
 # nginx stage: the unprivileged nginx image (runs as uid 101, listens on 8080). Identical to the nginx
-# stage of deploy/Dockerfile.prebuilt, which backend/tests/deploy checks.
+# stage of deploy/Dockerfile.prebuilt, which deploy/docker.test.ts checks.
 FROM nginxinc/nginx-unprivileged:1.28.2-alpine
 
 # Build steps run as root; the container runs as the nginx user (see USER below) and everything it

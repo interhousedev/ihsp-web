@@ -1,7 +1,7 @@
 # Local-stack variant of deploy/Dockerfile: the static apps are built on the host, not in Docker.
 #
 # `next build` for seven apps needs more memory than the 8 GB Docker VM of a laptop has, so
-# backend/scripts/local_up.sh builds the apps one at a time on the host and packs the result:
+# the iht-backend repo scripts/local_up.sh builds the apps one at a time on the host and packs the result:
 #
 #   cd web && bun install --frozen-lockfile
 #   for app in id sp staff admin lms share library; do bun run --filter "./apps/$app" build; done
@@ -13,7 +13,7 @@
 # build arg of the same name does (1.0.0 there).
 #
 # Build context is web/ (see Dockerfile.prebuilt.dockerignore). The nginx stage below must stay
-# identical to the one in deploy/Dockerfile (backend/tests/deploy checks it); only the way the
+# identical to the one in deploy/Dockerfile (deploy/docker.test.ts checks it); only the way the
 # apps get into /srv differs.
 
 # nginx stage: the unprivileged nginx image (runs as uid 101, listens on 8080). Identical to the nginx

@@ -20,3 +20,15 @@ apps/admin/public/sw.js
 
 # Copied from pdfjs-dist by `bun run copy:pdfjs` (apps/library/scripts/copy-pdfjs.mjs)
 apps/library/public/pdfjs/
+.hypothesis/
+.env
+.env.local
+.env.*.local
+e2e/.state/
+e2e/.report/
+e2e/.results/
+.w0a-done
+.nbw-done
+.idea/
+.vscode/
+*.log
