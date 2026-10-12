@@ -1,0 +1,27 @@
+# Keeps the pinned actions, base images and JavaScript dependencies current: one weekly pull request
+# per ecosystem, grouped so that one review covers related updates.
+version: 2
+updates:
+  - package-ecosystem: github-actions
+    directory: "/"
+    schedule:
+      interval: weekly
+    groups:
+      actions:
+        patterns: ["*"]
+
+  - package-ecosystem: docker
+    directory: "/deploy"
+    schedule:
+      interval: weekly
+    groups:
+      base-images:
+        patterns: ["*"]
+
+  - package-ecosystem: bun
+    directory: "/"
+    schedule:
+      interval: weekly
+    groups:
+      javascript:
+        patterns: ["*"]
