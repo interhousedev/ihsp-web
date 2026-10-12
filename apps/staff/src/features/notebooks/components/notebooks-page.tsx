@@ -4,15 +4,19 @@ import {
   groupNotebooks,
   NOTEBOOK_FOLDERS,
   parseNotebookFolder,
+  placeholderSlots,
+  SubjectSlotCards,
   useAllNotebooks,
+  useSubjectNotebookSlots,
   type NotebookFolder,
 } from "@ihsp/features-core"
 import { useT } from "@ihsp/i18n"
 import { Button, Input, PageContainer, Skeleton, StateView, cn, useDebounce } from "@ihsp/ui"
 import { IconSearch } from "@ihsp/ui"
-import { useSearchParams } from "next/navigation"
+import { useRouter, useSearchParams } from "next/navigation"
 import { useEffect, useState } from "react"
 import { NewNotebookButton } from "./new-notebook-button"
+import { notebookHref } from "../utils/hrefs"
 import { NotebookCard } from "./notebook-card"
 
 const SEARCH_DELAY_MS = 300
@@ -45,6 +49,9 @@ export function NotebooksPage() {
   const [visible, setVisible] = useState(PAGE_SIZE)
   useEffect(() => setVisible(PAGE_SIZE), [folder, query])
   const groups = groupNotebooks(all)
+  const router = useRouter()
+  const slots = placeholderSlots(useSubjectNotebookSlots().data, query)
+  const shownSlots = folder === null || folder === "subject" ? slots : []
   const filtered = folder ? groups[folder] : all
   const items = filtered.slice(0, visible)
 
@@ -68,7 +75,7 @@ export function NotebooksPage() {
       <div role="group" aria-label={t("list.title")} className="flex flex-wrap gap-2">
         {[null, ...NOTEBOOK_FOLDERS].map((key) => {
           const label = key ? t(`list.folders.${key}`) : t("list.folders.all")
-          const count = key ? groups[key].length : all.length
+          const count = (key ? groups[key].length : all.length) + (key === null || key === "subject" ? slots.length : 0)
           return (
             <Button
               key={key ?? "all"}
@@ -89,17 +96,18 @@ export function NotebooksPage() {
       {notebooks.isError ? (
         <StateView state="error" error={notebooks.error} onRetry={() => void notebooks.refetch()} />
       ) : null}
-      {notebooks.isSuccess && items.length === 0 && query === "" && folder === null ? (
+      {notebooks.isSuccess && items.length === 0 && shownSlots.length === 0 && query === "" && folder === null ? (
         <StateView state="empty" emptyText={t("list.empty")} action={<NewNotebookButton />} />
       ) : null}
-      {notebooks.isSuccess && items.length === 0 && (query !== "" || folder !== null) ? (
+      {notebooks.isSuccess && items.length === 0 && shownSlots.length === 0 && (query !== "" || folder !== null) ? (
         <StateView state="empty" emptyText={query === "" ? t("list.empty") : t("list.noResults", { query })} />
       ) : null}
-      {items.length > 0 ? (
+      {items.length + shownSlots.length > 0 ? (
         <ul className={GRID}>
           <li>
             <NewNotebookButton variant="tile" />
           </li>
+          <SubjectSlotCards slots={shownSlots} onOpened={(notebook) => router.push(notebookHref(notebook.id))} />
           {items.map((notebook) => (
             <NotebookCard key={notebook.id} notebook={notebook} />
           ))}

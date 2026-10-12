@@ -1,6 +1,15 @@
 /** WEB-31, WEB-32: the list of notebooks: cards, search, New notebook, and the Pin / Rename / Delete menu of a card. */
 import { describe, expect, test } from "bun:test"
-import { apiUrl, nbIds, notebookEmptyDetail, notebookPinnedDetail, problem, server, testRouter } from "@ihsp/test-utils"
+import {
+  apiUrl,
+  nbIds,
+  notebookEmptyDetail,
+  notebookPinnedDetail,
+  problem,
+  server,
+  subjectSlots,
+  testRouter,
+} from "@ihsp/test-utils"
 import { screen, waitFor, within } from "@testing-library/react"
 import { HttpResponse, http } from "msw"
 import { NotebooksPage } from "../features/notebooks/components/notebooks-page"
@@ -33,6 +42,26 @@ async function openCardMenu(user: Awaited<ReturnType<typeof renderList>>["user"]
   await user.click(screen.getByRole("button", { name: `Actions for “${title}”` }))
   await user.click(await screen.findByRole("menuitem", { name: item }))
 }
+
+describe("subject notebook slots", () => {
+  test("a subject without a notebook is a placeholder; the first click creates and opens it", async () => {
+    let posts = 0
+    server.use(
+      http.get(apiUrl("/v1/notebooks/auto/subjects"), () => HttpResponse.json(subjectSlots)),
+      http.post(apiUrl("/v1/notebooks/auto/subject/:subjectId"), () => {
+        posts += 1
+        return HttpResponse.json(notebookEmptyDetail)
+      }),
+    )
+    const { user } = await renderList()
+
+    const placeholder = await screen.findByRole("button", { name: /Algebra/ })
+    expect(placeholder).toHaveTextContent("Tap to open")
+    await user.click(placeholder)
+
+    await waitFor(() => expect(posts).toBe(1))
+  })
+})
 
 describe("notebooks list", () => {
   test("shows the heading, the search field and a card for every notebook, pinned first", async () => {
