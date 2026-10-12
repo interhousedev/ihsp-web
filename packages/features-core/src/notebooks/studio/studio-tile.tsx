@@ -13,17 +13,15 @@ export type StudioTileProps = {
   busy: boolean
   /** Why the tile cannot start anything now (shown as a tooltip and read as its description). */
   disabledReason: string | null
-  /** A start request is in flight. */
-  pending: boolean
   onStart: () => void
   onCustomize: () => void
 }
 
-/** One Studio button: icon and label start a generation with the default options, the pencil opens the form. */
-export function StudioTile({ tile, label, busy, disabledReason, pending, onStart, onCustomize }: StudioTileProps) {
+/** One Studio button: icon and label open the form of the kind; the pencil does the same (a visible affordance). */
+export function StudioTile({ tile, label, busy, disabledReason, onStart, onCustomize }: StudioTileProps) {
   const t = useT("notebooks")
   const Icon = tile.icon
-  const disabled = disabledReason !== null || pending
+  const disabled = disabledReason !== null
 
   return (
     <li className="group/tile relative">

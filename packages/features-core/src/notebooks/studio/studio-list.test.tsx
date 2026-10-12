@@ -131,6 +131,8 @@ describe("StudioList: a created item becomes ready", () => {
     await itemList()
 
     await user.click(screen.getByRole("button", { name: "Data table" }))
+    const form = await screen.findByRole("dialog", { name: "Customize Data table" })
+    await user.click(within(form).getByRole("button", { name: "Generate" }))
 
     // The new item shows at once, still being created.
     const list = screen.getByRole("list", { name: "Studio items" })

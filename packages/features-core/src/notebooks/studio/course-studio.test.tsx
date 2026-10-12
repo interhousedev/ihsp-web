@@ -59,6 +59,8 @@ describe("StudioPanel in a course workspace", () => {
     const { user } = renderPanel()
 
     await user.click(await screen.findByRole("button", { name: "Course plan" }))
+    const form = await screen.findByRole("dialog", { name: "Customize Course plan" })
+    await user.click(within(form).getByRole("button", { name: "Generate" }))
 
     await waitFor(() => expect(bodies).toHaveLength(1))
     expect(bodies[0]).toEqual({
@@ -72,6 +74,8 @@ describe("StudioPanel in a course workspace", () => {
     const { user } = renderPanel()
 
     await user.click(await screen.findByRole("button", { name: "Test questions" }))
+    const form = await screen.findByRole("dialog", { name: /^Customize / })
+    await user.click(within(form).getByRole("button", { name: "Generate" }))
 
     await waitFor(() => expect(bodies).toHaveLength(1))
     expect(bodies[0]?.kind).toBe("quiz")

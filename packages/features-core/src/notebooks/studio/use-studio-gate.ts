@@ -11,7 +11,7 @@ export type GateReason = "offline" | "readonly" | "limit" | "quota"
 export type Gate = { reason: GateReason; message: string }
 
 /**
- * Why generation is blocked right now (docs/reference/notebooklm.md § 5.4.4, § 5.6): the browser is offline, a token budget is used up, or the daily count of that kind is used up. `null` means free to go.
+ * Why generation is blocked right now: the browser is offline, a token budget is used up, or the daily count of that kind is used up. `null` means free to go.
  */
 export function useStudioGate(notebook: NotebookDetail) {
   const t = useT("notebooks")

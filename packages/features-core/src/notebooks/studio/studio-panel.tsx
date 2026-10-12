@@ -5,9 +5,7 @@ import { useT } from "@ihsp/i18n"
 import { Button } from "@ihsp/ui"
 import { IconLayoutSidebarRightCollapse, IconNotes } from "@ihsp/ui"
 import { useId, useState } from "react"
-import { useCreateArtifact } from "../api/use-artifacts"
-import { defaultCreate, isActive, studioTilesFor, type StudioTile as StudioTileDef } from "../lib/artifact-kinds"
-import { useNotebookErrorMessage } from "../lib/use-notebook-error"
+import { isActive, studioTilesFor, type StudioTile as StudioTileDef } from "../lib/artifact-kinds"
 import { useWorkspace } from "../workspace-context"
 import { CustomizeDialog } from "./customize-dialog"
 import { ReportPicker } from "./report-picker"
@@ -35,11 +33,9 @@ function belongsTo(tile: StudioTileDef, item: ArtifactItem): boolean {
 export function StudioPanel({ notebook, onCollapse }: StudioPanelProps) {
   const t = useT("notebooks")
   const workspace = useWorkspace()
-  const errorMessage = useNotebookErrorMessage()
   const headingId = useId()
   const gate = useStudioGate(notebook)
   const list = useArtifactPolling(notebook.id)
-  const create = useCreateArtifact(notebook.id)
 
   const [picking, setPicking] = useState(false)
   const [target, setTarget] = useState<CustomizeTarget>({
@@ -59,10 +55,7 @@ export function StudioPanel({ notebook, onCollapse }: StudioPanelProps) {
     setTarget(next)
     setCustomizing(true)
   }
-  const start = (tile: StudioTileDef) => {
-    if (tile.id === "report") setPicking(true)
-    else create.mutate(defaultCreate(tile))
-  }
+  /** A tile and its pencil both open the form; Generate there without changes equals the old one-click start. */
   const edit = (tile: StudioTileDef) => {
     if (tile.id === "report") setPicking(true)
     else
@@ -104,8 +97,7 @@ export function StudioPanel({ notebook, onCollapse }: StudioPanelProps) {
               label={t(`kind.${tile.labelKey}`)}
               busy={running.some((item) => belongsTo(tile, item))}
               disabledReason={gates[index]?.message ?? null}
-              pending={create.isPending}
-              onStart={() => start(tile)}
+              onStart={() => edit(tile)}
               onCustomize={() => edit(tile)}
             />
           ))}
@@ -123,11 +115,6 @@ export function StudioPanel({ notebook, onCollapse }: StudioPanelProps) {
         {quotas && quotaHintVisible(usage) ? (
           <p className="text-muted-foreground text-xs">
             {t("usage.materials", { used: quotas.used, limit: quotas.limit ?? 0 })}
-          </p>
-        ) : null}
-        {create.isError ? (
-          <p role="alert" className="text-destructive text-sm">
-            {errorMessage(create.error)}
           </p>
         ) : null}
         <StudioList notebookId={notebook.id} query={list} />

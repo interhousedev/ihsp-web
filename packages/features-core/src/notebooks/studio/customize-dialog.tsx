@@ -1,12 +1,15 @@
 "use client"
 
-import type { ArtifactKind, NotebookDetail, ReportFormat } from "@ihsp/api"
+import type { ArtifactKind, FileItem, NotebookDetail, ReportFormat, SourceItem } from "@ihsp/api"
 import { useT } from "@ihsp/i18n"
 import { Button, LoadingButton } from "@ihsp/ui"
 import { useEffect, useState } from "react"
+import { DrivePicker } from "../../file-upload-button"
 import { useCreateArtifact } from "../api/use-artifacts"
+import { useAddSources, useSelectSources, useSources } from "../api/use-sources"
+import { isUsable } from "../lib/sort-sources"
 import { useNotebookErrorMessage } from "../lib/use-notebook-error"
-import { buildCreate } from "./forms/build-create"
+import { buildCreate, withSourceIds } from "./forms/build-create"
 import { CoursePlanForm } from "./forms/course-plan-form"
 import { DataTableForm } from "./forms/data-table-form"
 import { FlashcardsForm } from "./forms/flashcards-form"
@@ -19,7 +22,7 @@ import { MindMapForm } from "./forms/mind-map-form"
 import { QuizForm } from "./forms/quiz-form"
 import { ReportForm } from "./forms/report-form"
 import { SlidesForm } from "./forms/slides-form"
-import { SourcesLine } from "./forms/sources-line"
+import { defaultSelection, SourceChooser } from "./forms/source-chooser"
 import { ResponsiveDialog } from "./responsive-dialog"
 import { useKindLabel } from "./use-kind-label"
 import { useStudioGate } from "./use-studio-gate"
@@ -33,7 +36,7 @@ export type CustomizeDialogProps = {
   onOpenChange: (open: boolean) => void
 }
 
-/** The per-kind form of the pencil button. Closing keeps nothing: the next opening starts from the defaults. */
+/** The per-kind form behind every Studio tile. Closing keeps nothing: the next opening starts from the defaults. */
 export function CustomizeDialog({ kind, ...rest }: CustomizeDialogProps) {
   return <CustomizeForm kind={kind} {...rest} />
 }
@@ -69,6 +72,17 @@ function KindFields({
   }
 }
 
+/** Files with readable text can be sources. */
+function hasReadableText(file: FileItem): boolean {
+  return file.assistant_ready && file.text_bytes !== null
+}
+
+function sameSet(a: ReadonlySet<string>, b: ReadonlySet<string>): boolean {
+  if (a.size !== b.size) return false
+  for (const id of a) if (!b.has(id)) return false
+  return true
+}
+
 function CustomizeForm({
   kind,
   format,
@@ -82,14 +96,25 @@ function CustomizeForm({
   const kindLabel = useKindLabel()
   const create = useCreateArtifact(notebook.id)
   const gate = useStudioGate(notebook)
+  const sources = useSources(notebook.id)
+  const add = useAddSources(notebook.id)
+  const select = useSelectSources(notebook.id)
 
   const identity = `${kind}:${format ?? ""}`
   const [state, setState] = useState<FormState>(() => initialState(kind, format))
+  // `null` until the person changes the ticks: the default follows the Sources pane even if it loads later.
+  const [picked, setPicked] = useState<Set<string> | null>(null)
+  const [browsing, setBrowsing] = useState(false)
+  const [addError, setAddError] = useState<string | null>(null)
   const [seen, setSeen] = useState({ open, identity })
   if (seen.open !== open || seen.identity !== identity) {
     // Every opening starts from the defaults (adjusting state while rendering, so there is no flash of old values).
     setSeen({ open, identity })
-    if (open) setState(initialState(kind, format))
+    if (open) {
+      setState(initialState(kind, format))
+      setPicked(null)
+      setAddError(null)
+    }
   }
 
   const reset = create.reset
@@ -97,16 +122,56 @@ function CustomizeForm({
     if (open) reset()
   }, [open, reset])
 
+  const all: readonly SourceItem[] = sources.data ?? []
+  const paneSelection = defaultSelection(sources.data)
+  const selection: ReadonlySet<string> = picked ?? paneSelection
+  const chosen = all.filter((source) => selection.has(source.id))
+  const readyChosen = chosen.filter(isUsable)
+  const waiting = chosen.length - readyChosen.length
+
   const blocked = gate.forKind(kind)
   const problem = formProblem(state)
+  // Everything ticked is still being read: wait for it rather than send a request the server would refuse.
+  const onlyWaiting = chosen.length > 0 && readyChosen.length === 0
   const label = kindLabel({
     kind,
     format: kind === "report" ? (format ?? "conspect") : null,
   })
 
-  const submit = () => {
-    create.mutate(buildCreate(state), { onSuccess: () => onOpenChange(false) })
+  const submit = async () => {
+    let body = buildCreate(state)
+    const ids = readyChosen.map((source) => source.id)
+    if (ids.length === 0 && paneSelection.size > 0) {
+      // "None" cannot be said in the request (no ids means the pane's selection), so the pane is cleared first.
+      try {
+        await select.mutateAsync({ selected: false })
+      } catch {
+        return // the mutation shows nothing itself; the rolled-back pane keeps its ticks
+      }
+    } else if (!sameSet(new Set(ids), paneSelection)) {
+      body = withSourceIds(body, ids)
+    }
+    create.mutate(body, { onSuccess: () => onOpenChange(false) })
   }
+
+  const addFiles = async (files: FileItem[]) => {
+    const readable = files.filter(hasReadableText)
+    setBrowsing(false)
+    if (readable.length === 0) return
+    setAddError(null)
+    try {
+      const result = await add.mutateAsync(readable.map((file) => ({ kind: "file", file_id: file.id })))
+      const next = new Set(selection)
+      for (const item of result.items) next.add(item.id)
+      setPicked(next)
+      const rejected = result.rejected[0]
+      if (rejected) setAddError(errorMessage(rejected.error))
+    } catch (error) {
+      setAddError(errorMessage(error))
+    }
+  }
+
+  const pending = create.isPending || select.isPending
 
   return (
     <ResponsiveDialog
@@ -121,10 +186,10 @@ function CustomizeForm({
           <LoadingButton
             type="button"
             className="min-h-11 md:min-h-8"
-            loading={create.isPending}
+            loading={pending}
             loadingLabel={root("common.loading")}
-            disabled={blocked !== null || problem !== null}
-            onClick={submit}
+            disabled={blocked !== null || problem !== null || onlyWaiting}
+            onClick={() => void submit()}
           >
             {t("opt.generate")}
           </LoadingButton>
@@ -138,10 +203,29 @@ function CustomizeForm({
         required={state.kind === "report" && state.format === "custom"}
         onChange={(focus) => setState({ ...state, focus })}
       />
-      <SourcesLine count={notebook.selected_source_count} onNavigate={() => onOpenChange(false)} />
-      {notebook.selected_source_count === 0 ? (
+      <SourceChooser
+        sources={sources.data}
+        loading={sources.isPending}
+        error={sources.isError ? sources.error : null}
+        onRetry={() => void sources.refetch()}
+        selected={selection}
+        onChange={setPicked}
+        onAdd={() => setBrowsing(true)}
+        adding={add.isPending}
+      />
+      {sources.isSuccess && chosen.length === 0 ? (
         <p role="status" className="text-sm text-amber-900 dark:text-amber-100">
           {t("studio.noSources")}
+        </p>
+      ) : null}
+      {waiting > 0 ? (
+        <p role="status" className="text-sm text-amber-900 dark:text-amber-100">
+          {onlyWaiting ? t("studio.sources.waitAll") : t("studio.sources.skipped", { count: waiting })}
+        </p>
+      ) : null}
+      {addError ? (
+        <p role="alert" className="text-destructive text-sm">
+          {addError}
         </p>
       ) : null}
       {blocked ? (
@@ -154,6 +238,14 @@ function CustomizeForm({
           {errorMessage(create.error)}
         </p>
       ) : null}
+      <DrivePicker
+        open={browsing}
+        onOpenChange={setBrowsing}
+        multiple
+        uploadPurpose="ai_upload"
+        busy={add.isPending}
+        onSelect={(files) => void addFiles(files)}
+      />
     </ResponsiveDialog>
   )
 }

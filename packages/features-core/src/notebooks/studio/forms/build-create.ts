@@ -126,6 +126,12 @@ export function buildLessonDraftCreate(state: LessonDraftState): ArtifactCreate 
   }
 }
 
+/** The same request restricted to the given sources (`options.source_ids`); the server uses only the ready ones. */
+export function withSourceIds(create: ArtifactCreate, sourceIds: readonly string[]): ArtifactCreate {
+  // Every member of the union takes `source_ids` in its options; the spread keeps the kind, so the cast is sound.
+  return { ...create, options: { ...create.options, source_ids: [...sourceIds] } } as ArtifactCreate
+}
+
 /** The request body of a form's state. */
 export function buildCreate(state: FormState): ArtifactCreate {
   switch (state.kind) {

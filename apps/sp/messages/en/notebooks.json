@@ -14,7 +14,11 @@
       "showMore": "Show more",
       "sources": "{count, plural, one {# source} other {# sources}}",
       "noResults": "No notebooks match “{query}”.",
-      "meta": "{sources} · {when}"
+      "meta": "{sources} · {when}",
+      "slot": {
+        "hint": "Tap to open",
+        "opening": "Opening…"
+      }
     },
     "untitled": "Untitled notebook",
     "card": {
@@ -230,7 +234,17 @@
       "changedHint": "The text changed after this answer was written. Showing the nearest text instead.",
       "loadMore": "Load more",
       "topicQuestion": "Tell me about {topic}",
-      "questions": "Questions about this source"
+      "questions": "Questions about this source",
+      "filePreview": {
+        "label": "File preview",
+        "open": "Open full preview",
+        "download": "Download",
+        "zoom": "Open {name} at full size",
+        "size": "Size",
+        "type": "Type",
+        "unsupported": "Your browser cannot play this file.",
+        "pdfFallback": "Your browser cannot show PDFs here. Open the full preview or download the file."
+      }
     },
     "note": {
       "edit": "Edit",
@@ -356,6 +370,20 @@
       "addNote": "Add note",
       "noSources": "No sources selected — the answer will not rely on your materials",
       "customize": "Customize {kind}",
+      "sources": {
+        "title": "Sources",
+        "count": "{selected} of {total} selected",
+        "search": "Search sources",
+        "list": "Sources to use",
+        "all": "Select all",
+        "none": "Select none",
+        "add": "Add sources",
+        "empty": "No sources yet — add a file to start",
+        "noMatch": "No source matches",
+        "words": "{count, plural, one {# word} other {# words}}",
+        "skipped": "{count, plural, one {# source is} other {# sources are}} still being read and will be skipped",
+        "waitAll": "The chosen sources are still being read — wait until they are ready"
+      },
       "collapse": "Collapse Studio",
       "tiles": "Create study materials",
       "tileBusy": "Being created",
@@ -445,7 +473,6 @@
       },
       "focus": "What should it focus on? (optional)",
       "language": "Language",
-      "using": "Using {count, plural, one {# source} other {# sources}}",
       "generate": "Generate",
       "focusPlaceholder": "For example: only the Calvin cycle, for a test",
       "focusCount": "{count} / {max}",
@@ -501,7 +528,6 @@
         "scientific": "Scientific",
         "playful": "Playful"
       },
-      "sourcesChange": "Change",
       "planDepth": {
         "label": "Detail",
         "overview": "Overview",

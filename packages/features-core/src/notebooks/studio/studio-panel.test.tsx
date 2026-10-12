@@ -10,6 +10,7 @@ import {
   server,
 } from "@ihsp/test-utils"
 import { screen, waitFor, within } from "@testing-library/react"
+import type { UserEvent } from "@testing-library/user-event"
 import { HttpResponse, http } from "msw"
 import { allowSlowRenders, renderNotebook } from "../test-support"
 import { StudioPanel } from "./studio-panel"
@@ -67,6 +68,13 @@ function tile(name: string): HTMLElement {
   return screen.getByRole("button", { name })
 }
 
+/** Waits for the form a tile opened and clicks Generate there (no option changed). */
+async function generateIn(user: UserEvent, dialogName: string): Promise<HTMLElement> {
+  const form = await screen.findByRole("dialog", { name: dialogName })
+  await user.click(within(form).getByRole("button", { name: "Generate" }))
+  return form
+}
+
 afterEach(() => setOnline(true))
 
 describe("StudioPanel: tiles", () => {
@@ -112,11 +120,14 @@ describe("StudioPanel: tiles", () => {
     }
   })
 
-  it("posts the default options of a tile on click", async () => {
+  it("opens the form of a tile on click; Generate without changes posts the default options", async () => {
     const bodies = captureCreates()
     const { user } = renderNotebook(<StudioPanel notebook={notebookDetail} />)
 
     await user.click(tile("Quiz"))
+    const form = await screen.findByRole("dialog", { name: "Customize Quiz" })
+    expect(bodies).toHaveLength(0)
+    await user.click(within(form).getByRole("button", { name: "Generate" }))
 
     await waitFor(() => expect(bodies).toHaveLength(1))
     expect(bodies[0]).toEqual({
@@ -128,14 +139,18 @@ describe("StudioPanel: tiles", () => {
       },
     })
 
+    await waitFor(() => expect(screen.queryByRole("dialog")).not.toBeInTheDocument())
     await user.click(tile("Conspect"))
+    await generateIn(user, "Customize Conspect")
     await waitFor(() => expect(bodies).toHaveLength(2))
     expect(bodies[1]).toEqual({
       kind: "report",
       options: { format: "conspect", detail: "standard", style: "outline" },
     })
 
+    await waitFor(() => expect(screen.queryByRole("dialog")).not.toBeInTheDocument())
     await user.click(tile("Data table"))
+    await generateIn(user, "Customize Data table")
     await waitFor(() => expect(bodies).toHaveLength(3))
     expect(bodies[2]).toEqual({
       kind: "data_table",
@@ -149,6 +164,7 @@ describe("StudioPanel: tiles", () => {
     const before = within(list).getAllByRole("listitem").length
 
     await user.click(tile("Mind map"))
+    await generateIn(user, "Customize Mind map")
 
     await waitFor(() =>
       expect(within(screen.getByRole("list", { name: "Studio items" })).getAllByRole("listitem")).toHaveLength(
@@ -170,6 +186,7 @@ describe("StudioPanel: tiles", () => {
     expect(within(tile("Mind map").closest("li") as HTMLElement).queryByRole("status")).not.toBeInTheDocument()
 
     await user.click(tile("Quiz"))
+    await generateIn(user, "Customize Quiz")
     await waitFor(() => expect(bodies).toHaveLength(1))
   })
 })
@@ -347,8 +364,9 @@ describe("StudioPanel: limits and errors", () => {
     const { user } = renderNotebook(<StudioPanel notebook={notebookDetail} />)
 
     await user.click(tile("Mind map"))
+    const form = await generateIn(user, "Customize Mind map")
 
-    const alert = await screen.findByRole("alert")
+    const alert = await within(form).findByRole("alert")
     if (typeof expected === "string") expect(alert).toHaveTextContent(expected)
     else expect(alert.textContent ?? "").toMatch(expected)
   })

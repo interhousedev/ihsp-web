@@ -1,6 +1,14 @@
 import { afterEach, describe, expect, it } from "bun:test"
-import type { ArtifactCreate, ArtifactItem, NotebookDetail } from "@ihsp/api"
-import { apiUrl, artifactGenerating, nbIds, notebookDetail, notebookUsageLimitReached, server } from "@ihsp/test-utils"
+import type { ArtifactCreate, ArtifactItem, FileItem } from "@ihsp/api"
+import {
+  apiUrl,
+  artifactGenerating,
+  filePdf,
+  nbIds,
+  notebookDetail,
+  notebookUsageLimitReached,
+  server,
+} from "@ihsp/test-utils"
 import { act, screen, waitFor, within } from "@testing-library/react"
 import type { UserEvent } from "@testing-library/user-event"
 import { HttpResponse, http } from "msw"
@@ -284,15 +292,79 @@ describe("Customize dialogs: common fields", () => {
     expect(within(dialog).getByText("14 / 1000")).toBeInTheDocument()
   })
 
-  it("shows how many sources are used and jumps to the Sources tab", async () => {
-    const { user, actions } = renderNotebook(<StudioPanel notebook={notebookDetail} />)
+  it("opens from a click on the tile itself, with the sources of the pane ticked", async () => {
+    const { user } = renderNotebook(<StudioPanel notebook={notebookDetail} />)
+
+    await user.click(await screen.findByRole("button", { name: "Quiz" }))
+    const dialog = await screen.findByRole("dialog", { name: "Customize Quiz" })
+
+    expect(await within(dialog).findByText("3 of 3 selected")).toBeInTheDocument()
+    const list = within(dialog).getByRole("list", { name: "Sources to use" })
+    for (const title of ["Biology 10.pdf", "Lesson 5: Photosynthesis", "My notes"]) {
+      expect(within(list).getByRole("checkbox", { name: title })).toBeChecked()
+    }
+  })
+
+  it("filters the source list by the search text", async () => {
+    const { user } = renderNotebook(<StudioPanel notebook={notebookDetail} />)
     const dialog = await openForm(user, "Quiz")
+    await within(dialog).findByText("3 of 3 selected")
 
-    expect(within(dialog).getByText("Using 3 sources")).toBeInTheDocument()
-    await user.click(within(dialog).getByRole("button", { name: "Change" }))
+    await user.click(within(dialog).getByRole("searchbox", { name: "Search sources" }))
+    await user.paste("photo")
 
-    expect(actions.showTab).toHaveBeenCalledWith("sources")
-    await waitFor(() => expect(screen.queryByRole("dialog")).not.toBeInTheDocument())
+    const list = within(dialog).getByRole("list", { name: "Sources to use" })
+    expect(within(list).getAllByRole("checkbox")).toHaveLength(1)
+    expect(within(list).getByRole("checkbox", { name: "Lesson 5: Photosynthesis" })).toBeInTheDocument()
+  })
+
+  it("ticks sources one by one or all at once, and the request carries the ticked ids", async () => {
+    const bodies = captureCreates()
+    const { user } = renderNotebook(<StudioPanel notebook={notebookDetail} />)
+    const dialog = await openForm(user, "Quiz")
+    await within(dialog).findByText("3 of 3 selected")
+
+    await user.click(within(dialog).getByRole("button", { name: "Select none" }))
+    expect(within(dialog).getByText("0 of 3 selected")).toBeInTheDocument()
+    expect(
+      within(dialog).getByText("No sources selected — the answer will not rely on your materials"),
+    ).toBeInTheDocument()
+
+    await user.click(within(dialog).getByRole("checkbox", { name: "My notes" }))
+    expect(within(dialog).getByText("1 of 3 selected")).toBeInTheDocument()
+    await generate(user, dialog)
+
+    await waitFor(() => expect(bodies).toHaveLength(1))
+    expect(bodies[0]?.options).toMatchObject({ source_ids: [nbIds.sourceText] })
+
+    const again = await openForm(user, "Quiz")
+    await within(again).findByText("3 of 3 selected")
+    await user.click(within(again).getByRole("button", { name: "Select none" }))
+    await user.click(within(again).getByRole("button", { name: "Select all" }))
+    expect(within(again).getByText("3 of 3 selected")).toBeInTheDocument()
+    await generate(user, again)
+
+    // The same set as the pane: the request is the plain one of the tile.
+    await waitFor(() => expect(bodies).toHaveLength(2))
+    expect(bodies[1]?.options).not.toHaveProperty("source_ids")
+  })
+
+  it("adds a file from the picker as a source and ticks it", async () => {
+    const extra: FileItem = { ...filePdf, id: "00000000-0000-4000-8000-000000000299", name: "chapter-3.pdf" }
+    server.use(http.get(apiUrl("/v1/me/files"), () => HttpResponse.json({ items: [extra], next_cursor: null })))
+    const { user } = renderNotebook(<StudioPanel notebook={notebookDetail} />)
+    const dialog = await openForm(user, "Quiz")
+    await within(dialog).findByText("3 of 3 selected")
+
+    await user.click(within(dialog).getByRole("button", { name: "Add sources" }))
+    await user.click(await screen.findByRole("button", { name: "chapter-3.pdf" }))
+    await user.click(screen.getByRole("button", { name: "Select" }))
+
+    expect(await within(dialog).findByText("4 of 4 selected")).toBeInTheDocument()
+    const list = within(dialog).getByRole("list", { name: "Sources to use" })
+    expect(within(list).getByRole("checkbox", { name: "File" })).toBeChecked()
+    expect(within(dialog).getByText("1 source is still being read and will be skipped")).toBeInTheDocument()
+    expect(within(dialog).getByRole("button", { name: "Generate" })).toBeEnabled()
   })
 
   it("starts from the defaults every time it opens: closing keeps nothing", async () => {
@@ -363,19 +435,29 @@ describe("Customize dialogs: common fields", () => {
     expect(screen.getByRole("dialog", { name: "Customize Quiz" })).toBeInTheDocument()
   })
 
-  it("can generate without a selected source and shows a warning instead", async () => {
-    const noSources: NotebookDetail = {
-      ...notebookDetail,
-      selected_source_count: 0,
-    }
-    const { user } = renderNotebook(<StudioPanel notebook={noSources} />)
+  it("can generate without a ticked source: a warning, the pane is cleared and the plain request goes out", async () => {
+    const bodies = captureCreates()
+    const selects: unknown[] = []
+    server.use(
+      http.post(apiUrl(`/v1/notebooks/${nbIds.notebook}/sources/select`), async ({ request }) => {
+        selects.push(await request.json())
+        return HttpResponse.json([])
+      }),
+    )
+    const { user } = renderNotebook(<StudioPanel notebook={notebookDetail} />)
     const dialog = await openForm(user, "Quiz")
+    await within(dialog).findByText("3 of 3 selected")
 
-    expect(within(dialog).getByText("Using 0 sources")).toBeInTheDocument()
-    expect(within(dialog).getByRole("button", { name: "Generate" })).toBeEnabled()
+    await user.click(within(dialog).getByRole("button", { name: "Select none" }))
     expect(
       within(dialog).getByText("No sources selected — the answer will not rely on your materials"),
     ).toBeInTheDocument()
+    expect(within(dialog).getByRole("button", { name: "Generate" })).toBeEnabled()
+    await generate(user, dialog)
+
+    await waitFor(() => expect(bodies).toHaveLength(1))
+    expect(selects).toEqual([{ selected: false }])
+    expect(bodies[0]?.options).not.toHaveProperty("source_ids")
   })
 
   it("cannot generate while the browser is offline", async () => {

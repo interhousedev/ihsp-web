@@ -10,7 +10,7 @@ import type {
   SlidesOptions,
 } from "@ihsp/api"
 
-/** The longest focus text the API accepts (`prompt`, docs/reference/notebooklm.md § 3.4.0). */
+/** The longest focus text the API accepts (`prompt`). */
 export const MAX_FOCUS_LENGTH = 1000
 export const MIN_ROWS = 10
 export const MAX_ROWS = 40

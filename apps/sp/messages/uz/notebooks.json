@@ -14,7 +14,11 @@
       "showMore": "Yana koʻrsatish",
       "sources": "{count} ta manba",
       "noResults": "«{query}» soʻrovi boʻyicha daftarlar topilmadi.",
-      "meta": "{sources} · {when}"
+      "meta": "{sources} · {when}",
+      "slot": {
+        "hint": "Ochish uchun bosing",
+        "opening": "Ochilmoqda…"
+      }
     },
     "untitled": "Nomsiz daftar",
     "card": {
@@ -230,7 +234,17 @@
       "changedHint": "Javob yozilganidan keyin matn oʻzgargan. Eng yaqin qism koʻrsatilmoqda.",
       "loadMore": "Yana koʻrsatish",
       "topicQuestion": "«{topic}» haqida gapirib ber",
-      "questions": "Ushbu manba boʻyicha savollar"
+      "questions": "Ushbu manba boʻyicha savollar",
+      "filePreview": {
+        "label": "Fayl koʻrinishi",
+        "open": "Toʻliq koʻrish",
+        "download": "Yuklab olish",
+        "zoom": "{name} faylini toʻliq oʻlchamda ochish",
+        "size": "Hajmi",
+        "type": "Turi",
+        "unsupported": "Brauzer bu faylni ijro eta olmaydi.",
+        "pdfFallback": "Brauzer PDF faylni bu yerda koʻrsata olmaydi. Toʻliq koʻrishni oching yoki faylni yuklab oling."
+      }
     },
     "note": {
       "edit": "Tahrirlash",
@@ -356,6 +370,20 @@
       "addNote": "Qayd qoʻshish",
       "noSources": "Manbalar tanlanmagan — javob materiallarga tayanmaydi",
       "customize": "Sozlash: {kind}",
+      "sources": {
+        "title": "Manbalar",
+        "count": "{total} tadan {selected} tasi tanlandi",
+        "search": "Manbalarni qidirish",
+        "list": "Ishlatiladigan manbalar",
+        "all": "Hammasini tanlash",
+        "none": "Tanlovni olib tashlash",
+        "add": "Manba qoʻshish",
+        "empty": "Hali manbalar yoʻq — fayl qoʻshing",
+        "noMatch": "Hech narsa topilmadi",
+        "words": "{count} ta soʻz",
+        "skipped": "{count} ta manba hali oʻqilmoqda va oʻtkazib yuboriladi",
+        "waitAll": "Tanlangan manbalar hali oʻqilmoqda — tayyor boʻlishini kuting"
+      },
       "collapse": "Studiyani yigʻish",
       "tiles": "Oʻquv materiallarini yaratish",
       "tileBusy": "Yaratilmoqda",
@@ -445,7 +473,6 @@
       },
       "focus": "Nimaga eʼtibor qaratilsin? (ixtiyoriy)",
       "language": "Til",
-      "using": "{count} ta manba ishlatiladi",
       "generate": "Yaratish",
       "focusPlaceholder": "Masalan: faqat Kalvin sikli, nazorat ishi uchun",
       "focusCount": "{count} / {max}",
@@ -501,7 +528,6 @@
         "scientific": "Ilmiy",
         "playful": "Oʻyinqaroq"
       },
-      "sourcesChange": "Oʻzgartirish",
       "planDepth": {
         "label": "Batafsillik",
         "overview": "Qisqacha",
