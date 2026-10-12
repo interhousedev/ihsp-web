@@ -112,6 +112,41 @@ describe("Docker build inputs", () => {
     expect(read("Dockerfile.prebuilt.dockerignore")).toContain("!apps/library/out\n")
   })
 
+  it("the nginx stages of both dockerfiles match (apps and chmod aside)", () => {
+    const stage = (name: string) =>
+      read(name)
+        .slice(read(name).indexOf("FROM nginx"))
+        .replace(/\\\n\s*/g, " ")
+        .split("\n")
+        .map((l) => l.trim())
+        .filter((l) => l && !l.startsWith("#"))
+        .filter((l) => !l.startsWith("COPY --from=builder") && !l.startsWith("COPY apps/") && !l.startsWith("RUN chmod +x /app/entrypoint.sh"))
+    expect(stage("Dockerfile.prebuilt")).toEqual(stage("Dockerfile"))
+  })
+
+  it("both dockerfiles place every app in the same directory", () => {
+    for (const app of ["id", "sp", "staff", "admin", "lms", "share", "library"]) {
+      const target = app === "share" ? "/srv/share/ai" : `/srv/${app}`
+      expect(read("Dockerfile")).toContain(`COPY --from=builder /app/apps/${app}/out ${target}\n`)
+      expect(read("Dockerfile.prebuilt")).toContain(`COPY apps/${app}/out ${target}\n`)
+    }
+  })
+
+  it("the prebuilt context is an allow-list of the exports", () => {
+    const rules = read("Dockerfile.prebuilt.dockerignore")
+      .split("\n")
+      .filter((l) => l && !l.startsWith("#"))
+    expect(rules[0]).toBe("*")
+    const apps = ["id", "sp", "staff", "admin", "lms", "share", "library"].map((a) => `!apps/${a}/out`)
+    expect(new Set(rules.slice(1))).toEqual(new Set(["!deploy", ...apps]))
+  })
+
+  it("the prebuilt image refuses exports without the CSP meta", () => {
+    const text = read("Dockerfile.prebuilt")
+    expect(text).toContain('http-equiv="Content-Security-Policy"')
+    expect(text).toContain("bun deploy/csp-hash.ts")
+  })
+
   it("dockerfile bakes the app version into the build before next build runs", () => {
     const dockerfile = read("Dockerfile")
     const arg = dockerfile.indexOf("ARG NEXT_PUBLIC_APP_VERSION=1.0.0")
