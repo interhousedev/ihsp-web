@@ -10,6 +10,20 @@ const snippetsDir = path.join(deployDir, "snippets")
 const read = (...parts: string[]) => fs.readFileSync(path.join(deployDir, ...parts), "utf-8")
 const confFiles = (dir: string) => fs.readdirSync(dir).filter((f) => f.endsWith(".conf"))
 
+const nginxStage = (name: string) =>
+  read(name)
+    .slice(read(name).indexOf("FROM nginx"))
+    .replace(/\\\n\s*/g, " ")
+    .split("\n")
+    .map((l) => l.trim())
+    .filter((l) => l && !l.startsWith("#"))
+    .filter(
+      (l) =>
+        !l.startsWith("COPY --from=builder") &&
+        !l.startsWith("COPY apps/") &&
+        !l.startsWith("RUN chmod +x /app/entrypoint.sh"),
+    )
+
 /** The Content-Security-Policy header line of a security-headers snippet (comments excluded). */
 const cspHeader = (snippet: string) =>
   snippet
@@ -113,15 +127,7 @@ describe("Docker build inputs", () => {
   })
 
   it("the nginx stages of both dockerfiles match (apps and chmod aside)", () => {
-    const stage = (name: string) =>
-      read(name)
-        .slice(read(name).indexOf("FROM nginx"))
-        .replace(/\\\n\s*/g, " ")
-        .split("\n")
-        .map((l) => l.trim())
-        .filter((l) => l && !l.startsWith("#"))
-        .filter((l) => !l.startsWith("COPY --from=builder") && !l.startsWith("COPY apps/") && !l.startsWith("RUN chmod +x /app/entrypoint.sh"))
-    expect(stage("Dockerfile.prebuilt")).toEqual(stage("Dockerfile"))
+    expect(nginxStage("Dockerfile.prebuilt")).toEqual(nginxStage("Dockerfile"))
   })
 
   it("both dockerfiles place every app in the same directory", () => {

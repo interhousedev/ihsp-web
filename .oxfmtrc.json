@@ -16,6 +16,7 @@
     "**/node_modules/**",
     "**/next-env.d.ts",
     "**/generated/**",
+    "packages/api/openapi.json",
     "bun.lock",
     "**/*.md",
     "**/*.mdc",
