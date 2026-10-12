@@ -32,7 +32,7 @@ import { SubmitButton } from "../components/forms/submit-button"
  *
  * Every component's markup is the shadcn TanStack Form doc anatomy — for
  * one-off custom fields, drop down to the raw `form.Field` render prop and
- * compose the `Field` primitives directly (see docs/forms.md).
+ * compose the `Field` primitives directly.
  */
 export const { useAppForm, withForm } = createFormHook({
   fieldContext,
