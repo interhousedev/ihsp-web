@@ -1,6 +1,6 @@
 import type { ItemLanguage, ItemType, MaterialLicence } from "@ihsp/api"
 
-// Constants of the upload wizard (docs/reference/study-library.md §§ 3.5 and 9.2). The limits are hints only: the
+// Constants of the upload wizard. The limits are hints only: the
 // server is the authority and answers `library/file-too-large` or `library/too-many-pages`.
 
 /** What the uploader brings: a Markdown note, a PDF (teachers may also bring DOCX or PPTX) or photos of paper notes. */

@@ -19,7 +19,7 @@ const WIDE_PANE_PX = 720
 
 /**
  * A report (conspect, study guide, briefing, ...): Markdown with citation chips, a table of contents, a toolbar (Copy,
- * Download .md, Print / PDF, Add as source) and "Ask about this" for selected text (docs/reference/notebooklm.md § 3.4.1).
+ * Download .md, Print / PDF, Add as source) and "Ask about this" for selected text.
  */
 export function ReportViewer({ notebookId, artifact }: ViewerProps<"report">) {
   const content = artifact.content

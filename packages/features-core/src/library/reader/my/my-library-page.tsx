@@ -10,7 +10,7 @@ import { ShelfTab } from "./shelf-tab"
 import { MY_TABS, useMyTab } from "./use-my-tab"
 
 /**
- * `/my/?tab=`: the student's own space (docs/reference/study-library.md § 3.9): Continue (the last six books), Shelf,
+ * `/my/?tab=`: the student's own space: Continue (the last six books), Shelf,
  * Notes (all highlights and notes, with export), Lists (reading lists of my groups) and Uploads. The tab is in the
  * address. There is no Offline tab: saving for offline is not part of this app yet.
  */

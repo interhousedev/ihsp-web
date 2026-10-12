@@ -1,6 +1,5 @@
-// Library (`library.ihsu.uz`): docs/reference/study-library.md § 7.5 (contract, copied verbatim) and §§ 7.1, 7.2
-// (request and response shapes the contract leaves open, added at the end of the file).
-// Theses and projects (§ 7.3) are not part of this file.
+// Library (`library.ihsu.uz`): the contract is copied verbatim from the backend; request and response shapes the
+// contract leaves open are added at the end of the file. Theses and projects are not part of this file.
 
 import type { Page } from "./common"
 

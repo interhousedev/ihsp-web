@@ -19,7 +19,7 @@ import {
 
 type IconInput = { kind: SourceKind; title?: string }
 
-/** The icon of a source row: PDF red, DOCX blue, then one icon per kind (docs/reference/notebooklm.md § 5.4.2). */
+/** The icon of a source row: PDF red, DOCX blue, then one icon per kind. */
 export function sourceIcon({ kind, title = "" }: IconInput): { Icon: Icon; className: string } {
   if (kind === "file") {
     const name = title.toLowerCase()

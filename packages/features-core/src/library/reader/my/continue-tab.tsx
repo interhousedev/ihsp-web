@@ -10,7 +10,7 @@ import { cardKey, cardRouteId, ItemCardView } from "../../catalog"
 import { useVisibleCards } from "../../hooks/use-uni-library"
 import { browseHref, readHref } from "../../utils/hrefs"
 
-/** How many books "Continue" shows (docs/reference/study-library.md § 3.9). */
+/** How many books "Continue" shows. */
 export const CONTINUE_LIMIT = 6
 
 /** The last books the user was reading, each with its progress and a link that opens it where they stopped. */

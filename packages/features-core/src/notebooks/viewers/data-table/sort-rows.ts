@@ -1,4 +1,4 @@
-// Client-side sorting of the data table (docs/reference/notebooklm.md § 3.4.5): text, number and date columns.
+// Client-side sorting of the data table: text, number and date columns.
 
 import type { DataTableContent } from "@ihsp/api"
 

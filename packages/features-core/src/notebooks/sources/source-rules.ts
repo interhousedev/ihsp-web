@@ -1,6 +1,6 @@
 import type { SourceItem, SourceKind } from "@ihsp/api"
 
-/** Kinds whose content can change upstream; **Sync** re-reads them (docs/reference/notebooklm.md § 3.2.1). */
+/** Kinds whose content can change upstream; **Sync** re-reads them. */
 const SYNCABLE_KINDS: ReadonlySet<SourceKind> = new Set(["chat", "flashcard_set", "lms_step", "url", "web_result"])
 
 /** Whether the row menu offers **Sync**: re-readable kinds, outdated sources and failures that may be temporary. */

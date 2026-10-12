@@ -1,7 +1,7 @@
 import { describe, expect, it } from "bun:test"
 import { OKINA, TUTUQ, findInText, normalizeWithMap, searchNormalize, uzTranslit } from "./translit"
 
-// The vectors of docs/reference/study-library.md § 11.1 and of backend/tests/shared/test_uz_translit.py.
+// The vectors of backend/tests/shared/test_uz_translit.py.
 const VECTORS: [string, string][] = [
   ["ўзбек", `o${OKINA}zbek`],
   ["ғазал", `g${OKINA}azal`],

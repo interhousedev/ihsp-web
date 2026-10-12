@@ -1,4 +1,4 @@
-// Progress and scoring of a quiz (docs/reference/notebooklm.md § 3.4.4): `{answers: {q1: ["a"]}, current: 3,
+// Progress and scoring of a quiz: `{answers: {q1: ["a"]}, current: 3,
 // submitted: true}`. `queue` is an optional extra: the question ids of a "Retry wrong answers" round.
 // All functions are pure.
 

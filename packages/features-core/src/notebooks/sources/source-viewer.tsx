@@ -11,6 +11,7 @@ import { SelectionToolbar } from "./selection-toolbar"
 import { SourceActionDialogs } from "./source-action-dialogs"
 import { SourceActionsMenu } from "./source-actions-menu"
 import { SourceBanner } from "./source-banner"
+import { SourceFilePreview } from "./source-file-preview"
 import { SourceGuide } from "./source-guide"
 import { useSourceActions } from "./use-source-actions"
 import { useSourceDetail } from "./use-source-detail"
@@ -24,7 +25,8 @@ export type SourceViewerProps = {
 }
 
 /**
- * The source viewer (middle pane, a full screen on phones): top bar, the source guide and the text in passages.
+ * The source viewer (middle pane, a full screen on phones): top bar, the preview of an uploaded file, the source guide
+ * and the text in passages.
  * Opened from a citation it scrolls to the cited passage and highlights it. Selecting text offers "Ask about this".
  */
 export function SourceViewer({ notebookId, sourceId, passageId }: SourceViewerProps) {
@@ -119,6 +121,7 @@ export function SourceViewer({ notebookId, sourceId, passageId }: SourceViewerPr
           {source && source.status !== "ready" ? (
             <SourceBanner source={source} onSync={() => actions.sync(source)} />
           ) : null}
+          {source?.file ? <SourceFilePreview notebookId={notebookId} sourceId={sourceId} file={source.file} /> : null}
           {source && readable ? <SourceGuide source={source} /> : null}
           {source && readable ? (
             <div ref={textRef}>

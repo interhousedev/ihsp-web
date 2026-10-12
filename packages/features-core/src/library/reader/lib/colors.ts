@@ -2,8 +2,8 @@ import type { AnnotationColor } from "@ihsp/api"
 import { IconCircleFilled, IconSquareFilled, IconStarFilled, IconTriangleFilled } from "@ihsp/ui"
 import type { ComponentType } from "react"
 
-// The four highlight colours. They also differ by a shape, so colour is never the only signal
-// (docs/reference/study-library.md § 9.4). Message keys: `library.annotation.color.<name>`.
+// The four highlight colours. They also differ by a shape, so colour is never the only signal.
+// Message keys: `library.annotation.color.<name>`.
 
 export const ANNOTATION_COLORS: readonly AnnotationColor[] = ["yellow", "green", "blue", "pink"]
 

@@ -1,7 +1,7 @@
 import { getLibraryFileUrl, type ItemFileUrl } from "@ihsp/api"
 
-// The reader opens files through a presigned URL that is valid for 15 minutes (`GET /library/items/{id}/files/{fid}/url`,
-// docs/reference/study-library.md § 3.8). A long reading session outlives it: the storage then answers `403`, and the
+// The reader opens files through a presigned URL that is valid for 15 minutes (`GET /library/items/{id}/files/{fid}/url`).
+// A long reading session outlives it: the storage then answers `403`, and the
 // reader asks for a new URL and repeats the request once.
 
 export interface FileLinks {

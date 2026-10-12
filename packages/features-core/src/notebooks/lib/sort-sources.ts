@@ -1,6 +1,6 @@
 import type { SourceItem, SourceKind } from "@ihsp/api"
 
-/** The order of the groups in the Sources panel (docs/reference/notebooklm.md § 5.4.2). */
+/** The order of the groups in the Sources panel. */
 export const SOURCE_GROUP_ORDER: readonly SourceKind[] = [
   "file",
   "chat",

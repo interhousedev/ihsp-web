@@ -32,7 +32,7 @@ type WorkspaceKeys = {
   onFocusComposer: () => void
 }
 
-/** Workspace shortcuts (docs/reference/notebooklm.md § 5.7): `/` composer, `[` and `]` panes, Esc closes a viewer. */
+/** Workspace shortcuts: `/` composer, `[` and `]` panes, Esc closes a viewer. */
 export function useWorkspaceKeys(options: WorkspaceKeys): void {
   const latest = useRef(options)
   useEffect(() => {

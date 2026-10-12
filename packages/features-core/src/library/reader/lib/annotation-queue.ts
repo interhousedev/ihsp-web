@@ -1,7 +1,7 @@
 import { isApiError, isNetworkError, type Annotation, type AnnotationInput, type AnnotationsSyncBody } from "@ihsp/api"
 
-// A retry queue for annotation changes that could not reach the server (docs/reference/study-library.md § 3.10 without
-// the offline store: it lives in memory and in `sessionStorage`, never in IndexedDB). Every create carries a
+// A retry queue for annotation changes that could not reach the server (without an offline store:
+// it lives in memory and in `sessionStorage`, never in IndexedDB). Every create carries a
 // client-generated `client_id`, and the server de-duplicates by it, so sending a change twice (a response got lost)
 // never makes a copy: the flush is idempotent.
 

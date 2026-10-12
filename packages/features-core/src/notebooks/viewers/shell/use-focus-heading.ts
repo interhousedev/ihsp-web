@@ -4,7 +4,7 @@ import { useEffect, useRef } from "react"
 
 /**
  * Moves the focus to the heading of a viewer when it opens and gives it back to whatever had it (the Studio row, a
- * citation chip) when the viewer closes (docs/reference/notebooklm.md § 5.7).
+ * citation chip) when the viewer closes.
  */
 export function useFocusHeading() {
   const ref = useRef<HTMLHeadingElement>(null)

@@ -4,7 +4,7 @@ import { isApiError, putLibraryProgress } from "@ihsp/api"
 import { useCallback, useEffect, useRef } from "react"
 import { percentOf, writeStoredPosition, type Locator } from "./lib/locator"
 
-// Reading progress (`PUT /me/library/progress/{item_id}`, docs/reference/study-library.md § 3.8): at most one write every
+// Reading progress (`PUT /me/library/progress/{item_id}`): at most one write every
 // 15 seconds, one more when the page is hidden or closed, and one when the reader unmounts. The server keeps the write
 // with the newest `client_ts`. The place is also kept on this device at once (the API has no call that returns it).
 

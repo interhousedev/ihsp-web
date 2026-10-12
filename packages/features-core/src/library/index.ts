@@ -1,4 +1,4 @@
-// Library (`library.ihsu.uz`): docs/reference/study-library.md § 9.3. One folder per area, each with its own `index.ts`
+// Library (`library.ihsu.uz`): one folder per area, each with its own `index.ts`
 // and its own message file (`messages/<locale>/<area>.json`):
 //   catalog (LIB-W1): home, browse, item pages, tags, rights, shelf button, report dialog, add to notebook, collections
 //   lists/view (LIB-W1) and lists/editor (LIB-W3): reading lists

@@ -1,4 +1,4 @@
-// Reader, annotations and My library (LIB-W2): docs/reference/study-library.md §§ 3.8, 3.9, 9.1 to 9.4.
+// Reader, annotations and My library (LIB-W2).
 // pdf.js and foliate-js are imported dynamically by the readers (see `lib/load-engines.ts`), so importing this barrel
 // does not load them.
 export { AnnotationList, type AnnotationListProps } from "./annotation-list"

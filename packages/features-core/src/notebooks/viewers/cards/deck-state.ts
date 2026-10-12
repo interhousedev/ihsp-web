@@ -1,4 +1,4 @@
-// Progress of a flash card deck (docs/reference/notebooklm.md § 3.4.3):
+// Progress of a flash card deck:
 // `{known, missed, deleted, order, position}`, saved with `PUT .../progress`. All functions are pure.
 
 export type DeckState = {

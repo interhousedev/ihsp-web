@@ -17,7 +17,7 @@ import { ViewerEmpty } from "./viewer-empty"
 import type { ViewerProps } from "./viewer-props"
 
 /**
- * A data table (docs/reference/notebooklm.md § 3.4.5): a table from 768 px up and cards on a phone, sortable columns,
+ * A data table: a table from 768 px up and cards on a phone, sortable columns,
  * a Sources column of citation chips, Copy as TSV and Download CSV. Not editable.
  */
 export function DataTableViewer({ artifact }: ViewerProps<"data_table">) {

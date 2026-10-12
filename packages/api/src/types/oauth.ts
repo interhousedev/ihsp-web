@@ -18,6 +18,6 @@ export type OauthLogoutResponse = { logout_url: string }
 
 export type OauthTelegramBody = { client_id: "sp" | "staff"; init_data: string }
 
-/** Hydra token hook payload and response (`docs/reference/hydra.md`); only the backend and Hydra use them. */
+/** Hydra token hook payload and response; only the backend and Hydra use them. */
 export type TokenHookPayload = Record<string, unknown>
 export type TokenHookResponse = Record<string, unknown>

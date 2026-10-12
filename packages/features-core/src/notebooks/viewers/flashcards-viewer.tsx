@@ -28,7 +28,7 @@ type Card = FlashcardsContent["cards"][number]
 /**
  * A quick deck in the style of NotebookLM (not the spaced-repetition study screen): tap to flip, mark Got it or
  * Missed it, shuffle, delete, restart, hints, "Explain" through the notebook chat, CSV export and the bridge that
- * saves the deck as a normal flash card set (docs/reference/notebooklm.md § 3.4.3).
+ * saves the deck as a normal flash card set.
  */
 export function FlashcardsViewer({ notebookId, artifact }: ViewerProps<"flashcards">) {
   const content = artifact.content

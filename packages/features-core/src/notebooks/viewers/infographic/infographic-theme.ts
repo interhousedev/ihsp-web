@@ -4,7 +4,7 @@ import type { CSSProperties } from "react"
 export type InfographicOrientation = "portrait" | "landscape" | "square"
 export type InfographicStyle = "clean" | "sketch" | "bento" | "scientific" | "playful"
 
-/** The fixed size of the canvas in CSS pixels (docs/reference/notebooklm.md § 3.4.7). */
+/** The fixed size of the canvas in CSS pixels. */
 export const CANVAS_SIZES: Record<InfographicOrientation, { width: number; height: number }> = {
   portrait: { width: 800, height: 1200 },
   landscape: { width: 1200, height: 800 },

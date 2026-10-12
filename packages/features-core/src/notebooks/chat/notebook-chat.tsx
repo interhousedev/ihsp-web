@@ -29,7 +29,7 @@ export type NotebookChatProps = {
 const NO_MESSAGES: Message[] = []
 
 /**
- * The cited chat panel (docs/reference/notebooklm.md § 5.4.3): the top block (title, summary, suggested questions),
+ * The cited chat panel: the top block (title, summary, suggested questions),
  * the saved conversation with the answer that is being written, quick actions under the latest answer and the
  * composer. Answers stream in; Stop keeps the partial text.
  */

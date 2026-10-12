@@ -15,7 +15,7 @@ export type NotebookWorkspaceProps = {
 }
 
 /**
- * The notebook page (docs/reference/notebooklm.md § 5.4.1): header, then Sources, Chat and Studio as three resizable
+ * The notebook page: header, then Sources, Chat and Studio as three resizable
  * panes (from 1280 px), the chat with side sheets (768 to 1279 px) or three tabs (phone). A source, an artifact or the
  * note editor replaces the chat while open. State that deserves a link (`tab`, `source`, `passage`, `artifact`, `note`,
  * `add`) lives in the address.

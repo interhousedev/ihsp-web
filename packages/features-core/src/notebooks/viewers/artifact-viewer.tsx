@@ -25,7 +25,7 @@ export type ArtifactViewerProps = {
 const POLL_MS = 3000
 
 /**
- * The shell of every Studio viewer (docs/reference/notebooklm.md § 5.4.5): Back, the title, the item menu, the "large
+ * The shell of every Studio viewer: Back, the title, the item menu, the "large
  * notebook" banner, the loading, error, generating, failed and canceled states, and the viewer picked by `kind`.
  * Loading the artifact marks it viewed, so the Studio list is refreshed to clear the blue dot.
  */

@@ -17,7 +17,7 @@
 //   getUniLibrary()               the current controls
 //   seedLibraryItem(detail, opts) adds or replaces a stored item: `{ ownerId?, text?, input?, addedAt? }`
 //
-// BEHAVIOUR (docs/reference/study-library.md §§ 3, 7.4)
+// BEHAVIOUR
 //   Visibility: anonymous visitors get published `visibility: "public"` items only, signed-in users also `lyceum` items,
 //     owners their own uploads in any status, librarians (role librarian or admin) everything; anything else is
 //     `404 library/not-found`. `GET /library/items` lists published, non-hidden items only; full-text hits carry

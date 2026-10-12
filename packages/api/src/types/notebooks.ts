@@ -1,4 +1,4 @@
-// Notebooks (NotebookLM-style) and Studio: docs/reference/notebooklm.md § 4.4, copied verbatim.
+// Notebooks (NotebookLM-style) and Studio: copied verbatim from the backend contract.
 // Additions (request bodies, query parameters, stream events) are at the end of the file.
 
 import type { WebQuota, WebResult } from "./ai"
@@ -87,11 +87,22 @@ export type SourceGuide = {
   key_topics: string[]
   questions: string[]
 }
+/** The uploaded file behind a `file` source or a file-based lesson material (preview and download). */
+export type SourceFile = {
+  id: string
+  name: string
+  content_type: string
+  byte_size: number
+}
+/** `GET …/sources/{sid}/file-url?disposition=inline|attachment`: a presigned URL valid for 60 seconds. */
+export type SourceFileUrl = { url: string; expires_at: string }
 export type SourceDetail = SourceItem & {
   guide: SourceGuide | null
   body_md: string | null
   editable: boolean
   citations: Citation[]
+  /** Null for sources that did not come from an upload (text, link, chat, library item…). */
+  file: SourceFile | null
 }
 export type PassageItem = {
   id: string
@@ -137,10 +148,21 @@ export type NotebookItem = {
   subject_id: string | null
   /** The lesson a `lesson_auto` notebook follows; null otherwise. */
   lesson_id: string | null
+  /** The group of a teacher's subject notebook; null otherwise. */
+  group_id: string | null
   /** The LMS course this notebook is the workspace of; null for a student's own notebook. */
   course_id: string | null
   /** False for staff who may only read the workspace (`view_drafts`); true for owners of personal notebooks. */
   can_write: boolean
+}
+/** A subject (teachers: subject and group) with its notebook, which is made on the first open. */
+export type SubjectNotebookSlot = {
+  subject_id: string
+  subject_name: string
+  group_id: string | null
+  group_name: string | null
+  notebook_id: string | null
+  source_count: number
 }
 /** Sync settings of an automatic notebook (`NotebookDetail.auto`). */
 export type AutoSettings = {

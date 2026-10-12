@@ -5,7 +5,7 @@ import { expand } from "./mini-app-actions"
 let started: Promise<void> | null = null
 
 /**
- * Initialises the SDK once (docs/reference/telegram.md § 8.3): mounts the components the app uses and tells
+ * Initialises the SDK once: mounts the components the app uses and tells
  * Telegram the page is ready. Does nothing outside Telegram. CSS variables are written by `TelegramBridge`.
  */
 export function initTelegram(): Promise<void> {

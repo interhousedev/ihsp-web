@@ -22,7 +22,7 @@ const CitationNavigationContext = createContext<CitationNavigation | null>(null)
 
 /**
  * Where a click on a citation chip goes. On a desktop it opens the source viewer at the passage; on a phone it opens
- * a bottom sheet with the quote and "Open in source" (docs/reference/notebooklm.md § 5.4.1). The workspace wraps its
+ * a bottom sheet with the quote and "Open in source". The workspace wraps its
  * panes in `CitationNavigationProvider`; outside of one the chip opens the source viewer directly.
  */
 export function useCitationNavigation(): CitationNavigation {

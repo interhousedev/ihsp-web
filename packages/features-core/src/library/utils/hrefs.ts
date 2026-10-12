@@ -1,6 +1,6 @@
 import { getConfig } from "@ihsp/config"
 
-// Routes of the library app (docs/reference/study-library.md § 9.1). The app is a static export, so entities are
+// Routes of the library app. The app is a static export, so entities are
 // addressed by query parameter (`/item/?id=`) and every path ends with a slash.
 
 function withQuery(path: string, params: Record<string, string | number | null | undefined>): string {

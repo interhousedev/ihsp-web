@@ -1,6 +1,6 @@
 import type { Annotation } from "@ihsp/api"
 
-// Locators of the reader (docs/reference/study-library.md § 3.8): `{ page }` for PDF and images, `{ cfi, progress }`
+// Locators of the reader: `{ page }` for PDF and images, `{ cfi, progress }`
 // for EPUB. They travel in annotations, in the progress calls and in the `?page=` / `?loc=` parameters of `/read/`.
 
 export type Locator = Annotation["locator"]

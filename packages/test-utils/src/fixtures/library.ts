@@ -1,4 +1,4 @@
-// Library fixtures (docs/reference/study-library.md; contract in packages/api/src/types/library.ts).
+// Library fixtures (contract in packages/api/src/types/library.ts).
 // Import from `@ihsp/test-utils`. The data is small and realistic (Uzbek, Russian and English). Ids are stable UUIDs
 // (`libIds`). The default acting user is the student "Aziza K., 2025" (`libActors.student`).
 //

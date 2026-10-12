@@ -7,7 +7,7 @@ import { ANNOTATION_COLORS, COLOR_ICONS, COLOR_TEXT } from "./lib/colors"
 
 /**
  * The four highlight colours as a radio group. Each one has its own shape as well as its colour, so the choice never
- * depends on colour vision (docs/reference/study-library.md § 9.4). Touch targets are 44 px on phones.
+ * depends on colour vision. Touch targets are 44 px on phones.
  */
 export function ColorPicker({
   value,

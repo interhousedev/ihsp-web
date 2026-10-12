@@ -11,7 +11,7 @@ export type ChatConfigDialogProps = {
 }
 
 /**
- * Configure chat (docs/reference/notebooklm.md § 5.4.3): style cards (Default, Learning guide, Custom with a text of
+ * Configure chat: style cards (Default, Learning guide, Custom with a text of
  * up to 1 000 characters), response length and answer language; **Save** patches `chat_config` of the notebook.
  */
 export function ChatConfigDialog({ notebook, open, onOpenChange }: ChatConfigDialogProps) {

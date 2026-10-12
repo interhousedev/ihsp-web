@@ -1,4 +1,4 @@
-// Library: catalogue, reader state, uploads and the librarian area (docs/reference/study-library.md §§ 7.1, 7.2).
+// Library: catalogue, reader state, uploads and the librarian area.
 // Routes marked *anon* in the document also work without a token for public items. Projects (§ 7.3) are not here.
 
 import { api } from "../client"

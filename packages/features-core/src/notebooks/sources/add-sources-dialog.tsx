@@ -25,7 +25,7 @@ export type AddSourcesDialogProps = {
 
 /**
  * Add sources: a dialog on desktop and a full-height drawer on phones, with tabs for My files, Chats, Lessons,
- * Flash cards, Courses, Text and Link (docs/reference/notebooklm.md § 5.4.2). The selection is kept across tabs and
+ * Flash cards, Courses, Text and Link. The selection is kept across tabs and
  * one request adds everything.
  */
 export function AddSourcesDialog({ notebookId, open, onOpenChange }: AddSourcesDialogProps) {

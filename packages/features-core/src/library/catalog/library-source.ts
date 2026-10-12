@@ -1,7 +1,7 @@
 import type { SourcesAddBody } from "@ihsp/api"
 
 /**
- * A library item as a notebook source (docs/reference/study-library.md § 3.11): `ref {item_id, file_id, page_from?,
+ * A library item as a notebook source: `ref {item_id, file_id, page_from?,
  * page_to?}`. The notebooks `SourceInput` type of `@ihsp/api` does not list this kind yet (the notebooks bridge on the
  * backend is a later phase), so the body is built here and cast once, at the single call site.
  */

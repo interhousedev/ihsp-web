@@ -18,7 +18,7 @@ import { ViewerEmpty } from "./viewer-empty"
 import type { ViewerProps } from "./viewer-props"
 
 /**
- * A quiz, one question per screen (docs/reference/notebooklm.md § 3.4.4): instant feedback for single choice and
+ * A quiz, one question per screen: instant feedback for single choice and
  * true/false, Check for multiple choice, hints, Explain through the notebook chat, results with a review, and
  * retries of all or only the wrong questions. Answers stay in the browser; the progress is saved with the artifact.
  */

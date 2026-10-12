@@ -44,6 +44,7 @@ export const courseWorkspaceDetail: NotebookDetail = {
   origin: "course",
   subject_id: null,
   lesson_id: null,
+  group_id: null,
   auto: null,
   chat_config: { style: "default", custom_prompt: null, length: "default", language: "auto" },
   summary: null,

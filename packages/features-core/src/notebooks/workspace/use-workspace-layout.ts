@@ -2,7 +2,7 @@
 
 import { useSyncExternalStore } from "react"
 
-/** `desktop`: three panes, `tablet`: chat plus side sheets, `phone`: three tabs (docs/reference/notebooklm.md § 5.4.1). */
+/** `desktop`: three panes, `tablet`: chat plus side sheets, `phone`: three tabs. */
 export type WorkspaceLayout = "desktop" | "tablet" | "phone"
 
 export const DESKTOP_MIN_WIDTH = 1280

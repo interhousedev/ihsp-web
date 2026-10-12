@@ -25,7 +25,7 @@ import type { getAdminModerationQueue, getAdminModerationSearch, getLessonResour
 import type { getLmsCourseBroadcasts, getLmsCourseCompare, getLmsCourseDraft, getLmsCoursePending, getLmsCoursePreviewStep, getLmsCourseStaff, getLmsCourseVersion, getLmsCourseVersions, getLmsCreators, getLmsStepDiff, getLmsStepDraft, getLmsStepHistory, patchLmsCourseBroadcast, patchLmsCourseSettings, patchLmsCourseStaff, postLmsCourseBroadcast, postLmsCourseDiscard, postLmsCourseDraftOutline, postLmsCourseInviteCode, postLmsCoursePublish, postLmsCourseStaff, postLmsCourseSteps, postLmsCourseVersionRestore, postLmsCourses, postLmsStepCheckpoints, postLmsStepDiscard, postLmsStepRestore, putLmsCourseDraftMeta, putLmsCreator, putLmsStepDraft } from "./endpoints/lms-authoring"
 import type { getLmsAttempt, getLmsCourse, getLmsCourseStep, getLmsCourseStudents, getLmsCourses, getLmsMyCourses, getLmsPreviewStepVideo, getLmsStepCardsNext, getLmsStepVideo, postLmsAttemptOverride, postLmsAttemptSubmit, postLmsCourseEnroll, postLmsJoin, postLmsStepBlockAttempts, postLmsStepCardReview, postLmsStepViewed, putLmsAttemptAnswers } from "./endpoints/lms-learning"
 import type { getAdminSyncRuns, getMeGrades, getMeGradesDay, getMeLessonResults, getMeRecordBook, getMeSubject, getMeSubjectLessons, getMeSubjects, postAdminSyncRun } from "./endpoints/marks"
-import type { getAdminSubjectMaterialGroups, getAdminSubjectMaterials, getArtifact, getArtifacts, getNotebook, getNotebookAutoSubject, getNotebookChat, getNotebookLabels, getNotebookSearch, getNotebookSource, getNotebookSources, getNotebookUsage, getNotebooks, getPassage, getSourcePassages, patchArtifact, patchNotebook, patchNotebookLabel, patchNotebookSource, postAdminSubjectMaterial, postArtifact, postArtifactAsSource, postArtifactAttachToLesson, postArtifactCancel, postArtifactFlashcardSet, postArtifactRetry, postArtifactSaveToFiles, postArtifactSlidesRevise, postNotebook, postNotebookAutoSubject, postNotebookDiscover, postNotebookLabel, postNotebookLabelsAuto, postNotebookMessage, postNotebookRegenerate, postNotebookSourceSync, postNotebookSources, postNotebookSourcesSelect, postSaveNote, putArtifactSlides, putNotebookSourceLabels } from "./endpoints/notebooks"
+import type { getAdminSubjectMaterialGroups, getAdminSubjectMaterials, getArtifact, getArtifacts, getNotebook, getNotebookAutoSubject, getNotebookChat, getNotebookLabels, getNotebookSearch, getNotebookSource, getNotebookSourceFileUrl, getNotebookSources, getNotebookSubjectSlots, getNotebookUsage, getNotebooks, getPassage, getSourcePassages, patchArtifact, patchNotebook, patchNotebookLabel, patchNotebookSource, postAdminSubjectMaterial, postArtifact, postArtifactAsSource, postArtifactAttachToLesson, postArtifactCancel, postArtifactFlashcardSet, postArtifactRetry, postArtifactSaveToFiles, postArtifactSlidesRevise, postNotebook, postNotebookAutoSubject, postNotebookDiscover, postNotebookLabel, postNotebookLabelsAuto, postNotebookMessage, postNotebookRegenerate, postNotebookSourceSync, postNotebookSources, postNotebookSourcesSelect, postSaveNote, putArtifactSlides, putNotebookSourceLabels } from "./endpoints/notebooks"
 import type { getNotifications, getNotificationsUnreadCount } from "./endpoints/notifications"
 import type { postOauthLogout, postOauthRefresh, postOauthTelegram, postOauthToken, postOauthTokenHook } from "./endpoints/oauth"
 import type { getPublicShare, postPublicReports } from "./endpoints/public"
@@ -1581,6 +1581,10 @@ export const response_postNotebook: ResponseOf<"/v1/notebooks", "post"> = res_po
 declare const req_postNotebook: NotebookCreateBody
 export const request_postNotebook: RequestOf<"/v1/notebooks", "post"> = req_postNotebook
 
+// GET /v1/notebooks/auto/subjects — getNotebookSubjectSlots
+declare const res_getNotebookSubjectSlots: Awaited<ReturnType<typeof getNotebookSubjectSlots>>
+export const response_getNotebookSubjectSlots: ResponseOf<"/v1/notebooks/auto/subjects", "get"> = res_getNotebookSubjectSlots
+
 // POST /v1/notebooks/auto/subject/{subject_id} — postNotebookAutoSubject
 declare const res_postNotebookAutoSubject: Awaited<ReturnType<typeof postNotebookAutoSubject>>
 export const response_postNotebookAutoSubject: ResponseOf<"/v1/notebooks/auto/subject/{subject_id}", "post"> = res_postNotebookAutoSubject
@@ -1620,6 +1624,12 @@ export const request_postNotebookSources: RequestOf<"/v1/notebooks/{notebook_id}
 // GET /v1/notebooks/{notebook_id}/sources/{source_id} — getNotebookSource
 declare const res_getNotebookSource: Awaited<ReturnType<typeof getNotebookSource>>
 export const response_getNotebookSource: ResponseOf<"/v1/notebooks/{notebook_id}/sources/{source_id}", "get"> = res_getNotebookSource
+
+// GET /v1/notebooks/{notebook_id}/sources/{source_id}/file-url — getNotebookSourceFileUrl
+declare const res_getNotebookSourceFileUrl: Awaited<ReturnType<typeof getNotebookSourceFileUrl>>
+export const response_getNotebookSourceFileUrl: ResponseOf<"/v1/notebooks/{notebook_id}/sources/{source_id}/file-url", "get"> = res_getNotebookSourceFileUrl
+declare const query_getNotebookSourceFileUrl: FileUrlParams
+export const query_ok_getNotebookSourceFileUrl: QueryOf<"/v1/notebooks/{notebook_id}/sources/{source_id}/file-url", "get"> = query_getNotebookSourceFileUrl
 
 // PATCH /v1/notebooks/{notebook_id}/sources/{source_id} — patchNotebookSource
 declare const res_patchNotebookSource: Awaited<ReturnType<typeof patchNotebookSource>>

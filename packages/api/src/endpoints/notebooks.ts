@@ -1,10 +1,11 @@
 // Notebooks (NotebookLM-style): notebooks, sources, grounded chat and Studio artifacts.
-// docs/reference/notebooklm.md § 4.3. Student only; a notebook of another user answers 404.
+// Student only; a notebook of another user answers 404.
 
 import { api } from "../client"
 import { keys } from "../keys"
 import { queryOptions, seg, type RequestOptions } from "../query"
 import type { NoContent, Page } from "../types/common"
+import type { FileUrlParams } from "../types/files"
 import type {
   AddSourcesResult,
   ArtifactCreate,
@@ -30,6 +31,7 @@ import type {
   NotebookPatchBody,
   NotebookTurn,
   NotebookUsage,
+  SubjectNotebookSlot,
   PassageDetail,
   PassageItem,
   PassageParams,
@@ -40,6 +42,7 @@ import type {
   SlidesPutBody,
   SlidesReviseBody,
   SourceDetail,
+  SourceFileUrl,
   AttachArtifactBody,
   AttachedResource,
   SourceItem,
@@ -75,9 +78,24 @@ export function postNotebook(body?: NotebookCreateBody, opts?: RequestOptions): 
   return api.post<NotebookDetail>("/v1/notebooks", body ?? {}, opts)
 }
 
-/** POST /v1/notebooks/auto/subject/{subject_id} — student; gets or creates the notebook of a subject. */
-export function postNotebookAutoSubject(subjectId: string, opts?: RequestOptions): Promise<NotebookDetail> {
-  return api.post<NotebookDetail>(`/v1/notebooks/auto/subject/${seg(subjectId)}`, undefined, opts)
+/** GET /v1/notebooks/auto/subjects — a slot per subject (teachers: subject and group); `notebook_id` is null until opened. */
+export function getNotebookSubjectSlots(opts?: RequestOptions): Promise<SubjectNotebookSlot[]> {
+  return api.get<SubjectNotebookSlot[]>("/v1/notebooks/auto/subjects", opts)
+}
+export const getNotebookSubjectSlotsQuery = () =>
+  queryOptions({
+    queryKey: ["notebooks", "auto", "subjects"] as const,
+    queryFn: ({ signal }) => getNotebookSubjectSlots({ signal }),
+  })
+
+/** POST /v1/notebooks/auto/subject/{subject_id} — gets or creates the notebook of a subject (teachers pass `group_id`). */
+export function postNotebookAutoSubject(
+  subjectId: string,
+  params?: { group_id?: string | null },
+  opts?: RequestOptions,
+): Promise<NotebookDetail> {
+  const query = params?.group_id ? { group_id: params.group_id } : undefined
+  return api.post<NotebookDetail>(`/v1/notebooks/auto/subject/${seg(subjectId)}`, undefined, { ...opts, query })
 }
 
 /** GET /v1/notebooks/auto/subject/{subject_id} — student; the notebook of a subject if it exists (404 otherwise). */
@@ -149,6 +167,27 @@ export const getNotebookSourceQuery = (id: string, sourceId: string) =>
   queryOptions({
     queryKey: keys.notebooks.source(id, sourceId),
     queryFn: ({ signal }) => getNotebookSource(id, sourceId, { signal }),
+  })
+
+/**
+ * GET /v1/notebooks/{id}/sources/{sid}/file-url?disposition=inline|attachment — a presigned URL of the uploaded file
+ * behind the source, valid for 60 seconds; access is the access to the notebook. `404` when the source has no file.
+ */
+export function getNotebookSourceFileUrl(
+  id: string,
+  sourceId: string,
+  params?: FileUrlParams,
+  opts?: RequestOptions,
+): Promise<SourceFileUrl> {
+  return api.get<SourceFileUrl>(`/v1/notebooks/${seg(id)}/sources/${seg(sourceId)}/file-url`, {
+    ...opts,
+    query: params,
+  })
+}
+export const getNotebookSourceFileUrlQuery = (id: string, sourceId: string, params?: FileUrlParams) =>
+  queryOptions({
+    queryKey: keys.notebooks.sourceFileUrl(id, sourceId, params?.disposition),
+    queryFn: ({ signal }) => getNotebookSourceFileUrl(id, sourceId, params, { signal }),
   })
 
 /** PATCH /v1/notebooks/{id}/sources/{sid} — rename, select, edit a note or pasted text. */

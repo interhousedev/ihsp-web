@@ -1,4 +1,4 @@
-// Server-sent events over `fetch`: the notebook chat streams its answer (docs/reference/notebooklm.md § 3.3.6).
+// Server-sent events over `fetch`: the notebook chat streams its answer.
 
 import type { NotebookStreamDone, NotebookStreamEvent } from "./types/notebooks"
 

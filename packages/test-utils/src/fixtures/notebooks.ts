@@ -1,5 +1,5 @@
 // Notebooks (NotebookLM-style): a ready notebook with three sources, a cited chat turn and one Studio artifact of
-// every P1/P2 kind (docs/reference/notebooklm.md § 5.5). Content is English and about photosynthesis.
+// every P1/P2 kind. Content is English and about photosynthesis.
 
 import type {
   ArtifactDetail,
@@ -11,6 +11,7 @@ import type {
   MindMapContent,
   NotebookDetail,
   NotebookItem,
+  SubjectNotebookSlot,
   NotebookMessage,
   NotebookTurn,
   NotebookUsage,
@@ -20,6 +21,7 @@ import type {
   ReportContent,
   SlidesContent,
   SourceDetail,
+  SourceFile,
   SourceGuide,
   SourceItem,
   DataTableContent,
@@ -28,6 +30,7 @@ import type {
 } from "@ihsp/api"
 import { webQuota, webResults } from "./ai"
 import { courseArtifactDetailOf } from "./course-workspace"
+import { fileItems } from "./files"
 import { FIXTURE_NOW, ids, uuid } from "./world"
 
 export const nbIds = {
@@ -259,6 +262,13 @@ export const sourceGuide: SourceGuide = {
   ],
 }
 
+/** The upload behind a `file` source or a file-based lesson material, from the files fixtures (`ref.file_id`). */
+export function sourceFileOf(source: SourceItem): SourceFile | null {
+  if (source.kind !== "file" && source.kind !== "lesson_resource") return null
+  const file = fileItems.find((item) => item.id === source.ref.file_id && item.status !== "deleted")
+  return file ? { id: file.id, name: file.name, content_type: file.content_type, byte_size: file.byte_size } : null
+}
+
 export function sourceDetailOf(source: SourceItem): SourceDetail {
   const editable = source.kind === "text" || source.kind === "note"
   return {
@@ -271,6 +281,7 @@ export function sourceDetailOf(source: SourceItem): SourceDetail {
       : null,
     editable,
     citations: [],
+    file: sourceFileOf(source),
   }
 }
 
@@ -289,6 +300,7 @@ export const notebookDetail: NotebookDetail = {
   origin: "manual",
   subject_id: null,
   lesson_id: null,
+  group_id: null,
   auto: null,
   chat_config: { style: "default", custom_prompt: null, length: "default", language: "auto" },
   summary: {
@@ -322,6 +334,7 @@ export const notebookPinnedDetail: NotebookDetail = {
   origin: "manual",
   subject_id: null,
   lesson_id: null,
+  group_id: null,
   auto: null,
   chat_config: { style: "learning_guide", custom_prompt: null, length: "shorter", language: "ru" },
   summary: null,
@@ -344,6 +357,7 @@ export const notebookEmptyDetail: NotebookDetail = {
   origin: "manual",
   subject_id: null,
   lesson_id: null,
+  group_id: null,
   auto: null,
   chat_config: { style: "default", custom_prompt: null, length: "default", language: "auto" },
   summary: null,
@@ -365,6 +379,7 @@ export function notebookItemOf(detail: NotebookDetail): NotebookItem {
     origin: detail.origin,
     subject_id: detail.subject_id,
     lesson_id: detail.lesson_id,
+    group_id: detail.group_id,
     course_id: detail.course_id,
     can_write: detail.can_write,
   }
@@ -1083,3 +1098,23 @@ export const labelCalvin: LabelItem = {
   origin: "auto",
   source_count: 1,
 }
+
+/** Subject slots: Physics has a notebook; Algebra does not yet (a placeholder card). */
+export const subjectSlots: SubjectNotebookSlot[] = [
+  {
+    subject_id: uuid(31, 1),
+    subject_name: "Physics",
+    group_id: null,
+    group_name: null,
+    notebook_id: nbIds.notebook,
+    source_count: 4,
+  },
+  {
+    subject_id: uuid(31, 2),
+    subject_name: "Algebra",
+    group_id: null,
+    group_name: null,
+    notebook_id: null,
+    source_count: 0,
+  },
+]

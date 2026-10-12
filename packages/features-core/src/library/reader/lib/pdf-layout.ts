@@ -1,7 +1,7 @@
 import type { PageFit } from "./reader-settings"
 
 // The geometry of the PDF reader: a document of hundreds of pages is a tall column of boxes, and only the boxes near the
-// window hold a canvas (docs/reference/study-library.md § 9.2: "render only visible pages for 100 MB PDFs").
+// window hold a canvas, so a 100 MB PDF renders only the visible pages.
 
 export type Size = { width: number; height: number }
 

@@ -4,7 +4,7 @@ import type { AnnotationColor } from "@ihsp/api"
 import { useCallback, useEffect, useState } from "react"
 import { isAnnotationColor } from "./colors"
 
-// Reader settings are remembered per device in `localStorage` (docs/reference/study-library.md § 3.8). The theme is not
+// Reader settings are remembered per device in `localStorage`. The theme is not
 // here: the reader follows the app's theme. Every read and write is in try/catch (private windows, blocked storage).
 
 export type PageFit = "width" | "page" | "custom"

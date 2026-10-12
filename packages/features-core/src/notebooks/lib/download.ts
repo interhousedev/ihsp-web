@@ -1,5 +1,5 @@
 // Browser-side downloads and clipboard. Some Telegram WebViews block blob downloads, so every Download in a viewer
-// also offers Copy (docs/reference/notebooklm.md § 5.6).
+// also offers Copy.
 
 /** Saves text as a file through a temporary link. */
 export function downloadText(filename: string, content: string, mime = "text/plain;charset=utf-8"): void {

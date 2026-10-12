@@ -64,9 +64,11 @@ import {
   notebookUsage,
   passagesOf,
   sourceDetailOf,
+  sourceFileOf,
   sourceStale,
   sourceFailed,
 } from "../fixtures/notebooks"
+import { TEST_STORAGE_URL } from "../fixtures/env"
 import { FIXTURE_NOW, uuid } from "../fixtures/world"
 import { apiUrl, matches, nextId, noContent, notFound, paginate, param, problem, query, readJson } from "./utils"
 import { spendWebSearch } from "./web-search"
@@ -659,6 +661,7 @@ export const notebooksHandlers = [
   }),
 
   // - - - Notebooks - - -
+  http.get(apiUrl("/v1/notebooks/auto/subjects"), () => HttpResponse.json([])),
   http.get(apiUrl("/v1/notebooks/usage"), () => HttpResponse.json(usageOf())),
   http.get(apiUrl("/v1/notebooks"), ({ request }) => {
     const q = query(request).get("q")
@@ -775,6 +778,16 @@ export const notebooksHandlers = [
     if (!entry) return notFound("Source")
     const detail = sourceDetailOf(entry.item)
     return HttpResponse.json({ ...detail, body_md: entry.body ?? detail.body_md })
+  }),
+  http.get(apiUrl("/v1/notebooks/:id/sources/:sid/file-url"), ({ params, request }) => {
+    const entry = find(param(params, "id"))?.sources.find((s) => s.item.id === param(params, "sid"))
+    const file = entry ? sourceFileOf(entry.item) : null
+    if (!file) return notFound("Source")
+    const disposition = query(request).get("disposition") ?? "attachment"
+    return HttpResponse.json({
+      url: `${TEST_STORAGE_URL}/files/${file.id}?disposition=${disposition}&signature=test`,
+      expires_at: "2026-10-07T05:13:00Z",
+    })
   }),
   http.patch(apiUrl("/v1/notebooks/:id/sources/:sid"), async ({ params, request }) => {
     const state = find(param(params, "id"))

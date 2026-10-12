@@ -197,6 +197,8 @@ export const keys = {
     courseSteps: (id: string) => ["notebooks", id, "course-steps"] as const,
     sources: (id: string) => ["notebooks", id, "sources"] as const,
     source: (id: string, sourceId: string) => ["notebooks", id, "sources", sourceId] as const,
+    sourceFileUrl: (id: string, sourceId: string, disposition?: string) =>
+      ["notebooks", id, "sources", sourceId, "file-url", disposition ?? null] as const,
     passages: (id: string, sourceId: string) => ["notebooks", id, "sources", sourceId, "passages"] as const,
     passage: (id: string, passageId: string, context?: number) =>
       ["notebooks", id, "passages", passageId, context ?? null] as const,

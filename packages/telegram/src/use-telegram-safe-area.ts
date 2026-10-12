@@ -11,7 +11,7 @@ const SIDES = ["top", "right", "bottom", "left"] as const
 /**
  * Inside Telegram: writes `--tg-safe-area-*` (device notches, Bot API 8.0) and `--tg-content-safe-area-*`
  * (Telegram's own header) in px on `<html>`. `@ihsp/ui` adds them to `env(safe-area-inset-*)` as `--safe-*`.
- * One source only: the SDK's own `bindCssVars` helpers are not used (docs/reference/telegram.md § 8.2).
+ * One source only: the SDK's own `bindCssVars` helpers are not used.
  */
 export function useTelegramSafeArea(): void {
   const safe = useSignal(viewport.safeAreaInsets) as Insets

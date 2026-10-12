@@ -33,7 +33,7 @@ export type SourcesPanelProps = {
 }
 
 /**
- * The Sources panel (docs/reference/notebooklm.md § 5.4.2): add button, the Discover box, select all, search, sync
+ * The Sources panel: add button, the Discover box, select all, search, sync
  * outdated, the list grouped by kind (or flat), source rows with their status, the empty drop zone and the "12 of 50
  * sources" footer. Discover results replace the list until they are added or closed; the title search filters it and
  * adds an "In the text" group. The Add sources dialog is rendered by the workspace (`openAddSources`).

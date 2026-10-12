@@ -5939,15 +5939,40 @@ export interface paths {
         };
         /**
          * Find Subject Notebook
-         * @description The student's notebook of a subject if it exists (404 otherwise); read-only.
+         * @description The user's notebook of a subject (and group) if it exists; read-only.
          */
         get: operations["find_subject_notebook_v1_notebooks_auto_subject__subject_id__get"];
         put?: never;
         /**
          * Open Subject Notebook
-         * @description Get or create the student's notebook of a subject (this term's materials).
+         * @description Get or create the user's notebook of a subject (this term's materials).
+         *
+         *     A teacher adds the `group_id` they teach the subject to; a student does not.
+         *     Safe to call twice at once: one notebook is made.
          */
         post: operations["open_subject_notebook_v1_notebooks_auto_subject__subject_id__post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/notebooks/auto/subjects": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * List Subject Slots
+         * @description A slot for every subject (teachers: subject and group) the user has.
+         *
+         *     `notebook_id` is null until the first open creates the notebook.
+         */
+        get: operations["list_subject_slots_v1_notebooks_auto_subjects_get"];
+        put?: never;
+        post?: never;
         delete?: never;
         options?: never;
         head?: never;
@@ -6692,7 +6717,7 @@ export interface paths {
         };
         /**
          * Get Source
-         * @description Return a source with its guide and, for a note, its text.
+         * @description Return a source with its guide, a note's text and an upload's file.
          */
         get: operations["get_source_v1_notebooks__notebook_id__sources__source_id__get"];
         put?: never;
@@ -6709,6 +6734,28 @@ export interface paths {
          * @description Rename a source, tick it or edit its text; keys that were not sent are kept.
          */
         patch: operations["update_source_v1_notebooks__notebook_id__sources__source_id__patch"];
+        trace?: never;
+    };
+    "/v1/notebooks/{notebook_id}/sources/{source_id}/file-url": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get Source File Url
+         * @description Presign a GET of the uploaded file; access is the access to the notebook.
+         *
+         *     Only PDFs and images may be shown inline; `404` when the source has no file.
+         */
+        get: operations["get_source_file_url_v1_notebooks__notebook_id__sources__source_id__file_url_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
         trace?: never;
     };
     "/v1/notebooks/{notebook_id}/sources/{source_id}/labels": {
@@ -13885,6 +13932,8 @@ export interface components {
             created_at: string;
             /** Emoji */
             emoji: string | null;
+            /** Group Id */
+            group_id: string | null;
             /**
              * Id
              * Format: uuid
@@ -13926,6 +13975,8 @@ export interface components {
             course_id: string | null;
             /** Emoji */
             emoji: string | null;
+            /** Group Id */
+            group_id: string | null;
             /**
              * Id
              * Format: uuid
@@ -16780,7 +16831,7 @@ export interface components {
         };
         /**
          * SourceDetailResponse
-         * @description `SourceDetail`: the item plus guide, text of a note and cited passages.
+         * @description `SourceDetail`: the item plus guide, text of a note, cited passages and file.
          */
         SourceDetailResponse: {
             /** Ai Unsupported */
@@ -16797,6 +16848,7 @@ export interface components {
             /** Editable */
             editable: boolean;
             failure: components["schemas"]["SourceFailure"] | null;
+            file?: components["schemas"]["SourceFileResponse"] | null;
             guide: components["schemas"]["SourceGuide"] | null;
             /** Has Guide */
             has_guide: boolean;
@@ -16845,6 +16897,36 @@ export interface components {
          * @enum {string}
          */
         SourceFailure: "unsupported_type" | "no_text" | "too_large" | "fetch_failed" | "forbidden" | "deleted" | "provider_error";
+        /**
+         * SourceFileResponse
+         * @description `SourceFile`: the uploaded file behind a source (preview and download).
+         */
+        SourceFileResponse: {
+            /** Byte Size */
+            byte_size: number;
+            /** Content Type */
+            content_type: string;
+            /**
+             * Id
+             * Format: uuid
+             */
+            id: string;
+            /** Name */
+            name: string;
+        };
+        /**
+         * SourceFileUrlResponse
+         * @description `SourceFileUrl`: a presigned URL of the file behind a source (60 seconds).
+         */
+        SourceFileUrlResponse: {
+            /**
+             * Expires At
+             * Format: date-time
+             */
+            expires_at: string;
+            /** Url */
+            url: string;
+        };
         /**
          * SourceGuide
          * @description `sources.guide` (§ 3.2.5).
@@ -17715,6 +17797,27 @@ export interface components {
              * @default
              */
             uz: string;
+        };
+        /**
+         * SubjectNotebookSlotResponse
+         * @description `SubjectNotebookSlot`: a subject (and group) with its notebook, if made yet.
+         */
+        SubjectNotebookSlotResponse: {
+            /** Group Id */
+            group_id: string | null;
+            /** Group Name */
+            group_name: string | null;
+            /** Notebook Id */
+            notebook_id: string | null;
+            /** Source Count */
+            source_count: number;
+            /**
+             * Subject Id
+             * Format: uuid
+             */
+            subject_id: string;
+            /** Subject Name */
+            subject_name: string;
         };
         /**
          * SubjectPatchBody
@@ -32335,7 +32438,9 @@ export interface operations {
     };
     find_subject_notebook_v1_notebooks_auto_subject__subject_id__get: {
         parameters: {
-            query?: never;
+            query?: {
+                group_id?: string | null;
+            };
             header?: never;
             path: {
                 subject_id: string;
@@ -32366,7 +32471,9 @@ export interface operations {
     };
     open_subject_notebook_v1_notebooks_auto_subject__subject_id__post: {
         parameters: {
-            query?: never;
+            query?: {
+                group_id?: string | null;
+            };
             header?: never;
             path: {
                 subject_id: string;
@@ -32391,6 +32498,26 @@ export interface operations {
                 };
                 content: {
                     "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    list_subject_slots_v1_notebooks_auto_subjects_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["SubjectNotebookSlotResponse"][];
                 };
             };
         };
@@ -33900,6 +34027,40 @@ export interface operations {
                 };
                 content: {
                     "application/json": components["schemas"]["SourceItemResponse"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    get_source_file_url_v1_notebooks__notebook_id__sources__source_id__file_url_get: {
+        parameters: {
+            query?: {
+                disposition?: ("inline" | "attachment") | null;
+            };
+            header?: never;
+            path: {
+                notebook_id: string;
+                source_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["SourceFileUrlResponse"];
                 };
             };
             /** @description Validation Error */

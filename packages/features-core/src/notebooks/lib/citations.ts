@@ -1,5 +1,5 @@
-// Citations in text: the server turns `[[S1:P4]]` model markers into numbered `⟦1⟧` or `⟦1,2⟧` markers
-// (docs/reference/notebooklm.md § 3.3.5); chat answers and reports are rendered from those. Web search results are
+// Citations in text: the server turns `[[S1:P4]]` model markers into numbered `⟦1⟧` or `⟦1,2⟧` markers;
+// chat answers and reports are rendered from those. Web search results are
 // cited as `⟦w1⟧` or `⟦w1,3⟧` (backend/app/shared/web_citations.py): `⟦w`, numbers separated by commas, `⟧`.
 
 import type { WebResult } from "@ihsp/api"

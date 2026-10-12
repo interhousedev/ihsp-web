@@ -1,5 +1,5 @@
 /**
- * Notebooks (NB-1 to NB-20, WEB-31 to WEB-36), docs/reference/notebooklm.md § 6.3 E2E: a notebook is built from pasted
+ * Notebooks (NB-1 to NB-20, WEB-31 to WEB-36) E2E: a notebook is built from pasted
  * text, chat answers carry citation chips that open the source at the passage, Studio makes a conspect, a quiz, flash
  * cards and a mind map, a phone gets tabs and a citation sheet, and the daily quota disables the tiles.
  * The backend runs with `OPENROUTER__MODE=fake`: a chat answer is `(fake) <first 100 characters of S1:P1> [[S1:P1]]`

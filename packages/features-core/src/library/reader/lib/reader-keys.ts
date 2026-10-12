@@ -1,4 +1,4 @@
-// Keyboard shortcuts of the reader (docs/reference/study-library.md §§ 3.8 and 9.4): arrows and page keys, `/` search in
+// Keyboard shortcuts of the reader: arrows and page keys, `/` search in
 // the item, `g` go to page, `h` highlight, `n` note, `b` bookmark, `+` and `-` zoom, `Esc` closes panels.
 
 export type ReaderKeyAction =

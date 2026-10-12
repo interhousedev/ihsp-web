@@ -1,5 +1,5 @@
 // Uzbek has two scripts. The backend stores a `search_text` of Uzbek items in one Latin form and normalises the query
-// the same way (`uz_translit` in `backend/app/shared/text.py`, docs/reference/study-library.md §§ 3.7 and 11.1). The
+// the same way (`uz_translit` in `backend/app/shared/text.py`). The
 // reader normalises the typed query and the page text the same way for "search in this item", so "ўзбек" finds
 // "oʻzbek", "o'zbek" and "O‘ZBEK" on a page. Keep this file in step with the Python function (the tests share its vectors).
 
