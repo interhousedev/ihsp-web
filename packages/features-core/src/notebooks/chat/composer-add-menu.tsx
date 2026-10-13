@@ -70,7 +70,7 @@ export function ComposerAddMenu({ notebook, disabled, onAttach, onDetach, onErro
         >
           <IconPlus aria-hidden />
         </DropdownMenuTrigger>
-        <DropdownMenuContent align="start" className="w-56">
+        <DropdownMenuContent side="top" align="start" className="w-56">
           {canUpload ? (
             <DropdownMenuItem className={itemClass} onClick={() => fileRef.current?.click()}>
               <IconUpload aria-hidden />
