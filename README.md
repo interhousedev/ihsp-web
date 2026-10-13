@@ -59,7 +59,7 @@ cd apps/sp && bun run dev    # a single app
 
 The apps call the API on `http://localhost:8000` and Hydra on `http://localhost:4444` directly. Start the backend from the `iht-backend` checkout: `scripts/dev.sh all` (plus `worker`, `scheduler` and `bot` in other terminals), then once `uv run python scripts/hydra_bootstrap.py` and `uv run python -m app seed-demo`. Login codes arrive in Mailpit at `http://localhost:8025`.
 
-To run the whole product in Docker instead, use `scripts/local_up.sh` in iht-backend. It builds the apps of this repository on the host, one at a time, and packs them with `deploy/Dockerfile.prebuilt`. It finds this repository at `../iht-web` or at `IHSP_WEB_DIR`. Then open `http://sp.localhost/`.
+To run the whole product in Docker instead, use `scripts/local_up.sh` in iht-backend. It builds the apps of this repository on the host, one at a time, and packs them with `deploy/Dockerfile.prebuilt`. It finds this repository at `../iht-web` or at `IHSP_WEB_DIR`. Then open `http://my.localhost/`.
 
 Demo logins (local stack only): `abdullayev.alisher` / `StudentDemo1`, `usmonov.bobur` / `TeacherDemo1`, `admin.ihsp` / `AdminDemo1` (needs a one-time code from Mailpit), `tursunov.sardor` / `LibrarianDemo1`.
 

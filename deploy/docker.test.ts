@@ -540,7 +540,7 @@ describe.skipIf(!haveTools)("entrypoint.sh rendering", () => {
     expect(run.exists("nginx", "conf.d", "default.conf")).toBe(true)
     expect(run.exists("nginx", "conf.d", "stale.conf")).toBe(false)
     expect(run.conf("sp.conf")).toContain("listen 8080;")
-    expect(run.conf("sp.conf")).toContain("server_name sp.localhost;")
+    expect(run.conf("sp.conf")).toContain("server_name my.localhost;")
     expect(run.conf("app.conf")).toContain("listen 8080;")
     expect(run.conf("app.conf")).toContain("server_name app.localhost;")
     expect(run.conf("library.conf")).toContain("listen 8080;")
@@ -696,10 +696,16 @@ describe.skipIf(!haveTools)("entrypoint.sh rendering", () => {
     expect(shared).toContain("worker-src 'self';")
   })
 
+  it("falls back to the deprecated APP_HOST_SP for the student app host", () => {
+    const run = runEntrypoint({ APP_HOST_SP: "sp.example.test" })
+    expect(run.exitCode).toBe(0)
+    expect(run.conf("sp.conf")).toContain("server_name sp.example.test;")
+  })
+
   it("renders host names, upstreams and env.js values from the environment", () => {
     const run = runEntrypoint({
       APP_ENV: "dev",
-      APP_HOST_SP: "sp.example.test",
+      APP_HOST_MY: "my.example.test",
       API_HOST: "api.example.test",
       IDENTITY_UPSTREAM: "identity.test:8001",
       API_UPSTREAM: "api.test:8000",
@@ -707,7 +713,7 @@ describe.skipIf(!haveTools)("entrypoint.sh rendering", () => {
       IHSP_WEB_API_URL: "http://api.example.test",
     })
     expect(run.exitCode).toBe(0)
-    expect(run.conf("sp.conf")).toContain("server_name sp.example.test;")
+    expect(run.conf("sp.conf")).toContain("server_name my.example.test;")
     expect(run.conf("api.conf")).toContain("server_name api.example.test;")
     expect(run.snippet("proxy-identity.conf")).toContain("proxy_pass http://identity.test:8001;")
     expect(run.snippet("proxy-backend.conf")).toContain("proxy_pass http://backend.test:9000;")

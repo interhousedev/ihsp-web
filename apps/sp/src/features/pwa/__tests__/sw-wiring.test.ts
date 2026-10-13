@@ -8,7 +8,7 @@ import { SW_EVENT, SW_MESSAGE } from "../utils/sw-messages"
 
 const ORIGIN = "https://app.ihsu.test"
 const API = "https://api.ihsu.test"
-const PORTAL = "https://sp.ihsu.test"
+const PORTAL = "https://my.ihsu.test"
 
 // - - - A Cache API in memory - - -
 

@@ -21,7 +21,8 @@
 #
 # SITE HOSTNAMES:
 #   APP_HOST_ID          - ID/OAuth service host (default: id.localhost)
-#   APP_HOST_SP          - Student portal host (default: sp.localhost)
+#   APP_HOST_MY          - Student app (my.iht) host (default: my.localhost)
+#   APP_HOST_SP          - Deprecated alias of APP_HOST_MY, used only when APP_HOST_MY is unset
 #   APP_HOST_APP         - Installable PWA host: the sp build with its own env.js (default: app.localhost)
 #   APP_HOST_STAFF       - Staff portal host (default: staff.localhost)
 #   APP_HOST_ADMIN       - Admin platform host (default: admin.localhost)
@@ -98,7 +99,7 @@ default() {
 default APP_ENV prod
 default LISTEN_PORT 8080
 default APP_HOST_ID id.localhost
-default APP_HOST_SP sp.localhost
+default APP_HOST_MY "${APP_HOST_SP:-my.localhost}"
 default APP_HOST_APP app.localhost
 default APP_HOST_STAFF staff.localhost
 default APP_HOST_ADMIN admin.localhost
@@ -149,7 +150,7 @@ fi
 # shellcheck disable=SC2016
 ENV_JS_VARS='${APP_ENV} ${APP_MODE} ${IHSP_WEB_API_URL} ${IHSP_WEB_ID_URL} ${IHSP_WEB_HYDRA_URL} ${IHSP_WEB_SP_URL} ${IHSP_WEB_APP_URL} ${IHSP_WEB_STAFF_URL} ${IHSP_WEB_ADMIN_URL} ${IHSP_WEB_LMS_URL} ${IHSP_WEB_LIBRARY_URL} ${IHSP_WEB_SHARE_URL} ${IHSP_WEB_SHORT_LINKS_URL} ${IHSP_WEB_ROOMS_URL} ${IHSP_WEB_MCP_URL} ${IHSP_BOT_USERNAME} ${OAUTH_CLIENT_ID} ${IHSP_STORAGE_ORIGIN}'
 # shellcheck disable=SC2016
-NGINX_VARS='${LISTEN_PORT} ${APP_HOST_ID} ${APP_HOST_SP} ${APP_HOST_APP} ${APP_HOST_STAFF} ${APP_HOST_ADMIN} ${APP_HOST_LMS} ${APP_HOST_LIBRARY} ${APP_HOST_SHARE} ${API_HOST} ${MCP_HOST} ${ROOT_HOST} ${HYDRA_UPSTREAM} ${IDENTITY_UPSTREAM} ${API_UPSTREAM} ${BOT_UPSTREAM} ${BACKEND_UPSTREAM} ${CSP_CONNECT_SRC} ${CSP_IMG_SRC} ${IHSP_STORAGE_ORIGIN} ${IHSP_WEB_SP_URL}'
+NGINX_VARS='${LISTEN_PORT} ${APP_HOST_ID} ${APP_HOST_MY} ${APP_HOST_APP} ${APP_HOST_STAFF} ${APP_HOST_ADMIN} ${APP_HOST_LMS} ${APP_HOST_LIBRARY} ${APP_HOST_SHARE} ${API_HOST} ${MCP_HOST} ${ROOT_HOST} ${HYDRA_UPSTREAM} ${IDENTITY_UPSTREAM} ${API_UPSTREAM} ${BOT_UPSTREAM} ${BACKEND_UPSTREAM} ${CSP_CONNECT_SRC} ${CSP_IMG_SRC} ${IHSP_STORAGE_ORIGIN} ${IHSP_WEB_SP_URL}'
 
 # app_mode APP: "pwa" for an app listed in PWA_APPS that can be installed on its own host, "sp" otherwise
 PWA_APPS="${PWA_APPS:-}"
