@@ -4,7 +4,8 @@
   "private": true,
   "scripts": {
     "dev": "next dev -p 3003",
-    "build": "bun run build:sw && next build",
+    "build": "bun run copy:pdfjs && bun run build:sw && next build",
+    "copy:pdfjs": "bun ../library/scripts/copy-pdfjs.mjs .",
     "build:sw": "bun build ../../packages/features-core/src/pwa/sw/generic.ts --outfile public/sw.js --target browser --minify",
     "typecheck": "tsc --noEmit",
     "test": "bun test --timeout 30000 --preload ../../packages/test-utils/src/preload.ts"

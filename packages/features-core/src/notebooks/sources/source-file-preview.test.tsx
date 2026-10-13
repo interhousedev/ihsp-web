@@ -87,6 +87,22 @@ describe("SourceFilePreview", () => {
     expect(within(region).getByRole("button", { name: "Open full preview" })).toBeTruthy()
   })
 
+  it("shows a PDF source in the browser's viewer, fit to width, from the presigned inline URL", async () => {
+    renderWithFile({ ...sheet, id: "f-pdf", name: "lab-report.pdf", content_type: "application/pdf" })
+
+    const region = await waitFor(() => preview())
+    const frame = await waitFor(() => {
+      const found = region.querySelector("iframe")
+      expect(found).not.toBeNull()
+      return found as HTMLIFrameElement
+    })
+    expect(frame.getAttribute("title")).toBe("lab-report.pdf")
+    expect(frame.getAttribute("src")).toBe(
+      "http://localhost:9000/files/f-pdf?disposition=inline&signature=test#view=FitH",
+    )
+    expect(within(region).queryByText(/cannot show PDFs/)).toBeNull()
+  })
+
   it("shows a spreadsheet as a file card with name, size and type, and only Download", async () => {
     renderWithFile(sheet)
 

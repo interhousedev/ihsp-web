@@ -3,9 +3,13 @@
 import type { SourceFile } from "@ihsp/api"
 import { useT } from "@ihsp/i18n"
 import { Dialog, DialogContent, DialogDescription, DialogTitle } from "@ihsp/ui"
+import { SourcePdfView } from "./source-pdf-view"
 import type { PreviewKind } from "./source-file-preview"
 
 export type SourceFileDialogProps = {
+  /** Set for a notebook source (its PDF link is renewed through the notebook API). */
+  notebookId?: string
+  sourceId?: string
   kind: PreviewKind
   file: SourceFile
   url: string
@@ -14,10 +18,10 @@ export type SourceFileDialogProps = {
 }
 
 /**
- * The full preview of an uploaded source: a lightbox for an image, the PDF in the browser's own viewer, a video
+ * The full preview of an uploaded source: a lightbox for an image, the PDF (browser viewer, or its first page where there is none), a video
  * or audio player. Loaded lazily by `SourceFilePreview` when it is opened the first time.
  */
-export function SourceFileDialog({ kind, file, url, open, onOpenChange }: SourceFileDialogProps) {
+export function SourceFileDialog({ notebookId, sourceId, kind, file, url, open, onOpenChange }: SourceFileDialogProps) {
   const t = useT("notebooks")
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
@@ -28,9 +32,7 @@ export function SourceFileDialog({ kind, file, url, open, onOpenChange }: Source
           {kind === "image" ? (
             <img src={url} alt={file.name} className="max-h-full max-w-full object-contain" />
           ) : kind === "pdf" ? (
-            <object data={url} type="application/pdf" aria-label={file.name} className="size-full bg-white">
-              <p className="text-muted-foreground p-4 text-center text-sm">{t("viewer.filePreview.pdfFallback")}</p>
-            </object>
+            <SourcePdfView notebookId={notebookId} sourceId={sourceId} name={file.name} url={url} size="full" />
           ) : kind === "video" ? (
             <video src={url} controls autoPlay preload="metadata" className="max-h-full w-full bg-black">
               <track kind="captions" />

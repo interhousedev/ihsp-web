@@ -8,6 +8,7 @@ import { useQuery } from "@tanstack/react-query"
 import { Suspense, lazy, useId, useState } from "react"
 import { fileKindOf, type FileKind } from "../../file-upload-button/drive-picker/file-kind"
 import { FileKindIcon } from "../../file-upload-button/drive-picker/file-visual"
+import { SourcePdfView } from "./source-pdf-view"
 import { useFormatBytes } from "./use-format-bytes"
 
 // The full-size viewer (lightbox, PDF frame, player) is loaded only when it is opened.
@@ -75,7 +76,14 @@ export function SourceFilePreview({ notebookId, sourceId, file }: SourceFilePrev
         {viewable && !inlineUrl ? (
           <Skeleton className={cn("w-full", kind === "audio" ? "h-14" : "h-48")} />
         ) : (
-          <PreviewWindow kind={kind} file={file} url={inlineUrl} onZoom={() => setOpen(true)} />
+          <PreviewWindow
+            notebookId={notebookId}
+            sourceId={sourceId}
+            kind={kind}
+            file={file}
+            url={inlineUrl}
+            onZoom={() => setOpen(true)}
+          />
         )}
       </div>
       {kind === "card" ? null : (
@@ -110,7 +118,15 @@ export function SourceFilePreview({ notebookId, sourceId, file }: SourceFilePrev
       </div>
       {open && inlineUrl ? (
         <Suspense fallback={null}>
-          <SourceFileDialog kind={kind} file={file} url={inlineUrl} open={open} onOpenChange={setOpen} />
+          <SourceFileDialog
+            notebookId={notebookId}
+            sourceId={sourceId}
+            kind={kind}
+            file={file}
+            url={inlineUrl}
+            open={open}
+            onOpenChange={setOpen}
+          />
         </Suspense>
       ) : null}
     </section>
@@ -118,11 +134,15 @@ export function SourceFilePreview({ notebookId, sourceId, file }: SourceFilePrev
 }
 
 function PreviewWindow({
+  notebookId,
+  sourceId,
   kind,
   file,
   url,
   onZoom,
 }: {
+  notebookId: string
+  sourceId: string
   kind: PreviewKind
   file: SourceFile
   url: string | null
@@ -143,11 +163,7 @@ function PreviewWindow({
         </button>
       )
     case "pdf":
-      return (
-        <object data={url} type="application/pdf" aria-label={file.name} className="h-[40vh] w-full bg-white">
-          <p className="text-muted-foreground p-4 text-center text-sm">{t("viewer.filePreview.pdfFallback")}</p>
-        </object>
-      )
+      return <SourcePdfView notebookId={notebookId} sourceId={sourceId} name={file.name} url={url} size="compact" />
     case "video":
       return (
         <video src={url} controls preload="metadata" className="max-h-[40vh] w-full bg-black">
