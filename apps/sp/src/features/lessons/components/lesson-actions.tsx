@@ -6,7 +6,7 @@ import { Button, Icons } from "@ihsp/ui"
 import Link from "next/link"
 import { useOpenSubjectNotebook } from "../../subjects/hooks/use-subject-hub"
 
-/** Links the lesson to its subject hub and opens the subject notebook chat with this lesson in focus. */
+/** Links the lesson to its subject hub and opens the subject notebook chat with this lesson attached as a chip. */
 export function LessonActions({ lesson }: { lesson: LessonItem }) {
   const t = useT("lesson")
   const th = useT("subjects.hub")
@@ -31,10 +31,7 @@ export function LessonActions({ lesson }: { lesson: LessonItem }) {
           onClick={() =>
             open.mutate({
               lessonId: lesson.id,
-              question: th("question", {
-                date: f.date(lesson.date, { day: "numeric", month: "long" }),
-                topic: lesson.topic ?? th("noTopic"),
-              }),
+              label: `${f.date(lesson.date, { day: "numeric", month: "long" })} · ${lesson.topic ?? th("noTopic")}`,
             })
           }
         >

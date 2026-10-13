@@ -1,4 +1,5 @@
-import type { StaffGroupMaterial, StaffSubject } from "@ihsp/api"
+import type { StaffGroupMaterial, StaffSubject, TeachingLesson, TeachingStudent } from "@ihsp/api"
+import { groupStudents } from "./schedule"
 import { ids, uuid } from "./world"
 
 /** Ids of the teacher's own subject materials; kind 71 is free in `uuid`. */
@@ -56,4 +57,76 @@ export const staffMineMaterial = {
   library_item_id: null,
   position: 1,
   created_at: "2026-09-09T08:00:00Z",
+}
+
+/** The lessons of a subject group in the teacher's timetable: one this week, one next week. */
+export function teachingLessons(groupName: string): TeachingLesson[] {
+  return [
+    {
+      id: uuid(72, 1),
+      date: "2026-10-08",
+      period: 2,
+      starts_at: "2026-10-08T04:30:00Z",
+      ends_at: "2026-10-08T05:50:00Z",
+      room_name: "204",
+      group_names: [groupName],
+      status: "scheduled",
+      topic: "Quadratic equations",
+      homework_text: "Ex. 4-7",
+      homework_due_date: null,
+    },
+    {
+      id: uuid(72, 2),
+      date: "2026-10-15",
+      period: 3,
+      starts_at: "2026-10-15T06:00:00Z",
+      ends_at: "2026-10-15T07:20:00Z",
+      room_name: "204",
+      group_names: [groupName],
+      status: "scheduled",
+      topic: null,
+      homework_text: null,
+      homework_due_date: null,
+    },
+  ]
+}
+
+/** The students of 2TN2 as the subject group pages list them. */
+export const teachingRoster = groupStudents.map(({ user_id, first_name, last_name, subgroup }) => ({
+  user_id,
+  first_name,
+  last_name,
+  subgroup,
+}))
+
+/** A student's record in a subject: three marks (average 4.33), one homework done, one absence. */
+export function teachingStudentRecord(subject: StaffSubject, student: TeachingStudent["student"]): TeachingStudent {
+  return {
+    subject_id: subject.subject_id,
+    subject_name: subject.name,
+    group_id: ids.group2TN2,
+    group_name: "2TN2",
+    student,
+    semester: 4,
+    marks: [
+      { semester: 4, type: "lesson", value: 5, date: "2026-10-06", lesson_id: null },
+      { semester: 4, type: "lesson", value: 4, date: "2026-10-01", lesson_id: null },
+      { semester: 4, type: "midterm", value: 4, date: "2026-09-25", lesson_id: null },
+    ],
+    average: 4.33,
+    semester_mark: null,
+    homework: [
+      {
+        lesson_id: uuid(72, 1),
+        date: "2026-10-06",
+        due_date: "2026-10-08",
+        text: "Ex. 4-7",
+        done_at: "2026-10-07T04:00:00Z",
+        note: "Photos uploaded to Drive",
+      },
+    ],
+    absences: 1,
+    lessons_with_attendance: 12,
+    absent_lessons: [{ lesson_id: uuid(72, 3), date: "2026-09-30", excused: false }],
+  }
 }

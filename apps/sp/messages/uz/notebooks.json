@@ -243,7 +243,9 @@
         "size": "Hajmi",
         "type": "Turi",
         "unsupported": "Brauzer bu faylni ijro eta olmaydi.",
-        "pdfFallback": "Brauzer PDF faylni bu yerda koʻrsata olmaydi. Toʻliq koʻrishni oching yoki faylni yuklab oling."
+        "pdfFallback": "Brauzer PDF faylni bu yerda koʻrsata olmaydi. Toʻliq koʻrishni oching yoki faylni yuklab oling.",
+        "pdfFirstPage": "{count} sahifadan 1-sahifa",
+        "pdfOpenTab": "PDF faylni yangi varaqda ochish"
       }
     },
     "note": {
@@ -948,6 +950,42 @@
       "addToFiles": "Fayllarimga qoʻshish",
       "savedToFiles": "«Fayllarim»ga saqlandi: {name}",
       "linkCopied": "Havola nusxalandi"
+    },
+    "attach": {
+      "chips": "Savolga biriktirilgan",
+      "remove": "{label} ni olib tashlash",
+      "menu": "Savolga qo‘shish",
+      "upload": "Fayllarni yuklash",
+      "lesson": "Dars qo‘shish",
+      "materials": "Materiallarni qidirish",
+      "search": "Qidirish",
+      "empty": "Hech narsa topilmadi",
+      "noTopic": "Mavzu hali yo‘q",
+      "uploadFailed": "{name} yuklanmadi"
+    },
+    "plan": {
+      "card": "{title} · {count} ta slayddan iborat reja",
+      "open": "Rejani ochish",
+      "title": "Taqdimot rejasi",
+      "description": "Taqdimot yaratilishidan oldin slaydlarni tekshiring. Sarlavha va bandlarni tahrirlang, slaydlarni oʻchiring yoki joyini almashtiring, soʻng «Yaratish»ni bosing.",
+      "deckTitle": "Taqdimot nomi",
+      "slideTitle": "{n}-slayd sarlavhasi",
+      "bullet": "{slide}-slaydning {n}-bandi",
+      "addBullet": "Band qoʻshish",
+      "removeBullet": "Bandni oʻchirish",
+      "moveUp": "{n}-slaydni yuqoriga surish",
+      "moveDown": "{n}-slaydni pastga surish",
+      "remove": "{n}-slaydni oʻchirish",
+      "generate": "Yaratish",
+      "save": "Saqlash",
+      "saved": "Saqlandi",
+      "making": "Reja tuzilmoqda…",
+      "makePlan": "Slaydlar rejasini tuzish",
+      "overLimit": "Rejada {count} ta slayd bor, taqdimotda esa koʻpi bilan {max} ta boʻlishi mumkin. Yaratishdan oldin slaydlarni oʻchiring yoki rejani qisqartiring.",
+      "trim": "{max} ta slaydgacha qisqartirish",
+      "tooFew": "Taqdimotda kamida 3 ta slayd boʻlishi kerak.",
+      "confirmed": "Bu reja asosida slaydlar yaratilmoqda.",
+      "generating": "Taqdimot yaratilmoqda. U Studioʻda paydo boʻladi."
     }
   },
   "errors": {
@@ -967,7 +1005,9 @@
       "artifact-limit": "Daftarda materiallar juda koʻp. Avval ortiqchalarini oʻchiring.",
       "artifact-not-ready": "Bu material hali tayyor emas.",
       "invalid-options": "Bu parametrlar ushbu material uchun mos emas.",
-      "feature-disabled": "Bu funksiya oʻchirilgan."
+      "feature-disabled": "Bu funksiya oʻchirilgan.",
+      "plan-too-long": "Rejada {count} ta slayd bor, taqdimotda esa koʻpi bilan {max} ta boʻlishi mumkin. Avval slaydlarni oʻchiring yoki birlashtiring.",
+      "plan-confirmed": "Bu reja asosida slaydlar allaqachon yaratilgan."
     }
   }
 }

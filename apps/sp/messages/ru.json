@@ -261,6 +261,7 @@
     "now": "Сейчас",
     "cancelled": "Отменено",
     "subgroup": "Подгруппа {number}",
+    "otherSubgroup": "Другая подгруппа ({name})",
     "subgroupHint": "Ваша подгруппа ещё не указана, поэтому показаны уроки обеих подгрупп.",
     "noLessons": "В этот день уроков нет.",
     "noLessonsWeek": "На этой неделе уроков нет.",
@@ -345,7 +346,6 @@
       "showMore": "Показать ещё",
       "noTopic": "Темы пока нет",
       "askAi": "Спросить ИИ об этом уроке",
-      "question": "Расскажи про урок {date}: {topic}",
       "materials": "{count, plural, one {# материал} few {# материала} other {# материалов}}",
       "kind": {
         "lecture": "Лекция",
@@ -386,6 +386,8 @@
     "resources": {
       "open": "Открыть",
       "openItem": "Открыть: {title}",
+      "preview": "Просмотр",
+      "previewItem": "Просмотреть {title}",
       "deleteItem": "Удалить: {title}"
     },
     "attach": {

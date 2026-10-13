@@ -19,12 +19,12 @@
       "text": "Uni bosh ekrandan oching."
     },
     "ios": {
-      "title": "iPhone yoki iPad’ga oʻrnatish",
+      "title": "iPhone yoki iPadʼga oʻrnatish",
       "step1": "Brauzer panelidagi «Ulashish» tugmasini bosing",
       "step2": "Pastga aylantiring va «Bosh ekranga qoʻshish» ni bosing",
       "step3": "«Qoʻshish» ni bosing. My IHT bosh ekranda paydo boʻladi.",
-      "openInSafari": "Bu brauzer ilovani bosh ekranga qoʻsha olmaydi. Sahifani Safari’da oching va qayta urinib koʻring.",
-      "pushNote": "iPhone’da bildirishnomalar faqat ilova oʻrnatilgandan keyin ishlaydi."
+      "openInSafari": "Bu brauzer ilovani bosh ekranga qoʻsha olmaydi. Sahifani Safariʼda oching va qayta urinib koʻring.",
+      "pushNote": "iPhoneʼda bildirishnomalar faqat ilova oʻrnatilgandan keyin ishlaydi."
     },
     "android": {
       "manual": {
@@ -41,7 +41,7 @@
       "address": "Yoki telefonda {url} manzilini oching."
     },
     "telegram": {
-      "open": "Telegram’da ochish",
+      "open": "Telegramʼda ochish",
       "hint": "Telegram qulayroqmi? My IHT mini-ilovasi u yerda oʻrnatmasdan ishlaydi."
     },
     "continue": "Brauzerda davom etish",

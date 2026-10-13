@@ -1,12 +1,14 @@
 "use client"
 
-import type { ArtifactCreate } from "@ihsp/api"
+import type { ArtifactCreate, PlanCreateBody, PresentationPlan } from "@ihsp/api"
 import { useT } from "@ihsp/i18n"
 import { Button, Spinner } from "@ihsp/ui"
 import { IconSparkles } from "@ihsp/ui"
 import { useId, useState } from "react"
 import { useCreateArtifact } from "../api"
 import { artifactKindKey, useNotebookErrorMessage } from "../lib"
+import { PlanCard } from "../plans/plan-card"
+import { useCreatePresentationPlan } from "../plans/use-presentation-plan"
 import { ArtifactNotice } from "./artifact-notice"
 
 /** Option names whose values have labels under `notebooks.opt.<name>.<value>`. */
@@ -40,6 +42,15 @@ function describeOptions(t: Translator, create: ArtifactCreate): { label: string
   return lines
 }
 
+/** A proposed deck is planned first (PLAN): the outline request made of the proposal. */
+function planBody(create: ArtifactCreate): PlanCreateBody {
+  const ids = optionsOf(create).source_ids
+  return {
+    prompt: create.prompt ?? null,
+    source_ids: Array.isArray(ids) ? ids.filter((id): id is string => typeof id === "string") : null,
+  }
+}
+
 type ActionCardProps = {
   notebookId: string
   /** The Studio output the assistant proposed in its answer (P2). */
@@ -55,6 +66,14 @@ export function ActionCard({ notebookId, create, onDismiss }: ActionCardProps) {
   const errorMessage = useNotebookErrorMessage()
   const mutation = useCreateArtifact(notebookId)
   const [created, setCreated] = useState<string | null>(null)
+  const planning = create.kind === "slides"
+  const planMutation = useCreatePresentationPlan(notebookId)
+  const [plan, setPlan] = useState<PresentationPlan | null>(null)
+  const failed = mutation.isError ? mutation.error : planMutation.isError ? planMutation.error : null
+  const start = () =>
+    planning
+      ? planMutation.mutate(planBody(create), { onSuccess: setPlan })
+      : mutation.mutate(create, { onSuccess: (item) => setCreated(item.id) })
 
   const kind = kindLabel(t, create)
   const options = describeOptions(t, create)
@@ -83,27 +102,29 @@ export function ActionCard({ notebookId, create, onDismiss }: ActionCardProps) {
           ) : null}
         </div>
       </div>
-      {created ? (
+      {plan ? (
+        <PlanCard notebookId={notebookId} plan={plan} />
+      ) : created ? (
         <ArtifactNotice notebookId={notebookId} artifactId={created} kind={kind} scope="chat.action" />
       ) : (
         <div className="flex flex-wrap gap-2">
           <Button
             type="button"
             className="min-h-11 md:min-h-8"
-            disabled={mutation.isPending}
-            onClick={() => mutation.mutate(create, { onSuccess: (item) => setCreated(item.id) })}
+            disabled={mutation.isPending || planMutation.isPending}
+            onClick={start}
           >
-            {mutation.isPending ? <Spinner aria-hidden /> : null}
-            {tc("create")}
+            {mutation.isPending || planMutation.isPending ? <Spinner aria-hidden /> : null}
+            {planning ? t("plan.makePlan") : tc("create")}
           </Button>
           <Button type="button" variant="outline" className="min-h-11 md:min-h-8" onClick={onDismiss}>
             {tc("cancel")}
           </Button>
         </div>
       )}
-      {mutation.isError ? (
+      {failed ? (
         <p role="alert" className="text-destructive text-sm">
-          {errorMessage(mutation.error)}
+          {errorMessage(failed)}
         </p>
       ) : null}
     </div>

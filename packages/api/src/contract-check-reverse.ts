@@ -29,6 +29,7 @@ import type { getAdminSyncRuns, getMeGrades, getMeGradesDay, getMeLessonResults,
 import type { getAdminSubjectMaterialGroups, getAdminSubjectMaterials, getArtifact, getArtifacts, getNotebook, getNotebookAutoSubject, getNotebookChat, getNotebookLabels, getNotebookSearch, getNotebookSource, getNotebookSourceFileUrl, getNotebookSources, getNotebookSubjectSlots, getNotebookUsage, getNotebooks, getPassage, getSourcePassages, getStaffSubjectMaterials, getStaffSubjects, patchArtifact, patchNotebook, patchNotebookLabel, patchNotebookSource, postAdminSubjectMaterial, postArtifact, postArtifactAsSource, postArtifactAttachToLesson, postArtifactCancel, postArtifactFlashcardSet, postArtifactRetry, postArtifactSaveToFiles, postArtifactSlidesRevise, postNotebook, postNotebookAutoSubject, postNotebookDiscover, postNotebookLabel, postNotebookLabelsAuto, postNotebookMessage, postNotebookRegenerate, postNotebookSourceSync, postNotebookSources, postNotebookSourcesSelect, postSaveNote, postStaffSubjectMaterial, putArtifactSlides, putNotebookSourceLabels } from "./endpoints/notebooks"
 import type { getNotifications, getNotificationsUnreadCount } from "./endpoints/notifications"
 import type { postOauthLogout, postOauthRefresh, postOauthTelegram, postOauthToken, postOauthTokenHook } from "./endpoints/oauth"
+import type { confirmPresentationPlan, getPresentationPlan, patchPresentationPlan, postPresentationPlan } from "./endpoints/presentation-plans"
 import type { getPublicShare, postPublicReports } from "./endpoints/public"
 import type { getPushConfig, postPushSubscription } from "./endpoints/push"
 import type { getInternalEmisProfile, getInternalEmisRatings, getInternalEmisSubjects, postIdReclaimEmail, postIdReclaimEmis, postIdRegisterComplete, postIdRegisterEmail, postIdRegisterEmis } from "./endpoints/registration"
@@ -1255,6 +1256,22 @@ export const served_postOauthTelegram: Awaited<ReturnType<typeof postOauthTelegr
 // POST /v1/oauth/token-hook — postOauthTokenHook
 declare const gen_postOauthTokenHook: ResponseOf<"/v1/oauth/token-hook", "post">
 export const served_postOauthTokenHook: Awaited<ReturnType<typeof postOauthTokenHook>> = gen_postOauthTokenHook
+
+// POST /v1/notebooks/{notebook_id}/presentation-plans — postPresentationPlan
+declare const gen_postPresentationPlan: ResponseOf<"/v1/notebooks/{notebook_id}/presentation-plans", "post">
+export const served_postPresentationPlan: Awaited<ReturnType<typeof postPresentationPlan>> = gen_postPresentationPlan
+
+// GET /v1/notebooks/{notebook_id}/presentation-plans/{plan_id} — getPresentationPlan
+declare const gen_getPresentationPlan: ResponseOf<"/v1/notebooks/{notebook_id}/presentation-plans/{plan_id}", "get">
+export const served_getPresentationPlan: Awaited<ReturnType<typeof getPresentationPlan>> = gen_getPresentationPlan
+
+// PATCH /v1/notebooks/{notebook_id}/presentation-plans/{plan_id} — patchPresentationPlan
+declare const gen_patchPresentationPlan: ResponseOf<"/v1/notebooks/{notebook_id}/presentation-plans/{plan_id}", "patch">
+export const served_patchPresentationPlan: Awaited<ReturnType<typeof patchPresentationPlan>> = gen_patchPresentationPlan
+
+// POST /v1/notebooks/{notebook_id}/presentation-plans/{plan_id}/confirm — confirmPresentationPlan
+declare const gen_confirmPresentationPlan: ResponseOf<"/v1/notebooks/{notebook_id}/presentation-plans/{plan_id}/confirm", "post">
+export const served_confirmPresentationPlan: Awaited<ReturnType<typeof confirmPresentationPlan>> = gen_confirmPresentationPlan
 
 // GET /v1/public/shares/{slug} — getPublicShare
 declare const gen_getPublicShare: ResponseOf<"/v1/public/shares/{slug}", "get">

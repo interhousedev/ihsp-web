@@ -1,6 +1,6 @@
 "use client"
 
-import type { NotebookDetail } from "@ihsp/api"
+import type { ChatAttachment, NotebookDetail } from "@ihsp/api"
 import { useFormatters, useT } from "@ihsp/i18n"
 import { Badge, Button, Textarea, useOnline } from "@ihsp/ui"
 import { IconArrowUp, IconPlayerStopFilled, IconSettings, IconWorld, IconX } from "@ihsp/ui"
@@ -11,14 +11,20 @@ import { useSlashInput } from "../../assistant-chat/use-slash-input"
 import { useWebQuota } from "../../web-search"
 import type { NotebookLimit } from "../api"
 import { useWorkspace } from "../workspace-context"
+import { AttachmentChips } from "./attachment-chips"
 import { ChatConfigDialog } from "./chat-config-dialog"
+import { takeChatAttachments, toSendOptions, type AttachedItem } from "./chat-attachments"
+import { ComposerAddMenu } from "./composer-add-menu"
 import { isTouchDevice, takeDraft } from "./composer-draft"
 import type { RestoredDraft } from "./use-chat-turn"
 
 const MAX_HEIGHT = 160
 
-/** What the composer tells the chat about a question: whether the model may search the web too. */
-export type ComposerSendOptions = { webSearch: boolean }
+/**
+ * What the composer tells the chat about a question: whether the model may search the web too, and what its chips
+ * attach (lessons and materials as `attachments`, uploaded files as `sourceIds`).
+ */
+export type ComposerSendOptions = { webSearch: boolean; attachments?: ChatAttachment[]; sourceIds?: string[] }
 
 type NotebookComposerProps = {
   notebook: NotebookDetail
@@ -65,12 +71,15 @@ export function NotebookComposer({
   const [command, setCommand] = useState<SlashName | null>(null)
   const [configOpen, setConfigOpen] = useState(false)
   const restoredText = useRef<string | null>(null)
+  const [attached, setAttached] = useState<AttachedItem[]>([])
+  const [attachError, setAttachError] = useState<string | null>(null)
 
   const noSources = notebook.selected_source_count === 0
   const readOnly = notebook.can_write === false
   const locked = limit.reached || !online || readOnly
   const slash = useSlashInput({ text, setText, command, setCommand, fieldRef, disabled: locked })
-  const canSend = !locked && !running && (text.trim().length > 0 || command !== null)
+  const uploading = attached.some((item) => item.kind === "file" && item.pending === true)
+  const canSend = !locked && !running && !uploading && (text.trim().length > 0 || command !== null)
 
   // The assistant sidebar writes a draft before it opens this chat; take it once.
   useEffect(() => {
@@ -78,6 +87,18 @@ export function NotebookComposer({
     if (!draft) return
     setText((current) => current || draft)
     fieldRef.current?.focus()
+  }, [notebook.id])
+
+  // "Ask AI about this lesson" leaves the lesson as a chip; take it once (StrictMode runs this twice).
+  // Chips belong to one notebook: another notebook starts with only its own hand-off (StrictMode's second run of
+  // the effect for the same notebook keeps what the first one took).
+  const attachedFor = useRef(notebook.id)
+  useEffect(() => {
+    const items = takeChatAttachments(notebook.id)
+    const switched = attachedFor.current !== notebook.id
+    attachedFor.current = notebook.id
+    if (switched) setAttached(mergeItem([], ...items))
+    else if (items.length > 0) setAttached((current) => mergeItem(current, ...items))
   }, [notebook.id])
 
   // A failed question comes back into an empty field; when the chat sends it again by itself (Send without web
@@ -110,7 +131,9 @@ export function NotebookComposer({
     const value = command ? slashText({ name: command, args: text.trim() }) : text.trim()
     setText("")
     setCommand(null)
-    onSend(value, { webSearch })
+    setAttached([])
+    setAttachError(null)
+    onSend(value, { webSearch, ...toSendOptions(attached) })
   }
 
   function onKeyDown(event: KeyboardEvent<HTMLTextAreaElement>) {
@@ -166,6 +189,10 @@ export function NotebookComposer({
         ) : null}
         <div className="bg-background focus-within:border-ring relative focus-within:ring-ring/30 flex flex-col gap-1 rounded-3xl border px-3 py-2 shadow-xs focus-within:ring-3">
           {slash.menu ? <SlashMenu {...slash.menu} /> : null}
+          <AttachmentChips
+            items={attached}
+            onRemove={(key) => setAttached((current) => current.filter((item) => item.key !== key))}
+          />
           {webOn || command ? (
             <div className="flex flex-wrap items-center gap-1 pt-1">
               {command ? <SlashChip name={command} onRemove={() => setCommand(null)} /> : null}
@@ -202,17 +229,26 @@ export function NotebookComposer({
             {...slash.fieldProps}
           />
           <div className="flex items-center justify-between gap-2">
-            <Button
-              type="button"
-              variant="ghost"
-              size="icon"
-              className="size-11 rounded-full"
-              aria-label={t("menu.configureChat")}
-              title={t("menu.configureChat")}
-              onClick={() => setConfigOpen(true)}
-            >
-              <IconSettings aria-hidden />
-            </Button>
+            <div className="flex items-center">
+              <ComposerAddMenu
+                notebook={notebook}
+                disabled={locked}
+                onAttach={(item) => setAttached((current) => mergeItem(current, item))}
+                onDetach={(key) => setAttached((current) => current.filter((item) => item.key !== key))}
+                onError={setAttachError}
+              />
+              <Button
+                type="button"
+                variant="ghost"
+                size="icon"
+                className="size-11 rounded-full"
+                aria-label={t("menu.configureChat")}
+                title={t("menu.configureChat")}
+                onClick={() => setConfigOpen(true)}
+              >
+                <IconSettings aria-hidden />
+              </Button>
+            </div>
             <div className="flex min-w-0 items-center gap-1">
               {webQuota.enabled ? (
                 <Button
@@ -262,6 +298,11 @@ export function NotebookComposer({
             </div>
           </div>
         </div>
+        {attachError ? (
+          <p role="alert" className="text-destructive px-3 text-xs">
+            {attachError}
+          </p>
+        ) : null}
         {webOn ? (
           <p role="status" className="text-muted-foreground flex items-center gap-1 px-3 text-xs">
             <IconWorld className="size-3.5 shrink-0" aria-hidden />
@@ -274,4 +315,15 @@ export function NotebookComposer({
       <ChatConfigDialog notebook={notebook} open={configOpen} onOpenChange={setConfigOpen} />
     </>
   )
+}
+
+/** Adds chips, replacing one with the same key (a finished upload, a lesson attached twice). */
+function mergeItem(current: readonly AttachedItem[], ...items: AttachedItem[]): AttachedItem[] {
+  const next = [...current]
+  for (const item of items) {
+    const index = next.findIndex((existing) => existing.key === item.key)
+    if (index === -1) next.push(item)
+    else next[index] = item
+  }
+  return next
 }

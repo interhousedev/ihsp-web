@@ -1,6 +1,6 @@
 "use client"
 
-import type { LessonItem, LessonResult } from "@ihsp/api"
+import type { LessonResult, StudentLessonItem } from "@ihsp/api"
 import { useFormatters, useT } from "@ihsp/i18n"
 import { Badge, Icons, MarkBadge, cn } from "@ihsp/ui"
 import Link from "next/link"
@@ -21,7 +21,8 @@ export function TimetableLessonBlock({
   showSubgroup = false,
   result,
 }: {
-  lesson: LessonItem
+  /** `subgroup.is_own_subgroup === false`: the other subgroup's lesson, shown dimmed and labelled. */
+  lesson: StudentLessonItem
   now: number
   /** The student has no subgroup, so lessons of both subgroups are listed and marked (UF-WEB-03 1a). */
   showSubgroup?: boolean
@@ -34,6 +35,7 @@ export function TimetableLessonBlock({
   const cancelled = lesson.status === "cancelled"
   const current = isLessonNow(lesson, now)
   const changes = describeChanges(lesson.changes)
+  const otherSubgroup = lesson.subgroup?.is_own_subgroup === false ? lesson.subgroup : null
   const subgroups = showSubgroup ? subgroupsOf(lesson) : []
   const started = Date.parse(lesson.starts_at) < now
   const shown = started && !cancelled ? result : undefined
@@ -44,6 +46,7 @@ export function TimetableLessonBlock({
   ]
   // The full subject, time, room and teacher: the tooltip for a block narrowed by an overlapping lesson.
   const details = [
+    otherSubgroup ? t("otherSubgroup", { name: otherSubgroup.subgroup_name }) : null,
     lesson.subject.name,
     `${f.time(lesson.starts_at)}–${f.time(lesson.ends_at)}`,
     lesson.room?.name ? t("room", { name: lesson.room.name }) : null,
@@ -57,11 +60,13 @@ export function TimetableLessonBlock({
       data-current={current}
       data-cancelled={cancelled}
       data-attendance={attendance ?? undefined}
+      data-other-subgroup={otherSubgroup ? true : undefined}
       className={cn(
         "hover:bg-accent focus-visible:ring-ring flex h-full min-w-0 flex-col gap-0.5 overflow-hidden rounded-md border p-1.5 text-xs leading-tight outline-none focus-visible:ring-2",
         attendance ? STATE_TONE[attendance].block : "bg-card",
         current && "border-primary ring-primary ring-1",
         cancelled && "opacity-60",
+        otherSubgroup && "border-dashed opacity-60",
       )}
     >
       <span className="flex min-w-0 items-start justify-between gap-1">
@@ -109,6 +114,9 @@ export function TimetableLessonBlock({
         {shown && shown.mark !== null ? <MarkBadge mark={shown.mark} size="sm" /> : null}
         {cancelled ? <Badge variant="destructive">{t("cancelled")}</Badge> : null}
         {current ? <Badge>{t("now")}</Badge> : null}
+        {otherSubgroup ? (
+          <Badge variant="outline">{t("otherSubgroup", { name: otherSubgroup.subgroup_name })}</Badge>
+        ) : null}
         {subgroups.map((number) => (
           <Badge key={number} variant="outline">
             {t("subgroup", { number })}

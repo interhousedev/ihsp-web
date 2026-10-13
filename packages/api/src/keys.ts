@@ -190,6 +190,10 @@ export const keys = {
     all: () => ["staff-subjects"] as const,
     list: () => ["staff-subjects", "list"] as const,
     materials: (subjectId: string) => ["staff-subjects", "materials", subjectId] as const,
+    group: (subjectId: string, groupId: string, subgroup: number | null) =>
+      ["staff-subjects", "group", subjectId, groupId, subgroup] as const,
+    student: (subjectId: string, groupId: string, subgroup: number | null, studentId: string) =>
+      ["staff-subjects", "student", subjectId, groupId, subgroup, studentId] as const,
   },
   notebooks: {
     all: () => ["notebooks"] as const,

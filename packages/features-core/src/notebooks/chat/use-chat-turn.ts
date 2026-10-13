@@ -7,8 +7,10 @@ import {
   readNotebookStream,
   streamNotebookMessage,
   streamNotebookRegenerate,
+  type AgentStep,
   type Anchor,
   type ArtifactCreate,
+  type ChatAttachment,
   type Citation,
   type NotebookChatHistory,
   type NotebookMessage,
@@ -21,6 +23,7 @@ import {
 import { useQueryClient } from "@tanstack/react-query"
 import { useCallback, useRef, useState } from "react"
 import { webSearchFailure, type WebSearchFailure } from "../../web-search"
+import { upsertStep } from "../../agent-steps/merge-steps"
 import { parseSlashText } from "../../assistant-chat/slash-commands"
 import { storeNotebookTurn } from "../api"
 import { abortable } from "./abortable"
@@ -34,6 +37,8 @@ export type SendOptions = {
   anchor?: Anchor
   /** Restrict the answer to these sources; default is the current selection. */
   sourceIds?: string[]
+  /** Lessons or lesson materials the question is about (chips of the composer). */
+  attachments?: ChatAttachment[]
   /** Let the model search the web too (`web_search: true`); the answer then carries web pages. */
   webSearch?: boolean
 }
@@ -134,13 +139,19 @@ export function useChatTurn(notebookId: string): ChatTurn {
       controllerRef.current = controller
       setPending(turn)
 
-      const buffer = { text: "", citations: [] as Citation[], web: [] as WebResult[] }
+      const buffer = { text: "", citations: [] as Citation[], web: [] as WebResult[], steps: [] as AgentStep[] }
       let timer: ReturnType<typeof setTimeout> | null = null
       const paint = () => {
         timer = null
         setPending((current) =>
           current
-            ? { ...current, assistantText: buffer.text, citations: [...buffer.citations], web: buffer.web }
+            ? {
+                ...current,
+                assistantText: buffer.text,
+                citations: [...buffer.citations],
+                web: buffer.web,
+                steps: buffer.steps,
+              }
             : current,
         )
       }
@@ -202,6 +213,9 @@ export function useChatTurn(notebookId: string): ChatTurn {
               schedule()
             } else if (event.event === "web") {
               buffer.web = event.data.results
+              schedule()
+            } else if (event.event === "step") {
+              buffer.steps = upsertStep(buffer.steps, event.data)
               schedule()
             } else if (event.event === "error") {
               throw errorFromEvent(event.data)
@@ -299,6 +313,7 @@ function toBody(request: Extract<TurnRequest, { kind: "send" }>): NotebookMessag
     ...(call ? { command: call.name, args: call.args } : {}),
     ...(options.sourceIds ? { source_ids: options.sourceIds } : {}),
     ...(options.anchor ? { anchor: options.anchor } : {}),
+    ...(options.attachments?.length ? { attachments: options.attachments } : {}),
     ...(options.webSearch ? { web_search: true } : {}),
   }
 }

@@ -3,6 +3,7 @@
 import type { NotebookMessage as Message } from "@ihsp/api"
 import { useT } from "@ihsp/i18n"
 import { IconSparkles } from "@ihsp/ui"
+import { StepTrace } from "../../agent-steps/step-trace"
 import { citedNumbers, citedWebNumbers } from "../lib/citations"
 import { ActionCard } from "./action-card"
 import { CitedMarkdown } from "./cited-markdown"
@@ -55,6 +56,7 @@ export function NotebookMessage({
   return (
     <article aria-label={t("assistant")} data-role="assistant" className="flex min-w-0 flex-col gap-2">
       <IconSparkles className="text-primary size-5" aria-hidden />
+      <StepTrace steps={message.steps} />
       <CitedMarkdown text={message.text} citations={message.citations} web={message.web} />
       {hasSourceChips && hasWebChips ? <p className="text-muted-foreground text-xs">{t("legend")}</p> : null}
       <WebSourcesRow web={message.web} text={message.text} />

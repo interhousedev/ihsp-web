@@ -1483,6 +1483,10 @@
         "label": "Tool steps per answer",
         "hint": "Most model requests (tool rounds) in one assistant answer."
       },
+      "ai_chat_history_limit": {
+        "label": "Chat history sent to the model",
+        "hint": "How many latest messages of a chat go to the model with each question; the model can read older ones with a tool."
+      },
       "ai_smart_requests_per_week_student": {
         "label": "Smart messages per week",
         "hint": "Messages a student may send to the smart model each week (Monday to Monday). 0 turns it off."

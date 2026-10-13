@@ -22,6 +22,7 @@ import { publicHandlers } from "./public"
 import { pushHandlers } from "./push"
 import { registrationHandlers } from "./registration"
 import { scheduleHandlers } from "./schedule"
+import { presentationPlansHandlers } from "./presentation-plans"
 import { staffSubjectsHandlers } from "./staff-subjects"
 import { subjectMaterialsHandlers } from "./subject-materials"
 import { teachersHandlers } from "./teachers"
@@ -50,6 +51,7 @@ export {
   setUniLibrary,
   type LibraryActorSpec,
 } from "./library"
+export { resetPresentationPlansState } from "./presentation-plans"
 export { resetStaffSubjectsState } from "./staff-subjects"
 export { resetSubjectMaterialsState } from "./subject-materials"
 export { resetTeacherContacts, resetTeacherPhotos, teacherPhotoUploads, type TeacherPhotoUpload } from "./teachers"
@@ -82,6 +84,7 @@ export {
   registrationHandlers,
   scheduleHandlers,
   staffSubjectsHandlers,
+  presentationPlansHandlers,
   subjectMaterialsHandlers,
   teachersHandlers,
   webSearchHandlers,
@@ -120,4 +123,5 @@ export const allHandlers = [
   ...libraryHandlers,
   ...subjectMaterialsHandlers,
   ...staffSubjectsHandlers,
+  ...presentationPlansHandlers,
 ]

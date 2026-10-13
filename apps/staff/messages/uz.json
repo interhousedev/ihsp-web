@@ -396,37 +396,39 @@
   },
   "subjects": {
     "title": "Fanlar",
-    "description": "Bu semestrda siz o'qitadigan fanlar, guruhlar va materiallar.",
-    "empty": "Bu semestrda sizda fanlar yo'q.",
-    "noId": "Ro'yxatdan fanni tanlang.",
-    "notTaught": "Siz bu fanni o'qitmaysiz.",
+    "description": "Bu semestrda siz oʻqitadigan fanlar, guruhlar va materiallar.",
+    "empty": "Bu semestrda sizda fanlar yoʻq.",
+    "noId": "Roʻyxatdan fanni tanlang.",
+    "notTaught": "Siz bu fanni oʻqitmaysiz.",
     "back": "Barcha fanlar",
     "groups": {
       "heading": "Guruhlar",
-      "divided": "Bo'lingan: {subgroups}-kichik guruh",
+      "divided": "Boʻlingan: {subgroups}-kichik guruh",
       "openNotebook": "Daftarni ochish",
       "createNotebook": "Daftar yaratish",
       "creatingNotebook": "Yaratilmoqda…",
       "lessons": "Yaqin darslar",
-      "noLessons": "Yaqin haftalarda dars yo'q.",
+      "noLessons": "Yaqin haftalarda dars yoʻq.",
       "period": "{number}-juftlik",
-      "timetable": "Jadvalni ochish"
+      "timetable": "Jadvalni ochish",
+      "openGroup": "Talabalar va darslar",
+      "openSubgroup": "{number}-kichik guruh"
     },
     "materials": {
       "heading": "Materiallar",
       "tier": {
-        "admin": "Ma'muriyat materiallari",
-        "adminHint": "Maktab bu fanni o'rganuvchilar uchun belgilagan. Ularni o'zgartirib bo'lmaydi.",
+        "admin": "Maʼmuriyat materiallari",
+        "adminHint": "Maktab bu fanni oʻrganuvchilar uchun belgilagan. Ularni oʻzgartirib boʻlmaydi.",
         "mine": "Mening fan materiallarim",
-        "mineHint": "Bu fanni o'qitadigan barcha guruhlaringizga ko'rinadi.",
+        "mineHint": "Bu fanni oʻqitadigan barcha guruhlaringizga koʻrinadi.",
         "groups": "Bitta guruh uchun materiallar",
-        "groupsHint": "Faqat shu guruhga (yoki kichik guruhga) ko'rinadi."
+        "groupsHint": "Faqat shu guruhga (yoki kichik guruhga) koʻrinadi."
       },
-      "empty": "Hozircha bo'sh.",
-      "emptyAdmin": "Ma'muriyat material qo'shmagan.",
-      "emptyGroups": "Bu fan bo'yicha guruhlaringiz yo'q.",
+      "empty": "Hozircha boʻsh.",
+      "emptyAdmin": "Maʼmuriyat material qoʻshmagan.",
+      "emptyGroups": "Bu fan boʻyicha guruhlaringiz yoʻq.",
       "groupHalf": "{group} · {number}-kichik guruh",
-      "remove": "O'chirish: {title}",
+      "remove": "Oʻchirish: {title}",
       "kind": {
         "file": "Fayl",
         "link": "Havola",
@@ -434,8 +436,8 @@
       },
       "add": {
         "kind": "Material turi",
-        "headingMine": "Barcha guruhlarim uchun material qo'shish",
-        "headingGroup": "{group} uchun material qo'shish",
+        "headingMine": "Barcha guruhlarim uchun material qoʻshish",
+        "headingGroup": "{group} uchun material qoʻshish",
         "chooseFile": "Fayl tanlash",
         "fileChosen": "Fayl: {name}",
         "urlLabel": "Veb manzil",
@@ -444,8 +446,42 @@
         "pickBook": "Tanlash",
         "bookChosen": "Kitob: {title}",
         "titleLabel": "Sarlavha",
-        "submit": "Material qo'shish"
+        "submit": "Material qoʻshish"
       }
+    },
+    "group": {
+      "back": "{subject}",
+      "subgroupTitle": "{group} · {number}-kichik guruh",
+      "students": "Talabalar ({count})",
+      "noStudents": "Bu guruhda talabalar yo‘q.",
+      "subgroupBadge": "{number}-kichik guruh",
+      "timetable": "Darslar",
+      "thisWeek": "Shu hafta",
+      "upcoming": "Kelgusi",
+      "noLessons": "Darslar yo‘q.",
+      "period": "{number}-para",
+      "room": "{room}-xona"
+    },
+    "student": {
+      "back": "Guruhga qaytish",
+      "marks": "Baholar",
+      "average": "O‘rtacha baho",
+      "semesterMark": "semestr bahosi {value}",
+      "noMarks": "Hali baholar yo‘q.",
+      "type": {
+        "lesson": "Dars bahosi",
+        "midterm": "Oraliq nazorat (ON)",
+        "final": "Yakuniy nazorat (YN)"
+      },
+      "homework": "Uy vazifalari",
+      "noHomework": "Bu fan bo‘yicha uy vazifalari yo‘q.",
+      "done": "Bajarildi {when}",
+      "notDone": "Bajarilmagan",
+      "note": "Izoh: {note}",
+      "attendance": "Davomat",
+      "absences": "Qoldirilgan darslar: {count}",
+      "absencesOf": "Qoldirilgan darslar: {total} tadan {count} ta",
+      "excused": "sababli"
     }
   }
 }

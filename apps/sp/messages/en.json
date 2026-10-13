@@ -261,6 +261,7 @@
     "now": "Now",
     "cancelled": "Cancelled",
     "subgroup": "Subgroup {number}",
+    "otherSubgroup": "Other subgroup ({name})",
     "subgroupHint": "Your subgroup is not set yet, so lessons of both subgroups are shown.",
     "noLessons": "No lessons on this day.",
     "noLessonsWeek": "No lessons this week.",
@@ -345,7 +346,6 @@
       "showMore": "Show more",
       "noTopic": "No topic yet",
       "askAi": "Ask AI about this lesson",
-      "question": "Tell me about the lesson on {date}: {topic}",
       "materials": "{count, plural, one {# material} other {# materials}}",
       "kind": {
         "lecture": "Lecture",
@@ -386,6 +386,8 @@
     "resources": {
       "open": "Open",
       "openItem": "Open {title}",
+      "preview": "Preview",
+      "previewItem": "Preview {title}",
       "deleteItem": "Delete {title}"
     },
     "attach": {

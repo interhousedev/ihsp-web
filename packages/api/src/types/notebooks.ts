@@ -1,7 +1,7 @@
 // Notebooks (NotebookLM-style) and Studio: copied verbatim from the backend contract.
 // Additions (request bodies, query parameters, stream events) are at the end of the file.
 
-import type { WebQuota, WebResult } from "./ai"
+import type { AgentStep, WebQuota, WebResult } from "./ai"
 import type { CoursePlanContent, CoursePlanOptions, LessonDraftContent, LessonDraftOptions } from "./course-workspace"
 
 export type SourceKind =
@@ -206,6 +206,8 @@ export type NotebookMessage = {
   feedback: "up" | "down" | null
   stopped: boolean
   created_at: string
+  /** What the assistant did while answering (AI-STEPS). TODO(contract): replace with generated */
+  steps?: AgentStep[]
 }
 export type NotebookTurn = {
   user_message: NotebookMessage
@@ -467,10 +469,15 @@ export type SourcePatchBody = {
 export type PassagesParams = { cursor?: string; limit?: number }
 export type PassageParams = { context?: number }
 /** `command` + `args` is a slash command that the server turns into the question; `text` may then be empty. */
+/** A lesson, or one material (`id` = link id) of a lesson, the question is about. */
+// TODO(contract): replace with generated
+export type ChatAttachment = { kind: "lesson"; id: string } | { kind: "material"; id: string; lesson_id: string }
 export type NotebookMessageBody = {
   text: string
   source_ids?: string[]
   anchor?: Anchor
+  // TODO(contract): replace with generated
+  attachments?: ChatAttachment[]
   web_search?: boolean
   command?: string
   args?: string
@@ -563,6 +570,8 @@ export type NotebookStreamEvent =
   | { event: "delta"; data: { text: string } }
   | { event: "citation"; data: Citation }
   | { event: "web"; data: { results: WebResult[] } }
+  /** A step started or finished (AI-STEPS); the same `id` arrives again when it ends. */
+  | { event: "step"; data: AgentStep }
   | { event: "done"; data: NotebookStreamDone }
   | {
       event: "error"

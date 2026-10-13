@@ -1,4 +1,4 @@
-import type { Citation, NotebookMessage, WebResult } from "@ihsp/api"
+import type { AgentStep, Citation, NotebookMessage, WebResult } from "@ihsp/api"
 
 /**
  * The turn that is running (or was stopped) and is not in the saved history yet: the optimistic question and the
@@ -15,6 +15,8 @@ export type PendingTurn = {
   citations: Citation[]
   /** Web pages of the answer (the `web` event), so web chips resolve while their markers stream in. */
   web: WebResult[]
+  /** Steps of the answer so far (the `step` events, AI-STEPS); optional so older callers need not set it. */
+  steps?: AgentStep[]
   /** The answer was stopped by the student; the partial text stays. */
   stopped: boolean
   /** Highest `seq` of the history when the turn began. */

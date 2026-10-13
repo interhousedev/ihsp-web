@@ -188,8 +188,29 @@ describe("Customize dialogs: one form per kind", () => {
     })
   })
 
-  it("slide deck: format and length", async () => {
+  it("PLAN slide deck: format and length ask for an outline first, which opens in the plan panel", async () => {
     const bodies = captureCreates()
+    const plans: unknown[] = []
+    server.use(
+      http.post(apiUrl(`/v1/notebooks/${nbIds.notebook}/presentation-plans`), async ({ request }) => {
+        plans.push(await request.json())
+        return HttpResponse.json(
+          {
+            id: "plan-1",
+            notebook_id: nbIds.notebook,
+            title: "Photosynthesis",
+            slides: [{ title: "Photosynthesis", bullets: ["Light"] }],
+            status: "draft",
+            max_slides: 18,
+            over_limit: false,
+            artifact_id: null,
+            created_at: "2026-10-14T09:00:00Z",
+            updated_at: "2026-10-14T09:00:00Z",
+          },
+          { status: 201 },
+        )
+      }),
+    )
     const { user } = renderNotebook(<StudioPanel notebook={notebookDetail} />)
     const dialog = await openForm(user, "Slide deck")
 
@@ -199,13 +220,12 @@ describe("Customize dialogs: one form per kind", () => {
       }),
     )
     await user.click(within(group(dialog, "Length")).getByRole("button", { name: "Long" }))
-    await generate(user, dialog)
+    await user.click(within(dialog).getByRole("button", { name: "Plan the slides" }))
 
-    await waitFor(() => expect(bodies).toHaveLength(1))
-    expect(bodies[0]).toEqual({
-      kind: "slides",
-      options: { format: "detailed", length: "long" },
-    })
+    await waitFor(() => expect(plans).toHaveLength(1))
+    expect(plans[0]).toMatchObject({ prompt: null, slide_count: 16, format: "detailed" })
+    expect(bodies).toHaveLength(0)
+    expect(await screen.findByRole("dialog", { name: "Presentation plan" })).toBeInTheDocument()
   })
 
   it("infographic: orientation, detail and one of five styles", async () => {

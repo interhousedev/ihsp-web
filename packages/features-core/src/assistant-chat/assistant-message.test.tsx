@@ -92,3 +92,17 @@ describe("AssistantMessage: web answers", () => {
     )
   })
 })
+
+describe("AI-STEPS AssistantMessage: steps", () => {
+  it("shows the stored steps collapsed above the answer text", () => {
+    renderMessage({
+      ...messageAssistantWeb,
+      steps: [{ id: "s1", kind: "web_search", label: "Searched the web", status: "done", duration_ms: 900 }],
+    })
+
+    const toggle = screen.getByRole("button", { name: "Show the steps of this answer" })
+    expect(toggle).toHaveAttribute("aria-expanded", "false")
+    const text = screen.getByText(/Plants turn light into sugar/)
+    expect(toggle.compareDocumentPosition(text) & Node.DOCUMENT_POSITION_FOLLOWING).toBeTruthy()
+  })
+})

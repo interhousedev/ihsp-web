@@ -79,6 +79,24 @@ export type ChatMessageView = {
   web: WebResult[]
   /** The caller's rating of an assistant message; `null` until they rate it. */
   feedback: "up" | "down" | null
+  /** What the assistant did while answering, in order (AI-STEPS). */
+  steps?: AgentStep[]
+}
+
+// TODO(contract): replace with generated
+/** One action of the assistant while it answered: a file it read, a search, a tool call (AI-STEPS). */
+export type AgentStep = {
+  id: string
+  kind: "read_file" | "web_search" | "retrieve" | "open_view" | "create" | "tool" | "think"
+  /** English fallback label (a tool name for `tool`); the web shows a translated label per `kind`. */
+  label: string
+  /** A name to show: a file name, a plan title, a count of results. */
+  target?: string | null
+  /** An id the web can open: a file id, a plan id, an artifact id. */
+  ref?: string | null
+  status: "running" | "done" | "failed"
+  started_at?: string | null
+  duration_ms?: number | null
 }
 
 export type ChatDetail = ChatItem & { messages: ChatMessageView[]; shared: boolean }

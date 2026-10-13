@@ -8,10 +8,11 @@ import { IconNotebook } from "@ihsp/ui"
 import { LinkButton } from "../../shared/components/link-button"
 import { formatBytes } from "../../shared/utils/format-bytes"
 import { fullName } from "../../shared/utils/people"
+import { ResourcePreview, canPreview } from "./resource-preview"
 
 /**
- * Materials and attachments of a lesson: title, author, size, an open link (the short link) and, for the student's
- * own attachments, a delete button (WEB-11).
+ * Materials and attachments of a lesson: title, author, size, a preview of files the browser can show, an open link
+ * (the short link) and, for the student's own attachments, a delete button (WEB-11).
  */
 export function ResourceList({
   items,
@@ -54,6 +55,9 @@ export function ResourceList({
                 .join(" · ")}
             </p>
           </div>
+          {item.kind === "file" && canPreview(item.file) ? (
+            <ResourcePreview file={item.file} title={item.title} />
+          ) : null}
           <LinkButton
             href={item.short_url}
             target="_blank"

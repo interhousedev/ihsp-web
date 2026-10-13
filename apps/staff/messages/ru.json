@@ -410,7 +410,9 @@
       "lessons": "Ближайшие уроки",
       "noLessons": "В ближайшие недели уроков нет.",
       "period": "пара {number}",
-      "timetable": "Открыть расписание"
+      "timetable": "Открыть расписание",
+      "openGroup": "Студенты и уроки",
+      "openSubgroup": "Подгруппа {number}"
     },
     "materials": {
       "heading": "Материалы",
@@ -446,6 +448,40 @@
         "titleLabel": "Название",
         "submit": "Добавить материал"
       }
+    },
+    "group": {
+      "back": "{subject}",
+      "subgroupTitle": "{group} · подгруппа {number}",
+      "students": "Студенты ({count})",
+      "noStudents": "В этой группе нет студентов.",
+      "subgroupBadge": "подгруппа {number}",
+      "timetable": "Уроки",
+      "thisWeek": "На этой неделе",
+      "upcoming": "Предстоящие",
+      "noLessons": "Уроков нет.",
+      "period": "{number} пара",
+      "room": "кабинет {room}"
+    },
+    "student": {
+      "back": "Назад к группе",
+      "marks": "Оценки",
+      "average": "Средний балл",
+      "semesterMark": "оценка за семестр {value}",
+      "noMarks": "Оценок пока нет.",
+      "type": {
+        "lesson": "Оценка за урок",
+        "midterm": "Промежуточный контроль (ПК)",
+        "final": "Итоговый контроль (ИК)"
+      },
+      "homework": "Домашние задания",
+      "noHomework": "По этому предмету нет домашних заданий.",
+      "done": "Выполнено {when}",
+      "notDone": "Не выполнено",
+      "note": "Заметка: {note}",
+      "attendance": "Посещаемость",
+      "absences": "Пропуски: {count}",
+      "absencesOf": "Пропуски: {count} из {total} уроков",
+      "excused": "по уважительной причине"
     }
   }
 }

@@ -7,6 +7,8 @@ import { useEffect, useState } from "react"
 import { DrivePicker } from "../../file-upload-button"
 import { useCreateArtifact } from "../api/use-artifacts"
 import { useAddSources, useSelectSources, useSources } from "../api/use-sources"
+import { PlanSheet } from "../plans/plan-sheet"
+import { useCreatePresentationPlan } from "../plans/use-presentation-plan"
 import { isUsable } from "../lib/sort-sources"
 import { useNotebookErrorMessage } from "../lib/use-notebook-error"
 import { buildCreate, withSourceIds } from "./forms/build-create"
@@ -83,6 +85,9 @@ function sameSet(a: ReadonlySet<string>, b: ReadonlySet<string>): boolean {
   return true
 }
 
+/** About how many slides each deck length has (the server keeps a plan within its limit). */
+const PLAN_SLIDES = { short: 6, default: 10, long: 16 } as const
+
 function CustomizeForm({
   kind,
   format,
@@ -99,6 +104,9 @@ function CustomizeForm({
   const sources = useSources(notebook.id)
   const add = useAddSources(notebook.id)
   const select = useSelectSources(notebook.id)
+  // A deck is planned first (PLAN): the outline opens in a side panel and Generate there makes the deck.
+  const planCreate = useCreatePresentationPlan(notebook.id)
+  const [planId, setPlanId] = useState<string | null>(null)
 
   const identity = `${kind}:${format ?? ""}`
   const [state, setState] = useState<FormState>(() => initialState(kind, format))
@@ -151,6 +159,21 @@ function CustomizeForm({
     } else if (!sameSet(new Set(ids), paneSelection)) {
       body = withSourceIds(body, ids)
     }
+    if (state.kind === "slides") {
+      const planBody = {
+        prompt: body.prompt ?? null,
+        source_ids: ids.length > 0 ? ids : null,
+        slide_count: PLAN_SLIDES[state.length],
+        format: state.format,
+      }
+      planCreate.mutate(planBody, {
+        onSuccess: (plan) => {
+          setPlanId(plan.id)
+          onOpenChange(false)
+        },
+      })
+      return
+    }
     create.mutate(body, { onSuccess: () => onOpenChange(false) })
   }
 
@@ -171,81 +194,91 @@ function CustomizeForm({
     }
   }
 
-  const pending = create.isPending || select.isPending
+  const pending = create.isPending || select.isPending || planCreate.isPending
 
   return (
-    <ResponsiveDialog
-      open={open}
-      onOpenChange={onOpenChange}
-      title={t("studio.customize", { kind: label })}
-      footer={
-        <>
-          <Button type="button" variant="outline" className="min-h-11 md:min-h-8" onClick={() => onOpenChange(false)}>
-            {root("common.cancel")}
-          </Button>
-          <LoadingButton
-            type="button"
-            className="min-h-11 md:min-h-8"
-            loading={pending}
-            loadingLabel={root("common.loading")}
-            disabled={blocked !== null || problem !== null || onlyWaiting}
-            onClick={() => void submit()}
-          >
-            {t("opt.generate")}
-          </LoadingButton>
-        </>
-      }
-    >
-      <KindFields state={state} onChange={setState} notebookId={notebook.id} />
-      <LanguageField value={state.language} onChange={(language) => setState({ ...state, language })} />
-      <FocusField
-        value={state.focus}
-        required={state.kind === "report" && state.format === "custom"}
-        onChange={(focus) => setState({ ...state, focus })}
-      />
-      <SourceChooser
-        sources={sources.data}
-        loading={sources.isPending}
-        error={sources.isError ? sources.error : null}
-        onRetry={() => void sources.refetch()}
-        selected={selection}
-        onChange={setPicked}
-        onAdd={() => setBrowsing(true)}
-        adding={add.isPending}
-      />
-      {sources.isSuccess && chosen.length === 0 ? (
-        <p role="status" className="text-sm text-amber-900 dark:text-amber-100">
-          {t("studio.noSources")}
-        </p>
+    <>
+      <ResponsiveDialog
+        open={open}
+        onOpenChange={onOpenChange}
+        title={t("studio.customize", { kind: label })}
+        footer={
+          <>
+            <Button type="button" variant="outline" className="min-h-11 md:min-h-8" onClick={() => onOpenChange(false)}>
+              {root("common.cancel")}
+            </Button>
+            <LoadingButton
+              type="button"
+              className="min-h-11 md:min-h-8"
+              loading={pending}
+              loadingLabel={root("common.loading")}
+              disabled={blocked !== null || problem !== null || onlyWaiting}
+              onClick={() => void submit()}
+            >
+              {kind === "slides" ? t("plan.makePlan") : t("opt.generate")}
+            </LoadingButton>
+          </>
+        }
+      >
+        <KindFields state={state} onChange={setState} notebookId={notebook.id} />
+        <LanguageField value={state.language} onChange={(language) => setState({ ...state, language })} />
+        <FocusField
+          value={state.focus}
+          required={state.kind === "report" && state.format === "custom"}
+          onChange={(focus) => setState({ ...state, focus })}
+        />
+        <SourceChooser
+          sources={sources.data}
+          loading={sources.isPending}
+          error={sources.isError ? sources.error : null}
+          onRetry={() => void sources.refetch()}
+          selected={selection}
+          onChange={setPicked}
+          onAdd={() => setBrowsing(true)}
+          adding={add.isPending}
+        />
+        {sources.isSuccess && chosen.length === 0 ? (
+          <p role="status" className="text-sm text-amber-900 dark:text-amber-100">
+            {t("studio.noSources")}
+          </p>
+        ) : null}
+        {waiting > 0 ? (
+          <p role="status" className="text-sm text-amber-900 dark:text-amber-100">
+            {onlyWaiting ? t("studio.sources.waitAll") : t("studio.sources.skipped", { count: waiting })}
+          </p>
+        ) : null}
+        {addError ? (
+          <p role="alert" className="text-destructive text-sm">
+            {addError}
+          </p>
+        ) : null}
+        {blocked ? (
+          <p role="status" className="text-muted-foreground text-sm">
+            {blocked.message}
+          </p>
+        ) : null}
+        {create.isError || planCreate.isError ? (
+          <p role="alert" className="text-destructive text-sm">
+            {errorMessage(create.isError ? create.error : planCreate.error)}
+          </p>
+        ) : null}
+        <DrivePicker
+          open={browsing}
+          onOpenChange={setBrowsing}
+          multiple
+          uploadPurpose="ai_upload"
+          busy={add.isPending}
+          onSelect={(files) => void addFiles(files)}
+        />
+      </ResponsiveDialog>
+      {planId ? (
+        <PlanSheet
+          notebookId={notebook.id}
+          planId={planId}
+          open
+          onOpenChange={(next) => (next ? undefined : setPlanId(null))}
+        />
       ) : null}
-      {waiting > 0 ? (
-        <p role="status" className="text-sm text-amber-900 dark:text-amber-100">
-          {onlyWaiting ? t("studio.sources.waitAll") : t("studio.sources.skipped", { count: waiting })}
-        </p>
-      ) : null}
-      {addError ? (
-        <p role="alert" className="text-destructive text-sm">
-          {addError}
-        </p>
-      ) : null}
-      {blocked ? (
-        <p role="status" className="text-muted-foreground text-sm">
-          {blocked.message}
-        </p>
-      ) : null}
-      {create.isError ? (
-        <p role="alert" className="text-destructive text-sm">
-          {errorMessage(create.error)}
-        </p>
-      ) : null}
-      <DrivePicker
-        open={browsing}
-        onOpenChange={setBrowsing}
-        multiple
-        uploadPurpose="ai_upload"
-        busy={add.isPending}
-        onSelect={(files) => void addFiles(files)}
-      />
-    </ResponsiveDialog>
+    </>
   )
 }

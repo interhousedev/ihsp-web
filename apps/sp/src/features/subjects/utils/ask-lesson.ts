@@ -1,7 +1,4 @@
-/** The notebook chat reads this sessionStorage draft once when it opens (see `takeDraft` in features-core). */
-export function notebookDraftKey(notebookId: string): string {
-  return `ihsp.notebooks.draft.${notebookId}`
-}
+import { leaveChatAttachment } from "@ihsp/features-core"
 
 /** `/notebooks/view/?id=&lesson=`: the subject notebook chat with one lesson in focus. */
 export function askLessonHref(notebookId: string, lessonId: string): string {
@@ -9,11 +6,12 @@ export function askLessonHref(notebookId: string, lessonId: string): string {
   return `/notebooks/view/?${query.toString()}`
 }
 
-/** Leaves the question in the chat composer of the notebook; storage may be blocked, then the chat just opens. */
-export function leaveLessonDraft(notebookId: string, text: string): void {
-  try {
-    window.sessionStorage.setItem(notebookDraftKey(notebookId), text)
-  } catch {
-    // The chat opens without the prefilled question.
-  }
+/** Leaves the lesson as a chip above the chat composer of the notebook (read once by the composer in features-core). */
+export function leaveLessonAttachment(notebookId: string, lessonId: string, label: string): void {
+  leaveChatAttachment(notebookId, {
+    kind: "lesson",
+    key: `lesson:${lessonId}`,
+    label,
+    attachment: { kind: "lesson", id: lessonId },
+  })
 }

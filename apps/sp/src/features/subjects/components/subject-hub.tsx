@@ -99,7 +99,7 @@ export function SubjectHub({ subjectId, semester }: { subjectId: string; semeste
     const when = f.date(row.date, { day: "numeric", month: "long" })
     open.mutate({
       lessonId: row.lesson_id,
-      question: t("question", { date: when, topic: row.topic ?? t("noTopic") }),
+      label: `${when} · ${row.topic ?? t("noTopic")}`,
     })
   }
 

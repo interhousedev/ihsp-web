@@ -26,6 +26,7 @@ const LIMIT_FIELDS = [
   "ai_session_tokens_student",
   "ai_daily_tokens_student",
   "ai_max_tool_steps",
+  "ai_chat_history_limit",
   "ai_smart_requests_per_week_student",
   "nb_session_tokens_student",
   "nb_daily_tokens_student",

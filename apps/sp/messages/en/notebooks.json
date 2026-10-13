@@ -243,7 +243,9 @@
         "size": "Size",
         "type": "Type",
         "unsupported": "Your browser cannot play this file.",
-        "pdfFallback": "Your browser cannot show PDFs here. Open the full preview or download the file."
+        "pdfFallback": "Your browser cannot show PDFs here. Open the full preview or download the file.",
+        "pdfFirstPage": "Page 1 of {count}",
+        "pdfOpenTab": "Open the PDF in a new tab"
       }
     },
     "note": {
@@ -948,6 +950,42 @@
       "addToFiles": "Add to my files",
       "savedToFiles": "Saved to My files: {name}",
       "linkCopied": "Link copied"
+    },
+    "attach": {
+      "chips": "Attached to the question",
+      "remove": "Remove {label}",
+      "menu": "Add to the question",
+      "upload": "Upload files",
+      "lesson": "Add lesson",
+      "materials": "Search materials",
+      "search": "Search",
+      "empty": "Nothing found",
+      "noTopic": "No topic yet",
+      "uploadFailed": "Could not upload {name}"
+    },
+    "plan": {
+      "card": "{title} · {count, plural, one {# slide} other {#-slide}} outline",
+      "open": "Open the outline",
+      "title": "Presentation plan",
+      "description": "Check the slides before the deck is made. Edit titles and points, delete or move slides, then Generate.",
+      "deckTitle": "Deck title",
+      "slideTitle": "Slide {n} title",
+      "bullet": "Point {n} of slide {slide}",
+      "addBullet": "Add a point",
+      "removeBullet": "Remove the point",
+      "moveUp": "Move slide {n} up",
+      "moveDown": "Move slide {n} down",
+      "remove": "Delete slide {n}",
+      "generate": "Generate",
+      "save": "Save",
+      "saved": "Saved",
+      "making": "Writing the outline…",
+      "makePlan": "Plan the slides",
+      "overLimit": "The plan has {count} slides, but a deck can have at most {max}. Delete slides or trim the plan before generating.",
+      "trim": "Trim to {max} slides",
+      "tooFew": "A deck needs at least 3 slides.",
+      "confirmed": "The slides are being made from this plan.",
+      "generating": "The deck is being generated. It will appear in Studio."
     }
   },
   "errors": {
@@ -967,7 +1005,9 @@
       "artifact-limit": "This notebook has too many study materials. Delete some first.",
       "artifact-not-ready": "This material is not ready yet.",
       "invalid-options": "These options are not valid for this material.",
-      "feature-disabled": "This feature is turned off."
+      "feature-disabled": "This feature is turned off.",
+      "plan-too-long": "The plan has {count} slides; a presentation can have at most {max}. Delete or merge slides first.",
+      "plan-confirmed": "This presentation plan has already been turned into slides."
     }
   }
 }

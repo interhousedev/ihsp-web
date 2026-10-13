@@ -846,6 +846,39 @@
         "hint": "What the commands do",
         "args": "Anything to add"
       }
+    },
+    "steps": {
+      "summary": "{count, plural, one {# step} other {# steps}}",
+      "toggle": "Show the steps of this answer",
+      "list": "Steps of this answer",
+      "readFile": "Reviewed uploaded “{target}”",
+      "webSearch": "Searched the web",
+      "retrieve": "Searched the sources",
+      "openView": "Opened {target}",
+      "create": "Created {target}",
+      "think": "Checked the answer",
+      "tool": {
+        "get_schedule": "Opened the schedule",
+        "get_marks": "Looked at the marks",
+        "get_homework": "Looked at the homework",
+        "get_attendance": "Looked at the attendance",
+        "get_my_subjects": "Looked at the subjects",
+        "list_files": "Looked through the files",
+        "search_files": "Searched the files",
+        "list_notebooks": "Looked through the notebooks",
+        "make_document": "Made a document",
+        "create_artifact": "Started a Studio output"
+      },
+      "running": {
+        "readFile": "Reading “{target}”…",
+        "webSearch": "Searching the web…",
+        "retrieve": "Searching the sources…",
+        "openView": "Opening {target}…",
+        "create": "Creating {target}…",
+        "think": "Checking the answer…"
+      },
+      "failed": "Failed",
+      "target": "Item"
     }
   },
   "files": {

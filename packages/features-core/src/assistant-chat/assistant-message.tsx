@@ -4,6 +4,7 @@ import type { ChatItem, ChatMessageView, ToolCallView as ToolCall } from "@ihsp/
 import { useT } from "@ihsp/i18n"
 import { Markdown } from "@ihsp/ui"
 import { IconSparkles } from "@ihsp/ui"
+import { StepTrace } from "../agent-steps/step-trace"
 import { WebSourcesRow } from "../notebooks/chat/web-sources-row"
 import { MessageActions, type Rating } from "./message-actions"
 import { ToolCallView } from "./tool-call-view"
@@ -52,6 +53,7 @@ export function AssistantMessage({
       <span className="bg-primary/10 text-primary flex size-7 items-center justify-center rounded-full" aria-hidden>
         <IconSparkles className="size-4" />
       </span>
+      <StepTrace steps={message.steps} />
       {calls.length > 0 ? (
         <div className="flex w-full flex-col gap-2">
           {calls.map((call) => (

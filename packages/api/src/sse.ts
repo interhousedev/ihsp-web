@@ -49,7 +49,7 @@ function parseBlock(block: string): RawSseEvent | null {
   return data.length > 0 ? { event, data: data.join("\n") } : null
 }
 
-const KNOWN_EVENTS = new Set(["message", "delta", "citation", "web", "done", "error"])
+const KNOWN_EVENTS = new Set(["message", "delta", "citation", "web", "step", "done", "error"])
 
 /** Turns the raw events of a notebook answer into typed ones; unknown events and invalid JSON are skipped. */
 export async function* readNotebookStream(response: Response): AsyncGenerator<NotebookStreamEvent> {

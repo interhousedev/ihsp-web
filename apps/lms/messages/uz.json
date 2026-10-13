@@ -920,10 +920,10 @@
   },
   "courseNotebooks": {
     "title": "Bloknotlar",
-    "empty": "Hozircha kurs bloknotlari yo'q. Har bir yozilgan kursda bittasi paydo bo'ladi.",
+    "empty": "Hozircha kurs bloknotlari yoʻq. Har bir yozilgan kursda bittasi paydo boʻladi.",
     "sources": "{count, plural, one {# manba} other {# manba}}",
     "meta": "{sources} · ochilgan: {when}",
-    "hint": "Kurs bloknoti kurs bilan birga yangilanadi: darslar, videolar, fayllar va kutubxona materiallari uning manbalari bo'ladi va kurs nashr etilganda yangilanadi."
+    "hint": "Kurs bloknoti kurs bilan birga yangilanadi: darslar, videolar, fayllar va kutubxona materiallari uning manbalari boʻladi va kurs nashr etilganda yangilanadi."
   },
   "workspace": {
     "openFailed": "AI ish maydonini ochib boʻlmadi"

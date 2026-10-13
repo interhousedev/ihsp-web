@@ -10,8 +10,10 @@ import { notebookHref } from "../../notebooks/utils/hrefs"
 import { LinkButton } from "../../shared/components/link-button"
 import { lessonHref } from "../../shared/utils/lesson-time"
 import { byGroup, groupLessons } from "../utils/groups"
+import { subjectGroupHref } from "../utils/hrefs"
 
-function GroupNotebook({ subject, groupId }: { subject: StaffSubject; groupId: string }) {
+/** The link to the teacher's notebook of the subject for the group (created on first open). */
+export function GroupNotebook({ subject, groupId }: { subject: StaffSubject; groupId: string }) {
   const t = useT("subjects.groups")
   const router = useRouter()
   const slots = useSubjectNotebookSlots()
@@ -70,6 +72,23 @@ export function SubjectGroups({ subject }: { subject: StaffSubject }) {
               {group.halves.length > 0 ? (
                 <p className="text-muted-foreground text-sm">{t("divided", { subgroups: group.halves.join(", ") })}</p>
               ) : null}
+            </div>
+            <div className="flex flex-wrap gap-2">
+              {group.halves.length > 0 ? (
+                group.halves.map((half) => (
+                  <LinkButton
+                    key={half}
+                    href={subjectGroupHref(subject.subject_id, group.group_id, half)}
+                    variant="outline"
+                  >
+                    {t("openSubgroup", { number: half })}
+                  </LinkButton>
+                ))
+              ) : (
+                <LinkButton href={subjectGroupHref(subject.subject_id, group.group_id)} variant="outline">
+                  {t("openGroup")}
+                </LinkButton>
+              )}
             </div>
             <GroupNotebook subject={subject} groupId={group.group_id} />
             <div className="flex flex-col gap-1">

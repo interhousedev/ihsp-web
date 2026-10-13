@@ -2,6 +2,7 @@
 
 import { useT } from "@ihsp/i18n"
 import { IconSparkles } from "@ihsp/ui"
+import { StepTrace } from "../../agent-steps/step-trace"
 import { CitedMarkdown } from "./cited-markdown"
 import type { PendingTurn } from "./pending-turn"
 
@@ -17,6 +18,7 @@ export function StreamingAnswer({ pending, running }: { pending: PendingTurn; ru
       className="flex min-w-0 flex-col gap-2"
     >
       <IconSparkles className="text-primary size-5" aria-hidden />
+      <StepTrace steps={pending.steps} live={running} />
       {pending.assistantText ? (
         <CitedMarkdown text={pending.assistantText} citations={pending.citations} web={pending.web} />
       ) : running ? (

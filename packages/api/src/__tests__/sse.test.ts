@@ -89,3 +89,22 @@ describe("readNotebookStream", () => {
     expect(web?.event === "web" && web.data.results[0]?.n).toBe(1)
   })
 })
+
+describe("AI-STEPS readNotebookStream steps", () => {
+  test("passes step events through, running then done", async () => {
+    const step = { id: "s1", kind: "retrieve", label: "Searched the sources", status: "running" }
+    const response = new Response(
+      body([
+        'event: message\ndata: {"id":"u1","seq":1}\n\n',
+        `event: step\ndata: ${JSON.stringify(step)}\n\n`,
+        `event: step\ndata: ${JSON.stringify({ ...step, status: "done", duration_ms: 12 })}\n\n`,
+      ]),
+    )
+
+    const events = await collect(readNotebookStream(response))
+
+    expect(events.map((event) => event.event)).toEqual(["message", "step", "step"])
+    const last = events[2]
+    expect(last?.event === "step" && last.data.status).toBe("done")
+  })
+})

@@ -12,3 +12,4 @@ export { WorkspaceProvider, useWorkspace, type WorkspaceActions } from "./worksp
 export type { AskRequest, WorkspaceTab } from "./types"
 export * from "./course"
 export * from "./subject-slots"
+export * from "./plans"

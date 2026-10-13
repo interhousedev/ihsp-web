@@ -6644,6 +6644,70 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/v1/notebooks/{notebook_id}/presentation-plans": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Create Presentation Plan
+         * @description Outline a slide deck; the deck is made only after "Generate" (PLAN).
+         */
+        post: operations["create_presentation_plan_v1_notebooks__notebook_id__presentation_plans_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/notebooks/{notebook_id}/presentation-plans/{plan_id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get Presentation Plan
+         * @description Return one of the caller's presentation plans (PLAN).
+         */
+        get: operations["get_presentation_plan_v1_notebooks__notebook_id__presentation_plans__plan_id__get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        /**
+         * Update Presentation Plan
+         * @description Save the edited outline: titles, bullets, deleted and moved slides (PLAN).
+         */
+        patch: operations["update_presentation_plan_v1_notebooks__notebook_id__presentation_plans__plan_id__patch"];
+        trace?: never;
+    };
+    "/v1/notebooks/{notebook_id}/presentation-plans/{plan_id}/confirm": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Confirm Presentation Plan
+         * @description Generate: queue the deck of the plan (422 `plan-too-long` over the limit).
+         */
+        post: operations["confirm_presentation_plan_v1_notebooks__notebook_id__presentation_plans__plan_id__confirm_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/v1/notebooks/{notebook_id}/search": {
         parameters: {
             query?: never;
@@ -7646,6 +7710,86 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/v1/staff/subjects/{subject_id}/groups/{group_id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get Group
+         * @description A group the caller teaches the subject: students and lessons.
+         */
+        get: operations["get_group_v1_staff_subjects__subject_id__groups__group_id__get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/staff/subjects/{subject_id}/groups/{group_id}/students/{student_id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get Student
+         * @description A student's marks, homework and attendance in the subject.
+         */
+        get: operations["get_student_v1_staff_subjects__subject_id__groups__group_id__students__student_id__get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/staff/subjects/{subject_id}/groups/{group_id}/subgroups/{subgroup}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get Subgroup
+         * @description A subgroup the caller teaches the subject: its students and lessons.
+         */
+        get: operations["get_subgroup_v1_staff_subjects__subject_id__groups__group_id__subgroups__subgroup__get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/staff/subjects/{subject_id}/groups/{group_id}/subgroups/{subgroup}/students/{student_id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get Subgroup Student
+         * @description A student of a subgroup: marks, homework and attendance in the subject.
+         */
+        get: operations["get_subgroup_student_v1_staff_subjects__subject_id__groups__group_id__subgroups__subgroup__students__student_id__get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/v1/staff/subjects/{subject_id}/materials": {
         parameters: {
             query?: never;
@@ -7734,6 +7878,24 @@ export interface paths {
 export type webhooks = Record<string, never>;
 export interface components {
     schemas: {
+        /**
+         * AbsentLessonResponse
+         * @description A lesson of the subject the student missed.
+         */
+        AbsentLessonResponse: {
+            /**
+             * Date
+             * Format: date
+             */
+            date: string;
+            /** Excused */
+            excused: boolean;
+            /**
+             * Lesson Id
+             * Format: uuid
+             */
+            lesson_id: string;
+        };
         /**
          * AccessOptionResponse
          * @description An access filter option.
@@ -7927,6 +8089,37 @@ export interface components {
             status: string;
             /** Telegram */
             telegram: components["schemas"]["app__interfaces__http__v1__id__schemas__TelegramAccountResponse"][];
+        };
+        /**
+         * AgentStepResponse
+         * @description AgentStep: one action of the assistant while it answered.
+         *
+         *     `target` is a name to show (a file, a count of results); `ref` an id the web can
+         *     open (a file id, a tool call id, a plan id).
+         */
+        AgentStepResponse: {
+            /** Duration Ms */
+            duration_ms?: number | null;
+            /** Id */
+            id: string;
+            /**
+             * Kind
+             * @enum {string}
+             */
+            kind: "read_file" | "web_search" | "retrieve" | "open_view" | "create" | "tool" | "think";
+            /** Label */
+            label: string;
+            /** Ref */
+            ref?: string | null;
+            /** Started At */
+            started_at?: string | null;
+            /**
+             * Status
+             * @enum {string}
+             */
+            status: "running" | "done" | "failed";
+            /** Target */
+            target?: string | null;
         };
         /**
          * AlertResponse
@@ -9403,6 +9596,28 @@ export interface components {
             new_password: string;
         };
         /**
+         * ChatAttachment
+         * @description A lesson, or one material of a lesson, the question is about (students).
+         *
+         *     `lesson`: `id` is the lesson. `material`: `id` is the link of the material and
+         *     `lesson_id` its lesson. The lesson's subject, date, topic, materials and homework
+         *     reach the model as a pinned text.
+         */
+        ChatAttachment: {
+            /**
+             * Id
+             * Format: uuid
+             */
+            id: string;
+            /**
+             * Kind
+             * @enum {string}
+             */
+            kind: "lesson" | "material";
+            /** Lesson Id */
+            lesson_id?: string | null;
+        };
+        /**
          * ChatConfig
          * @description `notebooks.chat_config` (§ 3.3.6).
          */
@@ -9560,6 +9775,8 @@ export interface components {
             role: "user" | "assistant";
             /** Seq */
             seq: number;
+            /** Steps */
+            steps?: components["schemas"]["AgentStepResponse"][];
             /** Text */
             text: string;
             /** Tool Calls */
@@ -11848,6 +12065,30 @@ export interface components {
             done: boolean;
         };
         /**
+         * HomeworkEntryResponse
+         * @description A homework of the subject and what the student did (`done_at`, `note`).
+         */
+        HomeworkEntryResponse: {
+            /**
+             * Date
+             * Format: date
+             */
+            date: string;
+            /** Done At */
+            done_at: string | null;
+            /** Due Date */
+            due_date: string | null;
+            /**
+             * Lesson Id
+             * Format: uuid
+             */
+            lesson_id: string;
+            /** Note */
+            note: string | null;
+            /** Text */
+            text: string | null;
+        };
+        /**
          * HomeworkNoteBody
          * @description Body of ``PUT /v1/me/homework/{lesson_id}/note``.
          */
@@ -13110,6 +13351,18 @@ export interface components {
             mark: number | null;
         };
         /**
+         * LessonSubgroupResponse
+         * @description The subgroup a lesson is for; `is_own_subgroup` is False for the other half.
+         */
+        LessonSubgroupResponse: {
+            /** Is Own Subgroup */
+            is_own_subgroup: boolean;
+            /** Subgroup Id */
+            subgroup_id: number;
+            /** Subgroup Name */
+            subgroup_name: string;
+        };
+        /**
          * LibraryItemInput
          * @description A library book or material, or a page range of one of its files.
          *
@@ -14095,6 +14348,8 @@ export interface components {
             seq: number;
             /** Source Ids */
             source_ids: string[];
+            /** Steps */
+            steps?: components["schemas"]["AgentStepResponse"][];
             /** Stopped */
             stopped: boolean;
             /** Text */
@@ -14762,6 +15017,32 @@ export interface components {
             category: 1 | 2 | 3 | 4;
         };
         /**
+         * PlanConfirmResponse
+         * @description The confirmed plan and the deck that is being generated.
+         */
+        PlanConfirmResponse: {
+            artifact: components["schemas"]["ArtifactItemResponse"];
+            plan: components["schemas"]["PresentationPlanResponse"];
+        };
+        /**
+         * PlanCreateBody
+         * @description POST /v1/notebooks/{id}/presentation-plans.
+         */
+        PlanCreateBody: {
+            /**
+             * Format
+             * @default presenter
+             * @enum {string}
+             */
+            format: "presenter" | "detailed";
+            /** Prompt */
+            prompt?: string | null;
+            /** Slide Count */
+            slide_count?: number | null;
+            /** Source Ids */
+            source_ids?: string[] | null;
+        };
+        /**
          * PlanPreviewResponse
          * @description What applying a course plan would do to the draft outline.
          */
@@ -14824,6 +15105,36 @@ export interface components {
             title: string;
         };
         /**
+         * PlanSlide
+         * @description One slide of an outline: a title and up to 8 bullets.
+         */
+        PlanSlide: {
+            /** Bullets */
+            bullets?: string[];
+            /** Title */
+            title: string;
+        };
+        /**
+         * PlanSlideBody
+         * @description One slide of an outline.
+         */
+        PlanSlideBody: {
+            /** Bullets */
+            bullets?: string[];
+            /** Title */
+            title: string;
+        };
+        /**
+         * PlanSlideResponse
+         * @description One slide of an outline.
+         */
+        PlanSlideResponse: {
+            /** Bullets */
+            bullets: string[];
+            /** Title */
+            title: string;
+        };
+        /**
          * PlanStepInput
          * @description One planned step.
          */
@@ -14859,6 +15170,16 @@ export interface components {
             step_id: string | null;
             /** Title */
             title: string;
+        };
+        /**
+         * PlanUpdateBody
+         * @description PATCH /v1/notebooks/{id}/presentation-plans/{pid}: what is sent is replaced.
+         */
+        PlanUpdateBody: {
+            /** Slides */
+            slides?: components["schemas"]["PlanSlideBody"][] | null;
+            /** Title */
+            title?: string | null;
         };
         /**
          * PlannerPair
@@ -15023,6 +15344,47 @@ export interface components {
             theme?: ("system" | "light" | "dark") | null;
             /** Today Cards */
             today_cards?: string[] | null;
+        };
+        /**
+         * PresentationPlanResponse
+         * @description `PresentationPlan`: a slide outline confirmed before its deck is made.
+         */
+        PresentationPlanResponse: {
+            /** Artifact Id */
+            artifact_id: string | null;
+            /**
+             * Created At
+             * Format: date-time
+             */
+            created_at: string;
+            /**
+             * Id
+             * Format: uuid
+             */
+            id: string;
+            /** Max Slides */
+            max_slides: number;
+            /**
+             * Notebook Id
+             * Format: uuid
+             */
+            notebook_id: string;
+            /** Over Limit */
+            over_limit: boolean;
+            /** Slides */
+            slides: components["schemas"]["PlanSlideResponse"][];
+            /**
+             * Status
+             * @enum {string}
+             */
+            status: "draft" | "confirmed";
+            /** Title */
+            title: string;
+            /**
+             * Updated At
+             * Format: date-time
+             */
+            updated_at: string;
         };
         /**
          * PresetResponse
@@ -16261,6 +16623,23 @@ export interface components {
             user_id: string;
         };
         /**
+         * RosterStudentResponse
+         * @description A student of the group (subgroup None: not assigned).
+         */
+        RosterStudentResponse: {
+            /** First Name */
+            first_name: string;
+            /** Last Name */
+            last_name: string;
+            /** Subgroup */
+            subgroup: number | null;
+            /**
+             * User Id
+             * Format: uuid
+             */
+            user_id: string;
+        };
+        /**
          * RunSyncBody
          * @description Start a sync for one student, or for everybody when ``user_id`` is absent.
          */
@@ -16890,6 +17269,8 @@ export interface components {
              * @enum {string}
              */
             length: "short" | "default" | "long";
+            /** Outline */
+            outline?: components["schemas"]["PlanSlide"][] | null;
             /** Source Ids */
             source_ids?: string[] | null;
         };
@@ -17528,6 +17909,69 @@ export interface components {
              * Format: uuid
              */
             user_id: string;
+        };
+        /**
+         * StudentLessonItemResponse
+         * @description A LessonItem of the student's timetable; `subgroup` is None for the group.
+         */
+        StudentLessonItemResponse: {
+            /** Absent Count */
+            absent_count?: number | null;
+            /** Attendance Submitted */
+            attendance_submitted: boolean;
+            /** Audience */
+            audience: components["schemas"]["app__interfaces__http__v1__admin_schedule__shared_schemas__AudienceItemResponse"][];
+            /** Changes */
+            changes: {
+                [key: string]: unknown[];
+            } | null;
+            /**
+             * Date
+             * Format: date
+             */
+            date: string;
+            /**
+             * Ends At
+             * Format: date-time
+             */
+            ends_at: string;
+            /** Has Homework */
+            has_homework: boolean;
+            /**
+             * Id
+             * Format: uuid
+             */
+            id: string;
+            /** Is Overridden */
+            is_overridden: boolean;
+            /**
+             * Kind
+             * @default other
+             * @enum {string}
+             */
+            kind: "lecture" | "practice" | "midterm" | "final" | "other";
+            /** Late Count */
+            late_count?: number | null;
+            /** Period */
+            period: number;
+            room: components["schemas"]["app__interfaces__http__v1__admin_schedule__shared_schemas__RoomRefLiteResponse"] | null;
+            /**
+             * Starts At
+             * Format: date-time
+             */
+            starts_at: string;
+            /**
+             * Status
+             * @enum {string}
+             */
+            status: "scheduled" | "cancelled";
+            subgroup?: components["schemas"]["LessonSubgroupResponse"] | null;
+            subject: components["schemas"]["app__interfaces__http__v1__admin_schedule__shared_schemas__SubjectRefResponse"];
+            teacher: components["schemas"]["app__interfaces__http__v1__admin_schedule__shared_schemas__PersonRefResponse"] | null;
+            /** Topic */
+            topic: string | null;
+            /** Topic Source */
+            topic_source?: ("emis" | "manual") | null;
         };
         /**
          * StudentLessonResponse
@@ -18429,6 +18873,138 @@ export interface components {
             id: string;
             /** Name */
             name: string;
+        };
+        /**
+         * TeachingGroupResponse
+         * @description A group (or subgroup) the caller teaches a subject: students and lessons.
+         *
+         *     `subgroups` lists the subgroups the caller teaches in the group; empty when the
+         *     group is taught undivided. `lessons` cover this week and the next three.
+         */
+        TeachingGroupResponse: {
+            /**
+             * Group Id
+             * Format: uuid
+             */
+            group_id: string;
+            /** Group Name */
+            group_name: string;
+            /** Lessons */
+            lessons: components["schemas"]["TeachingLessonResponse"][];
+            /** Students */
+            students: components["schemas"]["RosterStudentResponse"][];
+            /** Subgroup */
+            subgroup: number | null;
+            /** Subgroups */
+            subgroups: number[];
+            /**
+             * Subject Id
+             * Format: uuid
+             */
+            subject_id: string;
+            /** Subject Name */
+            subject_name: string;
+        };
+        /**
+         * TeachingLessonResponse
+         * @description A lesson of the subject for the group.
+         */
+        TeachingLessonResponse: {
+            /**
+             * Date
+             * Format: date
+             */
+            date: string;
+            /**
+             * Ends At
+             * Format: date-time
+             */
+            ends_at: string;
+            /** Group Names */
+            group_names: string[];
+            /** Homework Due Date */
+            homework_due_date: string | null;
+            /** Homework Text */
+            homework_text: string | null;
+            /**
+             * Id
+             * Format: uuid
+             */
+            id: string;
+            /** Period */
+            period: number;
+            /** Room Name */
+            room_name: string | null;
+            /**
+             * Starts At
+             * Format: date-time
+             */
+            starts_at: string;
+            /**
+             * Status
+             * @enum {string}
+             */
+            status: "scheduled" | "cancelled";
+            /** Topic */
+            topic: string | null;
+        };
+        /**
+         * TeachingMarkResponse
+         * @description One mark (2 to 5).
+         */
+        TeachingMarkResponse: {
+            /**
+             * Date
+             * Format: date
+             */
+            date: string;
+            /** Lesson Id */
+            lesson_id: string | null;
+            /** Semester */
+            semester: number;
+            /** Type */
+            type: string;
+            /** Value */
+            value: number;
+        };
+        /**
+         * TeachingStudentResponse
+         * @description A student's record in the subject: marks of the newest semester and more.
+         *
+         *     `average` is the mean of `marks` on the 5-point scale.
+         */
+        TeachingStudentResponse: {
+            /** Absences */
+            absences: number;
+            /** Absent Lessons */
+            absent_lessons: components["schemas"]["AbsentLessonResponse"][];
+            /** Average */
+            average: number | null;
+            /**
+             * Group Id
+             * Format: uuid
+             */
+            group_id: string;
+            /** Group Name */
+            group_name: string;
+            /** Homework */
+            homework: components["schemas"]["HomeworkEntryResponse"][];
+            /** Lessons With Attendance */
+            lessons_with_attendance: number | null;
+            /** Marks */
+            marks: components["schemas"]["TeachingMarkResponse"][];
+            /** Semester */
+            semester: number | null;
+            /** Semester Mark */
+            semester_mark: number | null;
+            student: components["schemas"]["RosterStudentResponse"];
+            /**
+             * Subject Id
+             * Format: uuid
+             */
+            subject_id: string;
+            /** Subject Name */
+            subject_name: string;
         };
         /**
          * TelegramLinkedResponse
@@ -21447,6 +22023,8 @@ export interface components {
              * @default
              */
             args: string;
+            /** Attachments */
+            attachments?: components["schemas"]["ChatAttachment"][];
             /** Command */
             command?: string | null;
             /** Source Ids */
@@ -32437,7 +33015,7 @@ export interface operations {
                     [name: string]: unknown;
                 };
                 content: {
-                    "application/json": components["schemas"]["app__interfaces__http__v1__admin_schedule__shared_schemas__LessonItemResponse"][];
+                    "application/json": components["schemas"]["StudentLessonItemResponse"][];
                 };
             };
             /** @description Validation Error */
@@ -33958,6 +34536,141 @@ export interface operations {
                 };
                 content: {
                     "application/json": components["schemas"]["PassageDetailResponse"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    create_presentation_plan_v1_notebooks__notebook_id__presentation_plans_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                notebook_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["PlanCreateBody"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["PresentationPlanResponse"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    get_presentation_plan_v1_notebooks__notebook_id__presentation_plans__plan_id__get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                notebook_id: string;
+                plan_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["PresentationPlanResponse"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    update_presentation_plan_v1_notebooks__notebook_id__presentation_plans__plan_id__patch: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                notebook_id: string;
+                plan_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["PlanUpdateBody"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["PresentationPlanResponse"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    confirm_presentation_plan_v1_notebooks__notebook_id__presentation_plans__plan_id__confirm_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                notebook_id: string;
+                plan_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            202: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["PlanConfirmResponse"];
                 };
             };
             /** @description Validation Error */
@@ -35780,6 +36493,138 @@ export interface operations {
                 };
                 content: {
                     "application/json": components["schemas"]["StaffSubjectResponse"][];
+                };
+            };
+        };
+    };
+    get_group_v1_staff_subjects__subject_id__groups__group_id__get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                subject_id: string;
+                group_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["TeachingGroupResponse"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    get_student_v1_staff_subjects__subject_id__groups__group_id__students__student_id__get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                subject_id: string;
+                group_id: string;
+                student_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["TeachingStudentResponse"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    get_subgroup_v1_staff_subjects__subject_id__groups__group_id__subgroups__subgroup__get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                subject_id: string;
+                group_id: string;
+                subgroup: number;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["TeachingGroupResponse"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    get_subgroup_student_v1_staff_subjects__subject_id__groups__group_id__subgroups__subgroup__students__student_id__get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                subject_id: string;
+                group_id: string;
+                subgroup: number;
+                student_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["TeachingStudentResponse"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
                 };
             };
         };

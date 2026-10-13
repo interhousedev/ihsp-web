@@ -125,7 +125,7 @@
       "gpa": "GPA (5 dan)",
       "absences": "Qoldirilgan darslar",
       "change": "oʻtgan semestrga nisbatan {change}",
-      "importing": "Baholaringiz EMIS’dan yuklanmoqda…",
+      "importing": "Baholaringiz EMISʼdan yuklanmoqda…",
       "updated": "Baholar yangilandi: {when}",
       "syncFailed": "Baholar oxirgi marta {time} da yangilangan"
     },
@@ -261,6 +261,7 @@
     "now": "Hozir",
     "cancelled": "Bekor qilingan",
     "subgroup": "{number}-kichik guruh",
+    "otherSubgroup": "Boshqa kichik guruh ({name})",
     "subgroupHint": "Kichik guruhingiz hali belgilanmagan, shuning uchun ikkala kichik guruh darslari koʻrsatilgan.",
     "noLessons": "Bu kuni dars yoʻq.",
     "noLessonsWeek": "Bu haftada dars yoʻq.",
@@ -345,7 +346,6 @@
       "showMore": "Yana koʻrsatish",
       "noTopic": "Mavzu hali yoʻq",
       "askAi": "Bu dars haqida AIdan soʻrash",
-      "question": "{date} kungi dars haqida aytib ber: {topic}",
       "materials": "{count, plural, one {# material} other {# material}}",
       "kind": {
         "lecture": "Maʼruza",
@@ -386,6 +386,8 @@
     "resources": {
       "open": "Ochish",
       "openItem": "Ochish: {title}",
+      "preview": "Ko‘rish",
+      "previewItem": "{title} ni ko‘rish",
       "deleteItem": "Oʻchirish: {title}"
     },
     "attach": {
@@ -424,7 +426,7 @@
       "gpa": "GPA (5 dan)",
       "marksCount": "{count, plural, other {# ta baho}}",
       "updated": "Yangilandi: {when}",
-      "importing": "Baholaringiz EMIS’dan yuklanmoqda…",
+      "importing": "Baholaringiz EMISʼdan yuklanmoqda…",
       "empty": "Bu semestrda hozircha baholar yoʻq.",
       "plan": "Reja",
       "planFor": "Baholar rejasi: {subject}"
@@ -445,7 +447,7 @@
       "chartTitle": "Semestrlar boʻyicha GPA",
       "chartLabel": "Semestrlar boʻyicha GPA chiziqli diagrammasi",
       "gpa": "GPA (5 dan)",
-      "gpaList": "Har bir semestr GPA’si (5 dan)",
+      "gpaList": "Har bir semestr GPAʼsi (5 dan)",
       "semesterShort": "S{number}",
       "semesterLabel": "{number}-semestr",
       "emisRating": "EMIS",

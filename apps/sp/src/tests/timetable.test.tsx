@@ -102,6 +102,32 @@ describe("calendar week view", () => {
     expect(slotOf("lesson-b").style.left).toBe("50%")
   })
 
+  test("the other subgroup's lesson is dimmed and labelled", async () => {
+    server.use(
+      http.get(apiUrl("/v1/me/timetable"), () =>
+        HttpResponse.json([
+          {
+            ...makeLesson({ weekday: 3, period: 3, subject: "english", room: "r204", subgroup: 1 }, { id: "lesson-a" }),
+            subgroup: { subgroup_id: 1, subgroup_name: "2TN2/1", is_own_subgroup: true },
+          },
+          {
+            ...makeLesson(
+              { weekday: 3, period: 4, subject: "informatics", room: "klaster", subgroup: 2 },
+              { id: "lesson-b" },
+            ),
+            subgroup: { subgroup_id: 2, subgroup_name: "2TN2/2", is_own_subgroup: false },
+          },
+        ]),
+      ),
+    )
+    const { container } = renderSp(<TimetablePage />, { route: "/timetable/" })
+
+    await waitFor(() => expect(container.querySelectorAll("[data-other-subgroup]")).toHaveLength(1))
+    const other = container.querySelector("[data-other-subgroup]")
+    expect(other?.getAttribute("href")).toContain("lesson-b")
+    expect(other?.textContent).toContain("2TN2/2")
+  })
+
   test("a block narrowed by an overlapping lesson keeps its full subject, time and room in a tooltip", async () => {
     server.use(
       http.get(apiUrl("/v1/me/timetable"), () =>

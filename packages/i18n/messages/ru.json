@@ -846,6 +846,39 @@
         "hint": "Что делают команды",
         "args": "Что добавить"
       }
+    },
+    "steps": {
+      "summary": "{count, plural, one {# шаг} few {# шага} many {# шагов} other {# шага}}",
+      "toggle": "Показать шаги этого ответа",
+      "list": "Шаги этого ответа",
+      "readFile": "Просмотрен загруженный файл «{target}»",
+      "webSearch": "Поиск в интернете",
+      "retrieve": "Поиск по источникам",
+      "openView": "Открыто: {target}",
+      "create": "Создано: {target}",
+      "think": "Ответ проверен",
+      "tool": {
+        "get_schedule": "Открыто расписание",
+        "get_marks": "Просмотрены оценки",
+        "get_homework": "Просмотрено домашнее задание",
+        "get_attendance": "Просмотрена посещаемость",
+        "get_my_subjects": "Просмотрены предметы",
+        "list_files": "Просмотрены файлы",
+        "search_files": "Поиск по файлам",
+        "list_notebooks": "Просмотрены блокноты",
+        "make_document": "Создан документ",
+        "create_artifact": "Запущено создание материала Studio"
+      },
+      "running": {
+        "readFile": "Читаю «{target}»…",
+        "webSearch": "Ищу в интернете…",
+        "retrieve": "Ищу по источникам…",
+        "openView": "Открываю {target}…",
+        "create": "Создаю {target}…",
+        "think": "Проверяю ответ…"
+      },
+      "failed": "Ошибка",
+      "target": "Объект"
     }
   },
   "files": {

@@ -3,7 +3,7 @@
 import { getMeSubjectLessonsQuery, postNotebookAutoSubject } from "@ihsp/api"
 import { useMutation, useQuery } from "@tanstack/react-query"
 import { useRouter } from "next/navigation"
-import { askLessonHref, leaveLessonDraft } from "../utils/ask-lesson"
+import { askLessonHref, leaveLessonAttachment } from "../utils/ask-lesson"
 
 export const PAST_STEP = 10
 
@@ -24,18 +24,18 @@ export function useSubjectLessons(subjectId: string | null, semester: number | u
 }
 
 /**
- * Opens (creating when needed) the notebook of the subject and goes to its chat. With a lesson, the question about
- * that lesson is prefilled and the lesson id travels in the address.
+ * Opens (creating when needed) the notebook of the subject and goes to its chat. With a lesson, the lesson is attached
+ * to the next question as a chip (`label`) and the lesson id travels in the address.
  */
 export function useOpenSubjectNotebook(subjectId: string) {
   const router = useRouter()
   return useMutation({
-    mutationFn: async (input: { lessonId?: string; question?: string }) => {
+    mutationFn: async (input: { lessonId?: string; label?: string }) => {
       const notebook = await postNotebookAutoSubject(subjectId)
       return { notebook, ...input }
     },
-    onSuccess: ({ notebook, lessonId, question }) => {
-      if (lessonId && question) leaveLessonDraft(notebook.id, question)
+    onSuccess: ({ notebook, lessonId, label }) => {
+      if (lessonId && label) leaveLessonAttachment(notebook.id, lessonId, label)
       router.push(lessonId ? askLessonHref(notebook.id, lessonId) : `/notebooks/view/?id=${notebook.id}`)
     },
   })

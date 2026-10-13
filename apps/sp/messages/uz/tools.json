@@ -54,7 +54,7 @@
       "allDecks": "Barcha kollodalar",
       "missing": "Kolloda topilmadi.",
       "importFailed": "Faylni o‘qib bo‘lmadi.",
-      "importEmpty": "Faylda kartochkalar topilmadi. Har qatorga bitta kartochka yozing: atama va ta’rif tab bilan ajratilgan.",
+      "importEmpty": "Faylda kartochkalar topilmadi. Har qatorga bitta kartochka yozing: atama va taʼrif tab bilan ajratilgan.",
       "imported": "“{title}” kollodasiga {count} ta kartochka import qilindi.",
       "created": "Kolloda yaratildi.",
       "saved": "Kartochkalar saqlandi.",

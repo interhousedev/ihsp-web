@@ -2,9 +2,9 @@
 import { afterEach, beforeEach, describe, expect, test } from "bun:test"
 import { apiUrl, ids, notebookDetail, server, testRouter } from "@ihsp/test-utils"
 import { screen, waitFor, within } from "@testing-library/react"
+import { takeChatAttachments } from "@ihsp/features-core"
 import { HttpResponse, http } from "msw"
 import { SubjectPage } from "../features/subjects/components/subject-page"
-import { notebookDraftKey } from "../features/subjects/utils/ask-lesson"
 import { configureTests, freezeTime, renderSp, unfreezeTime } from "./helpers"
 
 configureTests()
@@ -184,7 +184,7 @@ describe("subject hub", () => {
     await waitFor(() => expect(limits).toEqual(["10", "20"]))
   })
 
-  test("Ask AI about this lesson opens the subject notebook with the lesson and a prefilled question", async () => {
+  test("Ask AI about this lesson opens the subject notebook with the lesson attached as a chip", async () => {
     testRouter.push.mockClear()
     const { user } = renderSp(<SubjectPage />, { route: HUB })
 
@@ -194,6 +194,9 @@ describe("subject hub", () => {
     await waitFor(() => expect(testRouter.push).toHaveBeenCalled())
     const href = String(testRouter.push.mock.calls[0]?.[0])
     expect(href).toStartWith(`/notebooks/view/?id=${notebookDetail.id}&lesson=`)
-    expect(window.sessionStorage.getItem(notebookDraftKey(notebookDetail.id))).toContain("lesson")
+    const left = takeChatAttachments(notebookDetail.id)
+    expect(left).toHaveLength(1)
+    expect(left[0]).toMatchObject({ kind: "lesson", attachment: { kind: "lesson", id: href.split("lesson=")[1] } })
+    expect(left[0]?.label).toContain("Physics")
   })
 })

@@ -410,7 +410,9 @@
       "lessons": "Next lessons",
       "noLessons": "No lessons in the next weeks.",
       "period": "period {number}",
-      "timetable": "Open timetable"
+      "timetable": "Open timetable",
+      "openGroup": "Students and lessons",
+      "openSubgroup": "Subgroup {number}"
     },
     "materials": {
       "heading": "Materials",
@@ -446,6 +448,40 @@
         "titleLabel": "Title",
         "submit": "Add material"
       }
+    },
+    "group": {
+      "back": "{subject}",
+      "subgroupTitle": "{group} · subgroup {number}",
+      "students": "Students ({count})",
+      "noStudents": "No students in this group.",
+      "subgroupBadge": "subgroup {number}",
+      "timetable": "Lessons",
+      "thisWeek": "This week",
+      "upcoming": "Upcoming",
+      "noLessons": "No lessons.",
+      "period": "period {number}",
+      "room": "room {room}"
+    },
+    "student": {
+      "back": "Back to the group",
+      "marks": "Marks",
+      "average": "Average",
+      "semesterMark": "semester mark {value}",
+      "noMarks": "No marks yet.",
+      "type": {
+        "lesson": "Lesson mark",
+        "midterm": "Midterm control (MC)",
+        "final": "Final control (FC)"
+      },
+      "homework": "Homework",
+      "noHomework": "No homework for this subject.",
+      "done": "Done {when}",
+      "notDone": "Not done",
+      "note": "Note: {note}",
+      "attendance": "Attendance",
+      "absences": "Absences: {count}",
+      "absencesOf": "Absences: {count} of {total} lessons",
+      "excused": "excused"
     }
   }
 }

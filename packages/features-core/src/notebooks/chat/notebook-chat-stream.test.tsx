@@ -1,5 +1,5 @@
 import { describe, expect, it } from "bun:test"
-import { getNotebookChat, keys, type NotebookChatHistory, type NotebookMessage } from "@ihsp/api"
+import { type AgentStep, getNotebookChat, keys, type NotebookChatHistory, type NotebookMessage } from "@ihsp/api"
 import {
   apiUrl,
   citation1,
@@ -386,5 +386,34 @@ describe("NotebookChat: proposed Studio output", () => {
     stream.close()
 
     expect(await screen.findByRole("group", { name: "Create “Quiz”?" })).toBeInTheDocument()
+  })
+})
+
+describe("AI-STEPS NotebookChat: live steps", () => {
+  it("shows the running step while the answer streams and keeps the stored steps after done", async () => {
+    const stream = controlledStream()
+    stream.install()
+    const { user } = await renderChat()
+    await screen.findByRole("article", { name: "Assistant" })
+
+    await ask(user, "How is sugar made?")
+    const step: AgentStep = { id: "h1", kind: "retrieve", label: "Searched the sources", status: "running" }
+    stream.push("message", { id: "stream-question", seq: 3 })
+    stream.push("step", step)
+    expect(await screen.findByText("Searching the sources…")).toBeInTheDocument()
+
+    stream.push("step", { ...step, status: "done", duration_ms: 400 })
+    stream.push("delta", { text: "Sugar is made " })
+    expect(await screen.findByText("1 step")).toBeInTheDocument()
+
+    stream.push("done", {
+      assistant_message: answer({ steps: [{ ...step, status: "done", duration_ms: 400 }] }),
+      user_message: storedQuestion("How is sugar made?"),
+      usage: notebookUsage,
+    })
+    stream.close()
+
+    await waitFor(() => expect(screen.queryByRole("article", { busy: true })).not.toBeInTheDocument())
+    expect(screen.getAllByRole("button", { name: "Show the steps of this answer" }).length).toBeGreaterThan(0)
   })
 })

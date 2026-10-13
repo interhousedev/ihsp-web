@@ -33,3 +33,16 @@ describe("StreamingAnswer: web chips", () => {
     expect(screen.queryByRole("link")).not.toBeInTheDocument()
   })
 })
+
+describe("AI-STEPS StreamingAnswer: steps", () => {
+  it("names the running step above the growing answer", () => {
+    renderNotebook(
+      <StreamingAnswer
+        pending={{ ...pending, steps: [{ id: "1", kind: "web_search", label: "Searched the web", status: "running" }] }}
+        running
+      />,
+    )
+
+    expect(screen.getByText("Searching the web…")).toBeInTheDocument()
+  })
+})

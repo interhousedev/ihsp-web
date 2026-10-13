@@ -274,9 +274,21 @@ export function getMeProfile(opts?: RequestOptions): Promise<StudentProfile> {
 export const getMeProfileQuery = () =>
   queryOptions({ queryKey: keys.me.profile(), queryFn: ({ signal }) => getMeProfile({ signal }) })
 
+// TODO(contract): replace with generated
+/** The subgroup a student's lesson is for; null on the lesson means the whole group. */
+export type LessonSubgroup = {
+  subgroup_id: number
+  subgroup_name: string
+  is_own_subgroup: boolean
+}
+
+// TODO(contract): replace with generated
+/** A LessonItem of the student's timetable, with its subgroup. */
+export type StudentLessonItem = LessonItem & { subgroup?: LessonSubgroup | null }
+
 /** GET /v1/me/timetable?from&to — student. */
-export function getMeTimetable(params?: TimetableRangeParams, opts?: RequestOptions): Promise<LessonItem[]> {
-  return api.get<LessonItem[]>("/v1/me/timetable", { ...opts, query: params })
+export function getMeTimetable(params?: TimetableRangeParams, opts?: RequestOptions): Promise<StudentLessonItem[]> {
+  return api.get<StudentLessonItem[]>("/v1/me/timetable", { ...opts, query: params })
 }
 export const getMeTimetableQuery = (params?: TimetableRangeParams) =>
   queryOptions({
