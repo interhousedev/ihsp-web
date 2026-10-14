@@ -16,5 +16,7 @@ window.__ENV__ = {
   OAUTH_CLIENT_ID: "staff",
   // "pwa" turns this app into an installable one (manifest, service worker, offline page, forced updates).
   APP_MODE: "web",
+  // The apps hub: in pwa mode "Install the app" opens its install page of this app.
+  APP_URL: "http://localhost:3007",
   STORAGE_ORIGIN: "http://localhost:9000",
 };

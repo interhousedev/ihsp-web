@@ -5,6 +5,7 @@ import { getConfig, type AppEnv } from "@ihsp/config"
 import { useT } from "@ihsp/i18n"
 import type { PlatformLink } from "@ihsp/ui"
 import { installAppUrl, isPwaMode } from "../pwa/utils/app-mode"
+import { hubInstallUrl } from "../pwa/utils/hub-install"
 import { platformKeysFor, type PlatformKey } from "./platform-keys"
 
 const URL_KEYS: Record<PlatformKey, keyof AppEnv> = {
@@ -19,9 +20,9 @@ const URL_KEYS: Record<PlatformKey, keyof AppEnv> = {
 /** Apps that are installed separately: in the installed app their links go to the apps hub, to the app's install steps. */
 const HUB_ANCHORS: readonly PlatformKey[] = ["lms", "library", "staff", "admin"]
 
-/** `https://app.ihsu.uz` + `lms` → `https://app.ihsu.uz/#install-lms`. */
+/** `https://app.ihsu.uz` + `lms` → `https://app.ihsu.uz/install/?app=lms`, the hub's install page of that app. */
 export function installAnchorUrl(hub: string, key: PlatformKey): string {
-  return `${hub.replace(/\/+$/, "")}/#install-${key}`
+  return hubInstallUrl(hub, key)
 }
 
 /**

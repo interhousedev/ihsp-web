@@ -4,7 +4,7 @@ import { resetConfig } from "@ihsp/config"
 import { createPwaHeadScript } from "@ihsp/features-core/pwa/head"
 import { TEST_ENV, apiUrl, server } from "@ihsp/test-utils"
 import { PwaRuntime, useInstallAppMenuItem } from "@ihsp/features-core/pwa"
-import { screen, waitFor } from "@testing-library/react"
+import { fireEvent, screen, waitFor } from "@testing-library/react"
 import { HttpResponse, http } from "msw"
 import { existsSync, readFileSync } from "node:fs"
 import { join } from "node:path"
@@ -19,7 +19,11 @@ function setMode(mode: "web" | "pwa"): void {
 
 function InstallEntry() {
   const item = useInstallAppMenuItem()
-  return item ? <button type="button">{item.title}</button> : null
+  return item ? (
+    <button type="button" onClick={() => item.onSelect?.()}>
+      {item.title}
+    </button>
+  ) : null
 }
 
 const register = mock(async () => ({}) as ServiceWorkerRegistration)
@@ -112,6 +116,23 @@ describe("pwa mode", () => {
     renderStaff(<InstallEntry />)
 
     expect(screen.getByRole("button", { name: "Install the app" })).toBeInTheDocument()
+  })
+
+  test("Install opens the apps hub's install page of this app", () => {
+    setMode("pwa")
+    window.__ENV__ = { ...(window.__ENV__ as object), APP_URL: "http://app.localhost" }
+    resetConfig()
+    const open = mock(() => null)
+    const previous = window.open
+    window.open = open as unknown as typeof window.open
+    try {
+      renderStaff(<InstallEntry />)
+      fireEvent.click(screen.getByRole("button", { name: "Install the app" }))
+
+      expect(open).toHaveBeenCalledWith("http://app.localhost/install/?app=staff", "_blank", "noopener,noreferrer")
+    } finally {
+      window.open = previous
+    }
   })
 })
 

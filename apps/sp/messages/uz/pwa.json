@@ -52,6 +52,29 @@
       "installLabel": "{name} ilovasini oʻrnatish",
       "forStaff": "Xodimlar uchun",
       "thisApp": "Yuqoridagi qadamlar bilan oʻrnating"
+    },
+    "appInstall": {
+      "title": "{name}ni oʻrnatish",
+      "ownAddress": "{name} oʻz manzilidan oʻrnatiladi. Tugmani bosing: {name} ochiladi va darhol oʻrnatishni taklif qiladi.",
+      "open": "{name}ni ochish va oʻrnatish",
+      "stepsTitle": "Qanday oʻrnatiladi",
+      "ios": {
+        "step1": "Yuqoridagi tugmani bosing: {name} Safariʼda ochiladi",
+        "step2": "Brauzer panelidagi “Ulashish” tugmasini bosing",
+        "step3": "Pastga suring va “Bosh ekranga qoʻshish”ni tanlang",
+        "step4": "“Qoʻshish”ni bosing. {name} bosh ekranda paydo boʻladi."
+      },
+      "android": {
+        "step1": "Yuqoridagi tugmani bosing: {name} brauzerda ochiladi",
+        "step2": "Paydo boʻlgan xabarda “Oʻrnatish”ni bosing",
+        "step3": "Xabar chiqmadimi? Brauzer menyusini (uch nuqta) oching va “Ilovani oʻrnatish” yoki “Bosh ekranga qoʻshish”ni tanlang"
+      },
+      "desktop": {
+        "step1": "Yuqoridagi tugmani bosing: {name} brauzerda ochiladi",
+        "step2": "Paydo boʻlgan xabarda “Oʻrnatish”ni yoki manzil satridagi oʻrnatish belgisini bosing"
+      },
+      "unknown": "Bu ilovani bu yerdan oʻrnatib boʻlmaydi.",
+      "back": "Barcha IHT ilovalari"
     }
   }
 }

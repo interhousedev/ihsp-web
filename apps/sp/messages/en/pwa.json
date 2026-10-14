@@ -52,6 +52,29 @@
       "installLabel": "Install {name}",
       "forStaff": "For staff",
       "thisApp": "Install with the steps above"
+    },
+    "appInstall": {
+      "title": "Install {name}",
+      "ownAddress": "{name} installs from its own address. Tap the button: {name} opens and offers to install itself.",
+      "open": "Open {name} and install",
+      "stepsTitle": "How to install",
+      "ios": {
+        "step1": "Tap the button above: {name} opens in Safari",
+        "step2": "Tap the Share button in the browser bar",
+        "step3": "Scroll down and tap Add to Home Screen",
+        "step4": "Tap Add. {name} appears on your home screen."
+      },
+      "android": {
+        "step1": "Tap the button above: {name} opens in the browser",
+        "step2": "Tap Install in the message that appears",
+        "step3": "No message? Open the browser menu (the three dots) and choose Install app or Add to Home screen"
+      },
+      "desktop": {
+        "step1": "Click the button above: {name} opens in the browser",
+        "step2": "Click Install in the message that appears, or the install icon in the address bar"
+      },
+      "unknown": "This app cannot be installed from here.",
+      "back": "All IHT apps"
     }
   }
 }

@@ -1247,6 +1247,10 @@
       "iosHint": "Safariʼda “Ulashish” tugmasini bosing, soʻng “Bosh ekranga qoʻshish”ni tanlang.",
       "manualHint": "Brauzer menyusini oching va “Ilovani oʻrnatish” yoki “Bosh ekranga qoʻshish”ni tanlang."
     },
+    "request": {
+      "title": "Bu ilovani qurilmaga oʻrnatasizmi?",
+      "install": "Oʻrnatish"
+    },
     "lock": {
       "title": "IHT qulflangan",
       "prompt": "PIN-kodni kiriting",

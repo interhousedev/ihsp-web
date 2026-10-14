@@ -1,4 +1,4 @@
-/** The apps hub of the installable host: the apps to install, with a link to each one's host; unconfigured apps are hidden. */
+/** The apps hub of the installable host: the apps to install, with a link to each one's install page; unconfigured apps are hidden. */
 import { beforeEach, describe, expect, test } from "bun:test"
 import { screen, within } from "@testing-library/react"
 import { AppsHub } from "../components/apps-hub"
@@ -7,17 +7,17 @@ import { renderPwa, setRuntimeConfig } from "./pwa-test-support"
 beforeEach(() => setRuntimeConfig("pwa", { APP_URL: "http://localhost:3007" }))
 
 describe("AppsHub", () => {
-  test("lists the student app and every configured app with a link to its host", () => {
+  test("lists the student app and every configured app with a link to its install page on the hub", () => {
     renderPwa(<AppsHub />)
 
     const items = screen.getAllByRole("listitem")
     expect(items).toHaveLength(5)
     expect(within(items[0] as HTMLElement).getByText("my.iht")).toBeInTheDocument()
     expect(within(items[0] as HTMLElement).getByText("Install with the steps above")).toBeInTheDocument()
-    expect(screen.getByRole("link", { name: "Install lms.iht" })).toHaveAttribute("href", "http://localhost:3005")
-    expect(screen.getByRole("link", { name: "Install library.iht" })).toHaveAttribute("href", "http://localhost:3008")
-    expect(screen.getByRole("link", { name: "Install IHT Учителям" })).toHaveAttribute("href", "http://localhost:3003")
-    expect(screen.getByRole("link", { name: "Install admin.iht" })).toHaveAttribute("href", "http://localhost:3004")
+    expect(screen.getByRole("link", { name: "Install lms.iht" })).toHaveAttribute("href", "/install/?app=lms")
+    expect(screen.getByRole("link", { name: "Install library.iht" })).toHaveAttribute("href", "/install/?app=library")
+    expect(screen.getByRole("link", { name: "Install IHT Учителям" })).toHaveAttribute("href", "/install/?app=staff")
+    expect(screen.getByRole("link", { name: "Install admin.iht" })).toHaveAttribute("href", "/install/?app=admin")
   })
 
   test("marks Staff and Admin as for staff, and nobody else", () => {

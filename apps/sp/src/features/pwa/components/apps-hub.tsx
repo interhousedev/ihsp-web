@@ -3,10 +3,12 @@
 import { useT } from "@ihsp/i18n"
 import { buttonVariants, cn } from "@ihsp/ui"
 import { IconBook2, IconBooks, IconSchool, IconShieldLock, IconUsers } from "@ihsp/ui"
+import { hubInstallUrl } from "@ihsp/features-core/pwa"
 import { useEffect, useState, type ComponentType } from "react"
 import { useHubApps, type HubAppKey } from "../hooks/use-hub-apps"
 
-const ICONS: Record<HubAppKey, ComponentType<{ className?: string }>> = {
+/** The icon of each app on the hub and on its install page. */
+export const HUB_ICONS: Record<HubAppKey, ComponentType<{ className?: string }>> = {
   sp: IconSchool,
   lms: IconBook2,
   library: IconBooks,
@@ -39,8 +41,7 @@ function useHighlightedApp(apps: readonly { key: HubAppKey }[]): HubAppKey | nul
 
 /**
  * The apps hub of the installable host: every IHSP app that can be installed, each with a one-line description. The student
- * app installs on this page (the steps above); the others open on their own host, where the browser or the profile menu
- * installs them. Staff and admin are marked, an app without a configured address is not listed.
+ * app installs on this page (the steps above); each other app's "Install" opens its install page here (`/install/?app=lms`). Staff and admin are marked, an app without a configured address is not listed.
  */
 export function AppsHub() {
   const t = useT("pwa")
@@ -56,7 +57,7 @@ export function AppsHub() {
       </div>
       <ul className="flex flex-col gap-2">
         {apps.map((app) => {
-          const Icon = ICONS[app.key]
+          const Icon = HUB_ICONS[app.key]
           return (
             <li
               key={app.key}
@@ -81,9 +82,7 @@ export function AppsHub() {
               </div>
               {app.href ? (
                 <a
-                  href={app.href}
-                  target="_blank"
-                  rel="noreferrer"
+                  href={hubInstallUrl("", app.key)}
                   aria-label={t("hub.installLabel", { name: app.name })}
                   className={buttonVariants({ variant: "outline", className: "min-h-11 shrink-0" })}
                 >

@@ -91,8 +91,8 @@ describe("usePlatformLinks", () => {
 
       expect(links.map((link) => [link.key, link.href])).toEqual([
         ["sp", "http://localhost:3002"],
-        ["lms", "https://app.ihsu.uz/#install-lms"],
-        ["library", "https://app.ihsu.uz/#install-library"],
+        ["lms", "https://app.ihsu.uz/install/?app=lms"],
+        ["library", "https://app.ihsu.uz/install/?app=library"],
         ["id", "http://localhost:3001"],
       ])
     } finally {

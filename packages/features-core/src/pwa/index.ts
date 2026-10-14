@@ -2,6 +2,7 @@
 // React, importable from a worker bundle), the head script in `./utils/pwa-head` (importable from a server layout).
 export { PwaRuntime } from "./components/pwa-runtime"
 export { UpdateWatcher } from "./components/update-watcher"
+export { InstallRequest } from "./components/install-request"
 export { ForcedUpdateScreen } from "./components/forced-update-screen"
 export { useApplyUpdate, type ApplyUpdateOptions } from "./hooks/use-apply-update"
 export { useInstallAppMenuItem } from "./hooks/use-install-app-menu-item"
@@ -17,6 +18,14 @@ export { useVersionCheck, type VersionCheck } from "./hooks/use-version-check"
 export { getAppVersion } from "./api/get-app-version"
 export { installAppUrl, isPwaMode } from "./utils/app-mode"
 export { pwaAppId } from "./utils/app-id"
+export {
+  HUB_INSTALL_PATH,
+  INSTALL_REQUEST_PARAM,
+  clearInstallRequest,
+  hasInstallRequest,
+  hubInstallUrl,
+  installRequestUrl,
+} from "./utils/hub-install"
 export {
   APP_VERSION,
   compareVersions,

@@ -39,7 +39,7 @@ export const SWR_API_PATHS: readonly string[] = [
 ]
 
 /** Pages fetched when the worker installs, so the main screens work offline right after the first visit. */
-export const PRECACHE_PAGES: readonly string[] = ["/", "/timetable/", "/homework/", "/grades/"]
+export const PRECACHE_PAGES: readonly string[] = ["/", "/today/", "/timetable/", "/homework/", "/grades/"]
 
 const keys = createCacheKeys("sp")
 

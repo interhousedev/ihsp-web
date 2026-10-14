@@ -1247,6 +1247,10 @@
       "iosHint": "Tap the Share button in Safari, then Add to Home Screen.",
       "manualHint": "Open the browser menu and choose Install app or Add to Home screen."
     },
+    "request": {
+      "title": "Install this app on your device?",
+      "install": "Install"
+    },
     "lock": {
       "title": "IHT is locked",
       "prompt": "Enter your PIN",
