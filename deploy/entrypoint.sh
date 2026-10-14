@@ -132,6 +132,17 @@ default IHSP_WEB_MCP_URL http://localhost:8000/mcp
 default IHSP_BOT_USERNAME ihspbot
 default IHSP_STORAGE_ORIGIN http://localhost:8000
 
+# The storage address may carry a path (an S3 provider's endpoint such as https://storage.example/files).
+# In a CSP source a path that does not end in "/" matches only that exact path, so a presigned upload to
+# https://storage.example/files/bucket/key would be blocked: keep only the origin of every web address.
+to_origins() {
+  printf '%s' "$1" | sed -E 's#(https?://[^/ ]+)/[^ ]*#\1#g'
+}
+CSP_CONNECT_SRC=$(to_origins "$CSP_CONNECT_SRC")
+CSP_IMG_SRC=$(to_origins "$CSP_IMG_SRC")
+IHSP_STORAGE_ORIGIN=$(to_origins "$IHSP_STORAGE_ORIGIN")
+export CSP_CONNECT_SRC CSP_IMG_SRC IHSP_STORAGE_ORIGIN
+
 port_ok=0
 case "$LISTEN_PORT" in
   '' | *[!0-9]*) ;;

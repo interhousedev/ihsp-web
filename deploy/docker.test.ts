@@ -671,6 +671,22 @@ describe.skipIf(!haveTools)("entrypoint.sh rendering", () => {
     for (const file of confFiles(sitesDir)) expect(local.conf(file)).toContain("listen 8080")
   })
 
+  it("keeps only the origin of a storage endpoint with a path (a path source matches one exact path)", () => {
+    const run = runEntrypoint({
+      CSP_CONNECT_SRC: "'self' https://api.ihsu.test https://storage.provider.test/sp-files",
+      CSP_IMG_SRC: "'self' data: blob: https://storage.provider.test/sp-files/",
+      IHSP_STORAGE_ORIGIN: "https://storage.provider.test/sp-files",
+    })
+    expect(run.exitCode).toBe(0)
+    expect(run.snippet("security-headers.conf")).toContain(
+      "connect-src 'self' https://api.ihsu.test https://storage.provider.test;",
+    )
+    expect(run.snippet("security-headers.conf")).toContain("img-src 'self' data: blob: https://storage.provider.test;")
+    expect(cspHeader(run.snippet("security-headers-library.conf"))).toContain(
+      "connect-src 'self' https://api.ihsu.test https://storage.provider.test https://storage.provider.test;",
+    )
+  })
+
   it("renders the library CSP from CSP_IMG_SRC, CSP_CONNECT_SRC and the storage origin", () => {
     const defaults = runEntrypoint({})
     const header = cspHeader(defaults.snippet("security-headers-library.conf"))
