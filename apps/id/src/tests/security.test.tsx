@@ -246,7 +246,7 @@ describe("activity and account deletion", () => {
       (await screen.findAllByRole("button", { name: "Delete my account", hidden: true })).at(-1) as HTMLElement,
     )
 
-    expect(await screen.findByText("Account closed")).toBeInTheDocument()
+    expect(await screen.findByText("Account scheduled for deletion")).toBeInTheDocument()
     expect(body).toEqual({ password: "Secret123" })
   })
 })

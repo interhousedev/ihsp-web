@@ -9,7 +9,8 @@ import { InfoAlert } from "../../shared/components/error-alert"
 import { FlowCard } from "../../shared/components/flow-card"
 import { useTr } from "../../shared/hooks/use-tr"
 import { followChallengeUsed } from "../../shared/utils/challenge"
-import { applyLoginResult } from "../../login/utils/login-result"
+import { RestoreAccountForm } from "../../login/components/restore-account-form"
+import { applyLoginResult, type AccountRestore } from "../../login/utils/login-result"
 
 /** ID-14: three attempts per code. */
 const MAX_ATTEMPTS = 3
@@ -20,9 +21,10 @@ type OtpCodeFormProps = { challenge: string; login: string; onChangeLogin: () =>
 export function OtpCodeForm({ challenge, login, onChangeLogin }: OtpCodeFormProps) {
   const t = useTr()
   const [failures, setFailures] = useState(0)
+  const [restore, setRestore] = useState<AccountRestore | null>(null)
   const submit = useMutation({
     mutationFn: (code: string) => postLoginOtp({ login_challenge: challenge, login, code }),
-    onSuccess: (result) => applyLoginResult(result, () => undefined),
+    onSuccess: (result) => applyLoginResult(result, () => undefined, undefined, setRestore),
     onError: (error) => {
       if (followChallengeUsed(error)) return
       if (isApiError(error) && error.type === "auth/otp-invalid") setFailures((count) => count + 1)
@@ -36,6 +38,8 @@ export function OtpCodeForm({ challenge, login, onChangeLogin }: OtpCodeFormProp
     },
   })
   const attemptsLeft = Math.max(0, MAX_ATTEMPTS - failures)
+
+  if (restore) return <RestoreAccountForm challenge={challenge} restore={restore} onExpired={onChangeLogin} />
 
   return (
     <FlowCard title={t("loginOtp.codeTitle")} description={t("loginOtp.codeDescription")}>

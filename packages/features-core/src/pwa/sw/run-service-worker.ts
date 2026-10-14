@@ -28,7 +28,7 @@ import {
   pageCacheKey,
   portalOriginFromSearch,
 } from "./cache-keys"
-import { clickTarget, notificationOptions, parsePushPayload } from "./push"
+import { clickTarget, showPush } from "./push"
 import { SW_EVENT, SW_MESSAGE, parseSwMessage } from "./sw-messages"
 
 type SwExtendableEvent = Event & { waitUntil(promise: Promise<unknown>): void }
@@ -353,9 +353,8 @@ export function runServiceWorker(profile: SwProfile): void {
   // - - - Push notifications - - -
 
   self.addEventListener("push", (event) => {
-    const payload = parsePushPayload(event.data ? event.data.text() : null)
-    // Browsers (iOS especially) require every push to show a notification.
-    event.waitUntil(self.registration.showNotification(payload.title, notificationOptions(payload)))
+    // Browsers (iOS especially) require every push to show a notification; `showPush` never stays silent.
+    event.waitUntil(showPush(self.registration, event.data))
   })
 
   async function openLink(url: string): Promise<void> {

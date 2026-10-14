@@ -28,6 +28,7 @@ export {
   clickTarget,
   notificationOptions,
   parsePushPayload,
+  showPush,
   type ClickTarget,
   type PushPayload,
 } from "./push"

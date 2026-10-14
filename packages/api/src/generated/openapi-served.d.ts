@@ -2318,6 +2318,46 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/v1/id/login/restore": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Post Login Restore
+         * @description Cancel the deletion with the ticket of the login step, then sign in.
+         */
+        post: operations["post_login_restore_v1_id_login_restore_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/id/login/restore/decline": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Post Login Restore Decline
+         * @description Keep the deletion: reject the login challenge.
+         */
+        post: operations["post_login_restore_decline_v1_id_login_restore_decline_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/v1/id/logout": {
         parameters: {
             query?: never;
@@ -13715,12 +13755,13 @@ export interface components {
         };
         /**
          * LoginResultResponse
-         * @description A redirect, a second factor, or a forced password change.
+         * @description A redirect, a second factor, a forced password change or a restore offer.
          */
         LoginResultResponse: {
             password_change?: components["schemas"]["PasswordChangeResponse"] | null;
             /** Redirect To */
             redirect_to?: string | null;
+            restore?: components["schemas"]["RestoreResponse"] | null;
             second_factor?: components["schemas"]["SecondFactorResponse"] | null;
         };
         /**
@@ -16395,6 +16436,29 @@ export interface components {
             source: "user" | "emis";
             /** Title */
             title: string;
+        };
+        /**
+         * RestoreBody
+         * @description POST /v1/id/login/restore and /login/restore/decline.
+         */
+        RestoreBody: {
+            /** Login Challenge */
+            login_challenge: string;
+            /** Ticket */
+            ticket: string;
+        };
+        /**
+         * RestoreResponse
+         * @description The account is scheduled for deletion on ``deletes_on``: restore or decline.
+         */
+        RestoreResponse: {
+            /**
+             * Deletes On
+             * Format: date
+             */
+            deletes_on: string;
+            /** Ticket */
+            ticket: string;
         };
         /**
          * RestoreRevisionBody
@@ -20316,7 +20380,7 @@ export interface components {
          * @description Lifecycle of a user account.
          * @enum {string}
          */
-        UserStatus: "unregistered" | "pending_activation" | "active" | "blocked" | "deactivated" | "deleted";
+        UserStatus: "unregistered" | "pending_activation" | "active" | "blocked" | "deactivated" | "pending_deletion" | "deleted";
         /** ValidationError */
         ValidationError: {
             /** Context */
@@ -26658,6 +26722,72 @@ export interface operations {
                 };
                 content: {
                     "application/json": components["schemas"]["LoginResultResponse"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    post_login_restore_v1_id_login_restore_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["RestoreBody"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["LoginResultResponse"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    post_login_restore_decline_v1_id_login_restore_decline_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["RestoreBody"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["RedirectToResponse"];
                 };
             };
             /** @description Validation Error */

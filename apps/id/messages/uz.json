@@ -126,6 +126,12 @@
       "title": "Yangi parol tanlang",
       "description": "Parolni administrator oʻrnatgan. Davom etish uchun oʻz parolingizni tanlang.",
       "submit": "Saqlash va davom etish"
+    },
+    "restore": {
+      "title": "Akkauntni tiklaysizmi?",
+      "description": "Akkauntingiz {date} sanasida oʻchiriladi. Akkauntni saqlab qolish va kirishni davom ettirish uchun uni tiklang.",
+      "restore": "Tiklash",
+      "decline": "Oʻchirilgan qolsin / Chiqish"
     }
   },
   "loginOtp": {
@@ -198,6 +204,19 @@
       "description": "Loginingiz: {login}. U bilan va hozir kiritgan parolingiz bilan kiring.",
       "open": "IHTʼni ochish",
       "backToTelegram": "Telegram orqali kirishga qaytish"
+    },
+    "welcome": {
+      "title": "IHT IDʼga xush kelibsiz",
+      "description": "IHT ID — IHT xizmatlari uchun yagona hisobingiz.",
+      "points": {
+        "account": "my.iht, staff, kutubxona (lib.ihsu.uz) va LMS uchun bitta login.",
+        "codes": "Kirish kodlari Telegram yoki elektron pochta orqali keladi.",
+        "security": "Parol, seanslar va ulangan ilovalarni xavfsizlik sozlamalarida boshqaring."
+      },
+      "telegram": "Telegramni ulash",
+      "library": "Kutubxonani ochish",
+      "lms": "LMSni ochish",
+      "continue": "Davom etish"
     }
   },
   "reclaim": {
@@ -468,8 +487,8 @@
       "submit": "Hisobimni oʻchirish",
       "dialogTitle": "Hisobni oʻchirasizmi?",
       "dialogDescription": "Hamma qurilmalardan chiqarilasiz. Buni bekor qilib boʻlmaydi.",
-      "doneTitle": "Hisob yopildi",
-      "doneDescription": "Shaxsiy maʼlumotlaringiz {date} da oʻchiriladi."
+      "doneTitle": "Hisob oʻchirishga rejalashtirildi",
+      "doneDescription": "Hisobingiz {date} sanasida oʻchiriladi. Fikringiz oʻzgardimi? Shu sanagacha qayta kiring va «Tiklash» ni tanlang."
     }
   },
   "appearance": {

@@ -126,6 +126,12 @@
       "title": "Choose a new password",
       "description": "An administrator set your password. Choose your own to continue.",
       "submit": "Save and continue"
+    },
+    "restore": {
+      "title": "Restore your account?",
+      "description": "Your account is scheduled for deletion on {date}. Restore it to keep your account and continue logging in.",
+      "restore": "Restore",
+      "decline": "Keep deleted / Sign out"
     }
   },
   "loginOtp": {
@@ -198,6 +204,19 @@
       "description": "Your login is {login}. Use it with the password you just set.",
       "open": "Open IHT",
       "backToTelegram": "Back to Telegram login"
+    },
+    "welcome": {
+      "title": "Welcome to IHT ID",
+      "description": "IHT ID is your one account for IHT services.",
+      "points": {
+        "account": "One login for my.iht, staff, the library (lib.ihsu.uz) and the LMS.",
+        "codes": "Sign-in codes come by Telegram or by email.",
+        "security": "Manage your password, sessions and connected apps in the security settings."
+      },
+      "telegram": "Connect Telegram",
+      "library": "Open library",
+      "lms": "Open LMS",
+      "continue": "Continue"
     }
   },
   "reclaim": {
@@ -468,8 +487,8 @@
       "submit": "Delete my account",
       "dialogTitle": "Delete your account?",
       "dialogDescription": "You are logged out everywhere and cannot undo this.",
-      "doneTitle": "Account closed",
-      "doneDescription": "Your personal data will be removed on {date}."
+      "doneTitle": "Account scheduled for deletion",
+      "doneDescription": "Your account will be deleted on {date}. Changed your mind? Log in again before then and choose Restore."
     }
   },
   "appearance": {

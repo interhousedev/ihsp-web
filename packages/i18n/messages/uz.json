@@ -562,6 +562,15 @@
       "denied": "Bu sayt uchun bildirishnomalar bloklangan. Ularni brauzer yoki telefon sozlamalarida ruxsat bering va qayting.",
       "unavailable": "Push-bildirishnomalar serverda hali yoqilmagan.",
       "failed": "Bu qurilmada push-bildirishnomalarni oʻzgartirib boʻlmadi. Qayta urinib koʻring."
+    },
+    "prompt": {
+      "title": "Bildirishnomalar yoqilsinmi?",
+      "body": "Yangi baholar, uy vazifalari, dars jadvalidagi oʻzgarishlar va xabarlar ilova yopiq boʻlsa ham shu telefonga darhol keladi.",
+      "allow": "Ruxsat berish",
+      "notNow": "Hozir emas",
+      "installTitle": "Bildirishnomalar uchun ilova kerak",
+      "installBody": "iPhone va iPadʼda bildirishnomalar faqat oʻrnatilgan ilovada ishlaydi. “Ulashish” tugmasini, soʻng “Bosh ekranga qoʻshish”ni bosing va IHTʼni Bosh ekrandan oching.",
+      "ok": "Tushunarli"
     }
   },
   "assistant": {

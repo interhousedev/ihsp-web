@@ -110,6 +110,13 @@ export const loginResultRedirect: LoginResult = {
 }
 
 /** Password accepted, but an administrator chose it: the client asks for a new one. */
+/** TODO(contract): the account is scheduled for deletion. */
+export const loginResultRestore: LoginResult = {
+  redirect_to: null,
+  second_factor: null,
+  restore: { ticket: "restore-ticket-1", deletes_on: "2026-11-13" },
+}
+
 export const loginResultPasswordChange: LoginResult = {
   redirect_to: null,
   second_factor: null,

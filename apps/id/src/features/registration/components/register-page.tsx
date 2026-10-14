@@ -12,11 +12,13 @@ import { EmisCredentialsForm } from "./emis-credentials-form"
 import { RegisterCodeStep } from "./register-code-step"
 import { RegisterDone } from "./register-done"
 import { RegisterProfileStep } from "./register-profile-step"
+import { RegisterWelcome } from "./register-welcome"
 
 type Step =
   | { kind: "emis" }
   | { kind: "profile"; start: RegistrationStart }
   | { kind: "code"; start: RegistrationStart; password: string; email: string; confirmImport: boolean }
+  | { kind: "welcome"; login: string; redirectTo: string | null }
   | { kind: "done"; login: string }
 
 /** `/register/`: three steps of the EMIS registration (UF-ID-01). Carries `login_challenge` when it comes from a login. */
@@ -54,12 +56,15 @@ export function RegisterPage() {
         confirmImport={step.confirmImport}
         loginChallenge={loginChallenge}
         onBack={() => setStep({ kind: "profile", start: step.start })}
-        onCompleted={(response) => {
-          if (response.redirect_to) redirectTo(response.redirect_to)
-          else setStep({ kind: "done", login: response.login })
-        }}
+        onCompleted={(response) =>
+          setStep({ kind: "welcome", login: response.login, redirectTo: response.redirect_to ?? null })
+        }
       />
     )
+  }
+  if (step.kind === "welcome") {
+    const { login, redirectTo: next } = step
+    return <RegisterWelcome onContinue={() => (next ? redirectTo(next) : setStep({ kind: "done", login }))} />
   }
   if (step.kind === "done") return <RegisterDone login={step.login} />
   return (

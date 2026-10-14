@@ -4,6 +4,7 @@ import type {
   EmailChangeConfirmBody,
   LoginBody,
   LoginPasswordBody,
+  LoginRestoreBody,
   LoginOtpBody,
   OtpEnableBody,
   TelegramLoginBody,
@@ -23,6 +24,7 @@ import {
   loginInfo,
   loginResultRedirect,
   loginResultPasswordChange,
+  loginResultRestore,
   loginResultSecondFactor,
   scopeCatalog,
   sessionItems,
@@ -46,7 +48,7 @@ const HYDRA_REDIRECT = "http://localhost:4444/oauth2/auth?login_verifier=test"
 /**
  * Magic values of the login endpoints (everything else succeeds):
  * login `second.factor` returns the second factor step, `locked.user` is `auth/locked`, `no.role` is `auth/role-missing`;
- * password `wrong-password` is `auth/unauthorized`.
+ * `pending.deletion` is scheduled for deletion (the restore step); password `wrong-password` is `auth/unauthorized`.
  */
 function loginOutcome(login: string | undefined, password: string | undefined): Response {
   if (login === "locked.user") {
@@ -58,6 +60,7 @@ function loginOutcome(login: string | undefined, password: string | undefined): 
   }
   if (login === "second.factor") return HttpResponse.json(loginResultSecondFactor)
   if (login === "must.change") return HttpResponse.json(loginResultPasswordChange)
+  if (login === "pending.deletion") return HttpResponse.json(loginResultRestore)
   return HttpResponse.json(loginResultRedirect)
 }
 
@@ -83,6 +86,15 @@ export const idHandlers = [
     }
     return HttpResponse.json(loginResultRedirect)
   }),
+  // TODO(contract): the restore step of an account scheduled for deletion; ticket `stale` is `auth/unauthorized`.
+  http.post(apiUrl("/v1/id/login/restore"), async ({ request }) => {
+    const body = await readJson<LoginRestoreBody>(request)
+    if (body.ticket === "stale") return problem(401, "auth/unauthorized", "Invalid login or password")
+    return HttpResponse.json(loginResultRedirect)
+  }),
+  http.post(apiUrl("/v1/id/login/restore/decline"), () =>
+    HttpResponse.json({ redirect_to: "http://localhost:4444/oauth2/auth?error=access_denied" }),
+  ),
   http.post(apiUrl("/v1/id/login/otp/request"), () => HttpResponse.json({ sent: true }, { status: 202 })),
   http.post(apiUrl("/v1/id/login/otp"), async ({ request }) => {
     const body = await readJson<LoginOtpBody>(request)

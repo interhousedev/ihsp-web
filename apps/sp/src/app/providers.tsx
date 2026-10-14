@@ -7,6 +7,7 @@ import { I18nProvider, mergeMessages, type Locale, type Messages } from "@ihsp/i
 import { AppThemeProvider, createQueryClient } from "@ihsp/ui"
 import { PinGate } from "@/features/pwa/components/pin-gate"
 import { PwaGate } from "@/features/pwa/components/pwa-gate"
+import { PushPromptGate } from "@/features/pwa/components/push-prompt-gate"
 import { PwaRuntime } from "@/features/pwa/components/pwa-runtime"
 import { QueryClientProvider } from "@tanstack/react-query"
 import { NuqsAdapter } from "nuqs/adapters/next/app"
@@ -82,6 +83,7 @@ export function Providers({ children }: { children: ReactNode }) {
                 <PwaGate>
                   <AuthProvider>
                     <PwaRuntime />
+                    <PushPromptGate />
                     <ThemePreferenceSync>
                       <TelegramAutoLogin>
                         <PinGate>{children}</PinGate>

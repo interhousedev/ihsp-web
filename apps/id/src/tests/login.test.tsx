@@ -67,6 +67,38 @@ describe("login page", () => {
     expect(redirectToMock).not.toHaveBeenCalled()
   })
 
+  test("an account scheduled for deletion offers Restore, which continues the login", async () => {
+    let restoreBody: unknown = null
+    server.use(
+      http.post(apiUrl("/v1/id/login/restore"), async ({ request }) => {
+        restoreBody = await request.json()
+        return HttpResponse.json(loginResultRedirect)
+      }),
+    )
+    renderId(<LoginPage />, { route: ROUTE })
+
+    await submitCredentials("pending.deletion", "Secret123")
+    await findHeading("Restore your account?")
+    expect(screen.getByText(/Your account is scheduled for deletion on .*2026/)).toBeInTheDocument()
+    expect(redirectToMock).not.toHaveBeenCalled()
+    await clickButton("Restore")
+
+    await waitFor(() => expect(redirectToMock).toHaveBeenCalledWith(loginResultRedirect.redirect_to))
+    expect(restoreBody).toEqual({ login_challenge: "challenge-1", ticket: "restore-ticket-1" })
+  })
+
+  test("Keep deleted rejects the login instead of restoring", async () => {
+    renderId(<LoginPage />, { route: ROUTE })
+
+    await submitCredentials("pending.deletion", "Secret123")
+    await findHeading("Restore your account?")
+    await clickButton("Keep deleted / Sign out")
+
+    await waitFor(() =>
+      expect(redirectToMock).toHaveBeenCalledWith("http://localhost:4444/oauth2/auth?error=access_denied"),
+    )
+  })
+
   test("Log in with OTP is always shown and keeps the challenge", async () => {
     renderId(<LoginPage />, { route: ROUTE })
 

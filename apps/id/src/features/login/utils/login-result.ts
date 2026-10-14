@@ -2,16 +2,22 @@ import type { LoginResult } from "@ihsp/api"
 import { redirectTo } from "../../shared/utils/redirect"
 
 export type SecondFactor = NonNullable<LoginResult["second_factor"]>
+export type AccountRestore = NonNullable<LoginResult["restore"]>
 
 /**
  * What a password or OTP login step led to: a second factor to enter, a new password to choose (the old one was set
- * by an administrator), a redirect back to Hydra, or nothing usable.
+ * by an administrator), an account scheduled for deletion to restore, a redirect back to Hydra, or nothing usable.
  */
 export function applyLoginResult(
   result: LoginResult,
   onSecondFactor: (factor: SecondFactor) => void,
   onPasswordChange?: (ticket: string) => void,
+  onRestore?: (restore: AccountRestore) => void,
 ): void {
+  if (result.restore && onRestore) {
+    onRestore(result.restore)
+    return
+  }
   if (result.second_factor) {
     onSecondFactor(result.second_factor)
     return

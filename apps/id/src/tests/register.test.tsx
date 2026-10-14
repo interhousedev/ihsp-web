@@ -51,6 +51,8 @@ describe("registration", () => {
     await fillField("Code", "123456")
     await clickButton("Create account")
 
+    await findHeading("Welcome to IHT ID")
+    await clickButton("Continue")
     await findHeading("Account created")
     expect(body).toEqual({
       registration_token: "registration-token-2",
@@ -95,6 +97,9 @@ describe("registration", () => {
     await fillField("Code", "123456")
     await clickButton("Create account")
 
+    await findHeading("Welcome to IHT ID")
+    expect(redirectToMock).not.toHaveBeenCalled()
+    await clickButton("Continue")
     await waitFor(() =>
       expect(redirectToMock).toHaveBeenCalledWith("http://localhost:4444/oauth2/auth?login_verifier=r"),
     )

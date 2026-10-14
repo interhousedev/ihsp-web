@@ -17,7 +17,7 @@ import type { getAdminGroupCurriculum, getMeCurriculum, postAdminGroupCurriculum
 import type { getMeDashboard, putMeDashboard } from "./endpoints/dashboard"
 import type { deleteFile, getFile, getFileUrl, getMeFiles, getMeStorage, patchFile, postFileComplete, postFiles } from "./endpoints/files"
 import type { getMeFlashcardSet, getMeFlashcardSetStudy, getMeFlashcardSets, getMeFlashcardSetsStats, patchMeFlashcardSet, postMeFlashcardReview, postMeFlashcardSets, postMeFlashcardSetsCopy, putMeFlashcardSetCards } from "./endpoints/flashcards"
-import type { deleteIdMe, getIdActivation, getIdConsent, getIdLogin, getIdLogout, getIdMcpScopes, getIdMe, getIdMeActivity, getIdMeConnectors, getIdMeSessions, getIdMeTelegram, patchIdMePreferences, patchIdMeTelegram, postIdActivation, postIdConsent, postIdLogin, postIdLoginOtp, postIdLoginOtpRequest, postIdLoginPassword, postIdMeConnectors, postIdMeEmailChangeConfirm, postIdMeEmisPassword, postIdMeOtpDisable, postIdMeOtpEnableConfirm, postIdRecoveryOtpConfirm, postIdTelegramLogin, postIdTelegramOtpRequest, postIdTelegramStatus } from "./endpoints/id"
+import type { deleteIdMe, getIdActivation, getIdConsent, getIdLogin, getIdLogout, getIdMcpScopes, getIdMe, getIdMeActivity, getIdMeConnectors, getIdMeSessions, getIdMeTelegram, patchIdMePreferences, patchIdMeTelegram, postIdActivation, postIdConsent, postIdLogin, postIdLoginOtp, postIdLoginOtpRequest, postIdLoginPassword, postIdLoginRestore, postIdLoginRestoreDecline, postIdMeConnectors, postIdMeEmailChangeConfirm, postIdMeEmisPassword, postIdMeOtpDisable, postIdMeOtpEnableConfirm, postIdRecoveryOtpConfirm, postIdTelegramLogin, postIdTelegramOtpRequest, postIdTelegramStatus } from "./endpoints/id"
 import type { getAdminAudit, getAdminOauthClients, getAdminSettings, getAdminTeachers, getAdminUser, getAdminUsers, patchAdminTeacher, patchAdminUser, postAdminOauthClientVerify, postAdminTeacherDeactivate, postAdminTeachers, postAdminUserBlock, postAdminUserMailResume, postAdminUserMailSuspend, postAdminUserResetPassword, postAdminUserRoles, postAdminUserUnblock, putAdminSettings } from "./endpoints/id-admin"
 import type { getAdminInsights } from "./endpoints/insights"
 import type { getAnnotations, getAnnotationsExport, getLibraryAuthors, getLibraryCollection, getLibraryCollections, getLibraryFileUrl, getLibraryItem, getLibraryItemText, getLibraryItems, getLibraryMyGroups, getLibrarySanctions, getLibrarySubjects, getLibraryTags, getLibraryTopics, getManageBook, getManageBooks, getManageQueue, getManageStats, getManageSubjects, getManageSuggestion, getManageTopics, getMeLibrary, getMyUploads, getReadingList, getReadingLists, getShelf, getUniLibraryRecord, getUniLibrarySearch, getUniLibraryStatus, getUniLibraryTaxonomies, patchMaterial, postAnnotation, postAnnotationsSync, postLibrarySanction, postManageBook, postManageBookFile, postManageImport, postMaterial, postMaterialFiles, postMaterialSubmit, postMaterialVersion, postModeration, postReadingList, postSuggestion, postUniLibraryPin, putReadingListItems, putShelfEntry } from "./endpoints/library"
@@ -46,7 +46,7 @@ import type { ApplyBody, CourseWorkspaceBody } from "./types/course-workspace"
 import type { DashboardSaveBody } from "./types/dashboard"
 import type { FileCreateBody, FileRenameBody, FileUrlParams, MyFilesParams } from "./types/files"
 import type { FlashcardCardsBody, FlashcardCopyBody, FlashcardReviewBody, FlashcardSetCreateBody, FlashcardSetPatchBody, FlashcardStatsParams } from "./types/flashcards"
-import type { ActivationBody, ActivationEmailBody, ActivityParams, ConnectorCreateBody, ConsentBody, ConsentOtpBody, DeleteAccountBody, EmailChangeBody, EmailChangeConfirmBody, EmisPasswordBody, LoginBody, LoginOtpBody, LoginOtpRequestBody, LoginPasswordBody, OtpDisableBody, OtpEnableBody, OtpEnableConfirmBody, PasswordChangeBody, RecoveryLoginBody, RecoveryOtpCancelBody, RecoveryOtpConfirmBody, RecoveryOtpRequestBody, RecoveryPasswordConfirmBody, RecoveryPasswordRequestBody, TelegramLoginBody, TelegramOtpRequestBody, TelegramPatchBody, TelegramStatusBody, UserPreferencesPatch } from "./types/id"
+import type { ActivationBody, ActivationEmailBody, ActivityParams, ConnectorCreateBody, ConsentBody, ConsentOtpBody, DeleteAccountBody, EmailChangeBody, EmailChangeConfirmBody, EmisPasswordBody, LoginBody, LoginOtpBody, LoginOtpRequestBody, LoginPasswordBody, LoginRestoreBody, OtpDisableBody, OtpEnableBody, OtpEnableConfirmBody, PasswordChangeBody, RecoveryLoginBody, RecoveryOtpCancelBody, RecoveryOtpConfirmBody, RecoveryOtpRequestBody, RecoveryPasswordConfirmBody, RecoveryPasswordRequestBody, TelegramLoginBody, TelegramOtpRequestBody, TelegramPatchBody, TelegramStatusBody, UserPreferencesPatch } from "./types/id"
 import type { AdminAuditParams, AdminTeachersParams, AdminUsersParams, BlockUserBody, MailSuspendBody, OauthClientVerifyBody, PlatformSettingsBody, SetPasswordBody, TeacherCreateBody, TeacherPatchBody, UserPatchBody, UserRolesBody } from "./types/id-admin"
 import type { AnnotationInput, AnnotationsParams, AnnotationsSyncBody, BookFileBody, BookInput, BookRowsParams, ImportBody, ItemTextParams, ItemsParams, LibraryReportBody, MaterialFilesBody, MaterialInput, MaterialPatchBody, ModerationBody, PinExternalBody, ProgressBody, QueueParams, ReadingListInput, ReadingListsParams, ReportResolveBody, SanctionBody, ShelfParams, SuggestionBody, UniLibrarySearchParams, UploadsParams } from "./types/library"
 import type { LinkCreateBody, LinkDisableBody, ModerationQueueParams, ModerationSearchParams, MyLinksParams, ResourceCreateBody, ResourceHideBody, ShareCreateBody } from "./types/links"
@@ -736,6 +736,18 @@ declare const res_postIdLoginPassword: Awaited<ReturnType<typeof postIdLoginPass
 export const response_postIdLoginPassword: ResponseOf<"/v1/id/login/password", "post"> = res_postIdLoginPassword
 declare const req_postIdLoginPassword: LoginPasswordBody
 export const request_postIdLoginPassword: RequestOf<"/v1/id/login/password", "post"> = req_postIdLoginPassword
+
+// POST /v1/id/login/restore — postIdLoginRestore
+declare const res_postIdLoginRestore: Awaited<ReturnType<typeof postIdLoginRestore>>
+export const response_postIdLoginRestore: ResponseOf<"/v1/id/login/restore", "post"> = res_postIdLoginRestore
+declare const req_postIdLoginRestore: LoginRestoreBody
+export const request_postIdLoginRestore: RequestOf<"/v1/id/login/restore", "post"> = req_postIdLoginRestore
+
+// POST /v1/id/login/restore/decline — postIdLoginRestoreDecline
+declare const res_postIdLoginRestoreDecline: Awaited<ReturnType<typeof postIdLoginRestoreDecline>>
+export const response_postIdLoginRestoreDecline: ResponseOf<"/v1/id/login/restore/decline", "post"> = res_postIdLoginRestoreDecline
+declare const req_postIdLoginRestoreDecline: LoginRestoreBody
+export const request_postIdLoginRestoreDecline: RequestOf<"/v1/id/login/restore/decline", "post"> = req_postIdLoginRestoreDecline
 
 // POST /v1/id/login/otp — postIdLoginOtp
 declare const res_postIdLoginOtp: Awaited<ReturnType<typeof postIdLoginOtp>>

@@ -16,9 +16,17 @@ export type LoginResult = {
   second_factor: { method: "otp"; ticket: string; channels: ("telegram" | "email")[] } | null
   /** Set when an administrator chose the password and the deployment asks for a new one at login. */
   password_change?: { ticket: string } | null
+  /**
+   * TODO(contract): hand-written until the OpenAPI is regenerated. Set when the account is scheduled for deletion
+   * (`deletes_on`, an ISO date): restore it or decline with the ticket.
+   */
+  restore?: { ticket: string; deletes_on: string } | null
 }
 
 export type LoginPasswordBody = { login_challenge: string; ticket: string; new_password: string }
+
+/** TODO(contract): body of POST /v1/id/login/restore and /v1/id/login/restore/decline. */
+export type LoginRestoreBody = { login_challenge: string; ticket: string }
 
 export type ConsentInfo = {
   client_id: string

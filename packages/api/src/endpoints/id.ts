@@ -28,6 +28,7 @@ import type {
   LoginOtpRequestBody,
   LoginOtpRequestResponse,
   LoginPasswordBody,
+  LoginRestoreBody,
   LoginResult,
   OtpDisableBody,
   OtpEnableBody,
@@ -86,6 +87,19 @@ export function postIdLoginOtpRequest(
 /** POST /v1/id/login/password — none; sets the new password of a forced change and finishes the login. */
 export function postIdLoginPassword(body: LoginPasswordBody, opts?: RequestOptions): Promise<LoginResult> {
   return api.post<LoginResult>("/v1/id/login/password", body, { ...opts, auth: "none" })
+}
+
+/** POST /v1/id/login/restore — none; cancels a scheduled deletion and finishes the login. TODO(contract). */
+export function postIdLoginRestore(body: LoginRestoreBody, opts?: RequestOptions): Promise<LoginResult> {
+  return api.post<LoginResult>("/v1/id/login/restore", body, { ...opts, auth: "none" })
+}
+
+/** POST /v1/id/login/restore/decline — none; keeps the deletion and rejects the login. TODO(contract). */
+export function postIdLoginRestoreDecline(
+  body: LoginRestoreBody,
+  opts?: RequestOptions,
+): Promise<{ redirect_to: string }> {
+  return api.post<{ redirect_to: string }>("/v1/id/login/restore/decline", body, { ...opts, auth: "none" })
 }
 
 /** POST /v1/id/login/otp — none. */
@@ -357,6 +371,8 @@ export const postLogin = postIdLogin
 export const postLoginOtpRequest = postIdLoginOtpRequest
 export const postLoginOtp = postIdLoginOtp
 export const postLoginPassword = postIdLoginPassword
+export const postLoginRestore = postIdLoginRestore
+export const postLoginRestoreDecline = postIdLoginRestoreDecline
 export const getConsentInfo = getIdConsent
 export const postConsent = postIdConsent
 export const postConsentOtp = postIdConsentOtp

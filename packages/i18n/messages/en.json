@@ -562,6 +562,15 @@
       "denied": "Notifications are blocked for this site. Allow them in the browser or phone settings, then come back.",
       "unavailable": "Push notifications are not switched on on the server yet.",
       "failed": "Could not change push notifications on this device. Try again."
+    },
+    "prompt": {
+      "title": "Turn on notifications?",
+      "body": "Get new marks, homework, timetable changes and messages on this phone right away, even when the app is closed.",
+      "allow": "Allow",
+      "notNow": "Not now",
+      "installTitle": "Notifications need the app",
+      "installBody": "On iPhone and iPad, notifications only work in the installed app. Tap Share, then “Add to Home Screen”, and open IHT from the Home Screen.",
+      "ok": "Got it"
     }
   },
   "assistant": {

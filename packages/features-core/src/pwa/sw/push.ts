@@ -82,3 +82,24 @@ export function clickTarget(url: unknown, ownOrigin: string, portalOrigin: strin
   }
   return { kind: "external", url: parsed.href }
 }
+
+type NotificationShower = { showNotification(title: string, options: object): Promise<void> }
+
+/**
+ * Handles one `push` event. It always shows a notification: Safari on iOS revokes the subscription of an app that receives
+ * a push without one (and Chrome shows a generic one). A payload that cannot be read, or options the browser refuses,
+ * fall back to a plain notification instead of a silent push.
+ */
+export async function showPush(registration: NotificationShower, data: { text(): string } | null): Promise<void> {
+  let payload: PushPayload
+  try {
+    payload = parsePushPayload(data ? data.text() : null)
+  } catch {
+    payload = parsePushPayload(null)
+  }
+  try {
+    await registration.showNotification(payload.title, notificationOptions(payload))
+  } catch {
+    await registration.showNotification(payload.title, { body: payload.body, data: { url: payload.url } })
+  }
+}

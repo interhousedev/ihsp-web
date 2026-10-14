@@ -11,7 +11,7 @@ import { useTr } from "../../shared/hooks/use-tr"
 import { followChallengeUsed, withChallenge } from "../../shared/utils/challenge"
 import { isTouchDevice } from "../../shared/utils/is-touch-device"
 import { requiredText } from "../../shared/utils/schemas"
-import { applyLoginResult, type SecondFactor } from "../utils/login-result"
+import { applyLoginResult, type AccountRestore, type SecondFactor } from "../utils/login-result"
 import { LoginError } from "./login-error"
 import { LoginLinks } from "./login-links"
 
@@ -23,10 +23,17 @@ type PasswordLoginFormProps = {
   onSecondFactor: (credentials: PasswordCredentials, factor: SecondFactor) => void
   /** The password was set by an administrator and must be replaced; the ticket finishes the login. */
   onPasswordChange: (ticket: string) => void
+  onRestore: (restore: AccountRestore) => void
 }
 
 /** UF-ID-02: login and password. **Log in with OTP** is always shown (ID-13), so it never reveals who has OTP. */
-export function PasswordLoginForm({ challenge, info, onSecondFactor, onPasswordChange }: PasswordLoginFormProps) {
+export function PasswordLoginForm({
+  challenge,
+  info,
+  onSecondFactor,
+  onPasswordChange,
+  onRestore,
+}: PasswordLoginFormProps) {
   const t = useTr()
   const schema = useMemo(
     () =>
@@ -45,7 +52,8 @@ export function PasswordLoginForm({ challenge, info, onSecondFactor, onPasswordC
         password: value.password,
         remember: value.remember,
       }),
-    onSuccess: (result, value) => applyLoginResult(result, (factor) => onSecondFactor(value, factor), onPasswordChange),
+    onSuccess: (result, value) =>
+      applyLoginResult(result, (factor) => onSecondFactor(value, factor), onPasswordChange, onRestore),
     onError: (error) => {
       followChallengeUsed(error)
     },

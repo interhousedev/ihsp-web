@@ -18,7 +18,7 @@ import type { getAdminGroupCurriculum, getMeCurriculum, postAdminGroupCurriculum
 import type { getMeDashboard, putMeDashboard } from "./endpoints/dashboard"
 import type { deleteFile, getFile, getFileUrl, getMeFiles, getMeStorage, patchFile, postFileComplete, postFiles } from "./endpoints/files"
 import type { getMeFlashcardSet, getMeFlashcardSetStudy, getMeFlashcardSets, getMeFlashcardSetsStats, patchMeFlashcardSet, postMeFlashcardReview, postMeFlashcardSets, postMeFlashcardSetsCopy, putMeFlashcardSetCards } from "./endpoints/flashcards"
-import type { deleteIdMe, getIdActivation, getIdConsent, getIdLogin, getIdLogout, getIdMcpScopes, getIdMe, getIdMeActivity, getIdMeConnectors, getIdMeSessions, getIdMeTelegram, patchIdMePreferences, patchIdMeTelegram, postIdActivation, postIdConsent, postIdLogin, postIdLoginOtp, postIdLoginOtpRequest, postIdLoginPassword, postIdMeConnectors, postIdMeEmailChangeConfirm, postIdMeEmisPassword, postIdMeOtpDisable, postIdMeOtpEnableConfirm, postIdRecoveryOtpConfirm, postIdTelegramLogin, postIdTelegramOtpRequest, postIdTelegramStatus } from "./endpoints/id"
+import type { deleteIdMe, getIdActivation, getIdConsent, getIdLogin, getIdLogout, getIdMcpScopes, getIdMe, getIdMeActivity, getIdMeConnectors, getIdMeSessions, getIdMeTelegram, patchIdMePreferences, patchIdMeTelegram, postIdActivation, postIdConsent, postIdLogin, postIdLoginOtp, postIdLoginOtpRequest, postIdLoginPassword, postIdLoginRestore, postIdLoginRestoreDecline, postIdMeConnectors, postIdMeEmailChangeConfirm, postIdMeEmisPassword, postIdMeOtpDisable, postIdMeOtpEnableConfirm, postIdRecoveryOtpConfirm, postIdTelegramLogin, postIdTelegramOtpRequest, postIdTelegramStatus } from "./endpoints/id"
 import type { getAdminAudit, getAdminOauthClients, getAdminSettings, getAdminTeachers, getAdminUser, getAdminUsers, patchAdminTeacher, patchAdminUser, postAdminOauthClientVerify, postAdminTeacherDeactivate, postAdminTeachers, postAdminUserBlock, postAdminUserMailResume, postAdminUserMailSuspend, postAdminUserResetPassword, postAdminUserRoles, postAdminUserUnblock, putAdminSettings } from "./endpoints/id-admin"
 import type { getAdminInsights } from "./endpoints/insights"
 import type { getAnnotations, getAnnotationsExport, getLibraryAuthors, getLibraryCollection, getLibraryCollections, getLibraryFileUrl, getLibraryItem, getLibraryItemText, getLibraryItems, getLibraryMyGroups, getLibrarySanctions, getLibrarySubjects, getLibraryTags, getLibraryTopics, getManageBook, getManageBooks, getManageQueue, getManageStats, getManageSubjects, getManageSuggestion, getManageTopics, getMeLibrary, getMyUploads, getReadingList, getReadingLists, getShelf, getUniLibraryRecord, getUniLibrarySearch, getUniLibraryStatus, getUniLibraryTaxonomies, patchMaterial, postAnnotation, postAnnotationsSync, postLibrarySanction, postManageBook, postManageBookFile, postManageImport, postMaterial, postMaterialFiles, postMaterialSubmit, postMaterialVersion, postModeration, postReadingList, postSuggestion, postUniLibraryPin, putReadingListItems, putShelfEntry } from "./endpoints/library"
@@ -489,6 +489,14 @@ export const served_postIdLoginOtpRequest: Awaited<ReturnType<typeof postIdLogin
 // POST /v1/id/login/password — postIdLoginPassword
 declare const gen_postIdLoginPassword: ResponseOf<"/v1/id/login/password", "post">
 export const served_postIdLoginPassword: Awaited<ReturnType<typeof postIdLoginPassword>> = gen_postIdLoginPassword
+
+// POST /v1/id/login/restore — postIdLoginRestore
+declare const gen_postIdLoginRestore: ResponseOf<"/v1/id/login/restore", "post">
+export const served_postIdLoginRestore: Awaited<ReturnType<typeof postIdLoginRestore>> = gen_postIdLoginRestore
+
+// POST /v1/id/login/restore/decline — postIdLoginRestoreDecline
+declare const gen_postIdLoginRestoreDecline: ResponseOf<"/v1/id/login/restore/decline", "post">
+export const served_postIdLoginRestoreDecline: Awaited<ReturnType<typeof postIdLoginRestoreDecline>> = gen_postIdLoginRestoreDecline
 
 // POST /v1/id/login/otp — postIdLoginOtp
 declare const gen_postIdLoginOtp: ResponseOf<"/v1/id/login/otp", "post">
