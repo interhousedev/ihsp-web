@@ -5,12 +5,12 @@ import { act, screen, waitFor } from "@testing-library/react"
 import { HttpResponse, http } from "msw"
 import { useEffect } from "react"
 import { useBottomBar } from "../features/shell/hooks/use-bottom-bar"
-import { DEFAULT_BOTTOM_BAR, type DestinationId } from "../features/shell/utils/bottom-bar"
+import { DASHBOARD_MIGRATED, DEFAULT_BOTTOM_BAR, type DestinationId } from "../features/shell/utils/bottom-bar"
 import { configureTests, renderSp, studentWith } from "./helpers"
 
 configureTests()
 
-const storageKey = `ihsp:sp:bottom-bar:${userMe.id}`
+const storageKey = `ihsp:sp:bottom-bar:v2:${userMe.id}`
 
 beforeEach(() => window.localStorage.clear())
 
@@ -66,6 +66,8 @@ describe("useBottomBar", () => {
 
     await waitFor(() => expect(screen.getByTestId("ids").textContent).toBe("grades,today"))
     expect(JSON.parse(window.localStorage.getItem(storageKey) ?? "[]")).toEqual(["grades", "today"])
-    await waitFor(() => expect(bodies).toEqual([{ bottom_nav: ["grades", "today"] }]))
+    await waitFor(() =>
+      expect(bodies).toEqual([{ bottom_nav: ["grades", "today"], onboarding_dismissed: [DASHBOARD_MIGRATED] }]),
+    )
   })
 })

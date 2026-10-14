@@ -7,19 +7,21 @@ import { useMemo } from "react"
 
 /**
  * Sidebar groups and the phone bottom bar (WEB-2): Home, Academics, Study tools (pages by the study-tools task),
- * Inbox and Account. The calendar (`/timetable/`, titled Calendar) also holds the attendance. The bar has Today,
- * Calendar, Grades and Homework; "More" is added by the shell.
+ * Inbox and Account. The calendar (`/timetable/`, titled Calendar) also holds the attendance. The Dashboard (`/`) is the
+ * landing page; Today (`/today/`, the widgets) sits next to it. The bar has the Dashboard, Calendar, Grades and Homework;
+ * "More" is added by the shell.
  */
 export function useNav(): { groups: NavGroup[]; bottom: BottomNavItem[] } {
   const t = useT("nav")
   return useMemo(() => {
-    const today = { title: t("today"), url: "/", icon: "today", match: "exact" } as const
+    const dashboard = { title: t("dashboard"), url: "/", icon: "dashboard", match: "exact" } as const
+    const today = { title: t("today"), url: "/today/", icon: "today" } as const
     const timetable = { title: t("timetable"), url: "/timetable/", icon: "calendar" } as const
     const grades = { title: t("grades"), url: "/grades/", icon: "grades" } as const
     const homework = { title: t("homework"), url: "/homework/", icon: "homework" } as const
     return {
       groups: [
-        { label: t("groupHome"), items: [today] },
+        { label: t("groupHome"), items: [dashboard, today] },
         {
           label: t("groupAcademics"),
           items: [
@@ -53,7 +55,7 @@ export function useNav(): { groups: NavGroup[]; bottom: BottomNavItem[] } {
           items: [{ title: t("settings"), url: "/settings/", icon: "settings" }],
         },
       ],
-      bottom: [today, timetable, grades, homework],
+      bottom: [dashboard, timetable, grades, homework],
     }
   }, [t])
 }

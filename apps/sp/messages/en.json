@@ -42,6 +42,7 @@
   },
   "nav": {
     "short": {
+      "dashboard": "Home",
       "today": "Today",
       "timetable": "Calendar",
       "subjects": "Subjects",
@@ -56,6 +57,7 @@
       "notifications": "Alerts",
       "settings": "Settings"
     },
+    "dashboard": "Dashboard",
     "today": "Today",
     "timetable": "Calendar",
     "subjects": "Subjects",
@@ -84,6 +86,21 @@
     "absent": "Absent",
     "excused": "Excused",
     "not_taken": "Not taken yet"
+  },
+  "dashboard": {
+    "title": "Dashboard",
+    "lessons": "Today's lessons",
+    "noLessons": "No lessons today",
+    "openCalendar": "Open the calendar",
+    "mark": "Mark {mark}",
+    "notebook": "Notebook: {subject}",
+    "gpa": "GPA",
+    "gpaLabel": "GPA {value} out of 5, open Grades",
+    "gpaError": "Could not load the GPA",
+    "toGrades": "Grades",
+    "sections": "All sections",
+    "library": "Library",
+    "lms": "LMS"
   },
   "today": {
     "title": "Today",

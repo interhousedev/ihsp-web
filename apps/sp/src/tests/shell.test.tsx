@@ -68,6 +68,8 @@ describe("app frame", () => {
     await screen.findByText("page body")
 
     for (const name of [
+      "Dashboard",
+      "Today",
       "Calendar",
       "Subjects",
       "Grades",
@@ -97,7 +99,7 @@ describe("app frame", () => {
     expect(screen.queryAllByRole("link", { name: "Timetable" })).toHaveLength(0)
   })
 
-  test("the phone bottom bar has Today, Calendar, Grades, Homework and More", async () => {
+  test("the phone bottom bar has Home, Calendar, Grades, Homework and More", async () => {
     setViewportWidth(360)
     renderSp(
       <SpShell>
@@ -109,7 +111,9 @@ describe("app frame", () => {
     const bar = screen.getByRole("navigation", { name: "Quick navigation" })
 
     expect(bar.querySelectorAll("a")).toHaveLength(4)
-    expect(bar.textContent).toContain("Today")
+    expect(bar.querySelector("a")?.getAttribute("href")).toBe("/")
+    expect(bar.textContent).toContain("Home")
+    expect(bar.textContent).not.toContain("Today")
     expect(bar.textContent).toContain("Calendar")
     expect(bar.textContent).toContain("More")
   })

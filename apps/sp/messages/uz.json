@@ -42,6 +42,7 @@
   },
   "nav": {
     "short": {
+      "dashboard": "Asosiy",
       "today": "Bugun",
       "timetable": "Taqvim",
       "subjects": "Fanlar",
@@ -56,6 +57,7 @@
       "notifications": "Xabarlar",
       "settings": "Sozlama"
     },
+    "dashboard": "Bosh sahifa",
     "today": "Bugun",
     "timetable": "Taqvim",
     "subjects": "Fanlar",
@@ -84,6 +86,21 @@
     "absent": "Qatnashmagan",
     "excused": "Sababli",
     "not_taken": "Hali belgilanmagan"
+  },
+  "dashboard": {
+    "title": "Bosh sahifa",
+    "lessons": "Bugungi darslar",
+    "noLessons": "Bugun dars yoʻq",
+    "openCalendar": "Taqvimni ochish",
+    "mark": "Baho {mark}",
+    "notebook": "Daftar: {subject}",
+    "gpa": "GPA",
+    "gpaLabel": "GPA {value} (5 dan), baholarni ochish",
+    "gpaError": "GPA yuklanmadi",
+    "toGrades": "Baholar",
+    "sections": "Barcha boʻlimlar",
+    "library": "Kutubxona",
+    "lms": "LMS"
   },
   "today": {
     "title": "Bugun",

@@ -9,6 +9,9 @@ import {
   readLegacyBottomBar,
   readStoredBottomBar,
   storeBottomBar,
+  migrateToDashboard,
+  withDashboardFlag,
+  DASHBOARD_MIGRATED,
   DEFAULT_BOTTOM_BAR,
   type DestinationId,
 } from "../utils/bottom-bar"
@@ -27,16 +30,20 @@ export function useBottomBar(): {
   const userId = session?.user.id ?? ""
   const [local, setLocal] = useState<DestinationId[] | null>(() => (userId ? readStoredBottomBar(userId) : null))
 
-  const legacy = readLegacyBottomBar(preferences?.onboarding_dismissed)
-  const saved = preferences?.bottom_nav ? normalizeBottomBar(preferences.bottom_nav) : null
+  // Lists saved before the Dashboard (the legacy entry always is) get the Dashboard in place of Today.
+  const flagged = preferences?.onboarding_dismissed?.includes(DASHBOARD_MIGRATED) ?? false
+  const legacyRaw = readLegacyBottomBar(preferences?.onboarding_dismissed)
+  const legacy = legacyRaw ? migrateToDashboard(legacyRaw) : null
+  const stored = preferences?.bottom_nav ? normalizeBottomBar(preferences.bottom_nav) : null
+  const saved = stored && !flagged ? migrateToDashboard(stored) : stored
 
-  // Migrate once: the old `bottom-nav:` entry moves to `bottom_nav` and leaves `onboarding_dismissed`.
+  // Migrate once: the old `bottom-nav:` entry moves to `bottom_nav`, a pre-Dashboard list is rewritten, the flag is set.
   const migrate = update.mutate
   useEffect(() => {
-    if (!preferences || !legacy) return
+    if (!preferences || (flagged && !legacyRaw) || (!stored && !legacyRaw)) return
     migrate({
-      ...(preferences.bottom_nav ? {} : { bottom_nav: legacy }),
-      onboarding_dismissed: dropLegacyBottomBar(preferences.onboarding_dismissed),
+      bottom_nav: saved ?? legacy ?? undefined,
+      onboarding_dismissed: withDashboardFlag(dropLegacyBottomBar(preferences.onboarding_dismissed)),
     })
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [preferences?.onboarding_dismissed, preferences?.bottom_nav])
@@ -48,9 +55,15 @@ export function useBottomBar(): {
       const clean = normalizeBottomBar(next)
       setLocal(clean)
       if (userId) storeBottomBar(userId, clean)
-      if (preferences) update.mutate({ bottom_nav: clean })
+      if (!preferences) return
+      // Saving marks the account as Dashboard-era, so a chosen Today is not migrated later.
+      update.mutate(
+        flagged
+          ? { bottom_nav: clean }
+          : { bottom_nav: clean, onboarding_dismissed: withDashboardFlag(preferences.onboarding_dismissed ?? []) },
+      )
     },
-    [preferences, update, userId],
+    [flagged, preferences, update, userId],
   )
 
   return { ids, save }

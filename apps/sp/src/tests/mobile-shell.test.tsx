@@ -11,7 +11,9 @@ import { BottomBarEditor } from "../features/settings/components/bottom-bar-edit
 import { SpShell } from "../features/shell/components/sp-shell"
 import {
   BOTTOM_BAR_PREFIX,
+  DASHBOARD_MIGRATED,
   DEFAULT_BOTTOM_BAR,
+  migrateToDashboard,
   normalizeBottomBar,
   dropLegacyBottomBar,
   readLegacyBottomBar,
@@ -35,6 +37,85 @@ describe("bottom bar config", () => {
     expect(normalizeBottomBar(["grades", "x", "grades", "today"])).toEqual(["grades", "today"])
     expect(normalizeBottomBar([])).toEqual([...DEFAULT_BOTTOM_BAR])
     expect(normalizeBottomBar(["today", "timetable", "grades", "homework", "files"])).toHaveLength(4)
+  })
+
+  test("the default bar starts with the Dashboard and leaves Today out", () => {
+    expect(DEFAULT_BOTTOM_BAR[0]).toBe("dashboard")
+    expect(DEFAULT_BOTTOM_BAR).not.toContain("today")
+  })
+
+  test("a list saved before the Dashboard gets the Dashboard in place of Today", () => {
+    expect(migrateToDashboard(["timetable", "today", "grades"])).toEqual(["timetable", "dashboard", "grades"])
+    expect(migrateToDashboard(["files", "grades"])).toEqual(["files", "grades"])
+    expect(migrateToDashboard(["dashboard", "today"])).toEqual(["dashboard", "today"])
+  })
+
+  test("a stored account list with Today is migrated once and flagged", async () => {
+    const bodies: Record<string, unknown>[] = []
+    const session = studentWith({ bottom_nav: ["today", "grades"], onboarding_dismissed: ["welcome"] })
+    server.use(
+      http.get(apiUrl("/v1/id/me"), () => HttpResponse.json(session.user)),
+      http.patch(apiUrl("/v1/id/me/preferences"), async ({ request }) => {
+        const body = (await request.json()) as Record<string, unknown>
+        bodies.push(body)
+        return HttpResponse.json({ ...userMe.preferences, ...body })
+      }),
+    )
+    setViewportWidth(360)
+    renderSp(
+      <SpShell>
+        <p>page body</p>
+      </SpShell>,
+      { session },
+    )
+    await screen.findByText("page body")
+    const bar = screen.getByRole("navigation", { name: "Quick navigation" })
+    expect(within(bar).getByRole("link", { name: "Home" })).toBeInTheDocument()
+    await waitFor(() =>
+      expect(bodies).toEqual([
+        { bottom_nav: ["dashboard", "grades"], onboarding_dismissed: ["welcome", DASHBOARD_MIGRATED] },
+      ]),
+    )
+  })
+
+  test("after the migration Today may be chosen again and stays", async () => {
+    const bodies: Record<string, unknown>[] = []
+    const session = studentWith({ bottom_nav: ["today", "grades"], onboarding_dismissed: [DASHBOARD_MIGRATED] })
+    server.use(
+      http.get(apiUrl("/v1/id/me"), () => HttpResponse.json(session.user)),
+      http.patch(apiUrl("/v1/id/me/preferences"), async ({ request }) => {
+        bodies.push((await request.json()) as Record<string, unknown>)
+        return HttpResponse.json({})
+      }),
+    )
+    setViewportWidth(360)
+    renderSp(
+      <SpShell>
+        <p>page body</p>
+      </SpShell>,
+      { session },
+    )
+    await screen.findByText("page body")
+    const bar = screen.getByRole("navigation", { name: "Quick navigation" })
+    expect(within(bar).getByRole("link", { name: "Today" })).toBeInTheDocument()
+    expect(bodies).toEqual([])
+  })
+
+  test("a device list saved before the Dashboard is migrated", async () => {
+    window.localStorage.setItem(`ihsp:sp:bottom-bar:${userMe.id}`, JSON.stringify(["today", "files"]))
+    setViewportWidth(360)
+    renderSp(
+      <SpShell>
+        <p>page body</p>
+      </SpShell>,
+    )
+    await screen.findByText("page body")
+    const bar = screen.getByRole("navigation", { name: "Quick navigation" })
+    expect(
+      within(bar)
+        .getAllByRole("link")
+        .map((link) => link.getAttribute("href")),
+    ).toEqual(["/", "/files"])
   })
 
   test("reads and drops the legacy account entry", () => {
@@ -64,7 +145,9 @@ describe("bottom bar config", () => {
     )
     await screen.findByText("page body")
     await waitFor(() =>
-      expect(bodies).toEqual([{ bottom_nav: ["files", "grades"], onboarding_dismissed: ["welcome"] }]),
+      expect(bodies).toEqual([
+        { bottom_nav: ["files", "grades"], onboarding_dismissed: ["welcome", DASHBOARD_MIGRATED] },
+      ]),
     )
   })
 
@@ -79,15 +162,17 @@ describe("bottom bar config", () => {
     )
     const { user } = renderSp(<BottomBarEditor />, { route: "/settings/" })
 
-    await user.click(await screen.findByRole("button", { name: "Move right: Today" }))
+    await user.click(await screen.findByRole("button", { name: "Move right: Dashboard" }))
 
-    await waitFor(() => expect(bodies).toEqual([{ bottom_nav: ["timetable", "today", "grades", "homework"] }]))
-    const stored = window.localStorage.getItem(`ihsp:sp:bottom-bar:${userMe.id}`)
-    expect(JSON.parse(stored ?? "[]")).toEqual(["timetable", "today", "grades", "homework"])
+    await waitFor(() =>
+      expect(bodies.at(-1)).toMatchObject({ bottom_nav: ["timetable", "dashboard", "grades", "homework"] }),
+    )
+    const stored = window.localStorage.getItem(`ihsp:sp:bottom-bar:v2:${userMe.id}`)
+    expect(JSON.parse(stored ?? "[]")).toEqual(["timetable", "dashboard", "grades", "homework"])
   })
 
   test("the bar shows the saved pages and More", async () => {
-    window.localStorage.setItem(`ihsp:sp:bottom-bar:${userMe.id}`, JSON.stringify(["files", "grades"]))
+    window.localStorage.setItem(`ihsp:sp:bottom-bar:v2:${userMe.id}`, JSON.stringify(["files", "grades"]))
     setViewportWidth(360)
     renderSp(
       <SpShell>
