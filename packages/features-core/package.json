@@ -26,6 +26,6 @@
     "@ihsp/telegram": "workspace:*",
     "@ihsp/ui": "workspace:*",
     "foliate-js": "github:johnfactotum/foliate-js#78914aef4466eb960965702401634c2cb348e9b1",
-    "pdfjs-dist": "6.3.289"
+    "pdfjs-dist": "6.4.299"
   }
 }
