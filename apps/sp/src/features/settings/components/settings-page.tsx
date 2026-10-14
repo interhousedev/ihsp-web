@@ -13,6 +13,7 @@ import { LinkButton } from "../../shared/components/link-button"
 import { AppLockSection } from "../../pwa/components/app-lock-section"
 import { getServiceWorkerRegistration } from "../../pwa/utils/service-worker-registration"
 import { BottomBarEditor } from "./bottom-bar-editor"
+import { EmisSyncSection } from "./emis-sync-section"
 import { GeneralSettings } from "./general-settings"
 import { SettingsSection } from "./settings-section"
 import { TelegramHint } from "./telegram-hint"
@@ -38,6 +39,9 @@ export function SettingsPage() {
           </SettingsSection>
           <SettingsSection title={t("calendar.title")}>
             <CalendarFeedPanel />
+          </SettingsSection>
+          <SettingsSection title={t("emisSync.title")}>
+            <EmisSyncSection />
           </SettingsSection>
           <AppLockSection />
         </div>

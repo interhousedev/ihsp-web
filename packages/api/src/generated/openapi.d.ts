@@ -5782,6 +5782,30 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/v1/me/sync": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get Sync
+         * @description The last sync, or null before the first one.
+         */
+        get: operations["get_sync_v1_me_sync_get"];
+        put?: never;
+        /**
+         * Post Sync
+         * @description Queue the sync of teachers, lessons and marks; 429 within ten minutes.
+         */
+        post: operations["post_sync_v1_me_sync_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/v1/me/teachers": {
         parameters: {
             query?: never;
@@ -18660,6 +18684,26 @@ export interface components {
             items: components["schemas"]["app__interfaces__http__v1__admin_sync__schemas__SyncRunItemResponse"][];
             /** Next Cursor */
             next_cursor?: string | null;
+        };
+        /**
+         * SyncStatusResponse
+         * @description The last sync: queued, running, done or failed, and when.
+         */
+        SyncStatusResponse: {
+            /** Detail */
+            detail: string | null;
+            /** Finished At */
+            finished_at: string | null;
+            /**
+             * Requested At
+             * Format: date-time
+             */
+            requested_at: string;
+            /**
+             * Status
+             * @enum {string}
+             */
+            status: "queued" | "running" | "done" | "failed";
         };
         /**
          * SystemHealth
@@ -32908,6 +32952,46 @@ export interface operations {
                 };
                 content: {
                     "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    get_sync_v1_me_sync_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["SyncStatusResponse"] | null;
+                };
+            };
+        };
+    };
+    post_sync_v1_me_sync_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            202: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["SyncStatusResponse"];
                 };
             };
         };

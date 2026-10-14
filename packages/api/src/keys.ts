@@ -110,6 +110,7 @@ export const keys = {
     gradesDay: (date?: string) => ["me", "grades", "day", date ?? null] as const,
     recordBook: () => ["me", "record-book"] as const,
     curriculum: () => ["me", "curriculum"] as const,
+    sync: () => ["me", "sync"] as const,
     assessments: (filters?: object) => ["me", "assessments", params(filters)] as const,
     planner: (subjectId: string, filters?: object) =>
       ["me", "subjects", subjectId, "planner", params(filters)] as const,

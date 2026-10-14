@@ -25,6 +25,7 @@ import type { getAdminModerationQueue, getAdminModerationSearch, getLessonResour
 import type { getLmsCourseBroadcasts, getLmsCourseCompare, getLmsCourseDraft, getLmsCoursePending, getLmsCoursePreviewStep, getLmsCourseStaff, getLmsCourseVersion, getLmsCourseVersions, getLmsCreators, getLmsStepDiff, getLmsStepDraft, getLmsStepHistory, patchLmsCourseBroadcast, patchLmsCourseSettings, patchLmsCourseStaff, postLmsCourseBroadcast, postLmsCourseDiscard, postLmsCourseDraftOutline, postLmsCourseInviteCode, postLmsCoursePublish, postLmsCourseStaff, postLmsCourseSteps, postLmsCourseVersionRestore, postLmsCourses, postLmsStepCheckpoints, postLmsStepDiscard, postLmsStepRestore, putLmsCourseDraftMeta, putLmsCreator, putLmsStepDraft } from "./endpoints/lms-authoring"
 import type { getLmsAttempt, getLmsCourse, getLmsCourseStep, getLmsCourseStudents, getLmsCourses, getLmsMyCourses, getLmsPreviewStepVideo, getLmsStepCardsNext, getLmsStepVideo, postLmsAttemptOverride, postLmsAttemptSubmit, postLmsCourseEnroll, postLmsJoin, postLmsStepBlockAttempts, postLmsStepCardReview, postLmsStepViewed, putLmsAttemptAnswers } from "./endpoints/lms-learning"
 import type { getAdminSyncRuns, getMeGrades, getMeGradesDay, getMeLessonResults, getMeRecordBook, getMeSubject, getMeSubjectLessons, getMeSubjects, postAdminSyncRun } from "./endpoints/marks"
+import type { getMeSync, postMeSync } from "./endpoints/me-sync"
 import type { getAdminSubjectMaterialGroups, getAdminSubjectMaterials, getArtifact, getArtifacts, getNotebook, getNotebookAutoSubject, getNotebookChat, getNotebookLabels, getNotebookSearch, getNotebookSource, getNotebookSourceFileUrl, getNotebookSources, getNotebookSubjectSlots, getNotebookUsage, getNotebooks, getPassage, getSourcePassages, getStaffSubjectMaterials, getStaffSubjects, patchArtifact, patchNotebook, patchNotebookLabel, patchNotebookSource, postAdminSubjectMaterial, postArtifact, postArtifactAsSource, postArtifactAttachToLesson, postArtifactCancel, postArtifactFlashcardSet, postArtifactRetry, postArtifactSaveToFiles, postArtifactSlidesRevise, postNotebook, postNotebookAutoSubject, postNotebookDiscover, postNotebookLabel, postNotebookLabelsAuto, postNotebookMessage, postNotebookRegenerate, postNotebookSourceSync, postNotebookSources, postNotebookSourcesSelect, postSaveNote, postStaffSubjectMaterial, putArtifactSlides, putNotebookSourceLabels } from "./endpoints/notebooks"
 import type { getNotifications, getNotificationsUnreadCount } from "./endpoints/notifications"
 import type { postOauthLogout, postOauthRefresh, postOauthTelegram, postOauthToken, postOauthTokenHook } from "./endpoints/oauth"
@@ -1569,6 +1570,14 @@ declare const res_postAdminSyncRun: Awaited<ReturnType<typeof postAdminSyncRun>>
 export const response_postAdminSyncRun: ResponseOf<"/v1/admin/sync/run", "post"> = res_postAdminSyncRun
 declare const req_postAdminSyncRun: SyncRunBody
 export const request_postAdminSyncRun: RequestOf<"/v1/admin/sync/run", "post"> = req_postAdminSyncRun
+
+// GET /v1/me/sync — getMeSync
+declare const res_getMeSync: Awaited<ReturnType<typeof getMeSync>>
+export const response_getMeSync: ResponseOf<"/v1/me/sync", "get"> = res_getMeSync
+
+// POST /v1/me/sync — postMeSync
+declare const res_postMeSync: Awaited<ReturnType<typeof postMeSync>>
+export const response_postMeSync: ResponseOf<"/v1/me/sync", "post"> = res_postMeSync
 
 // GET /v1/notebooks — getNotebooks
 declare const res_getNotebooks: Awaited<ReturnType<typeof getNotebooks>>

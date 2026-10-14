@@ -805,6 +805,15 @@
       "show": "In the bottom bar: {page}",
       "moveUp": "Move left: {page}",
       "moveDown": "Move right: {page}"
+    },
+    "emisSync": {
+      "title": "EMIS data",
+      "button": "Re-sync teachers, lessons and marks",
+      "queued": "Queued…",
+      "running": "Syncing…",
+      "lastSynced": "Last synced: {time}",
+      "failed": "The last sync did not finish. Try again later.",
+      "rateLimited": "Try again in {minutes} min."
     }
   }
 }

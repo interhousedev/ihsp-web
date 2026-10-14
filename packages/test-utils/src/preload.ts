@@ -39,6 +39,7 @@ const { TEST_ENV } = await import("./fixtures/env")
 const { server } = await import("./server")
 const {
   resetAssessments,
+  resetMeSyncState,
   resetCreatedFiles,
   resetLibraryState,
   resetNotebooksState,
@@ -87,6 +88,7 @@ afterEach(() => {
   resetTeacherContacts()
   resetTeacherPhotos()
   resetAssessments()
+  resetMeSyncState()
   window.localStorage.clear()
   window.sessionStorage.clear()
   resetTestRouter()

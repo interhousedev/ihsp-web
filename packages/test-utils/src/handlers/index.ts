@@ -5,6 +5,7 @@ import { broadcastsHandlers } from "./broadcasts"
 import { classworkHandlers } from "./classwork"
 import { compositionHandlers } from "./composition"
 import { curriculumHandlers } from "./curriculum"
+import { meSyncHandlers } from "./me-sync"
 import { dashboardHandlers } from "./dashboard"
 import { filesHandlers } from "./files"
 import { flashcardsHandlers } from "./flashcards"
@@ -31,6 +32,7 @@ import { webSearchHandlers } from "./web-search"
 export { errorHandlers } from "./errors"
 export { applyOutlineOps } from "./lms-authoring"
 export { resetAssessments } from "./assessments"
+export { resetMeSyncState } from "./me-sync"
 export { resetAdminAiState } from "./admin-ai"
 export { resetCreatedFiles, storedObjects } from "./files"
 export {
@@ -66,6 +68,7 @@ export {
   classworkHandlers,
   compositionHandlers,
   curriculumHandlers,
+  meSyncHandlers,
   dashboardHandlers,
   filesHandlers,
   flashcardsHandlers,
@@ -102,6 +105,7 @@ export const allHandlers = [
   ...registrationHandlers,
   ...scheduleHandlers,
   ...curriculumHandlers,
+  ...meSyncHandlers,
   ...teachersHandlers,
   ...classworkHandlers,
   ...marksHandlers,

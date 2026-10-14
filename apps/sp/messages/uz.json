@@ -805,6 +805,15 @@
       "show": "Pastki panelda: {page}",
       "moveUp": "Chapga: {page}",
       "moveDown": "Oʻngga: {page}"
+    },
+    "emisSync": {
+      "title": "EMIS maʼlumotlari",
+      "button": "Oʻqituvchilar, darslar va baholarni qayta sinxronlash",
+      "queued": "Navbatda…",
+      "running": "Sinxronlanmoqda…",
+      "lastSynced": "Oxirgi sinxronlash: {time}",
+      "failed": "Oxirgi sinxronlash yakunlanmadi. Keyinroq urinib koʻring.",
+      "rateLimited": "{minutes} daqiqadan keyin urinib koʻring."
     }
   }
 }
