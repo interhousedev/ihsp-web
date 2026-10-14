@@ -1,8 +1,8 @@
 /** WEB-31, WEB-33: the notebook routes, the sidebar entry and the shell without the phone bottom bar. */
 import { afterEach, describe, expect, test } from "bun:test"
-import { apiUrl, nbIds, problem, server } from "@ihsp/test-utils"
-import { screen, within } from "@testing-library/react"
-import { http } from "msw"
+import { apiUrl, nbIds, notebookDetail, problem, server, testRouter } from "@ihsp/test-utils"
+import { screen, waitFor, within } from "@testing-library/react"
+import { HttpResponse, http } from "msw"
 import NotebooksRoute from "../app/notebooks/page"
 import NotebookViewRoute from "../app/notebooks/view/page"
 import { SpShell } from "../features/shell/components/sp-shell"
@@ -68,6 +68,43 @@ describe("/notebooks/view/", () => {
     renderNotebooksSp(<NotebookViewRoute />, { route: "/notebooks/view/?id=missing" })
 
     expect(await screen.findByText("This notebook was not found.")).toBeInTheDocument()
+  })
+
+  test("a subject reference creates (or gets) the subject notebook and opens it", async () => {
+    testRouter.replace.mockClear()
+    const posted: string[] = []
+    server.use(
+      http.post(apiUrl("/v1/notebooks/auto/subject/:subjectId"), ({ params }) => {
+        posted.push(String(params.subjectId))
+        return HttpResponse.json(notebookDetail)
+      }),
+    )
+    renderNotebooksSp(<NotebookViewRoute />, { route: "/notebooks/view/?subject=subj-1" })
+
+    await waitFor(() => expect(testRouter.replace).toHaveBeenCalledWith(`/notebooks/view/?id=${notebookDetail.id}`))
+    expect(posted).toEqual(["subj-1"])
+  })
+
+  test("a missing id with a subject reference falls back to the subject notebook", async () => {
+    testRouter.replace.mockClear()
+    renderNotebooksSp(<NotebookViewRoute />, { route: "/notebooks/view/?id=missing&subject=subj-1&lesson=l1" })
+
+    await waitFor(() =>
+      expect(testRouter.replace).toHaveBeenCalledWith(`/notebooks/view/?id=${notebookDetail.id}&lesson=l1`),
+    )
+  })
+
+  test("says the subject is unknown when the subject notebook cannot be made", async () => {
+    server.use(
+      http.post(apiUrl("/v1/notebooks/auto/subject/:subjectId"), () =>
+        problem(404, "notebooks/subject-not-found", "This subject is not known yet."),
+      ),
+    )
+    renderNotebooksSp(<NotebookViewRoute />, { route: "/notebooks/view/?subject=nope" })
+
+    expect(await screen.findByRole("alert")).toHaveTextContent(
+      "This subject is not known yet. Try again after your timetable syncs.",
+    )
   })
 
   test("shows an error with Try again when the notebook cannot be loaded", async () => {

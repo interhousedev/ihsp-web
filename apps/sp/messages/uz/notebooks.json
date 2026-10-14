@@ -991,6 +991,7 @@
   "errors": {
     "notebooks": {
       "not-found": "Daftar, manba yoki material topilmadi.",
+      "subject-not-found": "Bu fan hali maʼlum emas. Dars jadvali sinxronlangandan keyin qayta urinib koʻring.",
       "notebook-limit": "Daftarlar chekiga yetdingiz. Yangisini yaratish uchun bittasini oʻchiring.",
       "source-limit": "Daftarda manbalar yoki matn chekiga yetildi.",
       "source-duplicate": "Bu manba daftarda allaqachon bor.",

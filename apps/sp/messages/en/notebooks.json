@@ -991,6 +991,7 @@
   "errors": {
     "notebooks": {
       "not-found": "This notebook, source or item was not found.",
+      "subject-not-found": "This subject is not known yet. Try again after your timetable syncs.",
       "notebook-limit": "You have reached the limit of notebooks. Delete one to create another.",
       "source-limit": "This notebook has reached the limit of sources or text.",
       "source-duplicate": "This source is already in the notebook.",

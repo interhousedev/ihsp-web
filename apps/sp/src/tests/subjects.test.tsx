@@ -1,7 +1,7 @@
 /** WEB-7, WEB-8, UF-WEB-05: subjects and the subject page. */
 import { afterEach, beforeEach, describe, expect, test } from "bun:test"
 import { getMeCurriculumQuery, type SubjectCard } from "@ihsp/api"
-import { apiUrl, curriculumView, ids, server, subjectCards } from "@ihsp/test-utils"
+import { apiUrl, curriculumView, ids, notebookDetail, server, subjectCards, testRouter } from "@ihsp/test-utils"
 import { screen, waitFor, within } from "@testing-library/react"
 import { HttpResponse, http } from "msw"
 import { SubjectPage } from "../features/subjects/components/subject-page"
@@ -185,6 +185,26 @@ describe("subject page", () => {
     const planner = await screen.findByRole("link", { name: "Mark planner" })
     expect(planner.getAttribute("href")).toBe(`/grades/plan?subject=${ids.physics}&semester=4`)
     expect(screen.getByRole("button", { name: "Open notebook" })).toBeInTheDocument()
+  })
+
+  test("Open notebook creates the subject notebook when missing and opens it", async () => {
+    testRouter.push.mockClear()
+    const posted: string[] = []
+    server.use(
+      http.get(apiUrl("/v1/notebooks/auto/subject/:subjectId"), () =>
+        HttpResponse.json({ type: "notebooks/not-found", title: "Not found", status: 404 }, { status: 404 }),
+      ),
+      http.post(apiUrl("/v1/notebooks/auto/subject/:subjectId"), ({ params }) => {
+        posted.push(String(params.subjectId))
+        return HttpResponse.json(notebookDetail)
+      }),
+    )
+    const { user } = renderSp(<SubjectPage />, { route: PHYSICS })
+
+    await user.click(await screen.findByRole("button", { name: "Open notebook" }))
+
+    await waitFor(() => expect(testRouter.push).toHaveBeenCalledWith(`/notebooks/view/?id=${notebookDetail.id}`))
+    expect(posted).toEqual([ids.physics])
   })
 
   test("Lessons list past and upcoming lessons around now with their topic", async () => {
