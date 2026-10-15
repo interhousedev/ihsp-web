@@ -6,6 +6,7 @@ import { RequestFailed } from "../../shared/components/request-failed"
 import { useTr } from "../../shared/hooks/use-tr"
 import { useClientHint } from "../hooks/use-client-hint"
 import { useLoginInfo } from "../hooks/use-login-info"
+import { useTicketLogin } from "../hooks/use-ticket-login"
 import type { AccountRestore, SecondFactor } from "../utils/login-result"
 import { NewPasswordForm } from "./new-password-form"
 import { PasswordLoginForm, type PasswordCredentials } from "./password-login-form"
@@ -20,11 +21,12 @@ export function LoginFlow({ challenge }: { challenge: string }) {
   const hint = useClientHint()
   // The hint only draws the form early; the client name and `skip` always come from the server.
   const { query, redirecting } = useLoginInfo(challenge)
+  const redeeming = useTicketLogin(challenge)
   const [secondFactor, setSecondFactor] = useState<SecondFactorState | null>(null)
   const [passwordTicket, setPasswordTicket] = useState<string | null>(null)
   const [restore, setRestore] = useState<AccountRestore | null>(null)
 
-  if (redirecting) return <FlowSkeleton />
+  if (redirecting || redeeming) return <FlowSkeleton />
   const info = query.data ?? hint
   if (!info) {
     if (!query.isError) return <FlowSkeleton />

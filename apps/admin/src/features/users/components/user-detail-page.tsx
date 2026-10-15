@@ -15,6 +15,7 @@ import { TOUCH } from "../../shared/utils/touch"
 import { AuditList } from "./audit-list"
 import { BlockActions } from "./block-actions"
 import { CredentialResetActions } from "./credential-reset-actions"
+import { ResetLinkButton } from "./reset-link-button"
 import { EditUserDialog } from "./edit-user-dialog"
 import { MailActions } from "./mail-actions"
 import { RolesEditor } from "./roles-editor"
@@ -73,7 +74,10 @@ function DetailBody({ user }: { user: AdminUserDetail }) {
           {isAdmin ? (
             <CredentialResetActions userId={user.id} name={name} />
           ) : (
-            <p className="text-muted-foreground text-xs">{t("resetOnlyAdmins")}</p>
+            <>
+              <p className="text-muted-foreground text-xs">{t("resetOnlyAdmins")}</p>
+              <ResetLinkButton userId={user.id} />
+            </>
           )}
         </Section>
         <Section title={t("roles")}>

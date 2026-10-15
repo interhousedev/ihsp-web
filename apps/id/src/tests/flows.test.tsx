@@ -9,6 +9,7 @@ import { ReclaimPage } from "../features/reclaim/components/reclaim-page"
 import { LoginRecoveryPage } from "../features/recovery/components/login-recovery-page"
 import { OtpRecoveryPage } from "../features/recovery/components/otp-recovery-page"
 import { PasswordRecoveryPage } from "../features/recovery/components/password-recovery-page"
+import { LOGIN_TICKET_KEY } from "../features/shared/utils/login-ticket"
 import { clickButton, fillField, findHeading, findLink, renderId, allowSlowTests } from "./helpers"
 import { redirectToMock } from "./redirect-mock"
 
@@ -54,12 +55,12 @@ describe("staff activation", () => {
 })
 
 describe("recovery", () => {
-  test("password reset: login, code and a new password, then every other device is logged out", async () => {
+  test("password reset: login, code and a new password, then this device ends signed in", async () => {
     let body = null as { login_or_email: string; code: string; new_password: string } | null
     server.use(
       http.post(apiUrl("/v1/id/recovery/password/confirm"), async ({ request }) => {
         body = (await request.json()) as { login_or_email: string; code: string; new_password: string }
-        return new HttpResponse(null, { status: 204 })
+        return HttpResponse.json({ login_ticket: "reset-ticket" })
       }),
     )
     renderId(<PasswordRecoveryPage />, { route: "/recovery/password/" })
@@ -75,6 +76,11 @@ describe("recovery", () => {
 
     await findHeading("Password changed")
     expect(body).toEqual({ login_or_email: "brastilov.aleksey", code: "123456", new_password: "Better456" })
+    expect(screen.getByText("You stay signed in on this device.")).toBeInTheDocument()
+    await clickButton("Continue")
+    expect(window.sessionStorage.getItem(LOGIN_TICKET_KEY)).toBe("reset-ticket")
+    expect(redirectToMock).toHaveBeenCalledWith("/")
+    window.sessionStorage.removeItem(LOGIN_TICKET_KEY)
   })
 
   test("OTP reset shows when it takes effect", async () => {

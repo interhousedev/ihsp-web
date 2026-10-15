@@ -269,7 +269,8 @@
       "neutral": "Agar hisob mavjud boʻlsa, tiklash pochtasiga kod yubordik.",
       "submit": "Parolni oʻzgartirish",
       "doneTitle": "Parol oʻzgartirildi",
-      "doneDescription": "Yangi parol bilan kiring.",
+      "doneDescription": "Bu qurilmada tizimda qolasiz.",
+      "continue": "Davom etish",
       "sessionsRevoked": "Boshqa barcha qurilmalardan chiqildi.",
       "login": "Kirish"
     },

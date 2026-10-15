@@ -99,6 +99,7 @@ export const idAdminHandlers = [
   }),
   http.post(apiUrl("/v1/admin/users/:id/sessions/revoke"), () => noContent()),
   http.post(apiUrl("/v1/admin/users/:id/reset-password"), () => HttpResponse.json(resetPasswordResponse)),
+  http.post(apiUrl("/v1/admin/users/:id/reset-password-link"), () => HttpResponse.json(resetPasswordResponse)),
   http.post(apiUrl("/v1/admin/users/:id/reset-otp"), () => noContent()),
   http.post(apiUrl("/v1/admin/users/:id/mail/suspend"), async ({ params, request }) => {
     const user = findUser(param(params, "id"))

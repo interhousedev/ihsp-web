@@ -59,7 +59,7 @@ export function PasswordLoginForm({
     },
   })
   const form = useAppForm({
-    defaultValues: { login: "", password: "", remember: false } as PasswordCredentials,
+    defaultValues: { login: "", password: "", remember: true } as PasswordCredentials,
     validators: { onSubmit: schema },
     onSubmit: async ({ value }) => {
       await mutation.mutateAsync(value).catch(() => undefined)

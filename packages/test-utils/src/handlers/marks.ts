@@ -105,4 +105,6 @@ export const marksHandlers = [
   http.get(apiUrl("/v1/me/record-book"), () => HttpResponse.json(recordBook)),
   http.get(apiUrl("/v1/admin/sync/runs"), ({ request }) => HttpResponse.json(paginate(syncRuns, request))),
   http.post(apiUrl("/v1/admin/sync/run"), () => accepted()),
+  // TODO(contract): POST /v1/admin/sync/materials (hand-written until the OpenAPI is regenerated)
+  http.post(apiUrl("/v1/admin/sync/materials"), () => accepted()),
 ]

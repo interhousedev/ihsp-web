@@ -64,6 +64,26 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/internal/emis/{user_id}/file": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get File
+         * @description Download the file with the student's EMIS session and pass the bytes on.
+         */
+        get: operations["get_file_internal_emis__user_id__file_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/internal/emis/{user_id}/profile": {
         parameters: {
             query?: never;
@@ -1312,6 +1332,26 @@ export interface paths {
         patch: operations["update_subject_v1_admin_subjects__subject_id__patch"];
         trace?: never;
     };
+    "/v1/admin/sync/materials": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Resync Materials
+         * @description Replace the EMIS materials of the chosen terms in the worker; answers 202.
+         */
+        post: operations["resync_materials_v1_admin_sync_materials_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/v1/admin/sync/run": {
         parameters: {
             query?: never;
@@ -1756,6 +1796,26 @@ export interface paths {
          * @description Issue a reset link (also emailed to the user).
          */
         post: operations["post_reset_password_v1_admin_users__id__reset_password_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/admin/users/{id}/reset-password-link": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Post Reset Password Link
+         * @description Issue a reset link for the admin to hand over; nothing is emailed.
+         */
+        post: operations["post_reset_password_link_v1_admin_users__id__reset_password_link_post"];
         delete?: never;
         options?: never;
         head?: never;
@@ -2358,6 +2418,26 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/v1/id/login/ticket": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Post Login Ticket
+         * @description Redeem the one-time ticket on this login challenge (remembered device).
+         */
+        post: operations["post_login_ticket_v1_id_login_ticket_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/v1/id/logout": {
         parameters: {
             query?: never;
@@ -2921,7 +3001,7 @@ export interface paths {
         put?: never;
         /**
          * Post Password Confirm
-         * @description Check the code and the policy, change the password, log out everywhere.
+         * @description Change the password, log out everywhere, hand a ticket to sign in here.
          */
         post: operations["post_password_confirm_v1_id_recovery_password_confirm_post"];
         delete?: never;
@@ -10051,6 +10131,8 @@ export interface components {
         CompleteRegistrationResponse: {
             /** Login */
             login: string;
+            /** Login Ticket */
+            login_ticket?: string | null;
             /** Redirect To */
             redirect_to: string | null;
         };
@@ -13765,6 +13847,16 @@ export interface components {
             second_factor?: components["schemas"]["SecondFactorResponse"] | null;
         };
         /**
+         * LoginTicketBody
+         * @description POST /v1/id/login/ticket: sign in with the ticket of a registration or reset.
+         */
+        LoginTicketBody: {
+            /** Login Challenge */
+            login_challenge: string;
+            /** Ticket */
+            ticket: string;
+        };
+        /**
          * LogoutResponse
          * @description Hydra's end-session URL.
          */
@@ -14996,6 +15088,14 @@ export interface components {
             login_or_email: string;
             /** New Password */
             new_password: string;
+        };
+        /**
+         * PasswordConfirmResponse
+         * @description The password changed: redeem the ticket on IHT ID's next login challenge.
+         */
+        PasswordConfirmResponse: {
+            /** Login Ticket */
+            login_ticket: string;
         };
         /**
          * PasswordRequestBody
@@ -16470,6 +16570,14 @@ export interface components {
              * Format: uuid
              */
             revision_id: string;
+        };
+        /**
+         * ResyncMaterialsBody
+         * @description The terms whose EMIS materials are replaced.
+         */
+        ResyncMaterialsBody: {
+            /** Terms */
+            terms: components["schemas"]["TermChoice"][];
         };
         /**
          * ReviewBody
@@ -19189,6 +19297,16 @@ export interface components {
             client_id: "sp" | "staff";
             /** Init Data */
             init_data: string;
+        };
+        /**
+         * TermChoice
+         * @description An academic year and its half, e.g. 2026-2027 / 1.
+         */
+        TermChoice: {
+            /** Academic Year */
+            academic_year: string;
+            /** Half */
+            half: number;
         };
         /**
          * TermInputBody
@@ -22379,6 +22497,40 @@ export interface operations {
             };
         };
     };
+    get_file_internal_emis__user_id__file_get: {
+        parameters: {
+            query: {
+                url: string;
+                max_bytes: number;
+            };
+            header?: never;
+            path: {
+                user_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": unknown;
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
     get_profile_internal_emis__user_id__profile_get: {
         parameters: {
             query?: never;
@@ -24743,6 +24895,39 @@ export interface operations {
             };
         };
     };
+    resync_materials_v1_admin_sync_materials_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["ResyncMaterialsBody"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            202: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": unknown;
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
     run_sync_v1_admin_sync_run_post: {
         parameters: {
             query?: never;
@@ -25623,6 +25808,37 @@ export interface operations {
         };
     };
     post_reset_password_v1_admin_users__id__reset_password_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ActivationUrlResponse"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    post_reset_password_link_v1_admin_users__id__reset_password_link_post: {
         parameters: {
             query?: never;
             header?: never;
@@ -26801,6 +27017,39 @@ export interface operations {
             };
         };
     };
+    post_login_ticket_v1_id_login_ticket_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["LoginTicketBody"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["RedirectToResponse"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
     get_logout_v1_id_logout_get: {
         parameters: {
             query: {
@@ -27683,11 +27932,13 @@ export interface operations {
         };
         responses: {
             /** @description Successful Response */
-            204: {
+            200: {
                 headers: {
                     [name: string]: unknown;
                 };
-                content?: never;
+                content: {
+                    "application/json": components["schemas"]["PasswordConfirmResponse"];
+                };
             };
             /** @description Validation Error */
             422: {

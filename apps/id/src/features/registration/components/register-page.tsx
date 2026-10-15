@@ -7,6 +7,7 @@ import { TextLink } from "../../shared/components/text-link"
 import { useQueryParam } from "../../shared/hooks/use-query-param"
 import { useTr } from "../../shared/hooks/use-tr"
 import { withChallenge } from "../../shared/utils/challenge"
+import { signInWithTicket } from "../../shared/utils/login-ticket"
 import { redirectTo } from "../../shared/utils/redirect"
 import { EmisCredentialsForm } from "./emis-credentials-form"
 import { RegisterCodeStep } from "./register-code-step"
@@ -18,7 +19,7 @@ type Step =
   | { kind: "emis" }
   | { kind: "profile"; start: RegistrationStart }
   | { kind: "code"; start: RegistrationStart; password: string; email: string; confirmImport: boolean }
-  | { kind: "welcome"; login: string; redirectTo: string | null }
+  | { kind: "welcome"; login: string; redirectTo: string | null; ticket: string | null }
   | { kind: "done"; login: string }
 
 /** `/register/`: three steps of the EMIS registration (UF-ID-01). Carries `login_challenge` when it comes from a login. */
@@ -57,14 +58,24 @@ export function RegisterPage() {
         loginChallenge={loginChallenge}
         onBack={() => setStep({ kind: "profile", start: step.start })}
         onCompleted={(response) =>
-          setStep({ kind: "welcome", login: response.login, redirectTo: response.redirect_to ?? null })
+          setStep({
+            kind: "welcome",
+            login: response.login,
+            redirectTo: response.redirect_to ?? null,
+            ticket: response.login_ticket ?? null,
+          })
         }
       />
     )
   }
   if (step.kind === "welcome") {
-    const { login, redirectTo: next } = step
-    return <RegisterWelcome onContinue={() => (next ? redirectTo(next) : setStep({ kind: "done", login }))} />
+    const { login, redirectTo: next, ticket } = step
+    const onContinue = () => {
+      if (next) redirectTo(next)
+      else if (ticket) signInWithTicket(ticket)
+      else setStep({ kind: "done", login })
+    }
+    return <RegisterWelcome onContinue={onContinue} />
   }
   if (step.kind === "done") return <RegisterDone login={step.login} />
   return (

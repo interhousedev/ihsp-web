@@ -462,6 +462,13 @@
       "cancel": "Cancel",
       "save": "Set password",
       "saved": "Password of {name} set"
+    },
+    "resetLink": {
+      "button": "Generate reset password link",
+      "title": "Reset password link",
+      "description": "Give this link to the user. It works like the reset link from the password reset and is shown only once.",
+      "qrAlt": "QR code of the reset password link",
+      "close": "Done"
     }
   },
   "groups": {
@@ -1225,6 +1232,17 @@
         "duration": "Duration",
         "status": "Status",
         "stats": "Result"
+      },
+      "materials": {
+        "title": "Replace EMIS materials",
+        "description": "Deletes the files EMIS brought to lessons of the chosen terms and downloads them again. Files added by teachers and students stay.",
+        "terms": "Academic years and halves",
+        "termLabel": "{year}, half {half}",
+        "run": "Replace materials",
+        "confirmTitle": "Replace the EMIS materials?",
+        "confirmDescription": "{count, plural, one {The EMIS files of # term are deleted and downloaded again in the background.} other {The EMIS files of # terms are deleted and downloaded again in the background.}}",
+        "confirm": "Replace",
+        "started": "Materials re-sync started"
       }
     },
     "audit": {

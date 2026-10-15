@@ -203,6 +203,45 @@ describe("user detail", () => {
     expect(link).toHaveValue("http://localhost:3001/activate/?token=reset-token-1")
   })
 
+  test("generating a reset link of a student shows the link, a copy button and a QR code", async () => {
+    let calls = 0
+    server.use(
+      http.post(apiUrl(`/v1/admin/users/${ids.student}/reset-password-link`), () => {
+        calls += 1
+        return HttpResponse.json({ activation_url: "http://localhost:3001/activate/?token=reset-token-1" })
+      }),
+    )
+    const { user } = renderAdmin(<UserDetailPage />, { route: `/users/view/?id=${ids.student}` })
+    await user.click(await screen.findByRole("button", { name: "Generate reset password link" }))
+
+    const dialog = await screen.findByRole("dialog")
+    expect(calls).toBe(1)
+    expect(within(dialog).getByRole("textbox", { name: "Reset password link" })).toHaveValue(
+      "http://localhost:3001/activate/?token=reset-token-1",
+    )
+    expect(within(dialog).getByRole("img", { name: "QR code of the reset password link" })).toBeInTheDocument()
+    expect(within(dialog).getByRole("button", { name: "Copy" })).toBeInTheDocument()
+  })
+
+  test("the reset link button is offered for a student and a teacher, not for an administrator", async () => {
+    const student = renderAdmin(<UserDetailPage />, { route: `/users/view/?id=${ids.student}` })
+    expect(await screen.findByRole("button", { name: "Generate reset password link" })).toBeInTheDocument()
+    student.unmount()
+
+    const teacher = renderAdmin(<UserDetailPage />, { route: `/users/view/?id=${ids.teacherRakhimov}` })
+    expect(await screen.findByRole("button", { name: "Generate reset password link" })).toBeInTheDocument()
+    teacher.unmount()
+
+    server.use(
+      http.get(apiUrl(`/v1/admin/users/${ids.admin}`), () =>
+        HttpResponse.json({ ...adminAdminUser, telegram: [], sessions: [], recent_audit: [] }),
+      ),
+    )
+    renderAdmin(<UserDetailPage />, { route: `/users/view/?id=${ids.admin}` })
+    await screen.findByRole("button", { name: "Reset password" })
+    expect(screen.queryByRole("button", { name: "Generate reset password link" })).toBeNull()
+  })
+
   test("suspending the mailbox needs a reason", async () => {
     let body: unknown
     server.use(

@@ -40,6 +40,8 @@ import type {
   RecoveryOtpConfirmResponse,
   RecoveryOtpRequestBody,
   RecoveryPasswordConfirmBody,
+  RecoveryPasswordConfirmResponse,
+  LoginTicketBody,
   RecoveryPasswordRequestBody,
   ScopeCatalog,
   SessionItem,
@@ -100,6 +102,11 @@ export function postIdLoginRestoreDecline(
   opts?: RequestOptions,
 ): Promise<{ redirect_to: string }> {
   return api.post<{ redirect_to: string }>("/v1/id/login/restore/decline", body, { ...opts, auth: "none" })
+}
+
+/** POST /v1/id/login/ticket — none; redeems the ticket of a registration or reset on this challenge. TODO(contract). */
+export function postIdLoginTicket(body: LoginTicketBody, opts?: RequestOptions): Promise<{ redirect_to: string }> {
+  return api.post<{ redirect_to: string }>("/v1/id/login/ticket", body, { ...opts, auth: "none" })
 }
 
 /** POST /v1/id/login/otp — none. */
@@ -170,12 +177,12 @@ export function postIdRecoveryPasswordRequest(
   return api.post<NoContent>("/v1/id/recovery/password/request", body, { ...opts, auth: "none" })
 }
 
-/** POST /v1/id/recovery/password/confirm — none; `204`. */
+/** POST /v1/id/recovery/password/confirm — none; the one-time `login_ticket` signs this browser in. TODO(contract). */
 export function postIdRecoveryPasswordConfirm(
   body: RecoveryPasswordConfirmBody,
   opts?: RequestOptions,
-): Promise<NoContent> {
-  return api.post<NoContent>("/v1/id/recovery/password/confirm", body, { ...opts, auth: "none" })
+): Promise<RecoveryPasswordConfirmResponse> {
+  return api.post<RecoveryPasswordConfirmResponse>("/v1/id/recovery/password/confirm", body, { ...opts, auth: "none" })
 }
 
 /** POST /v1/id/recovery/otp/request — none; `202`. */

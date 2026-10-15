@@ -27,7 +27,8 @@ export type RegisterCompleteBody = {
   confirm_import_match?: boolean
   login_challenge?: string
 }
-export type RegisterCompleteResponse = { login: string; redirect_to: string | null }
+/** `login_ticket` (TODO(contract)): set without a login challenge; IHT ID redeems it on its own login. */
+export type RegisterCompleteResponse = { login: string; redirect_to: string | null; login_ticket?: string | null }
 
 export type ReclaimEmisBody = { emis_login: string; emis_password: string }
 export type ReclaimStart = { reclaim_token: string; login: string }

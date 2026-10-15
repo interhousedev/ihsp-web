@@ -117,3 +117,9 @@ export type SemesterParams = { semester?: number }
 export type SyncRunsParams = Pick<PageParams, "cursor" | "limit">
 /** Manual run: one student (`academic.sync_student`) or everyone (`academic.sync_all`). */
 export type SyncRunBody = { user_id?: string }
+
+/** One academic year and its half, e.g. `2026-2027` / 1. TODO(contract): replace with generated */
+export type TermChoice = { academic_year: string; half: 1 | 2 }
+
+/** Body of `POST /v1/admin/sync/materials`. TODO(contract): replace with generated */
+export type ResyncMaterialsBody = { terms: TermChoice[] }

@@ -9,7 +9,7 @@ import { useCountdown } from "../../shared/hooks/use-countdown"
 import { useTr } from "../../shared/hooks/use-tr"
 import { PasswordResetForm } from "./password-reset-form"
 
-type PasswordRecoveryConfirmProps = { identifier: string; onDone: () => void }
+type PasswordRecoveryConfirmProps = { identifier: string; onDone: (ticket: string) => void }
 
 /** Step 2 of the password reset: the emailed code and the new password. */
 export function PasswordRecoveryConfirm({ identifier, onDone }: PasswordRecoveryConfirmProps) {
@@ -18,7 +18,7 @@ export function PasswordRecoveryConfirm({ identifier, onDone }: PasswordRecovery
   const confirm = useMutation({
     mutationFn: (values: { code: string; password: string }) =>
       postIdRecoveryPasswordConfirm({ login_or_email: identifier, code: values.code, new_password: values.password }),
-    onSuccess: onDone,
+    onSuccess: (result) => onDone(result.login_ticket),
   })
   const resend = useMutation({
     mutationFn: () => postIdRecoveryPasswordRequest({ login_or_email: identifier }),

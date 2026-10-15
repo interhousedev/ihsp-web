@@ -175,6 +175,10 @@ export type RecoveryPasswordConfirmBody = {
   code: string
   new_password: string
 }
+/** TODO(contract): one-time ticket redeemed by `POST /v1/id/login/ticket`. */
+export type RecoveryPasswordConfirmResponse = { login_ticket: string }
+/** TODO(contract): `POST /v1/id/login/ticket`. */
+export type LoginTicketBody = { login_challenge: string; ticket: string }
 export type RecoveryOtpRequestBody = { login: string }
 export type RecoveryOtpConfirmBody = { login: string; code: string }
 export type RecoveryOtpConfirmResponse = { effective_at: string }

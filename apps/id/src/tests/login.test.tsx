@@ -4,6 +4,7 @@ import { apiUrl, loginResultRedirect, problem, server } from "@ihsp/test-utils"
 import { screen, waitFor } from "@testing-library/react"
 import { HttpResponse, http } from "msw"
 import { LoginPage } from "../features/login/components/login-page"
+import { LOGIN_TICKET_KEY } from "../features/shared/utils/login-ticket"
 import { clickButton, fillField, findHeading, findLink, renderId, allowSlowTests } from "./helpers"
 import { redirectToMock } from "./redirect-mock"
 
@@ -132,6 +133,42 @@ describe("login page", () => {
 
     expect(await screen.findByText("You don't have access to this platform.")).toBeInTheDocument()
     expect((await findLink("Back to the app")).getAttribute("href")).toBe("http://localhost:3002")
+  })
+
+  test("Remember me on this device is checked by default and still optional", async () => {
+    let body = null as { remember?: boolean } | null
+    server.use(
+      http.post(apiUrl("/v1/id/login"), async ({ request }) => {
+        body = (await request.json()) as { remember?: boolean }
+        return HttpResponse.json(loginResultRedirect)
+      }),
+    )
+    const { user } = renderId(<LoginPage />, { route: ROUTE })
+
+    const box = await screen.findByRole("checkbox", { name: "Remember me on this device" })
+    expect(box).toBeChecked()
+    await submitCredentials("brastilov.aleksey", "Secret123")
+    await waitFor(() => expect(body?.remember).toBe(true))
+    await user.click(box)
+    expect(box).not.toBeChecked()
+  })
+
+  test("a stored registration/reset ticket signs in without the form", async () => {
+    let body = null as { login_challenge: string; ticket: string } | null
+    server.use(
+      http.post(apiUrl("/v1/id/login/ticket"), async ({ request }) => {
+        body = (await request.json()) as { login_challenge: string; ticket: string }
+        return HttpResponse.json({ redirect_to: "http://localhost:4444/oauth2/auth?login_verifier=ticket" })
+      }),
+    )
+    window.sessionStorage.setItem(LOGIN_TICKET_KEY, "reset-ticket")
+    renderId(<LoginPage />, { route: ROUTE })
+
+    await waitFor(() =>
+      expect(redirectToMock).toHaveBeenCalledWith("http://localhost:4444/oauth2/auth?login_verifier=ticket"),
+    )
+    expect(body).toEqual({ login_challenge: "challenge-1", ticket: "reset-ticket" })
+    expect(window.sessionStorage.getItem(LOGIN_TICKET_KEY)).toBeNull()
   })
 
   test("an already authenticated browser (skip) is sent on without a form", async () => {

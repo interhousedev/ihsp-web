@@ -18,14 +18,14 @@ import type { getAdminGroupCurriculum, getMeCurriculum, postAdminGroupCurriculum
 import type { getMeDashboard, putMeDashboard } from "./endpoints/dashboard"
 import type { deleteFile, getFile, getFileUrl, getMeFiles, getMeStorage, patchFile, postFileComplete, postFiles } from "./endpoints/files"
 import type { getMeFlashcardSet, getMeFlashcardSetStudy, getMeFlashcardSets, getMeFlashcardSetsStats, patchMeFlashcardSet, postMeFlashcardReview, postMeFlashcardSets, postMeFlashcardSetsCopy, putMeFlashcardSetCards } from "./endpoints/flashcards"
-import type { deleteIdMe, getIdActivation, getIdConsent, getIdLogin, getIdLogout, getIdMcpScopes, getIdMe, getIdMeActivity, getIdMeConnectors, getIdMeSessions, getIdMeTelegram, patchIdMePreferences, patchIdMeTelegram, postIdActivation, postIdConsent, postIdLogin, postIdLoginOtp, postIdLoginOtpRequest, postIdLoginPassword, postIdLoginRestore, postIdLoginRestoreDecline, postIdMeConnectors, postIdMeEmailChangeConfirm, postIdMeEmisPassword, postIdMeOtpDisable, postIdMeOtpEnableConfirm, postIdRecoveryOtpConfirm, postIdTelegramLogin, postIdTelegramOtpRequest, postIdTelegramStatus } from "./endpoints/id"
-import type { getAdminAudit, getAdminOauthClients, getAdminSettings, getAdminTeachers, getAdminUser, getAdminUsers, patchAdminTeacher, patchAdminUser, postAdminOauthClientVerify, postAdminTeacherDeactivate, postAdminTeachers, postAdminUserBlock, postAdminUserMailResume, postAdminUserMailSuspend, postAdminUserResetPassword, postAdminUserRoles, postAdminUserUnblock, putAdminSettings } from "./endpoints/id-admin"
+import type { deleteIdMe, getIdActivation, getIdConsent, getIdLogin, getIdLogout, getIdMcpScopes, getIdMe, getIdMeActivity, getIdMeConnectors, getIdMeSessions, getIdMeTelegram, patchIdMePreferences, patchIdMeTelegram, postIdActivation, postIdConsent, postIdLogin, postIdLoginOtp, postIdLoginOtpRequest, postIdLoginPassword, postIdLoginRestore, postIdLoginRestoreDecline, postIdLoginTicket, postIdMeConnectors, postIdMeEmailChangeConfirm, postIdMeEmisPassword, postIdMeOtpDisable, postIdMeOtpEnableConfirm, postIdRecoveryOtpConfirm, postIdRecoveryPasswordConfirm, postIdTelegramLogin, postIdTelegramOtpRequest, postIdTelegramStatus } from "./endpoints/id"
+import type { getAdminAudit, getAdminOauthClients, getAdminSettings, getAdminTeachers, getAdminUser, getAdminUsers, patchAdminTeacher, patchAdminUser, postAdminOauthClientVerify, postAdminTeacherDeactivate, postAdminTeachers, postAdminUserBlock, postAdminUserMailResume, postAdminUserMailSuspend, postAdminUserResetPassword, postAdminUserResetPasswordLink, postAdminUserRoles, postAdminUserUnblock, putAdminSettings } from "./endpoints/id-admin"
 import type { getAdminInsights } from "./endpoints/insights"
 import type { getAnnotations, getAnnotationsExport, getLibraryAuthors, getLibraryCollection, getLibraryCollections, getLibraryFileUrl, getLibraryItem, getLibraryItemText, getLibraryItems, getLibraryMyGroups, getLibrarySanctions, getLibrarySubjects, getLibraryTags, getLibraryTopics, getManageBook, getManageBooks, getManageQueue, getManageStats, getManageSubjects, getManageSuggestion, getManageTopics, getMeLibrary, getMyUploads, getReadingList, getReadingLists, getShelf, getUniLibraryRecord, getUniLibrarySearch, getUniLibraryStatus, getUniLibraryTaxonomies, patchMaterial, postAnnotation, postAnnotationsSync, postLibrarySanction, postManageBook, postManageBookFile, postManageImport, postMaterial, postMaterialFiles, postMaterialSubmit, postMaterialVersion, postModeration, postReadingList, postSuggestion, postUniLibraryPin, putReadingListItems, putShelfEntry } from "./endpoints/library"
 import type { getAdminModerationQueue, getAdminModerationSearch, getLessonResources, getMeLinks, postAdminLinkDisable, postAdminLinkDismissReports, postLessonResourceHide, postLessonResources, postLinkRevoke, postLinks, postShares } from "./endpoints/links"
 import type { getLmsCourseBroadcasts, getLmsCourseCompare, getLmsCourseDraft, getLmsCoursePending, getLmsCoursePreviewStep, getLmsCourseStaff, getLmsCourseVersion, getLmsCourseVersions, getLmsCreators, getLmsStepDiff, getLmsStepDraft, getLmsStepHistory, patchLmsCourseBroadcast, patchLmsCourseSettings, patchLmsCourseStaff, postLmsCourseBroadcast, postLmsCourseDiscard, postLmsCourseDraftOutline, postLmsCourseInviteCode, postLmsCoursePublish, postLmsCourseStaff, postLmsCourseSteps, postLmsCourseVersionRestore, postLmsCourses, postLmsStepCheckpoints, postLmsStepDiscard, postLmsStepRestore, putLmsCourseDraftMeta, putLmsCreator, putLmsStepDraft } from "./endpoints/lms-authoring"
 import type { getLmsAttempt, getLmsCourse, getLmsCourseStep, getLmsCourseStudents, getLmsCourses, getLmsMyCourses, getLmsPreviewStepVideo, getLmsStepCardsNext, getLmsStepVideo, postLmsAttemptOverride, postLmsAttemptSubmit, postLmsCourseEnroll, postLmsJoin, postLmsStepBlockAttempts, postLmsStepCardReview, postLmsStepViewed, putLmsAttemptAnswers } from "./endpoints/lms-learning"
-import type { getAdminSyncRuns, getMeGrades, getMeGradesDay, getMeLessonResults, getMeRecordBook, getMeSubject, getMeSubjectLessons, getMeSubjects, postAdminSyncRun } from "./endpoints/marks"
+import type { getAdminSyncRuns, getMeGrades, getMeGradesDay, getMeLessonResults, getMeRecordBook, getMeSubject, getMeSubjectLessons, getMeSubjects, postAdminSyncMaterials, postAdminSyncRun } from "./endpoints/marks"
 import type { getMeSync, postMeSync } from "./endpoints/me-sync"
 import type { getAdminSubjectMaterialGroups, getAdminSubjectMaterials, getArtifact, getArtifacts, getNotebook, getNotebookAutoSubject, getNotebookChat, getNotebookLabels, getNotebookSearch, getNotebookSource, getNotebookSourceFileUrl, getNotebookSources, getNotebookSubjectSlots, getNotebookUsage, getNotebooks, getPassage, getSourcePassages, getStaffSubjectMaterials, getStaffSubjects, patchArtifact, patchNotebook, patchNotebookLabel, patchNotebookSource, postAdminSubjectMaterial, postArtifact, postArtifactAsSource, postArtifactAttachToLesson, postArtifactCancel, postArtifactFlashcardSet, postArtifactRetry, postArtifactSaveToFiles, postArtifactSlidesRevise, postNotebook, postNotebookAutoSubject, postNotebookDiscover, postNotebookLabel, postNotebookLabelsAuto, postNotebookMessage, postNotebookRegenerate, postNotebookSourceSync, postNotebookSources, postNotebookSourcesSelect, postSaveNote, postStaffSubjectMaterial, putArtifactSlides, putNotebookSourceLabels } from "./endpoints/notebooks"
 import type { getNotifications, getNotificationsUnreadCount } from "./endpoints/notifications"
@@ -430,6 +430,10 @@ export const served_postAdminUserRoles: Awaited<ReturnType<typeof postAdminUserR
 declare const gen_postAdminUserResetPassword: ResponseOf<"/v1/admin/users/{id}/reset-password", "post">
 export const served_postAdminUserResetPassword: Awaited<ReturnType<typeof postAdminUserResetPassword>> = gen_postAdminUserResetPassword
 
+// POST /v1/admin/users/{id}/reset-password-link — postAdminUserResetPasswordLink
+declare const gen_postAdminUserResetPasswordLink: ResponseOf<"/v1/admin/users/{id}/reset-password-link", "post">
+export const served_postAdminUserResetPasswordLink: Awaited<ReturnType<typeof postAdminUserResetPasswordLink>> = gen_postAdminUserResetPasswordLink
+
 // POST /v1/admin/users/{id}/mail/suspend — postAdminUserMailSuspend
 declare const gen_postAdminUserMailSuspend: ResponseOf<"/v1/admin/users/{id}/mail/suspend", "post">
 export const served_postAdminUserMailSuspend: Awaited<ReturnType<typeof postAdminUserMailSuspend>> = gen_postAdminUserMailSuspend
@@ -498,6 +502,10 @@ export const served_postIdLoginRestore: Awaited<ReturnType<typeof postIdLoginRes
 declare const gen_postIdLoginRestoreDecline: ResponseOf<"/v1/id/login/restore/decline", "post">
 export const served_postIdLoginRestoreDecline: Awaited<ReturnType<typeof postIdLoginRestoreDecline>> = gen_postIdLoginRestoreDecline
 
+// POST /v1/id/login/ticket — postIdLoginTicket
+declare const gen_postIdLoginTicket: ResponseOf<"/v1/id/login/ticket", "post">
+export const served_postIdLoginTicket: Awaited<ReturnType<typeof postIdLoginTicket>> = gen_postIdLoginTicket
+
 // POST /v1/id/login/otp — postIdLoginOtp
 declare const gen_postIdLoginOtp: ResponseOf<"/v1/id/login/otp", "post">
 export const served_postIdLoginOtp: Awaited<ReturnType<typeof postIdLoginOtp>> = gen_postIdLoginOtp
@@ -525,6 +533,10 @@ export const served_postIdTelegramOtpRequest: Awaited<ReturnType<typeof postIdTe
 // POST /v1/id/telegram/login — postIdTelegramLogin
 declare const gen_postIdTelegramLogin: ResponseOf<"/v1/id/telegram/login", "post">
 export const served_postIdTelegramLogin: Awaited<ReturnType<typeof postIdTelegramLogin>> = gen_postIdTelegramLogin
+
+// POST /v1/id/recovery/password/confirm — postIdRecoveryPasswordConfirm
+declare const gen_postIdRecoveryPasswordConfirm: ResponseOf<"/v1/id/recovery/password/confirm", "post">
+export const served_postIdRecoveryPasswordConfirm: Awaited<ReturnType<typeof postIdRecoveryPasswordConfirm>> = gen_postIdRecoveryPasswordConfirm
 
 // POST /v1/id/recovery/otp/confirm — postIdRecoveryOtpConfirm
 declare const gen_postIdRecoveryOtpConfirm: ResponseOf<"/v1/id/recovery/otp/confirm", "post">
@@ -1053,6 +1065,10 @@ export const served_getAdminSyncRuns: Awaited<ReturnType<typeof getAdminSyncRuns
 // POST /v1/admin/sync/run — postAdminSyncRun
 declare const gen_postAdminSyncRun: ResponseOf<"/v1/admin/sync/run", "post">
 export const served_postAdminSyncRun: Awaited<ReturnType<typeof postAdminSyncRun>> = gen_postAdminSyncRun
+
+// POST /v1/admin/sync/materials — postAdminSyncMaterials
+declare const gen_postAdminSyncMaterials: ResponseOf<"/v1/admin/sync/materials", "post">
+export const served_postAdminSyncMaterials: Awaited<ReturnType<typeof postAdminSyncMaterials>> = gen_postAdminSyncMaterials
 
 // GET /v1/me/sync — getMeSync
 declare const gen_getMeSync: ResponseOf<"/v1/me/sync", "get">

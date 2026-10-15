@@ -462,6 +462,13 @@
       "cancel": "Bekor qilish",
       "save": "Parol oʻrnatish",
       "saved": "{name} uchun parol oʻrnatildi"
+    },
+    "resetLink": {
+      "button": "Parolni tiklash havolasini yaratish",
+      "title": "Parolni tiklash havolasi",
+      "description": "Bu havolani foydalanuvchiga bering. U parolni tiklash havolasi kabi ishlaydi va faqat bir marta koʻrsatiladi.",
+      "qrAlt": "Parolni tiklash havolasining QR kodi",
+      "close": "Tayyor"
     }
   },
   "groups": {
@@ -1225,6 +1232,17 @@
         "duration": "Davomiyligi",
         "status": "Holati",
         "stats": "Natija"
+      },
+      "materials": {
+        "title": "EMIS materiallarini almashtirish",
+        "description": "Tanlangan yarim yilliklar darslariga EMIS qoʻshgan fayllarni oʻchiradi va qayta yuklaydi. Oʻqituvchi va talabalar qoʻshgan fayllar qoladi.",
+        "terms": "Oʻquv yillari va yarim yilliklar",
+        "termLabel": "{year}, {half}-yarim yillik",
+        "run": "Materiallarni almashtirish",
+        "confirmTitle": "EMIS materiallari almashtirilsinmi?",
+        "confirmDescription": "{count, plural, one {# ta yarim yillikning EMIS fayllari oʻchiriladi va fonda qayta yuklanadi.} other {# ta yarim yillikning EMIS fayllari oʻchiriladi va fonda qayta yuklanadi.}}",
+        "confirm": "Almashtirish",
+        "started": "Materiallarni qayta yuklash boshlandi"
       }
     },
     "audit": {

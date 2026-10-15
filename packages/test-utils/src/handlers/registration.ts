@@ -43,6 +43,7 @@ export const registrationHandlers = [
     return HttpResponse.json({
       ...registerCompleteResponse,
       redirect_to: body.login_challenge ? "http://localhost:4444/oauth2/auth?login_verifier=test" : null,
+      login_ticket: body.login_challenge ? null : "register-ticket",
     })
   }),
   http.post(apiUrl("/v1/id/reclaim/emis"), async ({ request }) => {

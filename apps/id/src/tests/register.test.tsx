@@ -4,6 +4,7 @@ import { apiUrl, server } from "@ihsp/test-utils"
 import { screen, waitFor } from "@testing-library/react"
 import { HttpResponse, http } from "msw"
 import { RegisterPage } from "../features/registration/components/register-page"
+import { LOGIN_TICKET_KEY } from "../features/shared/utils/login-ticket"
 import { clickButton, fillField, findHeading, findLink, renderId, allowSlowTests } from "./helpers"
 import { redirectToMock } from "./redirect-mock"
 
@@ -54,12 +55,38 @@ describe("registration", () => {
     await findHeading("Welcome to IHT ID")
     await clickButton("Continue")
     await findHeading("Account created")
+    expect(redirectToMock).not.toHaveBeenCalled()
     expect(body).toEqual({
       registration_token: "registration-token-2",
       password: "Secret123",
       email_code: "123456",
       confirm_import_match: true,
     })
+  })
+
+  test("without a login challenge the ticket signs this device in to IHT ID", async () => {
+    server.use(
+      http.post(apiUrl("/v1/id/register/complete"), () =>
+        HttpResponse.json({ login: "brastilov.aleksey", redirect_to: null, login_ticket: "register-ticket" }),
+      ),
+    )
+    renderId(<RegisterPage />, { route: "/register/" })
+
+    await submitEmis("student01")
+    await findHeading("Is this you?")
+    await fillField("New password", "Secret123")
+    await fillField("Repeat the password", "Secret123")
+    await fillField("Recovery email", "aleksey@example.org")
+    await clickButton("Send code to the email")
+    await findHeading("Confirm your email")
+    await fillField("Code", "123456")
+    await clickButton("Create account")
+    await findHeading("Welcome to IHT ID")
+    await clickButton("Continue")
+
+    expect(window.sessionStorage.getItem(LOGIN_TICKET_KEY)).toBe("register-ticket")
+    expect(redirectToMock).toHaveBeenCalledWith("/")
+    window.sessionStorage.removeItem(LOGIN_TICKET_KEY)
   })
 
   test("the password rules tick off while typing", async () => {

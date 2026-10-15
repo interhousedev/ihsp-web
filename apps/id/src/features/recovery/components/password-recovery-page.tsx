@@ -10,7 +10,7 @@ import { useTr } from "../../shared/hooks/use-tr"
 import { PasswordRecoveryConfirm } from "./password-recovery-confirm"
 import { PasswordRecoveryDone } from "./password-recovery-done"
 
-type Step = { kind: "request" } | { kind: "confirm"; identifier: string } | { kind: "done" }
+type Step = { kind: "request" } | { kind: "confirm"; identifier: string } | { kind: "done"; ticket: string }
 
 /** `/recovery/password/` (UF-ID-07): login or email, then the emailed code and a new password. */
 export function PasswordRecoveryPage() {
@@ -21,9 +21,11 @@ export function PasswordRecoveryPage() {
     onSuccess: (_result, identifier) => setStep({ kind: "confirm", identifier }),
   })
 
-  if (step.kind === "done") return <PasswordRecoveryDone />
+  if (step.kind === "done") return <PasswordRecoveryDone ticket={step.ticket} />
   if (step.kind === "confirm") {
-    return <PasswordRecoveryConfirm identifier={step.identifier} onDone={() => setStep({ kind: "done" })} />
+    return (
+      <PasswordRecoveryConfirm identifier={step.identifier} onDone={(ticket) => setStep({ kind: "done", ticket })} />
+    )
   }
   return (
     <FlowCard

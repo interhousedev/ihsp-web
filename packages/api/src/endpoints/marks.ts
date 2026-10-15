@@ -14,6 +14,7 @@ import type {
   SubjectDetail,
   SubjectLessonList,
   SubjectLessonsParams,
+  ResyncMaterialsBody,
   SyncRunBody,
   SyncRunItem,
   SyncRunsParams,
@@ -113,6 +114,15 @@ export const getAdminSyncRunsQuery = (params?: SyncRunsParams) =>
 /** POST /v1/admin/sync/run — admin; `202`, a manual run for one student or everyone. */
 export function postAdminSyncRun(body?: SyncRunBody, opts?: RequestOptions): Promise<NoContent> {
   return api.post<NoContent>("/v1/admin/sync/run", body ?? {}, opts)
+}
+
+/**
+ * POST /v1/admin/sync/materials — admin; `202`. The worker replaces every EMIS material
+ * of the chosen terms (deletes the EMIS files, downloads them fresh).
+ * TODO(contract): replace with generated
+ */
+export function postAdminSyncMaterials(body: ResyncMaterialsBody, opts?: RequestOptions): Promise<NoContent> {
+  return api.post<NoContent>("/v1/admin/sync/materials", body, opts)
 }
 
 // --- Names used by the app plans ---

@@ -78,6 +78,14 @@ export function postAdminUserResetPassword(id: string, opts?: RequestOptions): P
   return api.post<ResetPasswordResponse>(`/v1/admin/users/${seg(id)}/reset-password`, undefined, opts)
 }
 
+/**
+ * POST /v1/admin/users/{id}/reset-password-link — admin; the same reset link as reset-password, returned but not emailed.
+ * TODO(contract): hand-written until the openapi snapshot is regenerated.
+ */
+export function postAdminUserResetPasswordLink(id: string, opts?: RequestOptions): Promise<ResetPasswordResponse> {
+  return api.post<ResetPasswordResponse>(`/v1/admin/users/${seg(id)}/reset-password-link`, undefined, opts)
+}
+
 /** POST /v1/admin/users/{id}/reset-otp — admin; `204`. */
 export function postAdminUserResetOtp(id: string, opts?: RequestOptions): Promise<NoContent> {
   return api.post<NoContent>(`/v1/admin/users/${seg(id)}/reset-otp`, undefined, opts)

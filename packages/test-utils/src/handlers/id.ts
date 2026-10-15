@@ -95,6 +95,9 @@ export const idHandlers = [
   http.post(apiUrl("/v1/id/login/restore/decline"), () =>
     HttpResponse.json({ redirect_to: "http://localhost:4444/oauth2/auth?error=access_denied" }),
   ),
+  http.post(apiUrl("/v1/id/login/ticket"), () =>
+    HttpResponse.json({ redirect_to: "http://localhost:4444/oauth2/auth?login_verifier=ticket" }),
+  ),
   http.post(apiUrl("/v1/id/login/otp/request"), () => HttpResponse.json({ sent: true }, { status: 202 })),
   http.post(apiUrl("/v1/id/login/otp"), async ({ request }) => {
     const body = await readJson<LoginOtpBody>(request)
@@ -133,7 +136,7 @@ export const idHandlers = [
 
   // --- Login app: recovery ---
   http.post(apiUrl("/v1/id/recovery/password/request"), () => accepted()),
-  http.post(apiUrl("/v1/id/recovery/password/confirm"), () => noContent()),
+  http.post(apiUrl("/v1/id/recovery/password/confirm"), () => HttpResponse.json({ login_ticket: "reset-ticket" })),
   http.post(apiUrl("/v1/id/recovery/otp/request"), () => accepted()),
   http.post(apiUrl("/v1/id/recovery/otp/confirm"), () => HttpResponse.json({ effective_at: "2026-10-08T05:12:00Z" })),
   http.post(apiUrl("/v1/id/recovery/otp/cancel"), () => noContent()),

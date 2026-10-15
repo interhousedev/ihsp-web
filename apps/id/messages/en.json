@@ -269,7 +269,8 @@
       "neutral": "If the account exists, we sent a code to its recovery email.",
       "submit": "Change the password",
       "doneTitle": "Password changed",
-      "doneDescription": "Log in with your new password.",
+      "doneDescription": "You stay signed in on this device.",
+      "continue": "Continue",
       "sessionsRevoked": "Every other device was logged out.",
       "login": "Log in"
     },
