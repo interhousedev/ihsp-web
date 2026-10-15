@@ -81,7 +81,10 @@
     "sent": "Yuborilgan",
     "partial": "Qisman",
     "success": "Muvaffaqiyatli",
-    "running": "Bajarilmoqda"
+    "running": "Bajarilmoqda",
+    "queued": "Navbatda",
+    "stopping": "Toʻxtatilmoqda",
+    "done": "Tayyor"
   },
   "account": {
     "noTelegram": "Telegram akkauntlari ulanmagan.",
@@ -621,6 +624,24 @@
         "label": "Nomi (ixtiyoriy)",
         "open": "Materiallarni ochish"
       }
+    },
+    "emis": {
+      "open": "EMIS dan yuklash: {name}",
+      "title": "EMIS materiallari: {name}",
+      "description": "Ushbu fan darslari uchun EMIS materiallarini yuklaydi. Oʻqituvchi va talabalar qoʻshgan fayllar qoladi.",
+      "terms": "Oʻquv yillari va yarim yilliklar",
+      "termLabel": "{year}, {half}-yarim yillik",
+      "pullAll": "EMIS dan yuklash",
+      "confirmTitle": "Fan EMIS dan yuklansinmi?",
+      "confirmDescription": "Ushbu fan darslarining EMIS fayllari oʻchiriladi va fonda qayta yuklanadi.",
+      "confirm": "Yuklash",
+      "started": "EMIS dan yuklash boshlandi",
+      "teachers": "Oʻqituvchilar",
+      "groups": "Guruhlar",
+      "none": "Joriy semestrda bu fan hech kimda yoʻq.",
+      "pullNew": "Yangi materiallarni yuklash",
+      "pullNewFor": "Yangi materiallarni yuklash: {name}",
+      "softHint": "EMIS materiallari faqat materialsiz darslarga qoʻshiladi; hech narsa oʻchirilmaydi."
     }
   },
   "rooms": {
@@ -1210,7 +1231,8 @@
     "title": "Monitoring",
     "tabs": {
       "sync": "EMIS sinxronizatsiyasi",
-      "audit": "Audit jurnali"
+      "audit": "Audit jurnali",
+      "processes": "Jarayonlar"
     },
     "sync": {
       "userId": "Talaba ID si",
@@ -1262,6 +1284,15 @@
         "ip": "IP manzil",
         "details": "Tafsilotlar"
       }
+    },
+    "processes": {
+      "title": "Fon jarayonlari",
+      "loading": "Yuklanmoqda…",
+      "empty": "Ishlayotgan jarayon yoʻq.",
+      "started": "Boshlangan: {at}",
+      "stop": "Toʻxtatish",
+      "stopLabel": "{label} — toʻxtatish",
+      "stopped": "Toʻxtatish soʻraldi"
     }
   },
   "assistant": {
@@ -1426,6 +1457,7 @@
       "default": "Standart: {value}",
       "changed": "Oʻzgartirilgan",
       "reset": "Standartga qaytarish",
+      "unlimited": "Cheklanmagan",
       "save": "Oʻzgarishlarni saqlash",
       "saved": "Limitlar saqlandi",
       "unchanged": "Saqlanadigan oʻzgarish yoʻq",

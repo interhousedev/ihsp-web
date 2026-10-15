@@ -81,7 +81,10 @@
     "sent": "Sent",
     "partial": "Partly done",
     "success": "Success",
-    "running": "Running"
+    "running": "Running",
+    "queued": "Queued",
+    "stopping": "Stopping",
+    "done": "Done"
   },
   "account": {
     "noTelegram": "No Telegram accounts are linked.",
@@ -621,6 +624,24 @@
         "label": "Name (optional)",
         "open": "Open materials"
       }
+    },
+    "emis": {
+      "open": "EMIS pull for {name}",
+      "title": "EMIS materials: {name}",
+      "description": "Downloads the EMIS materials of this subject's lessons. Files added by teachers and students stay.",
+      "terms": "Academic years and halves",
+      "termLabel": "{year}, half {half}",
+      "pullAll": "Pull from EMIS",
+      "confirmTitle": "Pull the subject from EMIS?",
+      "confirmDescription": "The EMIS files of this subject's lessons are deleted and downloaded again in the background.",
+      "confirm": "Pull",
+      "started": "EMIS pull started",
+      "teachers": "Teachers",
+      "groups": "Groups",
+      "none": "Nobody has this subject in the current term.",
+      "pullNew": "Pull new materials",
+      "pullNewFor": "Pull new materials for {name}",
+      "softHint": "Only lessons without any material get EMIS materials; nothing is deleted."
     }
   },
   "rooms": {
@@ -1210,7 +1231,8 @@
     "title": "Monitoring",
     "tabs": {
       "sync": "EMIS sync",
-      "audit": "Audit log"
+      "audit": "Audit log",
+      "processes": "Processes"
     },
     "sync": {
       "userId": "Student ID",
@@ -1262,6 +1284,15 @@
         "ip": "IP address",
         "details": "Details"
       }
+    },
+    "processes": {
+      "title": "Worker processes",
+      "loading": "Loading…",
+      "empty": "No processes are running.",
+      "started": "Started {at}",
+      "stop": "Stop",
+      "stopLabel": "Stop {label}",
+      "stopped": "Stop requested"
     }
   },
   "assistant": {
@@ -1426,6 +1457,7 @@
       "default": "Default: {value}",
       "changed": "Changed",
       "reset": "Reset",
+      "unlimited": "Unlimited",
       "save": "Save changes",
       "saved": "Limits saved",
       "unchanged": "Nothing to save",

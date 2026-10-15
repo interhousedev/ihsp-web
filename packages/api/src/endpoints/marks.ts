@@ -15,6 +15,8 @@ import type {
   SubjectLessonList,
   SubjectLessonsParams,
   ResyncMaterialsBody,
+  SubjectEmisPullBody,
+  SubjectPeople,
   SyncRunBody,
   SyncRunItem,
   SyncRunsParams,
@@ -123,6 +125,28 @@ export function postAdminSyncRun(body?: SyncRunBody, opts?: RequestOptions): Pro
  */
 export function postAdminSyncMaterials(body: ResyncMaterialsBody, opts?: RequestOptions): Promise<NoContent> {
   return api.post<NoContent>("/v1/admin/sync/materials", body, opts)
+}
+
+/** GET /v1/admin/subjects/{id}/people — admin; teachers and groups of the subject this term. TODO(contract): replace with generated */
+export function getAdminSubjectPeople(subjectId: string, opts?: RequestOptions): Promise<SubjectPeople> {
+  return api.get<SubjectPeople>(`/v1/admin/subjects/${seg(subjectId)}/people`, opts)
+}
+export const getAdminSubjectPeopleQuery = (subjectId: string) =>
+  queryOptions({
+    queryKey: ["admin", "subjects", subjectId, "people"] as const,
+    queryFn: ({ signal }) => getAdminSubjectPeople(subjectId, { signal }),
+  })
+
+/**
+ * POST /v1/admin/subjects/{id}/emis-pull — admin; `202`. The worker pulls the subject's EMIS materials (full: replace,
+ * soft: only empty lessons), optionally for one teacher or group. TODO(contract): replace with generated
+ */
+export function postAdminSubjectEmisPull(
+  subjectId: string,
+  body: SubjectEmisPullBody,
+  opts?: RequestOptions,
+): Promise<NoContent> {
+  return api.post<NoContent>(`/v1/admin/subjects/${seg(subjectId)}/emis-pull`, body, opts)
 }
 
 // --- Names used by the app plans ---

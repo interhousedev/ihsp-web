@@ -34,6 +34,7 @@ import { useQuery } from "@tanstack/react-query"
 import { useState } from "react"
 import { QueryState } from "../../shared/components/query-state"
 import { useAdminMutation } from "../../shared/hooks/use-admin-mutation"
+import { limitNumber } from "../utils"
 
 const MULTIPLIERS = [2, 3, 5, 10] as const
 
@@ -87,7 +88,7 @@ export function ExtensionRow({ item }: { item: ExtensionItem }) {
     item.multiplier !== null
       ? t("extensions.multiplier", { value: item.multiplier })
       : Object.entries(item.values)
-          .map(([key, value]) => `${key}: ${value}`)
+          .map(([key, value]) => `${key}: ${limitNumber(value)}`)
           .join(", ")
   const until = item.expires_on ? t("extensions.until", { date: item.expires_on }) : t("extensions.forever")
   return (

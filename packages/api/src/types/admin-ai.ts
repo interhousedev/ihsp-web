@@ -12,6 +12,9 @@ export type LimitItem = {
   period: string | null
   minimum: number
   maximum: number
+  /** TODO(contract): true when -1 (no cap, shown as unlimited) is a valid value. */
+  unlimitable: boolean
+  /** The value in force; -1 means no cap. */
   value: number | null
   default: number | null
   overridden: boolean

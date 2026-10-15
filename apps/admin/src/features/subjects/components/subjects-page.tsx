@@ -15,6 +15,7 @@ import { TOUCH, TOUCH_ICON } from "../../shared/utils/touch"
 import { DefaultMaterialsDialog } from "./default-materials-dialog"
 import { MaterialsByEmisId } from "./materials-by-emis-id"
 import { SubjectDialog } from "./subject-dialog"
+import { SubjectEmisDialog } from "./subject-emis-dialog"
 
 const FILTER_KEYS = ["query"] as const
 
@@ -32,6 +33,8 @@ export function SubjectsPage() {
   const source = useArrayList<Subject>(subjects)
   const [materialsTarget, setMaterialsTarget] = useState<MaterialsTarget | null>(null)
   const [materialsOpen, setMaterialsOpen] = useState(false)
+  const [emisSubject, setEmisSubject] = useState<Subject | null>(null)
+  const [emisOpen, setEmisOpen] = useState(false)
   const materialGroups = useQuery(getAdminSubjectMaterialGroupsQuery())
   const materialCounts = useMemo(
     () => new Map((materialGroups.data ?? []).map((group) => [group.edu_subject_id, group.materials.length])),
@@ -105,19 +108,34 @@ export function SubjectsPage() {
         )
       }),
       actionsCol<Subject>(t("columns.actions"), (subject) => (
-        <Button
-          type="button"
-          variant="ghost"
-          size="icon"
-          className={TOUCH_ICON}
-          aria-label={t("edit", { name: subject.name.en })}
-          onClick={() => {
-            setDialogSubject(subject)
-            setDialogOpen(true)
-          }}
-        >
-          <Icons.edit aria-hidden />
-        </Button>
+        <span className="inline-flex items-center gap-1">
+          <Button
+            type="button"
+            variant="ghost"
+            size="icon"
+            className={TOUCH_ICON}
+            aria-label={t("emis.open", { name: subject.name.en })}
+            onClick={() => {
+              setEmisSubject(subject)
+              setEmisOpen(true)
+            }}
+          >
+            <Icons.upload aria-hidden className="rotate-180" />
+          </Button>
+          <Button
+            type="button"
+            variant="ghost"
+            size="icon"
+            className={TOUCH_ICON}
+            aria-label={t("edit", { name: subject.name.en })}
+            onClick={() => {
+              setDialogSubject(subject)
+              setDialogOpen(true)
+            }}
+          >
+            <Icons.edit aria-hidden />
+          </Button>
+        </span>
       )),
     ],
     [t, toggleDivided, materialCounts, materialGroups.data, openMaterials],
@@ -157,6 +175,7 @@ export function SubjectsPage() {
         }
       />
       <SubjectDialog subject={dialogSubject} open={dialogOpen} onOpenChange={setDialogOpen} />
+      <SubjectEmisDialog subject={emisSubject} open={emisOpen} onOpenChange={setEmisOpen} />
       <DefaultMaterialsDialog
         eduSubjectId={materialsTarget?.eduSubjectId ?? null}
         label={materialsTarget?.label}

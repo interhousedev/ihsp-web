@@ -78,8 +78,14 @@ describe("changesOf", () => {
     const result = changesOf([tokensLimit, hours], { [tokensLimit.key]: "12.5", [hours.key]: "721" }, invalid)
     expect(result.errors).toEqual({ [tokensLimit.key]: `bad ${tokensLimit.key}`, [hours.key]: `bad ${hours.key}` })
     expect(result.body.limits).toEqual({})
-    expect(changesOf([tokensLimit], { [tokensLimit.key]: "-1" }, invalid).errors).not.toEqual({})
     expect(changesOf([hours], { [hours.key]: "0" }, invalid).errors).toEqual({ [hours.key]: `bad ${hours.key}` })
+    expect(changesOf([hours], { [hours.key]: "-1" }, invalid).errors).toEqual({ [hours.key]: `bad ${hours.key}` })
+  })
+
+  test("minus one is no cap only for a limit that allows it, and it is sent as -1", () => {
+    const result = changesOf([tokensLimit], { [tokensLimit.key]: "-1" }, invalid)
+    expect(result).toEqual({ body: { limits: { [tokensLimit.key]: -1 } }, errors: {} })
+    expect(changesOf([hours], { [hours.key]: "-1" }, invalid).errors).not.toEqual({})
   })
 })
 
@@ -109,6 +115,28 @@ describe("limits editor", () => {
     expect(await screen.findByRole("alert")).toHaveTextContent(/^Enter a whole number from 0 to 100\W?000\.$/)
     expect(screen.getByLabelText("Notebook questions per minute")).toHaveAttribute("aria-invalid", "true")
     expect(sent).toBe(false)
+  })
+
+  test("the unlimited toggle disables the field and saves -1; other limits have no toggle", async () => {
+    let body: unknown
+    server.use(
+      http.put(apiUrl("/v1/admin/ai/limits"), async ({ request }) => {
+        body = await request.json()
+        return HttpResponse.json({ limits: adminLimits })
+      }),
+    )
+    renderAdmin(<LimitsEditor />, { route: "/limits/" })
+    const tokens = (await screen.findByLabelText("Assistant tokens per day")).closest("li") as HTMLElement
+    const hours = screen.getByLabelText("Session length").closest("li") as HTMLElement
+    expect(within(hours).queryByLabelText("Unlimited")).toBeNull()
+
+    fireEvent.click(within(tokens).getByLabelText("Unlimited"))
+    expect(screen.getByLabelText("Assistant tokens per day")).toBeDisabled()
+    expect(screen.getByLabelText("Assistant tokens per day")).toHaveValue("∞")
+    fireEvent.click(screen.getByRole("button", { name: "Save changes" }))
+
+    await waitUntil(() => body !== undefined, "no save")
+    expect(body).toEqual({ limits: { ai_daily_tokens_student: -1 } })
   })
 
   test("a changed value is sent alone as an integer", async () => {

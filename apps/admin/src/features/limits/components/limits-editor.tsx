@@ -12,9 +12,10 @@ import { useFormatters, useT } from "@ihsp/i18n"
 import { Button, Card, CardContent, CardHeader, CardTitle, Input, Label } from "@ihsp/ui"
 import { useQuery } from "@tanstack/react-query"
 import { useState } from "react"
+import { CheckField } from "../../shared/components/check-field"
 import { QueryState } from "../../shared/components/query-state"
 import { useAdminMutation } from "../../shared/hooks/use-admin-mutation"
-import { LIMIT_GROUPS, number } from "../utils"
+import { LIMIT_GROUPS, limitNumber, UNLIMITED } from "../utils"
 
 type Translate = ReturnType<typeof useT>
 
@@ -68,8 +69,9 @@ export function changesOf(
       if (item.overridden) changes[item.key] = null
       continue
     }
-    const value = /^\d+$/.test(text) ? Number(text) : Number.NaN
-    if (Number.isNaN(value) || value < item.minimum || value > item.maximum) {
+    const unlimited = item.unlimitable && text === String(UNLIMITED)
+    const value = unlimited ? UNLIMITED : /^\d+$/.test(text) ? Number(text) : Number.NaN
+    if (Number.isNaN(value) || (!unlimited && (value < item.minimum || value > item.maximum))) {
       errors[item.key] = invalid(item)
       continue
     }
@@ -125,7 +127,7 @@ function LimitsForm({ limits: initial }: { limits: LimitItem[] }) {
                     </Label>
                     <p className="text-muted-foreground text-xs">{hintOf(t, item)}</p>
                     <p className="text-muted-foreground text-xs tabular-nums">
-                      {t("editor.default", { value: number(item.default, f.locale) })}
+                      {t("editor.default", { value: limitNumber(item.default, f.locale) })}
                       {unitText(t, item) ? ` · ${unitText(t, item)}` : ""}
                       {item.overridden ? ` · ${t("editor.changed")}` : ""}
                     </p>
@@ -136,11 +138,20 @@ function LimitsForm({ limits: initial }: { limits: LimitItem[] }) {
                     ) : null}
                   </div>
                   <div className="flex items-center gap-2">
+                    {item.unlimitable ? (
+                      <CheckField
+                        checked={unlimitedOf(draft, item)}
+                        label={t("editor.unlimited")}
+                        className="min-h-0"
+                        onChange={(on) => setDraft({ ...draft, [item.key]: on ? String(UNLIMITED) : "" })}
+                      />
+                    ) : null}
                     <Input
                       id={`limit-${item.key}`}
                       inputMode="numeric"
                       className="w-32 text-end tabular-nums"
-                      value={draft[item.key] ?? ""}
+                      value={unlimitedOf(draft, item) ? "∞" : (draft[item.key] ?? "")}
+                      disabled={unlimitedOf(draft, item)}
                       placeholder={item.default === null ? "" : String(item.default)}
                       aria-invalid={Boolean(errors[item.key])}
                       onChange={(event) => setDraft({ ...draft, [item.key]: event.target.value })}
@@ -174,6 +185,11 @@ function LimitsForm({ limits: initial }: { limits: LimitItem[] }) {
       </div>
     </div>
   )
+}
+
+/** True when the draft of a limit is "no cap" (only a limit that allows it can be). */
+function unlimitedOf(draft: Record<string, string>, item: LimitItem): boolean {
+  return item.unlimitable && draft[item.key] === String(UNLIMITED)
 }
 
 function unitText(t: Translate, item: LimitItem): string {

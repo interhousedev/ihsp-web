@@ -23,6 +23,9 @@ const TONES: Record<string, Tone> = {
   partial: "outline",
   success: "secondary",
   running: "default",
+  queued: "outline",
+  stopping: "outline",
+  done: "secondary",
 }
 
 /** A status word as a badge: translated when `status.<value>` exists, the raw value otherwise. */

@@ -61,6 +61,7 @@ export const keys = {
       missing: (filters?: object) => ["admin", "attendance", "missing", params(filters)] as const,
     },
     syncRuns: (filters?: object) => ["admin", "sync-runs", params(filters)] as const,
+    jobs: () => ["admin", "jobs"] as const,
     dashboard: () => ["admin", "dashboard"] as const,
     insights: () => ["admin", "insights"] as const,
     aiLimits: () => ["admin", "ai", "limits"] as const,

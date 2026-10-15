@@ -107,4 +107,12 @@ export const marksHandlers = [
   http.post(apiUrl("/v1/admin/sync/run"), () => accepted()),
   // TODO(contract): POST /v1/admin/sync/materials (hand-written until the OpenAPI is regenerated)
   http.post(apiUrl("/v1/admin/sync/materials"), () => accepted()),
+  // TODO(contract): subject EMIS pull and its teachers/groups (hand-written until the OpenAPI is regenerated)
+  http.post(apiUrl("/v1/admin/subjects/:id/emis-pull"), () => accepted()),
+  http.get(apiUrl("/v1/admin/subjects/:id/people"), () =>
+    HttpResponse.json({
+      teachers: [{ id: ids.teacherKalandarova, name: "Kalandarova Gavxar" }],
+      groups: [{ id: ids.group2TN2, name: "2TN2" }],
+    }),
+  ),
 ]

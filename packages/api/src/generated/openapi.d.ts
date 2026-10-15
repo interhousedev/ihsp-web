@@ -696,6 +696,46 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/v1/admin/jobs": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * List Jobs
+         * @description Active jobs first, then the recently finished ones (newest first).
+         */
+        get: operations["list_jobs_v1_admin_jobs_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/admin/jobs/{job_id}/cancel": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Cancel Job
+         * @description Stop a job: a queued one is dropped, a running one stops at its next check.
+         */
+        post: operations["cancel_job_v1_admin_jobs__job_id__cancel_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/v1/admin/lessons": {
         parameters: {
             query?: never;
@@ -1330,6 +1370,46 @@ export interface paths {
          * @description Change a subject; null clears the short name or the EMIS link.
          */
         patch: operations["update_subject_v1_admin_subjects__subject_id__patch"];
+        trace?: never;
+    };
+    "/v1/admin/subjects/{subject_id}/emis-pull": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Emis Pull
+         * @description Pull the subject's EMIS materials in the worker (full or soft); answers 202.
+         */
+        post: operations["emis_pull_v1_admin_subjects__subject_id__emis_pull_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/admin/subjects/{subject_id}/people": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Subject People
+         * @description Teachers and groups that have the subject in the current term.
+         */
+        get: operations["subject_people_v1_admin_subjects__subject_id__people_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
         trace?: never;
     };
     "/v1/admin/sync/materials": {
@@ -11429,6 +11509,27 @@ export interface components {
             middle_name: string | null;
         };
         /**
+         * EmisPullBody
+         * @description Body of POST /v1/admin/subjects/{id}/emis-pull.
+         *
+         *     ``full`` replaces the EMIS materials of the subject's lessons, ``soft`` only
+         *     fills lessons without any material. ``terms`` absent = the current term.
+         */
+        EmisPullBody: {
+            /** Group Id */
+            group_id?: string | null;
+            /**
+             * Mode
+             * @default full
+             * @enum {string}
+             */
+            mode?: "full" | "soft";
+            /** Teacher Id */
+            teacher_id?: string | null;
+            /** Terms */
+            terms?: components["schemas"]["TermChoice"][] | null;
+        };
+        /**
          * EmisSemesterDatesResponse
          * @description EmisSemesterDates: ``number`` is 1-based, the dates are ISO.
          */
@@ -12521,6 +12622,46 @@ export interface components {
          * @enum {string}
          */
         ItemType: "textbook" | "manual" | "fiction" | "poetry" | "drama" | "nonfiction" | "reference" | "dictionary" | "lab_manual" | "problem_book" | "article" | "teaching_material" | "presentation" | "worksheet" | "lecture_notes" | "notes" | "practice_set" | "formula_sheet" | "other";
+        /**
+         * JobListResponse
+         * @description Active jobs (queued, running, stopping) and those finished today.
+         */
+        JobListResponse: {
+            /** Items */
+            items: components["schemas"]["JobResponse"][];
+        };
+        /**
+         * JobResponse
+         * @description One worker job.
+         */
+        JobResponse: {
+            /** Counters */
+            counters: {
+                [key: string]: number;
+            };
+            /** Created At */
+            created_at: string;
+            /** Done */
+            done: number;
+            /** Finished At */
+            finished_at: string | null;
+            /** Id */
+            id: string;
+            /** Kind */
+            kind: string;
+            /** Label */
+            label: string;
+            /** Note */
+            note: string | null;
+            /** Started At */
+            started_at: string | null;
+            /** Started By */
+            started_by: string | null;
+            /** Status */
+            status: string;
+            /** Total */
+            total: number | null;
+        };
         /**
          * JournalCellResponse
          * @description A cell of the journal.
@@ -13661,7 +13802,15 @@ export interface components {
              * @description tokens, count, steps, hours or bytes.
              */
             unit: string;
-            /** Value */
+            /**
+             * Unlimitable
+             * @description True when -1 (no cap, shown as unlimited) is a valid value.
+             */
+            unlimitable: boolean;
+            /**
+             * Value
+             * @description The value in force; -1 means no cap.
+             */
             value: number | null;
         };
         /**
@@ -18635,6 +18784,29 @@ export interface components {
             name?: components["schemas"]["SubjectNameBody"] | null;
             /** Short Name */
             short_name?: string | null;
+        };
+        /**
+         * SubjectPeopleResponse
+         * @description Teachers and groups of the subject in the current term.
+         */
+        SubjectPeopleResponse: {
+            /** Groups */
+            groups: components["schemas"]["SubjectPersonResponse"][];
+            /** Teachers */
+            teachers: components["schemas"]["SubjectPersonResponse"][];
+        };
+        /**
+         * SubjectPersonResponse
+         * @description A teacher or a group that has the subject.
+         */
+        SubjectPersonResponse: {
+            /**
+             * Id
+             * Format: uuid
+             */
+            id: string;
+            /** Name */
+            name: string;
         };
         /**
          * SubjectPlannerResponse
@@ -23690,6 +23862,57 @@ export interface operations {
             };
         };
     };
+    list_jobs_v1_admin_jobs_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["JobListResponse"];
+                };
+            };
+        };
+    };
+    cancel_job_v1_admin_jobs__job_id__cancel_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                job_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["JobResponse"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
     list_lessons_v1_admin_lessons_get: {
         parameters: {
             query?: {
@@ -24882,6 +25105,72 @@ export interface operations {
                 };
                 content: {
                     "application/json": components["schemas"]["SubjectResponse"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    emis_pull_v1_admin_subjects__subject_id__emis_pull_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                subject_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["EmisPullBody"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            202: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": unknown;
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    subject_people_v1_admin_subjects__subject_id__people_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                subject_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["SubjectPeopleResponse"];
                 };
             };
             /** @description Validation Error */

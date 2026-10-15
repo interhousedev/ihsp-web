@@ -8,6 +8,7 @@
 
 import type { paths } from "./generated/openapi-served"
 import type { getAdminAiExtensions, getAdminAiLimits, getAdminAiStudents, getAdminAiUsage, putAdminAiExtension, putAdminAiLimits } from "./endpoints/admin-ai"
+import type { getAdminJobs, postAdminJobCancel } from "./endpoints/admin-jobs"
 import type { getAiChat, getAiChats, getAiUsage, getAiWebSearch, patchAiChat, postAiChatMessages, postAiChatRegenerate, postAiChatToolCallApprove, postAiChatToolCallReject, postAiChats } from "./endpoints/ai"
 import type { getAdminAssessments, getMeAssessments, getMeSubjectPlanner, getStaffAssessments, patchAdminAssessment, patchStaffAssessment, postAdminAssessment, postMeAssessment, postStaffAssessment } from "./endpoints/assessments"
 import type { getAdminBroadcast, getAdminBroadcasts, patchAdminBroadcast, postAdminBroadcastCancel, postAdminBroadcastSend, postAdminBroadcasts, postAdminBroadcastsAudienceCount } from "./endpoints/broadcasts"
@@ -25,7 +26,7 @@ import type { getAnnotations, getAnnotationsExport, getLibraryAuthors, getLibrar
 import type { getAdminModerationQueue, getAdminModerationSearch, getLessonResources, getMeLinks, postAdminLinkDisable, postAdminLinkDismissReports, postLessonResourceHide, postLessonResources, postLinkRevoke, postLinks, postShares } from "./endpoints/links"
 import type { getLmsCourseBroadcasts, getLmsCourseCompare, getLmsCourseDraft, getLmsCoursePending, getLmsCoursePreviewStep, getLmsCourseStaff, getLmsCourseVersion, getLmsCourseVersions, getLmsCreators, getLmsStepDiff, getLmsStepDraft, getLmsStepHistory, patchLmsCourseBroadcast, patchLmsCourseSettings, patchLmsCourseStaff, postLmsCourseBroadcast, postLmsCourseDiscard, postLmsCourseDraftOutline, postLmsCourseInviteCode, postLmsCoursePublish, postLmsCourseStaff, postLmsCourseSteps, postLmsCourseVersionRestore, postLmsCourses, postLmsStepCheckpoints, postLmsStepDiscard, postLmsStepRestore, putLmsCourseDraftMeta, putLmsCreator, putLmsStepDraft } from "./endpoints/lms-authoring"
 import type { getLmsAttempt, getLmsCourse, getLmsCourseStep, getLmsCourseStudents, getLmsCourses, getLmsMyCourses, getLmsPreviewStepVideo, getLmsStepCardsNext, getLmsStepVideo, postLmsAttemptOverride, postLmsAttemptSubmit, postLmsCourseEnroll, postLmsJoin, postLmsStepBlockAttempts, postLmsStepCardReview, postLmsStepViewed, putLmsAttemptAnswers } from "./endpoints/lms-learning"
-import type { getAdminSyncRuns, getMeGrades, getMeGradesDay, getMeLessonResults, getMeRecordBook, getMeSubject, getMeSubjectLessons, getMeSubjects, postAdminSyncMaterials, postAdminSyncRun } from "./endpoints/marks"
+import type { getAdminSubjectPeople, getAdminSyncRuns, getMeGrades, getMeGradesDay, getMeLessonResults, getMeRecordBook, getMeSubject, getMeSubjectLessons, getMeSubjects, postAdminSubjectEmisPull, postAdminSyncMaterials, postAdminSyncRun } from "./endpoints/marks"
 import type { getMeSync, postMeSync } from "./endpoints/me-sync"
 import type { getAdminSubjectMaterialGroups, getAdminSubjectMaterials, getArtifact, getArtifacts, getNotebook, getNotebookAutoSubject, getNotebookChat, getNotebookLabels, getNotebookSearch, getNotebookSource, getNotebookSourceFileUrl, getNotebookSources, getNotebookSubjectSlots, getNotebookUsage, getNotebooks, getPassage, getSourcePassages, getStaffSubjectMaterials, getStaffSubjects, patchArtifact, patchNotebook, patchNotebookLabel, patchNotebookSource, postAdminSubjectMaterial, postArtifact, postArtifactAsSource, postArtifactAttachToLesson, postArtifactCancel, postArtifactFlashcardSet, postArtifactRetry, postArtifactSaveToFiles, postArtifactSlidesRevise, postNotebook, postNotebookAutoSubject, postNotebookDiscover, postNotebookLabel, postNotebookLabelsAuto, postNotebookMessage, postNotebookRegenerate, postNotebookSourceSync, postNotebookSources, postNotebookSourcesSelect, postSaveNote, postStaffSubjectMaterial, putArtifactSlides, putNotebookSourceLabels } from "./endpoints/notebooks"
 import type { getNotifications, getNotificationsUnreadCount } from "./endpoints/notifications"
@@ -69,6 +70,14 @@ export const served_getAdminAiStudents: Awaited<ReturnType<typeof getAdminAiStud
 // PUT /v1/admin/ai/limit-extensions/{user_id} — putAdminAiExtension
 declare const gen_putAdminAiExtension: ResponseOf<"/v1/admin/ai/limit-extensions/{user_id}", "put">
 export const served_putAdminAiExtension: Awaited<ReturnType<typeof putAdminAiExtension>> = gen_putAdminAiExtension
+
+// GET /v1/admin/jobs — getAdminJobs
+declare const gen_getAdminJobs: ResponseOf<"/v1/admin/jobs", "get">
+export const served_getAdminJobs: Awaited<ReturnType<typeof getAdminJobs>> = gen_getAdminJobs
+
+// POST /v1/admin/jobs/{job_id}/cancel — postAdminJobCancel
+declare const gen_postAdminJobCancel: ResponseOf<"/v1/admin/jobs/{job_id}/cancel", "post">
+export const served_postAdminJobCancel: Awaited<ReturnType<typeof postAdminJobCancel>> = gen_postAdminJobCancel
 
 // GET /v1/ai/chats — getAiChats
 declare const gen_getAiChats: ResponseOf<"/v1/ai/chats", "get">
@@ -1069,6 +1078,14 @@ export const served_postAdminSyncRun: Awaited<ReturnType<typeof postAdminSyncRun
 // POST /v1/admin/sync/materials — postAdminSyncMaterials
 declare const gen_postAdminSyncMaterials: ResponseOf<"/v1/admin/sync/materials", "post">
 export const served_postAdminSyncMaterials: Awaited<ReturnType<typeof postAdminSyncMaterials>> = gen_postAdminSyncMaterials
+
+// GET /v1/admin/subjects/{subject_id}/people — getAdminSubjectPeople
+declare const gen_getAdminSubjectPeople: ResponseOf<"/v1/admin/subjects/{subject_id}/people", "get">
+export const served_getAdminSubjectPeople: Awaited<ReturnType<typeof getAdminSubjectPeople>> = gen_getAdminSubjectPeople
+
+// POST /v1/admin/subjects/{subject_id}/emis-pull — postAdminSubjectEmisPull
+declare const gen_postAdminSubjectEmisPull: ResponseOf<"/v1/admin/subjects/{subject_id}/emis-pull", "post">
+export const served_postAdminSubjectEmisPull: Awaited<ReturnType<typeof postAdminSubjectEmisPull>> = gen_postAdminSubjectEmisPull
 
 // GET /v1/me/sync — getMeSync
 declare const gen_getMeSync: ResponseOf<"/v1/me/sync", "get">

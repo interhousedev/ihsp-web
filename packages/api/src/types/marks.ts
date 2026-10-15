@@ -123,3 +123,20 @@ export type TermChoice = { academic_year: string; half: 1 | 2 }
 
 /** Body of `POST /v1/admin/sync/materials`. TODO(contract): replace with generated */
 export type ResyncMaterialsBody = { terms: TermChoice[] }
+
+/** A teacher or a group that has the subject this term. TODO(contract): replace with generated */
+export type SubjectPerson = { id: string; name: string }
+
+/** `GET /v1/admin/subjects/{id}/people` — who teaches it, which groups have it. TODO(contract): replace with generated */
+export type SubjectPeople = { teachers: SubjectPerson[]; groups: SubjectPerson[] }
+
+/**
+ * Body of `POST /v1/admin/subjects/{id}/emis-pull`: `full` replaces the subject's EMIS materials, `soft` only fills
+ * lessons without any material (nothing deleted). No `terms` = the current term. TODO(contract): replace with generated
+ */
+export type SubjectEmisPullBody = {
+  mode?: "full" | "soft"
+  teacher_id?: string
+  group_id?: string
+  terms?: TermChoice[]
+}

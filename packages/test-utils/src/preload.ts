@@ -40,6 +40,7 @@ const { server } = await import("./server")
 const {
   resetAssessments,
   resetMeSyncState,
+  resetAdminJobs,
   resetCreatedFiles,
   resetLibraryState,
   resetNotebooksState,
@@ -89,6 +90,7 @@ afterEach(() => {
   resetTeacherPhotos()
   resetAssessments()
   resetMeSyncState()
+  resetAdminJobs()
   window.localStorage.clear()
   window.sessionStorage.clear()
   resetTestRouter()

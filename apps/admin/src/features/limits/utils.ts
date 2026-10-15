@@ -48,6 +48,14 @@ export function number(value: number | null, locale = "en"): string {
   return value === null ? "—" : new Intl.NumberFormat(locale).format(value)
 }
 
+/** The value a limit takes for "no cap" (the API's -1). */
+export const UNLIMITED = -1
+
+/** A limit as the lists show it: "∞" for no cap, otherwise the whole number. */
+export function limitNumber(value: number | null, locale = "en"): string {
+  return value === UNLIMITED ? "∞" : number(value, locale)
+}
+
 /** Tokens of one row: the input and output sides together. */
 export function tokens(row: { tokens_in: number; tokens_out: number }): number {
   return row.tokens_in + row.tokens_out
