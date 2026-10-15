@@ -83,7 +83,7 @@ export type SourceItem = {
    * TODO(contract): the lesson/subject sync owns the source (lesson material, lesson book, subject material copy).
    * In a subject or lesson notebook it is excluded instead of removed; false for the student's own sources.
    */
-  synced?: boolean
+  synced: boolean
   synced_at: string | null
   created_at: string
 }

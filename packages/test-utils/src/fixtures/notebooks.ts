@@ -154,6 +154,7 @@ export const sourceFile: SourceItem = {
   label_ids: [],
   modality: "text",
   ai_unsupported: false,
+  synced: false,
   synced_at: "2026-10-07T04:00:00Z",
   created_at: "2026-10-07T03:59:00Z",
 }
@@ -199,6 +200,7 @@ export const sourceText: SourceItem = {
   label_ids: [],
   modality: "text",
   ai_unsupported: false,
+  synced: false,
   synced_at: "2026-10-07T04:02:00Z",
   created_at: "2026-10-07T04:02:00Z",
 }
@@ -222,6 +224,7 @@ export const sourceFailed: SourceItem = {
   label_ids: [],
   modality: "text",
   ai_unsupported: false,
+  synced: false,
   synced_at: null,
   created_at: "2026-10-07T04:03:00Z",
 }
@@ -245,6 +248,7 @@ export const sourceStale: SourceItem = {
   label_ids: [],
   modality: "text",
   ai_unsupported: false,
+  synced: false,
   synced_at: "2026-10-06T10:00:00Z",
   created_at: "2026-10-06T10:00:00Z",
 }

@@ -218,6 +218,7 @@ function advanceSource(entry: StoredSource): void {
       has_guide: true,
       passage_count: Math.max(entry.passages.length, 1),
       word_count: Math.max(entry.item.word_count, 120),
+      synced: false,
       synced_at: FIXTURE_NOW,
     }
   }
@@ -263,6 +264,7 @@ function sourceFromInput(
     label_ids: [],
     modality: "text",
     ai_unsupported: false,
+    synced: false,
     synced_at: null,
     created_at: FIXTURE_NOW,
   }
