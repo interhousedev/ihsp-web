@@ -2,7 +2,7 @@
 
 import type { SourceItem } from "@ihsp/api"
 import { useState } from "react"
-import { useRemoveSource, useSyncSource, useUpdateSource } from "../api"
+import { useExcludeSource, useRemoveSource, useSyncSource, useUpdateSource } from "../api"
 import { useNotebookErrorMessage } from "../lib/use-notebook-error"
 
 type Options = {
@@ -10,11 +10,12 @@ type Options = {
   onRemoved?: (source: SourceItem) => void
 }
 
-/** Rename, sync and remove of sources with the dialogs' state; shared by the panel rows and the viewer menu. */
+/** Rename, sync, remove and exclude of sources with the dialogs' state; shared by the panel rows and the viewer menu. */
 export function useSourceActions(notebookId: string, { onRemoved }: Options = {}) {
   const syncMutation = useSyncSource(notebookId)
   const updateMutation = useUpdateSource(notebookId)
   const removeMutation = useRemoveSource(notebookId)
+  const excludeMutation = useExcludeSource(notebookId)
   const errorMessage = useNotebookErrorMessage()
   const [renaming, setRenaming] = useState<SourceItem | null>(null)
   const [removing, setRemoving] = useState<SourceItem | null>(null)
@@ -46,6 +47,14 @@ export function useSourceActions(notebookId: string, { onRemoved }: Options = {}
     })
   }
 
+  /** Leaves a synced source out of a subject or lesson notebook (it cannot be removed: the sync would bring it back). */
+  function exclude(source: SourceItem) {
+    excludeMutation.mutate(source.id, {
+      onSuccess: () => onRemoved?.(source),
+      onError: (error) => setSyncError(errorMessage(error)),
+    })
+  }
+
   return {
     renaming,
     removing,
@@ -69,6 +78,8 @@ export function useSourceActions(notebookId: string, { onRemoved }: Options = {}
     syncMany,
     rename,
     remove,
+    exclude,
+    excluding: excludeMutation.isPending,
   }
 }
 

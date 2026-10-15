@@ -19,6 +19,8 @@ export type WorkspaceActions = {
   /** Closes any viewer, shows the chat and sends the question there. */
   ask: (request: AskRequest) => void
   openAddSources: () => void
+  /** Shows the Sources pane with the web search box filled in (not started): the student sends it. */
+  openWebSearch: (query: string) => void
   /** Opens the note editor; without a source id it creates a new note. */
   openNoteEditor: (sourceId?: string) => void
 }

@@ -163,12 +163,12 @@ describe("NotebookComposer: attachments", () => {
     })
   })
 
-  it("offers no upload in an automatic notebook and no lesson items without a subject", async () => {
+  it("offers upload in a subject notebook too and no lesson items without a subject", async () => {
     serveSubject()
     const auto = await renderChat({ notebook: subjectNotebook })
     await auto.user.click(screen.getByRole("button", { name: "Add to the question" }))
     expect(await screen.findByRole("menuitem", { name: "Add lesson" })).toBeInTheDocument()
-    expect(screen.queryByRole("menuitem", { name: "Upload files" })).not.toBeInTheDocument()
+    expect(screen.getByRole("menuitem", { name: "Upload files" })).toBeInTheDocument()
     auto.unmount()
 
     const own = await renderChat()

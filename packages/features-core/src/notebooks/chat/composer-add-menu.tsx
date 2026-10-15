@@ -22,7 +22,7 @@ type ComposerAddMenuProps = {
 
 /**
  * The (+) button of the composer: "Upload files" (a file becomes a source of the notebook and is asked about;
- * personal notebooks only, automatic ones take no files), "Add lesson" and "Search materials" (the notebook's
+ * subject notebooks too: there it is the student's own source), "Add lesson" and "Search materials" (the notebook's
  * subject; lessons and materials go with the question as attachments).
  */
 export function ComposerAddMenu({ notebook, disabled, onAttach, onDetach, onError }: ComposerAddMenuProps) {
@@ -30,7 +30,7 @@ export function ComposerAddMenu({ notebook, disabled, onAttach, onDetach, onErro
   const add = useAddSources(notebook.id)
   const fileRef = useRef<HTMLInputElement>(null)
   const [picker, setPicker] = useState<PickerMode | null>(null)
-  const canUpload = notebook.can_write && notebook.auto === null
+  const canUpload = notebook.can_write
   const subjectId = notebook.subject_id
   const itemClass = "min-h-11 md:min-h-8"
 

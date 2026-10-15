@@ -6,7 +6,9 @@ import { useMemo } from "react"
 import { AssistantMessage } from "./assistant-message"
 import { hiddenCallsPerMessage } from "./hidden-calls"
 import type { Rating } from "./message-actions"
-import { ThinkingIndicator } from "./thinking-indicator"
+import { mergeAssistantTurns } from "./merge-turns"
+import { PendingAnswer } from "./pending-answer"
+import type { LiveAnswer } from "./stream-turn"
 import type { ChatActions } from "./use-chat-actions"
 import { UserMessage } from "./user-message"
 
@@ -19,6 +21,8 @@ type ChatMessageListProps = {
   pending: PendingMessage | null
   /** A turn (send, approve, reject, regenerate) is running. */
   busy: boolean
+  /** The status, steps and text of the answer being streamed; `null` before the first event. */
+  live?: LiveAnswer | null
   /** The answer with this `seq` is being replaced and is hidden meanwhile. */
   regeneratingSeq: number | null
   limitReachedTurn: boolean
@@ -35,6 +39,7 @@ export function ChatMessageList({
   ratings,
   pending,
   busy,
+  live = null,
   regeneratingSeq,
   limitReachedTurn,
   actions,
@@ -44,7 +49,7 @@ export function ChatMessageList({
   onRegenerate,
 }: ChatMessageListProps) {
   const t = useT("assistant.chat")
-  const { messages } = chat
+  const messages = useMemo(() => mergeAssistantTurns(chat.messages), [chat.messages])
   const hidden = useMemo(() => hiddenCallsPerMessage(messages), [messages])
 
   const pendingView: ChatMessageView | null = pending
@@ -95,7 +100,7 @@ export function ChatMessageList({
           <UserMessage message={pendingView} />
         </div>
       ) : null}
-      {busy ? <ThinkingIndicator /> : null}
+      {busy ? <PendingAnswer live={live} /> : null}
       {limitReachedTurn ? (
         <p role="status" className="text-muted-foreground text-sm">
           {t("limitReachedTurn")}

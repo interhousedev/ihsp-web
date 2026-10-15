@@ -176,6 +176,7 @@ export const sourceLesson: SourceItem = {
   label_ids: [],
   modality: "text",
   ai_unsupported: false,
+  synced: true,
   synced_at: "2026-10-07T04:01:00Z",
   created_at: "2026-10-07T04:00:00Z",
 }

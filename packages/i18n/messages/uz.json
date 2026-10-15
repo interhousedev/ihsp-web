@@ -580,7 +580,11 @@
       "attach": "Darsga biriktirish",
       "noLessons": "Bugun biriktirish uchun darslar yoʻq.",
       "attached": "Fayl darsga biriktirildi.",
-      "attachFailed": "Faylni biriktirib boʻlmadi."
+      "attachFailed": "Faylni biriktirib boʻlmadi.",
+      "share": "Ulashish",
+      "shareCopied": "Havola nusxalandi: {url}",
+      "shareCreated": "Havola yaratildi: {url}",
+      "shareFailed": "Havola yaratib boʻlmadi."
     },
     "page": {
       "title": "Yordamchi"

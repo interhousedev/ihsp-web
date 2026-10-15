@@ -2047,7 +2047,11 @@ export interface paths {
         put?: never;
         /**
          * Send Message
-         * @description Send a message and return what the assistant did with it.
+         * @description Send a message: one JSON result, or events with `Accept: text/event-stream`.
+         *
+         *     The events are `status`, `step`, `delta` (the text being written),
+         *     `round_end` (that text was a progress note), then `done` (the TurnResult:
+         *     stored messages and usage) or `error`.
          */
         post: operations["send_message_v1_ai_chats__chat_id__messages_post"];
         delete?: never;
@@ -8692,6 +8696,7 @@ export interface components {
                 [key: string]: string;
             };
             status: components["schemas"]["ArtifactStatus"];
+            suggest_web_search?: components["schemas"]["WebSearchSuggestion"] | null;
             /** Title */
             title: string;
             /** Unread */
@@ -8762,6 +8767,7 @@ export interface components {
             /** Source Count */
             source_count: number;
             status: components["schemas"]["ArtifactStatus"];
+            suggest_web_search?: components["schemas"]["WebSearchSuggestion"] | null;
             /** Title */
             title: string;
             /** Unread */
@@ -9992,6 +9998,8 @@ export interface components {
             feedback: ("up" | "down") | null;
             /** File Ids */
             file_ids: string[];
+            /** Progress */
+            progress?: string[];
             /**
              * Role
              * @enum {string}
@@ -17674,6 +17682,8 @@ export interface components {
             /** Stale */
             stale: boolean;
             status: components["schemas"]["SourceStatus"];
+            /** Synced */
+            synced: boolean;
             /** Synced At */
             synced_at: string | null;
             /** Title */
@@ -17776,6 +17786,8 @@ export interface components {
             /** Stale */
             stale: boolean;
             status: components["schemas"]["SourceStatus"];
+            /** Synced */
+            synced: boolean;
             /** Synced At */
             synced_at: string | null;
             /** Title */
@@ -20939,6 +20951,14 @@ export interface components {
             url: string;
             /** Why */
             why: string;
+        };
+        /**
+         * WebSearchSuggestion
+         * @description A web search the student may start to add sources; the server never starts it.
+         */
+        WebSearchSuggestion: {
+            /** Query */
+            query: string;
         };
         /**
          * Widget

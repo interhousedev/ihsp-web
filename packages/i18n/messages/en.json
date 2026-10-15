@@ -580,7 +580,11 @@
       "attach": "Attach to lesson",
       "noLessons": "No lessons today to attach to.",
       "attached": "Attached to the lesson.",
-      "attachFailed": "Could not attach the file."
+      "attachFailed": "Could not attach the file.",
+      "share": "Share",
+      "shareCopied": "Link copied: {url}",
+      "shareCreated": "Link created: {url}",
+      "shareFailed": "Could not create a link."
     },
     "page": {
       "title": "Assistant"

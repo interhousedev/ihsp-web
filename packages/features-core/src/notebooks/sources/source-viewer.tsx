@@ -4,6 +4,7 @@ import { useT } from "@ihsp/i18n"
 import { Button, Skeleton, StateView, cn } from "@ihsp/ui"
 import { IconArrowLeft, IconPencil, IconQuote } from "@ihsp/ui"
 import { useEffect, useId, useRef } from "react"
+import { useNotebook } from "../api"
 import { SourceKindIcon } from "../lib/source-icons"
 import { useWorkspace } from "../workspace-context"
 import { PassageList } from "./passage-list"
@@ -34,6 +35,7 @@ export function SourceViewer({ notebookId, sourceId, passageId }: SourceViewerPr
   const { closeViewer, ask, openNoteEditor } = useWorkspace()
   const detail = useSourceDetail(notebookId, sourceId)
   const actions = useSourceActions(notebookId, { onRemoved: closeViewer })
+  const isAuto = Boolean(useNotebook(notebookId).data?.auto)
   const textRef = useRef<HTMLDivElement>(null)
   const headingRef = useRef<HTMLHeadingElement>(null)
   const headingId = useId()
@@ -98,6 +100,7 @@ export function SourceViewer({ notebookId, sourceId, passageId }: SourceViewerPr
             onRename={() => actions.startRename(source)}
             onSync={() => actions.sync(source)}
             onRemove={() => actions.startRemove(source)}
+            onExclude={isAuto ? () => actions.exclude(source) : undefined}
           />
         ) : null}
       </header>

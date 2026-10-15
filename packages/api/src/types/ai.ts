@@ -81,7 +81,28 @@ export type ChatMessageView = {
   feedback: "up" | "down" | null
   /** What the assistant did while answering, in order (AI-STEPS). */
   steps?: AgentStep[]
+  // TODO(contract): replace with generated
+  /** The short notes the assistant wrote between its tool rounds, oldest first; `text` is the final answer. */
+  progress?: string[]
 }
+
+// TODO(contract): replace with generated
+/** One event of `POST /v1/ai/chats/{id}/messages` with `Accept: text/event-stream`. */
+export type AiStreamEvent =
+  /** The line the pending answer shows ("Looked up your marks", a progress note). */
+  | { event: "status"; data: { text: string } }
+  /** A step started or finished; the same `id` arrives again when it ends. */
+  | { event: "step"; data: AgentStep }
+  /** A piece of the text the model is writing (the answer, or a note before tool calls). */
+  | { event: "delta"; data: { text: string } }
+  /** The text streamed in this round was a progress note before tool calls: move it out of the answer. */
+  | { event: "round_end"; data: { text: string } }
+  /** The stored result: messages, status and usage. */
+  | { event: "done"; data: TurnResult }
+  | {
+      event: "error"
+      data: { type?: string; title?: string; message_key?: string; params?: Record<string, unknown> }
+    }
 
 // TODO(contract): replace with generated
 /** One action of the assistant while it answered: a file it read, a search, a tool call (AI-STEPS). */

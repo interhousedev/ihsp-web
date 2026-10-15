@@ -7,6 +7,7 @@ import {
   getPassageQuery,
   getSourcePassages,
   keys,
+  patchNotebookAuto,
   patchNotebookSource,
   postNotebookSourceSync,
   postNotebookSources,
@@ -189,6 +190,22 @@ export function useRemoveSource(notebookId: string) {
       setSourcesCache(queryClient, notebookId, (items) => items.filter((item) => item.id !== id))
       queryClient.removeQueries({ queryKey: keys.notebooks.source(notebookId, id) })
       void refreshNotebook(queryClient, notebookId)
+    },
+  })
+}
+
+/**
+ * Excludes a synced source of a subject or lesson notebook (`PATCH …/auto`): it leaves now and the sync keeps it out
+ * until it is restored. Own sources are removed instead.
+ */
+export function useExcludeSource(notebookId: string) {
+  const queryClient = useQueryClient()
+  return useMutation<NotebookDetail, unknown, string>({
+    mutationFn: (id) => patchNotebookAuto(notebookId, { exclude_source_ids: [id] }),
+    onSuccess: (detail, id) => {
+      setSourcesCache(queryClient, notebookId, (items) => items.filter((item) => item.id !== id))
+      queryClient.removeQueries({ queryKey: keys.notebooks.source(notebookId, id) })
+      queryClient.setQueryData(keys.notebooks.detail(notebookId), detail)
     },
   })
 }

@@ -3,6 +3,7 @@
 import {
   getStaffTodayQuery,
   postLessonResources,
+  postLinks,
   resolveFileUrl,
   type DocumentCard as Document,
   type LessonItem,
@@ -10,11 +11,25 @@ import {
 import { useSession } from "@ihsp/auth"
 import { useT } from "@ihsp/i18n"
 import { Button, DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@ihsp/ui"
-import { IconDownload, IconFileTypeDoc, IconLink } from "@ihsp/ui"
+import {
+  IconDownload,
+  IconFileTypeDoc,
+  IconFileTypePpt,
+  IconFileTypeXls,
+  IconLink,
+  IconShare,
+  type Icon,
+} from "@ihsp/ui"
 import { useMutation, useQuery } from "@tanstack/react-query"
 import { toast } from "sonner"
 
 type DocumentCardProps = { document: Document }
+
+const KIND_ICONS: Record<Document["kind"], Icon> = {
+  docx: IconFileTypeDoc,
+  xlsx: IconFileTypeXls,
+  pptx: IconFileTypePpt,
+}
 
 function sizeLabel(bytes: number): string {
   if (bytes >= 1024 * 1024) return `${(bytes / (1024 * 1024)).toFixed(1)} MB`
@@ -65,11 +80,46 @@ function AttachMenu({ fileId }: { fileId: string }) {
   )
 }
 
-/** A document made by the assistant: file name, size, a download and (for staff) "Attach to a lesson". */
+/** Share: a short link to the file (as on the Links page), copied to the clipboard. */
+function ShareButton({ fileId }: { fileId: string }) {
+  const t = useT("assistant")
+  const share = useMutation({
+    mutationFn: () => postLinks({ kind: "file", file_id: fileId }),
+    onSuccess: async (link) => {
+      try {
+        await navigator.clipboard.writeText(link.url)
+        toast.success(t("documents.shareCopied", { url: link.url }))
+      } catch {
+        toast.success(t("documents.shareCreated", { url: link.url }))
+      }
+    },
+    onError: () => toast.error(t("documents.shareFailed")),
+  })
+
+  return (
+    <Button
+      type="button"
+      variant="outline"
+      size="sm"
+      className="min-h-11 md:min-h-8"
+      disabled={share.isPending}
+      onClick={() => share.mutate()}
+    >
+      <IconShare aria-hidden />
+      {t("documents.share")}
+    </Button>
+  )
+}
+
+/**
+ * A file made by the assistant: icon by type, name, size, a download, a share link and
+ * (for staff) "Attach to a lesson". Office files have no in-app preview: Download opens them.
+ */
 export function DocumentCard({ document: doc }: DocumentCardProps) {
   const t = useT("assistant")
   const { session } = useSession()
   const isStaff = session?.user.roles.includes("teacher") ?? false
+  const KindIcon = KIND_ICONS[doc.kind] ?? IconFileTypeDoc
 
   async function download() {
     try {
@@ -87,7 +137,7 @@ export function DocumentCard({ document: doc }: DocumentCardProps) {
       aria-label={doc.name}
     >
       <div className="flex min-w-0 items-center gap-3">
-        <IconFileTypeDoc className="text-primary size-8 shrink-0" aria-hidden />
+        <KindIcon className="text-primary size-8 shrink-0" aria-hidden data-kind-icon={doc.kind} />
         <div className="min-w-0">
           <p className="truncate text-sm font-medium">{doc.name}</p>
           <p className="text-muted-foreground text-xs">
@@ -100,6 +150,7 @@ export function DocumentCard({ document: doc }: DocumentCardProps) {
           <IconDownload aria-hidden />
           {t("documents.download", { format: doc.kind })}
         </Button>
+        <ShareButton fileId={doc.file_id} />
         {isStaff ? <AttachMenu fileId={doc.file_id} /> : null}
       </div>
     </div>

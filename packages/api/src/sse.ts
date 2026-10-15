@@ -1,5 +1,6 @@
 // Server-sent events over `fetch`: the notebook chat streams its answer.
 
+import type { AiStreamEvent } from "./types/ai"
 import type { NotebookStreamDone, NotebookStreamEvent } from "./types/notebooks"
 
 export type RawSseEvent = { event: string; data: string }
@@ -78,4 +79,19 @@ function normalizeData(event: string, data: unknown): unknown {
   if (action) done.action = action as NotebookStreamDone["action"]
   if (user_message) done.user_message = user_message as NotebookStreamDone["user_message"]
   return done
+}
+
+const AI_EVENTS = new Set(["status", "step", "delta", "round_end", "done", "error"])
+
+/** Turns the raw events of an assistant chat answer into typed ones; unknown events and invalid JSON are skipped. */
+export async function* readAiChatStream(response: Response): AsyncGenerator<AiStreamEvent> {
+  if (!response.body) return
+  for await (const raw of readSse(response.body)) {
+    if (!AI_EVENTS.has(raw.event)) continue
+    try {
+      yield { event: raw.event, data: JSON.parse(raw.data) } as AiStreamEvent
+    } catch {
+      continue
+    }
+  }
 }

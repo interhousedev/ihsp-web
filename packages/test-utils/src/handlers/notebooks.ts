@@ -14,6 +14,7 @@ import type {
   NotebookFeedbackBody,
   NotebookMessage,
   NotebookMessageBody,
+  NotebookAutoPatchBody,
   NotebookPatchBody,
   NotebookStreamDone,
   NotebookUsage,
@@ -703,6 +704,30 @@ export const notebooksHandlers = [
     }
     return HttpResponse.json(recount(state))
   }),
+  // TODO(contract): PATCH /v1/notebooks/{id}/auto — exclude takes synced sources out; restore only drops the ref.
+  http.patch(apiUrl("/v1/notebooks/:id/auto"), async ({ params, request }) => {
+    const state = find(param(params, "id"))
+    if (!state) return notFound("Notebook")
+    const auto = state.detail.auto
+    if (!auto) return problem(422, "notebooks/invalid-options", "Not an automatic notebook")
+    const body = await readJson<NotebookAutoPatchBody>(request)
+    const excluded = new Set(body.exclude_source_ids ?? [])
+    const leaving = state.sources.filter((s) => excluded.has(s.item.id) && s.item.synced === true)
+    state.sources = state.sources.filter((s) => !leaving.includes(s))
+    const restore = new Set(body.restore_refs ?? [])
+    state.detail = {
+      ...state.detail,
+      auto: {
+        ...auto,
+        ...(body.include_classmates !== undefined ? { include_classmates: body.include_classmates } : {}),
+        excluded_refs: [
+          ...auto.excluded_refs.filter((ref) => !restore.has(ref.ref_key)),
+          ...leaving.map((s) => ({ ref_key: `ref:${s.item.id}`, title: s.item.title })),
+        ],
+      },
+    }
+    return HttpResponse.json(recount(state))
+  }),
   http.delete(apiUrl("/v1/notebooks/:id"), ({ params }) => {
     const id = param(params, "id")
     if (!notebooks.delete(id)) return notFound("Notebook")
@@ -809,6 +834,10 @@ export const notebooksHandlers = [
   http.delete(apiUrl("/v1/notebooks/:id/sources/:sid"), ({ params }) => {
     const state = find(param(params, "id"))
     if (!state) return notFound("Notebook")
+    const target = state.sources.find((s) => s.item.id === param(params, "sid"))
+    if (state.detail.auto && target?.item.synced === true) {
+      return problem(409, "notebooks/auto-readonly", "Synced sources are excluded, not removed")
+    }
     const before = state.sources.length
     state.sources = state.sources.filter((s) => s.item.id !== param(params, "sid"))
     if (state.sources.length === before) return notFound("Source")

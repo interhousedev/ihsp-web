@@ -51,6 +51,7 @@ export function renderNotebook(ui: ReactElement, options: RenderNotebookOptions 
     showTab: mock(() => undefined),
     ask: mock(() => undefined),
     openAddSources: mock(() => undefined),
+    openWebSearch: mock(() => undefined),
     openNoteEditor: mock(() => undefined),
     ...overrides,
   }

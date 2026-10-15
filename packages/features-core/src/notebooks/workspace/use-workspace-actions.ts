@@ -2,6 +2,7 @@
 
 import { useLayoutEffect, useMemo, useRef } from "react"
 import type { AskRequest } from "../types"
+import { requestWebSearch } from "../sources/web-search-prefill"
 import type { WorkspaceActions } from "../workspace-context"
 import type { PaneState } from "./use-pane-state"
 import type { WorkspaceLayout } from "./use-workspace-layout"
@@ -19,6 +20,14 @@ type ActionSources = {
 /** What each action means in the current layout (a phone switches tabs, a tablet opens sheets, a desktop expands). */
 function createActions({ notebookId, layout, url, panes, onAsk, onOpenAddSources }: ActionSources): WorkspaceActions {
   const closeSheet = () => panes.setSheet(null)
+  const showTab = (tab: Parameters<WorkspaceActions["showTab"]>[0]) => {
+    if (layout === "phone") url.showTab(tab)
+    else if (tab === "chat") {
+      closeSheet()
+      url.closeViewer()
+    } else if (layout === "tablet") panes.setSheet(tab)
+    else panes.setCollapsed(tab, false)
+  }
   return {
     notebookId,
     openSource: (sourceId, passageId) => {
@@ -34,14 +43,7 @@ function createActions({ notebookId, layout, url, panes, onAsk, onOpenAddSources
       url.openNote(sourceId)
     },
     closeViewer: () => url.closeViewer(),
-    showTab: (tab) => {
-      if (layout === "phone") url.showTab(tab)
-      else if (tab === "chat") {
-        closeSheet()
-        url.closeViewer()
-      } else if (layout === "tablet") panes.setSheet(tab)
-      else panes.setCollapsed(tab, false)
-    },
+    showTab,
     ask: (request) => {
       onAsk(request)
       closeSheet()
@@ -49,6 +51,10 @@ function createActions({ notebookId, layout, url, panes, onAsk, onOpenAddSources
       else url.closeViewer()
     },
     openAddSources: onOpenAddSources,
+    openWebSearch: (query) => {
+      requestWebSearch(query)
+      showTab("sources")
+    },
   }
 }
 
@@ -71,6 +77,7 @@ export function useWorkspaceActions(sources: ActionSources): WorkspaceActions {
       showTab: (tab) => latest.current.showTab(tab),
       ask: (request) => latest.current.ask(request),
       openAddSources: () => latest.current.openAddSources(),
+      openWebSearch: (query) => latest.current.openWebSearch(query),
       openNoteEditor: (sourceId) => latest.current.openNoteEditor(sourceId),
     }),
     [notebookId],

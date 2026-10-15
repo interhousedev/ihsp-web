@@ -73,7 +73,8 @@ export const aiHandlers = [
       const refused = spendWebSearch()
       return refused ?? HttpResponse.json(turnResultWeb(chat, body.text ?? "", nextSeq))
     }
-    return HttpResponse.json(turnResultFor(chat, body.text ?? "", nextSeq))
+    const result = turnResultFor(chat, body.text ?? "", nextSeq)
+    return wantsStream(request) ? aiTurnStream(result) : HttpResponse.json(result)
   }),
   http.post(apiUrl("/v1/ai/chats/:id/regenerate"), ({ params }) => {
     const chat = allChats.find((item) => item.id === param(params, "id"))
@@ -112,3 +113,31 @@ export const aiHandlers = [
   }),
   http.get(apiUrl("/v1/ai/usage"), () => HttpResponse.json(usageInfo)),
 ]
+
+function wantsStream(request: Request): boolean {
+  return (request.headers.get("accept") ?? "").includes("text/event-stream")
+}
+
+// TODO(contract): the SSE variant of POST /v1/ai/chats/{id}/messages (status, step, delta, done).
+/** The events of a turn: a status line, one finished step, the answer word by word, then the stored result. */
+export function aiTurnStream(result: TurnResult): Response {
+  const encoder = new TextEncoder()
+  const answer = result.new_messages.findLast((message) => message.role === "assistant")
+  const words = (answer?.text ?? "").split(/(?<=\s)/).filter(Boolean)
+  const step = { id: "step-1", kind: "tool", label: "get_my_subjects", status: "done", duration_ms: 5 }
+  const events: { event: string; data: unknown }[] = [
+    { event: "status", data: { text: "Thinking…" } },
+    { event: "step", data: step },
+    ...words.map((text) => ({ event: "delta", data: { text } })),
+    { event: "done", data: result },
+  ]
+  const stream = new ReadableStream<Uint8Array>({
+    start(controller) {
+      for (const item of events) {
+        controller.enqueue(encoder.encode(`event: ${item.event}\ndata: ${JSON.stringify(item.data)}\n\n`))
+      }
+      controller.close()
+    },
+  })
+  return new HttpResponse(stream, { headers: { "Content-Type": "text/event-stream" } })
+}

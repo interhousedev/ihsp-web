@@ -95,6 +95,7 @@ export function SourcesPanel({ notebook, onCollapse }: SourcesPanelProps) {
       onRename={actions.startRename}
       onSync={actions.sync}
       onRemove={actions.startRemove}
+      onExclude={notebook.auto ? actions.exclude : undefined}
       readOnly={readOnly}
     />
   )

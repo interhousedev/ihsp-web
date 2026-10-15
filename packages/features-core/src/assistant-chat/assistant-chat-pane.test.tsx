@@ -742,3 +742,68 @@ describe("AssistantChatPane: web search", () => {
     expect(screen.getByRole("textbox", { name: "Message" })).toHaveValue("")
   })
 })
+
+describe("AssistantChatPane: one answer per turn", () => {
+  it("shows a legacy turn stored as several messages as one answer with collapsed steps", async () => {
+    serveChat([
+      message(1, "user", "Что по литературе?"),
+      message(2, "assistant", "Ищу предмет литературы."),
+      message(3, "assistant", "Нашёл. Теперь оценки."),
+      message(4, "assistant", "Ваши оценки: 5 и 4."),
+    ])
+    const { user } = renderPane(ids.chat2)
+
+    expect(await screen.findByText("Ваши оценки: 5 и 4.")).toBeInTheDocument()
+    expect(screen.getAllByRole("article", { name: "Assistant" })).toHaveLength(1)
+    expect(screen.queryByText("Ищу предмет литературы.")).not.toBeInTheDocument()
+    const toggle = screen.getByRole("button", { name: "Show the steps of this answer" })
+    expect(toggle).toHaveTextContent("2 steps")
+
+    await user.click(toggle)
+
+    expect(screen.getByText("Ищу предмет литературы.")).toBeInTheDocument()
+  })
+
+  it("streams the answer: the deltas show live, then the stored answer replaces them", async () => {
+    serveChat([message(1, "user", "Hi"), message(2, "assistant", "Hello")])
+    const gate = Promise.withResolvers<void>()
+    server.use(
+      http.post(apiUrl(`/v1/ai/chats/${ids.chat2}/messages`), () => {
+        const encoder = new TextEncoder()
+        const done = {
+          chat: chatHomework,
+          new_messages: [message(3, "user", "Momentum?"), message(4, "assistant", "Mass times velocity.")],
+          status: "done",
+          usage: {
+            session: { used: 1, limit: 100, resets_at: null },
+            day: { used: 1, limit: 100, resets_at: "2026-10-08T00:00:00Z" },
+          },
+        }
+        const block = (event: string, data: unknown) =>
+          encoder.encode(`event: ${event}\ndata: ${JSON.stringify(data)}\n\n`)
+        const stream = new ReadableStream<Uint8Array>({
+          async start(controller) {
+            controller.enqueue(block("status", { text: "Looked up your marks" }))
+            controller.enqueue(block("delta", { text: "Mass times " }))
+            await gate.promise
+            controller.enqueue(block("delta", { text: "velocity." }))
+            controller.enqueue(block("done", done))
+            controller.close()
+          },
+        })
+        return new HttpResponse(stream, { headers: { "Content-Type": "text/event-stream" } })
+      }),
+    )
+    const { user } = renderPane(ids.chat2)
+    await screen.findByText("Hello")
+
+    await user.click(screen.getByRole("textbox", { name: "Message" }))
+    await user.paste("Momentum?")
+    await user.click(screen.getByRole("button", { name: "Send" }))
+
+    expect(await screen.findByTestId("pending-answer")).toHaveTextContent("Mass times")
+    gate.resolve()
+    expect(await screen.findByText("Mass times velocity.")).toBeInTheDocument()
+    await waitFor(() => expect(screen.queryByTestId("pending-answer")).not.toBeInTheDocument())
+  })
+})

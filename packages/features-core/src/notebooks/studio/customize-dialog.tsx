@@ -11,6 +11,7 @@ import { PlanSheet } from "../plans/plan-sheet"
 import { useCreatePresentationPlan } from "../plans/use-presentation-plan"
 import { isUsable } from "../lib/sort-sources"
 import { useNotebookErrorMessage } from "../lib/use-notebook-error"
+import { useOptionalWorkspace } from "../workspace-context"
 import { buildCreate, withSourceIds } from "./forms/build-create"
 import { CoursePlanForm } from "./forms/course-plan-form"
 import { DataTableForm } from "./forms/data-table-form"
@@ -28,6 +29,7 @@ import { defaultSelection, SourceChooser } from "./forms/source-chooser"
 import { ResponsiveDialog } from "./responsive-dialog"
 import { useKindLabel } from "./use-kind-label"
 import { useStudioGate } from "./use-studio-gate"
+import { suggestedQuery, WebSearchHint } from "./web-search-hint"
 
 export type CustomizeDialogProps = {
   kind: ArtifactKind
@@ -114,6 +116,9 @@ function CustomizeForm({
   const [picked, setPicked] = useState<Set<string> | null>(null)
   const [browsing, setBrowsing] = useState(false)
   const [addError, setAddError] = useState<string | null>(null)
+  // The web search the server suggests when the sources were thin (the output is already queued then).
+  const [suggestion, setSuggestion] = useState<string | null>(null)
+  const workspace = useOptionalWorkspace()
   const [seen, setSeen] = useState({ open, identity })
   if (seen.open !== open || seen.identity !== identity) {
     // Every opening starts from the defaults (adjusting state while rendering, so there is no flash of old values).
@@ -122,6 +127,7 @@ function CustomizeForm({
       setState(initialState(kind, format))
       setPicked(null)
       setAddError(null)
+      setSuggestion(null)
     }
   }
 
@@ -174,7 +180,14 @@ function CustomizeForm({
       })
       return
     }
-    create.mutate(body, { onSuccess: () => onOpenChange(false) })
+    create.mutate(body, {
+      onSuccess: (item) => {
+        // Thin sources: the output is queued anyway, so the dialog stays open with the web search offer.
+        const query = suggestedQuery(item)
+        if (query && workspace) setSuggestion(query)
+        else onOpenChange(false)
+      },
+    })
   }
 
   const addFiles = async (files: FileItem[]) => {
@@ -212,7 +225,7 @@ function CustomizeForm({
               className="min-h-11 md:min-h-8"
               loading={pending}
               loadingLabel={root("common.loading")}
-              disabled={blocked !== null || problem !== null || onlyWaiting}
+              disabled={blocked !== null || problem !== null || onlyWaiting || suggestion !== null}
               onClick={() => void submit()}
             >
               {kind === "slides" ? t("plan.makePlan") : t("opt.generate")}
@@ -251,6 +264,15 @@ function CustomizeForm({
           <p role="alert" className="text-destructive text-sm">
             {addError}
           </p>
+        ) : null}
+        {suggestion && workspace ? (
+          <WebSearchHint
+            query={suggestion}
+            onSearch={(query) => {
+              workspace.openWebSearch(query)
+              onOpenChange(false)
+            }}
+          />
         ) : null}
         {blocked ? (
           <p role="status" className="text-muted-foreground text-sm">

@@ -3,7 +3,7 @@
 import type { SourceItem } from "@ihsp/api"
 import { useT } from "@ihsp/i18n"
 import { Button, DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger, cn } from "@ihsp/ui"
-import { IconDots, IconExternalLink, IconPencil, IconRefresh, IconTrash } from "@ihsp/ui"
+import { IconDots, IconEyeOff, IconExternalLink, IconPencil, IconRefresh, IconTrash } from "@ihsp/ui"
 import { canSync } from "./source-rules"
 
 type SourceActionsMenuProps = {
@@ -13,18 +13,21 @@ type SourceActionsMenuProps = {
   onRename: () => void
   onSync: () => void
   onRemove: () => void
+  /** Synced sources of a subject or lesson notebook offer **Exclude** instead of **Remove**. */
+  onExclude?: () => void
   /** Row menus appear on hover and focus; the viewer's menu is always visible. */
   revealOnHover?: boolean
   className?: string
 }
 
-/** The ⋯ menu of a source: Open source, Rename, Sync, Remove. */
+/** The ⋯ menu of a source: Open source, Rename, Sync, Remove (Exclude for a synced source of an automatic notebook). */
 export function SourceActionsMenu({
   source,
   onOpen,
   onRename,
   onSync,
   onRemove,
+  onExclude,
   revealOnHover = false,
   className,
 }: SourceActionsMenuProps) {
@@ -67,10 +70,17 @@ export function SourceActionsMenu({
             {t("row.sync")}
           </DropdownMenuItem>
         ) : null}
-        <DropdownMenuItem variant="destructive" className={itemClass} onClick={onRemove}>
-          <IconTrash aria-hidden />
-          {t("row.remove")}
-        </DropdownMenuItem>
+        {onExclude && source.synced ? (
+          <DropdownMenuItem className={itemClass} onClick={onExclude}>
+            <IconEyeOff aria-hidden />
+            {t("row.exclude")}
+          </DropdownMenuItem>
+        ) : (
+          <DropdownMenuItem variant="destructive" className={itemClass} onClick={onRemove}>
+            <IconTrash aria-hidden />
+            {t("row.remove")}
+          </DropdownMenuItem>
+        )}
       </DropdownMenuContent>
     </DropdownMenu>
   )

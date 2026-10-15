@@ -6,6 +6,7 @@ import { IconArrowRight, IconLoader2 } from "@ihsp/ui"
 import { useId, useState, type FocusEvent, type FormEvent } from "react"
 import { useWebQuota } from "../../web-search"
 import { MIN_SEARCH_LENGTH } from "./constants"
+import { useWebSearchPrefill } from "./web-search-prefill"
 import type { DiscoverFlow, DiscoverMode } from "./use-discover"
 
 type DiscoverBoxProps = {
@@ -28,6 +29,7 @@ export function DiscoverBox({ flow, compact }: DiscoverBoxProps) {
   const [mode, setMode] = useState<DiscoverMode>("fast")
   const [focused, setFocused] = useState(false)
   const quotaId = useId()
+  useWebSearchPrefill(setQuery)
   if (!enabled || !quota) return null
 
   const text = query.trim()

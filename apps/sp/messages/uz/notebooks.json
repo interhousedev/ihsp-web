@@ -145,6 +145,8 @@
       "sync": "Yangilash",
       "rename": "Nomini oʻzgartirish",
       "remove": "Olib tashlash",
+      "exclude": "Chiqarib tashlash",
+      "fromLessons": "Darslardan",
       "more": "«{title}» manbasi uchun amallar"
     },
     "remove": {
@@ -371,6 +373,10 @@
       },
       "addNote": "Qayd qoʻshish",
       "noSources": "Manbalar tanlanmagan — javob materiallarga tayanmaydi",
+      "webHint": {
+        "message": "Materiallar yetarli emas — manbalarni internetdan qidiraymizmi?",
+        "action": "Internetdan qidirish"
+      },
       "customize": "Sozlash: {kind}",
       "sources": {
         "title": "Manbalar",

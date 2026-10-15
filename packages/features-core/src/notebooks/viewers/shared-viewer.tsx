@@ -13,6 +13,7 @@ const NO_ACTIONS: WorkspaceActions = {
   showTab: () => undefined,
   ask: () => undefined,
   openAddSources: () => undefined,
+  openWebSearch: () => undefined,
   openNoteEditor: () => undefined,
 }
 

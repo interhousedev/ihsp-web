@@ -36,6 +36,7 @@ export { resetAssessments } from "./assessments"
 export { resetMeSyncState } from "./me-sync"
 export { resetAdminJobs } from "./admin-jobs"
 export { resetAdminAiState } from "./admin-ai"
+export { aiTurnStream } from "./ai"
 export { resetCreatedFiles, storedObjects } from "./files"
 export {
   notebookFixtureSources,

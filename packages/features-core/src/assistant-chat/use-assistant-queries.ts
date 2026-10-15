@@ -8,12 +8,15 @@ import {
   keys,
   patchAiChat,
   postAiChatMessageFeedback,
-  postAiChatMessages,
   postAiChatRegenerate,
   postAiChatToolCallApprove,
   postAiChatToolCallReject,
   postAiChats,
+  streamAiChatRegenerate,
+  streamAiChatToolCallApprove,
+  streamAiChatToolCallReject,
   isApiError,
+  type AiStreamEvent,
   type AssistantKind,
   type ChatDetail,
   type ChatItem,
@@ -23,6 +26,7 @@ import {
 import { useMutation, useQuery, useQueryClient, type QueryClient } from "@tanstack/react-query"
 import { useRefreshWebQuota } from "../web-search"
 import { applyTurn } from "./apply-turn"
+import { sendStreamed, streamedTurn } from "./stream-turn"
 
 const CHATS_LIMIT = 100
 
@@ -124,14 +128,16 @@ export type SendMessageInput = {
   command?: { name: string; args: string }
   /** Aborts the request (the stop button). */
   signal?: AbortSignal
+  /** Gets the status lines, steps and answer pieces while the answer streams. */
+  onEvent?: (event: AiStreamEvent) => void
 }
 
 export function useSendMessage(chatId: string, assistant: AssistantKind) {
   const queryClient = useQueryClient()
   const refreshWebQuota = useRefreshWebQuota()
   return useMutation<TurnResult, unknown, SendMessageInput>({
-    mutationFn: ({ text, fileIds, webSearch, command, signal }) =>
-      postAiChatMessages(
+    mutationFn: ({ text, fileIds, webSearch, command, signal, onEvent }) =>
+      sendStreamed(
         chatId,
         {
           text: command ? "" : text,
@@ -139,7 +145,7 @@ export function useSendMessage(chatId: string, assistant: AssistantKind) {
           ...(command ? { command: command.name, args: command.args } : {}),
           ...(webSearch ? { web_search: true } : {}),
         },
-        signal ? { signal } : undefined,
+        { ...(signal ? { signal } : {}), ...(onEvent ? { onEvent } : {}) },
       ),
     onSuccess: (turn) => storeTurn(queryClient, assistant, chatId, turn),
     // A search spends the quota (and a refusal means it changed): read today's searches again either way.
@@ -155,17 +161,34 @@ export function useSendMessage(chatId: string, assistant: AssistantKind) {
   })
 }
 
-export type DecideToolCallInput =
+/** Hears the status lines, steps and text pieces of a streamed turn. */
+type LiveListener = { onEvent?: (event: AiStreamEvent) => void }
+
+export type DecideToolCallInput = (
   | { callId: string; decision: "approve" }
   | { callId: string; decision: "reject"; reason?: string }
+) &
+  LiveListener
 
 export function useDecideToolCall(chatId: string, assistant: AssistantKind) {
   const queryClient = useQueryClient()
   return useMutation<TurnResult, unknown, DecideToolCallInput>({
-    mutationFn: (input) =>
-      input.decision === "approve"
-        ? postAiChatToolCallApprove(chatId, input.callId)
-        : postAiChatToolCallReject(chatId, input.callId, input.reason ? { reason: input.reason } : {}),
+    mutationFn: (input) => {
+      const listen = input.onEvent ? { onEvent: input.onEvent } : {}
+      if (input.decision === "approve") {
+        return streamedTurn(
+          () => streamAiChatToolCallApprove(chatId, input.callId),
+          () => postAiChatToolCallApprove(chatId, input.callId),
+          listen,
+        )
+      }
+      const body = input.reason ? { reason: input.reason } : {}
+      return streamedTurn(
+        () => streamAiChatToolCallReject(chatId, input.callId, body),
+        () => postAiChatToolCallReject(chatId, input.callId, body),
+        listen,
+      )
+    },
     onSuccess: (turn) => storeTurn(queryClient, assistant, chatId, turn),
     onError: () => {
       // Expired, superseded or already decided in another tab: show the server's version of the chat.
@@ -177,8 +200,13 @@ export function useDecideToolCall(chatId: string, assistant: AssistantKind) {
 /** Answers the last user message again; the new answer replaces the one with the same `seq` (P1b). */
 export function useRegenerate(chatId: string, assistant: AssistantKind) {
   const queryClient = useQueryClient()
-  return useMutation<TurnResult, unknown, void>({
-    mutationFn: () => postAiChatRegenerate(chatId),
+  return useMutation<TurnResult, unknown, LiveListener | void>({
+    mutationFn: (input) =>
+      streamedTurn(
+        () => streamAiChatRegenerate(chatId),
+        () => postAiChatRegenerate(chatId),
+        input?.onEvent ? { onEvent: input.onEvent } : {},
+      ),
     onSuccess: (turn) => storeTurn(queryClient, assistant, chatId, turn),
     onError: (error) => {
       if (isApiError(error) && error.type === "ai/limit-reached") {

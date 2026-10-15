@@ -145,6 +145,8 @@
       "sync": "Sync",
       "rename": "Rename",
       "remove": "Remove",
+      "exclude": "Exclude",
+      "fromLessons": "From lessons",
       "more": "More actions for {title}"
     },
     "remove": {
@@ -371,6 +373,10 @@
       },
       "addNote": "Add note",
       "noSources": "No sources selected — the answer will not rely on your materials",
+      "webHint": {
+        "message": "Not enough material — search the web for sources?",
+        "action": "Search the web"
+      },
       "customize": "Customize {kind}",
       "sources": {
         "title": "Sources",

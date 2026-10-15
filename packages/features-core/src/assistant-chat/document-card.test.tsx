@@ -66,4 +66,32 @@ describe("make_document file card", () => {
 
     await waitFor(() => expect(sent).toEqual({ role: "material", kind: "file", file_id: FILE_ID }))
   })
+
+  it("shows a presentation from create_presentation with its icon and shares a short link", async () => {
+    let sent: unknown
+    server.use(
+      http.post(apiUrl("/v1/links"), async ({ request }) => {
+        sent = await request.json()
+        return HttpResponse.json({ url: "https://iht.test/s/deck1", kind: "file" }, { status: 201 })
+      }),
+    )
+    const writeText = spyOn(navigator.clipboard, "writeText").mockResolvedValue(undefined)
+    const deck: ToolCallView = {
+      ...call,
+      tool: "create_presentation",
+      document: { file_id: FILE_ID, name: "Биология.pptx", kind: "pptx", size: 2048 },
+    }
+    const { user } = renderNotebook(
+      <ToolCallRow call={deck} busy={false} onApprove={() => undefined} onReject={() => undefined} />,
+    )
+
+    const card = screen.getByRole("group", { name: "Биология.pptx" })
+    expect(card.querySelector('[data-kind-icon="pptx"]')).not.toBeNull()
+    expect(card).toHaveTextContent(".pptx · 2 KB")
+    await user.click(screen.getByRole("button", { name: "Share" }))
+
+    await waitFor(() => expect(sent).toEqual({ kind: "file", file_id: FILE_ID }))
+    await waitFor(() => expect(writeText).toHaveBeenCalledWith("https://iht.test/s/deck1"))
+    writeText.mockRestore()
+  })
 })

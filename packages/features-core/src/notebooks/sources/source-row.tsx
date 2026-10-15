@@ -2,7 +2,7 @@
 
 import type { SourceItem } from "@ihsp/api"
 import { useT } from "@ihsp/i18n"
-import { Button, cn } from "@ihsp/ui"
+import { Badge, Button, cn } from "@ihsp/ui"
 import { IconRefresh } from "@ihsp/ui"
 import { SourceKindIcon } from "../lib/source-icons"
 import { isUsable } from "../lib/sort-sources"
@@ -17,6 +17,8 @@ type SourceRowProps = {
   onRename: (source: SourceItem) => void
   onSync: (source: SourceItem) => void
   onRemove: (source: SourceItem) => void
+  /** Given in subject and lesson notebooks: synced sources get a "From lessons" badge and **Exclude**. */
+  onExclude?: (source: SourceItem) => void
   /** A reader of a course workspace: no sync, rename or removal, and the selection stays as it is. */
   readOnly?: boolean
 }
@@ -25,7 +27,16 @@ type SourceRowProps = {
  * One source: the whole row is a button that opens the viewer; the checkbox at the right selects the source for
  * answers and Studio; a status line explains a source that is not ready (an outdated one has a **Sync** button).
  */
-export function SourceRow({ source, onOpen, onToggle, onRename, onSync, onRemove, readOnly = false }: SourceRowProps) {
+export function SourceRow({
+  source,
+  onOpen,
+  onToggle,
+  onRename,
+  onSync,
+  onRemove,
+  onExclude,
+  readOnly = false,
+}: SourceRowProps) {
   const t = useT("notebooks")
   const usable = isUsable(source)
   return (
@@ -42,8 +53,15 @@ export function SourceRow({ source, onOpen, onToggle, onRename, onSync, onRemove
       >
         <SourceKindIcon kind={source.kind} title={source.title} className="size-5" />
         <span className="flex min-w-0 flex-1 flex-col">
-          <span className="truncate text-sm font-medium" title={source.title}>
-            {source.title}
+          <span className="flex min-w-0 items-center gap-1.5">
+            <span className="truncate text-sm font-medium" title={source.title}>
+              {source.title}
+            </span>
+            {onExclude && source.synced ? (
+              <Badge variant="secondary" className="shrink-0 px-1.5 text-[0.65rem]">
+                {t("row.fromLessons")}
+              </Badge>
+            ) : null}
           </span>
           <SourceStatusLine source={source} />
         </span>
@@ -68,6 +86,7 @@ export function SourceRow({ source, onOpen, onToggle, onRename, onSync, onRemove
           onRename={() => onRename(source)}
           onSync={() => onSync(source)}
           onRemove={() => onRemove(source)}
+          onExclude={onExclude ? () => onExclude(source) : undefined}
         />
       )}
       <SelectionCheckbox

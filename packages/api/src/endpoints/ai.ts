@@ -56,6 +56,46 @@ export function postAiChatMessages(id: string, body: ChatMessageBody, opts?: Req
   return api.post<TurnResult>(`/v1/ai/chats/${seg(id)}/messages`, body, opts)
 }
 
+/** Opens the SSE variant (`Accept: text/event-stream`) of a turn endpoint; read it with `readAiChatStream`. */
+function streamTurn(path: string, body: unknown, opts?: RequestOptions): Promise<Response> {
+  return api.request<Response>({
+    method: "POST",
+    path,
+    body,
+    headers: { Accept: "text/event-stream" },
+    responseType: "stream",
+    signal: opts?.signal,
+  })
+}
+
+/**
+ * Streaming variant of `POST /v1/ai/chats/{id}/messages` (`Accept: text/event-stream`): the raw SSE `Response`;
+ * read it with `readAiChatStream`. A server that answers with JSON still works (check the content type).
+ */
+export function streamAiChatMessages(id: string, body: ChatMessageBody, opts?: RequestOptions): Promise<Response> {
+  return streamTurn(`/v1/ai/chats/${seg(id)}/messages`, body, opts)
+}
+
+/** Streaming variant of `POST /v1/ai/chats/{id}/regenerate`. */
+export function streamAiChatRegenerate(id: string, opts?: RequestOptions): Promise<Response> {
+  return streamTurn(`/v1/ai/chats/${seg(id)}/regenerate`, undefined, opts)
+}
+
+/** Streaming variant of `POST /v1/ai/chats/{id}/tool-calls/{call_id}/approve`. */
+export function streamAiChatToolCallApprove(id: string, callId: string, opts?: RequestOptions): Promise<Response> {
+  return streamTurn(`/v1/ai/chats/${seg(id)}/tool-calls/${seg(callId)}/approve`, undefined, opts)
+}
+
+/** Streaming variant of `POST /v1/ai/chats/{id}/tool-calls/{call_id}/reject`. */
+export function streamAiChatToolCallReject(
+  id: string,
+  callId: string,
+  body?: ToolCallRejectBody,
+  opts?: RequestOptions,
+): Promise<Response> {
+  return streamTurn(`/v1/ai/chats/${seg(id)}/tool-calls/${seg(callId)}/reject`, body ?? {}, opts)
+}
+
 /** POST /v1/ai/chats/{id}/regenerate — owner; answers the last user message again (P1b). */
 export function postAiChatRegenerate(id: string, opts?: RequestOptions): Promise<TurnResult> {
   return api.post<TurnResult>(`/v1/ai/chats/${seg(id)}/regenerate`, undefined, opts)

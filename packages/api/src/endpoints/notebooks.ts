@@ -28,6 +28,7 @@ import type {
   NotebookFeedbackBody,
   NotebookItem,
   NotebookMessageBody,
+  NotebookAutoPatchBody,
   NotebookPatchBody,
   NotebookTurn,
   NotebookUsage,
@@ -134,6 +135,15 @@ export const getNotebookQuery = (id: string) =>
 /** PATCH /v1/notebooks/{id} — title, emoji, pin, chat configuration. */
 export function patchNotebook(id: string, body: NotebookPatchBody, opts?: RequestOptions): Promise<NotebookDetail> {
   return api.patch<NotebookDetail>(`/v1/notebooks/${seg(id)}`, body, opts)
+}
+
+/** TODO(contract): PATCH /v1/notebooks/{id}/auto — sync settings of an automatic notebook (exclude or restore materials). */
+export function patchNotebookAuto(
+  id: string,
+  body: NotebookAutoPatchBody,
+  opts?: RequestOptions,
+): Promise<NotebookDetail> {
+  return api.patch<NotebookDetail>(`/v1/notebooks/${seg(id)}/auto`, body, opts)
 }
 
 /** DELETE /v1/notebooks/{id} — `204`. */

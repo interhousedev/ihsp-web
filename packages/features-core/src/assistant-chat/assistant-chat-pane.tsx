@@ -1,6 +1,6 @@
 "use client"
 
-import { keys, type FileItem } from "@ihsp/api"
+import { keys, type AiStreamEvent, type FileItem } from "@ihsp/api"
 import { useErrorMessage, useT } from "@ihsp/i18n"
 import { Alert, AlertDescription, Button, StateView } from "@ihsp/ui"
 import { IconArrowDown, IconShare } from "@ihsp/ui"
@@ -16,6 +16,7 @@ import { ChatPaneHeader } from "./chat-pane-header"
 import { limitState } from "./limit-info"
 import type { Rating } from "./message-actions"
 import { takePendingTurn } from "./pending-turn"
+import { EMPTY_LIVE, applyLiveEvent, type LiveAnswer } from "./stream-turn"
 import { PillComposer, type PillComposerHandle, type PillComposerProps, type PillSendOptions } from "./pill-composer"
 import {
   useChat,
@@ -80,6 +81,7 @@ export function AssistantChatPane({
   const regenerate = useRegenerate(chatId, assistant)
   const feedback = useFeedback(chatId)
   const [pending, setPending] = useState<PendingMessage | null>(null)
+  const [live, setLive] = useState<LiveAnswer | null>(null)
   const [actionError, setActionError] = useState<unknown>(null)
   // The message that a web search failure kept from going out, so it can be sent once more without the search.
   const [webFailed, setWebFailed] = useState<{ error: unknown; text: string; fileIds: string[] } | null>(null)
@@ -99,8 +101,12 @@ export function AssistantChatPane({
   const limit = limitState(usage.data)
   const busy = send.isPending || decide.isPending || regenerate.isPending
   const regeneratingSeq = regenerate.isPending && lastMessage?.role === "assistant" ? lastMessage.seq : null
-  const followKey = `${chat.isSuccess}:${messages?.length ?? 0}:${pending?.text ?? ""}:${busy}`
+  const followKey = `${chat.isSuccess}:${messages?.length ?? 0}:${pending?.text ?? ""}:${busy}:${live?.text.length ?? 0}:${live?.status ?? ""}`
   const { containerRef, atBottom, onScroll, scrollToBottom } = useStickToBottom(followKey)
+
+  // The status, steps and streamed text of the turn that runs; cleared when it ends.
+  const listen = (event: AiStreamEvent) => setLive((current) => applyLiveEvent(current ?? EMPTY_LIVE, event))
+  const endLive = () => setLive(null)
 
   async function runTurn(text: string, fileIds: string[], webSearch: boolean): Promise<boolean> {
     const controller = new AbortController()
@@ -117,6 +123,7 @@ export function AssistantChatPane({
         webSearch,
         ...(call ? { command: call } : {}),
         signal: controller.signal,
+        onEvent: listen,
       })
       return true
     } catch (error) {
@@ -134,6 +141,7 @@ export function AssistantChatPane({
       return false
     } finally {
       setPending(null)
+      setLive(null)
       abort.current = null
     }
   }
@@ -165,17 +173,20 @@ export function AssistantChatPane({
 
   function handleApprove(callId: string) {
     setActionError(null)
-    decide.mutate({ callId, decision: "approve" }, { onSuccess: () => onToolApproved?.() })
+    decide.mutate(
+      { callId, decision: "approve", onEvent: listen },
+      { onSuccess: () => onToolApproved?.(), onSettled: endLive },
+    )
   }
 
   function handleReject(callId: string, reason: string | undefined) {
     setActionError(null)
-    decide.mutate({ callId, decision: "reject", reason })
+    decide.mutate({ callId, decision: "reject", reason, onEvent: listen }, { onSettled: endLive })
   }
 
   function handleRegenerate() {
     setActionError(null)
-    regenerate.mutate(undefined, { onError: (error) => setActionError(error) })
+    regenerate.mutate({ onEvent: listen }, { onError: (error) => setActionError(error), onSettled: endLive })
   }
 
   function handleRate(seq: number, rating: Rating) {
@@ -227,6 +238,7 @@ export function AssistantChatPane({
             ratings={ratings}
             pending={pending}
             busy={busy}
+            live={live}
             regeneratingSeq={regeneratingSeq}
             limitReachedTurn={send.data?.status === "limit_reached"}
             actions={actions}

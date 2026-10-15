@@ -79,6 +79,11 @@ export type SourceItem = {
   modality: string
   /** The model does not read this kind: the source stays in the notebook but is not sent to it. */
   ai_unsupported: boolean
+  /**
+   * TODO(contract): the lesson/subject sync owns the source (lesson material, lesson book, subject material copy).
+   * In a subject or lesson notebook it is excluded instead of removed; false for the student's own sources.
+   */
+  synced?: boolean
   synced_at: string | null
   created_at: string
 }
@@ -169,6 +174,14 @@ export type AutoSettings = {
   excluded_refs: { ref_key: string; title: string }[]
   include_classmates: boolean
   synced_at: string | null
+}
+/** TODO(contract): `PATCH /v1/notebooks/{id}/auto` body; every field is optional. */
+export type NotebookAutoPatchBody = {
+  include_classmates?: boolean
+  /** Synced sources to leave out; the sync keeps them out until restored. */
+  exclude_source_ids?: string[]
+  /** `excluded_refs[].ref_key` values to bring back. */
+  restore_refs?: string[]
 }
 export type NotebookDetail = NotebookItem & {
   /** Sync settings; null for a notebook that is not automatic. */

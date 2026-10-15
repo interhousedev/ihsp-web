@@ -39,6 +39,8 @@ function StepIcon({ step }: { step: AgentStep }) {
 export function useStepText(): (step: AgentStep) => string {
   const t = useT("assistant.steps")
   return (step) => {
+    // A progress note of the assistant ("Found it, now the marks") is shown as written.
+    if (step.kind === "think" && /\s/.test(step.label.trim())) return step.label
     const label = stepLabel(step)
     if (t.has(label.key)) return t(label.key, label.values)
     return label.fallback ?? step.label
