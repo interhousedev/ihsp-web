@@ -23,6 +23,7 @@ import { useRouter } from "next/navigation"
 import { useState, type FormEvent } from "react"
 import { hrefs } from "../../shared/utils/hrefs"
 import { courseFormSchema, slugify, type CourseFormValues } from "../utils/slugify"
+import { ImportImsccButton } from "../../imscc/components/import-imscc-dialog"
 import { CourseCreatorsCard } from "./course-creators-card"
 
 /**
@@ -116,6 +117,9 @@ export function AdminPage() {
           </form>
         </CardContent>
       </Card>
+      <div className="max-w-lg">
+        <ImportImsccButton />
+      </div>
       {isLmsAdmin ? <CourseCreatorsCard /> : null}
     </PageContainer>
   )

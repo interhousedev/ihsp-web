@@ -7,7 +7,15 @@ import { useCallback, useEffect, useRef, useState } from "react"
 import { hrefs } from "../../shared/utils/hrefs"
 import { can, type CoursePermission } from "../../shared/utils/permissions"
 
-export type EditorSection = "outline" | "workspace" | "publish" | "versions" | "staff" | "students" | "preview"
+export type EditorSection =
+  | "outline"
+  | "workspace"
+  | "publish"
+  | "versions"
+  | "staff"
+  | "students"
+  | "preview"
+  | "settings"
 
 /** Course tools as a row of links; each shows only for staff with the matching permission. */
 export function EditorNav({
@@ -53,6 +61,7 @@ export function EditorNav({
     { key: "publish", href: hrefs.publish(courseId), visible: can(permissions, "edit") || can(permissions, "publish") },
     { key: "versions", href: hrefs.versions(courseId), visible: any },
     { key: "staff", href: hrefs.staff(courseId), visible: any },
+    { key: "settings", href: hrefs.settings(courseId), visible: can(permissions, "edit") },
     { key: "students", href: hrefs.students(courseId), visible: can(permissions, "review") },
   ]
   return (

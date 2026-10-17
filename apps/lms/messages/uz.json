@@ -104,7 +104,9 @@
       "text": "material",
       "test": "test",
       "flashcards": "kartochkalar",
-      "video": "video"
+      "video": "video",
+      "h5p": "interaktiv topshiriq",
+      "interactive_video": "interaktiv video"
     },
     "status": {
       "passed": "oʻtilgan",
@@ -129,7 +131,26 @@
     "sidebarUnavailable": "Kurs mundarijasini yuklab boʻlmadi.",
     "lessonNavigation": "Dars navigatsiyasi",
     "video": "Video",
-    "videoUnavailable": "Bu videoni koʻrsatib boʻlmaydi."
+    "videoUnavailable": "Bu videoni koʻrsatib boʻlmaydi.",
+    "interactive": {
+      "markers": "Video toʻxtashlari",
+      "kinds": {
+        "question": "Savol",
+        "note": "Izoh",
+        "link": "Havola"
+      },
+      "rightOption": "Toʻgʻri javob",
+      "correct": "Toʻgʻri!",
+      "wrong": "Unchalik emas. Toʻgʻri javob belgilangan.",
+      "answer": "Javob berish",
+      "continue": "Davom etish",
+      "skip": "Oʻtkazib yuborish"
+    },
+    "h5p": {
+      "title": "Interaktiv topshiriq",
+      "unavailable": "Bu interaktiv topshiriqni koʻrsatib boʻlmaydi.",
+      "score": "Eng yaxshi natija: {max} dan {score}"
+    }
   },
   "test": {
     "title": "Test",
@@ -204,7 +225,8 @@
     "publish": "Nashr qilish",
     "versions": "Versiyalar",
     "staff": "Jamoa",
-    "students": "Talabalar"
+    "students": "Talabalar",
+    "settings": "Sozlamalar"
   },
   "editor": {
     "title": "Kurs muharriri",
@@ -286,7 +308,9 @@
       "text": "Matn",
       "test": "Test",
       "flashcards": "Kartochkalar",
-      "video": "Video"
+      "video": "Video",
+      "h5p": "H5P",
+      "interactive_video": "Interaktiv video"
     },
     "markdownLabel": "{number}-blok Markdown matni",
     "moveBlockUp": "{number}-blokni yuqoriga",
@@ -363,6 +387,14 @@
         "free": {
           "title": "Erkin javob",
           "description": "Oʻqituvchi baholaydigan batafsil javob"
+        },
+        "h5p": {
+          "title": "H5P",
+          "description": "Interaktiv H5P paketi (.h5p): testlar, taqdimotlar, oʻyinlar"
+        },
+        "interactive_video": {
+          "title": "Interaktiv video",
+          "description": "Savollar, izohlar va havolalar uchun toʻxtaydigan video"
         }
       }
     },
@@ -379,6 +411,39 @@
       "rejected": "Fayl video sifatida qabul qilinmadi.",
       "preview": "Videoni koʻrish",
       "previewUnavailable": "Koʻrish hozircha mavjud emas."
+    },
+    "h5p": {
+      "untitled": "H5P materiali",
+      "empty": "Hali paket yoʻq. H5P.org, Lumi yoki Moodleʼdan eksport qilingan .h5p faylni yuklang.",
+      "upload": ".h5p yuklash",
+      "replace": "Paketni almashtirish",
+      "uploading": "Paket tekshirilmoqda…",
+      "preview": "Koʻrish",
+      "file": "H5P paketi (.h5p)",
+      "tooLarge": "Paket 100 MB dan katta.",
+      "passing": "Oʻtish bali, %",
+      "passingHint": "Material shu baldan kam boʻlmagan natija bilan bajarilsa, blok oʻtilgan hisoblanadi."
+    },
+    "interactive": {
+      "timeline": "Toʻxtashlar",
+      "at": "Vaqt",
+      "add": {
+        "question": "Savol",
+        "note": "Izoh",
+        "link": "Havola"
+      },
+      "none": "Hali toʻxtashlar yoʻq: vaqtni kiriting va savol, izoh yoki havola qoʻshing.",
+      "kinds": {
+        "question": "Savol",
+        "note": "Izoh",
+        "link": "Havola"
+      },
+      "kind": "Turi",
+      "remove": "{time} dagi toʻxtashni oʻchirish",
+      "question": "Savol",
+      "text": "Matn",
+      "url": "Havola",
+      "multiple": "Bir nechta toʻgʻri javob"
     }
   },
   "markdownEditor": {
@@ -612,7 +677,8 @@
       "no-table": "{block}-blok, {question}-savol: jadval tuzing va toʻgʻri kataklarni belgilang.",
       "no-blanks": "{block}-blok, {question}-savol: boʻsh joy qoʻshing.",
       "no-formula": "{block}-blok, {question}-savol: formula boʻsh.",
-      "no-variables": "{block}-blok, {question}-savol: oʻzgaruvchi qoʻshing."
+      "no-variables": "{block}-blok, {question}-savol: oʻzgaruvchi qoʻshing.",
+      "empty-h5p": "{block}-blok: H5P paketini yuklang."
     }
   },
   "blocks": {
@@ -620,7 +686,9 @@
       "text": "Matn",
       "test": "Test",
       "flashcards": "Kartochkalar",
-      "video": "Video"
+      "video": "Video",
+      "h5p": "H5P",
+      "interactive_video": "Interaktiv video"
     },
     "untitled": "Nomsiz qadam",
     "noBlocks": "Bloklar yoʻq.",
@@ -666,7 +734,10 @@
     },
     "tableSummary": "Jadval {rows}×{columns}, {marked} ta belgilangan",
     "randomSummary": "Javob: {formula} (oʻzgaruvchilar: {count})",
-    "emptyVideo": "Video havolasi yoʻq."
+    "emptyVideo": "Video havolasi yoʻq.",
+    "emptyH5P": "H5P paketi yoʻq.",
+    "uploadedVideo": "Yuklangan video",
+    "interactions": "{count, plural, other {# ta toʻxtash}}"
   },
   "diff": {
     "live": "Nashr qilingan versiya",
@@ -925,7 +996,203 @@
     "meta": "{sources} · ochilgan: {when}",
     "hint": "Kurs bloknoti kurs bilan birga yangilanadi: darslar, videolar, fayllar va kutubxona materiallari uning manbalari boʻladi va kurs nashr etilganda yangilanadi."
   },
+  "imscc": {
+    "title": "Import .imscc",
+    "file": "Kartrij fayli",
+    "hint": "IMS Common Cartridge (.imscc yoki .zip), 200 MB gacha.",
+    "tooBig": "Fayl 200 MB dan katta.",
+    "start": "Import qilish",
+    "progress": "Import jarayoni",
+    "working": "Import qilinmoqda...",
+    "progressValue": "{done} / {total}",
+    "failed": "Import amalga oshmadi.",
+    "cancelled": "Import bekor qilindi.",
+    "report": "Import hisoboti",
+    "done": "Import qilindi: {title}",
+    "sections": "{count, plural, one {# boʻlim} other {# boʻlim}}",
+    "steps": "{count, plural, one {# qadam} other {# qadam}}",
+    "files": "{count, plural, one {# fayl} other {# fayl}}",
+    "quizzes": "{count, plural, one {# test} other {# test}}",
+    "questions": "{count, plural, one {# savol} other {# savol}}",
+    "links": "{count, plural, one {# havola} other {# havola}}",
+    "unsupported": "{count, plural, one {# element toʻliq import qilinmadi} other {# element toʻliq import qilinmadi}}",
+    "unsupportedList": "Toʻliq import qilinmagan elementlar",
+    "open": "Kursni ochish",
+    "close": "Yopish",
+    "background": "Yashirish",
+    "export": "Eksport .imscc",
+    "copy": "Kursdan nusxa olish",
+    "copyTitle": "Bu kursdan nusxa olinsinmi?",
+    "copyDescription": "Xuddi shu nom («(copy)» belgisi bilan), boʻlimlar, qadamlar va fayllar bilan yangi qoralama kursi yaratiladi, uning egasi siz boʻlasiz. Tinglovchilar nusxalanmaydi.",
+    "copyConfirm": "Nusxa olish",
+    "copying": "Kurs nusxalanmoqda...",
+    "copied": "Nusxa olindi: {title}",
+    "openCopy": "Nusxani ochish"
+  },
   "workspace": {
     "openFailed": "AI ish maydonini ochib boʻlmadi"
+  },
+  "courseSettings": {
+    "title": "Kurs sozlamalari",
+    "tabs": "Sozlamalar boʻlimlari",
+    "tab": {
+      "details": "Tavsif",
+      "visibility": "Kirish",
+      "navigation": "Navigatsiya"
+    },
+    "removeItem": "Oʻchirish: {item}",
+    "add": "Qoʻshish",
+    "accent": "Urgʻu rangi",
+    "accentPalette": "Ranglar palitrasi",
+    "errors": {
+      "hex": "Rangni #2563eb koʻrinishida kiriting.",
+      "length": "Matn juda uzun.",
+      "range": "{min} dan {max} gacha butun son kiriting.",
+      "count": "Bandlar juda koʻp yoki band juda uzun.",
+      "dates": "Tugash sanasi boshlanishidan oldin boʻlmasligi kerak."
+    },
+    "imageFailed": "Rasmdan foydalanib boʻlmadi. Boshqa fayl tanlang.",
+    "imageReplace": "Rasmni almashtirish",
+    "imageChoose": "Rasm tanlash",
+    "imageRemove": "Olib tashlash",
+    "imageSet": "Rasm oʻrnatilgan",
+    "cropTitle": "Qirqish: {label}",
+    "cropAspect": "Shakl",
+    "aspect": {
+      "square": "Kvadrat",
+      "wide": "16:10",
+      "banner": "5:1"
+    },
+    "cropZoom": "Masshtab",
+    "cropX": "Gorizontal",
+    "cropY": "Vertikal",
+    "cancel": "Bekor qilish",
+    "cropApply": "Qirqib yuklash",
+    "cardImage": "Karta rasmi",
+    "banner": "Keng banner",
+    "name": "Kurs nomi",
+    "code": "Kurs kodi",
+    "friendlyName": "Qisqa nom",
+    "summary": "Qisqa tavsif",
+    "description": "Toʻliq tavsif",
+    "language": "Til",
+    "languages": {
+      "uz": "Oʻzbekcha",
+      "ru": "Ruscha",
+      "en": "Inglizcha"
+    },
+    "level": "Daraja",
+    "levels": {
+      "none": "Koʻrsatilmagan",
+      "beginner": "Boshlangʻich",
+      "intermediate": "Oʻrta",
+      "advanced": "Ilgʻor"
+    },
+    "workload": "Haftasiga soat",
+    "duration": "Haftalar",
+    "tags": "Teglar",
+    "outcomes": "Nimani oʻrganasiz",
+    "requirements": "Talablar",
+    "audience": "Kurs kimlar uchun",
+    "state": "Holat",
+    "states": {
+      "draft": "Qoralama",
+      "published": "Nashr etilgan",
+      "archived": "Arxivda"
+    },
+    "goPublish": "Nashr qilishga oʻtish",
+    "restore": "Arxivdan qaytarish",
+    "archive": "Kursni arxivlash",
+    "audienceScope": "Kursni kim koʻra oladi",
+    "scopes": {
+      "link": "Faqat havola yoki kod orqali",
+      "group": "Tanlangan guruhlar",
+      "lyceum": "Butun litsey",
+      "public": "Hamma"
+    },
+    "groupIds": "Guruhlar",
+    "groupsChosen": "Tanlangan guruhlar",
+    "groupSearch": "Guruhlarni qidirish",
+    "groupList": "Guruhlar roʻyxati",
+    "groupRemove": "{name} ni olib tashlash",
+    "enrolment": "Kursga yozilish",
+    "enrolmentOpen": "Yozilish ochiq",
+    "enrolFrom": "Ochiladi",
+    "enrolTo": "Yopiladi",
+    "timezoneHint": "Vaqt qurilmangiz vaqt mintaqasida koʻrsatilgan.",
+    "joinCode": "Kurs kodi (kirish)",
+    "copy": "Nusxalash",
+    "noJoinCode": "Kod hali yoʻq.",
+    "regenerate": "Yangi kod yaratish",
+    "generate": "Kod yaratish",
+    "navigation": "Kurs navigatsiyasi",
+    "nav": {
+      "overview": "Umumiy koʻrinish",
+      "syllabus": "Dastur",
+      "announcements": "Eʼlonlar",
+      "people": "Ishtirokchilar",
+      "grades": "Baholar",
+      "files": "Fayllar",
+      "notebooks": "Daftarlar",
+      "discussions": "Muhokamalar"
+    },
+    "moveUp": "Yuqoriga: {name}",
+    "moveDown": "Pastga: {name}",
+    "showTab": "Koʻrsatish: {name}",
+    "sidebar": "Kurs vositalari",
+    "people": "Rollar boʻyicha ishtirokchilar",
+    "stats": {
+      "sections": "Modullar",
+      "steps": "Qadamlar",
+      "learners": "Oʻquvchilar"
+    },
+    "previewLearner": "Oʻquvchi sifatida koʻrish",
+    "linkCheck": "Havolalarni tekshirish",
+    "linkCheckStart": "Havolalarni tekshirish",
+    "linkCheckRunning": "Tekshirilmoqda...",
+    "checkedAt": "Tekshirilgan: {date}",
+    "linksOk": "Barcha havolalar ishlayapti: {count}.",
+    "brokenLinks": "Ishlamaydigan havolalar",
+    "linkErrors": {
+      "forbidden-target": "Manzilga ruxsat yoʻq",
+      "timeout": "Javob oʻz vaqtida kelmadi",
+      "unreachable": "Ochilmadi",
+      "too-many-redirects": "Qayta yoʻnaltirishlar juda koʻp"
+    },
+    "linkStatus": "Javob {code}",
+    "saved": "Sozlamalar saqlandi",
+    "save": "Saqlash",
+    "unsaved": "Saqlanmagan oʻzgarishlar bor",
+    "serverInvalid": "Server {field} maydonini rad etdi: {reason}."
+  },
+  "courseLanding": {
+    "continue": "Davom etish",
+    "enrol": "Yozilish",
+    "enrolled": "Siz kursga yozildingiz",
+    "opensOn": "Yozilish {date} da ochiladi",
+    "closedFor": "Bu kursga yozilib boʻlmaydi.",
+    "closed": "Yozilish yopilgan.",
+    "endsOn": "Yozilish {date} da yopiladi",
+    "previewBanner": "Koʻrib chiqish: oʻquvchilar kursni shunday koʻradi.",
+    "about": "Kurs haqida",
+    "outcomes": "Nimani oʻrganasiz",
+    "requirements": "Talablar",
+    "audience": "Kurs kimlar uchun",
+    "syllabus": "Dastur",
+    "authors": "Mualliflar",
+    "lessons": "{count} ta dars",
+    "facts": "Kurs haqida qisqacha",
+    "levels": {
+      "beginner": "Boshlangʻich",
+      "intermediate": "Oʻrta",
+      "advanced": "Ilgʻor"
+    },
+    "languages": {
+      "uz": "Oʻzbekcha",
+      "ru": "Ruscha",
+      "en": "Inglizcha"
+    },
+    "workload": "Haftasiga {count} soat",
+    "duration": "{count} hafta"
   }
 }

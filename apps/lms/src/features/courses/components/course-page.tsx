@@ -7,6 +7,7 @@ import { useQuery } from "@tanstack/react-query"
 import { QueryState } from "../../shared/components/query-state"
 import { StaffList } from "../../shared/components/staff-list"
 import { StepikScope } from "../../shared/components/stepik-scope"
+import { accentStyle } from "../../settings/utils/color"
 import { CourseNotebookButton } from "./course-notebook-button"
 import { CourseOutline } from "./course-outline"
 import { CoursePromoCard } from "./course-promo-card"
@@ -18,7 +19,7 @@ function CourseBody({ page }: { page: CoursePageData }) {
   const canOpenSteps = page.enrolled || page.can_edit
 
   return (
-    <div className="grid items-start gap-6 lg:grid-cols-[minmax(0,1fr)_20rem]">
+    <div style={accentStyle(page.accent_color)} className="grid items-start gap-6 lg:grid-cols-[minmax(0,1fr)_20rem]">
       <div className="order-last flex min-w-0 flex-col gap-8 lg:order-first">
         {page.enrolled && changedCount > 0 && page.updated_at ? (
           <Alert>

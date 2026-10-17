@@ -82,7 +82,7 @@ describe("the files of the installable LMS", () => {
     }
 
     expect(pkg.scripts["build:sw"]).toContain("features-core/src/pwa/sw/generic.ts")
-    expect(pkg.scripts.build).toStartWith("bun run build:sw")
+    expect(pkg.scripts.build).toStartWith("bun run copy:h5p && bun run build:sw")
   })
 })
 

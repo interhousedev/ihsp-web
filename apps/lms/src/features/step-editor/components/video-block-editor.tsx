@@ -8,7 +8,8 @@ import { VideoFile } from "../../shared/components/video-file"
 import { useEditorVideoUrl } from "../hooks/use-editor-video-url"
 import { useVideoUpload } from "../hooks/use-video-upload"
 
-type VideoBlock = Extract<Block, { type: "video" }>
+/** A video block or an interactive video block: both have the same source fields. */
+type VideoBlock = Extract<Block, { type: "video" | "interactive_video" }>
 
 const VIDEO_ACCEPT = "video/mp4,video/webm,video/quicktime,.mp4,.webm,.mov"
 
@@ -16,14 +17,14 @@ const VIDEO_ACCEPT = "video/mp4,video/webm,video/quicktime,.mp4,.webm,.mov"
  * A video by link (YouTube, Vimeo or a direct file) or an uploaded file, with an optional caption. An upload shows a
  * progress bar, then a preview player with replace and remove.
  */
-export function VideoBlockEditor({
+export function VideoBlockEditor<T extends VideoBlock>({
   block,
   onChange,
   courseId,
   stepId,
 }: {
-  block: VideoBlock
-  onChange: (block: VideoBlock) => void
+  block: T
+  onChange: (block: T) => void
   courseId?: string
   stepId?: string
 }) {

@@ -7,6 +7,8 @@ import { ConfirmDialog } from "@ihsp/ui"
 import { moveItem, updateBlock } from "../utils/content-ops"
 import { BlockCard } from "./block-card"
 import { FlashcardsBlockEditor } from "./flashcards-block-editor"
+import { H5PBlockEditor } from "./h5p-block-editor"
+import { InteractiveVideoBlockEditor } from "./interactive-video-block-editor"
 import { MarkdownEditor } from "./markdown-editor"
 import { VideoBlockEditor } from "./video-block-editor"
 import { TestBlockEditor } from "./test-block-editor"
@@ -58,6 +60,18 @@ export function BlockList({
             ) : null}
             {block.type === "video" ? (
               <VideoBlockEditor block={block} onChange={replace} courseId={courseId} stepId={stepId} />
+            ) : null}
+            {block.type === "interactive_video" ? (
+              <InteractiveVideoBlockEditor
+                block={block}
+                onChange={replace}
+                keyOf={keyOf}
+                courseId={courseId}
+                stepId={stepId}
+              />
+            ) : null}
+            {block.type === "h5p" ? (
+              <H5PBlockEditor block={block} onChange={replace} courseId={courseId} stepId={stepId} />
             ) : null}
             {block.type === "test" ? <TestBlockEditor block={block} keyOf={keyOf} onChange={replace} /> : null}
             {block.type === "flashcards" ? (

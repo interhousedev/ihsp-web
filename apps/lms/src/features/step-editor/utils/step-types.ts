@@ -2,6 +2,8 @@ import type { Block, Question } from "@ihsp/api"
 import { Icons } from "@ihsp/ui"
 import {
   newFlashcardsBlock,
+  newH5PBlock,
+  newInteractiveVideoBlock,
   newQuestion,
   newTestBlock,
   newTextBlock,
@@ -12,6 +14,8 @@ import {
 export type StepTypeId =
   | "text"
   | "video"
+  | "interactive_video"
+  | "h5p"
   | "flashcards"
   | "test"
   | "choice"
@@ -48,6 +52,13 @@ function task(type: QuestionType): () => Block {
 export const STEP_TYPES: readonly StepType[] = [
   { id: "text", group: "materials", icon: "text", create: newTextBlock },
   { id: "video", group: "materials", icon: "video", create: newVideoBlock },
+  {
+    id: "interactive_video",
+    group: "materials",
+    icon: "media",
+    create: newInteractiveVideoBlock,
+  },
+  { id: "h5p", group: "materials", icon: "sparkles", create: newH5PBlock },
   {
     id: "flashcards",
     group: "materials",

@@ -5,6 +5,9 @@ export type TestBlock = Extract<Block, { type: "test" }>
 export type TextBlock = Extract<Block, { type: "text" }>
 export type VideoBlock = Extract<Block, { type: "video" }>
 export type FlashcardsBlock = Extract<Block, { type: "flashcards" }>
+export type H5PBlock = Extract<Block, { type: "h5p" }>
+export type InteractiveVideoBlock = Extract<Block, { type: "interactive_video" }>
+export type Interaction = InteractiveVideoBlock["interactions"][number]
 export type QuestionOption = NonNullable<Question["options"]>[number]
 export type Card = FlashcardsBlock["cards"][number]
 
@@ -166,6 +169,36 @@ export function newVideoBlock(): VideoBlock {
   }
 }
 
+export function newH5PBlock(): H5PBlock {
+  return { id: newTempId(), type: "h5p", package_id: "", title: "", main_library: "", passing_score_pct: 0 }
+}
+
+export function newInteractiveVideoBlock(): InteractiveVideoBlock {
+  return {
+    id: newTempId(),
+    type: "interactive_video",
+    source: "link",
+    url: "",
+    file_id: null,
+    caption: "",
+    interactions: [],
+  }
+}
+
+/** A pause at `atSec`: a question starts with two options, the first one correct. */
+export function newInteraction(kind: Interaction["kind"], atSec: number): Interaction {
+  return {
+    id: newTempId(),
+    at_sec: Math.max(0, Math.round(atSec * 10) / 10),
+    kind,
+    text: "",
+    options: kind === "question" ? [{ ...newOption(), correct: true }, newOption()] : [],
+    multiple: false,
+    url: "",
+    points: 1,
+  }
+}
+
 export function newFlashcardsBlock(): FlashcardsBlock {
   return {
     id: newTempId(),
@@ -251,6 +284,12 @@ export function remapIds(
       })
     } else if (block.type === "flashcards" && other?.type === "flashcards") {
       block.cards.forEach((card, cardIndex) => pair(card, other.cards[cardIndex]))
+    } else if (block.type === "interactive_video" && other?.type === "interactive_video") {
+      block.interactions.forEach((item, itemIndex) => {
+        const otherItem = other.interactions[itemIndex]
+        pair(item, otherItem)
+        item.options.forEach((option, optionIndex) => pair(option, otherItem?.options[optionIndex]))
+      })
     }
   })
   if (map.size === 0) return { content: local, aliases: [] }
@@ -299,6 +338,17 @@ export function remapIds(
           cards: block.cards.map((card) => ({ ...card, id: swap(card.id) })),
         }
       }
+      if (block.type === "interactive_video") {
+        return {
+          ...block,
+          id: swap(block.id),
+          interactions: block.interactions.map((item) => ({
+            ...item,
+            id: swap(item.id),
+            options: item.options.map((option) => ({ ...option, id: swap(option.id) })),
+          })),
+        }
+      }
       return { ...block, id: swap(block.id) }
     }),
   }
@@ -322,11 +372,31 @@ export type ContentIssueCode =
   | "no-blanks"
   | "no-formula"
   | "no-variables"
+  | "empty-h5p"
 
 export type ContentIssue = {
   code: ContentIssueCode
   blockId: string
   questionId?: string
+}
+
+/** Interactive video pauses: a question needs a prompt, two filled options and a right one; a link a URL. */
+function interactionIssues(block: InteractiveVideoBlock): ContentIssue[] {
+  const issues: ContentIssue[] = []
+  for (const item of block.interactions) {
+    const at = { blockId: block.id, questionId: item.id }
+    if (item.kind === "link") {
+      if (!/^https?:\/\//.test(item.url)) issues.push({ code: "no-answers", ...at })
+      continue
+    }
+    if (item.text.trim() === "") issues.push({ code: "empty-prompt", ...at })
+    if (item.kind !== "question") continue
+    if (item.options.length < 2) issues.push({ code: "too-few-options", ...at })
+    if (item.options.some((option) => option.text.trim() === "")) issues.push({ code: "empty-option", ...at })
+    const correct = item.options.filter((option) => option.correct).length
+    if (!item.multiple && correct > 1) issues.push({ code: "several-correct", ...at })
+  }
+  return issues
 }
 
 /** Problems an author should fix before publishing; saving a draft is still allowed. */
@@ -386,8 +456,11 @@ export function validateContent(content: StepContent): ContentIssue[] {
           if (options.some((option) => option.text.trim() === "")) issues.push({ code: "empty-option", ...at })
         }
       }
-    } else if (block.type === "video") {
+    } else if (block.type === "video" || block.type === "interactive_video") {
       if (block.url.trim() === "" && !block.file_id) issues.push({ code: "empty-video", blockId: block.id })
+      if (block.type === "interactive_video") issues.push(...interactionIssues(block))
+    } else if (block.type === "h5p") {
+      if (!block.package_id) issues.push({ code: "empty-h5p", blockId: block.id })
     } else if (block.type === "flashcards") {
       if (block.cards.some((card) => card.front.trim() === "" || card.back.trim() === "")) {
         issues.push({ code: "empty-card", blockId: block.id })

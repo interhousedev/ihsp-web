@@ -8,6 +8,7 @@ import { can } from "../../shared/utils/permissions"
 import { useCourseDraft } from "../hooks/use-course-draft"
 import { useLeaveGuard } from "../hooks/use-leave-guard"
 import { useMetaEditor } from "../hooks/use-meta-editor"
+import { ExportImsccButton } from "../../imscc/components/export-imscc-button"
 import { CourseSettingsCard } from "./course-settings-card"
 import { EditorFrame } from "./editor-frame"
 import { MetaForm } from "./meta-form"
@@ -54,6 +55,7 @@ function EditorBody({ draft, autosaveMs }: { draft: CourseDraft; autosaveMs?: nu
         <OutlineEditor draft={draft} canEdit={canEdit} />
       </section>
       <CourseSettingsCard draft={draft} canEdit={canEdit} />
+      {canEdit ? <ExportImsccButton courseId={draft.id} slug={draft.slug} /> : null}
     </div>
   )
 }

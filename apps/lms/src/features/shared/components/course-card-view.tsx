@@ -8,6 +8,11 @@ import type { ReactNode } from "react"
 import { hrefs } from "../utils/hrefs"
 import { CourseCover } from "./course-cover"
 
+/** Enrolled learners (the card has a progress) open the course; everyone else lands on its about page. */
+export function courseCardHref(course: Pick<CourseCard, "slug" | "progress_pct">): string {
+  return course.progress_pct !== null ? hrefs.course(course.slug) : hrefs.about(course.slug)
+}
+
 /**
  * A course card like Stepik's: the cover, the title, a short description and the number of lessons; enrolled courses add
  * the progress bar. The whole card opens the course page (the title link is stretched over it); `actions` sit above that
@@ -23,6 +28,7 @@ export function CourseCardView({
   className?: string
 }) {
   const t = useT("courseCard")
+  const href = courseCardHref(course)
   return (
     <Card
       className={cn(
@@ -30,17 +36,19 @@ export function CourseCardView({
         className,
       )}
     >
-      <CourseCover title={course.title} url={course.cover_url} />
+      <CourseCover title={course.title} url={course.cover_url} accent={course.accent_color} />
       <CardContent className="flex flex-1 flex-col gap-2 pt-4">
         <h2 className="text-base leading-snug font-semibold break-words">
           <Link
-            href={hrefs.course(course.slug)}
+            href={href}
             className="outline-none after:absolute after:inset-0 after:content-[''] hover:underline focus-visible:underline"
           >
             {course.title}
           </Link>
         </h2>
-        {course.description ? <p className="text-muted-foreground line-clamp-2 text-sm">{course.description}</p> : null}
+        {course.summary || course.description ? (
+          <p className="text-muted-foreground line-clamp-2 text-sm">{course.summary || course.description}</p>
+        ) : null}
         <p className="text-muted-foreground flex flex-wrap items-center gap-x-3 gap-y-1 text-xs">
           <span>{t("lessons", { count: course.steps_count })}</span>
           {course.visibility === "invite" ? (

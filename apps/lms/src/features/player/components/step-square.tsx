@@ -8,7 +8,14 @@ import { useEffect, useRef } from "react"
 
 type Block = StepView["blocks"][number]
 
-const ICONS = { text: Icons.post, video: Icons.video, test: Icons.help, flashcards: Icons.flashcards } as const
+const ICONS = {
+  text: Icons.post,
+  video: Icons.video,
+  test: Icons.help,
+  flashcards: Icons.flashcards,
+  h5p: Icons.sparkles,
+  interactive_video: Icons.media,
+} as const
 
 /**
  * One square of the step strip: the type icon of a step (block) of the lesson. Passed steps are filled green, the

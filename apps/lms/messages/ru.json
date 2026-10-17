@@ -104,7 +104,9 @@
       "text": "материал",
       "test": "тест",
       "flashcards": "карточки",
-      "video": "видео"
+      "video": "видео",
+      "h5p": "интерактивное задание",
+      "interactive_video": "интерактивное видео"
     },
     "status": {
       "passed": "пройден",
@@ -129,7 +131,26 @@
     "sidebarUnavailable": "Не удалось загрузить содержание курса.",
     "lessonNavigation": "Навигация по уроку",
     "video": "Видео",
-    "videoUnavailable": "Это видео нельзя показать."
+    "videoUnavailable": "Это видео нельзя показать.",
+    "interactive": {
+      "markers": "Остановки видео",
+      "kinds": {
+        "question": "Вопрос",
+        "note": "Заметка",
+        "link": "Ссылка"
+      },
+      "rightOption": "Правильный ответ",
+      "correct": "Верно!",
+      "wrong": "Не совсем. Правильный ответ отмечен.",
+      "answer": "Ответить",
+      "continue": "Продолжить",
+      "skip": "Пропустить"
+    },
+    "h5p": {
+      "title": "Интерактивное задание",
+      "unavailable": "Это интерактивное задание нельзя показать.",
+      "score": "Лучший результат: {score} из {max}"
+    }
   },
   "test": {
     "title": "Тест",
@@ -204,7 +225,8 @@
     "publish": "Публикация",
     "versions": "Версии",
     "staff": "Команда",
-    "students": "Студенты"
+    "students": "Студенты",
+    "settings": "Настройки"
   },
   "editor": {
     "title": "Редактор курса",
@@ -286,7 +308,9 @@
       "text": "Текст",
       "test": "Тест",
       "flashcards": "Карточки",
-      "video": "Видео"
+      "video": "Видео",
+      "h5p": "H5P",
+      "interactive_video": "Интерактивное видео"
     },
     "markdownLabel": "Markdown блока {number}",
     "moveBlockUp": "Поднять блок {number}",
@@ -363,6 +387,14 @@
         "free": {
           "title": "Свободный ответ",
           "description": "Развёрнутый ответ, который оценивает преподаватель"
+        },
+        "h5p": {
+          "title": "H5P",
+          "description": "Интерактивный пакет H5P (.h5p): тесты, презентации, игры"
+        },
+        "interactive_video": {
+          "title": "Интерактивное видео",
+          "description": "Видео с остановками для вопросов, заметок и ссылок"
         }
       }
     },
@@ -379,6 +411,39 @@
       "rejected": "Файл не принят как видео.",
       "preview": "Просмотр видео",
       "previewUnavailable": "Просмотр пока недоступен."
+    },
+    "h5p": {
+      "untitled": "Материал H5P",
+      "empty": "Пакета пока нет. Загрузите файл .h5p, выгруженный из H5P.org, Lumi или Moodle.",
+      "upload": "Загрузить .h5p",
+      "replace": "Заменить пакет",
+      "uploading": "Проверяем пакет…",
+      "preview": "Просмотр",
+      "file": "Пакет H5P (.h5p)",
+      "tooLarge": "Пакет больше 100 МБ.",
+      "passing": "Проходной балл, %",
+      "passingHint": "Блок считается пройденным, когда материал выполнен не ниже этого балла."
+    },
+    "interactive": {
+      "timeline": "Остановки",
+      "at": "Время",
+      "add": {
+        "question": "Вопрос",
+        "note": "Заметка",
+        "link": "Ссылка"
+      },
+      "none": "Остановок пока нет: укажите время и добавьте вопрос, заметку или ссылку.",
+      "kinds": {
+        "question": "Вопрос",
+        "note": "Заметка",
+        "link": "Ссылка"
+      },
+      "kind": "Тип",
+      "remove": "Удалить остановку на {time}",
+      "question": "Вопрос",
+      "text": "Текст",
+      "url": "Ссылка",
+      "multiple": "Несколько правильных ответов"
     }
   },
   "markdownEditor": {
@@ -612,7 +677,8 @@
       "no-table": "Блок {block}, вопрос {question}: постройте таблицу и отметьте верные ячейки.",
       "no-blanks": "Блок {block}, вопрос {question}: добавьте пропуск.",
       "no-formula": "Блок {block}, вопрос {question}: пустая формула.",
-      "no-variables": "Блок {block}, вопрос {question}: добавьте переменную."
+      "no-variables": "Блок {block}, вопрос {question}: добавьте переменную.",
+      "empty-h5p": "Блок {block}: загрузите пакет H5P."
     }
   },
   "blocks": {
@@ -620,7 +686,9 @@
       "text": "Текст",
       "test": "Тест",
       "flashcards": "Карточки",
-      "video": "Видео"
+      "video": "Видео",
+      "h5p": "H5P",
+      "interactive_video": "Интерактивное видео"
     },
     "untitled": "Шаг без названия",
     "noBlocks": "Блоков нет.",
@@ -666,7 +734,10 @@
     },
     "tableSummary": "Таблица {rows}×{columns}, отмечено {marked}",
     "randomSummary": "Ответ: {formula} (переменных: {count})",
-    "emptyVideo": "Нет ссылки на видео."
+    "emptyVideo": "Нет ссылки на видео.",
+    "emptyH5P": "Нет пакета H5P.",
+    "uploadedVideo": "Загруженное видео",
+    "interactions": "{count, plural, one {# остановка} few {# остановки} many {# остановок} other {# остановки}}"
   },
   "diff": {
     "live": "Опубликованная версия",
@@ -925,7 +996,203 @@
     "meta": "{sources} · открыт {when}",
     "hint": "Блокнот курса следует за курсом: его уроки, видео, файлы и материалы библиотеки становятся источниками и обновляются при публикации курса."
   },
+  "imscc": {
+    "title": "Импорт .imscc",
+    "file": "Файл картриджа",
+    "hint": "IMS Common Cartridge (.imscc или .zip), до 200 МБ.",
+    "tooBig": "Файл больше 200 МБ.",
+    "start": "Импортировать",
+    "progress": "Ход импорта",
+    "working": "Импорт...",
+    "progressValue": "{done} из {total}",
+    "failed": "Не удалось импортировать.",
+    "cancelled": "Импорт отменён.",
+    "report": "Отчёт об импорте",
+    "done": "Импортировано: {title}",
+    "sections": "{count, plural, one {# раздел} few {# раздела} many {# разделов} other {# раздела}}",
+    "steps": "{count, plural, one {# шаг} few {# шага} many {# шагов} other {# шага}}",
+    "files": "{count, plural, one {# файл} few {# файла} many {# файлов} other {# файла}}",
+    "quizzes": "{count, plural, one {# тест} few {# теста} many {# тестов} other {# теста}}",
+    "questions": "{count, plural, one {# вопрос} few {# вопроса} many {# вопросов} other {# вопроса}}",
+    "links": "{count, plural, one {# ссылка} few {# ссылки} many {# ссылок} other {# ссылки}}",
+    "unsupported": "{count, plural, one {# элемент импортирован не полностью} few {# элемента импортированы не полностью} many {# элементов импортированы не полностью} other {# элемента импортированы не полностью}}",
+    "unsupportedList": "Элементы, импортированные не полностью",
+    "open": "Открыть курс",
+    "close": "Закрыть",
+    "background": "Скрыть",
+    "export": "Экспорт .imscc",
+    "copy": "Копировать курс",
+    "copyTitle": "Копировать этот курс?",
+    "copyDescription": "Будет создан новый черновик с тем же названием и пометкой «(copy)», с теми же разделами, шагами и файлами; его владельцем станете вы. Слушатели не копируются.",
+    "copyConfirm": "Копировать",
+    "copying": "Курс копируется...",
+    "copied": "Скопировано: {title}",
+    "openCopy": "Открыть копию"
+  },
   "workspace": {
     "openFailed": "Не удалось открыть ИИ-пространство"
+  },
+  "courseSettings": {
+    "title": "Настройки курса",
+    "tabs": "Разделы настроек",
+    "tab": {
+      "details": "Описание",
+      "visibility": "Доступ",
+      "navigation": "Навигация"
+    },
+    "removeItem": "Удалить: {item}",
+    "add": "Добавить",
+    "accent": "Акцентный цвет",
+    "accentPalette": "Палитра цветов",
+    "errors": {
+      "hex": "Укажите цвет вида #2563eb.",
+      "length": "Текст слишком длинный.",
+      "range": "Введите целое число от {min} до {max}.",
+      "count": "Слишком много пунктов или пункт слишком длинный.",
+      "dates": "Окончание не может быть раньше начала."
+    },
+    "imageFailed": "Не удалось использовать изображение. Попробуйте другой файл.",
+    "imageReplace": "Заменить изображение",
+    "imageChoose": "Выбрать изображение",
+    "imageRemove": "Убрать",
+    "imageSet": "Изображение задано",
+    "cropTitle": "Обрезка: {label}",
+    "cropAspect": "Форма",
+    "aspect": {
+      "square": "Квадрат",
+      "wide": "16:10",
+      "banner": "5:1"
+    },
+    "cropZoom": "Масштаб",
+    "cropX": "По горизонтали",
+    "cropY": "По вертикали",
+    "cancel": "Отмена",
+    "cropApply": "Обрезать и загрузить",
+    "cardImage": "Изображение карточки",
+    "banner": "Широкий баннер",
+    "name": "Название курса",
+    "code": "Код курса",
+    "friendlyName": "Короткое название",
+    "summary": "Краткое описание",
+    "description": "Полное описание",
+    "language": "Язык",
+    "languages": {
+      "uz": "Узбекский",
+      "ru": "Русский",
+      "en": "Английский"
+    },
+    "level": "Уровень",
+    "levels": {
+      "none": "Не указан",
+      "beginner": "Начальный",
+      "intermediate": "Средний",
+      "advanced": "Продвинутый"
+    },
+    "workload": "Часов в неделю",
+    "duration": "Недель",
+    "tags": "Теги",
+    "outcomes": "Чему вы научитесь",
+    "requirements": "Требования",
+    "audience": "Для кого курс",
+    "state": "Состояние",
+    "states": {
+      "draft": "Черновик",
+      "published": "Опубликован",
+      "archived": "В архиве"
+    },
+    "goPublish": "Перейти к публикации",
+    "restore": "Вернуть из архива",
+    "archive": "Архивировать курс",
+    "audienceScope": "Кто видит курс",
+    "scopes": {
+      "link": "Только по ссылке или коду",
+      "group": "Выбранные группы",
+      "lyceum": "Весь лицей",
+      "public": "Все"
+    },
+    "groupIds": "Группы",
+    "groupsChosen": "Выбранные группы",
+    "groupSearch": "Поиск групп",
+    "groupList": "Список групп",
+    "groupRemove": "Убрать {name}",
+    "enrolment": "Запись на курс",
+    "enrolmentOpen": "Запись открыта",
+    "enrolFrom": "Открывается",
+    "enrolTo": "Закрывается",
+    "timezoneHint": "Время указано в часовом поясе вашего устройства.",
+    "joinCode": "Код курса",
+    "copy": "Копировать",
+    "noJoinCode": "Кода пока нет.",
+    "regenerate": "Создать новый код",
+    "generate": "Создать код",
+    "navigation": "Навигация курса",
+    "nav": {
+      "overview": "Обзор",
+      "syllabus": "Программа",
+      "announcements": "Объявления",
+      "people": "Участники",
+      "grades": "Оценки",
+      "files": "Файлы",
+      "notebooks": "Блокноты",
+      "discussions": "Обсуждения"
+    },
+    "moveUp": "Поднять: {name}",
+    "moveDown": "Опустить: {name}",
+    "showTab": "Показывать: {name}",
+    "sidebar": "Инструменты курса",
+    "people": "Участники по ролям",
+    "stats": {
+      "sections": "Модулей",
+      "steps": "Шагов",
+      "learners": "Студентов"
+    },
+    "previewLearner": "Посмотреть как студент",
+    "linkCheck": "Проверка ссылок",
+    "linkCheckStart": "Проверить ссылки",
+    "linkCheckRunning": "Проверка...",
+    "checkedAt": "Проверено {date}",
+    "linksOk": "Все ссылки работают: {count}.",
+    "brokenLinks": "Нерабочие ссылки",
+    "linkErrors": {
+      "forbidden-target": "Адрес не разрешён",
+      "timeout": "Нет ответа вовремя",
+      "unreachable": "Недоступна",
+      "too-many-redirects": "Слишком много перенаправлений"
+    },
+    "linkStatus": "Ответ {code}",
+    "saved": "Настройки сохранены",
+    "save": "Сохранить",
+    "unsaved": "Есть несохранённые изменения",
+    "serverInvalid": "Сервер отклонил поле {field}: {reason}."
+  },
+  "courseLanding": {
+    "continue": "Продолжить",
+    "enrol": "Записаться",
+    "enrolled": "Вы записались на курс",
+    "opensOn": "Запись откроется {date}",
+    "closedFor": "Запись на этот курс недоступна.",
+    "closed": "Запись закрыта.",
+    "endsOn": "Запись закроется {date}",
+    "previewBanner": "Предпросмотр: так курс увидят студенты.",
+    "about": "О курсе",
+    "outcomes": "Чему вы научитесь",
+    "requirements": "Требования",
+    "audience": "Для кого курс",
+    "syllabus": "Программа",
+    "authors": "Авторы",
+    "lessons": "{count, plural, one {# урок} few {# урока} many {# уроков} other {# урока}}",
+    "facts": "О курсе кратко",
+    "levels": {
+      "beginner": "Начальный",
+      "intermediate": "Средний",
+      "advanced": "Продвинутый"
+    },
+    "languages": {
+      "uz": "Узбекский",
+      "ru": "Русский",
+      "en": "Английский"
+    },
+    "workload": "{count} ч в неделю",
+    "duration": "{count, plural, one {# неделя} few {# недели} many {# недель} other {# недели}}"
   }
 }

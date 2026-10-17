@@ -4,6 +4,8 @@ import type { StepView } from "@ihsp/api"
 import { Markdown } from "@ihsp/ui"
 import { useEffect, useRef } from "react"
 import { FlashcardsBlock } from "./flashcards-block"
+import { H5PBlock } from "./h5p-block"
+import { InteractiveVideoBlock } from "./interactive-video-block"
 import { TestBlock } from "./test-block"
 import { VideoBlock } from "./video-block"
 
@@ -56,6 +58,10 @@ export function StepContent({
           stepId={stepId}
           preview={preview}
         />
+      ) : block.type === "interactive_video" ? (
+        <InteractiveVideoBlock key={block.id} block={block} courseId={courseId} stepId={stepId} preview={preview} />
+      ) : block.type === "h5p" ? (
+        <H5PBlock key={block.id} block={block} courseId={courseId} stepId={stepId} preview={preview} />
       ) : block.type === "test" ? (
         <TestBlock key={block.id} courseId={courseId} stepId={stepId} block={block} preview={preview} slug={slug} />
       ) : (

@@ -22,6 +22,9 @@ export const hrefs = {
   step: (courseId: string, stepId: string, slug?: string, block?: number) =>
     `/course/step/${query({ course: courseId, step: stepId, slug, block })}`,
   edit: (courseId: string) => `/edit/${query({ id: courseId })}`,
+  settings: (courseId: string) => `/edit/settings/${query({ id: courseId })}`,
+  /** The learner landing page of a course; `preview` shows it as learners will see it, also while a draft. */
+  about: (slug: string, preview = false) => `/course/about/${query({ slug, preview: preview ? 1 : null })}`,
   editStep: (stepId: string) => `/edit/step/${query({ id: stepId })}`,
   workspace: (courseId: string) => `/edit/workspace/${query({ id: courseId })}`,
   publish: (courseId: string) => `/edit/publish/${query({ id: courseId })}`,

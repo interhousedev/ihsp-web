@@ -27,7 +27,7 @@ export function CoursePromoCard({ page }: { page: CoursePage }) {
 
   return (
     <Card className="gap-0 overflow-hidden pt-0">
-      <CourseCover title={page.title} url={page.cover_url} eager />
+      <CourseCover title={page.title} url={page.cover_url} accent={page.accent_color} eager />
       <CardContent className="flex flex-col gap-4 pt-4">
         {page.enrolled && progress ? (
           <Progress value={progress.percent} aria-label={t("progress")} className="gap-1.5">

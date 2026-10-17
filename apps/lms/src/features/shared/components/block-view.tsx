@@ -126,6 +126,21 @@ export function BlockView({ block }: { block: Block }) {
       </p>
     )
   }
+  if (block.type === "h5p") {
+    return (
+      <p className="text-sm break-all">
+        {block.package_id ? `${block.title || t("types.h5p")} · ${block.main_library}` : t("emptyH5P")}
+      </p>
+    )
+  }
+  if (block.type === "interactive_video") {
+    return (
+      <div className="flex flex-col gap-1 text-sm">
+        <p className="break-all">{block.url || (block.file_id ? t("uploadedVideo") : t("emptyVideo"))}</p>
+        <p className="text-muted-foreground">{t("interactions", { count: block.interactions.length })}</p>
+      </div>
+    )
+  }
   if (block.type === "flashcards") {
     return (
       <ul className="flex flex-col gap-1.5">

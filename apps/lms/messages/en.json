@@ -104,7 +104,9 @@
       "text": "reading",
       "test": "quiz",
       "flashcards": "flash cards",
-      "video": "video"
+      "video": "video",
+      "h5p": "interactive task",
+      "interactive_video": "interactive video"
     },
     "status": {
       "passed": "passed",
@@ -129,7 +131,26 @@
     "sidebarUnavailable": "The course contents could not be loaded.",
     "lessonNavigation": "Lesson navigation",
     "video": "Video",
-    "videoUnavailable": "This video cannot be shown."
+    "videoUnavailable": "This video cannot be shown.",
+    "interactive": {
+      "markers": "Pauses of the video",
+      "kinds": {
+        "question": "Question",
+        "note": "Note",
+        "link": "Link"
+      },
+      "rightOption": "Correct answer",
+      "correct": "Correct!",
+      "wrong": "Not quite. The correct answer is marked.",
+      "answer": "Answer",
+      "continue": "Continue",
+      "skip": "Skip"
+    },
+    "h5p": {
+      "title": "Interactive task",
+      "unavailable": "This interactive task cannot be shown.",
+      "score": "Best result: {score} of {max}"
+    }
   },
   "test": {
     "title": "Test",
@@ -204,7 +225,8 @@
     "publish": "Publish",
     "versions": "Versions",
     "staff": "Staff",
-    "students": "Students"
+    "students": "Students",
+    "settings": "Settings"
   },
   "editor": {
     "title": "Course editor",
@@ -286,7 +308,9 @@
       "text": "Text",
       "test": "Test",
       "flashcards": "Flash cards",
-      "video": "Video"
+      "video": "Video",
+      "h5p": "H5P",
+      "interactive_video": "Interactive video"
     },
     "markdownLabel": "Markdown of block {number}",
     "moveBlockUp": "Move block {number} up",
@@ -363,6 +387,14 @@
         "free": {
           "title": "Free answer",
           "description": "A long answer graded by a teacher"
+        },
+        "h5p": {
+          "title": "H5P",
+          "description": "An interactive H5P package (.h5p): quizzes, presentations, games"
+        },
+        "interactive_video": {
+          "title": "Interactive video",
+          "description": "A video that pauses for questions, notes and links"
         }
       }
     },
@@ -379,6 +411,39 @@
       "rejected": "The file was not accepted as a video.",
       "preview": "Video preview",
       "previewUnavailable": "The preview cannot be shown yet."
+    },
+    "h5p": {
+      "untitled": "H5P content",
+      "empty": "No package yet. Upload a .h5p file exported from H5P.org, Lumi or Moodle.",
+      "upload": "Upload .h5p",
+      "replace": "Replace package",
+      "uploading": "Checking the package…",
+      "preview": "Preview",
+      "file": "H5P package (.h5p)",
+      "tooLarge": "The package is larger than 100 MB.",
+      "passing": "Passing score, %",
+      "passingHint": "The block counts as passed once the content is completed with at least this score."
+    },
+    "interactive": {
+      "timeline": "Pauses",
+      "at": "Time",
+      "add": {
+        "question": "Question",
+        "note": "Note",
+        "link": "Link"
+      },
+      "none": "No pauses yet: enter a time and add a question, a note or a link.",
+      "kinds": {
+        "question": "Question",
+        "note": "Note",
+        "link": "Link"
+      },
+      "kind": "Type",
+      "remove": "Remove the pause at {time}",
+      "question": "Question",
+      "text": "Text",
+      "url": "Link",
+      "multiple": "Several correct answers"
     }
   },
   "markdownEditor": {
@@ -612,7 +677,8 @@
       "no-table": "Block {block}, question {question}: build a table and tick the correct cells.",
       "no-blanks": "Block {block}, question {question}: add a blank.",
       "no-formula": "Block {block}, question {question}: the formula is empty.",
-      "no-variables": "Block {block}, question {question}: add a variable."
+      "no-variables": "Block {block}, question {question}: add a variable.",
+      "empty-h5p": "Block {block}: upload an H5P package."
     }
   },
   "blocks": {
@@ -620,7 +686,9 @@
       "text": "Text",
       "test": "Test",
       "flashcards": "Flash cards",
-      "video": "Video"
+      "video": "Video",
+      "h5p": "H5P",
+      "interactive_video": "Interactive video"
     },
     "untitled": "Untitled step",
     "noBlocks": "No blocks.",
@@ -666,7 +734,10 @@
     },
     "tableSummary": "Table {rows} x {columns}, {marked} marked",
     "randomSummary": "Answer: {formula} ({count} variables)",
-    "emptyVideo": "No video link."
+    "emptyVideo": "No video link.",
+    "emptyH5P": "No H5P package.",
+    "uploadedVideo": "Uploaded video",
+    "interactions": "{count, plural, one {# pause} other {# pauses}}"
   },
   "diff": {
     "live": "Live version",
@@ -925,7 +996,203 @@
     "meta": "{sources} · opened {when}",
     "hint": "A course notebook follows the course: its lessons, videos, files and library items are its sources, and they update when the course is published."
   },
+  "imscc": {
+    "title": "Import .imscc",
+    "file": "Cartridge file",
+    "hint": "IMS Common Cartridge (.imscc or .zip), up to 200 MB.",
+    "tooBig": "The file is larger than 200 MB.",
+    "start": "Import",
+    "progress": "Import progress",
+    "working": "Importing...",
+    "progressValue": "{done} of {total}",
+    "failed": "The import failed.",
+    "cancelled": "The import was cancelled.",
+    "report": "Import report",
+    "done": "Imported: {title}",
+    "sections": "{count, plural, one {# section} other {# sections}}",
+    "steps": "{count, plural, one {# step} other {# steps}}",
+    "files": "{count, plural, one {# file} other {# files}}",
+    "quizzes": "{count, plural, one {# quiz} other {# quizzes}}",
+    "questions": "{count, plural, one {# question} other {# questions}}",
+    "links": "{count, plural, one {# link} other {# links}}",
+    "unsupported": "{count, plural, one {# item was not fully imported} other {# items were not fully imported}}",
+    "unsupportedList": "Items not fully imported",
+    "open": "Open the course",
+    "close": "Close",
+    "background": "Hide",
+    "export": "Export .imscc",
+    "copy": "Copy course",
+    "copyTitle": "Copy this course?",
+    "copyDescription": "A new draft course with the same title plus “(copy)” and the same sections, steps and files is created, and you own it. Learners are not copied.",
+    "copyConfirm": "Copy",
+    "copying": "Copying the course...",
+    "copied": "Copied: {title}",
+    "openCopy": "Open the copy"
+  },
   "workspace": {
     "openFailed": "The AI workspace could not be opened"
+  },
+  "courseSettings": {
+    "title": "Course settings",
+    "tabs": "Settings sections",
+    "tab": {
+      "details": "Details",
+      "visibility": "Visibility",
+      "navigation": "Navigation"
+    },
+    "removeItem": "Remove {item}",
+    "add": "Add",
+    "accent": "Accent color",
+    "accentPalette": "Color palette",
+    "errors": {
+      "hex": "Use a color like #2563eb.",
+      "length": "The text is too long.",
+      "range": "Enter a whole number from {min} to {max}.",
+      "count": "Too many items or an item is too long.",
+      "dates": "The end must not be before the start."
+    },
+    "imageFailed": "The image could not be used. Try another file.",
+    "imageReplace": "Replace image",
+    "imageChoose": "Choose image",
+    "imageRemove": "Remove",
+    "imageSet": "Image set",
+    "cropTitle": "Crop: {label}",
+    "cropAspect": "Shape",
+    "aspect": {
+      "square": "Square",
+      "wide": "16:10",
+      "banner": "5:1"
+    },
+    "cropZoom": "Zoom",
+    "cropX": "Horizontal",
+    "cropY": "Vertical",
+    "cancel": "Cancel",
+    "cropApply": "Crop and upload",
+    "cardImage": "Card image",
+    "banner": "Wide banner",
+    "name": "Course title",
+    "code": "Course code",
+    "friendlyName": "Friendly name",
+    "summary": "Short summary",
+    "description": "Full description",
+    "language": "Language",
+    "languages": {
+      "uz": "Uzbek",
+      "ru": "Russian",
+      "en": "English"
+    },
+    "level": "Level",
+    "levels": {
+      "none": "Not set",
+      "beginner": "Beginner",
+      "intermediate": "Intermediate",
+      "advanced": "Advanced"
+    },
+    "workload": "Hours per week",
+    "duration": "Weeks",
+    "tags": "Tags",
+    "outcomes": "What you will learn",
+    "requirements": "Requirements",
+    "audience": "Who it is for",
+    "state": "State",
+    "states": {
+      "draft": "Draft",
+      "published": "Published",
+      "archived": "Archived"
+    },
+    "goPublish": "Go to publishing",
+    "restore": "Restore from archive",
+    "archive": "Archive course",
+    "audienceScope": "Who can find the course",
+    "scopes": {
+      "link": "Only people with the link or code",
+      "group": "Selected groups",
+      "lyceum": "The whole lyceum",
+      "public": "Everyone"
+    },
+    "groupIds": "Groups",
+    "groupsChosen": "Selected groups",
+    "groupSearch": "Search groups",
+    "groupList": "Groups",
+    "groupRemove": "Remove {name}",
+    "enrolment": "Enrolment",
+    "enrolmentOpen": "Enrolment is open",
+    "enrolFrom": "Opens",
+    "enrolTo": "Closes",
+    "timezoneHint": "Times are in your device time zone.",
+    "joinCode": "Join code",
+    "copy": "Copy",
+    "noJoinCode": "No join code yet.",
+    "regenerate": "Generate a new code",
+    "generate": "Generate code",
+    "navigation": "Course navigation",
+    "nav": {
+      "overview": "Overview",
+      "syllabus": "Syllabus",
+      "announcements": "Announcements",
+      "people": "People",
+      "grades": "Grades",
+      "files": "Files",
+      "notebooks": "Notebooks",
+      "discussions": "Discussions"
+    },
+    "moveUp": "Move {name} up",
+    "moveDown": "Move {name} down",
+    "showTab": "Show {name}",
+    "sidebar": "Course tools",
+    "people": "People by role",
+    "stats": {
+      "sections": "Modules",
+      "steps": "Steps",
+      "learners": "Learners"
+    },
+    "previewLearner": "Preview as learner",
+    "linkCheck": "Validate links",
+    "linkCheckStart": "Check links",
+    "linkCheckRunning": "Checking...",
+    "checkedAt": "Checked {date}",
+    "linksOk": "{count, plural, one {# link works} other {# links work}}.",
+    "brokenLinks": "Broken links",
+    "linkErrors": {
+      "forbidden-target": "Address not allowed",
+      "timeout": "No answer in time",
+      "unreachable": "Cannot be reached",
+      "too-many-redirects": "Too many redirects"
+    },
+    "linkStatus": "Answer {code}",
+    "saved": "Settings saved",
+    "save": "Save",
+    "unsaved": "Unsaved changes",
+    "serverInvalid": "The server rejected {field}: {reason}."
+  },
+  "courseLanding": {
+    "continue": "Continue",
+    "enrol": "Enrol",
+    "enrolled": "You joined the course",
+    "opensOn": "Enrolment opens {date}",
+    "closedFor": "You cannot enrol in this course.",
+    "closed": "Enrolment is closed.",
+    "endsOn": "Enrolment closes {date}",
+    "previewBanner": "Preview: this is how learners will see the course.",
+    "about": "About the course",
+    "outcomes": "What you will learn",
+    "requirements": "Requirements",
+    "audience": "Who it is for",
+    "syllabus": "Syllabus",
+    "authors": "Authors",
+    "lessons": "{count, plural, one {# lesson} other {# lessons}}",
+    "facts": "Course facts",
+    "levels": {
+      "beginner": "Beginner",
+      "intermediate": "Intermediate",
+      "advanced": "Advanced"
+    },
+    "languages": {
+      "uz": "Uzbek",
+      "ru": "Russian",
+      "en": "English"
+    },
+    "workload": "{count} h per week",
+    "duration": "{count, plural, one {# week} other {# weeks}}"
   }
 }
