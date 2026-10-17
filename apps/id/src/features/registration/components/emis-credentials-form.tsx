@@ -1,7 +1,7 @@
 "use client"
 
 import { isApiError } from "@ihsp/api"
-import { LoadingButton, useAppForm } from "@ihsp/ui"
+import { Alert, AlertDescription, LoadingButton, useAppForm } from "@ihsp/ui"
 import { useMemo, type ReactNode } from "react"
 import { z } from "zod"
 import { ErrorAlert } from "../../shared/components/error-alert"
@@ -23,6 +23,10 @@ type EmisCredentialsFormProps = {
   loginChallenge?: string | null
   withLinkedActions?: boolean
   footer?: ReactNode
+  /** The EMIS login carried from the IHT ID login page; prefilled, never the password. */
+  initialLogin?: string
+  /** Shown above the form, e.g. why the user arrived here. */
+  notice?: ReactNode
 }
 
 /** Step 1 of registration and reclaim: the EMIS login and password (ID-1, ID-28). */
@@ -36,6 +40,8 @@ export function EmisCredentialsForm({
   loginChallenge = null,
   withLinkedActions = false,
   footer,
+  initialLogin = "",
+  notice,
 }: EmisCredentialsFormProps) {
   const t = useTr()
   const schema = useMemo(
@@ -44,7 +50,7 @@ export function EmisCredentialsForm({
     [t],
   )
   const form = useAppForm({
-    defaultValues: { emis_login: "", emis_password: "" },
+    defaultValues: { emis_login: initialLogin, emis_password: "" },
     validators: { onSubmit: schema },
     onSubmit: ({ value }) => onSubmit({ emis_login: value.emis_login.trim(), emis_password: value.emis_password }),
   })
@@ -53,6 +59,11 @@ export function EmisCredentialsForm({
   return (
     <FlowCard title={title} description={description} footer={footer}>
       <StepIndicator current={1} total={3} />
+      {notice ? (
+        <Alert>
+          <AlertDescription>{notice}</AlertDescription>
+        </Alert>
+      ) : null}
       <form
         noValidate
         className="grid gap-4"

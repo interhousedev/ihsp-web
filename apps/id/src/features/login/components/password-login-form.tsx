@@ -1,6 +1,6 @@
 "use client"
 
-import { postLogin, type LoginInfo } from "@ihsp/api"
+import { isApiError, postLogin, type LoginInfo } from "@ihsp/api"
 import { LoadingButton, Separator, useAppForm } from "@ihsp/ui"
 import { useMutation } from "@tanstack/react-query"
 import { useMemo } from "react"
@@ -10,10 +10,13 @@ import { LinkButton } from "../../shared/components/link-button"
 import { useTr } from "../../shared/hooks/use-tr"
 import { followChallengeUsed, withChallenge } from "../../shared/utils/challenge"
 import { isTouchDevice } from "../../shared/utils/is-touch-device"
+import { redirectTo } from "../../shared/utils/redirect"
 import { requiredText } from "../../shared/utils/schemas"
 import { applyLoginResult, type AccountRestore, type SecondFactor } from "../utils/login-result"
+import { emisRegisterHref, isEmisLogin } from "../utils/emis-login"
 import { LoginError } from "./login-error"
 import { LoginLinks } from "./login-links"
+import { PasskeyLoginButton } from "./passkey-login-button"
 
 export type PasswordCredentials = { login: string; password: string; remember: boolean }
 
@@ -54,8 +57,12 @@ export function PasswordLoginForm({
       }),
     onSuccess: (result, value) =>
       applyLoginResult(result, (factor) => onSecondFactor(value, factor), onPasswordChange, onRestore),
-    onError: (error) => {
-      followChallengeUsed(error)
+    onError: (error, value) => {
+      if (followChallengeUsed(error)) return
+      // An all-digit login that EMIS-style users type without an IHT ID yet: start the EMIS registration with the login.
+      if (isApiError(error) && error.type === "auth/invalid-credentials" && isEmisLogin(value.login)) {
+        redirectTo(emisRegisterHref(challenge, value.login))
+      }
     },
   })
   const form = useAppForm({
@@ -72,8 +79,20 @@ export function PasswordLoginForm({
       description={
         info.client_name ? t("login.description", { client: info.client_name }) : t("login.descriptionPending")
       }
-      footer={<LoginLinks challenge={challenge} />}
+      footer={<LoginLinks />}
     >
+      <LinkButton
+        href={withChallenge("/register/", "login_challenge", challenge)}
+        variant="outline"
+        className="h-11 w-full border-primary text-base font-medium text-primary"
+      >
+        {t("login.register")}
+      </LinkButton>
+      <div className="flex items-center gap-3 text-sm text-muted-foreground">
+        <Separator className="flex-1" />
+        <span>{t("login.orSignIn")}</span>
+        <Separator className="flex-1" />
+      </div>
       <form
         noValidate
         className="grid gap-4"
@@ -86,7 +105,7 @@ export function PasswordLoginForm({
           {(field) => (
             <field.TextField
               label={t("login.login")}
-              autoComplete="username"
+              autoComplete="username webauthn"
               autoCapitalize="none"
               autoCorrect="off"
               spellCheck={false}
@@ -116,6 +135,11 @@ export function PasswordLoginForm({
           {t("login.submit")}
         </LoadingButton>
       </form>
+      <PasskeyLoginButton
+        challenge={challenge}
+        remember={() => form.getFieldValue("remember")}
+        onResult={(result) => applyLoginResult(result, () => undefined, onPasswordChange, onRestore)}
+      />
       <Separator />
       <LinkButton href={withChallenge("/login/otp/", "login_challenge", challenge)} variant="outline">
         {t("login.withOtp")}

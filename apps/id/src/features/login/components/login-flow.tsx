@@ -12,6 +12,7 @@ import { NewPasswordForm } from "./new-password-form"
 import { PasswordLoginForm, type PasswordCredentials } from "./password-login-form"
 import { RestoreAccountForm } from "./restore-account-form"
 import { SecondFactorForm } from "./second-factor-form"
+import { TotpLoginForm } from "./totp-login-form"
 
 type SecondFactorState = { credentials: PasswordCredentials; factor: SecondFactor }
 
@@ -34,6 +35,9 @@ export function LoginFlow({ challenge }: { challenge: string }) {
   }
   if (restore) return <RestoreAccountForm challenge={challenge} restore={restore} onExpired={() => setRestore(null)} />
   if (passwordTicket) return <NewPasswordForm challenge={challenge} ticket={passwordTicket} />
+  if (secondFactor?.factor.method === "totp") {
+    return <TotpLoginForm challenge={challenge} factor={secondFactor.factor} onBack={() => setSecondFactor(null)} />
+  }
   if (secondFactor) {
     return (
       <SecondFactorForm

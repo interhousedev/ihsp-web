@@ -3,19 +3,17 @@
 import { useId, useState } from "react"
 import { useTr } from "../../shared/hooks/use-tr"
 import { TextLink } from "../../shared/components/text-link"
-import { withChallenge } from "../../shared/utils/challenge"
 
 /**
- * Secondary links under the login form: registration, and behind one "Can't get in?" button the recovery links
- * (password, login, reclaim), so the form is not followed by six actions at once.
+ * Secondary links under the login form: behind one "Can't get in?" button the recovery links (password, login,
+ * reclaim), so the form is not followed by several actions at once. Registration sits at the top of the card.
  */
-export function LoginLinks({ challenge }: { challenge: string }) {
+export function LoginLinks() {
   const t = useTr()
   const [helpOpen, setHelpOpen] = useState(false)
   const helpId = useId()
   return (
     <nav aria-label={t("login.helpLinks")} className="flex flex-col">
-      <TextLink href={withChallenge("/register/", "login_challenge", challenge)}>{t("login.register")}</TextLink>
       <button
         type="button"
         aria-expanded={helpOpen}

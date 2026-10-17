@@ -29,7 +29,8 @@
       "code": "Enter the 6-digit code.",
       "password": "The password does not meet the rules.",
       "mismatch": "The passwords do not match.",
-      "confirmRequired": "Please confirm to continue."
+      "confirmRequired": "Please confirm to continue.",
+      "recoveryCode": "Enter a recovery code such as k7mqa-2xpab."
     },
     "missingChallenge": {
       "title": "Open this page from an app",
@@ -42,7 +43,11 @@
       "sent": "We sent a code to your OTP channels.",
       "needSession": "To get a code you must be signed in here.",
       "openSecurity": "Sign in in a new tab"
-    }
+    },
+    "appCode": "Code from the app",
+    "recoveryCode": "Recovery code",
+    "useRecoveryCode": "Use a recovery code",
+    "useAppCode": "Use the code from the app"
   },
   "idErrors": {
     "generic": "Something went wrong. Try again in a moment.",
@@ -55,7 +60,9 @@
       "otp-invalid": "Wrong code. Attempts left: {attempts}.",
       "otp-invalid-plain": "The code is wrong or expired.",
       "second-factor-required": "A confirmation code is required.",
-      "challenge-used": "This login link was already used. Starting again."
+      "challenge-used": "This login link was already used. Starting again.",
+      "passkey-invalid": "The passkey could not be verified. Try again or sign in another way.",
+      "password-disabled": "Password sign-in is turned off for this account. Sign in with a passkey."
     },
     "common": {
       "rate-limited": "Too many attempts. Try again in {minutes} min.",
@@ -68,7 +75,11 @@
       "wrong-institution": "Only Interhouse students can register. This EMIS account belongs to another institution.",
       "emis-already-linked": "This EMIS account already has an IHT account.",
       "user-not-found": "No user with this login was found.",
-      "admin-reset-forbidden": "This account can only be reset by another Administration member. Contact Administration."
+      "admin-reset-forbidden": "This account can only be reset by another Administration member. Contact Administration.",
+      "passkey-not-found": "The passkey was not found.",
+      "last-passkey": "Password sign-in is off, so the last passkey cannot be removed. Reset your password first.",
+      "passkey-required": "Add a passkey before turning password sign-in off.",
+      "totp-state": "The authenticator app is already in this state. Reload the page."
     },
     "emis": {
       "auth-failed": "Wrong EMIS login or password.",
@@ -107,6 +118,7 @@
     "forgotPassword": "Forgot password?",
     "forgotLogin": "Forgot login?",
     "register": "Register with EMIS",
+    "orSignIn": "or sign in",
     "cantGetIn": "Reclaim the account with EMIS",
     "help": "Can't get in?",
     "helpLinks": "Help with login",
@@ -132,6 +144,13 @@
       "description": "Your account is scheduled for deletion on {date}. Restore it to keep your account and continue logging in.",
       "restore": "Restore",
       "decline": "Keep deleted / Sign out"
+    },
+    "passkey": {
+      "submit": "Sign in with a passkey"
+    },
+    "totp": {
+      "title": "Enter the code from the app",
+      "description": "Open your authenticator app and enter the 6-digit code for IHT ID."
     }
   },
   "loginOtp": {
@@ -175,6 +194,7 @@
   },
   "register": {
     "title": "Register with EMIS",
+    "emisLoginNotice": "This looks like an EMIS login — let's create your IHT ID.",
     "description": "Enter your EMIS login and password to import your name and group.",
     "submit": "Continue",
     "haveAccount": "I already have an account",
@@ -350,7 +370,10 @@
       "emisNeedsReauth": "Needs a new password",
       "connectors": "Connectors",
       "appearance": "Appearance",
-      "delete": "Delete account"
+      "delete": "Delete account",
+      "totp": "Authenticator app",
+      "passkeys": "Passkeys",
+      "passkeyCount": "Passkeys: {count}"
     },
     "emisBanner": {
       "title": "EMIS rejected the saved password",
@@ -371,7 +394,8 @@
       "amr": {
         "pwd": "password",
         "otp": "OTP",
-        "tg": "Telegram"
+        "tg": "Telegram",
+        "hwk": "passkey"
       }
     },
     "telegram": {
@@ -490,6 +514,49 @@
       "dialogDescription": "You are logged out everywhere and cannot undo this.",
       "doneTitle": "Account scheduled for deletion",
       "doneDescription": "Your account will be deleted on {date}. Changed your mind? Log in again before then and choose Restore."
+    },
+    "totp": {
+      "title": "Authenticator app",
+      "enabled": "The authenticator app is on. Recovery codes left: {count}.",
+      "enableTitle": "Turn on the authenticator app",
+      "enableDescription": "Use Google Authenticator, Microsoft Authenticator or a similar app for the second login step.",
+      "start": "Set up",
+      "scanTitle": "Scan the QR code",
+      "scanDescription": "Scan it with the app, then enter the 6-digit code the app shows.",
+      "qrLabel": "QR code for the authenticator app",
+      "manual": "Or enter this key manually:",
+      "confirm": "Turn on",
+      "recoveryTitle": "Recovery codes",
+      "recoveryDescription": "Each code works once if you lose your phone. Save them somewhere safe: they are shown only now.",
+      "copyCodes": "Copy codes",
+      "savedCodes": "I saved the codes",
+      "disableTitle": "Turn off the authenticator app",
+      "disableDescription": "Enter a code from the app or a recovery code.",
+      "disable": "Turn off"
+    },
+    "passkeys": {
+      "title": "Passkeys",
+      "empty": "No passkeys yet.",
+      "addTitle": "Add a passkey",
+      "addDescription": "Sign in with your fingerprint, face or device PIN instead of a password.",
+      "unsupported": "This browser does not support passkeys.",
+      "add": "Add a passkey",
+      "rename": "Rename",
+      "remove": "Remove",
+      "name": "Passkey name",
+      "save": "Save",
+      "cancel": "Cancel",
+      "created": "Added {date}",
+      "lastUsed": "last used {date}",
+      "neverUsed": "not used yet",
+      "removeTitle": "Remove the passkey \"{name}\"?",
+      "removeDescription": "You will no longer be able to sign in with it.",
+      "passwordTitle": "Password sign-in",
+      "passwordOn": "You can sign in with your password or a passkey.",
+      "passwordOff": "Password sign-in is off: only passkeys work. Reset your password to turn it back on.",
+      "passwordDisable": "Turn off password sign-in",
+      "passwordDisableTitle": "Sign in with passkeys only?",
+      "passwordDisableDescription": "Your password will stop working for sign-in. To turn it back on, reset the password."
     }
   },
   "appearance": {

@@ -1,12 +1,14 @@
 "use client"
 
-import type { UserMe } from "@ihsp/api"
+import { getIdMeSecurityQuery, type UserMe } from "@ihsp/api"
 import { Badge } from "@ihsp/ui"
 import {
   IconActivity,
   IconBrandTelegram,
   IconDeviceMobileMessage,
   IconDevices,
+  IconFingerprint,
+  IconShieldLock,
   IconKey,
   IconMail,
   IconPalette,
@@ -14,6 +16,7 @@ import {
   IconSchool,
   IconTrash,
 } from "@ihsp/ui"
+import { useQuery } from "@tanstack/react-query"
 import { useTr } from "../../shared/hooks/use-tr"
 import { EmisReauthBanner } from "./emis-reauth-banner"
 import { OnOffBadge } from "./on-off-badge"
@@ -23,6 +26,7 @@ import { SecurityCard } from "./security-card"
 export function SecurityOverview({ user }: { user: UserMe }) {
   const t = useTr()
   const isStudent = user.roles.includes("student")
+  const factors = useQuery(getIdMeSecurityQuery()).data
   return (
     <div className="grid gap-4">
       {user.emis_status === "needs_reauth" ? <EmisReauthBanner /> : null}
@@ -44,6 +48,26 @@ export function SecurityOverview({ user }: { user: UserMe }) {
           icon={IconDeviceMobileMessage}
           title={t("security.cards.otp")}
           status={<OnOffBadge on={user.otp_enabled} onLabel={t("security.on")} offLabel={t("security.off")} />}
+        />
+        <SecurityCard
+          href="/security/totp/"
+          icon={IconShieldLock}
+          title={t("security.cards.totp")}
+          status={
+            factors ? (
+              <OnOffBadge on={factors.totp_enabled} onLabel={t("security.on")} offLabel={t("security.off")} />
+            ) : undefined
+          }
+        />
+        <SecurityCard
+          href="/security/passkeys/"
+          icon={IconFingerprint}
+          title={t("security.cards.passkeys")}
+          status={
+            factors ? (
+              <Badge variant="outline">{t("security.cards.passkeyCount", { count: factors.passkeys.length })}</Badge>
+            ) : undefined
+          }
         />
         <SecurityCard
           href="/security/telegram/"

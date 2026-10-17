@@ -3,6 +3,7 @@
 import { postRegisterEmis, type RegistrationStart } from "@ihsp/api"
 import { useMutation } from "@tanstack/react-query"
 import { useState } from "react"
+import { EMIS_LOGIN_PARAM } from "../../login/utils/emis-login"
 import { TextLink } from "../../shared/components/text-link"
 import { useQueryParam } from "../../shared/hooks/use-query-param"
 import { useTr } from "../../shared/hooks/use-tr"
@@ -26,6 +27,8 @@ type Step =
 export function RegisterPage() {
   const t = useTr()
   const loginChallenge = useQueryParam("login_challenge")
+  // Set when the IHT ID login page sent an all-digit (EMIS-style) login here; the password is never carried over.
+  const emisLogin = useQueryParam(EMIS_LOGIN_PARAM)
   const [step, setStep] = useState<Step>({ kind: "emis" })
   const start = useMutation({
     mutationFn: (values: { emis_login: string; emis_password: string }) => postRegisterEmis(values),
@@ -88,6 +91,8 @@ export function RegisterPage() {
       onSubmit={(values) => start.mutate(values)}
       loginChallenge={loginChallenge}
       withLinkedActions
+      initialLogin={emisLogin ?? ""}
+      notice={emisLogin ? t("register.emisLoginNotice") : undefined}
       footer={
         <TextLink href={loginChallenge ? withChallenge("/login/", "login_challenge", loginChallenge) : "/security/"}>
           {t("register.haveAccount")}

@@ -12,6 +12,7 @@ const AMR_KEYS: Record<string, string> = {
   pwd: "security.sessions.amr.pwd",
   otp: "security.sessions.amr.otp",
   tg: "security.sessions.amr.tg",
+  hwk: "security.sessions.amr.hwk",
 }
 
 /** One session: device, IP, login method, last activity; the current one is marked and cannot be revoked here. */

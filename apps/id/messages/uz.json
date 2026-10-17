@@ -29,7 +29,8 @@
       "code": "6 xonali kodni kiriting.",
       "password": "Parol talablarga mos emas.",
       "mismatch": "Parollar mos kelmaydi.",
-      "confirmRequired": "Davom etish uchun tasdiqlang."
+      "confirmRequired": "Davom etish uchun tasdiqlang.",
+      "recoveryCode": "Zaxira kodini kiriting, masalan k7mqa-2xpab."
     },
     "missingChallenge": {
       "title": "Sahifani ilovadan oching",
@@ -42,7 +43,11 @@
       "sent": "Kodni OTP kanallaringizga yubordik.",
       "needSession": "Kod olish uchun bu yerda tizimga kirgan boʻlishingiz kerak.",
       "openSecurity": "Yangi oynada kirish"
-    }
+    },
+    "appCode": "Ilovadagi kod",
+    "recoveryCode": "Zaxira kodi",
+    "useRecoveryCode": "Zaxira kodini kiritish",
+    "useAppCode": "Ilovadagi kodni kiritish"
   },
   "idErrors": {
     "generic": "Nimadir xato ketdi. Birozdan keyin qayta urinib koʻring.",
@@ -55,7 +60,9 @@
       "otp-invalid": "Kod notoʻgʻri. Qolgan urinishlar: {attempts}.",
       "otp-invalid-plain": "Kod notoʻgʻri yoki muddati oʻtgan.",
       "second-factor-required": "Tasdiqlash kodi kerak.",
-      "challenge-used": "Bu kirish havolasi allaqachon ishlatilgan. Qaytadan boshlanmoqda."
+      "challenge-used": "Bu kirish havolasi allaqachon ishlatilgan. Qaytadan boshlanmoqda.",
+      "passkey-invalid": "Kirish kalitini tekshirib boʻlmadi. Qayta urinib koʻring yoki boshqa usulda kiring.",
+      "password-disabled": "Bu akkaunt uchun parol bilan kirish oʻchirilgan. Kirish kaliti bilan kiring."
     },
     "common": {
       "rate-limited": "Urinishlar juda koʻp. {minutes} daqiqadan keyin qayta urinib koʻring.",
@@ -68,7 +75,11 @@
       "wrong-institution": "Faqat Interhouse talabalari roʻyxatdan oʻta oladi. Bu EMIS hisobi boshqa muassasaga tegishli.",
       "emis-already-linked": "Bu EMIS hisobi uchun IHT hisobi allaqachon mavjud.",
       "user-not-found": "Bunday loginli foydalanuvchi topilmadi.",
-      "admin-reset-forbidden": "Bu hisobni faqat Maʼmuriyatning boshqa aʼzosi tiklay oladi. Maʼmuriyatga murojaat qiling."
+      "admin-reset-forbidden": "Bu hisobni faqat Maʼmuriyatning boshqa aʼzosi tiklay oladi. Maʼmuriyatga murojaat qiling.",
+      "passkey-not-found": "Kirish kaliti topilmadi.",
+      "last-passkey": "Parol bilan kirish oʻchirilgan, shuning uchun oxirgi kirish kalitini oʻchirib boʻlmaydi. Avval parolni tiklang.",
+      "passkey-required": "Parol bilan kirishni oʻchirishdan oldin kirish kalitini qoʻshing.",
+      "totp-state": "Autentifikator ilovasi allaqachon shu holatda. Sahifani yangilang."
     },
     "emis": {
       "auth-failed": "EMIS logini yoki paroli notoʻgʻri.",
@@ -107,6 +118,7 @@
     "forgotPassword": "Parolni unutdingizmi?",
     "forgotLogin": "Loginni unutdingizmi?",
     "register": "EMIS orqali roʻyxatdan oʻtish",
+    "orSignIn": "yoki kiring",
     "cantGetIn": "EMIS orqali hisobni qaytaring",
     "help": "Kira olmayapsizmi?",
     "helpLinks": "Kirish boʻyicha yordam",
@@ -132,6 +144,13 @@
       "description": "Akkauntingiz {date} sanasida oʻchiriladi. Akkauntni saqlab qolish va kirishni davom ettirish uchun uni tiklang.",
       "restore": "Tiklash",
       "decline": "Oʻchirilgan qolsin / Chiqish"
+    },
+    "passkey": {
+      "submit": "Kirish kaliti bilan kirish"
+    },
+    "totp": {
+      "title": "Ilovadagi kodni kiriting",
+      "description": "Autentifikator ilovasini oching va IHT ID uchun 6 xonali kodni kiriting."
     }
   },
   "loginOtp": {
@@ -175,6 +194,7 @@
   },
   "register": {
     "title": "EMIS orqali roʻyxatdan oʻtish",
+    "emisLoginNotice": "Bu EMIS logini koʻrinadi — keling, IHT ID yaratamiz.",
     "description": "Ism va guruhni olish uchun EMIS login va parolini kiriting.",
     "submit": "Davom etish",
     "haveAccount": "Menda hisob bor",
@@ -350,7 +370,10 @@
       "emisNeedsReauth": "Yangi parol kerak",
       "connectors": "Konnektorlar",
       "appearance": "Koʻrinish",
-      "delete": "Hisobni oʻchirish"
+      "delete": "Hisobni oʻchirish",
+      "totp": "Autentifikator ilovasi",
+      "passkeys": "Kirish kalitlari",
+      "passkeyCount": "Kalitlar: {count}"
     },
     "emisBanner": {
       "title": "EMIS saqlangan parolni qabul qilmadi",
@@ -371,7 +394,8 @@
       "amr": {
         "pwd": "parol",
         "otp": "OTP",
-        "tg": "Telegram"
+        "tg": "Telegram",
+        "hwk": "kirish kaliti"
       }
     },
     "telegram": {
@@ -490,6 +514,49 @@
       "dialogDescription": "Hamma qurilmalardan chiqarilasiz. Buni bekor qilib boʻlmaydi.",
       "doneTitle": "Hisob oʻchirishga rejalashtirildi",
       "doneDescription": "Hisobingiz {date} sanasida oʻchiriladi. Fikringiz oʻzgardimi? Shu sanagacha qayta kiring va «Tiklash» ni tanlang."
+    },
+    "totp": {
+      "title": "Autentifikator ilovasi",
+      "enabled": "Autentifikator ilovasi yoqilgan. Qolgan zaxira kodlari: {count}.",
+      "enableTitle": "Autentifikator ilovasini yoqish",
+      "enableDescription": "Kirishning ikkinchi bosqichi uchun Google Authenticator, Microsoft Authenticator yoki shunga oʻxshash ilovadan foydalaning.",
+      "start": "Sozlash",
+      "scanTitle": "QR kodni skanerlang",
+      "scanDescription": "Uni ilovada skanerlang, soʻng ilova koʻrsatgan 6 xonali kodni kiriting.",
+      "qrLabel": "Autentifikator ilovasi uchun QR kod",
+      "manual": "Yoki kalitni qoʻlda kiriting:",
+      "confirm": "Yoqish",
+      "recoveryTitle": "Zaxira kodlari",
+      "recoveryDescription": "Telefoningizni yoʻqotsangiz, har bir kod bir marta ishlaydi. Ularni xavfsiz joyda saqlang: ular faqat hozir koʻrsatiladi.",
+      "copyCodes": "Kodlarni nusxalash",
+      "savedCodes": "Kodlarni saqladim",
+      "disableTitle": "Autentifikator ilovasini oʻchirish",
+      "disableDescription": "Ilovadagi kodni yoki zaxira kodini kiriting.",
+      "disable": "Oʻchirish"
+    },
+    "passkeys": {
+      "title": "Kirish kalitlari",
+      "empty": "Hozircha kirish kalitlari yoʻq.",
+      "addTitle": "Kirish kalitini qoʻshish",
+      "addDescription": "Parol oʻrniga barmoq izi, yuz yoki qurilma PIN kodi bilan kiring.",
+      "unsupported": "Bu brauzer kirish kalitlarini qoʻllab-quvvatlamaydi.",
+      "add": "Kirish kalitini qoʻshish",
+      "rename": "Nomini oʻzgartirish",
+      "remove": "Oʻchirish",
+      "name": "Kalit nomi",
+      "save": "Saqlash",
+      "cancel": "Bekor qilish",
+      "created": "{date} qoʻshilgan",
+      "lastUsed": "oxirgi marta {date}",
+      "neverUsed": "hali ishlatilmagan",
+      "removeTitle": "«{name}» kirish kaliti oʻchirilsinmi?",
+      "removeDescription": "U bilan endi kira olmaysiz.",
+      "passwordTitle": "Parol bilan kirish",
+      "passwordOn": "Parol yoki kirish kaliti bilan kirishingiz mumkin.",
+      "passwordOff": "Parol bilan kirish oʻchirilgan: faqat kirish kalitlari ishlaydi. Qayta yoqish uchun parolni tiklang.",
+      "passwordDisable": "Parol bilan kirishni oʻchirish",
+      "passwordDisableTitle": "Faqat kirish kalitlari bilan kirilsinmi?",
+      "passwordDisableDescription": "Parol kirish uchun ishlamay qoladi. Qayta yoqish uchun parolni tiklang."
     }
   },
   "appearance": {
