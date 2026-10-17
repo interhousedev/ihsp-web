@@ -1,13 +1,13 @@
 "use client"
 
-import { BookEditor } from "@ihsp/features-core"
+import { UploadPage } from "@ihsp/features-core"
 import { LibraryShell } from "../../../features/shell/components/library-shell"
 
-/** Suggest a book: the book editor in "suggest" mode, sent to the librarians' queue. */
+/** Add a material (notes, worksheets, photos): the upload wizard (teachers and students). */
 export default function Page() {
   return (
     <LibraryShell access="auth">
-      <BookEditor id={null} mode="suggest" />
+      <UploadPage />
     </LibraryShell>
   )
 }

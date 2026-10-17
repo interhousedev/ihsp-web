@@ -1,13 +1,13 @@
 "use client"
 
-import { UploadPage } from "@ihsp/features-core"
+import { UploadBookPage } from "@ihsp/features-core"
 import { LibraryShell } from "../../features/shell/components/library-shell"
 
-/** Add a material: the upload wizard (teachers and students). */
+/** Add a book: the book editor; librarians create the book, everyone else sends it as a suggestion. */
 export default function Page() {
   return (
     <LibraryShell access="auth">
-      <UploadPage />
+      <UploadBookPage />
     </LibraryShell>
   )
 }
