@@ -93,6 +93,7 @@ describe("Docker build inputs", () => {
     const snippets = [
       "security-headers",
       "security-headers-library",
+      "security-headers-lms",
       "proxy-backend",
       "proxy-hydra",
       "proxy-identity",
@@ -208,6 +209,11 @@ describe("nginx.conf", () => {
   it("leaves rate limiting to the backend", () => {
     expect(read("nginx.conf")).not.toMatch(/^\s*limit_req_zone/m)
   })
+
+  it("redirects stay relative: no absolute redirect built from the internal port 8080", () => {
+    expect(read("nginx.conf")).toMatch(/^\s*absolute_redirect off;$/m)
+    expect(read("nginx.conf")).toMatch(/^\s*port_in_redirect off;$/m)
+  })
 })
 
 describe("templates", () => {
@@ -263,7 +269,7 @@ describe("templates", () => {
   })
 
   it("security headers: no X-Frame-Options next to frame-ancestors", () => {
-    for (const snippet of ["security-headers.conf", "security-headers-library.conf"]) {
+    for (const snippet of ["security-headers.conf", "security-headers-library.conf", "security-headers-lms.conf"]) {
       expect(read("snippets", snippet)).not.toMatch(/^add_header X-Frame-Options/m)
     }
   })
@@ -294,6 +300,35 @@ describe("templates", () => {
     for (const [name, directive] of others) {
       if (!changed.includes(name)) expect({ name, directive: ownDirectives.get(name) }).toEqual({ name, directive })
     }
+  })
+
+  it("security headers of the LMS: the shared ones plus video embeds and external video files", () => {
+    const csp = cspHeader(read("snippets", "security-headers-lms.conf"))
+    expect(csp).not.toContain("script-src")
+    expect(csp).not.toContain("default-src")
+    expect(csp).toContain(
+      "frame-src 'self' https://www.youtube-nocookie.com https://www.youtube.com https://player.vimeo.com;",
+    )
+    expect(csp).toContain("media-src 'self' blob: ${IHSP_STORAGE_ORIGIN} https:;")
+    const others = new Map(
+      cspDirectives(cspHeader(read("snippets", "security-headers.conf"))).map((d) => [d.split(" ")[0]!, d]),
+    )
+    const own = new Map(cspDirectives(csp).map((d) => [d.split(" ")[0]!, d]))
+    expect([...own.keys()].filter((name) => !others.has(name))).toEqual([])
+    for (const [name, directive] of others) {
+      if (!["frame-src", "media-src"].includes(name))
+        expect({ name, directive: own.get(name) }).toEqual({ name, directive })
+    }
+    expect(plain(read("snippets", "security-headers-lms.conf"))).toEqual(
+      plain(read("snippets", "security-headers.conf")),
+    )
+  })
+
+  it("lms.conf uses the LMS headers and proxies H5P package files to the backend", () => {
+    const lms = read("sites", "lms.conf")
+    expect(lms).not.toContain("security-headers.conf;")
+    expect(lms).toMatch(/location \^~ \/v1\/lms\/h5p\/ \{\s*include [^;]*proxy-backend\.conf;/)
+    expect(lms).toContain("location /h5p-player/ {")
   })
 
   it("the library snippet sends the same plain security headers as the shared one", () => {
@@ -380,6 +415,10 @@ describe("library.conf (library host)", () => {
   it("serves every page as a file or a directory index and answers 404 with the 404 page", () => {
     expect(block("/")).toContain("try_files $uri $uri/ =404;")
     expect(library).toContain("error_page 404 /404.html;")
+  })
+
+  it("redirects the removed /upload/suggest/ to /upload/, keeping the query", () => {
+    expect(block("~ ^/upload/suggest/?$")).toContain("return 301 /upload/$is_args$args;")
   })
 
   it("includes the security headers in every location that sets Cache-Control", () => {
