@@ -6,7 +6,7 @@ export type LimitItem = {
   group: string
   /** Translation key of the label; the web falls back to `key` for a limit it has no text for. */
   label_key: string
-  /** tokens, count, steps, hours or bytes. */
+  /** tokens, count, steps, hours, bytes or switch (TODO(contract): a 0/1 on-off limit). */
   unit: string
   /** session, day, week, minute or hour; null for a standing limit. */
   period: string | null

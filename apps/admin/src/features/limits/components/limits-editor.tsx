@@ -138,6 +138,14 @@ function LimitsForm({ limits: initial }: { limits: LimitItem[] }) {
                     ) : null}
                   </div>
                   <div className="flex items-center gap-2">
+                    {item.unit === "switch" ? (
+                      <CheckField
+                        checked={switchOf(draft, item)}
+                        label={t("editor.on")}
+                        className="min-h-0"
+                        onChange={(on) => setDraft({ ...draft, [item.key]: on ? "1" : "0" })}
+                      />
+                    ) : null}
                     {item.unlimitable ? (
                       <CheckField
                         checked={unlimitedOf(draft, item)}
@@ -148,6 +156,7 @@ function LimitsForm({ limits: initial }: { limits: LimitItem[] }) {
                     ) : null}
                     <Input
                       id={`limit-${item.key}`}
+                      hidden={item.unit === "switch"}
                       inputMode="numeric"
                       className="w-32 text-end tabular-nums"
                       value={unlimitedOf(draft, item) ? "∞" : (draft[item.key] ?? "")}
@@ -192,8 +201,14 @@ function unlimitedOf(draft: Record<string, string>, item: LimitItem): boolean {
   return item.unlimitable && draft[item.key] === String(UNLIMITED)
 }
 
+/** The state of a 0/1 switch limit: the draft, else the value in force. */
+function switchOf(draft: Record<string, string>, item: LimitItem): boolean {
+  const text = draft[item.key] ?? ""
+  return (text === "" ? String(item.value ?? item.default ?? 0) : text) === "1"
+}
+
 function unitText(t: Translate, item: LimitItem): string {
-  const unit = item.unit && item.unit !== "count" ? t(`editor.unit.${item.unit}`) : ""
+  const unit = item.unit && item.unit !== "count" && item.unit !== "switch" ? t(`editor.unit.${item.unit}`) : ""
   const period = item.period ? t(`editor.period.${item.period}`) : ""
   return [unit, period].filter(Boolean).join(" ")
 }

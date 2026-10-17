@@ -1457,6 +1457,7 @@
       "default": "Standart: {value}",
       "changed": "Oʻzgartirilgan",
       "reset": "Standartga qaytarish",
+      "on": "Yoqilgan",
       "unlimited": "Cheklanmagan",
       "save": "Oʻzgarishlarni saqlash",
       "saved": "Limitlar saqlandi",
@@ -1533,6 +1534,10 @@
         "label": "Javobdagi vosita qadamlari",
         "hint": "Bitta yordamchi javobida modelga eng koʻp murojaatlar (vosita aylanmalari)."
       },
+      "ai_ask_before_web_search": {
+        "label": "Internetda qidirishdan oldin soʻrash",
+        "hint": "Maktab maʼlumotlarida hech narsa topilmasa, oʻquvchi yordamchisi internetda qidirishdan oldin ruxsat soʻraydi; oʻchirilgan boʻlsa, darhol qidiradi."
+      },
       "ai_chat_history_limit": {
         "label": "Modelga yuboriladigan chat tarixi",
         "hint": "Har bir savol bilan modelga chatning nechta oxirgi xabari yuboriladi; eskilarini model vosita orqali oʻqiydi."
@@ -1580,6 +1585,14 @@
       "nb_search_per_minute": {
         "label": "Manbalarda qidiruv daqiqada",
         "hint": "Bloknot manbalarida daqiqada toʻliq matn qidiruvlari."
+      },
+      "nb_web_materials_per_day": {
+        "label": "Kuniga veb-materiallar",
+        "hint": "Oʻquvchining veb-manbalari bir kunda bloknotlarga yigʻa oladigan fayllar; -1 cheklovsiz degani."
+      },
+      "nb_media_described_per_day": {
+        "label": "Kuniga media",
+        "hint": "Oʻquvchi uchun bir kunda tavsiflangan rasmlar va matnga oʻgirilgan yozuvlar; -1 cheklovsiz degani."
       },
       "web_search_per_day_student": {
         "label": "Internet qidiruvi kuniga",

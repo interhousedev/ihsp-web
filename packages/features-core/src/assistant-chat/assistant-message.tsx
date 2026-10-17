@@ -41,7 +41,8 @@ export function AssistantMessage({
   onRegenerate,
 }: AssistantMessageProps) {
   const t = useT("assistant.message")
-  const calls: ToolCall[] = message.tool_calls.filter((call) => !hiddenCallIds.has(call.id))
+  const calls: ToolCall[] = visibleCalls(message, hiddenCallIds)
+  const text = answerText(message)
   const renderText = useWebRenderText(message.web)
 
   return (
@@ -61,12 +62,12 @@ export function AssistantMessage({
           ))}
         </div>
       ) : null}
-      {message.text ? (
+      {text ? (
         <>
           <Markdown renderText={renderText} className="w-full text-base leading-7 md:text-[0.95rem]">
-            {message.text}
+            {text}
           </Markdown>
-          <WebSourcesRow web={message.web} text={message.text} />
+          <WebSourcesRow web={message.web} text={text} />
           <MessageActions
             chat={chat}
             message={message}
@@ -81,4 +82,24 @@ export function AssistantMessage({
       ) : null}
     </article>
   )
+}
+
+/**
+ * The calls shown above the answer. When the answer has steps, read calls are already rows of the collapsed
+ * "N steps" line, so only cards (approvals, documents) remain; older answers without steps keep their notes.
+ */
+export function visibleCalls(message: ChatMessageView, hidden: ReadonlySet<string>): ToolCall[] {
+  const stepped = (message.steps ?? []).length > 0
+  return message.tool_calls.filter(
+    (call) => !hidden.has(call.id) && !(stepped && call.access === "read" && !call.document),
+  )
+}
+
+/**
+ * The answer text, or "" while a write waits for approval: the text of that round is a progress note
+ * ("First I'll check…"), shown among the steps, never as the answer.
+ */
+export function answerText(message: ChatMessageView): string {
+  if (message.tool_calls.some((call) => call.status === "pending_approval")) return ""
+  return message.text
 }

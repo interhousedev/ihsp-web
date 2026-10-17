@@ -38,6 +38,8 @@ const LIMIT_FIELDS = [
   "nb_chat_per_minute",
   "nb_source_adds_per_hour",
   "nb_search_per_minute",
+  "nb_web_materials_per_day",
+  "nb_media_described_per_day",
   "web_search_per_day_student",
   "web_search_max_results",
   "web_search_discover_results",

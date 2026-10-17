@@ -1,6 +1,6 @@
 import { describe, expect, it, mock } from "bun:test"
 import type { ChatMessageView } from "@ihsp/api"
-import { chatHomework, messageAssistantWeb, webResults } from "@ihsp/test-utils"
+import { chatHomework, messageAssistantWeb, toolCallLookup, toolCallPending, webResults } from "@ihsp/test-utils"
 import { screen, waitFor, within } from "@testing-library/react"
 import { allowSlowRenders, renderNotebook } from "../notebooks/test-support"
 import { AssistantMessage } from "./assistant-message"
@@ -104,5 +104,24 @@ describe("AI-STEPS AssistantMessage: steps", () => {
     expect(toggle).toHaveAttribute("aria-expanded", "false")
     const text = screen.getByText(/Plants turn light into sugar/)
     expect(toggle.compareDocumentPosition(text) & Node.DOCUMENT_POSITION_FOLLOWING).toBeTruthy()
+  })
+})
+
+describe("AssistantMessage: steps and progress notes", () => {
+  const step = { id: "s1", kind: "tool", label: "get_timetable", status: "done", duration_ms: 10 } as const
+
+  it("shows read tools only as the collapsed steps row, not as a list of notes", () => {
+    renderMessage({ ...messageAssistantWeb, tool_calls: [toolCallLookup], steps: [step] })
+
+    expect(screen.getByRole("button", { name: "Show the steps of this answer" })).toHaveTextContent("1 step")
+    expect(screen.queryByText("Looked up your timetable")).not.toBeInTheDocument()
+  })
+
+  it("never shows the note of a round that waits for approval as the answer", () => {
+    const note = "I'll save the set in Russian. First I'll check…"
+    renderMessage({ ...messageAssistantWeb, web: [], text: note, tool_calls: [toolCallPending] })
+
+    expect(screen.queryByText(note)).not.toBeInTheDocument()
+    expect(screen.getByText("Create flash card set")).toBeInTheDocument()
   })
 })

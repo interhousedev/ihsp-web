@@ -1457,6 +1457,7 @@
       "default": "Default: {value}",
       "changed": "Changed",
       "reset": "Reset",
+      "on": "On",
       "unlimited": "Unlimited",
       "save": "Save changes",
       "saved": "Limits saved",
@@ -1533,6 +1534,10 @@
         "label": "Tool steps per answer",
         "hint": "Most model requests (tool rounds) in one assistant answer."
       },
+      "ai_ask_before_web_search": {
+        "label": "Ask before searching the internet",
+        "hint": "When the school data has nothing, the student assistant asks the student before it searches the internet; off: it searches at once."
+      },
       "ai_chat_history_limit": {
         "label": "Chat history sent to the model",
         "hint": "How many latest messages of a chat go to the model with each question; the model can read older ones with a tool."
@@ -1580,6 +1585,14 @@
       "nb_search_per_minute": {
         "label": "Source searches per minute",
         "hint": "Full-text searches in notebook sources each minute."
+      },
+      "nb_web_materials_per_day": {
+        "label": "Web materials per day",
+        "hint": "Files a student's web sources may gather into notebooks each day; -1 means no cap."
+      },
+      "nb_media_described_per_day": {
+        "label": "Media reads per day",
+        "hint": "Images described and recordings transcribed for a student each day; -1 means no cap."
       },
       "web_search_per_day_student": {
         "label": "Web searches per day",
