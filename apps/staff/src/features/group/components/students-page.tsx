@@ -1,6 +1,13 @@
 "use client"
 
-import { getStaffGroupQuery, getStaffGroupStudentsQuery, type CuratorStudent, type GroupItem } from "@ihsp/api"
+import { GroupProgressSection } from "@ihsp/features-core"
+import {
+  getGroupProgressQuery,
+  getStaffGroupQuery,
+  getStaffGroupStudentsQuery,
+  type CuratorStudent,
+  type GroupItem,
+} from "@ihsp/api"
 import { useT } from "@ihsp/i18n"
 import { PageContainer } from "@ihsp/ui"
 import { useQuery } from "@tanstack/react-query"
@@ -58,6 +65,7 @@ function StudentsOfGroup({ group }: { group: GroupItem }) {
           )
         }}
       </QueryState>
+      <GroupProgressSection queryFor={(semester) => getGroupProgressQuery(group.id, semester)} />
       <StudentDrawer student={open} onClose={() => setOpen(null)} />
     </>
   )

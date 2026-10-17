@@ -32,6 +32,7 @@ export function useNav(): { groups: NavGroup[] } {
             { title: t("timetable"), url: "/timetable/", icon: "timetable" },
             { title: t("lessons"), url: "/lessons/", icon: "calendarEvent" },
             { title: t("exams"), url: "/exams/", icon: "forms" },
+            { title: t("certificateTypes"), url: "/certificate-types/", icon: "settings" },
           ],
         },
         {
@@ -39,6 +40,7 @@ export function useNav(): { groups: NavGroup[] } {
           items: [
             { title: t("attendance"), url: "/attendance/", icon: "attendance" },
             { title: t("reports"), url: "/reports/", icon: "reports" },
+            { title: t("certificates"), url: "/certificates/", icon: "grades" },
             { title: t("monitoring"), url: "/monitoring/", icon: "monitoring" },
           ],
         },

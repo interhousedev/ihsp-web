@@ -1,14 +1,17 @@
 "use client"
 
 import { keys, patchAdminUser, type AdminUser } from "@ihsp/api"
-import { useT } from "@ihsp/i18n"
+import { useErrorMessage, useT } from "@ihsp/i18n"
 import { Button, Dialog, DialogContent, DialogFooter, DialogHeader, DialogTitle, Input } from "@ihsp/ui"
 import { useEffect, useState } from "react"
 import { LabeledField } from "../../shared/components/labeled-field"
 import { useAdminMutation } from "../../shared/hooks/use-admin-mutation"
 import { TOUCH } from "../../shared/utils/touch"
 
-/** Edit the display name and email of any user. Only the changed fields are sent; a taken email answers 409. */
+/**
+ * Edit the names, login and email of any user. Only the changed fields are sent.
+ * A taken login or email (409) keeps the dialog open with the message inline.
+ */
 export function EditUserDialog({
   user,
   open,
@@ -22,22 +25,29 @@ export function EditUserDialog({
   const [lastName, setLastName] = useState(user.last_name)
   const [firstName, setFirstName] = useState(user.first_name)
   const [middleName, setMiddleName] = useState(user.middle_name ?? "")
+  const [login, setLogin] = useState(user.login ?? "")
   const [email, setEmail] = useState(user.recovery_email ?? "")
+  const errorMessage = useErrorMessage()
 
   useEffect(() => {
     if (!open) return
     setLastName(user.last_name)
     setFirstName(user.first_name)
     setMiddleName(user.middle_name ?? "")
+    setLogin(user.login ?? "")
     setEmail(user.recovery_email ?? "")
   }, [open, user])
 
   const save = useAdminMutation({
+    inlineError: true,
     mutationFn: () =>
       patchAdminUser(user.id, {
         ...(lastName.trim() !== user.last_name ? { last_name: lastName.trim() } : {}),
         ...(firstName.trim() !== user.first_name ? { first_name: firstName.trim() } : {}),
         ...(middleName.trim() !== (user.middle_name ?? "") ? { middle_name: middleName.trim() } : {}),
+        ...(login.trim().toLowerCase() !== (user.login ?? "") && login.trim() !== ""
+          ? { login: login.trim().toLowerCase() }
+          : {}),
         ...(email.trim() !== (user.recovery_email ?? "") && email.trim() !== "" ? { email: email.trim() } : {}),
       }),
     invalidate: [keys.admin.users.all(), keys.admin.teachers.all(), keys.admin.students.all()],
@@ -45,7 +55,7 @@ export function EditUserDialog({
     onSuccess: () => onOpenChange(false),
   })
 
-  const valid = lastName.trim() !== "" && firstName.trim() !== ""
+  const valid = lastName.trim() !== "" && firstName.trim() !== "" && login.trim() !== ""
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent>
@@ -83,6 +93,17 @@ export function EditUserDialog({
               onChange={(event) => setMiddleName(event.target.value)}
             />
           </LabeledField>
+          <LabeledField label={t("login")} htmlFor="edit-user-login" required>
+            <Input
+              id="edit-user-login"
+              value={login}
+              autoComplete="off"
+              spellCheck={false}
+              className={TOUCH}
+              aria-invalid={save.error ? true : undefined}
+              onChange={(event) => setLogin(event.target.value)}
+            />
+          </LabeledField>
           <LabeledField label={t("email")} htmlFor="edit-user-email">
             <Input
               id="edit-user-email"
@@ -92,6 +113,11 @@ export function EditUserDialog({
               onChange={(event) => setEmail(event.target.value)}
             />
           </LabeledField>
+          {save.isError ? (
+            <p role="alert" className="text-destructive text-sm">
+              {errorMessage(save.error)}
+            </p>
+          ) : null}
           <DialogFooter>
             <Button type="button" variant="outline" className={TOUCH} onClick={() => onOpenChange(false)}>
               {t("cancel")}

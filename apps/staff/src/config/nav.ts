@@ -32,6 +32,7 @@ export function useNav(): { groups: NavGroup[]; bottom: BottomNavItem[] } {
           { title: t("students"), url: "/group/", icon: "students", match: "exact" },
           { title: t("subgroups"), url: "/group/subgroups/", icon: "groups" },
           { title: t("groupAttendance"), url: "/group/attendance/", icon: "attendance" },
+          { title: t("certificates"), url: "/certificates/", icon: "grades" },
         ],
       })
     }

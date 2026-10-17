@@ -21,7 +21,8 @@
     "studentSearch": "Поиск студента",
     "notebooks": "Блокноты",
     "mail": "Почта",
-    "subjects": "Предметы"
+    "subjects": "Предметы",
+    "certificates": "Сертификаты"
   },
   "audience": {
     "subgroup": "{group} · подгруппа {number}"

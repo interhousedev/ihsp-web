@@ -6,6 +6,7 @@ import { PageContainer } from "@ihsp/ui"
 import { LinkButton } from "../../shared/components/link-button"
 import { QueryState } from "../../shared/components/query-state"
 import { useAccount, useProfile } from "../hooks/use-profile"
+import { CertificatesSection } from "./certificates-section"
 import { AccountCard } from "./account-card"
 import { EmisCard } from "./emis-card"
 import { StorageCard } from "./storage-card"
@@ -16,18 +17,21 @@ export function ProfileSections() {
   const profile = useProfile()
   const account = useAccount()
   return (
-    <QueryState query={profile} rows={4}>
-      {(data) => (
-        <div className="grid grid-cols-1 gap-4 lg:grid-cols-2">
-          <AccountCard profile={data} account={account.data} />
-          <div className="flex flex-col gap-4">
-            <EmisCard profile={data} />
-            <TelegramCard accounts={account.data?.telegram ?? []} />
-            <StorageCard />
+    <div className="flex flex-col gap-6">
+      <QueryState query={profile} rows={4}>
+        {(data) => (
+          <div className="grid grid-cols-1 gap-4 lg:grid-cols-2">
+            <AccountCard profile={data} account={account.data} />
+            <div className="flex flex-col gap-4">
+              <EmisCard profile={data} />
+              <TelegramCard accounts={account.data?.telegram ?? []} />
+              <StorageCard />
+            </div>
           </div>
-        </div>
-      )}
-    </QueryState>
+        )}
+      </QueryState>
+      <CertificatesSection />
+    </div>
   )
 }
 

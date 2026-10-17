@@ -29,7 +29,9 @@
     "assistant": "Yordamchi",
     "reports": "Hisobotlar",
     "settings": "Sozlamalar",
-    "limits": "Limitlar va xarajatlar"
+    "limits": "Limitlar va xarajatlar",
+    "certificateTypes": "Sertifikat turlari",
+    "certificates": "Sertifikatlar"
   },
   "shared": {
     "filters": "Filtrlar",
@@ -448,6 +450,7 @@
     },
     "edit": {
       "title": "Foydalanuvchini tahrirlash",
+      "login": "Login",
       "lastName": "Familiya",
       "firstName": "Ism",
       "middleName": "Otasining ismi",

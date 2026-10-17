@@ -29,7 +29,9 @@
     "assistant": "Assistant",
     "reports": "Reports",
     "settings": "Settings",
-    "limits": "Limits & usage"
+    "limits": "Limits & usage",
+    "certificateTypes": "Certificate types",
+    "certificates": "Certificates"
   },
   "shared": {
     "filters": "Filters",
@@ -448,6 +450,7 @@
     },
     "edit": {
       "title": "Edit user",
+      "login": "Login",
       "lastName": "Last name",
       "firstName": "First name",
       "middleName": "Middle name",

@@ -21,7 +21,8 @@
     "studentSearch": "Find a student",
     "notebooks": "Notebooks",
     "mail": "Email",
-    "subjects": "Subjects"
+    "subjects": "Subjects",
+    "certificates": "Certificates"
   },
   "audience": {
     "subgroup": "{group} · subgroup {number}"

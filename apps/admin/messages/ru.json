@@ -29,7 +29,9 @@
     "assistant": "Ассистент",
     "reports": "Отчёты",
     "settings": "Настройки",
-    "limits": "Лимиты и расходы"
+    "limits": "Лимиты и расходы",
+    "certificateTypes": "Типы сертификатов",
+    "certificates": "Сертификаты"
   },
   "shared": {
     "filters": "Фильтры",
@@ -448,6 +450,7 @@
     },
     "edit": {
       "title": "Изменить пользователя",
+      "login": "Логин",
       "lastName": "Фамилия",
       "firstName": "Имя",
       "middleName": "Отчество",

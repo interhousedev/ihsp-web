@@ -4,6 +4,7 @@ import { useT } from "@ihsp/i18n"
 import type { BottomNavItem, NavGroup } from "@ihsp/ui"
 import { IconNotebook, IconUserCircle } from "@ihsp/ui"
 import { useMemo } from "react"
+import { useIsHeadStudent } from "@/features/exams/hooks/use-exams"
 
 /**
  * Sidebar groups and the phone bottom bar (WEB-2): Home, Academics, Study tools (pages by the study-tools task),
@@ -13,6 +14,7 @@ import { useMemo } from "react"
  */
 export function useNav(): { groups: NavGroup[]; bottom: BottomNavItem[] } {
   const t = useT("nav")
+  const isHead = useIsHeadStudent()
   return useMemo(() => {
     const dashboard = { title: t("dashboard"), url: "/", icon: "dashboard", match: "exact" } as const
     const today = { title: t("today"), url: "/today/", icon: "today" } as const
@@ -31,6 +33,7 @@ export function useNav(): { groups: NavGroup[]; bottom: BottomNavItem[] } {
             homework,
             { title: t("exams"), url: "/exams/", icon: "calendarEvent" },
             { title: t("teachers"), url: "/teachers/", icon: IconUserCircle },
+            ...(isHead ? [{ title: t("myGroup"), url: "/my-group/", icon: "groups" as const }] : []),
           ],
         },
         {
@@ -57,5 +60,5 @@ export function useNav(): { groups: NavGroup[]; bottom: BottomNavItem[] } {
       ],
       bottom: [dashboard, timetable, grades, homework],
     }
-  }, [t])
+  }, [t, isHead])
 }

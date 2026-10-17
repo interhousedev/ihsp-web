@@ -21,7 +21,8 @@
     "studentSearch": "Talaba qidirish",
     "notebooks": "Bloknotlar",
     "mail": "Pochta",
-    "subjects": "Fanlar"
+    "subjects": "Fanlar",
+    "certificates": "Sertifikatlar"
   },
   "audience": {
     "subgroup": "{group} · {number}-kichik guruh"
