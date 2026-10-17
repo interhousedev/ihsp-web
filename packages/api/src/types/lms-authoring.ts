@@ -1,6 +1,7 @@
 // LMS — authoring, drafts, versions, staff (backend § API contract → "LMS (B12 authoring, B13 learning)" rows of B12, and Schemas).
 
 import type { PersonRef } from "./common"
+import type { H5PBlock, InteractiveVideoBlock } from "./lms-interactive"
 import type { CourseStaffItem, OutlineSection } from "./lms-learning"
 
 export type TestConfig = {
@@ -65,6 +66,8 @@ export type Block =
   | { id: string; type: "video"; source: "link" | "upload"; url: string; file_id: string | null; caption: string }
   | { id: string; type: "test"; config: TestConfig; questions: Question[] }
   | { id: string; type: "flashcards"; cards: { id: string; front: string; back: string }[] }
+  | H5PBlock
+  | InteractiveVideoBlock
 
 export type StepContent = { title: string; blocks: Block[] }
 

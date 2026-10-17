@@ -137,7 +137,7 @@ describe("UploadEditPage: items that cannot be edited", () => {
     expect(screen.getByRole("note")).toHaveTextContent("Answers to current homework are not allowed.")
     expect(screen.getByRole("link", { name: "Start a new upload" })).toHaveAttribute(
       "href",
-      expect.stringMatching(/^\/upload\/?$/),
+      expect.stringMatching(/^\/upload\/material\/?$/),
     )
     expect(screen.queryByRole("button", { name: "Next" })).not.toBeInTheDocument()
   })

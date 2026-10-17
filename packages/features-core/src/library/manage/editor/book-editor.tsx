@@ -15,14 +15,16 @@ import { BookMetadataFields } from "./book-metadata-fields"
 import { BookSubjectsTopics } from "./book-subjects-topics"
 import { PublishChecklist } from "./publish-checklist"
 import { SuggestBookEditor } from "./suggest-book-editor"
+import { SuggestionReviewPanel } from "./suggestion-review-panel"
 import { VisibilityPanel } from "./visibility-panel"
 import { useBookEditor } from "./use-book-editor"
 
 /**
  * The book editor (§ 3.4, § 9.2): file and cover, metadata, subjects and topics with page ranges, visibility,
  * visibility and download, the publish checklist, and Save, Publish, Unpublish and Take down. `id === null` is a new
- * book (`initialTitle` prefills the title, for a draft started from a suggestion). `mode="suggest"` is the same editor
- * for students: details, subjects and topics, then a link and a note, sent to the librarians' queue.
+ * book (`initialTitle` prefills the title; `fromSuggestion` prefills the whole form from a pending suggestion and
+ * shows Approve and Decline). `mode="suggest"` is the same editor for students (`/upload/`): file and cover, details,
+ * subjects and topics, then a link and a note, sent to the librarians' queue as a suggestion.
  */
 export function BookEditor({
   id,
@@ -75,6 +77,7 @@ function ManageBookEditor({
   const state = draft?.item.status ?? null
   const busy = editor.save.isPending || editor.act.isPending
   const published = state === "published" || state === "held"
+  const reviewing = editor.suggestion?.status === "new"
 
   return (
     <PageContainer
@@ -108,6 +111,18 @@ function ManageBookEditor({
           if (!busy && !editor.blocked && (editor.dirty || id === null)) editor.save.mutate()
         }}
       >
+        {editor.suggestion ? (
+          <SuggestionReviewPanel
+            suggestion={editor.suggestion}
+            blocked={editor.blocked}
+            approving={editor.save.isPending}
+            declining={editor.decline.isPending}
+            declineError={editor.decline.error ?? (reviewing ? editor.save.error : null)}
+            onApprove={() => editor.save.mutate()}
+            onDecline={(reason) => editor.decline.mutate(reason)}
+          />
+        ) : null}
+
         {state ? (
           <p className="flex items-center gap-2 text-sm">
             <span className="text-muted-foreground">{t("statusLabel")}:</span>
@@ -153,18 +168,20 @@ function ManageBookEditor({
 
         <PublishChecklist items={editor.checklist} stale={editor.dirty && id !== null} />
 
-        <BookActions
-          status={state}
-          isNew={id === null}
-          dirty={editor.dirty}
-          blocked={editor.blocked}
-          saving={editor.save.isPending}
-          acting={editor.act.isPending}
-          saveError={editor.save.error}
-          problem={editor.problem}
-          onSave={() => editor.save.mutate()}
-          onAction={(action, reason) => editor.act.mutate({ action, reason })}
-        />
+        {reviewing ? null : (
+          <BookActions
+            status={state}
+            isNew={id === null}
+            dirty={editor.dirty}
+            blocked={editor.blocked}
+            saving={editor.save.isPending}
+            acting={editor.act.isPending}
+            saveError={editor.save.error}
+            problem={editor.problem}
+            onSave={() => editor.save.mutate()}
+            onAction={(action, reason) => editor.act.mutate({ action, reason })}
+          />
+        )}
       </form>
     </PageContainer>
   )

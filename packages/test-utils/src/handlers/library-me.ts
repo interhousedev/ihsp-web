@@ -362,8 +362,29 @@ export const libraryMeHandlers = [
       note: body.note ?? null,
       book: body.book ?? null,
       createdAt: stamp(),
+      fileId: body.file_id ?? null,
+      status: "new",
     })
     return new HttpResponse(null, { status: 201 })
+  }),
+
+  // TODO(contract): GET /v1/me/library/suggestions.
+  http.get(apiUrl("/v1/me/library/suggestions"), ({ request }) => {
+    const actor = signedIn(request)
+    if (actor instanceof Response) return actor
+    const items = state.suggestions
+      .filter((s) => s.userId === actor.id)
+      .toSorted((a, b) => b.createdAt.localeCompare(a.createdAt))
+      .map((s) => ({
+        id: s.id,
+        title: s.title,
+        status: s.status ?? "new",
+        created_at: s.createdAt,
+        decided_at: s.decidedAt ?? null,
+        reason: s.reason ?? null,
+        item_id: s.itemId ?? null,
+      }))
+    return HttpResponse.json({ items })
   }),
 
   /** Two `exam_leak` (or `copyright`, `personal_data`, `inappropriate`) reports from different users hold a published item; one from staff holds it at once. */

@@ -18,7 +18,7 @@ describe("MyLibraryPage: tabs", () => {
 
     expect(await screen.findByRole("heading", { level: 1, name: "My library" })).toBeInTheDocument()
     const tabs = screen.getAllByRole("tab").map((tab) => tab.textContent)
-    expect(tabs).toEqual(["Continue", "Shelf", "Notes", "Lists", "My uploads"])
+    expect(tabs).toEqual(["Continue", "Shelf", "Notes", "Lists", "My uploads", "My suggestions"])
     expect(screen.getByRole("tab", { name: "Continue" })).toHaveAttribute("aria-selected", "true")
   })
 

@@ -10,7 +10,7 @@ allowSlowRenders()
 function renderSuggest() {
   setLibraryActor("student")
   return renderLibrary(<BookEditor id={null} mode="suggest" />, {
-    route: "/upload/suggest/",
+    route: "/upload/",
     session: { user: { ...userMe, roles: ["student"] } },
   })
 }

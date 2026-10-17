@@ -160,7 +160,8 @@
       "shelf": "Shelf",
       "notes": "Notes",
       "lists": "Lists",
-      "uploads": "My uploads"
+      "uploads": "My uploads",
+      "suggestions": "My suggestions"
     },
     "continue": {
       "empty": "No book started yet.",

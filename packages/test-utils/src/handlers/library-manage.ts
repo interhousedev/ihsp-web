@@ -135,25 +135,27 @@ function queueRows(actor: LibraryActor, tab: QueueTab): ManageQueueRow[] {
       .toSorted((a, b) => a.addedAt.localeCompare(b.addedAt))
       .map((s) => rowOf(actor, s, "rights"))
   }
-  return state.suggestions.map((s) =>
-    makeQueueRow(
-      makeItemDetail({
-        id: null,
-        slug: null,
-        kind: "book",
-        type: "other",
-        title: s.title,
-        author_label: "",
-        status: "pending_review",
-        has_text: false,
-      }),
-      "suggestion",
-      {
-        submitted_at: s.createdAt,
-        suggestion: { id: s.id, title: s.title, url: s.url, note: s.note, user_name: s.userName },
-      },
-    ),
-  )
+  return state.suggestions
+    .filter((s) => (s.status ?? "new") === "new")
+    .map((s) =>
+      makeQueueRow(
+        makeItemDetail({
+          id: null,
+          slug: null,
+          kind: "book",
+          type: "other",
+          title: s.title,
+          author_label: "",
+          status: "pending_review",
+          has_text: false,
+        }),
+        "suggestion",
+        {
+          submitted_at: s.createdAt,
+          suggestion: { id: s.id, title: s.title, url: s.url, note: s.note, user_name: s.userName },
+        },
+      ),
+    )
 }
 
 // - - - Moderation - - -

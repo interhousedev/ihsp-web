@@ -13,7 +13,7 @@ import {
   buttonVariants,
 } from "@ihsp/ui"
 import Link from "next/link"
-import { myHref, uploadHref } from "../utils/hrefs"
+import { myHref, uploadMaterialHref } from "../utils/hrefs"
 import { UploadReviewNote } from "./upload-review-note"
 
 /**
@@ -35,7 +35,7 @@ export function NotEditablePanel({ item }: { item: ItemDetail }) {
           <EmptyDescription>{t("text", { title: item.title, status: status(item.status) })}</EmptyDescription>
         </EmptyHeader>
         <EmptyContent className="flex-row flex-wrap justify-center gap-2">
-          <Link href={uploadHref()} className={buttonVariants({ className: "min-h-11 md:min-h-8" })}>
+          <Link href={uploadMaterialHref()} className={buttonVariants({ className: "min-h-11 md:min-h-8" })}>
             {t("newUpload")}
           </Link>
           <Link

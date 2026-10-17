@@ -20,6 +20,9 @@ export function BookFileSection({
   disabled,
   onFile,
   onCover,
+  bookPurpose = "library_book",
+  coverPurpose = "library_cover",
+  bookExtensions = [".pdf", ".epub"],
 }: {
   form: BookForm
   files: readonly ItemFile[]
@@ -30,6 +33,10 @@ export function BookFileSection({
   disabled: boolean
   onFile: (file: FileItem) => void
   onCover: (file: FileItem) => void
+  /** Students upload with `library_material` (books and covers are librarians' purposes). */
+  bookPurpose?: "library_book" | "library_material"
+  coverPurpose?: "library_cover" | "library_material"
+  bookExtensions?: string[]
 }) {
   const t = useT("library.manage.editor")
   const status = useT("library.manage.textStatus")
@@ -67,8 +74,8 @@ export function BookFileSection({
           </p>
         ) : null}
         <UploadZone
-          purpose="library_book"
-          extensions={[".pdf", ".epub"]}
+          purpose={bookPurpose}
+          extensions={bookExtensions}
           label={t("file")}
           hint={files.length > 0 ? t("fileReplaceHint") : t("fileHint")}
           chooseLabel={files.length > 0 ? t("fileReplace") : t("fileChoose")}
@@ -91,7 +98,7 @@ export function BookFileSection({
           </p>
         ) : null}
         <UploadZone
-          purpose="library_cover"
+          purpose={coverPurpose}
           extensions={[".jpg", ".jpeg", ".png", ".webp"]}
           label={t("cover")}
           hint={t("coverHint")}

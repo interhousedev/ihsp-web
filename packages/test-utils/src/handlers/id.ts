@@ -47,7 +47,8 @@ const HYDRA_REDIRECT = "http://localhost:4444/oauth2/auth?login_verifier=test"
 
 /**
  * Magic values of the login endpoints (everything else succeeds):
- * login `second.factor` returns the second factor step, `locked.user` is `auth/locked`, `no.role` is `auth/role-missing`;
+ * login `second.factor` returns the second factor step, `totp.user` the authenticator app step,
+ * `passkey.only` is `auth/password-disabled`, `locked.user` is `auth/locked`, `no.role` is `auth/role-missing`;
  * `pending.deletion` is scheduled for deletion (the restore step); password `wrong-password` is `auth/unauthorized`.
  */
 function loginOutcome(login: string | undefined, password: string | undefined): Response {
@@ -59,6 +60,15 @@ function loginOutcome(login: string | undefined, password: string | undefined): 
     return problem(401, "auth/unauthorized", "Invalid login or password")
   }
   if (login === "second.factor") return HttpResponse.json(loginResultSecondFactor)
+  if (login === "totp.user") {
+    return HttpResponse.json({
+      redirect_to: null,
+      second_factor: { method: "totp", ticket: "totp-ticket", channels: [] },
+    })
+  }
+  if (login === "passkey.only") {
+    return problem(401, "auth/password-disabled", "Password sign-in is turned off")
+  }
   if (login === "must.change") return HttpResponse.json(loginResultPasswordChange)
   if (login === "pending.deletion") return HttpResponse.json(loginResultRestore)
   return HttpResponse.json(loginResultRedirect)

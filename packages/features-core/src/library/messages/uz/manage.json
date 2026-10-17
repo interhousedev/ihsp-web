@@ -376,6 +376,24 @@
         "open_license": "Ochiq litsenziya",
         "public_domain": "Umumiy mulk",
         "permission": "Huquq egasining ruxsati bilan"
+      },
+      "suggestion": {
+        "title": "Oʻquvchi taklif qilgan",
+        "intro": "Shaklni tekshiring va tuzating, soʻng tasdiqlang: kitob oʻquvchining fayli bilan yaratiladi va oʻquvchiga xabar beriladi. Huquqlar qayd etilgach, uni kitob sahifasida eʼlon qiling.",
+        "file": "Fayl",
+        "link": "Havola",
+        "note": "Izoh",
+        "approve": "Tasdiqlash va kitobni yaratish",
+        "decline": "Rad etish",
+        "declineTitle": "Taklifni rad etish",
+        "declineDescription": "Oʻquvchi sababni koʻradi. Uning fayllari 30 kundan soʻng oʻchiriladi.",
+        "approved": "Taklif tasdiqlandi. Kitob yaratildi.",
+        "declined": "Taklif rad etildi. Oʻquvchiga xabar berildi.",
+        "status": {
+          "new": "Kutilmoqda",
+          "accepted": "Tasdiqlangan",
+          "declined": "Rad etilgan"
+        }
       }
     },
     "title": "Kutubxonachi boʻlimi",

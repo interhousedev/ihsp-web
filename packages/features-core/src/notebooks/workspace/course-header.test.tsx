@@ -67,4 +67,19 @@ describe("ChatPane of a course workspace", () => {
     ).toBeInTheDocument()
     expect(screen.queryByRole("group", { name: "Chat mode" })).not.toBeInTheDocument()
   })
+
+  it("never shows the author assistant to a learner's own course notebook", async () => {
+    renderNotebook(
+      <ChatPane
+        notebook={{ ...courseWorkspaceDetail, origin: "course_student", can_write: true }}
+        pendingAsk={null}
+        onAskHandled={() => undefined}
+      />,
+      { actions: { notebookId: courseIds.workspace } },
+    )
+
+    expect(await screen.findByRole("textbox", { name: "Message" })).toBeInTheDocument()
+    expect(screen.queryByRole("group", { name: "Chat mode" })).not.toBeInTheDocument()
+    expect(screen.queryByRole("button", { name: "Author assistant" })).not.toBeInTheDocument()
+  })
 })

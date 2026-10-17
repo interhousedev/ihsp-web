@@ -38,8 +38,14 @@ export type AdminTeachersParams = PageParams & { query?: string; status?: UserSt
 export type BlockUserBody = { reason: string }
 export type UserRolesBody = { grant: Role[]; revoke: Role[] }
 export type ResetPasswordResponse = { activation_url: string }
-/** `PATCH /v1/admin/users/{id}`: omitted keeps; a blank middle name clears it. */
-export type UserPatchBody = { last_name?: string; first_name?: string; middle_name?: string; email?: string }
+/** `PATCH /v1/admin/users/{id}`: omitted keeps; a blank middle name clears it. TODO(contract): `login` is hand-written until openapi is regenerated. */
+export type UserPatchBody = {
+  last_name?: string
+  first_name?: string
+  middle_name?: string
+  login?: string
+  email?: string
+}
 /** `POST /v1/admin/users/{id}/set-password`. */
 export type SetPasswordBody = { password: string; require_change?: boolean }
 export type MailSuspendBody = { reason: string }

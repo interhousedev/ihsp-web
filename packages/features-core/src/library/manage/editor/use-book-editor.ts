@@ -9,6 +9,8 @@ import {
   postManageBook,
   postManageBookAction,
   postManageBookFile,
+  postManageSuggestionApprove,
+  postManageSuggestionDecline,
   type BookAction,
   type FileItem,
   type ItemFile,
@@ -18,7 +20,7 @@ import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query"
 import { useRouter } from "next/navigation"
 import { useEffect, useMemo, useRef, useState } from "react"
 import { toast } from "sonner"
-import { manageBookEditHref } from "../../utils/hrefs"
+import { manageBookEditHref, manageQueueHref } from "../../utils/hrefs"
 import { emptyForm, formFromInput, formFromSuggestion, inputFromForm, sameForm, type BookForm } from "./book-form"
 import { localChecklist, validateForm, type ChecklistItem } from "./book-form-checks"
 import { useLeaveGuard } from "./use-leave-guard"
@@ -113,6 +115,10 @@ export function useBookEditor(id: string | null, initialTitle: string, fromSugge
         return id
       }
       const created = await postManageBook(input)
+      // A book saved from a pending suggestion approves it: the server attaches the suggester's file.
+      if (created.id && fromSuggestion && suggestion.data?.status === "new") {
+        await postManageSuggestionApprove(fromSuggestion, { item_id: created.id })
+      }
       if (created.id && pendingFile) {
         await postManageBookFile(created.id, { file_id: pendingFile.id, format: pendingFile.format, is_primary: true })
       }
@@ -122,7 +128,7 @@ export function useBookEditor(id: string | null, initialTitle: string, fromSugge
       setBaseline(form)
       setPendingFile(null)
       setProblem(null)
-      toast.success(t("saved"))
+      toast.success(fromSuggestion && !id ? t("suggestion.approved") : t("saved"))
       await invalidate()
       if (!id && savedId) router.replace(manageBookEditHref(savedId))
     },
@@ -142,6 +148,16 @@ export function useBookEditor(id: string | null, initialTitle: string, fromSugge
     if (id) attach.mutate(pending)
     else setPendingFile(pending)
   }
+
+  const decline = useMutation({
+    mutationFn: (reason: string) => postManageSuggestionDecline(fromSuggestion!, { reason }),
+    onSuccess: async () => {
+      setBaseline(form)
+      toast.success(t("suggestion.declined"))
+      await invalidate()
+      router.push(manageQueueHref("suggestions"))
+    },
+  })
 
   const act = useMutation({
     mutationFn: ({ action, reason }: { action: BookAction; reason?: string }) =>
@@ -182,5 +198,8 @@ export function useBookEditor(id: string | null, initialTitle: string, fromSugge
     addFile,
     act,
     problem,
+    /** The pending suggestion this new book starts from (`?suggestion=`), and its Decline. */
+    suggestion: id === null ? (suggestion.data ?? null) : null,
+    decline,
   }
 }

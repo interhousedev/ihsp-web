@@ -376,6 +376,24 @@
         "open_license": "Open licence",
         "public_domain": "Public domain",
         "permission": "With the rights holder’s permission"
+      },
+      "suggestion": {
+        "title": "Suggested by a student",
+        "intro": "Check and correct the form, then approve: the book is created with the student's file and the student is told. Publish it from the book page when the rights are recorded.",
+        "file": "File",
+        "link": "Link",
+        "note": "Note",
+        "approve": "Approve and create the book",
+        "decline": "Decline",
+        "declineTitle": "Decline the suggestion",
+        "declineDescription": "The student sees the reason. Their files are deleted after 30 days.",
+        "approved": "Suggestion approved. The book is created.",
+        "declined": "Suggestion declined. The student is told.",
+        "status": {
+          "new": "Waiting",
+          "accepted": "Approved",
+          "declined": "Declined"
+        }
       }
     },
     "title": "Librarian area",

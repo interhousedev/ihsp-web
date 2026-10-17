@@ -7,7 +7,7 @@ import { useInfiniteQuery, useMutation, useQueryClient } from "@tanstack/react-q
 import Link from "next/link"
 import { useState } from "react"
 import { toast } from "sonner"
-import { uploadHref } from "../utils/hrefs"
+import { uploadMaterialHref } from "../utils/hrefs"
 import { UploadRowCard } from "./upload-row-card"
 
 /** The filter: every status of an upload, in the order of its life. */
@@ -81,7 +81,7 @@ export function MyUploads() {
             </Button>
           ))}
         </div>
-        <Link href={uploadHref()} className={buttonVariants({ className: "min-h-11 md:min-h-8" })}>
+        <Link href={uploadMaterialHref()} className={buttonVariants({ className: "min-h-11 md:min-h-8" })}>
           <Icons.add aria-hidden />
           {t("add")}
         </Link>
@@ -105,7 +105,7 @@ export function MyUploads() {
                 {t("showAll")}
               </Button>
             ) : (
-              <Link href={uploadHref()} className={buttonVariants({ className: "min-h-11" })}>
+              <Link href={uploadMaterialHref()} className={buttonVariants({ className: "min-h-11" })}>
                 {t("add")}
               </Link>
             )

@@ -1,7 +1,8 @@
 import { afterEach, describe, expect, it, mock, spyOn } from "bun:test"
-import { libDetails, libIds, setLibraryActor, testRouter, userMe } from "@ihsp/test-utils"
+import { apiUrl, libDetails, libIds, libQueue, server, setLibraryActor, testRouter, userMe } from "@ihsp/test-utils"
 import { fireEvent, screen, waitFor, within } from "@testing-library/react"
 import axe from "axe-core"
+import { HttpResponse, http } from "msw"
 import { allowSlowRenders, renderLibrary } from "../../test-support"
 import { BookEditorPage } from "./book-editor-page"
 
@@ -189,5 +190,48 @@ describe("BookEditor: accessibility", () => {
     const results = await axe.run(container, { rules: { "color-contrast": { enabled: false } } })
 
     expect(results.violations.map((v) => `${v.id}: ${v.nodes.map((n) => n.target.join(" ")).join(", ")}`)).toEqual([])
+  })
+})
+
+describe("BookEditor: a new book from a student's suggestion", () => {
+  const suggestionId = libQueue.suggestions[0]?.suggestion?.id ?? ""
+
+  it("approves by creating the book, then links it to the suggestion", async () => {
+    const approved: unknown[] = []
+    server.use(
+      http.post(apiUrl("/v1/manage/library/suggestions/:id/approve"), async ({ request }) => {
+        approved.push(await request.clone().json())
+        return new HttpResponse(null, { status: 204 })
+      }),
+    )
+    const { user } = renderEditor(`?suggestion=${suggestionId}&title=Optics`)
+    const approve = await screen.findByRole("button", { name: "Approve and create the book" })
+    expect(screen.queryByRole("button", { name: "Create book" })).not.toBeInTheDocument()
+
+    await user.type(screen.getByLabelText(/^Authors/), "I. Newton{Enter}")
+    await user.click(approve)
+
+    await waitFor(() => expect(approved).toHaveLength(1))
+    expect(approved[0]).toMatchObject({ item_id: expect.any(String) })
+    await waitFor(() => expect(testRouter.replace).toHaveBeenCalled())
+  })
+
+  it("declines with a reason the student sees", async () => {
+    const declined: unknown[] = []
+    server.use(
+      http.post(apiUrl("/v1/manage/library/suggestions/:id/decline"), async ({ request }) => {
+        declined.push(await request.clone().json())
+        return new HttpResponse(null, { status: 204 })
+      }),
+    )
+    const { user } = renderEditor(`?suggestion=${suggestionId}`)
+    await user.click(await screen.findByRole("button", { name: "Decline" }))
+
+    const dialog = await screen.findByRole("dialog", { name: "Decline the suggestion" })
+    await user.type(within(dialog).getByLabelText("Reason"), "We already have it")
+    await user.click(within(dialog).getByRole("button", { name: "Decline" }))
+
+    await waitFor(() => expect(declined).toEqual([{ reason: "We already have it" }]))
+    await waitFor(() => expect(testRouter.push).toHaveBeenCalled())
   })
 })

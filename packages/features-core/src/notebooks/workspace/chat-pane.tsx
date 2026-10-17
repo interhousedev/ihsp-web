@@ -25,7 +25,7 @@ export function ChatPane({ notebook, pendingAsk, onAskHandled, covered = false, 
       hidden={covered}
       className="flex min-h-0 min-w-0 flex-1 flex-col print:hidden"
     >
-      {notebook.course_id != null && notebook.can_write ? (
+      {notebook.origin === "course" && notebook.course_id != null && notebook.can_write ? (
         <CourseChatPanes
           notebook={notebook}
           courseId={notebook.course_id}

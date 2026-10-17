@@ -2,6 +2,7 @@
 
 import type { PersonRef, ReviewRating } from "./common"
 import type { StudyNext } from "./flashcards"
+import type { LearningH5PBlock, LearningInteractiveVideoBlock } from "./lms-interactive"
 
 export type CourseCard = {
   id: string
@@ -13,6 +14,10 @@ export type CourseCard = {
   progress_pct: number | null
   visibility: "public" | "invite"
   updated_at: string | null
+  // TODO(contract): published with the settings routes; optional until the OpenAPI types carry them.
+  summary?: string | null
+  accent_color?: string | null
+  cover_file_id?: string | null
 }
 
 export type CourseStaffItem = {
@@ -108,6 +113,8 @@ export type StepView = {
         due: number
         passed: boolean
       }
+    | LearningH5PBlock
+    | LearningInteractiveVideoBlock
   )[]
   completed: boolean
   preview: boolean

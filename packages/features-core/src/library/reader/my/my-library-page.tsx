@@ -2,7 +2,7 @@
 
 import { useT } from "@ihsp/i18n"
 import { PageContainer, Tabs, TabsContent, TabsList, TabsTrigger } from "@ihsp/ui"
-import { MyUploads } from "../../upload"
+import { MySuggestions, MyUploads } from "../../upload"
 import { ContinueTab } from "./continue-tab"
 import { ListsTab } from "./lists-tab"
 import { NotesTab } from "./notes-tab"
@@ -11,7 +11,8 @@ import { MY_TABS, useMyTab } from "./use-my-tab"
 
 /**
  * `/my/?tab=`: the student's own space: Continue (the last six books), Shelf,
- * Notes (all highlights and notes, with export), Lists (reading lists of my groups) and Uploads. The tab is in the
+ * Notes (all highlights and notes, with export), Lists (reading lists of my groups), Uploads and
+ * Suggestions (books sent from `/upload/` and their status). The tab is in the
  * address. There is no Offline tab: saving for offline is not part of this app yet.
  */
 export function MyLibraryPage() {
@@ -48,6 +49,9 @@ export function MyLibraryPage() {
         </TabsContent>
         <TabsContent value="uploads" className="pt-2">
           <MyUploads />
+        </TabsContent>
+        <TabsContent value="suggestions" className="pt-2">
+          <MySuggestions />
         </TabsContent>
       </Tabs>
     </PageContainer>

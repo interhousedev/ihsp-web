@@ -29,8 +29,8 @@ describe("book form tags", () => {
 })
 
 describe("suggestions", () => {
-  it("sends the form as a suggested book without files, rights or visibility", () => {
-    const form = { ...emptyForm("Otkan kunlar"), authors: ["Abdulla Qodiriy"], tags: ["novel"] }
+  it("sends the form as a suggested book with its cover but without rights or visibility", () => {
+    const form = { ...emptyForm("Otkan kunlar"), authors: ["Abdulla Qodiriy"], tags: ["novel"], coverFileId: "c1" }
     const book = suggestedFromForm(form)
 
     expect(book).toMatchObject({
@@ -40,7 +40,7 @@ describe("suggestions", () => {
       type: "textbook",
     })
     expect(book).not.toHaveProperty("visibility")
-    expect(book).not.toHaveProperty("cover_file_id")
+    expect(book.cover_file_id).toBe("c1")
   })
 
   it("starts the librarian's form from a student's suggested book", () => {

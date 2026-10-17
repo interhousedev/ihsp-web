@@ -2,6 +2,7 @@ import { adminAiHandlers } from "./admin-ai"
 import { aiHandlers } from "./ai"
 import { assessmentsHandlers } from "./assessments"
 import { broadcastsHandlers } from "./broadcasts"
+import { certificatesHandlers } from "./certificates"
 import { classworkHandlers } from "./classwork"
 import { compositionHandlers } from "./composition"
 import { curriculumHandlers } from "./curriculum"
@@ -12,10 +13,14 @@ import { filesHandlers } from "./files"
 import { flashcardsHandlers } from "./flashcards"
 import { idHandlers } from "./id"
 import { idAdminHandlers } from "./id-admin"
+import { idFactorsHandlers } from "./id-factors"
 import { libraryHandlers } from "./library"
 import { linksHandlers } from "./links"
 import { lmsAuthoringHandlers } from "./lms-authoring"
 import { lmsLearningHandlers } from "./lms-learning"
+import { lmsImsccHandlers } from "./lms-imscc"
+import { lmsInteractiveHandlers } from "./lms-interactive"
+import { lmsSettingsHandlers } from "./lms-settings"
 import { marksHandlers } from "./marks"
 import { notebooksHandlers } from "./notebooks"
 import { notificationsHandlers } from "./notifications"
@@ -27,6 +32,7 @@ import { scheduleHandlers } from "./schedule"
 import { presentationPlansHandlers } from "./presentation-plans"
 import { staffSubjectsHandlers } from "./staff-subjects"
 import { subjectMaterialsHandlers } from "./subject-materials"
+import { groupProgressHandlers } from "./group-progress"
 import { teachersHandlers } from "./teachers"
 import { webSearchHandlers } from "./web-search"
 
@@ -34,6 +40,7 @@ export { errorHandlers } from "./errors"
 export { applyOutlineOps } from "./lms-authoring"
 export { resetAssessments } from "./assessments"
 export { resetMeSyncState } from "./me-sync"
+export { certificatesImported, resetCertificatesState, setCertificatesStaffForbidden } from "./certificates"
 export { resetAdminJobs } from "./admin-jobs"
 export { resetAdminAiState } from "./admin-ai"
 export { aiTurnStream } from "./ai"
@@ -47,6 +54,16 @@ export {
   type CourseApplyMode,
 } from "./notebooks"
 export { userForRequest } from "./id"
+export { resetImsccImports } from "./lms-imscc"
+export { h5pPackageFixture } from "./lms-interactive"
+export { courseLandingFixture, courseSettingsFixture, resetLmsSettings } from "./lms-settings"
+export {
+  currentFactors,
+  resetFactorsState,
+  setFactorsState,
+  TOTP_TEST_RECOVERY_CODES,
+  TOTP_TEST_SECRET,
+} from "./id-factors"
 export {
   getLibraryActor,
   getUniLibrary,
@@ -68,6 +85,7 @@ export {
   aiHandlers,
   assessmentsHandlers,
   broadcastsHandlers,
+  certificatesHandlers,
   classworkHandlers,
   compositionHandlers,
   curriculumHandlers,
@@ -77,11 +95,15 @@ export {
   filesHandlers,
   flashcardsHandlers,
   idAdminHandlers,
+  idFactorsHandlers,
   idHandlers,
   libraryHandlers,
   linksHandlers,
   lmsAuthoringHandlers,
   lmsLearningHandlers,
+  lmsImsccHandlers,
+  lmsInteractiveHandlers,
+  lmsSettingsHandlers,
   marksHandlers,
   notebooksHandlers,
   notificationsHandlers,
@@ -94,6 +116,7 @@ export {
   presentationPlansHandlers,
   subjectMaterialsHandlers,
   teachersHandlers,
+  groupProgressHandlers,
   webSearchHandlers,
 }
 
@@ -105,6 +128,7 @@ export const allHandlers = [
   ...compositionHandlers,
   ...oauthHandlers,
   ...idHandlers,
+  ...idFactorsHandlers,
   ...idAdminHandlers,
   ...registrationHandlers,
   ...scheduleHandlers,
@@ -112,6 +136,7 @@ export const allHandlers = [
   ...meSyncHandlers,
   ...adminJobsHandlers,
   ...teachersHandlers,
+  ...groupProgressHandlers,
   ...classworkHandlers,
   ...marksHandlers,
   ...assessmentsHandlers,
@@ -121,12 +146,16 @@ export const allHandlers = [
   ...notificationsHandlers,
   ...pushHandlers,
   ...broadcastsHandlers,
+  ...certificatesHandlers,
   ...webSearchHandlers,
   ...adminAiHandlers,
   ...aiHandlers,
   ...flashcardsHandlers,
   ...dashboardHandlers,
   ...notebooksHandlers,
+  ...lmsImsccHandlers,
+  ...lmsInteractiveHandlers,
+  ...lmsSettingsHandlers,
   ...lmsLearningHandlers,
   ...lmsAuthoringHandlers,
   ...libraryHandlers,
@@ -134,3 +163,4 @@ export const allHandlers = [
   ...staffSubjectsHandlers,
   ...presentationPlansHandlers,
 ]
+export { notHeadStudentResponse } from "./group-progress"

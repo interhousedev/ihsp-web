@@ -62,6 +62,9 @@ import type {
   ShelfParams,
   ShelfState,
   SuggestionBody,
+  ApproveSuggestionBody,
+  DeclineSuggestionBody,
+  MySuggestions,
   SuggestionDetail,
   SubjectInput,
   SubjectPatch,
@@ -394,6 +397,16 @@ export const getMyUploadsQuery = (params?: UploadsParams) =>
     queryFn: ({ signal }) => getMyUploads(params, { signal }),
   })
 
+/** GET /v1/me/library/suggestions — the signed-in person's suggestions, newest first. */
+export function getMySuggestions(opts?: RequestOptions): Promise<MySuggestions> {
+  return api.get<MySuggestions>("/v1/me/library/suggestions", opts)
+}
+export const getMySuggestionsQuery = () =>
+  queryOptions({
+    queryKey: keys.library.mySuggestions(),
+    queryFn: ({ signal }) => getMySuggestions({ signal }),
+  })
+
 /** POST /v1/library/suggestions — `201`; lands in the librarian queue. */
 export function postSuggestion(body: SuggestionBody, opts?: RequestOptions): Promise<NoContent> {
   return api.post<NoContent>("/v1/library/suggestions", body, opts)
@@ -529,6 +542,24 @@ export const getManageSuggestionQuery = (id: string) =>
     queryKey: keys.library.manage.suggestion(id),
     queryFn: ({ signal }) => getManageSuggestion(id, { signal }),
   })
+
+/** POST /v1/manage/library/suggestions/{id}/approve — `204`; links the saved book, hands over the file, notifies. */
+export function postManageSuggestionApprove(
+  id: string,
+  body: ApproveSuggestionBody,
+  opts?: RequestOptions,
+): Promise<NoContent> {
+  return api.post<NoContent>(`/v1/manage/library/suggestions/${seg(id)}/approve`, body, opts)
+}
+
+/** POST /v1/manage/library/suggestions/{id}/decline — `204`; the reason is shown to the suggester. */
+export function postManageSuggestionDecline(
+  id: string,
+  body: DeclineSuggestionBody,
+  opts?: RequestOptions,
+): Promise<NoContent> {
+  return api.post<NoContent>(`/v1/manage/library/suggestions/${seg(id)}/decline`, body, opts)
+}
 
 /** GET /v1/manage/library/collections. */
 export function getManageCollections(opts?: RequestOptions): Promise<ManageCollection[]> {

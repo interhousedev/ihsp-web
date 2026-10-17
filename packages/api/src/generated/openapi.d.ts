@@ -24,6 +24,26 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/internal/emis/{user_id}/certificates": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get Certificates
+         * @description Return the CEFR and national certificates of the student's EMIS profile.
+         */
+        get: operations["get_certificates_internal_emis__user_id__certificates_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/internal/emis/{user_id}/class-hours": {
         parameters: {
             query?: never;
@@ -1753,7 +1773,7 @@ export interface paths {
         head?: never;
         /**
          * Patch User
-         * @description Edit the display name and the email of any user.
+         * @description Edit the names, the login and the email of any user.
          */
         patch: operations["patch_user_v1_admin_users__id__patch"];
         trace?: never;
@@ -2202,6 +2222,298 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/v1/certificates/admin/types": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Create Type
+         * @description Create a custom certificate type.
+         */
+        post: operations["create_type_v1_certificates_admin_types_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/certificates/admin/types/{type_id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post?: never;
+        /**
+         * Delete Type
+         * @description Delete a custom type nobody uses.
+         */
+        delete: operations["delete_type_v1_certificates_admin_types__type_id__delete"];
+        options?: never;
+        head?: never;
+        /**
+         * Update Type
+         * @description Change the sent fields of a type.
+         */
+        patch: operations["update_type_v1_certificates_admin_types__type_id__patch"];
+        trace?: never;
+    };
+    "/v1/certificates/files/{file_id}/download": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Download File
+         * @description Redirect to a short-lived download URL of an attached file.
+         */
+        get: operations["download_file_v1_certificates_files__file_id__download_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/certificates/me": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * List My Entries
+         * @description Return the caller's certificates.
+         */
+        get: operations["list_my_entries_v1_certificates_me_get"];
+        put?: never;
+        /**
+         * Create Entry
+         * @description Record a certificate.
+         */
+        post: operations["create_entry_v1_certificates_me_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/certificates/me/import-emis": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Import Emis
+         * @description Import the caller's CEFR and national certificates from EMIS.
+         */
+        post: operations["import_emis_v1_certificates_me_import_emis_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/certificates/me/{entry_id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post?: never;
+        /**
+         * Delete Entry
+         * @description Delete the caller's certificate with its files.
+         */
+        delete: operations["delete_entry_v1_certificates_me__entry_id__delete"];
+        options?: never;
+        head?: never;
+        /**
+         * Update Entry
+         * @description Change the sent fields of the caller's certificate.
+         */
+        patch: operations["update_entry_v1_certificates_me__entry_id__patch"];
+        trace?: never;
+    };
+    "/v1/certificates/me/{entry_id}/files": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Add Entry File
+         * @description Attach an uploaded file (.png .jpg .jpeg .pdf .docx) to the caller's entry.
+         */
+        post: operations["add_entry_file_v1_certificates_me__entry_id__files_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/certificates/me/{entry_id}/files/{file_id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post?: never;
+        /**
+         * Remove Entry File
+         * @description Delete one file of the caller's entry.
+         */
+        delete: operations["remove_entry_file_v1_certificates_me__entry_id__files__file_id__delete"];
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/certificates/staff/entries": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * List Staff Entries
+         * @description Return a page of certificates of the students the caller may see.
+         */
+        get: operations["list_staff_entries_v1_certificates_staff_entries_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/certificates/staff/export": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Export Entries
+         * @description Stream the chosen certificate files as a ZIP archive.
+         */
+        post: operations["export_entries_v1_certificates_staff_export_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/certificates/staff/groups": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * List Staff Groups
+         * @description Return the groups the caller may filter by.
+         */
+        get: operations["list_staff_groups_v1_certificates_staff_groups_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/certificates/staff/ranking": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get Staff Ranking
+         * @description Return students ranked by their number of certificates.
+         */
+        get: operations["get_staff_ranking_v1_certificates_staff_ranking_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/certificates/staff/stats": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get Staff Stats
+         * @description Return counts by type, level and group.
+         */
+        get: operations["get_staff_stats_v1_certificates_staff_stats_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/certificates/types": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * List Types
+         * @description Return every certificate type.
+         */
+        get: operations["list_types_v1_certificates_types_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/v1/files": {
         parameters: {
             query?: never;
@@ -2442,6 +2754,46 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/v1/id/login/passkey": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Post Login Passkey
+         * @description Verify the passkey and accept the login.
+         */
+        post: operations["post_login_passkey_v1_id_login_passkey_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/id/login/passkey/options": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Post Login Passkey Options
+         * @description Options for navigator.credentials.get (also for conditional UI).
+         */
+        post: operations["post_login_passkey_options_v1_id_login_passkey_options_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/v1/id/login/password": {
         parameters: {
             query?: never;
@@ -2516,6 +2868,26 @@ export interface paths {
          * @description Redeem the one-time ticket on this login challenge (remembered device).
          */
         post: operations["post_login_ticket_v1_id_login_ticket_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/id/login/totp": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Post Login Totp
+         * @description The authenticator code (or a recovery code) after the password.
+         */
+        post: operations["post_login_totp_v1_id_login_totp_post"];
         delete?: never;
         options?: never;
         head?: never;
@@ -2770,6 +3142,70 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/v1/id/me/passkeys": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Post Passkey
+         * @description Store a new passkey.
+         */
+        post: operations["post_passkey_v1_id_me_passkeys_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/id/me/passkeys/options": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Post Passkey Options
+         * @description Options for navigator.credentials.create.
+         */
+        post: operations["post_passkey_options_v1_id_me_passkeys_options_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/id/me/passkeys/{id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post?: never;
+        /**
+         * Delete Passkey
+         * @description Remove a passkey (not the last one while password sign-in is off).
+         */
+        delete: operations["delete_passkey_v1_id_me_passkeys__id__delete"];
+        options?: never;
+        head?: never;
+        /**
+         * Patch Passkey
+         * @description Rename a passkey.
+         */
+        patch: operations["patch_passkey_v1_id_me_passkeys__id__patch"];
+        trace?: never;
+    };
     "/v1/id/me/password": {
         parameters: {
             query?: never;
@@ -2784,6 +3220,26 @@ export interface paths {
          * @description Verify the current password, apply the policy, log out other devices.
          */
         post: operations["post_password_v1_id_me_password_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/id/me/password-login/disable": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Post Password Login Disable
+         * @description Sign in with passkeys only; a password reset turns passwords back on.
+         */
+        post: operations["post_password_login_disable_v1_id_me_password_login_disable_post"];
         delete?: never;
         options?: never;
         head?: never;
@@ -2808,6 +3264,26 @@ export interface paths {
          * @description Merge the sent fields (an explicit null clears a nullable setting).
          */
         patch: operations["patch_preferences_v1_id_me_preferences_patch"];
+        trace?: never;
+    };
+    "/v1/id/me/security": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get Security
+         * @description TOTP state, password sign-in switch and passkeys.
+         */
+        get: operations["get_security_v1_id_me_security_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
         trace?: never;
     };
     "/v1/id/me/sessions": {
@@ -2932,6 +3408,66 @@ export interface paths {
          * @description Switch OTP delivery for one account.
          */
         patch: operations["patch_telegram_v1_id_me_telegram__telegram_user_id__patch"];
+        trace?: never;
+    };
+    "/v1/id/me/totp/confirm": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Post Totp Confirm
+         * @description Turn the app on with its first code; return the recovery codes.
+         */
+        post: operations["post_totp_confirm_v1_id_me_totp_confirm_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/id/me/totp/disable": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Post Totp Disable
+         * @description Turn the app off with a fresh code or a recovery code.
+         */
+        post: operations["post_totp_disable_v1_id_me_totp_disable_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/id/me/totp/setup": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Post Totp Setup
+         * @description A new secret for the authenticator app (valid 10 minutes).
+         */
+        post: operations["post_totp_setup_v1_id_me_totp_setup_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
         trace?: never;
     };
     "/v1/id/reclaim/complete": {
@@ -4002,6 +4538,26 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/v1/lms/courses/import": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Start Cartridge Import
+         * @description Upload an .imscc (at most 200 MB); the import runs in the background.
+         */
+        post: operations["start_cartridge_import_v1_lms_courses_import_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/v1/lms/courses/{course_id}/compare": {
         parameters: {
             query?: never;
@@ -4016,6 +4572,26 @@ export interface paths {
         get: operations["compare_versions_v1_lms_courses__course_id__compare_get"];
         put?: never;
         post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/lms/courses/{course_id}/copy": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Copy Course
+         * @description Copy the course draft as "<title> (copy)" owned by the caller (editors).
+         */
+        post: operations["copy_course_v1_lms_courses__course_id__copy_post"];
         delete?: never;
         options?: never;
         head?: never;
@@ -4122,6 +4698,46 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/v1/lms/courses/{course_id}/export.imscc": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Export Cartridge
+         * @description Download the course draft as a Common Cartridge 1.3 (editors).
+         */
+        get: operations["export_cartridge_v1_lms_courses__course_id__export_imscc_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/lms/courses/{course_id}/h5p": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Upload H5P
+         * @description Upload a `.h5p` package (zip, up to 100 MB); needs `edit` on the course.
+         */
+        post: operations["upload_h5p_v1_lms_courses__course_id__h5p_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/v1/lms/courses/{course_id}/invite-code": {
         parameters: {
             query?: never;
@@ -4136,6 +4752,30 @@ export interface paths {
          * @description Replace the invite code; old invite links stop working.
          */
         post: operations["rotate_invite_code_v1_lms_courses__course_id__invite_code_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/lms/courses/{course_id}/link-check": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get Link Report
+         * @description Return the last link report (`idle` when none).
+         */
+        get: operations["get_link_report_v1_lms_courses__course_id__link_check_get"];
+        put?: never;
+        /**
+         * Start Link Check
+         * @description Queue a check of the links in the step drafts.
+         */
+        post: operations["start_link_check_v1_lms_courses__course_id__link_check_post"];
         delete?: never;
         options?: never;
         head?: never;
@@ -4174,6 +4814,26 @@ export interface paths {
          * @description Render the draft of a step without correct answers (needs `view_drafts`).
          */
         get: operations["preview_step_v1_lms_courses__course_id__preview_steps__step_id__get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/lms/courses/{course_id}/preview/steps/{step_id}/blocks/{block_id}/h5p": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Preview H5P
+         * @description Return the signed base URL of a draft's H5P package (`view_drafts`).
+         */
+        get: operations["preview_h5p_v1_lms_courses__course_id__preview_steps__step_id__blocks__block_id__h5p_get"];
         put?: never;
         post?: never;
         delete?: never;
@@ -4229,7 +4889,11 @@ export interface paths {
             path?: never;
             cookie?: never;
         };
-        get?: never;
+        /**
+         * Get Settings
+         * @description Return every setting, the join code and the course counts.
+         */
+        get: operations["get_settings_v1_lms_courses__course_id__settings_get"];
         put?: never;
         post?: never;
         delete?: never;
@@ -4240,6 +4904,46 @@ export interface paths {
          * @description Apply the provided settings; `cover_file_id: null` removes the cover.
          */
         patch: operations["update_settings_v1_lms_courses__course_id__settings_patch"];
+        trace?: never;
+    };
+    "/v1/lms/courses/{course_id}/settings/details": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        /**
+         * Update Details
+         * @description Change the sent fields; invalid values are a 422 naming the field.
+         */
+        patch: operations["update_details_v1_lms_courses__course_id__settings_details_patch"];
+        trace?: never;
+    };
+    "/v1/lms/courses/{course_id}/settings/join-code": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Regenerate Join Code
+         * @description Replace the join code; the old one stops working.
+         */
+        post: operations["regenerate_join_code_v1_lms_courses__course_id__settings_join_code_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
         trace?: never;
     };
     "/v1/lms/courses/{course_id}/staff": {
@@ -4322,6 +5026,26 @@ export interface paths {
          * @description Return the live step without correct answers, with the caller's state.
          */
         get: operations["get_step_v1_lms_courses__course_id__steps__step_id__get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/lms/courses/{course_id}/steps/{step_id}/blocks/{block_id}/h5p": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get H5P Launch
+         * @description Return the signed base URL of the block's package (enrolled or staff).
+         */
+        get: operations["get_h5p_launch_v1_lms_courses__course_id__steps__step_id__blocks__block_id__h5p_get"];
         put?: never;
         post?: never;
         delete?: never;
@@ -4450,6 +5174,46 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/v1/lms/courses/{slug}/landing": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get Course Landing
+         * @description Describe the course; `?preview=1` shows drafts to people who can edit.
+         */
+        get: operations["get_course_landing_v1_lms_courses__slug__landing_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/lms/imports/{job_id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get Cartridge Import
+         * @description Poll an import started by the caller.
+         */
+        get: operations["get_cartridge_import_v1_lms_imports__job_id__get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/v1/lms/join": {
         parameters: {
             query?: never;
@@ -4504,6 +5268,46 @@ export interface paths {
          * @description Start an attempt (or resume the open one); `preview=true` is for staff.
          */
         post: operations["start_attempt_v1_lms_steps__step_id__blocks__block_id__attempts_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/lms/steps/{step_id}/blocks/{block_id}/h5p-result": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Record H5P Result
+         * @description Store a `completed`/`answered` xAPI statement of the whole content.
+         */
+        post: operations["record_h5p_result_v1_lms_steps__step_id__blocks__block_id__h5p_result_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/lms/steps/{step_id}/blocks/{block_id}/interactions/{interaction_id}/answer": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Answer Interaction
+         * @description Grade an answer to a question of an interactive video.
+         */
+        post: operations["answer_interaction_v1_lms_steps__step_id__blocks__block_id__interactions__interaction_id__answer_post"];
         delete?: never;
         options?: never;
         head?: never;
@@ -5027,11 +5831,31 @@ export interface paths {
         };
         /**
          * Get Suggestion
-         * @description One suggestion with the form the suggester filled in.
+         * @description One suggestion with the form and the file the suggester sent.
          */
         get: operations["get_suggestion_v1_manage_library_suggestions__suggestion_id__get"];
         put?: never;
         post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/manage/library/suggestions/{suggestion_id}/approve": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Approve Suggestion
+         * @description Link the book saved from the suggestion, hand over its file, notify.
+         */
+        post: operations["approve_suggestion_v1_manage_library_suggestions__suggestion_id__approve_post"];
         delete?: never;
         options?: never;
         head?: never;
@@ -5049,7 +5873,7 @@ export interface paths {
         put?: never;
         /**
          * Decide Suggestion
-         * @description Accept or decline a book suggestion.
+         * @description Accept or decline a book suggestion; a decline may say why.
          */
         post: operations["decide_suggestion_v1_manage_library_suggestions__suggestion_id___decision__post"];
         delete?: never;
@@ -5446,6 +6270,26 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/v1/me/group/progress": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get My Group Progress
+         * @description Return the group's marks and attendance; only for its head student.
+         */
+        get: operations["get_my_group_progress_v1_me_group_progress_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/v1/me/homework": {
         parameters: {
             query?: never;
@@ -5733,6 +6577,26 @@ export interface paths {
          * @description Take an item off the shelf (nothing happens when it was not there).
          */
         delete: operations["remove_shelf_entry_v1_me_library_shelf__item_id__delete"];
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/me/library/suggestions": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * List My Suggestions
+         * @description The signed-in person's suggestions and their statuses, newest first.
+         */
+        get: operations["list_my_suggestions_v1_me_library_suggestions_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
         options?: never;
         head?: never;
         patch?: never;
@@ -7478,6 +8342,26 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/v1/staff/groups/{group_id}/progress": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get Group Progress
+         * @description Return marks and attendance per student; only its curator or an admin.
+         */
+        get: operations["get_group_progress_v1_staff_groups__group_id__progress_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/v1/staff/groups/{group_id}/subgroups": {
         parameters: {
             query?: never;
@@ -8626,6 +9510,17 @@ export interface components {
             step_id: string | null;
         };
         /**
+         * ApproveSuggestionBody
+         * @description `POST /manage/library/suggestions/{id}/approve`: the book the editor saved.
+         */
+        ApproveSuggestionBody: {
+            /**
+             * Item Id
+             * Format: uuid
+             */
+            item_id: string;
+        };
+        /**
          * ArtifactDetailResponse
          * @description `ArtifactDetail`: the item, the document, its references and the progress.
          */
@@ -9376,6 +10271,11 @@ export interface components {
         } & {
             [key: string]: unknown;
         };
+        /** Body_add_entry_file_v1_certificates_me__entry_id__files_post */
+        Body_add_entry_file_v1_certificates_me__entry_id__files_post: {
+            /** File */
+            file: string;
+        };
         /** Body_import_preview_v1_admin_students_import_post */
         Body_import_preview_v1_admin_students_import_post: {
             /** File */
@@ -9388,6 +10288,16 @@ export interface components {
         };
         /** Body_put_photo_v1_admin_users__id__photo_put */
         Body_put_photo_v1_admin_users__id__photo_put: {
+            /** File */
+            file: string;
+        };
+        /** Body_start_cartridge_import_v1_lms_courses_import_post */
+        Body_start_cartridge_import_v1_lms_courses_import_post: {
+            /** File */
+            file: string;
+        };
+        /** Body_upload_h5p_v1_lms_courses__course_id__h5p_post */
+        Body_upload_h5p_v1_lms_courses__course_id__h5p_post: {
             /** File */
             file: string;
         };
@@ -9814,6 +10724,234 @@ export interface components {
             front: string;
             /** Id */
             id?: string | null;
+        };
+        /**
+         * CartridgeImportReport
+         * @description What the import created and what it could not map.
+         */
+        CartridgeImportReport: {
+            /** Files */
+            files: number;
+            /** Items */
+            items: components["schemas"]["CartridgeReportItem"][];
+            /** Links */
+            links: number;
+            /** Questions */
+            questions: number;
+            /** Quizzes */
+            quizzes: number;
+            /** Sections */
+            sections: number;
+            /** Steps */
+            steps: number;
+            /** Title */
+            title: string;
+        };
+        /**
+         * CartridgeImportStarted
+         * @description The job that imports the cartridge.
+         */
+        CartridgeImportStarted: {
+            /** Job Id */
+            job_id: string;
+        };
+        /**
+         * CartridgeImportStatus
+         * @description Progress of an import; ``course_id`` and ``report`` once it is done.
+         */
+        CartridgeImportStatus: {
+            /** Course Id */
+            course_id: string | null;
+            /** Done */
+            done: number;
+            /** Error */
+            error: string | null;
+            /** Job Id */
+            job_id: string;
+            report: components["schemas"]["CartridgeImportReport"] | null;
+            /**
+             * Status
+             * @enum {string}
+             */
+            status: "queued" | "running" | "stopping" | "done" | "failed" | "cancelled";
+            /** Total */
+            total: number | null;
+        };
+        /**
+         * CartridgeReportItem
+         * @description An item kept only as a link or note, or skipped.
+         */
+        CartridgeReportItem: {
+            /** Kind */
+            kind: string;
+            /** Note */
+            note: string;
+            /** Title */
+            title: string;
+        };
+        /**
+         * CertificateEntryResponse
+         * @description CertificateEntry.
+         */
+        CertificateEntryResponse: {
+            /**
+             * Created At
+             * Format: date-time
+             */
+            created_at: string;
+            /** Expires At */
+            expires_at: string | null;
+            /** Files */
+            files: components["schemas"]["CertificateFileResponse"][];
+            /**
+             * Id
+             * Format: uuid
+             */
+            id: string;
+            /** Issued At */
+            issued_at: string | null;
+            /** Level */
+            level: string | null;
+            /** Percent */
+            percent: number | null;
+            /** Score */
+            score: number | null;
+            /** Serial */
+            serial: string | null;
+            /**
+             * Source
+             * @enum {string}
+             */
+            source: "manual" | "emis";
+            /** Subject */
+            subject: string | null;
+            /**
+             * Type Id
+             * Format: uuid
+             */
+            type_id: string;
+            /** Year */
+            year: number | null;
+        };
+        /**
+         * CertificateFileResponse
+         * @description CertificateFile.
+         */
+        CertificateFileResponse: {
+            /** Content Type */
+            content_type: string;
+            /**
+             * Id
+             * Format: uuid
+             */
+            id: string;
+            /** Name */
+            name: string;
+            /** Size */
+            size: number;
+        };
+        /**
+         * CertificateTypeInput
+         * @description Body of POST /admin/types.
+         */
+        CertificateTypeInput: {
+            /**
+             * Asks Level
+             * @default false
+             */
+            asks_level?: boolean;
+            /**
+             * Asks Percent
+             * @default false
+             */
+            asks_percent?: boolean;
+            /**
+             * Asks Score
+             * @default false
+             */
+            asks_score?: boolean;
+            /**
+             * Asks Subject
+             * @default false
+             */
+            asks_subject?: boolean;
+            /**
+             * Asks Year
+             * @default true
+             */
+            asks_year?: boolean;
+            /** Code */
+            code: string;
+            /** Levels */
+            levels?: string[];
+            name: components["schemas"]["TypeName"];
+            /** Position */
+            position?: number | null;
+            /** Score Max */
+            score_max?: number | null;
+            /** Score Min */
+            score_min?: number | null;
+        };
+        /**
+         * CertificateTypePatch
+         * @description Body of PATCH /admin/types/{id}: only the sent fields change.
+         */
+        CertificateTypePatch: {
+            /** Asks Level */
+            asks_level?: boolean | null;
+            /** Asks Percent */
+            asks_percent?: boolean | null;
+            /** Asks Score */
+            asks_score?: boolean | null;
+            /** Asks Subject */
+            asks_subject?: boolean | null;
+            /** Asks Year */
+            asks_year?: boolean | null;
+            /** Code */
+            code?: string | null;
+            /** Levels */
+            levels?: string[] | null;
+            name?: components["schemas"]["TypeName"] | null;
+            /** Position */
+            position?: number | null;
+            /** Score Max */
+            score_max?: number | null;
+            /** Score Min */
+            score_min?: number | null;
+        };
+        /**
+         * CertificateTypeResponse
+         * @description CertificateType.
+         */
+        CertificateTypeResponse: {
+            /** Asks Level */
+            asks_level: boolean;
+            /** Asks Percent */
+            asks_percent: boolean;
+            /** Asks Score */
+            asks_score: boolean;
+            /** Asks Subject */
+            asks_subject: boolean;
+            /** Asks Year */
+            asks_year: boolean;
+            /** Builtin */
+            builtin: boolean;
+            /** Code */
+            code: string;
+            /**
+             * Id
+             * Format: uuid
+             */
+            id: string;
+            /** Levels */
+            levels: string[];
+            name: components["schemas"]["TypeName"];
+            /** Position */
+            position: number;
+            /** Score Max */
+            score_max: number | null;
+            /** Score Min */
+            score_min: number | null;
         };
         /**
          * ChangePasswordBody
@@ -10452,6 +11590,19 @@ export interface components {
             updated_at?: string | null;
         };
         /**
+         * CourseCopied
+         * @description The new draft course created by a copy.
+         */
+        CourseCopied: {
+            /**
+             * Course Id
+             * Format: uuid
+             */
+            course_id: string;
+            /** Title */
+            title: string;
+        };
+        /**
          * CourseCreatorResponse
          * @description CourseCreator: a person who holds the `lms_creator` role.
          */
@@ -10577,6 +11728,70 @@ export interface components {
             steps: components["schemas"]["CourseStepItemResponse"][];
             /** Title */
             title: string;
+        };
+        /**
+         * CourseSettingsView
+         * @description `CourseSettings`: everything the settings page edits, plus counts.
+         */
+        CourseSettingsView: {
+            /** Accent Color */
+            accent_color: string | null;
+            /** Audience */
+            audience: string[];
+            /** Audience Group Ids */
+            audience_group_ids: string[];
+            /** Audience Scope */
+            audience_scope: string;
+            /** Banner File Id */
+            banner_file_id: string | null;
+            /** Code */
+            code: string | null;
+            /** Cover File Id */
+            cover_file_id: string | null;
+            /** Duration Weeks */
+            duration_weeks: number | null;
+            /** Enrolment Ends At */
+            enrolment_ends_at: string | null;
+            /** Enrolment Open */
+            enrolment_open: boolean;
+            /** Enrolment Starts At */
+            enrolment_starts_at: string | null;
+            /** Friendly Name */
+            friendly_name: string | null;
+            /**
+             * Id
+             * Format: uuid
+             */
+            id: string;
+            /** Invite Code */
+            invite_code: string | null;
+            /** Language */
+            language: string;
+            /** Level */
+            level: string | null;
+            /** Lock Version */
+            lock_version: number;
+            /** Navigation */
+            navigation: {
+                [key: string]: unknown;
+            }[];
+            /** Outcomes */
+            outcomes: string[];
+            /** Publish State */
+            publish_state: string;
+            /** Requirements */
+            requirements: string[];
+            /** Slug */
+            slug: string;
+            stats: components["schemas"]["SettingsStatsView"];
+            /** Summary */
+            summary: string;
+            /** Tags */
+            tags: string[];
+            /** Visibility */
+            visibility: string;
+            /** Workload Hours Per Week */
+            workload_hours_per_week: number | null;
         };
         /**
          * CourseStaffItemResponse
@@ -10711,6 +11926,29 @@ export interface components {
             /** Title */
             title: string;
             visibility: components["schemas"]["app__modules__lms__domain__authoring__enums__Visibility"];
+        };
+        /**
+         * CreateEntryBody
+         * @description Body of POST /me.
+         */
+        CreateEntryBody: {
+            /** Level */
+            level?: string | null;
+            /** Percent */
+            percent?: number | null;
+            /** Score */
+            score?: number | null;
+            /** Serial */
+            serial?: string | null;
+            /** Subject */
+            subject?: string | null;
+            /**
+             * Type Id
+             * Format: uuid
+             */
+            type_id: string;
+            /** Year */
+            year?: number | null;
         };
         /**
          * CreateLabelBody
@@ -11180,6 +12418,14 @@ export interface components {
             topic_source?: ("emis" | "manual") | null;
         };
         /**
+         * DeclineSuggestionBody
+         * @description `POST /manage/library/suggestions/{id}/decline`: why, shown to the suggester.
+         */
+        DeclineSuggestionBody: {
+            /** Reason */
+            reason?: string | null;
+        };
+        /**
          * DefaultMaterialKind
          * @description Where a default material's text comes from.
          * @enum {string}
@@ -11331,6 +12577,33 @@ export interface components {
             new_email: string;
             /** Password */
             password: string;
+        };
+        /**
+         * EmisCertificateResponse
+         * @description EmisCertificate: a CEFR or national certificate of the EMIS profile.
+         */
+        EmisCertificateResponse: {
+            /** Expires On */
+            expires_on: string | null;
+            /** Issued On */
+            issued_on: string | null;
+            /**
+             * Kind
+             * @enum {string}
+             */
+            kind: "cefr" | "national";
+            /** Level */
+            level: string | null;
+            /** Percent */
+            percent: number | null;
+            /** Score */
+            score: number | null;
+            /** Serial */
+            serial: string | null;
+            /** Subject */
+            subject: string | null;
+            /** Url */
+            url: string | null;
         };
         /**
          * EmisClassHourResponse
@@ -11581,6 +12854,10 @@ export interface components {
          * @description EmisSubjectRatings.
          */
         EmisSubjectRatingsResponse: {
+            /** Absence Total */
+            absence_total?: number | null;
+            /** Absent Dates */
+            absent_dates?: string[] | null;
             /** Emis Subject Id */
             emis_subject_id: number;
             /** Marks */
@@ -11674,6 +12951,15 @@ export interface components {
              * Format: uuid
              */
             student_id: string;
+        };
+        /**
+         * ExportBody
+         * @description Body of POST /staff/export: file ids, or filters that pick the files.
+         */
+        ExportBody: {
+            /** File Ids */
+            file_ids?: string[] | null;
+            filters?: components["schemas"]["StaffFiltersBody"] | null;
         };
         /**
          * ExtensionBody
@@ -11957,7 +13243,7 @@ export interface components {
          * @description Why a file was uploaded.
          * @enum {string}
          */
-        FilePurpose: "ai_upload" | "link" | "mail" | "library_book" | "library_cover" | "library_material" | "lms_video" | "user_photo";
+        FilePurpose: "ai_upload" | "link" | "mail" | "library_book" | "library_cover" | "library_material" | "lms_video" | "user_photo" | "certificate";
         /**
          * FileStatus
          * @description Lifecycle of a stored file (spec -> Models -> File).
@@ -12185,6 +13471,23 @@ export interface components {
             subject: components["schemas"]["app__interfaces__http__v1__composition__shared_schemas__SubjectRefResponse"];
         };
         /**
+         * GroupCountsResponse
+         * @description Counts per level of one group.
+         */
+        GroupCountsResponse: {
+            /** Counts */
+            counts: {
+                [key: string]: number;
+            };
+            /**
+             * Group Id
+             * Format: uuid
+             */
+            group_id: string;
+            /** Group Name */
+            group_name: string;
+        };
+        /**
          * GroupCreateBody
          * @description Body of POST /v1/admin/groups.
          */
@@ -12247,6 +13550,85 @@ export interface components {
             status?: ("active" | "archived") | null;
         };
         /**
+         * GroupProgressCell
+         * @description One student's EMIS result and attendance in one subject.
+         */
+        GroupProgressCell: {
+            /** Absence Rate */
+            absence_rate: number | null;
+            /** Absences */
+            absences: number;
+            /**
+             * Attendance Source
+             * @default platform
+             * @enum {string}
+             */
+            attendance_source?: "emis" | "platform" | "mixed";
+            /** Emis Rating */
+            emis_rating: number | null;
+            /** Final Avg */
+            final_avg: number | null;
+            /** Lesson Avg */
+            lesson_avg: number | null;
+            /** Lessons */
+            lessons: number;
+            /** Marks Count */
+            marks_count: number;
+            /** Midterm Avg */
+            midterm_avg: number | null;
+            /** Semester Mark */
+            semester_mark: number | null;
+            /**
+             * Subject Id
+             * Format: uuid
+             */
+            subject_id: string;
+        };
+        /**
+         * GroupProgressResponse
+         * @description Marks and attendance of a group for its curator or head student.
+         */
+        GroupProgressResponse: {
+            /**
+             * Group Id
+             * Format: uuid
+             */
+            group_id: string;
+            /** Group Name */
+            group_name: string;
+            /** Semester */
+            semester: number;
+            /** Semesters */
+            semesters: number[];
+            /** Students */
+            students: components["schemas"]["GroupProgressStudent"][];
+            /** Subjects */
+            subjects: components["schemas"]["SubjectRef"][];
+        };
+        /**
+         * GroupProgressStudent
+         * @description A student's row: GPA, total attendance and one cell per subject.
+         */
+        GroupProgressStudent: {
+            /** Absence Rate */
+            absence_rate: number | null;
+            /** Absences */
+            absences: number;
+            /**
+             * Attendance Source
+             * @default platform
+             * @enum {string}
+             */
+            attendance_source?: "emis" | "platform" | "mixed";
+            /** Cells */
+            cells: components["schemas"]["GroupProgressCell"][];
+            /** Gpa */
+            gpa: number | null;
+            /** Lessons */
+            lessons: number;
+            student: components["schemas"]["app__interfaces__http__v1__me_marks__schemas__PersonRef"];
+        };
+        /**
          * GroupResponse
          * @description A study group a reading list can be aimed at.
          */
@@ -12297,6 +13679,78 @@ export interface components {
              * Format: uuid
              */
             user_id: string;
+        };
+        /**
+         * H5PBlock
+         * @description An uploaded H5P package, played in the browser with h5p-standalone.
+         */
+        "H5PBlock-Input": {
+            /**
+             * Id
+             * @default
+             */
+            id?: string;
+            /**
+             * Main Library
+             * @default
+             */
+            main_library?: string;
+            /**
+             * Package Id
+             * @default
+             */
+            package_id?: string;
+            /**
+             * Passing Score Pct
+             * @default 0
+             */
+            passing_score_pct?: number;
+            /**
+             * Title
+             * @default
+             */
+            title?: string;
+            /**
+             * @description discriminator enum property added by openapi-typescript
+             * @enum {string}
+             */
+            type: "h5p";
+        };
+        /**
+         * H5PLaunchResponse
+         * @description The signed base URL of an H5P package.
+         */
+        H5PLaunchResponse: {
+            /** Base Url */
+            base_url: string;
+            /** Expires In */
+            expires_in: number;
+        };
+        /**
+         * H5PLaunchView
+         * @description Where the player loads an H5P package from (signed, short-lived).
+         */
+        H5PLaunchView: {
+            /** Base Url */
+            base_url: string;
+            /** Expires In */
+            expires_in: number;
+        };
+        /**
+         * H5PPackageResponse
+         * @description An uploaded H5P package.
+         */
+        H5PPackageResponse: {
+            /** Byte Size */
+            byte_size: number;
+            /** Files */
+            files: number;
+            /** Main Library */
+            main_library: string;
+            /** Package Id */
+            package_id: string;
+            /** Title */
+            title: string;
         };
         /** HTTPValidationError */
         HTTPValidationError: {
@@ -12369,6 +13823,20 @@ export interface components {
         ImportConfirmResponse: {
             /** Created */
             created: number;
+            /** Skipped */
+            skipped: number;
+            /** Updated */
+            updated: number;
+        };
+        /**
+         * ImportEmisResponse
+         * @description Result of POST /me/import-emis.
+         */
+        ImportEmisResponse: {
+            /** Created */
+            created: number;
+            /** Files */
+            files: number;
             /** Skipped */
             skipped: number;
             /** Updated */
@@ -12508,6 +13976,83 @@ export interface components {
             marks: components["schemas"]["MarksInsights"];
             system: components["schemas"]["SystemHealth"];
             usage: components["schemas"]["UsageInsights"];
+        };
+        /**
+         * Interaction
+         * @description A pause of an interactive video: a question, a note or a link.
+         */
+        Interaction: {
+            /** At Sec */
+            at_sec: number;
+            /**
+             * Id
+             * @default
+             */
+            id?: string;
+            /**
+             * Kind
+             * @default question
+             * @enum {string}
+             */
+            kind?: "question" | "note" | "link";
+            /**
+             * Multiple
+             * @default false
+             */
+            multiple?: boolean;
+            /** Options */
+            options?: components["schemas"]["Option"][];
+            /**
+             * Points
+             * @default 1
+             */
+            points?: number;
+            /**
+             * Text
+             * @default
+             */
+            text?: string;
+            /**
+             * Url
+             * @default
+             */
+            url?: string;
+        };
+        /**
+         * InteractiveVideoBlock
+         * @description A video that pauses at timestamps for questions, notes and links.
+         */
+        "InteractiveVideoBlock-Input": {
+            /**
+             * Caption
+             * @default
+             */
+            caption?: string;
+            /** File Id */
+            file_id?: string | null;
+            /**
+             * Id
+             * @default
+             */
+            id?: string;
+            /** Interactions */
+            interactions?: components["schemas"]["Interaction"][];
+            /**
+             * Source
+             * @default link
+             * @enum {string}
+             */
+            source?: "link" | "upload";
+            /**
+             * @description discriminator enum property added by openapi-typescript
+             * @enum {string}
+             */
+            type: "interactive_video";
+            /**
+             * Url
+             * @default
+             */
+            url?: string;
         };
         /**
          * IntervalsResponse
@@ -12982,6 +14527,27 @@ export interface components {
             submitted_at: string | null;
         };
         /**
+         * LearningBlockResultView
+         * @description My result of an H5P or interactive video block (best H5P score).
+         */
+        LearningBlockResultView: {
+            /**
+             * Completed
+             * @default false
+             */
+            completed?: boolean;
+            /**
+             * Max Score
+             * @default 0
+             */
+            max_score?: number;
+            /**
+             * Score
+             * @default 0
+             */
+            score?: number;
+        };
+        /**
          * LearningCardCountsView
          * @description Cards left to study today.
          */
@@ -13035,6 +14601,10 @@ export interface components {
          * @description `CourseCard`: a course in the catalog and in My courses.
          */
         LearningCourseCardView: {
+            /** Accent Color */
+            accent_color?: string | null;
+            /** Cover File Id */
+            cover_file_id?: string | null;
             /** Cover Url */
             cover_url: string | null;
             /** Description */
@@ -13050,6 +14620,11 @@ export interface components {
             slug: string;
             /** Steps Count */
             steps_count: number;
+            /**
+             * Summary
+             * @default
+             */
+            summary?: string;
             /** Title */
             title: string;
             /** Updated At */
@@ -13065,10 +14640,14 @@ export interface components {
          * @description `CoursePage`: the course card with staff, outline and my state.
          */
         LearningCoursePageView: {
+            /** Accent Color */
+            accent_color?: string | null;
             /** Can Edit */
             can_edit: boolean;
             /** Changed Since Last Visit */
             changed_since_last_visit: string[];
+            /** Cover File Id */
+            cover_file_id?: string | null;
             /** Cover Url */
             cover_url: string | null;
             /** Description */
@@ -13099,6 +14678,11 @@ export interface components {
             steps_completed?: number | null;
             /** Steps Count */
             steps_count: number;
+            /**
+             * Summary
+             * @default
+             */
+            summary?: string;
             /** Title */
             title: string;
             /** Updated At */
@@ -13160,12 +14744,271 @@ export interface components {
             type: "flashcards";
         };
         /**
+         * LearningH5PBlockView
+         * @description An H5P block; ``GET .../h5p`` returns the signed base URL of the package.
+         */
+        LearningH5PBlockView: {
+            /** Id */
+            id: string;
+            /**
+             * Main Library
+             * @default
+             */
+            main_library?: string;
+            /** Package Id */
+            package_id: string;
+            /**
+             * Passed
+             * @default false
+             */
+            passed?: boolean;
+            /**
+             * Passing Score Pct
+             * @default 0
+             */
+            passing_score_pct?: number;
+            result?: components["schemas"]["LearningBlockResultView"] | null;
+            /**
+             * Title
+             * @default
+             */
+            title?: string;
+            /**
+             * @description discriminator enum property added by openapi-typescript
+             * @enum {string}
+             */
+            type: "h5p";
+        };
+        /**
+         * LearningH5PResultBody
+         * @description `POST .../blocks/{block_id}/h5p-result`: an xAPI statement of the player.
+         */
+        LearningH5PResultBody: {
+            /** Statement */
+            statement: {
+                [key: string]: unknown;
+            };
+        };
+        /**
+         * LearningInteractionAnswerBody
+         * @description `POST .../interactions/{interaction_id}/answer`: the chosen options.
+         */
+        LearningInteractionAnswerBody: {
+            /** Option Ids */
+            option_ids?: string[];
+        };
+        /**
+         * LearningInteractionAnswerView
+         * @description My first answer to an interactive video question.
+         */
+        LearningInteractionAnswerView: {
+            /** Correct */
+            correct: boolean;
+            /** Option Ids */
+            option_ids: string[];
+        };
+        /**
+         * LearningInteractionOptionView
+         * @description An answer option of an interactive video question (no correctness).
+         */
+        LearningInteractionOptionView: {
+            /** Id */
+            id: string;
+            /** Text */
+            text: string;
+        };
+        /**
+         * LearningInteractionResultView
+         * @description The graded answer, the right options (shown after answering) and the total.
+         */
+        LearningInteractionResultView: {
+            answer: components["schemas"]["LearningInteractionAnswerView"];
+            /** Correct Option Ids */
+            correct_option_ids: string[];
+            result: components["schemas"]["LearningBlockResultView"];
+        };
+        /**
+         * LearningInteractionView
+         * @description A pause of an interactive video.
+         */
+        LearningInteractionView: {
+            /** At Sec */
+            at_sec: number;
+            /** Id */
+            id: string;
+            /**
+             * Kind
+             * @enum {string}
+             */
+            kind: "question" | "note" | "link";
+            /**
+             * Multiple
+             * @default false
+             */
+            multiple?: boolean;
+            /** Options */
+            options?: components["schemas"]["LearningInteractionOptionView"][];
+            /**
+             * Points
+             * @default 1
+             */
+            points?: number;
+            /**
+             * Text
+             * @default
+             */
+            text?: string;
+            /**
+             * Url
+             * @default
+             */
+            url?: string;
+        };
+        /**
+         * LearningInteractiveVideoBlockView
+         * @description An interactive video block with my answers so far.
+         */
+        LearningInteractiveVideoBlockView: {
+            /** Answers */
+            answers?: {
+                [key: string]: components["schemas"]["LearningInteractionAnswerView"];
+            };
+            /**
+             * Caption
+             * @default
+             */
+            caption?: string;
+            /** File Id */
+            file_id?: string | null;
+            /** Id */
+            id: string;
+            /** Interactions */
+            interactions?: components["schemas"]["LearningInteractionView"][];
+            /**
+             * Passed
+             * @default false
+             */
+            passed?: boolean;
+            result?: components["schemas"]["LearningBlockResultView"] | null;
+            /**
+             * Source
+             * @enum {string}
+             */
+            source: "link" | "upload";
+            /**
+             * @description discriminator enum property added by openapi-typescript
+             * @enum {string}
+             */
+            type: "interactive_video";
+            /** Url */
+            url: string;
+        };
+        /**
          * LearningJoinBody
          * @description `POST /v1/lms/join`: an invite code.
          */
         LearningJoinBody: {
             /** Code */
             code: string;
+        };
+        /**
+         * LearningLandingAuthorView
+         * @description A staff member shown on the landing page.
+         */
+        LearningLandingAuthorView: {
+            /** Role */
+            role: string;
+            user: components["schemas"]["LearningPersonRefView"];
+        };
+        /**
+         * LearningLandingEnrolmentView
+         * @description Enrolment window and whether the viewer can join now.
+         */
+        LearningLandingEnrolmentView: {
+            /** Can Enrol */
+            can_enrol: boolean;
+            /** Ends At */
+            ends_at: string | null;
+            /** Enrolled */
+            enrolled: boolean;
+            /** Open */
+            open: boolean;
+            /** Starts At */
+            starts_at: string | null;
+        };
+        /**
+         * LearningLandingSectionView
+         * @description A syllabus section with its lesson titles.
+         */
+        LearningLandingSectionView: {
+            /** Steps */
+            steps: components["schemas"]["LearningLandingStepView"][];
+            /** Title */
+            title: string;
+        };
+        /**
+         * LearningLandingStepView
+         * @description A lesson in the syllabus.
+         */
+        LearningLandingStepView: {
+            /** Title */
+            title: string;
+        };
+        /**
+         * LearningLandingView
+         * @description `CourseLanding`: the public page of a course.
+         */
+        LearningLandingView: {
+            /** Accent Color */
+            accent_color: string | null;
+            /** Audience */
+            audience: string[];
+            /** Authors */
+            authors: components["schemas"]["LearningLandingAuthorView"][];
+            /** Banner File Id */
+            banner_file_id: string | null;
+            /** Banner Url */
+            banner_url: string | null;
+            /** Cover File Id */
+            cover_file_id: string | null;
+            /** Cover Url */
+            cover_url: string | null;
+            /** Description */
+            description: string;
+            /** Duration Weeks */
+            duration_weeks: number | null;
+            enrolment: components["schemas"]["LearningLandingEnrolmentView"];
+            /** Friendly Name */
+            friendly_name: string | null;
+            /**
+             * Id
+             * Format: uuid
+             */
+            id: string;
+            /** Language */
+            language: string;
+            /** Level */
+            level: string | null;
+            /** Outcomes */
+            outcomes: string[];
+            /** Preview */
+            preview: boolean;
+            /** Publish State */
+            publish_state: string;
+            /** Requirements */
+            requirements: string[];
+            /** Slug */
+            slug: string;
+            /** Summary */
+            summary: string;
+            /** Syllabus */
+            syllabus: components["schemas"]["LearningLandingSectionView"][];
+            /** Tags */
+            tags: string[];
+            /** Title */
+            title: string;
+            /** Workload Hours Per Week */
+            workload_hours_per_week: number | null;
         };
         /**
          * LearningMyCoursesView
@@ -13338,7 +15181,7 @@ export interface components {
          */
         LearningStepView: {
             /** Blocks */
-            blocks: (components["schemas"]["LearningTextBlockView"] | components["schemas"]["LearningVideoBlockView"] | components["schemas"]["LearningQuizBlockView"] | components["schemas"]["LearningFlashcardsBlockView"])[];
+            blocks: (components["schemas"]["LearningTextBlockView"] | components["schemas"]["LearningVideoBlockView"] | components["schemas"]["LearningQuizBlockView"] | components["schemas"]["LearningFlashcardsBlockView"] | components["schemas"]["LearningH5PBlockView"] | components["schemas"]["LearningInteractiveVideoBlockView"])[];
             /**
              * Blocks Passed
              * @default 0
@@ -13884,6 +15727,14 @@ export interface components {
             url: string;
         };
         /**
+         * LinkJobView
+         * @description The queued link check.
+         */
+        LinkJobView: {
+            /** Job Id */
+            job_id: string;
+        };
+        /**
          * LinkPageResponse
          * @description Page<LinkItem>.
          */
@@ -13892,6 +15743,44 @@ export interface components {
             items: components["schemas"]["LinkItem"][];
             /** Next Cursor */
             next_cursor: string | null;
+        };
+        /**
+         * LinkReportView
+         * @description `LinkReport`: the last link check of a course.
+         */
+        LinkReportView: {
+            /** Checked At */
+            checked_at?: string | null;
+            /** Job Id */
+            job_id?: string | null;
+            /**
+             * Results
+             * @default []
+             */
+            results?: components["schemas"]["LinkResultView"][];
+            /**
+             * Status
+             * @enum {string}
+             */
+            status: "idle" | "running" | "done";
+        };
+        /**
+         * LinkResultView
+         * @description One checked URL.
+         */
+        LinkResultView: {
+            /** Error */
+            error: string | null;
+            /** Ok */
+            ok: boolean;
+            /** Status Code */
+            status_code: number | null;
+            /** Step Id */
+            step_id: string;
+            /** Step Title */
+            step_title: string;
+            /** Url */
+            url: string;
         };
         /**
          * ListRefSchema
@@ -14415,6 +16304,39 @@ export interface components {
             follows_weekday: number;
         };
         /**
+         * MySuggestionResponse
+         * @description `MySuggestion`: one of the signed-in person's suggestions and its status.
+         */
+        MySuggestionResponse: {
+            /**
+             * Created At
+             * Format: date-time
+             */
+            created_at: string;
+            /** Decided At */
+            decided_at: string | null;
+            /**
+             * Id
+             * Format: uuid
+             */
+            id: string;
+            /** Item Id */
+            item_id: string | null;
+            /** Reason */
+            reason: string | null;
+            status: components["schemas"]["SuggestionStatus"];
+            /** Title */
+            title: string;
+        };
+        /**
+         * MySuggestionsResponse
+         * @description `GET /me/library/suggestions`: newest first.
+         */
+        MySuggestionsResponse: {
+            /** Items */
+            items: components["schemas"]["MySuggestionResponse"][];
+        };
+        /**
          * MyTeacherResponse
          * @description A teacher of the student.
          */
@@ -14487,6 +16409,19 @@ export interface components {
              * @default
              */
             uz?: string;
+        };
+        /**
+         * NavigationItem
+         * @description A section of the course page and whether learners see it.
+         */
+        NavigationItem: {
+            /**
+             * Hidden
+             * @default false
+             */
+            hidden?: boolean;
+            /** Key */
+            key: string;
         };
         /**
          * NewConnectorResponse
@@ -15225,6 +17160,78 @@ export interface components {
             kind: components["schemas"]["SourceKind"];
             /** Title */
             title: string;
+        };
+        /**
+         * PasskeyLoginBody
+         * @description POST /v1/id/login/passkey: the browser's AuthenticationResponseJSON.
+         */
+        PasskeyLoginBody: {
+            /** Credential */
+            credential: {
+                [key: string]: unknown;
+            };
+            /** Login Challenge */
+            login_challenge: string;
+            /**
+             * Remember
+             * @default false
+             */
+            remember?: boolean;
+        };
+        /**
+         * PasskeyOptionsBody
+         * @description POST /v1/id/login/passkey/options.
+         */
+        PasskeyOptionsBody: {
+            /** Login Challenge */
+            login_challenge: string;
+        };
+        /**
+         * PasskeyRegisterBody
+         * @description POST /v1/id/me/passkeys: the browser's RegistrationResponseJSON.
+         */
+        PasskeyRegisterBody: {
+            /** Credential */
+            credential: {
+                [key: string]: unknown;
+            };
+            /**
+             * Name
+             * @default
+             */
+            name?: string;
+        };
+        /**
+         * PasskeyRenameBody
+         * @description PATCH /v1/id/me/passkeys/{id}.
+         */
+        PasskeyRenameBody: {
+            /** Name */
+            name: string;
+        };
+        /**
+         * PasskeyResponse
+         * @description One passkey of the user (no key material).
+         */
+        PasskeyResponse: {
+            /** Backed Up */
+            backed_up: boolean;
+            /**
+             * Created At
+             * Format: date-time
+             */
+            created_at: string;
+            /**
+             * Id
+             * Format: uuid
+             */
+            id: string;
+            /** Last Used At */
+            last_used_at: string | null;
+            /** Name */
+            name: string;
+            /** Transports */
+            transports: string[];
         };
         /**
          * PasswordChangeResponse
@@ -16239,6 +18246,23 @@ export interface components {
             variables?: components["schemas"]["Variable"][];
         };
         /**
+         * RankingItem
+         * @description One ranked student.
+         */
+        RankingItem: {
+            /** Count */
+            count: number;
+            /** Group Name */
+            group_name: string;
+            /** Name */
+            name: string;
+            /**
+             * Student Id
+             * Format: uuid
+             */
+            student_id: string;
+        };
+        /**
          * Rating
          * @description Answer buttons.
          * @enum {string}
@@ -16404,6 +18428,14 @@ export interface components {
             /** Semester Mark */
             semester_mark: number | null;
             subject: components["schemas"]["SubjectRef"];
+        };
+        /**
+         * RecoveryCodesResponse
+         * @description One-time recovery codes, shown once.
+         */
+        RecoveryCodesResponse: {
+            /** Recovery Codes */
+            recovery_codes: string[];
         };
         /**
          * RedirectResponseBody
@@ -17205,7 +19237,7 @@ export interface components {
         };
         /**
          * SecondFactorResponse
-         * @description A code was sent; send it back with the ticket.
+         * @description A code was sent (otp), or the authenticator app is asked for (totp).
          */
         SecondFactorResponse: {
             /** Channels */
@@ -17213,11 +19245,25 @@ export interface components {
             /**
              * Method
              * @default otp
-             * @constant
+             * @enum {string}
              */
-            method?: "otp";
+            method?: "otp" | "totp";
             /** Ticket */
             ticket: string;
+        };
+        /**
+         * SecurityResponse
+         * @description GET /v1/id/me/security.
+         */
+        SecurityResponse: {
+            /** Passkeys */
+            passkeys: components["schemas"]["PasskeyResponse"][];
+            /** Password Login Enabled */
+            password_login_enabled: boolean;
+            /** Recovery Codes Left */
+            recovery_codes_left: number;
+            /** Totp Enabled */
+            totp_enabled: boolean;
         };
         /**
          * SelectSourcesBody
@@ -17494,6 +19540,68 @@ export interface components {
             cover_file_id?: string | null;
             status?: components["schemas"]["CourseStatus"] | null;
             visibility?: components["schemas"]["app__modules__lms__domain__authoring__enums__Visibility"] | null;
+        };
+        /**
+         * SettingsDetailsBody
+         * @description Partial change; omitted fields stay as they are, `null` clears nullable ones.
+         */
+        SettingsDetailsBody: {
+            /** Accent Color */
+            accent_color?: string | null;
+            /** Audience */
+            audience?: string[] | null;
+            /** Audience Group Ids */
+            audience_group_ids?: string[] | null;
+            /** Audience Scope */
+            audience_scope?: string | null;
+            /** Banner File Id */
+            banner_file_id?: string | null;
+            /** Code */
+            code?: string | null;
+            /** Cover File Id */
+            cover_file_id?: string | null;
+            /** Duration Weeks */
+            duration_weeks?: number | null;
+            /** Enrolment Ends At */
+            enrolment_ends_at?: string | null;
+            /** Enrolment Open */
+            enrolment_open?: boolean | null;
+            /** Enrolment Starts At */
+            enrolment_starts_at?: string | null;
+            /** Friendly Name */
+            friendly_name?: string | null;
+            /** Language */
+            language?: string | null;
+            /** Level */
+            level?: ("beginner" | "intermediate" | "advanced") | null;
+            /** Navigation */
+            navigation?: components["schemas"]["NavigationItem"][] | null;
+            /** Outcomes */
+            outcomes?: string[] | null;
+            /** Requirements */
+            requirements?: string[] | null;
+            /** Summary */
+            summary?: string | null;
+            /** Tags */
+            tags?: string[] | null;
+            /** Workload Hours Per Week */
+            workload_hours_per_week?: number | null;
+        };
+        /**
+         * SettingsStatsView
+         * @description Counts shown next to the settings.
+         */
+        SettingsStatsView: {
+            /** Learners */
+            learners: number;
+            /** Sections */
+            sections: number;
+            /** Staff By Role */
+            staff_by_role: {
+                [key: string]: number;
+            };
+            /** Steps */
+            steps: number;
         };
         /**
          * SharedArtifact
@@ -17872,6 +19980,81 @@ export interface components {
             items: components["schemas"]["StaffAssessmentItem"][];
         };
         /**
+         * StaffEntriesResponse
+         * @description A page of staff entries.
+         */
+        StaffEntriesResponse: {
+            /** Items */
+            items: components["schemas"]["StaffEntryResponse"][];
+            /** Total */
+            total: number;
+        };
+        /**
+         * StaffEntryResponse
+         * @description StaffEntry: an entry with its student.
+         */
+        StaffEntryResponse: {
+            /**
+             * Created At
+             * Format: date-time
+             */
+            created_at: string;
+            /** Expires At */
+            expires_at: string | null;
+            /** Files */
+            files: components["schemas"]["CertificateFileResponse"][];
+            /**
+             * Id
+             * Format: uuid
+             */
+            id: string;
+            /** Issued At */
+            issued_at: string | null;
+            /** Level */
+            level: string | null;
+            /** Percent */
+            percent: number | null;
+            /** Score */
+            score: number | null;
+            /** Serial */
+            serial: string | null;
+            /**
+             * Source
+             * @enum {string}
+             */
+            source: "manual" | "emis";
+            student: components["schemas"]["StaffStudent"];
+            /** Subject */
+            subject: string | null;
+            /**
+             * Type Id
+             * Format: uuid
+             */
+            type_id: string;
+            /** Year */
+            year: number | null;
+        };
+        /**
+         * StaffFiltersBody
+         * @description Staff filters as a JSON object (export body).
+         */
+        StaffFiltersBody: {
+            /** Group Id */
+            group_id?: string | null;
+            /** Level */
+            level?: string | null;
+            /** Q */
+            q?: string | null;
+            /** Student Id */
+            student_id?: string | null;
+            /** Subgroup */
+            subgroup?: string | null;
+            /** Subject */
+            subject?: string | null;
+            /** Type Id */
+            type_id?: string | null;
+        };
+        /**
          * StaffGroupMaterialResponse
          * @description A material of one group (and subgroup).
          */
@@ -17910,6 +20093,21 @@ export interface components {
             url: string | null;
         };
         /**
+         * StaffGroupResponse
+         * @description A group for the filter dropdown.
+         */
+        StaffGroupResponse: {
+            /**
+             * Id
+             * Format: uuid
+             */
+            id: string;
+            /** Name */
+            name: string;
+            /** Subgroups */
+            subgroups: string[];
+        };
+        /**
          * StaffHomeworkResponse
          * @description Homework of a lesson as the teacher sees it.
          */
@@ -17933,6 +20131,44 @@ export interface components {
             lesson: components["schemas"]["app__interfaces__http__v1__me_classwork__schemas__LessonItemResponse"];
             /** Materials */
             materials: components["schemas"]["ResourceItemResponse"][];
+        };
+        /**
+         * StaffRankingResponse
+         * @description Response of GET /staff/ranking.
+         */
+        StaffRankingResponse: {
+            /** Items */
+            items: components["schemas"]["RankingItem"][];
+        };
+        /**
+         * StaffStatsResponse
+         * @description Response of GET /staff/stats.
+         */
+        StaffStatsResponse: {
+            /** Types */
+            types: components["schemas"]["TypeStatsResponse"][];
+        };
+        /**
+         * StaffStudent
+         * @description The student of a staff entry.
+         */
+        StaffStudent: {
+            /**
+             * Group Id
+             * Format: uuid
+             */
+            group_id: string;
+            /** Group Name */
+            group_name: string;
+            /**
+             * Id
+             * Format: uuid
+             */
+            id: string;
+            /** Name */
+            name: string;
+            /** Subgroup */
+            subgroup: string | null;
         };
         /**
          * StaffSubjectGroupResponse
@@ -18065,7 +20301,7 @@ export interface components {
          */
         "StepContent-Input": {
             /** Blocks */
-            blocks?: (components["schemas"]["TextBlock-Input"] | components["schemas"]["VideoBlock-Input"] | components["schemas"]["TestBlock-Input"] | components["schemas"]["FlashcardsBlock-Input"])[];
+            blocks?: (components["schemas"]["TextBlock-Input"] | components["schemas"]["VideoBlock-Input"] | components["schemas"]["TestBlock-Input"] | components["schemas"]["FlashcardsBlock-Input"] | components["schemas"]["H5PBlock-Input"] | components["schemas"]["InteractiveVideoBlock-Input"])[];
             /** Title */
             title: string;
         };
@@ -18075,7 +20311,7 @@ export interface components {
          */
         "StepContent-Output": {
             /** Blocks */
-            blocks?: (components["schemas"]["app__modules__lms__domain__step_content__TextBlock"] | components["schemas"]["app__modules__lms__domain__step_content__VideoBlock"] | components["schemas"]["app__modules__lms__domain__step_content__TestBlock"] | components["schemas"]["app__modules__lms__domain__step_content__FlashcardsBlock"])[];
+            blocks?: (components["schemas"]["app__modules__lms__domain__step_content__TextBlock"] | components["schemas"]["app__modules__lms__domain__step_content__VideoBlock"] | components["schemas"]["app__modules__lms__domain__step_content__TestBlock"] | components["schemas"]["app__modules__lms__domain__step_content__FlashcardsBlock"] | components["schemas"]["app__modules__lms__domain__step_content__H5PBlock"] | components["schemas"]["app__modules__lms__domain__step_content__InteractiveVideoBlock"])[];
             /** Title */
             title: string;
         };
@@ -18145,7 +20381,7 @@ export interface components {
          */
         StepPreviewResponse: {
             /** Current Blocks */
-            current_blocks: (components["schemas"]["app__interfaces__http__v1__notebooks__schemas_apply__TextBlock"] | components["schemas"]["app__interfaces__http__v1__notebooks__schemas_apply__VideoBlock"] | components["schemas"]["app__interfaces__http__v1__notebooks__schemas_apply__TestBlock"] | components["schemas"]["app__interfaces__http__v1__notebooks__schemas_apply__FlashcardsBlock"])[] | null;
+            current_blocks: (components["schemas"]["app__interfaces__http__v1__notebooks__schemas_apply__TextBlock"] | components["schemas"]["app__interfaces__http__v1__notebooks__schemas_apply__VideoBlock"] | components["schemas"]["app__interfaces__http__v1__notebooks__schemas_apply__TestBlock"] | components["schemas"]["app__interfaces__http__v1__notebooks__schemas_apply__FlashcardsBlock"] | components["schemas"]["app__interfaces__http__v1__notebooks__schemas_apply__H5PBlock"] | components["schemas"]["app__interfaces__http__v1__notebooks__schemas_apply__InteractiveVideoBlock"])[] | null;
             /** Lock Version */
             lock_version: number | null;
             /**
@@ -18154,7 +20390,7 @@ export interface components {
              */
             mode: "append" | "replace";
             /** New Blocks */
-            new_blocks: (components["schemas"]["app__interfaces__http__v1__notebooks__schemas_apply__TextBlock"] | components["schemas"]["app__interfaces__http__v1__notebooks__schemas_apply__VideoBlock"] | components["schemas"]["app__interfaces__http__v1__notebooks__schemas_apply__TestBlock"] | components["schemas"]["app__interfaces__http__v1__notebooks__schemas_apply__FlashcardsBlock"])[];
+            new_blocks: (components["schemas"]["app__interfaces__http__v1__notebooks__schemas_apply__TextBlock"] | components["schemas"]["app__interfaces__http__v1__notebooks__schemas_apply__VideoBlock"] | components["schemas"]["app__interfaces__http__v1__notebooks__schemas_apply__TestBlock"] | components["schemas"]["app__interfaces__http__v1__notebooks__schemas_apply__FlashcardsBlock"] | components["schemas"]["app__interfaces__http__v1__notebooks__schemas_apply__H5PBlock"] | components["schemas"]["app__interfaces__http__v1__notebooks__schemas_apply__InteractiveVideoBlock"])[];
             /** Step Id */
             step_id: string | null;
             /** Title */
@@ -18483,6 +20719,12 @@ export interface components {
         SubjectCardResponse: {
             /** Absences */
             absences: number;
+            /**
+             * Attendance Source
+             * @default platform
+             * @enum {string}
+             */
+            attendance_source?: "emis" | "platform" | "mixed";
             /** Emis Rating */
             emis_rating: number | null;
             /**
@@ -18520,6 +20762,12 @@ export interface components {
         SubjectDetailResponse: {
             /** Absence Rate */
             absence_rate: number | null;
+            /**
+             * Attendance Source
+             * @default platform
+             * @enum {string}
+             */
+            attendance_source?: "emis" | "platform" | "mixed";
             averages: components["schemas"]["Averages"];
             /** Emis Rating */
             emis_rating: number | null;
@@ -18547,6 +20795,12 @@ export interface components {
              * @enum {string}
              */
             attendance: "present" | "late" | "absent" | "excused" | "not_taken";
+            /**
+             * Attendance Source
+             * @default platform
+             * @enum {string}
+             */
+            attendance_source?: "emis" | "platform";
             /** Attendance Submitted */
             attendance_submitted: boolean;
             /** Audience */
@@ -18969,18 +21223,42 @@ export interface components {
          */
         SuggestionDetailResponse: {
             book?: components["schemas"]["SuggestedBookBody"] | null;
+            /** Created At */
+            created_at?: string | null;
+            file?: components["schemas"]["SuggestionFileResponse"] | null;
             /**
              * Id
              * Format: uuid
              */
             id: string;
+            /** Item Id */
+            item_id?: string | null;
             /** Note */
             note: string | null;
+            /** Reason */
+            reason?: string | null;
             status: components["schemas"]["SuggestionStatus"];
             /** Title */
             title: string;
             /** Url */
             url: string | null;
+        };
+        /**
+         * SuggestionFileResponse
+         * @description The file a suggester uploaded with the form.
+         */
+        SuggestionFileResponse: {
+            /** Byte Size */
+            byte_size: number;
+            /** Content Type */
+            content_type: string;
+            /**
+             * Id
+             * Format: uuid
+             */
+            id: string;
+            /** Name */
+            name: string;
         };
         /**
          * SuggestionResponse
@@ -20026,6 +22304,36 @@ export interface components {
             tokens_out: number;
         };
         /**
+         * TotpCodeBody
+         * @description A 6-digit code (or, to disable, a recovery code).
+         */
+        TotpCodeBody: {
+            /** Code */
+            code: string;
+        };
+        /**
+         * TotpLoginBody
+         * @description POST /v1/id/login/totp.
+         */
+        TotpLoginBody: {
+            /** Code */
+            code: string;
+            /** Login Challenge */
+            login_challenge: string;
+            /** Ticket */
+            ticket: string;
+        };
+        /**
+         * TotpSetupResponse
+         * @description POST /v1/id/me/totp/setup: show ``otpauth_uri`` as a QR code.
+         */
+        TotpSetupResponse: {
+            /** Otpauth Uri */
+            otpauth_uri: string;
+            /** Secret */
+            secret: string;
+        };
+        /**
          * TurnResultResponse
          * @description TurnResult.
          */
@@ -20039,6 +22347,33 @@ export interface components {
              */
             status: "done" | "awaiting_approval" | "limit_reached";
             usage: components["schemas"]["UsageInfoResponse"];
+        };
+        /**
+         * TypeName
+         * @description A name in the three languages.
+         */
+        TypeName: {
+            /** En */
+            en: string;
+            /** Ru */
+            ru: string;
+            /** Uz */
+            uz: string;
+        };
+        /**
+         * TypeStatsResponse
+         * @description Levels of a type and the counts per group.
+         */
+        TypeStatsResponse: {
+            /** Groups */
+            groups: components["schemas"]["GroupCountsResponse"][];
+            /** Levels */
+            levels: string[];
+            /**
+             * Type Id
+             * Format: uuid
+             */
+            type_id: string;
         };
         /**
          * UniLibraryAccessFilter
@@ -20155,6 +22490,24 @@ export interface components {
              * Format: password
              */
             emis_password: string;
+        };
+        /**
+         * UpdateEntryBody
+         * @description Body of PATCH /me/{entry_id}: only the sent fields change.
+         */
+        UpdateEntryBody: {
+            /** Level */
+            level?: string | null;
+            /** Percent */
+            percent?: number | null;
+            /** Score */
+            score?: number | null;
+            /** Serial */
+            serial?: string | null;
+            /** Subject */
+            subject?: string | null;
+            /** Year */
+            year?: number | null;
         };
         /**
          * UpdateLabelBody
@@ -20555,7 +22908,7 @@ export interface components {
         };
         /**
          * UserPatchBody
-         * @description PATCH /v1/admin/users/{id}: display name and email (omitted keeps).
+         * @description PATCH /v1/admin/users/{id}: names, login and email (omitted keeps).
          */
         UserPatchBody: {
             /** Email */
@@ -20564,6 +22917,8 @@ export interface components {
             first_name?: string | null;
             /** Last Name */
             last_name?: string | null;
+            /** Login */
+            login?: string | null;
             /** Middle Name */
             middle_name?: string | null;
         };
@@ -20893,6 +23248,16 @@ export interface components {
          * @enum {string}
          */
         "Visibility-Output": "public" | "lyceum" | "hidden";
+        /**
+         * WebAuthnOptionsResponse
+         * @description PublicKeyCredentialCreationOptions / RequestOptions as JSON (base64url).
+         */
+        WebAuthnOptionsResponse: {
+            /** Options */
+            options: {
+                [key: string]: unknown;
+            };
+        };
         /**
          * WebQuotaResponse
          * @description `WebSearchStatus`: whether web search is on and today's searches.
@@ -22344,6 +24709,84 @@ export interface components {
             [key: string]: unknown;
         };
         /**
+         * H5PBlock
+         * @description An H5P package block (only shown, as the step already has it).
+         */
+        app__interfaces__http__v1__notebooks__schemas_apply__H5PBlock: {
+            /**
+             * Id
+             * @default
+             */
+            id?: string;
+            /**
+             * Main Library
+             * @default
+             */
+            main_library?: string;
+            /**
+             * Package Id
+             * @default
+             */
+            package_id?: string;
+            /**
+             * Passing Score Pct
+             * @default 0
+             */
+            passing_score_pct?: number;
+            /**
+             * Title
+             * @default
+             */
+            title?: string;
+            /**
+             * @description discriminator enum property added by openapi-typescript
+             * @enum {string}
+             */
+            type: "h5p";
+        } & {
+            [key: string]: unknown;
+        };
+        /**
+         * InteractiveVideoBlock
+         * @description An interactive video block (only shown, as the step already has it).
+         */
+        app__interfaces__http__v1__notebooks__schemas_apply__InteractiveVideoBlock: {
+            /**
+             * Caption
+             * @default
+             */
+            caption?: string;
+            /** File Id */
+            file_id?: string | null;
+            /**
+             * Id
+             * @default
+             */
+            id?: string;
+            /** Interactions */
+            interactions?: {
+                [key: string]: unknown;
+            }[];
+            /**
+             * Source
+             * @default link
+             * @enum {string}
+             */
+            source?: "link" | "upload";
+            /**
+             * @description discriminator enum property added by openapi-typescript
+             * @enum {string}
+             */
+            type: "interactive_video";
+            /**
+             * Url
+             * @default
+             */
+            url?: string;
+        } & {
+            [key: string]: unknown;
+        };
+        /**
          * TestBlock
          * @description A test block: its settings and questions.
          */
@@ -22514,6 +24957,78 @@ export interface components {
             type: "flashcards";
         };
         /**
+         * H5PBlock
+         * @description An uploaded H5P package, played in the browser with h5p-standalone.
+         */
+        app__modules__lms__domain__step_content__H5PBlock: {
+            /**
+             * Id
+             * @default
+             */
+            id?: string;
+            /**
+             * Main Library
+             * @default
+             */
+            main_library?: string;
+            /**
+             * Package Id
+             * @default
+             */
+            package_id?: string;
+            /**
+             * Passing Score Pct
+             * @default 0
+             */
+            passing_score_pct?: number;
+            /**
+             * Title
+             * @default
+             */
+            title?: string;
+            /**
+             * @description discriminator enum property added by openapi-typescript
+             * @enum {string}
+             */
+            type: "h5p";
+        };
+        /**
+         * InteractiveVideoBlock
+         * @description A video that pauses at timestamps for questions, notes and links.
+         */
+        app__modules__lms__domain__step_content__InteractiveVideoBlock: {
+            /**
+             * Caption
+             * @default
+             */
+            caption?: string;
+            /** File Id */
+            file_id?: string | null;
+            /**
+             * Id
+             * @default
+             */
+            id?: string;
+            /** Interactions */
+            interactions?: components["schemas"]["Interaction"][];
+            /**
+             * Source
+             * @default link
+             * @enum {string}
+             */
+            source?: "link" | "upload";
+            /**
+             * @description discriminator enum property added by openapi-typescript
+             * @enum {string}
+             */
+            type: "interactive_video";
+            /**
+             * Url
+             * @default
+             */
+            url?: string;
+        };
+        /**
          * TestBlock
          * @description A test block with its settings and questions.
          */
@@ -22614,6 +25129,37 @@ export interface operations {
                 };
                 content: {
                     "text/calendar": string;
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    get_certificates_internal_emis__user_id__certificates_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                user_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["EmisCertificateResponse"][];
                 };
             };
             /** @description Validation Error */
@@ -26709,6 +29255,523 @@ export interface operations {
             };
         };
     };
+    create_type_v1_certificates_admin_types_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["CertificateTypeInput"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["CertificateTypeResponse"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    delete_type_v1_certificates_admin_types__type_id__delete: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                type_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            204: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    update_type_v1_certificates_admin_types__type_id__patch: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                type_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["CertificateTypePatch"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["CertificateTypeResponse"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    download_file_v1_certificates_files__file_id__download_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                file_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            307: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": unknown;
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    list_my_entries_v1_certificates_me_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["CertificateEntryResponse"][];
+                };
+            };
+        };
+    };
+    create_entry_v1_certificates_me_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["CreateEntryBody"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["CertificateEntryResponse"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    import_emis_v1_certificates_me_import_emis_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ImportEmisResponse"];
+                };
+            };
+        };
+    };
+    delete_entry_v1_certificates_me__entry_id__delete: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                entry_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            204: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    update_entry_v1_certificates_me__entry_id__patch: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                entry_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["UpdateEntryBody"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["CertificateEntryResponse"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    add_entry_file_v1_certificates_me__entry_id__files_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                entry_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "multipart/form-data": components["schemas"]["Body_add_entry_file_v1_certificates_me__entry_id__files_post"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["CertificateFileResponse"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    remove_entry_file_v1_certificates_me__entry_id__files__file_id__delete: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                entry_id: string;
+                file_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            204: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    list_staff_entries_v1_certificates_staff_entries_get: {
+        parameters: {
+            query?: {
+                limit?: number;
+                offset?: number;
+                group_id?: string | null;
+                subgroup?: string | null;
+                type_id?: string | null;
+                subject?: string | null;
+                level?: string | null;
+                student_id?: string | null;
+                q?: string | null;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["StaffEntriesResponse"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    export_entries_v1_certificates_staff_export_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["ExportBody"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": unknown;
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    list_staff_groups_v1_certificates_staff_groups_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["StaffGroupResponse"][];
+                };
+            };
+        };
+    };
+    get_staff_ranking_v1_certificates_staff_ranking_get: {
+        parameters: {
+            query?: {
+                limit?: number;
+                group_id?: string | null;
+                subgroup?: string | null;
+                type_id?: string | null;
+                subject?: string | null;
+                level?: string | null;
+                student_id?: string | null;
+                q?: string | null;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["StaffRankingResponse"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    get_staff_stats_v1_certificates_staff_stats_get: {
+        parameters: {
+            query?: {
+                group_id?: string | null;
+                subgroup?: string | null;
+                type_id?: string | null;
+                subject?: string | null;
+                level?: string | null;
+                student_id?: string | null;
+                q?: string | null;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["StaffStatsResponse"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    list_types_v1_certificates_types_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["CertificateTypeResponse"][];
+                };
+            };
+        };
+    };
     request_upload_v1_files_post: {
         parameters: {
             query?: never;
@@ -27227,6 +30290,72 @@ export interface operations {
             };
         };
     };
+    post_login_passkey_v1_id_login_passkey_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["PasskeyLoginBody"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["LoginResultResponse"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    post_login_passkey_options_v1_id_login_passkey_options_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["PasskeyOptionsBody"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["WebAuthnOptionsResponse"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
     post_login_password_v1_id_login_password_post: {
         parameters: {
             query?: never;
@@ -27346,6 +30475,39 @@ export interface operations {
                 };
                 content: {
                     "application/json": components["schemas"]["RedirectToResponse"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    post_login_totp_v1_id_login_totp_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["TotpLoginBody"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["LoginResultResponse"];
                 };
             };
             /** @description Validation Error */
@@ -27771,6 +30933,123 @@ export interface operations {
             };
         };
     };
+    post_passkey_v1_id_me_passkeys_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["PasskeyRegisterBody"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["PasskeyResponse"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    post_passkey_options_v1_id_me_passkeys_options_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["WebAuthnOptionsResponse"];
+                };
+            };
+        };
+    };
+    delete_passkey_v1_id_me_passkeys__id__delete: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            204: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    patch_passkey_v1_id_me_passkeys__id__patch: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["PasskeyRenameBody"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["PasskeyResponse"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
     post_password_v1_id_me_password_post: {
         parameters: {
             query?: never;
@@ -27798,6 +31077,26 @@ export interface operations {
                 };
                 content: {
                     "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    post_password_login_disable_v1_id_me_password_login_disable_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["SecurityResponse"];
                 };
             };
         };
@@ -27831,6 +31130,26 @@ export interface operations {
                 };
                 content: {
                     "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    get_security_v1_id_me_security_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["SecurityResponse"];
                 };
             };
         };
@@ -28000,6 +31319,92 @@ export interface operations {
                 };
                 content: {
                     "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    post_totp_confirm_v1_id_me_totp_confirm_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["TotpCodeBody"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["RecoveryCodesResponse"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    post_totp_disable_v1_id_me_totp_disable_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["TotpCodeBody"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["SecurityResponse"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    post_totp_setup_v1_id_me_totp_setup_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["TotpSetupResponse"];
                 };
             };
         };
@@ -29959,6 +33364,39 @@ export interface operations {
             };
         };
     };
+    start_cartridge_import_v1_lms_courses_import_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "multipart/form-data": components["schemas"]["Body_start_cartridge_import_v1_lms_courses_import_post"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            202: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["CartridgeImportStarted"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
     compare_versions_v1_lms_courses__course_id__compare_get: {
         parameters: {
             query: {
@@ -29980,6 +33418,37 @@ export interface operations {
                 };
                 content: {
                     "application/json": components["schemas"]["VersionCompareResponse"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    copy_course_v1_lms_courses__course_id__copy_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                course_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["CourseCopied"];
                 };
             };
             /** @description Validation Error */
@@ -30156,6 +33625,72 @@ export interface operations {
             };
         };
     };
+    export_cartridge_v1_lms_courses__course_id__export_imscc_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                course_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/vnd.ims.imsccv1p3": unknown;
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    upload_h5p_v1_lms_courses__course_id__h5p_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                course_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "multipart/form-data": components["schemas"]["Body_upload_h5p_v1_lms_courses__course_id__h5p_post"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["H5PPackageResponse"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
     rotate_invite_code_v1_lms_courses__course_id__invite_code_post: {
         parameters: {
             query?: never;
@@ -30174,6 +33709,68 @@ export interface operations {
                 };
                 content: {
                     "application/json": components["schemas"]["InviteCodeResponse"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    get_link_report_v1_lms_courses__course_id__link_check_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                course_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["LinkReportView"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    start_link_check_v1_lms_courses__course_id__link_check_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                course_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["LinkJobView"];
                 };
             };
             /** @description Validation Error */
@@ -30237,6 +33834,39 @@ export interface operations {
                 };
                 content: {
                     "application/json": components["schemas"]["PreviewStepResponse"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    preview_h5p_v1_lms_courses__course_id__preview_steps__step_id__blocks__block_id__h5p_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                course_id: string;
+                step_id: string;
+                block_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["H5PLaunchResponse"];
                 };
             };
             /** @description Validation Error */
@@ -30318,6 +33948,37 @@ export interface operations {
             };
         };
     };
+    get_settings_v1_lms_courses__course_id__settings_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                course_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["CourseSettingsView"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
     update_settings_v1_lms_courses__course_id__settings_patch: {
         parameters: {
             query?: never;
@@ -30340,6 +34001,72 @@ export interface operations {
                 };
                 content: {
                     "application/json": components["schemas"]["CourseDraftResponse"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    update_details_v1_lms_courses__course_id__settings_details_patch: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                course_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["SettingsDetailsBody"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["CourseSettingsView"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    regenerate_join_code_v1_lms_courses__course_id__settings_join_code_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                course_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["InviteCodeResponse"];
                 };
             };
             /** @description Validation Error */
@@ -30552,6 +34279,39 @@ export interface operations {
             };
         };
     };
+    get_h5p_launch_v1_lms_courses__course_id__steps__step_id__blocks__block_id__h5p_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                course_id: string;
+                step_id: string;
+                block_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["H5PLaunchView"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
     get_video_stream_v1_lms_courses__course_id__steps__step_id__blocks__block_id__video_get: {
         parameters: {
             query?: never;
@@ -30742,6 +34502,70 @@ export interface operations {
             };
         };
     };
+    get_course_landing_v1_lms_courses__slug__landing_get: {
+        parameters: {
+            query?: {
+                preview?: boolean;
+            };
+            header?: never;
+            path: {
+                slug: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["LearningLandingView"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    get_cartridge_import_v1_lms_imports__job_id__get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                job_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["CartridgeImportStatus"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
     join_v1_lms_join_post: {
         parameters: {
             query?: never;
@@ -30816,6 +34640,79 @@ export interface operations {
                 };
                 content: {
                     "application/json": components["schemas"]["LearningAttemptView"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    record_h5p_result_v1_lms_steps__step_id__blocks__block_id__h5p_result_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                step_id: string;
+                block_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["LearningH5PResultBody"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["LearningBlockResultView"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    answer_interaction_v1_lms_steps__step_id__blocks__block_id__interactions__interaction_id__answer_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                step_id: string;
+                block_id: string;
+                interaction_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["LearningInteractionAnswerBody"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["LearningInteractionResultView"];
                 };
             };
             /** @description Validation Error */
@@ -31881,6 +35778,39 @@ export interface operations {
             };
         };
     };
+    approve_suggestion_v1_manage_library_suggestions__suggestion_id__approve_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                suggestion_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["ApproveSuggestionBody"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            204: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
     decide_suggestion_v1_manage_library_suggestions__suggestion_id___decision__post: {
         parameters: {
             query?: never;
@@ -31891,7 +35821,11 @@ export interface operations {
             };
             cookie?: never;
         };
-        requestBody?: never;
+        requestBody?: {
+            content: {
+                "application/json": components["schemas"]["DeclineSuggestionBody"] | null;
+            };
+        };
         responses: {
             /** @description Successful Response */
             204: {
@@ -32664,6 +36598,37 @@ export interface operations {
             };
         };
     };
+    get_my_group_progress_v1_me_group_progress_get: {
+        parameters: {
+            query?: {
+                semester?: number | null;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["GroupProgressResponse"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
     list_homework_v1_me_homework_get: {
         parameters: {
             query?: {
@@ -33217,6 +37182,26 @@ export interface operations {
                 };
                 content: {
                     "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    list_my_suggestions_v1_me_library_suggestions_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["MySuggestionsResponse"];
                 };
             };
         };
@@ -36419,6 +40404,39 @@ export interface operations {
                 };
                 content: {
                     "application/json": components["schemas"]["GroupDetailResponse"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    get_group_progress_v1_staff_groups__group_id__progress_get: {
+        parameters: {
+            query?: {
+                semester?: number | null;
+            };
+            header?: never;
+            path: {
+                group_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["GroupProgressResponse"];
                 };
             };
             /** @description Validation Error */

@@ -46,7 +46,8 @@ function fromDraft(block: DraftBlock): DisplayBlock {
 
 function fromLms(block: Block): DisplayBlock {
   if (block.type === "text") return { type: "text", markdown: block.markdown }
-  if (block.type === "video") return { type: "text", markdown: block.url }
+  if (block.type === "video" || block.type === "interactive_video") return { type: "text", markdown: block.url }
+  if (block.type === "h5p") return { type: "text", markdown: block.title || "H5P" }
   if (block.type === "flashcards")
     return { type: "flashcards", cards: block.cards.map(({ front, back }) => ({ front, back })) }
   return {

@@ -17,7 +17,17 @@ import type {
 import { HttpResponse, http } from "msw"
 import { TEST_STORAGE_URL } from "../fixtures/env"
 import { libStats } from "../fixtures/library"
-import { adminOnly, invalid, itemNotFound, newId, stamp, staffOnly, state, subjectRef } from "./library-state"
+import {
+  adminOnly,
+  invalid,
+  itemNotFound,
+  newId,
+  stamp,
+  staffOnly,
+  state,
+  subjectRef,
+  type StoredSuggestion,
+} from "./library-state"
 import { apiUrl, noContent, param, problem, query, readJson } from "./utils"
 
 const SANCTION_KINDS = ["warning", "upload_ban"]
@@ -31,6 +41,16 @@ function slugify(text: string): string {
 
 const hasNames = (name: { uz?: string; ru?: string; en?: string } | undefined) =>
   !!name?.uz?.trim() && !!name.ru?.trim() && !!name.en?.trim()
+
+/** A suggestion nobody decided yet, or the 404 / 409 the API answers. */
+function pendingSuggestion(id: string): StoredSuggestion | Response {
+  const found = state.suggestions.find((s) => s.id === id)
+  if (!found) return notFound("Suggestion")
+  if ((found.status ?? "new") !== "new") {
+    return problem(409, "library/invalid-transition", "Already decided", { params: { status: found.status } })
+  }
+  return found
+}
 
 function notFound(what: string): Response {
   return problem(404, "library/not-found", `${what} not found`)
@@ -212,9 +232,36 @@ export const libraryAdminHandlers = [
       title: found.title,
       url: found.url,
       note: found.note,
-      status: "new",
+      status: found.status ?? "new",
       book: found.book,
+      file: found.fileId
+        ? { id: found.fileId, name: "book.pdf", content_type: "application/pdf", byte_size: 1000 }
+        : null,
+      reason: found.reason ?? null,
+      item_id: found.itemId ?? null,
+      created_at: found.createdAt,
     })
+  }),
+
+  // TODO(contract): approve links the saved book; decline keeps a reason. Each is decided once.
+  http.post(apiUrl("/v1/manage/library/suggestions/:id/approve"), async ({ params, request }) => {
+    const actor = staffOnly(request)
+    if (actor instanceof Response) return actor
+    const found = pendingSuggestion(param(params, "id"))
+    if (found instanceof Response) return found
+    const body = await readJson<{ item_id: string }>(request)
+    if (!body.item_id) return invalid("item_id", "item_id is required")
+    Object.assign(found, { status: "accepted", itemId: body.item_id, decidedAt: stamp() })
+    return noContent()
+  }),
+  http.post(apiUrl("/v1/manage/library/suggestions/:id/decline"), async ({ params, request }) => {
+    const actor = staffOnly(request)
+    if (actor instanceof Response) return actor
+    const found = pendingSuggestion(param(params, "id"))
+    if (found instanceof Response) return found
+    const body = await readJson<{ reason: string | null }>(request)
+    Object.assign(found, { status: "declined", reason: body.reason?.trim() || null, decidedAt: stamp() })
+    return noContent()
   }),
 
   // --- Collections ---

@@ -113,6 +113,7 @@ export function formFromSuggestion(book: SuggestedBook): BookForm {
     type: book.type,
     description: text(book.description),
     yearsOfStudy: book.years_of_study ?? [],
+    coverFileId: book.cover_file_id ?? null,
     subjects: book.subjects ?? [],
     topics: (book.topics ?? []).map((row) => ({
       topic_id: row.topic_id,
@@ -174,6 +175,7 @@ export function suggestedFromForm(form: BookForm): SuggestedBook {
     subjects: input.subjects,
     topics: input.topics,
     tags: form.tags,
+    cover_file_id: form.coverFileId ?? null,
   }
 }
 

@@ -18,8 +18,9 @@ describe("AuthorChat", () => {
     renderAuthor()
 
     expect(await screen.findByRole("combobox", { name: "Author assistant chat" })).toHaveValue(courseIds.authorChat)
-    expect(await screen.findByText(/I propose to add one section with two steps/)).toBeInTheDocument()
-    expect(screen.getByText("Add to the course outline")).toBeInTheDocument()
+    expect(await screen.findByText("Add to the course outline")).toBeInTheDocument()
+    // The text of a round that waits for approval is a progress note, not the answer.
+    expect(screen.queryByText(/I propose to add one section with two steps/)).toBeNull()
     expect(screen.getByText("Conservation of energy")).toBeInTheDocument()
     expect(screen.getByRole("button", { name: "Approve" })).toBeInTheDocument()
   })

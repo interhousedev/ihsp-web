@@ -4,6 +4,15 @@
 const params = <T extends object>(value: T | undefined): T | Record<string, never> => value ?? {}
 
 export const keys = {
+  certificates: {
+    all: () => ["certificates"] as const,
+    types: () => ["certificates", "types"] as const,
+    mine: () => ["certificates", "mine"] as const,
+    groups: () => ["certificates", "groups"] as const,
+    entries: (filters?: object) => ["certificates", "entries", params(filters)] as const,
+    stats: (filters?: object) => ["certificates", "stats", params(filters)] as const,
+    ranking: (filters?: object) => ["certificates", "ranking", params(filters)] as const,
+  },
   id: {
     all: () => ["id"] as const,
     login: (challenge: string) => ["id", "login", challenge] as const,
@@ -16,6 +25,7 @@ export const keys = {
     telegram: () => ["id", "telegram"] as const,
     activity: (filters?: object) => ["id", "activity", params(filters)] as const,
     connectors: () => ["id", "connectors"] as const,
+    security: () => ["id", "security"] as const,
   },
   admin: {
     all: () => ["admin"] as const,
@@ -241,6 +251,7 @@ export const keys = {
     shelf: (filters?: object) => ["library", "me", "shelf", params(filters)] as const,
     annotations: (filters?: object) => ["library", "me", "annotations", params(filters)] as const,
     uploads: (filters?: object) => ["library", "me", "uploads", params(filters)] as const,
+    mySuggestions: () => ["library", "me", "suggestions"] as const,
     myGroups: () => ["library", "my-groups"] as const,
     manage: {
       all: () => ["library", "manage"] as const,

@@ -167,7 +167,7 @@ describe("MyUploads", () => {
     expect(await screen.findByText("You have not uploaded anything yet.")).toBeInTheDocument()
     expect(within(screen.getByRole("status")).getByRole("link", { name: "Add a material" })).toHaveAttribute(
       "href",
-      expect.stringMatching(/^\/upload\/?$/),
+      expect.stringMatching(/^\/upload\/material\/?$/),
     )
   })
 

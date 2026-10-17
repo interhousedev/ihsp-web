@@ -13,7 +13,8 @@ export type LoginInfo = {
 
 export type LoginResult = {
   redirect_to: string | null
-  second_factor: { method: "otp"; ticket: string; channels: ("telegram" | "email")[] } | null
+  /** `totp` (TODO(contract)): the authenticator app is asked for and `channels` is empty. */
+  second_factor: { method: "otp" | "totp"; ticket: string; channels: ("telegram" | "email")[] } | null
   /** Set when an administrator chose the password and the deployment asks for a new one at login. */
   password_change?: { ticket: string } | null
   /**

@@ -224,8 +224,8 @@
       "myUploads": "Mening yuklaganlarim"
     },
     "suggest": {
-      "title": "Kitob taklif qilish",
-      "intro": "Kutubxonada hali yoʻq kitobni taklif qiling. Kutubxonachi uni tekshiradi va mos boʻlsa qoʻshadi. Bilganingizni toʻldiring: nomi va kamida bitta muallif kerak.",
+      "title": "Kitob qoʻshish",
+      "intro": "Kutubxonada hali yoʻq kitobni qoʻshing: faylni yuklang va bilganingizni toʻldiring (nomi va kamida bitta muallif kerak). U kutubxonachilarga taklif sifatida yuboriladi: ular tekshiradi, kerak boʻlsa tuzatadi va qoʻshadi, holatini esa «Mening takliflarim» boʻlimida koʻrasiz.",
       "sourceTitle": "Qayerdan topish mumkin",
       "linkLabel": "Havola (ixtiyoriy)",
       "linkHint": "Kitobni oʻqish yoki sotib olish mumkin boʻlgan sahifa, https:// bilan boshlanadi",
@@ -233,7 +233,9 @@
       "noteLabel": "Kutubxonachi uchun izoh (ixtiyoriy)",
       "noteHint": "{count} / {max}",
       "send": "Taklifni yuborish",
-      "thanks": "Rahmat. Kutubxonachi uni koʻrib chiqadi."
+      "thanks": "Rahmat. Taklifingiz kutubxonachini kutmoqda.",
+      "mySuggestions": "Mening takliflarim",
+      "materialInstead": "Konspekt yoki ish varagʻini yuklash"
     }
   },
   "material": {
@@ -404,6 +406,19 @@
       "account_closed": "Hisob yopilgan",
       "unpublished": "Eʼlondan olingan",
       "takedown": "Kutubxonachi tomonidan olib tashlangan"
+    }
+  },
+  "mySuggestions": {
+    "label": "Mening takliflarim",
+    "suggest": "Kitob taklif qilish",
+    "empty": "Siz hali kitob taklif qilmagansiz.",
+    "sent": "{date} da yuborilgan",
+    "reason": "Sabab",
+    "openBook": "Kitobni ochish",
+    "status": {
+      "new": "Kutubxonachini kutmoqda",
+      "accepted": "Kutubxonaga qoʻshildi",
+      "declined": "Rad etildi"
     }
   }
 }

@@ -4,7 +4,7 @@ import { useT } from "@ihsp/i18n"
 import { cn } from "@ihsp/ui"
 import { IconBook2, IconCamera, IconFileTypePdf, IconMarkdown, type Icon, buttonVariants } from "@ihsp/ui"
 import Link from "next/link"
-import { uploadSuggestHref } from "../utils/hrefs"
+import { uploadHref } from "../utils/hrefs"
 import type { StepProps } from "./step-props"
 import { UPLOAD_KINDS, type UploadKind } from "./upload-config"
 
@@ -64,7 +64,7 @@ export function StepKind({ values, onChange, showProblems }: StepProps) {
           </p>
           <p className="text-muted-foreground text-sm">{t("suggestText")}</p>
         </div>
-        <Link href={uploadSuggestHref()} className={buttonVariants({ variant: "outline", className: "min-h-11" })}>
+        <Link href={uploadHref()} className={buttonVariants({ variant: "outline", className: "min-h-11" })}>
           {t("suggestButton")}
         </Link>
       </div>

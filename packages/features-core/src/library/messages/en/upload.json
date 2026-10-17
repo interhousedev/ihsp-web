@@ -224,8 +224,8 @@
       "myUploads": "My uploads"
     },
     "suggest": {
-      "title": "Suggest a book",
-      "intro": "Suggest a book that is not in the library yet. A librarian checks it and adds it if it fits. Fill in what you know; the title and at least one author are needed.",
+      "title": "Add a book",
+      "intro": "Add a book that is not in the library yet: upload the file and fill in what you know (the title and at least one author are needed). It goes to the librarians as a suggestion; they check it, may correct it and add it, and you see the status in My suggestions.",
       "sourceTitle": "Where to find it",
       "linkLabel": "Link (optional)",
       "linkHint": "A page where the book can be read or bought, starting with https://",
@@ -233,7 +233,9 @@
       "noteLabel": "Note for the librarian (optional)",
       "noteHint": "{count} of {max}",
       "send": "Send suggestion",
-      "thanks": "Thanks. A librarian will look at it."
+      "thanks": "Thanks. Your suggestion is waiting for a librarian.",
+      "mySuggestions": "My suggestions",
+      "materialInstead": "Upload notes or a worksheet instead"
     }
   },
   "material": {
@@ -404,6 +406,19 @@
       "account_closed": "The account was closed",
       "unpublished": "Removed from the library",
       "takedown": "Taken down by a librarian"
+    }
+  },
+  "mySuggestions": {
+    "label": "My suggestions",
+    "suggest": "Suggest a book",
+    "empty": "You have not suggested a book yet.",
+    "sent": "Sent {date}",
+    "reason": "Reason",
+    "openBook": "Open the book",
+    "status": {
+      "new": "Waiting for a librarian",
+      "accepted": "Added to the library",
+      "declined": "Declined"
     }
   }
 }

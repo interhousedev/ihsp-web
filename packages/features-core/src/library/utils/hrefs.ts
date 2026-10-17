@@ -40,8 +40,9 @@ export const collectionHref = (id: string) => withQuery("/collections/view/", { 
 
 export const uploadHref = () => "/upload/"
 export const uploadEditHref = (id: string) => withQuery("/upload/edit/", { id })
-export const uploadSuggestHref = () => "/upload/suggest/"
-export type MyLibraryTab = "continue" | "shelf" | "notes" | "lists" | "uploads"
+/** The material wizard (notes, worksheets, photos); `/upload/` itself is the book form. */
+export const uploadMaterialHref = () => "/upload/material/"
+export type MyLibraryTab = "continue" | "shelf" | "notes" | "lists" | "uploads" | "suggestions"
 export const myHref = (tab?: MyLibraryTab) => withQuery("/my/", { tab })
 
 export const manageQueueHref = (tab?: string) => withQuery("/manage/queue/", { tab })

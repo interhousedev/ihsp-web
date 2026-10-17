@@ -489,8 +489,52 @@ export interface SuggestionDetail {
   title: string
   url: string | null
   note: string | null
-  status: "new" | "accepted" | "declined"
+  status: SuggestionStatus
   book: SuggestedBook | null
+  /** TODO(contract): the file the suggester uploaded with the form. */
+  file?: SuggestionFile | null
+  /** TODO(contract) */
+  reason?: string | null
+  /** TODO(contract): the book an accepted suggestion became. */
+  item_id?: string | null
+  /** TODO(contract) */
+  created_at?: string | null
+}
+
+export type SuggestionStatus = "new" | "accepted" | "declined"
+
+/** TODO(contract): `SuggestionFileResponse`. */
+export interface SuggestionFile {
+  id: string
+  name: string
+  content_type: string
+  byte_size: number
+}
+
+/** TODO(contract): `GET /me/library/suggestions` row (`MySuggestionResponse`). */
+export interface MySuggestion {
+  id: string
+  title: string
+  status: SuggestionStatus
+  created_at: string
+  decided_at: string | null
+  reason: string | null
+  item_id: string | null
+}
+
+/** TODO(contract): `MySuggestionsResponse`. */
+export interface MySuggestions {
+  items: MySuggestion[]
+}
+
+/** TODO(contract): `POST /manage/library/suggestions/{id}/approve`. */
+export interface ApproveSuggestionBody {
+  item_id: string
+}
+
+/** TODO(contract): `POST /manage/library/suggestions/{id}/decline`. */
+export interface DeclineSuggestionBody {
+  reason?: string | null
 }
 
 /** `POST /library/items/{id}/report`. */

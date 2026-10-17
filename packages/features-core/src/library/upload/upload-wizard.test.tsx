@@ -447,9 +447,9 @@ describe("UploadWizard: blocked and refused uploads", () => {
 })
 
 describe("UploadWizard: suggest a book", () => {
-  it("links to the book editor in suggest mode", () => {
+  it("links to the book form at /upload/", () => {
     renderWizard()
-    expect(screen.getByRole("link", { name: "Suggest a book" }).getAttribute("href")).toMatch(/^\/upload\/suggest\/?$/)
+    expect(screen.getByRole("link", { name: "Suggest a book" }).getAttribute("href")).toMatch(/^\/upload\/?$/)
     expect(screen.queryByRole("dialog", { name: "Suggest a book" })).not.toBeInTheDocument()
   })
 })

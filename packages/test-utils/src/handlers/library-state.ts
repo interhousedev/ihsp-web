@@ -85,6 +85,11 @@ export type StoredSuggestion = {
   note: string | null
   book: SuggestedBook | null
   createdAt: string
+  fileId?: string | null
+  status?: "new" | "accepted" | "declined"
+  reason?: string | null
+  itemId?: string | null
+  decidedAt?: string | null
 }
 export type ShelfRow = { itemId: string; state: ShelfState; finishedAt: string | null; updatedAt: string; seq: number }
 export type ProgressRow = ProgressBody & { itemId: string; updatedAt: string }

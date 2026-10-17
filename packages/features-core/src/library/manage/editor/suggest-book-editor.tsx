@@ -1,19 +1,22 @@
 "use client"
 
-import { postSuggestion } from "@ihsp/api"
+import { keys, postSuggestion, type FileItem } from "@ihsp/api"
 import { useErrorMessage, useT } from "@ihsp/i18n"
 import { Button, Input, PageContainer, Textarea, buttonVariants } from "@ihsp/ui"
 import { IconArrowLeft } from "@ihsp/ui"
-import { useMutation } from "@tanstack/react-query"
+import { useMutation, useQueryClient } from "@tanstack/react-query"
 import Link from "next/link"
+import { useRouter } from "next/navigation"
 import { useId, useMemo, useState } from "react"
 import { toast } from "sonner"
-import { uploadHref } from "../../utils/hrefs"
+import { myHref, uploadMaterialHref } from "../../utils/hrefs"
+import { BookFileSection } from "./book-file-section"
 import { emptyForm, suggestedFromForm, sameForm, type BookForm } from "./book-form"
 import { validateForm } from "./book-form-checks"
 import { BookMetadataFields } from "./book-metadata-fields"
 import { BookSubjectsTopics } from "./book-subjects-topics"
 import { FieldRow } from "./field-row"
+import { formatOf, type PendingFile } from "./use-book-editor"
 import { useLeaveGuard } from "./use-leave-guard"
 
 const NOTE_MAX = 500
@@ -31,9 +34,11 @@ export function isSuggestionLink(value: string): boolean {
 }
 
 /**
- * The book editor in "suggest" mode (`/upload/suggest/`): the same details, subjects and topics as the librarian's
- * editor, plus a link and a note. There are no files, rights or visibility; Send puts the book into the librarians'
- * queue (`POST /library/suggestions` with `book`), where a librarian turns it into a draft.
+ * The book editor in "suggest" mode (`/upload/` for everyone who is not a librarian): the same file and cover,
+ * details, subjects and topics as the librarian's editor, plus a link and a note. There are no rights or visibility;
+ * Send stores a pending suggestion with the uploaded file (`POST /library/suggestions` with `book` and `file_id`),
+ * never a book. A librarian opens it in the book editor, edits it and approves or declines it; the status shows in
+ * My library > My suggestions.
  */
 export function SuggestBookEditor({ initialTitle = "" }: { initialTitle?: string }) {
   const t = useT("library.upload.suggest")
@@ -43,8 +48,12 @@ export function SuggestBookEditor({ initialTitle = "" }: { initialTitle?: string
   const [form, setForm] = useState<BookForm>(() => emptyForm(initialTitle))
   const [link, setLink] = useState("")
   const [note, setNote] = useState("")
+  const [file, setFile] = useState<PendingFile | null>(null)
+  const [coverName, setCoverName] = useState<string | null>(null)
   const [attempted, setAttempted] = useState(false)
-  const dirty = !sameForm(form, emptyForm(initialTitle)) || link !== "" || note !== ""
+  const queryClient = useQueryClient()
+  const router = useRouter()
+  const dirty = !sameForm(form, emptyForm(initialTitle)) || link !== "" || note !== "" || file !== null
   useLeaveGuard(dirty, editor("leaveConfirm"))
 
   const issues = useMemo(() => validateForm(form), [form])
@@ -62,13 +71,19 @@ export function SuggestBookEditor({ initialTitle = "" }: { initialTitle?: string
         book: suggestedFromForm(form),
         ...(link.trim() ? { url: link.trim() } : {}),
         ...(note.trim() ? { note: note.trim() } : {}),
+        ...(file ? { file_id: file.id } : {}),
       }),
-    onSuccess: () => {
-      toast.success(t("thanks"))
+    onSuccess: async () => {
+      toast.success(t("thanks"), {
+        action: { label: t("mySuggestions"), onClick: () => router.push(myHref("suggestions")) },
+      })
       setForm(emptyForm())
       setLink("")
       setNote("")
+      setFile(null)
+      setCoverName(null)
       setAttempted(false)
+      await queryClient.invalidateQueries({ queryKey: keys.library.mySuggestions() })
     },
   })
 
@@ -76,10 +91,21 @@ export function SuggestBookEditor({ initialTitle = "" }: { initialTitle?: string
     <PageContainer
       title={t("title")}
       actions={
-        <Link href={uploadHref()} className={buttonVariants({ variant: "outline", className: "min-h-11 md:min-h-8" })}>
-          <IconArrowLeft aria-hidden />
-          {editor("back")}
-        </Link>
+        <>
+          <Link
+            href={myHref("suggestions")}
+            className={buttonVariants({ variant: "outline", className: "min-h-11 md:min-h-8" })}
+          >
+            <IconArrowLeft aria-hidden />
+            {t("mySuggestions")}
+          </Link>
+          <Link
+            href={uploadMaterialHref()}
+            className={buttonVariants({ variant: "outline", className: "min-h-11 md:min-h-8" })}
+          >
+            {t("materialInstead")}
+          </Link>
+        </>
       }
     >
       <form
@@ -92,6 +118,25 @@ export function SuggestBookEditor({ initialTitle = "" }: { initialTitle?: string
         }}
       >
         <p className="text-muted-foreground text-sm">{t("intro")}</p>
+
+        <BookFileSection
+          form={form}
+          files={[]}
+          pendingFile={file}
+          coverName={coverName}
+          attaching={false}
+          attachError={null}
+          disabled={send.isPending}
+          bookPurpose="library_material"
+          coverPurpose="library_material"
+          onFile={(uploaded: FileItem) =>
+            setFile({ id: uploaded.id, name: uploaded.name, format: formatOf(uploaded.name) })
+          }
+          onCover={(uploaded: FileItem) => {
+            setCoverName(uploaded.name)
+            update({ coverFileId: uploaded.id, coverUrl: null })
+          }}
+        />
 
         <section aria-labelledby="suggest-details-title" className="flex flex-col gap-4 rounded-xl border p-4">
           <h2 id="suggest-details-title" className="text-lg font-semibold">
