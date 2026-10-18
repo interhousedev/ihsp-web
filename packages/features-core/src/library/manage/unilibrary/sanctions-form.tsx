@@ -2,7 +2,7 @@
 
 import { postLibrarySanction, type Sanction } from "@ihsp/api"
 import { useErrorMessage, useFormatters, useT } from "@ihsp/i18n"
-import { Button, Input, Label, NativeSelect, NativeSelectOption, Textarea } from "@ihsp/ui"
+import { Button, Dropdown, Input, Label, Textarea } from "@ihsp/ui"
 import { useMutation } from "@tanstack/react-query"
 import { useId, useState } from "react"
 
@@ -78,14 +78,15 @@ export function SanctionsForm() {
         </div>
         <div className="flex flex-col gap-1.5">
           <Label htmlFor={`${id}-kind`}>{t("kind")}</Label>
-          <NativeSelect
+          <Dropdown
             id={`${id}-kind`}
             value={kind}
-            onChange={(event) => setKind(event.target.value as Sanction["kind"])}
-          >
-            <NativeSelectOption value="warning">{t("warning")}</NativeSelectOption>
-            <NativeSelectOption value="upload_ban">{t("upload_ban")}</NativeSelectOption>
-          </NativeSelect>
+            onValueChange={(value) => setKind(value as Sanction["kind"])}
+            options={[
+              { value: "warning", label: t("warning") },
+              { value: "upload_ban", label: t("upload_ban") },
+            ]}
+          />
         </div>
         {kind === "upload_ban" ? (
           <div className="flex flex-col gap-1.5">

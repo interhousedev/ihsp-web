@@ -1,6 +1,6 @@
 /** "App lock" in Settings: set, change and turn off the PIN. */
 import { beforeEach, describe, expect, test } from "bun:test"
-import { userMe } from "@ihsp/test-utils"
+import { dropdownLabels, selectDropdownValue, userMe } from "@ihsp/test-utils"
 import { screen, waitFor } from "@testing-library/react"
 import { configureTests, setValue } from "../../../tests/helpers"
 import { AppLockSection } from "../components/app-lock-section"
@@ -176,18 +176,16 @@ describe("Ask for the PIN again", () => {
     await user.click(screen.getByRole("button", { name: "Save" }))
 
     await waitFor(() => expect(readPinRecord(userMe.id)?.relock).toBe("5m"))
-    expect(await screen.findByLabelText("Ask for the PIN again")).toHaveValue("5m")
+    expect(await screen.findByLabelText("Ask for the PIN again")).toHaveAttribute("data-value", "5m")
   })
 
   test("offers every option, with its own words", async () => {
     writePinRecord(userMe.id, await createPinRecord("1234", 1000))
-    renderSection()
+    const { user } = renderSection()
 
     const select = screen.getByLabelText("Ask for the PIN again")
 
-    expect([...select.querySelectorAll("option")].map((option) => option.textContent)).toEqual(
-      RELOCK_OPTIONS.map((option) => OPTION_LABELS[option]),
-    )
+    expect(await dropdownLabels(user, select)).toEqual(RELOCK_OPTIONS.map((option) => OPTION_LABELS[option]))
   })
 
   for (const option of RELOCK_OPTIONS) {
@@ -196,7 +194,7 @@ describe("Ask for the PIN again", () => {
       writePinRecord("someone-else", await createPinRecord("9999", 1000, "never"))
       const { user } = renderSection()
 
-      await user.selectOptions(screen.getByLabelText("Ask for the PIN again"), option)
+      await selectDropdownValue(user, screen.getByLabelText("Ask for the PIN again"), option)
 
       await waitFor(() => expect(readPinRecord(userMe.id)?.relock).toBe(option))
       expect(readPinRecord("someone-else")?.relock).toBe("never")

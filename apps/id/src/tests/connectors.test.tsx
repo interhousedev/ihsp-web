@@ -1,6 +1,15 @@
 /** UF-MCP-01, UF-MCP-04, MCP-2, MCP-4: MCP connectors. */
 import { describe, expect, test } from "bun:test"
-import { adminMe, apiUrl, connectorToken, connectors, scopeCatalog, server, testRouter } from "@ihsp/test-utils"
+import {
+  adminMe,
+  apiUrl,
+  connectorToken,
+  connectors,
+  scopeCatalog,
+  server,
+  setDropdownValue,
+  testRouter,
+} from "@ihsp/test-utils"
 import { fireEvent, screen, waitFor } from "@testing-library/react"
 import { HttpResponse, http } from "msw"
 import { ConnectorsPage } from "../features/connectors/components/connectors-page"
@@ -47,7 +56,7 @@ describe("new connector page", () => {
     const { user } = renderId(<NewConnectorPage />, { route: "/connectors/new/", session: LOGGED_IN })
 
     await user.click(await screen.findByText("Study planner"))
-    fireEvent.change(await screen.findByLabelText("Expires after"), { target: { value: "90" } })
+    setDropdownValue(await screen.findByLabelText("Expires after"), "90")
     await fillField("Name", "Mine")
     await clickButton("Create connector")
 
@@ -70,7 +79,7 @@ describe("new connector page", () => {
     )
     renderId(<NewConnectorPage />, { route: "/connectors/new/", session: LOGGED_IN })
 
-    fireEvent.change(await screen.findByLabelText("Server"), { target: { value: "lms" } })
+    setDropdownValue(await screen.findByLabelText("Server"), "lms")
     expect(await screen.findByText("Read courses, steps and attempts.")).toBeInTheDocument()
     expect(screen.getByText("Edit modules, lessons and steps.")).toBeInTheDocument()
     fireEvent.click(await screen.findByText("Module editor"))
@@ -112,12 +121,14 @@ describe("new connector page", () => {
       session: { access_token: "admin-token", user: adminMe },
     })
 
-    fireEvent.change(await screen.findByLabelText("Server"), { target: { value: "admin" } })
+    setDropdownValue(await screen.findByLabelText("Server"), "admin")
 
     expect(await screen.findByText("Administration connectors need a confirmation code.")).toBeInTheDocument()
     expect(screen.getByText("Administration connectors last at most 30 days.")).toBeInTheDocument()
+    const expiry = await screen.findByLabelText("Expires after")
+    fireEvent.click(expiry)
     expect(
-      document.querySelectorAll("#" + CSS.escape((await screen.findByLabelText("Expires after")).id) + " option"),
+      document.querySelectorAll(`#${CSS.escape(expiry.getAttribute("aria-controls") ?? "")} [role='option']`),
     ).toHaveLength(1)
     expect(expiryOptions("admin")).toEqual([30])
     expect(expiryOptions("lms")).toEqual([30, 90, 365])

@@ -827,11 +827,20 @@
     "emisSync": {
       "title": "EMIS data",
       "button": "Re-sync teachers, lessons and marks",
-      "queued": "Queued…",
-      "running": "Syncing…",
-      "lastSynced": "Last synced: {time}",
-      "failed": "The last sync did not finish. Try again later.",
-      "rateLimited": "Try again in {minutes} min."
+      "status": "Status",
+      "states": {
+        "pending": "Queued",
+        "running": "Syncing",
+        "succeeded": "Done",
+        "failed": "Not finished"
+      },
+      "attempts": "attempt {n} of {max}",
+      "finishedAt": "Finished: {time}",
+      "subgroup": "Subgroup: {value}",
+      "noSubgroup": "none",
+      "marks": "marks synced: {n}",
+      "lastError": "Reason: {error}",
+      "gaveUp": "The sync stopped after {max} attempts. Press the button to retry."
     }
   }
 }

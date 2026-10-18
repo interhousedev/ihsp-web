@@ -167,7 +167,7 @@ describe("LessonDraftViewer", () => {
     const dialog = await screen.findByRole("dialog")
 
     expect(await within(dialog).findByText(/The content of “Newton's laws” is replaced/)).toBeInTheDocument()
-    expect(within(dialog).getByLabelText("Step")).toHaveValue(courseIds.stepNewLaws)
+    expect(within(dialog).getByLabelText("Step")).toHaveAttribute("data-value", courseIds.stepNewLaws)
     expect(within(dialog).getByRole("radio", { name: "Replace the content" })).toBeChecked()
     await user.click(within(dialog).getByRole("button", { name: "Apply" }))
 

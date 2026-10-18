@@ -3,10 +3,12 @@ import type { ArtifactCreate, ArtifactItem, FileItem } from "@ihsp/api"
 import {
   apiUrl,
   artifactGenerating,
+  dropdownLabels,
   filePdf,
   nbIds,
   notebookDetail,
   notebookUsageLimitReached,
+  selectDropdownValue,
   server,
 } from "@ihsp/test-utils"
 import { act, screen, waitFor, within } from "@testing-library/react"
@@ -68,7 +70,7 @@ describe("Customize dialogs: one form per kind", () => {
         name: "Cornell notes",
       }),
     )
-    await user.selectOptions(within(dialog).getByRole("combobox", { name: "Language" }), "ru")
+    await selectDropdownValue(user, within(dialog).getByRole("combobox", { name: "Language" }), "ru")
     await user.click(
       within(dialog).getByRole("textbox", {
         name: "What should it focus on? (optional)",
@@ -275,12 +277,8 @@ describe("Customize dialogs: common fields", () => {
     const dialog = await openForm(user, "Mind map")
     const language = within(dialog).getByRole("combobox", { name: "Language" })
 
-    expect(language).toHaveValue("auto")
-    expect(
-      within(language)
-        .getAllByRole("option")
-        .map((option) => option.textContent),
-    ).toEqual(["Auto", "Oʻzbekcha", "Русский", "English"])
+    expect(language).toHaveAttribute("data-value", "auto")
+    expect(await dropdownLabels(user, language)).toEqual(["Auto", "Oʻzbekcha", "Русский", "English"])
     await generate(user, dialog)
     await waitFor(() => expect(bodies).toHaveLength(1))
     expect(bodies[0]).toEqual({
@@ -289,7 +287,7 @@ describe("Customize dialogs: common fields", () => {
     })
 
     const again = await openForm(user, "Mind map")
-    await user.selectOptions(within(again).getByRole("combobox", { name: "Language" }), "uz")
+    await selectDropdownValue(user, within(again).getByRole("combobox", { name: "Language" }), "uz")
     await generate(user, again)
     await waitFor(() => expect(bodies).toHaveLength(2))
     expect(bodies[1]).toEqual({

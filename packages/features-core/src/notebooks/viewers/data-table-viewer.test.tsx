@@ -1,6 +1,6 @@
 import { afterEach, describe, expect, it, spyOn } from "bun:test"
 import type { ArtifactDetail } from "@ihsp/api"
-import { artifactDataTable, artifactDetailOf, dataTableContent, nbIds } from "@ihsp/test-utils"
+import { artifactDataTable, artifactDetailOf, dataTableContent, nbIds, selectDropdownValue } from "@ihsp/test-utils"
 import { act, screen, within } from "@testing-library/react"
 import { allowSlowRenders, renderNotebook } from "../test-support"
 import { DataTableViewer } from "./data-table-viewer"
@@ -156,14 +156,14 @@ describe("DataTableViewer: on a phone", () => {
     window.innerWidth = 360
     const { user } = renderTable()
 
-    await user.selectOptions(screen.getByRole("combobox", { name: "Sort by" }), "Order")
+    await selectDropdownValue(user, screen.getByRole("combobox", { name: "Sort by" }), "Order")
     expect(cardTitles()).toEqual(["Light reactions", "Water splitting", "Calvin cycle", "Sugar output"])
 
     await user.click(screen.getByRole("button", { name: "Ascending" }))
     expect(cardTitles()).toEqual(["Sugar output", "Calvin cycle", "Light reactions", "Water splitting"])
     expect(screen.getByRole("button", { name: "Descending" })).toBeInTheDocument()
 
-    await user.selectOptions(screen.getByRole("combobox", { name: "Sort by" }), "No sorting")
+    await selectDropdownValue(user, screen.getByRole("combobox", { name: "Sort by" }), "No sorting")
     expect(cardTitles()[0]).toBe("Light reactions")
   })
 

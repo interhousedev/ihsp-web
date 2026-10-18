@@ -637,6 +637,14 @@ export type SubjectMaterial = {
 }
 /** The default materials of one EMIS subject id. */
 export type SubjectMaterialGroup = { edu_subject_id: number; materials: SubjectMaterial[] }
+
+/** Result of "check that all lesson materials are in the notebook". */
+export type ReconcileMaterials = {
+  notebooks: number
+  added: number
+  already_present: number
+  skipped: number
+}
 /** Exactly the target that `kind` names is given: `url`, `file_id` or `library_item_id`. */
 export type SubjectMaterialCreateBody = {
   kind: SubjectMaterialKind

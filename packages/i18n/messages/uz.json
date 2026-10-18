@@ -1475,7 +1475,11 @@
       "allSubgroups": "Barcha kichik guruhlar",
       "allTypes": "Barcha turlar",
       "allLevels": "Barcha darajalar",
-      "reset": "Filtrlarni tozalash"
+      "reset": "Filtrlarni tozalash",
+      "min": "Min",
+      "max": "Max",
+      "otherValues": "Boshqa qiymatlar",
+      "customHint": "Bu turning qo'shimcha maydonlari"
     },
     "table": {
       "student": "Talaba",
@@ -1540,7 +1544,25 @@
       "empty": "Turlar yoʻq.",
       "cancel": "Bekor qilish",
       "save": "Saqlash",
-      "confirmDelete": "Oʻchirish"
-    }
+      "confirmDelete": "Oʻchirish",
+      "customFields": "Qo'shimcha maydonlar",
+      "addField": "Maydon qo'shish",
+      "removeField": "Maydonni o'chirish",
+      "fieldKey": "Kalit",
+      "fieldKind": "Turi",
+      "fieldLabelUz": "Nomi (uz)",
+      "fieldLabelRu": "Nomi (ru)",
+      "fieldLabelEn": "Nomi (en)",
+      "fieldOptions": "Variantlar",
+      "fieldOptionsHint": "Har qatorga bitta variant",
+      "fieldAllowOther": "\"Boshqa\" (erkin matn) ruxsat etilsin",
+      "fieldRequired": "Majburiy",
+      "kindText": "Matn",
+      "kindNumber": "Son",
+      "kindSingle": "Bitta tanlov",
+      "kindMulti": "Bir nechta tanlov",
+      "fieldsEmpty": "Qo'shimcha maydonlar hali yo'q."
+    },
+    "customOther": "Boshqa"
   }
 }

@@ -2,7 +2,7 @@
 
 import { getLmsCourseCompareQuery, getLmsCourseVersionsQuery, type VersionCompare } from "@ihsp/api"
 import { useT } from "@ihsp/i18n"
-import { Badge, Field, FieldLabel, Icons, NativeSelect, NativeSelectOption, cn } from "@ihsp/ui"
+import { Badge, Dropdown, Field, FieldLabel, Icons, cn } from "@ihsp/ui"
 import { useQuery } from "@tanstack/react-query"
 import { useRouter } from "next/navigation"
 import { EditorFrame } from "../../editor/components/editor-frame"
@@ -92,21 +92,16 @@ export function ComparePage({ courseId, a, b }: { courseId: string; a: number; b
             ).map(([key, value]) => (
               <Field key={key}>
                 <FieldLabel htmlFor={`compare-${key}`}>{t(key === "a" ? "from" : "to")}</FieldLabel>
-                <NativeSelect
+                <Dropdown
                   id={`compare-${key}`}
-                  value={value}
-                  onChange={(event) => {
-                    const next = Number(event.target.value)
+                  value={String(value)}
+                  onValueChange={(raw) => {
+                    const next = Number(raw)
                     router.push(hrefs.compare(courseId, key === "a" ? next : a, key === "b" ? next : b))
                   }}
                   className="w-full"
-                >
-                  {numbers.map((number) => (
-                    <NativeSelectOption key={number} value={number}>
-                      {t("version", { number })}
-                    </NativeSelectOption>
-                  ))}
-                </NativeSelect>
+                  options={numbers.map((number) => ({ value: String(number), label: t("version", { number }) }))}
+                />
               </Field>
             ))}
           </div>

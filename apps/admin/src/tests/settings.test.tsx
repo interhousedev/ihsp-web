@@ -17,7 +17,7 @@ describe("platform settings", () => {
     renderAdmin(<SettingsPage />, { route: "/settings/" })
 
     expect(await screen.findByLabelText("School name")).toHaveValue("")
-    expect(screen.getByLabelText("Default interface language")).toHaveValue("ru")
+    expect(screen.getByLabelText("Default interface language")).toHaveTextContent("Русский")
     const notebooks = screen.getByText("Notebooks").closest("li") as HTMLElement
     expect(within(notebooks).getByText("on")).toBeInTheDocument()
     expect(within(notebooks).getByText(/AI notebooks for study materials/)).toBeInTheDocument()

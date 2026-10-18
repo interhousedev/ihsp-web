@@ -42,6 +42,7 @@ export function useNav(): { groups: NavGroup[] } {
             { title: t("reports"), url: "/reports/", icon: "reports" },
             { title: t("certificates"), url: "/certificates/", icon: "grades" },
             { title: t("monitoring"), url: "/monitoring/", icon: "monitoring" },
+            { title: t("logs"), url: "/logs/", icon: "warning" },
           ],
         },
         {

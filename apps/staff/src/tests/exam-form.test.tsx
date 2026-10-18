@@ -1,7 +1,16 @@
 /** ExamForm on its own: validation, the payload of a write, the refusal of the backend. */
 import { describe, expect, test } from "bun:test"
 import type { StaffAssessmentItem } from "@ihsp/api"
-import { apiUrl, assessmentIds, group2TN2, ids, problem, server, staffAssessments } from "@ihsp/test-utils"
+import {
+  apiUrl,
+  assessmentIds,
+  group2TN2,
+  ids,
+  problem,
+  selectDropdownValue,
+  server,
+  staffAssessments,
+} from "@ihsp/test-utils"
 import { screen, waitFor } from "@testing-library/react"
 import { HttpResponse, http } from "msw"
 import { ExamForm } from "../features/exams/components/exam-form"
@@ -39,10 +48,10 @@ describe("ExamForm", () => {
 
   test("a control week fixes the kind; a mismatching kind clears the week", async () => {
     const { user } = renderForm({ mode: "add", prefill: { subjectId: ids.physics, date: "2026-10-15", kind: "final" } })
-    await user.selectOptions(screen.getByLabelText("Control week"), "midterm_1")
-    expect(screen.getByLabelText("Kind")).toHaveValue("midterm")
-    await user.selectOptions(screen.getByLabelText("Kind"), "other")
-    expect(screen.getByLabelText("Control week")).toHaveValue("")
+    await selectDropdownValue(user, screen.getByLabelText("Control week"), "midterm_1")
+    expect(screen.getByLabelText("Kind")).toHaveAttribute("data-value", "midterm")
+    await selectDropdownValue(user, screen.getByLabelText("Kind"), "other")
+    expect(screen.getByLabelText("Control week")).toHaveAttribute("data-value", "")
   })
 
   test("a stored exam: Save sends the changed field; the editor closes", async () => {

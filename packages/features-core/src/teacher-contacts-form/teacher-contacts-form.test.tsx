@@ -1,6 +1,6 @@
 import { describe, expect, it } from "bun:test"
 import { getStaffMeContacts, putStaffMeContacts, type TeacherContacts } from "@ihsp/api"
-import { apiUrl, renderWithProviders, server } from "@ihsp/test-utils"
+import { apiUrl, renderWithProviders, server, setDropdownValue } from "@ihsp/test-utils"
 import { fireEvent, screen, waitFor } from "@testing-library/react"
 import { HttpResponse, http } from "msw"
 import { TeacherContactsForm } from "./teacher-contacts-form"
@@ -38,7 +38,7 @@ describe("TeacherContactsForm", () => {
 
     const phone = await screen.findByLabelText("Phone")
     expect(screen.getByLabelText("Telegram")).toHaveValue("gulnora_a")
-    fireEvent.change(phone, { target: { value: " +998 90 123-45-67 " } })
+    setDropdownValue(phone, " +998 90 123-45-67 ")
     fireEvent.click(screen.getByRole("button", { name: "Save" }))
 
     await waitFor(() => expect(sent).toEqual({ ...STORED, phone: "+998 90 123-45-67" }))

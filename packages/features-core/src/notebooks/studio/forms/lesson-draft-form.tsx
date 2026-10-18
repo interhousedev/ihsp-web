@@ -1,7 +1,7 @@
 "use client"
 
 import { useT } from "@ihsp/i18n"
-import { Checkbox, NativeSelect, NativeSelectOptGroup, NativeSelectOption } from "@ihsp/ui"
+import { Checkbox, Dropdown } from "@ihsp/ui"
 import { useId } from "react"
 import { useCourseSteps } from "../../api/use-course-workspace"
 import type { FormProps } from "./form-props"
@@ -19,23 +19,18 @@ export function LessonDraftForm({ state, onChange, notebookId }: FormProps<Lesso
         <label htmlFor={selectId} className="text-sm font-medium">
           {t("lessonStep.label")}
         </label>
-        <NativeSelect
+        <Dropdown
           id={selectId}
           className="min-h-11 w-full md:min-h-8"
           value={state.stepId}
-          onChange={(event) => onChange({ ...state, stepId: event.target.value })}
-        >
-          <NativeSelectOption value="new">{t("lessonStep.new")}</NativeSelectOption>
-          {(outline.data?.sections ?? []).map((section) => (
-            <NativeSelectOptGroup key={section.id} label={section.title}>
-              {section.steps.map((step) => (
-                <NativeSelectOption key={step.id} value={step.id}>
-                  {step.title}
-                </NativeSelectOption>
-              ))}
-            </NativeSelectOptGroup>
-          ))}
-        </NativeSelect>
+          onValueChange={(value) => onChange({ ...state, stepId: value })}
+          options={[
+            { value: "new", label: t("lessonStep.new") },
+            ...(outline.data?.sections ?? []).flatMap((section) =>
+              section.steps.map((step) => ({ value: step.id, label: `${section.title} · ${step.title}` })),
+            ),
+          ]}
+        />
       </div>
       <SegmentedField
         label={t("lessonLength.label")}

@@ -24,6 +24,7 @@
     "exams": "Exams",
     "attendance": "Attendance",
     "monitoring": "Monitoring",
+    "logs": "Logs",
     "broadcasts": "Broadcasts",
     "moderation": "Moderation",
     "assistant": "Assistant",
@@ -645,6 +646,13 @@
       "pullNew": "Pull new materials",
       "pullNewFor": "Pull new materials for {name}",
       "softHint": "Only lessons without any material get EMIS materials; nothing is deleted."
+    },
+    "reconcile": {
+      "button": "Check that all lesson materials are in the notebook",
+      "hint": "Adds the lesson materials missing from the subject notebooks. Materials already there stay as they are.",
+      "running": "Checking…",
+      "done": "Checked {notebooks} notebooks: {added} added, {present} already present, {skipped} not readable yet.",
+      "error": "The check failed. Try again."
     }
   },
   "rooms": {
@@ -1268,7 +1276,18 @@
         "confirmDescription": "{count, plural, one {The EMIS files of # term are deleted and downloaded again in the background.} other {The EMIS files of # terms are deleted and downloaded again in the background.}}",
         "confirm": "Replace",
         "started": "Materials re-sync started"
-      }
+      },
+      "studentSyncsTitle": "Student syncs (failed first)",
+      "studentSyncsEmpty": "No student sync is failed, pending or running.",
+      "loading": "Loading…",
+      "studentSyncsColumns": {
+        "student": "Student",
+        "status": "Status",
+        "attempts": "Attempts",
+        "lastError": "Last error",
+        "finished": "Finished"
+      },
+      "studentSyncsAttempts": "{n} of {max}"
     },
     "audit": {
       "empty": "No audit events match.",
@@ -1297,6 +1316,31 @@
       "stopLabel": "Stop {label}",
       "stopped": "Stop requested"
     }
+  },
+  "logs": {
+    "title": "Logs",
+    "filters": {
+      "project": "Project",
+      "projectAll": "All projects",
+      "level": "Level",
+      "levelAll": "All levels"
+    },
+    "levels": {
+      "fatal": "Fatal",
+      "error": "Error",
+      "warning": "Warning",
+      "info": "Info",
+      "debug": "Debug"
+    },
+    "count": "{count} events",
+    "lastSeen": "Last seen",
+    "never": "Never",
+    "open": "Open issue",
+    "empty": "No issues match these filters.",
+    "disabled": "Error tracking is not configured on this server, so there are no issues to show.",
+    "prev": "Previous",
+    "next": "Next",
+    "page": "Page {page}"
   },
   "assistant": {
     "page": {

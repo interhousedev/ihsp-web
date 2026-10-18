@@ -3,7 +3,7 @@
  * each filter reaches the API; a switch adds the control weeks that have no date for a subject yet.
  */
 import { afterEach, beforeEach, describe, expect, test } from "bun:test"
-import { apiUrl, ids, server } from "@ihsp/test-utils"
+import { apiUrl, dropdownLabels, ids, selectDropdownValue, server } from "@ihsp/test-utils"
 import { screen, within } from "@testing-library/react"
 import { HttpResponse, http } from "msw"
 import { ExamsPage } from "../features/exams/components/exams-page"
@@ -147,7 +147,7 @@ describe("exam filters", () => {
   test("the group is sent as group_id", async () => {
     const { user } = await renderList()
 
-    await user.selectOptions(await screen.findByRole("combobox", { name: "Group" }), "2TN2")
+    await selectDropdownValue(user, await screen.findByRole("combobox", { name: "Group" }), "2TN2")
 
     await watcher.waitFor((params) => params.get("group_id") === ids.group2TN2)
   })
@@ -155,7 +155,7 @@ describe("exam filters", () => {
   test("the subject is sent as subject_id", async () => {
     const { user } = await renderList()
 
-    await user.selectOptions(await screen.findByRole("combobox", { name: "Subject" }), "Physics")
+    await selectDropdownValue(user, await screen.findByRole("combobox", { name: "Subject" }), "Physics")
 
     await watcher.waitFor((params) => params.get("subject_id") === ids.physics)
     expect(await within(table()).findByText("Mechanics")).toBeInTheDocument()
@@ -165,7 +165,7 @@ describe("exam filters", () => {
   test("the kind is sent as kind", async () => {
     const { user } = await renderList()
 
-    await user.selectOptions(await screen.findByRole("combobox", { name: "Kind" }), "final")
+    await selectDropdownValue(user, await screen.findByRole("combobox", { name: "Kind" }), "final")
 
     await watcher.waitFor((params) => params.get("kind") === "final")
     expect(await within(table()).findByText("Klaster")).toBeInTheDocument()
@@ -174,7 +174,7 @@ describe("exam filters", () => {
   test("the status is sent as status", async () => {
     const { user } = await renderList()
 
-    await user.selectOptions(await screen.findByRole("combobox", { name: "Status" }), "planned")
+    await selectDropdownValue(user, await screen.findByRole("combobox", { name: "Status" }), "planned")
 
     await watcher.waitFor((params) => params.get("status") === "planned")
   })
@@ -182,7 +182,7 @@ describe("exam filters", () => {
   test("the source is sent as source", async () => {
     const { user } = await renderList()
 
-    await user.selectOptions(await screen.findByRole("combobox", { name: "Source" }), "head_student")
+    await selectDropdownValue(user, await screen.findByRole("combobox", { name: "Source" }), "head_student")
 
     await watcher.waitFor((params) => params.get("source") === "head_student")
     expect(await within(table()).findByText("The head student suggests this date.")).toBeInTheDocument()
@@ -200,7 +200,7 @@ describe("exam filters", () => {
   test("a control week asks for its dates and keeps the rows of that week", async () => {
     const { user } = await renderList()
 
-    await user.selectOptions(await screen.findByRole("combobox", { name: "Control week" }), "midterm_2")
+    await selectDropdownValue(user, await screen.findByRole("combobox", { name: "Control week" }), "midterm_2")
 
     await watcher.waitFor((params) => params.get("from") === "2026-11-16" && params.get("to") === "2026-11-20")
     expect(await within(table()).findByText("History")).toBeInTheDocument()
@@ -208,12 +208,10 @@ describe("exam filters", () => {
   })
 
   test("the control weeks offered are the ones set for the current term", async () => {
-    await renderList()
+    const { user } = await renderList()
 
     const select = await screen.findByRole("combobox", { name: "Control week" })
-    const labels = within(select)
-      .getAllByRole("option")
-      .map((option) => option.textContent)
+    const labels = await dropdownLabels(user, select)
     expect(labels).toEqual([
       "All control weeks",
       "Midterm 1 · 12–16 Oct",
@@ -234,8 +232,8 @@ describe("exam filters", () => {
         params.get("status") === "planned" &&
         params.get("source") === "teacher",
     )
-    expect(await screen.findByRole("combobox", { name: "Group" })).toHaveValue(ids.group2TN2)
-    expect(screen.getByRole("combobox", { name: "Kind" })).toHaveValue("midterm")
+    expect(await screen.findByRole("combobox", { name: "Group" })).toHaveAttribute("data-value", ids.group2TN2)
+    expect(screen.getByRole("combobox", { name: "Kind" })).toHaveAttribute("data-value", "midterm")
   })
 
   test("a choice the API does not know is not sent", async () => {
@@ -251,7 +249,7 @@ describe("exam filters", () => {
 
     await user.click(screen.getByRole("button", { name: "Reset" }))
 
-    expect(await screen.findByRole("combobox", { name: "Group" })).toHaveValue("")
+    expect(await screen.findByRole("combobox", { name: "Group" })).toHaveAttribute("data-value", "")
   })
 })
 

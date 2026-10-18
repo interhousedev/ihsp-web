@@ -1,5 +1,5 @@
 import { describe, expect, it } from "bun:test"
-import { apiUrl, renderWithProviders, server } from "@ihsp/test-utils"
+import { apiUrl, renderWithProviders, server, setDropdownValue } from "@ihsp/test-utils"
 import { fireEvent, screen, waitFor } from "@testing-library/react"
 import { HttpResponse, http } from "msw"
 import { MailPage } from "./mail-page"
@@ -66,9 +66,9 @@ describe("MailPage", () => {
     renderWithProviders(<MailPage />, {})
     expect(await screen.findByText("You have not sent any emails yet.")).toBeInTheDocument()
 
-    fireEvent.change(screen.getByLabelText("To"), { target: { value: "teacher@example.org" } })
-    fireEvent.change(screen.getByLabelText("Subject"), { target: { value: "Question 3" } })
-    fireEvent.change(screen.getByLabelText("Message"), { target: { value: "Hello" } })
+    setDropdownValue(screen.getByLabelText("To"), "teacher@example.org")
+    setDropdownValue(screen.getByLabelText("Subject"), "Question 3")
+    setDropdownValue(screen.getByLabelText("Message"), "Hello")
     fireEvent.click(screen.getByRole("button", { name: "Send" }))
 
     await waitFor(() => expect(posted).toMatchObject({ to: ["teacher@example.org"], subject: "Question 3" }))

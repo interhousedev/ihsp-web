@@ -2,7 +2,7 @@
 
 import type { PlannerMarkType } from "@ihsp/api"
 import { useT } from "@ihsp/i18n"
-import { Button, Label, NativeSelect, NativeSelectOption } from "@ihsp/ui"
+import { Button, Dropdown, Label } from "@ihsp/ui"
 import { useId, useState } from "react"
 import { PageSection } from "../../../exams/components/page-section"
 import { usePlannerLabels } from "../hooks/use-planner-labels"
@@ -10,7 +10,7 @@ import { WHAT_IF_MARKS, WHAT_IF_TYPES, type WhatIfMark } from "../utils/what-if"
 import { addWhatIf, canAddWhatIf, removeWhatIf } from "../utils/what-if-list"
 import { WhatIfChips } from "./what-if-chips"
 
-const SELECT_CLASS = "w-28 [&_select]:h-11 md:[&_select]:h-8"
+const SELECT_CLASS = "w-28"
 
 /**
  * "Try other marks": pick a kind of mark and a mark from 2 to 5, add it, and the planner answers again as if it was
@@ -42,33 +42,23 @@ export function WhatIfEditor({ marks, onChange }: { marks: WhatIfMark[]; onChang
       <div className="flex flex-wrap items-end gap-2">
         <div className="flex flex-col gap-1">
           <Label htmlFor={typeId}>{t("typeLabel")}</Label>
-          <NativeSelect
+          <Dropdown
             id={typeId}
             className={SELECT_CLASS}
             value={type}
-            onChange={(event) => setType(event.target.value as PlannerMarkType)}
-          >
-            {WHAT_IF_TYPES.map((option) => (
-              <NativeSelectOption key={option} value={option}>
-                {labels.tryType(option)}
-              </NativeSelectOption>
-            ))}
-          </NativeSelect>
+            onValueChange={(next) => setType(next as PlannerMarkType)}
+            options={WHAT_IF_TYPES.map((option) => ({ value: option, label: labels.tryType(option) }))}
+          />
         </div>
         <div className="flex flex-col gap-1">
           <Label htmlFor={markId}>{t("markLabel")}</Label>
-          <NativeSelect
+          <Dropdown
             id={markId}
             className={SELECT_CLASS}
             value={String(value)}
-            onChange={(event) => setValue(Number(event.target.value))}
-          >
-            {WHAT_IF_MARKS.map((option) => (
-              <NativeSelectOption key={option} value={String(option)}>
-                {option}
-              </NativeSelectOption>
-            ))}
-          </NativeSelect>
+            onValueChange={(next) => setValue(Number(next))}
+            options={WHAT_IF_MARKS.map((option) => ({ value: String(option), label: String(option) }))}
+          />
         </div>
         <Button
           type="button"

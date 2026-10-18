@@ -3,17 +3,7 @@
 import { isApiError } from "@ihsp/api"
 import type { ApplyBody, ApplyPreview, ApplyResult, ArtifactKind, CoursePlan, LessonDraft } from "@ihsp/api"
 import { useT } from "@ihsp/i18n"
-import {
-  Badge,
-  Button,
-  Checkbox,
-  LoadingButton,
-  buttonVariants,
-  NativeSelect,
-  NativeSelectOptGroup,
-  NativeSelectOption,
-  cn,
-} from "@ihsp/ui"
+import { Badge, Button, Checkbox, LoadingButton, buttonVariants, Dropdown, cn } from "@ihsp/ui"
 import { IconAlertTriangle, IconCheck, IconExternalLink } from "@ihsp/ui"
 import { useEffect, useId, useMemo, useRef, useState } from "react"
 import { useApplyArtifact, useApplyPreview, useCourseSteps } from "../../api/use-course-workspace"
@@ -288,45 +278,36 @@ export function ApplyDialog(props: ApplyDialogProps) {
                 <label htmlFor={stepSelectId} className="text-sm font-medium">
                   {t("course.apply.target")}
                 </label>
-                <NativeSelect
+                <Dropdown
                   id={stepSelectId}
                   className="min-h-11 w-full md:min-h-8"
                   value={stepId}
-                  onChange={(event) => setStepId(event.target.value)}
-                >
-                  {isLesson ? (
-                    <NativeSelectOption value={NEW_STEP}>{t("course.apply.newStepOption")}</NativeSelectOption>
-                  ) : (
-                    <NativeSelectOption value="">{t("course.apply.pickStep")}</NativeSelectOption>
-                  )}
-                  {(outline.data?.sections ?? []).map((section) => (
-                    <NativeSelectOptGroup key={section.id} label={section.title}>
-                      {section.steps.map((step) => (
-                        <NativeSelectOption key={step.id} value={step.id}>
-                          {step.title}
-                        </NativeSelectOption>
-                      ))}
-                    </NativeSelectOptGroup>
-                  ))}
-                </NativeSelect>
+                  onValueChange={setStepId}
+                  options={[
+                    isLesson
+                      ? { value: NEW_STEP, label: t("course.apply.newStepOption") }
+                      : { value: "", label: t("course.apply.pickStep") },
+                    ...(outline.data?.sections ?? []).flatMap((section) =>
+                      section.steps.map((step) => ({ value: step.id, label: `${section.title} · ${step.title}` })),
+                    ),
+                  ]}
+                />
               </div>
               {isLesson && stepId === NEW_STEP ? (
                 <div className="flex flex-col gap-1.5">
                   <label htmlFor={sectionSelectId} className="text-sm font-medium">
                     {t("course.apply.section")}
                   </label>
-                  <NativeSelect
+                  <Dropdown
                     id={sectionSelectId}
                     className="min-h-11 w-full md:min-h-8"
                     value={sectionId}
-                    onChange={(event) => setSectionId(event.target.value)}
-                  >
-                    {(outline.data?.sections ?? []).map((section) => (
-                      <NativeSelectOption key={section.id} value={section.id}>
-                        {section.title}
-                      </NativeSelectOption>
-                    ))}
-                  </NativeSelect>
+                    onValueChange={setSectionId}
+                    options={(outline.data?.sections ?? []).map((section) => ({
+                      value: section.id,
+                      label: section.title,
+                    }))}
+                  />
                 </div>
               ) : null}
               {isLesson && stepId !== NEW_STEP ? (

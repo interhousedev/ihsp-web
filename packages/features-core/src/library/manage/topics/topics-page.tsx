@@ -9,7 +9,7 @@ import {
   type ManageTopic,
 } from "@ihsp/api"
 import { useErrorMessage, useFormatters, useT } from "@ihsp/i18n"
-import { Button, ConfirmDialog, Label, NativeSelect, NativeSelectOption, PageContainer, StateView } from "@ihsp/ui"
+import { Button, ConfirmDialog, Dropdown, Label, PageContainer, StateView } from "@ihsp/ui"
 import { IconPlus } from "@ihsp/ui"
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query"
 import { useMemo, useState } from "react"
@@ -86,18 +86,13 @@ export function TopicsPage() {
         <div className="flex max-w-3xl flex-col gap-4">
           <div className="flex flex-col gap-1.5">
             <Label htmlFor="topics-subject">{t("subject")}</Label>
-            <NativeSelect
+            <Dropdown
               id="topics-subject"
               value={subjectId ?? ""}
               className="w-full sm:w-72"
-              onChange={(event) => setChosen(event.target.value)}
-            >
-              {subjects.data.map((subject) => (
-                <NativeSelectOption key={subject.id} value={subject.id}>
-                  {subject.name}
-                </NativeSelectOption>
-              ))}
-            </NativeSelect>
+              onValueChange={setChosen}
+              options={subjects.data.map((subject) => ({ value: subject.id, label: subject.name }))}
+            />
           </div>
 
           {topics.isPending && subjectId ? (

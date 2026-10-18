@@ -1,6 +1,6 @@
 /** ACA-15: the mark planner page and its entry point, the "Plan" link of the grades page. */
 import { afterEach, beforeEach, describe, expect, test } from "bun:test"
-import { apiUrl, ids, plannerFor, plannerMath, server } from "@ihsp/test-utils"
+import { apiUrl, ids, plannerFor, plannerMath, server, setDropdownValue } from "@ihsp/test-utils"
 import type { PlannerTarget, SubjectPlanner } from "@ihsp/api"
 import { fireEvent, screen, waitFor, within } from "@testing-library/react"
 import { HttpResponse, delay, http } from "msw"
@@ -62,8 +62,8 @@ async function renderPlanner(route = PLANNER_ROUTE) {
 }
 
 function addMark(type: "lesson" | "midterm" | "final", mark: number): void {
-  fireEvent.change(screen.getByLabelText("Type"), { target: { value: type } })
-  fireEvent.change(screen.getByLabelText("Mark"), { target: { value: String(mark) } })
+  setDropdownValue(screen.getByLabelText("Type"), type)
+  setDropdownValue(screen.getByLabelText("Mark"), String(mark))
   fireEvent.click(screen.getByRole("button", { name: "Add" }))
 }
 
@@ -375,7 +375,8 @@ describe("what-if marks", () => {
     expect(screen.getByText("No marks tried yet.")).toBeInTheDocument()
     expect(screen.getByRole("button", { name: "Reset" })).toBeDisabled()
     expect(screen.getByLabelText("Type")).toBeInTheDocument()
-    const marks = within(screen.getByLabelText("Mark")).getAllByRole("option")
+    fireEvent.click(screen.getByLabelText("Mark"))
+    const marks = within(screen.getByRole("listbox")).getAllByRole("option")
     expect(marks.map((option) => option.textContent)).toEqual(["5", "4", "3", "2"])
   })
 

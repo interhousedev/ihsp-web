@@ -14,8 +14,7 @@ import {
   IconSearch,
   IconUpload,
   Input,
-  NativeSelect,
-  NativeSelectOption,
+  Dropdown,
   StateView,
   cn,
 } from "@ihsp/ui"
@@ -170,25 +169,21 @@ export function DrivePicker({
               onChange={(event) => setSearch(event.target.value)}
             />
           </div>
-          <NativeSelect
+          <Dropdown
             aria-label={t("type")}
             value={group}
-            onChange={(event) => setGroup(event.target.value as DriveTypeGroup)}
-          >
-            {DRIVE_TYPE_GROUPS.map((entry) => (
-              <NativeSelectOption key={entry.id} value={entry.id}>
-                {t(`types.${entry.id}`)}
-              </NativeSelectOption>
-            ))}
-          </NativeSelect>
-          <NativeSelect
+            onValueChange={(value) => setGroup(value as DriveTypeGroup)}
+            options={DRIVE_TYPE_GROUPS.map((entry) => ({ value: entry.id, label: t(`types.${entry.id}`) }))}
+          />
+          <Dropdown
             aria-label={t("sort")}
             value={sort}
-            onChange={(event) => setSort(event.target.value === "older" ? "older" : "recent")}
-          >
-            <NativeSelectOption value="recent">{t("recent")}</NativeSelectOption>
-            <NativeSelectOption value="older">{t("older")}</NativeSelectOption>
-          </NativeSelect>
+            onValueChange={(value) => setSort(value === "older" ? "older" : "recent")}
+            options={[
+              { value: "recent", label: t("recent") },
+              { value: "older", label: t("older") },
+            ]}
+          />
           <div className="flex gap-1" role="group" aria-label={t("view")}>
             <Button
               type="button"

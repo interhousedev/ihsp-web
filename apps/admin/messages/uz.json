@@ -24,6 +24,7 @@
     "exams": "Imtihonlar",
     "attendance": "Davomat",
     "monitoring": "Monitoring",
+    "logs": "Loglar",
     "broadcasts": "Xabarnomalar",
     "moderation": "Moderatsiya",
     "assistant": "Yordamchi",
@@ -645,6 +646,13 @@
       "pullNew": "Yangi materiallarni yuklash",
       "pullNewFor": "Yangi materiallarni yuklash: {name}",
       "softHint": "EMIS materiallari faqat materialsiz darslarga qoʻshiladi; hech narsa oʻchirilmaydi."
+    },
+    "reconcile": {
+      "button": "Barcha dars materiallari daftarda borligini tekshirish",
+      "hint": "Fan daftarlarida yo‘q dars materiallarini qo‘shadi. Mavjud materiallar o‘zgarmaydi.",
+      "running": "Tekshirilmoqda…",
+      "done": "Tekshirildi: {notebooks} ta daftar. Qo‘shildi: {added}, avvaldan bor: {present}, hali o‘qib bo‘lmaydi: {skipped}.",
+      "error": "Tekshirish amalga oshmadi. Qayta urinib ko‘ring."
     }
   },
   "rooms": {
@@ -1268,7 +1276,18 @@
         "confirmDescription": "{count, plural, one {# ta yarim yillikning EMIS fayllari oʻchiriladi va fonda qayta yuklanadi.} other {# ta yarim yillikning EMIS fayllari oʻchiriladi va fonda qayta yuklanadi.}}",
         "confirm": "Almashtirish",
         "started": "Materiallarni qayta yuklash boshlandi"
-      }
+      },
+      "studentSyncsTitle": "Talabalar sinxronlashi (avval muvaffaqiyatsizlar)",
+      "studentSyncsEmpty": "Muvaffaqiyatsiz, navbatdagi yoki bajarilayotgan sinxronlash yo'q.",
+      "loading": "Yuklanmoqda…",
+      "studentSyncsColumns": {
+        "student": "Talaba",
+        "status": "Holat",
+        "attempts": "Urinishlar",
+        "lastError": "Oxirgi xato",
+        "finished": "Yakunlangan"
+      },
+      "studentSyncsAttempts": "{n} / {max}"
     },
     "audit": {
       "empty": "Audit hodisalari topilmadi.",
@@ -1297,6 +1316,31 @@
       "stopLabel": "{label} — toʻxtatish",
       "stopped": "Toʻxtatish soʻraldi"
     }
+  },
+  "logs": {
+    "title": "Loglar",
+    "filters": {
+      "project": "Loyiha",
+      "projectAll": "Barcha loyihalar",
+      "level": "Daraja",
+      "levelAll": "Barcha darajalar"
+    },
+    "levels": {
+      "fatal": "Halokatli",
+      "error": "Xato",
+      "warning": "Ogohlantirish",
+      "info": "Ma’lumot",
+      "debug": "Nosozlikni tuzatish"
+    },
+    "count": "{count} ta hodisa",
+    "lastSeen": "Oxirgi marta",
+    "never": "Hech qachon",
+    "open": "Muammoni ochish",
+    "empty": "Bu filtrlarga mos muammo yo‘q.",
+    "disabled": "Bu serverda xatolarni kuzatish sozlanmagan, shuning uchun muammolar ko‘rsatilmaydi.",
+    "prev": "Oldingi",
+    "next": "Keyingi",
+    "page": "{page}-sahifa"
   },
   "assistant": {
     "page": {

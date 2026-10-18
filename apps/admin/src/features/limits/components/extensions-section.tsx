@@ -25,10 +25,9 @@ import {
   DialogFooter,
   DialogHeader,
   DialogTitle,
+  Dropdown,
   Input,
   Label,
-  NativeSelect,
-  NativeSelectOption,
 } from "@ihsp/ui"
 import { useQuery } from "@tanstack/react-query"
 import { useState } from "react"
@@ -227,17 +226,15 @@ export function ExtensionDialog({ open, onOpenChange }: { open: boolean; onOpenC
             {mode === "multiplier" ? (
               <div className="flex flex-col gap-1.5">
                 <Label htmlFor="ext-multiplier">{t("extensions.dialog.multiplier")}</Label>
-                <NativeSelect
+                <Dropdown
                   id="ext-multiplier"
                   value={String(multiplier)}
-                  onChange={(event) => setMultiplier(Number(event.target.value))}
-                >
-                  {MULTIPLIERS.map((value) => (
-                    <NativeSelectOption key={value} value={String(value)}>
-                      {t("extensions.multiplier", { value })}
-                    </NativeSelectOption>
-                  ))}
-                </NativeSelect>
+                  onValueChange={(next) => setMultiplier(Number(next))}
+                  options={MULTIPLIERS.map((value) => ({
+                    value: String(value),
+                    label: t("extensions.multiplier", { value }),
+                  }))}
+                />
               </div>
             ) : (
               <div className="flex max-h-72 flex-col gap-3 overflow-y-auto">

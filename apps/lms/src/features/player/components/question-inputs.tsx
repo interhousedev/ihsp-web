@@ -2,7 +2,7 @@
 
 import type { Answer } from "@ihsp/api"
 import { useT } from "@ihsp/i18n"
-import { Button, Icons, Input, NativeSelect, NativeSelectOption, Textarea } from "@ihsp/ui"
+import { Button, Dropdown, Icons, Input, Textarea } from "@ihsp/ui"
 import { moveItem } from "../../step-editor/utils/content-ops"
 import type { AttemptQuestion } from "../utils/answers"
 
@@ -62,24 +62,21 @@ export function MatchingInput({ question, answer, onChange }: Props) {
       {(question.lefts ?? []).map((left) => (
         <li key={left.id} className="grid items-center gap-2 sm:grid-cols-2">
           <span className="text-sm break-words">{left.text}</span>
-          <NativeSelect
+          <Dropdown
             aria-label={t("matchFor", { item: left.text })}
             value={pairs[left.id] ?? ""}
-            onChange={(event) => {
+            onValueChange={(value) => {
               const next = { ...pairs }
-              if (event.target.value === "") delete next[left.id]
-              else next[left.id] = event.target.value
+              if (value === "") delete next[left.id]
+              else next[left.id] = value
               onChange(Object.keys(next).length === 0 ? null : { pairs: next })
             }}
             className="w-full"
-          >
-            <NativeSelectOption value="">{t("choose")}</NativeSelectOption>
-            {(question.rights ?? []).map((right) => (
-              <NativeSelectOption key={right.id} value={right.id}>
-                {right.text}
-              </NativeSelectOption>
-            ))}
-          </NativeSelect>
+            options={[
+              { value: "", label: t("choose") },
+              ...(question.rights ?? []).map((right) => ({ value: right.id, label: right.text })),
+            ]}
+          />
         </li>
       ))}
     </ul>

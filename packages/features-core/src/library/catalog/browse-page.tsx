@@ -1,7 +1,7 @@
 "use client"
 
 import { useT } from "@ihsp/i18n"
-import { Button, Icons, Input, PageContainer, ToggleGroup, ToggleGroupItem } from "@ihsp/ui"
+import { Button, Dropdown, Icons, Input, PageContainer, ToggleGroup, ToggleGroupItem } from "@ihsp/ui"
 import { IconLayoutGrid, IconList } from "@ihsp/ui"
 import { useEffect, useState } from "react"
 import { useUniLibraryAvailability } from "../hooks/use-uni-library"
@@ -78,21 +78,18 @@ export function BrowsePage() {
         <div className="flex items-center gap-2">
           <label className="text-muted-foreground flex items-center gap-2 text-sm">
             <span className="sr-only sm:not-sr-only">{t("sortLabel")}</span>
-            <select
-              className="border-input bg-background h-11 rounded-lg border px-2 text-sm md:h-8"
+            <Dropdown
+              aria-label={t("sortLabel")}
               value={state.sort ?? (state.q.trim() ? "relevance" : "newest")}
-              onChange={(event) => {
-                const sort = event.target.value
+              onValueChange={(sort) => {
                 if (sort === "relevance" || sort === "newest" || sort === "title" || sort === "author")
                   void setState({ sort })
               }}
-            >
-              {(["relevance", "newest", "title", "author"] as const).map((sort) => (
-                <option key={sort} value={sort}>
-                  {t(`sort.${sort}`)}
-                </option>
-              ))}
-            </select>
+              options={(["relevance", "newest", "title", "author"] as const).map((sort) => ({
+                value: sort,
+                label: t(`sort.${sort}`),
+              }))}
+            />
           </label>
           <ToggleGroup
             aria-label={t("layoutLabel")}

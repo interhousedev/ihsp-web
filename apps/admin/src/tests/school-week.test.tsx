@@ -1,7 +1,7 @@
 /** The lyceum does not study on Saturdays: timetable, entry editor and bell rows offer Monday to Friday only. */
 import { describe, expect, test } from "bun:test"
 import type { Bell } from "@ihsp/api"
-import { currentTerm } from "@ihsp/test-utils"
+import { currentTerm, dropdownLabels } from "@ihsp/test-utils"
 import { screen, within } from "@testing-library/react"
 import { TermCard } from "../features/terms/components/term-card"
 import { TermsPage } from "../features/terms/components/terms-page"
@@ -46,8 +46,8 @@ describe("the school week in the timetable", () => {
     }
   })
 
-  test("the weekday select of the entry editor lists the five school days only", () => {
-    renderAdmin(
+  test("the weekday select of the entry editor lists the five school days only", async () => {
+    const { user } = renderAdmin(
       <EntryEditorDialog
         term={currentTerm}
         entry={null}
@@ -59,12 +59,8 @@ describe("the school week in the timetable", () => {
     )
 
     const select = screen.getByLabelText(/^Weekday/)
-    expect(
-      within(select)
-        .getAllByRole("option")
-        .map((option) => option.textContent),
-    ).toEqual(SCHOOL_DAYS)
-    expect(select).toHaveValue("5")
+    expect(await dropdownLabels(user, select)).toEqual(SCHOOL_DAYS)
+    expect(select).toHaveAttribute("data-value", "5")
   })
 })
 

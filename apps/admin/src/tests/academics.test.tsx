@@ -1,6 +1,15 @@
 /** ADM-6–ADM-10, ADM-18, UF-ADM-04, UF-ADM-05, UF-ADM-07: groups, subjects, terms, timetable page, lessons. */
 import { describe, expect, test } from "bun:test"
-import { adminLessons, apiUrl, cancelledLesson, currentTerm, ids, server, teacherNeededLesson } from "@ihsp/test-utils"
+import {
+  adminLessons,
+  apiUrl,
+  cancelledLesson,
+  currentTerm,
+  ids,
+  selectDropdownValue,
+  server,
+  teacherNeededLesson,
+} from "@ihsp/test-utils"
 import { screen, within } from "@testing-library/react"
 import { HttpResponse, http } from "msw"
 import { GroupDetailPage } from "../features/groups/components/group-detail-page"
@@ -58,7 +67,7 @@ describe("groups", () => {
 
     const save = screen.getByRole("button", { name: /Save subgroups/ })
     expect(save).toBeDisabled()
-    await user.selectOptions(await screen.findByLabelText("Subgroup of Qodirov Sardor"), "2")
+    await selectDropdownValue(user, await screen.findByLabelText("Subgroup of Qodirov Sardor"), "2")
     await waitUntil(() => !(save as HTMLButtonElement).disabled, "save still disabled")
     await user.click(save)
 
@@ -77,8 +86,7 @@ describe("groups", () => {
     const { user } = renderAdmin(<GroupDetailPage />, { route: `/groups/view/?id=${ids.group2TN2}` })
     await screen.findByRole("heading", { name: "2TN2" })
 
-    await screen.findByRole("option", { name: /Rakhimov/ })
-    await user.selectOptions(screen.getByLabelText("Curator"), ids.teacherRakhimov)
+    await selectDropdownValue(user, screen.getByLabelText("Curator"), ids.teacherRakhimov)
     await user.click(screen.getByRole("button", { name: "Save" }))
 
     await waitUntil(() => body !== undefined, "no request")
@@ -97,7 +105,7 @@ describe("groups", () => {
     await screen.findByRole("heading", { name: "2TN2" })
 
     setValue(screen.getByLabelText("Name"), "2TN9")
-    await user.selectOptions(screen.getByLabelText("Semester"), "6")
+    await selectDropdownValue(user, screen.getByLabelText("Semester"), "6")
     await user.click(screen.getByRole("button", { name: "Save" }))
 
     await waitUntil(() => body !== undefined, "no request")
@@ -220,10 +228,11 @@ describe("timetable page", () => {
 
 describe("lessons", () => {
   test("lists lessons and marks the ones without a teacher or cancelled", async () => {
-    renderAdmin(<LessonsPage />, { route: "/lessons/" })
+    const { user } = renderAdmin(<LessonsPage />, { route: "/lessons/" })
 
+    expect((await screen.findAllByText("Cancelled")).length).toBeGreaterThan(0)
+    await user.click(await screen.findByRole("button", { name: "Next page" }))
     expect((await screen.findAllByText("Teacher needed")).length).toBeGreaterThan(0)
-    expect(screen.getAllByText("Cancelled").length).toBeGreaterThan(0)
     expect(adminLessons).toContain(teacherNeededLesson)
   })
 
@@ -260,7 +269,7 @@ describe("lessons", () => {
     const dialog = await screen.findByRole("dialog")
     const save = within(dialog).getByRole("button", { name: "Save changes" })
     expect(save).toBeDisabled()
-    await user.selectOptions(within(dialog).getByLabelText("Status"), "cancelled")
+    await selectDropdownValue(user, within(dialog).getByLabelText("Status"), "cancelled")
     await waitUntil(() => !(save as HTMLButtonElement).disabled, "save still disabled")
     await user.click(save)
 

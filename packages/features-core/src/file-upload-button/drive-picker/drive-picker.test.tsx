@@ -1,6 +1,6 @@
 import { describe, expect, it, mock, setDefaultTimeout } from "bun:test"
 import type { FileItem } from "@ihsp/api"
-import { apiUrl, fileImage, filePdf, renderWithProviders, server } from "@ihsp/test-utils"
+import { apiUrl, fileImage, filePdf, renderWithProviders, server, setDropdownValue } from "@ihsp/test-utils"
 import { configure, fireEvent, screen, waitFor, within } from "@testing-library/react"
 import { HttpResponse, http } from "msw"
 import { formatFileSize } from "./file-kind"
@@ -73,15 +73,15 @@ describe("DrivePicker", () => {
     expect(seen[0]?.get("page_size")).toBe("24")
     expect(seen[0]?.get("page")).toBe("1")
 
-    fireEvent.change(screen.getByLabelText("Search by name"), { target: { value: "report" } })
+    setDropdownValue(screen.getByLabelText("Search by name"), "report")
     await waitFor(() => expect(seen.some((search) => search.get("q") === "report")).toBe(true))
 
-    fireEvent.change(screen.getByLabelText("File type"), { target: { value: "video" } })
+    setDropdownValue(screen.getByLabelText("File type"), "video")
     await waitFor(() => expect(seen.some((search) => search.get("type") === "video")).toBe(true))
-    fireEvent.change(screen.getByLabelText("File type"), { target: { value: "documents" } })
+    setDropdownValue(screen.getByLabelText("File type"), "documents")
     await waitFor(() => expect(seen.some((search) => search.get("type") === "doc")).toBe(true))
 
-    fireEvent.change(screen.getByLabelText("Order"), { target: { value: "older" } })
+    setDropdownValue(screen.getByLabelText("Order"), "older")
     await waitFor(() => expect(seen.some((search) => search.get("sort") === "older")).toBe(true))
   })
 

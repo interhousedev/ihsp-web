@@ -4,7 +4,7 @@ import { useSortable } from "@dnd-kit/sortable"
 import { CSS } from "@dnd-kit/utilities"
 import type { Importance } from "@ihsp/api"
 import { useT } from "@ihsp/i18n"
-import { Button, Icons, Input, Label, NativeSelect, NativeSelectOption, Textarea, cn } from "@ihsp/ui"
+import { Button, Dropdown, Icons, Input, Label, Textarea, cn } from "@ihsp/ui"
 import { IconArrowDown, IconArrowUp, IconLink } from "@ihsp/ui"
 import { useId, useState, type KeyboardEvent } from "react"
 import { SourceTag } from "../../catalog/source-tag"
@@ -178,18 +178,13 @@ export function EntryRow({ entry, index, count, onChange, onMove, onRemove, show
 
       <div className="flex flex-col gap-1.5 sm:max-w-xs">
         <Label htmlFor={ids.importance}>{t("importance", { name })}</Label>
-        <NativeSelect
+        <Dropdown
           id={ids.importance}
           className="w-full"
           value={entry.importance}
-          onChange={(event) => onChange(entry.key, { importance: event.target.value as Importance })}
-        >
-          {IMPORTANCE_LEVELS.map((level) => (
-            <NativeSelectOption key={level} value={level}>
-              {library(`importance.${level}`)}
-            </NativeSelectOption>
-          ))}
-        </NativeSelect>
+          onValueChange={(value) => onChange(entry.key, { importance: value as Importance })}
+          options={IMPORTANCE_LEVELS.map((level) => ({ value: level, label: library(`importance.${level}`) }))}
+        />
       </div>
 
       <details

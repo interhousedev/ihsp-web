@@ -1,6 +1,6 @@
 import { describe, expect, it } from "bun:test"
 import { getMyUploads } from "@ihsp/api"
-import { apiUrl, problem, server, setLibraryActor, teacherMe, testRouter } from "@ihsp/test-utils"
+import { apiUrl, problem, selectDropdownValue, server, setLibraryActor, teacherMe, testRouter } from "@ihsp/test-utils"
 import { fireEvent, screen, waitFor, within } from "@testing-library/react"
 import axe from "axe-core"
 import { HttpResponse, http } from "msw"
@@ -86,11 +86,11 @@ describe("UploadWizard: steps and validation", () => {
     const { user } = renderWizard()
     await chooseKind(user, /Markdown note/)
 
-    await user.selectOptions(await screen.findByLabelText("Type"), "worksheet")
-    await user.selectOptions(screen.getByLabelText("Language"), "ru")
+    await selectDropdownValue(user, await screen.findByLabelText("Type"), "worksheet")
+    await selectDropdownValue(user, screen.getByLabelText("Language"), "ru")
 
-    expect(screen.getByLabelText("Type")).toHaveValue("worksheet")
-    expect(screen.getByLabelText("Language")).toHaveValue("ru")
+    expect(screen.getByLabelText("Type")).toHaveAttribute("data-value", "worksheet")
+    expect(screen.getByLabelText("Language")).toHaveAttribute("data-value", "ru")
     expect(screen.queryByRole("option", { name: "Textbook" })).not.toBeInTheDocument()
   })
 

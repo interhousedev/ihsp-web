@@ -2,7 +2,7 @@
 
 import { getMeSubjectQuery, getMeSubjectsQuery, type ResourceItem, type SubjectDetail } from "@ihsp/api"
 import { useFormatters, useT } from "@ihsp/i18n"
-import { NativeSelect, NativeSelectOption, StateView } from "@ihsp/ui"
+import { Dropdown, StateView } from "@ihsp/ui"
 import { IconLink } from "@ihsp/ui"
 import { useQuery } from "@tanstack/react-query"
 import { useId } from "react"
@@ -110,19 +110,16 @@ export function PickLessonsTab({ subjectId, onSubjectChange, ...pick }: LessonsT
         <label htmlFor={selectId} className="text-sm font-medium">
           {t("add.lessons.subject")}
         </label>
-        <NativeSelect
+        <Dropdown
           id={selectId}
           value={subjectId}
-          className="w-full [&_select]:h-11 md:[&_select]:h-8"
-          onChange={(event) => onSubjectChange(event.target.value)}
-        >
-          <NativeSelectOption value="">{t("add.lessons.choose")}</NativeSelectOption>
-          {subjects.data.map((card) => (
-            <NativeSelectOption key={card.subject.id} value={card.subject.id}>
-              {card.subject.name}
-            </NativeSelectOption>
-          ))}
-        </NativeSelect>
+          className="w-full"
+          onValueChange={onSubjectChange}
+          options={[
+            { value: "", label: t("add.lessons.choose") },
+            ...subjects.data.map((card) => ({ value: card.subject.id, label: card.subject.name })),
+          ]}
+        />
       </div>
       {subjectId ? <SubjectResources subjectId={subjectId} {...pick} /> : null}
     </div>

@@ -8,10 +8,12 @@ import {
   nbIds,
   resourceAttachment,
   resourceMaterial,
+  selectDropdownValue,
   server,
+  setDropdownValue,
   staffLessonFor,
 } from "@ihsp/test-utils"
-import { fireEvent, screen, waitFor, within } from "@testing-library/react"
+import { screen, waitFor, within } from "@testing-library/react"
 import { HttpResponse, http } from "msw"
 import { LessonPage } from "../features/lessons/components/lesson-page"
 import { configureTests, renderStaff, setValue } from "./helpers"
@@ -224,7 +226,7 @@ describe("materials and attachments", () => {
     const checkboxes = await within(dialog).findAllByRole("checkbox")
     await user.click(checkboxes[0] as HTMLElement)
     await user.click(within(dialog).getByRole("tab", { name: "Link" }))
-    fireEvent.change(within(dialog).getByLabelText("Link address"), { target: { value: "https://example.org/lab" } })
+    setDropdownValue(within(dialog).getByLabelText("Link address"), "https://example.org/lab")
     await user.click(within(dialog).getByRole("button", { name: "Add link" }))
 
     await waitFor(() =>
@@ -249,7 +251,7 @@ describe("materials and attachments", () => {
     const dialog = await screen.findByRole("dialog")
     await user.click(within(dialog).getByRole("button", { name: "Attachment" }))
     await user.click(within(dialog).getByRole("tab", { name: "Link" }))
-    fireEvent.change(within(dialog).getByLabelText("Link address"), { target: { value: "https://example.org/slides" } })
+    setDropdownValue(within(dialog).getByLabelText("Link address"), "https://example.org/slides")
     await user.click(within(dialog).getByRole("button", { name: "Add link" }))
 
     await waitFor(() =>
@@ -277,7 +279,7 @@ describe("materials and attachments", () => {
     expect(within(dialog).getByRole("button", { name: "Attachment" })).toHaveAttribute("aria-pressed", "true")
     expect(within(dialog).getByRole("button", { name: "Material" })).toHaveAttribute("aria-pressed", "false")
     await user.click(within(dialog).getByRole("tab", { name: "From notebook" }))
-    await user.selectOptions(await within(dialog).findByLabelText("Pick a notebook"), nbIds.notebook)
+    await selectDropdownValue(user, await within(dialog).findByLabelText("Pick a notebook"), nbIds.notebook)
     await user.click(await within(dialog).findByRole("button", { name: "Photosynthesis: conspect" }))
 
     await waitFor(() => expect(bodies).toHaveLength(1))

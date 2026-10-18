@@ -2,7 +2,7 @@
 
 import { getLibrarySubjectsQuery, getLibraryTopicsQuery, type ItemLanguage, type ItemType, type Topic } from "@ihsp/api"
 import { useT } from "@ihsp/i18n"
-import { Input, Label, NativeSelect, NativeSelectOption, Skeleton, Textarea } from "@ihsp/ui"
+import { Dropdown, Input, Label, Skeleton, Textarea } from "@ihsp/ui"
 import { useQueries, useQuery } from "@tanstack/react-query"
 import { useId } from "react"
 import { stepProblems } from "./material-values"
@@ -176,33 +176,26 @@ export function DetailsFields({
           <div className="grid gap-4 sm:grid-cols-2">
             <div className="flex flex-col gap-1.5">
               <Label htmlFor={ids.type}>{t("typeLabel")}</Label>
-              <NativeSelect
+              <Dropdown
                 id={ids.type}
                 className="w-full"
                 value={values.type}
-                onChange={(event) => onChange({ type: event.target.value as ItemType })}
-              >
-                {MATERIAL_TYPES.map((type) => (
-                  <NativeSelectOption key={type} value={type}>
-                    {library(`type.${type}`)}
-                  </NativeSelectOption>
-                ))}
-              </NativeSelect>
+                onValueChange={(value) => onChange({ type: value as ItemType })}
+                options={MATERIAL_TYPES.map((type) => ({ value: type, label: library(`type.${type}`) }))}
+              />
             </div>
             <div className="flex flex-col gap-1.5">
               <Label htmlFor={ids.language}>{t("languageLabel")}</Label>
-              <NativeSelect
+              <Dropdown
                 id={ids.language}
                 className="w-full"
                 value={values.language}
-                onChange={(event) => onChange({ language: event.target.value as ItemLanguage })}
-              >
-                {MATERIAL_LANGUAGES.map((language) => (
-                  <NativeSelectOption key={language} value={language}>
-                    {library(`browse.language.${language}`)}
-                  </NativeSelectOption>
-                ))}
-              </NativeSelect>
+                onValueChange={(value) => onChange({ language: value as ItemLanguage })}
+                options={MATERIAL_LANGUAGES.map((language) => ({
+                  value: language,
+                  label: library(`browse.language.${language}`),
+                }))}
+              />
             </div>
           </div>
         </>

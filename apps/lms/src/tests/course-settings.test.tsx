@@ -1,6 +1,6 @@
 /** LMSUI: course settings (details form, visibility, navigation, link check) and the learner landing page. */
 import { beforeEach, describe, expect, it, setDefaultTimeout } from "bun:test"
-import { courseSettingsFixture, ids, resetLmsSettings, server } from "@ihsp/test-utils"
+import { courseSettingsFixture, ids, resetLmsSettings, server, setDropdownValue } from "@ihsp/test-utils"
 import { fireEvent, screen, waitFor, within } from "@testing-library/react"
 import { http, HttpResponse } from "msw"
 import { LandingPage } from "../features/landing/components/landing-page"
@@ -146,8 +146,8 @@ describe("settings visibility and navigation", () => {
   it("rejects an enrolment end before its start", async () => {
     const { user } = openSettings()
     await user.click(await screen.findByRole("tab", { name: "Visibility" }))
-    fireEvent.change(await screen.findByLabelText("Opens"), { target: { value: "2026-10-10T10:00" } })
-    fireEvent.change(screen.getByLabelText("Closes"), { target: { value: "2026-10-01T10:00" } })
+    setDropdownValue(await screen.findByLabelText("Opens"), "2026-10-10T10:00")
+    setDropdownValue(screen.getByLabelText("Closes"), "2026-10-01T10:00")
     expect(await screen.findByText("The end must not be before the start.")).toBeInTheDocument()
     expect(screen.getByRole("button", { name: "Save" })).toBeDisabled()
   })

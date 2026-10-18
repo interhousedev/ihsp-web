@@ -1,7 +1,7 @@
 /** The shared app lock: the Settings card (off by default, PIN set and removed) and the gate that covers the app. */
 import { afterEach, beforeEach, describe, expect, test } from "bun:test"
 import { resetConfig } from "@ihsp/config"
-import { TEST_ENV, renderWithProviders, userMe } from "@ihsp/test-utils"
+import { TEST_ENV, renderWithProviders, setDropdownValue, userMe } from "@ihsp/test-utils"
 import { fireEvent, screen, waitFor } from "@testing-library/react"
 import { AppLockSection } from "../app-lock-section"
 import { PinGate } from "../pin-gate"
@@ -36,8 +36,8 @@ describe("the Settings card", () => {
   test("sets a PIN for the signed-in user", async () => {
     const { user } = renderWithProviders(<AppLockSection />)
     await user.click(screen.getByRole("button", { name: "Set a PIN" }))
-    fireEvent.change(await screen.findByLabelText("New PIN (4 to 6 digits)"), { target: { value: "4821" } })
-    fireEvent.change(screen.getByLabelText("Repeat the new PIN"), { target: { value: "4821" } })
+    setDropdownValue(await screen.findByLabelText("New PIN (4 to 6 digits)"), "4821")
+    setDropdownValue(screen.getByLabelText("Repeat the new PIN"), "4821")
     await user.click(screen.getByRole("button", { name: "Save" }))
 
     await waitFor(() => expect(readPinRecord(userMe.id)).not.toBeNull())

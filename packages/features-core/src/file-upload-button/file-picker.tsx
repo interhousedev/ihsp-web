@@ -2,7 +2,7 @@
 
 import { getMeFilesQuery, type FileItem, type FileTypeFilter } from "@ihsp/api"
 import { useT } from "@ihsp/i18n"
-import { Button, Icons, Input, NativeSelect, NativeSelectOption, StateView } from "@ihsp/ui"
+import { Button, Dropdown, Icons, Input, StateView } from "@ihsp/ui"
 import { useQuery } from "@tanstack/react-query"
 import { useDeferredValue, useState } from "react"
 
@@ -65,32 +65,30 @@ export function FilePicker({
         }}
       />
       <div className="grid grid-cols-2 gap-2">
-        <NativeSelect
+        <Dropdown
           aria-label={t("type")}
           value={type}
-          onChange={(event) => {
-            setType(event.target.value as FileTypeFilter | "")
+          onValueChange={(value) => {
+            setType(value as FileTypeFilter | "")
             setPage(1)
           }}
-        >
-          <NativeSelectOption value="">{t("allTypes")}</NativeSelectOption>
-          {TYPES.map((value) => (
-            <NativeSelectOption key={value} value={value}>
-              {t(`types.${value}`)}
-            </NativeSelectOption>
-          ))}
-        </NativeSelect>
-        <NativeSelect
+          options={[
+            { value: "", label: t("allTypes") },
+            ...TYPES.map((value) => ({ value, label: t(`types.${value}`) })),
+          ]}
+        />
+        <Dropdown
           aria-label={t("sort")}
           value={sort}
-          onChange={(event) => {
-            setSort(event.target.value === "older" ? "older" : "recent")
+          onValueChange={(value) => {
+            setSort(value === "older" ? "older" : "recent")
             setPage(1)
           }}
-        >
-          <NativeSelectOption value="recent">{t("recent")}</NativeSelectOption>
-          <NativeSelectOption value="older">{t("older")}</NativeSelectOption>
-        </NativeSelect>
+          options={[
+            { value: "recent", label: t("recent") },
+            { value: "older", label: t("older") },
+          ]}
+        />
       </div>
       {query.isPending ? <StateView state="loading" rows={2} /> : null}
       {query.isError ? <StateView state="error" error={query.error} onRetry={() => void query.refetch()} /> : null}

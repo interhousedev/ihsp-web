@@ -8,7 +8,7 @@ import {
   type AttachedResource,
 } from "@ihsp/api"
 import { useErrorMessage, useT } from "@ihsp/i18n"
-import { Button, NativeSelect, NativeSelectOption, StateView } from "@ihsp/ui"
+import { Button, Dropdown, StateView } from "@ihsp/ui"
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query"
 import { useId, useState } from "react"
 
@@ -54,19 +54,13 @@ export function NotebookSource({
       <label htmlFor={id} className="text-sm font-medium">
         {t("pick")}
       </label>
-      <NativeSelect
+      <Dropdown
         id={id}
-        className="w-full [&_select]:h-11 md:[&_select]:h-8"
+        className="w-full"
         value={notebookId}
-        onChange={(event) => setPicked(event.target.value)}
-      >
-        {items.map((item) => (
-          <NativeSelectOption key={item.id} value={item.id}>
-            {item.emoji ? `${item.emoji} ` : ""}
-            {item.title}
-          </NativeSelectOption>
-        ))}
-      </NativeSelect>
+        onValueChange={setPicked}
+        options={items.map((item) => ({ value: item.id, label: `${item.emoji ? `${item.emoji} ` : ""}${item.title}` }))}
+      />
       {artifacts.isPending && notebookId !== "" ? <StateView state="loading" rows={2} /> : null}
       {!artifacts.isPending && files.length === 0 ? <StateView state="empty" emptyText={t("none")} /> : null}
       <ul className="flex flex-col gap-1.5" data-testid="notebook-outputs">

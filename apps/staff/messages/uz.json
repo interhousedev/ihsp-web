@@ -483,6 +483,13 @@
       "absences": "Qoldirilgan darslar: {count}",
       "absencesOf": "Qoldirilgan darslar: {total} tadan {count} ta",
       "excused": "sababli"
+    },
+    "reconcile": {
+      "button": "Barcha dars materiallari daftarda borligini tekshirish",
+      "hint": "Fan daftarlarida yo‘q dars materiallarini qo‘shadi. Mavjud materiallar o‘zgarmaydi.",
+      "running": "Tekshirilmoqda…",
+      "done": "Tekshirildi: {notebooks} ta daftar. Qo‘shildi: {added}, avvaldan bor: {present}, hali o‘qib bo‘lmaydi: {skipped}.",
+      "error": "Tekshirish amalga oshmadi. Qayta urinib ko‘ring."
     }
   }
 }

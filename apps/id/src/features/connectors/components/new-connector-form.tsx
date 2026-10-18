@@ -7,10 +7,9 @@ import {
   CardDescription,
   CardHeader,
   CardTitle,
+  Dropdown,
   FieldLabel,
   LoadingButton,
-  NativeSelect,
-  NativeSelectOption,
 } from "@ihsp/ui"
 import { useMutation } from "@tanstack/react-query"
 import { useId, useState } from "react"
@@ -106,18 +105,13 @@ export function NewConnectorForm({ catalog, user, onCreated }: NewConnectorFormP
         >
           <div className="grid gap-2">
             <FieldLabel htmlFor={serverId}>{t("connectors.new.server")}</FieldLabel>
-            <NativeSelect
+            <Dropdown
               id={serverId}
               className="w-full"
               value={server}
-              onChange={(event) => changeServer(event.target.value as McpServer)}
-            >
-              {servers.map((item) => (
-                <NativeSelectOption key={item.server} value={item.server}>
-                  {t(SERVER_KEYS[item.server])}
-                </NativeSelectOption>
-              ))}
-            </NativeSelect>
+              onValueChange={(next) => changeServer(next as McpServer)}
+              options={servers.map((item) => ({ value: item.server, label: t(SERVER_KEYS[item.server]) }))}
+            />
           </div>
           <ScopePicker
             entry={entry}
@@ -149,18 +143,16 @@ export function NewConnectorForm({ catalog, user, onCreated }: NewConnectorFormP
           />
           <div className="grid gap-2">
             <FieldLabel htmlFor={expiryId}>{t("connectors.new.expiry")}</FieldLabel>
-            <NativeSelect
+            <Dropdown
               id={expiryId}
               className="w-full"
               value={String(days)}
-              onChange={(event) => setDays(Number(event.target.value))}
-            >
-              {expiryOptions(server).map((option) => (
-                <NativeSelectOption key={option} value={String(option)}>
-                  {t("connectors.new.days", { count: option })}
-                </NativeSelectOption>
-              ))}
-            </NativeSelect>
+              onValueChange={(next) => setDays(Number(next))}
+              options={expiryOptions(server).map((option) => ({
+                value: String(option),
+                label: t("connectors.new.days", { count: option }),
+              }))}
+            />
             {server === "admin" ? (
               <p className="text-muted-foreground text-sm">{t("connectors.new.adminLimit")}</p>
             ) : null}

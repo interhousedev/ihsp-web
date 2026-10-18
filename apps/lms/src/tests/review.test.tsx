@@ -1,6 +1,6 @@
 import { describe, expect, it, setDefaultTimeout } from "bun:test"
 import type { AttemptOverrideBody } from "@ihsp/api"
-import { apiUrl, ids, server, testRouter } from "@ihsp/test-utils"
+import { apiUrl, ids, selectDropdownValue, server, testRouter } from "@ihsp/test-utils"
 import { screen, waitFor } from "@testing-library/react"
 import { HttpResponse, http } from "msw"
 import { AdminPage } from "../features/admin/components/admin-page"
@@ -110,7 +110,7 @@ describe("create course", () => {
     const { user } = renderLms(<AdminPage />, { route: "/admin/" })
     await user.type(await screen.findByLabelText("Title"), "Linear Algebra 2")
     expect(screen.getByLabelText("Address")).toHaveValue("linear-algebra-2")
-    await user.selectOptions(screen.getByLabelText("Visibility"), "invite")
+    await selectDropdownValue(user, screen.getByLabelText("Visibility"), "invite")
     await user.click(screen.getByRole("button", { name: "Create course" }))
     await waitFor(() =>
       expect(body).toEqual({ title: "Linear Algebra 2", slug: "linear-algebra-2", visibility: "invite" }),

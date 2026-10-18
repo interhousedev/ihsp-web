@@ -9,11 +9,10 @@ import {
   DialogHeader,
   DialogTitle,
   DialogTrigger,
+  Dropdown,
   Icons,
   Input,
   Label,
-  NativeSelect,
-  NativeSelectOption,
   Textarea,
 } from "@ihsp/ui"
 import { useId, useState, type FormEvent } from "react"
@@ -86,32 +85,28 @@ export function SuggestExamDialog() {
           <form className="flex flex-col gap-3" onSubmit={submit}>
             <div className="flex flex-col gap-1">
               <Label htmlFor={ids.subject}>{t("subject")}</Label>
-              <NativeSelect
+              <Dropdown
                 id={ids.subject}
                 required
-                className="w-full [&_select]:h-11 md:[&_select]:h-8"
+                className="w-full"
                 value={subjectId}
-                onChange={(event) => setSubjectId(event.target.value)}
-              >
-                <NativeSelectOption value="">{t("subjectPlaceholder")}</NativeSelectOption>
-                {(subjects.data ?? []).map((card) => (
-                  <NativeSelectOption key={card.subject.id} value={card.subject.id}>
-                    {card.subject.name}
-                  </NativeSelectOption>
-                ))}
-              </NativeSelect>
+                onValueChange={setSubjectId}
+                placeholder={t("subjectPlaceholder")}
+                options={(subjects.data ?? []).map((card) => ({ value: card.subject.id, label: card.subject.name }))}
+              />
             </div>
             <div className="flex flex-col gap-1">
               <Label htmlFor={ids.kind}>{t("kind")}</Label>
-              <NativeSelect
+              <Dropdown
                 id={ids.kind}
-                className="w-full [&_select]:h-11 md:[&_select]:h-8"
+                className="w-full"
                 value={kind}
-                onChange={(event) => setKind(event.target.value === "final" ? "final" : "midterm")}
-              >
-                <NativeSelectOption value="midterm">{tKind("midterm")}</NativeSelectOption>
-                <NativeSelectOption value="final">{tKind("final")}</NativeSelectOption>
-              </NativeSelect>
+                onValueChange={(next) => setKind(next === "final" ? "final" : "midterm")}
+                options={[
+                  { value: "midterm", label: tKind("midterm") },
+                  { value: "final", label: tKind("final") },
+                ]}
+              />
             </div>
             <div className="grid grid-cols-2 gap-3">
               <div className="flex flex-col gap-1">

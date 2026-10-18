@@ -11,8 +11,7 @@ import { useT } from "@ihsp/i18n"
 import {
   Button,
   Label,
-  NativeSelect,
-  NativeSelectOption,
+  Dropdown,
   Sheet,
   SheetContent,
   SheetDescription,
@@ -150,127 +149,98 @@ function FilterFields({ state, onChange }: { state: BrowseState; onChange: (patc
     enabled: Boolean(state.subject),
   })
   const topicOptions = flattenTopics(topics.data ?? [])
-  const any = <NativeSelectOption value="">{t("any")}</NativeSelectOption>
+  const any = { value: "", label: t("any") }
   return (
     <div className="flex flex-col gap-4">
       <Field id="filter-subject" label={t("filter.subject")}>
-        <NativeSelect
+        <Dropdown
           id="filter-subject"
           className="w-full"
           value={state.subject ?? ""}
-          onChange={(event) => onChange({ subject: event.target.value || null, topic: null })}
-        >
-          {any}
-          {subjects.data?.map((subject) => (
-            <NativeSelectOption key={subject.id} value={subject.id}>
-              {subject.name} ({subject.item_count})
-            </NativeSelectOption>
-          ))}
-        </NativeSelect>
+          onValueChange={(value) => onChange({ subject: value || null, topic: null })}
+          options={[
+            any,
+            ...(subjects.data ?? []).map((subject) => ({
+              value: subject.id,
+              label: `${subject.name} (${subject.item_count})`,
+            })),
+          ]}
+        />
       </Field>
       {state.subject && topicOptions.length > 0 ? (
         <Field id="filter-topic" label={t("filter.topic")}>
-          <NativeSelect
+          <Dropdown
             id="filter-topic"
             className="w-full"
             value={state.topic ?? ""}
-            onChange={(event) => onChange({ topic: event.target.value || null })}
-          >
-            {any}
-            {topicOptions.map((topic) => (
-              <NativeSelectOption key={topic.id} value={topic.id}>
-                {topic.label}
-              </NativeSelectOption>
-            ))}
-          </NativeSelect>
+            onValueChange={(value) => onChange({ topic: value || null })}
+            options={[any, ...topicOptions.map((topic) => ({ value: topic.id, label: topic.label }))]}
+          />
         </Field>
       ) : null}
       <TagFilter tag={state.tag} onChange={(tag) => onChange({ tag })} />
       <Field id="filter-year" label={t("filter.year")}>
-        <NativeSelect
+        <Dropdown
           id="filter-year"
           className="w-full"
           value={state.year ? String(state.year) : ""}
-          onChange={(event) => onChange({ year: event.target.value ? Number(event.target.value) : null })}
-        >
-          {any}
-          {[1, 2].map((year) => (
-            <NativeSelectOption key={year} value={String(year)}>
-              {t("year", { year })}
-            </NativeSelectOption>
-          ))}
-        </NativeSelect>
+          onValueChange={(value) => onChange({ year: value ? Number(value) : null })}
+          options={[any, ...[1, 2].map((year) => ({ value: String(year), label: t("year", { year }) }))]}
+        />
       </Field>
       <Field id="filter-type" label={t("filter.type")}>
-        <NativeSelect
+        <Dropdown
           id="filter-type"
           className="w-full"
           value={state.type ?? ""}
-          onChange={(event) => onChange({ type: event.target.value || null })}
-        >
-          {any}
-          {TYPES.map((type) => (
-            <NativeSelectOption key={type} value={type}>
-              {library(`type.${type}`)}
-            </NativeSelectOption>
-          ))}
-        </NativeSelect>
+          onValueChange={(value) => onChange({ type: value || null })}
+          options={[any, ...TYPES.map((type) => ({ value: type, label: library(`type.${type}`) }))]}
+        />
       </Field>
       <Field id="filter-language" label={t("filter.language")}>
-        <NativeSelect
+        <Dropdown
           id="filter-language"
           className="w-full"
           value={state.lang ?? ""}
-          onChange={(event) => onChange({ lang: event.target.value || null })}
-        >
-          {any}
-          {LANGUAGES.map((language) => (
-            <NativeSelectOption key={language} value={language}>
-              {t(`language.${language}`)}
-            </NativeSelectOption>
-          ))}
-        </NativeSelect>
+          onValueChange={(value) => onChange({ lang: value || null })}
+          options={[any, ...LANGUAGES.map((language) => ({ value: language, label: t(`language.${language}`) }))]}
+        />
       </Field>
       {state.source !== "book" ? (
         <Field id="filter-uploader" label={t("filter.uploader")}>
-          <NativeSelect
+          <Dropdown
             id="filter-uploader"
             className="w-full"
             value={state.uploader ?? ""}
-            onChange={(event) =>
-              onChange({
-                uploader:
-                  event.target.value === "student" || event.target.value === "teacher" ? event.target.value : null,
-              })
-            }
-          >
-            {any}
-            <NativeSelectOption value="student">{t("uploader.student")}</NativeSelectOption>
-            <NativeSelectOption value="teacher">{t("uploader.teacher")}</NativeSelectOption>
-          </NativeSelect>
+            onValueChange={(value) => onChange({ uploader: value === "student" || value === "teacher" ? value : null })}
+            options={[
+              any,
+              { value: "student", label: t("uploader.student") },
+              { value: "teacher", label: t("uploader.teacher") },
+            ]}
+          />
         </Field>
       ) : null}
       {signedIn ? (
         <Field id="filter-shelf" label={t("filter.shelf")}>
-          <NativeSelect
+          <Dropdown
             id="filter-shelf"
             className="w-full"
             value={state.shelf ?? ""}
-            onChange={(event) => {
-              const value = event.target.value
+            onValueChange={(value) =>
               onChange({
                 shelf: value === "any" || value === "want" || value === "reading" || value === "done" ? value : null,
               })
-            }}
-          >
-            {any}
-            <NativeSelectOption value="any">{t("filter.shelf")}</NativeSelectOption>
-            {(["want", "reading", "done"] as const).map((shelf) => (
-              <NativeSelectOption key={shelf} value={shelf}>
-                {library(`shelf.${shelf}`)}
-              </NativeSelectOption>
-            ))}
-          </NativeSelect>
+            }
+            options={[
+              any,
+              { value: "any", label: t("filter.shelf") },
+              ...(["want", "reading", "done"] as const).map((shelf) => ({
+                value: shelf,
+                label: library(`shelf.${shelf}`),
+              })),
+            ]}
+          />
         </Field>
       ) : null}
       <Label className="min-h-11 cursor-pointer gap-3 font-normal md:min-h-9">

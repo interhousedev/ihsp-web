@@ -11,8 +11,7 @@ import {
   DialogTitle,
   Input,
   Label,
-  NativeSelect,
-  NativeSelectOption,
+  Dropdown,
   Textarea,
 } from "@ihsp/ui"
 import { useEffect, useId, useState } from "react"
@@ -116,19 +115,16 @@ export function ReasonDialog({
           {coded && codes.length > 0 ? (
             <div className="flex flex-col gap-1.5">
               <Label htmlFor={`${fieldId}-code`}>{t("reasonLabel")}</Label>
-              <NativeSelect
+              <Dropdown
                 id={`${fieldId}-code`}
                 className="w-full"
                 value={code}
-                onChange={(event) => setPicked(event.target.value)}
-              >
-                {codes.map((value) => (
-                  <NativeSelectOption key={value} value={value}>
-                    {t(`reasonCodes.${value}`)}
-                  </NativeSelectOption>
-                ))}
-                <NativeSelectOption value={OTHER}>{t("reasonCodes.other")}</NativeSelectOption>
-              </NativeSelect>
+                onValueChange={setPicked}
+                options={[
+                  ...codes.map((value) => ({ value, label: t(`reasonCodes.${value}`) })),
+                  { value: OTHER, label: t("reasonCodes.other") },
+                ]}
+              />
             </div>
           ) : null}
           {ownWords ? (

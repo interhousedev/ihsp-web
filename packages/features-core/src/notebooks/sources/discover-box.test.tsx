@@ -4,10 +4,12 @@ import {
   apiUrl,
   courseWorkspaceReadOnly,
   discoverResponse,
+  dropdownLabels,
   nbIds,
   notebookDetail,
   notebookEmptyDetail,
   problem,
+  selectDropdownValue,
   server,
   setCourseWorkspaceReadOnly,
   setWebQuota,
@@ -53,26 +55,28 @@ function captureDiscover(response: DiscoverResponse = discoverResponse) {
 describe("DiscoverBox", () => {
   describe("what it shows", () => {
     it("shows the input, the mode pill with its cost and the quota line in an empty notebook", async () => {
-      renderPanel(notebookEmptyDetail)
+      const { user } = renderPanel(notebookEmptyDetail)
 
       expect(await searchInput()).toBeInTheDocument()
       const mode = screen.getByRole("combobox", { name: "Search type" })
-      expect(mode).toHaveValue("fast")
-      expect(screen.getByRole("option", { name: "Fast search · 1 search" })).toBeInTheDocument()
+      expect(mode).toHaveAttribute("data-value", "fast")
+      expect(await dropdownLabels(user, mode)).toContain("Fast search · 1 search")
       expect(screen.getByText("4 of 10 web searches left today")).toBeInTheDocument()
     })
 
     it("takes the cost of a deep search from the quota", async () => {
       setWebQuota({ ...webQuota, deep_cost: 5 })
-      renderPanel(notebookEmptyDetail)
+      const { user } = renderPanel(notebookEmptyDetail)
+      const mode = await screen.findByRole("combobox", { name: "Search type" })
 
-      expect(await screen.findByRole("option", { name: "Deep search · 5 searches" })).toBeInTheDocument()
+      await waitFor(async () => expect(await dropdownLabels(user, mode)).toContain("Deep search · 5 searches"))
     })
 
     it("shows 3 searches for the deep mode with the default quota", async () => {
-      renderPanel(notebookEmptyDetail)
+      const { user } = renderPanel(notebookEmptyDetail)
+      const mode = await screen.findByRole("combobox", { name: "Search type" })
 
-      expect(await screen.findByRole("option", { name: "Deep search · 3 searches" })).toBeInTheDocument()
+      await waitFor(async () => expect(await dropdownLabels(user, mode)).toContain("Deep search · 3 searches"))
     })
 
     it("shows only the input once the notebook has sources, and the rest when it is focused", async () => {
@@ -138,7 +142,7 @@ describe("DiscoverBox", () => {
       const captured = captureDiscover()
       const { user } = renderPanel(notebookEmptyDetail)
       await typeQuery(user, "calvin cycle")
-      await user.selectOptions(screen.getByRole("combobox", { name: "Search type" }), "deep")
+      await selectDropdownValue(user, screen.getByRole("combobox", { name: "Search type" }), "deep")
 
       await user.click(screen.getByRole("button", { name: "Search the web" }))
 
@@ -164,7 +168,7 @@ describe("DiscoverBox", () => {
       const submit = await screen.findByRole("button", { name: "Search the web" })
       expect(submit).toBeEnabled()
 
-      await user.selectOptions(screen.getByRole("combobox", { name: "Search type" }), "deep")
+      await selectDropdownValue(user, screen.getByRole("combobox", { name: "Search type" }), "deep")
 
       expect(submit).toBeDisabled()
     })

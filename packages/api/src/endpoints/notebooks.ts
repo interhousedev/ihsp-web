@@ -56,6 +56,7 @@ import type {
   NotebooksParams,
   SubjectMaterial,
   SubjectMaterialCreateBody,
+  ReconcileMaterials,
   SubjectMaterialGroup,
   StaffSubject,
   StaffSubjectMaterialCreateBody,
@@ -591,6 +592,14 @@ export function deleteAdminSubjectMaterial(
   return api.delete<NoContent>(`/v1/admin/subject-materials/${seg(eduSubjectId)}/${seg(materialId)}`, opts)
 }
 
+/** POST /v1/admin/subject-materials/subjects/{subject_id}/reconcile — admin; syncs every student's subject notebook now. */
+export function postAdminReconcileSubjectMaterials(
+  subjectId: string,
+  opts?: RequestOptions,
+): Promise<ReconcileMaterials> {
+  return api.post<ReconcileMaterials>(`/v1/admin/subject-materials/subjects/${seg(subjectId)}/reconcile`, {}, opts)
+}
+
 // --- A teacher's subjects and materials (staff) ---
 
 /** GET /v1/staff/subjects — teacher; the subjects taught this term, each with its groups and subgroups. */
@@ -624,6 +633,14 @@ export function postStaffSubjectMaterial(
   opts?: RequestOptions,
 ): Promise<SubjectMaterial> {
   return api.post<SubjectMaterial>(`/v1/staff/subjects/${seg(subjectId)}/materials`, body, opts)
+}
+
+/** POST /v1/staff/subjects/{id}/reconcile — teacher; syncs the teacher's own subject notebooks of the subject now. */
+export function postStaffReconcileSubjectMaterials(
+  subjectId: string,
+  opts?: RequestOptions,
+): Promise<ReconcileMaterials> {
+  return api.post<ReconcileMaterials>(`/v1/staff/subjects/${seg(subjectId)}/reconcile`, {}, opts)
 }
 
 /** DELETE /v1/staff/subjects/{id}/materials/{material_id} — teacher, own materials only; `204`, `404`. */

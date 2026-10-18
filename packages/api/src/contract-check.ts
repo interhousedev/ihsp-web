@@ -8,10 +8,11 @@
 import type { paths } from "./generated/openapi"
 import type { getAdminAiExtensions, getAdminAiLimits, getAdminAiStudents, getAdminAiUsage, putAdminAiExtension, putAdminAiLimits } from "./endpoints/admin-ai"
 import type { getAdminJobs, postAdminJobCancel } from "./endpoints/admin-jobs"
+import type { getAdminLogIssues } from "./endpoints/admin-logs"
 import type { getAiChat, getAiChats, getAiUsage, getAiWebSearch, patchAiChat, postAiChatMessages, postAiChatRegenerate, postAiChatToolCallApprove, postAiChatToolCallReject, postAiChats } from "./endpoints/ai"
 import type { getAdminAssessments, getMeAssessments, getMeSubjectPlanner, getStaffAssessments, patchAdminAssessment, patchStaffAssessment, postAdminAssessment, postMeAssessment, postStaffAssessment } from "./endpoints/assessments"
 import type { getAdminBroadcast, getAdminBroadcasts, patchAdminBroadcast, postAdminBroadcastCancel, postAdminBroadcastSend, postAdminBroadcasts, postAdminBroadcastsAudienceCount } from "./endpoints/broadcasts"
-import type { getCertificateGroups, getCertificateRanking, getCertificateStats, getCertificateTypes, getMyCertificates, getStaffCertificates, patchCertificateType, postCertificateExport, postCertificateType, postImportCertificatesFromEmis, postMyCertificate, postMyCertificateFile } from "./endpoints/certificates"
+import type { getCertificateGroups, getCertificateRanking, getCertificateStats, getCertificateTypes, getCustomFieldValues, getMyCertificates, getStaffCertificates, patchCertificateType, postCertificateExport, postCertificateType, postImportCertificatesFromEmis, postMyCertificate, postMyCertificateFile } from "./endpoints/certificates"
 import type { deleteStaffLessonHomework, getAdminAttendance, getAdminAttendanceMissing, getMeAttendance, getMeHomework, getMeLesson, getMeToday, getStaffGroupAttendance, getStaffGroupStudents, getStaffJournal, getStaffJournalOptions, getStaffLesson, getStaffToday, postStaffJournalToggle, putMeHomeworkDone, putMeHomeworkNote, putStaffLessonAttendance, putStaffLessonAttendanceExcuse, putStaffLessonHomework, putStaffLessonTopic } from "./endpoints/classwork"
 import type { getAdminDashboard, getAdminGroupsStats, getAdminStudent, getAdminTeacherProfile, getMeAlerts, getMeOutboundMail, getMeSearch, postMeCalendarToken, postMeOutboundMail } from "./endpoints/composition"
 import type { getCourseSteps, getNotebookUsageOf, postApplyArtifact, postApplyPreview, postCourseNotebook, postCourseWorkspace } from "./endpoints/course-workspace"
@@ -33,7 +34,7 @@ import type { getLmsAttempt, getLmsCourse, getLmsCourseStep, getLmsCourseStudent
 import type { getLmsCourseSettings, patchLmsCourseDetails, postLmsCourseJoinCode, postLmsCourseLinkCheck } from "./endpoints/lms-settings"
 import type { getAdminSubjectPeople, getAdminSyncRuns, getMeGrades, getMeGradesDay, getMeLessonResults, getMeRecordBook, getMeSubject, getMeSubjectLessons, getMeSubjects, postAdminSubjectEmisPull, postAdminSyncMaterials, postAdminSyncRun } from "./endpoints/marks"
 import type { getMeSync, postMeSync } from "./endpoints/me-sync"
-import type { getAdminSubjectMaterialGroups, getAdminSubjectMaterials, getArtifact, getArtifacts, getNotebook, getNotebookAutoSubject, getNotebookChat, getNotebookLabels, getNotebookSearch, getNotebookSource, getNotebookSourceFileUrl, getNotebookSources, getNotebookSubjectSlots, getNotebookUsage, getNotebooks, getPassage, getSourcePassages, getStaffSubjectMaterials, getStaffSubjects, patchArtifact, patchNotebook, patchNotebookLabel, patchNotebookSource, postAdminSubjectMaterial, postArtifact, postArtifactAsSource, postArtifactAttachToLesson, postArtifactCancel, postArtifactFlashcardSet, postArtifactRetry, postArtifactSaveToFiles, postArtifactSlidesRevise, postNotebook, postNotebookAutoSubject, postNotebookDiscover, postNotebookLabel, postNotebookLabelsAuto, postNotebookMessage, postNotebookRegenerate, postNotebookSourceSync, postNotebookSources, postNotebookSourcesSelect, postSaveNote, postStaffSubjectMaterial, putArtifactSlides, putNotebookSourceLabels } from "./endpoints/notebooks"
+import type { getAdminSubjectMaterialGroups, getAdminSubjectMaterials, getArtifact, getArtifacts, getNotebook, getNotebookAutoSubject, getNotebookChat, getNotebookLabels, getNotebookSearch, getNotebookSource, getNotebookSourceFileUrl, getNotebookSources, getNotebookSubjectSlots, getNotebookUsage, getNotebooks, getPassage, getSourcePassages, getStaffSubjectMaterials, getStaffSubjects, patchArtifact, patchNotebook, patchNotebookLabel, patchNotebookSource, postAdminReconcileSubjectMaterials, postAdminSubjectMaterial, postArtifact, postArtifactAsSource, postArtifactAttachToLesson, postArtifactCancel, postArtifactFlashcardSet, postArtifactRetry, postArtifactSaveToFiles, postArtifactSlidesRevise, postNotebook, postNotebookAutoSubject, postNotebookDiscover, postNotebookLabel, postNotebookLabelsAuto, postNotebookMessage, postNotebookRegenerate, postNotebookSourceSync, postNotebookSources, postNotebookSourcesSelect, postSaveNote, postStaffReconcileSubjectMaterials, postStaffSubjectMaterial, putArtifactSlides, putNotebookSourceLabels } from "./endpoints/notebooks"
 import type { getNotifications, getNotificationsUnreadCount } from "./endpoints/notifications"
 import type { postOauthLogout, postOauthRefresh, postOauthTelegram, postOauthToken, postOauthTokenHook } from "./endpoints/oauth"
 import type { confirmPresentationPlan, getPresentationPlan, patchPresentationPlan, postPresentationPlan } from "./endpoints/presentation-plans"
@@ -143,6 +144,10 @@ export const response_getAdminJobs: ResponseOf<"/v1/admin/jobs", "get"> = res_ge
 // POST /v1/admin/jobs/{job_id}/cancel — postAdminJobCancel
 declare const res_postAdminJobCancel: Awaited<ReturnType<typeof postAdminJobCancel>>
 export const response_postAdminJobCancel: ResponseOf<"/v1/admin/jobs/{job_id}/cancel", "post"> = res_postAdminJobCancel
+
+// GET /v1/admin/logs/issues — getAdminLogIssues
+declare const res_getAdminLogIssues: Awaited<ReturnType<typeof getAdminLogIssues>>
+export const response_getAdminLogIssues: ResponseOf<"/v1/admin/logs/issues", "get"> = res_getAdminLogIssues
 
 // GET /v1/ai/chats — getAiChats
 declare const res_getAiChats: Awaited<ReturnType<typeof getAiChats>>
@@ -357,6 +362,12 @@ export const response_postImportCertificatesFromEmis: ResponseOf<"/v1/certificat
 // GET /v1/certificates/staff/groups — getCertificateGroups
 declare const res_getCertificateGroups: Awaited<ReturnType<typeof getCertificateGroups>>
 export const response_getCertificateGroups: ResponseOf<"/v1/certificates/staff/groups", "get"> = res_getCertificateGroups
+
+// GET /v1/certificates/staff/fields/{key}/values — getCustomFieldValues
+declare const res_getCustomFieldValues: Awaited<ReturnType<typeof getCustomFieldValues>>
+export const response_getCustomFieldValues: ResponseOf<"/v1/certificates/staff/fields/{key}/values", "get"> = res_getCustomFieldValues
+declare const query_getCustomFieldValues: CertificateFilters
+export const query_ok_getCustomFieldValues: QueryOf<"/v1/certificates/staff/fields/{key}/values", "get"> = query_getCustomFieldValues
 
 // GET /v1/certificates/staff/entries — getStaffCertificates
 declare const res_getStaffCertificates: Awaited<ReturnType<typeof getStaffCertificates>>
@@ -2092,6 +2103,10 @@ export const request_postAdminSubjectMaterial: RequestOf<"/v1/admin/subject-mate
 // no JSON success response (204, CSV, calendar or HTML): only the route is checked
 export type route_deleteAdminSubjectMaterial = OperationOf<"/v1/admin/subject-materials/{edu_subject_id}/{material_id}", "delete">
 
+// POST /v1/admin/subject-materials/subjects/{subject_id}/reconcile — postAdminReconcileSubjectMaterials
+declare const res_postAdminReconcileSubjectMaterials: Awaited<ReturnType<typeof postAdminReconcileSubjectMaterials>>
+export const response_postAdminReconcileSubjectMaterials: ResponseOf<"/v1/admin/subject-materials/subjects/{subject_id}/reconcile", "post"> = res_postAdminReconcileSubjectMaterials
+
 // GET /v1/staff/subjects — getStaffSubjects
 declare const res_getStaffSubjects: Awaited<ReturnType<typeof getStaffSubjects>>
 export const response_getStaffSubjects: ResponseOf<"/v1/staff/subjects", "get"> = res_getStaffSubjects
@@ -2105,6 +2120,10 @@ declare const res_postStaffSubjectMaterial: Awaited<ReturnType<typeof postStaffS
 export const response_postStaffSubjectMaterial: ResponseOf<"/v1/staff/subjects/{subject_id}/materials", "post"> = res_postStaffSubjectMaterial
 declare const req_postStaffSubjectMaterial: StaffSubjectMaterialCreateBody
 export const request_postStaffSubjectMaterial: RequestOf<"/v1/staff/subjects/{subject_id}/materials", "post"> = req_postStaffSubjectMaterial
+
+// POST /v1/staff/subjects/{subject_id}/reconcile — postStaffReconcileSubjectMaterials
+declare const res_postStaffReconcileSubjectMaterials: Awaited<ReturnType<typeof postStaffReconcileSubjectMaterials>>
+export const response_postStaffReconcileSubjectMaterials: ResponseOf<"/v1/staff/subjects/{subject_id}/reconcile", "post"> = res_postStaffReconcileSubjectMaterials
 
 // DELETE /v1/staff/subjects/{subject_id}/materials/{material_id} — deleteStaffSubjectMaterial
 // no JSON success response (204, CSV, calendar or HTML): only the route is checked

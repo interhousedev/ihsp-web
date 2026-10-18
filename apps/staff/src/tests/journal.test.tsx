@@ -1,7 +1,7 @@
 /** STF-9, UF-STF-07: the journal. */
 import { afterEach, beforeEach, describe, expect, spyOn, test } from "bun:test"
 import type { Journal } from "@ihsp/api"
-import { apiUrl, ids, journal, server, weekLessons } from "@ihsp/test-utils"
+import { apiUrl, dropdownLabels, ids, journal, server, weekLessons } from "@ihsp/test-utils"
 import { screen, waitFor, within } from "@testing-library/react"
 import { HttpResponse, http } from "msw"
 import { toast } from "sonner"
@@ -37,12 +37,12 @@ async function grid(): Promise<HTMLElement> {
 
 describe("journal", () => {
   test("picks a subject and audience the teacher teaches and shows the grid", async () => {
-    renderStaff(<JournalPage />, { route: "/journal/" })
+    const { user } = renderStaff(<JournalPage />, { route: "/journal/" })
 
     const picker = await screen.findByRole("combobox", { name: "Subject and audience" })
 
-    expect(picker).toHaveValue(`${ids.physics}|2tn2`)
-    expect(within(picker).getByRole("option", { name: "English · 2TN2 subgroup 1" })).toBeInTheDocument()
+    expect(picker).toHaveAttribute("data-value", `${ids.physics}|2tn2`)
+    expect(await dropdownLabels(user, picker)).toContain("English · 2TN2 subgroup 1")
     const table = await grid()
     expect(within(table).getByText("Brastilov Aleksey")).toBeInTheDocument()
     expect(within(table).getByText("Absences")).toBeInTheDocument()
@@ -54,7 +54,7 @@ describe("journal", () => {
 
     const picker = await screen.findByRole("combobox", { name: "Subject and audience" })
 
-    expect(picker).toHaveValue(`${ids.english}|2tn2:1`)
+    expect(picker).toHaveAttribute("data-value", `${ids.english}|2tn2:1`)
   })
 
   test("a column header opens the lesson; a column without attendance is marked", async () => {

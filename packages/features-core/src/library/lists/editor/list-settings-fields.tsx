@@ -2,7 +2,7 @@
 
 import { getLibrarySubjectsQuery, type ReadingListScope, type ReadingListStatus } from "@ihsp/api"
 import { useT } from "@ihsp/i18n"
-import { Input, Label, NativeSelect, NativeSelectOption, Skeleton, Textarea, cn } from "@ihsp/ui"
+import { Dropdown, Input, Label, Skeleton, Textarea, cn } from "@ihsp/ui"
 import { useQuery } from "@tanstack/react-query"
 import { useId } from "react"
 import { DESCRIPTION_MAX, TITLE_MAX, settingsProblems, type ListSettings } from "./entries"
@@ -144,21 +144,18 @@ export function ListSettingsFields({
       <div className="grid gap-4 sm:grid-cols-3">
         <div className="flex flex-col gap-1.5">
           <Label htmlFor={ids.subject}>{settings.scope === "subject" ? t("subjectLabel") : t("subjectOptional")}</Label>
-          <NativeSelect
+          <Dropdown
             id={ids.subject}
             className="w-full"
             value={settings.subjectId}
             aria-invalid={problems.includes("subjectRequired")}
             aria-describedby={problems.includes("subjectRequired") ? `${ids.subject}-error` : undefined}
-            onChange={(event) => onChange({ subjectId: event.target.value })}
-          >
-            <NativeSelectOption value="">{t("noSubject")}</NativeSelectOption>
-            {subjects.data?.map((subject) => (
-              <NativeSelectOption key={subject.id} value={subject.id}>
-                {subject.name}
-              </NativeSelectOption>
-            ))}
-          </NativeSelect>
+            onValueChange={(value) => onChange({ subjectId: value })}
+            options={[
+              { value: "", label: t("noSubject") },
+              ...(subjects.data ?? []).map((subject) => ({ value: subject.id, label: subject.name })),
+            ]}
+          />
           {problems.includes("subjectRequired") ? (
             <p id={`${ids.subject}-error`} role="alert" className="text-destructive text-sm">
               {t("subjectRequired")}
@@ -167,34 +164,30 @@ export function ListSettingsFields({
         </div>
         <div className="flex flex-col gap-1.5">
           <Label htmlFor={ids.year}>{t("yearLabel")}</Label>
-          <NativeSelect
+          <Dropdown
             id={ids.year}
             className="w-full"
             value={settings.year === null ? "" : String(settings.year)}
-            onChange={(event) => onChange({ year: event.target.value === "" ? null : Number(event.target.value) })}
-          >
-            <NativeSelectOption value="">{t("anyYear")}</NativeSelectOption>
-            {YEARS.map((year) => (
-              <NativeSelectOption key={year} value={String(year)}>
-                {t("year", { year })}
-              </NativeSelectOption>
-            ))}
-          </NativeSelect>
+            onValueChange={(value) => onChange({ year: value === "" ? null : Number(value) })}
+            options={[
+              { value: "", label: t("anyYear") },
+              ...YEARS.map((year) => ({ value: String(year), label: t("year", { year }) })),
+            ]}
+          />
         </div>
         <div className="flex flex-col gap-1.5">
           <Label htmlFor={ids.term}>{t("termLabel")}</Label>
-          <NativeSelect
+          <Dropdown
             id={ids.term}
             className="w-full"
             value={settings.termHalf === null ? "" : String(settings.termHalf)}
-            onChange={(event) =>
-              onChange({ termHalf: event.target.value === "" ? null : (Number(event.target.value) as 1 | 2) })
-            }
-          >
-            <NativeSelectOption value="">{t("wholeYear")}</NativeSelectOption>
-            <NativeSelectOption value="1">{t("term", { half: 1 })}</NativeSelectOption>
-            <NativeSelectOption value="2">{t("term", { half: 2 })}</NativeSelectOption>
-          </NativeSelect>
+            onValueChange={(value) => onChange({ termHalf: value === "" ? null : (Number(value) as 1 | 2) })}
+            options={[
+              { value: "", label: t("wholeYear") },
+              { value: "1", label: t("term", { half: 1 }) },
+              { value: "2", label: t("term", { half: 2 }) },
+            ]}
+          />
         </div>
       </div>
 

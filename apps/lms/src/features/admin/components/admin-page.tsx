@@ -8,15 +8,14 @@ import {
   AlertDescription,
   Card,
   CardContent,
+  Dropdown,
   Field,
   FieldDescription,
   FieldError,
   FieldLabel,
   Input,
-  NativeSelect,
-  NativeSelectOption,
-  PageContainer,
   LoadingButton,
+  PageContainer,
 } from "@ihsp/ui"
 import { useMutation } from "@tanstack/react-query"
 import { useRouter } from "next/navigation"
@@ -96,15 +95,16 @@ export function AdminPage() {
             </Field>
             <Field>
               <FieldLabel htmlFor="course-new-visibility">{t("visibility")}</FieldLabel>
-              <NativeSelect
+              <Dropdown
                 id="course-new-visibility"
                 value={visibility}
-                onChange={(event) => setVisibility(event.target.value === "invite" ? "invite" : "public")}
+                onValueChange={(next) => setVisibility(next === "invite" ? "invite" : "public")}
                 className="w-full"
-              >
-                <NativeSelectOption value="public">{t("visibilityPublic")}</NativeSelectOption>
-                <NativeSelectOption value="invite">{t("visibilityInvite")}</NativeSelectOption>
-              </NativeSelect>
+                options={[
+                  { value: "public", label: t("visibilityPublic") },
+                  { value: "invite", label: t("visibilityInvite") },
+                ]}
+              />
             </Field>
             {create.isError ? (
               <Alert variant="destructive">

@@ -11,12 +11,11 @@ import {
   DialogFooter,
   DialogHeader,
   DialogTitle,
+  Dropdown,
   Field,
   FieldDescription,
   FieldLabel,
   Input,
-  NativeSelect,
-  NativeSelectOption,
   LoadingButton,
   Switch,
 } from "@ihsp/ui"
@@ -108,19 +107,16 @@ export function StaffFormDialog({
 
           <Field>
             <FieldLabel htmlFor="staff-preset">{t("preset")}</FieldLabel>
-            <NativeSelect
+            <Dropdown
               id="staff-preset"
               value={preset}
-              onChange={(event) => choosePreset(event.target.value)}
+              onValueChange={choosePreset}
               className="w-full"
-            >
-              <NativeSelectOption value="custom">{t("presets.custom")}</NativeSelectOption>
-              {ROLE_PRESETS.map((item) => (
-                <NativeSelectOption key={item.key} value={item.key}>
-                  {t(`presets.${item.key}`)}
-                </NativeSelectOption>
-              ))}
-            </NativeSelect>
+              options={[
+                { value: "custom", label: t("presets.custom") },
+                ...ROLE_PRESETS.map((item) => ({ value: item.key, label: t(`presets.${item.key}`) })),
+              ]}
+            />
           </Field>
 
           <Field>

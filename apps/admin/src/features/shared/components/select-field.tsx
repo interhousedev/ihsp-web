@@ -1,12 +1,12 @@
 "use client"
 
-import { NativeSelect, NativeSelectOption } from "@ihsp/ui"
+import { Dropdown } from "@ihsp/ui"
 import { TOUCH_SELECT } from "../utils/touch"
 
 export type SelectOption = { value: string; label: string; disabled?: boolean }
 
 /**
- * A native `<select>` (reliable on phones and with a screen reader). `emptyLabel` adds a first option with the
+ * A single-choice dropdown. `emptyLabel` adds a first option with the
  * empty value; the value `null` or `""` selects it.
  */
 export function SelectField({
@@ -29,20 +29,17 @@ export function SelectField({
   "aria-label"?: string
 }) {
   return (
-    <NativeSelect
+    <Dropdown
       id={id}
       value={value ?? ""}
       disabled={disabled}
       aria-label={ariaLabel}
-      onChange={(event) => onChange(event.target.value)}
+      onValueChange={onChange}
       className={`${TOUCH_SELECT} ${className ?? "w-full"}`}
-    >
-      {emptyLabel !== undefined ? <NativeSelectOption value="">{emptyLabel}</NativeSelectOption> : null}
-      {options.map((option) => (
-        <NativeSelectOption key={option.value} value={option.value} disabled={option.disabled}>
-          {option.label}
-        </NativeSelectOption>
-      ))}
-    </NativeSelect>
+      options={[
+        ...(emptyLabel !== undefined ? [{ value: "", label: emptyLabel }] : []),
+        ...options.map((option) => ({ value: option.value, label: option.label, disabled: option.disabled })),
+      ]}
+    />
   )
 }

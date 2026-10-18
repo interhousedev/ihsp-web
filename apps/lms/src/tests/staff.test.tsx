@@ -1,6 +1,6 @@
 import { describe, expect, it, setDefaultTimeout } from "bun:test"
 import type { CourseStaffBody } from "@ihsp/api"
-import { apiUrl, ids, server } from "@ihsp/test-utils"
+import { apiUrl, ids, selectDropdownValue, server } from "@ihsp/test-utils"
 import { screen, waitFor, within } from "@testing-library/react"
 import { HttpResponse, http } from "msw"
 import { StaffPage } from "../features/staff/components/staff-page"
@@ -36,7 +36,7 @@ describe("staff page", () => {
     await user.click(await screen.findByRole("button", { name: "Add staff member" }))
     const dialog = await screen.findByRole("dialog")
     await user.type(within(dialog).getByLabelText("Login"), "kalandarova.gavxar")
-    await user.selectOptions(within(dialog).getByLabelText("Role preset"), "teacher")
+    await selectDropdownValue(user, within(dialog).getByLabelText("Role preset"), "teacher")
     expect(within(dialog).getByLabelText("Role shown on the course page")).toHaveValue("Teacher")
     expect(within(dialog).getByRole("checkbox", { name: /^Edit/ })).toBeChecked()
     expect(within(dialog).getByRole("checkbox", { name: /^Manage staff/ })).not.toBeChecked()

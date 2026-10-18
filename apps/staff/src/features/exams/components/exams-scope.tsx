@@ -1,7 +1,7 @@
 "use client"
 
 import { useT } from "@ihsp/i18n"
-import { NativeSelect } from "@ihsp/ui"
+import { Dropdown } from "@ihsp/ui"
 import { parseAsString, useQueryState } from "nuqs"
 import { useId, useMemo, type ReactNode } from "react"
 import { QueryState } from "../../shared/components/query-state"
@@ -33,21 +33,19 @@ export function ExamsScope({ children }: { children: (group: TeachingGroup) => R
                 <label htmlFor={selectId} className="text-sm font-medium">
                   {t("pickGroup")}
                 </label>
-                <NativeSelect
+                <Dropdown
                   id={selectId}
-                  className="w-full sm:w-60 [&_select]:h-11 md:[&_select]:h-8"
+                  className="w-full sm:w-60"
                   value={group.id}
-                  onChange={(event) => void setParam(event.target.value)}
-                >
-                  {list.map((item) => {
+                  onValueChange={(value) => void setParam(value)}
+                  options={list.map((item) => {
                     const waiting = counts.get(item.id) ?? 0
-                    return (
-                      <option key={item.id} value={item.id}>
-                        {waiting > 0 ? t("groupOption", { name: item.name, count: waiting }) : item.name}
-                      </option>
-                    )
+                    return {
+                      value: item.id,
+                      label: waiting > 0 ? t("groupOption", { name: item.name, count: waiting }) : item.name,
+                    }
                   })}
-                </NativeSelect>
+                />
               </div>
             ) : null}
             {children(group)}

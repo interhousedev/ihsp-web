@@ -109,6 +109,8 @@ CI builds and publishes the image `ghcr.io/<owner>/ihsp-web`. The apps are built
 
 Dependabot updates the actions, the base images and the Bun dependencies weekly. A tag `v1.2.3` publishes the image as `1.2.3` and bakes that version into the apps (`NEXT_PUBLIC_APP_VERSION`), which the installable app compares with the backend's `GET /v1/app/version`.
 
+Error tracking (Bugsink, Sentry protocol) is set at build time with `NEXT_PUBLIC_BUGSINK_DSN` (a public DSN, empty by default). When it is empty no client is started; when it is set, the browser sends errors with no user data, cookies, headers, IP addresses, input breadcrumbs or replays. The page CSP (`connect-src`, `CSP_CONNECT_SRC`) must allow the DSN host; the default `'self' https:` already does.
+
 ## Working on this repository
 
 [CODESTYLE.md](CODESTYLE.md) has the coding rules and [CLAUDE.md](CLAUDE.md) has the instructions for Claude Code.

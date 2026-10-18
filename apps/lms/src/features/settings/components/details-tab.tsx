@@ -1,7 +1,7 @@
 "use client"
 
 import { useT } from "@ihsp/i18n"
-import { Field, FieldError, FieldLabel, Input, NativeSelect, NativeSelectOption, Textarea } from "@ihsp/ui"
+import { Dropdown, Field, FieldError, FieldLabel, Input, Textarea } from "@ihsp/ui"
 import type { CourseDraft, CourseLanguage, CourseLevel } from "@ihsp/api"
 import { MarkdownEditor } from "../../step-editor/components/markdown-editor"
 import type { SettingsForm } from "../hooks/use-settings-form"
@@ -115,34 +115,26 @@ export function DetailsTab({
       <div className="grid gap-4 md:grid-cols-2">
         <Field>
           <FieldLabel htmlFor="settings-language">{t("language")}</FieldLabel>
-          <NativeSelect
+          <Dropdown
             id="settings-language"
             value={values.language}
-            onChange={(e) => update({ language: e.target.value as CourseLanguage })}
+            onValueChange={(next) => update({ language: next as CourseLanguage })}
             className="w-full"
-          >
-            {LANGUAGES.map((code) => (
-              <NativeSelectOption key={code} value={code}>
-                {t(`languages.${code}`)}
-              </NativeSelectOption>
-            ))}
-          </NativeSelect>
+            options={LANGUAGES.map((code) => ({ value: code, label: t(`languages.${code}`) }))}
+          />
         </Field>
         <Field>
           <FieldLabel htmlFor="settings-level">{t("level")}</FieldLabel>
-          <NativeSelect
+          <Dropdown
             id="settings-level"
             value={values.level ?? ""}
-            onChange={(e) => update({ level: (e.target.value || null) as CourseLevel | null })}
+            onValueChange={(next) => update({ level: (next || null) as CourseLevel | null })}
             className="w-full"
-          >
-            <NativeSelectOption value="">{t("levels.none")}</NativeSelectOption>
-            {LEVELS.map((level) => (
-              <NativeSelectOption key={level} value={level}>
-                {t(`levels.${level}`)}
-              </NativeSelectOption>
-            ))}
-          </NativeSelect>
+            options={[
+              { value: "", label: t("levels.none") },
+              ...LEVELS.map((level) => ({ value: level, label: t(`levels.${level}`) })),
+            ]}
+          />
         </Field>
         <Field>
           <FieldLabel htmlFor="settings-workload">{t("workload")}</FieldLabel>

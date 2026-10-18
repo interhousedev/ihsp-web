@@ -1,7 +1,7 @@
 "use client"
 
 import { useFormatters, useT } from "@ihsp/i18n"
-import { Button, Input, NativeSelect, NativeSelectOption } from "@ihsp/ui"
+import { Button, Dropdown, Input } from "@ihsp/ui"
 import { IconArrowRight, IconLoader2 } from "@ihsp/ui"
 import { useId, useState, type FocusEvent, type FormEvent } from "react"
 import { useWebQuota } from "../../web-search"
@@ -85,19 +85,15 @@ export function DiscoverBox({ flow, compact }: DiscoverBoxProps) {
         </div>
         {expanded ? (
           <div className="flex flex-wrap items-center justify-between gap-x-3 gap-y-1">
-            <NativeSelect
-              className="[&_select]:h-11 md:[&_select]:h-8 [&_select]:rounded-full [&_select]:ps-3"
+            <Dropdown
               aria-label={t("discover.mode")}
               value={mode}
-              onChange={(event) => setMode(event.target.value === "deep" ? "deep" : "fast")}
-            >
-              <NativeSelectOption value="fast">
-                {`${t("discover.fast")} · ${t("discover.cost", { count: 1 })}`}
-              </NativeSelectOption>
-              <NativeSelectOption value="deep">
-                {`${t("discover.deep")} · ${t("discover.cost", { count: quota.deep_cost })}`}
-              </NativeSelectOption>
-            </NativeSelect>
+              onValueChange={(value) => setMode(value === "deep" ? "deep" : "fast")}
+              options={[
+                { value: "fast", label: `${t("discover.fast")} · ${t("discover.cost", { count: 1 })}` },
+                { value: "deep", label: `${t("discover.deep")} · ${t("discover.cost", { count: quota.deep_cost })}` },
+              ]}
+            />
             <p id={quotaId} role="status" className="text-muted-foreground text-xs">
               {spent
                 ? composer("webNone", { time: format.time(quota.resets_at) })

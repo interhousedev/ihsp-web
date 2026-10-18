@@ -6,8 +6,7 @@ import {
   Button,
   Icons,
   Input,
-  NativeSelect,
-  NativeSelectOption,
+  Dropdown,
   PageContainer,
   Skeleton,
   StateView,
@@ -77,18 +76,15 @@ export function BooksPage() {
           className="min-h-11 min-w-0 flex-1 basis-56 md:min-h-8"
           onChange={(event) => setText(event.target.value)}
         />
-        <NativeSelect
+        <Dropdown
           aria-label={t("statusFilter")}
           value={status}
-          onChange={(event) => setStatus(event.target.value as ItemStatus | "")}
-        >
-          <NativeSelectOption value="">{t("allStatuses")}</NativeSelectOption>
-          {STATUSES.map((value) => (
-            <NativeSelectOption key={value} value={value}>
-              {statusLabel(value)}
-            </NativeSelectOption>
-          ))}
-        </NativeSelect>
+          onValueChange={(value) => setStatus(value as ItemStatus | "")}
+          options={[
+            { value: "", label: t("allStatuses") },
+            ...STATUSES.map((value) => ({ value, label: statusLabel(value) })),
+          ]}
+        />
       </form>
 
       {query.isPending ? (

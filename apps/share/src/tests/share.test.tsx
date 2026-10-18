@@ -1,7 +1,7 @@
 /** SHR-1 to SHR-8 (viewer) and SL-9 (report): the public page behind `/ai/<slug>`. */
 import { describe, expect, test } from "bun:test"
 import { getConfig, resetConfig } from "@ihsp/config"
-import { apiUrl, publicShareGoneSlug, server, userMe } from "@ihsp/test-utils"
+import { apiUrl, publicShareGoneSlug, server, setDropdownValue, userMe } from "@ihsp/test-utils"
 import { fireEvent, screen, waitFor, within } from "@testing-library/react"
 import { HttpResponse, http } from "msw"
 import { ShareFrame } from "../features/share/share-header"
@@ -223,9 +223,7 @@ describe("report", () => {
       }),
     )
 
-    fireEvent.change(await screen.findByLabelText("Reason"), {
-      target: { value: "phishing" },
-    })
+    setDropdownValue(await screen.findByLabelText("Reason"), "phishing")
     fireEvent.change(screen.getByLabelText("Comment (optional)"), {
       target: { value: "Looks fake" },
     })
@@ -265,7 +263,7 @@ describe("report", () => {
         hidden: true,
       }),
     )
-    fireEvent.change(await screen.findByLabelText("Reason"), { target: { value: "other" } })
+    setDropdownValue(await screen.findByLabelText("Reason"), "other")
     fireEvent.click(await screen.findByRole("button", { name: "Send report", hidden: true }))
 
     expect(await screen.findByRole("alert")).toBeInTheDocument()

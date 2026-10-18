@@ -827,11 +827,20 @@
     "emisSync": {
       "title": "EMIS maʼlumotlari",
       "button": "Oʻqituvchilar, darslar va baholarni qayta sinxronlash",
-      "queued": "Navbatda…",
-      "running": "Sinxronlanmoqda…",
-      "lastSynced": "Oxirgi sinxronlash: {time}",
-      "failed": "Oxirgi sinxronlash yakunlanmadi. Keyinroq urinib koʻring.",
-      "rateLimited": "{minutes} daqiqadan keyin urinib koʻring."
+      "status": "Holat",
+      "states": {
+        "pending": "Navbatda",
+        "running": "Sinxronlanmoqda",
+        "succeeded": "Tayyor",
+        "failed": "Yakunlanmadi"
+      },
+      "attempts": "{max} tadan {n}-urinish",
+      "finishedAt": "Yakunlandi: {time}",
+      "subgroup": "Guruhcha: {value}",
+      "noSubgroup": "yo'q",
+      "marks": "sinxronlangan baholar: {n}",
+      "lastError": "Sabab: {error}",
+      "gaveUp": "Sinxronlash {max} urinishdan keyin to'xtatildi. Qayta urinish uchun tugmani bosing."
     }
   }
 }

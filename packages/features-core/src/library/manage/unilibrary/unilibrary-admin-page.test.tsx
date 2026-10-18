@@ -1,5 +1,12 @@
 import { describe, expect, it } from "bun:test"
-import { getUniLibrary, libActors, libExternalCards, setLibraryActor, userMe } from "@ihsp/test-utils"
+import {
+  getUniLibrary,
+  libActors,
+  libExternalCards,
+  selectDropdownValue,
+  setLibraryActor,
+  userMe,
+} from "@ihsp/test-utils"
 import { screen, waitFor, within } from "@testing-library/react"
 import axe from "axe-core"
 import { useUniLibraryAvailability } from "../../hooks/use-uni-library"
@@ -107,7 +114,7 @@ describe("UniLibraryAdminPage: sanctions", () => {
     expect(await within(form).findByText(`Warning recorded for ${libActors.student.id}.`)).toBeInTheDocument()
 
     await user.type(within(form).getByLabelText("User id"), libActors.student.id)
-    await user.selectOptions(within(form).getByLabelText("Decision"), "upload_ban")
+    await selectDropdownValue(user, within(form).getByLabelText("Decision"), "upload_ban")
     await user.type(within(form).getByLabelText("Ban lasts until"), "2026-12-01")
     await user.type(within(form).getByLabelText("Reason"), "Repeated upheld reports")
     await user.click(within(form).getByRole("button", { name: "Record decision" }))

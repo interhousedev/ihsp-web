@@ -18,6 +18,7 @@ import {
 } from "../features/step-editor/utils/content-ops"
 import { STEP_TYPES, STEP_TYPE_GROUPS } from "../features/step-editor/utils/step-types"
 import { renderLms } from "./helpers"
+import { setDropdownValue } from "@ihsp/test-utils"
 
 const codes = (q: Question) =>
   validateContent({
@@ -136,8 +137,8 @@ function current(): Question {
 describe("question forms", () => {
   it("edits a matching pair", () => {
     renderLms(<Harness initial={{ ...newQuestion("matching"), id: "q" }} />)
-    fireEvent.change(screen.getByLabelText("Left item 1"), { target: { value: "Cat" } })
-    fireEvent.change(screen.getByLabelText("Right item 1"), { target: { value: "Meow" } })
+    setDropdownValue(screen.getByLabelText("Left item 1"), "Cat")
+    setDropdownValue(screen.getByLabelText("Right item 1"), "Meow")
     expect(current().pairs?.[0]).toMatchObject({ left: "Cat", right: "Meow" })
     fireEvent.click(screen.getByRole("button", { name: "Add pair" }))
     expect(current().pairs).toHaveLength(3)
@@ -153,24 +154,24 @@ describe("question forms", () => {
 
   it("edits random variables and the formula", () => {
     renderLms(<Harness initial={{ ...newQuestion("random_number"), id: "q" }} />)
-    fireEvent.change(screen.getByLabelText("Formula of the answer"), { target: { value: "a * b" } })
-    fireEvent.change(screen.getByLabelText("Variable 1 maximum"), { target: { value: "20" } })
+    setDropdownValue(screen.getByLabelText("Formula of the answer"), "a * b")
+    setDropdownValue(screen.getByLabelText("Variable 1 maximum"), "20")
     expect(current().random?.formula).toBe("a * b")
     expect(current().random?.variables[0]?.max).toBe(20)
   })
 
   it("edits formula, blanks, code and sorting", () => {
     renderLms(<Harness initial={{ ...newQuestion("formula"), id: "q" }} />)
-    fireEvent.change(screen.getByLabelText("Correct expression"), { target: { value: "(x+1)^2" } })
+    setDropdownValue(screen.getByLabelText("Correct expression"), "(x+1)^2")
     expect(current().formula?.expression).toBe("(x+1)^2")
-    fireEvent.change(screen.getByLabelText("Type"), { target: { value: "sorting" } })
-    fireEvent.change(screen.getByLabelText("Item 1"), { target: { value: "first" } })
+    setDropdownValue(screen.getByLabelText("Type"), "sorting")
+    setDropdownValue(screen.getByLabelText("Item 1"), "first")
     expect(current().options?.[0]?.text).toBe("first")
-    fireEvent.change(screen.getByLabelText("Type"), { target: { value: "blanks" } })
-    fireEvent.change(screen.getByLabelText("Accepted answers of blank 1"), { target: { value: "Paris\nparis" } })
+    setDropdownValue(screen.getByLabelText("Type"), "blanks")
+    setDropdownValue(screen.getByLabelText("Accepted answers of blank 1"), "Paris\nparis")
     expect(current().blanks?.[0]?.accepted).toEqual(["Paris", "paris"])
-    fireEvent.change(screen.getByLabelText("Type"), { target: { value: "code" } })
-    fireEvent.change(screen.getByLabelText("Expected outputs"), { target: { value: "1\n2" } })
+    setDropdownValue(screen.getByLabelText("Type"), "code")
+    setDropdownValue(screen.getByLabelText("Expected outputs"), "1\n2")
     expect(current().code?.expected_outputs).toEqual(["1\n2"])
   })
 
@@ -180,7 +181,7 @@ describe("question forms", () => {
       { type: "video" }
     >
     renderLms(<VideoBlockEditor block={block} onChange={(next) => (block = next)} />)
-    fireEvent.change(screen.getByLabelText("Video link"), { target: { value: "https://youtu.be/abc" } })
+    setDropdownValue(screen.getByLabelText("Video link"), "https://youtu.be/abc")
     expect(block.url).toBe("https://youtu.be/abc")
   })
 })
@@ -224,7 +225,7 @@ describe("player question fields", () => {
       ],
     }
     renderLms(<Field question={question} />)
-    fireEvent.change(screen.getByLabelText("Match for L1"), { target: { value: "1" } })
+    setDropdownValue(screen.getByLabelText("Match for L1"), "1")
     expect(given()).toEqual({ pairs: { "1": "1" } })
   })
 
@@ -239,25 +240,25 @@ describe("player question fields", () => {
 
   it("fills blanks, formulas, free text and generated numbers", () => {
     renderLms(<Field question={{ ...base, type: "blanks", blanks: 2 }} />)
-    fireEvent.change(screen.getByLabelText("Blank 2"), { target: { value: "x" } })
+    setDropdownValue(screen.getByLabelText("Blank 2"), "x")
     expect(given()).toEqual({ texts: ["", "x"] })
   })
 
   it("answers a formula, a random number and a free question", () => {
     renderLms(<Field question={{ ...base, type: "formula", variables: ["x"] }} />)
-    fireEvent.change(screen.getByPlaceholderText("Your expression"), { target: { value: "x^2" } })
+    setDropdownValue(screen.getByPlaceholderText("Your expression"), "x^2")
     expect(given()).toEqual({ text: "x^2" })
   })
 
   it("answers a generated number", () => {
     renderLms(<Field question={{ ...base, type: "random_number" }} />)
-    fireEvent.change(screen.getByPlaceholderText("Number"), { target: { value: "7.5" } })
+    setDropdownValue(screen.getByPlaceholderText("Number"), "7.5")
     expect(given()).toEqual({ number: 7.5 })
   })
 
   it("answers code with the reported output only when outputs are compared", () => {
     renderLms(<Field question={{ ...base, type: "code", code: { language: "python", starter: "", auto: true } }} />)
-    fireEvent.change(screen.getByLabelText("Output of your program"), { target: { value: "42" } })
+    setDropdownValue(screen.getByLabelText("Output of your program"), "42")
     expect(given()).toEqual({ text: "", output: "42" })
   })
 

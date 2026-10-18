@@ -4,7 +4,7 @@
  */
 import { afterEach, beforeEach, describe, expect, it, spyOn } from "bun:test"
 import type { CourseDraft } from "@ihsp/api"
-import { apiUrl, courseDraft, ids, server } from "@ihsp/test-utils"
+import { apiUrl, courseDraft, ids, server, setDropdownValue } from "@ihsp/test-utils"
 import { act, fireEvent, renderHook, screen, waitFor } from "@testing-library/react"
 import { HttpResponse, http } from "msw"
 import { CourseEditorPage } from "../features/editor/components/course-editor-page"
@@ -44,7 +44,7 @@ describe("course details autosave", () => {
     const field = await screen.findByLabelText("Course title")
     expect(await screen.findByText("Draft saved")).toBeInTheDocument()
 
-    fireEvent.change(field, { target: { value: "Calculus, autumn" } })
+    setDropdownValue(field, "Calculus, autumn")
     expect(screen.getByText("Unsaved changes")).toBeInTheDocument()
 
     await waitFor(() => expect(bodies).toHaveLength(1), { timeout: 5000 })
@@ -58,7 +58,7 @@ describe("course details autosave", () => {
     const field = await screen.findByLabelText("Course title")
     await screen.findByText("Draft saved")
 
-    fireEvent.change(field, { target: { value: "Left in a hurry" } })
+    setDropdownValue(field, "Left in a hurry")
     unmount()
 
     await waitFor(() => expect(bodies).toHaveLength(1))

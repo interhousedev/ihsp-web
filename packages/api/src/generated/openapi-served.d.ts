@@ -1000,6 +1000,26 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/v1/admin/logs/issues": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * List Issues
+         * @description Error issues from Bugsink, filtered and paged; disabled when unconfigured.
+         */
+        get: operations["list_issues_v1_admin_logs_issues_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/v1/admin/moderation/queue": {
         parameters: {
             query?: never;
@@ -1304,6 +1324,26 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/v1/admin/subject-materials/subjects/{subject_id}/reconcile": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Reconcile Admin Subject Materials
+         * @description Sync every student's subject notebook of the subject, now; report the totals.
+         */
+        post: operations["reconcile_admin_subject_materials_v1_admin_subject_materials_subjects__subject_id__reconcile_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/v1/admin/subject-materials/{edu_subject_id}": {
         parameters: {
             query?: never;
@@ -1484,6 +1524,26 @@ export interface paths {
          * @description Return EMIS sync runs, newest first.
          */
         get: operations["list_runs_v1_admin_sync_runs_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/admin/sync/student-syncs": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * List Student Syncs
+         * @description Students whose initial sync is in this status, most recently changed first.
+         */
+        get: operations["list_student_syncs_v1_admin_sync_student_syncs_get"];
         put?: never;
         post?: never;
         delete?: never;
@@ -2428,6 +2488,26 @@ export interface paths {
          * @description Stream the chosen certificate files as a ZIP archive.
          */
         post: operations["export_entries_v1_certificates_staff_export_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/certificates/staff/fields/{key}/values": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * List Custom Field Values
+         * @description Return the choices and stored values of one custom field of the type.
+         */
+        get: operations["list_custom_field_values_v1_certificates_staff_fields__key__values_get"];
+        put?: never;
+        post?: never;
         delete?: never;
         options?: never;
         head?: never;
@@ -8946,6 +9026,26 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/v1/staff/subjects/{subject_id}/reconcile": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Reconcile Staff Subject Materials
+         * @description Sync the teacher's own subject notebooks of the subject, now; report totals.
+         */
+        post: operations["reconcile_staff_subject_materials_v1_staff_subjects__subject_id__reconcile_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/v1/staff/timetable": {
         parameters: {
             query?: never;
@@ -10799,6 +10899,10 @@ export interface components {
              * Format: date-time
              */
             created_at: string;
+            /** Custom Values */
+            custom_values: {
+                [key: string]: string | number | string[];
+            };
             /** Expires At */
             expires_at: string | null;
             /** Files */
@@ -10882,6 +10986,8 @@ export interface components {
             asks_year: boolean;
             /** Code */
             code: string;
+            /** Custom Fields */
+            custom_fields?: components["schemas"]["CustomFieldInput"][];
             /** Levels */
             levels?: string[];
             name: components["schemas"]["TypeName"];
@@ -10909,6 +11015,8 @@ export interface components {
             asks_year?: boolean | null;
             /** Code */
             code?: string | null;
+            /** Custom Fields */
+            custom_fields?: components["schemas"]["CustomFieldInput"][] | null;
             /** Levels */
             levels?: string[] | null;
             name?: components["schemas"]["TypeName"] | null;
@@ -10938,6 +11046,8 @@ export interface components {
             builtin: boolean;
             /** Code */
             code: string;
+            /** Custom Fields */
+            custom_fields: components["schemas"]["CustomFieldResponse"][];
             /**
              * Id
              * Format: uuid
@@ -11932,6 +12042,10 @@ export interface components {
          * @description Body of POST /me.
          */
         CreateEntryBody: {
+            /** Custom */
+            custom?: {
+                [key: string]: string | number | string[];
+            } | null;
             /** Level */
             level?: string | null;
             /** Percent */
@@ -12264,6 +12378,82 @@ export interface components {
              * @enum {string}
              */
             status: "synced" | "no_student";
+        };
+        /**
+         * CustomFieldInput
+         * @description A custom input field of a type (admin).
+         */
+        CustomFieldInput: {
+            /**
+             * Allow Other
+             * @default false
+             */
+            allow_other: boolean;
+            /** Key */
+            key: string;
+            /**
+             * Kind
+             * @enum {string}
+             */
+            kind: "text" | "number" | "single" | "multi";
+            label: components["schemas"]["TypeName"];
+            /** Options */
+            options?: string[];
+            /**
+             * Required
+             * @default false
+             */
+            required: boolean;
+        };
+        /**
+         * CustomFieldResponse
+         * @description CustomField.
+         */
+        CustomFieldResponse: {
+            /**
+             * Allow Other
+             * @default false
+             */
+            allow_other: boolean;
+            /** Key */
+            key: string;
+            /**
+             * Kind
+             * @enum {string}
+             */
+            kind: "text" | "number" | "single" | "multi";
+            label: components["schemas"]["TypeName"];
+            /** Options */
+            options?: string[];
+            /**
+             * Required
+             * @default false
+             */
+            required: boolean;
+        };
+        /**
+         * CustomFieldValuesResponse
+         * @description Response of GET /staff/fields/{key}/values.
+         *
+         *     ``other_values`` holds the free-text values of a choice field (all distinct
+         *     texts for a text field); ``min`` and ``max`` are set for a number field.
+         */
+        CustomFieldValuesResponse: {
+            /** Key */
+            key: string;
+            /**
+             * Kind
+             * @enum {string}
+             */
+            kind: "text" | "number" | "single" | "multi";
+            /** Max */
+            max: number | null;
+            /** Min */
+            min: number | null;
+            /** Options */
+            options: string[];
+            /** Other Values */
+            other_values: string[];
         };
         /**
          * DashboardResponse
@@ -15838,6 +16028,50 @@ export interface components {
             step_id: string;
         };
         /**
+         * LogIssue
+         * @description One grouped error issue.
+         */
+        LogIssue: {
+            /** Count */
+            count: number;
+            /** Id */
+            id: string;
+            /** Last Seen */
+            last_seen: string | null;
+            /** Level */
+            level: string;
+            /** Project */
+            project: string;
+            /** Title */
+            title: string;
+            /** Url */
+            url: string;
+        };
+        /**
+         * LogIssuesPage
+         * @description A page of issues; empty with ``disabled`` when Bugsink is not configured.
+         */
+        LogIssuesPage: {
+            /** Disabled */
+            disabled: boolean;
+            /** Has Next */
+            has_next: boolean;
+            /** Items */
+            items: components["schemas"]["LogIssue"][];
+            /** Page */
+            page: number;
+            /** Projects */
+            projects: string[];
+            /** Size */
+            size: number;
+        };
+        /**
+         * LogLevel
+         * @description Severity of an error issue.
+         * @enum {string}
+         */
+        LogLevel: "fatal" | "error" | "warning" | "info" | "debug";
+        /**
          * LoginBody
          * @description POST /v1/id/login.
          */
@@ -16765,6 +16999,16 @@ export interface components {
             topic: string | null;
             /** Topic Source */
             topic_source?: ("emis" | "manual") | null;
+        };
+        /**
+         * NumberRange
+         * @description Bounds of a number custom field filter; an open end is null.
+         */
+        NumberRange: {
+            /** Max */
+            max?: number | null;
+            /** Min */
+            min?: number | null;
         };
         /**
          * OAuthClientResponse
@@ -18399,6 +18643,32 @@ export interface components {
             week_label?: string | null;
         };
         /**
+         * ReconcileMaterialsResponse
+         * @description What "check that all lesson materials are in the notebook" found.
+         */
+        ReconcileMaterialsResponse: {
+            /**
+             * Added
+             * @description Lesson materials added to notebooks now.
+             */
+            added: number;
+            /**
+             * Already Present
+             * @description Materials the notebooks already had.
+             */
+            already_present: number;
+            /**
+             * Notebooks
+             * @description Subject notebooks checked.
+             */
+            notebooks: number;
+            /**
+             * Skipped
+             * @description Materials not readable yet; retried later.
+             */
+            skipped: number;
+        };
+        /**
          * RecordBookResponse
          * @description All semesters with results.
          */
@@ -19999,6 +20269,10 @@ export interface components {
              * Format: date-time
              */
             created_at: string;
+            /** Custom Values */
+            custom_values: {
+                [key: string]: string | number | string[];
+            };
             /** Expires At */
             expires_at: string | null;
             /** Files */
@@ -20039,12 +20313,20 @@ export interface components {
          * @description Staff filters as a JSON object (export body).
          */
         StaffFiltersBody: {
+            /** Custom */
+            custom?: {
+                [key: string]: string[];
+            };
             /** Group Id */
             group_id?: string | null;
             /** Level */
             level?: string | null;
             /** Q */
             q?: string | null;
+            /** Ranges */
+            ranges?: {
+                [key: string]: components["schemas"]["NumberRange"];
+            };
             /** Student Id */
             student_id?: string | null;
             /** Subgroup */
@@ -21321,13 +21603,24 @@ export interface components {
         };
         /**
          * SyncStatusResponse
-         * @description The last sync: queued, running, done or failed, and when.
+         * @description The sync record: where it is, what it synced, and why it failed if it did.
          */
         SyncStatusResponse: {
-            /** Detail */
-            detail: string | null;
+            /** Attempts */
+            attempts: number;
             /** Finished At */
             finished_at: string | null;
+            /** Last Error */
+            last_error: string | null;
+            /** Marks Count */
+            marks_count: number | null;
+            /**
+             * Max Attempts
+             * @default 6
+             */
+            max_attempts: number;
+            /** Next Attempt At */
+            next_attempt_at: string | null;
             /**
              * Requested At
              * Format: date-time
@@ -21337,7 +21630,14 @@ export interface components {
              * Status
              * @enum {string}
              */
-            status: "queued" | "running" | "done" | "failed";
+            status: "pending" | "running" | "succeeded" | "failed";
+            /** Subgroup */
+            subgroup: number | null;
+            /**
+             * User Id
+             * Format: uuid
+             */
+            user_id: string;
         };
         /**
          * SystemHealth
@@ -22496,6 +22796,10 @@ export interface components {
          * @description Body of PATCH /me/{entry_id}: only the sent fields change.
          */
         UpdateEntryBody: {
+            /** Custom */
+            custom?: {
+                [key: string]: string | number | string[];
+            } | null;
             /** Level */
             level?: string | null;
             /** Percent */
@@ -27002,6 +27306,40 @@ export interface operations {
             };
         };
     };
+    list_issues_v1_admin_logs_issues_get: {
+        parameters: {
+            query?: {
+                project?: string | null;
+                level?: components["schemas"]["LogLevel"] | null;
+                page?: number;
+                size?: number;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["LogIssuesPage"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
     queue_v1_admin_moderation_queue_get: {
         parameters: {
             query?: {
@@ -27489,6 +27827,37 @@ export interface operations {
             };
         };
     };
+    reconcile_admin_subject_materials_v1_admin_subject_materials_subjects__subject_id__reconcile_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                subject_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ReconcileMaterialsResponse"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
     list_default_materials_v1_admin_subject_materials__edu_subject_id__get: {
         parameters: {
             query?: never;
@@ -27835,6 +28204,38 @@ export interface operations {
                 };
                 content: {
                     "application/json": components["schemas"]["SyncRunPageResponse"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    list_student_syncs_v1_admin_sync_student_syncs_get: {
+        parameters: {
+            query?: {
+                status?: "pending" | "running" | "succeeded" | "failed";
+                limit?: number;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["SyncStatusResponse"][];
                 };
             };
             /** @description Validation Error */
@@ -29644,6 +30045,45 @@ export interface operations {
                 };
                 content: {
                     "application/json": unknown;
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    list_custom_field_values_v1_certificates_staff_fields__key__values_get: {
+        parameters: {
+            query?: {
+                group_id?: string | null;
+                subgroup?: string | null;
+                type_id?: string | null;
+                subject?: string | null;
+                level?: string | null;
+                student_id?: string | null;
+                q?: string | null;
+            };
+            header?: never;
+            path: {
+                key: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["CustomFieldValuesResponse"];
                 };
             };
             /** @description Validation Error */
@@ -41505,6 +41945,37 @@ export interface operations {
                     [name: string]: unknown;
                 };
                 content?: never;
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    reconcile_staff_subject_materials_v1_staff_subjects__subject_id__reconcile_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                subject_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ReconcileMaterialsResponse"];
+                };
             };
             /** @description Validation Error */
             422: {

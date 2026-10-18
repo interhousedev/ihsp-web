@@ -8,8 +8,7 @@ import {
   DialogHeader,
   DialogTitle,
   Label,
-  NativeSelect,
-  NativeSelectOption,
+  Dropdown,
   Textarea,
   ToggleGroup,
   ToggleGroupItem,
@@ -174,22 +173,17 @@ export function ChatConfigForm({ notebook, onClose }: ChatConfigFormProps) {
 
       <div className="flex items-center justify-between gap-3">
         <Label htmlFor={`${ids}-language`}>{t("language.label")}</Label>
-        <NativeSelect
+        <Dropdown
           id={`${ids}-language`}
           value={language}
           disabled={readOnly}
           className="min-h-11 w-40 md:min-h-8"
-          onChange={(event) => {
-            const next = LANGUAGES.find((value) => value === event.target.value)
+          onValueChange={(value) => {
+            const next = LANGUAGES.find((item) => item === value)
             if (next) setLanguage(next)
           }}
-        >
-          {LANGUAGES.map((value) => (
-            <NativeSelectOption key={value} value={value}>
-              {t(`language.${value}`)}
-            </NativeSelectOption>
-          ))}
-        </NativeSelect>
+          options={LANGUAGES.map((value) => ({ value, label: t(`language.${value}`) }))}
+        />
       </div>
 
       {update.isError ? (

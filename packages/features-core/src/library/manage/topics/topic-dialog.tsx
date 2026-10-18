@@ -12,8 +12,7 @@ import {
   DialogTitle,
   Input,
   Label,
-  NativeSelect,
-  NativeSelectOption,
+  Dropdown,
 } from "@ihsp/ui"
 import { useMutation, useQueryClient } from "@tanstack/react-query"
 import { useEffect, useId, useState } from "react"
@@ -129,14 +128,15 @@ export function TopicDialog({ target, onClose }: { target: TopicTarget | null; o
           </div>
           <div className="flex flex-col gap-1.5">
             <Label htmlFor={`${id}-year`}>{t("year")}</Label>
-            <NativeSelect id={`${id}-year`} value={year} onChange={(event) => setYear(event.target.value)}>
-              <NativeSelectOption value="">{t("anyYear")}</NativeSelectOption>
-              {[1, 2].map((value) => (
-                <NativeSelectOption key={value} value={String(value)}>
-                  {browse("year", { year: value })}
-                </NativeSelectOption>
-              ))}
-            </NativeSelect>
+            <Dropdown
+              id={`${id}-year`}
+              value={year}
+              onValueChange={setYear}
+              options={[
+                { value: "", label: t("anyYear") },
+                ...[1, 2].map((value) => ({ value: String(value), label: browse("year", { year: value }) })),
+              ]}
+            />
           </div>
           {save.isError ? (
             <p role="alert" className="text-destructive text-sm">

@@ -1,5 +1,5 @@
 import { describe, expect, it } from "bun:test"
-import { apiUrl, filePdf, ids, linkItems, linkUrl, problem, server } from "@ihsp/test-utils"
+import { apiUrl, filePdf, ids, linkItems, linkUrl, problem, selectDropdownValue, server } from "@ihsp/test-utils"
 import { fireEvent, screen, waitFor, within } from "@testing-library/react"
 import { NuqsTestingAdapter } from "nuqs/adapters/testing"
 import { HttpResponse, http } from "msw"
@@ -210,8 +210,7 @@ describe("LinksPage: new short link (UF-WEB-26 step 2, SL-1)", () => {
 
     await user.click(within(dialog).getByRole("button", { name: "File" }))
     const select = await within(dialog).findByLabelText("File")
-    await within(dialog).findByRole("option", { name: "kinematics-notes.pdf" })
-    await user.selectOptions(select, ids.file)
+    await selectDropdownValue(user, select, ids.file)
     await user.click(within(dialog).getByRole("button", { name: "Create link" }))
 
     await waitFor(() => expect(body).toEqual({ kind: "file", file_id: ids.file }))
@@ -226,8 +225,7 @@ describe("LinksPage: new short link (UF-WEB-26 step 2, SL-1)", () => {
       target: { files: [new File(["notes"], "fresh-notes.pdf", { type: "application/pdf" })] },
     })
 
-    await waitFor(() => expect(within(dialog).getByLabelText("File")).not.toHaveValue(""))
-    expect(within(dialog).getByRole("option", { name: "fresh-notes.pdf" })).toBeInTheDocument()
+    await waitFor(() => expect(within(dialog).getByLabelText("File")).toHaveTextContent("fresh-notes.pdf"))
     expect(within(dialog).getByRole("button", { name: "Create link" })).toBeEnabled()
   })
 })

@@ -1,5 +1,5 @@
 import { describe, expect, it } from "bun:test"
-import { apiUrl, libDetails, libIds, server } from "@ihsp/test-utils"
+import { apiUrl, libDetails, libIds, selectDropdownValue, server } from "@ihsp/test-utils"
 import { HttpResponse, http } from "msw"
 import { screen, waitFor } from "@testing-library/react"
 import { allowSlowRenders, renderLibrary, renderLibraryAnonymous } from "../test-support"
@@ -72,7 +72,7 @@ describe("AddToNotebookButton", () => {
     await user.click(screen.getByRole("button", { name: "Add to notebook" }))
     await user.click(await screen.findByRole("radio", { name: "Pages" }))
 
-    await user.selectOptions(screen.getByLabelText("Chapters"), "1")
+    await selectDropdownValue(user, screen.getByLabelText("Chapters"), "1")
 
     expect((screen.getByLabelText("From page") as HTMLInputElement).value).not.toBe("")
     expect((screen.getByLabelText("To page") as HTMLInputElement).value).not.toBe("")

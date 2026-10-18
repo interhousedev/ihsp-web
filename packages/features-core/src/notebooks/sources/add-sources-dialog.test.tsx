@@ -1,5 +1,14 @@
 import { describe, expect, it, mock } from "bun:test"
-import { apiUrl, filePdf, ids, nbIds, problem, resourceMaterialFile, server } from "@ihsp/test-utils"
+import {
+  apiUrl,
+  filePdf,
+  ids,
+  nbIds,
+  problem,
+  resourceMaterialFile,
+  selectDropdownValue,
+  server,
+} from "@ihsp/test-utils"
 import { fireEvent, screen, waitFor, within } from "@testing-library/react"
 import { HttpResponse, http } from "msw"
 import { allowSlowRenders, renderNotebook } from "../test-support"
@@ -165,7 +174,7 @@ describe("AddSourcesDialog", () => {
       const { user } = renderDialog()
       await openTab(user, "Lessons")
 
-      await user.selectOptions(await screen.findByLabelText("Subject"), "Physics")
+      await selectDropdownValue(user, await screen.findByLabelText("Subject"), "Physics")
       await user.click(await screen.findByRole("checkbox", { name: "kinematics-notes.pdf" }))
       const web = screen.getByRole("checkbox", { name: "Khan Academy: physics" })
       expect(isDisabled(web)).toBe(false)
@@ -186,7 +195,7 @@ describe("AddSourcesDialog", () => {
       const { user } = renderDialog(nbIds.notebook)
       await openTab(user, "Lessons")
 
-      await user.selectOptions(await screen.findByLabelText("Subject"), "Physics")
+      await selectDropdownValue(user, await screen.findByLabelText("Subject"), "Physics")
 
       const khan = await screen.findByRole("checkbox", { name: "Khan Academy: physics" })
       await until(() => isDisabled(khan))

@@ -1,7 +1,7 @@
 "use client"
 
 import { useT } from "@ihsp/i18n"
-import { Label, NativeSelect, NativeSelectOption } from "@ihsp/ui"
+import { Dropdown, Label } from "@ihsp/ui"
 import { useId } from "react"
 import { LANGUAGES, type LanguageChoice } from "./form-state"
 
@@ -17,21 +17,19 @@ export function LanguageField({ value, onChange }: LanguageFieldProps) {
   return (
     <div className="flex flex-col gap-1.5">
       <Label htmlFor={id}>{t("language")}</Label>
-      <NativeSelect
+      <Dropdown
         id={id}
         value={value}
-        className="[&_select]:h-11 w-full md:[&_select]:h-8"
-        onChange={(event) => {
-          const chosen = LANGUAGES.find((language) => language === event.target.value)
+        className="w-full"
+        onValueChange={(next) => {
+          const chosen = LANGUAGES.find((language) => language === next)
           if (chosen) onChange(chosen)
         }}
-      >
-        {LANGUAGES.map((language) => (
-          <NativeSelectOption key={language} value={language}>
-            {language === "auto" ? t("languageAuto") : t(`lang.${language}`)}
-          </NativeSelectOption>
-        ))}
-      </NativeSelect>
+        options={LANGUAGES.map((language) => ({
+          value: language,
+          label: language === "auto" ? t("languageAuto") : t(`lang.${language}`),
+        }))}
+      />
     </div>
   )
 }

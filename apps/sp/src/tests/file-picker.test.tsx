@@ -1,6 +1,6 @@
 /** The file picker of the lesson attachment dialog: name search, type filter, order and six per page. */
 import { describe, expect, test } from "bun:test"
-import { apiUrl, filePdf, server } from "@ihsp/test-utils"
+import { apiUrl, filePdf, selectDropdownValue, server } from "@ihsp/test-utils"
 import { FilePicker } from "@ihsp/features-core"
 import { screen, waitFor } from "@testing-library/react"
 import { HttpResponse, http } from "msw"
@@ -62,8 +62,8 @@ describe("file picker", () => {
     await screen.findByText(filePdf.name)
 
     setValue(screen.getByLabelText("Search files by name"), "report")
-    await user.selectOptions(screen.getByLabelText("File type"), "pdf")
-    await user.selectOptions(screen.getByLabelText("Order"), "older")
+    await selectDropdownValue(user, screen.getByLabelText("File type"), "pdf")
+    await selectDropdownValue(user, screen.getByLabelText("Order"), "older")
 
     await waitFor(() => expect(requests.at(-1)).toEqual({ q: "report", type: "pdf", sort: "older", page: "1" }))
   })

@@ -1,5 +1,14 @@
 import { describe, expect, it } from "bun:test"
-import { apiUrl, libDetails, problem, server, setLibraryActor, userMe } from "@ihsp/test-utils"
+import {
+  apiUrl,
+  dropdownLabels,
+  libDetails,
+  problem,
+  selectDropdownValue,
+  server,
+  setLibraryActor,
+  userMe,
+} from "@ihsp/test-utils"
 import { screen, waitFor, within } from "@testing-library/react"
 import axe from "axe-core"
 import { HttpResponse, http } from "msw"
@@ -183,17 +192,13 @@ describe("QueuePage: actions", () => {
     const dialog = await screen.findByRole("dialog", { name: "Unpublish this item" })
 
     const select = within(dialog).getByLabelText("Reason")
-    expect(
-      within(select)
-        .getAllByRole("option")
-        .map((option) => option.textContent),
-    ).toEqual([
+    expect(await dropdownLabels(user, select)).toEqual([
       "Removed from the library",
       "Takedown (rights or policy)",
       "Replaced by a newer version",
       "Other (write your own)",
     ])
-    await user.selectOptions(select, "takedown")
+    await selectDropdownValue(user, select, "takedown")
     await user.click(within(dialog).getByRole("button", { name: "Unpublish" }))
 
     await waitFor(() => expect(body).toEqual({ reason: "takedown" }))
@@ -289,7 +294,7 @@ describe("QueuePage: keyboard", () => {
     await user.keyboard("h")
     const dialog = await screen.findByRole("dialog", { name: "Hold for review" })
     // "Reported by readers" is the code that fits a hold and is preselected.
-    expect((within(dialog).getByLabelText("Reason") as HTMLSelectElement).value).toBe("reported")
+    expect(within(dialog).getByLabelText("Reason")).toHaveAttribute("data-value", "reported")
     await user.click(within(dialog).getByRole("button", { name: "Hold" }))
 
     expect(await screen.findByText(`Held: ${REPORTED}`)).toBeInTheDocument()

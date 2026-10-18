@@ -1,5 +1,5 @@
 import { describe, expect, it } from "bun:test"
-import { setLibraryActor, userMe } from "@ihsp/test-utils"
+import { selectDropdownValue, setLibraryActor, userMe } from "@ihsp/test-utils"
 import { fireEvent, screen, waitFor, within } from "@testing-library/react"
 import { allowSlowRenders, renderLibrary } from "../../test-support"
 import { BooksPage } from "./books-page"
@@ -35,11 +35,11 @@ describe("BooksPage", () => {
     const { user } = renderBooks()
     await screen.findByRole("link", { name: /Physics 10: Mechanics/ })
 
-    await user.selectOptions(screen.getByLabelText("Status"), "draft")
+    await selectDropdownValue(user, screen.getByLabelText("Status"), "draft")
     await waitFor(() => expect(screen.queryByRole("link", { name: /Physics 10: Mechanics/ })).not.toBeInTheDocument())
     expect(screen.getByRole("link", { name: /Kimyo masalalari/ })).toBeInTheDocument()
 
-    await user.selectOptions(screen.getByLabelText("Status"), "")
+    await selectDropdownValue(user, screen.getByLabelText("Status"), "")
     await user.type(screen.getByRole("searchbox", { name: "Search by title or author" }), "physics")
     await waitFor(() => expect(screen.queryByRole("link", { name: /Kimyo masalalari/ })).not.toBeInTheDocument())
     expect(screen.getByRole("link", { name: /Open Physics: Mechanics/ })).toBeInTheDocument()

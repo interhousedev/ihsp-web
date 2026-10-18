@@ -8,6 +8,7 @@ import { compositionHandlers } from "./composition"
 import { curriculumHandlers } from "./curriculum"
 import { meSyncHandlers } from "./me-sync"
 import { adminJobsHandlers } from "./admin-jobs"
+import { adminLogsHandlers } from "./admin-logs"
 import { dashboardHandlers } from "./dashboard"
 import { filesHandlers } from "./files"
 import { flashcardsHandlers } from "./flashcards"
@@ -91,6 +92,7 @@ export {
   curriculumHandlers,
   meSyncHandlers,
   adminJobsHandlers,
+  adminLogsHandlers,
   dashboardHandlers,
   filesHandlers,
   flashcardsHandlers,
@@ -135,6 +137,7 @@ export const allHandlers = [
   ...curriculumHandlers,
   ...meSyncHandlers,
   ...adminJobsHandlers,
+  ...adminLogsHandlers,
   ...teachersHandlers,
   ...groupProgressHandlers,
   ...classworkHandlers,

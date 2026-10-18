@@ -3,7 +3,7 @@
  * control week its date, add an exam, and export the list.
  */
 import { afterEach, beforeEach, describe, expect, spyOn, test } from "bun:test"
-import { apiUrl, assessmentIds, ids, server } from "@ihsp/test-utils"
+import { apiUrl, assessmentIds, ids, selectDropdownValue, server } from "@ihsp/test-utils"
 import { screen, within } from "@testing-library/react"
 import { HttpResponse, http } from "msw"
 import { toast } from "sonner"
@@ -125,7 +125,7 @@ describe("dismiss and cancel", () => {
     await user.click(await within(await screen.findByRole("alertdialog")).findByRole("button", { name: "Cancel exam" }))
     await watcher.waitForMutation()
 
-    await user.selectOptions(screen.getByRole("combobox", { name: "Status" }), "cancelled")
+    await selectDropdownValue(user, screen.getByRole("combobox", { name: "Status" }), "cancelled")
 
     const row = await waitUntilRow("Algebra and functions")
     expect(within(row).getByText("Cancelled")).toBeInTheDocument()
@@ -172,7 +172,7 @@ async function openNew(user: User) {
 }
 
 async function fillRequired(user: User, dialog: HTMLElement) {
-  await user.selectOptions(within(dialog).getByLabelText(/^Subject/), "Mathematics")
+  await selectDropdownValue(user, within(dialog).getByLabelText(/^Subject/), "Mathematics")
   await user.click(
     within(within(dialog).getByRole("group", { name: "2TN2" })).getByRole("checkbox", { name: "Whole group" }),
   )
@@ -190,7 +190,7 @@ describe("edit", () => {
     expect(within(dialog).getByLabelText("Time")).toHaveValue("09:00")
     expect(within(dialog).getByLabelText("Room")).toHaveValue("204")
     expect(within(dialog).getByLabelText("Title")).toHaveValue("Algebra and functions")
-    expect(within(dialog).getByLabelText("Control week")).toHaveValue("midterm_1")
+    expect(within(dialog).getByLabelText("Control week")).toHaveAttribute("data-value", "midterm_1")
   })
 
   test("only the changed field is sent", async () => {
@@ -283,7 +283,7 @@ describe("set the date of a control week", () => {
     expect(within(dialog).getByText("Midterm 1 for 2TN2.")).toBeInTheDocument()
     expect(within(dialog).queryByLabelText(/^Subject/)).not.toBeInTheDocument()
     expect(within(dialog).queryByRole("checkbox")).not.toBeInTheDocument()
-    expect(within(dialog).getByLabelText("Control week")).toHaveValue("midterm_1")
+    expect(within(dialog).getByLabelText("Control week")).toHaveAttribute("data-value", "midterm_1")
     expect(within(dialog).getByText("Week: 12–16 Oct")).toBeInTheDocument()
   })
 
@@ -345,7 +345,7 @@ describe("new exam", () => {
     const dialog = await openNew(user)
 
     await fillRequired(user, dialog)
-    await user.selectOptions(within(dialog).getByLabelText(/^Kind/), "final")
+    await selectDropdownValue(user, within(dialog).getByLabelText(/^Kind/), "final")
     setValue(within(dialog).getByLabelText("Time"), "10:30")
     setValue(within(dialog).getByLabelText("Room"), " Klaster ")
     setValue(within(dialog).getByLabelText("Note"), "Bring a pen.")
@@ -367,8 +367,8 @@ describe("new exam", () => {
     const dialog = await openNew(user)
 
     await fillRequired(user, dialog)
-    await user.selectOptions(within(dialog).getByLabelText("Control week"), "final")
-    expect(within(dialog).getByLabelText(/^Kind/)).toHaveValue("final")
+    await selectDropdownValue(user, within(dialog).getByLabelText("Control week"), "final")
+    expect(within(dialog).getByLabelText(/^Kind/)).toHaveAttribute("data-value", "final")
     await user.click(within(dialog).getByRole("button", { name: "Add exam" }))
 
     const body = (await watcher.waitForMutation()).body
@@ -379,7 +379,7 @@ describe("new exam", () => {
     const { user } = await renderPage()
     const dialog = await openNew(user)
 
-    await user.selectOptions(within(dialog).getByLabelText(/^Subject/), "Physics")
+    await selectDropdownValue(user, within(dialog).getByLabelText(/^Subject/), "Physics")
     await user.click(
       within(within(dialog).getByRole("group", { name: "2TN2" })).getByRole("checkbox", { name: "Subgroup 2" }),
     )
@@ -415,7 +415,7 @@ describe("new exam", () => {
     expect(
       await within(dialog).findByText("This group already has an exam of this subject, kind and date."),
     ).toBeInTheDocument()
-    expect(within(dialog).getByLabelText(/^Subject/)).toHaveValue(ids.math)
+    expect(within(dialog).getByLabelText(/^Subject/)).toHaveAttribute("data-value", ids.math)
   })
 
   test("an invalid exam is refused with a message that names what to check", async () => {

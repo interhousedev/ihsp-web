@@ -6,6 +6,7 @@ import {
   courseIds,
   courseWorkspaceDetail,
   courseWorkspaceReadOnly,
+  selectDropdownValue,
   server,
 } from "@ihsp/test-utils"
 import { screen, waitFor, within } from "@testing-library/react"
@@ -87,7 +88,7 @@ describe("StudioPanel in a course workspace", () => {
 
     await user.click(await screen.findByRole("button", { name: "Customize Lesson draft" }))
     const dialog = await screen.findByRole("dialog")
-    await user.selectOptions(within(dialog).getByLabelText("Write it for"), courseIds.stepKinematics)
+    await selectDropdownValue(user, within(dialog).getByLabelText("Write it for"), courseIds.stepKinematics)
     await user.click(within(dialog).getByRole("button", { name: "Long" }))
     await user.click(
       within(dialog).getByRole("checkbox", {

@@ -343,6 +343,8 @@ describe("keys used in the code", () => {
       "limits.editor.period.${item.period}": ["session", "day", "week", "minute", "hour"],
       "users.roles.${role}": [...roles, "lms_creator", "librarian"],
       "users.status.${value}": ["active", "pending_activation", "blocked", "deactivated"],
+      "logs.levels.${level}": ["fatal", "error", "warning", "info", "debug"],
+      "logs.levels.${value}": ["fatal", "error", "warning", "info", "debug"],
     }
     const unknown = [...dynamic.keys()].filter((key) => !(key in expected))
     expect(unknown).toEqual([])

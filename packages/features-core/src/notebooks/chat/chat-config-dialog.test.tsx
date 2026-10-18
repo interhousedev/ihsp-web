@@ -1,7 +1,15 @@
 import { describe, expect, it, mock } from "bun:test"
 import type { ChatConfig, NotebookDetail } from "@ihsp/api"
 import type { Locale } from "@ihsp/i18n"
-import { apiUrl, courseWorkspaceDetail, courseWorkspaceReadOnly, nbIds, notebookDetail, server } from "@ihsp/test-utils"
+import {
+  apiUrl,
+  courseWorkspaceDetail,
+  courseWorkspaceReadOnly,
+  nbIds,
+  notebookDetail,
+  selectDropdownValue,
+  server,
+} from "@ihsp/test-utils"
 import { screen, waitFor, within } from "@testing-library/react"
 import { HttpResponse, http } from "msw"
 import { allowSlowRenders, renderNotebook } from "../test-support"
@@ -47,7 +55,7 @@ describe("ChatConfigDialog", () => {
     expect(style("Learning guide")).toHaveAttribute("aria-pressed", "true")
     expect(style("Default")).toHaveAttribute("aria-pressed", "false")
     expect(length("Shorter")).toHaveAttribute("aria-pressed", "true")
-    expect(screen.getByRole("combobox", { name: "Answer language" })).toHaveValue("ru")
+    expect(screen.getByRole("combobox", { name: "Answer language" })).toHaveAttribute("data-value", "ru")
     expect(screen.queryByRole("textbox", { name: "Style instruction" })).not.toBeInTheDocument()
   })
 
@@ -57,7 +65,7 @@ describe("ChatConfigDialog", () => {
 
     await user.click(await screen.findByRole("button", { name: "Learning guide" }))
     await user.click(length("Longer"))
-    await user.selectOptions(screen.getByRole("combobox", { name: "Answer language" }), "uz")
+    await selectDropdownValue(user, screen.getByRole("combobox", { name: "Answer language" }), "uz")
     await user.click(screen.getByRole("button", { name: "Save" }))
 
     await waitFor(() =>

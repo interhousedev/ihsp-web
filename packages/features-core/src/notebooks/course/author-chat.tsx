@@ -2,7 +2,7 @@
 
 import { keys } from "@ihsp/api"
 import { useErrorMessage, useT } from "@ihsp/i18n"
-import { Button, NativeSelect, NativeSelectOption, StateView } from "@ihsp/ui"
+import { Button, Dropdown, StateView } from "@ihsp/ui"
 import { IconMessagePlus } from "@ihsp/ui"
 import { useQueryClient } from "@tanstack/react-query"
 import { useEffect, useId, useRef, useState } from "react"
@@ -98,19 +98,14 @@ export function AuthorChat({ courseId, notebookId }: { courseId: string; noteboo
           <label htmlFor={selectId} className="sr-only">
             {t("course.author.chatPicker")}
           </label>
-          <NativeSelect
+          <Dropdown
             id={selectId}
             className="min-h-11 min-w-0 flex-1 md:min-h-8"
             value={chatId ?? ""}
             disabled={items.length === 0}
-            onChange={(event) => setChosen(event.target.value)}
-          >
-            {items.map((item) => (
-              <NativeSelectOption key={item.id} value={item.id}>
-                {item.title}
-              </NativeSelectOption>
-            ))}
-          </NativeSelect>
+            onValueChange={setChosen}
+            options={items.map((item) => ({ value: item.id, label: item.title }))}
+          />
           <Button
             type="button"
             variant="outline"

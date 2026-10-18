@@ -1,6 +1,6 @@
 /** ADM-19, ROOM-6, ROOM-7, UF-ADM-16: rooms with link and PIN, regenerate PIN with confirmation, merge, archive. */
 import { describe, expect, test } from "bun:test"
-import { apiUrl, rooms, server } from "@ihsp/test-utils"
+import { apiUrl, rooms, selectDropdownValue, server } from "@ihsp/test-utils"
 import { screen, within } from "@testing-library/react"
 import { HttpResponse, http } from "msw"
 import { RoomsPage } from "../features/rooms/components/rooms-page"
@@ -72,7 +72,7 @@ describe("rooms page", () => {
 
     await user.click(screen.getByRole("button", { name: "Merge room 101 into another room" }))
     const dialog = await screen.findByRole("dialog")
-    await user.selectOptions(within(dialog).getByLabelText(/Merge into/), rooms[1]?.id ?? "")
+    await selectDropdownValue(user, within(dialog).getByLabelText(/Merge into/), rooms[1]?.id ?? "")
     await user.click(within(dialog).getByRole("button", { name: "Merge" }))
 
     await waitUntil(() => body !== undefined, "no request")

@@ -1,7 +1,7 @@
 "use client"
 
 import { useT } from "@ihsp/i18n"
-import { Label, NativeSelect, NativeSelectOption } from "@ihsp/ui"
+import { Dropdown, Label } from "@ihsp/ui"
 import { useId } from "react"
 import { RELOCK_OPTIONS, isRelockOption, type RelockOption } from "./lock-policy"
 
@@ -12,20 +12,18 @@ export function RelockSelect({ value, onChange }: { value: RelockOption; onChang
   return (
     <div className="mt-4 flex max-w-sm flex-col gap-1.5">
       <Label htmlFor={id}>{t("lock.settings.relock.title")}</Label>
-      <NativeSelect
+      <Dropdown
         id={id}
         className="w-full"
         value={value}
-        onChange={(event) => {
-          if (isRelockOption(event.target.value)) onChange(event.target.value)
+        onValueChange={(next) => {
+          if (isRelockOption(next)) onChange(next)
         }}
-      >
-        {RELOCK_OPTIONS.map((option) => (
-          <NativeSelectOption key={option} value={option}>
-            {t(`lock.settings.relock.options.${option}`)}
-          </NativeSelectOption>
-        ))}
-      </NativeSelect>
+        options={RELOCK_OPTIONS.map((option) => ({
+          value: option,
+          label: t(`lock.settings.relock.options.${option}`),
+        }))}
+      />
       <p className="text-muted-foreground text-xs">{t("lock.settings.relock.hint")}</p>
     </div>
   )

@@ -10,11 +10,10 @@ import {
   DialogFooter,
   DialogHeader,
   DialogTitle,
+  Dropdown,
   DropdownMenuItem,
   Input,
   Label,
-  NativeSelect,
-  NativeSelectOption,
   cn,
 } from "@ihsp/ui"
 import { IconNotebook } from "@ihsp/ui"
@@ -121,19 +120,16 @@ export function AddDialog({
           >
             <div className="flex flex-col gap-1.5">
               <Label htmlFor="library-notebook">{t("choose")}</Label>
-              <NativeSelect
+              <Dropdown
                 id="library-notebook"
                 className="w-full"
                 value={notebookId}
-                onChange={(event) => setNotebookId(event.target.value)}
-              >
-                <NativeSelectOption value={NEW_NOTEBOOK}>{t("newNotebook")}</NativeSelectOption>
-                {notebooks.data?.items.map((notebook) => (
-                  <NativeSelectOption key={notebook.id} value={notebook.id}>
-                    {notebook.title}
-                  </NativeSelectOption>
-                ))}
-              </NativeSelect>
+                onValueChange={setNotebookId}
+                options={[
+                  { value: NEW_NOTEBOOK, label: t("newNotebook") },
+                  ...(notebooks.data?.items.map((notebook) => ({ value: notebook.id, label: notebook.title })) ?? []),
+                ]}
+              />
               {notebooks.data && notebooks.data.items.length === 0 ? (
                 <p className="text-muted-foreground text-xs">{t("noNotebooks")}</p>
               ) : null}
@@ -164,12 +160,13 @@ export function AddDialog({
                 <div className="flex flex-col gap-3">
                   <p className="text-muted-foreground text-xs">{t("rangeHint")}</p>
                   {chapters.length > 0 ? (
-                    <NativeSelect
+                    <Dropdown
                       aria-label={t("toc")}
                       className="w-full"
+                      placeholder={t("tocPick")}
                       value=""
-                      onChange={(event) => {
-                        const index = Number(event.target.value)
+                      onValueChange={(value) => {
+                        const index = Number(value)
                         const start = chapters[index]
                         if (!start?.page) return
                         const next = chapters.slice(index + 1).find((entry) => entry.level <= start.level)
@@ -178,15 +175,11 @@ export function AddDialog({
                           next?.page ? String(Math.max(start.page, next.page - 1)) : pageCount ? String(pageCount) : "",
                         )
                       }}
-                    >
-                      <NativeSelectOption value="">{t("tocPick")}</NativeSelectOption>
-                      {chapters.map((entry, index) => (
-                        <NativeSelectOption key={`${entry.title}-${index}`} value={String(index)}>
-                          {" ".repeat(entry.level * 2)}
-                          {entry.title}
-                        </NativeSelectOption>
-                      ))}
-                    </NativeSelect>
+                      options={chapters.map((entry, index) => ({
+                        value: String(index),
+                        label: `${" ".repeat(entry.level * 2)}${entry.title}`,
+                      }))}
+                    />
                   ) : null}
                   <div className="grid grid-cols-2 gap-3">
                     <div className="flex flex-col gap-1.5">

@@ -7,12 +7,14 @@ import {
   dashboardLayout,
   flashcardSets,
   ids,
+  selectDropdownValue,
   server,
+  setDropdownValue,
   studentProfile,
   subjectRefs,
 } from "@ihsp/test-utils"
 import type { AssessmentItem, SubjectDetail } from "@ihsp/api"
-import { fireEvent, screen, waitFor, within } from "@testing-library/react"
+import { screen, waitFor, within } from "@testing-library/react"
 import { HttpResponse, http } from "msw"
 import { ExamPage } from "../features/exams/components/exam-page"
 import { ExamsPage } from "../features/exams/components/exams-page"
@@ -123,7 +125,7 @@ describe("exams list", () => {
     renderSp(<ExamsPage />, { route: "/exams/" })
 
     await findCard("Upcoming")
-    fireEvent.change(screen.getByLabelText("Subject"), { target: { value: ids.math } })
+    setDropdownValue(screen.getByLabelText("Subject"), ids.math)
 
     await waitFor(() => expect(screen.getAllByTestId("exam-row")).toHaveLength(2))
     for (const row of screen.getAllByTestId("exam-row")) expect(row).toHaveTextContent("Mathematics")
@@ -170,9 +172,8 @@ describe("suggest a date", () => {
 
     await user.click(await screen.findByRole("button", { name: "Suggest a date" }))
     const dialog = await screen.findByRole("dialog")
-    await waitFor(() => expect(within(dialog).getByRole("option", { name: "Mathematics" })).toBeInTheDocument())
-    fireEvent.change(within(dialog).getByLabelText("Subject"), { target: { value: ids.math } })
-    fireEvent.change(within(dialog).getByLabelText("Control"), { target: { value: "final" } })
+    await selectDropdownValue(user, within(dialog).getByLabelText("Subject"), ids.math)
+    await selectDropdownValue(user, within(dialog).getByLabelText("Control"), "final")
     setValue(within(dialog).getByLabelText("Date"), "2026-12-15")
     setValue(within(dialog).getByLabelText("Time (optional)"), "09:00")
     setValue(within(dialog).getByLabelText("Room (optional)"), "204")
@@ -198,8 +199,7 @@ describe("suggest a date", () => {
 
     await user.click(await screen.findByRole("button", { name: "Suggest a date" }))
     const dialog = await screen.findByRole("dialog")
-    await waitFor(() => expect(within(dialog).getByRole("option", { name: "Physics" })).toBeInTheDocument())
-    fireEvent.change(within(dialog).getByLabelText("Subject"), { target: { value: ids.physics } })
+    await selectDropdownValue(user, within(dialog).getByLabelText("Subject"), ids.physics)
     setValue(within(dialog).getByLabelText("Date"), "2026-11-03")
     await user.click(within(dialog).getByRole("button", { name: "Send suggestion" }))
 

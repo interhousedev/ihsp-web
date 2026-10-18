@@ -1,5 +1,5 @@
 import { describe, expect, it } from "bun:test"
-import { libSubjects, setLibraryActor, userMe } from "@ihsp/test-utils"
+import { dropdownLabels, libSubjects, selectDropdownValue, setLibraryActor, userMe } from "@ihsp/test-utils"
 import { screen, waitFor, within } from "@testing-library/react"
 import { allowSlowRenders, renderLibrary } from "../../test-support"
 import { TopicsPage } from "./topics-page"
@@ -13,8 +13,8 @@ async function renderTopics() {
     session: { user: { ...userMe, roles: ["student", "librarian"] } },
   })
   const select = await screen.findByLabelText("Subject")
-  await waitFor(() => expect(within(select).getAllByRole("option").length).toBeGreaterThan(1))
-  await view.user.selectOptions(select, libSubjects.physics.id)
+  await waitFor(async () => expect((await dropdownLabels(view.user, select)).length).toBeGreaterThan(1))
+  await selectDropdownValue(view.user, select, libSubjects.physics.id)
   return view
 }
 

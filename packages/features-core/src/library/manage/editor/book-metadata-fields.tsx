@@ -1,7 +1,7 @@
 "use client"
 
 import { useT } from "@ihsp/i18n"
-import { Input, NativeSelect, NativeSelectOption, Textarea, cn } from "@ihsp/ui"
+import { Dropdown, Input, Textarea, cn } from "@ihsp/ui"
 import { useId } from "react"
 import { BOOK_LANGUAGES, BOOK_TYPES, YEARS_OF_STUDY, type BookForm } from "./book-form"
 import type { FormIssues } from "./book-form-checks"
@@ -79,32 +79,22 @@ export function BookMetadataFields({
         />
       </div>
       <FieldRow id={`${id}-language`} label={t("language")} hint={t("languageHint")}>
-        <NativeSelect
+        <Dropdown
           id={`${id}-language`}
           value={form.language}
           className="w-full"
-          onChange={(event) => onChange({ language: event.target.value as BookForm["language"] })}
-        >
-          {BOOK_LANGUAGES.map((value) => (
-            <NativeSelectOption key={value} value={value}>
-              {language(value)}
-            </NativeSelectOption>
-          ))}
-        </NativeSelect>
+          onValueChange={(value) => onChange({ language: value as BookForm["language"] })}
+          options={BOOK_LANGUAGES.map((value) => ({ value, label: language(value) }))}
+        />
       </FieldRow>
       <FieldRow id={`${id}-type`} label={t("type")}>
-        <NativeSelect
+        <Dropdown
           id={`${id}-type`}
           value={form.type}
           className="w-full"
-          onChange={(event) => onChange({ type: event.target.value as BookForm["type"] })}
-        >
-          {BOOK_TYPES.map((value) => (
-            <NativeSelectOption key={value} value={value}>
-              {type(value)}
-            </NativeSelectOption>
-          ))}
-        </NativeSelect>
+          onValueChange={(value) => onChange({ type: value as BookForm["type"] })}
+          options={BOOK_TYPES.map((value) => ({ value, label: type(value) }))}
+        />
       </FieldRow>
       <FieldRow id={`${id}-year`} label={t("year")} error={message(issues.yearPublished)}>
         <Input

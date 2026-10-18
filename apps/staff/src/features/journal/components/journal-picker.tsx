@@ -2,7 +2,7 @@
 
 import type { JournalOption } from "@ihsp/api"
 import { useT } from "@ihsp/i18n"
-import { NativeSelect } from "@ihsp/ui"
+import { Dropdown } from "@ihsp/ui"
 import { useId } from "react"
 import { optionLabel, optionValue, parseOptionValue } from "../utils/selection"
 
@@ -23,21 +23,16 @@ export function JournalPicker({
       <label htmlFor={id} className="text-sm font-medium">
         {t("pick")}
       </label>
-      <NativeSelect
-        className="w-full sm:w-80 [&_select]:h-11 md:[&_select]:h-8"
+      <Dropdown
+        className="w-full sm:w-80"
         id={id}
         value={selected ? optionValue(selected) : ""}
-        onChange={(event) => {
-          const parsed = parseOptionValue(event.target.value)
+        onValueChange={(value) => {
+          const parsed = parseOptionValue(value)
           if (parsed) onChange(parsed.subject, parsed.audience)
         }}
-      >
-        {options.map((option) => (
-          <option key={optionValue(option)} value={optionValue(option)}>
-            {optionLabel(option)}
-          </option>
-        ))}
-      </NativeSelect>
+        options={options.map((option) => ({ value: optionValue(option), label: optionLabel(option) }))}
+      />
     </div>
   )
 }

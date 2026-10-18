@@ -1,6 +1,6 @@
 /** ADM-9, ACA-5–ACA-8, UF-ADM-06: the entry editor checks conflicts live and blocks saving on conflicts. */
 import { describe, expect, mock, test } from "bun:test"
-import { apiUrl, currentTerm, ids, server, timetableEntries } from "@ihsp/test-utils"
+import { apiUrl, currentTerm, ids, selectDropdownValue, server, timetableEntries } from "@ihsp/test-utils"
 import { screen, within } from "@testing-library/react"
 import { HttpResponse, http } from "msw"
 import { EntryEditorDialog, type EntryDefaults } from "../features/timetable/components/entry-editor-dialog"
@@ -26,9 +26,7 @@ function renderEditor(onClose = mock(() => undefined)) {
 }
 
 async function chooseSubject(user: ReturnType<typeof renderEditor>["user"]) {
-  await screen.findByRole("option", { name: "Mathematics" })
-  await screen.findByRole("option", { name: /Rakhimov/ })
-  await user.selectOptions(screen.getByLabelText(/^Subject/), ids.math)
+  await selectDropdownValue(user, screen.getByLabelText(/^Subject/), ids.math)
 }
 
 describe("timetable entry editor", () => {
@@ -64,7 +62,7 @@ describe("timetable entry editor", () => {
     await chooseSubject(user)
     await screen.findByTestId("conflicts")
 
-    await user.selectOptions(screen.getByLabelText(/^Teacher/), ids.teacherSmirnova)
+    await selectDropdownValue(user, screen.getByLabelText(/^Teacher/), ids.teacherSmirnova)
     await waitUntil(() => screen.queryByTestId("conflicts") === null, "conflicts still shown")
     expect(await screen.findByText("No conflicts.")).toBeInTheDocument()
 
@@ -115,8 +113,7 @@ describe("timetable entry editor", () => {
 
   test("a divisible subject suggests two subgroup entries", async () => {
     const { user } = renderEditor()
-    await screen.findByRole("option", { name: "English" })
-    await user.selectOptions(screen.getByLabelText(/^Subject/), ids.english)
+    await selectDropdownValue(user, screen.getByLabelText(/^Subject/), ids.english)
 
     await user.click(await screen.findByRole("button", { name: "Split into subgroups" }))
 

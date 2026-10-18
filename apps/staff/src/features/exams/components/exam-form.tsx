@@ -2,7 +2,7 @@
 
 import type { AssessmentKind, ControlName } from "@ihsp/api"
 import { useErrorMessage, useT } from "@ihsp/i18n"
-import { Button, DatePicker, LoadingButton, NativeSelect, useAppForm } from "@ihsp/ui"
+import { Button, DatePicker, Dropdown, LoadingButton, useAppForm } from "@ihsp/ui"
 import { useMemo, useRef } from "react"
 import { toast } from "sonner"
 import { useCreateExam } from "../hooks/use-create-exam"
@@ -23,7 +23,7 @@ import type { SubjectChoice, TeachingGroup } from "../utils/teaching"
 import { ExamField } from "./exam-field"
 
 const KINDS: readonly AssessmentKind[] = ["midterm", "final", "other"]
-const SELECT_CLASS = "w-full [&_select]:h-11 md:[&_select]:h-8"
+const SELECT_CLASS = "w-full"
 const INPUT_CLASS = "h-11 md:h-8"
 
 /**
@@ -143,20 +143,15 @@ export function ExamForm({
             htmlFor="exam-subject"
             errors={field.state.meta.isTouched ? field.state.meta.errors : []}
           >
-            <NativeSelect
+            <Dropdown
               id="exam-subject"
               className={SELECT_CLASS}
               value={field.state.value}
               disabled={editing}
-              onChange={(event) => chooseSubject(event.target.value)}
-            >
-              <option value="">{t("chooseSubject")}</option>
-              {subjects.map((subject) => (
-                <option key={subject.id} value={subject.id}>
-                  {subject.name}
-                </option>
-              ))}
-            </NativeSelect>
+              onValueChange={chooseSubject}
+              placeholder={t("chooseSubject")}
+              options={subjects.map((subject) => ({ value: subject.id, label: subject.name }))}
+            />
           </ExamField>
         )}
       </form.Field>
@@ -165,16 +160,17 @@ export function ExamForm({
         <form.Field name="subgroup">
           {(field) => (
             <ExamField label={t("fields.audience")} htmlFor="exam-audience" errors={[]}>
-              <NativeSelect
+              <Dropdown
                 id="exam-audience"
                 className={SELECT_CLASS}
                 value={field.state.value}
-                onChange={(event) => field.handleChange(event.target.value as ExamFormValues["subgroup"])}
-              >
-                <option value="">{`${group.name} · ${t("wholeGroup")}`}</option>
-                <option value="1">{`${group.name} · ${t("subgroup", { number: 1 })}`}</option>
-                <option value="2">{`${group.name} · ${t("subgroup", { number: 2 })}`}</option>
-              </NativeSelect>
+                onValueChange={(value) => field.handleChange(value as ExamFormValues["subgroup"])}
+                options={[
+                  { value: "", label: `${group.name} · ${t("wholeGroup")}` },
+                  { value: "1", label: `${group.name} · ${t("subgroup", { number: 1 })}` },
+                  { value: "2", label: `${group.name} · ${t("subgroup", { number: 2 })}` },
+                ]}
+              />
             </ExamField>
           )}
         </form.Field>
@@ -188,37 +184,29 @@ export function ExamForm({
               htmlFor="exam-control"
               errors={field.state.meta.isTouched ? field.state.meta.errors : []}
             >
-              <NativeSelect
+              <Dropdown
                 id="exam-control"
                 className={SELECT_CLASS}
                 value={field.state.value}
-                onChange={(event) => chooseControl(event.target.value as ExamFormValues["control"])}
-              >
-                <option value="">{t("noControl")}</option>
-                {CONTROLS.map((control: ControlName) => (
-                  <option key={control} value={control}>
-                    {te(`controls.${control}`)}
-                  </option>
-                ))}
-              </NativeSelect>
+                onValueChange={(value) => chooseControl(value as ExamFormValues["control"])}
+                options={[
+                  { value: "", label: t("noControl") },
+                  ...CONTROLS.map((control: ControlName) => ({ value: control, label: te(`controls.${control}`) })),
+                ]}
+              />
             </ExamField>
           )}
         </form.Field>
         <form.Field name="kind">
           {(field) => (
             <ExamField label={t("fields.kind")} htmlFor="exam-kind" errors={[]}>
-              <NativeSelect
+              <Dropdown
                 id="exam-kind"
                 className={SELECT_CLASS}
                 value={field.state.value}
-                onChange={(event) => chooseKind(event.target.value as AssessmentKind)}
-              >
-                {KINDS.map((kind) => (
-                  <option key={kind} value={kind}>
-                    {te(`kinds.${kind}`)}
-                  </option>
-                ))}
-              </NativeSelect>
+                onValueChange={(value) => chooseKind(value as AssessmentKind)}
+                options={KINDS.map((kind) => ({ value: kind, label: te(`kinds.${kind}`) }))}
+              />
             </ExamField>
           )}
         </form.Field>

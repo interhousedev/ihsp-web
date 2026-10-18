@@ -1,7 +1,18 @@
 /** Exams (midterm and final controls): the group's controls by control week, the editor and the suggestions to confirm. */
 import { afterEach, beforeEach, describe, expect, test } from "bun:test"
 import type { StaffAssessmentItem } from "@ihsp/api"
-import { apiUrl, assessmentIds, group1TN1, group2TN2, ids, problem, server, staffAssessments } from "@ihsp/test-utils"
+import {
+  apiUrl,
+  assessmentIds,
+  group1TN1,
+  group2TN2,
+  dropdownLabels,
+  ids,
+  problem,
+  selectDropdownValue,
+  server,
+  staffAssessments,
+} from "@ihsp/test-utils"
 import { screen, waitFor, within } from "@testing-library/react"
 import type { UserEvent } from "@testing-library/user-event"
 import { HttpResponse, http } from "msw"
@@ -440,14 +451,14 @@ describe("exams page", () => {
     await user.click(screen.getByRole("button", { name: "Add exam" }))
     const dialog = await openDialog()
     expect(within(dialog).getByRole("heading", { name: "Add exam" })).toBeInTheDocument()
-    await user.selectOptions(within(dialog).getByLabelText("Subject"), ids.physics)
+    await selectDropdownValue(user, within(dialog).getByLabelText("Subject"), ids.physics)
     await pickDay(user, dialog, 15)
     setValue(within(dialog).getByLabelText("Start time"), "14:30")
     setValue(within(dialog).getByLabelText("Room"), "101")
     setValue(within(dialog).getByLabelText("Note for students"), "Bring a calculator")
 
-    expect(within(dialog).getByLabelText("Control week")).toHaveValue("midterm_1")
-    expect(within(dialog).getByLabelText("Kind")).toHaveValue("midterm")
+    expect(within(dialog).getByLabelText("Control week")).toHaveAttribute("data-value", "midterm_1")
+    expect(within(dialog).getByLabelText("Kind")).toHaveAttribute("data-value", "midterm")
     await user.click(within(dialog).getByRole("button", { name: "Save" }))
 
     await waitFor(() =>
@@ -475,9 +486,9 @@ describe("exams page", () => {
     await section("Midterm 1")
     await user.click(screen.getByRole("button", { name: "Add exam" }))
     const dialog = await openDialog()
-    await user.selectOptions(within(dialog).getByLabelText("Subject"), ids.history)
-    await user.selectOptions(within(dialog).getByLabelText("Audience"), "2")
-    await user.selectOptions(within(dialog).getByLabelText("Kind"), "other")
+    await selectDropdownValue(user, within(dialog).getByLabelText("Subject"), ids.history)
+    await selectDropdownValue(user, within(dialog).getByLabelText("Audience"), "2")
+    await selectDropdownValue(user, within(dialog).getByLabelText("Kind"), "other")
     await pickDay(user, dialog, 30)
     await user.click(within(dialog).getByRole("button", { name: "Save" }))
 
@@ -514,7 +525,7 @@ describe("exams page", () => {
     await section("Midterm 1")
     await user.click(screen.getByRole("button", { name: "Add exam" }))
     const dialog = await openDialog()
-    await user.selectOptions(within(dialog).getByLabelText("Subject"), ids.physics)
+    await selectDropdownValue(user, within(dialog).getByLabelText("Subject"), ids.physics)
     await pickDay(user, dialog, 15)
     const note = within(dialog).getByLabelText("Note for students")
     note.removeAttribute("maxlength")
@@ -533,9 +544,9 @@ describe("exams page", () => {
     await user.click(within(midterm1).getByRole("button", { name: "Set date: English" }))
     const dialog = await openDialog()
     expect(within(dialog).getByRole("heading", { name: "Set exam date" })).toBeInTheDocument()
-    expect(within(dialog).getByLabelText("Subject")).toHaveValue(ids.english)
-    expect(within(dialog).getByLabelText("Control week")).toHaveValue("midterm_1")
-    expect(within(dialog).getByLabelText("Kind")).toHaveValue("midterm")
+    expect(within(dialog).getByLabelText("Subject")).toHaveAttribute("data-value", ids.english)
+    expect(within(dialog).getByLabelText("Control week")).toHaveAttribute("data-value", "midterm_1")
+    expect(within(dialog).getByLabelText("Kind")).toHaveAttribute("data-value", "midterm")
     expect(within(dialog).getByText("Control week: 12 Oct – 16 Oct")).toBeInTheDocument()
     await pickDay(user, dialog, 14)
     await user.click(within(dialog).getByRole("button", { name: "Save" }))
@@ -593,7 +604,7 @@ describe("exams page", () => {
     const { user } = renderExams()
 
     await section("Midterm 1")
-    await user.selectOptions(screen.getByLabelText("Subject"), ids.math)
+    await selectDropdownValue(user, screen.getByLabelText("Subject"), ids.math)
 
     await waitFor(() => expect(screen.queryByRole("region", { name: "Midterm 2" })).not.toBeInTheDocument())
     expect(rowOf(await section("Midterm 1"), "Mathematics")).toBeInTheDocument()
@@ -614,7 +625,7 @@ describe("exams page", () => {
     const { user } = renderExams()
 
     const picker = await screen.findByRole("combobox", { name: "Group" })
-    await user.selectOptions(picker, ids.group1TN1)
+    await selectDropdownValue(user, picker, ids.group1TN1)
 
     expect(await screen.findByText("No exams for this group yet.")).toBeInTheDocument()
     expect(screen.getByRole("button", { name: "Add exam" })).toBeInTheDocument()
@@ -622,17 +633,11 @@ describe("exams page", () => {
 
   test("the group picker tells how many suggested dates wait in each group", async () => {
     server.use(http.get(apiUrl("/v1/staff/groups"), () => HttpResponse.json([group2TN2, group1TN1])))
-    renderExams()
+    const { user } = renderExams()
 
     const picker = await screen.findByRole("combobox", { name: "Group" })
 
-    await waitFor(() =>
-      expect(
-        within(picker)
-          .getAllByRole("option")
-          .map((option) => option.textContent),
-      ).toEqual(["1TN1", "2TN2 (2 to confirm)"]),
-    )
+    expect(await dropdownLabels(user, picker)).toEqual(["1TN1", "2TN2 (2 to confirm)"])
   })
 
   test("?group= opens that group", async () => {

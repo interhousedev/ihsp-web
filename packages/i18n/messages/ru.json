@@ -1475,7 +1475,11 @@
       "allSubgroups": "Все подгруппы",
       "allTypes": "Все типы",
       "allLevels": "Все уровни",
-      "reset": "Сбросить фильтры"
+      "reset": "Сбросить фильтры",
+      "min": "Мин.",
+      "max": "Макс.",
+      "otherValues": "Другие значения",
+      "customHint": "Дополнительные поля этого типа"
     },
     "table": {
       "student": "Студент",
@@ -1540,7 +1544,25 @@
       "empty": "Типов нет.",
       "cancel": "Отмена",
       "save": "Сохранить",
-      "confirmDelete": "Удалить"
-    }
+      "confirmDelete": "Удалить",
+      "customFields": "Дополнительные поля",
+      "addField": "Добавить поле",
+      "removeField": "Удалить поле",
+      "fieldKey": "Ключ",
+      "fieldKind": "Тип",
+      "fieldLabelUz": "Название (uz)",
+      "fieldLabelRu": "Название (ru)",
+      "fieldLabelEn": "Название (en)",
+      "fieldOptions": "Варианты",
+      "fieldOptionsHint": "По одному варианту в строке",
+      "fieldAllowOther": "Разрешить «Другое» (свободный текст)",
+      "fieldRequired": "Обязательное",
+      "kindText": "Текст",
+      "kindNumber": "Число",
+      "kindSingle": "Один вариант",
+      "kindMulti": "Несколько вариантов",
+      "fieldsEmpty": "Дополнительных полей пока нет."
+    },
+    "customOther": "Другое"
   }
 }

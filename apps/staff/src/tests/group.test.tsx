@@ -4,6 +4,7 @@ import {
   FIXTURE_TODAY,
   apiUrl,
   attendanceSheetSubmitted,
+  dropdownLabels,
   group1TN1,
   group2TN2,
   ids,
@@ -134,15 +135,11 @@ describe("students", () => {
 
   test("a curator of several groups can pick one", async () => {
     server.use(http.get(apiUrl("/v1/staff/groups"), () => HttpResponse.json([group2TN2, group1TN1])))
-    renderStaff(<StudentsPage />)
+    const { user } = renderStaff(<StudentsPage />)
 
     const picker = await screen.findByRole("combobox", { name: "Group" })
 
-    expect(
-      within(picker)
-        .getAllByRole("option")
-        .map((option) => option.textContent),
-    ).toEqual(["2TN2", "1TN1"])
+    expect(await dropdownLabels(user, picker)).toEqual(["2TN2", "1TN1"])
   })
 
   test("a teacher who curates nothing is told so", async () => {

@@ -1475,7 +1475,11 @@
       "allSubgroups": "All subgroups",
       "allTypes": "All types",
       "allLevels": "All levels",
-      "reset": "Reset filters"
+      "reset": "Reset filters",
+      "min": "Min",
+      "max": "Max",
+      "otherValues": "Other values",
+      "customHint": "Custom fields of this type"
     },
     "table": {
       "student": "Student",
@@ -1540,7 +1544,25 @@
       "empty": "No types.",
       "cancel": "Cancel",
       "save": "Save",
-      "confirmDelete": "Delete"
-    }
+      "confirmDelete": "Delete",
+      "customFields": "Custom fields",
+      "addField": "Add field",
+      "removeField": "Remove field",
+      "fieldKey": "Key",
+      "fieldKind": "Kind",
+      "fieldLabelUz": "Label (uz)",
+      "fieldLabelRu": "Label (ru)",
+      "fieldLabelEn": "Label (en)",
+      "fieldOptions": "Options",
+      "fieldOptionsHint": "One option per line",
+      "fieldAllowOther": "Allow other (free text)",
+      "fieldRequired": "Required",
+      "kindText": "Text",
+      "kindNumber": "Number",
+      "kindSingle": "Single choice",
+      "kindMulti": "Multiple choice",
+      "fieldsEmpty": "No custom fields yet."
+    },
+    "customOther": "Other"
   }
 }

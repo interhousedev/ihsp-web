@@ -3,7 +3,17 @@
 import { getMeFilesQuery, type FileItem, type LinkCreateBody } from "@ihsp/api"
 import { FileUploadButton } from "@ihsp/features-core"
 import { useErrorMessage, useT } from "@ihsp/i18n"
-import { Button, Dialog, DialogContent, DialogFooter, DialogHeader, DialogTitle, Input, Label } from "@ihsp/ui"
+import {
+  Button,
+  Dialog,
+  DialogContent,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+  Dropdown,
+  Input,
+  Label,
+} from "@ihsp/ui"
 import { useQuery, useQueryClient } from "@tanstack/react-query"
 import { useId, useState } from "react"
 import { toast } from "sonner"
@@ -112,19 +122,14 @@ export function NewLinkDialog({ open, onOpenChange }: NewLinkDialogProps) {
             <div className="flex flex-col gap-3">
               <div className="flex flex-col gap-1">
                 <Label htmlFor={fileSelectId}>{t("fileLabel")}</Label>
-                <select
+                <Dropdown
                   id={fileSelectId}
                   value={fileId}
-                  className="border-input bg-background h-11 w-full rounded-lg border px-2.5 text-sm"
-                  onChange={(event) => setFileId(event.target.value)}
-                >
-                  <option value="">{files.isPending ? t("loadingFiles") : t("chooseFile")}</option>
-                  {options.map((file) => (
-                    <option key={file.id} value={file.id}>
-                      {file.name}
-                    </option>
-                  ))}
-                </select>
+                  className="w-full"
+                  placeholder={files.isPending ? t("loadingFiles") : t("chooseFile")}
+                  onValueChange={setFileId}
+                  options={options.map((file) => ({ value: file.id, label: file.name }))}
+                />
               </div>
               <p className="text-muted-foreground text-xs">{t("or")}</p>
               <FileUploadButton

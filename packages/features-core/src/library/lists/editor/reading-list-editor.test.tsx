@@ -9,6 +9,7 @@ import {
   libSubjects,
   pickCard,
   problem,
+  selectDropdownValue,
   server,
   setLibraryActor,
   setUniLibrary,
@@ -47,7 +48,7 @@ const names = () =>
 
 async function fillNewList(user: ReturnType<typeof renderLibrary>["user"]) {
   await user.type(await screen.findByLabelText("Title"), "Optics reading")
-  await user.selectOptions(screen.getByLabelText("Subject"), libSubjects.physics.id)
+  await selectDropdownValue(user, screen.getByLabelText("Subject"), libSubjects.physics.id)
 }
 
 function bigList(count: number): ReadingListDetail {
@@ -76,7 +77,7 @@ describe("ReadingListEditor: a new list", () => {
     expect(screen.getByText("Some fields need your attention. They are marked above.")).toBeInTheDocument()
 
     await fillNewList(user)
-    await user.selectOptions(screen.getByLabelText("Year of study"), "1")
+    await selectDropdownValue(user, screen.getByLabelText("Year of study"), "1")
     await user.click(screen.getByRole("radio", { name: /Published/ }))
     await user.click(screen.getByRole("button", { name: "Save list" }))
 
@@ -100,8 +101,8 @@ describe("ReadingListEditor: a new list", () => {
     expect(screen.getByTestId("entry-count")).toHaveTextContent("1 of 100 entries")
     expect(within(results).getByText("Added")).toBeInTheDocument()
     const importance = screen.getByLabelText(`Importance of ${title}`)
-    expect(importance).toHaveValue("recommended")
-    await user.selectOptions(importance, "essential")
+    expect(importance).toHaveAttribute("data-value", "recommended")
+    await selectDropdownValue(user, importance, "essential")
     await user.click(screen.getByRole("button", { name: "Save list" }))
 
     await waitFor(() => expect(testRouter.push).toHaveBeenCalledTimes(1))
@@ -183,7 +184,7 @@ describe("ReadingListEditor: an existing list", () => {
     expect(screen.getByRole("radio", { name: /Published/ })).toBeChecked()
     expect(screen.getByTestId("entry-count")).toHaveTextContent("5 of 100 entries")
     const first = libListPhysics.entries[0]!.item!.title
-    expect(screen.getByLabelText(`Importance of ${first}`)).toHaveValue("essential")
+    expect(screen.getByLabelText(`Importance of ${first}`)).toHaveAttribute("data-value", "essential")
     expect(screen.getByLabelText(`First page of ${first}`)).toHaveValue(5)
     expect(screen.getByLabelText(`Last page of ${first}`)).toHaveValue(30)
     expect(screen.getByLabelText(`Week or term label for ${first}`)).toHaveValue("Week 1")

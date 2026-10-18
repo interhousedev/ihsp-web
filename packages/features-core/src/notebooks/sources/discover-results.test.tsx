@@ -8,6 +8,7 @@ import {
   notebookEmptyDetail,
   problem,
   seedNotebookSource,
+  selectDropdownValue,
   server,
   sourceFile,
 } from "@ihsp/test-utils"
@@ -32,7 +33,7 @@ async function search(user: ReturnType<typeof renderPanel>["user"], options: { d
   const input = await screen.findByRole("textbox", { name: "Find new sources on the internet" })
   await user.click(input)
   await user.paste("photosynthesis stages")
-  if (options.deep) await user.selectOptions(screen.getByRole("combobox", { name: "Search type" }), "deep")
+  if (options.deep) await selectDropdownValue(user, screen.getByRole("combobox", { name: "Search type" }), "deep")
   await user.click(screen.getByRole("button", { name: "Search the web" }))
   await screen.findByText(WIKI)
 }
@@ -134,7 +135,7 @@ describe("DiscoverResults", () => {
       const input = await screen.findByRole("textbox", { name: "Find new sources on the internet" })
       await user.click(input)
       await user.paste("calvin cycle")
-      await user.selectOptions(screen.getByRole("combobox", { name: "Search type" }), "deep")
+      await selectDropdownValue(user, screen.getByRole("combobox", { name: "Search type" }), "deep")
 
       await user.click(screen.getByRole("button", { name: "Search the web" }))
 

@@ -2,7 +2,7 @@
 
 import type { DataTableContent } from "@ihsp/api"
 import { useT } from "@ihsp/i18n"
-import { Button, NativeSelect, NativeSelectOption } from "@ihsp/ui"
+import { Button, Dropdown } from "@ihsp/ui"
 import { useId } from "react"
 import type { SortState } from "./sort-rows"
 
@@ -22,23 +22,16 @@ export function SortControls({ columns, sort, onChange }: SortControlsProps) {
         <label htmlFor={selectId} className="text-muted-foreground text-xs">
           {t("viewers.table.sortBy")}
         </label>
-        <NativeSelect
+        <Dropdown
           id={selectId}
-          className="w-full [&_select]:h-11"
+          className="w-full"
           value={sort?.key ?? ""}
-          onChange={(event) =>
-            onChange(
-              event.target.value === "" ? null : { key: event.target.value, direction: sort?.direction ?? "asc" },
-            )
-          }
-        >
-          <NativeSelectOption value="">{t("viewers.table.sortNone")}</NativeSelectOption>
-          {columns.map((column) => (
-            <NativeSelectOption key={column.key} value={column.key}>
-              {column.label}
-            </NativeSelectOption>
-          ))}
-        </NativeSelect>
+          onValueChange={(value) => onChange(value === "" ? null : { key: value, direction: sort?.direction ?? "asc" })}
+          options={[
+            { value: "", label: t("viewers.table.sortNone") },
+            ...columns.map((column) => ({ value: column.key, label: column.label })),
+          ]}
+        />
       </div>
       <Button
         type="button"

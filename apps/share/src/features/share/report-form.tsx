@@ -2,7 +2,7 @@
 
 import { isApiError, postPublicReports, type ReportReason } from "@ihsp/api"
 import { useErrorMessage, useT } from "@ihsp/i18n"
-import { Alert, AlertDescription, Button, LoadingButton, NativeSelect, NativeSelectOption, Textarea } from "@ihsp/ui"
+import { Alert, AlertDescription, Button, Dropdown, LoadingButton, Textarea } from "@ihsp/ui"
 import { useMutation } from "@tanstack/react-query"
 import { useId, useState } from "react"
 
@@ -57,22 +57,15 @@ export function ReportForm({ slug }: { slug: string }) {
         <label htmlFor={reasonId} className="text-sm font-medium">
           {t("reason")}
         </label>
-        <NativeSelect
+        <Dropdown
           id={reasonId}
           value={reason}
           required
           className="min-h-11 w-full"
-          onChange={(event) => setReason(event.target.value as ReportReason | "")}
-        >
-          <NativeSelectOption value="" disabled>
-            {t("reasonPlaceholder")}
-          </NativeSelectOption>
-          {REASONS.map((value) => (
-            <NativeSelectOption key={value} value={value}>
-              {t(`reasons.${value}`)}
-            </NativeSelectOption>
-          ))}
-        </NativeSelect>
+          placeholder={t("reasonPlaceholder")}
+          onValueChange={(next) => setReason(next as ReportReason | "")}
+          options={REASONS.map((value) => ({ value, label: t(`reasons.${value}`) }))}
+        />
       </div>
       <div className="flex flex-col gap-1.5">
         <label htmlFor={commentId} className="text-sm font-medium">
