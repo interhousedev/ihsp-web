@@ -21,6 +21,11 @@ RUN bun install --frozen-lockfile
 ARG NEXT_PUBLIC_APP_VERSION=1.0.0
 ENV NEXT_PUBLIC_APP_VERSION=${NEXT_PUBLIC_APP_VERSION}
 
+# Build-time DSN of error tracking (Bugsink, Sentry protocol). Empty (the default) means no error tracking;
+# the DSN is public, it only lets the browser send events. Pass `--build-arg NEXT_PUBLIC_BUGSINK_DSN=...`.
+ARG NEXT_PUBLIC_BUGSINK_DSN=
+ENV NEXT_PUBLIC_BUGSINK_DSN=${NEXT_PUBLIC_BUGSINK_DSN}
+
 # Build all apps
 RUN bun run build
 

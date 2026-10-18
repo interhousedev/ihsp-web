@@ -1,5 +1,6 @@
 "use client"
 
+import { ErrorTrackingInit } from "@ihsp/features-core/telemetry"
 import { ConfigGate } from "@ihsp/config"
 import { I18nProvider, mergeMessages, type Locale, type Messages } from "@ihsp/i18n"
 import { AppThemeProvider, createQueryClient } from "@ihsp/ui"
@@ -22,6 +23,7 @@ export function Providers({ children }: { children: ReactNode }) {
   const [queryClient] = useState(createQueryClient)
   return (
     <ConfigGate>
+      <ErrorTrackingInit />
       <QueryClientProvider client={queryClient}>
         <I18nProvider app="share" loadMessages={loadAppMessages}>
           <AppThemeProvider>{children}</AppThemeProvider>

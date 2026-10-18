@@ -1,5 +1,6 @@
 "use client"
 
+import { ErrorTrackingInit } from "@ihsp/features-core/telemetry"
 import { AuthProvider } from "@ihsp/auth"
 import { ConfigGate } from "@ihsp/config"
 import { ThemePreferenceSync, loadLibraryMessages } from "@ihsp/features-core"
@@ -28,6 +29,7 @@ export function Providers({ children }: { children: ReactNode }) {
   const [queryClient] = useState(createQueryClient)
   return (
     <ConfigGate>
+      <ErrorTrackingInit />
       <QueryClientProvider client={queryClient}>
         <I18nProvider app="library" loadMessages={loadAppMessages}>
           <NuqsAdapter>
