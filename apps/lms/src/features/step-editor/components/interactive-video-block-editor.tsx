@@ -1,7 +1,7 @@
 "use client"
 
 import { useT } from "@ihsp/i18n"
-import { Button, Field, FieldLabel, Icons, Input, NativeSelect, NativeSelectOption, Switch, Textarea } from "@ihsp/ui"
+import { Button, Dropdown, Field, FieldLabel, Icons, Input, Switch, Textarea } from "@ihsp/ui"
 import { useId, useState } from "react"
 import { formatTime, parseTime, sortInteractions } from "../../player/utils/interactive-video"
 import { type Interaction, type InteractiveVideoBlock, newInteraction } from "../utils/content-ops"
@@ -152,22 +152,17 @@ function InteractionEditor({
         </Field>
         <Field className="w-36">
           <FieldLabel htmlFor={`${id}-kind`}>{t("interactive.kind")}</FieldLabel>
-          <NativeSelect
+          <Dropdown
             id={`${id}-kind`}
             value={item.kind}
-            onChange={(event) => {
-              const kind = event.target.value as Interaction["kind"]
+            onValueChange={(next) => {
+              const kind = next as Interaction["kind"]
               const fresh = newInteraction(kind, item.at_sec)
               onChange({ ...item, kind, options: kind === "question" ? fresh.options : [] })
             }}
             className="w-full"
-          >
-            {KINDS.map((kind) => (
-              <NativeSelectOption key={kind} value={kind}>
-                {t(`interactive.kinds.${kind}`)}
-              </NativeSelectOption>
-            ))}
-          </NativeSelect>
+            options={KINDS.map((kind) => ({ value: kind, label: t(`interactive.kinds.${kind}`) }))}
+          />
         </Field>
         <Button
           type="button"

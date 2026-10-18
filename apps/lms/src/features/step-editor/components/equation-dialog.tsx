@@ -93,8 +93,12 @@ export function EquationDialog({
 
   return (
     <Dialog open onOpenChange={(open) => !open && onCancel()}>
-      <DialogContent className="sm:max-w-xl" initialFocus={field} finalFocus={returnFocus}>
-        <form onSubmit={submit} className="flex flex-col gap-4">
+      <DialogContent
+        className="sm:max-w-[720px] grid-cols-[minmax(0,1fr)]"
+        initialFocus={field}
+        finalFocus={returnFocus}
+      >
+        <form onSubmit={submit} className="flex min-w-0 flex-col gap-4">
           <DialogHeader>
             <DialogTitle>{editing ? t("editTitle") : t("title")}</DialogTitle>
           </DialogHeader>
@@ -129,7 +133,11 @@ export function EquationDialog({
             <span className="text-sm font-medium" id={`${id}-templates`}>
               {t("templates")}
             </span>
-            <div className="grid grid-cols-2 gap-1.5 sm:grid-cols-4" role="group" aria-labelledby={`${id}-templates`}>
+            <div
+              className="grid min-w-0 grid-cols-[repeat(auto-fill,minmax(7.5rem,1fr))] gap-1.5"
+              role="group"
+              aria-labelledby={`${id}-templates`}
+            >
               {TEMPLATES.map((template) => (
                 <Button
                   key={template.name}
@@ -141,7 +149,7 @@ export function EquationDialog({
                     latex: template.latex,
                   })}
                   title={template.latex}
-                  className="h-auto min-h-11 flex-col gap-0.5 py-1.5 md:pointer-fine:min-h-8"
+                  className="h-auto min-h-11 min-w-0 flex-col gap-0.5 overflow-hidden py-1.5 md:pointer-fine:min-h-8"
                 >
                   <span aria-hidden className="pointer-events-none max-w-full overflow-hidden text-[0.8rem]">
                     <MathFormula source={template.latex} />
@@ -175,7 +183,7 @@ export function EquationDialog({
             />
           </Field>
 
-          <section aria-labelledby={`${id}-preview-title`} className="flex flex-col gap-2">
+          <section aria-labelledby={`${id}-preview-title`} className="flex min-w-0 flex-col gap-2">
             <h3 id={`${id}-preview-title`} className="text-sm font-medium">
               {t("preview")}
             </h3>
@@ -199,7 +207,7 @@ export function EquationDialog({
             </div>
           </section>
 
-          <DialogFooter>
+          <DialogFooter className="flex-wrap">
             <Button type="button" variant="outline" onClick={onCancel} className="min-h-11 md:min-h-8">
               {t("cancel")}
             </Button>

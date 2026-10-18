@@ -2,7 +2,7 @@
 
 import type { TestConfig } from "@ihsp/api"
 import { useT } from "@ihsp/i18n"
-import { Field, FieldLabel, NativeSelect, NativeSelectOption, Switch } from "@ihsp/ui"
+import { Dropdown, Field, FieldLabel, Switch } from "@ihsp/ui"
 import { useId } from "react"
 import { minutesToSeconds, secondsToMinutes } from "../../shared/utils/time"
 import { SHOW_ANSWERS } from "../utils/content-ops"
@@ -68,21 +68,16 @@ export function TestConfigForm({ config, onChange }: { config: TestConfig; onCha
       />
       <Field>
         <FieldLabel htmlFor={showId}>{t("showAnswers")}</FieldLabel>
-        <NativeSelect
+        <Dropdown
           id={showId}
           value={config.show_answers}
-          onChange={(event) => {
-            const next = SHOW_ANSWERS.find((item) => item === event.target.value)
+          onValueChange={(value) => {
+            const next = SHOW_ANSWERS.find((item) => item === value)
             if (next) onChange({ ...config, show_answers: next })
           }}
           className="w-full"
-        >
-          {SHOW_ANSWERS.map((item) => (
-            <NativeSelectOption key={item} value={item}>
-              {t(`showAnswersOptions.${item}`)}
-            </NativeSelectOption>
-          ))}
-        </NativeSelect>
+          options={SHOW_ANSWERS.map((item) => ({ value: item, label: t(`showAnswersOptions.${item}`) }))}
+        />
       </Field>
       <SwitchField
         label={t("shuffleQuestions")}

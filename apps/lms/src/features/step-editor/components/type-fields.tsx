@@ -2,17 +2,7 @@
 
 import type { Question } from "@ihsp/api"
 import { useT } from "@ihsp/i18n"
-import {
-  Button,
-  Field,
-  FieldDescription,
-  FieldLabel,
-  Icons,
-  Input,
-  NativeSelect,
-  NativeSelectOption,
-  Textarea,
-} from "@ihsp/ui"
+import { Button, Field, FieldDescription, FieldLabel, Icons, Input, Dropdown, Textarea } from "@ihsp/ui"
 import { useId } from "react"
 import { moveItem, newBlank, newOption, newPair, newVariable } from "../utils/content-ops"
 
@@ -449,20 +439,21 @@ export function FormulaFields({ question, onChange }: Props) {
       </Field>
       <Field>
         <FieldLabel htmlFor={`${id}-mode`}>{t("compareMode")}</FieldLabel>
-        <NativeSelect
+        <Dropdown
           id={`${id}-mode`}
           value={spec.mode}
-          onChange={(event) =>
+          onValueChange={(value) =>
             set({
               ...spec,
-              mode: event.target.value === "numeric" ? "numeric" : "symbolic",
+              mode: value === "numeric" ? "numeric" : "symbolic",
             })
           }
           className="w-full"
-        >
-          <NativeSelectOption value="symbolic">{t("modeSymbolic")}</NativeSelectOption>
-          <NativeSelectOption value="numeric">{t("modeNumeric")}</NativeSelectOption>
-        </NativeSelect>
+          options={[
+            { value: "symbolic", label: t("modeSymbolic") },
+            { value: "numeric", label: t("modeNumeric") },
+          ]}
+        />
       </Field>
     </div>
   )

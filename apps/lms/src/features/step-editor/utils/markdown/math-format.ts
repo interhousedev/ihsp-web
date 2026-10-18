@@ -24,8 +24,11 @@ export function mathAt(state: TextState, index: MarkdownIndex = indexMarkdown(st
 export function formulaAt(state: TextState, display: boolean): Formula & { editing: boolean } {
   const span = mathAt(state)
   if (span) return { latex: span.value, display: span.display, editing: true }
+  const selected = state.text.slice(state.start, state.end).trim()
+  // Plain prose (words with spaces and no TeX markup) is not a formula: start with an empty field.
+  const prose = /\s/.test(selected) && !/[\\^_{]/.test(selected)
   return {
-    latex: state.text.slice(state.start, state.end).trim(),
+    latex: prose ? "" : selected,
     display,
     editing: false,
   }

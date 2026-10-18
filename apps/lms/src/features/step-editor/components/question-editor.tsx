@@ -2,7 +2,7 @@
 
 import type { Question } from "@ihsp/api"
 import { useT } from "@ihsp/i18n"
-import { Button, Field, FieldLabel, Icons, Input, NativeSelect, NativeSelectOption, Textarea } from "@ihsp/ui"
+import { Button, Field, FieldLabel, Icons, Input, Dropdown, Textarea } from "@ihsp/ui"
 import { useId } from "react"
 import { QUESTION_TYPES, changeQuestionType, type QuestionType } from "../utils/content-ops"
 import { AnswerConfigEditor } from "./answer-config-editor"
@@ -84,21 +84,16 @@ export function QuestionEditor({
       <div className="grid gap-3 sm:grid-cols-[1fr_8rem]">
         <Field>
           <FieldLabel htmlFor={typeId}>{t("type")}</FieldLabel>
-          <NativeSelect
+          <Dropdown
             id={typeId}
             value={question.type}
-            onChange={(event) => {
-              const next = QUESTION_TYPES.find((item): item is QuestionType => item === event.target.value)
+            onValueChange={(value) => {
+              const next = QUESTION_TYPES.find((item): item is QuestionType => item === value)
               if (next) onChange(changeQuestionType(question, next))
             }}
             className="w-full"
-          >
-            {QUESTION_TYPES.map((type) => (
-              <NativeSelectOption key={type} value={type}>
-                {t(`types.${type}`)}
-              </NativeSelectOption>
-            ))}
-          </NativeSelect>
+            options={QUESTION_TYPES.map((type) => ({ value: type, label: t(`types.${type}`) }))}
+          />
         </Field>
         <Field>
           <FieldLabel htmlFor={pointsId}>{t("points")}</FieldLabel>

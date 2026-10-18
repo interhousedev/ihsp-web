@@ -77,6 +77,10 @@ describe("formulaAt", () => {
   test("starts a new formula from the selection", () => {
     expect(formulaAt(marked("a « x^2 » b"), false)).toEqual({ latex: "x^2", display: false, editing: false })
   })
+
+  test("opens empty when the selection is plain prose", () => {
+    expect(formulaAt(marked("a « hello world » b"), false)).toEqual({ latex: "", display: false, editing: false })
+  })
 })
 
 describe("normalizeUrl", () => {
