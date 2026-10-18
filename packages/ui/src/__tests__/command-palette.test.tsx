@@ -1,5 +1,5 @@
 import { describe, expect, it, mock } from "bun:test"
-import { renderWithProviders } from "@ihsp/test-utils"
+import { renderWithProviders, setDropdownValue } from "@ihsp/test-utils"
 import { fireEvent, screen, waitFor, within } from "@testing-library/react"
 import { CommandPalette, groupResults, type CommandPaletteResult } from "../components/command-palette"
 
@@ -29,7 +29,7 @@ describe("CommandPalette", () => {
   ) {
     const view = renderWithProviders(<CommandPalette search={search} onNavigate={onNavigate} />, {})
     fireEvent.click(await screen.findByRole("button", { name: "Open search" }))
-    fireEvent.change(await screen.findByPlaceholderText("Type a command or search…"), { target: { value: "photosyn" } })
+    setDropdownValue(await screen.findByPlaceholderText("Type a command or search…"), "photosyn")
     return { onNavigate, ...view }
   }
 
@@ -60,7 +60,7 @@ describe("CommandPalette", () => {
     renderWithProviders(<CommandPalette search={search} onNavigate={() => {}} />, {})
     fireEvent.click(await screen.findByRole("button", { name: "Open search" }))
 
-    fireEvent.change(await screen.findByPlaceholderText("Type a command or search…"), { target: { value: "p" } })
+    setDropdownValue(await screen.findByPlaceholderText("Type a command or search…"), "p")
     await new Promise((resolve) => setTimeout(resolve, 400))
 
     expect(search).not.toHaveBeenCalled()

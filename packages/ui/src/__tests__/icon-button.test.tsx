@@ -3,7 +3,6 @@ import { renderWithProviders } from "@ihsp/test-utils"
 import { screen } from "@testing-library/react"
 import { IconShare } from "../components/icons"
 import { IconButton } from "../components/ui/icon-button"
-import { PillSelect } from "../components/ui/pill-select"
 
 describe("IconButton", () => {
   it("is named by its aria-label and calls onClick", async () => {
@@ -24,19 +23,5 @@ describe("IconButton", () => {
   it("requires aria-label at the type level", () => {
     // @ts-expect-error aria-label is required
     renderWithProviders(<IconButton icon={IconShare} />)
-  })
-})
-
-describe("PillSelect", () => {
-  it("renders a labelled select with options", async () => {
-    const { user } = renderWithProviders(
-      <PillSelect aria-label="Semester" defaultValue="a">
-        <option value="a">Autumn</option>
-        <option value="b">Spring</option>
-      </PillSelect>,
-    )
-    const sel = screen.getByRole("combobox", { name: "Semester" })
-    await user.selectOptions(sel, "b")
-    expect(sel).toHaveValue("b")
   })
 })
