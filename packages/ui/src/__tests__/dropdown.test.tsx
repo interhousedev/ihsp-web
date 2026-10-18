@@ -100,13 +100,50 @@ describe("Dropdown", () => {
 
   it("filters options when searchable", async () => {
     const { user } = renderWithProviders(
-      <Dropdown aria-label="Search fruit" searchable options={options} defaultValue="" searchPlaceholder="Find" />,
+      <Dropdown
+        aria-label="Search fruit"
+        searchable
+        options={options}
+        defaultValue=""
+        searchPlaceholder="Find"
+        searchLabel="Find a fruit"
+      />,
     )
     const trigger = screen.getByRole("combobox", { name: "Search fruit" })
     await user.click(trigger)
-    await user.type(screen.getByRole("combobox", { name: "Find" }), "che")
+    await user.type(screen.getByRole("combobox", { name: "Find a fruit" }), "che")
     expect(screen.queryByRole("option", { name: "Apple" })).toBeNull()
     await user.click(screen.getByRole("option", { name: "Cherry" }))
     expect(trigger).toHaveTextContent("Cherry")
+  })
+
+  it("blocks a native form submit while a required dropdown is empty", async () => {
+    const submits: string[] = []
+    const { user, container } = renderWithProviders(
+      <form
+        onSubmit={(event) => {
+          event.preventDefault()
+          submits.push("submitted")
+        }}
+      >
+        <Dropdown aria-label="Fruit" name="fruit" required options={options} defaultValue="" />
+        <button type="submit">Save</button>
+      </form>,
+    )
+    const form = container.querySelector("form") as HTMLFormElement
+    await user.click(screen.getByRole("button", { name: "Save" }))
+    expect(submits).toHaveLength(0)
+    expect(screen.getByRole("combobox", { name: "Fruit" })).toHaveFocus()
+
+    await selectDropdownOption(user, screen.getByRole("combobox", { name: "Fruit" }), "Cherry")
+    form.requestSubmit()
+    expect(submits).toHaveLength(1)
+  })
+
+  it("requires a search label and placeholder in searchable mode", () => {
+    // Type-level guarantee: `searchable` without `searchLabel` does not compile.
+    // @ts-expect-error searchLabel is required when searchable
+    const props: Parameters<typeof Dropdown>[0] = { options, searchable: true, searchPlaceholder: "Find" }
+    expect(props.searchable).toBe(true)
   })
 })

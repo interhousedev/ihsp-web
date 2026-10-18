@@ -40,4 +40,33 @@ describe("error tracking", () => {
     expect(scrubBreadcrumb({ category: "ui.input", message: "secret" })).toBeNull()
     expect(scrubBreadcrumb({ category: "navigation", message: "/logs/" })).not.toBeNull()
   })
+
+  test("scrubEvent strips the query and fragment from the request URL and query_string", () => {
+    const event = scrubEvent({
+      request: {
+        url: "https://auth.example.test/oauth2/auth?login_challenge=abc&code=xyz#state=s",
+        query_string: "login_challenge=abc&code=xyz",
+      },
+    } as ErrorEvent)
+
+    expect(event.request?.url).toBe("https://auth.example.test/oauth2/auth")
+    expect(event.request?.query_string).toBeUndefined()
+  })
+
+  test("scrubBreadcrumb strips the query and fragment from url, from and to", () => {
+    const breadcrumb = scrubBreadcrumb({
+      category: "navigation",
+      data: {
+        from: "/login?consent_challenge=c1",
+        to: "https://id.example.test/reset#token=t9",
+        url: "/reset-password?token=tok",
+      },
+    })
+
+    expect(breadcrumb?.data).toEqual({
+      from: "/login",
+      to: "https://id.example.test/reset",
+      url: "/reset-password",
+    })
+  })
 })

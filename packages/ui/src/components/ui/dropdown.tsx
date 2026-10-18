@@ -24,9 +24,6 @@ type DropdownBaseProps = {
   "aria-labelledby"?: string
   "aria-describedby"?: string
   "aria-invalid"?: boolean
-  /** Adds a search field at the top of the list that filters options by label. */
-  searchable?: boolean
-  searchPlaceholder?: string
   /** Shown in the list when a search matches nothing. */
   emptyLabel?: string
   size?: "sm" | "default"
@@ -34,19 +31,36 @@ type DropdownBaseProps = {
   onOpenChange?: (open: boolean) => void
 }
 
-type DropdownSingleProps = DropdownBaseProps & {
-  multiple?: false
-  value?: string
-  defaultValue?: string
-  onValueChange?: (value: string) => void
-}
+/** Searchable mode needs translated copy: the placeholder and the accessible name of the search field. */
+type DropdownSearchProps =
+  | {
+      /** Adds a search field at the top of the list that filters options by label. */
+      searchable: true
+      searchPlaceholder: string
+      /** Accessible name of the search field (translated). */
+      searchLabel: string
+    }
+  | {
+      searchable?: false
+      searchPlaceholder?: never
+      searchLabel?: never
+    }
 
-type DropdownMultiProps = DropdownBaseProps & {
-  multiple: true
-  value?: string[]
-  defaultValue?: string[]
-  onValueChange?: (value: string[]) => void
-}
+type DropdownSingleProps = DropdownBaseProps &
+  DropdownSearchProps & {
+    multiple?: false
+    value?: string
+    defaultValue?: string
+    onValueChange?: (value: string) => void
+  }
+
+type DropdownMultiProps = DropdownBaseProps &
+  DropdownSearchProps & {
+    multiple: true
+    value?: string[]
+    defaultValue?: string[]
+    onValueChange?: (value: string[]) => void
+  }
 
 export type DropdownProps = DropdownSingleProps | DropdownMultiProps
 
@@ -77,6 +91,7 @@ function Dropdown(props: DropdownProps) {
     "aria-invalid": ariaInvalid,
     searchable = false,
     searchPlaceholder = "",
+    searchLabel = "",
     emptyLabel = "",
     size = "default",
     className,
@@ -288,6 +303,25 @@ function Dropdown(props: DropdownProps) {
       {multiple
         ? selected.map((value) => <input key={value} type="hidden" name={name} value={value} />)
         : name !== undefined && <input type="hidden" name={name} value={selected[0] ?? ""} />}
+      {required ? (
+        // Native `required` only works on form controls, so a visually hidden input mirrors the selection and
+        // blocks submit while it is empty. An invalid submit moves focus to the trigger.
+        <input
+          type="text"
+          tabIndex={-1}
+          aria-hidden
+          data-slot="dropdown-required"
+          className="sr-only"
+          required
+          disabled={disabled}
+          value={multiple ? selected.join(",") : (selected[0] ?? "")}
+          onChange={() => {}}
+          onInvalid={(event) => {
+            event.preventDefault()
+            triggerRef.current?.focus()
+          }}
+        />
+      ) : null}
       <button
         ref={triggerRef}
         id={id}
@@ -335,7 +369,7 @@ function Dropdown(props: DropdownProps) {
                 aria-autocomplete="list"
                 aria-controls={listboxId}
                 aria-activedescendant={activeId}
-                aria-label={searchPlaceholder || "Search"}
+                aria-label={searchLabel}
                 data-slot="dropdown-search"
                 value={query}
                 placeholder={searchPlaceholder}
