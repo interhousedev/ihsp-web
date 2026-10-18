@@ -18,6 +18,33 @@ export interface CertificateType {
   asks_year: boolean
   builtin: boolean
   position: number
+  custom_fields: CustomField[]
+}
+
+export type CustomFieldKind = "text" | "number" | "single" | "multi"
+
+/** A custom input field of a type; choice kinds list `options`, `allow_other` adds free text. */
+export interface CustomField {
+  key: string
+  kind: CustomFieldKind
+  label: LocalizedName
+  required: boolean
+  options: string[]
+  allow_other: boolean
+}
+
+/** A value of a custom field: text or one choice, a number, or several choices. */
+export type CustomValue = string | number | string[]
+
+/** Response of `GET /v1/certificates/staff/fields/{key}/values`. */
+export interface CustomFieldValues {
+  key: string
+  kind: CustomFieldKind
+  options: string[]
+  /** Free-text choices from the data; every distinct text for a text field. */
+  other_values: string[]
+  min: number | null
+  max: number | null
 }
 
 /** Body of `POST /v1/certificates/admin/types`; `PATCH` takes any part of it. */
@@ -45,6 +72,7 @@ export interface CertificateEntry {
   issued_at: string | null
   expires_at: string | null
   files: CertificateFile[]
+  custom_values: Record<string, CustomValue>
   created_at: string
 }
 
@@ -56,6 +84,7 @@ export type CertificateEntryInput = {
   subject?: string | null
   year?: number | null
   serial?: string | null
+  custom?: Record<string, CustomValue> | null
 }
 
 export type CertificateImportResult = { created: number; updated: number; files: number; skipped: number }
@@ -78,6 +107,10 @@ export type CertificateFilters = {
   level?: string
   student_id?: string
   q?: string
+  /** Custom choice/text filters, sent as repeated `cf_<key>` query params. */
+  custom?: Record<string, string[]>
+  /** Custom number filters, sent as `cfmin_<key>` / `cfmax_<key>`. */
+  ranges?: Record<string, { min?: number | null; max?: number | null }>
 }
 
 export type StaffCertificateParams = CertificateFilters & { limit?: number; offset?: number }

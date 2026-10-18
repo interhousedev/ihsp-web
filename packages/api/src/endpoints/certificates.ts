@@ -1,9 +1,10 @@
 // Student certificates (`/v1/certificates`): types, the student's own entries and files, staff views and the ZIP export.
 
-import { api } from "../client"
+import { api, type QueryParams } from "../client"
 import { keys } from "../keys"
 import { queryOptions, seg, type RequestOptions } from "../query"
 import type {
+  CustomFieldValues,
   CertificateEntry,
   CertificateEntryInput,
   CertificateExportBody,
@@ -120,12 +121,48 @@ export const getCertificateGroupsQuery = () =>
     queryFn: ({ signal }) => getCertificateGroups({ signal }),
   })
 
+/**
+ * Flattens the custom filters to the query params the backend reads:
+ * `cf_<key>` (repeated) for choices and text, `cfmin_<key>` / `cfmax_<key>` for numbers.
+ */
+export function flattenCertificateFilters(params: CertificateFilters | undefined): QueryParams | undefined {
+  if (!params) return undefined
+  const { custom, ranges, ...rest } = params
+  const flat: QueryParams = { ...rest }
+  for (const [key, values] of Object.entries(custom ?? {})) flat[`cf_${key}`] = values
+  for (const [key, range] of Object.entries(ranges ?? {})) {
+    if (range.min != null) flat[`cfmin_${key}`] = range.min
+    if (range.max != null) flat[`cfmax_${key}`] = range.max
+  }
+  return flat
+}
+
+/** GET /v1/certificates/staff/fields/{key}/values?type_id — choices and stored values of one custom field (needs one type). */
+export function getCustomFieldValues(
+  key: string,
+  params: CertificateFilters,
+  opts?: RequestOptions,
+): Promise<CustomFieldValues> {
+  return api.get<CustomFieldValues>(`/v1/certificates/staff/fields/${seg(key)}/values`, {
+    ...opts,
+    query: flattenCertificateFilters(params),
+  })
+}
+export const getCustomFieldValuesQuery = (key: string, params: CertificateFilters) =>
+  queryOptions({
+    queryKey: keys.certificates.fieldValues(key, params),
+    queryFn: ({ signal }) => getCustomFieldValues(key, params, { signal }),
+  })
+
 /** GET /v1/certificates/staff/entries?filters&limit&offset. */
 export function getStaffCertificates(
   params?: StaffCertificateParams,
   opts?: RequestOptions,
 ): Promise<StaffCertificatePage> {
-  return api.get<StaffCertificatePage>(`/v1/certificates/staff/entries`, { ...opts, query: params })
+  return api.get<StaffCertificatePage>(`/v1/certificates/staff/entries`, {
+    ...opts,
+    query: flattenCertificateFilters(params),
+  })
 }
 export const getStaffCertificatesQuery = (params?: StaffCertificateParams) =>
   queryOptions({
@@ -135,7 +172,10 @@ export const getStaffCertificatesQuery = (params?: StaffCertificateParams) =>
 
 /** GET /v1/certificates/staff/stats?filters. */
 export function getCertificateStats(params?: CertificateFilters, opts?: RequestOptions): Promise<CertificateStats> {
-  return api.get<CertificateStats>(`/v1/certificates/staff/stats`, { ...opts, query: params })
+  return api.get<CertificateStats>(`/v1/certificates/staff/stats`, {
+    ...opts,
+    query: flattenCertificateFilters(params),
+  })
 }
 export const getCertificateStatsQuery = (params?: CertificateFilters) =>
   queryOptions({
@@ -148,7 +188,10 @@ export function getCertificateRanking(
   params?: CertificateFilters & { limit?: number },
   opts?: RequestOptions,
 ): Promise<CertificateRanking> {
-  return api.get<CertificateRanking>(`/v1/certificates/staff/ranking`, { ...opts, query: params })
+  return api.get<CertificateRanking>(`/v1/certificates/staff/ranking`, {
+    ...opts,
+    query: flattenCertificateFilters(params),
+  })
 }
 export const getCertificateRankingQuery = (params?: CertificateFilters & { limit?: number }) =>
   queryOptions({

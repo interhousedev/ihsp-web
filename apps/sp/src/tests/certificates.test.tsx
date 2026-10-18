@@ -1,6 +1,6 @@
 /** CERT-1..4: the student's certificates: list per type, add with the fields of the type, files, delete, EMIS import. */
 import { describe, expect, test } from "bun:test"
-import { apiUrl, server } from "@ihsp/test-utils"
+import { apiUrl, server, setDropdownValue } from "@ihsp/test-utils"
 import { fireEvent, screen, waitFor, within } from "@testing-library/react"
 import { HttpResponse, http } from "msw"
 import { CertificatesSection } from "../features/profile/components/certificates-section"
@@ -32,8 +32,8 @@ describe("student certificates", () => {
     await user.click(screen.getByRole("button", { name: "Add CEFR" }))
     const dialog = await screen.findByRole("dialog")
     expect(within(dialog).queryByLabelText("Score")).toBeNull()
-    fireEvent.change(within(dialog).getByLabelText("Level"), { target: { value: "B2" } })
-    fireEvent.change(within(dialog).getByLabelText("Year"), { target: { value: "2026" } })
+    setDropdownValue(within(dialog).getByLabelText("Level"), "B2")
+    setDropdownValue(within(dialog).getByLabelText("Year"), "2026")
     await user.click(within(dialog).getByRole("button", { name: "Save" }))
 
     await waitFor(() => expect(body).not.toBeNull())

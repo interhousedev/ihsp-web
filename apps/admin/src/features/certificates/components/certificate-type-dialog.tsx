@@ -14,6 +14,7 @@ import { useState } from "react"
 import { LabeledField } from "../../shared/components/labeled-field"
 import { useAdminMutation } from "../../shared/hooks/use-admin-mutation"
 import { TOUCH } from "../../shared/utils/touch"
+import { CustomFieldsEditor, draftValid, fromDraft, toDraft, type DraftField } from "./custom-fields-editor"
 
 const FLAGS = ["asks_level", "asks_score", "asks_percent", "asks_subject", "asks_year"] as const
 const FLAG_KEYS = {
@@ -44,6 +45,7 @@ export function CertificateTypeDialog({ type, onClose }: { type: CertificateType
     asks_subject: type?.asks_subject ?? false,
     asks_year: type?.asks_year ?? true,
   })
+  const [customFields, setCustomFields] = useState<DraftField[]>((type?.custom_fields ?? []).map(toDraft))
   const save = useAdminMutation({
     mutationFn: (body: CertificateTypeInput) =>
       type ? patchCertificateType(type.id, body) : postCertificateType(body),
@@ -51,7 +53,12 @@ export function CertificateTypeDialog({ type, onClose }: { type: CertificateType
     success: type ? t("updated") : t("created"),
     onSuccess: onClose,
   })
-  const valid = code.trim() !== "" && names.en.trim() !== "" && names.ru.trim() !== "" && names.uz.trim() !== ""
+  const valid =
+    code.trim() !== "" &&
+    names.en.trim() !== "" &&
+    names.ru.trim() !== "" &&
+    names.uz.trim() !== "" &&
+    customFields.every(draftValid)
   const submit = () =>
     save.mutate({
       code: code.trim(),
@@ -61,6 +68,7 @@ export function CertificateTypeDialog({ type, onClose }: { type: CertificateType
       score_min: flags.asks_score ? numberOrNull(min) : null,
       score_max: flags.asks_score ? numberOrNull(max) : null,
       position: type?.position ?? 100,
+      custom_fields: customFields.map(fromDraft),
     })
   return (
     <Dialog open onOpenChange={(open) => (open ? undefined : onClose())}>
@@ -124,6 +132,7 @@ export function CertificateTypeDialog({ type, onClose }: { type: CertificateType
               </LabeledField>
             </div>
           ) : null}
+          <CustomFieldsEditor fields={customFields} onChange={setCustomFields} />
           <div className="grid gap-2">
             {FLAGS.map((flag) => (
               <label key={flag} className="flex min-h-11 items-center gap-2 text-sm md:min-h-8">

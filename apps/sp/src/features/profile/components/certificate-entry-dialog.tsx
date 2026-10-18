@@ -7,8 +7,9 @@ import {
   type CertificateEntry,
   type CertificateEntryInput,
   type CertificateType,
+  type CustomValue,
 } from "@ihsp/api"
-import { typeName } from "@ihsp/features-core"
+import { CustomFieldInputs, typeName } from "@ihsp/features-core"
 import { useErrorMessage, useLocale, useT } from "@ihsp/i18n"
 import {
   Button,
@@ -20,8 +21,7 @@ import {
   Field,
   FieldLabel,
   Input,
-  NativeSelect,
-  NativeSelectOption,
+  Dropdown,
 } from "@ihsp/ui"
 import { useMutation, useQueryClient } from "@tanstack/react-query"
 import { useState } from "react"
@@ -51,6 +51,7 @@ export function CertificateEntryDialog({
   const [percent, setPercent] = useState(entry?.percent != null ? String(entry.percent) : "")
   const [subject, setSubject] = useState(entry?.subject ?? "")
   const [year, setYear] = useState(entry?.year != null ? String(entry.year) : "")
+  const [custom, setCustom] = useState<Record<string, CustomValue>>(entry?.custom_values ?? {})
   const name = typeName(type, locale)
 
   const save = useMutation({
@@ -63,7 +64,8 @@ export function CertificateEntryDialog({
     onError: (error) => toast.error(errorMessage(error)),
   })
 
-  const valid = (!type.asks_level || level !== "") && (!type.asks_score || score.trim() !== "")
+  const customOk = type.custom_fields.every((field) => !field.required || custom[field.key] !== undefined)
+  const valid = (!type.asks_level || level !== "") && (!type.asks_score || score.trim() !== "") && customOk
   const submit = () =>
     save.mutate({
       type_id: type.id,
@@ -72,6 +74,7 @@ export function CertificateEntryDialog({
       percent: type.asks_percent ? numberOrNull(percent) : null,
       subject: type.asks_subject ? subject.trim() || null : null,
       year: type.asks_year ? numberOrNull(year) : null,
+      custom: type.custom_fields.length > 0 ? custom : null,
     })
 
   return (
@@ -90,19 +93,16 @@ export function CertificateEntryDialog({
           {type.asks_level ? (
             <Field>
               <FieldLabel htmlFor="cert-level">{t("level")}</FieldLabel>
-              <NativeSelect
+              <Dropdown
                 id="cert-level"
                 value={level}
-                onChange={(event) => setLevel(event.target.value)}
+                onValueChange={setLevel}
                 className="w-full"
-              >
-                <NativeSelectOption value="">{t("chooseLevel")}</NativeSelectOption>
-                {type.levels.map((item) => (
-                  <NativeSelectOption key={item} value={item}>
-                    {item}
-                  </NativeSelectOption>
-                ))}
-              </NativeSelect>
+                options={[
+                  { value: "", label: t("chooseLevel") },
+                  ...type.levels.map((item) => ({ value: item, label: item })),
+                ]}
+              />
             </Field>
           ) : null}
           {type.asks_score ? (
@@ -168,6 +168,7 @@ export function CertificateEntryDialog({
               />
             </Field>
           ) : null}
+          <CustomFieldInputs fields={type.custom_fields} values={custom} onChange={setCustom} />
           <DialogFooter>
             <Button type="button" variant="outline" className="min-h-11 md:min-h-8" onClick={onClose}>
               {t("cancel")}

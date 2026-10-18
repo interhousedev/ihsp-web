@@ -19,6 +19,7 @@ const base: Omit<CertificateTypeInput, "code" | "name" | "position"> = {
   asks_percent: false,
   asks_subject: false,
   asks_year: true,
+  custom_fields: [],
 }
 
 export const certificateTypes: CertificateType[] = [
@@ -81,6 +82,7 @@ export const certificateEntries: CertificateEntry[] = [
     issued_at: null,
     expires_at: null,
     files: [{ id: uuid(KIND, 201), name: "ielts.pdf", size: 120_000, content_type: "application/pdf" }],
+    custom_values: {},
     created_at: "2026-10-01T08:00:00Z",
   },
   {
@@ -96,6 +98,7 @@ export const certificateEntries: CertificateEntry[] = [
     issued_at: null,
     expires_at: null,
     files: [],
+    custom_values: {},
     created_at: "2026-10-02T08:00:00Z",
   },
 ]

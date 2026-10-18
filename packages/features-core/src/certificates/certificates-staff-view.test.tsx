@@ -1,7 +1,16 @@
 /** CERT-6..8: staff certificates view: filters narrow the table and the stats, ZIP export, 403 for a non-curator. */
 import { describe, expect, test } from "bun:test"
-import { apiUrl, ids, renderWithProviders, server, setCertificatesStaffForbidden } from "@ihsp/test-utils"
-import { fireEvent, screen, waitFor, within } from "@testing-library/react"
+import {
+  apiUrl,
+  certificateTypes,
+  ids,
+  renderWithProviders,
+  server,
+  setCertificatesStaffForbidden,
+  selectDropdownValue,
+  setDropdownValue,
+} from "@ihsp/test-utils"
+import { screen, waitFor, within } from "@testing-library/react"
 import { HttpResponse, http } from "msw"
 import { chartModel } from "./certificate-stats"
 import { CertificatesStaffView } from "./certificates-staff-view"
@@ -27,7 +36,7 @@ describe("certificates staff view", () => {
     renderWithProviders(<CertificatesStaffView />)
     await screen.findAllByText("Karimova Dilnoza")
 
-    fireEvent.change(screen.getByLabelText("Group"), { target: { value: ids.group2TN2 } })
+    setDropdownValue(screen.getByLabelText("Group"), ids.group2TN2)
 
     await waitFor(() => expect(screen.queryAllByText("Karimova Dilnoza")).toHaveLength(0))
     expect(seen).toContain(ids.group2TN2)
@@ -73,5 +82,70 @@ describe("certificates staff view", () => {
 
     expect(Object.keys(config)).toEqual(["l0", "l1"])
     expect(rows).toEqual([{ group: "2TN2", l0: 0, l1: 3 }])
+  })
+})
+
+describe("custom field filters", () => {
+  const LABEL = { uz: "Yo'nalish", ru: "Направление", en: "Track" }
+  const TRACK = {
+    key: "track",
+    kind: "multi",
+    label: LABEL,
+    required: false,
+    options: ["math", "art"],
+    allow_other: true,
+  }
+  const SCORE = {
+    key: "score",
+    kind: "number",
+    label: { uz: "Ball", ru: "Балл", en: "Score" },
+    required: false,
+    options: [],
+    allow_other: false,
+  }
+
+  test("one filter per custom field of the one selected type, sent as cf_ and cfmin_ params", async () => {
+    const seen: { tracks: string[]; min: string | null } = { tracks: [], min: null }
+    server.use(
+      http.get(apiUrl("/v1/certificates/types"), () =>
+        HttpResponse.json(
+          certificateTypes.map((kind) => (kind.code === "ielts" ? { ...kind, custom_fields: [TRACK, SCORE] } : kind)),
+        ),
+      ),
+      http.get(apiUrl("/v1/certificates/staff/fields/:key/values"), () =>
+        HttpResponse.json({
+          key: "track",
+          kind: "multi",
+          options: ["math", "art"],
+          other_values: ["Chess club"],
+          min: null,
+          max: null,
+        }),
+      ),
+      http.get(apiUrl("/v1/certificates/staff/entries"), ({ request }) => {
+        const params = new URL(request.url).searchParams
+        seen.tracks = params.getAll("cf_track")
+        seen.min = params.get("cfmin_score")
+        return HttpResponse.json({ items: [], total: 0 })
+      }),
+    )
+    const { user } = renderWithProviders(<CertificatesStaffView />)
+    await screen.findAllByText("Karimova Dilnoza")
+    expect(screen.queryByLabelText("Track")).toBeNull()
+
+    setDropdownValue(screen.getByLabelText("Type"), certificateTypes.find((kind) => kind.code === "ielts")!.id)
+
+    const track = await screen.findByRole("combobox", { name: "Track" })
+    await user.click(track)
+    expect(await screen.findByRole("option", { name: "Chess club" })).toBeInTheDocument()
+    for (const value of ["math", "Chess club"]) {
+      await selectDropdownValue(user, screen.getByRole("combobox", { name: "Track" }), value)
+      // Let each pick reach the query before the next one, as a user would.
+      await waitFor(() => expect(seen.tracks).toContain(value))
+    }
+    await user.type(screen.getByLabelText("Score Min"), "500")
+
+    await waitFor(() => expect(seen.min).toBe("500"))
+    expect(seen.tracks).toEqual(["math", "Chess club"])
   })
 })

@@ -136,6 +136,7 @@ export const certificatesHandlers = [
       issued_at: null,
       expires_at: null,
       files: [],
+      custom_values: {},
       created_at: "2026-10-07T05:12:00Z",
     }
     mine = [...mine, entry]
@@ -185,6 +186,12 @@ export const certificatesHandlers = [
   http.get(apiUrl("/v1/certificates/staff/ranking"), ({ request }) =>
     staffForbidden ? forbidden() : HttpResponse.json({ items: rankingOf(filtered(request)) }),
   ),
+  http.get(apiUrl("/v1/certificates/staff/fields/:key/values"), ({ params }) => {
+    if (staffForbidden) return forbidden()
+    const key = String(params.key)
+    const kind = types.flatMap((type) => type.custom_fields).find((field) => field.key === key)?.kind ?? "text"
+    return HttpResponse.json({ key, kind, options: [], other_values: [], min: null, max: null })
+  }),
   http.post(apiUrl("/v1/certificates/staff/export"), () =>
     staffForbidden
       ? forbidden()
