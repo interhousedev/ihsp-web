@@ -1,17 +1,38 @@
 "use client"
 
 import type { CustomField, CustomFieldKind } from "@ihsp/api"
-import { useT } from "@ihsp/i18n"
-import { Button, Checkbox, Dropdown, Field, FieldLabel, Input } from "@ihsp/ui"
-import { TOUCH } from "../../shared/utils/touch"
+import { useLocale, useT } from "@ihsp/i18n"
+import {
+  Badge,
+  Button,
+  Checkbox,
+  Dropdown,
+  Field,
+  FieldLabel,
+  IconChevronDown,
+  IconChevronUp,
+  IconPencil,
+  IconPlus,
+  IconTrash,
+  IconX,
+  Input,
+  Sheet,
+  SheetContent,
+  SheetFooter,
+  SheetHeader,
+  SheetTitle,
+  Switch,
+} from "@ihsp/ui"
+import { useState } from "react"
+import { TOUCH, TOUCH_ICON } from "../../shared/utils/touch"
 
-/** A field while it is edited: options are one text, one per line. */
+/** A field while it is edited: options are a list of chips. */
 export type DraftField = {
   key: string
   kind: CustomFieldKind
   label: { uz: string; ru: string; en: string }
   required: boolean
-  optionsText: string
+  options: string[]
   allow_other: boolean
 }
 
@@ -27,7 +48,7 @@ export function toDraft(field: CustomField): DraftField {
     kind: field.kind,
     label: { ...field.label },
     required: field.required,
-    optionsText: field.options.join("\n"),
+    options: [...field.options],
     allow_other: field.allow_other,
   }
 }
@@ -39,12 +60,7 @@ export function fromDraft(draft: DraftField): CustomField {
     kind: draft.kind,
     label: { uz: draft.label.uz.trim(), ru: draft.label.ru.trim(), en: draft.label.en.trim() },
     required: draft.required,
-    options: choice
-      ? draft.optionsText
-          .split("\n")
-          .map((line) => line.trim())
-          .filter(Boolean)
-      : [],
+    options: choice ? draft.options : [],
     allow_other: choice && draft.allow_other,
   }
 }
@@ -55,10 +71,14 @@ const KEY_RE = /^[a-z][a-z0-9_]{0,31}$/
 export function draftValid(draft: DraftField): boolean {
   if (!KEY_RE.test(draft.key.trim())) return false
   if (LANGS.some((lang) => draft.label[lang].trim() === "")) return false
-  return !CHOICE(draft.kind) || fromDraft(draft).options.length > 0
+  return !CHOICE(draft.kind) || draft.options.length > 0
 }
 
-/** Editor for the custom input fields of a certificate type. */
+function newDraft(): DraftField {
+  return { key: "", kind: "text", label: { uz: "", ru: "", en: "" }, required: false, options: [], allow_other: false }
+}
+
+/** Compact list of a type's custom fields; one field is edited in a side panel. */
 export function CustomFieldsEditor({
   fields,
   onChange,
@@ -67,102 +87,237 @@ export function CustomFieldsEditor({
   onChange: (fields: DraftField[]) => void
 }) {
   const t = useT("certificates.types")
-  const update = (index: number, patch: Partial<DraftField>) =>
-    onChange(fields.map((item, i) => (i === index ? { ...item, ...patch } : item)))
+  const locale = useLocale()
+  const [panel, setPanel] = useState<{ index: number | null; draft: DraftField } | null>(null)
+  const move = (index: number, delta: number) => {
+    const target = index + delta
+    if (target < 0 || target >= fields.length) return
+    const next = [...fields]
+    ;[next[index], next[target]] = [next[target], next[index]]
+    onChange(next)
+  }
   const remove = (index: number) => onChange(fields.filter((_, i) => i !== index))
+  const save = (draft: DraftField) => {
+    if (!panel) return
+    onChange(panel.index === null ? [...fields, draft] : fields.map((item, i) => (i === panel.index ? draft : item)))
+    setPanel(null)
+  }
   return (
     <section className="grid gap-3">
-      <h3 className="text-sm font-medium">{t("customFields")}</h3>
-      {fields.length === 0 ? <p className="text-muted-foreground text-sm">{t("fieldsEmpty")}</p> : null}
-      {fields.map((field, index) => (
-        <div key={index} className="grid gap-3 rounded-md border p-3">
-          <Field>
-            <FieldLabel htmlFor={`cf-key-${index}`}>{t("fieldKey")}</FieldLabel>
-            <Input
-              id={`cf-key-${index}`}
-              className={TOUCH}
-              value={field.key}
-              onChange={(event) => update(index, { key: event.target.value })}
-            />
-          </Field>
-          <Field>
-            <FieldLabel htmlFor={`cf-kind-${index}`}>{t("fieldKind")}</FieldLabel>
-            <Dropdown
-              id={`cf-kind-${index}`}
-              className="w-full"
-              value={field.kind}
-              onValueChange={(value) => update(index, { kind: value as CustomFieldKind })}
-              options={KINDS.map((kind) => ({ value: kind, label: t(KIND_KEYS[kind]) }))}
-            />
-          </Field>
-          {LANGS.map((lang) => (
-            <Field key={lang}>
-              <FieldLabel htmlFor={`cf-label-${index}-${lang}`}>{t(LANG_KEYS[lang])}</FieldLabel>
-              <Input
-                id={`cf-label-${index}-${lang}`}
-                className={TOUCH}
-                value={field.label[lang]}
-                onChange={(event) => update(index, { label: { ...field.label, [lang]: event.target.value } })}
-              />
-            </Field>
-          ))}
-          {CHOICE(field.kind) ? (
-            <>
-              <Field>
-                <FieldLabel htmlFor={`cf-options-${index}`}>{t("fieldOptions")}</FieldLabel>
-                <textarea
-                  id={`cf-options-${index}`}
-                  className="border-input min-h-24 rounded-md border bg-transparent p-2 text-sm"
-                  value={field.optionsText}
-                  onChange={(event) => update(index, { optionsText: event.target.value })}
-                />
-                <p className="text-muted-foreground text-xs">{t("fieldOptionsHint")}</p>
-              </Field>
-              <label className="flex min-h-11 items-center gap-2 text-sm md:min-h-8">
-                <Checkbox
-                  checked={field.allow_other}
-                  onCheckedChange={(checked) => update(index, { allow_other: checked === true })}
-                />
-                {t("fieldAllowOther")}
-              </label>
-            </>
-          ) : null}
-          <label className="flex min-h-11 items-center gap-2 text-sm md:min-h-8">
-            <Checkbox
-              checked={field.required}
-              onCheckedChange={(checked) => update(index, { required: checked === true })}
-            />
-            {t("fieldRequired")}
-          </label>
-          <div>
-            <Button type="button" variant="outline" className={TOUCH} onClick={() => remove(index)}>
-              {t("removeField")}
-            </Button>
-          </div>
-        </div>
-      ))}
-      <div>
+      <div className="flex items-center justify-between gap-2">
+        <h3 className="text-sm font-medium">{t("customFields")}</h3>
         <Button
           type="button"
           variant="outline"
+          size="sm"
           className={TOUCH}
-          onClick={() =>
-            onChange([
-              ...fields,
-              {
-                key: "",
-                kind: "text",
-                label: { uz: "", ru: "", en: "" },
-                required: false,
-                optionsText: "",
-                allow_other: false,
-              },
-            ])
-          }
+          onClick={() => setPanel({ index: null, draft: newDraft() })}
         >
-          {t("addField")}
+          <IconPlus aria-hidden /> {t("addField")}
         </Button>
       </div>
+      {fields.length === 0 ? <p className="text-muted-foreground text-sm">{t("fieldsEmpty")}</p> : null}
+      {fields.length > 0 ? (
+        <ul className="grid gap-2">
+          {fields.map((field, index) => {
+            const labels = field.label as Record<string, string | undefined>
+            const name = labels[locale] || field.label.en || field.key
+            return (
+              <li key={index} className="flex items-center gap-2 rounded-md border px-3 py-2">
+                <div className="min-w-0 flex-1">
+                  <p className="truncate text-sm font-medium">{name}</p>
+                  <p className="text-muted-foreground truncate text-xs">{field.key}</p>
+                </div>
+                <Badge variant="secondary">{t(KIND_KEYS[field.kind])}</Badge>
+                {field.required ? <Badge variant="outline">{t("requiredBadge")}</Badge> : null}
+                <Button
+                  type="button"
+                  variant="ghost"
+                  size="icon"
+                  className={TOUCH_ICON}
+                  aria-label={t("moveUp", { name })}
+                  disabled={index === 0}
+                  onClick={() => move(index, -1)}
+                >
+                  <IconChevronUp aria-hidden />
+                </Button>
+                <Button
+                  type="button"
+                  variant="ghost"
+                  size="icon"
+                  className={TOUCH_ICON}
+                  aria-label={t("moveDown", { name })}
+                  disabled={index === fields.length - 1}
+                  onClick={() => move(index, 1)}
+                >
+                  <IconChevronDown aria-hidden />
+                </Button>
+                <Button
+                  type="button"
+                  variant="ghost"
+                  size="icon"
+                  className={TOUCH_ICON}
+                  aria-label={t("editField", { name })}
+                  onClick={() => setPanel({ index, draft: toDraft(field) })}
+                >
+                  <IconPencil aria-hidden />
+                </Button>
+                <Button
+                  type="button"
+                  variant="ghost"
+                  size="icon"
+                  className={TOUCH_ICON}
+                  aria-label={t("deleteField", { name })}
+                  onClick={() => remove(index)}
+                >
+                  <IconTrash aria-hidden />
+                </Button>
+              </li>
+            )
+          })}
+        </ul>
+      ) : null}
+      <Sheet open={panel !== null} onOpenChange={(open) => (open ? undefined : setPanel(null))}>
+        {panel ? (
+          <FieldPanel
+            key={panel.index ?? "new"}
+            title={panel.index === null ? t("fieldPanelAdd") : t("editField", { name: panel.draft.key })}
+            initial={panel.draft}
+            onSave={save}
+            onClose={() => setPanel(null)}
+          />
+        ) : null}
+      </Sheet>
     </section>
+  )
+}
+
+/** Side panel that edits one field; its draft stays local until Done. */
+function FieldPanel({
+  title,
+  initial,
+  onSave,
+  onClose,
+}: {
+  title: string
+  initial: DraftField
+  onSave: (draft: DraftField) => void
+  onClose: () => void
+}) {
+  const t = useT("certificates.types")
+  const [draft, setDraft] = useState(initial)
+  const [option, setOption] = useState("")
+  const patch = (next: Partial<DraftField>) => setDraft((current) => ({ ...current, ...next }))
+  const addOption = () => {
+    const text = option.trim()
+    if (text !== "" && !draft.options.includes(text)) patch({ options: [...draft.options, text] })
+    setOption("")
+  }
+  return (
+    <SheetContent side="right" className="flex h-full flex-col gap-0 p-0 sm:max-w-md">
+      <SheetHeader className="border-b p-4">
+        <SheetTitle>{title}</SheetTitle>
+      </SheetHeader>
+      <div className="grid min-h-0 flex-1 content-start gap-4 overflow-y-auto p-4">
+        <Field>
+          <FieldLabel htmlFor="cf-key">{t("fieldKey")}</FieldLabel>
+          <Input
+            id="cf-key"
+            className={TOUCH}
+            value={draft.key}
+            onChange={(event) => patch({ key: event.target.value })}
+          />
+        </Field>
+        <Field>
+          <FieldLabel htmlFor="cf-kind">{t("fieldKind")}</FieldLabel>
+          <Dropdown
+            id="cf-kind"
+            className="w-full"
+            value={draft.kind}
+            onValueChange={(value) => patch({ kind: value as CustomFieldKind })}
+            options={KINDS.map((kind) => ({ value: kind, label: t(KIND_KEYS[kind]) }))}
+          />
+        </Field>
+        {LANGS.map((lang) => (
+          <Field key={lang}>
+            <FieldLabel htmlFor={`cf-label-${lang}`}>{t(LANG_KEYS[lang])}</FieldLabel>
+            <Input
+              id={`cf-label-${lang}`}
+              className={TOUCH}
+              value={draft.label[lang]}
+              onChange={(event) => patch({ label: { ...draft.label, [lang]: event.target.value } })}
+            />
+          </Field>
+        ))}
+        {CHOICE(draft.kind) ? (
+          <>
+            <Field>
+              <FieldLabel htmlFor="cf-option">{t("fieldOptions")}</FieldLabel>
+              <div className="flex flex-wrap gap-2">
+                {draft.options.map((item, index) => (
+                  <span
+                    key={item}
+                    className="inline-flex items-center gap-1 rounded-full border py-0.5 pr-1 pl-3 text-sm"
+                  >
+                    {item}
+                    <button
+                      type="button"
+                      aria-label={t("removeOption", { option: item })}
+                      className="hover:bg-muted rounded-full p-1"
+                      onClick={() => patch({ options: draft.options.filter((_, i) => i !== index) })}
+                    >
+                      <IconX className="size-3.5" aria-hidden />
+                    </button>
+                  </span>
+                ))}
+                {draft.options.length === 0 ? (
+                  <p className="text-muted-foreground text-xs">{t("fieldOptionsEmpty")}</p>
+                ) : null}
+              </div>
+              <div className="flex gap-2">
+                <Input
+                  id="cf-option"
+                  className={TOUCH}
+                  value={option}
+                  placeholder={t("optionPlaceholder")}
+                  onChange={(event) => setOption(event.target.value)}
+                  onKeyDown={(event) => {
+                    if (event.key === "Enter") {
+                      event.preventDefault()
+                      addOption()
+                    }
+                  }}
+                />
+                <Button
+                  type="button"
+                  variant="outline"
+                  className={TOUCH}
+                  disabled={option.trim() === ""}
+                  onClick={addOption}
+                >
+                  {t("addOption")}
+                </Button>
+              </div>
+            </Field>
+            <label className="flex min-h-11 items-center justify-between gap-2 text-sm md:min-h-8">
+              {t("fieldAllowOther")}
+              <Switch checked={draft.allow_other} onCheckedChange={(checked) => patch({ allow_other: checked })} />
+            </label>
+          </>
+        ) : null}
+        <label className="flex min-h-11 items-center gap-2 text-sm md:min-h-8">
+          <Checkbox checked={draft.required} onCheckedChange={(checked) => patch({ required: checked === true })} />
+          {t("fieldRequired")}
+        </label>
+      </div>
+      <SheetFooter className="border-t p-4">
+        <Button type="button" variant="outline" className={TOUCH} onClick={onClose}>
+          {t("cancel")}
+        </Button>
+        <Button type="button" className={TOUCH} disabled={!draftValid(draft)} onClick={() => onSave(draft)}>
+          {t("fieldDone")}
+        </Button>
+      </SheetFooter>
+    </SheetContent>
   )
 }

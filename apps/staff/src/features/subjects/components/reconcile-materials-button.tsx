@@ -1,19 +1,29 @@
 "use client"
 
-import { postStaffReconcileSubjectMaterials, type ReconcileMaterials } from "@ihsp/api"
+import { getStaffReconcileStatus, postStaffReconcileSubjectMaterials, type ReconcileJobState } from "@ihsp/api"
 import { useT } from "@ihsp/i18n"
 import { Button } from "@ihsp/ui"
-import { useMutation } from "@tanstack/react-query"
+import { useMutation, useQuery } from "@tanstack/react-query"
 import { useState } from "react"
 
-/** "Check that all lesson materials are in the notebook": syncs every student's subject notebook now. */
+const FINISHED: ReconcileJobState[] = ["done", "failed", "cancelled"]
+
+/** "Check that all lesson materials are in the notebook": starts a background job and polls its totals. */
 export function ReconcileMaterialsButton({ subjectId }: { subjectId: string }) {
   const t = useT("subjects.reconcile")
-  const [result, setResult] = useState<ReconcileMaterials | null>(null)
-  const run = useMutation({
+  const [jobId, setJobId] = useState<string | null>(null)
+  const start = useMutation({
     mutationFn: () => postStaffReconcileSubjectMaterials(subjectId),
-    onSuccess: (data) => setResult(data),
+    onSuccess: (data) => setJobId(data.job_id),
   })
+  const job = useQuery({
+    queryKey: ["staff", "reconcile", subjectId, jobId],
+    queryFn: () => getStaffReconcileStatus(subjectId, jobId ?? ""),
+    enabled: jobId !== null,
+    refetchInterval: (query) => (query.state.data && !FINISHED.includes(query.state.data.status) ? 2000 : false),
+  })
+  const finished = job.data !== undefined && FINISHED.includes(job.data.status)
+  const running = start.isPending || (jobId !== null && !finished)
   return (
     <div className="flex flex-col gap-1">
       <p className="text-muted-foreground text-xs">{t("hint")}</p>
@@ -21,21 +31,26 @@ export function ReconcileMaterialsButton({ subjectId }: { subjectId: string }) {
         type="button"
         variant="outline"
         className="min-h-11 md:min-h-8"
-        disabled={run.isPending}
-        onClick={() => run.mutate()}
+        disabled={running}
+        onClick={() => start.mutate()}
       >
-        {run.isPending ? t("running") : t("button")}
+        {running ? t("running") : t("button")}
       </Button>
-      {result && (
+      {job.data?.status === "done" ? (
         <p role="status" className="text-xs">
-          {t("done", { ...result })}
+          {t("done", {
+            notebooks: job.data.notebooks,
+            added: job.data.added,
+            present: job.data.already_present,
+            skipped: job.data.skipped,
+          })}
         </p>
-      )}
-      {run.isError && (
+      ) : null}
+      {start.isError || job.isError || job.data?.status === "failed" || job.data?.status === "cancelled" ? (
         <p role="alert" className="text-destructive text-xs">
           {t("error")}
         </p>
-      )}
+      ) : null}
     </div>
   )
 }

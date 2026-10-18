@@ -1335,9 +1335,29 @@ export interface paths {
         put?: never;
         /**
          * Reconcile Admin Subject Materials
-         * @description Sync every student's subject notebook of the subject, now; report the totals.
+         * @description Queue the sync of every student's subject notebook of the subject; answer 202.
          */
         post: operations["reconcile_admin_subject_materials_v1_admin_subject_materials_subjects__subject_id__reconcile_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/admin/subject-materials/subjects/{subject_id}/reconcile/{job_id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get Admin Reconcile Status
+         * @description The totals of a reconcile job (any admin may read any of them).
+         */
+        get: operations["get_admin_reconcile_status_v1_admin_subject_materials_subjects__subject_id__reconcile__job_id__get"];
+        put?: never;
+        post?: never;
         delete?: never;
         options?: never;
         head?: never;
@@ -1532,6 +1552,26 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/v1/admin/sync/runs/{run_id}/stop": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Stop Run
+         * @description Stop a running sync run; 202, 404 unknown run, 409 not running.
+         */
+        post: operations["stop_run_v1_admin_sync_runs__run_id__stop_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/v1/admin/sync/student-syncs": {
         parameters: {
             query?: never;
@@ -1546,6 +1586,26 @@ export interface paths {
         get: operations["list_student_syncs_v1_admin_sync_student_syncs_get"];
         put?: never;
         post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/admin/sync/student-syncs/{user_id}/stop": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Stop Student Sync
+         * @description Stop a running student sync; 202, 409 when it is not running.
+         */
+        post: operations["stop_student_sync_v1_admin_sync_student_syncs__user_id__stop_post"];
         delete?: never;
         options?: never;
         head?: never;
@@ -2543,7 +2603,7 @@ export interface paths {
         };
         /**
          * Get Staff Ranking
-         * @description Return students ranked by their number of certificates.
+         * @description Return students ranked by the type's score (else by certificate count).
          */
         get: operations["get_staff_ranking_v1_certificates_staff_ranking_get"];
         put?: never;
@@ -9037,9 +9097,29 @@ export interface paths {
         put?: never;
         /**
          * Reconcile Staff Subject Materials
-         * @description Sync the teacher's own subject notebooks of the subject, now; report totals.
+         * @description Queue the sync of the teacher's own subject notebooks; answer 202.
          */
         post: operations["reconcile_staff_subject_materials_v1_staff_subjects__subject_id__reconcile_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/staff/subjects/{subject_id}/reconcile/{job_id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get Staff Reconcile Status
+         * @description The totals of a reconcile job the teacher started.
+         */
+        get: operations["get_staff_reconcile_status_v1_staff_subjects__subject_id__reconcile__job_id__get"];
+        put?: never;
+        post?: never;
         delete?: never;
         options?: never;
         head?: never;
@@ -10914,28 +10994,16 @@ export interface components {
             id: string;
             /** Issued At */
             issued_at: string | null;
-            /** Level */
-            level: string | null;
-            /** Percent */
-            percent: number | null;
-            /** Score */
-            score: number | null;
-            /** Serial */
-            serial: string | null;
             /**
              * Source
              * @enum {string}
              */
             source: "manual" | "emis";
-            /** Subject */
-            subject: string | null;
             /**
              * Type Id
              * Format: uuid
              */
             type_id: string;
-            /** Year */
-            year: number | null;
         };
         /**
          * CertificateFileResponse
@@ -10959,89 +11027,32 @@ export interface components {
          * @description Body of POST /admin/types.
          */
         CertificateTypeInput: {
-            /**
-             * Asks Level
-             * @default false
-             */
-            asks_level: boolean;
-            /**
-             * Asks Percent
-             * @default false
-             */
-            asks_percent: boolean;
-            /**
-             * Asks Score
-             * @default false
-             */
-            asks_score: boolean;
-            /**
-             * Asks Subject
-             * @default false
-             */
-            asks_subject: boolean;
-            /**
-             * Asks Year
-             * @default true
-             */
-            asks_year: boolean;
             /** Code */
             code: string;
             /** Custom Fields */
             custom_fields?: components["schemas"]["CustomFieldInput"][];
-            /** Levels */
-            levels?: string[];
             name: components["schemas"]["TypeName"];
             /** Position */
             position?: number | null;
-            /** Score Max */
-            score_max?: number | null;
-            /** Score Min */
-            score_min?: number | null;
         };
         /**
          * CertificateTypePatch
          * @description Body of PATCH /admin/types/{id}: only the sent fields change.
          */
         CertificateTypePatch: {
-            /** Asks Level */
-            asks_level?: boolean | null;
-            /** Asks Percent */
-            asks_percent?: boolean | null;
-            /** Asks Score */
-            asks_score?: boolean | null;
-            /** Asks Subject */
-            asks_subject?: boolean | null;
-            /** Asks Year */
-            asks_year?: boolean | null;
             /** Code */
             code?: string | null;
             /** Custom Fields */
             custom_fields?: components["schemas"]["CustomFieldInput"][] | null;
-            /** Levels */
-            levels?: string[] | null;
             name?: components["schemas"]["TypeName"] | null;
             /** Position */
             position?: number | null;
-            /** Score Max */
-            score_max?: number | null;
-            /** Score Min */
-            score_min?: number | null;
         };
         /**
          * CertificateTypeResponse
          * @description CertificateType.
          */
         CertificateTypeResponse: {
-            /** Asks Level */
-            asks_level: boolean;
-            /** Asks Percent */
-            asks_percent: boolean;
-            /** Asks Score */
-            asks_score: boolean;
-            /** Asks Subject */
-            asks_subject: boolean;
-            /** Asks Year */
-            asks_year: boolean;
             /** Builtin */
             builtin: boolean;
             /** Code */
@@ -11053,15 +11064,9 @@ export interface components {
              * Format: uuid
              */
             id: string;
-            /** Levels */
-            levels: string[];
             name: components["schemas"]["TypeName"];
             /** Position */
             position: number;
-            /** Score Max */
-            score_max: number | null;
-            /** Score Min */
-            score_min: number | null;
         };
         /**
          * ChangePasswordBody
@@ -12046,23 +12051,11 @@ export interface components {
             custom?: {
                 [key: string]: string | number | string[];
             } | null;
-            /** Level */
-            level?: string | null;
-            /** Percent */
-            percent?: number | null;
-            /** Score */
-            score?: number | null;
-            /** Serial */
-            serial?: string | null;
-            /** Subject */
-            subject?: string | null;
             /**
              * Type Id
              * Format: uuid
              */
             type_id: string;
-            /** Year */
-            year?: number | null;
         };
         /**
          * CreateLabelBody
@@ -12397,6 +12390,10 @@ export interface components {
              */
             kind: "text" | "number" | "single" | "multi";
             label: components["schemas"]["TypeName"];
+            /** Max */
+            max?: number | null;
+            /** Min */
+            min?: number | null;
             /** Options */
             options?: string[];
             /**
@@ -12423,6 +12420,10 @@ export interface components {
              */
             kind: "text" | "number" | "single" | "multi";
             label: components["schemas"]["TypeName"];
+            /** Max */
+            max?: number | null;
+            /** Min */
+            min?: number | null;
             /** Options */
             options?: string[];
             /**
@@ -18491,7 +18492,7 @@ export interface components {
         };
         /**
          * RankingItem
-         * @description One ranked student.
+         * @description One ranked student: ``value`` is the best score of the type (null: none).
          */
         RankingItem: {
             /** Count */
@@ -18505,6 +18506,8 @@ export interface components {
              * Format: uuid
              */
             student_id: string;
+            /** Value */
+            value?: number | null;
         };
         /**
          * Rating
@@ -18643,13 +18646,30 @@ export interface components {
             week_label?: string | null;
         };
         /**
-         * ReconcileMaterialsResponse
-         * @description What "check that all lesson materials are in the notebook" found.
+         * ReconcileJobAccepted
+         * @description 202 answer of "check that all lesson materials are in the notebooks".
          */
-        ReconcileMaterialsResponse: {
+        ReconcileJobAccepted: {
+            /**
+             * Job Id
+             * @description Poll GET .../reconcile/{job_id} for the totals.
+             */
+            job_id: string;
+            /**
+             * Status
+             * @description Starts as queued.
+             * @enum {string}
+             */
+            status: "queued" | "running" | "stopping" | "done" | "failed" | "cancelled";
+        };
+        /**
+         * ReconcileJobStatus
+         * @description Progress and totals of one reconcile job.
+         */
+        ReconcileJobStatus: {
             /**
              * Added
-             * @description Lesson materials added to notebooks now.
+             * @description Lesson materials added to notebooks.
              */
             added: number;
             /**
@@ -18658,8 +18678,15 @@ export interface components {
              */
             already_present: number;
             /**
+             * Done
+             * @description True once the check finished (status done).
+             */
+            done: boolean;
+            /** Job Id */
+            job_id: string;
+            /**
              * Notebooks
-             * @description Subject notebooks checked.
+             * @description Subject notebooks checked so far.
              */
             notebooks: number;
             /**
@@ -18667,6 +18694,12 @@ export interface components {
              * @description Materials not readable yet; retried later.
              */
             skipped: number;
+            /**
+             * Status
+             * @description queued, running, done, failed or cancelled.
+             * @enum {string}
+             */
+            status: "queued" | "running" | "stopping" | "done" | "failed" | "cancelled";
         };
         /**
          * RecordBookResponse
@@ -20284,29 +20317,17 @@ export interface components {
             id: string;
             /** Issued At */
             issued_at: string | null;
-            /** Level */
-            level: string | null;
-            /** Percent */
-            percent: number | null;
-            /** Score */
-            score: number | null;
-            /** Serial */
-            serial: string | null;
             /**
              * Source
              * @enum {string}
              */
             source: "manual" | "emis";
             student: components["schemas"]["StaffStudent"];
-            /** Subject */
-            subject: string | null;
             /**
              * Type Id
              * Format: uuid
              */
             type_id: string;
-            /** Year */
-            year: number | null;
         };
         /**
          * StaffFiltersBody
@@ -22800,18 +22821,6 @@ export interface components {
             custom?: {
                 [key: string]: string | number | string[];
             } | null;
-            /** Level */
-            level?: string | null;
-            /** Percent */
-            percent?: number | null;
-            /** Score */
-            score?: number | null;
-            /** Serial */
-            serial?: string | null;
-            /** Subject */
-            subject?: string | null;
-            /** Year */
-            year?: number | null;
         };
         /**
          * UpdateLabelBody
@@ -27839,12 +27848,44 @@ export interface operations {
         requestBody?: never;
         responses: {
             /** @description Successful Response */
+            202: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ReconcileJobAccepted"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    get_admin_reconcile_status_v1_admin_subject_materials_subjects__subject_id__reconcile__job_id__get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                subject_id: string;
+                job_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
             200: {
                 headers: {
                     [name: string]: unknown;
                 };
                 content: {
-                    "application/json": components["schemas"]["ReconcileMaterialsResponse"];
+                    "application/json": components["schemas"]["ReconcileJobStatus"];
                 };
             };
             /** @description Validation Error */
@@ -28217,6 +28258,37 @@ export interface operations {
             };
         };
     };
+    stop_run_v1_admin_sync_runs__run_id__stop_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                run_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            202: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": unknown;
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
     list_student_syncs_v1_admin_sync_student_syncs_get: {
         parameters: {
             query?: {
@@ -28236,6 +28308,37 @@ export interface operations {
                 };
                 content: {
                     "application/json": components["schemas"]["SyncStatusResponse"][];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    stop_student_sync_v1_admin_sync_student_syncs__user_id__stop_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                user_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            202: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": unknown;
                 };
             };
             /** @description Validation Error */
@@ -41969,12 +42072,44 @@ export interface operations {
         requestBody?: never;
         responses: {
             /** @description Successful Response */
+            202: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ReconcileJobAccepted"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    get_staff_reconcile_status_v1_staff_subjects__subject_id__reconcile__job_id__get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                subject_id: string;
+                job_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
             200: {
                 headers: {
                     [name: string]: unknown;
                 };
                 content: {
-                    "application/json": components["schemas"]["ReconcileMaterialsResponse"];
+                    "application/json": components["schemas"]["ReconcileJobStatus"];
                 };
             };
             /** @description Validation Error */

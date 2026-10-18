@@ -14,11 +14,11 @@ describe("student certificates", () => {
 
     expect(await screen.findByText("7.0 · 2026")).toBeInTheDocument()
     expect(screen.getByText("ielts.pdf")).toBeInTheDocument()
-    expect(screen.getByText("A · 82.5% · Mathematics · 2025")).toBeInTheDocument()
+    expect(screen.getByText("A · 82.5 · Mathematics · 2025")).toBeInTheDocument()
     expect(screen.getByText("From EMIS")).toBeInTheDocument()
   })
 
-  test("adds an entry asking only for the fields of the type", async () => {
+  test("adds an entry with the custom fields of the type", async () => {
     let body: Record<string, unknown> | null = null
     server.use(
       http.post(apiUrl("/v1/certificates/me"), async ({ request }) => {
@@ -31,13 +31,12 @@ describe("student certificates", () => {
 
     await user.click(screen.getByRole("button", { name: "Add CEFR" }))
     const dialog = await screen.findByRole("dialog")
-    expect(within(dialog).queryByLabelText("Score")).toBeNull()
-    setDropdownValue(within(dialog).getByLabelText("Level"), "B2")
-    setDropdownValue(within(dialog).getByLabelText("Year"), "2026")
+    expect(within(dialog).queryByLabelText(/Year/)).toBeNull()
+    setDropdownValue(within(dialog).getByLabelText(/Level/), "B2")
     await user.click(within(dialog).getByRole("button", { name: "Save" }))
 
     await waitFor(() => expect(body).not.toBeNull())
-    expect(body).toMatchObject({ level: "B2", year: 2026, score: null })
+    expect(body).toMatchObject({ type_id: expect.any(String), custom: { level: "B2" } })
   })
 
   test("uploads several files to an entry", async () => {

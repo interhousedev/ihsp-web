@@ -56,7 +56,8 @@ import type {
   NotebooksParams,
   SubjectMaterial,
   SubjectMaterialCreateBody,
-  ReconcileMaterials,
+  ReconcileJobAccepted,
+  ReconcileJobStatus,
   SubjectMaterialGroup,
   StaffSubject,
   StaffSubjectMaterialCreateBody,
@@ -592,12 +593,24 @@ export function deleteAdminSubjectMaterial(
   return api.delete<NoContent>(`/v1/admin/subject-materials/${seg(eduSubjectId)}/${seg(materialId)}`, opts)
 }
 
-/** POST /v1/admin/subject-materials/subjects/{subject_id}/reconcile — admin; syncs every student's subject notebook now. */
+/** POST /v1/admin/subject-materials/subjects/{subject_id}/reconcile — admin; starts a job that syncs every student's subject notebook. */
 export function postAdminReconcileSubjectMaterials(
   subjectId: string,
   opts?: RequestOptions,
-): Promise<ReconcileMaterials> {
-  return api.post<ReconcileMaterials>(`/v1/admin/subject-materials/subjects/${seg(subjectId)}/reconcile`, {}, opts)
+): Promise<ReconcileJobAccepted> {
+  return api.post<ReconcileJobAccepted>(`/v1/admin/subject-materials/subjects/${seg(subjectId)}/reconcile`, {}, opts)
+}
+
+/** GET /v1/admin/subject-materials/subjects/{subject_id}/reconcile/{job_id} — admin; progress and totals of a job. */
+export function getAdminReconcileStatus(
+  subjectId: string,
+  jobId: string,
+  opts?: RequestOptions,
+): Promise<ReconcileJobStatus> {
+  return api.get<ReconcileJobStatus>(
+    `/v1/admin/subject-materials/subjects/${seg(subjectId)}/reconcile/${seg(jobId)}`,
+    opts,
+  )
 }
 
 // --- A teacher's subjects and materials (staff) ---
@@ -635,12 +648,21 @@ export function postStaffSubjectMaterial(
   return api.post<SubjectMaterial>(`/v1/staff/subjects/${seg(subjectId)}/materials`, body, opts)
 }
 
-/** POST /v1/staff/subjects/{id}/reconcile — teacher; syncs the teacher's own subject notebooks of the subject now. */
+/** POST /v1/staff/subjects/{id}/reconcile — teacher; starts a job that syncs the teacher's own subject notebooks of the subject. */
 export function postStaffReconcileSubjectMaterials(
   subjectId: string,
   opts?: RequestOptions,
-): Promise<ReconcileMaterials> {
-  return api.post<ReconcileMaterials>(`/v1/staff/subjects/${seg(subjectId)}/reconcile`, {}, opts)
+): Promise<ReconcileJobAccepted> {
+  return api.post<ReconcileJobAccepted>(`/v1/staff/subjects/${seg(subjectId)}/reconcile`, {}, opts)
+}
+
+/** GET /v1/staff/subjects/{subject_id}/reconcile/{job_id} — teacher; progress and totals of a job. */
+export function getStaffReconcileStatus(
+  subjectId: string,
+  jobId: string,
+  opts?: RequestOptions,
+): Promise<ReconcileJobStatus> {
+  return api.get<ReconcileJobStatus>(`/v1/staff/subjects/${seg(subjectId)}/reconcile/${seg(jobId)}`, opts)
 }
 
 /** DELETE /v1/staff/subjects/{id}/materials/{material_id} — teacher, own materials only; `204`, `404`. */

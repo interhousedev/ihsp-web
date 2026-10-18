@@ -1,9 +1,19 @@
 "use client"
 
-import { getAdminStudentSyncsQuery, type MeSyncStatus, type StudentSyncStatus } from "@ihsp/api"
+import {
+  getAdminStudentSyncsQuery,
+  keys,
+  type MeSyncStatus,
+  postAdminStudentSyncStop,
+  type StudentSyncStatus,
+} from "@ihsp/api"
 import { useFormatters, useT } from "@ihsp/i18n"
+import { ConfirmDialog } from "@ihsp/ui"
 import { useQuery } from "@tanstack/react-query"
+import { useState } from "react"
 import { StatusBadge } from "../../shared/components/status-badge"
+import { useAdminMutation } from "../../shared/hooks/use-admin-mutation"
+import { TOUCH } from "../../shared/utils/touch"
 
 const STATUSES: readonly StudentSyncStatus[] = ["failed", "pending", "running", "succeeded"]
 
@@ -19,6 +29,13 @@ export function StudentSyncs() {
     return query?.data ?? []
   })
   const loading = failed.isPending || pending.isPending || running.isPending
+  const [stopping, setStopping] = useState<MeSyncStatus | null>(null)
+  const stop = useAdminMutation({
+    mutationFn: (userId: string) => postAdminStudentSyncStop(userId),
+    invalidate: STATUSES.map((status) => keys.admin.studentSyncs(status)),
+    success: t("studentStopped"),
+    onSuccess: () => setStopping(null),
+  })
 
   return (
     <section className="flex flex-col gap-3" aria-labelledby="student-syncs-title">
@@ -37,6 +54,9 @@ export function StudentSyncs() {
                 <th className="py-1 pr-3 font-medium">{t("studentSyncsColumns.attempts")}</th>
                 <th className="py-1 pr-3 font-medium">{t("studentSyncsColumns.lastError")}</th>
                 <th className="py-1 pr-3 font-medium">{t("studentSyncsColumns.finished")}</th>
+                <th className="py-1 pr-3 font-medium">
+                  <span className="sr-only">{t("studentStop")}</span>
+                </th>
               </tr>
             </thead>
             <tbody>
@@ -51,12 +71,36 @@ export function StudentSyncs() {
                   </td>
                   <td className="py-1 pr-3 break-all text-xs">{row.last_error ?? "—"}</td>
                   <td className="py-1 pr-3">{row.finished_at ? f.dateTime(row.finished_at) : "—"}</td>
+                  <td className="py-1 pr-3">
+                    {row.status === "running" ? (
+                      <button
+                        type="button"
+                        className={`${TOUCH} text-destructive text-xs underline underline-offset-2`}
+                        onClick={() => setStopping(row)}
+                      >
+                        {t("studentStop")}
+                      </button>
+                    ) : null}
+                  </td>
                 </tr>
               ))}
             </tbody>
           </table>
         </div>
       ) : null}
+      <ConfirmDialog
+        open={stopping !== null}
+        onOpenChange={(open) => {
+          if (!open) setStopping(null)
+        }}
+        title={t("studentStopTitle")}
+        description={t("studentStopDescription")}
+        confirmLabel={t("studentStopConfirm")}
+        loading={stop.isPending}
+        onConfirm={() => {
+          if (stopping) stop.mutate(stopping.user_id)
+        }}
+      />
     </section>
   )
 }

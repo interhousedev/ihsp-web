@@ -1,6 +1,6 @@
 "use client"
 
-import { getAdminSyncRuns, keys, postSyncRun, type SyncRunItem } from "@ihsp/api"
+import { getAdminSyncRuns, keys, postAdminSyncRunStop, postSyncRun, type SyncRunItem } from "@ihsp/api"
 import { useFormatters, useT } from "@ihsp/i18n"
 import { Button, ConfirmDialog, Input } from "@ihsp/ui"
 import { useMemo, useState } from "react"
@@ -30,6 +30,7 @@ export function SyncTab() {
   )
   const [confirmOpen, setConfirmOpen] = useState(false)
   const [userId, setUserId] = useState("")
+  const [stopping, setStopping] = useState<SyncRunItem | null>(null)
 
   const trimmed = userId.trim()
   const validUser = trimmed === "" || UUID_PATTERN.test(trimmed)
@@ -41,6 +42,13 @@ export function SyncTab() {
       setConfirmOpen(false)
       setUserId("")
     },
+  })
+
+  const stop = useAdminMutation({
+    mutationFn: (runId: string) => postAdminSyncRunStop(runId),
+    invalidate: [keys.admin.syncRuns()],
+    success: t("runStopped"),
+    onSuccess: () => setStopping(null),
   })
 
   const columns = useMemo(
@@ -62,6 +70,13 @@ export function SyncTab() {
             .join(" · ") || "—"}
         </span>
       )),
+      col<SyncRunItem>("actions", "", (item) =>
+        item.finished_at ? null : (
+          <Button type="button" variant="outline" size="sm" className={TOUCH} onClick={() => setStopping(item)}>
+            {t("runStop")}
+          </Button>
+        ),
+      ),
     ],
     [f, t],
   )
@@ -91,6 +106,19 @@ export function SyncTab() {
       <MaterialsResync />
       <StudentSyncs />
       <PagedTable source={source} columns={columns} getRowId={(item) => item.id} emptyText={t("empty")} />
+      <ConfirmDialog
+        open={stopping !== null}
+        onOpenChange={(open) => {
+          if (!open) setStopping(null)
+        }}
+        title={t("runStopTitle")}
+        description={t("runStopDescription")}
+        confirmLabel={t("runStopConfirm")}
+        loading={stop.isPending}
+        onConfirm={() => {
+          if (stopping) stop.mutate(stopping.id)
+        }}
+      />
       <ConfirmDialog
         open={confirmOpen}
         onOpenChange={setConfirmOpen}

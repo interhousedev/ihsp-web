@@ -118,6 +118,16 @@ export function postAdminSyncRun(body?: SyncRunBody, opts?: RequestOptions): Pro
   return api.post<NoContent>("/v1/admin/sync/run", body ?? {}, opts)
 }
 
+/** POST /v1/admin/sync/runs/{run_id}/stop — admin; `202`. 404 unknown run, 409 not running. */
+export function postAdminSyncRunStop(runId: string, opts?: RequestOptions): Promise<NoContent> {
+  return api.post<NoContent>(`/v1/admin/sync/runs/${encodeURIComponent(runId)}/stop`, {}, opts)
+}
+
+/** POST /v1/admin/sync/student-syncs/{user_id}/stop — admin; `202`. 409 when not running. */
+export function postAdminStudentSyncStop(userId: string, opts?: RequestOptions): Promise<NoContent> {
+  return api.post<NoContent>(`/v1/admin/sync/student-syncs/${encodeURIComponent(userId)}/stop`, {}, opts)
+}
+
 /**
  * POST /v1/admin/sync/materials — admin; `202`. The worker replaces every EMIS material
  * of the chosen terms (deletes the EMIS files, downloads them fresh).

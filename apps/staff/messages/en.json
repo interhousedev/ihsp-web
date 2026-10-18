@@ -486,10 +486,10 @@
     },
     "reconcile": {
       "button": "Check that all lesson materials are in the notebook",
-      "hint": "Adds the lesson materials missing from the subject notebooks. Materials already there stay as they are.",
+      "hint": "Starts a background check that adds the lesson materials missing from the subject notebooks. Materials already there stay as they are.",
       "running": "Checking…",
-      "done": "Checked {notebooks} notebooks: {added} added, {present} already present, {skipped} not readable yet.",
-      "error": "The check failed. Try again."
+      "done": "Checked {notebooks} notebooks: {added} added, {present} already present, {skipped} to retry later.",
+      "error": "The check did not finish. Try again."
     }
   }
 }

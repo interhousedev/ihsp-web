@@ -33,9 +33,9 @@ import type { postLmsCourseCopy, postLmsCourseImport } from "./endpoints/lms-ims
 import type { getLmsH5PLaunch, getLmsPreviewH5PLaunch, postLmsH5PPackage, postLmsH5PResult, postLmsInteractionAnswer } from "./endpoints/lms-interactive"
 import type { getLmsAttempt, getLmsCourse, getLmsCourseStep, getLmsCourseStudents, getLmsCourses, getLmsMyCourses, getLmsPreviewStepVideo, getLmsStepCardsNext, getLmsStepVideo, postLmsAttemptOverride, postLmsAttemptSubmit, postLmsCourseEnroll, postLmsJoin, postLmsStepBlockAttempts, postLmsStepCardReview, postLmsStepViewed, putLmsAttemptAnswers } from "./endpoints/lms-learning"
 import type { getLmsCourseSettings, patchLmsCourseDetails, postLmsCourseJoinCode, postLmsCourseLinkCheck } from "./endpoints/lms-settings"
-import type { getAdminSubjectPeople, getAdminSyncRuns, getMeGrades, getMeGradesDay, getMeLessonResults, getMeRecordBook, getMeSubject, getMeSubjectLessons, getMeSubjects, postAdminSubjectEmisPull, postAdminSyncMaterials, postAdminSyncRun } from "./endpoints/marks"
+import type { getAdminSubjectPeople, getAdminSyncRuns, getMeGrades, getMeGradesDay, getMeLessonResults, getMeRecordBook, getMeSubject, getMeSubjectLessons, getMeSubjects, postAdminStudentSyncStop, postAdminSubjectEmisPull, postAdminSyncMaterials, postAdminSyncRun, postAdminSyncRunStop } from "./endpoints/marks"
 import type { getAdminStudentSyncs, getMeSync, postMeSync } from "./endpoints/me-sync"
-import type { getAdminSubjectMaterialGroups, getAdminSubjectMaterials, getArtifact, getArtifacts, getNotebook, getNotebookAutoSubject, getNotebookChat, getNotebookLabels, getNotebookSearch, getNotebookSource, getNotebookSourceFileUrl, getNotebookSources, getNotebookSubjectSlots, getNotebookUsage, getNotebooks, getPassage, getSourcePassages, getStaffSubjectMaterials, getStaffSubjects, patchArtifact, patchNotebook, patchNotebookLabel, patchNotebookSource, postAdminReconcileSubjectMaterials, postAdminSubjectMaterial, postArtifact, postArtifactAsSource, postArtifactAttachToLesson, postArtifactCancel, postArtifactFlashcardSet, postArtifactRetry, postArtifactSaveToFiles, postArtifactSlidesRevise, postNotebook, postNotebookAutoSubject, postNotebookDiscover, postNotebookLabel, postNotebookLabelsAuto, postNotebookMessage, postNotebookRegenerate, postNotebookSourceSync, postNotebookSources, postNotebookSourcesSelect, postSaveNote, postStaffReconcileSubjectMaterials, postStaffSubjectMaterial, putArtifactSlides, putNotebookSourceLabels } from "./endpoints/notebooks"
+import type { getAdminReconcileStatus, getAdminSubjectMaterialGroups, getAdminSubjectMaterials, getArtifact, getArtifacts, getNotebook, getNotebookAutoSubject, getNotebookChat, getNotebookLabels, getNotebookSearch, getNotebookSource, getNotebookSourceFileUrl, getNotebookSources, getNotebookSubjectSlots, getNotebookUsage, getNotebooks, getPassage, getSourcePassages, getStaffReconcileStatus, getStaffSubjectMaterials, getStaffSubjects, patchArtifact, patchNotebook, patchNotebookLabel, patchNotebookSource, postAdminReconcileSubjectMaterials, postAdminSubjectMaterial, postArtifact, postArtifactAsSource, postArtifactAttachToLesson, postArtifactCancel, postArtifactFlashcardSet, postArtifactRetry, postArtifactSaveToFiles, postArtifactSlidesRevise, postNotebook, postNotebookAutoSubject, postNotebookDiscover, postNotebookLabel, postNotebookLabelsAuto, postNotebookMessage, postNotebookRegenerate, postNotebookSourceSync, postNotebookSources, postNotebookSourcesSelect, postSaveNote, postStaffReconcileSubjectMaterials, postStaffSubjectMaterial, putArtifactSlides, putNotebookSourceLabels } from "./endpoints/notebooks"
 import type { getNotifications, getNotificationsUnreadCount } from "./endpoints/notifications"
 import type { postOauthLogout, postOauthRefresh, postOauthTelegram, postOauthToken, postOauthTokenHook } from "./endpoints/oauth"
 import type { confirmPresentationPlan, getPresentationPlan, patchPresentationPlan, postPresentationPlan } from "./endpoints/presentation-plans"
@@ -1238,6 +1238,14 @@ export const served_getAdminSyncRuns: Awaited<ReturnType<typeof getAdminSyncRuns
 declare const gen_postAdminSyncRun: ResponseOf<"/v1/admin/sync/run", "post">
 export const served_postAdminSyncRun: Awaited<ReturnType<typeof postAdminSyncRun>> = gen_postAdminSyncRun
 
+// POST /v1/admin/sync/runs/{run_id}/stop — postAdminSyncRunStop
+declare const gen_postAdminSyncRunStop: ResponseOf<"/v1/admin/sync/runs/{run_id}/stop", "post">
+export const served_postAdminSyncRunStop: Awaited<ReturnType<typeof postAdminSyncRunStop>> = gen_postAdminSyncRunStop
+
+// POST /v1/admin/sync/student-syncs/{user_id}/stop — postAdminStudentSyncStop
+declare const gen_postAdminStudentSyncStop: ResponseOf<"/v1/admin/sync/student-syncs/{user_id}/stop", "post">
+export const served_postAdminStudentSyncStop: Awaited<ReturnType<typeof postAdminStudentSyncStop>> = gen_postAdminStudentSyncStop
+
 // POST /v1/admin/sync/materials — postAdminSyncMaterials
 declare const gen_postAdminSyncMaterials: ResponseOf<"/v1/admin/sync/materials", "post">
 export const served_postAdminSyncMaterials: Awaited<ReturnType<typeof postAdminSyncMaterials>> = gen_postAdminSyncMaterials
@@ -1438,6 +1446,10 @@ export const served_postAdminSubjectMaterial: Awaited<ReturnType<typeof postAdmi
 declare const gen_postAdminReconcileSubjectMaterials: ResponseOf<"/v1/admin/subject-materials/subjects/{subject_id}/reconcile", "post">
 export const served_postAdminReconcileSubjectMaterials: Awaited<ReturnType<typeof postAdminReconcileSubjectMaterials>> = gen_postAdminReconcileSubjectMaterials
 
+// GET /v1/admin/subject-materials/subjects/{subject_id}/reconcile/{job_id} — getAdminReconcileStatus
+declare const gen_getAdminReconcileStatus: ResponseOf<"/v1/admin/subject-materials/subjects/{subject_id}/reconcile/{job_id}", "get">
+export const served_getAdminReconcileStatus: Awaited<ReturnType<typeof getAdminReconcileStatus>> = gen_getAdminReconcileStatus
+
 // GET /v1/staff/subjects — getStaffSubjects
 declare const gen_getStaffSubjects: ResponseOf<"/v1/staff/subjects", "get">
 export const served_getStaffSubjects: Awaited<ReturnType<typeof getStaffSubjects>> = gen_getStaffSubjects
@@ -1453,6 +1465,10 @@ export const served_postStaffSubjectMaterial: Awaited<ReturnType<typeof postStaf
 // POST /v1/staff/subjects/{subject_id}/reconcile — postStaffReconcileSubjectMaterials
 declare const gen_postStaffReconcileSubjectMaterials: ResponseOf<"/v1/staff/subjects/{subject_id}/reconcile", "post">
 export const served_postStaffReconcileSubjectMaterials: Awaited<ReturnType<typeof postStaffReconcileSubjectMaterials>> = gen_postStaffReconcileSubjectMaterials
+
+// GET /v1/staff/subjects/{subject_id}/reconcile/{job_id} — getStaffReconcileStatus
+declare const gen_getStaffReconcileStatus: ResponseOf<"/v1/staff/subjects/{subject_id}/reconcile/{job_id}", "get">
+export const served_getStaffReconcileStatus: Awaited<ReturnType<typeof getStaffReconcileStatus>> = gen_getStaffReconcileStatus
 
 // GET /v1/notifications — getNotifications
 declare const gen_getNotifications: ResponseOf<"/v1/notifications", "get">

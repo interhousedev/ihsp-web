@@ -41,13 +41,13 @@ function filtered(request: Request): StaffCertificateEntry[] {
   const search = query(request)
   const get = (key: keyof CertificateFilters) => search.get(key)
   const q = get("q")?.toLowerCase()
+  const customFilters = [...search.entries()].filter(([key]) => key.startsWith("cf_"))
   return staffCertificateEntries.filter(
     (e) =>
       (!get("group_id") || e.student.group_id === get("group_id")) &&
       (!get("subgroup") || e.student.subgroup === get("subgroup")) &&
       (!get("type_id") || e.type_id === get("type_id")) &&
-      (!get("subject") || e.subject === get("subject")) &&
-      (!get("level") || e.level === get("level")) &&
+      customFilters.every(([key, value]) => String(e.custom_values[key.slice(3)] ?? "") === value) &&
       (!get("student_id") || e.student.id === get("student_id")) &&
       (!q || e.student.name.toLowerCase().includes(q)),
   )
@@ -62,11 +62,12 @@ function statsOf(entries: StaffCertificateEntry[]): CertificateStats {
         for (const e of entries.filter((item) => item.type_id === type.id)) {
           const gid = e.student.group_id ?? ""
           const group = groups.get(gid) ?? { group_id: gid, group_name: e.student.group_name ?? "", counts: {} }
-          const level = e.level ?? "—"
+          const level = String(e.custom_values.level ?? "—")
           group.counts[level] = (group.counts[level] ?? 0) + 1
           groups.set(gid, group)
         }
-        return { type_id: type.id, levels: type.levels.length ? type.levels : ["—"], groups: [...groups.values()] }
+        const levels = type.custom_fields.find((field) => field.key === "level")?.options ?? []
+        return { type_id: type.id, levels: levels.length ? levels : ["—"], groups: [...groups.values()] }
       }),
   }
 }
@@ -120,23 +121,19 @@ export const certificatesHandlers = [
     const body = await readJson<CertificateEntryInput>(request)
     const type = types.find((t) => t.id === body.type_id)
     if (!type) return notFound("Certificate type")
-    if (body.level && !type.levels.includes(body.level)) {
+    const level = body.custom?.level
+    const levels = type.custom_fields.find((field) => field.key === "level")?.options ?? []
+    if (typeof level === "string" && levels.length > 0 && !levels.includes(level)) {
       return problem(422, "common/validation-error", "Invalid level")
     }
     const entry: CertificateEntry = {
       id: nextId(91),
       type_id: type.id,
-      level: body.level ?? null,
-      score: body.score ?? null,
-      percent: body.percent ?? null,
-      subject: body.subject ?? null,
-      year: body.year ?? null,
-      serial: body.serial ?? null,
       source: "manual",
       issued_at: null,
       expires_at: null,
       files: [],
-      custom_values: {},
+      custom_values: body.custom ?? {},
       created_at: "2026-10-07T05:12:00Z",
     }
     mine = [...mine, entry]

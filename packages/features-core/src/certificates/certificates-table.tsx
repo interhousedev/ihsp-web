@@ -66,7 +66,7 @@ export function CertificatesTable({ items, types, selected, onSelectedChange }: 
                   {entry.student.subgroup ? ` / ${entry.student.subgroup}` : ""}
                 </TableCell>
                 <TableCell>{typeName(type, locale)}</TableCell>
-                <TableCell>{entrySummary(entry)}</TableCell>
+                <TableCell>{entrySummary(entry, type)}</TableCell>
                 <TableCell>{entry.files.length > 0 ? t("fileCount", { count: entry.files.length }) : "—"}</TableCell>
               </TableRow>
             )

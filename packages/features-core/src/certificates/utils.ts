@@ -1,4 +1,4 @@
-import type { CertificateEntry, CertificateType } from "@ihsp/api"
+import type { CertificateEntry, CertificateType, CustomValue } from "@ihsp/api"
 
 /** The type's name in the active locale (`uz`, `ru` or `en`), falling back to the code. */
 export function typeName(type: CertificateType | undefined, locale: string): string {
@@ -7,15 +7,19 @@ export function typeName(type: CertificateType | undefined, locale: string): str
   return names[locale] || type.name.en || type.code
 }
 
-/** One line with what the entry holds: level, score, percent, subject, year. */
-export function entrySummary(entry: CertificateEntry): string {
-  const parts: string[] = []
-  if (entry.level) parts.push(entry.level)
-  if (entry.score != null) parts.push(String(entry.score))
-  if (entry.percent != null) parts.push(`${entry.percent}%`)
-  if (entry.subject) parts.push(entry.subject)
-  if (entry.year != null) parts.push(String(entry.year))
-  return parts.join(" · ")
+/** One line with the entry's custom values, in the type's field order. */
+export function entrySummary(entry: CertificateEntry, type?: CertificateType): string {
+  const keys = type ? type.custom_fields.map((field) => field.key) : Object.keys(entry.custom_values)
+  return keys
+    .map((key) => formatCustomValue(entry.custom_values[key]))
+    .filter((text) => text !== "")
+    .join(" · ")
+}
+
+function formatCustomValue(value: CustomValue | undefined): string {
+  if (value === undefined) return ""
+  if (Array.isArray(value)) return value.join(", ")
+  return String(value)
 }
 
 /** Levels typed as "A1, A2" to a list without blanks and duplicates. */

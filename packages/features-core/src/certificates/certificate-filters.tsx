@@ -38,7 +38,7 @@ function Select({
 }
 
 /**
- * Group, subgroup, type, subject, level and student filters of the staff views.
+ * Group, subgroup, type and student filters of the staff views.
  * With exactly one type selected, one filter per custom field of that type follows.
  */
 export function CertificateFiltersBar({ value, onChange, groups, types }: Props) {
@@ -51,10 +51,6 @@ export function CertificateFiltersBar({ value, onChange, groups, types }: Props)
     onChange(next)
   }
   const group = groups.find((item) => item.id === value.group_id)
-  const levelsOf = value.type_id
-    ? (types.find((type) => type.id === value.type_id)?.levels ?? [])
-    : types.flatMap((type) => type.levels)
-  const levels = [...new Set(levelsOf)]
   const active = Object.values(value).some(Boolean)
   const selectedType = value.type_id ? types.find((type) => type.id === value.type_id) : undefined
   return (
@@ -79,20 +75,7 @@ export function CertificateFiltersBar({ value, onChange, groups, types }: Props)
           value={value.type_id ?? ""}
           all={t("allTypes")}
           options={types.map((type) => ({ value: type.id, label: typeName(type, locale) }))}
-          onChange={(type_id) => set({ type_id, level: undefined, custom: undefined, ranges: undefined })}
-        />
-        <Select
-          label={t("level")}
-          value={value.level ?? ""}
-          all={t("allLevels")}
-          options={levels.map((item) => ({ value: item, label: item }))}
-          onChange={(level) => set({ level })}
-        />
-        <Input
-          aria-label={t("subject")}
-          placeholder={t("subject")}
-          value={value.subject ?? ""}
-          onChange={(event) => set({ subject: event.target.value })}
+          onChange={(type_id) => set({ type_id, custom: undefined, ranges: undefined })}
         />
         <Input
           aria-label={t("student")}

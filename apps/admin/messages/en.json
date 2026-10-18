@@ -85,6 +85,8 @@
     "partial": "Partly done",
     "success": "Success",
     "running": "Running",
+    "stopped": "Stopped",
+    "paused": "Paused",
     "queued": "Queued",
     "stopping": "Stopping",
     "done": "Done"
@@ -649,10 +651,10 @@
     },
     "reconcile": {
       "button": "Check that all lesson materials are in the notebook",
-      "hint": "Adds the lesson materials missing from the subject notebooks. Materials already there stay as they are.",
+      "hint": "Starts a background check that adds the lesson materials missing from the subject notebooks. Materials already there stay as they are.",
       "running": "Checking…",
-      "done": "Checked {notebooks} notebooks: {added} added, {present} already present, {skipped} not readable yet.",
-      "error": "The check failed. Try again."
+      "done": "Checked {notebooks} notebooks: {added} added, {present} already present, {skipped} to retry later.",
+      "error": "The check did not finish. Try again."
     }
   },
   "rooms": {
@@ -1287,7 +1289,17 @@
         "lastError": "Last error",
         "finished": "Finished"
       },
-      "studentSyncsAttempts": "{n} of {max}"
+      "studentSyncsAttempts": "{n} of {max}",
+      "runStop": "Stop",
+      "runStopTitle": "Stop this sync run?",
+      "runStopDescription": "The run ends after the students already in progress. Students not yet synced are picked up by the next sync.",
+      "runStopConfirm": "Stop run",
+      "runStopped": "Stop requested. The run ends shortly.",
+      "studentStop": "Stop",
+      "studentStopTitle": "Stop this student's sync?",
+      "studentStopDescription": "The sync of this student stops before its next step and is not retried automatically. Start it again from the sync tools.",
+      "studentStopConfirm": "Stop sync",
+      "studentStopped": "Stop requested for this student."
     },
     "audit": {
       "empty": "No audit events match.",

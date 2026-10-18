@@ -85,6 +85,8 @@
     "partial": "Qisman",
     "success": "Muvaffaqiyatli",
     "running": "Bajarilmoqda",
+    "stopped": "To'xtatildi",
+    "paused": "To'xtab turibdi",
     "queued": "Navbatda",
     "stopping": "Toʻxtatilmoqda",
     "done": "Tayyor"
@@ -649,10 +651,10 @@
     },
     "reconcile": {
       "button": "Barcha dars materiallari daftarda borligini tekshirish",
-      "hint": "Fan daftarlarida yo‘q dars materiallarini qo‘shadi. Mavjud materiallar o‘zgarmaydi.",
+      "hint": "Fon rejimida tekshiruvni boshlaydi: fan bloknotlarida yo'q dars materiallarini qo'shadi. Mavjud materiallar o'zgarmaydi.",
       "running": "Tekshirilmoqda…",
-      "done": "Tekshirildi: {notebooks} ta daftar. Qo‘shildi: {added}, avvaldan bor: {present}, hali o‘qib bo‘lmaydi: {skipped}.",
-      "error": "Tekshirish amalga oshmadi. Qayta urinib ko‘ring."
+      "done": "Tekshirildi bloknotlar: {notebooks}. Qo'shildi: {added}, avval bor edi: {present}, keyinroq qayta urinish: {skipped}.",
+      "error": "Tekshiruv yakunlanmadi. Qayta urinib ko'ring."
     }
   },
   "rooms": {
@@ -1287,7 +1289,17 @@
         "lastError": "Oxirgi xato",
         "finished": "Yakunlangan"
       },
-      "studentSyncsAttempts": "{n} / {max}"
+      "studentSyncsAttempts": "{n} / {max}",
+      "runStop": "To'xtatish",
+      "runStopTitle": "Bu sinxronizatsiyani to'xtatasizmi?",
+      "runStopDescription": "Ishlayotgan talabalardan keyin sinxronizatsiya tugaydi. Hali sinxronlanmaganlarni keyingi sinxronizatsiya oladi.",
+      "runStopConfirm": "Sinxronizatsiyani to'xtatish",
+      "runStopped": "To'xtatish so'raldi. Sinxronizatsiya tez orada tugaydi.",
+      "studentStop": "To'xtatish",
+      "studentStopTitle": "Bu talabaning sinxronizatsiyasini to'xtatasizmi?",
+      "studentStopDescription": "Talabaning sinxronizatsiyasi keyingi bosqichdan oldin to'xtaydi va avtomatik qayta urinilmaydi. Uni sinxronizatsiya vositalaridan qayta boshlang.",
+      "studentStopConfirm": "Sinxronizatsiyani to'xtatish",
+      "studentStopped": "Bu talaba uchun to'xtatish so'raldi."
     },
     "audit": {
       "empty": "Audit hodisalari topilmadi.",

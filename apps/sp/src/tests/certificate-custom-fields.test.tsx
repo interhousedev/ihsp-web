@@ -53,7 +53,6 @@ describe("student custom fields", () => {
     await waitFor(() => expect(within(dialog).getByLabelText(/Track/)).toBeInTheDocument())
     expect(within(dialog).getByRole("button", { name: "Save" })).toBeDisabled()
 
-    setDropdownValue(within(dialog).getByLabelText("Level"), "B2")
     setDropdownValue(within(dialog).getByLabelText(/Note/), "Excellent")
     setDropdownValue(within(dialog).getByLabelText(/Track/), "math")
     await user.click(within(dialog).getByRole("button", { name: "Save" }))

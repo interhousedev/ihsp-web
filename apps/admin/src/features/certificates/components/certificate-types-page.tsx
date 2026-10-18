@@ -25,14 +25,9 @@ import { useAdminMutation } from "../../shared/hooks/use-admin-mutation"
 import { TOUCH, TOUCH_ICON } from "../../shared/utils/touch"
 import { CertificateTypeDialog } from "./certificate-type-dialog"
 
-function asked(type: CertificateType, t: (key: string) => string): string {
-  const labels: string[] = []
-  if (type.asks_level) labels.push(t("asksLevel"))
-  if (type.asks_score) labels.push(t("asksScore"))
-  if (type.asks_percent) labels.push(t("asksPercent"))
-  if (type.asks_subject) labels.push(t("asksSubject"))
-  if (type.asks_year) labels.push(t("asksYear"))
-  return labels.join(", ")
+/** The labels of the type's custom fields, in the active locale. */
+function fieldLabels(type: CertificateType, locale: string): string {
+  return type.custom_fields.map((field) => field.label[locale as "uz"] || field.label.en || field.key).join(", ")
 }
 
 /** Certificate types: create, edit and delete; built-in types cannot be deleted. */
@@ -86,7 +81,7 @@ export function CertificateTypesPage() {
                       {name} {type.builtin ? <Badge variant="secondary">{t("builtin")}</Badge> : null}
                     </TableCell>
                     <TableCell className="font-mono text-xs">{type.code}</TableCell>
-                    <TableCell>{asked(type, t)}</TableCell>
+                    <TableCell>{fieldLabels(type, locale)}</TableCell>
                     <TableCell>
                       <span className="flex justify-end gap-1">
                         <Button

@@ -8,14 +8,6 @@ export interface CertificateType {
   id: string
   code: string
   name: LocalizedName
-  levels: string[]
-  asks_level: boolean
-  asks_score: boolean
-  score_min: number | null
-  score_max: number | null
-  asks_percent: boolean
-  asks_subject: boolean
-  asks_year: boolean
   builtin: boolean
   position: number
   custom_fields: CustomField[]
@@ -62,12 +54,6 @@ export interface CertificateFile {
 export interface CertificateEntry {
   id: string
   type_id: string
-  level: string | null
-  score: number | null
-  percent: number | null
-  subject: string | null
-  year: number | null
-  serial: string | null
   source: "manual" | "emis"
   issued_at: string | null
   expires_at: string | null
@@ -78,12 +64,6 @@ export interface CertificateEntry {
 
 export type CertificateEntryInput = {
   type_id: string
-  level?: string | null
-  score?: number | null
-  percent?: number | null
-  subject?: string | null
-  year?: number | null
-  serial?: string | null
   custom?: Record<string, CustomValue> | null
 }
 
@@ -103,8 +83,6 @@ export type CertificateFilters = {
   group_id?: string
   subgroup?: string
   type_id?: string
-  subject?: string
-  level?: string
   student_id?: string
   q?: string
   /** Custom choice/text filters, sent as repeated `cf_<key>` query params. */

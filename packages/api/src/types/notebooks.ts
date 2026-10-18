@@ -638,8 +638,15 @@ export type SubjectMaterial = {
 /** The default materials of one EMIS subject id. */
 export type SubjectMaterialGroup = { edu_subject_id: number; materials: SubjectMaterial[] }
 
-/** Result of "check that all lesson materials are in the notebook". */
-export type ReconcileMaterials = {
+/** State of a reconcile job ("check that all lesson materials are in the notebook"). */
+export type ReconcileJobState = "queued" | "running" | "stopping" | "done" | "failed" | "cancelled"
+/** 202 answer of the reconcile start: poll the job for its totals. */
+export type ReconcileJobAccepted = { job_id: string; status: ReconcileJobState }
+/** Progress and totals of one reconcile job. */
+export type ReconcileJobStatus = {
+  job_id: string
+  status: ReconcileJobState
+  done: boolean
   notebooks: number
   added: number
   already_present: number

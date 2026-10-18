@@ -25,6 +25,8 @@ const TONES: Record<string, Tone> = {
   running: "default",
   queued: "outline",
   stopping: "outline",
+  stopped: "outline",
+  paused: "outline",
   done: "secondary",
 }
 

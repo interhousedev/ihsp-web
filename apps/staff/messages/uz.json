@@ -486,10 +486,10 @@
     },
     "reconcile": {
       "button": "Barcha dars materiallari daftarda borligini tekshirish",
-      "hint": "Fan daftarlarida yo‘q dars materiallarini qo‘shadi. Mavjud materiallar o‘zgarmaydi.",
+      "hint": "Fon rejimida tekshiruvni boshlaydi: fan bloknotlarida yo'q dars materiallarini qo'shadi. Mavjud materiallar o'zgarmaydi.",
       "running": "Tekshirilmoqda…",
-      "done": "Tekshirildi: {notebooks} ta daftar. Qo‘shildi: {added}, avvaldan bor: {present}, hali o‘qib bo‘lmaydi: {skipped}.",
-      "error": "Tekshirish amalga oshmadi. Qayta urinib ko‘ring."
+      "done": "Tekshirildi bloknotlar: {notebooks}. Qo'shildi: {added}, avval bor edi: {present}, keyinroq qayta urinish: {skipped}.",
+      "error": "Tekshiruv yakunlanmadi. Qayta urinib ko'ring."
     }
   }
 }

@@ -34,7 +34,18 @@ function sameTarget(item: SubjectMaterial, body: Partial<SubjectMaterialCreateBo
 
 export const subjectMaterialsHandlers = [
   http.post(apiUrl("/v1/admin/subject-materials/subjects/:subjectId/reconcile"), () =>
-    HttpResponse.json({ notebooks: 2, added: 1, already_present: 3, skipped: 0 }),
+    HttpResponse.json({ job_id: "reconcile-job-admin", status: "queued" }, { status: 202 }),
+  ),
+  http.get(apiUrl("/v1/admin/subject-materials/subjects/:subjectId/reconcile/:jobId"), ({ params }) =>
+    HttpResponse.json({
+      job_id: String(params.jobId),
+      status: "done",
+      done: true,
+      notebooks: 2,
+      added: 1,
+      already_present: 3,
+      skipped: 0,
+    }),
   ),
   http.get(apiUrl("/v1/admin/subject-materials"), () => HttpResponse.json(subjectMaterialGroups(store))),
   http.get(apiUrl("/v1/admin/subject-materials/:eduSubjectId"), ({ params }) => {
