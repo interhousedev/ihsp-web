@@ -1,17 +1,13 @@
-// Academic — the student's own full EMIS sync (teachers, lessons with plans, marks).
+// Academic — the student's own initial EMIS sync (sync with proof) and the admin list of them.
 
+import type { components } from "../generated/openapi"
 import { api } from "../client"
 import { keys } from "../keys"
 import { queryOptions, type RequestOptions } from "../query"
 
-// TODO(contract): replace with generated
-/** The student's last full sync; `detail` is the timetable outcome (`synced`, `no_term`, `emis_unavailable`, ...). */
-export interface MeSyncStatus {
-  status: "queued" | "running" | "done" | "failed"
-  requested_at: string
-  finished_at: string | null
-  detail: string | null
-}
+/** The durable sync record: status, attempts, last error, what was synced. */
+export type MeSyncStatus = components["schemas"]["SyncStatusResponse"]
+export type StudentSyncStatus = MeSyncStatus["status"]
 
 /** GET /v1/me/sync — student; `null` before the first sync. */
 export function getMeSync(opts?: RequestOptions): Promise<MeSyncStatus | null> {
@@ -23,7 +19,20 @@ export const getMeSyncQuery = () =>
     queryFn: ({ signal }) => getMeSync({ signal }),
   })
 
-/** POST /v1/me/sync — student; 202 with the queued state, `429 common/rate-limited` within ten minutes. */
+/** POST /v1/me/sync — student; 202 with the job. Idempotent: a pending, running or done job is returned as it is. */
 export function postMeSync(opts?: RequestOptions): Promise<MeSyncStatus> {
   return api.post<MeSyncStatus>("/v1/me/sync", {}, opts)
 }
+
+/** GET /v1/admin/sync/student-syncs?status= — admin; the students whose initial sync is in one status. */
+export function getAdminStudentSyncs(
+  status: StudentSyncStatus = "failed",
+  opts?: RequestOptions,
+): Promise<MeSyncStatus[]> {
+  return api.get<MeSyncStatus[]>("/v1/admin/sync/student-syncs", { ...opts, query: { status } })
+}
+export const getAdminStudentSyncsQuery = (status: StudentSyncStatus = "failed") =>
+  queryOptions({
+    queryKey: keys.admin.studentSyncs(status),
+    queryFn: ({ signal }) => getAdminStudentSyncs(status, { signal }),
+  })

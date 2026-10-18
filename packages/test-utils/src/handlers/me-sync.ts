@@ -1,6 +1,6 @@
 import type { MeSyncStatus } from "@ihsp/api"
 import { HttpResponse, http } from "msw"
-import { apiUrl, problem } from "./utils"
+import { apiUrl } from "./utils"
 
 let last: MeSyncStatus | null = null
 
@@ -9,17 +9,34 @@ export function resetMeSyncState(): void {
   last = null
 }
 
+/** A sync record with sensible defaults; override what a test cares about. */
+export function syncRecord(overrides: Partial<MeSyncStatus> = {}): MeSyncStatus {
+  return {
+    user_id: "00000000-0000-4000-8000-000000000001",
+    status: "pending",
+    attempts: 0,
+    max_attempts: 6,
+    requested_at: "2026-10-06T09:00:00Z",
+    next_attempt_at: null,
+    finished_at: null,
+    last_error: null,
+    subgroup: null,
+    marks_count: null,
+    ...overrides,
+  }
+}
+
 /**
- * `GET /v1/me/sync` answers the last sync (`null` before the first); `POST` queues one and answers 202, and a second
- * `POST` while the window is open answers `429 common/rate-limited` with `retry_after`, as the backend does.
+ * `GET /v1/me/sync` answers the job (`null` before the first); `POST` returns the job as pending, and
+ * is idempotent: a job that is already pending, running or succeeded is answered unchanged.
  */
 export const meSyncHandlers = [
+  http.get(apiUrl("/v1/admin/sync/student-syncs"), () => HttpResponse.json([] as MeSyncStatus[])),
   http.get(apiUrl("/v1/me/sync"), () => HttpResponse.json(last)),
   http.post(apiUrl("/v1/me/sync"), () => {
-    if (last !== null) {
-      return problem(429, "common/rate-limited", "Too many requests", { params: { retry_after: 540 } })
+    if (last === null || last.status === "failed") {
+      last = syncRecord({ status: "pending", requested_at: "2026-10-06T09:00:00Z" })
     }
-    last = { status: "queued", requested_at: "2026-10-06T09:00:00Z", finished_at: null, detail: null }
     return HttpResponse.json(last, { status: 202 })
   }),
 ]

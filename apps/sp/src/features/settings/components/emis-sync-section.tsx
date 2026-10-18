@@ -1,6 +1,6 @@
 "use client"
 
-import { getErrorParam, getMeSyncQuery, isApiError, keys, postMeSync, type MeSyncStatus } from "@ihsp/api"
+import { getMeSyncQuery, keys, postMeSync, type MeSyncStatus } from "@ihsp/api"
 import { useErrorMessage, useFormatters, useT } from "@ihsp/i18n"
 import { Button } from "@ihsp/ui"
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query"
@@ -8,14 +8,10 @@ import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query"
 const POLL_MS = 3000
 
 function isActive(state: MeSyncStatus | null | undefined): boolean {
-  return state?.status === "queued" || state?.status === "running"
+  return state?.status === "pending" || state?.status === "running"
 }
 
-function isNumber(value: unknown): value is number {
-  return typeof value === "number"
-}
-
-/** Re-sync teachers, lessons (with plans) and marks from EMIS; the backend allows one sync per ten minutes. */
+/** Re-sync teachers, lessons, subgroup and marks from EMIS; shows the durable sync record (attempts, reason, what was synced). */
 export function EmisSyncSection() {
   const t = useT("settings.emisSync")
   const errorMessage = useErrorMessage()
@@ -27,18 +23,22 @@ export function EmisSyncSection() {
   })
   const sync = useMutation({
     mutationFn: () => postMeSync(),
-    onSuccess: (queued) => client.setQueryData(keys.me.sync(), queued),
+    onSuccess: (job) => client.setQueryData(keys.me.sync(), job),
   })
   const current = state.data
-  const active = isActive(current)
-
-  function failure(error: unknown): string {
-    if (isApiError(error) && error.status === 429) {
-      const seconds = getErrorParam(error, "retry_after", isNumber) ?? 600
-      return t("rateLimited", { minutes: Math.max(1, Math.ceil(seconds / 60)) })
+  const stateLabel = (status: MeSyncStatus["status"]): string => {
+    switch (status) {
+      case "pending":
+        return t("states.pending")
+      case "running":
+        return t("states.running")
+      case "succeeded":
+        return t("states.succeeded")
+      case "failed":
+        return t("states.failed")
     }
-    return errorMessage(error)
   }
+  const active = isActive(current)
 
   return (
     <div className="flex flex-col gap-3">
@@ -50,18 +50,33 @@ export function EmisSyncSection() {
         {t("button")}
       </Button>
       {current ? (
-        <p className="text-muted-foreground text-sm" aria-live="polite">
-          {current.status === "queued" ? t("queued") : null}
-          {current.status === "running" ? t("running") : null}
-          {current.status === "done" && current.finished_at
-            ? t("lastSynced", { time: format.dateTime(current.finished_at) })
-            : null}
-          {current.status === "failed" ? t("failed") : null}
-        </p>
+        <div className="text-muted-foreground flex flex-col gap-1 text-sm" aria-live="polite">
+          <p>
+            {t("status")}: {stateLabel(current.status)}
+            {current.status === "failed" || current.status === "pending" || current.status === "running"
+              ? ` · ${t("attempts", { n: current.attempts, max: current.max_attempts ?? current.attempts })}`
+              : null}
+          </p>
+          {current.status === "succeeded" && current.finished_at ? (
+            <p>{t("finishedAt", { time: format.dateTime(current.finished_at) })}</p>
+          ) : null}
+          {current.status === "succeeded" ? (
+            <p>
+              {t("subgroup", { value: current.subgroup ?? t("noSubgroup") })} ·{" "}
+              {t("marks", { n: current.marks_count ?? 0 })}
+            </p>
+          ) : null}
+          {current.status === "failed" && current.last_error ? (
+            <p>{t("lastError", { error: current.last_error })}</p>
+          ) : null}
+          {current.status === "failed" && current.attempts >= (current.max_attempts ?? 0) ? (
+            <p>{t("gaveUp", { max: current.max_attempts ?? 0 })}</p>
+          ) : null}
+        </div>
       ) : null}
       {sync.isError ? (
         <p role="alert" className="text-destructive text-sm">
-          {failure(sync.error)}
+          {errorMessage(sync.error)}
         </p>
       ) : null}
     </div>

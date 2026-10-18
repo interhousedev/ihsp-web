@@ -9,6 +9,7 @@ import { PagedTable } from "../../shared/components/paged-table"
 import { StatusBadge } from "../../shared/components/status-badge"
 import { useAdminMutation } from "../../shared/hooks/use-admin-mutation"
 import { MaterialsResync } from "./materials-resync"
+import { StudentSyncs } from "./student-syncs"
 import { SERVER_PAGE_SIZE, usePagedList } from "../../shared/hooks/use-paged-list"
 import { col } from "../../shared/utils/columns"
 import { TOUCH } from "../../shared/utils/touch"
@@ -88,6 +89,7 @@ export function SyncTab() {
         </Button>
       </div>
       <MaterialsResync />
+      <StudentSyncs />
       <PagedTable source={source} columns={columns} getRowId={(item) => item.id} emptyText={t("empty")} />
       <ConfirmDialog
         open={confirmOpen}
