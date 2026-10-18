@@ -48,7 +48,10 @@ describe("SubjectsPage", () => {
 
     await user.click(screen.getByRole("button", { name: "Add a subject under Physics" }))
     const dialog = await screen.findByRole("dialog", { name: "Add a subject under this one" })
-    expect(within(dialog).getByRole("combobox", { name: "Under" })).toHaveValue(libSubjects.physics.id)
+    expect(within(dialog).getByRole("combobox", { name: "Under" })).toHaveAttribute(
+      "data-value",
+      libSubjects.physics.id,
+    )
     await user.type(within(dialog).getByLabelText("Name (Uzbek)"), "Optika")
     await user.type(within(dialog).getByLabelText("Name (Russian)"), "Оптика")
     await user.type(within(dialog).getByLabelText("Name (English)"), "Optics")

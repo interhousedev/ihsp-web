@@ -12,8 +12,7 @@ import {
   DialogTitle,
   Input,
   Label,
-  NativeSelect,
-  NativeSelectOption,
+  Dropdown,
 } from "@ihsp/ui"
 import { useMutation, useQueryClient } from "@tanstack/react-query"
 import { useEffect, useId, useMemo, useState } from "react"
@@ -136,19 +135,19 @@ export function SubjectDialog({
           </div>
           <div className="flex flex-col gap-1.5">
             <Label htmlFor={`${id}-parent`}>{t("parent")}</Label>
-            <NativeSelect
+            <Dropdown
               id={`${id}-parent`}
               value={parentId}
               className="w-full"
-              onChange={(event) => setParentId(event.target.value)}
-            >
-              <NativeSelectOption value="">{t("parentTop")}</NativeSelectOption>
-              {choices.map((choice) => (
-                <NativeSelectOption key={choice.id} value={choice.id}>
-                  {`${"– ".repeat(choice.depth)}${choice.subject.name.en}`}
-                </NativeSelectOption>
-              ))}
-            </NativeSelect>
+              onValueChange={setParentId}
+              options={[
+                { value: "", label: t("parentTop") },
+                ...choices.map((choice) => ({
+                  value: choice.id,
+                  label: `${"– ".repeat(choice.depth)}${choice.subject.name.en}`,
+                })),
+              ]}
+            />
           </div>
           <div className="flex flex-col gap-1.5">
             <Label htmlFor={`${id}-slug`}>{t("slug")}</Label>

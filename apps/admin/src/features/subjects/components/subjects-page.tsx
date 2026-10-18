@@ -14,6 +14,7 @@ import { actionsCol, col } from "../../shared/utils/columns"
 import { TOUCH, TOUCH_ICON } from "../../shared/utils/touch"
 import { DefaultMaterialsDialog } from "./default-materials-dialog"
 import { MaterialsByEmisId } from "./materials-by-emis-id"
+import { ReconcileMaterialsButton } from "./reconcile-materials-button"
 import { SubjectDialog } from "./subject-dialog"
 import { SubjectEmisDialog } from "./subject-emis-dialog"
 
@@ -95,16 +96,19 @@ export function SubjectsPage() {
         }
         const count = materialCounts.get(eduSubjectId) ?? 0
         return (
-          <Button
-            type="button"
-            variant="outline"
-            className={TOUCH}
-            aria-label={t("materials.open", { name: subject.name.en, count })}
-            onClick={() => openMaterials({ eduSubjectId, label: subject.name.en })}
-          >
-            <Icons.paperclip aria-hidden />
-            {materialGroups.data ? count : "…"}
-          </Button>
+          <span className="inline-flex flex-col items-start gap-2">
+            <Button
+              type="button"
+              variant="outline"
+              className={TOUCH}
+              aria-label={t("materials.open", { name: subject.name.en, count })}
+              onClick={() => openMaterials({ eduSubjectId, label: subject.name.en })}
+            >
+              <Icons.paperclip aria-hidden />
+              {materialGroups.data ? count : "…"}
+            </Button>
+            <ReconcileMaterialsButton subjectId={subject.id} />
+          </span>
         )
       }),
       actionsCol<Subject>(t("columns.actions"), (subject) => (

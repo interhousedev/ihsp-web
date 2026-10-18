@@ -3,7 +3,7 @@ import { afterEach, beforeEach, describe, expect, test } from "bun:test"
 import { readFileSync } from "node:fs"
 import { join } from "node:path"
 import { mergeMessages, type Messages } from "@ihsp/i18n"
-import { ids } from "@ihsp/test-utils"
+import { ids, setDropdownValue } from "@ihsp/test-utils"
 import { fireEvent, screen, waitFor, within } from "@testing-library/react"
 import { SubjectPage } from "../features/subjects/components/subject-page"
 import { SubjectsPage } from "../features/subjects/components/subjects-page"
@@ -38,8 +38,8 @@ describe("subjects", () => {
 
     const group = screen.getByRole("group", { name: "2TN2" })
     fireEvent.click(within(group).getByRole("button", { name: "Link" }))
-    fireEvent.change(within(group).getByLabelText("Web address"), { target: { value: "https://example.org/x" } })
-    fireEvent.change(within(group).getByLabelText("Title"), { target: { value: "Extra for 2TN2" } })
+    setDropdownValue(within(group).getByLabelText("Web address"), "https://example.org/x")
+    setDropdownValue(within(group).getByLabelText("Title"), "Extra for 2TN2")
     fireEvent.click(within(group).getByRole("button", { name: "Add material" }))
     await waitFor(() =>
       expect(within(screen.getByRole("group", { name: "2TN2" })).getByText("Extra for 2TN2")).toBeTruthy(),

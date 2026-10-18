@@ -2,7 +2,7 @@
 
 import { getLibrarySubjectsQuery, getLibraryTopicsQuery, type Topic } from "@ihsp/api"
 import { useT } from "@ihsp/i18n"
-import { Button, Input, NativeSelect, NativeSelectOption, Skeleton } from "@ihsp/ui"
+import { Button, Dropdown, Input, Skeleton } from "@ihsp/ui"
 import { IconPlus, IconTrash } from "@ihsp/ui"
 import { useQuery } from "@tanstack/react-query"
 import { useMemo } from "react"
@@ -63,44 +63,32 @@ export function BookSubjectsTopics({
         <ul className="flex flex-col gap-2">
           {form.subjects.map((row, index) => (
             <li key={row.subject_id} className="flex flex-wrap items-center gap-2">
-              <NativeSelect
+              <Dropdown
                 aria-label={t("subjectName")}
                 value={row.subject_id}
-                onChange={(event) =>
+                onValueChange={(value) =>
                   onChange({
-                    subjects: form.subjects.map((item, at) =>
-                      at === index ? { ...item, subject_id: event.target.value } : item,
-                    ),
+                    subjects: form.subjects.map((item, at) => (at === index ? { ...item, subject_id: value } : item)),
                   })
                 }
-              >
-                {(subjects.data ?? [])
+                options={(subjects.data ?? [])
                   .filter((subject) => subject.id === row.subject_id || !chosen.has(subject.id))
-                  .map((subject) => (
-                    <NativeSelectOption key={subject.id} value={subject.id}>
-                      {subject.name}
-                    </NativeSelectOption>
-                  ))}
-              </NativeSelect>
-              <NativeSelect
+                  .map((subject) => ({ value: subject.id, label: subject.name }))}
+              />
+              <Dropdown
                 aria-label={t("subjectRoleLabel", {
                   name: subjects.data?.find((subject) => subject.id === row.subject_id)?.name ?? "",
                 })}
                 value={row.role}
-                onChange={(event) =>
+                onValueChange={(value) =>
                   onChange({
                     subjects: form.subjects.map((item, at) =>
-                      at === index ? { ...item, role: event.target.value as typeof row.role } : item,
+                      at === index ? { ...item, role: value as typeof row.role } : item,
                     ),
                   })
                 }
-              >
-                {SUBJECT_ROLES.map((role) => (
-                  <NativeSelectOption key={role} value={role}>
-                    {roles(role)}
-                  </NativeSelectOption>
-                ))}
-              </NativeSelect>
+                options={SUBJECT_ROLES.map((role) => ({ value: role, label: roles(role) }))}
+              />
               <Button
                 type="button"
                 variant="ghost"
@@ -137,23 +125,16 @@ export function BookSubjectsTopics({
         <ul className="flex flex-col gap-2">
           {form.topics.map((row, index) => (
             <li key={`${row.topic_id}-${index}`} className="flex flex-wrap items-center gap-2">
-              <NativeSelect
+              <Dropdown
                 aria-label={t("topicName")}
                 value={row.topic_id}
-                onChange={(event) =>
+                onValueChange={(value) =>
                   onChange({
-                    topics: form.topics.map((item, at) =>
-                      at === index ? { ...item, topic_id: event.target.value } : item,
-                    ),
+                    topics: form.topics.map((item, at) => (at === index ? { ...item, topic_id: value } : item)),
                   })
                 }
-              >
-                {offered.map((topic) => (
-                  <NativeSelectOption key={topic.id} value={topic.id}>
-                    {topic.label}
-                  </NativeSelectOption>
-                ))}
-              </NativeSelect>
+                options={offered.map((topic) => ({ value: topic.id, label: topic.label }))}
+              />
               <Input
                 aria-label={t("pageFrom")}
                 inputMode="numeric"

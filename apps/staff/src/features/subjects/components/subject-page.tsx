@@ -8,6 +8,7 @@ import { parseAsString, useQueryState } from "nuqs"
 import { BackLink } from "../../shared/components/back-link"
 import { QueryState } from "../../shared/components/query-state"
 import { SUBJECTS_HREF } from "../utils/hrefs"
+import { ReconcileMaterialsButton } from "./reconcile-materials-button"
 import { SubjectGroups } from "./subject-groups"
 import { SubjectMaterials } from "./subject-materials"
 
@@ -40,6 +41,7 @@ export function SubjectPage() {
             <BackLink href={SUBJECTS_HREF} label={t("back")} />
             <div className="flex flex-col gap-8">
               <SubjectGroups subject={subject} />
+              <ReconcileMaterialsButton subjectId={subject.subject_id} />
               <SubjectMaterials subjectId={subject.subject_id} />
             </div>
           </PageContainer>

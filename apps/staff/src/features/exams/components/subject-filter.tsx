@@ -1,7 +1,7 @@
 "use client"
 
 import { useT } from "@ihsp/i18n"
-import { NativeSelect } from "@ihsp/ui"
+import { Dropdown } from "@ihsp/ui"
 import { useId } from "react"
 
 /** The subject view of the list: all subjects or one (`?subject=`). */
@@ -21,19 +21,16 @@ export function SubjectFilter({
       <label htmlFor={id} className="text-sm font-medium">
         {t("subjectFilter")}
       </label>
-      <NativeSelect
+      <Dropdown
         id={id}
-        className="w-full sm:w-60 [&_select]:h-11 md:[&_select]:h-8"
+        className="w-full sm:w-60"
         value={value}
-        onChange={(event) => onChange(event.target.value)}
-      >
-        <option value="">{t("allSubjects")}</option>
-        {subjects.map((subject) => (
-          <option key={subject.id} value={subject.id}>
-            {subject.name}
-          </option>
-        ))}
-      </NativeSelect>
+        onValueChange={onChange}
+        options={[
+          { value: "", label: t("allSubjects") },
+          ...subjects.map((subject) => ({ value: subject.id, label: subject.name })),
+        ]}
+      />
     </div>
   )
 }

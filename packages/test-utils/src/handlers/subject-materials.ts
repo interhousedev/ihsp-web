@@ -33,6 +33,9 @@ function sameTarget(item: SubjectMaterial, body: Partial<SubjectMaterialCreateBo
 }
 
 export const subjectMaterialsHandlers = [
+  http.post(apiUrl("/v1/admin/subject-materials/subjects/:subjectId/reconcile"), () =>
+    HttpResponse.json({ notebooks: 2, added: 1, already_present: 3, skipped: 0 }),
+  ),
   http.get(apiUrl("/v1/admin/subject-materials"), () => HttpResponse.json(subjectMaterialGroups(store))),
   http.get(apiUrl("/v1/admin/subject-materials/:eduSubjectId"), ({ params }) => {
     const id = eduSubjectId(params)

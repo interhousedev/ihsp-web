@@ -87,6 +87,9 @@ export const staffSubjectsHandlers = [
     studentResponse,
   ),
   http.get(apiUrl("/v1/staff/subjects"), () => HttpResponse.json(staffSubjects)),
+  http.post(apiUrl("/v1/staff/subjects/:subjectId/reconcile"), () =>
+    HttpResponse.json({ notebooks: 1, added: 1, already_present: 2, skipped: 0 }),
+  ),
   http.get(apiUrl("/v1/staff/subjects/:subjectId/materials"), ({ params }) => {
     const subject = staffSubjects.find((item) => item.subject_id === param(params, "subjectId"))
     if (!subject) return notTaught()
