@@ -34,7 +34,7 @@ import type { getLmsH5PLaunch, getLmsPreviewH5PLaunch, postLmsH5PPackage, postLm
 import type { getLmsAttempt, getLmsCourse, getLmsCourseStep, getLmsCourseStudents, getLmsCourses, getLmsMyCourses, getLmsPreviewStepVideo, getLmsStepCardsNext, getLmsStepVideo, postLmsAttemptOverride, postLmsAttemptSubmit, postLmsCourseEnroll, postLmsJoin, postLmsStepBlockAttempts, postLmsStepCardReview, postLmsStepViewed, putLmsAttemptAnswers } from "./endpoints/lms-learning"
 import type { getLmsCourseSettings, patchLmsCourseDetails, postLmsCourseJoinCode, postLmsCourseLinkCheck } from "./endpoints/lms-settings"
 import type { getAdminSubjectPeople, getAdminSyncRuns, getMeGrades, getMeGradesDay, getMeLessonResults, getMeRecordBook, getMeSubject, getMeSubjectLessons, getMeSubjects, postAdminSubjectEmisPull, postAdminSyncMaterials, postAdminSyncRun } from "./endpoints/marks"
-import type { getMeSync, postMeSync } from "./endpoints/me-sync"
+import type { getAdminStudentSyncs, getMeSync, postMeSync } from "./endpoints/me-sync"
 import type { getAdminSubjectMaterialGroups, getAdminSubjectMaterials, getArtifact, getArtifacts, getNotebook, getNotebookAutoSubject, getNotebookChat, getNotebookLabels, getNotebookSearch, getNotebookSource, getNotebookSourceFileUrl, getNotebookSources, getNotebookSubjectSlots, getNotebookUsage, getNotebooks, getPassage, getSourcePassages, getStaffSubjectMaterials, getStaffSubjects, patchArtifact, patchNotebook, patchNotebookLabel, patchNotebookSource, postAdminReconcileSubjectMaterials, postAdminSubjectMaterial, postArtifact, postArtifactAsSource, postArtifactAttachToLesson, postArtifactCancel, postArtifactFlashcardSet, postArtifactRetry, postArtifactSaveToFiles, postArtifactSlidesRevise, postNotebook, postNotebookAutoSubject, postNotebookDiscover, postNotebookLabel, postNotebookLabelsAuto, postNotebookMessage, postNotebookRegenerate, postNotebookSourceSync, postNotebookSources, postNotebookSourcesSelect, postSaveNote, postStaffReconcileSubjectMaterials, postStaffSubjectMaterial, putArtifactSlides, putNotebookSourceLabels } from "./endpoints/notebooks"
 import type { getNotifications, getNotificationsUnreadCount } from "./endpoints/notifications"
 import type { postOauthLogout, postOauthRefresh, postOauthTelegram, postOauthToken, postOauthTokenHook } from "./endpoints/oauth"
@@ -1257,6 +1257,10 @@ export const served_getMeSync: Awaited<ReturnType<typeof getMeSync>> = gen_getMe
 // POST /v1/me/sync — postMeSync
 declare const gen_postMeSync: ResponseOf<"/v1/me/sync", "post">
 export const served_postMeSync: Awaited<ReturnType<typeof postMeSync>> = gen_postMeSync
+
+// GET /v1/admin/sync/student-syncs — getAdminStudentSyncs
+declare const gen_getAdminStudentSyncs: ResponseOf<"/v1/admin/sync/student-syncs", "get">
+export const served_getAdminStudentSyncs: Awaited<ReturnType<typeof getAdminStudentSyncs>> = gen_getAdminStudentSyncs
 
 // GET /v1/notebooks — getNotebooks
 declare const gen_getNotebooks: ResponseOf<"/v1/notebooks", "get">
