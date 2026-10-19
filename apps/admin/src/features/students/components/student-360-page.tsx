@@ -58,7 +58,7 @@ export function Student360Page() {
               ))}
             </TabsList>
             <TabsContent value="overview">
-              <StudentOverviewTab profile={data.profile} />
+              <StudentOverviewTab profile={data.profile} userId={id} />
             </TabsContent>
             <TabsContent value="timetable">
               <LessonList lessons={data.timetable_week} />

@@ -3,10 +3,12 @@ import { HttpResponse, http } from "msw"
 import { apiUrl } from "./utils"
 
 let last: MeSyncStatus | null = null
+const adminLast = new Map<string, MeSyncStatus>()
 
 /** Forget the last sync (preload calls this after every test). */
 export function resetMeSyncState(): void {
   last = null
+  adminLast.clear()
 }
 
 /** A sync record with sensible defaults; override what a test cares about. */
@@ -32,6 +34,17 @@ export function syncRecord(overrides: Partial<MeSyncStatus> = {}): MeSyncStatus 
  */
 export const meSyncHandlers = [
   http.get(apiUrl("/v1/admin/sync/student-syncs"), () => HttpResponse.json([] as MeSyncStatus[])),
+  http.get(apiUrl("/v1/admin/students/:userId/sync"), ({ params }) =>
+    HttpResponse.json(adminLast.get(String(params.userId)) ?? null),
+  ),
+  http.post(apiUrl("/v1/admin/students/:userId/sync"), ({ params }) => {
+    const userId = String(params.userId)
+    const current = adminLast.get(userId)
+    if (current === undefined || current.status === "failed" || current.status === "succeeded") {
+      adminLast.set(userId, syncRecord({ user_id: userId, status: "pending", requested_at: "2026-10-06T09:00:00Z" }))
+    }
+    return HttpResponse.json(adminLast.get(userId), { status: 202 })
+  }),
   http.get(apiUrl("/v1/me/sync"), () => HttpResponse.json(last)),
   http.post(apiUrl("/v1/me/sync"), () => {
     if (last === null || last.status === "failed") {

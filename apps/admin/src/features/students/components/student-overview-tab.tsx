@@ -5,9 +5,10 @@ import { useFormatters, useT } from "@ihsp/i18n"
 import { Card, CardContent } from "@ihsp/ui"
 import { StatusBadge } from "../../shared/components/status-badge"
 import { fullName } from "../../shared/utils/names"
+import { StudentSyncCard } from "./student-sync-card"
 
 /** Identity, group, curator and EMIS status of a student (ADM-3 "Overview"). */
-export function StudentOverviewTab({ profile }: { profile: Student360["profile"] }) {
+export function StudentOverviewTab({ profile, userId }: { profile: Student360["profile"]; userId: string }) {
   const t = useT("students")
   const f = useFormatters()
   const rows: [string, React.ReactNode][] = [
@@ -24,17 +25,20 @@ export function StudentOverviewTab({ profile }: { profile: Student360["profile"]
     [t("overview.roles"), profile.roles.join(", ")],
   ]
   return (
-    <Card>
-      <CardContent>
-        <dl className="grid grid-cols-1 gap-x-6 gap-y-3 sm:grid-cols-2">
-          {rows.map(([label, value]) => (
-            <div key={label} className="flex flex-col gap-0.5">
-              <dt className="text-muted-foreground text-xs">{label}</dt>
-              <dd className="text-sm break-words">{value}</dd>
-            </div>
-          ))}
-        </dl>
-      </CardContent>
-    </Card>
+    <div className="flex flex-col gap-4">
+      <Card>
+        <CardContent>
+          <dl className="grid grid-cols-1 gap-x-6 gap-y-3 sm:grid-cols-2">
+            {rows.map(([label, value]) => (
+              <div key={label} className="flex flex-col gap-0.5">
+                <dt className="text-muted-foreground text-xs">{label}</dt>
+                <dd className="text-sm break-words">{value}</dd>
+              </div>
+            ))}
+          </dl>
+        </CardContent>
+      </Card>
+      <StudentSyncCard userId={userId} />
+    </div>
   )
 }

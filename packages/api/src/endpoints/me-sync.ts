@@ -24,6 +24,21 @@ export function postMeSync(opts?: RequestOptions): Promise<MeSyncStatus> {
   return api.post<MeSyncStatus>("/v1/me/sync", {}, opts)
 }
 
+/** GET /v1/admin/students/{user_id}/sync — admin; the student's last full EMIS sync, `null` when none. */
+export function getAdminStudentSync(userId: string, opts?: RequestOptions): Promise<MeSyncStatus | null> {
+  return api.get<MeSyncStatus | null>(`/v1/admin/students/${encodeURIComponent(userId)}/sync`, opts)
+}
+export const getAdminStudentSyncQuery = (userId: string) =>
+  queryOptions({
+    queryKey: keys.admin.studentSync(userId),
+    queryFn: ({ signal }) => getAdminStudentSync(userId, { signal }),
+  })
+
+/** POST /v1/admin/students/{user_id}/sync — admin; 202 with the job. Idempotent: a pending or running job is returned as it is. */
+export function postAdminStudentSync(userId: string, opts?: RequestOptions): Promise<MeSyncStatus> {
+  return api.post<MeSyncStatus>(`/v1/admin/students/${encodeURIComponent(userId)}/sync`, {}, opts)
+}
+
 /** GET /v1/admin/sync/student-syncs?status= — admin; the students whose initial sync is in one status. */
 export function getAdminStudentSyncs(
   status: StudentSyncStatus = "failed",
