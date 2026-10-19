@@ -9,6 +9,7 @@ import { curriculumHandlers } from "./curriculum"
 import { meSyncHandlers } from "./me-sync"
 import { adminJobsHandlers } from "./admin-jobs"
 import { adminLogsHandlers } from "./admin-logs"
+import { adminKnowledgeHandlers } from "./admin-knowledge"
 import { dashboardHandlers } from "./dashboard"
 import { filesHandlers } from "./files"
 import { flashcardsHandlers } from "./flashcards"
@@ -43,6 +44,7 @@ export { resetAssessments } from "./assessments"
 export { resetMeSyncState } from "./me-sync"
 export { certificatesImported, resetCertificatesState, setCertificatesStaffForbidden } from "./certificates"
 export { resetAdminJobs } from "./admin-jobs"
+export { resetAdminKnowledge } from "./admin-knowledge"
 export { resetAdminAiState } from "./admin-ai"
 export { aiTurnStream } from "./ai"
 export { resetCreatedFiles, storedObjects } from "./files"
@@ -93,6 +95,7 @@ export {
   meSyncHandlers,
   adminJobsHandlers,
   adminLogsHandlers,
+  adminKnowledgeHandlers,
   dashboardHandlers,
   filesHandlers,
   flashcardsHandlers,
@@ -138,6 +141,7 @@ export const allHandlers = [
   ...meSyncHandlers,
   ...adminJobsHandlers,
   ...adminLogsHandlers,
+  ...adminKnowledgeHandlers,
   ...teachersHandlers,
   ...groupProgressHandlers,
   ...classworkHandlers,

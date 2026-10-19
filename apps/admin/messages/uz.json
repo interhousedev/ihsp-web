@@ -32,7 +32,8 @@
     "settings": "Sozlamalar",
     "limits": "Limitlar va xarajatlar",
     "certificateTypes": "Sertifikat turlari",
-    "certificates": "Sertifikatlar"
+    "certificates": "Sertifikatlar",
+    "knowledge": "Bilimlar bazasi"
   },
   "shared": {
     "filters": "Filtrlar",
@@ -232,7 +233,24 @@
       "status": "Holati",
       "emis": "EMIS holati",
       "synced": "Oxirgi sinxronizatsiya",
-      "roles": "Rollar"
+      "roles": "Rollar",
+      "syncButton": "EMIS bilan sinxronlash (baholar, o‘qituvchilar, darslar)",
+      "syncTitle": "EMIS bilan sinxronlash",
+      "syncHint": "O‘quvchining kichik guruhi, dars jadvali, o‘qituvchilar va baholari EMIS’dan qayta yuklanadi.",
+      "syncConfirmTitle": "O‘quvchini EMIS bilan sinxronlashtirilsinmi?",
+      "syncConfirmDescription": "Kichik guruh, dars jadvali, o‘qituvchilar va baholar EMIS’dan qayta yuklanadi. Sinxronlash fonda bajariladi va bir necha daqiqa olishi mumkin.",
+      "syncConfirmAction": "Sinxronlashni boshlash",
+      "syncQueued": "EMIS bilan sinxronlash boshlandi",
+      "syncNever": "Hali sinxronlanmagan",
+      "syncAttempts": "Urinish {n} / {max}",
+      "syncLastError": "So‘nggi xato",
+      "syncFinished": "Tugadi",
+      "syncStatus": {
+        "pending": "Navbatda",
+        "running": "Bajarilmoqda",
+        "succeeded": "Muvaffaqiyatli",
+        "failed": "Xato"
+      }
     },
     "grades": {
       "semester": "{semester}-semestr",
@@ -1686,5 +1704,42 @@
         "hint": "Muallif yordamchisining bitta javobida modelga eng koʻp murojaatlar."
       }
     }
+  },
+  "knowledge": {
+    "title": "Bilimlar bazasi",
+    "filters": "Filtrlar",
+    "search": "Qidirish",
+    "tagFilter": "Teglar",
+    "add": "Yozuv qoʻshish",
+    "edit": "{key} yozuvi",
+    "editEntry": "{key} yozuvini tahrirlash",
+    "deleteEntry": "{key} yozuvini oʻchirish",
+    "columns": {
+      "key": "Kalit",
+      "title": "Sarlavha",
+      "tags": "Teglar",
+      "updated": "Yangilangan",
+      "actions": "Amallar"
+    },
+    "fields": {
+      "key": "Kalit",
+      "title": "Sarlavha",
+      "value": "Matn",
+      "tags": "Teglar"
+    },
+    "tagsHint": "Teglarni vergul bilan ajrating.",
+    "cancel": "Bekor qilish",
+    "save": "Saqlash",
+    "created": "Yozuv qoʻshildi.",
+    "updated": "Yozuv saqlandi.",
+    "deleted": "Yozuv oʻchirildi.",
+    "deleteTitle": "{key} oʻchirilsinmi?",
+    "deleteText": "Yordamchi bu yozuvni endi topa olmaydi.",
+    "confirmDelete": "Oʻchirish",
+    "empty": "Bilimlar bazasi boʻsh.",
+    "emptyFiltered": "Bu filtrlar boʻyicha yozuv yoʻq.",
+    "prev": "Oldingi",
+    "next": "Keyingi",
+    "page": "{pages} sahifadan {page}-sahifa"
   }
 }

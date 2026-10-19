@@ -9,6 +9,7 @@
 import type { paths } from "./generated/openapi-served"
 import type { getAdminAiExtensions, getAdminAiLimits, getAdminAiStudents, getAdminAiUsage, putAdminAiExtension, putAdminAiLimits } from "./endpoints/admin-ai"
 import type { getAdminJobs, postAdminJobCancel } from "./endpoints/admin-jobs"
+import type { getAdminKnowledge, getAdminKnowledgeEntry, patchAdminKnowledge, postAdminKnowledge } from "./endpoints/admin-knowledge"
 import type { getAdminLogIssues } from "./endpoints/admin-logs"
 import type { getAiChat, getAiChats, getAiUsage, getAiWebSearch, patchAiChat, postAiChatMessages, postAiChatRegenerate, postAiChatToolCallApprove, postAiChatToolCallReject, postAiChats } from "./endpoints/ai"
 import type { getAdminAssessments, getMeAssessments, getMeSubjectPlanner, getStaffAssessments, patchAdminAssessment, patchStaffAssessment, postAdminAssessment, postMeAssessment, postStaffAssessment } from "./endpoints/assessments"
@@ -34,7 +35,7 @@ import type { getLmsH5PLaunch, getLmsPreviewH5PLaunch, postLmsH5PPackage, postLm
 import type { getLmsAttempt, getLmsCourse, getLmsCourseStep, getLmsCourseStudents, getLmsCourses, getLmsMyCourses, getLmsPreviewStepVideo, getLmsStepCardsNext, getLmsStepVideo, postLmsAttemptOverride, postLmsAttemptSubmit, postLmsCourseEnroll, postLmsJoin, postLmsStepBlockAttempts, postLmsStepCardReview, postLmsStepViewed, putLmsAttemptAnswers } from "./endpoints/lms-learning"
 import type { getLmsCourseSettings, patchLmsCourseDetails, postLmsCourseJoinCode, postLmsCourseLinkCheck } from "./endpoints/lms-settings"
 import type { getAdminSubjectPeople, getAdminSyncRuns, getMeGrades, getMeGradesDay, getMeLessonResults, getMeRecordBook, getMeSubject, getMeSubjectLessons, getMeSubjects, postAdminStudentSyncStop, postAdminSubjectEmisPull, postAdminSyncMaterials, postAdminSyncRun, postAdminSyncRunStop } from "./endpoints/marks"
-import type { getAdminStudentSyncs, getMeSync, postMeSync } from "./endpoints/me-sync"
+import type { getAdminStudentSync, getAdminStudentSyncs, getMeSync, postAdminStudentSync, postMeSync } from "./endpoints/me-sync"
 import type { getAdminReconcileStatus, getAdminSubjectMaterialGroups, getAdminSubjectMaterials, getArtifact, getArtifacts, getNotebook, getNotebookAutoSubject, getNotebookChat, getNotebookLabels, getNotebookSearch, getNotebookSource, getNotebookSourceFileUrl, getNotebookSources, getNotebookSubjectSlots, getNotebookUsage, getNotebooks, getPassage, getSourcePassages, getStaffReconcileStatus, getStaffSubjectMaterials, getStaffSubjects, patchArtifact, patchNotebook, patchNotebookLabel, patchNotebookSource, postAdminReconcileSubjectMaterials, postAdminSubjectMaterial, postArtifact, postArtifactAsSource, postArtifactAttachToLesson, postArtifactCancel, postArtifactFlashcardSet, postArtifactRetry, postArtifactSaveToFiles, postArtifactSlidesRevise, postNotebook, postNotebookAutoSubject, postNotebookDiscover, postNotebookLabel, postNotebookLabelsAuto, postNotebookMessage, postNotebookRegenerate, postNotebookSourceSync, postNotebookSources, postNotebookSourcesSelect, postSaveNote, postStaffReconcileSubjectMaterials, postStaffSubjectMaterial, putArtifactSlides, putNotebookSourceLabels } from "./endpoints/notebooks"
 import type { getNotifications, getNotificationsUnreadCount } from "./endpoints/notifications"
 import type { postOauthLogout, postOauthRefresh, postOauthTelegram, postOauthToken, postOauthTokenHook } from "./endpoints/oauth"
@@ -85,6 +86,22 @@ export const served_getAdminJobs: Awaited<ReturnType<typeof getAdminJobs>> = gen
 // POST /v1/admin/jobs/{job_id}/cancel — postAdminJobCancel
 declare const gen_postAdminJobCancel: ResponseOf<"/v1/admin/jobs/{job_id}/cancel", "post">
 export const served_postAdminJobCancel: Awaited<ReturnType<typeof postAdminJobCancel>> = gen_postAdminJobCancel
+
+// GET /v1/admin/knowledge — getAdminKnowledge
+declare const gen_getAdminKnowledge: ResponseOf<"/v1/admin/knowledge", "get">
+export const served_getAdminKnowledge: Awaited<ReturnType<typeof getAdminKnowledge>> = gen_getAdminKnowledge
+
+// GET /v1/admin/knowledge/{entry_id} — getAdminKnowledgeEntry
+declare const gen_getAdminKnowledgeEntry: ResponseOf<"/v1/admin/knowledge/{entry_id}", "get">
+export const served_getAdminKnowledgeEntry: Awaited<ReturnType<typeof getAdminKnowledgeEntry>> = gen_getAdminKnowledgeEntry
+
+// POST /v1/admin/knowledge — postAdminKnowledge
+declare const gen_postAdminKnowledge: ResponseOf<"/v1/admin/knowledge", "post">
+export const served_postAdminKnowledge: Awaited<ReturnType<typeof postAdminKnowledge>> = gen_postAdminKnowledge
+
+// PATCH /v1/admin/knowledge/{entry_id} — patchAdminKnowledge
+declare const gen_patchAdminKnowledge: ResponseOf<"/v1/admin/knowledge/{entry_id}", "patch">
+export const served_patchAdminKnowledge: Awaited<ReturnType<typeof patchAdminKnowledge>> = gen_patchAdminKnowledge
 
 // GET /v1/admin/logs/issues — getAdminLogIssues
 declare const gen_getAdminLogIssues: ResponseOf<"/v1/admin/logs/issues", "get">
@@ -1265,6 +1282,14 @@ export const served_getMeSync: Awaited<ReturnType<typeof getMeSync>> = gen_getMe
 // POST /v1/me/sync — postMeSync
 declare const gen_postMeSync: ResponseOf<"/v1/me/sync", "post">
 export const served_postMeSync: Awaited<ReturnType<typeof postMeSync>> = gen_postMeSync
+
+// GET /v1/admin/students/{user_id}/sync — getAdminStudentSync
+declare const gen_getAdminStudentSync: ResponseOf<"/v1/admin/students/{user_id}/sync", "get">
+export const served_getAdminStudentSync: Awaited<ReturnType<typeof getAdminStudentSync>> = gen_getAdminStudentSync
+
+// POST /v1/admin/students/{user_id}/sync — postAdminStudentSync
+declare const gen_postAdminStudentSync: ResponseOf<"/v1/admin/students/{user_id}/sync", "post">
+export const served_postAdminStudentSync: Awaited<ReturnType<typeof postAdminStudentSync>> = gen_postAdminStudentSync
 
 // GET /v1/admin/sync/student-syncs — getAdminStudentSyncs
 declare const gen_getAdminStudentSyncs: ResponseOf<"/v1/admin/sync/student-syncs", "get">

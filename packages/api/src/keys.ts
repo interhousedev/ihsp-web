@@ -31,6 +31,7 @@ export const keys = {
   admin: {
     all: () => ["admin"] as const,
     studentSyncs: (status: string) => ["admin", "student-syncs", status] as const,
+    studentSync: (userId: string) => ["admin", "students", userId, "sync"] as const,
     teacherContacts: (id: string) => ["admin", "teacher-contacts", id] as const,
     users: {
       all: () => ["admin", "users"] as const,
@@ -75,6 +76,10 @@ export const keys = {
     syncRuns: (filters?: object) => ["admin", "sync-runs", params(filters)] as const,
     jobs: () => ["admin", "jobs"] as const,
     logs: (filters?: object) => ["admin", "logs", params(filters)] as const,
+    knowledge: {
+      all: () => ["admin", "knowledge"] as const,
+      list: (filters?: object) => ["admin", "knowledge", "list", params(filters)] as const,
+    },
     dashboard: () => ["admin", "dashboard"] as const,
     insights: () => ["admin", "insights"] as const,
     aiLimits: () => ["admin", "ai", "limits"] as const,

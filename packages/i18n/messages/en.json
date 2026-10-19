@@ -497,7 +497,10 @@
       "default-material-not-found": "This default material was not found."
     },
     "certificate_type_builtin": "This type is built in and cannot be deleted.",
-    "certificate_type_in_use": "This type has certificates and cannot be deleted."
+    "certificate_type_in_use": "This type has certificates and cannot be deleted.",
+    "knowledge_key_taken": "This key is already used by another entry.",
+    "knowledge_entry_not_found": "The entry was not found.",
+    "knowledge_invalid": "A field of the entry is not valid."
   },
   "notifications": {
     "title": "Notifications",

@@ -32,7 +32,8 @@
     "settings": "Settings",
     "limits": "Limits & usage",
     "certificateTypes": "Certificate types",
-    "certificates": "Certificates"
+    "certificates": "Certificates",
+    "knowledge": "Knowledge base"
   },
   "shared": {
     "filters": "Filters",
@@ -232,7 +233,24 @@
       "status": "Status",
       "emis": "EMIS status",
       "synced": "Last sync",
-      "roles": "Roles"
+      "roles": "Roles",
+      "syncButton": "Sync EMIS (marks, teachers, lessons)",
+      "syncTitle": "EMIS sync",
+      "syncHint": "Re-reads the student's subgroup, timetable lessons, teachers and marks from EMIS.",
+      "syncConfirmTitle": "Sync this student from EMIS?",
+      "syncConfirmDescription": "The subgroup, timetable lessons, teachers and marks are re-read from EMIS. The sync runs in the background and may take a few minutes.",
+      "syncConfirmAction": "Start sync",
+      "syncQueued": "EMIS sync started",
+      "syncNever": "Not synced yet",
+      "syncAttempts": "Attempt {n} of {max}",
+      "syncLastError": "Last error",
+      "syncFinished": "Finished",
+      "syncStatus": {
+        "pending": "Queued",
+        "running": "Running",
+        "succeeded": "Succeeded",
+        "failed": "Failed"
+      }
     },
     "grades": {
       "semester": "Semester {semester}",
@@ -1686,5 +1704,42 @@
         "hint": "Most model requests in one author assistant answer."
       }
     }
+  },
+  "knowledge": {
+    "title": "Knowledge base",
+    "filters": "Filters",
+    "search": "Search",
+    "tagFilter": "Tags",
+    "add": "Add entry",
+    "edit": "Edit {key}",
+    "editEntry": "Edit entry {key}",
+    "deleteEntry": "Delete entry {key}",
+    "columns": {
+      "key": "Key",
+      "title": "Title",
+      "tags": "Tags",
+      "updated": "Updated",
+      "actions": "Actions"
+    },
+    "fields": {
+      "key": "Key",
+      "title": "Title",
+      "value": "Text",
+      "tags": "Tags"
+    },
+    "tagsHint": "Separate tags with commas.",
+    "cancel": "Cancel",
+    "save": "Save",
+    "created": "Entry added.",
+    "updated": "Entry saved.",
+    "deleted": "Entry deleted.",
+    "deleteTitle": "Delete {key}?",
+    "deleteText": "The assistant will no longer find this entry.",
+    "confirmDelete": "Delete",
+    "empty": "The knowledge base is empty.",
+    "emptyFiltered": "No entries match these filters.",
+    "prev": "Previous",
+    "next": "Next",
+    "page": "Page {page} of {pages}"
   }
 }

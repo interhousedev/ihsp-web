@@ -43,6 +43,7 @@ const {
   resetFactorsState,
   resetMeSyncState,
   resetAdminJobs,
+  resetAdminKnowledge,
   resetCreatedFiles,
   resetLibraryState,
   resetNotebooksState,
@@ -95,6 +96,7 @@ afterEach(() => {
   resetCertificatesState()
   resetFactorsState()
   resetAdminJobs()
+  resetAdminKnowledge()
   window.localStorage.clear()
   window.sessionStorage.clear()
   resetTestRouter()

@@ -497,7 +497,10 @@
       "default-material-not-found": "Standart material topilmadi."
     },
     "certificate_type_builtin": "Bu tur ichki, uni oʻchirib boʻlmaydi.",
-    "certificate_type_in_use": "Bu turda sertifikatlar bor, uni oʻchirib boʻlmaydi."
+    "certificate_type_in_use": "Bu turda sertifikatlar bor, uni oʻchirib boʻlmaydi.",
+    "knowledge_key_taken": "Bu kalit boshqa yozuvda band.",
+    "knowledge_entry_not_found": "Yozuv topilmadi.",
+    "knowledge_invalid": "Yozuv maydoni notoʻgʻri."
   },
   "notifications": {
     "title": "Bildirishnomalar",

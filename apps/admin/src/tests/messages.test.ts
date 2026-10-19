@@ -310,6 +310,7 @@ describe("keys used in the code", () => {
       "lessons.status.${lesson.status}": ["scheduled", "cancelled"],
       "moderation.kind.${item.link.kind}": ["url", "file", "chat", "flashcard_set"],
       "students.tabs.${name}": ["overview", "timetable", "grades", "attendance", "account"],
+      "students.overview.syncStatus.${job.status}": ["pending", "running", "succeeded", "failed"],
       "teachers.status.${value}": ["active", "pending_activation", "deactivated", "blocked"],
       "terms.editor.issues.${issue}": [
         "year",

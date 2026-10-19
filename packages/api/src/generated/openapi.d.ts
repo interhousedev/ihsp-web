@@ -756,6 +756,58 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/v1/admin/knowledge": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * List Entries
+         * @description List entries: hybrid search with `q`, else the newest changes first.
+         */
+        get: operations["list_entries_v1_admin_knowledge_get"];
+        put?: never;
+        /**
+         * Create Entry
+         * @description Create an entry; a key that exists (any case) answers 409.
+         */
+        post: operations["create_entry_v1_admin_knowledge_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/admin/knowledge/{entry_id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get Entry
+         * @description Return one entry.
+         */
+        get: operations["get_entry_v1_admin_knowledge__entry_id__get"];
+        put?: never;
+        post?: never;
+        /**
+         * Delete Entry
+         * @description Delete an entry.
+         */
+        delete: operations["delete_entry_v1_admin_knowledge__entry_id__delete"];
+        options?: never;
+        head?: never;
+        /**
+         * Update Entry
+         * @description Change the sent fields; the entry is embedded again.
+         */
+        patch: operations["update_entry_v1_admin_knowledge__entry_id__patch"];
+        trace?: never;
+    };
     "/v1/admin/lessons": {
         parameters: {
             query?: never;
@@ -1298,6 +1350,30 @@ export interface paths {
         get: operations["get_student_360_v1_admin_students__user_id__get"];
         put?: never;
         post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/admin/students/{user_id}/sync": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get Sync
+         * @description The student's last sync, or null when there is none.
+         */
+        get: operations["get_sync_v1_admin_students__user_id__sync_get"];
+        put?: never;
+        /**
+         * Post Sync
+         * @description Queue the full EMIS sync; a pending or running one is returned as it is.
+         */
+        post: operations["post_sync_v1_admin_students__user_id__sync_post"];
         delete?: never;
         options?: never;
         head?: never;
@@ -14503,6 +14579,84 @@ export interface components {
             user_id: string;
         };
         /**
+         * KnowledgeEntryInput
+         * @description Body of POST /v1/admin/knowledge.
+         */
+        KnowledgeEntryInput: {
+            /** Key */
+            key: string;
+            /** Tags */
+            tags?: string[];
+            /** Title */
+            title?: string | null;
+            /** Value */
+            value: string;
+        };
+        /**
+         * KnowledgeEntryListResponse
+         * @description A page of entries and the total count.
+         */
+        KnowledgeEntryListResponse: {
+            /** Items */
+            items: components["schemas"]["KnowledgeEntryResponse"][];
+            /** Limit */
+            limit: number;
+            /** Offset */
+            offset: number;
+            /** Total */
+            total: number;
+        };
+        /**
+         * KnowledgeEntryPatch
+         * @description Body of PATCH /v1/admin/knowledge/{entry_id}: only the sent fields change.
+         */
+        KnowledgeEntryPatch: {
+            /** Key */
+            key?: string | null;
+            /** Tags */
+            tags?: string[] | null;
+            /** Title */
+            title?: string | null;
+            /** Value */
+            value?: string | null;
+        };
+        /**
+         * KnowledgeEntryResponse
+         * @description KnowledgeEntry; `score` is set only for a search (`q`).
+         */
+        KnowledgeEntryResponse: {
+            /**
+             * Author Id
+             * Format: uuid
+             */
+            author_id: string;
+            /**
+             * Created At
+             * Format: date-time
+             */
+            created_at: string;
+            /**
+             * Id
+             * Format: uuid
+             */
+            id: string;
+            /** Key */
+            key: string;
+            /** Score */
+            score?: number | null;
+            /** Tags */
+            tags: string[];
+            /** Title */
+            title: string | null;
+            /**
+             * Updated At
+             * Format: date-time
+             */
+            updated_at: string;
+            /** Value */
+            value: string;
+        };
+        /**
          * LabelAutoResponse
          * @description The state of the automatic labeling.
          *
@@ -26792,6 +26946,168 @@ export interface operations {
             };
         };
     };
+    list_entries_v1_admin_knowledge_get: {
+        parameters: {
+            query?: {
+                q?: string | null;
+                tags?: string[] | null;
+                limit?: number;
+                offset?: number;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["KnowledgeEntryListResponse"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    create_entry_v1_admin_knowledge_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["KnowledgeEntryInput"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["KnowledgeEntryResponse"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    get_entry_v1_admin_knowledge__entry_id__get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                entry_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["KnowledgeEntryResponse"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    delete_entry_v1_admin_knowledge__entry_id__delete: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                entry_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            204: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    update_entry_v1_admin_knowledge__entry_id__patch: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                entry_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["KnowledgeEntryPatch"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["KnowledgeEntryResponse"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
     list_lessons_v1_admin_lessons_get: {
         parameters: {
             query?: {
@@ -27803,6 +28119,68 @@ export interface operations {
                 };
                 content: {
                     "application/json": components["schemas"]["Student360Response"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    get_sync_v1_admin_students__user_id__sync_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                user_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["SyncStatusResponse"] | null;
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    post_sync_v1_admin_students__user_id__sync_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                user_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            202: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["SyncStatusResponse"];
                 };
             };
             /** @description Validation Error */

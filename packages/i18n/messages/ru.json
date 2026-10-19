@@ -497,7 +497,10 @@
       "default-material-not-found": "Материал по умолчанию не найден."
     },
     "certificate_type_builtin": "Этот тип встроенный, его нельзя удалить.",
-    "certificate_type_in_use": "У этого типа есть сертификаты, его нельзя удалить."
+    "certificate_type_in_use": "У этого типа есть сертификаты, его нельзя удалить.",
+    "knowledge_key_taken": "Этот ключ уже занят другой записью.",
+    "knowledge_entry_not_found": "Запись не найдена.",
+    "knowledge_invalid": "Поле записи заполнено неверно."
   },
   "notifications": {
     "title": "Уведомления",
