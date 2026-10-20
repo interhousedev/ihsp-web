@@ -16,9 +16,6 @@ import { withGuidedHint } from "./guided-hint"
 import type { LimitState } from "./limit-info"
 import { SlashChip, SlashMenu } from "./slash-menu"
 import { slashText, type SlashCall, type SlashName } from "./slash-commands"
-import { TierPicker } from "./tier-picker"
-import type { SmartState } from "./limit-info"
-import type { ChatTier } from "./use-assistant-queries"
 import { useSlashInput } from "./use-slash-input"
 import { useWebSwitch } from "./use-web-switch"
 
@@ -55,8 +52,6 @@ export type PillComposerProps = {
   /** While `sending`, the send button becomes a stop button that calls this (the page aborts the request). */
   onStop?: () => void
   placeholder: string
-  /** The model class picker; only the home composer shows it (a chat keeps the tier it was created with). */
-  tier?: { value: ChatTier; onChange: (tier: ChatTier) => void; smart?: SmartState }
   /** Fills the field from outside (a suggestion chip): a new `key` sets the command chip (or the text) and focuses. */
   prefill?: { key: number; command?: SlashName; text?: string } | null
   autoFocus?: boolean
@@ -83,7 +78,6 @@ export function PillComposer({
   chatId,
   onStop,
   placeholder,
-  tier,
   prefill,
   autoFocus = false,
 }: PillComposerProps) {
@@ -205,7 +199,7 @@ export function PillComposer({
 
   return (
     <form
-      className="flex flex-col gap-2"
+      className="flex flex-col gap-2 pb-[env(safe-area-inset-bottom)] sm:pb-0"
       onSubmit={(event) => {
         event.preventDefault()
         void submit()
@@ -269,24 +263,8 @@ export function PillComposer({
             ))}
           </div>
         ) : null}
-        <div className="flex items-end gap-1">
-          {features.plus ? (
-            <ComposerPlusMenu
-              disabled={locked}
-              guided={guided}
-              onGuidedChange={setGuided}
-              web={webOn}
-              onWebChange={setWeb}
-              webQuota={webQuota}
-              onStudyTool={pickCommand}
-              fieldRef={inputRef}
-              onUpload={() => uploadRef.current?.open()}
-              onPickFiles={() => setPickerOpen(true)}
-              onAskNotebook={askNotebook}
-            />
-          ) : (
-            <span className="w-2 shrink-0" aria-hidden />
-          )}
+        {/* Phones: the field spans the card and the toolbar sits below it. sm+: one row (toolbar contents join it). */}
+        <div className="flex flex-col gap-1 sm:flex-row sm:items-end">
           <label htmlFor={inputId} className="sr-only">
             {t("label")}
           </label>
@@ -306,35 +284,55 @@ export function PillComposer({
                   ? tSlash(`${command}.args`)
                   : placeholder
             }
-            className="placeholder:text-muted-foreground field-sizing-content max-h-40 min-h-11 min-w-0 flex-1 resize-none bg-transparent px-1 py-2.5 text-base outline-none disabled:cursor-not-allowed md:text-sm"
+            className="placeholder:text-muted-foreground field-sizing-content max-h-40 min-h-11 w-full min-w-0 order-1 resize-none bg-transparent px-2 py-2.5 text-base outline-none disabled:cursor-not-allowed sm:order-2 sm:w-auto sm:flex-1 sm:px-1 md:text-sm"
             onChange={(event) => slash.onTextChange(event.target.value)}
             onKeyDown={onKeyDown}
             {...slash.fieldProps}
           />
-          {tier ? (
-            <TierPicker value={tier.value} onChange={tier.onChange} disabled={locked} smart={tier.smart ?? null} />
-          ) : null}
-          {stoppable ? (
-            <Button
-              type="button"
-              size="icon"
-              className="size-11 shrink-0 rounded-full"
-              aria-label={t("stop")}
-              onClick={onStop}
-            >
-              <IconPlayerStop aria-hidden />
-            </Button>
-          ) : (
-            <Button
-              type="submit"
-              size="icon"
-              className="size-11 shrink-0 rounded-full"
-              aria-label={t("send")}
-              disabled={!canSend}
-            >
-              <IconArrowUp aria-hidden />
-            </Button>
-          )}
+          <div className="order-2 flex items-center justify-between gap-1 sm:contents">
+            <div className="flex shrink-0 items-center sm:order-1">
+              {features.plus ? (
+                <ComposerPlusMenu
+                  disabled={locked}
+                  guided={guided}
+                  onGuidedChange={setGuided}
+                  web={webOn}
+                  onWebChange={setWeb}
+                  webQuota={webQuota}
+                  onStudyTool={pickCommand}
+                  fieldRef={inputRef}
+                  onUpload={() => uploadRef.current?.open()}
+                  onPickFiles={() => setPickerOpen(true)}
+                  onAskNotebook={askNotebook}
+                />
+              ) : (
+                <span className="w-2 shrink-0" aria-hidden />
+              )}
+            </div>
+            <div className="flex shrink-0 items-center gap-1 sm:order-3">
+              {stoppable ? (
+                <Button
+                  type="button"
+                  size="icon"
+                  className="size-11 shrink-0 rounded-full"
+                  aria-label={t("stop")}
+                  onClick={onStop}
+                >
+                  <IconPlayerStop aria-hidden />
+                </Button>
+              ) : (
+                <Button
+                  type="submit"
+                  size="icon"
+                  className="size-11 shrink-0 rounded-full"
+                  aria-label={t("send")}
+                  disabled={!canSend}
+                >
+                  <IconArrowUp aria-hidden />
+                </Button>
+              )}
+            </div>
+          </div>
         </div>
       </div>
       {webOn && webQuota.quota && webQuota.quota.limit !== null ? (

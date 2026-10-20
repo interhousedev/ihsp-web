@@ -49,7 +49,7 @@ export function TierPicker({ value, onChange, disabled = false, smart = null }: 
           <Button
             type="button"
             variant="ghost"
-            className="text-muted-foreground min-h-11 shrink-0 gap-1 rounded-full px-3 md:min-h-9"
+            className="text-muted-foreground min-h-11 max-w-44 shrink-0 gap-1 rounded-full px-3 md:min-h-9"
             aria-label={`${t("label")}: ${label}`}
           />
         }
@@ -57,7 +57,7 @@ export function TierPicker({ value, onChange, disabled = false, smart = null }: 
         {label}
         <IconChevronDown className="size-4" aria-hidden />
       </DropdownMenuTrigger>
-      <DropdownMenuContent align="end" side="top" className="w-40">
+      <DropdownMenuContent align="end" side="bottom" className="w-40">
         <DropdownMenuRadioGroup value={value} onValueChange={(next) => onChange(next === "smart" ? "smart" : "fast")}>
           {TIERS.map((tier) => (
             <DropdownMenuRadioItem

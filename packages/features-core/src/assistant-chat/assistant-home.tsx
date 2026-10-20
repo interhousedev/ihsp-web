@@ -3,13 +3,14 @@
 import type { FileItem } from "@ihsp/api"
 import { useSession } from "@ihsp/auth"
 import { useErrorMessage, useT } from "@ihsp/i18n"
+import { useOnline } from "@ihsp/ui"
 import { useRouter } from "next/navigation"
 import { useEffect, useState, type ReactNode } from "react"
-import { limitState } from "./limit-info"
+import { limitState, smartState } from "./limit-info"
 import { storePendingTurn } from "./pending-turn"
 import { slashInfo, type SlashName } from "./slash-commands"
 import { PillComposer, type PillSendOptions } from "./pill-composer"
-import { smartState } from "./limit-info"
+import { TierPicker } from "./tier-picker"
 import { useCreateChat, useUsage, type ChatTier } from "./use-assistant-queries"
 import { writeWebSwitch } from "./use-web-switch"
 import { useAssistantScope } from "./assistant-context"
@@ -51,9 +52,11 @@ export function AssistantHome({ basePath, navButtons, trailing }: AssistantHomeP
   const { assistant, features } = useAssistantScope()
   const usage = useUsage(assistant)
   const createChat = useCreateChat(assistant)
+  const online = useOnline()
   const [greeting] = useState(() => 1 + Math.floor(Math.random() * GREETINGS))
   const [chipOffset] = useState(nextChipOffset)
   const [tier, setTier] = useState<ChatTier>("fast")
+  const limit = limitState(usage.data)
   const smart = smartState(usage.data)
   const smartOut = smart !== null && smart.remaining <= 0
   // The week's smart requests ran out while the picker was on smart: the next chat starts on fast.
@@ -92,7 +95,10 @@ export function AssistantHome({ basePath, navButtons, trailing }: AssistantHomeP
     <div className="flex min-h-0 min-w-0 flex-1 flex-col">
       <div className="flex h-14 shrink-0 items-center gap-1 px-2 md:px-4">
         {navButtons}
-        <span className="ms-auto">{trailing}</span>
+        <span className="ms-auto flex items-center gap-1">
+          <TierPicker value={tier} onChange={setTier} smart={smart} disabled={limit.reached || !online} />
+          {trailing}
+        </span>
       </div>
       <div className="flex min-h-0 flex-1 flex-col items-center justify-center overflow-y-auto px-4 pb-14">
         <div className="flex w-full max-w-3xl flex-col gap-8">
@@ -102,10 +108,9 @@ export function AssistantHome({ basePath, navButtons, trailing }: AssistantHomeP
           <div className="flex flex-col gap-3">
             <PillComposer
               sending={createChat.isPending}
-              limit={limitState(usage.data)}
+              limit={limit}
               onSend={handleSend}
               placeholder={t("home.placeholder")}
-              tier={{ value: tier, onChange: setTier, smart }}
               prefill={prefill}
               autoFocus
             />

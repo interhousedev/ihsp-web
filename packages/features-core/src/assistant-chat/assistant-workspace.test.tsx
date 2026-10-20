@@ -61,6 +61,13 @@ describe("AssistantWorkspace: home", () => {
     expect(testRouter.push).not.toHaveBeenCalled()
   })
 
+  it("shows the tier picker in the home header, outside the composer", async () => {
+    renderWorkspace()
+
+    const picker = await screen.findByRole("button", { name: "Answer mode: Fast" })
+    expect(picker.closest("form")).toBeNull()
+  })
+
   it("creates the chat with the chosen tier and opens it with the text carried over", async () => {
     let body: unknown
     server.use(

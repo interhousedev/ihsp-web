@@ -152,21 +152,26 @@ describe("PillComposer: limit, offline and tier", () => {
     expect(screen.getByRole("button", { name: "Add" })).toBeDisabled()
   })
 
-  it("shows the tier picker only when asked, and reports the choice", async () => {
-    const onChange = mock((_tier: string) => undefined)
-    const { user } = renderComposer({ tier: { value: "fast", onChange } })
-
-    await user.click(screen.getByRole("button", { name: "Answer mode: Fast" }))
-    expect(await screen.findByRole("menuitemradio", { name: "Fast" })).toHaveAttribute("aria-checked", "true")
-    await user.click(screen.getByRole("menuitemradio", { name: "Smart" }))
-
-    expect(onChange).toHaveBeenCalledWith("smart")
-  })
-
-  it("has no tier picker without the prop", () => {
+  it("keeps the tier picker out of the composer (it lives in the page header)", () => {
     renderComposer()
 
     expect(screen.queryByRole("button", { name: /Answer mode/ })).not.toBeInTheDocument()
+  })
+})
+
+describe("PillComposer: layout", () => {
+  it("stacks the toolbar under the field on phones and puts send after the field in DOM order", () => {
+    renderComposer()
+    const field = screen.getByRole("textbox", { name: "Message" })
+    const send = screen.getByRole("button", { name: "Send" })
+    const row = field.parentElement as HTMLElement
+
+    expect(row).toHaveClass("flex-col", "sm:flex-row")
+    expect(field).toHaveClass("w-full", "order-1", "sm:order-2")
+    expect(field).toHaveClass("max-h-40", "field-sizing-content")
+    expect(send.closest("form")).toBe(field.closest("form"))
+    expect(send.compareDocumentPosition(field) & Node.DOCUMENT_POSITION_PRECEDING).toBeTruthy()
+    expect(send.closest("form")?.className).toContain("env(safe-area-inset-bottom)")
   })
 })
 
