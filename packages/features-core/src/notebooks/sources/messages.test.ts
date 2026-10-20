@@ -39,6 +39,7 @@ function usedKeys(): string[] {
   for (const code of [
     "unsupported_type",
     "no_text",
+    "no_transcript",
     "too_large",
     "fetch_failed",
     "forbidden",

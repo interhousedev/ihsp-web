@@ -11,6 +11,7 @@ import { useState } from "react"
 import { GeneralSettings } from "./general-settings"
 import { SettingsSection } from "./settings-section"
 import { TelegramCard } from "./telegram-card"
+import { WorkOffTemplates } from "./work-off-templates"
 
 /** The staff portal edits the teacher's notification settings: lesson links and the end-of-lesson prompt. */
 const NOTIFICATION_ROLES: Role[] = ["teacher"]
@@ -48,6 +49,9 @@ export function SettingsPage() {
               load={(signal) => getStaffMeContacts({ signal })}
               save={putStaffMeContacts}
             />
+          </SettingsSection>
+          <SettingsSection title={t("workOffs.title")}>
+            <WorkOffTemplates />
           </SettingsSection>
           <AppLockSection />
         </div>

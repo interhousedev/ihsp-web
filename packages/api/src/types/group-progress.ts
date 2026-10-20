@@ -5,6 +5,8 @@ export type GroupProgressSubject = { id: string; name: string; short_name: strin
 export type GroupProgressCell = {
   subject_id: string
   semester_mark: number | null
+  /** GPA counting temporary marks not yet in EMIS; null when there are none. */
+  gpa_with_temporary?: number | null
   midterm_avg: number | null
   final_avg: number | null
   lesson_avg: number | null

@@ -9,6 +9,7 @@ import {
   keys,
   patchNotebookAuto,
   patchNotebookSource,
+  postNotebookSourceReread,
   postNotebookSourceSync,
   postNotebookSources,
   postNotebookSourcesSelect,
@@ -174,6 +175,19 @@ export function useSyncSource(notebookId: string) {
   const queryClient = useQueryClient()
   return useMutation<SourceItem, unknown, string>({
     mutationFn: (id) => postNotebookSourceSync(notebookId, id),
+    onSuccess: (item) => {
+      setSourcesCache(queryClient, notebookId, (items) =>
+        items.map((current) => (current.id === item.id ? item : current)),
+      )
+    },
+  })
+}
+
+/** Extracts a source's text again; the list polls until the read ends (`ready` or `failed`). */
+export function useRereadSource(notebookId: string) {
+  const queryClient = useQueryClient()
+  return useMutation<SourceItem, unknown, string>({
+    mutationFn: (id) => postNotebookSourceReread(notebookId, id),
     onSuccess: (item) => {
       setSourcesCache(queryClient, notebookId, (items) =>
         items.map((current) => (current.id === item.id ? item : current)),

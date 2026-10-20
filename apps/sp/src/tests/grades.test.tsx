@@ -29,6 +29,8 @@ describe("semester grades", () => {
     expect(rows).toHaveLength(semesterGrades.rows.length + 1)
     const physics = within(rows.find((row) => within(row).queryByText("Physics")) as HTMLElement)
     expect(physics.getByText("4.8")).toBeInTheDocument()
+    expect(physics.getByTestId("temporary-gpa")).toHaveTextContent("4.3")
+    expect(screen.getAllByTestId("temporary-gpa")).toHaveLength(1)
     expect(screen.getByText(/Updated /)).toBeInTheDocument()
   })
 

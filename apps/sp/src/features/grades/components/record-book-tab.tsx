@@ -1,6 +1,7 @@
 "use client"
 
 import { useT } from "@ihsp/i18n"
+import { TemporaryGpa } from "@ihsp/features-core"
 import { MarkBadge, Skeleton, Stat } from "@ihsp/ui"
 import { lazy, Suspense } from "react"
 import { QueryState } from "../../shared/components/query-state"
@@ -51,7 +52,10 @@ export function RecordBookTab() {
                     <span className="text-muted-foreground text-xs">
                       {t("emisRating")}: {item.emis_rating ?? "–"}
                     </span>
-                    <MarkBadge mark={item.semester_mark} />
+                    <span className="inline-flex items-start">
+                      <MarkBadge mark={item.semester_mark} />
+                      <TemporaryGpa value={item.gpa_with_temporary} />
+                    </span>
                   </li>
                 ))}
               </ul>

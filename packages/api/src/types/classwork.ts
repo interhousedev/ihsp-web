@@ -1,5 +1,6 @@
 // Academic — classwork (backend § API contract → "Academic — classwork (B4)", Schemas and the attendance body addition).
 
+import type { CommonWorkOffChoice, WorkOffChoice, WorkOffItem, WorkOffMode } from "./work-offs-staff"
 import type { AttendanceState, DateRangeParams, PersonRef, SubjectRef } from "./common"
 import type { ResourceItem } from "./links"
 import type { MarkItem } from "./marks"
@@ -82,6 +83,8 @@ export type AttendanceSheet = {
   roster: RosterItem[]
   submitted_at: string | null
   submitted_by: PersonRef | null
+  /** The lesson's work-offs of absent students (WO-3); absent from older responses. */
+  work_offs?: WorkOffItem[]
 }
 
 export type StaffLesson = {
@@ -151,6 +154,10 @@ export type AttendanceSubmitBody = {
   late: string[]
   present_unassigned: string[]
   base_version: number
+  /** Omitted means `per_student`; `work_offs` lists only the absent students whose choice changed. */
+  work_off_mode?: WorkOffMode
+  work_offs?: WorkOffChoice[]
+  common_work_off?: CommonWorkOffChoice | null
 }
 export type AttendanceExcuseBody = { student_id: string; excused: boolean; comment?: string }
 
@@ -177,3 +184,30 @@ export type AdminAttendanceParams = {
 }
 export type MissingAttendanceParams = DateRangeParams
 export type MissingAttendanceItem = { teacher: PersonRef; lessons: LessonItem[] }
+
+/** A temporary mark (2 to 5) a teacher gave in a lesson; it is not in EMIS yet. */
+export type TemporaryMark = {
+  id: string
+  lesson_id: string
+  lesson_date: string
+  lesson_period: number
+  student_id: string
+  student_name: string
+  group_id: string | null
+  group_name: string
+  subject_id: string
+  subject_name: string
+  teacher_id: string
+  teacher_name: string
+  value: number
+  comment: string | null
+  author_id: string
+  created_at: string
+  updated_at: string
+}
+
+/** Temporary marks, oldest lesson first. */
+export type TemporaryMarkList = { items: TemporaryMark[] }
+
+/** PUT /v1/staff/lessons/{id}/temporary-marks/{student_id}. */
+export type TemporaryMarkBody = { value: number; comment?: string | null }

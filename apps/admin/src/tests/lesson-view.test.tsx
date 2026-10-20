@@ -99,6 +99,8 @@ describe("editing as Administration", () => {
 
     const group = await screen.findByRole("radiogroup", { name: /Ismoilov Jasur/ })
     await user.click(within(group).getByRole("radio", { name: "Absent" }))
+    await user.click(within(await screen.findByRole("dialog")).getByRole("button", { name: "Cancel" }))
+    await waitFor(() => expect(screen.queryByRole("dialog")).not.toBeInTheDocument())
     await user.click(within(section("attendance")).getByRole("button", { name: "Submit attendance" }))
 
     await waitFor(() => expect(bodies).toHaveLength(1))

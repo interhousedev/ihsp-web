@@ -33,7 +33,8 @@
     "limits": "Limitlar va xarajatlar",
     "certificateTypes": "Sertifikat turlari",
     "certificates": "Sertifikatlar",
-    "knowledge": "Bilimlar bazasi"
+    "knowledge": "Bilimlar bazasi",
+    "workOffs": "Qayta topshirish"
   },
   "shared": {
     "filters": "Filtrlar",
@@ -1738,6 +1739,53 @@
     "confirmDelete": "Oʻchirish",
     "empty": "Bilimlar bazasi boʻsh.",
     "emptyFiltered": "Bu filtrlar boʻyicha yozuv yoʻq.",
+    "prev": "Oldingi",
+    "next": "Keyingi",
+    "page": "{pages} sahifadan {page}-sahifa"
+  },
+  "workOffs": {
+    "title": "Qayta topshirish",
+    "from": "Boshlanish sanasi",
+    "to": "Tugash sanasi",
+    "open": "Ochiq",
+    "done": "Bajarilgan",
+    "back": "Orqaga",
+    "status": "Holati",
+    "totalOpen": "Jami ochiq: {count}",
+    "empty": "Bu davrda qayta topshirish topshiriqlari yoʻq.",
+    "emptyList": "Bu filtrlar boʻyicha topshiriq yoʻq.",
+    "tabs": {
+      "subject": "Fanlar boʻyicha",
+      "teacher": "Oʻqituvchilar boʻyicha",
+      "group": "Guruhlar boʻyicha",
+      "student": "Oʻquvchilar boʻyicha"
+    },
+    "labels": {
+      "subject": "Fan",
+      "teacher": "Oʻqituvchi",
+      "group": "Guruh",
+      "student": "Oʻquvchi"
+    },
+    "statuses": {
+      "open": "Ochiq",
+      "done": "Bajarilgan",
+      "all": "Hammasi"
+    },
+    "itemStatus": {
+      "assigned": "Ochiq",
+      "done": "Bajarilgan"
+    },
+    "columns": {
+      "lesson": "Dars",
+      "subject": "Fan",
+      "teacher": "Oʻqituvchi",
+      "group": "Guruh",
+      "student": "Oʻquvchi",
+      "text": "Topshiriq",
+      "status": "Holati",
+      "due": "Muddat"
+    },
+    "lesson": "{date}, {period}-dars",
     "prev": "Oldingi",
     "next": "Keyingi",
     "page": "{pages} sahifadan {page}-sahifa"

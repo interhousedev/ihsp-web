@@ -2,6 +2,7 @@
 
 import type { SemesterGrades } from "@ihsp/api"
 import { useFormatters, useT } from "@ihsp/i18n"
+import { TemporaryGpa } from "@ihsp/features-core"
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@ihsp/ui"
 
 function mark(value: number | null): string {
@@ -42,7 +43,10 @@ export function StudentGradesTab({ grades }: { grades: SemesterGrades }) {
                   <TableCell className="text-end tabular-nums">{mark(row.lesson_avg)}</TableCell>
                   <TableCell className="text-end tabular-nums">{mark(row.midterm_avg)}</TableCell>
                   <TableCell className="text-end tabular-nums">{mark(row.final_avg)}</TableCell>
-                  <TableCell className="text-end tabular-nums">{row.semester_mark ?? "—"}</TableCell>
+                  <TableCell className="text-end tabular-nums">
+                    {row.semester_mark ?? "—"}
+                    <TemporaryGpa value={row.gpa_with_temporary} />
+                  </TableCell>
                   <TableCell className="text-end tabular-nums">{row.emis_rating ?? "—"}</TableCell>
                   <TableCell className="text-end tabular-nums">{row.marks_count}</TableCell>
                 </TableRow>

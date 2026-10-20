@@ -2,6 +2,7 @@
 
 import type { SemesterGrades } from "@ihsp/api"
 import { useT } from "@ihsp/i18n"
+import { TemporaryGpa } from "@ihsp/features-core"
 import { Card, CardContent, MarkBadge } from "@ihsp/ui"
 import Link from "next/link"
 import { LinkButton } from "../../shared/components/link-button"
@@ -24,7 +25,10 @@ export function GradesCards({ grades }: { grades: SemesterGrades }) {
               >
                 <div className="flex items-center justify-between gap-3">
                   <span className="font-semibold break-words">{row.subject.name}</span>
-                  <MarkBadge mark={row.semester_mark} size="lg" />
+                  <span className="inline-flex items-start">
+                    <MarkBadge mark={row.semester_mark} size="lg" />
+                    <TemporaryGpa value={row.gpa_with_temporary} />
+                  </span>
                 </div>
                 <dl className="grid grid-cols-4 gap-2 text-center text-xs">
                   {(

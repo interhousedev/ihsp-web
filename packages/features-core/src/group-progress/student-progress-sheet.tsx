@@ -3,6 +3,7 @@
 import type { GroupProgressStudent, GroupProgressSubject } from "@ihsp/api"
 import { useT } from "@ihsp/i18n"
 import { Sheet, SheetContent, SheetHeader, SheetTitle } from "@ihsp/ui"
+import { TemporaryGpa } from "../temporary-gpa"
 import { cellOf, formatMark, formatPercent } from "./format"
 
 /** The details of one student: per subject the semester mark, ПК, ИК, the lesson average and the absences. */
@@ -40,7 +41,10 @@ export function StudentProgressSheet({
                       {cell ? (
                         <dl className="mt-2 grid grid-cols-2 gap-x-3 gap-y-1 text-sm tabular-nums">
                           <dt className="text-muted-foreground">{t("semesterMark")}</dt>
-                          <dd className="font-semibold">{formatMark(cell.semester_mark)}</dd>
+                          <dd className="font-semibold">
+                            {formatMark(cell.semester_mark)}
+                            <TemporaryGpa value={cell.gpa_with_temporary} />
+                          </dd>
                           <dt className="text-muted-foreground">{t("midterm")}</dt>
                           <dd>{formatMark(cell.midterm_avg)}</dd>
                           <dt className="text-muted-foreground">{t("final")}</dt>

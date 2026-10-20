@@ -9,6 +9,7 @@ import type {
   MissingAttendanceItem,
   StaffLesson,
   StaffToday,
+  TemporaryMark,
   StudentAttendance,
   StudentLesson,
   StudentToday,
@@ -17,6 +18,7 @@ import { groupStudents } from "./schedule"
 import { newMarks, marks } from "./marks"
 import { resourceAttachment, resourceItems } from "./links"
 import {
+  FIXTURE_NOW,
   FIXTURE_TODAY,
   FIXTURE_TOMORROW,
   atTashkent,
@@ -356,4 +358,27 @@ export const curatorStudents: CuratorStudent[] = groupStudents.map((student, ind
 
 export const missingAttendance: MissingAttendanceItem[] = [
   { teacher: persons.yusupov, lessons: [{ ...needsAttentionLesson, teacher: persons.yusupov }] },
+]
+
+/** Temporary marks Kalandarova gave in today's Physics lesson; not in EMIS yet. */
+export const temporaryMarks: TemporaryMark[] = [
+  {
+    id: "00000000-0000-7000-8000-000000000071",
+    lesson_id: ids.lessonPhysicsToday,
+    lesson_date: FIXTURE_TODAY,
+    lesson_period: 3,
+    student_id: ids.student,
+    student_name: `${persons.student.last_name} ${persons.student.first_name}`,
+    group_id: ids.group2TN2,
+    group_name: "2TN2",
+    subject_id: ids.physics,
+    subject_name: "Physics",
+    teacher_id: ids.teacherKalandarova,
+    teacher_name: "Kalandarova Gavxar",
+    value: 4,
+    comment: "Oral answer",
+    author_id: ids.teacherKalandarova,
+    created_at: FIXTURE_NOW,
+    updated_at: FIXTURE_NOW,
+  },
 ]

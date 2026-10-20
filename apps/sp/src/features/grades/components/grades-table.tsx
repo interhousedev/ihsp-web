@@ -2,6 +2,7 @@
 
 import type { SemesterGrades } from "@ihsp/api"
 import { useT } from "@ihsp/i18n"
+import { TemporaryGpa } from "@ihsp/features-core"
 import { MarkBadge, Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@ihsp/ui"
 import Link from "next/link"
 import { LinkButton } from "../../shared/components/link-button"
@@ -46,6 +47,7 @@ export function GradesTable({ grades }: { grades: SemesterGrades }) {
             </TableCell>
             <TableCell className="text-center">
               <MarkBadge mark={row.semester_mark} size="lg" />
+              <TemporaryGpa value={row.gpa_with_temporary} />
             </TableCell>
             <TableCell className="text-center">{row.emis_rating ?? "–"}</TableCell>
             <TableCell className="text-end">

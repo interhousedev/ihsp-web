@@ -22,7 +22,8 @@
     "notebooks": "Bloknotlar",
     "mail": "Pochta",
     "subjects": "Fanlar",
-    "certificates": "Sertifikatlar"
+    "certificates": "Sertifikatlar",
+    "temporaryMarks": "EMIS kutmoqda"
   },
   "audience": {
     "subgroup": "{group} · {number}-kichik guruh"
@@ -361,6 +362,22 @@
     },
     "notifications": {
       "title": "Bildirishnomalar"
+    },
+    "workOffs": {
+      "title": "Otrabotkalar",
+      "add": "Shablon qoʻshish",
+      "addTitle": "Yangi shablon",
+      "editTitle": "Shablonni tahrirlash",
+      "text": "Matn",
+      "placeholder": "Oʻquvchi nima qilishi kerak",
+      "editFor": "Shablonni tahrirlash: {text}",
+      "deleteFor": "Shablonni oʻchirish: {text}",
+      "deleteTitle": "Bu shablon oʻchirilsinmi?",
+      "defaultLabel": "Standart otrabotka",
+      "noDefault": "Standarti yoʻq",
+      "empty": "Hozircha shablon yoʻq.",
+      "saved": "Shablon saqlandi",
+      "deleted": "Shablon oʻchirildi"
     }
   },
   "students": {
@@ -491,5 +508,22 @@
       "done": "Tekshirildi bloknotlar: {notebooks}. Qo'shildi: {added}, avval bor edi: {present}, keyinroq qayta urinish: {skipped}.",
       "error": "Tekshiruv yakunlanmadi. Qayta urinib ko'ring."
     }
+  },
+  "temporaryMarks": {
+    "journalTitle": "Jurnal",
+    "note": "Bu baholar EMISga kiritilgunча vaqtinchalik.",
+    "valueFor": "{name} uchun baho",
+    "setValue": "{name}ga {value} qo'yish",
+    "commentFor": "{name} uchun izoh",
+    "comment": "Izoh (ixtiyoriy)",
+    "save": "Saqlash",
+    "saveFor": "{name} uchun bahoni saqlash",
+    "remove": "O'chirish",
+    "removeFor": "{name} uchun bahoni o'chirish",
+    "saved": "Baho saqlandi",
+    "removed": "Baho o'chirildi",
+    "pendingTitle": "EMISga kiritilishi kutilmoqda",
+    "empty": "EMISga kiritilishi kutilayotgan baholar yo'q.",
+    "period": "{number}-dars"
   }
 }

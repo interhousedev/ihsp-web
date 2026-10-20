@@ -18,6 +18,9 @@ import type {
   Journal,
   JournalOption,
   JournalParams,
+  TemporaryMark,
+  TemporaryMarkBody,
+  TemporaryMarkList,
   JournalToggleBody,
   JournalToggleResult,
   MissingAttendanceItem,
@@ -258,3 +261,38 @@ export const getJournal = getStaffJournal
 export const getJournalOptions = getStaffJournalOptions
 export const postJournalToggle = postStaffJournalToggle
 export const getJournalCsv = getStaffJournalCsv
+
+/** GET /v1/staff/lessons/{id}/temporary-marks — teacher of the lesson or admin. */
+export function getStaffLessonTemporaryMarks(id: string, opts?: RequestOptions): Promise<TemporaryMarkList> {
+  return api.get<TemporaryMarkList>(`/v1/staff/lessons/${seg(id)}/temporary-marks`, opts)
+}
+export const getStaffLessonTemporaryMarksQuery = (id: string) =>
+  queryOptions({
+    queryKey: keys.staff.lessonTemporaryMarks(id),
+    queryFn: ({ signal }) => getStaffLessonTemporaryMarks(id, { signal }),
+  })
+
+/** PUT /v1/staff/lessons/{id}/temporary-marks/{student_id} — sets the student's temporary mark (2 to 5). */
+export function putStaffLessonTemporaryMark(
+  id: string,
+  studentId: string,
+  body: TemporaryMarkBody,
+  opts?: RequestOptions,
+): Promise<TemporaryMark> {
+  return api.put<TemporaryMark>(`/v1/staff/lessons/${seg(id)}/temporary-marks/${seg(studentId)}`, body, opts)
+}
+
+/** DELETE /v1/staff/lessons/{id}/temporary-marks/{student_id} — removes it (204). */
+export function deleteStaffLessonTemporaryMark(id: string, studentId: string, opts?: RequestOptions): Promise<void> {
+  return api.delete<void>(`/v1/staff/lessons/${seg(id)}/temporary-marks/${seg(studentId)}`, opts)
+}
+
+/** GET /v1/staff/temporary-marks/pending — the caller's temporary marks not yet in EMIS, oldest lesson first. */
+export function getStaffTemporaryMarksPending(opts?: RequestOptions): Promise<TemporaryMarkList> {
+  return api.get<TemporaryMarkList>("/v1/staff/temporary-marks/pending", opts)
+}
+export const getStaffTemporaryMarksPendingQuery = () =>
+  queryOptions({
+    queryKey: keys.staff.temporaryMarksPending(),
+    queryFn: ({ signal }) => getStaffTemporaryMarksPending({ signal }),
+  })

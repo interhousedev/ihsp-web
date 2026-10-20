@@ -22,7 +22,8 @@
     "notebooks": "Блокноты",
     "mail": "Почта",
     "subjects": "Предметы",
-    "certificates": "Сертификаты"
+    "certificates": "Сертификаты",
+    "temporaryMarks": "Ожидают EMIS"
   },
   "audience": {
     "subgroup": "{group} · подгруппа {number}"
@@ -361,6 +362,22 @@
     },
     "notifications": {
       "title": "Уведомления"
+    },
+    "workOffs": {
+      "title": "Отработки",
+      "add": "Добавить шаблон",
+      "addTitle": "Новый шаблон",
+      "editTitle": "Изменить шаблон",
+      "text": "Текст",
+      "placeholder": "Что должен сделать ученик",
+      "editFor": "Изменить шаблон: {text}",
+      "deleteFor": "Удалить шаблон: {text}",
+      "deleteTitle": "Удалить этот шаблон?",
+      "defaultLabel": "Отработка по умолчанию",
+      "noDefault": "Без отработки по умолчанию",
+      "empty": "Шаблонов пока нет.",
+      "saved": "Шаблон сохранён",
+      "deleted": "Шаблон удалён"
     }
   },
   "students": {
@@ -491,5 +508,22 @@
       "done": "Проверено блокнотов: {notebooks}. Добавлено: {added}, уже были: {present}, повторим позже: {skipped}.",
       "error": "Проверка не завершилась. Попробуйте снова."
     }
+  },
+  "temporaryMarks": {
+    "journalTitle": "Журнал",
+    "note": "Эти оценки временные, пока вы не внесёте их в EMIS.",
+    "valueFor": "Оценка для {name}",
+    "setValue": "Поставить {name} {value}",
+    "commentFor": "Комментарий для {name}",
+    "comment": "Комментарий (необязательно)",
+    "save": "Сохранить",
+    "saveFor": "Сохранить оценку для {name}",
+    "remove": "Удалить",
+    "removeFor": "Удалить оценку для {name}",
+    "saved": "Оценка сохранена",
+    "removed": "Оценка удалена",
+    "pendingTitle": "Ожидают внесения в EMIS",
+    "empty": "Нет оценок, ожидающих внесения в EMIS.",
+    "period": "Урок {number}"
   }
 }

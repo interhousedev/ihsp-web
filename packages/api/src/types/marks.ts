@@ -20,6 +20,8 @@ export type SubjectCard = {
   subject: SubjectRef
   teachers: SubjectTeacher[]
   semester_mark: number | null
+  /** GPA counting temporary marks not yet in EMIS; null when there are none. */
+  gpa_with_temporary?: number | null
   emis_rating: number | null
   absences: number
   next_lesson: LessonItem | null
@@ -31,6 +33,8 @@ export type SubjectDetail = {
   teachers: SubjectTeacher[]
   averages: { lesson: number | null; midterm: number | null; final: number | null }
   semester_mark: number | null
+  /** GPA counting temporary marks not yet in EMIS; null when there are none. */
+  gpa_with_temporary?: number | null
   emis_rating: number | null
   absence_rate: number | null
   lessons: (LessonItem & {
@@ -84,6 +88,7 @@ export type SemesterGrades = {
     midterm_avg: number | null
     final_avg: number | null
     semester_mark: number | null
+    gpa_with_temporary?: number | null
     emis_rating: number | null
     marks_count: number
   }[]
@@ -99,7 +104,12 @@ export type RecordBook = {
   semesters: {
     semester: number
     gpa: number | null
-    subjects: { subject: SubjectRef; semester_mark: number | null; emis_rating: number | null }[]
+    subjects: {
+      subject: SubjectRef
+      semester_mark: number | null
+      gpa_with_temporary?: number | null
+      emis_rating: number | null
+    }[]
   }[]
 }
 

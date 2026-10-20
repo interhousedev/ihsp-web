@@ -7,6 +7,7 @@ import { IconRefresh } from "@ihsp/ui"
 import { SourceKindIcon } from "../lib/source-icons"
 import { isUsable } from "../lib/sort-sources"
 import { SelectionCheckbox } from "./selection-checkbox"
+import { canReread } from "./source-rules"
 import { SourceActionsMenu } from "./source-actions-menu"
 import { SourceStatusLine } from "./source-status-line"
 
@@ -16,6 +17,9 @@ type SourceRowProps = {
   onToggle: (source: SourceItem, selected: boolean) => void
   onRename: (source: SourceItem) => void
   onSync: (source: SourceItem) => void
+  /** Extracts the text again for a source without text; `rereading` while the request is out. */
+  onReread?: (source: SourceItem) => void
+  rereading?: boolean
   onRemove: (source: SourceItem) => void
   /** Given in subject and lesson notebooks: synced sources get a "From lessons" badge and **Exclude**. */
   onExclude?: (source: SourceItem) => void
@@ -33,6 +37,8 @@ export function SourceRow({
   onToggle,
   onRename,
   onSync,
+  onReread,
+  rereading = false,
   onRemove,
   onExclude,
   readOnly = false,
@@ -66,6 +72,19 @@ export function SourceRow({
           <SourceStatusLine source={source} />
         </span>
       </button>
+      {onReread && canReread(source) && !readOnly ? (
+        <Button
+          type="button"
+          variant="outline"
+          size="sm"
+          className="min-h-11 shrink-0 gap-1 px-2 md:min-h-7"
+          disabled={rereading}
+          onClick={() => onReread(source)}
+        >
+          <IconRefresh aria-hidden className={rereading ? "animate-spin" : undefined} />
+          {rereading ? t("row.rereading") : t("row.reread")}
+        </Button>
+      ) : null}
       {source.status === "stale" && !readOnly ? (
         <Button
           type="button"

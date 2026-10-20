@@ -35,7 +35,7 @@ import type { getLmsAttempt, getLmsCourse, getLmsCourseStep, getLmsCourseStudent
 import type { getLmsCourseSettings, patchLmsCourseDetails, postLmsCourseJoinCode, postLmsCourseLinkCheck } from "./endpoints/lms-settings"
 import type { getAdminSubjectPeople, getAdminSyncRuns, getMeGrades, getMeGradesDay, getMeLessonResults, getMeRecordBook, getMeSubject, getMeSubjectLessons, getMeSubjects, postAdminStudentSyncStop, postAdminSubjectEmisPull, postAdminSyncMaterials, postAdminSyncRun, postAdminSyncRunStop } from "./endpoints/marks"
 import type { getAdminStudentSync, getAdminStudentSyncs, getMeSync, postAdminStudentSync, postMeSync } from "./endpoints/me-sync"
-import type { getAdminReconcileStatus, getAdminSubjectMaterialGroups, getAdminSubjectMaterials, getArtifact, getArtifacts, getNotebook, getNotebookAutoSubject, getNotebookChat, getNotebookLabels, getNotebookSearch, getNotebookSource, getNotebookSourceFileUrl, getNotebookSources, getNotebookSubjectSlots, getNotebookUsage, getNotebooks, getPassage, getSourcePassages, getStaffReconcileStatus, getStaffSubjectMaterials, getStaffSubjects, patchArtifact, patchNotebook, patchNotebookLabel, patchNotebookSource, postAdminReconcileSubjectMaterials, postAdminSubjectMaterial, postArtifact, postArtifactAsSource, postArtifactAttachToLesson, postArtifactCancel, postArtifactFlashcardSet, postArtifactRetry, postArtifactSaveToFiles, postArtifactSlidesRevise, postNotebook, postNotebookAutoSubject, postNotebookDiscover, postNotebookLabel, postNotebookLabelsAuto, postNotebookMessage, postNotebookRegenerate, postNotebookSourceSync, postNotebookSources, postNotebookSourcesSelect, postSaveNote, postStaffReconcileSubjectMaterials, postStaffSubjectMaterial, putArtifactSlides, putNotebookSourceLabels } from "./endpoints/notebooks"
+import type { getAdminReconcileStatus, getAdminSubjectMaterialGroups, getAdminSubjectMaterials, getArtifact, getArtifacts, getNotebook, getNotebookAutoSubject, getNotebookChat, getNotebookLabels, getNotebookSearch, getNotebookSource, getNotebookSourceFileUrl, getNotebookSources, getNotebookSubjectSlots, getNotebookUsage, getNotebooks, getPassage, getSourcePassages, getStaffReconcileStatus, getStaffSubjectMaterials, getStaffSubjects, patchArtifact, patchNotebook, patchNotebookLabel, patchNotebookSource, postAdminReconcileSubjectMaterials, postAdminSubjectMaterial, postArtifact, postArtifactAsSource, postArtifactAttachToLesson, postArtifactCancel, postArtifactFlashcardSet, postArtifactRetry, postArtifactSaveToFiles, postArtifactSlidesRevise, postNotebook, postNotebookAutoSubject, postNotebookDiscover, postNotebookLabel, postNotebookLabelsAuto, postNotebookMessage, postNotebookRegenerate, postNotebookSourceReread, postNotebookSourceSync, postNotebookSources, postNotebookSourcesSelect, postSaveNote, postStaffReconcileSubjectMaterials, postStaffSubjectMaterial, putArtifactSlides, putNotebookSourceLabels } from "./endpoints/notebooks"
 import type { getNotifications, getNotificationsUnreadCount } from "./endpoints/notifications"
 import type { postOauthLogout, postOauthRefresh, postOauthTelegram, postOauthToken, postOauthTokenHook } from "./endpoints/oauth"
 import type { confirmPresentationPlan, getPresentationPlan, patchPresentationPlan, postPresentationPlan } from "./endpoints/presentation-plans"
@@ -44,6 +44,9 @@ import type { getPushConfig, postPushSubscription } from "./endpoints/push"
 import type { getInternalEmisProfile, getInternalEmisRatings, getInternalEmisSubjects, postIdReclaimEmail, postIdReclaimEmis, postIdRegisterComplete, postIdRegisterEmail, postIdRegisterEmis } from "./endpoints/registration"
 import type { getAdminGroup, getAdminGroups, getAdminLessons, getAdminRooms, getAdminStudents, getAdminSubjects, getAdminTerms, getAdminTimetable, getMeProfile, getMeTimetable, getStaffGroup, getStaffGroups, getStaffTimetable, patchAdminGroup, patchAdminLesson, patchAdminRoom, patchAdminSubject, patchAdminTerm, patchAdminTimetable, postAdminGroups, postAdminLessons, postAdminRoomArchive, postAdminRoomMerge, postAdminRoomRegeneratePin, postAdminStudentsImport, postAdminStudentsImportConfirm, postAdminSubjects, postAdminTerms, postAdminTimetable, postAdminTimetableCheck, postAdminTimetableCopy, putAdminGroupSubgroups, putStaffGroupSubgroups } from "./endpoints/schedule"
 import type { deleteAdminUserPhoto, deleteStaffMePhoto, getAdminTeacherContacts, getMeTeacher, getMeTeacherTimetable, getMeTeachers, getStaffMeContacts, putAdminTeacherContacts, putAdminUserPhoto, putStaffMeContacts, putStaffMePhoto } from "./endpoints/teachers"
+import type { getAdminWorkOffStats, getAdminWorkOffs } from "./endpoints/work-offs-admin"
+import type { getMeWorkOffs } from "./endpoints/work-offs-me"
+import type { getWorkOffTemplates, patchWorkOff, postWorkOffTemplate, putWorkOffTemplate } from "./endpoints/work-offs-staff"
 import type { AdminUsageParams, ExtensionBody, ExtensionsParams, LimitsBody } from "./types/admin-ai"
 import type { KnowledgeEntryInput, KnowledgeEntryPatch, KnowledgeParams } from "./types/admin-knowledge"
 import type { ChatCreateBody, ChatMessageBody, ChatPatchBody, ChatsParams, MessageFeedbackBody, ToolCallRejectBody, UsageParams } from "./types/ai"
@@ -73,6 +76,9 @@ import type { PushSubscriptionBody, PushUnsubscribeBody } from "./types/push"
 import type { EmisRatingsParams, ReclaimCompleteBody, ReclaimEmailBody, ReclaimEmisBody, RegisterCompleteBody, RegisterEmailBody, RegisterEmisBody } from "./types/registration"
 import type { AdminGroupsParams, AdminLessonsParams, AdminRoomsParams, AdminStudentsParams, AdminSubjectsParams, AdminTimetableParams, ExtraLessonInput, GroupCreateBody, GroupPatchBody, LessonPatchBody, RoomMergeBody, RoomRenameBody, SubgroupAssignmentsBody, SubjectCreateBody, SubjectPatchBody, TermInput, TermPatch, TimetableCopyBody, TimetableEntryInput, TimetablePatchBody, TimetableRangeParams } from "./types/schedule"
 import type { TeacherContacts, TeacherTimetableParams } from "./types/teachers"
+import type { AdminWorkOffsParams, WorkOffStatsParams } from "./types/work-offs-admin"
+import type { MyWorkOffsParams } from "./types/work-offs-me"
+import type { WorkOffPatchBody, WorkOffTemplateBody } from "./types/work-offs-staff"
 
 type Method = "get" | "post" | "put" | "patch" | "delete"
 type OperationOf<P extends keyof paths, M extends Method> = paths[P] extends Record<M, infer O> ? O : never
@@ -1969,6 +1975,10 @@ export const request_postNotebookSourcesSelect: RequestOf<"/v1/notebooks/{notebo
 declare const res_postNotebookSourceSync: Awaited<ReturnType<typeof postNotebookSourceSync>>
 export const response_postNotebookSourceSync: ResponseOf<"/v1/notebooks/{notebook_id}/sources/{source_id}/sync", "post"> = res_postNotebookSourceSync
 
+// POST /v1/notebooks/{notebook_id}/sources/{source_id}/reread — postNotebookSourceReread
+declare const res_postNotebookSourceReread: Awaited<ReturnType<typeof postNotebookSourceReread>>
+export const response_postNotebookSourceReread: ResponseOf<"/v1/notebooks/{notebook_id}/sources/{source_id}/reread", "post"> = res_postNotebookSourceReread
+
 // DELETE /v1/notebooks/{notebook_id}/sources/{source_id} — deleteNotebookSource
 // no JSON success response (204, CSV, calendar or HTML): only the route is checked
 export type route_deleteNotebookSource = OperationOf<"/v1/notebooks/{notebook_id}/sources/{source_id}", "delete">
@@ -2556,4 +2566,52 @@ export const response_putAdminUserPhoto: ResponseOf<"/v1/admin/users/{id}/photo"
 // DELETE /v1/admin/users/{id}/photo — deleteAdminUserPhoto
 declare const res_deleteAdminUserPhoto: Awaited<ReturnType<typeof deleteAdminUserPhoto>>
 export const response_deleteAdminUserPhoto: ResponseOf<"/v1/admin/users/{id}/photo", "delete"> = res_deleteAdminUserPhoto
+
+// GET /v1/admin/work-offs/stats — getAdminWorkOffStats
+declare const res_getAdminWorkOffStats: Awaited<ReturnType<typeof getAdminWorkOffStats>>
+export const response_getAdminWorkOffStats: ResponseOf<"/v1/admin/work-offs/stats", "get"> = res_getAdminWorkOffStats
+declare const query_getAdminWorkOffStats: WorkOffStatsParams
+export const query_ok_getAdminWorkOffStats: QueryOf<"/v1/admin/work-offs/stats", "get"> = query_getAdminWorkOffStats
+
+// GET /v1/admin/work-offs — getAdminWorkOffs
+declare const res_getAdminWorkOffs: Awaited<ReturnType<typeof getAdminWorkOffs>>
+export const response_getAdminWorkOffs: ResponseOf<"/v1/admin/work-offs", "get"> = res_getAdminWorkOffs
+declare const query_getAdminWorkOffs: AdminWorkOffsParams
+export const query_ok_getAdminWorkOffs: QueryOf<"/v1/admin/work-offs", "get"> = query_getAdminWorkOffs
+
+// GET /v1/me/work-offs — getMeWorkOffs
+declare const res_getMeWorkOffs: Awaited<ReturnType<typeof getMeWorkOffs>>
+export const response_getMeWorkOffs: ResponseOf<"/v1/me/work-offs", "get"> = res_getMeWorkOffs
+declare const query_getMeWorkOffs: MyWorkOffsParams
+export const query_ok_getMeWorkOffs: QueryOf<"/v1/me/work-offs", "get"> = query_getMeWorkOffs
+
+// GET /v1/staff/work-off-templates — getWorkOffTemplates
+declare const res_getWorkOffTemplates: Awaited<ReturnType<typeof getWorkOffTemplates>>
+export const response_getWorkOffTemplates: ResponseOf<"/v1/staff/work-off-templates", "get"> = res_getWorkOffTemplates
+
+// POST /v1/staff/work-off-templates — postWorkOffTemplate
+declare const res_postWorkOffTemplate: Awaited<ReturnType<typeof postWorkOffTemplate>>
+export const response_postWorkOffTemplate: ResponseOf<"/v1/staff/work-off-templates", "post"> = res_postWorkOffTemplate
+declare const req_postWorkOffTemplate: WorkOffTemplateBody
+export const request_postWorkOffTemplate: RequestOf<"/v1/staff/work-off-templates", "post"> = req_postWorkOffTemplate
+
+// PUT /v1/staff/work-off-templates/{id} — putWorkOffTemplate
+declare const res_putWorkOffTemplate: Awaited<ReturnType<typeof putWorkOffTemplate>>
+export const response_putWorkOffTemplate: ResponseOf<"/v1/staff/work-off-templates/{id}", "put"> = res_putWorkOffTemplate
+declare const req_putWorkOffTemplate: WorkOffTemplateBody
+export const request_putWorkOffTemplate: RequestOf<"/v1/staff/work-off-templates/{id}", "put"> = req_putWorkOffTemplate
+
+// DELETE /v1/staff/work-off-templates/{id} — deleteWorkOffTemplate
+// no JSON success response (204, CSV, calendar or HTML): only the route is checked
+export type route_deleteWorkOffTemplate = OperationOf<"/v1/staff/work-off-templates/{id}", "delete">
+
+// PATCH /v1/staff/work-offs/{id} — patchWorkOff
+declare const res_patchWorkOff: Awaited<ReturnType<typeof patchWorkOff>>
+export const response_patchWorkOff: ResponseOf<"/v1/staff/work-offs/{id}", "patch"> = res_patchWorkOff
+declare const req_patchWorkOff: WorkOffPatchBody
+export const request_patchWorkOff: RequestOf<"/v1/staff/work-offs/{id}", "patch"> = req_patchWorkOff
+
+// DELETE /v1/staff/work-offs/{id} — deleteWorkOff
+// no JSON success response (204, CSV, calendar or HTML): only the route is checked
+export type route_deleteWorkOff = OperationOf<"/v1/staff/work-offs/{id}", "delete">
 

@@ -20,6 +20,7 @@ export type SourceStatus = "pending" | "processing" | "ready" | "failed" | "unav
 export type SourceFailure =
   | "unsupported_type"
   | "no_text"
+  | "no_transcript"
   | "too_large"
   | "fetch_failed"
   | "forbidden"

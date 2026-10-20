@@ -1,5 +1,6 @@
 "use client"
 
+import type { ReactNode } from "react"
 import { useT } from "@ihsp/i18n"
 import { Badge, cn } from "@ihsp/ui"
 import { fullName } from "../utils/people"
@@ -15,11 +16,14 @@ export function RosterRow({
   mark,
   readOnly,
   onMark,
+  children,
 }: {
   item: SheetRosterItem
   mark: Mark
   readOnly: boolean
   onMark: (mark: AttendanceMark) => void
+  /** Shown under the student: the work-off task of an absent student. */
+  children?: ReactNode
 }) {
   const t = useT("lessonDetail.attendance")
   const absent = mark === "absent"
@@ -44,33 +48,41 @@ export function RosterRow({
   if (readOnly) {
     return (
       <li
-        className="flex min-h-11 items-center justify-between gap-3 rounded-lg border p-2"
+        aria-label={name}
+        className="flex min-h-11 flex-col justify-center gap-1.5 rounded-lg border p-2"
         data-absent={absent}
         data-late={late}
       >
-        <span className="flex min-w-0 flex-col">
-          <span className="truncate text-sm">{name}</span>
-          {comment}
-        </span>
-        {state}
+        <div className="flex items-center justify-between gap-3">
+          <span className="flex min-w-0 flex-col">
+            <span className="truncate text-sm">{name}</span>
+            {comment}
+          </span>
+          {state}
+        </div>
+        {absent ? children : null}
       </li>
     )
   }
 
   return (
     <li
+      aria-label={name}
       data-absent={absent}
       data-late={late}
       className={cn(
-        "flex flex-col gap-2 rounded-lg border p-2 sm:flex-row sm:items-center sm:gap-3",
+        "flex flex-col gap-2 rounded-lg border p-2",
         absent ? "border-red-800/50 bg-red-700/5" : late ? "border-orange-600/50 bg-orange-600/5" : "bg-background",
       )}
     >
-      <span className="flex min-w-0 flex-1 flex-col">
-        <span className="truncate text-sm">{name}</span>
-        {comment}
-      </span>
-      <AttendanceSegmented name={name} mark={mark} onMark={onMark} />
+      <div className="flex flex-col gap-2 sm:flex-row sm:items-center sm:gap-3">
+        <span className="flex min-w-0 flex-1 flex-col">
+          <span className="truncate text-sm">{name}</span>
+          {comment}
+        </span>
+        <AttendanceSegmented name={name} mark={mark} onMark={onMark} />
+      </div>
+      {absent ? children : null}
     </li>
   )
 }

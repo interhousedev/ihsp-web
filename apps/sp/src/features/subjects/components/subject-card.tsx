@@ -1,7 +1,7 @@
 "use client"
 
 import type { CurriculumSubject, SubjectCard as SubjectCardData } from "@ihsp/api"
-import { SubjectTypeBadge } from "@ihsp/features-core"
+import { SubjectTypeBadge, TemporaryGpa } from "@ihsp/features-core"
 import { useFormatters, useT } from "@ihsp/i18n"
 import { Card, CardContent, MarkBadge, cn } from "@ihsp/ui"
 import Link from "next/link"
@@ -43,7 +43,10 @@ export function SubjectCard({
                 <p className="text-muted-foreground truncate text-xs">{card.teachers.map(shortName).join(", ")}</p>
                 <SubjectTypeBadge typeId={curriculumSubject?.subject_type_id} className="mt-1.5" />
               </div>
-              <MarkBadge mark={card.semester_mark} size="lg" />
+              <span className="inline-flex items-start">
+                <MarkBadge mark={card.semester_mark} size="lg" />
+                <TemporaryGpa value={card.gpa_with_temporary} />
+              </span>
             </div>
             <dl className={cn("grid gap-2 text-xs", hours === null ? "grid-cols-2" : "grid-cols-3")}>
               <div>

@@ -4,6 +4,7 @@ import { assessmentsHandlers } from "./assessments"
 import { broadcastsHandlers } from "./broadcasts"
 import { certificatesHandlers } from "./certificates"
 import { classworkHandlers } from "./classwork"
+import { temporaryMarksHandlers } from "./temporary-marks"
 import { compositionHandlers } from "./composition"
 import { curriculumHandlers } from "./curriculum"
 import { meSyncHandlers } from "./me-sync"
@@ -37,10 +38,14 @@ import { subjectMaterialsHandlers } from "./subject-materials"
 import { groupProgressHandlers } from "./group-progress"
 import { teachersHandlers } from "./teachers"
 import { webSearchHandlers } from "./web-search"
+import { workOffsMeHandlers } from "./work-offs-me"
+import { workOffsStaffHandlers } from "./work-offs-staff"
+import { adminWorkOffsHandlers } from "./work-offs-admin"
 
 export { errorHandlers } from "./errors"
 export { applyOutlineOps } from "./lms-authoring"
 export { resetAssessments } from "./assessments"
+export { resetTemporaryMarks } from "./temporary-marks"
 export { resetMeSyncState } from "./me-sync"
 export { certificatesImported, resetCertificatesState, setCertificatesStaffForbidden } from "./certificates"
 export { resetAdminJobs } from "./admin-jobs"
@@ -78,6 +83,7 @@ export {
 } from "./library"
 export { resetPresentationPlansState } from "./presentation-plans"
 export { resetStaffSubjectsState } from "./staff-subjects"
+export { resetWorkOffsStaffState, seedStaffWorkOffs, staffWorkOffsOf } from "./work-offs-staff"
 export { resetSubjectMaterialsState } from "./subject-materials"
 export { resetTeacherContacts, resetTeacherPhotos, teacherPhotoUploads, type TeacherPhotoUpload } from "./teachers"
 export { pushSubscriptions, resetPushSubscriptions } from "./push"
@@ -123,6 +129,9 @@ export {
   teachersHandlers,
   groupProgressHandlers,
   webSearchHandlers,
+  workOffsMeHandlers,
+  workOffsStaffHandlers,
+  adminWorkOffsHandlers,
 }
 
 /**
@@ -144,7 +153,11 @@ export const allHandlers = [
   ...adminKnowledgeHandlers,
   ...teachersHandlers,
   ...groupProgressHandlers,
+  ...temporaryMarksHandlers,
   ...classworkHandlers,
+  ...workOffsMeHandlers,
+  ...workOffsStaffHandlers,
+  ...adminWorkOffsHandlers,
   ...marksHandlers,
   ...assessmentsHandlers,
   ...filesHandlers,

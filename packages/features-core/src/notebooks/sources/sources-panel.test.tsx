@@ -243,6 +243,36 @@ describe("SourcesPanel", () => {
       expect(await screen.findByRole("menuitem", { name: "Remove" })).toBeInTheDocument()
     })
 
+    it("re-reads a source without text and drops the failure once the text is found", async () => {
+      seedNotebookSource(sourceFailed)
+      const { user } = renderPanel()
+
+      await user.click(await screen.findByRole("button", { name: "Re-read" }))
+
+      await until(() => screen.queryByText("Could not read: No text found in the source.") === null, 8000)
+      expect(screen.queryByRole("button", { name: "Re-read" })).not.toBeInTheDocument()
+    })
+
+    it("offers Re-read for a video without captions, and not for a source that failed otherwise", async () => {
+      seedNotebookSource({
+        ...sourceFailed,
+        id: "0000001f-0000-4000-8000-000000000077",
+        title: "Lecture video",
+        kind: "url",
+        failure: "no_transcript",
+      })
+      seedNotebookSource({
+        ...sourceFailed,
+        id: "0000001f-0000-4000-8000-000000000078",
+        title: "Gone page",
+        failure: "fetch_failed",
+      })
+      renderPanel()
+
+      expect(await screen.findByText("Could not read: This video has no transcript to read.")).toBeInTheDocument()
+      expect(screen.getAllByRole("button", { name: "Re-read" })).toHaveLength(1)
+    })
+
     it("marks a source that is not available", async () => {
       seedNotebookSource({ ...sourceFailed, status: "unavailable", failure: "deleted" })
       renderPanel()

@@ -31,7 +31,7 @@ export function groupProgressFor(semester: number): GroupProgress {
         lessons: 40,
         absence_rate: 0.075,
         cells: [
-          cell(ids.math, { semester_mark: semester === 1 ? 5 : 4 }),
+          cell(ids.math, { semester_mark: semester === 1 ? 5 : 4, gpa_with_temporary: semester === 1 ? null : 4.3 }),
           cell(ids.physics, { semester_mark: null, midterm_avg: null, final_avg: null, lesson_avg: null }),
         ],
       },

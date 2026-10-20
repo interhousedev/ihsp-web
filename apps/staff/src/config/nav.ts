@@ -20,10 +20,14 @@ export function useNav(): { groups: NavGroup[]; bottom: BottomNavItem[] } {
     const exams = { title: t("exams"), url: "/group/exams/", icon: "calendarEvent" } as const
     const studentSearch = { title: t("studentSearch"), url: "/students/", icon: "search" } as const
     const subjects = { title: t("subjects"), url: "/subjects/", icon: "subjects" } as const
+    const pendingMarks = { title: t("temporaryMarks"), url: "/temporary-marks/", icon: "forms" } as const
     const notebooks = { title: t("notebooks"), url: "/notebooks/", icon: IconNotebook } as const
     const groups: NavGroup[] = [
       { label: t("groupHome"), items: [today] },
-      { label: t("groupTeaching"), items: [timetable, journal, subjects, studentSearch, notebooks, exams] },
+      {
+        label: t("groupTeaching"),
+        items: [timetable, journal, subjects, pendingMarks, studentSearch, notebooks, exams],
+      },
     ]
     if (isCurator) {
       groups.push({

@@ -138,7 +138,8 @@
       "fetch_failed": "Sahifani ochib boʻlmadi.",
       "forbidden": "Bu elementdan foydalana olmaysiz.",
       "deleted": "Fayl oʻchirilgan.",
-      "provider_error": "Vaqtinchalik xatolik. Qayta urinib koʻring."
+      "provider_error": "Vaqtinchalik xatolik. Qayta urinib koʻring.",
+      "no_transcript": "Videoda oʼqish uchun subtitrlar yoʼq."
     },
     "row": {
       "open": "Manbani ochish",
@@ -147,7 +148,9 @@
       "remove": "Olib tashlash",
       "exclude": "Chiqarib tashlash",
       "fromLessons": "Darslardan",
-      "more": "«{title}» manbasi uchun amallar"
+      "more": "«{title}» manbasi uchun amallar",
+      "reread": "Qayta oʼqish",
+      "rereading": "Qayta oʼqilmoqda…"
     },
     "remove": {
       "title": "Bu manba olib tashlansinmi?",

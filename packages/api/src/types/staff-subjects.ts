@@ -74,6 +74,8 @@ export type TeachingStudent = {
   marks: TeachingMark[]
   average: number | null
   semester_mark: number | null
+  /** GPA counting temporary marks not yet in EMIS; null when there are none. */
+  gpa_with_temporary?: number | null
   homework: TeachingHomework[]
   absences: number
   lessons_with_attendance: number | null

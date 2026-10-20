@@ -77,7 +77,8 @@
     "goHome": "Bosh sahifaga",
     "morePages": "Yana sahifalar",
     "previousSlide": "Oldingi slayd",
-    "nextSlide": "Keyingi slayd"
+    "nextSlide": "Keyingi slayd",
+    "withTemporaryMarks": "EMISga hali kiritilmagan vaqtinchalik baholar bilan"
   },
   "state": {
     "loadingTitle": "Yuklanmoqda",
@@ -500,7 +501,22 @@
     "certificate_type_in_use": "Bu turda sertifikatlar bor, uni oʻchirib boʻlmaydi.",
     "knowledge_key_taken": "Bu kalit boshqa yozuvda band.",
     "knowledge_entry_not_found": "Yozuv topilmadi.",
-    "knowledge_invalid": "Yozuv maydoni notoʻgʻri."
+    "knowledge_invalid": "Yozuv maydoni notoʻgʻri.",
+    "work-off": {
+      "template-not-found": "Bunday otrabotka shabloni yoʻq.",
+      "not-found": "Bunday otrabotka yoʻq.",
+      "template-limit": "Otrabotka shablonlari 20 tadan oshmasligi kerak.",
+      "text-invalid": "Otrabotka matni 1 dan 2000 gacha belgidan iborat boʻlishi kerak.",
+      "text-required": "Shablonni tanlang yoki otrabotka matnini yozing.",
+      "not-absent": "Otrabotkani faqat kelmagan oʻquvchiga berish mumkin.",
+      "status-invalid": "Holat tayinlangan yoki bajarilgan boʻlishi kerak."
+    },
+    "temporary-mark": {
+      "not-found": "Vaqtinchalik baho topilmadi.",
+      "student-not-in-lesson": "Bu o‘quvchi darsda yo‘q.",
+      "value-invalid": "Vaqtinchalik baho 2 dan 5 gacha bo‘lishi kerak.",
+      "comment-invalid": "Izoh 500 belgigacha bo‘lishi mumkin."
+    }
   },
   "notifications": {
     "title": "Bildirishnomalar",
@@ -1112,10 +1128,36 @@
       "absentCount": "{count} ta yoʻq",
       "lateCount": "{count} ta kech qoldi",
       "presentCount": "{count} ta bor",
-      "late": "Kech qoldi"
+      "late": "Kech qoldi",
+      "saveWithout": "Otrabotkasiz saqlash",
+      "saveCommon": "Saqlash va barcha kelmaganlarga bitta otrabotka berish"
     },
     "audience": {
       "subgroup": "{group} · {number}-kichik guruh"
+    },
+    "workOff": {
+      "title": "Otrabotka",
+      "titleFor": "Otrabotka: {name}",
+      "commonTitle": "Barcha kelmaganlar uchun otrabotka",
+      "editTitle": "Otrabotkani tahrirlash",
+      "template": "Shablon",
+      "extraText": "Qoʻshimcha matn",
+      "text": "Topshiriq",
+      "dueDate": "Topshirish muddati",
+      "noDate": "Muddatsiz",
+      "clearDate": "Muddatni olib tashlash",
+      "add": "Otrabotka berish",
+      "editFor": "{name} otrabotkasini tahrirlash",
+      "none": "Otrabotka yoʻq",
+      "label": "Otrabotka: {text}",
+      "due": "Muddat: {date}",
+      "done": "Bajarildi",
+      "markDone": "Bajarildi deb belgilash",
+      "reopen": "Qayta ochish",
+      "deleteFor": "{name} otrabotkasini oʻchirish",
+      "deleteTitle": "Bu otrabotka oʻchirilsinmi?",
+      "saved": "Otrabotka saqlandi",
+      "deleted": "Otrabotka oʻchirildi"
     }
   },
   "flashcards": {

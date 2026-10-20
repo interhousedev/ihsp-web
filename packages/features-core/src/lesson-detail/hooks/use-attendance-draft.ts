@@ -11,6 +11,7 @@ import {
   type AttendanceMark,
   type Marks,
 } from "../utils/marks"
+import { pruneDrafts, type WorkOffDraft, type WorkOffDrafts } from "../utils/work-offs"
 
 type Draft = {
   /** What the teacher sees now. */
@@ -18,11 +19,17 @@ type Draft = {
   /** What the sheet of `baseVersion` says; the draft is dirty when `marks` differs from it. */
   baseMarks: Marks
   baseVersion: number
+  /** Work-off choices of students marked absent in this form; students not listed keep their saved work-off. */
+  workOffs: WorkOffDrafts
 }
 
 function fromSheet(sheet: AttendanceSheet): Draft {
   const marks = initialMarks(sheet)
-  return { marks, baseMarks: marks, baseVersion: sheet.version }
+  return { marks, baseMarks: marks, baseVersion: sheet.version, workOffs: {} }
+}
+
+function isDirty(draft: Draft): boolean {
+  return !sameMarks(draft.marks, draft.baseMarks) || Object.keys(draft.workOffs).length > 0
 }
 
 /**
@@ -35,26 +42,38 @@ export function useAttendanceDraft(sheet: AttendanceSheet) {
   useEffect(() => {
     setDraft((current) => {
       if (current.baseVersion === sheet.version) return current
-      if (!sameMarks(current.marks, current.baseMarks)) return current
+      if (isDirty(current)) return current
       return fromSheet(sheet)
     })
   }, [sheet])
 
-  const dirty = !sameMarks(draft.marks, draft.baseMarks)
+  const dirty = isDirty(draft)
   const stale = draft.baseVersion !== sheet.version && dirty
 
   const mark = useCallback(
     (userId: string, next: AttendanceMark) =>
-      setDraft((current) => ({ ...current, marks: setMark(current.marks, userId, next) })),
+      setDraft((current) => {
+        const marks = setMark(current.marks, userId, next)
+        return { ...current, marks, workOffs: pruneDrafts(current.workOffs, marks) }
+      }),
     [],
   )
   const setUnassigned = useCallback(
     (userId: string, next: AttendanceMark) =>
-      setDraft((current) => ({ ...current, marks: setUnassignedMark(current.marks, userId, next) })),
+      setDraft((current) => {
+        const marks = setUnassignedMark(current.marks, userId, next)
+        return { ...current, marks, workOffs: pruneDrafts(current.workOffs, marks) }
+      }),
+    [],
+  )
+  /** Sets the work-off choice of an absent student. */
+  const setWorkOff = useCallback(
+    (userId: string, choice: WorkOffDraft) =>
+      setDraft((current) => ({ ...current, workOffs: { ...current.workOffs, [userId]: choice } })),
     [],
   )
   const markEveryonePresent = useCallback(
-    () => setDraft((current) => ({ ...current, marks: everyonePresent(current.marks, sheet) })),
+    () => setDraft((current) => ({ ...current, marks: everyonePresent(current.marks, sheet), workOffs: {} })),
     [sheet],
   )
   /** Drops the edits and shows `next` (the "review the current list" choice of the conflict dialog). */
@@ -68,11 +87,13 @@ export function useAttendanceDraft(sheet: AttendanceSheet) {
 
   return {
     marks: draft.marks,
+    workOffs: draft.workOffs,
     baseVersion: draft.baseVersion,
     dirty,
     stale,
     mark,
     setUnassigned,
+    setWorkOff,
     markEveryonePresent,
     reset,
     rebase,

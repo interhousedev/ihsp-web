@@ -94,6 +94,8 @@ export function SourcesPanel({ notebook, onCollapse }: SourcesPanelProps) {
       onToggle={toggleSource}
       onRename={actions.startRename}
       onSync={actions.sync}
+      onReread={actions.reread}
+      rereading={actions.isRereading(source.id)}
       onRemove={actions.startRemove}
       onExclude={notebook.auto ? actions.exclude : undefined}
       readOnly={readOnly}

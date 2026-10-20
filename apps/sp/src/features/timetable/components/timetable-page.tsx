@@ -6,6 +6,7 @@ import { Alert, AlertDescription, PageContainer, cn, useIsMobile } from "@ihsp/u
 import { useQuery } from "@tanstack/react-query"
 import { parseAsString, useQueryState } from "nuqs"
 import { useMemo } from "react"
+import { WorkOffCard } from "../../attendance/components/work-off-card"
 import { AttendanceOverview } from "../../attendance/components/attendance-overview"
 import { useAttendance } from "../../attendance/hooks/use-attendance"
 import { dayStatus, type MarkedState } from "../../attendance/utils/lesson-states"
@@ -143,6 +144,7 @@ export function TimetablePage() {
       <QueryState query={attendance} rows={4}>
         {(data) => <AttendanceOverview data={data} month={month} />}
       </QueryState>
+      <WorkOffCard />
     </PageContainer>
   )
 }

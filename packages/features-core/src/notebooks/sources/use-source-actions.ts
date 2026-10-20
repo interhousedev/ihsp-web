@@ -2,7 +2,7 @@
 
 import type { SourceItem } from "@ihsp/api"
 import { useState } from "react"
-import { useExcludeSource, useRemoveSource, useSyncSource, useUpdateSource } from "../api"
+import { useExcludeSource, useRemoveSource, useRereadSource, useSyncSource, useUpdateSource } from "../api"
 import { useNotebookErrorMessage } from "../lib/use-notebook-error"
 
 type Options = {
@@ -16,6 +16,7 @@ export function useSourceActions(notebookId: string, { onRemoved }: Options = {}
   const updateMutation = useUpdateSource(notebookId)
   const removeMutation = useRemoveSource(notebookId)
   const excludeMutation = useExcludeSource(notebookId)
+  const rereadMutation = useRereadSource(notebookId)
   const errorMessage = useNotebookErrorMessage()
   const [renaming, setRenaming] = useState<SourceItem | null>(null)
   const [removing, setRemoving] = useState<SourceItem | null>(null)
@@ -24,6 +25,12 @@ export function useSourceActions(notebookId: string, { onRemoved }: Options = {}
   function sync(source: Pick<SourceItem, "id">) {
     setSyncError(null)
     syncMutation.mutate(source.id, { onError: (error) => setSyncError(errorMessage(error)) })
+  }
+
+  /** Extracts the text of a source that had none again (the **Re-read** button). */
+  function reread(source: Pick<SourceItem, "id">) {
+    setSyncError(null)
+    rereadMutation.mutate(source.id, { onError: (error) => setSyncError(errorMessage(error)) })
   }
 
   /** Syncs several sources (the "Sync outdated" button); failures are summarised in `syncError`. */
@@ -60,6 +67,8 @@ export function useSourceActions(notebookId: string, { onRemoved }: Options = {}
     removing,
     syncError,
     syncing: syncMutation.isPending,
+    reread,
+    isRereading: (id: string) => rereadMutation.isPending && rereadMutation.variables === id,
     renamePending: updateMutation.isPending,
     renameError: updateMutation.error,
     removePending: removeMutation.isPending,

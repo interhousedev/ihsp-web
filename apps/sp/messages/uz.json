@@ -727,6 +727,15 @@
       "empty": "Qoldirilgan darslar yoʻq.",
       "absent": "Qoldirilgan",
       "excused": "Sababli"
+    },
+    "workOffs": {
+      "title": "Qayta topshirish vazifalari",
+      "period": "{period}-dars",
+      "dueOn": "Muddati: {date}",
+      "overdue": "Muddati o'tgan",
+      "status": {
+        "assigned": "Bajarilishi kerak"
+      }
     }
   },
   "homework": {

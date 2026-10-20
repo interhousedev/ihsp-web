@@ -2198,6 +2198,46 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/v1/admin/work-offs": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * List Admin Work Offs
+         * @description Return one page of work-offs matching the filters.
+         */
+        get: operations["list_admin_work_offs_v1_admin_work_offs_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/admin/work-offs/stats": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get Work Off Stats
+         * @description Return open and done counts per subject, teacher, group or student.
+         */
+        get: operations["get_work_off_stats_v1_admin_work_offs_stats_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/v1/ai/chats": {
         parameters: {
             query?: never;
@@ -7190,6 +7230,26 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/v1/me/work-offs": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * List My Work Offs
+         * @description Return the student's work-offs, newest lesson first.
+         */
+        get: operations["list_my_work_offs_v1_me_work_offs_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/v1/notebooks": {
         parameters: {
             query?: never;
@@ -8170,6 +8230,26 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/v1/notebooks/{notebook_id}/sources/{source_id}/reread": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Reread Source
+         * @description Extract the source's text again; a source still being read is returned as is.
+         */
+        post: operations["reread_source_v1_notebooks__notebook_id__sources__source_id__reread_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/v1/notebooks/{notebook_id}/sources/{source_id}/sync": {
         parameters: {
             query?: never;
@@ -8822,6 +8902,50 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/v1/staff/lessons/{id}/temporary-marks": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * List Lesson Temporary Marks
+         * @description Return the lesson's temporary marks.
+         */
+        get: operations["list_lesson_temporary_marks_v1_staff_lessons__id__temporary_marks_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/staff/lessons/{id}/temporary-marks/{student_id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        /**
+         * Set Temporary Mark
+         * @description Create or replace the student's temporary mark for the lesson.
+         */
+        put: operations["set_temporary_mark_v1_staff_lessons__id__temporary_marks__student_id__put"];
+        post?: never;
+        /**
+         * Delete Temporary Mark
+         * @description Delete the student's temporary mark for the lesson.
+         */
+        delete: operations["delete_temporary_mark_v1_staff_lessons__id__temporary_marks__student_id__delete"];
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/v1/staff/lessons/{id}/topic": {
         parameters: {
             query?: never;
@@ -9202,6 +9326,26 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/v1/staff/temporary-marks/pending": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * List Pending Temporary Marks
+         * @description The caller's pending marks; Administration may pick a teacher or see all.
+         */
+        get: operations["list_pending_temporary_marks_v1_staff_temporary_marks_pending_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/v1/staff/timetable": {
         parameters: {
             query?: never;
@@ -9240,6 +9384,78 @@ export interface paths {
         options?: never;
         head?: never;
         patch?: never;
+        trace?: never;
+    };
+    "/v1/staff/work-off-templates": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * List Work Off Templates
+         * @description Return the actor's templates, oldest first.
+         */
+        get: operations["list_work_off_templates_v1_staff_work_off_templates_get"];
+        put?: never;
+        /**
+         * Create Work Off Template
+         * @description Create a template for the actor.
+         */
+        post: operations["create_work_off_template_v1_staff_work_off_templates_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/staff/work-off-templates/{id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        /**
+         * Update Work Off Template
+         * @description Save one of the actor's templates.
+         */
+        put: operations["update_work_off_template_v1_staff_work_off_templates__id__put"];
+        post?: never;
+        /**
+         * Delete Work Off Template
+         * @description Delete one of the actor's templates.
+         */
+        delete: operations["delete_work_off_template_v1_staff_work_off_templates__id__delete"];
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/staff/work-offs/{id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post?: never;
+        /**
+         * Delete Work Off
+         * @description Delete one work-off of a lesson the actor teaches.
+         */
+        delete: operations["delete_work_off_v1_staff_work_offs__id__delete"];
+        options?: never;
+        head?: never;
+        /**
+         * Update Work Off
+         * @description Apply the sent fields; an absent ``due_date`` stays, ``null`` clears it.
+         */
+        patch: operations["update_work_off_v1_staff_work_offs__id__patch"];
         trace?: never;
     };
 }
@@ -9457,6 +9673,68 @@ export interface components {
             status: string;
             /** Telegram */
             telegram: components["schemas"]["app__interfaces__http__v1__id__schemas__TelegramAccountResponse"][];
+        };
+        /**
+         * AdminWorkOffItemResponse
+         * @description One work-off in the administration list.
+         */
+        AdminWorkOffItemResponse: {
+            /**
+             * Created At
+             * Format: date-time
+             */
+            created_at: string;
+            /**
+             * Date
+             * Format: date
+             */
+            date: string;
+            /** Done At */
+            done_at: string | null;
+            /** Due Date */
+            due_date: string | null;
+            /** Group Name */
+            group_name: string | null;
+            /**
+             * Id
+             * Format: uuid
+             */
+            id: string;
+            /**
+             * Lesson Id
+             * Format: uuid
+             */
+            lesson_id: string;
+            /** Period */
+            period: number;
+            /**
+             * Status
+             * @enum {string}
+             */
+            status: "assigned" | "done";
+            /**
+             * Student Id
+             * Format: uuid
+             */
+            student_id: string;
+            /** Student Name */
+            student_name: string;
+            /** Subject Name */
+            subject_name: string;
+            /** Teacher Name */
+            teacher_name: string | null;
+            /** Text */
+            text: string;
+        };
+        /**
+         * AdminWorkOffListResponse
+         * @description A page of work-offs and the total count.
+         */
+        AdminWorkOffListResponse: {
+            /** Items */
+            items: components["schemas"]["AdminWorkOffItemResponse"][];
+            /** Total */
+            total: number;
         };
         /**
          * AgentStepResponse
@@ -10237,6 +10515,8 @@ export interface components {
             submitted_by: components["schemas"]["app__interfaces__http__v1__me_classwork__schemas__PersonRefResponse"] | null;
             /** Version */
             version: number;
+            /** Work Offs */
+            work_offs?: components["schemas"]["WorkOffResponse"][];
         };
         /**
          * AudienceBody
@@ -11481,6 +11761,18 @@ export interface components {
             slug: string;
             /** Title */
             title: string;
+        };
+        /**
+         * CommonWorkOffBody
+         * @description One work-off choice: a template, a text or both, and a due date.
+         */
+        CommonWorkOffBody: {
+            /** Due Date */
+            due_date?: string | null;
+            /** Template Id */
+            template_id?: string | null;
+            /** Text */
+            text?: string | null;
         };
         /**
          * CompareStepView
@@ -13708,6 +14000,8 @@ export interface components {
             emis_rating: number | null;
             /** Final Avg */
             final_avg: number | null;
+            /** Gpa With Temporary */
+            gpa_with_temporary?: number | null;
             /** Lesson Avg */
             lesson_avg: number | null;
             /** Marks Count */
@@ -13727,6 +14021,8 @@ export interface components {
             emis_rating: number | null;
             /** Final Avg */
             final_avg: number | null;
+            /** Gpa With Temporary */
+            gpa_with_temporary?: number | null;
             /** Lesson Avg */
             lesson_avg: number | null;
             /** Marks Count */
@@ -13835,6 +14131,8 @@ export interface components {
             emis_rating: number | null;
             /** Final Avg */
             final_avg: number | null;
+            /** Gpa With Temporary */
+            gpa_with_temporary?: number | null;
             /** Lesson Avg */
             lesson_avg: number | null;
             /** Lessons */
@@ -16758,6 +17056,49 @@ export interface components {
             week: components["schemas"]["TeacherLessonResponse"][];
         };
         /**
+         * MyWorkOffResponse
+         * @description A work-off task of the student (WO-6).
+         */
+        MyWorkOffResponse: {
+            /**
+             * Created At
+             * Format: date-time
+             */
+            created_at: string;
+            /**
+             * Date
+             * Format: date
+             */
+            date: string;
+            /** Done At */
+            done_at: string | null;
+            /** Due Date */
+            due_date: string | null;
+            /**
+             * Id
+             * Format: uuid
+             */
+            id: string;
+            /**
+             * Lesson Id
+             * Format: uuid
+             */
+            lesson_id: string;
+            /** Period */
+            period: number;
+            /**
+             * Status
+             * @enum {string}
+             */
+            status: "assigned" | "done";
+            /** Subject Name */
+            subject_name: string;
+            /** Teacher Name */
+            teacher_name: string | null;
+            /** Text */
+            text: string;
+        };
+        /**
          * NamesBody
          * @description Names in the three languages of the lyceum.
          */
@@ -18882,6 +19223,8 @@ export interface components {
         RecordBookSubject: {
             /** Emis Rating */
             emis_rating: number | null;
+            /** Gpa With Temporary */
+            gpa_with_temporary?: number | null;
             /** Semester Mark */
             semester_mark: number | null;
             subject: components["schemas"]["SubjectRef"];
@@ -20261,7 +20604,7 @@ export interface components {
          * @description Machine code of why a source failed (translated by the web app).
          * @enum {string}
          */
-        SourceFailure: "unsupported_type" | "no_text" | "too_large" | "fetch_failed" | "forbidden" | "deleted" | "provider_error";
+        SourceFailure: "unsupported_type" | "no_text" | "no_transcript" | "too_large" | "fetch_failed" | "forbidden" | "deleted" | "provider_error";
         /**
          * SourceFileResponse
          * @description `SourceFile`: the uploaded file behind a source (preview and download).
@@ -21184,6 +21527,8 @@ export interface components {
             attendance_source?: "emis" | "platform" | "mixed";
             /** Emis Rating */
             emis_rating: number | null;
+            /** Gpa With Temporary */
+            gpa_with_temporary?: number | null;
             /**
              * Lates
              * @default 0
@@ -21228,6 +21573,8 @@ export interface components {
             averages: components["schemas"]["Averages"];
             /** Emis Rating */
             emis_rating: number | null;
+            /** Gpa With Temporary */
+            gpa_with_temporary?: number | null;
             /** Lessons */
             lessons: components["schemas"]["SubjectLesson"][];
             /** Marks */
@@ -21620,10 +21967,19 @@ export interface components {
             absent: string[];
             /** Base Version */
             base_version: number;
+            common_work_off?: components["schemas"]["CommonWorkOffBody"] | null;
             /** Late */
             late?: string[];
             /** Present Unassigned */
             present_unassigned?: string[];
+            /**
+             * Work Off Mode
+             * @default per_student
+             * @enum {string}
+             */
+            work_off_mode?: "per_student" | "none" | "common";
+            /** Work Offs */
+            work_offs?: components["schemas"]["WorkOffChoiceBody"][];
         };
         /**
          * SuggestedBookBody
@@ -22133,6 +22489,8 @@ export interface components {
             absent_lessons: components["schemas"]["AbsentLessonResponse"][];
             /** Average */
             average: number | null;
+            /** Gpa With Temporary */
+            gpa_with_temporary?: number | null;
             /**
              * Group Id
              * Format: uuid
@@ -22234,6 +22592,88 @@ export interface components {
             client_id: "sp" | "staff";
             /** Init Data */
             init_data: string;
+        };
+        /**
+         * TemporaryMarkBody
+         * @description A temporary mark on the EMIS scale (2 to 5) with an optional comment.
+         */
+        TemporaryMarkBody: {
+            /** Comment */
+            comment?: string | null;
+            /** Value */
+            value: number;
+        };
+        /**
+         * TemporaryMarkListResponse
+         * @description Temporary marks, oldest lesson first.
+         */
+        TemporaryMarkListResponse: {
+            /** Items */
+            items: components["schemas"]["TemporaryMarkResponse"][];
+        };
+        /**
+         * TemporaryMarkResponse
+         * @description A temporary mark with student, group, subject and lesson names.
+         */
+        TemporaryMarkResponse: {
+            /**
+             * Author Id
+             * Format: uuid
+             */
+            author_id: string;
+            /** Comment */
+            comment: string | null;
+            /**
+             * Created At
+             * Format: date-time
+             */
+            created_at: string;
+            /** Group Id */
+            group_id: string | null;
+            /** Group Name */
+            group_name: string;
+            /**
+             * Id
+             * Format: uuid
+             */
+            id: string;
+            /**
+             * Lesson Date
+             * Format: date
+             */
+            lesson_date: string;
+            /**
+             * Lesson Id
+             * Format: uuid
+             */
+            lesson_id: string;
+            /** Lesson Period */
+            lesson_period: number;
+            /**
+             * Student Id
+             * Format: uuid
+             */
+            student_id: string;
+            /** Student Name */
+            student_name: string;
+            /**
+             * Subject Id
+             * Format: uuid
+             */
+            subject_id: string;
+            /** Subject Name */
+            subject_name: string;
+            /** Teacher Id */
+            teacher_id: string | null;
+            /** Teacher Name */
+            teacher_name: string;
+            /**
+             * Updated At
+             * Format: date-time
+             */
+            updated_at: string;
+            /** Value */
+            value: number;
         };
         /**
          * TermChoice
@@ -23858,6 +24298,164 @@ export interface components {
             x: number;
             /** Y */
             y: number;
+        };
+        /**
+         * WorkOffChoiceBody
+         * @description A work-off choice for one absent student.
+         */
+        WorkOffChoiceBody: {
+            /** Due Date */
+            due_date?: string | null;
+            /**
+             * Student Id
+             * Format: uuid
+             */
+            student_id: string;
+            /** Template Id */
+            template_id?: string | null;
+            /** Text */
+            text?: string | null;
+        };
+        /**
+         * WorkOffPatchBody
+         * @description Body of ``PATCH /v1/staff/work-offs/{id}``; only sent fields change.
+         */
+        WorkOffPatchBody: {
+            /** Due Date */
+            due_date?: string | null;
+            /** Status */
+            status?: ("assigned" | "done") | null;
+            /** Text */
+            text?: string | null;
+        };
+        /**
+         * WorkOffResponse
+         * @description A work-off task given to one absent student (WO-3).
+         */
+        WorkOffResponse: {
+            /**
+             * Assigned By
+             * Format: uuid
+             */
+            assigned_by: string;
+            /**
+             * Created At
+             * Format: date-time
+             */
+            created_at: string;
+            /** Done At */
+            done_at: string | null;
+            /** Due Date */
+            due_date: string | null;
+            /**
+             * Id
+             * Format: uuid
+             */
+            id: string;
+            /**
+             * Lesson Id
+             * Format: uuid
+             */
+            lesson_id: string;
+            /**
+             * Status
+             * @enum {string}
+             */
+            status: "assigned" | "done";
+            /**
+             * Student Id
+             * Format: uuid
+             */
+            student_id: string;
+            /** Template Id */
+            template_id: string | null;
+            /** Text */
+            text: string;
+            /**
+             * Updated At
+             * Format: date-time
+             */
+            updated_at: string;
+        };
+        /**
+         * WorkOffStatsResponse
+         * @description Work-off statistics (the JSON keys are ``from`` and ``to``).
+         */
+        WorkOffStatsResponse: {
+            /**
+             * From
+             * Format: date
+             */
+            from: string;
+            /**
+             * Group By
+             * @enum {string}
+             */
+            group_by: "subject" | "teacher" | "group" | "student";
+            /** Rows */
+            rows: components["schemas"]["WorkOffStatsRowResponse"][];
+            /**
+             * To
+             * Format: date
+             */
+            to: string;
+            /** Total Open */
+            total_open: number;
+        };
+        /**
+         * WorkOffStatsRowResponse
+         * @description Open and done counts of one subject, teacher, group or student.
+         */
+        WorkOffStatsRowResponse: {
+            /** Done Count */
+            done_count: number;
+            /**
+             * Key
+             * Format: uuid
+             */
+            key: string;
+            /** Name */
+            name: string;
+            /** Open Count */
+            open_count: number;
+        };
+        /**
+         * WorkOffTemplateBody
+         * @description Body of ``POST`` and ``PUT /v1/staff/work-off-templates``.
+         */
+        WorkOffTemplateBody: {
+            /**
+             * Is Default
+             * @default false
+             */
+            is_default?: boolean;
+            /** Text */
+            text: string;
+        };
+        /**
+         * WorkOffTemplateResponse
+         * @description A reusable work-off text of a teacher.
+         */
+        WorkOffTemplateResponse: {
+            /**
+             * Created At
+             * Format: date-time
+             */
+            created_at: string;
+            /**
+             * Id
+             * Format: uuid
+             */
+            id: string;
+            /** Is Default */
+            is_default: boolean;
+            /** Text */
+            text: string;
+            /**
+             * Updated At
+             * Format: date-time
+             */
+            updated_at: string;
         };
         /**
          * AudienceBody
@@ -29721,6 +30319,78 @@ export interface operations {
                 };
                 content: {
                     "application/json": components["schemas"]["app__interfaces__http__v1__admin_users__schemas__AdminUserResponse"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    list_admin_work_offs_v1_admin_work_offs_get: {
+        parameters: {
+            query?: {
+                from?: string | null;
+                to?: string | null;
+                subject_id?: string | null;
+                teacher_id?: string | null;
+                group_id?: string | null;
+                student_id?: string | null;
+                status?: "open" | "done" | "all";
+                limit?: number;
+                offset?: number;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["AdminWorkOffListResponse"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    get_work_off_stats_v1_admin_work_offs_stats_get: {
+        parameters: {
+            query?: {
+                from?: string | null;
+                to?: string | null;
+                group_by?: "subject" | "teacher" | "group" | "student";
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["WorkOffStatsResponse"];
                 };
             };
             /** @description Validation Error */
@@ -38729,6 +39399,37 @@ export interface operations {
             };
         };
     };
+    list_my_work_offs_v1_me_work_offs_get: {
+        parameters: {
+            query?: {
+                status?: "open" | "all";
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["MyWorkOffResponse"][];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
     list_notebooks_v1_notebooks_get: {
         parameters: {
             query?: {
@@ -40702,6 +41403,38 @@ export interface operations {
             };
         };
     };
+    reread_source_v1_notebooks__notebook_id__sources__source_id__reread_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                notebook_id: string;
+                source_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["SourceItemResponse"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
     sync_source_v1_notebooks__notebook_id__sources__source_id__sync_post: {
         parameters: {
             query?: never;
@@ -41789,6 +42522,103 @@ export interface operations {
             };
         };
     };
+    list_lesson_temporary_marks_v1_staff_lessons__id__temporary_marks_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["TemporaryMarkListResponse"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    set_temporary_mark_v1_staff_lessons__id__temporary_marks__student_id__put: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+                student_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["TemporaryMarkBody"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["TemporaryMarkResponse"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    delete_temporary_mark_v1_staff_lessons__id__temporary_marks__student_id__delete: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+                student_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            204: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
     set_topic_v1_staff_lessons__id__topic_put: {
         parameters: {
             query?: never;
@@ -42501,6 +43331,37 @@ export interface operations {
             };
         };
     };
+    list_pending_temporary_marks_v1_staff_temporary_marks_pending_get: {
+        parameters: {
+            query?: {
+                teacher_id?: string | null;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["TemporaryMarkListResponse"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
     get_staff_timetable_v1_staff_timetable_get: {
         parameters: {
             query?: {
@@ -42549,6 +43410,187 @@ export interface operations {
                 };
                 content: {
                     "application/json": components["schemas"]["StaffTodayResponse"];
+                };
+            };
+        };
+    };
+    list_work_off_templates_v1_staff_work_off_templates_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["WorkOffTemplateResponse"][];
+                };
+            };
+        };
+    };
+    create_work_off_template_v1_staff_work_off_templates_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["WorkOffTemplateBody"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["WorkOffTemplateResponse"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    update_work_off_template_v1_staff_work_off_templates__id__put: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["WorkOffTemplateBody"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["WorkOffTemplateResponse"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    delete_work_off_template_v1_staff_work_off_templates__id__delete: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            204: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    delete_work_off_v1_staff_work_offs__id__delete: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            204: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    update_work_off_v1_staff_work_offs__id__patch: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["WorkOffPatchBody"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["WorkOffResponse"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
                 };
             };
         };

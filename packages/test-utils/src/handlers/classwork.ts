@@ -24,6 +24,7 @@ import {
   studentToday,
 } from "../fixtures/classwork"
 import { FIXTURE_NOW } from "../fixtures/world"
+import { staffWorkOffsOf } from "./work-offs-staff"
 import { apiUrl, notFound, param, query, readJson } from "./utils"
 
 function csv(rows: (string | number)[][], filename: string): Response {
@@ -38,6 +39,12 @@ function csv(rows: (string | number)[][], filename: string): Response {
 
 function homeworkFor(lessonId: string) {
   return homeworkItems.find((item) => item.lesson_id === lessonId)
+}
+
+/** The staff lesson with the work-offs the work-off handlers hold for it. */
+function lessonWithWorkOffs(id: string) {
+  const lesson = staffLessonFor(id)
+  return lesson ? { ...lesson, attendance: { ...lesson.attendance, work_offs: staffWorkOffsOf(id) } } : undefined
 }
 
 export const classworkHandlers = [
@@ -82,7 +89,7 @@ export const classworkHandlers = [
   // --- Teacher ---
   http.get(apiUrl("/v1/staff/today"), () => HttpResponse.json(staffToday)),
   http.get(apiUrl("/v1/staff/lessons/:id"), ({ params }) => {
-    const lesson = staffLessonFor(param(params, "id"))
+    const lesson = lessonWithWorkOffs(param(params, "id"))
     return lesson ? HttpResponse.json(lesson) : notFound("Lesson")
   }),
   http.put(apiUrl("/v1/staff/lessons/:id/homework"), async ({ params, request }) => {
@@ -110,7 +117,7 @@ export const classworkHandlers = [
   }),
   // Echoes the submitted sheet with `version = base_version + 1`; conflicts come from `errorHandlers.conflictAttendance`.
   http.put(apiUrl("/v1/staff/lessons/:id/attendance"), async ({ params, request }) => {
-    const lesson = staffLessonFor(param(params, "id"))
+    const lesson = lessonWithWorkOffs(param(params, "id"))
     if (!lesson) return notFound("Lesson")
     const body = await readJson<AttendanceSubmitBody>(request)
     const absent = new Set(body.absent ?? [])

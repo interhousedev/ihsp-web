@@ -11,6 +11,14 @@ export function canSync(source: Pick<SourceItem, "kind" | "status" | "failure">)
   return SYNCABLE_KINDS.has(source.kind)
 }
 
+/** Failures where the source had no text to read: a scan, a video without captions. */
+const NO_TEXT_FAILURES: ReadonlySet<string> = new Set(["no_text", "no_transcript"])
+
+/** Whether the row offers **Re-read**: the text was not found, so reading it again may find it now. */
+export function canReread(source: Pick<SourceItem, "status" | "failure">): boolean {
+  return source.status === "failed" && NO_TEXT_FAILURES.has(source.failure ?? "")
+}
+
 /** Pasted text and notes can be edited in the note editor. */
 export function isEditableKind(kind: SourceKind): boolean {
   return kind === "note" || kind === "text"

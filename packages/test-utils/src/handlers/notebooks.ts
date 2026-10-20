@@ -800,6 +800,13 @@ export const notebooksHandlers = [
     entry.polls = 1
     return HttpResponse.json(entry.item)
   }),
+  http.post(apiUrl("/v1/notebooks/:id/sources/:sid/reread"), ({ params }) => {
+    const entry = find(param(params, "id"))?.sources.find((s) => s.item.id === param(params, "sid"))
+    if (!entry) return notFound("Source")
+    entry.item = { ...entry.item, status: "pending", failure: null }
+    entry.polls = 1
+    return HttpResponse.json(entry.item)
+  }),
   http.get(apiUrl("/v1/notebooks/:id/sources/:sid"), ({ params }) => {
     const entry = find(param(params, "id"))?.sources.find((s) => s.item.id === param(params, "sid"))
     if (!entry) return notFound("Source")

@@ -36,7 +36,7 @@ import type { getLmsAttempt, getLmsCourse, getLmsCourseStep, getLmsCourseStudent
 import type { getLmsCourseSettings, patchLmsCourseDetails, postLmsCourseJoinCode, postLmsCourseLinkCheck } from "./endpoints/lms-settings"
 import type { getAdminSubjectPeople, getAdminSyncRuns, getMeGrades, getMeGradesDay, getMeLessonResults, getMeRecordBook, getMeSubject, getMeSubjectLessons, getMeSubjects, postAdminStudentSyncStop, postAdminSubjectEmisPull, postAdminSyncMaterials, postAdminSyncRun, postAdminSyncRunStop } from "./endpoints/marks"
 import type { getAdminStudentSync, getAdminStudentSyncs, getMeSync, postAdminStudentSync, postMeSync } from "./endpoints/me-sync"
-import type { getAdminReconcileStatus, getAdminSubjectMaterialGroups, getAdminSubjectMaterials, getArtifact, getArtifacts, getNotebook, getNotebookAutoSubject, getNotebookChat, getNotebookLabels, getNotebookSearch, getNotebookSource, getNotebookSourceFileUrl, getNotebookSources, getNotebookSubjectSlots, getNotebookUsage, getNotebooks, getPassage, getSourcePassages, getStaffReconcileStatus, getStaffSubjectMaterials, getStaffSubjects, patchArtifact, patchNotebook, patchNotebookLabel, patchNotebookSource, postAdminReconcileSubjectMaterials, postAdminSubjectMaterial, postArtifact, postArtifactAsSource, postArtifactAttachToLesson, postArtifactCancel, postArtifactFlashcardSet, postArtifactRetry, postArtifactSaveToFiles, postArtifactSlidesRevise, postNotebook, postNotebookAutoSubject, postNotebookDiscover, postNotebookLabel, postNotebookLabelsAuto, postNotebookMessage, postNotebookRegenerate, postNotebookSourceSync, postNotebookSources, postNotebookSourcesSelect, postSaveNote, postStaffReconcileSubjectMaterials, postStaffSubjectMaterial, putArtifactSlides, putNotebookSourceLabels } from "./endpoints/notebooks"
+import type { getAdminReconcileStatus, getAdminSubjectMaterialGroups, getAdminSubjectMaterials, getArtifact, getArtifacts, getNotebook, getNotebookAutoSubject, getNotebookChat, getNotebookLabels, getNotebookSearch, getNotebookSource, getNotebookSourceFileUrl, getNotebookSources, getNotebookSubjectSlots, getNotebookUsage, getNotebooks, getPassage, getSourcePassages, getStaffReconcileStatus, getStaffSubjectMaterials, getStaffSubjects, patchArtifact, patchNotebook, patchNotebookLabel, patchNotebookSource, postAdminReconcileSubjectMaterials, postAdminSubjectMaterial, postArtifact, postArtifactAsSource, postArtifactAttachToLesson, postArtifactCancel, postArtifactFlashcardSet, postArtifactRetry, postArtifactSaveToFiles, postArtifactSlidesRevise, postNotebook, postNotebookAutoSubject, postNotebookDiscover, postNotebookLabel, postNotebookLabelsAuto, postNotebookMessage, postNotebookRegenerate, postNotebookSourceReread, postNotebookSourceSync, postNotebookSources, postNotebookSourcesSelect, postSaveNote, postStaffReconcileSubjectMaterials, postStaffSubjectMaterial, putArtifactSlides, putNotebookSourceLabels } from "./endpoints/notebooks"
 import type { getNotifications, getNotificationsUnreadCount } from "./endpoints/notifications"
 import type { postOauthLogout, postOauthRefresh, postOauthTelegram, postOauthToken, postOauthTokenHook } from "./endpoints/oauth"
 import type { confirmPresentationPlan, getPresentationPlan, patchPresentationPlan, postPresentationPlan } from "./endpoints/presentation-plans"
@@ -45,6 +45,9 @@ import type { getPushConfig, postPushSubscription } from "./endpoints/push"
 import type { getInternalEmisProfile, getInternalEmisRatings, getInternalEmisSubjects, postIdReclaimEmail, postIdReclaimEmis, postIdRegisterComplete, postIdRegisterEmail, postIdRegisterEmis } from "./endpoints/registration"
 import type { getAdminGroup, getAdminGroups, getAdminLessons, getAdminRooms, getAdminStudents, getAdminSubjects, getAdminTerms, getAdminTimetable, getMeProfile, getMeTimetable, getStaffGroup, getStaffGroups, getStaffTimetable, patchAdminGroup, patchAdminLesson, patchAdminRoom, patchAdminSubject, patchAdminTerm, patchAdminTimetable, postAdminGroups, postAdminLessons, postAdminRoomArchive, postAdminRoomMerge, postAdminRoomRegeneratePin, postAdminStudentsImport, postAdminStudentsImportConfirm, postAdminSubjects, postAdminTerms, postAdminTimetable, postAdminTimetableCheck, postAdminTimetableCopy, putAdminGroupSubgroups, putStaffGroupSubgroups } from "./endpoints/schedule"
 import type { deleteAdminUserPhoto, deleteStaffMePhoto, getAdminTeacherContacts, getMeTeacher, getMeTeacherTimetable, getMeTeachers, getStaffMeContacts, putAdminTeacherContacts, putAdminUserPhoto, putStaffMeContacts, putStaffMePhoto } from "./endpoints/teachers"
+import type { getAdminWorkOffStats, getAdminWorkOffs } from "./endpoints/work-offs-admin"
+import type { getMeWorkOffs } from "./endpoints/work-offs-me"
+import type { getWorkOffTemplates, patchWorkOff, postWorkOffTemplate, putWorkOffTemplate } from "./endpoints/work-offs-staff"
 
 type Method = "get" | "post" | "put" | "patch" | "delete"
 type OperationOf<P extends keyof paths, M extends Method> = paths[P] extends Record<M, infer O> ? O : never
@@ -1355,6 +1358,10 @@ export const served_postNotebookSourcesSelect: Awaited<ReturnType<typeof postNot
 declare const gen_postNotebookSourceSync: ResponseOf<"/v1/notebooks/{notebook_id}/sources/{source_id}/sync", "post">
 export const served_postNotebookSourceSync: Awaited<ReturnType<typeof postNotebookSourceSync>> = gen_postNotebookSourceSync
 
+// POST /v1/notebooks/{notebook_id}/sources/{source_id}/reread — postNotebookSourceReread
+declare const gen_postNotebookSourceReread: ResponseOf<"/v1/notebooks/{notebook_id}/sources/{source_id}/reread", "post">
+export const served_postNotebookSourceReread: Awaited<ReturnType<typeof postNotebookSourceReread>> = gen_postNotebookSourceReread
+
 // GET /v1/notebooks/{notebook_id}/sources/{source_id}/passages — getSourcePassages
 declare const gen_getSourcePassages: ResponseOf<"/v1/notebooks/{notebook_id}/sources/{source_id}/passages", "get">
 export const served_getSourcePassages: Awaited<ReturnType<typeof getSourcePassages>> = gen_getSourcePassages
@@ -1762,4 +1769,32 @@ export const served_putAdminUserPhoto: Awaited<ReturnType<typeof putAdminUserPho
 // DELETE /v1/admin/users/{id}/photo — deleteAdminUserPhoto
 declare const gen_deleteAdminUserPhoto: ResponseOf<"/v1/admin/users/{id}/photo", "delete">
 export const served_deleteAdminUserPhoto: Awaited<ReturnType<typeof deleteAdminUserPhoto>> = gen_deleteAdminUserPhoto
+
+// GET /v1/admin/work-offs/stats — getAdminWorkOffStats
+declare const gen_getAdminWorkOffStats: ResponseOf<"/v1/admin/work-offs/stats", "get">
+export const served_getAdminWorkOffStats: Awaited<ReturnType<typeof getAdminWorkOffStats>> = gen_getAdminWorkOffStats
+
+// GET /v1/admin/work-offs — getAdminWorkOffs
+declare const gen_getAdminWorkOffs: ResponseOf<"/v1/admin/work-offs", "get">
+export const served_getAdminWorkOffs: Awaited<ReturnType<typeof getAdminWorkOffs>> = gen_getAdminWorkOffs
+
+// GET /v1/me/work-offs — getMeWorkOffs
+declare const gen_getMeWorkOffs: ResponseOf<"/v1/me/work-offs", "get">
+export const served_getMeWorkOffs: Awaited<ReturnType<typeof getMeWorkOffs>> = gen_getMeWorkOffs
+
+// GET /v1/staff/work-off-templates — getWorkOffTemplates
+declare const gen_getWorkOffTemplates: ResponseOf<"/v1/staff/work-off-templates", "get">
+export const served_getWorkOffTemplates: Awaited<ReturnType<typeof getWorkOffTemplates>> = gen_getWorkOffTemplates
+
+// POST /v1/staff/work-off-templates — postWorkOffTemplate
+declare const gen_postWorkOffTemplate: ResponseOf<"/v1/staff/work-off-templates", "post">
+export const served_postWorkOffTemplate: Awaited<ReturnType<typeof postWorkOffTemplate>> = gen_postWorkOffTemplate
+
+// PUT /v1/staff/work-off-templates/{id} — putWorkOffTemplate
+declare const gen_putWorkOffTemplate: ResponseOf<"/v1/staff/work-off-templates/{id}", "put">
+export const served_putWorkOffTemplate: Awaited<ReturnType<typeof putWorkOffTemplate>> = gen_putWorkOffTemplate
+
+// PATCH /v1/staff/work-offs/{id} — patchWorkOff
+declare const gen_patchWorkOff: ResponseOf<"/v1/staff/work-offs/{id}", "patch">
+export const served_patchWorkOff: Awaited<ReturnType<typeof patchWorkOff>> = gen_patchWorkOff
 

@@ -1,7 +1,7 @@
 "use client"
 
 import type { SubjectDetail } from "@ihsp/api"
-import { TeacherAvatar } from "@ihsp/features-core"
+import { TeacherAvatar, TemporaryGpa } from "@ihsp/features-core"
 import { useErrorMessage, useT } from "@ihsp/i18n"
 import { Button, Icons, MarkBadge, Stat } from "@ihsp/ui"
 import Link from "next/link"
@@ -63,7 +63,15 @@ export function SubjectOverviewTab({ detail }: { detail: SubjectDetail }) {
         )}
       </section>
       <div className="grid grid-cols-2 gap-3 md:grid-cols-4">
-        <Stat label={t("semesterMark")} value={<MarkBadge mark={detail.semester_mark} size="lg" />} />
+        <Stat
+          label={t("semesterMark")}
+          value={
+            <span className="inline-flex items-start">
+              <MarkBadge mark={detail.semester_mark} size="lg" />
+              <TemporaryGpa value={detail.gpa_with_temporary} />
+            </span>
+          }
+        />
         <Stat label={t("emisRating")} value={detail.emis_rating ?? "–"} />
         <Stat label={t("absenceRate")} value={percent(detail.absence_rate)} />
       </div>

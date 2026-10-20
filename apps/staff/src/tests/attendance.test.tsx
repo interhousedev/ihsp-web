@@ -61,6 +61,13 @@ function radio(name: RegExp | string, state: "Present" | "Late" | "Absent") {
   return within(screen.getByRole("radiogroup", { name })).getByRole("radio", { name: state })
 }
 
+/** Marking a student absent opens the work-off dialog (WO-3); these tests are about the marks, so they close it. */
+async function markAbsent(user: ReturnType<typeof renderStaff>["user"], name: RegExp = /Ismoilov Jasur/) {
+  await user.click(radio(name, "Absent"))
+  await user.click(within(await screen.findByRole("dialog")).getByRole("button", { name: "Cancel" }))
+  await waitFor(() => expect(screen.queryByRole("dialog")).not.toBeInTheDocument())
+}
+
 describe("attendance sheet", () => {
   test("everyone starts present; marking a student absent and submitting sends absent and base_version", async () => {
     const captured = captureSubmit()
@@ -70,7 +77,7 @@ describe("attendance sheet", () => {
     expect(radio(/Ismoilov Jasur/, "Present")).toBeChecked()
     expect(screen.getByText(/^3 present/)).toBeInTheDocument()
 
-    await user.click(radio(/Ismoilov Jasur/, "Absent"))
+    await markAbsent(user)
     expect(radio(/Ismoilov Jasur/, "Absent")).toBeChecked()
     expect(screen.getByText(/^2 present · 1 absent/)).toBeInTheDocument()
 
@@ -108,6 +115,7 @@ describe("attendance sheet", () => {
     await user.keyboard("{ArrowRight}")
     expect(radio(/Ismoilov Jasur/, "Late")).toBeChecked()
     await user.keyboard("{ArrowRight}")
+    await user.click(within(await screen.findByRole("dialog")).getByRole("button", { name: "Cancel" }))
     expect(radio(/Ismoilov Jasur/, "Absent")).toBeChecked()
   })
 
@@ -156,7 +164,7 @@ describe("attendance sheet", () => {
   test("a 409 shows the conflict dialog with the current list; keeping my marks submits against the new version", async () => {
     const { user } = renderStaff(<Harness />)
     await screen.findByRole("radiogroup", { name: /Ismoilov Jasur/ })
-    await user.click(radio(/Ismoilov Jasur/, "Absent"))
+    await markAbsent(user)
     server.use(errorHandlers.conflictAttendance)
 
     await user.click(screen.getByRole("button", { name: "Submit attendance" }))
@@ -180,7 +188,7 @@ describe("attendance sheet", () => {
   test("a 409 lets the teacher review the current list instead", async () => {
     const { user } = renderStaff(<Harness />)
     await screen.findByRole("radiogroup", { name: /Ismoilov Jasur/ })
-    await user.click(radio(/Ismoilov Jasur/, "Absent"))
+    await markAbsent(user)
     server.use(errorHandlers.conflictAttendance)
 
     await user.click(screen.getByRole("button", { name: "Submit attendance" }))
@@ -223,7 +231,7 @@ describe("attendance sheet", () => {
   test("Everyone present clears the absences", async () => {
     const { user } = renderStaff(<AttendanceSheetView lesson={lessonData.lesson} sheet={attendanceSheet} />)
     await screen.findByRole("radiogroup", { name: /Ismoilov Jasur/ })
-    await user.click(radio(/Ismoilov Jasur/, "Absent"))
+    await markAbsent(user)
     expect(radio(/Ismoilov Jasur/, "Absent")).toBeChecked()
 
     await user.click(screen.getByRole("button", { name: "Everyone present" }))

@@ -346,6 +346,10 @@ describe("keys used in the code", () => {
       "users.status.${value}": ["active", "pending_activation", "blocked", "deactivated"],
       "logs.levels.${level}": ["fatal", "error", "warning", "info", "debug"],
       "logs.levels.${value}": ["fatal", "error", "warning", "info", "debug"],
+      "workOffs.tabs.${group}": ["subject", "teacher", "group", "student"],
+      "workOffs.labels.${by}": ["subject", "teacher", "group", "student"],
+      "workOffs.statuses.${value}": ["open", "done", "all"],
+      "workOffs.itemStatus.${item.status}": ["assigned", "done"],
     }
     const unknown = [...dynamic.keys()].filter((key) => !(key in expected))
     expect(unknown).toEqual([])

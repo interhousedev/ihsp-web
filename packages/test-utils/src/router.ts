@@ -33,7 +33,9 @@ export function setTestRoute(href: string): void {
   state.search = url.search
   // Test files share one process; a test that navigated away (or closed the window) leaves `about:blank`, where a
   // relative `replaceState` is ignored. Components that read `location` directly (the share viewer) need a real URL.
-  if (window.location.protocol === "about:") {
+  // A test that followed a redirect to another origin (the Hydra authorize URL) leaves that origin behind; a relative
+  // `replaceState` keeps it, which breaks code that builds URLs from `window.location.origin`.
+  if (window.location.protocol === "about:" || window.location.origin !== "http://localhost:3000") {
     ;(window as unknown as { happyDOM?: { setURL: (value: string) => void } }).happyDOM?.setURL(
       "http://localhost:3000/",
     )

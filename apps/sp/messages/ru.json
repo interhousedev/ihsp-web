@@ -727,6 +727,15 @@
       "empty": "Пропущенных уроков нет.",
       "absent": "Пропуск",
       "excused": "По уважительной"
+    },
+    "workOffs": {
+      "title": "Отработки",
+      "period": "{period}-й урок",
+      "dueOn": "Срок: {date}",
+      "overdue": "Просрочено",
+      "status": {
+        "assigned": "К выполнению"
+      }
     }
   },
   "homework": {

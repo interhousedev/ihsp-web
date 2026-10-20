@@ -33,7 +33,8 @@
     "limits": "Limits & usage",
     "certificateTypes": "Certificate types",
     "certificates": "Certificates",
-    "knowledge": "Knowledge base"
+    "knowledge": "Knowledge base",
+    "workOffs": "Work-off tasks"
   },
   "shared": {
     "filters": "Filters",
@@ -1738,6 +1739,53 @@
     "confirmDelete": "Delete",
     "empty": "The knowledge base is empty.",
     "emptyFiltered": "No entries match these filters.",
+    "prev": "Previous",
+    "next": "Next",
+    "page": "Page {page} of {pages}"
+  },
+  "workOffs": {
+    "title": "Work-off tasks",
+    "from": "From date",
+    "to": "To date",
+    "open": "Open",
+    "done": "Done",
+    "back": "Back",
+    "status": "Status",
+    "totalOpen": "Open in total: {count}",
+    "empty": "No work-off tasks in this period.",
+    "emptyList": "No work-off tasks match these filters.",
+    "tabs": {
+      "subject": "By subject",
+      "teacher": "By teacher",
+      "group": "By group",
+      "student": "By student"
+    },
+    "labels": {
+      "subject": "Subject",
+      "teacher": "Teacher",
+      "group": "Group",
+      "student": "Student"
+    },
+    "statuses": {
+      "open": "Open",
+      "done": "Done",
+      "all": "All"
+    },
+    "itemStatus": {
+      "assigned": "Open",
+      "done": "Done"
+    },
+    "columns": {
+      "lesson": "Lesson",
+      "subject": "Subject",
+      "teacher": "Teacher",
+      "group": "Group",
+      "student": "Student",
+      "text": "Task",
+      "status": "Status",
+      "due": "Due date"
+    },
+    "lesson": "{date}, period {period}",
     "prev": "Previous",
     "next": "Next",
     "page": "Page {page} of {pages}"

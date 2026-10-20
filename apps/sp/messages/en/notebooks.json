@@ -138,7 +138,8 @@
       "fetch_failed": "Could not open the page.",
       "forbidden": "You cannot use this item.",
       "deleted": "The file was deleted.",
-      "provider_error": "Temporary error. Try again."
+      "provider_error": "Temporary error. Try again.",
+      "no_transcript": "This video has no transcript to read."
     },
     "row": {
       "open": "Open source",
@@ -147,7 +148,9 @@
       "remove": "Remove",
       "exclude": "Exclude",
       "fromLessons": "From lessons",
-      "more": "More actions for {title}"
+      "more": "More actions for {title}",
+      "reread": "Re-read",
+      "rereading": "Re-reading…"
     },
     "remove": {
       "title": "Remove this source?",

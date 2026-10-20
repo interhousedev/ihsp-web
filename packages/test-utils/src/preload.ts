@@ -39,6 +39,7 @@ const { TEST_ENV } = await import("./fixtures/env")
 const { server } = await import("./server")
 const {
   resetAssessments,
+  resetTemporaryMarks,
   resetCertificatesState,
   resetFactorsState,
   resetMeSyncState,
@@ -54,6 +55,7 @@ const {
   resetTeacherPhotos,
   resetAdminAiState,
   resetWebSearchState,
+  resetWorkOffsStaffState,
 } = await import("./handlers")
 const { resetTestRouter, testNavigation } = await import("./router")
 
@@ -92,11 +94,13 @@ afterEach(() => {
   resetTeacherContacts()
   resetTeacherPhotos()
   resetAssessments()
+  resetTemporaryMarks()
   resetMeSyncState()
   resetCertificatesState()
   resetFactorsState()
   resetAdminJobs()
   resetAdminKnowledge()
+  resetWorkOffsStaffState()
   window.localStorage.clear()
   window.sessionStorage.clear()
   resetTestRouter()

@@ -22,7 +22,8 @@
     "notebooks": "Notebooks",
     "mail": "Email",
     "subjects": "Subjects",
-    "certificates": "Certificates"
+    "certificates": "Certificates",
+    "temporaryMarks": "Pending for EMIS"
   },
   "audience": {
     "subgroup": "{group} · subgroup {number}"
@@ -361,6 +362,22 @@
     },
     "notifications": {
       "title": "Notifications"
+    },
+    "workOffs": {
+      "title": "Work-off tasks",
+      "add": "Add template",
+      "addTitle": "New template",
+      "editTitle": "Edit template",
+      "text": "Text",
+      "placeholder": "What the student should do",
+      "editFor": "Edit template: {text}",
+      "deleteFor": "Delete template: {text}",
+      "deleteTitle": "Delete this template?",
+      "defaultLabel": "Default work-off task",
+      "noDefault": "No default",
+      "empty": "No templates yet.",
+      "saved": "Template saved",
+      "deleted": "Template deleted"
     }
   },
   "students": {
@@ -491,5 +508,22 @@
       "done": "Checked {notebooks} notebooks: {added} added, {present} already present, {skipped} to retry later.",
       "error": "The check did not finish. Try again."
     }
+  },
+  "temporaryMarks": {
+    "journalTitle": "Journal",
+    "note": "These marks are temporary until you put them into EMIS.",
+    "valueFor": "Mark for {name}",
+    "setValue": "Give {name} a {value}",
+    "commentFor": "Comment for {name}",
+    "comment": "Comment (optional)",
+    "save": "Save",
+    "saveFor": "Save mark for {name}",
+    "remove": "Remove",
+    "removeFor": "Remove mark for {name}",
+    "saved": "Mark saved",
+    "removed": "Mark removed",
+    "pendingTitle": "Pending for EMIS",
+    "empty": "No marks are waiting for EMIS.",
+    "period": "Period {number}"
   }
 }

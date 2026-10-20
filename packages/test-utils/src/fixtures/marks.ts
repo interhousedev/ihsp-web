@@ -86,6 +86,7 @@ export const semesterGrades: SemesterGrades = {
       midterm_avg: 5,
       final_avg: null,
       semester_mark: 4.8,
+      gpa_with_temporary: 4.3,
       emis_rating: 5,
       marks_count: 3,
     },
@@ -185,6 +186,7 @@ export const subjectDetailPhysics: SubjectDetail = {
   teachers: [subjectTeacher(persons.kalandarova)],
   averages: { lesson: 4.5, midterm: 5, final: null },
   semester_mark: 4.8,
+  gpa_with_temporary: 4.3,
   emis_rating: 5,
   absence_rate: 0,
   lessons: weekLessons

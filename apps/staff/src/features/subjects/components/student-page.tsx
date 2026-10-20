@@ -2,6 +2,7 @@
 
 import { getTeachingStudentQuery, type TeachingStudent } from "@ihsp/api"
 import { formatDate, formatDateTime, useT } from "@ihsp/i18n"
+import { TemporaryGpa } from "@ihsp/features-core"
 import { PageContainer, StateView } from "@ihsp/ui"
 import { useQuery } from "@tanstack/react-query"
 import { parseAsInteger, parseAsString, useQueryState } from "nuqs"
@@ -22,7 +23,11 @@ function Marks({ record }: { record: TeachingStudent }) {
         <p className="text-sm">
           {t("average")}: <strong>{record.average === null ? "—" : record.average.toFixed(2)}</strong>
           {record.semester_mark === null ? null : (
-            <span className="text-muted-foreground"> · {t("semesterMark", { value: record.semester_mark })}</span>
+            <span className="text-muted-foreground">
+              {" "}
+              · {t("semesterMark", { value: record.semester_mark })}
+              <TemporaryGpa value={record.gpa_with_temporary} />
+            </span>
           )}
         </p>
       </div>

@@ -229,6 +229,11 @@ export function postNotebookSourceSync(id: string, sourceId: string, opts?: Requ
   return api.post<SourceItem>(`/v1/notebooks/${seg(id)}/sources/${seg(sourceId)}/sync`, undefined, opts)
 }
 
+/** POST /v1/notebooks/{id}/sources/{sid}/reread — the text is extracted again; the source goes to `pending`. */
+export function postNotebookSourceReread(id: string, sourceId: string, opts?: RequestOptions): Promise<SourceItem> {
+  return api.post<SourceItem>(`/v1/notebooks/${seg(id)}/sources/${seg(sourceId)}/reread`, undefined, opts)
+}
+
 /** DELETE /v1/notebooks/{id}/sources/{sid} — `204`. */
 export function deleteNotebookSource(id: string, sourceId: string, opts?: RequestOptions): Promise<NoContent> {
   return api.delete<NoContent>(`/v1/notebooks/${seg(id)}/sources/${seg(sourceId)}`, opts)

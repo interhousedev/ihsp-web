@@ -82,6 +82,10 @@ export const keys = {
     },
     dashboard: () => ["admin", "dashboard"] as const,
     insights: () => ["admin", "insights"] as const,
+    workOffs: {
+      stats: (filters?: object) => ["admin", "work-offs", "stats", params(filters)] as const,
+      list: (filters?: object) => ["admin", "work-offs", "list", params(filters)] as const,
+    },
     aiLimits: () => ["admin", "ai", "limits"] as const,
     aiUsage: (filters?: object) => ["admin", "ai", "usage", params(filters)] as const,
     aiExtensions: (filters?: object) => ["admin", "ai", "extensions", params(filters)] as const,
@@ -99,10 +103,13 @@ export const keys = {
   staff: {
     all: () => ["staff"] as const,
     contacts: () => ["staff", "contacts"] as const,
+    workOffTemplates: () => ["staff", "work-off-templates"] as const,
     today: () => ["staff", "today"] as const,
     assessments: (filters?: object) => ["staff", "assessments", params(filters)] as const,
     timetable: (filters?: object) => ["staff", "timetable", params(filters)] as const,
     lesson: (id: string) => ["staff", "lessons", id] as const,
+    lessonTemporaryMarks: (id: string) => ["staff", "lessons", id, "temporary-marks"] as const,
+    temporaryMarksPending: () => ["staff", "temporary-marks", "pending"] as const,
     groups: {
       list: () => ["staff", "groups"] as const,
       detail: (id: string) => ["staff", "groups", id] as const,
@@ -120,6 +127,7 @@ export const keys = {
     today: () => ["me", "today"] as const,
     timetable: (filters?: object) => ["me", "timetable", params(filters)] as const,
     homework: (filters?: object) => ["me", "homework", params(filters)] as const,
+    workOffs: (filters?: object) => ["me", "work-offs", params(filters)] as const,
     attendance: (filters?: object) => ["me", "attendance", params(filters)] as const,
     subjects: (filters?: object) => ["me", "subjects", params(filters)] as const,
     subject: (id: string, filters?: object) => ["me", "subjects", id, params(filters)] as const,
