@@ -1,0 +1,27 @@
+{
+  "app": {
+    "name": "library.iht",
+    "description": "Litseyning kitoblari, darsliklari va oʻquv materiallari"
+  },
+  "nav": {
+    "home": "Bosh sahifa",
+    "browse": "Katalog",
+    "lists": "Oʻqish roʻyxatlari",
+    "my": "Mening kutubxonam",
+    "upload": "Material qoʻshish",
+    "groupLibrary": "Kutubxona",
+    "groupMine": "Men uchun",
+    "groupManage": "Kutubxonachi",
+    "queue": "Koʻrib chiqish navbati",
+    "books": "Kitoblar",
+    "topics": "Mavzular",
+    "subjects": "Fanlar",
+    "manageCollections": "Toʻplamlar",
+    "reports": "Shikoyatlar",
+    "stats": "Statistika",
+    "unilibrary": "UniLibrary"
+  },
+  "shell": {
+    "signIn": "Kirish"
+  }
+}
