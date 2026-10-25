@@ -1,0 +1,42 @@
+"use client"
+
+import { getMeSubjectLessonsQuery, postNotebookAutoSubject } from "@ihsp/api"
+import { useMutation, useQuery } from "@tanstack/react-query"
+import { useRouter } from "next/navigation"
+import { askLessonHref, leaveLessonAttachment } from "../utils/ask-lesson"
+
+export const PAST_STEP = 10
+
+/**
+ * The subject hub list around now, in `semester` (the subject page's semester; the current one when unset).
+ * `pastLimit` grows by `PAST_STEP` with every "show more".
+ */
+export function useSubjectLessons(subjectId: string | null, semester: number | undefined, pastLimit: number) {
+  return useQuery({
+    ...getMeSubjectLessonsQuery(subjectId ?? "", {
+      around: "now",
+      past_limit: pastLimit,
+      ...(semester ? { semester } : {}),
+    }),
+    enabled: subjectId !== null,
+    placeholderData: (previous) => previous,
+  })
+}
+
+/**
+ * Opens (creating when needed) the notebook of the subject and goes to its chat. With a lesson, the lesson is attached
+ * to the next question as a chip (`label`) and the lesson id travels in the address.
+ */
+export function useOpenSubjectNotebook(subjectId: string) {
+  const router = useRouter()
+  return useMutation({
+    mutationFn: async (input: { lessonId?: string; label?: string }) => {
+      const notebook = await postNotebookAutoSubject(subjectId)
+      return { notebook, ...input }
+    },
+    onSuccess: ({ notebook, lessonId, label }) => {
+      if (lessonId && label) leaveLessonAttachment(notebook.id, lessonId, label)
+      router.push(lessonId ? askLessonHref(notebook.id, lessonId) : `/notebooks/view/?id=${notebook.id}`)
+    },
+  })
+}

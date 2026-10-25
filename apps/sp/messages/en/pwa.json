@@ -1,0 +1,80 @@
+{
+  "pwa": {
+    "landing": {
+      "title": "Add My IHT to your home screen",
+      "subtitle": "Install the app and open it in one tap, like any other app on your phone."
+    },
+    "benefits": {
+      "fast": "Opens full screen in one tap",
+      "offline": "Calendar, homework and grades work without internet",
+      "session": "You stay signed in for up to 90 days",
+      "push": "Install to get notifications about new marks"
+    },
+    "install": {
+      "button": "Install the app",
+      "busy": "Installing…"
+    },
+    "installed": {
+      "title": "My IHT is installed",
+      "text": "Open it from your home screen."
+    },
+    "ios": {
+      "title": "Install on iPhone or iPad",
+      "step1": "Tap the Share button in the browser bar",
+      "step2": "Scroll down and tap Add to Home Screen",
+      "step3": "Tap Add. My IHT appears on your home screen.",
+      "openInSafari": "This browser cannot add apps to the home screen. Open this page in Safari and try again.",
+      "pushNote": "On iPhone, notifications only work once the app is installed."
+    },
+    "android": {
+      "manual": {
+        "title": "Install from the browser menu",
+        "step1": "Open the browser menu (the three dots)",
+        "step2": "Choose Install app or Add to Home screen",
+        "step3": "Confirm. My IHT appears on your home screen."
+      }
+    },
+    "desktop": {
+      "title": "Open My IHT on your phone",
+      "scan": "Point your phone camera at the code, then add the app to your home screen.",
+      "qrLabel": "QR code with the address of the My IHT app",
+      "address": "Or open {url} on your phone."
+    },
+    "telegram": {
+      "open": "Open in Telegram",
+      "hint": "Prefer Telegram? The My IHT mini app works there with nothing to install."
+    },
+    "continue": "Continue in browser",
+    "hub": {
+      "title": "More IHT apps",
+      "subtitle": "Each app installs on its own: open it and add it to your home screen.",
+      "install": "Install",
+      "installLabel": "Install {name}",
+      "forStaff": "For staff",
+      "thisApp": "Install with the steps above"
+    },
+    "appInstall": {
+      "title": "Install {name}",
+      "ownAddress": "{name} installs from its own address. Tap the button: {name} opens and offers to install itself.",
+      "open": "Open {name} and install",
+      "stepsTitle": "How to install",
+      "ios": {
+        "step1": "Tap the button above: {name} opens in Safari",
+        "step2": "Tap the Share button in the browser bar",
+        "step3": "Scroll down and tap Add to Home Screen",
+        "step4": "Tap Add. {name} appears on your home screen."
+      },
+      "android": {
+        "step1": "Tap the button above: {name} opens in the browser",
+        "step2": "Tap Install in the message that appears",
+        "step3": "No message? Open the browser menu (the three dots) and choose Install app or Add to Home screen"
+      },
+      "desktop": {
+        "step1": "Click the button above: {name} opens in the browser",
+        "step2": "Click Install in the message that appears, or the install icon in the address bar"
+      },
+      "unknown": "This app cannot be installed from here.",
+      "back": "All IHT apps"
+    }
+  }
+}

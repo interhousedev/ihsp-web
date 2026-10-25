@@ -1,0 +1,164 @@
+{
+  "files": {
+    "page": {
+      "title": "Mening fayllarim",
+      "upload": "Fayllarni yuklash",
+      "empty": "Hozircha fayllar yo‘q. Birinchisini yuklang.",
+      "loadMore": "Yana ko‘rsatish"
+    },
+    "storage": {
+      "label": "Band joy",
+      "used": "{used} / {quota}",
+      "almostFull": "Deyarli to‘lgan. Keraksiz fayllarni o‘chiring.",
+      "clearedOn": "Bu semestr fayllari {date} kuni o‘chiriladi."
+    },
+    "status": {
+      "checking": "Tekshirilmoqda…",
+      "rejected": "Rad etildi: {reason}",
+      "assistantReady": "Yordamchi uchun tayyor",
+      "assistantTooLarge": "Yordamchi uchun juda katta",
+      "assistantUnreadable": "Yordamchi o‘qiy olmaydi"
+    },
+    "usedBy": {
+      "label": "Qayerda ishlatilgan",
+      "link": "Havola",
+      "lesson": "Dars",
+      "lessonUnknown": "dars",
+      "chat": "Suhbat"
+    },
+    "row": {
+      "download": "Yuklab olish",
+      "downloadFailed": "Faylni ochib bo‘lmadi.",
+      "rename": "{name} nomini o‘zgartirish",
+      "renameShort": "Nomini o‘zgartirish",
+      "delete": "{name} faylini o‘chirish",
+      "deleteShort": "O‘chirish"
+    },
+    "rename": {
+      "title": "Fayl nomini o‘zgartirish",
+      "label": "Nomi",
+      "save": "Saqlash",
+      "cancel": "Bekor qilish"
+    },
+    "delete": {
+      "title": "Bu fayl o‘chirilsinmi?",
+      "description": "“{name}” fayli butunlay o‘chiriladi.",
+      "usedWarning": "Fayl ishlatilmoqda. Quyidagilar ishlamay qoladi:",
+      "confirm": "O‘chirish",
+      "deleted": "“{name}” fayli o‘chirildi."
+    }
+  },
+  "flashcards": {
+    "page": {
+      "title": "Kartochkalar",
+      "allDecks": "Barcha kollodalar",
+      "missing": "Kolloda topilmadi.",
+      "importFailed": "Faylni o‘qib bo‘lmadi.",
+      "importEmpty": "Faylda kartochkalar topilmadi. Har qatorga bitta kartochka yozing: atama va taʼrif tab bilan ajratilgan.",
+      "imported": "“{title}” kollodasiga {count} ta kartochka import qilindi.",
+      "created": "Kolloda yaratildi.",
+      "saved": "Kartochkalar saqlandi.",
+      "deleteTitle": "Bu kolloda o‘chirilsinmi?",
+      "deleteDescription": "“{title}” kollodasi, uning barcha kartochkalari va natijalari o‘chiriladi. Ochiq havolalar ishlamay qoladi.",
+      "deleteConfirm": "Kollodani o‘chirish",
+      "deleteFailed": "Kollodani o‘chirib bo‘lmadi."
+    },
+    "options": {
+      "title": "Sozlamalar: {title}",
+      "titleLabel": "Nomi",
+      "descriptionLabel": "Tavsif",
+      "newPerDay": "Kuniga yangi kartochkalar",
+      "reviewsPerDay": "Kuniga takrorlashlar",
+      "limitInvalid": "{min} dan {max} gacha butun son kiriting.",
+      "save": "Saqlash",
+      "saving": "Saqlanmoqda…",
+      "saved": "Sozlamalar saqlandi.",
+      "delete": "Kollodani o‘chirish"
+    },
+    "descriptionDialog": {
+      "title": "Tavsif",
+      "label": "Tavsif",
+      "cancel": "Bekor qilish",
+      "save": "Saqlash",
+      "saving": "Saqlanmoqda…",
+      "saved": "Tavsif saqlandi."
+    },
+    "copy": {
+      "title": "Ulashilgan kollodani nusxalash",
+      "copying": "Kolloda hisobingizga nusxalanmoqda…",
+      "missing": "Nusxalash havolasi to‘liq emas."
+    }
+  },
+  "links": {
+    "page": {
+      "title": "Havolalar va ulashishlar",
+      "new": "Yangi qisqa havola",
+      "empty": "Hozircha havolalar yo‘q.",
+      "loadMore": "Yana ko‘rsatish",
+      "revokeTitle": "Ulashish bekor qilinsinmi?",
+      "revokeDescription": "“{name}” havolasi borlar uchun ishlamay qoladi.",
+      "revokeConfirm": "Bekor qilish",
+      "revoked": "Ulashish bekor qilindi.",
+      "deleteTitle": "Havola o‘chirilsinmi?",
+      "deleteDescription": "“{name}” ishlamay qoladi. Qisqa kod 90 kun qayta ishlatilmaydi.",
+      "deleteConfirm": "O‘chirish",
+      "deleted": "Havola o‘chirildi.",
+      "actionFailed": "Bajarilmadi. Qayta urinib ko‘ring."
+    },
+    "kind": {
+      "filter": "Turi bo‘yicha saralash",
+      "all": "Hammasi",
+      "url": "Havolalar",
+      "file": "Fayllar",
+      "chat": "Suhbatlar",
+      "flashcard_set": "Kartochkalar",
+      "artifact": "Bloknot materiallari",
+      "message": "Vizualizatsiyalar"
+    },
+    "row": {
+      "kind": {
+        "url": "Havola",
+        "file": "Fayl",
+        "chat": "Suhbat",
+        "flashcard_set": "Kartochkalar",
+        "artifact": "Bloknot materiallari",
+        "message": "Vizualizatsiya",
+        "lesson": "Dars ilovasi"
+      },
+      "status": {
+        "revoked": "Bekor qilingan",
+        "disabled": "O‘chirilgan",
+        "expired": "Muddati tugagan"
+      },
+      "modeSnapshot": "Surat",
+      "modeLive": "Jonli",
+      "hits": "{count} ta o‘tish",
+      "created": "{date} da yaratilgan",
+      "expires": "{date} gacha amal qiladi",
+      "copy": "Nusxalash",
+      "open": "Ochish",
+      "revoke": "Bekor qilish",
+      "revokeLabel": "{name} ni bekor qilish",
+      "delete": "O‘chirish",
+      "deleteLabel": "{name} ni o‘chirish",
+      "openLesson": "Darsni ochish"
+    },
+    "new": {
+      "title": "Yangi qisqa havola",
+      "mode": "Havola nimaga olib boradi",
+      "mode_url": "Veb-manzil",
+      "mode_file": "Fayl",
+      "urlLabel": "Manzil (http yoki https)",
+      "urlInvalid": "http:// yoki https:// bilan boshlanadigan to‘liq manzil kiriting.",
+      "fileLabel": "Fayl",
+      "chooseFile": "Faylni tanlang",
+      "loadingFiles": "Fayllar yuklanmoqda…",
+      "or": "yoki",
+      "uploadNew": "Yangi fayl yuklash",
+      "cancel": "Bekor qilish",
+      "create": "Havola yaratish",
+      "created": "Havola yaratildi: {url}",
+      "createdCopied": "Havola yaratildi va nusxalandi: {url}"
+    }
+  }
+}

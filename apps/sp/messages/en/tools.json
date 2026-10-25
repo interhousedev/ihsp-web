@@ -1,0 +1,164 @@
+{
+  "files": {
+    "page": {
+      "title": "My files",
+      "upload": "Upload files",
+      "empty": "No files yet. Upload your first file.",
+      "loadMore": "Load more"
+    },
+    "storage": {
+      "label": "Storage used",
+      "used": "{used} of {quota}",
+      "almostFull": "Almost full. Delete files you do not need.",
+      "clearedOn": "Files of this term are deleted on {date}."
+    },
+    "status": {
+      "checking": "Checking…",
+      "rejected": "Rejected: {reason}",
+      "assistantReady": "Ready for assistant",
+      "assistantTooLarge": "Too large for assistant",
+      "assistantUnreadable": "Assistant cannot read it"
+    },
+    "usedBy": {
+      "label": "Used in",
+      "link": "Link",
+      "lesson": "Lesson",
+      "lessonUnknown": "lesson",
+      "chat": "Chat"
+    },
+    "row": {
+      "download": "Download",
+      "downloadFailed": "Could not open the file.",
+      "rename": "Rename {name}",
+      "renameShort": "Rename",
+      "delete": "Delete {name}",
+      "deleteShort": "Delete"
+    },
+    "rename": {
+      "title": "Rename file",
+      "label": "Name",
+      "save": "Save",
+      "cancel": "Cancel"
+    },
+    "delete": {
+      "title": "Delete this file?",
+      "description": "“{name}” will be deleted for good.",
+      "usedWarning": "This file is used. These items will stop working:",
+      "confirm": "Delete",
+      "deleted": "“{name}” deleted."
+    }
+  },
+  "flashcards": {
+    "page": {
+      "title": "Flash cards",
+      "allDecks": "All decks",
+      "missing": "This deck was not found.",
+      "importFailed": "Could not read the file.",
+      "importEmpty": "No cards found in the file. Use one card per line, with the term and the definition separated by a tab.",
+      "imported": "{count, plural, one {# card} other {# cards}} imported into “{title}”.",
+      "created": "Deck created.",
+      "saved": "Cards saved.",
+      "deleteTitle": "Delete this deck?",
+      "deleteDescription": "“{title}” and all its cards and progress will be deleted. Its public links stop working.",
+      "deleteConfirm": "Delete deck",
+      "deleteFailed": "Could not delete the deck."
+    },
+    "options": {
+      "title": "Options: {title}",
+      "titleLabel": "Title",
+      "descriptionLabel": "Description",
+      "newPerDay": "New cards per day",
+      "reviewsPerDay": "Reviews per day",
+      "limitInvalid": "Enter a whole number from {min} to {max}.",
+      "save": "Save",
+      "saving": "Saving…",
+      "saved": "Options saved.",
+      "delete": "Delete deck"
+    },
+    "descriptionDialog": {
+      "title": "Description",
+      "label": "Description",
+      "cancel": "Cancel",
+      "save": "Save",
+      "saving": "Saving…",
+      "saved": "Description saved."
+    },
+    "copy": {
+      "title": "Copy shared deck",
+      "copying": "Copying the deck to your account…",
+      "missing": "This copy link is incomplete."
+    }
+  },
+  "links": {
+    "page": {
+      "title": "Links and shares",
+      "new": "New short link",
+      "empty": "You have no links yet.",
+      "loadMore": "Load more",
+      "revokeTitle": "Revoke this share?",
+      "revokeDescription": "“{name}” stops working for everyone who has the link.",
+      "revokeConfirm": "Revoke",
+      "revoked": "Share revoked.",
+      "deleteTitle": "Delete this link?",
+      "deleteDescription": "“{name}” stops working. Its short ID is not reused for 90 days.",
+      "deleteConfirm": "Delete",
+      "deleted": "Link deleted.",
+      "actionFailed": "That did not work. Try again."
+    },
+    "kind": {
+      "filter": "Filter by kind",
+      "all": "All",
+      "url": "Links",
+      "file": "Files",
+      "chat": "Chats",
+      "flashcard_set": "Flash cards",
+      "artifact": "Notebook materials",
+      "message": "Visualizations"
+    },
+    "row": {
+      "kind": {
+        "url": "Link",
+        "file": "File",
+        "chat": "Chat",
+        "flashcard_set": "Flash cards",
+        "artifact": "Notebook materials",
+        "message": "Visualization",
+        "lesson": "Lesson attachment"
+      },
+      "status": {
+        "revoked": "Revoked",
+        "disabled": "Disabled",
+        "expired": "Expired"
+      },
+      "modeSnapshot": "Snapshot",
+      "modeLive": "Live",
+      "hits": "{count, plural, one {# click} other {# clicks}}",
+      "created": "created {date}",
+      "expires": "expires {date}",
+      "copy": "Copy",
+      "open": "Open",
+      "revoke": "Revoke",
+      "revokeLabel": "Revoke {name}",
+      "delete": "Delete",
+      "deleteLabel": "Delete {name}",
+      "openLesson": "Open lesson"
+    },
+    "new": {
+      "title": "New short link",
+      "mode": "Link target",
+      "mode_url": "Web address",
+      "mode_file": "File",
+      "urlLabel": "Address (http or https)",
+      "urlInvalid": "Enter a full address that starts with http:// or https://.",
+      "fileLabel": "File",
+      "chooseFile": "Choose a file",
+      "loadingFiles": "Loading files…",
+      "or": "or",
+      "uploadNew": "Upload a new file",
+      "cancel": "Cancel",
+      "create": "Create link",
+      "created": "Link created: {url}",
+      "createdCopied": "Link created and copied: {url}"
+    }
+  }
+}
