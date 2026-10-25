@@ -1,0 +1,13 @@
+// Librarian area and UniLibrary administration.
+// One folder per screen; the app pages in `apps/library/src/app/manage/**` are thin wrappers around these exports.
+
+export * from "./queue"
+export * from "./reports"
+export * from "./books"
+export * from "./editor"
+export * from "./topics"
+export * from "./subjects"
+export * from "./collections"
+export * from "./stats"
+export * from "./unilibrary"
+export { ReasonDialog, type ReasonDialogProps } from "./shared/reason-dialog"

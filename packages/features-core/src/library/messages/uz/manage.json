@@ -1,0 +1,569 @@
+{
+  "manage": {
+    "topics": {
+      "title": "Mavzular",
+      "add": "Mavzu qoʻshish",
+      "subject": "Fan",
+      "empty": "“{subject}” fanida hali mavzular yoʻq.",
+      "treeLabel": "“{subject}” fanining mavzulari",
+      "deleteTitle": "Mavzu oʻchirilsinmi?",
+      "deleteText": "“{name}” mavzusi oʻchiriladi. Materiallar bu belgini yoʻqotadi.",
+      "deleteTextChildren": "“{name}” mavzusi va uning ostidagi barcha mavzular oʻchiriladi. Materiallar bu belgilarni yoʻqotadi.",
+      "deleteConfirm": "Oʻchirish",
+      "addChild": "“{name}” ostiga mavzu qoʻshish",
+      "edit": "“{name}” ni tahrirlash",
+      "delete": "“{name}” ni oʻchirish",
+      "editTitle": "Mavzuni tahrirlash",
+      "addTitle": "Mavzu qoʻshish",
+      "addChildTitle": "Ichki mavzu qoʻshish",
+      "underParent": "U “{name}” ostiga joylanadi.",
+      "namesRequired": "Nomini oʻzbek, rus va ingliz tillarida yozing.",
+      "name": "Nomi",
+      "slug": "Manzillar uchun qisqa nom",
+      "slugHint": "Majburiy emas. Boʻsh qoldirsangiz, inglizcha nomdan hosil qilinadi.",
+      "year": "Oʻqish yili",
+      "anyYear": "Istalgan yil",
+      "save": "Saqlash",
+      "code": "Kod (BBK yoki UDK)",
+      "codeHint": "Ixtiyoriy. Kutubxona tasnifi kodi.",
+      "archived": "Arxivda",
+      "archive": "«{name}» ni arxivlash",
+      "restore": "«{name}» ni tiklash",
+      "moveUp": "«{name}» ni yuqoriga",
+      "moveDown": "«{name}» ni pastga"
+    },
+    "subjects": {
+      "title": "Fanlar",
+      "add": "Fan qoʻshish",
+      "addChild": "«{name}» ichiga fan qoʻshish",
+      "addTitle": "Yangi fan",
+      "addChildTitle": "Ichki fan qoʻshish",
+      "editTitle": "Fanni tahrirlash",
+      "edit": "«{name}» ni tahrirlash",
+      "archive": "«{name}» ni arxivlash",
+      "restore": "«{name}» ni tiklash",
+      "archived": "Arxivda",
+      "moveUp": "«{name}» ni yuqoriga",
+      "moveDown": "«{name}» ni pastga",
+      "empty": "Hali fanlar yoʻq.",
+      "treeLabel": "Fanlar daraxti",
+      "namesRequired": "Nomini oʻzbek, rus va ingliz tillarida yozing.",
+      "name": "Nomi",
+      "code": "Kod (BBK yoki UDK)",
+      "codeHint": "Ixtiyoriy. Kutubxona tasnifi kodi, masalan, BBK 74 yoki UDK 37.",
+      "parent": "Ichida",
+      "parentTop": "Yuqori daraja",
+      "slug": "Manzil uchun qisqa nom",
+      "slugHint": "Ixtiyoriy. Boʻsh qoldirilsa, ingliz nomidan yasaladi.",
+      "save": "Saqlash"
+    },
+    "collections": {
+      "title": "Toʻplamlar",
+      "add": "Yangi toʻplam",
+      "empty": "Hozircha toʻplamlar yoʻq.",
+      "listLabel": "Toʻplamlar",
+      "itemCount": "{count, plural, one {# ta material} other {# ta material}}",
+      "publishedBadge": "Eʼlon qilingan",
+      "draftBadge": "Eʼlon qilinmagan",
+      "edit": "“{name}” ni tahrirlash",
+      "delete": "“{name}” ni oʻchirish",
+      "deleteTitle": "Toʻplam oʻchirilsinmi?",
+      "deleteText": "“{name}” toʻplami oʻchiriladi. Materiallar kutubxonada qoladi.",
+      "deleteConfirm": "Oʻchirish",
+      "editTitle": "Toʻplamni tahrirlash",
+      "addTitle": "Yangi toʻplam",
+      "dialogHint": "Nomlar oʻzbek, rus va ingliz tillarida kerak.",
+      "titleField": "Nomi",
+      "descriptionField": "Tavsif",
+      "published": "Eʼlon qilingan",
+      "publishedHint": "Oʻquvchilar faqat eʼlon qilingan toʻplamlarni koʻradi.",
+      "cover": "Muqova",
+      "coverChoose": "Muqova tanlash",
+      "coverReplace": "Muqovani almashtirish",
+      "coverNew": "Yangi muqova: {name}",
+      "save": "Saqlash",
+      "pickerSearch": "Qoʻshish uchun materiallarni topish",
+      "pickerHint": "Nomi, muallifi yoki mavzusining kamida ikki harfini yozing.",
+      "pickerNone": "Hech narsa topilmadi.",
+      "pickerResults": "Qidiruv natijalari",
+      "pickerAdd": "“{title}” ni toʻplamga qoʻshish",
+      "pickerAdded": "Qoʻshilgan",
+      "pickerAddShort": "Qoʻshish",
+      "chosen": "{count, plural, one {Toʻplamda # ta material} other {Toʻplamda # ta material}}",
+      "chosenNone": "Hozircha materiallar yoʻq.",
+      "chosenList": "Toʻplam materiallari tartib bilan",
+      "moveUp": "“{title}” ni yuqoriga surish",
+      "moveDown": "“{title}” ni pastga surish",
+      "removeItem": "“{title}” ni toʻplamdan olib tashlash"
+    },
+    "stats": {
+      "title": "Statistika",
+      "range": "Davr",
+      "from": "Boshlanishi",
+      "to": "Tugashi",
+      "rangeInvalid": "Boshlanish sanasi tugash sanasidan keyin boʻlmasligi kerak.",
+      "overview": "Foydalanish",
+      "opens": "Materiallar ochilishi",
+      "readers": "Oʻquvchilar",
+      "uploads": "Kunlar boʻyicha yuklashlar",
+      "noUploads": "Bu davrda yuklashlar yoʻq.",
+      "searchesWithout": "Natijasiz qidiruvlar",
+      "noSearches": "Har bir qidiruv nimadir topdi.",
+      "topItems": "Eng koʻp ochilgan materiallar",
+      "noTopItems": "Hech qanday material ochilmagan.",
+      "byStatus": "Holat boʻyicha materiallar",
+      "noItems": "Materiallar yoʻq.",
+      "byReason": "Sabab boʻyicha ochiq shikoyatlar",
+      "noReports": "Ochiq shikoyatlar yoʻq.",
+      "subjectsWithout": "Materialsiz fanlar",
+      "noGaps": "Har bir fanda materiallar bor.",
+      "queue": {
+        "title": "Koʻrib chiqish navbati",
+        "length": "Kutmoqda",
+        "oldest": "Eng eskisi",
+        "average": "Oʻrtacha kutish",
+        "slow": "Eng eski material 2 oʻquv kundan koʻp kutdi.",
+        "serviceLevel": "Maqsad: 2 oʻquv kun ichida qaror."
+      }
+    },
+    "unilibrary": {
+      "title": "UniLibrary",
+      "settings": {
+        "title": "Sozlamalar",
+        "explanation": "Odatda oʻchiq. Oʻchiq paytda UniLibrary dan hech narsa koʻrsatilmaydi, server unga murojaat qilmaydi.",
+        "enable": "UniLibrary ni yoqish",
+        "enableHint": "UniLibrary kartochkalarini qidiruv va material sahifalarida koʻrsatish.",
+        "anonymous": "Anonim kartochkalarni koʻrsatish",
+        "anonymousHint": "Tizimga kirmagan tashrifchilar uchun ham.",
+        "save": "Sozlamalarni saqlash",
+        "unsaved": "Saqlanmagan oʻzgarishlar",
+        "on": "Yoqilgan",
+        "off": "Oʻchiq",
+        "savedOn": "UniLibrary yoqildi.",
+        "savedOff": "UniLibrary oʻchirildi."
+      },
+      "status": {
+        "title": "Holat",
+        "breaker": "Aloqa",
+        "breakerState": {
+          "closed": "Ishlayapti",
+          "open": "Javob bermayapti",
+          "half_open": "Tekshirilmoqda"
+        },
+        "breakerHint": {
+          "closed": "Soʻrovlar UniLibrary ga odatdagidek ketadi.",
+          "open": "Juda koʻp soʻrov bajarilmadi. Bir daqiqa saqlangan natijalar koʻrsatiladi.",
+          "half_open": "Bitta sinov soʻrovi yuborilmoqda."
+        },
+        "cache": {
+          "hits": "Keshdan",
+          "misses": "Keshda yoʻq edi",
+          "stale": "Saqlangan natijalar koʻrsatildi",
+          "rate": "Keshga tushish ulushi"
+        },
+        "calls": "Oxirgi soʻrovlar",
+        "noCalls": "Hozircha soʻrovlar yoʻq.",
+        "time": "Vaqt",
+        "result": "Natija",
+        "duration": "Davomiyligi",
+        "path": "Soʻrov",
+        "ok": "Muvaffaqiyatli",
+        "failed": "Xato",
+        "ms": "{ms} ms",
+        "hidden": "Yashirilgan yozuvlar",
+        "noHidden": "Yashirilgan yozuvlar yoʻq."
+      },
+      "coming": {
+        "title": "Tasmalar va moslashtirish keyinroq paydo boʻladi.",
+        "text": "Davriy tasmalar va fanlarni moslashtirish bu versiyada yoʻq."
+      }
+    },
+    "sanctions": {
+      "title": "Ogohlantirishlar va yuklashni taqiqlash",
+      "description": "Tasdiqlangan shikoyatdan keyin ogohlantiring yoki yuklashni taqiqlang. Foydalanuvchi qarorni koʻradi.",
+      "userId": "Foydalanuvchi identifikatori",
+      "userIdHint": "“Foydalanuvchilar va rollar” boʻlimidagi foydalanuvchi sahifasidan olingan identifikator.",
+      "userIdInvalid": "Identifikatorni UUID koʻrinishida kiriting, masalan 0b8e6a52-6f4e-4a62-9e0f-5a1d3c2b4e7f.",
+      "kind": "Qaror",
+      "warning": "Ogohlantirish",
+      "upload_ban": "Yuklashni taqiqlash",
+      "until": "Taqiq amal qiladi",
+      "untilHint": "Tugash sanasiz taqiq uchun boʻsh qoldiring.",
+      "reason": "Sabab",
+      "reasonHint": "Foydalanuvchi bu matnni koʻradi.",
+      "reasonRequired": "Sababni yozing.",
+      "submit": "Qarorni yozish",
+      "doneWarning": "Ogohlantirish yozildi: {user}.",
+      "doneBan": "Yuklash taqiqi yozildi: {user}. {until}"
+    },
+    "books": {
+      "title": "Kitoblar",
+      "new": "Yangi kitob",
+      "import": "Ommaviy import",
+      "filters": "Kitoblarni topish",
+      "search": "Nomi yoki muallifi boʻyicha qidirish",
+      "statusFilter": "Holat",
+      "allStatuses": "Barcha holatlar",
+      "empty": "Hozircha kitoblar yoʻq.",
+      "noMatches": "Bu qidiruv boʻyicha kitob topilmadi.",
+      "loadMore": "Yana koʻrsatish",
+      "tableLabel": "Kutubxona kitoblari",
+      "edit": "Tahrirlash",
+      "column": {
+        "title": "Nomi",
+        "rights": "Huquqlar",
+        "status": "Holat",
+        "visibility": "Koʻrinish",
+        "text": "Matn",
+        "updated": "Yangilangan"
+      },
+      "visibility": {
+        "public": "Hamma uchun",
+        "lyceum": "Faqat litsey",
+        "hidden": "Yashirin"
+      }
+    },
+    "import": {
+      "title": "Kitoblarni ommaviy import qilish",
+      "description": "Har qatori bitta kitob boʻlgan CSV yuklang. Xatoli qatorlar roʻyxatga olinadi.",
+      "columns": "Ustunlar: fayl nomi, nomi, mualliflar, til, yil, tur, huquq va asos, fanlar, mavzular. Avval fayllarni yuklang.",
+      "zone": "CSV fayl",
+      "hint": "CSV faylni bu yerga tashlang yoki tanlang.",
+      "choose": "CSV tanlash",
+      "replace": "Boshqa CSV tanlash",
+      "ready": "Importga tayyor: {name}",
+      "run": "Import qilish",
+      "another": "Boshqa faylni import qilish",
+      "done": "Tayyor",
+      "created": "{count, plural, one {# ta kitob qoralamasi yaratildi.} other {# ta kitob qoralamasi yaratildi.}}",
+      "errors": "{count, plural, one {# ta xatoli qator oʻtkazib yuborildi.} other {# ta xatoli qator oʻtkazib yuborildi.}}",
+      "noErrors": "Barcha qatorlar import qilindi.",
+      "row": "Qator",
+      "problem": "Muammo"
+    },
+    "editor": {
+      "newTitle": "Yangi kitob",
+      "editTitle": "Kitobni tahrirlash",
+      "back": "Kitoblar roʻyxatiga",
+      "viewPublic": "Kitob sahifasini ochish",
+      "statusLabel": "Holat",
+      "reason": "Sabab",
+      "leaveConfirm": "Saqlanmagan oʻzgarishlar bor. Sahifadan chiqasizmi?",
+      "saved": "Kitob saqlandi.",
+      "fileAttached": "Fayl biriktirildi.",
+      "unsavedChanges": "Saqlanmagan oʻzgarishlar",
+      "allSaved": "Barcha oʻzgarishlar saqlangan.",
+      "saveBeforePublish": "Eʼlon qilishdan oldin saqlang.",
+      "create": "Kitob yaratish",
+      "save": "Saqlash",
+      "publish": "Eʼlon qilish",
+      "unpublish": "Olib tashlash",
+      "takedown": "Talab boʻyicha olib tashlash",
+      "takedownTitle": "Kitobni kutubxonadan olib tashlash",
+      "takedownDescription": "Kitob kutubxonadan yoʻqoladi. Sabab audit uchun saqlanadi.",
+      "done": {
+        "publish": "Kitob eʼlon qilindi.",
+        "unpublish": "Kitob olib tashlandi.",
+        "takedown": "Kitob kutubxonadan olib tashlandi."
+      },
+      "file": "Kitob fayli",
+      "fileHint": "PDF yoki EPUB faylni bu yerga tashlang yoki tanlang.",
+      "fileReplaceHint": "Asosiy faylni almashtirish uchun yangi PDF yoki EPUB ni bu yerga tashlang.",
+      "fileChoose": "PDF yoki EPUB tanlash",
+      "fileReplace": "Faylni almashtirish",
+      "filePending": "{name} yuklandi va kitob yaratilganda biriktiriladi.",
+      "noFile": "Hozircha fayl yoʻq.",
+      "primaryFile": "Asosiy fayl",
+      "pages": "{count, plural, one {# bet} other {# bet}}",
+      "cover": "Muqova",
+      "coverHint": "JPG yoki PNG. Eʼlon qilish uchun kerak.",
+      "coverChoose": "Muqova tanlash",
+      "coverReplace": "Muqovani almashtirish",
+      "coverNew": "Yangi muqova: {name}",
+      "metadata": "Maʼlumotlar",
+      "fieldTitle": "Nomi",
+      "subtitle": "Qoʻshimcha nom",
+      "authors": "Mualliflar",
+      "translators": "Tarjimonlar",
+      "addEntry": "Qoʻshish",
+      "removeEntry": "Olib tashlash: {name}",
+      "language": "Til va yozuv",
+      "languageHint": "Lotin va kirill yozuvidagi oʻzbek tili alohida.",
+      "type": "Turi",
+      "year": "Nashr yili",
+      "publisher": "Nashriyot",
+      "isbn": "ISBN",
+      "yearsOfStudy": "Oʻqish yillari",
+      "description": "Tavsif",
+      "subjectsAndTopics": "Fanlar va mavzular",
+      "subjects": "Fanlar",
+      "subjectsHint": "Eʼlon qilish uchun kamida bitta fan yoki toʻplam kerak.",
+      "noSubjects": "Hozircha fan yoʻq.",
+      "subjectName": "Fan",
+      "subjectRoleLabel": "“{name}” fanidagi roli",
+      "removeSubject": "Fanni olib tashlash",
+      "addSubject": "Fan qoʻshish",
+      "subjectRole": {
+        "textbook": "Darslik",
+        "core": "Asosiy oʻqish",
+        "supplementary": "Qoʻshimcha",
+        "reference": "Maʼlumotnoma"
+      },
+      "topics": "Mavzular",
+      "topicsHint": "Xohlasangiz, har bir mavzu yoritilgan betlarni koʻrsating.",
+      "topicName": "Mavzu",
+      "pageFrom": "Qaysi betdan",
+      "pageTo": "Qaysi betgacha",
+      "removeTopic": "Mavzuni olib tashlash",
+      "addTopic": "Mavzu qoʻshish",
+      "topicsNeedSubject": "Avval fanni tanlang.",
+      "upload": {
+        "dropHint": "Faylni bu yerga tashlang yoki tanlang.",
+        "wrongType": "Bu fayl turi qabul qilinmaydi. Foydalaning: {types}.",
+        "uploading": "Yuklanmoqda: {name}…",
+        "progress": "{name} faylini yuklash jarayoni",
+        "rejected": "Fayl rad etildi: {reason}"
+      },
+      "error": {
+        "titleRequired": "Nomini yozing.",
+        "authorsRequired": "Kamida bitta muallif qoʻshing.",
+        "yearInvalid": "Yilni toʻrt raqamgacha yozing.",
+        "rangeInvalid": "Birinchi bet oxirgi betdan keyin boʻlmasligi kerak."
+      },
+      "visibility": {
+        "label": "Kitobni kim koʻradi",
+        "lyceum": "Faqat litsey",
+        "public": "Hamma uchun",
+        "lyceumHint": "Faqat litsey oʻquvchilari va xodimlari koʻradi.",
+        "publicHint": "Hamma koʻradi, mehmonlar ham.",
+        "download": "Yuklab olishga ruxsat",
+        "downloadHint": "Oʻquvchilar faylni saqlashi mumkin.",
+        "title": "Kitobni kim koʻradi"
+      },
+      "checklist": {
+        "title": "Eʼlon qilish roʻyxati",
+        "intro": "Eʼlon qilish uchun qizil bandlarni tuzating.",
+        "ready": "Hammasi tayyor. Eʼlon qilishingiz mumkin.",
+        "unsaved": "Saqlanmagan oʻzgarishlaringiz uchun koʻrsatilmoqda.",
+        "done": "bajarilgan",
+        "todo": "bajarish kerak",
+        "text_status": {
+          "label": "Fayl tekshirilgan",
+          "hint": "PDF yoki EPUB biriktiring va matnni kuting."
+        },
+        "cover": {
+          "label": "Muqova bor",
+          "hint": "Muqova rasmini yuklang."
+        },
+        "subjects": {
+          "label": "Kamida bitta fan bor",
+          "hint": "Fan qoʻshing yoki kitobni toʻplamga joylang."
+        }
+      },
+      "authorsHint": "Yozishni boshlang: lotin va kirill yozuvidagi ismlar bir-biriga mos keladi.",
+      "authorsPlaceholder": "Muallif ismini kiriting",
+      "authorSuggestions": "Mualliflar",
+      "tags": "Teglar",
+      "tagsHint": "Qidiruv uchun kalit soʻzlar. Mavjud tegni tanlang yoki yangisini kiriting.",
+      "tagsPlaceholder": "Teg kiriting",
+      "tagSuggestions": "Teglar",
+      "tagCount": "{count} ta yozuv",
+      "noSuggestions": "Hech narsa topilmadi. «{value}» ni qoʻshish uchun Enter bosing.",
+      "rights": "Huquqlar",
+      "rightsHint": "Matnni kim nashr etishga ruxsat bergan. Nashr uchun kutubxonachi maʼlumotlarni tekshiradi.",
+      "rightsOptions": {
+        "official": "Rasmiy, maktab yoki nashriyot bilan shartnoma asosida",
+        "open_license": "Ochiq litsenziya",
+        "public_domain": "Umumiy mulk",
+        "permission": "Huquq egasining ruxsati bilan"
+      },
+      "suggestion": {
+        "title": "Oʻquvchi taklif qilgan",
+        "intro": "Shaklni tekshiring va tuzating, soʻng tasdiqlang: kitob oʻquvchining fayli bilan yaratiladi va oʻquvchiga xabar beriladi. Huquqlar qayd etilgach, uni kitob sahifasida eʼlon qiling.",
+        "file": "Fayl",
+        "link": "Havola",
+        "note": "Izoh",
+        "approve": "Tasdiqlash va kitobni yaratish",
+        "decline": "Rad etish",
+        "declineTitle": "Taklifni rad etish",
+        "declineDescription": "Oʻquvchi sababni koʻradi. Uning fayllari 30 kundan soʻng oʻchiriladi.",
+        "approved": "Taklif tasdiqlandi. Kitob yaratildi.",
+        "declined": "Taklif rad etildi. Oʻquvchiga xabar berildi.",
+        "status": {
+          "new": "Kutilmoqda",
+          "accepted": "Tasdiqlangan",
+          "declined": "Rad etilgan"
+        }
+      }
+    },
+    "title": "Kutubxonachi boʻlimi",
+    "approve": "Tasdiqlash",
+    "requestChanges": "Tuzatish soʻrash",
+    "reject": "Rad etish",
+    "hold": "Toʻxtatish",
+    "unpublish": "Olib tashlash",
+    "restore": "Qaytarish",
+    "ownItem": "Buni siz yuklagansiz. Uni boshqa kutubxonachi tasdiqlashi kerak.",
+    "reasonRequired": "Sababni yozing. Muallif uni koʻradi.",
+    "reasonLabel": "Sabab",
+    "textStatus": {
+      "none": "Matn hali yoʻq",
+      "pending": "Matn ajratilmoqda",
+      "ready": "Matn tayyor",
+      "no_text": "Matnsiz skan",
+      "failed": "Matnni ajratib boʻlmadi"
+    },
+    "queue": {
+      "title": "Koʻrib chiqish navbati",
+      "tabsLabel": "Navbat boʻlimlari",
+      "tab": {
+        "review": "Koʻrib chiqish uchun",
+        "reports": "Shikoyatlar",
+        "held": "Toʻxtatilgan",
+        "rights": "Huquqlar",
+        "suggestions": "Takliflar"
+      },
+      "oldest": "Eng eskisi: {age}",
+      "empty": {
+        "review": "Koʻrib chiqish uchun hech narsa yoʻq.",
+        "reports": "Ochiq shikoyatlar yoʻq.",
+        "held": "Toʻxtatilgan materiallar yoʻq.",
+        "rights": "Barcha kitoblarning huquqlari rasmiylashtirilgan.",
+        "suggestions": "Takliflar yoʻq."
+      },
+      "listLabel": "{tab}: materiallar",
+      "selectHint": "Bu yerda koʻrish uchun materialni tanlang.",
+      "shortcutsHint": "j/k — oʻtish, a — tasdiqlash, c — tuzatish, r — rad etish, h — toʻxtatish.",
+      "kind": {
+        "student_material": "Oʻquvchi materiali",
+        "teacher_material": "Oʻqituvchi materiali",
+        "suggestion": "Taklif",
+        "report": "Shikoyat",
+        "rights": "Huquqlar"
+      },
+      "sent": "Yuborilgan: {age}",
+      "findings": "{count, plural, one {# ta skaner topilmasi} other {# ta skaner topilmasi}}",
+      "reportCount": "{count} × {reason}",
+      "needsOther": "Boshqa kutubxonachi kerak",
+      "actionsLabel": "Tanlangan material uchun amallar",
+      "resolveReports": "Shikoyatlarni hal qilish",
+      "editRights": "Huquqlarni tahrirlash",
+      "createDraft": "Kitob qoralamasini yaratish",
+      "announce": {
+        "approve": "Tasdiqlandi: {title}",
+        "request-changes": "Tuzatish soʻraldi: {title}",
+        "reject": "Rad etildi: {title}",
+        "hold": "Toʻxtatildi: {title}",
+        "restore": "Qaytarildi: {title}",
+        "unpublish": "Olib tashlandi: {title}",
+        "resolve": "Shikoyatlar hal qilindi: {title}"
+      },
+      "dialog": {
+        "request-changes": {
+          "title": "Tuzatish soʻrash",
+          "description": "“{title}” da nimani tuzatishni muallifga yozing.",
+          "confirm": "Soʻrovni yuborish"
+        },
+        "reject": {
+          "title": "Materialni rad etish",
+          "description": "“{title}” rad etiladi. Muallif sababni koʻradi.",
+          "confirm": "Rad etish"
+        },
+        "hold": {
+          "title": "Tekshirish uchun toʻxtatish",
+          "description": "“{title}” qaror qilguningizcha yashiriladi. Muallif sababni koʻradi.",
+          "confirm": "Toʻxtatish"
+        },
+        "unpublish": {
+          "title": "Materialni olib tashlash",
+          "description": "“{title}” kutubxonadan olib tashlanadi. Muallif sababni koʻradi.",
+          "confirm": "Olib tashlash"
+        },
+        "restore": {
+          "title": "Materialni qaytarish",
+          "description": "“{title}” yana eʼlon qilinadi. Nega qaytarilayotganini yozing.",
+          "confirm": "Qaytarish"
+        }
+      },
+      "preview": {
+        "title": "Koʻrib chiqiladigan material",
+        "openItem": "Material sahifasini ochish",
+        "openReader": "Oʻquvchida ochish",
+        "uploader": "Yukladi",
+        "sent": "Yuborilgan",
+        "findings": "Skaner topilmalari",
+        "noFindings": "Skaner hech narsa topmadi.",
+        "reports": "Shikoyatlar",
+        "description": "Tavsif",
+        "subjects": "Fanlar",
+        "files": "Fayllar",
+        "noFiles": "Fayllar yoʻq.",
+        "pages": "{count, plural, one {# bet} other {# bet}}",
+        "statusReason": "Yozuvdagi sabab",
+        "suggestedBy": "Taklif qildi",
+        "suggestionLink": "Havola",
+        "suggestionNote": "Izoh",
+        "suggestedBook": "Talaba toʻldirgan kitob",
+        "suggestedTags": "Teglar"
+      }
+    },
+    "resolve": {
+      "title": "Shikoyatlarni hal qilish",
+      "description": "Qaror “{title}” ning barcha ochiq shikoyatlariga tegishli.",
+      "decision": "Qaror",
+      "action": {
+        "dismiss": {
+          "label": "Shikoyatlarni rad etish",
+          "hint": "Shikoyatlar notoʻgʻri. Material ochiq qoladi yoki qaytadi."
+        },
+        "hold": {
+          "label": "Toʻxtatish",
+          "hint": "Tekshirilgunicha materialni oʻquvchilardan yashirish."
+        },
+        "unpublish": {
+          "label": "Olib tashlash",
+          "hint": "Materialni kutubxonadan olib tashlash."
+        },
+        "unpublish_and_warn": {
+          "label": "Olib tashlash va ogohlantirish",
+          "hint": "Materialni olib tashlash va muallifga ogohlantirish yozish."
+        }
+      },
+      "confirm": "Qoʻllash"
+    },
+    "reports": {
+      "title": "Shikoyatlar",
+      "section": {
+        "open": "Ochiq shikoyatlar",
+        "held": "Shikoyatdan keyin toʻxtatilgan"
+      },
+      "empty": {
+        "open": "Ochiq shikoyatlar yoʻq.",
+        "held": "Toʻxtatilgan materiallar yoʻq."
+      },
+      "heldBadge": "Toʻxtatilgan",
+      "sent": "birinchi shikoyat: {age}",
+      "reasons": "Sabablar",
+      "reasonCount": "{count} × {reason}",
+      "resolve": "Hal qilish",
+      "openQueue": "Navbatni ochish"
+    },
+    "lang": {
+      "uz": "Oʻzbekcha",
+      "ru": "Ruscha",
+      "en": "Inglizcha"
+    },
+    "fieldRequired": "Bu maydon majburiy.",
+    "reasonOwn": "Oʻz soʻzlaringiz bilan (40 belgigacha)",
+    "noteLabel": "Muallifga xabar",
+    "noteLabelOptional": "Muallifga xabar (ixtiyoriy)",
+    "noteRequired": "Muallif nimani tuzatishi kerakligini yozing.",
+    "reasonCodes": {
+      "reported": "Oʻquvchilar shikoyati",
+      "unpublished": "Kutubxonadan olib tashlangan",
+      "takedown": "Olib tashlash (huquq yoki qoidalar)",
+      "superseded": "Yangi versiya bilan almashtirilgan",
+      "other": "Boshqa (oʻzingiz yozing)"
+    }
+  }
+}

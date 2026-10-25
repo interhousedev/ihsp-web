@@ -1,0 +1,209 @@
+{
+  "reader": {
+    "back": "Back to the item",
+    "contents": "Contents",
+    "contentsEmpty": "This item has no table of contents.",
+    "search": "Search in this item",
+    "searchLabel": "Search text",
+    "searchPlaceholder": "Word or phrase",
+    "searchSubmit": "Search",
+    "searchClear": "Clear the search",
+    "searching": "Searching…",
+    "searchNone": "Nothing found.",
+    "searchResults": "{count, plural, one {# result} other {# results}}",
+    "searchResultsLabel": "Search results",
+    "searchPage": "p. {page}",
+    "noTextSearch": "This scan has no text, so there is nothing to search.",
+    "notes": "Notes and highlights",
+    "settings": "Reading settings",
+    "settingsHint": "Saved on this device.",
+    "menu": "More actions",
+    "itemPage": "Item page",
+    "previous": "Previous page",
+    "next": "Next page",
+    "page": "Page {page} of {pages}",
+    "pageLabel": "Page {page}",
+    "pageError": "Page {page} could not be drawn.",
+    "percent": "{percent}% read",
+    "progress": "Reading progress",
+    "goToPage": "Go to page",
+    "goToPageLabel": "Page number",
+    "goToPageHint": "From 1 to {pages}",
+    "goToPageInvalid": "Enter a page from 1 to {pages}.",
+    "go": "Go",
+    "document": "Document text",
+    "view": "Reader",
+    "unsupported": "This file cannot be read in the browser.",
+    "fixedLayout": "Fixed page layout is not supported yet. Download the file to read it.",
+    "noText": "This item is a scan without text, so search and notebooks cannot use it.",
+    "addBookmark": "Bookmark this place",
+    "removeBookmark": "Remove the bookmark",
+    "zoom": "Zoom",
+    "zoomIn": "Zoom in",
+    "zoomOut": "Zoom out",
+    "pageFit": "Page fit",
+    "fitWidth": "Fit width",
+    "fitPage": "Fit page",
+    "fontSize": "Text size",
+    "smaller": "Smaller text",
+    "larger": "Larger text",
+    "lineHeight": "Line spacing",
+    "lineHeights": {
+      "0": "Tight",
+      "1": "Normal",
+      "2": "Wide"
+    },
+    "flow": "Layout",
+    "flowPaginated": "Pages",
+    "flowScrolled": "Scroll",
+    "shortcuts": {
+      "title": "Keyboard shortcuts",
+      "next": {
+        "keys": "→  PgDn  Space",
+        "action": "Next page"
+      },
+      "prev": {
+        "keys": "←  PgUp  Shift+Space",
+        "action": "Previous page"
+      },
+      "search": {
+        "keys": "/",
+        "action": "Search in this item"
+      },
+      "goto": {
+        "keys": "G",
+        "action": "Go to page"
+      },
+      "highlight": {
+        "keys": "H",
+        "action": "Highlight the selected text"
+      },
+      "note": {
+        "keys": "N",
+        "action": "Add a note to the selected text"
+      },
+      "bookmark": {
+        "keys": "B",
+        "action": "Add or remove a bookmark"
+      },
+      "zoom": {
+        "keys": "+  −",
+        "action": "Zoom (PDF)"
+      },
+      "escape": {
+        "keys": "Esc",
+        "action": "Close a panel or clear the selection"
+      }
+    }
+  },
+  "annotation": {
+    "selection": "Selected text",
+    "highlight": "Highlight",
+    "note": "Add note",
+    "copy": "Copy",
+    "copied": "Copied",
+    "copyFailed": "Could not copy.",
+    "addToNotebook": "Add to notebook",
+    "dismiss": "Close the selection menu",
+    "colorLabel": "Colour",
+    "color": {
+      "yellow": "Yellow",
+      "green": "Green",
+      "blue": "Blue",
+      "pink": "Pink"
+    },
+    "kind": {
+      "highlight": "Highlight",
+      "note": "Note",
+      "bookmark": "Bookmark"
+    },
+    "saved": "Saved.",
+    "selectFirst": "Select some text first.",
+    "signIn": "Sign in to highlight and keep notes.",
+    "signInTitle": "Notes need an account",
+    "bookmarkAdded": "Bookmark added.",
+    "bookmarkRemoved": "Bookmark removed.",
+    "panelTitle": "Notes and highlights",
+    "emptyTitle": "No notes yet",
+    "empty": "Select text in the book to highlight it or add a note.",
+    "goTo": "Go to",
+    "edit": "Edit",
+    "delete": "Delete",
+    "deleteTitle": "Delete this mark?",
+    "deleteHint": "This cannot be undone.",
+    "retry": "Try again",
+    "discard": "Discard",
+    "sync": {
+      "queued": "Waiting for the network",
+      "sending": "Saving…",
+      "failed": "Not saved"
+    },
+    "page": "p. {page}",
+    "percent": "{percent}% of the book",
+    "openNote": "Open this note",
+    "noteDialogTitle": "Add a note",
+    "editDialogTitle": "Edit the note",
+    "noteDialogHint": "The note is private. Only you can see it.",
+    "noteLabel": "Note",
+    "notePlaceholder": "Your thoughts about this passage",
+    "save": "Save",
+    "cancel": "Cancel"
+  },
+  "offline": {
+    "waiting": "{count, plural, one {# change waits for the network} other {# changes wait for the network}}"
+  },
+  "my": {
+    "title": "My library",
+    "notesHeading": "My notes and highlights",
+    "tabs": {
+      "continue": "Continue",
+      "shelf": "Shelf",
+      "notes": "Notes",
+      "lists": "Lists",
+      "uploads": "My uploads",
+      "suggestions": "My suggestions"
+    },
+    "continue": {
+      "empty": "No book started yet.",
+      "action": "Continue reading"
+    },
+    "shelf": {
+      "filter": "Filter the shelf by state",
+      "all": "All",
+      "empty": "Your shelf is empty. Add books from the catalogue.",
+      "emptyFiltered": "Nothing on the shelf in this state.",
+      "removed": "No longer available",
+      "removedHint": "Removed from the library. You can take it off your shelf.",
+      "removeEntry": "Remove from shelf"
+    },
+    "lists": {
+      "empty": "No reading lists for your groups yet.",
+      "all": "All reading lists"
+    },
+    "showMore": "Show more"
+  },
+  "notes": {
+    "title": "My notes and highlights",
+    "search": "Search my notes",
+    "searchLabel": "Search notes",
+    "color": "Colour filter",
+    "allColors": "All colours",
+    "colors": {
+      "yellow": "Yellow",
+      "green": "Green",
+      "blue": "Blue",
+      "pink": "Pink"
+    },
+    "export": "Export to Markdown",
+    "exportItem": "Export this item",
+    "exportName": "Library notes",
+    "exported": "Notes exported.",
+    "empty": "No notes yet.",
+    "emptyFiltered": "No notes match your search.",
+    "count": "{count, plural, one {# note} other {# notes}}",
+    "open": "Open in the reader",
+    "unavailable": "This item is no longer available",
+    "loadingItem": "Loading the title",
+    "showMore": "Show more"
+  }
+}

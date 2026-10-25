@@ -1,0 +1,34 @@
+{
+  "name": "@ihsp/features-core",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "sideEffects": false,
+  "main": "./src/index.ts",
+  "types": "./src/index.ts",
+  "exports": {
+    ".": "./src/index.ts",
+    "./pwa": "./src/pwa/index.ts",
+    "./pwa/sw": "./src/pwa/sw/index.ts",
+    "./pwa/lock": "./src/pwa/lock/index.ts",
+    "./pwa/head": "./src/pwa/utils/pwa-head.ts",
+    "./library-test-support": "./src/library/test-support.tsx",
+    "./telemetry": "./src/telemetry/index.ts",
+    "./openui": "./src/openui/index.ts"
+  },
+  "scripts": {
+    "typecheck": "tsc --noEmit",
+    "test": "bun test --timeout 30000 --preload ../test-utils/src/preload.ts"
+  },
+  "dependencies": {
+    "@ihsp/api": "workspace:*",
+    "@ihsp/auth": "workspace:*",
+    "@ihsp/config": "workspace:*",
+    "@ihsp/i18n": "workspace:*",
+    "@ihsp/telegram": "workspace:*",
+    "@ihsp/ui": "workspace:*",
+    "@sentry/browser": "10.76.0",
+    "foliate-js": "github:johnfactotum/foliate-js#78914aef4466eb960965702401634c2cb348e9b1",
+    "pdfjs-dist": "6.3.289"
+  }
+}

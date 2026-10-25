@@ -1,0 +1,209 @@
+{
+  "reader": {
+    "back": "Materialga qaytish",
+    "contents": "Mundarija",
+    "contentsEmpty": "Bu materialda mundarija yoʻq.",
+    "search": "Material ichidan qidirish",
+    "searchLabel": "Qidiriladigan matn",
+    "searchPlaceholder": "Soʻz yoki ibora",
+    "searchSubmit": "Qidirish",
+    "searchClear": "Qidiruvni tozalash",
+    "searching": "Qidirilmoqda…",
+    "searchNone": "Hech narsa topilmadi.",
+    "searchResults": "{count, plural, one {# ta natija} other {# ta natija}}",
+    "searchResultsLabel": "Qidiruv natijalari",
+    "searchPage": "{page}-bet",
+    "noTextSearch": "Bu skanda matn yoʻq, qidiradigan narsa yoʻq.",
+    "notes": "Izohlar va belgilar",
+    "settings": "Oʻqish sozlamalari",
+    "settingsHint": "Shu qurilmada saqlanadi.",
+    "menu": "Yana amallar",
+    "itemPage": "Material sahifasi",
+    "previous": "Oldingi bet",
+    "next": "Keyingi bet",
+    "page": "{page}-bet, jami {pages} bet",
+    "pageLabel": "{page}-bet",
+    "pageError": "{page}-betni koʻrsatib boʻlmadi.",
+    "percent": "{percent}% oʻqildi",
+    "progress": "Oʻqish jarayoni",
+    "goToPage": "Betga oʻtish",
+    "goToPageLabel": "Bet raqami",
+    "goToPageHint": "1 dan {pages} gacha",
+    "goToPageInvalid": "1 dan {pages} gacha bet kiriting.",
+    "go": "Oʻtish",
+    "document": "Hujjat matni",
+    "view": "Oʻqish oynasi",
+    "unsupported": "Bu faylni brauzerda oʻqib boʻlmaydi.",
+    "fixedLayout": "Qatʼiy joylashuv hozircha qoʻllanmaydi. Faylni yuklab oling.",
+    "noText": "Bu matnsiz skan, shuning uchun qidiruv va daftarlar undan foydalana olmaydi.",
+    "addBookmark": "Joyga xatchoʻp qoʻyish",
+    "removeBookmark": "Xatchoʻpni olib tashlash",
+    "zoom": "Masshtab",
+    "zoomIn": "Kattalashtirish",
+    "zoomOut": "Kichiklashtirish",
+    "pageFit": "Bet oʻlchami",
+    "fitWidth": "Kengligi boʻyicha",
+    "fitPage": "Butun bet",
+    "fontSize": "Matn oʻlchami",
+    "smaller": "Kichikroq",
+    "larger": "Kattaroq",
+    "lineHeight": "Qatorlar oraligʻi",
+    "lineHeights": {
+      "0": "Zich",
+      "1": "Oddiy",
+      "2": "Keng"
+    },
+    "flow": "Koʻrinish",
+    "flowPaginated": "Betlar",
+    "flowScrolled": "Aylantirish",
+    "shortcuts": {
+      "title": "Klaviatura yorliqlari",
+      "next": {
+        "keys": "→  PgDn  Boʻsh joy",
+        "action": "Keyingi bet"
+      },
+      "prev": {
+        "keys": "←  PgUp  Shift+Boʻsh joy",
+        "action": "Oldingi bet"
+      },
+      "search": {
+        "keys": "/",
+        "action": "Material ichidan qidirish"
+      },
+      "goto": {
+        "keys": "G",
+        "action": "Betga oʻtish"
+      },
+      "highlight": {
+        "keys": "H",
+        "action": "Tanlangan matnni belgilash"
+      },
+      "note": {
+        "keys": "N",
+        "action": "Tanlangan matnga izoh qoʻshish"
+      },
+      "bookmark": {
+        "keys": "B",
+        "action": "Xatchoʻp qoʻshish yoki olib tashlash"
+      },
+      "zoom": {
+        "keys": "+  −",
+        "action": "Masshtab (PDF)"
+      },
+      "escape": {
+        "keys": "Esc",
+        "action": "Panelni yopish yoki tanlovni bekor qilish"
+      }
+    }
+  },
+  "annotation": {
+    "selection": "Tanlangan matn",
+    "highlight": "Belgilash",
+    "note": "Izoh qoʻshish",
+    "copy": "Nusxalash",
+    "copied": "Nusxalandi",
+    "copyFailed": "Nusxalab boʻlmadi.",
+    "addToNotebook": "Daftarga qoʻshish",
+    "dismiss": "Tanlash menyusini yopish",
+    "colorLabel": "Rang",
+    "color": {
+      "yellow": "Sariq",
+      "green": "Yashil",
+      "blue": "Koʻk",
+      "pink": "Pushti"
+    },
+    "kind": {
+      "highlight": "Belgi",
+      "note": "Izoh",
+      "bookmark": "Xatchoʻp"
+    },
+    "saved": "Saqlandi.",
+    "selectFirst": "Avval matnni belgilang.",
+    "signIn": "Belgilash va izoh yuritish uchun kiring.",
+    "signInTitle": "Izohlar uchun hisob kerak",
+    "bookmarkAdded": "Xatchoʻp qoʻshildi.",
+    "bookmarkRemoved": "Xatchoʻp olib tashlandi.",
+    "panelTitle": "Izohlar va belgilar",
+    "emptyTitle": "Hozircha izohlar yoʻq",
+    "empty": "Belgilash yoki izoh qoʻshish uchun kitobdagi matnni tanlang.",
+    "goTo": "Oʻtish",
+    "edit": "Tahrirlash",
+    "delete": "Oʻchirish",
+    "deleteTitle": "Bu belgi oʻchirilsinmi?",
+    "deleteHint": "Buni bekor qilib boʻlmaydi.",
+    "retry": "Qayta urinish",
+    "discard": "Bekor qilish",
+    "sync": {
+      "queued": "Tarmoq kutilmoqda",
+      "sending": "Saqlanmoqda…",
+      "failed": "Saqlanmadi"
+    },
+    "page": "{page}-bet",
+    "percent": "kitobning {percent}%",
+    "openNote": "Izohni ochish",
+    "noteDialogTitle": "Izoh qoʻshish",
+    "editDialogTitle": "Izohni tahrirlash",
+    "noteDialogHint": "Izoh shaxsiy. Uni faqat siz koʻrasiz.",
+    "noteLabel": "Izoh",
+    "notePlaceholder": "Bu parcha haqidagi fikrlaringiz",
+    "save": "Saqlash",
+    "cancel": "Bekor qilish"
+  },
+  "offline": {
+    "waiting": "{count, plural, one {# ta oʻzgarish tarmoqni kutmoqda} other {# ta oʻzgarish tarmoqni kutmoqda}}"
+  },
+  "my": {
+    "title": "Mening kutubxonam",
+    "notesHeading": "Mening izohlarim va belgilarim",
+    "tabs": {
+      "continue": "Davom ettirish",
+      "shelf": "Javon",
+      "notes": "Izohlar",
+      "lists": "Roʻyxatlar",
+      "uploads": "Mening yuklamalarim",
+      "suggestions": "Mening takliflarim"
+    },
+    "continue": {
+      "empty": "Hali kitob boshlanmagan.",
+      "action": "Oʻqishni davom ettirish"
+    },
+    "shelf": {
+      "filter": "Javonni holat boʻyicha saralash",
+      "all": "Hammasi",
+      "empty": "Javoningiz boʻsh. Katalogdan kitob qoʻshing.",
+      "emptyFiltered": "Javonda bu holatdagi kitob yoʻq.",
+      "removed": "Endi mavjud emas",
+      "removedHint": "Kutubxonadan olib tashlangan. Javondan olib tashlashingiz mumkin.",
+      "removeEntry": "Javondan olib tashlash"
+    },
+    "lists": {
+      "empty": "Guruhlaringiz uchun hali oʻqish roʻyxatlari yoʻq.",
+      "all": "Barcha oʻqish roʻyxatlari"
+    },
+    "showMore": "Yana koʻrsatish"
+  },
+  "notes": {
+    "title": "Mening izohlarim va belgilarim",
+    "search": "Izohlarim ichidan qidirish",
+    "searchLabel": "Izohlarni qidirish",
+    "color": "Rang boʻyicha saralash",
+    "allColors": "Barcha ranglar",
+    "colors": {
+      "yellow": "Sariq",
+      "green": "Yashil",
+      "blue": "Koʻk",
+      "pink": "Pushti"
+    },
+    "export": "Markdownga eksport",
+    "exportItem": "Shu materialni eksport qilish",
+    "exportName": "Kutubxona izohlari",
+    "exported": "Izohlar eksport qilindi.",
+    "empty": "Izohlar hozircha yoʻq.",
+    "emptyFiltered": "Soʻrovingizga mos izohlar yoʻq.",
+    "count": "{count, plural, one {# ta izoh} other {# ta izoh}}",
+    "open": "Oʻqish oynasida ochish",
+    "unavailable": "Bu material endi mavjud emas",
+    "loadingItem": "Nom yuklanmoqda",
+    "showMore": "Yana koʻrsatish"
+  }
+}
