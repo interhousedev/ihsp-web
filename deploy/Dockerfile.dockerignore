@@ -1,0 +1,11 @@
+# Build context is web/. Dependencies are installed and apps built inside the image.
+**/node_modules
+**/.next
+**/out
+**/*.tsbuildinfo
+.git
+coverage
+playwright-report
+test-results
+.w0-installed
+.w0a-done
