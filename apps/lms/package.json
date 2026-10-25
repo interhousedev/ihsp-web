@@ -1,0 +1,23 @@
+{
+  "name": "@ihsp/lms",
+  "version": "0.0.0",
+  "private": true,
+  "scripts": {
+    "dev": "bun run copy:h5p && next dev -p 3005",
+    "build": "bun run copy:h5p && bun run build:sw && next build",
+    "copy:h5p": "bun scripts/copy-h5p.mjs",
+    "build:sw": "bun build ../../packages/features-core/src/pwa/sw/generic.ts --outfile public/sw.js --target browser --minify",
+    "typecheck": "tsc --noEmit",
+    "test": "bun test --timeout 30000 --preload ../../packages/test-utils/src/preload.ts"
+  },
+  "dependencies": {
+    "@ihsp/api": "workspace:*",
+    "@ihsp/auth": "workspace:*",
+    "@ihsp/config": "workspace:*",
+    "@ihsp/features-core": "workspace:*",
+    "@ihsp/i18n": "workspace:*",
+    "@ihsp/telegram": "workspace:*",
+    "@ihsp/ui": "workspace:*",
+    "h5p-standalone": "3.8.0"
+  }
+}
