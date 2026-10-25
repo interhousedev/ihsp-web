@@ -1,0 +1,27 @@
+{
+  "app": {
+    "name": "library.iht",
+    "description": "Books, textbooks and study materials of the lyceum"
+  },
+  "nav": {
+    "home": "Home",
+    "browse": "Browse",
+    "lists": "Reading lists",
+    "my": "My library",
+    "upload": "Add a material",
+    "groupLibrary": "Library",
+    "groupMine": "For me",
+    "groupManage": "Librarian",
+    "queue": "Review queue",
+    "books": "Books",
+    "topics": "Topics",
+    "subjects": "Subjects",
+    "manageCollections": "Collections",
+    "reports": "Reports",
+    "stats": "Statistics",
+    "unilibrary": "UniLibrary"
+  },
+  "shell": {
+    "signIn": "Sign in"
+  }
+}
