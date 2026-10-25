@@ -1,0 +1,36 @@
+/*
+ * The Stepik look of the learner screens: catalog, course page, "my courses" and the lesson player.
+ * `.lms-stepik` swaps the accent of the app theme for Stepik's green inside those pages only (the editor keeps the
+ * theme); `.lms-chrome` is the dark top bar and course sidebar of the lesson player, dark in light and dark mode.
+ * Plain CSS variables only: Tailwind utilities read them through `bg-primary`, `bg-(--stepik-green)` and so on.
+ */
+
+.lms-stepik {
+  --stepik-green: #66cc66;
+  /* White text on this green passes 4.5:1; the light green above is only used for fills and bars. */
+  --stepik-green-strong: #2a7f3e;
+  --stepik-chrome: #222222;
+  --stepik-sidebar: #2c2c2c;
+  --stepik-chrome-hover: #3b3b3b;
+  --stepik-chrome-muted: #b8b8b8;
+  --primary: var(--stepik-green-strong);
+  --primary-foreground: #ffffff;
+  --ring: var(--stepik-green);
+}
+
+.dark .lms-stepik {
+  --primary: var(--stepik-green);
+  --primary-foreground: #0a2a12;
+}
+
+.lms-chrome {
+  --foreground: #f2f2f2;
+  --muted: rgb(255 255 255 / 0.22);
+  --muted-foreground: var(--stepik-chrome-muted);
+  --accent: var(--stepik-chrome-hover);
+  --accent-foreground: #ffffff;
+  --primary: var(--stepik-green);
+  --primary-foreground: #0a2a12;
+  --border: rgb(255 255 255 / 0.12);
+  color: #f2f2f2;
+}
