@@ -1,0 +1,26 @@
+name: Feature request
+description: Suggest an improvement for one of the web apps.
+labels: [enhancement]
+body:
+  - type: dropdown
+    id: app
+    attributes:
+      label: App
+      options: [id, sp (my.iht), staff, admin, lms, share, library, landing, packages, deploy]
+    validations:
+      required: true
+  - type: textarea
+    id: problem
+    attributes:
+      label: Problem
+      description: Who needs this (student, teacher, admin, librarian, course staff) and why.
+    validations:
+      required: true
+  - type: textarea
+    id: proposal
+    attributes:
+      label: Proposal
+  - type: textarea
+    id: alternatives
+    attributes:
+      label: Alternatives considered

@@ -1,0 +1,7 @@
+# rule<TAB>file — reviewed CodeQL false positives; each is skipped only in this file. Reasons:
+# clear-text-storage: session.ts keeps OIDC state + single-use PKCE verifier in tab-scoped sessionStorage across the redirect.
+# user-controlled-bypass: session.ts acts on the callback `error` only when `state` equals this tab's stored state.
+# xss-through-dom: image-crop-field.tsx sets <img src> only from previewImageSrc() (blob:/data:image/ allowlist).
+js/clear-text-storage-of-sensitive-data	packages/auth/src/session.ts
+js/user-controlled-bypass	packages/auth/src/session.ts
+js/xss-through-dom	apps/lms/src/features/settings/components/image-crop-field.tsx

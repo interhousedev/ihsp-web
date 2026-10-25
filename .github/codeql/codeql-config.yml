@@ -1,0 +1,10 @@
+# CodeQL configuration for code scanning (referenced by .github/workflows/codeql.yml and scripts/security_scan.sh).
+# Each exclusion is a reviewed false positive; the reason is given next to it.
+name: "IHSP web CodeQL config"
+
+# Vendored third-party bundles are not our code: the H5P player is minified upstream code under public/.
+paths-ignore:
+  - "apps/*/public/h5p-player/**"
+
+# Reviewed false positives are listed per file in .github/codeql/reviewed-alerts.tsv (local scan) and are
+# dismissed per alert in GitHub code scanning; no rule is excluded for the whole repository.
