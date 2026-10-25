@@ -1,0 +1,16 @@
+{
+  "name": "@ihsp/landing",
+  "version": "0.0.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev -p 3009",
+    "build": "next build",
+    "typecheck": "tsc --noEmit",
+    "test": "bun test --timeout 30000 --preload ../../packages/test-utils/src/preload.ts"
+  },
+  "dependencies": {
+    "@ihsp/config": "workspace:*",
+    "@ihsp/i18n": "workspace:*",
+    "@ihsp/ui": "workspace:*"
+  }
+}

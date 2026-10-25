@@ -1,0 +1,16 @@
+/* Interhouse brand: the navy of the logo (apps/sp/public/icons/logo.svg, #273D88) and a lighter tint for dark mode. */
+.landing {
+  --brand: #273d88;
+  --brand-strong: #1c2c63;
+  --brand-ink: #ffffff;
+  --brand-text: #273d88;
+  --brand-soft: #eef1fa;
+}
+
+.dark .landing {
+  --brand: #3d56b8;
+  --brand-strong: #4c66cc;
+  --brand-ink: #ffffff;
+  --brand-text: #a9b8f0;
+  --brand-soft: #151d3d;
+}
