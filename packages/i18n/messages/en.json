@@ -1,0 +1,1697 @@
+{
+  "teacherContacts": {
+    "title": "Contacts",
+    "telegram": "Telegram",
+    "phone": "Phone",
+    "email": "Email",
+    "office": "Office / room",
+    "officeHours": "Office hours",
+    "note": "Note",
+    "save": "Save",
+    "saved": "Contacts saved",
+    "saveFailed": "Could not save the contacts",
+    "invalid": "Check the Telegram name, phone and email"
+  },
+  "teacherPhoto": {
+    "label": "Photo",
+    "hint": "JPEG or PNG, up to 5 MB.",
+    "upload": "Upload photo",
+    "replace": "Replace photo",
+    "remove": "Remove photo",
+    "uploading": "Uploading…",
+    "saved": "Photo saved",
+    "removed": "Photo removed",
+    "removeTitle": "Remove the photo?",
+    "removeDescription": "The photo is removed at once. You can upload a new one afterwards.",
+    "wrongType": "Choose a JPEG or PNG image.",
+    "tooLarge": "The photo is larger than 5 MB.",
+    "alt": "Photo of {name}"
+  },
+  "common": {
+    "appName": "IHT",
+    "loading": "Loading…",
+    "retry": "Try again",
+    "cancel": "Cancel",
+    "confirm": "Confirm",
+    "save": "Save",
+    "saving": "Saving…",
+    "saved": "Saved",
+    "delete": "Delete",
+    "edit": "Edit",
+    "add": "Add",
+    "create": "Create",
+    "upload": "Upload",
+    "download": "Download",
+    "refresh": "Refresh",
+    "close": "Close",
+    "back": "Back",
+    "next": "Next",
+    "previous": "Previous",
+    "done": "Done",
+    "search": "Search",
+    "searchPlaceholder": "Search…",
+    "more": "More",
+    "copy": "Copy",
+    "copied": "Copied",
+    "yes": "Yes",
+    "no": "No",
+    "open": "Open",
+    "all": "All",
+    "none": "None",
+    "apply": "Apply",
+    "reset": "Reset",
+    "clear": "Clear",
+    "today": "Today",
+    "offline": "Offline",
+    "skipToContent": "Skip to content",
+    "sourceCodeWeb": "Source code: web",
+    "sourceCodeBackend": "Source code: backend",
+    "openMenu": "Open menu",
+    "language": "Language",
+    "theme": "Theme",
+    "logout": "Log out",
+    "showPassword": "Show password",
+    "hidePassword": "Hide password",
+    "profile": "Profile",
+    "settings": "Settings",
+    "notFoundTitle": "Page not found",
+    "notFoundDescription": "The page you are looking for does not exist or was moved.",
+    "goHome": "Go to the start page",
+    "morePages": "More pages",
+    "previousSlide": "Previous slide",
+    "nextSlide": "Next slide",
+    "withTemporaryMarks": "Including temporary marks not yet in EMIS"
+  },
+  "state": {
+    "loadingTitle": "Loading",
+    "emptyTitle": "Nothing here yet",
+    "emptyDescription": "When there is something to show, it will appear here.",
+    "errorTitle": "Something went wrong",
+    "errorDescription": "We could not load this. Check your connection and try again.",
+    "offlineTitle": "You are offline",
+    "offlineDescription": "Saved data is shown when it is available."
+  },
+  "theme": {
+    "toggle": "Toggle light and dark mode",
+    "light": "Light",
+    "dark": "Dark",
+    "system": "System",
+    "palette": "Color theme"
+  },
+  "locale": {
+    "switcher": "Language",
+    "uz": "Oʻzbekcha",
+    "ru": "Русский",
+    "en": "English"
+  },
+  "nav": {
+    "main": "Main navigation",
+    "bottom": "Quick navigation",
+    "more": "More",
+    "moreTitle": "All sections",
+    "toggleSidebar": "Toggle the sidebar",
+    "back": "Back",
+    "forward": "Forward",
+    "recentPages": "Recent pages"
+  },
+  "table": {
+    "columns": "Columns",
+    "rowsPerPage": "Rows per page",
+    "pageOf": "Page {page} of {pages}",
+    "pageOnly": "Page {page}",
+    "noResults": "No results.",
+    "selectedOf": "{selected} of {total} row(s) selected.",
+    "first": "First page",
+    "last": "Last page",
+    "previous": "Previous page",
+    "next": "Next page",
+    "filter": "Filter",
+    "clearFilters": "Clear filters",
+    "sortAscending": "Sort ascending",
+    "sortDescending": "Sort descending",
+    "hideColumn": "Hide column",
+    "search": "Search…",
+    "total": "{total} row(s) total.",
+    "noColumns": "No columns found.",
+    "searchColumns": "Search columns…",
+    "clearFilter": "Clear {title} filter"
+  },
+  "auth": {
+    "signingIn": "Signing you in…",
+    "redirecting": "Redirecting to the login page…",
+    "callbackFailed": "We could not complete the login.",
+    "tryAgain": "Log in again",
+    "forbiddenTitle": "No access",
+    "forbiddenDescription": "Your account does not have access to this page.",
+    "telegramLoading": "Logging you in with Telegram…",
+    "telegramTitle": "Log in in the bot first",
+    "telegramDescription": "This Telegram account is not linked to an IHT account yet. Open the bot, press Log in and come back.",
+    "telegramOpenBot": "Open @{bot}",
+    "telegramFailed": "We could not log you in with Telegram."
+  },
+  "markdown": {
+    "externalLink": "Opens {url}",
+    "imageBlocked": "Image not shown: {alt}",
+    "spoiler": "Hidden text, press to reveal",
+    "mathError": "Formula error: {message}"
+  },
+  "calendar": {
+    "previousWeek": "Previous week",
+    "nextWeek": "Next week",
+    "thisWeek": "This week",
+    "previousDay": "Previous day",
+    "nextDay": "Next day",
+    "pickDate": "Pick a date",
+    "weekRange": "{start} – {end}"
+  },
+  "qr": {
+    "alt": "QR code"
+  },
+  "semester": {
+    "switcher": "Semester",
+    "label": "Semester {number}"
+  },
+  "command": {
+    "placeholder": "Type a command or search…",
+    "empty": "No results found.",
+    "searching": "Searching…",
+    "navigation": "Go to",
+    "open": "Open search"
+  },
+  "user": {
+    "menu": "Account menu"
+  },
+  "platforms": {
+    "title": "IHT platforms",
+    "current": "(current)",
+    "sp": {
+      "name": "my.iht",
+      "description": "Student portal"
+    },
+    "staff": {
+      "name": "IHT Учителям",
+      "description": "Teacher workspace"
+    },
+    "admin": {
+      "name": "admin.iht",
+      "description": "Administration"
+    },
+    "lms": {
+      "name": "lms.iht",
+      "description": "Courses"
+    },
+    "library": {
+      "name": "library.iht",
+      "description": "Books & materials"
+    },
+    "id": {
+      "name": "IHT ID",
+      "description": "Account & security"
+    }
+  },
+  "errors": {
+    "generic": "Something went wrong. Try again in a moment.",
+    "network": {
+      "unreachable": "No connection to the server. Check your internet and try again."
+    },
+    "common": {
+      "conflict": "Someone changed this at the same time. Reload and try again.",
+      "rate-limited": "Too many requests. Wait a little and try again.",
+      "not-found": "We could not find what you are looking for.",
+      "forbidden": "You do not have permission to do this.",
+      "validation": "Some of the entered data is not valid.",
+      "gone": "This is no longer available."
+    },
+    "auth": {
+      "challenge-used": "This login link was already used. Starting again.",
+      "invalid-credentials": "Wrong login or password.",
+      "locked": "Too many attempts. The account is locked for a while.",
+      "otp-invalid": "The code is wrong or expired.",
+      "role-missing": "Your account has no access to this app.",
+      "second-factor-required": "A one-time code is required.",
+      "unauthorized": "Please log in again.",
+      "challenge-invalid": "This sign-in request is not valid. Start again from the app."
+    },
+    "emis": {
+      "auth-failed": "EMIS did not accept this login and password.",
+      "unavailable": "EMIS is not available right now. Try again later.",
+      "credentials-missing": "No working EMIS login is stored for this account. Sign in again to link EMIS."
+    },
+    "id": {
+      "admin-reset-forbidden": "Only an administrator can reset this account.",
+      "emis-already-linked": "This EMIS account is already linked to another IHT account.",
+      "user-not-found": "No user with this login was found.",
+      "wrong-institution": "This EMIS account belongs to another institution.",
+      "registration-expired": "This session has expired. Please start again.",
+      "email-in-use": "This email address is already used by another account.",
+      "email-not-set": "Enter your email address and request a code first.",
+      "code-invalid": "The code is wrong or has expired. Request a new code.",
+      "import-match-unconfirmed": "Please confirm that this record is yours.",
+      "password-weak": "The password does not meet the requirements.",
+      "reclaim-forbidden": "This account cannot be reclaimed. Contact Administration.",
+      "no-emis-link": "Your account is not linked to EMIS.",
+      "emis-profile-mismatch": "These EMIS credentials belong to a different EMIS account.",
+      "wrong-password": "The password is wrong.",
+      "delete-forbidden": "This account cannot be deleted here. Contact Administration.",
+      "admin-server-forbidden": "Only verified clients can connect to the Administration server.",
+      "password-policy": "The password does not meet the requirements.",
+      "email-taken": "This email already belongs to another account.",
+      "email-locked": "The email of an activated account cannot be changed here.",
+      "otp-no-channel": "There is no channel to send a code to. Link Telegram or confirm your email.",
+      "self-action-forbidden": "You cannot do this to your own account.",
+      "invalid-status": "The account status does not allow this action.",
+      "activation-invalid": "This link has expired or was already used. Ask Administration for a new one.",
+      "connector-invalid": "The connector settings are not valid.",
+      "unknown-client": "Unknown application.",
+      "hydra-unavailable": "The sign-in service is not responding. Try again later.",
+      "email-unavailable": "The email could not be sent. Try again later.",
+      "login-taken": "This login is already taken.",
+      "login-invalid": "A login has 3 to 100 characters: lowercase Latin letters, digits and dots.",
+      "photo-too-large": "The photo is larger than 5 MB.",
+      "photo-type-not-allowed": "Only JPEG or PNG photos are accepted.",
+      "photo-empty": "The photo file is empty."
+    },
+    "telegram": {
+      "linked-elsewhere": "This Telegram account is already linked to another user."
+    },
+    "attendance": {
+      "window-closed": "The time to change this attendance list has passed.",
+      "lesson-cancelled": "This lesson was cancelled, so attendance cannot be taken.",
+      "lesson-reassigned": "This lesson was reassigned to another teacher.",
+      "absent-outside-roster": "Some students are not in this lesson's audience.",
+      "excuse-not-absent": "Only an absent student can be excused."
+    },
+    "files": {
+      "quota-exceeded": "Your file storage is full. Delete some files and try again.",
+      "too-large": "The file is too large.",
+      "type-not-allowed": "This type of file is not allowed.",
+      "upload-missing": "The upload did not finish. Try again.",
+      "invalid-name": "The file name is empty or longer than {max_length} characters.",
+      "invalid-checksum": "The file checksum is not valid.",
+      "invalid-size": "The file is empty or its size is not valid.",
+      "not-found": "File not found.",
+      "deleted": "This file was deleted.",
+      "not-ready": "The file is not ready yet.",
+      "no-text": "This file has no readable text.",
+      "page-not-found": "This page of the file does not exist.",
+      "upload-failed": "The upload failed. Check your connection and try again."
+    },
+    "ai": {
+      "limit-reached": "You reached the assistant limit. It resets later.",
+      "access-revoked": "The school administration has restricted your access to the AI features. If you think this is a mistake, contact the administration.",
+      "provider-error": "The assistant is not available right now. Try again later.",
+      "chat-not-found": "Chat not found.",
+      "tool-call-not-found": "This assistant action was not found.",
+      "tool-call-not-pending": "This assistant action was already decided.",
+      "tool-call-expired": "This assistant action expired.",
+      "turn-in-progress": "The assistant is still answering in this chat.",
+      "wrong-assistant": "You cannot use this assistant.",
+      "attachment-invalid": "An attached file is missing or not ready.",
+      "tool-arguments": "The assistant sent invalid arguments to a tool.",
+      "tool-failed": "The assistant tool could not complete the request."
+    },
+    "library": {
+      "not-found": "This item is not available.",
+      "not-supported": "This action is not available for UniLibrary books.",
+      "rights-incomplete": "Fill in the rights information before publishing.",
+      "visibility-conflict": "This book cannot be public with this rights class.",
+      "text-unavailable": "This item is a scan without text.",
+      "list-too-long": "A reading list can have at most 100 entries.",
+      "own-item": "You uploaded this. Another librarian must approve it.",
+      "not-editable": "This item cannot be edited in its current state.",
+      "file-too-large": "The file is too large.",
+      "too-many-pages": "The file has too many pages.",
+      "duplicate": "This file is already in the library.",
+      "rate-limited": "Too many uploads or reports. Try again later.",
+      "banned": "You cannot upload to the library right now.",
+      "external-disabled": "UniLibrary is not available.",
+      "external-unavailable": "UniLibrary is not responding. Try again later."
+    },
+    "links": {
+      "blocked-url": "This address cannot be shortened.",
+      "invalid-target": "Provide either a web address or a file, as the link type requires.",
+      "file-not-ready": "The file is not ready or is not yours.",
+      "invalid-expiry": "The expiry date must be in the future.",
+      "lesson-mismatch": "Other lessons must be the same subject on the same day.",
+      "not-found": "Link not found.",
+      "gone": "This link was removed.",
+      "disabled": "This link was disabled by Administration.",
+      "share-not-allowed": "You cannot share this item.",
+      "resource-forbidden": "You cannot add or change resources of this lesson.",
+      "lesson-window-closed": "Attachments can be added from 7 days after a lesson back to 14 days ahead.",
+      "slug-exhausted": "Could not create a short link right now. Try again."
+    },
+    "lms": {
+      "draft-changed": "The draft changed while you were working. Reload it first.",
+      "no-attempts-left": "You have no attempts left for this test.",
+      "attempt-cooldown": "The pause between attempts is not over yet.",
+      "attempt-closed": "This attempt is already closed.",
+      "not-enrolled": "You are not enrolled in this course.",
+      "invite-not-valid": "Invite not valid. Check the code or ask for a new one.",
+      "course-not-found": "Course not found.",
+      "step-not-found": "Step not found.",
+      "block-not-found": "This block does not exist in the step.",
+      "card-not-found": "This flash card no longer exists.",
+      "attempt-not-found": "Attempt not found.",
+      "permission-denied": "You do not have the \"{permission}\" permission in this course.",
+      "attempt-not-submitted": "This attempt has no result yet.",
+      "attempt-start-conflict": "The attempt could not be started. Try again.",
+      "answer-invalid": "The answer to question {question_id} is not valid.",
+      "score-invalid": "The score must be between 0 and {max_score}.",
+      "attempt-preview": "Preview attempts cannot be reviewed.",
+      "revision-not-found": "This saved state of the step was not found.",
+      "version-not-found": "Version not found.",
+      "staff-not-found": "This person is not on the course staff.",
+      "slug-taken": "A course with the address \"{slug}\" already exists.",
+      "staff-exists": "This person is already on the course staff.",
+      "last-manager": "The course must keep at least one person who can manage staff.",
+      "slug-invalid": "The course address may contain only lowercase Latin letters, digits and hyphens (3 to 60 characters).",
+      "title-invalid": "The title must have 1 to {max_length} characters.",
+      "staff-invalid": "The role or the permissions are not valid.",
+      "outline-invalid": "This change does not fit the current outline of the course.",
+      "content-invalid": "The step content is not valid.",
+      "file-missing": "The step refers to a file that does not exist.",
+      "nothing-to-publish": "There are no changes to publish.",
+      "no-live-version": "There is no published version to go back to.",
+      "invite-not-applicable": "Only invite-only courses have an invite code."
+    },
+    "notify": {
+      "not-found": "Notification not found."
+    },
+    "flashcards": {
+      "set-not-found": "Flash card set not found.",
+      "card-not-found": "Card not found.",
+      "invalid-cards": "Each side of a card needs 1 to {max_chars} characters, and a set holds at most {max_cards} cards.",
+      "invalid-set": "The field \"{field}\" must be between {min} and {max}.",
+      "share-not-found": "This link does not lead to a flash card set."
+    },
+    "mail": {
+      "not-found": "Email not found.",
+      "purged": "The full email was deleted after 30 days.",
+      "mailbox-unavailable": "You do not have an active mailbox.",
+      "suspended": "Sending from your mailbox is suspended. You can still receive email.",
+      "daily-limit": "Limit of {limit} emails per day reached. Try again tomorrow.",
+      "global-limit": "The system sending limit for today is reached. Try again tomorrow.",
+      "invalid-recipient": "\"{address}\" is not a valid email address.",
+      "no-recipients": "Add at least one recipient.",
+      "too-many-recipients": "An email can have at most {limit} recipients.",
+      "too-large": "The email is too large to send. The limit is 25 MB.",
+      "not-inbound": "Only received emails can be marked as spam.",
+      "outbound-disabled": "Sending email from the platform is switched off.",
+      "outbound-failed": "The email could not be sent. Try again later.",
+      "attachment-not-found": "The attached file was not found in your files."
+    },
+    "admin": {
+      "broadcast-not-found": "Broadcast not found.",
+      "broadcast-not-editable": "Only drafts and scheduled broadcasts can be edited.",
+      "broadcast-not-sendable": "Only drafts and scheduled broadcasts can be sent.",
+      "broadcast-not-cancellable": "Only scheduled broadcasts can be cancelled.",
+      "broadcast-empty-audience": "The audience has no recipients.",
+      "broadcast-text-too-long": "The text is too long for one Telegram message ({length} of {limit} characters).",
+      "broadcast-no-telegram": "Link a Telegram account to receive the preview.",
+      "broadcast-time-invalid": "The scheduled time must include a time zone."
+    },
+    "academic": {
+      "invalid-date-range": "The date range is reversed or longer than three months.",
+      "term-not-found": "Term not found.",
+      "term-overlap": "The dates overlap another term.",
+      "term-duplicate": "A term with this academic year and half already exists.",
+      "term-dates-invalid": "A term must start before it ends.",
+      "term-bells-invalid": "The bell schedule is invalid: each period may appear once per weekday and must end after it starts.",
+      "term-non-study-day-invalid": "A non-study day must fall inside the term.",
+      "term-moved-day-invalid": "A moved day must follow a weekday from Monday to Friday, and Saturday is never a study day.",
+      "term-control-periods-invalid": "A control week is invalid: it must start on or before its end, lie inside the term and come after the previous control.",
+      "no-term-for-date": "No term contains this date.",
+      "no-bell": "The term has no bell for period {period} on this day.",
+      "group-not-found": "Group not found.",
+      "group-name-invalid": "Enter a group name.",
+      "group-name-taken": "An active group named {name} already exists.",
+      "group-emis-id-taken": "Another group is already linked to this EMIS group.",
+      "curriculum-no-emis-student": "No student of this group has a working EMIS login yet.",
+      "curator-not-teacher": "The curator must be a teacher.",
+      "head-student-invalid": "The head student must be an active student of this group.",
+      "not-group-curator": "Only the curator of this group or Administration can do this.",
+      "subgroup-assignment-invalid": "Every student must be an active student of this group, and the subgroup must be 1 or 2.",
+      "student-not-found": "Student record not found",
+      "subject-not-found": "This subject is not in your curriculum",
+      "subject-emis-id-taken": "Another subject is already linked to this EMIS subject.",
+      "subject-name-invalid": "Enter the subject name in at least one language.",
+      "room-not-found": "Room not found.",
+      "room-name-invalid": "Enter a room name.",
+      "room-slug-taken": "Another room already uses the address {slug}.",
+      "room-in-use": "Future lessons still use this room.",
+      "room-merge-invalid": "A room cannot be merged into itself or into an archived room.",
+      "entry-not-found": "Timetable entry not found.",
+      "entry-invalid": "The timetable entry is not valid.",
+      "entry-not-school-day": "Lessons are held Monday to Friday, so a Saturday slot cannot be added.",
+      "lesson-not-found": "This lesson was not found.",
+      "import-invalid": "The file cannot be read as a student list.",
+      "import-expired": "The import preview has expired. Upload the file again.",
+      "sync-running": "An EMIS sync is already running",
+      "journal-not-found": "This journal is not available to you.",
+      "not-lesson-teacher": "Only the lesson's teacher or Administration can do this.",
+      "not-curator": "You are not the curator of this group.",
+      "topic-too-long": "A topic can have up to {max} characters.",
+      "assessment-not-found": "This exam was not found.",
+      "not-assessment-teacher": "Only a teacher of this subject in this group or Administration can do this.",
+      "not-head-student": "Only the head student of the group can suggest an exam date.",
+      "assessment-subject-not-found": "This subject was not found.",
+      "invalid-assessment": "The exam is not valid. Check the group, the subject and the date.",
+      "assessment-exists": "This group already has an exam of this subject, kind and date."
+    },
+    "homework": {
+      "not-found": "This lesson has no homework.",
+      "lesson-cancelled": "Homework cannot be added to a cancelled lesson.",
+      "text-invalid": "Homework must be 1 to {max} characters.",
+      "note-too-long": "A note can have up to {max} characters."
+    },
+    "mcp": {
+      "unauthenticated": "Not authenticated. Send a valid connector token or OAuth access token for this MCP server.",
+      "insufficient-scope": "insufficient_scope: the scope \"{scope}\" is not granted to this connector.",
+      "rate-limited": "Too many calls. Try again in {retry_after} seconds.",
+      "course-not-allowed": "This connector is limited to other courses.",
+      "tool-not-allowed": "The tool \"{tool}\" is not available on this read-only server.",
+      "file-not-accessible": "The file does not exist, is not ready yet or is not available to you.",
+      "not-owner": "This flash card set belongs to another user.",
+      "not-found": "Not found, or not visible to you.",
+      "invalid-input": "Invalid input: {reason}.",
+      "range-too-long": "The date range is too long. Use at most {max_days} days.",
+      "file-no-text": "This file has no text to read.",
+      "file-too-large": "The text of this file is larger than the limit of {max_bytes} bytes."
+    },
+    "calendar": {
+      "feed-not-found": "This calendar link is invalid or was replaced by a new one."
+    },
+    "composition": {
+      "student-not-found": "This user is not a student.",
+      "teacher-not-found": "This user is not a teacher."
+    },
+    "bot": {
+      "file-too-large": "This file is larger than 20 MB, so the bot cannot take it. Upload it in the staff portal."
+    },
+    "web-search": {
+      "disabled": "Web search is turned off.",
+      "quota-exceeded": "No web searches left today.",
+      "unavailable": "Web search is not available right now."
+    },
+    "notebooks": {
+      "default-material-exists": "This material is already a default material of the subject.",
+      "default-material-invalid": "This file, link or book cannot be a default material. Check it and try again.",
+      "default-material-limit": "The subject already has the maximum number of default materials.",
+      "default-material-not-found": "This default material was not found."
+    },
+    "certificate_type_builtin": "This type is built in and cannot be deleted.",
+    "certificate_type_in_use": "This type has certificates and cannot be deleted.",
+    "knowledge_key_taken": "This key is already used by another entry.",
+    "knowledge_entry_not_found": "The entry was not found.",
+    "knowledge_invalid": "A field of the entry is not valid.",
+    "work-off": {
+      "template-not-found": "This work-off template does not exist.",
+      "not-found": "This work-off task does not exist.",
+      "template-limit": "You can have up to 20 work-off templates.",
+      "text-invalid": "The work-off text must be 1 to 2000 characters.",
+      "text-required": "Choose a template or write the work-off text.",
+      "not-absent": "A work-off task can only go to an absent student.",
+      "status-invalid": "The status must be assigned or done."
+    },
+    "temporary-mark": {
+      "not-found": "This temporary mark was not found.",
+      "student-not-in-lesson": "This student is not in the lesson.",
+      "value-invalid": "A temporary mark must be from 2 to 5.",
+      "comment-invalid": "A comment can have up to 500 characters."
+    }
+  },
+  "notifications": {
+    "title": "Notifications",
+    "filters": {
+      "all": "All",
+      "activity": "Activity",
+      "announcements": "Announcements"
+    },
+    "markAllRead": "Mark all as read",
+    "empty": "No notifications yet.",
+    "loadMore": "Show more",
+    "unread": "Unread",
+    "bell": "Notifications",
+    "bellWithCount": "Notifications, {count} unread",
+    "viewAll": "View all notifications",
+    "markRead": "Mark as read"
+  },
+  "notificationSettings": {
+    "saving": "Saving…",
+    "saved": "Saved",
+    "marks": {
+      "title": "New marks",
+      "enabled": "Notify me about new marks",
+      "enabledHint": "Sent after each EMIS sync.",
+      "types": "Mark types",
+      "values": "Mark values",
+      "subjects": "Subjects",
+      "allSubjects": "All subjects are included.",
+      "someSubjects": "Only the ticked subjects are included.",
+      "type": {
+        "lesson": "Lesson",
+        "midterm": "Midterm (PC)",
+        "final": "Final (FC)"
+      }
+    },
+    "alerts": {
+      "title": "Alerts",
+      "drops": "GPA and semester mark drops",
+      "dropsHint": "A message when your GPA or a semester mark goes down.",
+      "gpaBelow": "GPA below",
+      "semesterMarkBelow": "Semester mark below",
+      "markBelow": "A mark below"
+    },
+    "lessons": {
+      "title": "Lessons",
+      "linksLead": "Send lesson links before the lesson",
+      "minutes": "min",
+      "prompt": "End-of-lesson prompt",
+      "promptHint": "Attendance and homework prompt 5 minutes before the lesson ends."
+    },
+    "mail": {
+      "title": "Mail",
+      "forward": "Forward new mail to Telegram",
+      "forwardHint": "Messages to your IHT mailbox arrive in the bot."
+    },
+    "push": {
+      "title": "Push notifications",
+      "label": "Push notifications on this device",
+      "checking": "Checking this device…",
+      "off": "Get your notifications on this device even when the app is closed. The switches above choose which ones.",
+      "on": "This device gets your notifications, as Telegram does. The switches above choose which ones.",
+      "unsupported": "This browser cannot show push notifications.",
+      "noWorker": "Open the installed IHT app to turn push notifications on for this device.",
+      "iosInstall": "On iPhone and iPad, add IHT to the Home Screen first, then open it from there to turn push notifications on.",
+      "denied": "Notifications are blocked for this site. Allow them in the browser or phone settings, then come back.",
+      "unavailable": "Push notifications are not switched on on the server yet.",
+      "failed": "Could not change push notifications on this device. Try again."
+    },
+    "prompt": {
+      "title": "Turn on notifications?",
+      "body": "Get new marks, homework, timetable changes and messages on this phone right away, even when the app is closed.",
+      "allow": "Allow",
+      "notNow": "Not now",
+      "installTitle": "Notifications need the app",
+      "installBody": "On iPhone and iPad, notifications only work in the installed app. Tap Share, then “Add to Home Screen”, and open IHT from the Home Screen.",
+      "ok": "Got it"
+    }
+  },
+  "assistant": {
+    "documents": {
+      "download": "Download .{format}",
+      "downloadFailed": "Could not download the file.",
+      "attach": "Attach to lesson",
+      "noLessons": "No lessons today to attach to.",
+      "attached": "Attached to the lesson.",
+      "attachFailed": "Could not attach the file.",
+      "share": "Share",
+      "shareCopied": "Link copied: {url}",
+      "shareCreated": "Link created: {url}",
+      "shareFailed": "Could not create a link."
+    },
+    "page": {
+      "title": "Assistant"
+    },
+    "list": {
+      "title": "Chats",
+      "new": "New chat",
+      "empty": "No chats yet. Start your first one.",
+      "pending": "{count, plural, one {# action waiting} other {# actions waiting}}",
+      "rename": "Rename chat {title}",
+      "delete": "Delete chat {title}",
+      "deleteTitle": "Delete this chat?",
+      "deleteDescription": "“{title}” and its public links will be removed.",
+      "deleteConfirm": "Delete chat",
+      "deleteFailed": "Could not delete the chat.",
+      "createFailed": "Could not start a new chat."
+    },
+    "chat": {
+      "back": "Back to chats",
+      "share": "Share",
+      "sharedBanner": "This chat is shared publicly. Anyone with the link can read it.",
+      "messages": "Messages",
+      "emptyChat": "Ask a question to start. I can look up your timetable, homework, marks and files.",
+      "thinking": "The assistant is working…",
+      "limitReachedTurn": "The assistant stopped because a usage limit was reached.",
+      "selectChat": "Choose a chat from the list or start a new one."
+    },
+    "message": {
+      "you": "You",
+      "assistant": "Assistant",
+      "like": "Good answer",
+      "dislike": "Bad answer",
+      "regenerate": "Regenerate",
+      "copy": "Copy",
+      "copied": "Copied",
+      "more": "More",
+      "showMore": "Show more",
+      "showLess": "Show less",
+      "scrollDown": "Scroll to the latest message",
+      "thinking": "Thinking…",
+      "actions": "Answer actions",
+      "addChat": "Add chat to notebook",
+      "shareChat": "Share chat",
+      "feedbackFailed": "Could not send your feedback.",
+      "sendWithoutWeb": "Send without web search"
+    },
+    "composer": {
+      "label": "Message",
+      "placeholder": "Write a message…",
+      "disabledPlaceholder": "Input is off until the limit resets",
+      "send": "Send",
+      "upload": "Upload a file",
+      "pickFiles": "Choose from My files",
+      "attached": "Attached files",
+      "limitAccess": "AI access is restricted for your account.",
+      "limitSession": "Session limit reached, available again at {time}",
+      "limitDay": "Daily limit reached, resets at {time}",
+      "plus": "Add",
+      "myFiles": "From My files",
+      "notebook": "Ask a notebook",
+      "guided": "Guided learning",
+      "tier": {
+        "fast": "Fast",
+        "smart": "Smart",
+        "smartLeft": "Smart: {left} of {limit} left this week",
+        "smartNoneLeft": "Smart: none left, resets {date}",
+        "label": "Answer mode"
+      },
+      "guidedHint": "Guided learning: explain step by step, ask me questions and check my understanding before giving the full answer.",
+      "guidedOff": "Turn off guided learning",
+      "stop": "Stop",
+      "offline": "You are offline",
+      "noNotebooks": "No notebooks yet",
+      "tools": "Tools",
+      "web": "Web search",
+      "webLeft": "{count} left",
+      "webQuota": "{remaining} of {limit} web searches left today",
+      "webNone": "No web searches left today. Resets at {time}.",
+      "webOff": "Turn off web search",
+      "webBadge": "Web",
+      "studyTools": {
+        "label": "Study tools"
+      }
+    },
+    "attach": {
+      "title": "Attach files",
+      "empty": "You have no ready files yet.",
+      "notReadable": "too large or not readable for the assistant",
+      "attached": "already attached",
+      "cancel": "Cancel",
+      "confirm": "{count, plural, =0 {Attach} one {Attach # file} other {Attach # files}}"
+    },
+    "files": {
+      "unnamed": "File",
+      "openFailed": "Could not open the file.",
+      "remove": "Remove {name}"
+    },
+    "approval": {
+      "approve": "Approve",
+      "reject": "Reject",
+      "sendRejection": "Send rejection",
+      "cancel": "Cancel",
+      "reasonLabel": "Reason (optional)",
+      "reasonPlaceholder": "Why not? For example: make the cards shorter",
+      "reasonShown": "Reason: {reason}",
+      "sensitive": "Check this",
+      "expiresAt": "Waiting for you until {time}",
+      "items": "{count, plural, one {# item} other {# items}}",
+      "status": {
+        "pending": "Waiting for approval",
+        "running": "Running…",
+        "done": "Done",
+        "failed": "Failed",
+        "rejected": "Rejected",
+        "expired": "Expired",
+        "superseded": "Replaced by your new message"
+      }
+    },
+    "usage": {
+      "title": "Assistant usage",
+      "session": "Session (5 hours)",
+      "day": "Today",
+      "resetsAt": "Resets at {time}"
+    },
+    "share": {
+      "titleChat": "Share this chat",
+      "titleSet": "Share this set",
+      "warning": "The assistant’s answers may contain personal data such as marks and absences.",
+      "includeFuture": "Include future messages",
+      "snapshotHint": "Snapshot: messages up to now. The choice cannot be changed later.",
+      "liveHint": "Live: new messages also appear in the shared chat. The choice cannot be changed later.",
+      "expiryLabel": "Expires on (optional)",
+      "create": "Create link",
+      "created": "Link created.",
+      "createdCopied": "Link created and copied.",
+      "existing": "Existing links",
+      "noLinks": "No links yet.",
+      "modeSnapshot": "Snapshot",
+      "modeLive": "Live",
+      "hits": "{count, plural, one {# view} other {# views}}",
+      "expires": "expires {date}",
+      "copy": "Copy",
+      "revoke": "Revoke",
+      "revokeTitle": "Revoke this link?",
+      "revokeDescription": "People who open it will see “This link was removed”.",
+      "revoked": "Link revoked."
+    },
+    "rename": {
+      "title": "Rename chat",
+      "label": "Title",
+      "save": "Save",
+      "cancel": "Cancel"
+    },
+    "sidebar": {
+      "newChat": "New chat",
+      "search": "Search chats",
+      "notebooks": "Notebooks",
+      "newNotebook": "New notebook",
+      "folders": {
+        "subject": "Subject notebooks",
+        "course": "Course notebooks",
+        "mine": "My notebooks"
+      },
+      "showAllFolder": "Show all ({count})",
+      "allNotebooks": "All notebooks",
+      "recent": "Recent",
+      "showMore": "Show more",
+      "collapse": "Collapse the sidebar",
+      "open": "Open the sidebar",
+      "empty": "No chats yet. Ask your first question.",
+      "chatMenu": "Options for {title}",
+      "usageRing": "Assistant usage, {percent}% used"
+    },
+    "search": {
+      "placeholder": "Search chats and notebooks",
+      "none": "Nothing found"
+    },
+    "home": {
+      "greeting1": "Hello, {name}",
+      "greeting2": "What shall we study today, {name}?",
+      "greeting3": "Ready when you are, {name}",
+      "greeting4": "How can I help, {name}?",
+      "placeholder": "Ask the assistant",
+      "chips": "Suggestions"
+    },
+    "disclaimer": "The assistant is AI and can make mistakes. Check important information.",
+    "addToNotebook": {
+      "title": "Add to notebook",
+      "choose": "Choose a notebook",
+      "new": "New notebook",
+      "added": "Added to “{name}”",
+      "already": "Already in this notebook",
+      "open": "Open notebook",
+      "itemLabel": "Add {title} to a notebook"
+    },
+    "workspace": {
+      "sidebar": "Chats and notebooks",
+      "history": "Chat history"
+    },
+    "menu": {
+      "rename": "Rename",
+      "delete": "Delete"
+    },
+    "pane": {
+      "title": "Chat title",
+      "options": "Chat options"
+    },
+    "web": {
+      "sources": "Sources · {count}",
+      "chip": "Web source {n}: {title}",
+      "fromDb": "From IHT",
+      "open": "Open page",
+      "list": "Web pages used for this answer",
+      "more": "{site} and {count} more",
+      "copySources": "Sources:"
+    },
+    "slash": {
+      "menu": "Commands",
+      "empty": "No such command",
+      "remove": "Remove command /{name}",
+      "goal": {
+        "title": "Goal",
+        "hint": "Set what this chat is for",
+        "args": "Describe your goal"
+      },
+      "cards": {
+        "title": "Flash cards",
+        "hint": "Make flash cards on a topic or file",
+        "args": "Topic or file"
+      },
+      "quiz": {
+        "title": "Quiz",
+        "hint": "Quiz me with an answer key",
+        "args": "Topic or file"
+      },
+      "summary": {
+        "title": "Conspect",
+        "hint": "Structured study notes",
+        "args": "Topic or file"
+      },
+      "mindmap": {
+        "title": "Mind map",
+        "hint": "A branching outline of a topic",
+        "args": "Topic"
+      },
+      "slides": {
+        "title": "Slides",
+        "hint": "Plan a slide deck",
+        "args": "Topic"
+      },
+      "report": {
+        "title": "Report",
+        "hint": "A short written report",
+        "args": "Topic"
+      },
+      "table": {
+        "title": "Table",
+        "hint": "Compare facts in a table",
+        "args": "Subject"
+      },
+      "explain": {
+        "title": "Explain",
+        "hint": "Explain simply, step by step",
+        "args": "What to explain"
+      },
+      "translate": {
+        "title": "Translate",
+        "hint": "Translate a text",
+        "args": "Language and text"
+      },
+      "help": {
+        "title": "Help",
+        "hint": "What the commands do",
+        "args": "Anything to add"
+      }
+    },
+    "steps": {
+      "summary": "{count, plural, one {# step} other {# steps}}",
+      "toggle": "Show the steps of this answer",
+      "list": "Steps of this answer",
+      "readFile": "Reviewed uploaded “{target}”",
+      "webSearch": "Searched the web",
+      "retrieve": "Searched the sources",
+      "openView": "Opened {target}",
+      "create": "Created {target}",
+      "think": "Checked the answer",
+      "tool": {
+        "get_schedule": "Opened the schedule",
+        "get_marks": "Looked at the marks",
+        "get_homework": "Looked at the homework",
+        "get_attendance": "Looked at the attendance",
+        "get_my_subjects": "Looked at the subjects",
+        "list_files": "Looked through the files",
+        "search_files": "Searched the files",
+        "list_notebooks": "Looked through the notebooks",
+        "make_document": "Made a document",
+        "create_artifact": "Started a Studio output"
+      },
+      "running": {
+        "readFile": "Reading “{target}”…",
+        "webSearch": "Searching the web…",
+        "retrieve": "Searching the sources…",
+        "openView": "Opening {target}…",
+        "create": "Creating {target}…",
+        "think": "Checking the answer…"
+      },
+      "failed": "Failed",
+      "target": "Item"
+    }
+  },
+  "files": {
+    "upload": {
+      "button": "Upload files",
+      "progress": "Uploading {name}",
+      "percent": "{percent}%",
+      "checking": "Checking…",
+      "rejected": "Rejected: {reason}",
+      "dismiss": "Dismiss",
+      "dropHere": "Drop the files here",
+      "dragHint": "Drag and drop files here, or click to select",
+      "limit": "Up to {size} per file",
+      "remove": "Remove file",
+      "tooMany": "{count, plural, one {Only one file can be uploaded at a time} other {Up to {count} files can be uploaded}}"
+    },
+    "reasons": {
+      "unknown": "the file did not pass the check",
+      "type_mismatch": "the content does not match the file type",
+      "infected": "a virus or malware was found",
+      "too_large": "the file is too large",
+      "empty": "the file is empty"
+    },
+    "picker": {
+      "search": "Search files by name",
+      "type": "File type",
+      "allTypes": "All types",
+      "types": {
+        "pdf": "PDF",
+        "doc": "Documents",
+        "sheet": "Spreadsheets",
+        "slides": "Slides",
+        "text": "Text",
+        "image": "Images"
+      },
+      "sort": "Order",
+      "recent": "Recent first",
+      "older": "Older first",
+      "empty": "No files found.",
+      "pagination": "File pages",
+      "previous": "Previous",
+      "next": "Next",
+      "page": "Page {page}"
+    },
+    "drive": {
+      "title": "My files",
+      "search": "Search by name",
+      "type": "File type",
+      "types": {
+        "all": "All types",
+        "documents": "Documents",
+        "images": "Images",
+        "video": "Video",
+        "presentations": "Presentations",
+        "spreadsheets": "Spreadsheets",
+        "pdf": "PDF"
+      },
+      "sort": "Order",
+      "recent": "Recent first",
+      "older": "Older first",
+      "view": "View",
+      "grid": "Grid",
+      "list": "List",
+      "upload": "Upload",
+      "drop": "Drop files to upload",
+      "uploading": "{count, plural, one {Uploading # file…} other {Uploading # files…}}",
+      "rejected": "{name} was not accepted.",
+      "empty": "No files found.",
+      "files": "Files",
+      "loadMore": "Load more",
+      "preview": "Preview",
+      "noPreview": "Click a file to preview it.",
+      "selected": "{count, plural, =0 {Nothing selected} one {# selected} other {# selected}}",
+      "cancel": "Cancel",
+      "confirm": "Select",
+      "size": "Size",
+      "kind": "Type",
+      "added": "Added"
+    }
+  },
+  "lessonDetail": {
+    "header": {
+      "period": "Period {number}",
+      "audience": "Audience",
+      "room": "Room",
+      "noRoom": "Not set",
+      "cancelled": "Cancelled",
+      "changed": "Changed",
+      "fields": {
+        "room": "Room",
+        "teacher": "Teacher",
+        "subject": "Subject",
+        "date": "Date",
+        "period": "Period"
+      },
+      "teacherNeeded": "Teacher needed"
+    },
+    "topic": {
+      "title": "Lesson topic",
+      "placeholder": "What was taught",
+      "save": "Save topic",
+      "saved": "Topic saved"
+    },
+    "materials": {
+      "title": "Materials",
+      "empty": "No materials yet. Add a file or a link for the students.",
+      "delete": "Delete",
+      "deleteTitle": "Delete this material?",
+      "deleteDescription": "{title} will disappear from the lesson for everyone.",
+      "deleted": "Material deleted"
+    },
+    "attachments": {
+      "title": "Student attachments",
+      "description": "Files and links the students added. Hide the ones that do not belong.",
+      "empty": "No attachments.",
+      "delete": "Delete",
+      "deleteTitle": "Delete this attachment?",
+      "deleteDescription": "{title} will be removed from the lesson.",
+      "deleted": "Attachment deleted",
+      "hiddenDone": "Attachment hidden from the students",
+      "shown": "Attachment is visible again"
+    },
+    "resources": {
+      "open": "Open",
+      "openItem": "Open {title}",
+      "hide": "Hide",
+      "hideItem": "Hide {title}",
+      "show": "Show",
+      "showItem": "Show {title}",
+      "hidden": "Hidden",
+      "deleteItem": "Delete {title}"
+    },
+    "add": {
+      "button": "Add material",
+      "title": "Add to the lesson",
+      "kind": "Add as",
+      "role": {
+        "material": "Material",
+        "attachment": "Attachment"
+      },
+      "alsoAdd": "Also add to",
+      "period": "period {number}",
+      "tabs": {
+        "file": "File",
+        "link": "Link",
+        "notebook": "From notebook"
+      },
+      "notebook": {
+        "label": "Notebook",
+        "pick": "Pick a notebook",
+        "none": "No ready reports, tables or slides in this notebook.",
+        "noNotebooks": "No notebooks yet."
+      },
+      "upload": "Choose a file",
+      "url": "Link address",
+      "addLink": "Add link",
+      "added": "Added to the lesson"
+    },
+    "homework": {
+      "title": "Homework",
+      "text": "Homework text",
+      "placeholder": "What the students should do",
+      "dueDate": "Due date",
+      "pickDate": "Pick a date",
+      "useAutomatic": "Use the automatic date",
+      "autoHint": "The due date is set to the next lesson of this subject when you save.",
+      "autoDate": "Automatic: the next lesson, {date}.",
+      "manualDate": "You chose this date.",
+      "noNextLesson": "There is no next lesson of this subject. Pick a due date.",
+      "add": "Add homework",
+      "saveChanges": "Save changes",
+      "saved": "Homework saved",
+      "delete": "Delete homework",
+      "deleteTitle": "Delete the homework?",
+      "deleteDescription": "It disappears from the students' to-do lists.",
+      "deleted": "Homework deleted"
+    },
+    "attendance": {
+      "title": "Attendance",
+      "present": "Present",
+      "absent": "Absent",
+      "excused": "Excused",
+      "everyonePresent": "Everyone present",
+      "hint": "Everyone starts as present. Mark who was late or absent.",
+      "notTaken": "Attendance was not taken for this lesson.",
+      "submittedAt": "Submitted {time}.",
+      "submittedBy": "Submitted {time} by {name}.",
+      "submit": "Submit attendance",
+      "saveChanges": "Save changes",
+      "saving": "Saving…",
+      "saved": "Attendance saved",
+      "noStudents": "No students in this lesson.",
+      "windowClosed": "The 7-day window has passed, so this list is read-only. Ask Administration to correct it.",
+      "cancelled": "This lesson was cancelled. Attendance is not taken.",
+      "stale": "The list was changed elsewhere. Your marks are kept.",
+      "showCurrent": "Show the current list",
+      "unassigned": {
+        "title": "Students without a subgroup",
+        "hint": "They are counted only if you mark them.",
+        "markFor": "Mark {name}",
+        "notCounted": "{count, plural, one {# student not counted} other {# students not counted}}"
+      },
+      "conflict": {
+        "title": "The list was changed",
+        "description": "Someone else saved the attendance of this lesson while you were editing.",
+        "descriptionBy": "{name} saved the attendance on {time}.",
+        "currentList": "Absent now",
+        "noAbsences": "Nobody is absent.",
+        "review": "Show the current list",
+        "keepMine": "Keep my marks"
+      },
+      "absentCount": "{count} absent",
+      "lateCount": "{count, plural, one {# late} other {# late}}",
+      "presentCount": "{count} present",
+      "late": "Late",
+      "saveWithout": "Save without work-off tasks",
+      "saveCommon": "Save and give one common task to all absent"
+    },
+    "audience": {
+      "subgroup": "{group} · subgroup {number}"
+    },
+    "workOff": {
+      "title": "Work-off task",
+      "titleFor": "Work-off task: {name}",
+      "commonTitle": "Work-off task for all absent students",
+      "editTitle": "Edit work-off task",
+      "template": "Template",
+      "extraText": "Extra text",
+      "text": "Task",
+      "dueDate": "Due date",
+      "noDate": "No due date",
+      "clearDate": "Clear the due date",
+      "add": "Add work-off task",
+      "editFor": "Edit the work-off task of {name}",
+      "none": "No work-off task",
+      "label": "Work-off: {text}",
+      "due": "Due {date}",
+      "done": "Done",
+      "markDone": "Mark done",
+      "reopen": "Reopen",
+      "deleteFor": "Delete the work-off task of {name}",
+      "deleteTitle": "Delete this work-off task?",
+      "saved": "Work-off task saved",
+      "deleted": "Work-off task deleted"
+    }
+  },
+  "flashcards": {
+    "heatmap": {
+      "title": "Review heatmap",
+      "previousYear": "Previous year",
+      "nextYear": "Next year",
+      "thisYear": "Back to this year",
+      "summary": "Reviews in {year}: {count, plural, one {# review} other {# reviews}} on {days, plural, one {# day} other {# days}}",
+      "cell": "{count, plural, one {# review} other {# reviews}} on {date}",
+      "noReviews": "No reviews on {date}",
+      "cards": "{count, plural, one {# card} other {# cards}}",
+      "days": "{count, plural, one {# day} other {# days}}",
+      "dailyAverage": "Daily average",
+      "daysLearned": "Days learned",
+      "longestStreak": "Longest streak",
+      "currentStreak": "Current streak"
+    },
+    "deckList": {
+      "deck": "Deck",
+      "new": "New",
+      "learn": "Learn",
+      "due": "Due",
+      "options": "Options",
+      "editCards": "Edit cards",
+      "delete": "Delete",
+      "deckOptions": "Options for {title}",
+      "empty": "No decks yet. Create one, import a file, or ask the assistant to make cards from your notes.",
+      "studiedToday": "Studied {count, plural, one {# card} other {# cards}} in {seconds, plural, one {# second} other {# seconds}} today ({perCard}s/card)",
+      "studiedNothing": "No cards studied today yet.",
+      "getShared": "Get shared",
+      "createDeck": "Create deck",
+      "importFile": "Import file",
+      "source": {
+        "ai": "Assistant",
+        "mcp": "via MCP",
+        "copied": "Copied"
+      }
+    },
+    "getShared": {
+      "title": "Get a shared deck",
+      "label": "Share link or code",
+      "invalid": "This is not a share link.",
+      "cancel": "Cancel",
+      "copy": "Copy to my decks"
+    },
+    "overview": {
+      "cardCount": "{count, plural, one {# card} other {# cards}}",
+      "countsLabel": "Cards to study today",
+      "new": "New",
+      "learning": "Learning",
+      "toReview": "To review",
+      "studyNow": "Study now",
+      "finished": "Congratulations! You have finished this deck for now.",
+      "noCards": "This deck has no cards yet. Press Edit cards to add some.",
+      "options": "Options",
+      "editCards": "Edit cards",
+      "description": "Description",
+      "share": "Share"
+    },
+    "study": {
+      "title": "Study",
+      "counts": "New {new}, learning {learning}, to review {review}",
+      "edit": "Edit",
+      "limits": "Limits",
+      "showAnswer": "Show answer",
+      "rate": "How well did you know it?",
+      "rating": {
+        "again": "Again",
+        "hard": "Hard",
+        "medium": "Good",
+        "easy": "Easy"
+      },
+      "done": {
+        "title": "Congratulations! You have finished this deck for now.",
+        "reviewed": "{count, plural, one {You answered # card.} other {You answered # cards.}}",
+        "back": "Back to the deck"
+      }
+    },
+    "editor": {
+      "createTitle": "Create a new flashcard set",
+      "editTitle": "Edit cards",
+      "titleLabel": "Title",
+      "descriptionLabel": "Add a description…",
+      "import": "Import",
+      "preview": "Show Markdown preview",
+      "hint": "Both sides support Markdown. Cards you do not change keep their progress. Paste lines of term, tab, definition to add many cards at once.",
+      "cards": "Cards",
+      "addCard": "Add a card",
+      "term": "Term",
+      "definition": "Definition",
+      "enterTerm": "Enter term",
+      "enterDefinition": "Enter definition",
+      "cardN": "Card {n}",
+      "reorder": "Reorder card {n}. Drag it, or press Alt and an arrow key.",
+      "remove": "Delete card {n}",
+      "incomplete": "Fill in both sides or delete this card.",
+      "create": "Create",
+      "createAndPractice": "Create and practice",
+      "save": "Save",
+      "saveAndPractice": "Save and practice",
+      "saving": "Saving…",
+      "cancel": "Cancel",
+      "unsaved": "Unsaved changes",
+      "moved": "Card {n} moved to position {to} of {count}.",
+      "dragInstructions": "To pick up a card, press Space. Use the arrow keys to move it and Space to drop it. Press Escape to cancel.",
+      "dragStart": "Picked up card {n}.",
+      "dragOver": "Card is over position {n}.",
+      "dragEnd": "Card dropped at position {n}.",
+      "dragCancel": "Moving cancelled.",
+      "problems": {
+        "titleRequired": "Enter a title.",
+        "titleTooLong": "The title is too long.",
+        "descriptionTooLong": "The description is too long.",
+        "cardsRequired": "Add at least one card.",
+        "tooMany": "A set has at most 500 cards."
+      }
+    },
+    "import": {
+      "title": "Import cards",
+      "textLabel": "Cards to import",
+      "placeholder": "Term\tDefinition",
+      "separator": "Between term and definition",
+      "separators": {
+        "tab": "Tab",
+        "comma": "Comma",
+        "semicolon": "Semicolon"
+      },
+      "chooseFile": "Choose a file",
+      "found": "{count, plural, one {# card found.} other {# cards found.}}",
+      "skipped": "{count, plural, one {# line was skipped.} other {# lines were skipped.}}",
+      "cancel": "Cancel",
+      "confirm": "{count, plural, one {Import # card} other {Import # cards}}"
+    }
+  },
+  "pwa": {
+    "update": {
+      "available": "Update available",
+      "description": "A new version of IHT is ready.",
+      "reload": "Reload",
+      "forced": {
+        "title": "Updating IHT",
+        "text": "This takes a few seconds."
+      }
+    },
+    "menu": {
+      "install": "Install the app",
+      "iosHint": "Tap the Share button in Safari, then Add to Home Screen.",
+      "manualHint": "Open the browser menu and choose Install app or Add to Home screen."
+    },
+    "request": {
+      "title": "Install this app on your device?",
+      "install": "Install"
+    },
+    "lock": {
+      "title": "IHT is locked",
+      "prompt": "Enter your PIN",
+      "wrong": "Wrong PIN. {count, plural, one {# attempt} other {# attempts}} left.",
+      "lockedOut": "Too many wrong attempts. Signing you out…",
+      "signOutFailed": "Could not sign you out. Check your connection: the app stays locked and tries again when you are online.",
+      "retry": "Try again",
+      "forgot": "Forgot PIN?",
+      "forgotTitle": "Forgot your PIN?",
+      "forgotText": "You will be signed out on this device and the PIN will be removed. You can sign in again with your password.",
+      "forgotConfirm": "Sign out",
+      "delete": "Delete the last digit",
+      "digits": "PIN, {filled} of {total} digits entered",
+      "settings": {
+        "title": "App lock",
+        "description": "Ask for a PIN when the app is opened, and again after it was in the background for the time you choose.",
+        "off": "App lock is off.",
+        "on": "App lock is on.",
+        "set": "Set a PIN",
+        "change": "Change PIN",
+        "remove": "Turn off",
+        "current": "Current PIN",
+        "new": "New PIN (4 to 6 digits)",
+        "repeat": "Repeat the new PIN",
+        "save": "Save",
+        "cancel": "Cancel",
+        "errors": {
+          "length": "The PIN must be 4 to 6 digits.",
+          "mismatch": "The PINs do not match.",
+          "wrong": "Wrong PIN.",
+          "storage": "The PIN could not be saved on this device."
+        },
+        "done": {
+          "set": "App lock is on.",
+          "change": "PIN changed.",
+          "remove": "App lock is off."
+        },
+        "relock": {
+          "title": "Ask for the PIN again",
+          "hint": "How long the app may stay in the background before it asks for the PIN. It always asks when the app starts.",
+          "options": {
+            "immediately": "Immediately",
+            "1m": "After 1 minute",
+            "5m": "After 5 minutes",
+            "15m": "After 15 minutes",
+            "1h": "After 1 hour",
+            "never": "Only when the app starts"
+          }
+        }
+      }
+    }
+  },
+  "paletteSearch": {
+    "sections": {
+      "subjects": "Subjects",
+      "lessons": "Lessons",
+      "homework": "Homework",
+      "files": "Files",
+      "flashcardSets": "Flash card sets",
+      "notebooks": "Notebooks",
+      "marks": "Marks",
+      "libraryItems": "Library"
+    }
+  },
+  "composeMail": {
+    "open": "Write an email",
+    "title": "New email",
+    "description": "The email is sent from the platform. Replies go to the address you give in the text.",
+    "to": "To",
+    "toPlaceholder": "name@example.org, another@example.org",
+    "subject": "Subject",
+    "body": "Message",
+    "attachment": "Attachment",
+    "attach": "Attach a file from My files",
+    "removeAttachment": "Remove attachment",
+    "chooseFile": "Choose a file",
+    "send": "Send",
+    "sending": "Sending…",
+    "cancel": "Cancel",
+    "sent": "Email sent",
+    "failed": "The email was not sent.",
+    "recipientsHelp": "Separate addresses with commas."
+  },
+  "mailPage": {
+    "title": "Email",
+    "compose": "New email",
+    "sent": "Sent",
+    "empty": "You have not sent any emails yet.",
+    "loadMore": "Show more"
+  },
+  "curriculum": {
+    "title": "Curriculum",
+    "empty": "The curriculum of your group has not been loaded yet.",
+    "updated": "Updated {date}",
+    "speciality": "Speciality",
+    "direction": "Direction",
+    "eduForm": "Form of study",
+    "language": "Language of instruction",
+    "ratingScale": "Rating scale",
+    "scale": {
+      "range": "{min, number}–{max, number}",
+      "from": "from {min, number}",
+      "to": "up to {max, number}"
+    },
+    "semesters": "Semesters",
+    "semester": "Semester {number}",
+    "current": "Current",
+    "period": "{from} – {to}",
+    "exams": "Exams",
+    "vocational": "Vocational subjects",
+    "studyHours": "Study hours",
+    "hours": "{count, number} h",
+    "noSubjects": "No subjects in this semester.",
+    "types": {
+      "general": "General education",
+      "inDepth": "In-depth",
+      "vocational": "Vocational",
+      "unified": "Unified"
+    },
+    "table": {
+      "subject": "Subject",
+      "type": "Type",
+      "hours": "Total hours",
+      "classHours": "Class hours",
+      "independentHours": "Independent hours",
+      "separated": "Separated",
+      "yes": "Yes",
+      "no": "No"
+    }
+  },
+  "groupProgress": {
+    "title": "Marks & attendance",
+    "myGroup": "My group",
+    "student": "Student",
+    "gpa": "GPA",
+    "absences": "Absences",
+    "semesterMark": "Semester mark",
+    "midterm": "Midterm (PC)",
+    "final": "Final (FC)",
+    "lessonAvg": "Lesson average",
+    "subject": "Subject",
+    "empty": "No students in this group.",
+    "noData": "No data",
+    "attendance": "{absences} of {lessons} ({rate})",
+    "close": "Close",
+    "notAllowed": "Only the head student of the group can see this page.",
+    "subjects": "Subjects",
+    "shortMidterm": "PC",
+    "shortFinal": "FC",
+    "error": "Could not load the group marks."
+  },
+  "certificates": {
+    "title": "Certificates",
+    "staffTitle": "Certificates",
+    "typesTitle": "Certificate types",
+    "empty": "No certificates of this type yet.",
+    "noTypes": "No certificate types.",
+    "loadError": "Could not load certificates.",
+    "add": "Add",
+    "edit": "Edit",
+    "editEntry": "Edit {type}",
+    "addEntry": "Add {type}",
+    "save": "Save",
+    "cancel": "Cancel",
+    "saved": "Saved",
+    "removed": "Removed",
+    "level": "Level",
+    "chooseLevel": "Choose a level",
+    "score": "Score",
+    "scoreRange": "{min} to {max}",
+    "percent": "Percent",
+    "subject": "Subject",
+    "year": "Year",
+    "serial": "Serial number",
+    "sourceEmis": "From EMIS",
+    "sourceManual": "Added by you",
+    "files": "Files",
+    "addFiles": "Add files",
+    "fileHint": "PNG, JPG, PDF or DOCX",
+    "uploading": "Uploading…",
+    "uploaded": "Files uploaded",
+    "download": "Download",
+    "noFiles": "No files",
+    "deleteFile": "Delete file {name}",
+    "deleteFileTitle": "Delete this file?",
+    "deleteFileText": "{name} will be removed.",
+    "deleteEntry": "Delete entry",
+    "deleteEntryTitle": "Delete this certificate?",
+    "deleteEntryText": "The entry and its files will be removed.",
+    "delete": "Delete",
+    "importEmis": "Load National Certificate and CEFR from EMIS",
+    "importing": "Loading…",
+    "importResult": "Created {created}, updated {updated}, files {files}, skipped {skipped}.",
+    "errors": {
+      "tooBig": "The file is too big or your storage is full.",
+      "badType": "Only PNG, JPG, PDF and DOCX files are allowed."
+    },
+    "filters": {
+      "group": "Group",
+      "subgroup": "Subgroup",
+      "type": "Type",
+      "subject": "Subject",
+      "level": "Level",
+      "student": "Student",
+      "allGroups": "All groups",
+      "allSubgroups": "All subgroups",
+      "allTypes": "All types",
+      "allLevels": "All levels",
+      "reset": "Reset filters",
+      "min": "Min",
+      "max": "Max",
+      "otherValues": "Other values",
+      "customHint": "Custom fields of this type"
+    },
+    "table": {
+      "student": "Student",
+      "group": "Group",
+      "type": "Certificate",
+      "result": "Result",
+      "year": "Year",
+      "files": "Files",
+      "select": "Select {name}",
+      "selectAll": "Select all on this page",
+      "empty": "No certificates match the filters.",
+      "total": "{count} in total",
+      "previous": "Previous",
+      "next": "Next",
+      "fileCount": "{count} file(s)"
+    },
+    "downloadZip": "Download ZIP",
+    "downloadZipSelected": "Download ZIP ({count})",
+    "zipFailed": "Could not build the archive.",
+    "stats": {
+      "title": "Statistics",
+      "empty": "Nothing to show for these filters.",
+      "count": "Certificates"
+    },
+    "ranking": {
+      "title": "Most certificates",
+      "empty": "No students yet.",
+      "count": "{count}"
+    },
+    "forbidden": "Certificates are available to curators of a group and to administrators.",
+    "types": {
+      "add": "Add type",
+      "edit": "Edit type {name}",
+      "delete": "Delete type {name}",
+      "builtinTooltip": "Built-in types cannot be deleted",
+      "deleteTitle": "Delete type {name}?",
+      "deleteText": "Types that have entries cannot be deleted.",
+      "created": "Type created",
+      "updated": "Type saved",
+      "deleted": "Type deleted",
+      "code": "Code",
+      "nameUz": "Name (Uzbek)",
+      "nameRu": "Name (Russian)",
+      "nameEn": "Name (English)",
+      "levels": "Levels",
+      "levelsHint": "Separate with commas, e.g. A1, A2, B1",
+      "scoreMin": "Minimum score",
+      "scoreMax": "Maximum score",
+      "position": "Order",
+      "asksLevel": "Ask for a level",
+      "asksScore": "Ask for a score",
+      "asksPercent": "Ask for a percent",
+      "asksSubject": "Ask for a subject",
+      "asksYear": "Ask for a year",
+      "builtin": "Built-in",
+      "columns": {
+        "name": "Name",
+        "code": "Code",
+        "asks": "Fields",
+        "actions": "Actions"
+      },
+      "empty": "No types.",
+      "cancel": "Cancel",
+      "save": "Save",
+      "confirmDelete": "Delete",
+      "customFields": "Custom fields",
+      "addField": "Add field",
+      "fieldKey": "Key",
+      "fieldKind": "Kind",
+      "fieldLabelUz": "Label (uz)",
+      "fieldLabelRu": "Label (ru)",
+      "fieldLabelEn": "Label (en)",
+      "fieldOptions": "Options",
+      "fieldDone": "Done",
+      "fieldPanelAdd": "New field",
+      "editField": "Edit field {name}",
+      "deleteField": "Delete field {name}",
+      "moveUp": "Move {name} up",
+      "moveDown": "Move {name} down",
+      "fieldOptionsEmpty": "No options yet.",
+      "optionPlaceholder": "Type an option and press Enter",
+      "addOption": "Add option",
+      "removeOption": "Remove {option}",
+      "requiredBadge": "Required",
+      "fieldAllowOther": "Allow other (free text)",
+      "fieldRequired": "Required",
+      "kindText": "Text",
+      "kindNumber": "Number",
+      "kindSingle": "Single choice",
+      "kindMulti": "Multiple choice",
+      "fieldsEmpty": "No custom fields yet."
+    },
+    "customOther": "Other"
+  },
+  "feedback": {
+    "menu": {
+      "suggest": "Suggest an idea or report a problem",
+      "mine": "My feedback"
+    },
+    "dialog": {
+      "title": "Suggest an idea or report a problem",
+      "kind": "Type",
+      "area": "Section",
+      "titleField": "Title",
+      "description": "Details",
+      "attachments": "Screenshots or files",
+      "attachmentsHint": "Up to 10 images. Drop them here or choose files.",
+      "chooseFiles": "Choose files",
+      "dropHere": "Drop to add",
+      "remove": "Remove",
+      "cancel": "Cancel",
+      "submit": "Send",
+      "sending": "Sending…",
+      "sent": "Thank you. We received your message.",
+      "close": "Close",
+      "tooMany": "You can attach up to 10 files.",
+      "notImage": "Only images can be attached.",
+      "rateLimited": "You have sent too many messages. Try again later.",
+      "uploading": "Uploading {percent}%",
+      "uploadFailed": "The file did not upload.",
+      "uploadRejected": "The file was rejected."
+    },
+    "kind": {
+      "idea": "Idea",
+      "bug": "Problem",
+      "other": "Other"
+    },
+    "area": {
+      "id": "IHT ID",
+      "my": "my.iht",
+      "staff": "IHT Teachers",
+      "admin": "Administration",
+      "lms": "LMS",
+      "library": "Library",
+      "share": "Shared links",
+      "bot": "Telegram bot",
+      "ai": "AI assistant",
+      "notebooks": "Notebooks",
+      "mail": "Mail",
+      "other": "Other"
+    },
+    "status": {
+      "new": "New",
+      "in_review": "In review",
+      "planned": "Planned",
+      "done": "Done",
+      "rejected": "Declined"
+    },
+    "page": {
+      "title": "My feedback",
+      "empty": "You have not sent any feedback yet.",
+      "showResponses": "Show responses",
+      "hideResponses": "Hide responses",
+      "noResponses": "No response yet.",
+      "responses": "Responses",
+      "sentAt": "Sent {date}",
+      "openFile": "Open file",
+      "responseBy": "{name}, {date}"
+    }
+  },
+  "openui": {
+    "error": "Could not show this block",
+    "loading": "Preparing the block",
+    "chart": "Chart"
+  }
+}
