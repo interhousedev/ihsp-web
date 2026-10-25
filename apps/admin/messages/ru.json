@@ -1,0 +1,2054 @@
+{
+  "app": {
+    "name": "admin.iht"
+  },
+  "nav": {
+    "main": "Основное",
+    "home": "Главная",
+    "groupHome": "Главная",
+    "groupPeople": "Люди",
+    "groupAcademics": "Учёба",
+    "groupReports": "Отчёты",
+    "groupCommunication": "Коммуникация",
+    "groupTools": "Инструменты",
+    "dashboard": "Сводка",
+    "students": "Студенты",
+    "teachers": "Преподаватели",
+    "users": "Пользователи и роли",
+    "groups": "Группы",
+    "subjects": "Предметы",
+    "rooms": "Кабинеты",
+    "terms": "Семестры и звонки",
+    "timetable": "Расписание",
+    "lessons": "Уроки",
+    "exams": "Экзамены",
+    "attendance": "Посещаемость",
+    "monitoring": "Мониторинг",
+    "logs": "Логи",
+    "broadcasts": "Рассылки",
+    "moderation": "Модерация",
+    "callForImprovements": "Призыв к улучшениям",
+    "assistant": "Ассистент",
+    "reports": "Отчёты",
+    "settings": "Настройки",
+    "limits": "Лимиты и расходы",
+    "certificateTypes": "Типы сертификатов",
+    "certificates": "Сертификаты",
+    "knowledge": "База знаний",
+    "workOffs": "Отработки",
+    "loginCues": "Логины для регистрации",
+    "botPosts": "Посты бота"
+  },
+  "shared": {
+    "filters": "Фильтры",
+    "exportCsv": "Экспорт в CSV",
+    "noLessons": "Уроков нет.",
+    "cancelled": "Отменён",
+    "changed": "Изменён",
+    "teacherNeeded": "Нужен преподаватель",
+    "audience": {
+      "legend": "Кому",
+      "noGroups": "Групп пока нет.",
+      "whole": "Вся группа",
+      "subgroup": "Подгруппа {number}"
+    },
+    "controls": {
+      "midterm_1": "Промежуточный контроль 1",
+      "midterm_2": "Промежуточный контроль 2",
+      "final": "Итоговый контроль (ИК)"
+    },
+    "selection": {
+      "region": "Выбранные строки",
+      "count": "{count, plural, one {Выбрано #} few {Выбрано #} many {Выбрано #} other {Выбрано #}}",
+      "clear": "Снять выбор",
+      "selectAll": "Выбрать все строки на этой странице",
+      "selectRow": "Выбрать {name}",
+      "exportSelected": "Экспорт выбранных",
+      "blockSelected": "Заблокировать выбранных",
+      "blockSelectedTitle": "Заблокировать {count, plural, one {# пользователя} few {# пользователей} many {# пользователей} other {# пользователей}}?",
+      "blockSelectedDone": "{count, plural, one {Заблокирован # пользователь} few {Заблокировано # пользователя} many {Заблокировано # пользователей} other {Заблокировано # пользователей}}",
+      "confirmSelected": "Подтвердить выбранные",
+      "confirmSelectedDone": "{count, plural, one {Подтверждена # дата} few {Подтверждено # даты} many {Подтверждено # дат} other {Подтверждено # дат}}"
+    },
+    "sortedNote": "Сортировка упорядочивает уже загруженные строки."
+  },
+  "status": {
+    "active": "Активен",
+    "blocked": "Заблокирован",
+    "disabled": "Отключён",
+    "left": "Выбыл",
+    "archived": "В архиве",
+    "cancelled": "Отменён",
+    "failed": "Ошибка",
+    "needs_reauth": "Нужен вход в EMIS",
+    "pending_activation": "Не активирован",
+    "deactivated": "Деактивирован",
+    "draft": "Черновик",
+    "scheduled": "Запланирована",
+    "sending": "Отправляется",
+    "sent": "Отправлена",
+    "partial": "Частично",
+    "success": "Успешно",
+    "running": "Выполняется",
+    "stopped": "Остановлено",
+    "paused": "Приостановлено",
+    "queued": "В очереди",
+    "stopping": "Останавливается",
+    "done": "Готово"
+  },
+  "account": {
+    "noTelegram": "Аккаунты Telegram не привязаны.",
+    "linkedAt": "Привязан {date}",
+    "otpDelivery": "Получает коды",
+    "botBlocked": "Заблокировал бота",
+    "noSessions": "Активных сессий нет.",
+    "unknownDevice": "Неизвестное устройство",
+    "currentSession": "Текущая",
+    "lastSeen": "последняя активность {date}",
+    "noAudit": "Событий аудита нет.",
+    "auditEvents": {
+      "loginSuccess": "Вход в систему",
+      "loginFailed": "Неудачная попытка входа",
+      "logout": "Выход из системы",
+      "passwordChanged": "Пароль изменён",
+      "passwordReset": "Пароль сброшен",
+      "passwordResetByAdmin": "Пароль сброшен администратором",
+      "otpEnabled": "Двухэтапный вход включён",
+      "otpDisabled": "Двухэтапный вход выключен",
+      "otpResetRequested": "Запрошен сброс двухэтапного входа",
+      "otpResetCancelled": "Сброс двухэтапного входа отменён",
+      "otpResetApplied": "Сброс двухэтапного входа применён",
+      "otpResetByAdmin": "Сброс двухэтапного входа администратором",
+      "emailChanged": "Почта изменена",
+      "telegramLinked": "Telegram привязан",
+      "telegramUnlinked": "Telegram отвязан",
+      "sessionRevoked": "Сессия завершена",
+      "sessionsRevoked": "Сессии завершены",
+      "connectorCreated": "Подключение создано",
+      "connectorRevoked": "Подключение отозвано",
+      "roleGranted": "Роль выдана",
+      "roleRevoked": "Роль снята",
+      "userCreated": "Аккаунт создан",
+      "userRegistered": "Аккаунт зарегистрирован",
+      "userUpdated": "Аккаунт изменён",
+      "userBlocked": "Аккаунт заблокирован",
+      "userUnblocked": "Аккаунт разблокирован",
+      "userActivated": "Аккаунт активирован",
+      "userDeactivated": "Аккаунт деактивирован",
+      "userDeleted": "Аккаунт удалён",
+      "userPurged": "Аккаунт окончательно удалён",
+      "accountDeleted": "Аккаунт удалён владельцем",
+      "accountReclaimed": "Аккаунт восстановлен",
+      "studentViewed": "Открыт профиль студента",
+      "mailSuspended": "Отправка почты приостановлена",
+      "mailResumed": "Отправка почты возобновлена",
+      "oauthClientVerified": "OAuth-клиент проверен",
+      "emisPasswordUpdated": "Пароль EMIS обновлён"
+    },
+    "reason": "Причина",
+    "revokeSessions": "Завершить сессии",
+    "revokeTitle": "Завершить все сессии {name}?",
+    "revokeDescription": "Пользователь выйдет отовсюду и должен будет войти снова.",
+    "sessionsRevoked": "Сессии завершены",
+    "block": "Заблокировать",
+    "blockTitle": "Заблокировать {name}?",
+    "blockDescription": "Сессии, токены и коннекторы перестанут работать. Укажите причину.",
+    "blocked": "{name} заблокирован",
+    "unblock": "Разблокировать",
+    "unblocked": "{name} разблокирован"
+  },
+  "dashboard": {
+    "title": "Сводка",
+    "lessonsToday": "Уроков сегодня",
+    "cancelledToday": "Отменено сегодня",
+    "teacherNeeded": "Уроки без преподавателя",
+    "needsReauth": "Студентов, которым нужен новый пароль EMIS",
+    "missingTitle": "Посещаемость не отмечена",
+    "missingNone": "Посещаемость отмечена во всех недавних уроках.",
+    "missingCount": "Уроков: {count}",
+    "openMissing": "Открыть список",
+    "syncTitle": "Синхронизация с EMIS",
+    "syncLastRun": "Последний запуск",
+    "syncStatus": "Статус",
+    "syncNever": "Синхронизация ещё не запускалась.",
+    "syncNeedsReauth": "Нужен новый пароль EMIS: {count}",
+    "openMonitoring": "Открыть мониторинг",
+    "broadcastsTitle": "Запланированные рассылки",
+    "broadcastsNone": "Запланированных рассылок нет.",
+    "openBroadcasts": "Открыть рассылки"
+  },
+  "students": {
+    "title": "Студенты",
+    "empty": "По этим фильтрам студентов нет.",
+    "importAction": "Импорт из CSV",
+    "notSelected": "Выберите студента в списке.",
+    "subgroup": "Подгруппа {number}",
+    "filters": {
+      "query": "Поиск",
+      "queryPlaceholder": "Имя или логин",
+      "group": "Группа",
+      "allGroups": "Все группы",
+      "subgroup": "Подгруппа",
+      "allSubgroups": "Любая подгруппа",
+      "status": "Статус",
+      "allStatuses": "Любой статус",
+      "emisStatus": "Статус EMIS",
+      "allEmis": "Любой статус EMIS",
+      "registered": "Регистрация",
+      "allRegistered": "С регистрацией и без"
+    },
+    "status": {
+      "active": "Учится",
+      "left": "Выбыл"
+    },
+    "emis": {
+      "active": "Работает",
+      "needs_reauth": "Нужен вход в EMIS"
+    },
+    "registered": {
+      "yes": "Зарегистрирован",
+      "no": "Не зарегистрирован"
+    },
+    "columns": {
+      "name": "Имя",
+      "login": "Логин",
+      "group": "Группа",
+      "subgroup": "Подгруппа",
+      "status": "Статус",
+      "emis": "EMIS",
+      "registered": "Регистрация",
+      "synced": "Последняя синхронизация"
+    },
+    "tabs": {
+      "overview": "Обзор",
+      "timetable": "Расписание",
+      "grades": "Оценки",
+      "attendance": "Посещаемость",
+      "account": "Аккаунт"
+    },
+    "overview": {
+      "login": "Логин",
+      "mailbox": "Почтовый ящик",
+      "group": "Группа",
+      "subgroup": "Подгруппа",
+      "semester": "Семестр",
+      "curator": "Куратор",
+      "headStudent": "Староста",
+      "status": "Статус",
+      "emis": "Статус EMIS",
+      "synced": "Последняя синхронизация",
+      "roles": "Роли",
+      "syncButton": "Синхронизировать с EMIS (оценки, учителя, занятия)",
+      "syncTitle": "Синхронизация с EMIS",
+      "syncHint": "Заново загрузит из EMIS подгруппу, занятия расписания, учителей и оценки ученика.",
+      "syncConfirmTitle": "Синхронизировать ученика с EMIS?",
+      "syncConfirmDescription": "Подгруппа, занятия расписания, учителя и оценки будут загружены из EMIS заново. Синхронизация идёт в фоне и может занять несколько минут.",
+      "syncConfirmAction": "Запустить синхронизацию",
+      "syncQueued": "Синхронизация с EMIS запущена",
+      "syncNever": "Ещё не синхронизировано",
+      "syncAttempts": "Попытка {n} из {max}",
+      "syncLastError": "Последняя ошибка",
+      "syncFinished": "Завершено",
+      "syncStatus": {
+        "pending": "В очереди",
+        "running": "Выполняется",
+        "succeeded": "Выполнено",
+        "failed": "Ошибка"
+      }
+    },
+    "grades": {
+      "semester": "Семестр {semester}",
+      "gpa": "GPA {gpa} из 5",
+      "synced": "синхронизировано {date}",
+      "empty": "Оценок пока нет.",
+      "subject": "Предмет",
+      "lesson": "Уроки",
+      "midterm": "Промежуточный контроль (ПК)",
+      "final": "Итоговый контроль (ИК)",
+      "semesterMark": "Семестровая оценка",
+      "emisRating": "Рейтинг EMIS",
+      "count": "Оценок"
+    },
+    "attendance": {
+      "period": "{from} – {to}",
+      "notTaken": "Уроков без отметки посещаемости: {count}",
+      "empty": "За этот период данных нет.",
+      "subject": "Предмет",
+      "lessons": "Уроков",
+      "absences": "Пропусков",
+      "excused": "По уважительной причине",
+      "rate": "Доля пропусков",
+      "missed": "Пропущенные уроки",
+      "noMissed": "Пропущенных уроков нет.",
+      "excusedBadge": "Уважительная причина"
+    },
+    "account": {
+      "telegram": "Аккаунты Telegram",
+      "sessions": "Сессии",
+      "audit": "События аудита"
+    },
+    "import": {
+      "title": "Импорт студентов",
+      "back": "Студенты",
+      "file": "Файл CSV",
+      "uploadPreview": "Показать предпросмотр",
+      "new": "Новые студенты",
+      "changed": "Изменения",
+      "conflicts": "Конфликты",
+      "noRows": "Строк нет.",
+      "line": "строка {line}",
+      "unchanged": "Строк без изменений: {count}",
+      "conflictsHint": "Конфликтных строк: {count}. Они пропущены. Исправьте в файле и загрузите снова.",
+      "confirm": "Импортировать строк: {count}",
+      "discard": "Отменить",
+      "done": "Импорт завершён",
+      "result": "Создано {created}, обновлено {updated}, пропущено {skipped}."
+    }
+  },
+  "teachers": {
+    "title": "Преподаватели",
+    "new": "Новый преподаватель",
+    "empty": "По этим фильтрам преподавателей нет.",
+    "notSelected": "Выберите преподавателя в списке.",
+    "filters": {
+      "query": "Поиск",
+      "queryPlaceholder": "Имя или логин",
+      "status": "Статус",
+      "allStatuses": "Любой статус"
+    },
+    "status": {
+      "active": "Активен",
+      "pending_activation": "Не активирован",
+      "deactivated": "Деактивирован",
+      "blocked": "Заблокирован"
+    },
+    "columns": {
+      "name": "Имя",
+      "login": "Логин",
+      "status": "Статус",
+      "email": "Почта",
+      "lastLogin": "Последний вход"
+    },
+    "create": {
+      "title": "Новый преподаватель",
+      "back": "Преподаватели",
+      "lastName": "Фамилия",
+      "firstName": "Имя",
+      "middleName": "Отчество",
+      "email": "Почта",
+      "duplicate": "Преподаватель с таким именем уже есть. Создавайте ещё один, только если это другой человек.",
+      "create": "Создать аккаунт",
+      "createAnyway": "Всё равно создать",
+      "createdTitle": "Аккаунт преподавателя создан",
+      "createdLogin": "Логин: {login}",
+      "activationLink": "Ссылка активации",
+      "activationHint": "Передайте ссылку преподавателю, если письмо не дошло. Показывается один раз.",
+      "openProfile": "Открыть профиль преподавателя",
+      "createAnother": "Создать ещё"
+    },
+    "edit": {
+      "title": "Изменить преподавателя",
+      "lastName": "Фамилия",
+      "firstName": "Имя",
+      "middleName": "Отчество",
+      "email": "Почта",
+      "cancel": "Отмена",
+      "save": "Сохранить",
+      "saved": "Преподаватель сохранён"
+    },
+    "profile": {
+      "contacts": "Контакты для студентов",
+      "back": "Преподаватели",
+      "edit": "Изменить",
+      "deactivate": "Деактивировать",
+      "deactivateTitle": "Деактивировать {name}?",
+      "deactivateDescription": "Сессии завершатся, будущие уроки получат пометку «нужен преподаватель».",
+      "deactivated": "{name} деактивирован",
+      "openInUsers": "Открыть в «Пользователи и роли»",
+      "curatedGroups": "Кураторство",
+      "noGroups": "Этот преподаватель не курирует группы.",
+      "missingAttendance": "Уроки без посещаемости",
+      "missingCount": "Не отмечено",
+      "noMissing": "Всё отмечено.",
+      "timetable": "Расписание на эту неделю",
+      "setPassword": "Задать пароль"
+    }
+  },
+  "users": {
+    "title": "Пользователи и роли",
+    "empty": "По этим фильтрам пользователей нет.",
+    "notSelected": "Выберите пользователя в списке.",
+    "mailSuspended": "Почта приостановлена",
+    "tabs": {
+      "users": "Пользователи",
+      "clients": "OAuth-клиенты"
+    },
+    "filters": {
+      "query": "Поиск",
+      "queryPlaceholder": "Имя или логин",
+      "role": "Роль",
+      "allRoles": "Любая роль",
+      "status": "Статус",
+      "allStatuses": "Любой статус"
+    },
+    "roles": {
+      "student": "Студент",
+      "teacher": "Преподаватель",
+      "admin": "Администрация",
+      "lms_admin": "Администратор LMS",
+      "lms_creator": "Автор курсов LMS",
+      "librarian": "Библиотекарь",
+      "legend": "Роли, которые можно выдать",
+      "save": "Сохранить роли",
+      "saved": "Роли {name} сохранены",
+      "confirmTitle": "Изменить роли?",
+      "confirmDescription": "Пользователь выйдет отовсюду. Новый член Администрации настроит одноразовый код при входе."
+    },
+    "status": {
+      "active": "Активен",
+      "pending_activation": "Не активирован",
+      "blocked": "Заблокирован",
+      "deactivated": "Деактивирован"
+    },
+    "columns": {
+      "name": "Имя",
+      "login": "Логин",
+      "roles": "Роли",
+      "status": "Статус",
+      "lastLogin": "Последний вход"
+    },
+    "detail": {
+      "back": "Пользователи и роли",
+      "created": "Создан {date}",
+      "lastLogin": "Последний вход {date}",
+      "neverLoggedIn": "Ещё не входил",
+      "access": "Доступ",
+      "resetOnlyAdmins": "Сброс доступен только членам Администрации.",
+      "roles": "Роли",
+      "mail": "Почта",
+      "telegram": "Аккаунты Telegram",
+      "sessions": "Сессии",
+      "audit": "Последние события аудита",
+      "edit": "Изменить",
+      "setPassword": "Задать пароль"
+    },
+    "reset": {
+      "password": "Сбросить пароль",
+      "passwordTitle": "Сбросить пароль {name}?",
+      "passwordDescription": "Старый пароль перестанет работать. Вы получите одноразовую ссылку активации.",
+      "otp": "Сбросить одноразовый код",
+      "otpTitle": "Сбросить одноразовый код {name}?",
+      "otpDescription": "Пользователь настроит одноразовый код заново при следующем входе.",
+      "otpDone": "Одноразовый код {name} сброшен",
+      "linkTitle": "Ссылка активации",
+      "linkDescription": "Передайте эту ссылку пользователю. Она показывается один раз.",
+      "close": "Готово"
+    },
+    "mail": {
+      "noMailbox": "Нет почтового ящика",
+      "stateActive": "Отправка разрешена",
+      "stateSuspended": "Отправка приостановлена",
+      "suspend": "Приостановить отправку",
+      "suspendTitle": "Приостановить отправку с почты {name}?",
+      "suspendDescription": "Бот не будет отправлять письма с этого ящика. Приём продолжится.",
+      "reason": "Причина",
+      "suspended": "Отправка с почты {name} приостановлена",
+      "resume": "Возобновить отправку",
+      "resumed": "Отправка с почты {name} возобновлена"
+    },
+    "clients": {
+      "empty": "OAuth-клиентов пока нет.",
+      "name": "Название",
+      "clientId": "ID клиента",
+      "kind": "Тип",
+      "builtIn": "Встроенный",
+      "dynamic": "Зарегистрирован коннектором",
+      "lastUsed": "Последнее использование",
+      "state": "Состояние",
+      "actions": "Действия",
+      "verified": "Проверен",
+      "unverified": "Не проверен",
+      "verify": "Отметить проверенным",
+      "unverify": "Снять отметку",
+      "verifiedDone": "{name} отмечен проверенным",
+      "unverifiedDone": "С {name} снята отметка проверенного"
+    },
+    "edit": {
+      "title": "Изменить пользователя",
+      "login": "Логин",
+      "lastName": "Фамилия",
+      "firstName": "Имя",
+      "middleName": "Отчество",
+      "email": "Почта",
+      "cancel": "Отмена",
+      "save": "Сохранить",
+      "saved": "Пользователь сохранён"
+    },
+    "setPassword": {
+      "title": "Задать пароль: {name}",
+      "description": "Текущие сессии завершатся. Передайте пароль лично.",
+      "password": "Новый пароль",
+      "rules": "От 8 символов, с цифрой, строчной и заглавной буквой.",
+      "requireChange": "Сменить при первом входе",
+      "cancel": "Отмена",
+      "save": "Задать пароль",
+      "saved": "Пароль {name} задан"
+    },
+    "resetLink": {
+      "button": "Создать ссылку для сброса пароля",
+      "title": "Ссылка для сброса пароля",
+      "description": "Передайте эту ссылку пользователю. Она работает так же, как ссылка сброса пароля, и показывается один раз.",
+      "qrAlt": "QR-код ссылки для сброса пароля",
+      "close": "Готово"
+    }
+  },
+  "groups": {
+    "title": "Группы",
+    "new": "Новая группа",
+    "empty": "Групп пока нет.",
+    "notSelected": "Выберите группу в списке.",
+    "filters": {
+      "status": "Статус",
+      "allStatuses": "Любой статус"
+    },
+    "status": {
+      "active": "Активна",
+      "archived": "В архиве"
+    },
+    "columns": {
+      "name": "Группа",
+      "semester": "Семестр",
+      "students": "Студентов",
+      "subgroups": "Подгруппы заданы",
+      "unregistered": "Не зарегистрированы",
+      "attendance": "Посещаемость",
+      "gpa": "Средний GPA (из 5)",
+      "curator": "Куратор",
+      "status": "Статус"
+    },
+    "create": {
+      "title": "Новая группа",
+      "name": "Название",
+      "emisId": "ID группы в EMIS",
+      "semester": "Текущий семестр",
+      "cancel": "Отмена",
+      "submit": "Создать группу",
+      "done": "Группа {name} создана"
+    },
+    "view": {
+      "semester": "Семестр {semester}",
+      "people": "Куратор и староста",
+      "curator": "Куратор",
+      "headStudent": "Староста",
+      "none": "Не назначен",
+      "status": "Статус",
+      "statusActive": "Активна",
+      "statusArchived": "В архиве",
+      "save": "Сохранить",
+      "saved": "Группа сохранена",
+      "students": "Студенты ({count})",
+      "saveSubgroups": "Сохранить подгруппы ({count})",
+      "subgroupsSaved": "Подгруппы сохранены",
+      "noStudents": "В этой группе пока нет студентов.",
+      "name": "Название",
+      "statusColumn": "Статус",
+      "registered": "Зарегистрирован",
+      "subgroup": "Подгруппа",
+      "subgroupOf": "Подгруппа студента {name}",
+      "subgroupNumber": "Подгруппа {number}",
+      "noSubgroup": "Без подгруппы",
+      "yes": "Да",
+      "no": "Нет",
+      "semesterField": "Семестр",
+      "tabs": {
+        "overview": "Обзор",
+        "curriculum": "Учебный план"
+      }
+    },
+    "curriculum": {
+      "sync": "Синхронизировать с EMIS",
+      "syncing": "Загрузка учебного плана из EMIS…",
+      "synced": "Учебный план обновлён из EMIS.",
+      "empty": "Для этой группы ещё не сохранён учебный план. Нажмите «Синхронизировать с EMIS», чтобы загрузить его."
+    }
+  },
+  "subjects": {
+    "title": "Предметы",
+    "new": "Новый предмет",
+    "empty": "Предметов не найдено.",
+    "notInEmis": "Нет в EMIS",
+    "edit": "Изменить {name}",
+    "dividedFor": "{name} можно делить на подгруппы",
+    "filters": {
+      "query": "Поиск",
+      "queryPlaceholder": "Название предмета"
+    },
+    "columns": {
+      "nameEn": "Английский",
+      "nameRu": "Русский",
+      "nameUz": "Узбекский",
+      "shortName": "Сокращение",
+      "emis": "ID в EMIS",
+      "canBeDivided": "Делится на подгруппы",
+      "materials": "Материалы",
+      "actions": "Действия"
+    },
+    "dialog": {
+      "createTitle": "Новый предмет",
+      "editTitle": "Изменить предмет",
+      "nameUz": "Название на узбекском",
+      "nameRu": "Название на русском",
+      "nameEn": "Название на английском",
+      "shortName": "Сокращение",
+      "emisId": "ID предмета в EMIS",
+      "canBeDivided": "Можно делить на подгруппы",
+      "cancel": "Отмена",
+      "save": "Сохранить",
+      "created": "Предмет создан",
+      "saved": "Предмет сохранён"
+    },
+    "materials": {
+      "open": "Материалы по умолчанию для предмета {name}: {count}",
+      "openNoEmis": "Материалы по умолчанию для предмета {name}: нужен ID в EMIS",
+      "needEmis": "Нужен ID в EMIS",
+      "title": "Материалы по умолчанию: {label}",
+      "description": "Каждый студент получает копию этих материалов в блокноте по этому предмету. ID предмета в EMIS: {id}.",
+      "emisLabel": "ID в EMIS {id}",
+      "listLabel": "Материалы по умолчанию",
+      "empty": "Материалов по умолчанию пока нет.",
+      "kind": {
+        "file": "Файл",
+        "link": "Ссылка",
+        "library_item": "Книга из библиотеки"
+      },
+      "remove": "Удалить {title}",
+      "removeAsk": "Удалить материал?",
+      "removeConfirm": "Удалить",
+      "removeConfirmFor": "Подтвердить удаление: {title}",
+      "keep": "Оставить",
+      "removed": "Материал удалён",
+      "add": {
+        "heading": "Добавить материал",
+        "kind": "Тип",
+        "titleLabel": "Название",
+        "upload": "Выбрать файл",
+        "fileChosen": "Файл: {name}",
+        "urlLabel": "Ссылка",
+        "searchLabel": "Поиск по библиотеке",
+        "searchHint": "Введите не меньше двух букв названия или автора.",
+        "searchNone": "Ничего не найдено.",
+        "searchResults": "Результаты поиска по библиотеке",
+        "pick": "Выбрать",
+        "picked": "Выбрано",
+        "pickFor": "Выбрать {title}",
+        "bookChosen": "Книга: {title}",
+        "submit": "Добавить материал",
+        "added": "Материал добавлен"
+      },
+      "byId": {
+        "heading": "Материалы по ID в EMIS",
+        "hint": "Для предмета, которого ещё нет в списке.",
+        "id": "ID предмета в EMIS",
+        "label": "Название (необязательно)",
+        "open": "Открыть материалы"
+      }
+    },
+    "emis": {
+      "open": "Загрузка из EMIS: {name}",
+      "title": "Материалы EMIS: {name}",
+      "description": "Загружает материалы EMIS для уроков этого предмета. Файлы преподавателей и студентов остаются.",
+      "terms": "Учебные годы и полугодия",
+      "termLabel": "{year}, полугодие {half}",
+      "pullAll": "Загрузить из EMIS",
+      "confirmTitle": "Загрузить предмет из EMIS?",
+      "confirmDescription": "Файлы EMIS уроков этого предмета будут удалены и загружены заново в фоне.",
+      "confirm": "Загрузить",
+      "started": "Загрузка из EMIS запущена",
+      "teachers": "Преподаватели",
+      "groups": "Группы",
+      "none": "В текущем семестре этого предмета ни у кого нет.",
+      "pullNew": "Загрузить новые материалы",
+      "pullNewFor": "Загрузить новые материалы: {name}",
+      "softHint": "Материалы EMIS получат только уроки без материалов; ничего не удаляется."
+    },
+    "reconcile": {
+      "button": "Проверить, что все материалы уроков есть в блокноте",
+      "hint": "Запускает фоновую проверку: добавляет материалы уроков, которых нет в блокнотах предмета. Уже имеющиеся материалы не меняются.",
+      "running": "Проверяем…",
+      "done": "Проверено блокнотов: {notebooks}. Добавлено: {added}, уже были: {present}, повторим позже: {skipped}.",
+      "error": "Проверка не завершилась. Попробуйте снова."
+    },
+    "lessonSources": {
+      "open": "Материалы уроков: {name}",
+      "title": "Из уроков (EMIS): {name}",
+      "heading": "Из уроков (EMIS)",
+      "group": "Группа",
+      "allGroups": "Все группы",
+      "empty": "Материалов уроков нет.",
+      "hidden": "Скрыт",
+      "file": "{name} ({size})",
+      "openItem": "Открыть: {title}",
+      "pages": "Страницы",
+      "previous": "Назад",
+      "next": "Далее",
+      "range": "{from}–{to} из {total}"
+    }
+  },
+  "rooms": {
+    "title": "Кабинеты",
+    "empty": "Кабинетов пока нет.",
+    "copyLink": "Копировать ссылку",
+    "copyPin": "Копировать PIN",
+    "pinOf": "PIN кабинета {name}",
+    "filters": {
+      "status": "Статус",
+      "allStatuses": "Любой статус"
+    },
+    "status": {
+      "active": "Активен",
+      "archived": "В архиве"
+    },
+    "columns": {
+      "name": "Кабинет",
+      "link": "Ссылка",
+      "pin": "PIN",
+      "lessons": "Уроков на этой неделе",
+      "status": "Статус",
+      "actions": "Действия"
+    },
+    "actions": {
+      "rename": "Переименовать кабинет {name}",
+      "pin": "Создать новый PIN для кабинета {name}",
+      "merge": "Объединить кабинет {name} с другим",
+      "archive": "Отправить кабинет {name} в архив"
+    },
+    "rename": {
+      "title": "Переименовать кабинет {name}",
+      "name": "Новое название",
+      "cancel": "Отмена",
+      "submit": "Переименовать",
+      "done": "Кабинет переименован"
+    },
+    "pin": {
+      "title": "Создать новый PIN для кабинета {name}?",
+      "description": "Старый PIN и закладки сразу перестанут работать.",
+      "confirm": "Создать новый PIN",
+      "done": "Новый PIN создан"
+    },
+    "merge": {
+      "title": "Объединить кабинет {name} с другим",
+      "description": "Уроки перейдут в выбранный кабинет, а этот уйдёт в архив.",
+      "target": "Объединить с",
+      "choose": "Выберите кабинет",
+      "cancel": "Отмена",
+      "submit": "Объединить",
+      "done": "Кабинеты объединены"
+    },
+    "archive": {
+      "title": "Отправить кабинет {name} в архив?",
+      "description": "Уроков на этой неделе: {count}. Архивируйте только неиспользуемый кабинет.",
+      "confirm": "В архив",
+      "done": "Кабинет в архиве"
+    }
+  },
+  "terms": {
+    "title": "Семестры и звонки",
+    "new": "Новый семестр",
+    "empty": "Семестров пока нет.",
+    "edit": "Изменить",
+    "current": "Текущий",
+    "termTitle": "{year}, полугодие {half}",
+    "dates": "{from} – {to}",
+    "bell": "{period}. {start}–{end}",
+    "counts": "Нерабочих дней: {holidays}. Перенесённых учебных дней: {moved}.",
+    "editor": {
+      "createTitle": "Новый семестр",
+      "editTitle": "Изменить семестр {year}",
+      "year": "Учебный год",
+      "half": "Полугодие",
+      "half1": "Первое полугодие",
+      "half2": "Второе полугодие",
+      "starts": "Начало",
+      "ends": "Конец",
+      "bells": "Расписание звонков",
+      "cancel": "Отмена",
+      "save": "Сохранить семестр",
+      "created": "Семестр создан",
+      "saved": "Семестр сохранён",
+      "issues": {
+        "year": "Укажите учебный год.",
+        "dates": "Выберите даты начала и конца.",
+        "order": "Семестр должен заканчиваться после начала.",
+        "noBells": "Добавьте хотя бы один урок.",
+        "bellTime": "У каждого урока время начала должно быть раньше времени конца.",
+        "bellWeekdays": "У каждого урока должен быть хотя бы один день недели.",
+        "bellDuplicate": "Один урок указан дважды в один и тот же день недели.",
+        "controlIncomplete": "Для недели контроля нужны первый и последний день.",
+        "controlOrder": "Неделя контроля должна заканчиваться не раньше дня начала.",
+        "controlOutside": "Неделя контроля должна лежать внутри семестра.",
+        "controlSequence": "Каждая неделя контроля должна начинаться после окончания предыдущей."
+      },
+      "controls": {
+        "title": "Недели контроля",
+        "start": "{name}: первый день",
+        "end": "{name}: последний день",
+        "clear": "Очистить: {name}",
+        "clearShort": "Очистить"
+      }
+    },
+    "bells": {
+      "period": "Урок",
+      "start": "Начало",
+      "end": "Конец",
+      "weekdays": "Дни недели урока {period}",
+      "remove": "Удалить урок {period}",
+      "add": "Добавить урок",
+      "emis": "EMIS",
+      "emisHint": "Синхронизировано с часами занятий EMIS",
+      "overridden": "Изменено",
+      "overriddenHint": "Отличается от EMIS ({start}–{end})",
+      "reset": "Сбросить к EMIS",
+      "rowMenu": "Действия для урока {period}"
+    },
+    "days": {
+      "nonStudy": "Нерабочие дни",
+      "pickHoliday": "Выберите дату",
+      "addHoliday": "Добавить день",
+      "moved": "Перенесённые учебные дни",
+      "pickMoved": "Выберите дату",
+      "follows": "Идут уроки дня",
+      "addMoved": "Добавить перенос",
+      "movedLine": "{date}: уроки дня «{weekday}»",
+      "removeDay": "Удалить {date}",
+      "removeTitle": "Удалить {date}?",
+      "removeDescription": "Изменение вступит в силу при сохранении семестра."
+    },
+    "controls": {
+      "title": "Недели контроля",
+      "chip": "{name}: {period}",
+      "notSet": "не задан"
+    }
+  },
+  "timetable": {
+    "title": "Расписание",
+    "term": "Семестр",
+    "termLabel": "{year}, полугодие {half}",
+    "view": "Вид",
+    "views": {
+      "group": "Группа",
+      "teacher": "Преподаватель",
+      "room": "Кабинет"
+    },
+    "entity": {
+      "group": "Группа",
+      "teacher": "Преподаватель",
+      "room": "Кабинет"
+    },
+    "noEntities": {
+      "group": "Групп пока нет.",
+      "teacher": "Преподавателей пока нет.",
+      "room": "Кабинетов пока нет."
+    },
+    "noTerms": "Сначала создайте семестр.",
+    "emptyTimetable": "Пусто. Нажмите на ячейку, чтобы добавить запись.",
+    "copyFromTerm": "Копировать из другого семестра",
+    "gridCaption": "Недельное расписание",
+    "period": "Урок",
+    "add": "Добавить запись",
+    "addAt": "Добавить запись: {weekday}, урок {period}",
+    "openEntry": "Изменить запись {subject}",
+    "parityShort": {
+      "odd": "нечётные недели",
+      "even": "чётные недели"
+    },
+    "copy": {
+      "title": "Копировать в {year}, полугодие {half}",
+      "from": "Копировать из",
+      "choose": "Выберите семестр",
+      "termLabel": "{year}, полугодие {half}",
+      "cancel": "Отмена",
+      "submit": "Копировать расписание",
+      "done": "Скопировано записей: {count}"
+    },
+    "editor": {
+      "createTitle": "Новая запись",
+      "editTitle": "Изменить запись",
+      "description": "{weekday}, урок {period}",
+      "weekday": "День недели",
+      "period": "Урок",
+      "parity": "Недели",
+      "parityEvery": "Каждую неделю",
+      "parityOdd": "Нечётные недели",
+      "parityEven": "Чётные недели",
+      "subject": "Предмет",
+      "choose": "Выберите",
+      "teacher": "Преподаватель",
+      "noTeacher": "Преподавателя пока нет",
+      "room": "Кабинет",
+      "audience": "Для кого",
+      "splitSuggestion": "Создать две записи, по одной на подгруппу?",
+      "split": "Разделить на подгруппы",
+      "splitNext": "Сохраните подгруппу 1, затем та же форма откроется для подгруппы 2.",
+      "validFrom": "Действует с",
+      "validTo": "Действует до",
+      "noEnd": "Без даты окончания",
+      "clear": "Очистить",
+      "checking": "Проверяем конфликты…",
+      "checkFailed": "Проверка конфликтов не удалась. Сервер проверит при сохранении.",
+      "noConflicts": "Конфликтов нет.",
+      "conflictsTitle": "Конфликтов: {count}",
+      "conflictKind": {
+        "teacher": "Преподаватель",
+        "room": "Кабинет",
+        "audience": "Аудитория"
+      },
+      "cancel": "Отмена",
+      "save": "Сохранить запись",
+      "saved": "Запись сохранена",
+      "created": "Запись создана",
+      "delete": "Удалить запись",
+      "deleteTitle": "Удалить эту запись?",
+      "deleteDescription": "Будущие уроки записи удалятся. Изменённые вручную останутся.",
+      "deleted": "Запись удалена",
+      "openLesson": "Открыть урок"
+    }
+  },
+  "lessons": {
+    "title": "Уроки",
+    "extraAction": "Дополнительный урок",
+    "empty": "По этим фильтрам уроков нет.",
+    "changeAction": "Изменить",
+    "changeLesson": "Изменить урок «{subject}» {date}",
+    "openAction": "Открыть",
+    "openLesson": "Открыть: {subject}, {date}",
+    "changed": "Изменён",
+    "teacherNeeded": "Нужен преподаватель",
+    "status": {
+      "scheduled": "По расписанию",
+      "cancelled": "Отменён"
+    },
+    "filters": {
+      "from": "С даты",
+      "to": "По дату",
+      "group": "Группа",
+      "allGroups": "Все группы",
+      "teacher": "Преподаватель",
+      "allTeachers": "Все преподаватели",
+      "status": "Статус",
+      "allStatuses": "Любой статус",
+      "teacherNeeded": "Преподаватель",
+      "anyTeacher": "С преподавателем и без",
+      "onlyTeacherNeeded": "Нужен преподаватель"
+    },
+    "columns": {
+      "date": "Дата",
+      "time": "Время",
+      "subject": "Предмет",
+      "teacher": "Преподаватель",
+      "room": "Кабинет",
+      "audience": "Для кого",
+      "status": "Статус",
+      "actions": "Действия"
+    },
+    "change": {
+      "title": "Изменить урок «{subject}»",
+      "status": "Статус",
+      "scheduled": "По расписанию",
+      "cancelled": "Отменён",
+      "date": "Дата",
+      "period": "Урок",
+      "subject": "Предмет",
+      "teacher": "Преподаватель",
+      "noTeacher": "Без преподавателя",
+      "room": "Кабинет",
+      "topic": "Тема",
+      "notifyHint": "Студенты и преподаватели получат уведомление.",
+      "cancel": "Отмена",
+      "save": "Сохранить изменения",
+      "saved": "Урок изменён"
+    },
+    "extra": {
+      "title": "Дополнительный урок",
+      "date": "Дата",
+      "period": "Урок",
+      "subject": "Предмет",
+      "choose": "Выберите",
+      "teacher": "Преподаватель",
+      "noTeacher": "Преподавателя пока нет",
+      "room": "Кабинет",
+      "audience": "Для кого",
+      "topic": "Тема",
+      "cancel": "Отмена",
+      "submit": "Добавить урок",
+      "created": "Дополнительный урок добавлен"
+    },
+    "view": {
+      "title": "Урок",
+      "missing": "Урок не выбран. Откройте его из списка уроков.",
+      "back": "Уроки"
+    }
+  },
+  "exams": {
+    "title": "Экзамены",
+    "newAction": "Новый экзамен",
+    "empty": "Нет экзаменов по этим фильтрам.",
+    "toConfirm": "Ждут подтверждения: {count}",
+    "toConfirmHint": "Неподтверждённые даты. Нажмите, чтобы показать только их.",
+    "nothingToConfirm": "Нет дат, ожидающих подтверждения.",
+    "filters": {
+      "from": "С даты",
+      "to": "По дату",
+      "group": "Группа",
+      "allGroups": "Все группы",
+      "subject": "Предмет",
+      "allSubjects": "Все предметы",
+      "kind": "Вид",
+      "allKinds": "Все виды",
+      "control": "Неделя контроля",
+      "allControls": "Все недели контроля",
+      "controlOption": "{name} · {period}",
+      "status": "Статус",
+      "allStatuses": "Назначенные и неподтверждённые",
+      "source": "Источник",
+      "allSources": "Любой источник",
+      "undated": "Показывать недели контроля без даты"
+    },
+    "kind": {
+      "midterm": "Промежуточный контроль (ПК)",
+      "final": "Итоговый контроль (ИК)",
+      "other": "Другое"
+    },
+    "status": {
+      "planned": "Назначен",
+      "tentative": "Не подтверждён",
+      "cancelled": "Отменён",
+      "undated": "Дата не задана"
+    },
+    "source": {
+      "teacher": "Преподаватель",
+      "admin": "Администрация",
+      "emis": "EMIS",
+      "head_student": "Староста"
+    },
+    "columns": {
+      "date": "Дата",
+      "subject": "Предмет",
+      "groups": "Группы",
+      "kind": "Вид",
+      "time": "Время",
+      "room": "Аудитория",
+      "status": "Статус",
+      "source": "Источник",
+      "setBy": "Кто назначил",
+      "note": "Заметка",
+      "actions": "Действия"
+    },
+    "csv": {
+      "week": "Неделя контроля",
+      "control": "Контроль",
+      "title": "Название"
+    },
+    "actions": {
+      "edit": "Изменить",
+      "editLabel": "Изменить: {subject}, {date}",
+      "confirm": "Подтвердить",
+      "confirmLabel": "Подтвердить: {subject}, {date}",
+      "dismiss": "Отклонить",
+      "dismissLabel": "Отклонить: {subject}, {date}",
+      "cancel": "Отменить",
+      "cancelLabel": "Отменить: {subject}, {date}",
+      "setDate": "Назначить дату",
+      "setDateLabel": "Назначить дату: {subject}, {groups}"
+    },
+    "confirmed": "Дата подтверждена",
+    "dialog": {
+      "createTitle": "Новый экзамен",
+      "editTitle": "Изменить: {subject}",
+      "setDateTitle": "Назначить дату: {subject}",
+      "setDateDescription": "{control}, {groups}.",
+      "subject": "Предмет",
+      "choose": "Выберите",
+      "audience": "Группы",
+      "kind": "Вид",
+      "control": "Неделя контроля",
+      "controlAuto": "По дате",
+      "weekHint": "Неделя: {period}",
+      "date": "Дата",
+      "time": "Время",
+      "timeHint": "Ташкентское время. Оставьте пустым, если время ещё неизвестно.",
+      "room": "Аудитория",
+      "title": "Название",
+      "note": "Заметка",
+      "cancel": "Отмена",
+      "create": "Добавить экзамен",
+      "save": "Сохранить",
+      "setDate": "Назначить дату",
+      "created": "Экзамен добавлен",
+      "saved": "Экзамен сохранён",
+      "dateSet": "Дата назначена",
+      "issues": {
+        "subject": "Выберите предмет.",
+        "audience": "Выберите хотя бы одну группу.",
+        "date": "Выберите дату.",
+        "time": "Введите время в формате часы:минуты."
+      }
+    },
+    "dismiss": {
+      "dismissTitle": "Отклонить эту дату?",
+      "cancelTitle": "Отменить этот экзамен?",
+      "description": "{subject}, {date}, {groups}: экзамен отменён и пропадёт из календарей.",
+      "keep": "Оставить",
+      "dismissed": "Дата отклонена",
+      "cancelled": "Экзамен отменён"
+    }
+  },
+  "attendance": {
+    "title": "Посещаемость",
+    "from": "С даты",
+    "to": "По дату",
+    "currentTerm": "Текущий семестр",
+    "resetRange": "Текущий семестр",
+    "tabs": {
+      "report": "Отчёт",
+      "missing": "Без отметки"
+    },
+    "report": {
+      "view": "Вид",
+      "views": {
+        "group": "Группы",
+        "student": "Студенты",
+        "subject": "Предметы",
+        "teacher": "Преподаватели"
+      },
+      "labels": {
+        "group": "Группа",
+        "student": "Студент",
+        "subject": "Предмет",
+        "teacher": "Преподаватель"
+      },
+      "group": "Группа",
+      "allGroups": "Все группы",
+      "period": "{from} – {to}",
+      "empty": "За этот период данных нет.",
+      "lessons": "Уроков",
+      "absences": "Пропусков",
+      "excused": "По уважительной причине",
+      "notTaken": "Не отмечено",
+      "rate": "Доля пропусков"
+    },
+    "missing": {
+      "none": "Во всех уроках этого периода посещаемость отмечена.",
+      "count": "Уроков: {count}",
+      "openLesson": "Открыть урок"
+    }
+  },
+  "broadcasts": {
+    "title": "Рассылки",
+    "new": "Новая рассылка",
+    "empty": "Рассылок пока нет.",
+    "deliveryLine": "Доставлено {sent}, ошибок {failed}, заблокировали бота {blocked}",
+    "status": {
+      "draft": "Черновик",
+      "scheduled": "Запланирована",
+      "sending": "Отправляется",
+      "sent": "Отправлена",
+      "cancelled": "Отменена"
+    },
+    "filters": {
+      "status": "Статус",
+      "allStatuses": "Любой статус"
+    },
+    "columns": {
+      "title": "Заголовок",
+      "status": "Статус",
+      "audience": "Кому",
+      "when": "Дата",
+      "delivery": "Доставка"
+    },
+    "audience": {
+      "title": "Кому",
+      "everyone": "Всем",
+      "roles": "Роли",
+      "role": {
+        "student": "Студенты",
+        "teacher": "Преподаватели",
+        "admin": "Администрация",
+        "lms_admin": "Администраторы LMS",
+        "librarian": "Библиотекари"
+      },
+      "groups": "Группы",
+      "groupsCount": "Групп: {count}",
+      "semesters": "Семестры",
+      "semester": "Семестр {number}",
+      "semestersList": "Семестры {list}",
+      "counting": "Считаем получателей…",
+      "countFailed": "Не удалось посчитать получателей.",
+      "recipients": "Получателей: {count}"
+    },
+    "stats": {
+      "total": "Получателей",
+      "sent": "Доставлено",
+      "failed": "Ошибок",
+      "blocked": "Заблокировали бота"
+    },
+    "editor": {
+      "newTitle": "Новая рассылка",
+      "back": "Рассылки",
+      "scheduledFor": "Запланирована на {date}",
+      "createdByAssistant": "Черновик создан ассистентом",
+      "assistantDraft": "Создано ассистентом. Проверьте: отправить может только человек.",
+      "readOnly": "Эту рассылку больше нельзя изменить.",
+      "titleLabel": "Заголовок",
+      "textLabel": "Текст",
+      "formatting": "Форматирование",
+      "bold": "Жирный",
+      "italic": "Курсив",
+      "underline": "Подчёркнутый",
+      "link": "Ссылка",
+      "boldText": "жирный текст",
+      "italicText": "текст курсивом",
+      "underlineText": "подчёркнутый текст",
+      "linkText": "текст ссылки",
+      "linkPrompt": "Адрес ссылки (https://…)",
+      "media": "Медиа",
+      "addMedia": "Добавить медиа",
+      "removeMedia": "Убрать {name}",
+      "previewTitle": "Предпросмотр",
+      "previewEmpty": "Здесь появится текст.",
+      "saveDraft": "Сохранить черновик",
+      "saved": "Черновик сохранён",
+      "sendPreview": "Отправить предпросмотр мне",
+      "previewSent": "Предпросмотр отправлен в ваш Telegram",
+      "sendNow": "Отправить сейчас",
+      "sendTitle": "Отправить рассылку сейчас?",
+      "sendDescription": "Она уйдёт получателям: {count}, и отозвать её будет нельзя.",
+      "sentDone": "Рассылка отправляется",
+      "schedule": "Запланировать",
+      "reschedule": "Изменить время",
+      "scheduledDone": "Рассылка запланирована",
+      "cancelScheduled": "Отменить отправку",
+      "cancelTitle": "Отменить запланированную рассылку?",
+      "cancelDescription": "Она не будет отправлена. Текст сохранится.",
+      "cancelledDone": "Рассылка отменена"
+    },
+    "schedule": {
+      "title": "Запланировать рассылку",
+      "when": "Отправить в",
+      "hint": "Время по Ташкенту.",
+      "past": "Выберите время в будущем.",
+      "cancel": "Отмена",
+      "submit": "Запланировать",
+      "description": "Время по Ташкенту (UTC+5)."
+    }
+  },
+  "moderation": {
+    "title": "Модерация",
+    "search": "Поиск",
+    "searchPlaceholder": "Короткий ID, ссылка или логин",
+    "emptyQueue": "Жалоб на ссылки нет.",
+    "emptySearch": "Ничего не найдено.",
+    "copyUrl": "Копировать ссылку",
+    "kind": {
+      "url": "Короткая ссылка",
+      "file": "Ссылка на файл",
+      "chat": "Опубликованный чат",
+      "flashcard_set": "Опубликованные карточки"
+    },
+    "live": "Работает",
+    "revoked": "Отозвана",
+    "disabled": "Отключена",
+    "disabledWithReason": "Отключена: {reason}",
+    "columns": {
+      "link": "Ссылка",
+      "target": "Куда ведёт",
+      "owner": "Владелец",
+      "reports": "Жалоб",
+      "hits": "Переходов",
+      "state": "Состояние",
+      "actions": "Действия"
+    },
+    "disable": "Отключить",
+    "disableFor": "Отключить ссылку {slug}",
+    "disableTitle": "Отключить ссылку {slug}?",
+    "disableDescription": "Ссылка покажет страницу «отключена». Содержимое сохранится.",
+    "reason": "Причина",
+    "disabledDone": "Ссылка отключена",
+    "dismiss": "Снять жалобы",
+    "dismissFor": "Снять жалобы со ссылки {slug}",
+    "dismissedDone": "Жалобы сняты"
+  },
+  "monitoring": {
+    "title": "Мониторинг",
+    "tabs": {
+      "sync": "Синхронизация EMIS",
+      "audit": "Журнал аудита",
+      "processes": "Процессы"
+    },
+    "sync": {
+      "userId": "ID студента",
+      "userHint": "Оставьте пустым, чтобы синхронизировать всех.",
+      "userInvalid": "Это не похоже на ID.",
+      "runAll": "Синхронизировать всех сейчас",
+      "runOne": "Синхронизировать этого студента сейчас",
+      "confirmAllTitle": "Запустить синхронизацию для всех студентов?",
+      "confirmAllDescription": "Запросы в EMIS по каждому студенту, может занять несколько минут.",
+      "confirmOneTitle": "Запустить синхронизацию для этого студента?",
+      "confirmOneDescription": "Оценки и профиль студента обновятся из EMIS.",
+      "run": "Запустить",
+      "started": "Синхронизация запущена",
+      "empty": "Запусков синхронизации пока нет.",
+      "running": "Выполняется",
+      "seconds": "{count} с",
+      "columns": {
+        "started": "Начало",
+        "duration": "Длительность",
+        "status": "Статус",
+        "stats": "Результат"
+      },
+      "materials": {
+        "title": "Заменить материалы из EMIS",
+        "description": "Удаляет файлы, которые EMIS добавил к урокам выбранных полугодий, и загружает их заново. Файлы учителей и студентов остаются.",
+        "terms": "Учебные годы и полугодия",
+        "termLabel": "{year}, полугодие {half}",
+        "run": "Заменить материалы",
+        "confirmTitle": "Заменить материалы из EMIS?",
+        "confirmDescription": "{count, plural, one {Файлы EMIS # полугодия будут удалены и загружены заново в фоне.} few {Файлы EMIS # полугодий будут удалены и загружены заново в фоне.} many {Файлы EMIS # полугодий будут удалены и загружены заново в фоне.} other {Файлы EMIS # полугодий будут удалены и загружены заново в фоне.}}",
+        "confirm": "Заменить",
+        "started": "Повторная загрузка материалов запущена"
+      },
+      "studentSyncsTitle": "Синхронизация студентов (сначала неудачные)",
+      "studentSyncsEmpty": "Нет неудачных, ожидающих или выполняющихся синхронизаций.",
+      "loading": "Загрузка…",
+      "studentSyncsColumns": {
+        "student": "Студент",
+        "status": "Статус",
+        "attempts": "Попытки",
+        "lastError": "Последняя ошибка",
+        "finished": "Завершено"
+      },
+      "studentSyncsAttempts": "{n} из {max}",
+      "runStop": "Остановить",
+      "runStopTitle": "Остановить этот запуск синхронизации?",
+      "runStopDescription": "Запуск завершится после студентов, которые уже обрабатываются. Остальные студенты будут синхронизированы при следующем запуске.",
+      "runStopConfirm": "Остановить запуск",
+      "runStopped": "Остановка запрошена. Запуск скоро завершится.",
+      "studentStop": "Остановить",
+      "studentStopTitle": "Остановить синхронизацию этого студента?",
+      "studentStopDescription": "Синхронизация студента остановится перед следующим шагом и не будет повторена автоматически. Запустите её снова из инструментов синхронизации.",
+      "studentStopConfirm": "Остановить синхронизацию",
+      "studentStopped": "Остановка запрошена для этого студента."
+    },
+    "audit": {
+      "empty": "Событий аудита не найдено.",
+      "filters": {
+        "user": "ID пользователя",
+        "userPlaceholder": "ID пользователя",
+        "type": "Тип события",
+        "typePlaceholder": "Тип события",
+        "from": "С даты",
+        "to": "По дату"
+      },
+      "columns": {
+        "time": "Время",
+        "type": "Событие",
+        "actor": "Кто",
+        "ip": "IP-адрес",
+        "details": "Подробности"
+      }
+    },
+    "processes": {
+      "title": "Фоновые процессы",
+      "loading": "Загрузка…",
+      "empty": "Нет запущенных процессов.",
+      "started": "Запущен {at}",
+      "stop": "Остановить",
+      "stopLabel": "Остановить {label}",
+      "stopped": "Остановка запрошена"
+    }
+  },
+  "logs": {
+    "title": "Логи",
+    "filters": {
+      "project": "Проект",
+      "projectAll": "Все проекты",
+      "level": "Уровень",
+      "levelAll": "Все уровни"
+    },
+    "levels": {
+      "fatal": "Критическая",
+      "error": "Ошибка",
+      "warning": "Предупреждение",
+      "info": "Информация",
+      "debug": "Отладка"
+    },
+    "count": "{count} событий",
+    "lastSeen": "Последний раз",
+    "never": "Никогда",
+    "open": "Открыть проблему",
+    "empty": "Проблем по этим фильтрам нет.",
+    "disabled": "Отслеживание ошибок не настроено на этом сервере, поэтому проблем нет.",
+    "prev": "Назад",
+    "next": "Вперёд",
+    "page": "Страница {page}"
+  },
+  "assistant": {
+    "page": {
+      "description": "Спрашивайте о людях, расписании и посещаемости. Изменения нужно подтвердить."
+    },
+    "chat": {
+      "emptyChat": "Задайте вопрос, чтобы начать."
+    },
+    "approval": {
+      "reasonPlaceholder": "Почему нет? Например: используй кабинет 310"
+    }
+  },
+  "reports": {
+    "title": "Отчёты",
+    "tabs": {
+      "health": "Система",
+      "usage": "Использование",
+      "academic": "Учёба"
+    },
+    "health": {
+      "up": "Работает",
+      "down": "Недоступно",
+      "database": "База данных",
+      "redis": "Redis",
+      "queueWaiting": "Задач в очереди",
+      "queueHint": "{count} выполняется",
+      "failedLogins": "Неудачные входы за 24 ч",
+      "loginsHint": "{failed} из {total} попыток",
+      "updated": "Обновлено {time}"
+    },
+    "usage": {
+      "storage": "Хранилище",
+      "files": "Файлов: {count}",
+      "signInsToday": "Входов сегодня",
+      "tokensToday": "Токенов ассистента сегодня",
+      "tokensTotal": "Токены ассистента",
+      "last14": "за 14 дней",
+      "signIns": "Активные пользователи по дням",
+      "users": "Пользователи",
+      "tokens": "Токены ассистента по дням",
+      "tokensLabel": "Токены"
+    },
+    "academic": {
+      "attendanceTitle": "Посещаемость по группам",
+      "attendanceRate": "Посещаемость",
+      "noAttendance": "Данных о посещаемости пока нет.",
+      "marksTitle": "Распределение оценок",
+      "marksCount": "Оценок",
+      "noMarks": "Оценок пока нет."
+    }
+  },
+  "settings": {
+    "title": "Настройки",
+    "school": "Школа",
+    "schoolName": "Название школы",
+    "supportContact": "Контакт поддержки",
+    "defaults": "Значения по умолчанию",
+    "defaultLanguage": "Язык интерфейса по умолчанию",
+    "changePasswordOnLogin": "Просить сменить пароль, заданный администратором",
+    "changePasswordFlagOn": "Смена пароля при входе включена на сервере.",
+    "changePasswordFlagOff": "Выключено на сервере.",
+    "featureLabels": {
+      "notebooks": "Блокноты",
+      "ai_assistant": "ИИ-ассистент",
+      "flashcards": "Карточки",
+      "lms": "Курсы (LMS)",
+      "mail": "Почта студентов",
+      "push": "Push-уведомления",
+      "emis_sync": "Синхронизация с EMIS",
+      "library": "Библиотека",
+      "web_search": "Веб-поиск",
+      "vector_search": "Поиск по смыслу",
+      "change_password_on_login": "Смена пароля при входе"
+    },
+    "featureDescriptions": {
+      "notebooks": "ИИ-блокноты для учебных материалов: маршруты и плановые задачи.",
+      "ai_assistant": "Ассистенты для студентов и администрации.",
+      "flashcards": "Наборы карточек и интервальное повторение.",
+      "lms": "Создание курсов и маршруты обучения.",
+      "mail": "Почтовые ящики студентов и их фоновые задачи.",
+      "push": "Web Push в браузер; нужны также ключи VAPID.",
+      "emis_sync": "Плановая синхронизация с EMIS.",
+      "library": "Сайт библиотеки и его плановые задачи.",
+      "web_search": "Переключатель веб-поиска в ассистенте, блокнотах и Discover.",
+      "vector_search": "Поиск по смыслу в блокнотах; нужна векторная база данных.",
+      "change_password_on_login": "Пользователь, чей пароль задал администратор, выбирает новый после входа."
+    },
+    "save": "Сохранить",
+    "saved": "Настройки сохранены",
+    "features": "Функции сервера",
+    "on": "вкл",
+    "off": "выкл",
+    "languages": {
+      "uz": "Oʻzbekcha",
+      "ru": "Русский",
+      "en": "English"
+    }
+  },
+  "limits": {
+    "title": "Лимиты и расходы",
+    "description": "Лимиты ИИ, стоимость моделей и кто ими пользуется.",
+    "range": {
+      "7": "7 дней",
+      "30": "30 дней",
+      "90": "90 дней",
+      "month": "Этот месяц"
+    },
+    "cards": {
+      "monthCost": "Расход за месяц",
+      "rangeCost": "Расход за период",
+      "projected": "Прогноз на месяц",
+      "tokensToday": "Токенов сегодня",
+      "callsToday": "Запросов сегодня",
+      "failed": "ошибок: {count}"
+    },
+    "charts": {
+      "daily": "Расход по дням и функциям",
+      "byModel": "Расход по моделям",
+      "byRole": "Расход по ролям",
+      "empty": "В этом периоде платных запросов не было.",
+      "usd": "USD"
+    },
+    "features": {
+      "assistant": "Помощник",
+      "notebook_chat": "Чат блокнота",
+      "notebook_prep": "Разбор источников",
+      "studio": "Студия",
+      "lms_author": "Автор курса",
+      "web_search": "Поиск в интернете",
+      "embedding": "Поиск по смыслу",
+      "academic": "Названия предметов",
+      "other": "Прочее"
+    },
+    "roles": {
+      "student": "Ученики",
+      "teacher": "Учителя",
+      "admin": "Администраторы",
+      "staff": "Другие сотрудники",
+      "system": "Системные задачи"
+    },
+    "top": {
+      "title": "Самые активные",
+      "user": "Пользователь",
+      "role": "Роль",
+      "calls": "Запросы",
+      "tokens": "Токены",
+      "cost": "Расход",
+      "empty": "В этом периоде платных запросов не было."
+    },
+    "editor": {
+      "title": "Лимиты",
+      "description": "Изменения действуют в течение примерно 30 секунд. Сотрудники не ограничены.",
+      "groups": {
+        "assistant": "Помощник",
+        "smart": "Умный помощник",
+        "notebooks": "Блокноты и Студия",
+        "web_search": "Поиск в интернете",
+        "lms": "Авторство курсов"
+      },
+      "value": "Значение",
+      "default": "По умолчанию: {value}",
+      "changed": "Изменено",
+      "reset": "Сбросить",
+      "on": "Включено",
+      "unlimited": "Без ограничений",
+      "save": "Сохранить изменения",
+      "saved": "Лимиты сохранены",
+      "unchanged": "Нечего сохранять",
+      "invalid": "Введите целое число от {min} до {max}.",
+      "failed": "Не удалось сохранить лимиты",
+      "unit": {
+        "tokens": "токенов",
+        "count": "раз",
+        "steps": "шагов",
+        "hours": "ч",
+        "bytes": "байт"
+      },
+      "period": {
+        "session": "за сессию",
+        "day": "в день",
+        "week": "в неделю",
+        "minute": "в минуту",
+        "hour": "в час"
+      }
+    },
+    "access": {
+      "title": "Доступ к ИИ по пользователям",
+      "description": "Отключите ИИ-чат или ИИ в блокнотах для одного ученика. Изменение действует в течение 30 секунд.",
+      "search": "Найти ученика",
+      "searchPlaceholder": "Имя или логин, не менее 2 символов",
+      "pick": "Выберите ученика, чтобы увидеть и изменить его доступ к ИИ.",
+      "change": "Выбрать другого ученика",
+      "chat": "ИИ-чат",
+      "notebooks": "ИИ в блокнотах",
+      "confirmRevoke": "Отключить «{scope}» для {name}?",
+      "confirmRestore": "Включить «{scope}» для {name}?",
+      "confirm": "Подтвердить",
+      "saved": "Доступ к ИИ обновлён."
+    },
+    "extensions": {
+      "title": "Расширения для учеников",
+      "description": "Увеличить лимиты одного ученика множителем или фиксированными значениями до даты.",
+      "add": "Добавить расширение",
+      "empty": "Расширений пока нет.",
+      "active": "Действует",
+      "expired": "Истекло",
+      "until": "до {date}",
+      "forever": "без срока",
+      "multiplier": "×{value}",
+      "values": "Фиксированные значения",
+      "remove": "Удалить",
+      "removed": "Расширение удалено",
+      "saved": "Расширение сохранено",
+      "badge": "Лимиты ИИ увеличены до {date}",
+      "badgeForever": "Лимиты ИИ увеличены",
+      "dialog": {
+        "title": "Увеличить лимиты ученика",
+        "search": "Имя или логин (от 2 букв)",
+        "noResults": "Ученики не найдены.",
+        "student": "Ученик",
+        "change": "Сменить",
+        "mode": "Вариант",
+        "multiplier": "Множитель",
+        "custom": "Фиксированные значения",
+        "customHint": "Заполните только те лимиты, которые нужно поднять; остальные не меняются.",
+        "expires": "Действует до (необязательно)",
+        "note": "Примечание (зачем и на сколько)",
+        "save": "Сохранить расширение",
+        "need": "Выберите множитель или задайте хотя бы одно значение."
+      },
+      "removeTitle": "Удалить расширение для {name}?",
+      "removeDescription": "Лимиты студента сразу вернутся к стандартным."
+    },
+    "fields": {
+      "ai_text_max_bytes": {
+        "label": "Максимальный размер файла для помощника",
+        "hint": "Самый большой извлечённый текст, который помощник может открыть своим инструментом."
+      },
+      "ai_session_hours": {
+        "label": "Длительность сессии",
+        "hint": "Часов, которые длится сессия токенов; следующее сообщение после неё начинает новую."
+      },
+      "ai_session_tokens_student": {
+        "label": "Токены помощника за сессию",
+        "hint": "Токены модели, которые ученик может потратить за сессию (с учётом веса модели)."
+      },
+      "ai_daily_tokens_student": {
+        "label": "Токены помощника в день",
+        "hint": "Токены модели, которые ученик может потратить с помощником за день (по Ташкенту)."
+      },
+      "ai_max_tool_steps": {
+        "label": "Шагов инструментов в ответе",
+        "hint": "Наибольшее число обращений к модели (раундов инструментов) в одном ответе помощника."
+      },
+      "ai_ask_before_web_search": {
+        "label": "Спрашивать перед поиском в интернете",
+        "hint": "Если в данных школы ничего нет, помощник ученика сначала спрашивает разрешения искать в интернете; выключено — ищет сразу."
+      },
+      "ai_chat_history_limit": {
+        "label": "История чата для модели",
+        "hint": "Сколько последних сообщений чата отправляется модели с каждым вопросом; более ранние модель читает инструментом."
+      },
+      "ai_smart_requests_per_week_student": {
+        "label": "Умных сообщений в неделю",
+        "hint": "Сообщений умной модели, которые ученик может отправить за неделю (с понедельника). 0 выключает."
+      },
+      "nb_session_tokens_student": {
+        "label": "Токены блокнотов за сессию",
+        "hint": "Взвешенные токены за сессию в блокнотах (вход + 0,1 × кэш + 5 × выход)."
+      },
+      "nb_daily_tokens_student": {
+        "label": "Токены блокнотов в день",
+        "hint": "Взвешенные токены блокнотов, которые ученик может использовать за день."
+      },
+      "nb_artifacts_per_day": {
+        "label": "Результатов Студии в день",
+        "hint": "Результатов Студии (конспекты, тесты, слайды и т. п.), которые ученик может запустить за день."
+      },
+      "nb_audio_per_day": {
+        "label": "Аудиообзоров в день",
+        "hint": "0 выключает счётчик; аудиообзоры пока не создаются."
+      },
+      "nb_slides_per_day": {
+        "label": "Презентаций в день",
+        "hint": "Презентаций, которые ученик может создать за день."
+      },
+      "nb_infographics_per_day": {
+        "label": "Инфографики в день",
+        "hint": "Инфографики, которые ученик может создать за день."
+      },
+      "nb_concurrent_artifacts": {
+        "label": "Результатов одновременно",
+        "hint": "Сколько результатов Студии ученик может создавать одновременно."
+      },
+      "nb_chat_per_minute": {
+        "label": "Вопросов в блокноте в минуту",
+        "hint": "Вопросов в чат блокнота, которые ученик может задать за минуту."
+      },
+      "nb_source_adds_per_hour": {
+        "label": "Источников в час",
+        "hint": "Источников, которые ученик может добавить в блокноты за час."
+      },
+      "nb_search_per_minute": {
+        "label": "Поисков по источникам в минуту",
+        "hint": "Полнотекстовых поисков по источникам блокнотов в минуту."
+      },
+      "nb_web_materials_per_day": {
+        "label": "Веб-материалов в день",
+        "hint": "Файлов, которые веб-источники ученика могут собрать в блокноты за день; -1 — без ограничения."
+      },
+      "nb_media_described_per_day": {
+        "label": "Медиа в день",
+        "hint": "Изображений с описанием и записей с расшифровкой для ученика за день; -1 — без ограничения."
+      },
+      "web_search_per_day_student": {
+        "label": "Поисков в интернете в день",
+        "hint": "Поисков, которые ученик может начать за день (по Ташкенту); 0 выключает поиск."
+      },
+      "web_search_local_min_new": {
+        "label": "Новых сохранённых страниц до Exa",
+        "hint": "Если столько новых сохранённых страниц подходят к запросу, ответ строится из них без Exa и без расхода лимита ученика; 0 — всегда Exa."
+      },
+      "web_search_max_results": {
+        "label": "Страниц в ответе чата",
+        "hint": "Сколько страниц один поиск оставляет для ответа в чате."
+      },
+      "web_search_discover_results": {
+        "label": "Страниц в поиске Discover",
+        "hint": "Сколько страниц возвращает каждый поиск Discover."
+      },
+      "web_search_deep_queries": {
+        "label": "Запросов в глубоком Discover",
+        "hint": "Сколько поисков делает глубокий запуск; столько же списывается из дневной квоты."
+      },
+      "web_search_deep_results": {
+        "label": "Страниц после глубокого запуска",
+        "hint": "Лучшие страницы, которые глубокий запуск Discover оставляет после ранжирования."
+      },
+      "lms_ai_chat_per_minute": {
+        "label": "Сообщений авторского помощника в минуту",
+        "hint": "Сообщений, которые автор курса может отправить помощнику за минуту."
+      },
+      "lms_ai_max_tool_steps": {
+        "label": "Шагов инструментов авторского помощника",
+        "hint": "Наибольшее число обращений к модели в одном ответе авторского помощника."
+      }
+    }
+  },
+  "knowledge": {
+    "title": "База знаний",
+    "filters": "Фильтры",
+    "search": "Поиск",
+    "tagFilter": "Теги",
+    "add": "Добавить запись",
+    "edit": "Запись {key}",
+    "editEntry": "Изменить запись {key}",
+    "deleteEntry": "Удалить запись {key}",
+    "columns": {
+      "key": "Ключ",
+      "title": "Заголовок",
+      "tags": "Теги",
+      "updated": "Обновлено",
+      "actions": "Действия"
+    },
+    "fields": {
+      "key": "Ключ",
+      "title": "Заголовок",
+      "value": "Текст",
+      "tags": "Теги"
+    },
+    "accessGuest": "Доступно гостям",
+    "accessStudent": "Доступно студентам",
+    "badgeGuest": "Гости",
+    "badgeStudent": "Студенты",
+    "tagsHint": "Теги через запятую.",
+    "cancel": "Отмена",
+    "save": "Сохранить",
+    "created": "Запись добавлена.",
+    "updated": "Запись сохранена.",
+    "deleted": "Запись удалена.",
+    "deleteTitle": "Удалить {key}?",
+    "deleteText": "Ассистент больше не найдёт эту запись.",
+    "confirmDelete": "Удалить",
+    "empty": "База знаний пуста.",
+    "emptyFiltered": "Нет записей по этим фильтрам.",
+    "prev": "Назад",
+    "next": "Вперёд",
+    "page": "Страница {page} из {pages}"
+  },
+  "workOffs": {
+    "title": "Отработки",
+    "from": "С даты",
+    "to": "По дату",
+    "open": "Открыто",
+    "done": "Выполнено",
+    "back": "Назад",
+    "status": "Статус",
+    "totalOpen": "Всего открыто: {count}",
+    "empty": "За этот период отработок нет.",
+    "emptyList": "По этим фильтрам отработок нет.",
+    "tabs": {
+      "subject": "По предметам",
+      "teacher": "По учителям",
+      "group": "По группам",
+      "student": "По ученикам"
+    },
+    "labels": {
+      "subject": "Предмет",
+      "teacher": "Учитель",
+      "group": "Группа",
+      "student": "Ученик"
+    },
+    "statuses": {
+      "open": "Открытые",
+      "done": "Выполненные",
+      "all": "Все"
+    },
+    "itemStatus": {
+      "assigned": "Открыта",
+      "done": "Выполнена"
+    },
+    "columns": {
+      "lesson": "Урок",
+      "subject": "Предмет",
+      "teacher": "Учитель",
+      "group": "Группа",
+      "student": "Ученик",
+      "text": "Задание",
+      "status": "Статус",
+      "due": "Срок"
+    },
+    "lesson": "{date}, урок {period}",
+    "prev": "Назад",
+    "next": "Далее",
+    "page": "Страница {page} из {pages}"
+  },
+  "callForImprovements": {
+    "title": "Призыв к улучшениям",
+    "filters": "Фильтры",
+    "allStatuses": "Все статусы",
+    "allKinds": "Все типы",
+    "allAreas": "Все разделы",
+    "empty": "Пока нет предложений и сообщений об ошибках.",
+    "emptyFiltered": "По этим фильтрам ничего не найдено.",
+    "loadMore": "Показать ещё",
+    "open": "Открыть",
+    "columns": {
+      "title": "Заголовок",
+      "kind": "Тип",
+      "area": "Раздел",
+      "status": "Статус",
+      "reporter": "От кого",
+      "received": "Получено",
+      "replies": "Ответы"
+    },
+    "filter": {
+      "status": "Статус",
+      "kind": "Тип",
+      "area": "Раздел"
+    },
+    "kind": {
+      "idea": "Идея",
+      "bug": "Ошибка",
+      "other": "Другое"
+    },
+    "area": {
+      "id": "ID",
+      "my": "my.iht",
+      "staff": "Учителя",
+      "admin": "Администрирование",
+      "lms": "LMS",
+      "library": "Библиотека",
+      "share": "Публикации",
+      "bot": "Бот",
+      "ai": "ИИ-ассистент",
+      "notebooks": "Блокноты",
+      "mail": "Почта",
+      "other": "Другое"
+    },
+    "status": {
+      "new": "Новое",
+      "in_review": "На рассмотрении",
+      "planned": "Запланировано",
+      "done": "Сделано",
+      "rejected": "Отклонено"
+    },
+    "source": {
+      "web": "Сайт",
+      "bot": "Телеграм-бот"
+    },
+    "detail": {
+      "back": "Призыв к улучшениям",
+      "missingId": "Откройте обращение из списка.",
+      "notFound": "Обращение не найдено или удалено.",
+      "fields": "Подробности",
+      "description": "Описание",
+      "page": "Страница",
+      "reporter": "Отправитель",
+      "group": "Группа",
+      "roles": "Роли",
+      "source": "Источник",
+      "received": "Получено",
+      "statusLabel": "Статус",
+      "statusSaved": "Статус обновлён",
+      "attachments": "Вложения",
+      "noAttachments": "Вложений нет.",
+      "preview": "Просмотр: {name}",
+      "download": "Скачать {name}",
+      "thread": "Ответы",
+      "noReplies": "Ответов пока нет.",
+      "deliveries": "Доставка",
+      "delivery": {
+        "sent": "Отправлено",
+        "failed": "Не доставлено",
+        "unavailable": "Недоступно"
+      },
+      "channel": {
+        "telegram": "Телеграм",
+        "mail": "Почта"
+      },
+      "reply": {
+        "title": "Ответ",
+        "text": "Сообщение",
+        "textHint": "До 4000 символов.",
+        "attach": "Прикрепить изображения или файлы",
+        "removeFile": "Убрать {name}",
+        "channels": "Отправить через",
+        "submit": "Отправить ответ",
+        "required": "Напишите ответ.",
+        "tooLong": "Ответ длиннее 4000 символов.",
+        "channelsRequired": "Выберите хотя бы один канал.",
+        "sent": "Ответ отправлен"
+      }
+    }
+  },
+  "loginCues": {
+    "title": "Логины для регистрации",
+    "add": "Добавить",
+    "bulkAdd": "Вставить список",
+    "allGroups": "Все группы",
+    "filterGroup": "Фильтр по группе",
+    "empty": "Логинов пока нет.",
+    "columns": {
+      "name": "Имя",
+      "group": "Группа",
+      "login": "Логин EMIS",
+      "status": "Статус",
+      "created": "Добавлен",
+      "actions": "Действия"
+    },
+    "status": {
+      "free": "Свободен",
+      "used": "Использован"
+    },
+    "delete": "Удалить {name}",
+    "deleteTitle": "Удалить {name}?",
+    "deleteText": "Этот вариант имени больше не будет показан при регистрации.",
+    "confirmDelete": "Удалить",
+    "deleted": "Вариант удалён",
+    "created": "Вариант добавлен",
+    "form": {
+      "title": "Добавить вариант имени",
+      "fullName": "Полное имя",
+      "group": "Группа",
+      "chooseGroup": "Выберите группу",
+      "emisLogin": "Логин EMIS",
+      "emisLoginHint": "Только цифры.",
+      "submit": "Добавить",
+      "cancel": "Отмена",
+      "required": "Обязательное поле",
+      "loginDigits": "Логин EMIS состоит только из цифр."
+    },
+    "bulk": {
+      "title": "Вставить список",
+      "lines": "Строки",
+      "hint": "Одна строка на ученика: логин;полное имя",
+      "placeholder": "20240123;Алиев Али",
+      "preview": "Распознано строк: {count}.",
+      "errors": "Проверьте строки: {lines}.",
+      "submit": "Добавить все",
+      "done": "Добавлено вариантов: {count}"
+    }
+  },
+  "botPosts": {
+    "loading": "Загрузка…",
+    "loadFailed": "Не удалось загрузить посты.",
+    "empty": "Постов пока нет.",
+    "saved": "Пост сохранён",
+    "created": "Пост добавлен",
+    "deleted": "Пост удалён",
+    "moved": "Пост перенесён",
+    "deleteTitle": "Удалить пост?",
+    "deleteDescription": "Пост и всё, что к нему относится, будет удалено из бота.",
+    "tree": {
+      "title": "Посты",
+      "dragHandle": "Перетащить: {title}",
+      "draft": "черновик"
+    },
+    "editor": {
+      "slug": "Slug",
+      "locale": "Язык",
+      "title": "Заголовок",
+      "body": "Текст",
+      "audience": "Аудитория",
+      "published": "Опубликован",
+      "parent": "Перенести в",
+      "moveTo": "Выберите родителя…",
+      "save": "Сохранить",
+      "addChild": "Добавить подпост",
+      "delete": "Удалить пост",
+      "label": "Текст поста",
+      "linkPrompt": "Адрес ссылки (https://…)",
+      "bold": "Жирный",
+      "italic": "Курсив",
+      "underline": "Подчёркнутый",
+      "strike": "Зачёркнутый",
+      "spoiler": "Спойлер",
+      "code": "Код",
+      "pre": "Блок кода",
+      "quote": "Цитата",
+      "link": "Ссылка",
+      "formatting": "Форматирование",
+      "deleteWithChildren": "Удалить вместе с подпостами"
+    },
+    "preview": {
+      "title": "Предпросмотр",
+      "empty": "Пустой текст",
+      "buttonEmpty": "Кнопка"
+    },
+    "buttons": {
+      "title": "Кнопки",
+      "label": "Надпись {locale}",
+      "url": "Адрес (https)",
+      "remove": "Удалить кнопку",
+      "add": "Добавить кнопку"
+    },
+    "audience": {
+      "guest": "Гости",
+      "student": "Студенты",
+      "both": "Все"
+    },
+    "deleteWithChildrenTitle": "Удалить пост вместе с подпостами?",
+    "deleteWithChildrenDescription": "Пост и все подпосты под ним будут удалены из бота.",
+    "errors": {
+      "generic": "Что-то пошло не так. Попробуйте ещё раз.",
+      "slugTaken": "Этот slug уже занят.",
+      "notFound": "Пост больше не существует.",
+      "rootProtected": "Главное меню нельзя удалить или перенести.",
+      "hasChildren": "У поста есть подпосты.",
+      "cycle": "Пост нельзя перенести внутрь самого себя.",
+      "reorderMismatch": "Порядок больше не совпадает с деревом. Обновите страницу и попробуйте снова.",
+      "invalid": {
+        "empty": "{field}: заполните поле.",
+        "language": "{field}: заполните текст на этом языке.",
+        "too-long": "{field}: текст слишком длинный.",
+        "format": "{field}: используйте строчные латинские буквы, цифры и дефисы.",
+        "url": "{field}: используйте адрес https://.",
+        "too-many": "{field}: слишком много элементов."
+      }
+    }
+  }
+}
