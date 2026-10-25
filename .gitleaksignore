@@ -1,0 +1,8 @@
+# Accepted gitleaks findings (generic-api-key), both are test fixtures and not credentials.
+# Fingerprint format: <commit>:<file>:<rule>:<line>
+
+# A public VAPID application server key (base64url) used to test applicationServerKey().
+a2d6bb32ad9b8e78e3bc2c09b44aea1a19942f17:packages/features-core/src/push/push-support.test.ts:generic-api-key:65
+
+# A test fixture value in test-utils (shared MSW test data), not a credential.
+9d35aead514c17a2e32441c2905f1c9d4cf8e06d:packages/test-utils/src/fixtures/id.ts:generic-api-key:258

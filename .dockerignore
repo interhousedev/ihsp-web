@@ -1,0 +1,24 @@
+# Default build context ignore list. deploy/Dockerfile and deploy/Dockerfile.prebuilt
+# use their own deploy/*.dockerignore files, which take precedence under BuildKit.
+**/node_modules
+**/.next
+**/*.tsbuildinfo
+**/.DS_Store
+**/*.log
+.git
+.github
+.claude
+.idea
+.vscode
+coverage
+playwright-report
+test-results
+e2e/.state
+e2e/.report
+e2e/.results
+.env
+.env.*
+*.pem
+*.key
+docs
+*.md

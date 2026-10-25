@@ -1,0 +1,53 @@
+node_modules/
+.next/
+out/
+*.tsbuildinfo
+next-env.d.ts
+.DS_Store
+playwright-report/
+test-results/
+coverage/
+.w0-installed
+
+# Bundled by `bun run build:sw` from apps/sp/src/features/pwa/sw/sw.ts
+apps/sp/public/sw.js
+
+# Bundled by `bun run build:sw` from packages/features-core/src/pwa/sw/generic.ts
+apps/lms/public/sw.js
+apps/library/public/sw.js
+apps/staff/public/sw.js
+apps/admin/public/sw.js
+
+# Copied from pdfjs-dist by `bun run copy:pdfjs` (apps/library/scripts/copy-pdfjs.mjs)
+apps/library/public/pdfjs/
+apps/lms/public/h5p-player/
+apps/sp/public/pdfjs/
+apps/staff/public/pdfjs/
+.hypothesis/
+.env
+.env.local
+.env.*.local
+e2e/.state/
+e2e/.report/
+e2e/.results/
+.w0a-done
+.nbw-done
+.idea/
+.vscode/
+*.log
+
+# Editors, OS and local junk
+Thumbs.db
+*.swp
+*~
+*.orig
+*.rej
+.env.*
+!.env.example
+.cache/
+.turbo/
+*.pem
+*.key
+
+# Local CI and security scan reports (scripts/ci_local.sh, scripts/security_scan.sh)
+/reports/

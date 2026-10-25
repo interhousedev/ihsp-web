@@ -1,0 +1,31 @@
+# osv-scanner configuration. Each ignore is time-boxed: after ignoreUntil the advisory is reported again.
+# Review by 2026-11-03.
+
+# fast-uri 3.1.8 (transitive via ajv, production): the fix is fast-uri 3.1.9, published 2026-10-19. The bunfig
+# minimumReleaseAge (7 days) blocks it until about 2026-10-26 23:05 UTC. Bump to 3.1.9 as soon as it is allowed.
+[[IgnoredVulns]]
+id = "GHSA-w74x-v6f9-j3xg"
+ignoreUntil = 2026-11-03
+reason = "fast-uri URI scheme spoofing; fixed in 3.1.9, blocked by minimumReleaseAge until about 2026-10-27"
+
+[[IgnoredVulns]]
+id = "GHSA-xhq7-xmqj-769h"
+ignoreUntil = 2026-11-03
+reason = "fast-uri path equivalence in relative reference normalization; fixed in 3.1.9, blocked by minimumReleaseAge"
+
+[[IgnoredVulns]]
+id = "GHSA-wjr9-j795-jxcr"
+ignoreUntil = 2026-11-03
+reason = "fast-uri host confusion via WHATWG host canonicalization; fixed in 3.1.9, blocked by minimumReleaseAge"
+
+[[IgnoredVulns]]
+id = "GHSA-333x-w4r6-6crp"
+ignoreUntil = 2026-11-03
+reason = "fast-uri scheme injection via suffix references; fixed in 3.1.9, blocked by minimumReleaseAge"
+
+# happy-dom 20.14.5 (dev only, test runner globals). The fix is happy-dom 21.0.4, published 2026-10-20; the
+# minimumReleaseAge blocks it until about 2026-10-27. Bump the registrator to a 21.x release and run the test suite.
+[[IgnoredVulns]]
+id = "GHSA-834v-8h66-3h79"
+ignoreUntil = 2026-11-03
+reason = "happy-dom unsanitized import alias, dev and test only; fixed in 21.0.4, blocked by minimumReleaseAge"
