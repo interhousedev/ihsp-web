@@ -1,0 +1,24 @@
+import { getConfig } from "@ihsp/config"
+
+/**
+ * True when the app runs as an installable app: `APP_MODE=pwa` in its `/env.js`. Every app can: the student app on the
+ * app host (`app.ihsu.uz`, the same static build as the portal), the others on their own hosts. On `my.ihsu.uz`, in the
+ * Telegram mini app and on a plain website it is false, and nothing of this feature is active.
+ * False as well when the runtime config is not there (prerendering, a broken deployment).
+ */
+export function isPwaMode(): boolean {
+  try {
+    return getConfig().APP_MODE === "pwa"
+  } catch {
+    return false
+  }
+}
+
+/** The address of the installable app, or `null` when the deployment has none (the portal then shows no install entry). */
+export function installAppUrl(): string | null {
+  try {
+    return getConfig().APP_URL ?? null
+  } catch {
+    return null
+  }
+}

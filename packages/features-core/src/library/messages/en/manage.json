@@ -1,0 +1,569 @@
+{
+  "manage": {
+    "topics": {
+      "title": "Topics",
+      "add": "Add topic",
+      "subject": "Subject",
+      "empty": "{subject} has no topics yet.",
+      "treeLabel": "Topics of {subject}",
+      "deleteTitle": "Delete this topic?",
+      "deleteText": "“{name}” will be deleted. Items lose this tag.",
+      "deleteConfirm": "Delete",
+      "addChild": "Add a topic under {name}",
+      "edit": "Edit {name}",
+      "delete": "Delete {name}",
+      "editTitle": "Edit topic",
+      "addTitle": "Add topic",
+      "addChildTitle": "Add subtopic",
+      "underParent": "It will be placed under “{name}”.",
+      "namesRequired": "Write the name in Uzbek, Russian and English.",
+      "name": "Name",
+      "slug": "Short name for addresses",
+      "slugHint": "Optional. Leave it empty to make it from the English name.",
+      "year": "Year of study",
+      "anyYear": "Any year",
+      "save": "Save",
+      "deleteTextChildren": "“{name}” and all the topics below it will be deleted. Items lose these tags.",
+      "code": "Code (ББК or УДК)",
+      "codeHint": "Optional. The library classification code.",
+      "archived": "Archived",
+      "archive": "Archive {name}",
+      "restore": "Restore {name}",
+      "moveUp": "Move {name} up",
+      "moveDown": "Move {name} down"
+    },
+    "subjects": {
+      "title": "Subjects",
+      "add": "Add subject",
+      "addChild": "Add a subject under {name}",
+      "addTitle": "Add subject",
+      "addChildTitle": "Add a subject under this one",
+      "editTitle": "Edit subject",
+      "edit": "Edit {name}",
+      "archive": "Archive {name}",
+      "restore": "Restore {name}",
+      "archived": "Archived",
+      "moveUp": "Move {name} up",
+      "moveDown": "Move {name} down",
+      "empty": "No subjects yet.",
+      "treeLabel": "Subject tree",
+      "namesRequired": "Write the name in Uzbek, Russian and English.",
+      "name": "Name",
+      "code": "Code (ББК or УДК)",
+      "codeHint": "Optional. The library classification code, for example ББК 74 or УДК 37.",
+      "parent": "Under",
+      "parentTop": "Top level",
+      "slug": "Short name for addresses",
+      "slugHint": "Optional. Leave it empty to make it from the English name.",
+      "save": "Save"
+    },
+    "collections": {
+      "title": "Collections",
+      "add": "New collection",
+      "empty": "There are no collections yet.",
+      "listLabel": "Collections",
+      "itemCount": "{count, plural, one {# item} other {# items}}",
+      "publishedBadge": "Published",
+      "draftBadge": "Not published",
+      "edit": "Edit {name}",
+      "delete": "Delete {name}",
+      "deleteTitle": "Delete this collection?",
+      "deleteText": "“{name}” will be deleted. The items stay in the library.",
+      "deleteConfirm": "Delete",
+      "editTitle": "Edit collection",
+      "addTitle": "New collection",
+      "dialogHint": "Titles are needed in Uzbek, Russian and English.",
+      "titleField": "Title",
+      "descriptionField": "Description",
+      "published": "Published",
+      "publishedHint": "Readers see published collections only.",
+      "cover": "Cover",
+      "coverChoose": "Choose a cover",
+      "coverReplace": "Replace the cover",
+      "coverNew": "New cover: {name}",
+      "save": "Save",
+      "pickerSearch": "Find items to add",
+      "pickerHint": "Type at least two letters of a title, an author or a topic.",
+      "pickerNone": "Nothing found.",
+      "pickerResults": "Search results",
+      "pickerAdd": "Add {title} to the collection",
+      "pickerAdded": "Added",
+      "pickerAddShort": "Add",
+      "chosen": "{count, plural, one {# item in this collection} other {# items in this collection}}",
+      "chosenNone": "No items yet.",
+      "chosenList": "Items of the collection, in order",
+      "moveUp": "Move {title} up",
+      "moveDown": "Move {title} down",
+      "removeItem": "Remove {title} from the collection"
+    },
+    "stats": {
+      "title": "Statistics",
+      "range": "Period",
+      "from": "From",
+      "to": "To",
+      "rangeInvalid": "The start date must not be after the end date.",
+      "overview": "Use",
+      "opens": "Item opens",
+      "readers": "Readers",
+      "uploads": "Uploads by day",
+      "noUploads": "No uploads in this period.",
+      "searchesWithout": "Searches without results",
+      "noSearches": "Every search found something.",
+      "topItems": "Most opened items",
+      "noTopItems": "No items were opened.",
+      "byStatus": "Items by status",
+      "noItems": "No items.",
+      "byReason": "Open reports by reason",
+      "noReports": "No open reports.",
+      "subjectsWithout": "Subjects without materials",
+      "noGaps": "Every subject has materials.",
+      "queue": {
+        "title": "Review queue",
+        "length": "Waiting",
+        "oldest": "Oldest",
+        "average": "Average wait",
+        "slow": "The oldest item waited over 2 school days.",
+        "serviceLevel": "Goal: a decision within 2 school days."
+      }
+    },
+    "unilibrary": {
+      "title": "UniLibrary",
+      "settings": {
+        "title": "Settings",
+        "explanation": "Off by default. While off, nothing from UniLibrary shows and the server makes no calls to it.",
+        "enable": "Enable UniLibrary",
+        "enableHint": "Show UniLibrary cards in search and on item pages.",
+        "anonymous": "Show anonymous cards",
+        "anonymousHint": "Also for visitors who are not signed in.",
+        "save": "Save settings",
+        "unsaved": "Unsaved changes",
+        "on": "On",
+        "off": "Off",
+        "savedOn": "UniLibrary is on.",
+        "savedOff": "UniLibrary is off."
+      },
+      "status": {
+        "title": "Status",
+        "breaker": "Connection",
+        "breakerState": {
+          "closed": "Working",
+          "open": "Not responding",
+          "half_open": "Testing"
+        },
+        "breakerHint": {
+          "closed": "Calls go to UniLibrary as usual.",
+          "open": "Too many calls failed. Saved results show for a minute.",
+          "half_open": "One test call is going through."
+        },
+        "cache": {
+          "hits": "Served from cache",
+          "misses": "Not in cache",
+          "stale": "Saved results shown",
+          "rate": "Cache hit rate"
+        },
+        "calls": "Last calls",
+        "noCalls": "No calls yet.",
+        "time": "Time",
+        "result": "Result",
+        "duration": "Duration",
+        "path": "Request",
+        "ok": "OK",
+        "failed": "Failed",
+        "ms": "{ms} ms",
+        "hidden": "Hidden records",
+        "noHidden": "No record is hidden."
+      },
+      "coming": {
+        "title": "Feeds and mapping are coming.",
+        "text": "Periodic feeds and subject mapping are not in this version."
+      }
+    },
+    "sanctions": {
+      "title": "Warnings and upload bans",
+      "description": "Warn a user or ban uploads after upheld reports. The user sees the decision.",
+      "userId": "User id",
+      "userIdHint": "The id from the user's page in Users and roles.",
+      "userIdInvalid": "Enter the user id as a UUID, for example 0b8e6a52-6f4e-4a62-9e0f-5a1d3c2b4e7f.",
+      "kind": "Decision",
+      "warning": "Warning",
+      "upload_ban": "Upload ban",
+      "until": "Ban lasts until",
+      "untilHint": "Leave it empty for a ban without an end date.",
+      "reason": "Reason",
+      "reasonHint": "The user will see this text.",
+      "reasonRequired": "Write a reason.",
+      "submit": "Record decision",
+      "doneWarning": "Warning recorded for {user}.",
+      "doneBan": "Upload ban recorded for {user}. {until}"
+    },
+    "books": {
+      "title": "Books",
+      "new": "New book",
+      "import": "Bulk import",
+      "filters": "Find books",
+      "search": "Search by title or author",
+      "statusFilter": "Status",
+      "allStatuses": "All statuses",
+      "empty": "There are no books yet.",
+      "noMatches": "No books match this search.",
+      "loadMore": "Load more",
+      "tableLabel": "Library books",
+      "edit": "Edit",
+      "column": {
+        "title": "Title",
+        "rights": "Rights",
+        "status": "Status",
+        "visibility": "Visibility",
+        "text": "Text",
+        "updated": "Updated"
+      },
+      "visibility": {
+        "public": "Public",
+        "lyceum": "Lyceum only",
+        "hidden": "Hidden"
+      }
+    },
+    "import": {
+      "title": "Bulk import of books",
+      "description": "Upload a CSV with one row per book. Rows with errors are listed.",
+      "columns": "Columns: file name, title, authors, language, year, type, rights and basis, subjects, topics. Upload the files first.",
+      "zone": "CSV file",
+      "hint": "Drop a CSV file here or choose it.",
+      "choose": "Choose CSV",
+      "replace": "Choose another CSV",
+      "ready": "Ready to import: {name}",
+      "run": "Import",
+      "another": "Import another file",
+      "done": "Done",
+      "created": "{count, plural, one {# draft book was created.} other {# draft books were created.}}",
+      "errors": "{count, plural, one {# row has an error and was skipped.} other {# rows have errors and were skipped.}}",
+      "noErrors": "Every row was imported.",
+      "row": "Row",
+      "problem": "Problem"
+    },
+    "editor": {
+      "newTitle": "New book",
+      "editTitle": "Edit book",
+      "back": "Back to books",
+      "viewPublic": "Open the book page",
+      "statusLabel": "Status",
+      "reason": "Reason",
+      "leaveConfirm": "You have unsaved changes. Leave this page?",
+      "saved": "The book was saved.",
+      "fileAttached": "The file was attached.",
+      "unsavedChanges": "Unsaved changes",
+      "allSaved": "All changes are saved.",
+      "saveBeforePublish": "Save before you publish.",
+      "create": "Create book",
+      "save": "Save",
+      "publish": "Publish",
+      "unpublish": "Unpublish",
+      "takedown": "Take down",
+      "takedownTitle": "Take this book down",
+      "takedownDescription": "The book leaves the library. The reason is kept for the audit.",
+      "done": {
+        "publish": "The book is published.",
+        "unpublish": "The book is unpublished.",
+        "takedown": "The book was taken down."
+      },
+      "file": "Book file",
+      "fileHint": "Drop a PDF or EPUB here, or choose it.",
+      "fileReplaceHint": "Drop a new PDF or EPUB here to replace the main file.",
+      "fileChoose": "Choose PDF or EPUB",
+      "fileReplace": "Replace the file",
+      "filePending": "{name} is uploaded and will be attached when you create the book.",
+      "noFile": "No file yet.",
+      "primaryFile": "Main file",
+      "pages": "{count, plural, one {# page} other {# pages}}",
+      "cover": "Cover",
+      "coverHint": "JPG or PNG. Required to publish.",
+      "coverChoose": "Choose a cover",
+      "coverReplace": "Replace the cover",
+      "coverNew": "New cover: {name}",
+      "metadata": "Details",
+      "fieldTitle": "Title",
+      "subtitle": "Subtitle",
+      "authors": "Authors",
+      "translators": "Translators",
+      "addEntry": "Add",
+      "removeEntry": "Remove {name}",
+      "language": "Language and script",
+      "languageHint": "Uzbek in Latin and Cyrillic are separate choices.",
+      "type": "Type",
+      "year": "Year of publication",
+      "publisher": "Publisher",
+      "isbn": "ISBN",
+      "yearsOfStudy": "Years of study",
+      "description": "Description",
+      "subjectsAndTopics": "Subjects and topics",
+      "subjects": "Subjects",
+      "subjectsHint": "At least one subject or collection is needed to publish.",
+      "noSubjects": "No subject yet.",
+      "subjectName": "Subject",
+      "subjectRoleLabel": "Role in {name}",
+      "removeSubject": "Remove subject",
+      "addSubject": "Add subject",
+      "subjectRole": {
+        "textbook": "Textbook",
+        "core": "Core reading",
+        "supplementary": "Supplementary",
+        "reference": "Reference"
+      },
+      "topics": "Topics",
+      "topicsHint": "Optionally name the pages where each topic is covered.",
+      "topicName": "Topic",
+      "pageFrom": "From page",
+      "pageTo": "To page",
+      "removeTopic": "Remove topic",
+      "addTopic": "Add topic",
+      "topicsNeedSubject": "Choose a subject first.",
+      "upload": {
+        "dropHint": "Drop a file here or choose it.",
+        "wrongType": "This file type is not accepted. Use {types}.",
+        "uploading": "Uploading {name}…",
+        "progress": "Upload progress of {name}",
+        "rejected": "The file was rejected: {reason}"
+      },
+      "error": {
+        "titleRequired": "Write a title.",
+        "authorsRequired": "Add at least one author.",
+        "yearInvalid": "Use a year with up to four digits.",
+        "rangeInvalid": "The first page must not be after the last page."
+      },
+      "visibility": {
+        "label": "Who can see the book",
+        "lyceum": "Lyceum only",
+        "public": "Public",
+        "lyceumHint": "Only lyceum students and staff see it.",
+        "publicHint": "Anyone can see it, including visitors.",
+        "download": "Allow download",
+        "downloadHint": "Readers may save the file.",
+        "title": "Who can see the book"
+      },
+      "checklist": {
+        "title": "Publish checklist",
+        "intro": "Fix the red items to publish.",
+        "ready": "Everything is ready. You can publish.",
+        "unsaved": "Shown for your unsaved changes.",
+        "done": "done",
+        "todo": "to do",
+        "text_status": {
+          "label": "The file has been checked",
+          "hint": "Attach a PDF or EPUB and wait for its text."
+        },
+        "cover": {
+          "label": "Cover is present",
+          "hint": "Upload a cover image."
+        },
+        "subjects": {
+          "label": "At least one subject",
+          "hint": "Add a subject, or put the book into a collection."
+        }
+      },
+      "authorsHint": "Start typing: Latin and Cyrillic spellings find each other.",
+      "authorsPlaceholder": "Type an author’s name",
+      "authorSuggestions": "Authors",
+      "tags": "Tags",
+      "tagsHint": "Keywords that help search. Pick one that is already used, or type a new one.",
+      "tagsPlaceholder": "Type a tag",
+      "tagSuggestions": "Tags",
+      "tagCount": "{count, plural, one {# item} other {# items}}",
+      "noSuggestions": "Nothing found. Press Enter to add “{value}”.",
+      "rights": "Rights",
+      "rightsHint": "Who may publish this text. Publishing needs the details checked by a librarian.",
+      "rightsOptions": {
+        "official": "Official, by agreement with the school or publisher",
+        "open_license": "Open licence",
+        "public_domain": "Public domain",
+        "permission": "With the rights holder’s permission"
+      },
+      "suggestion": {
+        "title": "Suggested by a student",
+        "intro": "Check and correct the form, then approve: the book is created with the student's file and the student is told. Publish it from the book page when the rights are recorded.",
+        "file": "File",
+        "link": "Link",
+        "note": "Note",
+        "approve": "Approve and create the book",
+        "decline": "Decline",
+        "declineTitle": "Decline the suggestion",
+        "declineDescription": "The student sees the reason. Their files are deleted after 30 days.",
+        "approved": "Suggestion approved. The book is created.",
+        "declined": "Suggestion declined. The student is told.",
+        "status": {
+          "new": "Waiting",
+          "accepted": "Approved",
+          "declined": "Declined"
+        }
+      }
+    },
+    "title": "Librarian area",
+    "approve": "Approve",
+    "requestChanges": "Request changes",
+    "reject": "Reject",
+    "hold": "Hold",
+    "unpublish": "Unpublish",
+    "restore": "Restore",
+    "ownItem": "You uploaded this. Another librarian must approve it.",
+    "reasonRequired": "Write a reason. The owner will see it.",
+    "reasonLabel": "Reason",
+    "textStatus": {
+      "none": "No text yet",
+      "pending": "Extracting text",
+      "ready": "Text ready",
+      "no_text": "Scan without text",
+      "failed": "Text extraction failed"
+    },
+    "queue": {
+      "title": "Review queue",
+      "tabsLabel": "Queue sections",
+      "tab": {
+        "review": "To review",
+        "reports": "Reports",
+        "held": "Held",
+        "rights": "Rights",
+        "suggestions": "Suggestions"
+      },
+      "oldest": "Oldest: {age}",
+      "empty": {
+        "review": "Nothing is waiting for review.",
+        "reports": "No open reports.",
+        "held": "No held items.",
+        "rights": "The rights of every book are complete.",
+        "suggestions": "No suggestions."
+      },
+      "listLabel": "{tab}: items",
+      "selectHint": "Choose an item to see it here.",
+      "shortcutsHint": "j/k move, a approve, c changes, r reject, h hold.",
+      "kind": {
+        "student_material": "Student material",
+        "teacher_material": "Teacher material",
+        "suggestion": "Suggestion",
+        "report": "Reported",
+        "rights": "Rights"
+      },
+      "sent": "Sent {age}",
+      "findings": "{count, plural, one {# scan finding} other {# scan findings}}",
+      "reportCount": "{count} × {reason}",
+      "needsOther": "Needs another librarian",
+      "actionsLabel": "Actions for the chosen item",
+      "resolveReports": "Resolve reports",
+      "editRights": "Edit rights",
+      "createDraft": "Create a book draft",
+      "announce": {
+        "approve": "Approved: {title}",
+        "request-changes": "Changes requested: {title}",
+        "reject": "Rejected: {title}",
+        "hold": "Held: {title}",
+        "restore": "Restored: {title}",
+        "unpublish": "Unpublished: {title}",
+        "resolve": "Reports resolved: {title}"
+      },
+      "dialog": {
+        "request-changes": {
+          "title": "Request changes",
+          "description": "Tell the owner what to fix in “{title}”.",
+          "confirm": "Send request"
+        },
+        "reject": {
+          "title": "Reject this item",
+          "description": "“{title}” will be rejected. The owner will see your reason.",
+          "confirm": "Reject"
+        },
+        "hold": {
+          "title": "Hold for review",
+          "description": "“{title}” is hidden until you decide. The owner sees your reason.",
+          "confirm": "Hold"
+        },
+        "unpublish": {
+          "title": "Unpublish this item",
+          "description": "“{title}” leaves the library. The owner sees your reason.",
+          "confirm": "Unpublish"
+        },
+        "restore": {
+          "title": "Restore this item",
+          "description": "“{title}” will be published again. Note why it comes back.",
+          "confirm": "Restore"
+        }
+      },
+      "preview": {
+        "title": "Item to review",
+        "openItem": "Open the item page",
+        "openReader": "Open in the reader",
+        "uploader": "Uploaded by",
+        "sent": "Sent",
+        "findings": "Scan findings",
+        "noFindings": "The scan found nothing.",
+        "reports": "Reports",
+        "description": "Description",
+        "subjects": "Subjects",
+        "files": "Files",
+        "noFiles": "No files.",
+        "pages": "{count, plural, one {# page} other {# pages}}",
+        "statusReason": "Reason on record",
+        "suggestedBy": "Suggested by",
+        "suggestionLink": "Link",
+        "suggestionNote": "Note",
+        "suggestedBook": "The book, as the student filled it in",
+        "suggestedTags": "Tags"
+      }
+    },
+    "resolve": {
+      "title": "Resolve reports",
+      "description": "The decision covers every open report of “{title}”.",
+      "decision": "Decision",
+      "action": {
+        "dismiss": {
+          "label": "Dismiss",
+          "hint": "Reports were wrong. The item stays public or comes back."
+        },
+        "hold": {
+          "label": "Hold",
+          "hint": "Hide the item from readers until it is checked."
+        },
+        "unpublish": {
+          "label": "Unpublish",
+          "hint": "Remove the item from the library."
+        },
+        "unpublish_and_warn": {
+          "label": "Unpublish and warn",
+          "hint": "Remove the item and record a warning for the uploader."
+        }
+      },
+      "confirm": "Resolve"
+    },
+    "reports": {
+      "title": "Reports",
+      "section": {
+        "open": "Open reports",
+        "held": "Held after reports"
+      },
+      "empty": {
+        "open": "No open reports.",
+        "held": "No held items."
+      },
+      "heldBadge": "Held",
+      "sent": "first sent {age}",
+      "reasons": "Reasons",
+      "reasonCount": "{count} × {reason}",
+      "resolve": "Resolve",
+      "openQueue": "Open the queue"
+    },
+    "lang": {
+      "uz": "Uzbek",
+      "ru": "Russian",
+      "en": "English"
+    },
+    "fieldRequired": "This field is required.",
+    "reasonOwn": "Your own words (up to 40 characters)",
+    "noteLabel": "Message to the owner",
+    "noteLabelOptional": "Message to the owner (optional)",
+    "noteRequired": "Write what the owner should change.",
+    "reasonCodes": {
+      "reported": "Reported by readers",
+      "unpublished": "Removed from the library",
+      "takedown": "Takedown (rights or policy)",
+      "superseded": "Replaced by a newer version",
+      "other": "Other (write your own)"
+    }
+  }
+}
