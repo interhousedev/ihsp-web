@@ -1,0 +1,550 @@
+{
+  "app": {
+    "name": "IHT Учителям"
+  },
+  "nav": {
+    "today": "Today",
+    "timetable": "Timetable",
+    "journal": "Journal",
+    "exams": "Exams",
+    "myGroup": "My group",
+    "students": "Students",
+    "subgroups": "Subgroups",
+    "groupAttendance": "Attendance",
+    "notifications": "Notifications",
+    "settings": "Settings",
+    "groupHome": "Home",
+    "groupTeaching": "Teaching",
+    "groupMyGroup": "My group",
+    "groupInbox": "Inbox",
+    "groupSettings": "Account",
+    "studentSearch": "Find a student",
+    "notebooks": "Notebooks",
+    "mail": "Email",
+    "subjects": "Subjects",
+    "certificates": "Certificates",
+    "temporaryMarks": "Pending for EMIS"
+  },
+  "audience": {
+    "subgroup": "{group} · subgroup {number}"
+  },
+  "today": {
+    "title": "Today",
+    "now": {
+      "title": "Lesson",
+      "titleNow": "Now",
+      "titleNext": "Next lesson",
+      "none": "No more lessons today.",
+      "running": "In progress",
+      "cancelled": "Cancelled",
+      "room": "Room {name}",
+      "attendance": "Attendance",
+      "homework": "Homework",
+      "addMaterial": "Add material"
+    },
+    "lessons": {
+      "title": "Today's lessons",
+      "empty": "You have no lessons today.",
+      "cancelled": "Cancelled",
+      "changed": "Changed",
+      "attendanceMissing": "Attendance missing",
+      "homeworkMissing": "No homework yet"
+    },
+    "attention": {
+      "title": "Needs attention",
+      "none": "Attendance is up to date for the last 7 days.",
+      "period": "Period {number}",
+      "take": "Take attendance"
+    },
+    "getStarted": {
+      "title": "Get started",
+      "hide": "Hide",
+      "dismissStep": "Dismiss: {step}",
+      "steps": {
+        "telegram": {
+          "title": "Link Telegram",
+          "text": "Get lesson links and the end-of-lesson prompt in the bot.",
+          "action": "Link Telegram"
+        },
+        "notifications": {
+          "title": "Check notifications",
+          "text": "Lesson links 5 minutes before the start and the end-of-lesson prompt.",
+          "action": "Open settings"
+        }
+      }
+    },
+    "examSuggestions": {
+      "title": "Exam dates to confirm",
+      "summary": "{count, plural, one {# exam date to confirm} other {# exam dates to confirm}}",
+      "review": "Review"
+    }
+  },
+  "timetable": {
+    "title": "Timetable",
+    "days": "Days of the week",
+    "period": "Period {number}",
+    "periodHeader": "Period",
+    "room": "Room {name}",
+    "now": "Now",
+    "cancelled": "Cancelled",
+    "attendanceMissing": "Attendance missing",
+    "noLessons": "No lessons on this day.",
+    "noLessonsWeek": "No lessons this week.",
+    "fields": {
+      "room": "Room",
+      "teacher": "Teacher",
+      "subject": "Subject",
+      "date": "Date",
+      "period": "Period"
+    },
+    "attendanceTaken": "Attendance taken",
+    "attendanceTakenAbsent": "{count, plural, one {Taken · # absent} other {Taken · # absent}}"
+  },
+  "lesson": {
+    "title": "Lesson",
+    "missing": "No lesson was chosen. Open one from Today or the timetable.",
+    "backToTimetable": "Timetable"
+  },
+  "journal": {
+    "title": "Journal",
+    "pick": "Subject and audience",
+    "noOptions": "You have no lessons to show in the journal yet.",
+    "noLessons": "No lessons in this term yet.",
+    "export": "Export CSV",
+    "student": "Student",
+    "absences": "Absences",
+    "semesterMark": "Semester",
+    "noTopic": "No topic",
+    "notTaken": "Not taken",
+    "absentMark": "A",
+    "lateMark": "L",
+    "late": "late",
+    "excusedMark": "E",
+    "absent": "absent",
+    "excused": "excused",
+    "present": "present",
+    "cellLabel": "{name}, {date}: {state}",
+    "hint": "Absences can be changed for 7 days after the lesson.",
+    "conflictReloaded": "Someone else changed this lesson; the journal was reloaded.",
+    "notSaved": "Not saved",
+    "keysHint": "Use the arrow keys to move between cells; Space or Enter changes the mark.",
+    "temporaryMark": "Temporary mark",
+    "temporaryMarkFor": "Temporary mark for {name}, {date}",
+    "temporaryState": "temporary mark {value}",
+    "temporaryMarkHint": "Temporary marks stay here until you put them into EMIS."
+  },
+  "group": {
+    "noGroup": "You do not curate a group.",
+    "pickGroup": "Group",
+    "students": {
+      "title": "Students",
+      "student": "Student",
+      "subgroup": "Subgroup",
+      "subgroupNotSet": "Not set",
+      "subgroupNumber": "Subgroup {number}",
+      "absenceRate": "Absence rate",
+      "gpa": "GPA (out of 5)",
+      "attention": "Needs attention",
+      "headStudent": "Head student: {name}",
+      "noHeadStudent": "No head student",
+      "count": "{count, plural, one {# student} other {# students}}",
+      "empty": "No students in this group.",
+      "flaggedCount": "{count, plural, one {# student needs attention} other {# students need attention}}",
+      "noneFlagged": "Nobody needs attention right now.",
+      "notRegistered": "Not registered",
+      "registered": "Registered",
+      "noFlags": "Nothing needs attention for this student.",
+      "openAttendance": "Open attendance",
+      "assignSubgroup": "Assign a subgroup",
+      "flags": {
+        "absences": "High absences",
+        "gpa_drop": "GPA drop",
+        "no_subgroup": "No subgroup"
+      },
+      "flagHints": {
+        "absences": "The absence rate is above the threshold.",
+        "gpa_drop": "The GPA is lower than in the previous semester.",
+        "no_subgroup": "Sees both subgroups until you assign one."
+      }
+    },
+    "subgroups": {
+      "title": "Subgroups",
+      "empty": "No students in this group.",
+      "select": "Select {name}",
+      "selectAll": "Select all",
+      "selected": "{count, plural, one {# selected} other {# selected}}",
+      "bulk": "Assign the selected students",
+      "assignTo": "Subgroup {number}",
+      "clearSubgroup": "Clear subgroup",
+      "subgroupOf": "Subgroup of {name}",
+      "setSubgroup": "{name}: subgroup {number}",
+      "notSet": "Not set",
+      "notRegistered": "Not registered",
+      "save": "Save",
+      "saving": "Saving…",
+      "saved": "Subgroups saved",
+      "unsaved": "{count, plural, one {# unsaved change} other {# unsaved changes}}",
+      "discard": "Discard changes"
+    },
+    "attendance": {
+      "title": "Group attendance",
+      "from": "From",
+      "to": "To",
+      "export": "Export CSV",
+      "empty": "No data for this range.",
+      "views": {
+        "student": "Per student",
+        "subject": "Per subject",
+        "day": "Per day",
+        "lesson": "Per lesson"
+      },
+      "columns": {
+        "label": "Name",
+        "absences": "Absences",
+        "excused": "Excused",
+        "lessons": "Lessons",
+        "rate": "Absence rate",
+        "notTaken": "Not taken",
+        "actions": "Actions"
+      },
+      "absencesLine": "{absences} absences ({excused} excused)",
+      "rateLine": "Absence rate {rate}",
+      "lessonsLine": "{lessons} lessons",
+      "notTakenLine": "{count} without attendance",
+      "excuse": "Excuse"
+    },
+    "excuse": {
+      "title": "Excuse absences",
+      "noAbsences": "Nobody was absent at this lesson.",
+      "excused": "Excused",
+      "unexcused": "Not excused",
+      "comment": "Comment for {name}",
+      "commentPlaceholder": "Comment, for example a medical note",
+      "mark": "Mark excused",
+      "markFor": "Mark {name} as excused",
+      "remove": "Remove excuse",
+      "marked": "Marked as excused",
+      "removed": "Excuse removed"
+    }
+  },
+  "exams": {
+    "title": "Exams",
+    "noGroups": "You do not teach any group yet.",
+    "pickGroup": "Group",
+    "groupOption": "{name} ({count} to confirm)",
+    "subjectFilter": "Subject",
+    "allSubjects": "All subjects",
+    "add": "Add exam",
+    "empty": "No exams for this group yet.",
+    "emptyFiltered": "No exams for this subject.",
+    "weekOf": "Control week {range}",
+    "room": "Room {name}",
+    "controls": {
+      "midterm_1": "Midterm 1",
+      "midterm_2": "Midterm 2",
+      "final": "Final (FC)",
+      "other": "Other"
+    },
+    "kinds": {
+      "midterm": "Midterm (PC)",
+      "final": "Final (FC)",
+      "other": "Other"
+    },
+    "status": {
+      "planned": "Planned",
+      "tentative": "Not confirmed",
+      "undated": "Date not set"
+    },
+    "sources": {
+      "teacher": "Teacher",
+      "admin": "Administration",
+      "emis": "EMIS",
+      "head_student": "Head student"
+    },
+    "actions": {
+      "edit": "Edit",
+      "editFor": "Edit {subject}",
+      "confirm": "Confirm",
+      "confirmFor": "Confirm {subject}",
+      "dismiss": "Dismiss",
+      "dismissFor": "Dismiss {subject}",
+      "cancel": "Cancel exam",
+      "cancelFor": "Cancel exam: {subject}",
+      "setDate": "Set date",
+      "setDateFor": "Set date: {subject}"
+    },
+    "suggestions": {
+      "title": "Suggested dates to confirm",
+      "fromEmis": "From EMIS lesson",
+      "fromHeadStudent": "Suggested by the head student",
+      "confirmAsIs": "Confirm as is",
+      "confirmAsIsFor": "Confirm as is: {subject}",
+      "editConfirm": "Edit and confirm",
+      "editConfirmFor": "Edit and confirm: {subject}",
+      "dismiss": "Dismiss",
+      "dismissFor": "Dismiss: {subject}"
+    },
+    "confirmed": "Date confirmed",
+    "dismissed": "Suggestion dismissed",
+    "cancelled": "Exam cancelled",
+    "created": "Exam added",
+    "saved": "Exam saved",
+    "dismissDialog": {
+      "titleSuggestion": "Dismiss this suggestion?",
+      "titleCancel": "Cancel this exam?",
+      "textSuggestion": "{subject}, {date}. The suggestion will not come back.",
+      "textCancel": "{subject}, {date}. Students will no longer see this exam.",
+      "confirmSuggestion": "Dismiss",
+      "confirmCancel": "Cancel exam",
+      "keep": "Keep"
+    },
+    "editor": {
+      "titleAdd": "Add exam",
+      "titleSetDate": "Set exam date",
+      "titleEdit": "Edit exam",
+      "titleConfirm": "Edit and confirm",
+      "group": "Group {name}",
+      "save": "Save",
+      "saveConfirm": "Save and confirm",
+      "saving": "Saving…",
+      "fields": {
+        "subject": "Subject",
+        "audience": "Audience",
+        "kind": "Kind",
+        "control": "Control week",
+        "date": "Date",
+        "time": "Start time",
+        "room": "Room",
+        "title": "Title",
+        "note": "Note for students"
+      },
+      "chooseSubject": "Choose a subject",
+      "wholeGroup": "Whole group",
+      "subgroup": "Subgroup {number}",
+      "noControl": "No control week",
+      "controlHint": "Control week: {range}",
+      "timeHint": "Optional, Tashkent time.",
+      "roomPlaceholder": "For example 204",
+      "titlePlaceholder": "For example Algebra and functions",
+      "validation": {
+        "subject": "Choose a subject.",
+        "date": "Choose a date.",
+        "time": "Enter the time as HH:MM.",
+        "title": "The title can have up to 200 characters.",
+        "note": "The note can have up to 2000 characters.",
+        "control": "The kind does not match the control week."
+      }
+    }
+  },
+  "settings": {
+    "contacts": {
+      "title": "Contacts",
+      "description": "Shown to your students on My teachers."
+    },
+    "photo": {
+      "title": "Profile photo",
+      "description": "Shown to your students on My teachers. JPEG or PNG, up to 5 MB."
+    },
+    "title": "Settings",
+    "general": {
+      "title": "Language and theme",
+      "language": "Language",
+      "theme": "Theme",
+      "themes": {
+        "light": "Light",
+        "dark": "Dark",
+        "system": "System"
+      }
+    },
+    "telegram": {
+      "title": "Telegram",
+      "notLinked": "Telegram is not linked. Notifications arrive on the web only.",
+      "linked": "Linked",
+      "blocked": "Bot blocked",
+      "link": "Link Telegram",
+      "manage": "Manage Telegram accounts"
+    },
+    "notifications": {
+      "title": "Notifications"
+    },
+    "workOffs": {
+      "title": "Work-off tasks",
+      "add": "Add template",
+      "addTitle": "New template",
+      "editTitle": "Edit template",
+      "text": "Text",
+      "placeholder": "What the student should do",
+      "editFor": "Edit template: {text}",
+      "deleteFor": "Delete template: {text}",
+      "deleteTitle": "Delete this template?",
+      "defaultLabel": "Default work-off task",
+      "noDefault": "No default",
+      "empty": "No templates yet.",
+      "saved": "Template saved",
+      "deleted": "Template deleted"
+    }
+  },
+  "students": {
+    "title": "Find a student",
+    "search": "Search by name",
+    "noStudents": "You have no students yet.",
+    "noResults": "No students match “{query}”.",
+    "count": "{count, plural, one {# student} other {# students}}",
+    "absences": "{count, plural, one {# absence} other {# absences}}",
+    "profile": "Student",
+    "back": "Find a student",
+    "notFound": "This student was not found among your groups.",
+    "attendance": "Attendance",
+    "attendanceSummary": "{absences, plural, one {# absence} other {# absences}} in {lessons, plural, one {# lesson with attendance taken} other {# lessons with attendance taken}}",
+    "marks": "Marks by subject",
+    "semester": "Semester",
+    "noMarks": "No marks yet.",
+    "noLessonMarks": "No lesson marks yet.",
+    "recentLessons": "Recent lessons",
+    "noLessons": "No lessons yet.",
+    "materials": "Lesson materials",
+    "absent": "Absent",
+    "excused": "Excused"
+  },
+  "staffNotebooks": {
+    "attach": "Attach to lesson",
+    "attachTitle": "Attach to a lesson",
+    "loading": "Loading your lessons…",
+    "noLessons": "You have no lessons in this period.",
+    "period": "Period {number}",
+    "attached": "Added to the lesson",
+    "openLesson": "Open the lesson",
+    "done": "Done"
+  },
+  "subjects": {
+    "title": "Subjects",
+    "description": "The subjects you teach this term, with their groups and materials.",
+    "empty": "You have no subjects this term.",
+    "noId": "Choose a subject from the list.",
+    "notTaught": "You do not teach this subject.",
+    "back": "All subjects",
+    "groups": {
+      "heading": "Groups",
+      "divided": "Divided: subgroup {subgroups}",
+      "openNotebook": "Open notebook",
+      "createNotebook": "Create notebook",
+      "creatingNotebook": "Creating…",
+      "lessons": "Next lessons",
+      "noLessons": "No lessons in the next weeks.",
+      "period": "period {number}",
+      "timetable": "Open timetable",
+      "openGroup": "Students and lessons",
+      "openSubgroup": "Subgroup {number}"
+    },
+    "materials": {
+      "heading": "Materials",
+      "tier": {
+        "admin": "Administration materials",
+        "adminHint": "Set by the school for everyone who studies this subject. You cannot change them.",
+        "mine": "My materials for this subject",
+        "mineHint": "Shared with all the groups you teach this subject to.",
+        "groups": "Materials for one group",
+        "groupsHint": "Shared only with that group (or subgroup)."
+      },
+      "empty": "Nothing here yet.",
+      "emptyAdmin": "The administration has not added materials.",
+      "emptyGroups": "You have no groups for this subject.",
+      "groupHalf": "{group} · subgroup {number}",
+      "remove": "Remove {title}",
+      "kind": {
+        "file": "File",
+        "link": "Link",
+        "library_item": "Library book"
+      },
+      "add": {
+        "kind": "Kind of material",
+        "headingMine": "Add a material for all my groups",
+        "headingGroup": "Add a material for {group}",
+        "chooseFile": "Choose a file",
+        "fileChosen": "File: {name}",
+        "urlLabel": "Web address",
+        "searchLabel": "Search the library",
+        "searchNone": "No books found.",
+        "pickBook": "Choose",
+        "bookChosen": "Book: {title}",
+        "titleLabel": "Title",
+        "submit": "Add material"
+      }
+    },
+    "group": {
+      "back": "{subject}",
+      "subgroupTitle": "{group} · subgroup {number}",
+      "students": "Students ({count})",
+      "noStudents": "No students in this group.",
+      "subgroupBadge": "subgroup {number}",
+      "timetable": "Lessons",
+      "thisWeek": "This week",
+      "upcoming": "Upcoming",
+      "noLessons": "No lessons.",
+      "period": "period {number}",
+      "room": "room {room}"
+    },
+    "student": {
+      "back": "Back to the group",
+      "marks": "Marks",
+      "average": "Average",
+      "semesterMark": "semester mark {value}",
+      "noMarks": "No marks yet.",
+      "type": {
+        "lesson": "Lesson mark",
+        "midterm": "Midterm control (MC)",
+        "final": "Final control (FC)"
+      },
+      "homework": "Homework",
+      "noHomework": "No homework for this subject.",
+      "done": "Done {when}",
+      "notDone": "Not done",
+      "note": "Note: {note}",
+      "attendance": "Attendance",
+      "absences": "Absences: {count}",
+      "absencesOf": "Absences: {count} of {total} lessons",
+      "excused": "excused"
+    },
+    "reconcile": {
+      "button": "Check that all lesson materials are in the notebook",
+      "hint": "Starts a background check that adds the lesson materials missing from the subject notebooks. Materials already there stay as they are.",
+      "running": "Checking…",
+      "done": "Checked {notebooks} notebooks: {added} added, {present} already present, {skipped} to retry later.",
+      "error": "The check did not finish. Try again."
+    },
+    "lessonSources": {
+      "heading": "From lessons (EMIS)",
+      "group": "Group",
+      "allGroups": "All groups",
+      "empty": "No lesson materials.",
+      "hidden": "Hidden",
+      "hiddenByRule": "Hidden by the group rule",
+      "file": "{name} ({size})",
+      "openItem": "Open {title}",
+      "hide": "Hide {title}",
+      "show": "Show {title}",
+      "hideForGroup": "Hide EMIS sources for {group}",
+      "pages": "Pages",
+      "previous": "Previous",
+      "next": "Next",
+      "range": "{from}–{to} of {total}"
+    }
+  },
+  "temporaryMarks": {
+    "journalTitle": "Journal",
+    "note": "These marks are temporary until you put them into EMIS.",
+    "valueFor": "Mark for {name}",
+    "setValue": "Give {name} a {value}",
+    "commentFor": "Comment for {name}",
+    "comment": "Comment (optional)",
+    "save": "Save",
+    "saveFor": "Save mark for {name}",
+    "remove": "Remove",
+    "removeFor": "Remove mark for {name}",
+    "saved": "Mark saved",
+    "removed": "Mark removed",
+    "pendingTitle": "Pending for EMIS",
+    "empty": "No marks are waiting for EMIS.",
+    "period": "Period {number}"
+  }
+}
