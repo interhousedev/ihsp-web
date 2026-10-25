@@ -1,0 +1,1132 @@
+{
+  "notebooks": {
+    "list": {
+      "title": "Notebooks",
+      "new": "New notebook",
+      "search": "Search notebooks",
+      "empty": "No notebooks yet.",
+      "folders": {
+        "all": "All",
+        "subject": "Subject Notebooks",
+        "course": "LMS Notebooks",
+        "mine": "My Notebooks"
+      },
+      "showMore": "Show more",
+      "sources": "{count, plural, one {# source} other {# sources}}",
+      "noResults": "No notebooks match “{query}”.",
+      "meta": "{sources} · {when}",
+      "slot": {
+        "hint": "Tap to open",
+        "opening": "Opening…"
+      }
+    },
+    "untitled": "Untitled notebook",
+    "card": {
+      "pin": "Pin",
+      "unpin": "Unpin",
+      "rename": "Rename",
+      "delete": "Delete",
+      "pinned": "Pinned",
+      "menu": "Actions for “{title}”"
+    },
+    "delete": {
+      "title": "Delete this notebook?",
+      "description": "Its sources, chat and study materials will be deleted. Your files stay in My files."
+    },
+    "workspace": {
+      "back": "All notebooks",
+      "notFound": "This notebook was not found.",
+      "rename": "Rename notebook",
+      "menu": "Notebook menu",
+      "deleteNotebook": "Delete notebook",
+      "usageTitle": "Usage: {percent}%",
+      "tabBar": "Notebook sections",
+      "sheetDescription": "Side panel of the notebook",
+      "showSources": "Show Sources",
+      "showStudio": "Show Studio",
+      "resizeSources": "Resize the Sources panel",
+      "resizeStudio": "Resize the Studio panel",
+      "openSources": "Open Sources ({count})",
+      "openStudio": "Open Studio ({count})",
+      "emoji": {
+        "change": "Change emoji",
+        "pick": "Choose an emoji"
+      }
+    },
+    "tabs": {
+      "sources": "Sources",
+      "chat": "Chat",
+      "studio": "Studio"
+    },
+    "usage": {
+      "open": "Usage",
+      "title": "Usage",
+      "session": "This session",
+      "day": "Today",
+      "resets": "Resets at {time}",
+      "unlimited": "No limit",
+      "materials": "Study materials: {used} of {limit} today",
+      "description": "How much you can create with the AI.",
+      "used": "{percent}% used",
+      "generating": "Being created now: {count} of {limit}",
+      "kinds": "Daily limits",
+      "quota": "{kind}: {used} of {limit} today",
+      "note": "The session limit refills over 5 hours; the daily limit resets at midnight. Viewing existing items is free."
+    },
+    "menu": {
+      "configureChat": "Configure chat"
+    },
+    "sources": {
+      "title": "Sources",
+      "add": "Add sources",
+      "selectAll": "Select all sources",
+      "syncAll": "Sync outdated sources",
+      "limit": "{count} of {limit} sources",
+      "empty": {
+        "title": "Add your first source",
+        "description": "Upload a file, add a lesson material or chat, or paste text.",
+        "fromFiles": "From My files"
+      },
+      "collapse": "Collapse the sources panel",
+      "showFlat": "Show as one list",
+      "showGrouped": "Group by type",
+      "selectGroup": "Select all in {group}",
+      "limitNear": "The source limit is almost reached.",
+      "selectFailed": "Could not change the selection.",
+      "search": "Search sources",
+      "searchEmpty": "Nothing found for «{query}»",
+      "inText": "In the text",
+      "inTextLoading": "Searching in the text…",
+      "searchCount": "{count, plural, one {# source found} other {# sources found}}",
+      "clearSearch": "Clear search",
+      "autoLabel": "Label sources by topic",
+      "autoLabeling": "Labelling sources…",
+      "autoLabelFailed": "Could not label the sources. Try again.",
+      "autoLabelNeedsSelection": "Select at least one ready source first.",
+      "groupBy": "Group by",
+      "groupByType": "Type",
+      "groupByTopic": "Topic",
+      "groupByNone": "None (one list)",
+      "dropToAdd": "Drop files to add as sources"
+    },
+    "group": {
+      "file": "Files",
+      "chat": "AI chats",
+      "lesson_resource": "Lesson materials",
+      "flashcard_set": "Flash cards",
+      "lms_step": "Course steps",
+      "note": "Notes",
+      "text": "Pasted text",
+      "url": "Web pages",
+      "web_result": "Web results",
+      "library_item": "Library",
+      "library_notes": "Library notes"
+    },
+    "status": {
+      "aiUnsupported": "Not used by the AI: unsupported format",
+      "pending": "Waiting…",
+      "processing": "Reading…",
+      "failed": "Could not read",
+      "unavailable": "Not available",
+      "stale": "Outdated",
+      "failedReason": "Could not read: {reason}",
+      "unavailableReason": "Not available: {reason}"
+    },
+    "failure": {
+      "unsupported_type": "This file type has no readable text yet.",
+      "no_text": "No text found in the source.",
+      "too_large": "The source is too large.",
+      "fetch_failed": "Could not open the page.",
+      "forbidden": "You cannot use this item.",
+      "deleted": "The file was deleted.",
+      "provider_error": "Temporary error. Try again.",
+      "no_transcript": "This video has no transcript to read."
+    },
+    "row": {
+      "open": "Open source",
+      "sync": "Sync",
+      "rename": "Rename",
+      "remove": "Remove",
+      "exclude": "Exclude",
+      "fromLessons": "From lessons",
+      "more": "More actions for {title}",
+      "reread": "Re-read",
+      "rereading": "Re-reading…",
+      "aiReading": "AI is reading this file… it will be available soon",
+      "noText": "No readable text found",
+      "aiReadingNow": "AI is reading the file at the moment, so it will be available soon!",
+      "emptyText": "No text found"
+    },
+    "remove": {
+      "title": "Remove this source?",
+      "description": "Answers will no longer use it. Saved citations keep their quotes."
+    },
+    "add": {
+      "title": "Add sources",
+      "tab": {
+        "files": "My files",
+        "chats": "Chats",
+        "lessons": "Lessons",
+        "flashcards": "Flash cards",
+        "courses": "Courses",
+        "text": "Text",
+        "link": "Link",
+        "course_steps": "Course steps"
+      },
+      "upload": "Upload a file",
+      "drop": "Drop files here",
+      "textTitle": "Title",
+      "textBody": "Paste text here",
+      "linkSoon": "Web pages are coming soon. Copy the text and paste it.",
+      "submit": "{count, plural, one {Add # source} other {Add # sources}}",
+      "alreadyAdded": "Already added",
+      "noText": "No readable text",
+      "rejected": "{title}: {reason}",
+      "tabs": "Source types",
+      "selected": "{count} selected",
+      "full": "This notebook has reached the source limit. Remove a source to add more.",
+      "tooMany": "{max, plural, one {You can add only # source at a time.} other {You can add up to # sources at a time.}}",
+      "adding": "Adding {name}…",
+      "textAdd": "Add text",
+      "files": {
+        "search": "Search files",
+        "empty": "You have no files yet. Upload one to get started.",
+        "noMatch": "No files match your search.",
+        "browse": "All my files"
+      },
+      "chats": {
+        "empty": "No chats yet. Talk to the assistant first, then add the chat here."
+      },
+      "lessons": {
+        "subject": "Subject",
+        "choose": "Choose a subject",
+        "noSubjects": "No subjects found.",
+        "empty": "This subject has no materials yet.",
+        "material": "Material",
+        "attachment": "Attachment",
+        "webPage": "web page"
+      },
+      "flashcards": {
+        "empty": "You have no flash card sets yet.",
+        "cards": "{count, plural, one {# card} other {# cards}}",
+        "noCards": "No cards yet"
+      },
+      "courses": {
+        "empty": "You are not enrolled in any course yet.",
+        "noSteps": "This course has no steps yet.",
+        "steps": "{count, plural, one {# step} other {# steps}}",
+        "testsNote": "Only the text and cards of a step are added. Tests are never included.",
+        "hasTests": "Tests are left out"
+      },
+      "link": {
+        "label": "Links",
+        "placeholder": "https://example.com/page",
+        "hint": "Paste one or more links separated by spaces or new lines. Only the text of a page is used.",
+        "skipped": "Not web addresses, skipped: {items}",
+        "add": "{count, plural, =0 {Add links} one {Add # link} other {Add # links}}"
+      },
+      "courseSteps": {
+        "empty": "The course has no steps yet.",
+        "note": "Steps are read from the draft. Test blocks are never added."
+      }
+    },
+    "viewer": {
+      "back": "Back to chat",
+      "guide": "Source guide",
+      "topics": "Key topics",
+      "building": "Summarizing…",
+      "page": "Page {page}",
+      "changed": "Source changed",
+      "ask": "Ask about this",
+      "close": "Close",
+      "loadingText": "Loading…",
+      "empty": "There is no text in this source.",
+      "changedHint": "The text changed after this answer was written. Showing the nearest text instead.",
+      "loadMore": "Load more",
+      "topicQuestion": "Tell me about {topic}",
+      "questions": "Questions about this source",
+      "filePreview": {
+        "label": "File preview",
+        "open": "Open full preview",
+        "download": "Download",
+        "zoom": "Open {name} at full size",
+        "size": "Size",
+        "type": "Type",
+        "unsupported": "Your browser cannot play this file.",
+        "pdfFallback": "Your browser cannot show PDFs here. Open the full preview or download the file.",
+        "pdfFirstPage": "Page 1 of {count}",
+        "pdfOpenTab": "Open the PDF in a new tab"
+      }
+    },
+    "note": {
+      "edit": "Edit",
+      "removeCitations": "Remove citations and edit",
+      "save": "Save note",
+      "new": "New note",
+      "cancel": "Cancel",
+      "titleLabel": "Title",
+      "untitled": "Untitled note",
+      "body": "Note",
+      "placeholder": "Write your note here. Markdown works.",
+      "markdownHint": "Markdown is supported: **bold**, lists, headings.",
+      "citedHint": "This note was saved from an answer and keeps its citations. Remove them to edit the text."
+    },
+    "chat": {
+      "placeholder": "Ask a question about your sources or ask to create something",
+      "sourcesCount": "{count, plural, one {# source} other {# sources}}",
+      "noSources": "No sources selected — the answer will not rely on your materials",
+      "disclaimer": "Answers can be wrong. Check them against your sources.",
+      "thinking": "Reading your sources…",
+      "stop": "Stop",
+      "noCitations": "This answer has no citations. Check it against your sources.",
+      "retrieval": "Based on the most relevant parts of large sources.",
+      "saveToNote": "Save to note",
+      "savedToNote": "Saved to notes",
+      "suggested": "Suggested questions",
+      "summaryBuilding": "Preparing the summary…",
+      "clear": "Delete chat history",
+      "clearConfirm": "Delete the chat history of this notebook?",
+      "messages": "Conversation",
+      "you": "You",
+      "assistant": "Assistant",
+      "meta": "{sources} · {date}",
+      "summary": "Summary",
+      "summaryActions": "Summary actions",
+      "summaryFailed": "Could not prepare the summary.",
+      "answerActions": "Answer actions",
+      "inputLabel": "Message",
+      "send": "Send",
+      "stopped": "Stopped",
+      "followups": "Follow-up questions",
+      "quick": {
+        "label": "Create study materials",
+        "started": "“{kind}” is being created.",
+        "ready": "“{kind}” is ready.",
+        "failed": "“{kind}” could not be created.",
+        "open": "Open Studio"
+      },
+      "action": {
+        "title": "Create “{kind}”?",
+        "focus": "Focus: {prompt}",
+        "created": "“{kind}” is being created.",
+        "ready": "“{kind}” is ready.",
+        "failed": "“{kind}” could not be created."
+      },
+      "web": "Search the web too",
+      "legend": "① your sources · 🌐 web pages",
+      "showMoreQuestions": "Show more",
+      "webOn": "Web search is on",
+      "webOff": "Turn off web search",
+      "showLessQuestions": "Show less"
+    },
+    "citation": {
+      "label": "Source {n}",
+      "open": "Open in source",
+      "removed": "Source changed or removed"
+    },
+    "config": {
+      "title": "Configure chat",
+      "style": {
+        "default": {
+          "label": "Default"
+        },
+        "learning_guide": {
+          "label": "Learning guide"
+        },
+        "custom": "Custom",
+        "label": "Style"
+      },
+      "custom": {
+        "placeholder": "Describe the style or the role, e.g. “Explain like I am 12”."
+      },
+      "length": {
+        "default": "Default",
+        "shorter": "Shorter",
+        "longer": "Longer",
+        "label": "Response length"
+      },
+      "language": {
+        "auto": "Same as the interface",
+        "label": "Answer language",
+        "uz": "Oʻzbekcha",
+        "ru": "Русский",
+        "en": "English"
+      },
+      "customLabel": "Style instruction",
+      "customCount": "{count} of {max}",
+      "presets": {
+        "label": "Presets",
+        "balanced": "Balanced",
+        "tutor": "Tutor",
+        "exam": "Exam prep",
+        "simple": "Simple words",
+        "depth": "In depth",
+        "prompt": {
+          "exam": "Answer like an examiner's checklist: the key facts and definitions first, then likely exam questions and common mistakes.",
+          "simple": "Explain in plain, simple words with short sentences and everyday examples; avoid jargon, or explain it when unavoidable.",
+          "depth": "Give a thorough, detailed explanation with reasoning, edge cases and examples."
+        }
+      },
+      "goal": {
+        "label": "Goal",
+        "placeholder": "What are you working on?",
+        "left": "{count, plural, one {# character left} other {# characters left}}"
+      }
+    },
+    "studio": {
+      "title": "Studio",
+      "empty": {
+        "title": "Studio results will be saved here.",
+        "description": "Add sources to create study materials."
+      },
+      "addNote": "Add note",
+      "noSources": "No sources selected — the answer will not rely on your materials",
+      "webHint": {
+        "message": "Not enough material — search the web for sources?",
+        "action": "Search the web"
+      },
+      "customize": "Customize {kind}",
+      "sources": {
+        "title": "Sources",
+        "count": "{selected} of {total} selected",
+        "search": "Search sources",
+        "list": "Sources to use",
+        "all": "Select all",
+        "none": "Select none",
+        "add": "Add sources",
+        "empty": "No sources yet — add a file to start",
+        "noMatch": "No source matches",
+        "words": "{count, plural, one {# word} other {# words}}",
+        "skipped": "{count, plural, one {# source is} other {# sources are}} still being read and will be skipped",
+        "waitAll": "The chosen sources are still being read — wait until they are ready"
+      },
+      "collapse": "Collapse Studio",
+      "tiles": "Create study materials",
+      "tileBusy": "Being created",
+      "items": "Studio items",
+      "itemSubtitle": "{count, plural, one {# source} other {# sources}} · {time}",
+      "menu": "Actions for {title}",
+      "rename": "Rename",
+      "renameTitle": "Rename item",
+      "renameLabel": "Title",
+      "cancel": "Cancel creation",
+      "delete": "Delete",
+      "deleteTitle": "Delete this item?",
+      "deleteDescription": "It will be removed from Studio. Your sources are not affected.",
+      "canceled": "Canceled",
+      "progress": "Progress",
+      "addedAsSource": "Added to your sources",
+      "setSaved": "Flash card set saved",
+      "promptTitle": "Prompt",
+      "promptType": "Type",
+      "promptOptions": "Options",
+      "promptFocus": "Focus",
+      "promptNoFocus": "No focus text was given.",
+      "formatHint": {
+        "study_guide": "Quiz, essay questions and a glossary",
+        "briefing": "Summary, key themes and facts",
+        "faq": "Questions and answers",
+        "timeline": "Events in order and a cast of characters",
+        "article": "A friendly article for classmates",
+        "custom": "Describe what you need"
+      },
+      "blueprint": {
+        "title": "Plan",
+        "delivered": "{delivered} of {requested}",
+        "rejected": "{count} rejected",
+        "byTemplate": "By template",
+        "byDomain": "By domain",
+        "sources": "Source types",
+        "mode": "Test type",
+        "items": "Items"
+      }
+    },
+    "kind": {
+      "audio_overview": "Audio overview",
+      "slides": "Slide deck",
+      "mind_map": "Mind map",
+      "conspect": "Conspect",
+      "report": "Reports",
+      "flashcards": "Flash cards",
+      "quiz": "Quiz",
+      "infographic": "Infographic",
+      "data_table": "Data table",
+      "artifacts": "Study materials",
+      "course_plan": "Course plan",
+      "lesson_draft": "Lesson draft",
+      "course_quiz": "Test questions",
+      "course_flashcards": "Flash cards",
+      "exercise": "Exercise"
+    },
+    "format": {
+      "conspect": "Conspect",
+      "study_guide": "Study guide",
+      "briefing": "Briefing",
+      "faq": "FAQ",
+      "timeline": "Timeline",
+      "article": "Article",
+      "custom": "Create your own"
+    },
+    "report": {
+      "pickTitle": "Choose a report format",
+      "contents": "Contents",
+      "print": "Print / PDF",
+      "downloadMd": "Download .md"
+    },
+    "opt": {
+      "count": {
+        "fewer": "Fewer",
+        "standard": "Standard",
+        "more": "More",
+        "custom": "Custom",
+        "customCards": "Number of cards",
+        "customQuestions": "Number of questions",
+        "customRange": "Enter a number from {min} to {max}",
+        "label": "Number"
+      },
+      "difficulty": {
+        "easy": "Easy",
+        "medium": "Medium",
+        "hard": "Hard",
+        "label": "Difficulty"
+      },
+      "detail": {
+        "short": "Short",
+        "standard": "Standard",
+        "long": "Long",
+        "label": "Detail"
+      },
+      "style": {
+        "outline": "Outline",
+        "cornell": "Cornell notes",
+        "thesis": "Theses",
+        "label": "Style"
+      },
+      "focus": "What should it focus on? (optional)",
+      "language": "Language",
+      "generate": "Generate",
+      "focusPlaceholder": "For example: only the Calvin cycle, for a test",
+      "focusCount": "{count} / {max}",
+      "customPrompt": "What should the report contain?",
+      "customPlaceholder": "Describe the task in your own words",
+      "languageAuto": "Auto",
+      "lang": {
+        "uz": "Oʻzbekcha",
+        "ru": "Русский",
+        "en": "English"
+      },
+      "types": {
+        "label": "Question types",
+        "single": "Single choice",
+        "multiple": "Multiple choice",
+        "true_false": "True / false",
+        "hint": "Choose at least one type"
+      },
+      "maxRows": {
+        "label": "Maximum rows",
+        "hint": "From 10 to 40"
+      },
+      "mapDetail": {
+        "overview": "Overview",
+        "detailed": "Detailed"
+      },
+      "slidesFormat": {
+        "label": "Format",
+        "presenter": "Presenter slides",
+        "detailed": "Detailed deck"
+      },
+      "length": {
+        "label": "Length",
+        "short": "Short",
+        "default": "Default",
+        "long": "Long"
+      },
+      "orientation": {
+        "label": "Orientation",
+        "portrait": "Portrait",
+        "landscape": "Landscape",
+        "square": "Square"
+      },
+      "infoDetail": {
+        "concise": "Concise",
+        "standard": "Standard",
+        "detailed": "Detailed"
+      },
+      "infoStyle": {
+        "clean": "Clean",
+        "sketch": "Sketch",
+        "bento": "Bento",
+        "scientific": "Scientific",
+        "playful": "Playful"
+      },
+      "planDepth": {
+        "label": "Detail",
+        "overview": "Overview",
+        "detailed": "Detailed"
+      },
+      "sectionsHint": {
+        "label": "Number of sections (optional)",
+        "placeholder": "Let the model decide",
+        "hint": "From {min} to {max}."
+      },
+      "lessonStep": {
+        "label": "Write it for",
+        "new": "A new step"
+      },
+      "lessonLength": {
+        "label": "Length",
+        "short": "Short",
+        "standard": "Standard",
+        "long": "Long"
+      },
+      "includeTest": {
+        "label": "Add a test with questions"
+      },
+      "includeCards": {
+        "label": "Add flash cards"
+      },
+      "yes": "yes",
+      "mode": {
+        "label": "Test type",
+        "auto": "Auto (recommended)",
+        "full_mock": "Full mock exam",
+        "topic_test": "Topic test",
+        "question_type_test": "One question type",
+        "vocab_test": "Vocabulary",
+        "formula_recall": "Formulas",
+        "concept_check": "Concepts",
+        "problem_practice": "Problem practice",
+        "reading_test": "Reading"
+      },
+      "sourceKind": {
+        "vocabulary_list": "Vocabulary list",
+        "problem_set": "Problem set",
+        "formula_sheet": "Formula sheet",
+        "reading_passages": "Reading passages",
+        "textbook_chapter": "Textbook chapter",
+        "lecture_notes": "Lecture notes",
+        "exam_paper": "Exam paper",
+        "other": "Other"
+      },
+      "exam": {
+        "label": "Exam style",
+        "ielts_academic": "IELTS Academic",
+        "sat": "SAT",
+        "ap": "AP",
+        "generic": "General"
+      },
+      "skill": {
+        "label": "Skill",
+        "reading": "Reading",
+        "writing": "Writing",
+        "listening_script": "Listening script",
+        "mixed": "Mixed"
+      },
+      "exerciseMode": {
+        "label": "Format",
+        "auto": "Auto",
+        "full_section": "Full section",
+        "practice": "Practice",
+        "drill": "One question type"
+      },
+      "exerciseCount": {
+        "auto": "Auto",
+        "hint": "Empty: the usual number for the exam (1 to 60)"
+      }
+    },
+    "item": {
+      "generating": "Generating… this can take a minute. You can leave this page.",
+      "failed": "Could not create",
+      "retry": "Try again",
+      "new": "New",
+      "viewPrompt": "View prompt",
+      "addAsSource": "Add as source",
+      "sampled": "Large notebook: based on a sample of the text. Select fewer sources for a complete result."
+    },
+    "limit": {
+      "day": "Daily limit reached, resets at {time}.",
+      "session": "Session limit reached, available again at {time}.",
+      "access": "The school administration has restricted AI in notebooks for your account.",
+      "quota": "Daily limit for “{kind}” reached.",
+      "busy": "Three items are already being created. Wait for one to finish."
+    },
+    "mindmap": {
+      "fit": "Fit to screen",
+      "expandAll": "Expand all",
+      "collapseAll": "Collapse all",
+      "zoomIn": "Zoom in",
+      "zoomOut": "Zoom out",
+      "download": "Download image",
+      "listView": "Outline view",
+      "ask": "Ask in chat",
+      "sources": "Show sources",
+      "prompt": "Explain “{label}” using my sources.",
+      "expand": "Expand",
+      "collapse": "Collapse",
+      "more": "More actions",
+      "downloadOutline": "Download text",
+      "copyOutline": "Copy outline",
+      "exportFailed": "Could not create the PNG in this browser. Download or copy the outline instead.",
+      "empty": "This mind map is empty.",
+      "toolbar": "Mind map tools",
+      "canvas": "Mind map: {title}",
+      "outline": "Mind map outline: {title}",
+      "details": "Details of {label}",
+      "tidy": "Tidy up",
+      "addBlock": "Text block",
+      "addChild": "Add child",
+      "addSibling": "Add sibling",
+      "edit": "Edit",
+      "delete": "Delete",
+      "editLabel": "Node text",
+      "newNode": "New idea",
+      "newBlock": "Note"
+    },
+    "cards": {
+      "flip": "Flip card",
+      "known": "Got it",
+      "missed": "Missed it",
+      "progress": "Card {current} of {total}",
+      "shuffle": "Shuffle",
+      "delete": "Delete card",
+      "restart": "Restart",
+      "hint": "Hint",
+      "explain": "Explain",
+      "results": "Done! Known: {known}, missed: {missed}.",
+      "again": {
+        "same": "Same cards",
+        "all": "All cards",
+        "missed": "Only missed cards"
+      },
+      "csv": "Download CSV",
+      "saveSet": "Save as flash card set",
+      "openSet": "Open set"
+    },
+    "quiz": {
+      "progress": "Question {current} of {total}",
+      "multi": "Choose all that apply",
+      "check": "Check",
+      "next": "Next",
+      "back": "Back",
+      "skip": "Skip",
+      "correct": "Correct",
+      "wrong": "Incorrect",
+      "true": "True",
+      "false": "False",
+      "score": "Score",
+      "accuracy": "Accuracy",
+      "skipped": "Skipped",
+      "review": "Review answers",
+      "retry": "Try again",
+      "retryWrong": "Retry wrong answers"
+    },
+    "table": {
+      "copy": "Copy as TSV",
+      "csv": "Download CSV",
+      "sources": "Sources"
+    },
+    "slides": {
+      "more": "More actions",
+      "start": "Start slideshow",
+      "notes": "Speaker notes",
+      "revise": "Revise",
+      "generateRevised": "Generate revised deck",
+      "pending": "Pending changes",
+      "slideN": "Slide {n}",
+      "exit": "Press Esc to exit",
+      "stage": "Current slide",
+      "slideOf": "Slide {current} of {total}",
+      "previous": "Previous slide",
+      "next": "Next slide",
+      "list": "Slides",
+      "slideshow": "Slideshow",
+      "exitShow": "Exit slideshow",
+      "empty": "This deck has no slides.",
+      "edit": "Edit",
+      "saved": "All changes saved",
+      "unsaved": "Unsaved changes",
+      "discard": "Discard changes",
+      "moveUp": "Move slide up",
+      "moveDown": "Move slide down",
+      "reorder": "Reorder slide {n}",
+      "moved": "Slide {from} moved to position {to} of {count}",
+      "delete": "Delete slide",
+      "deleteTitle": "Delete this slide?",
+      "deleteDescription": "The slide is removed from the deck when you save.",
+      "editorTitle": "Edit slide {n}",
+      "field": {
+        "title": "Title",
+        "bullets": "Bullets",
+        "bullet": "Bullet {n}",
+        "addBullet": "Add bullet",
+        "removeBullet": "Remove bullet {n}",
+        "body": "Body text",
+        "quote": "Quote",
+        "attribution": "Author or source",
+        "leftHeading": "Left column heading",
+        "rightHeading": "Right column heading",
+        "leftBullet": "Left column, bullet {n}",
+        "rightBullet": "Right column, bullet {n}",
+        "visualHint": "Idea for a picture"
+      },
+      "hint": "Picture idea: {hint}",
+      "notesEmpty": "No speaker notes for this slide.",
+      "print": "Print / PDF",
+      "copyOutline": "Copy outline",
+      "hasChange": "has a pending change",
+      "reviseTitle": "Revise slide {n}",
+      "instruction": "What to change on slide {n}",
+      "instructionPlaceholder": "What should change on this slide?",
+      "reviseHelp": "Write what to change. Only slides with an instruction are regenerated, as a new deck.",
+      "pendingEmpty": "No changes yet.",
+      "removeChange": "Remove the change for slide {n}",
+      "saveFirst": "Save or discard your edits first.",
+      "generating": "Generating…",
+      "revised": "The revised deck is being generated. It will appear in Studio.",
+      "dragHelp": "Press Space to pick up the slide, the arrow keys to move it and Space to drop it. Escape cancels."
+    },
+    "infographic": {
+      "png": "Download PNG",
+      "canvas": "Infographic",
+      "zoom": "Zoom",
+      "zoomIn": "Zoom in",
+      "zoomOut": "Zoom out",
+      "fit": "Fit to width",
+      "zoomValue": "{percent}%",
+      "print": "Print / PDF",
+      "copy": "Copy text",
+      "preparing": "Preparing image…",
+      "pngFailed": "Could not create the image. Use Print / PDF instead.",
+      "sources": "Sources ({count})",
+      "takeaway": "Key takeaway",
+      "step": "Step {n}"
+    },
+    "audio": {
+      "play": "Play",
+      "pause": "Pause",
+      "speed": "Speed",
+      "transcript": "Transcript",
+      "preparing": "Preparing audio… {percent}%",
+      "aiVoices": "AI voices can make mistakes."
+    },
+    "artifactError": {
+      "provider_error": "The AI service had a temporary error.",
+      "invalid_output": "The result was not valid. Try again.",
+      "no_content": "The sources are too short for this material.",
+      "limit_reached": "A usage limit was reached.",
+      "timeout": "It took too long.",
+      "canceled": "Canceled.",
+      "generic": "Could not create this material."
+    },
+    "sourceRename": {
+      "title": "Rename source",
+      "label": "Title",
+      "cancel": "Cancel",
+      "save": "Save"
+    },
+    "viewers": {
+      "region": "Study material",
+      "titleLabel": "Title",
+      "deleteTitle": "Delete this item?",
+      "deleteDescription": "It will be removed from Studio. This cannot be undone.",
+      "noContent": "This item has no content yet.",
+      "explain": {
+        "title": "Explanation",
+        "retry": "Ask again"
+      },
+      "report": {
+        "toolbar": "Report actions",
+        "sourceAdded": "Added as a source",
+        "askPrompt": "Explain this part of the report in more detail.",
+        "askSelection": "Ask about the selected text"
+      },
+      "cards": {
+        "deck": "Flash cards",
+        "tools": "Card tools",
+        "front": "Front",
+        "back": "Back",
+        "tapToFlip": "Tap the card or press Space to flip it.",
+        "empty": "No cards left in this set.",
+        "explainPrompt": "Explain this in more detail using my sources: {text}",
+        "setSaved": "Saved as a flash card set",
+        "copy": "Copy cards"
+      },
+      "quiz": {
+        "region": "Quiz",
+        "results": "Results",
+        "finish": "See results",
+        "hint": "Hint",
+        "explain": "Explain",
+        "explainPrompt": "Explain this quiz question and its answer in more detail using my sources: {text}",
+        "explanation": "Explanation",
+        "correctOption": "Correct answer",
+        "yourAnswer": "Your answer",
+        "noAnswer": "No answer",
+        "backToResults": "Back to results",
+        "reviewTitle": "Your answers",
+        "empty": "This quiz has no questions."
+      },
+      "table": {
+        "toolbar": "Table actions",
+        "sortBy": "Sort by",
+        "sortNone": "No sorting",
+        "ascending": "Ascending",
+        "descending": "Descending",
+        "empty": "This table has no rows."
+      }
+    },
+    "rename": {
+      "title": "Rename notebook",
+      "label": "Name"
+    },
+    "discover": {
+      "placeholder": "Find new sources on the internet",
+      "fast": "Fast search",
+      "deep": "Deep search",
+      "cost": "{count, plural, one {# search} other {# searches}}",
+      "results": "Results for «{query}»",
+      "already": "Already in sources",
+      "add": "{count, plural, one {Add # source} other {Add # sources}}",
+      "searching": "Searching… about 20 seconds",
+      "blocked": "This site does not allow reading its pages. Open it and paste the text instead.",
+      "back": "Back to sources",
+      "count": "{count, plural, one {# result} other {# results}}",
+      "submit": "Search the web",
+      "mode": "Search type",
+      "selectAll": "Select all",
+      "selectNone": "Clear selection",
+      "open": "Open «{title}» in a new tab",
+      "queries": "Searched for"
+    },
+    "combine": {
+      "action": "Combine selected notes",
+      "hint": "Select at least two notes to combine them.",
+      "title": "Combine notes",
+      "titleLabel": "Title of the new note",
+      "defaultTitle": "Notes · {title}",
+      "fallbackTitle": "Combined notes",
+      "listLabel": "Notes to combine",
+      "unselect": "Unselect the original notes",
+      "cancel": "Cancel",
+      "submit": "Combine",
+      "working": "Combining…"
+    },
+    "course": {
+      "acceptedAnswers": "Accepted answers",
+      "backToEditor": "Back to the course editor",
+      "cardsBlock": "{count, plural, one {# flash card} other {# flash cards}}",
+      "testBlock": "{count, plural, one {Test: # question} other {Test: # questions}}",
+      "correctOption": "correct",
+      "passingScore": "pass at {percent}%",
+      "questionType": {
+        "single": "one answer",
+        "multiple": "several answers",
+        "text": "text answer",
+        "number": "number"
+      },
+      "readOnlyChat": "You can read this workspace but not change it, so the chat is off.",
+      "readOnlySources": "You can read this workspace but not change it.",
+      "readOnlyStudio": "You can read this workspace but not change it.",
+      "lesson": {
+        "title": "Step title"
+      },
+      "chatMode": {
+        "label": "Chat mode",
+        "sources": "Ask the sources",
+        "author": "Author assistant"
+      },
+      "author": {
+        "chatPicker": "Author assistant chat",
+        "inputLabel": "Message to the author assistant",
+        "newChat": "New chat",
+        "placeholder": "Ask for a plan, a lesson, a test…",
+        "starters": "Ideas to start with",
+        "starter": {
+          "plan": "Plan a course on ",
+          "lesson": "Write the lesson for the step ",
+          "test": "Add a test with 5 questions to the step ",
+          "review": "Review the course outline and point out the gaps"
+        },
+        "starterLabel": {
+          "plan": "Plan a course",
+          "lesson": "Write a lesson",
+          "test": "Add a test",
+          "review": "Review the outline"
+        }
+      },
+      "plan": {
+        "summary": "Course overview",
+        "courseGoals": "Course learning goals (one per line)",
+        "sectionGoals": "Section goals (one per line)",
+        "stepGoals": "Step goals (one per line)",
+        "stepSummary": "What the step covers",
+        "sectionTitle": "Title of section {n}",
+        "stepTitle": "Title of step {n}",
+        "addSection": "Add section",
+        "addStep": "Add step",
+        "moveUp": "Move up",
+        "moveDown": "Move down",
+        "removeSection": "Remove section",
+        "removeStep": "Remove step",
+        "reset": "Undo my edits",
+        "problem": {
+          "no-sections": "The plan has no sections.",
+          "empty-title": "Every section and step needs a title.",
+          "no-steps": "Every section needs at least one step."
+        }
+      },
+      "apply": {
+        "title": "Apply “{title}” to the course",
+        "description": {
+          "course_plan": "Creates the sections and steps the course draft does not have yet. Nothing changes for students until you publish.",
+          "lesson_draft": "Writes the lesson into a step of the course draft. Nothing changes for students until you publish.",
+          "quiz": "Adds the questions to a step of the course draft as a test block.",
+          "flashcards": "Adds the cards to a step of the course draft as a flash cards block."
+        },
+        "buttonPlan": "Apply to course",
+        "buttonStep": "Apply to step",
+        "confirm": "Apply",
+        "loading": "Checking what would change…",
+        "problems": "This cannot be applied yet:",
+        "new": "New",
+        "exists": "Exists",
+        "added": "Added",
+        "planCounts": "{sections, plural, one {# new section} other {# new sections}}, {steps, plural, one {# new step} other {# new steps}}. {existing, plural, one {# step already exists and stays} other {# steps already exist and stay}} as they are.",
+        "newStep": "A new step “{title}” will be created.",
+        "appendTo": "Blocks are added to the end of “{title}”.",
+        "replaceIn": "The content of “{title}” is replaced.",
+        "removedBlocks": "{count, plural, one {# current block is removed} other {# current blocks are removed}}.",
+        "target": "Step",
+        "pickStep": "Choose a step…",
+        "newStepOption": "A new step",
+        "section": "In section",
+        "mode": "Mode",
+        "mode_replace": "Replace the content",
+        "mode_append": "Add to the end",
+        "addBriefs": "Put the goals and the summary of each new step into its first text block",
+        "conflict": "The step changed meanwhile. The preview was reloaded; check it and apply again.",
+        "donePlan": "{sections, plural, one {# section} other {# sections}} and {steps, plural, one {# step} other {# steps}} created in the draft.",
+        "doneStep": "The step draft is updated. Review it in the editor, then publish.",
+        "openEditor": "Open in editor",
+        "notes": "Notes about the conversion"
+      }
+    },
+    "label": {
+      "other": "No topic",
+      "rename": "Rename label",
+      "delete": "Delete label",
+      "nameField": "Label name",
+      "renameFailed": "Could not rename the label.",
+      "deleteFailed": "Could not delete the label.",
+      "deleteTitle": "Delete this label?",
+      "deleteDescription": "The label is removed. Its sources stay in the notebook."
+    },
+    "export": {
+      "download": "Download .{format}",
+      "share": "Share",
+      "addToFiles": "Add to my files",
+      "savedToFiles": "Saved to My files: {name}",
+      "linkCopied": "Link copied"
+    },
+    "attach": {
+      "chips": "Attached to the question",
+      "remove": "Remove {label}",
+      "menu": "Add to the question",
+      "upload": "Upload files",
+      "lesson": "Add lesson",
+      "materials": "Search materials",
+      "search": "Search",
+      "empty": "Nothing found",
+      "noTopic": "No topic yet",
+      "uploadFailed": "Could not upload {name}"
+    },
+    "plan": {
+      "card": "{title} · {count, plural, one {# slide} other {#-slide}} outline",
+      "open": "Open the outline",
+      "title": "Presentation plan",
+      "description": "Check the slides before the deck is made. Edit titles and points, delete or move slides, then Generate.",
+      "deckTitle": "Deck title",
+      "slideTitle": "Slide {n} title",
+      "bullet": "Point {n} of slide {slide}",
+      "addBullet": "Add a point",
+      "removeBullet": "Remove the point",
+      "moveUp": "Move slide {n} up",
+      "moveDown": "Move slide {n} down",
+      "remove": "Delete slide {n}",
+      "generate": "Generate",
+      "save": "Save",
+      "saved": "Saved",
+      "making": "Writing the outline…",
+      "makePlan": "Plan the slides",
+      "overLimit": "The plan has {count} slides, but a deck can have at most {max}. Delete slides or trim the plan before generating.",
+      "trim": "Trim to {max} slides",
+      "tooFew": "A deck needs at least 3 slides.",
+      "confirmed": "The slides are being made from this plan.",
+      "generating": "The deck is being generated. It will appear in Studio."
+    },
+    "exercise": {
+      "region": "Exercise",
+      "passage": "Passage",
+      "questions": "Questions",
+      "part": "Part {n}",
+      "chooseAll": "Choose all that apply",
+      "choose": "Choose",
+      "answer": "Your answer",
+      "wordLimit": "No more than {count} words",
+      "accepted": "Correct answer: {answers}",
+      "tfng": {
+        "true": "True",
+        "false": "False",
+        "not_given": "Not Given"
+      },
+      "essay": "Your essay",
+      "essayTask": "At least {min} words, {minutes} minutes",
+      "words": "Words: {count} of {min}",
+      "rubric": "Rubric",
+      "outline": "What a strong answer covers",
+      "submit": "Submit answers",
+      "retry": "Start again",
+      "score": "Score: {earned} of {possible}",
+      "correct": "Correct",
+      "wrong": "Incorrect ({earned} of {possible})",
+      "timer": {
+        "start": "Start timer",
+        "pause": "Pause",
+        "left": "{time} left",
+        "over": "Time is up"
+      },
+      "feedback": {
+        "get": "Get AI feedback",
+        "loading": "Checking the essay",
+        "title": "AI feedback",
+        "band": "Estimated band: {band}",
+        "strengths": "Strengths",
+        "improvements": "How to improve",
+        "tooShort": "Write at least 10 words first"
+      }
+    }
+  },
+  "errors": {
+    "notebooks": {
+      "not-found": "This notebook, source or item was not found.",
+      "subject-not-found": "This subject is not known yet. Try again after your timetable syncs.",
+      "notebook-limit": "You have reached the limit of notebooks. Delete one to create another.",
+      "source-limit": "This notebook has reached the limit of sources or text.",
+      "source-duplicate": "This source is already in the notebook.",
+      "source-forbidden": "You cannot add this item as a source.",
+      "source-unsupported": "This type of source cannot be read yet.",
+      "source-too-large": "The source is too large.",
+      "source-not-ready": "The source is still being read. Try again in a moment.",
+      "no-sources-selected": "Select at least one ready source first.",
+      "quota-exceeded": "The daily limit for this kind of material is reached.",
+      "limit-reached": "The usage limit is reached. Try again after it resets.",
+      "busy": "Something is already being created. Wait for it to finish.",
+      "artifact-limit": "This notebook has too many study materials. Delete some first.",
+      "artifact-not-ready": "This material is not ready yet.",
+      "invalid-options": "These options are not valid for this material.",
+      "feature-disabled": "This feature is turned off.",
+      "plan-too-long": "The plan has {count} slides; a presentation can have at most {max}. Delete or merge slides first.",
+      "plan-confirmed": "This presentation plan has already been turned into slides."
+    }
+  }
+}

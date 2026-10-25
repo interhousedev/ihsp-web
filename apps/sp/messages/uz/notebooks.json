@@ -1,0 +1,1132 @@
+{
+  "notebooks": {
+    "list": {
+      "title": "Daftarlar",
+      "new": "Yangi daftar",
+      "search": "Daftarlarni qidirish",
+      "empty": "Daftarlar hali yoʻq.",
+      "folders": {
+        "all": "Barchasi",
+        "subject": "Fan daftarlari",
+        "course": "LMS daftarlari",
+        "mine": "Mening daftarlarim"
+      },
+      "showMore": "Yana koʻrsatish",
+      "sources": "{count} ta manba",
+      "noResults": "«{query}» soʻrovi boʻyicha daftarlar topilmadi.",
+      "meta": "{sources} · {when}",
+      "slot": {
+        "hint": "Ochish uchun bosing",
+        "opening": "Ochilmoqda…"
+      }
+    },
+    "untitled": "Nomsiz daftar",
+    "card": {
+      "pin": "Mahkamlash",
+      "unpin": "Mahkamdan olish",
+      "rename": "Nomini oʻzgartirish",
+      "delete": "Oʻchirish",
+      "pinned": "Mahkamlangan",
+      "menu": "«{title}» daftari amallari"
+    },
+    "delete": {
+      "title": "Bu daftar oʻchirilsinmi?",
+      "description": "Uning manbalari, chati va oʻquv materiallari oʻchiriladi. Fayllaringiz «Mening fayllarim»da qoladi."
+    },
+    "workspace": {
+      "back": "Barcha daftarlar",
+      "notFound": "Bu daftar topilmadi.",
+      "rename": "Daftar nomini oʻzgartirish",
+      "menu": "Daftar menyusi",
+      "deleteNotebook": "Daftarni oʻchirish",
+      "usageTitle": "Foydalanildi: {percent}%",
+      "tabBar": "Daftar boʻlimlari",
+      "sheetDescription": "Daftarning yon paneli",
+      "showSources": "Manbalarni koʻrsatish",
+      "showStudio": "Studiyani koʻrsatish",
+      "resizeSources": "Manbalar panelining kengligini oʻzgartirish",
+      "resizeStudio": "Studiya panelining kengligini oʻzgartirish",
+      "openSources": "Manbalarni ochish ({count})",
+      "openStudio": "Studiyani ochish ({count})",
+      "emoji": {
+        "change": "Emojini almashtirish",
+        "pick": "Emojini tanlang"
+      }
+    },
+    "tabs": {
+      "sources": "Manbalar",
+      "chat": "Chat",
+      "studio": "Studiya"
+    },
+    "usage": {
+      "open": "Foydalanish",
+      "title": "Foydalanish",
+      "session": "Shu sessiya",
+      "day": "Bugun",
+      "resets": "{time} da yangilanadi",
+      "unlimited": "Cheklovsiz",
+      "materials": "Bugungi materiallar: {used}/{limit}",
+      "description": "Sunʼiy intellekt yordamida qancha material yaratishingiz mumkin.",
+      "used": "Ishlatilgan: {percent}%",
+      "generating": "Hozir yaratilmoqda: {count}/{limit}",
+      "kinds": "Kunlik cheklar",
+      "quota": "{kind}: bugun {used}/{limit}",
+      "note": "Sessiya cheki 5 soat ichida tiklanadi, kunlik chek yarim tunda yangilanadi. Tayyor materiallarni koʻrish cheklarni sarflamaydi."
+    },
+    "menu": {
+      "configureChat": "Chatni sozlash"
+    },
+    "sources": {
+      "title": "Manbalar",
+      "add": "Manba qoʻshish",
+      "selectAll": "Barcha manbalarni tanlash",
+      "syncAll": "Eskirgan manbalarni yangilash",
+      "limit": "{count}/{limit} manba",
+      "empty": {
+        "title": "Birinchi manbani qoʻshing",
+        "description": "Fayl yuklang, dars materiali yoki chatni qoʻshing yoki matn joylang.",
+        "fromFiles": "«Mening fayllarim»dan"
+      },
+      "collapse": "Manbalar panelini yigʻish",
+      "showFlat": "Bitta roʻyxat sifatida koʻrsatish",
+      "showGrouped": "Turlar boʻyicha guruhlash",
+      "selectGroup": "Hammasini tanlash: {group}",
+      "limitNear": "Manbalar limiti deyarli tugadi.",
+      "selectFailed": "Tanlovni oʻzgartirib boʻlmadi.",
+      "search": "Manbalardan qidirish",
+      "searchEmpty": "«{query}» boʻyicha hech narsa topilmadi",
+      "inText": "Matn ichida",
+      "inTextLoading": "Matn ichidan qidirilmoqda…",
+      "searchCount": "{count} ta manba topildi",
+      "clearSearch": "Qidiruvni tozalash",
+      "autoLabel": "Manbalarni mavzu boʻyicha belgilash",
+      "autoLabeling": "Manbalar belgilanmoqda…",
+      "autoLabelFailed": "Manbalarni belgilab boʻlmadi. Qaytadan urinib koʻring.",
+      "autoLabelNeedsSelection": "Avval kamida bitta tayyor manbani tanlang.",
+      "groupBy": "Guruhlash",
+      "groupByType": "Turi boʻyicha",
+      "groupByTopic": "Mavzu boʻyicha",
+      "groupByNone": "Guruhsiz (bitta roʻyxat)",
+      "dropToAdd": "Manba sifatida qoÊ»shish uchun fayllarni shu yerga tashlang"
+    },
+    "group": {
+      "file": "Fayllar",
+      "chat": "Yordamchi chatlari",
+      "lesson_resource": "Dars materiallari",
+      "flashcard_set": "Kartochkalar",
+      "lms_step": "Kurs qadamlari",
+      "note": "Qaydlar",
+      "text": "Joylangan matn",
+      "url": "Veb-sahifalar",
+      "web_result": "Qidiruv natijalari",
+      "library_item": "Kutubxona",
+      "library_notes": "Kutubxona qaydlari"
+    },
+    "status": {
+      "aiUnsupported": "AI ishlatmaydi: format qo‘llab-quvvatlanmaydi",
+      "pending": "Kutilmoqda…",
+      "processing": "Oʻqilmoqda…",
+      "failed": "Oʻqib boʻlmadi",
+      "unavailable": "Mavjud emas",
+      "stale": "Eskirgan",
+      "failedReason": "Oʻqib boʻlmadi: {reason}",
+      "unavailableReason": "Mavjud emas: {reason}"
+    },
+    "failure": {
+      "unsupported_type": "Bu fayl turidan matnni hozircha olib boʻlmaydi.",
+      "no_text": "Manbada matn topilmadi.",
+      "too_large": "Manba juda katta.",
+      "fetch_failed": "Sahifani ochib boʻlmadi.",
+      "forbidden": "Bu elementdan foydalana olmaysiz.",
+      "deleted": "Fayl oʻchirilgan.",
+      "provider_error": "Vaqtinchalik xatolik. Qayta urinib koʻring.",
+      "no_transcript": "Videoda oʼqish uchun subtitrlar yoʼq."
+    },
+    "row": {
+      "open": "Manbani ochish",
+      "sync": "Yangilash",
+      "rename": "Nomini oʻzgartirish",
+      "remove": "Olib tashlash",
+      "exclude": "Chiqarib tashlash",
+      "fromLessons": "Darslardan",
+      "more": "«{title}» manbasi uchun amallar",
+      "reread": "Qayta oʼqish",
+      "rereading": "Qayta oʼqilmoqda…",
+      "aiReading": "AI bu faylni oÊ»qimoqda… u tez orada mavjud boÊ»ladi",
+      "noText": "OÊ»qiladigan matn topilmadi",
+      "aiReadingNow": "AI hozir faylni oÊ»qimoqda, shuning uchun u tez orada mavjud boÊ»ladi!",
+      "emptyText": "Matn topilmadi"
+    },
+    "remove": {
+      "title": "Bu manba olib tashlansinmi?",
+      "description": "Javoblar uni endi ishlatmaydi. Saqlangan havolalarda iqtiboslar qoladi."
+    },
+    "add": {
+      "title": "Manba qoʻshish",
+      "tab": {
+        "files": "Mening fayllarim",
+        "chats": "Chatlar",
+        "lessons": "Darslar",
+        "flashcards": "Kartochkalar",
+        "courses": "Kurslar",
+        "text": "Matn",
+        "link": "Havola",
+        "course_steps": "Kurs qadamlari"
+      },
+      "upload": "Fayl yuklash",
+      "drop": "Fayllarni shu yerga tashlang",
+      "textTitle": "Sarlavha",
+      "textBody": "Matnni shu yerga joylang",
+      "linkSoon": "Veb-sahifalar tez orada qoʻshiladi. Matnni nusxalab joylang.",
+      "submit": "{count} ta manbani qoʻshish",
+      "alreadyAdded": "Allaqachon qoʻshilgan",
+      "noText": "Oʻqiladigan matn yoʻq",
+      "rejected": "{title}: {reason}",
+      "tabs": "Manba turlari",
+      "selected": "{count} ta tanlandi",
+      "full": "Daftarda manbalar limitiga yetildi. Yangisini qoʻshish uchun birini olib tashlang.",
+      "tooMany": "Bir safarda koʻpi bilan {max} ta manba qoʻshish mumkin.",
+      "adding": "{name} qoʻshilmoqda…",
+      "textAdd": "Matnni qoʻshish",
+      "files": {
+        "search": "Fayllardan qidirish",
+        "empty": "Hozircha fayllar yoʻq. Birinchisini yuklang.",
+        "noMatch": "Fayllar topilmadi.",
+        "browse": "Barcha fayllarim"
+      },
+      "chats": {
+        "empty": "Hozircha chatlar yoʻq. Avval yordamchi bilan suhbatlashing, keyin chatni shu yerga qoʻshing."
+      },
+      "lessons": {
+        "subject": "Fan",
+        "choose": "Fanni tanlang",
+        "noSubjects": "Fanlar topilmadi.",
+        "empty": "Bu fanda hozircha materiallar yoʻq.",
+        "material": "Material",
+        "attachment": "Biriktirma",
+        "webPage": "veb-sahifa"
+      },
+      "flashcards": {
+        "empty": "Hozircha kartochkalar toʻplamlari yoʻq.",
+        "cards": "{count} ta kartochka",
+        "noCards": "Hozircha kartochkalar yoʻq"
+      },
+      "courses": {
+        "empty": "Siz hali hech bir kursga yozilmagansiz.",
+        "noSteps": "Bu kursda hozircha qadamlar yoʻq.",
+        "steps": "{count} ta qadam",
+        "testsNote": "Qadamning faqat matni va kartochkalari qoʻshiladi. Testlar hech qachon kiritilmaydi.",
+        "hasTests": "Testlar kiritilmaydi"
+      },
+      "link": {
+        "label": "Havolalar",
+        "placeholder": "https://example.com/page",
+        "hint": "Bir yoki bir nechta havolani boʻsh joy yoki yangi qator bilan ajratib joylang. Faqat sahifaning matni ishlatiladi.",
+        "skipped": "Veb-manzil emas, oʻtkazib yuborildi: {items}",
+        "add": "{count, plural, =0 {Havolalarni qoʻshish} other {# ta havolani qoʻshish}}"
+      },
+      "courseSteps": {
+        "empty": "Kursda hali qadamlar yoʻq.",
+        "note": "Qadamlar qoralamadan oʻqiladi. Test bloklari qoʻshilmaydi."
+      }
+    },
+    "viewer": {
+      "back": "Chatga qaytish",
+      "guide": "Manba haqida",
+      "topics": "Asosiy mavzular",
+      "building": "Qisqacha tavsif tayyorlanmoqda…",
+      "page": "{page}-sahifa",
+      "changed": "Manba oʻzgargan",
+      "ask": "Shu haqida soʻrash",
+      "close": "Yopish",
+      "loadingText": "Yuklanmoqda…",
+      "empty": "Bu manbada matn yoʻq.",
+      "changedHint": "Javob yozilganidan keyin matn oʻzgargan. Eng yaqin qism koʻrsatilmoqda.",
+      "loadMore": "Yana koʻrsatish",
+      "topicQuestion": "«{topic}» haqida gapirib ber",
+      "questions": "Ushbu manba boʻyicha savollar",
+      "filePreview": {
+        "label": "Fayl koʻrinishi",
+        "open": "Toʻliq koʻrish",
+        "download": "Yuklab olish",
+        "zoom": "{name} faylini toʻliq oʻlchamda ochish",
+        "size": "Hajmi",
+        "type": "Turi",
+        "unsupported": "Brauzer bu faylni ijro eta olmaydi.",
+        "pdfFallback": "Brauzer PDF faylni bu yerda koʻrsata olmaydi. Toʻliq koʻrishni oching yoki faylni yuklab oling.",
+        "pdfFirstPage": "{count} sahifadan 1-sahifa",
+        "pdfOpenTab": "PDF faylni yangi varaqda ochish"
+      }
+    },
+    "note": {
+      "edit": "Tahrirlash",
+      "removeCitations": "Havolalarni olib tashlab tahrirlash",
+      "save": "Qaydni saqlash",
+      "new": "Yangi qayd",
+      "cancel": "Bekor qilish",
+      "titleLabel": "Sarlavha",
+      "untitled": "Nomsiz qayd",
+      "body": "Qayd",
+      "placeholder": "Qaydni shu yerga yozing. Markdown ishlaydi.",
+      "markdownHint": "Markdown qoʻllab-quvvatlanadi: **qalin**, roʻyxatlar, sarlavhalar.",
+      "citedHint": "Bu qayd javobdan saqlangan va manbalarga havolalarni saqlab turadi. Matnni tahrirlash uchun ularni olib tashlang."
+    },
+    "chat": {
+      "placeholder": "Manbalar haqida savol bering yoki biror narsa yaratishni soʻrang",
+      "sourcesCount": "{count} ta manba",
+      "noSources": "Manbalar tanlanmagan — javob materiallarga tayanmaydi",
+      "disclaimer": "Javoblar xato boʻlishi mumkin. Ularni manbalar bilan solishtiring.",
+      "thinking": "Manbalaringiz oʻqilmoqda…",
+      "stop": "Toʻxtatish",
+      "noCitations": "Bu javobda manbalarga havolalar yoʻq. Uni manbalar bilan solishtiring.",
+      "retrieval": "Katta manbalarning eng mos qismlari asosida.",
+      "saveToNote": "Qaydga saqlash",
+      "savedToNote": "Qaydlarga saqlandi",
+      "suggested": "Taklif etilgan savollar",
+      "summaryBuilding": "Qisqacha tavsif tayyorlanmoqda…",
+      "clear": "Chat tarixini oʻchirish",
+      "clearConfirm": "Ushbu daftarning chat tarixi oʻchirilsinmi?",
+      "messages": "Suhbat",
+      "you": "Siz",
+      "assistant": "Yordamchi",
+      "meta": "{sources} · {date}",
+      "summary": "Qisqacha tavsif",
+      "summaryActions": "Tavsif ustidagi amallar",
+      "summaryFailed": "Qisqacha tavsifni tayyorlab boʻlmadi.",
+      "answerActions": "Javob ustidagi amallar",
+      "inputLabel": "Xabar",
+      "send": "Yuborish",
+      "stopped": "Toʻxtatildi",
+      "followups": "Davomiy savollar",
+      "quick": {
+        "label": "Oʻquv materiallarini yaratish",
+        "started": "«{kind}» yaratilmoqda.",
+        "ready": "«{kind}» tayyor.",
+        "failed": "«{kind}» yaratib bo‘lmadi.",
+        "open": "Studiyani ochish"
+      },
+      "action": {
+        "title": "«{kind}» yaratilsinmi?",
+        "focus": "Yoʻnalish: {prompt}",
+        "created": "«{kind}» yaratilmoqda.",
+        "ready": "«{kind}» tayyor.",
+        "failed": "«{kind}» yaratib bo‘lmadi."
+      },
+      "web": "Internetdan ham qidirish",
+      "legend": "① manbalaringiz · 🌐 veb-sahifalar",
+      "showMoreQuestions": "Yana koʻrsatish",
+      "webOn": "Internetdan qidirish yoqilgan",
+      "webOff": "Internetdan qidirishni oʻchirish",
+      "showLessQuestions": "Kamroq koʻrsatish"
+    },
+    "citation": {
+      "label": "{n}-manba",
+      "open": "Manbada ochish",
+      "removed": "Manba oʻzgargan yoki olib tashlangan"
+    },
+    "config": {
+      "title": "Chatni sozlash",
+      "style": {
+        "default": {
+          "label": "Standart"
+        },
+        "learning_guide": {
+          "label": "Murabbiy"
+        },
+        "custom": "Oʻz uslubi",
+        "label": "Uslub"
+      },
+      "custom": {
+        "placeholder": "Uslub yoki rolni tavsiflang, masalan: «12 yoshli bolaga tushuntirgandek tushuntir»."
+      },
+      "length": {
+        "default": "Standart",
+        "shorter": "Qisqaroq",
+        "longer": "Uzunroq",
+        "label": "Javob uzunligi"
+      },
+      "language": {
+        "auto": "Interfeys tilida",
+        "label": "Javob tili",
+        "uz": "Oʻzbekcha",
+        "ru": "Русский",
+        "en": "English"
+      },
+      "customLabel": "Uslub boʻyicha koʻrsatma",
+      "customCount": "{count}/{max}",
+      "presets": {
+        "label": "Tayyor sozlamalar",
+        "balanced": "Muvozanatli",
+        "tutor": "Repetitor",
+        "exam": "Imtihonga tayyorgarlik",
+        "simple": "Oddiy soʻzlar bilan",
+        "depth": "Batafsil",
+        "prompt": {
+          "exam": "Imtihon oluvchining nazorat roʻyxati kabi javob ber: avval asosiy faktlar va atamalar, keyin imtihonda tushishi mumkin boʻlgan savollar va keng tarqalgan xatolar.",
+          "simple": "Oddiy soʻzlar, qisqa gaplar va kundalik misollar bilan tushuntir; murakkab atamalarsiz tushuntir, kerak boʻlsa ularni izohla.",
+          "depth": "Fikr yuritish, istisno holatlar va misollar bilan puxta, batafsil tushuntirib ber."
+        }
+      },
+      "goal": {
+        "label": "Maqsad",
+        "placeholder": "Nima ustida ishlayapsiz?",
+        "left": "{count} ta belgi qoldi"
+      }
+    },
+    "studio": {
+      "title": "Studiya",
+      "empty": {
+        "title": "Studiya natijalari shu yerda saqlanadi.",
+        "description": "Oʻquv materiallari yaratish uchun manbalar qoʻshing."
+      },
+      "addNote": "Qayd qoʻshish",
+      "noSources": "Manbalar tanlanmagan — javob materiallarga tayanmaydi",
+      "webHint": {
+        "message": "Materiallar yetarli emas — manbalarni internetdan qidiraymizmi?",
+        "action": "Internetdan qidirish"
+      },
+      "customize": "Sozlash: {kind}",
+      "sources": {
+        "title": "Manbalar",
+        "count": "{total} tadan {selected} tasi tanlandi",
+        "search": "Manbalarni qidirish",
+        "list": "Ishlatiladigan manbalar",
+        "all": "Hammasini tanlash",
+        "none": "Tanlovni olib tashlash",
+        "add": "Manba qoʻshish",
+        "empty": "Hali manbalar yoʻq — fayl qoʻshing",
+        "noMatch": "Hech narsa topilmadi",
+        "words": "{count} ta soʻz",
+        "skipped": "{count} ta manba hali oʻqilmoqda va oʻtkazib yuboriladi",
+        "waitAll": "Tanlangan manbalar hali oʻqilmoqda — tayyor boʻlishini kuting"
+      },
+      "collapse": "Studiyani yigʻish",
+      "tiles": "Oʻquv materiallarini yaratish",
+      "tileBusy": "Yaratilmoqda",
+      "items": "Studiya materiallari",
+      "itemSubtitle": "{count} ta manba · {time}",
+      "menu": "Amallar: {title}",
+      "rename": "Nomini oʻzgartirish",
+      "renameTitle": "Material nomini oʻzgartirish",
+      "renameLabel": "Sarlavha",
+      "cancel": "Yaratishni bekor qilish",
+      "delete": "Oʻchirish",
+      "deleteTitle": "Bu material oʻchirilsinmi?",
+      "deleteDescription": "U Studiyadan oʻchiriladi. Manbalar oʻzgarmaydi.",
+      "canceled": "Bekor qilindi",
+      "progress": "Jarayon",
+      "addedAsSource": "Manbalarga qoʻshildi",
+      "setSaved": "Kartochkalar toʻplami saqlandi",
+      "promptTitle": "Soʻrov",
+      "promptType": "Turi",
+      "promptOptions": "Sozlamalar",
+      "promptFocus": "Eʼtibor",
+      "promptNoFocus": "Eʼtibor matni kiritilmagan.",
+      "formatHint": {
+        "study_guide": "Test, esse savollari va lugʻat",
+        "briefing": "Xulosa, asosiy mavzular va faktlar",
+        "faq": "Savollar va javoblar",
+        "timeline": "Voqealar tartib bilan va ishtirokchilar roʻyxati",
+        "article": "Sinfdoshlar uchun qiziqarli maqola",
+        "custom": "Nima kerakligini tasvirlab bering"
+      },
+      "blueprint": {
+        "title": "Reja",
+        "delivered": "{requested} tadan {delivered} tasi",
+        "rejected": "rad etildi: {count}",
+        "byTemplate": "Shablon bo‘yicha",
+        "byDomain": "Mavzu bo‘yicha",
+        "sources": "Manba turlari",
+        "mode": "Test turi",
+        "items": "Elementlar"
+      }
+    },
+    "kind": {
+      "audio_overview": "Audio sharh",
+      "slides": "Taqdimot",
+      "mind_map": "Aql xaritasi",
+      "conspect": "Konspekt",
+      "report": "Hisobotlar",
+      "flashcards": "Kartochkalar",
+      "quiz": "Test",
+      "infographic": "Infografika",
+      "data_table": "Maʼlumotlar jadvali",
+      "artifacts": "Oʻquv materiallari",
+      "course_plan": "Kurs rejasi",
+      "lesson_draft": "Dars qoralamasi",
+      "course_quiz": "Test savollari",
+      "course_flashcards": "Kartochkalar",
+      "exercise": "Mashq"
+    },
+    "format": {
+      "conspect": "Konspekt",
+      "study_guide": "Oʻquv qoʻllanma",
+      "briefing": "Qisqa sharh",
+      "faq": "Koʻp beriladigan savollar",
+      "timeline": "Xronologiya",
+      "article": "Maqola",
+      "custom": "Oʻz formatingiz"
+    },
+    "report": {
+      "pickTitle": "Hisobot formatini tanlang",
+      "contents": "Mundarija",
+      "print": "Chop etish / PDF",
+      "downloadMd": ".md yuklab olish"
+    },
+    "opt": {
+      "count": {
+        "fewer": "Kamroq",
+        "standard": "Standart",
+        "more": "Koʻproq",
+        "custom": "Boshqa",
+        "customCards": "Kartochkalar soni",
+        "customQuestions": "Savollar soni",
+        "customRange": "{min} dan {max} gacha son kiriting",
+        "label": "Soni"
+      },
+      "difficulty": {
+        "easy": "Oson",
+        "medium": "Oʻrtacha",
+        "hard": "Qiyin",
+        "label": "Murakkablik"
+      },
+      "detail": {
+        "short": "Qisqa",
+        "standard": "Standart",
+        "long": "Batafsil",
+        "label": "Batafsillik"
+      },
+      "style": {
+        "outline": "Reja-konspekt",
+        "cornell": "Kornell usuli",
+        "thesis": "Tezislar",
+        "label": "Uslub"
+      },
+      "focus": "Nimaga eʼtibor qaratilsin? (ixtiyoriy)",
+      "language": "Til",
+      "generate": "Yaratish",
+      "focusPlaceholder": "Masalan: faqat Kalvin sikli, nazorat ishi uchun",
+      "focusCount": "{count} / {max}",
+      "customPrompt": "Hisobotda nima boʻlishi kerak?",
+      "customPlaceholder": "Vazifani oʻz soʻzlaringiz bilan tasvirlang",
+      "languageAuto": "Avto",
+      "lang": {
+        "uz": "Oʻzbekcha",
+        "ru": "Русский",
+        "en": "English"
+      },
+      "types": {
+        "label": "Savol turlari",
+        "single": "Bitta javob",
+        "multiple": "Bir nechta javob",
+        "true_false": "Toʻgʻri / notoʻgʻri",
+        "hint": "Kamida bitta turni tanlang"
+      },
+      "maxRows": {
+        "label": "Qatorlarning eng koʻp soni",
+        "hint": "10 dan 40 gacha"
+      },
+      "mapDetail": {
+        "overview": "Umumiy",
+        "detailed": "Batafsil"
+      },
+      "slidesFormat": {
+        "label": "Format",
+        "presenter": "Maʼruzachi uchun",
+        "detailed": "Batafsil taqdimot"
+      },
+      "length": {
+        "label": "Uzunligi",
+        "short": "Qisqa",
+        "default": "Standart",
+        "long": "Uzun"
+      },
+      "orientation": {
+        "label": "Yoʻnalish",
+        "portrait": "Vertikal",
+        "landscape": "Gorizontal",
+        "square": "Kvadrat"
+      },
+      "infoDetail": {
+        "concise": "Qisqa",
+        "standard": "Standart",
+        "detailed": "Batafsil"
+      },
+      "infoStyle": {
+        "clean": "Toza",
+        "sketch": "Eskiz",
+        "bento": "Bento",
+        "scientific": "Ilmiy",
+        "playful": "Oʻyinqaroq"
+      },
+      "planDepth": {
+        "label": "Batafsillik",
+        "overview": "Qisqacha",
+        "detailed": "Batafsil"
+      },
+      "sectionsHint": {
+        "label": "Boʻlimlar soni (ixtiyoriy)",
+        "placeholder": "Modelga qoldiring",
+        "hint": "{min} dan {max} gacha."
+      },
+      "lessonStep": {
+        "label": "Quyidagi uchun yozish",
+        "new": "Yangi qadam"
+      },
+      "lessonLength": {
+        "label": "Hajmi",
+        "short": "Qisqa",
+        "standard": "Standart",
+        "long": "Katta"
+      },
+      "includeTest": {
+        "label": "Savollar bilan test qoʻshish"
+      },
+      "includeCards": {
+        "label": "Kartochkalar qoʻshish"
+      },
+      "yes": "ha",
+      "mode": {
+        "label": "Test turi",
+        "auto": "Avto (tavsiya etiladi)",
+        "full_mock": "To‘liq sinov imtihoni",
+        "topic_test": "Mavzu bo‘yicha test",
+        "question_type_test": "Bitta savol turi",
+        "vocab_test": "Lug‘at",
+        "formula_recall": "Formulalar",
+        "concept_check": "Tushunchalar",
+        "problem_practice": "Masalalar mashqi",
+        "reading_test": "O‘qish"
+      },
+      "sourceKind": {
+        "vocabulary_list": "Lug‘at ro‘yxati",
+        "problem_set": "Masalalar to‘plami",
+        "formula_sheet": "Formulalar varaqasi",
+        "reading_passages": "O‘qish matnlari",
+        "textbook_chapter": "Darslik bobi",
+        "lecture_notes": "Maʼruza konspekti",
+        "exam_paper": "Imtihon varianti",
+        "other": "Boshqa"
+      },
+      "exam": {
+        "label": "Imtihon formati",
+        "ielts_academic": "IELTS Academic",
+        "sat": "SAT",
+        "ap": "AP",
+        "generic": "Umumiy"
+      },
+      "skill": {
+        "label": "Koʻnikma",
+        "reading": "Oʻqish",
+        "writing": "Yozish",
+        "listening_script": "Tinglash matni",
+        "mixed": "Aralash"
+      },
+      "exerciseMode": {
+        "label": "Format",
+        "auto": "Avto",
+        "full_section": "Toʻliq boʻlim",
+        "practice": "Mashgʻulot",
+        "drill": "Bir turdagi savollar"
+      },
+      "exerciseCount": {
+        "auto": "Avto",
+        "hint": "Boʻsh: imtihon uchun odatiy son (1 dan 60 gacha)"
+      }
+    },
+    "item": {
+      "generating": "Yaratilmoqda… bu bir daqiqa olishi mumkin. Sahifani tark etishingiz mumkin.",
+      "failed": "Yaratib boʻlmadi",
+      "retry": "Qayta urinib koʻrish",
+      "new": "Yangi",
+      "viewPrompt": "Soʻrovni koʻrish",
+      "addAsSource": "Manba sifatida qoʻshish",
+      "sampled": "Katta daftar: matndan tanlanma asosida. Toʻliq natija uchun kamroq manba tanlang."
+    },
+    "limit": {
+      "day": "Kunlik chek tugadi, {time} da yangilanadi.",
+      "session": "Sessiya cheki tugadi, {time} da yana mavjud boʻladi.",
+      "access": "Maktab maÊ»muriyati hisobingiz uchun bloknotlarda sunÊ»iy intellektni cheklagan.",
+      "quota": "«{kind}» uchun kunlik chek tugadi.",
+      "busy": "Uchta material allaqachon yaratilmoqda. Bittasi tugashini kuting."
+    },
+    "mindmap": {
+      "fit": "Ekranga moslash",
+      "expandAll": "Hammasini ochish",
+      "collapseAll": "Hammasini yigʻish",
+      "zoomIn": "Yaqinlashtirish",
+      "zoomOut": "Uzoqlashtirish",
+      "download": "Rasmni yuklab olish",
+      "listView": "Roʻyxat koʻrinishi",
+      "ask": "Chatda soʻrash",
+      "sources": "Manbalarni koʻrsatish",
+      "prompt": "«{label}» ni manbalarim asosida tushuntir.",
+      "expand": "Ochish",
+      "collapse": "Yigʻish",
+      "more": "Boshqa amallar",
+      "downloadOutline": "Matnni yuklab olish",
+      "copyOutline": "Rejani nusxalash",
+      "exportFailed": "Bu brauzerda PNG yaratib boʻlmadi. Rejani yuklab oling yoki nusxalang.",
+      "empty": "Bu aql xaritasi boʻsh.",
+      "toolbar": "Xarita vositalari",
+      "canvas": "Aql xaritasi: {title}",
+      "outline": "Aql xaritasi rejasi: {title}",
+      "details": "{label} haqida",
+      "tidy": "Siqish",
+      "addBlock": "Matn bloki",
+      "addChild": "Ichki tugun qoʻshish",
+      "addSibling": "Yonma-yon tugun qoʻshish",
+      "edit": "Tahrirlash",
+      "delete": "Oʻchirish",
+      "editLabel": "Tugun matni",
+      "newNode": "Yangi fikr",
+      "newBlock": "Eslatma"
+    },
+    "cards": {
+      "flip": "Kartochkani aylantirish",
+      "known": "Bildim",
+      "missed": "Bilmadim",
+      "progress": "{current}/{total}-kartochka",
+      "shuffle": "Aralashtirish",
+      "delete": "Kartochkani oʻchirish",
+      "restart": "Qaytadan boshlash",
+      "hint": "Maslahat",
+      "explain": "Tushuntirish",
+      "results": "Tayyor! Bilaman: {known}, bilmayman: {missed}.",
+      "again": {
+        "same": "Xuddi shu kartochkalar",
+        "all": "Hamma kartochkalar",
+        "missed": "Faqat bilmaganlar"
+      },
+      "csv": "CSV yuklab olish",
+      "saveSet": "Kartochkalar toʻplami sifatida saqlash",
+      "openSet": "Toʻplamni ochish"
+    },
+    "quiz": {
+      "progress": "{current}/{total}-savol",
+      "multi": "Barcha mosini tanlang",
+      "check": "Tekshirish",
+      "next": "Keyingi",
+      "back": "Orqaga",
+      "skip": "Oʻtkazib yuborish",
+      "correct": "Toʻgʻri",
+      "wrong": "Notoʻgʻri",
+      "true": "Toʻgʻri",
+      "false": "Notoʻgʻri",
+      "score": "Natija",
+      "accuracy": "Aniqlik",
+      "skipped": "Oʻtkazib yuborilgan",
+      "review": "Javoblarni koʻrish",
+      "retry": "Qayta topshirish",
+      "retryWrong": "Xatolarni takrorlash"
+    },
+    "table": {
+      "copy": "TSV sifatida nusxalash",
+      "csv": "CSV yuklab olish",
+      "sources": "Manbalar"
+    },
+    "slides": {
+      "more": "Boshqa amallar",
+      "start": "Koʻrsatuvni boshlash",
+      "notes": "Maʼruzachi qaydlari",
+      "revise": "Oʻzgartirish",
+      "generateRevised": "Yangi versiyani yaratish",
+      "pending": "Kutilayotgan oʻzgarishlar",
+      "slideN": "{n}-slayd",
+      "exit": "Chiqish uchun Esc",
+      "stage": "Joriy slayd",
+      "slideOf": "{total} tadan {current}-slayd",
+      "previous": "Oldingi slayd",
+      "next": "Keyingi slayd",
+      "list": "Slaydlar",
+      "slideshow": "Koʻrsatuv",
+      "exitShow": "Koʻrsatuvdan chiqish",
+      "empty": "Taqdimotda slaydlar yoʻq.",
+      "edit": "Tahrirlash",
+      "saved": "Barcha oʻzgarishlar saqlandi",
+      "unsaved": "Saqlanmagan oʻzgarishlar bor",
+      "discard": "Oʻzgarishlarni bekor qilish",
+      "moveUp": "Slaydni yuqoriga siljitish",
+      "moveDown": "Slaydni pastga siljitish",
+      "reorder": "{n}-slayd tartibini oʻzgartirish",
+      "moved": "{from}-slayd {count} tadan {to}-oʻringa koʻchirildi",
+      "delete": "Slaydni oʻchirish",
+      "deleteTitle": "Bu slayd oʻchirilsinmi?",
+      "deleteDescription": "Slayd saqlaganingizdan keyin taqdimotdan olib tashlanadi.",
+      "editorTitle": "{n}-slaydni tahrirlash",
+      "field": {
+        "title": "Sarlavha",
+        "bullets": "Bandlar",
+        "bullet": "{n}-band",
+        "addBullet": "Band qoʻshish",
+        "removeBullet": "{n}-bandni oʻchirish",
+        "body": "Matn",
+        "quote": "Iqtibos",
+        "attribution": "Muallif yoki manba",
+        "leftHeading": "Chap ustun sarlavhasi",
+        "rightHeading": "Oʻng ustun sarlavhasi",
+        "leftBullet": "Chap ustun, {n}-band",
+        "rightBullet": "Oʻng ustun, {n}-band",
+        "visualHint": "Rasm uchun gʻoya"
+      },
+      "hint": "Rasm gʻoyasi: {hint}",
+      "notesEmpty": "Bu slaydda qaydlar yoʻq.",
+      "print": "Chop etish / PDF",
+      "copyOutline": "Rejani nusxalash",
+      "hasChange": "kutilayotgan oʻzgarish bor",
+      "reviseTitle": "{n}-slaydni oʻzgartirish",
+      "instruction": "{n}-slaydda nimani oʻzgartirish kerak",
+      "instructionPlaceholder": "Bu slaydda nimani oʻzgartirish kerak?",
+      "reviseHelp": "Nimani oʻzgartirishni yozing. Faqat koʻrsatmasi bor slaydlar qayta yaratiladi, natija yangi taqdimot boʻladi.",
+      "pendingEmpty": "Hozircha oʻzgarishlar yoʻq.",
+      "removeChange": "{n}-slayd uchun oʻzgarishni olib tashlash",
+      "saveFirst": "Avval tahrirlarni saqlang yoki bekor qiling.",
+      "generating": "Yaratilmoqda…",
+      "revised": "Yangi versiya yaratilmoqda. U Studiyada paydo boʻladi.",
+      "dragHelp": "Slaydni olish uchun probelni, siljitish uchun strelkalarni, qoʻyish uchun yana probelni bosing. Bekor qilish uchun Escape."
+    },
+    "infographic": {
+      "png": "PNG yuklab olish",
+      "canvas": "Infografika",
+      "zoom": "Masshtab",
+      "zoomIn": "Kattalashtirish",
+      "zoomOut": "Kichiklashtirish",
+      "fit": "Eniga moslash",
+      "zoomValue": "{percent}%",
+      "print": "Chop etish / PDF",
+      "copy": "Matnni nusxalash",
+      "preparing": "Tasvir tayyorlanmoqda…",
+      "pngFailed": "Tasvirni yaratib boʻlmadi. Oʻrniga Chop etish / PDF dan foydalaning.",
+      "sources": "Manbalar ({count})",
+      "takeaway": "Asosiy xulosa",
+      "step": "{n}-qadam"
+    },
+    "audio": {
+      "play": "Ijro etish",
+      "pause": "Pauza",
+      "speed": "Tezlik",
+      "transcript": "Matn",
+      "preparing": "Audio tayyorlanmoqda… {percent}%",
+      "aiVoices": "SI ovozlari xato qilishi mumkin."
+    },
+    "artifactError": {
+      "provider_error": "SI xizmatida vaqtinchalik xatolik yuz berdi.",
+      "invalid_output": "Natija notoʻgʻri chiqdi. Qayta urinib koʻring.",
+      "no_content": "Manbalar bu material uchun juda qisqa.",
+      "limit_reached": "Foydalanish cheki tugadi.",
+      "timeout": "Juda uzoq davom etdi.",
+      "canceled": "Bekor qilindi.",
+      "generic": "Bu materialni yaratib boʻlmadi."
+    },
+    "sourceRename": {
+      "title": "Manba nomini oʻzgartirish",
+      "label": "Sarlavha",
+      "cancel": "Bekor qilish",
+      "save": "Saqlash"
+    },
+    "viewers": {
+      "region": "Oʻquv material",
+      "titleLabel": "Nomi",
+      "deleteTitle": "Bu materialni oʻchirasizmi?",
+      "deleteDescription": "U Studiyadan olib tashlanadi. Buni bekor qilib boʻlmaydi.",
+      "noContent": "Bu materialda hozircha mazmun yoʻq.",
+      "explain": {
+        "title": "Tushuntirish",
+        "retry": "Yana soʻrash"
+      },
+      "report": {
+        "toolbar": "Hisobot amallari",
+        "sourceAdded": "Manba sifatida qoʻshildi",
+        "askPrompt": "Hisobotning shu qismini batafsilroq tushuntir.",
+        "askSelection": "Belgilangan matn haqida soʻrash"
+      },
+      "cards": {
+        "deck": "Kartochkalar",
+        "tools": "Kartochka vositalari",
+        "front": "Old tomoni",
+        "back": "Orqa tomoni",
+        "tapToFlip": "Aylantirish uchun kartochkani bosing yoki Probel tugmasini bosing.",
+        "empty": "Bu toʻplamda kartochkalar qolmadi.",
+        "explainPrompt": "Manbalarim asosida batafsilroq tushuntir: {text}",
+        "setSaved": "Kartochkalar toʻplami sifatida saqlandi",
+        "copy": "Kartochkalarni nusxalash"
+      },
+      "quiz": {
+        "region": "Test",
+        "results": "Natijalar",
+        "finish": "Natijalarni koʻrish",
+        "hint": "Maslahat",
+        "explain": "Tushuntirish",
+        "explainPrompt": "Manbalarim asosida shu test savolini va uning javobini batafsilroq tushuntir: {text}",
+        "explanation": "Tushuntirish",
+        "correctOption": "Toʻgʻri javob",
+        "yourAnswer": "Sizning javobingiz",
+        "noAnswer": "Javob yoʻq",
+        "backToResults": "Natijalarga qaytish",
+        "reviewTitle": "Javoblaringiz",
+        "empty": "Bu testda savollar yoʻq."
+      },
+      "table": {
+        "toolbar": "Jadval amallari",
+        "sortBy": "Saralash",
+        "sortNone": "Saralanmagan",
+        "ascending": "Oʻsish boʻyicha",
+        "descending": "Kamayish boʻyicha",
+        "empty": "Bu jadvalda qatorlar yoʻq."
+      }
+    },
+    "rename": {
+      "title": "Daftar nomini oʻzgartirish",
+      "label": "Nomi"
+    },
+    "discover": {
+      "placeholder": "Internetdan yangi manbalar toping",
+      "fast": "Tezkor qidiruv",
+      "deep": "Chuqur qidiruv",
+      "cost": "{count} ta qidiruv",
+      "results": "«{query}» boʻyicha natijalar",
+      "already": "Allaqachon manbalarda",
+      "add": "{count} ta manba qoʻshish",
+      "searching": "Qidirilmoqda… taxminan 20 soniya",
+      "blocked": "Bu sayt sahifalarini oʻqishga ruxsat bermaydi. Uni oching va matnni qoʻyib qoʻying.",
+      "back": "Manbalarga qaytish",
+      "count": "{count} ta natija",
+      "submit": "Internetdan qidirish",
+      "mode": "Qidiruv turi",
+      "selectAll": "Hammasini tanlash",
+      "selectNone": "Tanlovni bekor qilish",
+      "open": "«{title}» sahifasini yangi oynada ochish",
+      "queries": "Qidiruv soʻrovlari"
+    },
+    "combine": {
+      "action": "Tanlangan qaydlarni birlashtirish",
+      "hint": "Birlashtirish uchun kamida ikkita qayd tanlang.",
+      "title": "Qaydlarni birlashtirish",
+      "titleLabel": "Yangi qayd sarlavhasi",
+      "defaultTitle": "Qaydlar · {title}",
+      "fallbackTitle": "Birlashtirilgan qaydlar",
+      "listLabel": "Birlashtiriladigan qaydlar",
+      "unselect": "Asl qaydlarning tanlovini bekor qilish",
+      "cancel": "Bekor qilish",
+      "submit": "Birlashtirish",
+      "working": "Birlashtirilmoqda…"
+    },
+    "course": {
+      "acceptedAnswers": "Qabul qilinadigan javoblar",
+      "backToEditor": "Kurs muharririga qaytish",
+      "cardsBlock": "{count, plural, one {# ta kartochka} other {# ta kartochka}}",
+      "testBlock": "{count, plural, one {Test: # ta savol} other {Test: # ta savol}}",
+      "correctOption": "toʻgʻri",
+      "passingScore": "oʻtish balli {percent}%",
+      "questionType": {
+        "single": "bitta javob",
+        "multiple": "bir nechta javob",
+        "text": "matnli javob",
+        "number": "son"
+      },
+      "readOnlyChat": "Bu ish maydonini faqat oʻqiy olasiz, oʻzgartira olmaysiz, shuning uchun chat oʻchirilgan.",
+      "readOnlySources": "Bu ish maydonini faqat oʻqiy olasiz, oʻzgartira olmaysiz.",
+      "readOnlyStudio": "Bu ish maydonini faqat oʻqiy olasiz, oʻzgartira olmaysiz.",
+      "lesson": {
+        "title": "Qadam nomi"
+      },
+      "chatMode": {
+        "label": "Chat rejimi",
+        "sources": "Manbalardan soʻrash",
+        "author": "Muallif yordamchisi"
+      },
+      "author": {
+        "chatPicker": "Muallif yordamchisi chati",
+        "inputLabel": "Muallif yordamchisiga xabar",
+        "newChat": "Yangi chat",
+        "placeholder": "Reja, dars yoki test soʻrang…",
+        "starters": "Boshlash uchun gʻoyalar",
+        "starter": {
+          "plan": "Quyidagi mavzuda kurs rejasini tuz: ",
+          "lesson": "Quyidagi qadam uchun dars yoz: ",
+          "test": "Quyidagi qadamga 5 ta savoldan iborat test qoʻsh: ",
+          "review": "Kurs tuzilmasini tekshir va kamchiliklarni koʻrsat"
+        },
+        "starterLabel": {
+          "plan": "Kurs rejasini tuzish",
+          "lesson": "Dars yozish",
+          "test": "Test qoʻshish",
+          "review": "Tuzilmani tekshirish"
+        }
+      },
+      "plan": {
+        "summary": "Kurs tavsifi",
+        "courseGoals": "Kurs maqsadlari (har qatorda bittadan)",
+        "sectionGoals": "Boʻlim maqsadlari (har qatorda bittadan)",
+        "stepGoals": "Qadam maqsadlari (har qatorda bittadan)",
+        "stepSummary": "Qadam nima haqida",
+        "sectionTitle": "{n}-boʻlim nomi",
+        "stepTitle": "{n}-qadam nomi",
+        "addSection": "Boʻlim qoʻshish",
+        "addStep": "Qadam qoʻshish",
+        "moveUp": "Yuqoriga",
+        "moveDown": "Pastga",
+        "removeSection": "Boʻlimni oʻchirish",
+        "removeStep": "Qadamni oʻchirish",
+        "reset": "Tahrirlarimni bekor qilish",
+        "problem": {
+          "no-sections": "Rejada boʻlimlar yoʻq.",
+          "empty-title": "Har bir boʻlim va qadamning nomi boʻlishi kerak.",
+          "no-steps": "Har bir boʻlimda kamida bitta qadam boʻlishi kerak."
+        }
+      },
+      "apply": {
+        "title": "«{title}»ni kursga qoʻllash",
+        "description": {
+          "course_plan": "Kurs qoralamasida hali yoʻq boʻlim va qadamlarni yaratadi. Kursni nashr qilmaguningizcha talabalar uchun hech narsa oʻzgarmaydi.",
+          "lesson_draft": "Darsni kurs qoralamasidagi qadamga yozadi. Kursni nashr qilmaguningizcha talabalar uchun hech narsa oʻzgarmaydi.",
+          "quiz": "Savollarni kurs qoralamasidagi qadamga test bloki sifatida qoʻshadi.",
+          "flashcards": "Kartochkalarni kurs qoralamasidagi qadamga kartochkalar bloki sifatida qoʻshadi."
+        },
+        "buttonPlan": "Kursga qoʻllash",
+        "buttonStep": "Qadamga qoʻllash",
+        "confirm": "Qoʻllash",
+        "loading": "Nima oʻzgarishini tekshiryapmiz…",
+        "problems": "Hozircha buni qoʻllab boʻlmaydi:",
+        "new": "Yangi",
+        "exists": "Bor",
+        "added": "Qoʻshiladi",
+        "planCounts": "{sections, plural, one {# ta yangi boʻlim} other {# ta yangi boʻlim}}, {steps, plural, one {# ta yangi qadam} other {# ta yangi qadam}}. {existing, plural, one {# ta qadam allaqachon bor va oʻzgarmaydi} other {# ta qadam allaqachon bor va oʻzgarmaydi}}.",
+        "newStep": "«{title}» nomli yangi qadam yaratiladi.",
+        "appendTo": "Bloklar «{title}» qadamining oxiriga qoʻshiladi.",
+        "replaceIn": "«{title}» qadamining mazmuni almashtiriladi.",
+        "removedBlocks": "{count, plural, one {# ta joriy blok olib tashlanadi} other {# ta joriy blok olib tashlanadi}}.",
+        "target": "Qadam",
+        "pickStep": "Qadamni tanlang…",
+        "newStepOption": "Yangi qadam",
+        "section": "Boʻlimga",
+        "mode": "Rejim",
+        "mode_replace": "Mazmunni almashtirish",
+        "mode_append": "Oxiriga qoʻshish",
+        "addBriefs": "Har bir yangi qadamning maqsad va tavsifini uning birinchi matn blokiga joylash",
+        "conflict": "Qadam shu orada oʻzgargan. Koʻrib chiqish yangilandi: tekshirib, qayta qoʻllang.",
+        "donePlan": "Qoralamada {sections, plural, one {# ta boʻlim} other {# ta boʻlim}} va {steps, plural, one {# ta qadam} other {# ta qadam}} yaratildi.",
+        "doneStep": "Qadam qoralamasi yangilandi. Muharrirda tekshiring va nashr qiling.",
+        "openEditor": "Muharrirda ochish",
+        "notes": "Oʻzgartirish haqida izohlar"
+      }
+    },
+    "label": {
+      "other": "Mavzusiz",
+      "rename": "Mavzu nomini oʻzgartirish",
+      "delete": "Mavzuni oʻchirish",
+      "nameField": "Mavzu nomi",
+      "renameFailed": "Mavzu nomini oʻzgartirib boʻlmadi.",
+      "deleteFailed": "Mavzuni oʻchirib boʻlmadi.",
+      "deleteTitle": "Bu mavzu oʻchirilsinmi?",
+      "deleteDescription": "Mavzu oʻchiriladi. Uning manbalari daftarda qoladi."
+    },
+    "export": {
+      "download": "Yuklab olish .{format}",
+      "share": "Ulashish",
+      "addToFiles": "Fayllarimga qoʻshish",
+      "savedToFiles": "«Fayllarim»ga saqlandi: {name}",
+      "linkCopied": "Havola nusxalandi"
+    },
+    "attach": {
+      "chips": "Savolga biriktirilgan",
+      "remove": "{label} ni olib tashlash",
+      "menu": "Savolga qo‘shish",
+      "upload": "Fayllarni yuklash",
+      "lesson": "Dars qo‘shish",
+      "materials": "Materiallarni qidirish",
+      "search": "Qidirish",
+      "empty": "Hech narsa topilmadi",
+      "noTopic": "Mavzu hali yo‘q",
+      "uploadFailed": "{name} yuklanmadi"
+    },
+    "plan": {
+      "card": "{title} · {count} ta slayddan iborat reja",
+      "open": "Rejani ochish",
+      "title": "Taqdimot rejasi",
+      "description": "Taqdimot yaratilishidan oldin slaydlarni tekshiring. Sarlavha va bandlarni tahrirlang, slaydlarni oʻchiring yoki joyini almashtiring, soʻng «Yaratish»ni bosing.",
+      "deckTitle": "Taqdimot nomi",
+      "slideTitle": "{n}-slayd sarlavhasi",
+      "bullet": "{slide}-slaydning {n}-bandi",
+      "addBullet": "Band qoʻshish",
+      "removeBullet": "Bandni oʻchirish",
+      "moveUp": "{n}-slaydni yuqoriga surish",
+      "moveDown": "{n}-slaydni pastga surish",
+      "remove": "{n}-slaydni oʻchirish",
+      "generate": "Yaratish",
+      "save": "Saqlash",
+      "saved": "Saqlandi",
+      "making": "Reja tuzilmoqda…",
+      "makePlan": "Slaydlar rejasini tuzish",
+      "overLimit": "Rejada {count} ta slayd bor, taqdimotda esa koʻpi bilan {max} ta boʻlishi mumkin. Yaratishdan oldin slaydlarni oʻchiring yoki rejani qisqartiring.",
+      "trim": "{max} ta slaydgacha qisqartirish",
+      "tooFew": "Taqdimotda kamida 3 ta slayd boʻlishi kerak.",
+      "confirmed": "Bu reja asosida slaydlar yaratilmoqda.",
+      "generating": "Taqdimot yaratilmoqda. U Studioʻda paydo boʻladi."
+    },
+    "exercise": {
+      "region": "Mashq",
+      "passage": "Matn",
+      "questions": "Savollar",
+      "part": "{n}-qism",
+      "chooseAll": "Barcha mos javoblarni tanlang",
+      "choose": "Tanlang",
+      "answer": "Javobingiz",
+      "wordLimit": "Koʻpi bilan {count} ta soʻz",
+      "accepted": "Toʻgʻri javob: {answers}",
+      "tfng": {
+        "true": "Toʻgʻri",
+        "false": "Notoʻgʻri",
+        "not_given": "Maʼlumot yoʻq"
+      },
+      "essay": "Inshoingiz",
+      "essayTask": "Kamida {min} ta soʻz, {minutes} daqiqa",
+      "words": "Soʻzlar: {count} / {min}",
+      "rubric": "Baholash mezonlari",
+      "outline": "Kuchli javobda nimalar boʻlishi kerak",
+      "submit": "Javoblarni yuborish",
+      "retry": "Qaytadan boshlash",
+      "score": "Natija: {possible} dan {earned}",
+      "correct": "Toʻgʻri",
+      "wrong": "Notoʻgʻri ({possible} dan {earned})",
+      "timer": {
+        "start": "Taymerni boshlash",
+        "pause": "Pauza",
+        "left": "{time} qoldi",
+        "over": "Vaqt tugadi"
+      },
+      "feedback": {
+        "get": "AI fikrini olish",
+        "loading": "Insho tekshirilmoqda",
+        "title": "AI fikri",
+        "band": "Taxminiy ball: {band}",
+        "strengths": "Kuchli tomonlar",
+        "improvements": "Nimani yaxshilash kerak",
+        "tooShort": "Avval kamida 10 ta soʻz yozing"
+      }
+    }
+  },
+  "errors": {
+    "notebooks": {
+      "not-found": "Daftar, manba yoki material topilmadi.",
+      "subject-not-found": "Bu fan hali maʼlum emas. Dars jadvali sinxronlangandan keyin qayta urinib koʻring.",
+      "notebook-limit": "Daftarlar chekiga yetdingiz. Yangisini yaratish uchun bittasini oʻchiring.",
+      "source-limit": "Daftarda manbalar yoki matn chekiga yetildi.",
+      "source-duplicate": "Bu manba daftarda allaqachon bor.",
+      "source-forbidden": "Bu elementni manba sifatida qoʻshib boʻlmaydi.",
+      "source-unsupported": "Bu turdagi manbani hozircha oʻqib boʻlmaydi.",
+      "source-too-large": "Manba juda katta.",
+      "source-not-ready": "Manba hali oʻqilmoqda. Birozdan keyin urinib koʻring.",
+      "no-sources-selected": "Avval kamida bitta tayyor manbani tanlang.",
+      "quota-exceeded": "Bu turdagi materiallar uchun kunlik chek tugadi.",
+      "limit-reached": "Foydalanish cheki tugadi. Yangilanganidan keyin urinib koʻring.",
+      "busy": "Allaqachon yaratilmoqda. Tugashini kuting.",
+      "artifact-limit": "Daftarda materiallar juda koʻp. Avval ortiqchalarini oʻchiring.",
+      "artifact-not-ready": "Bu material hali tayyor emas.",
+      "invalid-options": "Bu parametrlar ushbu material uchun mos emas.",
+      "feature-disabled": "Bu funksiya oʻchirilgan.",
+      "plan-too-long": "Rejada {count} ta slayd bor, taqdimotda esa koʻpi bilan {max} ta boʻlishi mumkin. Avval slaydlarni oʻchiring yoki birlashtiring.",
+      "plan-confirmed": "Bu reja asosida slaydlar allaqachon yaratilgan."
+    }
+  }
+}

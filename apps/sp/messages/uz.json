@@ -1,0 +1,862 @@
+{
+  "teachers": {
+    "page": {
+      "title": "Oʻqituvchilarim",
+      "empty": "Hozircha oʻqituvchilar yoʻq. Dars jadvalida darslar paydo boʻlganda koʻrinadi."
+    },
+    "card": {
+      "nearest": "Yaqin dars",
+      "now": "Hozir",
+      "none": "Keyingi ikki haftada darslar yoʻq",
+      "upcoming": "Keyingi ikki hafta",
+      "showAll": "Hammasini koʻrsatish ({count})",
+      "showLess": "Yigʻish",
+      "room": "xona {room}"
+    },
+    "contacts": {
+      "title": "Aloqa",
+      "none": "Aloqa maʼlumotlari hali yoʻq",
+      "office": "{office}-xona",
+      "copy": "Nusxa olish",
+      "copyFailed": "Nusxa olib boʻlmadi"
+    },
+    "detail": {
+      "back": "Oʻqituvchilar",
+      "subjects": "Fanlar",
+      "timetable": "Dars jadvali",
+      "previousWeek": "Oldingi hafta",
+      "nextWeek": "Keyingi hafta",
+      "thisWeek": "Joriy hafta",
+      "yourGroup": "Sizning guruhingiz",
+      "cancelled": "Bekor qilindi",
+      "noLessonsDay": "Dars yoʻq",
+      "notFound": "Oʻqituvchi topilmadi",
+      "room": "{room}-xona"
+    }
+  },
+  "app": {
+    "name": "my.iht"
+  },
+  "offline": {
+    "updated": "Yangilandi: {when}"
+  },
+  "nav": {
+    "short": {
+      "dashboard": "Asosiy",
+      "today": "Bugun",
+      "timetable": "Taqvim",
+      "subjects": "Fanlar",
+      "grades": "Baholar",
+      "homework": "Vazifa",
+      "exams": "Imtihon",
+      "assistant": "Yordamchi",
+      "notebooks": "Daftar",
+      "flashcards": "Kartalar",
+      "files": "Fayllar",
+      "links": "Havolalar",
+      "notifications": "Xabarlar",
+      "settings": "Sozlama"
+    },
+    "dashboard": "Bosh sahifa",
+    "today": "Bugun",
+    "timetable": "Taqvim",
+    "subjects": "Fanlar",
+    "grades": "Baholar",
+    "homework": "Uy vazifalari",
+    "exams": "Imtihonlar",
+    "teachers": "Oʻqituvchilarim",
+    "myGroup": "Mening guruhim",
+    "assistant": "Yordamchi",
+    "notebooks": "Daftarlar",
+    "flashcards": "Kartochkalar",
+    "files": "Mening fayllarim",
+    "links": "Havolalar va ulashishlar",
+    "notifications": "Bildirishnomalar",
+    "profile": "Profil",
+    "settings": "Sozlamalar",
+    "groupHome": "Bosh sahifa",
+    "groupAcademics": "Oʻqish",
+    "groupStudyTools": "Oʻqish vositalari",
+    "groupInbox": "Kelganlar",
+    "groupAccount": "Hisob",
+    "mail": "Pochta"
+  },
+  "attendanceStates": {
+    "late": "Kech qoldi",
+    "present": "Qatnashgan",
+    "absent": "Qatnashmagan",
+    "excused": "Sababli",
+    "not_taken": "Hali belgilanmagan"
+  },
+  "dashboard": {
+    "title": "Bosh sahifa",
+    "lessons": "Bugungi darslar",
+    "noLessons": "Bugun dars yoʻq",
+    "openCalendar": "Taqvimni ochish",
+    "mark": "Baho {mark}",
+    "notebook": "Daftar: {subject}",
+    "gpa": "GPA",
+    "gpaLabel": "GPA {value} (5 dan), baholarni ochish",
+    "gpaError": "GPA yuklanmadi",
+    "toGrades": "Baholar",
+    "sections": "Barcha boʻlimlar",
+    "library": "Kutubxona",
+    "lms": "LMS"
+  },
+  "today": {
+    "title": "Bugun",
+    "now": {
+      "title": "Keyingi dars",
+      "titleNow": "Hozir",
+      "titleNext": "Keyingi dars",
+      "none": "Bugun boshqa dars yoʻq.",
+      "nextStudyDay": "Keyingi oʻquv kuni: {date}.",
+      "minutesLeft": "{count} daqiqa qoldi",
+      "startsIn": "{count} daqiqadan keyin",
+      "room": "{name}-xona",
+      "materials": "{count, plural, =0 {Materiallar yoʻq} other {# ta material}}"
+    },
+    "timeline": {
+      "title": "Bugungi darslar",
+      "cancelled": "Bekor qilingan",
+      "changed": "Oʻzgargan",
+      "homework": "Vazifa"
+    },
+    "due": {
+      "title": "Keyingi oʻquv kuniga topshirish",
+      "titleOn": "{date} gacha topshirish",
+      "all": "Barcha vazifalar",
+      "count": "{count, plural, other {# ta vazifa bajarilishi kerak}}",
+      "overdueCount": "muddati oʻtgan: {count}"
+    },
+    "marks": {
+      "title": "Yangi baholar",
+      "type": {
+        "lesson": "Dars",
+        "midterm": "Oraliq nazorat (ON)",
+        "final": "Yakuniy nazorat (YaN)"
+      }
+    },
+    "semester": {
+      "title": "Shu semestr",
+      "titleNumber": "{number}-semestr",
+      "gpa": "GPA (5 dan)",
+      "absences": "Qoldirilgan darslar",
+      "change": "oʻtgan semestrga nisbatan {change}",
+      "importing": "Baholaringiz EMISʼdan yuklanmoqda…",
+      "updated": "Baholar yangilandi: {when}",
+      "syncFailed": "Baholar oxirgi marta {time} da yangilangan"
+    },
+    "announcements": {
+      "title": "Eʼlonlar",
+      "all": "Hammasi"
+    },
+    "alerts": {
+      "title": "Eʼtibor talab qiladi",
+      "emis_reauth": "EMIS parolini yangilash kerak. Yangilamaguningizcha yangi baholar yuklanmaydi.",
+      "no_subgroup": "Kichik guruhingiz hali belgilanmagan. Uni kurator belgilaydi.",
+      "files_expiring": "{count, plural, one {# ta fayl {date} kuni oʻchiriladi} other {# ta fayl {date} kuni oʻchiriladi}}",
+      "pending_approvals": "{count, plural, one {Yordamchining # ta amali tasdigʻingizni kutmoqda} other {Yordamchining # ta amali tasdigʻingizni kutmoqda}}",
+      "sync_failed": "EMIS bilan oxirgi sinxronlash amalga oshmadi. Baholar eskirgan boʻlishi mumkin.",
+      "actions": {
+        "emis_reauth": "Parolni yangilash",
+        "no_subgroup": "Profilni ochish",
+        "files_expiring": "Fayllarimni ochish",
+        "pending_approvals": "Koʻrib chiqish",
+        "sync_failed": "Baholarni ochish"
+      },
+      "short": {
+        "emis_reauth": "EMIS parolini yangilang",
+        "no_subgroup": "Kichik guruh belgilanmagan",
+        "files_expiring": "{count, plural, one {# fayl oʻchadi} other {# fayl oʻchadi}}",
+        "pending_approvals": "{count, plural, one {# amal tasdiqlashni kutmoqda} other {# amal tasdiqlashni kutmoqda}}",
+        "sync_failed": "EMIS sinxronizatsiyasi muvaffaqiyatsiz"
+      }
+    },
+    "getStarted": {
+      "title": "Boshlash",
+      "hide": "Yashirish",
+      "dismissStep": "Oʻtkazib yuborish: {step}",
+      "subgroupSet": "Kichik guruhingiz: {number}.",
+      "subgroupUnset": "Hali belgilanmagan. Uni kurator belgilaydi.",
+      "steps": {
+        "telegram": {
+          "title": "Telegramni ulang",
+          "text": "Bildirishnomalar va bir martalik kodlarni Telegramda oling.",
+          "action": "Ulash"
+        },
+        "subgroup": {
+          "title": "Kichik guruhni tekshiring",
+          "text": "Dars jadvalingiz unga bogʻliq.",
+          "action": "Profilni ochish"
+        },
+        "notifications": {
+          "title": "Bildirishnomalarni tanlang",
+          "text": "Qaysi baholar va ogohlantirishlar kerakligini tanlang.",
+          "action": "Sozlamalarni ochish"
+        }
+      }
+    },
+    "dashboard": {
+      "title": "Mening vidjetlarim",
+      "edit": "Tahrirlash",
+      "done": "Tayyor",
+      "cancel": "Bekor qilish",
+      "add": "Vidjet qoʻshish",
+      "catalog": "Vidjetlar katalogi",
+      "editor": "Vidjet sozlamalari",
+      "size": "Oʻlcham",
+      "color": "Rang",
+      "colorDefault": "Standart rang",
+      "remove": "Oʻchirish",
+      "editTile": "Tanlash: {title}",
+      "conflict": "Vidjetlar boshqa qurilmada oʻzgartirilgan. Tahrir saqlanmadi, qayta urinib koʻring.",
+      "noLesson": "Keyingi dars yoʻq.",
+      "noLessons": "Bugun dars yoʻq.",
+      "noExams": "Yaqin orada nazorat yoʻq.",
+      "homeworkDue": "bajarish kerak",
+      "gpa": "GPA (5 dan)",
+      "cardsDue": "takrorlanadigan kartochka",
+      "absences": "qoldirilgan dars",
+      "anySubject": "faningiz",
+      "kinds": {
+        "timetable": "Jadval",
+        "homework": "Vazifalar",
+        "marks": "Baholar",
+        "exams": "Nazoratlar",
+        "flashcards_due": "Kartochkalar",
+        "notebook_prompt": "Oʻqish gʻoyasi",
+        "attendance": "Davomat",
+        "clock_next_lesson": "Keyingi dars",
+        "upcoming_controls": "Yaqin nazoratlar",
+        "next_lesson": "Keyingi dars",
+        "today_lessons": "Bugungi darslar",
+        "semester_summary": "Semestr",
+        "announcements": "Eʼlonlar",
+        "new_marks": "Yangi baholar",
+        "alerts": "Eʼtibor kerak",
+        "get_started": "Boshlash"
+      },
+      "notebookPrompt": {
+        "templates": {
+          "0": "“{subject}” fanidan oraliq nazoratga kartochkalar bilan tayyorlan",
+          "1": "“{subject}” fanidan bilimimni tekshir",
+          "2": "“{subject}” fanining oxirgi darsini qisqacha aytib ber",
+          "3": "“{subject}” fanining eng qiyin mavzusini oddiy tushuntir"
+        }
+      },
+      "groups": {
+        "study": "Oʻqish",
+        "control": "Nazorat",
+        "news": "Yangiliklar",
+        "tools": "Asboblar"
+      },
+      "noAnnouncements": "Eʼlonlar yoʻq.",
+      "noNewMarks": "Yangi baholar yoʻq.",
+      "newMarks": "yangi baho",
+      "noAlerts": "Eʼtibor talab qiladigan narsa yoʻq.",
+      "alertsCount": "koʻrish kerak",
+      "allSet": "Hammasi tayyor.",
+      "stepsLeft": "qadam qoldi"
+    }
+  },
+  "timetable": {
+    "title": "Taqvim",
+    "views": {
+      "day": "Kun",
+      "week": "Hafta",
+      "month": "Oy"
+    },
+    "viewsLabel": "Taqvim koʻrinishi",
+    "today": "Bugun",
+    "previousMonth": "Oldingi oy",
+    "nextMonth": "Keyingi oy",
+    "legend": "Davomat ranglari",
+    "freeGap": "Boʻsh vaqt: {minutes} daq",
+    "breakGap": "Tanaffus: {minutes} daq",
+    "days": "Hafta kunlari",
+    "room": "{name}-xona",
+    "now": "Hozir",
+    "cancelled": "Bekor qilingan",
+    "subgroup": "{number}-kichik guruh",
+    "otherSubgroup": "Boshqa kichik guruh ({name})",
+    "subgroupHint": "Kichik guruhingiz hali belgilanmagan, shuning uchun ikkala kichik guruh darslari koʻrsatilgan.",
+    "noLessons": "Bu kuni dars yoʻq.",
+    "noLessonsWeek": "Bu haftada dars yoʻq.",
+    "fields": {
+      "room": "Xona",
+      "teacher": "Oʻqituvchi",
+      "subject": "Fan",
+      "date": "Sana",
+      "period": "Juftlik",
+      "topic": "Mavzu"
+    }
+  },
+  "calendarFeed": {
+    "subscribe": "Kalendarga obuna boʻlish",
+    "title": "Kalendarga obuna boʻlish",
+    "intro": "Taqvim ilovalari uchun dars jadvalingizning shaxsiy havolasi. Havolasi borlar darslaringizni koʻradi, shuning uchun uni bermang. Yangi havola eskisini oʻchiradi.",
+    "create": "Havola yaratish",
+    "shownOnce": "Havolani hoziroq nusxalang. U faqat bir marta koʻrsatiladi.",
+    "feedUrl": "Kalendar havolasi",
+    "google": "Google Kalendarga qoʻshish",
+    "apple": "Apple Kalendarga qoʻshish",
+    "regenerate": "Yangi havola yaratish",
+    "regenerateTitle": "Yangi havola yaratilsinmi?",
+    "regenerateText": "Eski havola ishlamay qoladi. Uni ishlatayotgan kalendarlar yangi havolani qoʻshmaguningizcha yangilanmaydi.",
+    "regenerateConfirm": "Yaratish"
+  },
+  "subjects": {
+    "title": "Fanlar",
+    "empty": "Bu semestrda fanlar yoʻq.",
+    "notFound": "Fan topilmadi.",
+    "semesterLabel": "{number}-semestr",
+    "emisRating": "EMIS reytingi",
+    "absences": "Qoldirilgan darslar",
+    "nextLesson": "Keyingi dars: {date}, {time}",
+    "noNextLesson": "Yaqin darslar yoʻq",
+    "tabs": {
+      "overview": "Umumiy",
+      "lessons": "Darslar",
+      "materials": "Materiallar"
+    },
+    "overview": {
+      "planner": "Baho rejalashtirgichi",
+      "openNotebook": "Bloknotni ochish",
+      "notebook": "Fan bloknoti",
+      "teachers": "Oʻqituvchilar",
+      "semesterMark": "Semestr bahosi",
+      "emisRating": "EMIS reytingi",
+      "absenceRate": "Qoldirilgan darslar ulushi",
+      "averages": "Oʻrtacha baholar",
+      "type": {
+        "lesson": "Darslar",
+        "midterm": "Oraliq nazorat (ON)",
+        "final": "Yakuniy nazorat (YaN)"
+      }
+    },
+    "lessons": {
+      "empty": "Hozircha darslar yoʻq.",
+      "noTopic": "Mavzu hali kiritilmagan",
+      "homework": "Vazifa"
+    },
+    "marks": {
+      "type": {
+        "lesson": "Dars",
+        "midterm": "Oraliq nazorat (ON)",
+        "final": "Yakuniy nazorat (YaN)"
+      }
+    },
+    "materials": {
+      "search": "Materiallarni qidirish",
+      "empty": "Materiallar topilmadi."
+    },
+    "hub": {
+      "title": "Markaz",
+      "notebook": {
+        "title": "Fan daftari",
+        "open": "Daftarni ochish"
+      },
+      "past": "Soʻnggi darslar",
+      "upcoming": "Keyingi 14 kun",
+      "noUpcoming": "Keyingi 14 kunda dars yoʻq.",
+      "empty": "Hozircha dars yoʻq.",
+      "showMore": "Yana koʻrsatish",
+      "noTopic": "Mavzu hali yoʻq",
+      "askAi": "Bu dars haqida AIdan soʻrash",
+      "materials": "{count, plural, one {# material} other {# material}}",
+      "kind": {
+        "lecture": "Maʼruza",
+        "practice": "Amaliyot",
+        "midterm": "Oraliq nazorat (ON)",
+        "final": "Yakuniy nazorat (YaN)",
+        "other": "Dars"
+      },
+      "attendance": {
+        "present": "Qatnashdi",
+        "absent": "Qatnashmadi",
+        "late": "Kechikdi"
+      }
+    }
+  },
+  "lesson": {
+    "title": "Dars",
+    "notFound": "Dars topilmadi.",
+    "backToTimetable": "Taqvim",
+    "cancelled": "Bekor qilingan",
+    "date": "Sana",
+    "time": "Vaqt",
+    "period": "{number}-juftlik",
+    "room": "Xona",
+    "teacher": "Oʻqituvchi",
+    "topic": "Mavzu",
+    "materials": "Materiallar",
+    "noMaterials": "Oʻqituvchi material qoʻshmagan.",
+    "homework": "Uy vazifasi",
+    "noHomework": "Bu dars uchun vazifa yoʻq.",
+    "attachments": "Ilovalar",
+    "noAttachments": "Hozircha ilovalar yoʻq.",
+    "myResult": "Mening natijam",
+    "noMark": "Bu dars uchun baho yoʻq",
+    "deleteTitle": "Ilova oʻchirilsinmi?",
+    "deleteText": "“{title}” darsdan yoʻqoladi. Fayl “Mening fayllarim”da qoladi.",
+    "deleteConfirm": "Oʻchirish",
+    "resources": {
+      "open": "Ochish",
+      "openItem": "Ochish: {title}",
+      "preview": "Ko‘rish",
+      "previewItem": "{title} ni ko‘rish",
+      "deleteItem": "Oʻchirish: {title}"
+    },
+    "attach": {
+      "button": "Ilova qoʻshish",
+      "title": "Ilova qoʻshish",
+      "tabs": {
+        "file": "Fayl",
+        "link": "Havola"
+      },
+      "upload": "Fayl yuklash",
+      "pickFromFiles": "“Fayllarim”dan tanlash",
+      "url": "Havola manzili",
+      "addLink": "Havola qoʻshish"
+    },
+    "toSubject": "Fan: {subject}"
+  },
+  "grades": {
+    "title": "Baholar",
+    "tabs": {
+      "semester": "Semestr",
+      "day": "Kunlar boʻyicha",
+      "record": "Yozuv daftarchasi"
+    },
+    "emis": {
+      "title": "EMIS parolini yangilash kerak",
+      "text": "Yangi parolni kiritmaguningizcha baholar yangilanmaydi. Eski baholar koʻrinib turadi.",
+      "action": "Parolni yangilash"
+    },
+    "semester": {
+      "subject": "Fan",
+      "lessonAvg": "Darslar",
+      "midtermAvg": "ON",
+      "finalAvg": "YaN",
+      "semesterMark": "Semestr",
+      "emisRating": "EMIS",
+      "gpa": "GPA (5 dan)",
+      "marksCount": "{count, plural, other {# ta baho}}",
+      "updated": "Yangilandi: {when}",
+      "importing": "Baholaringiz EMISʼdan yuklanmoqda…",
+      "empty": "Bu semestrda hozircha baholar yoʻq.",
+      "plan": "Reja",
+      "planFor": "Baholar rejasi: {subject}"
+    },
+    "day": {
+      "previous": "Oldingi oʻquv kuni",
+      "next": "Keyingi oʻquv kuni",
+      "pick": "Sanani tanlang",
+      "empty": "Bu kuni baholar yoʻq.",
+      "unmatched": "Darssiz baholar",
+      "type": {
+        "lesson": "Dars",
+        "midterm": "Oraliq nazorat (ON)",
+        "final": "Yakuniy nazorat (YaN)"
+      }
+    },
+    "record": {
+      "chartTitle": "Semestrlar boʻyicha GPA",
+      "chartLabel": "Semestrlar boʻyicha GPA chiziqli diagrammasi",
+      "gpa": "GPA (5 dan)",
+      "gpaList": "Har bir semestr GPAʼsi (5 dan)",
+      "semesterShort": "S{number}",
+      "semesterLabel": "{number}-semestr",
+      "emisRating": "EMIS",
+      "empty": "Yozuv daftarchasi boʻsh."
+    },
+    "planner": {
+      "link": "Reja",
+      "title": "Baho rejalashtiruvchi",
+      "back": "Baholar",
+      "semester": "{number}-semestr",
+      "noSubject": "Baholarni rejalashtirish uchun “Baholar” sahifasida fanni tanlang.",
+      "summary": {
+        "title": "Hozirgi baholaringiz",
+        "lesson": "Dars baholari",
+        "midterm": "Oraliq nazoratlar",
+        "final": "Yakuniy nazorat (YaN)",
+        "marks": "{count, plural, other {# ta baho}}",
+        "average": "oʻrtacha {value}",
+        "semesterMark": "Hozirgi semestr bahosi",
+        "missingTitle": "Hali yoʻq"
+      },
+      "missing": {
+        "lesson": "Dars baholari hali yoʻq",
+        "midterm": "Oraliq nazorat hali yoʻq",
+        "final": "Yakuniy nazorat hali yoʻq"
+      },
+      "predicted": {
+        "title": "Taxminiy baho",
+        "none": "Taxmin koʻrish uchun avval dars baholari kerak.",
+        "both": "Qolgan har bir oraliq nazoratdan {midterm}, yakuniy nazoratdan {final} olsangiz.",
+        "midterm": "Qolgan har bir oraliq nazoratdan {midterm} olsangiz.",
+        "final": "Yakuniy nazoratdan {final} olsangiz.",
+        "nothingLeft": "Nazoratlar qolmagan, bu sizning semestr bahongiz."
+      },
+      "targets": {
+        "title": "Maqsad qilish mumkin boʻlgan baholar",
+        "grade": "{grade} baho",
+        "threshold": "semestr bahosi {threshold} dan",
+        "secured": "Kafolatlangan",
+        "possible": "Mumkin",
+        "notReachable": "Erishib boʻlmaydi",
+        "unknown": "Nomaʼlum",
+        "securedText": "Qolgan nazoratlar qanday boʻlmasin, bu bahoni olasiz.",
+        "notReachableText": "Qolgan nazoratlardagi eng yaxshi baholar ham bu semestrda yetmaydi.",
+        "unknownText": "Avval dars baholari kerak.",
+        "neededMidterm": "Qolgan har bir oraliq nazoratdan kamida {value} kerak.",
+        "neededFinal": "Yakuniy nazoratdan kamida {value} kerak.",
+        "neededBoth": "Qolgan har bir nazoratdan kamida {value}.",
+        "example": "Masalan, oraliq nazoratdan {midterm}, yakuniy nazoratdan kamida {final}."
+      },
+      "pairs": {
+        "caption": "Har bir oraliq baho uchun eng past yakuniy baho",
+        "midterm": "Oraliq baho",
+        "final": "Eng past yakuniy",
+        "notReachable": "erishib boʻlmaydi"
+      },
+      "whatIf": {
+        "title": "Agar… boʻlsa",
+        "type": "Baho turi",
+        "mark": "Baho",
+        "add": "Qoʻshish",
+        "reset": "Tozalash",
+        "list": "Sinalayotgan baholar",
+        "empty": "Hali baho qoʻshilmagan.",
+        "chip": "{type}: {mark}",
+        "remove": "Olib tashlash: {type}, {mark}",
+        "types": {
+          "lesson": "Dars",
+          "midterm": "Oraliq nazorat (ON)",
+          "final": "Yakuniy nazorat (YaN)"
+        }
+      }
+    }
+  },
+  "exams": {
+    "title": "Imtihonlar",
+    "empty": "Nazoratlar hali yoʻq.",
+    "upcoming": "Yaqinlashayotgan",
+    "past": "Oʻtgan",
+    "noUpcoming": "Yaqinlashayotgan nazoratlar yoʻq.",
+    "noPast": "Oʻtgan nazoratlar yoʻq.",
+    "filter": {
+      "label": "Fan",
+      "all": "Barcha fanlar"
+    },
+    "kind": {
+      "midterm1": "1-oraliq nazorat",
+      "midterm2": "2-oraliq nazorat",
+      "midterm": "Oraliq nazorat (ON)",
+      "final": "Yakuniy nazorat (YaN)",
+      "other": "Nazorat"
+    },
+    "name": "{control} · {subject}",
+    "countdown": {
+      "today": "bugun",
+      "tomorrow": "ertaga",
+      "yesterday": "kecha",
+      "in": "{count, plural, other {# kundan keyin}}",
+      "ago": "{count, plural, other {# kun oldin}}",
+      "weekRunning": "shu haftada"
+    },
+    "badge": {
+      "tentative": "Tasdiqlanmagan",
+      "undated": "Sana hali belgilanmagan"
+    },
+    "row": {
+      "week": "Nazorat haftasi {range}",
+      "room": "{room}-xona"
+    },
+    "view": {
+      "back": "Imtihonlar",
+      "notFound": "Bu nazorat topilmadi. U boshqa kunga koʻchirilgan yoki bekor qilingan boʻlishi mumkin.",
+      "date": "Sana",
+      "time": "Vaqt",
+      "room": "Xona",
+      "week": "Nazorat haftasi",
+      "note": "Izoh",
+      "planner": "Baho rejalashtiruvchi",
+      "practice": "Mashq testi"
+    },
+    "decks": {
+      "title": "Sizning kollodalaringiz",
+      "empty": "Bu fan boʻyicha hali kollodalar yoʻq.",
+      "create": "Kolloda yaratish",
+      "newTitle": "{subject} — imtihon",
+      "cards": "{count, plural, other {# ta kartochka}}",
+      "due": "takrorlash kerak: {count}",
+      "practice": "Mashq qilish",
+      "practiceItem": "Mashq qilish: {title}"
+    },
+    "materials": {
+      "title": "Oxirgi nazoratdan beri dars materiallari",
+      "sinceDate": "Oldingi nazoratdan beri: {control}, {date}.",
+      "sinceStart": "Bu semestrda oldingi nazorat yoʻq, shuning uchun hozirgacha boʻlgan barcha materiallar koʻrsatilgan.",
+      "empty": "Oʻshandan beri yangi materiallar yoʻq.",
+      "lesson": "{date} dagi dars",
+      "open": "Ochish",
+      "openItem": "Ochish: {title}"
+    },
+    "suggest": {
+      "button": "Sana taklif qilish",
+      "title": "Nazorat sanasini taklif qilish",
+      "description": "Guruhingizning oraliq yoki yakuniy nazorati.",
+      "subject": "Fan",
+      "subjectPlaceholder": "Fanni tanlang",
+      "kind": "Nazorat",
+      "date": "Sana",
+      "time": "Vaqt (ixtiyoriy)",
+      "room": "Xona (ixtiyoriy)",
+      "note": "Izoh (ixtiyoriy)",
+      "submit": "Taklifni yuborish",
+      "doneTitle": "Taklif yuborildi",
+      "doneText": "Oʻqituvchi yoki maʼmuriyat tasdiqlamaguncha sana “Tasdiqlanmagan” boʻlib qoladi.",
+      "close": "Yopish"
+    },
+    "card": {
+      "title": "Yaqinlashayotgan nazoratlar",
+      "all": "Barcha imtihonlar",
+      "headline": "{control} · {subject} · {when}"
+    }
+  },
+  "planner": {
+    "title": "Baholar rejasi",
+    "headline": "Baholar rejasi · {semester}-semestr",
+    "back": "Baholar",
+    "noSubject": "Rejani Baholar sahifasidagi fandan oching.",
+    "type": {
+      "lesson": "Darslar",
+      "midterm": "Oraliq nazorat (ON)",
+      "final": "Yakuniy nazorat (YaN)"
+    },
+    "summary": {
+      "title": "Baholaringiz",
+      "count": "{count, plural, other {# ta baho}}",
+      "noMarks": "Baho yoʻq",
+      "semesterMark": "Hozirgi semestr bahosi",
+      "noSemesterMark": "Semestr bahosi hali yoʻq",
+      "missing": {
+        "lesson": "Dars baholari hali yoʻq",
+        "midterm": "Oraliq nazorat hali yoʻq",
+        "final": "Yakuniy nazorat hali yoʻq"
+      }
+    },
+    "prediction": {
+      "title": "Semestr bahosi prognozi",
+      "unknown": "Avval dars baholarini qoʻshing: ularsiz prognoz tuzib boʻlmaydi.",
+      "both": "Qolgan har bir oraliq nazoratdan {midterm}, yakuniy nazoratdan {final} olsangiz.",
+      "midterm": "Qolgan har bir oraliq nazoratdan {midterm} olsangiz.",
+      "final": "Yakuniy nazoratdan {final} olsangiz.",
+      "none": "Barcha nazoratlar baholangan, shuning uchun bu — semestr bahongiz."
+    },
+    "targets": {
+      "title": "Buning uchun nima kerak"
+    },
+    "target": {
+      "grade": "{grade} baho",
+      "threshold": "Semestr bahosi {threshold} yoki undan yuqori",
+      "status": {
+        "secured": "Kafolatlangan",
+        "needed": "Baho kerak",
+        "not_reachable": "Erishib boʻlmaydi",
+        "unknown": "Hali nomaʼlum"
+      },
+      "secured": "Qolgan nazoratlar qanday boʻlishidan qatʼi nazar bu bahoni olasiz.",
+      "notReachable": "Bu semestrda erishib boʻlmaydi, qolgan barcha nazoratlardan 5 olsangiz ham.",
+      "unknown": "Avval dars baholarini qoʻshing: reja tuzish uchun hozircha asos yoʻq.",
+      "midterm": "{count, plural, other {Qolgan {count} ta oraliq nazoratning har biridan kamida {value} oling.}}",
+      "final": "Yakuniy nazoratdan kamida {value} oling.",
+      "both": "Qolgan har bir nazoratdan kamida {value} oling.",
+      "pairs": {
+        "caption": "Oraliq baho boʻyicha eng past yakuniy baho",
+        "midterm": "Oraliq baho",
+        "final": "Yakuniy kamida",
+        "notReachable": "Erishib boʻlmaydi"
+      }
+    },
+    "whatIf": {
+      "title": "Boshqa baholarni sinab koʻring",
+      "typeLabel": "Turi",
+      "markLabel": "Baho",
+      "types": {
+        "lesson": "Dars",
+        "midterm": "Oraliq nazorat (ON)",
+        "final": "Yakuniy nazorat (YaN)"
+      },
+      "add": "Qoʻshish",
+      "reset": "Tozalash",
+      "list": "Siz sinayotgan baholar",
+      "item": "{type} {value}",
+      "remove": "Olib tashlash: {type} {value}",
+      "empty": "Hali hech narsa sinalmadi."
+    }
+  },
+  "attendance": {
+    "overviewTitle": "Davomat",
+    "thisMonth": "Shu oy",
+    "semester": "Semestr",
+    "semesterAbsences": "Qoldirilgan",
+    "semesterExcused": "Sababli",
+    "semesterLessons": "Darslar",
+    "notTaken": "{count, plural, other {# ta darsda davomat hali belgilanmagan, ular hisobga olinmaydi.}}",
+    "summaryTitle": "Fanlar boʻyicha xulosa",
+    "noSummary": "Bu semestrda davomat belgilangan darslar yoʻq.",
+    "missedTitle": "Qoldirilgan darslar",
+    "summary": {
+      "subject": "Fan",
+      "absences": "Qoldirilgan",
+      "excused": "Sababli",
+      "lessons": "Darslar",
+      "rate": "Qoldirish ulushi"
+    },
+    "calendar": {
+      "label": "Davomat kalendari",
+      "previousMonth": "Oldingi oy",
+      "nextMonth": "Keyingi oy",
+      "dayWithAbsences": "{date}: {count, plural, other {# ta dars qoldirilgan}}"
+    },
+    "missed": {
+      "empty": "Qoldirilgan darslar yoʻq.",
+      "absent": "Qoldirilgan",
+      "excused": "Sababli"
+    },
+    "workOffs": {
+      "title": "Qayta topshirish vazifalari",
+      "period": "{period}-dars",
+      "dueOn": "Muddati: {date}",
+      "overdue": "Muddati o'tgan",
+      "status": {
+        "assigned": "Bajarilishi kerak"
+      }
+    }
+  },
+  "homework": {
+    "title": "Uy vazifalari",
+    "overdue": {
+      "title": "Muddati oʻtgan"
+    },
+    "overdueBy": "{count, plural, other {Muddati # kun oʻtgan}}",
+    "tabs": {
+      "upcoming": "Yaqin",
+      "later": "Keyinroq",
+      "done": "Bajarilgan"
+    },
+    "empty": {
+      "upcoming": "Topshiriladigan vazifa yoʻq.",
+      "later": "Keyinroq uchun reja yoʻq.",
+      "done": "Hozircha bajarilgan vazifalar yoʻq."
+    },
+    "tick": "Bajarildi: {subject}",
+    "updated": "Yangilangan",
+    "dueOn": "Muddat: {date}",
+    "noDueDate": "Muddatsiz",
+    "givenOn": "Berilgan: {date}",
+    "openLesson": "Darsni ochish",
+    "yourNote": "Sizning qaydingiz",
+    "addNote": "Qayd qoʻshish",
+    "editNote": "Qaydni tahrirlash",
+    "noteLabel": "Shaxsiy qayd",
+    "notePlaceholder": "Masalan: 34–36-betlar eng qiyin",
+    "noteCounter": "{count}/{max}",
+    "noteSave": "Saqlash",
+    "noteCancel": "Bekor qilish",
+    "workOff": {
+      "badge": "Qayta topshirish",
+      "overdue": "Muddati oʻtgan",
+      "lesson": "Dars: {date}",
+      "dueOn": "Muddat: {date}",
+      "noDueDate": "Muddatsiz"
+    }
+  },
+  "profile": {
+    "title": "Profil",
+    "security": "Xavfsizlik sozlamalari",
+    "account": {
+      "title": "Hisob",
+      "name": "Ism",
+      "login": "Login",
+      "mailbox": "Pochta qutisi",
+      "group": "Guruh",
+      "subgroup": "Kichik guruh",
+      "subgroupUnset": "Hali belgilanmagan",
+      "curator": "Kurator",
+      "headStudent": "Guruh sardori"
+    },
+    "emis": {
+      "title": "EMIS",
+      "status": "Ulanish holati",
+      "active": "Ulangan",
+      "needsReauth": "Parolni yangilash kerak",
+      "unknown": "Nomaʼlum",
+      "lastSync": "Oxirgi sinxronlash",
+      "never": "Hali sinxronlanmagan",
+      "update": "EMIS parolini yangilash"
+    },
+    "telegram": {
+      "title": "Telegram",
+      "manage": "Boshqarish",
+      "link": "Telegramni ulash",
+      "none": "Telegram hisobi ulanmagan.",
+      "linkedOn": "Ulangan: {date}"
+    },
+    "storage": {
+      "title": "Xotira",
+      "used": "{quota} dan {used} band",
+      "clearedOn": "Shu semestr fayllari {date} kuni oʻchiriladi."
+    }
+  },
+  "settings": {
+    "title": "Sozlamalar",
+    "general": {
+      "title": "Umumiy",
+      "language": "Til",
+      "theme": "Mavzu",
+      "themes": {
+        "light": "Yorugʻ",
+        "dark": "Qorongʻi",
+        "system": "Tizim"
+      }
+    },
+    "notifications": {
+      "title": "Bildirishnomalar",
+      "noTelegram": "Bildirishnomalar Telegramga yuboriladi. Olish uchun uni ulang.",
+      "linkTelegram": "Telegramni ulash"
+    },
+    "calendar": {
+      "title": "Kalendar"
+    },
+    "bottomNav": {
+      "title": "Pastki menyu",
+      "slots": "Panelda {count} / {max} ta sahifa",
+      "show": "Pastki panelda: {page}",
+      "moveUp": "Chapga: {page}",
+      "moveDown": "Oʻngga: {page}"
+    },
+    "emisSync": {
+      "title": "EMIS maʼlumotlari",
+      "button": "Oʻqituvchilar, darslar va baholarni qayta sinxronlash",
+      "status": "Holat",
+      "states": {
+        "pending": "Navbatda",
+        "running": "Sinxronlanmoqda",
+        "succeeded": "Tayyor",
+        "failed": "Yakunlanmadi"
+      },
+      "attempts": "{max} tadan {n}-urinish",
+      "finishedAt": "Yakunlandi: {time}",
+      "subgroup": "Guruhcha: {value}",
+      "noSubgroup": "yo'q",
+      "marks": "sinxronlangan baholar: {n}",
+      "lastError": "Sabab: {error}",
+      "gaveUp": "Sinxronlash {max} urinishdan keyin to'xtatildi. Qayta urinish uchun tugmani bosing."
+    }
+  }
+}

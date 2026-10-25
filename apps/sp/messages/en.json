@@ -1,0 +1,862 @@
+{
+  "teachers": {
+    "page": {
+      "title": "My teachers",
+      "empty": "No teachers yet. They appear once your timetable has lessons."
+    },
+    "card": {
+      "nearest": "Next class",
+      "now": "Now",
+      "none": "No classes in the next two weeks",
+      "upcoming": "Next two weeks",
+      "showAll": "Show all ({count})",
+      "showLess": "Show less",
+      "room": "room {room}"
+    },
+    "contacts": {
+      "title": "Contacts",
+      "none": "No contacts yet",
+      "office": "Room {office}",
+      "copy": "Copy",
+      "copyFailed": "Could not copy"
+    },
+    "detail": {
+      "back": "Teachers",
+      "subjects": "Subjects",
+      "timetable": "Timetable",
+      "previousWeek": "Previous week",
+      "nextWeek": "Next week",
+      "thisWeek": "This week",
+      "yourGroup": "Your group",
+      "cancelled": "Cancelled",
+      "noLessonsDay": "No lessons",
+      "notFound": "Teacher not found",
+      "room": "room {room}"
+    }
+  },
+  "app": {
+    "name": "my.iht"
+  },
+  "offline": {
+    "updated": "Updated {when}"
+  },
+  "nav": {
+    "short": {
+      "dashboard": "Home",
+      "today": "Today",
+      "timetable": "Calendar",
+      "subjects": "Subjects",
+      "grades": "Grades",
+      "homework": "Tasks",
+      "exams": "Exams",
+      "assistant": "Assistant",
+      "notebooks": "Notebooks",
+      "flashcards": "Cards",
+      "files": "Files",
+      "links": "Links",
+      "notifications": "Alerts",
+      "settings": "Settings"
+    },
+    "dashboard": "Dashboard",
+    "today": "Today",
+    "timetable": "Calendar",
+    "subjects": "Subjects",
+    "grades": "Grades",
+    "homework": "Homework",
+    "exams": "Exams",
+    "teachers": "My teachers",
+    "myGroup": "My group",
+    "assistant": "Assistant",
+    "notebooks": "Notebooks",
+    "flashcards": "Flash cards",
+    "files": "My files",
+    "links": "Links & shares",
+    "notifications": "Notifications",
+    "profile": "Profile",
+    "settings": "Settings",
+    "groupHome": "Home",
+    "groupAcademics": "Academics",
+    "groupStudyTools": "Study tools",
+    "groupInbox": "Inbox",
+    "groupAccount": "Account",
+    "mail": "Email"
+  },
+  "attendanceStates": {
+    "late": "Late",
+    "present": "Present",
+    "absent": "Absent",
+    "excused": "Excused",
+    "not_taken": "Not taken yet"
+  },
+  "dashboard": {
+    "title": "Dashboard",
+    "lessons": "Today's lessons",
+    "noLessons": "No lessons today",
+    "openCalendar": "Open the calendar",
+    "mark": "Mark {mark}",
+    "notebook": "Notebook: {subject}",
+    "gpa": "GPA",
+    "gpaLabel": "GPA {value} out of 5, open Grades",
+    "gpaError": "Could not load the GPA",
+    "toGrades": "Grades",
+    "sections": "All sections",
+    "library": "Library",
+    "lms": "LMS"
+  },
+  "today": {
+    "title": "Today",
+    "now": {
+      "title": "Next lesson",
+      "titleNow": "Now",
+      "titleNext": "Next lesson",
+      "none": "No more lessons today.",
+      "nextStudyDay": "Next study day: {date}.",
+      "minutesLeft": "{count} min left",
+      "startsIn": "in {count} min",
+      "room": "Room {name}",
+      "materials": "{count, plural, =0 {No materials} one {# material} other {# materials}}"
+    },
+    "timeline": {
+      "title": "Today's lessons",
+      "cancelled": "Cancelled",
+      "changed": "Changed",
+      "homework": "Homework"
+    },
+    "due": {
+      "title": "Due next study day",
+      "titleOn": "Due {date}",
+      "all": "All homework",
+      "count": "{count, plural, one {# task to do} other {# tasks to do}}",
+      "overdueCount": "{count} overdue"
+    },
+    "marks": {
+      "title": "New marks",
+      "type": {
+        "lesson": "Lesson",
+        "midterm": "Midterm (PC)",
+        "final": "Final (FC)"
+      }
+    },
+    "semester": {
+      "title": "This semester",
+      "titleNumber": "Semester {number}",
+      "gpa": "GPA (out of 5)",
+      "absences": "Absences",
+      "change": "{change} vs last semester",
+      "importing": "Importing your marks from EMIS…",
+      "updated": "Marks updated {when}",
+      "syncFailed": "Marks last updated at {time}"
+    },
+    "announcements": {
+      "title": "Announcements",
+      "all": "All"
+    },
+    "alerts": {
+      "title": "Needs your attention",
+      "emis_reauth": "Your EMIS password needs updating. New marks cannot be loaded until you do.",
+      "no_subgroup": "Your subgroup is not set yet. Your curator will set it.",
+      "files_expiring": "{count, plural, one {# file will be deleted on {date}} other {# files will be deleted on {date}}}",
+      "pending_approvals": "{count, plural, one {# assistant action is waiting for your approval} other {# assistant actions are waiting for your approval}}",
+      "sync_failed": "The last EMIS sync failed. Marks may be out of date.",
+      "actions": {
+        "emis_reauth": "Update password",
+        "no_subgroup": "Open profile",
+        "files_expiring": "Open My files",
+        "pending_approvals": "Review",
+        "sync_failed": "Open grades"
+      },
+      "short": {
+        "emis_reauth": "Update your EMIS password",
+        "no_subgroup": "Subgroup not set",
+        "files_expiring": "{count, plural, one {# file expiring} other {# files expiring}}",
+        "pending_approvals": "{count, plural, one {# action to approve} other {# actions to approve}}",
+        "sync_failed": "EMIS sync failed"
+      }
+    },
+    "getStarted": {
+      "title": "Get started",
+      "hide": "Hide",
+      "dismissStep": "Skip: {step}",
+      "subgroupSet": "Your subgroup is {number}.",
+      "subgroupUnset": "Not set yet. Your curator will set it.",
+      "steps": {
+        "telegram": {
+          "title": "Link Telegram",
+          "text": "Get notifications and one-time codes in Telegram.",
+          "action": "Link"
+        },
+        "subgroup": {
+          "title": "Check your subgroup",
+          "text": "Your timetable depends on it.",
+          "action": "Open profile"
+        },
+        "notifications": {
+          "title": "Choose notifications",
+          "text": "Pick which marks and alerts you want.",
+          "action": "Open settings"
+        }
+      }
+    },
+    "dashboard": {
+      "title": "My widgets",
+      "edit": "Edit",
+      "done": "Done",
+      "cancel": "Cancel",
+      "add": "Add widget",
+      "catalog": "Widget catalogue",
+      "editor": "Widget settings",
+      "size": "Size",
+      "color": "Colour",
+      "colorDefault": "Default colour",
+      "remove": "Remove",
+      "editTile": "Select {title}",
+      "conflict": "The widgets were changed on another device. Your edit was not saved; try again.",
+      "noLesson": "Nothing up next.",
+      "noLessons": "No lessons today.",
+      "noExams": "No controls soon.",
+      "homeworkDue": "to do",
+      "gpa": "GPA (out of 5)",
+      "cardsDue": "cards due",
+      "absences": "absences",
+      "anySubject": "your subject",
+      "kinds": {
+        "timetable": "Schedule",
+        "homework": "Tasks",
+        "marks": "Marks",
+        "exams": "Exams",
+        "flashcards_due": "Flash cards",
+        "notebook_prompt": "Study idea",
+        "attendance": "Attendance",
+        "clock_next_lesson": "Up next",
+        "upcoming_controls": "Upcoming controls",
+        "next_lesson": "Next lesson",
+        "today_lessons": "Today's lessons",
+        "semester_summary": "Semester",
+        "announcements": "Announcements",
+        "new_marks": "New marks",
+        "alerts": "Needs attention",
+        "get_started": "Get started"
+      },
+      "notebookPrompt": {
+        "templates": {
+          "0": "Prepare for the midterm in {subject} with flash cards",
+          "1": "Quiz me on {subject}",
+          "2": "Summarise the last lesson of {subject}",
+          "3": "Explain the hardest topic of {subject} simply"
+        }
+      },
+      "groups": {
+        "study": "Study",
+        "control": "Control",
+        "news": "News",
+        "tools": "Tools"
+      },
+      "noAnnouncements": "No announcements.",
+      "noNewMarks": "No new marks.",
+      "newMarks": "new marks",
+      "noAlerts": "Nothing needs attention.",
+      "alertsCount": "to look at",
+      "allSet": "All set.",
+      "stepsLeft": "steps left"
+    }
+  },
+  "timetable": {
+    "title": "Calendar",
+    "views": {
+      "day": "Day",
+      "week": "Week",
+      "month": "Month"
+    },
+    "viewsLabel": "Calendar view",
+    "today": "Today",
+    "previousMonth": "Previous month",
+    "nextMonth": "Next month",
+    "legend": "Attendance colours",
+    "freeGap": "Free: {minutes} min",
+    "breakGap": "Break: {minutes} min",
+    "days": "Days of the week",
+    "room": "Room {name}",
+    "now": "Now",
+    "cancelled": "Cancelled",
+    "subgroup": "Subgroup {number}",
+    "otherSubgroup": "Other subgroup ({name})",
+    "subgroupHint": "Your subgroup is not set yet, so lessons of both subgroups are shown.",
+    "noLessons": "No lessons on this day.",
+    "noLessonsWeek": "No lessons this week.",
+    "fields": {
+      "room": "Room",
+      "teacher": "Teacher",
+      "subject": "Subject",
+      "date": "Date",
+      "period": "Period",
+      "topic": "Topic"
+    }
+  },
+  "calendarFeed": {
+    "subscribe": "Subscribe to calendar",
+    "title": "Subscribe to calendar",
+    "intro": "A private link to your timetable for any calendar app. Anyone with the link sees your lessons, so do not share it. A new link turns the old one off.",
+    "create": "Create link",
+    "shownOnce": "Copy this link now. It is shown only once.",
+    "feedUrl": "Calendar feed link",
+    "google": "Add to Google Calendar",
+    "apple": "Add to Apple Calendar",
+    "regenerate": "Regenerate link",
+    "regenerateTitle": "Regenerate the link?",
+    "regenerateText": "The old link stops working. Calendars that use it will not update until you add the new one.",
+    "regenerateConfirm": "Regenerate"
+  },
+  "subjects": {
+    "title": "Subjects",
+    "empty": "No subjects in this semester.",
+    "notFound": "Subject not found.",
+    "semesterLabel": "Semester {number}",
+    "emisRating": "EMIS rating",
+    "absences": "Absences",
+    "nextLesson": "Next lesson: {date}, {time}",
+    "noNextLesson": "No upcoming lessons",
+    "tabs": {
+      "overview": "Overview",
+      "lessons": "Lessons",
+      "materials": "Materials"
+    },
+    "overview": {
+      "planner": "Mark planner",
+      "openNotebook": "Open notebook",
+      "notebook": "Subject notebook",
+      "teachers": "Teachers",
+      "semesterMark": "Semester mark",
+      "emisRating": "EMIS rating",
+      "absenceRate": "Absence rate",
+      "averages": "Averages",
+      "type": {
+        "lesson": "Lessons",
+        "midterm": "Midterm (PC)",
+        "final": "Final (FC)"
+      }
+    },
+    "lessons": {
+      "empty": "No lessons yet.",
+      "noTopic": "No topic yet",
+      "homework": "Homework"
+    },
+    "marks": {
+      "type": {
+        "lesson": "Lesson",
+        "midterm": "Midterm (PC)",
+        "final": "Final (FC)"
+      }
+    },
+    "materials": {
+      "search": "Search materials",
+      "empty": "No materials found."
+    },
+    "hub": {
+      "title": "Hub",
+      "notebook": {
+        "title": "Subject notebook",
+        "open": "Open notebook"
+      },
+      "past": "Recent lessons",
+      "upcoming": "Next 14 days",
+      "noUpcoming": "No lessons in the next 14 days.",
+      "empty": "No lessons yet.",
+      "showMore": "Show more",
+      "noTopic": "No topic yet",
+      "askAi": "Ask AI about this lesson",
+      "materials": "{count, plural, one {# material} other {# materials}}",
+      "kind": {
+        "lecture": "Lecture",
+        "practice": "Practice",
+        "midterm": "Midterm (PC)",
+        "final": "Final (FC)",
+        "other": "Lesson"
+      },
+      "attendance": {
+        "present": "Present",
+        "absent": "Absent",
+        "late": "Late"
+      }
+    }
+  },
+  "lesson": {
+    "title": "Lesson",
+    "notFound": "Lesson not found.",
+    "backToTimetable": "Calendar",
+    "cancelled": "Cancelled",
+    "date": "Date",
+    "time": "Time",
+    "period": "Period {number}",
+    "room": "Room",
+    "teacher": "Teacher",
+    "topic": "Topic",
+    "materials": "Materials",
+    "noMaterials": "The teacher has not added materials.",
+    "homework": "Homework",
+    "noHomework": "No homework for this lesson.",
+    "attachments": "Attachments",
+    "noAttachments": "No attachments yet.",
+    "myResult": "My result",
+    "noMark": "No mark for this lesson",
+    "deleteTitle": "Delete this attachment?",
+    "deleteText": "“{title}” disappears from the lesson. The file stays in My files.",
+    "deleteConfirm": "Delete",
+    "resources": {
+      "open": "Open",
+      "openItem": "Open {title}",
+      "preview": "Preview",
+      "previewItem": "Preview {title}",
+      "deleteItem": "Delete {title}"
+    },
+    "attach": {
+      "button": "Add attachment",
+      "title": "Add attachment",
+      "tabs": {
+        "file": "File",
+        "link": "Link"
+      },
+      "upload": "Upload a file",
+      "pickFromFiles": "Choose from My files",
+      "url": "Link address",
+      "addLink": "Add link"
+    },
+    "toSubject": "Subject: {subject}"
+  },
+  "grades": {
+    "title": "Grades",
+    "tabs": {
+      "semester": "Semester",
+      "day": "By day",
+      "record": "Record book"
+    },
+    "emis": {
+      "title": "EMIS password needs updating",
+      "text": "Marks are not updated until you enter the new password. Old marks stay visible.",
+      "action": "Update password"
+    },
+    "semester": {
+      "subject": "Subject",
+      "lessonAvg": "Lessons",
+      "midtermAvg": "PC",
+      "finalAvg": "FC",
+      "semesterMark": "Semester mark",
+      "emisRating": "EMIS",
+      "gpa": "GPA (out of 5)",
+      "marksCount": "{count, plural, one {# mark} other {# marks}}",
+      "updated": "Updated {when}",
+      "importing": "Importing your marks from EMIS…",
+      "empty": "No marks in this semester yet.",
+      "plan": "Plan",
+      "planFor": "Mark planner: {subject}"
+    },
+    "day": {
+      "previous": "Previous study day",
+      "next": "Next study day",
+      "pick": "Pick a date",
+      "empty": "No marks on this day.",
+      "unmatched": "Marks without a lesson",
+      "type": {
+        "lesson": "Lesson",
+        "midterm": "Midterm (PC)",
+        "final": "Final (FC)"
+      }
+    },
+    "record": {
+      "chartTitle": "GPA by semester",
+      "chartLabel": "Line chart of GPA by semester",
+      "gpa": "GPA (out of 5)",
+      "gpaList": "GPA of each semester (out of 5)",
+      "semesterShort": "S{number}",
+      "semesterLabel": "Semester {number}",
+      "emisRating": "EMIS",
+      "empty": "The record book is empty."
+    },
+    "planner": {
+      "link": "Plan",
+      "title": "Mark planner",
+      "back": "Grades",
+      "semester": "Semester {number}",
+      "noSubject": "Choose a subject on the Grades page to plan its marks.",
+      "summary": {
+        "title": "Your marks now",
+        "lesson": "Lesson marks",
+        "midterm": "Midterms",
+        "final": "Final (FC)",
+        "marks": "{count, plural, one {# mark} other {# marks}}",
+        "average": "average {value}",
+        "semesterMark": "Semester mark now",
+        "missingTitle": "Still missing"
+      },
+      "missing": {
+        "lesson": "Lesson marks not yet",
+        "midterm": "Midterm not yet",
+        "final": "Final not yet"
+      },
+      "predicted": {
+        "title": "Predicted mark",
+        "none": "Add lesson marks first to see a prediction.",
+        "both": "If every remaining midterm gets {midterm} and the final gets {final}.",
+        "midterm": "If every remaining midterm gets {midterm}.",
+        "final": "If the final gets {final}.",
+        "nothingLeft": "No controls are left, so this is your semester mark."
+      },
+      "targets": {
+        "title": "Marks you can aim for",
+        "grade": "Mark {grade}",
+        "threshold": "semester mark from {threshold}",
+        "secured": "Secured",
+        "possible": "Possible",
+        "notReachable": "Not reachable",
+        "unknown": "Unknown",
+        "securedText": "You get this mark whatever the remaining controls bring.",
+        "notReachableText": "Even the best marks on the remaining controls are not enough this semester.",
+        "unknownText": "Add lesson marks first.",
+        "neededMidterm": "Needs at least {value} on every remaining midterm.",
+        "neededFinal": "Needs at least {value} on the final.",
+        "neededBoth": "At least {value} on every remaining control.",
+        "example": "For example, {midterm} on the midterm and at least {final} on the final."
+      },
+      "pairs": {
+        "caption": "Lowest final mark for each midterm mark",
+        "midterm": "Midterm mark",
+        "final": "Lowest final",
+        "notReachable": "not reachable"
+      },
+      "whatIf": {
+        "title": "What if…",
+        "type": "Type of mark",
+        "mark": "Mark",
+        "add": "Add",
+        "reset": "Reset",
+        "list": "Marks you are trying",
+        "empty": "No marks added yet.",
+        "chip": "{type}: {mark}",
+        "remove": "Remove {type}: {mark}",
+        "types": {
+          "lesson": "Lesson",
+          "midterm": "Midterm (PC)",
+          "final": "Final (FC)"
+        }
+      }
+    }
+  },
+  "exams": {
+    "title": "Exams",
+    "empty": "No controls yet.",
+    "upcoming": "Upcoming",
+    "past": "Past",
+    "noUpcoming": "No upcoming controls.",
+    "noPast": "No past controls.",
+    "filter": {
+      "label": "Subject",
+      "all": "All subjects"
+    },
+    "kind": {
+      "midterm1": "Midterm 1",
+      "midterm2": "Midterm 2",
+      "midterm": "Midterm (PC)",
+      "final": "Final (FC)",
+      "other": "Control"
+    },
+    "name": "{control} · {subject}",
+    "countdown": {
+      "today": "today",
+      "tomorrow": "tomorrow",
+      "yesterday": "yesterday",
+      "in": "in {count, plural, one {# day} other {# days}}",
+      "ago": "{count, plural, one {# day} other {# days}} ago",
+      "weekRunning": "this week"
+    },
+    "badge": {
+      "tentative": "Not confirmed",
+      "undated": "Date not set yet"
+    },
+    "row": {
+      "week": "Control week {range}",
+      "room": "Room {room}"
+    },
+    "view": {
+      "back": "Exams",
+      "notFound": "This control was not found. It may have been moved or cancelled.",
+      "date": "Date",
+      "time": "Time",
+      "room": "Room",
+      "week": "Control week",
+      "note": "Note",
+      "planner": "Mark planner",
+      "practice": "Practice quiz"
+    },
+    "decks": {
+      "title": "Your decks",
+      "empty": "You have no decks for this subject yet.",
+      "create": "Create a deck",
+      "newTitle": "{subject} — exam",
+      "cards": "{count, plural, one {# card} other {# cards}}",
+      "due": "{count} to review",
+      "practice": "Practice",
+      "practiceItem": "Practice: {title}"
+    },
+    "materials": {
+      "title": "Lesson materials since the previous control",
+      "sinceDate": "Since the previous control: {control}, {date}.",
+      "sinceStart": "No earlier control this semester, so these are all the materials so far.",
+      "empty": "No new materials since then.",
+      "lesson": "Lesson of {date}",
+      "open": "Open",
+      "openItem": "Open: {title}"
+    },
+    "suggest": {
+      "button": "Suggest a date",
+      "title": "Suggest a control date",
+      "description": "Midterm (PC) or final (FC) of your group.",
+      "subject": "Subject",
+      "subjectPlaceholder": "Choose a subject",
+      "kind": "Control",
+      "date": "Date",
+      "time": "Time (optional)",
+      "room": "Room (optional)",
+      "note": "Note (optional)",
+      "submit": "Send suggestion",
+      "doneTitle": "Suggestion sent",
+      "doneText": "The date stays \"Not confirmed\" until a teacher or the administration confirms it.",
+      "close": "Close"
+    },
+    "card": {
+      "title": "Controls coming up",
+      "all": "All exams",
+      "headline": "{control} · {subject} · {when}"
+    }
+  },
+  "planner": {
+    "title": "Mark planner",
+    "headline": "Mark planner · semester {semester}",
+    "back": "Grades",
+    "noSubject": "Open the planner from a subject on the Grades page.",
+    "type": {
+      "lesson": "Lessons",
+      "midterm": "Midterm (PC)",
+      "final": "Final (FC)"
+    },
+    "summary": {
+      "title": "Your marks",
+      "count": "{count, plural, one {# mark} other {# marks}}",
+      "noMarks": "No marks",
+      "semesterMark": "Semester mark so far",
+      "noSemesterMark": "No semester mark yet",
+      "missing": {
+        "lesson": "No lesson marks yet",
+        "midterm": "Midterm not yet",
+        "final": "Final not yet"
+      }
+    },
+    "prediction": {
+      "title": "Predicted semester mark",
+      "unknown": "Add lesson marks first: without them there is nothing to predict from.",
+      "both": "Assuming a {midterm} on every remaining midterm and a {final} on the final.",
+      "midterm": "Assuming a {midterm} on every remaining midterm.",
+      "final": "Assuming a {final} on the final.",
+      "none": "Every control already has a mark, so this is your semester mark."
+    },
+    "targets": {
+      "title": "What you need"
+    },
+    "target": {
+      "grade": "Grade {grade}",
+      "threshold": "Semester mark {threshold} or higher",
+      "status": {
+        "secured": "Secured",
+        "needed": "Needs marks",
+        "not_reachable": "Out of reach",
+        "unknown": "Not known yet"
+      },
+      "secured": "You get this grade whatever the remaining controls bring.",
+      "notReachable": "Not reachable this semester, even with a 5 on every remaining control.",
+      "unknown": "Add lesson marks first: there is nothing to plan from yet.",
+      "midterm": "{count, plural, one {Get at least a {value} on the remaining midterm.} other {Get at least a {value} on each of the # remaining midterms.}}",
+      "final": "Get at least a {value} on the final.",
+      "both": "Get at least a {value} on every remaining control.",
+      "pairs": {
+        "caption": "Lowest final for each midterm mark",
+        "midterm": "Midterm mark",
+        "final": "Lowest final",
+        "notReachable": "Not reachable"
+      }
+    },
+    "whatIf": {
+      "title": "Try other marks",
+      "typeLabel": "Type",
+      "markLabel": "Mark",
+      "types": {
+        "lesson": "Lesson",
+        "midterm": "Midterm (PC)",
+        "final": "Final (FC)"
+      },
+      "add": "Add",
+      "reset": "Reset",
+      "list": "Marks you are trying",
+      "item": "{type} {value}",
+      "remove": "Remove {type} {value}",
+      "empty": "No marks tried yet."
+    }
+  },
+  "attendance": {
+    "overviewTitle": "Attendance",
+    "thisMonth": "This month",
+    "semester": "This semester",
+    "semesterAbsences": "Absences",
+    "semesterExcused": "Excused",
+    "semesterLessons": "Lessons",
+    "notTaken": "{count, plural, one {# lesson has no attendance taken yet and is not counted.} other {# lessons have no attendance taken yet and are not counted.}}",
+    "summaryTitle": "Summary by subject",
+    "noSummary": "No lessons with attendance this semester.",
+    "missedTitle": "Missed lessons",
+    "summary": {
+      "subject": "Subject",
+      "absences": "Absences",
+      "excused": "Excused",
+      "lessons": "Lessons",
+      "rate": "Absence rate"
+    },
+    "calendar": {
+      "label": "Attendance calendar",
+      "previousMonth": "Previous month",
+      "nextMonth": "Next month",
+      "dayWithAbsences": "{date}: {count, plural, one {# absence} other {# absences}}"
+    },
+    "missed": {
+      "empty": "No missed lessons.",
+      "absent": "Absent",
+      "excused": "Excused"
+    },
+    "workOffs": {
+      "title": "Work-off tasks",
+      "period": "Period {period}",
+      "dueOn": "Due {date}",
+      "overdue": "Overdue",
+      "status": {
+        "assigned": "To do"
+      }
+    }
+  },
+  "homework": {
+    "title": "Homework",
+    "overdue": {
+      "title": "Overdue"
+    },
+    "overdueBy": "{count, plural, one {# day overdue} other {# days overdue}}",
+    "tabs": {
+      "upcoming": "Upcoming",
+      "later": "Later",
+      "done": "Done"
+    },
+    "empty": {
+      "upcoming": "Nothing due.",
+      "later": "Nothing planned for later.",
+      "done": "No finished homework yet."
+    },
+    "tick": "Done: {subject}",
+    "updated": "Updated",
+    "dueOn": "Due {date}",
+    "noDueDate": "No due date",
+    "givenOn": "Given on {date}",
+    "openLesson": "Open lesson",
+    "yourNote": "Your note",
+    "addNote": "Add note",
+    "editNote": "Edit note",
+    "noteLabel": "Private note",
+    "notePlaceholder": "For example: pages 34–36 are the hard part",
+    "noteCounter": "{count}/{max}",
+    "noteSave": "Save",
+    "noteCancel": "Cancel",
+    "workOff": {
+      "badge": "Work-off",
+      "overdue": "Overdue",
+      "lesson": "Lesson {date}",
+      "dueOn": "Due {date}",
+      "noDueDate": "No due date"
+    }
+  },
+  "profile": {
+    "title": "Profile",
+    "security": "Security settings",
+    "account": {
+      "title": "Account",
+      "name": "Name",
+      "login": "Login",
+      "mailbox": "Mailbox",
+      "group": "Group",
+      "subgroup": "Subgroup",
+      "subgroupUnset": "Not set yet",
+      "curator": "Curator",
+      "headStudent": "Head student"
+    },
+    "emis": {
+      "title": "EMIS",
+      "status": "Link status",
+      "active": "Linked",
+      "needsReauth": "Password needs updating",
+      "unknown": "Unknown",
+      "lastSync": "Last sync",
+      "never": "Not synced yet",
+      "update": "Update EMIS password"
+    },
+    "telegram": {
+      "title": "Telegram",
+      "manage": "Manage",
+      "link": "Link Telegram",
+      "none": "No Telegram account is linked.",
+      "linkedOn": "Linked {date}"
+    },
+    "storage": {
+      "title": "Storage",
+      "used": "{used} of {quota} used",
+      "clearedOn": "Files of this term are deleted on {date}."
+    }
+  },
+  "settings": {
+    "title": "Settings",
+    "general": {
+      "title": "General",
+      "language": "Language",
+      "theme": "Theme",
+      "themes": {
+        "light": "Light",
+        "dark": "Dark",
+        "system": "System"
+      }
+    },
+    "notifications": {
+      "title": "Notifications",
+      "noTelegram": "Notifications go to Telegram. Link it to receive them.",
+      "linkTelegram": "Link Telegram"
+    },
+    "calendar": {
+      "title": "Calendar feed"
+    },
+    "bottomNav": {
+      "title": "Bottom menu",
+      "slots": "{count} of {max} pages in the bar",
+      "show": "In the bottom bar: {page}",
+      "moveUp": "Move left: {page}",
+      "moveDown": "Move right: {page}"
+    },
+    "emisSync": {
+      "title": "EMIS data",
+      "button": "Re-sync teachers, lessons and marks",
+      "status": "Status",
+      "states": {
+        "pending": "Queued",
+        "running": "Syncing",
+        "succeeded": "Done",
+        "failed": "Not finished"
+      },
+      "attempts": "attempt {n} of {max}",
+      "finishedAt": "Finished: {time}",
+      "subgroup": "Subgroup: {value}",
+      "noSubgroup": "none",
+      "marks": "marks synced: {n}",
+      "lastError": "Reason: {error}",
+      "gaveUp": "The sync stopped after {max} attempts. Press the button to retry."
+    }
+  }
+}
