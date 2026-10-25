@@ -1,0 +1,8 @@
+# Dev-only advisories that `bun audit` reports as high or critical, accepted for a limited time.
+# bun audit has no ignore setting, so scripts/security_scan.sh (bun-audit) reads this file: a listed advisory is
+# reported as a warning, not a failure, until its date. An expired or unlisted high advisory fails the scan.
+#
+# Format (tab separated): advisory id <TAB> package <TAB> until (YYYY-MM-DD) <TAB> reason
+# Every entry is a dev dependency (test runner globals), not shipped to users. Review by the date given.
+
+GHSA-834v-8h66-3h79	happy-dom	2026-11-03	Dev/test only (@happy-dom/global-registrator). Fixed in 21.0.4, published 2026-10-20; blocked by bunfig minimumReleaseAge until about 2026-10-27. Bump and run bun test apps packages.
