@@ -1,0 +1,658 @@
+{
+  "idCommon": {
+    "brand": "IHT ID",
+    "working": "Biroz kuting…",
+    "loading": "Yuklanmoqda…",
+    "code": "Kod",
+    "resend": "Yangi kod yuborish",
+    "resendIn": "Yangi kodni {seconds} soniyadan keyin yuborish mumkin",
+    "step": "{total} dan {current}-qadam",
+    "newPassword": "Yangi parol",
+    "confirmPassword": "Parolni takrorlang",
+    "recoveryEmail": "Tiklash uchun pochta",
+    "recoveryEmailHint": "Kodlar va xavfsizlik xabarlari shu manzilga yuboriladi.",
+    "emisLogin": "EMIS logini",
+    "emisPassword": "EMIS paroli",
+    "emisPasswordHint": "Shifrlangan holda saqlanadi. Faqat baholar va jadval uchun.",
+    "passwordRules": {
+      "title": "Parol talablari",
+      "length": "Kamida 8 ta belgi",
+      "digit": "Kamida bitta raqam",
+      "upper": "Kamida bitta bosh harf",
+      "lower": "Kamida bitta kichik harf",
+      "met": "(bajarildi)",
+      "notMet": "(hali yoʻq)"
+    },
+    "validation": {
+      "required": "Bu maydon majburiy.",
+      "email": "Toʻgʻri pochta manzilini kiriting.",
+      "code": "6 xonali kodni kiriting.",
+      "password": "Parol talablarga mos emas.",
+      "mismatch": "Parollar mos kelmaydi.",
+      "confirmRequired": "Davom etish uchun tasdiqlang.",
+      "recoveryCode": "Zaxira kodini kiriting, masalan k7mqa-2xpab."
+    },
+    "missingChallenge": {
+      "title": "Sahifani ilovadan oching",
+      "description": "Sahifani IHT ilovasidagi «Kirish» tugmasidan oching.",
+      "action": "Hisob xavfsizligini ochish"
+    },
+    "stepUp": {
+      "send": "Kod yuborish",
+      "sendAgain": "Kodni qayta yuborish",
+      "sent": "Kodni OTP kanallaringizga yubordik.",
+      "needSession": "Kod olish uchun bu yerda tizimga kirgan boʻlishingiz kerak.",
+      "openSecurity": "Yangi oynada kirish"
+    },
+    "appCode": "Ilovadagi kod",
+    "recoveryCode": "Zaxira kodi",
+    "useRecoveryCode": "Zaxira kodini kiritish",
+    "useAppCode": "Ilovadagi kodni kiritish",
+    "securityContact": {
+      "button": "Xavfsizlik aloqasi",
+      "title": "Xavfsizlik aloqasi",
+      "hint": "Hisobingizga boshqa birov kirganiga shubhangiz bo‘lsa, shu yerga yozing."
+    }
+  },
+  "idErrors": {
+    "generic": "Nimadir xato ketdi. Birozdan keyin qayta urinib koʻring.",
+    "network": "Serverga ulanib boʻlmadi. Internetni tekshirib, qayta urinib koʻring.",
+    "auth": {
+      "unauthorized": "Login yoki parol notoʻgʻri.",
+      "invalid-credentials": "Login yoki parol notoʻgʻri.",
+      "locked": "Urinishlar juda koʻp. {minutes} daqiqadan keyin qayta urinib koʻring.",
+      "role-missing": "Sizda bu platformaga kirish huquqi yoʻq.",
+      "otp-invalid": "Kod notoʻgʻri. Qolgan urinishlar: {attempts}.",
+      "otp-invalid-plain": "Kod notoʻgʻri yoki muddati oʻtgan.",
+      "second-factor-required": "Tasdiqlash kodi kerak.",
+      "challenge-used": "Bu kirish havolasi allaqachon ishlatilgan. Qaytadan boshlanmoqda.",
+      "passkey-invalid": "Kirish kalitini tekshirib boʻlmadi. Qayta urinib koʻring yoki boshqa usulda kiring.",
+      "password-disabled": "Bu akkaunt uchun parol bilan kirish oʻchirilgan. Kirish kaliti bilan kiring."
+    },
+    "common": {
+      "rate-limited": "Urinishlar juda koʻp. {minutes} daqiqadan keyin qayta urinib koʻring.",
+      "validation": "Kiritilgan baʼzi maʼlumotlar notoʻgʻri.",
+      "request-validation": "Kiritilgan baʼzi maʼlumotlar notoʻgʻri.",
+      "not-found": "Siz izlagan narsa topilmadi.",
+      "forbidden": "Bu amalni bajarishga ruxsatingiz yoʻq."
+    },
+    "id": {
+      "wrong-institution": "Faqat Interhouse talabalari roʻyxatdan oʻta oladi. Bu EMIS hisobi boshqa muassasaga tegishli.",
+      "emis-already-linked": "Bu EMIS hisobi uchun IHT hisobi allaqachon mavjud.",
+      "user-not-found": "Bunday loginli foydalanuvchi topilmadi.",
+      "admin-reset-forbidden": "Bu hisobni faqat Maʼmuriyatning boshqa aʼzosi tiklay oladi. Maʼmuriyatga murojaat qiling.",
+      "passkey-not-found": "Kirish kaliti topilmadi.",
+      "last-passkey": "Parol bilan kirish oʻchirilgan, shuning uchun oxirgi kirish kalitini oʻchirib boʻlmaydi. Avval parolni tiklang.",
+      "passkey-required": "Parol bilan kirishni oʻchirishdan oldin kirish kalitini qoʻshing.",
+      "totp-state": "Autentifikator ilovasi allaqachon shu holatda. Sahifani yangilang.",
+      "login-cue-not-found": "Bu ism roʻyxatda yoʻq. Ismingizni qayta tanlang.",
+      "login-cue-group-not-found": "Bu guruh endi mavjud emas. Guruhni qayta tanlang.",
+      "login-cue-unavailable": "Bu ism allaqachon hisob uchun ishlatilgan. Maʼmuriyatga murojaat qiling."
+    },
+    "emis": {
+      "auth-failed": "EMIS logini yoki paroli notoʻgʻri.",
+      "unavailable": "EMIS javob bermayapti. Keyinroq urinib koʻring."
+    },
+    "telegram": {
+      "linked-elsewhere": "Bu Telegram hisobi boshqa IHT hisobiga ulangan. Avval oʻsha yerdan chiqing."
+    }
+  },
+  "idNav": {
+    "security": "Xavfsizlik",
+    "overview": "Umumiy koʻrinish",
+    "password": "Parol",
+    "otp": "OTP bilan kirish",
+    "telegram": "Telegram",
+    "email": "Tiklash uchun pochta",
+    "sessions": "Seanslar",
+    "activity": "Faollik",
+    "emis": "EMIS hisobi",
+    "integrations": "Integratsiyalar",
+    "connectors": "Konnektorlar",
+    "account": "Hisob",
+    "appearance": "Koʻrinish",
+    "delete": "Hisobni oʻchirish"
+  },
+  "login": {
+    "title": "Kirish",
+    "description": "«{client}» ga davom etish uchun",
+    "descriptionPending": "davom etish uchun",
+    "unavailable": "Kirish sahifasini ochib boʻlmadi",
+    "login": "Login yoki EMIS login",
+    "password": "Parol",
+    "remember": "Bu qurilmada eslab qolish",
+    "submit": "Kirish",
+    "withOtp": "OTP bilan kirish",
+    "forgotPassword": "Parolni unutdingizmi?",
+    "forgotLogin": "Loginni unutdingizmi?",
+    "register": "EMIS orqali roʻyxatdan oʻtish",
+    "orSignIn": "yoki kiring",
+    "cantGetIn": "EMIS orqali hisobni qaytaring",
+    "help": "Kira olmayapsizmi?",
+    "helpLinks": "Kirish boʻyicha yordam",
+    "backToApp": "Ilovaga qaytish",
+    "channel": {
+      "telegram": "Telegram",
+      "email": "pochta"
+    },
+    "secondFactor": {
+      "title": "Kodni kiriting",
+      "description": "Hisobingiz uchun ikkinchi qadam kerak.",
+      "sent": "Kodni yubordik: {channels}.",
+      "submit": "Tasdiqlash",
+      "back": "Parolga qaytish"
+    },
+    "passwordChange": {
+      "title": "Yangi parol tanlang",
+      "description": "Parolni administrator oʻrnatgan. Davom etish uchun oʻz parolingizni tanlang.",
+      "submit": "Saqlash va davom etish"
+    },
+    "restore": {
+      "title": "Akkauntni tiklaysizmi?",
+      "description": "Akkauntingiz {date} sanasida oʻchiriladi. Akkauntni saqlab qolish va kirishni davom ettirish uchun uni tiklang.",
+      "restore": "Tiklash",
+      "decline": "Oʻchirilgan qolsin / Chiqish"
+    },
+    "passkey": {
+      "submit": "Kirish kaliti bilan kirish"
+    },
+    "totp": {
+      "title": "Ilovadagi kodni kiriting",
+      "description": "Autentifikator ilovasini oching va IHT ID uchun 6 xonali kodni kiriting."
+    }
+  },
+  "loginOtp": {
+    "title": "OTP bilan kirish",
+    "description": "«{client}» ga davom etish uchun",
+    "sendCode": "Kod yuborish",
+    "backToPassword": "Parol bilan kirish",
+    "lostAccess": "Telegramga kirish huquqini yoʻqotdingizmi?",
+    "codeTitle": "Kodni kiriting",
+    "codeDescription": "Kod 5 daqiqa amal qiladi.",
+    "neutral": "Agar bu login uchun OTP bilan kirish yoqilgan boʻlsa, kod yuborildi.",
+    "submit": "Kirish",
+    "attemptsLeft": "Qolgan urinishlar: {count}.",
+    "codeInvalidated": "Notoʻgʻri urinishlar juda koʻp. Yangi kod yuboring.",
+    "changeLogin": "Boshqa login"
+  },
+  "consent": {
+    "title": "«{client}» ga ruxsat berasizmi?",
+    "description": "Ilova IHT hisobingizga kirish huquqini soʻramoqda.",
+    "verified": "Tekshirilgan",
+    "unverified": "Tekshirilmagan",
+    "unverifiedWarning": "Maʼmuriyat bu ilovani tekshirmagan. Unga ishonsangizgina ruxsat bering.",
+    "redirectDomain": "Qaytadigan manzil",
+    "serverLabel": "Server",
+    "server": {
+      "student": "Talabalar",
+      "lms": "LMS kurslari",
+      "admin": "Maʼmuriyat"
+    },
+    "scopes": "Soʻralayotgan ruxsatlar",
+    "tools": "Vositalar: {tools}",
+    "otpRequired": "Maʼmuriyat serveriga kirish uchun tasdiqlash kodi kerak.",
+    "allow": "Ruxsat berish",
+    "deny": "Rad etish",
+    "unavailable": "Soʻrovni ochib boʻlmadi"
+  },
+  "logout": {
+    "title": "Hisobdan chiqilmoqda",
+    "description": "Bir lahza…",
+    "failed": "Hisobdan chiqib boʻlmadi"
+  },
+  "register": {
+    "title": "EMIS orqali roʻyxatdan oʻtish",
+    "emisLoginNotice": "Bu EMIS logini koʻrinadi — keling, IHT ID yaratamiz.",
+    "description": "Ism va guruhni olish uchun EMIS login va parolini kiriting.",
+    "submit": "Davom etish",
+    "haveAccount": "Menda hisob bor",
+    "linked": {
+      "login": "Kirish",
+      "reset": "Parolni tiklash",
+      "reclaim": "Hisobni EMIS orqali qaytarish"
+    },
+    "profile": {
+      "title": "Bu siz boʻlasizmi?",
+      "description": "Maʼlumotlarni tekshiring, soʻng parol va tiklash uchun pochta kiriting.",
+      "name": "Ism",
+      "group": "Guruh",
+      "login": "Sizning loginingiz",
+      "imported": "Maʼmuriyat {name} ({group}) ni qoʻshgan. Siz boʻlsangiz, tasdiqlang.",
+      "isThisYou": "Ha, bu men",
+      "submit": "Kodni pochtaga yuborish"
+    },
+    "code": {
+      "title": "Pochtani tasdiqlang",
+      "description": "6 xonali kodni {email} manziliga yubordik.",
+      "submit": "Hisob yaratish",
+      "changeEmail": "Pochtani oʻzgartirish"
+    },
+    "done": {
+      "title": "Hisob yaratildi",
+      "description": "Loginingiz: {login}. U bilan va hozir kiritgan parolingiz bilan kiring.",
+      "open": "IHTʼni ochish"
+    },
+    "welcome": {
+      "title": "IHT IDʼga xush kelibsiz",
+      "description": "IHT ID — IHT xizmatlari uchun yagona hisobingiz.",
+      "points": {
+        "account": "my.iht, staff, kutubxona (lib.ihsu.uz) va LMS uchun bitta login.",
+        "codes": "Kirish kodlari Telegram yoki elektron pochta orqali keladi.",
+        "security": "Parol, seanslar va ulangan ilovalarni xavfsizlik sozlamalarida boshqaring."
+      },
+      "telegram": "Telegramni ulash",
+      "library": "Kutubxonani ochish",
+      "lms": "LMSni ochish",
+      "continue": "Davom etish"
+    },
+    "pickLink": "Ismimni roʻyxatdan tanlayman",
+    "cue": {
+      "title": "Ismingizni tanlang",
+      "group": "Guruh",
+      "chooseGroup": "Guruhni tanlang",
+      "continue": "Davom etish",
+      "back": "Orqaga",
+      "empty": "Bu guruhda hali ismlar yoʻq.",
+      "namesHint": "Davom etish uchun ismingizni bosing.",
+      "passwordTitle": "EMIS parolingizni kiriting",
+      "emisPassword": "EMIS paroli",
+      "submit": "Davom etish"
+    }
+  },
+  "reclaim": {
+    "title": "Hisobni qaytarish",
+    "description": "Hisobni qaytarish uchun EMIS login va parolini kiriting. Barcha seans, konnektor va Telegram ulanishlari tugatiladi.",
+    "submit": "Davom etish",
+    "backToLogin": "Kirishga qaytish",
+    "password": {
+      "title": "Yangi parol oʻrnating",
+      "description": "Hisob topildi: {login}.",
+      "warning": "Eski pochta xabar oladi va barcha qurilmalardan chiqiladi.",
+      "submit": "Kodni pochtaga yuborish"
+    },
+    "code": {
+      "title": "Pochtani tasdiqlang",
+      "description": "6 xonali kodni {email} manziliga yubordik.",
+      "submit": "Hisobni qaytarish"
+    },
+    "done": {
+      "title": "Hisob tiklandi",
+      "description": "Yangi parol bilan kiring va Telegramni qaytadan ulang.",
+      "login": "Kirish"
+    }
+  },
+  "activate": {
+    "title": "Xush kelibsiz, {name}",
+    "description": "Hisobni faollashtirish uchun parol va tiklash uchun pochta kiriting.",
+    "login": "Login",
+    "submit": "Kodni pochtaga yuborish",
+    "unavailable": "Faollashtirish havolasini ochib boʻlmadi",
+    "code": {
+      "title": "Pochtani tasdiqlang",
+      "description": "6 xonali kodni {email} manziliga yubordik.",
+      "submit": "Hisobni faollashtirish"
+    },
+    "invalid": {
+      "title": "Bu havola endi ishlamaydi",
+      "description": "Faollashtirish havolasining muddati tugagan yoki u allaqachon ishlatilgan. Maʼmuriyatdan yangi havola soʻrang.",
+      "login": "Kirish"
+    }
+  },
+  "recovery": {
+    "backToLogin": "Kirishga qaytish",
+    "password": {
+      "title": "Parolni tiklash",
+      "description": "Loginingiz yoki tiklash uchun pochtangizni kiriting.",
+      "identifier": "Login yoki pochta",
+      "request": "Kod yuborish",
+      "confirmTitle": "Yangi parol oʻrnating",
+      "neutral": "Agar hisob mavjud boʻlsa, tiklash pochtasiga kod yubordik.",
+      "submit": "Parolni oʻzgartirish",
+      "doneTitle": "Parol oʻzgartirildi",
+      "doneDescription": "Bu qurilmada tizimda qolasiz.",
+      "continue": "Davom etish",
+      "sessionsRevoked": "Boshqa barcha qurilmalardan chiqildi.",
+      "login": "Kirish"
+    },
+    "otp": {
+      "title": "OTPʼni tiklash",
+      "description": "Loginni kiriting. Kodni tiklash pochtasiga yuboramiz.",
+      "request": "Kod yuborish",
+      "confirmTitle": "Tiklashni tasdiqlang",
+      "neutral": "Agar hisob mavjud boʻlsa, tiklash pochtasiga kod yubordik.",
+      "confirm": "OTPʼni tiklash",
+      "doneTitle": "OTPʼni tiklash rejalashtirildi",
+      "doneDescription": "OTP {when} da tiklanadi. Barcha Telegram ulanishlari olib tashlanadi.",
+      "cancelHint": "Siz boʻlmasangiz, Telegramdagi xabarda «Bekor qilish» ni bosing."
+    },
+    "login": {
+      "title": "Loginni unutdingizmi?",
+      "description": "Tiklash uchun pochtangizni kiriting, loginni yuboramiz.",
+      "submit": "Loginni yuborish",
+      "sent": "Agar bu pochta hisobga tegishli boʻlsa, loginni unga yubordik."
+    }
+  },
+  "miniApp": {
+    "title": "IHTʼga kirish",
+    "description": "Bu Telegram hisobini ulash uchun kiring.",
+    "submit": "Kirish",
+    "register": "EMIS orqali roʻyxatdan oʻtish",
+    "registered": "Hisob yaratildi. {login} sifatida kiring.",
+    "unavailable": "Bu Telegram hisobini tekshirib boʻlmadi",
+    "outside": {
+      "title": "Sahifani botdan oching",
+      "description": "Telegram bu sahifaga kerakli maʼlumotlarni imzolaydi. Sahifani @{bot} orqali oching.",
+      "open": "@{bot}ʼni ochish"
+    },
+    "expired": {
+      "title": "Botda yana «Kirish» tugmasini bosing",
+      "description": "Telegram maʼlumotlari eskirgan. Botga qaytib, «Kirish» tugmasini qayta bosing."
+    },
+    "code": {
+      "title": "Kodni kiriting",
+      "description": "Kodni OTP kanallaringizga yubordik.",
+      "submit": "Tasdiqlash",
+      "back": "Orqaga"
+    },
+    "otp": {
+      "description": "Loginingizni kiriting. OTP bilan kirish yoqilgan boʻlsa, kod yuboramiz."
+    }
+  },
+  "security": {
+    "title": "Xavfsizlik",
+    "profile": "Hisob",
+    "on": "Yoqilgan",
+    "off": "Oʻchirilgan",
+    "currentPassword": "Joriy parol",
+    "roles": {
+      "student": "Talaba",
+      "teacher": "Oʻqituvchi",
+      "admin": "Maʼmuriyat",
+      "lms_admin": "LMS administratori",
+      "lms_creator": "LMS kurs muallifi"
+    },
+    "cards": {
+      "password": "Parol",
+      "otp": "OTP bilan kirish",
+      "telegram": "Telegram",
+      "telegramCount": "Ulangan: {count}",
+      "email": "Tiklash uchun pochta",
+      "emailMissing": "Pochta koʻrsatilmagan",
+      "sessions": "Seanslar",
+      "activity": "Faollik",
+      "emis": "EMIS hisobi",
+      "emisActive": "Ishlayapti",
+      "emisNeedsReauth": "Yangi parol kerak",
+      "connectors": "Konnektorlar",
+      "appearance": "Koʻrinish",
+      "delete": "Hisobni oʻchirish",
+      "totp": "Autentifikator ilovasi",
+      "passkeys": "Kirish kalitlari",
+      "passkeyCount": "Kalitlar: {count}"
+    },
+    "emisBanner": {
+      "title": "EMIS saqlangan parolni qabul qilmadi",
+      "description": "Yangi EMIS parolini kiritmaguningizcha baholar yangilanmaydi.",
+      "action": "EMIS parolini yangilash"
+    },
+    "sessions": {
+      "title": "Seanslar",
+      "empty": "Faol seanslar yoʻq.",
+      "current": "Bu qurilma",
+      "deviceOn": "{browser}, {os}",
+      "unknownDevice": "Nomaʼlum qurilma",
+      "lastSeen": "Oxirgi faollik: {when}",
+      "revoke": "Chiqish",
+      "revokeOthers": "Boshqa qurilmalardan chiqish",
+      "revokeOthersTitle": "Boshqa qurilmalardan chiqasizmi?",
+      "revokeOthersDescription": "Boshqa qurilmalar chiqariladi. Bu qoladi.",
+      "amr": {
+        "pwd": "parol",
+        "otp": "OTP",
+        "tg": "Telegram",
+        "hwk": "kirish kaliti"
+      }
+    },
+    "telegram": {
+      "title": "Telegram hisoblari",
+      "linkTitle": "Telegramni ulash",
+      "linkDescription": "Botni oching, «Kirish» ni bosing va u yerda kiring.",
+      "link": "Botni ochish",
+      "qr": "Botni ochadigan QR kod",
+      "empty": "Hali birorta Telegram hisobi ulanmagan.",
+      "linkedAt": "Ulangan: {when}",
+      "blocked": "Bot bloklangan",
+      "otpDelivery": "OTP kodlarini shu yerga yuborish",
+      "unlink": "Ajratish",
+      "unlinkTitle": "{name} ni ajratasizmi?",
+      "unlinkDescription": "Kod va xabarnomalar kelmaydi, botdan chiqariladi.",
+      "unlinkLastChannel": "Oxirgi OTP kanali. Tiklash pochtasini yoqing yoki OTP bilan kirishni oʻchiring."
+    },
+    "otp": {
+      "title": "OTP bilan kirish",
+      "enabled": "OTP bilan kirish yoqilgan. Kodlar ulangan Telegram hisoblaringizga yuboriladi.",
+      "enabledWithEmail": "OTP bilan kirish yoqilgan. Kodlar Telegram va tiklash pochtasiga yuboriladi.",
+      "enableTitle": "OTP bilan kirishni yoqish",
+      "enableDescription": "Kodlar qayerga yuborilishini tanlang. Tasdiqlash uchun sinov kodini yuboramiz.",
+      "channels": "Kanallar",
+      "telegramChannel": "Ulangan Telegram hisoblari",
+      "noTelegram": "Telegram hisobi ulanmagan.",
+      "linkTelegram": "Telegramni ulash",
+      "emailChannel": "Tiklash uchun pochta",
+      "needChannel": "Kamida bitta kanalni tanlang: Telegramni ulang yoki pochtadan foydalaning.",
+      "sendTestCode": "Sinov kodini yuborish",
+      "confirmTitle": "Sinov kodini kiriting",
+      "confirmDescription": "OTP bilan kirish ishlashiga ishonch hosil qilish uchun yuborilgan kodni kiriting.",
+      "confirm": "OTP bilan kirishni yoqish",
+      "changeChannels": "Kanallarni oʻzgartirish",
+      "disableTitle": "OTP bilan kirishni oʻchirish",
+      "disableDescription": "OTP bilan kirishni oʻchirish uchun parolingizni kiriting.",
+      "disable": "OTP bilan kirishni oʻchirish"
+    },
+    "email": {
+      "title": "Tiklash uchun pochta",
+      "current": "Hozirgi: {email}",
+      "hint": "Parol va yangi manzilni kiriting. Unga kod yuboramiz.",
+      "new": "Yangi pochta",
+      "send": "Kod yuborish",
+      "codeSent": "6 xonali kodni {email} manziliga yubordik.",
+      "confirm": "Oʻzgartirishni tasdiqlash",
+      "done": "Tiklash uchun pochta oʻzgartirildi. Eski manzilga xabar yuborildi."
+    },
+    "password": {
+      "title": "Parolni oʻzgartirish",
+      "description": "Oʻzgartirishdan keyin boshqa qurilmalardan chiqiladi.",
+      "submit": "Parolni oʻzgartirish",
+      "done": "Parol oʻzgartirildi. Boshqa qurilmalardan chiqildi."
+    },
+    "activity": {
+      "title": "Faollik",
+      "empty": "Hozircha hodisalar yoʻq.",
+      "more": "Yana yuklash",
+      "by": "Bajargan: {name}",
+      "helpTitle": "Nimadir notanishmi?",
+      "helpDescription": "Parolni oʻzgartiring va boshqa barcha qurilmalardan chiqing.",
+      "changePassword": "Parolni oʻzgartirish",
+      "logOutEverywhere": "Hamma joydan chiqish",
+      "types": {
+        "login_success": "Tizimga kirildi",
+        "login_failed": "Kirishda muvaffaqiyatsiz urinish",
+        "auth_login": "Tizimga kirildi",
+        "auth_login_failed": "Kirishda muvaffaqiyatsiz urinish",
+        "password_changed": "Parol oʻzgartirildi",
+        "auth_password_changed": "Parol oʻzgartirildi",
+        "password_reset": "Parol tiklandi",
+        "otp_enabled": "OTP bilan kirish yoqildi",
+        "otp_disabled": "OTP bilan kirish oʻchirildi",
+        "otp_reset_requested": "OTPʼni tiklash soʻraldi",
+        "otp_reset_cancelled": "OTPʼni tiklash bekor qilindi",
+        "email_changed": "Tiklash pochtasi oʻzgartirildi",
+        "telegram_linked": "Telegram ulandi",
+        "telegram_unlinked": "Telegram ajratildi",
+        "session_revoked": "Seansdan chiqarildi",
+        "connector_created": "Konnektor yaratildi",
+        "connector_revoked": "Konnektor bekor qilindi",
+        "role_granted": "Rol berildi",
+        "role_revoked": "Rol olib tashlandi",
+        "admin_user_blocked": "Hisob Maʼmuriyat tomonidan bloklandi",
+        "emis_password_updated": "EMIS paroli yangilandi"
+      }
+    },
+    "emis": {
+      "title": "EMIS hisobi",
+      "formTitle": "EMIS parolini yangilash",
+      "formDescription": "Saqlashdan oldin yangi parolni EMISʼda tekshiramiz.",
+      "submit": "Tekshirish va saqlash",
+      "done": "EMIS paroli yangilandi. Baholar yana sinxronlanadi."
+    },
+    "delete": {
+      "title": "Hisobni oʻchirish",
+      "deletedTitle": "Nima oʻchiriladi",
+      "items": {
+        "account": "Hisobingiz va profilingiz",
+        "files": "Fayllaringiz",
+        "chats": "Yordamchi bilan suhbatlar",
+        "flashcards": "Kartochkalar",
+        "links": "Qisqa havolalar va ulashishlar (ular ishlamay qoladi)",
+        "mail": "Pochta qutingiz"
+      },
+      "keptTitle": "Litsey nimani saqlab qoladi",
+      "kept": {
+        "attendance": "Ismingiz bilan davomat yozuvlari",
+        "marks": "Ismingiz bilan baholar tarixi"
+      },
+      "thirtyDays": "Hisob darhol yopiladi. Shaxsiy maʼlumotlar 30 kundan keyin oʻchiriladi.",
+      "confirmTitle": "Tasdiqlash",
+      "confirmDescription": "Parolni va OTP yoqilgan boʻlsa, kodni kiriting.",
+      "submit": "Hisobimni oʻchirish",
+      "dialogTitle": "Hisobni oʻchirasizmi?",
+      "dialogDescription": "Hamma qurilmalardan chiqarilasiz. Buni bekor qilib boʻlmaydi.",
+      "doneTitle": "Hisob oʻchirishga rejalashtirildi",
+      "doneDescription": "Hisobingiz {date} sanasida oʻchiriladi. Fikringiz oʻzgardimi? Shu sanagacha qayta kiring va «Tiklash» ni tanlang."
+    },
+    "totp": {
+      "title": "Autentifikator ilovasi",
+      "enabled": "Autentifikator ilovasi yoqilgan. Qolgan zaxira kodlari: {count}.",
+      "enableTitle": "Autentifikator ilovasini yoqish",
+      "enableDescription": "Kirishning ikkinchi bosqichi uchun Google Authenticator, Microsoft Authenticator yoki shunga oʻxshash ilovadan foydalaning.",
+      "start": "Sozlash",
+      "scanTitle": "QR kodni skanerlang",
+      "scanDescription": "Uni ilovada skanerlang, soʻng ilova koʻrsatgan 6 xonali kodni kiriting.",
+      "qrLabel": "Autentifikator ilovasi uchun QR kod",
+      "manual": "Yoki kalitni qoʻlda kiriting:",
+      "confirm": "Yoqish",
+      "recoveryTitle": "Zaxira kodlari",
+      "recoveryDescription": "Telefoningizni yoʻqotsangiz, har bir kod bir marta ishlaydi. Ularni xavfsiz joyda saqlang: ular faqat hozir koʻrsatiladi.",
+      "copyCodes": "Kodlarni nusxalash",
+      "savedCodes": "Kodlarni saqladim",
+      "disableTitle": "Autentifikator ilovasini oʻchirish",
+      "disableDescription": "Ilovadagi kodni yoki zaxira kodini kiriting.",
+      "disable": "Oʻchirish"
+    },
+    "passkeys": {
+      "title": "Kirish kalitlari",
+      "empty": "Hozircha kirish kalitlari yoʻq.",
+      "addTitle": "Kirish kalitini qoʻshish",
+      "addDescription": "Parol oʻrniga barmoq izi, yuz yoki qurilma PIN kodi bilan kiring.",
+      "unsupported": "Bu brauzer kirish kalitlarini qoʻllab-quvvatlamaydi.",
+      "add": "Kirish kalitini qoʻshish",
+      "rename": "Nomini oʻzgartirish",
+      "remove": "Oʻchirish",
+      "name": "Kalit nomi",
+      "save": "Saqlash",
+      "cancel": "Bekor qilish",
+      "created": "{date} qoʻshilgan",
+      "lastUsed": "oxirgi marta {date}",
+      "neverUsed": "hali ishlatilmagan",
+      "removeTitle": "«{name}» kirish kaliti oʻchirilsinmi?",
+      "removeDescription": "U bilan endi kira olmaysiz.",
+      "passwordTitle": "Parol bilan kirish",
+      "passwordOn": "Parol yoki kirish kaliti bilan kirishingiz mumkin.",
+      "passwordOff": "Parol bilan kirish oʻchirilgan: faqat kirish kalitlari ishlaydi. Qayta yoqish uchun parolni tiklang.",
+      "passwordDisable": "Parol bilan kirishni oʻchirish",
+      "passwordDisableTitle": "Faqat kirish kalitlari bilan kirilsinmi?",
+      "passwordDisableDescription": "Parol kirish uchun ishlamay qoladi. Qayta yoqish uchun parolni tiklang."
+    }
+  },
+  "appearance": {
+    "title": "Koʻrinish",
+    "theme": "Mavzu",
+    "light": "Yorugʻ",
+    "dark": "Qorongʻi",
+    "system": "Tizim"
+  },
+  "connectors": {
+    "title": "Konnektorlar",
+    "empty": "Hozircha konnektorlar yoʻq.",
+    "createdAt": "Yaratilgan",
+    "lastUsed": "Oxirgi foydalanish",
+    "expires": "Amal qilish muddati",
+    "never": "Hech qachon",
+    "noExpiry": "Muddatsiz",
+    "scopes": "Ruxsatlar",
+    "revoked": "Bekor qilingan",
+    "expired": "Muddati tugagan",
+    "revoke": "Bekor qilish",
+    "revokeTitle": "«{name}» ni bekor qilasizmi?",
+    "revokeDescription": "AI ilovasi kirish huquqini darhol yoʻqotadi.",
+    "kind": {
+      "token": "Token",
+      "oauth": "OAuth"
+    },
+    "server": {
+      "student": "Talabalar",
+      "lms": "LMS kurslari",
+      "admin": "Maʼmuriyat"
+    },
+    "presets": {
+      "study_planner": "Oʻqish rejalashtiruvchisi",
+      "grades": "Baholar",
+      "revision": "Takrorlash",
+      "course_reviewer": "Kurs taqrizchisi",
+      "course_author": "Kurs muallifi",
+      "module_editor": "Modul muharriri",
+      "course_manager": "Kurslarni boshqarish",
+      "attendance_analyst": "Davomat tahlilchisi",
+      "timetable_viewer": "Dars jadvalini koʻrish"
+    },
+    "scopeHints": {
+      "lms_courses_read": "Kurs, qadam va urinishlarni oʻqish.",
+      "lms_courses_write": "Kurs yaratish va tahrirlash.",
+      "lms_courses_delete": "Kurslarni arxivlash.",
+      "lms_modules_write": "Modul, dars va qadamlarni tahrirlash."
+    },
+    "new": {
+      "action": "Yangi konnektor",
+      "pageTitle": "Yangi konnektor",
+      "title": "Konnektor sozlamalari",
+      "description": "Serverni, ilova nimalarni qila olishini va qancha muddatga ekanini tanlang.",
+      "noServers": "Rollaringiz uchun mavjud MCP serveri yoʻq.",
+      "server": "Server",
+      "preset": "Vazifa uchun toʻplam",
+      "custom": "Oʻzim tanlagan ruxsatlar",
+      "scopes": "Ruxsatlar",
+      "scopesRequired": "Kamida bitta ruxsatni tanlang.",
+      "courses": "Kurslar",
+      "coursesHint": "Hech narsa tanlanmasa, tahrirlay oladigan barcha kurslar ruxsat etiladi.",
+      "coursesFailed": "Kurslaringizni yuklab boʻlmadi.",
+      "name": "Nomi",
+      "nameHint": "Masalan, Claude — oʻqish rejalashtiruvchisi.",
+      "expiry": "Amal qilish muddati",
+      "days": "{count} kun",
+      "adminLimit": "Maʼmuriyat konnektorlari koʻpi bilan 30 kun amal qiladi.",
+      "adminOtp": "Maʼmuriyat konnektorlari uchun tasdiqlash kodi kerak.",
+      "submit": "Konnektor yaratish"
+    },
+    "created": {
+      "title": "«{name}» konnektori yaratildi",
+      "description": "Uni quyidagi sozlamalar bilan AI ilovangizga qoʻshing.",
+      "onceTitle": "Tokenni hozir nusxalang",
+      "once": "Bir marta koʻrsatiladi. Yoʻqotsangiz, konnektorni bekor qilib, yangisini yarating.",
+      "token": "Token",
+      "copyToken": "Tokenni nusxalash",
+      "config": "Konfiguratsiya",
+      "copyConfig": "Konfiguratsiyani nusxalash",
+      "done": "Tayyor"
+    }
+  }
+}
