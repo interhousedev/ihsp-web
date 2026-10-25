@@ -1,0 +1,59 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <meta name="robots" content="noindex" />
+    <title>admin.iht</title>
+    <style>
+      body {
+        margin: 0;
+        min-height: 100dvh;
+        display: grid;
+        place-items: center;
+        padding: 16px;
+        font-family: system-ui, sans-serif;
+        background: #ffffff;
+        color: #0a0a0a;
+        text-align: center;
+      }
+      @media (prefers-color-scheme: dark) {
+        body {
+          background: #0a0a0a;
+          color: #fafafa;
+        }
+      }
+      main {
+        max-width: 22rem;
+      }
+      p {
+        margin: 0 0 1rem;
+        line-height: 1.4;
+      }
+      button {
+        min-height: 44px;
+        padding: 0 20px;
+        font: inherit;
+        font-weight: 600;
+        border: 0;
+        border-radius: 10px;
+        background: #0a0a0a;
+        color: #ffffff;
+      }
+      @media (prefers-color-scheme: dark) {
+        button {
+          background: #fafafa;
+          color: #0a0a0a;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <main>
+      <p data-lang="en"></p>
+      <button type="button" data-reload></button>
+    </main>
+    <!-- The page is served by the service worker while there is no network, so it cannot use the app's messages. -->
+    <script src="/offline.js"></script>
+  </body>
+</html>

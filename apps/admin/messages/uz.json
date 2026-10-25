@@ -1,0 +1,2054 @@
+{
+  "app": {
+    "name": "admin.iht"
+  },
+  "nav": {
+    "main": "Asosiy",
+    "home": "Bosh sahifa",
+    "groupHome": "Bosh sahifa",
+    "groupPeople": "Odamlar",
+    "groupAcademics": "Oʻquv jarayoni",
+    "groupReports": "Hisobotlar",
+    "groupCommunication": "Aloqa",
+    "groupTools": "Vositalar",
+    "dashboard": "Boshqaruv paneli",
+    "students": "Talabalar",
+    "teachers": "Oʻqituvchilar",
+    "users": "Foydalanuvchilar va rollar",
+    "groups": "Guruhlar",
+    "subjects": "Fanlar",
+    "rooms": "Xonalar",
+    "terms": "Semestrlar va qoʻngʻiroqlar",
+    "timetable": "Dars jadvali",
+    "lessons": "Darslar",
+    "exams": "Imtihonlar",
+    "attendance": "Davomat",
+    "monitoring": "Monitoring",
+    "logs": "Loglar",
+    "broadcasts": "Xabarnomalar",
+    "moderation": "Moderatsiya",
+    "callForImprovements": "Takomillashtirish boʻyicha chaqiruv",
+    "assistant": "Yordamchi",
+    "reports": "Hisobotlar",
+    "settings": "Sozlamalar",
+    "limits": "Limitlar va xarajatlar",
+    "certificateTypes": "Sertifikat turlari",
+    "certificates": "Sertifikatlar",
+    "knowledge": "Bilimlar bazasi",
+    "workOffs": "Qayta topshirish",
+    "loginCues": "Roʻyxatga olish loginlari",
+    "botPosts": "Bot postlari"
+  },
+  "shared": {
+    "filters": "Filtrlar",
+    "exportCsv": "CSV ga eksport",
+    "noLessons": "Darslar yoʻq.",
+    "cancelled": "Bekor qilingan",
+    "changed": "Oʻzgartirilgan",
+    "teacherNeeded": "Oʻqituvchi kerak",
+    "audience": {
+      "legend": "Kimlar uchun",
+      "noGroups": "Hozircha guruhlar yoʻq.",
+      "whole": "Butun guruh",
+      "subgroup": "{number}-kichik guruh"
+    },
+    "controls": {
+      "midterm_1": "Oraliq nazorat 1",
+      "midterm_2": "Oraliq nazorat 2",
+      "final": "Yakuniy nazorat (YaN)"
+    },
+    "selection": {
+      "region": "Tanlangan qatorlar",
+      "count": "{count, plural, one {# tanlandi} other {# tanlandi}}",
+      "clear": "Tanlovni bekor qilish",
+      "selectAll": "Bu sahifadagi barcha qatorlarni tanlash",
+      "selectRow": "{name} ni tanlash",
+      "exportSelected": "Tanlanganlarni eksport qilish",
+      "blockSelected": "Tanlanganlarni bloklash",
+      "blockSelectedTitle": "{count, plural, one {# foydalanuvchi} other {# foydalanuvchi}} bloklansinmi?",
+      "blockSelectedDone": "{count, plural, one {# foydalanuvchi bloklandi} other {# foydalanuvchi bloklandi}}",
+      "confirmSelected": "Tanlanganlarni tasdiqlash",
+      "confirmSelectedDone": "{count, plural, one {# sana tasdiqlandi} other {# sana tasdiqlandi}}"
+    },
+    "sortedNote": "Saralash hozircha yuklangan qatorlarni tartiblaydi."
+  },
+  "status": {
+    "active": "Faol",
+    "blocked": "Bloklangan",
+    "disabled": "Oʻchirilgan",
+    "left": "Ketgan",
+    "archived": "Arxivda",
+    "cancelled": "Bekor qilingan",
+    "failed": "Xatolik",
+    "needs_reauth": "EMIS ga kirish kerak",
+    "pending_activation": "Faollashtirilmagan",
+    "deactivated": "Faolsizlantirilgan",
+    "draft": "Qoralama",
+    "scheduled": "Rejalashtirilgan",
+    "sending": "Yuborilmoqda",
+    "sent": "Yuborilgan",
+    "partial": "Qisman",
+    "success": "Muvaffaqiyatli",
+    "running": "Bajarilmoqda",
+    "stopped": "ToÊ»xtatildi",
+    "paused": "ToÊ»xtab turibdi",
+    "queued": "Navbatda",
+    "stopping": "Toʻxtatilmoqda",
+    "done": "Tayyor"
+  },
+  "account": {
+    "noTelegram": "Telegram akkauntlari ulanmagan.",
+    "linkedAt": "{date} da ulangan",
+    "otpDelivery": "Kodlarni oladi",
+    "botBlocked": "Botni bloklagan",
+    "noSessions": "Faol seanslar yoʻq.",
+    "unknownDevice": "Nomaʼlum qurilma",
+    "currentSession": "Joriy",
+    "lastSeen": "oxirgi faollik {date}",
+    "noAudit": "Audit hodisalari yoʻq.",
+    "auditEvents": {
+      "loginSuccess": "Tizimga kirildi",
+      "loginFailed": "Kirishga urinish muvaffaqiyatsiz",
+      "logout": "Tizimdan chiqildi",
+      "passwordChanged": "Parol almashtirildi",
+      "passwordReset": "Parol tiklandi",
+      "passwordResetByAdmin": "Parol administrator tomonidan tiklandi",
+      "otpEnabled": "Ikki bosqichli kirish yoqildi",
+      "otpDisabled": "Ikki bosqichli kirish oʻchirildi",
+      "otpResetRequested": "Ikki bosqichli kirishni tiklash soʻraldi",
+      "otpResetCancelled": "Ikki bosqichli kirishni tiklash bekor qilindi",
+      "otpResetApplied": "Ikki bosqichli kirishni tiklash qoʻllandi",
+      "otpResetByAdmin": "Ikki bosqichli kirishni administrator tikladi",
+      "emailChanged": "Pochta oʻzgartirildi",
+      "telegramLinked": "Telegram ulandi",
+      "telegramUnlinked": "Telegram uzildi",
+      "sessionRevoked": "Seans tugatildi",
+      "sessionsRevoked": "Seanslar tugatildi",
+      "connectorCreated": "Ulanish yaratildi",
+      "connectorRevoked": "Ulanish bekor qilindi",
+      "roleGranted": "Rol berildi",
+      "roleRevoked": "Rol olib tashlandi",
+      "userCreated": "Hisob yaratildi",
+      "userRegistered": "Hisob roʻyxatdan oʻtkazildi",
+      "userUpdated": "Hisob yangilandi",
+      "userBlocked": "Hisob bloklandi",
+      "userUnblocked": "Hisob blokdan chiqarildi",
+      "userActivated": "Hisob faollashtirildi",
+      "userDeactivated": "Hisob faolsizlantirildi",
+      "userDeleted": "Hisob oʻchirildi",
+      "userPurged": "Hisob butunlay oʻchirildi",
+      "accountDeleted": "Hisob egasi tomonidan oʻchirildi",
+      "accountReclaimed": "Hisob qayta tiklandi",
+      "studentViewed": "Talaba profili ochildi",
+      "mailSuspended": "Pochta yuborish toʻxtatildi",
+      "mailResumed": "Pochta yuborish tiklandi",
+      "oauthClientVerified": "OAuth klient tasdiqlandi",
+      "emisPasswordUpdated": "EMIS paroli yangilandi"
+    },
+    "reason": "Sabab",
+    "revokeSessions": "Seanslarni tugatish",
+    "revokeTitle": "{name} ning barcha seanslari tugatilsinmi?",
+    "revokeDescription": "Foydalanuvchi hamma joydan chiqariladi va qayta kirishi kerak boʻladi.",
+    "sessionsRevoked": "Seanslar tugatildi",
+    "block": "Bloklash",
+    "blockTitle": "{name} bloklansinmi?",
+    "blockDescription": "Seans, token va konnektorlar ishlamaydi. Sababni yozing.",
+    "blocked": "{name} bloklandi",
+    "unblock": "Blokdan chiqarish",
+    "unblocked": "{name} blokdan chiqarildi"
+  },
+  "dashboard": {
+    "title": "Boshqaruv paneli",
+    "lessonsToday": "Bugungi darslar",
+    "cancelledToday": "Bugun bekor qilingan",
+    "teacherNeeded": "Oʻqituvchisiz darslar",
+    "needsReauth": "EMIS parolini qayta kiritishi kerak boʻlgan talabalar",
+    "missingTitle": "Davomat belgilanmagan",
+    "missingNone": "Barcha soʻnggi darslarda davomat belgilangan.",
+    "missingCount": "Darslar: {count}",
+    "openMissing": "Roʻyxatni ochish",
+    "syncTitle": "EMIS sinxronizatsiyasi",
+    "syncLastRun": "Oxirgi ishga tushirish",
+    "syncStatus": "Holati",
+    "syncNever": "Sinxronizatsiya hali ishlamagan.",
+    "syncNeedsReauth": "Yangi EMIS paroli kerak: {count}",
+    "openMonitoring": "Monitoringni ochish",
+    "broadcastsTitle": "Rejalashtirilgan xabarnomalar",
+    "broadcastsNone": "Rejalashtirilgan xabarnomalar yoʻq.",
+    "openBroadcasts": "Xabarnomalarni ochish"
+  },
+  "students": {
+    "title": "Talabalar",
+    "empty": "Bu filtrlarga mos talabalar yoʻq.",
+    "importAction": "CSV dan import",
+    "notSelected": "Roʻyxatdan talabani tanlang.",
+    "subgroup": "{number}-kichik guruh",
+    "filters": {
+      "query": "Qidiruv",
+      "queryPlaceholder": "Ism yoki login",
+      "group": "Guruh",
+      "allGroups": "Barcha guruhlar",
+      "subgroup": "Kichik guruh",
+      "allSubgroups": "Istalgan kichik guruh",
+      "status": "Holati",
+      "allStatuses": "Istalgan holat",
+      "emisStatus": "EMIS holati",
+      "allEmis": "Istalgan EMIS holati",
+      "registered": "Roʻyxatdan oʻtish",
+      "allRegistered": "Oʻtgan va oʻtmagan"
+    },
+    "status": {
+      "active": "Oʻqiydi",
+      "left": "Ketgan"
+    },
+    "emis": {
+      "active": "Ishlayapti",
+      "needs_reauth": "EMIS ga kirish kerak"
+    },
+    "registered": {
+      "yes": "Roʻyxatdan oʻtgan",
+      "no": "Roʻyxatdan oʻtmagan"
+    },
+    "columns": {
+      "name": "Ism",
+      "login": "Login",
+      "group": "Guruh",
+      "subgroup": "Kichik guruh",
+      "status": "Holati",
+      "emis": "EMIS",
+      "registered": "Roʻyxatdan oʻtish",
+      "synced": "Oxirgi sinxronizatsiya"
+    },
+    "tabs": {
+      "overview": "Umumiy",
+      "timetable": "Dars jadvali",
+      "grades": "Baholar",
+      "attendance": "Davomat",
+      "account": "Akkaunt"
+    },
+    "overview": {
+      "login": "Login",
+      "mailbox": "Pochta qutisi",
+      "group": "Guruh",
+      "subgroup": "Kichik guruh",
+      "semester": "Semestr",
+      "curator": "Kurator",
+      "headStudent": "Guruh sardori",
+      "status": "Holati",
+      "emis": "EMIS holati",
+      "synced": "Oxirgi sinxronizatsiya",
+      "roles": "Rollar",
+      "syncButton": "EMIS bilan sinxronlash (baholar, o‘qituvchilar, darslar)",
+      "syncTitle": "EMIS bilan sinxronlash",
+      "syncHint": "O‘quvchining kichik guruhi, dars jadvali, o‘qituvchilar va baholari EMIS’dan qayta yuklanadi.",
+      "syncConfirmTitle": "O‘quvchini EMIS bilan sinxronlashtirilsinmi?",
+      "syncConfirmDescription": "Kichik guruh, dars jadvali, o‘qituvchilar va baholar EMIS’dan qayta yuklanadi. Sinxronlash fonda bajariladi va bir necha daqiqa olishi mumkin.",
+      "syncConfirmAction": "Sinxronlashni boshlash",
+      "syncQueued": "EMIS bilan sinxronlash boshlandi",
+      "syncNever": "Hali sinxronlanmagan",
+      "syncAttempts": "Urinish {n} / {max}",
+      "syncLastError": "So‘nggi xato",
+      "syncFinished": "Tugadi",
+      "syncStatus": {
+        "pending": "Navbatda",
+        "running": "Bajarilmoqda",
+        "succeeded": "Muvaffaqiyatli",
+        "failed": "Xato"
+      }
+    },
+    "grades": {
+      "semester": "{semester}-semestr",
+      "gpa": "GPA {gpa} / 5",
+      "synced": "{date} da sinxronlangan",
+      "empty": "Hozircha baholar yoʻq.",
+      "subject": "Fan",
+      "lesson": "Darslar",
+      "midterm": "Oraliq nazorat (ON)",
+      "final": "Yakuniy nazorat (YaN)",
+      "semesterMark": "Semestr bahosi",
+      "emisRating": "EMIS reytingi",
+      "count": "Baholar"
+    },
+    "attendance": {
+      "period": "{from} – {to}",
+      "notTaken": "Davomat belgilanmagan darslar: {count}",
+      "empty": "Bu davr uchun maʼlumot yoʻq.",
+      "subject": "Fan",
+      "lessons": "Darslar",
+      "absences": "Qoldirilgan",
+      "excused": "Uzrli",
+      "rate": "Qoldirish ulushi",
+      "missed": "Qoldirilgan darslar",
+      "noMissed": "Qoldirilgan darslar yoʻq.",
+      "excusedBadge": "Uzrli"
+    },
+    "account": {
+      "telegram": "Telegram akkauntlari",
+      "sessions": "Seanslar",
+      "audit": "Audit hodisalari"
+    },
+    "import": {
+      "title": "Talabalarni import qilish",
+      "back": "Talabalar",
+      "file": "CSV fayl",
+      "uploadPreview": "Oldindan koʻrish",
+      "new": "Yangi talabalar",
+      "changed": "Oʻzgarishlar",
+      "conflicts": "Nizolar",
+      "noRows": "Qatorlar yoʻq.",
+      "line": "{line}-qator",
+      "unchanged": "Oʻzgarmagan qatorlar: {count}",
+      "conflictsHint": "Nizoli qatorlar: {count}. Ular oʻtkazib yuboriladi. Faylda tuzatib, qayta yuklang.",
+      "confirm": "{count} ta qatorni import qilish",
+      "discard": "Bekor qilish",
+      "done": "Import tugadi",
+      "result": "Yaratildi {created}, yangilandi {updated}, oʻtkazib yuborildi {skipped}."
+    }
+  },
+  "teachers": {
+    "title": "Oʻqituvchilar",
+    "new": "Yangi oʻqituvchi",
+    "empty": "Bu filtrlarga mos oʻqituvchilar yoʻq.",
+    "notSelected": "Roʻyxatdan oʻqituvchini tanlang.",
+    "filters": {
+      "query": "Qidiruv",
+      "queryPlaceholder": "Ism yoki login",
+      "status": "Holati",
+      "allStatuses": "Istalgan holat"
+    },
+    "status": {
+      "active": "Faol",
+      "pending_activation": "Faollashtirilmagan",
+      "deactivated": "Faolsizlantirilgan",
+      "blocked": "Bloklangan"
+    },
+    "columns": {
+      "name": "Ism",
+      "login": "Login",
+      "status": "Holati",
+      "email": "Pochta",
+      "lastLogin": "Oxirgi kirish"
+    },
+    "create": {
+      "title": "Yangi oʻqituvchi",
+      "back": "Oʻqituvchilar",
+      "lastName": "Familiya",
+      "firstName": "Ism",
+      "middleName": "Otasining ismi",
+      "email": "Pochta",
+      "duplicate": "Bunday ismli oʻqituvchi bor. Faqat boshqa odam uchun yarating.",
+      "create": "Akkaunt yaratish",
+      "createAnyway": "Baribir yaratish",
+      "createdTitle": "Oʻqituvchi akkaunti yaratildi",
+      "createdLogin": "Login: {login}",
+      "activationLink": "Faollashtirish havolasi",
+      "activationHint": "Xat kelmasa, havolani oʻqituvchiga bering. Bir marta koʻrsatiladi.",
+      "openProfile": "Oʻqituvchi profilini ochish",
+      "createAnother": "Yana yaratish"
+    },
+    "edit": {
+      "title": "Oʻqituvchini tahrirlash",
+      "lastName": "Familiya",
+      "firstName": "Ism",
+      "middleName": "Otasining ismi",
+      "email": "Pochta",
+      "cancel": "Bekor qilish",
+      "save": "Saqlash",
+      "saved": "Oʻqituvchi saqlandi"
+    },
+    "profile": {
+      "contacts": "Talabalar uchun aloqa",
+      "back": "Oʻqituvchilar",
+      "edit": "Tahrirlash",
+      "deactivate": "Faolsizlantirish",
+      "deactivateTitle": "{name} faolsizlantirilsinmi?",
+      "deactivateDescription": "Seanslar tugaydi, kelgusi darslar yangi oʻqituvchi kerakligi bilan belgilanadi.",
+      "deactivated": "{name} faolsizlantirildi",
+      "openInUsers": "“Foydalanuvchilar va rollar” da ochish",
+      "curatedGroups": "Kuratorlik guruhlari",
+      "noGroups": "Bu oʻqituvchi hech bir guruhga kuratorlik qilmaydi.",
+      "missingAttendance": "Davomati belgilanmagan darslar",
+      "missingCount": "Belgilanmagan",
+      "noMissing": "Hammasi belgilangan.",
+      "timetable": "Shu haftaning dars jadvali",
+      "setPassword": "Parol oʻrnatish"
+    }
+  },
+  "users": {
+    "title": "Foydalanuvchilar va rollar",
+    "empty": "Bu filtrlarga mos foydalanuvchilar yoʻq.",
+    "notSelected": "Roʻyxatdan foydalanuvchini tanlang.",
+    "mailSuspended": "Pochta toʻxtatilgan",
+    "tabs": {
+      "users": "Foydalanuvchilar",
+      "clients": "OAuth mijozlari"
+    },
+    "filters": {
+      "query": "Qidiruv",
+      "queryPlaceholder": "Ism yoki login",
+      "role": "Rol",
+      "allRoles": "Istalgan rol",
+      "status": "Holati",
+      "allStatuses": "Istalgan holat"
+    },
+    "roles": {
+      "student": "Talaba",
+      "teacher": "Oʻqituvchi",
+      "admin": "Maʼmuriyat",
+      "lms_admin": "LMS administratori",
+      "lms_creator": "LMS kurs muallifi",
+      "librarian": "Kutubxonachi",
+      "legend": "Berish mumkin boʻlgan rollar",
+      "save": "Rollarni saqlash",
+      "saved": "{name} rollari saqlandi",
+      "confirmTitle": "Rollar oʻzgartirilsinmi?",
+      "confirmDescription": "Foydalanuvchi hamma joydan chiqariladi. Maʼmuriyatning yangi aʼzosi kirishda bir martalik kod sozlaydi."
+    },
+    "status": {
+      "active": "Faol",
+      "pending_activation": "Faollashtirilmagan",
+      "blocked": "Bloklangan",
+      "deactivated": "Faolsizlantirilgan"
+    },
+    "columns": {
+      "name": "Ism",
+      "login": "Login",
+      "roles": "Rollar",
+      "status": "Holati",
+      "lastLogin": "Oxirgi kirish"
+    },
+    "detail": {
+      "back": "Foydalanuvchilar va rollar",
+      "created": "Yaratilgan: {date}",
+      "lastLogin": "Oxirgi kirish: {date}",
+      "neverLoggedIn": "Hali kirmagan",
+      "access": "Kirish huquqi",
+      "resetOnlyAdmins": "Tiklash faqat Maʼmuriyat aʼzolari uchun.",
+      "roles": "Rollar",
+      "mail": "Pochta",
+      "telegram": "Telegram akkauntlari",
+      "sessions": "Seanslar",
+      "audit": "Soʻnggi audit hodisalari",
+      "edit": "Tahrirlash",
+      "setPassword": "Parol oʻrnatish"
+    },
+    "reset": {
+      "password": "Parolni tiklash",
+      "passwordTitle": "{name} paroli tiklansinmi?",
+      "passwordDescription": "Eski parol ishlamaydi. Bir martalik faollashtirish havolasini olasiz.",
+      "otp": "Bir martalik kodni tiklash",
+      "otpTitle": "{name} ning bir martalik kodi tiklansinmi?",
+      "otpDescription": "Foydalanuvchi keyingi kirishda bir martalik kodni qayta sozlaydi.",
+      "otpDone": "{name} ning bir martalik kodi tiklandi",
+      "linkTitle": "Faollashtirish havolasi",
+      "linkDescription": "Bu havolani foydalanuvchiga bering. U faqat bir marta koʻrsatiladi.",
+      "close": "Tayyor"
+    },
+    "mail": {
+      "noMailbox": "Pochta qutisi yoʻq",
+      "stateActive": "Yuborishga ruxsat bor",
+      "stateSuspended": "Yuborish toʻxtatilgan",
+      "suspend": "Yuborishni toʻxtatish",
+      "suspendTitle": "{name} pochtasidan yuborish toʻxtatilsinmi?",
+      "suspendDescription": "Bot bu qutidan xat yubormaydi. Qabul qilish davom etadi.",
+      "reason": "Sabab",
+      "suspended": "{name} pochtasidan yuborish toʻxtatildi",
+      "resume": "Yuborishni tiklash",
+      "resumed": "{name} pochtasidan yuborish tiklandi"
+    },
+    "clients": {
+      "empty": "Hozircha OAuth mijozlari yoʻq.",
+      "name": "Nomi",
+      "clientId": "Mijoz ID si",
+      "kind": "Turi",
+      "builtIn": "Oʻrnatilgan",
+      "dynamic": "Konnektor roʻyxatdan oʻtkazgan",
+      "lastUsed": "Oxirgi foydalanish",
+      "state": "Holati",
+      "actions": "Amallar",
+      "verified": "Tasdiqlangan",
+      "unverified": "Tasdiqlanmagan",
+      "verify": "Tasdiqlangan deb belgilash",
+      "unverify": "Belgini olib tashlash",
+      "verifiedDone": "{name} tasdiqlangan deb belgilandi",
+      "unverifiedDone": "{name} dan tasdiqlangan belgisi olib tashlandi"
+    },
+    "edit": {
+      "title": "Foydalanuvchini tahrirlash",
+      "login": "Login",
+      "lastName": "Familiya",
+      "firstName": "Ism",
+      "middleName": "Otasining ismi",
+      "email": "Pochta",
+      "cancel": "Bekor qilish",
+      "save": "Saqlash",
+      "saved": "Foydalanuvchi saqlandi"
+    },
+    "setPassword": {
+      "title": "Parol oʻrnatish: {name}",
+      "description": "Joriy seanslar tugaydi. Parolni shaxsan topshiring.",
+      "password": "Yangi parol",
+      "rules": "Kamida 8 belgi: raqam, kichik va bosh harf bilan.",
+      "requireChange": "Birinchi kirishda almashtirilsin",
+      "cancel": "Bekor qilish",
+      "save": "Parol oʻrnatish",
+      "saved": "{name} uchun parol oʻrnatildi"
+    },
+    "resetLink": {
+      "button": "Parolni tiklash havolasini yaratish",
+      "title": "Parolni tiklash havolasi",
+      "description": "Bu havolani foydalanuvchiga bering. U parolni tiklash havolasi kabi ishlaydi va faqat bir marta koʻrsatiladi.",
+      "qrAlt": "Parolni tiklash havolasining QR kodi",
+      "close": "Tayyor"
+    }
+  },
+  "groups": {
+    "title": "Guruhlar",
+    "new": "Yangi guruh",
+    "empty": "Hozircha guruhlar yoʻq.",
+    "notSelected": "Roʻyxatdan guruhni tanlang.",
+    "filters": {
+      "status": "Holati",
+      "allStatuses": "Istalgan holat"
+    },
+    "status": {
+      "active": "Faol",
+      "archived": "Arxivda"
+    },
+    "columns": {
+      "name": "Guruh",
+      "semester": "Semestr",
+      "students": "Talabalar",
+      "subgroups": "Kichik guruhlar belgilangan",
+      "unregistered": "Roʻyxatdan oʻtmaganlar",
+      "attendance": "Davomat",
+      "gpa": "Oʻrtacha GPA (5 dan)",
+      "curator": "Kurator",
+      "status": "Holati"
+    },
+    "create": {
+      "title": "Yangi guruh",
+      "name": "Nomi",
+      "emisId": "EMIS dagi guruh ID si",
+      "semester": "Joriy semestr",
+      "cancel": "Bekor qilish",
+      "submit": "Guruh yaratish",
+      "done": "{name} guruhi yaratildi"
+    },
+    "view": {
+      "semester": "{semester}-semestr",
+      "people": "Kurator va guruh sardori",
+      "curator": "Kurator",
+      "headStudent": "Guruh sardori",
+      "none": "Tayinlanmagan",
+      "status": "Holati",
+      "statusActive": "Faol",
+      "statusArchived": "Arxivda",
+      "save": "Saqlash",
+      "saved": "Guruh saqlandi",
+      "students": "Talabalar ({count})",
+      "saveSubgroups": "Kichik guruhlarni saqlash ({count})",
+      "subgroupsSaved": "Kichik guruhlar saqlandi",
+      "noStudents": "Bu guruhda hozircha talabalar yoʻq.",
+      "name": "Nomi",
+      "statusColumn": "Holati",
+      "registered": "Roʻyxatdan oʻtgan",
+      "subgroup": "Kichik guruh",
+      "subgroupOf": "{name} ning kichik guruhi",
+      "subgroupNumber": "{number}-kichik guruh",
+      "noSubgroup": "Kichik guruhsiz",
+      "yes": "Ha",
+      "no": "Yoʻq",
+      "semesterField": "Semestr",
+      "tabs": {
+        "overview": "Umumiy",
+        "curriculum": "Oʻquv reja"
+      }
+    },
+    "curriculum": {
+      "sync": "EMIS bilan sinxronlash",
+      "syncing": "Oʻquv reja EMIS dan yuklanmoqda…",
+      "synced": "Oʻquv reja EMIS dan yangilandi.",
+      "empty": "Bu guruh uchun oʻquv reja hali saqlanmagan. Yuklash uchun «EMIS bilan sinxronlash» tugmasini bosing."
+    }
+  },
+  "subjects": {
+    "title": "Fanlar",
+    "new": "Yangi fan",
+    "empty": "Fanlar topilmadi.",
+    "notInEmis": "EMIS da yoʻq",
+    "edit": "{name} ni tahrirlash",
+    "dividedFor": "{name} ni kichik guruhlarga boʻlish mumkin",
+    "filters": {
+      "query": "Qidiruv",
+      "queryPlaceholder": "Fan nomi"
+    },
+    "columns": {
+      "nameEn": "Inglizcha",
+      "nameRu": "Ruscha",
+      "nameUz": "Oʻzbekcha",
+      "shortName": "Qisqa nomi",
+      "emis": "EMIS ID",
+      "canBeDivided": "Boʻlinadi",
+      "materials": "Materiallar",
+      "actions": "Amallar"
+    },
+    "dialog": {
+      "createTitle": "Yangi fan",
+      "editTitle": "Fanni tahrirlash",
+      "nameUz": "Oʻzbekcha nomi",
+      "nameRu": "Ruscha nomi",
+      "nameEn": "Inglizcha nomi",
+      "shortName": "Qisqa nomi",
+      "emisId": "EMIS dagi fan ID si",
+      "canBeDivided": "Kichik guruhlarga boʻlish mumkin",
+      "cancel": "Bekor qilish",
+      "save": "Saqlash",
+      "created": "Fan yaratildi",
+      "saved": "Fan saqlandi"
+    },
+    "materials": {
+      "open": "{name} fanining standart materiallari: {count}",
+      "openNoEmis": "{name} fanining standart materiallari: EMIS ID kerak",
+      "needEmis": "EMIS ID kerak",
+      "title": "Standart materiallar: {label}",
+      "description": "Har bir oʻquvchining shu fan boʻyicha daftariga bu materiallarning nusxasi qoʻshiladi. EMIS dagi fan ID si: {id}.",
+      "emisLabel": "EMIS ID {id}",
+      "listLabel": "Standart materiallar",
+      "empty": "Standart materiallar hali yoʻq.",
+      "kind": {
+        "file": "Fayl",
+        "link": "Havola",
+        "library_item": "Kutubxona kitobi"
+      },
+      "remove": "{title} ni olib tashlash",
+      "removeAsk": "Material olib tashlansinmi?",
+      "removeConfirm": "Olib tashlash",
+      "removeConfirmFor": "{title} ni olib tashlashni tasdiqlash",
+      "keep": "Qoldirish",
+      "removed": "Material olib tashlandi",
+      "add": {
+        "heading": "Material qoʻshish",
+        "kind": "Turi",
+        "titleLabel": "Nomi",
+        "upload": "Fayl tanlash",
+        "fileChosen": "Fayl: {name}",
+        "urlLabel": "Havola",
+        "searchLabel": "Kutubxonadan qidirish",
+        "searchHint": "Kitob yoki muallif nomining kamida ikkita harfini kiriting.",
+        "searchNone": "Hech narsa topilmadi.",
+        "searchResults": "Kutubxonadan qidiruv natijalari",
+        "pick": "Tanlash",
+        "picked": "Tanlandi",
+        "pickFor": "{title} ni tanlash",
+        "bookChosen": "Kitob: {title}",
+        "submit": "Material qoʻshish",
+        "added": "Material qoʻshildi"
+      },
+      "byId": {
+        "heading": "EMIS ID boʻyicha materiallar",
+        "hint": "Roʻyxatda hali yoʻq fan uchun.",
+        "id": "EMIS dagi fan ID si",
+        "label": "Nomi (ixtiyoriy)",
+        "open": "Materiallarni ochish"
+      }
+    },
+    "emis": {
+      "open": "EMIS dan yuklash: {name}",
+      "title": "EMIS materiallari: {name}",
+      "description": "Ushbu fan darslari uchun EMIS materiallarini yuklaydi. Oʻqituvchi va talabalar qoʻshgan fayllar qoladi.",
+      "terms": "Oʻquv yillari va yarim yilliklar",
+      "termLabel": "{year}, {half}-yarim yillik",
+      "pullAll": "EMIS dan yuklash",
+      "confirmTitle": "Fan EMIS dan yuklansinmi?",
+      "confirmDescription": "Ushbu fan darslarining EMIS fayllari oʻchiriladi va fonda qayta yuklanadi.",
+      "confirm": "Yuklash",
+      "started": "EMIS dan yuklash boshlandi",
+      "teachers": "Oʻqituvchilar",
+      "groups": "Guruhlar",
+      "none": "Joriy semestrda bu fan hech kimda yoʻq.",
+      "pullNew": "Yangi materiallarni yuklash",
+      "pullNewFor": "Yangi materiallarni yuklash: {name}",
+      "softHint": "EMIS materiallari faqat materialsiz darslarga qoʻshiladi; hech narsa oʻchirilmaydi."
+    },
+    "reconcile": {
+      "button": "Barcha dars materiallari daftarda borligini tekshirish",
+      "hint": "Fon rejimida tekshiruvni boshlaydi: fan bloknotlarida yoÊ»q dars materiallarini qoÊ»shadi. Mavjud materiallar oÊ»zgarmaydi.",
+      "running": "Tekshirilmoqda…",
+      "done": "Tekshirildi bloknotlar: {notebooks}. QoÊ»shildi: {added}, avval bor edi: {present}, keyinroq qayta urinish: {skipped}.",
+      "error": "Tekshiruv yakunlanmadi. Qayta urinib koÊ»ring."
+    },
+    "lessonSources": {
+      "open": "{name} dars materiallari",
+      "title": "Darslardan (EMIS): {name}",
+      "heading": "Darslardan (EMIS)",
+      "group": "Guruh",
+      "allGroups": "Barcha guruhlar",
+      "empty": "Dars materiallari yoʻq.",
+      "hidden": "Yashirin",
+      "file": "{name} ({size})",
+      "openItem": "Ochish: {title}",
+      "pages": "Sahifalar",
+      "previous": "Oldingi",
+      "next": "Keyingi",
+      "range": "{from}–{to} / {total}"
+    }
+  },
+  "rooms": {
+    "title": "Xonalar",
+    "empty": "Hozircha xonalar yoʻq.",
+    "copyLink": "Havolani nusxalash",
+    "copyPin": "PIN ni nusxalash",
+    "pinOf": "{name} xonasining PIN kodi",
+    "filters": {
+      "status": "Holati",
+      "allStatuses": "Istalgan holat"
+    },
+    "status": {
+      "active": "Faol",
+      "archived": "Arxivda"
+    },
+    "columns": {
+      "name": "Xona",
+      "link": "Havola",
+      "pin": "PIN",
+      "lessons": "Shu haftadagi darslar",
+      "status": "Holati",
+      "actions": "Amallar"
+    },
+    "actions": {
+      "rename": "{name} xonasi nomini oʻzgartirish",
+      "pin": "{name} xonasi uchun yangi PIN yaratish",
+      "merge": "{name} xonasini boshqasiga birlashtirish",
+      "archive": "{name} xonasini arxivga oʻtkazish"
+    },
+    "rename": {
+      "title": "{name} xonasi nomini oʻzgartirish",
+      "name": "Yangi nom",
+      "cancel": "Bekor qilish",
+      "submit": "Nomini oʻzgartirish",
+      "done": "Xona nomi oʻzgartirildi"
+    },
+    "pin": {
+      "title": "{name} xonasi uchun yangi PIN yaratilsinmi?",
+      "description": "Eski PIN va xatchoʻplar darhol ishlamaydi.",
+      "confirm": "Yangi PIN yaratish",
+      "done": "Yangi PIN yaratildi"
+    },
+    "merge": {
+      "title": "{name} xonasini boshqasiga birlashtirish",
+      "description": "Darslar tanlangan xonaga oʻtadi, bu xona arxivlanadi.",
+      "target": "Birlashtirish",
+      "choose": "Xonani tanlang",
+      "cancel": "Bekor qilish",
+      "submit": "Birlashtirish",
+      "done": "Xonalar birlashtirildi"
+    },
+    "archive": {
+      "title": "{name} xonasi arxivga oʻtkazilsinmi?",
+      "description": "Shu haftadagi darslar: {count}. Faqat ishlatilmayotgan xonani arxivlang.",
+      "confirm": "Arxivga oʻtkazish",
+      "done": "Xona arxivga oʻtkazildi"
+    }
+  },
+  "terms": {
+    "title": "Semestrlar va qoʻngʻiroqlar",
+    "new": "Yangi semestr",
+    "empty": "Hozircha semestrlar yoʻq.",
+    "edit": "Tahrirlash",
+    "current": "Joriy",
+    "termTitle": "{year}, {half}-yarim yillik",
+    "dates": "{from} – {to}",
+    "bell": "{period}. {start}–{end}",
+    "counts": "Dam olish kunlari: {holidays}. Koʻchirilgan oʻquv kunlari: {moved}.",
+    "editor": {
+      "createTitle": "Yangi semestr",
+      "editTitle": "{year} semestrini tahrirlash",
+      "year": "Oʻquv yili",
+      "half": "Yarim yillik",
+      "half1": "Birinchi yarim yillik",
+      "half2": "Ikkinchi yarim yillik",
+      "starts": "Boshlanishi",
+      "ends": "Tugashi",
+      "bells": "Qoʻngʻiroqlar jadvali",
+      "cancel": "Bekor qilish",
+      "save": "Semestrni saqlash",
+      "created": "Semestr yaratildi",
+      "saved": "Semestr saqlandi",
+      "issues": {
+        "year": "Oʻquv yilini kiriting.",
+        "dates": "Boshlanish va tugash sanalarini tanlang.",
+        "order": "Semestr boshlanishidan keyin tugashi kerak.",
+        "noBells": "Kamida bitta dars qoʻshing.",
+        "bellTime": "Har bir darsning boshlanish vaqti tugash vaqtidan oldin boʻlishi kerak.",
+        "bellWeekdays": "Har bir darsda kamida bitta hafta kuni boʻlishi kerak.",
+        "bellDuplicate": "Bir dars bir hafta kunida ikki marta koʻrsatilgan.",
+        "controlIncomplete": "Nazorat haftasi uchun birinchi va oxirgi kun kerak.",
+        "controlOrder": "Nazorat haftasi boshlangan kundan oldin tugamasligi kerak.",
+        "controlOutside": "Nazorat haftasi semestr ichida boʻlishi kerak.",
+        "controlSequence": "Har bir nazorat haftasi oldingisi tugagandan keyin boshlanishi kerak."
+      },
+      "controls": {
+        "title": "Nazorat haftalari",
+        "start": "{name}: birinchi kun",
+        "end": "{name}: oxirgi kun",
+        "clear": "Tozalash: {name}",
+        "clearShort": "Tozalash"
+      }
+    },
+    "bells": {
+      "period": "Dars",
+      "start": "Boshlanishi",
+      "end": "Tugashi",
+      "weekdays": "{period}-darsning hafta kunlari",
+      "remove": "{period}-darsni oʻchirish",
+      "add": "Dars qoʻshish",
+      "emis": "EMIS",
+      "emisHint": "EMIS dars soatlaridan sinxronlangan",
+      "overridden": "Oʻzgartirilgan",
+      "overriddenHint": "EMIS dan farq qiladi ({start}–{end})",
+      "reset": "EMIS ga qaytarish",
+      "rowMenu": "{period}-dars amallari"
+    },
+    "days": {
+      "nonStudy": "Dam olish kunlari",
+      "pickHoliday": "Sanani tanlang",
+      "addHoliday": "Kun qoʻshish",
+      "moved": "Koʻchirilgan oʻquv kunlari",
+      "pickMoved": "Sanani tanlang",
+      "follows": "Qaysi kun darslari oʻtadi",
+      "addMoved": "Koʻchirish qoʻshish",
+      "movedLine": "{date}: “{weekday}” kuni darslari",
+      "removeDay": "{date} ni oʻchirish",
+      "removeTitle": "{date} oʻchirilsinmi?",
+      "removeDescription": "Oʻzgarish semestr saqlanganda kuchga kiradi."
+    },
+    "controls": {
+      "title": "Nazorat haftalari",
+      "chip": "{name}: {period}",
+      "notSet": "belgilanmagan"
+    }
+  },
+  "timetable": {
+    "title": "Dars jadvali",
+    "term": "Semestr",
+    "termLabel": "{year}, {half}-yarim yillik",
+    "view": "Koʻrinish",
+    "views": {
+      "group": "Guruh",
+      "teacher": "Oʻqituvchi",
+      "room": "Xona"
+    },
+    "entity": {
+      "group": "Guruh",
+      "teacher": "Oʻqituvchi",
+      "room": "Xona"
+    },
+    "noEntities": {
+      "group": "Hozircha guruhlar yoʻq.",
+      "teacher": "Hozircha oʻqituvchilar yoʻq.",
+      "room": "Hozircha xonalar yoʻq."
+    },
+    "noTerms": "Avval semestr yarating.",
+    "emptyTimetable": "Boʻsh. Yozuv qoʻshish uchun katakni bosing.",
+    "copyFromTerm": "Boshqa semestrdan nusxalash",
+    "gridCaption": "Haftalik dars jadvali",
+    "period": "Dars",
+    "add": "Yozuv qoʻshish",
+    "addAt": "Yozuv qoʻshish: {weekday}, {period}-dars",
+    "openEntry": "{subject} yozuvini tahrirlash",
+    "parityShort": {
+      "odd": "toq haftalar",
+      "even": "juft haftalar"
+    },
+    "copy": {
+      "title": "{year}, {half}-yarim yillikka nusxalash",
+      "from": "Nusxa manbai",
+      "choose": "Semestrni tanlang",
+      "termLabel": "{year}, {half}-yarim yillik",
+      "cancel": "Bekor qilish",
+      "submit": "Jadvalni nusxalash",
+      "done": "Nusxalangan yozuvlar: {count}"
+    },
+    "editor": {
+      "createTitle": "Yangi yozuv",
+      "editTitle": "Yozuvni tahrirlash",
+      "description": "{weekday}, {period}-dars",
+      "weekday": "Hafta kuni",
+      "period": "Dars",
+      "parity": "Haftalar",
+      "parityEvery": "Har hafta",
+      "parityOdd": "Toq haftalar",
+      "parityEven": "Juft haftalar",
+      "subject": "Fan",
+      "choose": "Tanlang",
+      "teacher": "Oʻqituvchi",
+      "noTeacher": "Hozircha oʻqituvchi yoʻq",
+      "room": "Xona",
+      "audience": "Kimlar uchun",
+      "splitSuggestion": "Kichik guruh uchun bittadan ikkita yozuv yaratilsinmi?",
+      "split": "Kichik guruhlarga boʻlish",
+      "splitNext": "1-kichik guruhni saqlang, soʻng xuddi shu shakl 2-kichik guruh uchun ochiladi.",
+      "validFrom": "Qachondan amal qiladi",
+      "validTo": "Qachongacha amal qiladi",
+      "noEnd": "Tugash sanasi yoʻq",
+      "clear": "Tozalash",
+      "checking": "Nizolar tekshirilmoqda…",
+      "checkFailed": "Tekshiruv amalga oshmadi. Server saqlashda tekshiradi.",
+      "noConflicts": "Nizolar yoʻq.",
+      "conflictsTitle": "Nizolar: {count}",
+      "conflictKind": {
+        "teacher": "Oʻqituvchi",
+        "room": "Xona",
+        "audience": "Auditoriya"
+      },
+      "cancel": "Bekor qilish",
+      "save": "Yozuvni saqlash",
+      "saved": "Yozuv saqlandi",
+      "created": "Yozuv yaratildi",
+      "delete": "Yozuvni oʻchirish",
+      "deleteTitle": "Bu yozuv oʻchirilsinmi?",
+      "deleteDescription": "Kelgusi darslar oʻchiriladi. Qoʻlda oʻzgartirilganlari qoladi.",
+      "deleted": "Yozuv oʻchirildi",
+      "openLesson": "Darsni ochish"
+    }
+  },
+  "lessons": {
+    "title": "Darslar",
+    "extraAction": "Qoʻshimcha dars",
+    "empty": "Bu filtrlarga mos darslar yoʻq.",
+    "changeAction": "Oʻzgartirish",
+    "changeLesson": "{date} dagi “{subject}” darsini oʻzgartirish",
+    "openAction": "Ochish",
+    "openLesson": "Ochish: {subject}, {date}",
+    "changed": "Oʻzgartirilgan",
+    "teacherNeeded": "Oʻqituvchi kerak",
+    "status": {
+      "scheduled": "Jadval boʻyicha",
+      "cancelled": "Bekor qilingan"
+    },
+    "filters": {
+      "from": "Boshlanish sanasi",
+      "to": "Tugash sanasi",
+      "group": "Guruh",
+      "allGroups": "Barcha guruhlar",
+      "teacher": "Oʻqituvchi",
+      "allTeachers": "Barcha oʻqituvchilar",
+      "status": "Holati",
+      "allStatuses": "Istalgan holat",
+      "teacherNeeded": "Oʻqituvchi",
+      "anyTeacher": "Oʻqituvchili va oʻqituvchisiz",
+      "onlyTeacherNeeded": "Oʻqituvchi kerak"
+    },
+    "columns": {
+      "date": "Sana",
+      "time": "Vaqt",
+      "subject": "Fan",
+      "teacher": "Oʻqituvchi",
+      "room": "Xona",
+      "audience": "Kimlar uchun",
+      "status": "Holati",
+      "actions": "Amallar"
+    },
+    "change": {
+      "title": "“{subject}” darsini oʻzgartirish",
+      "status": "Holati",
+      "scheduled": "Jadval boʻyicha",
+      "cancelled": "Bekor qilingan",
+      "date": "Sana",
+      "period": "Dars",
+      "subject": "Fan",
+      "teacher": "Oʻqituvchi",
+      "noTeacher": "Oʻqituvchisiz",
+      "room": "Xona",
+      "topic": "Mavzu",
+      "notifyHint": "Talabalar va oʻqituvchilar xabarnoma oladi.",
+      "cancel": "Bekor qilish",
+      "save": "Oʻzgarishlarni saqlash",
+      "saved": "Dars oʻzgartirildi"
+    },
+    "extra": {
+      "title": "Qoʻshimcha dars",
+      "date": "Sana",
+      "period": "Dars",
+      "subject": "Fan",
+      "choose": "Tanlang",
+      "teacher": "Oʻqituvchi",
+      "noTeacher": "Hozircha oʻqituvchi yoʻq",
+      "room": "Xona",
+      "audience": "Kimlar uchun",
+      "topic": "Mavzu",
+      "cancel": "Bekor qilish",
+      "submit": "Dars qoʻshish",
+      "created": "Qoʻshimcha dars qoʻshildi"
+    },
+    "view": {
+      "title": "Dars",
+      "missing": "Dars tanlanmagan. Uni darslar roʻyxatidan oching.",
+      "back": "Darslar"
+    }
+  },
+  "exams": {
+    "title": "Imtihonlar",
+    "newAction": "Yangi imtihon",
+    "empty": "Bu filtrlar boʻyicha imtihonlar yoʻq.",
+    "toConfirm": "Tasdiqlash kerak: {count}",
+    "toConfirmHint": "Tasdiqlanmagan sanalar. Faqat shularni koʻrsatish uchun bosing.",
+    "nothingToConfirm": "Tasdiqlashni kutayotgan sanalar yoʻq.",
+    "filters": {
+      "from": "Sanadan",
+      "to": "Sanagacha",
+      "group": "Guruh",
+      "allGroups": "Barcha guruhlar",
+      "subject": "Fan",
+      "allSubjects": "Barcha fanlar",
+      "kind": "Turi",
+      "allKinds": "Barcha turlar",
+      "control": "Nazorat haftasi",
+      "allControls": "Barcha nazorat haftalari",
+      "controlOption": "{name} · {period}",
+      "status": "Holati",
+      "allStatuses": "Rejalashtirilgan va tasdiqlanmagan",
+      "source": "Manba",
+      "allSources": "Istalgan manba",
+      "undated": "Sanasi yoʻq nazorat haftalarini koʻrsatish"
+    },
+    "kind": {
+      "midterm": "Oraliq nazorat (ON)",
+      "final": "Yakuniy nazorat (YaN)",
+      "other": "Boshqa"
+    },
+    "status": {
+      "planned": "Rejalashtirilgan",
+      "tentative": "Tasdiqlanmagan",
+      "cancelled": "Bekor qilingan",
+      "undated": "Sana belgilanmagan"
+    },
+    "source": {
+      "teacher": "Oʻqituvchi",
+      "admin": "Maʼmuriyat",
+      "emis": "EMIS",
+      "head_student": "Guruh sardori"
+    },
+    "columns": {
+      "date": "Sana",
+      "subject": "Fan",
+      "groups": "Guruhlar",
+      "kind": "Turi",
+      "time": "Vaqt",
+      "room": "Xona",
+      "status": "Holati",
+      "source": "Manba",
+      "setBy": "Kim belgilagan",
+      "note": "Izoh",
+      "actions": "Amallar"
+    },
+    "csv": {
+      "week": "Nazorat haftasi",
+      "control": "Nazorat",
+      "title": "Nomi"
+    },
+    "actions": {
+      "edit": "Tahrirlash",
+      "editLabel": "Tahrirlash: {subject}, {date}",
+      "confirm": "Tasdiqlash",
+      "confirmLabel": "Tasdiqlash: {subject}, {date}",
+      "dismiss": "Rad etish",
+      "dismissLabel": "Rad etish: {subject}, {date}",
+      "cancel": "Bekor qilish",
+      "cancelLabel": "Bekor qilish: {subject}, {date}",
+      "setDate": "Sana belgilash",
+      "setDateLabel": "Sana belgilash: {subject}, {groups}"
+    },
+    "confirmed": "Sana tasdiqlandi",
+    "dialog": {
+      "createTitle": "Yangi imtihon",
+      "editTitle": "Tahrirlash: {subject}",
+      "setDateTitle": "Sana belgilash: {subject}",
+      "setDateDescription": "{control}, {groups}.",
+      "subject": "Fan",
+      "choose": "Tanlang",
+      "audience": "Guruhlar",
+      "kind": "Turi",
+      "control": "Nazorat haftasi",
+      "controlAuto": "Sana boʻyicha",
+      "weekHint": "Hafta: {period}",
+      "date": "Sana",
+      "time": "Vaqt",
+      "timeHint": "Toshkent vaqti. Vaqt hali nomaʼlum boʻlsa, boʻsh qoldiring.",
+      "room": "Xona",
+      "title": "Nomi",
+      "note": "Izoh",
+      "cancel": "Bekor qilish",
+      "create": "Imtihon qoʻshish",
+      "save": "Saqlash",
+      "setDate": "Sana belgilash",
+      "created": "Imtihon qoʻshildi",
+      "saved": "Imtihon saqlandi",
+      "dateSet": "Sana belgilandi",
+      "issues": {
+        "subject": "Fanni tanlang.",
+        "audience": "Kamida bitta guruhni tanlang.",
+        "date": "Sanani tanlang.",
+        "time": "Vaqtni soat:daqiqa shaklida kiriting."
+      }
+    },
+    "dismiss": {
+      "dismissTitle": "Bu sana rad etilsinmi?",
+      "cancelTitle": "Bu imtihon bekor qilinsinmi?",
+      "description": "{subject}, {date}, {groups}: imtihon bekor qilinadi va kalendarlardan yoʻqoladi.",
+      "keep": "Qoldirish",
+      "dismissed": "Sana rad etildi",
+      "cancelled": "Imtihon bekor qilindi"
+    }
+  },
+  "attendance": {
+    "title": "Davomat",
+    "from": "Boshlanish sanasi",
+    "to": "Tugash sanasi",
+    "currentTerm": "Joriy semestr",
+    "resetRange": "Joriy semestr",
+    "tabs": {
+      "report": "Hisobot",
+      "missing": "Belgilanmagan"
+    },
+    "report": {
+      "view": "Koʻrinish",
+      "views": {
+        "group": "Guruhlar",
+        "student": "Talabalar",
+        "subject": "Fanlar",
+        "teacher": "Oʻqituvchilar"
+      },
+      "labels": {
+        "group": "Guruh",
+        "student": "Talaba",
+        "subject": "Fan",
+        "teacher": "Oʻqituvchi"
+      },
+      "group": "Guruh",
+      "allGroups": "Barcha guruhlar",
+      "period": "{from} – {to}",
+      "empty": "Bu davr uchun maʼlumot yoʻq.",
+      "lessons": "Darslar",
+      "absences": "Qoldirilgan",
+      "excused": "Uzrli",
+      "notTaken": "Belgilanmagan",
+      "rate": "Qoldirish ulushi"
+    },
+    "missing": {
+      "none": "Bu davrdagi barcha darslarda davomat belgilangan.",
+      "count": "Darslar: {count}",
+      "openLesson": "Darsni ochish"
+    }
+  },
+  "broadcasts": {
+    "title": "Xabarnomalar",
+    "new": "Yangi xabarnoma",
+    "empty": "Hozircha xabarnomalar yoʻq.",
+    "deliveryLine": "Yetkazildi {sent}, xato {failed}, botni bloklaganlar {blocked}",
+    "status": {
+      "draft": "Qoralama",
+      "scheduled": "Rejalashtirilgan",
+      "sending": "Yuborilmoqda",
+      "sent": "Yuborilgan",
+      "cancelled": "Bekor qilingan"
+    },
+    "filters": {
+      "status": "Holati",
+      "allStatuses": "Istalgan holat"
+    },
+    "columns": {
+      "title": "Sarlavha",
+      "status": "Holati",
+      "audience": "Kimlarga",
+      "when": "Sana",
+      "delivery": "Yetkazish"
+    },
+    "audience": {
+      "title": "Kimlarga",
+      "everyone": "Hammaga",
+      "roles": "Rollar",
+      "role": {
+        "student": "Talabalar",
+        "teacher": "Oʻqituvchilar",
+        "admin": "Maʼmuriyat",
+        "lms_admin": "LMS administratorlari",
+        "librarian": "Kutubxonachilar"
+      },
+      "groups": "Guruhlar",
+      "groupsCount": "Guruhlar: {count}",
+      "semesters": "Semestrlar",
+      "semester": "{number}-semestr",
+      "semestersList": "Semestrlar: {list}",
+      "counting": "Qabul qiluvchilar hisoblanmoqda…",
+      "countFailed": "Qabul qiluvchilarni hisoblab boʻlmadi.",
+      "recipients": "Qabul qiluvchilar: {count}"
+    },
+    "stats": {
+      "total": "Qabul qiluvchilar",
+      "sent": "Yetkazildi",
+      "failed": "Xato",
+      "blocked": "Botni bloklaganlar"
+    },
+    "editor": {
+      "newTitle": "Yangi xabarnoma",
+      "back": "Xabarnomalar",
+      "scheduledFor": "{date} ga rejalashtirilgan",
+      "createdByAssistant": "Qoralamani yordamchi yaratgan",
+      "assistantDraft": "Yordamchi yaratgan. Tekshiring: faqat inson yubora oladi.",
+      "readOnly": "Bu xabarnomani endi oʻzgartirib boʻlmaydi.",
+      "titleLabel": "Sarlavha",
+      "textLabel": "Matn",
+      "formatting": "Formatlash",
+      "bold": "Qalin",
+      "italic": "Kursiv",
+      "underline": "Tagiga chizilgan",
+      "link": "Havola",
+      "boldText": "qalin matn",
+      "italicText": "kursiv matn",
+      "underlineText": "tagiga chizilgan matn",
+      "linkText": "havola matni",
+      "linkPrompt": "Havola manzili (https://…)",
+      "media": "Media",
+      "addMedia": "Media qoʻshish",
+      "removeMedia": "{name} ni olib tashlash",
+      "previewTitle": "Oldindan koʻrish",
+      "previewEmpty": "Matn shu yerda paydo boʻladi.",
+      "saveDraft": "Qoralamani saqlash",
+      "saved": "Qoralama saqlandi",
+      "sendPreview": "Oldindan koʻrishni menga yuborish",
+      "previewSent": "Oldindan koʻrish Telegramingizga yuborildi",
+      "sendNow": "Hozir yuborish",
+      "sendTitle": "Xabarnoma hozir yuborilsinmi?",
+      "sendDescription": "U qabul qiluvchilarga ({count}) yuboriladi va qaytarib boʻlmaydi.",
+      "sentDone": "Xabarnoma yuborilmoqda",
+      "schedule": "Rejalashtirish",
+      "reschedule": "Vaqtni oʻzgartirish",
+      "scheduledDone": "Xabarnoma rejalashtirildi",
+      "cancelScheduled": "Yuborishni bekor qilish",
+      "cancelTitle": "Rejalashtirilgan xabarnoma bekor qilinsinmi?",
+      "cancelDescription": "Yuborilmaydi. Matn saqlanadi.",
+      "cancelledDone": "Xabarnoma bekor qilindi"
+    },
+    "schedule": {
+      "title": "Xabarnomani rejalashtirish",
+      "when": "Yuborish vaqti",
+      "hint": "Toshkent vaqti bilan.",
+      "past": "Kelajakdagi vaqtni tanlang.",
+      "cancel": "Bekor qilish",
+      "submit": "Rejalashtirish",
+      "description": "Vaqt Toshkent vaqti bilan (UTC+5)."
+    }
+  },
+  "moderation": {
+    "title": "Moderatsiya",
+    "search": "Qidiruv",
+    "searchPlaceholder": "Qisqa ID, havola yoki login",
+    "emptyQueue": "Shikoyat qilingan havolalar yoʻq.",
+    "emptySearch": "Hech narsa topilmadi.",
+    "copyUrl": "Havolani nusxalash",
+    "kind": {
+      "url": "Qisqa havola",
+      "file": "Fayl havolasi",
+      "chat": "Ulashilgan suhbat",
+      "flashcard_set": "Ulashilgan kartochkalar"
+    },
+    "live": "Ishlayapti",
+    "revoked": "Bekor qilingan",
+    "disabled": "Oʻchirilgan",
+    "disabledWithReason": "Oʻchirilgan: {reason}",
+    "columns": {
+      "link": "Havola",
+      "target": "Qayerga olib boradi",
+      "owner": "Egasi",
+      "reports": "Shikoyatlar",
+      "hits": "Oʻtishlar",
+      "state": "Holati",
+      "actions": "Amallar"
+    },
+    "disable": "Oʻchirish",
+    "disableFor": "{slug} havolasini oʻchirish",
+    "disableTitle": "{slug} havolasi oʻchirilsinmi?",
+    "disableDescription": "Havola “oʻchirilgan” sahifasini koʻrsatadi. Mazmun saqlanadi.",
+    "reason": "Sabab",
+    "disabledDone": "Havola oʻchirildi",
+    "dismiss": "Shikoyatlarni bekor qilish",
+    "dismissFor": "{slug} havolasidagi shikoyatlarni bekor qilish",
+    "dismissedDone": "Shikoyatlar bekor qilindi"
+  },
+  "monitoring": {
+    "title": "Monitoring",
+    "tabs": {
+      "sync": "EMIS sinxronizatsiyasi",
+      "audit": "Audit jurnali",
+      "processes": "Jarayonlar"
+    },
+    "sync": {
+      "userId": "Talaba ID si",
+      "userHint": "Hammani sinxronlash uchun boʻsh qoldiring.",
+      "userInvalid": "Bu ID ga oʻxshamaydi.",
+      "runAll": "Hammasini hozir sinxronlash",
+      "runOne": "Bu talabani hozir sinxronlash",
+      "confirmAllTitle": "Barcha talabalar uchun sinxronizatsiya boshlansinmi?",
+      "confirmAllDescription": "Har bir talaba uchun EMIS soʻrovi, bir necha daqiqa olishi mumkin.",
+      "confirmOneTitle": "Bu talaba uchun sinxronizatsiya boshlansinmi?",
+      "confirmOneDescription": "Talabaning baholari va profili EMIS dan yangilanadi.",
+      "run": "Boshlash",
+      "started": "Sinxronizatsiya boshlandi",
+      "empty": "Hozircha sinxronizatsiya ishga tushirilmagan.",
+      "running": "Bajarilmoqda",
+      "seconds": "{count} s",
+      "columns": {
+        "started": "Boshlangan",
+        "duration": "Davomiyligi",
+        "status": "Holati",
+        "stats": "Natija"
+      },
+      "materials": {
+        "title": "EMIS materiallarini almashtirish",
+        "description": "Tanlangan yarim yilliklar darslariga EMIS qoʻshgan fayllarni oʻchiradi va qayta yuklaydi. Oʻqituvchi va talabalar qoʻshgan fayllar qoladi.",
+        "terms": "Oʻquv yillari va yarim yilliklar",
+        "termLabel": "{year}, {half}-yarim yillik",
+        "run": "Materiallarni almashtirish",
+        "confirmTitle": "EMIS materiallari almashtirilsinmi?",
+        "confirmDescription": "{count, plural, one {# ta yarim yillikning EMIS fayllari oʻchiriladi va fonda qayta yuklanadi.} other {# ta yarim yillikning EMIS fayllari oʻchiriladi va fonda qayta yuklanadi.}}",
+        "confirm": "Almashtirish",
+        "started": "Materiallarni qayta yuklash boshlandi"
+      },
+      "studentSyncsTitle": "Talabalar sinxronlashi (avval muvaffaqiyatsizlar)",
+      "studentSyncsEmpty": "Muvaffaqiyatsiz, navbatdagi yoki bajarilayotgan sinxronlash yoÊ»q.",
+      "loading": "Yuklanmoqda…",
+      "studentSyncsColumns": {
+        "student": "Talaba",
+        "status": "Holat",
+        "attempts": "Urinishlar",
+        "lastError": "Oxirgi xato",
+        "finished": "Yakunlangan"
+      },
+      "studentSyncsAttempts": "{n} / {max}",
+      "runStop": "ToÊ»xtatish",
+      "runStopTitle": "Bu sinxronizatsiyani toÊ»xtatasizmi?",
+      "runStopDescription": "Ishlayotgan talabalardan keyin sinxronizatsiya tugaydi. Hali sinxronlanmaganlarni keyingi sinxronizatsiya oladi.",
+      "runStopConfirm": "Sinxronizatsiyani toÊ»xtatish",
+      "runStopped": "ToÊ»xtatish soÊ»raldi. Sinxronizatsiya tez orada tugaydi.",
+      "studentStop": "ToÊ»xtatish",
+      "studentStopTitle": "Bu talabaning sinxronizatsiyasini toÊ»xtatasizmi?",
+      "studentStopDescription": "Talabaning sinxronizatsiyasi keyingi bosqichdan oldin toÊ»xtaydi va avtomatik qayta urinilmaydi. Uni sinxronizatsiya vositalaridan qayta boshlang.",
+      "studentStopConfirm": "Sinxronizatsiyani toÊ»xtatish",
+      "studentStopped": "Bu talaba uchun toÊ»xtatish soÊ»raldi."
+    },
+    "audit": {
+      "empty": "Audit hodisalari topilmadi.",
+      "filters": {
+        "user": "Foydalanuvchi ID si",
+        "userPlaceholder": "Foydalanuvchi ID si",
+        "type": "Hodisa turi",
+        "typePlaceholder": "Hodisa turi",
+        "from": "Boshlanish sanasi",
+        "to": "Tugash sanasi"
+      },
+      "columns": {
+        "time": "Vaqt",
+        "type": "Hodisa",
+        "actor": "Kim",
+        "ip": "IP manzil",
+        "details": "Tafsilotlar"
+      }
+    },
+    "processes": {
+      "title": "Fon jarayonlari",
+      "loading": "Yuklanmoqda…",
+      "empty": "Ishlayotgan jarayon yoʻq.",
+      "started": "Boshlangan: {at}",
+      "stop": "Toʻxtatish",
+      "stopLabel": "{label} — toʻxtatish",
+      "stopped": "Toʻxtatish soʻraldi"
+    }
+  },
+  "logs": {
+    "title": "Loglar",
+    "filters": {
+      "project": "Loyiha",
+      "projectAll": "Barcha loyihalar",
+      "level": "Daraja",
+      "levelAll": "Barcha darajalar"
+    },
+    "levels": {
+      "fatal": "Halokatli",
+      "error": "Xato",
+      "warning": "Ogohlantirish",
+      "info": "Ma’lumot",
+      "debug": "Nosozlikni tuzatish"
+    },
+    "count": "{count} ta hodisa",
+    "lastSeen": "Oxirgi marta",
+    "never": "Hech qachon",
+    "open": "Muammoni ochish",
+    "empty": "Bu filtrlarga mos muammo yo‘q.",
+    "disabled": "Bu serverda xatolarni kuzatish sozlanmagan, shuning uchun muammolar ko‘rsatilmaydi.",
+    "prev": "Oldingi",
+    "next": "Keyingi",
+    "page": "{page}-sahifa"
+  },
+  "assistant": {
+    "page": {
+      "description": "Odamlar, jadval va davomat haqida soʻrang. Oʻzgarishlar tasdiqni talab qiladi."
+    },
+    "chat": {
+      "emptyChat": "Boshlash uchun savol bering."
+    },
+    "approval": {
+      "reasonPlaceholder": "Nega yoʻq? Masalan: 310-xonadan foydalan"
+    }
+  },
+  "reports": {
+    "title": "Hisobotlar",
+    "tabs": {
+      "health": "Tizim",
+      "usage": "Foydalanish",
+      "academic": "Oʻquv"
+    },
+    "health": {
+      "up": "Ishlayapti",
+      "down": "Mavjud emas",
+      "database": "Maʼlumotlar bazasi",
+      "redis": "Redis",
+      "queueWaiting": "Navbatdagi vazifalar",
+      "queueHint": "{count} bajarilmoqda",
+      "failedLogins": "24 soatdagi muvaffaqiyatsiz kirishlar",
+      "loginsHint": "{total} urinishdan {failed} tasi",
+      "updated": "Yangilandi: {time}"
+    },
+    "usage": {
+      "storage": "Xotira",
+      "files": "Fayllar: {count}",
+      "signInsToday": "Bugungi kirishlar",
+      "tokensToday": "Bugungi yordamchi tokenlari",
+      "tokensTotal": "Yordamchi tokenlari",
+      "last14": "14 kun",
+      "signIns": "Kunlik faol foydalanuvchilar",
+      "users": "Foydalanuvchilar",
+      "tokens": "Kunlik yordamchi tokenlari",
+      "tokensLabel": "Tokenlar"
+    },
+    "academic": {
+      "attendanceTitle": "Guruhlar boʻyicha davomat",
+      "attendanceRate": "Davomat",
+      "noAttendance": "Davomat maʼlumotlari hali yoʻq.",
+      "marksTitle": "Baholar taqsimoti",
+      "marksCount": "Baholar",
+      "noMarks": "Baholar hali yoʻq."
+    }
+  },
+  "settings": {
+    "title": "Sozlamalar",
+    "school": "Maktab",
+    "schoolName": "Maktab nomi",
+    "supportContact": "Qoʻllab-quvvatlash aloqasi",
+    "defaults": "Standart qiymatlar",
+    "defaultLanguage": "Standart interfeys tili",
+    "changePasswordOnLogin": "Administrator oʻrnatgan parolni almashtirishni soʻrash",
+    "changePasswordFlagOn": "Kirishda parolni almashtirish serverda yoqilgan.",
+    "changePasswordFlagOff": "Serverda oʻchirilgan.",
+    "featureLabels": {
+      "notebooks": "Bloknotlar",
+      "ai_assistant": "SI yordamchisi",
+      "flashcards": "Kartochkalar",
+      "lms": "Kurslar (LMS)",
+      "mail": "Talabalar pochtasi",
+      "push": "Push-bildirishnomalar",
+      "emis_sync": "EMIS bilan sinxronlash",
+      "library": "Kutubxona",
+      "web_search": "Veb-qidiruv",
+      "vector_search": "Maʼno boʻyicha qidiruv",
+      "change_password_on_login": "Kirishda parolni almashtirish"
+    },
+    "featureDescriptions": {
+      "notebooks": "Oʻquv materiallari uchun SI bloknotlari: marshrutlar va rejali vazifalar.",
+      "ai_assistant": "Talabalar va maʼmuriyat yordamchilari.",
+      "flashcards": "Kartochkalar toʻplamlari va oraliq takrorlash.",
+      "lms": "Kurslar yaratish va oʻqish marshrutlari.",
+      "mail": "Talabalar pochta qutilari va ularning fon vazifalari.",
+      "push": "Brauzerga Web Push; VAPID kalitlari ham kerak.",
+      "emis_sync": "EMIS bilan rejali sinxronlash.",
+      "library": "Kutubxona sayti va uning rejali vazifalari.",
+      "web_search": "Yordamchi, bloknotlar va Discoverʼdagi veb-qidiruv tugmasi.",
+      "vector_search": "Bloknotlarda maʼno boʻyicha qidiruv; vektor baza kerak.",
+      "change_password_on_login": "Administrator bergan parolli foydalanuvchi kirgach yangi parol tanlaydi."
+    },
+    "save": "Saqlash",
+    "saved": "Sozlamalar saqlandi",
+    "features": "Server funksiyalari",
+    "on": "yoq",
+    "off": "oʻch",
+    "languages": {
+      "uz": "Oʻzbekcha",
+      "ru": "Русский",
+      "en": "English"
+    }
+  },
+  "limits": {
+    "title": "Limitlar va xarajatlar",
+    "description": "Sunʼiy intellekt limitlari, modellar narxi va ulardan kim foydalanayotgani.",
+    "range": {
+      "7": "7 kun",
+      "30": "30 kun",
+      "90": "90 kun",
+      "month": "Bu oy"
+    },
+    "cards": {
+      "monthCost": "Bu oydagi xarajat",
+      "rangeCost": "Davrdagi xarajat",
+      "projected": "Oy uchun prognoz",
+      "tokensToday": "Bugungi tokenlar",
+      "callsToday": "Bugungi soʻrovlar",
+      "failed": "xato: {count}"
+    },
+    "charts": {
+      "daily": "Funksiyalar boʻyicha kunlik xarajat",
+      "byModel": "Modellar boʻyicha xarajat",
+      "byRole": "Rollar boʻyicha xarajat",
+      "empty": "Bu davrda pullik soʻrovlar boʻlmagan.",
+      "usd": "USD"
+    },
+    "features": {
+      "assistant": "Yordamchi",
+      "notebook_chat": "Bloknot suhbati",
+      "notebook_prep": "Manba tahlili",
+      "studio": "Studiya",
+      "lms_author": "Kurs muallifi",
+      "web_search": "Internet qidiruvi",
+      "embedding": "Maʼno boʻyicha qidiruv",
+      "academic": "Fan nomlari",
+      "other": "Boshqa"
+    },
+    "roles": {
+      "student": "Oʻquvchilar",
+      "teacher": "Oʻqituvchilar",
+      "admin": "Administratorlar",
+      "staff": "Boshqa xodimlar",
+      "system": "Tizim vazifalari"
+    },
+    "top": {
+      "title": "Eng faol foydalanuvchilar",
+      "user": "Foydalanuvchi",
+      "role": "Rol",
+      "calls": "Soʻrovlar",
+      "tokens": "Tokenlar",
+      "cost": "Xarajat",
+      "empty": "Bu davrda pullik soʻrovlar boʻlmagan."
+    },
+    "editor": {
+      "title": "Limitlar",
+      "description": "Oʻzgarishlar taxminan 30 soniyada kuchga kiradi. Xodimlar cheklanmaydi.",
+      "groups": {
+        "assistant": "Yordamchi",
+        "smart": "Aqlli yordamchi",
+        "notebooks": "Bloknotlar va Studiya",
+        "web_search": "Internet qidiruvi",
+        "lms": "Kurs muallifligi"
+      },
+      "value": "Qiymat",
+      "default": "Standart: {value}",
+      "changed": "Oʻzgartirilgan",
+      "reset": "Standartga qaytarish",
+      "on": "Yoqilgan",
+      "unlimited": "Cheklanmagan",
+      "save": "Oʻzgarishlarni saqlash",
+      "saved": "Limitlar saqlandi",
+      "unchanged": "Saqlanadigan oʻzgarish yoʻq",
+      "invalid": "{min} dan {max} gacha butun son kiriting.",
+      "failed": "Limitlarni saqlab boʻlmadi",
+      "unit": {
+        "tokens": "token",
+        "count": "marta",
+        "steps": "qadam",
+        "hours": "soat",
+        "bytes": "bayt"
+      },
+      "period": {
+        "session": "sessiyada",
+        "day": "kuniga",
+        "week": "haftasiga",
+        "minute": "daqiqada",
+        "hour": "soatda"
+      }
+    },
+    "access": {
+      "title": "Foydalanuvchilar uchun sunÊ»iy intellekt kirishi",
+      "description": "Bitta oÊ»quvchi uchun chat yoki bloknot sunÊ»iy intellektini oÊ»chiring. OÊ»zgarish 30 soniya ichida kuchga kiradi.",
+      "search": "OÊ»quvchini toping",
+      "searchPlaceholder": "Ism yoki login, kamida 2 ta belgi",
+      "pick": "Kirishni koÊ»rish va oÊ»zgartirish uchun oÊ»quvchini tanlang.",
+      "change": "Boshqa oÊ»quvchini tanlash",
+      "chat": "Chat sunÊ»iy intellekti",
+      "notebooks": "Bloknot sunÊ»iy intellekti",
+      "confirmRevoke": "{name} uchun «{scope}» ni oÊ»chirasizmi?",
+      "confirmRestore": "{name} uchun «{scope}» ni yoqasizmi?",
+      "confirm": "Tasdiqlash",
+      "saved": "SunÊ»iy intellekt kirishi yangilandi."
+    },
+    "extensions": {
+      "title": "Foydalanuvchi kengaytmalari",
+      "description": "Bitta oʻquvchi limitini koʻpaytirish: koʻpaytirgich yoki belgilangan qiymatlar, sanagacha.",
+      "add": "Kengaytma qoʻshish",
+      "empty": "Hozircha kengaytmalar yoʻq.",
+      "active": "Amalda",
+      "expired": "Muddati oʻtgan",
+      "until": "{date} gacha",
+      "forever": "muddatsiz",
+      "multiplier": "×{value}",
+      "values": "Belgilangan qiymatlar",
+      "remove": "Oʻchirish",
+      "removed": "Kengaytma oʻchirildi",
+      "saved": "Kengaytma saqlandi",
+      "badge": "Sunʼiy intellekt limitlari {date} gacha kengaytirilgan",
+      "badgeForever": "Sunʼiy intellekt limitlari kengaytirilgan",
+      "dialog": {
+        "title": "Oʻquvchi limitlarini kengaytirish",
+        "search": "Ism yoki login (kamida 2 harf)",
+        "noResults": "Oʻquvchilar topilmadi.",
+        "student": "Oʻquvchi",
+        "change": "Almashtirish",
+        "mode": "Turi",
+        "multiplier": "Koʻpaytirgich",
+        "custom": "Belgilangan qiymatlar",
+        "customHint": "Faqat oshirmoqchi boʻlgan limitlarni kiriting; qolganlari oʻzgarmaydi.",
+        "expires": "Amal qilish muddati (ixtiyoriy)",
+        "note": "Izoh (nima uchun, qancha muddat)",
+        "save": "Kengaytmani saqlash",
+        "need": "Koʻpaytirgich tanlang yoki kamida bitta qiymat kiriting."
+      },
+      "removeTitle": "{name} uchun kengaytma oʻchirilsinmi?",
+      "removeDescription": "Talabaning limitlari darhol standart holatga qaytadi."
+    },
+    "fields": {
+      "ai_text_max_bytes": {
+        "label": "Yordamchi uchun eng katta fayl",
+        "hint": "Yordamchi fayl vositasi bilan ocha oladigan eng katta matn."
+      },
+      "ai_session_hours": {
+        "label": "Sessiya davomiyligi",
+        "hint": "Token sessiyasi davom etadigan soatlar; undan keyingi birinchi xabar yangisini boshlaydi."
+      },
+      "ai_session_tokens_student": {
+        "label": "Yordamchi tokenlari sessiyada",
+        "hint": "Oʻquvchi sessiyada sarflashi mumkin boʻlgan model tokenlari (model vazni bilan hisoblanadi)."
+      },
+      "ai_daily_tokens_student": {
+        "label": "Yordamchi tokenlari kuniga",
+        "hint": "Oʻquvchi yordamchi bilan har kuni (Toshkent vaqti) sarflashi mumkin boʻlgan tokenlar."
+      },
+      "ai_max_tool_steps": {
+        "label": "Javobdagi vosita qadamlari",
+        "hint": "Bitta yordamchi javobida modelga eng koʻp murojaatlar (vosita aylanmalari)."
+      },
+      "ai_ask_before_web_search": {
+        "label": "Internetda qidirishdan oldin soʻrash",
+        "hint": "Maktab maʼlumotlarida hech narsa topilmasa, oʻquvchi yordamchisi internetda qidirishdan oldin ruxsat soʻraydi; oʻchirilgan boʻlsa, darhol qidiradi."
+      },
+      "ai_chat_history_limit": {
+        "label": "Modelga yuboriladigan chat tarixi",
+        "hint": "Har bir savol bilan modelga chatning nechta oxirgi xabari yuboriladi; eskilarini model vosita orqali oʻqiydi."
+      },
+      "ai_smart_requests_per_week_student": {
+        "label": "Haftasiga aqlli xabarlar",
+        "hint": "Oʻquvchi haftada (dushanbadan) aqlli modelga yubora oladigan xabarlar. 0 oʻchiradi."
+      },
+      "nb_session_tokens_student": {
+        "label": "Bloknot tokenlari sessiyada",
+        "hint": "Bloknotlarda sessiya uchun ogʻirlangan tokenlar (kirish + 0,1 × kesh + 5 × chiqish)."
+      },
+      "nb_daily_tokens_student": {
+        "label": "Bloknot tokenlari kuniga",
+        "hint": "Oʻquvchi har kuni ishlatishi mumkin boʻlgan ogʻirlangan bloknot tokenlari."
+      },
+      "nb_artifacts_per_day": {
+        "label": "Studiya natijalari kuniga",
+        "hint": "Oʻquvchi har kuni boshlashi mumkin boʻlgan Studiya natijalari (konspekt, test, slayd va h.k.)."
+      },
+      "nb_audio_per_day": {
+        "label": "Audio sharhlar kuniga",
+        "hint": "0 hisoblagichni oʻchiradi; audio sharhlar hali tayyorlanmaydi."
+      },
+      "nb_slides_per_day": {
+        "label": "Slaydlar kuniga",
+        "hint": "Oʻquvchi har kuni yarata oladigan slaydlar."
+      },
+      "nb_infographics_per_day": {
+        "label": "Infografika kuniga",
+        "hint": "Oʻquvchi har kuni yarata oladigan infografikalar."
+      },
+      "nb_concurrent_artifacts": {
+        "label": "Bir vaqtda tayyorlanadigan natijalar",
+        "hint": "Oʻquvchi bir vaqtning oʻzida nechta Studiya natijasini yaratishi mumkin."
+      },
+      "nb_chat_per_minute": {
+        "label": "Bloknotda savollar daqiqada",
+        "hint": "Oʻquvchi bloknot suhbatiga har daqiqada bera oladigan savollar."
+      },
+      "nb_source_adds_per_hour": {
+        "label": "Soatiga qoʻshiladigan manbalar",
+        "hint": "Oʻquvchi bloknotlarga soatiga qoʻsha oladigan manbalar."
+      },
+      "nb_search_per_minute": {
+        "label": "Manbalarda qidiruv daqiqada",
+        "hint": "Bloknot manbalarida daqiqada toʻliq matn qidiruvlari."
+      },
+      "nb_web_materials_per_day": {
+        "label": "Kuniga veb-materiallar",
+        "hint": "Oʻquvchining veb-manbalari bir kunda bloknotlarga yigʻa oladigan fayllar; -1 cheklovsiz degani."
+      },
+      "nb_media_described_per_day": {
+        "label": "Kuniga media",
+        "hint": "Oʻquvchi uchun bir kunda tavsiflangan rasmlar va matnga oʻgirilgan yozuvlar; -1 cheklovsiz degani."
+      },
+      "web_search_per_day_student": {
+        "label": "Internet qidiruvi kuniga",
+        "hint": "Oʻquvchi har kuni (Toshkent vaqti) boshlashi mumkin boʻlgan qidiruvlar; 0 oʻchiradi."
+      },
+      "web_search_local_min_new": {
+        "label": "Exaʼdan oldin yangi saqlangan sahifalar",
+        "hint": "Shuncha yangi saqlangan sahifa soʻrovga mos kelsa, javob Exaʼsiz va oʻquvchi limitini sarflamasdan ulardan tuziladi; 0 — har doim Exa."
+      },
+      "web_search_max_results": {
+        "label": "Chat qidiruvidagi sahifalar",
+        "hint": "Bitta qidiruv chat javobi uchun saqlaydigan sahifalar."
+      },
+      "web_search_discover_results": {
+        "label": "Discover qidiruvidagi sahifalar",
+        "hint": "Har bir Discover qidiruvi qaytaradigan sahifalar."
+      },
+      "web_search_deep_queries": {
+        "label": "Chuqur Discover soʻrovlari",
+        "hint": "Chuqur ishga tushirish qiladigan qidiruvlar; kunlik kvotadan shuncha sarflanadi."
+      },
+      "web_search_deep_results": {
+        "label": "Chuqur ishdan keyin qoladigan sahifalar",
+        "hint": "Chuqur Discover tartiblangandan keyin saqlaydigan eng yaxshi sahifalar."
+      },
+      "lms_ai_chat_per_minute": {
+        "label": "Muallif yordamchisiga xabarlar daqiqada",
+        "hint": "Kurs muallifi yordamchiga har daqiqada yubora oladigan xabarlar."
+      },
+      "lms_ai_max_tool_steps": {
+        "label": "Muallif yordamchisi vosita qadamlari",
+        "hint": "Muallif yordamchisining bitta javobida modelga eng koʻp murojaatlar."
+      }
+    }
+  },
+  "knowledge": {
+    "title": "Bilimlar bazasi",
+    "filters": "Filtrlar",
+    "search": "Qidirish",
+    "tagFilter": "Teglar",
+    "add": "Yozuv qoʻshish",
+    "edit": "{key} yozuvi",
+    "editEntry": "{key} yozuvini tahrirlash",
+    "deleteEntry": "{key} yozuvini oʻchirish",
+    "columns": {
+      "key": "Kalit",
+      "title": "Sarlavha",
+      "tags": "Teglar",
+      "updated": "Yangilangan",
+      "actions": "Amallar"
+    },
+    "fields": {
+      "key": "Kalit",
+      "title": "Sarlavha",
+      "value": "Matn",
+      "tags": "Teglar"
+    },
+    "accessGuest": "Mehmonlarga ochiq",
+    "accessStudent": "Talabalarga ochiq",
+    "badgeGuest": "Mehmonlar",
+    "badgeStudent": "Talabalar",
+    "tagsHint": "Teglarni vergul bilan ajrating.",
+    "cancel": "Bekor qilish",
+    "save": "Saqlash",
+    "created": "Yozuv qoʻshildi.",
+    "updated": "Yozuv saqlandi.",
+    "deleted": "Yozuv oʻchirildi.",
+    "deleteTitle": "{key} oʻchirilsinmi?",
+    "deleteText": "Yordamchi bu yozuvni endi topa olmaydi.",
+    "confirmDelete": "Oʻchirish",
+    "empty": "Bilimlar bazasi boʻsh.",
+    "emptyFiltered": "Bu filtrlar boʻyicha yozuv yoʻq.",
+    "prev": "Oldingi",
+    "next": "Keyingi",
+    "page": "{pages} sahifadan {page}-sahifa"
+  },
+  "workOffs": {
+    "title": "Qayta topshirish",
+    "from": "Boshlanish sanasi",
+    "to": "Tugash sanasi",
+    "open": "Ochiq",
+    "done": "Bajarilgan",
+    "back": "Orqaga",
+    "status": "Holati",
+    "totalOpen": "Jami ochiq: {count}",
+    "empty": "Bu davrda qayta topshirish topshiriqlari yoʻq.",
+    "emptyList": "Bu filtrlar boʻyicha topshiriq yoʻq.",
+    "tabs": {
+      "subject": "Fanlar boʻyicha",
+      "teacher": "Oʻqituvchilar boʻyicha",
+      "group": "Guruhlar boʻyicha",
+      "student": "Oʻquvchilar boʻyicha"
+    },
+    "labels": {
+      "subject": "Fan",
+      "teacher": "Oʻqituvchi",
+      "group": "Guruh",
+      "student": "Oʻquvchi"
+    },
+    "statuses": {
+      "open": "Ochiq",
+      "done": "Bajarilgan",
+      "all": "Hammasi"
+    },
+    "itemStatus": {
+      "assigned": "Ochiq",
+      "done": "Bajarilgan"
+    },
+    "columns": {
+      "lesson": "Dars",
+      "subject": "Fan",
+      "teacher": "Oʻqituvchi",
+      "group": "Guruh",
+      "student": "Oʻquvchi",
+      "text": "Topshiriq",
+      "status": "Holati",
+      "due": "Muddat"
+    },
+    "lesson": "{date}, {period}-dars",
+    "prev": "Oldingi",
+    "next": "Keyingi",
+    "page": "{pages} sahifadan {page}-sahifa"
+  },
+  "callForImprovements": {
+    "title": "Takomillashtirish boʻyicha chaqiruv",
+    "filters": "Filtrlar",
+    "allStatuses": "Barcha holatlar",
+    "allKinds": "Barcha turlar",
+    "allAreas": "Barcha boʻlimlar",
+    "empty": "Hozircha takliflar va xatolik haqidagi xabarlar yoʻq.",
+    "emptyFiltered": "Bu filtrlar boʻyicha hech narsa topilmadi.",
+    "loadMore": "Yana koʻrsatish",
+    "open": "Ochish",
+    "columns": {
+      "title": "Sarlavha",
+      "kind": "Turi",
+      "area": "Boʻlim",
+      "status": "Holati",
+      "reporter": "Kimdan",
+      "received": "Qabul qilingan",
+      "replies": "Javoblar"
+    },
+    "filter": {
+      "status": "Holati",
+      "kind": "Turi",
+      "area": "Boʻlim"
+    },
+    "kind": {
+      "idea": "Gʻoya",
+      "bug": "Xato",
+      "other": "Boshqa"
+    },
+    "area": {
+      "id": "ID",
+      "my": "my.iht",
+      "staff": "Oʻqituvchilar",
+      "admin": "Administratsiya",
+      "lms": "LMS",
+      "library": "Kutubxona",
+      "share": "Nashrlar",
+      "bot": "Bot",
+      "ai": "AI yordamchi",
+      "notebooks": "Daftarlar",
+      "mail": "Pochta",
+      "other": "Boshqa"
+    },
+    "status": {
+      "new": "Yangi",
+      "in_review": "Koʻrib chiqilmoqda",
+      "planned": "Rejalashtirilgan",
+      "done": "Bajarilgan",
+      "rejected": "Rad etilgan"
+    },
+    "source": {
+      "web": "Veb-sayt",
+      "bot": "Telegram bot"
+    },
+    "detail": {
+      "back": "Takomillashtirish boʻyicha chaqiruv",
+      "missingId": "Roʻyxatdan murojaatni oching.",
+      "notFound": "Murojaat topilmadi yoki oʻchirilgan.",
+      "fields": "Tafsilotlar",
+      "description": "Tavsif",
+      "page": "Sahifa",
+      "reporter": "Yuboruvchi",
+      "group": "Guruh",
+      "roles": "Rollar",
+      "source": "Manba",
+      "received": "Qabul qilingan",
+      "statusLabel": "Holati",
+      "statusSaved": "Holat yangilandi",
+      "attachments": "Ilovalar",
+      "noAttachments": "Ilovalar yoʻq.",
+      "preview": "Koʻrinish: {name}",
+      "download": "{name} ni yuklab olish",
+      "thread": "Javoblar",
+      "noReplies": "Hozircha javoblar yoʻq.",
+      "deliveries": "Yetkazish",
+      "delivery": {
+        "sent": "Yuborildi",
+        "failed": "Yetkazilmadi",
+        "unavailable": "Mavjud emas"
+      },
+      "channel": {
+        "telegram": "Telegram",
+        "mail": "Pochta"
+      },
+      "reply": {
+        "title": "Javob",
+        "text": "Xabar",
+        "textHint": "4000 belgigacha.",
+        "attach": "Rasm yoki fayllarni biriktirish",
+        "removeFile": "{name} ni olib tashlash",
+        "channels": "Yuborish kanali",
+        "submit": "Javobni yuborish",
+        "required": "Javob yozing.",
+        "tooLong": "Javob 4000 belgidan uzun.",
+        "channelsRequired": "Kamida bitta kanalni tanlang.",
+        "sent": "Javob yuborildi"
+      }
+    }
+  },
+  "loginCues": {
+    "title": "Roʻyxatga olish loginlari",
+    "add": "Qoʻshish",
+    "bulkAdd": "Roʻyxatni joylash",
+    "allGroups": "Barcha guruhlar",
+    "filterGroup": "Guruh boʻyicha filtr",
+    "empty": "Hozircha loginlar yoʻq.",
+    "columns": {
+      "name": "Ism",
+      "group": "Guruh",
+      "login": "EMIS logini",
+      "status": "Holat",
+      "created": "Qoʻshilgan",
+      "actions": "Amallar"
+    },
+    "status": {
+      "free": "Boʻsh",
+      "used": "Ishlatilgan"
+    },
+    "delete": "{name} ni oʻchirish",
+    "deleteTitle": "{name} oʻchirilsinmi?",
+    "deleteText": "Talaba bu ismni roʻyxatga olishda koʻrmaydi.",
+    "confirmDelete": "Oʻchirish",
+    "deleted": "Variant oʻchirildi",
+    "created": "Variant qoʻshildi",
+    "form": {
+      "title": "Ism variantini qoʻshish",
+      "fullName": "Toʻliq ism",
+      "group": "Guruh",
+      "chooseGroup": "Guruhni tanlang",
+      "emisLogin": "EMIS logini",
+      "emisLoginHint": "Faqat raqamlar.",
+      "submit": "Qoʻshish",
+      "cancel": "Bekor qilish",
+      "required": "Majburiy",
+      "loginDigits": "EMIS logini faqat raqamlardan iborat boʻlishi kerak."
+    },
+    "bulk": {
+      "title": "Roʻyxatni joylash",
+      "lines": "Qatorlar",
+      "hint": "Har bir talaba uchun bitta qator: login;toʻliq ism",
+      "placeholder": "20240123;Aliyev Ali",
+      "preview": "Tanilgan qatorlar: {count}.",
+      "errors": "Qatorlarni tekshiring: {lines}.",
+      "submit": "Hammasini qoʻshish",
+      "done": "{count} ta variant qoʻshildi"
+    }
+  },
+  "botPosts": {
+    "loading": "Yuklanmoqda…",
+    "loadFailed": "Postlarni yuklab bo‘lmadi.",
+    "empty": "Hozircha postlar yo‘q.",
+    "saved": "Post saqlandi",
+    "created": "Post qo‘shildi",
+    "deleted": "Post o‘chirildi",
+    "moved": "Post ko‘chirildi",
+    "deleteTitle": "Postni o‘chirasizmi?",
+    "deleteDescription": "Post va unga tegishli barcha postlar botdan o‘chiriladi.",
+    "tree": {
+      "title": "Postlar",
+      "dragHandle": "Sudrash: {title}",
+      "draft": "qoralama"
+    },
+    "editor": {
+      "slug": "Slug",
+      "locale": "Til",
+      "title": "Sarlavha",
+      "body": "Matn",
+      "audience": "Auditoriya",
+      "published": "Nashr etilgan",
+      "parent": "Ostiga ko‘chirish",
+      "moveTo": "Ota postni tanlang…",
+      "save": "Saqlash",
+      "addChild": "Ichki post qo‘shish",
+      "delete": "Postni o‘chirish",
+      "label": "Post matni",
+      "linkPrompt": "Havola manzili (https://…)",
+      "bold": "Qalin",
+      "italic": "Kursiv",
+      "underline": "Tagiga chizilgan",
+      "strike": "Ustidan chizilgan",
+      "spoiler": "Spoiler",
+      "code": "Kod",
+      "pre": "Kod bloki",
+      "quote": "Iqtibos",
+      "link": "Havola",
+      "formatting": "Formatlash",
+      "deleteWithChildren": "Ichki postlari bilan o‘chirish"
+    },
+    "preview": {
+      "title": "Oldindan ko‘rish",
+      "empty": "Matn bo‘sh",
+      "buttonEmpty": "Tugma"
+    },
+    "buttons": {
+      "title": "Tugmalar",
+      "label": "Nomi {locale}",
+      "url": "Manzil (https)",
+      "remove": "Tugmani o‘chirish",
+      "add": "Tugma qo‘shish"
+    },
+    "audience": {
+      "guest": "Mehmonlar",
+      "student": "Talabalar",
+      "both": "Hammaga"
+    },
+    "deleteWithChildrenTitle": "Postni ichki postlari bilan o‘chirasizmi?",
+    "deleteWithChildrenDescription": "Post va undan pastdagi barcha ichki postlar botdan o‘chiriladi.",
+    "errors": {
+      "generic": "Xatolik yuz berdi. Qayta urinib ko‘ring.",
+      "slugTaken": "Bu slug band.",
+      "notFound": "Post topilmadi.",
+      "rootProtected": "Asosiy menyuni o‘chirib yoki ko‘chirib bo‘lmaydi.",
+      "hasChildren": "Postda ichki postlar bor.",
+      "cycle": "Postni o‘ziga ichki qilib ko‘chirib bo‘lmaydi.",
+      "reorderMismatch": "Tartib daraxtga mos kelmaydi. Sahifani yangilab, qayta urinib ko‘ring.",
+      "invalid": {
+        "empty": "{field}: maydonni to‘ldiring.",
+        "language": "{field}: bu til uchun matnni kiriting.",
+        "too-long": "{field}: matn juda uzun.",
+        "format": "{field}: kichik lotin harflar, raqamlar va chiziqcha ishlating.",
+        "url": "{field}: https:// manzilidan foydalaning.",
+        "too-many": "{field}: elementlar juda ko‘p."
+      }
+    }
+  }
+}
