@@ -1,0 +1,550 @@
+{
+  "app": {
+    "name": "IHT Учителям"
+  },
+  "nav": {
+    "today": "Bugun",
+    "timetable": "Dars jadvali",
+    "journal": "Jurnal",
+    "exams": "Nazoratlar",
+    "myGroup": "Mening guruhim",
+    "students": "Talabalar",
+    "subgroups": "Kichik guruhlar",
+    "groupAttendance": "Davomat",
+    "notifications": "Bildirishnomalar",
+    "settings": "Sozlamalar",
+    "groupHome": "Bosh sahifa",
+    "groupTeaching": "Dars berish",
+    "groupMyGroup": "Mening guruhim",
+    "groupInbox": "Kiruvchilar",
+    "groupSettings": "Hisob",
+    "studentSearch": "Talaba qidirish",
+    "notebooks": "Bloknotlar",
+    "mail": "Pochta",
+    "subjects": "Fanlar",
+    "certificates": "Sertifikatlar",
+    "temporaryMarks": "EMIS kutmoqda"
+  },
+  "audience": {
+    "subgroup": "{group} · {number}-kichik guruh"
+  },
+  "today": {
+    "title": "Bugun",
+    "now": {
+      "title": "Dars",
+      "titleNow": "Hozir",
+      "titleNext": "Keyingi dars",
+      "none": "Bugun boshqa dars yoʻq.",
+      "running": "Davom etmoqda",
+      "cancelled": "Bekor qilingan",
+      "room": "{name}-xona",
+      "attendance": "Davomat",
+      "homework": "Uy vazifasi",
+      "addMaterial": "Material qoʻshish"
+    },
+    "lessons": {
+      "title": "Bugungi darslar",
+      "empty": "Bugun darslaringiz yoʻq.",
+      "cancelled": "Bekor qilingan",
+      "changed": "Oʻzgartirilgan",
+      "attendanceMissing": "Davomat yoʻq",
+      "homeworkMissing": "Uy vazifasi yoʻq"
+    },
+    "attention": {
+      "title": "Eʼtibor talab qiladi",
+      "none": "Oxirgi 7 kun davomati belgilangan.",
+      "period": "{number}-juftlik",
+      "take": "Davomatni belgilash"
+    },
+    "getStarted": {
+      "title": "Boshlash",
+      "hide": "Yashirish",
+      "dismissStep": "Qadamni yashirish: {step}",
+      "steps": {
+        "telegram": {
+          "title": "Telegramni ulang",
+          "text": "Dars havolalari va dars oxiridagi eslatmani botda oling.",
+          "action": "Telegramni ulash"
+        },
+        "notifications": {
+          "title": "Bildirishnomalarni tekshiring",
+          "text": "Dars boshlanishidan 5 daqiqa oldin havolalar va dars oxiridagi eslatma.",
+          "action": "Sozlamalarni ochish"
+        }
+      }
+    },
+    "examSuggestions": {
+      "title": "Tasdiqlanadigan nazorat sanalari",
+      "summary": "{count, plural, one {# nazorat sanasini tasdiqlash kerak} other {# nazorat sanasini tasdiqlash kerak}}",
+      "review": "Koʻrib chiqish"
+    }
+  },
+  "timetable": {
+    "title": "Dars jadvali",
+    "days": "Hafta kunlari",
+    "period": "{number}-juftlik",
+    "periodHeader": "Juftlik",
+    "room": "{name}-xona",
+    "now": "Hozir",
+    "cancelled": "Bekor qilingan",
+    "attendanceMissing": "Davomat yoʻq",
+    "noLessons": "Bu kuni dars yoʻq.",
+    "noLessonsWeek": "Bu hafta dars yoʻq.",
+    "fields": {
+      "room": "Xona",
+      "teacher": "Oʻqituvchi",
+      "subject": "Fan",
+      "date": "Sana",
+      "period": "Juftlik"
+    },
+    "attendanceTaken": "Davomat belgilangan",
+    "attendanceTakenAbsent": "Belgilangan · yoʻq: {count}"
+  },
+  "lesson": {
+    "title": "Dars",
+    "missing": "Dars tanlanmagan. Uni «Bugun» sahifasidan yoki jadvaldan oching.",
+    "backToTimetable": "Dars jadvali"
+  },
+  "journal": {
+    "title": "Jurnal",
+    "pick": "Fan va auditoriya",
+    "noOptions": "Jurnal uchun hozircha darslar yoʻq.",
+    "noLessons": "Bu semestrda hozircha darslar yoʻq.",
+    "export": "CSV sifatida yuklash",
+    "student": "Talaba",
+    "absences": "Qoldirilgan",
+    "semesterMark": "Semestr",
+    "noTopic": "Mavzusiz",
+    "notTaken": "Belgilanmagan",
+    "absentMark": "Y",
+    "lateMark": "K",
+    "late": "kech qoldi",
+    "excusedMark": "S",
+    "absent": "yoʻq",
+    "excused": "sababli",
+    "present": "bor",
+    "cellLabel": "{name}, {date}: {state}",
+    "hint": "Yoʻqlikni darsdan keyin 7 kun ichida oʻzgartirish mumkin.",
+    "conflictReloaded": "Bu darsni boshqa kimdir oʻzgartirdi; jurnal qayta yuklandi.",
+    "notSaved": "Saqlanmadi",
+    "keysHint": "Katakchalar orasida strelkalar bilan yuring; probel yoki Enter belgini oʻzgartiradi.",
+    "temporaryMark": "Vaqtinchalik baho",
+    "temporaryMarkFor": "Vaqtinchalik baho: {name}, {date}",
+    "temporaryState": "vaqtinchalik baho {value}",
+    "temporaryMarkHint": "Vaqtinchalik baholar EMIS ga kiritilguncha shu yerda saqlanadi."
+  },
+  "group": {
+    "noGroup": "Siz guruhga rahbarlik qilmaysiz.",
+    "pickGroup": "Guruh",
+    "students": {
+      "title": "Talabalar",
+      "student": "Talaba",
+      "subgroup": "Kichik guruh",
+      "subgroupNotSet": "Belgilanmagan",
+      "subgroupNumber": "{number}-kichik guruh",
+      "absenceRate": "Qoldirish ulushi",
+      "gpa": "GPA (5 dan)",
+      "attention": "Eʼtibor talab qiladi",
+      "headStudent": "Guruh sardori: {name}",
+      "noHeadStudent": "Sardor yoʻq",
+      "count": "{count, plural, one {# talaba} other {# talaba}}",
+      "empty": "Guruhda talabalar yoʻq.",
+      "flaggedCount": "{count, plural, one {# talaba eʼtibor talab qiladi} other {# talaba eʼtibor talab qiladi}}",
+      "noneFlagged": "Hozir hech kim eʼtibor talab qilmaydi.",
+      "notRegistered": "Roʻyxatdan oʻtmagan",
+      "registered": "Roʻyxatdan oʻtgan",
+      "noFlags": "Bu talabada eʼtibor talab qiladigan holat yoʻq.",
+      "openAttendance": "Davomatni ochish",
+      "assignSubgroup": "Kichik guruh belgilash",
+      "flags": {
+        "absences": "Koʻp qoldirgan",
+        "gpa_drop": "GPA pasaygan",
+        "no_subgroup": "Kichik guruh yoʻq"
+      },
+      "flagHints": {
+        "absences": "Qoldirish ulushi chegaradan yuqori.",
+        "gpa_drop": "GPA oldingi semestrdagidan past.",
+        "no_subgroup": "Belgilamaguningizcha ikkala kichik guruhni koʻradi."
+      }
+    },
+    "subgroups": {
+      "title": "Kichik guruhlar",
+      "empty": "Guruhda talabalar yoʻq.",
+      "select": "Tanlash: {name}",
+      "selectAll": "Hammasini tanlash",
+      "selected": "Tanlangan: {count}",
+      "bulk": "Tanlanganlarga belgilash",
+      "assignTo": "{number}-kichik guruh",
+      "clearSubgroup": "Kichik guruhni olib tashlash",
+      "subgroupOf": "Kichik guruh: {name}",
+      "setSubgroup": "{name}: {number}-kichik guruh",
+      "notSet": "Belgilanmagan",
+      "notRegistered": "Roʻyxatdan oʻtmagan",
+      "save": "Saqlash",
+      "saving": "Saqlanmoqda…",
+      "saved": "Kichik guruhlar saqlandi",
+      "unsaved": "Saqlanmagan oʻzgarishlar: {count}",
+      "discard": "Oʻzgarishlarni bekor qilish"
+    },
+    "attendance": {
+      "title": "Guruh davomati",
+      "from": "Dan",
+      "to": "Gacha",
+      "export": "CSV sifatida yuklash",
+      "empty": "Bu davr uchun maʼlumot yoʻq.",
+      "views": {
+        "student": "Talabalar boʻyicha",
+        "subject": "Fanlar boʻyicha",
+        "day": "Kunlar boʻyicha",
+        "lesson": "Darslar boʻyicha"
+      },
+      "columns": {
+        "label": "Nomi",
+        "absences": "Qoldirilgan",
+        "excused": "Sababli",
+        "lessons": "Darslar",
+        "rate": "Qoldirish ulushi",
+        "notTaken": "Belgilanmagan",
+        "actions": "Amallar"
+      },
+      "absencesLine": "Qoldirilgan: {absences} (sababli: {excused})",
+      "rateLine": "Qoldirish ulushi {rate}",
+      "lessonsLine": "Darslar: {lessons}",
+      "notTakenLine": "belgilanmagan: {count}",
+      "excuse": "Sababli"
+    },
+    "excuse": {
+      "title": "Sababli yoʻqliklar",
+      "noAbsences": "Bu darsda hech kim yoʻq edi.",
+      "excused": "Sababli",
+      "unexcused": "Sababsiz",
+      "comment": "Izoh: {name}",
+      "commentPlaceholder": "Izoh, masalan, maʼlumotnoma",
+      "mark": "Sababli deb belgilash",
+      "markFor": "Sababli deb belgilash: {name}",
+      "remove": "Belgini olib tashlash",
+      "marked": "Yoʻqlik sababli deb belgilandi",
+      "removed": "Belgi olib tashlandi"
+    }
+  },
+  "exams": {
+    "title": "Nazoratlar",
+    "noGroups": "Siz hali birorta guruhda dars bermaysiz.",
+    "pickGroup": "Guruh",
+    "groupOption": "{name} (tasdiqlash kerak: {count})",
+    "subjectFilter": "Fan",
+    "allSubjects": "Barcha fanlar",
+    "add": "Nazorat qoʻshish",
+    "empty": "Bu guruh uchun hali nazoratlar yoʻq.",
+    "emptyFiltered": "Bu fan boʻyicha nazoratlar yoʻq.",
+    "weekOf": "Nazorat haftasi: {range}",
+    "room": "{name}-xona",
+    "controls": {
+      "midterm_1": "Oraliq nazorat 1",
+      "midterm_2": "Oraliq nazorat 2",
+      "final": "Yakuniy nazorat (YaN)",
+      "other": "Boshqa"
+    },
+    "kinds": {
+      "midterm": "Oraliq nazorat (ON)",
+      "final": "Yakuniy nazorat (YaN)",
+      "other": "Boshqa"
+    },
+    "status": {
+      "planned": "Rejalashtirilgan",
+      "tentative": "Tasdiqlanmagan",
+      "undated": "Sana belgilanmagan"
+    },
+    "sources": {
+      "teacher": "Oʻqituvchi",
+      "admin": "Maʼmuriyat",
+      "emis": "EMIS",
+      "head_student": "Guruh sardori"
+    },
+    "actions": {
+      "edit": "Tahrirlash",
+      "editFor": "Tahrirlash: {subject}",
+      "confirm": "Tasdiqlash",
+      "confirmFor": "Tasdiqlash: {subject}",
+      "dismiss": "Rad etish",
+      "dismissFor": "Rad etish: {subject}",
+      "cancel": "Nazoratni bekor qilish",
+      "cancelFor": "Nazoratni bekor qilish: {subject}",
+      "setDate": "Sana belgilash",
+      "setDateFor": "Sana belgilash: {subject}"
+    },
+    "suggestions": {
+      "title": "Tasdiqlash uchun taklif etilgan sanalar",
+      "fromEmis": "EMIS darsidan",
+      "fromHeadStudent": "Guruh sardori taklif qilgan",
+      "confirmAsIs": "Shundayligicha tasdiqlash",
+      "confirmAsIsFor": "Shundayligicha tasdiqlash: {subject}",
+      "editConfirm": "Oʻzgartirib tasdiqlash",
+      "editConfirmFor": "Oʻzgartirib tasdiqlash: {subject}",
+      "dismiss": "Rad etish",
+      "dismissFor": "Rad etish: {subject}"
+    },
+    "confirmed": "Sana tasdiqlandi",
+    "dismissed": "Taklif rad etildi",
+    "cancelled": "Nazorat bekor qilindi",
+    "created": "Nazorat qoʻshildi",
+    "saved": "Nazorat saqlandi",
+    "dismissDialog": {
+      "titleSuggestion": "Taklif rad etilsinmi?",
+      "titleCancel": "Nazorat bekor qilinsinmi?",
+      "textSuggestion": "{subject}, {date}. Taklif qayta chiqmaydi.",
+      "textCancel": "{subject}, {date}. Talabalar bu nazoratni boshqa koʻrmaydi.",
+      "confirmSuggestion": "Rad etish",
+      "confirmCancel": "Nazoratni bekor qilish",
+      "keep": "Qoldirish"
+    },
+    "editor": {
+      "titleAdd": "Nazorat qoʻshish",
+      "titleSetDate": "Nazorat sanasini belgilash",
+      "titleEdit": "Nazoratni tahrirlash",
+      "titleConfirm": "Oʻzgartirib tasdiqlash",
+      "group": "Guruh {name}",
+      "save": "Saqlash",
+      "saveConfirm": "Saqlash va tasdiqlash",
+      "saving": "Saqlanmoqda…",
+      "fields": {
+        "subject": "Fan",
+        "audience": "Auditoriya",
+        "kind": "Turi",
+        "control": "Nazorat haftasi",
+        "date": "Sana",
+        "time": "Boshlanish vaqti",
+        "room": "Xona",
+        "title": "Nomi",
+        "note": "Talabalar uchun izoh"
+      },
+      "chooseSubject": "Fanni tanlang",
+      "wholeGroup": "Butun guruh",
+      "subgroup": "{number}-kichik guruh",
+      "noControl": "Nazorat haftasiz",
+      "controlHint": "Nazorat haftasi: {range}",
+      "timeHint": "Ixtiyoriy, Toshkent vaqti.",
+      "roomPlaceholder": "Masalan, 204",
+      "titlePlaceholder": "Masalan, Algebra va funksiyalar",
+      "validation": {
+        "subject": "Fanni tanlang.",
+        "date": "Sanani tanlang.",
+        "time": "Vaqtni SS:DD koʻrinishida kiriting.",
+        "title": "Nom 200 belgidan oshmasligi kerak.",
+        "note": "Izoh 2000 belgidan oshmasligi kerak.",
+        "control": "Turi nazorat haftasiga mos emas."
+      }
+    }
+  },
+  "settings": {
+    "contacts": {
+      "title": "Aloqa",
+      "description": "Talabalaringizga «Oʻqituvchilarim» boʻlimida koʻrinadi."
+    },
+    "photo": {
+      "title": "Profil surati",
+      "description": "Bu surat oʻquvchilaringizga «Mening oʻqituvchilarim» boʻlimida koʻrinadi. JPEG yoki PNG, 5 MB gacha."
+    },
+    "title": "Sozlamalar",
+    "general": {
+      "title": "Til va mavzu",
+      "language": "Til",
+      "theme": "Mavzu",
+      "themes": {
+        "light": "Yorugʻ",
+        "dark": "Qorongʻi",
+        "system": "Tizim"
+      }
+    },
+    "telegram": {
+      "title": "Telegram",
+      "notLinked": "Telegram ulanmagan. Xabarnomalar faqat vebda.",
+      "linked": "Ulangan",
+      "blocked": "Bot bloklangan",
+      "link": "Telegramni ulash",
+      "manage": "Telegram hisoblarini boshqarish"
+    },
+    "notifications": {
+      "title": "Bildirishnomalar"
+    },
+    "workOffs": {
+      "title": "Otrabotkalar",
+      "add": "Shablon qoʻshish",
+      "addTitle": "Yangi shablon",
+      "editTitle": "Shablonni tahrirlash",
+      "text": "Matn",
+      "placeholder": "Oʻquvchi nima qilishi kerak",
+      "editFor": "Shablonni tahrirlash: {text}",
+      "deleteFor": "Shablonni oʻchirish: {text}",
+      "deleteTitle": "Bu shablon oʻchirilsinmi?",
+      "defaultLabel": "Standart otrabotka",
+      "noDefault": "Standarti yoʻq",
+      "empty": "Hozircha shablon yoʻq.",
+      "saved": "Shablon saqlandi",
+      "deleted": "Shablon oʻchirildi"
+    }
+  },
+  "students": {
+    "title": "Talaba qidirish",
+    "search": "Ism boʻyicha qidirish",
+    "noStudents": "Hozircha talabalaringiz yoʻq.",
+    "noResults": "“{query}” boʻyicha hech kim topilmadi.",
+    "count": "{count, plural, one {# talaba} other {# talaba}}",
+    "absences": "{count, plural, one {# dars qoldirgan} other {# dars qoldirgan}}",
+    "profile": "Talaba",
+    "back": "Talaba qidirish",
+    "notFound": "Bu talaba guruhlaringizdan topilmadi.",
+    "attendance": "Davomat",
+    "attendanceSummary": "Davomat belgilangan {lessons} ta darsda {absences} ta qoldirilgan",
+    "marks": "Fanlar boʻyicha baholar",
+    "semester": "Semestr",
+    "noMarks": "Hozircha baholar yoʻq.",
+    "noLessonMarks": "Hozircha dars baholari yoʻq.",
+    "recentLessons": "Oxirgi darslar",
+    "noLessons": "Hozircha darslar yoʻq.",
+    "materials": "Dars materiallari",
+    "absent": "Yoʻq",
+    "excused": "Sababli"
+  },
+  "staffNotebooks": {
+    "attach": "Darsga biriktirish",
+    "attachTitle": "Darsga biriktirish",
+    "loading": "Darslaringiz yuklanmoqda…",
+    "noLessons": "Bu davrda darslaringiz yoʻq.",
+    "period": "{number}-juftlik",
+    "attached": "Darsga qoʻshildi",
+    "openLesson": "Darsni ochish",
+    "done": "Tayyor"
+  },
+  "subjects": {
+    "title": "Fanlar",
+    "description": "Bu semestrda siz oʻqitadigan fanlar, guruhlar va materiallar.",
+    "empty": "Bu semestrda sizda fanlar yoʻq.",
+    "noId": "Roʻyxatdan fanni tanlang.",
+    "notTaught": "Siz bu fanni oʻqitmaysiz.",
+    "back": "Barcha fanlar",
+    "groups": {
+      "heading": "Guruhlar",
+      "divided": "Boʻlingan: {subgroups}-kichik guruh",
+      "openNotebook": "Daftarni ochish",
+      "createNotebook": "Daftar yaratish",
+      "creatingNotebook": "Yaratilmoqda…",
+      "lessons": "Yaqin darslar",
+      "noLessons": "Yaqin haftalarda dars yoʻq.",
+      "period": "{number}-juftlik",
+      "timetable": "Jadvalni ochish",
+      "openGroup": "Talabalar va darslar",
+      "openSubgroup": "{number}-kichik guruh"
+    },
+    "materials": {
+      "heading": "Materiallar",
+      "tier": {
+        "admin": "Maʼmuriyat materiallari",
+        "adminHint": "Maktab bu fanni oʻrganuvchilar uchun belgilagan. Ularni oʻzgartirib boʻlmaydi.",
+        "mine": "Mening fan materiallarim",
+        "mineHint": "Bu fanni oʻqitadigan barcha guruhlaringizga koʻrinadi.",
+        "groups": "Bitta guruh uchun materiallar",
+        "groupsHint": "Faqat shu guruhga (yoki kichik guruhga) koʻrinadi."
+      },
+      "empty": "Hozircha boʻsh.",
+      "emptyAdmin": "Maʼmuriyat material qoʻshmagan.",
+      "emptyGroups": "Bu fan boʻyicha guruhlaringiz yoʻq.",
+      "groupHalf": "{group} · {number}-kichik guruh",
+      "remove": "Oʻchirish: {title}",
+      "kind": {
+        "file": "Fayl",
+        "link": "Havola",
+        "library_item": "Kutubxona kitobi"
+      },
+      "add": {
+        "kind": "Material turi",
+        "headingMine": "Barcha guruhlarim uchun material qoʻshish",
+        "headingGroup": "{group} uchun material qoʻshish",
+        "chooseFile": "Fayl tanlash",
+        "fileChosen": "Fayl: {name}",
+        "urlLabel": "Veb manzil",
+        "searchLabel": "Kutubxonadan qidirish",
+        "searchNone": "Kitob topilmadi.",
+        "pickBook": "Tanlash",
+        "bookChosen": "Kitob: {title}",
+        "titleLabel": "Sarlavha",
+        "submit": "Material qoʻshish"
+      }
+    },
+    "group": {
+      "back": "{subject}",
+      "subgroupTitle": "{group} · {number}-kichik guruh",
+      "students": "Talabalar ({count})",
+      "noStudents": "Bu guruhda talabalar yo‘q.",
+      "subgroupBadge": "{number}-kichik guruh",
+      "timetable": "Darslar",
+      "thisWeek": "Shu hafta",
+      "upcoming": "Kelgusi",
+      "noLessons": "Darslar yo‘q.",
+      "period": "{number}-para",
+      "room": "{room}-xona"
+    },
+    "student": {
+      "back": "Guruhga qaytish",
+      "marks": "Baholar",
+      "average": "O‘rtacha baho",
+      "semesterMark": "semestr bahosi {value}",
+      "noMarks": "Hali baholar yo‘q.",
+      "type": {
+        "lesson": "Dars bahosi",
+        "midterm": "Oraliq nazorat (ON)",
+        "final": "Yakuniy nazorat (YN)"
+      },
+      "homework": "Uy vazifalari",
+      "noHomework": "Bu fan bo‘yicha uy vazifalari yo‘q.",
+      "done": "Bajarildi {when}",
+      "notDone": "Bajarilmagan",
+      "note": "Izoh: {note}",
+      "attendance": "Davomat",
+      "absences": "Qoldirilgan darslar: {count}",
+      "absencesOf": "Qoldirilgan darslar: {total} tadan {count} ta",
+      "excused": "sababli"
+    },
+    "reconcile": {
+      "button": "Barcha dars materiallari daftarda borligini tekshirish",
+      "hint": "Fon rejimida tekshiruvni boshlaydi: fan bloknotlarida yo'q dars materiallarini qo'shadi. Mavjud materiallar o'zgarmaydi.",
+      "running": "Tekshirilmoqda…",
+      "done": "Tekshirildi bloknotlar: {notebooks}. Qo'shildi: {added}, avval bor edi: {present}, keyinroq qayta urinish: {skipped}.",
+      "error": "Tekshiruv yakunlanmadi. Qayta urinib ko'ring."
+    },
+    "lessonSources": {
+      "heading": "Darslardan (EMIS)",
+      "group": "Guruh",
+      "allGroups": "Barcha guruhlar",
+      "empty": "Dars materiallari yoʻq.",
+      "hidden": "Yashirin",
+      "hiddenByRule": "Guruh qoidasi bilan yashirilgan",
+      "file": "{name} ({size})",
+      "openItem": "Ochish: {title}",
+      "hide": "Yashirish: {title}",
+      "show": "Koʻrsatish: {title}",
+      "hideForGroup": "{group} uchun EMIS manbalarini yashirish",
+      "pages": "Sahifalar",
+      "previous": "Oldingi",
+      "next": "Keyingi",
+      "range": "{from}–{to} / {total}"
+    }
+  },
+  "temporaryMarks": {
+    "journalTitle": "Jurnal",
+    "note": "Bu baholar EMISga kiritilgunча vaqtinchalik.",
+    "valueFor": "{name} uchun baho",
+    "setValue": "{name}ga {value} qo'yish",
+    "commentFor": "{name} uchun izoh",
+    "comment": "Izoh (ixtiyoriy)",
+    "save": "Saqlash",
+    "saveFor": "{name} uchun bahoni saqlash",
+    "remove": "O'chirish",
+    "removeFor": "{name} uchun bahoni o'chirish",
+    "saved": "Baho saqlandi",
+    "removed": "Baho o'chirildi",
+    "pendingTitle": "EMISga kiritilishi kutilmoqda",
+    "empty": "EMISga kiritilishi kutilayotgan baholar yo'q.",
+    "period": "{number}-dars"
+  }
+}

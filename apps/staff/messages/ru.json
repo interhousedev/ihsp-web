@@ -1,0 +1,550 @@
+{
+  "app": {
+    "name": "IHT Учителям"
+  },
+  "nav": {
+    "today": "Сегодня",
+    "timetable": "Расписание",
+    "journal": "Журнал",
+    "exams": "Контроли",
+    "myGroup": "Моя группа",
+    "students": "Студенты",
+    "subgroups": "Подгруппы",
+    "groupAttendance": "Посещаемость",
+    "notifications": "Уведомления",
+    "settings": "Настройки",
+    "groupHome": "Главная",
+    "groupTeaching": "Преподавание",
+    "groupMyGroup": "Моя группа",
+    "groupInbox": "Входящие",
+    "groupSettings": "Аккаунт",
+    "studentSearch": "Поиск студента",
+    "notebooks": "Блокноты",
+    "mail": "Почта",
+    "subjects": "Предметы",
+    "certificates": "Сертификаты",
+    "temporaryMarks": "Ожидают EMIS"
+  },
+  "audience": {
+    "subgroup": "{group} · подгруппа {number}"
+  },
+  "today": {
+    "title": "Сегодня",
+    "now": {
+      "title": "Занятие",
+      "titleNow": "Сейчас",
+      "titleNext": "Следующее занятие",
+      "none": "Сегодня больше нет занятий.",
+      "running": "Идёт",
+      "cancelled": "Отменено",
+      "room": "Кабинет {name}",
+      "attendance": "Посещаемость",
+      "homework": "Домашнее задание",
+      "addMaterial": "Добавить материал"
+    },
+    "lessons": {
+      "title": "Занятия сегодня",
+      "empty": "Сегодня у вас нет занятий.",
+      "cancelled": "Отменено",
+      "changed": "Изменено",
+      "attendanceMissing": "Нет посещаемости",
+      "homeworkMissing": "Нет домашнего задания"
+    },
+    "attention": {
+      "title": "Требует внимания",
+      "none": "Посещаемость за последние 7 дней отмечена.",
+      "period": "{number}-я пара",
+      "take": "Отметить посещаемость"
+    },
+    "getStarted": {
+      "title": "С чего начать",
+      "hide": "Скрыть",
+      "dismissStep": "Скрыть шаг: {step}",
+      "steps": {
+        "telegram": {
+          "title": "Подключите Telegram",
+          "text": "Получайте ссылки на занятие и напоминание в конце занятия в боте.",
+          "action": "Подключить Telegram"
+        },
+        "notifications": {
+          "title": "Проверьте уведомления",
+          "text": "Ссылки на занятие за 5 минут до начала и напоминание в конце занятия.",
+          "action": "Открыть настройки"
+        }
+      }
+    },
+    "examSuggestions": {
+      "title": "Даты контролей для подтверждения",
+      "summary": "{count, plural, one {# дату контроля нужно подтвердить} few {# даты контролей нужно подтвердить} many {# дат контролей нужно подтвердить} other {# даты контролей нужно подтвердить}}",
+      "review": "Посмотреть"
+    }
+  },
+  "timetable": {
+    "title": "Расписание",
+    "days": "Дни недели",
+    "period": "{number}-я пара",
+    "periodHeader": "Пара",
+    "room": "Кабинет {name}",
+    "now": "Сейчас",
+    "cancelled": "Отменено",
+    "attendanceMissing": "Нет посещаемости",
+    "noLessons": "В этот день занятий нет.",
+    "noLessonsWeek": "На этой неделе занятий нет.",
+    "fields": {
+      "room": "Кабинет",
+      "teacher": "Преподаватель",
+      "subject": "Предмет",
+      "date": "Дата",
+      "period": "Пара"
+    },
+    "attendanceTaken": "Посещаемость отмечена",
+    "attendanceTakenAbsent": "Отмечено · отсутствуют: {count}"
+  },
+  "lesson": {
+    "title": "Занятие",
+    "missing": "Занятие не выбрано. Откройте его на странице «Сегодня» или в расписании.",
+    "backToTimetable": "Расписание"
+  },
+  "journal": {
+    "title": "Журнал",
+    "pick": "Предмет и аудитория",
+    "noOptions": "Для журнала пока нет занятий.",
+    "noLessons": "В этом семестре пока нет занятий.",
+    "export": "Экспорт в CSV",
+    "student": "Студент",
+    "absences": "Пропуски",
+    "semesterMark": "Семестр",
+    "noTopic": "Без темы",
+    "notTaken": "Не отмечено",
+    "absentMark": "Н",
+    "lateMark": "О",
+    "late": "опоздал",
+    "excusedMark": "У",
+    "absent": "отсутствует",
+    "excused": "уважительная причина",
+    "present": "присутствует",
+    "cellLabel": "{name}, {date}: {state}",
+    "hint": "Пропуски можно менять в течение 7 дней после занятия.",
+    "conflictReloaded": "Кто-то другой изменил это занятие; журнал перезагружен.",
+    "notSaved": "Не сохранено",
+    "keysHint": "Стрелки перемещают по ячейкам; пробел или Enter меняет отметку.",
+    "temporaryMark": "Временная оценка",
+    "temporaryMarkFor": "Временная оценка: {name}, {date}",
+    "temporaryState": "временная оценка {value}",
+    "temporaryMarkHint": "Временные оценки хранятся здесь, пока вы не внесёте их в EMIS."
+  },
+  "group": {
+    "noGroup": "Вы не курируете группу.",
+    "pickGroup": "Группа",
+    "students": {
+      "title": "Студенты",
+      "student": "Студент",
+      "subgroup": "Подгруппа",
+      "subgroupNotSet": "Не задана",
+      "subgroupNumber": "Подгруппа {number}",
+      "absenceRate": "Доля пропусков",
+      "gpa": "GPA (из 5)",
+      "attention": "Требует внимания",
+      "headStudent": "Староста: {name}",
+      "noHeadStudent": "Старосты нет",
+      "count": "{count, plural, one {# студент} few {# студента} many {# студентов} other {# студента}}",
+      "empty": "В группе нет студентов.",
+      "flaggedCount": "{count, plural, one {# студент требует внимания} few {# студента требуют внимания} many {# студентов требуют внимания} other {# студента требуют внимания}}",
+      "noneFlagged": "Сейчас никто не требует внимания.",
+      "notRegistered": "Не зарегистрирован",
+      "registered": "Зарегистрирован",
+      "noFlags": "У этого студента нет причин для беспокойства.",
+      "openAttendance": "Открыть посещаемость",
+      "assignSubgroup": "Назначить подгруппу",
+      "flags": {
+        "absences": "Много пропусков",
+        "gpa_drop": "Снижение GPA",
+        "no_subgroup": "Нет подгруппы"
+      },
+      "flagHints": {
+        "absences": "Доля пропусков выше порога.",
+        "gpa_drop": "GPA ниже, чем в прошлом семестре.",
+        "no_subgroup": "Видит обе подгруппы, пока вы не назначите."
+      }
+    },
+    "subgroups": {
+      "title": "Подгруппы",
+      "empty": "В группе нет студентов.",
+      "select": "Выбрать: {name}",
+      "selectAll": "Выбрать всех",
+      "selected": "Выбрано: {count}",
+      "bulk": "Назначить выбранным",
+      "assignTo": "Подгруппа {number}",
+      "clearSubgroup": "Снять подгруппу",
+      "subgroupOf": "Подгруппа: {name}",
+      "setSubgroup": "{name}: подгруппа {number}",
+      "notSet": "Не задана",
+      "notRegistered": "Не зарегистрирован",
+      "save": "Сохранить",
+      "saving": "Сохраняем…",
+      "saved": "Подгруппы сохранены",
+      "unsaved": "Несохранённых изменений: {count}",
+      "discard": "Отменить изменения"
+    },
+    "attendance": {
+      "title": "Посещаемость группы",
+      "from": "С",
+      "to": "По",
+      "export": "Экспорт в CSV",
+      "empty": "За этот период данных нет.",
+      "views": {
+        "student": "По студентам",
+        "subject": "По предметам",
+        "day": "По дням",
+        "lesson": "По занятиям"
+      },
+      "columns": {
+        "label": "Название",
+        "absences": "Пропуски",
+        "excused": "Уважительные",
+        "lessons": "Занятия",
+        "rate": "Доля пропусков",
+        "notTaken": "Не отмечено",
+        "actions": "Действия"
+      },
+      "absencesLine": "Пропусков: {absences} (уважительных: {excused})",
+      "rateLine": "Доля пропусков {rate}",
+      "lessonsLine": "Занятий: {lessons}",
+      "notTakenLine": "без отметки: {count}",
+      "excuse": "Уважительная"
+    },
+    "excuse": {
+      "title": "Уважительные пропуски",
+      "noAbsences": "На этом занятии никого не было.",
+      "excused": "Уважительный",
+      "unexcused": "Неуважительный",
+      "comment": "Комментарий: {name}",
+      "commentPlaceholder": "Комментарий, например справка",
+      "mark": "Уважительный",
+      "markFor": "Отметить уважительным: {name}",
+      "remove": "Снять отметку",
+      "marked": "Пропуск отмечен уважительным",
+      "removed": "Отметка снята"
+    }
+  },
+  "exams": {
+    "title": "Контроли",
+    "noGroups": "Вы пока не ведёте занятия ни в одной группе.",
+    "pickGroup": "Группа",
+    "groupOption": "{name} (подтвердить: {count})",
+    "subjectFilter": "Предмет",
+    "allSubjects": "Все предметы",
+    "add": "Добавить контроль",
+    "empty": "Для этой группы контролей пока нет.",
+    "emptyFiltered": "По этому предмету контролей нет.",
+    "weekOf": "Неделя контроля: {range}",
+    "room": "Кабинет {name}",
+    "controls": {
+      "midterm_1": "Промежуточный контроль 1",
+      "midterm_2": "Промежуточный контроль 2",
+      "final": "Итоговый контроль (ИК)",
+      "other": "Другое"
+    },
+    "kinds": {
+      "midterm": "Промежуточный контроль (ПК)",
+      "final": "Итоговый контроль (ИК)",
+      "other": "Другое"
+    },
+    "status": {
+      "planned": "Запланирован",
+      "tentative": "Не подтверждено",
+      "undated": "Дата не назначена"
+    },
+    "sources": {
+      "teacher": "Преподаватель",
+      "admin": "Администрация",
+      "emis": "EMIS",
+      "head_student": "Староста"
+    },
+    "actions": {
+      "edit": "Изменить",
+      "editFor": "Изменить: {subject}",
+      "confirm": "Подтвердить",
+      "confirmFor": "Подтвердить: {subject}",
+      "dismiss": "Отклонить",
+      "dismissFor": "Отклонить: {subject}",
+      "cancel": "Отменить контроль",
+      "cancelFor": "Отменить контроль: {subject}",
+      "setDate": "Назначить дату",
+      "setDateFor": "Назначить дату: {subject}"
+    },
+    "suggestions": {
+      "title": "Предложенные даты для подтверждения",
+      "fromEmis": "Из занятия EMIS",
+      "fromHeadStudent": "Предложил староста",
+      "confirmAsIs": "Подтвердить как есть",
+      "confirmAsIsFor": "Подтвердить как есть: {subject}",
+      "editConfirm": "Изменить и подтвердить",
+      "editConfirmFor": "Изменить и подтвердить: {subject}",
+      "dismiss": "Отклонить",
+      "dismissFor": "Отклонить: {subject}"
+    },
+    "confirmed": "Дата подтверждена",
+    "dismissed": "Предложение отклонено",
+    "cancelled": "Контроль отменён",
+    "created": "Контроль добавлен",
+    "saved": "Контроль сохранён",
+    "dismissDialog": {
+      "titleSuggestion": "Отклонить предложение?",
+      "titleCancel": "Отменить контроль?",
+      "textSuggestion": "{subject}, {date}. Предложение больше не появится.",
+      "textCancel": "{subject}, {date}. Студенты больше не увидят этот контроль.",
+      "confirmSuggestion": "Отклонить",
+      "confirmCancel": "Отменить контроль",
+      "keep": "Оставить"
+    },
+    "editor": {
+      "titleAdd": "Добавить контроль",
+      "titleSetDate": "Назначить дату контроля",
+      "titleEdit": "Изменить контроль",
+      "titleConfirm": "Изменить и подтвердить",
+      "group": "Группа {name}",
+      "save": "Сохранить",
+      "saveConfirm": "Сохранить и подтвердить",
+      "saving": "Сохранение…",
+      "fields": {
+        "subject": "Предмет",
+        "audience": "Аудитория",
+        "kind": "Вид",
+        "control": "Неделя контроля",
+        "date": "Дата",
+        "time": "Начало",
+        "room": "Кабинет",
+        "title": "Название",
+        "note": "Заметка для студентов"
+      },
+      "chooseSubject": "Выберите предмет",
+      "wholeGroup": "Вся группа",
+      "subgroup": "Подгруппа {number}",
+      "noControl": "Без недели контроля",
+      "controlHint": "Неделя контроля: {range}",
+      "timeHint": "Необязательно, время Ташкента.",
+      "roomPlaceholder": "Например, 204",
+      "titlePlaceholder": "Например, Алгебра и функции",
+      "validation": {
+        "subject": "Выберите предмет.",
+        "date": "Выберите дату.",
+        "time": "Введите время как ЧЧ:ММ.",
+        "title": "Название — не больше 200 символов.",
+        "note": "Заметка — не больше 2000 символов.",
+        "control": "Вид не подходит к неделе контроля."
+      }
+    }
+  },
+  "settings": {
+    "contacts": {
+      "title": "Контакты",
+      "description": "Показываются вашим студентам в разделе «Мои преподаватели»."
+    },
+    "photo": {
+      "title": "Фото профиля",
+      "description": "Его видят ваши ученики в разделе «Мои учителя». JPEG или PNG, до 5 МБ."
+    },
+    "title": "Настройки",
+    "general": {
+      "title": "Язык и тема",
+      "language": "Язык",
+      "theme": "Тема",
+      "themes": {
+        "light": "Светлая",
+        "dark": "Тёмная",
+        "system": "Системная"
+      }
+    },
+    "telegram": {
+      "title": "Telegram",
+      "notLinked": "Telegram не подключён. Уведомления только в вебе.",
+      "linked": "Подключён",
+      "blocked": "Бот заблокирован",
+      "link": "Подключить Telegram",
+      "manage": "Управлять аккаунтами Telegram"
+    },
+    "notifications": {
+      "title": "Уведомления"
+    },
+    "workOffs": {
+      "title": "Отработки",
+      "add": "Добавить шаблон",
+      "addTitle": "Новый шаблон",
+      "editTitle": "Изменить шаблон",
+      "text": "Текст",
+      "placeholder": "Что должен сделать ученик",
+      "editFor": "Изменить шаблон: {text}",
+      "deleteFor": "Удалить шаблон: {text}",
+      "deleteTitle": "Удалить этот шаблон?",
+      "defaultLabel": "Отработка по умолчанию",
+      "noDefault": "Без отработки по умолчанию",
+      "empty": "Шаблонов пока нет.",
+      "saved": "Шаблон сохранён",
+      "deleted": "Шаблон удалён"
+    }
+  },
+  "students": {
+    "title": "Поиск студента",
+    "search": "Поиск по имени",
+    "noStudents": "У вас пока нет студентов.",
+    "noResults": "По запросу «{query}» никого нет.",
+    "count": "{count, plural, one {# студент} few {# студента} many {# студентов} other {# студента}}",
+    "absences": "{count, plural, one {# пропуск} few {# пропуска} many {# пропусков} other {# пропуска}}",
+    "profile": "Студент",
+    "back": "Поиск студента",
+    "notFound": "Этот студент не найден среди ваших групп.",
+    "attendance": "Посещаемость",
+    "attendanceSummary": "{absences, plural, one {# пропуск} few {# пропуска} many {# пропусков} other {# пропуска}} за {lessons, plural, one {# занятие с отмеченной посещаемостью} few {# занятия с отмеченной посещаемостью} many {# занятий с отмеченной посещаемостью} other {# занятия с отмеченной посещаемостью}}",
+    "marks": "Оценки по предметам",
+    "semester": "Семестр",
+    "noMarks": "Оценок пока нет.",
+    "noLessonMarks": "Оценок за занятия пока нет.",
+    "recentLessons": "Последние занятия",
+    "noLessons": "Занятий пока нет.",
+    "materials": "Материалы занятия",
+    "absent": "Отсутствовал(а)",
+    "excused": "Уважительная"
+  },
+  "staffNotebooks": {
+    "attach": "Прикрепить к уроку",
+    "attachTitle": "Прикрепить к уроку",
+    "loading": "Загружаем ваши уроки…",
+    "noLessons": "В этом периоде у вас нет уроков.",
+    "period": "Пара {number}",
+    "attached": "Добавлено к уроку",
+    "openLesson": "Открыть урок",
+    "done": "Готово"
+  },
+  "subjects": {
+    "title": "Предметы",
+    "description": "Предметы, которые вы ведёте в этом семестре, с группами и материалами.",
+    "empty": "В этом семестре у вас нет предметов.",
+    "noId": "Выберите предмет из списка.",
+    "notTaught": "Вы не ведёте этот предмет.",
+    "back": "Все предметы",
+    "groups": {
+      "heading": "Группы",
+      "divided": "Деление: подгруппа {subgroups}",
+      "openNotebook": "Открыть блокнот",
+      "createNotebook": "Создать блокнот",
+      "creatingNotebook": "Создаём…",
+      "lessons": "Ближайшие уроки",
+      "noLessons": "В ближайшие недели уроков нет.",
+      "period": "пара {number}",
+      "timetable": "Открыть расписание",
+      "openGroup": "Студенты и уроки",
+      "openSubgroup": "Подгруппа {number}"
+    },
+    "materials": {
+      "heading": "Материалы",
+      "tier": {
+        "admin": "Материалы администрации",
+        "adminHint": "Заданы школой для всех, кто изучает предмет. Изменить их нельзя.",
+        "mine": "Мои материалы по предмету",
+        "mineHint": "Доступны всем группам, у которых вы ведёте этот предмет.",
+        "groups": "Материалы для одной группы",
+        "groupsHint": "Доступны только этой группе (или подгруппе)."
+      },
+      "empty": "Здесь пока пусто.",
+      "emptyAdmin": "Администрация не добавила материалы.",
+      "emptyGroups": "У вас нет групп по этому предмету.",
+      "groupHalf": "{group} · подгруппа {number}",
+      "remove": "Удалить: {title}",
+      "kind": {
+        "file": "Файл",
+        "link": "Ссылка",
+        "library_item": "Книга библиотеки"
+      },
+      "add": {
+        "kind": "Тип материала",
+        "headingMine": "Добавить материал для всех моих групп",
+        "headingGroup": "Добавить материал для {group}",
+        "chooseFile": "Выбрать файл",
+        "fileChosen": "Файл: {name}",
+        "urlLabel": "Веб-адрес",
+        "searchLabel": "Поиск в библиотеке",
+        "searchNone": "Книги не найдены.",
+        "pickBook": "Выбрать",
+        "bookChosen": "Книга: {title}",
+        "titleLabel": "Название",
+        "submit": "Добавить материал"
+      }
+    },
+    "group": {
+      "back": "{subject}",
+      "subgroupTitle": "{group} · подгруппа {number}",
+      "students": "Студенты ({count})",
+      "noStudents": "В этой группе нет студентов.",
+      "subgroupBadge": "подгруппа {number}",
+      "timetable": "Уроки",
+      "thisWeek": "На этой неделе",
+      "upcoming": "Предстоящие",
+      "noLessons": "Уроков нет.",
+      "period": "{number} пара",
+      "room": "кабинет {room}"
+    },
+    "student": {
+      "back": "Назад к группе",
+      "marks": "Оценки",
+      "average": "Средний балл",
+      "semesterMark": "оценка за семестр {value}",
+      "noMarks": "Оценок пока нет.",
+      "type": {
+        "lesson": "Оценка за урок",
+        "midterm": "Промежуточный контроль (ПК)",
+        "final": "Итоговый контроль (ИК)"
+      },
+      "homework": "Домашние задания",
+      "noHomework": "По этому предмету нет домашних заданий.",
+      "done": "Выполнено {when}",
+      "notDone": "Не выполнено",
+      "note": "Заметка: {note}",
+      "attendance": "Посещаемость",
+      "absences": "Пропуски: {count}",
+      "absencesOf": "Пропуски: {count} из {total} уроков",
+      "excused": "по уважительной причине"
+    },
+    "reconcile": {
+      "button": "Проверить, что все материалы уроков есть в блокноте",
+      "hint": "Запускает фоновую проверку: добавляет материалы уроков, которых нет в блокнотах предмета. Уже имеющиеся материалы не меняются.",
+      "running": "Проверяем…",
+      "done": "Проверено блокнотов: {notebooks}. Добавлено: {added}, уже были: {present}, повторим позже: {skipped}.",
+      "error": "Проверка не завершилась. Попробуйте снова."
+    },
+    "lessonSources": {
+      "heading": "Из уроков (EMIS)",
+      "group": "Группа",
+      "allGroups": "Все группы",
+      "empty": "Материалов уроков нет.",
+      "hidden": "Скрыт",
+      "hiddenByRule": "Скрыт правилом группы",
+      "file": "{name} ({size})",
+      "openItem": "Открыть: {title}",
+      "hide": "Скрыть: {title}",
+      "show": "Показать: {title}",
+      "hideForGroup": "Скрыть источники EMIS для {group}",
+      "pages": "Страницы",
+      "previous": "Назад",
+      "next": "Далее",
+      "range": "{from}–{to} из {total}"
+    }
+  },
+  "temporaryMarks": {
+    "journalTitle": "Журнал",
+    "note": "Эти оценки временные, пока вы не внесёте их в EMIS.",
+    "valueFor": "Оценка для {name}",
+    "setValue": "Поставить {name} {value}",
+    "commentFor": "Комментарий для {name}",
+    "comment": "Комментарий (необязательно)",
+    "save": "Сохранить",
+    "saveFor": "Сохранить оценку для {name}",
+    "remove": "Удалить",
+    "removeFor": "Удалить оценку для {name}",
+    "saved": "Оценка сохранена",
+    "removed": "Оценка удалена",
+    "pendingTitle": "Ожидают внесения в EMIS",
+    "empty": "Нет оценок, ожидающих внесения в EMIS.",
+    "period": "Урок {number}"
+  }
+}
