@@ -1,0 +1,65 @@
+{
+  "share": {
+    "brand": "IHT shares",
+    "loading": "Loading…",
+    "sharedBy": "Shared by {name}",
+    "openApp": "Open my.iht",
+    "notFound": {
+      "title": "Link not found",
+      "description": "This link does not exist or has been removed."
+    },
+    "gone": {
+      "title": "This link was removed",
+      "description": "The person who shared it has revoked the link."
+    },
+    "chat": {
+      "publicBanner": "Shared publicly",
+      "empty": "There are no messages in this chat.",
+      "messages": "Messages",
+      "assistant": "Assistant"
+    },
+    "flashcards": {
+      "publicBanner": "Shared publicly",
+      "count": "{count, plural, one {# card} other {# cards}}",
+      "study": "Study",
+      "copy": "Copy to my decks",
+      "copySignIn": "Copy to my decks (sign in)",
+      "empty": "This set has no cards.",
+      "cardsLabel": "Cards",
+      "cardN": "Card {n}",
+      "front": "Front",
+      "back": "Back",
+      "studyAgain": "Study again",
+      "backToList": "Back to the cards"
+    },
+    "report": {
+      "open": "Report this link",
+      "title": "Report this link",
+      "reason": "Reason",
+      "reasonPlaceholder": "Choose a reason",
+      "reasons": {
+        "phishing": "Phishing or fake",
+        "malware": "Malware or virus",
+        "personal_data": "Personal data",
+        "offensive": "Offensive content",
+        "other": "Other"
+      },
+      "comment": "Comment (optional)",
+      "cancel": "Cancel",
+      "submit": "Send report",
+      "sending": "Sending…",
+      "success": "Thank you. Administration will look at this link.",
+      "failed": "We could not send the report. Try again later."
+    },
+    "visualization": {
+      "title": "Visualization",
+      "logoAlt": "my.iht",
+      "share": "Share",
+      "copied": "Link copied",
+      "copyFailed": "Could not copy the link",
+      "expiredTitle": "This link has expired",
+      "expiredDescription": "Visualization links work for a limited time. Ask for a new one in the bot.",
+      "openApp": "Open my.iht"
+    }
+  }
+}
