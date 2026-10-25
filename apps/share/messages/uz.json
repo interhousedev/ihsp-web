@@ -1,0 +1,65 @@
+{
+  "share": {
+    "brand": "IHT — havolalar",
+    "loading": "Yuklanmoqda…",
+    "sharedBy": "Ulashgan: {name}",
+    "openApp": "my.iht ni ochish",
+    "notFound": {
+      "title": "Havola topilmadi",
+      "description": "Bunday havola yoʻq yoki oʻchirilgan."
+    },
+    "gone": {
+      "title": "Havola oʻchirilgan",
+      "description": "Muallif bu havolani bekor qilgan."
+    },
+    "chat": {
+      "publicBanner": "Havola orqali ochiq",
+      "empty": "Bu chatda xabarlar yoʻq.",
+      "messages": "Xabarlar",
+      "assistant": "Yordamchi"
+    },
+    "flashcards": {
+      "publicBanner": "Havola orqali ochiq",
+      "count": "{count, plural, one {# ta kartochka} other {# ta kartochka}}",
+      "study": "Oʻrganish",
+      "copy": "Kollodalarimga nusxalash",
+      "copySignIn": "Kollodalarimga nusxalash (kirish kerak)",
+      "empty": "Bu toʻplamda kartochkalar yoʻq.",
+      "cardsLabel": "Kartochkalar",
+      "cardN": "{n}-kartochka",
+      "front": "Old tomoni",
+      "back": "Orqa tomoni",
+      "studyAgain": "Yana oʻrganish",
+      "backToList": "Kartochkalarga qaytish"
+    },
+    "report": {
+      "open": "Havola ustidan shikoyat",
+      "title": "Havola ustidan shikoyat",
+      "reason": "Sabab",
+      "reasonPlaceholder": "Sababni tanlang",
+      "reasons": {
+        "phishing": "Fishing yoki soxta",
+        "malware": "Zararli dastur",
+        "personal_data": "Shaxsiy maʼlumotlar",
+        "offensive": "Haqoratli mazmun",
+        "other": "Boshqa"
+      },
+      "comment": "Izoh (ixtiyoriy)",
+      "cancel": "Bekor qilish",
+      "submit": "Shikoyat yuborish",
+      "sending": "Yuborilmoqda…",
+      "success": "Rahmat. Maʼmuriyat bu havolani koʻrib chiqadi.",
+      "failed": "Shikoyatni yuborib boʻlmadi. Keyinroq urinib koʻring."
+    },
+    "visualization": {
+      "title": "Vizualizatsiya",
+      "logoAlt": "my.iht",
+      "share": "Ulashish",
+      "copied": "Havola nusxalandi",
+      "copyFailed": "Havolani nusxalab bo‘lmadi",
+      "expiredTitle": "Havola muddati tugagan",
+      "expiredDescription": "Vizualizatsiya havolalari cheklangan vaqt ishlaydi. Botdan yangisini so‘rang.",
+      "openApp": "my.iht ni ochish"
+    }
+  }
+}
