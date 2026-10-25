@@ -1,0 +1,5 @@
+{
+  "extends": "../tsconfig/library.json",
+  "include": ["src/**/*"],
+  "exclude": ["src/contract-check.ts", "src/contract-check-reverse.ts", "src/generated/**"]
+}
