@@ -1,0 +1,46 @@
+# gitleaks configuration for the directory scan (scripts/security_scan.sh passes --config in both modes).
+# Extends the default rules; the allowlists below cover paths that are not source code or are not secrets.
+# Commit-based findings are accepted in .gitleaksignore instead.
+
+[extend]
+useDefault = true
+
+# Installed packages: third-party code, never committed.
+[[allowlists]]
+description = "node_modules: installed third-party packages (bun.lock covers them)"
+paths = ['''(^|/)node_modules/''']
+
+# Next.js static export output of each app (git-ignored, rebuilt from source).
+[[allowlists]]
+description = "apps/*/out: static export output (build artifact, git-ignored)"
+paths = ['''(^|/)apps/[^/]+/out/''']
+
+# Next.js dev and build caches, source maps and manifests (git-ignored; Sentry and Turbopack ids look like keys).
+[[allowlists]]
+description = "apps/*/.next: Next.js build and dev cache (build artifact, git-ignored)"
+paths = ['''(^|/)\.next/''']
+
+# Local scanner output and e2e reports (git-ignored).
+[[allowlists]]
+description = "reports: scanner output and test reports (git-ignored)"
+paths = ['''(^|/)reports/''', '''(^|/)e2e/\.report/''']
+
+# Vendored PDF.js build: minified bundles and WASM glue with random-looking constants.
+[[allowlists]]
+description = "apps/*/public/pdfjs: vendored PDF.js (third-party, not configuration)"
+paths = ['''(^|/)apps/[^/]+/public/pdfjs/''']
+
+# Vendored H5P player: minified bundle and font/image assets from the H5P project.
+[[allowlists]]
+description = "apps/*/public/h5p-player: vendored H5P player (third-party, not configuration)"
+paths = ['''(^|/)apps/[^/]+/public/h5p-player/''']
+
+# Shared test data: fake tokens and keys used by unit and component tests.
+[[allowlists]]
+description = "fixtures: test fixture data (fake tokens and keys, never used outside tests)"
+paths = ['''(^|/)fixtures/''']
+
+# A public VAPID key used as a unit-test vector for applicationServerKey().
+[[allowlists]]
+description = "push-support.test.ts: public VAPID key test vector (not a secret)"
+paths = ['''(^|/)packages/features-core/src/push/push-support\.test\.ts$''']
