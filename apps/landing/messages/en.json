@@ -1,0 +1,144 @@
+{
+  "landing": {
+    "meta": {
+      "title": "my.iht — Interhouse student platform"
+    },
+    "skip": "Skip to content",
+    "logoAlt": "Interhouse logo",
+    "brand": "Interhouse",
+    "headline": "Making everyday studying at Interhouse more convenient",
+    "lead": "One platform of the Academic Lyceum International House Tashkent for students, teachers, staff and applicants.",
+    "ctaApply": "Want to apply to Interhouse? Ask the my.iht AI to learn more!",
+    "ctaApplyHint": "Opens the Telegram bot in guest mode",
+    "ctaStudent": "Already a student? It's your personal helper: new marks notifications, timetable, homework, AI study notebooks…",
+    "ctaStudentButton": "Open my.iht",
+    "why": {
+      "title": "Why my.iht?",
+      "lead": "Everything you need for a school day in one place, on the phone and in Telegram."
+    },
+    "how": {
+      "title": "How my.iht helps you study"
+    },
+    "benefits": {
+      "marks": {
+        "title": "Marks, ПК and ИК",
+        "text": "A notification as soon as a new mark, Промежуточный контроль or Итоговый контроль result appears."
+      },
+      "timetable": {
+        "title": "Timetable",
+        "text": "Today's lessons, rooms and changes at a glance, Monday to Friday."
+      },
+      "homework": {
+        "title": "Homework",
+        "text": "Tasks from every subject with deadlines, so nothing is forgotten."
+      },
+      "attendance": {
+        "title": "Attendance",
+        "text": "Your absences and work-offs, clear and up to date."
+      },
+      "assistant": {
+        "title": "AI assistant",
+        "text": "Ask about any topic and get an explanation that fits your lessons."
+      },
+      "notebooks": {
+        "title": "Notebooks and Studio",
+        "text": "AI study notebooks from your materials: summaries, quizzes and more."
+      },
+      "flashcards": {
+        "title": "Flashcards",
+        "text": "Make card sets and repeat them right before the test."
+      },
+      "mail": {
+        "title": "Mail",
+        "text": "A student mailbox for messages from the lyceum."
+      },
+      "library": {
+        "title": "Library",
+        "text": "Find and read books from the lyceum library online."
+      },
+      "bot": {
+        "title": "Telegram bot",
+        "text": "Marks, timetable and the assistant right inside Telegram."
+      }
+    },
+    "platforms": {
+      "title": "One platform, several apps",
+      "lead": "Real screens of the apps on a phone.",
+      "open": "Open {name}",
+      "screenAlt": "Screenshot of {name}: {screen}",
+      "sp": {
+        "name": "my.iht",
+        "for": "For students",
+        "features": {
+          "f1": "Home with today's lessons",
+          "f2": "Marks and timetable",
+          "f3": "AI assistant and notebooks"
+        },
+        "screens": {
+          "home": "home screen",
+          "timetable": "timetable",
+          "notebooks": "AI notebooks"
+        }
+      },
+      "staff": {
+        "name": "IHT Учителям",
+        "for": "For teachers and curators",
+        "features": {
+          "f1": "Class journal",
+          "f2": "Attendance and work-offs",
+          "f3": "Homework for groups"
+        },
+        "screens": {
+          "journal": "class journal"
+        }
+      },
+      "lms": {
+        "name": "lms.iht",
+        "for": "Courses",
+        "features": {
+          "f1": "Course catalog",
+          "f2": "Lessons and tests",
+          "f3": "Progress tracking"
+        },
+        "screens": {
+          "course": "course catalog"
+        }
+      },
+      "library": {
+        "name": "library.iht",
+        "for": "Library",
+        "features": {
+          "f1": "Book catalog",
+          "f2": "Online reader",
+          "f3": "Book suggestions"
+        },
+        "screens": {
+          "catalog": "library catalog"
+        }
+      },
+      "bot": {
+        "name": "Telegram bot",
+        "for": "In Telegram",
+        "features": {
+          "f1": "Guest mode for applicants",
+          "f2": "Mark notifications",
+          "f3": "The AI assistant in chat"
+        },
+        "screens": {
+          "assistant": "AI assistant"
+        }
+      }
+    },
+    "footer": {
+      "apps": "Apps",
+      "security": "Security contact",
+      "language": "Language",
+      "rights": "Academic Lyceum International House Tashkent"
+    },
+    "notFound": {
+      "title": "Page not found",
+      "description": "This page does not exist.",
+      "home": "Go to the home page"
+    }
+  }
+}

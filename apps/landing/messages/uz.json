@@ -1,0 +1,144 @@
+{
+  "landing": {
+    "meta": {
+      "title": "my.iht — Interhouse oʻquvchilar platformasi"
+    },
+    "skip": "Asosiy qismga oʻtish",
+    "logoAlt": "Interhouse logotipi",
+    "brand": "Interhouse",
+    "headline": "Interhouse’da har kungi oʻqishni yanada qulay qilamiz",
+    "lead": "International House Tashkent akademik litseyining oʻquvchilar, oʻqituvchilar, xodimlar va abituriyentlar uchun yagona platformasi.",
+    "ctaApply": "Interhouse’ga hujjat topshirmoqchimisiz? Batafsil bilish uchun my.iht sunʼiy intellektidan soʻrang!",
+    "ctaApplyHint": "Telegram botini mehmon rejimida ochadi",
+    "ctaStudent": "Allaqachon oʻqiyapsizmi? Bu sizning shaxsiy yordamchingiz: yangi baholar haqida xabarlar, dars jadvali, uy vazifalari, AI oʻquv daftarlari…",
+    "ctaStudentButton": "my.iht’ni ochish",
+    "why": {
+      "title": "Nega my.iht?",
+      "lead": "Oʻquv kuni uchun kerakli hamma narsa bir joyda: telefonda va Telegramda."
+    },
+    "how": {
+      "title": "my.iht oʻqishga qanday yordam beradi"
+    },
+    "benefits": {
+      "marks": {
+        "title": "Baholar, ПК va ИК",
+        "text": "Yangi baho yoki Промежуточный контроль (ПК) va Итоговый контроль (ИК) natijasi chiqishi bilan xabar."
+      },
+      "timetable": {
+        "title": "Dars jadvali",
+        "text": "Dushanbadan jumagacha bugungi darslar, xonalar va oʻzgarishlar."
+      },
+      "homework": {
+        "title": "Uy vazifalari",
+        "text": "Barcha fanlardan muddatli vazifalar — hech narsa esdan chiqmaydi."
+      },
+      "attendance": {
+        "title": "Davomat",
+        "text": "Qoldirilgan darslar va ularni qoplash — aniq va dolzarb."
+      },
+      "assistant": {
+        "title": "AI yordamchi",
+        "text": "Istalgan mavzu haqida soʻrang va darslaringizga mos tushuntirish oling."
+      },
+      "notebooks": {
+        "title": "Daftarlar va Studio",
+        "text": "Materiallaringizdan AI daftarlar: konspektlar, testlar va boshqalar."
+      },
+      "flashcards": {
+        "title": "Kartochkalar",
+        "text": "Kartochkalar toʻplamini tuzing va nazoratdan oldin takrorlang."
+      },
+      "mail": {
+        "title": "Pochta",
+        "text": "Litseydan xatlar uchun oʻquvchi pochta qutisi."
+      },
+      "library": {
+        "title": "Kutubxona",
+        "text": "Litsey kutubxonasidagi kitoblarni onlayn toping va oʻqing."
+      },
+      "bot": {
+        "title": "Telegram bot",
+        "text": "Baholar, jadval va yordamchi toʻgʻridan-toʻgʻri Telegramda."
+      }
+    },
+    "platforms": {
+      "title": "Bitta platforma, bir nechta ilova",
+      "lead": "Ilovalarning telefondagi haqiqiy ekranlari.",
+      "open": "{name}ni ochish",
+      "screenAlt": "{name} ekrani: {screen}",
+      "sp": {
+        "name": "my.iht",
+        "for": "Oʻquvchilar uchun",
+        "features": {
+          "f1": "Bugungi darslar bilan bosh sahifa",
+          "f2": "Baholar va jadval",
+          "f3": "AI yordamchi va daftarlar"
+        },
+        "screens": {
+          "home": "bosh sahifa",
+          "timetable": "dars jadvali",
+          "notebooks": "AI daftarlar"
+        }
+      },
+      "staff": {
+        "name": "IHT Учителям",
+        "for": "Oʻqituvchilar va kuratorlar uchun",
+        "features": {
+          "f1": "Sinf jurnali",
+          "f2": "Davomat va qoplash",
+          "f3": "Guruhlar uchun uy vazifalari"
+        },
+        "screens": {
+          "journal": "sinf jurnali"
+        }
+      },
+      "lms": {
+        "name": "lms.iht",
+        "for": "Kurslar",
+        "features": {
+          "f1": "Kurslar katalogi",
+          "f2": "Darslar va testlar",
+          "f3": "Natijalarni kuzatish"
+        },
+        "screens": {
+          "course": "kurslar katalogi"
+        }
+      },
+      "library": {
+        "name": "library.iht",
+        "for": "Kutubxona",
+        "features": {
+          "f1": "Kitoblar katalogi",
+          "f2": "Onlayn oʻqish",
+          "f3": "Kitob taklif qilish"
+        },
+        "screens": {
+          "catalog": "kutubxona katalogi"
+        }
+      },
+      "bot": {
+        "name": "Telegram bot",
+        "for": "Telegramda",
+        "features": {
+          "f1": "Abituriyentlar uchun mehmon rejimi",
+          "f2": "Baholar haqida xabarlar",
+          "f3": "Chatdagi AI yordamchi"
+        },
+        "screens": {
+          "assistant": "AI yordamchi"
+        }
+      }
+    },
+    "footer": {
+      "apps": "Ilovalar",
+      "security": "Xavfsizlik boʻyicha aloqa",
+      "language": "Til",
+      "rights": "International House Tashkent akademik litseyi"
+    },
+    "notFound": {
+      "title": "Sahifa topilmadi",
+      "description": "Bunday sahifa mavjud emas.",
+      "home": "Bosh sahifaga"
+    }
+  }
+}
