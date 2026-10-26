@@ -93,7 +93,7 @@
     "openapi-typescript": "^7.9.0",
     "oxfmt": "^0.42.0",
     "oxlint": "^1.57.0",
-    "typescript": "^5.9.0"
+    "typescript": "^7.0.2"
   },
   "overrides": {
     "@openuidev/lang-core": "0.4.0",
