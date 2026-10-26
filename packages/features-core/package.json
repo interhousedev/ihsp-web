@@ -27,7 +27,7 @@
     "@ihsp/i18n": "workspace:*",
     "@ihsp/telegram": "workspace:*",
     "@ihsp/ui": "workspace:*",
-    "@sentry/browser": "10.76.0",
+    "@sentry/browser": "11.8.0",
     "foliate-js": "github:johnfactotum/foliate-js#78914aef4466eb960965702401634c2cb348e9b1",
     "pdfjs-dist": "6.3.289"
   }
