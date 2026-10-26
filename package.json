@@ -30,7 +30,7 @@
     "@dnd-kit/utilities": "^3.2.2",
     "@fontsource-variable/inter": "^5.2.0",
     "@openuidev/lang-core": "0.4.0",
-    "@openuidev/react-lang": "0.4.0",
+    "@openuidev/react-lang": "1.0.1",
     "@tabler/icons-react": "^3.40.0",
     "@tailwindcss/postcss": "^4.2.2",
     "@tanstack/query-sync-storage-persister": "^5.95.2",
