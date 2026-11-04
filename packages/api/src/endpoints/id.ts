@@ -16,6 +16,13 @@ import type {
   Connector,
   ConnectorCreateBody,
   ConnectorCreated,
+  CreateMcpClientBody,
+  McpClientResponse,
+  McpSetupResponse,
+  McpSetupServer,
+  McpSetupService,
+  NewMcpClientResponse,
+  ProvisionedMcpSetupResponse,
   DeleteAccountBody,
   DeleteAccountResponse,
   EmailChangeBody,
@@ -418,3 +425,46 @@ export const deleteConnector = deleteIdMeConnector
 export const postEmisPassword = postIdMeEmisPassword
 export const deleteMe = deleteIdMe
 export const postStepUp = postIdMeStepUp
+
+/** GET /v1/id/me/mcp-setup/{service}?server= — bearer. */
+export function getIdMeMcpSetup(
+  service: McpSetupService,
+  server: McpSetupServer,
+  opts?: RequestOptions,
+): Promise<McpSetupResponse> {
+  return api.get<McpSetupResponse>(`/v1/id/me/mcp-setup/${seg(service)}`, { ...opts, query: { server } })
+}
+export const getIdMeMcpSetupQuery = (service: McpSetupService, server: McpSetupServer) =>
+  queryOptions({
+    queryKey: keys.id.mcpSetup(service, server),
+    queryFn: ({ signal }) => getIdMeMcpSetup(service, server, { signal }),
+  })
+
+/** POST /v1/id/me/mcp-setup/{service}?server= — bearer; pre-creates the service's OAuth client once (idempotent). */
+export function postIdMeMcpSetup(
+  service: McpSetupService,
+  server: McpSetupServer,
+  opts?: RequestOptions,
+): Promise<ProvisionedMcpSetupResponse> {
+  return api.post<ProvisionedMcpSetupResponse>(`/v1/id/me/mcp-setup/${seg(service)}`, undefined, {
+    ...opts,
+    query: { server },
+  })
+}
+
+/** GET /v1/id/me/mcp-clients — bearer. */
+export function getIdMeMcpClients(opts?: RequestOptions): Promise<McpClientResponse[]> {
+  return api.get<McpClientResponse[]>("/v1/id/me/mcp-clients", opts)
+}
+export const getIdMeMcpClientsQuery = () =>
+  queryOptions({ queryKey: keys.id.mcpClients(), queryFn: ({ signal }) => getIdMeMcpClients({ signal }) })
+
+/** POST /v1/id/me/mcp-clients — bearer; the secret in the response is shown once. */
+export function postIdMeMcpClient(body: CreateMcpClientBody, opts?: RequestOptions): Promise<NewMcpClientResponse> {
+  return api.post<NewMcpClientResponse>("/v1/id/me/mcp-clients", body, opts)
+}
+
+/** DELETE /v1/id/me/mcp-clients/{client_id} — bearer; `204`. */
+export function deleteIdMeMcpClient(clientId: string, opts?: RequestOptions): Promise<NoContent> {
+  return api.delete<NoContent>(`/v1/id/me/mcp-clients/${seg(clientId)}`, opts)
+}

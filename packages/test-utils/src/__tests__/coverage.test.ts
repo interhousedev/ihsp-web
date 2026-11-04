@@ -12,9 +12,9 @@ const ENDPOINTS_DIR = join(import.meta.dir, "../../../api/src/endpoints")
 const CALL = /api\.(get|post|put|patch|delete)(?:<[^(]*?>)?\(\s*(["`])([^"`]+)\2/g
 const REQUEST = /method:\s*"(GET|POST|PUT|PATCH|DELETE)",\s*path:\s*(["`])([^"`]+)\2/g
 
-/** `${seg(id)}` and `:id` both become `{}` so a client path and a handler path can be compared. */
+/** `${seg(id)}` and `:id` / `:project_id` all become `{}` so a client path and a handler path can be compared. */
 function normalize(path: string): string {
-  return path.replace(/\$\{[^}]+\}/g, "{}").replace(/:[A-Za-z]+/g, "{}")
+  return path.replace(/\$\{[^}]+\}/g, "{}").replace(/:[A-Za-z_]+/g, "{}")
 }
 
 /** Every `api.<method>(path)` call of the typed endpoint functions of `@ihsp/api`. */

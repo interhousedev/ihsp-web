@@ -143,9 +143,21 @@ export type TurnResult = {
   usage: UsageInfo
 }
 
-export type ChatsParams = PageParams & { assistant?: AssistantKind; q?: string; course_id?: string }
+export type ChatsParams = PageParams & {
+  assistant?: AssistantKind
+  q?: string
+  course_id?: string
+  /** The chats of one project (`GET /v1/ai/chats?project_id=`). */
+  project_id?: string
+}
 /** `tier` picks the model class of a new chat (P2): `fast` (default) or `smart`. */
-export type ChatCreateBody = { assistant: AssistantKind; tier?: "fast" | "smart"; course_id?: string }
+export type ChatCreateBody = {
+  assistant: AssistantKind
+  tier?: "fast" | "smart"
+  course_id?: string
+  /** The new chat appears in this project's Chats tab. */
+  project_id?: string
+}
 export type ChatPatchBody = { title: string }
 /** `command` + `args` is a slash command (`cards`, `quiz`, ...) that the server maps to a prompt or tool; `text` may then be empty. */
 export type ChatMessageBody = {
@@ -159,3 +171,18 @@ export type ToolCallRejectBody = { reason?: string }
 export type MessageFeedbackBody = { rating: "up" | "down"; comment?: string }
 /** The author assistant's budget is read per course (the server checks `edit` on it). */
 export type UsageParams = { assistant?: AssistantKind; course_id?: string }
+
+/** A project: a named group of chats with files and instructions (`/v1/ai/projects`). */
+export type ProjectResponse = {
+  id: string
+  name: string
+  instructions: string
+  created_at: string
+  updated_at: string
+}
+export type ProjectBody = { name: string; instructions?: string }
+/** PATCH: only the fields sent change. */
+export type ProjectPatchBody = { name?: string | null; instructions?: string | null }
+/** A file attached to a project (`/v1/ai/projects/{id}/files`). */
+export type ProjectFileResponse = { file_id: string; name: string; status: string }
+export type AttachFileBody = { file_id: string }

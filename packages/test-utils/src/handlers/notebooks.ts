@@ -528,6 +528,9 @@ function finishAutoRun(notebook: StoredNotebook, labels: LabelsState): void {
 }
 
 export const notebooksHandlers = [
+  http.post(apiUrl("/v1/notebooks/flashcard-workspace"), () =>
+    HttpResponse.json({ notebook_id: nbIds.notebook, sources: [] }),
+  ),
   // The notebook of a subject (get or create); the subject hub opens it.
   http.post(apiUrl("/v1/notebooks/auto/subject/:subjectId"), () => HttpResponse.json(notebookDetail)),
   http.get(apiUrl("/v1/notebooks/auto/subject/:subjectId"), () => HttpResponse.json(notebookDetail)),

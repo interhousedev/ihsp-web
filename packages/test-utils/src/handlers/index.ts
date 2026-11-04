@@ -26,6 +26,7 @@ import { lmsImsccHandlers } from "./lms-imscc"
 import { lmsInteractiveHandlers } from "./lms-interactive"
 import { lmsSettingsHandlers } from "./lms-settings"
 import { marksHandlers } from "./marks"
+import { groupRatingHandlers } from "./group-rating"
 import { notebooksHandlers } from "./notebooks"
 import { notificationsHandlers } from "./notifications"
 import { oauthHandlers } from "./oauth"
@@ -37,6 +38,7 @@ import { presentationPlansHandlers } from "./presentation-plans"
 import { staffSubjectsHandlers } from "./staff-subjects"
 import { subjectMaterialsHandlers } from "./subject-materials"
 import { groupProgressHandlers } from "./group-progress"
+import { myGroupHandlers } from "./my-group"
 import { teachersHandlers } from "./teachers"
 import { webSearchHandlers } from "./web-search"
 import { workOffsMeHandlers } from "./work-offs-me"
@@ -56,6 +58,7 @@ export { certificatesImported, resetCertificatesState, setCertificatesStaffForbi
 export { resetAdminJobs } from "./admin-jobs"
 export { resetAdminKnowledge } from "./admin-knowledge"
 export { resetAdminAiState } from "./admin-ai"
+export { resetAiProjectsState } from "./ai-projects"
 export { aiTurnStream } from "./ai"
 export { resetCreatedFiles, storedObjects } from "./files"
 export {
@@ -93,6 +96,7 @@ export { resetStaffSubjectsState } from "./staff-subjects"
 export { resetWorkOffsStaffState, seedStaffWorkOffs, staffWorkOffsOf } from "./work-offs-staff"
 export { resetSubjectMaterialsState } from "./subject-materials"
 export { resetTeacherContacts, resetTeacherPhotos, teacherPhotoUploads, type TeacherPhotoUpload } from "./teachers"
+export { groupPhotoExports } from "./schedule"
 export { pushSubscriptions, resetPushSubscriptions } from "./push"
 export { currentWebQuota, resetWebSearchState, setWebQuota, spendWebSearch } from "./web-search"
 export { apiUrl, notFound, paginate, problem } from "./utils"
@@ -136,6 +140,7 @@ export {
   subjectMaterialsHandlers,
   teachersHandlers,
   groupProgressHandlers,
+  myGroupHandlers,
   webSearchHandlers,
   workOffsMeHandlers,
   workOffsStaffHandlers,
@@ -167,12 +172,14 @@ export const allHandlers = [
   ...adminKnowledgeHandlers,
   ...teachersHandlers,
   ...groupProgressHandlers,
+  ...myGroupHandlers,
   ...temporaryMarksHandlers,
   ...classworkHandlers,
   ...workOffsMeHandlers,
   ...workOffsStaffHandlers,
   ...adminWorkOffsHandlers,
   ...marksHandlers,
+  ...groupRatingHandlers,
   ...assessmentsHandlers,
   ...filesHandlers,
   ...lessonSourcesHandlers,

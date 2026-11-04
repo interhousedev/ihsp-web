@@ -55,6 +55,7 @@ const {
   resetTeacherContacts,
   resetTeacherPhotos,
   resetAdminAiState,
+  resetAiProjectsState,
   resetWebSearchState,
   resetWorkOffsStaffState,
 } = await import("./handlers")
@@ -88,6 +89,7 @@ afterEach(() => {
   resetNotebooksState()
   resetWebSearchState()
   resetAdminAiState()
+  resetAiProjectsState()
   resetLibraryState()
   resetSubjectMaterialsState()
   resetLessonSourcesState()

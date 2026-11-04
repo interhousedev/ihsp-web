@@ -245,6 +245,7 @@ export const studentItems: StudentItem[] = groupStudents.map((student) => ({
   emis_status: student.registered ? "active" : null,
   registered: student.registered,
   synced_at: student.registered ? "2026-10-07T01:00:00Z" : null,
+  photo_url: null,
 }))
 
 export const importPreview: ImportPreview = {

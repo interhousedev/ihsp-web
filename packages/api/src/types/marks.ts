@@ -124,6 +124,15 @@ export type SyncRunItem = {
 // --- Query parameters and bodies ---
 
 export type SemesterParams = { semester?: number }
+
+/** One student of the head student's group in `GET /v1/me/group/rating` (head student only, otherwise 403). */
+export type GroupRatingRow = {
+  name: string
+  gpa: number | null
+  emis_rating?: number | null
+  rank: number | null
+  is_me: boolean
+}
 export type SyncRunsParams = Pick<PageParams, "cursor" | "limit">
 /** Manual run: one student (`academic.sync_student`) or everyone (`academic.sync_all`). */
 export type SyncRunBody = { user_id?: string }

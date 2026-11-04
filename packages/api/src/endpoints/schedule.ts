@@ -84,6 +84,16 @@ export function getAdminGroup(id: string, opts?: RequestOptions): Promise<GroupD
 export const getAdminGroupQuery = (id: string) =>
   queryOptions({ queryKey: keys.admin.groups.detail(id), queryFn: ({ signal }) => getAdminGroup(id, { signal }) })
 
+/** GET /v1/admin/groups/{id}/photos.zip — admin; the photos of the active students as one ZIP (ADM-PHOTO-2). */
+export function getAdminGroupPhotosZip(id: string, opts?: RequestOptions): Promise<Blob> {
+  return api.request<Blob>({
+    ...opts,
+    method: "GET",
+    path: `/v1/admin/groups/${seg(id)}/photos.zip`,
+    responseType: "blob",
+  })
+}
+
 /** PATCH /v1/admin/groups/{id} — admin. */
 export function patchAdminGroup(id: string, body: GroupPatchBody, opts?: RequestOptions): Promise<GroupDetail> {
   return api.patch<GroupDetail>(`/v1/admin/groups/${seg(id)}`, body, opts)

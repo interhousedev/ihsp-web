@@ -5,6 +5,7 @@ import { keys } from "../keys"
 import { queryOptions, seg, type RequestOptions } from "../query"
 import type { NoContent, Page } from "../types/common"
 import type {
+  AttachFileBody,
   ChatCreateBody,
   ChatDetail,
   ChatItem,
@@ -12,6 +13,10 @@ import type {
   ChatPatchBody,
   ChatsParams,
   MessageFeedbackBody,
+  ProjectBody,
+  ProjectFileResponse,
+  ProjectPatchBody,
+  ProjectResponse,
   ToolCallRejectBody,
   TurnResult,
   UsageInfo,
@@ -142,3 +147,49 @@ export function getAiWebSearch(opts?: RequestOptions): Promise<WebQuota> {
 }
 export const getAiWebSearchQuery = () =>
   queryOptions({ queryKey: keys.ai.webSearch(), queryFn: ({ signal }) => getAiWebSearch({ signal }) })
+
+/** GET /v1/ai/projects — the caller's projects. */
+export function getAiProjects(opts?: RequestOptions): Promise<ProjectResponse[]> {
+  return api.get<ProjectResponse[]>("/v1/ai/projects", opts)
+}
+export const getAiProjectsQuery = () =>
+  queryOptions({ queryKey: keys.ai.projects(), queryFn: ({ signal }) => getAiProjects({ signal }) })
+
+/** POST /v1/ai/projects — create a project. */
+export function postAiProject(body: ProjectBody, opts?: RequestOptions): Promise<ProjectResponse> {
+  return api.post<ProjectResponse>("/v1/ai/projects", body, opts)
+}
+
+/** GET /v1/ai/projects/{id}. */
+export function getAiProject(id: string, opts?: RequestOptions): Promise<ProjectResponse> {
+  return api.get<ProjectResponse>(`/v1/ai/projects/${seg(id)}`, opts)
+}
+export const getAiProjectQuery = (id: string) =>
+  queryOptions({ queryKey: keys.ai.project(id), queryFn: ({ signal }) => getAiProject(id, { signal }) })
+
+/** PATCH /v1/ai/projects/{id} — rename or change the instructions. */
+export function patchAiProject(id: string, body: ProjectPatchBody, opts?: RequestOptions): Promise<ProjectResponse> {
+  return api.patch<ProjectResponse>(`/v1/ai/projects/${seg(id)}`, body, opts)
+}
+
+/** DELETE /v1/ai/projects/{id}; `204`. */
+export function deleteAiProject(id: string, opts?: RequestOptions): Promise<NoContent> {
+  return api.delete<NoContent>(`/v1/ai/projects/${seg(id)}`, opts)
+}
+
+/** GET /v1/ai/projects/{id}/files — the sources of a project. */
+export function getAiProjectFiles(id: string, opts?: RequestOptions): Promise<ProjectFileResponse[]> {
+  return api.get<ProjectFileResponse[]>(`/v1/ai/projects/${seg(id)}/files`, opts)
+}
+export const getAiProjectFilesQuery = (id: string) =>
+  queryOptions({ queryKey: keys.ai.projectFiles(id), queryFn: ({ signal }) => getAiProjectFiles(id, { signal }) })
+
+/** POST /v1/ai/projects/{id}/files — attach one of the caller's ready files; `204`. */
+export function postAiProjectFile(id: string, body: AttachFileBody, opts?: RequestOptions): Promise<NoContent> {
+  return api.post<NoContent>(`/v1/ai/projects/${seg(id)}/files`, body, opts)
+}
+
+/** DELETE /v1/ai/projects/{id}/files/{file_id}; `204`. */
+export function deleteAiProjectFile(id: string, fileId: string, opts?: RequestOptions): Promise<NoContent> {
+  return api.delete<NoContent>(`/v1/ai/projects/${seg(id)}/files/${seg(fileId)}`, opts)
+}

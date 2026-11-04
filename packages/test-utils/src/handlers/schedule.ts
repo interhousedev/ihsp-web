@@ -39,6 +39,12 @@ import {
 import { atTashkent, audienceOf, bellOf, ids, persons, roomRefs, subjectRefs } from "../fixtures/world"
 import { apiUrl, matches, nextId, noContent, notFound, paginate, param, problem, query, readJson } from "./utils"
 
+/** End-of-central-directory record of an empty ZIP archive. */
+const EMPTY_ZIP = [0x50, 0x4b, 0x05, 0x06, ...Array.from({ length: 18 }, () => 0)]
+
+/** Group ids whose photo ZIP was requested, in order. */
+export const groupPhotoExports: string[] = []
+
 function personById(id: string | null | undefined): PersonRef | null {
   if (!id) return null
   return Object.values(persons).find((person) => person.id === id) ?? null
@@ -350,6 +356,14 @@ export const scheduleHandlers = [
       ends_at: atTashkent(date, bell.end),
       topic: body.topic === undefined ? lesson.topic : body.topic,
       is_overridden: true,
+    })
+  }),
+
+  // --- Group photo ZIP (ADM-PHOTO-2): an empty archive; the requested group ids are recorded ---
+  http.get(apiUrl("/v1/admin/groups/:id/photos.zip"), ({ params }) => {
+    groupPhotoExports.push(String(params.id))
+    return new HttpResponse(new Uint8Array(EMPTY_ZIP), {
+      headers: { "Content-Type": "application/zip" },
     })
   }),
 

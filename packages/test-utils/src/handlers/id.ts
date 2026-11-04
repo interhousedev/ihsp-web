@@ -1,4 +1,7 @@
 import type {
+  CreateMcpClientBody,
+  McpSetupServer,
+  McpSetupService,
   ConnectorCreateBody,
   ConsentBody,
   EmailChangeConfirmBody,
@@ -20,6 +23,9 @@ import {
   auditItems,
   connectorToken,
   connectors,
+  mcpClientSecret,
+  mcpClients,
+  mcpSetupFor,
   consentInfo,
   loginInfo,
   loginResultRedirect,
@@ -220,6 +226,49 @@ export const idHandlers = [
     })
   }),
   http.delete(apiUrl("/v1/id/me/connectors/:id"), () => noContent()),
+  // --- MCP setup wizard: vendor steps, and the user's own OAuth clients (the secret is shown once). ---
+  http.get(apiUrl("/v1/id/me/mcp-setup/:service"), ({ params, request }) =>
+    HttpResponse.json(
+      mcpSetupFor(
+        param(params, "service") as McpSetupService,
+        (query(request).get("server") ?? "student") as McpSetupServer,
+      ),
+    ),
+  ),
+  http.post(apiUrl("/v1/id/me/mcp-setup/:service"), ({ params, request }) => {
+    const service = param(params, "service")
+    const server = query(request).get("server") ?? "student"
+    return HttpResponse.json({
+      client: {
+        client_id: `mcp_client_${service}_${server}_01`,
+        name: service,
+        redirect_uris: [],
+        server,
+        service,
+      },
+      client_secret: mcpClientSecret,
+      created: true,
+    })
+  }),
+  http.get(apiUrl("/v1/id/me/mcp-clients"), () => HttpResponse.json(mcpClients)),
+  http.post(apiUrl("/v1/id/me/mcp-clients"), async ({ request }) => {
+    const body = await readJson<CreateMcpClientBody>(request)
+    return HttpResponse.json(
+      {
+        client: {
+          client_id: `mcp_client_${body.service}_${nextId(12)}`,
+          name: body.name ?? body.service,
+          redirect_uris: [body.redirect_uri],
+          server: body.server,
+          service: body.service,
+        },
+        client_secret: mcpClientSecret,
+        token_endpoint_auth_method: "client_secret_post",
+      },
+      { status: 201 },
+    )
+  }),
+  http.delete(apiUrl("/v1/id/me/mcp-clients/:clientId"), () => noContent()),
   http.post(apiUrl("/v1/id/me/emis-password"), () => HttpResponse.json({ emis_status: "active" })),
   http.delete(apiUrl("/v1/id/me"), () => HttpResponse.json({ closes_on: "2026-11-06" }, { status: 202 })),
   http.post(apiUrl("/v1/id/me/step-up"), () => accepted()),

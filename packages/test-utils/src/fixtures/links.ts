@@ -46,7 +46,8 @@ export const linkChatShare: LinkItem = {
   share_mode: "snapshot",
   hits: 5,
   created_at: "2026-10-02T14:00:00Z",
-  expires_at: "2026-11-01T14:00:00Z",
+  // Relative to now: the share must stay active for the revoke tests whatever the date.
+  expires_at: new Date(Date.now() + 30 * 24 * 60 * 60 * 1000).toISOString(),
   revoked_at: null,
   disabled: false,
 }

@@ -5,6 +5,11 @@ import type {
   Connector,
   LoginInfo,
   LoginResult,
+  McpClientResponse,
+  McpSetupResponse,
+  McpSetupServer,
+  McpSetupService,
+  OAuthSettingsResponse,
   ScopeCatalog,
   SessionItem,
   TelegramAccount,
@@ -285,6 +290,85 @@ export const connectors: Connector[] = [
 
 /** Plain-text token returned once by `POST /v1/id/me/connectors`. */
 export const connectorToken = "ihsp_ab12cdef34567890abcdef1234567890"
+
+/** Secret returned once by `POST /v1/id/me/mcp-clients`. */
+export const mcpClientSecret = "mcp-secret-7f3a9c2e1b8d4f60"
+
+const CHAT_REDIRECT = "https://chatgpt.com/connector_platform_oauth_redirect"
+
+const mcpOAuth: OAuthSettingsResponse = {
+  issuer: "https://id.ihsu.uz",
+  discovery_url: "https://id.ihsu.uz/.well-known/openid-configuration",
+  authorization_endpoint: "https://id.ihsu.uz/oauth/auth",
+  token_endpoint: "https://id.ihsu.uz/oauth/token",
+  revocation_endpoint: "https://id.ihsu.uz/oauth/revoke",
+  registration_endpoint: "https://id.ihsu.uz/oauth/register",
+  jwks_uri: "https://id.ihsu.uz/.well-known/jwks.json",
+  protected_resource_metadata_url: "https://mcp.ihsu.uz/.well-known/oauth-protected-resource/mcp/student",
+  resource: "https://mcp.ihsu.uz/mcp/student",
+  audience: "https://mcp.ihsu.uz/mcp/student",
+  scopes: ["schedule:read", "marks:read"],
+  client_scopes: "openid offline_access schedule:read marks:read",
+  code_challenge_method: "S256",
+  grant_types: ["authorization_code", "refresh_token"],
+  response_types: ["code"],
+  token_endpoint_auth_methods: ["client_secret_post", "none"],
+  redirect_uris: [CHAT_REDIRECT],
+  redirect_uri_patterns: ["https://claude.ai/api/mcp/auth_callback/*"],
+  own_client_route: "/v1/id/me/mcp-clients",
+}
+
+/** `GET /v1/id/me/mcp-setup/{service}` for the student server, with the vendor facts as machine codes. */
+export function mcpSetupFor(service: McpSetupService, server: McpSetupServer = "student"): McpSetupResponse {
+  const facts: Record<McpSetupService, Pick<McpSetupResponse, "availability" | "auth_modes" | "notes" | "docs_url">> = {
+    chatgpt: {
+      availability: "plan_gated",
+      auth_modes: ["oauth_dcr", "oauth_client"],
+      notes: ["business_enterprise_edu_full_mcp", "pro_read_fetch_only"],
+      docs_url: "https://help.openai.com/en/articles/12584461-developer-mode-and-mcp-apps-in-chatgpt",
+    },
+    gemini: {
+      availability: "limited",
+      auth_modes: ["oauth_dcr", "oauth_client"],
+      notes: ["gemini_app_us_18_personal_account_keep_activity_on", "gemini_enterprise_admin_sets_up_client_and_pkce"],
+      docs_url: "https://support.google.com/gemini/answer/17209137",
+    },
+    claude: {
+      availability: "limited",
+      auth_modes: ["oauth_dcr", "oauth_client", "static_token"],
+      notes: [
+        "free_plan_one_custom_connector",
+        "team_enterprise_owner_adds_connector",
+        "static_headers_beta_owner_only",
+      ],
+      docs_url: "https://claude.com/docs/connectors/custom/remote-mcp",
+    },
+    custom: {
+      availability: "available",
+      auth_modes: ["oauth_dcr", "oauth_client", "static_token"],
+      notes: ["dcr_needs_allowlisted_redirect_uri"],
+      docs_url: null,
+    },
+  }
+  return {
+    service,
+    server,
+    server_url: `https://mcp.ihsu.uz/mcp/${server}`,
+    ...facts[service],
+    oauth: mcpOAuth,
+    token_route: "/v1/id/me/connectors",
+  }
+}
+
+export const mcpClients: McpClientResponse[] = [
+  {
+    client_id: "mcp_client_chatgpt_01",
+    name: "ChatGPT study",
+    redirect_uris: [CHAT_REDIRECT],
+    server: "student",
+    service: "chatgpt",
+  },
+]
 
 export const activationInfo: ActivationInfo = {
   first_name: persons.kalandarova.first_name,

@@ -14,6 +14,7 @@ import {
 import { authorChat, authorChatDetail, authorTurnApproved } from "../fixtures/course-workspace"
 import { FIXTURE_NOW } from "../fixtures/world"
 import { apiUrl, matches, nextId, noContent, notFound, paginate, param, query, readJson } from "./utils"
+import { addProjectChat, aiProjectsHandlers, projectChatsFor } from "./ai-projects"
 import { spendWebSearch } from "./web-search"
 
 const detailById = [chatDetailPending, chatDetailHomework, chatDetailAdmin, authorChatDetail]
@@ -21,10 +22,13 @@ const detailById = [chatDetailPending, chatDetailHomework, chatDetailAdmin, auth
 const allChats = [...chatItems, authorChat]
 
 export const aiHandlers = [
+  ...aiProjectsHandlers,
   http.get(apiUrl("/v1/ai/chats"), ({ request }) => {
     const assistant = query(request).get("assistant")
     const q = query(request).get("q")
     const courseId = query(request).get("course_id")
+    const projectId = query(request).get("project_id")
+    if (projectId) return HttpResponse.json(paginate(projectChatsFor(projectId), request))
     if (assistant === "lms_author") {
       return HttpResponse.json(
         paginate(
@@ -42,7 +46,7 @@ export const aiHandlers = [
   }),
   http.post(apiUrl("/v1/ai/chats"), async ({ request }) => {
     const body = await readJson<ChatCreateBody>(request)
-    return HttpResponse.json({
+    const chat = {
       id: nextId(10),
       assistant: body.assistant ?? "student",
       title: "New chat",
@@ -50,7 +54,9 @@ export const aiHandlers = [
       pending_approvals: 0,
       course_id: body.course_id ?? null,
       tier: body.tier ?? "fast",
-    })
+    } as const
+    if (body.project_id) addProjectChat(chat, body.project_id)
+    return HttpResponse.json(chat)
   }),
   http.get(apiUrl("/v1/ai/chats/:id"), ({ params }) => {
     const chat = detailById.find((item) => item.id === param(params, "id"))

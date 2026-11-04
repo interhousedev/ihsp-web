@@ -11,7 +11,14 @@ import type { SemesterGrades, SyncRunItem } from "./marks"
 import type { GroupItem, LessonItem, StudentProfile } from "./schedule"
 
 export type Alert = {
-  kind: "emis_reauth" | "no_subgroup" | "files_expiring" | "pending_approvals" | "sync_failed"
+  kind:
+    | "emis_reauth"
+    | "no_subgroup"
+    | "seminar_soon"
+    | "files_expiring"
+    | "pending_approvals"
+    | "sync_failed"
+    | "connect_ai"
   params: Record<string, unknown>
   action_url: string | null
 }

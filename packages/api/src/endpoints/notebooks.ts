@@ -505,6 +505,14 @@ export function postExerciseFeedback(
   )
 }
 
+/** POST /v1/notebooks/flashcard-workspace — the hidden notebook with the sources chosen for AI cards of a set. */
+export function postFlashcardWorkspace(
+  body: { notebook_sources: { notebook_id: string; source_id: string }[]; file_ids: string[] },
+  opts?: RequestOptions,
+): Promise<{ notebook_id: string; sources: SourceItem[] }> {
+  return api.post<{ notebook_id: string; sources: SourceItem[] }>("/v1/notebooks/flashcard-workspace", body, opts)
+}
+
 /** POST /v1/notebooks/{id}/artifacts/{aid}/save-as-source — reports; `201`. */
 export function postArtifactAsSource(id: string, artifactId: string, opts?: RequestOptions): Promise<SourceItem> {
   return api.post<SourceItem>(`/v1/notebooks/${seg(id)}/artifacts/${seg(artifactId)}/save-as-source`, undefined, opts)

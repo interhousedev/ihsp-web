@@ -148,7 +148,13 @@ export type CuratorStudent = GroupStudent & {
 
 // --- Request bodies and query parameters ---
 
-export type HomeworkListParams = { status?: "overdue" | "upcoming" | "later" | "done" }
+export type HomeworkListParams = {
+  status?: "overdue" | "upcoming" | "later" | "done"
+  subject_id?: string
+  /** Keeps the homework due in this range (inclusive), by due date. */
+  from?: string
+  to?: string
+}
 export type HomeworkDoneBody = { done: boolean }
 export type HomeworkNoteBody = { note: string | null }
 export type StudentAttendanceParams = DateRangeParams

@@ -26,6 +26,8 @@ export const keys = {
     telegram: () => ["id", "telegram"] as const,
     activity: (filters?: object) => ["id", "activity", params(filters)] as const,
     connectors: () => ["id", "connectors"] as const,
+    mcpSetup: (service: string, server: string) => ["id", "mcp-setup", service, server] as const,
+    mcpClients: () => ["id", "mcp-clients"] as const,
     security: () => ["id", "security"] as const,
     registrationGroups: () => ["id", "registration", "groups"] as const,
     registrationCues: (groupId: string) => ["id", "registration", "cues", groupId] as const,
@@ -137,6 +139,8 @@ export const keys = {
     today: () => ["me", "today"] as const,
     timetable: (filters?: object) => ["me", "timetable", params(filters)] as const,
     homework: (filters?: object) => ["me", "homework", params(filters)] as const,
+    group: () => ["me", "group"] as const,
+    groupRating: (filters?: object) => ["me", "group-rating", params(filters)] as const,
     workOffs: (filters?: object) => ["me", "work-offs", params(filters)] as const,
     attendance: (filters?: object) => ["me", "attendance", params(filters)] as const,
     subjects: (filters?: object) => ["me", "subjects", params(filters)] as const,
@@ -190,6 +194,9 @@ export const keys = {
         ? (["ai", "usage", assistant ?? null, courseId] as const)
         : (["ai", "usage", assistant ?? null] as const),
     webSearch: () => ["ai", "web-search"] as const,
+    projects: () => ["ai", "projects"] as const,
+    project: (id: string) => ["ai", "projects", id] as const,
+    projectFiles: (id: string) => ["ai", "projects", id, "files"] as const,
   },
   dashboard: {
     layout: () => ["dashboard"] as const,

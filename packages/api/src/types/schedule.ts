@@ -179,6 +179,8 @@ export type StudentItem = {
   emis_status: string | null
   registered: boolean
   synced_at: string | null
+  /** Link to the profile photo, valid for an hour; null when there is none. */
+  photo_url: string | null
 }
 
 export type ImportRow = {

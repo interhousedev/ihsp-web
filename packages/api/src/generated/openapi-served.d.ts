@@ -764,6 +764,26 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/v1/admin/groups/{group_id}/photos.zip": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Export Group Photos
+         * @description Return the group's active students' photos as a ZIP, named by full name.
+         */
+        get: operations["export_group_photos_v1_admin_groups__group_id__photos_zip_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/v1/admin/groups/{group_id}/subgroups": {
         parameters: {
             query?: never;
@@ -1545,7 +1565,7 @@ export interface paths {
         };
         /**
          * List Students
-         * @description Search and filter students; names come from the identity module.
+         * @description Search and filter students; names and photo links come from identity.
          */
         get: operations["list_students_v1_admin_students_get"];
         put?: never;
@@ -2530,6 +2550,7 @@ export interface paths {
          * @description List the caller's chats of one assistant, newest first; `q` searches titles.
          *
          *     `lms_author` chats are listed per course: `course_id` is required for them.
+         *     `project_id` lists the chats of one of the caller's projects.
          */
         get: operations["list_chats_v1_ai_chats_get"];
         put?: never;
@@ -2670,6 +2691,124 @@ export interface paths {
          * @description Reject a pending write; the reason goes back to the assistant.
          */
         post: operations["reject_tool_call_v1_ai_chats__chat_id__tool_calls__call_id__reject_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/ai/projects": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * List Projects
+         * @description The caller's projects, newest first.
+         */
+        get: operations["list_projects_v1_ai_projects_get"];
+        put?: never;
+        /**
+         * Create Project
+         * @description Start a project.
+         */
+        post: operations["create_project_v1_ai_projects_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/ai/projects/{project_id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get Project
+         * @description One of the caller's projects (another student's looks missing).
+         */
+        get: operations["get_project_v1_ai_projects__project_id__get"];
+        put?: never;
+        post?: never;
+        /**
+         * Delete Project
+         * @description Delete the project; its chats stay, outside any project.
+         */
+        delete: operations["delete_project_v1_ai_projects__project_id__delete"];
+        options?: never;
+        head?: never;
+        /**
+         * Patch Project
+         * @description Change the name and/or the instructions.
+         */
+        patch: operations["patch_project_v1_ai_projects__project_id__patch"];
+        trace?: never;
+    };
+    "/v1/ai/projects/{project_id}/files": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * List Project Files
+         * @description The files attached to the project.
+         */
+        get: operations["list_project_files_v1_ai_projects__project_id__files_get"];
+        put?: never;
+        /**
+         * Attach Project File
+         * @description Attach one of the caller's own ready files to the project.
+         */
+        post: operations["attach_project_file_v1_ai_projects__project_id__files_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/ai/projects/{project_id}/files/{file_id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post?: never;
+        /**
+         * Detach Project File
+         * @description Remove a file from the project (the file stays).
+         */
+        delete: operations["detach_project_file_v1_ai_projects__project_id__files__file_id__delete"];
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/ai/transcriptions": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Transcribe
+         * @description Transcribe one recording (audio up to 1 MiB and 120 seconds, not stored).
+         *
+         *     `duration_ms` is the length the client measured; the byte cap bounds the read.
+         */
+        post: operations["transcribe_v1_ai_transcriptions_post"];
         delete?: never;
         options?: never;
         head?: never;
@@ -3732,6 +3871,74 @@ export interface paths {
          * @description Check the new password against EMIS, then store it (ID-8).
          */
         post: operations["update_emis_password_v1_id_me_emis_password_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/id/me/mcp-clients": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get Mcp Clients
+         * @description The caller's own OAuth clients.
+         */
+        get: operations["get_mcp_clients_v1_id_me_mcp_clients_get"];
+        put?: never;
+        /**
+         * Post Mcp Client
+         * @description Create a client for one exact redirect URI; the secret is shown only here.
+         */
+        post: operations["post_mcp_client_v1_id_me_mcp_clients_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/id/me/mcp-clients/{client_id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post?: never;
+        /**
+         * Delete Mcp Client
+         * @description Revoke the connectors of the client and delete it.
+         */
+        delete: operations["delete_mcp_client_v1_id_me_mcp_clients__client_id__delete"];
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/id/me/mcp-setup/{service}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get Mcp Setup
+         * @description What to enter to connect `server` to one AI service.
+         */
+        get: operations["get_mcp_setup_v1_id_me_mcp_setup__service__get"];
+        put?: never;
+        /**
+         * Provision Mcp Setup
+         * @description Pre-create the OAuth client of `service` (MCP-5); a repeat has no secret.
+         */
+        post: operations["provision_mcp_setup_v1_id_me_mcp_setup__service__post"];
         delete?: never;
         options?: never;
         head?: never;
@@ -6946,6 +7153,26 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/v1/me/group": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get My Group
+         * @description The group card and members; open to every student of the group.
+         */
+        get: operations["get_my_group_v1_me_group_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/v1/me/group/progress": {
         parameters: {
             query?: never;
@@ -6966,6 +7193,26 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/v1/me/group/rating": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get My Group Rating
+         * @description The group's students by GPA; only for its head student (as group progress).
+         */
+        get: operations["get_my_group_rating_v1_me_group_rating_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/v1/me/homework": {
         parameters: {
             query?: never;
@@ -6976,6 +7223,9 @@ export interface paths {
         /**
          * List Homework
          * @description Return the chosen list; ``upcoming`` is the default.
+         *
+         *     ``subject_id`` keeps one subject; ``from`` and ``to`` keep the homework due in
+         *     that range (inclusive), by due date.
          */
         get: operations["list_homework_v1_me_homework_get"];
         put?: never;
@@ -7804,6 +8054,26 @@ export interface paths {
          *     the 404 of a missing notebook.
          */
         post: operations["open_course_notebook_v1_notebooks_course__course_id__post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/notebooks/flashcard-workspace": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Flashcard Workspace
+         * @description Put the chosen notebook sources and files into the hidden Studio notebook.
+         */
+        post: operations["flashcard_workspace_v1_notebooks_flashcard_workspace_post"];
         delete?: never;
         options?: never;
         head?: never;
@@ -8824,6 +9094,26 @@ export interface paths {
          * @description Return Hydra's end-session URL for the browser to open.
          */
         post: operations["post_logout_v1_oauth_logout_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/oauth/mcp/register": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Register Mcp Client
+         * @description Register a client whose redirect URIs are on the allowlist.
+         */
+        post: operations["register_mcp_client"];
         delete?: never;
         options?: never;
         head?: never;
@@ -10411,7 +10701,7 @@ export interface components {
              * Kind
              * @enum {string}
              */
-            kind: "emis_reauth" | "no_subgroup" | "files_expiring" | "pending_approvals" | "sync_failed";
+            kind: "emis_reauth" | "no_subgroup" | "seminar_soon" | "files_expiring" | "pending_approvals" | "sync_failed" | "connect_ai";
             /** Params */
             params: {
                 [key: string]: unknown;
@@ -11006,6 +11296,17 @@ export interface components {
             role: "material" | "attachment";
         };
         /**
+         * AttachFileBody
+         * @description POST /v1/ai/projects/{id}/files: one of the caller's own ready files.
+         */
+        AttachFileBody: {
+            /**
+             * File Id
+             * Format: uuid
+             */
+            file_id: string;
+        };
+        /**
          * AttachedResourceResponse
          * @description The lesson resource that was created from an output.
          */
@@ -11481,6 +11782,13 @@ export interface components {
         };
         /** Body_start_cartridge_import_v1_lms_courses_import_post */
         Body_start_cartridge_import_v1_lms_courses_import_post: {
+            /** File */
+            file: string;
+        };
+        /** Body_transcribe_v1_ai_transcriptions_post */
+        Body_transcribe_v1_ai_transcriptions_post: {
+            /** Duration Ms */
+            duration_ms: number;
             /** File */
             file: string;
         };
@@ -12166,6 +12474,8 @@ export interface components {
             messages: components["schemas"]["ChatMessageViewResponse"][];
             /** Pending Approvals */
             pending_approvals: number;
+            /** Project Id */
+            project_id?: string | null;
             /** Shared */
             shared: boolean;
             /**
@@ -12226,6 +12536,8 @@ export interface components {
             last_message_at: string;
             /** Pending Approvals */
             pending_approvals: number;
+            /** Project Id */
+            project_id?: string | null;
             /**
              * Tier
              * @enum {string}
@@ -13029,6 +13341,8 @@ export interface components {
             assistant: "student" | "admin" | "lms_author";
             /** Course Id */
             course_id?: string | null;
+            /** Project Id */
+            project_id?: string | null;
             /** Tier */
             tier?: ("fast" | "smart") | null;
         };
@@ -13120,6 +13434,26 @@ export interface components {
             kind: "url" | "file";
             /** Target Url */
             target_url?: string | null;
+        };
+        /**
+         * CreateMcpClientBody
+         * @description POST /v1/id/me/mcp-clients.
+         */
+        CreateMcpClientBody: {
+            /** Name */
+            name?: string | null;
+            /** Redirect Uri */
+            redirect_uri: string;
+            /**
+             * Server
+             * @enum {string}
+             */
+            server: "student" | "lms" | "admin";
+            /**
+             * Service
+             * @enum {string}
+             */
+            service: "chatgpt" | "gemini" | "claude" | "custom";
         };
         /**
          * CreateNotebookBody
@@ -14872,6 +15206,29 @@ export interface components {
             set_id: string;
         };
         /**
+         * FlashcardWorkspaceBody
+         * @description POST /v1/notebooks/flashcard-workspace: 1 to 20 sources and files together.
+         */
+        FlashcardWorkspaceBody: {
+            /** File Ids */
+            file_ids?: string[];
+            /** Notebook Sources */
+            notebook_sources?: components["schemas"]["NotebookSourceRef"][];
+        };
+        /**
+         * FlashcardWorkspaceResponse
+         * @description The hidden notebook to call the Studio routes with, and its sources.
+         */
+        FlashcardWorkspaceResponse: {
+            /**
+             * Notebook Id
+             * Format: uuid
+             */
+            notebook_id: string;
+            /** Sources */
+            sources: components["schemas"]["SourceItemResponse"][];
+        };
+        /**
          * FlashcardsBlock
          * @description A block of flash cards studied with spaced repetition.
          */
@@ -15081,6 +15438,25 @@ export interface components {
             unregistered_count: number;
         };
         /**
+         * GroupMemberRow
+         * @description One active student of the caller's group.
+         */
+        GroupMemberRow: {
+            /** First Name */
+            first_name: string;
+            /**
+             * Id
+             * Format: uuid
+             */
+            id: string;
+            /** Is Head Student */
+            is_head_student: boolean;
+            /** Is Me */
+            is_me: boolean;
+            /** Last Name */
+            last_name: string;
+        };
+        /**
          * GroupPatchBody
          * @description Body of PATCH /v1/admin/groups/{id}; send null to clear curator or head.
          */
@@ -15095,6 +15471,21 @@ export interface components {
             name?: string | null;
             /** Status */
             status?: ("active" | "archived") | null;
+        };
+        /**
+         * GroupPersonRef
+         * @description A person of the group, by name.
+         */
+        GroupPersonRef: {
+            /** First Name */
+            first_name: string;
+            /**
+             * Id
+             * Format: uuid
+             */
+            id: string;
+            /** Last Name */
+            last_name: string;
         };
         /**
          * GroupProgressCell
@@ -15178,6 +15569,22 @@ export interface components {
             student: components["schemas"]["app__interfaces__http__v1__me_marks__schemas__PersonRef"];
         };
         /**
+         * GroupRatingRow
+         * @description One student of the group in the GPA rating (`rank` None when no GPA).
+         */
+        GroupRatingRow: {
+            /** Emis Rating */
+            emis_rating?: number | null;
+            /** Gpa */
+            gpa: number | null;
+            /** Is Me */
+            is_me: boolean;
+            /** Name */
+            name: string;
+            /** Rank */
+            rank: number | null;
+        };
+        /**
          * GroupResponse
          * @description A study group a reading list can be aimed at.
          */
@@ -15228,6 +15635,22 @@ export interface components {
              * Format: uuid
              */
             user_id: string;
+        };
+        /**
+         * GroupTeacherRef
+         * @description The homeroom teacher, with the public contacts shown to students.
+         */
+        GroupTeacherRef: {
+            contacts: components["schemas"]["TeacherContacts"];
+            /** First Name */
+            first_name: string;
+            /**
+             * Id
+             * Format: uuid
+             */
+            id: string;
+            /** Last Name */
+            last_name: string;
         };
         /**
          * H5PBlock
@@ -17949,6 +18372,54 @@ export interface components {
             topic_ids?: string[] | null;
         };
         /**
+         * McpClientResponse
+         * @description A user's own OAuth client (never the secret).
+         */
+        McpClientResponse: {
+            /** Client Id */
+            client_id: string;
+            /** Name */
+            name: string;
+            /** Redirect Uris */
+            redirect_uris: string[];
+            /** Server */
+            server: ("student" | "lms" | "admin") | null;
+            /** Service */
+            service: string | null;
+        };
+        /**
+         * McpSetupResponse
+         * @description What the user enters. `notes` are machine codes the web app translates.
+         */
+        McpSetupResponse: {
+            /** Auth Modes */
+            auth_modes: ("oauth_dcr" | "oauth_client" | "static_token")[];
+            /**
+             * Availability
+             * @enum {string}
+             */
+            availability: "available" | "limited" | "plan_gated";
+            /** Docs Url */
+            docs_url: string | null;
+            /** Notes */
+            notes: string[];
+            oauth: components["schemas"]["OAuthSettingsResponse"] | null;
+            /**
+             * Server
+             * @enum {string}
+             */
+            server: "student" | "lms" | "admin";
+            /** Server Url */
+            server_url: string;
+            /**
+             * Service
+             * @enum {string}
+             */
+            service: "chatgpt" | "gemini" | "claude" | "custom";
+            /** Token Route */
+            token_route: string | null;
+        };
+        /**
          * MeLibraryResponse
          * @description `MeLibrary`: continue reading, shelf counts and the offline limits.
          */
@@ -18135,6 +18606,30 @@ export interface components {
             follows_weekday: number;
         };
         /**
+         * MyGroupResponse
+         * @description The caller's group: homeroom teacher, head student and members.
+         *
+         *     `homeroom_teacher` and `head_student` are null when not assigned.
+         *     `is_head_student` tells whether group progress and rating are open to the caller.
+         */
+        MyGroupResponse: {
+            head_student: components["schemas"]["GroupPersonRef"] | null;
+            homeroom_teacher: components["schemas"]["GroupTeacherRef"] | null;
+            /**
+             * Id
+             * Format: uuid
+             */
+            id: string;
+            /** Is Head Student */
+            is_head_student: boolean;
+            /** Members */
+            members: components["schemas"]["GroupMemberRow"][];
+            /** Name */
+            name: string;
+            /** Size */
+            size: number;
+        };
+        /**
          * MySuggestionResponse
          * @description `MySuggestion`: one of the signed-in person's suggestions and its status.
          */
@@ -18305,6 +18800,21 @@ export interface components {
             connector: components["schemas"]["ConnectorResponse"];
             /** Token */
             token: string;
+        };
+        /**
+         * NewMcpClientResponse
+         * @description The client and its secret, shown once.
+         */
+        NewMcpClientResponse: {
+            client: components["schemas"]["McpClientResponse"];
+            /** Client Secret */
+            client_secret: string;
+            /**
+             * Token Endpoint Auth Method
+             * @default client_secret_post
+             * @constant
+             */
+            token_endpoint_auth_method: "client_secret_post";
         };
         /**
          * NewPasswordLoginBody
@@ -18485,7 +18995,7 @@ export interface components {
          * @description How a notebook came to be: written by the student or kept up by the system.
          * @enum {string}
          */
-        NotebookOrigin: "manual" | "subject_auto" | "lesson_auto" | "course" | "course_student";
+        NotebookOrigin: "manual" | "subject_auto" | "lesson_auto" | "course" | "course_student" | "flashcards";
         /**
          * NotebookSearchItemResponse
          * @description `NotebookSearchItem`: a notebook whose title or a source title matched.
@@ -18504,6 +19014,22 @@ export interface components {
             source_count: number;
             /** Title */
             title: string;
+        };
+        /**
+         * NotebookSourceRef
+         * @description A source of one of the caller's notebooks.
+         */
+        NotebookSourceRef: {
+            /**
+             * Notebook Id
+             * Format: uuid
+             */
+            notebook_id: string;
+            /**
+             * Source Id
+             * Format: uuid
+             */
+            source_id: string;
         };
         /**
          * NotebookSummary
@@ -18665,6 +19191,50 @@ export interface components {
             name: string;
             /** Verified */
             verified: boolean;
+        };
+        /**
+         * OAuthSettingsResponse
+         * @description OAuth settings of a client configured by hand. Contains no secret.
+         */
+        OAuthSettingsResponse: {
+            /** Audience */
+            audience: string;
+            /** Authorization Endpoint */
+            authorization_endpoint: string;
+            /** Client Scopes */
+            client_scopes: string;
+            /** Code Challenge Method */
+            code_challenge_method: string;
+            /** Discovery Url */
+            discovery_url: string;
+            /** Grant Types */
+            grant_types: string[];
+            /** Issuer */
+            issuer: string;
+            /** Jwks Uri */
+            jwks_uri: string;
+            /** Own Client Route */
+            own_client_route: string;
+            /** Protected Resource Metadata Url */
+            protected_resource_metadata_url: string;
+            /** Redirect Uri Patterns */
+            redirect_uri_patterns: string[];
+            /** Redirect Uris */
+            redirect_uris: string[];
+            /** Registration Endpoint */
+            registration_endpoint: string;
+            /** Resource */
+            resource: string;
+            /** Response Types */
+            response_types: string[];
+            /** Revocation Endpoint */
+            revocation_endpoint: string;
+            /** Scopes */
+            scopes: string[];
+            /** Token Endpoint */
+            token_endpoint: string;
+            /** Token Endpoint Auth Methods */
+            token_endpoint_auth_methods: string[];
         };
         /**
          * OfflineLimits
@@ -19827,6 +20397,69 @@ export interface components {
             percent: number;
         };
         /**
+         * ProjectBody
+         * @description POST /v1/ai/projects.
+         */
+        ProjectBody: {
+            /**
+             * Instructions
+             * @default
+             */
+            instructions: string;
+            /** Name */
+            name: string;
+        };
+        /**
+         * ProjectFileResponse
+         * @description A file attached to a project.
+         */
+        ProjectFileResponse: {
+            /**
+             * File Id
+             * Format: uuid
+             */
+            file_id: string;
+            /** Name */
+            name: string;
+            /** Status */
+            status: string;
+        };
+        /**
+         * ProjectPatchBody
+         * @description PATCH /v1/ai/projects/{id}: only the fields sent change.
+         */
+        ProjectPatchBody: {
+            /** Instructions */
+            instructions?: string | null;
+            /** Name */
+            name?: string | null;
+        };
+        /**
+         * ProjectResponse
+         * @description Project: a named group of chats with files and instructions.
+         */
+        ProjectResponse: {
+            /**
+             * Created At
+             * Format: date-time
+             */
+            created_at: string;
+            /**
+             * Id
+             * Format: uuid
+             */
+            id: string;
+            /** Instructions */
+            instructions: string;
+            /** Name */
+            name: string;
+            /**
+             * Updated At
+             * Format: date-time
+             */
+            updated_at: string;
+        };
+        /**
          * ProposalBody
          * @description A date a head student suggests for their group; it stays tentative.
          */
@@ -19859,6 +20492,17 @@ export interface components {
              * @default
              */
             title: string;
+        };
+        /**
+         * ProvisionedMcpSetupResponse
+         * @description A pre-created client; `client_secret` is set only when this call created it.
+         */
+        ProvisionedMcpSetupResponse: {
+            client: components["schemas"]["McpClientResponse"];
+            /** Client Secret */
+            client_secret: string | null;
+            /** Created */
+            created: boolean;
         };
         /**
          * PublicShare
@@ -20539,6 +21183,52 @@ export interface components {
         RedirectToResponse: {
             /** Redirect To */
             redirect_to: string;
+        };
+        /**
+         * RegisterBody
+         * @description The fields that are read; any other client metadata is ignored.
+         */
+        RegisterBody: {
+            /** Client Name */
+            client_name?: string | null;
+            /** Redirect Uris */
+            redirect_uris: string[];
+            /** Token Endpoint Auth Method */
+            token_endpoint_auth_method?: string | null;
+        };
+        /**
+         * RegisterError
+         * @description RFC 7591 section 3.2.2.
+         */
+        RegisterError: {
+            /** Error */
+            error: string;
+            /** Error Description */
+            error_description: string;
+        };
+        /**
+         * RegisterResponse
+         * @description RFC 7591 section 3.2.1. `client_secret` only for a confidential client.
+         */
+        RegisterResponse: {
+            /** Client Id */
+            client_id: string;
+            /** Client Name */
+            client_name: string;
+            /** Client Secret */
+            client_secret?: string | null;
+            /** Client Secret Expires At */
+            client_secret_expires_at?: number | null;
+            /** Grant Types */
+            grant_types: string[];
+            /** Redirect Uris */
+            redirect_uris: string[];
+            /** Response Types */
+            response_types: string[];
+            /** Scope */
+            scope: string;
+            /** Token Endpoint Auth Method */
+            token_endpoint_auth_method: string;
         };
         /**
          * RegistrationProfileResponse
@@ -22657,6 +23347,8 @@ export interface components {
             last_name: string;
             /** Login */
             login: string | null;
+            /** Photo Url */
+            photo_url?: string | null;
             /** Registered */
             registered: boolean;
             /** Status */
@@ -24615,6 +25307,14 @@ export interface components {
             otpauth_uri: string;
             /** Secret */
             secret: string;
+        };
+        /**
+         * TranscriptionResponse
+         * @description `Transcription`: the words of a recording, as spoken.
+         */
+        TranscriptionResponse: {
+            /** Text */
+            text: string;
         };
         /**
          * TurnResultResponse
@@ -29027,6 +29727,37 @@ export interface operations {
             };
         };
     };
+    export_group_photos_v1_admin_groups__group_id__photos_zip_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                group_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description ZIP of the active students' photos, named by full name. */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/zip": unknown;
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
     assign_subgroups_v1_admin_groups__group_id__subgroups_put: {
         parameters: {
             query?: never;
@@ -32381,6 +33112,7 @@ export interface operations {
                 limit?: number;
                 q?: string | null;
                 course_id?: string | null;
+                project_id?: string | null;
             };
             header?: never;
             path?: never;
@@ -32691,6 +33423,281 @@ export interface operations {
                 };
                 content: {
                     "application/json": components["schemas"]["TurnResultResponse"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    list_projects_v1_ai_projects_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ProjectResponse"][];
+                };
+            };
+        };
+    };
+    create_project_v1_ai_projects_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["ProjectBody"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ProjectResponse"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    get_project_v1_ai_projects__project_id__get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                project_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ProjectResponse"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    delete_project_v1_ai_projects__project_id__delete: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                project_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            204: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    patch_project_v1_ai_projects__project_id__patch: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                project_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["ProjectPatchBody"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ProjectResponse"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    list_project_files_v1_ai_projects__project_id__files_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                project_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ProjectFileResponse"][];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    attach_project_file_v1_ai_projects__project_id__files_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                project_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["AttachFileBody"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            204: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    detach_project_file_v1_ai_projects__project_id__files__file_id__delete: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                project_id: string;
+                file_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            204: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    transcribe_v1_ai_transcriptions_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "multipart/form-data": components["schemas"]["Body_transcribe_v1_ai_transcriptions_post"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["TranscriptionResponse"];
                 };
             };
             /** @description Validation Error */
@@ -34551,6 +35558,154 @@ export interface operations {
                 };
                 content: {
                     "application/json": components["schemas"]["EmisPasswordResponse"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    get_mcp_clients_v1_id_me_mcp_clients_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["McpClientResponse"][];
+                };
+            };
+        };
+    };
+    post_mcp_client_v1_id_me_mcp_clients_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["CreateMcpClientBody"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["NewMcpClientResponse"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    delete_mcp_client_v1_id_me_mcp_clients__client_id__delete: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                client_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            204: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    get_mcp_setup_v1_id_me_mcp_setup__service__get: {
+        parameters: {
+            query?: {
+                server?: "student" | "lms" | "admin";
+            };
+            header?: never;
+            path: {
+                service: "chatgpt" | "gemini" | "claude" | "custom";
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["McpSetupResponse"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    provision_mcp_setup_v1_id_me_mcp_setup__service__post: {
+        parameters: {
+            query?: {
+                server?: "student" | "lms" | "admin";
+            };
+            header?: never;
+            path: {
+                service: "chatgpt" | "gemini" | "claude" | "custom";
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ProvisionedMcpSetupResponse"];
                 };
             };
             /** @description Validation Error */
@@ -40359,6 +41514,26 @@ export interface operations {
             };
         };
     };
+    get_my_group_v1_me_group_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["MyGroupResponse"];
+                };
+            };
+        };
+    };
     get_my_group_progress_v1_me_group_progress_get: {
         parameters: {
             query?: {
@@ -40390,10 +41565,44 @@ export interface operations {
             };
         };
     };
+    get_my_group_rating_v1_me_group_rating_get: {
+        parameters: {
+            query?: {
+                semester?: number | null;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["GroupRatingRow"][];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
     list_homework_v1_me_homework_get: {
         parameters: {
             query?: {
                 status?: "overdue" | "upcoming" | "later" | "done";
+                subject_id?: string | null;
+                from?: string | null;
+                to?: string | null;
             };
             header?: never;
             path?: never;
@@ -41866,6 +43075,39 @@ export interface operations {
                 };
                 content: {
                     "application/json": components["schemas"]["NotebookItemResponse"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    flashcard_workspace_v1_notebooks_flashcard_workspace_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["FlashcardWorkspaceBody"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["FlashcardWorkspaceResponse"];
                 };
             };
             /** @description Validation Error */
@@ -43824,6 +45066,48 @@ export interface operations {
                 };
                 content: {
                     "application/json": components["schemas"]["LogoutResponse"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    register_mcp_client: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["RegisterBody"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["RegisterResponse"];
+                };
+            };
+            /** @description Bad Request */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["RegisterError"];
                 };
             };
             /** @description Validation Error */

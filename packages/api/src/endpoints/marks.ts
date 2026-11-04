@@ -6,6 +6,7 @@ import { queryOptions, seg, type RequestOptions } from "../query"
 import type { NoContent, Page } from "../types/common"
 import type {
   DayGrades,
+  GroupRatingRow,
   RecordBook,
   SemesterGrades,
   SemesterParams,
@@ -84,6 +85,16 @@ export const getMeGradesQuery = (params?: SemesterParams) =>
   queryOptions({
     queryKey: keys.me.grades(params),
     queryFn: ({ signal }) => getMeGrades(params, { signal }),
+  })
+
+/** GET /v1/me/group/rating?semester — head student of the group only; any other student gets 403. */
+export function getMeGroupRating(params?: SemesterParams, opts?: RequestOptions): Promise<GroupRatingRow[]> {
+  return api.get<GroupRatingRow[]>("/v1/me/group/rating", { ...opts, query: params })
+}
+export const getMeGroupRatingQuery = (params?: SemesterParams) =>
+  queryOptions({
+    queryKey: keys.me.groupRating(params),
+    queryFn: ({ signal }) => getMeGroupRating(params, { signal }),
   })
 
 /** GET /v1/me/grades/day?date — student; `date` is `YYYY-MM-DD`. */

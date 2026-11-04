@@ -230,3 +230,76 @@ export type EmisPasswordResponse = { emis_status: "active" | "needs_reauth" }
 
 export type DeleteAccountBody = { password: string; otp_code?: string }
 export type DeleteAccountResponse = { closes_on: string }
+
+// --- MCP setup wizard (GET /v1/id/me/mcp-setup/{service}, /v1/id/me/mcp-clients) ---
+
+export type McpSetupService = "chatgpt" | "gemini" | "claude" | "custom"
+export type McpSetupAuthMode = "oauth_dcr" | "oauth_client" | "static_token"
+export type McpSetupAvailability = "available" | "limited" | "plan_gated"
+export type McpSetupServer = "student" | "lms" | "admin"
+
+/** Everything a client configured by hand needs. */
+export type OAuthSettingsResponse = {
+  issuer: string
+  discovery_url: string
+  authorization_endpoint: string
+  token_endpoint: string
+  revocation_endpoint: string
+  registration_endpoint: string
+  jwks_uri: string
+  protected_resource_metadata_url: string
+  resource: string
+  audience: string
+  scopes: string[]
+  client_scopes: string
+  code_challenge_method: string
+  grant_types: string[]
+  response_types: string[]
+  token_endpoint_auth_methods: string[]
+  redirect_uris: string[]
+  redirect_uri_patterns: string[]
+  own_client_route: string
+}
+
+/** What the user enters. `notes` are machine codes the web app translates. */
+export type McpSetupResponse = {
+  service: McpSetupService
+  server: McpSetupServer
+  server_url: string
+  availability: McpSetupAvailability
+  auth_modes: McpSetupAuthMode[]
+  notes: string[]
+  docs_url: string | null
+  oauth: OAuthSettingsResponse | null
+  token_route: string | null
+}
+
+/** A user's own OAuth client (never the secret). */
+export type McpClientResponse = {
+  client_id: string
+  name: string
+  redirect_uris: string[]
+  server: McpSetupServer | null
+  service: string | null
+}
+
+export type CreateMcpClientBody = {
+  service: McpSetupService
+  server: McpSetupServer
+  redirect_uri: string
+  name?: string | null
+}
+
+/** The client and its secret, shown once. */
+/** POST /v1/id/me/mcp-setup/{service}: the pre-created client; `client_secret` is set only when this call created it. */
+export type ProvisionedMcpSetupResponse = {
+  client: McpClientResponse
+  client_secret: string | null
+  created: boolean
+}
+
+export type NewMcpClientResponse = {
+  client: McpClientResponse
+  client_secret: string
+  token_endpoint_auth_method?: "client_secret_post"
+}
