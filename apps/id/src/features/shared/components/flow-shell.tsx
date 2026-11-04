@@ -1,6 +1,6 @@
 "use client"
 
-import { LanguageSwitcher, SourceCodeLinks, ThemeToggle } from "@ihsp/ui"
+import { LanguageSwitcher, ThemeToggle } from "@ihsp/ui"
 import type { ReactNode } from "react"
 import { useTr } from "../hooks/use-tr"
 import { SecurityContactButton } from "./security-contact-button"
@@ -26,7 +26,6 @@ export function FlowShell({ children }: { children: ReactNode }) {
       <main className="mx-auto flex w-full max-w-md flex-1 flex-col justify-center px-4 py-6">{children}</main>
       <footer className="flex flex-col items-center gap-1 px-4 py-3">
         <SecurityContactButton />
-        <SourceCodeLinks />
       </footer>
     </div>
   )

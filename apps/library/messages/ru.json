@@ -1,6 +1,6 @@
 {
   "app": {
-    "name": "library.iht",
+    "name": "{appLibrary}",
     "description": "Книги, учебники и учебные материалы лицея"
   },
   "nav": {

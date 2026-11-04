@@ -1,6 +1,6 @@
 {
   "idCommon": {
-    "brand": "IHT ID",
+    "brand": "{appId}",
     "working": "Please wait…",
     "loading": "Loading…",
     "code": "Code",
@@ -34,7 +34,7 @@
     },
     "missingChallenge": {
       "title": "Open this page from an app",
-      "description": "Open this page from the Log in button of an IHT app.",
+      "description": "Open this page from the Log in button of an {brand} app.",
       "action": "Open account security"
     },
     "stepUp": {
@@ -77,8 +77,8 @@
       "forbidden": "You do not have permission to do this."
     },
     "id": {
-      "wrong-institution": "Only Interhouse students can register. This EMIS account belongs to another institution.",
-      "emis-already-linked": "This EMIS account already has an IHT account.",
+      "wrong-institution": "Only {orgAlias} students can register. This EMIS account belongs to another institution.",
+      "emis-already-linked": "This EMIS account already has an {brand} account.",
       "user-not-found": "No user with this login was found.",
       "admin-reset-forbidden": "This account can only be reset by another Administration member. Contact Administration.",
       "passkey-not-found": "The passkey was not found.",
@@ -94,7 +94,7 @@
       "unavailable": "EMIS is not responding. Try again later."
     },
     "telegram": {
-      "linked-elsewhere": "This Telegram account is already linked to another IHT account. Log out there first."
+      "linked-elsewhere": "This Telegram account is already linked to another {brand} account. Log out there first."
     }
   },
   "idNav": {
@@ -158,7 +158,7 @@
     },
     "totp": {
       "title": "Enter the code from the app",
-      "description": "Open your authenticator app and enter the 6-digit code for IHT ID."
+      "description": "Open your authenticator app and enter the 6-digit code for {appId}."
     }
   },
   "loginOtp": {
@@ -177,7 +177,7 @@
   },
   "consent": {
     "title": "Allow {client}?",
-    "description": "This application asks for access to your IHT account.",
+    "description": "This application asks for access to your {brand} account.",
     "verified": "Verified",
     "unverified": "Unverified",
     "unverifiedWarning": "Administration has not verified this application. Allow it only if you trust it.",
@@ -202,7 +202,7 @@
   },
   "register": {
     "title": "Register with EMIS",
-    "emisLoginNotice": "This looks like an EMIS login — let's create your IHT ID.",
+    "emisLoginNotice": "This looks like an EMIS login — let's create your {appId}.",
     "description": "Enter your EMIS login and password to import your name and group.",
     "submit": "Continue",
     "haveAccount": "I already have an account",
@@ -230,13 +230,13 @@
     "done": {
       "title": "Account created",
       "description": "Your login is {login}. Use it with the password you just set.",
-      "open": "Open IHT"
+      "open": "Open {brand}"
     },
     "welcome": {
-      "title": "Welcome to IHT ID",
-      "description": "IHT ID is your one account for IHT services.",
+      "title": "Welcome to {appId}",
+      "description": "{appId} is your one account for {brand} services.",
       "points": {
-        "account": "One login for my.iht, staff, the library (lib.ihsu.uz) and the LMS.",
+        "account": "One login for {appMy}, staff, the library ({libraryHost}) and the LMS.",
         "codes": "Sign-in codes come by Telegram or by email.",
         "security": "Manage your password, sessions and connected apps in the security settings."
       },
@@ -333,7 +333,7 @@
     }
   },
   "miniApp": {
-    "title": "Log in to IHT",
+    "title": "Log in to {brand}",
     "description": "Log in to link this Telegram account.",
     "submit": "Log in",
     "register": "Register with EMIS",
@@ -653,6 +653,124 @@
       "config": "Configuration",
       "copyConfig": "Copy configuration",
       "done": "Done"
+    },
+    "mcp": {
+      "title": "Connect an AI app",
+      "chooseTitle": "Which AI app do you connect?",
+      "services": {
+        "chatgpt": "ChatGPT",
+        "gemini": "Gemini",
+        "claude": "Claude",
+        "custom": "Custom MCP client"
+      },
+      "serviceHints": {
+        "chatgpt": "OpenAI, with plugins",
+        "gemini": "Google, on the web",
+        "claude": "Anthropic, with connectors",
+        "custom": "Any app that speaks MCP over HTTP"
+      },
+      "back": "Back",
+      "server": "Server",
+      "availability": "Availability",
+      "availabilityValue": {
+        "available": "Available",
+        "limited": "Limited",
+        "plan_gated": "Paid plans only"
+      },
+      "notesTitle": "Good to know",
+      "serverUrl": "Server URL",
+      "copyNamed": "Copy {name}",
+      "steps": {
+        "chatgpt": {
+          "s1": "Open ChatGPT settings and turn on developer mode under Apps.",
+          "s2": "Add the server URL under Plugins.",
+          "s3": "Sign in with your IHS account and allow access."
+        },
+        "gemini": {
+          "s1": "Open gemini.google.com in a browser, not the phone app.",
+          "s2": "Add a custom MCP server with the URL below.",
+          "s3": "Sign in with your IHS account and allow access."
+        },
+        "claude": {
+          "s1": "Open Settings, then Connectors, and choose Add custom connector.",
+          "s2": "Paste the server URL.",
+          "s3": "Sign in with your IHS account and allow access."
+        },
+        "custom": {
+          "s1": "Choose the Streamable HTTP transport and paste the server URL.",
+          "s2": "If the app asks for OAuth, enter the settings below.",
+          "s3": "Sign in with your IHS account and allow access."
+        }
+      },
+      "connectInApp": {
+        "title": "Connect in the app",
+        "text": "The app registers itself. Add the server URL there; no client is needed."
+      },
+      "ownClient": {
+        "title": "Create your own client",
+        "redirect": "Redirect URI",
+        "redirectHint": "Paste the redirect URI the app shows you.",
+        "invalidRedirect": "Use an https address, or http on localhost.",
+        "create": "Create client",
+        "secretTitle": "Client created",
+        "clientId": "Client ID",
+        "secret": "Client secret",
+        "secretOnce": "Shown once. Copy it now; it cannot be shown again.",
+        "clients": "Your clients",
+        "noClients": "No clients yet.",
+        "delete": "Delete client"
+      },
+      "staticToken": {
+        "title": "Static token",
+        "text": "Create a token and send it as a bearer header.",
+        "action": "Create token"
+      },
+      "oauth": {
+        "title": "OAuth settings",
+        "tokenRoute": "Token route",
+        "fields": {
+          "issuer": "Issuer",
+          "discovery_url": "Discovery URL",
+          "authorization_endpoint": "Authorization endpoint",
+          "token_endpoint": "Token endpoint",
+          "revocation_endpoint": "Revocation endpoint",
+          "registration_endpoint": "Registration endpoint",
+          "jwks_uri": "JWKS URI",
+          "protected_resource_metadata_url": "Protected resource metadata",
+          "resource": "Resource",
+          "audience": "Audience",
+          "scopes": "Scopes",
+          "client_scopes": "Client scopes",
+          "code_challenge_method": "PKCE method",
+          "grant_types": "Grant types",
+          "response_types": "Response types",
+          "token_endpoint_auth_methods": "Token auth methods",
+          "redirect_uris": "Redirect URIs",
+          "redirect_uri_patterns": "Redirect URI patterns",
+          "own_client_route": "Own client route"
+        }
+      },
+      "notes": {
+        "business_enterprise_edu_full_mcp": "Full MCP on Business, Enterprise and Edu plans. [Developer mode guide](chatgptHelp).",
+        "pro_read_fetch_only": "Pro plans get read and fetch tools only. Added under Plugins.",
+        "gemini_app_us_18_personal_account_keep_activity_on": "US only, 18 or older, personal account, Keep Activity on. Add the server on the web. [Gemini help](geminiHelp).",
+        "gemini_enterprise_admin_sets_up_client_and_pkce": "Enterprise: an admin creates the client with PKCE. [Setup guide](geminiEnterprise).",
+        "free_plan_one_custom_connector": "Free plan: one custom connector.",
+        "team_enterprise_owner_adds_connector": "Team and Enterprise: an Owner adds the connector. [Connector guide](claudeRemote).",
+        "static_headers_beta_owner_only": "Static headers are in beta and only the Owner can use them.",
+        "dcr_needs_allowlisted_redirect_uri": "Automatic registration needs an allowlisted redirect URI."
+      },
+      "provision": {
+        "question": "Do you want us to pre-create the needed data?",
+        "yes": "Yes, create it for me",
+        "no": "No, I will set it up myself",
+        "createdTitle": "Your values",
+        "clientId": "Client ID",
+        "secret": "Client secret",
+        "secretOnce": "Shown once. Copy it now; it cannot be shown again.",
+        "reused": "This client already exists. Its secret was shown when it was created; delete it to get a new one.",
+        "delete": "Delete this client"
+      }
     }
   }
 }

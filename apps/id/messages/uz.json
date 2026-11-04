@@ -1,6 +1,6 @@
 {
   "idCommon": {
-    "brand": "IHT ID",
+    "brand": "{appId}",
     "working": "Biroz kuting…",
     "loading": "Yuklanmoqda…",
     "code": "Kod",
@@ -34,7 +34,7 @@
     },
     "missingChallenge": {
       "title": "Sahifani ilovadan oching",
-      "description": "Sahifani IHT ilovasidagi «Kirish» tugmasidan oching.",
+      "description": "Sahifani {brand} ilovasidagi «Kirish» tugmasidan oching.",
       "action": "Hisob xavfsizligini ochish"
     },
     "stepUp": {
@@ -77,8 +77,8 @@
       "forbidden": "Bu amalni bajarishga ruxsatingiz yoʻq."
     },
     "id": {
-      "wrong-institution": "Faqat Interhouse talabalari roʻyxatdan oʻta oladi. Bu EMIS hisobi boshqa muassasaga tegishli.",
-      "emis-already-linked": "Bu EMIS hisobi uchun IHT hisobi allaqachon mavjud.",
+      "wrong-institution": "Faqat {orgAlias} talabalari roʻyxatdan oʻta oladi. Bu EMIS hisobi boshqa muassasaga tegishli.",
+      "emis-already-linked": "Bu EMIS hisobi uchun {brand} hisobi allaqachon mavjud.",
       "user-not-found": "Bunday loginli foydalanuvchi topilmadi.",
       "admin-reset-forbidden": "Bu hisobni faqat Maʼmuriyatning boshqa aʼzosi tiklay oladi. Maʼmuriyatga murojaat qiling.",
       "passkey-not-found": "Kirish kaliti topilmadi.",
@@ -94,7 +94,7 @@
       "unavailable": "EMIS javob bermayapti. Keyinroq urinib koʻring."
     },
     "telegram": {
-      "linked-elsewhere": "Bu Telegram hisobi boshqa IHT hisobiga ulangan. Avval oʻsha yerdan chiqing."
+      "linked-elsewhere": "Bu Telegram hisobi boshqa {brand} hisobiga ulangan. Avval oʻsha yerdan chiqing."
     }
   },
   "idNav": {
@@ -158,7 +158,7 @@
     },
     "totp": {
       "title": "Ilovadagi kodni kiriting",
-      "description": "Autentifikator ilovasini oching va IHT ID uchun 6 xonali kodni kiriting."
+      "description": "Autentifikator ilovasini oching va {appId} uchun 6 xonali kodni kiriting."
     }
   },
   "loginOtp": {
@@ -177,7 +177,7 @@
   },
   "consent": {
     "title": "«{client}» ga ruxsat berasizmi?",
-    "description": "Ilova IHT hisobingizga kirish huquqini soʻramoqda.",
+    "description": "Ilova {brand} hisobingizga kirish huquqini soʻramoqda.",
     "verified": "Tekshirilgan",
     "unverified": "Tekshirilmagan",
     "unverifiedWarning": "Maʼmuriyat bu ilovani tekshirmagan. Unga ishonsangizgina ruxsat bering.",
@@ -202,7 +202,7 @@
   },
   "register": {
     "title": "EMIS orqali roʻyxatdan oʻtish",
-    "emisLoginNotice": "Bu EMIS logini koʻrinadi — keling, IHT ID yaratamiz.",
+    "emisLoginNotice": "Bu EMIS logini koʻrinadi — keling, {appId} yaratamiz.",
     "description": "Ism va guruhni olish uchun EMIS login va parolini kiriting.",
     "submit": "Davom etish",
     "haveAccount": "Menda hisob bor",
@@ -230,13 +230,13 @@
     "done": {
       "title": "Hisob yaratildi",
       "description": "Loginingiz: {login}. U bilan va hozir kiritgan parolingiz bilan kiring.",
-      "open": "IHTʼni ochish"
+      "open": "{brand}ʼni ochish"
     },
     "welcome": {
-      "title": "IHT IDʼga xush kelibsiz",
-      "description": "IHT ID — IHT xizmatlari uchun yagona hisobingiz.",
+      "title": "{appId}ʼga xush kelibsiz",
+      "description": "{appId} — {brand} xizmatlari uchun yagona hisobingiz.",
       "points": {
-        "account": "my.iht, staff, kutubxona (lib.ihsu.uz) va LMS uchun bitta login.",
+        "account": "{appMy}, staff, kutubxona ({libraryHost}) va LMS uchun bitta login.",
         "codes": "Kirish kodlari Telegram yoki elektron pochta orqali keladi.",
         "security": "Parol, seanslar va ulangan ilovalarni xavfsizlik sozlamalarida boshqaring."
       },
@@ -333,7 +333,7 @@
     }
   },
   "miniApp": {
-    "title": "IHTʼga kirish",
+    "title": "{brand}ʼga kirish",
     "description": "Bu Telegram hisobini ulash uchun kiring.",
     "submit": "Kirish",
     "register": "EMIS orqali roʻyxatdan oʻtish",
@@ -653,6 +653,124 @@
       "config": "Konfiguratsiya",
       "copyConfig": "Konfiguratsiyani nusxalash",
       "done": "Tayyor"
+    },
+    "mcp": {
+      "title": "Sunʼiy intellekt ilovasini ulash",
+      "chooseTitle": "Qaysi ilovani ulaysiz?",
+      "services": {
+        "chatgpt": "ChatGPT",
+        "gemini": "Gemini",
+        "claude": "Claude",
+        "custom": "Maxsus MCP-mijoz"
+      },
+      "serviceHints": {
+        "chatgpt": "OpenAI, plaginlar bilan",
+        "gemini": "Google, veb-brauzerda",
+        "claude": "Anthropic, konnektorlar bilan",
+        "custom": "HTTP orqali MCP ishlaydigan har qanday ilova"
+      },
+      "back": "Orqaga",
+      "server": "Server",
+      "availability": "Mavjudligi",
+      "availabilityValue": {
+        "available": "Mavjud",
+        "limited": "Cheklangan",
+        "plan_gated": "Faqat pullik tariflarda"
+      },
+      "notesTitle": "Bilib qoʻying",
+      "serverUrl": "Server manzili",
+      "copyNamed": "Nusxalash: {name}",
+      "steps": {
+        "chatgpt": {
+          "s1": "ChatGPT sozlamalarini oching va «Ilovalar» boʻlimida ishlab chiquvchi rejimini yoqing.",
+          "s2": "Server manzilini «Plaginlar» boʻlimiga qoʻshing.",
+          "s3": "IHS hisobingiz bilan kiring va kirishga ruxsat bering."
+        },
+        "gemini": {
+          "s1": "gemini.google.com saytini brauzerda oching, mobil ilovada emas.",
+          "s2": "Quyidagi manzil boʻyicha maxsus MCP-serverni qoʻshing.",
+          "s3": "IHS hisobingiz bilan kiring va kirishga ruxsat bering."
+        },
+        "claude": {
+          "s1": "Sozlamalar, keyin «Konnektorlar» boʻlimini oching va «Maxsus konnektor qoʻshish»ni tanlang.",
+          "s2": "Server manzilini qoʻying.",
+          "s3": "IHS hisobingiz bilan kiring va kirishga ruxsat bering."
+        },
+        "custom": {
+          "s1": "Streamable HTTP transportini tanlang va server manzilini qoʻying.",
+          "s2": "Ilova OAuth soʻrasa, quyidagi sozlamalarni kiriting.",
+          "s3": "IHS hisobingiz bilan kiring va kirishga ruxsat bering."
+        }
+      },
+      "connectInApp": {
+        "title": "Ilovada ulash",
+        "text": "Ilova oʻzini roʻyxatdan oʻtkazadi. Server manzilini u yerga qoʻshing; oʻz klientingiz kerak emas."
+      },
+      "ownClient": {
+        "title": "Oʻz klientingizni yarating",
+        "redirect": "Redirect URI",
+        "redirectHint": "Ilova koʻrsatgan qayta yoʻnaltirish manzilini qoʻying.",
+        "invalidRedirect": "https manzil yoki localhostdagi http manzilini kiriting.",
+        "create": "Klient yaratish",
+        "secretTitle": "Klient yaratildi",
+        "clientId": "Klient ID",
+        "secret": "Klient sirri",
+        "secretOnce": "Bir marta koʻrsatiladi. Hozir nusxalang, keyin qayta koʻrsatilmaydi.",
+        "clients": "Sizning klientlaringiz",
+        "noClients": "Hozircha klientlar yoʻq.",
+        "delete": "Klientni oʻchirish"
+      },
+      "staticToken": {
+        "title": "Statik token",
+        "text": "Token yarating va uni Bearer sarlavhasi sifatida yuboring.",
+        "action": "Token yaratish"
+      },
+      "oauth": {
+        "title": "OAuth sozlamalari",
+        "tokenRoute": "Token yoʻnalishi",
+        "fields": {
+          "issuer": "Emitent",
+          "discovery_url": "Discovery URL",
+          "authorization_endpoint": "Avtorizatsiya endpoint",
+          "token_endpoint": "Token endpoint",
+          "revocation_endpoint": "Bekor qilish endpoint",
+          "registration_endpoint": "Roʻyxatdan oʻtish endpoint",
+          "jwks_uri": "JWKS URI",
+          "protected_resource_metadata_url": "Resurs metamaʼlumotlari",
+          "resource": "Resurs",
+          "audience": "Auditoriya",
+          "scopes": "Ruxsat doiralari",
+          "client_scopes": "Klient doiralari",
+          "code_challenge_method": "PKCE usuli",
+          "grant_types": "Grant turlari",
+          "response_types": "Javob turlari",
+          "token_endpoint_auth_methods": "Autentifikatsiya usullari",
+          "redirect_uris": "Redirect URI",
+          "redirect_uri_patterns": "Redirect URI shablonlari",
+          "own_client_route": "Oʻz klient yoʻnalishi"
+        }
+      },
+      "notes": {
+        "business_enterprise_edu_full_mcp": "Business, Enterprise va Edu tariflarida toʻliq MCP. [Ishlab chiquvchi rejimi boʻyicha qoʻllanma](chatgptHelp).",
+        "pro_read_fetch_only": "Pro tarifida faqat oʻqish va yuklab olish vositalari bor. «Plaginlar» boʻlimida qoʻshiladi.",
+        "gemini_app_us_18_personal_account_keep_activity_on": "Faqat AQSh, 18 yoshdan katta, shaxsiy hisob, «Faollik tarixi» yoqilgan. Server veb-versiyada qoʻshiladi. [Gemini yordami](geminiHelp).",
+        "gemini_enterprise_admin_sets_up_client_and_pkce": "Enterprise: klientni administrator PKCE bilan yaratadi. [Sozlash qoʻllanmasi](geminiEnterprise).",
+        "free_plan_one_custom_connector": "Bepul tarifda bitta maxsus konnektor bor.",
+        "team_enterprise_owner_adds_connector": "Team va Enterprise: konnektorni egasi qoʻshadi. [Konnektor qoʻllanmasi](claudeRemote).",
+        "static_headers_beta_owner_only": "Statik sarlavhalar beta holatida va faqat egasi uchun.",
+        "dcr_needs_allowlisted_redirect_uri": "Avtomatik roʻyxatdan oʻtish uchun ruxsat etilgan redirect URI kerak."
+      },
+      "provision": {
+        "question": "Kerakli maʼlumotlarni oldindan yaratib beraylikmi?",
+        "yes": "Ha, men uchun yarating",
+        "no": "Yoʻq, oʻzim sozlayman",
+        "createdTitle": "Sizning qiymatlaringiz",
+        "clientId": "Klient ID",
+        "secret": "Klient sirri",
+        "secretOnce": "Bir marta koʻrsatiladi. Hozir nusxalang, keyin qayta koʻrsatilmaydi.",
+        "reused": "Bu klient allaqachon yaratilgan. Uning siri yaratilganda koʻrsatilgan; yangisini olish uchun klientni oʻchiring.",
+        "delete": "Bu klientni oʻchirish"
+      }
     }
   }
 }

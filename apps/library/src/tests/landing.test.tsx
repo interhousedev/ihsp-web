@@ -13,14 +13,14 @@ function asLibrary(): void {
 }
 
 describe("library landing page", () => {
-  it("shows an anonymous visitor the catalogue", async () => {
+  it("shows an anonymous visitor the home with the subject shelves", async () => {
     asLibrary()
     setLibraryActor(null)
     server.use(http.post(apiUrl("/v1/oauth/refresh"), () => problem(401, "auth/unauthorized", "No session")))
     renderLibraryApp(<Page />, { session: null })
 
-    expect(await screen.findByRole("heading", { level: 1, name: "Browse" })).toBeInTheDocument()
-    expect(screen.queryByRole("heading", { level: 1, name: "Library" })).not.toBeInTheDocument()
+    expect(await screen.findByRole("heading", { level: 1, name: "Library" })).toBeInTheDocument()
+    expect(await screen.findByRole("heading", { name: "Subjects" })).toBeInTheDocument()
   })
 
   it("shows a signed-in user the personal home", async () => {

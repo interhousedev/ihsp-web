@@ -1,6 +1,6 @@
 {
   "app": {
-    "name": "library.iht",
+    "name": "{appLibrary}",
     "description": "Books, textbooks and study materials of the lyceum"
   },
   "nav": {

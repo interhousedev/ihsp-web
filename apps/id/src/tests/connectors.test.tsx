@@ -19,10 +19,18 @@ import { clickButton, fillField, findButton, LOGGED_IN, renderId, allowSlowTests
 
 allowSlowTests()
 
+/** The wizard starts with the service choice; the static token path opens the connector form. */
+async function openTokenForm(): Promise<void> {
+  fireEvent.click(await findButton(/^Custom MCP client/))
+  await clickButton("Create token")
+}
+
 describe("new connector page", () => {
   test("the token is shown once with a config snippet and is gone after Done", async () => {
     const { user, queryClient } = renderId(<NewConnectorPage />, { route: "/connectors/new/", session: LOGGED_IN })
 
+    await user.click(await findButton(/^Custom MCP client/))
+    await clickButton("Create token")
     await user.click(await screen.findByText("Study planner"))
     await fillField("Name", "Claude planner")
     await clickButton("Create connector")
@@ -55,6 +63,8 @@ describe("new connector page", () => {
     )
     const { user } = renderId(<NewConnectorPage />, { route: "/connectors/new/", session: LOGGED_IN })
 
+    await user.click(await findButton(/^Custom MCP client/))
+    await clickButton("Create token")
     await user.click(await screen.findByText("Study planner"))
     setDropdownValue(await screen.findByLabelText("Expires after"), "90")
     await fillField("Name", "Mine")
@@ -78,6 +88,7 @@ describe("new connector page", () => {
       }),
     )
     renderId(<NewConnectorPage />, { route: "/connectors/new/", session: LOGGED_IN })
+    await openTokenForm()
 
     setDropdownValue(await screen.findByLabelText("Server"), "lms")
     expect(await screen.findByText("Read courses, steps and attempts.")).toBeInTheDocument()
@@ -92,6 +103,7 @@ describe("new connector page", () => {
 
   test("a connector without a name or scope is not sent", async () => {
     renderId(<NewConnectorPage />, { route: "/connectors/new/", session: LOGGED_IN })
+    await openTokenForm()
 
     await clickButton("Create connector")
 
@@ -121,6 +133,7 @@ describe("new connector page", () => {
       session: { access_token: "admin-token", user: adminMe },
     })
 
+    await openTokenForm()
     setDropdownValue(await screen.findByLabelText("Server"), "admin")
 
     expect(await screen.findByText("Administration connectors need a confirmation code.")).toBeInTheDocument()

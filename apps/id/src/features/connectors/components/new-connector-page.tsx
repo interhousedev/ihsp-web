@@ -8,10 +8,10 @@ import { useState } from "react"
 import { QueryBoundary } from "../../shared/components/query-boundary"
 import { useTr } from "../../shared/hooks/use-tr"
 import { ConnectorTokenView } from "./connector-token-view"
-import { NewConnectorForm } from "./new-connector-form"
+import { McpSetupWizard } from "./mcp-setup-wizard"
 
 /**
- * `/connectors/new/`. The token lives only in this component's state: it is never cached, stored or put into a URL,
+ * `/connectors/new/` (MCP-5 wizard). The token lives only in this component's state: it is never cached, stored or put into a URL,
  * so it is gone as soon as the user leaves the page (MCP-2).
  */
 export function NewConnectorPage() {
@@ -31,14 +31,14 @@ export function NewConnectorPage() {
   }
 
   return (
-    <PageContainer title={t("connectors.new.pageTitle")}>
+    <PageContainer title={t("connectors.mcp.title")}>
       {leaving ? <StateView state="loading" /> : null}
       {created ? <ConnectorTokenView created={created} onDone={finish} /> : null}
       {!created && !leaving ? (
         <QueryBoundary query={catalog}>
           {(scopeCatalog) => (
             <QueryBoundary query={me}>
-              {(user) => <NewConnectorForm catalog={scopeCatalog} user={user} onCreated={setCreated} />}
+              {(user) => <McpSetupWizard catalog={scopeCatalog} user={user} onTokenCreated={setCreated} />}
             </QueryBoundary>
           )}
         </QueryBoundary>

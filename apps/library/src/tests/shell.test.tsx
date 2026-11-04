@@ -82,7 +82,7 @@ describe("LibraryShell", () => {
     )
 
     expect(await screen.findByText("page body")).toBeInTheDocument()
-    await screen.findByRole("button", { name: "Account menu" })
+    await screen.findAllByRole("button", { name: "Account menu" })
     const labels = navLabels()
     expectLabels(labels, ["Home", "Browse", "My library", "Add a material", "Reading lists"])
     expect(labels).not.toContain("Review queue")
@@ -100,7 +100,7 @@ describe("LibraryShell", () => {
       { session: { user: { ...userMe, roles: ["student", "librarian"] } } },
     )
     await screen.findByText("page body")
-    expectLabels(navLabels(), ["Review queue", "Books", "Topics", "Collections", "Reports", "Statistics"])
+    expectLabels(navLabels(), ["Review queue", "Books", "Topics", "Collections", "Statistics"])
     expect(navLabels()).not.toContain("UniLibrary")
     expect(bottomLabels()).toEqual(["Home", "Browse", "My library", "Review queue"])
     librarian.unmount()
@@ -145,7 +145,7 @@ describe("LibraryShell", () => {
       { session: { user: { ...teacherMe, roles: ["teacher"] } } },
     )
 
-    await user.click(await screen.findByRole("button", { name: "Account menu" }))
+    await user.click((await screen.findAllByRole("button", { name: "Account menu" }))[0])
 
     const menu = await screen.findByRole("menu")
     expect(within(menu).getByRole("menuitem", { name: /library\.iht/ })).toHaveAttribute("aria-current", "page")

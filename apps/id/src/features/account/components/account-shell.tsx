@@ -2,33 +2,46 @@
 
 import { patchPreferences } from "@ihsp/api"
 import { logout, useSession } from "@ihsp/auth"
-import { usePlatformLinks } from "@ihsp/features-core"
-import { AppShell, UserMenu } from "@ihsp/ui"
+import { ShellNavControls, useLicenseMenu, usePlatformLinks } from "@ihsp/features-core"
+import { AppShell, SidebarBrand, UserMenu } from "@ihsp/ui"
 import type { ReactNode } from "react"
 import { useTr } from "../../shared/hooks/use-tr"
 import { useIdNav } from "../hooks/use-id-nav"
 
-/** Frame of the security pages: sidebar (a sheet on phones), account menu with language, theme and log out. */
+/** Frame of the security pages: sidebar (a sheet on phones) with the account menu: license, language, theme and log out. */
 export function AccountShell({ children }: { children: ReactNode }) {
   const t = useTr()
   const { session } = useSession()
   const user = session?.user
   const nav = useIdNav(user?.roles ?? [])
   const platforms = usePlatformLinks()
+  const license = useLicenseMenu()
 
   return (
     <AppShell
       nav={nav}
-      brand={<span className="px-2 text-base font-semibold">{t("idCommon.brand")}</span>}
-      header={
+      brand={
+        <SidebarBrand
+          name={t("idCommon.brand")}
+          // oxlint-disable-next-line nextjs/no-img-element -- static export, the logo is a plain file of /public
+          logo={<img src="/icons/icon-192.png" alt="" width={24} height={24} />}
+        />
+      }
+      controlsLeading={<ShellNavControls />}
+      sidebarFooter={
         user ? (
-          <UserMenu
-            name={`${user.first_name} ${user.last_name}`}
-            subtitle={user.login}
-            platforms={platforms}
-            onLogout={() => void logout()}
-            onLocaleChange={(locale) => void patchPreferences({ locale }).catch(() => undefined)}
-          />
+          <>
+            <UserMenu
+              variant="row"
+              name={`${user.first_name} ${user.last_name}`}
+              subtitle={user.login}
+              items={license.items}
+              platforms={platforms}
+              onLogout={() => void logout()}
+              onLocaleChange={(locale) => void patchPreferences({ locale }).catch(() => undefined)}
+            />
+            {license.dialog}
+          </>
         ) : null
       }
     >

@@ -1,8 +1,8 @@
 /** The pages of /manage/: the role guard of every route, and that a librarian reaches the real screens. */
 import { describe, expect, it } from "bun:test"
 import { resetConfig } from "@ihsp/config"
-import { setLibraryActor, userMe } from "@ihsp/test-utils"
-import { screen } from "@testing-library/react"
+import { setLibraryActor, testRouter, userMe } from "@ihsp/test-utils"
+import { screen, waitFor } from "@testing-library/react"
 import type { ComponentType } from "react"
 import BooksEditPage from "../app/manage/books/edit/page"
 import BooksPage from "../app/manage/books/page"
@@ -27,7 +27,6 @@ const LIBRARIAN_PAGES: [route: string, Page: ComponentType, heading: string][] =
   ["/manage/topics/", TopicsPage, "Topics"],
   ["/manage/subjects/", SubjectsPage, "Subjects"],
   ["/manage/collections/", CollectionsPage, "Collections"],
-  ["/manage/reports/", ReportsPage, "Reports"],
   ["/manage/stats/", StatsPage, "Statistics"],
 ]
 
@@ -46,6 +45,21 @@ describe("the /manage/ pages: role guard", () => {
       expect(await screen.findByRole("heading", { level: 1, name: heading })).toBeInTheDocument()
     })
   }
+
+  it("/manage/reports/ is for librarians, and a librarian is sent to the queue's reports tab", async () => {
+    asLibrary()
+    setLibraryActor("student")
+    const student = renderLibraryApp(<ReportsPage />, { route: "/manage/reports/" })
+    expect(await screen.findByText("No access")).toBeInTheDocument()
+    student.unmount()
+
+    setLibraryActor("librarian")
+    renderLibraryApp(<ReportsPage />, {
+      route: "/manage/reports/",
+      session: { user: { ...userMe, roles: ["student", "librarian"] } },
+    })
+    await waitFor(() => expect(testRouter.replace).toHaveBeenCalledWith("/manage/queue/?tab=reports"))
+  })
 
   it("/manage/unilibrary/ is for administrators only: a librarian sees 'No access'", async () => {
     asLibrary()

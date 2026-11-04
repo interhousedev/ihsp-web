@@ -1,4 +1,5 @@
 import "@ihsp/ui/styles"
+import { BRAND } from "@ihsp/config/brand"
 import { TELEGRAM_SDK_LOADER } from "@ihsp/telegram/sdk-loader"
 import { THEME_INIT_SCRIPT } from "@ihsp/ui/theme-init"
 import { LANG_INIT_SCRIPT } from "./lang-init"
@@ -7,7 +8,7 @@ import type { ReactNode } from "react"
 import { Providers } from "./providers"
 
 export const metadata: Metadata = {
-  title: "IHT ID",
+  title: BRAND.apps.id.name,
   description: "Log in, registration and account security",
   icons: {
     icon: [

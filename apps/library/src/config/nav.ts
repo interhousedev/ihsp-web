@@ -3,7 +3,7 @@
 import { useLibraryAccess } from "@ihsp/features-core"
 import { useT } from "@ihsp/i18n"
 import { filterNavGroups, type BottomNavItem, type NavGroup } from "@ihsp/ui"
-import { IconBookmarks, IconBooks, IconCategory, IconFlag, IconInbox, IconListDetails, IconSitemap } from "@ihsp/ui"
+import { IconBookmarks, IconBooks, IconCategory, IconInbox, IconListDetails, IconSitemap } from "@ihsp/ui"
 import { useMemo } from "react"
 
 /**
@@ -41,7 +41,6 @@ export function useNav(): { groups: NavGroup[]; bottom: BottomNavItem[] } {
             icon: "galleryVerticalEnd",
             visible: canManage,
           },
-          { title: t("reports"), url: "/manage/reports/", icon: IconFlag, visible: canManage },
           { title: t("stats"), url: "/manage/stats/", icon: "reports", visible: canManage },
           { title: t("unilibrary"), url: "/manage/unilibrary/", icon: "globe", visible: isAdmin },
         ],

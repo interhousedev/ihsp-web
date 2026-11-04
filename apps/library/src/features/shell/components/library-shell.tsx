@@ -2,7 +2,7 @@
 
 import type { Role } from "@ihsp/api"
 import { RequireAuth, RequireRole } from "@ihsp/auth"
-import { HistoryButtons, useLibraryAccess } from "@ihsp/features-core"
+import { ShellNavControls, useLibraryAccess } from "@ihsp/features-core"
 import { AppShell, OfflineBadge } from "@ihsp/ui"
 import { Suspense, type ReactNode } from "react"
 import { useNav } from "../../../config/nav"
@@ -20,11 +20,11 @@ import { SignInButton } from "./sign-in-button"
 export type LibraryAccessRule = "public" | "auth" | { roles: Role[] }
 
 function Header() {
-  const { status, signedIn } = useLibraryAccess()
+  const { status } = useLibraryAccess()
   return (
     <>
       <OfflineBadge />
-      {signedIn ? <ProfileMenu /> : status === "anonymous" ? <SignInButton /> : null}
+      {status === "anonymous" ? <SignInButton /> : null}
     </>
   )
 }
@@ -33,11 +33,12 @@ function Frame({ children }: { children: ReactNode }) {
   const nav = useNav()
   return (
     <AppShell
-      headerLeading={<HistoryButtons />}
+      controlsLeading={<ShellNavControls />}
       nav={nav.groups}
       bottomNav={nav.bottom}
       brand={<LibraryBrand />}
-      header={<Header />}
+      sidebarFooter={<ProfileMenu variant="row" />}
+      controls={<Header />}
     >
       <Suspense fallback={<PageLoading />}>{children}</Suspense>
     </AppShell>

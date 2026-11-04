@@ -1,6 +1,6 @@
 {
   "idCommon": {
-    "brand": "IHT ID",
+    "brand": "{appId}",
     "working": "Подождите…",
     "loading": "Загрузка…",
     "code": "Код",
@@ -34,7 +34,7 @@
     },
     "missingChallenge": {
       "title": "Откройте страницу из приложения",
-      "description": "Откройте страницу по кнопке «Войти» в приложении IHT.",
+      "description": "Откройте страницу по кнопке «Войти» в приложении {brand}.",
       "action": "Открыть безопасность аккаунта"
     },
     "stepUp": {
@@ -77,8 +77,8 @@
       "forbidden": "У вас нет прав на это действие."
     },
     "id": {
-      "wrong-institution": "Регистрироваться могут только студенты Interhouse. Этот аккаунт EMIS относится к другому учебному заведению.",
-      "emis-already-linked": "У этого аккаунта EMIS уже есть аккаунт IHT.",
+      "wrong-institution": "Регистрироваться могут только студенты {orgAlias}. Этот аккаунт EMIS относится к другому учебному заведению.",
+      "emis-already-linked": "У этого аккаунта EMIS уже есть аккаунт {brand}.",
       "user-not-found": "Пользователь с таким логином не найден.",
       "admin-reset-forbidden": "Этот аккаунт может сбросить только другой член Администрации. Обратитесь в Администрацию.",
       "passkey-not-found": "Ключ доступа не найден.",
@@ -94,7 +94,7 @@
       "unavailable": "EMIS не отвечает. Попробуйте позже."
     },
     "telegram": {
-      "linked-elsewhere": "Этот аккаунт Telegram уже привязан к другому аккаунту IHT. Сначала выйдите там."
+      "linked-elsewhere": "Этот аккаунт Telegram уже привязан к другому аккаунту {brand}. Сначала выйдите там."
     }
   },
   "idNav": {
@@ -158,7 +158,7 @@
     },
     "totp": {
       "title": "Введите код из приложения",
-      "description": "Откройте приложение-аутентификатор и введите 6-значный код для IHT ID."
+      "description": "Откройте приложение-аутентификатор и введите 6-значный код для {appId}."
     }
   },
   "loginOtp": {
@@ -177,7 +177,7 @@
   },
   "consent": {
     "title": "Разрешить «{client}»?",
-    "description": "Приложение запрашивает доступ к вашему аккаунту IHT.",
+    "description": "Приложение запрашивает доступ к вашему аккаунту {brand}.",
     "verified": "Проверено",
     "unverified": "Не проверено",
     "unverifiedWarning": "Администрация не проверила это приложение. Разрешайте доступ, только если вы ему доверяете.",
@@ -202,7 +202,7 @@
   },
   "register": {
     "title": "Регистрация через EMIS",
-    "emisLoginNotice": "Похоже, это логин EMIS — давайте создадим ваш IHT ID.",
+    "emisLoginNotice": "Похоже, это логин EMIS — давайте создадим ваш {appId}.",
     "description": "Введите логин и пароль EMIS, чтобы загрузить имя и группу.",
     "submit": "Продолжить",
     "haveAccount": "У меня уже есть аккаунт",
@@ -230,13 +230,13 @@
     "done": {
       "title": "Аккаунт создан",
       "description": "Ваш логин: {login}. Входите с ним и только что заданным паролем.",
-      "open": "Открыть IHT"
+      "open": "Открыть {brand}"
     },
     "welcome": {
-      "title": "Добро пожаловать в IHT ID",
-      "description": "IHT ID — ваш единый аккаунт для сервисов IHT.",
+      "title": "Добро пожаловать в {appId}",
+      "description": "{appId} — ваш единый аккаунт для сервисов {brand}.",
       "points": {
-        "account": "Один вход для my.iht, staff, библиотеки (lib.ihsu.uz) и LMS.",
+        "account": "Один вход для {appMy}, staff, библиотеки ({libraryHost}) и LMS.",
         "codes": "Коды для входа приходят в Telegram или на почту.",
         "security": "Пароль, сеансы и подключённые приложения — в настройках безопасности."
       },
@@ -333,7 +333,7 @@
     }
   },
   "miniApp": {
-    "title": "Вход в IHT",
+    "title": "Вход в {brand}",
     "description": "Войдите, чтобы привязать этот аккаунт Telegram.",
     "submit": "Войти",
     "register": "Регистрация через EMIS",
@@ -653,6 +653,124 @@
       "config": "Конфигурация",
       "copyConfig": "Скопировать конфигурацию",
       "done": "Готово"
+    },
+    "mcp": {
+      "title": "Подключить ИИ-приложение",
+      "chooseTitle": "Какое ИИ-приложение вы подключаете?",
+      "services": {
+        "chatgpt": "ChatGPT",
+        "gemini": "Gemini",
+        "claude": "Claude",
+        "custom": "Свой MCP-клиент"
+      },
+      "serviceHints": {
+        "chatgpt": "OpenAI, с плагинами",
+        "gemini": "Google, в браузере",
+        "claude": "Anthropic, с коннекторами",
+        "custom": "Любое приложение с MCP по HTTP"
+      },
+      "back": "Назад",
+      "server": "Сервер",
+      "availability": "Доступность",
+      "availabilityValue": {
+        "available": "Доступно",
+        "limited": "Ограниченно",
+        "plan_gated": "Только на платных тарифах"
+      },
+      "notesTitle": "Важно знать",
+      "serverUrl": "Адрес сервера",
+      "copyNamed": "Копировать: {name}",
+      "steps": {
+        "chatgpt": {
+          "s1": "Откройте настройки ChatGPT и включите режим разработчика в разделе «Приложения».",
+          "s2": "Добавьте адрес сервера в разделе «Плагины».",
+          "s3": "Войдите под учётной записью ИХШ и разрешите доступ."
+        },
+        "gemini": {
+          "s1": "Откройте gemini.google.com в браузере, а не в мобильном приложении.",
+          "s2": "Добавьте пользовательский MCP-сервер по адресу ниже.",
+          "s3": "Войдите под учётной записью ИХШ и разрешите доступ."
+        },
+        "claude": {
+          "s1": "Откройте «Настройки», затем «Коннекторы», и выберите «Добавить свой коннектор».",
+          "s2": "Вставьте адрес сервера.",
+          "s3": "Войдите под учётной записью ИХШ и разрешите доступ."
+        },
+        "custom": {
+          "s1": "Выберите транспорт Streamable HTTP и вставьте адрес сервера.",
+          "s2": "Если приложение запрашивает OAuth, введите настройки ниже.",
+          "s3": "Войдите под учётной записью ИХШ и разрешите доступ."
+        }
+      },
+      "connectInApp": {
+        "title": "Подключение в приложении",
+        "text": "Приложение регистрирует себя само. Добавьте там адрес сервера; свой клиент не нужен."
+      },
+      "ownClient": {
+        "title": "Создайте свой клиент",
+        "redirect": "Redirect URI",
+        "redirectHint": "Вставьте адрес перенаправления, который показывает приложение.",
+        "invalidRedirect": "Укажите адрес https или http на localhost.",
+        "create": "Создать клиент",
+        "secretTitle": "Клиент создан",
+        "clientId": "ID клиента",
+        "secret": "Секрет клиента",
+        "secretOnce": "Показывается один раз. Скопируйте сейчас: повторно его не покажут.",
+        "clients": "Ваши клиенты",
+        "noClients": "Клиентов пока нет.",
+        "delete": "Удалить клиент"
+      },
+      "staticToken": {
+        "title": "Статический токен",
+        "text": "Создайте токен и передайте его как Bearer-заголовок.",
+        "action": "Создать токен"
+      },
+      "oauth": {
+        "title": "Настройки OAuth",
+        "tokenRoute": "Маршрут токена",
+        "fields": {
+          "issuer": "Издатель",
+          "discovery_url": "Discovery URL",
+          "authorization_endpoint": "Endpoint авторизации",
+          "token_endpoint": "Endpoint токенов",
+          "revocation_endpoint": "Endpoint отзыва",
+          "registration_endpoint": "Endpoint регистрации",
+          "jwks_uri": "JWKS URI",
+          "protected_resource_metadata_url": "Метаданные ресурса",
+          "resource": "Ресурс",
+          "audience": "Аудитория",
+          "scopes": "Области доступа",
+          "client_scopes": "Области клиента",
+          "code_challenge_method": "Метод PKCE",
+          "grant_types": "Типы грантов",
+          "response_types": "Типы ответа",
+          "token_endpoint_auth_methods": "Способы аутентификации",
+          "redirect_uris": "Redirect URI",
+          "redirect_uri_patterns": "Шаблоны redirect URI",
+          "own_client_route": "Маршрут своего клиента"
+        }
+      },
+      "notes": {
+        "business_enterprise_edu_full_mcp": "Полный MCP на тарифах Business, Enterprise и Edu. [Инструкция по режиму разработчика](chatgptHelp).",
+        "pro_read_fetch_only": "На тарифе Pro доступны только инструменты чтения и загрузки. Добавляется в разделе «Плагины».",
+        "gemini_app_us_18_personal_account_keep_activity_on": "Только США, от 18 лет, личный аккаунт, включена «История действий». Сервер добавляется в веб-версии. [Справка Gemini](geminiHelp).",
+        "gemini_enterprise_admin_sets_up_client_and_pkce": "Enterprise: администратор создаёт клиент с PKCE. [Инструкция по настройке](geminiEnterprise).",
+        "free_plan_one_custom_connector": "На бесплатном тарифе доступен один свой коннектор.",
+        "team_enterprise_owner_adds_connector": "Team и Enterprise: коннектор добавляет владелец. [Инструкция по коннекторам](claudeRemote).",
+        "static_headers_beta_owner_only": "Статические заголовки в бете и доступны только владельцу.",
+        "dcr_needs_allowlisted_redirect_uri": "Автоматическая регистрация требует разрешённого redirect URI."
+      },
+      "provision": {
+        "question": "Создать нужные данные за вас?",
+        "yes": "Да, создайте за меня",
+        "no": "Нет, я настрою сам",
+        "createdTitle": "Ваши значения",
+        "clientId": "ID клиента",
+        "secret": "Секрет клиента",
+        "secretOnce": "Показывается один раз. Скопируйте сейчас: повторно его не покажут.",
+        "reused": "Этот клиент уже создан. Его секрет показывали при создании; удалите клиент, чтобы получить новый.",
+        "delete": "Удалить этот клиент"
+      }
     }
   }
 }
