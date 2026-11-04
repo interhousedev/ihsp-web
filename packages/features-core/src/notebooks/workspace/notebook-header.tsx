@@ -30,7 +30,7 @@ export function NotebookHeader({ notebook, extras }: NotebookHeaderProps) {
   const backLabel = course ? t("course.backToEditor") : t("workspace.back")
 
   return (
-    <header className="bg-background flex h-14 shrink-0 items-center gap-1 border-b px-2 print:hidden md:px-3">
+    <header className="bg-background flex h-14 shrink-0 items-center gap-1 border-b px-2 print:hidden md:ps-3 md:pe-(--shell-controls-width)">
       <Link
         href={backHref}
         aria-label={backLabel}

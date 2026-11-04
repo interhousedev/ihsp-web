@@ -32,7 +32,7 @@ export function PublishChecklist({
         {items.map((item) => (
           <li key={item.key} data-ok={item.ok} className="flex items-start gap-2 text-sm">
             {item.ok ? (
-              <IconCircleCheck className="mt-0.5 size-5 shrink-0 text-emerald-700 dark:text-emerald-300" aria-hidden />
+              <IconCircleCheck className="mt-0.5 size-5 shrink-0 text-success" aria-hidden />
             ) : (
               <IconCircleX className="text-destructive mt-0.5 size-5 shrink-0" aria-hidden />
             )}

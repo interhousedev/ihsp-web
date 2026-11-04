@@ -50,7 +50,9 @@
       "tagPlaceholder": "Teg kiriting",
       "tagSuggestions": "Teglar",
       "noTags": "«{value}» tegi yoʻq. Shu teg boʻyicha filtrlash uchun Enter bosing.",
-      "clearTag": "Olib tashlash"
+      "clearTag": "Olib tashlash",
+      "collection": "Toʻplam",
+      "removeCollection": "{title} toʻplamini olib tashlash"
     },
     "year": "{year}-kurs",
     "uploader": {
@@ -105,6 +107,8 @@
     "noText": "Bu matnsiz skan, shuning uchun qidiruv va daftarlar undan foydalana olmaydi.",
     "removed": "Bu material olib tashlangan",
     "removedHint": "Javonda qoladi, lekin ochib boʻlmaydi.",
+    "noRead": "Hisobingiz bu materialni oʻqiy olmaydi.",
+    "noFile": "Bu materialda oʻqish uchun fayl yoʻq.",
     "ownerPanel": "Sizning yuklaganingiz",
     "status": {
       "label": "Holati",

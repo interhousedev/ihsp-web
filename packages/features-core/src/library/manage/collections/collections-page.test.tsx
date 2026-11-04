@@ -1,6 +1,7 @@
 import { describe, expect, it } from "bun:test"
-import { setLibraryActor, userMe } from "@ihsp/test-utils"
+import { apiUrl, problem, server, setLibraryActor, userMe } from "@ihsp/test-utils"
 import { screen, waitFor, within } from "@testing-library/react"
+import { http } from "msw"
 import { allowSlowRenders, renderLibrary } from "../../test-support"
 import { CollectionsPage } from "./collections-page"
 
@@ -71,6 +72,19 @@ describe("CollectionsPage", () => {
 
     await user.click(within(dialog).getByRole("button", { name: "Remove Gʻazallar from the collection" }))
     expect(within(items).getAllByRole("listitem")).toHaveLength(1)
+  })
+
+  it("shows a retry when the item search fails, and finds the items after the retry", async () => {
+    server.use(http.get(apiUrl("/v1/library/items"), () => problem(500, "common/internal", "Boom"), { once: true }))
+    const { user } = renderCollections()
+    await screen.findByRole("list", { name: "Collections" })
+
+    await user.click(screen.getAllByRole("button", { name: "New collection" })[0]!)
+    const dialog = await screen.findByRole("dialog", { name: "New collection" })
+    await user.type(within(dialog).getByLabelText("Find items to add"), "physics")
+    await user.click(await within(dialog).findByRole("button", { name: "Try again" }))
+
+    expect(await within(dialog).findByRole("button", { name: /^Add Physics 10: Mechanics/ })).toBeInTheDocument()
   })
 
   it("deletes a collection after a confirmation", async () => {

@@ -23,7 +23,8 @@ export function WorkspaceSkeleton({ layout }: { layout: WorkspaceLayout }) {
       role="status"
       aria-busy="true"
       aria-label={t("loadingTitle")}
-      className="flex h-[calc(100dvh-3.5rem-var(--safe-top))] min-h-0 flex-col"
+      data-shell-flush
+      className="flex h-[calc(100dvh-var(--shell-top-reserve,0px))] md:h-[calc(100dvh-var(--safe-top))] min-h-0 flex-col"
     >
       <div className="flex h-14 shrink-0 items-center gap-3 border-b px-3">
         <Skeleton className="size-9 rounded-lg" />

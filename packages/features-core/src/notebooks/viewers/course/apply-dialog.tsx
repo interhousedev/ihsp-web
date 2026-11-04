@@ -45,7 +45,7 @@ function Diff({ before, after }: { before: string; after: string }) {
           data-kind={line.kind}
           className={cn(
             "block",
-            line.kind === "added" && "bg-emerald-500/15 text-emerald-700 dark:text-emerald-300",
+            line.kind === "added" && "bg-success-muted text-success",
             line.kind === "removed" && "bg-destructive/15 text-destructive line-through",
           )}
         >

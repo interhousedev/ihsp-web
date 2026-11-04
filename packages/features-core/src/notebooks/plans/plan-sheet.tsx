@@ -109,7 +109,7 @@ function PlanEditor({ notebookId, plan }: { notebookId: string; plan: Presentati
           ))}
         </ol>
         {over && !readOnly ? (
-          <div role="alert" className="flex flex-col gap-2 rounded-lg border border-amber-500/40 p-3 text-sm">
+          <div role="alert" className="flex flex-col gap-2 rounded-lg border border-warning/40 p-3 text-sm">
             <p>{t("overLimit", { count: slides.length, max: plan.max_slides })}</p>
             <Button
               type="button"

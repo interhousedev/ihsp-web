@@ -69,7 +69,7 @@ export function BookFileSection({
         )}
         {pendingFile ? (
           <p className="text-sm">
-            <IconCircleCheck className="me-1 inline size-4 text-emerald-700 dark:text-emerald-300" aria-hidden />
+            <IconCircleCheck className="me-1 inline size-4 text-success" aria-hidden />
             {t("filePending", { name: pendingFile.name })}
           </p>
         ) : null}
@@ -93,7 +93,7 @@ export function BookFileSection({
         <CoverImage src={form.coverUrl} className="aspect-[3/4] w-28 rounded-md" />
         {coverName ? (
           <p className="text-sm">
-            <IconCircleCheck className="me-1 inline size-4 text-emerald-700 dark:text-emerald-300" aria-hidden />
+            <IconCircleCheck className="me-1 inline size-4 text-success" aria-hidden />
             {t("coverNew", { name: coverName })}
           </p>
         ) : null}

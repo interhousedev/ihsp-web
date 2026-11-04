@@ -15,7 +15,7 @@ type SourceBannerProps = {
 export function SourceBanner({ source, onSync }: SourceBannerProps) {
   const t = useT("notebooks")
   return (
-    <div className="flex flex-wrap items-center justify-between gap-2 rounded-lg border border-amber-500/40 bg-amber-500/10 p-3 text-sm">
+    <div className="flex flex-wrap items-center justify-between gap-2 rounded-lg border border-warning bg-warning-muted p-3 text-sm">
       <SourceStatusLine source={source} className="text-sm" />
       {source.status === "stale" ? (
         <Button type="button" variant="outline" size="sm" className="min-h-11 gap-1 md:min-h-8" onClick={onSync}>

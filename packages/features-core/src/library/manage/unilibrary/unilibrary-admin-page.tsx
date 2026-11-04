@@ -16,7 +16,7 @@ export function UniLibraryAdminPage() {
   const t = useT("library.manage.unilibrary")
   return (
     <PageContainer title={t("title")}>
-      <div className="flex max-w-4xl flex-col gap-6">
+      <div className="flex w-full min-w-0 flex-col gap-6">
         <SettingsPanel />
         <StatusPanel />
         <p role="note" className="bg-muted flex items-start gap-2 rounded-xl border p-4 text-sm">

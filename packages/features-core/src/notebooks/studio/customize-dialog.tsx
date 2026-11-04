@@ -254,12 +254,12 @@ function CustomizeForm({
           adding={add.isPending}
         />
         {sources.isSuccess && chosen.length === 0 ? (
-          <p role="status" className="text-sm text-amber-900 dark:text-amber-100">
+          <p role="status" className="text-sm text-warning">
             {t("studio.noSources")}
           </p>
         ) : null}
         {waiting > 0 ? (
-          <p role="status" className="text-sm text-amber-900 dark:text-amber-100">
+          <p role="status" className="text-sm text-warning">
             {onlyWaiting ? t("studio.sources.waitAll") : t("studio.sources.skipped", { count: waiting })}
           </p>
         ) : null}

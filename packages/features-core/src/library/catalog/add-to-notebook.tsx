@@ -107,7 +107,7 @@ export function AddDialog({
           <DialogDescription>{t("description")}</DialogDescription>
         </DialogHeader>
         {noText ? (
-          <p role="alert" className="text-sm text-amber-800 dark:text-amber-200">
+          <p role="alert" className="text-warning text-sm">
             {t("noText")}
           </p>
         ) : (

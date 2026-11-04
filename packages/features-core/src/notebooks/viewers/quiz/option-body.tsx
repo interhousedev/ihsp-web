@@ -17,7 +17,7 @@ export function optionClasses({ selected, revealed, correct }: OptionState): str
   return cn(
     "flex min-h-14 w-full items-center gap-3 rounded-xl border p-3 text-start text-base transition-colors motion-reduce:transition-none md:min-h-12",
     !revealed && (selected ? "border-primary bg-primary/10" : "bg-card hover:bg-muted"),
-    revealed && correct && "border-green-600 bg-green-600/10 dark:border-green-500",
+    revealed && correct && "border-success bg-success-muted",
     revealed && !correct && selected && "border-destructive bg-destructive/10",
     revealed && !correct && !selected && "bg-card text-muted-foreground",
   )
@@ -41,7 +41,7 @@ export function OptionBody({ text, kind, selected, revealed, correct }: OptionBo
     <>
       <span aria-hidden className="flex size-6 shrink-0 items-center justify-center">
         {revealed && correct ? (
-          <IconCircleCheck className="size-6 text-green-600 dark:text-green-500" />
+          <IconCircleCheck className="size-6 text-success" />
         ) : revealed && selected ? (
           <IconCircleX className="text-destructive size-6" />
         ) : (

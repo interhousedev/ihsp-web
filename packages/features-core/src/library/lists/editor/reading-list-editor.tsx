@@ -80,7 +80,7 @@ export function ReadingListEditor() {
     )
   }
   return (
-    <PageContainer title={t("editTitle")} description={query.data.title}>
+    <PageContainer title={t("editTitle")}>
       <ListEditorForm key={query.data.id} list={query.data} />
     </PageContainer>
   )

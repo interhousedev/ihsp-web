@@ -58,7 +58,7 @@ export function SourceRow({
     <li
       className={cn(
         "group/row hover:bg-muted/60 focus-within:bg-muted/60 flex items-center rounded-lg",
-        !usable && source.status !== "pending" && source.status !== "processing" && "bg-amber-500/5",
+        !usable && source.status !== "pending" && source.status !== "processing" && "bg-warning-muted",
       )}
     >
       <button
@@ -73,7 +73,7 @@ export function SourceRow({
               {source.title}
             </span>
             {source.status === "ready" && source.word_count === 0 ? (
-              <Badge variant="outline" className="shrink-0 px-1.5 text-[0.65rem] text-amber-700 dark:text-amber-400">
+              <Badge variant="outline" className="shrink-0 px-1.5 text-[0.65rem] text-warning">
                 {t("row.emptyText")}
               </Badge>
             ) : null}

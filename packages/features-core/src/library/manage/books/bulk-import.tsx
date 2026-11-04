@@ -27,7 +27,7 @@ function ImportOutcome({ result }: { result: ImportResult }) {
   return (
     <div role="status" aria-live="polite" className="flex flex-col gap-3">
       <p className="flex items-center gap-2 text-sm font-medium">
-        <IconCircleCheck className="size-5 text-emerald-700 dark:text-emerald-300" aria-hidden />
+        <IconCircleCheck className="size-5 text-success" aria-hidden />
         {t("created", { count: result.created })}
       </p>
       {result.errors.length > 0 ? (

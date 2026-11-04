@@ -50,7 +50,9 @@
       "tagPlaceholder": "Type a tag",
       "tagSuggestions": "Tags",
       "noTags": "No tag “{value}”. Press Enter to filter by it.",
-      "clearTag": "Remove"
+      "clearTag": "Remove",
+      "collection": "Collection",
+      "removeCollection": "Remove collection {title}"
     },
     "year": "Year {year}",
     "uploader": {
@@ -105,6 +107,8 @@
     "noText": "This item is a scan without text, so search and notebooks cannot use it.",
     "removed": "This item was removed",
     "removedHint": "It stays on your shelf but cannot be opened.",
+    "noRead": "Your account cannot read this item.",
+    "noFile": "This item has no file to read.",
     "ownerPanel": "Your upload",
     "status": {
       "label": "Status",

@@ -9,6 +9,7 @@ import { toast } from "sonner"
 import { useAutoLabel, useLabels, useSelectSource, useSelectSources, useSources } from "../api"
 import { canShowFlat, isUsable, selectionState } from "../lib/sort-sources"
 import { groupByTopic } from "../lib/topic-groups"
+import { FileUploadButton } from "../../file-upload-button"
 import { useWorkspace } from "../workspace-context"
 import { DiscoverBox } from "./discover-box"
 import { DiscoverResults } from "./discover-results"
@@ -129,11 +130,18 @@ export function SourcesPanel({ notebook, onCollapse }: SourcesPanelProps) {
         </p>
       ) : (
         <>
-          <div className="px-3 md:px-4">
-            <Button type="button" variant="outline" className="min-h-11 w-full" onClick={openAddSources}>
+          <div className="flex items-start gap-2 px-3 md:px-4">
+            <Button type="button" variant="outline" className="min-h-11 flex-1" onClick={openAddSources}>
               <IconPlus aria-hidden />
               {t("sources.add")}
             </Button>
+            <FileUploadButton
+              purpose="ai_upload"
+              multiple
+              iconOnly
+              label={t("sources.uploadFile")}
+              onUploaded={(file) => void uploader.addFile(file)}
+            />
           </div>
           <DiscoverBox flow={discover} compact={items.length > 0} />
         </>

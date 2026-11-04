@@ -138,9 +138,7 @@ export function SearchPanel({ open, onOpenChange, noText, search, onSelect, onCl
                   </span>
                   <span className="break-words">
                     …{hit.excerpt.pre}
-                    <mark className="bg-yellow-300/60 text-foreground rounded-[2px] dark:bg-yellow-300/40">
-                      {hit.excerpt.match}
-                    </mark>
+                    <mark className="bg-warning-muted text-foreground rounded-[2px]">{hit.excerpt.match}</mark>
                     {hit.excerpt.post}…
                   </span>
                 </button>

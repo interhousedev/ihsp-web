@@ -39,7 +39,7 @@ export function NoTextIcon({ label, className }: StatusIconProps) {
           <span role="img" aria-label={label} tabIndex={0} className="inline-flex shrink-0 outline-none" />
         }
       >
-        <IconAlertTriangle aria-hidden className={cn("mt-px size-3.5 text-amber-700 dark:text-amber-400", className)} />
+        <IconAlertTriangle aria-hidden className={cn("mt-px size-3.5 text-warning", className)} />
       </TooltipTrigger>
       <TooltipContent>{label}</TooltipContent>
     </Tooltip>

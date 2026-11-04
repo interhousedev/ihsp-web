@@ -7,24 +7,13 @@ import { Card, CardContent, CardHeader, CardTitle, ConfirmDialog, StateView } fr
 import { useId, useState } from "react"
 import { toast } from "sonner"
 import { useDeleteResource } from "../hooks/use-lesson-mutations"
-import { AddMaterialDialog } from "./add-material-dialog"
 import { ResourceList } from "./resource-list"
 
 /**
- * Materials of the lesson (STF-4, STF-5, UF-STF-04): the teacher's files and links, with Add material and delete for
- * their own items. `defaultOpen` opens the add dialog (the Today quick action).
+ * Materials of the lesson (STF-4, STF-5, UF-STF-04): the teacher's files and links, with delete for their own items.
+ * Add material is a pop-up in the lesson's action toolbar.
  */
-export function MaterialsSection({
-  lesson,
-  materials,
-  defaultOpen,
-  onAddClosed,
-}: {
-  lesson: StaffLesson["lesson"]
-  materials: ResourceItem[]
-  defaultOpen: boolean
-  onAddClosed: () => void
-}) {
+export function MaterialsSection({ lesson, materials }: { lesson: StaffLesson["lesson"]; materials: ResourceItem[] }) {
   const t = useT("lessonDetail.materials")
   const errorMessage = useErrorMessage()
   const titleId = useId()
@@ -49,7 +38,6 @@ export function MaterialsSection({
           <CardTitle id={titleId} className="text-base">
             {t("title")}
           </CardTitle>
-          <AddMaterialDialog lesson={lesson} defaultOpen={defaultOpen} onClose={onAddClosed} />
         </CardHeader>
         <CardContent>
           {materials.length === 0 ? (

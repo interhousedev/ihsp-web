@@ -2,7 +2,7 @@
 
 import type { Annotation, AnnotationColor, ItemDetail, ItemFile } from "@ihsp/api"
 import { useT } from "@ihsp/i18n"
-import { useIsMobile } from "@ihsp/ui"
+import { StateView, useIsMobile } from "@ihsp/ui"
 import { useCallback, useEffect, useMemo, useRef, useState } from "react"
 import { toast } from "sonner"
 import { AddToNotebookDialog, ReportDialog } from "../catalog"
@@ -93,6 +93,9 @@ export function ReaderFrame({ item, file, start, startFraction, engines }: Reade
   const root = useRef<HTMLDivElement>(null)
 
   const [position, setPosition] = useState<ReaderPosition | null>(null)
+  // A view that failed to open shows this error instead of a blank frame; Try again mounts the view afresh.
+  const [loadError, setLoadError] = useState<{ error: unknown } | null>(null)
+  const [attempt, setAttempt] = useState(0)
   const [selection, setSelection] = useState<ReaderSelection | null>(null)
   const [pages, setPages] = useState<number | null>(file.pages)
   const [announcement, setAnnouncement] = useState("")
@@ -126,7 +129,7 @@ export function ReaderFrame({ item, file, start, startFraction, engines }: Reade
   const onReady = useCallback((info: { pages: number | null }) => {
     if (info.pages) setPages(info.pages)
   }, [])
-  const onError = useCallback(() => undefined, [])
+  const onError = useCallback((error: unknown) => setLoadError({ error }), [])
   const onAnnotationClick = useCallback((id: string) => {
     setActiveId(id)
     setNotesOpen(true)
@@ -305,14 +308,27 @@ export function ReaderFrame({ item, file, start, startFraction, engines }: Reade
     onError,
     ref: view,
   }
-  const body =
+  const reader =
     format === "pdf" ? (
-      <PdfReader {...common} {...(engines?.pdf ? { loadEngine: engines.pdf } : {})} />
+      <PdfReader key={attempt} {...common} {...(engines?.pdf ? { loadEngine: engines.pdf } : {})} />
     ) : format === "epub" ? (
-      <EpubReader {...common} {...(engines?.epub ? { loadEngine: engines.epub } : {})} />
+      <EpubReader key={attempt} {...common} {...(engines?.epub ? { loadEngine: engines.epub } : {})} />
     ) : (
-      <TextReader {...common} />
+      <TextReader key={attempt} {...common} />
     )
+  const body = loadError ? (
+    <StateView
+      state="error"
+      error={loadError.error}
+      onRetry={() => {
+        setLoadError(null)
+        setAttempt((count) => count + 1)
+      }}
+      className="m-4"
+    />
+  ) : (
+    reader
+  )
 
   const list = (
     <AnnotationList

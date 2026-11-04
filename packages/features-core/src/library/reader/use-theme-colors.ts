@@ -4,7 +4,8 @@ import { useEffect, useState, type RefObject } from "react"
 
 export type ThemeColors = { foreground: string; background: string; link: string }
 
-const FALLBACK: ThemeColors = { foreground: "#111111", background: "#ffffff", link: "#2563eb" }
+// Until the page's own colours are read, the browser's system colours stand in (no palette values in the code).
+const FALLBACK: ThemeColors = { foreground: "CanvasText", background: "Canvas", link: "LinkText" }
 
 function resolve(element: HTMLElement): ThemeColors {
   const style = getComputedStyle(element)

@@ -51,7 +51,7 @@ export const manageBookEditHref = (id?: string) => withQuery("/manage/books/edit
 export const manageTopicsHref = () => "/manage/topics/"
 export const manageSubjectsHref = () => "/manage/subjects/"
 export const manageCollectionsHref = () => "/manage/collections/"
-export const manageReportsHref = () => "/manage/reports/"
+export const manageReportsHref = () => "/manage/queue/?tab=reports"
 export const manageStatsHref = () => "/manage/stats/"
 export const manageUniLibraryHref = () => "/manage/unilibrary/"
 

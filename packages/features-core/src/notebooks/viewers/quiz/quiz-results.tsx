@@ -38,7 +38,7 @@ export function QuizResults({ summary, onReview, onRetryAll, onRetryWrong }: Qui
           <Stat
             label={t("quiz.correct")}
             value={summary.correct}
-            icon={<IconCircleCheck aria-hidden className="size-4 text-green-600 dark:text-green-500" />}
+            icon={<IconCircleCheck aria-hidden className="size-4 text-success" />}
           />
           <Stat
             label={t("quiz.wrong")}

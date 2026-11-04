@@ -75,7 +75,7 @@ export function SubjectsPage() {
           }
         />
       ) : (
-        <ul aria-label={t("treeLabel")} className="flex max-w-3xl flex-col gap-2">
+        <ul aria-label={t("treeLabel")} className="flex w-full min-w-0 flex-col gap-2">
           {tree.map((node, index) => (
             <SubjectTreeNode
               key={node.id}

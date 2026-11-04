@@ -145,11 +145,11 @@ describe("ReadingListEditor: a new list", () => {
     await user.type(await screen.findByLabelText("Title"), "Group list")
     await user.click(screen.getByRole("radio", { name: /Groups/ }))
 
-    expect(await screen.findByRole("checkbox", { name: "2TN2" })).toBeInTheDocument()
+    expect(await screen.findByRole("checkbox", { name: "1-Litsey A" })).toBeInTheDocument()
     await user.click(screen.getByRole("button", { name: "Save list" }))
     expect(await screen.findByText("Choose at least one group.")).toBeInTheDocument()
 
-    await user.click(screen.getByRole("checkbox", { name: "2TN2" }))
+    await user.click(screen.getByRole("checkbox", { name: "1-Litsey A" }))
     await user.click(screen.getByRole("button", { name: "Save list" }))
 
     await waitFor(() => expect(testRouter.push).toHaveBeenCalledTimes(1))
@@ -158,19 +158,19 @@ describe("ReadingListEditor: a new list", () => {
     expect((await getReadingList(created.id)).group_ids).toHaveLength(1)
   })
 
-  it("says that group lists are not available to a librarian who cannot list groups", async () => {
+  it("offers every group of the lyceum to a librarian for a group list", async () => {
     const { user } = renderEditor("/lists/edit/", "librarian")
-    await screen.findByLabelText("Title")
+    await user.type(await screen.findByLabelText("Title"), "Librarian group list")
+    await user.click(screen.getByRole("radio", { name: /Groups/ }))
 
-    expect(screen.getByRole("radio", { name: /Groups/ })).toBeDisabled()
-    expect(screen.getByRole("radio", { name: /The whole lyceum/ })).toBeEnabled()
-    await user.click(screen.getByRole("radio", { name: /The whole lyceum/ }))
-    await user.type(screen.getByLabelText("Title"), "Whole school")
+    expect(await screen.findByRole("checkbox", { name: "1-Litsey A" })).toBeEnabled()
+    expect(screen.getByRole("checkbox", { name: "2-Litsey A" })).toBeInTheDocument()
+    await user.click(screen.getByRole("checkbox", { name: "2-Litsey A" }))
     await user.click(screen.getByRole("button", { name: "Save list" }))
 
     await waitFor(() => expect(testRouter.push).toHaveBeenCalledTimes(1))
-    const created = (await getReadingLists({ mine: true })).find((list) => list.title === "Whole school")!
-    expect(created.scope).toBe("school")
+    const created = (await getReadingLists({ mine: true })).find((list) => list.title === "Librarian group list")!
+    expect(created.scope).toBe("groups")
   })
 })
 

@@ -1,6 +1,8 @@
+import { BRAND } from "@ihsp/config/brand"
+
 /** Colours of the browser bar around the installed app (light and dark `--background` of the theme). */
-export const PWA_THEME_COLOR_LIGHT = "#ffffff"
-export const PWA_THEME_COLOR_DARK = "#0a0a0a"
+export const PWA_THEME_COLOR_LIGHT = BRAND.colors.pwaLight
+export const PWA_THEME_COLOR_DARK = BRAND.colors.pwaDark
 
 export const MANIFEST_PATH = "/manifest.webmanifest"
 export const APPLE_TOUCH_ICON_PATH = "/icons/apple-touch-icon.png"
@@ -23,5 +25,5 @@ export function createPwaHeadScript(title: string): string {
   return `try{var e=window.__ENV__;if(e&&e.APP_MODE==='pwa'){var h=document.head;var a=function(t,o){var n=document.createElement(t);for(var k in o)n.setAttribute(k,o[k]);h.appendChild(n)};a('link',{rel:'manifest',href:'${MANIFEST_PATH}'});a('link',{rel:'apple-touch-icon',href:'${APPLE_TOUCH_ICON_PATH}'});a('meta',{name:'theme-color',content:'${PWA_THEME_COLOR_LIGHT}',media:'(prefers-color-scheme: light)'});a('meta',{name:'theme-color',content:'${PWA_THEME_COLOR_DARK}',media:'(prefers-color-scheme: dark)'});a('meta',{name:'apple-mobile-web-app-capable',content:'yes'});a('meta',{name:'mobile-web-app-capable',content:'yes'});a('meta',{name:'apple-mobile-web-app-title',content:${name}});a('meta',{name:'apple-mobile-web-app-status-bar-style',content:'default'});window.addEventListener('beforeinstallprompt',function(v){v.preventDefault();window.${INSTALL_PROMPT_GLOBAL}=v;window.dispatchEvent(new Event('${INSTALL_PROMPT_EVENT}'))})}}catch(x){}`
 }
 
-/** The head script of the student app ("My IHT" under the home screen icon). */
-export const PWA_HEAD_SCRIPT = createPwaHeadScript("My IHT")
+/** The head script of the student app (its installed name under the home screen icon). */
+export const PWA_HEAD_SCRIPT = createPwaHeadScript(BRAND.apps.sp.pwaName)

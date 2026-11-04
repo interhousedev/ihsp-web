@@ -18,7 +18,7 @@ const CHOICE =
   "flex min-h-11 cursor-pointer items-start gap-3 rounded-lg border px-3 py-2 text-sm has-[:focus-visible]:ring-2 has-[:focus-visible]:ring-ring"
 
 function choiceClass(selected: boolean, submitted: boolean, correct: boolean): string {
-  if (submitted && correct) return cn(CHOICE, "border-emerald-600 bg-emerald-50 dark:bg-emerald-950")
+  if (submitted && correct) return cn(CHOICE, "border-success bg-success-muted")
   if (submitted && selected) return cn(CHOICE, "border-destructive bg-destructive/10")
   return cn(CHOICE, selected ? "border-primary bg-primary/5" : "border-border")
 }
@@ -85,7 +85,7 @@ function MatchingInput({ question, answer, submitted, onAnswer }: InputProps) {
               <select
                 className={cn(
                   "border-input bg-background min-h-11 rounded-md border px-2 text-sm md:min-h-8",
-                  submitted && (right ? "border-emerald-600" : "border-destructive"),
+                  submitted && (right ? "border-success" : "border-destructive"),
                 )}
                 value={value}
                 disabled={submitted}
@@ -98,9 +98,7 @@ function MatchingInput({ question, answer, submitted, onAnswer }: InputProps) {
                   </option>
                 ))}
               </select>
-              {submitted && !right ? (
-                <span className="text-xs text-emerald-700 dark:text-emerald-300">{item.answer}</span>
-              ) : null}
+              {submitted && !right ? <span className="text-xs text-success">{item.answer}</span> : null}
             </span>
           </label>
         )
@@ -134,9 +132,7 @@ function TextInput({ question, answer, submitted, onAnswer }: InputProps) {
         </p>
       ) : null}
       {submitted ? (
-        <p className="text-xs text-emerald-700 dark:text-emerald-300">
-          {t("accepted", { answers: question.accepted.join(" / ") })}
-        </p>
+        <p className="text-xs text-success">{t("accepted", { answers: question.accepted.join(" / ") })}</p>
       ) : null}
     </div>
   )

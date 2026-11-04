@@ -109,6 +109,18 @@ describe("QueuePage: tabs and list", () => {
     expect((await screen.findAllByRole("alert")).length).toBeGreaterThan(0)
     expect(screen.getAllByRole("button", { name: "Try again" }).length).toBeGreaterThan(0)
   })
+
+  it("shows a retry in the preview when the item cannot be loaded, and the details after the retry", async () => {
+    server.use(http.get(apiUrl("/v1/library/items/:id"), () => problem(500, "common/internal", "Boom"), { once: true }))
+    const { user } = renderQueue()
+
+    await user.click(await row(PENDING))
+    const preview = await screen.findByRole("article", { name: "Item to review" })
+    await user.click(await within(preview).findByRole("button", { name: "Try again" }))
+
+    await waitFor(() => expect(within(preview).queryByRole("button", { name: "Try again" })).not.toBeInTheDocument())
+    expect(within(preview).getByRole("heading", { name: "Files" })).toBeInTheDocument()
+  })
 })
 
 describe("QueuePage: actions", () => {

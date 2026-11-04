@@ -108,7 +108,7 @@ export function StudioPanel({ notebook, onCollapse }: StudioPanelProps) {
           </p>
         ))}
         {notebook.selected_source_count === 0 ? (
-          <p role="status" className="text-xs text-amber-900 dark:text-amber-100">
+          <p role="status" className="text-xs text-warning">
             {t("studio.noSources")}
           </p>
         ) : null}

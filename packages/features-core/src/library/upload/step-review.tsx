@@ -2,7 +2,7 @@
 
 import { getLibrarySubjectsQuery, type ItemFile } from "@ihsp/api"
 import { useT } from "@ihsp/i18n"
-import { Badge, formatBytes } from "@ihsp/ui"
+import { Badge, StateView, formatBytes } from "@ihsp/ui"
 import { useQuery } from "@tanstack/react-query"
 import type { ReactNode } from "react"
 import { useLibraryAccess } from "../hooks/use-library-access"
@@ -62,7 +62,13 @@ export function StepReview({
           <span className="font-medium">{values.title}</span>
         </Row>
         {values.description.trim() ? <Row label={t("description")}>{values.description}</Row> : null}
-        <Row label={t("subjects")}>{values.subjectIds.map(nameOf).join(", ") || "–"}</Row>
+        <Row label={t("subjects")}>
+          {subjects.isError ? (
+            <StateView state="error" error={subjects.error} onRetry={() => void subjects.refetch()} />
+          ) : (
+            values.subjectIds.map(nameOf).join(", ") || "–"
+          )}
+        </Row>
         <Row label={t("years")}>{values.years.toSorted((a, b) => a - b).join(", ") || "–"}</Row>
         <Row label={t("type")}>{library(`type.${values.type}`)}</Row>
         <Row label={t("language")}>{library(`browse.language.${values.language}`)}</Row>

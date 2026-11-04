@@ -21,14 +21,12 @@ export function AnswerFeedback({ question, correct, refsIndex, onExplain }: Answ
     <div
       className={cn(
         "flex flex-col gap-2 rounded-xl border p-4 text-sm",
-        correct
-          ? "border-green-600/50 bg-green-600/5 dark:border-green-500/50"
-          : "border-destructive/50 bg-destructive/5",
+        correct ? "border-success bg-success-muted" : "border-destructive/50 bg-destructive/5",
       )}
     >
       <p className="flex items-center gap-2 text-base font-semibold">
         {correct ? (
-          <IconCircleCheck aria-hidden className="size-5 text-green-600 dark:text-green-500" />
+          <IconCircleCheck aria-hidden className="size-5 text-success" />
         ) : (
           <IconCircleX aria-hidden className="text-destructive size-5" />
         )}

@@ -38,7 +38,7 @@ export function DiscoverFooter({
         </p>
       ) : null}
       {atLimit ? (
-        <p role="status" className="text-xs text-amber-700 dark:text-amber-400">
+        <p role="status" className="text-xs text-warning">
           {capacity === 0 ? t("add.full") : t("add.tooMany", { max: capacity })}
         </p>
       ) : null}

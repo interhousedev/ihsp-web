@@ -1,6 +1,7 @@
 import { describe, expect, it } from "bun:test"
-import { libDetails, setUniLibrary } from "@ihsp/test-utils"
+import { apiUrl, libCollections, libDetails, problem, server, setUniLibrary } from "@ihsp/test-utils"
 import { screen, waitFor, within } from "@testing-library/react"
+import { http } from "msw"
 import { allowSlowRenders, renderLibrary, renderLibraryAnonymous } from "../test-support"
 import { BrowsePage } from "./browse-page"
 
@@ -109,5 +110,55 @@ describe("BrowsePage", () => {
     const results = await screen.findByRole("list", { name: "Search results" })
     expect(within(results).getByText(libDetails.bookOtkanKunlar.title)).toBeInTheDocument()
     expect(within(results).queryByText(libDetails.bookPhysics10.title)).not.toBeInTheDocument()
+  })
+})
+
+describe("BrowsePage: filters from the address", () => {
+  it("offers every year of study the backend accepts, 1 to 12", async () => {
+    const { user } = renderLibrary(<BrowsePage />, { route: "/browse/" })
+    await user.click(await screen.findByRole("button", { name: /Filters/ }))
+    await user.click(screen.getByRole("combobox", { name: "Year of study" }))
+
+    const years = await screen.findAllByRole("option", { name: /^Year \d+$/ })
+    expect(years.map((option) => option.textContent)).toEqual(
+      Array.from({ length: 12 }, (_, index) => `Year ${index + 1}`),
+    )
+  })
+
+  it("shows the collection from the address as a chip that removes the filter", async () => {
+    const collection = libCollections[0]!
+    const { user } = renderLibrary(<BrowsePage />, { route: `/browse/?collection=${collection.id}` })
+
+    const chip = await screen.findByRole("button", { name: `Remove collection ${collection.title}` })
+    await user.click(chip)
+
+    await waitFor(() =>
+      expect(screen.queryByRole("button", { name: `Remove collection ${collection.title}` })).not.toBeInTheDocument(),
+    )
+  })
+
+  it("shows the error state, not the empty text, when the UniLibrary search fails", async () => {
+    setUniLibrary({ enabled: true })
+    server.use(
+      http.get(apiUrl("/v1/library/external/unilibrary/search"), () =>
+        problem(503, "library/unavailable", "UniLibrary is unavailable"),
+      ),
+    )
+    renderLibrary(<BrowsePage />, { route: "/browse/?source=external&q=physics" })
+
+    const alert = await screen.findByRole("alert")
+    expect(within(alert).getByText("Something went wrong")).toBeInTheDocument()
+    expect(screen.queryByText(/Nothing found/)).not.toBeInTheDocument()
+  })
+})
+
+describe("BrowsePage: a filter list that cannot load", () => {
+  it("shows the error with Try again in the subject filter instead of an empty list", async () => {
+    server.use(http.get(apiUrl("/v1/library/subjects"), () => problem(500, "common/internal", "Broken")))
+    const { user } = renderLibrary(<BrowsePage />, { route: "/browse/" })
+    await user.click(await screen.findByRole("button", { name: /Filters/ }))
+
+    expect(await screen.findByRole("alert")).toHaveTextContent("Something went wrong")
+    expect(screen.getByRole("button", { name: "Try again" })).toBeInTheDocument()
   })
 })

@@ -40,7 +40,7 @@ function DataTableBody({
   const pageLabel = (page: number) => t("viewer.page", { page })
 
   return (
-    <section className="mx-auto flex w-full max-w-6xl flex-col gap-4 p-4 md:p-6">
+    <section className="flex w-full min-w-0 flex-col gap-4 p-4 md:p-6">
       <div role="group" aria-label={t("viewers.table.toolbar")} className="flex flex-wrap gap-2">
         <ToolbarButton
           icon={IconCopy}

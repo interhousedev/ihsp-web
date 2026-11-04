@@ -2,7 +2,7 @@
 
 import { getReadingListsQuery } from "@ihsp/api"
 import { useT } from "@ihsp/i18n"
-import { StateView, buttonVariants } from "@ihsp/ui"
+import { ScrollList, StateView, buttonVariants } from "@ihsp/ui"
 import { useQuery } from "@tanstack/react-query"
 import Link from "next/link"
 import { ReadingListCardView } from "../../lists/view"
@@ -28,12 +28,14 @@ export function ListsTab() {
     )
   }
   return (
-    <ul className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3" aria-label={t("tabs.lists")}>
-      {query.data.map((list) => (
-        <li key={list.id}>
-          <ReadingListCardView list={list} />
-        </li>
-      ))}
-    </ul>
+    <ScrollList label={t("tabs.lists")}>
+      <ul className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3" aria-label={t("tabs.lists")}>
+        {query.data.map((list) => (
+          <li key={list.id}>
+            <ReadingListCardView list={list} />
+          </li>
+        ))}
+      </ul>
+    </ScrollList>
   )
 }

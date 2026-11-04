@@ -2,19 +2,10 @@
 
 import { useT } from "@ihsp/i18n"
 import { Skeleton } from "@ihsp/ui"
-import { createParser, Renderer, type Library } from "@openuidev/react-lang"
+import { Renderer, type Library } from "@openuidev/react-lang"
 import { Component, useMemo, type ReactNode } from "react"
+import { isRenderable } from "./renderable"
 import { stringsInBlock } from "./safe"
-
-/** True when the block parses to a tree with no validation errors and no missing references. */
-function isRenderable(code: string, library: Library): boolean {
-  try {
-    const result = createParser(library.toJSONSchema(), library.root).parse(code)
-    return result.root !== null && result.meta.errors.length === 0 && result.meta.unresolved.length === 0
-  } catch {
-    return false
-  }
-}
 
 function BlockFallback({ code }: { code: string }) {
   const t = useT("openui")
@@ -51,11 +42,22 @@ export function OpenUiSkeleton() {
   return <Skeleton role="status" aria-label={t("loading")} className="my-2 h-24 w-full" />
 }
 
-/** A complete ```openui block: rendered with the library, or degraded to its readable text when it is invalid. */
-export function OpenUiBlock({ code, library }: { code: string; library: Library }) {
+/**
+ * A complete ```openui block: rendered with the library, or degraded to its readable text when it is invalid. While
+ * the answer streams an invalid block waits as a skeleton: the backend repairs or drops it when the answer ends.
+ */
+export function OpenUiBlock({
+  code,
+  library,
+  isStreaming = false,
+}: {
+  code: string
+  library: Library
+  isStreaming?: boolean
+}) {
   const ok = useMemo(() => isRenderable(code, library), [code, library])
   const fallback = <BlockFallback code={code} />
-  if (!ok) return fallback
+  if (!ok) return isStreaming ? <OpenUiSkeleton /> : fallback
   return (
     <Boundary fallback={fallback}>
       <Renderer response={code} library={library} isStreaming={false} />

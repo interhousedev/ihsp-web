@@ -108,8 +108,6 @@ export function ListSettingsFields({
                 {t("retry")}
               </button>
             </div>
-          ) : groups.state === "unavailable" ? (
-            <p className="text-muted-foreground text-sm">{t("groupsUnavailable")}</p>
           ) : groups.groups.length === 0 ? (
             <p className="text-muted-foreground text-sm">{t("noGroups")}</p>
           ) : (

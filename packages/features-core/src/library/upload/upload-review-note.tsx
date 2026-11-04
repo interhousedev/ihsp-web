@@ -1,7 +1,7 @@
 "use client"
 
 import { useT } from "@ihsp/i18n"
-import { Alert, AlertDescription, AlertTitle, Icons, cn } from "@ihsp/ui"
+import { Alert, AlertDescription, AlertTitle, Icons } from "@ihsp/ui"
 import { useReasonText } from "./reason-text"
 
 /**
@@ -21,10 +21,7 @@ export function UploadReviewNote({
   const reasonText = useReasonText()(reason)
   if (!reasonText && !message) return null
   return (
-    <Alert
-      role="note"
-      className={cn("border-amber-300 bg-amber-50 dark:border-amber-800 dark:bg-amber-950/40", className)}
-    >
+    <Alert role="note" className={className}>
       <Icons.info aria-hidden />
       <AlertTitle>{t("reviewerMessage")}</AlertTitle>
       <AlertDescription className="text-foreground flex flex-col gap-1">

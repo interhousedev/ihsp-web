@@ -38,7 +38,7 @@ export function LinkTab({ value, onChange, disabled, onSubmit }: LinkTabProps) {
         />
         <p className="text-muted-foreground text-xs">{t("add.link.hint")}</p>
         {skipped.length > 0 ? (
-          <p role="status" className="text-xs text-amber-700 dark:text-amber-400">
+          <p role="status" className="text-xs text-warning">
             {t("add.link.skipped", { items: skipped.join(", ") })}
           </p>
         ) : null}

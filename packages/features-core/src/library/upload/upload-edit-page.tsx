@@ -56,7 +56,7 @@ function EditBody({ item }: { item: ItemDetail }) {
   }
   const body = text.data?.pages.map((page) => page.text).join("\n\n") ?? ""
   return (
-    <PageContainer title={title} description={item.title}>
+    <PageContainer title={title}>
       {wizard ? (
         <UploadWizard key={item.id} item={item} initialBody={body} />
       ) : (

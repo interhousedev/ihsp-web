@@ -44,23 +44,30 @@ describe("OPENUI-4 MessageWithOpenUi", () => {
     expect(screen.getByRole("note")).toBeInTheDocument()
   })
 
-  it("does not render a javascript: link as an anchor", () => {
+  it("does not render a block with a javascript: link; it degrades to its readable text", () => {
+    // The backend drops such a block before it is stored (corpus.json: javascript_link), so the web does not render it.
     show(
       wrap(
         'root = Stack([LinkList([{title: "Bad", url: "javascript:alert(1)"}, {title: "Good", url: "https://example.com/a"}])])',
       ),
     )
-    expect(screen.queryByRole("link", { name: "Bad" })).toBeNull()
-    expect(screen.getByText("Bad")).toBeInTheDocument()
-    const good = screen.getByRole("link", { name: "Good" })
-    expect(good).toHaveAttribute("target", "_blank")
-    expect(good).toHaveAttribute("rel", "noopener noreferrer nofollow")
+    expect(screen.queryByRole("link")).toBeNull()
+    expect(screen.getByRole("note")).toHaveTextContent("Bad")
+    expect(screen.getByRole("note")).toHaveTextContent("Good")
   })
 
   it("shows a skeleton for an unclosed block", () => {
     show("Intro\n```openui\nroot = Stack([Tab", chatLibrary, true)
     expect(screen.getByRole("status", { name: "Preparing the block" })).toBeInTheDocument()
     expect(screen.queryByText(/root =/)).toBeNull()
+  })
+
+  it("shows a skeleton, not the error fallback, for a closed invalid block while streaming", () => {
+    // The backend repairs or drops invalid blocks only when the answer finishes; until then the block waits.
+    show(wrap('root = Stack([Evil("Visible words")])'), chatLibrary, true)
+    expect(screen.getByRole("status", { name: "Preparing the block" })).toBeInTheDocument()
+    expect(screen.queryByRole("note")).toBeNull()
+    expect(screen.queryByText("Visible words")).toBeNull()
   })
 
   it("studio library renders only studio components", () => {

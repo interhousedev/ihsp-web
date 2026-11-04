@@ -6,6 +6,8 @@ import axe from "axe-core"
 import { HttpResponse, http } from "msw"
 import { allowSlowRenders, renderLibrary, renderLibraryAnonymous } from "../test-support"
 import { resetAnnotationQueue } from "./lib/annotation-queue"
+import type { FileLinks } from "./lib/file-link"
+import type { PdfOpenOptions } from "./lib/pdf-types"
 import { ReaderPage } from "./reader-page"
 import { createFakeEpub, createFakePdf } from "./testing/fake-engines"
 
@@ -45,6 +47,30 @@ const openNotesButton = async () => (await screen.findAllByRole("button", { name
 const stored = async (itemId: string) => (await getAnnotations({ item_id: itemId })).items
 
 describe("ReaderPage: opening", () => {
+  it("shows one error with Try again when the book cannot be opened, and opens it on retry", async () => {
+    const fake = createFakePdf(3, (page) => `Velocity on page ${page}.`)
+    let attempts = 0
+    const flaky = {
+      pdf: async () => ({
+        open: async (links: FileLinks, options?: PdfOpenOptions) => {
+          attempts += 1
+          if (attempts === 1) throw new Error("broken")
+          return fake.engine.open(links, options)
+        },
+      }),
+    }
+    const { user } = renderLibrary(<ReaderPage engines={flaky} />, { route: PDF_ROUTE })
+
+    await screen.findByRole("alert")
+    // The engine's own error is replaced by the frame's error once it reports; click the frame's button.
+    await act(() => new Promise((resolve) => setTimeout(resolve, 50)))
+    await user.click(within(screen.getByRole("alert")).getByRole("button", { name: "Try again" }))
+
+    await waitFor(() => expect(attempts).toBe(2))
+    expect(await screen.findByText("Velocity on page 1.", {}, { timeout: 3000 })).toBeInTheDocument()
+    expect(screen.queryByRole("alert")).not.toBeInTheDocument()
+  })
+
   it("opens a PDF at the page in the address and shows where it is", async () => {
     renderPdf(`${PDF_ROUTE}&page=8`)
 

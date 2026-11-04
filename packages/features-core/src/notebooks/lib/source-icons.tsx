@@ -23,23 +23,22 @@ type IconInput = { kind: SourceKind; title?: string }
 export function sourceIcon({ kind, title = "" }: IconInput): { Icon: Icon; className: string } {
   if (kind === "file") {
     const name = title.toLowerCase()
-    if (name.endsWith(".pdf")) return { Icon: IconFileTypePdf, className: "text-red-600 dark:text-red-400" }
-    if (name.endsWith(".docx") || name.endsWith(".doc"))
-      return { Icon: IconFileTypeDoc, className: "text-blue-600 dark:text-blue-400" }
+    if (name.endsWith(".pdf")) return { Icon: IconFileTypePdf, className: "text-destructive" }
+    if (name.endsWith(".docx") || name.endsWith(".doc")) return { Icon: IconFileTypeDoc, className: "text-info" }
     if (name.endsWith(".txt") || name.endsWith(".md")) return { Icon: IconFileText, className: "text-muted-foreground" }
     return { Icon: IconFile, className: "text-muted-foreground" }
   }
   const byKind: Record<Exclude<SourceKind, "file">, { Icon: Icon; className: string }> = {
-    chat: { Icon: IconMessageChatbot, className: "text-violet-600 dark:text-violet-400" },
-    lesson_resource: { Icon: IconSchool, className: "text-emerald-600 dark:text-emerald-400" },
-    flashcard_set: { Icon: IconCards, className: "text-amber-600 dark:text-amber-400" },
-    lms_step: { Icon: IconBooks, className: "text-sky-600 dark:text-sky-400" },
+    chat: { Icon: IconMessageChatbot, className: "text-info" },
+    lesson_resource: { Icon: IconSchool, className: "text-success" },
+    flashcard_set: { Icon: IconCards, className: "text-warning" },
+    lms_step: { Icon: IconBooks, className: "text-info" },
     text: { Icon: IconClipboardText, className: "text-muted-foreground" },
-    note: { Icon: IconNote, className: "text-yellow-600 dark:text-yellow-400" },
-    url: { Icon: IconWorld, className: "text-sky-600 dark:text-sky-400" },
-    web_result: { Icon: IconWorld, className: "text-sky-600 dark:text-sky-400" },
-    library_item: { Icon: IconBook2, className: "text-rose-600 dark:text-rose-400" },
-    library_notes: { Icon: IconNote, className: "text-rose-600 dark:text-rose-400" },
+    note: { Icon: IconNote, className: "text-warning" },
+    url: { Icon: IconWorld, className: "text-info" },
+    web_result: { Icon: IconWorld, className: "text-info" },
+    library_item: { Icon: IconBook2, className: "text-destructive" },
+    library_notes: { Icon: IconNote, className: "text-destructive" },
   }
   // A kind this build does not know yet must not crash the page.
   return byKind[kind] ?? { Icon: IconFile, className: "text-muted-foreground" }

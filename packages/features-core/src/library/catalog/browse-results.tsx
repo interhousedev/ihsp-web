@@ -3,7 +3,7 @@
 import { getLibraryItems, getUniLibrarySearch, type ItemCard } from "@ihsp/api"
 import { keys } from "@ihsp/api"
 import { useT } from "@ihsp/i18n"
-import { Button, Icons, Skeleton, StateView } from "@ihsp/ui"
+import { Alert, AlertDescription, Button, Icons, Skeleton, StateView } from "@ihsp/ui"
 import { useInfiniteQuery } from "@tanstack/react-query"
 import { useVisibleCards } from "../hooks/use-uni-library"
 import { cardKey } from "./card-utils"
@@ -94,18 +94,14 @@ export function ExternalResults({ state, layout }: { state: BrowseState; layout:
   const stale = query.data?.pages.some((page) => page.stale) ?? false
 
   if (query.isPending) return <LoadingGrid layout={layout} />
-  if (query.isError)
-    return <StateView state="error" emptyText={t("unilibrary.error")} onRetry={() => void query.refetch()} />
+  if (query.isError) return <StateView state="error" error={query.error} onRetry={() => void query.refetch()} />
   return (
     <div className="flex flex-col gap-4">
       <p className="text-muted-foreground text-xs">{t("unilibrary.universityLevel")}</p>
       {stale ? (
-        <p
-          role="status"
-          className="rounded-md border border-amber-300 bg-amber-50 px-3 py-2 text-sm text-amber-900 dark:border-amber-800 dark:bg-amber-950/50 dark:text-amber-100"
-        >
-          {t("unilibrary.unavailable")}
-        </p>
+        <Alert role="status">
+          <AlertDescription>{t("unilibrary.unavailable")}</AlertDescription>
+        </Alert>
       ) : null}
       {cards.length === 0 ? (
         <StateView state="empty" emptyText={t("unilibrary.empty")} />

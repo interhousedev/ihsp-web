@@ -83,7 +83,7 @@ export function TopicsPage() {
       ) : subjects.isError ? (
         <StateView state="error" error={subjects.error} onRetry={() => void subjects.refetch()} />
       ) : (
-        <div className="flex max-w-3xl flex-col gap-4">
+        <div className="flex w-full min-w-0 flex-col gap-4">
           <div className="flex flex-col gap-1.5">
             <Label htmlFor="topics-subject">{t("subject")}</Label>
             <Dropdown

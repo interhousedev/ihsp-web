@@ -2,6 +2,7 @@
  * Web push in the service worker as pure functions: what a push payload means, which notification it becomes, and where a
  * tap on it goes. `run-service-worker.ts` wires them to the `push` and `notificationclick` events.
  */
+import { BRAND } from "@ihsp/config/brand"
 
 /** The JSON the backend pushes (`{title, body, url, tag, notification_id, type}`); only `title` may be missing. */
 export type PushPayload = {
@@ -13,7 +14,7 @@ export type PushPayload = {
   type: string | null
 }
 
-export const DEFAULT_TITLE = "IHT"
+export const DEFAULT_TITLE = BRAND.name
 export const NOTIFICATION_ICON = "/icons/icon-192.png"
 export const NOTIFICATION_BADGE = "/icons/badge-96.png"
 

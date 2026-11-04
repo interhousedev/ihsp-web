@@ -98,7 +98,7 @@ export function ReadingListView({ list }: { list: ReadingListDetail }) {
   const percent = progress.total > 0 ? Math.round((progress.done / progress.total) * 100) : 0
   const groups = byWeek ? groupByWeek(list.entries) : groupByImportance(list.entries)
   return (
-    <div className="mx-auto flex w-full max-w-3xl flex-col gap-4 px-4 pt-4 pb-8 md:px-6">
+    <div className="flex w-full min-w-0 flex-col gap-4 px-4 pt-4 pb-8 md:px-6">
       <header className="flex flex-col gap-2">
         <div className="flex flex-wrap items-start justify-between gap-3">
           <h1 className="text-2xl font-bold tracking-tight break-words md:text-3xl">{list.title}</h1>

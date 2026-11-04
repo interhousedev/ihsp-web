@@ -292,7 +292,6 @@
       "groupsRequired": "Choose at least one group.",
       "groupsError": "Groups could not be loaded.",
       "retry": "Try again",
-      "groupsUnavailable": "Lists for groups are not available for your account.",
       "noGroups": "You have no groups to choose from.",
       "subjectLabel": "Subject",
       "subjectOptional": "Subject (optional)",

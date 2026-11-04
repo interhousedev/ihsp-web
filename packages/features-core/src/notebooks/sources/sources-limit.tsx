@@ -13,7 +13,7 @@ export function SourcesLimit({ count, limit = SOURCE_LIMIT }: { count: number; l
     <p
       className={cn(
         "flex items-center gap-1.5 border-t px-4 py-2 text-xs",
-        near ? "text-amber-700 dark:text-amber-400" : "text-muted-foreground",
+        near ? "text-warning" : "text-muted-foreground",
       )}
     >
       {near ? <IconAlertTriangle aria-hidden className="size-3.5 shrink-0" /> : null}

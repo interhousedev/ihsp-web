@@ -56,7 +56,7 @@ export function LessonHeader({ lesson, withTeacher = false }: { lesson: LessonIt
       </div>
       {lesson.status !== "cancelled"
         ? changes.map((change) => (
-            <p key={change.field} className="text-xs text-amber-700 dark:text-amber-400">
+            <p key={change.field} className="text-xs text-warning">
               {t.has(`fields.${change.field}`) ? t(`fields.${change.field}`) : change.field}: {change.from} →{" "}
               {change.to}
             </p>

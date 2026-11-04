@@ -1,9 +1,10 @@
 import { describe, expect, it, mock, setDefaultTimeout } from "bun:test"
 import type { FileItem } from "@ihsp/api"
 import { TEST_STORAGE_URL, apiUrl, filePdf, problem, renderWithProviders, server } from "@ihsp/test-utils"
-import { configure, fireEvent, screen, waitFor, within } from "@testing-library/react"
+import { act, configure, fireEvent, screen, waitFor, within } from "@testing-library/react"
 import { HttpResponse, http } from "msw"
-import { FileUploadButton } from "./file-upload-button"
+import { createRef } from "react"
+import { FileUploadButton, type FileUploadControl } from "./file-upload-button"
 
 configure({ asyncUtilTimeout: 8000 })
 setDefaultTimeout(30_000)
@@ -115,5 +116,16 @@ describe("FileUploadButton (FILE-2, UF-WEB-18)", () => {
     fireEvent.click(within(alert.closest("li") as HTMLElement).getByRole("button", { name: "Dismiss" }))
 
     await waitFor(() => expect(screen.queryByText("installer.exe")).not.toBeInTheDocument())
+  })
+
+  it("uploads files handed over by the control handle (drag and drop) without the file picker", async () => {
+    const onUploaded = mock((_file: FileItem) => undefined)
+    const control = createRef<FileUploadControl>()
+    renderWithProviders(<FileUploadButton purpose="ai_upload" onUploaded={onUploaded} controlRef={control} />, {})
+
+    act(() => control.current?.upload([new File(["hello world"], "dropped.pdf", { type: "application/pdf" })]))
+
+    await waitFor(() => expect(onUploaded).toHaveBeenCalledTimes(1))
+    expect(onUploaded.mock.calls[0]?.[0]).toMatchObject({ name: "dropped.pdf", status: "ready" })
   })
 })

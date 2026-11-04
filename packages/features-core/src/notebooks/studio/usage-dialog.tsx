@@ -30,7 +30,7 @@ function Meter({ label, part }: { label: string; part: UsagePart }) {
         className={cn(
           "gap-1.5",
           // Amber from 80 %, red when used up.
-          percent >= 80 && "[&_[data-slot=progress-indicator]]:bg-amber-500",
+          percent >= 80 && "[&_[data-slot=progress-indicator]]:bg-warning",
           percent >= 100 && "[&_[data-slot=progress-indicator]]:bg-destructive",
         )}
       >

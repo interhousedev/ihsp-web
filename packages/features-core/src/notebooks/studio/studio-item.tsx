@@ -79,7 +79,7 @@ export function StudioItem({ item, notebookId }: StudioItemProps) {
           <span className="truncate text-sm font-medium">{title}</span>
           {unread ? (
             <>
-              <span aria-hidden className="size-2 shrink-0 rounded-full bg-blue-500 dark:bg-blue-400" />
+              <span aria-hidden className="size-2 shrink-0 rounded-full bg-info" />
               <span className="sr-only">{t("item.new")}</span>
             </>
           ) : null}

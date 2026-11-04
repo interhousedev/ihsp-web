@@ -56,7 +56,11 @@ export function ItemActions({ item }: { item: ItemDetail }) {
         </Link>
       ) : status === "anonymous" ? (
         <SignInLink label={t("signInToRead")} variant="default" />
-      ) : null}
+      ) : (
+        <p role="note" className="text-muted-foreground w-full text-sm">
+          {file ? t("noRead") : t("noFile")}
+        </p>
+      )}
       <ShelfButton item={item} />
       {item.can.add_to_notebook && file ? (
         <AddToNotebookButton

@@ -6,9 +6,9 @@ import { useRef, type KeyboardEvent } from "react"
 import type { AttendanceMark, Mark } from "../utils/marks"
 
 const OPTIONS: { value: AttendanceMark; icon: typeof Icons.check; active: string }[] = [
-  { value: "present", icon: Icons.check, active: "border-green-700 bg-green-600 text-white" },
-  { value: "late", icon: Icons.clock, active: "border-orange-700 bg-orange-600 text-white" },
-  { value: "absent", icon: Icons.close, active: "border-red-800 bg-red-700 text-white" },
+  { value: "present", icon: Icons.check, active: "border-success bg-success text-success-foreground" },
+  { value: "late", icon: Icons.clock, active: "border-warning bg-warning text-warning-foreground" },
+  { value: "absent", icon: Icons.close, active: "border-destructive bg-destructive text-destructive-foreground" },
 ]
 
 /**

@@ -4,13 +4,18 @@ import { uploadFile, type FileItem, type FileUploadPurpose } from "@ihsp/api"
 import { useErrorMessage, useT } from "@ihsp/i18n"
 import { Button, Progress, cn } from "@ihsp/ui"
 import { IconAlertTriangle, IconPaperclip, IconUpload, IconX } from "@ihsp/ui"
-import { useRef, useState, type ChangeEvent } from "react"
+import { useImperativeHandle, useRef, useState, type ChangeEvent, type Ref } from "react"
 import { useRejectReason } from "./use-reject-reason"
 
 /** File types FILE-4 allows; the backend checks the real type after the upload. */
 export const UPLOAD_ACCEPT = ".pdf,.docx,.pptx,.xlsx,.txt,.md,.png,.jpg,.jpeg"
 
+/** Lets a parent open the file chooser or upload files it got elsewhere (a drop on the composer). */
+export type FileUploadControl = { open: () => void; upload: (files: File[]) => void }
+
 export type FileUploadButtonProps = {
+  /** Receives the control; `upload` runs the same rows and checks as a chosen file. */
+  controlRef?: Ref<FileUploadControl>
   purpose: FileUploadPurpose
   /** Called once per file that the backend verified (`status: "ready"`). */
   onUploaded: (file: FileItem) => void
@@ -23,6 +28,8 @@ export type FileUploadButtonProps = {
   label?: string
   /** Paperclip button without text (the label stays as the accessible name). */
   iconOnly?: boolean
+  /** No visible button: the parent opens the chooser or uploads through `controlRef`; the rows still show. */
+  hideTrigger?: boolean
   variant?: "default" | "outline" | "secondary" | "ghost"
   className?: string
 }
@@ -47,8 +54,10 @@ export function FileUploadButton({
   disabled = false,
   label,
   iconOnly = false,
+  hideTrigger = false,
   variant = "outline",
   className,
+  controlRef,
 }: FileUploadButtonProps) {
   const t = useT("files.upload")
   const errorMessage = useErrorMessage()
@@ -88,6 +97,13 @@ export function FileUploadButton({
     }
   }
 
+  useImperativeHandle(controlRef, () => ({
+    open: () => inputRef.current?.click(),
+    upload: (files) => {
+      for (const file of files) void upload(file)
+    },
+  }))
+
   function onChange(event: ChangeEvent<HTMLInputElement>) {
     const files = Array.from(event.target.files ?? [])
     event.target.value = ""
@@ -108,18 +124,20 @@ export function FileUploadButton({
         disabled={disabled}
         onChange={onChange}
       />
-      <Button
-        type="button"
-        variant={variant}
-        size={iconOnly ? "icon" : "default"}
-        className={cn(iconOnly ? "size-11" : "min-h-11 px-4", className)}
-        disabled={disabled}
-        aria-label={iconOnly ? text : undefined}
-        onClick={() => inputRef.current?.click()}
-      >
-        {iconOnly ? <IconPaperclip aria-hidden /> : <IconUpload aria-hidden />}
-        {iconOnly ? null : text}
-      </Button>
+      {hideTrigger ? null : (
+        <Button
+          type="button"
+          variant={variant}
+          size={iconOnly ? "icon" : "default"}
+          className={cn(iconOnly ? "size-11" : "min-h-11 px-4", className)}
+          disabled={disabled}
+          aria-label={iconOnly ? text : undefined}
+          onClick={() => inputRef.current?.click()}
+        >
+          {iconOnly ? <IconPaperclip aria-hidden /> : <IconUpload aria-hidden />}
+          {iconOnly ? null : text}
+        </Button>
+      )}
       {rows.length > 0 ? (
         <ul className="flex flex-col gap-2" aria-live="polite">
           {rows.map((row) => (

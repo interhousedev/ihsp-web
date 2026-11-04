@@ -172,7 +172,7 @@ function QuestionBlock({ question, answer, submitted, onAnswer, essay }: BlockPr
       {essay ?? <QuestionInput question={question} answer={answer} submitted={submitted} onAnswer={onAnswer} />}
       {graded ? (
         <div className="flex flex-col gap-1 text-sm">
-          <p className={right ? "font-medium text-emerald-700 dark:text-emerald-300" : "text-destructive font-medium"}>
+          <p className={right ? "font-medium text-success" : "text-destructive font-medium"}>
             {right ? t("correct") : t("wrong", { earned: grade.earned, possible: grade.possible })}
           </p>
           {question.explanation ? <p className="text-muted-foreground">{question.explanation}</p> : null}

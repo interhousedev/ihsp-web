@@ -2,7 +2,7 @@
 
 import { getLibraryItemsQuery, type ItemCard } from "@ihsp/api"
 import { useT } from "@ihsp/i18n"
-import { Button, Input, Label, Skeleton, useDebounce } from "@ihsp/ui"
+import { Button, Input, Label, Skeleton, StateView, useDebounce } from "@ihsp/ui"
 import { IconArrowDown, IconArrowUp, IconPlus, IconX } from "@ihsp/ui"
 import { useQuery } from "@tanstack/react-query"
 import { useId, useState } from "react"
@@ -66,6 +66,8 @@ export function ItemPicker({
         <div aria-live="polite">
           {search.isPending ? (
             <Skeleton className="h-16 w-full rounded-lg" />
+          ) : search.isError ? (
+            <StateView state="error" error={search.error} onRetry={() => void search.refetch()} />
           ) : results.length === 0 ? (
             <p className="text-muted-foreground text-sm">{t("pickerNone")}</p>
           ) : (

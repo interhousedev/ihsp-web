@@ -147,10 +147,7 @@ export function EssayField({ notebookId, artifactId, question, value, submitted,
         className="min-h-48 text-base md:text-sm"
         onChange={(event) => onChange(event.target.value)}
       />
-      <p
-        id={counterId}
-        className={short ? "text-muted-foreground text-xs" : "text-xs text-emerald-700 dark:text-emerald-300"}
-      >
+      <p id={counterId} className={short ? "text-muted-foreground text-xs" : "text-xs text-success"}>
         {t("words", { count: words, min: question.min_words })}
       </p>
       {submitted ? (

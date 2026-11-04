@@ -46,12 +46,12 @@ export function PendingUploadRow({ row, onDismiss }: PendingUploadRowProps) {
 
   if (row.phase === "failed") {
     return (
-      <li role="alert" className="flex items-center rounded-lg bg-amber-500/5">
+      <li role="alert" className="flex items-center rounded-lg bg-warning-muted">
         <div className="flex min-h-11 min-w-0 flex-1 items-start gap-2 py-1 ps-2 pe-1">
-          <IconAlertTriangle aria-hidden className="mt-0.5 size-4 shrink-0 text-amber-700 dark:text-amber-400" />
+          <IconAlertTriangle aria-hidden className="mt-0.5 size-4 shrink-0 text-warning" />
           <span className="min-w-0 flex-1">
             <span className="block truncate text-sm font-medium">{row.name}</span>
-            <span className="block text-xs break-words text-amber-700 dark:text-amber-400">{row.message}</span>
+            <span className="block text-xs break-words text-warning">{row.message}</span>
           </span>
         </div>
         <Button

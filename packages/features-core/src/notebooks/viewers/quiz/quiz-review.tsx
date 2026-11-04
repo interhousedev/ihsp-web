@@ -23,7 +23,7 @@ function VerdictTag({ verdict }: { verdict: QuestionVerdict }) {
   if (verdict === "correct") {
     return (
       <span className="flex items-center gap-1 text-sm font-medium">
-        <IconCircleCheck aria-hidden className="size-4 text-green-600 dark:text-green-500" />
+        <IconCircleCheck aria-hidden className="size-4 text-success" />
         {t("quiz.correct")}
       </span>
     )

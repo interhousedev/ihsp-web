@@ -25,7 +25,7 @@ export function WebSearchHint({ query, onSearch }: WebSearchHintProps) {
   return (
     <div
       role="status"
-      className="flex flex-col items-start gap-2 rounded-xl border border-amber-300 bg-amber-50 p-3 text-sm text-amber-900 dark:border-amber-800 dark:bg-amber-950/40 dark:text-amber-100"
+      className="flex flex-col items-start gap-2 rounded-xl border border-warning bg-warning-muted p-3 text-sm text-warning"
     >
       <p>{t("studio.webHint.message")}</p>
       <Button type="button" variant="outline" className="min-h-11 md:min-h-8" onClick={() => onSearch(query)}>

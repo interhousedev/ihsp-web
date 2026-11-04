@@ -1,7 +1,8 @@
 import { describe, expect, it } from "bun:test"
-import { libDetails, libExternalPinnedDetail, libIds, server, setUniLibrary } from "@ihsp/test-utils"
+import { apiUrl, libDetails, libExternalPinnedDetail, libIds, server, setUniLibrary } from "@ihsp/test-utils"
 import { screen, waitFor } from "@testing-library/react"
 import axe from "axe-core"
+import { HttpResponse, http } from "msw"
 import { allowSlowRenders, renderLibrary, renderLibraryAnonymous } from "../test-support"
 import { ItemPage } from "./item-page"
 
@@ -124,5 +125,20 @@ describe("ItemPage: material", () => {
     renderItem(libIds.matUnpublished)
 
     expect(await screen.findByText("This item was removed")).toBeInTheDocument()
+  })
+})
+
+describe("ItemPage: a book the account cannot read", () => {
+  it("says why there is no Read button instead of showing nothing", async () => {
+    const book = libDetails.bookPhysics10
+    server.use(
+      http.get(apiUrl("/v1/library/items/:id"), () =>
+        HttpResponse.json({ ...book, can: { ...book.can, read: false } }),
+      ),
+    )
+    renderLibrary(<ItemPage />, { route: `/item/?id=${libIds.bookPhysics10}` })
+
+    expect(await screen.findByText("Your account cannot read this item.")).toBeInTheDocument()
+    expect(screen.queryByRole("link", { name: "Read" })).not.toBeInTheDocument()
   })
 })

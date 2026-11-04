@@ -2,15 +2,14 @@
 
 import type { ItemCard } from "@ihsp/api"
 import { useT } from "@ihsp/i18n"
-import { Badge, cn } from "@ihsp/ui"
+import { Badge, type StatusTone, cn } from "@ihsp/ui"
 import { IconBook, IconBuildingBank, IconFileText } from "@ihsp/ui"
 
-const TONE: Record<ItemCard["tag"]["source"], string> = {
-  // UniLibrary has its own colour so it is never mistaken for the lyceum's own content.
-  unilibrary:
-    "border-violet-300 bg-violet-50 text-violet-800 dark:border-violet-700 dark:bg-violet-950/60 dark:text-violet-200",
-  book: "border-emerald-300 bg-emerald-50 text-emerald-800 dark:border-emerald-700 dark:bg-emerald-950/60 dark:text-emerald-200",
-  material: "border-sky-300 bg-sky-50 text-sky-800 dark:border-sky-700 dark:bg-sky-950/60 dark:text-sky-200",
+const TONE: Record<ItemCard["tag"]["source"], StatusTone> = {
+  // UniLibrary has the warning tone so it is never mistaken for the lyceum's own content.
+  unilibrary: "warning",
+  book: "success",
+  material: "info",
 }
 
 const ICON = { unilibrary: IconBuildingBank, book: IconBook, material: IconFileText } as const
@@ -21,8 +20,8 @@ export function SourceTag({ source, className }: { source: ItemCard["tag"]["sour
   const Icon = ICON[source]
   return (
     <Badge
-      variant="outline"
-      className={cn("gap-1 font-medium", TONE[source], className)}
+      variant={TONE[source]}
+      className={cn("gap-1 font-medium", className)}
       title={source === "unilibrary" ? t("unilibraryHint") : undefined}
     >
       <Icon className="size-3" aria-hidden />

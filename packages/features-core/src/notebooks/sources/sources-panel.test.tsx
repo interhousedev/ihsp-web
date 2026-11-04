@@ -92,6 +92,36 @@ describe("SourcesPanel", () => {
     expect(screen.queryByRole("dialog")).not.toBeInTheDocument()
   })
 
+  it("adds a file straight from the panel, next to Add sources, with several files at once", async () => {
+    renderPanel()
+    await rows()
+
+    expect(screen.getByRole("button", { name: "Add sources" })).toBeInTheDocument()
+    const upload = screen.getByRole("button", { name: "Upload file" })
+    expect(upload).toBeInTheDocument()
+    const input = document.querySelector<HTMLInputElement>('input[type="file"]')
+    expect(input).not.toBeNull()
+    expect(input?.multiple).toBe(true)
+  })
+
+  it("hides the upload button in a notebook that cannot be changed", async () => {
+    renderPanel({ ...notebookDetail, can_write: false })
+    await rows()
+
+    expect(screen.queryByRole("button", { name: "Upload file" })).not.toBeInTheDocument()
+  })
+
+  it("keeps the list in its own scroll area under the header and the toolbar", async () => {
+    renderPanel()
+    const row = await rows()
+
+    const scroller = row.closest(".overflow-y-auto")
+    expect(scroller).not.toBeNull()
+    const section = scroller?.closest("section")
+    expect(section?.className).toContain("min-h-0")
+    expect(section?.className).toContain("h-full")
+  })
+
   it("shows the collapse button only when asked to", async () => {
     const onCollapse = mock(() => undefined)
     const { user, unmount } = renderPanel(notebookDetail, onCollapse)

@@ -10,7 +10,7 @@ import {
   type SuggestedBook,
 } from "@ihsp/api"
 import { useFormatters, useT } from "@ihsp/i18n"
-import { Badge, Skeleton, formatBytes, safeHttpUrl } from "@ihsp/ui"
+import { Badge, Skeleton, StateView, formatBytes, safeHttpUrl } from "@ihsp/ui"
 import { IconAlertTriangle, IconExternalLink, IconUserOff } from "@ihsp/ui"
 import { useQuery } from "@tanstack/react-query"
 import Link from "next/link"
@@ -96,7 +96,9 @@ function SuggestionBlock({ row }: { row: ManageQueueRow }) {
       <Section title={t("suggestedBy")}>
         <p className="text-sm">{suggestion.user_name}</p>
       </Section>
-      {detail.data?.book ? (
+      {detail.isError ? (
+        <StateView state="error" error={detail.error} onRetry={() => void detail.refetch()} />
+      ) : detail.data?.book ? (
         <Section title={t("suggestedBook")}>
           <SuggestedBookFacts book={detail.data.book} />
         </Section>
@@ -253,6 +255,8 @@ export function ItemPreviewPane({
       {id ? (
         detail.isPending ? (
           <Skeleton className="h-24 w-full rounded-lg" />
+        ) : detail.isError ? (
+          <StateView state="error" error={detail.error} onRetry={() => void detail.refetch()} />
         ) : detail.data ? (
           <>
             {detail.data.description ? (

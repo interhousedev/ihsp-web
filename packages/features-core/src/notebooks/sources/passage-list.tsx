@@ -67,7 +67,7 @@ export function PassageList({ notebookId, sourceId, passageId }: PassageListProp
   return (
     <div className="flex flex-col gap-2">
       {focus.changed ? (
-        <div role="status" className="rounded-lg border border-amber-500/40 bg-amber-500/10 p-3 text-sm">
+        <div role="status" className="rounded-lg border border-warning bg-warning-muted p-3 text-sm">
           <p className="font-medium">{t("viewer.changed")}</p>
           <p className="text-muted-foreground text-xs">{t("viewer.changedHint")}</p>
           {focus.nearby ? (

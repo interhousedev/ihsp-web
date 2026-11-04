@@ -22,10 +22,7 @@ export function SourceStatusLine({ source, className }: SourceStatusLineProps) {
   const reason = failureText(source.failure)
 
   const unsupported = source.ai_unsupported ? (
-    <span
-      data-testid="ai-unsupported"
-      className={cn("flex items-start gap-1 text-xs text-amber-700 dark:text-amber-400", className)}
-    >
+    <span data-testid="ai-unsupported" className={cn("flex items-start gap-1 text-xs text-warning", className)}>
       <IconAlertTriangle aria-hidden className="mt-px size-3.5 shrink-0" />
       <span className="min-w-0">{t("status.aiUnsupported")}</span>
     </span>
@@ -44,7 +41,7 @@ export function SourceStatusLine({ source, className }: SourceStatusLineProps) {
       )
     case "failed":
       return (
-        <span className={cn("flex items-start gap-1 text-xs text-amber-700 dark:text-amber-400", className)}>
+        <span className={cn("flex items-start gap-1 text-xs text-warning", className)}>
           {source.failure === "no_text" ? (
             <NoTextIcon label={t("row.noText")} />
           ) : (
@@ -55,7 +52,7 @@ export function SourceStatusLine({ source, className }: SourceStatusLineProps) {
       )
     case "unavailable":
       return (
-        <span className={cn("flex items-start gap-1 text-xs text-amber-700 dark:text-amber-400", className)}>
+        <span className={cn("flex items-start gap-1 text-xs text-warning", className)}>
           <IconAlertTriangle aria-hidden className="mt-px size-3.5 shrink-0" />
           <span className="min-w-0">
             {reason ? t("status.unavailableReason", { reason }) : t("status.unavailable")}

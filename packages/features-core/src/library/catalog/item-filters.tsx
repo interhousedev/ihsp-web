@@ -1,6 +1,7 @@
 "use client"
 
 import {
+  getLibraryCollectionQuery,
   getLibrarySubjectsQuery,
   getLibraryTagsQuery,
   getLibraryTopicsQuery,
@@ -10,8 +11,12 @@ import {
 import { useT } from "@ihsp/i18n"
 import {
   Button,
-  Label,
   Dropdown,
+  Field,
+  FieldLabel,
+  Icons,
+  Label,
+  StateView,
   Sheet,
   SheetContent,
   SheetDescription,
@@ -22,11 +27,14 @@ import {
 } from "@ihsp/ui"
 import { IconAdjustmentsHorizontal } from "@ihsp/ui"
 import { useQuery } from "@tanstack/react-query"
-import { useId, useState, type ReactNode } from "react"
+import { useId, useState } from "react"
 import { SuggestInput, useDebouncedValue, type SuggestOption } from "../utils/suggest-input"
 import { useLibraryAccess } from "../hooks/use-library-access"
 import { useUniLibraryEnabled } from "../hooks/use-uni-library"
 import { BROWSE_SOURCES, countActiveFilters, type BrowseState } from "./use-browse-state"
+
+/** The backend takes a year of study from 1 to 12 (`year_of_study` on the items query). */
+const YEARS_OF_STUDY = Array.from({ length: 12 }, (_, index) => index + 1)
 
 const TYPES: readonly ItemType[] = [
   "textbook",
@@ -91,12 +99,22 @@ export function SourceChips({
   )
 }
 
-function Field({ label, id, children }: { label: string; id: string; children: ReactNode }) {
+/** The one collection a shared link filters by, shown as a chip that removes the filter. */
+function CollectionChip({ id, onRemove }: { id: string; onRemove: () => void }) {
+  const t = useT("library.browse")
+  const collection = useQuery(getLibraryCollectionQuery(id))
+  const title = collection.data?.title ?? t("filter.collection")
   return (
-    <div className="flex flex-col gap-1.5">
-      <Label htmlFor={id}>{label}</Label>
-      {children}
-    </div>
+    <Button
+      type="button"
+      variant="secondary"
+      className="min-h-11 md:min-h-8"
+      aria-label={t("filter.removeCollection", { title })}
+      onClick={onRemove}
+    >
+      {title}
+      <Icons.close aria-hidden />
+    </Button>
   )
 }
 
@@ -113,7 +131,9 @@ function TagFilter({ tag, onChange }: { tag: string | null; onChange: (tag: stri
     onChange(value)
   }
   return (
-    <Field id={`${id}-tag`} label={t("filter.tag")}>
+    <Field>
+      <FieldLabel htmlFor={`${id}-tag`}>{t("filter.tag")}</FieldLabel>
+      {found.isError ? <StateView state="error" error={found.error} onRetry={() => void found.refetch()} /> : null}
       {tag ? (
         <div className="flex items-center justify-between gap-2 rounded-md border px-3 py-1 text-sm">
           <span className="truncate">{tag}</span>
@@ -152,7 +172,11 @@ function FilterFields({ state, onChange }: { state: BrowseState; onChange: (patc
   const any = { value: "", label: t("any") }
   return (
     <div className="flex flex-col gap-4">
-      <Field id="filter-subject" label={t("filter.subject")}>
+      <Field>
+        <FieldLabel htmlFor="filter-subject">{t("filter.subject")}</FieldLabel>
+        {subjects.isError ? (
+          <StateView state="error" error={subjects.error} onRetry={() => void subjects.refetch()} />
+        ) : null}
         <Dropdown
           id="filter-subject"
           className="w-full"
@@ -168,7 +192,8 @@ function FilterFields({ state, onChange }: { state: BrowseState; onChange: (patc
         />
       </Field>
       {state.subject && topicOptions.length > 0 ? (
-        <Field id="filter-topic" label={t("filter.topic")}>
+        <Field>
+          <FieldLabel htmlFor="filter-topic">{t("filter.topic")}</FieldLabel>
           <Dropdown
             id="filter-topic"
             className="w-full"
@@ -179,16 +204,18 @@ function FilterFields({ state, onChange }: { state: BrowseState; onChange: (patc
         </Field>
       ) : null}
       <TagFilter tag={state.tag} onChange={(tag) => onChange({ tag })} />
-      <Field id="filter-year" label={t("filter.year")}>
+      <Field>
+        <FieldLabel htmlFor="filter-year">{t("filter.year")}</FieldLabel>
         <Dropdown
           id="filter-year"
           className="w-full"
           value={state.year ? String(state.year) : ""}
           onValueChange={(value) => onChange({ year: value ? Number(value) : null })}
-          options={[any, ...[1, 2].map((year) => ({ value: String(year), label: t("year", { year }) }))]}
+          options={[any, ...YEARS_OF_STUDY.map((year) => ({ value: String(year), label: t("year", { year }) }))]}
         />
       </Field>
-      <Field id="filter-type" label={t("filter.type")}>
+      <Field>
+        <FieldLabel htmlFor="filter-type">{t("filter.type")}</FieldLabel>
         <Dropdown
           id="filter-type"
           className="w-full"
@@ -197,7 +224,8 @@ function FilterFields({ state, onChange }: { state: BrowseState; onChange: (patc
           options={[any, ...TYPES.map((type) => ({ value: type, label: library(`type.${type}`) }))]}
         />
       </Field>
-      <Field id="filter-language" label={t("filter.language")}>
+      <Field>
+        <FieldLabel htmlFor="filter-language">{t("filter.language")}</FieldLabel>
         <Dropdown
           id="filter-language"
           className="w-full"
@@ -207,7 +235,8 @@ function FilterFields({ state, onChange }: { state: BrowseState; onChange: (patc
         />
       </Field>
       {state.source !== "book" ? (
-        <Field id="filter-uploader" label={t("filter.uploader")}>
+        <Field>
+          <FieldLabel htmlFor="filter-uploader">{t("filter.uploader")}</FieldLabel>
           <Dropdown
             id="filter-uploader"
             className="w-full"
@@ -222,7 +251,8 @@ function FilterFields({ state, onChange }: { state: BrowseState; onChange: (patc
         </Field>
       ) : null}
       {signedIn ? (
-        <Field id="filter-shelf" label={t("filter.shelf")}>
+        <Field>
+          <FieldLabel htmlFor="filter-shelf">{t("filter.shelf")}</FieldLabel>
           <Dropdown
             id="filter-shelf"
             className="w-full"
@@ -288,6 +318,9 @@ export function ItemFilters({
           </span>
         ) : null}
       </Button>
+      {state.collection ? (
+        <CollectionChip id={state.collection} onRemove={() => onChange({ collection: null })} />
+      ) : null}
       {active > 0 ? (
         <Button type="button" variant="ghost" className="min-h-11 md:min-h-8" onClick={onClear}>
           {t("clear")}

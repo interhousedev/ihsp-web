@@ -18,7 +18,7 @@ export function usageLevel(ratio: number): UsageLevel {
 
 const TONE: Record<UsageLevel, string> = {
   ok: "text-primary",
-  warning: "text-amber-500",
+  warning: "text-warning",
   full: "text-destructive",
 }
 

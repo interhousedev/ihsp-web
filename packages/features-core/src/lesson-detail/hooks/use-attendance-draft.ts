@@ -36,8 +36,12 @@ function isDirty(draft: Draft): boolean {
  * The marks of the attendance form. A sheet that changed on the server is taken over when the teacher has no
  * unsaved edits; with edits the form keeps them and reports `stale`, and a save then ends in the conflict dialog.
  */
-export function useAttendanceDraft(sheet: AttendanceSheet) {
-  const [draft, setDraft] = useState<Draft>(() => fromSheet(sheet))
+export function useAttendanceDraft(sheet: AttendanceSheet, options: { startAllPresent?: boolean } = {}) {
+  // A draft that starts "everyone present" is only a draft: it differs from the saved sheet until the teacher saves.
+  const [draft, setDraft] = useState<Draft>(() => {
+    const initial = fromSheet(sheet)
+    return options.startAllPresent ? { ...initial, marks: everyonePresent(initial.marks, sheet) } : initial
+  })
 
   useEffect(() => {
     setDraft((current) => {

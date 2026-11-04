@@ -71,7 +71,7 @@ describe("UsageDialog", () => {
     expect(screen.getByText("Resets at 05:00")).toBeInTheDocument()
   })
 
-  it("keeps the meter neutral below 80 percent and amber from 80 percent", async () => {
+  it("keeps the meter neutral below 80 percent and warning from 80 percent", async () => {
     useUsage({
       ...notebookUsage,
       budget: {
@@ -92,8 +92,8 @@ describe("UsageDialog", () => {
     const session = await screen.findByRole("progressbar", {
       name: "This session",
     })
-    expect(session.className).toContain("bg-amber-500")
-    expect(screen.getByRole("progressbar", { name: "Today" }).className).not.toContain("bg-amber-500")
+    expect(session.className).toContain("bg-warning")
+    expect(screen.getByRole("progressbar", { name: "Today" }).className).not.toContain("bg-warning")
   })
 
   it("shows an error with Try again when the usage cannot be loaded", async () => {

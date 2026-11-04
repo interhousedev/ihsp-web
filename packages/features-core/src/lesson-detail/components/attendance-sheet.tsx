@@ -36,14 +36,23 @@ import { WorkOffPanel } from "./work-off-panel"
  * section of their own and count only when marked. After the 7-day window (or for a cancelled lesson) the sheet is
  * read-only. A `409` opens the conflict dialog with the current list.
  */
-export function AttendanceSheetView({ lesson, sheet }: { lesson: LessonItem; sheet: AttendanceSheet }) {
+export function AttendanceSheetView({
+  lesson,
+  sheet,
+  startAllPresent = false,
+}: {
+  lesson: LessonItem
+  sheet: AttendanceSheet
+  /** The journal's "Mark all present": the draft starts with everyone present; nothing is saved until Save. */
+  startAllPresent?: boolean
+}) {
   const t = useT("lessonDetail.attendance")
   const tw = useT("lessonDetail.workOff")
   const f = useFormatters()
   const titleId = useId()
   const errorMessage = useErrorMessage()
   const queryClient = useQueryClient()
-  const draft = useAttendanceDraft(sheet)
+  const draft = useAttendanceDraft(sheet, { startAllPresent })
   const submit = useSubmitAttendance(lesson.id)
   const [conflict, setConflict] = useState<AttendanceSheet | null>(null)
   const templates = useWorkOffTemplates()
@@ -206,6 +215,7 @@ export function AttendanceSheetView({ lesson, sheet }: { lesson: LessonItem; she
                         item={item}
                         mark={draft.marks[item.user_id] ?? "present"}
                         readOnly={readOnly}
+                        notTaken={!sheet.submitted}
                         onMark={(mark) => markStudent(item.user_id, mark, draft.mark)}
                       >
                         {workOffPanel(item)}

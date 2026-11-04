@@ -3,7 +3,7 @@
 import { useReasonText } from "../upload/reason-text"
 import { deleteMaterial, type ItemDetail } from "@ihsp/api"
 import { useErrorMessage, useT } from "@ihsp/i18n"
-import { Badge, ConfirmDialog, buttonVariants } from "@ihsp/ui"
+import { Badge, Button, ConfirmDialog, buttonVariants } from "@ihsp/ui"
 import { IconPencil } from "@ihsp/ui"
 import { useMutation, useQueryClient } from "@tanstack/react-query"
 import Link from "next/link"
@@ -60,13 +60,14 @@ export function ItemOwnerPanel({ item }: { item: ItemDetail }) {
           <IconPencil aria-hidden />
           {t("edit")}
         </Link>
-        <button
+        <Button
           type="button"
-          className={buttonVariants({ variant: "ghost", className: "text-destructive min-h-11 md:min-h-8" })}
+          variant="ghost"
+          className="text-destructive min-h-11 md:min-h-8"
           onClick={() => setConfirming(true)}
         >
           {t("withdraw")}
-        </button>
+        </Button>
       </div>
       <ConfirmDialog
         open={confirming}

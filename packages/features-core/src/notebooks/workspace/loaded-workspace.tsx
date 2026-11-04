@@ -95,7 +95,10 @@ export function LoadedWorkspace({ notebook, layout }: { notebook: NotebookDetail
     <WorkspaceProvider value={actions}>
       <CitationNavigationProvider>
         <NotebookUploadScope notebookId={notebook.id} canWrite={notebook.can_write !== false}>
-          <div className="flex h-[calc(100dvh-3.5rem-var(--safe-top))] min-h-0 min-w-0 flex-col print:block print:h-auto">
+          <div
+            data-shell-flush
+            className="flex h-[calc(100dvh-var(--shell-top-reserve,0px))] md:h-[calc(100dvh-var(--safe-top))] min-h-0 min-w-0 flex-col print:block print:h-auto"
+          >
             {phoneViewerOpen ? null : (
               <NotebookHeader
                 notebook={notebook}

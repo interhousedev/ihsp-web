@@ -2,51 +2,52 @@
 
 import { getUniLibraryStatusQuery, type UniLibraryStatus } from "@ihsp/api"
 import { useFormatters, useT } from "@ihsp/i18n"
-import {
-  Badge,
-  Skeleton,
-  StateView,
-  Table,
-  TableBody,
-  TableCaption,
-  TableCell,
-  TableHead,
-  TableHeader,
-  TableRow,
-} from "@ihsp/ui"
+import { Badge, DataTable, Skeleton, StateView } from "@ihsp/ui"
+import { getCoreRowModel, useReactTable, type ColumnDef } from "@tanstack/react-table"
 import { useQuery } from "@tanstack/react-query"
+import { useMemo } from "react"
 
 const BREAKER_VARIANT = { closed: "default", open: "destructive", half_open: "secondary" } as const
 
+type CallRow = UniLibraryStatus["last_calls"][number]
+
+/** The last outgoing calls; a table from 768 px, one card per call below it (`DataTable` card layout). */
 function CallsTable({ calls }: { calls: UniLibraryStatus["last_calls"] }) {
   const t = useT("library.manage.unilibrary.status")
   const format = useFormatters()
-  if (calls.length === 0) return <p className="text-muted-foreground text-sm">{t("noCalls")}</p>
-  return (
-    <Table>
-      <TableCaption className="sr-only">{t("calls")}</TableCaption>
-      <TableHeader>
-        <TableRow>
-          <TableHead scope="col">{t("time")}</TableHead>
-          <TableHead scope="col">{t("result")}</TableHead>
-          <TableHead scope="col">{t("duration")}</TableHead>
-          <TableHead scope="col">{t("path")}</TableHead>
-        </TableRow>
-      </TableHeader>
-      <TableBody>
-        {calls.map((call) => (
-          <TableRow key={`${call.at}-${call.path}`}>
-            <TableCell>{format.dateTime(call.at)}</TableCell>
-            <TableCell>
-              <Badge variant={call.ok ? "secondary" : "destructive"}>{call.ok ? t("ok") : t("failed")}</Badge>
-            </TableCell>
-            <TableCell className="tabular-nums">{t("ms", { ms: call.ms })}</TableCell>
-            <TableCell className="font-mono text-xs break-all whitespace-normal">{call.path}</TableCell>
-          </TableRow>
-        ))}
-      </TableBody>
-    </Table>
+  const columns = useMemo<ColumnDef<CallRow>[]>(
+    () => [
+      { id: "time", header: t("time"), cell: ({ row }) => format.dateTime(row.original.at) },
+      {
+        id: "result",
+        header: t("result"),
+        cell: ({ row }) => (
+          <Badge variant={row.original.ok ? "secondary" : "destructive"}>
+            {row.original.ok ? t("ok") : t("failed")}
+          </Badge>
+        ),
+      },
+      {
+        id: "duration",
+        header: t("duration"),
+        cell: ({ row }) => <span className="tabular-nums">{t("ms", { ms: row.original.ms })}</span>,
+      },
+      {
+        id: "path",
+        header: t("path"),
+        cell: ({ row }) => <span className="font-mono text-xs break-all whitespace-normal">{row.original.path}</span>,
+      },
+    ],
+    [t, format],
   )
+  const table = useReactTable({
+    data: calls,
+    columns,
+    getCoreRowModel: getCoreRowModel(),
+    getRowId: (call) => `${call.at}-${call.path}`,
+  })
+  if (calls.length === 0) return <p className="text-muted-foreground text-sm">{t("noCalls")}</p>
+  return <DataTable table={table} cardLayout />
 }
 
 /**
