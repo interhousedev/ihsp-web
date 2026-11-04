@@ -111,7 +111,7 @@ export function ReviewHeatmap({ stats, onYearChange, today = todayIso(), classNa
         className="relative w-full max-w-full overflow-x-auto pb-1"
         data-testid="review-heatmap"
       >
-        <div className="mx-auto flex w-max gap-1">
+        <div className="flex w-full min-w-0 gap-1">
           <div className="text-muted-foreground flex flex-col gap-1 pe-1 text-[10px] leading-3" aria-hidden>
             {weekdayLabels.map((label, index) => (
               <span key={index} className="flex h-3 items-center">
@@ -119,10 +119,10 @@ export function ReviewHeatmap({ stats, onYearChange, today = todayIso(), classNa
               </span>
             ))}
           </div>
-          <div>
+          <div className="min-w-0 flex-1">
             <div className="flex gap-1">
               {weeks.map((week, weekIndex) => (
-                <div key={weekIndex} className="flex flex-col gap-1">
+                <div key={weekIndex} className="flex min-w-0 flex-1 flex-col gap-1">
                   {week.map((cell, dayIndex) =>
                     cell ? (
                       <span
@@ -132,13 +132,13 @@ export function ReviewHeatmap({ stats, onYearChange, today = todayIso(), classNa
                         data-count={cell.count}
                         data-level={cell.level}
                         className={cn(
-                          "size-3 rounded-[3px]",
+                          "h-3 w-full rounded-[3px]",
                           cell.future ? "bg-muted/40" : LEVEL_CLASS[cell.level],
                           cell.date === today && "ring-foreground/60 ring-1 ring-offset-1",
                         )}
                       />
                     ) : (
-                      <span key={`blank-${dayIndex}`} className="size-3" aria-hidden />
+                      <span key={`blank-${dayIndex}`} className="h-3 w-full" aria-hidden />
                     ),
                   )}
                 </div>
@@ -146,7 +146,7 @@ export function ReviewHeatmap({ stats, onYearChange, today = todayIso(), classNa
             </div>
             <div
               className="text-muted-foreground mt-1 grid gap-1 text-[10px] leading-3"
-              style={{ gridTemplateColumns: `repeat(${weeks.length}, 0.75rem)` }}
+              style={{ gridTemplateColumns: `repeat(${weeks.length}, minmax(0, 1fr))` }}
               aria-hidden
             >
               {months.map(({ week, month }) => (

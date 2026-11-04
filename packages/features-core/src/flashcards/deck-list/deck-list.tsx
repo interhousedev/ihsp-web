@@ -68,7 +68,7 @@ export function DeckList({
   const buttonClass = "min-h-11 rounded-full px-5 text-xs font-semibold md:min-h-9"
 
   return (
-    <div className={cn("mx-auto flex w-full max-w-3xl flex-col gap-6", className)}>
+    <div className={cn("flex w-full min-w-0 flex-col gap-6", className)}>
       {decks.length === 0 ? (
         <p className="text-muted-foreground rounded-xl border border-dashed p-6 text-center text-sm">{t("empty")}</p>
       ) : (

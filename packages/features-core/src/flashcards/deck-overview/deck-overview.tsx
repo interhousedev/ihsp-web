@@ -60,7 +60,7 @@ export function DeckOverview({
   ].filter((item) => item.onClick)
 
   return (
-    <div className={cn("mx-auto flex w-full max-w-3xl flex-col items-center gap-6", className)}>
+    <div className={cn("flex w-full min-w-0 flex-col items-center gap-6", className)}>
       <header className="flex max-w-full flex-col items-center gap-1 text-center">
         <h1 className="text-2xl font-bold tracking-tight break-words md:text-3xl">{title}</h1>
         {description ? (

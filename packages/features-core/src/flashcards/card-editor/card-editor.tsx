@@ -18,6 +18,7 @@ import type { EditorRow } from "../utils/editor-rows"
 import { parseImport } from "../utils/parse-import"
 import { DESCRIPTION_MAX, TITLE_MAX } from "../utils/limits"
 import { CardEditorRow } from "./card-editor-row"
+import { AiCardsDialog } from "./ai-cards-dialog"
 import { ImportDialog } from "./import-dialog"
 import { useCardEditor } from "./use-card-editor"
 
@@ -67,6 +68,7 @@ export function CardEditor({
   const editor = useCardEditor({ title: initialTitle, description: initialDescription, rows: initialRows }, mode)
   const [preview, setPreview] = useState(false)
   const [importOpen, setImportOpen] = useState(false)
+  const [aiOpen, setAiOpen] = useState(false)
   const [announcement, setAnnouncement] = useState("")
 
   const sensors = useSensors(
@@ -152,7 +154,7 @@ export function CardEditor({
 
   return (
     <form
-      className={cn("mx-auto flex w-full max-w-4xl flex-col gap-4", className)}
+      className={cn("flex w-full min-w-0 flex-col gap-4", className)}
       noValidate
       onSubmit={(event) => event.preventDefault()}
     >
@@ -203,6 +205,10 @@ export function CardEditor({
         >
           <Icons.upload aria-hidden />
           {t("import")}
+        </Button>
+        <Button type="button" variant="outline" className="min-h-11 rounded-full px-4" onClick={() => setAiOpen(true)}>
+          <Icons.sparkles aria-hidden />
+          {t("addWithAi")}
         </Button>
         <label className="flex min-h-11 items-center gap-2 text-sm">
           <input
@@ -281,6 +287,7 @@ export function CardEditor({
       {editor.dirty ? <p className="text-muted-foreground text-end text-xs">{t("unsaved")}</p> : null}
       {submitButtons}
 
+      <AiCardsDialog open={aiOpen} onOpenChange={setAiOpen} onAdd={(cards) => editor.importCards(cards)} />
       <ImportDialog open={importOpen} onOpenChange={setImportOpen} onImport={(cards) => editor.importCards(cards)} />
     </form>
   )
