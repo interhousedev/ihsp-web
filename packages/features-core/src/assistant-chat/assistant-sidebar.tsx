@@ -2,20 +2,32 @@
 
 import { useT } from "@ihsp/i18n"
 import { Button } from "@ihsp/ui"
-import { IconEdit, IconLayoutSidebarLeftCollapse, IconSearch } from "@ihsp/ui"
+import { IconBooks, IconEdit, IconLayoutSidebarLeftCollapse, IconLink, IconSearch } from "@ihsp/ui"
 import Link from "next/link"
 import { useRouter } from "next/navigation"
 import { useState } from "react"
 import { ChatSearchDialog } from "./chat-search-dialog"
 import { SidebarNotebooks } from "./sidebar-notebooks"
+import { SidebarProjects } from "./sidebar-projects"
 import { SidebarRecentChats } from "./sidebar-recent-chats"
+import { SIDEBAR_ROW, SidebarIcon } from "./sidebar-rows"
 import { SidebarUsage } from "./sidebar-usage"
 import { useUsage } from "./use-assistant-queries"
 import { useChatActions } from "./use-chat-actions"
 import { notebookUrl } from "./use-add-to-notebook"
 import { useAssistantScope } from "./assistant-context"
 
-type AssistantSidebarProps = {
+/** Destinations of the app around the assistant; a link the app does not have is left out of the sidebar. */
+export type AssistantSidebarLinks = {
+  /** The app's library (the student's files); absent where the app has none. */
+  libraryHref?: string
+  /** The MCP setup wizard on the id app (absolute address); absent where the app has none (MCP-5). */
+  connectorsHref?: string
+  /** The app's brand name (its `app.name` message), used in the wizard link's label. */
+  appName?: string
+}
+
+type AssistantSidebarProps = AssistantSidebarLinks & {
   basePath: string
   /** The open chat (highlighted in Recent). */
   activeChatId: string | null
@@ -27,13 +39,16 @@ type AssistantSidebarProps = {
   inline?: boolean
 }
 
-/** Left column of the assistant: New chat, Search chats, Notebooks, Recent chats and the usage ring. */
+/** Left column of the assistant: New chat, Search chats, Library, then Projects, Notebooks and Recents, and the usage ring. The account lives in the app shell. */
 export function AssistantSidebar({
   basePath,
   activeChatId,
   onNavigate,
   onCollapse,
   inline = false,
+  libraryHref,
+  connectorsHref,
+  appName,
 }: AssistantSidebarProps) {
   const t = useT("assistant")
   const router = useRouter()
@@ -47,8 +62,8 @@ export function AssistantSidebar({
   })
 
   return (
-    <nav aria-label={t("workspace.sidebar")} className="flex h-full min-h-0 flex-col gap-2 p-3">
-      <div className="flex h-11 shrink-0 items-center">
+    <nav aria-label={t("workspace.sidebar")} className="flex h-full min-h-0 flex-col gap-0.5 p-3">
+      <div className="mb-1.5 flex h-11 shrink-0 items-center">
         {onCollapse ? (
           <Button
             type="button"
@@ -62,23 +77,39 @@ export function AssistantSidebar({
           </Button>
         ) : null}
       </div>
-      <Link
-        href={`${basePath}/`}
-        onClick={onNavigate}
-        className="bg-primary/10 text-primary hover:bg-primary/15 focus-visible:ring-ring/50 flex min-h-11 items-center gap-2 self-start rounded-full px-4 text-sm font-medium outline-none focus-visible:ring-3 md:min-h-9"
-      >
-        <IconEdit className="size-4" aria-hidden />
+      <Link href={`${basePath}/`} onClick={onNavigate} className={SIDEBAR_ROW}>
+        <SidebarIcon>
+          <IconEdit className="size-4" aria-hidden />
+        </SidebarIcon>
         {t("sidebar.newChat")}
       </Link>
-      <button
-        type="button"
-        className="hover:bg-muted focus-visible:ring-ring/50 flex min-h-11 items-center gap-2 rounded-full px-3 text-sm outline-none focus-visible:ring-3 md:min-h-9"
-        onClick={() => setSearchOpen(true)}
-      >
-        <IconSearch className="size-4" aria-hidden />
+      <button type="button" className={SIDEBAR_ROW} onClick={() => setSearchOpen(true)}>
+        <SidebarIcon>
+          <IconSearch className="size-4" aria-hidden />
+        </SidebarIcon>
         {t("sidebar.search")}
       </button>
-      <div className="flex min-h-0 flex-1 flex-col gap-4 overflow-y-auto py-2">
+      {libraryHref ? (
+        <Link href={libraryHref} onClick={onNavigate} className={SIDEBAR_ROW}>
+          <SidebarIcon>
+            <IconBooks className="size-4" aria-hidden />
+          </SidebarIcon>
+          {t("sidebar.library")}
+        </Link>
+      ) : null}
+      {connectorsHref ? (
+        <a href={connectorsHref} rel="noopener noreferrer" onClick={onNavigate} className={SIDEBAR_ROW}>
+          <SidebarIcon>
+            <IconLink className="size-4" aria-hidden />
+          </SidebarIcon>
+          {t("sidebar.connectAi", { app: appName ?? "" })}
+        </a>
+      ) : null}
+      {/* Everything below the pinned rows scrolls as one column, so a long project list never squeezes Recents. */}
+      <div data-scroll="sections" className="mt-3 flex min-h-0 flex-1 flex-col gap-4 overflow-y-auto">
+        {assistant === "student" ? (
+          <SidebarProjects basePath={basePath} activeChatId={activeChatId} onNavigate={onNavigate} />
+        ) : null}
         {features.notebooks ? <SidebarNotebooks onNavigate={onNavigate} /> : null}
         <SidebarRecentChats activeChatId={activeChatId} basePath={basePath} actions={actions} onNavigate={onNavigate} />
       </div>

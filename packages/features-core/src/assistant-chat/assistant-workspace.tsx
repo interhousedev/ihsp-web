@@ -3,18 +3,20 @@
 import type { AssistantKind } from "@ihsp/api"
 import { useT } from "@ihsp/i18n"
 import { Sheet, SheetContent, SheetDescription, SheetHeader, SheetTitle } from "@ihsp/ui"
-import { useSearchParams } from "next/navigation"
+import { usePathname, useSearchParams } from "next/navigation"
 import { useEffect, useState } from "react"
 import { AssistantProvider, useAssistantScope } from "./assistant-context"
 import { AssistantChatPane } from "./assistant-chat-pane"
 import { AssistantHome } from "./assistant-home"
-import { AssistantSidebar } from "./assistant-sidebar"
+import { AssistantSidebar, type AssistantSidebarLinks } from "./assistant-sidebar"
 import { UsageButton } from "./sidebar-usage"
 import { useUsage } from "./use-assistant-queries"
 import { useSidebarCollapsed } from "./use-sidebar-collapsed"
+import { ProjectsList } from "../projects/projects-list"
+import { ProjectView } from "../projects/project-view"
 import { WorkspaceNavButtons } from "./workspace-nav-buttons"
 
-export type AssistantWorkspaceProps = {
+export type AssistantWorkspaceProps = AssistantSidebarLinks & {
   assistant: Exclude<AssistantKind, "lms_author">
   /** Route of the assistant section; the chat page is `<basePath>/chat/?id=`. */
   basePath: string
@@ -30,17 +32,21 @@ function isEditable(target: EventTarget | null): boolean {
  * smaller screens, and the home or the open chat (`?id=`) as the main area. Fill the height you give it
  * (`h-full`); the page wraps it in `<Suspense>` because it reads `useSearchParams`.
  */
-export function AssistantWorkspace({ assistant, basePath }: AssistantWorkspaceProps) {
+export function AssistantWorkspace({ assistant, basePath, ...links }: AssistantWorkspaceProps) {
   return (
     <AssistantProvider assistant={assistant}>
-      <WorkspaceBody basePath={basePath} />
+      <WorkspaceBody basePath={basePath} links={links} />
     </AssistantProvider>
   )
 }
 
-function WorkspaceBody({ basePath }: { basePath: string }) {
+function WorkspaceBody({ basePath, links }: { basePath: string; links: AssistantSidebarLinks }) {
   const t = useT("assistant")
+  // `?id=` is the chat on the chat page and the project on the project page; the path decides which one it is.
+  const pathname = usePathname().replace(/\/+$/, "")
   const chatId = useSearchParams().get("id")
+  const onProjects = pathname === `${basePath}/projects`
+  const onProject = pathname === `${basePath}/project`
   const [collapsed, setCollapsed] = useSidebarCollapsed()
   const [sheetOpen, setSheetOpen] = useState(false)
   const { assistant } = useAssistantScope()
@@ -79,11 +85,22 @@ function WorkspaceBody({ basePath }: { basePath: string }) {
             activeChatId={chatId}
             onNavigate={() => setSheetOpen(false)}
             onCollapse={() => setCollapsed(true)}
+            {...links}
           />
         </aside>
       )}
       <div className="flex min-h-0 min-w-0 flex-1 flex-col">
-        {chatId ? (
+        {onProject && chatId ? (
+          <ProjectView
+            key={chatId}
+            projectId={chatId}
+            basePath={basePath}
+            navButtons={navButtons}
+            trailing={trailing}
+          />
+        ) : onProjects ? (
+          <ProjectsList basePath={basePath} navButtons={navButtons} trailing={trailing} />
+        ) : chatId ? (
           <AssistantChatPane
             key={chatId}
             chatId={chatId}
@@ -101,7 +118,12 @@ function WorkspaceBody({ basePath }: { basePath: string }) {
             <SheetTitle>{t("workspace.sidebar")}</SheetTitle>
             <SheetDescription>{t("workspace.history")}</SheetDescription>
           </SheetHeader>
-          <AssistantSidebar basePath={basePath} activeChatId={chatId} onNavigate={() => setSheetOpen(false)} />
+          <AssistantSidebar
+            basePath={basePath}
+            activeChatId={chatId}
+            onNavigate={() => setSheetOpen(false)}
+            {...links}
+          />
         </SheetContent>
       </Sheet>
     </div>

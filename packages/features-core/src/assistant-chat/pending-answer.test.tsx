@@ -28,4 +28,34 @@ describe("PendingAnswer", () => {
     )
     expect(screen.queryByRole("status")).not.toBeInTheDocument()
   })
+
+  it("shows the steps as a collapsed grey trace before any answer text", () => {
+    const steps = [
+      { id: "think-1", kind: "think", label: "Сначала найду предмет.", status: "done", duration_ms: 0 },
+      { id: "s1", kind: "tool", label: "get_marks", status: "running" },
+    ] as const
+    renderNotebook(<PendingAnswer live={{ status: "", steps: [...steps], text: "" }} />)
+
+    expect(screen.getByRole("button", { name: "Show the steps of this answer" })).toHaveAttribute(
+      "aria-expanded",
+      "false",
+    )
+    expect(screen.queryByText("Сначала найду предмет.")).toBeNull()
+  })
+
+  it("never shows a progress note as the status line; the status falls back to Thinking…", () => {
+    const note = "Сначала найду предмет."
+    renderNotebook(
+      <PendingAnswer
+        live={{
+          status: "",
+          steps: [{ id: "think-1", kind: "think", label: note, status: "done", duration_ms: 0 }],
+          text: "",
+          note,
+        }}
+      />,
+    )
+
+    expect(screen.getByRole("status")).toHaveTextContent("Thinking…")
+  })
 })

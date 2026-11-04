@@ -13,24 +13,26 @@ import {
 } from "@ihsp/api"
 import { upsertStep } from "../agent-steps/merge-steps"
 
-/** The answer while it is made: the status line, the steps so far and the streamed text. */
-export type LiveAnswer = { status: string; steps: AgentStep[]; text: string }
+/**
+ * The answer while it is made: the status line, the steps so far and the streamed text. `note` is the progress note
+ * of the last tool round: the server sends it again as a think step, so it is never echoed as the status.
+ */
+export type LiveAnswer = { status: string; steps: AgentStep[]; text: string; note?: string }
 
 export const EMPTY_LIVE: LiveAnswer = { status: "", steps: [], text: "" }
 
 /** Folds one event into the live answer (`done` and `error` end the turn and change nothing). */
 export function applyLiveEvent(live: LiveAnswer, event: AiStreamEvent): LiveAnswer {
-  if (event.event === "status") return { ...live, status: event.data.text }
+  if (event.event === "status") {
+    if (live.note !== undefined && event.data.text.trim() === live.note) return live
+    return { ...live, status: event.data.text }
+  }
   if (event.event === "step") return { ...live, steps: upsertStep(live.steps, event.data) }
   if (event.event === "delta") return { ...live, text: live.text + event.data.text }
   if (event.event === "round_end") {
-    // The text of this round was a note before tool calls: it becomes a step, the answer area empties.
-    const note = event.data.text.trim()
-    const id = `note-${live.steps.length}`
-    const steps: AgentStep[] = note
-      ? [...live.steps, { id, kind: "think", label: note, status: "done", duration_ms: 0 }]
-      : live.steps
-    return { status: note || live.status, steps, text: "" }
+    // The streamed text of this round was a note before tool calls: the answer area empties. The note itself
+    // arrives as a think step (one step per note, never two), so it stays out of the status line.
+    return { status: "", steps: live.steps, text: "", note: event.data.text.trim() }
   }
   return live
 }

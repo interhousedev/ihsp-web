@@ -3,11 +3,23 @@
 import type { FileItem, NotebookItem } from "@ihsp/api"
 import { useFormatters, useT } from "@ihsp/i18n"
 import { Badge, Button, OfflineBadge, cn, useOnline } from "@ihsp/ui"
-import { IconArrowUp, IconPlayerStop, IconSchool, IconWorld, IconX } from "@ihsp/ui"
+import { IconArrowUp, IconMicrophone, IconPlayerStop, IconSchool, IconWorld, IconX } from "@ihsp/ui"
 import { useRouter } from "next/navigation"
-import { useEffect, useId, useImperativeHandle, useRef, useState, type KeyboardEvent, type Ref } from "react"
+import {
+  useEffect,
+  useId,
+  useImperativeHandle,
+  useRef,
+  useState,
+  type DragEvent,
+  type KeyboardEvent,
+  type Ref,
+} from "react"
+import { UPLOAD_ACCEPT } from "../file-upload-button/file-upload-button"
 import { useWebQuota } from "../web-search"
 import { AttachFilesDialog } from "./attach-files-dialog"
+import { ComposerVoiceBar } from "./composer-voice"
+import { splitDropped } from "./composer-drop"
 import { ComposerPlusMenu } from "./composer-plus-menu"
 import { ComposerUpload, type ComposerUploadHandle } from "./composer-upload"
 import { FileChip } from "./file-chip"
@@ -18,6 +30,9 @@ import { SlashChip, SlashMenu } from "./slash-menu"
 import { slashText, type SlashCall, type SlashName } from "./slash-commands"
 import { useSlashInput } from "./use-slash-input"
 import { useWebSwitch } from "./use-web-switch"
+import { recordingFormat, useVoiceRecorder } from "./use-voice-recorder"
+import { voiceErrorKey } from "./voice-format"
+import { transcribeVoice, type VoiceClip } from "./voice-transcribe"
 
 /** What the student chose besides the text; the composer passes it only while a choice is on. */
 export type PillSendOptions = {
@@ -101,6 +116,13 @@ export function PillComposer({
   const webQuota = useWebQuota()
   // The last draft that came back after a failed send, with the text that was sent for it.
   const returned = useRef<{ draft: string; sent: string } | null>(null)
+  const [alert, setAlert] = useState<string | null>(null)
+  const [dragging, setDragging] = useState(false)
+  const [transcribing, setTranscribing] = useState(false)
+  const [voiceReady, setVoiceReady] = useState(false)
+  const transcription = useRef<AbortController | null>(null)
+  const voice = useVoiceRecorder(onVoiceLimit)
+  const voiceActive = voice.recording || transcribing
 
   // A switch that was left on stays off-screen (and unsent) while the server has web search turned off.
   const webOn = web && webQuota.enabled && features.plus
@@ -111,6 +133,12 @@ export function PillComposer({
   useEffect(() => {
     if (autoFocus && !isTouchDevice()) inputRef.current?.focus()
   }, [autoFocus])
+
+  // The microphone exists only where MediaRecorder does; a transcription still running is dropped on unmount.
+  useEffect(() => {
+    setVoiceReady(recordingFormat() !== null)
+    return () => transcription.current?.abort()
+  }, [])
 
   const prefillKey = prefill?.key
   const prefillText = prefill?.text
@@ -171,6 +199,80 @@ export function PillComposer({
     setFiles((current) => [...current, ...added.filter((file) => !current.some((item) => item.id === file.id))])
   }
 
+  async function startVoice() {
+    setAlert(null)
+    const failed = await voice.start()
+    if (failed) setAlert(t(`voice.${failed}`))
+  }
+
+  /** Cancel: during a recording the audio is dropped; during the transcription the request is aborted. */
+  function cancelVoice() {
+    if (transcription.current) {
+      transcription.current.abort()
+      transcription.current = null
+      setTranscribing(false)
+      return
+    }
+    voice.cancel()
+  }
+
+  /** Stop: the recording is transcribed and goes into the field (or is sent with `sendAfter`). */
+  async function dictate(sendAfter: boolean) {
+    const clip = await voice.finish()
+    if (clip) await transcribeClip(clip, sendAfter)
+  }
+
+  /** The length cap stops the recording by itself; its audio is transcribed into the field. */
+  function onVoiceLimit(clip: VoiceClip) {
+    void transcribeClip(clip, false)
+  }
+
+  async function transcribeClip(clip: VoiceClip, sendAfter: boolean) {
+    const controller = new AbortController()
+    transcription.current = controller
+    setTranscribing(true)
+    setAlert(null)
+    try {
+      const transcript = await transcribeVoice(clip, controller.signal)
+      if (controller.signal.aborted) return
+      if (transcript === "") {
+        setAlert(t("voice.empty"))
+        return
+      }
+      if (!sendAfter) {
+        setText((current) => (current.trim() === "" ? transcript : `${current.trimEnd()} ${transcript}`))
+        inputRef.current?.focus()
+        return
+      }
+      const sent = await onSend(transcript, files)
+      if (sent) setFiles([])
+      else setText((current) => (current === "" ? transcript : current))
+    } catch (error) {
+      if (!controller.signal.aborted) setAlert(t(`voice.${voiceErrorKey(error)}`))
+    } finally {
+      if (transcription.current === controller) {
+        transcription.current = null
+        setTranscribing(false)
+      }
+    }
+  }
+
+  function onDragOver(event: DragEvent<HTMLDivElement>) {
+    if (locked || !Array.from(event.dataTransfer.types).includes("Files")) return
+    event.preventDefault()
+    setDragging(true)
+  }
+
+  /** A drop uploads the files the upload takes; the others are named in the alert and not sent. */
+  function onDrop(event: DragEvent<HTMLDivElement>) {
+    event.preventDefault()
+    setDragging(false)
+    if (locked) return
+    const { accepted, rejected } = splitDropped(Array.from(event.dataTransfer.files), UPLOAD_ACCEPT)
+    setAlert(rejected.length > 0 ? t("dropRejected", { names: rejected.map((file) => file.name).join(", ") }) : null)
+    if (accepted.length > 0) uploadRef.current?.upload(accepted)
+  }
+
   function askNotebook(notebook: NotebookItem) {
     const draft = text.trim()
     try {
@@ -212,6 +314,11 @@ export function PillComposer({
           {limitText}
         </p>
       ) : null}
+      {alert ? (
+        <p role="alert" className="text-destructive px-4 text-sm">
+          {alert}
+        </p>
+      ) : null}
       {online ? null : (
         <div className="flex">
           <OfflineBadge />
@@ -222,8 +329,17 @@ export function PillComposer({
         className={cn(
           "bg-muted/50 focus-within:border-ring relative focus-within:ring-ring/30 flex flex-col gap-1 rounded-[1.75rem] border p-1.5 transition-shadow focus-within:ring-3 motion-reduce:transition-none",
           locked && "opacity-70",
+          dragging && "border-primary border-dashed",
         )}
+        onDragOver={onDragOver}
+        onDragLeave={() => setDragging(false)}
+        onDrop={onDrop}
       >
+        {dragging ? (
+          <p className="bg-background/80 pointer-events-none absolute inset-0 z-10 flex items-center justify-center rounded-[1.75rem] text-sm font-medium">
+            {t("drop")}
+          </p>
+        ) : null}
         {slash.menu ? <SlashMenu {...slash.menu} /> : null}
         {files.length > 0 || guided || webOn || command ? (
           <div className="flex flex-wrap items-center gap-1 px-2 pt-1" aria-label={t("attached")} role="group">
@@ -266,76 +382,99 @@ export function PillComposer({
           </div>
         ) : null}
         {/* Phones: the field spans the card and the toolbar sits below it. sm+: one row (toolbar contents join it). */}
-        <div className="flex flex-col gap-1 sm:flex-row sm:items-end">
-          <label htmlFor={inputId} className="sr-only">
-            {t("label")}
-          </label>
-          <textarea
-            id={inputId}
-            ref={inputRef}
-            data-assistant-composer
-            value={text}
-            rows={1}
-            disabled={locked}
-            placeholder={
-              locked
-                ? online
-                  ? t("disabledPlaceholder")
-                  : t("offline")
-                : command
-                  ? tSlash(`${command}.args`)
-                  : placeholder
-            }
-            className="placeholder:text-muted-foreground field-sizing-content max-h-40 min-h-11 w-full min-w-0 order-1 resize-none bg-transparent px-2 py-2.5 text-base outline-none disabled:cursor-not-allowed sm:order-2 sm:w-auto sm:flex-1 sm:px-1 md:text-sm"
-            onChange={(event) => slash.onTextChange(event.target.value)}
-            onKeyDown={onKeyDown}
-            {...slash.fieldProps}
+        {voiceActive ? (
+          <ComposerVoiceBar
+            phase={transcribing ? "transcribing" : "recording"}
+            levels={voice.levels}
+            onCancel={cancelVoice}
+            onStop={() => void dictate(false)}
+            onSend={() => void dictate(true)}
           />
-          <div className="order-2 flex items-center justify-between gap-1 sm:contents">
-            <div className="flex shrink-0 items-center sm:order-1">
-              {features.plus ? (
-                <ComposerPlusMenu
-                  disabled={locked}
-                  guided={guided}
-                  onGuidedChange={setGuided}
-                  web={webOn}
-                  onWebChange={setWeb}
-                  webQuota={webQuota}
-                  onStudyTool={pickCommand}
-                  fieldRef={inputRef}
-                  onUpload={() => uploadRef.current?.open()}
-                  onPickFiles={() => setPickerOpen(true)}
-                  onAskNotebook={askNotebook}
-                />
-              ) : (
-                <span className="w-2 shrink-0" aria-hidden />
-              )}
-            </div>
-            <div className="flex shrink-0 items-center gap-1 sm:order-3">
-              {stoppable ? (
-                <Button
-                  type="button"
-                  size="icon"
-                  className="size-11 shrink-0 rounded-full"
-                  aria-label={t("stop")}
-                  onClick={onStop}
-                >
-                  <IconPlayerStop aria-hidden />
-                </Button>
-              ) : (
-                <Button
-                  type="submit"
-                  size="icon"
-                  className="size-11 shrink-0 rounded-full"
-                  aria-label={t("send")}
-                  disabled={!canSend}
-                >
-                  <IconArrowUp aria-hidden />
-                </Button>
-              )}
+        ) : (
+          <div className="flex flex-col gap-1 sm:flex-row sm:items-end">
+            <label htmlFor={inputId} className="sr-only">
+              {t("label")}
+            </label>
+            <textarea
+              id={inputId}
+              ref={inputRef}
+              data-assistant-composer
+              value={text}
+              rows={1}
+              disabled={locked}
+              placeholder={
+                locked
+                  ? online
+                    ? t("disabledPlaceholder")
+                    : t("offline")
+                  : command
+                    ? tSlash(`${command}.args`)
+                    : placeholder
+              }
+              className="placeholder:text-muted-foreground field-sizing-content max-h-40 min-h-11 w-full min-w-0 order-1 resize-none bg-transparent px-2 py-2.5 text-base outline-none disabled:cursor-not-allowed sm:order-2 sm:w-auto sm:flex-1 sm:px-1 md:text-sm"
+              onChange={(event) => slash.onTextChange(event.target.value)}
+              onKeyDown={onKeyDown}
+              {...slash.fieldProps}
+            />
+            <div className="order-2 flex items-center justify-between gap-1 sm:contents">
+              <div className="flex shrink-0 items-center sm:order-1">
+                {features.plus ? (
+                  <ComposerPlusMenu
+                    disabled={locked}
+                    guided={guided}
+                    onGuidedChange={setGuided}
+                    web={webOn}
+                    onWebChange={setWeb}
+                    webQuota={webQuota}
+                    onStudyTool={pickCommand}
+                    fieldRef={inputRef}
+                    onUpload={() => uploadRef.current?.open()}
+                    onPickFiles={() => setPickerOpen(true)}
+                    onAskNotebook={askNotebook}
+                  />
+                ) : (
+                  <span className="w-2 shrink-0" aria-hidden />
+                )}
+              </div>
+              <div className="flex shrink-0 items-center gap-1 sm:order-3">
+                {voiceReady && !stoppable ? (
+                  <Button
+                    type="button"
+                    variant="ghost"
+                    size="icon"
+                    className="size-11 shrink-0 rounded-full"
+                    aria-label={t("voice.start")}
+                    disabled={locked}
+                    onClick={() => void startVoice()}
+                  >
+                    <IconMicrophone aria-hidden />
+                  </Button>
+                ) : null}
+                {stoppable ? (
+                  <Button
+                    type="button"
+                    size="icon"
+                    className="size-11 shrink-0 rounded-full"
+                    aria-label={t("stop")}
+                    onClick={onStop}
+                  >
+                    <IconPlayerStop aria-hidden />
+                  </Button>
+                ) : (
+                  <Button
+                    type="submit"
+                    size="icon"
+                    className="size-11 shrink-0 rounded-full"
+                    aria-label={t("send")}
+                    disabled={!canSend}
+                  >
+                    <IconArrowUp aria-hidden />
+                  </Button>
+                )}
+              </div>
             </div>
           </div>
-        </div>
+        )}
       </div>
       {webOn && webQuota.quota && webQuota.quota.limit !== null ? (
         <p role="status" className="text-muted-foreground flex items-center justify-center gap-1.5 px-4 text-xs">

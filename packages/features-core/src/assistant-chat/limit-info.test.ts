@@ -1,6 +1,6 @@
 import { describe, expect, it } from "bun:test"
 import type { UsageInfo } from "@ihsp/api"
-import { formatTokens, limitState, smartState, usagePercent } from "./limit-info"
+import { formatTokens, limitState, showsMcpPrompt, smartState, usagePercent } from "./limit-info"
 
 function usage(
   overrides: { session?: Partial<UsageInfo["session"]>; day?: Partial<UsageInfo["day"]> } = {},
@@ -90,5 +90,17 @@ describe("smartState", () => {
     expect(smartState({ ...usage(), smart_remaining: null, smart_limit: null, smart_resets_at: null })).toBeNull()
     expect(smartState(usage())).toBeNull()
     expect(smartState(undefined)).toBeNull()
+  })
+})
+
+describe("showsMcpPrompt (AI limit reached)", () => {
+  it("suggests the MCP setup when the session or the day budget is used up", () => {
+    expect(showsMcpPrompt({ reached: true, scope: "session", resetsAt: null })).toBe(true)
+    expect(showsMcpPrompt({ reached: true, scope: "day", resetsAt: null })).toBe(true)
+  })
+
+  it("stays silent while the limit is not reached or when Administration revoked the chat AI", () => {
+    expect(showsMcpPrompt({ reached: false })).toBe(false)
+    expect(showsMcpPrompt({ reached: true, scope: "access", resetsAt: null })).toBe(false)
   })
 })

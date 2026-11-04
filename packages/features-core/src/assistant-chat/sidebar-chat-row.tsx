@@ -6,6 +6,7 @@ import { Button, DropdownMenu, DropdownMenuContent, DropdownMenuTrigger, cn } fr
 import { IconDots } from "@ihsp/ui"
 import Link from "next/link"
 import { ChatMenuItems } from "./chat-menu-items"
+import { SIDEBAR_ROW, SIDEBAR_ROW_ACTIVE } from "./sidebar-rows"
 import type { ChatActions } from "./use-chat-actions"
 
 type SidebarChatRowProps = {
@@ -26,10 +27,7 @@ export function SidebarChatRow({ chat, active, basePath, actions, onNavigate }: 
         aria-current={active ? "page" : undefined}
         title={chat.title}
         onClick={onNavigate}
-        className={cn(
-          "hover:bg-muted focus-visible:ring-ring/50 flex min-h-11 items-center gap-2 rounded-full ps-3 pe-11 text-sm outline-none focus-visible:ring-3 md:min-h-9",
-          active && "bg-primary/10 font-medium",
-        )}
+        className={cn(SIDEBAR_ROW, "pe-11", active && SIDEBAR_ROW_ACTIVE)}
       >
         <span className="min-w-0 flex-1 truncate">{chat.title}</span>
         {chat.pending_approvals > 0 ? (
@@ -47,7 +45,7 @@ export function SidebarChatRow({ chat, active, basePath, actions, onNavigate }: 
               type="button"
               variant="ghost"
               size="icon"
-              className="pointer-coarse:opacity-100 absolute end-1 top-1/2 size-9 -translate-y-1/2 rounded-full opacity-0 group-hover/chat:opacity-100 focus-visible:opacity-100 aria-expanded:opacity-100"
+              className="pointer-coarse:opacity-100 absolute end-0 top-1/2 size-11 -translate-y-1/2 rounded-lg opacity-0 md:end-1 md:size-7 group-hover/chat:opacity-100 focus-visible:opacity-100 aria-expanded:opacity-100"
               aria-label={t("sidebar.chatMenu", { title: chat.title })}
             />
           }

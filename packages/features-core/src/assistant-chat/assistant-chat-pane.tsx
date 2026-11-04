@@ -1,6 +1,7 @@
 "use client"
 
 import { keys, type AiStreamEvent, type FileItem } from "@ihsp/api"
+import { getConfig } from "@ihsp/config"
 import { useErrorMessage, useT } from "@ihsp/i18n"
 import { Alert, AlertDescription, Button, StateView } from "@ihsp/ui"
 import { IconArrowDown, IconShare } from "@ihsp/ui"
@@ -14,6 +15,7 @@ import { parseSlashText } from "./slash-commands"
 import { ChatMessageList, type PendingMessage } from "./chat-message-list"
 import { ChatPaneHeader } from "./chat-pane-header"
 import { limitState } from "./limit-info"
+import { LimitMcpPrompt } from "./limit-mcp-prompt"
 import type { Rating } from "./message-actions"
 import { takePendingTurn } from "./pending-turn"
 import { EMPTY_LIVE, applyLiveEvent, type LiveAnswer } from "./stream-turn"
@@ -281,6 +283,7 @@ export function AssistantChatPane({
               ) : null}
             </div>
           ) : null}
+          <LimitMcpPrompt limit={limit} connectorsHref={`${getConfig().ID_URL}/connectors/new/`} />
           <PillComposer
             ref={composer}
             chatId={chatId}

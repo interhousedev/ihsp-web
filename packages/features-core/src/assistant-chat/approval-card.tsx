@@ -25,14 +25,10 @@ function PreviewFields({ preview }: { preview: Preview }) {
         <div
           key={`${field.label}:${field.value}`}
           data-sensitive={field.sensitive ? "true" : "false"}
-          className={
-            field.sensitive
-              ? "rounded-md border border-amber-500/60 bg-amber-100 px-2 py-1.5 dark:bg-amber-950/60"
-              : "px-2 py-0.5"
-          }
+          className={field.sensitive ? "rounded-md border border-warning bg-warning-muted px-2 py-1.5" : "px-2 py-0.5"}
         >
           <dt className="text-muted-foreground flex items-center gap-1 text-xs">
-            {field.sensitive ? <IconAlertTriangle className="size-3.5 text-amber-600" aria-hidden /> : null}
+            {field.sensitive ? <IconAlertTriangle className="size-3.5 text-warning" aria-hidden /> : null}
             {field.label}
             {field.sensitive ? <Badge variant="outline">{t("sensitive")}</Badge> : null}
           </dt>

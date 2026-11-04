@@ -3,9 +3,14 @@
 import type { FileItem } from "@ihsp/api"
 import { useT } from "@ihsp/i18n"
 import { useImperativeHandle, useRef, type Ref } from "react"
-import { FileUploadButton } from "../file-upload-button"
+import { FileUploadButton, type FileUploadControl } from "../file-upload-button/file-upload-button"
 
-export type ComposerUploadHandle = { open: () => void }
+export type ComposerUploadHandle = {
+  /** Opens the file chooser (the "+" menu entry). */
+  open: () => void
+  /** Uploads files dropped on the composer, with the same progress rows and checks as a chosen file. */
+  upload: (files: File[]) => void
+}
 
 type ComposerUploadProps = {
   ref: Ref<ComposerUploadHandle>
@@ -14,23 +19,24 @@ type ComposerUploadProps = {
 }
 
 /**
- * The upload machinery of the composer: `FileUploadButton` with its own button hidden, so the "+" menu entry
- * **Upload a file** can open the file chooser while the progress and error rows stay visible above the pill.
+ * The upload machinery of the composer: `FileUploadButton` with its own button hidden. The "+" menu entry opens the
+ * file chooser and a drop hands its files over; the progress and error rows stay visible above the pill.
  */
 export function ComposerUpload({ ref, disabled, onUploaded }: ComposerUploadProps) {
   const t = useT("assistant.composer")
-  const wrapper = useRef<HTMLDivElement>(null)
+  const control = useRef<FileUploadControl>(null)
 
   useImperativeHandle(
     ref,
     () => ({
-      open: () => wrapper.current?.querySelector<HTMLInputElement>('input[type="file"]')?.click(),
+      open: () => control.current?.open(),
+      upload: (files) => control.current?.upload(files),
     }),
     [],
   )
 
   return (
-    <div ref={wrapper} className="[&>div>button]:hidden">
+    <div className="[&>div>button]:hidden">
       <FileUploadButton
         purpose="ai_upload"
         multiple
@@ -38,6 +44,7 @@ export function ComposerUpload({ ref, disabled, onUploaded }: ComposerUploadProp
         label={t("upload")}
         disabled={disabled}
         onUploaded={onUploaded}
+        controlRef={control}
       />
     </div>
   )

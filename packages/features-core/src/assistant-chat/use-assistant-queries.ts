@@ -65,7 +65,7 @@ export type ChatTier = "fast" | "smart"
 
 export type CreateChatInput = { tier?: ChatTier }
 
-export function useCreateChat(assistant: AssistantKind, courseId?: string) {
+export function useCreateChat(assistant: AssistantKind, courseId?: string, projectId?: string) {
   const queryClient = useQueryClient()
   return useMutation<ChatItem, unknown, CreateChatInput | undefined>({
     mutationFn: (input) =>
@@ -73,8 +73,13 @@ export function useCreateChat(assistant: AssistantKind, courseId?: string) {
         assistant,
         ...(input?.tier ? { tier: input.tier } : {}),
         ...(courseId ? { course_id: courseId } : {}),
+        ...(projectId ? { project_id: projectId } : {}),
       }),
-    onSuccess: () => refreshChatList(queryClient, assistant),
+    onSuccess: () => {
+      void refreshChatList(queryClient, assistant)
+      // Project chat lists (the Chats tab, the sidebar) have their own keys: refresh every chat list.
+      if (projectId) void queryClient.invalidateQueries({ queryKey: ["ai", "chats"] })
+    },
   })
 }
 

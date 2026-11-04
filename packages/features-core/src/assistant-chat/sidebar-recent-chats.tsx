@@ -1,9 +1,10 @@
 "use client"
 
 import { useErrorMessage, useT } from "@ihsp/i18n"
-import { Button, Skeleton } from "@ihsp/ui"
+import { Button, Skeleton, cn } from "@ihsp/ui"
 import { useState } from "react"
 import { SidebarChatRow } from "./sidebar-chat-row"
+import { SIDEBAR_ROW, SidebarSection } from "./sidebar-rows"
 import { useChats } from "./use-assistant-queries"
 import type { ChatActions } from "./use-chat-actions"
 import { useAssistantScope } from "./assistant-context"
@@ -18,7 +19,7 @@ type SidebarRecentChatsProps = {
   onNavigate: () => void
 }
 
-/** Section **Recent**: the latest 20 chats, **Show more** adds 20 more. */
+/** Section **Recents**: the latest 20 chats, **Show more** adds 20 more. */
 export function SidebarRecentChats({ activeChatId, basePath, actions, onNavigate }: SidebarRecentChatsProps) {
   const t = useT("assistant.sidebar")
   const tCommon = useT("common")
@@ -31,14 +32,11 @@ export function SidebarRecentChats({ activeChatId, basePath, actions, onNavigate
   const items = (chats.data?.items ?? []).filter((chat) => chat.id === activeChatId || !isUntitledChat(chat.title))
 
   return (
-    <section aria-labelledby="assistant-recent-heading" className="flex flex-col gap-1">
-      <h3 id="assistant-recent-heading" className="text-muted-foreground px-3 py-1 text-xs font-medium">
-        {t("recent")}
-      </h3>
+    <SidebarSection title={t("recent")}>
       {chats.isPending ? (
         <div role="status" aria-busy="true" aria-label={tCommon("loading")} className="flex flex-col gap-1">
           {[0, 1, 2, 3].map((row) => (
-            <Skeleton key={row} className="h-9 w-full rounded-full" />
+            <Skeleton key={row} className="h-9 w-full rounded-lg" />
           ))}
         </div>
       ) : null}
@@ -76,15 +74,14 @@ export function SidebarRecentChats({ activeChatId, basePath, actions, onNavigate
         </ul>
       ) : null}
       {items.length > visible ? (
-        <Button
+        <button
           type="button"
-          variant="ghost"
-          className="text-muted-foreground min-h-11 justify-start rounded-full px-3 md:min-h-9"
+          className={cn(SIDEBAR_ROW, "text-muted-foreground")}
           onClick={() => setVisible((count) => count + PAGE)}
         >
           {t("showMore")}
-        </Button>
+        </button>
       ) : null}
-    </section>
+    </SidebarSection>
   )
 }

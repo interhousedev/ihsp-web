@@ -16,6 +16,14 @@ export function usagePercent(used: number, limit: number | null): number {
 }
 
 /**
+ * Whether the MCP setup suggestion shows (MCP-5). A used-up session or day budget is solved by connecting an own AI
+ * app; an Administration block on the chat AI is not, so the suggestion stays hidden then.
+ */
+export function showsMcpPrompt(limit: LimitState): boolean {
+  return limit.reached && limit.scope !== "access"
+}
+
+/**
  * Whether the input must be disabled (AI-8). When both budgets are used up the later reset time wins, because
  * the student can write again only after both have reset.
  */

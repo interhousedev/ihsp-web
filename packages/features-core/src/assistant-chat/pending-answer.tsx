@@ -37,10 +37,14 @@ export function PendingAnswer({ live }: { live: LiveAnswer | null }) {
     )
   }
 
+  // Before the first answer text the steps (and the notes among them) stay in the grey trace, not in the status line.
   return (
-    <p role="status" data-testid="pending-answer" className="text-muted-foreground flex items-center gap-2 text-sm">
-      <IconSparkles className="size-4 shrink-0 animate-pulse motion-reduce:animate-none" aria-hidden />
-      <span className="animate-pulse motion-reduce:animate-none">{status}</span>
-    </p>
+    <div data-testid="pending-answer" className="flex min-w-0 flex-col items-start gap-2">
+      <StepTrace steps={live?.steps} live />
+      <p role="status" className="text-muted-foreground flex items-center gap-2 text-sm">
+        <IconSparkles className="size-4 shrink-0 animate-pulse motion-reduce:animate-none" aria-hidden />
+        <span className="animate-pulse motion-reduce:animate-none">{status}</span>
+      </p>
+    </div>
   )
 }

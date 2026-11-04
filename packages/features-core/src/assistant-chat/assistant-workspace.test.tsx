@@ -161,6 +161,9 @@ describe("AssistantWorkspace: sidebar", () => {
     )
     expect(within(nav).getByRole("link", { name: "Homework help" })).toBeInTheDocument()
     expect(within(nav).queryByText("Weekly attendance")).not.toBeInTheDocument()
+    // Notebook groups start collapsed: nothing opens by itself.
+    expect(within(nav).queryByRole("link", { name: /World history/ })).not.toBeInTheDocument()
+    await loose.click(await within(nav).findByRole("button", { name: /My notebooks/ }))
     expect(await within(nav).findByRole("link", { name: /World history/ })).toHaveAttribute(
       "href",
       `/notebooks/view${QUERY}${nbIds.notebookPinned}`,
@@ -170,7 +173,7 @@ describe("AssistantWorkspace: sidebar", () => {
     expect(within(nav).getByRole("link", { name: "New chat" })).toHaveAttribute("href", "/assistant")
   })
 
-  it("hides chats that never got a message from Recent", async () => {
+  it("hides chats that never got a message from Recents", async () => {
     server.use(
       http.get(apiUrl("/v1/ai/chats"), () =>
         HttpResponse.json({
@@ -202,7 +205,7 @@ describe("AssistantWorkspace: sidebar", () => {
 
     const nav = await screen.findByRole("navigation", { name: "Chats and notebooks" })
     expect(await within(nav).findByRole("link", { name: /^Kinematics revision/ })).toBeInTheDocument()
-    const recent = within(nav).getByRole("region", { name: "Recent" })
+    const recent = within(nav).getByRole("region", { name: "Recents" })
     expect(within(recent).getAllByRole("link")).toHaveLength(1)
   })
 
@@ -219,6 +222,7 @@ describe("AssistantWorkspace: sidebar", () => {
     renderWorkspace(`/notebooks/view/?id=${nbIds.notebook}`)
 
     const nav = await screen.findByRole("navigation", { name: "Chats and notebooks" })
+    await loose.click(await within(nav).findByRole("button", { name: /My notebooks/ }))
     expect(await within(nav).findByRole("link", { name: /Photosynthesis/ })).toHaveAttribute("aria-current", "page")
     expect(within(nav).getByRole("link", { name: /World history/ })).not.toHaveAttribute("aria-current")
   })

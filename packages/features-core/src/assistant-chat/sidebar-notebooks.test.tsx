@@ -17,15 +17,44 @@ function make(count: number, origin: "subject_auto" | "course" | "manual", label
 }
 
 describe("SidebarNotebooks folders", () => {
+  it("lists the student's own and course notebooks before the subject ones", async () => {
+    const items = [...make(3, "subject_auto", "Subject"), ...make(2, "course", "Course"), ...make(1, "manual", "Own")]
+    server.use(http.get(apiUrl("/v1/notebooks"), () => HttpResponse.json({ items, next_cursor: null })))
+    renderNotebook(<SidebarNotebooks onNavigate={() => {}} />, { route: "/assistant/" })
+
+    await screen.findByRole("button", { name: /Subject notebooks/ })
+    const order = Array.from(document.querySelectorAll("[data-folder]")).map((node) => node.getAttribute("data-folder"))
+    expect(order).toEqual(["mine", "course", "subject"])
+  })
+
+  it("opens the subject folder by itself and keeps the others collapsed", async () => {
+    const items = [...make(3, "subject_auto", "Subject"), ...make(2, "course", "Course"), ...make(1, "manual", "Own")]
+    server.use(http.get(apiUrl("/v1/notebooks"), () => HttpResponse.json({ items, next_cursor: null })))
+    renderNotebook(<SidebarNotebooks onNavigate={() => {}} />, { route: "/assistant/" })
+
+    await screen.findByRole("button", { name: /Subject notebooks/ })
+    const subject = document.querySelector('[data-folder="subject"]') as HTMLElement
+    const course = document.querySelector('[data-folder="course"]') as HTMLElement
+    const mine = document.querySelector('[data-folder="mine"]') as HTMLElement
+    expect(within(subject).getAllByRole("link", { name: /Subject \d/ }).length).toBe(3)
+    expect(within(course).queryAllByRole("link").length).toBe(0)
+    expect(within(mine).queryAllByRole("link").length).toBe(0)
+  })
+
   it("shows five per folder, the counts and a show-all link", async () => {
     const items = [...make(30, "subject_auto", "Subject"), ...make(7, "course", "Course"), ...make(2, "manual", "Own")]
     server.use(http.get(apiUrl("/v1/notebooks"), () => HttpResponse.json({ items, next_cursor: null })))
     const { user } = renderNotebook(<SidebarNotebooks onNavigate={() => {}} />, { route: "/assistant/" })
 
-    await screen.findByText("Subject 1")
+    await screen.findByRole("button", { name: /Subject notebooks/ })
     const subject = document.querySelector('[data-folder="subject"]') as HTMLElement
     const course = document.querySelector('[data-folder="course"]') as HTMLElement
     const mine = document.querySelector('[data-folder="mine"]') as HTMLElement
+    // Subject opens by itself; the other groups stay collapsed until the student opens them.
+    expect(within(course).queryAllByRole("link").length).toBe(0)
+    expect(within(mine).queryAllByRole("link").length).toBe(0)
+    await user.click(within(course).getByRole("button", { name: /Course notebooks/ }))
+    await user.click(within(mine).getByRole("button", { name: /My notebooks/ }))
     expect(within(subject).getAllByRole("link").length).toBe(6)
     expect(within(subject).getByRole("link", { name: "Show all (30)" }).getAttribute("href")).toContain(
       "folder=subject",
@@ -38,7 +67,7 @@ describe("SidebarNotebooks folders", () => {
 
     await user.click(within(subject).getByRole("button", { name: /Subject notebooks/ }))
     expect(within(subject).queryAllByRole("link").length).toBe(0)
-    expect(window.localStorage.getItem("ihsp.assistant.notebook-folders.collapsed")).toContain("subject")
+    expect(window.localStorage.getItem("ihsp.assistant.notebook-sections")).toContain("subject")
   })
 
   it("counts every page of the list, not only the first one", async () => {
@@ -63,5 +92,18 @@ describe("SidebarNotebooks folders", () => {
       return element as HTMLElement
     })
     expect(within(subject).getByRole("link", { name: "Show all (130)" })).toBeInTheDocument()
+  })
+
+  it("does not open the group of the notebook on screen", async () => {
+    server.use(
+      http.get(apiUrl("/v1/notebooks"), () =>
+        HttpResponse.json({ items: make(2, "manual", "Own"), next_cursor: null }),
+      ),
+    )
+    const items = make(2, "manual", "Own")
+    renderNotebook(<SidebarNotebooks onNavigate={() => {}} />, { route: `/notebooks/view/?id=${items[0]?.id}` })
+
+    await screen.findByRole("button", { name: /My notebooks/ })
+    expect(screen.queryByRole("link", { name: "Own 1" })).toBeNull()
   })
 })
