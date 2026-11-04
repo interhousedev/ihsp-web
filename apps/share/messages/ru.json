@@ -1,9 +1,9 @@
 {
   "share": {
-    "brand": "IHT — ссылки",
+    "brand": "{brand} — ссылки",
     "loading": "Загрузка…",
     "sharedBy": "Поделился(-ась): {name}",
-    "openApp": "Открыть my.iht",
+    "openApp": "Открыть {appMy}",
     "notFound": {
       "title": "Ссылка не найдена",
       "description": "Такой ссылки нет или она удалена."
@@ -53,13 +53,13 @@
     },
     "visualization": {
       "title": "Визуализация",
-      "logoAlt": "my.iht",
+      "logoAlt": "{appMy}",
       "share": "Поделиться",
       "copied": "Ссылка скопирована",
       "copyFailed": "Не удалось скопировать ссылку",
       "expiredTitle": "Срок действия ссылки истёк",
       "expiredDescription": "Ссылки на визуализации действуют ограниченное время. Запросите новую в боте.",
-      "openApp": "Открыть my.iht"
+      "openApp": "Открыть {appMy}"
     }
   }
 }

@@ -1,23 +1,23 @@
 {
   "landing": {
     "meta": {
-      "title": "my.iht — Interhouse student platform"
+      "title": "{appMy} — {orgAlias} student platform"
     },
     "skip": "Skip to content",
-    "logoAlt": "Interhouse logo",
-    "brand": "Interhouse",
-    "headline": "Making everyday studying at Interhouse more convenient",
-    "lead": "One platform of the Academic Lyceum International House Tashkent for students, teachers, staff and applicants.",
-    "ctaApply": "Want to apply to Interhouse? Ask the my.iht AI to learn more!",
+    "logoAlt": "{orgAlias} logo",
+    "brand": "{orgAlias}",
+    "headline": "Making everyday studying at {orgAlias} more convenient",
+    "lead": "One platform of the Academic Lyceum {orgName} for students, teachers, staff and applicants.",
+    "ctaApply": "Want to apply to {orgAlias}? Ask the {appMy} AI to learn more!",
     "ctaApplyHint": "Opens the Telegram bot in guest mode",
     "ctaStudent": "Already a student? It's your personal helper: new marks notifications, timetable, homework, AI study notebooks…",
-    "ctaStudentButton": "Open my.iht",
+    "ctaStudentButton": "Open {appMy}",
     "why": {
-      "title": "Why my.iht?",
+      "title": "Why {appMy}?",
       "lead": "Everything you need for a school day in one place, on the phone and in Telegram."
     },
     "how": {
-      "title": "How my.iht helps you study"
+      "title": "How {appMy} helps you study"
     },
     "benefits": {
       "marks": {
@@ -67,7 +67,7 @@
       "open": "Open {name}",
       "screenAlt": "Screenshot of {name}: {screen}",
       "sp": {
-        "name": "my.iht",
+        "name": "{appMy}",
         "for": "For students",
         "features": {
           "f1": "Home with today's lessons",
@@ -81,7 +81,7 @@
         }
       },
       "staff": {
-        "name": "IHT Учителям",
+        "name": "{appStaff}",
         "for": "For teachers and curators",
         "features": {
           "f1": "Class journal",
@@ -93,7 +93,7 @@
         }
       },
       "lms": {
-        "name": "lms.iht",
+        "name": "{appLms}",
         "for": "Courses",
         "features": {
           "f1": "Course catalog",
@@ -105,7 +105,7 @@
         }
       },
       "library": {
-        "name": "library.iht",
+        "name": "{appLibrary}",
         "for": "Library",
         "features": {
           "f1": "Book catalog",
@@ -133,7 +133,7 @@
       "apps": "Apps",
       "security": "Security contact",
       "language": "Language",
-      "rights": "Academic Lyceum International House Tashkent"
+      "rights": "Academic Lyceum {orgName}"
     },
     "notFound": {
       "title": "Page not found",

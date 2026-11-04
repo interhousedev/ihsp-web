@@ -1,14 +1,13 @@
 import "@ihsp/ui/styles"
-import "./landing.css"
+import { BRAND } from "@ihsp/config/brand"
 import type { Metadata, Viewport } from "next"
 import type { ReactNode } from "react"
 import { LANG_INIT_SCRIPT } from "./lang-init"
 import { Providers } from "./providers"
 
 export const metadata: Metadata = {
-  title: "my.iht — Interhouse",
-  description:
-    "Making everyday studying at Interhouse more convenient: marks, timetable, homework, AI study notebooks.",
+  title: `${BRAND.apps.sp.name} — ${BRAND.orgAlias}`,
+  description: `Making everyday studying at ${BRAND.orgAlias} more convenient: marks, timetable, homework, AI study notebooks.`,
   icons: {
     icon: [
       { url: "/favicon.ico", sizes: "any" },
@@ -22,8 +21,8 @@ export const viewport: Viewport = {
   width: "device-width",
   initialScale: 1,
   themeColor: [
-    { media: "(prefers-color-scheme: light)", color: "#ffffff" },
-    { media: "(prefers-color-scheme: dark)", color: "#0d1430" },
+    { media: "(prefers-color-scheme: light)", color: BRAND.colors.landingBarLight },
+    { media: "(prefers-color-scheme: dark)", color: BRAND.colors.landingBarDark },
   ],
 }
 

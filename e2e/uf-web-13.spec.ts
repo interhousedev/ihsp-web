@@ -59,14 +59,13 @@ test("UF-WEB-13 tick homework, move it to Done, keep a private note", async ({ p
 
     // A private note.
     const note = `Pages 34-36 ${Date.now()}`
-    await done.getByRole("button", { name: "Add note" }).click()
-    await done.getByLabel("Private note").fill(note)
     const saved = page.waitForResponse(
       (response) => response.url().includes("/note") && response.request().method() === "PUT",
     )
-    await done.getByRole("button", { name: "Save", exact: true }).click()
+    await done.getByLabel("Private note").fill(note)
+    await done.getByLabel("Private note").blur()
     expect((await saved).ok()).toBe(true)
-    await expect(done.getByText(note)).toBeVisible()
+    await expect(done.getByLabel("Private note")).toHaveValue(note)
 
     // Both survive a reload.
     await page.reload()

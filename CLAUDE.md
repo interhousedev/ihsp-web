@@ -44,12 +44,18 @@ Use oxlint and oxfmt, never prettier or eslint. Run `bun run test` only for the 
 - **Icons** only through the registry in `packages/ui/src/components/icons.tsx`.
 - **Tests first**, with MSW handlers and fixtures kept in step with the OpenAPI types.
 
+- **Third-party licenses.** When a dependency changes (`package.json`, `bun.lock`) or the backend's `licenses/python.json` changes, run `bun run generate-licenses` and commit the regenerated `packages/features-core/src/license/generated/licenses.json`.
+
 ## Product facts the code relies on
 
 - Roles: student, teacher, admin, lms_admin, lms_creator, librarian. Telegram mini app sessions never reach the admin app.
 - Sign-in is Ory Hydra OAuth with PKCE through the `id` app; the access token (10 minutes) is kept in memory, the refresh token is an HttpOnly cookie on the API host. A 401 can arrive at any time (blocking a user bumps the session epoch).
 - `app.ihsu.uz` is the installable build of `sp` (APP_MODE `pwa`); `my.ihsu.uz` is the plain site and the Telegram mini app. `PWA_APPS` can make lms, library, staff and admin installable.
 - Web search (Exa) is a switch in the assistant and notebooks; quota errors come back as problem+json types the UI translates.
+
+## Rebranding
+
+Brand names and colours live in `packages/config/src/brand.ts` and `packages/ui/src/styles/brand.css`. In messages use the placeholders (`{brand}`, `{appMy}` ...), in code `BRAND`; never a literal (a test fails). See README, "Rebranding".
 
 ## Documentation policy
 

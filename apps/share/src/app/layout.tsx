@@ -1,4 +1,5 @@
 import "@ihsp/ui/styles"
+import { BRAND } from "@ihsp/config/brand"
 import { THEME_INIT_SCRIPT } from "@ihsp/ui/theme-init"
 import { LANG_INIT_SCRIPT } from "./lang-init"
 import type { Metadata, Viewport } from "next"
@@ -6,7 +7,7 @@ import type { ReactNode } from "react"
 import { Providers } from "./providers"
 
 export const metadata: Metadata = {
-  title: "IHT shares",
+  title: BRAND.apps.share.name,
   description: "Shared assistant chats and flash card sets",
   robots: { index: false, follow: false },
   // The app is served under `/ai` (basePath); Next does not prefix metadata icon paths.

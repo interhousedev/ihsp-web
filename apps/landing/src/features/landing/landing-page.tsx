@@ -1,5 +1,6 @@
 "use client"
 
+import { BRAND } from "@ihsp/config/brand"
 import { useT } from "@ihsp/i18n"
 import {
   IconBell,
@@ -12,7 +13,6 @@ import {
   IconNotebook,
   IconSparkles,
   IconUserCheck,
-  SourceCodeLinks,
   type Icon,
 } from "@ihsp/ui"
 import { useLandingLinks, type LandingLinks } from "./links"
@@ -123,7 +123,7 @@ export function LandingPage() {
       </a>
       <header className="mx-auto flex max-w-6xl items-center gap-3 px-4 py-3">
         {/* oxlint-disable-next-line nextjs/no-img-element -- static export, the logo is a plain file of /public */}
-        <img src="/icons/logo.svg" alt={t("logoAlt")} width={40} height={40} className="size-10 rounded-lg" />
+        <img src={BRAND.logos.svg} alt={t("logoAlt")} width={40} height={40} className="size-10 rounded-lg" />
         <span className="text-lg font-semibold">{t("brand")}</span>
       </header>
 
@@ -131,7 +131,7 @@ export function LandingPage() {
         <section className="mx-auto max-w-6xl px-4 pt-8 pb-12 sm:pt-16">
           <div className="max-w-3xl">
             <h1 className="text-3xl font-bold tracking-tight text-balance sm:text-5xl">
-              <span className="text-[var(--brand-text)]">my.iht</span> · {t("headline")}
+              <span className="text-[var(--brand-text)]">{BRAND.apps.sp.name}</span> · {t("headline")}
             </h1>
             <p className="text-muted-foreground mt-4 text-lg">{t("lead")}</p>
             <div className="mt-8 flex flex-col gap-2">
@@ -238,7 +238,6 @@ export function LandingPage() {
             {links.securityContact ? <SecurityContact contact={links.securityContact} /> : null}
           </div>
           <p className="text-muted-foreground text-sm sm:col-span-2">© {t("footer.rights")}</p>
-          <SourceCodeLinks className="sm:col-span-2 sm:justify-start" />
         </div>
       </footer>
     </>

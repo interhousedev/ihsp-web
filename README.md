@@ -198,3 +198,11 @@ Contributions are welcome. Read [CONTRIBUTING.md](CONTRIBUTING.md) and [CODESTYL
 Copyright (C) 2026 Alex Sayfi and contributors.
 
 Licensed under the [GNU Affero General Public License v3.0 only](LICENSE) (`AGPL-3.0-only`). If you run a modified version as a network service, you must offer its users the corresponding source code.
+
+## Rebranding
+
+Edit `packages/config/src/brand.ts` (names, descriptions, repository URLs, logo paths, browser-bar colours), `packages/ui/src/styles/brand.css` (brand colours) and the image files in `apps/<app>/public/icons/`, then run `bun run packages/config/scripts/generate-brand-assets.ts` (each app's build runs it too) to rewrite the manifests and offline pages. Messages use placeholders (`{brand}`, `{appMy}` ...) filled when they load; `packages/config/src/__tests__/brand-literals.test.ts` fails on a literal name elsewhere.
+
+## Third-party licenses
+
+The Settings page of each app has a License section: the AGPL notice with the links to both source repositories, and a searchable list of the open source packages. The list is `packages/features-core/src/license/generated/licenses.json`, written by `bun run generate-licenses` from `bun.lock` and `node_modules` (production dependencies only) and from the backend's `licenses/python.json` (read from `${IHSP_BACKEND_DIR:-../iht-backend}`, written there by `uv run python scripts/export_licenses.py`). The fonts (Inter, KaTeX) and the icons (Tabler) ship inside their packages and are listed there. Native builds for other platforms are left out when they are not installed on the machine that runs the script. Run the script after any dependency change and commit the regenerated file.

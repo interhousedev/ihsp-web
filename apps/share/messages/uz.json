@@ -1,9 +1,9 @@
 {
   "share": {
-    "brand": "IHT — havolalar",
+    "brand": "{brand} — havolalar",
     "loading": "Yuklanmoqda…",
     "sharedBy": "Ulashgan: {name}",
-    "openApp": "my.iht ni ochish",
+    "openApp": "{appMy} ni ochish",
     "notFound": {
       "title": "Havola topilmadi",
       "description": "Bunday havola yoʻq yoki oʻchirilgan."
@@ -53,13 +53,13 @@
     },
     "visualization": {
       "title": "Vizualizatsiya",
-      "logoAlt": "my.iht",
+      "logoAlt": "{appMy}",
       "share": "Ulashish",
       "copied": "Havola nusxalandi",
       "copyFailed": "Havolani nusxalab bo‘lmadi",
       "expiredTitle": "Havola muddati tugagan",
       "expiredDescription": "Vizualizatsiya havolalari cheklangan vaqt ishlaydi. Botdan yangisini so‘rang.",
-      "openApp": "my.iht ni ochish"
+      "openApp": "{appMy} ni ochish"
     }
   }
 }

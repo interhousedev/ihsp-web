@@ -1,9 +1,9 @@
 {
   "share": {
-    "brand": "IHT shares",
+    "brand": "{appShare}",
     "loading": "Loading…",
     "sharedBy": "Shared by {name}",
-    "openApp": "Open my.iht",
+    "openApp": "Open {appMy}",
     "notFound": {
       "title": "Link not found",
       "description": "This link does not exist or has been removed."
@@ -53,13 +53,13 @@
     },
     "visualization": {
       "title": "Visualization",
-      "logoAlt": "my.iht",
+      "logoAlt": "{appMy}",
       "share": "Share",
       "copied": "Link copied",
       "copyFailed": "Could not copy the link",
       "expiredTitle": "This link has expired",
       "expiredDescription": "Visualization links work for a limited time. Ask for a new one in the bot.",
-      "openApp": "Open my.iht"
+      "openApp": "Open {appMy}"
     }
   }
 }

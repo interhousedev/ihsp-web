@@ -1,6 +1,7 @@
 /**
- * The Today dashboard of the student portal: Edit mode, add a widget from the catalogue, resize it, Done saves the
- * layout (it survives a reload). The spec removes the widget again so that it can run repeatedly.
+ * The Home widget grid of the student portal: Edit mode, add a widget from the catalogue, resize it, Done saves the
+ * layout (it survives a reload). The spec removes the widget again so that it can run repeatedly. The old Today
+ * address (`/today/`) redirects to Home.
  */
 
 import { STUDENT } from "./fixtures/accounts"
@@ -8,7 +9,13 @@ import { URLS } from "./fixtures/env"
 import { loginAs } from "./fixtures/login"
 import { a11y, expect, test } from "./fixtures/test"
 
-test("Today dashboard: add a widget, resize it, save, remove it", async ({ page }, testInfo) => {
+test("the old Today address redirects to Home", async ({ page }) => {
+  await loginAs(page, STUDENT, "sp", { path: "/today/" })
+  await expect(page.getByRole("region", { name: "My widgets" })).toBeVisible()
+  await expect.poll(() => new URL(page.url()).pathname).toBe("/")
+})
+
+test("Home widget grid: add a widget, resize it, save, remove it", async ({ page }, testInfo) => {
   test.slow()
   await loginAs(page, STUDENT, "sp", { path: "/" })
   const dashboard = page.getByRole("region", { name: "My widgets" })

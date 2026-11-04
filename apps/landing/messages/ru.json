@@ -1,23 +1,23 @@
 {
   "landing": {
     "meta": {
-      "title": "my.iht — платформа учеников Interhouse"
+      "title": "{appMy} — платформа учеников {orgAlias}"
     },
     "skip": "Перейти к содержимому",
-    "logoAlt": "Логотип Interhouse",
-    "brand": "Interhouse",
-    "headline": "Делаем повседневную учёбу в Interhouse удобнее",
-    "lead": "Единая платформа Академического лицея International House Tashkent для учеников, учителей, сотрудников и абитуриентов.",
-    "ctaApply": "Хотите поступить в Interhouse? Спросите ИИ my.iht, чтобы узнать больше!",
+    "logoAlt": "Логотип {orgAlias}",
+    "brand": "{orgAlias}",
+    "headline": "Делаем повседневную учёбу в {orgAlias} удобнее",
+    "lead": "Единая платформа Академического лицея {orgName} для учеников, учителей, сотрудников и абитуриентов.",
+    "ctaApply": "Хотите поступить в {orgAlias}? Спросите ИИ {appMy}, чтобы узнать больше!",
     "ctaApplyHint": "Откроет Telegram-бота в гостевом режиме",
     "ctaStudent": "Уже учитесь? Это ваш личный помощник: уведомления о новых оценках, расписание, домашние задания, ИИ-тетради…",
-    "ctaStudentButton": "Открыть my.iht",
+    "ctaStudentButton": "Открыть {appMy}",
     "why": {
-      "title": "Почему my.iht?",
+      "title": "Почему {appMy}?",
       "lead": "Всё нужное для учебного дня в одном месте: в телефоне и в Telegram."
     },
     "how": {
-      "title": "Как my.iht помогает учиться"
+      "title": "Как {appMy} помогает учиться"
     },
     "benefits": {
       "marks": {
@@ -67,7 +67,7 @@
       "open": "Открыть {name}",
       "screenAlt": "Снимок экрана {name}: {screen}",
       "sp": {
-        "name": "my.iht",
+        "name": "{appMy}",
         "for": "Для учеников",
         "features": {
           "f1": "Главная с уроками на сегодня",
@@ -81,7 +81,7 @@
         }
       },
       "staff": {
-        "name": "IHT Учителям",
+        "name": "{appStaff}",
         "for": "Для учителей и кураторов",
         "features": {
           "f1": "Журнал класса",
@@ -93,7 +93,7 @@
         }
       },
       "lms": {
-        "name": "lms.iht",
+        "name": "{appLms}",
         "for": "Курсы",
         "features": {
           "f1": "Каталог курсов",
@@ -105,7 +105,7 @@
         }
       },
       "library": {
-        "name": "library.iht",
+        "name": "{appLibrary}",
         "for": "Библиотека",
         "features": {
           "f1": "Каталог книг",
@@ -133,7 +133,7 @@
       "apps": "Приложения",
       "security": "Контакт по безопасности",
       "language": "Язык",
-      "rights": "Академический лицей International House Tashkent"
+      "rights": "Академический лицей {orgName}"
     },
     "notFound": {
       "title": "Страница не найдена",

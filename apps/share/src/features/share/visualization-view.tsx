@@ -2,6 +2,7 @@
 
 import { api, isApiError, seg, type RequestOptions } from "@ihsp/api"
 import { getConfig } from "@ihsp/config"
+import { BRAND } from "@ihsp/config/brand"
 import { useT } from "@ihsp/i18n"
 import { chatLibrary, MessageWithOpenUi } from "@ihsp/features-core/openui"
 import { Button, Markdown, StateView } from "@ihsp/ui"
@@ -76,7 +77,7 @@ export function VisualizationView({ slug }: { slug: string }) {
       <div className="mx-auto flex w-full max-w-3xl flex-col items-center gap-4 px-3 pt-[max(1.25rem,env(safe-area-inset-top))] pb-[max(2rem,env(safe-area-inset-bottom))] sm:px-4">
         <a href={getConfig().SP_URL} aria-label={t("openApp")}>
           {/* oxlint-disable-next-line nextjs/no-img-element -- static export, the logo is a plain file of /public */}
-          <img src="/ai/icons/logo.svg" alt={t("logoAlt")} width={32} height={32} className="size-8" />
+          <img src={`/ai${BRAND.logos.svg}`} alt={t("logoAlt")} width={32} height={32} className="size-8" />
         </a>
         <main id="main-content" className="flex w-full min-w-0 flex-col gap-4">
           {query.isPending ? (

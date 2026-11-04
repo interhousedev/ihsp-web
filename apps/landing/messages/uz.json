@@ -1,23 +1,23 @@
 {
   "landing": {
     "meta": {
-      "title": "my.iht — Interhouse oʻquvchilar platformasi"
+      "title": "{appMy} — {orgAlias} oʻquvchilar platformasi"
     },
     "skip": "Asosiy qismga oʻtish",
-    "logoAlt": "Interhouse logotipi",
-    "brand": "Interhouse",
-    "headline": "Interhouse’da har kungi oʻqishni yanada qulay qilamiz",
-    "lead": "International House Tashkent akademik litseyining oʻquvchilar, oʻqituvchilar, xodimlar va abituriyentlar uchun yagona platformasi.",
-    "ctaApply": "Interhouse’ga hujjat topshirmoqchimisiz? Batafsil bilish uchun my.iht sunʼiy intellektidan soʻrang!",
+    "logoAlt": "{orgAlias} logotipi",
+    "brand": "{orgAlias}",
+    "headline": "{orgAlias}’da har kungi oʻqishni yanada qulay qilamiz",
+    "lead": "{orgName} akademik litseyining oʻquvchilar, oʻqituvchilar, xodimlar va abituriyentlar uchun yagona platformasi.",
+    "ctaApply": "{orgAlias}’ga hujjat topshirmoqchimisiz? Batafsil bilish uchun {appMy} sunʼiy intellektidan soʻrang!",
     "ctaApplyHint": "Telegram botini mehmon rejimida ochadi",
     "ctaStudent": "Allaqachon oʻqiyapsizmi? Bu sizning shaxsiy yordamchingiz: yangi baholar haqida xabarlar, dars jadvali, uy vazifalari, AI oʻquv daftarlari…",
-    "ctaStudentButton": "my.iht’ni ochish",
+    "ctaStudentButton": "{appMy}’ni ochish",
     "why": {
-      "title": "Nega my.iht?",
+      "title": "Nega {appMy}?",
       "lead": "Oʻquv kuni uchun kerakli hamma narsa bir joyda: telefonda va Telegramda."
     },
     "how": {
-      "title": "my.iht oʻqishga qanday yordam beradi"
+      "title": "{appMy} oʻqishga qanday yordam beradi"
     },
     "benefits": {
       "marks": {
@@ -67,7 +67,7 @@
       "open": "{name}ni ochish",
       "screenAlt": "{name} ekrani: {screen}",
       "sp": {
-        "name": "my.iht",
+        "name": "{appMy}",
         "for": "Oʻquvchilar uchun",
         "features": {
           "f1": "Bugungi darslar bilan bosh sahifa",
@@ -81,7 +81,7 @@
         }
       },
       "staff": {
-        "name": "IHT Учителям",
+        "name": "{appStaff}",
         "for": "Oʻqituvchilar va kuratorlar uchun",
         "features": {
           "f1": "Sinf jurnali",
@@ -93,7 +93,7 @@
         }
       },
       "lms": {
-        "name": "lms.iht",
+        "name": "{appLms}",
         "for": "Kurslar",
         "features": {
           "f1": "Kurslar katalogi",
@@ -105,7 +105,7 @@
         }
       },
       "library": {
-        "name": "library.iht",
+        "name": "{appLibrary}",
         "for": "Kutubxona",
         "features": {
           "f1": "Kitoblar katalogi",
@@ -133,7 +133,7 @@
       "apps": "Ilovalar",
       "security": "Xavfsizlik boʻyicha aloqa",
       "language": "Til",
-      "rights": "International House Tashkent akademik litseyi"
+      "rights": "{orgName} akademik litseyi"
     },
     "notFound": {
       "title": "Sahifa topilmadi",

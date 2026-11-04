@@ -27,6 +27,7 @@ Thank you for helping. This repository holds the static Next.js apps of the Inte
 - **Static export.** No middleware, route handlers, server actions, `cookies()` or `headers()`. Entity pages use query parameters, not dynamic segments. Wrap anything that reads the URL in `<Suspense>`. No `next/image`. Runtime configuration comes from `/env.js` through `getConfig()`, never from module scope.
 - **CSP.** A new inline script or third-party origin needs a change in `deploy/csp-hash.ts` or `deploy/snippets/` and an end-to-end check.
 - **i18n.** Every string in uz, ru and en at once; a parity test checks it.
+- **Third-party licenses.** A dependency change needs `bun run generate-licenses` and the regenerated list committed with it.
 - **Icons** only through `packages/ui/src/components/icons.tsx`.
 
 ## API contract

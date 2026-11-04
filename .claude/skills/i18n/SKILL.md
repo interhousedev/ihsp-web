@@ -13,6 +13,7 @@ description: Use when adding or changing any user-facing text, message keys, ter
 - "Промежуточный контроль (ПК)" and "Итоговый контроль (ИК)". Never "Рубежный контроль".
 - Russian: "Урок", never "Занятие". LMS glossary: Курс, Модуль, Урок, Шаг.
 - The student app is "my.iht" ("SP" is only a code name); the teacher app is "IHT Учителям".
+- **Brand names are placeholders in messages:** `{brand}`, `{orgName}`, `{orgAlias}`, `{libraryHost}`, `{appMy}`, `{appMyPwa}`, `{appStaff}`, `{appAdmin}`, `{appLms}`, `{appLibrary}`, `{appId}`, `{appShare}`, filled from `packages/config/src/brand.ts` when messages load. Never write the names literally; a test fails.
 - Uzbek uses ʻ (oʻ, gʻ) and ʼ (tutuqbelgi) in admin and LMS texts; search folds every apostrophe form and Uzbek Cyrillic to Latin.
 
 ## Copy
