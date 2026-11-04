@@ -167,7 +167,7 @@ describe("Docker build inputs", () => {
   it("the nginx stages run unprivileged on 8080 with busybox wget (no curl, bash or apk packages)", () => {
     for (const name of ["Dockerfile", "Dockerfile.prebuilt"]) {
       const text = read(name)
-      expect(text).toContain("FROM nginxinc/nginx-unprivileged:1.28.2-alpine\n")
+      expect(text).toContain("FROM nginxinc/nginx-unprivileged:1.30.1-alpine\n")
       expect(text).toContain("EXPOSE 8080\n")
       expect(text).toContain("USER 101\n")
       expect(text).toContain("CMD wget -q -O /dev/null")

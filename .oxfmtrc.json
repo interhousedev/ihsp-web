@@ -11,6 +11,7 @@
   "printWidth": 120,
   "endOfLine": "lf",
   "ignorePatterns": [
+    "packages/features-core/src/openui/corpus.json",
     "**/.next/**",
     "**/out/**",
     "**/node_modules/**",
