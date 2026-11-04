@@ -140,3 +140,35 @@ describe("replayed stream: thoughts never become answer text", () => {
     expect(live.text).toBe("")
   })
 })
+
+describe("sendStreamed: the stored answer wins over the streamed raw text", () => {
+  it("resolves with the done text, which replaces the raw table the deltas streamed", async () => {
+    const raw = "| Subject | Mark |\n|---|---|\n| Math | 5 |\n"
+    const cleaned = "Your mark in Math is 5."
+    const final: TurnResult = {
+      ...result,
+      new_messages: [{ ...result.new_messages[0]!, text: cleaned }],
+    }
+    server.use(
+      http.post(
+        apiUrl(`/v1/ai/chats/${ids.chat2}/messages`),
+        () =>
+          new HttpResponse(
+            sse([
+              { event: "delta", data: { text: raw } },
+              { event: "done", data: final },
+            ]),
+            {
+              headers: { "Content-Type": "text/event-stream" },
+            },
+          ),
+      ),
+    )
+    const events: AiStreamEvent[] = []
+
+    const turn = await sendStreamed(ids.chat2, { text: "?", file_ids: [] }, { onEvent: (e) => events.push(e) })
+
+    expect(turn.new_messages[0]?.text).toBe(cleaned)
+    expect(events.reduce(applyLiveEvent, EMPTY_LIVE).text).toBe(raw)
+  })
+})

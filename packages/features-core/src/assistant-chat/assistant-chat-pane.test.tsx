@@ -8,6 +8,7 @@ import {
   server,
   setWebQuota,
   testRouter,
+  toolCallPending,
   turnResultApproved,
   turnResultRejected,
   usageLimitReached,
@@ -805,5 +806,118 @@ describe("AssistantChatPane: one answer per turn", () => {
     gate.resolve()
     expect(await screen.findByText("Mass times velocity.")).toBeInTheDocument()
     await waitFor(() => expect(screen.queryByTestId("pending-answer")).not.toBeInTheDocument())
+  })
+})
+
+const RAW_TABLE = "Here is the table:\n\n| Subject | Mark |\n|---|---|\n| Math | 5 |\n"
+const CLEANED = "Your mark in Math is 5."
+const SUCCESS_USAGE = {
+  session: { used: 1, limit: 100, resets_at: null },
+  day: { used: 1, limit: 100, resets_at: "2026-10-08T00:00:00Z" },
+}
+
+type WireEvent = { event: string; data: unknown }
+
+/** Serves a send as an SSE stream: `before`, then wait for `gate`, then `after` (the stream ends with them). */
+function gatedStream(before: WireEvent[], gate: Promise<void>, after: WireEvent[]) {
+  return http.post(apiUrl(`/v1/ai/chats/${ids.chat2}/messages`), () => {
+    const encoder = new TextEncoder()
+    const block = ({ event, data }: WireEvent) => encoder.encode(`event: ${event}\ndata: ${JSON.stringify(data)}\n\n`)
+    const stream = new ReadableStream<Uint8Array>({
+      async start(controller) {
+        for (const item of before) controller.enqueue(block(item))
+        await gate
+        for (const item of after) controller.enqueue(block(item))
+        controller.close()
+      },
+    })
+    return new HttpResponse(stream, { headers: { "Content-Type": "text/event-stream" } })
+  })
+}
+
+async function sendQuestion(user: ReturnType<typeof renderPane>["user"]) {
+  await user.click(screen.getByRole("textbox", { name: "Message" }))
+  await user.paste("Marks?")
+  await user.click(screen.getByRole("button", { name: "Send" }))
+}
+
+describe("AssistantChatPane: streamed raw text is replaced by the stored answer", () => {
+  it("shows only the stored answer after a streamed raw table, never the table", async () => {
+    serveChat([message(1, "user", "Hi"), message(2, "assistant", "Hello")])
+    const gate = Promise.withResolvers<void>()
+    const done: WireEvent = {
+      event: "done",
+      data: {
+        chat: chatHomework,
+        new_messages: [message(3, "user", "Marks?"), message(4, "assistant", CLEANED)],
+        status: "done",
+        usage: SUCCESS_USAGE,
+      },
+    }
+    server.use(gatedStream([{ event: "delta", data: { text: RAW_TABLE } }], gate.promise, [done]))
+    const { user } = renderPane(ids.chat2)
+    await screen.findByText("Hello")
+
+    await sendQuestion(user)
+
+    expect(await screen.findByTestId("pending-answer")).toHaveTextContent("Subject")
+    gate.resolve()
+    expect(await screen.findByText(CLEANED)).toBeInTheDocument()
+    await waitFor(() => expect(screen.queryByTestId("pending-answer")).not.toBeInTheDocument())
+    const log = screen.getByRole("log")
+    expect(log).not.toHaveTextContent("Subject")
+    expect(log).not.toHaveTextContent("|---|")
+  })
+
+  it("shows no raw table when the turn ends awaiting approval (the approval card only)", async () => {
+    serveChat([message(1, "user", "Hi"), message(2, "assistant", "Hello")])
+    const gate = Promise.withResolvers<void>()
+    const done: WireEvent = {
+      event: "done",
+      data: {
+        chat: chatHomework,
+        new_messages: [
+          message(3, "user", "Marks?"),
+          { ...message(4, "assistant", CLEANED), tool_calls: [toolCallPending] },
+        ],
+        status: "awaiting_approval",
+        usage: SUCCESS_USAGE,
+      },
+    }
+    server.use(gatedStream([{ event: "delta", data: { text: RAW_TABLE } }], gate.promise, [done]))
+    const { user } = renderPane(ids.chat2)
+    await screen.findByText("Hello")
+
+    await sendQuestion(user)
+    expect(await screen.findByTestId("pending-answer")).toHaveTextContent("Subject")
+    gate.resolve()
+
+    expect(await screen.findByRole("button", { name: "Approve" })).toBeInTheDocument()
+    await waitFor(() => expect(screen.queryByTestId("pending-answer")).not.toBeInTheDocument())
+    const log = screen.getByRole("log")
+    expect(log).not.toHaveTextContent("Subject")
+    expect(log).not.toHaveTextContent("|---|")
+  })
+
+  it("drops the streamed raw table and shows the error when the stream fails mid-answer", async () => {
+    serveChat([message(1, "user", "Hi"), message(2, "assistant", "Hello")])
+    const gate = Promise.withResolvers<void>()
+    const error: WireEvent = {
+      event: "error",
+      data: { type: "ai/provider-error", title: "Provider error" },
+    }
+    server.use(gatedStream([{ event: "delta", data: { text: RAW_TABLE } }], gate.promise, [error]))
+    const { user } = renderPane(ids.chat2)
+    await screen.findByText("Hello")
+
+    await sendQuestion(user)
+    expect(await screen.findByTestId("pending-answer")).toHaveTextContent("Subject")
+    gate.resolve()
+
+    expect(await screen.findByRole("alert")).toBeInTheDocument()
+    await waitFor(() => expect(screen.queryByTestId("pending-answer")).not.toBeInTheDocument())
+    const log = screen.getByRole("log")
+    expect(log).not.toHaveTextContent("Subject")
+    expect(log).not.toHaveTextContent("|---|")
   })
 })
