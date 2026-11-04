@@ -32,7 +32,8 @@
   --safe-right: calc(env(safe-area-inset-right, 0px) + var(--tg-safe-area-right, 0px));
   --safe-bottom: calc(env(safe-area-inset-bottom, 0px) + var(--tg-safe-area-bottom, 0px));
   --safe-left: calc(env(safe-area-inset-left, 0px) + var(--tg-safe-area-left, 0px));
-  --bottom-nav-height: 3.5rem;
+  /* The floating phone bar: 4 rem pill plus the 0.5 rem it floats above the safe area. */
+  --bottom-nav-height: 4.5rem;
 }
 
 body {
@@ -599,6 +600,16 @@ body {
 
   @media (prefers-reduced-motion: no-preference) {
     animation: spoiler-drift 2.5s linear infinite;
+  }
+}
+
+/* Skeletons: a soft highlight sweeps across (background-position only); `motion-reduce:animate-none` stops it. */
+@keyframes skeleton-sweep {
+  from {
+    background-position: 100% 0;
+  }
+  to {
+    background-position: -100% 0;
   }
 }
 

@@ -1,10 +1,11 @@
 import { cn } from "../lib/utils"
 
+/** The `--mark-*` tokens (theme.css): 5 success, 4 info, 3 warning, 2 destructive. */
 const TONES: Record<2 | 3 | 4 | 5, string> = {
-  2: "bg-red-100 text-red-800 dark:bg-red-950 dark:text-red-300",
-  3: "bg-amber-100 text-amber-800 dark:bg-amber-950 dark:text-amber-300",
-  4: "bg-sky-100 text-sky-800 dark:bg-sky-950 dark:text-sky-300",
-  5: "bg-emerald-100 text-emerald-800 dark:bg-emerald-950 dark:text-emerald-300",
+  2: "bg-mark-2-muted text-mark-2",
+  3: "bg-mark-3-muted text-mark-3",
+  4: "bg-mark-4-muted text-mark-4",
+  5: "bg-mark-5-muted text-mark-5",
 }
 
 /** 2–5 scale tone for a mark; averages (4.3) use the nearest whole mark. */
@@ -12,7 +13,12 @@ export function markTone(mark: number): 2 | 3 | 4 | 5 {
   return Math.min(5, Math.max(2, Math.round(mark))) as 2 | 3 | 4 | 5
 }
 
-/** A mark as a coloured chip (2 red, 3 amber, 4 blue, 5 green); no mark shows a muted dash. */
+/** Background and text classes of a mark's tone, for cells and chips that are not a `MarkBadge`. */
+export function markToneClass(mark: number): string {
+  return TONES[markTone(mark)]
+}
+
+/** A mark as a coloured chip on the `--mark-*` tokens; no mark shows a muted dash. */
 export function MarkBadge({
   mark,
   size = "md",
@@ -41,7 +47,7 @@ export function MarkBadge({
       data-mark={markTone(mark)}
       className={cn(
         "inline-flex items-center justify-center rounded-md py-0.5 font-semibold tabular-nums",
-        TONES[markTone(mark)],
+        markToneClass(mark),
         sizes[size],
         className,
       )}

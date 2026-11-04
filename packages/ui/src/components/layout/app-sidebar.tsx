@@ -24,6 +24,13 @@ import {
 import { NavIconView } from "./nav-icon"
 import { isActivePath, type NavGroup, type NavItem } from "./nav-types"
 
+/**
+ * Geometry shared by every nav row, expanded and collapsed: the icon is the first child and never moves (the row keeps
+ * its `p-2` and the icon its `size-4`). The label is one line, clipped and faded when the rail is collapsed, so it
+ * never wraps while the sidebar animates and never pushes the icon.
+ */
+const LABEL_CLASS = "min-w-0 flex-1 truncate transition-opacity duration-200 group-data-[collapsible=icon]:opacity-0"
+
 function NavLink({ item, pathname }: { item: NavItem; pathname: string | null }) {
   const active = isActivePath(pathname, item.url, item.match)
   const link = item.external ? (
@@ -35,7 +42,7 @@ function NavLink({ item, pathname }: { item: NavItem; pathname: string | null })
     <SidebarMenuItem>
       <SidebarMenuButton render={link} tooltip={item.title} isActive={active} aria-disabled={item.disabled}>
         <NavIconView icon={item.icon} />
-        <span>{item.title}</span>
+        <span className={LABEL_CLASS}>{item.title}</span>
       </SidebarMenuButton>
       {item.badge ? <SidebarMenuBadge>{item.badge}</SidebarMenuBadge> : null}
     </SidebarMenuItem>
@@ -50,8 +57,8 @@ function NavBranch({ item, pathname }: { item: NavItem; pathname: string | null 
         render={<SidebarMenuButton tooltip={item.title} isActive={active} className="group/collapsible" />}
       >
         <NavIconView icon={item.icon} />
-        <span>{item.title}</span>
-        <Icons.chevronRight className="ml-auto transition-transform duration-200 group-data-panel-open/collapsible:rotate-90" />
+        <span className={LABEL_CLASS}>{item.title}</span>
+        <Icons.chevronRight className="shrink-0 transition-transform duration-200 group-data-panel-open/collapsible:rotate-90 group-data-[collapsible=icon]:hidden" />
       </CollapsibleTrigger>
       <CollapsibleContent>
         <SidebarMenuSub>
@@ -71,16 +78,25 @@ function NavBranch({ item, pathname }: { item: NavItem; pathname: string | null 
   )
 }
 
-/** The side navigation: a fixed sidebar from 768 px, a sheet on phones (handled by `Sidebar`). */
+/**
+ * The side navigation: a floating glass rail from 768 px (a pill of circular icon buttons when collapsed), a sheet on
+ * phones (handled by `Sidebar`). The bottom of the panel is the account row (`footer`: the app's profile menu in its
+ * `row` variant), separated from the navigation by a hairline.
+ */
 export function AppSidebar({ nav, brand, footer }: { nav: NavGroup[]; brand?: ReactNode; footer?: ReactNode }) {
   const pathname = usePathname()
   return (
-    <Sidebar collapsible="icon">
-      {brand ? <SidebarHeader className="group-data-[collapsible=icon]:pt-4">{brand}</SidebarHeader> : null}
+    <Sidebar collapsible="icon" variant="floating">
+      {brand ? <SidebarHeader>{brand}</SidebarHeader> : null}
       <SidebarContent className="overflow-x-hidden">
         {nav.map((group, index) => (
           <SidebarGroup key={group.label ?? `group-${index}`} className="py-0">
-            {group.label ? <SidebarGroupLabel>{group.label}</SidebarGroupLabel> : null}
+            {/* The label keeps its h-8 slot when collapsed (text faded), so every row sits at the same y. */}
+            {group.label ? (
+              <SidebarGroupLabel className="group-data-[collapsible=icon]:mt-0">
+                <span className="min-w-0 truncate">{group.label}</span>
+              </SidebarGroupLabel>
+            ) : null}
             <SidebarMenu>
               {group.items.map((item) =>
                 item.items && item.items.length > 0 ? (
@@ -93,7 +109,11 @@ export function AppSidebar({ nav, brand, footer }: { nav: NavGroup[]; brand?: Re
           </SidebarGroup>
         ))}
       </SidebarContent>
-      {footer ? <SidebarFooter>{footer}</SidebarFooter> : null}
+      {footer ? (
+        <SidebarFooter data-slot="sidebar-account" className="border-t border-hairline">
+          {footer}
+        </SidebarFooter>
+      ) : null}
       <SidebarRail />
     </Sidebar>
   )

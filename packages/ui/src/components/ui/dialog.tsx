@@ -31,7 +31,7 @@ function DialogOverlay({ className, ...props }: DialogPrimitive.Backdrop.Props) 
       data-slot="dialog-overlay"
       className={cn(
         MOTION.popup,
-        "fixed inset-0 isolate z-50 bg-black/10 supports-backdrop-filter:backdrop-blur-xs data-open:animate-in data-open:fade-in-0 data-closed:animate-out data-closed:fade-out-0",
+        "fixed inset-0 isolate z-50 bg-black/20 supports-backdrop-filter:backdrop-blur-xs data-open:animate-in data-open:fade-in-0 data-closed:animate-out data-closed:fade-out-0",
         className,
       )}
       {...props}
@@ -55,7 +55,8 @@ function DialogContent({
         data-slot="dialog-content"
         className={cn(
           MOTION.popup,
-          "fixed top-1/2 left-1/2 z-50 grid w-full max-w-[calc(100%-2rem)] -translate-x-1/2 -translate-y-1/2 gap-4 rounded-xl bg-popover p-4 text-sm text-popover-foreground ring-1 ring-foreground/10 outline-none sm:max-w-sm max-sm:top-auto max-sm:bottom-0 max-sm:max-h-dvh max-sm:max-w-none max-sm:translate-y-0 max-sm:overflow-y-auto max-sm:overscroll-contain max-sm:rounded-b-none max-sm:pb-[calc(1rem+var(--safe-bottom))] data-open:animate-in data-open:fade-in-0 data-open:zoom-in-95 data-closed:animate-out data-closed:fade-out-0 data-closed:zoom-out-95",
+          // Desktop: fade and a slight zoom from the centre. Phones: a bottom sheet that rises a few pixels, no zoom.
+          "glass-strong fixed top-1/2 left-1/2 z-50 grid max-h-[calc(100dvh-2rem)] w-full max-w-[calc(100%-2rem)] overflow-y-auto overscroll-contain -translate-x-1/2 -translate-y-1/2 gap-4 rounded-panel p-5 text-sm text-popover-foreground outline-none ease-(--ease-standard) sm:max-w-sm max-sm:top-auto max-sm:bottom-0 max-sm:max-h-dvh max-sm:max-w-none max-sm:translate-y-0 max-sm:overflow-y-auto max-sm:overscroll-contain max-sm:rounded-b-none max-sm:pb-[calc(1.25rem+var(--safe-bottom))] data-open:animate-in data-open:fade-in-0 data-open:zoom-in-95 max-sm:data-open:zoom-in-100 max-sm:data-open:slide-in-from-bottom-4 data-closed:animate-out data-closed:ease-(--ease-exit) data-closed:fade-out-0 data-closed:zoom-out-95 max-sm:data-closed:zoom-out-100 max-sm:data-closed:slide-out-to-bottom-4",
           className,
         )}
         {...props}

@@ -55,6 +55,7 @@ export function UserMenu({
   platforms = [],
   onLogout,
   onLocaleChange,
+  variant = "avatar",
 }: {
   name: string
   subtitle?: string | null
@@ -65,19 +66,40 @@ export function UserMenu({
   onLogout: () => void
   /** Called after the language was changed (save it in the account with `patchPreferences`). */
   onLocaleChange?: (locale: Locale) => void
+  /** `avatar`: a round button for the top bar. `row`: name and login in a full-width row, the menu opens upwards. */
+  variant?: "avatar" | "row"
 }) {
   const t = useT()
   const locale = useLocale()
   const { theme, setTheme } = useThemeChoice()
+  const row = variant === "row"
 
   return (
     <DropdownMenu>
       <DropdownMenuTrigger
-        render={<Button variant="ghost" className="size-11 rounded-full p-0 md:size-9" aria-label={t("user.menu")} />}
+        render={
+          row ? (
+            <Button
+              variant="ghost"
+              className="h-auto min-h-11 w-full justify-start rounded-full px-2 py-1.5 md:min-h-10 group-data-[collapsible=icon]:size-8 group-data-[collapsible=icon]:p-0"
+              aria-label={t("user.menu")}
+            />
+          ) : (
+            <Button
+              variant="ghost"
+              className="size-11 rounded-full p-0 ring-1 ring-hairline md:size-9"
+              aria-label={t("user.menu")}
+            />
+          )
+        }
       >
-        <UserAvatar name={name} imageUrl={imageUrl} />
+        {row ? (
+          <UserAvatar name={name} imageUrl={imageUrl} subtitle={subtitle} showInfo />
+        ) : (
+          <UserAvatar name={name} imageUrl={imageUrl} />
+        )}
       </DropdownMenuTrigger>
-      <DropdownMenuContent className="w-64" align="end" sideOffset={8}>
+      <DropdownMenuContent className="w-64" align={row ? "start" : "end"} side={row ? "top" : "bottom"} sideOffset={10}>
         <DropdownMenuGroup>
           <DropdownMenuLabel className="p-0 font-normal">
             <div className="px-1 py-1.5">

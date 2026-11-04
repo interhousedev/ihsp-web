@@ -1,25 +1,50 @@
 import type { ReactNode } from "react"
 import { cn } from "../../lib/utils"
+import { PageHeader } from "./page-header"
+
+/**
+ * `full` (default) fills the content area: data, grids, tables, calendars, dashboards.
+ * `narrow` caps a reading column or a form at `max-w-2xl`, centred.
+ */
+export type PageWidth = "full" | "narrow"
+
+const WIDTH_CLASS: Record<PageWidth, string> = {
+  full: "w-full",
+  narrow: "mx-auto w-full max-w-2xl",
+}
 
 export type PageContainerProps = {
   title: string
+  /** Content width; `full` unless the page is text to read or a form. */
+  width?: PageWidth
+  /** @deprecated Page subtitles are against the copy rules; kept for existing callers. */
   description?: string
+  /** A back link before the title. */
+  back?: ReactNode
   /** Buttons next to the title; they wrap under it on phones. */
   actions?: ReactNode
   className?: string
   children: ReactNode
 }
 
-/** Standard page body: title row, optional description and the content with mobile-first paddings. */
-export function PageContainer({ title, description, actions, className, children }: PageContainerProps) {
+/** Standard page body: the `PageHeader` and the content with mobile-first paddings. */
+export function PageContainer({
+  title,
+  width = "full",
+  description,
+  back,
+  actions,
+  className,
+  children,
+}: PageContainerProps) {
   return (
-    <div className={cn("flex min-w-0 flex-1 flex-col gap-4 px-4 pt-2 pb-6 md:px-6 md:pt-4", className)}>
-      <div className="flex flex-wrap items-start justify-between gap-3">
-        <div className="min-w-0">
-          <h1 className="text-2xl font-bold tracking-tight break-words md:text-3xl">{title}</h1>
-          {description ? <p className="text-muted-foreground mt-1 text-sm">{description}</p> : null}
-        </div>
-        {actions ? <div className="flex shrink-0 flex-wrap items-center gap-2">{actions}</div> : null}
+    <div
+      data-shell-flush
+      className={cn("flex min-w-0 flex-1 flex-col gap-4 px-4 pt-3 pb-6 md:px-6 md:pt-7", WIDTH_CLASS[width], className)}
+    >
+      <div className="md:pe-(--shell-controls-width)">
+        <PageHeader title={title} back={back} actions={actions} />
+        {description ? <p className="text-muted-foreground mt-1 text-sm">{description}</p> : null}
       </div>
       {children}
     </div>

@@ -25,7 +25,7 @@ export function UserAvatar({ name, imageUrl, subtitle, showInfo = false, classNa
     <div className="flex min-w-0 items-center gap-2">
       <Avatar className={cn("size-8", className)}>
         {imageUrl ? <AvatarImage src={imageUrl} alt="" /> : null}
-        <AvatarFallback className="rounded-lg text-xs">{initials(name)}</AvatarFallback>
+        <AvatarFallback className="rounded-full text-xs">{initials(name)}</AvatarFallback>
       </Avatar>
       {showInfo ? (
         <div className="grid min-w-0 flex-1 text-left text-sm leading-tight">
