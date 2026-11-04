@@ -1,5 +1,6 @@
 import "@ihsp/ui/styles"
 import { TELEGRAM_SDK_LOADER } from "@ihsp/telegram/sdk-loader"
+import { BRAND } from "@ihsp/config/brand"
 import { createPwaHeadScript } from "@ihsp/features-core/pwa/head"
 import { THEME_INIT_SCRIPT } from "@ihsp/ui/theme-init"
 import type { Metadata, Viewport } from "next"
@@ -7,7 +8,7 @@ import type { ReactNode } from "react"
 import { Providers } from "./providers"
 
 export const metadata: Metadata = {
-  title: "IHT Учителям",
+  title: BRAND.apps.staff.name,
   description: "Lessons, attendance and journal for teachers",
   icons: {
     icon: [
@@ -19,7 +20,7 @@ export const metadata: Metadata = {
 }
 
 /** The head script of the installable app (`APP_MODE=pwa`): manifest link, iOS tags, install prompt catcher. */
-const PWA_HEAD_SCRIPT = createPwaHeadScript("IHT Учителям")
+const PWA_HEAD_SCRIPT = createPwaHeadScript(BRAND.apps.staff.pwaName)
 
 export const viewport: Viewport = {
   width: "device-width",

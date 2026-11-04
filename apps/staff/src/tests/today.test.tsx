@@ -27,10 +27,14 @@ describe("Today", () => {
     expect(within(next).getByText("Physics")).toBeInTheDocument()
     expect(within(next).getByText(/2TN2/)).toBeInTheDocument()
     const id = encodeURIComponent(ids.lessonPhysicsToday)
-    expect(hrefOf(within(next).getByRole("link", { name: "Attendance" }))).toBe(`/lessons/view/?id=${id}#attendance`)
-    expect(hrefOf(within(next).getByRole("link", { name: "Homework" }))).toBe(`/lessons/view/?id=${id}#homework`)
+    expect(hrefOf(within(next).getByRole("link", { name: "Attendance" }))).toBe(
+      `/lessons/view/?id=${id}&from=today#attendance`,
+    )
+    expect(hrefOf(within(next).getByRole("link", { name: "Homework" }))).toBe(
+      `/lessons/view/?id=${id}&from=today#homework`,
+    )
     expect(hrefOf(within(next).getByRole("link", { name: "Add material" }))).toBe(
-      `/lessons/view/?id=${id}&add=material#materials`,
+      `/lessons/view/?id=${id}&add=material&from=today#materials`,
     )
   })
 
@@ -79,7 +83,7 @@ describe("Today", () => {
     const lesson = staffToday.needs_attention[0]
     expect(lesson).toBeDefined()
     expect(hrefOf(within(attention).getByRole("link", { name: "Take attendance" }))).toBe(
-      `/lessons/view/?id=${encodeURIComponent(lesson?.id ?? "")}#attendance`,
+      `/lessons/view/?id=${encodeURIComponent(lesson?.id ?? "")}&from=today#attendance`,
     )
   })
 
@@ -114,9 +118,12 @@ describe("Today", () => {
   })
 })
 
+/** Push notifications are off: the notifications step is still to do. */
+const pushOff = { user: { ...teacherMe, preferences: { ...userPreferences, notify_push: false } } }
+
 describe("Get started card", () => {
   test("suggests linking Telegram and checking notifications", async () => {
-    renderStaff(<TodayPage />)
+    renderStaff(<TodayPage />, { session: pushOff })
 
     const started = await card("Get started")
 
@@ -135,7 +142,7 @@ describe("Get started card", () => {
         return HttpResponse.json({ ...userPreferences, ...body })
       }),
     )
-    const { user } = renderStaff(<TodayPage />)
+    const { user } = renderStaff(<TodayPage />, { session: pushOff })
 
     const started = await card("Get started")
     await user.click(within(started).getByRole("button", { name: "Hide" }))

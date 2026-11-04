@@ -2,7 +2,7 @@
 
 import type { LessonItem } from "@ihsp/api"
 import { useFormatters, useT } from "@ihsp/i18n"
-import { Icons } from "@ihsp/ui"
+import { Icons, ScrollList } from "@ihsp/ui"
 import { LinkButton } from "../../shared/components/link-button"
 import { useAudienceLabel } from "../../shared/hooks/use-audience-label"
 import { lessonHref } from "../../shared/utils/lesson-time"
@@ -22,23 +22,25 @@ export function NeedsAttentionCard({ lessons }: { lessons: LessonItem[] }) {
           {t("none")}
         </p>
       ) : (
-        <ul className="flex flex-col gap-2">
-          {lessons.map((lesson) => (
-            <li key={lesson.id} className="flex flex-wrap items-center justify-between gap-2 rounded-lg border p-2">
-              <div className="min-w-0">
-                <p className="truncate text-sm font-medium">{lesson.subject.name}</p>
-                <p className="text-muted-foreground truncate text-xs">
-                  {[
-                    f.date(lesson.date, { weekday: "short", day: "numeric", month: "short" }),
-                    t("period", { number: lesson.period }),
-                    audienceLabel(lesson.audience),
-                  ].join(" · ")}
-                </p>
-              </div>
-              <LinkButton href={lessonHref(lesson.id, "attendance")}>{t("take")}</LinkButton>
-            </li>
-          ))}
-        </ul>
+        <ScrollList label={t("title")} maxHeight="20rem">
+          <ul className="flex flex-col gap-2">
+            {lessons.map((lesson) => (
+              <li key={lesson.id} className="flex flex-wrap items-center justify-between gap-2 rounded-lg border p-2">
+                <div className="min-w-0">
+                  <p className="truncate text-sm font-medium">{lesson.subject.name}</p>
+                  <p className="text-muted-foreground truncate text-xs">
+                    {[
+                      f.date(lesson.date, { weekday: "short", day: "numeric", month: "short" }),
+                      t("period", { number: lesson.period }),
+                      audienceLabel(lesson.audience),
+                    ].join(" · ")}
+                  </p>
+                </div>
+                <LinkButton href={lessonHref(lesson.id, "attendance", undefined, "today")}>{t("take")}</LinkButton>
+              </li>
+            ))}
+          </ul>
+        </ScrollList>
       )}
     </TodayCard>
   )

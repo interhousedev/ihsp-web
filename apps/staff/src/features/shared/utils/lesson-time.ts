@@ -23,8 +23,18 @@ export function isAttendanceTaken(
   return lesson.status !== "cancelled" && lesson.attendance_submitted && Date.parse(lesson.ends_at) < now
 }
 
-/** Link to the lesson page; `hash` jumps to a section (`attendance`, `homework`, `materials`). */
-export function lessonHref(id: string, hash?: "attendance" | "homework" | "materials", add?: "material"): string {
-  const query = add ? `?id=${encodeURIComponent(id)}&add=${add}` : `?id=${encodeURIComponent(id)}`
-  return `/lessons/view/${query}${hash ? `#${hash}` : ""}`
+/**
+ * Link to the lesson page; `hash` jumps to a section (`attendance`, `homework`, `materials`), `from` tells the page
+ * where to send the teacher back (`today`; the timetable is the default).
+ */
+export function lessonHref(
+  id: string,
+  hash?: "attendance" | "homework" | "materials",
+  add?: "material",
+  from?: "today",
+): string {
+  const params = [`id=${encodeURIComponent(id)}`]
+  if (add) params.push(`add=${add}`)
+  if (from) params.push(`from=${from}`)
+  return `/lessons/view/?${params.join("&")}${hash ? `#${hash}` : ""}`
 }

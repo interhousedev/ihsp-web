@@ -17,7 +17,7 @@ import { useState } from "react"
 import { toast } from "sonner"
 import { QueryState } from "../../shared/components/query-state"
 import { fullName } from "../../shared/utils/people"
-import { useSetExcuse } from "../hooks/use-set-excuse"
+import { useSetExcuse } from "../../attendance/use-set-excuse"
 
 function ExcuseRow({
   item,

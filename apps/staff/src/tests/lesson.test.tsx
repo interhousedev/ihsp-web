@@ -29,9 +29,15 @@ function section(id: string): HTMLElement {
   return element
 }
 
+/** Homework and Attendance open in a pop-up from the lesson's action buttons; the address does not change. */
+async function openPopUp(user: ReturnType<typeof renderStaff>["user"], name: "Homework" | "Attendance") {
+  await user.click(await screen.findByRole("button", { name }))
+  return screen.findByRole("dialog")
+}
+
 describe("lesson page", () => {
-  test("shows the audience, room, materials, attachments, homework and attendance", async () => {
-    renderStaff(<LessonPage />, { route: ROUTE })
+  test("shows the audience, room, materials, attachments and the action buttons; homework and attendance open in pop-ups", async () => {
+    const { user } = renderStaff(<LessonPage />, { route: ROUTE })
 
     expect(await screen.findByRole("heading", { name: "Physics" })).toBeInTheDocument()
     expect(screen.getByText("2TN2")).toBeInTheDocument()
@@ -39,9 +45,17 @@ describe("lesson page", () => {
     expect(within(section("materials")).getByText("Khan Academy: physics")).toBeInTheDocument()
     expect(within(section("materials")).getByText("kinematics-notes.pdf")).toBeInTheDocument()
     expect(screen.getByText("Worked example on YouTube")).toBeInTheDocument()
-    expect(screen.getByLabelText("Homework text")).toHaveValue("Solve problems 14-17 on page 52")
-    expect(section("attendance")).toBeInTheDocument()
-    expect(screen.getByRole("radiogroup", { name: /Ismoilov Jasur/ })).toBeInTheDocument()
+    expect(screen.queryByLabelText("Homework text")).not.toBeInTheDocument()
+    expect(screen.queryByRole("radiogroup", { name: /Ismoilov Jasur/ })).not.toBeInTheDocument()
+
+    const homework = await openPopUp(user, "Homework")
+    expect(within(homework).getByLabelText("Homework text")).toHaveValue("Solve problems 14-17 on page 52")
+    await user.keyboard("{Escape}")
+    await waitFor(() => expect(screen.queryByRole("dialog")).not.toBeInTheDocument())
+
+    const attendance = await openPopUp(user, "Attendance")
+    expect(within(attendance).getByRole("radiogroup", { name: /Ismoilov Jasur/ })).toBeInTheDocument()
+    expect(window.location.pathname).toBe("/lessons/view/")
   })
 
   test("without ?id= it asks to pick a lesson", async () => {
@@ -75,6 +89,22 @@ describe("lesson page", () => {
   })
 })
 
+describe("lesson back link", () => {
+  test("returns to Today when the lesson was opened from Today", async () => {
+    renderStaff(<LessonPage />, { route: `${ROUTE}&from=today` })
+
+    expect(await screen.findByRole("link", { name: /Back: Today/ })).toHaveAttribute("href", "/")
+  })
+
+  test("returns to the timetable when the lesson was not opened from Today", async () => {
+    renderStaff(<LessonPage />, { route: ROUTE })
+
+    const link = await screen.findByRole("link", { name: /Back: Timetable/ })
+
+    expect(link.getAttribute("href")).toMatch(/^\/timetable\/?$/)
+  })
+})
+
 describe("homework", () => {
   test("changing the text keeps the automatic due date (no due_date is sent)", async () => {
     const bodies: unknown[] = []
@@ -89,9 +119,10 @@ describe("homework", () => {
       }),
     )
     const { user } = renderStaff(<LessonPage />, { route: ROUTE })
+    const homework = await openPopUp(user, "Homework")
 
-    setValue(await screen.findByLabelText("Homework text"), "Problems 14-20")
-    await user.click(within(section("homework")).getByRole("button", { name: "Save changes" }))
+    setValue(await within(homework).findByLabelText("Homework text"), "Problems 14-20")
+    await user.click(within(homework).getByRole("button", { name: "Save changes" }))
 
     await waitFor(() => expect(bodies).toEqual([{ text: "Problems 14-20" }]))
   })
@@ -108,9 +139,10 @@ describe("homework", () => {
       }),
     )
     const { user } = renderStaff(<LessonPage />, { route: ROUTE })
+    const homework = await openPopUp(user, "Homework")
 
-    setValue(await screen.findByLabelText("Homework text"), "New")
-    await user.click(within(section("homework")).getByRole("button", { name: "Save changes" }))
+    setValue(await within(homework).findByLabelText("Homework text"), "New")
+    await user.click(within(homework).getByRole("button", { name: "Save changes" }))
 
     await waitFor(() => expect(bodies).toEqual([{ text: "New", due_date: "2026-10-09" }]))
   })
@@ -118,7 +150,8 @@ describe("homework", () => {
   test("with no next lesson the teacher is asked for a date", async () => {
     const noNext: StaffLesson = { ...lessonData, homework: { text: "Read", due_date: null, due_auto: true } }
     server.use(http.get(apiUrl("/v1/staff/lessons/:id"), () => HttpResponse.json(noNext)))
-    renderStaff(<LessonPage />, { route: ROUTE })
+    const { user } = renderStaff(<LessonPage />, { route: ROUTE })
+    await openPopUp(user, "Homework")
 
     expect(await screen.findByText("There is no next lesson of this subject. Pick a due date.")).toBeInTheDocument()
   })
@@ -132,9 +165,10 @@ describe("homework", () => {
       }),
     )
     const { user } = renderStaff(<LessonPage />, { route: ROUTE })
+    const homework = await openPopUp(user, "Homework")
 
-    await screen.findByLabelText("Homework text")
-    await user.click(within(section("homework")).getByRole("button", { name: "Delete homework" }))
+    await within(homework).findByLabelText("Homework text")
+    await user.click(within(homework).getByRole("button", { name: "Delete homework" }))
     const dialog = await screen.findByRole("alertdialog")
     expect(deleted).toBe(0)
     await user.click(within(dialog).getByRole("button", { name: "Delete homework" }))
@@ -145,13 +179,10 @@ describe("homework", () => {
 
   test("a lesson without homework offers Add homework", async () => {
     server.use(http.get(apiUrl("/v1/staff/lessons/:id"), () => HttpResponse.json({ ...lessonData, homework: null })))
-    renderStaff(<LessonPage />, { route: ROUTE })
+    const { user } = renderStaff(<LessonPage />, { route: ROUTE })
+    const homework = await openPopUp(user, "Homework")
 
-    expect(
-      await within(await screen.findByLabelText("Homework text").then(() => section("homework"))).findByRole("button", {
-        name: "Add homework",
-      }),
-    ).toBeDisabled()
+    expect(await within(homework).findByRole("button", { name: "Add homework" })).toBeDisabled()
   })
 })
 

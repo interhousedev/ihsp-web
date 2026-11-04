@@ -29,12 +29,14 @@ export function TemporaryMarkDialog({
   const name = fullName(student)
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent>
+      {/* min-w-0 on the grid items: the row wraps inside the dialog at 375 px instead of pushing past it. */}
+      <DialogContent className="grid-cols-[minmax(0,1fr)]">
         <DialogHeader>
-          <DialogTitle>{t("temporaryMarkFor", { name, date })}</DialogTitle>
+          {/* pe-8 keeps the title clear of the close button in the corner. */}
+          <DialogTitle className="pe-8 break-words">{t("temporaryMarkFor", { name, date })}</DialogTitle>
           <DialogDescription>{t("temporaryMarkHint")}</DialogDescription>
         </DialogHeader>
-        <ul className="divide-y rounded-lg border">
+        <ul className="min-w-0 divide-y rounded-lg border">
           <TemporaryMarkRow lessonId={lessonId} student={student} mark={cell.temporary_mark} />
         </ul>
       </DialogContent>

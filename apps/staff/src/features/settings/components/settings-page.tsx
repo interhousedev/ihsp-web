@@ -3,7 +3,7 @@
 import type { Role } from "@ihsp/api"
 import { useSession } from "@ihsp/auth"
 import { deleteStaffMePhoto, getStaffMeContacts, keys, putStaffMeContacts, putStaffMePhoto } from "@ihsp/api"
-import { NotificationSettingsForm, PhotoField, TeacherContactsForm } from "@ihsp/features-core"
+import { LicenseSection, NotificationSettingsForm, PhotoField, TeacherContactsForm } from "@ihsp/features-core"
 import { AppLockSection } from "@ihsp/features-core/pwa/lock"
 import { useT } from "@ihsp/i18n"
 import { PageContainer } from "@ihsp/ui"
@@ -54,6 +54,7 @@ export function SettingsPage() {
             <WorkOffTemplates />
           </SettingsSection>
           <AppLockSection />
+          <LicenseSection />
         </div>
         <SettingsSection title={t("notifications.title")}>
           <NotificationSettingsForm roles={NOTIFICATION_ROLES} showPush={false} />

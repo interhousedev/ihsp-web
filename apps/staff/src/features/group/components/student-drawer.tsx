@@ -11,7 +11,15 @@ import { formatGpa, formatRate } from "../utils/students"
  * The student card of the curator (UF-STF-09 step 2): subgroup, absence rate, semester GPA and why the student is
  * flagged, with shortcuts to the pages that fix it.
  */
-export function StudentDrawer({ student, onClose }: { student: CuratorStudent | null; onClose: () => void }) {
+export function StudentDrawer({
+  student,
+  groupId,
+  onClose,
+}: {
+  student: CuratorStudent | null
+  groupId: string
+  onClose: () => void
+}) {
   const t = useT("group.students")
   return (
     <Sheet open={student !== null} onOpenChange={(open) => !open && onClose()}>
@@ -59,6 +67,11 @@ export function StudentDrawer({ student, onClose }: { student: CuratorStudent | 
                 <p className="text-muted-foreground text-sm">{t("noFlags")}</p>
               )}
               <div className="flex flex-wrap gap-2">
+                <LinkButton
+                  href={`/students/view/?id=${encodeURIComponent(student.user_id)}&group=${encodeURIComponent(groupId)}`}
+                >
+                  {t("openProfile")}
+                </LinkButton>
                 <LinkButton href="/group/attendance/">{t("openAttendance")}</LinkButton>
                 {student.subgroup === null ? (
                   <LinkButton href="/group/subgroups/">{t("assignSubgroup")}</LinkButton>

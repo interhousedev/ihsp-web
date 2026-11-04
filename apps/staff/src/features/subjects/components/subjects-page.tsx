@@ -14,7 +14,7 @@ export function SubjectsPage() {
   const t = useT("subjects")
   const query = useQuery(getStaffSubjectsQuery())
   return (
-    <PageContainer title={t("title")} description={t("description")}>
+    <PageContainer title={t("title")}>
       <QueryState query={query} isEmpty={(subjects) => subjects.length === 0} emptyText={t("empty")} rows={3}>
         {(subjects) => (
           <ul className="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-3">

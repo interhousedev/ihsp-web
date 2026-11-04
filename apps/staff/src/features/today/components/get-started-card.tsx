@@ -25,7 +25,7 @@ export function GetStartedCard() {
   const dismissed = preferences.onboarding_dismissed
   const steps: { id: StepId; done: boolean; href: string }[] = [
     { id: "telegram", done: session.user.telegram.length > 0, href: `${getConfig().ID_URL}/security/telegram/` },
-    { id: "notifications", done: false, href: "/settings/" },
+    { id: "notifications", done: preferences.notify_push, href: "/settings/" },
   ]
   const open = steps.filter((step) => !step.done && !dismissed.includes(step.id))
   if (open.length === 0) return null

@@ -2,7 +2,7 @@
 
 import type { LessonItem } from "@ihsp/api"
 import { todayIso, useFormatters, useT } from "@ihsp/i18n"
-import { Button, StateView, cn } from "@ihsp/ui"
+import { Button, ScrollList, StateView, cn } from "@ihsp/ui"
 import { lessonsOn, weekDays } from "../utils/week"
 import { TimetableLessonCard } from "./timetable-lesson-card"
 
@@ -49,13 +49,15 @@ export function TimetableDayList({
       {items.length === 0 ? (
         <StateView state="empty" emptyText={t("noLessons")} />
       ) : (
-        <ul className="flex flex-col gap-2">
-          {items.map((lesson) => (
-            <li key={lesson.id}>
-              <TimetableLessonCard lesson={lesson} now={now} showTime />
-            </li>
-          ))}
-        </ul>
+        <ScrollList label={t("dayLessons")}>
+          <ul className="flex flex-col gap-2">
+            {items.map((lesson) => (
+              <li key={lesson.id}>
+                <TimetableLessonCard lesson={lesson} now={now} showTime />
+              </li>
+            ))}
+          </ul>
+        </ScrollList>
       )}
     </div>
   )

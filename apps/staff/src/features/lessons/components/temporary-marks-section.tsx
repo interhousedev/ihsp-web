@@ -3,6 +3,7 @@
 import { getStaffLessonTemporaryMarksQuery } from "@ihsp/api"
 import type { RosterItem } from "@ihsp/api"
 import { useT } from "@ihsp/i18n"
+import { ScrollList } from "@ihsp/ui"
 import { useQuery } from "@tanstack/react-query"
 import { QueryState } from "../../shared/components/query-state"
 import { TemporaryMarkRow } from "./temporary-marks-row"
@@ -19,16 +20,18 @@ export function TemporaryMarksSection({ lessonId, roster }: { lessonId: string; 
       <p className="text-muted-foreground text-sm">{t("note")}</p>
       <QueryState query={query} rows={4}>
         {(data) => (
-          <ul className="divide-y rounded-lg border">
-            {roster.map((student) => (
-              <TemporaryMarkRow
-                key={student.user_id}
-                lessonId={lessonId}
-                student={student}
-                mark={data.items.find((item) => item.student_id === student.user_id) ?? null}
-              />
-            ))}
-          </ul>
+          <ScrollList label={t("journalTitle")} maxHeight="28rem">
+            <ul className="divide-y rounded-lg border">
+              {roster.map((student) => (
+                <TemporaryMarkRow
+                  key={student.user_id}
+                  lessonId={lessonId}
+                  student={student}
+                  mark={data.items.find((item) => item.student_id === student.user_id) ?? null}
+                />
+              ))}
+            </ul>
+          </ScrollList>
         )}
       </QueryState>
     </section>

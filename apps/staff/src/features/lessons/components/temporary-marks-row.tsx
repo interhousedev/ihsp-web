@@ -64,9 +64,9 @@ export function TemporaryMarkRow({
   const dirty = value !== null && (value !== mark?.value || (comment.trim() || null) !== (mark?.comment ?? null))
 
   return (
-    <li className="flex flex-col gap-2 p-3 md:flex-row md:items-center">
-      <span className="min-w-0 font-medium md:w-56">{name}</span>
-      <div role="group" aria-label={t("valueFor", { name })} className="flex gap-1">
+    <li className="flex min-w-0 flex-col gap-2 p-3 md:flex-row md:items-center">
+      <span className="min-w-0 font-medium break-words md:w-56">{name}</span>
+      <div role="group" aria-label={t("valueFor", { name })} className="flex shrink-0 gap-1">
         {VALUES.map((item) => (
           <Button
             key={item}
@@ -82,14 +82,14 @@ export function TemporaryMarkRow({
         ))}
       </div>
       <Input
-        className="md:flex-1"
+        className="w-full min-w-0 md:flex-1"
         value={comment}
         maxLength={500}
         aria-label={t("commentFor", { name })}
         placeholder={t("comment")}
         onChange={(event) => setComment(event.target.value)}
       />
-      <div className="flex gap-2">
+      <div className="flex flex-wrap gap-2">
         <Button
           type="button"
           size="sm"

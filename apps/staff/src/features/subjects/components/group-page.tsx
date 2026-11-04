@@ -7,6 +7,7 @@ import { useQuery } from "@tanstack/react-query"
 import Link from "next/link"
 import { parseAsInteger, parseAsString, useQueryState } from "nuqs"
 import { BackLink } from "../../shared/components/back-link"
+import { GroupHeader, StudentList } from "../../shared/components/group-roster"
 import { QueryState } from "../../shared/components/query-state"
 import { lessonHref } from "../../shared/utils/lesson-time"
 import { subjectHref, subjectStudentHref } from "../utils/hrefs"
@@ -24,31 +25,29 @@ function Students({ group }: { group: TeachingGroup }) {
   const t = useT("subjects.group")
   return (
     <section aria-labelledby="group-students" className="flex flex-col gap-3">
-      <h2 id="group-students" className="text-lg font-semibold">
-        {t("students", { count: group.students.length })}
-      </h2>
+      <GroupHeader id="group-students" title={t("students", { count: group.students.length })} />
       {group.students.length === 0 ? (
         <p className="text-muted-foreground text-sm">{t("noStudents")}</p>
       ) : (
-        <ul className="bg-card ring-foreground/10 divide-border flex flex-col divide-y rounded-xl ring-1">
-          {group.students.map((student) => (
-            <li key={student.user_id}>
-              <Link
-                href={subjectStudentHref(group.subject_id, group.group_id, group.subgroup, student.user_id)}
-                className="hover:bg-muted flex min-h-11 items-center justify-between gap-3 px-4 py-2"
-              >
-                <span>
-                  {student.last_name} {student.first_name}
+        <StudentList
+          items={group.students}
+          getKey={(student) => student.user_id}
+          renderItem={(student) => (
+            <Link
+              href={subjectStudentHref(group.subject_id, group.group_id, group.subgroup, student.user_id)}
+              className="hover:bg-muted flex min-h-11 items-center justify-between gap-3 px-4 py-2"
+            >
+              <span>
+                {student.last_name} {student.first_name}
+              </span>
+              {group.subgroup === null && student.subgroup !== null ? (
+                <span className="text-muted-foreground text-xs">
+                  {t("subgroupBadge", { number: student.subgroup })}
                 </span>
-                {group.subgroup === null && student.subgroup !== null ? (
-                  <span className="text-muted-foreground text-xs">
-                    {t("subgroupBadge", { number: student.subgroup })}
-                  </span>
-                ) : null}
-              </Link>
-            </li>
-          ))}
-        </ul>
+              ) : null}
+            </Link>
+          )}
+        />
       )}
     </section>
   )
@@ -120,7 +119,7 @@ export function GroupPage() {
   return (
     <QueryState query={query} rows={4}>
       {(group) => (
-        <PageContainer title={title(group)} description={group.subject_name}>
+        <PageContainer title={title(group)}>
           <BackLink href={subjectHref(id)} label={ts("group.back", { subject: group.subject_name })} />
           <div className="flex flex-col gap-8">
             {subject ? (

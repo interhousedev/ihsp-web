@@ -1,6 +1,7 @@
 "use client"
 
 import { getJournalCsv, getStaffJournalOptionsQuery, getStaffJournalQuery } from "@ihsp/api"
+import { LessonAttendanceDialog } from "@ihsp/features-core"
 import { useErrorMessage, useT } from "@ihsp/i18n"
 import { Button, Icons, PageContainer, StateView } from "@ihsp/ui"
 import { useQuery } from "@tanstack/react-query"
@@ -12,6 +13,7 @@ import { downloadBlob } from "../../shared/utils/download-blob"
 import { selectedOption } from "../utils/selection"
 import { JournalGrid } from "./journal-grid"
 import { JournalPicker } from "./journal-picker"
+import { MarkAllPresentBar } from "./mark-all-present"
 
 /**
  * Journal (STF-9, UF-STF-07): a subject and an audience the teacher teaches, then a grid of students by lessons with
@@ -24,6 +26,7 @@ export function JournalPage() {
   const [subject, setSubject] = useQueryState("subject", parseAsString)
   const [audience, setAudience] = useQueryState("audience", parseAsString)
   const [exporting, setExporting] = useState(false)
+  const [markAllLessonId, setMarkAllLessonId] = useState<string | null>(null)
   const optionsQuery = useQuery(getStaffJournalOptionsQuery())
   const selected = selectedOption(optionsQuery.data ?? [], subject, audience)
   const params = selected ? { subject_id: selected.subject.id, audience_key: selected.audience_key } : null
@@ -78,8 +81,16 @@ export function JournalPage() {
                     <StateView state="empty" emptyText={t("noLessons")} />
                   ) : (
                     <>
+                      <MarkAllPresentBar lessons={journal.lessons} onOpen={setMarkAllLessonId} />
                       <JournalGrid journal={journal} params={params} />
                       <p className="text-muted-foreground text-xs">{t("hint")}</p>
+                      {markAllLessonId ? (
+                        <LessonAttendanceDialog
+                          lessonId={markAllLessonId}
+                          startAllPresent
+                          onClose={() => setMarkAllLessonId(null)}
+                        />
+                      ) : null}
                     </>
                   )
                 }

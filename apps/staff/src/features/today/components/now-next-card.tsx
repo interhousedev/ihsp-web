@@ -39,7 +39,7 @@ export function NowNextCard({ lesson }: { lesson: LessonItem | null }) {
   return (
     <TodayCard title={running ? t("titleNow") : t("titleNext")}>
       <Link
-        href={lessonHref(lesson.id)}
+        href={lessonHref(lesson.id, undefined, undefined, "today")}
         className="hover:bg-accent focus-visible:ring-ring -mx-2 flex min-h-11 flex-col gap-1 rounded-lg px-2 py-1 outline-none focus-visible:ring-2"
       >
         <span className="flex flex-wrap items-center gap-2">
@@ -56,15 +56,15 @@ export function NowNextCard({ lesson }: { lesson: LessonItem | null }) {
       </Link>
       {!cancelled ? (
         <div className="flex flex-wrap gap-2 pt-1">
-          <LinkButton href={lessonHref(lesson.id, "attendance")} variant="default">
+          <LinkButton href={lessonHref(lesson.id, "attendance", undefined, "today")} variant="default">
             <Icons.attendance aria-hidden />
             {t("attendance")}
           </LinkButton>
-          <LinkButton href={lessonHref(lesson.id, "homework")}>
+          <LinkButton href={lessonHref(lesson.id, "homework", undefined, "today")}>
             <Icons.homework aria-hidden />
             {t("homework")}
           </LinkButton>
-          <LinkButton href={lessonHref(lesson.id, "materials", "material")}>
+          <LinkButton href={lessonHref(lesson.id, "materials", "material", "today")}>
             <Icons.add aria-hidden />
             {t("addMaterial")}
           </LinkButton>

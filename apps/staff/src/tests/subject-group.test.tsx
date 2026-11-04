@@ -3,9 +3,10 @@ import { afterEach, beforeEach, describe, expect, test } from "bun:test"
 import { readFileSync } from "node:fs"
 import { join } from "node:path"
 import { mergeMessages, type Messages } from "@ihsp/i18n"
-import { ids } from "@ihsp/test-utils"
-import { screen, within } from "@testing-library/react"
+import { ids, testRouter } from "@ihsp/test-utils"
+import { screen, waitFor, within } from "@testing-library/react"
 import { GroupPage } from "../features/subjects/components/group-page"
+import { StudentProfile } from "../features/students/student-profile"
 import { StudentPage } from "../features/subjects/components/student-page"
 import { SubjectPage } from "../features/subjects/components/subject-page"
 import { subjectGroupHref, subjectStudentHref } from "../features/subjects/utils/hrefs"
@@ -37,7 +38,7 @@ describe("subject groups", () => {
       route: subjectGroupHref(ids.math, ids.group2TN2),
     })
     expect(await screen.findByRole("heading", { name: "2TN2", level: 1 })).toBeTruthy()
-    const students = screen.getByRole("heading", { name: "Students (4)" }).parentElement as HTMLElement
+    const students = screen.getByRole("heading", { name: "Students (4)" }).closest("section") as HTMLElement
     expect(hrefOf(within(students).getByRole("link", { name: /Ismoilov Jasur/ }))).toBe(
       subjectStudentHref(ids.math, ids.group2TN2, null, ids.student2),
     )
@@ -65,7 +66,7 @@ describe("subject groups", () => {
 
 describe("a student's record", () => {
   test("shows marks with the average, homework and attendance", async () => {
-    renderStaff(<StudentPage />, {
+    renderStaff(<StudentProfile />, {
       messages: withNotebooks,
       route: subjectStudentHref(ids.math, ids.group2TN2, null, ids.student2),
     })
@@ -77,11 +78,23 @@ describe("a student's record", () => {
   })
 
   test("a student of another subgroup is not shown", async () => {
-    renderStaff(<StudentPage />, {
+    renderStaff(<StudentProfile />, {
       messages: withNotebooks,
       route: subjectStudentHref(ids.english, ids.group2TN2, 1, ids.student2),
     })
     expect(await screen.findByRole("button", { name: /retry|try again/i })).toBeTruthy()
     expect(screen.queryByRole("heading", { name: "Ismoilov Jasur" })).toBeNull()
+  })
+})
+
+describe("the old student URL", () => {
+  test("redirects to the profile and keeps every parameter", async () => {
+    renderStaff(<StudentPage />, {
+      messages: withNotebooks,
+      route: `/subjects/student/?id=${ids.english}&group=${ids.group2TN2}&subgroup=1&student=${ids.student2}`,
+    })
+    await waitFor(() =>
+      expect(testRouter.replace).toHaveBeenCalledWith(subjectStudentHref(ids.english, ids.group2TN2, 1, ids.student2)),
+    )
   })
 })

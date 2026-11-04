@@ -9,8 +9,13 @@ import { newestFirst } from "../utils/controls"
  * The dates nobody confirmed yet in the teacher's subjects and groups, newest first: suggestions from EMIS lessons
  * outside a control week and from head students. The Today card and the group picker read the same query.
  */
-export function useTentativeExams(): { items: StaffAssessmentItem[]; isPending: boolean } {
+export function useTentativeExams(): {
+  items: StaffAssessmentItem[]
+  isPending: boolean
+  isError: boolean
+  refetch: () => Promise<unknown>
+} {
   const query = useQuery(getStaffAssessmentsQuery({ status: "tentative" }))
   const items = useMemo(() => newestFirst(query.data?.items ?? []), [query.data])
-  return { items, isPending: query.isPending }
+  return { items, isPending: query.isPending, isError: query.isError, refetch: query.refetch }
 }

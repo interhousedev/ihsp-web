@@ -21,7 +21,7 @@ describe("app frame", () => {
     expect(await screen.findByText("page body")).toBeInTheDocument()
     expect(screen.getByRole("button", { name: "Open search" })).toBeInTheDocument()
     expect(await screen.findByRole("button", { name: /^Notifications/ })).toBeInTheDocument()
-    expect(screen.getByRole("button", { name: "Account menu" })).toBeInTheDocument()
+    expect(screen.getAllByRole("button", { name: "Account menu" }).length).toBeGreaterThan(0)
   })
 
   test("the sidebar follows the staff portal areas", async () => {
@@ -48,6 +48,27 @@ describe("app frame", () => {
     ]) {
       expect(screen.getAllByRole("link", { name }).length).toBeGreaterThan(0)
     }
+  })
+
+  test("STF-1: a failed groups request shows an error with retry and keeps My group", async () => {
+    let calls = 0
+    server.use(
+      http.get(apiUrl("/v1/staff/groups"), () => {
+        calls += 1
+        return calls === 1 ? HttpResponse.json({ type: "about:blank" }, { status: 500 }) : HttpResponse.json([])
+      }),
+    )
+
+    renderStaff(
+      <StaffShell>
+        <p>page body</p>
+      </StaffShell>,
+    )
+
+    expect(await screen.findByText("Could not load your groups.")).toBeInTheDocument()
+    expect(screen.getAllByRole("link", { name: "Subgroups" }).length).toBeGreaterThan(0)
+    screen.getByRole("button", { name: "Retry" }).click()
+    await waitFor(() => expect(screen.queryByText("Could not load your groups.")).not.toBeInTheDocument())
   })
 
   test("a student account gets the no-access screen", async () => {

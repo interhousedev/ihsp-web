@@ -81,8 +81,7 @@ describe("journal", () => {
         { lesson_id: firstLesson.id, student_id: ids.student3, absent: true, late: false, base_version: 3 },
       ]),
     )
-    await waitFor(() => expect(cell).toHaveAttribute("aria-pressed", "true"))
-    expect(cell).toHaveAccessibleName(/: absent$/)
+    await waitFor(() => expect(cell).toHaveAccessibleName(/: absent$/))
 
     await user.click(cell)
 
@@ -127,7 +126,7 @@ describe("journal", () => {
     const cell = within(table).getAllByRole("button", { name: /^Nazarova Madina, .*: present$/ })[0] as HTMLElement
     await user.click(cell)
 
-    await waitFor(() => expect(cell).toHaveAttribute("aria-pressed", "false"))
+    await waitFor(() => expect(cell).toHaveAccessibleName(/: present/))
     await waitFor(() => {
       if (cell.getAttribute("data-failed") !== "true") throw new Error("cell not marked")
     })
@@ -247,6 +246,44 @@ describe("journal helpers", () => {
     expect(next.lessons[0]?.attendance_submitted).toBe(true)
     const back = applyToggle(next, { lessonId, studentId: ids.student3, absent: false })
     expect(back.students.find((item) => item.user_id === ids.student3)?.absences).toBe(0)
+  })
+})
+
+describe("journal accessibility and phones", () => {
+  test("a cell is a labelled button that announces its state, without aria-pressed", async () => {
+    renderStaff(<JournalPage />, { route: "/journal/" })
+
+    const table = await grid()
+    const cell = table.querySelector<HTMLElement>("button[data-row]")
+    if (!cell) throw new Error("no editable cell in the grid")
+
+    expect(cell).not.toHaveAttribute("aria-pressed")
+    expect(cell.getAttribute("aria-label")).toMatch(/: /)
+  })
+
+  test("the temporary-mark pencil is a keyboard tab stop", async () => {
+    renderStaff(<JournalPage />, { route: "/journal/" })
+
+    const table = await grid()
+    const pencil = within(table).getAllByTestId("temporary-mark-button")[0]
+    if (!pencil) throw new Error("no temporary-mark pencil in the grid")
+
+    expect(pencil).not.toHaveAttribute("tabindex", "-1")
+  })
+
+  test("on a phone the journal is one card per student, not a table", async () => {
+    const original = window.innerWidth
+    window.innerWidth = 375
+    try {
+      renderStaff(<JournalPage />, { route: "/journal/" })
+
+      const cards = await screen.findByTestId("journal-cards")
+
+      expect(screen.queryByRole("grid")).toBeNull()
+      expect(within(cards).getByText("Brastilov Aleksey")).toBeInTheDocument()
+    } finally {
+      window.innerWidth = original
+    }
   })
 })
 

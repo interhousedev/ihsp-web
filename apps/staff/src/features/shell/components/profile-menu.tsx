@@ -7,7 +7,7 @@ import { useT } from "@ihsp/i18n"
 import { UserMenu } from "@ihsp/ui"
 
 /** Profile menu in the header: Settings, language, theme and log out. */
-export function ProfileMenu() {
+export function ProfileMenu({ variant = "avatar" }: { variant?: "avatar" | "row" }) {
   const t = useT("nav")
   const { session } = useSession()
   const update = useUpdatePreferences()
@@ -22,6 +22,7 @@ export function ProfileMenu() {
       <UserMenu
         name={`${last_name} ${first_name}`}
         subtitle={login}
+        variant={variant}
         items={[
           { key: "settings", title: t("settings"), icon: "settings", href: "/settings/" },
           ...feedback.items,

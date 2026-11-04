@@ -59,11 +59,7 @@ export function TimetableLessonCard({
         {cancelled ? <Badge variant="destructive">{t("cancelled")}</Badge> : null}
         {current ? <Badge>{t("now")}</Badge> : null}
         {taken ? (
-          <Badge
-            variant="secondary"
-            data-testid="attendance-taken"
-            className="bg-emerald-100 text-emerald-800 dark:bg-emerald-950 dark:text-emerald-300"
-          >
+          <Badge variant="secondary" data-testid="attendance-taken" className="bg-success-muted text-success">
             <Icons.check aria-hidden />
             {lesson.absent_count ? t("attendanceTakenAbsent", { count: lesson.absent_count }) : t("attendanceTaken")}
           </Badge>
@@ -77,7 +73,7 @@ export function TimetableLessonCard({
       </span>
       {!cancelled
         ? changes.map((change) => (
-            <span key={change.field} className="text-xs text-amber-700 dark:text-amber-400">
+            <span key={change.field} className="text-xs text-warning">
               {t.has(`fields.${change.field}`) ? t(`fields.${change.field}`) : change.field}: {change.from} →{" "}
               {change.to}
             </span>

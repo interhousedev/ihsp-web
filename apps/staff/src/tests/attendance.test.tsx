@@ -208,7 +208,7 @@ describe("attendance sheet", () => {
     expect(screen.queryByRole("radiogroup", { name: /Ismoilov Jasur/ })).not.toBeInTheDocument()
     expect(screen.queryByRole("button", { name: "Submit attendance" })).not.toBeInTheDocument()
     expect(screen.queryByRole("button", { name: "Save changes" })).not.toBeInTheDocument()
-    expect(screen.queryByRole("button", { name: "Everyone present" })).not.toBeInTheDocument()
+    expect(screen.queryByRole("button", { name: "Mark all present" })).not.toBeInTheDocument()
     expect(screen.getByText("Ismoilov Jasur").closest("li")).toHaveAttribute("data-absent", "true")
   })
 
@@ -234,7 +234,7 @@ describe("attendance sheet", () => {
     await markAbsent(user)
     expect(radio(/Ismoilov Jasur/, "Absent")).toBeChecked()
 
-    await user.click(screen.getByRole("button", { name: "Everyone present" }))
+    await user.click(screen.getByRole("button", { name: "Mark all present" }))
 
     expect(radio(/Ismoilov Jasur/, "Present")).toBeChecked()
   })

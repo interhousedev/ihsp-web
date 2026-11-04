@@ -1,11 +1,13 @@
 "use client"
 
 import { RequireAuth, RequireRole } from "@ihsp/auth"
-import { HistoryButtons } from "@ihsp/features-core"
+import { ShellNavControls } from "@ihsp/features-core"
 import { AppShell } from "@ihsp/ui"
 import { Suspense, type ReactNode } from "react"
 import { useNav } from "../../../config/nav"
+import { CuratedGroupsError } from "./curated-groups-error"
 import { PageLoading } from "./page-loading"
+import { ProfileMenu } from "./profile-menu"
 import { ShellHeader } from "./shell-header"
 import { StaffBrand } from "./staff-brand"
 
@@ -31,12 +33,14 @@ function StaffFrame({ children }: { children: ReactNode }) {
   const nav = useNav()
   return (
     <AppShell
-      headerLeading={<HistoryButtons />}
+      controlsLeading={<ShellNavControls />}
       nav={nav.groups}
       bottomNav={nav.bottom}
       brand={<StaffBrand />}
-      header={<ShellHeader nav={nav.groups} />}
+      sidebarFooter={<ProfileMenu variant="row" />}
+      controls={<ShellHeader nav={nav.groups} />}
     >
+      <CuratedGroupsError />
       <Suspense fallback={<PageLoading />}>{children}</Suspense>
     </AppShell>
   )

@@ -4,6 +4,7 @@ import type { LessonItem, StaffSubject } from "@ihsp/api"
 import { useOpenSubjectNotebook, useSubjectNotebookSlots } from "@ihsp/features-core"
 import { formatDate, useT } from "@ihsp/i18n"
 import { Button } from "@ihsp/ui"
+import Link from "next/link"
 import { useRouter } from "next/navigation"
 import { useTeachingTimetable } from "../../exams/hooks/use-teaching-timetable"
 import { notebookHref } from "../../notebooks/utils/hrefs"
@@ -26,12 +27,14 @@ export function GroupNotebook({ subject, groupId }: { subject: StaffSubject; gro
       </LinkButton>
     )
   }
+  // Without a slot the server has no subject-group to open a notebook for, so there is nothing to offer.
+  if (!slot) return null
   return (
     <Button
       type="button"
       className="min-h-11 md:min-h-8"
-      disabled={!slot || open.isPending}
-      onClick={() => slot && open.mutate(slot, { onSuccess: (notebook) => router.push(notebookHref(notebook.id)) })}
+      disabled={open.isPending}
+      onClick={() => open.mutate(slot, { onSuccess: (notebook) => router.push(notebookHref(notebook.id)) })}
     >
       {open.isPending ? t("creatingNotebook") : t("createNotebook")}
     </Button>
@@ -45,10 +48,10 @@ function LessonList({ lessons }: { lessons: LessonItem[] }) {
     <ul className="flex flex-col gap-1 text-sm">
       {lessons.map((lesson) => (
         <li key={lesson.id}>
-          <a href={lessonHref(lesson.id)} className="hover:underline">
+          <Link href={lessonHref(lesson.id)} className="hover:underline">
             {formatDate(lesson.date)} · {t("period", { number: lesson.period })}
             {lesson.topic ? ` · ${lesson.topic}` : ""}
-          </a>
+          </Link>
         </li>
       ))}
     </ul>

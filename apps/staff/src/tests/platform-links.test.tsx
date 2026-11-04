@@ -21,7 +21,7 @@ describe("profile menu", () => {
       </StaffShell>,
     )
 
-    await user.click(await screen.findByRole("button", { name: "Account menu" }))
+    await user.click((await screen.findAllByRole("button", { name: "Account menu" }))[0])
 
     const menu = await screen.findByRole("menu")
     expect(within(menu).getByRole("menuitem", { name: /Учителям/ })).toHaveAttribute("aria-current", "page")

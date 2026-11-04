@@ -19,7 +19,10 @@ export function LessonPage() {
   const t = useT("lesson")
   const [id] = useQueryState("id", parseAsString)
   const [add, setAdd] = useQueryState("add", parseAsString)
+  const [from] = useQueryState("from", parseAsString)
   const query = useStaffLesson(id)
+  const back =
+    from === "today" ? { href: "/", label: t("backToToday") } : { href: "/timetable/", label: t("backToTimetable") }
   const loaded = query.data !== undefined
 
   useEffect(() => {
@@ -36,7 +39,7 @@ export function LessonPage() {
 
   return (
     <PageContainer title={query.data?.lesson.subject.name ?? t("title")}>
-      <BackLink href="/timetable/" label={t("backToTimetable")} />
+      <BackLink href={back.href} label={back.label} />
       <QueryState query={query} rows={5}>
         {(data) => (
           <>

@@ -2,7 +2,7 @@
 
 import type { StaffToday } from "@ihsp/api"
 import { useFormatters, useT } from "@ihsp/i18n"
-import { Badge, Timeline, type TimelineItem } from "@ihsp/ui"
+import { Badge, ScrollList, Timeline, type TimelineItem } from "@ihsp/ui"
 import { useAudienceLabel } from "../../shared/hooks/use-audience-label"
 import { useNow } from "../../shared/hooks/use-now"
 import { isLessonNow, lessonHref } from "../../shared/utils/lesson-time"
@@ -41,13 +41,19 @@ export function TodayLessonsCard({ lessons }: { lessons: TodayLesson[] }) {
         </>
       ),
       state: stateOf(lesson, now),
-      href: lessonHref(lesson.id),
+      href: lessonHref(lesson.id, undefined, undefined, "today"),
     }
   })
 
   return (
     <TodayCard title={t("title")} className="md:col-span-2">
-      {items.length === 0 ? <p className="text-muted-foreground text-sm">{t("empty")}</p> : <Timeline items={items} />}
+      {items.length === 0 ? (
+        <p className="text-muted-foreground text-sm">{t("empty")}</p>
+      ) : (
+        <ScrollList label={t("title")}>
+          <Timeline items={items} />
+        </ScrollList>
+      )}
     </TodayCard>
   )
 }

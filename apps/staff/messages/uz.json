@@ -1,6 +1,6 @@
 {
   "app": {
-    "name": "IHT Учителям"
+    "name": "{appStaff}"
   },
   "nav": {
     "today": "Bugun",
@@ -76,12 +76,14 @@
     "examSuggestions": {
       "title": "Tasdiqlanadigan nazorat sanalari",
       "summary": "{count, plural, one {# nazorat sanasini tasdiqlash kerak} other {# nazorat sanasini tasdiqlash kerak}}",
-      "review": "Koʻrib chiqish"
+      "review": "Koʻrib chiqish",
+      "error": "Nazorat sanalarini yuklab boʻlmadi."
     }
   },
   "timetable": {
     "title": "Dars jadvali",
     "days": "Hafta kunlari",
+    "dayLessons": "Kun darslari",
     "period": "{number}-juftlik",
     "periodHeader": "Juftlik",
     "room": "{name}-xona",
@@ -103,9 +105,12 @@
   "lesson": {
     "title": "Dars",
     "missing": "Dars tanlanmagan. Uni «Bugun» sahifasidan yoki jadvaldan oching.",
-    "backToTimetable": "Dars jadvali"
+    "backToTimetable": "Dars jadvali",
+    "backToToday": "Bugun"
   },
   "journal": {
+    "markAll": "Hammasini bor deb belgilash",
+    "studentCards": "Oʻquvchilar va darslar",
     "title": "Jurnal",
     "pick": "Fan va auditoriya",
     "noOptions": "Jurnal uchun hozircha darslar yoʻq.",
@@ -128,6 +133,8 @@
     "conflictReloaded": "Bu darsni boshqa kimdir oʻzgartirdi; jurnal qayta yuklandi.",
     "notSaved": "Saqlanmadi",
     "keysHint": "Katakchalar orasida strelkalar bilan yuring; probel yoki Enter belgini oʻzgartiradi.",
+    "excuse": "Sababli",
+    "excuseFor": "Sababli qilish: {name}, {date}",
     "temporaryMark": "Vaqtinchalik baho",
     "temporaryMarkFor": "Vaqtinchalik baho: {name}, {date}",
     "temporaryState": "vaqtinchalik baho {value}",
@@ -155,6 +162,7 @@
       "registered": "Roʻyxatdan oʻtgan",
       "noFlags": "Bu talabada eʼtibor talab qiladigan holat yoʻq.",
       "openAttendance": "Davomatni ochish",
+      "openProfile": "Profilni ochish",
       "assignSubgroup": "Kichik guruh belgilash",
       "flags": {
         "absences": "Koʻp qoldirgan",
@@ -386,6 +394,8 @@
   },
   "students": {
     "title": "Talaba qidirish",
+    "allSubjects": "Barcha fanlar",
+    "subjectFilter": "Fan",
     "search": "Ism boʻyicha qidirish",
     "noStudents": "Hozircha talabalaringiz yoʻq.",
     "noResults": "“{query}” boʻyicha hech kim topilmadi.",
@@ -546,5 +556,9 @@
     "pendingTitle": "EMISga kiritilishi kutilmoqda",
     "empty": "EMISga kiritilishi kutilayotgan baholar yo'q.",
     "period": "{number}-dars"
+  },
+  "shell": {
+    "groupsError": "Guruhlaringizni yuklab boʻlmadi.",
+    "retry": "Qayta urinish"
   }
 }

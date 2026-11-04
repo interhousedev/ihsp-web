@@ -5,11 +5,12 @@ import { Badge, Input, MarkBadge, PageContainer, StateView } from "@ihsp/ui"
 import { IconSearch } from "@ihsp/ui"
 import Link from "next/link"
 import { parseAsString, useQueryState } from "nuqs"
+import { studentProfileHref } from "./hrefs"
 import { useTeacherStudents } from "./hooks/use-teacher-students"
 import { nameOf, searchStudents, subjectsLine } from "./utils"
 
 export function studentHref(id: string): string {
-  return `/students/view/?id=${encodeURIComponent(id)}`
+  return studentProfileHref(id)
 }
 
 /**

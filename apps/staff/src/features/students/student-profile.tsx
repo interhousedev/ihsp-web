@@ -2,35 +2,107 @@
 
 import { getStaffLessonQuery, type ResourceItem } from "@ihsp/api"
 import { todayIso, useFormatters, useT } from "@ihsp/i18n"
-import { Badge, Card, CardContent, CardHeader, CardTitle, MarkBadge, PageContainer, StateView } from "@ihsp/ui"
+import { Badge, Button, Card, CardContent, CardHeader, CardTitle, MarkBadge, PageContainer, StateView } from "@ihsp/ui"
 import { useQueries } from "@tanstack/react-query"
 import Link from "next/link"
-import { parseAsString, useQueryState } from "nuqs"
+import { parseAsInteger, parseAsString, useQueryState } from "nuqs"
 import { BackLink } from "../shared/components/back-link"
+import { QueryState } from "../shared/components/query-state"
+import { subjectGroupHref } from "../subjects/utils/hrefs"
 import { optionLabel } from "../journal/utils/selection"
 import { lessonHref } from "../shared/utils/lesson-time"
 import { useTeacherStudents } from "./hooks/use-teacher-students"
+import { SubjectRecord, useTeachingStudent } from "./subject-record"
 import { attendanceOf, marksOf, nameOf, recentLessons, type StudentSummary } from "./utils"
 
 const RECENT_LESSONS = 6
 
 /**
  * The profile of a student (`?id=`), from the teacher's journals: marks by subject, attendance, and the latest
- * lessons with their materials.
+ * lessons with their materials. `?subject=` filters it to one subject; with `&group=` (and `&subgroup=`) it also
+ * shows the student's record in that taught group: average, homework and attendance.
  */
 export function StudentProfile() {
   const t = useT("students")
+  const ts = useT("subjects")
   const [id] = useQueryState("id", parseAsString)
+  const [subject, setSubject] = useQueryState("subject", parseAsString)
+  const [group, setGroup] = useQueryState("group", parseAsString)
+  const [subgroup, setSubgroup] = useQueryState("subgroup", parseAsInteger)
   const { students, isPending } = useTeacherStudents()
   const student = students.find((item) => item.userId === id)
+  const inGroup = !!subject && !!group
+  const record = useTeachingStudent(subject, group, subgroup, id)
+
+  const entries = student && subject ? student.entries.filter((entry) => entry.option.subject.id === subject) : []
+  const shown = student ? (subject ? { ...student, entries } : student) : undefined
+  const title = record.data
+    ? `${record.data.student.last_name} ${record.data.student.first_name}`
+    : student && !inGroup
+      ? nameOf(student)
+      : t("profile")
+
+  function pickSubject(next: string | null) {
+    void setSubject(next)
+    void setGroup(null)
+    void setSubgroup(null)
+  }
 
   return (
-    <PageContainer title={student ? nameOf(student) : t("profile")}>
-      <BackLink href="/students/" label={t("back")} />
-      {isPending && !student ? <StateView state="loading" rows={4} /> : null}
-      {!isPending && !student ? <StateView state="empty" emptyText={t("notFound")} /> : null}
-      {student ? <Profile student={student} /> : null}
+    <PageContainer title={title}>
+      <BackLink
+        href={inGroup ? subjectGroupHref(subject, group, subgroup) : "/students/"}
+        label={inGroup ? ts("student.back") : t("back")}
+      />
+      {student ? <SubjectFilter student={student} value={subject} onChange={pickSubject} /> : null}
+      {isPending && !student && !inGroup ? <StateView state="loading" rows={4} /> : null}
+      {!isPending && !student && !inGroup ? <StateView state="empty" emptyText={t("notFound")} /> : null}
+      {inGroup ? (
+        <QueryState query={record} rows={4}>
+          {(data) => <SubjectRecord record={data} />}
+        </QueryState>
+      ) : null}
+      {shown && (!inGroup || (record.data && shown.entries.length > 0)) ? <Profile student={shown} /> : null}
     </PageContainer>
+  )
+}
+
+function SubjectFilter({
+  student,
+  value,
+  onChange,
+}: {
+  student: StudentSummary
+  value: string | null
+  onChange: (subjectId: string | null) => void
+}) {
+  const t = useT("students")
+  const subjects = [
+    ...new Map(student.entries.map((entry) => [entry.option.subject.id, entry.option.subject])).values(),
+  ]
+  if (subjects.length < 2) return null
+  return (
+    <div role="group" aria-label={t("subjectFilter")} className="flex flex-wrap gap-2">
+      <Button
+        size="sm"
+        variant={value === null ? "default" : "outline"}
+        aria-pressed={value === null}
+        onClick={() => onChange(null)}
+      >
+        {t("allSubjects")}
+      </Button>
+      {subjects.map((item) => (
+        <Button
+          key={item.id}
+          size="sm"
+          variant={value === item.id ? "default" : "outline"}
+          aria-pressed={value === item.id}
+          onClick={() => onChange(item.id)}
+        >
+          {item.name}
+        </Button>
+      ))}
+    </div>
   )
 }
 

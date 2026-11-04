@@ -1,3 +1,5 @@
+import { studentProfileHref } from "../../students/hrefs"
+
 /** Routes of the subject pages (static export: the subject is in the query string). */
 export const SUBJECTS_HREF = "/subjects/"
 
@@ -17,12 +19,12 @@ export function subjectGroupHref(subjectId: string, groupId: string, subgroup: n
   return `/subjects/group/?${groupQuery(subjectId, groupId, subgroup)}`
 }
 
-/** The page of one student of a subject group: marks, homework, attendance. */
+/** The profile of one student of a subject group: marks, homework, attendance (the canonical student page). */
 export function subjectStudentHref(
   subjectId: string,
   groupId: string,
   subgroup: number | null,
   studentId: string,
 ): string {
-  return `/subjects/student/?${groupQuery(subjectId, groupId, subgroup)}&student=${encodeURIComponent(studentId)}`
+  return studentProfileHref(studentId, { subject: subjectId, group: groupId, subgroup })
 }

@@ -1,11 +1,10 @@
 "use client"
 
 import { getStaffTodayQuery } from "@ihsp/api"
-import { useFormatters, useT } from "@ihsp/i18n"
+import { useT } from "@ihsp/i18n"
 import { PageContainer } from "@ihsp/ui"
 import { useQuery } from "@tanstack/react-query"
 import { QueryState } from "../../shared/components/query-state"
-import { useNow } from "../../shared/hooks/use-now"
 import { ExamSuggestionsCard } from "./exam-suggestions-card"
 import { GetStartedCard } from "./get-started-card"
 import { NeedsAttentionCard } from "./needs-attention-card"
@@ -15,12 +14,10 @@ import { TodayLessonsCard } from "./today-lessons-card"
 /** Today (STF-2, UF-STF-01, UF-STF-02): what to do now, the day's lessons and what was missed. */
 export function TodayPage() {
   const t = useT("today")
-  const f = useFormatters()
-  const now = useNow(60_000)
   const query = useQuery(getStaffTodayQuery())
 
   return (
-    <PageContainer title={t("title")} description={f.date(now, { weekday: "long", day: "numeric", month: "long" })}>
+    <PageContainer title={t("title")}>
       <GetStartedCard />
       <ExamSuggestionsCard />
       <QueryState query={query} rows={4}>

@@ -1,6 +1,6 @@
 {
   "app": {
-    "name": "IHT Учителям"
+    "name": "{appStaff}"
   },
   "nav": {
     "today": "Today",
@@ -76,12 +76,14 @@
     "examSuggestions": {
       "title": "Exam dates to confirm",
       "summary": "{count, plural, one {# exam date to confirm} other {# exam dates to confirm}}",
-      "review": "Review"
+      "review": "Review",
+      "error": "Could not load the exam dates."
     }
   },
   "timetable": {
     "title": "Timetable",
     "days": "Days of the week",
+    "dayLessons": "Lessons of the day",
     "period": "Period {number}",
     "periodHeader": "Period",
     "room": "Room {name}",
@@ -103,9 +105,12 @@
   "lesson": {
     "title": "Lesson",
     "missing": "No lesson was chosen. Open one from Today or the timetable.",
-    "backToTimetable": "Timetable"
+    "backToTimetable": "Timetable",
+    "backToToday": "Today"
   },
   "journal": {
+    "markAll": "Mark all present",
+    "studentCards": "Students and lessons",
     "title": "Journal",
     "pick": "Subject and audience",
     "noOptions": "You have no lessons to show in the journal yet.",
@@ -128,6 +133,8 @@
     "conflictReloaded": "Someone else changed this lesson; the journal was reloaded.",
     "notSaved": "Not saved",
     "keysHint": "Use the arrow keys to move between cells; Space or Enter changes the mark.",
+    "excuse": "Excuse",
+    "excuseFor": "Excuse {name}, {date}",
     "temporaryMark": "Temporary mark",
     "temporaryMarkFor": "Temporary mark for {name}, {date}",
     "temporaryState": "temporary mark {value}",
@@ -155,6 +162,7 @@
       "registered": "Registered",
       "noFlags": "Nothing needs attention for this student.",
       "openAttendance": "Open attendance",
+      "openProfile": "Open profile",
       "assignSubgroup": "Assign a subgroup",
       "flags": {
         "absences": "High absences",
@@ -386,6 +394,8 @@
   },
   "students": {
     "title": "Find a student",
+    "allSubjects": "All subjects",
+    "subjectFilter": "Subject",
     "search": "Search by name",
     "noStudents": "You have no students yet.",
     "noResults": "No students match “{query}”.",
@@ -546,5 +556,9 @@
     "pendingTitle": "Pending for EMIS",
     "empty": "No marks are waiting for EMIS.",
     "period": "Period {number}"
+  },
+  "shell": {
+    "groupsError": "Could not load your groups.",
+    "retry": "Retry"
   }
 }

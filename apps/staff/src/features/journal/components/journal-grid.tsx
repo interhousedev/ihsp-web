@@ -2,17 +2,22 @@
 
 import { isApiError, type Journal, type JournalParams } from "@ihsp/api"
 import { todayIso, useErrorMessage, useFormatters, useT } from "@ihsp/i18n"
-import { Badge, IconEdit, MarkBadge, cn } from "@ihsp/ui"
+import { Badge, IconEdit, MarkBadge, cn, useIsMobile } from "@ihsp/ui"
 import Link from "next/link"
 import { useId, useState, type KeyboardEvent } from "react"
 import { toast } from "sonner"
 import { lessonHref } from "../../shared/utils/lesson-time"
 import { fullName } from "../../shared/utils/people"
-import { useToggleAbsence } from "../hooks/use-toggle-absence"
+import { ExcuseDialog } from "../../group/components/excuse-dialog"
+import { useAttendance } from "../../attendance/use-attendance"
+import { JournalCardList } from "./journal-card-list"
 import { JournalCell } from "./journal-cell"
 import { TemporaryMarkDialog } from "./temporary-mark-dialog"
 
 type Position = { row: number; col: number }
+type Student = Journal["students"][number]
+type Cell = Student["cells"][number]
+type Lesson = Journal["lessons"][number]
 
 /** The cell the arrow keys land on; Home/End go to the first/last lesson of the row, Ctrl+Home/End to the corners. */
 function moveTo(key: string, ctrl: boolean, from: Position, rows: number, cols: number): Position | null {
@@ -47,16 +52,30 @@ export function JournalGrid({ journal, params }: { journal: Journal; params: Jou
   const t = useT("journal")
   const f = useFormatters()
   const errorMessage = useErrorMessage()
-  const toggle = useToggleAbsence(params)
+  const { cycle } = useAttendance(params)
   const today = todayIso()
   const hintId = useId()
   const [active, setActive] = useState<Position>({ row: 0, col: 0 })
   const [failed, setFailed] = useState<ReadonlySet<string>>(new Set())
-  const [editing, setEditing] = useState<{ lessonId: string; row: number; col: number } | null>(null)
+  const [editing, setEditing] = useState<{ lessonId: string; row: number } | null>(null)
+  const [excuse, setExcuse] = useState<{ id: string; label: string } | null>(null)
+  const phone = useIsMobile()
 
   if (journal.students.length === 0 || journal.lessons.length === 0) return null
   const rows = journal.students.length
   const cols = journal.lessons.length
+
+  // present -> absent -> late -> present
+  function toggleCell(lesson: Lesson, student: Student, cell: Cell, key: string) {
+    cycle(lesson, student, cell, { onError: (error) => onError(error, key), onSuccess: () => onSuccess(key) })
+  }
+
+  function openExcuse(lesson: Lesson, student: Student) {
+    setExcuse({
+      id: lesson.id,
+      label: `${fullName(student)}, ${f.date(lesson.date, { day: "numeric", month: "short" })}`,
+    })
+  }
 
   function onKeyDown(event: KeyboardEvent<HTMLTableSectionElement>) {
     const target = event.target as HTMLElement
@@ -85,7 +104,7 @@ export function JournalGrid({ journal, params }: { journal: Journal; params: Jou
     })
   }
 
-  return (
+  const table = (
     <div className="relative max-h-[70dvh] w-full overflow-auto rounded-lg border" data-testid="journal-grid">
       <p id={hintId} className="sr-only">
         {t("keysHint")}
@@ -188,18 +207,8 @@ export function JournalGrid({ journal, params }: { journal: Journal; params: Jou
                           position={{ row, col }}
                           tabIndex={active.row === row && active.col === col ? 0 : -1}
                           onFocus={() => setActive({ row, col })}
-                          onToggle={() =>
-                            toggle.mutate(
-                              {
-                                lessonId: lesson.id,
-                                studentId: student.user_id,
-                                // present -> absent -> late -> present
-                                absent: !cell.absent && !cell.late,
-                                late: cell.absent,
-                              },
-                              { onError: (error) => onError(error, key), onSuccess: () => onSuccess(key) },
-                            )
-                          }
+                          onToggle={() => toggleCell(lesson, student, cell, key)}
+                          onExcuse={() => openExcuse(lesson, student)}
                         />
                         {lesson.editable ? (
                           <button
@@ -209,9 +218,8 @@ export function JournalGrid({ journal, params }: { journal: Journal; params: Jou
                               date: f.date(lesson.date, { day: "numeric", month: "short" }),
                             })}
                             title={t("temporaryMark")}
-                            tabIndex={-1}
                             data-testid="temporary-mark-button"
-                            onClick={() => setEditing({ lessonId: lesson.id, row, col })}
+                            onClick={() => setEditing({ lessonId: lesson.id, row })}
                             className="hover:bg-accent text-muted-foreground focus-visible:ring-ring ms-0.5 flex min-h-11 min-w-6 items-center justify-center rounded-md outline-none focus-visible:ring-2"
                           >
                             <IconEdit className="size-3.5" aria-hidden />
@@ -232,8 +240,26 @@ export function JournalGrid({ journal, params }: { journal: Journal; params: Jou
           ))}
         </tbody>
       </table>
-      {editing ? <EditTemporaryMark editing={editing} journal={journal} onClose={() => setEditing(null)} /> : null}
     </div>
+  )
+
+  return (
+    <>
+      {phone ? (
+        <JournalCardList
+          journal={journal}
+          failed={failed}
+          today={today}
+          onToggle={toggleCell}
+          onExcuse={openExcuse}
+          onEdit={(lessonId, row) => setEditing({ lessonId, row })}
+        />
+      ) : (
+        table
+      )}
+      <ExcuseDialog lessonId={excuse?.id ?? null} label={excuse?.label ?? ""} onClose={() => setExcuse(null)} />
+      {editing ? <EditTemporaryMark editing={editing} journal={journal} onClose={() => setEditing(null)} /> : null}
+    </>
   )
 }
 
@@ -243,7 +269,7 @@ function EditTemporaryMark({
   journal,
   onClose,
 }: {
-  editing: { lessonId: string; row: number; col: number }
+  editing: { lessonId: string; row: number }
   journal: Journal
   onClose: () => void
 }) {

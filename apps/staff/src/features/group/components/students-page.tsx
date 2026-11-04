@@ -12,6 +12,7 @@ import { useT } from "@ihsp/i18n"
 import { PageContainer } from "@ihsp/ui"
 import { useQuery } from "@tanstack/react-query"
 import { useState } from "react"
+import { GroupHeader, StudentList } from "../../shared/components/group-roster"
 import { QueryState } from "../../shared/components/query-state"
 import { fullName } from "../../shared/utils/people"
 import { sortStudents } from "../utils/students"
@@ -28,13 +29,18 @@ function StudentsOfGroup({ group }: { group: GroupItem }) {
 
   return (
     <>
-      <div className="flex flex-wrap items-center gap-x-6 gap-y-1 text-sm">
-        <span className="text-lg font-semibold">{group.name}</span>
-        <span className="text-muted-foreground">
-          {headStudent ? t("headStudent", { name: fullName(headStudent) }) : t("noHeadStudent")}
-        </span>
-        <span className="text-muted-foreground">{t("count", { count: group.students_count })}</span>
-      </div>
+      <GroupHeader
+        id="group-name"
+        title={group.name}
+        meta={
+          <>
+            <span className="text-muted-foreground">
+              {headStudent ? t("headStudent", { name: fullName(headStudent) }) : t("noHeadStudent")}
+            </span>
+            <span className="text-muted-foreground">{t("count", { count: group.students_count })}</span>
+          </>
+        }
+      />
       <QueryState
         query={students}
         rows={4}
@@ -49,24 +55,26 @@ function StudentsOfGroup({ group }: { group: GroupItem }) {
               <p className="text-muted-foreground text-sm" role="status">
                 {flagged > 0 ? t("flaggedCount", { count: flagged }) : t("noneFlagged")}
               </p>
-              <div className="text-muted-foreground hidden grid-cols-[minmax(0,2fr)_6rem_6rem_6rem_minmax(0,2fr)] gap-3 px-3 text-xs font-medium md:grid">
-                <span>{t("student")}</span>
-                <span>{t("subgroup")}</span>
-                <span>{t("absenceRate")}</span>
-                <span>{t("gpa")}</span>
-                <span>{t("attention")}</span>
-              </div>
-              <ul className="flex flex-col gap-2">
-                {sorted.map((student) => (
-                  <StudentRow key={student.user_id} student={student} onOpen={() => setOpen(student)} />
-                ))}
-              </ul>
+              <StudentList
+                items={sorted}
+                getKey={(student) => student.user_id}
+                renderItem={(student) => <StudentRow student={student} onOpen={() => setOpen(student)} />}
+                columns={
+                  <div className="text-muted-foreground hidden grid-cols-[minmax(0,2fr)_6rem_6rem_6rem_minmax(0,2fr)] gap-3 border-b px-3 py-2 text-xs font-medium md:grid">
+                    <span>{t("student")}</span>
+                    <span>{t("subgroup")}</span>
+                    <span>{t("absenceRate")}</span>
+                    <span>{t("gpa")}</span>
+                    <span>{t("attention")}</span>
+                  </div>
+                }
+              />
             </>
           )
         }}
       </QueryState>
       <GroupProgressSection queryFor={(semester) => getGroupProgressQuery(group.id, semester)} />
-      <StudentDrawer student={open} onClose={() => setOpen(null)} />
+      <StudentDrawer student={open} groupId={group.id} onClose={() => setOpen(null)} />
     </>
   )
 }
