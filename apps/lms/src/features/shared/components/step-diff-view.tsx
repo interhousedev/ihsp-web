@@ -8,16 +8,16 @@ import { BlockView } from "./block-view"
 
 const ROW_STYLE: Record<DiffStatus, string> = {
   same: "border-border",
-  added: "border-emerald-500 bg-emerald-500/5",
-  removed: "border-red-500 bg-red-500/5",
-  changed: "border-amber-500 bg-amber-500/5",
+  added: "border-success bg-success/5",
+  removed: "border-destructive bg-destructive/5",
+  changed: "border-warning bg-warning/5",
 }
 
-const BADGE_VARIANT: Record<DiffStatus, "outline" | "default" | "destructive" | "secondary"> = {
+const BADGE_VARIANT: Record<DiffStatus, "outline" | "success" | "destructive" | "warning"> = {
   same: "outline",
-  added: "default",
+  added: "success",
   removed: "destructive",
-  changed: "secondary",
+  changed: "warning",
 }
 
 /**

@@ -8,9 +8,12 @@ import type { ReactNode } from "react"
 import { hrefs } from "../utils/hrefs"
 import { CourseCover } from "./course-cover"
 
-/** Enrolled learners (the card has a progress) open the course; everyone else lands on its about page. */
-export function courseCardHref(course: Pick<CourseCard, "slug" | "progress_pct">): string {
-  return course.progress_pct !== null ? hrefs.course(course.slug) : hrefs.about(course.slug)
+/**
+ * Every card opens the one course page; it shows the enrolled view or the join view itself. The link never depends on
+ * `progress_pct`, so enrolling (which refreshes the catalog) cannot leave a card pointing at the wrong page.
+ */
+export function courseCardHref(course: Pick<CourseCard, "slug">): string {
+  return hrefs.course(course.slug)
 }
 
 /**

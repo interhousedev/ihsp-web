@@ -1,13 +1,8 @@
 "use client"
 
-import { CoursePage } from "@/features/courses/components/course-page"
-import { ParamsRoute } from "@/features/shared/components/params-route"
-import { LmsShell } from "@/features/shell/components/lms-shell"
+import { CourseRoute } from "@/features/courses/components/course-route"
 
+/** The old `/course/?slug=` links: redirects to the address in the path. */
 export default function Page() {
-  return (
-    <LmsShell>
-      <ParamsRoute required={["slug"]}>{({ slug }) => <CoursePage slug={slug} />}</ParamsRoute>
-    </LmsShell>
-  )
+  return <CourseRoute />
 }

@@ -1,9 +1,9 @@
 /** LMSUI: course settings (details form, visibility, navigation, link check) and the learner landing page. */
 import { beforeEach, describe, expect, it, setDefaultTimeout } from "bun:test"
 import { courseSettingsFixture, ids, resetLmsSettings, server, setDropdownValue } from "@ihsp/test-utils"
-import { fireEvent, screen, waitFor, within } from "@testing-library/react"
+import { screen, waitFor, within } from "@testing-library/react"
 import { http, HttpResponse } from "msw"
-import { LandingPage } from "../features/landing/components/landing-page"
+import { CoursePage } from "../features/courses/components/course-page"
 import { CourseSettingsPage } from "../features/settings/components/settings-page"
 import { accentStyle, contrastRatio, isHexColor, normalizeHex, readableOn } from "../features/settings/utils/color"
 import { filterGroups } from "../features/settings/components/group-picker"
@@ -190,22 +190,22 @@ describe("link check", () => {
 })
 
 describe("landing page", () => {
-  it("renders the facts, lists, syllabus, authors and the enrol button", async () => {
-    renderLms(<LandingPage slug="calculus-1" preview={false} />)
+  it("renders the About facts and the syllabus and staff tabs of the course preview", async () => {
+    const { user } = renderLms(<CoursePage slug="calculus-1" preview />)
 
     expect(await screen.findByText("Limits, derivatives and integrals.")).toBeInTheDocument()
     expect(screen.getByText("Beginner")).toBeInTheDocument()
     expect(screen.getByText("4 h per week")).toBeInTheDocument()
     expect(screen.getByText("10 weeks")).toBeInTheDocument()
     expect(screen.getByText("Differentiate a function")).toBeInTheDocument()
-    expect(screen.getByText("Limits")).toBeInTheDocument()
-    expect(screen.getByText("Rakhimov Timur")).toBeInTheDocument()
-    expect(screen.getByRole("button", { name: "Enrol" })).toBeEnabled()
-    expect(screen.queryByText(/Preview:/)).toBeNull()
+    await user.click(screen.getByRole("tab", { name: "Syllabus" }))
+    expect(await screen.findByText("Limits")).toBeInTheDocument()
+    await user.click(screen.getByRole("tab", { name: "Staff" }))
+    expect(await screen.findByText("Rakhimov Timur")).toBeInTheDocument()
   })
 
   it("shows the preview banner and does not allow enrolling", async () => {
-    renderLms(<LandingPage slug="calculus-1" preview />)
+    renderLms(<CoursePage slug="calculus-1" preview />)
 
     expect(await screen.findByText(/Preview: this is how learners/)).toBeInTheDocument()
     expect(screen.getByRole("button", { name: "Enrol" })).toBeDisabled()
@@ -213,9 +213,8 @@ describe("landing page", () => {
 })
 
 describe("course card link", () => {
-  it("opens the about page when not enrolled and the course when enrolled", () => {
-    expect(courseCardHref({ slug: "algebra", progress_pct: null })).toBe("/course/about/?slug=algebra")
-    expect(courseCardHref({ slug: "algebra", progress_pct: 0 })).toBe("/course/?slug=algebra")
+  it("opens the one course page for every card, whatever the progress", () => {
+    expect(courseCardHref({ slug: "algebra" })).toBe("/course/algebra/")
   })
 })
 

@@ -39,7 +39,7 @@ export function SettingsSidebar({ settings, pollMs }: { settings: CourseSettings
               ))}
             </ul>
           ) : null}
-          <LinkButton href={hrefs.about(settings.slug, true)} variant="outline" className="min-h-11 md:min-h-8">
+          <LinkButton href={hrefs.course(settings.slug, true)} variant="outline" className="min-h-11 md:min-h-8">
             <Icons.eye aria-hidden />
             {t("previewLearner")}
           </LinkButton>

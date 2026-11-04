@@ -45,29 +45,32 @@ describe("my courses", () => {
 
 describe("course page", () => {
   it("shows staff with their roles, the outline marks, progress and the Updated note", async () => {
-    renderLms(<CoursePage slug={coursePage.slug} />, { route: `/course/?slug=${coursePage.slug}` })
+    const { user } = renderLms(<CoursePage slug={coursePage.slug} />, { route: `/course/${coursePage.slug}/` })
     expect(await screen.findByRole("heading", { name: "Derivatives 101", level: 1 })).toBeInTheDocument()
-    expect(screen.getByText("Rakhimov Timur")).toBeInTheDocument()
+    await user.click(screen.getByRole("tab", { name: "Staff" }))
+    expect(await screen.findByText("Rakhimov Timur")).toBeInTheDocument()
     expect(screen.getByText("Author")).toBeInTheDocument()
     // The hidden staff member ("show on page" off) is not part of the page the server sends.
     expect(screen.queryByText("Tester")).not.toBeInTheDocument()
-    expect(screen.getByText("Changed")).toBeInTheDocument()
-    expect(screen.getByText("New")).toBeInTheDocument()
     expect(screen.getByLabelText("Progress")).toBeInTheDocument()
     expect(screen.getByText("2 of 3 points")).toBeInTheDocument()
     expect(
       screen.getByText(/2 lessons are new or changed; your completed lessons stay completed\./),
     ).toBeInTheDocument()
+    await user.click(screen.getByRole("tab", { name: "Syllabus" }))
+    expect(screen.getByText("Changed")).toBeInTheDocument()
+    expect(screen.getByText("New")).toBeInTheDocument()
     expect(screen.getByLabelText("Completed")).toBeInTheDocument()
     const link = screen.getByRole("link", { name: /Derivative rules quiz/ })
-    expect(link.getAttribute("href")).toContain(`course=${ids.course}&step=${ids.courseStepTest}`)
+    expect(link.getAttribute("href")).toContain(`/course/${ids.course}/step/${ids.courseStepTest}`)
     // Continue goes to the first step that is not completed.
-    expect(screen.getByRole("link", { name: "Continue" }).getAttribute("href")).toContain(`step=${ids.courseStepTest}`)
+    expect(screen.getByRole("link", { name: "Continue" }).getAttribute("href")).toContain(`/step/${ids.courseStepTest}`)
   })
 
   it("numbers the modules and lessons of the syllabus and sizes the course in the side card", async () => {
-    renderLms(<CoursePage slug={coursePage.slug} />)
-    const syllabus = (await screen.findByRole("heading", { name: "Syllabus" })).closest("section") as HTMLElement
+    const { user } = renderLms(<CoursePage slug={coursePage.slug} />)
+    await user.click(await screen.findByRole("tab", { name: "Syllabus" }))
+    const syllabus = await screen.findByRole("tabpanel")
     const modules = within(syllabus).getAllByRole("heading", { level: 3 })
     expect(modules.map((item) => item.textContent)).toEqual(["1Introduction", "2Rules and practice"])
     expect(within(syllabus).getByText("1.1")).toBeInTheDocument()
@@ -97,6 +100,7 @@ describe("course page", () => {
       }),
     )
     const { user } = renderLms(<CoursePage slug={coursePage.slug} />)
+    await user.click(await screen.findByRole("tab", { name: "Syllabus" }))
     // Steps are not links before enrolling.
     expect(await screen.findByText("Derivative rules quiz")).toBeInTheDocument()
     expect(screen.queryByRole("link", { name: /Derivative rules quiz/ })).not.toBeInTheDocument()
@@ -139,7 +143,7 @@ describe("join page", () => {
     expect(joined).toBeNull()
     await user.click(screen.getByRole("button", { name: "Join" }))
     await waitFor(() => expect(joined).toEqual({ code: "KP7M2Q" }))
-    await waitFor(() => expect(testRouter.push).toHaveBeenCalledWith(`/course/?slug=${coursePage.slug}`))
+    await waitFor(() => expect(testRouter.push).toHaveBeenCalledWith(`/course/${coursePage.slug}/`))
   })
 
   it("says the invite is not valid for a wrong or rotated code", async () => {

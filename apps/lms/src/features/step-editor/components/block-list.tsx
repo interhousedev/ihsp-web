@@ -18,6 +18,7 @@ export function BlockList({
   content,
   keyOf,
   edit,
+  canEdit,
   courseId,
   stepId,
 }: {
@@ -26,6 +27,7 @@ export function BlockList({
   content: StepContent
   keyOf: (id: string) => string
   edit: (update: (content: StepContent) => StepContent) => void
+  canEdit: boolean
 }) {
   const t = useT("stepEditor")
   const [removing, setRemoving] = useState<Block | null>(null)
@@ -43,6 +45,7 @@ export function BlockList({
             type={block.type}
             index={index}
             total={content.blocks.length}
+            canEdit={canEdit}
             onMove={(direction) =>
               edit((current) => ({
                 ...current,

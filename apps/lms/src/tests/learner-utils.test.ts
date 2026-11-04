@@ -119,8 +119,8 @@ describe("course progress", () => {
 
 describe("addresses of the steps", () => {
   it("carry the step number only when given", () => {
-    expect(hrefs.step("c", "s", "slug")).toBe("/course/step/?course=c&step=s&slug=slug")
-    expect(hrefs.step("c", "s", "slug", 3)).toBe("/course/step/?course=c&step=s&slug=slug&block=3")
+    expect(hrefs.step("c", "s")).toBe("/course/c/step/s/")
+    expect(hrefs.step("c", "s", 3)).toBe("/course/c/step/s/?block=3")
     expect(hrefs.preview("c", "s", 2)).toBe("/edit/preview/?id=c&step=s&block=2")
   })
 })

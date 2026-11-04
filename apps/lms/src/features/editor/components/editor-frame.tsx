@@ -33,7 +33,7 @@ export function EditorFrame({
   children: (permissions: readonly CoursePermission[]) => ReactNode
 }) {
   const t = useT("editorNav")
-  const { permissions, isPending } = useCoursePermissions(courseId)
+  const { permissions, isPending, isError, refetch } = useCoursePermissions(courseId)
   const readsDraft = can(permissions, "edit") || can(permissions, "view_drafts")
   const draft = useQuery({ ...getLmsCourseDraftQuery(courseId), enabled: readsDraft, retry: false })
 
@@ -41,6 +41,13 @@ export function EditorFrame({
     return (
       <div className="px-4 pt-4 md:px-6">
         <StateView state="loading" />
+      </div>
+    )
+  }
+  if (isError) {
+    return (
+      <div className="px-4 pt-4 md:px-6">
+        <StateView state="error" onRetry={refetch} />
       </div>
     )
   }

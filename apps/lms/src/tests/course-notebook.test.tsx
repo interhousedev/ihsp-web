@@ -1,5 +1,5 @@
 import { describe, expect, it, setDefaultTimeout } from "bun:test"
-import { apiUrl, coursePage, coursePageNotEnrolled, problem, server, testRouter } from "@ihsp/test-utils"
+import { apiUrl, coursePage, coursePageNotEnrolled, problem, server } from "@ihsp/test-utils"
 import { screen, waitFor } from "@testing-library/react"
 import { HttpResponse, http } from "msw"
 import en from "../../messages/en.json"
@@ -38,8 +38,8 @@ describe("course page loading", () => {
   })
 })
 
-describe("course notebook button", () => {
-  it("opens the student's notebook of an enrolled course", async () => {
+describe("course notebook tab", () => {
+  it("creates the student's notebook of an enrolled course when the Notebook tab opens", async () => {
     let posted = 0
     server.use(
       http.post(apiUrl(`/v1/notebooks/course/${coursePage.id}`), () => {
@@ -49,10 +49,9 @@ describe("course notebook button", () => {
     )
     const { user } = renderLms(<CoursePage slug={coursePage.slug} />)
 
-    await user.click(await screen.findByRole("button", { name: "Course notebook" }))
+    await user.click(await screen.findByRole("tab", { name: "Notebook" }))
 
-    await waitFor(() => expect(testRouter.push).toHaveBeenCalledWith("/notebooks/view/?id=nb-course-1"))
-    expect(posted).toBe(1)
+    await waitFor(() => expect(posted).toBe(1))
   })
 
   it("is not offered to someone who is not enrolled", async () => {
@@ -60,7 +59,7 @@ describe("course notebook button", () => {
     renderLms(<CoursePage slug={coursePageNotEnrolled.slug} />)
 
     expect(await screen.findByRole("heading", { level: 1, name: coursePageNotEnrolled.title })).toBeInTheDocument()
-    expect(screen.queryByRole("button", { name: "Course notebook" })).not.toBeInTheDocument()
+    expect(screen.queryByRole("tab", { name: "Notebook" })).not.toBeInTheDocument()
   })
 })
 

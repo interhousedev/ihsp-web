@@ -60,7 +60,7 @@ function AttemptBody({ attempt, courseId }: { attempt: AttemptReview; courseId: 
                 key={item.question_id}
                 className={cn(
                   "flex flex-col gap-1 rounded-lg border border-s-4 p-3 text-sm",
-                  item.correct ? "border-s-emerald-500" : "border-s-red-500",
+                  item.correct ? "border-s-success" : "border-s-destructive",
                 )}
               >
                 <span className="font-medium">

@@ -29,7 +29,13 @@ export function LessonFooter({
       className="bg-muted/40 flex items-center justify-between gap-3 border-t px-4 py-3 md:px-6"
     >
       {previous ? (
-        <LinkButton href={hrefFor(previous)} rel="prev" variant="outline" className="min-h-11 md:min-h-9">
+        <LinkButton
+          href={hrefFor(previous)}
+          prefetch={false}
+          rel="prev"
+          variant="outline"
+          className="min-h-11 md:min-h-9"
+        >
           <Icons.chevronLeft aria-hidden />
           {t("previous")}
         </LinkButton>
@@ -39,6 +45,7 @@ export function LessonFooter({
       {next ? (
         <Link
           href={hrefFor(next)}
+          prefetch={false}
           rel="next"
           className={cn(buttonVariants(), "min-h-11 px-5 text-sm font-semibold md:min-h-9")}
         >

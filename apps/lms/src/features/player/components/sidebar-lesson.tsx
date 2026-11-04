@@ -40,6 +40,7 @@ export function SidebarLesson({
     <Link
       ref={ref}
       href={href}
+      prefetch={false}
       title={title}
       aria-current={active ? "step" : undefined}
       onClick={closeDrawer}
@@ -56,7 +57,7 @@ export function SidebarLesson({
       <span className="min-w-0 flex-1 truncate">{title}</span>
       {badge === "new" || badge === "changed" ? (
         <span
-          className="size-2 shrink-0 rounded-full bg-amber-400"
+          className="size-2 shrink-0 rounded-full bg-warning"
           role="img"
           aria-label={badges(badge)}
           title={badges(badge)}

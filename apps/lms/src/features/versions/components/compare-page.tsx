@@ -14,15 +14,15 @@ type Change = VersionCompare["steps"][number]["change"]
 
 const ROW_STYLE: Record<Change, string> = {
   same: "border-border text-muted-foreground",
-  added: "border-emerald-500 bg-emerald-500/5",
-  removed: "border-red-500 bg-red-500/5",
-  changed: "border-amber-500 bg-amber-500/5",
+  added: "border-success bg-success/5",
+  removed: "border-destructive bg-destructive/5",
+  changed: "border-warning bg-warning/5",
 }
-const BADGE: Record<Change, "outline" | "default" | "destructive" | "secondary"> = {
+const BADGE: Record<Change, "outline" | "success" | "destructive" | "warning"> = {
   same: "outline",
-  added: "default",
+  added: "success",
   removed: "destructive",
-  changed: "secondary",
+  changed: "warning",
 }
 
 function shortId(id: string | null): string {

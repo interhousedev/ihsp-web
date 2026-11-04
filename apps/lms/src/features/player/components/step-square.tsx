@@ -49,6 +49,7 @@ export function StepSquare({
     <Link
       ref={ref}
       href={href}
+      prefetch={false}
       aria-label={label}
       title={label}
       aria-current={current ? "step" : undefined}

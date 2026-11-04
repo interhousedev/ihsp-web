@@ -93,11 +93,11 @@ test("UF-LMS-10 a learner sees the catalog and the course page", async ({ page }
   await a11y(page, testInfo, { label: "lms catalog" })
   await expect(page.getByText(COURSE_TITLE).first()).toBeVisible()
   await page.getByText(COURSE_TITLE).first().click()
-  await expect(page).toHaveURL(new RegExp(`^${URLS.lms}/course/\\?slug=`))
+  await expect(page).toHaveURL(new RegExp(`^${URLS.lms}/course/[^/?]+/`))
   await expect(
     page
-      .getByRole("button", { name: /^(Enroll|Continue)$/ })
-      .or(page.getByRole("link", { name: /^(Enroll|Continue)$/ }))
+      .getByRole("button", { name: /^Enroll$/ })
+      .or(page.getByRole("tab", { name: "Lesson" }))
       .first(),
   ).toBeVisible()
   await a11y(page, testInfo, { label: "lms course" })

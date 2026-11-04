@@ -57,7 +57,8 @@ export function CourseOutline({ page, linkSteps }: { page: CoursePage; linkSteps
                   <li key={step.step_id}>
                     {linkSteps ? (
                       <Link
-                        href={hrefs.step(page.id, step.step_id, page.slug)}
+                        href={hrefs.step(page.id, step.step_id)}
+                        prefetch={false}
                         className={cn(className, "hover:bg-muted/60 focus-visible:bg-muted/60 outline-none")}
                       >
                         {content}

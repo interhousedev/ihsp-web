@@ -151,6 +151,7 @@ export function StepEditorBody({
         content={editor.content}
         keyOf={editor.keyOf}
         edit={canEdit ? editor.edit : () => undefined}
+        canEdit={canEdit}
         courseId={draft.course_id}
         stepId={draft.step_id}
       />

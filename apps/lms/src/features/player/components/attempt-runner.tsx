@@ -9,7 +9,7 @@ import {
   type AttemptView,
 } from "@ihsp/api"
 import { useErrorMessage, useT } from "@ihsp/i18n"
-import { Alert, AlertDescription, Badge, LoadingButton, cn } from "@ihsp/ui"
+import { Alert, AlertDescription, Badge, Button, LoadingButton, cn } from "@ihsp/ui"
 import { useCallback, useEffect, useRef, useState } from "react"
 import { formatCountdown } from "../../shared/utils/time"
 import { useCountdown } from "../hooks/use-countdown"
@@ -18,6 +18,9 @@ import { QuestionField } from "./question-field"
 
 /** How long to wait after the last change before the answers are saved to the server. */
 export const ANSWER_SAVE_DELAY_MS = 600
+/** First pause after a failed save; it doubles per failure up to the maximum. */
+const RETRY_BASE_MS = 2_000
+const RETRY_MAX_MS = 30_000
 
 type SaveState = "idle" | "saving" | "saved" | "error"
 
@@ -50,6 +53,8 @@ export function AttemptRunner({
   const submittedRef = useRef(false)
   const closedRef = useRef(false)
   const saveTimer = useRef<number | null>(null)
+  const failuresRef = useRef(0)
+  const flushRef = useRef<() => Promise<void>>(async () => undefined)
 
   /** `lms/attempt-closed` means the server already finished this attempt; hand over to the block once. */
   const closeIfClosed = useCallback(
@@ -74,17 +79,28 @@ export function AttemptRunner({
     dirtyRef.current = false
     setSaveState("saving")
     const run = putLmsAttemptAnswers(attempt.id, { answers: answersRef.current }).then(
-      () => setSaveState("saved"),
+      () => {
+        failuresRef.current = 0
+        setSaveState("saved")
+      },
       (error: unknown) => {
+        // The answers stay dirty and on screen; the save is retried with a growing pause until it works.
         dirtyRef.current = true
+        if (closeIfClosed(error)) return
         setSaveState("error")
-        closeIfClosed(error)
+        const delay = Math.min(RETRY_MAX_MS, RETRY_BASE_MS * 2 ** failuresRef.current)
+        failuresRef.current += 1
+        saveTimer.current = window.setTimeout(() => void flushRef.current(), delay)
       },
     )
     savingRef.current = run
     await run
     savingRef.current = null
   }, [attempt.id, closeIfClosed])
+
+  useEffect(() => {
+    flushRef.current = flush
+  }, [flush])
 
   const submit = useCallback(async () => {
     if (submittedRef.current) return
@@ -145,6 +161,17 @@ export function AttemptRunner({
                   ? t("saveFailed")
                   : ""}
           </span>
+          {saveState === "error" ? (
+            <Button
+              type="button"
+              variant="outline"
+              size="sm"
+              onClick={() => void flush()}
+              className="min-h-11 md:min-h-8"
+            >
+              {t("retrySave")}
+            </Button>
+          ) : null}
         </div>
         {remaining !== null ? (
           <span

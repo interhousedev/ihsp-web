@@ -11,6 +11,7 @@ import { useMarkViewed } from "../hooks/use-mark-viewed"
 import { useStepOutline } from "../hooks/use-step-outline"
 import { blockTargets, firstOpenBlock, resolveBlock, type NavTarget } from "../utils/block-nav"
 import { courseProgress } from "../../shared/utils/course-progress"
+import { CourseSections } from "./course-sections"
 import { LearnerFrame } from "./learner-frame"
 import { LearnerSidebar } from "./learner-sidebar"
 import { LessonFooter } from "./lesson-footer"
@@ -55,22 +56,46 @@ export function StepPlayer({
 
   const blocks = step.data?.blocks ?? []
   const index = resolveBlock(block, blocks, entry)
-  const courseSlug = around.slug
 
   const stepHref = (id: string, number?: number) =>
-    preview ? hrefs.preview(courseId, id, number) : hrefs.step(courseId, id, courseSlug ?? undefined, number)
+    preview ? hrefs.preview(courseId, id, number) : hrefs.step(courseId, id, number)
   const targetHref = (target: NavTarget) => stepHref(target.stepId, target.block ?? undefined)
-  const backHref = preview ? hrefs.edit(courseId) : courseSlug ? hrefs.course(courseSlug) : hrefs.myCourses()
+  const backHref = preview ? hrefs.edit(courseId) : hrefs.myCourses()
 
   const links: SidebarLink[] = preview
     ? [{ key: "editor", label: t("backToEditor"), href: hrefs.edit(courseId) }]
     : [
-        ...(courseSlug ? [{ key: "course", label: t("coursePage"), href: hrefs.course(courseSlug) }] : []),
         ...(around.course?.can_edit ? [{ key: "edit", label: t("editCourse"), href: hrefs.edit(courseId) }] : []),
         { key: "my", label: t("myCourses"), href: hrefs.myCourses() },
       ]
   const numbers = around.outline ? lessonNumbers(around.outline) : null
   const { previous, next } = blockTargets({ stepId, index, total: blocks.length, outline: around.outline })
+
+  const lesson = (
+    <QueryState query={step} rows={3}>
+      {(data) => {
+        const current = data.blocks[index]
+        return (
+          <>
+            <LessonHeader number={numbers?.get(stepId) ?? null} step={data} />
+            {current ? (
+              <StepContent
+                block={current}
+                courseId={courseId}
+                stepId={stepId}
+                slug={around.slug}
+                preview={preview || data.preview}
+                focusKey={`${stepId}:${index}`}
+              />
+            ) : (
+              <p className="text-muted-foreground px-4 py-5 text-sm md:px-6">{t("emptyStep")}</p>
+            )}
+            <LessonFooter previous={previous} next={next} hrefFor={targetHref} finishHref={backHref} />
+          </>
+        )
+      }}
+    </QueryState>
+  )
 
   return (
     <LearnerFrame
@@ -88,29 +113,7 @@ export function StepPlayer({
       }
     >
       {preview ? <PreviewBanner backHref={backHref} /> : null}
-      <QueryState query={step} rows={3}>
-        {(data) => {
-          const current = data.blocks[index]
-          return (
-            <>
-              <LessonHeader number={numbers?.get(stepId) ?? null} step={data} />
-              {current ? (
-                <StepContent
-                  block={current}
-                  courseId={courseId}
-                  stepId={stepId}
-                  slug={around.slug}
-                  preview={preview || data.preview}
-                  focusKey={`${stepId}:${index}`}
-                />
-              ) : (
-                <p className="text-muted-foreground px-4 py-5 text-sm md:px-6">{t("emptyStep")}</p>
-              )}
-              <LessonFooter previous={previous} next={next} hrefFor={targetHref} finishHref={backHref} />
-            </>
-          )
-        }}
-      </QueryState>
+      {preview ? lesson : <CourseSections course={around.course} lesson={lesson} />}
     </LearnerFrame>
   )
 }

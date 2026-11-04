@@ -21,7 +21,7 @@ describe("profile menu", () => {
       { session: { user: { ...teacherMe, roles: ["lms_admin"] } } },
     )
 
-    await user.click(await screen.findByRole("button", { name: "Account menu" }))
+    await user.click((await screen.findAllByRole("button", { name: "Account menu" }))[0])
 
     const menu = await screen.findByRole("menu")
     expect(within(menu).getByRole("menuitem", { name: /lms\.iht/ })).toHaveAttribute("aria-current", "page")
@@ -38,7 +38,7 @@ describe("profile menu", () => {
       { session: { user: { ...teacherMe, roles: ["teacher"] } } },
     )
 
-    await user.click(await screen.findByRole("button", { name: "Account menu" }))
+    await user.click((await screen.findAllByRole("button", { name: "Account menu" }))[0])
 
     const menu = await screen.findByRole("menu")
     expect(within(menu).getByRole("menuitem", { name: /Учителям/ })).toHaveAttribute("href", "http://localhost:3003")

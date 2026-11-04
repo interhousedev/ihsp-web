@@ -1,6 +1,12 @@
 "use client"
 
-import { getLmsCourseDraftQuery, getLmsCourseQuery, type CoursePage, type OutlineSection } from "@ihsp/api"
+import {
+  getLmsCourseDraftQuery,
+  getLmsCourseQuery,
+  getLmsMyCoursesQuery,
+  type CoursePage,
+  type OutlineSection,
+} from "@ihsp/api"
 import { useQuery } from "@tanstack/react-query"
 
 export type StepOutline = {
@@ -26,7 +32,15 @@ export function useStepOutline({
   slug: string | null
   preview: boolean
 }): StepOutline {
-  const course = useQuery({ ...getLmsCourseQuery(slug ?? courseId), enabled: !preview, retry: false })
+  // The course page is served by slug only and the player's address has the id: the student's courses map one to the other.
+  const mine = useQuery({ ...getLmsMyCoursesQuery(), enabled: !preview && slug === null, retry: false })
+  const known =
+    slug ?? [...(mine.data?.enrolled ?? []), ...(mine.data?.managed ?? [])].find((item) => item.id === courseId)?.slug
+  const course = useQuery({
+    ...getLmsCourseQuery(known ?? courseId),
+    enabled: !preview && (known !== undefined || !mine.isPending),
+    retry: false,
+  })
   const draft = useQuery({ ...getLmsCourseDraftQuery(courseId), enabled: preview, retry: false })
   if (preview)
     return {

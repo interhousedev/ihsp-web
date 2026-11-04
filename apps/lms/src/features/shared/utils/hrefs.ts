@@ -1,4 +1,9 @@
-/** Addresses of the pages of this app. Entity pages take their ids from the query string (static export). */
+/**
+ * Addresses of the pages of this app. Entity pages take their ids from the query string (static export); the course
+ * pages keep them in the path, see `course-path.ts`.
+ */
+
+const RESERVED_SLUGS: ReadonlySet<string> = new Set(["step", "about", "shell"])
 
 function query(params: Record<string, string | number | null | undefined>): string {
   const search = new URLSearchParams()
@@ -14,17 +19,21 @@ export const hrefs = {
   myCourses: () => "/my/",
   join: (code?: string) => `/join/${query({ code })}`,
   admin: () => "/admin/",
-  course: (slug: string) => `/course/${query({ slug })}`,
   /**
-   * `course` is the course id; `slug` lets the player load the outline for the sidebar and the lesson links; `block` is
-   * the 1-based number of the step (block) of the lesson; without it the player opens the first step not passed yet.
+   * Opening a course: it resumes in the player, or shows the landing to whoever cannot learn it yet. `preview` shows it as
+   * learners who are not enrolled will see it (also while a draft). A slug equal to a real folder stays in the query.
    */
-  step: (courseId: string, stepId: string, slug?: string, block?: number) =>
-    `/course/step/${query({ course: courseId, step: stepId, slug, block })}`,
+  course: (slug: string, preview = false) => {
+    const params = query({ preview: preview ? 1 : null })
+    return RESERVED_SLUGS.has(slug)
+      ? `/course/${query({ slug, preview: preview ? 1 : null })}`
+      : `/course/${encodeURIComponent(slug)}/${params}`
+  },
+  /** `block` is the 1-based step (block) of the lesson; without it the player opens the first step not passed yet. */
+  step: (courseId: string, stepId: string, block?: number) =>
+    `/course/${encodeURIComponent(courseId)}/step/${encodeURIComponent(stepId)}/${query({ block })}`,
   edit: (courseId: string) => `/edit/${query({ id: courseId })}`,
   settings: (courseId: string) => `/edit/settings/${query({ id: courseId })}`,
-  /** The learner landing page of a course; `preview` shows it as learners will see it, also while a draft. */
-  about: (slug: string, preview = false) => `/course/about/${query({ slug, preview: preview ? 1 : null })}`,
   editStep: (stepId: string) => `/edit/step/${query({ id: stepId })}`,
   workspace: (courseId: string) => `/edit/workspace/${query({ id: courseId })}`,
   publish: (courseId: string) => `/edit/publish/${query({ id: courseId })}`,

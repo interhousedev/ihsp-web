@@ -2,8 +2,8 @@
 
 import { getAdminGroupsQuery, getStaffGroupsQuery } from "@ihsp/api"
 import { useSession } from "@ihsp/auth"
-import { useT } from "@ihsp/i18n"
-import { Badge, Field, FieldLabel, Input } from "@ihsp/ui"
+import { useErrorMessage, useT } from "@ihsp/i18n"
+import { Alert, AlertDescription, Badge, Field, FieldLabel, Input } from "@ihsp/ui"
 import { useQuery } from "@tanstack/react-query"
 import { useState } from "react"
 
@@ -16,17 +16,24 @@ export function filterGroups<T extends { name: string }>(groups: readonly T[], t
 /** Searchable list of groups (administrators see all active groups, teachers the groups they curate). */
 export function GroupPicker({ value, onChange }: { value: string[]; onChange: (ids: string[]) => void }) {
   const t = useT("courseSettings")
+  const errorMessage = useErrorMessage()
   const { session } = useSession()
   const isAdmin = session?.user.roles.includes("admin") ?? false
   const staff = useQuery({ ...getStaffGroupsQuery(), enabled: !isAdmin })
   const admin = useQuery({ ...getAdminGroupsQuery({ status: "active" }), enabled: isAdmin })
+  const source = isAdmin ? admin : staff
   const [term, setTerm] = useState("")
-  const groups = (isAdmin ? admin.data : staff.data) ?? []
+  const groups = source.data ?? []
   const names = new Map(groups.map((group) => [group.id, group.name]))
   const toggle = (id: string) => onChange(value.includes(id) ? value.filter((v) => v !== id) : [...value, id])
   return (
     <Field>
       <FieldLabel htmlFor="scope-groups">{t("groupIds")}</FieldLabel>
+      {source.isError ? (
+        <Alert variant="destructive">
+          <AlertDescription>{errorMessage(source.error)}</AlertDescription>
+        </Alert>
+      ) : null}
       {value.length > 0 ? (
         <ul aria-label={t("groupsChosen")} className="flex flex-wrap gap-2">
           {value.map((id) => (

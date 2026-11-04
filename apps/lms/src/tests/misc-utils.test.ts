@@ -9,9 +9,8 @@ import { courseStaff, ids, courseOutline } from "@ihsp/test-utils"
 
 describe("hrefs", () => {
   it("puts ids in the query string and skips empty values", () => {
-    expect(hrefs.course("derivatives-101")).toBe("/course/?slug=derivatives-101")
-    expect(hrefs.step("c1", "s1")).toBe("/course/step/?course=c1&step=s1")
-    expect(hrefs.step("c1", "s1", "slug")).toBe("/course/step/?course=c1&step=s1&slug=slug")
+    expect(hrefs.course("derivatives-101")).toBe("/course/derivatives-101/")
+    expect(hrefs.step("c1", "s1")).toBe("/course/c1/step/s1/")
     expect(hrefs.preview("c1")).toBe("/edit/preview/?id=c1")
     expect(hrefs.join()).toBe("/join/")
     expect(hrefs.join("A B")).toBe("/join/?code=A+B")

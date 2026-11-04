@@ -1,54 +1,36 @@
 "use client"
 
 import type { CourseDraft } from "@ihsp/api"
-import { useErrorMessage, useT } from "@ihsp/i18n"
-import { Alert, AlertDescription, Card, CardContent, Dropdown, Field, FieldLabel } from "@ihsp/ui"
-import { useDraftActions } from "../hooks/use-course-draft"
+import { useT } from "@ihsp/i18n"
+import { Card, CardContent } from "@ihsp/ui"
+import { LinkButton } from "../../shared/components/link-button"
+import { hrefs } from "../../shared/utils/hrefs"
 
-/** Visibility (public or invite-only) and the archive state of the course (`PATCH /settings`, course:edit). */
-export function CourseSettingsCard({ draft, canEdit }: { draft: CourseDraft; canEdit: boolean }) {
+/**
+ * Visibility and status of the course, read-only here. They are changed in the course settings tab, the one editor
+ * for visibility (`PATCH /settings` there), so the course has a single place to decide.
+ */
+export function CourseSettingsCard({ draft }: { draft: CourseDraft }) {
   const t = useT("editor")
-  const errorMessage = useErrorMessage()
-  const { settings } = useDraftActions(draft.id)
   return (
     <Card>
       <CardContent className="flex flex-col gap-4">
         <h2 className="text-base font-semibold">{t("settings")}</h2>
-        <div className="grid gap-4 sm:grid-cols-2">
-          <Field>
-            <FieldLabel htmlFor="course-visibility">{t("visibility")}</FieldLabel>
-            <Dropdown
-              id="course-visibility"
-              value={draft.visibility}
-              disabled={!canEdit || settings.isPending}
-              onValueChange={(next) => settings.mutate({ visibility: next === "invite" ? "invite" : "public" })}
-              className="w-full"
-              options={[
-                { value: "public", label: t("visibilityPublic") },
-                { value: "invite", label: t("visibilityInvite") },
-              ]}
-            />
-          </Field>
-          <Field>
-            <FieldLabel htmlFor="course-status">{t("status")}</FieldLabel>
-            <Dropdown
-              id="course-status"
-              value={draft.status}
-              disabled={!canEdit || settings.isPending}
-              onValueChange={(next) => settings.mutate({ status: next === "archived" ? "archived" : "active" })}
-              className="w-full"
-              options={[
-                { value: "active", label: t("statusActive") },
-                { value: "archived", label: t("statusArchived") },
-              ]}
-            />
-          </Field>
+        <dl className="grid gap-4 sm:grid-cols-2">
+          <div className="flex flex-col gap-1">
+            <dt className="text-muted-foreground text-xs">{t("visibility")}</dt>
+            <dd className="text-sm">{draft.visibility === "invite" ? t("visibilityInvite") : t("visibilityPublic")}</dd>
+          </div>
+          <div className="flex flex-col gap-1">
+            <dt className="text-muted-foreground text-xs">{t("status")}</dt>
+            <dd className="text-sm">{draft.status === "archived" ? t("statusArchived") : t("statusActive")}</dd>
+          </div>
+        </dl>
+        <div>
+          <LinkButton href={hrefs.settings(draft.id)} variant="outline" className="min-h-11 md:min-h-8">
+            {t("openSettings")}
+          </LinkButton>
         </div>
-        {settings.isError ? (
-          <Alert variant="destructive">
-            <AlertDescription>{errorMessage(settings.error)}</AlertDescription>
-          </Alert>
-        ) : null}
       </CardContent>
     </Card>
   )

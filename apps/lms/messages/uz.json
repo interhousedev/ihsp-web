@@ -1,11 +1,11 @@
 {
   "app": {
-    "name": "lms.iht"
+    "name": "{appLms}"
   },
   "nav": {
-    "catalog": "Katalog",
+    "catalog": "Kurslar",
     "my": "Mening kurslarim",
-    "join": "Kodni kiritish",
+    "join": "Kursga qoʻshilish",
     "notebooks": "Bloknotlar",
     "admin": "Kurs yaratish",
     "groupLearn": "Oʻqish",
@@ -81,7 +81,22 @@
     "facts": "Kurs haqida raqamlarda",
     "notebook": "Kurs bloknoti",
     "notebookFailed": "Kurs bloknotini ochib boʻlmadi. Qayta urinib koʻring.",
-    "enrolled": "Siz kursga yozildingiz"
+    "enrolled": "Siz kursga yozildingiz",
+    "tabs": {
+      "about": "Kurs haqida",
+      "syllabus": "Dastur",
+      "staff": "Oʻqituvchilar",
+      "progress": "Natija va ballar",
+      "updates": "Yangilanishlar",
+      "notebook": "Bloknot",
+      "ai": "AI chat"
+    },
+    "tabsLabel": "Kurs boʻlimlari",
+    "progressEmpty": "Natijani koʻrish uchun kursga yoziling.",
+    "updatesEmpty": "Oxirgi tashrifingizdan beri yangi yoki oʻzgargan narsa yoʻq.",
+    "updatesLabel": "Yangi yoki oʻzgargan darslar",
+    "aiNote": "Yordamchi kurs bloknotidagi kurs materiallari asosida javob beradi. Umumiy yordamchi bitta kurs bilan cheklanmagan.",
+    "aiOpen": "Kurs chatini ochish"
   },
   "join": {
     "title": "Kursga qoʻshilish",
@@ -125,7 +140,7 @@
     "fullscreen": "Toʻliq ekran",
     "exitFullscreen": "Toʻliq ekrandan chiqish",
     "settings": "Sozlamalar",
-    "coursePage": "Kurs sahifasi",
+    "lesson": "Dars",
     "editCourse": "Kursni tahrirlash",
     "myCourses": "Mening kurslarim",
     "sidebarUnavailable": "Kurs mundarijasini yuklab boʻlmadi.",
@@ -176,6 +191,7 @@
     "saving": "Saqlanmoqda…",
     "saved": "Javoblar saqlandi",
     "saveFailed": "Javoblarni saqlab boʻlmadi. Ular sahifada qoldi, qayta urinib koʻring.",
+    "retrySave": "Qayta saqlash",
     "timeLeft": "Qolgan vaqt",
     "submit": "Yuborish",
     "questionNumber": "{number}-savol",
@@ -232,6 +248,7 @@
     "title": "Kurs muharriri",
     "save": "Saqlash",
     "readOnly": "Qoralamani koʻrishingiz mumkin, lekin oʻzgartira olmaysiz.",
+    "openSettings": "Kurs sozlamalarini ochish",
     "reviewPending": "Kutilayotgan oʻzgarishlarni koʻrib chiqish",
     "unpublished": "{count, plural, one {# ta nashr etilmagan oʻzgarish} other {# ta nashr etilmagan oʻzgarish}}",
     "publishAction": "Nashr etish",
@@ -1173,6 +1190,8 @@
     "closedFor": "Bu kursga yozilib boʻlmaydi.",
     "closed": "Yozilish yopilgan.",
     "endsOn": "Yozilish {date} da yopiladi",
+    "emptySyllabus": "Dastur boʻsh.",
+    "noAuthors": "Mualliflar koʻrsatilmagan.",
     "previewBanner": "Koʻrib chiqish: oʻquvchilar kursni shunday koʻradi.",
     "about": "Kurs haqida",
     "outcomes": "Nimani oʻrganasiz",

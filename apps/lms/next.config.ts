@@ -22,6 +22,15 @@ const config: NextConfig = {
     "@ihsp/ui",
   ],
   turbopack: { root: fileURLToPath(new URL("../..", import.meta.url)) },
+  // Dev only, the counterpart of the /course/ location in deploy/sites/lms.conf; an export has no rewrites.
+  ...(process.env.NODE_ENV === "development"
+    ? {
+        rewrites: async () => [
+          { source: "/course/:course", destination: "/course/shell/" },
+          { source: "/course/:course/step/:step", destination: "/course/shell/" },
+        ],
+      }
+    : {}),
 }
 
 export default config

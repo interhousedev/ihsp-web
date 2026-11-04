@@ -47,7 +47,7 @@ export function CoursePromoCard({ page }: { page: CoursePage }) {
         ) : null}
 
         {page.enrolled && next ? (
-          <LinkButton href={hrefs.step(page.id, next.step_id, page.slug)} className={CTA}>
+          <LinkButton href={hrefs.step(page.id, next.step_id)} className={CTA}>
             {t("continue")}
           </LinkButton>
         ) : null}

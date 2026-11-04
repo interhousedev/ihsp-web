@@ -1,7 +1,8 @@
 "use client"
 
+import { BRAND } from "@ihsp/config/brand"
 import { useT } from "@ihsp/i18n"
-import { Button, Icons } from "@ihsp/ui"
+import { Button, Icons, buttonVariants, cn } from "@ihsp/ui"
 import Link from "next/link"
 import type { ReactNode } from "react"
 import { hrefs } from "../../shared/utils/hrefs"
@@ -25,11 +26,18 @@ export function LearnerTopBar({ strip, onOpenContents }: { strip: ReactNode; onO
         <Icons.panelLeft aria-hidden className="size-5" />
       </Button>
       <Link
+        href={hrefs.myCourses()}
+        aria-label={t("myCourses")}
+        className={cn(buttonVariants({ variant: "ghost" }), "size-11 shrink-0 md:size-9")}
+      >
+        <Icons.chevronLeft aria-hidden className="size-5" />
+      </Link>
+      <Link
         href={hrefs.catalog()}
         className="hidden h-11 w-60 shrink-0 items-center gap-2 rounded-md px-3 text-lg font-semibold outline-none focus-visible:ring-2 focus-visible:ring-(--stepik-green) lg:flex"
       >
         {/* oxlint-disable-next-line nextjs/no-img-element -- static export, the logo is a plain file of /public */}
-        <img src="/icons/logo.svg" alt="" width={24} height={24} className="size-6 shrink-0 rounded-md" />
+        <img src={BRAND.logos.svg} alt="" width={24} height={24} className="size-6 shrink-0 rounded-md" />
         <span className="truncate">{app("name")}</span>
       </Link>
       <div className="min-w-0 flex-1">{strip}</div>

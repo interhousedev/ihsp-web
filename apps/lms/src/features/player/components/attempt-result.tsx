@@ -43,14 +43,14 @@ export function AttemptResultView({
                 key={item.question_id}
                 className={cn(
                   "flex flex-col gap-1 rounded-lg border-s-4 border p-3 text-sm",
-                  item.correct ? "border-s-emerald-500" : "border-s-red-500",
+                  item.correct ? "border-s-success" : "border-s-destructive",
                 )}
               >
                 <div className="flex items-center gap-2">
                   {item.correct ? (
-                    <Icons.circleCheck className="size-4 text-emerald-600" aria-hidden />
+                    <Icons.circleCheck className="size-4 text-success" aria-hidden />
                   ) : (
-                    <Icons.circleX className="size-4 text-red-600" aria-hidden />
+                    <Icons.circleX className="size-4 text-destructive" aria-hidden />
                   )}
                   <span className="font-medium">
                     {t("questionNumber", { number: index + 1 })} · {item.correct ? t("correct") : t("incorrect")}

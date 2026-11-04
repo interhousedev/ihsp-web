@@ -1,11 +1,11 @@
 {
   "app": {
-    "name": "lms.iht"
+    "name": "{appLms}"
   },
   "nav": {
-    "catalog": "Catalog",
+    "catalog": "Courses",
     "my": "My courses",
-    "join": "Enter code",
+    "join": "Join a course",
     "notebooks": "Notebooks",
     "admin": "Create course",
     "groupLearn": "Learn",
@@ -81,7 +81,22 @@
     "facts": "Course facts",
     "notebook": "Course notebook",
     "notebookFailed": "The course notebook could not be opened. Try again.",
-    "enrolled": "You joined the course"
+    "enrolled": "You joined the course",
+    "tabs": {
+      "about": "About",
+      "syllabus": "Syllabus",
+      "staff": "Staff",
+      "progress": "Progress and points",
+      "updates": "Updates",
+      "notebook": "Notebook",
+      "ai": "AI chat"
+    },
+    "tabsLabel": "Course sections",
+    "progressEmpty": "Join the course to see your progress.",
+    "updatesEmpty": "Nothing is new or changed since your last visit.",
+    "updatesLabel": "Lessons that are new or changed",
+    "aiNote": "The assistant answers from the course materials in your course notebook. The general assistant is not limited to one course.",
+    "aiOpen": "Open the course chat"
   },
   "join": {
     "title": "Join a course",
@@ -125,7 +140,7 @@
     "fullscreen": "Full screen",
     "exitFullscreen": "Exit full screen",
     "settings": "Settings",
-    "coursePage": "Course page",
+    "lesson": "Lesson",
     "editCourse": "Edit the course",
     "myCourses": "My courses",
     "sidebarUnavailable": "The course contents could not be loaded.",
@@ -176,6 +191,7 @@
     "saving": "Saving…",
     "saved": "Answers saved",
     "saveFailed": "Could not save answers. They are kept on this page; try again.",
+    "retrySave": "Retry save",
     "timeLeft": "Time left",
     "submit": "Submit",
     "questionNumber": "Question {number}",
@@ -232,6 +248,7 @@
     "title": "Course editor",
     "save": "Save",
     "readOnly": "You can view the draft but not change it.",
+    "openSettings": "Open course settings",
     "reviewPending": "Review pending changes",
     "unpublished": "{count, plural, one {# unpublished change} other {# unpublished changes}}",
     "publishAction": "Publish",
@@ -963,7 +980,7 @@
     "empty": "The draft has no steps yet."
   },
   "admin": {
-    "title": "Create a course",
+    "title": "Create course",
     "courseTitle": "Title",
     "titleRequired": "Enter a title.",
     "slug": "Address",
@@ -1173,6 +1190,8 @@
     "closedFor": "You cannot enrol in this course.",
     "closed": "Enrolment is closed.",
     "endsOn": "Enrolment closes {date}",
+    "emptySyllabus": "The syllabus is empty.",
+    "noAuthors": "No authors shown.",
     "previewBanner": "Preview: this is how learners will see the course.",
     "about": "About the course",
     "outcomes": "What you will learn",

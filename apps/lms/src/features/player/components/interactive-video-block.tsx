@@ -102,7 +102,7 @@ export function InteractiveVideoBlock({
               >
                 {answer ? (
                   answer.correct ? (
-                    <Icons.check aria-hidden className="size-3.5 text-green-600" />
+                    <Icons.check aria-hidden className="size-3.5 text-success" />
                   ) : (
                     <Icons.close aria-hidden className="text-destructive size-3.5" />
                   )
@@ -283,7 +283,7 @@ function InteractionPanel({
                 />
                 <span className="break-words">{option.text}</span>
                 {right ? (
-                  <Icons.check aria-label={t("interactive.rightOption")} className="ms-auto size-4 text-green-600" />
+                  <Icons.check aria-label={t("interactive.rightOption")} className="ms-auto size-4 text-success" />
                 ) : null}
               </label>
             )
@@ -291,7 +291,7 @@ function InteractionPanel({
         </fieldset>
       ) : null}
       {answer ? (
-        <p role="status" className={answer.correct ? "text-sm text-green-700" : "text-destructive text-sm"}>
+        <p role="status" className={answer.correct ? "text-sm text-success" : "text-destructive text-sm"}>
           {answer.correct ? t("interactive.correct") : t("interactive.wrong")}
         </p>
       ) : null}

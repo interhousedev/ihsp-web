@@ -1,17 +1,12 @@
 "use client"
 
-import { getLmsCourseLandingQuery, lmsLandingKey, type CourseLanding } from "@ihsp/api"
+import type { CourseLanding } from "@ihsp/api"
 import { useErrorMessage, useFormatters, useT } from "@ihsp/i18n"
-import { Alert, AlertDescription, Badge, Icons, LoadingButton, PageContainer, UserAvatar } from "@ihsp/ui"
-import { useQuery, useQueryClient } from "@tanstack/react-query"
+import { Alert, AlertDescription, Badge, Icons, LoadingButton, UserAvatar } from "@ihsp/ui"
 import { toast } from "sonner"
 import { useEnroll } from "../../courses/hooks/use-enroll"
-import { CourseCover } from "../../shared/components/course-cover"
 import { LinkButton } from "../../shared/components/link-button"
-import { QueryState } from "../../shared/components/query-state"
-import { StepikScope } from "../../shared/components/stepik-scope"
 import { hrefs } from "../../shared/utils/hrefs"
-import { accentStyle } from "../../settings/utils/color"
 
 function List({ id, title, items }: { id: string; title: string; items: string[] }) {
   if (items.length === 0) return null
@@ -57,11 +52,93 @@ function Chips({ landing }: { landing: CourseLanding }) {
   )
 }
 
-function EnrolBox({ landing }: { landing: CourseLanding }) {
+/** The About tab of a course: the summary, the facts and the lists the teachers wrote. Also used before enrolling. */
+export function LandingAbout({ landing }: { landing: CourseLanding }) {
+  const t = useT("courseLanding")
+  return (
+    <div className="flex flex-col gap-8">
+      {landing.summary ? <p className="text-base leading-relaxed break-words">{landing.summary}</p> : null}
+      <Chips landing={landing} />
+      {landing.description ? (
+        <section aria-labelledby="landing-about" className="flex flex-col gap-3">
+          <h2 id="landing-about" className="text-xl font-semibold">
+            {t("about")}
+          </h2>
+          <p className="text-sm leading-relaxed break-words whitespace-pre-line">{landing.description}</p>
+        </section>
+      ) : null}
+      <List id="landing-outcomes" title={t("outcomes")} items={landing.outcomes} />
+      <List id="landing-requirements" title={t("requirements")} items={landing.requirements} />
+      <List id="landing-audience" title={t("audience")} items={landing.audience} />
+    </div>
+  )
+}
+
+/** The syllabus as the landing knows it (module and lesson titles only), for viewers without the course page. */
+export function LandingSyllabus({ landing }: { landing: CourseLanding }) {
+  const t = useT("courseLanding")
+  if (landing.syllabus.length === 0) return <p className="text-muted-foreground text-sm">{t("emptySyllabus")}</p>
+  return (
+    <ol className="flex flex-col gap-3">
+      {landing.syllabus.map((section, index) => (
+        <li key={`${section.title}-${index}`}>
+          <details className="group rounded-lg border">
+            <summary className="flex min-h-11 cursor-pointer list-none items-center gap-3 px-4 py-2 [&::-webkit-details-marker]:hidden">
+              <Icons.chevronRight
+                aria-hidden
+                className="text-muted-foreground size-4 transition-transform group-open:rotate-90"
+              />
+              <span className="min-w-0 flex-1 text-sm font-semibold break-words">
+                <span className="text-muted-foreground me-2 tabular-nums">{index + 1}</span>
+                {section.title}
+              </span>
+              <span className="text-muted-foreground shrink-0 text-xs">
+                {t("lessons", { count: section.steps.length })}
+              </span>
+            </summary>
+            <ul className="flex flex-col divide-y border-t">
+              {section.steps.map((step, at) => (
+                <li key={`${step.title}-${at}`} className="px-4 py-3 text-sm break-words">
+                  {step.title}
+                </li>
+              ))}
+            </ul>
+          </details>
+        </li>
+      ))}
+    </ol>
+  )
+}
+
+/** The authors the landing shows, for viewers without the course's staff list. */
+export function LandingAuthors({ landing }: { landing: CourseLanding }) {
+  const t = useT("courseLanding")
+  if (landing.authors.length === 0) return <p className="text-muted-foreground text-sm">{t("noAuthors")}</p>
+  return (
+    <ul className="grid gap-2 sm:grid-cols-2">
+      {landing.authors.map(({ user, role }) => (
+        <li key={user.id} className="flex items-center gap-3">
+          <UserAvatar name={`${user.last_name} ${user.first_name}`} className="size-9" />
+          <div className="min-w-0">
+            <p className="truncate text-sm font-medium">
+              {user.last_name} {user.first_name}
+            </p>
+            <p className="text-muted-foreground truncate text-xs">{role}</p>
+          </div>
+        </li>
+      ))}
+    </ul>
+  )
+}
+
+/**
+ * The enrol box for viewers without the course page (not enrolled). In preview the button is disabled, so a staff
+ * member sees the layout without joining.
+ */
+export function LandingEnrolBox({ landing }: { landing: CourseLanding }) {
   const t = useT("courseLanding")
   const format = useFormatters()
   const errorMessage = useErrorMessage()
-  const queryClient = useQueryClient()
   const enroll = useEnroll(landing.slug)
   const { enrolment } = landing
   const style = {
@@ -82,14 +159,7 @@ function EnrolBox({ landing }: { landing: CourseLanding }) {
         loading={enroll.isPending}
         style={style}
         className="min-h-11 w-full text-base font-semibold"
-        onClick={() =>
-          enroll.mutate(landing.id, {
-            onSuccess: () => {
-              toast.success(t("enrolled"))
-              void queryClient.invalidateQueries({ queryKey: lmsLandingKey(landing.slug, false) })
-            },
-          })
-        }
+        onClick={() => enroll.mutate(landing.id, { onSuccess: () => toast.success(t("enrolled")) })}
       >
         {t("enrol")}
       </LoadingButton>
@@ -111,120 +181,5 @@ function EnrolBox({ landing }: { landing: CourseLanding }) {
         </Alert>
       ) : null}
     </div>
-  )
-}
-
-function Body({ landing }: { landing: CourseLanding }) {
-  const t = useT("courseLanding")
-  return (
-    <div style={accentStyle(landing.accent_color)} className="flex flex-col gap-6">
-      {landing.preview ? (
-        <Alert>
-          <Icons.eye aria-hidden />
-          <AlertDescription>{t("previewBanner")}</AlertDescription>
-        </Alert>
-      ) : null}
-      {landing.banner_url ? (
-        <img src={landing.banner_url} alt="" className="aspect-[5/1] w-full rounded-xl object-cover" />
-      ) : (
-        <div
-          aria-hidden
-          className="h-2 w-full rounded-full"
-          style={{ backgroundColor: "var(--course-accent, var(--border))" }}
-        />
-      )}
-      <div className="grid items-start gap-6 lg:grid-cols-[minmax(0,1fr)_20rem]">
-        <div className="order-last flex min-w-0 flex-col gap-8 lg:order-first">
-          {landing.summary ? <p className="text-base leading-relaxed break-words">{landing.summary}</p> : null}
-          <Chips landing={landing} />
-          {landing.description ? (
-            <section aria-labelledby="landing-about" className="flex flex-col gap-3">
-              <h2 id="landing-about" className="text-xl font-semibold">
-                {t("about")}
-              </h2>
-              <p className="text-sm leading-relaxed break-words whitespace-pre-line">{landing.description}</p>
-            </section>
-          ) : null}
-          <List id="landing-outcomes" title={t("outcomes")} items={landing.outcomes} />
-          <List id="landing-requirements" title={t("requirements")} items={landing.requirements} />
-          <List id="landing-audience" title={t("audience")} items={landing.audience} />
-          {landing.syllabus.length > 0 ? (
-            <section aria-labelledby="landing-syllabus" className="flex flex-col gap-3">
-              <h2 id="landing-syllabus" className="text-xl font-semibold">
-                {t("syllabus")}
-              </h2>
-              <ol className="flex flex-col gap-3">
-                {landing.syllabus.map((section, index) => (
-                  <li key={`${section.title}-${index}`}>
-                    <details className="group rounded-lg border">
-                      <summary className="flex min-h-11 cursor-pointer list-none items-center gap-3 px-4 py-2 [&::-webkit-details-marker]:hidden">
-                        <Icons.chevronRight
-                          aria-hidden
-                          className="text-muted-foreground size-4 transition-transform group-open:rotate-90"
-                        />
-                        <span className="min-w-0 flex-1 text-sm font-semibold break-words">
-                          <span className="text-muted-foreground me-2 tabular-nums">{index + 1}</span>
-                          {section.title}
-                        </span>
-                        <span className="text-muted-foreground shrink-0 text-xs">
-                          {t("lessons", { count: section.steps.length })}
-                        </span>
-                      </summary>
-                      <ul className="flex flex-col divide-y border-t">
-                        {section.steps.map((step, at) => (
-                          <li key={`${step.title}-${at}`} className="px-4 py-3 text-sm break-words">
-                            {step.title}
-                          </li>
-                        ))}
-                      </ul>
-                    </details>
-                  </li>
-                ))}
-              </ol>
-            </section>
-          ) : null}
-          {landing.authors.length > 0 ? (
-            <section aria-labelledby="landing-authors" className="flex flex-col gap-3">
-              <h2 id="landing-authors" className="text-xl font-semibold">
-                {t("authors")}
-              </h2>
-              <ul className="grid gap-2 sm:grid-cols-2">
-                {landing.authors.map(({ user, role }) => (
-                  <li key={user.id} className="flex items-center gap-3">
-                    <UserAvatar name={`${user.last_name} ${user.first_name}`} className="size-9" />
-                    <div className="min-w-0">
-                      <p className="truncate text-sm font-medium">
-                        {user.last_name} {user.first_name}
-                      </p>
-                      <p className="text-muted-foreground truncate text-xs">{role}</p>
-                    </div>
-                  </li>
-                ))}
-              </ul>
-            </section>
-          ) : null}
-        </div>
-        <div className="order-first overflow-hidden rounded-xl border lg:sticky lg:top-4 lg:order-last">
-          <CourseCover title={landing.title} url={landing.cover_url} accent={landing.accent_color} eager />
-          <div className="p-4">
-            <EnrolBox landing={landing} />
-          </div>
-        </div>
-      </div>
-    </div>
-  )
-}
-
-/** `/course/about/?slug=&preview=1`: the Stepik-style landing page of a course for learners who are not in it yet. */
-export function LandingPage({ slug, preview }: { slug: string; preview: boolean }) {
-  const landing = useQuery(getLmsCourseLandingQuery(slug, preview))
-  return (
-    <StepikScope>
-      <PageContainer title={landing.data?.friendly_name || landing.data?.title || slug}>
-        <QueryState query={landing} rows={4}>
-          {(data) => <Body landing={data} />}
-        </QueryState>
-      </PageContainer>
-    </StepikScope>
   )
 }

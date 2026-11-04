@@ -33,7 +33,7 @@ function startsAttemptWithoutDeadline() {
 
 function renderPlayer(stepId: string, mode: "learn" | "preview" = "learn", block: number | null = null) {
   return renderLms(<StepPlayer courseId={courseId} stepId={stepId} slug={slug} block={block} mode={mode} />, {
-    route: `/course/step/?course=${courseId}&step=${stepId}`,
+    route: `/course/${courseId}/step/${stepId}/`,
   })
 }
 
@@ -62,7 +62,7 @@ describe("step player: text and navigation", () => {
     expect(await screen.findByRole("heading", { name: "What is a derivative?", level: 2 })).toBeInTheDocument()
     const next = await screen.findByRole("link", { name: /Next lesson/ })
     // Next removes the trailing slash outside the static export config, so only the query is compared.
-    expect(next.getAttribute("href")).toContain(`course=${courseId}&step=${ids.courseStepTest}&slug=${slug}`)
+    expect(next.getAttribute("href")).toContain(`/course/${courseId}/step/${ids.courseStepTest}`)
     expect(screen.queryByRole("link", { name: /Previous/ })).not.toBeInTheDocument()
   })
 
@@ -105,27 +105,27 @@ describe("step player: the step strip", () => {
     const strip = screen.getByRole("navigation", { name: "Steps of this lesson" })
     const squares = within(strip).getAllByRole("link")
     expect(squares[0]?.getAttribute("aria-current")).toBe("step")
-    expect(squares[2]?.getAttribute("href")).toContain(`step=${ids.courseStepTest}&slug=${slug}&block=3`)
+    expect(squares[2]?.getAttribute("href")).toContain(`/step/${ids.courseStepTest}?block=3`)
   })
 
   it("moves to the next step inside the lesson and to the next lesson after the last step", async () => {
     servesMixedStep()
     const { unmount } = renderPlayer(ids.courseStepTest, "learn", 1)
     const next = await screen.findByRole("link", { name: /Next step/ })
-    expect(next.getAttribute("href")).toContain(`step=${ids.courseStepTest}&slug=${slug}&block=2`)
+    expect(next.getAttribute("href")).toContain(`/step/${ids.courseStepTest}?block=2`)
     expect(screen.queryByRole("link", { name: /^Previous/ })).toBeInTheDocument()
     unmount()
 
     renderPlayer(ids.courseStepTest, "learn", 3)
     const lesson = await screen.findByRole("link", { name: /Next lesson/ })
-    expect(lesson.getAttribute("href")).toContain(`step=${ids.courseStepCards}&slug=${slug}`)
+    expect(lesson.getAttribute("href")).toContain(`/step/${ids.courseStepCards}`)
     expect(lesson.getAttribute("href")).not.toContain("block=")
   })
 
-  it("finishes at the end of the course by going back to the course page", async () => {
+  it("finishes at the end of the course by going back to the list of courses", async () => {
     renderPlayer(ids.courseStepCards)
     const finish = await screen.findByRole("link", { name: /Finish/ })
-    expect(finish.getAttribute("href")).toContain(`slug=${slug}`)
+    expect(finish.getAttribute("href")).toMatch(/^\/my\/?$/)
   })
 
   it("keeps a step from the address inside the lesson", async () => {
@@ -167,11 +167,10 @@ describe("step player: the course sidebar", () => {
     expect(within(nav).getByRole("link", { name: /Key formulas/ })).toBeInTheDocument()
   })
 
-  it("offers the way back to the course and to my courses from the settings menu", async () => {
+  it("offers the way back to my courses from the settings menu", async () => {
     const { user } = renderPlayer(ids.courseStepText)
     await screen.findByRole("heading", { name: "What is a derivative?", level: 2 })
     await user.click(screen.getByRole("button", { name: "Settings" }))
-    expect(await screen.findByRole("menuitem", { name: "Course page" })).toBeInTheDocument()
     expect(screen.getByRole("menuitem", { name: "My courses" })).toBeInTheDocument()
   })
 })
