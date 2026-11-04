@@ -11,7 +11,14 @@ export {
   type Locale,
 } from "./locales"
 export { useLocaleStore, currentLocale, setLocale, setPreferredLocale } from "./locale-store"
-export { loadMessages, loadSharedMessages, mergeMessages, type MessageLoader, type Messages } from "./messages"
+export {
+  applyBrand,
+  loadMessages,
+  loadSharedMessages,
+  mergeMessages,
+  type MessageLoader,
+  type Messages,
+} from "./messages"
 export { formatDate, formatDateTime, formatRelative, formatTime, formatWeekday, type DateInput } from "./format"
 export { addDays, compareIso, minutesOfDay, startOfWeek, todayIso, weekDates, type IsoDate } from "./dates"
 export { useFormatters } from "./use-formatters"

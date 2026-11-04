@@ -1,7 +1,7 @@
 import { NextIntlClientProvider } from "next-intl"
 import type { ReactNode } from "react"
 import { TIME_ZONE, type Locale } from "./locales"
-import type { Messages } from "./messages"
+import { applyBrand, type Messages } from "./messages"
 
 /** Synchronous provider for tests and stories: no dynamic import, no locale store. */
 export function I18nTestProvider({
@@ -16,7 +16,7 @@ export function I18nTestProvider({
   return (
     <NextIntlClientProvider
       locale={locale}
-      messages={messages}
+      messages={applyBrand(messages)}
       timeZone={TIME_ZONE}
       getMessageFallback={({ namespace, key }) => (namespace ? `${namespace}.${key}` : key)}
       onError={() => undefined}

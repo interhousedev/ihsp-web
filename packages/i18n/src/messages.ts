@@ -1,3 +1,4 @@
+import { fillBrand } from "@ihsp/config/brand"
 import type { Locale } from "./locales"
 
 export type Messages = { [key: string]: string | Messages }
@@ -32,5 +33,14 @@ export async function loadSharedMessages(locale: Locale): Promise<Messages> {
 /** Shared messages of `@ihsp/i18n` merged with the app's own messages. */
 export async function loadMessages(locale: Locale, appLoader?: MessageLoader): Promise<Messages> {
   const [shared, app] = await Promise.all([loadSharedMessages(locale), appLoader ? appLoader(locale) : undefined])
-  return app ? mergeMessages(shared, unwrap(app)) : shared
+  return applyBrand(app ? mergeMessages(shared, unwrap(app)) : shared)
+}
+
+/** Fills the brand placeholders (`{brand}`, `{appMy}` ...) of every message; the one place they are injected. */
+export function applyBrand(messages: Messages): Messages {
+  const result: Messages = {}
+  for (const [key, value] of Object.entries(messages)) {
+    result[key] = typeof value === "string" ? fillBrand(value) : applyBrand(value)
+  }
+  return result
 }
