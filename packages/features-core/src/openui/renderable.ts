@@ -4,8 +4,7 @@ import { safeHttpsUrl } from "./safe"
 
 // The same rules as the backend validator (app/shared/openui/validate.py), checked on the
 // shared corpus (corpus.json). The parser alone accepts partial trees and state references.
-const UNSAFE_TEXT = /<\s*\/?\s*(script|iframe|object|embed|style)|javascript:/i
-const STRING = /"(?:\\.|[^"\\\n])*"/g
+const UNSAFE_TEXT = /<\s*(?:\/\s*)?(script|iframe|object|embed|style)|javascript:/i
 const URL_PROP = /\burl\s*:\s*"((?:\\.|[^"\\])*)"/g
 const ROOT = /^\s*root\s*=/m
 
@@ -25,9 +24,40 @@ export function isRenderable(code: string, library: Library): boolean {
   }
 }
 
+/**
+ * The code with the text of every closed string removed, in linear time on model output. The rest of a line after an
+ * unclosed quote stays as code, so a `$` or `@` in it is still seen.
+ */
+export function withoutStringText(code: string): string {
+  let out = ""
+  let i = 0
+  while (i < code.length) {
+    if (code[i] !== '"') {
+      out += code[i]
+      i += 1
+      continue
+    }
+    let end = i + 1
+    while (end < code.length && code[end] !== '"' && code[end] !== "\n") {
+      if (code[end] === "\\" && code[end + 1] !== "\n") end += 1
+      end += 1
+    }
+    if (code[end] === '"') {
+      out += '""'
+      i = end + 1
+    } else {
+      const lineEnd = code.indexOf("\n", i)
+      const stop = lineEnd === -1 ? code.length : lineEnd
+      out += code.slice(i, stop)
+      i = stop
+    }
+  }
+  return out
+}
+
 /** State references and functions, and links that are not https, outside of the strings' text. */
 function hasUnsafeSource(code: string): boolean {
-  if (/[$@]/.test(code.replace(STRING, '""'))) return true
+  if (/[$@]/.test(withoutStringText(code))) return true
   for (const match of code.matchAll(URL_PROP)) {
     const url = match[1] ?? ""
     if (safeHttpsUrl(url) === null || /\s/.test(url)) return true
