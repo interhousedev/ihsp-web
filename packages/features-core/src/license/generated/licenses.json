@@ -1906,7 +1906,7 @@
     },
     {
       "name": "dnspython",
-      "version": "2.8.0",
+      "version": "2.9.2",
       "license": "ISC",
       "url": "https://www.dnspython.org",
       "ecosystem": "PyPI"
@@ -2046,7 +2046,7 @@
     },
     {
       "name": "fast-uri",
-      "version": "3.1.8",
+      "version": "3.1.9",
       "license": "BSD-3-Clause",
       "url": "https://github.com/fastify/fast-uri",
       "ecosystem": "npm"
@@ -2529,7 +2529,7 @@
     },
     {
       "name": "joserfc",
-      "version": "1.7.5",
+      "version": "1.8.0",
       "license": "BSD-3-Clause",
       "url": "https://github.com/authlib/joserfc",
       "ecosystem": "PyPI"
@@ -3600,7 +3600,7 @@
     },
     {
       "name": "pyasn1",
-      "version": "0.6.4",
+      "version": "0.6.5",
       "license": "BSD-2-Clause",
       "url": "https://github.com/pyasn1/pyasn1",
       "ecosystem": "PyPI"
@@ -3670,7 +3670,7 @@
     },
     {
       "name": "pypdf",
-      "version": "6.21.2",
+      "version": "6.21.4",
       "license": "BSD-3-Clause",
       "url": "https://github.com/py-pdf/pypdf",
       "ecosystem": "PyPI"
