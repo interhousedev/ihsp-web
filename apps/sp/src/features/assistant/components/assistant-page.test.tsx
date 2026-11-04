@@ -16,7 +16,12 @@ describe("AssistantPage (WEB-25, WEB-36, UF-WEB-19)", () => {
     const sidebar = screen.getByRole("navigation", { name: "Chats and notebooks" })
     expect(await within(sidebar).findByText("Kinematics revision")).toBeInTheDocument()
     expect(within(sidebar).getByText("Homework help")).toBeInTheDocument()
-    expect(await within(sidebar).findByText("Photosynthesis")).toBeInTheDocument()
+    // Notebook groups start collapsed: the group is there, its notebooks are one click away.
+    expect(await within(sidebar).findByRole("button", { name: /My notebooks/ })).toHaveAttribute(
+      "aria-expanded",
+      "false",
+    )
+    expect(within(sidebar).queryByText("Photosynthesis")).not.toBeInTheDocument()
   })
 
   it("starts a chat from the first message and opens it", async () => {

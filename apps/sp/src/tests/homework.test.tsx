@@ -3,7 +3,7 @@ import { afterEach, beforeEach, describe, expect, test } from "bun:test"
 import { apiUrl, homeworkEnglish, homeworkMath, homeworkOverdue, homeworkPhysics, server } from "@ihsp/test-utils"
 import { keys, type HomeworkItem, type StudentToday } from "@ihsp/api"
 import { QueryClient } from "@tanstack/react-query"
-import { screen, waitFor, within } from "@testing-library/react"
+import { fireEvent, screen, waitFor, within } from "@testing-library/react"
 import { HttpResponse, http } from "msw"
 import { HomeworkPage } from "../features/homework/components/homework-page"
 import { applyHomeworkUpdate, bucketOf, nextList } from "../features/homework/utils/apply-homework-update"
@@ -128,7 +128,7 @@ describe("Homework page", () => {
     expect(screen.getByText("Draft is in my notebook")).toBeInTheDocument()
   })
 
-  test("a note is saved with its text and limited to 1000 characters", async () => {
+  test("the note field is always visible and saves on its own after a pause, without buttons", async () => {
     const bodies: unknown[] = []
     server.use(
       http.put(apiUrl("/v1/me/homework/:lessonId/note"), async ({ request }) => {
@@ -137,21 +137,57 @@ describe("Homework page", () => {
         return HttpResponse.json({ ...homeworkMath, note: body.note })
       }),
     )
-    const { user } = renderSp(<HomeworkPage />, { route: "/homework/" })
+    renderSp(<HomeworkPage />, { route: "/homework/" })
 
     const item = (await screen.findByText(homeworkMath.text)).closest("li") as HTMLElement
-    await user.click(within(item).getByRole("button", { name: "Add note" }))
-    const field = screen.getByLabelText("Private note")
+    expect(within(item).queryByRole("button", { name: "Save" })).toBeNull()
+    expect(within(item).queryByRole("button", { name: "Add note" })).toBeNull()
+    const field = within(item).getByLabelText("Private note")
     expect(field).toHaveAttribute("maxlength", "1000")
     setValue(field, "pages 34-36 are hard")
-    expect(screen.getByText("20/1000")).toBeInTheDocument()
-    await user.click(screen.getByRole("button", { name: "Save" }))
+    expect(within(item).getByText("20/1000")).toBeInTheDocument()
 
-    await waitFor(() => expect(bodies).toEqual([{ note: "pages 34-36 are hard" }]))
-    expect(await screen.findByText("pages 34-36 are hard")).toBeInTheDocument()
+    await waitFor(() => expect(bodies).toEqual([{ note: "pages 34-36 are hard" }]), { timeout: 3000 })
+    expect(await within(item).findByText("Saved")).toBeInTheDocument()
   })
 
-  test("saving an empty note removes it", async () => {
+  test("leaving the note field saves at once", async () => {
+    const bodies: unknown[] = []
+    server.use(
+      http.put(apiUrl("/v1/me/homework/:lessonId/note"), async ({ request }) => {
+        const body = (await request.json()) as { note: string | null }
+        bodies.push(body)
+        return HttpResponse.json({ ...homeworkMath, note: body.note })
+      }),
+    )
+    renderSp(<HomeworkPage />, { route: "/homework/" })
+
+    const item = (await screen.findByText(homeworkMath.text)).closest("li") as HTMLElement
+    const field = within(item).getByLabelText("Private note")
+    setValue(field, "blur me")
+    fireEvent.blur(field)
+
+    await waitFor(() => expect(bodies).toEqual([{ note: "blur me" }]))
+  })
+
+  test("a failed save keeps the draft and says it was not saved", async () => {
+    server.use(
+      http.put(apiUrl("/v1/me/homework/:lessonId/note"), () =>
+        HttpResponse.json({ type: "common/unavailable", title: "Unavailable", status: 503 }, { status: 503 }),
+      ),
+    )
+    renderSp(<HomeworkPage />, { route: "/homework/" })
+
+    const item = (await screen.findByText(homeworkMath.text)).closest("li") as HTMLElement
+    const field = within(item).getByLabelText("Private note")
+    setValue(field, "keep my draft")
+    fireEvent.blur(field)
+
+    expect(await within(item).findByText("Not saved")).toBeInTheDocument()
+    expect(field).toHaveValue("keep my draft")
+  })
+
+  test("clearing the note field removes the note", async () => {
     const bodies: unknown[] = []
     server.use(
       http.put(apiUrl("/v1/me/homework/:lessonId/note"), async ({ request }) => {
@@ -160,13 +196,39 @@ describe("Homework page", () => {
         return HttpResponse.json({ ...homeworkEnglish, note: body.note })
       }),
     )
-    const { user } = renderSp(<HomeworkPage />, { route: "/homework/?tab=done" })
+    renderSp(<HomeworkPage />, { route: "/homework/?tab=done" })
 
-    await user.click((await screen.findAllByRole("button", { name: "Edit note" }))[0] as HTMLElement)
-    setValue(screen.getByLabelText("Private note"), "")
-    await user.click(screen.getByRole("button", { name: "Save" }))
+    const item = (await screen.findByText(homeworkEnglish.text)).closest("li") as HTMLElement
+    const field = within(item).getByLabelText("Private note")
+    expect(field).toHaveValue(homeworkEnglish.note)
+    setValue(field, "")
+    fireEvent.blur(field)
 
     await waitFor(() => expect(bodies).toEqual([{ note: null }]))
+  })
+
+  test("By subject has one date switcher and groups the day's homework by subject", async () => {
+    server.use(
+      http.get(apiUrl("/v1/me/homework"), ({ request }) => {
+        const day = new URL(request.url).searchParams.get("from")
+        return HttpResponse.json(
+          [homeworkMath, homeworkEnglish, homeworkPhysics].filter((item) => item.due_date === day),
+        )
+      }),
+    )
+    const { user } = renderSp(<HomeworkPage />, { route: "/homework/?tab=subject" })
+
+    expect(await screen.findByText("No homework on this day.")).toBeInTheDocument()
+    expect(screen.getAllByRole("button", { name: "Next day" })).toHaveLength(1)
+    await user.click(screen.getByRole("button", { name: "Next day" }))
+
+    expect(await screen.findByRole("heading", { name: homeworkMath.subject.name })).toBeInTheDocument()
+    expect(screen.getByRole("heading", { name: homeworkEnglish.subject.name })).toBeInTheDocument()
+    expect(screen.queryByRole("heading", { name: homeworkPhysics.subject.name })).not.toBeInTheDocument()
+
+    await user.click(screen.getByRole("button", { name: "Next day" }))
+    expect(await screen.findByRole("heading", { name: homeworkPhysics.subject.name })).toBeInTheDocument()
+    expect(screen.queryByRole("heading", { name: homeworkMath.subject.name })).not.toBeInTheDocument()
   })
 
   test("an empty list shows a friendly message", async () => {

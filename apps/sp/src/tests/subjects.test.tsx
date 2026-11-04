@@ -246,13 +246,13 @@ describe("subject page", () => {
 
     const late = (await screen.findByText("Row 2")).closest("li") as HTMLElement
     expect(late).toHaveAttribute("data-attendance", "late")
-    expect(within(late).getByText("Late").closest("[data-attendance]")?.className).toContain("bg-orange-700")
+    expect(within(late).getByText("Late").closest("[data-attendance]")?.className).toContain("bg-warning")
     expect(within(late).getByText("Midterm (PC)")).toBeInTheDocument()
     expect(within(late).getAllByText("Lesson").length).toBeGreaterThan(0)
     expect(late.querySelectorAll("[data-mark-type]")).toHaveLength(2)
     const absent = screen.getByText("Row 3").closest("li") as HTMLElement
     expect(absent).toHaveAttribute("data-attendance", "absent")
-    expect(within(absent).getByText("Absent").closest("[data-attendance]")?.className).toContain("bg-red-800")
+    expect(within(absent).getByText("Absent").closest("[data-attendance]")?.className).toContain("bg-destructive")
     const present = screen.getByText("Row 1").closest("li") as HTMLElement
     expect(within(present).queryByText("Present")).not.toBeInTheDocument()
   })

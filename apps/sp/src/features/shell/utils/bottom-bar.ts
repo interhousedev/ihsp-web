@@ -2,9 +2,11 @@
  * The phone bottom bar's pages. The user picks and orders them in Settings; the choice is a list of destination ids
  * (`DESTINATION_IDS`), saved per user (account preferences, with this device's storage as the fallback).
  */
+/** The Today page was merged into the Home page; a saved `today` id in a bottom bar means Home. */
+const RETIRED_TODAY = "today"
+
 export const DESTINATION_IDS = [
   "dashboard",
-  "today",
   "timetable",
   "subjects",
   "grades",
@@ -24,7 +26,6 @@ export type DestinationId = (typeof DESTINATION_IDS)[number]
 /** Paths of the destinations (the same as the sidebar's). */
 export const DESTINATION_URLS: Record<DestinationId, string> = {
   dashboard: "/",
-  today: "/today/",
   timetable: "/timetable/",
   subjects: "/subjects/",
   grades: "/grades/",
@@ -60,15 +61,17 @@ export function isDestinationId(value: string): value is DestinationId {
 /** Known ids in order without duplicates, cut to the slots; an empty result falls back to the defaults. */
 export function normalizeBottomBar(ids: readonly string[]): DestinationId[] {
   const seen = new Set<DestinationId>()
-  for (const id of ids) if (isDestinationId(id)) seen.add(id)
+  for (const id of ids) {
+    const current = id === RETIRED_TODAY ? "dashboard" : id
+    if (isDestinationId(current)) seen.add(current)
+  }
   const list = [...seen].slice(0, MAX_BOTTOM_TABS)
   return list.length > 0 ? list : [...DEFAULT_BOTTOM_BAR]
 }
 
-/** A list saved before the Dashboard existed: Today (then the landing page) becomes the Dashboard in its place. */
-export function migrateToDashboard(ids: readonly DestinationId[]): DestinationId[] {
-  if (ids.includes("dashboard")) return [...ids]
-  return ids.map((id) => (id === "today" ? "dashboard" : id))
+/** A list saved before Today merged into the Dashboard: the retired `today` id is read as `dashboard`, once. */
+export function migrateToDashboard(ids: readonly string[]): DestinationId[] {
+  return normalizeBottomBar(ids)
 }
 
 /** The preference list with the Dashboard flag added once. */

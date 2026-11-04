@@ -545,7 +545,7 @@ describe("what-if marks", () => {
 
 describe("the Plan link on the grades page", () => {
   test("every row of the table links to the planner of its subject and semester", async () => {
-    renderSp(<GradesPage />, { route: "/grades/" })
+    renderSp(<GradesPage />, { route: "/grades/?tab=semester" })
 
     const link = await screen.findByRole("link", { name: "Mark planner: Physics" })
 
@@ -556,7 +556,7 @@ describe("the Plan link on the grades page", () => {
 
   test("the cards of a phone have the link too", async () => {
     setViewportWidth(360)
-    renderSp(<GradesPage />, { route: "/grades/" })
+    renderSp(<GradesPage />, { route: "/grades/?tab=semester" })
 
     const cards = await screen.findAllByTestId("grade-card")
 
@@ -570,7 +570,7 @@ describe("the Plan link on the grades page", () => {
   })
 
   test("the subject link of a row is still the one that opens its marks", async () => {
-    renderSp(<GradesPage />, { route: "/grades/" })
+    renderSp(<GradesPage />, { route: "/grades/?tab=semester" })
 
     const link = await screen.findByRole("link", { name: "Physics" })
 

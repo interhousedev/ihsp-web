@@ -6,8 +6,11 @@ import {
   getMeStorageQuery,
   keys,
   patchFile,
+  postLinks,
   type FileDeleteResponse,
   type FileItem,
+  type LinkItem,
+  type MyFilesParams,
   type Page,
 } from "@ihsp/api"
 import { useInfiniteQuery, useMutation, useQuery, useQueryClient, type InfiniteData } from "@tanstack/react-query"
@@ -23,12 +26,15 @@ function anyChecking(data: InfiniteData<Page<FileItem>> | undefined): boolean {
   return data?.pages.some((page) => page.items.some(isChecking)) ?? false
 }
 
+/** The server-side filters of My files: name search, file type and the purpose view (tab). */
+export type MyFileFilters = Pick<MyFilesParams, "q" | "type" | "purpose">
+
 /** My files, newest first, loaded page by page; files being checked refresh every 3 seconds. */
-export function useMyFiles() {
+export function useMyFiles(filters: MyFileFilters = {}) {
   return useInfiniteQuery({
-    queryKey: [...keys.me.files(), "pages"],
+    queryKey: [...keys.me.files(filters), "pages"],
     initialPageParam: undefined as string | undefined,
-    queryFn: ({ pageParam, signal }) => getMeFiles({ cursor: pageParam, limit: PAGE_SIZE }, { signal }),
+    queryFn: ({ pageParam, signal }) => getMeFiles({ ...filters, cursor: pageParam, limit: PAGE_SIZE }, { signal }),
     getNextPageParam: (last) => last.next_cursor ?? undefined,
     refetchInterval: (query) => (anyChecking(query.state.data) ? POLL_MS : false),
   })
@@ -52,6 +58,13 @@ export function useRenameFile() {
   return useMutation<FileItem, unknown, { id: string; name: string }>({
     mutationFn: ({ id, name }) => patchFile(id, { name }),
     onSuccess: refresh,
+  })
+}
+
+/** A short link to one of my files (`POST /v1/links`, kind `file`). */
+export function useShareFile() {
+  return useMutation<LinkItem, unknown, string>({
+    mutationFn: (id) => postLinks({ kind: "file", file_id: id }),
   })
 }
 

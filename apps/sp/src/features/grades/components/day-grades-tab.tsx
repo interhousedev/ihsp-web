@@ -1,14 +1,19 @@
 "use client"
 
 import { todayIso, useFormatters, useT } from "@ihsp/i18n"
+import { AttendanceStatus } from "@ihsp/features-core"
 import { Button, DatePicker, Icons, MarkBadge } from "@ihsp/ui"
 import Link from "next/link"
 import { parseAsString, useQueryState } from "nuqs"
 import { QueryState } from "../../shared/components/query-state"
-import { useDayGrades } from "../hooks/use-grades"
+import { useDayGrades, useDayLessonResults } from "../hooks/use-grades"
+import { subjectMarksHref } from "../utils/links"
 import { shiftStudyDay } from "../utils/study-days"
 
-/** Marks of one day placed on their lessons; marks without a lesson are listed apart (WEB-14, UF-WEB-10). */
+/**
+ * One day (WEB-14, UF-WEB-10): every lesson with its attendance and marks, and the marks without a lesson listed apart.
+ * The date is the only filter.
+ */
 export function DayGradesTab() {
   const t = useT("grades.day")
   const f = useFormatters()
@@ -16,6 +21,7 @@ export function DayGradesTab() {
   const [dateParam, setDate] = useQueryState("date", parseAsString)
   const date = dateParam && /^\d{4}-\d{2}-\d{2}$/.test(dateParam) ? dateParam : today
   const query = useDayGrades(date)
+  const attendance = new Map(useDayLessonResults(date).data?.map((result) => [result.lesson_id, result.attendance]))
 
   return (
     <div className="flex flex-col gap-4">
@@ -29,7 +35,7 @@ export function DayGradesTab() {
         >
           <Icons.chevronLeft aria-hidden />
         </Button>
-        <div data-testid="day-date" className="w-44 shrink-0">
+        <div data-testid="day-date" className="min-w-0 flex-1 sm:w-44 sm:flex-none">
           <DatePicker value={date} max={today} aria-label={t("pick")} onChange={(next) => void setDate(next)} />
         </div>
         <Button
@@ -52,24 +58,28 @@ export function DayGradesTab() {
         {(day) => (
           <div className="flex flex-col gap-4">
             <ul className="flex flex-col gap-2">
-              {day.lessons.map(({ lesson, marks }) => (
-                <li key={lesson.id}>
-                  <Link
-                    href={`/lessons/view/?id=${encodeURIComponent(lesson.id)}`}
-                    className="hover:bg-accent focus-visible:ring-ring flex min-h-14 items-center gap-3 rounded-lg border p-3 outline-none focus-visible:ring-2"
-                  >
-                    <span className="text-muted-foreground w-12 shrink-0 text-xs tabular-nums">
-                      {f.time(lesson.starts_at)}
-                    </span>
-                    <span className="min-w-24 flex-1 text-sm font-medium break-words">{lesson.subject.name}</span>
-                    <span className="flex flex-wrap items-center justify-end gap-1">
-                      {marks.map((mark, index) => (
-                        <MarkBadge key={`${mark.type}-${index}`} mark={mark.value} size="lg" />
-                      ))}
-                    </span>
-                  </Link>
-                </li>
-              ))}
+              {day.lessons.map(({ lesson, marks }) => {
+                const state = attendance.get(lesson.id)
+                return (
+                  <li key={lesson.id}>
+                    <Link
+                      href={`/lessons/view/?id=${encodeURIComponent(lesson.id)}`}
+                      className="hover:bg-accent focus-visible:ring-ring flex min-h-14 items-center gap-3 rounded-lg border p-3 outline-none focus-visible:ring-2"
+                    >
+                      <span className="text-muted-foreground w-12 shrink-0 text-xs tabular-nums">
+                        {f.time(lesson.starts_at)}
+                      </span>
+                      <span className="min-w-24 flex-1 text-sm font-medium break-words">{lesson.subject.name}</span>
+                      <span className="flex flex-wrap items-center justify-end gap-1">
+                        {state ? <AttendanceStatus state={state} /> : null}
+                        {marks.map((mark, index) => (
+                          <MarkBadge key={`${mark.type}-${index}`} mark={mark.value} size="lg" />
+                        ))}
+                      </span>
+                    </Link>
+                  </li>
+                )
+              })}
             </ul>
             {day.unmatched.length > 0 ? (
               <section aria-labelledby="unmatched-marks" className="flex flex-col gap-2">
@@ -78,14 +88,16 @@ export function DayGradesTab() {
                 </h3>
                 <ul className="flex flex-col gap-2">
                   {day.unmatched.map((mark, index) => (
-                    <li
-                      key={`${mark.subject.id}-${index}`}
-                      className="flex min-h-11 items-center gap-3 rounded-lg border p-2"
-                    >
-                      <MarkBadge mark={mark.value} size="lg" />
-                      <span className="min-w-0 text-sm break-words">
-                        {mark.subject.name} · {t(`type.${mark.type}`)}
-                      </span>
+                    <li key={`${mark.subject.id}-${index}`}>
+                      <Link
+                        href={subjectMarksHref(mark.subject.id, mark.semester)}
+                        className="hover:bg-accent focus-visible:ring-ring flex min-h-11 items-center gap-3 rounded-lg border p-2 outline-none focus-visible:ring-2"
+                      >
+                        <MarkBadge mark={mark.value} size="lg" />
+                        <span className="min-w-0 text-sm break-words">
+                          {mark.subject.name} · {t(`type.${mark.type}`)}
+                        </span>
+                      </Link>
                     </li>
                   ))}
                 </ul>

@@ -10,7 +10,7 @@ import { clearPersistedQueries } from "../../offline/utils/persisted-queries"
 import { useInstallMenuItem } from "../../pwa/hooks/use-install-menu-item"
 
 /** Profile menu in the header: Profile, Settings, language, theme and log out (WEB-2). */
-export function ProfileMenu() {
+export function ProfileMenu({ variant = "avatar" }: { variant?: "avatar" | "row" }) {
   const t = useT("nav")
   const { session } = useSession()
   const update = useUpdatePreferences()
@@ -25,6 +25,7 @@ export function ProfileMenu() {
     <UserMenu
       name={name}
       subtitle={login}
+      variant={variant}
       items={[
         {
           key: "profile",
@@ -50,7 +51,7 @@ export function ProfileMenu() {
     />
   )
   // The installed app on a phone has no profile page of its own: the avatar goes straight to Settings.
-  if (!isPwaMode())
+  if (variant === "row" || !isPwaMode())
     return (
       <>
         {menu}

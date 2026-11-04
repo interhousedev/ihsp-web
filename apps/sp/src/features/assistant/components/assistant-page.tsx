@@ -1,6 +1,7 @@
 "use client"
 
 import { AssistantWorkspace } from "@ihsp/features-core"
+import { getConfig } from "@ihsp/config"
 import { useT } from "@ihsp/i18n"
 
 /**
@@ -10,10 +11,17 @@ import { useT } from "@ihsp/i18n"
  */
 export function AssistantPage() {
   const t = useT("assistant.page")
+  const app = useT("app")
   return (
-    <div className="h-[calc(100dvh-3.5rem-var(--safe-top)-var(--bottom-nav-height)-var(--safe-bottom))] min-h-0 md:h-[calc(100dvh-3.5rem-var(--safe-top))]">
+    <div className="h-[calc(100dvh-var(--shell-top-reserve,0px)-var(--bottom-nav-height)-var(--safe-bottom))] min-h-0 md:h-[calc(100dvh-var(--shell-top-reserve,0px))]">
       <h1 className="sr-only">{t("title")}</h1>
-      <AssistantWorkspace assistant="student" basePath="/assistant" />
+      <AssistantWorkspace
+        assistant="student"
+        basePath="/assistant"
+        libraryHref="/files/"
+        connectorsHref={`${getConfig().ID_URL}/connectors/new/`}
+        appName={app("name")}
+      />
     </div>
   )
 }

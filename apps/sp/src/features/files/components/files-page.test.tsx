@@ -12,13 +12,124 @@ function rowOf(name: string): HTMLElement {
   return screen.getByRole("heading", { name }).closest("[data-file-id]") as HTMLElement
 }
 
-describe("FilesPage: quota and list (UF-WEB-18, WEB-21, FILE-5, FILE-6)", () => {
-  it("shows the quota bar and the date this term's files are deleted", async () => {
+/** Opens the "More actions" menu of a file and picks one of its items. */
+async function pickMoreAction(user: ReturnType<typeof renderTools>["user"], name: string, item: string) {
+  await user.click(screen.getByRole("button", { name: `More actions for ${name}` }))
+  await user.click(await screen.findByRole("menuitem", { name: item }))
+}
+
+/** Opens the settings menu and its storage dialog. */
+async function openStorage(user: ReturnType<typeof renderTools>["user"]): Promise<HTMLElement> {
+  await user.click(screen.getByRole("button", { name: "Settings" }))
+  await user.click(await screen.findByRole("menuitem", { name: "Storage" }))
+  return await screen.findByRole("dialog")
+}
+
+describe("FilesPage: header, filters and views", () => {
+  it("shows the title, the search and the grid or list toggle", async () => {
     renderTools(<FilesPage />, { route: "/files/" })
 
-    expect(await screen.findByText("3.7 MB of 50 MB")).toBeInTheDocument()
-    expect(screen.getByRole("progressbar", { name: "Storage used" })).toBeInTheDocument()
-    expect(screen.getByText("Files of this term are deleted on 15 Jan 2027.")).toBeInTheDocument()
+    expect(await screen.findByRole("heading", { name: "My files" })).toBeInTheDocument()
+    expect(screen.getByRole("searchbox", { name: "Search by name" })).toBeInTheDocument()
+    expect(screen.getByRole("button", { name: "Grid" })).toHaveAttribute("aria-pressed", "true")
+    expect(screen.getByRole("button", { name: "List" })).toHaveAttribute("aria-pressed", "false")
+  })
+
+  it("switches between the grid and the list view", async () => {
+    const { user } = renderTools(<FilesPage />, { route: "/files/" })
+    await screen.findByRole("heading", { name: "kinematics-notes.pdf" })
+
+    expect(screen.getByRole("list", { name: "Files" })).toHaveAttribute("data-view", "grid")
+    await user.click(screen.getByRole("button", { name: "List" }))
+
+    expect(screen.getByRole("button", { name: "List" })).toHaveAttribute("aria-pressed", "true")
+    expect(screen.getByRole("list", { name: "Files" })).toHaveAttribute("data-view", "list")
+  })
+
+  it("filters the files by the pill tabs through the server", async () => {
+    const purposes: string[] = []
+    server.use(
+      http.get(apiUrl("/v1/me/files"), ({ request }) => {
+        purposes.push(new URL(request.url).searchParams.get("purpose") ?? "all")
+        return HttpResponse.json({ items: [], next_cursor: null })
+      }),
+    )
+    const { user } = renderTools(<FilesPage />, { route: "/files/" })
+    await screen.findByText("No files yet. Upload your first file.")
+
+    await user.click(screen.getByRole("button", { name: "Links" }))
+
+    await waitFor(() => expect(purposes).toContain("link"))
+    expect(screen.getByRole("button", { name: "Links" })).toHaveAttribute("aria-pressed", "true")
+  })
+
+  it("searches the files by name on the server", async () => {
+    const queries: string[] = []
+    server.use(
+      http.get(apiUrl("/v1/me/files"), ({ request }) => {
+        const q = new URL(request.url).searchParams.get("q")
+        if (q) queries.push(q)
+        return HttpResponse.json({ items: [], next_cursor: null })
+      }),
+    )
+    const { user } = renderTools(<FilesPage />, { route: "/files/" })
+    await screen.findByText("No files yet. Upload your first file.")
+
+    await user.type(screen.getByRole("searchbox", { name: "Search by name" }), "kine")
+
+    await waitFor(() => expect(queries).toContain("kine"))
+    expect(await screen.findByText("No files found.")).toBeInTheDocument()
+  })
+
+  it("filters the files by file type from the filter menu", async () => {
+    const types: string[] = []
+    server.use(
+      http.get(apiUrl("/v1/me/files"), ({ request }) => {
+        const type = new URL(request.url).searchParams.get("type")
+        if (type) types.push(type)
+        return HttpResponse.json({ items: [], next_cursor: null })
+      }),
+    )
+    const { user } = renderTools(<FilesPage />, { route: "/files/" })
+    await screen.findByText("No files yet. Upload your first file.")
+
+    await user.click(screen.getByRole("button", { name: "Filter" }))
+    await user.click(await screen.findByRole("menuitemradio", { name: "Images" }))
+
+    await waitFor(() => expect(types).toContain("image"))
+  })
+
+  it("offers upload in the New menu and no folder or trash actions", async () => {
+    const { user } = renderTools(<FilesPage />, { route: "/files/" })
+    await screen.findByRole("heading", { name: "kinematics-notes.pdf" })
+
+    await user.click(screen.getByRole("button", { name: "New" }))
+
+    expect(await screen.findByRole("menuitem", { name: "Upload files" })).toBeInTheDocument()
+    expect(screen.queryByRole("menuitem", { name: /folder/i })).not.toBeInTheDocument()
+  })
+
+  it("shows storage from the settings menu, with no trash", async () => {
+    const { user } = renderTools(<FilesPage />, { route: "/files/" })
+    await screen.findByRole("heading", { name: "kinematics-notes.pdf" })
+
+    await user.click(screen.getByRole("button", { name: "Settings" }))
+
+    expect(await screen.findByRole("menuitem", { name: "Storage" })).toBeInTheDocument()
+    expect(screen.queryByRole("menuitem", { name: "Trash" })).not.toBeInTheDocument()
+  })
+})
+
+describe("FilesPage: quota and list (UF-WEB-18, WEB-21, FILE-5, FILE-6)", () => {
+  it("shows the quota bar and the date this term's files are deleted", async () => {
+    const { user } = renderTools(<FilesPage />, { route: "/files/" })
+    await screen.findByRole("heading", { name: "kinematics-notes.pdf" })
+
+    const dialog = await openStorage(user)
+
+    expect(await within(dialog).findByText("3.7 MB of 50 MB")).toBeInTheDocument()
+    expect(within(dialog).getByRole("progressbar", { name: "Storage used" })).toBeInTheDocument()
+    expect(within(dialog).getByText("Files of this term are deleted on 15 Jan 2027.")).toBeInTheDocument()
   })
 
   it("warns when the storage is almost full", async () => {
@@ -32,10 +143,13 @@ describe("FilesPage: quota and list (UF-WEB-18, WEB-21, FILE-5, FILE-6)", () => 
         }),
       ),
     )
-    renderTools(<FilesPage />, { route: "/files/" })
+    const { user } = renderTools(<FilesPage />, { route: "/files/" })
+    await screen.findByRole("heading", { name: "kinematics-notes.pdf" })
 
-    expect(await screen.findByText("Almost full. Delete files you do not need.")).toBeInTheDocument()
-    expect(screen.getByText("1.4 GB of 1.5 GB")).toBeInTheDocument()
+    const dialog = await openStorage(user)
+
+    expect(await within(dialog).findByText("Almost full. Delete files you do not need.")).toBeInTheDocument()
+    expect(within(dialog).getByText("1.4 GB of 1.5 GB")).toBeInTheDocument()
   })
 
   it("lists the files with their status and where they are used", async () => {
@@ -136,6 +250,17 @@ describe("FilesPage: upload (UF-WEB-18 step 2)", () => {
     expect(await screen.findByRole("heading", { name: "chapter-2.txt" })).toBeInTheDocument()
   })
 
+  it("uploads files dropped on the list", async () => {
+    renderTools(<FilesPage />, { route: "/files/" })
+    await screen.findByRole("heading", { name: "kinematics-notes.pdf" })
+
+    fireEvent.drop(screen.getByTestId("files-dropzone"), {
+      dataTransfer: { files: [new File(["d"], "dropped.pdf", { type: "application/pdf" })] },
+    })
+
+    expect(await screen.findByRole("heading", { name: "dropped.pdf" })).toBeInTheDocument()
+  })
+
   it("shows a progress bar for an upload that is still running", async () => {
     const { promise: gate, resolve: release } = Promise.withResolvers<void>()
     server.use(
@@ -169,7 +294,7 @@ describe("FilesPage: upload (UF-WEB-18 step 2)", () => {
   })
 })
 
-describe("FilesPage: rename, download, delete (UF-WEB-18 step 4)", () => {
+describe("FilesPage: rename, share, download, delete (UF-WEB-18 step 4)", () => {
   it("renames a file", async () => {
     let body: unknown
     server.use(
@@ -179,8 +304,9 @@ describe("FilesPage: rename, download, delete (UF-WEB-18 step 4)", () => {
       }),
     )
     const { user } = renderTools(<FilesPage />, { route: "/files/" })
+    await screen.findByRole("heading", { name: "kinematics-notes.pdf" })
 
-    await user.click(await screen.findByRole("button", { name: "Rename kinematics-notes.pdf" }))
+    await pickMoreAction(user, "kinematics-notes.pdf", "Rename")
     const dialog = await screen.findByRole("dialog")
     const input = within(dialog).getByLabelText("Name")
     await user.clear(input)
@@ -188,6 +314,22 @@ describe("FilesPage: rename, download, delete (UF-WEB-18 step 4)", () => {
     await user.click(within(dialog).getByRole("button", { name: "Save" }))
 
     await waitFor(() => expect(body).toEqual({ name: "kinematics-final.pdf" }))
+  })
+
+  it("shares a file as a link and copies it", async () => {
+    let body: unknown
+    server.use(
+      http.post(apiUrl("/v1/links"), async ({ request }) => {
+        body = await readBody(request)
+        return HttpResponse.json({ id: ids.file, url: "https://ihsp.test/s/abc" }, { status: 201 })
+      }),
+    )
+    const { user } = renderTools(<FilesPage />, { route: "/files/" })
+    await screen.findByRole("heading", { name: "kinematics-notes.pdf" })
+
+    await pickMoreAction(user, "kinematics-notes.pdf", "Share")
+
+    await waitFor(() => expect(body).toEqual({ kind: "file", file_id: ids.file }))
   })
 
   it("opens a PDF inline through a presigned URL", async () => {
@@ -218,8 +360,9 @@ describe("FilesPage: rename, download, delete (UF-WEB-18 step 4)", () => {
       }),
     )
     const { user } = renderTools(<FilesPage />, { route: "/files/" })
+    await screen.findByRole("heading", { name: "kinematics-notes.pdf" })
 
-    await user.click(await screen.findByRole("button", { name: "Delete kinematics-notes.pdf" }))
+    await pickMoreAction(user, "kinematics-notes.pdf", "Delete")
     const dialog = await screen.findByRole("alertdialog")
 
     expect(within(dialog).getByText("This file is used. These items will stop working:")).toBeInTheDocument()
@@ -234,8 +377,9 @@ describe("FilesPage: rename, download, delete (UF-WEB-18 step 4)", () => {
 
   it("deletes a file that is not in use without a warning", async () => {
     const { user } = renderTools(<FilesPage />, { route: "/files/" })
+    await screen.findByRole("heading", { name: "installer.exe" })
 
-    await user.click(await screen.findByRole("button", { name: "Delete installer.exe" }))
+    await pickMoreAction(user, "installer.exe", "Delete")
     const dialog = await screen.findByRole("alertdialog")
 
     expect(within(dialog).queryByText(/will stop working/)).not.toBeInTheDocument()

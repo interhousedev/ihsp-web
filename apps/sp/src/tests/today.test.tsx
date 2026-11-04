@@ -3,7 +3,7 @@ import { afterEach, beforeEach, describe, expect, test } from "bun:test"
 import { apiUrl, server, studentToday } from "@ihsp/test-utils"
 import { screen, waitFor, within } from "@testing-library/react"
 import { HttpResponse, http } from "msw"
-import { TodayPage } from "../features/today/components/today-page"
+import { DashboardPage } from "../features/dashboard/components/dashboard-page"
 import { allTodayCards, moveCard, visibleTodayCards } from "../features/today/utils/today-cards"
 import { remainingMinutes } from "../features/today/utils/countdown"
 import { configureTests, findCard, freezeTime, queryCard, renderSp, unfreezeTime } from "./helpers"
@@ -15,7 +15,7 @@ afterEach(unfreezeTime)
 
 describe("Today page", () => {
   test("every section is a widget: the page holds nothing outside the dashboard", async () => {
-    renderSp(<TodayPage />)
+    renderSp(<DashboardPage />)
 
     await findCard("Next lesson")
 
@@ -31,7 +31,7 @@ describe("Today page", () => {
   })
 
   test("the next lesson widget counts down", async () => {
-    renderSp(<TodayPage />)
+    renderSp(<DashboardPage />)
 
     const now = await findCard("Next lesson")
 
@@ -39,7 +39,7 @@ describe("Today page", () => {
   })
 
   test("the semester widget shows the GPA it gets from the API", async () => {
-    renderSp(<TodayPage />)
+    renderSp(<DashboardPage />)
 
     const semester = await findCard("Semester 4")
 
@@ -55,7 +55,7 @@ describe("Today page", () => {
         return HttpResponse.json({})
       }),
     )
-    renderSp(<TodayPage />)
+    renderSp(<DashboardPage />)
 
     await findCard("New marks")
 
@@ -78,7 +78,7 @@ describe("Today page", () => {
         }),
       ),
     )
-    renderSp(<TodayPage />)
+    renderSp(<DashboardPage />)
 
     expect(await screen.findAllByText("Nothing up next.")).not.toHaveLength(0)
     expect(await screen.findByText("Importing your marks from EMIS…")).toBeInTheDocument()

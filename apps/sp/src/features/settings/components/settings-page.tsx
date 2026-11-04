@@ -2,7 +2,7 @@
 
 import { getMeProfileQuery } from "@ihsp/api"
 import { useSession } from "@ihsp/auth"
-import { FeedbackDialog, NotificationSettingsForm } from "@ihsp/features-core"
+import { FeedbackDialog, LicenseSection, NotificationSettingsForm } from "@ihsp/features-core"
 import { useT } from "@ihsp/i18n"
 import { Button, PageContainer } from "@ihsp/ui"
 import { useQuery } from "@tanstack/react-query"
@@ -56,6 +56,7 @@ export function SettingsPage() {
             </div>
             <FeedbackDialog open={feedbackOpen} onOpenChange={setFeedbackOpen} defaultArea="my" />
           </SettingsSection>
+          <LicenseSection />
         </div>
         <SettingsSection title={t("notifications.title")}>
           <TelegramHint />

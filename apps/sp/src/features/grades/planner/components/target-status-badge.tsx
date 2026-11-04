@@ -5,9 +5,9 @@ import { Badge, cn } from "@ihsp/ui"
 import { usePlannerLabels } from "../hooks/use-planner-labels"
 
 const TONES: Record<PlannerTargetStatus, string> = {
-  secured: "border-emerald-500/60 bg-emerald-50 text-emerald-800 dark:bg-emerald-950/40 dark:text-emerald-300",
-  needed: "border-amber-500/60 bg-amber-50 text-amber-800 dark:bg-amber-950/40 dark:text-amber-300",
-  not_reachable: "border-red-500/60 bg-red-50 text-red-800 dark:bg-red-950/40 dark:text-red-300",
+  secured: "border-success bg-success-muted text-success",
+  needed: "border-warning bg-warning-muted text-warning",
+  not_reachable: "border-destructive bg-destructive-muted text-destructive",
   unknown: "",
 }
 

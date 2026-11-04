@@ -107,7 +107,8 @@
       "groupByType": "Type",
       "groupByTopic": "Topic",
       "groupByNone": "None (one list)",
-      "dropToAdd": "Drop files to add as sources"
+      "dropToAdd": "Drop files to add as sources",
+      "uploadFile": "Upload file"
     },
     "group": {
       "file": "Files",

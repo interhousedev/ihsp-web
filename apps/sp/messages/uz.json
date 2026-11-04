@@ -35,7 +35,7 @@
     }
   },
   "app": {
-    "name": "my.iht"
+    "name": "{appMy}"
   },
   "offline": {
     "updated": "Yangilandi: {when}"
@@ -163,15 +163,18 @@
         "no_subgroup": "Profilni ochish",
         "files_expiring": "Fayllarimni ochish",
         "pending_approvals": "Koʻrib chiqish",
-        "sync_failed": "Baholarni ochish"
+        "sync_failed": "Baholarni ochish",
+        "seminar_soon": "Dars jadvalini ochish"
       },
       "short": {
         "emis_reauth": "EMIS parolini yangilang",
         "no_subgroup": "Kichik guruh belgilanmagan",
         "files_expiring": "{count, plural, one {# fayl oʻchadi} other {# fayl oʻchadi}}",
         "pending_approvals": "{count, plural, one {# amal tasdiqlashni kutmoqda} other {# amal tasdiqlashni kutmoqda}}",
-        "sync_failed": "EMIS sinxronizatsiyasi muvaffaqiyatsiz"
-      }
+        "sync_failed": "EMIS sinxronizatsiyasi muvaffaqiyatsiz",
+        "seminar_soon": "«{subject}» seminari {time} da"
+      },
+      "seminar_soon": "«{subject}» seminari {time} da, {period}-dars"
     },
     "getStarted": {
       "title": "Boshlash",
@@ -211,6 +214,7 @@
       "remove": "Oʻchirish",
       "editTile": "Tanlash: {title}",
       "conflict": "Vidjetlar boshqa qurilmada oʻzgartirilgan. Tahrir saqlanmadi, qayta urinib koʻring.",
+      "saveFailed": "Joylashuvni saqlab boʻlmadi. Oʻzgarishlaringiz saqlanib qoldi, qayta urinib koʻring.",
       "noLesson": "Keyingi dars yoʻq.",
       "noLessons": "Bugun dars yoʻq.",
       "noExams": "Yaqin orada nazorat yoʻq.",
@@ -258,6 +262,12 @@
       "alertsCount": "koʻrish kerak",
       "allSet": "Hammasi tayyor.",
       "stepsLeft": "qadam qoldi"
+    },
+    "connectAi": {
+      "title": "Sunʼiy intellektni {app} ga ulash",
+      "text": "Maʼlumotlaringiz bilan oʻz sunʼiy intellekt ilovangizda davom eting.",
+      "action": "ИИ-ilovani sozlash",
+      "dismiss": "Hozir emas"
     }
   },
   "timetable": {
@@ -538,6 +548,22 @@
           "final": "Yakuniy nazorat (YaN)"
         }
       }
+    },
+    "rating": {
+      "title": "Guruh reytingi",
+      "ownGpa": "Sizning oʻrtacha ballingiz (5 dan)",
+      "empty": "Bu semestrda hali reyting yoʻq.",
+      "rank": "№",
+      "name": "Talaba",
+      "gpa": "Oʻrtacha ball",
+      "emis": "EMIS",
+      "list": "Guruh talabalari oʻrtacha ball boʻyicha"
+    },
+    "sections": {
+      "title": "Oʻquv reja va baholar",
+      "semester": "{number}-semestr",
+      "current": "Joriy",
+      "hours": "{hours} soat"
     }
   },
   "exams": {
@@ -736,6 +762,25 @@
       "status": {
         "assigned": "Bajarilishi kerak"
       }
+    },
+    "squares": {
+      "title": "Haftalik davomat",
+      "weekday": {
+        "mon": "Du",
+        "tue": "Se",
+        "wed": "Ch",
+        "thu": "Pa",
+        "fri": "Ju"
+      },
+      "state": {
+        "present": "Qatnashdi",
+        "absent": "Darsda yoʻq (nb)",
+        "excused": "Sababli",
+        "not_taken": "Hali belgilanmagan",
+        "future": "Dars hali boʻlmagan"
+      },
+      "previousWeek": "Oldingi davomat haftasi",
+      "nextWeek": "Keyingi davomat haftasi"
     }
   },
   "homework": {
@@ -747,7 +792,8 @@
     "tabs": {
       "upcoming": "Yaqin",
       "later": "Keyinroq",
-      "done": "Bajarilgan"
+      "done": "Bajarilgan",
+      "subject": "Fanlar boʻyicha"
     },
     "empty": {
       "upcoming": "Topshiriladigan vazifa yoʻq.",
@@ -761,19 +807,25 @@
     "givenOn": "Berilgan: {date}",
     "openLesson": "Darsni ochish",
     "yourNote": "Sizning qaydingiz",
-    "addNote": "Qayd qoʻshish",
-    "editNote": "Qaydni tahrirlash",
     "noteLabel": "Shaxsiy qayd",
     "notePlaceholder": "Masalan: 34–36-betlar eng qiyin",
     "noteCounter": "{count}/{max}",
-    "noteSave": "Saqlash",
-    "noteCancel": "Bekor qilish",
     "workOff": {
       "badge": "Qayta topshirish",
       "overdue": "Muddati oʻtgan",
       "lesson": "Dars: {date}",
       "dueOn": "Muddat: {date}",
       "noDueDate": "Muddatsiz"
+    },
+    "noteStatus": {
+      "saving": "Saqlanmoqda…",
+      "saved": "Saqlandi",
+      "failed": "Saqlanmadi"
+    },
+    "bySubject": {
+      "empty": "Bu kunga uy vazifasi yoʻq.",
+      "previousDay": "Oldingi kun",
+      "nextDay": "Keyingi kun"
     }
   },
   "profile": {
@@ -858,5 +910,9 @@
       "lastError": "Sabab: {error}",
       "gaveUp": "Sinxronlash {max} urinishdan keyin to'xtatildi. Qayta urinish uchun tugmani bosing."
     }
+  },
+  "weekPager": {
+    "previous": "Oldingi hafta",
+    "next": "Keyingi hafta"
   }
 }

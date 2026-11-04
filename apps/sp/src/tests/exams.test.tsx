@@ -18,7 +18,7 @@ import { screen, waitFor, within } from "@testing-library/react"
 import { HttpResponse, http } from "msw"
 import { ExamPage } from "../features/exams/components/exam-page"
 import { ExamsPage } from "../features/exams/components/exams-page"
-import { TodayPage } from "../features/today/components/today-page"
+import { DashboardPage } from "../features/dashboard/components/dashboard-page"
 import { configureTests, findCard, freezeTime, renderSp, setValue, unfreezeTime } from "./helpers"
 
 configureTests()
@@ -478,7 +478,7 @@ describe("Today controls widget", () => {
   beforeEach(useBigControls)
 
   test("shows the nearest dated control big and the rest in a short list", async () => {
-    renderSp(<TodayPage />)
+    renderSp(<DashboardPage />)
 
     const card = await findCard("Controls coming up")
     const next = within(card).getByTestId("exam-next")
@@ -493,7 +493,7 @@ describe("Today controls widget", () => {
   })
 
   test("marks the controls that are not confirmed and the weeks without a date", async () => {
-    renderSp(<TodayPage />)
+    renderSp(<DashboardPage />)
 
     const card = await findCard("Controls coming up")
     const physics = within(card)
@@ -505,7 +505,7 @@ describe("Today controls widget", () => {
   })
 
   test("the tile opens the exams list", async () => {
-    renderSp(<TodayPage />)
+    renderSp(<DashboardPage />)
 
     const card = await findCard("Controls coming up")
 
@@ -520,7 +520,7 @@ describe("Today controls widget", () => {
         return HttpResponse.json({ items: assessments })
       }),
     )
-    renderSp(<TodayPage />)
+    renderSp(<DashboardPage />)
 
     await findCard("Controls coming up")
 
@@ -530,7 +530,7 @@ describe("Today controls widget", () => {
 
   test("says there is nothing soon when there is nothing in 14 days", async () => {
     server.use(http.get(apiUrl("/v1/me/assessments"), () => HttpResponse.json({ items: [] })))
-    renderSp(<TodayPage />)
+    renderSp(<DashboardPage />)
 
     const card = await findCard("Controls coming up")
     expect(within(card).getByText("No controls soon.")).toBeInTheDocument()
@@ -538,7 +538,7 @@ describe("Today controls widget", () => {
 
   test("says there is nothing soon when the request fails, and the rest of Today stays", async () => {
     server.use(http.get(apiUrl("/v1/me/assessments"), () => HttpResponse.json({}, { status: 500 })))
-    renderSp(<TodayPage />)
+    renderSp(<DashboardPage />)
 
     const card = await findCard("Controls coming up")
     expect(within(card).getByText("No controls soon.")).toBeInTheDocument()

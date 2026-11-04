@@ -47,15 +47,15 @@ describe("month view of the calendar", () => {
       if (!day.querySelector('[data-dot="late"]')) throw new Error("no late dot yet")
       return day
     })
-    expect(late.querySelector('[data-dot="late"]')).toHaveClass("bg-orange-700")
+    expect(late.querySelector('[data-dot="late"]')).toHaveClass("bg-warning")
     expect(late.querySelector('[data-dot="absent"]')).toBeNull()
 
     const absent = screen.getByRole("button", { name: /^6 October: 1 absence$/ })
-    expect(absent.querySelector('[data-dot="absent"]')).toHaveClass("bg-red-800")
+    expect(absent.querySelector('[data-dot="absent"]')).toHaveClass("bg-destructive")
     expect(absent.querySelector('[data-dot="late"]')).toBeNull()
 
     expect(screen.getByRole("button", { name: "2 October" }).querySelector('[data-dot="present"]')).toHaveClass(
-      "bg-green-600",
+      "bg-success",
     )
   })
 
@@ -179,5 +179,60 @@ describe("month grid", () => {
 
     expect(await screen.findByRole("heading", { name: "December 2026" })).toBeInTheDocument()
     expect(screen.queryByRole("heading", { name: "October 2026" })).not.toBeInTheDocument()
+  })
+})
+
+describe("month view look and data", () => {
+  test("the view switch is the shared pill tabs with one selected view", async () => {
+    renderSp(<TimetablePage />, { route: MONTH })
+
+    const tabs = await screen.findByRole("tablist", { name: "Calendar view" })
+    expect(within(tabs).getByRole("tab", { name: "Month" })).toHaveAttribute("aria-selected", "true")
+    expect(within(tabs).getByRole("tab", { name: "Week" })).toHaveAttribute("aria-selected", "false")
+  })
+
+  test("the month requests the attendance of the whole visible month", async () => {
+    const requested: { path: string; from: string | null; to: string | null }[] = []
+    const record =
+      (path: string) =>
+      ({ request }: { request: Request }) => {
+        const search = new URL(request.url).searchParams
+        requested.push({ path, from: search.get("from"), to: search.get("to") })
+        return HttpResponse.json([])
+      }
+    server.use(
+      http.get(apiUrl("/v1/me/timetable"), record("timetable")),
+      http.get(apiUrl("/v1/me/lesson-results"), record("results")),
+    )
+    renderSp(<TimetablePage />, { route: MONTH })
+
+    await waitFor(() => expect(requested).toContainEqual({ path: "timetable", from: "2026-10-01", to: "2026-10-31" }))
+    expect(requested).toContainEqual({ path: "results", from: "2026-10-01", to: "2026-10-31" })
+  })
+
+  test("today is a filled accent on the number and the cell is announced as the current date", async () => {
+    renderSp(<TimetablePage />, { route: MONTH })
+
+    const today = await screen.findByRole("button", { name: "7 October" })
+    expect(today).toHaveAttribute("aria-current", "date")
+    expect(within(today).getByText("7")).toHaveClass("bg-primary", "text-primary-foreground")
+    expect(screen.getByRole("button", { name: "8 October" })).not.toHaveAttribute("aria-current")
+  })
+
+  test("weekends are marked and keep full text contrast instead of faded text", async () => {
+    renderSp(<TimetablePage />, { route: MONTH })
+
+    const saturday = await screen.findByRole("button", { name: "10 October" })
+    expect(saturday).toHaveAttribute("data-weekend", "true")
+    expect(saturday.className).not.toMatch(/(^|\s)opacity-\d|\/60(\s|$)/)
+    expect(screen.getByRole("button", { name: "12 October" })).toHaveAttribute("data-weekend", "false")
+  })
+
+  test("every day cell is at least 44 px tall and clickable", async () => {
+    renderSp(<TimetablePage />, { route: MONTH })
+
+    const day = await screen.findByRole("button", { name: "12 October" })
+    expect(day.className).toContain("min-h-11")
+    expect(day.tagName).toBe("BUTTON")
   })
 })

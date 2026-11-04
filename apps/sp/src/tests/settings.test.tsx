@@ -33,6 +33,16 @@ function recordPatches(): Record<string, unknown>[] {
 }
 
 describe("settings page", () => {
+  test("the language switcher is full width on a 360 px phone and 12 rem wide from md up", async () => {
+    renderSp(<SettingsPage />, { route: "/settings/" })
+
+    const row = (await screen.findByText("Language")).parentElement
+    const control = row?.querySelector<HTMLElement>("[class*='md:h-8']")
+    expect(control?.className).toContain("w-full")
+    expect(control?.className).toContain("md:w-48")
+    expect(control?.className).not.toMatch(/(^|\s)w-48(\s|$)/)
+  })
+
   test("has the general, notification and calendar sections", async () => {
     renderSp(<SettingsPage />, { route: "/settings/" })
 

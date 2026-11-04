@@ -1,7 +1,7 @@
 "use client"
 
 import { addDays, startOfWeek, useFormatters, useT } from "@ihsp/i18n"
-import { Button, Icons } from "@ihsp/ui"
+import { Button, Icons, Tabs, TabsList, TabsTrigger } from "@ihsp/ui"
 import { samePeriod, VIEWS, type CalendarView } from "../utils/view"
 
 /**
@@ -47,20 +47,15 @@ export function CalendarToolbar({
 
   return (
     <div className="flex flex-wrap items-center justify-between gap-2">
-      <div role="group" aria-label={t("viewsLabel")} className="bg-muted inline-flex rounded-md p-0.5">
-        {VIEWS.map((item) => (
-          <Button
-            key={item}
-            variant={item === view ? "default" : "ghost"}
-            size="sm"
-            aria-pressed={item === view}
-            className="min-h-11 min-w-16 md:min-h-8"
-            onClick={() => onViewChange(item)}
-          >
-            {labels[item]}
-          </Button>
-        ))}
-      </div>
+      <Tabs value={view} onValueChange={(next) => onViewChange(next as CalendarView)}>
+        <TabsList aria-label={t("viewsLabel")} className="w-full sm:w-fit">
+          {VIEWS.map((item) => (
+            <TabsTrigger key={item} value={item} className="min-h-11 min-w-16 md:min-h-7">
+              {labels[item]}
+            </TabsTrigger>
+          ))}
+        </TabsList>
+      </Tabs>
       <div className="flex flex-wrap items-center gap-1">
         {view === "month" ? null : (
           <>

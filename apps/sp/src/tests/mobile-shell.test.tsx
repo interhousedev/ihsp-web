@@ -3,7 +3,7 @@ import { afterEach, beforeEach, describe, expect, spyOn, test } from "bun:test"
 import { apiUrl, filePdf, resourceMaterial, server, setTestRoute, userMe } from "@ihsp/test-utils"
 import { act, screen, waitFor, within } from "@testing-library/react"
 import { HttpResponse, http } from "msw"
-import { FileRow } from "../features/files/components/file-row"
+import { FileListRow } from "../features/files/components/file-list-row"
 import { ResourceList } from "../features/lessons/components/resource-list"
 import { AppsHub } from "../features/pwa/components/apps-hub"
 import { setRuntimeConfig } from "../features/pwa/__tests__/pwa-test-support"
@@ -34,7 +34,7 @@ afterEach(() => {
 
 describe("bottom bar config", () => {
   test("keeps known pages in order, drops duplicates and falls back to the defaults", () => {
-    expect(normalizeBottomBar(["grades", "x", "grades", "today"])).toEqual(["grades", "today"])
+    expect(normalizeBottomBar(["grades", "x", "grades", "today"])).toEqual(["grades", "dashboard"])
     expect(normalizeBottomBar([])).toEqual([...DEFAULT_BOTTOM_BAR])
     expect(normalizeBottomBar(["today", "timetable", "grades", "homework", "files"])).toHaveLength(4)
   })
@@ -47,7 +47,7 @@ describe("bottom bar config", () => {
   test("a list saved before the Dashboard gets the Dashboard in place of Today", () => {
     expect(migrateToDashboard(["timetable", "today", "grades"])).toEqual(["timetable", "dashboard", "grades"])
     expect(migrateToDashboard(["files", "grades"])).toEqual(["files", "grades"])
-    expect(migrateToDashboard(["dashboard", "today"])).toEqual(["dashboard", "today"])
+    expect(migrateToDashboard(["dashboard", "today"])).toEqual(["dashboard"])
   })
 
   test("a stored account list with Today is migrated once and flagged", async () => {
@@ -76,29 +76,6 @@ describe("bottom bar config", () => {
         { bottom_nav: ["dashboard", "grades"], onboarding_dismissed: ["welcome", DASHBOARD_MIGRATED] },
       ]),
     )
-  })
-
-  test("after the migration Today may be chosen again and stays", async () => {
-    const bodies: Record<string, unknown>[] = []
-    const session = studentWith({ bottom_nav: ["today", "grades"], onboarding_dismissed: [DASHBOARD_MIGRATED] })
-    server.use(
-      http.get(apiUrl("/v1/id/me"), () => HttpResponse.json(session.user)),
-      http.patch(apiUrl("/v1/id/me/preferences"), async ({ request }) => {
-        bodies.push((await request.json()) as Record<string, unknown>)
-        return HttpResponse.json({})
-      }),
-    )
-    setViewportWidth(360)
-    renderSp(
-      <SpShell>
-        <p>page body</p>
-      </SpShell>,
-      { session },
-    )
-    await screen.findByText("page body")
-    const bar = screen.getByRole("navigation", { name: "Quick navigation" })
-    expect(within(bar).getByRole("link", { name: "Today" })).toBeInTheDocument()
-    expect(bodies).toEqual([])
   })
 
   test("a device list saved before the Dashboard is migrated", async () => {
@@ -248,7 +225,7 @@ describe("bottom bar config", () => {
 })
 
 describe("installed app on a phone", () => {
-  test("has no sidebar toggle in pwa mode, but has it in a browser", async () => {
+  test("has no sidebar toggle on a phone with the bottom bar; a page without the bar keeps it in a browser", async () => {
     setViewportWidth(360)
     setRuntimeConfig("pwa", { APP_URL: "http://localhost:3007" })
     const pwa = renderSp(
@@ -262,8 +239,18 @@ describe("installed app on a phone", () => {
     pwa.unmount()
 
     setRuntimeConfig("sp")
-    renderSp(
+    const browser = renderSp(
       <SpShell>
+        <p>page body</p>
+      </SpShell>,
+    )
+    await screen.findByText("page body")
+    // The bottom bar's More is the one overflow menu on phones.
+    expect(screen.queryByRole("button", { name: "Toggle the sidebar" })).not.toBeInTheDocument()
+    browser.unmount()
+
+    renderSp(
+      <SpShell hideBottomNav>
         <p>page body</p>
       </SpShell>,
     )
@@ -300,7 +287,7 @@ describe("linked titles", () => {
   })
 
   test("a file name links to the file in the list", () => {
-    renderSp(<FileRow file={filePdf} onRename={() => undefined} onDelete={() => undefined} />)
+    renderSp(<FileListRow file={filePdf} onRename={() => undefined} onDelete={() => undefined} />)
 
     expect(screen.getByRole("link", { name: filePdf.name })).toHaveAttribute("href", `/files/#file-${filePdf.id}`)
   })

@@ -4,7 +4,30 @@
       "title": "Мои файлы",
       "upload": "Загрузить файлы",
       "empty": "Файлов пока нет. Загрузите первый.",
-      "loadMore": "Показать ещё"
+      "loadMore": "Показать ещё",
+      "new": "Создать",
+      "settings": "Настройки",
+      "manage": "Управление",
+      "storage": "Хранилище",
+      "filter": "Фильтр",
+      "fileType": "Тип файла",
+      "tabsLabel": "Виды файлов",
+      "tabs": {
+        "all": "Все",
+        "uploaded": "Загруженные",
+        "links": "Ссылки",
+        "mail": "Почта"
+      },
+      "types": {
+        "all": "Все типы",
+        "images": "Изображения",
+        "documents": "Документы",
+        "spreadsheets": "Таблицы",
+        "presentations": "Презентации",
+        "pdf": "PDF",
+        "text": "Текст",
+        "video": "Видео"
+      }
     },
     "storage": {
       "label": "Занято места",
@@ -32,7 +55,10 @@
       "rename": "Переименовать {name}",
       "renameShort": "Переименовать",
       "delete": "Удалить {name}",
-      "deleteShort": "Удалить"
+      "deleteShort": "Удалить",
+      "share": "Поделиться",
+      "linkCopied": "Ссылка скопирована.",
+      "more": "Действия с файлом {name}"
     },
     "rename": {
       "title": "Переименовать файл",

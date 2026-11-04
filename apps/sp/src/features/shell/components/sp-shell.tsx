@@ -1,14 +1,15 @@
 "use client"
 
 import { RequireAuth, RequireRole } from "@ihsp/auth"
-import { HistoryButtons } from "@ihsp/features-core"
+import { ShellNavControls } from "@ihsp/features-core"
 import { isPwaMode } from "@ihsp/features-core/pwa"
 import { AppShell } from "@ihsp/ui"
 import { Suspense, type ReactNode } from "react"
 import { useNav } from "../../../config/nav"
 import { QueryPersistence } from "../../offline/components/query-persistence"
-import { MobileTabBar } from "./mobile-tab-bar"
+import { SpBottomNav } from "./sp-bottom-nav"
 import { PageLoading } from "./page-loading"
+import { ProfileMenu } from "./profile-menu"
 import { ShellHeader } from "./shell-header"
 import { SpBrand } from "./sp-brand"
 
@@ -27,11 +28,12 @@ export function SpShell({ children, hideBottomNav = false }: { children: ReactNo
         <QueryPersistence>
           <AppShell
             nav={nav.groups}
-            bottomBar={hideBottomNav ? undefined : <MobileTabBar groups={nav.groups} />}
+            bottomBar={hideBottomNav ? undefined : <SpBottomNav groups={nav.groups} />}
             mobileSidebar={!isPwaMode()}
             brand={<SpBrand />}
-            headerLeading={<HistoryButtons />}
-            header={<ShellHeader nav={nav.groups} />}
+            sidebarFooter={<ProfileMenu variant="row" />}
+            controlsLeading={<ShellNavControls />}
+            controls={<ShellHeader nav={nav.groups} />}
           >
             <Suspense fallback={<PageLoading />}>{children}</Suspense>
           </AppShell>

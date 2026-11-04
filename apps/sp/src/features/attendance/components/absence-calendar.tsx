@@ -69,7 +69,7 @@ export function AbsenceCalendar({
       </div>
       <div className="grid grid-cols-7 gap-1 text-center">
         {weekdayLabels.map((label) => (
-          <span key={label} aria-hidden className="text-muted-foreground text-xs">
+          <span key={label} aria-hidden className="text-foreground/70 py-1 text-xs font-medium">
             {label}
           </span>
         ))}
@@ -78,35 +78,40 @@ export function AbsenceCalendar({
           const count = absences.get(date) ?? 0
           const isLate = late.has(date)
           const isPresent = !isLate && count === 0 && status.get(date) === "present"
+          const isToday = date === today
           const plain = f.date(date, { day: "numeric", month: "long" })
           return (
             <Button
               key={date}
               variant="ghost"
               aria-label={count > 0 ? t("dayWithAbsences", { date: plain, count }) : plain}
+              aria-current={isToday ? "date" : undefined}
+              data-weekend={isWeekend(date) ? "true" : "false"}
               className={cn(
-                "relative h-11 px-0 md:h-9",
-                date === today && "ring-primary ring-1",
-                // Saturday and Sunday have no lessons: the cells stay tappable but look empty.
-                isWeekend(date) && "text-muted-foreground/60",
-                count === 0 && !isLate && !isPresent && "opacity-60",
+                "flex h-auto min-h-11 w-full flex-col items-center justify-center gap-1 rounded-lg px-0 py-1 font-normal md:min-h-10",
+                "hover:bg-muted focus-visible:ring-ring/50 focus-visible:ring-[3px]",
+                // Saturday and Sunday have no lessons; the text keeps AA contrast but reads as quieter than a school day.
+                isWeekend(date) && "text-foreground/70",
               )}
               onClick={() => onSelect(date)}
             >
-              <span className="tabular-nums">{Number(date.slice(8))}</span>
-              {count > 0 || isLate || isPresent ? (
-                <span aria-hidden className="absolute bottom-1 left-1/2 flex -translate-x-1/2 gap-0.5">
-                  {count > 0 ? (
-                    <span data-dot="absent" className={cn("size-1.5 rounded-full", STATE_TONE.absent.dot)} />
-                  ) : null}
-                  {isLate ? (
-                    <span data-dot="late" className={cn("size-1.5 rounded-full", STATE_TONE.late.dot)} />
-                  ) : null}
-                  {isPresent ? (
-                    <span data-dot="present" className={cn("size-1.5 rounded-full", STATE_TONE.present.dot)} />
-                  ) : null}
-                </span>
-              ) : null}
+              <span
+                className={cn(
+                  "flex size-7 items-center justify-center rounded-full text-sm tabular-nums",
+                  isToday && "bg-primary text-primary-foreground font-semibold",
+                )}
+              >
+                {Number(date.slice(8))}
+              </span>
+              <span aria-hidden className="flex h-1.5 items-center justify-center gap-0.5">
+                {count > 0 ? (
+                  <span data-dot="absent" className={cn("size-1.5 rounded-full", STATE_TONE.absent.dot)} />
+                ) : null}
+                {isLate ? <span data-dot="late" className={cn("size-1.5 rounded-full", STATE_TONE.late.dot)} /> : null}
+                {isPresent ? (
+                  <span data-dot="present" className={cn("size-1.5 rounded-full", STATE_TONE.present.dot)} />
+                ) : null}
+              </span>
             </Button>
           )
         })}

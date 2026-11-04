@@ -1,11 +1,12 @@
 "use client"
 
-import type { DashboardWidgetKind, DashboardWidgetSize } from "@ihsp/api"
+import { type DashboardWidgetKind, type DashboardWidgetSize, isApiError } from "@ihsp/api"
 import { useT } from "@ihsp/i18n"
-import { Button, Icons } from "@ihsp/ui"
+import { Button, Icons, StateView } from "@ihsp/ui"
 import { useCallback, useState } from "react"
 import { AddWidget } from "./editor/add-widget"
 import { WidgetEditor } from "./editor/widget-editor"
+import { ConnectAiNotice } from "./connect-ai-notice"
 import { DashboardGrid } from "./grid"
 import {
   addWidget,
@@ -21,8 +22,7 @@ import { useDashboard, useSaveDashboard } from "./use-dashboard"
 
 /**
  * The widget grid on Today. "Edit" starts a draft (add from the catalogue, select a tile to resize, recolour or delete it,
- * drag to reorder); "Done" saves the draft with the version it was read at. Hidden while the layout loads or fails:
- * Today works without it.
+ * drag to reorder); "Done" saves the draft with the version it was read at. A failed save keeps the draft.
  */
 export function Dashboard() {
   const t = useT("today.dashboard")
@@ -31,7 +31,7 @@ export function Dashboard() {
   const [draft, setDraft] = useState<Widget[] | null>(null)
   const [selectedId, setSelectedId] = useState<string | null>(null)
   const [adding, setAdding] = useState(false)
-  const [conflict, setConflict] = useState(false)
+  const [saveError, setSaveError] = useState<"conflict" | "failed" | null>(null)
 
   const change = useCallback((fn: (widgets: readonly Widget[]) => Widget[]) => {
     setDraft((current) => (current ? fn(current) : current))
@@ -39,7 +39,10 @@ export function Dashboard() {
   const onMove = useCallback((id: string, to: number) => change((w) => moveWidget(w, id, to)), [change])
   const onColor = useCallback((id: string, color: string | null) => change((w) => colorWidget(w, id, color)), [change])
 
-  if (!query.data) return null
+  if (query.isPending) return <StateView state="loading" rows={2} />
+  if (!query.data) {
+    return <StateView state="error" error={query.error} onRetry={() => void query.refetch()} />
+  }
   const editing = draft !== null
   const widgets = draft ?? shownWidgets(query.data.widgets)
   const selected = draft?.find((widget) => widget.id === selectedId) ?? null
@@ -55,12 +58,12 @@ export function Dashboard() {
       { version: query.data.version, widgets: draft },
       {
         onSuccess: () => {
-          setConflict(false)
+          setSaveError(null)
           finish()
         },
-        onError: () => {
-          setConflict(true)
-          finish()
+        // The draft stays so the student can try again; a conflict is answered by the refetch the hook starts.
+        onError: (error) => {
+          setSaveError(isApiError(error) && error.status === 409 ? "conflict" : "failed")
         },
       },
     )
@@ -99,9 +102,9 @@ export function Dashboard() {
           )}
         </div>
       </div>
-      {conflict ? (
+      {saveError ? (
         <p role="alert" className="text-destructive text-sm">
-          {t("conflict")}
+          {saveError === "conflict" ? t("conflict") : t("saveFailed")}
         </p>
       ) : null}
       {editing && adding ? (
@@ -112,6 +115,7 @@ export function Dashboard() {
           }}
         />
       ) : null}
+      <ConnectAiNotice />
       <DashboardGrid
         widgets={widgets}
         editing={editing}

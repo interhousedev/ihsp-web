@@ -64,10 +64,10 @@ describe("useBottomBar", () => {
     // An id the app no longer knows (an old build saved it) is typed away here, as the hook must drop it.
     act(() => save(["grades", "nope", "grades", "today"] as unknown as DestinationId[]))
 
-    await waitFor(() => expect(screen.getByTestId("ids").textContent).toBe("grades,today"))
-    expect(JSON.parse(window.localStorage.getItem(storageKey) ?? "[]")).toEqual(["grades", "today"])
+    await waitFor(() => expect(screen.getByTestId("ids").textContent).toBe("grades,dashboard"))
+    expect(JSON.parse(window.localStorage.getItem(storageKey) ?? "[]")).toEqual(["grades", "dashboard"])
     await waitFor(() =>
-      expect(bodies).toEqual([{ bottom_nav: ["grades", "today"], onboarding_dismissed: [DASHBOARD_MIGRATED] }]),
+      expect(bodies).toEqual([{ bottom_nav: ["grades", "dashboard"], onboarding_dismissed: [DASHBOARD_MIGRATED] }]),
     )
   })
 })

@@ -35,7 +35,7 @@
     }
   },
   "app": {
-    "name": "my.iht"
+    "name": "{appMy}"
   },
   "offline": {
     "updated": "Updated {when}"
@@ -163,15 +163,18 @@
         "no_subgroup": "Open profile",
         "files_expiring": "Open My files",
         "pending_approvals": "Review",
-        "sync_failed": "Open grades"
+        "sync_failed": "Open grades",
+        "seminar_soon": "Open timetable"
       },
       "short": {
         "emis_reauth": "Update your EMIS password",
         "no_subgroup": "Subgroup not set",
         "files_expiring": "{count, plural, one {# file expiring} other {# files expiring}}",
         "pending_approvals": "{count, plural, one {# action to approve} other {# actions to approve}}",
-        "sync_failed": "EMIS sync failed"
-      }
+        "sync_failed": "EMIS sync failed",
+        "seminar_soon": "Seminar {subject} at {time}"
+      },
+      "seminar_soon": "Seminar {subject} at {time}, period {period}"
     },
     "getStarted": {
       "title": "Get started",
@@ -211,6 +214,7 @@
       "remove": "Remove",
       "editTile": "Select {title}",
       "conflict": "The widgets were changed on another device. Your edit was not saved; try again.",
+      "saveFailed": "Could not save the layout. Your changes are kept; try again.",
       "noLesson": "Nothing up next.",
       "noLessons": "No lessons today.",
       "noExams": "No controls soon.",
@@ -258,6 +262,12 @@
       "alertsCount": "to look at",
       "allSet": "All set.",
       "stepsLeft": "steps left"
+    },
+    "connectAi": {
+      "title": "Connect my AI to {app}",
+      "text": "Keep working with your data in your own AI app.",
+      "action": "Set up an AI app",
+      "dismiss": "Not now"
     }
   },
   "timetable": {
@@ -427,7 +437,7 @@
     "tabs": {
       "semester": "Semester",
       "day": "By day",
-      "record": "Record book"
+      "record": "Grade book"
     },
     "emis": {
       "title": "EMIS password needs updating",
@@ -538,6 +548,22 @@
           "final": "Final (FC)"
         }
       }
+    },
+    "rating": {
+      "title": "Group rating",
+      "ownGpa": "Your GPA (out of 5)",
+      "empty": "No ratings for this semester yet.",
+      "rank": "#",
+      "name": "Student",
+      "gpa": "GPA",
+      "emis": "EMIS",
+      "list": "Students of the group by GPA"
+    },
+    "sections": {
+      "title": "Study plan and marks",
+      "semester": "Semester {number}",
+      "current": "Current",
+      "hours": "{hours} h"
     }
   },
   "exams": {
@@ -736,6 +762,25 @@
       "status": {
         "assigned": "To do"
       }
+    },
+    "squares": {
+      "title": "Attendance this week",
+      "weekday": {
+        "mon": "Mon",
+        "tue": "Tue",
+        "wed": "Wed",
+        "thu": "Thu",
+        "fri": "Fri"
+      },
+      "state": {
+        "present": "Present",
+        "absent": "Absent",
+        "excused": "Excused absence",
+        "not_taken": "Not taken yet",
+        "future": "Lesson not yet held"
+      },
+      "previousWeek": "Previous attendance week",
+      "nextWeek": "Next attendance week"
     }
   },
   "homework": {
@@ -747,7 +792,8 @@
     "tabs": {
       "upcoming": "Upcoming",
       "later": "Later",
-      "done": "Done"
+      "done": "Done",
+      "subject": "By subject"
     },
     "empty": {
       "upcoming": "Nothing due.",
@@ -761,19 +807,25 @@
     "givenOn": "Given on {date}",
     "openLesson": "Open lesson",
     "yourNote": "Your note",
-    "addNote": "Add note",
-    "editNote": "Edit note",
     "noteLabel": "Private note",
     "notePlaceholder": "For example: pages 34–36 are the hard part",
     "noteCounter": "{count}/{max}",
-    "noteSave": "Save",
-    "noteCancel": "Cancel",
     "workOff": {
       "badge": "Work-off",
       "overdue": "Overdue",
       "lesson": "Lesson {date}",
       "dueOn": "Due {date}",
       "noDueDate": "No due date"
+    },
+    "noteStatus": {
+      "saving": "Saving…",
+      "saved": "Saved",
+      "failed": "Not saved"
+    },
+    "bySubject": {
+      "empty": "No homework on this day.",
+      "previousDay": "Previous day",
+      "nextDay": "Next day"
     }
   },
   "profile": {
@@ -858,5 +910,9 @@
       "lastError": "Reason: {error}",
       "gaveUp": "The sync stopped after {max} attempts. Press the button to retry."
     }
+  },
+  "weekPager": {
+    "previous": "Previous week",
+    "next": "Next week"
   }
 }

@@ -12,10 +12,11 @@ import { PAST_STEP, useOpenSubjectNotebook, useSubjectLessons } from "../hooks/u
 export function LessonAttendanceBadge({ state }: { state: SubjectLessonRow["attendance"] }) {
   const t = useT("subjects.hub.attendance")
   if (state !== "absent" && state !== "late") return null
-  const colour = state === "absent" ? "bg-red-800 dark:bg-red-700" : "bg-orange-700 dark:bg-orange-600"
+  const colour =
+    state === "absent" ? "bg-destructive text-destructive-foreground" : "bg-warning text-warning-foreground"
   return (
     <span
-      className={`inline-flex items-center rounded-md px-2 py-0.5 text-xs font-semibold text-white ${colour}`}
+      className={`inline-flex items-center rounded-md px-2 py-0.5 text-xs font-semibold ${colour}`}
       data-attendance={state}
     >
       {t(state)}
@@ -37,7 +38,7 @@ function LessonRow({
   const tm = useT("subjects.marks")
   return (
     <li
-      className="flex flex-col gap-2 rounded-lg border p-3 data-[attendance=absent]:border-red-800 data-[attendance=late]:border-orange-700"
+      className="flex flex-col gap-2 rounded-lg border p-3 data-[attendance=absent]:border-destructive data-[attendance=late]:border-warning"
       data-past={row.past}
       data-attendance={row.attendance ?? undefined}
     >

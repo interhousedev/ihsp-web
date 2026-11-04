@@ -1,4 +1,5 @@
 import "@ihsp/ui/styles"
+import { BRAND } from "@ihsp/config/brand"
 import { PWA_HEAD_SCRIPT } from "@/features/pwa/utils/pwa-head"
 import { TELEGRAM_SDK_LOADER } from "@ihsp/telegram/sdk-loader"
 import { THEME_INIT_SCRIPT } from "@ihsp/ui/theme-init"
@@ -8,7 +9,7 @@ import type { ReactNode } from "react"
 import { Providers } from "./providers"
 
 export const metadata: Metadata = {
-  title: "my.iht",
+  title: BRAND.apps.sp.name,
   description: "Calendar, grades, homework and study tools",
   icons: {
     icon: [

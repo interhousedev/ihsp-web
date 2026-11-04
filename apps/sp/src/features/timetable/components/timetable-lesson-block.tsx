@@ -74,11 +74,7 @@ export function TimetableLessonBlock({
           {lesson.subject.name}
         </span>
         {attendance === "present" ? (
-          <Icons.check
-            className="size-3.5 shrink-0 text-green-600 dark:text-green-400"
-            role="img"
-            aria-label={ta("present")}
-          />
+          <Icons.check className="size-3.5 shrink-0 text-success" role="img" aria-label={ta("present")} />
         ) : null}
       </span>
       <span className="text-muted-foreground tabular-nums">
@@ -89,7 +85,7 @@ export function TimetableLessonBlock({
       ) : null}
       {!cancelled
         ? changes.map((change) => (
-            <span key={change.field} className="truncate text-amber-700 dark:text-amber-400">
+            <span key={change.field} className="truncate text-warning">
               {t.has(`fields.${change.field}`) ? t(`fields.${change.field}`) : change.field}: {change.from} →{" "}
               {change.to}
             </span>

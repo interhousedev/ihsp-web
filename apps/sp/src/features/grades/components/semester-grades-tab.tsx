@@ -9,6 +9,8 @@ import { useSemesterGrades } from "../hooks/use-grades"
 import { EmisBanner } from "./emis-banner"
 import { GradesCards } from "./grades-cards"
 import { GradesTable } from "./grades-table"
+import { GroupRatingSection } from "./group-rating-section"
+import { SemesterAccordions } from "./semester-accordions"
 
 /** Semester grades (WEB-12, WEB-16, UF-WEB-09): GPA, sync time and the table (cards below 768 px). */
 export function SemesterGradesTab() {
@@ -51,6 +53,8 @@ export function SemesterGradesTab() {
           </>
         )}
       </QueryState>
+      <SemesterAccordions current={current} />
+      <GroupRatingSection semester={selected} />
     </div>
   )
 }

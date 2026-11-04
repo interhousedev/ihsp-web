@@ -43,7 +43,8 @@ describe("app frame", () => {
     expect(await screen.findByText("page body")).toBeInTheDocument()
     expect(screen.getByRole("button", { name: "Open search" })).toBeInTheDocument()
     expect(await screen.findByRole("button", { name: /^Notifications/ })).toBeInTheDocument()
-    expect(screen.getByRole("button", { name: "Account menu" })).toBeInTheDocument()
+    // The sidebar footer (desktop) and the header (phones) each have the account menu.
+    expect(screen.getAllByRole("button", { name: "Account menu" }).length).toBeGreaterThan(0)
   })
 
   test("has history back and forward buttons next to the sidebar toggle, disabled on a fresh history", async () => {
@@ -69,7 +70,6 @@ describe("app frame", () => {
 
     for (const name of [
       "Dashboard",
-      "Today",
       "Calendar",
       "Subjects",
       "Grades",

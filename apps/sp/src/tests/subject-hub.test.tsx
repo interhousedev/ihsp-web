@@ -122,7 +122,7 @@ describe("subject hub", () => {
     const badge = within(past).getByText("Absent")
 
     expect(badge.getAttribute("data-attendance")).toBe("absent")
-    expect(badge.className).toContain("bg-red-800")
+    expect(badge.className).toContain("bg-destructive")
   })
 
   test("a late lesson shows the Late badge", async () => {
@@ -133,7 +133,7 @@ describe("subject hub", () => {
     const badge = within(past).getByText("Late")
 
     expect(badge.getAttribute("data-attendance")).toBe("late")
-    expect(badge.className).toContain("bg-orange-700")
+    expect(badge.className).toContain("bg-warning")
   })
 
   test("an upcoming lesson shows neither a mark nor attendance", async () => {

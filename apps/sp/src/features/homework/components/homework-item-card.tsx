@@ -2,23 +2,21 @@
 
 import type { HomeworkItem } from "@ihsp/api"
 import { useErrorMessage, useFormatters, useT } from "@ihsp/i18n"
-import { Badge, Button, Checkbox, cn } from "@ihsp/ui"
+import { Badge, Checkbox, cn } from "@ihsp/ui"
 import Link from "next/link"
-import { useState } from "react"
 import { shortName } from "../../shared/utils/people"
 import { useSetHomeworkDone } from "../hooks/use-homework"
-import { HomeworkNoteEditor } from "./homework-note-editor"
+import { HomeworkNoteField } from "./homework-note-field"
 
 /**
  * One homework item (WEB-19, WEB-20): tick box, subject, task, teacher, due date, the lesson it was given at,
- * an "updated" badge, how many days it is overdue and the student's private note. Ticking is personal tracking only.
+ * an "updated" badge, how many days it is overdue and the student's private note, saved on its own. Ticking is personal tracking only.
  */
 export function HomeworkItemCard({ item, withNote = true }: { item: HomeworkItem; withNote?: boolean }) {
   const t = useT("homework")
   const f = useFormatters()
   const errorMessage = useErrorMessage()
   const setDone = useSetHomeworkDone()
-  const [editing, setEditing] = useState(false)
   const done = item.done_at !== null
   const overdue = !done && item.days_overdue > 0
   const dayFormat = { weekday: "short", day: "numeric", month: "short" } as const
@@ -57,13 +55,6 @@ export function HomeworkItemCard({ item, withNote = true }: { item: HomeworkItem
             .filter(Boolean)
             .join(" · ")}
         </p>
-        {withNote && item.note && !editing ? (
-          <p className="bg-muted mt-2 rounded-md px-2 py-1.5 text-sm break-words whitespace-pre-line">
-            <span className="text-muted-foreground block text-xs">{t("yourNote")}</span>
-            {item.note}
-          </p>
-        ) : null}
-        {editing ? <HomeworkNoteEditor item={item} onClose={() => setEditing(false)} /> : null}
         <div className="mt-1 flex flex-wrap items-center gap-x-4">
           <Link
             href={`/lessons/view/?id=${encodeURIComponent(item.lesson_id)}`}
@@ -71,12 +62,12 @@ export function HomeworkItemCard({ item, withNote = true }: { item: HomeworkItem
           >
             {t("openLesson")}
           </Link>
-          {withNote && !editing ? (
-            <Button variant="link" className="min-h-11 px-0" onClick={() => setEditing(true)}>
-              {item.note ? t("editNote") : t("addNote")}
-            </Button>
-          ) : null}
         </div>
+        {withNote ? (
+          <div className="mt-2">
+            <HomeworkNoteField lessonId={item.lesson_id} note={item.note} />
+          </div>
+        ) : null}
         {setDone.isError ? (
           <p role="alert" className="text-destructive text-sm">
             {errorMessage(setDone.error)}

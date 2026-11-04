@@ -7,9 +7,10 @@ import { QueryState } from "../../shared/components/query-state"
 import { useHomeworkList, useOpenWorkOffs } from "../hooks/use-homework"
 import { HomeworkItemCard } from "./homework-item-card"
 import { OverdueSection } from "./overdue-section"
+import { HomeworkBySubject } from "./homework-by-subject"
 import { WorkOffTodoItem } from "./work-off-todo-item"
 
-const TABS = ["upcoming", "later", "done"] as const
+const TABS = ["upcoming", "later", "done", "subject"] as const
 
 /**
  * Homework (WEB-18–20, UF-WEB-13): the highlighted Overdue group first, then the Upcoming, Later and Done lists with
@@ -18,7 +19,7 @@ const TABS = ["upcoming", "later", "done"] as const
 export function HomeworkPage() {
   const t = useT("homework")
   const [tab, setTab] = useQueryState("tab", parseAsStringLiteral(TABS).withDefault("upcoming"))
-  const query = useHomeworkList(tab)
+  const query = useHomeworkList(tab === "subject" ? "upcoming" : tab)
   const workOffs = useOpenWorkOffs()
   const leadingWorkOffs = tab === "upcoming" ? (workOffs.data ?? []) : []
 
@@ -34,22 +35,26 @@ export function HomeworkPage() {
           ))}
         </TabsList>
       </Tabs>
-      <QueryState
-        query={query}
-        isEmpty={(items) => items.length === 0 && leadingWorkOffs.length === 0}
-        emptyText={t(`empty.${tab}`)}
-      >
-        {(items) => (
-          <ul className="flex flex-col gap-2">
-            {leadingWorkOffs.map((item) => (
-              <WorkOffTodoItem key={`work-off-${item.id}`} item={item} />
-            ))}
-            {items.map((item) => (
-              <HomeworkItemCard key={item.lesson_id} item={item} />
-            ))}
-          </ul>
-        )}
-      </QueryState>
+      {tab === "subject" ? (
+        <HomeworkBySubject />
+      ) : (
+        <QueryState
+          query={query}
+          isEmpty={(items) => items.length === 0 && leadingWorkOffs.length === 0}
+          emptyText={t(`empty.${tab}`)}
+        >
+          {(items) => (
+            <ul className="flex flex-col gap-2">
+              {leadingWorkOffs.map((item) => (
+                <WorkOffTodoItem key={`work-off-${item.id}`} item={item} />
+              ))}
+              {items.map((item) => (
+                <HomeworkItemCard key={item.lesson_id} item={item} />
+              ))}
+            </ul>
+          )}
+        </QueryState>
+      )}
     </PageContainer>
   )
 }

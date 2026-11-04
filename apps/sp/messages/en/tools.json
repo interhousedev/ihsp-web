@@ -4,7 +4,30 @@
       "title": "My files",
       "upload": "Upload files",
       "empty": "No files yet. Upload your first file.",
-      "loadMore": "Load more"
+      "loadMore": "Load more",
+      "new": "New",
+      "settings": "Settings",
+      "manage": "Manage",
+      "storage": "Storage",
+      "filter": "Filter",
+      "fileType": "File type",
+      "tabsLabel": "File views",
+      "tabs": {
+        "all": "All",
+        "uploaded": "Uploaded",
+        "links": "Links",
+        "mail": "Mail"
+      },
+      "types": {
+        "all": "All types",
+        "images": "Images",
+        "documents": "Documents",
+        "spreadsheets": "Spreadsheets",
+        "presentations": "Presentations",
+        "pdf": "PDFs",
+        "text": "Text",
+        "video": "Video"
+      }
     },
     "storage": {
       "label": "Storage used",
@@ -32,7 +55,10 @@
       "rename": "Rename {name}",
       "renameShort": "Rename",
       "delete": "Delete {name}",
-      "deleteShort": "Delete"
+      "deleteShort": "Delete",
+      "share": "Share",
+      "linkCopied": "Link copied.",
+      "more": "More actions for {name}"
     },
     "rename": {
       "title": "Rename file",

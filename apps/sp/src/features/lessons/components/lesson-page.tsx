@@ -7,6 +7,7 @@ import { ConfirmDialog, Icons, MarkBadge, PageContainer, StateView } from "@ihsp
 import { parseAsString, useQueryState } from "nuqs"
 import { useState, type ReactNode } from "react"
 import { HomeworkItemCard } from "../../homework/components/homework-item-card"
+import { HomeworkNoteField } from "../../homework/components/homework-note-field"
 import { AttendanceBadge } from "../../shared/components/attendance-badge"
 import { BackLink } from "../../shared/components/back-link"
 import { QueryState } from "../../shared/components/query-state"
@@ -50,12 +51,15 @@ function LessonContent({ data }: { data: StudentLesson }) {
       </Section>
 
       <Section title={t("homework")}>
-        {data.homework ? (
+        {data.homework?.text ? (
           <ul>
             <HomeworkItemCard item={data.homework} />
           </ul>
         ) : (
-          <p className="text-muted-foreground text-sm">{t("noHomework")}</p>
+          <div className="flex flex-col gap-3">
+            <p className="text-muted-foreground text-sm">{t("noHomework")}</p>
+            <HomeworkNoteField lessonId={data.lesson.id} note={data.homework?.note ?? null} />
+          </div>
         )}
       </Section>
 

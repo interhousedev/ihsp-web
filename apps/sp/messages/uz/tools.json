@@ -4,7 +4,30 @@
       "title": "Mening fayllarim",
       "upload": "Fayllarni yuklash",
       "empty": "Hozircha fayllar yo‘q. Birinchisini yuklang.",
-      "loadMore": "Yana ko‘rsatish"
+      "loadMore": "Yana ko‘rsatish",
+      "new": "Yangi",
+      "settings": "Sozlamalar",
+      "manage": "Boshqarish",
+      "storage": "Xotira",
+      "filter": "Filtr",
+      "fileType": "Fayl turi",
+      "tabsLabel": "Fayllar koʼrinishi",
+      "tabs": {
+        "all": "Barchasi",
+        "uploaded": "Yuklangan",
+        "links": "Havolalar",
+        "mail": "Pochta"
+      },
+      "types": {
+        "all": "Barcha turlar",
+        "images": "Rasmlar",
+        "documents": "Hujjatlar",
+        "spreadsheets": "Jadvallar",
+        "presentations": "Taqdimotlar",
+        "pdf": "PDF",
+        "text": "Matn",
+        "video": "Video"
+      }
     },
     "storage": {
       "label": "Band joy",
@@ -32,7 +55,10 @@
       "rename": "{name} nomini o‘zgartirish",
       "renameShort": "Nomini o‘zgartirish",
       "delete": "{name} faylini o‘chirish",
-      "deleteShort": "O‘chirish"
+      "deleteShort": "O‘chirish",
+      "share": "Ulashish",
+      "linkCopied": "Havola nusxalandi.",
+      "more": "{name} fayli amallari"
     },
     "rename": {
       "title": "Fayl nomini o‘zgartirish",

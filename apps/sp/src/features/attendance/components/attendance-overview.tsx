@@ -1,5 +1,6 @@
 "use client"
 
+import { AttendanceWeekSquares } from "./attendance-week-squares"
 import { getMeLessonResultsQuery, getMeTimetableQuery, type StudentAttendance } from "@ihsp/api"
 import { useFormatters, useT } from "@ihsp/i18n"
 import { Alert, AlertDescription, cn } from "@ihsp/ui"
@@ -41,6 +42,7 @@ export function AttendanceOverview({ data, month }: { data: StudentAttendance; m
       <h2 id="attendance-overview" className="text-base font-semibold">
         {t("overviewTitle")}
       </h2>
+      <AttendanceWeekSquares />
       {data.not_taken > 0 ? (
         <Alert>
           <AlertDescription data-testid="not-taken">{t("notTaken", { count: data.not_taken })}</AlertDescription>

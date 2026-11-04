@@ -11,5 +11,4 @@ export function newDeckHref(title: string): string {
 }
 
 /** Where "Practice quiz" goes by default: the notebooks page. The exam page takes it as `practiceQuizHref`. */
-// TODO(HUBS): link to the subject's auto notebook (GET /v1/notebooks/auto/subject/{subject_id}) when the HUBS agent ships it
 export const PRACTICE_QUIZ_HREF = "/notebooks/"

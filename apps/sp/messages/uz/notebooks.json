@@ -107,7 +107,8 @@
       "groupByType": "Turi boʻyicha",
       "groupByTopic": "Mavzu boʻyicha",
       "groupByNone": "Guruhsiz (bitta roʻyxat)",
-      "dropToAdd": "Manba sifatida qoÊ»shish uchun fayllarni shu yerga tashlang"
+      "dropToAdd": "Manba sifatida qoÊ»shish uchun fayllarni shu yerga tashlang",
+      "uploadFile": "Fayl yuklash"
     },
     "group": {
       "file": "Fayllar",

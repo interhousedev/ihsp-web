@@ -14,14 +14,7 @@ export function ExamBadges({ item }: { item: Pick<AssessmentItem, "status" | "ha
   if (!tentative && item.has_date) return null
   return (
     <span className="flex flex-wrap gap-1">
-      {tentative ? (
-        <Badge
-          variant="outline"
-          className="border-amber-500/60 bg-amber-50 text-amber-800 dark:bg-amber-950/40 dark:text-amber-300"
-        >
-          {t("tentative")}
-        </Badge>
-      ) : null}
+      {tentative ? <Badge variant="warning">{t("tentative")}</Badge> : null}
       {item.has_date ? null : <Badge variant="secondary">{t("undated")}</Badge>}
     </span>
   )

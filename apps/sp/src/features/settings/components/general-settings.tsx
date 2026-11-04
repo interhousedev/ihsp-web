@@ -14,7 +14,7 @@ export function GeneralSettings() {
     <div className="flex flex-col gap-4">
       <div className="flex flex-wrap items-center justify-between gap-3">
         <span className="text-sm font-medium">{t("language")}</span>
-        <LanguageSwitcher className="h-11 w-48 md:h-8" onChange={(locale) => update.mutate({ locale })} />
+        <LanguageSwitcher className="h-11 w-full md:h-8 md:w-48" onChange={(locale) => update.mutate({ locale })} />
       </div>
       <div className="flex flex-wrap items-center justify-between gap-3">
         <span id="settings-theme" className="text-sm font-medium">

@@ -1,7 +1,7 @@
 /** WEB-9–11, UF-WEB-06–08: the lesson page, attachments. */
 import { afterEach, beforeEach, describe, expect, test } from "bun:test"
-import { apiUrl, ids, lessonId, resourceAttachment, server } from "@ihsp/test-utils"
-import { screen, waitFor, within } from "@testing-library/react"
+import { apiUrl, homeworkPhysics, ids, lessonId, resourceAttachment, server, studentLessonFor } from "@ihsp/test-utils"
+import { fireEvent, screen, waitFor, within } from "@testing-library/react"
 import { HttpResponse, http } from "msw"
 import { LessonPage } from "../features/lessons/components/lesson-page"
 import { configureTests, freezeTime, renderSp, setValue, unfreezeTime } from "./helpers"
@@ -98,6 +98,33 @@ describe("lesson page", () => {
     await user.click(screen.getByRole("button", { name: "Add link" }))
 
     expect(await screen.findByText("This address cannot be shortened.")).toBeInTheDocument()
+  })
+
+  test("a lesson without homework still has a private note field that saves on its own", async () => {
+    const lesson = studentLessonFor(ids.lessonPhysicsToday)
+    if (!lesson) throw new Error("fixture missing")
+    const bodies: unknown[] = []
+    server.use(
+      http.get(apiUrl("/v1/me/lessons/:id"), () =>
+        HttpResponse.json({
+          ...lesson,
+          homework: { ...homeworkPhysics, text: "", due_date: null, done_at: null, note: null },
+        }),
+      ),
+      http.put(apiUrl("/v1/me/homework/:lessonId/note"), async ({ request }) => {
+        const body = (await request.json()) as { note: string | null }
+        bodies.push(body)
+        return HttpResponse.json({ ...homeworkPhysics, text: "", note: body.note })
+      }),
+    )
+    renderSp(<LessonPage />, { route: TODAY_ROUTE })
+
+    expect(await screen.findByText("No homework for this lesson.")).toBeInTheDocument()
+    const field = screen.getByLabelText("Private note")
+    setValue(field, "bring the lab book")
+    fireEvent.blur(field)
+
+    await waitFor(() => expect(bodies).toEqual([{ note: "bring the lab book" }]))
   })
 
   test("a lesson that does not exist shows the error state", async () => {
