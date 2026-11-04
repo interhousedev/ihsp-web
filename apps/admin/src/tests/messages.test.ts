@@ -219,6 +219,28 @@ describe("keys used in the code", () => {
     const expected: Record<string, string[]> = {
       // The student assistant workspace (features-core/assistant-chat) shares this folder with the admin chat.
       "assistant.home.greeting${greeting}": ["1", "2", "3", "4"],
+      "assistant.composer.voice.${failed}": [
+        "micDenied",
+        "noMic",
+        "rateLimited",
+        "limit",
+        "tooLarge",
+        "tooLong",
+        "format",
+        "network",
+        "failed",
+      ],
+      "assistant.composer.voice.${voiceErrorKey(error)}": [
+        "micDenied",
+        "noMic",
+        "rateLimited",
+        "limit",
+        "tooLarge",
+        "tooLong",
+        "format",
+        "network",
+        "failed",
+      ],
       "assistant.slash.${chip}.title": ["explain", "cards", "quiz", "summary", "mindmap", "table"],
       "assistant.slash.${chip}.hint": ["explain", "cards", "quiz", "summary", "mindmap", "table"],
       "assistant.slash.${item.name}.title": [

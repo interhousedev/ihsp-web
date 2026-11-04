@@ -9,7 +9,7 @@ import { configureTests, hrefOf, renderAdmin } from "./helpers"
 configureTests()
 
 describe("app frame", () => {
-  test("the sidebar follows the spec table: Home, People, Academics, Reports, Communication, Tools", async () => {
+  test("the sidebar follows the spec table: Home, People, Academics, Reports, Operations, Communication, Tools", async () => {
     renderAdmin(
       <AdminFrame>
         <p>page body</p>
@@ -17,7 +17,7 @@ describe("app frame", () => {
     )
 
     expect(await screen.findByText("page body")).toBeInTheDocument()
-    for (const heading of ["Home", "People", "Academics", "Reports", "Communication", "Tools"]) {
+    for (const heading of ["Home", "People", "Academics", "Reports", "Operations", "Communication", "Tools"]) {
       expect(screen.getAllByText(heading).length).toBeGreaterThan(0)
     }
     const expected: Record<string, string> = {

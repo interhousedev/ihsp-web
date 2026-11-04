@@ -1,4 +1,5 @@
 import "@ihsp/ui/styles"
+import { BRAND } from "@ihsp/config/brand"
 import { createPwaHeadScript } from "@ihsp/features-core/pwa/head"
 import { THEME_INIT_SCRIPT } from "@ihsp/ui/theme-init"
 import type { Metadata, Viewport } from "next"
@@ -6,7 +7,7 @@ import type { ReactNode } from "react"
 import { Providers } from "./providers"
 
 export const metadata: Metadata = {
-  title: "admin.iht",
+  title: BRAND.apps.admin.name,
   description: "Administration of people, timetable and communication",
   icons: {
     icon: [
@@ -18,7 +19,7 @@ export const metadata: Metadata = {
 }
 
 /** The head script of the installable app (`APP_MODE=pwa`): manifest link, iOS tags, install prompt catcher. */
-const PWA_HEAD_SCRIPT = createPwaHeadScript("admin.iht")
+const PWA_HEAD_SCRIPT = createPwaHeadScript(BRAND.apps.admin.pwaName)
 
 export const viewport: Viewport = {
   width: "device-width",

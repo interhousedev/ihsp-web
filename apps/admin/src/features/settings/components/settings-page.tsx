@@ -8,6 +8,7 @@ import {
   type PlatformSettings,
   type PlatformSettingsBody,
 } from "@ihsp/api"
+import { LicenseSection } from "@ihsp/features-core"
 import { AppLockSection } from "@ihsp/features-core/pwa/lock"
 import { useT } from "@ihsp/i18n"
 import { Badge, Button, Card, CardContent, CardHeader, CardTitle, Input, PageContainer } from "@ihsp/ui"
@@ -164,6 +165,9 @@ function SettingsForm({ settings }: { settings: PlatformSettings }) {
       </section>
       <div className="max-w-2xl">
         <AppLockSection />
+      </div>
+      <div className="max-w-2xl">
+        <LicenseSection />
       </div>
     </PageContainer>
   )

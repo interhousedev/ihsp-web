@@ -36,6 +36,20 @@ describe("login cues page", () => {
     expect(queries[0]).not.toContain("group_id")
   })
 
+  test("LC-ADM-03 keeps the chosen group filter in the URL and sends it to the list", async () => {
+    const queries: string[] = []
+    server.use(
+      http.get(apiUrl("/v1/admin/login-cues"), ({ request }) => {
+        queries.push(new URL(request.url).search)
+        return HttpResponse.json([cue])
+      }),
+    )
+    renderAdmin(<LoginCuesPage />, { route: `/login-cues/?group_id=${ids.group2TN2}` })
+
+    await screen.findByRole("table")
+    expect(queries[0]).toContain(`group_id=${ids.group2TN2}`)
+  })
+
   test("LC-ADM-02 refuses an EMIS login with letters and saves digits only", async () => {
     let body = null as Record<string, unknown> | null
     server.use(

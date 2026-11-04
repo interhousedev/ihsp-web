@@ -12,20 +12,22 @@ const ALL = "all"
 const PAGE_SIZE = 20
 
 /** Level badges: the colour helps, the text label always says the level. */
-const LEVEL_TONE: Record<LogLevel, string> = {
-  fatal: "border-transparent bg-red-700 text-white",
-  error: "border-red-600/40 bg-red-600/10 text-red-700 dark:text-red-400",
-  warning: "border-amber-600/40 bg-amber-500/10 text-amber-800 dark:text-amber-300",
-  info: "border-blue-600/40 bg-blue-500/10 text-blue-700 dark:text-blue-300",
-  debug: "border-border bg-muted text-muted-foreground",
+const LEVEL_TONE: Record<LogLevel, { variant: "destructive" | "warning" | "info" | "neutral"; className?: string }> = {
+  fatal: { variant: "destructive", className: "bg-destructive text-destructive-foreground" },
+  error: { variant: "destructive" },
+  warning: { variant: "warning" },
+  info: { variant: "info" },
+  debug: { variant: "neutral" },
 }
 
 function LevelBadge({ level }: { level: string }) {
   const t = useT("logs")
   const known = (LOG_LEVELS as readonly string[]).includes(level)
+  if (!known) return <Badge variant="outline">{level}</Badge>
+  const tone = LEVEL_TONE[level as LogLevel]
   return (
-    <Badge variant="outline" className={known ? LEVEL_TONE[level as LogLevel] : undefined}>
-      {known ? t(`levels.${level}`) : level}
+    <Badge variant={tone.variant} className={tone.className}>
+      {t(`levels.${level}`)}
     </Badge>
   )
 }

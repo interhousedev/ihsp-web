@@ -94,6 +94,7 @@ describe("Docker build inputs", () => {
       "security-headers",
       "security-headers-library",
       "security-headers-lms",
+      "security-headers-admin",
       "proxy-backend",
       "proxy-hydra",
       "proxy-identity",
@@ -266,6 +267,22 @@ describe("templates", () => {
       expect(directives.get("manifest-src")).toBe("manifest-src 'self'")
       expect(directives.get("media-src")).toBe("media-src 'self' blob: ${IHSP_STORAGE_ORIGIN}")
       expect(directives.get("worker-src")).toMatch(/^worker-src 'self'( blob:)?$/)
+    }
+  })
+
+  it("security headers of the admin site: camera only for the admin origin, the rest as the other sites", () => {
+    const admin = read("snippets", "security-headers-admin.conf")
+    const shared = read("snippets", "security-headers.conf")
+    expect(admin).toContain("camera=(self)")
+    expect(admin).toContain("geolocation=(), microphone=(), camera=(self)")
+    expect(shared).toContain("geolocation=(), microphone=(), camera=()")
+    expect(plain(admin.replaceAll("camera=(self)", "camera=()"))).toEqual(plain(shared))
+    expect(cspHeader(admin)).toEqual(cspHeader(shared))
+    const site = read("sites", "admin.conf")
+    expect(site).toContain("include /tmp/ihsp/nginx/snippets/security-headers-admin.conf;")
+    expect(site).not.toContain("snippets/security-headers.conf")
+    for (const other of ["app.conf", "staff.conf", "lms.conf", "library.conf"]) {
+      expect(read("sites", other)).not.toContain("camera=(self)")
     }
   })
 

@@ -1,6 +1,6 @@
 {
   "app": {
-    "name": "admin.iht"
+    "name": "{appAdmin}"
   },
   "nav": {
     "main": "Asosiy",
@@ -9,6 +9,7 @@
     "groupPeople": "Odamlar",
     "groupAcademics": "Oʻquv jarayoni",
     "groupReports": "Hisobotlar",
+    "groupOperations": "Operatsiyalar",
     "groupCommunication": "Aloqa",
     "groupTools": "Vositalar",
     "dashboard": "Boshqaruv paneli",
@@ -41,6 +42,7 @@
   },
   "shared": {
     "filters": "Filtrlar",
+    "lessonList": "Sanalar boʻyicha darslar",
     "exportCsv": "CSV ga eksport",
     "noLessons": "Darslar yoʻq.",
     "cancelled": "Bekor qilingan",
@@ -217,7 +219,8 @@
       "status": "Holati",
       "emis": "EMIS",
       "registered": "Roʻyxatdan oʻtish",
-      "synced": "Oxirgi sinxronizatsiya"
+      "synced": "Oxirgi sinxronizatsiya",
+      "photo": "Surat"
     },
     "tabs": {
       "overview": "Umumiy",
@@ -563,7 +566,9 @@
       "tabs": {
         "overview": "Umumiy",
         "curriculum": "Oʻquv reja"
-      }
+      },
+      "exportPhotos": "Suratlarni eksport qilish",
+      "exportingPhotos": "Arxiv tayyorlanmoqda…"
     },
     "curriculum": {
       "sync": "EMIS bilan sinxronlash",
@@ -1857,7 +1862,7 @@
     },
     "area": {
       "id": "ID",
-      "my": "my.iht",
+      "my": "{appMy}",
       "staff": "Oʻqituvchilar",
       "admin": "Administratsiya",
       "lms": "LMS",
@@ -2050,5 +2055,28 @@
         "too-many": "{field}: elementlar juda ko‘p."
       }
     }
+  },
+  "studentPhoto": {
+    "column": "Surat",
+    "action": "Surat",
+    "title": "{name} surati",
+    "current": "Joriy surat",
+    "noPhoto": "Surat hali yoʼq",
+    "takePhoto": "Suratga olish",
+    "capture": "Suratga olish",
+    "retake": "Qayta olish",
+    "chooseFile": "Fayl tanlash",
+    "upload": "Surat yuklash",
+    "uploading": "Saqlanmoqda…",
+    "saved": "Surat saqlandi",
+    "hint": "JPEG yoki PNG, 5 MB gacha.",
+    "cameraHint": "Talabani kadrga joylashtiring va suratga oling.",
+    "cameraUnavailable": "Bu yerda kamera mavjud emas. Surat faylini tanlang.",
+    "cameraDenied": "Kameraga ruxsat berilmadi. Faylni tanlang yoki brauzer sozlamalarida kameraga ruxsat bering.",
+    "preview": "Oldindan koʼrish",
+    "video": "Kamera tasviri",
+    "wrongType": "JPEG yoki PNG rasmini tanlang.",
+    "tooLarge": "Surat 5 MB dan katta.",
+    "close": "Yopish"
   }
 }

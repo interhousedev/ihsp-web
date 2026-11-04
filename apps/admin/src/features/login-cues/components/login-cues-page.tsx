@@ -21,15 +21,19 @@ import { useQuery } from "@tanstack/react-query"
 import { useState } from "react"
 import { SelectField } from "../../shared/components/select-field"
 import { useAdminMutation } from "../../shared/hooks/use-admin-mutation"
+import { useFilterState } from "../../shared/hooks/use-filter-state"
 import { TOUCH, TOUCH_ICON } from "../../shared/utils/touch"
 import { LoginCueBulkDialog } from "./login-cue-bulk-dialog"
 import { LoginCueDialog } from "./login-cue-dialog"
+
+const FILTER_KEYS = ["group_id"] as const
 
 /** Login cues: names that students pick at registration instead of typing their EMIS login. Staff only. */
 export function LoginCuesPage() {
   const t = useT("loginCues")
   const locale = useLocale()
-  const [groupId, setGroupId] = useState("")
+  const filters = useFilterState(FILTER_KEYS)
+  const groupId = filters.values.group_id ?? ""
   const [adding, setAdding] = useState(false)
   const [bulk, setBulk] = useState(false)
   const [deleting, setDeleting] = useState<LoginCueResponse | null>(null)
@@ -64,7 +68,7 @@ export function LoginCuesPage() {
           value={groupId}
           emptyLabel={t("allGroups")}
           options={(groups.data ?? []).map((group) => ({ value: group.id, label: group.name }))}
-          onChange={setGroupId}
+          onChange={(value) => filters.set("group_id", value)}
         />
       </div>
       {cues.isPending ? (

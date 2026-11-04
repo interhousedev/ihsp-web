@@ -9,6 +9,7 @@ import { BackLink } from "../../shared/components/back-link"
 import { QueryState } from "../../shared/components/query-state"
 import { GroupCurriculumTab } from "./group-curriculum-tab"
 import { GroupPeopleCard } from "./group-people-card"
+import { GroupPhotosExportButton } from "./group-photos-export-button"
 import { GroupStudentsCard } from "./group-students-card"
 
 const TABS = ["overview", "curriculum"] as const
@@ -44,7 +45,12 @@ export function GroupDetailPage() {
           ]
             .filter(Boolean)
             .join(" · ")}
-          actions={<BackLink href="/groups/" label={t("title")} />}
+          actions={
+            <>
+              <GroupPhotosExportButton groupId={group.id} groupName={group.name} />
+              <BackLink href="/groups/" label={t("title")} />
+            </>
+          }
         >
           <Tabs value={tab} onValueChange={(value) => void setTab(value === "curriculum" ? "curriculum" : null)}>
             <TabsList className="h-auto w-full flex-wrap justify-start sm:w-fit">

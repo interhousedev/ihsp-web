@@ -3,25 +3,13 @@
 import { deleteCertificateType, getCertificateTypesQuery, keys, type CertificateType } from "@ihsp/api"
 import { typeName } from "@ihsp/features-core"
 import { useLocale, useT } from "@ihsp/i18n"
-import {
-  Badge,
-  Button,
-  ConfirmDialog,
-  IconPencil,
-  IconPlus,
-  IconTrash,
-  PageContainer,
-  StateView,
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableHeader,
-  TableRow,
-} from "@ihsp/ui"
+import { Badge, Button, ConfirmDialog, IconPencil, IconPlus, IconTrash, PageContainer } from "@ihsp/ui"
 import { useQuery } from "@tanstack/react-query"
-import { useState } from "react"
+import { useMemo, useState } from "react"
+import { PagedTable } from "../../shared/components/paged-table"
 import { useAdminMutation } from "../../shared/hooks/use-admin-mutation"
+import { useArrayList } from "../../shared/hooks/use-paged-list"
+import { actionsCol, col } from "../../shared/utils/columns"
 import { TOUCH, TOUCH_ICON } from "../../shared/utils/touch"
 import { CertificateTypeDialog } from "./certificate-type-dialog"
 
@@ -36,6 +24,13 @@ export function CertificateTypesPage() {
   const tRoot = useT("certificates")
   const locale = useLocale()
   const types = useQuery(getCertificateTypesQuery())
+  const source = useArrayList<CertificateType>({
+    data: types.data,
+    isPending: types.isPending,
+    isError: types.isError,
+    error: types.error,
+    refetch: () => types.refetch(),
+  })
   const [editing, setEditing] = useState<CertificateType | "new" | null>(null)
   const [deleting, setDeleting] = useState<CertificateType | null>(null)
   const remove = useAdminMutation({
@@ -44,6 +39,48 @@ export function CertificateTypesPage() {
     success: t("deleted"),
     onSuccess: () => setDeleting(null),
   })
+  const columns = useMemo(
+    () => [
+      col<CertificateType>("name", t("columns.name"), (type) => (
+        <span className="font-medium">
+          {typeName(type, locale)} {type.builtin ? <Badge variant="secondary">{t("builtin")}</Badge> : null}
+        </span>
+      )),
+      col<CertificateType>("code", t("columns.code"), (type) => <span className="font-mono text-xs">{type.code}</span>),
+      col<CertificateType>("asks", t("columns.asks"), (type) => fieldLabels(type, locale)),
+      actionsCol<CertificateType>(t("columns.actions"), (type) => {
+        const name = typeName(type, locale)
+        return (
+          <>
+            <Button
+              type="button"
+              variant="ghost"
+              size="icon"
+              className={TOUCH_ICON}
+              aria-label={t("edit", { name })}
+              onClick={() => setEditing(type)}
+            >
+              <IconPencil aria-hidden />
+            </Button>
+            <span title={type.builtin ? t("builtinTooltip") : undefined}>
+              <Button
+                type="button"
+                variant="ghost"
+                size="icon"
+                className={TOUCH_ICON}
+                aria-label={t("delete", { name })}
+                disabled={type.builtin}
+                onClick={() => setDeleting(type)}
+              >
+                <IconTrash aria-hidden />
+              </Button>
+            </span>
+          </>
+        )
+      }),
+    ],
+    [t, locale],
+  )
   return (
     <PageContainer
       title={tRoot("typesTitle")}
@@ -53,69 +90,7 @@ export function CertificateTypesPage() {
         </Button>
       }
     >
-      {types.isPending ? (
-        <StateView state="loading" />
-      ) : types.isError ? (
-        <StateView state="error" error={types.error} onRetry={() => void types.refetch()} />
-      ) : types.data.length === 0 ? (
-        <StateView state="empty" emptyText={t("empty")} />
-      ) : (
-        <div className="overflow-x-auto rounded-lg border">
-          <Table>
-            <TableHeader>
-              <TableRow>
-                <TableHead>{t("columns.name")}</TableHead>
-                <TableHead>{t("columns.code")}</TableHead>
-                <TableHead>{t("columns.asks")}</TableHead>
-                <TableHead>
-                  <span className="sr-only">{t("columns.actions")}</span>
-                </TableHead>
-              </TableRow>
-            </TableHeader>
-            <TableBody>
-              {types.data.map((type) => {
-                const name = typeName(type, locale)
-                return (
-                  <TableRow key={type.id}>
-                    <TableCell className="font-medium">
-                      {name} {type.builtin ? <Badge variant="secondary">{t("builtin")}</Badge> : null}
-                    </TableCell>
-                    <TableCell className="font-mono text-xs">{type.code}</TableCell>
-                    <TableCell>{fieldLabels(type, locale)}</TableCell>
-                    <TableCell>
-                      <span className="flex justify-end gap-1">
-                        <Button
-                          type="button"
-                          variant="ghost"
-                          size="icon"
-                          className={TOUCH_ICON}
-                          aria-label={t("edit", { name })}
-                          onClick={() => setEditing(type)}
-                        >
-                          <IconPencil aria-hidden />
-                        </Button>
-                        <span title={type.builtin ? t("builtinTooltip") : undefined}>
-                          <Button
-                            type="button"
-                            variant="ghost"
-                            size="icon"
-                            className={TOUCH_ICON}
-                            aria-label={t("delete", { name })}
-                            disabled={type.builtin}
-                            onClick={() => setDeleting(type)}
-                          >
-                            <IconTrash aria-hidden />
-                          </Button>
-                        </span>
-                      </span>
-                    </TableCell>
-                  </TableRow>
-                )
-              })}
-            </TableBody>
-          </Table>
-        </div>
-      )}
+      <PagedTable source={source} columns={columns} getRowId={(type) => type.id} emptyText={t("empty")} cardLayout />
       {editing ? (
         <CertificateTypeDialog
           key={editing === "new" ? "new" : editing.id}

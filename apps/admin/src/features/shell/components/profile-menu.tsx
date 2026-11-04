@@ -6,7 +6,7 @@ import { useInstallAppMenuItem } from "@ihsp/features-core/pwa"
 import { UserMenu } from "@ihsp/ui"
 
 /** Profile menu in the header: language, theme and log out. */
-export function ProfileMenu() {
+export function ProfileMenu({ variant = "avatar" }: { variant?: "avatar" | "row" }) {
   const { session } = useSession()
   const update = useUpdatePreferences()
   const platforms = usePlatformLinks()
@@ -17,6 +17,7 @@ export function ProfileMenu() {
     <UserMenu
       name={`${last_name} ${first_name}`}
       subtitle={login}
+      variant={variant}
       items={installItem ? [installItem] : []}
       platforms={platforms}
       onLocaleChange={(locale) => update.mutate({ locale })}

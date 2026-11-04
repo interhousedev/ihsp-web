@@ -1,6 +1,6 @@
 {
   "app": {
-    "name": "admin.iht"
+    "name": "{appAdmin}"
   },
   "nav": {
     "main": "Main",
@@ -9,6 +9,7 @@
     "groupPeople": "People",
     "groupAcademics": "Academics",
     "groupReports": "Reports",
+    "groupOperations": "Operations",
     "groupCommunication": "Communication",
     "groupTools": "Tools",
     "dashboard": "Dashboard",
@@ -41,6 +42,7 @@
   },
   "shared": {
     "filters": "Filters",
+    "lessonList": "Lessons by date",
     "exportCsv": "Export CSV",
     "noLessons": "No lessons.",
     "cancelled": "Cancelled",
@@ -217,7 +219,8 @@
       "status": "Status",
       "emis": "EMIS",
       "registered": "Registration",
-      "synced": "Last sync"
+      "synced": "Last sync",
+      "photo": "Photo"
     },
     "tabs": {
       "overview": "Overview",
@@ -563,7 +566,9 @@
       "tabs": {
         "overview": "Overview",
         "curriculum": "Curriculum"
-      }
+      },
+      "exportPhotos": "Export photos",
+      "exportingPhotos": "Preparing the ZIP…"
     },
     "curriculum": {
       "sync": "Sync from EMIS",
@@ -1857,7 +1862,7 @@
     },
     "area": {
       "id": "ID",
-      "my": "my.iht",
+      "my": "{appMy}",
       "staff": "Staff",
       "admin": "Admin",
       "lms": "LMS",
@@ -2050,5 +2055,28 @@
         "too-many": "{field}: too many items."
       }
     }
+  },
+  "studentPhoto": {
+    "column": "Photo",
+    "action": "Photo",
+    "title": "Photo of {name}",
+    "current": "Current photo",
+    "noPhoto": "No photo yet",
+    "takePhoto": "Take photo",
+    "capture": "Capture",
+    "retake": "Retake",
+    "chooseFile": "Choose a file",
+    "upload": "Upload photo",
+    "uploading": "Saving…",
+    "saved": "Photo saved",
+    "hint": "JPEG or PNG, up to 5 MB.",
+    "cameraHint": "Hold the student in frame, then capture.",
+    "cameraUnavailable": "The camera is not available here. Choose a photo file instead.",
+    "cameraDenied": "Camera access was denied. Choose a file instead, or allow the camera in the browser settings.",
+    "preview": "Preview",
+    "video": "Camera preview",
+    "wrongType": "Choose a JPEG or PNG image.",
+    "tooLarge": "The photo is larger than 5 MB.",
+    "close": "Close"
   }
 }

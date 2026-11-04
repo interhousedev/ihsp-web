@@ -1,7 +1,7 @@
 "use client"
 
 import { RequireAuth, RequireRole } from "@ihsp/auth"
-import { HistoryButtons } from "@ihsp/features-core"
+import { ShellNavControls } from "@ihsp/features-core"
 import { AppShell, StateView, ThemeToggle } from "@ihsp/ui"
 import { Suspense, type ReactNode } from "react"
 import { useNav } from "../../../config/nav"
@@ -10,7 +10,7 @@ import { ProfileMenu } from "./profile-menu"
 
 function PageLoading() {
   return (
-    <div className="p-4 md:p-6">
+    <div data-shell-flush className="p-4 md:p-6">
       <StateView state="loading" rows={4} />
     </div>
   )
@@ -28,13 +28,9 @@ export function AdminFrame({ children }: { children: ReactNode }) {
         <AppShell
           nav={nav.groups}
           brand={<AdminBrand />}
-          headerLeading={<HistoryButtons />}
-          header={
-            <>
-              <ThemeToggle />
-              <ProfileMenu />
-            </>
-          }
+          sidebarFooter={<ProfileMenu variant="row" />}
+          controlsLeading={<ShellNavControls />}
+          controls={<ThemeToggle />}
         >
           <Suspense fallback={<PageLoading />}>{children}</Suspense>
         </AppShell>

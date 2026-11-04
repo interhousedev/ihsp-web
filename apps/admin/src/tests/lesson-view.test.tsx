@@ -30,19 +30,31 @@ function section(id: string): HTMLElement {
   return element
 }
 
+/** Homework and Attendance open in a pop-up from the lesson's action buttons; the address does not change. */
+async function openPopUp(user: ReturnType<typeof renderAdmin>["user"], name: "Homework" | "Attendance") {
+  await user.click(await screen.findByRole("button", { name }))
+  return screen.findByRole("dialog")
+}
+
 describe("lesson page", () => {
-  test("shows subject, teacher, audience, room, topic, homework, materials and the attendance sheet", async () => {
-    renderAdmin(<LessonViewPage />, { route: ROUTE })
+  test("shows subject, teacher, audience, room, topic, materials; homework and attendance open in pop-ups", async () => {
+    const { user } = renderAdmin(<LessonViewPage />, { route: ROUTE })
 
     expect(await screen.findByRole("heading", { name: "Physics" })).toBeInTheDocument()
     expect(screen.getByText("Kalandarova Gavxar")).toBeInTheDocument()
     expect(screen.getByText("2TN2")).toBeInTheDocument()
     expect(screen.getByText("102")).toBeInTheDocument()
     expect(screen.getByLabelText("Lesson topic")).toBeInTheDocument()
-    expect(screen.getByLabelText("Homework text")).toHaveValue("Solve problems 14-17 on page 52")
     expect(within(section("materials")).getByText("kinematics-notes.pdf")).toBeInTheDocument()
-    expect(section("attendance")).toBeInTheDocument()
-    expect(screen.getByRole("radiogroup", { name: /Ismoilov Jasur/ })).toBeInTheDocument()
+    expect(screen.queryByLabelText("Homework text")).not.toBeInTheDocument()
+
+    const homework = await openPopUp(user, "Homework")
+    expect(within(homework).getByLabelText("Homework text")).toHaveValue("Solve problems 14-17 on page 52")
+    await user.keyboard("{Escape}")
+    await waitFor(() => expect(screen.queryByRole("dialog")).not.toBeInTheDocument())
+
+    const attendance = await openPopUp(user, "Attendance")
+    expect(within(attendance).getByRole("radiogroup", { name: /Ismoilov Jasur/ })).toBeInTheDocument()
   })
 
   test("goes back to the lessons list", async () => {
@@ -97,11 +109,12 @@ describe("editing as Administration", () => {
     )
     const { user } = renderAdmin(<LessonViewPage />, { route: ROUTE })
 
-    const group = await screen.findByRole("radiogroup", { name: /Ismoilov Jasur/ })
+    const attendance = await openPopUp(user, "Attendance")
+    const group = within(attendance).getByRole("radiogroup", { name: /Ismoilov Jasur/ })
     await user.click(within(group).getByRole("radio", { name: "Absent" }))
-    await user.click(within(await screen.findByRole("dialog")).getByRole("button", { name: "Cancel" }))
-    await waitFor(() => expect(screen.queryByRole("dialog")).not.toBeInTheDocument())
-    await user.click(within(section("attendance")).getByRole("button", { name: "Submit attendance" }))
+    await user.click(await screen.findByRole("button", { name: "Cancel" }))
+    await waitFor(() => expect(screen.getAllByRole("dialog")).toHaveLength(1))
+    await user.click(within(attendance).getByRole("button", { name: "Submit attendance" }))
 
     await waitFor(() => expect(bodies).toHaveLength(1))
     expect(bodies[0]).toMatchObject({ base_version: lessonData.attendance.version })
@@ -117,9 +130,10 @@ describe("editing as Administration", () => {
         }),
       ),
     )
-    renderAdmin(<LessonViewPage />, { route: ROUTE })
+    const { user } = renderAdmin(<LessonViewPage />, { route: ROUTE })
 
-    const group = await screen.findByRole("radiogroup", { name: /Ismoilov Jasur/ })
+    const attendance = await openPopUp(user, "Attendance")
+    const group = within(attendance).getByRole("radiogroup", { name: /Ismoilov Jasur/ })
     expect(within(group).getByRole("radio", { name: "Present" })).toBeEnabled()
     expect(screen.queryByText(/7-day window has passed/)).not.toBeInTheDocument()
   })

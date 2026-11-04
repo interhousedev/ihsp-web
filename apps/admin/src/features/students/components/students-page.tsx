@@ -2,9 +2,9 @@
 
 import { getAdminStudents, keys, type StudentItem } from "@ihsp/api"
 import { useFormatters, useT } from "@ihsp/i18n"
-import { Badge, Icons, PageContainer, buttonVariants } from "@ihsp/ui"
+import { Badge, Button, Icons, PageContainer, buttonVariants } from "@ihsp/ui"
 import Link from "next/link"
-import { useMemo } from "react"
+import { useMemo, useState } from "react"
 import { ExportButton } from "../../shared/components/export-button"
 import { ListToolbar, type ToolbarFilter } from "../../shared/components/list-toolbar"
 import { PagedTable } from "../../shared/components/paged-table"
@@ -18,11 +18,14 @@ import { fetchAllPages } from "../../shared/utils/fetch-all-pages"
 import { fullName } from "../../shared/utils/names"
 import { TOUCH } from "../../shared/utils/touch"
 import { STUDENT_FILTER_KEYS, studentParams } from "../utils/student-params"
+import { StudentPhotoDialog } from "./student-photo-dialog"
 
 /** Students list (ADM-3, UF-ADM-03): search and filters in the URL, rows open the Student 360 page, CSV export. */
 export function StudentsPage() {
   const t = useT("students")
   const tSel = useT("shared.selection")
+  const tPhoto = useT("studentPhoto")
+  const [photoStudent, setPhotoStudent] = useState<StudentItem | null>(null)
   const f = useFormatters()
   const filters = useFilterState(STUDENT_FILTER_KEYS)
   const groups = useGroupOptions()
@@ -136,8 +139,14 @@ export function StudentsPage() {
         (student) => (student.synced_at ? f.dateTime(student.synced_at) : "—"),
         { sort: (student) => student.synced_at },
       ),
+      col<StudentItem>("photo", t("columns.photo"), (student) => (
+        <Button type="button" variant="outline" size="sm" className={TOUCH} onClick={() => setPhotoStudent(student)}>
+          <Icons.upload aria-hidden />
+          {tPhoto("action")}
+        </Button>
+      )),
     ],
-    [f, t, tSel],
+    [f, t, tSel, tPhoto],
   )
 
   function studentsCsv(rows: StudentItem[]) {
@@ -197,6 +206,7 @@ export function StudentsPage() {
           </ListToolbar>
         }
       />
+      <StudentPhotoDialog student={photoStudent} onClose={() => setPhotoStudent(null)} />
     </PageContainer>
   )
 }

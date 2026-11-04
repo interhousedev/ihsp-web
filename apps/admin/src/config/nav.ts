@@ -5,7 +5,7 @@ import type { NavGroup } from "@ihsp/ui"
 import { useMemo } from "react"
 
 /**
- * Sidebar of the admin app, as in the spec table: Home, People, Academics, Reports, Communication, Tools.
+ * Sidebar of the admin app: Home, People, Academics, Reports, Operations, Communication, Tools.
  * Administration works on a desktop or a tablet, so there is no phone bottom bar; the sidebar opens as a sheet.
  */
 export function useNav(): { groups: NavGroup[] } {
@@ -18,9 +18,9 @@ export function useNav(): { groups: NavGroup[] } {
           label: t("groupPeople"),
           items: [
             { title: t("students"), url: "/students/", icon: "students" },
-            { title: t("teachers"), url: "/teachers/", icon: "user" },
+            { title: t("teachers"), url: "/teachers/", icon: "userPen" },
             { title: t("users"), url: "/users/", icon: "account" },
-            { title: t("loginCues"), url: "/login-cues/", icon: "user" },
+            { title: t("loginCues"), url: "/login-cues/", icon: "login" },
           ],
         },
         {
@@ -34,7 +34,6 @@ export function useNav(): { groups: NavGroup[] } {
             { title: t("lessons"), url: "/lessons/", icon: "calendarEvent" },
             { title: t("exams"), url: "/exams/", icon: "forms" },
             { title: t("knowledge"), url: "/knowledge/", icon: "library" },
-            { title: t("certificateTypes"), url: "/certificate-types/", icon: "settings" },
           ],
         },
         {
@@ -44,8 +43,15 @@ export function useNav(): { groups: NavGroup[] } {
             { title: t("workOffs"), url: "/work-offs/", icon: "homework" },
             { title: t("reports"), url: "/reports/", icon: "reports" },
             { title: t("certificates"), url: "/certificates/", icon: "grades" },
+            { title: t("certificateTypes"), url: "/certificate-types/", icon: "badgeCheck" },
+          ],
+        },
+        {
+          label: t("groupOperations"),
+          items: [
             { title: t("monitoring"), url: "/monitoring/", icon: "monitoring" },
             { title: t("logs"), url: "/logs/", icon: "warning" },
+            { title: t("limits"), url: "/limits/", icon: "adjustments" },
           ],
         },
         {
@@ -55,11 +61,10 @@ export function useNav(): { groups: NavGroup[] } {
         {
           label: t("groupTools"),
           items: [
-            { title: t("botPosts"), url: "/bot-posts/", icon: "broadcasts" },
+            { title: t("botPosts"), url: "/bot-posts/", icon: "post" },
             { title: t("moderation"), url: "/moderation/", icon: "moderation" },
             { title: t("callForImprovements"), url: "/call-for-improvements/", icon: "chat" },
             { title: t("assistant"), url: "/assistant/", icon: "assistant" },
-            { title: t("limits"), url: "/limits/", icon: "adjustments" },
             { title: t("settings"), url: "/settings/", icon: "settings" },
           ],
         },

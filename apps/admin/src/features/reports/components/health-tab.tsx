@@ -16,7 +16,8 @@ function Up({ ok }: { ok: boolean }) {
 export function HealthTab() {
   const t = useT("reports.health")
   const f = useFormatters()
-  const query = useQuery({ ...getAdminInsightsQuery(), refetchInterval: 30_000 })
+  // Polling pauses while the tab is hidden (refetchIntervalInBackground stays off).
+  const query = useQuery({ ...getAdminInsightsQuery(), refetchInterval: 30_000, refetchIntervalInBackground: false })
   return (
     <QueryState query={query} rows={3}>
       {({ system, generated_at }) => {
