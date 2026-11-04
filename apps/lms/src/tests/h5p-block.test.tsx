@@ -98,6 +98,9 @@ describe("H5P player", () => {
     expect(frame.getAttribute("sandbox")).toBe("allow-scripts")
     expect(frame.getAttribute("src")).toContain("/h5p-player/player.html#base=%2Fv1%2Flms%2Fh5p%2Ftoken-h1")
 
+    // happy-dom does not load iframes, so the frame has no window of its own.
+    const frameWindow = {} as Window
+    Object.defineProperty(frame, "contentWindow", { value: frameWindow })
     const data = { type: "ihsp-h5p-xapi", verb: COMPLETED, score: { raw: 3, max: 4 }, completion: true }
     // A message that does not come from the frame window is ignored.
     act(() => {
@@ -105,7 +108,9 @@ describe("H5P player", () => {
     })
     expect(sent).toBeUndefined()
     act(() => {
-      window.dispatchEvent(new MessageEvent("message", { data, origin: "null", source: frame.contentWindow }))
+      window.dispatchEvent(
+        new MessageEvent("message", { data, origin: "null", source: frameWindow as MessageEventSource }),
+      )
     })
     expect(await screen.findByText("Best result: 3 of 4")).toBeTruthy()
     expect(sent).toEqual({
