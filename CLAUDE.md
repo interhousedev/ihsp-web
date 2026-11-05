@@ -53,10 +53,14 @@ Use oxlint and oxfmt, never prettier or eslint. Run `bun run test` only for the 
 - `app.ihsu.uz` is the installable build of `sp` (APP_MODE `pwa`); `my.ihsu.uz` is the plain site and the Telegram mini app. `PWA_APPS` can make lms, library, staff and admin installable.
 - Web search (Exa) is a switch in the assistant and notebooks; quota errors come back as problem+json types the UI translates.
 
+## Releases
+
+Use the `release` skill to run CI locally, build images, or release a version. Every release moves its entries in `CHANGELOG.md` from `[Unreleased]` to the new version before the tag is created.
+
 ## Rebranding
 
 Brand names and colours live in `packages/config/src/brand.ts` and `packages/ui/src/styles/brand.css`. In messages use the placeholders (`{brand}`, `{appMy}` ...), in code `BRAND`; never a literal (a test fails). See README, "Rebranding".
 
 ## Documentation policy
 
-The repository is open source. The allowed Markdown files are `README.md` files, `CODESTYLE.md`, this file, the community files (`CONTRIBUTING.md`, `SECURITY.md`, `CODE_OF_CONDUCT.md`, `.github/ISSUE_TEMPLATE/*`, `.github/PULL_REQUEST_TEMPLATE.md`) and the project skills in `.claude/skills/<name>/SKILL.md`. Do not add design documents, plans or reports to the repository. Update README.md, CODESTYLE.md or the matching skill when behaviour or rules change.
+The repository is open source. The allowed Markdown files are `README.md` files, `CODESTYLE.md`, `CHANGELOG.md`, this file, the community files (`CONTRIBUTING.md`, `SECURITY.md`, `CODE_OF_CONDUCT.md`, `.github/ISSUE_TEMPLATE/*`, `.github/PULL_REQUEST_TEMPLATE.md`) and the project skills in `.claude/skills/<name>/SKILL.md`. Do not add design documents, plans or reports to the repository. Update README.md, CODESTYLE.md or the matching skill when behaviour or rules change.
