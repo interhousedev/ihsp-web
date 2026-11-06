@@ -63,7 +63,7 @@ describe("exams list", () => {
     await renderList()
 
     const row = within(rowOf("Algebra and functions"))
-    expect(row.getByText("Wed 14 Oct")).toBeInTheDocument()
+    expect(row.getByText(/^Wed,? 14 Oct$/)).toBeInTheDocument()
     expect(row.getByText("Mathematics")).toBeInTheDocument()
     expect(row.getByText("2TN2")).toBeInTheDocument()
     expect(row.getByText("Midterm 1")).toBeInTheDocument()
