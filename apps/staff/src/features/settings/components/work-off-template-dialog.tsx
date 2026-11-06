@@ -1,7 +1,7 @@
 "use client"
 
 import { useT } from "@ihsp/i18n"
-import { Button, Dialog, DialogContent, DialogFooter, DialogHeader, DialogTitle, Label, Textarea } from "@ihsp/ui"
+import { Button, Label, ResponsiveDialog, Textarea } from "@ihsp/ui"
 import { useId, useState } from "react"
 
 /** A work-off template: its text (1 to 1000 characters). The caller shows the error of a failed save. */
@@ -27,28 +27,13 @@ export function WorkOffTemplateDialog({
   const trimmed = text.trim()
 
   return (
-    <Dialog open onOpenChange={(open) => !open && onClose()}>
-      <DialogContent className="max-h-[90dvh] overflow-y-auto sm:max-w-md">
-        <DialogHeader>
-          <DialogTitle>{title}</DialogTitle>
-        </DialogHeader>
-        <div className="flex flex-col gap-1.5">
-          <Label htmlFor={id}>{t("text")}</Label>
-          <Textarea
-            id={id}
-            value={text}
-            rows={4}
-            maxLength={1000}
-            placeholder={t("placeholder")}
-            onChange={(event) => setText(event.target.value)}
-          />
-        </div>
-        {error ? (
-          <p role="alert" className="text-destructive text-sm">
-            {error}
-          </p>
-        ) : null}
-        <DialogFooter>
+    <ResponsiveDialog
+      open
+      onOpenChange={(open) => !open && onClose()}
+      title={title}
+      size="sm"
+      footer={
+        <>
           <Button variant="outline" className="min-h-11 md:min-h-8" onClick={onClose}>
             {tc("cancel")}
           </Button>
@@ -59,8 +44,25 @@ export function WorkOffTemplateDialog({
           >
             {tc("save")}
           </Button>
-        </DialogFooter>
-      </DialogContent>
-    </Dialog>
+        </>
+      }
+    >
+      <div className="flex flex-col gap-1.5">
+        <Label htmlFor={id}>{t("text")}</Label>
+        <Textarea
+          id={id}
+          value={text}
+          rows={4}
+          maxLength={1000}
+          placeholder={t("placeholder")}
+          onChange={(event) => setText(event.target.value)}
+        />
+      </div>
+      {error ? (
+        <p role="alert" className="text-destructive text-sm">
+          {error}
+        </p>
+      ) : null}
+    </ResponsiveDialog>
   )
 }

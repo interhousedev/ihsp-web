@@ -1,21 +1,10 @@
 "use client"
 
-import { rosterOf, useStaffLesson, type SheetRosterItem } from "@ihsp/features-core"
+import { QueryState, rosterOf, type SheetRosterItem, useStaffLesson } from "@ihsp/features-core"
 import { useErrorMessage, useT } from "@ihsp/i18n"
-import {
-  Badge,
-  Button,
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogHeader,
-  DialogTitle,
-  Input,
-  StateView,
-} from "@ihsp/ui"
+import { Badge, Button, Input, ResponsiveDialog, StateView } from "@ihsp/ui"
 import { useState } from "react"
 import { toast } from "sonner"
-import { QueryState } from "../../shared/components/query-state"
 import { fullName } from "../../shared/utils/people"
 import { useSetExcuse } from "../../attendance/use-set-excuse"
 
@@ -130,14 +119,14 @@ export function ExcuseDialog({
 }) {
   const t = useT("group.excuse")
   return (
-    <Dialog open={lessonId !== null} onOpenChange={(open) => !open && onClose()}>
-      <DialogContent className="max-h-[90dvh] overflow-y-auto sm:max-w-md">
-        <DialogHeader>
-          <DialogTitle>{t("title")}</DialogTitle>
-          <DialogDescription>{label}</DialogDescription>
-        </DialogHeader>
-        {lessonId ? <ExcuseList key={lessonId} lessonId={lessonId} /> : null}
-      </DialogContent>
-    </Dialog>
+    <ResponsiveDialog
+      open={lessonId !== null}
+      onOpenChange={(open) => !open && onClose()}
+      title={t("title")}
+      description={label}
+      size="sm"
+    >
+      {lessonId ? <ExcuseList key={lessonId} lessonId={lessonId} /> : null}
+    </ResponsiveDialog>
   )
 }

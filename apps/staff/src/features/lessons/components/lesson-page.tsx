@@ -1,12 +1,10 @@
 "use client"
 
-import { LessonDetail, scrollToHash, useStaffLesson } from "@ihsp/features-core"
+import { BackLink, LessonDetail, QueryState, scrollToHash, useStaffLesson } from "@ihsp/features-core"
 import { useT } from "@ihsp/i18n"
 import { PageContainer, StateView } from "@ihsp/ui"
 import { parseAsString, useQueryState } from "nuqs"
 import { useEffect } from "react"
-import { BackLink } from "../../shared/components/back-link"
-import { QueryState } from "../../shared/components/query-state"
 import { TemporaryMarksSection } from "./temporary-marks-section"
 
 /**

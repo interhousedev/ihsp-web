@@ -2,12 +2,12 @@
 
 import { getStaffAssessmentsQuery, type StaffAssessmentItem } from "@ihsp/api"
 import { useErrorMessage, useFormatters, useT } from "@ihsp/i18n"
-import { Button, ConfirmDialog, Icons } from "@ihsp/ui"
+import { Button, ConfirmDialog, Icons, SubjectFilter } from "@ihsp/ui"
 import { useQuery } from "@tanstack/react-query"
 import { parseAsString, useQueryState } from "nuqs"
 import { useMemo, useState } from "react"
 import { toast } from "sonner"
-import { QueryState } from "../../shared/components/query-state"
+import { QueryState } from "@ihsp/features-core"
 import { useTeachingTimetable } from "../hooks/use-teaching-timetable"
 import { useUpdateExam } from "../hooks/use-update-exam"
 import { filterBySubject, groupBySection, newestFirst, statusOf, weekPeriods } from "../utils/controls"
@@ -16,7 +16,6 @@ import { subjectChoices, type TeachingGroup } from "../utils/teaching"
 import { ExamEditorDialog } from "./exam-editor-dialog"
 import { ExamRow, type ExamRowActions } from "./exam-row"
 import { ExamSection } from "./exam-section"
-import { SubjectFilter } from "./subject-filter"
 import { SuggestionRow } from "./suggestion-row"
 import { SuggestionsBlock } from "./suggestions-block"
 
@@ -82,7 +81,13 @@ export function ExamsOfGroup({ group }: { group: TeachingGroup }) {
     <>
       <div className="flex flex-wrap items-end justify-between gap-3">
         {subjects.length > 1 ? (
-          <SubjectFilter subjects={subjects} value={subjectId} onChange={(id) => void setSubject(id || null)} />
+          <SubjectFilter
+            subjects={subjects}
+            value={subjectId || null}
+            onChange={(id) => void setSubject(id)}
+            label={t("subjectFilter")}
+            allLabel={t("allSubjects")}
+          />
         ) : (
           <span />
         )}

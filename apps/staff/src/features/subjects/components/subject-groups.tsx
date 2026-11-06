@@ -69,7 +69,7 @@ export function SubjectGroups({ subject }: { subject: StaffSubject }) {
       </h2>
       <ul className="grid grid-cols-1 gap-3 md:grid-cols-2">
         {byGroup(subject.groups).map((group) => (
-          <li key={group.group_id} className="bg-card ring-foreground/10 flex flex-col gap-3 rounded-xl p-4 ring-1">
+          <li key={group.group_id} className="bg-card ring-foreground/10 flex flex-col gap-3 rounded-card p-4 ring-1">
             <div className="flex flex-col gap-0.5">
               <h3 className="font-medium">{group.group_name}</h3>
               {group.halves.length > 0 ? (

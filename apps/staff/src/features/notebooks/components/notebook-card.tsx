@@ -20,7 +20,7 @@ export function NotebookCard({ notebook }: { notebook: NotebookItem }) {
     <li className="relative">
       <Link
         href={notebookHref(notebook.id)}
-        className="bg-card hover:bg-muted/50 focus-visible:ring-ring ring-foreground/10 flex h-full min-h-32 flex-col gap-3 rounded-xl p-4 text-start ring-1 transition-colors outline-none focus-visible:ring-2"
+        className="bg-card hover:bg-muted/50 focus-visible:ring-ring ring-foreground/10 flex h-full min-h-32 flex-col gap-3 rounded-card p-4 text-start ring-1 transition-colors outline-none focus-visible:ring-2"
       >
         <span aria-hidden className="text-4xl leading-none">
           {notebook.emoji ?? FALLBACK_EMOJI}

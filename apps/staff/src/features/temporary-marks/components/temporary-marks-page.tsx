@@ -6,7 +6,7 @@ import { MarkBadge, PageContainer } from "@ihsp/ui"
 import { useQuery } from "@tanstack/react-query"
 import Link from "next/link"
 import { lessonHref } from "../../shared/utils/lesson-time"
-import { QueryState } from "../../shared/components/query-state"
+import { QueryState } from "@ihsp/features-core"
 
 type Group = {
   lessonId: string

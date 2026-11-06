@@ -1,17 +1,19 @@
 "use client"
 
 import {
+  CardSkeletons,
   groupNotebooks,
   NOTEBOOK_FOLDERS,
   parseNotebookFolder,
   placeholderSlots,
   SubjectSlotCards,
+  type NotebookFolder,
   useAllNotebooks,
   useSubjectNotebookSlots,
-  type NotebookFolder,
 } from "@ihsp/features-core"
+import { SharedNotebooksSection } from "@ihsp/features-core"
 import { useT } from "@ihsp/i18n"
-import { Button, Input, PageContainer, Skeleton, StateView, cn, useDebounce } from "@ihsp/ui"
+import { Button, cn, Input, PageContainer, StateView, useDebounce } from "@ihsp/ui"
 import { IconSearch } from "@ihsp/ui"
 import { useRouter, useSearchParams } from "next/navigation"
 import { useEffect, useState } from "react"
@@ -23,18 +25,6 @@ const SEARCH_DELAY_MS = 300
 /** Past this many cards the grid is paged: the rest is revealed in steps of this size. */
 const PAGE_SIZE = 48
 const GRID = "grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4"
-
-function CardSkeletons() {
-  return (
-    <ul className={GRID} aria-hidden>
-      {Array.from({ length: 4 }, (_, index) => (
-        <li key={index}>
-          <Skeleton className="h-32 w-full rounded-xl" />
-        </li>
-      ))}
-    </ul>
-  )
-}
 
 /** `/notebooks/`: the student's notebooks (pinned first), a search field and a New notebook tile (docs § 5.3). */
 export function NotebooksPage() {
@@ -57,6 +47,7 @@ export function NotebooksPage() {
 
   return (
     <PageContainer title={t("list.title")} actions={<NewNotebookButton />}>
+      <SharedNotebooksSection />
       <div className="relative max-w-md">
         <IconSearch
           aria-hidden
@@ -92,7 +83,7 @@ export function NotebooksPage() {
         })}
       </div>
 
-      {notebooks.isPending ? <CardSkeletons /> : null}
+      {notebooks.isPending ? <StateView state="loading" skeleton={<CardSkeletons />} /> : null}
       {notebooks.isError ? (
         <StateView state="error" error={notebooks.error} onRetry={() => void notebooks.refetch()} />
       ) : null}

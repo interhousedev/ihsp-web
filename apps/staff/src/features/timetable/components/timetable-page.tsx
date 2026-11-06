@@ -2,10 +2,10 @@
 
 import { getStaffTimetableQuery } from "@ihsp/api"
 import { useT } from "@ihsp/i18n"
-import { PageContainer, useIsMobile } from "@ihsp/ui"
+import { PageContainer, StateView, useIsMobile } from "@ihsp/ui"
 import { useQuery } from "@tanstack/react-query"
 import { parseAsString, useQueryState } from "nuqs"
-import { QueryState } from "../../shared/components/query-state"
+import { QueryState } from "@ihsp/features-core"
 import { useNow } from "../../shared/hooks/use-now"
 import { mondayOf, selectedDay, weekRange } from "../utils/week"
 import { TimetableDayList } from "./timetable-day-list"
@@ -46,7 +46,7 @@ export function TimetablePage() {
               now={now}
             />
           ) : lessons.length === 0 ? (
-            <p className="text-muted-foreground text-sm">{t("noLessonsWeek")}</p>
+            <StateView state="empty" emptyText={t("noLessonsWeek")} />
           ) : (
             <TimetableWeekGrid monday={monday} lessons={lessons} now={now} />
           )

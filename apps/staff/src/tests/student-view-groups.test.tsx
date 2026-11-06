@@ -1,6 +1,6 @@
 /** The student profile opened directly, its subject filter in the URL, and the two group pages that link to it. */
 import { afterEach, beforeEach, describe, expect, test } from "bun:test"
-import { group2TN2, ids, journal, journalOptions } from "@ihsp/test-utils"
+import { group2TN2, ids, journal, journalOptions, selectDropdownOption } from "@ihsp/test-utils"
 import { screen, waitFor, within } from "@testing-library/react"
 import { NuqsTestingAdapter } from "nuqs/adapters/testing"
 import type { ReactElement } from "react"
@@ -46,7 +46,7 @@ describe("STF-9 student profile opened directly", () => {
       journalOptions.length,
     )
     expect(screen.getByTestId("attendance-summary")).toBeInTheDocument()
-    expect(screen.getByRole("button", { name: "All subjects" })).toHaveAttribute("aria-pressed", "true")
+    expect(screen.getByRole("combobox", { name: "Subject" })).toHaveAttribute("data-value", "")
   })
 
   test("a student id that is not one of the teacher's students shows not found", async () => {
@@ -65,14 +65,14 @@ describe("STF-9 subject filter on the student profile", () => {
     const marks = await screen.findByTestId("marks-by-subject")
     expect(within(marks).getAllByRole("listitem")).toHaveLength(journalOptions.length)
 
-    await user.click(await screen.findByRole("button", { name: english.subject.name }))
+    await selectDropdownOption(user, await screen.findByRole("combobox", { name: "Subject" }), english.subject.name)
 
     await waitFor(() => expect(within(screen.getByTestId("marks-by-subject")).getAllByRole("listitem")).toHaveLength(1))
     const narrowed = screen.getByTestId("marks-by-subject")
     expect(within(narrowed).getByText(new RegExp(`^${english.subject.name} · `))).toBeInTheDocument()
     expect(within(narrowed).queryByText(new RegExp(`^${physics.subject.name} · `))).toBeNull()
     expect(urls.at(-1)?.get("subject")).toBe(english.subject.id)
-    expect(screen.getByRole("button", { name: english.subject.name })).toHaveAttribute("aria-pressed", "true")
+    expect(screen.getByRole("combobox", { name: "Subject" })).toHaveAttribute("data-value", english.subject.id)
   })
 
   test("a profile opened with the subject in the URL is already filtered", async () => {
@@ -83,7 +83,7 @@ describe("STF-9 subject filter on the student profile", () => {
     const marks = await screen.findByTestId("marks-by-subject")
     expect(within(marks).getAllByRole("listitem")).toHaveLength(1)
     expect(within(marks).getByText(new RegExp(`^${physics.subject.name} · `))).toBeInTheDocument()
-    expect(screen.getByRole("button", { name: physics.subject.name })).toHaveAttribute("aria-pressed", "true")
+    expect(screen.getByRole("combobox", { name: "Subject" })).toHaveAttribute("data-value", physics.subject.id)
   })
 
   test("All subjects clears the filter again", async () => {
@@ -92,7 +92,7 @@ describe("STF-9 subject filter on the student profile", () => {
     })
     expect(within(await screen.findByTestId("marks-by-subject")).getAllByRole("listitem")).toHaveLength(1)
 
-    await user.click(screen.getByRole("button", { name: "All subjects" }))
+    await selectDropdownOption(user, screen.getByRole("combobox", { name: "Subject" }), "All subjects")
 
     await waitFor(() =>
       expect(within(screen.getByTestId("marks-by-subject")).getAllByRole("listitem")).toHaveLength(

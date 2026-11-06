@@ -3,18 +3,20 @@
 import type { NotebookItem } from "@ihsp/api"
 import { useNotebookErrorMessage, useUpdateNotebook } from "@ihsp/features-core"
 import { useT } from "@ihsp/i18n"
-import { Button, DialogFooter, DialogHeader, DialogTitle, Input, Label } from "@ihsp/ui"
+import { Button, Input, Label, ResponsiveDialog } from "@ihsp/ui"
 import { useId, useState } from "react"
 
 const TITLE_MAX = 200
 
 type RenameNotebookFormProps = {
   notebook: NotebookItem
-  onDone: () => void
+  open: boolean
+  onOpenChange: (open: boolean) => void
 }
 
 /** The form inside the Rename dialog; it mounts with the dialog, so it always starts from the current title. */
-export function RenameNotebookForm({ notebook, onDone }: RenameNotebookFormProps) {
+export function RenameNotebookForm({ notebook, open, onOpenChange }: RenameNotebookFormProps) {
+  const onDone = () => onOpenChange(false)
   const t = useT("notebooks")
   const common = useT("common")
   const errorMessage = useNotebookErrorMessage()
@@ -24,18 +26,28 @@ export function RenameNotebookForm({ notebook, onDone }: RenameNotebookFormProps
   const trimmed = title.trim()
 
   return (
-    <form
-      className="flex flex-col gap-4"
+    <ResponsiveDialog
+      open={open}
+      onOpenChange={onOpenChange}
+      size="sm"
+      title={t("rename.title")}
       onSubmit={(event) => {
         event.preventDefault()
         if (trimmed === "") return
         if (trimmed === notebook.title) onDone()
         else update.mutate({ title: trimmed }, { onSuccess: onDone })
       }}
+      footer={
+        <>
+          <Button type="button" variant="outline" className="min-h-11" onClick={onDone}>
+            {common("cancel")}
+          </Button>
+          <Button type="submit" className="min-h-11" disabled={update.isPending || trimmed === ""}>
+            {common("save")}
+          </Button>
+        </>
+      }
     >
-      <DialogHeader>
-        <DialogTitle>{t("rename.title")}</DialogTitle>
-      </DialogHeader>
       <div className="flex flex-col gap-1">
         <Label htmlFor={inputId}>{t("rename.label")}</Label>
         <Input
@@ -51,14 +63,6 @@ export function RenameNotebookForm({ notebook, onDone }: RenameNotebookFormProps
           {errorMessage(update.error)}
         </p>
       ) : null}
-      <DialogFooter>
-        <Button type="button" variant="outline" className="min-h-11" onClick={onDone}>
-          {common("cancel")}
-        </Button>
-        <Button type="submit" className="min-h-11" disabled={update.isPending || trimmed === ""}>
-          {common("save")}
-        </Button>
-      </DialogFooter>
-    </form>
+    </ResponsiveDialog>
   )
 }

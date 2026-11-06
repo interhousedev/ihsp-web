@@ -6,7 +6,7 @@ import { Dropdown } from "@ihsp/ui"
 import { useQuery } from "@tanstack/react-query"
 import { parseAsString, useQueryState } from "nuqs"
 import { useId, type ReactNode } from "react"
-import { QueryState } from "../../shared/components/query-state"
+import { QueryState } from "@ihsp/features-core"
 
 /**
  * Finds the group of the "My group" pages: the groups the teacher curates (`GET /v1/staff/groups`). A teacher who

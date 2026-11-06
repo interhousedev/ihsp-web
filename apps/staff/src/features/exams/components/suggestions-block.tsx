@@ -10,7 +10,7 @@ export function SuggestionsBlock({ count, children }: { count: number; children:
   return (
     <section
       aria-labelledby={headingId}
-      className="border-primary/40 bg-primary/5 flex flex-col gap-3 rounded-xl border p-3"
+      className="border-primary/40 bg-primary/5 flex flex-col gap-3 rounded-card border p-3"
     >
       <div className="flex flex-col gap-1">
         <h2 id={headingId} className="text-base font-semibold">

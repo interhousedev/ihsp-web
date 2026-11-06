@@ -35,7 +35,7 @@ export function JournalCardList({
     <ScrollList label={t("studentCards")}>
       <ul className="flex flex-col gap-3" data-testid="journal-cards">
         {journal.students.map((student, row) => (
-          <li key={student.user_id} className="bg-card ring-foreground/10 flex flex-col gap-2 rounded-xl p-3 ring-1">
+          <li key={student.user_id} className="bg-card ring-foreground/10 flex flex-col gap-2 rounded-card p-3 ring-1">
             <div className="flex flex-wrap items-center justify-between gap-2">
               <h3 className="font-medium break-words">{fullName(student)}</h3>
               <p className="text-muted-foreground flex items-center gap-2 text-sm">

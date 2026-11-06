@@ -1,6 +1,6 @@
 "use client"
 
-import { GroupProgressSection } from "@ihsp/features-core"
+import { GroupProgressSection, QueryState } from "@ihsp/features-core"
 import {
   getGroupProgressQuery,
   getStaffGroupQuery,
@@ -13,7 +13,6 @@ import { PageContainer } from "@ihsp/ui"
 import { useQuery } from "@tanstack/react-query"
 import { useState } from "react"
 import { GroupHeader, StudentList } from "../../shared/components/group-roster"
-import { QueryState } from "../../shared/components/query-state"
 import { fullName } from "../../shared/utils/people"
 import { sortStudents } from "../utils/students"
 import { GroupScope } from "./group-scope"

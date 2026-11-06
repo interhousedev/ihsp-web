@@ -3,7 +3,7 @@
 import { deleteStaffSubjectMaterial, getStaffSubjectMaterialsQuery, type SubjectMaterial } from "@ihsp/api"
 import { useErrorMessage, useT } from "@ihsp/i18n"
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query"
-import { QueryState } from "../../shared/components/query-state"
+import { QueryState } from "@ihsp/features-core"
 import { byGroup } from "../utils/groups"
 import { MaterialForm } from "./material-form"
 import { MaterialList } from "./material-list"

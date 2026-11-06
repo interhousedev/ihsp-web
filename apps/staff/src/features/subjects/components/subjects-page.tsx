@@ -5,7 +5,7 @@ import { useT } from "@ihsp/i18n"
 import { PageContainer } from "@ihsp/ui"
 import { useQuery } from "@tanstack/react-query"
 import Link from "next/link"
-import { QueryState } from "../../shared/components/query-state"
+import { QueryState } from "@ihsp/features-core"
 import { byGroup } from "../utils/groups"
 import { subjectHref } from "../utils/hrefs"
 
@@ -22,7 +22,7 @@ export function SubjectsPage() {
               <li key={subject.subject_id}>
                 <Link
                   href={subjectHref(subject.subject_id)}
-                  className="bg-card hover:bg-muted/50 focus-visible:ring-ring ring-foreground/10 flex min-h-24 flex-col gap-1 rounded-xl p-4 ring-1 outline-none focus-visible:ring-2"
+                  className="bg-card hover:bg-muted/50 focus-visible:ring-ring ring-foreground/10 flex min-h-24 flex-col gap-1 rounded-card p-4 ring-1 outline-none focus-visible:ring-2"
                 >
                   <span className="font-medium break-words">{subject.name}</span>
                   <span className="text-muted-foreground text-sm">

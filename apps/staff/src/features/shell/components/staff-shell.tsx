@@ -1,12 +1,11 @@
 "use client"
 
 import { RequireAuth, RequireRole } from "@ihsp/auth"
-import { ShellNavControls } from "@ihsp/features-core"
+import { PageLoading, ShellNavControls, usePlatformLinks } from "@ihsp/features-core"
 import { AppShell } from "@ihsp/ui"
 import { Suspense, type ReactNode } from "react"
 import { useNav } from "../../../config/nav"
 import { CuratedGroupsError } from "./curated-groups-error"
-import { PageLoading } from "./page-loading"
 import { ProfileMenu } from "./profile-menu"
 import { ShellHeader } from "./shell-header"
 import { StaffBrand } from "./staff-brand"
@@ -31,11 +30,13 @@ export function StaffShell({ children }: { children: ReactNode }) {
  */
 function StaffFrame({ children }: { children: ReactNode }) {
   const nav = useNav()
+  const platforms = usePlatformLinks()
   return (
     <AppShell
       controlsLeading={<ShellNavControls />}
       nav={nav.groups}
       bottomNav={nav.bottom}
+      platforms={platforms}
       brand={<StaffBrand />}
       sidebarFooter={<ProfileMenu variant="row" />}
       controls={<ShellHeader nav={nav.groups} />}

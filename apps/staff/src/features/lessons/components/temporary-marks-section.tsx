@@ -5,7 +5,7 @@ import type { RosterItem } from "@ihsp/api"
 import { useT } from "@ihsp/i18n"
 import { ScrollList } from "@ihsp/ui"
 import { useQuery } from "@tanstack/react-query"
-import { QueryState } from "../../shared/components/query-state"
+import { QueryState } from "@ihsp/features-core"
 import { TemporaryMarkRow } from "./temporary-marks-row"
 
 /** The lesson's temporary marks (2 to 5) per roster student; they stay here until the teacher puts them into EMIS. */

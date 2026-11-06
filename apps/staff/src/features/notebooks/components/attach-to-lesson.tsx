@@ -2,7 +2,7 @@
 
 import { getArtifactQuery, getStaffTimetableQuery, type LessonItem } from "@ihsp/api"
 import { addDays, todayIso, useErrorMessage, useFormatters, useT } from "@ihsp/i18n"
-import { Button, Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger, Icons } from "@ihsp/ui"
+import { Button, Icons, ResponsiveDialog } from "@ihsp/ui"
 import { useQuery } from "@tanstack/react-query"
 import Link from "next/link"
 import { useState } from "react"
@@ -27,25 +27,19 @@ export function AttachToLesson({ notebookId, artifactId }: { notebookId: string;
   if (!artifact.data || artifact.data.status !== "ready" || !ATTACHABLE.has(artifact.data.kind)) return null
 
   return (
-    <Dialog open={open} onOpenChange={setOpen}>
-      <DialogTrigger
-        render={
-          <Button
-            className="fixed end-4 bottom-20 z-40 min-h-11 shadow-lg md:bottom-4"
-            data-testid="attach-to-lesson"
-          />
-        }
+    <>
+      <Button
+        className="fixed end-4 bottom-20 z-40 min-h-11 shadow-lg md:bottom-4"
+        data-testid="attach-to-lesson"
+        onClick={() => setOpen(true)}
       >
         <Icons.paperclip aria-hidden />
         {t("attach")}
-      </DialogTrigger>
-      <DialogContent className="max-h-[90dvh] overflow-y-auto sm:max-w-md">
-        <DialogHeader>
-          <DialogTitle>{t("attachTitle")}</DialogTitle>
-        </DialogHeader>
+      </Button>
+      <ResponsiveDialog open={open} onOpenChange={setOpen} title={t("attachTitle")} size="sm">
         {open ? <LessonChoices notebookId={notebookId} artifactId={artifactId} onDone={() => setOpen(false)} /> : null}
-      </DialogContent>
-    </Dialog>
+      </ResponsiveDialog>
+    </>
   )
 }
 

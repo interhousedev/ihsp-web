@@ -1,7 +1,7 @@
 "use client"
 
 import { useT } from "@ihsp/i18n"
-import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from "@ihsp/ui"
+import { ResponsiveDialog } from "@ihsp/ui"
 import type { ControlPeriods } from "../utils/controls"
 import type { EditorState } from "../utils/editor-state"
 import type { SubjectChoice, TeachingGroup } from "../utils/teaching"
@@ -34,23 +34,22 @@ export function ExamEditorDialog({
             : t("titleEdit")
 
   return (
-    <Dialog open={state !== null} onOpenChange={(open) => !open && onClose()}>
-      <DialogContent className="max-h-[92dvh] overflow-y-auto sm:max-w-lg">
-        <DialogHeader>
-          <DialogTitle>{title}</DialogTitle>
-          <DialogDescription>{t("group", { name: group.name })}</DialogDescription>
-        </DialogHeader>
-        {state ? (
-          <ExamForm
-            key={state.mode === "edit" ? state.item.id : state.mode}
-            group={group}
-            state={state}
-            subjects={subjects}
-            periods={periods}
-            onDone={onClose}
-          />
-        ) : null}
-      </DialogContent>
-    </Dialog>
+    <ResponsiveDialog
+      open={state !== null}
+      onOpenChange={(open) => !open && onClose()}
+      title={title}
+      description={t("group", { name: group.name })}
+    >
+      {state ? (
+        <ExamForm
+          key={state.mode === "edit" ? state.item.id : state.mode}
+          group={group}
+          state={state}
+          subjects={subjects}
+          periods={periods}
+          onDone={onClose}
+        />
+      ) : null}
+    </ResponsiveDialog>
   )
 }
