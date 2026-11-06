@@ -10,7 +10,7 @@ export function StepList({ steps }: { steps: Step[] }) {
   return (
     <ol className="flex flex-col gap-3">
       {steps.map((step, index) => (
-        <li key={step.text} className="bg-card flex items-center gap-3 rounded-xl border p-3">
+        <li key={step.text} className="bg-card flex items-center gap-3 rounded-card border p-3">
           <span
             aria-hidden
             className="bg-primary text-primary-foreground flex size-7 shrink-0 items-center justify-center rounded-full text-sm font-semibold"

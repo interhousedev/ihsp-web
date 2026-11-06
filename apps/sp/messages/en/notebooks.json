@@ -1105,6 +1105,37 @@
         "improvements": "How to improve",
         "tooShort": "Write at least 10 words first"
       }
+    },
+    "share": {
+      "title": "Share",
+      "linkTitle": "Link",
+      "linkCreate": "Create link",
+      "linkReplace": "Replace link",
+      "linkOff": "Turn link off",
+      "linkOffHint": "Turning the link off removes everyone who joined through it.",
+      "linkOnce": "Copy it now: this link is shown only once. Anyone opening it must sign in.",
+      "linkCopied": "Link copied",
+      "copyFailed": "Could not copy the link",
+      "copyLink": "Copy link",
+      "peopleTitle": "People",
+      "searchPlaceholder": "Search by name, 3 letters or more",
+      "noPeople": "Nobody found",
+      "recipientsHint": "Students can share only with classmates in their group.",
+      "remove": "Remove {name}",
+      "hiddenSources": "Chats, lesson, course and library sources stay private and are not shared.",
+      "setsTitle": "Base materials",
+      "setSources": "sources: {count}",
+      "setGone": "You no longer have access to this notebook",
+      "detach": "Detach",
+      "attach": "Attach {title}",
+      "noSets": "Notebooks shared with you can be attached here. Their current sources join this notebook's chat.",
+      "joinTitle": "Shared with you",
+      "joinFailed": "This link does not work any more. Ask the owner for a new one.",
+      "sharedWithMe": "Shared with me",
+      "sharedBy": "From {name}",
+      "noStudio": "Studio is not available in a shared notebook. Copy it to your notebooks to use Studio.",
+      "copy": "Copy to my notebooks",
+      "leave": "Remove from my list"
     }
   },
   "errors": {

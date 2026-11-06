@@ -176,11 +176,12 @@ describe("subject page", () => {
     expect(screen.getByText("0%")).toBeInTheDocument()
     expect(screen.getByText("Averages")).toBeInTheDocument()
     expect(screen.getByRole("tab", { name: "Overview", selected: true })).toBeInTheDocument()
-    expect(screen.queryByRole("tab", { name: "Marks" })).not.toBeInTheDocument()
+    expect(screen.getByRole("tab", { name: "My marks" })).toBeInTheDocument()
+    expect(screen.queryByRole("heading", { name: "Subject notebook" })).not.toBeInTheDocument()
   })
 
-  test("Overview has the planner and notebook buttons", async () => {
-    renderSp(<SubjectPage />, { route: PHYSICS })
+  test("My marks has the planner and the header has the notebook button", async () => {
+    renderSp(<SubjectPage />, { route: `${PHYSICS}&tab=marks` })
 
     const planner = await screen.findByRole("link", { name: "Mark planner" })
     expect(planner.getAttribute("href")).toBe(`/grades/plan?subject=${ids.physics}&semester=4`)

@@ -3,7 +3,7 @@
 import { useT } from "@ihsp/i18n"
 import { PageContainer, StateView } from "@ihsp/ui"
 import { parseAsInteger, parseAsString, useQueryState } from "nuqs"
-import { BackLink } from "../../../shared/components/back-link"
+import { BackLink } from "@ihsp/features-core"
 import { gradesHref } from "../utils/hrefs"
 import { PlannerBody } from "./planner-body"
 

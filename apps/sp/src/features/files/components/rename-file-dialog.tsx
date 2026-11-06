@@ -2,7 +2,7 @@
 
 import type { FileItem } from "@ihsp/api"
 import { useErrorMessage, useT } from "@ihsp/i18n"
-import { Button, Dialog, DialogContent, DialogFooter, DialogHeader, DialogTitle, Input, Label } from "@ihsp/ui"
+import { Button, Input, Label, ResponsiveDialog } from "@ihsp/ui"
 import { useId, useState } from "react"
 import { useRenameFile } from "../hooks/use-my-files"
 
@@ -17,16 +17,27 @@ function RenameFileForm({ file, onClose }: { file: FileItem; onClose: () => void
   const trimmed = name.trim()
 
   return (
-    <form
-      className="flex flex-col gap-4"
+    <ResponsiveDialog
+      open
+      onOpenChange={(open) => {
+        if (!open) onClose()
+      }}
+      title={t("title")}
       onSubmit={(event) => {
         event.preventDefault()
         if (trimmed) rename.mutate({ id: file.id, name: trimmed }, { onSuccess: onClose })
       }}
+      footer={
+        <>
+          <Button type="button" variant="outline" className="min-h-11" onClick={onClose}>
+            {t("cancel")}
+          </Button>
+          <Button type="submit" className="min-h-11" disabled={rename.isPending || trimmed === ""}>
+            {t("save")}
+          </Button>
+        </>
+      }
     >
-      <DialogHeader>
-        <DialogTitle>{t("title")}</DialogTitle>
-      </DialogHeader>
       <div className="flex flex-col gap-1">
         <Label htmlFor={inputId}>{t("label")}</Label>
         <Input
@@ -42,28 +53,11 @@ function RenameFileForm({ file, onClose }: { file: FileItem; onClose: () => void
           {errorMessage(rename.error)}
         </p>
       ) : null}
-      <DialogFooter>
-        <Button type="button" variant="outline" className="min-h-11" onClick={onClose}>
-          {t("cancel")}
-        </Button>
-        <Button type="submit" className="min-h-11" disabled={rename.isPending || trimmed === ""}>
-          {t("save")}
-        </Button>
-      </DialogFooter>
-    </form>
+    </ResponsiveDialog>
   )
 }
 
 /** Rename dialog; the form is keyed by the file, so every file starts with its own name and a clean error state. */
 export function RenameFileDialog({ file, onClose }: RenameFileDialogProps) {
-  return (
-    <Dialog
-      open={file !== null}
-      onOpenChange={(open) => {
-        if (!open) onClose()
-      }}
-    >
-      <DialogContent>{file ? <RenameFileForm key={file.id} file={file} onClose={onClose} /> : null}</DialogContent>
-    </Dialog>
-  )
+  return file ? <RenameFileForm key={file.id} file={file} onClose={onClose} /> : null
 }

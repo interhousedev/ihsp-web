@@ -5,7 +5,7 @@ import { todayIso, useFormatters, useT } from "@ihsp/i18n"
 import { Button, Icons } from "@ihsp/ui"
 import { useQuery } from "@tanstack/react-query"
 import { useState } from "react"
-import { QueryState } from "../../shared/components/query-state"
+import { QueryState } from "@ihsp/features-core"
 import { groupBySubject, shiftDay } from "../utils/subject-groups"
 import { HomeworkItemCard } from "./homework-item-card"
 

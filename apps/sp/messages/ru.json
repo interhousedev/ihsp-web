@@ -49,7 +49,7 @@
       "grades": "Оценки",
       "homework": "Задания",
       "exams": "Экзамены",
-      "assistant": "Помощник",
+      "assistant": "Ассистент",
       "notebooks": "Блокноты",
       "flashcards": "Карточки",
       "files": "Файлы",
@@ -278,6 +278,7 @@
       "month": "Месяц"
     },
     "viewsLabel": "Вид календаря",
+    "hideOtherSubgroup": "Не показывать уроки другой подгруппы",
     "today": "Сегодня",
     "previousMonth": "Предыдущий месяц",
     "nextMonth": "Следующий месяц",
@@ -327,12 +328,14 @@
     "noNextLesson": "Ближайших уроков нет",
     "tabs": {
       "overview": "Обзор",
+      "marks": "Мои оценки",
       "lessons": "Уроки",
       "materials": "Материалы"
     },
     "overview": {
       "planner": "Планировщик оценок",
       "openNotebook": "Открыть блокнот",
+      "noMarks": "Оценок пока нет.",
       "notebook": "Блокнот предмета",
       "teachers": "Преподаватели",
       "semesterMark": "Оценка за семестр",
@@ -411,13 +414,6 @@
     "deleteTitle": "Удалить вложение?",
     "deleteText": "«{title}» исчезнет с урока. Файл останется в «Моих файлах».",
     "deleteConfirm": "Удалить",
-    "resources": {
-      "open": "Открыть",
-      "openItem": "Открыть: {title}",
-      "preview": "Просмотр",
-      "previewItem": "Просмотреть {title}",
-      "deleteItem": "Удалить: {title}"
-    },
     "attach": {
       "button": "Добавить вложение",
       "title": "Добавить вложение",
@@ -463,6 +459,13 @@
       "previous": "Предыдущий учебный день",
       "next": "Следующий учебный день",
       "pick": "Выберите дату",
+      "viewsLabel": "Показать оценки за",
+      "views": { "day": "День", "week": "Неделя", "month": "Месяц" },
+      "previousWeek": "Предыдущая неделя",
+      "nextWeek": "Следующая неделя",
+      "previousMonth": "Предыдущий месяц",
+      "nextMonth": "Следующий месяц",
+      "dayMarks": "{date}: {count, plural, =0 {нет оценок} one {# оценка} few {# оценки} many {# оценок} other {# оценки}}",
       "empty": "В этот день оценок нет.",
       "unmatched": "Оценки без урока",
       "type": {
@@ -747,7 +750,9 @@
       "label": "Календарь посещаемости",
       "previousMonth": "Предыдущий месяц",
       "nextMonth": "Следующий месяц",
-      "dayWithAbsences": "{date}: {count, plural, one {# пропуск} few {# пропуска} many {# пропусков} other {# пропуска}}"
+      "dayWithAbsences": "{date}: {count, plural, one {# пропуск} few {# пропуска} many {# пропусков} other {# пропуска}}",
+      "weekColumn": "Нед",
+      "academicWeek": "Учебная неделя {number}"
     },
     "missed": {
       "empty": "Пропущенных уроков нет.",

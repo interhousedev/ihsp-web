@@ -4,27 +4,65 @@ import { todayIso, useFormatters, useT } from "@ihsp/i18n"
 import { AttendanceStatus } from "@ihsp/features-core"
 import { Button, DatePicker, Icons, MarkBadge } from "@ihsp/ui"
 import Link from "next/link"
-import { parseAsString, useQueryState } from "nuqs"
-import { QueryState } from "../../shared/components/query-state"
+import { parseAsString, parseAsStringLiteral, useQueryState } from "nuqs"
+import { GradesPeriodView } from "./grades-period-view"
+import { QueryState } from "@ihsp/features-core"
 import { useDayGrades, useDayLessonResults } from "../hooks/use-grades"
 import { subjectMarksHref } from "../utils/links"
 import { shiftStudyDay } from "../utils/study-days"
 
+const VIEWS = ["day", "week", "month"] as const
+
 /**
  * One day (WEB-14, UF-WEB-10): every lesson with its attendance and marks, and the marks without a lesson listed apart.
- * The date is the only filter.
+ * `?view=week|month` shows the marks of the period around `?date=` as a calendar instead.
  */
 export function DayGradesTab() {
   const t = useT("grades.day")
   const f = useFormatters()
   const today = todayIso()
   const [dateParam, setDate] = useQueryState("date", parseAsString)
+  const [view, setView] = useQueryState("view", parseAsStringLiteral(VIEWS).withDefault("day"))
   const date = dateParam && /^\d{4}-\d{2}-\d{2}$/.test(dateParam) ? dateParam : today
   const query = useDayGrades(date)
   const attendance = new Map(useDayLessonResults(date).data?.map((result) => [result.lesson_id, result.attendance]))
 
+  const switcher = (
+    <div role="group" aria-label={t("viewsLabel")} className="flex w-fit gap-1">
+      {VIEWS.map((item) => (
+        <Button
+          key={item}
+          variant={item === view ? "default" : "outline"}
+          aria-pressed={item === view}
+          className="min-h-11 min-w-16 md:min-h-8"
+          onClick={() => void setView(item === "day" ? null : item)}
+        >
+          {t(`views.${item}`)}
+        </Button>
+      ))}
+    </div>
+  )
+
+  if (view !== "day") {
+    return (
+      <div className="flex flex-col gap-4">
+        {switcher}
+        <GradesPeriodView
+          view={view}
+          date={date}
+          onDateChange={(next) => void setDate(next)}
+          onPickDay={(next) => {
+            void setView(null)
+            void setDate(next)
+          }}
+        />
+      </div>
+    )
+  }
+
   return (
     <div className="flex flex-col gap-4">
+      {switcher}
       <div className="flex items-center gap-1">
         <Button
           variant="outline"

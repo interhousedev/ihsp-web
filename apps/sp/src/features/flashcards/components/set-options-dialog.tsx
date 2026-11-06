@@ -2,7 +2,7 @@
 
 import type { FlashcardSetDetail } from "@ihsp/api"
 import { useT } from "@ihsp/i18n"
-import { Button, Dialog, DialogContent, DialogHeader, DialogTitle } from "@ihsp/ui"
+import { Button, ResponsiveDialog } from "@ihsp/ui"
 import { SetSettingsForm } from "./set-settings-form"
 
 export type SetOptionsDialogProps = {
@@ -16,18 +16,13 @@ export type SetOptionsDialogProps = {
 export function SetOptionsDialog({ deck, open, onOpenChange, onDelete }: SetOptionsDialogProps) {
   const t = useT("flashcards.options")
   return (
-    <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="max-h-[90dvh] overflow-y-auto sm:max-w-lg">
-        <DialogHeader>
-          <DialogTitle>{t("title", { title: deck.title })}</DialogTitle>
-        </DialogHeader>
-        <SetSettingsForm set={deck} onSaved={() => onOpenChange(false)} />
-        <div className="border-t pt-4">
-          <Button type="button" variant="destructive" className="min-h-11" onClick={onDelete}>
-            {t("delete")}
-          </Button>
-        </div>
-      </DialogContent>
-    </Dialog>
+    <ResponsiveDialog open={open} onOpenChange={onOpenChange} title={t("title", { title: deck.title })}>
+      <SetSettingsForm set={deck} onSaved={() => onOpenChange(false)} />
+      <div className="border-t pt-4">
+        <Button type="button" variant="destructive" className="min-h-11" onClick={onDelete}>
+          {t("delete")}
+        </Button>
+      </div>
+    </ResponsiveDialog>
   )
 }

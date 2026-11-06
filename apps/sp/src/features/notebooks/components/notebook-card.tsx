@@ -24,7 +24,7 @@ export function NotebookCard({ notebook, compact = false }: { notebook: Notebook
       <Link
         href={notebookHref(notebook.id)}
         className={cn(
-          "bg-card hover:bg-muted/50 focus-visible:ring-ring ring-foreground/10 flex h-full flex-col rounded-xl text-start ring-1 transition-colors outline-none focus-visible:ring-2",
+          "bg-card hover:bg-muted/50 focus-visible:ring-ring ring-foreground/10 flex h-full flex-col rounded-card text-start ring-1 transition-colors outline-none focus-visible:ring-2",
           compact ? "min-h-20 gap-1.5 p-3" : "min-h-32 gap-3 p-4",
         )}
       >

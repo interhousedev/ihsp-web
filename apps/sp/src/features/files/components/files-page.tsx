@@ -3,17 +3,7 @@
 import type { FileItem } from "@ihsp/api"
 import { FileUploadButton, type FileUploadControl } from "@ihsp/features-core"
 import { useT } from "@ihsp/i18n"
-import {
-  Button,
-  Dialog,
-  DialogContent,
-  DialogHeader,
-  DialogTitle,
-  IconUpload,
-  PageContainer,
-  StateView,
-  cn,
-} from "@ihsp/ui"
+import { Button, IconUpload, PageContainer, ResponsiveDialog, StateView, cn } from "@ihsp/ui"
 import { useDeferredValue, useRef, useState, type DragEvent } from "react"
 import { useMyFiles, useRefreshFiles } from "../hooks/use-my-files"
 import { FILE_TABS, fileFilters, type FileTab, type FileTypeOption, type FileView } from "../utils/file-filters"
@@ -22,6 +12,8 @@ import { FileCard } from "./file-card"
 import { FileListRow } from "./file-list-row"
 import { FilesToolbar } from "./files-toolbar"
 import { RenameFileDialog } from "./rename-file-dialog"
+import { ShareFileDialog } from "./share-file-dialog"
+import { SharedFilesSection } from "./shared-files-section"
 import { StorageCard } from "./storage-card"
 
 /**
@@ -38,6 +30,7 @@ export function FilesPage() {
   const [storageOpen, setStorageOpen] = useState(false)
   const [dragging, setDragging] = useState(false)
   const [renaming, setRenaming] = useState<FileItem | null>(null)
+  const [sharing, setSharing] = useState<FileItem | null>(null)
   const [deleting, setDeleting] = useState<FileItem | null>(null)
   const uploader = useRef<FileUploadControl>(null)
   const q = useDeferredValue(search.trim())
@@ -57,6 +50,7 @@ export function FilesPage() {
 
   return (
     <PageContainer title={t("title")}>
+      <SharedFilesSection />
       <FilesToolbar
         search={search}
         onSearch={setSearch}
@@ -131,9 +125,9 @@ export function FilesPage() {
             {items.map((file) => (
               <li key={file.id} className="min-w-0">
                 {view === "grid" ? (
-                  <FileCard file={file} onRename={setRenaming} onDelete={setDeleting} />
+                  <FileCard file={file} onShare={setSharing} onRename={setRenaming} onDelete={setDeleting} />
                 ) : (
-                  <FileListRow file={file} onRename={setRenaming} onDelete={setDeleting} />
+                  <FileListRow file={file} onShare={setSharing} onRename={setRenaming} onDelete={setDeleting} />
                 )}
               </li>
             ))}
@@ -154,14 +148,10 @@ export function FilesPage() {
         ) : null}
       </div>
 
-      <Dialog open={storageOpen} onOpenChange={setStorageOpen}>
-        <DialogContent>
-          <DialogHeader>
-            <DialogTitle>{t("storage")}</DialogTitle>
-          </DialogHeader>
-          <StorageCard />
-        </DialogContent>
-      </Dialog>
+      <ResponsiveDialog open={storageOpen} onOpenChange={setStorageOpen} title={t("storage")} size="sm">
+        <StorageCard />
+      </ResponsiveDialog>
+      <ShareFileDialog file={sharing} onClose={() => setSharing(null)} />
       <RenameFileDialog file={renaming} onClose={() => setRenaming(null)} />
       <DeleteFileDialog file={deleting} onClose={() => setDeleting(null)} />
     </PageContainer>

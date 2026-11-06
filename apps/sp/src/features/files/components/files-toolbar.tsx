@@ -8,19 +8,15 @@ import {
   DropdownMenuGroup,
   DropdownMenuItem,
   DropdownMenuLabel,
-  DropdownMenuRadioGroup,
-  DropdownMenuRadioItem,
   DropdownMenuTrigger,
   IconChevronDown,
   IconCloud,
-  IconFilter,
   IconLayoutGrid,
   IconList,
   IconPlus,
-  IconSearch,
   IconSettings,
   IconUpload,
-  Input,
+  ListToolbar,
 } from "@ihsp/ui"
 import { FILE_TYPE_OPTIONS, type FileTypeOption, type FileView } from "../utils/file-filters"
 
@@ -53,48 +49,30 @@ export function FilesToolbar({
   const tDrive = useT("files.drive")
 
   return (
-    <div className="flex flex-wrap items-center gap-2">
-      <div className="relative order-first w-full min-w-0 sm:order-none sm:w-auto sm:flex-1 sm:basis-56">
-        <IconSearch aria-hidden className="text-muted-foreground absolute top-1/2 left-3.5 size-4 -translate-y-1/2" />
-        <Input
-          type="search"
-          value={search}
-          aria-label={tDrive("search")}
-          placeholder={tDrive("search")}
-          className="h-11 rounded-full pl-9 md:h-9"
-          onChange={(event) => onSearch(event.target.value)}
-        />
-      </div>
-
-      <DropdownMenu>
-        <DropdownMenuTrigger
-          render={
-            <Button
-              type="button"
-              variant={typeOption === "all" ? "outline" : "secondary"}
-              size="icon"
-              className="size-11 rounded-full md:size-9"
-              aria-label={t("filter")}
-              title={t("filter")}
-            />
-          }
-        >
-          <IconFilter aria-hidden />
-        </DropdownMenuTrigger>
-        <DropdownMenuContent align="end">
-          <DropdownMenuGroup>
-            <DropdownMenuLabel>{t("fileType")}</DropdownMenuLabel>
-            <DropdownMenuRadioGroup value={typeOption} onValueChange={(value) => onTypeOption(value as FileTypeOption)}>
-              {FILE_TYPE_OPTIONS.map((option) => (
-                <DropdownMenuRadioItem key={option.id} value={option.id}>
-                  {t(`types.${option.id}`)}
-                </DropdownMenuRadioItem>
-              ))}
-            </DropdownMenuRadioGroup>
-          </DropdownMenuGroup>
-        </DropdownMenuContent>
-      </DropdownMenu>
-
+    <ListToolbar
+      filters={[
+        { kind: "search", key: "q", label: tDrive("search"), debounceMs: 0 },
+        {
+          kind: "select",
+          key: "type",
+          label: t("fileType"),
+          allLabel: t("types.all"),
+          options: FILE_TYPE_OPTIONS.filter((option) => option.id !== "all").map((option) => ({
+            value: option.id,
+            label: t(`types.${option.id}`),
+          })),
+        },
+      ]}
+      values={{ q: search, type: typeOption === "all" ? null : typeOption }}
+      onChange={(key, next) => {
+        if (key === "q") onSearch(next ?? "")
+        else onTypeOption((next ?? "all") as FileTypeOption)
+      }}
+      onReset={() => {
+        onSearch("")
+        onTypeOption("all")
+      }}
+    >
       <div className="flex gap-1" role="group" aria-label={tDrive("view")}>
         <Button
           type="button"
@@ -159,6 +137,6 @@ export function FilesToolbar({
           </DropdownMenuGroup>
         </DropdownMenuContent>
       </DropdownMenu>
-    </div>
+    </ListToolbar>
   )
 }

@@ -62,7 +62,14 @@ export function TimetableDayView({
 
   return (
     <div className="flex flex-col gap-3" onTouchStart={onTouchStart} onTouchEnd={onTouchEnd}>
-      <WeekStrip monday={monday} selected={day} today={today} statuses={statuses} onChange={onDayChange} />
+      <WeekStrip
+        monday={monday}
+        lessons={lessons}
+        selected={day}
+        today={today}
+        statuses={statuses}
+        onChange={onDayChange}
+      />
       {items.length === 0 ? (
         <StateView state="empty" emptyText={t("noLessons")} />
       ) : (

@@ -389,7 +389,7 @@ describe("preparation page", () => {
       )
       expect(
         within(items[0] as HTMLElement)
-          .getByRole("link", { name: "Open: Quadratics slides" })
+          .getByRole("link", { name: "Open Quadratics slides" })
           .getAttribute("href"),
       ).toBe("http://localhost:8000/s/m-6")
       expect(within(section).getByText(/Since the previous control: Midterm 1, 2 Oct/)).toBeInTheDocument()

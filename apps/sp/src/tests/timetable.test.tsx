@@ -6,7 +6,7 @@ import { HttpResponse, http } from "msw"
 import { googleCalendarUrl, webcalUrl } from "../features/calendar-feed/utils/feed-links"
 import { describeChanges } from "../features/shared/utils/describe-changes"
 import { TimetablePage } from "../features/timetable/components/timetable-page"
-import { isIsoDate, isWeekend, lessonsOn, subgroupsOf, weekDays, weekRange } from "../features/timetable/utils/week"
+import { isIsoDate, lessonsOn, subgroupsOf, weekDays, weekRange } from "../features/timetable/utils/week"
 import { configureTests, freezeTime, renderSp, setViewportWidth, unfreezeTime } from "./helpers"
 
 configureTests()
@@ -43,21 +43,33 @@ describe("calendar week view", () => {
 
     expect(await screen.findByText("08:00")).toBeInTheDocument()
     expect(screen.getByText("14:00")).toBeInTheDocument()
-    // The fixture has two Saturday lessons; the study week has no Saturday column, so they are not drawn.
-    const studyLessons = weekLessons.filter((lesson) => !isWeekend(lesson.date))
-    expect(document.querySelectorAll("a[href*='/lessons/view']")).toHaveLength(studyLessons.length)
+    // The fixture has two Saturday lessons, so Saturday gets a column and they are drawn too.
+    expect(document.querySelectorAll("a[href*='/lessons/view']")).toHaveLength(weekLessons.length)
     expect(screen.getAllByText("Mathematics").length).toBeGreaterThan(0)
   })
 
-  test("the study week has five columns, Monday to Friday, and no weekend column", async () => {
+  const columnDays = () =>
+    Array.from(document.querySelectorAll("ol[aria-label]")).map((column) =>
+      column.getAttribute("aria-label")?.slice(0, 3),
+    )
+
+  test("a week without weekend lessons has five columns", async () => {
     renderSp(<TimetablePage />, { route: "/timetable/" })
 
     await screen.findByText("08:00")
-    const columns = Array.from(document.querySelectorAll("ol[aria-label]")).map((column) =>
-      column.getAttribute("aria-label"),
+    expect(columnDays()).toEqual(["Mon", "Tue", "Wed", "Thu", "Fri"])
+  })
+
+  test("a Saturday with lessons gets a column; a Sunday without lessons does not", async () => {
+    const saturday = makeLesson(
+      { weekday: 6, period: 1, subject: "math", room: "r101", subgroup: null },
+      { id: "lesson-saturday", date: "2026-10-10" },
     )
-    expect(columns).toHaveLength(5)
-    expect(columns.map((label) => label?.slice(0, 3))).toEqual(["Mon", "Tue", "Wed", "Thu", "Fri"])
+    server.use(http.get(apiUrl("/v1/me/timetable"), () => HttpResponse.json([...weekLessons, saturday])))
+    renderSp(<TimetablePage />, { route: "/timetable/" })
+
+    await screen.findByText("08:00")
+    expect(columnDays()).toEqual(["Mon", "Tue", "Wed", "Thu", "Fri", "Sat"])
   })
 
   test("a block is placed by its start and its length, proportional to the minutes", async () => {
@@ -174,7 +186,7 @@ describe("calendar week view", () => {
     expect(screen.getByText("Now")).toBeInTheDocument()
   })
 
-  test("on a Saturday the calendar opens on the coming week", async () => {
+  test("on a Saturday without lessons the calendar opens on the coming week", async () => {
     // Saturday 10 October 2026, 10:12 in Tashkent.
     setSystemTime(new Date("2026-10-10T05:12:00Z"))
     const ranges: string[] = []
@@ -187,11 +199,10 @@ describe("calendar week view", () => {
     )
     renderSp(<TimetablePage />, { route: "/timetable/" })
 
-    await waitFor(() => expect(ranges).toContain("2026-10-12..2026-10-16"))
-    expect(ranges).not.toContain("2026-10-05..2026-10-09")
+    await waitFor(() => expect(ranges).toContain("2026-10-12..2026-10-18"))
   })
 
-  test("the next week button asks for the following Monday to Friday", async () => {
+  test("the next week button asks for the following week", async () => {
     const ranges: string[] = []
     server.use(
       http.get(apiUrl("/v1/me/timetable"), ({ request }) => {
@@ -205,8 +216,8 @@ describe("calendar week view", () => {
     await screen.findByText("08:00")
     await user.click(screen.getByRole("button", { name: "Next week" }))
 
-    await waitFor(() => expect(ranges).toContain("2026-10-12..2026-10-16"))
-    expect(ranges).toContain("2026-10-05..2026-10-09")
+    await waitFor(() => expect(ranges).toContain("2026-10-12..2026-10-18"))
+    expect(ranges).toContain("2026-10-05..2026-10-11")
   })
 
   test("the address picks the view and the day", async () => {
@@ -368,8 +379,8 @@ describe("week helpers", () => {
     expect(isIsoDate(null)).toBe(false)
   })
 
-  test("weeks run Monday to Friday and lessons of a day are sorted by period", () => {
-    expect(weekRange("2026-10-05")).toEqual({ from: "2026-10-05", to: "2026-10-09" })
+  test("the data of a week reaches Sunday and lessons of a day are sorted by period", () => {
+    expect(weekRange("2026-10-05")).toEqual({ from: "2026-10-05", to: "2026-10-11" })
     expect(lessonsOn(weekLessons, "2026-10-07").map((lesson) => lesson.period)).toEqual([1, 2, 3, 4, 5, 6])
   })
 

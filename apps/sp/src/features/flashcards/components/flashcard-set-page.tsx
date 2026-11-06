@@ -9,6 +9,7 @@ import { useState } from "react"
 import { toast } from "sonner"
 import { useDeleteFlashcardSet, useFlashcardSet, useFlashcardStats } from "../hooks/use-flashcards"
 import { editHref, studyHref } from "../utils/hrefs"
+import { CardStatsList } from "./card-stats-list"
 import { DescriptionDialog } from "./description-dialog"
 import { SetOptionsDialog } from "./set-options-dialog"
 
@@ -75,6 +76,7 @@ export function FlashcardSetPage() {
       <div className="flex justify-center">
         <AddToNotebookMenu input={{ kind: "flashcard_set", set_id: detail.id }} />
       </div>
+      {detail.card_count > 0 ? <CardStatsList setId={detail.id} /> : null}
 
       <SetOptionsDialog
         deck={detail}

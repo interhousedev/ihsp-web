@@ -1,7 +1,7 @@
 "use client"
 
 import { getMeAttendanceQuery, getMeTimetableQuery } from "@ihsp/api"
-import { useT, todayIso } from "@ihsp/i18n"
+import { addDays, useFormatters, useT, todayIso } from "@ihsp/i18n"
 import { useQuery } from "@tanstack/react-query"
 import { useState } from "react"
 import { WeekPager } from "../../shared/components/week-pager"
@@ -19,6 +19,7 @@ const TONE: Record<SquareState, string> = {
 /** Attendance of one week as squares: one per lesson, Monday to Friday, coloured by state (a label for each state). */
 export function AttendanceWeekSquares() {
   const t = useT("attendance.squares")
+  const f = useFormatters()
   const weekday = {
     mon: t("weekday.mon"),
     tue: t("weekday.tue"),
@@ -35,8 +36,10 @@ export function AttendanceWeekSquares() {
   }
   const WEEKDAYS = ["mon", "tue", "wed", "thu", "fri"] as const
   const [range, setRange] = useState(() => schoolWeekOf(todayIso()))
-  const lessons = useQuery(getMeTimetableQuery(range)).data ?? []
-  const attendance = useQuery(getMeAttendanceQuery(range)).data
+  // The pager names the school week; the data reaches Sunday, so an opened weekend shows too.
+  const fullWeek = { from: range.from, to: addDays(range.from, 6) }
+  const lessons = useQuery(getMeTimetableQuery(fullWeek)).data ?? []
+  const attendance = useQuery(getMeAttendanceQuery(fullWeek)).data
   const days = weekSquares(
     lessons,
     attendance?.missed.map((item) => ({ lessonId: item.lesson.id, excused: item.excused })) ?? [],
@@ -55,10 +58,12 @@ export function AttendanceWeekSquares() {
         onNext={() => setRange(shiftWeek(range.from, 1))}
         labels={{ previous: t("previousWeek"), next: t("nextWeek") }}
       />
-      <div className="grid grid-cols-5 gap-2">
+      <div className="grid gap-2" style={{ gridTemplateColumns: `repeat(${days.length}, minmax(0, 1fr))` }}>
         {days.map((day, index) => (
           <div key={day.weekday} className="flex flex-col gap-2">
-            <span className="text-muted-foreground text-xs">{weekday[WEEKDAYS[index] ?? "mon"]}</span>
+            <span className="text-muted-foreground text-xs">
+              {WEEKDAYS[index] ? weekday[WEEKDAYS[index]] : f.weekday(addDays(range.from, day.weekday - 1), "short")}
+            </span>
             <div className="flex flex-wrap gap-1">
               {day.squares.map((square) => (
                 <span

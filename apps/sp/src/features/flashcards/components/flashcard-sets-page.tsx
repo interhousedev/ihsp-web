@@ -14,6 +14,7 @@ import {
   useFlashcardStats,
 } from "../hooks/use-flashcards"
 import { deckHref, editHref, optionsHref } from "../utils/hrefs"
+import { MergeSetsDialog } from "./merge-sets-dialog"
 
 const TITLE_MAX = 200
 
@@ -33,6 +34,7 @@ export function FlashcardSetsPage() {
   const create = useCreateFlashcardSet()
   const remove = useDeleteFlashcardSet()
   const [deleting, setDeleting] = useState<FlashcardSetItem | null>(null)
+  const [mergeOpen, setMergeOpen] = useState(false)
 
   async function importFile(file: File) {
     try {
@@ -69,12 +71,14 @@ export function FlashcardSetsPage() {
           getDeckHref={deckHref}
           onCreateDeck={() => router.push("/flashcards/edit/")}
           onImportFile={(file) => void importFile(file)}
+          onMerge={() => setMergeOpen(true)}
           onGetShared={(slug) => router.push(`/flashcards/copy/?share=${encodeURIComponent(slug)}`)}
           onDeckOptions={(deck) => router.push(optionsHref(deck.id))}
           onDeckEdit={(deck) => router.push(editHref(deck.id))}
           onDeckDelete={setDeleting}
         />
       ) : null}
+      {mergeOpen && decks.data ? <MergeSetsDialog decks={decks.data} open onOpenChange={setMergeOpen} /> : null}
       <ConfirmDialog
         open={deleting !== null}
         onOpenChange={(open) => {

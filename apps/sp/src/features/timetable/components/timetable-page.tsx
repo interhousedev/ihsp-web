@@ -1,8 +1,9 @@
 "use client"
 
-import { getMeLessonResultsQuery, getMeProfileQuery, getMeTimetableQuery } from "@ihsp/api"
+import { getMeLessonResultsQuery, getMeProfileQuery, getMeTimetableQuery, type StudentLessonItem } from "@ihsp/api"
 import { startOfWeek, todayIso, useFormatters, useT } from "@ihsp/i18n"
-import { Alert, AlertDescription, PageContainer, cn, useIsMobile } from "@ihsp/ui"
+import { Alert, AlertDescription, cn, PageContainer, StateView, Switch, useIsMobile } from "@ihsp/ui"
+import { useHideOtherSubgroup } from "../hooks/use-hide-other-subgroup"
 import { useQuery } from "@tanstack/react-query"
 import { parseAsString, useQueryState } from "nuqs"
 import { useMemo } from "react"
@@ -13,7 +14,7 @@ import { dayStatus, type MarkedState } from "../../attendance/utils/lesson-state
 import { monthOf } from "../../attendance/utils/month-grid"
 import { STATE_TONE } from "../../attendance/utils/state-tone"
 import { CalendarFeedDialog } from "../../calendar-feed/components/calendar-feed-dialog"
-import { QueryState } from "../../shared/components/query-state"
+import { QueryState } from "@ihsp/features-core"
 import { useNow } from "../../shared/hooks/use-now"
 import { DESKTOP_PX_PER_MINUTE, PHONE_PX_PER_MINUTE } from "../utils/timeline"
 import { isIsoDate, lessonsOn, studyDayOf, subgroupsOf, weekDays, weekRange } from "../utils/week"
@@ -22,6 +23,8 @@ import { CalendarToolbar } from "./calendar-toolbar"
 import { TimeGrid } from "./time-grid"
 import { TimetableDayView } from "./timetable-day-view"
 import { TimetableMonthView } from "./timetable-month-view"
+
+const isOther = (lesson: StudentLessonItem) => lesson.subgroup?.is_own_subgroup === false
 
 /**
  * The calendar (WEB-5, WEB-6, UF-WEB-03, UF-WEB-04, WEB-17): the lessons as a day or a week on a time axis, the
@@ -39,11 +42,13 @@ export function TimetablePage() {
   const today = todayIso()
   // Phones open on the day, desktops on the week; the address overrides it.
   const view: CalendarView = parseView(viewParam) ?? (isMobile ? "day" : "week")
-  // A weekend opens on the Monday after it: there are no lessons to show for today.
-  const focusToday = studyDayOf(today)
+  // A weekend without lessons opens on the Monday after it; a weekend with lessons is a study day like any other.
+  const todayWeek = useQuery(getMeTimetableQuery(weekRange(startOfWeek(today)))).data
+  const focusToday = todayWeek?.some((lesson) => lesson.date === today) ? today : studyDayOf(today)
   const focus = isIsoDate(dayParam) ? dayParam : focusToday
-  // The day view has no Saturday or Sunday: a weekend address opens on the Monday after it.
-  const day = view === "day" ? studyDayOf(focus) : focus
+  const focusWeek = useQuery(getMeTimetableQuery(weekRange(startOfWeek(focus)))).data
+  const focusOpen = focusWeek?.some((lesson) => lesson.date === focus) ?? false
+  const day = view === "day" && !focusOpen ? studyDayOf(focus) : focus
   const monday = startOfWeek(day)
   const month = monthOf(day)
   const range = weekRange(monday)
@@ -54,6 +59,7 @@ export function TimetablePage() {
   const profile = useQuery(getMeProfileQuery())
   const subgroupUnset = profile.data?.subgroup === null
   const attendance = useAttendance(null, null)
+  const { hidden, setHidden } = useHideOtherSubgroup()
   const pxPerMinute = isMobile ? PHONE_PX_PER_MINUTE : DESKTOP_PX_PER_MINUTE
   const legend: { state: MarkedState; label: string }[] = [
     { state: "present", label: ta("present") },
@@ -68,7 +74,7 @@ export function TimetablePage() {
         day={day}
         today={focusToday}
         onViewChange={(next) => void setView(next)}
-        onStep={(direction) => void setDay(stepDate(view, day, direction))}
+        onStep={(direction) => void setDay(stepDate(view, day, direction, lessonsQuery.data))}
         onToday={() => void setDay(null)}
       />
       <ul className="text-muted-foreground flex flex-wrap gap-x-4 gap-y-1 text-xs" aria-label={t("legend")}>
@@ -96,14 +102,21 @@ export function TimetablePage() {
         </QueryState>
       ) : (
         <QueryState query={lessonsQuery} rows={4}>
-          {(lessons) => {
-            const hint = subgroupUnset && lessons.some((lesson) => subgroupsOf(lesson).length > 0)
+          {(allLessons) => {
+            const hint = subgroupUnset && allLessons.some((lesson) => subgroupsOf(lesson).length > 0)
+            const lessons = hidden ? allLessons.filter((lesson) => !isOther(lesson)) : allLessons
             return (
               <>
                 {hint ? (
                   <Alert>
                     <AlertDescription>{t("subgroupHint")}</AlertDescription>
                   </Alert>
+                ) : null}
+                {hidden || allLessons.some(isOther) ? (
+                  <label className="flex min-h-11 w-fit items-center gap-2 text-sm md:min-h-8">
+                    <Switch checked={hidden} onCheckedChange={setHidden} />
+                    {t("hideOtherSubgroup")}
+                  </label>
                 ) : null}
                 {view === "day" ? (
                   <TimetableDayView
@@ -116,13 +129,13 @@ export function TimetablePage() {
                     results={results}
                     statuses={statuses}
                     onDayChange={(next) => void setDay(next)}
-                    onStep={(direction) => void setDay(stepDate("day", day, direction))}
+                    onStep={(direction) => void setDay(stepDate("day", day, direction, allLessons))}
                   />
                 ) : lessons.length === 0 ? (
-                  <p className="text-muted-foreground text-sm">{t("noLessonsWeek")}</p>
+                  <StateView state="empty" emptyText={t("noLessonsWeek")} />
                 ) : (
                   <TimeGrid
-                    columns={weekDays(monday).map((date) => ({
+                    columns={weekDays(monday, lessons).map((date) => ({
                       key: date,
                       label: f.weekday(date, "short"),
                       sublabel: f.date(date, { day: "numeric", month: "short" }),

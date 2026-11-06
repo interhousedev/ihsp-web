@@ -2,7 +2,12 @@
 
 import {
   deleteMeFlashcardSet,
+  getMeFlashcardSetCardStatsQuery,
   getMeFlashcardSetQuery,
+  postMeFlashcardSetStudyRestart,
+  postMeFlashcardSetsMerge,
+  type FlashcardMergeBody,
+  type FlashcardMergeResult,
   getMeFlashcardSetStudyQuery,
   getMeFlashcardSetsQuery,
   getMeFlashcardSetsStatsQuery,
@@ -92,6 +97,29 @@ export function useCopyFlashcardSet() {
   })
 }
 
+/** Combines sets into a new one; the sources stay. */
+export function useMergeFlashcardSets() {
+  const queryClient = useQueryClient()
+  return useMutation<FlashcardMergeResult, unknown, FlashcardMergeBody>({
+    mutationFn: (body) => postMeFlashcardSetsMerge(body),
+    onSuccess: (result) => storeDetail(queryClient, result.set),
+  })
+}
+
+/** Attempts, correct and incorrect answers and the last study time of every card. */
+export function useFlashcardCardStats(id: string | null) {
+  return useQuery({ ...getMeFlashcardSetCardStatsQuery(id ?? ""), enabled: id !== null })
+}
+
+/** Starts a practice round after today's cards are finished; the schedule stays as it is. */
+export function useRestartStudy(setId: string) {
+  const queryClient = useQueryClient()
+  return useMutation<StudyNext, unknown, void>({
+    mutationFn: () => postMeFlashcardSetStudyRestart(setId),
+    onSuccess: (next) => queryClient.setQueryData(keys.flashcards.study(setId), next),
+  })
+}
+
 /** Rates a card; the answer is the next card, which replaces the cached study state. */
 export function useReviewFlashcard(setId: string) {
   const queryClient = useQueryClient()
@@ -107,6 +135,7 @@ export function useReviewFlashcard(setId: string) {
       void queryClient.invalidateQueries({ queryKey: keys.flashcards.sets(), exact: true })
       void queryClient.invalidateQueries({ queryKey: keys.flashcards.set(setId), exact: true })
       void queryClient.invalidateQueries({ queryKey: keys.flashcards.allStats() })
+      void queryClient.invalidateQueries({ queryKey: keys.flashcards.cardStats(setId) })
     },
   })
 }

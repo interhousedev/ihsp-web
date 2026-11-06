@@ -139,7 +139,7 @@ describe("bottom bar config", () => {
     )
     const { user } = renderSp(<BottomBarEditor />, { route: "/settings/" })
 
-    await user.click(await screen.findByRole("button", { name: "Move right: Dashboard" }))
+    await user.click(await screen.findByRole("button", { name: "Move right: Home" }))
 
     await waitFor(() =>
       expect(bodies.at(-1)).toMatchObject({ bottom_nav: ["timetable", "dashboard", "grades", "homework"] }),

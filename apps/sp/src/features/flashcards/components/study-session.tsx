@@ -6,7 +6,7 @@ import { useErrorMessage, useT } from "@ihsp/i18n"
 import { PageContainer, StateView } from "@ihsp/ui"
 import { useRouter, useSearchParams } from "next/navigation"
 import { useState } from "react"
-import { useFlashcardSet, useReviewFlashcard, useStudyNext } from "../hooks/use-flashcards"
+import { useFlashcardSet, useRestartStudy, useReviewFlashcard, useStudyNext } from "../hooks/use-flashcards"
 import { deckHref, editHref, optionsHref } from "../utils/hrefs"
 
 /**
@@ -21,6 +21,7 @@ export function StudySession() {
   const deck = useFlashcardSet(id)
   const study = useStudyNext(id)
   const review = useReviewFlashcard(id ?? "")
+  const restart = useRestartStudy(id ?? "")
   const [reviewed, setReviewed] = useState(0)
 
   if (id === null) {
@@ -62,7 +63,10 @@ export function StudySession() {
         counts={next.counts}
         reviewed={reviewed}
         isRating={review.isPending}
-        error={review.isError ? errorMessage(review.error) : undefined}
+        error={review.isError ? errorMessage(review.error) : restart.isError ? errorMessage(restart.error) : undefined}
+        onRestart={next.done_for_today ? () => restart.mutate() : undefined}
+        isRestarting={restart.isPending}
+        practiceRemaining={next.practice_remaining ?? 0}
         onRate={rate}
         onEdit={() => router.push(editHref(id))}
         onLimits={() => router.push(optionsHref(id))}

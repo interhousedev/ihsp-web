@@ -2,13 +2,12 @@
 
 import type { AssessmentItem } from "@ihsp/api"
 import { useT } from "@ihsp/i18n"
-import { PageContainer } from "@ihsp/ui"
+import { PageContainer, SubjectFilter } from "@ihsp/ui"
 import { parseAsString, useQueryState } from "nuqs"
-import { QueryState } from "../../shared/components/query-state"
+import { QueryState } from "@ihsp/features-core"
 import { useExams, useIsHeadStudent } from "../hooks/use-exams"
 import { filterBySubject, splitExams, subjectsOf } from "../utils/exam-list"
 import { ExamSection } from "./exam-section"
-import { SubjectFilter } from "./subject-filter"
 import { SuggestExamDialog } from "./suggest-exam-dialog"
 
 function ExamsContent({ items }: { items: AssessmentItem[] }) {
@@ -20,7 +19,13 @@ function ExamsContent({ items }: { items: AssessmentItem[] }) {
   const { upcoming, past } = splitExams(filterBySubject(items, selected))
   return (
     <div className="flex flex-col gap-6">
-      <SubjectFilter subjects={subjects} value={selected} onChange={(next) => void setSubjectId(next)} />
+      <SubjectFilter
+        subjects={subjects}
+        value={selected}
+        onChange={(next) => void setSubjectId(next)}
+        label={t("filter.label")}
+        allLabel={t("filter.all")}
+      />
       <ExamSection title={t("upcoming")} items={upcoming} emptyText={t("noUpcoming")} />
       <ExamSection title={t("past")} items={past} emptyText={t("noPast")} />
     </div>

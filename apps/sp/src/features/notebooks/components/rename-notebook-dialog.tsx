@@ -1,7 +1,6 @@
 "use client"
 
 import type { NotebookItem } from "@ihsp/api"
-import { Dialog, DialogContent } from "@ihsp/ui"
 import { RenameNotebookForm } from "./rename-notebook-form"
 
 type RenameNotebookDialogProps = {
@@ -12,11 +11,5 @@ type RenameNotebookDialogProps = {
 
 /** Rename from a card's menu. */
 export function RenameNotebookDialog({ notebook, open, onOpenChange }: RenameNotebookDialogProps) {
-  return (
-    <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent>
-        <RenameNotebookForm notebook={notebook} onDone={() => onOpenChange(false)} />
-      </DialogContent>
-    </Dialog>
-  )
+  return <RenameNotebookForm notebook={notebook} open={open} onOpenChange={onOpenChange} />
 }

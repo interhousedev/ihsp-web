@@ -1,5 +1,6 @@
 "use client"
 
+import { usePlatformLinks } from "@ihsp/features-core"
 import { useT } from "@ihsp/i18n"
 import { BottomNav, type BottomNavItem, type NavGroup, type NavItem } from "@ihsp/ui"
 import { useMemo } from "react"
@@ -14,6 +15,7 @@ import { ProfileMenu } from "./profile-menu"
 export function SpBottomNav({ groups }: { groups: NavGroup[] }) {
   const t = useT()
   const { ids } = useBottomBar()
+  const platforms = usePlatformLinks()
   const byUrl = useMemo(() => {
     const map = new Map<string, NavItem>()
     for (const group of groups) for (const item of group.items) map.set(item.url, item)
@@ -28,6 +30,7 @@ export function SpBottomNav({ groups }: { groups: NavGroup[] }) {
       items={tabs}
       more={groups}
       moreFooter={<ProfileMenu variant="row" />}
+      platforms={platforms}
       excludeVisibleFromMore
       testId="mobile-tab-bar"
     />

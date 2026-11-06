@@ -36,7 +36,7 @@ export function InstallLanding({ view, inAppBrowser, onInstall, onContinue }: La
         <header className="flex flex-col items-center gap-3 text-center">
           {/* oxlint-disable-next-line nextjs/no-img-element -- static export, the icon is a plain file of /public */}
           <img src="/icons/icon-192.png" alt="" width={72} height={72} className="rounded-2xl shadow-sm" />
-          <h1 className="text-2xl font-semibold">{t("landing.title")}</h1>
+          <h1 className="text-2xl font-bold tracking-tight">{t("landing.title")}</h1>
           <p className="text-muted-foreground text-sm">{t("landing.subtitle")}</p>
         </header>
         {view === "installed" ? null : <LandingBenefits />}

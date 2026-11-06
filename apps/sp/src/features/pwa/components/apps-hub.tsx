@@ -64,7 +64,7 @@ export function AppsHub() {
               id={`install-${app.key}`}
               data-highlighted={highlighted === app.key}
               className={cn(
-                "bg-card flex scroll-mt-20 items-center gap-3 rounded-xl border p-3 transition-shadow",
+                "bg-card flex scroll-mt-20 items-center gap-3 rounded-card border p-3 transition-shadow",
                 highlighted === app.key && "ring-primary border-primary ring-2",
               )}
             >

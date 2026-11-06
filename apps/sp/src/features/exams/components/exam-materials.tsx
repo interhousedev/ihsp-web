@@ -3,8 +3,7 @@
 import type { AssessmentItem } from "@ihsp/api"
 import { todayIso, useFormatters, useT } from "@ihsp/i18n"
 import Link from "next/link"
-import { LinkButton } from "../../shared/components/link-button"
-import { QueryState } from "../../shared/components/query-state"
+import { FileItem, FileOpenLink, QueryState } from "@ihsp/features-core"
 import { useExamLabels } from "../hooks/use-exam-labels"
 import { useSubjectMaterials } from "../hooks/use-exams"
 import { lessonHref } from "../utils/hrefs"
@@ -37,13 +36,15 @@ export function ExamMaterials({ item, exams }: { item: AssessmentItem; exams: As
           return (
             <ul className="flex flex-col gap-2">
               {entries.map(({ material, lesson }) => (
-                <li
+                <FileItem
+                  as="li"
                   key={material.link_id}
-                  className="flex min-h-11 items-center gap-3 rounded-lg border p-2"
                   data-testid="exam-material"
-                >
-                  <div className="min-w-0 flex-1">
-                    <p className="truncate text-sm font-medium">{material.title}</p>
+                  name={material.title}
+                  contentType={
+                    material.kind === "file" ? (material.file?.content_type ?? "application/octet-stream") : null
+                  }
+                  details={
                     <p className="text-muted-foreground truncate text-xs">
                       <Link href={lessonHref(lesson.id)} className="underline-offset-4 hover:underline">
                         {t("lesson", { date: f.date(lesson.date, { day: "numeric", month: "short" }) })}
@@ -55,17 +56,9 @@ export function ExamMaterials({ item, exams }: { item: AssessmentItem; exams: As
                         </>
                       ) : null}
                     </p>
-                  </div>
-                  <LinkButton
-                    href={material.short_url}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="shrink-0"
-                    aria-label={t("openItem", { title: material.title })}
-                  >
-                    {t("open")}
-                  </LinkButton>
-                </li>
+                  }
+                  actions={<FileOpenLink href={material.short_url} title={material.title} />}
+                />
               ))}
             </ul>
           )

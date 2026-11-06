@@ -7,7 +7,7 @@ export function isIsoDate(value: string | null | undefined): value is string {
   )
 }
 
-/** Saturday and Sunday: no lessons, so the calendar does not draw them in the week or the day views. */
+/** Saturday and Sunday: the calendar draws them only when they have lessons. */
 export function isWeekend(date: string): boolean {
   const weekday = new Date(`${date}T00:00:00Z`).getUTCDay()
   return weekday === 0 || weekday === 6
@@ -20,14 +20,16 @@ export function studyDayOf(date: string): string {
   return day
 }
 
-/** `[monday, friday]` as the `from` / `to` of `GET /v1/me/timetable`: the study week has five days. */
+/** `[monday, sunday]` as the `from` / `to` of `GET /v1/me/timetable`: a weekend may have lessons. */
 export function weekRange(monday: string): { from: string; to: string } {
-  return { from: monday, to: addDays(monday, 4) }
+  return { from: monday, to: addDays(monday, 6) }
 }
 
-/** The five study days of the week that starts on `monday`: Monday to Friday. */
-export function weekDays(monday: string): string[] {
-  return Array.from({ length: 5 }, (_, index) => addDays(monday, index))
+/** Monday to Friday of the week that starts on `monday`, plus Saturday and Sunday when they have lessons. */
+export function weekDays(monday: string, lessons: readonly { date: string }[] = []): string[] {
+  return Array.from({ length: 7 }, (_, index) => addDays(monday, index)).filter(
+    (date) => !isWeekend(date) || lessons.some((lesson) => lesson.date === date),
+  )
 }
 
 export function lessonsOn(lessons: readonly LessonItem[], date: string): LessonItem[] {

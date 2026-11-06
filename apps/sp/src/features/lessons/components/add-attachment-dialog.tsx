@@ -3,20 +3,7 @@
 import type { FileItem } from "@ihsp/api"
 import { DrivePicker } from "@ihsp/features-core"
 import { useErrorMessage, useT } from "@ihsp/i18n"
-import {
-  Button,
-  Dialog,
-  DialogContent,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
-  Icons,
-  Input,
-  Tabs,
-  TabsContent,
-  TabsList,
-  TabsTrigger,
-} from "@ihsp/ui"
+import { Button, Icons, Input, ResponsiveDialog, Tabs, TabsContent, TabsList, TabsTrigger } from "@ihsp/ui"
 import { useState } from "react"
 import { useAddAttachment } from "../hooks/use-lesson"
 
@@ -53,15 +40,12 @@ export function AddAttachmentDialog({ lessonId }: { lessonId: string }) {
   }
 
   return (
-    <Dialog open={open} onOpenChange={setOpen}>
-      <DialogTrigger render={<Button className="min-h-11 md:min-h-8" />}>
+    <>
+      <Button className="min-h-11 md:min-h-8" onClick={() => setOpen(true)}>
         <Icons.add aria-hidden />
         {t("button")}
-      </DialogTrigger>
-      <DialogContent className="max-h-[90dvh] overflow-y-auto sm:max-w-md">
-        <DialogHeader>
-          <DialogTitle>{t("title")}</DialogTitle>
-        </DialogHeader>
+      </Button>
+      <ResponsiveDialog open={open} onOpenChange={setOpen} title={t("title")}>
         <Tabs defaultValue="file">
           <TabsList className="h-auto min-h-11 w-full">
             <TabsTrigger value="file" className="min-h-11">
@@ -113,7 +97,7 @@ export function AddAttachmentDialog({ lessonId }: { lessonId: string }) {
             {errorMessage(add.error)}
           </p>
         ) : null}
-      </DialogContent>
-    </Dialog>
+      </ResponsiveDialog>
+    </>
   )
 }

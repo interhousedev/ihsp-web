@@ -1,10 +1,9 @@
 import { resolveFileUrl, type FileItem } from "@ihsp/api"
 import { opensInline } from "./format-bytes"
 
-/** Opens a file in a new tab through a presigned URL (valid for 60 seconds). */
-export async function openFile(file: FileItem): Promise<void> {
-  const url = await resolveFileUrl(file.id, opensInline(file.content_type))
-  window.open(url, "_blank", "noopener,noreferrer")
+/** The fresh address of a file: PDFs and images open in the browser, everything else downloads (FILE-3). */
+export function fileAddress(file: FileItem): Promise<string> {
+  return resolveFileUrl(file.id, opensInline(file.content_type))
 }
 
 /** Where a file lives in the list (its card anchor); the title link opens the file itself on click. */

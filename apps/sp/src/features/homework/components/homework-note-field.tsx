@@ -57,8 +57,9 @@ export function HomeworkNoteField({ lessonId, note }: { lessonId: string; note: 
   useEffect(
     () => () => {
       if (timerRef.current) clearTimeout(timerRef.current)
+      // Leaving the page must not raise an unhandled rejection when the save fails (the draft is lost then).
       if (draftRef.current.trim() !== savedRef.current)
-        void saveRef.current({ lessonId, note: draftRef.current.trim() || null })
+        saveRef.current({ lessonId, note: draftRef.current.trim() || null }).catch(() => undefined)
     },
     [lessonId],
   )

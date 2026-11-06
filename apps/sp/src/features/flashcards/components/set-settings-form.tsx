@@ -28,12 +28,15 @@ export function SetSettingsForm({ set, onSaved }: { set: FlashcardSetDetail; onS
   const [newPerDay, setNewPerDay] = useState(String(set.new_per_day))
   const [reviewsPerDay, setReviewsPerDay] = useState(String(set.reviews_per_day))
 
+  const [shuffle, setShuffle] = useState(set.shuffle ?? false)
+
   useEffect(() => {
+    setShuffle(set.shuffle ?? false)
     setTitle(set.title)
     setDescription(set.description ?? "")
     setNewPerDay(String(set.new_per_day))
     setReviewsPerDay(String(set.reviews_per_day))
-  }, [set.title, set.description, set.new_per_day, set.reviews_per_day])
+  }, [set.title, set.description, set.new_per_day, set.reviews_per_day, set.shuffle])
 
   const newLimit = parseLimit(newPerDay, NEW_PER_DAY)
   const reviewsLimit = parseLimit(reviewsPerDay, REVIEWS_PER_DAY)
@@ -46,6 +49,7 @@ export function SetSettingsForm({ set, onSaved }: { set: FlashcardSetDetail; onS
       description: description.trim(),
       new_per_day: newLimit,
       reviews_per_day: reviewsLimit,
+      shuffle,
     }
     update.mutate(body, {
       onSuccess: () => {
@@ -111,6 +115,18 @@ export function SetSettingsForm({ set, onSaved }: { set: FlashcardSetDetail; onS
           ) : null}
         </div>
       </div>
+      <label className="flex min-h-11 items-start gap-2 text-sm">
+        <input
+          type="checkbox"
+          className="mt-0.5 size-5"
+          checked={shuffle}
+          onChange={(event) => setShuffle(event.target.checked)}
+        />
+        <span className="flex flex-col">
+          {t("shuffle")}
+          <span className="text-muted-foreground text-xs">{t("shuffleHint")}</span>
+        </span>
+      </label>
       {update.isError ? (
         <p role="alert" className="text-destructive text-sm">
           {errorMessage(update.error)}

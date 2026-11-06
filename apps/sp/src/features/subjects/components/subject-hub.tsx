@@ -5,7 +5,7 @@ import { useErrorMessage, useFormatters, useT } from "@ihsp/i18n"
 import { Badge, Button, Icons, MarkBadge, StateView } from "@ihsp/ui"
 import Link from "next/link"
 import { useState } from "react"
-import { QueryState } from "../../shared/components/query-state"
+import { QueryState } from "@ihsp/features-core"
 import { PAST_STEP, useOpenSubjectNotebook, useSubjectLessons } from "../hooks/use-subject-hub"
 
 /** Dark red for an absence, dark orange for a late arrival. A present lesson shows nothing. */

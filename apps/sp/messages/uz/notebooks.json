@@ -1105,6 +1105,37 @@
         "improvements": "Nimani yaxshilash kerak",
         "tooShort": "Avval kamida 10 ta soʻz yozing"
       }
+    },
+    "share": {
+      "title": "Ulashish",
+      "linkTitle": "Havola",
+      "linkCreate": "Havola yaratish",
+      "linkReplace": "Havolani almashtirish",
+      "linkOff": "Havolani oʻchirish",
+      "linkOffHint": "Havola oʻchirilsa, u orqali kirganlarning hammasi ruxsatini yoʻqotadi.",
+      "linkOnce": "Hozir nusxa oling: havola faqat bir marta koʻrsatiladi. Uni ochish uchun tizimga kirish kerak.",
+      "linkCopied": "Havoladan nusxa olindi",
+      "copyFailed": "Havoladan nusxa olib boʻlmadi",
+      "copyLink": "Havoladan nusxa olish",
+      "peopleTitle": "Odamlar",
+      "searchPlaceholder": "Ism boʻyicha qidirish, kamida 3 harf",
+      "noPeople": "Hech kim topilmadi",
+      "recipientsHint": "Talabalar faqat oʻz guruhidagi sinfdoshlari bilan ulashishi mumkin.",
+      "remove": "Olib tashlash: {name}",
+      "hiddenSources": "Chatlar, dars, kurs va kutubxona manbalari yopiq qoladi va ulashilmaydi.",
+      "setsTitle": "Asosiy materiallar",
+      "setSources": "manbalar: {count}",
+      "setGone": "Bu daftarga endi ruxsatingiz yoʻq",
+      "detach": "Uzish",
+      "attach": "Ulash: {title}",
+      "noSets": "Siz bilan ulashilgan daftarlarni shu yerda ulash mumkin. Ularning joriy manbalari ushbu daftar chatida ishlatiladi.",
+      "joinTitle": "Siz bilan ulashilgan",
+      "joinFailed": "Bu havola endi ishlamaydi. Egasidan yangisini soʻrang.",
+      "sharedWithMe": "Men bilan ulashilgan",
+      "sharedBy": "Kimdan: {name}",
+      "noStudio": "Ulashilgan daftarda Studiya mavjud emas. Studiyadan foydalanish uchun uni oʻzingizga nusxalang.",
+      "copy": "Mening daftarlarimga nusxalash",
+      "leave": "Roʻyxatimdan olib tashlash"
     }
   },
   "errors": {

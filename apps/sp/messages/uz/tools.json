@@ -50,14 +50,10 @@
       "chat": "Suhbat"
     },
     "row": {
-      "download": "Yuklab olish",
-      "downloadFailed": "Faylni ochib bo‘lmadi.",
       "rename": "{name} nomini o‘zgartirish",
       "renameShort": "Nomini o‘zgartirish",
       "delete": "{name} faylini o‘chirish",
       "deleteShort": "O‘chirish",
-      "share": "Ulashish",
-      "linkCopied": "Havola nusxalandi.",
       "more": "{name} fayli amallari"
     },
     "rename": {
@@ -72,6 +68,13 @@
       "usedWarning": "Fayl ishlatilmoqda. Quyidagilar ishlamay qoladi:",
       "confirm": "O‘chirish",
       "deleted": "“{name}” fayli o‘chirildi."
+    },
+    "sharing": {
+      "title": "Odamlar bilan ulashish",
+      "sharedTitle": "Men bilan ulashilgan",
+      "remove": "Roʻyxatimdan olib tashlash",
+      "joinFailed": "Bu havola endi ishlamaydi.",
+      "from": "Kimdan: {name}"
     }
   },
   "flashcards": {
@@ -87,7 +90,17 @@
       "deleteTitle": "Bu kolloda o‘chirilsinmi?",
       "deleteDescription": "“{title}” kollodasi, uning barcha kartochkalari va natijalari o‘chiriladi. Ochiq havolalar ishlamay qoladi.",
       "deleteConfirm": "Kollodani o‘chirish",
-      "deleteFailed": "Kollodani o‘chirib bo‘lmadi."
+      "deleteFailed": "Kollodani o‘chirib bo‘lmadi.",
+      "mergeTitle": "Kollodalarni birlashtirish",
+      "mergeHint": "Yangi kollodaga kartochkalar nusxasi tushadi. Tanlangan kollodalar oʻzgarmaydi, bir xil kartochkalar bir marta qoʻshiladi.",
+      "mergeSets": "Birlashtiriladigan kollodalar",
+      "mergeName": "Yangi kolloda nomi",
+      "mergeSubmit": "Birlashtirish",
+      "merged": "Yangi kolloda, kartochkalar: {count}. Oʻtkazib yuborilgan takrorlar: {skipped}.",
+      "statsTitle": "Savollar",
+      "statsRow": "Urinishlar: {attempts}, toʻgʻri: {correct}, notoʻgʻri: {incorrect}",
+      "statsLast": "oxirgi marta {date}",
+      "statsNever": "hali oʻrganilmagan"
     },
     "options": {
       "title": "Sozlamalar: {title}",
@@ -99,6 +112,8 @@
       "save": "Saqlash",
       "saving": "Saqlanmoqda…",
       "saved": "Sozlamalar saqlandi.",
+      "shuffle": "Kartochkalarni aralashtirish",
+      "shuffleHint": "Yangi kartochkalar va takrorlashlar tasodifiy tartibda keladi.",
       "delete": "Kollodani o‘chirish"
     },
     "descriptionDialog": {

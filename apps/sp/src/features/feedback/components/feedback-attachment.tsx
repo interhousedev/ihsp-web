@@ -1,34 +1,30 @@
 "use client"
 
 import type { FeedbackAttachment } from "@ihsp/api"
+import { FileItem, FileOpenLink } from "@ihsp/features-core"
 import { useT } from "@ihsp/i18n"
+import { formatBytes } from "@ihsp/ui"
 
-/** One file of a report or of a response: images are shown as thumbnails, other files as a link. */
+/** One file of a report or of a response. */
 export function FeedbackAttachmentView({ attachment }: { attachment: FeedbackAttachment }) {
   const t = useT("feedback")
-  const isImage = attachment.mime.startsWith("image/")
-  if (isImage) {
-    return (
-      <img src={attachment.download_url} alt={attachment.name} className="size-24 rounded-md border object-cover" />
-    )
-  }
+  const name = attachment.name || t("page.openFile")
   return (
-    <a
-      href={attachment.download_url}
-      target="_blank"
-      rel="noopener noreferrer"
-      className="text-primary inline-flex min-h-11 items-center text-sm underline underline-offset-4"
-    >
-      {attachment.name || t("page.openFile")}
-    </a>
+    <FileItem
+      name={name}
+      contentType={attachment.mime}
+      thumbnailUrl={attachment.mime.startsWith("image/") ? attachment.download_url : null}
+      meta={[formatBytes(attachment.size)]}
+      actions={<FileOpenLink href={attachment.download_url} title={name} />}
+    />
   )
 }
 
-/** The attachments of a report or a response, wrapped so they break onto new lines on a phone. */
+/** The attachments of a report or a response. */
 export function FeedbackAttachmentList({ attachments }: { attachments: readonly FeedbackAttachment[] }) {
   if (attachments.length === 0) return null
   return (
-    <ul className="flex flex-wrap gap-2">
+    <ul className="flex flex-col gap-2">
       {attachments.map((attachment) => (
         <li key={attachment.file_id}>
           <FeedbackAttachmentView attachment={attachment} />

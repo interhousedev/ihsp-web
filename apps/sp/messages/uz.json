@@ -278,6 +278,7 @@
       "month": "Oy"
     },
     "viewsLabel": "Taqvim koʻrinishi",
+    "hideOtherSubgroup": "Boshqa kichik guruh darslarini koʻrsatmaslik",
     "today": "Bugun",
     "previousMonth": "Oldingi oy",
     "nextMonth": "Keyingi oy",
@@ -327,12 +328,14 @@
     "noNextLesson": "Yaqin darslar yoʻq",
     "tabs": {
       "overview": "Umumiy",
+      "marks": "Baholarim",
       "lessons": "Darslar",
       "materials": "Materiallar"
     },
     "overview": {
       "planner": "Baho rejalashtirgichi",
       "openNotebook": "Bloknotni ochish",
+      "noMarks": "Hozircha baholar yoʻq.",
       "notebook": "Fan bloknoti",
       "teachers": "Oʻqituvchilar",
       "semesterMark": "Semestr bahosi",
@@ -411,13 +414,6 @@
     "deleteTitle": "Ilova oʻchirilsinmi?",
     "deleteText": "“{title}” darsdan yoʻqoladi. Fayl “Mening fayllarim”da qoladi.",
     "deleteConfirm": "Oʻchirish",
-    "resources": {
-      "open": "Ochish",
-      "openItem": "Ochish: {title}",
-      "preview": "Ko‘rish",
-      "previewItem": "{title} ni ko‘rish",
-      "deleteItem": "Oʻchirish: {title}"
-    },
     "attach": {
       "button": "Ilova qoʻshish",
       "title": "Ilova qoʻshish",
@@ -463,6 +459,13 @@
       "previous": "Oldingi oʻquv kuni",
       "next": "Keyingi oʻquv kuni",
       "pick": "Sanani tanlang",
+      "viewsLabel": "Baholarni koʻrsatish",
+      "views": { "day": "Kun", "week": "Hafta", "month": "Oy" },
+      "previousWeek": "Oldingi hafta",
+      "nextWeek": "Keyingi hafta",
+      "previousMonth": "Oldingi oy",
+      "nextMonth": "Keyingi oy",
+      "dayMarks": "{date}: {count, plural, =0 {baholar yoʻq} other {# ta baho}}",
       "empty": "Bu kuni baholar yoʻq.",
       "unmatched": "Darssiz baholar",
       "type": {
@@ -747,7 +750,9 @@
       "label": "Davomat kalendari",
       "previousMonth": "Oldingi oy",
       "nextMonth": "Keyingi oy",
-      "dayWithAbsences": "{date}: {count, plural, other {# ta dars qoldirilgan}}"
+      "dayWithAbsences": "{date}: {count, plural, other {# ta dars qoldirilgan}}",
+      "weekColumn": "Hf",
+      "academicWeek": "{number}-oʻquv haftasi"
     },
     "missed": {
       "empty": "Qoldirilgan darslar yoʻq.",

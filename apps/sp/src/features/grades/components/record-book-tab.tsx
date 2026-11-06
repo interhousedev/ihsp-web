@@ -4,7 +4,7 @@ import { useT } from "@ihsp/i18n"
 import { TemporaryGpa } from "@ihsp/features-core"
 import { MarkBadge, Skeleton, Stat } from "@ihsp/ui"
 import { lazy, Suspense } from "react"
-import { QueryState } from "../../shared/components/query-state"
+import { QueryState } from "@ihsp/features-core"
 import { useRecordBook } from "../hooks/use-grades"
 
 /** Recharts arrives in its own chunk when the tab shows a book; a box of the chart's height holds its place. */

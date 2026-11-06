@@ -7,7 +7,7 @@ import { IconCircleCheck } from "@ihsp/ui"
 export function InstalledNotice() {
   const t = useT("pwa")
   return (
-    <section role="status" className="bg-card flex flex-col items-center gap-2 rounded-xl border p-5 text-center">
+    <section role="status" className="bg-card flex flex-col items-center gap-2 rounded-card border p-5 text-center">
       <IconCircleCheck aria-hidden className="text-primary size-10" />
       <h2 className="text-base font-semibold">{t("installed.title")}</h2>
       <p className="text-muted-foreground text-sm">{t("installed.text")}</p>

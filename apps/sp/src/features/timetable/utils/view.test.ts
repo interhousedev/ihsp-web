@@ -44,9 +44,18 @@ describe("calendar view", () => {
 })
 
 describe("study week", () => {
-  it("is five days, Monday to Friday, and the week range ends on Friday", () => {
+  it("is five days without weekend lessons, and the data range reaches Sunday", () => {
     expect(weekDays("2026-10-05")).toEqual(["2026-10-05", "2026-10-06", "2026-10-07", "2026-10-08", "2026-10-09"])
-    expect(weekRange("2026-10-05")).toEqual({ from: "2026-10-05", to: "2026-10-09" })
+    expect(weekRange("2026-10-05")).toEqual({ from: "2026-10-05", to: "2026-10-11" })
+  })
+
+  it("adds only the weekend day that has lessons, and a day step stops on it", () => {
+    const lessons = [{ date: "2026-10-10" }]
+    expect(weekDays("2026-10-05", lessons).at(-1)).toBe("2026-10-10")
+    expect(weekDays("2026-10-05", lessons)).toHaveLength(6)
+    expect(stepDate("day", "2026-10-09", 1, lessons)).toBe("2026-10-10")
+    expect(stepDate("day", "2026-10-10", 1, lessons)).toBe("2026-10-12")
+    expect(stepDate("day", "2026-10-09", 1)).toBe("2026-10-12")
   })
 
   it("a weekend opens on the Monday after it; a study day stays", () => {

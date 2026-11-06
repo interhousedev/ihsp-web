@@ -6,10 +6,8 @@ import {
   getMeStorageQuery,
   keys,
   patchFile,
-  postLinks,
   type FileDeleteResponse,
   type FileItem,
-  type LinkItem,
   type MyFilesParams,
   type Page,
 } from "@ihsp/api"
@@ -58,13 +56,6 @@ export function useRenameFile() {
   return useMutation<FileItem, unknown, { id: string; name: string }>({
     mutationFn: ({ id, name }) => patchFile(id, { name }),
     onSuccess: refresh,
-  })
-}
-
-/** A short link to one of my files (`POST /v1/links`, kind `file`). */
-export function useShareFile() {
-  return useMutation<LinkItem, unknown, string>({
-    mutationFn: (id) => postLinks({ kind: "file", file_id: id }),
   })
 }
 

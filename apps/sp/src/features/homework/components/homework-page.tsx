@@ -3,7 +3,7 @@
 import { useT } from "@ihsp/i18n"
 import { PageContainer, Tabs, TabsList, TabsTrigger } from "@ihsp/ui"
 import { parseAsStringLiteral, useQueryState } from "nuqs"
-import { QueryState } from "../../shared/components/query-state"
+import { QueryState } from "@ihsp/features-core"
 import { useHomeworkList, useOpenWorkOffs } from "../hooks/use-homework"
 import { HomeworkItemCard } from "./homework-item-card"
 import { OverdueSection } from "./overdue-section"

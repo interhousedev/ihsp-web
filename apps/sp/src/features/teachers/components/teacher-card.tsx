@@ -13,7 +13,7 @@ import { UpcomingLessons } from "./upcoming-lessons"
 export function TeacherCard({ teacher }: { teacher: MyTeacher }) {
   const name = teacherName(teacher)
   return (
-    <article data-testid="teacher-card" className="bg-card flex flex-col gap-3 rounded-xl border p-4">
+    <article data-testid="teacher-card" className="bg-card flex flex-col gap-3 rounded-card border p-4">
       <div className="flex items-start gap-3">
         <TeacherAvatar name={name} photoUrl={teacher.photo_url} />
         <div className="flex min-w-0 flex-col gap-1.5">

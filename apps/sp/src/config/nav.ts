@@ -2,7 +2,7 @@
 
 import { useT } from "@ihsp/i18n"
 import type { BottomNavItem, NavGroup } from "@ihsp/ui"
-import { IconNotebook, IconUserCircle } from "@ihsp/ui"
+import { IconUserCircle } from "@ihsp/ui"
 import { useMemo } from "react"
 import { useIsHeadStudent } from "@/features/exams/hooks/use-exams"
 
@@ -17,12 +17,12 @@ export function useNav(): { groups: NavGroup[]; bottom: BottomNavItem[] } {
   const isHead = useIsHeadStudent()
   return useMemo(() => {
     const dashboard = { title: t("dashboard"), url: "/", icon: "dashboard", match: "exact" } as const
-    const timetable = { title: t("timetable"), url: "/timetable/", icon: "calendar" } as const
+    const timetable = { title: t("timetable"), url: "/timetable/", icon: "timetable" } as const
     const grades = { title: t("grades"), url: "/grades/", icon: "grades" } as const
     const homework = { title: t("homework"), url: "/homework/", icon: "homework" } as const
     return {
       groups: [
-        { label: t("groupHome"), items: [dashboard] },
+        { items: [dashboard] },
         {
           label: t("groupAcademics"),
           items: [
@@ -30,7 +30,7 @@ export function useNav(): { groups: NavGroup[]; bottom: BottomNavItem[] } {
             { title: t("subjects"), url: "/subjects/", icon: "subjects" },
             grades,
             homework,
-            { title: t("exams"), url: "/exams/", icon: "calendarEvent" },
+            { title: t("exams"), url: "/exams/", icon: "exams" },
             { title: t("teachers"), url: "/teachers/", icon: IconUserCircle },
             ...(isHead ? [{ title: t("myGroup"), url: "/my-group/", icon: "groups" as const }] : []),
           ],
@@ -39,7 +39,7 @@ export function useNav(): { groups: NavGroup[]; bottom: BottomNavItem[] } {
           label: t("groupStudyTools"),
           items: [
             { title: t("assistant"), url: "/assistant/", icon: "assistant" },
-            { title: t("notebooks"), url: "/notebooks/", icon: IconNotebook },
+            { title: t("notebooks"), url: "/notebooks/", icon: "notebooks" },
             { title: t("flashcards"), url: "/flashcards/", icon: "flashcards" },
             { title: t("files"), url: "/files/", icon: "files" },
             { title: t("links"), url: "/links/", icon: "links" },

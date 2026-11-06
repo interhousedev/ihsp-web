@@ -2,17 +2,18 @@
 
 import { useT } from "@ihsp/i18n"
 import { PageContainer, StateView, Tabs, TabsContent, TabsList, TabsTrigger } from "@ihsp/ui"
+import { SubjectMarksTab } from "./subject-marks-tab"
+import { SubjectNotebookButton } from "./subject-notebook-button"
 import { parseAsInteger, parseAsString, parseAsStringLiteral, useQueryState } from "nuqs"
-import { BackLink } from "../../shared/components/back-link"
-import { QueryState } from "../../shared/components/query-state"
+import { BackLink, QueryState } from "@ihsp/features-core"
 import { useSubject } from "../hooks/use-subjects"
 import { SubjectHub } from "./subject-hub"
 import { SubjectMaterialsTab } from "./subject-materials-tab"
 import { SubjectOverviewTab } from "./subject-overview-tab"
 
-const TABS = ["overview", "lessons", "materials"] as const
+const TABS = ["overview", "marks", "lessons", "materials"] as const
 
-/** One subject (WEB-8, UF-WEB-05): `?id=&semester=&tab=`; Overview first (planner and notebook buttons), then Lessons with their marks and attendance, then Materials. */
+/** One subject (WEB-8, WEB-13, UF-WEB-05): `?id=&semester=&tab=`; Overview first, then My marks with the planner, Lessons with their marks and attendance, then Materials. The notebook is in the header. */
 export function SubjectPage() {
   const t = useT("subjects")
   const [id] = useQueryState("id", parseAsString)
@@ -25,7 +26,8 @@ export function SubjectPage() {
   return (
     <PageContainer
       title={query.data?.subject.name ?? t("title")}
-      description={query.data ? t("semesterLabel", { number: query.data.semester }) : undefined}
+      meta={query.data ? t("semesterLabel", { number: query.data.semester }) : undefined}
+      actions={query.data ? <SubjectNotebookButton subjectId={query.data.subject.id} /> : undefined}
     >
       <BackLink href="/subjects/" label={t("title")} />
       <QueryState query={query} rows={4}>
@@ -40,6 +42,9 @@ export function SubjectPage() {
             </TabsList>
             <TabsContent value="overview" className="pt-2">
               <SubjectOverviewTab detail={detail} />
+            </TabsContent>
+            <TabsContent value="marks" className="pt-2">
+              <SubjectMarksTab detail={detail} />
             </TabsContent>
             <TabsContent value="lessons" className="pt-2">
               <SubjectHub subjectId={detail.subject.id} semester={detail.semester} />

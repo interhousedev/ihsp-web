@@ -2,7 +2,7 @@
 
 import { useT } from "@ihsp/i18n"
 import { PageContainer } from "@ihsp/ui"
-import { QueryState } from "../../shared/components/query-state"
+import { QueryState } from "@ihsp/features-core"
 import { useMyTeachers } from "../hooks/use-my-teachers"
 import { TeacherCard } from "./teacher-card"
 

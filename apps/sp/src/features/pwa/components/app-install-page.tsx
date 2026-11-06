@@ -57,7 +57,7 @@ function AppInstallContent({ app }: { app: HubApp & { href: string } }) {
         <span className="bg-card flex size-18 items-center justify-center rounded-2xl border shadow-sm">
           <Icon aria-hidden className="text-primary size-10" />
         </span>
-        <h1 className="text-2xl font-semibold">{t("appInstall.title", { name: app.name })}</h1>
+        <h1 className="text-2xl font-bold tracking-tight">{t("appInstall.title", { name: app.name })}</h1>
         <p className="text-muted-foreground text-sm">{app.description}</p>
       </header>
       <p role="note" className="bg-muted text-muted-foreground rounded-lg p-3 text-sm">

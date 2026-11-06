@@ -2,7 +2,7 @@
 
 import { useFormatters, useT } from "@ihsp/i18n"
 import { Progress } from "@ihsp/ui"
-import { QueryState } from "../../shared/components/query-state"
+import { QueryState } from "@ihsp/features-core"
 import { formatBytes } from "../../shared/utils/format-bytes"
 import { useStorage } from "../hooks/use-profile"
 import { ProfileCard } from "./profile-card"

@@ -2,17 +2,19 @@
 
 import type { NotebookItem, SubjectNotebookSlot } from "@ihsp/api"
 import {
+  CardSkeletons,
   groupNotebooks,
   NOTEBOOK_FOLDERS,
   parseNotebookFolder,
   placeholderSlots,
+  SharedNotebooksSection,
   SubjectSlotCards,
+  type NotebookFolder,
   useAllNotebooks,
   useSubjectNotebookSlots,
-  type NotebookFolder,
 } from "@ihsp/features-core"
 import { useT } from "@ihsp/i18n"
-import { Button, Icons, Input, PageContainer, Skeleton, StateView, cn, useDebounce } from "@ihsp/ui"
+import { Button, cn, Icons, Input, PageContainer, StateView, useDebounce } from "@ihsp/ui"
 import { IconSearch } from "@ihsp/ui"
 import { useRouter, useSearchParams } from "next/navigation"
 import { useState } from "react"
@@ -26,18 +28,6 @@ const COLLAPSE_ABOVE = 6
 /** Past this many cards a folder is paged: the rest is revealed in steps of this size. */
 const PAGE_SIZE = 48
 const GRID = "grid grid-cols-1 gap-2 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4"
-
-function CardSkeletons() {
-  return (
-    <ul className={GRID} aria-hidden>
-      {Array.from({ length: 4 }, (_, index) => (
-        <li key={index}>
-          <Skeleton className="h-32 w-full rounded-xl" />
-        </li>
-      ))}
-    </ul>
-  )
-}
 
 /** One folder: a collapsible header with the folder icon, its title and the count, then its notebooks as compact cards. */
 function FolderSection({
@@ -146,7 +136,7 @@ export function NotebooksPage() {
         />
       </div>
 
-      {notebooks.isPending ? <CardSkeletons /> : null}
+      {notebooks.isPending ? <StateView state="loading" skeleton={<CardSkeletons className="gap-2" />} /> : null}
       {notebooks.isError ? (
         <StateView state="error" error={notebooks.error} onRetry={() => void notebooks.refetch()} />
       ) : null}
@@ -156,6 +146,7 @@ export function NotebooksPage() {
       {notebooks.isSuccess && all.length === 0 && slots.length === 0 && query !== "" ? (
         <StateView state="empty" emptyText={t("list.noResults", { query })} />
       ) : null}
+      <SharedNotebooksSection />
       {all.length + slots.length > 0 ? (
         <div className="flex flex-col gap-5">
           {NOTEBOOK_FOLDERS.filter(

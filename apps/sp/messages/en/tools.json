@@ -50,14 +50,10 @@
       "chat": "Chat"
     },
     "row": {
-      "download": "Download",
-      "downloadFailed": "Could not open the file.",
       "rename": "Rename {name}",
       "renameShort": "Rename",
       "delete": "Delete {name}",
       "deleteShort": "Delete",
-      "share": "Share",
-      "linkCopied": "Link copied.",
       "more": "More actions for {name}"
     },
     "rename": {
@@ -72,6 +68,13 @@
       "usedWarning": "This file is used. These items will stop working:",
       "confirm": "Delete",
       "deleted": "“{name}” deleted."
+    },
+    "sharing": {
+      "title": "Share with people",
+      "sharedTitle": "Shared with me",
+      "remove": "Remove from my list",
+      "joinFailed": "This link does not work any more.",
+      "from": "From {name}"
     }
   },
   "flashcards": {
@@ -87,7 +90,17 @@
       "deleteTitle": "Delete this deck?",
       "deleteDescription": "“{title}” and all its cards and progress will be deleted. Its public links stop working.",
       "deleteConfirm": "Delete deck",
-      "deleteFailed": "Could not delete the deck."
+      "deleteFailed": "Could not delete the deck.",
+      "mergeTitle": "Combine decks",
+      "mergeHint": "A new deck gets copies of the cards. The chosen decks stay as they are, and identical cards are added once.",
+      "mergeSets": "Decks to combine",
+      "mergeName": "Name of the new deck",
+      "mergeSubmit": "Combine",
+      "merged": "New deck with {count, plural, one {# card} other {# cards}}. Duplicates skipped: {skipped}.",
+      "statsTitle": "Questions",
+      "statsRow": "Attempts: {attempts}, correct: {correct}, incorrect: {incorrect}",
+      "statsLast": "last studied {date}",
+      "statsNever": "not studied yet"
     },
     "options": {
       "title": "Options: {title}",
@@ -99,6 +112,8 @@
       "save": "Save",
       "saving": "Saving…",
       "saved": "Options saved.",
+      "shuffle": "Shuffle cards",
+      "shuffleHint": "New cards and reviews come in a random order.",
       "delete": "Delete deck"
     },
     "descriptionDialog": {

@@ -5,16 +5,16 @@ import { addDays, startOfWeek, todayIso, useFormatters, useT, type IsoDate } fro
 import { Badge, Button, Icons, cn } from "@ihsp/ui"
 import { parseAsString, useQueryState } from "nuqs"
 import Link from "next/link"
-import { QueryState } from "../../shared/components/query-state"
-import { studyDayOf } from "../../timetable/utils/week"
+import { QueryState } from "@ihsp/features-core"
+import { studyDayOf, weekDays } from "../../timetable/utils/week"
 import { useTeacherTimetable } from "../hooks/use-my-teacher"
 import { lessonHref } from "../utils/teacher-display"
 
 const ISO_DATE = /^\d{4}-\d{2}-\d{2}$/
-const WEEKDAYS = [0, 1, 2, 3, 4] as const
 
 /**
- * The teacher's lessons in every group, Monday to Friday of one week (`?week=` any day of it; this week by default).
+ * The teacher's lessons in every group of one week (`?week=` any day of it; this week by default): Monday to Friday,
+ * and Saturday or Sunday when they have lessons.
  * On a weekend "this week" is the week after, as in the calendar (`studyDayOf`).
  * The student's own group is highlighted; the other groups are muted and show their group name.
  */
@@ -26,8 +26,7 @@ export function TeacherTimetable({ teacherId }: { teacherId: string }) {
   const thisMonday = startOfWeek(studyDayOf(today))
   const monday = week && ISO_DATE.test(week) ? startOfWeek(week) : thisMonday
   const friday = addDays(monday, 4)
-  const days = WEEKDAYS.map((offset) => addDays(monday, offset))
-  const query = useTeacherTimetable(teacherId, monday, friday)
+  const query = useTeacherTimetable(teacherId, monday, addDays(monday, 6))
 
   function show(date: IsoDate) {
     void setWeek(date === thisMonday ? null : date)
@@ -77,8 +76,8 @@ export function TeacherTimetable({ teacherId }: { teacherId: string }) {
       </div>
       <QueryState query={query} rows={3}>
         {(slots) => (
-          <div className="grid gap-3 md:grid-cols-5">
-            {days.map((date) => (
+          <div className="grid gap-3 md:grid-flow-col md:auto-cols-fr">
+            {weekDays(monday, slots).map((date) => (
               <DayColumn key={date} date={date} today={today} slots={slots.filter((slot) => slot.date === date)} />
             ))}
           </div>
@@ -95,7 +94,7 @@ function DayColumn({ date, today, slots }: { date: IsoDate; today: IsoDate; slot
     <section
       aria-label={format.weekday(date, "long")}
       data-testid="teacher-day"
-      className={cn("bg-card flex flex-col gap-2 rounded-xl border p-3", date === today && "border-primary")}
+      className={cn("bg-card flex flex-col gap-2 rounded-card border p-3", date === today && "border-primary")}
     >
       <h3 className="text-sm font-semibold">
         {format.weekday(date, "long")}{" "}

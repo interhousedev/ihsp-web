@@ -3,17 +3,7 @@
 import { getMeFilesQuery, type FileItem, type LinkCreateBody } from "@ihsp/api"
 import { FileUploadButton } from "@ihsp/features-core"
 import { useErrorMessage, useT } from "@ihsp/i18n"
-import {
-  Button,
-  Dialog,
-  DialogContent,
-  DialogFooter,
-  DialogHeader,
-  DialogTitle,
-  Dropdown,
-  Input,
-  Label,
-} from "@ihsp/ui"
+import { Button, Dropdown, Input, Label, ResponsiveDialog } from "@ihsp/ui"
 import { useQuery, useQueryClient } from "@tanstack/react-query"
 import { useId, useState } from "react"
 import { toast } from "sonner"
@@ -75,90 +65,86 @@ export function NewLinkDialog({ open, onOpenChange }: NewLinkDialogProps) {
   }
 
   return (
-    <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="max-h-[90dvh] overflow-y-auto">
-        <form
-          className="flex flex-col gap-4"
-          onSubmit={(event) => {
-            event.preventDefault()
-            submit()
-          }}
-        >
-          <DialogHeader>
-            <DialogTitle>{t("title")}</DialogTitle>
-          </DialogHeader>
+    <ResponsiveDialog
+      open={open}
+      onOpenChange={onOpenChange}
+      title={t("title")}
+      onSubmit={(event) => {
+        event.preventDefault()
+        submit()
+      }}
+      footer={
+        <>
+          <Button type="button" variant="outline" className="min-h-11" onClick={() => onOpenChange(false)}>
+            {t("cancel")}
+          </Button>
+          <Button type="submit" className="min-h-11" disabled={!canCreate || create.isPending}>
+            {t("create")}
+          </Button>
+        </>
+      }
+    >
+      <div role="group" aria-label={t("mode")} className="grid grid-cols-2 gap-2">
+        {(["url", "file"] as const).map((value) => (
+          <Button
+            key={value}
+            type="button"
+            variant={mode === value ? "default" : "outline"}
+            className="min-h-11"
+            aria-pressed={mode === value}
+            onClick={() => setMode(value)}
+          >
+            {t(`mode_${value}`)}
+          </Button>
+        ))}
+      </div>
 
-          <div role="group" aria-label={t("mode")} className="grid grid-cols-2 gap-2">
-            {(["url", "file"] as const).map((value) => (
-              <Button
-                key={value}
-                type="button"
-                variant={mode === value ? "default" : "outline"}
-                className="min-h-11"
-                aria-pressed={mode === value}
-                onClick={() => setMode(value)}
-              >
-                {t(`mode_${value}`)}
-              </Button>
-            ))}
+      {mode === "url" ? (
+        <div className="flex flex-col gap-1">
+          <Label htmlFor={urlId}>{t("urlLabel")}</Label>
+          <Input
+            id={urlId}
+            type="url"
+            inputMode="url"
+            placeholder="https://"
+            value={url}
+            aria-invalid={urlInvalid}
+            className="min-h-11"
+            onChange={(event) => setUrl(event.target.value)}
+          />
+          {urlInvalid ? <p className="text-destructive text-xs">{t("urlInvalid")}</p> : null}
+        </div>
+      ) : (
+        <div className="flex flex-col gap-3">
+          <div className="flex flex-col gap-1">
+            <Label htmlFor={fileSelectId}>{t("fileLabel")}</Label>
+            <Dropdown
+              id={fileSelectId}
+              value={fileId}
+              className="w-full"
+              placeholder={files.isPending ? t("loadingFiles") : t("chooseFile")}
+              onValueChange={setFileId}
+              options={options.map((file) => ({ value: file.id, label: file.name }))}
+            />
           </div>
+          <p className="text-muted-foreground text-xs">{t("or")}</p>
+          <FileUploadButton
+            purpose="link"
+            label={t("uploadNew")}
+            onUploaded={(file) => {
+              setUploaded((current) => [file, ...current])
+              setFileId(file.id)
+            }}
+            onSettled={() => void queryClient.invalidateQueries({ queryKey: ["me", "files"] })}
+          />
+        </div>
+      )}
 
-          {mode === "url" ? (
-            <div className="flex flex-col gap-1">
-              <Label htmlFor={urlId}>{t("urlLabel")}</Label>
-              <Input
-                id={urlId}
-                type="url"
-                inputMode="url"
-                placeholder="https://"
-                value={url}
-                aria-invalid={urlInvalid}
-                className="min-h-11"
-                onChange={(event) => setUrl(event.target.value)}
-              />
-              {urlInvalid ? <p className="text-destructive text-xs">{t("urlInvalid")}</p> : null}
-            </div>
-          ) : (
-            <div className="flex flex-col gap-3">
-              <div className="flex flex-col gap-1">
-                <Label htmlFor={fileSelectId}>{t("fileLabel")}</Label>
-                <Dropdown
-                  id={fileSelectId}
-                  value={fileId}
-                  className="w-full"
-                  placeholder={files.isPending ? t("loadingFiles") : t("chooseFile")}
-                  onValueChange={setFileId}
-                  options={options.map((file) => ({ value: file.id, label: file.name }))}
-                />
-              </div>
-              <p className="text-muted-foreground text-xs">{t("or")}</p>
-              <FileUploadButton
-                purpose="link"
-                label={t("uploadNew")}
-                onUploaded={(file) => {
-                  setUploaded((current) => [file, ...current])
-                  setFileId(file.id)
-                }}
-                onSettled={() => void queryClient.invalidateQueries({ queryKey: ["me", "files"] })}
-              />
-            </div>
-          )}
-
-          {create.isError ? (
-            <p role="alert" className="text-destructive text-sm">
-              {errorMessage(create.error)}
-            </p>
-          ) : null}
-          <DialogFooter>
-            <Button type="button" variant="outline" className="min-h-11" onClick={() => onOpenChange(false)}>
-              {t("cancel")}
-            </Button>
-            <Button type="submit" className="min-h-11" disabled={!canCreate || create.isPending}>
-              {t("create")}
-            </Button>
-          </DialogFooter>
-        </form>
-      </DialogContent>
-    </Dialog>
+      {create.isError ? (
+        <p role="alert" className="text-destructive text-sm">
+          {errorMessage(create.error)}
+        </p>
+      ) : null}
+    </ResponsiveDialog>
   )
 }

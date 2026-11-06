@@ -20,7 +20,7 @@ export function WidgetEditor({
 }) {
   const t = useT("today.dashboard")
   return (
-    <div role="region" aria-label={t("editor")} className="bg-card flex flex-col gap-3 rounded-2xl border p-3">
+    <div role="region" aria-label={t("editor")} className="bg-card flex flex-col gap-3 rounded-card border p-3">
       <h3 className="text-sm font-semibold">{t(`kinds.${widget.kind}`)}</h3>
       <div role="group" aria-label={t("size")} className="flex flex-wrap gap-2">
         {WIDGET_SIZES[widget.kind].map((size) => (

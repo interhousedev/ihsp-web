@@ -11,7 +11,7 @@ export function DashboardPage() {
   const f = useFormatters()
   const now = useNow(60_000)
   return (
-    <PageContainer title={t("title")} description={f.date(now, { weekday: "long", day: "numeric", month: "long" })}>
+    <PageContainer title={t("title")} meta={f.date(now, { weekday: "long", day: "numeric", month: "long" })}>
       <Dashboard />
     </PageContainer>
   )

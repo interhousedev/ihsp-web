@@ -5,14 +5,16 @@ import {
   deleteMyCertificate,
   deleteMyCertificateFile,
   getCertificateFileBlob,
+  getCertificateFileUrl,
   keys,
   postMyCertificateFile,
   type CertificateEntry,
   type CertificateFile,
 } from "@ihsp/api"
-import { entrySummary, saveBlob } from "@ihsp/features-core"
+import { FileItem, entrySummary, openFileUrl, saveBlob } from "@ihsp/features-core"
 import { useErrorMessage, useT } from "@ihsp/i18n"
 import { Badge, Button, ConfirmDialog, IconDownload, IconPencil, IconPlus, IconTrash } from "@ihsp/ui"
+import { isMiniApp } from "@ihsp/telegram/core"
 import { useMutation, useQueryClient } from "@tanstack/react-query"
 import { useRef, useState } from "react"
 import { toast } from "sonner"
@@ -66,7 +68,11 @@ export function CertificateEntryRow({ entry, onEdit }: { entry: CertificateEntry
     onError: (error) => toast.error(errorMessage(error)),
   })
   const download = useMutation({
-    mutationFn: async (file: CertificateFile) => saveBlob(await getCertificateFileBlob(file.id), file.name),
+    mutationFn: async (file: CertificateFile) => {
+      // The Telegram webview cannot save a blob, so the file leaves through the system browser.
+      if (isMiniApp()) return openFileUrl((await getCertificateFileUrl(file.id)).url)
+      saveBlob(await getCertificateFileBlob(file.id), file.name)
+    },
     onError: (error) => toast.error(errorMessage(error)),
   })
 
@@ -102,33 +108,37 @@ export function CertificateEntryRow({ entry, onEdit }: { entry: CertificateEntry
       </div>
       <ul className="flex flex-col gap-1">
         {entry.files.map((file) => (
-          <li key={file.id} className="flex items-center justify-between gap-2 text-sm">
-            <span className="min-w-0 truncate">
-              {file.name} <span className="text-muted-foreground">{formatBytes(file.size)}</span>
-            </span>
-            <span className="flex shrink-0 items-center gap-1">
-              <Button
-                type="button"
-                variant="ghost"
-                size="icon"
-                className="size-11 md:size-8"
-                aria-label={`${t("download")}: ${file.name}`}
-                onClick={() => download.mutate(file)}
-              >
-                <IconDownload aria-hidden />
-              </Button>
-              <Button
-                type="button"
-                variant="ghost"
-                size="icon"
-                className="size-11 md:size-8"
-                aria-label={t("deleteFile", { name: file.name })}
-                onClick={() => setPending({ kind: "file", file })}
-              >
-                <IconTrash aria-hidden />
-              </Button>
-            </span>
-          </li>
+          <FileItem
+            as="li"
+            key={file.id}
+            name={file.name}
+            meta={[formatBytes(file.size)]}
+            actions={
+              <>
+                <Button
+                  type="button"
+                  variant="ghost"
+                  size="icon"
+                  className="size-11 md:size-8"
+                  aria-label={`${t("download")}: ${file.name}`}
+                  disabled={download.isPending}
+                  onClick={() => download.mutate(file)}
+                >
+                  <IconDownload aria-hidden />
+                </Button>
+                <Button
+                  type="button"
+                  variant="ghost"
+                  size="icon"
+                  className="size-11 md:size-8"
+                  aria-label={t("deleteFile", { name: file.name })}
+                  onClick={() => setPending({ kind: "file", file })}
+                >
+                  <IconTrash aria-hidden />
+                </Button>
+              </>
+            }
+          />
         ))}
       </ul>
       <div className="flex flex-wrap items-center gap-2">

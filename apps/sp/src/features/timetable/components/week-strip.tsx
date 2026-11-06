@@ -9,12 +9,14 @@ import { weekDays } from "../utils/week"
 /** The seven days of the week as a compact strip to pick the day; a dot shows the day's attendance. */
 export function WeekStrip({
   monday,
+  lessons = [],
   selected,
   today,
   statuses,
   onChange,
 }: {
   monday: string
+  lessons?: readonly { date: string }[]
   selected: string
   today: string
   statuses: ReadonlyMap<string, MarkedState>
@@ -22,10 +24,16 @@ export function WeekStrip({
 }) {
   const t = useT("timetable")
   const f = useFormatters()
+  const days = weekDays(monday, lessons)
 
   return (
-    <div role="group" aria-label={t("days")} className="grid grid-cols-5 gap-1">
-      {weekDays(monday).map((date) => {
+    <div
+      role="group"
+      aria-label={t("days")}
+      className="grid gap-1"
+      style={{ gridTemplateColumns: `repeat(${days.length}, minmax(0, 1fr))` }}
+    >
+      {days.map((date) => {
         const status = statuses.get(date)
         return (
           <Button

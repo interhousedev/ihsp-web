@@ -3,7 +3,7 @@
 import { useT } from "@ihsp/i18n"
 import { Badge } from "@ihsp/ui"
 import { useId } from "react"
-import { QueryState } from "../../shared/components/query-state"
+import { QueryState } from "@ihsp/features-core"
 import { useHomeworkList } from "../hooks/use-homework"
 import { HomeworkItemCard } from "./homework-item-card"
 
@@ -21,7 +21,7 @@ export function OverdueSection() {
     <section
       aria-labelledby={titleId}
       data-testid="homework-overdue"
-      className="border-destructive/40 bg-destructive/5 flex flex-col gap-2 rounded-xl border p-3"
+      className="border-destructive/40 bg-destructive/5 flex flex-col gap-2 rounded-card border p-3"
     >
       <div className="flex flex-wrap items-center gap-2">
         <h2 id={titleId} className="text-destructive text-base font-semibold">

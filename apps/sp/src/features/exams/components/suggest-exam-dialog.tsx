@@ -1,20 +1,7 @@
 "use client"
 
 import { useErrorMessage, useT } from "@ihsp/i18n"
-import {
-  Button,
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
-  Dropdown,
-  Icons,
-  Input,
-  Label,
-  Textarea,
-} from "@ihsp/ui"
+import { Button, Dropdown, Icons, Input, Label, ResponsiveDialog, Textarea } from "@ihsp/ui"
 import { useId, useState, type FormEvent } from "react"
 import { useProposeExam, useSubjectChoices } from "../hooks/use-exams"
 import { startsAtOf } from "../utils/starts-at"
@@ -66,23 +53,37 @@ export function SuggestExamDialog() {
     })
   }
 
+  const done = propose.isSuccess
   return (
-    <Dialog open={open} onOpenChange={close}>
-      <DialogTrigger render={<Button className="min-h-11 md:min-h-8" />}>
+    <>
+      <Button className="min-h-11 md:min-h-8" onClick={() => close(true)}>
         <Icons.add aria-hidden />
         {t("button")}
-      </DialogTrigger>
-      <DialogContent className="max-h-[90dvh] overflow-y-auto sm:max-w-md">
-        <DialogHeader>
-          <DialogTitle>{propose.isSuccess ? t("doneTitle") : t("title")}</DialogTitle>
-          <DialogDescription>{propose.isSuccess ? t("doneText") : t("description")}</DialogDescription>
-        </DialogHeader>
-        {propose.isSuccess ? (
-          <Button type="button" className="min-h-11 md:min-h-8" onClick={() => close(false)}>
-            {t("close")}
-          </Button>
-        ) : (
-          <form className="flex flex-col gap-3" onSubmit={submit}>
+      </Button>
+      <ResponsiveDialog
+        open={open}
+        onOpenChange={close}
+        title={done ? t("doneTitle") : t("title")}
+        description={done ? t("doneText") : t("description")}
+        onSubmit={done ? undefined : submit}
+        footer={
+          done ? (
+            <Button type="button" className="min-h-11 md:min-h-8" onClick={() => close(false)}>
+              {t("close")}
+            </Button>
+          ) : (
+            <Button
+              type="submit"
+              className="min-h-11 md:min-h-8"
+              disabled={propose.isPending || subjectId === "" || date === ""}
+            >
+              {t("submit")}
+            </Button>
+          )
+        }
+      >
+        {done ? null : (
+          <>
             <div className="flex flex-col gap-1">
               <Label htmlFor={ids.subject}>{t("subject")}</Label>
               <Dropdown
@@ -156,16 +157,9 @@ export function SuggestExamDialog() {
                 {errorMessage(propose.error)}
               </p>
             ) : null}
-            <Button
-              type="submit"
-              className="min-h-11 md:min-h-8"
-              disabled={propose.isPending || subjectId === "" || date === ""}
-            >
-              {t("submit")}
-            </Button>
-          </form>
+          </>
         )}
-      </DialogContent>
-    </Dialog>
+      </ResponsiveDialog>
+    </>
   )
 }

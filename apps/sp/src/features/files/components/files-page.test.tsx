@@ -1,5 +1,14 @@
 import { describe, expect, it, mock } from "bun:test"
-import { TEST_STORAGE_URL, apiUrl, fileImage, filePdf, ids, problem, server } from "@ihsp/test-utils"
+import {
+  TEST_STORAGE_URL,
+  apiUrl,
+  fileImage,
+  filePdf,
+  ids,
+  problem,
+  selectDropdownOption,
+  server,
+} from "@ihsp/test-utils"
 import { fireEvent, screen, waitFor, within } from "@testing-library/react"
 import { HttpResponse, http } from "msw"
 import { allowSlowRenders, enter, readBody, renderTools } from "../../assistant/utils/tools-test-utils"
@@ -93,8 +102,7 @@ describe("FilesPage: header, filters and views", () => {
     const { user } = renderTools(<FilesPage />, { route: "/files/" })
     await screen.findByText("No files yet. Upload your first file.")
 
-    await user.click(screen.getByRole("button", { name: "Filter" }))
-    await user.click(await screen.findByRole("menuitemradio", { name: "Images" }))
+    await selectDropdownOption(user, screen.getByRole("combobox", { name: "File type" }), "Images")
 
     await waitFor(() => expect(types).toContain("image"))
   })
@@ -327,7 +335,8 @@ describe("FilesPage: rename, share, download, delete (UF-WEB-18 step 4)", () => 
     const { user } = renderTools(<FilesPage />, { route: "/files/" })
     await screen.findByRole("heading", { name: "kinematics-notes.pdf" })
 
-    await pickMoreAction(user, "kinematics-notes.pdf", "Share")
+    await user.click(within(rowOf("kinematics-notes.pdf")).getByRole("button", { name: "Share kinematics-notes.pdf" }))
+    await user.click(await screen.findByRole("menuitem", { name: /Public link/ }))
 
     await waitFor(() => expect(body).toEqual({ kind: "file", file_id: ids.file }))
   })
@@ -391,7 +400,7 @@ describe("file size helpers", () => {
     expect(formatBytes(512)).toBe("512 B")
     expect(formatBytes(640 * 1024 * 1024)).toBe("640 MB")
     expect(formatBytes(1.5 * 1024 * 1024 * 1024)).toBe("1.5 GB")
-    expect(formatBytes(482_113)).toBe("471 KB")
+    expect(formatBytes(482_113)).toBe("470.8 KB")
   })
 
   it("computes the quota share and the inline types", () => {

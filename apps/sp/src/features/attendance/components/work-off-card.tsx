@@ -4,7 +4,7 @@ import { getMeWorkOffsQuery, type MyWorkOff } from "@ihsp/api"
 import { todayIso, useFormatters, useT } from "@ihsp/i18n"
 import { Badge } from "@ihsp/ui"
 import { useQuery } from "@tanstack/react-query"
-import { QueryState } from "../../shared/components/query-state"
+import { QueryState } from "@ihsp/features-core"
 
 /** The student's open work-off tasks for missed lessons (WO-6). Hidden when there is nothing to work off. */
 export function WorkOffCard() {

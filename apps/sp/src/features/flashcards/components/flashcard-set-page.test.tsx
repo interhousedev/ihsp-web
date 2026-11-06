@@ -83,6 +83,7 @@ describe("FlashcardSetPage (WEB-22, Anki's deck overview)", () => {
           description: flashcardSetDetail.description,
           new_per_day: 15,
           reviews_per_day: 100,
+          shuffle: false,
         },
       ]),
     )

@@ -24,7 +24,7 @@ export function FeedbackItemCard({ item }: { item: FeedbackOut }) {
   const hasResponses = item.response_count > 0
 
   return (
-    <article className="bg-card flex flex-col gap-3 rounded-xl border p-4">
+    <article className="bg-card flex flex-col gap-3 rounded-card border p-4">
       <div className="flex flex-wrap items-center gap-2">
         <Badge variant={STATUS_VARIANT[item.status]}>{t(`status.${item.status}`)}</Badge>
         <Badge variant="outline">{t(`kind.${item.kind}`)}</Badge>

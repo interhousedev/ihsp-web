@@ -1,7 +1,7 @@
 "use client"
 
-import type { FileItem } from "@ihsp/api"
-import { FileKindIcon, FileThumb } from "@ihsp/features-core"
+import type { FileItem as ApiFile } from "@ihsp/api"
+import { FileItem, FileThumb } from "@ihsp/features-core"
 import { useFormatters } from "@ihsp/i18n"
 import { Card } from "@ihsp/ui"
 import { formatBytes } from "../utils/format-bytes"
@@ -11,20 +11,23 @@ import { FileTitle } from "./file-title"
 import { UsedByList } from "./used-by-list"
 
 type FileCardProps = {
-  file: FileItem
-  onRename: (file: FileItem) => void
-  onDelete: (file: FileItem) => void
+  file: ApiFile
+  onShare?: (file: ApiFile) => void
+  onRename: (file: ApiFile) => void
+  onDelete: (file: ApiFile) => void
 }
 
-/** A file in the grid: file-type icon and name as the header, the thumbnail (or a large type icon) and the actions. */
-export function FileCard({ file, onRename, onDelete }: FileCardProps) {
+/** A file in the grid: the shared file row as the header, then the thumbnail (or a large type icon) and the actions. */
+export function FileCard({ file, onShare, onRename, onDelete }: FileCardProps) {
   const format = useFormatters()
   return (
     <Card data-file-id={file.id} id={`file-${file.id}`} className="gap-0 overflow-hidden p-0">
-      <div className="flex min-w-0 items-center gap-2 border-b px-3 py-2">
-        <FileKindIcon file={file} className="text-muted-foreground size-4" />
-        <FileTitle file={file} className="min-w-0 flex-1 truncate" />
-      </div>
+      <FileItem
+        className="rounded-none border-0 border-b"
+        name={file.name}
+        contentType={file.content_type}
+        title={<FileTitle file={file} className="truncate" />}
+      />
       <FileThumb file={file} className="aspect-[4/3] w-full" />
       <div className="flex flex-col gap-2 p-3">
         <FileStatusBadge file={file} />
@@ -32,7 +35,7 @@ export function FileCard({ file, onRename, onDelete }: FileCardProps) {
           {formatBytes(file.byte_size)} · {format.date(file.created_at)}
         </p>
         <UsedByList items={file.used_by} />
-        <FileActions file={file} onRename={onRename} onDelete={onDelete} />
+        <FileActions file={file} {...(onShare ? { onShare } : {})} onRename={onRename} onDelete={onDelete} />
       </div>
     </Card>
   )

@@ -1,5 +1,6 @@
 "use client"
 
+import { PageContainer } from "@ihsp/ui"
 import { getMyFeedbackQuery } from "@ihsp/api"
 import { QueryState } from "@ihsp/features-core"
 import { useT } from "@ihsp/i18n"
@@ -11,8 +12,7 @@ export function MyFeedbackPage() {
   const t = useT("feedback")
   const query = useQuery(getMyFeedbackQuery())
   return (
-    <div className="flex flex-col gap-4">
-      <h1 className="text-xl font-semibold">{t("page.title")}</h1>
+    <PageContainer title={t("page.title")}>
       <QueryState query={query} isEmpty={(data) => data.items.length === 0} emptyText={t("page.empty")}>
         {(data) => (
           <ul className="flex flex-col gap-3">
@@ -24,6 +24,6 @@ export function MyFeedbackPage() {
           </ul>
         )}
       </QueryState>
-    </div>
+    </PageContainer>
   )
 }

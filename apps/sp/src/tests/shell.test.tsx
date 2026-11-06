@@ -69,7 +69,7 @@ describe("app frame", () => {
     await screen.findByText("page body")
 
     for (const name of [
-      "Dashboard",
+      "Home",
       "Calendar",
       "Subjects",
       "Grades",
