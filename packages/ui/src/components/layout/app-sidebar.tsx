@@ -40,7 +40,13 @@ function NavLink({ item, pathname }: { item: NavItem; pathname: string | null })
   )
   return (
     <SidebarMenuItem>
-      <SidebarMenuButton render={link} tooltip={item.title} isActive={active} aria-disabled={item.disabled}>
+      <SidebarMenuButton
+        render={link}
+        tooltip={item.title}
+        isActive={active}
+        aria-disabled={item.disabled}
+        className="max-md:min-h-11"
+      >
         <NavIconView icon={item.icon} />
         <span className={LABEL_CLASS}>{item.title}</span>
       </SidebarMenuButton>

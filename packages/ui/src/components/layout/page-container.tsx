@@ -17,10 +17,12 @@ export type PageContainerProps = {
   title: string
   /** Content width; `full` unless the page is text to read or a form. */
   width?: PageWidth
-  /** @deprecated Page subtitles are against the copy rules; kept for existing callers. */
-  description?: string
   /** A back link before the title. */
   back?: ReactNode
+  /** A status next to the title. */
+  badge?: ReactNode
+  /** Facts about this record under the title. */
+  meta?: ReactNode
   /** Buttons next to the title; they wrap under it on phones. */
   actions?: ReactNode
   className?: string
@@ -31,8 +33,9 @@ export type PageContainerProps = {
 export function PageContainer({
   title,
   width = "full",
-  description,
   back,
+  badge,
+  meta,
   actions,
   className,
   children,
@@ -43,8 +46,7 @@ export function PageContainer({
       className={cn("flex min-w-0 flex-1 flex-col gap-4 px-4 pt-3 pb-6 md:px-6 md:pt-7", WIDTH_CLASS[width], className)}
     >
       <div className="md:pe-(--shell-controls-width)">
-        <PageHeader title={title} back={back} actions={actions} />
-        {description ? <p className="text-muted-foreground mt-1 text-sm">{description}</p> : null}
+        <PageHeader title={title} back={back} badge={badge} meta={meta} actions={actions} />
       </div>
       {children}
     </div>

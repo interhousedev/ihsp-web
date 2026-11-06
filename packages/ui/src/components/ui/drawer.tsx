@@ -64,6 +64,9 @@ function DrawerClose({ ...props }: DrawerPrimitive.Close.Props) {
   return <DrawerPrimitive.Close data-slot="drawer-close" {...props} />
 }
 
+/** Keeps a focused field above the on-screen keyboard; wraps `DrawerContent` of a sheet with form fields. */
+const DrawerVirtualKeyboardProvider = DrawerPrimitive.VirtualKeyboardProvider
+
 function DrawerOverlay({ className, ...props }: DrawerPrimitive.Backdrop.Props) {
   return (
     <DrawerPrimitive.Backdrop
@@ -206,4 +209,5 @@ export {
   DrawerFooter,
   DrawerTitle,
   DrawerDescription,
+  DrawerVirtualKeyboardProvider,
 }

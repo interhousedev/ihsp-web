@@ -9,6 +9,7 @@ import { SidebarInset, SidebarProvider, SidebarTrigger, useSidebar } from "../ui
 import { AppSidebar } from "./app-sidebar"
 import { BottomNav } from "./bottom-nav"
 import type { BottomNavItem, NavGroup } from "./nav-types"
+import type { PlatformLink } from "./user-menu"
 
 export type AppShellProps = {
   nav: NavGroup[]
@@ -26,6 +27,8 @@ export type AppShellProps = {
   brand?: ReactNode
   /** Bottom of the sidebar: the user block. */
   sidebarFooter?: ReactNode
+  /** The user's platforms for the "More" sheet of `bottomNav` (`usePlatformLinks()`). */
+  platforms?: PlatformLink[]
   children: ReactNode
 }
 
@@ -91,6 +94,7 @@ export function AppShell({
   brand,
   sidebarFooter,
   controlsLeading,
+  platforms,
   children,
 }: AppShellProps) {
   const t = useT()
@@ -120,12 +124,16 @@ export function AppShell({
         <div
           className={cn(
             "page-enter flex min-w-0 flex-1 flex-col pt-(--shell-top-reserve) md:has-[[data-shell-flush]]:pt-(--safe-top)",
-            (bottomNav || bottomBar) && "pb-[calc(var(--bottom-nav-height)+var(--safe-bottom))] md:pb-0",
+            (bottomNav || bottomBar) &&
+              "pb-[calc(var(--bottom-nav-height)+var(--safe-bottom))] [--save-bar-bottom:calc(var(--bottom-nav-height)+var(--safe-bottom)+0.5rem)] md:pb-0 md:[--save-bar-bottom:calc(var(--safe-bottom)+0.5rem)]",
           )}
         >
           {children}
         </div>
-        {bottomBar ?? (bottomNav ? <BottomNav items={bottomNav} more={nav} moreFooter={sidebarFooter} /> : null)}
+        {bottomBar ??
+          (bottomNav ? (
+            <BottomNav items={bottomNav} more={nav} moreFooter={sidebarFooter} platforms={platforms} />
+          ) : null)}
       </SidebarInset>
     </SidebarProvider>
   )

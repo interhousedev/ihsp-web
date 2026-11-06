@@ -3,6 +3,7 @@
 import type { FC } from "react"
 import { Icons } from "../icons"
 import { cn } from "../../lib/utils"
+import { Spinner } from "./spinner"
 
 export interface UploadedFile {
   id: string
@@ -123,7 +124,7 @@ export const FilePreview: FC<FilePreviewProps> = ({ files, onRemove, className, 
           >
             {file.isUploading && (
               <div className="absolute inset-0 flex items-center justify-center rounded-xl bg-black/30">
-                <Icons.spinner size={20} className="animate-spin text-white" />
+                <Spinner aria-hidden className="size-5 text-white" />
               </div>
             )}
 

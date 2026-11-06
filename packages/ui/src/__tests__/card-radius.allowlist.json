@@ -1,0 +1,19 @@
+[
+  "apps/share/src/features/share/chat-view.tsx",
+  "apps/share/src/features/share/visualization-view.tsx",
+  "apps/sp/src/features/files/components/files-page.tsx",
+  "apps/sp/src/features/notebooks/components/new-notebook-button.tsx",
+  "apps/sp/src/features/pwa/components/app-install-page.tsx",
+  "apps/sp/src/features/today/dashboard/editor/add-widget.tsx",
+  "apps/staff/src/features/notebooks/components/new-notebook-button.tsx",
+  "packages/features-core/src/assistant-chat/slash-menu.tsx",
+  "packages/features-core/src/library/manage/editor/upload-zone.tsx",
+  "packages/features-core/src/library/reader/selection-toolbar.tsx",
+  "packages/features-core/src/library/upload/step-licence.tsx",
+  "packages/features-core/src/notebooks/chat/question-chip.tsx",
+  "packages/features-core/src/notebooks/sources/notebook-upload-scope.tsx",
+  "packages/features-core/src/notebooks/sources/sources-empty.tsx",
+  "packages/features-core/src/notebooks/viewers/cards/card-face.tsx",
+  "packages/features-core/src/notebooks/viewers/mind-map/mind-map-toolbar.tsx",
+  "packages/features-core/src/notebooks/viewers/quiz/option-body.tsx"
+]

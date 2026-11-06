@@ -28,6 +28,12 @@
     "alt": "Photo of {name}"
   },
   "common": {
+    "saveBar": {
+      "unsaved": "Unsaved changes",
+      "saved": "All changes saved",
+      "discard": "Discard changes",
+      "leaveConfirm": "You have unsaved changes. Leave this page?"
+    },
     "appName": "{brand}",
     "loading": "Loading…",
     "retry": "Try again",
@@ -60,6 +66,7 @@
     "none": "None",
     "apply": "Apply",
     "reset": "Reset",
+    "filters": "Filters",
     "clear": "Clear",
     "today": "Today",
     "offline": "Offline",
@@ -87,7 +94,10 @@
     "errorTitle": "Something went wrong",
     "errorDescription": "We could not load this. Check your connection and try again.",
     "offlineTitle": "You are offline",
-    "offlineDescription": "Saved data is shown when it is available."
+    "offlineDescription": "Saved data is shown when it is available.",
+    "filteredTitle": "Nothing found",
+    "resetFilters": "Reset filters",
+    "crashDescription": "This page could not be shown. Try again."
   },
   "theme": {
     "toggle": "Toggle light and dark mode",
@@ -599,15 +609,10 @@
   "assistant": {
     "documents": {
       "download": "Download .{format}",
-      "downloadFailed": "Could not download the file.",
       "attach": "Attach to lesson",
       "noLessons": "No lessons today to attach to.",
       "attached": "Attached to the lesson.",
-      "attachFailed": "Could not attach the file.",
-      "share": "Share",
-      "shareCopied": "Link copied: {url}",
-      "shareCreated": "Link created: {url}",
-      "shareFailed": "Could not create a link."
+      "attachFailed": "Could not attach the file."
     },
     "page": {
       "title": "Assistant"
@@ -975,6 +980,21 @@
     }
   },
   "files": {
+    "item": {
+      "download": "Download",
+      "openFailed": "Could not open the file.",
+      "open": "Open",
+      "openItem": "Open {title}",
+      "preview": "Preview",
+      "previewItem": "Preview {title}",
+      "share": "Share",
+      "shareItem": "Share {name}",
+      "linkCopied": "Link copied.",
+      "publicLink": "Public link",
+      "publicHint": "Anyone with the link can open the file, no sign-in needed.",
+      "peopleLink": "Sign-in link or people",
+      "peopleHint": "Only signed-in people: those you add or who open the link."
+    },
     "upload": {
       "button": "Upload files",
       "progress": "Uploading {name}",
@@ -1096,8 +1116,6 @@
       "shown": "Attachment is visible again"
     },
     "resources": {
-      "open": "Open",
-      "openItem": "Open {title}",
       "hide": "Hide",
       "hideItem": "Hide {title}",
       "show": "Show",
@@ -1253,9 +1271,10 @@
       "getShared": "Get shared",
       "createDeck": "Create deck",
       "importFile": "Import file",
+      "merge": "Combine decks",
       "source": {
         "ai": "Assistant",
-        "mcp": "via MCP",
+        "mcp": "Created with AI",
         "copied": "Copied"
       }
     },
@@ -1296,8 +1315,11 @@
       "done": {
         "title": "Congratulations! You have finished this deck for now.",
         "reviewed": "{count, plural, one {You answered # card.} other {You answered # cards.}}",
-        "back": "Back to the deck"
-      }
+        "back": "Back to the deck",
+        "restart": "Study again",
+        "restartHint": "An extra round of all cards. Your schedule and daily limits do not change."
+      },
+      "practice": "Extra round: {count, plural, one {# card} other {# cards}} left. Answers do not change your schedule."
     },
     "editor": {
       "createTitle": "Create a new flashcard set",
@@ -1337,6 +1359,7 @@
         "cardsRequired": "Add at least one card.",
         "tooMany": "A set has at most 500 cards."
       },
+      "hardness": { "label": "Hardness", "easy": "Easy", "medium": "Medium", "hard": "Hard" },
       "addWithAi": "Add new questions with AI"
     },
     "import": {
@@ -1649,7 +1672,10 @@
     "stats": {
       "title": "Statistics",
       "empty": "Nothing to show for these filters.",
-      "count": "Certificates"
+      "count": "Certificates",
+      "groupedBy": "Grouped by {field}",
+      "average": "Average {value}",
+      "distribution": "Distribution"
     },
     "ranking": {
       "title": "Most certificates",
@@ -1713,6 +1739,7 @@
       "requiredBadge": "Required",
       "fieldAllowOther": "Allow other (free text)",
       "fieldRequired": "Required",
+      "starField": "Group statistics by {name}",
       "kindText": "Text",
       "kindNumber": "Number",
       "kindSingle": "Single choice",
@@ -1799,6 +1826,7 @@
     "webApps": "Web apps repository",
     "backend": "Backend repository",
     "packagesShow": "Open source packages",
+    "packagesHome": "Home",
     "search": "Search packages",
     "found": "Found: {count}",
     "empty": "Nothing found",

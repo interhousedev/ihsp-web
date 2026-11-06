@@ -28,6 +28,12 @@
     "alt": "{name} surati"
   },
   "common": {
+    "saveBar": {
+      "unsaved": "Saqlanmagan oʻzgarishlar bor",
+      "saved": "Barcha oʻzgarishlar saqlandi",
+      "discard": "Oʻzgarishlarni bekor qilish",
+      "leaveConfirm": "Saqlanmagan oʻzgarishlar bor. Sahifadan chiqasizmi?"
+    },
     "appName": "{brand}",
     "loading": "Yuklanmoqda…",
     "retry": "Qayta urinish",
@@ -60,6 +66,7 @@
     "none": "Hech biri",
     "apply": "Qoʻllash",
     "reset": "Tiklash",
+    "filters": "Filtrlar",
     "clear": "Tozalash",
     "today": "Bugun",
     "offline": "Tarmoqsiz",
@@ -87,7 +94,10 @@
     "errorTitle": "Nimadir xato ketdi",
     "errorDescription": "Maʼlumotni yuklab boʻlmadi. Internetni tekshirib, qayta urinib koʻring.",
     "offlineTitle": "Internet yoʻq",
-    "offlineDescription": "Saqlangan maʼlumotlar bor boʻlsa, koʻrsatiladi."
+    "offlineDescription": "Saqlangan maʼlumotlar bor boʻlsa, koʻrsatiladi.",
+    "filteredTitle": "Hech narsa topilmadi",
+    "resetFilters": "Filtrlarni tozalash",
+    "crashDescription": "Bu sahifani koʻrsatib boʻlmadi. Qayta urinib koʻring."
   },
   "theme": {
     "toggle": "Yorugʻ va qorongʻi rejimni almashtirish",
@@ -599,15 +609,10 @@
   "assistant": {
     "documents": {
       "download": "Yuklab olish .{format}",
-      "downloadFailed": "Faylni yuklab olib boʻlmadi.",
       "attach": "Darsga biriktirish",
       "noLessons": "Bugun biriktirish uchun darslar yoʻq.",
       "attached": "Fayl darsga biriktirildi.",
-      "attachFailed": "Faylni biriktirib boʻlmadi.",
-      "share": "Ulashish",
-      "shareCopied": "Havola nusxalandi: {url}",
-      "shareCreated": "Havola yaratildi: {url}",
-      "shareFailed": "Havola yaratib boʻlmadi."
+      "attachFailed": "Faylni biriktirib boʻlmadi."
     },
     "page": {
       "title": "Yordamchi"
@@ -975,6 +980,21 @@
     }
   },
   "files": {
+    "item": {
+      "download": "Yuklab olish",
+      "openFailed": "Faylni ochib boʻlmadi.",
+      "open": "Ochish",
+      "openItem": "Ochish: {title}",
+      "preview": "Koʻrish",
+      "previewItem": "Koʻrish: {title}",
+      "share": "Ulashish",
+      "shareItem": "Ulashish: {name}",
+      "linkCopied": "Havola nusxalandi.",
+      "publicLink": "Ochiq havola",
+      "publicHint": "Havolasi bor har kim tizimga kirmasdan faylni ochishi mumkin.",
+      "peopleLink": "Kirish talab qiladigan havola yoki odamlar",
+      "peopleHint": "Faqat tizimga kirganlar: siz qoʻshganlar yoki havolani ochganlar."
+    },
     "upload": {
       "button": "Fayllarni yuklash",
       "progress": "{name} yuklanmoqda",
@@ -1096,8 +1116,6 @@
       "shown": "Ilova yana koʻrinadi"
     },
     "resources": {
-      "open": "Ochish",
-      "openItem": "Ochish: {title}",
       "hide": "Yashirish",
       "hideItem": "Yashirish: {title}",
       "show": "Koʻrsatish",
@@ -1253,9 +1271,10 @@
       "getShared": "Ulashilgan",
       "createDeck": "Kolloda yaratish",
       "importFile": "Fayl import qilish",
+      "merge": "Kollodalarni birlashtirish",
       "source": {
         "ai": "Yordamchi",
-        "mcp": "MCP orqali",
+        "mcp": "AI yordamida yaratilgan",
         "copied": "Nusxalangan"
       }
     },
@@ -1296,8 +1315,11 @@
       "done": {
         "title": "Tabriklaymiz! Bu kolloda hozircha tugadi.",
         "reviewed": "Siz {count} ta kartochkaga javob berdingiz.",
-        "back": "Kollodaga qaytish"
-      }
+        "back": "Kollodaga qaytish",
+        "restart": "Yana takrorlash",
+        "restartHint": "Barcha kartochkalar boʻyicha qoʻshimcha aylana. Jadval va kunlik limitlar oʻzgarmaydi."
+      },
+      "practice": "Qoʻshimcha aylana, qolgan kartochkalar: {count}. Javoblar jadvalni oʻzgartirmaydi."
     },
     "editor": {
       "createTitle": "Yangi kartochkalar toʻplamini yaratish",
@@ -1337,6 +1359,7 @@
         "cardsRequired": "Kamida bitta kartochka qoʻshing.",
         "tooMany": "Toʻplamda koʻpi bilan 500 ta kartochka boʻladi."
       },
+      "hardness": { "label": "Qiyinlik", "easy": "Oson", "medium": "Oʻrtacha", "hard": "Qiyin" },
       "addWithAi": "AI yordamida yangi savollar qoʼshish"
     },
     "import": {
@@ -1649,7 +1672,10 @@
     "stats": {
       "title": "Statistika",
       "empty": "Bu filtrlar uchun maʼlumot yoʻq.",
-      "count": "Sertifikatlar"
+      "count": "Sertifikatlar",
+      "groupedBy": "{field} boʻyicha guruhlangan",
+      "average": "Oʻrtacha: {value}",
+      "distribution": "Taqsimot"
     },
     "ranking": {
       "title": "Eng koʻp sertifikatlar",
@@ -1713,6 +1739,7 @@
       "requiredBadge": "Majburiy",
       "fieldAllowOther": "\"Boshqa\" (erkin matn) ruxsat etilsin",
       "fieldRequired": "Majburiy",
+      "starField": "Statistikani {name} maydoni boʻyicha guruhlash",
       "kindText": "Matn",
       "kindNumber": "Son",
       "kindSingle": "Bitta tanlov",
@@ -1799,6 +1826,7 @@
     "webApps": "Veb-ilovalar ombori",
     "backend": "Backend ombori",
     "packagesShow": "Ochiq kodli komponentlar",
+    "packagesHome": "Bosh sahifa",
     "search": "Komponentlarni qidirish",
     "found": "Topildi: {count}",
     "empty": "Hech narsa topilmadi",

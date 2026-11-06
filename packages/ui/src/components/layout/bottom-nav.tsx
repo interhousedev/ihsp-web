@@ -9,6 +9,8 @@ import { Icons } from "../icons"
 import { Sheet, SheetContent, SheetHeader, SheetTitle } from "../ui/sheet"
 import { NavIconView } from "./nav-icon"
 import { isActivePath, type BottomNavItem, type NavGroup } from "./nav-types"
+import { PLATFORM_ICONS } from "./platform-menu"
+import type { PlatformLink } from "./user-menu"
 
 const MAX_ITEMS = 5
 
@@ -29,6 +31,8 @@ export type BottomNavProps = {
   testId?: string
   /** The account row at the end of the "More" sheet: phones have no sidebar to hold it. */
   moreFooter?: ReactNode
+  /** The user's platforms, listed by name in the "More" sheet: the way to another app on a phone. */
+  platforms?: PlatformLink[]
 }
 
 /**
@@ -36,7 +40,14 @@ export type BottomNavProps = {
  * filled circle. At most five slots; with `more` (the full navigation) the last slot is "More", which opens a sheet
  * with every section.
  */
-export function BottomNav({ items, more, excludeVisibleFromMore = false, testId, moreFooter }: BottomNavProps) {
+export function BottomNav({
+  items,
+  more,
+  excludeVisibleFromMore = false,
+  testId,
+  moreFooter,
+  platforms = [],
+}: BottomNavProps) {
   const t = useT()
   const pathname = usePathname()
   const [moreOpen, setMoreOpen] = useState(false)
@@ -48,6 +59,11 @@ export function BottomNav({ items, more, excludeVisibleFromMore = false, testId,
         .map((group) => ({ ...group, items: group.items.filter((item) => !visibleUrls.has(item.url)) }))
         .filter((group) => group.items.length > 0)
     : more
+  const otherPlatforms = platforms.filter((platform) => !platform.current)
+  // On a page without its own slot "More" is where the user is, so one slot is always lit.
+  const moreActive =
+    !visible.some((item) => isActivePath(pathname, item.url, item.match)) &&
+    (more ?? []).some((group) => group.items.some((item) => isActivePath(pathname, item.url, item.match)))
 
   // The current page is scrolled into the middle of the sheet, so the place is found at once.
   useEffect(() => {
@@ -90,12 +106,13 @@ export function BottomNav({ items, more, excludeVisibleFromMore = false, testId,
         {more ? (
           <button
             type="button"
-            className={cn(itemClass, "text-muted-foreground")}
+            className={cn(itemClass, moreActive ? "text-foreground" : "text-muted-foreground")}
+            data-active={moreActive}
             aria-haspopup="dialog"
             aria-expanded={moreOpen}
             onClick={() => setMoreOpen(true)}
           >
-            <span className={iconPillClass}>
+            <span className={cn(iconPillClass, moreActive && "bg-primary text-primary-foreground")}>
               <Icons.dots className="size-5" aria-hidden />
             </span>
             <span>{t("nav.more")}</span>
@@ -134,6 +151,26 @@ export function BottomNav({ items, more, excludeVisibleFromMore = false, testId,
                   })}
                 </div>
               ))}
+              {otherPlatforms.length > 0 ? (
+                <div data-slot="more-platforms" className="flex flex-col gap-1">
+                  <p className="text-muted-foreground px-3 text-xs font-medium uppercase">{t("platforms.title")}</p>
+                  {otherPlatforms.map((platform) => (
+                    <a
+                      key={platform.key}
+                      href={platform.href}
+                      data-platform={platform.key}
+                      onClick={platform.onClick}
+                      className="press hover:bg-accent flex min-h-12 items-center gap-3 rounded-full px-3 text-sm"
+                    >
+                      <NavIconView icon={PLATFORM_ICONS[platform.key]} className="size-5" />
+                      <span className="flex min-w-0 flex-col">
+                        <span className="font-medium">{platform.name}</span>
+                        <span className="text-muted-foreground truncate text-xs">{platform.description}</span>
+                      </span>
+                    </a>
+                  ))}
+                </div>
+              ) : null}
             </nav>
             {moreFooter ? (
               <div data-slot="more-account" className="border-t border-hairline p-2">

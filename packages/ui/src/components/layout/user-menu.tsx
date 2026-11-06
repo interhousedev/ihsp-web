@@ -2,6 +2,7 @@
 
 import { LOCALES, LOCALE_NAMES, isLocale, setLocale, useLocale, useT, type Locale } from "@ihsp/i18n"
 import Link from "next/link"
+import type { MouseEvent } from "react"
 import { Icons } from "../icons"
 import { THEME_CHOICES, isThemeChoice, useThemeChoice } from "../themes/theme-choice"
 import { Button } from "../ui/button"
@@ -41,6 +42,8 @@ export type PlatformLink = {
   href: string
   /** The app the user is in now. */
   current: boolean
+  /** Replaces the plain navigation where the page cannot follow the link itself (the Telegram mini app). */
+  onClick?: (event: MouseEvent) => void
 }
 
 /**
@@ -139,6 +142,7 @@ export function UserMenu({
                       href={platform.href}
                       aria-current={platform.current ? "page" : undefined}
                       data-platform={platform.key}
+                      onClick={platform.onClick}
                     />
                   }
                 >
