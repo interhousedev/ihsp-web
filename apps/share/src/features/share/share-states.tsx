@@ -1,31 +1,24 @@
 "use client"
 
 import { useT } from "@ihsp/i18n"
-import { Empty, EmptyDescription, EmptyHeader, EmptyTitle, Skeleton } from "@ihsp/ui"
+import { Skeleton, StateView } from "@ihsp/ui"
 
 /** `404`: no such slug (or a path without one). */
 export function ShareNotFound() {
   const t = useT("share.notFound")
-  return (
-    <Empty>
-      <EmptyHeader>
-        <EmptyTitle>{t("title")}</EmptyTitle>
-        <EmptyDescription>{t("description")}</EmptyDescription>
-      </EmptyHeader>
-    </Empty>
-  )
+  return <StateView state="empty" className="border-0" title={t("title")} description={t("description")} />
 }
 
 /** `410`: the owner revoked the link (or the chat or set was deleted). */
 export function ShareGone({ title, description }: { title?: string; description?: string } = {}) {
   const t = useT("share.gone")
   return (
-    <Empty>
-      <EmptyHeader>
-        <EmptyTitle>{title ?? t("title")}</EmptyTitle>
-        <EmptyDescription>{description ?? t("description")}</EmptyDescription>
-      </EmptyHeader>
-    </Empty>
+    <StateView
+      state="empty"
+      className="border-0"
+      title={title ?? t("title")}
+      description={description ?? t("description")}
+    />
   )
 }
 

@@ -2,12 +2,11 @@
 
 import type { Role } from "@ihsp/api"
 import { RequireAuth, RequireRole } from "@ihsp/auth"
-import { ShellNavControls, useLibraryAccess } from "@ihsp/features-core"
+import { PageLoading, ShellNavControls, useLibraryAccess, usePlatformLinks } from "@ihsp/features-core"
 import { AppShell, OfflineBadge } from "@ihsp/ui"
 import { Suspense, type ReactNode } from "react"
 import { useNav } from "../../../config/nav"
 import { LibraryBrand } from "./library-brand"
-import { PageLoading } from "./page-loading"
 import { ProfileMenu } from "./profile-menu"
 import { SignInButton } from "./sign-in-button"
 
@@ -31,11 +30,13 @@ function Header() {
 
 function Frame({ children }: { children: ReactNode }) {
   const nav = useNav()
+  const platforms = usePlatformLinks()
   return (
     <AppShell
       controlsLeading={<ShellNavControls />}
       nav={nav.groups}
       bottomNav={nav.bottom}
+      platforms={platforms}
       brand={<LibraryBrand />}
       sidebarFooter={<ProfileMenu variant="row" />}
       controls={<Header />}

@@ -3,7 +3,7 @@
 import type { PublicShare } from "@ihsp/api"
 import { useT } from "@ihsp/i18n"
 import { chatLibrary, MessageWithOpenUi } from "@ihsp/features-core/openui"
-import { Badge, Markdown, cn } from "@ihsp/ui"
+import { Badge, cn, Markdown, StateView } from "@ihsp/ui"
 
 type ChatMessages = NonNullable<PublicShare["chat"]>["messages"]
 
@@ -16,7 +16,7 @@ export function ChatView({ messages, authorName }: { messages: ChatMessages; aut
         {t("publicBanner")}
       </Badge>
       {messages.length === 0 ? (
-        <p className="text-muted-foreground py-8 text-center text-sm">{t("empty")}</p>
+        <StateView state="empty" emptyText={t("empty")} />
       ) : (
         <ol aria-label={t("messages")} className="flex flex-col gap-4">
           {messages.map((message, index) => {

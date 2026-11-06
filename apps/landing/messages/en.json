@@ -134,11 +134,6 @@
       "security": "Security contact",
       "language": "Language",
       "rights": "Academic Lyceum {orgName}"
-    },
-    "notFound": {
-      "title": "Page not found",
-      "description": "This page does not exist.",
-      "home": "Go to the home page"
     }
   }
 }

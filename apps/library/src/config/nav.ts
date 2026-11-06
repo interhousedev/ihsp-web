@@ -32,7 +32,7 @@ export function useNav(): { groups: NavGroup[]; bottom: BottomNavItem[] } {
         label: t("groupManage"),
         items: [
           { title: t("queue"), url: "/manage/queue/", icon: IconInbox, visible: canManage },
-          { title: t("books"), url: "/manage/books/", icon: IconBooks, visible: canManage },
+          { title: t("books"), url: "/manage/books/", icon: "subjects", visible: canManage },
           { title: t("topics"), url: "/manage/topics/", icon: IconCategory, visible: canManage },
           { title: t("subjects"), url: "/manage/subjects/", icon: IconSitemap, visible: canManage },
           {

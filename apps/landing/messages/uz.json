@@ -134,11 +134,6 @@
       "security": "Xavfsizlik boʻyicha aloqa",
       "language": "Til",
       "rights": "{orgName} akademik litseyi"
-    },
-    "notFound": {
-      "title": "Sahifa topilmadi",
-      "description": "Bunday sahifa mavjud emas.",
-      "home": "Bosh sahifaga"
     }
   }
 }

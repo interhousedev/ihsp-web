@@ -4,7 +4,7 @@ import type { PublicShare } from "@ihsp/api"
 import { useAuthStore } from "@ihsp/auth"
 import { getConfig } from "@ihsp/config"
 import { useT } from "@ihsp/i18n"
-import { Badge, Button, Markdown, buttonVariants } from "@ihsp/ui"
+import { Badge, Button, buttonVariants, Markdown, StateView } from "@ihsp/ui"
 import { useState } from "react"
 import { StudyMode } from "./study-mode"
 
@@ -41,11 +41,11 @@ export function FlashcardsView({ cards, slug }: { cards: Cards; slug: string }) 
         </a>
       </div>
       {cards.length === 0 ? (
-        <p className="text-muted-foreground py-8 text-center text-sm">{t("empty")}</p>
+        <StateView state="empty" emptyText={t("empty")} />
       ) : (
         <ol aria-label={t("cardsLabel")} className="flex flex-col gap-3">
           {cards.map((card, index) => (
-            <li key={card.id} className="bg-card flex flex-col gap-3 rounded-xl border p-4 text-sm">
+            <li key={card.id} className="bg-card flex flex-col gap-3 rounded-card border p-4 text-sm">
               <span className="text-muted-foreground text-xs font-medium">{t("cardN", { n: index + 1 })}</span>
               <div>
                 <p className="text-muted-foreground text-xs">{t("front")}</p>

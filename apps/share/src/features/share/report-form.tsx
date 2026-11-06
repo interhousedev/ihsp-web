@@ -46,7 +46,7 @@ export function ReportForm({ slug }: { slug: string }) {
 
   return (
     <form
-      className="bg-card flex flex-col gap-4 rounded-xl border p-4"
+      className="bg-card flex flex-col gap-4 rounded-card border p-4"
       onSubmit={(event) => {
         event.preventDefault()
         if (reason !== "") report.mutate(reason)

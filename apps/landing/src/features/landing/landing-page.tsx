@@ -75,7 +75,7 @@ function BenefitGrid({ items }: { items: [BenefitKey, Icon][] }) {
   return (
     <ul className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
       {items.map(([key, Glyph]) => (
-        <li key={key} className="bg-card rounded-2xl border p-5">
+        <li key={key} className="bg-card rounded-card border p-5">
           <span className="mb-3 inline-flex size-10 items-center justify-center rounded-xl bg-[var(--brand-soft)] text-[var(--brand-text)]">
             <Glyph aria-hidden className="size-5" />
           </span>

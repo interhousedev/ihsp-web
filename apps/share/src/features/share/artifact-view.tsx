@@ -72,7 +72,7 @@ function Viewer({ artifact }: { artifact: ArtifactDetail }) {
 export function ArtifactView({ share, slug }: { share: PublicShare; slug: string }) {
   if (!share.artifact) return null
   return (
-    <div className="bg-card min-w-0 overflow-hidden rounded-xl border">
+    <div className="bg-card min-w-0 overflow-hidden rounded-card border">
       <SharedViewerProvider>
         <Viewer artifact={toArtifact(share, share.artifact, slug)} />
       </SharedViewerProvider>
