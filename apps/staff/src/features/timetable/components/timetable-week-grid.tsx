@@ -20,11 +20,14 @@ export function TimetableWeekGrid({ monday, lessons, now }: { monday: string; le
     sublabel: f.date(date, { day: "numeric", month: "short" }),
     highlight: date === today,
   }))
-  const rows = periodsOf(drawn).map((period) => ({
+  const periods = periodsOf(drawn)
+  // A row states a time only when it is true for the whole row; otherwise each lesson shows its own.
+  const rows = periods.map((period) => ({
     key: String(period.period),
     label: t("period", { number: period.period }),
-    sublabel: `${f.time(period.starts_at)}–${f.time(period.ends_at)}`,
+    sublabel: period.sameTime ? `${f.time(period.starts_at)}–${f.time(period.ends_at)}` : undefined,
   }))
+  const ownTime = new Set(periods.filter((period) => !period.sameTime).map((period) => period.period))
 
   return (
     <CalendarGrid
@@ -35,7 +38,7 @@ export function TimetableWeekGrid({ monday, lessons, now }: { monday: string; le
       renderCell={(rowKey, columnKey) => (
         <div className="flex flex-col gap-1.5">
           {lessonsAt(drawn, columnKey, Number(rowKey)).map((lesson) => (
-            <TimetableLessonCard key={lesson.id} lesson={lesson} now={now} />
+            <TimetableLessonCard key={lesson.id} lesson={lesson} now={now} showTime={ownTime.has(lesson.period)} />
           ))}
         </div>
       )}

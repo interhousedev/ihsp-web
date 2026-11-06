@@ -122,7 +122,7 @@ function PhotoBody({ student }: { student: StudentItem }) {
             </span>
           )}
         </figure>
-        {previewUrl ? (
+        {previewUrl?.startsWith("blob:") ? (
           <figure className="flex flex-col gap-1">
             <figcaption className="text-muted-foreground text-xs">{t("preview")}</figcaption>
             <img src={previewUrl} alt={t("preview")} className="size-28 rounded-md object-cover" />

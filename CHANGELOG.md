@@ -26,6 +26,7 @@ All notable changes to this project are documented here. The format follows [Kee
 
 ### Changed
 
+- Staff timetable: when a period has different times on different days, each lesson shows its own time.
 - Files look and behave the same across apps: one row, type icons, size format, preview and download. In the Telegram mini app, downloads open in the system browser.
 - Navigation uses one icon and one name per destination across apps, and "More" lights up on pages without a tab.
 - Telegram's Back button replaces the shell's history buttons in the mini app, and links to other apps leave through Telegram.

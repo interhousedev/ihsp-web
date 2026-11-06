@@ -25,14 +25,32 @@ export function weekRange(monday: string): { from: string; to: string } {
   return { from: monday, to: addDays(monday, SCHOOL_DAYS - 1) }
 }
 
-export type Period = { period: number; starts_at: string; ends_at: string }
+/** `sameTime` is false when the period's lessons this week differ in time (a Friday of its own). */
+export type Period = { period: number; starts_at: string; ends_at: string; sameTime: boolean }
 
-/** The periods that have a lesson this week, with the bell times of the first lesson found in each. */
+const DAY_MS = 86_400_000
+
+function timeOfDay(iso: string): number {
+  return Date.parse(iso) % DAY_MS
+}
+
+/** The periods that have a lesson this week; the times are those of the first lesson found in each. */
 export function periodsOf(lessons: readonly LessonItem[]): Period[] {
   const byPeriod = new Map<number, Period>()
   for (const lesson of lessons) {
-    if (!byPeriod.has(lesson.period)) {
-      byPeriod.set(lesson.period, { period: lesson.period, starts_at: lesson.starts_at, ends_at: lesson.ends_at })
+    const known = byPeriod.get(lesson.period)
+    if (!known) {
+      byPeriod.set(lesson.period, {
+        period: lesson.period,
+        starts_at: lesson.starts_at,
+        ends_at: lesson.ends_at,
+        sameTime: true,
+      })
+    } else if (
+      timeOfDay(known.starts_at) !== timeOfDay(lesson.starts_at) ||
+      timeOfDay(known.ends_at) !== timeOfDay(lesson.ends_at)
+    ) {
+      known.sameTime = false
     }
   }
   return [...byPeriod.values()].toSorted((a, b) => a.period - b.period)
