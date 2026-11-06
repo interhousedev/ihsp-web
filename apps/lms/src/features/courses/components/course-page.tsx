@@ -123,7 +123,7 @@ function NotebookTab({ notebookId, failed }: { notebookId: string | null; failed
   }
   if (notebookId === null) return <Skeleton className="h-96 w-full rounded-xl" />
   return (
-    <div className="h-[70dvh] min-h-96 overflow-hidden rounded-xl border">
+    <div className="h-[70dvh] min-h-96 overflow-hidden rounded-card border">
       <NotebookWorkspace notebookId={notebookId} />
     </div>
   )
@@ -287,7 +287,7 @@ export function CoursePage({ slug, preview = false }: { slug: string; preview?: 
               {course ? (
                 <CoursePromoCard page={course} />
               ) : info ? (
-                <div className="overflow-hidden rounded-xl border p-4">
+                <div className="overflow-hidden rounded-card border p-4">
                   <LandingEnrolBox landing={info} />
                 </div>
               ) : null}

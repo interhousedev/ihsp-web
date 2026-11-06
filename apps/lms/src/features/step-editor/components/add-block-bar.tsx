@@ -2,7 +2,7 @@
 
 import type { Block } from "@ihsp/api"
 import { useT } from "@ihsp/i18n"
-import { Button, Dialog, DialogContent, DialogHeader, DialogTitle, Icons } from "@ihsp/ui"
+import { Button, Icons, ResponsiveDialog } from "@ihsp/ui"
 import { useState } from "react"
 import { STEP_TYPES, STEP_TYPE_GROUPS } from "../utils/step-types"
 
@@ -11,15 +11,12 @@ export function AddBlockBar({ onAdd }: { onAdd: (block: Block) => void }) {
   const t = useT("stepEditor")
   const [open, setOpen] = useState(false)
   return (
-    <Dialog open={open} onOpenChange={setOpen}>
+    <>
       <Button type="button" variant="outline" onClick={() => setOpen(true)} className="w-fit min-h-11 md:min-h-8">
         <Icons.add aria-hidden />
         {t("addBlock")}
       </Button>
-      <DialogContent className="max-h-[90dvh] overflow-y-auto sm:max-w-3xl">
-        <DialogHeader>
-          <DialogTitle>{t("typePicker.title")}</DialogTitle>
-        </DialogHeader>
+      <ResponsiveDialog open={open} onOpenChange={setOpen} title={t("typePicker.title")} size="lg">
         <div className="flex flex-col gap-5">
           {STEP_TYPE_GROUPS.map((group) => (
             <section key={group} aria-labelledby={`step-type-group-${group}`} className="flex flex-col gap-2">
@@ -55,7 +52,7 @@ export function AddBlockBar({ onAdd }: { onAdd: (block: Block) => void }) {
             </section>
           ))}
         </div>
-      </DialogContent>
-    </Dialog>
+      </ResponsiveDialog>
+    </>
   )
 }

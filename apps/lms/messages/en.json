@@ -25,7 +25,7 @@
     "new": "New",
     "changed": "Changed",
     "removed": "Removed",
-    "mcp": "Via MCP",
+    "mcp": "Created with AI",
     "ai": "Via AI"
   },
   "courseCard": {
@@ -306,7 +306,7 @@
       "changed": "Changed",
       "unchanged": "Unchanged"
     },
-    "viaMcp": "Via MCP",
+    "viaMcp": "Created with AI",
     "checkpoint": "Save checkpoint",
     "history": "History",
     "discard": "Discard changes",
@@ -812,7 +812,7 @@
       "changed": "Changed",
       "removed": "Removed"
     },
-    "viaMcp": "Via MCP",
+    "viaMcp": "Created with AI",
     "showDiff": "Show diff",
     "hideDiff": "Hide diff",
     "note": "Note (optional)",
@@ -1213,5 +1213,11 @@
     },
     "workload": "{count} h per week",
     "duration": "{count, plural, one {# week} other {# weeks}}"
+  },
+  "media": {
+    "title": "Course material",
+    "loading": "Opening…",
+    "notAvailable": "This link is not available.",
+    "open": "Open the file"
   }
 }

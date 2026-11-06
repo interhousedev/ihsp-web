@@ -6,7 +6,7 @@
     "catalog": "Kurslar",
     "my": "Mening kurslarim",
     "join": "Kursga qoʻshilish",
-    "notebooks": "Bloknotlar",
+    "notebooks": "Daftarlar",
     "admin": "Kurs yaratish",
     "groupLearn": "Oʻqish",
     "groupManage": "Boshqarish"
@@ -25,7 +25,7 @@
     "new": "Yangi",
     "changed": "Oʻzgargan",
     "removed": "Oʻchirilgan",
-    "mcp": "MCP orqali",
+    "mcp": "AI yordamida yaratilgan",
     "ai": "AI orqali"
   },
   "courseCard": {
@@ -306,7 +306,7 @@
       "changed": "Oʻzgargan",
       "unchanged": "Oʻzgarmagan"
     },
-    "viaMcp": "MCP orqali",
+    "viaMcp": "AI yordamida yaratilgan",
     "checkpoint": "Nazorat nuqtasini saqlash",
     "history": "Tarix",
     "discard": "Oʻzgarishlarni bekor qilish",
@@ -812,7 +812,7 @@
       "changed": "Oʻzgargan",
       "removed": "Oʻchirilgan"
     },
-    "viaMcp": "MCP orqali",
+    "viaMcp": "AI yordamida yaratilgan",
     "showDiff": "Farqni koʻrsatish",
     "hideDiff": "Farqni yashirish",
     "note": "Izoh (ixtiyoriy)",
@@ -1213,5 +1213,11 @@
     },
     "workload": "Haftasiga {count} soat",
     "duration": "{count} hafta"
+  },
+  "media": {
+    "title": "Kurs materiali",
+    "loading": "Ochilmoqda…",
+    "notAvailable": "Bu havola mavjud emas.",
+    "open": "Faylni ochish"
   }
 }

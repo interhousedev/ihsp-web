@@ -2,7 +2,7 @@
 
 import { useT } from "@ihsp/i18n"
 import { LinkButton } from "../../shared/components/link-button"
-import { QueryState } from "../../shared/components/query-state"
+import { QueryState } from "@ihsp/features-core"
 import { hrefs } from "../../shared/utils/hrefs"
 import { can } from "../../shared/utils/permissions"
 import { useCourseDraft } from "../hooks/use-course-draft"

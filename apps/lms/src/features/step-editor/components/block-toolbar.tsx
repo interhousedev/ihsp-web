@@ -1,7 +1,7 @@
 "use client"
 
 import { useT } from "@ihsp/i18n"
-import { cn } from "@ihsp/ui"
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue, cn } from "@ihsp/ui"
 import {
   IconAlignCenter,
   IconAlignLeft,
@@ -41,6 +41,8 @@ const SWATCH: Record<Color, string> = {
 }
 
 export type Paragraph = "paragraph" | "heading1" | "heading2" | "heading3"
+
+const PARAGRAPHS: readonly Paragraph[] = ["paragraph", "heading1", "heading2", "heading3"]
 
 function Divider() {
   return <span aria-hidden className="bg-border mx-0.5 h-5 w-px shrink-0 md:mx-1" />
@@ -125,20 +127,28 @@ export function BlockToolbar({
           shortcut={{ key: "z", shift: true }}
         />
         <Divider />
-        <select
-          aria-label={t("paragraphStyle")}
-          title={t("paragraphStyle")}
+        <Select
           value={paragraph}
           disabled={disabled}
-          data-toolbar-item=""
-          onChange={(event) => onParagraph(event.target.value as Paragraph)}
-          className="bg-background focus-visible:ring-ring/50 h-11 shrink-0 rounded-md border px-1.5 text-xs outline-none focus-visible:ring-2 md:pointer-fine:h-8"
+          items={PARAGRAPHS.map((value) => ({ value, label: t(value) }))}
+          onValueChange={(value) => value && onParagraph(value as Paragraph)}
         >
-          <option value="paragraph">{t("paragraph")}</option>
-          <option value="heading1">{t("heading1")}</option>
-          <option value="heading2">{t("heading2")}</option>
-          <option value="heading3">{t("heading3")}</option>
-        </select>
+          <SelectTrigger
+            aria-label={t("paragraphStyle")}
+            title={t("paragraphStyle")}
+            data-toolbar-item=""
+            className="h-11 shrink-0 text-xs md:pointer-fine:h-8"
+          >
+            <SelectValue />
+          </SelectTrigger>
+          <SelectContent>
+            {PARAGRAPHS.map((value) => (
+              <SelectItem key={value} value={value}>
+                {t(value)}
+              </SelectItem>
+            ))}
+          </SelectContent>
+        </Select>
         <Divider />
         <ToolbarButton
           label={t("bold")}

@@ -2,7 +2,7 @@
 
 import { getLmsStepDiffQuery } from "@ihsp/api"
 import { useQuery } from "@tanstack/react-query"
-import { QueryState } from "../../shared/components/query-state"
+import { QueryState } from "@ihsp/features-core"
 import { StepDiffView } from "../../shared/components/step-diff-view"
 
 /** Loads the live content next to the draft of one step and shows them side by side. */

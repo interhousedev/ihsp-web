@@ -21,6 +21,7 @@ import {
   FieldLabel,
   Icons,
   LoadingButton,
+  StateView,
   Textarea,
 } from "@ihsp/ui"
 import { useMutation, useQueryClient } from "@tanstack/react-query"
@@ -104,7 +105,7 @@ export function PublishBody({
       ) : null}
 
       {!hasPending ? (
-        <p className="text-muted-foreground text-sm">{t("noPending")}</p>
+        <StateView state="empty" emptyText={t("noPending")} />
       ) : (
         <>
           <p className="text-sm">

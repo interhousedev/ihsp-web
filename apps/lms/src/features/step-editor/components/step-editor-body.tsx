@@ -2,7 +2,18 @@
 
 import { postLmsStepCheckpoints, postLmsStepDiscard, type StepDraft } from "@ihsp/api"
 import { useErrorMessage, useT } from "@ihsp/i18n"
-import { Alert, AlertDescription, Badge, Button, ConfirmDialog, Field, FieldLabel, Icons, Input } from "@ihsp/ui"
+import {
+  AiMark,
+  Alert,
+  AlertDescription,
+  Badge,
+  Button,
+  ConfirmDialog,
+  Field,
+  FieldLabel,
+  Icons,
+  Input,
+} from "@ihsp/ui"
 import { useMutation } from "@tanstack/react-query"
 import { useState } from "react"
 import { SaveIndicator } from "../../editor/components/save-indicator"
@@ -61,7 +72,7 @@ export function StepEditorBody({
       <div className="flex flex-wrap items-center gap-2">
         <SaveIndicator status={editor.status} />
         {draft.status !== "unchanged" ? <Badge variant="secondary">{t(`status.${draft.status}`)}</Badge> : null}
-        {draft.updated_via === "mcp" ? <Badge variant="outline">{t("viaMcp")}</Badge> : null}
+        {draft.updated_via === "mcp" ? <AiMark label={t("viaMcp")} /> : null}
         {draft.updated_via === "ai" ? <OutlineBadge kind="ai" /> : null}
         <div className="ms-auto flex flex-wrap items-center gap-2">
           {canEdit ? (

@@ -55,7 +55,7 @@ export function EditorFrame({
   if (!allowed) return <AccessDenied backHref={hrefs.myCourses()} />
 
   return (
-    <PageContainer title={title} description={description ?? draft.data?.title ?? t("courseTools")} actions={actions}>
+    <PageContainer title={title} meta={description ?? draft.data?.title ?? t("courseTools")} actions={actions}>
       <EditorNav courseId={courseId} current={current} permissions={permissions} />
       {children(permissions)}
     </PageContainer>

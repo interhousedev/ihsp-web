@@ -6,7 +6,7 @@ import { Badge, Dropdown, Field, FieldLabel, Icons, cn } from "@ihsp/ui"
 import { useQuery } from "@tanstack/react-query"
 import { useRouter } from "next/navigation"
 import { EditorFrame } from "../../editor/components/editor-frame"
-import { QueryState } from "../../shared/components/query-state"
+import { QueryState } from "@ihsp/features-core"
 import { hrefs } from "../../shared/utils/hrefs"
 import { LinkButton } from "../../shared/components/link-button"
 

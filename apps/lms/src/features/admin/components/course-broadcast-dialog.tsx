@@ -6,16 +6,12 @@ import {
   Alert,
   AlertDescription,
   Button,
-  Dialog,
-  DialogContent,
-  DialogFooter,
-  DialogHeader,
-  DialogTitle,
   Field,
   FieldDescription,
   FieldLabel,
   Input,
   LoadingButton,
+  ResponsiveDialog,
   Textarea,
 } from "@ihsp/ui"
 import { useMutation, useQueryClient } from "@tanstack/react-query"
@@ -67,58 +63,56 @@ export function CourseBroadcastDialog({
   const valid = title.trim() !== "" && body.trim() !== ""
 
   return (
-    <Dialog open={open} onOpenChange={close}>
-      <DialogContent className="max-h-[90dvh] overflow-y-auto">
-        <form onSubmit={submit} className="flex flex-col gap-4">
-          <DialogHeader>
-            <DialogTitle>{t("dialogTitle")}</DialogTitle>
-          </DialogHeader>
+    <ResponsiveDialog
+      open={open}
+      onOpenChange={close}
+      title={t("dialogTitle")}
+      onSubmit={submit}
+      footer={
+        <>
+          <Button type="button" variant="outline" onClick={() => close(false)} className="min-h-11 md:min-h-8">
+            {t("close")}
+          </Button>
+          <LoadingButton type="submit" disabled={!valid} className="min-h-11 md:min-h-8" loading={send.isPending}>
+            {t("send")}
+          </LoadingButton>
+        </>
+      }
+    >
+      {sent ? (
+        <Alert>
+          <AlertDescription>{t("sent", { count: sent.recipients ?? 0 })}</AlertDescription>
+        </Alert>
+      ) : null}
 
-          {sent ? (
-            <Alert>
-              <AlertDescription>{t("sent", { count: sent.recipients ?? 0 })}</AlertDescription>
-            </Alert>
-          ) : null}
+      <Field>
+        <FieldLabel htmlFor="broadcast-title">{t("titleLabel")}</FieldLabel>
+        <Input
+          id="broadcast-title"
+          value={title}
+          onChange={(event) => setTitle(event.target.value)}
+          maxLength={BROADCAST_TITLE_MAX}
+          className="h-11 md:h-8"
+        />
+      </Field>
 
-          <Field>
-            <FieldLabel htmlFor="broadcast-title">{t("titleLabel")}</FieldLabel>
-            <Input
-              id="broadcast-title"
-              value={title}
-              onChange={(event) => setTitle(event.target.value)}
-              maxLength={BROADCAST_TITLE_MAX}
-              className="h-11 md:h-8"
-            />
-          </Field>
+      <Field>
+        <FieldLabel htmlFor="broadcast-body">{t("bodyLabel")}</FieldLabel>
+        <Textarea
+          id="broadcast-body"
+          value={body}
+          onChange={(event) => setBody(event.target.value)}
+          maxLength={BROADCAST_BODY_MAX}
+          rows={6}
+        />
+        <FieldDescription>{t("bodyHint", { used: body.length, max: BROADCAST_BODY_MAX })}</FieldDescription>
+      </Field>
 
-          <Field>
-            <FieldLabel htmlFor="broadcast-body">{t("bodyLabel")}</FieldLabel>
-            <Textarea
-              id="broadcast-body"
-              value={body}
-              onChange={(event) => setBody(event.target.value)}
-              maxLength={BROADCAST_BODY_MAX}
-              rows={6}
-            />
-            <FieldDescription>{t("bodyHint", { used: body.length, max: BROADCAST_BODY_MAX })}</FieldDescription>
-          </Field>
-
-          {send.isError ? (
-            <Alert variant="destructive">
-              <AlertDescription>{errorMessage(send.error)}</AlertDescription>
-            </Alert>
-          ) : null}
-
-          <DialogFooter>
-            <Button type="button" variant="outline" onClick={() => close(false)} className="min-h-11 md:min-h-8">
-              {t("close")}
-            </Button>
-            <LoadingButton type="submit" disabled={!valid} className="min-h-11 md:min-h-8" loading={send.isPending}>
-              {t("send")}
-            </LoadingButton>
-          </DialogFooter>
-        </form>
-      </DialogContent>
-    </Dialog>
+      {send.isError ? (
+        <Alert variant="destructive">
+          <AlertDescription>{errorMessage(send.error)}</AlertDescription>
+        </Alert>
+      ) : null}
+    </ResponsiveDialog>
   )
 }

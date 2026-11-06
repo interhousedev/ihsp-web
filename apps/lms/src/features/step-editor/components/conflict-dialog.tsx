@@ -2,7 +2,7 @@
 
 import type { StepContent, StepDraft } from "@ihsp/api"
 import { useFormatters, useT } from "@ihsp/i18n"
-import { Button, Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle } from "@ihsp/ui"
+import { Button, ResponsiveDialog } from "@ihsp/ui"
 import { StepDiffView } from "../../shared/components/step-diff-view"
 import { personName } from "../../shared/utils/people"
 
@@ -30,21 +30,21 @@ export function ConflictDialog({
   const who =
     theirs.updated_via === "mcp" ? t("mcpClient") : theirs.updated_by ? personName(theirs.updated_by) : t("someone")
   return (
-    <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="max-h-[90dvh] overflow-y-auto sm:max-w-4xl">
-        <DialogHeader>
-          <DialogTitle>{t("title")}</DialogTitle>
-          <DialogDescription>
-            {theirs.updated_at
-              ? t("description", {
-                  who,
-                  time: format.dateTime(theirs.updated_at),
-                })
-              : t("descriptionNoTime", { who })}
-          </DialogDescription>
-        </DialogHeader>
-        <StepDiffView live={theirs.content} draft={mine} liveLabel={t("theirs")} draftLabel={t("mine")} />
-        <DialogFooter className="flex-col gap-2 sm:flex-row">
+    <ResponsiveDialog
+      open={open}
+      onOpenChange={onOpenChange}
+      size="lg"
+      title={t("title")}
+      description={
+        theirs.updated_at
+          ? t("description", {
+              who,
+              time: format.dateTime(theirs.updated_at),
+            })
+          : t("descriptionNoTime", { who })
+      }
+      footer={
+        <>
           <Button variant="outline" onClick={() => onOpenChange(false)} className="min-h-11 md:min-h-8">
             {t("copyByHand")}
           </Button>
@@ -54,8 +54,10 @@ export function ConflictDialog({
           <Button onClick={onKeepMine} className="min-h-11 md:min-h-8">
             {t("keepMine")}
           </Button>
-        </DialogFooter>
-      </DialogContent>
-    </Dialog>
+        </>
+      }
+    >
+      <StepDiffView live={theirs.content} draft={mine} liveLabel={t("theirs")} draftLabel={t("mine")} />
+    </ResponsiveDialog>
   )
 }

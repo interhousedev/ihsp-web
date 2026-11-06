@@ -14,17 +14,13 @@ import {
   Alert,
   AlertDescription,
   Button,
-  Dialog,
-  DialogContent,
-  DialogFooter,
-  DialogHeader,
-  DialogTitle,
   Field,
   FieldDescription,
   FieldLabel,
   Input,
   LoadingButton,
   Progress,
+  ResponsiveDialog,
 } from "@ihsp/ui"
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query"
 import { useRouter } from "next/navigation"
@@ -83,121 +79,126 @@ export function ImportImsccDialog({ open, onOpenChange }: { open: boolean; onOpe
   const report = data?.report ?? null
   const error = upload.isError ? upload.error : job.isError ? job.error : null
 
+  const footer =
+    jobId === null ? (
+      <LoadingButton type="submit" disabled={!file || tooBig} loading={upload.isPending}>
+        {t("start")}
+      </LoadingButton>
+    ) : (
+      <>
+        {data?.status === "done" && data.course_id ? (
+          <Button
+            type="button"
+            onClick={() => {
+              const id = data.course_id
+              close(false)
+              if (id) router.push(hrefs.edit(id))
+            }}
+          >
+            {t("open")}
+          </Button>
+        ) : null}
+        <Button type="button" variant="outline" onClick={() => close(false)}>
+          {finished || error ? t("close") : t("background")}
+        </Button>
+      </>
+    )
+
   return (
-    <Dialog open={open} onOpenChange={close}>
-      <DialogContent>
-        <DialogHeader>
-          <DialogTitle>{t("title")}</DialogTitle>
-        </DialogHeader>
-        {jobId === null ? (
-          <form onSubmit={submit} className="flex flex-col gap-4" noValidate>
-            <Field>
-              <FieldLabel htmlFor="imscc-file">{t("file")}</FieldLabel>
-              <Input
-                id="imscc-file"
-                type="file"
-                accept=".imscc,.zip"
-                disabled={upload.isPending}
-                onChange={(event) => {
-                  const picked = event.target.files?.[0] ?? null
-                  setFile(picked)
-                  setTooBig(picked !== null && picked.size > IMSCC_MAX_BYTES)
-                }}
-                className="h-11 md:h-8"
-              />
-              <FieldDescription>{t("hint")}</FieldDescription>
-            </Field>
-            {tooBig ? (
-              <Alert variant="destructive">
-                <AlertDescription>{t("tooBig")}</AlertDescription>
-              </Alert>
-            ) : null}
-            {error ? (
-              <Alert variant="destructive">
-                <AlertDescription>{errorMessage(error)}</AlertDescription>
-              </Alert>
-            ) : null}
-            <DialogFooter>
-              <LoadingButton type="submit" disabled={!file || tooBig} loading={upload.isPending}>
-                {t("start")}
-              </LoadingButton>
-            </DialogFooter>
-          </form>
-        ) : (
-          <div className="flex flex-col gap-4">
-            {running || (!data && !error) ? (
-              <Progress value={percent} aria-label={t("progress")}>
-                <span className="text-sm">
-                  {percent === null
-                    ? t("working")
-                    : t("progressValue", { done: data?.done ?? 0, total: data?.total ?? 0 })}
-                </span>
-              </Progress>
-            ) : null}
-            {error ? (
-              <Alert variant="destructive">
-                <AlertDescription>{errorMessage(error)}</AlertDescription>
-              </Alert>
-            ) : null}
-            {data?.status === "failed" ? (
-              <Alert variant="destructive">
-                <AlertDescription>{data.error ?? t("failed")}</AlertDescription>
-              </Alert>
-            ) : null}
-            {data?.status === "cancelled" ? <p className="text-sm">{t("cancelled")}</p> : null}
-            {data?.status === "done" && report ? (
-              <section aria-label={t("report")} className="flex flex-col gap-3">
-                <h3 className="text-base font-semibold">{t("done", { title: report.title })}</h3>
-                <ul className="grid grid-cols-2 gap-x-4 gap-y-1 text-sm">
-                  <li>{t("sections", { count: report.sections })}</li>
-                  <li>{t("steps", { count: report.steps })}</li>
-                  <li>{t("files", { count: report.files })}</li>
-                  <li>{t("quizzes", { count: report.quizzes })}</li>
-                  <li>{t("questions", { count: report.questions })}</li>
-                  <li>{t("links", { count: report.links })}</li>
-                </ul>
-                {report.items.length > 0 ? (
-                  <div className="flex flex-col gap-1">
-                    <h4 className="text-sm font-medium">{t("unsupported", { count: report.items.length })}</h4>
-                    <ul
-                      aria-label={t("unsupportedList")}
-                      className="flex max-h-48 flex-col gap-1 overflow-y-auto text-sm"
-                    >
-                      {report.items.map((item, index) => (
-                        <li key={`${index}-${item.title}`}>
-                          <span className="font-medium">{item.title}</span>
-                          <span className="text-muted-foreground">
-                            {" "}
-                            ({item.kind}): {item.note}
-                          </span>
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
-                ) : null}
-              </section>
-            ) : null}
-            <DialogFooter>
-              {data?.status === "done" && data.course_id ? (
-                <Button
-                  type="button"
-                  onClick={() => {
-                    const id = data.course_id
-                    close(false)
-                    if (id) router.push(hrefs.edit(id))
-                  }}
-                >
-                  {t("open")}
-                </Button>
+    <ResponsiveDialog
+      open={open}
+      onOpenChange={close}
+      title={t("title")}
+      footer={footer}
+      onSubmit={jobId === null ? submit : undefined}
+      noValidate
+    >
+      {jobId === null ? (
+        <>
+          <Field>
+            <FieldLabel htmlFor="imscc-file">{t("file")}</FieldLabel>
+            <Input
+              id="imscc-file"
+              type="file"
+              accept=".imscc,.zip"
+              disabled={upload.isPending}
+              onChange={(event) => {
+                const picked = event.target.files?.[0] ?? null
+                setFile(picked)
+                setTooBig(picked !== null && picked.size > IMSCC_MAX_BYTES)
+              }}
+              className="h-11 md:h-8"
+            />
+            <FieldDescription>{t("hint")}</FieldDescription>
+          </Field>
+          {tooBig ? (
+            <Alert variant="destructive">
+              <AlertDescription>{t("tooBig")}</AlertDescription>
+            </Alert>
+          ) : null}
+          {error ? (
+            <Alert variant="destructive">
+              <AlertDescription>{errorMessage(error)}</AlertDescription>
+            </Alert>
+          ) : null}
+        </>
+      ) : (
+        <>
+          {running || (!data && !error) ? (
+            <Progress value={percent} aria-label={t("progress")}>
+              <span className="text-sm">
+                {percent === null
+                  ? t("working")
+                  : t("progressValue", { done: data?.done ?? 0, total: data?.total ?? 0 })}
+              </span>
+            </Progress>
+          ) : null}
+          {error ? (
+            <Alert variant="destructive">
+              <AlertDescription>{errorMessage(error)}</AlertDescription>
+            </Alert>
+          ) : null}
+          {data?.status === "failed" ? (
+            <Alert variant="destructive">
+              <AlertDescription>{data.error ?? t("failed")}</AlertDescription>
+            </Alert>
+          ) : null}
+          {data?.status === "cancelled" ? <p className="text-sm">{t("cancelled")}</p> : null}
+          {data?.status === "done" && report ? (
+            <section aria-label={t("report")} className="flex flex-col gap-3">
+              <h3 className="text-base font-semibold">{t("done", { title: report.title })}</h3>
+              <ul className="grid grid-cols-2 gap-x-4 gap-y-1 text-sm">
+                <li>{t("sections", { count: report.sections })}</li>
+                <li>{t("steps", { count: report.steps })}</li>
+                <li>{t("files", { count: report.files })}</li>
+                <li>{t("quizzes", { count: report.quizzes })}</li>
+                <li>{t("questions", { count: report.questions })}</li>
+                <li>{t("links", { count: report.links })}</li>
+              </ul>
+              {report.items.length > 0 ? (
+                <div className="flex flex-col gap-1">
+                  <h4 className="text-sm font-medium">{t("unsupported", { count: report.items.length })}</h4>
+                  <ul
+                    aria-label={t("unsupportedList")}
+                    className="flex max-h-48 flex-col gap-1 overflow-y-auto text-sm"
+                  >
+                    {report.items.map((item, index) => (
+                      <li key={`${index}-${item.title}`}>
+                        <span className="font-medium">{item.title}</span>
+                        <span className="text-muted-foreground">
+                          {" "}
+                          ({item.kind}): {item.note}
+                        </span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
               ) : null}
-              <Button type="button" variant="outline" onClick={() => close(false)}>
-                {finished || error ? t("close") : t("background")}
-              </Button>
-            </DialogFooter>
-          </div>
-        )}
-      </DialogContent>
-    </Dialog>
+            </section>
+          ) : null}
+        </>
+      )}
+    </ResponsiveDialog>
   )
 }
 

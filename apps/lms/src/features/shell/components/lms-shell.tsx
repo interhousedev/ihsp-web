@@ -1,12 +1,11 @@
 "use client"
 
 import { RequireAuth } from "@ihsp/auth"
-import { ShellNavControls } from "@ihsp/features-core"
+import { PageLoading, ShellNavControls, usePlatformLinks } from "@ihsp/features-core"
 import { AppShell, OfflineBadge } from "@ihsp/ui"
 import { Suspense, type ReactNode } from "react"
 import { useNav } from "../../../config/nav"
 import { LmsBrand } from "./lms-brand"
-import { PageLoading } from "./page-loading"
 import { ProfileMenu } from "./profile-menu"
 
 /**
@@ -15,11 +14,13 @@ import { ProfileMenu } from "./profile-menu"
  */
 export function LmsShell({ children }: { children: ReactNode }) {
   const nav = useNav()
+  const platforms = usePlatformLinks()
   return (
     <RequireAuth>
       <AppShell
         nav={nav.groups}
         bottomNav={nav.bottom}
+        platforms={platforms}
         brand={<LmsBrand />}
         sidebarFooter={<ProfileMenu variant="row" />}
         controlsLeading={<ShellNavControls />}

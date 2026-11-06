@@ -2,13 +2,13 @@
 
 import { keys, putLmsCourseDraftMeta, type CourseDraft } from "@ihsp/api"
 import { useErrorMessage, useT } from "@ihsp/i18n"
-import { Alert, AlertDescription, LoadingButton, cn } from "@ihsp/ui"
+import { Alert, AlertDescription, SaveBar, cn } from "@ihsp/ui"
 import { useMutation, useQueryClient } from "@tanstack/react-query"
 import { useEffect, useState } from "react"
 import { toast } from "sonner"
 import { useCourseDraft } from "../../editor/hooks/use-course-draft"
 import { EditorFrame } from "../../editor/components/editor-frame"
-import { QueryState } from "../../shared/components/query-state"
+import { QueryState } from "@ihsp/features-core"
 import { useSettingsForm } from "../hooks/use-settings-form"
 import { DetailsTab } from "./details-tab"
 import { NavigationTab } from "./navigation-tab"
@@ -107,17 +107,13 @@ function SettingsBody({ draft, pollMs }: { draft: CourseDraft; pollMs?: number }
                 <AlertDescription>{errorMessage(meta.error)}</AlertDescription>
               </Alert>
             ) : null}
-            <div className="bg-background sticky bottom-0 flex items-center gap-3 border-t py-3">
-              <LoadingButton
-                loading={form.save.isPending || meta.isPending}
-                disabled={(!form.dirty && !metaDirty) || form.invalid}
-                onClick={() => void save()}
-                className="min-h-11 md:min-h-8"
-              >
-                {t("save")}
-              </LoadingButton>
-              {form.dirty || metaDirty ? <span className="text-muted-foreground text-sm">{t("unsaved")}</span> : null}
-            </div>
+            <SaveBar
+              dirty={form.dirty || metaDirty}
+              saving={form.save.isPending || meta.isPending}
+              canSave={(form.dirty || metaDirty) && !form.invalid}
+              saveLabel={t("save")}
+              onSave={() => void save()}
+            />
           </div>
           <SettingsSidebar settings={settings} pollMs={pollMs} />
         </div>

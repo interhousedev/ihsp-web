@@ -2,7 +2,7 @@
 
 import { RequireAuth } from "@ihsp/auth"
 import { Suspense, type ReactNode } from "react"
-import { PageLoading } from "./page-loading"
+import { PageLoading } from "@ihsp/features-core"
 
 /**
  * The frame of the lesson player: only the login check. The player draws its own full-screen layout (dark top bar and

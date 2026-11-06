@@ -2,7 +2,7 @@
 
 import type { Answer } from "@ihsp/api"
 import { useT } from "@ihsp/i18n"
-import { Button, Dropdown, Icons, Input, Textarea } from "@ihsp/ui"
+import { Button, Dropdown, Icons, Input, Textarea, useIsMobile } from "@ihsp/ui"
 import { moveItem } from "../../step-editor/utils/content-ops"
 import type { AttemptQuestion } from "../utils/answers"
 
@@ -88,6 +88,37 @@ export function TableInput({ question, answer, onChange }: Props) {
   const t = useT("test")
   const table = question.table ?? { rows: [], columns: [] }
   const cells = answer?.cells ?? []
+  const isMobile = useIsMobile()
+  const toggle = (key: string) => {
+    const next = cells.includes(key) ? cells.filter((c) => c !== key) : [...cells, key]
+    onChange(next.length === 0 ? null : { cells: next })
+  }
+  if (isMobile) {
+    return (
+      <ul className="flex flex-col gap-2 text-sm">
+        {table.rows.map((title, row) => (
+          <li key={row} className="rounded-card border p-3">
+            <p className="font-medium break-words">{title}</p>
+            {table.columns.map((column, columnIndex) => {
+              const key = `${row}:${columnIndex}`
+              return (
+                <label key={key} className="flex min-h-11 items-center gap-3">
+                  <input
+                    type="checkbox"
+                    aria-label={t("cell", { row: title, column })}
+                    checked={cells.includes(key)}
+                    onChange={() => toggle(key)}
+                    className="accent-primary size-5 shrink-0"
+                  />
+                  <span className="min-w-0 break-words">{column}</span>
+                </label>
+              )
+            })}
+          </li>
+        ))}
+      </ul>
+    )
+  }
   return (
     <div className="overflow-x-auto">
       <table className="text-sm">
@@ -115,10 +146,7 @@ export function TableInput({ question, answer, onChange }: Props) {
                       type="checkbox"
                       aria-label={t("cell", { row: title, column })}
                       checked={cells.includes(key)}
-                      onChange={() => {
-                        const next = cells.includes(key) ? cells.filter((c) => c !== key) : [...cells, key]
-                        onChange(next.length === 0 ? null : { cells: next })
-                      }}
+                      onChange={() => toggle(key)}
                       className="accent-primary size-5"
                     />
                   </td>

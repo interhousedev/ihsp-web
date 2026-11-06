@@ -2,7 +2,7 @@
 
 import type { Question } from "@ihsp/api"
 import { useT } from "@ihsp/i18n"
-import { Button, Field, FieldDescription, FieldLabel, Icons, Input, Dropdown, Textarea } from "@ihsp/ui"
+import { Button, Field, FieldDescription, FieldLabel, Icons, Input, Dropdown, Textarea, useIsMobile } from "@ihsp/ui"
 import { useId } from "react"
 import { moveItem, newBlank, newOption, newPair, newVariable } from "../utils/content-ops"
 
@@ -141,6 +141,106 @@ export function TableFields({ question, onChange }: Props) {
       [...table.columns, ""],
       table.correct.map((line) => [...line, false]),
     )
+  const isMobile = useIsMobile()
+  const footer = (
+    <div className="flex flex-wrap gap-2">
+      <AddButton label={t("addRow")} onClick={addRow} />
+      <AddButton label={t("addColumn")} onClick={addColumn} />
+      <Button
+        type="button"
+        variant="ghost"
+        size="sm"
+        disabled={table.columns.length <= 1}
+        onClick={() =>
+          set(
+            table.rows,
+            table.columns.slice(0, -1),
+            table.correct.map((line) => line.slice(0, -1)),
+          )
+        }
+        className="min-h-11 md:min-h-7"
+      >
+        {t("removeColumn")}
+      </Button>
+    </div>
+  )
+  if (isMobile) {
+    return (
+      <div className="flex flex-col gap-3">
+        <div className="flex flex-col gap-2">
+          {table.columns.map((title, column) => (
+            <Input
+              key={column}
+              aria-label={t("columnTitle", { number: column + 1 })}
+              placeholder={t("columnTitle", { number: column + 1 })}
+              value={title}
+              onChange={(event) =>
+                set(
+                  table.rows,
+                  table.columns.map((c, i) => (i === column ? event.target.value : c)),
+                  table.correct,
+                )
+              }
+              className="h-11"
+            />
+          ))}
+        </div>
+        <ul className="flex flex-col gap-2 text-sm">
+          {table.rows.map((title, row) => (
+            <li key={row} className="flex flex-col gap-1 rounded-card border p-3">
+              <div className={ROW}>
+                <Input
+                  aria-label={t("rowTitle", { number: row + 1 })}
+                  placeholder={t("rowTitle", { number: row + 1 })}
+                  value={title}
+                  onChange={(event) =>
+                    set(
+                      table.rows.map((r, i) => (i === row ? event.target.value : r)),
+                      table.columns,
+                      table.correct,
+                    )
+                  }
+                  className="h-11 min-w-0 flex-1"
+                />
+                <RemoveButton
+                  label={t("removeRow", { number: row + 1 })}
+                  onClick={() =>
+                    set(
+                      table.rows.filter((_, i) => i !== row),
+                      table.columns,
+                      table.correct.filter((_, i) => i !== row),
+                    )
+                  }
+                  disabled={table.rows.length <= 1}
+                />
+              </div>
+              {table.columns.map((columnTitle, column) => (
+                <label key={column} className="flex min-h-11 items-center gap-3">
+                  <input
+                    type="checkbox"
+                    aria-label={t("cellCorrect", { row: row + 1, column: column + 1 })}
+                    checked={table.correct[row]?.[column] ?? false}
+                    onChange={(event) =>
+                      set(
+                        table.rows,
+                        table.columns,
+                        table.correct.map((line, r) =>
+                          line.map((v, c) => (r === row && c === column ? event.target.checked : v)),
+                        ),
+                      )
+                    }
+                    className="accent-primary size-5 shrink-0"
+                  />
+                  <span className="min-w-0 break-words">{columnTitle}</span>
+                </label>
+              ))}
+            </li>
+          ))}
+        </ul>
+        {footer}
+      </div>
+    )
+  }
   return (
     <div className="flex flex-col gap-2">
       <div className="overflow-x-auto">
@@ -224,26 +324,7 @@ export function TableFields({ question, onChange }: Props) {
           </tbody>
         </table>
       </div>
-      <div className="flex flex-wrap gap-2">
-        <AddButton label={t("addRow")} onClick={addRow} />
-        <AddButton label={t("addColumn")} onClick={addColumn} />
-        <Button
-          type="button"
-          variant="ghost"
-          size="sm"
-          disabled={table.columns.length <= 1}
-          onClick={() =>
-            set(
-              table.rows,
-              table.columns.slice(0, -1),
-              table.correct.map((line) => line.slice(0, -1)),
-            )
-          }
-          className="min-h-11 md:min-h-7"
-        >
-          {t("removeColumn")}
-        </Button>
-      </div>
+      {footer}
     </div>
   )
 }

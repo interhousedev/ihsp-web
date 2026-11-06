@@ -5,7 +5,7 @@ import { useFormatters, useT } from "@ihsp/i18n"
 import { Button, Card, CardContent, Icons } from "@ihsp/ui"
 import { useQuery } from "@tanstack/react-query"
 import { useState } from "react"
-import { QueryState } from "../../shared/components/query-state"
+import { QueryState } from "@ihsp/features-core"
 import { CourseBroadcastDialog } from "./course-broadcast-dialog"
 import { CourseBroadcastEditDialog } from "./course-broadcast-edit-dialog"
 

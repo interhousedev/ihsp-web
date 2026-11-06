@@ -2,11 +2,11 @@
 
 import { getLmsCourseDraftQuery, getLmsCourseStudentsQuery, type CourseStudent } from "@ihsp/api"
 import { useFormatters, useT } from "@ihsp/i18n"
-import { Badge, Card, CardContent, Input, Progress } from "@ihsp/ui"
+import { Badge, Card, CardContent, Input, Progress, StateView } from "@ihsp/ui"
 import { useQuery, type UseQueryResult } from "@tanstack/react-query"
 import { useMemo, useState } from "react"
 import { EditorFrame } from "../../editor/components/editor-frame"
-import { QueryState } from "../../shared/components/query-state"
+import { QueryState } from "@ihsp/features-core"
 import { hrefs } from "../../shared/utils/hrefs"
 import { personName } from "../../shared/utils/people"
 import { can } from "../../shared/utils/permissions"
@@ -125,7 +125,7 @@ function StudentsBody({
         {(items) => {
           const shown = items.filter((student) => personName(student.user).toLowerCase().includes(needle))
           return shown.length === 0 ? (
-            <p className="text-muted-foreground text-sm">{t("noMatches")}</p>
+            <StateView state="filtered" emptyText={t("noMatches")} onReset={() => onSearch("")} />
           ) : (
             <ul className="grid gap-3 lg:grid-cols-2">
               {shown.map((student) => (

@@ -1,20 +1,7 @@
 "use client"
 
 import { useT } from "@ihsp/i18n"
-import {
-  Button,
-  Dialog,
-  DialogContent,
-  DialogFooter,
-  DialogHeader,
-  DialogTitle,
-  Field,
-  FieldLabel,
-  MathFormula,
-  mathError,
-  Textarea,
-  useKatex,
-} from "@ihsp/ui"
+import { Button, Field, FieldLabel, MathFormula, mathError, ResponsiveDialog, Textarea, useKatex } from "@ihsp/ui"
 import { IconAlertTriangle } from "@ihsp/ui"
 import { type FormEvent, type KeyboardEvent, type RefObject, useId, useRef, useState } from "react"
 import type { Formula } from "../utils/markdown/math-format"
@@ -92,131 +79,128 @@ export function EquationDialog({
   }
 
   return (
-    <Dialog open onOpenChange={(open) => !open && onCancel()}>
-      <DialogContent
-        className="sm:max-w-[720px] grid-cols-[minmax(0,1fr)]"
-        initialFocus={field}
-        finalFocus={returnFocus}
-      >
-        <form onSubmit={submit} className="flex min-w-0 flex-col gap-4">
-          <DialogHeader>
-            <DialogTitle>{editing ? t("editTitle") : t("title")}</DialogTitle>
-          </DialogHeader>
-
-          <fieldset className="flex flex-col gap-2">
-            <legend className="mb-2 text-sm font-medium">{t("placement")}</legend>
-            <div className="bg-muted inline-flex w-fit rounded-lg p-0.5" role="radiogroup" aria-label={t("placement")}>
-              {([false, true] as const).map((value) => (
-                <button
-                  key={String(value)}
-                  type="button"
-                  role="radio"
-                  aria-checked={display === value}
-                  tabIndex={display === value ? 0 : -1}
-                  onClick={() => setDisplay(value)}
-                  onKeyDown={(event) => {
-                    if (!["ArrowLeft", "ArrowRight", "ArrowUp", "ArrowDown"].includes(event.key)) return
-                    event.preventDefault()
-                    setDisplay(!value)
-                    const group = event.currentTarget.parentElement
-                    requestAnimationFrame(() => group?.querySelector<HTMLElement>('[aria-checked="true"]')?.focus())
-                  }}
-                  className="aria-checked:bg-background aria-checked:text-foreground text-muted-foreground focus-visible:ring-ring/50 min-h-11 rounded-md px-3 text-sm font-medium outline-none focus-visible:ring-2 aria-checked:shadow-sm md:pointer-fine:min-h-8"
-                >
-                  {value ? t("display") : t("inline")}
-                </button>
-              ))}
-            </div>
-          </fieldset>
-
-          <div className="flex flex-col gap-2">
-            <span className="text-sm font-medium" id={`${id}-templates`}>
-              {t("templates")}
-            </span>
-            <div
-              className="grid min-w-0 grid-cols-[repeat(auto-fill,minmax(7.5rem,1fr))] gap-1.5"
-              role="group"
-              aria-labelledby={`${id}-templates`}
-            >
-              {TEMPLATES.map((template) => (
-                <Button
-                  key={template.name}
-                  type="button"
-                  variant="outline"
-                  onClick={() => insertTemplate(template)}
-                  aria-label={t("insertTemplate", {
-                    name: t(template.name),
-                    latex: template.latex,
-                  })}
-                  title={template.latex}
-                  className="h-auto min-h-11 min-w-0 flex-col gap-0.5 overflow-hidden py-1.5 md:pointer-fine:min-h-8"
-                >
-                  <span aria-hidden className="pointer-events-none max-w-full overflow-hidden text-[0.8rem]">
-                    <MathFormula source={template.latex} />
-                  </span>
-                  <span aria-hidden className="text-muted-foreground text-xs">
-                    {t(template.name)}
-                  </span>
-                </Button>
-              ))}
-            </div>
-          </div>
-
-          <Field>
-            <FieldLabel htmlFor={`${id}-latex`}>{t("latex")}</FieldLabel>
-            <Textarea
-              ref={field}
-              id={`${id}-latex`}
-              value={latex}
-              onChange={(event) => {
-                setLatex(event.target.value)
-                setUnwritable(false)
+    <ResponsiveDialog
+      open
+      onOpenChange={(open) => !open && onCancel()}
+      title={editing ? t("editTitle") : t("title")}
+      size="lg"
+      onSubmit={submit}
+      initialFocus={field}
+      finalFocus={returnFocus}
+      footer={
+        <>
+          <Button type="button" variant="outline" onClick={onCancel} className="min-h-11 md:min-h-8">
+            {t("cancel")}
+          </Button>
+          <Button type="submit" disabled={!canInsert} className="min-h-11 md:min-h-8">
+            {editing ? t("save") : t("insert")}
+          </Button>
+        </>
+      }
+    >
+      <fieldset className="flex flex-col gap-2">
+        <legend className="mb-2 text-sm font-medium">{t("placement")}</legend>
+        <div className="bg-muted inline-flex w-fit rounded-lg p-0.5" role="radiogroup" aria-label={t("placement")}>
+          {([false, true] as const).map((value) => (
+            <button
+              key={String(value)}
+              type="button"
+              role="radio"
+              aria-checked={display === value}
+              tabIndex={display === value ? 0 : -1}
+              onClick={() => setDisplay(value)}
+              onKeyDown={(event) => {
+                if (!["ArrowLeft", "ArrowRight", "ArrowUp", "ArrowDown"].includes(event.key)) return
+                event.preventDefault()
+                setDisplay(!value)
+                const group = event.currentTarget.parentElement
+                requestAnimationFrame(() => group?.querySelector<HTMLElement>('[aria-checked="true"]')?.focus())
               }}
-              onKeyDown={onKeyDown}
-              rows={3}
-              spellCheck={false}
-              autoCapitalize="off"
-              autoCorrect="off"
-              aria-invalid={error !== null || unwritable}
-              aria-describedby={`${id}-preview`}
-              className="font-mono"
-            />
-          </Field>
-
-          <section aria-labelledby={`${id}-preview-title`} className="flex min-w-0 flex-col gap-2">
-            <h3 id={`${id}-preview-title`} className="text-sm font-medium">
-              {t("preview")}
-            </h3>
-            <div
-              id={`${id}-preview`}
-              aria-live="polite"
-              className="bg-muted/40 flex min-h-20 items-center justify-center overflow-x-auto rounded-lg border p-3"
+              className="aria-checked:bg-background aria-checked:text-foreground text-muted-foreground focus-visible:ring-ring/50 min-h-11 rounded-md px-3 text-sm font-medium outline-none focus-visible:ring-2 aria-checked:shadow-sm md:pointer-fine:min-h-8"
             >
-              {source === "" ? (
-                <p className="text-muted-foreground text-sm">{t("previewEmpty")}</p>
-              ) : !katex ? (
-                <p className="text-muted-foreground text-sm">{t("loading")}</p>
-              ) : error !== null || unwritable ? (
-                <p className="text-destructive flex items-start gap-1.5 text-sm" data-testid="equation-error">
-                  <IconAlertTriangle aria-hidden className="mt-0.5 size-4 shrink-0" />
-                  {unwritable ? t("cannotWrite") : t("error", { message: error ?? "" })}
-                </p>
-              ) : (
-                <MathFormula source={source} display={display} className="my-0 w-full" />
-              )}
-            </div>
-          </section>
+              {value ? t("display") : t("inline")}
+            </button>
+          ))}
+        </div>
+      </fieldset>
 
-          <DialogFooter className="flex-wrap">
-            <Button type="button" variant="outline" onClick={onCancel} className="min-h-11 md:min-h-8">
-              {t("cancel")}
+      <div className="flex flex-col gap-2">
+        <span className="text-sm font-medium" id={`${id}-templates`}>
+          {t("templates")}
+        </span>
+        <div
+          className="grid min-w-0 grid-cols-[repeat(auto-fill,minmax(7.5rem,1fr))] gap-1.5"
+          role="group"
+          aria-labelledby={`${id}-templates`}
+        >
+          {TEMPLATES.map((template) => (
+            <Button
+              key={template.name}
+              type="button"
+              variant="outline"
+              onClick={() => insertTemplate(template)}
+              aria-label={t("insertTemplate", {
+                name: t(template.name),
+                latex: template.latex,
+              })}
+              title={template.latex}
+              className="h-auto min-h-11 min-w-0 flex-col gap-0.5 overflow-hidden py-1.5 md:pointer-fine:min-h-8"
+            >
+              <span aria-hidden className="pointer-events-none max-w-full overflow-hidden text-[0.8rem]">
+                <MathFormula source={template.latex} />
+              </span>
+              <span aria-hidden className="text-muted-foreground text-xs">
+                {t(template.name)}
+              </span>
             </Button>
-            <Button type="submit" disabled={!canInsert} className="min-h-11 md:min-h-8">
-              {editing ? t("save") : t("insert")}
-            </Button>
-          </DialogFooter>
-        </form>
-      </DialogContent>
-    </Dialog>
+          ))}
+        </div>
+      </div>
+
+      <Field>
+        <FieldLabel htmlFor={`${id}-latex`}>{t("latex")}</FieldLabel>
+        <Textarea
+          ref={field}
+          id={`${id}-latex`}
+          value={latex}
+          onChange={(event) => {
+            setLatex(event.target.value)
+            setUnwritable(false)
+          }}
+          onKeyDown={onKeyDown}
+          rows={3}
+          spellCheck={false}
+          autoCapitalize="off"
+          autoCorrect="off"
+          aria-invalid={error !== null || unwritable}
+          aria-describedby={`${id}-preview`}
+          className="font-mono"
+        />
+      </Field>
+
+      <section aria-labelledby={`${id}-preview-title`} className="flex min-w-0 flex-col gap-2">
+        <h3 id={`${id}-preview-title`} className="text-sm font-medium">
+          {t("preview")}
+        </h3>
+        <div
+          id={`${id}-preview`}
+          aria-live="polite"
+          className="bg-muted/40 flex min-h-20 items-center justify-center overflow-x-auto rounded-lg border p-3"
+        >
+          {source === "" ? (
+            <p className="text-muted-foreground text-sm">{t("previewEmpty")}</p>
+          ) : !katex ? (
+            <p className="text-muted-foreground text-sm">{t("loading")}</p>
+          ) : error !== null || unwritable ? (
+            <p className="text-destructive flex items-start gap-1.5 text-sm" data-testid="equation-error">
+              <IconAlertTriangle aria-hidden className="mt-0.5 size-4 shrink-0" />
+              {unwritable ? t("cannotWrite") : t("error", { message: error ?? "" })}
+            </p>
+          ) : (
+            <MathFormula source={source} display={display} className="my-0 w-full" />
+          )}
+        </div>
+      </section>
+    </ResponsiveDialog>
   )
 }

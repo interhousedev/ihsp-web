@@ -2,10 +2,10 @@
 
 import { getLmsMyCoursesQuery } from "@ihsp/api"
 import { useT } from "@ihsp/i18n"
-import { PageContainer } from "@ihsp/ui"
+import { PageContainer, StateView } from "@ihsp/ui"
 import { useQuery } from "@tanstack/react-query"
 import { CourseCardView } from "../../shared/components/course-card-view"
-import { QueryState } from "../../shared/components/query-state"
+import { QueryState } from "@ihsp/features-core"
 import { StepikScope } from "../../shared/components/stepik-scope"
 import { hrefs } from "../../shared/utils/hrefs"
 import { LinkButton } from "../../shared/components/link-button"
@@ -34,7 +34,7 @@ export function MyCoursesPage() {
                   {t("enrolled")}
                 </h2>
                 {data.enrolled.length === 0 ? (
-                  <p className="text-muted-foreground text-sm">{t("noneEnrolled")}</p>
+                  <StateView state="empty" emptyText={t("noneEnrolled")} />
                 ) : (
                   <ul className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4">
                     {data.enrolled.map((course) => (

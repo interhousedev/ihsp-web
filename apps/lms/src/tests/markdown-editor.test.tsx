@@ -4,7 +4,6 @@ import { act, fireEvent, screen, waitFor, within } from "@testing-library/react"
 import { useState } from "react"
 import { MarkdownEditor } from "../features/step-editor/components/markdown-editor"
 import { renderLms } from "./helpers"
-import { selectDropdownValue } from "@ihsp/test-utils"
 
 setDefaultTimeout(60_000)
 
@@ -155,10 +154,11 @@ describe("markdown editor: block toolbar", () => {
     select(textarea, 2)
     const toolbar = screen.getByRole("toolbar", { name: "Text formatting" })
 
-    await selectDropdownValue(user, within(toolbar).getByRole("combobox", { name: "Paragraph style" }), "heading2")
+    await user.click(within(toolbar).getByRole("combobox", { name: "Paragraph style" }))
+    await user.click(await screen.findByRole("option", { name: /2/ }))
 
     await waitFor(() => expect(textarea).toHaveValue("## Title\ntext"))
-    expect(within(toolbar).getByRole("combobox", { name: "Paragraph style" })).toHaveValue("heading2")
+    expect(within(toolbar).getByRole("combobox", { name: "Paragraph style" }).textContent).toContain("2")
   })
 
   it("turns selected lines into a numbered list and back", async () => {

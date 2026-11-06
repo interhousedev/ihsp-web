@@ -28,7 +28,7 @@ import {
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query"
 import { useState, type FormEvent } from "react"
 import { toast } from "sonner"
-import { QueryState } from "../../shared/components/query-state"
+import { QueryState } from "@ihsp/features-core"
 import { personName } from "../../shared/utils/people"
 
 /** Only teachers and administrators can become course creators (the backend refuses students with a 422). */

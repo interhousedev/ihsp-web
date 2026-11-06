@@ -3,7 +3,7 @@
 import { ErrorTrackingInit } from "@ihsp/features-core/telemetry"
 import { AuthProvider } from "@ihsp/auth"
 import { ConfigGate } from "@ihsp/config"
-import { ThemePreferenceSync } from "@ihsp/features-core"
+import { LazyTelegramBridge, ThemePreferenceSync } from "@ihsp/features-core"
 import { PwaRuntime } from "@ihsp/features-core/pwa"
 import { I18nProvider, mergeMessages, type Locale, type Messages } from "@ihsp/i18n"
 import { AppThemeProvider, createQueryClient } from "@ihsp/ui"
@@ -37,7 +37,9 @@ export function Providers({ children }: { children: ReactNode }) {
             <AppThemeProvider>
               <AuthProvider>
                 <PwaRuntime />
-                <ThemePreferenceSync>{children}</ThemePreferenceSync>
+                <LazyTelegramBridge>
+                  <ThemePreferenceSync>{children}</ThemePreferenceSync>
+                </LazyTelegramBridge>
               </AuthProvider>
             </AppThemeProvider>
           </NuqsAdapter>

@@ -2,11 +2,11 @@
 
 import { getLmsCoursesQuery } from "@ihsp/api"
 import { useT } from "@ihsp/i18n"
-import { Icons, Input, PageContainer, useDebounce } from "@ihsp/ui"
+import { Icons, ListToolbar, PageContainer, useDebounce } from "@ihsp/ui"
 import { keepPreviousData, useQuery } from "@tanstack/react-query"
 import { useState } from "react"
 import { CourseCardView } from "../../shared/components/course-card-view"
-import { QueryState } from "../../shared/components/query-state"
+import { QueryState } from "@ihsp/features-core"
 import { StepikScope } from "../../shared/components/stepik-scope"
 import { hrefs } from "../../shared/utils/hrefs"
 import { LinkButton } from "../../shared/components/link-button"
@@ -32,20 +32,20 @@ export function CatalogPage() {
           </LinkButton>
         }
       >
-        <div className="relative max-w-xl">
-          <Icons.search
-            className="text-muted-foreground pointer-events-none absolute start-3 top-1/2 size-4 -translate-y-1/2"
-            aria-hidden
-          />
-          <Input
-            type="search"
-            value={text}
-            onChange={(event) => setText(event.target.value)}
-            placeholder={t("searchPlaceholder")}
-            aria-label={t("searchLabel")}
-            className="h-11 ps-9"
-          />
-        </div>
+        <ListToolbar
+          filters={[
+            {
+              kind: "search",
+              key: "query",
+              label: t("searchLabel"),
+              placeholder: t("searchPlaceholder"),
+              debounceMs: 0,
+            },
+          ]}
+          values={{ query: text }}
+          onChange={(_key, next) => setText(next ?? "")}
+          onReset={() => setText("")}
+        />
         <QueryState
           query={courses}
           isEmpty={(items) => items.length === 0}

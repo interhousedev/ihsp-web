@@ -2,7 +2,7 @@
 
 import { uploadFile, type FileItem } from "@ihsp/api"
 import { useErrorMessage, useT } from "@ihsp/i18n"
-import { IconLoader2, IconPhoto } from "@ihsp/ui"
+import { IconPhoto, Spinner } from "@ihsp/ui"
 import { type ChangeEvent, useRef, useState } from "react"
 import { ToolbarButton } from "./toolbar-button"
 
@@ -43,7 +43,7 @@ export function ImageUploadButton({
     <>
       <ToolbarButton
         label={t("image")}
-        icon={busy ? IconLoader2 : IconPhoto}
+        icon={busy ? Spinner : IconPhoto}
         disabled={disabled || busy}
         onPress={() => input.current?.click()}
       />

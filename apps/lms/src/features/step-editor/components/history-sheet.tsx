@@ -16,7 +16,7 @@ import {
 } from "@ihsp/ui"
 import { useMutation, useQuery } from "@tanstack/react-query"
 import { useState } from "react"
-import { QueryState } from "../../shared/components/query-state"
+import { QueryState } from "@ihsp/features-core"
 import { personName } from "../../shared/utils/people"
 
 /** The history of a step: published revisions and checkpoints, newest first, with Restore (LMS-12). */

@@ -6,17 +6,12 @@ import {
   Alert,
   AlertDescription,
   Button,
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogFooter,
-  DialogHeader,
-  DialogTitle,
   Field,
   FieldDescription,
   FieldLabel,
   Input,
   LoadingButton,
+  ResponsiveDialog,
   Textarea,
 } from "@ihsp/ui"
 import { useMutation, useQueryClient } from "@tanstack/react-query"
@@ -60,57 +55,55 @@ export function CourseBroadcastEditDialog({
   const valid = title.trim() !== "" && body.trim() !== ""
 
   return (
-    <Dialog open onOpenChange={(open) => (open ? undefined : onClose())}>
-      <DialogContent className="max-h-[90dvh] overflow-y-auto">
-        <form onSubmit={submit} className="flex flex-col gap-4">
-          <DialogHeader>
-            <DialogTitle>{t("editTitle")}</DialogTitle>
-          </DialogHeader>
+    <ResponsiveDialog
+      open
+      onOpenChange={(open) => (open ? undefined : onClose())}
+      title={t("editTitle")}
+      onSubmit={submit}
+      footer={
+        <>
+          <Button type="button" variant="outline" onClick={onClose} className="min-h-11 md:min-h-8">
+            {t("close")}
+          </Button>
+          <LoadingButton
+            type="submit"
+            disabled={!valid || !changed}
+            className="min-h-11 md:min-h-8"
+            loading={save.isPending}
+          >
+            {t("save")}
+          </LoadingButton>
+        </>
+      }
+    >
+      <Field>
+        <FieldLabel htmlFor="broadcast-edit-title">{t("titleLabel")}</FieldLabel>
+        <Input
+          id="broadcast-edit-title"
+          value={title}
+          onChange={(event) => setTitle(event.target.value)}
+          maxLength={BROADCAST_TITLE_MAX}
+          className="h-11 md:h-8"
+        />
+      </Field>
 
-          <Field>
-            <FieldLabel htmlFor="broadcast-edit-title">{t("titleLabel")}</FieldLabel>
-            <Input
-              id="broadcast-edit-title"
-              value={title}
-              onChange={(event) => setTitle(event.target.value)}
-              maxLength={BROADCAST_TITLE_MAX}
-              className="h-11 md:h-8"
-            />
-          </Field>
+      <Field>
+        <FieldLabel htmlFor="broadcast-edit-body">{t("bodyLabel")}</FieldLabel>
+        <Textarea
+          id="broadcast-edit-body"
+          value={body}
+          onChange={(event) => setBody(event.target.value)}
+          maxLength={BROADCAST_BODY_MAX}
+          rows={6}
+        />
+        <FieldDescription>{t("bodyHint", { used: body.length, max: BROADCAST_BODY_MAX })}</FieldDescription>
+      </Field>
 
-          <Field>
-            <FieldLabel htmlFor="broadcast-edit-body">{t("bodyLabel")}</FieldLabel>
-            <Textarea
-              id="broadcast-edit-body"
-              value={body}
-              onChange={(event) => setBody(event.target.value)}
-              maxLength={BROADCAST_BODY_MAX}
-              rows={6}
-            />
-            <FieldDescription>{t("bodyHint", { used: body.length, max: BROADCAST_BODY_MAX })}</FieldDescription>
-          </Field>
-
-          {save.isError ? (
-            <Alert variant="destructive">
-              <AlertDescription>{errorMessage(save.error)}</AlertDescription>
-            </Alert>
-          ) : null}
-
-          <DialogFooter>
-            <Button type="button" variant="outline" onClick={onClose} className="min-h-11 md:min-h-8">
-              {t("close")}
-            </Button>
-            <LoadingButton
-              type="submit"
-              disabled={!valid || !changed}
-              className="min-h-11 md:min-h-8"
-              loading={save.isPending}
-            >
-              {t("save")}
-            </LoadingButton>
-          </DialogFooter>
-        </form>
-      </DialogContent>
-    </Dialog>
+      {save.isError ? (
+        <Alert variant="destructive">
+          <AlertDescription>{errorMessage(save.error)}</AlertDescription>
+        </Alert>
+      ) : null}
+    </ResponsiveDialog>
   )
 }

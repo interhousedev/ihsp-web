@@ -3,7 +3,7 @@
 import { PreviewPage } from "@/features/preview/components/preview-page"
 import { PreviewShell } from "@/features/preview/components/preview-shell"
 import { ParamsRoute, toPositiveInt } from "@/features/shared/components/params-route"
-import { PageLoading } from "@/features/shell/components/page-loading"
+import { PageLoading } from "@ihsp/features-core"
 import { Suspense } from "react"
 
 export default function Page() {

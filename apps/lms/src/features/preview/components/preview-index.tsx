@@ -2,12 +2,12 @@
 
 import { getLmsCourseDraftQuery } from "@ihsp/api"
 import { useT } from "@ihsp/i18n"
-import { Alert, AlertDescription, Icons } from "@ihsp/ui"
+import { Alert, AlertDescription, Icons, StateView } from "@ihsp/ui"
 import { useQuery } from "@tanstack/react-query"
 import Link from "next/link"
 import { EditorFrame } from "../../editor/components/editor-frame"
 import { OutlineBadge } from "../../shared/components/outline-badge"
-import { QueryState } from "../../shared/components/query-state"
+import { QueryState } from "@ihsp/features-core"
 import { hrefs } from "../../shared/utils/hrefs"
 import { flattenOutline } from "../../shared/utils/outline"
 import { LinkButton } from "../../shared/components/link-button"
@@ -38,7 +38,7 @@ export function PreviewIndex({ courseId }: { courseId: string }) {
                       </LinkButton>
                     </div>
                   ) : (
-                    <p className="text-muted-foreground text-sm">{t("empty")}</p>
+                    <StateView state="empty" emptyText={t("empty")} />
                   )}
                   <ol className="flex flex-col gap-4">
                     {data.outline.map((section) => (

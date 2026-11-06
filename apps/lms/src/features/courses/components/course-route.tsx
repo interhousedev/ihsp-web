@@ -10,7 +10,7 @@ import { hrefs } from "../../shared/utils/hrefs"
 import { continueStep } from "../../shared/utils/outline"
 import { LearnerShell } from "../../shell/components/learner-shell"
 import { LmsShell } from "../../shell/components/lms-shell"
-import { PageLoading } from "../../shell/components/page-loading"
+import { PageLoading } from "@ihsp/features-core"
 import { CoursePage } from "./course-page"
 
 const LOCATION_CHANGED = "lms:course-location"
