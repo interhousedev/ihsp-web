@@ -1,7 +1,7 @@
 "use client"
 
 import { readConfig } from "@ihsp/config"
-import { Button, Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@ihsp/ui"
+import { Button, ResponsiveDialog } from "@ihsp/ui"
 import { useEffect, useState } from "react"
 import { useTr } from "../hooks/use-tr"
 import { parseSecurityContact } from "../utils/security-contact"
@@ -24,14 +24,11 @@ export function SecurityContactButton() {
   if (!contact) return null
 
   return (
-    <Dialog open={open} onOpenChange={setOpen}>
-      <DialogTrigger render={<Button variant="link" className="min-h-11" />}>
+    <>
+      <Button variant="link" className="min-h-11" onClick={() => setOpen(true)}>
         {t("idCommon.securityContact.button")}
-      </DialogTrigger>
-      <DialogContent>
-        <DialogHeader>
-          <DialogTitle>{t("idCommon.securityContact.title")}</DialogTitle>
-        </DialogHeader>
+      </Button>
+      <ResponsiveDialog open={open} onOpenChange={setOpen} title={t("idCommon.securityContact.title")} size="sm">
         <p className="text-muted-foreground text-sm">{t("idCommon.securityContact.hint")}</p>
         <p className="text-base font-medium break-words">
           {parseSecurityContact(contact).map((part, index) =>
@@ -44,7 +41,7 @@ export function SecurityContactButton() {
             ),
           )}
         </p>
-      </DialogContent>
-    </Dialog>
+      </ResponsiveDialog>
+    </>
   )
 }

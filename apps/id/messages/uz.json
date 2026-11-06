@@ -195,6 +195,13 @@
     "deny": "Rad etish",
     "unavailable": "Soʻrovni ochib boʻlmadi"
   },
+  "oauthError": {
+    "title": "Ulanishni yakunlab boʻlmadi",
+    "description": "Ulanayotgan ilova xizmat qabul qila olmaydigan soʻrov yubordi. Unga hech qanday maʼlumot berilmadi.",
+    "redirectMismatch": "Ilova roʻyxatdan oʻtmagan yoʻnaltirish manzilidan foydalandi. Uni «Konnektorlar» sahifasida qayta ulang yoki ilova koʻrsatgan manzil bilan yangi klient yarating.",
+    "action": "Konnektorlarni ochish",
+    "code": "Xato kodi: {code}"
+  },
   "logout": {
     "title": "Hisobdan chiqilmoqda",
     "description": "Bir lahza…",
@@ -619,7 +626,26 @@
       "lms_courses_read": "Kurs, qadam va urinishlarni oʻqish.",
       "lms_courses_write": "Kurs yaratish va tahrirlash.",
       "lms_courses_delete": "Kurslarni arxivlash.",
-      "lms_modules_write": "Modul, dars va qadamlarni tahrirlash."
+      "lms_modules_write": "Modul, dars va qadamlarni tahrirlash.",
+      "schedule_read": "Dars jadvali va fanlarni koʻrish.",
+      "homework_read": "Uy vazifalarini koʻrish.",
+      "marks_read": "Baholar, natijalar va GPAni koʻrish.",
+      "attendance_read": "Davomatni koʻrish.",
+      "materials_read": "Dars materiallari va tafsilotlarini koʻrish.",
+      "files_read": "Fayllaringizni oʻqish.",
+      "flashcards_read": "Kartochka toʻplamlarini koʻrish.",
+      "flashcards_write": "Kartochkalar yaratish va tahrirlash.",
+      "sync_run": "EMISdan baholarni yangilash.",
+      "teachers_read": "Oʻqituvchilar va ularning jadvalini koʻrish.",
+      "knowledge_read": "Bilimlar bazasidan qidirish.",
+      "flashcards_delete": "Kartochkalarni oʻchirish.",
+      "tests_read": "Testlaringizni koʻrish.",
+      "tests_write": "Testlar yaratish va tahrirlash.",
+      "notebooks_read": "Daftarlar va ularning materiallarini oʻqish.",
+      "notebooks_write": "Daftarlar yaratish, manbalar qoʻshish va materiallar yaratish.",
+      "library_read": "Kutubxonadan qidirish va oʻqish.",
+      "files_read_all": "Faqat oʻzingiz yuklaganlarni emas, barcha oʻquv fayllarini oʻqish.",
+      "learning_read": "Siz yozilgan kurslar mazmunini koʻrish."
     },
     "new": {
       "action": "Yangi konnektor",
@@ -755,6 +781,8 @@
         "pro_read_fetch_only": "Pro tarifida faqat oʻqish va yuklab olish vositalari bor. «Plaginlar» boʻlimida qoʻshiladi.",
         "gemini_app_us_18_personal_account_keep_activity_on": "Faqat AQSh, 18 yoshdan katta, shaxsiy hisob, «Faollik tarixi» yoqilgan. Server veb-versiyada qoʻshiladi. [Gemini yordami](geminiHelp).",
         "gemini_enterprise_admin_sets_up_client_and_pkce": "Enterprise: klientni administrator PKCE bilan yaratadi. [Sozlash qoʻllanmasi](geminiEnterprise).",
+        "gemini_web_generated_redirect": "Gemini veb-versiyasi: avtomatik roʻyxatdan oʻtishdan foydalaning. Google oʻz yoʻnaltirish manzilini koʻrsatsa, aynan shu manzil bilan oʻz klientingizni yarating.",
+        "gemini_cli_redirect": "Gemini CLI: avtomatik roʻyxatdan oʻtish oʻzi ishlaydi. Oldindan yaratilgan klient bilan redirectUri ni http://127.0.0.1:7777/oauth/callback qilib belgilang.",
         "free_plan_one_custom_connector": "Bepul tarifda bitta maxsus konnektor bor.",
         "team_enterprise_owner_adds_connector": "Team va Enterprise: konnektorni egasi qoʻshadi. [Konnektor qoʻllanmasi](claudeRemote).",
         "static_headers_beta_owner_only": "Statik sarlavhalar beta holatida va faqat egasi uchun.",
@@ -771,6 +799,48 @@
         "reused": "Bu klient allaqachon yaratilgan. Uning siri yaratilganda koʻrsatilgan; yangisini olish uchun klientni oʻchiring.",
         "delete": "Bu klientni oʻchirish"
       }
+    },
+    "activity": {
+      "title": "Kalitlar faolligi",
+      "outcome": "Natija",
+      "outcomeAll": "Barcha natijalar",
+      "empty": "Kalitlaringiz hali soʻrov yubormagan.",
+      "write": "Yozish",
+      "deletedKey": "Oʻchirilgan kalit",
+      "duration": "{ms} ms",
+      "newer": "Yangiroq",
+      "older": "Eskiroq",
+      "outcomes": {
+        "ok": "Muvaffaqiyatli",
+        "denied": "Rad etildi",
+        "rate_limited": "Limitdan oshdi",
+        "not_found": "Topilmadi",
+        "invalid": "Notoʻgʻri maʼlumot",
+        "error": "Xato"
+      }
+    },
+    "offers": {
+      "title": "Konnektorlar uchun yangi ruxsatlar",
+      "read": "Oʻqiy oladi",
+      "write": "Oʻzgartira oladi",
+      "forConnectors": "Konnektorlar: {names}",
+      "until": "{date} gacha qaror qilish mumkin",
+      "accept": "Qabul qilish",
+      "decline": "Rad etish",
+      "granted": "Ruxsatlar qoʻshildi.",
+      "declined": "Ruxsatlar qoʻshilmadi.",
+      "gone": "Bu taklif endi mavjud emas."
+    },
+    "media": {
+      "title": "Media havolalar",
+      "hint": "Konnektor orqali yaratilgan kurs videolari havolalari. Havolaga ega har kim uni 5 soat davomida tizimga kirmasdan ochishi mumkin.",
+      "issued": "Yaratilgan",
+      "until": "Kirmasdan ochish muddati",
+      "opens": "Ochilgan",
+      "stopped": "Toʻxtatilgan",
+      "stop": "Havolani toʻxtatish",
+      "stopTitle": "Bu havola toʻxtatilsinmi?",
+      "stopDescription": "Havola hamma uchun darhol ishlamay qoladi."
     }
   }
 }

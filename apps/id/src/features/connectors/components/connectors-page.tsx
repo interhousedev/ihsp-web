@@ -7,6 +7,8 @@ import { LinkButton } from "../../shared/components/link-button"
 import { QueryBoundary } from "../../shared/components/query-boundary"
 import { useTr } from "../../shared/hooks/use-tr"
 import { ConnectorCard } from "./connector-card"
+import { MediaGrantsSection } from "./media-grants-section"
+import { ScopeOffersSection } from "./scope-offers-section"
 
 /** `/connectors/` (UF-MCP-04, ID-27): all connectors of the user, newest first. */
 export function ConnectorsPage() {
@@ -15,8 +17,16 @@ export function ConnectorsPage() {
   return (
     <PageContainer
       title={t("connectors.title")}
-      actions={<LinkButton href="/connectors/new/">{t("connectors.new.action")}</LinkButton>}
+      actions={
+        <div className="flex flex-wrap gap-2">
+          <LinkButton href="/connectors/activity/" variant="outline">
+            {t("connectors.activity.title")}
+          </LinkButton>
+          <LinkButton href="/connectors/new/">{t("connectors.new.action")}</LinkButton>
+        </div>
+      }
     >
+      <ScopeOffersSection />
       <QueryBoundary query={query}>
         {(connectors) =>
           connectors.length === 0 ? (
@@ -38,6 +48,7 @@ export function ConnectorsPage() {
           )
         }
       </QueryBoundary>
+      <MediaGrantsSection />
     </PageContainer>
   )
 }

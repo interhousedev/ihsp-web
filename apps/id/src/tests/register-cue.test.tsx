@@ -39,8 +39,9 @@ describe("registration by picking a name", () => {
 
     await user.click(await screen.findByRole("button", { name: "Pick my name from a list" }))
     const select = await screen.findByLabelText("Group")
-    await waitFor(() => expect(screen.getByRole("option", { name: "2TN2" })).toBeInTheDocument())
-    fireEvent.change(select, { target: { value: "g-2tn2" } })
+    await waitFor(() => expect(select).not.toBeDisabled())
+    await user.click(select)
+    await user.click(await screen.findByRole("option", { name: "2TN2" }))
     await clickButton("Continue")
 
     await user.click(await screen.findByRole("button", { name: "Aliyev Ali" }))

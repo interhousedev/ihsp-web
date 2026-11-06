@@ -195,6 +195,13 @@
     "deny": "Deny",
     "unavailable": "We could not open this request"
   },
+  "oauthError": {
+    "title": "Could not finish connecting",
+    "description": "The app you are connecting sent a request this service cannot accept. Nothing was shared with it.",
+    "redirectMismatch": "The app used a redirect address that is not registered. Connect it again from the Connectors page, or create a new client with the address the app shows.",
+    "action": "Open Connectors",
+    "code": "Error code: {code}"
+  },
   "logout": {
     "title": "Logging you out",
     "description": "One moment…",
@@ -619,7 +626,26 @@
       "lms_courses_read": "Read courses, steps and attempts.",
       "lms_courses_write": "Create and edit courses.",
       "lms_courses_delete": "Archive courses.",
-      "lms_modules_write": "Edit modules, lessons and steps."
+      "lms_modules_write": "Edit modules, lessons and steps.",
+      "schedule_read": "See your timetable and subjects.",
+      "homework_read": "See your homework.",
+      "marks_read": "See your marks, results and GPA.",
+      "attendance_read": "See your attendance.",
+      "materials_read": "See lesson materials and details.",
+      "files_read": "Read your own files.",
+      "flashcards_read": "See your flash card sets.",
+      "flashcards_write": "Create and edit flash cards.",
+      "sync_run": "Refresh your marks from EMIS.",
+      "teachers_read": "See your teachers and their timetables.",
+      "knowledge_read": "Search the knowledge base.",
+      "flashcards_delete": "Delete flash cards.",
+      "tests_read": "See your tests.",
+      "tests_write": "Create and edit tests.",
+      "notebooks_read": "Read your notebooks and their outputs.",
+      "notebooks_write": "Create notebooks, add sources and generate outputs.",
+      "library_read": "Search and read the library.",
+      "files_read_all": "Read all your study files, not only your own uploads.",
+      "learning_read": "See the content of your enrolled courses."
     },
     "new": {
       "action": "New connector",
@@ -755,6 +781,8 @@
         "pro_read_fetch_only": "Pro plans get read and fetch tools only. Added under Plugins.",
         "gemini_app_us_18_personal_account_keep_activity_on": "US only, 18 or older, personal account, Keep Activity on. Add the server on the web. [Gemini help](geminiHelp).",
         "gemini_enterprise_admin_sets_up_client_and_pkce": "Enterprise: an admin creates the client with PKCE. [Setup guide](geminiEnterprise).",
+        "gemini_web_generated_redirect": "Gemini web: use automatic registration. If Google shows its own redirect address, create your own client with that exact address.",
+        "gemini_cli_redirect": "Gemini CLI: automatic registration just works. With a pre-created client, set redirectUri to http://127.0.0.1:7777/oauth/callback.",
         "free_plan_one_custom_connector": "Free plan: one custom connector.",
         "team_enterprise_owner_adds_connector": "Team and Enterprise: an Owner adds the connector. [Connector guide](claudeRemote).",
         "static_headers_beta_owner_only": "Static headers are in beta and only the Owner can use them.",
@@ -771,6 +799,48 @@
         "reused": "This client already exists. Its secret was shown when it was created; delete it to get a new one.",
         "delete": "Delete this client"
       }
+    },
+    "activity": {
+      "title": "Key activity",
+      "outcome": "Result",
+      "outcomeAll": "All results",
+      "empty": "Your keys have not made any calls yet.",
+      "write": "Write",
+      "deletedKey": "Deleted key",
+      "duration": "{ms} ms",
+      "newer": "Newer",
+      "older": "Older",
+      "outcomes": {
+        "ok": "Success",
+        "denied": "Denied",
+        "rate_limited": "Rate limited",
+        "not_found": "Not found",
+        "invalid": "Invalid input",
+        "error": "Error"
+      }
+    },
+    "offers": {
+      "title": "New permissions for your connectors",
+      "read": "Can read",
+      "write": "Can change",
+      "forConnectors": "Connectors: {names}",
+      "until": "Open until {date}",
+      "accept": "Accept",
+      "decline": "Decline",
+      "granted": "Permissions added.",
+      "declined": "Permissions not added.",
+      "gone": "This offer can no longer be decided."
+    },
+    "media": {
+      "title": "Media links",
+      "hint": "Links to course videos made through a connector. Anyone holding a link can open it without signing in for 5 hours.",
+      "issued": "Created",
+      "until": "Open without sign-in until",
+      "opens": "Times opened",
+      "stopped": "Stopped",
+      "stop": "Stop link",
+      "stopTitle": "Stop this link?",
+      "stopDescription": "The link stops working for everyone at once."
     }
   }
 }

@@ -44,6 +44,8 @@ export const NOTE_CODES = [
   "pro_read_fetch_only",
   "gemini_app_us_18_personal_account_keep_activity_on",
   "gemini_enterprise_admin_sets_up_client_and_pkce",
+  "gemini_web_generated_redirect",
+  "gemini_cli_redirect",
   "free_plan_one_custom_connector",
   "team_enterprise_owner_adds_connector",
   "static_headers_beta_owner_only",

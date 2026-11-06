@@ -6,7 +6,7 @@ import { ShellNavControls, useLicenseMenu, usePlatformLinks } from "@ihsp/featur
 import { AppShell, SidebarBrand, UserMenu } from "@ihsp/ui"
 import type { ReactNode } from "react"
 import { useTr } from "../../shared/hooks/use-tr"
-import { useIdNav } from "../hooks/use-id-nav"
+import { useIdBottom, useIdNav } from "../hooks/use-id-nav"
 
 /** Frame of the security pages: sidebar (a sheet on phones) with the account menu: license, language, theme and log out. */
 export function AccountShell({ children }: { children: ReactNode }) {
@@ -14,12 +14,15 @@ export function AccountShell({ children }: { children: ReactNode }) {
   const { session } = useSession()
   const user = session?.user
   const nav = useIdNav(user?.roles ?? [])
+  const bottom = useIdBottom()
   const platforms = usePlatformLinks()
   const license = useLicenseMenu()
 
   return (
     <AppShell
       nav={nav}
+      bottomNav={bottom}
+      platforms={platforms}
       brand={
         <SidebarBrand
           name={t("idCommon.brand")}
@@ -27,7 +30,7 @@ export function AccountShell({ children }: { children: ReactNode }) {
           logo={<img src="/icons/icon-192.png" alt="" width={24} height={24} />}
         />
       }
-      controlsLeading={<ShellNavControls />}
+      controlsLeading={<ShellNavControls home="/security/" />}
       sidebarFooter={
         user ? (
           <>

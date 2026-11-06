@@ -56,7 +56,7 @@ export function ConnectorCard({ connector }: { connector: Connector }) {
           )}
         </div>
         <ul className="flex flex-wrap gap-1" aria-label={t("connectors.scopes")}>
-          {connector.scopes.map((scope) => (
+          {[...connector.scopes, ...connector.extra_scopes].map((scope) => (
             <li key={scope}>
               <code className="bg-muted rounded px-1.5 py-0.5 text-xs">{scope}</code>
             </li>

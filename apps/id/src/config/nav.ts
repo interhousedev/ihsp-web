@@ -1,4 +1,4 @@
-import type { NavGroup } from "@ihsp/ui"
+import type { BottomNavItem, NavGroup } from "@ihsp/ui"
 import {
   IconActivity,
   IconBrandTelegram,
@@ -13,6 +13,15 @@ import {
   IconTrash,
 } from "@ihsp/ui"
 import type { Translate } from "../features/shared/hooks/use-tr"
+
+/** The phone bottom bar; "More" with everything else is added by the shell. */
+export function buildIdBottom(t: Translate): BottomNavItem[] {
+  return [
+    { title: t("idNav.overview"), url: "/security/", icon: IconShieldLock, match: "exact" },
+    { title: t("idNav.connectors"), url: "/connectors/", icon: IconPlugConnected },
+    { title: t("idNav.appearance"), url: "/appearance/", icon: IconPalette },
+  ]
+}
 
 /**
  * Sidebar of the security area. Items without `roles` are for everyone; EMIS and account deletion are for students.

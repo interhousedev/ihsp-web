@@ -41,7 +41,7 @@ export function PasswordChangePage() {
   })
 
   return (
-    <PageContainer title={t("security.password.title")} description={t("security.password.description")}>
+    <PageContainer title={t("security.password.title")} meta={t("security.password.description")}>
       <Card>
         <CardContent>
           <form

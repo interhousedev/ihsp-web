@@ -1,7 +1,7 @@
 "use client"
 
 import { getIdLoginCueGroupsQuery, type LoginCueGroup } from "@ihsp/api"
-import { Button } from "@ihsp/ui"
+import { Button, Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@ihsp/ui"
 import { useQuery } from "@tanstack/react-query"
 import { useState } from "react"
 import { ErrorAlert } from "../../shared/components/error-alert"
@@ -22,22 +22,29 @@ export function RegisterCueGroupStep({ onPicked, onBack }: RegisterCueGroupStepP
 
   return (
     <FlowCard title={t("register.cue.title")}>
-      <label className="grid gap-2 text-sm font-medium">
+      <div className="grid gap-2 text-sm font-medium">
         {t("register.cue.group")}
-        <select
-          className="border-input bg-background h-11 w-full rounded-md border px-3 text-base"
-          value={groupId}
+        <Select
+          value={groupId || null}
           disabled={groups.isPending || groups.isError}
-          onChange={(event) => setGroupId(event.target.value)}
+          items={[
+            { value: null, label: t("register.cue.chooseGroup") },
+            ...(groups.data ?? []).map((group) => ({ value: group.group_id, label: group.name })),
+          ]}
+          onValueChange={(next: string | null) => setGroupId(next ?? "")}
         >
-          <option value="">{t("register.cue.chooseGroup")}</option>
-          {(groups.data ?? []).map((group) => (
-            <option key={group.group_id} value={group.group_id}>
-              {group.name}
-            </option>
-          ))}
-        </select>
-      </label>
+          <SelectTrigger aria-label={t("register.cue.group")} className="h-11 w-full text-base">
+            <SelectValue />
+          </SelectTrigger>
+          <SelectContent>
+            {(groups.data ?? []).map((group) => (
+              <SelectItem key={group.group_id} value={group.group_id}>
+                {group.name}
+              </SelectItem>
+            ))}
+          </SelectContent>
+        </Select>
+      </div>
       <ErrorAlert error={groups.error} />
       <Button
         type="button"
