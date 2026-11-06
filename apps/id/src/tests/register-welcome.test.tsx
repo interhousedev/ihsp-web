@@ -5,12 +5,11 @@ import { RegisterWelcome } from "../features/registration/components/register-we
 import { clickButton, findHeading, findLink, renderId } from "./helpers"
 
 describe("registration welcome", () => {
-  test("explains IHT ID, suggests Telegram, library and LMS, and Continue resumes", async () => {
+  test("explains IHT ID, suggests library and LMS, and Continue resumes", async () => {
     const onContinue = mock(() => {})
     renderId(<RegisterWelcome onContinue={onContinue} />, { route: "/register/" })
 
     await findHeading("Welcome to IHT ID")
-    expect((await findLink("Connect Telegram")).getAttribute("href")).toBe("/security/telegram/")
     expect((await findLink("Open library")).getAttribute("href")).toStartWith(
       getConfig().LIBRARY_URL ?? "https://lib.ihsu.uz",
     )

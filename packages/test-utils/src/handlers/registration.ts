@@ -38,6 +38,7 @@ export const registrationHandlers = [
     return HttpResponse.json(body.emis_login === "imported" ? registrationStartWithImport : registrationStart)
   }),
   http.post(apiUrl("/v1/id/register/email"), () => accepted()),
+  http.post(apiUrl("/v1/id/register/telegram-status"), () => HttpResponse.json({ linked: false })),
   http.post(apiUrl("/v1/id/register/complete"), async ({ request }) => {
     const body = await readJson<RegisterCompleteBody>(request)
     return HttpResponse.json({

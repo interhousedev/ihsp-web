@@ -25,6 +25,8 @@ type EmisCredentialsFormProps = {
   footer?: ReactNode
   /** The EMIS login carried from the IHT ID login page; prefilled, never the password. */
   initialLogin?: string
+  /** A full-width action above the form. */
+  topAction?: ReactNode
   /** Shown above the form, e.g. why the user arrived here. */
   notice?: ReactNode
 }
@@ -41,6 +43,7 @@ export function EmisCredentialsForm({
   withLinkedActions = false,
   footer,
   initialLogin = "",
+  topAction,
   notice,
 }: EmisCredentialsFormProps) {
   const t = useTr()
@@ -58,6 +61,7 @@ export function EmisCredentialsForm({
 
   return (
     <FlowCard title={title} description={description} footer={footer}>
+      {topAction}
       <StepIndicator current={1} total={3} />
       {notice ? (
         <Alert>

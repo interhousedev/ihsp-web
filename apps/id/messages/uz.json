@@ -252,7 +252,7 @@
       "lms": "LMSni ochish",
       "continue": "Davom etish"
     },
-    "pickLink": "Ismimni roʻyxatdan tanlayman",
+    "pickLink": "EMIS ID raqamimni eslay olmayman yoki parol oʻrnatmaganman",
     "cue": {
       "title": "Ismingizni tanlang",
       "group": "Guruh",
@@ -264,6 +264,29 @@
       "passwordTitle": "EMIS parolingizni kiriting",
       "emisPassword": "EMIS paroli",
       "submit": "Davom etish"
+    },
+    "firstTime": {
+      "link": "Men EMIS tizimiga hech kirmaganman va parolimni bilmayman",
+      "title": "EMIS tizimiga birinchi kirish",
+      "description": "EMIS ID raqamingizni va EMIS bergan boshlangʻich parolni kiriting. Tekshiruvdan soʻng oʻz parolingizni yaratasiz.",
+      "emisId": "EMIS ID",
+      "useBirthDate": "Tugʻilgan sana",
+      "useUnique": "Litsey menga maxsus parol bergan",
+      "birthDate": "Tugʻilgan sana (KKOOYYYY)",
+      "birthDateHint": "Masalan, 28012009.",
+      "birthDateInvalid": "Haqiqiy sanani KKOOYYYY koʻrinishida kiriting.",
+      "unique": "Maxsus parol",
+      "back": "Orqaga"
+    },
+    "telegram": {
+      "title": "Telegramni ulang",
+      "description": "Bu qadam majburiy. U hisobingiz va EMIS parolingizni himoya qiladi.",
+      "codes": "Xavfsizlik kodlari Telegramga keladi.",
+      "emis": "Keyinroq EMIS parolini Telegramdan kelgan kod bilan “Xavfsizlik → EMIS hisobi” boʻlimida oʻzgartirishingiz mumkin.",
+      "link": "Telegramni ulash",
+      "qr": "Botni ochadigan QR kod",
+      "waiting": "Telegramdan tasdiq kutilmoqda…",
+      "linked": "Telegram ulandi."
     }
   },
   "reclaim": {
@@ -510,7 +533,18 @@
       "formTitle": "EMIS parolini yangilash",
       "formDescription": "Saqlashdan oldin yangi parolni EMISʼda tekshiramiz.",
       "submit": "Tekshirish va saqlash",
-      "done": "EMIS paroli yangilandi. Baholar yana sinxronlanadi."
+      "done": "EMIS paroli yangilandi. Baholar yana sinxronlanadi.",
+      "change": {
+        "title": "EMIS parolini oʻzgartirish",
+        "description": "Parol EMIS tizimining oʻzida oʻzgaradi, shuning uchun emis.edu.uz saytida ham yangisidan foydalaning.",
+        "current": "Joriy EMIS paroli",
+        "mismatch": "Parollar mos kelmadi.",
+        "verifyWith": "Bu siz ekaningizni tasdiqlang",
+        "withPassword": "Hisobim paroli",
+        "withCode": "Telegramga yuborilgan kod",
+        "submit": "Parolni oʻzgartirish",
+        "done": "EMIS paroli oʻzgartirildi."
+      }
     },
     "delete": {
       "title": "Hisobni oʻchirish",

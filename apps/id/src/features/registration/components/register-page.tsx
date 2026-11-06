@@ -19,11 +19,14 @@ import { RegisterCueGroupStep } from "./register-cue-group-step"
 import { RegisterCueNameStep } from "./register-cue-name-step"
 import { RegisterCuePasswordStep } from "./register-cue-password-step"
 import { RegisterDone } from "./register-done"
+import { RegisterFirstTimeStep } from "./register-first-time-step"
 import { RegisterProfileStep } from "./register-profile-step"
+import { RegisterTelegramStep } from "./register-telegram-step"
 import { RegisterWelcome } from "./register-welcome"
 
 type Step =
   | { kind: "emis" }
+  | { kind: "first-time" }
   | { kind: "cue-group" }
   | { kind: "cue-name"; group: LoginCueGroup }
   | { kind: "cue-password"; group: LoginCueGroup; cue: LoginCueName }
@@ -36,6 +39,7 @@ type Step =
       confirmImport: boolean
       fromCue: boolean
     }
+  | { kind: "telegram"; code: string; after: AfterRegistration; miniApp: boolean }
   | { kind: "welcome"; login: string; redirectTo: string | null; ticket: string | null }
   | { kind: "done"; login: string }
 
@@ -51,6 +55,14 @@ function continueRegistration(after: AfterRegistration, showDone: () => void): v
   else showDone()
 }
 
+/** Back to the mini app login page, which finds the linked Telegram account and opens my.iht. */
+function finishInMiniApp(after: AfterRegistration): void {
+  continueRegistration(after, () => {
+    writeSession(TELEGRAM_NEW_LOGIN_KEY, after.login)
+    redirectTo("/telegram/")
+  })
+}
+
 /** `/register/`: three steps of the EMIS registration (UF-ID-01). Carries `login_challenge` when it comes from a login. */
 export function RegisterPage() {
   const t = useTr()
@@ -63,6 +75,19 @@ export function RegisterPage() {
     onSuccess: (result) => setStep({ kind: "profile", start: result, fromCue: false }),
   })
 
+  if (step.kind === "first-time") {
+    return (
+      <RegisterFirstTimeStep
+        pending={start.isPending}
+        error={start.error}
+        onSubmit={(values) => start.mutate(values)}
+        onBack={() => {
+          start.reset()
+          setStep({ kind: "emis" })
+        }}
+      />
+    )
+  }
   if (step.kind === "cue-group") {
     return (
       <RegisterCueGroupStep
@@ -122,16 +147,23 @@ export function RegisterPage() {
             redirectTo: response.redirect_to ?? null,
             ticket: response.login_ticket ?? null,
           }
-          if (isMiniApp()) {
-            // Back to the mini app login page, which links this Telegram account to the new login and then opens my.iht.
-            continueRegistration(after, () => {
-              writeSession(TELEGRAM_NEW_LOGIN_KEY, response.login)
-              redirectTo("/telegram/")
-            })
+          if (response.telegram_link_code) {
+            setStep({ kind: "telegram", code: response.telegram_link_code, after, miniApp: isMiniApp() })
+          } else if (isMiniApp()) {
+            finishInMiniApp(after)
           } else {
             setStep({ kind: "welcome", ...after })
           }
         }}
+      />
+    )
+  }
+  if (step.kind === "telegram") {
+    const { after, miniApp } = step
+    return (
+      <RegisterTelegramStep
+        code={step.code}
+        onContinue={() => (miniApp ? finishInMiniApp(after) : setStep({ kind: "welcome", ...after }))}
       />
     )
   }
@@ -153,15 +185,27 @@ export function RegisterPage() {
       withLinkedActions
       initialLogin={emisLogin ?? ""}
       notice={emisLogin ? t("register.emisLoginNotice") : undefined}
+      topAction={
+        <Button
+          type="button"
+          className="h-auto min-h-11 whitespace-normal text-base"
+          onClick={() => setStep({ kind: "cue-group" })}
+        >
+          {t("register.pickLink")}
+        </Button>
+      }
       footer={
         <>
           <Button
             type="button"
             variant="link"
             className="h-11 text-base"
-            onClick={() => setStep({ kind: "cue-group" })}
+            onClick={() => {
+              start.reset()
+              setStep({ kind: "first-time" })
+            }}
           >
-            {t("register.pickLink")}
+            {t("register.firstTime.link")}
           </Button>
           <TextLink href={loginChallenge ? withChallenge("/login/", "login_challenge", loginChallenge) : "/security/"}>
             {t("register.haveAccount")}

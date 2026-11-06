@@ -4,6 +4,16 @@ All notable changes to this project are documented here. The format follows [Kee
 
 ## [Unreleased]
 
+## [1.1.1] - 2026-11-06
+
+### Added
+
+- First-time EMIS registration, a required Telegram step and a form to change the EMIS password.
+
+### Changed
+
+- The name picker is now a prominent button above the EMIS form, with clearer wording; the welcome screen has icons.
+
 ## [1.1.0] - 2026-11-06
 
 - Sharing: share a notebook or file by sign-in link or with named people, chat read-only in a private thread on your own limits, copy a shared notebook, attach one as live base materials.

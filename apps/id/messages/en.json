@@ -252,7 +252,7 @@
       "lms": "Open LMS",
       "continue": "Continue"
     },
-    "pickLink": "Pick my name from a list",
+    "pickLink": "I don't remember my EMIS ID or haven't set a password",
     "cue": {
       "title": "Pick your name",
       "group": "Group",
@@ -264,6 +264,29 @@
       "passwordTitle": "Enter your EMIS password",
       "emisPassword": "EMIS password",
       "submit": "Continue"
+    },
+    "firstTime": {
+      "link": "I've never logged into EMIS and don't know my password",
+      "title": "First login to EMIS",
+      "description": "Enter your EMIS ID and the initial password EMIS gave you. After the check you create your own password.",
+      "emisId": "EMIS ID",
+      "useBirthDate": "Date of birth",
+      "useUnique": "My lyceum gave me a unique password",
+      "birthDate": "Date of birth (DDMMYYYY)",
+      "birthDateHint": "For example, 28012009.",
+      "birthDateInvalid": "Enter a real date as DDMMYYYY.",
+      "unique": "Unique password",
+      "back": "Back"
+    },
+    "telegram": {
+      "title": "Link your Telegram",
+      "description": "This step is required. It protects your account and your EMIS password.",
+      "codes": "Security codes arrive in Telegram.",
+      "emis": "You can later change your EMIS password with a code from Telegram, under Security → EMIS account.",
+      "link": "Link Telegram",
+      "qr": "QR code that opens the bot",
+      "waiting": "Waiting for Telegram…",
+      "linked": "Telegram is linked."
     }
   },
   "reclaim": {
@@ -510,7 +533,18 @@
       "formTitle": "Update the EMIS password",
       "formDescription": "We check the new password in EMIS before saving it.",
       "submit": "Check and save",
-      "done": "The EMIS password was updated. Marks sync again."
+      "done": "The EMIS password was updated. Marks sync again.",
+      "change": {
+        "title": "Change the EMIS password",
+        "description": "This changes the password in EMIS itself, so use the new one on emis.edu.uz too.",
+        "current": "Current EMIS password",
+        "mismatch": "The passwords do not match.",
+        "verifyWith": "Confirm it is you",
+        "withPassword": "My account password",
+        "withCode": "A code sent to Telegram",
+        "submit": "Change the password",
+        "done": "The EMIS password was changed."
+      }
     },
     "delete": {
       "title": "Delete account",

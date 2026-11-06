@@ -21,6 +21,7 @@ export type RegistrationStart = {
 export type RegisterEmisBody = { emis_login: string; emis_password: string }
 export type RegisterEmailBody = { registration_token: string; email: string }
 export type RegisterCompleteBody = {
+  telegram_init_data?: string
   registration_token: string
   password: string
   email_code: string
@@ -28,7 +29,13 @@ export type RegisterCompleteBody = {
   login_challenge?: string
 }
 /** `login_ticket` (TODO(contract)): set without a login challenge; IHT ID redeems it on its own login. */
-export type RegisterCompleteResponse = { login: string; redirect_to: string | null; login_ticket?: string | null }
+export type RegisterCompleteResponse = {
+  login: string
+  redirect_to: string | null
+  telegram_linked?: boolean
+  telegram_link_code?: string | null
+  login_ticket?: string | null
+}
 
 export type ReclaimEmisBody = { emis_login: string; emis_password: string }
 export type ReclaimStart = { reclaim_token: string; login: string }

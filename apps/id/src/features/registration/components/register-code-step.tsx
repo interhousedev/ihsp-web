@@ -1,5 +1,6 @@
 "use client"
 
+import { readSession, TELEGRAM_INIT_DATA_KEY } from "../../shared/utils/storage"
 import { postRegisterComplete, postRegisterEmail, type RegisterCompleteResponse } from "@ihsp/api"
 import { Button } from "@ihsp/ui"
 import { useMutation } from "@tanstack/react-query"
@@ -37,6 +38,7 @@ export function RegisterCodeStep({
         email_code: code,
         confirm_import_match: confirmImport ? true : undefined,
         login_challenge: loginChallenge ?? undefined,
+        telegram_init_data: readSession(TELEGRAM_INIT_DATA_KEY) ?? undefined,
       }),
     onSuccess: onCompleted,
   })

@@ -19,6 +19,7 @@ import { z } from "zod"
 import { ErrorAlert } from "../../shared/components/error-alert"
 import { QueryBoundary } from "../../shared/components/query-boundary"
 import { useTr } from "../../shared/hooks/use-tr"
+import { ChangeEmisPasswordForm } from "./change-emis-password-form"
 import { EmisReauthBanner } from "./emis-reauth-banner"
 
 /** `/security/emis/` (UF-ID-12, ID-8): the new EMIS password is checked against EMIS before it replaces the saved one. */
@@ -91,6 +92,7 @@ export function EmisPasswordPage() {
                 </form>
               </CardContent>
             </Card>
+            <ChangeEmisPasswordForm />
           </div>
         )}
       </QueryBoundary>

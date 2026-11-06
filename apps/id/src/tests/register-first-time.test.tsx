@@ -1,0 +1,41 @@
+import { describe, expect, test } from "bun:test"
+import { apiUrl, server } from "@ihsp/test-utils"
+import { screen } from "@testing-library/react"
+import { HttpResponse, http } from "msw"
+import { RegisterPage } from "../features/registration/components/register-page"
+import { allowSlowTests, clickButton, fillField, findButton, renderId } from "./helpers"
+
+allowSlowTests()
+
+const LINK = /never logged into EMIS/i
+
+describe("first-time EMIS registration", () => {
+  test("sends the typed ID and the date of birth as the EMIS credentials", async () => {
+    let sent: unknown
+    server.use(
+      http.post(apiUrl("/v1/id/register/emis"), async ({ request }) => {
+        sent = await request.json()
+        return HttpResponse.json(
+          { type: "emis/auth-failed", title: "x", status: 401, message_key: "emis-auth-failed", params: {} },
+          { status: 401 },
+        )
+      }),
+    )
+    renderId(<RegisterPage />, { route: "/register/" })
+    await clickButton(LINK)
+    await fillField("EMIS ID", " 12345 ")
+    await fillField(/Date of birth \(DDMMYYYY\)/, "28012009")
+    await clickButton(/^Continue$/)
+    await screen.findByRole("alert")
+    expect(sent).toEqual({ emis_login: "12345", emis_password: "28012009" })
+  })
+
+  test("refuses an impossible date", async () => {
+    renderId(<RegisterPage />, { route: "/register/" })
+    await clickButton(LINK)
+    await fillField("EMIS ID", "12345")
+    await fillField(/Date of birth \(DDMMYYYY\)/, "99999999")
+    await screen.findByText(/real date/i)
+    expect(((await findButton(/^Continue$/)) as HTMLButtonElement).disabled).toBe(true)
+  })
+})

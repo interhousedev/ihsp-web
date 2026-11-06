@@ -398,6 +398,27 @@ export function deleteIdMe(body: DeleteAccountBody, opts?: RequestOptions): Prom
   return api.delete<DeleteAccountResponse>("/v1/id/me", { ...opts, body })
 }
 
+/** POST /v1/id/me/emis-password/change — student; `204`, changes the password in EMIS. */
+export function postIdMeEmisPasswordChange(
+  body: {
+    current_emis_password: string
+    new_emis_password: string
+    account_password?: string
+    otp_code?: string
+  },
+  opts?: RequestOptions,
+): Promise<NoContent> {
+  return api.post<NoContent>("/v1/id/me/emis-password/change", body, opts)
+}
+
+/** POST /v1/id/register/telegram-status — none; polled by the registration's Telegram step. */
+export function postRegisterTelegramStatus(
+  body: { code: string },
+  opts?: RequestOptions,
+): Promise<{ linked: boolean }> {
+  return api.post<{ linked: boolean }>("/v1/id/register/telegram-status", body, { ...opts, auth: "none" })
+}
+
 /** POST /v1/id/me/step-up — bearer (contract addition); `202`, sends an OTP before connectors and account deletion. */
 export function postIdMeStepUp(opts?: RequestOptions): Promise<NoContent> {
   return api.post<NoContent>("/v1/id/me/step-up", undefined, opts)
@@ -441,6 +462,7 @@ export const listConnectors = getIdMeConnectors
 export const postConnector = postIdMeConnectors
 export const deleteConnector = deleteIdMeConnector
 export const postEmisPassword = postIdMeEmisPassword
+export const postChangeEmisPassword = postIdMeEmisPasswordChange
 export const deleteMe = deleteIdMe
 export const postStepUp = postIdMeStepUp
 

@@ -37,7 +37,7 @@ describe("registration by picking a name", () => {
     )
     const { user } = renderId(<RegisterPage />, { route: "/register/" })
 
-    await user.click(await screen.findByRole("button", { name: "Pick my name from a list" }))
+    await user.click(await screen.findByRole("button", { name: "I don't remember my EMIS ID or haven't set a password" }))
     const select = await screen.findByLabelText("Group")
     await waitFor(() => expect(select).not.toBeDisabled())
     await user.click(select)

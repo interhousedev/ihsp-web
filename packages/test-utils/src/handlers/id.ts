@@ -273,6 +273,7 @@ export const idHandlers = [
     )
   }),
   http.delete(apiUrl("/v1/id/me/mcp-clients/:clientId"), () => noContent()),
+  http.post(apiUrl("/v1/id/me/emis-password/change"), () => new HttpResponse(null, { status: 204 })),
   http.post(apiUrl("/v1/id/me/emis-password"), () => HttpResponse.json({ emis_status: "active" })),
   http.delete(apiUrl("/v1/id/me"), () => HttpResponse.json({ closes_on: "2026-11-06" }, { status: 202 })),
   http.post(apiUrl("/v1/id/me/step-up"), () => accepted()),

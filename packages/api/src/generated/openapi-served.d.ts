@@ -4125,6 +4125,26 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/v1/id/me/emis-password/change": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Change Emis Password
+         * @description Check the second factor and the current EMIS password, then change it.
+         */
+        post: operations["change_emis_password_v1_id_me_emis_password_change_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/v1/id/me/mcp-clients": {
         parameters: {
             query?: never;
@@ -4835,6 +4855,26 @@ export interface paths {
          * @description Start a registration with the EMIS login behind the chosen cue.
          */
         post: operations["start_cue_registration_v1_id_register_emis_cue_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/id/register/telegram-status": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Register Telegram Status
+         * @description Polled by the registration's Telegram step; the code is the credential.
+         */
+        post: operations["register_telegram_status_v1_id_register_telegram_status_post"];
         delete?: never;
         options?: never;
         head?: never;
@@ -9708,6 +9748,26 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/v1/oauth/mcp/redirect-sync": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Redirect Sync
+         * @description Always 204: Hydra stays the one that accepts or refuses the request.
+         */
+        get: operations["redirect_sync_v1_oauth_mcp_redirect_sync_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/v1/oauth/mcp/register": {
         parameters: {
             query?: never;
@@ -13146,6 +13206,26 @@ export interface components {
             position: number;
         };
         /**
+         * ChangeEmisPasswordBody
+         * @description A change of the EMIS password; exactly one second factor is required.
+         */
+        ChangeEmisPasswordBody: {
+            /** Account Password */
+            account_password?: string | null;
+            /**
+             * Current Emis Password
+             * Format: password
+             */
+            current_emis_password: string;
+            /**
+             * New Emis Password
+             * Format: password
+             */
+            new_emis_password: string;
+            /** Otp Code */
+            otp_code?: string | null;
+        };
+        /**
          * ChangePasswordBody
          * @description POST /v1/id/me/password.
          */
@@ -13557,6 +13637,8 @@ export interface components {
             password: string;
             /** Registration Token */
             registration_token: string;
+            /** Telegram Init Data */
+            telegram_init_data?: string | null;
         };
         /**
          * CompleteRegistrationResponse
@@ -13569,6 +13651,13 @@ export interface components {
             login_ticket?: string | null;
             /** Redirect To */
             redirect_to: string | null;
+            /** Telegram Link Code */
+            telegram_link_code?: string | null;
+            /**
+             * Telegram Linked
+             * @default false
+             */
+            telegram_linked: boolean;
         };
         /**
          * ConflictResponse
@@ -25816,6 +25905,22 @@ export interface components {
             subject_name: string;
         };
         /**
+         * TelegramLinkStatusBody
+         * @description The one-time code of the registration's Telegram step.
+         */
+        TelegramLinkStatusBody: {
+            /** Code */
+            code: string;
+        };
+        /**
+         * TelegramLinkStatusResponse
+         * @description Whether the bot has redeemed the code.
+         */
+        TelegramLinkStatusResponse: {
+            /** Linked */
+            linked: boolean;
+        };
+        /**
          * TelegramLinkedResponse
          * @description The Telegram account is linked.
          */
@@ -37269,6 +37374,37 @@ export interface operations {
             };
         };
     };
+    change_emis_password_v1_id_me_emis_password_change_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["ChangeEmisPasswordBody"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            204: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
     get_mcp_clients_v1_id_me_mcp_clients_get: {
         parameters: {
             query?: never;
@@ -38396,6 +38532,39 @@ export interface operations {
                 };
                 content: {
                     "application/json": components["schemas"]["RegistrationStartResponse"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    register_telegram_status_v1_id_register_telegram_status_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["TelegramLinkStatusBody"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["TelegramLinkStatusResponse"];
                 };
             };
             /** @description Validation Error */
@@ -47421,6 +47590,36 @@ export interface operations {
                 content: {
                     "application/json": components["schemas"]["LogoutResponse"];
                 };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    redirect_sync_v1_oauth_mcp_redirect_sync_get: {
+        parameters: {
+            query?: {
+                client_id?: string;
+                redirect_uri?: string;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            204: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
             };
             /** @description Validation Error */
             422: {
