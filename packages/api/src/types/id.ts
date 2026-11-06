@@ -123,6 +123,8 @@ export type Connector = {
   name: string
   server: "student" | "lms" | "admin"
   scopes: string[]
+  /** Scopes granted after an OAuth token was issued; empty for token connectors. */
+  extra_scopes: string[]
   course_ids: string[] | null
   kind: "token" | "oauth"
   token_prefix: string | null
@@ -130,6 +132,21 @@ export type Connector = {
   last_used_at: string | null
   expires_at: string | null
   revoked_at: string | null
+}
+
+/** New MCP permissions offered for my connectors; decided here or from the Telegram buttons. */
+export type ScopeOffer = {
+  id: string
+  release_id: string
+  server: "student" | "lms" | "admin"
+  read_scopes: string[]
+  write_scopes: string[]
+  connector_names: string[]
+  expires_at: string
+}
+export type ScopeOfferDecision = {
+  result: "granted" | "declined" | "already_decided" | "expired" | "not_available"
+  connector_names: string[]
 }
 
 // --- Request bodies and small responses ---

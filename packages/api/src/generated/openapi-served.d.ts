@@ -1244,6 +1244,46 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/v1/admin/mcp/activity": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * List Activity
+         * @description Newest first, 50 per page; every read writes `mcp.activity_viewed`.
+         */
+        get: operations["list_activity_v1_admin_mcp_activity_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/admin/mcp/activity/summary": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get Summary
+         * @description The last 7 days unless `from` says otherwise.
+         */
+        get: operations["get_summary_v1_admin_mcp_activity_summary_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/v1/admin/moderation/queue": {
         parameters: {
             query?: never;
@@ -2941,6 +2981,26 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/v1/certificates/files/{file_id}/download-url": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get File Url
+         * @description Return a short-lived address, for clients that cannot follow a redirect.
+         */
+        get: operations["get_file_url_v1_certificates_files__file_id__download_url_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/v1/certificates/me": {
         parameters: {
             query?: never;
@@ -3269,6 +3329,66 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/v1/files/shared/{file_id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post?: never;
+        /**
+         * Leave Shared File
+         * @description The recipient removes a shared file from their list.
+         */
+        delete: operations["leave_shared_file_v1_files_shared__file_id__delete"];
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/files/shared/{file_id}/url": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get Shared File Url
+         * @description Presign a GET for a recipient; valid for 60 seconds.
+         */
+        get: operations["get_shared_file_url_v1_files_shared__file_id__url_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/files/shares/join": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Join File Share
+         * @description Open a share link: a signed-in person gets their own grant.
+         */
+        post: operations["join_file_share_v1_files_shares_join_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/v1/files/{file_id}": {
         parameters: {
             query?: never;
@@ -3312,6 +3432,74 @@ export interface paths {
          */
         post: operations["complete_upload_v1_files__file_id__complete_post"];
         delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/files/{file_id}/shares": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get File Shares
+         * @description Who has access (the owner only).
+         */
+        get: operations["get_file_shares_v1_files__file_id__shares_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/files/{file_id}/shares/link": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Create File Share Link
+         * @description Create the link or replace its token; the token is shown this once.
+         */
+        post: operations["create_file_share_link_v1_files__file_id__shares_link_post"];
+        /**
+         * Delete File Share Link
+         * @description Turn the link off and remove everyone who joined through it.
+         */
+        delete: operations["delete_file_share_link_v1_files__file_id__shares_link_delete"];
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/files/{file_id}/shares/{user_id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        /**
+         * Add File Share Person
+         * @description Give a person access to download the file.
+         */
+        put: operations["add_file_share_person_v1_files__file_id__shares__user_id__put"];
+        post?: never;
+        /**
+         * Remove File Share Person
+         * @description Revoke a person's access at once.
+         */
+        delete: operations["remove_file_share_person_v1_files__file_id__shares__user_id__delete"];
         options?: never;
         head?: never;
         patch?: never;
@@ -3791,6 +3979,66 @@ export interface paths {
          * @description Create the connector; the token is in this response only.
          */
         post: operations["post_connector_v1_id_me_connectors_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/id/me/connectors/activity": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get Activity
+         * @description Newest first, 50 per page; scoped to the caller whatever the filter names.
+         */
+        get: operations["get_activity_v1_id_me_connectors_activity_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/id/me/connectors/offers": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get Scope Offers
+         * @description The caller's open offers.
+         */
+        get: operations["get_scope_offers_v1_id_me_connectors_offers_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/id/me/connectors/offers/{offer_id}/decision": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Post Scope Offer Decision
+         * @description Accept or decline; the same single-use rules as the Telegram buttons.
+         */
+        post: operations["post_scope_offer_decision_v1_id_me_connectors_offers__offer_id__decision_post"];
         delete?: never;
         options?: never;
         head?: never;
@@ -6117,6 +6365,66 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/v1/lms/media/grants": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * List Media Grants
+         * @description Return the media links issued for the caller.
+         */
+        get: operations["list_media_grants_v1_lms_media_grants_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/lms/media/grants/{grant_id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post?: never;
+        /**
+         * Revoke Media Grant
+         * @description Stop one of the caller's media links at once.
+         */
+        delete: operations["revoke_media_grant_v1_lms_media_grants__grant_id__delete"];
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/lms/media/redeem": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Redeem Media
+         * @description Open a link: 5 hours anonymously, always when enrolled, never when not.
+         */
+        post: operations["redeem_media_v1_lms_media_redeem_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/v1/lms/my-courses": {
         parameters: {
             query?: never;
@@ -7005,6 +7313,26 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/v1/me/flashcard-sets/merge": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Merge Sets
+         * @description Create a set from copies of the cards of several sets; the sources stay.
+         */
+        post: operations["merge_sets_v1_me_flashcard_sets_merge_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/v1/me/flashcard-sets/stats": {
         parameters: {
             query?: never;
@@ -7053,6 +7381,26 @@ export interface paths {
         patch: operations["update_set_v1_me_flashcard_sets__set_id__patch"];
         trace?: never;
     };
+    "/v1/me/flashcard-sets/{set_id}/card-stats": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get Card Stats
+         * @description Return attempts, correct and incorrect answers and last study per card.
+         */
+        get: operations["get_card_stats_v1_me_flashcard_sets__set_id__card_stats_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/v1/me/flashcard-sets/{set_id}/cards": {
         parameters: {
             query?: never;
@@ -7066,7 +7414,11 @@ export interface paths {
          * @description Save the full ordered list of cards; ids that are missing are deleted.
          */
         put: operations["replace_cards_v1_me_flashcard_sets__set_id__cards_put"];
-        post?: never;
+        /**
+         * Add Cards
+         * @description Append a batch of new cards.
+         */
+        post: operations["add_cards_v1_me_flashcard_sets__set_id__cards_post"];
         delete?: never;
         options?: never;
         head?: never;
@@ -7091,6 +7443,50 @@ export interface paths {
         options?: never;
         head?: never;
         patch?: never;
+        trace?: never;
+    };
+    "/v1/me/flashcard-sets/{set_id}/study/restart": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Restart Study
+         * @description Study every card again today; the schedule and limits stay untouched.
+         */
+        post: operations["restart_study_v1_me_flashcard_sets__set_id__study_restart_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/me/flashcards/{card_id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post?: never;
+        /**
+         * Delete Card
+         * @description Delete one card.
+         */
+        delete: operations["delete_card_v1_me_flashcards__card_id__delete"];
+        options?: never;
+        head?: never;
+        /**
+         * Update Card
+         * @description Change the text or the base hardness of one card.
+         */
+        patch: operations["update_card_v1_me_flashcards__card_id__patch"];
         trace?: never;
     };
     "/v1/me/flashcards/{card_id}/review": {
@@ -7676,6 +8072,26 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/v1/me/shared-files": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * List Shared Files
+         * @description The files shared with the caller.
+         */
+        get: operations["list_shared_files_v1_me_shared_files_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/v1/me/storage": {
         parameters: {
             query?: never;
@@ -8074,6 +8490,66 @@ export interface paths {
          * @description Put the chosen notebook sources and files into the hidden Studio notebook.
          */
         post: operations["flashcard_workspace_v1_notebooks_flashcard_workspace_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/notebooks/share-recipients": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Search Recipients
+         * @description People to share with, by name (3 letters at least, 10 results at most).
+         */
+        get: operations["search_recipients_v1_notebooks_share_recipients_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/notebooks/shared": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * List Shared
+         * @description The notebooks shared with the caller.
+         */
+        get: operations["list_shared_v1_notebooks_shared_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/notebooks/shares/join": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Join Share
+         * @description Open a share link: a signed-in person gets their own grant.
+         */
+        post: operations["join_share_v1_notebooks_shares_join_post"];
         delete?: never;
         options?: never;
         head?: never;
@@ -8702,6 +9178,70 @@ export interface paths {
         patch: operations["update_label_v1_notebooks__notebook_id__labels__label_id__patch"];
         trace?: never;
     };
+    "/v1/notebooks/{notebook_id}/linked-sets": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * List Linked Sets
+         * @description The sets attached to the caller's notebook.
+         */
+        get: operations["list_linked_sets_v1_notebooks__notebook_id__linked_sets_get"];
+        put?: never;
+        /**
+         * Attach Linked Set
+         * @description Attach a notebook as a live set of sources.
+         */
+        post: operations["attach_linked_set_v1_notebooks__notebook_id__linked_sets_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/notebooks/{notebook_id}/linked-sets/{linked_id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post?: never;
+        /**
+         * Detach Linked Set
+         * @description Detach a set of sources.
+         */
+        delete: operations["detach_linked_set_v1_notebooks__notebook_id__linked_sets__linked_id__delete"];
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/notebooks/{notebook_id}/membership": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post?: never;
+        /**
+         * Leave Shared
+         * @description The recipient removes a shared notebook from their list.
+         */
+        delete: operations["leave_shared_v1_notebooks__notebook_id__membership_delete"];
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/v1/notebooks/{notebook_id}/passages/{passage_id}": {
         parameters: {
             query?: never;
@@ -8801,6 +9341,74 @@ export interface paths {
         put?: never;
         post?: never;
         delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/notebooks/{notebook_id}/shares": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get Shares
+         * @description Who has access (the owner only).
+         */
+        get: operations["get_shares_v1_notebooks__notebook_id__shares_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/notebooks/{notebook_id}/shares/link": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Create Share Link
+         * @description Create the link or replace its token; the token is shown this once.
+         */
+        post: operations["create_share_link_v1_notebooks__notebook_id__shares_link_post"];
+        /**
+         * Delete Share Link
+         * @description Turn the link off and remove everyone who joined through it.
+         */
+        delete: operations["delete_share_link_v1_notebooks__notebook_id__shares_link_delete"];
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/notebooks/{notebook_id}/shares/{user_id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        /**
+         * Add Share Person
+         * @description Give a person read-only access.
+         */
+        put: operations["add_share_person_v1_notebooks__notebook_id__shares__user_id__put"];
+        post?: never;
+        /**
+         * Remove Share Person
+         * @description Revoke a person's access at once and delete their thread.
+         */
+        delete: operations["remove_share_person_v1_notebooks__notebook_id__shares__user_id__delete"];
         options?: never;
         head?: never;
         patch?: never;
@@ -10332,6 +10940,14 @@ export interface components {
             activation_url: string;
         };
         /**
+         * AddCardsBody
+         * @description POST /v1/me/flashcard-sets/{id}/cards: a batch appended to the set.
+         */
+        AddCardsBody: {
+            /** Cards */
+            cards: components["schemas"]["CardBody"][];
+        };
+        /**
          * AddResourceBody
          * @description Attach a URL or a file to a lesson.
          */
@@ -10521,6 +11137,75 @@ export interface components {
         AdminFeedbackListOut: {
             /** Items */
             items: components["schemas"]["AdminFeedbackListItem"][];
+            /** Next Cursor */
+            next_cursor: string | null;
+        };
+        /**
+         * AdminMcpActivityItem
+         * @description A call with the person it belongs to.
+         */
+        AdminMcpActivityItem: {
+            /** Arguments */
+            arguments: {
+                [key: string]: unknown;
+            } | null;
+            /** Client Id */
+            client_id: string | null;
+            /** Connector Id */
+            connector_id: string | null;
+            /** Connector Name */
+            connector_name: string | null;
+            /**
+             * Created At
+             * Format: date-time
+             */
+            created_at: string;
+            /** Duration Ms */
+            duration_ms: number;
+            /** Error Code */
+            error_code: string | null;
+            /** Error Id */
+            error_id: string | null;
+            /**
+             * Id
+             * Format: uuid
+             */
+            id: string;
+            /** Ip */
+            ip: string | null;
+            /**
+             * Outcome
+             * @enum {string}
+             */
+            outcome: "ok" | "denied" | "rate_limited" | "not_found" | "invalid" | "error";
+            /** Read Only */
+            read_only: boolean;
+            /** Result Summary */
+            result_summary: {
+                [key: string]: unknown;
+            } | null;
+            /** Scope */
+            scope: string;
+            /**
+             * Server
+             * @enum {string}
+             */
+            server: "student" | "lms" | "admin";
+            /** Tool */
+            tool: string;
+            /**
+             * User Id
+             * Format: uuid
+             */
+            user_id: string;
+        };
+        /**
+         * AdminMcpActivityPage
+         * @description A page of anyone's calls.
+         */
+        AdminMcpActivityPage: {
+            /** Items */
+            items: components["schemas"]["AdminMcpActivityItem"][];
             /** Next Cursor */
             next_cursor: string | null;
         };
@@ -11305,6 +11990,17 @@ export interface components {
              * Format: uuid
              */
             file_id: string;
+        };
+        /**
+         * AttachLinkedSetBody
+         * @description The notebook to attach as a live set of sources.
+         */
+        AttachLinkedSetBody: {
+            /**
+             * Notebook Id
+             * Format: uuid
+             */
+            notebook_id: string;
         };
         /**
          * AttachedResourceResponse
@@ -12196,13 +12892,19 @@ export interface components {
         };
         /**
          * CardBody
-         * @description One card of POST /v1/me/flashcard-sets.
+         * @description One new card; `hardness` sets how its schedule starts.
          */
         CardBody: {
             /** Back */
             back: string;
             /** Front */
             front: string;
+            /**
+             * Hardness
+             * @default medium
+             * @enum {string}
+             */
+            hardness: "easy" | "medium" | "hard";
         };
         /**
          * CardResponse
@@ -12216,6 +12918,11 @@ export interface components {
             /** Front */
             front: string;
             /**
+             * Hardness
+             * @enum {string}
+             */
+            hardness: "easy" | "medium" | "hard";
+            /**
              * Id
              * Format: uuid
              */
@@ -12226,14 +12933,44 @@ export interface components {
             state: string;
         };
         /**
+         * CardStatsResponse
+         * @description Answers on one card: Again is incorrect, any other button correct.
+         */
+        CardStatsResponse: {
+            /** Attempts */
+            attempts: number;
+            /**
+             * Card Id
+             * Format: uuid
+             */
+            card_id: string;
+            /** Correct */
+            correct: number;
+            /** Front */
+            front: string;
+            /**
+             * Hardness
+             * @enum {string}
+             */
+            hardness: "easy" | "medium" | "hard";
+            /** Incorrect */
+            incorrect: number;
+            /** Last Studied At */
+            last_studied_at: string | null;
+        };
+        /**
          * CardWithIdBody
          * @description One card of PUT /v1/me/flashcard-sets/{id}/cards; `id` keeps its progress.
+         *
+         *     `hardness` left out keeps a known card's value and means medium for a new card.
          */
         CardWithIdBody: {
             /** Back */
             back: string;
             /** Front */
             front: string;
+            /** Hardness */
+            hardness?: ("easy" | "medium" | "hard") | null;
             /** Id */
             id?: string | null;
         };
@@ -12353,6 +13090,14 @@ export interface components {
             name: string;
             /** Size */
             size: number;
+        };
+        /**
+         * CertificateFileUrl
+         * @description A short-lived address of an attached file.
+         */
+        CertificateFileUrl: {
+            /** Url */
+            url: string;
         };
         /**
          * CertificateTypeInput
@@ -12855,6 +13600,8 @@ export interface components {
             created_at: string | null;
             /** Expires At */
             expires_at: string | null;
+            /** Extra Scopes */
+            extra_scopes: string[];
             /**
              * Id
              * Format: uuid
@@ -13805,6 +14552,11 @@ export interface components {
             /** Options */
             options?: string[];
             /**
+             * Primary
+             * @default false
+             */
+            primary: boolean;
+            /**
              * Required
              * @default false
              */
@@ -13834,6 +14586,11 @@ export interface components {
             min?: number | null;
             /** Options */
             options?: string[];
+            /**
+             * Primary
+             * @default false
+             */
+            primary: boolean;
             /**
              * Required
              * @default false
@@ -15112,6 +15869,49 @@ export interface components {
          */
         FilePurpose: "ai_upload" | "link" | "mail" | "library_book" | "library_cover" | "library_material" | "lms_video" | "user_photo" | "certificate" | "feedback";
         /**
+         * FileShareLinkResponse
+         * @description A new token: it is shown this once, only its hash is stored.
+         */
+        FileShareLinkResponse: {
+            /** Token */
+            token: string;
+        };
+        /**
+         * FileSharePersonResponse
+         * @description A person with access.
+         */
+        FileSharePersonResponse: {
+            /**
+             * Created At
+             * Format: date-time
+             */
+            created_at: string;
+            /** Name */
+            name: string;
+            /**
+             * User Id
+             * Format: uuid
+             */
+            user_id: string;
+            via: components["schemas"]["FileShareVia"];
+        };
+        /**
+         * FileShareVia
+         * @description How a person got access; turning a link off removes only ``link`` grants.
+         * @enum {string}
+         */
+        FileShareVia: "direct" | "link";
+        /**
+         * FileSharesResponse
+         * @description Who has access and whether a link works.
+         */
+        FileSharesResponse: {
+            /** Link Active */
+            link_active: boolean;
+            /** People */
+            people: components["schemas"]["FileSharePersonResponse"][];
+        };
+        /**
          * FileStatus
          * @description Lifecycle of a stored file (spec -> Models -> File).
          * @enum {string}
@@ -15376,9 +16176,11 @@ export interface components {
         };
         /**
          * GroupCountsResponse
-         * @description Counts per level of one group.
+         * @description Counts per value of one group, and the group's average of a starred number.
          */
         GroupCountsResponse: {
+            /** Average */
+            average?: number | null;
             /** Counts */
             counts: {
                 [key: string]: number;
@@ -16186,6 +16988,22 @@ export interface components {
             status: string;
             /** Total */
             total: number | null;
+        };
+        /**
+         * JoinFileShareBody
+         * @description The token of a share link, in the body so that it stays out of access logs.
+         */
+        JoinFileShareBody: {
+            /** Token */
+            token: string;
+        };
+        /**
+         * JoinShareBody
+         * @description The token of a share link, in the body so that it stays out of access logs.
+         */
+        JoinShareBody: {
+            /** Token */
+            token: string;
         };
         /**
          * JournalCellResponse
@@ -17927,6 +18745,33 @@ export interface components {
             url: string;
         };
         /**
+         * LinkedSetResponse
+         * @description An attached notebook; only its id once the caller has no access to it.
+         */
+        LinkedSetResponse: {
+            /** Available */
+            available: boolean;
+            /** Emoji */
+            emoji: string | null;
+            /**
+             * Notebook Id
+             * Format: uuid
+             */
+            notebook_id: string;
+            /** Sources */
+            sources: components["schemas"]["SourceItemResponse"][];
+            /** Title */
+            title: string | null;
+        };
+        /**
+         * LinkedSetsResponse
+         * @description `{items}` of the sets attached to a notebook.
+         */
+        LinkedSetsResponse: {
+            /** Items */
+            items: components["schemas"]["LinkedSetResponse"][];
+        };
+        /**
          * ListRefSchema
          * @description A reading list the item is on.
          */
@@ -18372,6 +19217,78 @@ export interface components {
             topic_ids?: string[] | null;
         };
         /**
+         * McpActivityItem
+         * @description One MCP tool call: redacted arguments, counts, never content.
+         */
+        McpActivityItem: {
+            /** Arguments */
+            arguments: {
+                [key: string]: unknown;
+            } | null;
+            /** Client Id */
+            client_id: string | null;
+            /** Connector Id */
+            connector_id: string | null;
+            /** Connector Name */
+            connector_name: string | null;
+            /**
+             * Created At
+             * Format: date-time
+             */
+            created_at: string;
+            /** Duration Ms */
+            duration_ms: number;
+            /** Error Code */
+            error_code: string | null;
+            /** Error Id */
+            error_id: string | null;
+            /**
+             * Id
+             * Format: uuid
+             */
+            id: string;
+            /** Ip */
+            ip: string | null;
+            /**
+             * Outcome
+             * @enum {string}
+             */
+            outcome: "ok" | "denied" | "rate_limited" | "not_found" | "invalid" | "error";
+            /** Read Only */
+            read_only: boolean;
+            /** Result Summary */
+            result_summary: {
+                [key: string]: unknown;
+            } | null;
+            /** Scope */
+            scope: string;
+            /**
+             * Server
+             * @enum {string}
+             */
+            server: "student" | "lms" | "admin";
+            /** Tool */
+            tool: string;
+        };
+        /**
+         * McpActivityPage
+         * @description A page of the caller's calls.
+         */
+        McpActivityPage: {
+            /** Items */
+            items: components["schemas"]["McpActivityItem"][];
+            /** Next Cursor */
+            next_cursor: string | null;
+        };
+        /**
+         * McpActivitySummary
+         * @description Calls and errors per tool, busiest first.
+         */
+        McpActivitySummary: {
+            /** Items */
+            items: components["schemas"]["McpToolSummaryItem"][];
+        };
+        /**
          * McpClientResponse
          * @description A user's own OAuth client (never the secret).
          */
@@ -18420,6 +19337,20 @@ export interface components {
             token_route: string | null;
         };
         /**
+         * McpToolSummaryItem
+         * @description Calls of one tool; `errors` counts every outcome other than ok.
+         */
+        McpToolSummaryItem: {
+            /** Calls */
+            calls: number;
+            /** Errors */
+            errors: number;
+            /** Server */
+            server: string;
+            /** Tool */
+            tool: string;
+        };
+        /**
          * MeLibraryResponse
          * @description `MeLibrary`: continue reading, shelf counts and the offline limits.
          */
@@ -18431,6 +19362,97 @@ export interface components {
             shelf_counts: {
                 [key: string]: number;
             };
+        };
+        /**
+         * MediaGrantItem
+         * @description A link I issued; the token is never stored, so never shown again.
+         */
+        MediaGrantItem: {
+            /** Block Id */
+            block_id: string;
+            /**
+             * Course Id
+             * Format: uuid
+             */
+            course_id: string;
+            /**
+             * Created At
+             * Format: date-time
+             */
+            created_at: string;
+            /**
+             * Expires At
+             * Format: date-time
+             */
+            expires_at: string;
+            /**
+             * Id
+             * Format: uuid
+             */
+            id: string;
+            /** Redeem Count */
+            redeem_count: number;
+            /** Revoked At */
+            revoked_at: string | null;
+            /**
+             * Step Id
+             * Format: uuid
+             */
+            step_id: string;
+        };
+        /**
+         * MediaGrantsResponse
+         * @description My media links.
+         */
+        MediaGrantsResponse: {
+            /** Items */
+            items: components["schemas"]["MediaGrantItem"][];
+        };
+        /**
+         * MediaRedeemBody
+         * @description `POST /v1/lms/media/redeem`: the token from the fragment of the link.
+         */
+        MediaRedeemBody: {
+            /** Token */
+            token: string;
+        };
+        /**
+         * MediaRedeemResponse
+         * @description A short-lived address; nothing about the course on refusal.
+         */
+        MediaRedeemResponse: {
+            /** Expires In */
+            expires_in: number;
+            /**
+             * Tier
+             * @enum {string}
+             */
+            tier: "anon" | "enrolled";
+            /** Title */
+            title: string;
+            /** Url */
+            url: string;
+        };
+        /**
+         * MergeSetsBody
+         * @description POST /v1/me/flashcard-sets/merge: the sets in the order of the new set.
+         */
+        MergeSetsBody: {
+            /** Description */
+            description?: string | null;
+            /** Set Ids */
+            set_ids: string[];
+            /** Title */
+            title: string;
+        };
+        /**
+         * MergedSetResponse
+         * @description The new set and how many duplicate cards were left out.
+         */
+        MergedSetResponse: {
+            /** Duplicates Skipped */
+            duplicates_skipped: number;
+            set: components["schemas"]["SetDetailResponse"];
         };
         /**
          * MessageFeedbackBody
@@ -18900,6 +19922,11 @@ export interface components {
             ready_source_count: number;
             /** Selected Source Count */
             selected_source_count: number;
+            /**
+             * Shared
+             * @default false
+             */
+            shared: boolean;
             /** Source Count */
             source_count: number;
             /** Subject Id */
@@ -18939,6 +19966,11 @@ export interface components {
             origin: components["schemas"]["NotebookOrigin"];
             /** Pinned */
             pinned: boolean;
+            /**
+             * Shared
+             * @default false
+             */
+            shared: boolean;
             /** Source Count */
             source_count: number;
             /** Subject Id */
@@ -19014,6 +20046,18 @@ export interface components {
             source_count: number;
             /** Title */
             title: string;
+        };
+        /**
+         * NotebookSharesResponse
+         * @description Who has access, whether a link works and which kinds of source stay private.
+         */
+        NotebookSharesResponse: {
+            /** Hidden Source Kinds */
+            hidden_source_kinds: components["schemas"]["SourceKind"][];
+            /** Link Active */
+            link_active: boolean;
+            /** People */
+            people: components["schemas"]["SharePersonResponse"][];
         };
         /**
          * NotebookSourceRef
@@ -21993,6 +23037,56 @@ export interface components {
             servers: components["schemas"]["ServerCatalogResponse"][];
         };
         /**
+         * ScopeOfferDecisionBody
+         * @description POST /v1/id/me/connectors/offers/{offer_id}/decision.
+         */
+        ScopeOfferDecisionBody: {
+            /** Grant */
+            grant: boolean;
+        };
+        /**
+         * ScopeOfferDecisionResponse
+         * @description How it ended: someone else's offer and an unknown one answer the same.
+         */
+        ScopeOfferDecisionResponse: {
+            /** Connector Names */
+            connector_names: string[];
+            /**
+             * Result
+             * @enum {string}
+             */
+            result: "granted" | "declined" | "already_decided" | "expired" | "not_available";
+        };
+        /**
+         * ScopeOfferResponse
+         * @description New permissions offered for the caller's connectors; holds no token.
+         */
+        ScopeOfferResponse: {
+            /** Connector Names */
+            connector_names: string[];
+            /**
+             * Expires At
+             * Format: date-time
+             */
+            expires_at: string;
+            /**
+             * Id
+             * Format: uuid
+             */
+            id: string;
+            /** Read Scopes */
+            read_scopes: string[];
+            /** Release Id */
+            release_id: string;
+            /**
+             * Server
+             * @enum {string}
+             */
+            server: "student" | "lms" | "admin";
+            /** Write Scopes */
+            write_scopes: string[];
+        };
+        /**
          * ScopeResponse
          * @description One scope and its tools.
          */
@@ -22257,7 +23351,7 @@ export interface components {
         };
         /**
          * SetDetailResponse
-         * @description FlashcardSetDetail = FlashcardSetItem plus limits and cards.
+         * @description FlashcardSetDetail = FlashcardSetItem plus limits, settings and cards.
          */
         SetDetailResponse: {
             /** Card Count */
@@ -22285,6 +23379,8 @@ export interface components {
             new_today: number;
             /** Reviews Per Day */
             reviews_per_day: number;
+            /** Shuffle */
+            shuffle: boolean;
             /**
              * Source
              * @enum {string}
@@ -22446,6 +23542,60 @@ export interface components {
             steps: number;
         };
         /**
+         * ShareLinkResponse
+         * @description A new token: it is shown this once, only its hash is stored.
+         */
+        ShareLinkResponse: {
+            /** Token */
+            token: string;
+        };
+        /**
+         * SharePersonResponse
+         * @description A person with access.
+         */
+        SharePersonResponse: {
+            /**
+             * Created At
+             * Format: date-time
+             */
+            created_at: string;
+            /** Name */
+            name: string;
+            /**
+             * User Id
+             * Format: uuid
+             */
+            user_id: string;
+            via: components["schemas"]["ShareVia"];
+        };
+        /**
+         * ShareRecipientResponse
+         * @description A person found by name; never a login or a contact.
+         */
+        ShareRecipientResponse: {
+            /**
+             * Id
+             * Format: uuid
+             */
+            id: string;
+            /** Name */
+            name: string;
+        };
+        /**
+         * ShareRecipientsResponse
+         * @description `{items}` of the people found.
+         */
+        ShareRecipientsResponse: {
+            /** Items */
+            items: components["schemas"]["ShareRecipientResponse"][];
+        };
+        /**
+         * ShareVia
+         * @description How a person got access; turning a link off removes only ``link`` grants.
+         * @enum {string}
+         */
+        ShareVia: "direct" | "link";
+        /**
          * SharedArtifact
          * @description A shared Studio output: its kind and the content the viewers render.
          */
@@ -22488,6 +23638,90 @@ export interface components {
         SharedChat: {
             /** Messages */
             messages: components["schemas"]["ChatMessage"][];
+        };
+        /**
+         * SharedFileItem
+         * @description A file shared with the caller: no storage key, usage list or owner id.
+         */
+        SharedFileItem: {
+            /** Byte Size */
+            byte_size: number;
+            /** Content Type */
+            content_type: string;
+            /**
+             * Created At
+             * Format: date-time
+             */
+            created_at: string;
+            /**
+             * Id
+             * Format: uuid
+             */
+            id: string;
+            /** Name */
+            name: string;
+            /** Owner Name */
+            owner_name: string;
+        };
+        /**
+         * SharedFilesResponse
+         * @description `{items}` of the files shared with the caller.
+         */
+        SharedFilesResponse: {
+            /** Items */
+            items: components["schemas"]["SharedFileItem"][];
+        };
+        /**
+         * SharedNotebookResponse
+         * @description A notebook shared with the caller.
+         */
+        SharedNotebookResponse: {
+            /** Can Write */
+            can_write: boolean;
+            /** Course Id */
+            course_id: string | null;
+            /** Emoji */
+            emoji: string | null;
+            /** Group Id */
+            group_id: string | null;
+            /**
+             * Id
+             * Format: uuid
+             */
+            id: string;
+            /** Last Opened At */
+            last_opened_at: string | null;
+            /** Lesson Id */
+            lesson_id: string | null;
+            origin: components["schemas"]["NotebookOrigin"];
+            /** Owner Name */
+            owner_name: string;
+            /** Pinned */
+            pinned: boolean;
+            /**
+             * Shared
+             * @default false
+             */
+            shared: boolean;
+            /** Source Count */
+            source_count: number;
+            /** Subject Id */
+            subject_id: string | null;
+            /** Title */
+            title: string;
+            /**
+             * Updated At
+             * Format: date-time
+             */
+            updated_at: string;
+        };
+        /**
+         * SharedNotebooksResponse
+         * @description `{items}` of the notebooks shared with the caller.
+         */
+        SharedNotebooksResponse: {
+            /** Items */
+            items: components["schemas"]["SharedNotebookResponse"][];
         };
         /**
          * ShelfBody
@@ -23545,6 +24779,10 @@ export interface components {
             /** Done For Today */
             done_for_today: boolean;
             intervals: components["schemas"]["IntervalsResponse"] | null;
+            /** Practice */
+            practice: boolean;
+            /** Practice Remaining */
+            practice_remaining: number;
             /**
              * Set Id
              * Format: uuid
@@ -25345,13 +26583,19 @@ export interface components {
         };
         /**
          * TypeStatsResponse
-         * @description Levels of a type and the counts per group.
+         * @description Values of a type and counts per group; grouped by the starred field if any.
          */
         TypeStatsResponse: {
+            /** Average */
+            average?: number | null;
             /** Groups */
             groups: components["schemas"]["GroupCountsResponse"][];
             /** Levels */
             levels: string[];
+            /** Primary Key */
+            primary_key?: string | null;
+            /** Primary Kind */
+            primary_kind?: ("text" | "number" | "single") | null;
             /**
              * Type Id
              * Format: uuid
@@ -25448,6 +26692,20 @@ export interface components {
             include_classmates?: boolean | null;
             /** Restore Refs */
             restore_refs?: string[] | null;
+        };
+        /**
+         * UpdateCardBody
+         * @description PATCH /v1/me/flashcards/{id}; send only the fields to change.
+         *
+         *     A new hardness reschedules a card only while it was never answered.
+         */
+        UpdateCardBody: {
+            /** Back */
+            back?: string | null;
+            /** Front */
+            front?: string | null;
+            /** Hardness */
+            hardness?: ("easy" | "medium" | "hard") | null;
         };
         /**
          * UpdateCollectionBody
@@ -25554,6 +26812,8 @@ export interface components {
             new_per_day?: number | null;
             /** Reviews Per Day */
             reviews_per_day?: number | null;
+            /** Shuffle */
+            shuffle?: boolean | null;
             /** Title */
             title?: string | null;
         };
@@ -30709,6 +31969,76 @@ export interface operations {
             };
         };
     };
+    list_activity_v1_admin_mcp_activity_get: {
+        parameters: {
+            query?: {
+                user_id?: string | null;
+                connector_id?: string | null;
+                server?: ("student" | "lms" | "admin") | null;
+                tool?: string | null;
+                outcome?: ("ok" | "denied" | "rate_limited" | "not_found" | "invalid" | "error") | null;
+                from?: string | null;
+                to?: string | null;
+                cursor?: string | null;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["AdminMcpActivityPage"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    get_summary_v1_admin_mcp_activity_summary_get: {
+        parameters: {
+            query?: {
+                from?: string | null;
+                to?: string | null;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["McpActivitySummary"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
     queue_v1_admin_moderation_queue_get: {
         parameters: {
             query?: {
@@ -33911,6 +35241,37 @@ export interface operations {
             };
         };
     };
+    get_file_url_v1_certificates_files__file_id__download_url_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                file_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["CertificateFileUrl"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
     list_my_entries_v1_certificates_me_get: {
         parameters: {
             query?: never;
@@ -34456,6 +35817,101 @@ export interface operations {
             };
         };
     };
+    leave_shared_file_v1_files_shared__file_id__delete: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                file_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            204: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    get_shared_file_url_v1_files_shared__file_id__url_get: {
+        parameters: {
+            query?: {
+                inline?: boolean | null;
+            };
+            header?: never;
+            path: {
+                file_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["DownloadUrlResponse"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    join_file_share_v1_files_shares_join_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["JoinFileShareBody"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["SharedFileItem"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
     get_file_v1_files__file_id__get: {
         parameters: {
             query?: never;
@@ -34572,6 +36028,157 @@ export interface operations {
                 content: {
                     "application/json": components["schemas"]["app__interfaces__http__v1__files__schemas__FileItem"];
                 };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    get_file_shares_v1_files__file_id__shares_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                file_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["FileSharesResponse"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    create_file_share_link_v1_files__file_id__shares_link_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                file_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["FileShareLinkResponse"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    delete_file_share_link_v1_files__file_id__shares_link_delete: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                file_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            204: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    add_file_share_person_v1_files__file_id__shares__user_id__put: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                file_id: string;
+                user_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            204: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    remove_file_share_person_v1_files__file_id__shares__user_id__delete: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                file_id: string;
+                user_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            204: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
             };
             /** @description Validation Error */
             422: {
@@ -35432,6 +37039,97 @@ export interface operations {
                 };
                 content: {
                     "application/json": components["schemas"]["NewConnectorResponse"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    get_activity_v1_id_me_connectors_activity_get: {
+        parameters: {
+            query?: {
+                connector_id?: string | null;
+                tool?: string | null;
+                outcome?: ("ok" | "denied" | "rate_limited" | "not_found" | "invalid" | "error") | null;
+                from?: string | null;
+                to?: string | null;
+                cursor?: string | null;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["McpActivityPage"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    get_scope_offers_v1_id_me_connectors_offers_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ScopeOfferResponse"][];
+                };
+            };
+        };
+    };
+    post_scope_offer_decision_v1_id_me_connectors_offers__offer_id__decision_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                offer_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["ScopeOfferDecisionBody"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ScopeOfferDecisionResponse"];
                 };
             };
             /** @description Validation Error */
@@ -39515,6 +41213,88 @@ export interface operations {
             };
         };
     };
+    list_media_grants_v1_lms_media_grants_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["MediaGrantsResponse"];
+                };
+            };
+        };
+    };
+    revoke_media_grant_v1_lms_media_grants__grant_id__delete: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                grant_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            204: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    redeem_media_v1_lms_media_redeem_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["MediaRedeemBody"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["MediaRedeemResponse"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
     list_my_courses_v1_lms_my_courses_get: {
         parameters: {
             query?: never;
@@ -41224,6 +43004,39 @@ export interface operations {
             };
         };
     };
+    merge_sets_v1_me_flashcard_sets_merge_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["MergeSetsBody"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["MergedSetResponse"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
     get_review_stats_v1_me_flashcard_sets_stats_get: {
         parameters: {
             query?: {
@@ -41351,6 +43164,37 @@ export interface operations {
             };
         };
     };
+    get_card_stats_v1_me_flashcard_sets__set_id__card_stats_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                set_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["CardStatsResponse"][];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
     replace_cards_v1_me_flashcard_sets__set_id__cards_put: {
         parameters: {
             query?: never;
@@ -41363,6 +43207,41 @@ export interface operations {
         requestBody: {
             content: {
                 "application/json": components["schemas"]["ReplaceCardsBody"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["SetDetailResponse"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    add_cards_v1_me_flashcard_sets__set_id__cards_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                set_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["AddCardsBody"];
             };
         };
         responses: {
@@ -41404,6 +43283,101 @@ export interface operations {
                 };
                 content: {
                     "application/json": components["schemas"]["StudyNextResponse"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    restart_study_v1_me_flashcard_sets__set_id__study_restart_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                set_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["StudyNextResponse"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    delete_card_v1_me_flashcards__card_id__delete: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                card_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            204: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    update_card_v1_me_flashcards__card_id__patch: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                card_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["UpdateCardBody"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["CardResponse"];
                 };
             };
             /** @description Validation Error */
@@ -42445,6 +44419,26 @@ export interface operations {
             };
         };
     };
+    list_shared_files_v1_me_shared_files_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["SharedFilesResponse"];
+                };
+            };
+        };
+    };
     get_storage_v1_me_storage_get: {
         parameters: {
             query?: never;
@@ -43108,6 +45102,90 @@ export interface operations {
                 };
                 content: {
                     "application/json": components["schemas"]["FlashcardWorkspaceResponse"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    search_recipients_v1_notebooks_share_recipients_get: {
+        parameters: {
+            query: {
+                q: string;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ShareRecipientsResponse"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    list_shared_v1_notebooks_shared_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["SharedNotebooksResponse"];
+                };
+            };
+        };
+    };
+    join_share_v1_notebooks_shares_join_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["JoinShareBody"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["NotebookItemResponse"];
                 };
             };
             /** @description Validation Error */
@@ -44344,6 +46422,131 @@ export interface operations {
             };
         };
     };
+    list_linked_sets_v1_notebooks__notebook_id__linked_sets_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                notebook_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["LinkedSetsResponse"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    attach_linked_set_v1_notebooks__notebook_id__linked_sets_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                notebook_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["AttachLinkedSetBody"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": unknown;
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    detach_linked_set_v1_notebooks__notebook_id__linked_sets__linked_id__delete: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                notebook_id: string;
+                linked_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            204: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    leave_shared_v1_notebooks__notebook_id__membership_delete: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                notebook_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            204: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
     get_passage_v1_notebooks__notebook_id__passages__passage_id__get: {
         parameters: {
             query?: {
@@ -44535,6 +46738,157 @@ export interface operations {
                 content: {
                     "application/json": components["schemas"]["SearchResponse"];
                 };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    get_shares_v1_notebooks__notebook_id__shares_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                notebook_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["NotebookSharesResponse"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    create_share_link_v1_notebooks__notebook_id__shares_link_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                notebook_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ShareLinkResponse"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    delete_share_link_v1_notebooks__notebook_id__shares_link_delete: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                notebook_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            204: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    add_share_person_v1_notebooks__notebook_id__shares__user_id__put: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                notebook_id: string;
+                user_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            204: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    remove_share_person_v1_notebooks__notebook_id__shares__user_id__delete: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                notebook_id: string;
+                user_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            204: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
             };
             /** @description Validation Error */
             422: {

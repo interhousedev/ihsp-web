@@ -1,6 +1,8 @@
 import type {
   FlashcardCardsBody,
   FlashcardCopyBody,
+  FlashcardHardness,
+  FlashcardMergeBody,
   FlashcardReviewBody,
   FlashcardSetCreateBody,
   FlashcardSetDetail,
@@ -23,10 +25,13 @@ function setDetailFor(id: string): FlashcardSetDetail | undefined {
   return id === flashcardSetDetail.id ? flashcardSetDetail : undefined
 }
 
-function cardsWithIds(cards: { id?: string; front: string; back: string }[]): FlashcardSetDetail["cards"] {
+function cardsWithIds(
+  cards: { id?: string; front: string; back: string; hardness?: FlashcardHardness }[],
+): FlashcardSetDetail["cards"] {
   return cards.map((card, index) => ({
     id: card.id ?? nextId(14),
     position: index + 1,
+    hardness: card.hardness ?? null,
     front: card.front,
     back: card.back,
     state: card.id ? (flashcardCards.find((item) => item.id === card.id)?.state ?? "new") : "new",
@@ -60,6 +65,13 @@ export const flashcardsHandlers = [
       new_count: flashcardSetDetail.card_count,
       learning_count: 0,
       due_count: 0,
+    })
+  }),
+  http.post(apiUrl("/v1/me/flashcard-sets/merge"), async ({ request }) => {
+    const body = await readJson<FlashcardMergeBody>(request)
+    return HttpResponse.json({
+      set: { ...flashcardSetDetail, id: nextId(12), title: body.title, source: "manual" },
+      duplicates_skipped: 0,
     })
   }),
   http.post(apiUrl("/v1/me/flashcard-sets"), async ({ request }) => {
@@ -106,6 +118,27 @@ export const flashcardsHandlers = [
   }),
   http.get(apiUrl("/v1/me/flashcard-sets/:id/study"), ({ params }) =>
     setDetailFor(param(params, "id")) ? HttpResponse.json(studyNext) : notFound("Flash card set"),
+  ),
+  // A practice round: the answers change no schedule, so `intervals` is null.
+  http.post(apiUrl("/v1/me/flashcard-sets/:id/study/restart"), ({ params }) =>
+    setDetailFor(param(params, "id"))
+      ? HttpResponse.json({ ...studyNext, intervals: null, practice: true, practice_remaining: flashcardCards.length })
+      : notFound("Flash card set"),
+  ),
+  http.get(apiUrl("/v1/me/flashcard-sets/:id/card-stats"), ({ params }) =>
+    setDetailFor(param(params, "id"))
+      ? HttpResponse.json(
+          flashcardCards.map((card) => ({
+            card_id: card.id,
+            front: card.front,
+            hardness: "medium",
+            attempts: 0,
+            correct: 0,
+            incorrect: 0,
+            last_studied_at: null,
+          })),
+        )
+      : notFound("Flash card set"),
   ),
   // Reviewing the first card returns the second one; reviewing any other card finishes the session.
   http.post(apiUrl("/v1/me/flashcards/:cardId/review"), async ({ params, request }) => {

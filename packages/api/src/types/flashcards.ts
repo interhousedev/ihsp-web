@@ -2,6 +2,22 @@
 
 import type { ReviewRating } from "./common"
 
+export type FlashcardHardness = "easy" | "medium" | "hard"
+
+/** Answers on one card: Again is incorrect, every other button correct. */
+export type FlashcardCardStats = {
+  card_id: string
+  front: string
+  hardness: FlashcardHardness
+  attempts: number
+  correct: number
+  incorrect: number
+  last_studied_at: string | null
+}
+
+export type FlashcardMergeBody = { set_ids: string[]; title: string; description?: string }
+export type FlashcardMergeResult = { set: FlashcardSetDetail; duplicates_skipped: number }
+
 export type FlashcardSetItem = {
   id: string
   title: string
@@ -23,7 +39,9 @@ export type FlashcardSearchItem = Omit<FlashcardSetItem, "new_count" | "learning
 export type FlashcardSetDetail = FlashcardSetItem & {
   new_per_day: number
   reviews_per_day: number
+  shuffle: boolean
   cards: {
+    hardness: FlashcardHardness | null
     id: string
     position: number
     front: string
@@ -40,21 +58,27 @@ export type StudyNext = {
   intervals: { again: string; hard: string; medium: string; easy: string } | null
   counts: { learning: number; review: number; new: number }
   done_for_today: boolean
+  /** A restart round: the answers change no schedule and `intervals` is null. */
+  practice: boolean
+  practice_remaining: number
 }
 
 export type FlashcardSetCreateBody = {
   title: string
   description?: string
-  cards: { front: string; back: string }[]
+  cards: { front: string; back: string; hardness?: FlashcardHardness }[]
 }
 export type FlashcardSetPatchBody = {
   title?: string
   description?: string
   new_per_day?: number
   reviews_per_day?: number
+  shuffle?: boolean
 }
 /** Full ordered list; cards whose id is missing from it are deleted. */
-export type FlashcardCardsBody = { cards: { id?: string; front: string; back: string }[] }
+export type FlashcardCardsBody = {
+  cards: { id?: string; front: string; back: string; hardness?: FlashcardHardness }[]
+}
 export type FlashcardReviewBody = {
   rating: ReviewRating
   /** How long the card was on screen; the server keeps at most one minute of it. */

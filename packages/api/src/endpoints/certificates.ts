@@ -106,6 +106,11 @@ export function getCertificateFileBlob(fileId: string, opts?: RequestOptions): P
   })
 }
 
+/** GET /v1/certificates/files/{file_id}/download-url — a short-lived address, for the Telegram webview that cannot save a blob. */
+export function getCertificateFileUrl(fileId: string, opts?: RequestOptions): Promise<{ url: string }> {
+  return api.get<{ url: string }>(`/v1/certificates/files/${seg(fileId)}/download-url`, opts)
+}
+
 /** POST /v1/certificates/me/import-emis — pulls the National Certificate and CEFR from EMIS. */
 export function postImportCertificatesFromEmis(opts?: RequestOptions): Promise<CertificateImportResult> {
   return api.post<CertificateImportResult>(`/v1/certificates/me/import-emis`, {}, opts)

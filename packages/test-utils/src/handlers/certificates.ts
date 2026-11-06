@@ -53,21 +53,58 @@ function filtered(request: Request): StaffCertificateEntry[] {
   )
 }
 
+const mean = (values: number[]) => (values.length ? values.reduce((sum, v) => sum + v, 0) / values.length : null)
+
+/** Stats as the API builds them: grouped by the starred field, else by level. */
 function statsOf(entries: StaffCertificateEntry[]): CertificateStats {
   return {
     types: types
       .filter((type) => entries.some((e) => e.type_id === type.id))
       .map((type) => {
-        const groups = new Map<string, { group_id: string; group_name: string; counts: Record<string, number> }>()
+        const starred = type.custom_fields.find((field) => field.primary)
+        const key = starred?.key ?? "level"
+        const numeric = starred?.kind === "number"
+        const groups = new Map<
+          string,
+          { group_id: string; group_name: string; counts: Record<string, number>; values: number[] }
+        >()
+        const all: number[] = []
         for (const e of entries.filter((item) => item.type_id === type.id)) {
           const gid = e.student.group_id ?? ""
-          const group = groups.get(gid) ?? { group_id: gid, group_name: e.student.group_name ?? "", counts: {} }
-          const level = String(e.custom_values.level ?? "—")
-          group.counts[level] = (group.counts[level] ?? 0) + 1
+          const group = groups.get(gid) ?? {
+            group_id: gid,
+            group_name: e.student.group_name ?? "",
+            counts: {},
+            values: [],
+          }
+          const raw = e.custom_values[key]
+          const label = numeric && typeof raw === "number" ? String(raw) : String(raw || "—")
+          if (numeric && typeof raw === "number") {
+            group.values.push(raw)
+            all.push(raw)
+          }
+          group.counts[label] = (group.counts[label] ?? 0) + 1
           groups.set(gid, group)
         }
-        const levels = type.custom_fields.find((field) => field.key === "level")?.options ?? []
-        return { type_id: type.id, levels: levels.length ? levels : ["—"], groups: [...groups.values()] }
+        const allCounts = [...groups.values()].map((group) => group.counts)
+        const options = type.custom_fields.find((field) => field.key === key)?.options ?? []
+        const levels = numeric
+          ? [...new Set(allCounts.flatMap((counts) => Object.keys(counts)))].toSorted((a, b) => Number(a) - Number(b))
+          : options.length
+            ? options
+            : ["—"]
+        return {
+          type_id: type.id,
+          levels,
+          groups: [...groups.values()].map(({ values, ...group }) => ({
+            ...group,
+            average: numeric ? mean(values) : null,
+          })),
+          primary_key: starred?.key ?? null,
+          // The API keeps only the kinds a starred field can have (no `multi`).
+          primary_kind: starred && starred.kind !== "multi" ? starred.kind : null,
+          average: numeric ? mean(all) : null,
+        }
       }),
   }
 }
@@ -165,6 +202,9 @@ export const certificatesHandlers = [
     )
     return noContent()
   }),
+  http.get(apiUrl("/v1/certificates/files/:fileId/download-url"), () =>
+    HttpResponse.json({ url: "https://storage.test/certificate.pdf" }),
+  ),
   http.get(apiUrl("/v1/certificates/files/:fileId/download"), () => new HttpResponse("file", { status: 200 })),
   http.get(apiUrl("/v1/certificates/staff/groups"), () =>
     staffForbidden ? forbidden() : HttpResponse.json(certificateGroups),

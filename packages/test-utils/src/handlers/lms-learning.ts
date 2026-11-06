@@ -12,9 +12,20 @@ import {
   stepProgress,
   stepViews,
 } from "../fixtures/lms-learning"
-import { apiUrl, matches, notFound, param, problem, query, readJson } from "./utils"
+import { apiUrl, matches, noContent, notFound, param, problem, query, readJson } from "./utils"
 
 export const lmsLearningHandlers = [
+  // Media links: a redeem opens the file for a short time; the grants list is empty unless a test adds one.
+  http.post(apiUrl("/v1/lms/media/redeem"), () =>
+    HttpResponse.json({
+      url: "https://media.test/lesson-clip.mp4",
+      expires_in: 60,
+      title: "Lesson clip",
+      tier: "enrolled",
+    }),
+  ),
+  http.get(apiUrl("/v1/lms/media/grants"), () => HttpResponse.json({ items: [] })),
+  http.delete(apiUrl("/v1/lms/media/grants/:grantId"), () => noContent()),
   http.get(apiUrl("/v1/lms/courses"), ({ request }) => {
     const needle = query(request).get("query")
     return HttpResponse.json(

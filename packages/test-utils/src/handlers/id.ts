@@ -205,6 +205,10 @@ export const idHandlers = [
   }),
   http.get(apiUrl("/v1/id/me/activity"), ({ request }) => HttpResponse.json(paginate(auditItems, request))),
   http.get(apiUrl("/v1/id/me/connectors"), () => HttpResponse.json(connectors)),
+  http.post(apiUrl("/v1/id/me/connectors/offers/:id/decision"), () =>
+    HttpResponse.json({ result: "granted", connector_names: [] }),
+  ),
+  http.get(apiUrl("/v1/id/me/connectors/offers"), () => HttpResponse.json([])),
   http.post(apiUrl("/v1/id/me/connectors"), async ({ request }) => {
     const body = await readJson<ConnectorCreateBody>(request)
     const days = body.expires_in_days ?? 30

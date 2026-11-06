@@ -26,6 +26,9 @@ export const keys = {
     telegram: () => ["id", "telegram"] as const,
     activity: (filters?: object) => ["id", "activity", params(filters)] as const,
     connectors: () => ["id", "connectors"] as const,
+    scopeOffers: () => ["id", "connectors", "offers"] as const,
+    mediaGrants: () => ["id", "connectors", "media-grants"] as const,
+    connectorActivity: (filters?: object) => ["id", "connectors", "activity", params(filters)] as const,
     mcpSetup: (service: string, server: string) => ["id", "mcp-setup", service, server] as const,
     mcpClients: () => ["id", "mcp-clients"] as const,
     security: () => ["id", "security"] as const,
@@ -83,6 +86,8 @@ export const keys = {
     syncRuns: (filters?: object) => ["admin", "sync-runs", params(filters)] as const,
     jobs: () => ["admin", "jobs"] as const,
     logs: (filters?: object) => ["admin", "logs", params(filters)] as const,
+    mcpActivity: (filters?: object) => ["admin", "mcp-activity", params(filters)] as const,
+    mcpActivitySummary: (filters?: object) => ["admin", "mcp-activity", "summary", params(filters)] as const,
     knowledge: {
       all: () => ["admin", "knowledge"] as const,
       list: (filters?: object) => ["admin", "knowledge", "list", params(filters)] as const,
@@ -206,6 +211,7 @@ export const keys = {
     sets: () => ["flashcards", "sets"] as const,
     set: (id: string) => ["flashcards", "sets", id] as const,
     study: (id: string) => ["flashcards", "sets", id, "study"] as const,
+    cardStats: (id: string) => ["flashcards", "sets", id, "card-stats"] as const,
     stats: (setId: string | null, year: number | null) => ["flashcards", "stats", setId, year] as const,
     allStats: () => ["flashcards", "stats"] as const,
   },
@@ -247,6 +253,13 @@ export const keys = {
       ["staff-subjects", "group", subjectId, groupId, subgroup] as const,
     student: (subjectId: string, groupId: string, subgroup: number | null, studentId: string) =>
       ["staff-subjects", "student", subjectId, groupId, subgroup, studentId] as const,
+  },
+  sharing: {
+    notebooks: () => ["sharing", "notebooks"] as const,
+    notebook: (id: string) => ["sharing", "notebook", id] as const,
+    linkedSets: (id: string) => ["sharing", "linked-sets", id] as const,
+    files: () => ["sharing", "files"] as const,
+    file: (id: string) => ["sharing", "file", id] as const,
   },
   notebooks: {
     all: () => ["notebooks"] as const,

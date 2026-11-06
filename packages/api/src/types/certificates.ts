@@ -23,6 +23,8 @@ export interface CustomField {
   required: boolean
   options: string[]
   allow_other: boolean
+  /** The priority star: statistics group or average by this field (one per type). */
+  primary: boolean
 }
 
 /** A value of a custom field: text or one choice, a number, or several choices. */
@@ -95,8 +97,24 @@ export type StaffCertificateParams = CertificateFilters & { limit?: number; offs
 
 export type StaffCertificatePage = { items: StaffCertificateEntry[]; total: number }
 
-export type CertificateStatsGroup = { group_id: string; group_name: string; counts: Record<string, number> }
-export type CertificateStatsType = { type_id: string; levels: string[]; groups: CertificateStatsGroup[] }
+export type CertificateStatsGroup = {
+  group_id: string
+  group_name: string
+  counts: Record<string, number>
+  /** The group's average of the starred number field; null for other fields. */
+  average: number | null
+}
+export type CertificateStatsType = {
+  type_id: string
+  levels: string[]
+  groups: CertificateStatsGroup[]
+  /** The starred field's key; null when the type has no star (grouped by level). */
+  primary_key: string | null
+  /** Only a starred field sets it; the contract has no `multi` kind here. */
+  primary_kind: Exclude<CustomFieldKind, "multi"> | null
+  /** The average of the starred number field over the whole scope. */
+  average: number | null
+}
 export type CertificateStats = { types: CertificateStatsType[] }
 
 export type CertificateRankingItem = { student_id: string; name: string; group_name: string | null; count: number }

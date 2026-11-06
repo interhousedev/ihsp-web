@@ -17,6 +17,9 @@ import type {
   CourseStudent,
   LmsCardReviewBody,
   LmsCardStudy,
+  MediaGrants,
+  MediaRedeem,
+  MediaRedeemBody,
   MyCourses,
   StepProgressItem,
   StepView,
@@ -66,6 +69,21 @@ export function postLmsCourseEnroll(id: string, opts?: RequestOptions): Promise<
 /** POST /v1/lms/join — bearer, rate limited; joins by invite code. */
 export function postLmsJoin(body: CourseJoinBody, opts?: RequestOptions): Promise<CoursePage> {
   return api.post<CoursePage>("/v1/lms/join", body, opts)
+}
+
+/** POST /v1/lms/media/redeem — bearer optional, rate limited; opens a media link. Any refusal is the same 404. */
+export function postLmsMediaRedeem(body: MediaRedeemBody, opts?: RequestOptions): Promise<MediaRedeem> {
+  return api.post<MediaRedeem>("/v1/lms/media/redeem", body, opts)
+}
+
+/** GET /v1/lms/media/grants — bearer; the media links issued for me. */
+export function getLmsMediaGrants(opts?: RequestOptions): Promise<MediaGrants> {
+  return api.get<MediaGrants>("/v1/lms/media/grants", opts)
+}
+
+/** DELETE /v1/lms/media/grants/{id} — bearer; stops one of my media links. */
+export function deleteLmsMediaGrant(grantId: string, opts?: RequestOptions): Promise<void> {
+  return api.delete<void>(`/v1/lms/media/grants/${seg(grantId)}`, opts)
 }
 
 /** GET /v1/lms/courses/{id}/steps/{step_id} — enrolled or staff. */

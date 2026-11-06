@@ -233,6 +233,20 @@ export type StepProgressItem = {
 
 export type CourseCatalogParams = { query?: string }
 export type CourseJoinBody = { code: string }
+
+export type MediaRedeemBody = { token: string }
+export type MediaRedeem = { url: string; expires_in: number; title: string; tier: "anon" | "enrolled" }
+export type MediaGrant = {
+  id: string
+  course_id: string
+  step_id: string
+  block_id: string
+  created_at: string
+  expires_at: string
+  revoked_at: string | null
+  redeem_count: number
+}
+export type MediaGrants = { items: MediaGrant[] }
 export type AttemptAnswersBody = { answers: Record<string, Answer> }
 export type AttemptOverrideBody = { score: number; comment: string }
 export type LmsCardReviewBody = { rating: ReviewRating }

@@ -10,9 +10,11 @@ import { curriculumHandlers } from "./curriculum"
 import { meSyncHandlers } from "./me-sync"
 import { adminJobsHandlers } from "./admin-jobs"
 import { adminLogsHandlers } from "./admin-logs"
+import { mcpActivityHandlers } from "./mcp-activity"
 import { adminKnowledgeHandlers } from "./admin-knowledge"
 import { dashboardHandlers } from "./dashboard"
 import { filesHandlers } from "./files"
+import { sharingHandlers } from "./sharing"
 import { flashcardsHandlers } from "./flashcards"
 import { idHandlers } from "./id"
 import { idAdminHandlers } from "./id-admin"
@@ -112,6 +114,7 @@ export {
   meSyncHandlers,
   adminJobsHandlers,
   adminLogsHandlers,
+  mcpActivityHandlers,
   adminKnowledgeHandlers,
   dashboardHandlers,
   filesHandlers,
@@ -154,6 +157,7 @@ export {
  * `compositionHandlers` come first so `GET /v1/admin/groups/stats` is not taken for `GET /v1/admin/groups/:id`.
  */
 export const allHandlers = [
+  ...sharingHandlers,
   ...compositionHandlers,
   ...oauthHandlers,
   ...idHandlers,
@@ -169,6 +173,7 @@ export const allHandlers = [
   ...meSyncHandlers,
   ...adminJobsHandlers,
   ...adminLogsHandlers,
+  ...mcpActivityHandlers,
   ...adminKnowledgeHandlers,
   ...teachersHandlers,
   ...groupProgressHandlers,
@@ -206,3 +211,4 @@ export const allHandlers = [
   ...presentationPlansHandlers,
 ]
 export { notHeadStudentResponse } from "./group-progress"
+export { resetSharing, sharingState } from "./sharing"

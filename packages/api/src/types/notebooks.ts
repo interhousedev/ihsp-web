@@ -143,6 +143,8 @@ export type NotebookSummary = {
 export type NotebookOrigin = "manual" | "subject_auto" | "lesson_auto" | "course" | "course_student"
 export type NotebookItem = {
   id: string
+  /** The caller reads it through a share: read-only, with a private chat. */
+  shared?: boolean
   title: string
   emoji: string | null
   pinned: boolean

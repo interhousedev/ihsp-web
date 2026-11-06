@@ -278,6 +278,7 @@ export const connectors: Connector[] = [
     name: "Claude Desktop",
     server: "student",
     scopes: ["schedule:read", "marks:read"],
+    extra_scopes: [],
     course_ids: null,
     kind: "token",
     token_prefix: "ihsp_ab12",

@@ -5,6 +5,7 @@ export const flashcardCards: FlashcardSetDetail["cards"] = [
   {
     id: "0000000e-0000-4000-8000-000000000001",
     position: 1,
+    hardness: null,
     front: "What is velocity?",
     back: "The rate of change of position: $v = \\Delta x / \\Delta t$.",
     state: "review",
@@ -13,6 +14,7 @@ export const flashcardCards: FlashcardSetDetail["cards"] = [
   {
     id: "0000000e-0000-4000-8000-000000000002",
     position: 2,
+    hardness: null,
     front: "What is acceleration?",
     back: "The rate of change of velocity.",
     state: "learning",
@@ -21,6 +23,7 @@ export const flashcardCards: FlashcardSetDetail["cards"] = [
   {
     id: "0000000e-0000-4000-8000-000000000003",
     position: 3,
+    hardness: null,
     front: "Uniform motion formula",
     back: "$x = x_0 + vt$",
     state: "new",
@@ -29,6 +32,7 @@ export const flashcardCards: FlashcardSetDetail["cards"] = [
   {
     id: "0000000e-0000-4000-8000-000000000004",
     position: 4,
+    hardness: null,
     front: "Free fall acceleration on Earth",
     back: "$g \\approx 9.8\\ \\text{m/s}^2$",
     state: "new",
@@ -68,6 +72,7 @@ export const flashcardSetDetail: FlashcardSetDetail = {
   ...flashcardSetPhysics,
   new_per_day: 10,
   reviews_per_day: 100,
+  shuffle: false,
   cards: flashcardCards,
 }
 
@@ -84,6 +89,8 @@ export const studyNext: StudyNext = {
   intervals,
   counts: { learning: 1, review: 1, new: 2 },
   done_for_today: false,
+  practice: false,
+  practice_remaining: 0,
 }
 
 /** The card after `studyNext` once it has been reviewed. */
@@ -104,6 +111,8 @@ export const studyDone: StudyNext = {
   intervals: null,
   counts: { learning: 0, review: 0, new: 0 },
   done_for_today: true,
+  practice: false,
+  practice_remaining: 0,
 }
 
 /** Reviews per day in the weeks before "today" (2026-10-07), as the heatmap of the deck list shows them. */

@@ -11,6 +11,7 @@ const levelField = (options: string[]) => ({
   required: true,
   options,
   allow_other: false,
+  primary: false,
 })
 const yearField = {
   key: "year",
@@ -19,6 +20,7 @@ const yearField = {
   required: false,
   options: [],
   allow_other: false,
+  primary: false,
 }
 const percentField = {
   key: "percent",
@@ -27,6 +29,7 @@ const percentField = {
   required: false,
   options: [],
   allow_other: false,
+  primary: false,
 }
 const subjectField = {
   key: "subject",
@@ -35,6 +38,7 @@ const subjectField = {
   required: false,
   options: [],
   allow_other: false,
+  primary: false,
 }
 
 const IELTS_LEVELS = ["5.0", "5.5", "6.0", "6.5", "7.0", "7.5", "8.0"]
@@ -46,7 +50,7 @@ export const certificateTypes: CertificateType[] = [
     id: uuid(KIND, 1),
     code: "ielts",
     name: name("IELTS"),
-    custom_fields: [levelField(IELTS_LEVELS), yearField],
+    custom_fields: [{ ...levelField(IELTS_LEVELS), primary: true }, yearField],
     builtin: false,
     position: 1,
   },
@@ -62,7 +66,7 @@ export const certificateTypes: CertificateType[] = [
     id: uuid(KIND, 3),
     code: "sat",
     name: name("SAT"),
-    custom_fields: [{ ...yearField, key: "score", label: name("Score", "Балл", "Ball") }],
+    custom_fields: [{ ...yearField, key: "score", label: name("Score", "Балл", "Ball"), primary: true }],
     builtin: false,
     position: 3,
   },

@@ -39,6 +39,7 @@ const { TEST_ENV } = await import("./fixtures/env")
 const { server } = await import("./server")
 const {
   resetAssessments,
+  resetSharing,
   resetTemporaryMarks,
   resetCertificatesState,
   resetFactorsState,
@@ -98,6 +99,7 @@ afterEach(() => {
   resetTeacherContacts()
   resetTeacherPhotos()
   resetAssessments()
+  resetSharing()
   resetTemporaryMarks()
   resetMeSyncState()
   resetCertificatesState()

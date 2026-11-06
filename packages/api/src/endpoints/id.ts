@@ -16,6 +16,8 @@ import type {
   Connector,
   ConnectorCreateBody,
   ConnectorCreated,
+  ScopeOffer,
+  ScopeOfferDecision,
   CreateMcpClientBody,
   McpClientResponse,
   McpSetupResponse,
@@ -363,6 +365,22 @@ export const getIdMeConnectorsQuery = () =>
 /** POST /v1/id/me/connectors — bearer; the token in the response is shown once. */
 export function postIdMeConnectors(body: ConnectorCreateBody, opts?: RequestOptions): Promise<ConnectorCreated> {
   return api.post<ConnectorCreated>("/v1/id/me/connectors", body, opts)
+}
+
+/** GET /v1/id/me/connectors/offers — bearer; my open offers of new permissions. */
+export function getIdMeConnectorOffers(opts?: RequestOptions): Promise<ScopeOffer[]> {
+  return api.get<ScopeOffer[]>("/v1/id/me/connectors/offers", opts)
+}
+export const getIdMeConnectorOffersQuery = () =>
+  queryOptions({ queryKey: keys.id.scopeOffers(), queryFn: ({ signal }) => getIdMeConnectorOffers({ signal }) })
+
+/** POST /v1/id/me/connectors/offers/{id}/decision — bearer; single use, like the Telegram buttons. */
+export function postIdMeConnectorOfferDecision(
+  id: string,
+  body: { grant: boolean },
+  opts?: RequestOptions,
+): Promise<ScopeOfferDecision> {
+  return api.post<ScopeOfferDecision>(`/v1/id/me/connectors/offers/${seg(id)}/decision`, body, opts)
 }
 
 /** DELETE /v1/id/me/connectors/{id} — bearer; `204`. */

@@ -5,8 +5,11 @@ import { keys } from "../keys"
 import { queryOptions, seg, type RequestOptions } from "../query"
 import type { NoContent } from "../types/common"
 import type {
+  FlashcardCardStats,
   FlashcardCardsBody,
   FlashcardCopyBody,
+  FlashcardMergeBody,
+  FlashcardMergeResult,
   FlashcardReviewBody,
   FlashcardSetCreateBody,
   FlashcardSetDetail,
@@ -95,6 +98,29 @@ export function postMeFlashcardReview(
 export function postMeFlashcardSetsCopy(body: FlashcardCopyBody, opts?: RequestOptions): Promise<FlashcardSetDetail> {
   return api.post<FlashcardSetDetail>("/v1/me/flashcard-sets/copy", body, opts)
 }
+
+/** POST /v1/me/flashcard-sets/{id}/study/restart — owner; a practice round that leaves the schedule alone. */
+export function postMeFlashcardSetStudyRestart(id: string, opts?: RequestOptions): Promise<StudyNext> {
+  return api.post<StudyNext>(`/v1/me/flashcard-sets/${seg(id)}/study/restart`, undefined, opts)
+}
+
+/** POST /v1/me/flashcard-sets/merge — student; a new set from copies of the cards of several sets. */
+export function postMeFlashcardSetsMerge(
+  body: FlashcardMergeBody,
+  opts?: RequestOptions,
+): Promise<FlashcardMergeResult> {
+  return api.post<FlashcardMergeResult>("/v1/me/flashcard-sets/merge", body, opts)
+}
+
+/** GET /v1/me/flashcard-sets/{id}/card-stats — owner; attempts per card. */
+export function getMeFlashcardSetCardStats(id: string, opts?: RequestOptions): Promise<FlashcardCardStats[]> {
+  return api.get<FlashcardCardStats[]>(`/v1/me/flashcard-sets/${seg(id)}/card-stats`, opts)
+}
+export const getMeFlashcardSetCardStatsQuery = (id: string) =>
+  queryOptions({
+    queryKey: keys.flashcards.cardStats(id),
+    queryFn: ({ signal }) => getMeFlashcardSetCardStats(id, { signal }),
+  })
 
 // --- Names used by the app plans ---
 
