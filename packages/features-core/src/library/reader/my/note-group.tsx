@@ -31,7 +31,7 @@ export function NoteGroup({ itemId, title, unavailable, notes, exporting, onExpo
   const annotationT = useT("library.annotation")
   const { date } = useFormatters()
   return (
-    <section aria-label={title ?? t("loadingItem")} className="bg-card flex flex-col gap-3 rounded-xl border p-3">
+    <section aria-label={title ?? t("loadingItem")} className="bg-card flex flex-col gap-3 rounded-card border p-3">
       <header className="flex flex-wrap items-center justify-between gap-2">
         {title === undefined && !unavailable ? (
           <Skeleton className="h-5 w-48" />

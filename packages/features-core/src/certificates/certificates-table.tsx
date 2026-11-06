@@ -2,7 +2,7 @@
 
 import type { CertificateType, StaffCertificateEntry } from "@ihsp/api"
 import { useLocale, useT } from "@ihsp/i18n"
-import { Checkbox, Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@ihsp/ui"
+import { Checkbox, ResponsiveTable, type ResponsiveColumn } from "@ihsp/ui"
 import { entrySummary, typeName } from "./utils"
 
 type Props = {
@@ -12,7 +12,7 @@ type Props = {
   onSelectedChange: (next: Set<string>) => void
 }
 
-/** Entries with a checkbox per file; the chosen file ids go to the ZIP export. */
+/** Entries with a checkbox per file; the chosen file ids go to the ZIP export. Cards on phones. */
 export function CertificatesTable({ items, types, selected, onSelectedChange }: Props) {
   const t = useT("certificates.table")
   const locale = useLocale()
@@ -26,53 +26,67 @@ export function CertificatesTable({ items, types, selected, onSelectedChange }: 
     }
     onSelectedChange(next)
   }
+  const selectAll = (
+    <Checkbox
+      aria-label={t("selectAll")}
+      checked={allSelected}
+      disabled={pageFileIds.length === 0}
+      onCheckedChange={(checked) => toggle(pageFileIds, checked === true)}
+    />
+  )
+  const typeOf = (entry: StaffCertificateEntry) => types.find((item) => item.id === entry.type_id)
+  const columns: ResponsiveColumn<StaffCertificateEntry>[] = [
+    {
+      id: "select",
+      header: selectAll,
+      role: "action",
+      headClassName: "w-10",
+      cell: (entry) => {
+        const ids = entry.files.map((file) => file.id)
+        return (
+          <label className="flex min-h-11 min-w-11 items-center justify-center md:min-h-0 md:min-w-0 md:justify-start">
+            <Checkbox
+              aria-label={t("select", { name: `${entry.student.name} ${typeName(typeOf(entry), locale)}` })}
+              disabled={ids.length === 0}
+              checked={ids.length > 0 && ids.every((id) => selected.has(id))}
+              onCheckedChange={(checked) => toggle(ids, checked === true)}
+            />
+          </label>
+        )
+      },
+    },
+    {
+      id: "student",
+      header: t("student"),
+      role: "title",
+      cellClassName: "font-medium",
+      cell: (entry) => entry.student.name,
+    },
+    {
+      id: "group",
+      header: t("group"),
+      cell: (entry) => `${entry.student.group_name}${entry.student.subgroup ? ` / ${entry.student.subgroup}` : ""}`,
+    },
+    { id: "type", header: t("type"), cell: (entry) => typeName(typeOf(entry), locale) },
+    { id: "result", header: t("result"), cell: (entry) => entrySummary(entry, typeOf(entry)) },
+    {
+      id: "files",
+      header: t("files"),
+      cell: (entry) => (entry.files.length > 0 ? t("fileCount", { count: entry.files.length }) : "—"),
+    },
+  ]
   return (
-    <div className="overflow-x-auto rounded-lg border">
-      <Table>
-        <TableHeader>
-          <TableRow>
-            <TableHead className="w-10">
-              <Checkbox
-                aria-label={t("selectAll")}
-                checked={allSelected}
-                disabled={pageFileIds.length === 0}
-                onCheckedChange={(checked) => toggle(pageFileIds, checked === true)}
-              />
-            </TableHead>
-            <TableHead>{t("student")}</TableHead>
-            <TableHead>{t("group")}</TableHead>
-            <TableHead>{t("type")}</TableHead>
-            <TableHead>{t("result")}</TableHead>
-            <TableHead>{t("files")}</TableHead>
-          </TableRow>
-        </TableHeader>
-        <TableBody>
-          {items.map((entry) => {
-            const ids = entry.files.map((file) => file.id)
-            const type = types.find((item) => item.id === entry.type_id)
-            return (
-              <TableRow key={entry.id}>
-                <TableCell>
-                  <Checkbox
-                    aria-label={t("select", { name: `${entry.student.name} ${typeName(type, locale)}` })}
-                    disabled={ids.length === 0}
-                    checked={ids.length > 0 && ids.every((id) => selected.has(id))}
-                    onCheckedChange={(checked) => toggle(ids, checked === true)}
-                  />
-                </TableCell>
-                <TableCell className="font-medium">{entry.student.name}</TableCell>
-                <TableCell>
-                  {entry.student.group_name}
-                  {entry.student.subgroup ? ` / ${entry.student.subgroup}` : ""}
-                </TableCell>
-                <TableCell>{typeName(type, locale)}</TableCell>
-                <TableCell>{entrySummary(entry, type)}</TableCell>
-                <TableCell>{entry.files.length > 0 ? t("fileCount", { count: entry.files.length }) : "—"}</TableCell>
-              </TableRow>
-            )
-          })}
-        </TableBody>
-      </Table>
-    </div>
+    <ResponsiveTable
+      label={t("files")}
+      rows={items}
+      rowKey={(entry) => entry.id}
+      columns={columns}
+      cardsHeader={
+        <label className="flex min-h-11 items-center gap-2 px-3 text-sm">
+          {selectAll}
+          <span aria-hidden>{t("selectAll")}</span>
+        </label>
+      }
+    />
   )
 }

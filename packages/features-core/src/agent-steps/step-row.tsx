@@ -8,11 +8,11 @@ import {
   IconChevronDown,
   IconEye,
   IconFileText,
-  IconLoader2,
   IconSearch,
   IconSparkles,
   IconTool,
   IconWorld,
+  Spinner,
   cn,
 } from "@ihsp/ui"
 import { useId, useState, type ComponentType } from "react"
@@ -29,7 +29,7 @@ const KIND_ICONS: Record<AgentStep["kind"], ComponentType<{ className?: string }
 }
 
 function StepIcon({ step }: { step: AgentStep }) {
-  if (step.status === "running") return <IconLoader2 className="size-3.5 animate-spin" aria-hidden />
+  if (step.status === "running") return <Spinner className="size-3.5" aria-hidden />
   if (step.status === "failed") return <IconAlertCircle className="text-destructive size-3.5" aria-hidden />
   const Icon = KIND_ICONS[step.kind]
   return <Icon className="size-3.5" />

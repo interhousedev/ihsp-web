@@ -58,7 +58,7 @@ function ReviewItem({
   const t = useT("notebooks")
   const promptId = useId()
   return (
-    <li className="flex flex-col gap-3 rounded-xl border p-4">
+    <li className="flex flex-col gap-3 rounded-card border p-4">
       <VerdictTag verdict={verdictOf(question, answers)} />
       <div id={promptId} role="heading" aria-level={4} className="flex gap-1.5">
         <span aria-hidden className="text-muted-foreground font-semibold tabular-nums">

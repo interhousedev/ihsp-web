@@ -1,8 +1,7 @@
 "use client"
 
 import { useT } from "@ihsp/i18n"
-import { Button } from "@ihsp/ui"
-import { IconLoader2 } from "@ihsp/ui"
+import { Button, LoadingButton } from "@ihsp/ui"
 
 type DiscoverFooterProps = {
   count: number
@@ -30,6 +29,7 @@ export function DiscoverFooter({
   onAdd,
 }: DiscoverFooterProps) {
   const t = useT("notebooks")
+  const tCommon = useT("common")
   return (
     <div className="bg-background sticky bottom-0 -mx-2 flex flex-col gap-2 border-t px-3 pt-2 pb-1 md:-mx-3">
       {error ? (
@@ -52,10 +52,16 @@ export function DiscoverFooter({
         >
           {allPicked ? t("discover.selectNone") : t("discover.selectAll")}
         </Button>
-        <Button type="button" className="min-h-11 md:min-h-8" disabled={count === 0 || pending} onClick={onAdd}>
-          {pending ? <IconLoader2 aria-hidden className="animate-spin motion-reduce:animate-none" /> : null}
+        <LoadingButton
+          type="button"
+          className="min-h-11 md:min-h-8"
+          disabled={count === 0}
+          loading={pending}
+          loadingLabel={tCommon("loading")}
+          onClick={onAdd}
+        >
           {t("discover.add", { count })}
-        </Button>
+        </LoadingButton>
       </div>
     </div>
   )

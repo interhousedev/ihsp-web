@@ -2,8 +2,8 @@
 
 import type { SourceDetail } from "@ihsp/api"
 import { useT } from "@ihsp/i18n"
-import { Button, Collapsible, CollapsibleContent, CollapsibleTrigger, Markdown } from "@ihsp/ui"
-import { IconChevronDown, IconCornerDownRight, IconLoader2, IconSparkles } from "@ihsp/ui"
+import { Button, Collapsible, CollapsibleContent, CollapsibleTrigger, Markdown, Spinner } from "@ihsp/ui"
+import { IconChevronDown, IconCornerDownRight, IconSparkles } from "@ihsp/ui"
 import { useWorkspace } from "../workspace-context"
 import { hasGuideKind } from "./source-rules"
 
@@ -20,7 +20,7 @@ export function SourceGuide({ source }: { source: SourceDetail }) {
   if (!guide && !building) return null
 
   return (
-    <Collapsible defaultOpen className="bg-card rounded-xl border">
+    <Collapsible defaultOpen className="bg-card rounded-card border">
       <CollapsibleTrigger className="focus-visible:ring-ring group/guide flex min-h-11 w-full items-center gap-2 rounded-xl px-4 text-start text-sm font-medium outline-hidden focus-visible:ring-2">
         <IconSparkles aria-hidden className="text-primary size-4 shrink-0" />
         <span className="flex-1">{t("viewer.guide")}</span>
@@ -79,7 +79,7 @@ export function SourceGuide({ source }: { source: SourceDetail }) {
             </>
           ) : (
             <p role="status" className="text-muted-foreground flex items-center gap-2 text-sm">
-              <IconLoader2 aria-hidden className="size-4 animate-spin motion-reduce:animate-none" />
+              <Spinner aria-hidden className="size-4" />
               {t("viewer.building")}
             </p>
           )}

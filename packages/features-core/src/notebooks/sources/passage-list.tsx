@@ -2,7 +2,7 @@
 
 import { useT } from "@ihsp/i18n"
 import { Button, Skeleton, StateView } from "@ihsp/ui"
-import { IconLoader2 } from "@ihsp/ui"
+import { Spinner } from "@ihsp/ui"
 import { useEffect, useMemo, useRef } from "react"
 import { useSourcePassages } from "../api"
 import { PassageBlock } from "./passage-block"
@@ -104,9 +104,7 @@ export function PassageList({ notebookId, sourceId, passageId }: PassageListProp
             disabled={passages.isFetchingNextPage}
             onClick={() => void passages.fetchNextPage()}
           >
-            {passages.isFetchingNextPage ? (
-              <IconLoader2 aria-hidden className="animate-spin motion-reduce:animate-none" />
-            ) : null}
+            {passages.isFetchingNextPage ? <Spinner aria-hidden /> : null}
             {t("viewer.loadMore")}
           </Button>
         </div>

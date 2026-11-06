@@ -17,7 +17,7 @@ export function BackLink({ href, label }: { href: string; label: string }) {
     <Link
       href={href}
       aria-label={`${t("back")}: ${label}`}
-      className="text-muted-foreground hover:text-foreground flex min-h-11 w-fit items-center gap-1 text-sm"
+      className="text-muted-foreground hover:text-foreground focus-visible:ring-ring/50 flex min-h-11 w-fit items-center gap-1 rounded-md text-sm outline-none focus-visible:ring-3"
     >
       <Icons.chevronLeft className="size-4" aria-hidden />
       {label}

@@ -106,7 +106,10 @@ export function LibraryHomePage() {
       <SearchBox />
 
       {status === "anonymous" ? (
-        <section aria-labelledby="home-signin-title" className="bg-muted/40 flex flex-col gap-1 rounded-xl border p-4">
+        <section
+          aria-labelledby="home-signin-title"
+          className="bg-muted/40 flex flex-col gap-1 rounded-card border p-4"
+        >
           <div>
             <h2 id="home-signin-title" className="font-semibold">
               {t("signInTitle")}
@@ -141,7 +144,7 @@ export function LibraryHomePage() {
               <li key={subject.id}>
                 <Link
                   href={browseHref({ subject: subject.id })}
-                  className="bg-card hover:bg-muted/50 focus-visible:ring-ring flex min-h-20 flex-col justify-between gap-1 rounded-xl border p-3 focus-visible:ring-2"
+                  className="bg-card hover:bg-muted/50 focus-visible:ring-ring flex min-h-20 flex-col justify-between gap-1 rounded-card border p-3 focus-visible:ring-2"
                 >
                   <span className="font-medium break-words">{subject.name}</span>
                   <span className="text-muted-foreground text-xs">{t("items", { count: subject.item_count })}</span>
@@ -160,7 +163,7 @@ export function LibraryHomePage() {
               <li key={collection.id} className="w-44 shrink-0 snap-start">
                 <Link
                   href={collectionHref(collection.id)}
-                  className="bg-card hover:bg-muted/50 focus-visible:ring-ring flex h-full flex-col gap-2 rounded-xl border p-3 focus-visible:ring-2"
+                  className="bg-card hover:bg-muted/50 focus-visible:ring-ring flex h-full flex-col gap-2 rounded-card border p-3 focus-visible:ring-2"
                 >
                   <CoverImage src={collection.cover_url} className="aspect-[4/3] w-full rounded-md" />
                   <span className="line-clamp-2 text-sm font-medium break-words">{collection.title}</span>

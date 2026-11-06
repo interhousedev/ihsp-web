@@ -23,8 +23,8 @@ describe("rowsFromSet", () => {
   it("orders the cards by position and keeps their ids", () => {
     const result = rowsFromSet({
       cards: [
-        { id: "2", position: 2, front: "B", back: "b", state: "new", due_at: null },
-        { id: "1", position: 1, front: "A", back: "a", state: "new", due_at: null },
+        { id: "2", position: 2, front: "B", back: "b", state: "new", due_at: null, hardness: null },
+        { id: "1", position: 1, front: "A", back: "a", state: "new", due_at: null, hardness: null },
       ],
     })
 

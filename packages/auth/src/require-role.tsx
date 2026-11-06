@@ -2,7 +2,7 @@
 
 import type { Role } from "@ihsp/api"
 import { useT } from "@ihsp/i18n"
-import { Empty, EmptyDescription, EmptyHeader, EmptyMedia, EmptyTitle, Icons } from "@ihsp/ui"
+import { Icons, StateView } from "@ihsp/ui"
 import type { ReactNode } from "react"
 import { useSession } from "./use-session"
 
@@ -35,15 +35,13 @@ export function RequireRole({
   if (fallback !== undefined) return <>{fallback}</>
   return (
     <div className="flex min-h-dvh items-center justify-center p-4">
-      <Empty>
-        <EmptyHeader>
-          <EmptyMedia variant="icon">
-            <Icons.lock aria-hidden />
-          </EmptyMedia>
-          <EmptyTitle>{t("auth.forbiddenTitle")}</EmptyTitle>
-          <EmptyDescription>{t("auth.forbiddenDescription")}</EmptyDescription>
-        </EmptyHeader>
-      </Empty>
+      <StateView
+        state="empty"
+        className="border-0"
+        icon={<Icons.lock aria-hidden />}
+        title={t("auth.forbiddenTitle")}
+        description={t("auth.forbiddenDescription")}
+      />
     </div>
   )
 }

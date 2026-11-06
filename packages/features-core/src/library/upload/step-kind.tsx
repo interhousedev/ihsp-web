@@ -26,7 +26,7 @@ export function StepKind({ values, onChange, showProblems }: StepProps) {
               <label
                 key={kind}
                 className={cn(
-                  "bg-card focus-within:ring-ring flex min-h-11 cursor-pointer gap-3 rounded-xl border p-4 focus-within:ring-2",
+                  "bg-card focus-within:ring-ring flex min-h-11 cursor-pointer gap-3 rounded-card border p-4 focus-within:ring-2",
                   selected && "border-primary bg-primary/5 ring-primary ring-1",
                 )}
               >
@@ -56,7 +56,7 @@ export function StepKind({ values, onChange, showProblems }: StepProps) {
         ) : null}
       </fieldset>
 
-      <div className="bg-muted/40 flex flex-wrap items-center justify-between gap-3 rounded-xl border p-4">
+      <div className="bg-muted/40 flex flex-wrap items-center justify-between gap-3 rounded-card border p-4">
         <div className="min-w-0">
           <p className="flex items-center gap-2 font-medium">
             <IconBook2 className="size-5" aria-hidden />

@@ -8,12 +8,9 @@ import {
   Badge,
   Button,
   ConfirmDialog,
-  Dialog,
-  DialogContent,
-  DialogHeader,
-  DialogTitle,
   Input,
   Label,
+  ResponsiveDialog,
   StateView,
 } from "@ihsp/ui"
 import { IconAlertTriangle } from "@ihsp/ui"
@@ -136,81 +133,78 @@ export function ShareDialog({ open, onOpenChange, kind, targetId }: ShareDialogP
 
   return (
     <>
-      <Dialog open={open} onOpenChange={onOpenChange}>
-        <DialogContent className="max-h-[90dvh] overflow-y-auto">
-          <DialogHeader>
-            <DialogTitle>{kind === "chat" ? t("titleChat") : t("titleSet")}</DialogTitle>
-          </DialogHeader>
+      <ResponsiveDialog
+        open={open}
+        onOpenChange={onOpenChange}
+        size="sm"
+        title={kind === "chat" ? t("titleChat") : t("titleSet")}
+      >
+        {kind === "chat" ? (
+          <Alert>
+            <IconAlertTriangle aria-hidden />
+            <AlertDescription>{t("warning")}</AlertDescription>
+          </Alert>
+        ) : null}
 
-          {kind === "chat" ? (
-            <Alert>
-              <IconAlertTriangle aria-hidden />
-              <AlertDescription>{t("warning")}</AlertDescription>
-            </Alert>
-          ) : null}
-
-          {kind === "chat" ? (
-            <div className="flex items-start gap-3">
-              <input
-                id={switchId}
-                type="checkbox"
-                role="switch"
-                aria-checked={live}
-                className="mt-0.5 size-5 shrink-0"
-                checked={live}
-                onChange={(event) => setLive(event.target.checked)}
-              />
-              <div className="flex flex-col">
-                <Label htmlFor={switchId} className="min-h-6 text-sm font-medium">
-                  {t("includeFuture")}
-                </Label>
-                <span className="text-muted-foreground text-xs" data-testid="share-mode-hint">
-                  {live ? t("liveHint") : t("snapshotHint")}
-                </span>
-              </div>
-            </div>
-          ) : null}
-
-          <div className="flex flex-col gap-1">
-            <Label htmlFor={expiryId}>{t("expiryLabel")}</Label>
-            <Input
-              id={expiryId}
-              type="date"
-              min={tomorrowIso()}
-              value={expiry}
-              className="min-h-11"
-              onChange={(event) => setExpiry(event.target.value)}
+        {kind === "chat" ? (
+          <div className="flex items-start gap-3">
+            <input
+              id={switchId}
+              type="checkbox"
+              role="switch"
+              aria-checked={live}
+              className="mt-0.5 size-5 shrink-0"
+              checked={live}
+              onChange={(event) => setLive(event.target.checked)}
             />
+            <div className="flex flex-col">
+              <Label htmlFor={switchId} className="min-h-6 text-sm font-medium">
+                {t("includeFuture")}
+              </Label>
+              <span className="text-muted-foreground text-xs" data-testid="share-mode-hint">
+                {live ? t("liveHint") : t("snapshotHint")}
+              </span>
+            </div>
           </div>
+        ) : null}
 
-          {create.isError ? (
-            <p role="alert" className="text-destructive text-sm">
-              {errorMessage(create.error)}
-            </p>
+        <div className="flex flex-col gap-1">
+          <Label htmlFor={expiryId}>{t("expiryLabel")}</Label>
+          <Input
+            id={expiryId}
+            type="date"
+            min={tomorrowIso()}
+            value={expiry}
+            className="min-h-11"
+            onChange={(event) => setExpiry(event.target.value)}
+          />
+        </div>
+
+        {create.isError ? (
+          <p role="alert" className="text-destructive text-sm">
+            {errorMessage(create.error)}
+          </p>
+        ) : null}
+        <Button type="button" className="min-h-11" disabled={create.isPending} onClick={createLink}>
+          {t("create")}
+        </Button>
+
+        <section aria-label={t("existing")} className="flex flex-col gap-2">
+          <h3 className="text-sm font-semibold">{t("existing")}</h3>
+          {links.isPending ? <StateView state="loading" rows={1} /> : null}
+          {links.isError ? <StateView state="error" error={links.error} onRetry={() => void links.refetch()} /> : null}
+          {!links.isPending && !links.isError && rows.length === 0 ? (
+            <p className="text-muted-foreground text-sm">{t("noLinks")}</p>
           ) : null}
-          <Button type="button" className="min-h-11" disabled={create.isPending} onClick={createLink}>
-            {t("create")}
-          </Button>
-
-          <section aria-label={t("existing")} className="flex flex-col gap-2">
-            <h3 className="text-sm font-semibold">{t("existing")}</h3>
-            {links.isPending ? <StateView state="loading" rows={1} /> : null}
-            {links.isError ? (
-              <StateView state="error" error={links.error} onRetry={() => void links.refetch()} />
-            ) : null}
-            {!links.isPending && !links.isError && rows.length === 0 ? (
-              <p className="text-muted-foreground text-sm">{t("noLinks")}</p>
-            ) : null}
-            {rows.length > 0 ? (
-              <ul className="flex flex-col gap-2">
-                {rows.map((link) => (
-                  <LinkRow key={link.id} link={link} kind={kind} onRevoke={setRevoking} />
-                ))}
-              </ul>
-            ) : null}
-          </section>
-        </DialogContent>
-      </Dialog>
+          {rows.length > 0 ? (
+            <ul className="flex flex-col gap-2">
+              {rows.map((link) => (
+                <LinkRow key={link.id} link={link} kind={kind} onRevoke={setRevoking} />
+              ))}
+            </ul>
+          ) : null}
+        </section>
+      </ResponsiveDialog>
       <ConfirmDialog
         open={revoking !== null}
         onOpenChange={(next) => {

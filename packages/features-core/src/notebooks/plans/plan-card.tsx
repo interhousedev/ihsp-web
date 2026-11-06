@@ -19,7 +19,7 @@ export function PlanCard({ notebookId, plan: created }: { notebookId: string; pl
       <button
         type="button"
         onClick={() => setOpen(true)}
-        className="bg-card hover:bg-muted flex min-h-11 w-full items-center gap-3 rounded-xl border p-3 text-start"
+        className="bg-card hover:bg-muted flex min-h-11 w-full items-center gap-3 rounded-card border p-3 text-start"
       >
         <IconPresentation className="text-primary size-5 shrink-0" aria-hidden />
         <span className="flex min-w-0 flex-1 flex-col">

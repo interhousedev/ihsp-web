@@ -2,21 +2,7 @@
 
 import { keys, postManageImport, type FileItem, type ImportResult } from "@ihsp/api"
 import { useErrorMessage, useT } from "@ihsp/i18n"
-import {
-  Button,
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogFooter,
-  DialogHeader,
-  DialogTitle,
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableHeader,
-  TableRow,
-} from "@ihsp/ui"
+import { Button, ResponsiveDialog, Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@ihsp/ui"
 import { IconCircleCheck, IconFileImport } from "@ihsp/ui"
 import { useMutation, useQueryClient } from "@tanstack/react-query"
 import { useState } from "react"
@@ -84,76 +70,67 @@ export function BulkImport({ open, onOpenChange }: { open: boolean; onOpenChange
   }
 
   return (
-    <Dialog
+    <ResponsiveDialog
       open={open}
       onOpenChange={(next) => {
         if (!next) reset()
         onOpenChange(next)
       }}
-    >
-      <DialogContent className="max-h-[90dvh] overflow-y-auto sm:max-w-xl">
-        <DialogHeader>
-          <DialogTitle>{t("title")}</DialogTitle>
-          <DialogDescription>{t("description")}</DialogDescription>
-        </DialogHeader>
-        {result ? (
-          <ImportOutcome result={result} />
+      title={t("title")}
+      description={t("description")}
+      footer={
+        result ? (
+          <>
+            <Button type="button" variant="outline" className="min-h-11 md:min-h-8" onClick={reset}>
+              {t("another")}
+            </Button>
+            <Button type="button" className="min-h-11 md:min-h-8" onClick={() => onOpenChange(false)}>
+              {t("done")}
+            </Button>
+          </>
         ) : (
-          <div className="flex flex-col gap-3">
-            <p className="text-muted-foreground text-xs">{t("columns")}</p>
-            <UploadZone
-              purpose="library_book"
-              extensions={[".csv"]}
-              label={t("zone")}
-              hint={t("hint")}
-              chooseLabel={csv ? t("replace") : t("choose")}
-              disabled={run.isPending}
-              onUploaded={(file) => {
-                run.reset()
-                setCsv(file)
-              }}
-            />
-            {csv ? <p className="text-sm">{t("ready", { name: csv.name })}</p> : null}
-            {run.isError ? (
-              <p role="alert" className="text-destructive text-sm">
-                {errorMessage(run.error)}
-              </p>
-            ) : null}
-          </div>
-        )}
-        <DialogFooter>
-          {result ? (
-            <>
-              <Button type="button" variant="outline" className="min-h-11 md:min-h-8" onClick={reset}>
-                {t("another")}
-              </Button>
-              <Button type="button" className="min-h-11 md:min-h-8" onClick={() => onOpenChange(false)}>
-                {t("done")}
-              </Button>
-            </>
-          ) : (
-            <>
-              <Button
-                type="button"
-                variant="outline"
-                className="min-h-11 md:min-h-8"
-                onClick={() => onOpenChange(false)}
-              >
-                {common("cancel")}
-              </Button>
-              <Button
-                type="button"
-                className="min-h-11 md:min-h-8"
-                disabled={!csv || run.isPending}
-                onClick={() => csv && run.mutate(csv)}
-              >
-                <IconFileImport aria-hidden />
-                {t("run")}
-              </Button>
-            </>
-          )}
-        </DialogFooter>
-      </DialogContent>
-    </Dialog>
+          <>
+            <Button type="button" variant="outline" className="min-h-11 md:min-h-8" onClick={() => onOpenChange(false)}>
+              {common("cancel")}
+            </Button>
+            <Button
+              type="button"
+              className="min-h-11 md:min-h-8"
+              disabled={!csv || run.isPending}
+              onClick={() => csv && run.mutate(csv)}
+            >
+              <IconFileImport aria-hidden />
+              {t("run")}
+            </Button>
+          </>
+        )
+      }
+    >
+      {result ? (
+        <ImportOutcome result={result} />
+      ) : (
+        <div className="flex flex-col gap-3">
+          <p className="text-muted-foreground text-xs">{t("columns")}</p>
+          <UploadZone
+            purpose="library_book"
+            extensions={[".csv"]}
+            label={t("zone")}
+            hint={t("hint")}
+            chooseLabel={csv ? t("replace") : t("choose")}
+            disabled={run.isPending}
+            onUploaded={(file) => {
+              run.reset()
+              setCsv(file)
+            }}
+          />
+          {csv ? <p className="text-sm">{t("ready", { name: csv.name })}</p> : null}
+          {run.isError ? (
+            <p role="alert" className="text-destructive text-sm">
+              {errorMessage(run.error)}
+            </p>
+          ) : null}
+        </div>
+      )}
+    </ResponsiveDialog>
   )
 }

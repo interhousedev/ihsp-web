@@ -1,8 +1,8 @@
 "use client"
 
 import { useFormatters, useT } from "@ihsp/i18n"
-import { Button, Dropdown, Input } from "@ihsp/ui"
-import { IconArrowRight, IconLoader2 } from "@ihsp/ui"
+import { Button, Dropdown, Input, Spinner } from "@ihsp/ui"
+import { IconArrowRight } from "@ihsp/ui"
 import { useId, useState, type FocusEvent, type FormEvent } from "react"
 import { useWebQuota } from "../../web-search"
 import { MIN_SEARCH_LENGTH } from "./constants"
@@ -76,11 +76,7 @@ export function DiscoverBox({ flow, compact }: DiscoverBoxProps) {
             aria-label={t("discover.submit")}
             disabled={!canSend}
           >
-            {flow.pending ? (
-              <IconLoader2 aria-hidden className="animate-spin motion-reduce:animate-none" />
-            ) : (
-              <IconArrowRight aria-hidden />
-            )}
+            {flow.pending ? <Spinner aria-hidden /> : <IconArrowRight aria-hidden />}
           </Button>
         </div>
         {expanded ? (

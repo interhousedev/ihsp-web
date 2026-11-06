@@ -4,7 +4,7 @@ import { getManageBooks, keys, type ItemStatus } from "@ihsp/api"
 import { useT } from "@ihsp/i18n"
 import {
   Button,
-  Icons,
+  LoadingButton,
   Input,
   Dropdown,
   PageContainer,
@@ -31,6 +31,7 @@ const PAGE_SIZE = 25
 export function BooksPage() {
   const t = useT("library.manage.books")
   const statusLabel = useT("library.item.status")
+  const tCommon = useT("common")
   const [text, setText] = useState("")
   const [status, setStatus] = useState<ItemStatus | "">("")
   const [importing, setImporting] = useState(false)
@@ -112,16 +113,16 @@ export function BooksPage() {
         <>
           <BooksTable rows={rows} />
           {query.hasNextPage ? (
-            <Button
+            <LoadingButton
               type="button"
               variant="outline"
               className="min-h-11 self-center"
-              disabled={query.isFetchingNextPage}
+              loading={query.isFetchingNextPage}
+              loadingLabel={tCommon("loading")}
               onClick={() => void query.fetchNextPage()}
             >
-              {query.isFetchingNextPage ? <Icons.spinner className="animate-spin" aria-hidden /> : null}
               {t("loadMore")}
-            </Button>
+            </LoadingButton>
           ) : null}
         </>
       )}

@@ -39,7 +39,7 @@ describe("make_document file card", () => {
     )
     const { user } = renderCall()
 
-    expect(screen.getByRole("group", { name: "Cells.docx" })).toHaveTextContent(".docx · 36 KB")
+    expect(screen.getByRole("group", { name: "Cells.docx" })).toHaveTextContent(".docx · 35.8 KB")
     await user.click(screen.getByRole("button", { name: "Download .docx" }))
 
     await waitFor(() =>
@@ -88,7 +88,8 @@ describe("make_document file card", () => {
     const card = screen.getByRole("group", { name: "Биология.pptx" })
     expect(card.querySelector('[data-kind-icon="pptx"]')).not.toBeNull()
     expect(card).toHaveTextContent(".pptx · 2 KB")
-    await user.click(screen.getByRole("button", { name: "Share" }))
+    await user.click(screen.getByRole("button", { name: "Share Биология.pptx" }))
+    await user.click(await screen.findByRole("menuitem", { name: /Public link/ }))
 
     await waitFor(() => expect(sent).toEqual({ kind: "file", file_id: FILE_ID }))
     await waitFor(() => expect(writeText).toHaveBeenCalledWith("https://iht.test/s/deck1"))

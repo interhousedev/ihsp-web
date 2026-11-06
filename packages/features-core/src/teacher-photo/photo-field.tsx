@@ -1,7 +1,7 @@
 "use client"
 
 import { useErrorMessage, useT } from "@ihsp/i18n"
-import { Button, ConfirmDialog, Icons } from "@ihsp/ui"
+import { ConfirmDialog, Icons, LoadingButton } from "@ihsp/ui"
 import { useRef, useState } from "react"
 import { toast } from "sonner"
 import { PHOTO_ACCEPT, photoProblem } from "./photo-rules"
@@ -26,6 +26,7 @@ type Pending = "upload" | "remove" | null
  */
 export function PhotoField({ name, photoUrl, onUpload, onRemove }: PhotoFieldProps) {
   const t = useT("teacherPhoto")
+  const tCommon = useT("common")
   const errorMessage = useErrorMessage()
   const input = useRef<HTMLInputElement>(null)
   const [pending, setPending] = useState<Pending>(null)
@@ -61,35 +62,31 @@ export function PhotoField({ name, photoUrl, onUpload, onRemove }: PhotoFieldPro
       <div className="flex min-w-0 flex-col gap-2">
         <p className="text-muted-foreground text-xs">{t("hint")}</p>
         <div className="flex flex-wrap gap-2">
-          <Button
+          <LoadingButton
             type="button"
             variant="outline"
             className="min-h-11 md:min-h-8"
             disabled={pending !== null}
+            loading={pending === "upload"}
+            loadingLabel={tCommon("loading")}
             onClick={() => input.current?.click()}
           >
-            {pending === "upload" ? (
-              <Icons.spinner aria-hidden className="animate-spin" />
-            ) : (
-              <Icons.upload aria-hidden />
-            )}
+            <Icons.upload aria-hidden />
             {photoUrl ? t("replace") : t("upload")}
-          </Button>
+          </LoadingButton>
           {photoUrl ? (
-            <Button
+            <LoadingButton
               type="button"
               variant="ghost"
               className="min-h-11 md:min-h-8"
               disabled={pending !== null}
+              loading={pending === "remove"}
+              loadingLabel={tCommon("loading")}
               onClick={() => setConfirmingRemove(true)}
             >
-              {pending === "remove" ? (
-                <Icons.spinner aria-hidden className="animate-spin" />
-              ) : (
-                <Icons.trash aria-hidden />
-              )}
+              <Icons.trash aria-hidden />
               {t("remove")}
-            </Button>
+            </LoadingButton>
           ) : null}
         </div>
         <input

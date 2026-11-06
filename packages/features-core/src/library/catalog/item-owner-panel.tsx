@@ -33,7 +33,7 @@ export function ItemOwnerPanel({ item }: { item: ItemDetail }) {
   return (
     <section
       aria-labelledby="owner-panel-title"
-      className="bg-muted/40 flex flex-col gap-3 rounded-xl border p-4 text-sm"
+      className="bg-muted/40 flex flex-col gap-3 rounded-card border p-4 text-sm"
     >
       <h2 id="owner-panel-title" className="font-semibold">
         {t("ownerPanel")}

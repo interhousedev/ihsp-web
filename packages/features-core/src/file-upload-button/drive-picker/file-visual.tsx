@@ -1,29 +1,21 @@
 "use client"
 
 import { getFileUrlQuery, type FileItem } from "@ihsp/api"
-import {
-  IconFile,
-  IconFileText,
-  IconFileTypeDoc,
-  IconFileTypePdf,
-  IconFileTypeXls,
-  IconPhoto,
-  IconPresentation,
-  IconVideo,
-  cn,
-} from "@ihsp/ui"
+import { Icons, cn } from "@ihsp/ui"
 import { useQuery } from "@tanstack/react-query"
 import { fileKindOf, type FileKind } from "./file-kind"
 
 const ICONS = {
-  image: IconPhoto,
-  video: IconVideo,
-  pdf: IconFileTypePdf,
-  slides: IconPresentation,
-  sheet: IconFileTypeXls,
-  doc: IconFileTypeDoc,
-  text: IconFileText,
-  other: IconFile,
+  image: Icons.media,
+  video: Icons.video,
+  pdf: Icons.fileTypePdf,
+  slides: Icons.fileTypePpt,
+  sheet: Icons.fileTypeXls,
+  doc: Icons.fileTypeDoc,
+  text: Icons.post,
+  archive: Icons.fileZip,
+  audio: Icons.music,
+  other: Icons.page,
 } as const satisfies Record<FileKind, unknown>
 
 /** The icon of a file type. */

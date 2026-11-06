@@ -78,7 +78,7 @@ export function StepLicence({ values, onChange, showProblems, canPublish }: Step
         )}
       </section>
 
-      <section className="bg-muted/40 flex flex-col gap-2 rounded-xl border p-4" aria-labelledby="policy-heading">
+      <section className="bg-muted/40 flex flex-col gap-2 rounded-card border p-4" aria-labelledby="policy-heading">
         <h3 id="policy-heading" className="text-base font-semibold">
           {material("policyTitle")}
         </h3>

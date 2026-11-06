@@ -2,8 +2,8 @@
 
 import type { ArtifactDetail } from "@ihsp/api"
 import { useT } from "@ihsp/i18n"
-import { Button } from "@ihsp/ui"
-import { IconAlertTriangle, IconLoader2, IconPlayerStop } from "@ihsp/ui"
+import { Button, Spinner } from "@ihsp/ui"
+import { IconAlertTriangle, IconPlayerStop } from "@ihsp/ui"
 import { useRetryArtifact } from "../../api/use-artifacts"
 import { useNotebookErrorMessage } from "../../lib/use-notebook-error"
 import { ViewerProgress } from "../progress-bar"
@@ -57,7 +57,7 @@ export function ArtifactPending({ notebookId, artifact, onRetried }: ArtifactPen
 
   return (
     <div role="status" className="flex flex-col items-center gap-3 p-8 text-center">
-      <IconLoader2 aria-hidden className="text-primary size-8 animate-spin motion-reduce:animate-none" />
+      <Spinner aria-hidden className="text-primary size-8" />
       <p className="max-w-prose text-sm">{t("item.generating")}</p>
       {artifact.progress !== null ? (
         <div className="w-full max-w-xs">

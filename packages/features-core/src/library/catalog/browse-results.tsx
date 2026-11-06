@@ -3,7 +3,7 @@
 import { getLibraryItems, getUniLibrarySearch, type ItemCard } from "@ihsp/api"
 import { keys } from "@ihsp/api"
 import { useT } from "@ihsp/i18n"
-import { Alert, AlertDescription, Button, Icons, Skeleton, StateView } from "@ihsp/ui"
+import { Alert, AlertDescription, LoadingButton, Skeleton, StateView } from "@ihsp/ui"
 import { useInfiniteQuery } from "@tanstack/react-query"
 import { useVisibleCards } from "../hooks/use-uni-library"
 import { cardKey } from "./card-utils"
@@ -61,16 +61,16 @@ export function CatalogueResults({ state, layout }: { state: BrowseState; layout
       </p>
       <ItemGrid items={cards} layout={layout} label={t("resultsLabel")} />
       {query.hasNextPage ? (
-        <Button
+        <LoadingButton
           type="button"
           variant="outline"
           className="min-h-11 self-center"
-          disabled={query.isFetchingNextPage}
+          loading={query.isFetchingNextPage}
+          loadingLabel={t("loadingMore")}
           onClick={() => void query.fetchNextPage()}
         >
-          {query.isFetchingNextPage ? <Icons.spinner className="animate-spin" aria-hidden /> : null}
-          {query.isFetchingNextPage ? t("loadingMore") : t("loadMore")}
-        </Button>
+          {t("loadMore")}
+        </LoadingButton>
       ) : null}
     </div>
   )
@@ -109,15 +109,16 @@ export function ExternalResults({ state, layout }: { state: BrowseState; layout:
         <ItemGrid items={cards} layout={layout} label={t("source.external")} />
       )}
       {query.hasNextPage ? (
-        <Button
+        <LoadingButton
           type="button"
           variant="outline"
           className="min-h-11 self-center"
-          disabled={query.isFetchingNextPage}
+          loading={query.isFetchingNextPage}
+          loadingLabel={t("browse.loadingMore")}
           onClick={() => void query.fetchNextPage()}
         >
-          {query.isFetchingNextPage ? t("browse.loadingMore") : t("browse.loadMore")}
-        </Button>
+          {t("browse.loadMore")}
+        </LoadingButton>
       ) : null}
     </div>
   )

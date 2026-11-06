@@ -1,8 +1,8 @@
-import type { FlashcardCardsBody, FlashcardSetDetail } from "@ihsp/api"
+import type { FlashcardCardsBody, FlashcardHardness, FlashcardSetDetail } from "@ihsp/api"
 import type { ImportedCard } from "./parse-import"
 
 /** One card in the editor. `id` is missing for cards that are not saved yet. */
-export type EditorRow = { key: string; id?: string; front: string; back: string }
+export type EditorRow = { key: string; id?: string; front: string; back: string; hardness?: FlashcardHardness }
 
 let newRowCounter = 0
 
@@ -14,7 +14,13 @@ export function newEditorRow(front = "", back = ""): EditorRow {
 export function rowsFromSet(set: Pick<FlashcardSetDetail, "cards">): EditorRow[] {
   return set.cards
     .toSorted((a, b) => a.position - b.position)
-    .map((card) => ({ key: card.id, id: card.id, front: card.front, back: card.back }))
+    .map((card) => ({
+      key: card.id,
+      id: card.id,
+      front: card.front,
+      back: card.back,
+      ...(card.hardness ? { hardness: card.hardness } : {}),
+    }))
 }
 
 function isBlank(row: EditorRow): boolean {
@@ -84,7 +90,13 @@ export function rowsEqual(a: EditorRow[], b: EditorRow[]): boolean {
     a.length === b.length &&
     a.every((row, index) => {
       const other = b[index]
-      return other !== undefined && row.id === other.id && row.front === other.front && row.back === other.back
+      return (
+        other !== undefined &&
+        row.id === other.id &&
+        row.front === other.front &&
+        row.back === other.back &&
+        (row.hardness ?? "medium") === (other.hardness ?? "medium")
+      )
     })
   )
 }

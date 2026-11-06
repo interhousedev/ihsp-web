@@ -30,7 +30,7 @@ export function StudioTile({ tile, label, busy, disabledReason, onStart, onCusto
         disabled={disabled}
         title={disabledReason ?? undefined}
         className={cn(
-          "bg-muted/50 hover:bg-muted focus-visible:ring-ring/50 flex min-h-24 w-full flex-col items-center justify-center gap-2 rounded-xl border px-2 py-3 text-center text-sm font-medium outline-none focus-visible:ring-3",
+          "bg-muted/50 hover:bg-muted focus-visible:ring-ring/50 flex min-h-24 w-full flex-col items-center justify-center gap-2 rounded-card border px-2 py-3 text-center text-sm font-medium outline-none focus-visible:ring-3",
           "disabled:cursor-not-allowed disabled:opacity-50",
         )}
         onClick={onStart}

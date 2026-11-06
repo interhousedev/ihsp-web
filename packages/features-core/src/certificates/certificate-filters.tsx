@@ -2,7 +2,7 @@
 
 import type { CertificateFilters, CertificateGroup, CertificateType } from "@ihsp/api"
 import { useLocale, useT } from "@ihsp/i18n"
-import { Button, Dropdown, Input } from "@ihsp/ui"
+import { ListToolbar } from "@ihsp/ui"
 import { CustomFieldFilters } from "./custom-fields"
 import { typeName } from "./utils"
 
@@ -11,30 +11,6 @@ type Props = {
   onChange: (value: CertificateFilters) => void
   groups: CertificateGroup[]
   types: CertificateType[]
-}
-
-function Select({
-  label,
-  value,
-  all,
-  options,
-  onChange,
-}: {
-  label: string
-  value: string
-  all: string
-  options: { value: string; label: string }[]
-  onChange: (value: string) => void
-}) {
-  return (
-    <Dropdown
-      aria-label={label}
-      value={value}
-      onValueChange={onChange}
-      className="w-full"
-      options={[{ value: "", label: all }, ...options]}
-    />
-  )
 }
 
 /**
@@ -55,40 +31,42 @@ export function CertificateFiltersBar({ value, onChange, groups, types }: Props)
   const selectedType = value.type_id ? types.find((type) => type.id === value.type_id) : undefined
   return (
     <div className="flex flex-col gap-2">
-      <div className="grid grid-cols-1 gap-2 sm:grid-cols-2 lg:grid-cols-4">
-        <Select
-          label={t("group")}
-          value={value.group_id ?? ""}
-          all={t("allGroups")}
-          options={groups.map((item) => ({ value: item.id, label: item.name }))}
-          onChange={(group_id) => set({ group_id })}
-        />
-        <Select
-          label={t("subgroup")}
-          value={value.subgroup ?? ""}
-          all={t("allSubgroups")}
-          options={(group?.subgroups ?? []).map((item) => ({ value: item, label: item }))}
-          onChange={(subgroup) => set({ subgroup })}
-        />
-        <Select
-          label={t("type")}
-          value={value.type_id ?? ""}
-          all={t("allTypes")}
-          options={types.map((type) => ({ value: type.id, label: typeName(type, locale) }))}
-          onChange={(type_id) => set({ type_id, custom: undefined, ranges: undefined })}
-        />
-        <Input
-          aria-label={t("student")}
-          placeholder={t("student")}
-          value={value.q ?? ""}
-          onChange={(event) => set({ q: event.target.value })}
-        />
-        {active ? (
-          <Button type="button" variant="outline" onClick={() => onChange({})}>
-            {t("reset")}
-          </Button>
-        ) : null}
-      </div>
+      <ListToolbar
+        filters={[
+          {
+            kind: "select",
+            key: "group_id",
+            label: t("group"),
+            allLabel: t("allGroups"),
+            options: groups.map((item) => ({ value: item.id, label: item.name })),
+          },
+          {
+            kind: "select",
+            key: "subgroup",
+            label: t("subgroup"),
+            allLabel: t("allSubgroups"),
+            options: (group?.subgroups ?? []).map((item) => ({ value: item, label: item })),
+          },
+          {
+            kind: "select",
+            key: "type_id",
+            label: t("type"),
+            allLabel: t("allTypes"),
+            options: types.map((type) => ({ value: type.id, label: typeName(type, locale) })),
+          },
+          { kind: "search", key: "q", label: t("student"), debounceMs: 0 },
+        ]}
+        values={{ group_id: value.group_id, subgroup: value.subgroup, type_id: value.type_id, q: value.q }}
+        onChange={(key, next) => {
+          const text = next ?? ""
+          if (key === "group_id") set({ group_id: text })
+          else if (key === "subgroup") set({ subgroup: text })
+          else if (key === "type_id") set({ type_id: text, custom: undefined, ranges: undefined })
+          else set({ q: text })
+        }}
+        active={active}
+        onReset={() => onChange({})}
+      />
       {selectedType ? <CustomFieldFilters type={selectedType} value={value} onChange={onChange} /> : null}
     </div>
   )

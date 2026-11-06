@@ -47,7 +47,7 @@ export function NotebookChat({ notebook, pendingAsk, onAskHandled }: NotebookCha
 
   const aiBlocked = useNotebookAiBlocked()
   const limit = aiBlocked ? NOTEBOOK_ACCESS_REVOKED : notebookLimit(usage.data)
-  const canAsk = online && !limit.reached && !running && notebook.can_write !== false
+  const canAsk = online && !limit.reached && !running && (notebook.can_write !== false || notebook.shared === true)
 
   const saved = chat.data?.messages ?? NO_MESSAGES
   const visible = pending?.replaced ? saved.filter((message) => message.id !== pending.replaced?.id) : saved

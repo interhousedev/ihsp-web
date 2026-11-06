@@ -20,7 +20,7 @@ export function AnswerFeedback({ question, correct, refsIndex, onExplain }: Answ
   return (
     <div
       className={cn(
-        "flex flex-col gap-2 rounded-xl border p-4 text-sm",
+        "flex flex-col gap-2 rounded-card border p-4 text-sm",
         correct ? "border-success bg-success-muted" : "border-destructive/50 bg-destructive/5",
       )}
     >

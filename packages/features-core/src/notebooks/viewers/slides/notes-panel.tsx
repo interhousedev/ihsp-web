@@ -13,7 +13,7 @@ export function NotesPanel({ notes, className }: NotesPanelProps) {
   const t = useT("notebooks.slides")
   const text = notes.trim()
   return (
-    <section aria-label={t("notes")} className={cn("bg-muted/50 rounded-xl border p-3 md:p-4", className)}>
+    <section aria-label={t("notes")} className={cn("bg-muted/50 rounded-card border p-3 md:p-4", className)}>
       <h3 className="text-muted-foreground mb-1 text-xs font-semibold">{t("notes")}</h3>
       {text ? (
         <p className="text-sm leading-relaxed whitespace-pre-wrap">{text}</p>

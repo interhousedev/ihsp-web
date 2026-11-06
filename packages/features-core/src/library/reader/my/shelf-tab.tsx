@@ -25,7 +25,7 @@ function RemovedRow({ entry }: { entry: ShelfEntry }) {
     onError: (error) => toast.error(errorMessage(error)),
   })
   return (
-    <div className="bg-muted/40 flex h-full flex-col gap-2 rounded-xl border border-dashed p-3">
+    <div className="bg-muted/40 flex h-full flex-col gap-2 rounded-card border border-dashed p-3">
       <p className="font-medium break-words">{entry.item.title}</p>
       {entry.item.author_label ? <p className="text-muted-foreground text-xs">{entry.item.author_label}</p> : null}
       <p className="text-muted-foreground text-sm">{t("shelf.removed")}</p>

@@ -1,6 +1,7 @@
-// Shell chrome shared by the apps: the pieces that were copied into every `apps/*/src/features/{shell,shared}`.
-// Apps adopt them one by one; the local copies stay valid until then.
+// Shell chrome shared by the apps.
 export { BackLink } from "./back-link"
+export { CardSkeletons } from "./card-skeletons"
+export { LazyTelegramBridge } from "./lazy-telegram-bridge"
 export { LinkButton, isInternalHref } from "./link-button"
 export { PageLoading } from "./page-loading"
 export { ProfileMenu } from "./profile-menu"

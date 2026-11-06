@@ -62,11 +62,9 @@ export function ProjectsList({ basePath, navButtons, trailing }: ProjectsListPro
           {projects.isError ? (
             <StateView state="error" error={projects.error} onRetry={() => void projects.refetch()} />
           ) : null}
-          {projects.isSuccess && projects.data.length === 0 ? (
-            <p className="text-muted-foreground py-6 text-sm">{t("empty")}</p>
-          ) : null}
+          {projects.isSuccess && projects.data.length === 0 ? <StateView state="empty" emptyText={t("empty")} /> : null}
           {projects.isSuccess && projects.data.length > 0 ? (
-            <ul className="divide-y rounded-xl border">
+            <ul className="divide-y rounded-card border">
               {projects.data.map((project) => (
                 <li key={project.id}>
                   <Link

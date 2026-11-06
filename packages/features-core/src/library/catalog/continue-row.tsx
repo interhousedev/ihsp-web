@@ -25,7 +25,7 @@ export function ContinueRow({ items }: { items: readonly ItemCard[] }) {
             <li key={cardKey(item)}>
               <Link
                 href={readHref({ item: id })}
-                className="bg-card hover:bg-muted/50 focus-visible:ring-ring flex min-h-20 items-center gap-3 rounded-xl border p-3 focus-visible:ring-2"
+                className="bg-card hover:bg-muted/50 focus-visible:ring-ring flex min-h-20 items-center gap-3 rounded-card border p-3 focus-visible:ring-2"
               >
                 <CoverImage src={item.cover_url} title={item.title} className="h-16 w-12 shrink-0 rounded" />
                 <span className="flex min-w-0 flex-1 flex-col gap-1.5">

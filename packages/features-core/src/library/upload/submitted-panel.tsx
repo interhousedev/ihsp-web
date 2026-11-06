@@ -2,17 +2,7 @@
 
 import type { ItemDetail } from "@ihsp/api"
 import { useT } from "@ihsp/i18n"
-import {
-  Button,
-  Empty,
-  EmptyContent,
-  EmptyDescription,
-  EmptyHeader,
-  EmptyMedia,
-  EmptyTitle,
-  Icons,
-  buttonVariants,
-} from "@ihsp/ui"
+import { Button, buttonVariants, Icons, StateView } from "@ihsp/ui"
 import Link from "next/link"
 import { itemHref, myHref } from "../utils/hrefs"
 import { SubmitNote } from "./step-review"
@@ -22,33 +12,37 @@ export function SubmittedPanel({ item, onAnother }: { item: ItemDetail; onAnothe
   const t = useT("library.upload.done")
   const published = item.status === "published"
   return (
-    <Empty className="border" role="status" data-status={item.status}>
-      <EmptyHeader>
-        <EmptyMedia variant="icon">
-          <Icons.circleCheck aria-hidden />
-        </EmptyMedia>
-        <EmptyTitle>{published ? t("publishedTitle") : t("reviewTitle")}</EmptyTitle>
-        <EmptyDescription>{item.title}</EmptyDescription>
-        <EmptyDescription>{published ? t("publishedText") : <SubmitNote className="contents" />}</EmptyDescription>
-      </EmptyHeader>
-      <EmptyContent className="flex-row flex-wrap justify-center gap-2">
-        {published && item.id ? (
-          <Link href={itemHref(item.id)} className={buttonVariants({ className: "min-h-11 md:min-h-8" })}>
-            {t("view")}
+    <StateView
+      state="empty"
+      data-status={item.status}
+      icon={<Icons.circleCheck aria-hidden />}
+      title={published ? t("publishedTitle") : t("reviewTitle")}
+      description={
+        <>
+          <div>{item.title}</div>
+          <div>{published ? t("publishedText") : <SubmitNote className="contents" />}</div>
+        </>
+      }
+      action={
+        <>
+          {published && item.id ? (
+            <Link href={itemHref(item.id)} className={buttonVariants({ className: "min-h-11 md:min-h-8" })}>
+              {t("view")}
+            </Link>
+          ) : null}
+          <Link
+            href={myHref("uploads")}
+            className={buttonVariants({ variant: published ? "outline" : "default", className: "min-h-11 md:min-h-8" })}
+          >
+            {t("myUploads")}
           </Link>
-        ) : null}
-        <Link
-          href={myHref("uploads")}
-          className={buttonVariants({ variant: published ? "outline" : "default", className: "min-h-11 md:min-h-8" })}
-        >
-          {t("myUploads")}
-        </Link>
-        {onAnother ? (
-          <Button type="button" variant="outline" className="min-h-11 md:min-h-8" onClick={onAnother}>
-            {t("another")}
-          </Button>
-        ) : null}
-      </EmptyContent>
-    </Empty>
+          {onAnother ? (
+            <Button type="button" variant="outline" className="min-h-11 md:min-h-8" onClick={onAnother}>
+              {t("another")}
+            </Button>
+          ) : null}
+        </>
+      }
+    />
   )
 }

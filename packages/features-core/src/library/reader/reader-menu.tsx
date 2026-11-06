@@ -4,9 +4,8 @@ import { getLibraryFileUrl, type ItemDetail, type ItemFile } from "@ihsp/api"
 import { useErrorMessage, useT } from "@ihsp/i18n"
 import { Button, buttonVariants, safeHttpUrl } from "@ihsp/ui"
 import { IconDownload, IconFlag, IconInfoCircle } from "@ihsp/ui"
-import { useMutation } from "@tanstack/react-query"
 import Link from "next/link"
-import { toast } from "sonner"
+import { useFileOpener } from "../../file-item/file-actions"
 import { AddToNotebookButton, ShareLink, ShelfButton } from "../catalog"
 import { itemHref } from "../utils/hrefs"
 import { ReaderSheet } from "./reader-sheet"
@@ -37,14 +36,12 @@ export function ReaderMenu({
   const errorMessage = useErrorMessage()
   const id = item.id
 
-  const download = useMutation({
-    mutationFn: () => getLibraryFileUrl(id!, file.id),
-    onSuccess: (target) => {
-      const url = safeHttpUrl(target.url)
-      if (url) window.location.assign(url)
-    },
-    onError: (error) => toast.error(errorMessage(error)),
-  })
+  const opener = useFileOpener(undefined, errorMessage)
+  const resolveDownload = async () => {
+    const url = safeHttpUrl((await getLibraryFileUrl(id!, file.id)).url)
+    if (!url) throw new Error("unsafe file address")
+    return url
+  }
   if (!id) return null
 
   return (
@@ -76,8 +73,8 @@ export function ReaderMenu({
             type="button"
             variant="outline"
             className="min-h-11 md:min-h-8"
-            disabled={download.isPending}
-            onClick={() => download.mutate()}
+            disabled={opener.pending}
+            onClick={() => void opener.open(resolveDownload)}
           >
             <IconDownload aria-hidden />
             {itemT("download")}

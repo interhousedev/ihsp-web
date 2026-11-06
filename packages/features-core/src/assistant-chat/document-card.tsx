@@ -3,25 +3,18 @@
 import {
   getStaffTodayQuery,
   postLessonResources,
-  postLinks,
   resolveFileUrl,
   type DocumentCard as Document,
   type LessonItem,
 } from "@ihsp/api"
 import { useSession } from "@ihsp/auth"
 import { useT } from "@ihsp/i18n"
-import { Button, DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@ihsp/ui"
-import {
-  IconDownload,
-  IconFileTypeDoc,
-  IconFileTypePpt,
-  IconFileTypeXls,
-  IconLink,
-  IconShare,
-  type Icon,
-} from "@ihsp/ui"
+import { Button, DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger, formatBytes } from "@ihsp/ui"
+import { IconDownload, IconFileTypeDoc, IconFileTypePpt, IconFileTypeXls, IconLink, type Icon } from "@ihsp/ui"
 import { useMutation, useQuery } from "@tanstack/react-query"
 import { toast } from "sonner"
+import { useFileOpener } from "../file-item/file-actions"
+import { FileShareMenu } from "../file-item/file-share-menu"
 
 type DocumentCardProps = { document: Document }
 
@@ -29,11 +22,6 @@ const KIND_ICONS: Record<Document["kind"], Icon> = {
   docx: IconFileTypeDoc,
   xlsx: IconFileTypeXls,
   pptx: IconFileTypePpt,
-}
-
-function sizeLabel(bytes: number): string {
-  if (bytes >= 1024 * 1024) return `${(bytes / (1024 * 1024)).toFixed(1)} MB`
-  return `${Math.max(1, Math.round(bytes / 1024))} KB`
 }
 
 function lessonLabel(lesson: LessonItem): string {
@@ -80,37 +68,6 @@ function AttachMenu({ fileId }: { fileId: string }) {
   )
 }
 
-/** Share: a short link to the file (as on the Links page), copied to the clipboard. */
-function ShareButton({ fileId }: { fileId: string }) {
-  const t = useT("assistant")
-  const share = useMutation({
-    mutationFn: () => postLinks({ kind: "file", file_id: fileId }),
-    onSuccess: async (link) => {
-      try {
-        await navigator.clipboard.writeText(link.url)
-        toast.success(t("documents.shareCopied", { url: link.url }))
-      } catch {
-        toast.success(t("documents.shareCreated", { url: link.url }))
-      }
-    },
-    onError: () => toast.error(t("documents.shareFailed")),
-  })
-
-  return (
-    <Button
-      type="button"
-      variant="outline"
-      size="sm"
-      className="min-h-11 md:min-h-8"
-      disabled={share.isPending}
-      onClick={() => share.mutate()}
-    >
-      <IconShare aria-hidden />
-      {t("documents.share")}
-    </Button>
-  )
-}
-
 /**
  * A file made by the assistant: icon by type, name, size, a download, a share link and
  * (for staff) "Attach to a lesson". Office files have no in-app preview: Download opens them.
@@ -121,13 +78,7 @@ export function DocumentCard({ document: doc }: DocumentCardProps) {
   const isStaff = session?.user.roles.includes("teacher") ?? false
   const KindIcon = KIND_ICONS[doc.kind] ?? IconFileTypeDoc
 
-  async function download() {
-    try {
-      window.open(await resolveFileUrl(doc.file_id, false), "_blank", "noopener,noreferrer")
-    } catch {
-      toast.error(t("documents.downloadFailed"))
-    }
-  }
+  const { open, pending } = useFileOpener()
 
   return (
     <div
@@ -141,16 +92,22 @@ export function DocumentCard({ document: doc }: DocumentCardProps) {
         <div className="min-w-0">
           <p className="truncate text-sm font-medium">{doc.name}</p>
           <p className="text-muted-foreground text-xs">
-            .{doc.kind} · {sizeLabel(doc.size)}
+            .{doc.kind} · {formatBytes(doc.size)}
           </p>
         </div>
       </div>
       <div className="flex flex-wrap gap-2">
-        <Button type="button" size="sm" className="min-h-11 md:min-h-8" onClick={() => void download()}>
+        <Button
+          type="button"
+          size="sm"
+          className="min-h-11 md:min-h-8"
+          disabled={pending}
+          onClick={() => void open(() => resolveFileUrl(doc.file_id, false))}
+        >
           <IconDownload aria-hidden />
           {t("documents.download", { format: doc.kind })}
         </Button>
-        <ShareButton fileId={doc.file_id} />
+        <FileShareMenu fileId={doc.file_id} name={doc.name} labelled />
         {isStaff ? <AttachMenu fileId={doc.file_id} /> : null}
       </div>
     </div>

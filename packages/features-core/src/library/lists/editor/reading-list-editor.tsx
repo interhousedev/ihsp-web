@@ -2,18 +2,7 @@
 
 import { getReadingListQuery, isApiError } from "@ihsp/api"
 import { useT } from "@ihsp/i18n"
-import {
-  Empty,
-  EmptyContent,
-  EmptyDescription,
-  EmptyHeader,
-  EmptyMedia,
-  EmptyTitle,
-  Icons,
-  PageContainer,
-  StateView,
-  buttonVariants,
-} from "@ihsp/ui"
+import { buttonVariants, Icons, PageContainer, StateView } from "@ihsp/ui"
 import { useQuery } from "@tanstack/react-query"
 import Link from "next/link"
 import { useSearchParams } from "next/navigation"
@@ -56,26 +45,25 @@ export function ReadingListEditor() {
   if (!query.data.can_edit) {
     return (
       <PageContainer title={t("editTitle")}>
-        <Empty className="border" role="status">
-          <EmptyHeader>
-            <EmptyMedia variant="icon">
-              <Icons.lock aria-hidden />
-            </EmptyMedia>
-            <EmptyTitle>{t("readOnlyTitle")}</EmptyTitle>
-            <EmptyDescription>{t("readOnlyText", { title: query.data.title })}</EmptyDescription>
-          </EmptyHeader>
-          <EmptyContent className="flex-row flex-wrap justify-center gap-2">
-            <Link href={listHref(id)} className={buttonVariants({ className: "min-h-11 md:min-h-8" })}>
-              {t("openList")}
-            </Link>
-            <Link
-              href={listsHref()}
-              className={buttonVariants({ variant: "outline", className: "min-h-11 md:min-h-8" })}
-            >
-              {t("allLists")}
-            </Link>
-          </EmptyContent>
-        </Empty>
+        <StateView
+          state="empty"
+          icon={<Icons.lock aria-hidden />}
+          title={t("readOnlyTitle")}
+          description={t("readOnlyText", { title: query.data.title })}
+          action={
+            <>
+              <Link href={listHref(id)} className={buttonVariants({ className: "min-h-11 md:min-h-8" })}>
+                {t("openList")}
+              </Link>
+              <Link
+                href={listsHref()}
+                className={buttonVariants({ variant: "outline", className: "min-h-11 md:min-h-8" })}
+              >
+                {t("allLists")}
+              </Link>
+            </>
+          }
+        />
       </PageContainer>
     )
   }

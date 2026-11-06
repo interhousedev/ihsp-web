@@ -100,7 +100,7 @@ export function DetailsFields({
       </div>
 
       {readOnlyMeta ? (
-        <div className="bg-muted/40 flex flex-col gap-2 rounded-xl border p-3 text-sm">
+        <div className="bg-muted/40 flex flex-col gap-2 rounded-card border p-3 text-sm">
           <dl className="grid gap-2 sm:grid-cols-2">
             <div>
               <dt className="text-muted-foreground">{t("subjectsLabel")}</dt>

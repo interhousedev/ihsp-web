@@ -3,7 +3,7 @@
 import type { SourceItem } from "@ihsp/api"
 import { useT } from "@ihsp/i18n"
 import { Badge, Button, Tooltip, TooltipContent, TooltipTrigger, cn } from "@ihsp/ui"
-import { IconRefresh } from "@ihsp/ui"
+import { IconRefresh, Spinner } from "@ihsp/ui"
 import { SourceKindIcon } from "../lib/source-icons"
 import { isUsable } from "../lib/sort-sources"
 import { SelectionCheckbox } from "./selection-checkbox"
@@ -95,7 +95,7 @@ export function SourceRow({
           disabled={rereading}
           onClick={() => onReread(source)}
         >
-          <IconRefresh aria-hidden className={rereading ? "animate-spin" : undefined} />
+          {rereading ? <Spinner aria-hidden /> : <IconRefresh aria-hidden />}
           {rereading ? t("row.rereading") : t("row.reread")}
         </Button>
       ) : null}

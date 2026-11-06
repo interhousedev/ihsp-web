@@ -2,7 +2,8 @@
 
 import type { FileItem } from "@ihsp/api"
 import { useFormatters, useT } from "@ihsp/i18n"
-import { fileKindOf, formatFileSize } from "./file-kind"
+import { formatBytes } from "@ihsp/ui"
+import { fileKindOf } from "./file-kind"
 import { FileKindIcon, useInlineUrl } from "./file-visual"
 
 /**
@@ -29,7 +30,7 @@ export function FilePreview({ file }: { file: FileItem }) {
         </p>
         <dl className="text-muted-foreground mt-1 grid grid-cols-[auto_1fr] gap-x-3 gap-y-0.5 text-xs">
           <dt>{t("size")}</dt>
-          <dd>{formatFileSize(file.byte_size)}</dd>
+          <dd>{formatBytes(file.byte_size)}</dd>
           <dt>{t("kind")}</dt>
           <dd className="truncate">{file.content_type}</dd>
           <dt>{t("added")}</dt>

@@ -2,7 +2,7 @@
 
 import { useT } from "@ihsp/i18n"
 import { Button, cn } from "@ihsp/ui"
-import { IconAlertTriangle, IconLoader2, IconX } from "@ihsp/ui"
+import { IconAlertTriangle, IconX, Spinner } from "@ihsp/ui"
 import { useState, type DragEvent, type ReactNode } from "react"
 import type { NotebookUploader, UploadRow } from "./use-upload-to-notebook"
 
@@ -45,7 +45,7 @@ function UploadRowView({ row, onDismiss }: { row: UploadRow; onDismiss: (key: st
   }
   return (
     <li className="text-muted-foreground flex items-center gap-2 text-xs">
-      <IconLoader2 aria-hidden className="size-3.5 shrink-0 animate-spin motion-reduce:animate-none" />
+      <Spinner aria-hidden className="size-3.5 shrink-0" />
       <span className="min-w-0 truncate">
         {row.phase === "uploading"
           ? t("files.upload.progress", { name: row.name })

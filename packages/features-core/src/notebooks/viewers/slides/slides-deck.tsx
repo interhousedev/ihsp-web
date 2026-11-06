@@ -2,8 +2,8 @@
 
 import type { ArtifactDetail, SlidesContent } from "@ihsp/api"
 import { useT } from "@ihsp/i18n"
-import { ConfirmDialog, StateView } from "@ihsp/ui"
-import { useEffect, useMemo, useState, type KeyboardEvent } from "react"
+import { ConfirmDialog, StateView, useUnsavedGuard } from "@ihsp/ui"
+import { useMemo, useState, type KeyboardEvent } from "react"
 import { toast } from "sonner"
 import { useUpdateSlides } from "../../api/use-artifacts"
 import { RefChips, citationsFromRefs } from "../../chat/ref-chips"
@@ -47,14 +47,9 @@ export function SlidesDeck({ notebookId, artifact, content }: SlidesDeckProps) {
   const [confirmingDelete, setConfirmingDelete] = useState(false)
   const [announcement, setAnnouncement] = useState("")
 
-  // A page with unsaved edits asks before it is closed or reloaded.
+  // A page with unsaved edits asks before it is closed or reloaded, even while the save bar is hidden.
   const { dirty } = deck
-  useEffect(() => {
-    if (!dirty) return
-    const listener = (event: BeforeUnloadEvent) => event.preventDefault()
-    window.addEventListener("beforeunload", listener)
-    return () => window.removeEventListener("beforeunload", listener)
-  }, [dirty])
+  useUnsavedGuard(dirty)
 
   const marked = useMemo(
     () => new Set(mode === "revise" ? revision.pending.map((change) => change.slide_id) : []),

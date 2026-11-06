@@ -1,17 +1,7 @@
 "use client"
 
 import { useT } from "@ihsp/i18n"
-import {
-  Badge,
-  Button,
-  ConfirmDialog,
-  Empty,
-  EmptyDescription,
-  EmptyHeader,
-  EmptyMedia,
-  EmptyTitle,
-  cn,
-} from "@ihsp/ui"
+import { Badge, Button, cn, ConfirmDialog, StateView } from "@ihsp/ui"
 import { IconBookmark, IconHighlight, IconPencil, IconRefresh, IconTrash } from "@ihsp/ui"
 import { useEffect, useRef, useState } from "react"
 import { byPosition } from "./lib/annotation-order"
@@ -176,26 +166,20 @@ export function AnnotationList({
   return (
     <div className="flex min-h-0 flex-1 flex-col gap-3 overflow-y-auto p-3">
       {!canEdit ? (
-        <Empty className="border">
-          <EmptyHeader>
-            <EmptyMedia variant="icon">
-              <IconHighlight aria-hidden />
-            </EmptyMedia>
-            <EmptyTitle>{t("signInTitle")}</EmptyTitle>
-            <EmptyDescription>{t("signIn")}</EmptyDescription>
-          </EmptyHeader>
-          <SignInLink />
-        </Empty>
+        <StateView
+          state="empty"
+          icon={<IconHighlight aria-hidden />}
+          title={t("signInTitle")}
+          description={t("signIn")}
+          action={<SignInLink />}
+        />
       ) : ordered.length === 0 ? (
-        <Empty className="border">
-          <EmptyHeader>
-            <EmptyMedia variant="icon">
-              <IconHighlight aria-hidden />
-            </EmptyMedia>
-            <EmptyTitle>{t("emptyTitle")}</EmptyTitle>
-            <EmptyDescription>{t("empty")}</EmptyDescription>
-          </EmptyHeader>
-        </Empty>
+        <StateView
+          state="empty"
+          icon={<IconHighlight aria-hidden />}
+          title={t("emptyTitle")}
+          description={t("empty")}
+        />
       ) : (
         <ul className="flex flex-col gap-2" aria-label={t("panelTitle")}>
           {ordered.map((annotation) => (

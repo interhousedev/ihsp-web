@@ -15,7 +15,7 @@ type DeckResultsProps = {
 export function DeckResults({ known, missed, onRestart }: DeckResultsProps) {
   const t = useT("notebooks")
   return (
-    <div className="bg-card flex flex-1 flex-col items-center justify-center gap-4 rounded-2xl border p-6 text-center md:aspect-[3/2] md:flex-none">
+    <div className="bg-card flex flex-1 flex-col items-center justify-center gap-4 rounded-card border p-6 text-center md:aspect-[3/2] md:flex-none">
       <IconTrophy aria-hidden className="text-primary size-10" />
       <p role="status" className="text-lg font-semibold">
         {t("cards.results", { known, missed })}

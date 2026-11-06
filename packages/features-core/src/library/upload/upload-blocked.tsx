@@ -1,17 +1,7 @@
 "use client"
 
 import { useFormatters, useT } from "@ihsp/i18n"
-import {
-  Button,
-  Empty,
-  EmptyContent,
-  EmptyDescription,
-  EmptyHeader,
-  EmptyMedia,
-  EmptyTitle,
-  Icons,
-  buttonVariants,
-} from "@ihsp/ui"
+import { Button, buttonVariants, Icons, StateView } from "@ihsp/ui"
 import Link from "next/link"
 import { browseHref, myHref } from "../utils/hrefs"
 import { classifyUploadError, numberParam, stringParam } from "./upload-errors"
@@ -38,26 +28,36 @@ export function UploadBlocked({ error, onRetry }: { error: unknown; onRetry?: ()
   else text = t("rateLimitedLater")
 
   return (
-    <Empty className="border" role="alert" data-blocked={banned ? "banned" : "rate-limited"}>
-      <EmptyHeader>
-        <EmptyMedia variant="icon">{banned ? <Icons.lock aria-hidden /> : <Icons.clock aria-hidden />}</EmptyMedia>
-        <EmptyTitle>{banned ? t("bannedTitle") : t("rateLimitedTitle")}</EmptyTitle>
-        <EmptyDescription>{text}</EmptyDescription>
-        {banned ? <EmptyDescription>{t("bannedHint")}</EmptyDescription> : null}
-      </EmptyHeader>
-      <EmptyContent className="flex-row flex-wrap justify-center gap-2">
-        {!banned && onRetry ? (
-          <Button type="button" variant="outline" className="min-h-11 md:min-h-8" onClick={onRetry}>
-            {t("retry")}
-          </Button>
-        ) : null}
-        <Link href={myHref("uploads")} className={buttonVariants({ className: "min-h-11 md:min-h-8" })}>
-          {t("myUploads")}
-        </Link>
-        <Link href={browseHref()} className={buttonVariants({ variant: "outline", className: "min-h-11 md:min-h-8" })}>
-          {t("browse")}
-        </Link>
-      </EmptyContent>
-    </Empty>
+    <StateView
+      state="error"
+      role="alert"
+      data-blocked={banned ? "banned" : "rate-limited"}
+      icon={banned ? <Icons.lock aria-hidden /> : <Icons.clock aria-hidden />}
+      title={banned ? t("bannedTitle") : t("rateLimitedTitle")}
+      description={
+        <>
+          <span className="block">{text}</span>
+          {banned ? <span className="block">{t("bannedHint")}</span> : null}
+        </>
+      }
+      action={
+        <>
+          {!banned && onRetry ? (
+            <Button type="button" variant="outline" className="min-h-11 md:min-h-8" onClick={onRetry}>
+              {t("retry")}
+            </Button>
+          ) : null}
+          <Link href={myHref("uploads")} className={buttonVariants({ className: "min-h-11 md:min-h-8" })}>
+            {t("myUploads")}
+          </Link>
+          <Link
+            href={browseHref()}
+            className={buttonVariants({ variant: "outline", className: "min-h-11 md:min-h-8" })}
+          >
+            {t("browse")}
+          </Link>
+        </>
+      }
+    />
   )
 }

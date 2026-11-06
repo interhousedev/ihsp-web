@@ -2,7 +2,7 @@
 
 import { getMeFilesQuery, type FileItem } from "@ihsp/api"
 import { useFormatters, useT } from "@ihsp/i18n"
-import { Button, Input, StateView } from "@ihsp/ui"
+import { Button, Input, StateView, formatBytes } from "@ihsp/ui"
 import { useQuery } from "@tanstack/react-query"
 import { useState } from "react"
 import { DrivePicker, FileUploadButton } from "../../file-upload-button"
@@ -11,7 +11,6 @@ import type { FilesTabProps } from "./add-types"
 import { PickRow } from "./pick-row"
 import { refValue } from "./source-rules"
 import { UploadDropZone } from "./upload-drop-zone"
-import { useFormatBytes } from "./use-format-bytes"
 
 /** Files with readable text can be sources; the rest are shown disabled with the reason. */
 function hasReadableText(file: FileItem): boolean {
@@ -22,7 +21,6 @@ function hasReadableText(file: FileItem): boolean {
 export function PickFilesTab({ sources, selection, full, uploader }: FilesTabProps) {
   const t = useT("notebooks")
   const format = useFormatters()
-  const formatBytes = useFormatBytes()
   const files = useQuery(getMeFilesQuery({ limit: 100 }))
   const [search, setSearch] = useState("")
   const [browsing, setBrowsing] = useState(false)

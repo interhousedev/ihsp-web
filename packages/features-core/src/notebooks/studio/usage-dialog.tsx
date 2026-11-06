@@ -2,10 +2,9 @@
 
 import type { NotebookUsage, UsagePart } from "@ihsp/api"
 import { useFormatters, useT } from "@ihsp/i18n"
-import { Progress, ProgressLabel, Skeleton, StateView, cn } from "@ihsp/ui"
+import { Progress, ProgressLabel, Skeleton, StateView, cn, ResponsiveDialog } from "@ihsp/ui"
 import { useNotebookUsage } from "../api/use-notebook-usage"
 import { useOptionalWorkspace } from "../workspace-context"
-import { ResponsiveDialog } from "./responsive-dialog"
 
 export type UsageDialogProps = {
   open: boolean

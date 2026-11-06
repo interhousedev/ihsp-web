@@ -1,7 +1,7 @@
 "use client"
 
 import { useT } from "@ihsp/i18n"
-import { Button, Dialog, DialogContent, DialogFooter, DialogHeader, DialogTitle, Input, Label } from "@ihsp/ui"
+import { Button, Input, Label, ResponsiveDialog } from "@ihsp/ui"
 import { useId, useState } from "react"
 import { parseShareInput } from "../utils/share-input"
 
@@ -32,44 +32,42 @@ export function GetSharedDialog({ open, onOpenChange, onSubmit }: GetSharedDialo
   }
 
   return (
-    <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent>
-        <form
-          className="flex flex-col gap-4"
-          onSubmit={(event) => {
-            event.preventDefault()
-            submit()
-          }}
-        >
-          <DialogHeader>
-            <DialogTitle>{t("title")}</DialogTitle>
-          </DialogHeader>
-          <div className="flex flex-col gap-1">
-            <Label htmlFor={inputId}>{t("label")}</Label>
-            <Input
-              id={inputId}
-              value={value}
-              className="min-h-11"
-              autoFocus
-              aria-invalid={invalid}
-              onChange={(event) => setValue(event.target.value)}
-            />
-            {invalid ? (
-              <p role="alert" className="text-destructive text-sm">
-                {t("invalid")}
-              </p>
-            ) : null}
-          </div>
-          <DialogFooter>
-            <Button type="button" variant="outline" className="min-h-11" onClick={() => onOpenChange(false)}>
-              {t("cancel")}
-            </Button>
-            <Button type="submit" className="min-h-11">
-              {t("copy")}
-            </Button>
-          </DialogFooter>
-        </form>
-      </DialogContent>
-    </Dialog>
+    <ResponsiveDialog
+      open={open}
+      onOpenChange={onOpenChange}
+      title={t("title")}
+      size="sm"
+      onSubmit={(event) => {
+        event.preventDefault()
+        submit()
+      }}
+      footer={
+        <>
+          <Button type="button" variant="outline" className="min-h-11" onClick={() => onOpenChange(false)}>
+            {t("cancel")}
+          </Button>
+          <Button type="submit" className="min-h-11">
+            {t("copy")}
+          </Button>
+        </>
+      }
+    >
+      <div className="flex flex-col gap-1">
+        <Label htmlFor={inputId}>{t("label")}</Label>
+        <Input
+          id={inputId}
+          value={value}
+          className="min-h-11"
+          autoFocus
+          aria-invalid={invalid}
+          onChange={(event) => setValue(event.target.value)}
+        />
+        {invalid ? (
+          <p role="alert" className="text-destructive text-sm">
+            {t("invalid")}
+          </p>
+        ) : null}
+      </div>
+    </ResponsiveDialog>
   )
 }

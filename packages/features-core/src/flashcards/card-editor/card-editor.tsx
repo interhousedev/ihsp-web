@@ -10,6 +10,7 @@ import {
   type DragEndEvent,
 } from "@dnd-kit/core"
 import { SortableContext, sortableKeyboardCoordinates, verticalListSortingStrategy } from "@dnd-kit/sortable"
+import type { FlashcardHardness } from "@ihsp/api"
 import { useT } from "@ihsp/i18n"
 import { Button, Icons, Input, Label, Textarea, buttonVariants, cn } from "@ihsp/ui"
 import Link from "next/link"
@@ -26,7 +27,7 @@ export type CardEditorValues = {
   title: string
   description: string
   /** The filled rows in their order; `id` is set for cards that already exist (they keep their progress). */
-  cards: { id?: string; front: string; back: string }[]
+  cards: { id?: string; front: string; back: string; hardness?: FlashcardHardness }[]
 }
 
 export type CardEditorProps = {
@@ -121,6 +122,7 @@ export function CardEditor({
             ...(row.id ? { id: row.id } : {}),
             front: row.front.trim(),
             back: row.back.trim(),
+            ...(row.hardness ? { hardness: row.hardness } : {}),
           })),
       },
       practice,

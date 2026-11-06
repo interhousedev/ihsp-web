@@ -20,7 +20,7 @@ export function StatsSection({
   return (
     <section
       aria-label={title}
-      className={`flex min-w-0 flex-col gap-3 rounded-xl border p-4 ${wide ? "md:col-span-2" : ""}`}
+      className={`flex min-w-0 flex-col gap-3 rounded-card border p-4 ${wide ? "md:col-span-2" : ""}`}
     >
       <h2 className="text-base font-semibold">{title}</h2>
       {children}

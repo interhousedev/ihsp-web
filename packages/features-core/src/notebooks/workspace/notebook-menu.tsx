@@ -1,6 +1,6 @@
 "use client"
 
-import type { NotebookDetail } from "@ihsp/api"
+import { deleteNotebookMembership, keys, postNotebookCopy, type NotebookDetail } from "@ihsp/api"
 import { useT } from "@ihsp/i18n"
 import {
   Button,
@@ -12,13 +12,17 @@ import {
   DropdownMenuTrigger,
 } from "@ihsp/ui"
 import { IconDotsVertical } from "@ihsp/ui"
+import { useQueryClient } from "@tanstack/react-query"
 import { useRouter } from "next/navigation"
+import { toast } from "sonner"
 import { useState } from "react"
 import { useDeleteNotebook, useDeleteNotebookChat } from "../api"
+import { LinkedSetsDialog } from "../sharing/linked-sets-dialog"
+import { ShareNotebookDialog } from "../sharing/share-notebook-dialog"
 import { useNotebookErrorMessage } from "../lib/use-notebook-error"
 import { ChatConfigDialog } from "./panes"
 
-type Dialog = "config" | "clearChat" | "delete" | null
+type Dialog = "config" | "clearChat" | "delete" | "share" | "sets" | null
 
 /** The ⋮ menu of the header: configure the chat, delete the chat history, delete the notebook. */
 export function NotebookMenu({ notebook }: { notebook: NotebookDetail }) {
@@ -29,6 +33,29 @@ export function NotebookMenu({ notebook }: { notebook: NotebookDetail }) {
   const [dialog, setDialog] = useState<Dialog>(null)
   const clearChat = useDeleteNotebookChat(notebook.id)
   const remove = useDeleteNotebook()
+  const client = useQueryClient()
+  const viewer = notebook.shared === true
+  const canShare = notebook.origin === "manual" && !viewer
+
+  async function copyToMine() {
+    try {
+      const copy = await postNotebookCopy(notebook.id)
+      await client.invalidateQueries({ queryKey: keys.notebooks.all() })
+      router.push(`/notebooks/view/?id=${encodeURIComponent(copy.id)}`)
+    } catch (error) {
+      toast.error(errorMessage(error))
+    }
+  }
+
+  async function leave() {
+    try {
+      await deleteNotebookMembership(notebook.id)
+      await client.invalidateQueries({ queryKey: keys.sharing.notebooks() })
+      router.push("/notebooks/")
+    } catch (error) {
+      toast.error(errorMessage(error))
+    }
+  }
 
   function close() {
     setDialog(null)
@@ -53,17 +80,40 @@ export function NotebookMenu({ notebook }: { notebook: NotebookDetail }) {
           <IconDotsVertical aria-hidden />
         </DropdownMenuTrigger>
         <DropdownMenuContent align="end" className="w-56">
-          <DropdownMenuItem className="min-h-11 md:min-h-8" onClick={() => setDialog("config")}>
-            {t("menu.configureChat")}
-          </DropdownMenuItem>
+          {canShare ? (
+            <>
+              <DropdownMenuItem className="min-h-11 md:min-h-8" onClick={() => setDialog("share")}>
+                {t("share.title")}
+              </DropdownMenuItem>
+              <DropdownMenuItem className="min-h-11 md:min-h-8" onClick={() => setDialog("sets")}>
+                {t("share.setsTitle")}
+              </DropdownMenuItem>
+            </>
+          ) : null}
+          {viewer ? (
+            <DropdownMenuItem className="min-h-11 md:min-h-8" onClick={() => void copyToMine()}>
+              {t("share.copy")}
+            </DropdownMenuItem>
+          ) : (
+            <DropdownMenuItem className="min-h-11 md:min-h-8" onClick={() => setDialog("config")}>
+              {t("menu.configureChat")}
+            </DropdownMenuItem>
+          )}
           <DropdownMenuItem
             className="min-h-11 md:min-h-8"
-            disabled={notebook.can_write === false}
+            disabled={notebook.can_write === false && !viewer}
             onClick={() => setDialog("clearChat")}
           >
             {t("chat.clear")}
           </DropdownMenuItem>
-          {notebook.course_id == null ? (
+          {viewer ? (
+            <>
+              <DropdownMenuSeparator />
+              <DropdownMenuItem variant="destructive" className="min-h-11 md:min-h-8" onClick={() => void leave()}>
+                {t("share.leave")}
+              </DropdownMenuItem>
+            </>
+          ) : notebook.course_id == null ? (
             <>
               <DropdownMenuSeparator />
               <DropdownMenuItem
@@ -77,6 +127,13 @@ export function NotebookMenu({ notebook }: { notebook: NotebookDetail }) {
           ) : null}
         </DropdownMenuContent>
       </DropdownMenu>
+
+      {canShare ? (
+        <>
+          <ShareNotebookDialog notebookId={notebook.id} open={dialog === "share"} onOpenChange={(o) => !o && close()} />
+          <LinkedSetsDialog notebookId={notebook.id} open={dialog === "sets"} onOpenChange={(o) => !o && close()} />
+        </>
+      ) : null}
 
       <ChatConfigDialog notebook={notebook} open={dialog === "config"} onOpenChange={(open) => !open && close()} />
 

@@ -66,7 +66,7 @@ export function SettingsPanel() {
   const dirty = !!saved && (saved.enabled !== enabled || saved.anonymous_cards !== anonymous)
 
   return (
-    <section aria-labelledby="unilibrary-settings" className="flex flex-col gap-4 rounded-xl border p-4">
+    <section aria-labelledby="unilibrary-settings" className="flex flex-col gap-4 rounded-card border p-4">
       <div className="flex flex-wrap items-center justify-between gap-2">
         <h2 id="unilibrary-settings" className="text-lg font-semibold">
           {t("title")}

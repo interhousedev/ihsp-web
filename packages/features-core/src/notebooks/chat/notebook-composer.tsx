@@ -75,7 +75,7 @@ export function NotebookComposer({
   const [attachError, setAttachError] = useState<string | null>(null)
 
   const noSources = notebook.selected_source_count === 0
-  const readOnly = notebook.can_write === false
+  const readOnly = notebook.can_write === false && notebook.shared !== true
   const locked = limit.reached || !online || readOnly
   const slash = useSlashInput({ text, setText, command, setCommand, fieldRef, disabled: locked })
   const uploading = attached.some((item) => item.kind === "file" && item.pending === true)

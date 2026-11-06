@@ -66,7 +66,7 @@ export function EntryRow({ entry, index, count, onChange, onMove, onRemove, show
       data-entry-key={entry.key}
       aria-label={t("position", { n, count })}
       className={cn(
-        "bg-card flex flex-col gap-3 rounded-xl border p-3",
+        "bg-card flex flex-col gap-3 rounded-card border p-3",
         problems.length > 0 && "border-destructive",
         isDragging && "relative z-10 opacity-80 shadow-lg",
       )}

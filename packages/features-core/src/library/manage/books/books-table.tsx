@@ -93,7 +93,7 @@ export function BooksTable({ rows }: { rows: readonly BookRow[] }) {
     return (
       <ul aria-label={t("tableLabel")} className="flex flex-col gap-2">
         {sorted.map((row) => (
-          <li key={row.item.id ?? row.item.title} className="flex flex-col gap-2 rounded-xl border p-3">
+          <li key={row.item.id ?? row.item.title} className="flex flex-col gap-2 rounded-card border p-3">
             <RowLink row={row} />
             <p className="text-muted-foreground text-xs">{row.item.author_label}</p>
             <div className="flex flex-wrap items-center gap-1.5">
@@ -126,7 +126,6 @@ export function BooksTable({ rows }: { rows: readonly BookRow[] }) {
               <RowLink row={row} />
               <div className="text-muted-foreground text-xs">{row.item.author_label}</div>
             </TableCell>
-            <TableCell></TableCell>
             <TableCell>
               <StatusBadge row={row} />
             </TableCell>

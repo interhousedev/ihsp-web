@@ -1,7 +1,7 @@
 "use client"
 
 import { useT } from "@ihsp/i18n"
-import { Button, Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from "@ihsp/ui"
+import { Button, ResponsiveDialog } from "@ihsp/ui"
 import { ComposeMailForm } from "./compose-mail-form"
 
 export { parseRecipients } from "./compose-mail-form"
@@ -18,23 +18,23 @@ export type ComposeMailDialogProps = {
 export function ComposeMailDialog({ open, onOpenChange, initialTo = [], initialSubject = "" }: ComposeMailDialogProps) {
   const t = useT("composeMail")
   return (
-    <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="max-h-[90dvh] overflow-y-auto">
-        <DialogHeader>
-          <DialogTitle>{t("title")}</DialogTitle>
-          <DialogDescription>{t("description")}</DialogDescription>
-        </DialogHeader>
-        <ComposeMailForm
-          initialTo={initialTo}
-          initialSubject={initialSubject}
-          onSent={() => onOpenChange(false)}
-          actions={
-            <Button type="button" variant="outline" className="min-h-11" onClick={() => onOpenChange(false)}>
-              {t("cancel")}
-            </Button>
-          }
-        />
-      </DialogContent>
-    </Dialog>
+    <ResponsiveDialog
+      open={open}
+      onOpenChange={onOpenChange}
+      title={t("title")}
+      description={t("description")}
+      size="sm"
+    >
+      <ComposeMailForm
+        initialTo={initialTo}
+        initialSubject={initialSubject}
+        onSent={() => onOpenChange(false)}
+        actions={
+          <Button type="button" variant="outline" className="min-h-11" onClick={() => onOpenChange(false)}>
+            {t("cancel")}
+          </Button>
+        }
+      />
+    </ResponsiveDialog>
   )
 }

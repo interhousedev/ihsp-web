@@ -2,23 +2,10 @@
 
 import { getNotebooksQuery, postNotebook, postNotebookSources } from "@ihsp/api"
 import { useErrorMessage, useT } from "@ihsp/i18n"
-import {
-  Button,
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogFooter,
-  DialogHeader,
-  DialogTitle,
-  Dropdown,
-  DropdownMenuItem,
-  Input,
-  Label,
-  cn,
-} from "@ihsp/ui"
+import { Button, Dropdown, DropdownMenuItem, Input, Label, ResponsiveDialog, cn } from "@ihsp/ui"
 import { IconNotebook } from "@ihsp/ui"
 import { useMutation, useQuery } from "@tanstack/react-query"
-import { useState } from "react"
+import { useState, type FormEvent } from "react"
 import { toast } from "sonner"
 import { useLibraryAccess } from "../hooks/use-library-access"
 import { notebookHref } from "../utils/hrefs"
@@ -100,126 +87,128 @@ export function AddDialog({
   const rangeInvalid = !whole && parsePage(from) === null && parsePage(to) === null
 
   return (
-    <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent>
-        <DialogHeader>
-          <DialogTitle>{t("title")}</DialogTitle>
-          <DialogDescription>{t("description")}</DialogDescription>
-        </DialogHeader>
-        {noText ? (
-          <p role="alert" className="text-warning text-sm">
-            {t("noText")}
-          </p>
-        ) : (
-          <form
-            className="flex flex-col gap-4"
-            onSubmit={(event) => {
+    <ResponsiveDialog
+      open={open}
+      onOpenChange={onOpenChange}
+      title={t("title")}
+      description={t("description")}
+      size="sm"
+      {...(noText
+        ? {}
+        : {
+            onSubmit: (event: FormEvent<HTMLFormElement>) => {
               event.preventDefault()
               add.mutate()
-            }}
-          >
-            <div className="flex flex-col gap-1.5">
-              <Label htmlFor="library-notebook">{t("choose")}</Label>
-              <Dropdown
-                id="library-notebook"
-                className="w-full"
-                value={notebookId}
-                onValueChange={setNotebookId}
-                options={[
-                  { value: NEW_NOTEBOOK, label: t("newNotebook") },
-                  ...(notebooks.data?.items.map((notebook) => ({ value: notebook.id, label: notebook.title })) ?? []),
-                ]}
-              />
-              {notebooks.data && notebooks.data.items.length === 0 ? (
-                <p className="text-muted-foreground text-xs">{t("noNotebooks")}</p>
-              ) : null}
-            </div>
-            <fieldset className="flex flex-col gap-2">
-              <legend className="mb-1 text-sm font-medium">{t("range")}</legend>
-              <Label className="min-h-11 gap-3 font-normal md:min-h-9">
-                <input
-                  type="radio"
-                  name="library-range"
-                  checked={whole}
-                  onChange={() => setWhole(true)}
-                  className="size-4"
-                />
-                {t("whole")}
-              </Label>
-              <Label className="min-h-11 gap-3 font-normal md:min-h-9">
-                <input
-                  type="radio"
-                  name="library-range"
-                  checked={!whole}
-                  onChange={() => setWhole(false)}
-                  className="size-4"
-                />
-                {t("range")}
-              </Label>
-              {whole ? null : (
-                <div className="flex flex-col gap-3">
-                  <p className="text-muted-foreground text-xs">{t("rangeHint")}</p>
-                  {chapters.length > 0 ? (
-                    <Dropdown
-                      aria-label={t("toc")}
-                      className="w-full"
-                      placeholder={t("tocPick")}
-                      value=""
-                      onValueChange={(value) => {
-                        const index = Number(value)
-                        const start = chapters[index]
-                        if (!start?.page) return
-                        const next = chapters.slice(index + 1).find((entry) => entry.level <= start.level)
-                        setFrom(String(start.page))
-                        setTo(
-                          next?.page ? String(Math.max(start.page, next.page - 1)) : pageCount ? String(pageCount) : "",
-                        )
-                      }}
-                      options={chapters.map((entry, index) => ({
-                        value: String(index),
-                        label: `${" ".repeat(entry.level * 2)}${entry.title}`,
-                      }))}
-                    />
-                  ) : null}
-                  <div className="grid grid-cols-2 gap-3">
-                    <div className="flex flex-col gap-1.5">
-                      <Label htmlFor="library-from">{t("from")}</Label>
-                      <Input
-                        id="library-from"
-                        inputMode="numeric"
-                        value={from}
-                        onChange={(event) => setFrom(event.target.value)}
-                        className="min-h-11 md:min-h-8"
-                      />
-                    </div>
-                    <div className="flex flex-col gap-1.5">
-                      <Label htmlFor="library-to">{t("to")}</Label>
-                      <Input
-                        id="library-to"
-                        inputMode="numeric"
-                        value={to}
-                        onChange={(event) => setTo(event.target.value)}
-                        className="min-h-11 md:min-h-8"
-                      />
-                    </div>
-                  </div>
-                </div>
-              )}
-            </fieldset>
-            {add.isError ? (
-              <p role="alert" className="text-destructive text-sm">
-                {errorMessage(add.error)}
-              </p>
-            ) : null}
-            <DialogFooter>
+            },
+            footer: (
               <Button type="submit" className="min-h-11 md:min-h-8" disabled={add.isPending || rangeInvalid}>
                 {add.isPending ? t("adding") : t("add")}
               </Button>
-            </DialogFooter>
-          </form>
-        )}
-      </DialogContent>
-    </Dialog>
+            ),
+          })}
+    >
+      {noText ? (
+        <p role="alert" className="text-warning text-sm">
+          {t("noText")}
+        </p>
+      ) : (
+        <>
+          <div className="flex flex-col gap-1.5">
+            <Label htmlFor="library-notebook">{t("choose")}</Label>
+            <Dropdown
+              id="library-notebook"
+              className="w-full"
+              value={notebookId}
+              onValueChange={setNotebookId}
+              options={[
+                { value: NEW_NOTEBOOK, label: t("newNotebook") },
+                ...(notebooks.data?.items.map((notebook) => ({ value: notebook.id, label: notebook.title })) ?? []),
+              ]}
+            />
+            {notebooks.data && notebooks.data.items.length === 0 ? (
+              <p className="text-muted-foreground text-xs">{t("noNotebooks")}</p>
+            ) : null}
+          </div>
+          <fieldset className="flex flex-col gap-2">
+            <legend className="mb-1 text-sm font-medium">{t("range")}</legend>
+            <Label className="min-h-11 gap-3 font-normal md:min-h-9">
+              <input
+                type="radio"
+                name="library-range"
+                checked={whole}
+                onChange={() => setWhole(true)}
+                className="size-4"
+              />
+              {t("whole")}
+            </Label>
+            <Label className="min-h-11 gap-3 font-normal md:min-h-9">
+              <input
+                type="radio"
+                name="library-range"
+                checked={!whole}
+                onChange={() => setWhole(false)}
+                className="size-4"
+              />
+              {t("range")}
+            </Label>
+            {whole ? null : (
+              <div className="flex flex-col gap-3">
+                <p className="text-muted-foreground text-xs">{t("rangeHint")}</p>
+                {chapters.length > 0 ? (
+                  <Dropdown
+                    aria-label={t("toc")}
+                    className="w-full"
+                    placeholder={t("tocPick")}
+                    value=""
+                    onValueChange={(value) => {
+                      const index = Number(value)
+                      const start = chapters[index]
+                      if (!start?.page) return
+                      const next = chapters.slice(index + 1).find((entry) => entry.level <= start.level)
+                      setFrom(String(start.page))
+                      setTo(
+                        next?.page ? String(Math.max(start.page, next.page - 1)) : pageCount ? String(pageCount) : "",
+                      )
+                    }}
+                    options={chapters.map((entry, index) => ({
+                      value: String(index),
+                      label: `${" ".repeat(entry.level * 2)}${entry.title}`,
+                    }))}
+                  />
+                ) : null}
+                <div className="grid grid-cols-2 gap-3">
+                  <div className="flex flex-col gap-1.5">
+                    <Label htmlFor="library-from">{t("from")}</Label>
+                    <Input
+                      id="library-from"
+                      inputMode="numeric"
+                      value={from}
+                      onChange={(event) => setFrom(event.target.value)}
+                      className="min-h-11 md:min-h-8"
+                    />
+                  </div>
+                  <div className="flex flex-col gap-1.5">
+                    <Label htmlFor="library-to">{t("to")}</Label>
+                    <Input
+                      id="library-to"
+                      inputMode="numeric"
+                      value={to}
+                      onChange={(event) => setTo(event.target.value)}
+                      className="min-h-11 md:min-h-8"
+                    />
+                  </div>
+                </div>
+              </div>
+            )}
+          </fieldset>
+          {add.isError ? (
+            <p role="alert" className="text-destructive text-sm">
+              {errorMessage(add.error)}
+            </p>
+          ) : null}
+        </>
+      )}
+    </ResponsiveDialog>
   )
 }
 

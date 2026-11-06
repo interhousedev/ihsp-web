@@ -2,17 +2,7 @@
 
 import type { ChatConfig, ChatStyle, NotebookDetail } from "@ihsp/api"
 import { useT } from "@ihsp/i18n"
-import {
-  Button,
-  DialogFooter,
-  DialogHeader,
-  DialogTitle,
-  Label,
-  Dropdown,
-  Textarea,
-  ToggleGroup,
-  ToggleGroupItem,
-} from "@ihsp/ui"
+import { Button, Label, Dropdown, ResponsiveDialog, Textarea, ToggleGroup, ToggleGroupItem } from "@ihsp/ui"
 import { useId, useState } from "react"
 import { useUpdateNotebook } from "../api"
 import { useNotebookErrorMessage } from "../lib"
@@ -76,17 +66,28 @@ export function ChatConfigForm({ notebook, onClose }: ChatConfigFormProps) {
   }
 
   return (
-    <form
-      className="flex min-w-0 flex-col gap-3.5"
+    <ResponsiveDialog
+      open
+      onOpenChange={(next) => !next && onClose()}
+      size="sm"
+      title={t("title")}
       onSubmit={(event) => {
         event.preventDefault()
         save()
       }}
+      footer={
+        readOnly ? null : (
+          <>
+            <Button type="button" variant="outline" className="min-h-11" onClick={onClose}>
+              {tc("cancel")}
+            </Button>
+            <Button type="submit" className="min-h-11" disabled={!canSave}>
+              {tc("save")}
+            </Button>
+          </>
+        )
+      }
     >
-      <DialogHeader>
-        <DialogTitle>{t("title")}</DialogTitle>
-      </DialogHeader>
-
       {readOnly ? <p className="text-muted-foreground text-sm">{tcourse("readOnlySources")}</p> : null}
 
       <div className="flex flex-col gap-1.5">
@@ -191,17 +192,6 @@ export function ChatConfigForm({ notebook, onClose }: ChatConfigFormProps) {
           {errorMessage(update.error)}
         </p>
       ) : null}
-
-      {readOnly ? null : (
-        <DialogFooter>
-          <Button type="button" variant="outline" className="min-h-11" onClick={onClose}>
-            {tc("cancel")}
-          </Button>
-          <Button type="submit" className="min-h-11" disabled={!canSave}>
-            {tc("save")}
-          </Button>
-        </DialogFooter>
-      )}
-    </form>
+    </ResponsiveDialog>
   )
 }

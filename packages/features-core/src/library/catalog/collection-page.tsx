@@ -22,7 +22,7 @@ export function CollectionPage() {
     return <NotAvailable />
   }
   return (
-    <PageContainer title={query.data?.title ?? t("title")} description={query.data?.description ?? undefined}>
+    <PageContainer title={query.data?.title ?? t("title")} meta={query.data?.description ?? undefined}>
       {query.isPending ? (
         <StateView state="loading" />
       ) : query.isError ? (

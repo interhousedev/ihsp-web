@@ -1,7 +1,7 @@
 "use client"
 
 import { useT } from "@ihsp/i18n"
-import { Dialog, DialogContent, DialogTitle, StateView } from "@ihsp/ui"
+import { ResponsiveDialog, StateView } from "@ihsp/ui"
 import { useStaffLesson } from "../hooks/use-staff-lesson"
 import { AttendanceSheetView } from "./attendance-sheet"
 
@@ -22,26 +22,25 @@ export function LessonAttendanceDialog({
   const query = useStaffLesson(lessonId)
 
   return (
-    <Dialog
+    <ResponsiveDialog
       open
+      size="lg"
+      title={t("title")}
       onOpenChange={(open) => {
         if (!open) onClose()
       }}
     >
-      <DialogContent className="max-h-[90dvh] overflow-y-auto sm:max-w-2xl">
-        <DialogTitle className="sr-only">{t("title")}</DialogTitle>
-        {query.data ? (
-          <AttendanceSheetView
-            lesson={query.data.lesson}
-            sheet={query.data.attendance}
-            startAllPresent={startAllPresent}
-          />
-        ) : query.isError ? (
-          <StateView state="error" error={query.error} onRetry={() => void query.refetch()} />
-        ) : (
-          <StateView state="loading" rows={4} />
-        )}
-      </DialogContent>
-    </Dialog>
+      {query.data ? (
+        <AttendanceSheetView
+          lesson={query.data.lesson}
+          sheet={query.data.attendance}
+          startAllPresent={startAllPresent}
+        />
+      ) : query.isError ? (
+        <StateView state="error" error={query.error} onRetry={() => void query.refetch()} />
+      ) : (
+        <StateView state="loading" rows={4} />
+      )}
+    </ResponsiveDialog>
   )
 }

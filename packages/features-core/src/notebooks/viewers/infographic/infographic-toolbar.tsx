@@ -1,7 +1,7 @@
 "use client"
 
 import { useT } from "@ihsp/i18n"
-import { Button, Icons } from "@ihsp/ui"
+import { Button, Icons, LoadingButton } from "@ihsp/ui"
 import { IconCopy, IconDownload, IconMaximize, IconPrinter } from "@ihsp/ui"
 import { MAX_ZOOM, MIN_ZOOM } from "./fit-scale"
 
@@ -73,10 +73,16 @@ export function InfographicToolbar({
           <span className="sr-only sm:not-sr-only">{t("fit")}</span>
         </Button>
       </div>
-      <Button type="button" className="min-h-11 md:min-h-8" disabled={busy} onClick={onDownload}>
-        {busy ? <Icons.spinner className="animate-spin" aria-hidden /> : <IconDownload aria-hidden />}
-        {busy ? t("preparing") : t("png")}
-      </Button>
+      <LoadingButton
+        type="button"
+        className="min-h-11 md:min-h-8"
+        loading={busy}
+        loadingLabel={t("preparing")}
+        onClick={onDownload}
+      >
+        <IconDownload aria-hidden />
+        {t("png")}
+      </LoadingButton>
       <Button type="button" variant="outline" className={ICON_ON_PHONE} title={t("print")} onClick={onPrint}>
         <IconPrinter aria-hidden />
         <span className="sr-only sm:not-sr-only">{t("print")}</span>

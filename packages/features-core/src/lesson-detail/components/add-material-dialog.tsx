@@ -6,13 +6,9 @@ import { useErrorMessage, useFormatters, useT } from "@ihsp/i18n"
 import {
   Button,
   Checkbox,
-  Dialog,
-  DialogContent,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
   Icons,
   Input,
+  ResponsiveDialog,
   Tabs,
   TabsContent,
   TabsList,
@@ -88,16 +84,12 @@ export function AddMaterialDialog({
   }
 
   return (
-    <Dialog open={open} onOpenChange={changeOpen}>
-      <DialogTrigger render={<Button className="min-h-11 md:min-h-8" />}>
+    <>
+      <Button className="min-h-11 md:min-h-8" onClick={() => changeOpen(true)}>
         <Icons.add aria-hidden />
         {t("button")}
-      </DialogTrigger>
-      <DialogContent className="max-h-[90dvh] overflow-y-auto sm:max-w-md">
-        <DialogHeader>
-          <DialogTitle>{t("title")}</DialogTitle>
-        </DialogHeader>
-
+      </Button>
+      <ResponsiveDialog open={open} onOpenChange={changeOpen} size="sm" title={t("title")}>
         <div className="flex flex-col gap-1.5">
           <span id="add-role" className="text-sm font-medium">
             {t("kind")}
@@ -200,7 +192,7 @@ export function AddMaterialDialog({
             {errorMessage(add.error)}
           </p>
         ) : null}
-      </DialogContent>
-    </Dialog>
+      </ResponsiveDialog>
+    </>
   )
 }

@@ -44,7 +44,7 @@ export function BookFileSection({
   return (
     <section
       aria-labelledby="book-file-title"
-      className="grid gap-4 rounded-xl border p-4 md:grid-cols-[minmax(0,2fr)_minmax(0,1fr)]"
+      className="grid gap-4 rounded-card border p-4 md:grid-cols-[minmax(0,2fr)_minmax(0,1fr)]"
     >
       <div className="flex min-w-0 flex-col gap-3">
         <h2 id="book-file-title" className="text-lg font-semibold">

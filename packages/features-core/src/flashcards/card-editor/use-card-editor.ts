@@ -29,7 +29,7 @@ export function useCardEditor(initial: CardEditorInitial, mode: "create" | "edit
   const [focusKey, setFocusKey] = useState<string | null>(null)
   const [showErrors, setShowErrors] = useState(false)
 
-  const update = useCallback((key: string, patch: Partial<Pick<EditorRow, "front" | "back">>) => {
+  const update = useCallback((key: string, patch: Partial<Pick<EditorRow, "front" | "back" | "hardness">>) => {
     setRows((current) => current.map((row) => (row.key === key ? { ...row, ...patch } : row)))
   }, [])
   const remove = useCallback((key: string) => setRows((current) => current.filter((row) => row.key !== key)), [])

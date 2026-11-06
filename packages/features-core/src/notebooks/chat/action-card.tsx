@@ -79,7 +79,7 @@ export function ActionCard({ notebookId, create, onDismiss }: ActionCardProps) {
   const options = describeOptions(t, create)
 
   return (
-    <div role="group" aria-labelledby={titleId} className="bg-card flex flex-col gap-3 rounded-xl border p-3">
+    <div role="group" aria-labelledby={titleId} className="bg-card flex flex-col gap-3 rounded-card border p-3">
       <div className="flex items-start gap-2">
         <IconSparkles className="text-primary mt-0.5 size-5 shrink-0" aria-hidden />
         <div className="flex min-w-0 flex-col gap-1.5">

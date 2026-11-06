@@ -33,7 +33,7 @@ export function SlideEditor({ slide, number, onPatch }: SlideEditorProps) {
   return (
     <section
       aria-label={t("editorTitle", { n: number })}
-      className="bg-card flex flex-col gap-4 rounded-xl border p-3 md:p-4"
+      className="bg-card flex flex-col gap-4 rounded-card border p-3 md:p-4"
     >
       <h3 className="text-sm font-semibold">{t("editorTitle", { n: number })}</h3>
 

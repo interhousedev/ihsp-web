@@ -17,11 +17,12 @@ import {
   Dropdown,
   StateView,
   cn,
+  formatBytes,
 } from "@ihsp/ui"
 import { useInfiniteQuery, useQueryClient } from "@tanstack/react-query"
 import { useDeferredValue, useEffect, useMemo, useRef, useState, type DragEvent } from "react"
 import { FileUploadButton, UPLOAD_ACCEPT } from "../file-upload-button"
-import { DRIVE_TYPE_GROUPS, formatFileSize, type DriveTypeGroup } from "./file-kind"
+import { DRIVE_TYPE_GROUPS, type DriveTypeGroup } from "./file-kind"
 import { FilePreview } from "./file-preview"
 import { FileKindIcon, FileThumb } from "./file-visual"
 
@@ -288,7 +289,7 @@ export function DrivePicker({
                       <>
                         <FileKindIcon file={file} className="text-muted-foreground" />
                         <span className="min-w-0 flex-1 truncate">{file.name}</span>
-                        <span className="text-muted-foreground shrink-0 text-xs">{formatFileSize(file.byte_size)}</span>
+                        <span className="text-muted-foreground shrink-0 text-xs">{formatBytes(file.byte_size)}</span>
                       </>
                     )}
                     {isSelected(file) ? (

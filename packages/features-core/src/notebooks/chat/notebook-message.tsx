@@ -14,6 +14,7 @@ import type { ProposedAction } from "./use-chat-turn"
 import { UserMessageBubble } from "./user-message-bubble"
 import { WebSourcesRow } from "./web-sources-row"
 import { MessageWithOpenUi, chatLibrary } from "../../openui"
+import { useIsSharedView } from "../api"
 
 type NotebookMessageProps = {
   notebookId: string
@@ -40,6 +41,7 @@ export function NotebookMessage({
   onRegenerate,
   onDismissAction,
 }: NotebookMessageProps) {
+  const sharedView = useIsSharedView(notebookId)
   const t = useT("notebooks.chat")
 
   if (message.role === "user") {
@@ -79,7 +81,7 @@ export function NotebookMessage({
         <ActionCard notebookId={notebookId} create={action.create} onDismiss={onDismissAction} />
       ) : null}
       {latest ? <FollowUpChips followups={message.followups} disabled={!canAsk} onAsk={onAsk} /> : null}
-      {latest ? <QuickActions notebookId={notebookId} disabled={!canAsk} /> : null}
+      {latest && !sharedView ? <QuickActions notebookId={notebookId} disabled={!canAsk} /> : null}
     </article>
   )
 }

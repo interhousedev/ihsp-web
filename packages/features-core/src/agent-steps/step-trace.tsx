@@ -2,7 +2,7 @@
 
 import type { AgentStep } from "@ihsp/api"
 import { useT } from "@ihsp/i18n"
-import { IconChevronDown, IconLoader2, cn } from "@ihsp/ui"
+import { IconChevronDown, cn, Spinner } from "@ihsp/ui"
 import { useId, useState } from "react"
 import { runningStep } from "./merge-steps"
 import { formatDuration } from "./step-label"
@@ -39,7 +39,7 @@ export function StepTrace({ steps, live = false }: StepTraceProps) {
         onClick={() => setOpen((value) => !value)}
         className="hover:text-foreground flex min-h-8 items-center gap-1.5 self-start rounded-md"
       >
-        {current ? <IconLoader2 className="size-3.5 animate-spin" aria-hidden /> : null}
+        {current ? <Spinner className="size-3.5" aria-hidden /> : null}
         <span>{current ? text(current) : t("summary", { count: steps.length })}</span>
         {!current && duration ? <span className="tabular-nums">· {duration}</span> : null}
         <IconChevronDown className={cn("size-3.5 transition-transform", open && "rotate-180")} aria-hidden />

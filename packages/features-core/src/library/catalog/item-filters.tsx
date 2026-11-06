@@ -16,6 +16,8 @@ import {
   FieldLabel,
   Icons,
   Label,
+  ListToolbar,
+  type ToolbarChip,
   StateView,
   Sheet,
   SheetContent,
@@ -303,29 +305,88 @@ export function ItemFilters({
 }) {
   const t = useT("library.browse")
   const [open, setOpen] = useState(false)
+  const library = useT("library")
+  const subjects = useQuery(getLibrarySubjectsQuery())
+  const topics = useQuery({
+    ...getLibraryTopicsQuery({ subject_id: state.subject ?? "" }),
+    enabled: Boolean(state.subject),
+  })
   const active = countActiveFilters(state)
+  const chip = (key: string, label: string, value: string, patch: Patch): ToolbarChip => ({
+    key,
+    label: `${label}: ${value}`,
+    onRemove: () => onChange(patch),
+  })
+  const chips: ToolbarChip[] = [
+    ...(state.subject
+      ? [
+          chip(
+            "subject",
+            t("filter.subject"),
+            subjects.data?.find((subject) => subject.id === state.subject)?.name ?? state.subject,
+            { subject: null, topic: null },
+          ),
+        ]
+      : []),
+    ...(state.topic
+      ? [
+          chip(
+            "topic",
+            t("filter.topic"),
+            flattenTopics(topics.data ?? [])
+              .find((topic) => topic.id === state.topic)
+              ?.label.trim() ?? state.topic,
+            { topic: null },
+          ),
+        ]
+      : []),
+    ...(state.tag ? [chip("tag", t("filter.tag"), state.tag, { tag: null })] : []),
+    ...(state.year ? [chip("year", t("filter.year"), t("year", { year: state.year }), { year: null })] : []),
+    ...(state.type ? [chip("type", t("filter.type"), library(`type.${state.type}`), { type: null })] : []),
+    ...(state.lang ? [chip("lang", t("filter.language"), t(`language.${state.lang}`), { lang: null })] : []),
+    ...(state.uploader
+      ? [chip("uploader", t("filter.uploader"), t(`uploader.${state.uploader}`), { uploader: null })]
+      : []),
+    ...(state.shelf
+      ? [
+          state.shelf === "any"
+            ? { key: "shelf", label: t("filter.shelf"), onRemove: () => onChange({ shelf: null }) }
+            : chip("shelf", t("filter.shelf"), library(`shelf.${state.shelf}`), { shelf: null }),
+        ]
+      : []),
+    ...(state.hasText
+      ? [{ key: "hasText", label: t("filter.hasText"), onRemove: () => onChange({ hasText: false }) }]
+      : []),
+  ]
   return (
-    <div className={cn("flex items-center gap-2", className)}>
-      <Button type="button" variant="outline" className="min-h-11 md:min-h-8" onClick={() => setOpen(true)}>
-        <IconAdjustmentsHorizontal aria-hidden />
-        {t("filters")}
-        {active > 0 ? (
-          <span
-            className="bg-primary text-primary-foreground ms-1 rounded-full px-1.5 text-xs tabular-nums"
-            aria-label={String(active)}
-          >
-            {active}
-          </span>
-        ) : null}
-      </Button>
-      {state.collection ? (
-        <CollectionChip id={state.collection} onRemove={() => onChange({ collection: null })} />
-      ) : null}
-      {active > 0 ? (
-        <Button type="button" variant="ghost" className="min-h-11 md:min-h-8" onClick={onClear}>
-          {t("clear")}
-        </Button>
-      ) : null}
+    <div className={cn("min-w-0 flex-1", className)}>
+      <ListToolbar
+        filters={[]}
+        values={{}}
+        onChange={() => {}}
+        extraChips={chips}
+        active={active > 0}
+        onReset={onClear}
+        leading={
+          <>
+            <Button type="button" variant="outline" className="min-h-11 md:min-h-8" onClick={() => setOpen(true)}>
+              <IconAdjustmentsHorizontal aria-hidden />
+              {t("filters")}
+              {active > 0 ? (
+                <span
+                  className="bg-primary text-primary-foreground ms-1 rounded-full px-1.5 text-xs tabular-nums"
+                  aria-label={String(active)}
+                >
+                  {active}
+                </span>
+              ) : null}
+            </Button>
+            {state.collection ? (
+              <CollectionChip id={state.collection} onRemove={() => onChange({ collection: null })} />
+            ) : null}
+          </>
+        }
+      />
       <Sheet open={open} onOpenChange={setOpen}>
         <SheetContent side="right" className="w-full overflow-y-auto sm:max-w-sm">
           <SheetHeader>

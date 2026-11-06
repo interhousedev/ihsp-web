@@ -11,7 +11,7 @@ export function ReadingListCardView({ list }: { list: ReadingListCardData }) {
   const t = useT("library.readingList")
   const percent = list.essential_count > 0 ? Math.round((list.essential_done / list.essential_count) * 100) : 0
   return (
-    <article className="bg-card focus-within:ring-ring relative flex h-full flex-col gap-2 rounded-xl border p-4 focus-within:ring-2 hover:shadow-sm">
+    <article className="bg-card focus-within:ring-ring relative flex h-full flex-col gap-2 rounded-card border p-4 focus-within:ring-2 hover:shadow-sm">
       <h3 className="font-medium break-words">
         <Link href={listHref(list.id)} className="after:absolute after:inset-0 hover:underline">
           {list.title}

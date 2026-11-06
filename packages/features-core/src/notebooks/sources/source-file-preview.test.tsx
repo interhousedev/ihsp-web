@@ -60,13 +60,18 @@ describe("SourceFilePreview", () => {
     const picture = await within(region).findByRole("img", { name: "lab-setup.jpg" })
     expect(picture.getAttribute("src")).toContain(`/files/${image.id}?disposition=inline`)
     expect(within(region).getByRole("button", { name: "Open full preview" })).toBeTruthy()
-    const download = within(region).getByRole("link", { name: "Download" })
-    await waitFor(() => {
-      expect(download.getAttribute("href")).toBe(
+    const realOpen = window.open
+    const opened = mock(() => null)
+    window.open = opened as unknown as typeof window.open
+    await user.click(within(region).getByRole("button", { name: "Download" }))
+    await waitFor(() =>
+      expect(opened).toHaveBeenCalledWith(
         `http://localhost:9000/files/${image.id}?disposition=attachment&signature=test`,
-      )
-    })
-    expect(download.getAttribute("download")).toBe("lab-setup.jpg")
+        "_blank",
+        "noopener,noreferrer",
+      ),
+    )
+    window.open = realOpen
 
     await user.click(within(region).getByRole("button", { name: "Open lab-setup.jpg at full size" }))
     const dialog = await screen.findByRole("dialog")
@@ -108,10 +113,10 @@ describe("SourceFilePreview", () => {
 
     const region = await waitFor(() => preview())
     expect(within(region).getByText("results.xlsx")).toBeTruthy()
-    expect(within(region).getByText("20 kB")).toBeTruthy()
+    expect(within(region).getByText("20 KB")).toBeTruthy()
     expect(within(region).getByText(sheet.content_type)).toBeTruthy()
     expect(within(region).queryByRole("button", { name: "Open full preview" })).toBeNull()
-    expect(within(region).getByRole("link", { name: "Download" })).toBeTruthy()
+    expect(within(region).getByRole("button", { name: "Download" })).toBeTruthy()
   })
 
   it("shows no preview for a pasted text", async () => {

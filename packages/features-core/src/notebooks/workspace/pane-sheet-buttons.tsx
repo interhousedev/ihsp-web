@@ -53,12 +53,14 @@ export function PaneSheetButtons({ notebook, onOpen }: PaneSheetButtonsProps) {
         count={notebook.source_count}
         onClick={() => onOpen("sources")}
       />
-      <SheetButton
-        label={t("openStudio", { count: artifacts.data?.length ?? 0 })}
-        icon={<IconWand aria-hidden />}
-        count={artifacts.data?.length ?? 0}
-        onClick={() => onOpen("studio")}
-      />
+      {notebook.shared ? null : (
+        <SheetButton
+          label={t("openStudio", { count: artifacts.data?.length ?? 0 })}
+          icon={<IconWand aria-hidden />}
+          count={artifacts.data?.length ?? 0}
+          onClick={() => onOpen("studio")}
+        />
+      )}
     </>
   )
 }

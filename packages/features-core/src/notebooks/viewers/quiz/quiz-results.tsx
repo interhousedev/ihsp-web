@@ -15,7 +15,7 @@ type QuizResultsProps = {
 
 function Stat({ label, value, icon }: { label: string; value: string | number; icon?: ReactNode }) {
   return (
-    <div className="bg-card flex flex-col gap-1 rounded-xl border p-4">
+    <div className="bg-card flex flex-col gap-1 rounded-card border p-4">
       <dt className="text-muted-foreground flex items-center gap-1.5 text-sm">
         {icon}
         {label}

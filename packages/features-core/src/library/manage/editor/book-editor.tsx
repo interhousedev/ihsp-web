@@ -150,14 +150,14 @@ function ManageBookEditor({
           }}
         />
 
-        <section aria-labelledby="book-details-title" className="flex flex-col gap-4 rounded-xl border p-4">
+        <section aria-labelledby="book-details-title" className="flex flex-col gap-4 rounded-card border p-4">
           <h2 id="book-details-title" className="text-lg font-semibold">
             {t("metadata")}
           </h2>
           <BookMetadataFields form={form} issues={issues} disabled={busy} onChange={update} />
         </section>
 
-        <section aria-labelledby="book-subjects-title" className="flex flex-col gap-4 rounded-xl border p-4">
+        <section aria-labelledby="book-subjects-title" className="flex flex-col gap-4 rounded-card border p-4">
           <h2 id="book-subjects-title" className="text-lg font-semibold">
             {t("subjectsAndTopics")}
           </h2>

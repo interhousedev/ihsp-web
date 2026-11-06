@@ -10,13 +10,16 @@ import {
 } from "@ihsp/api"
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query"
 import { useEffect, useRef, useState } from "react"
+import { useIsSharedView } from "./use-notebooks"
 
 const POLL_MS = 2000
 
 /** The topic labels of a notebook; polls every 2 s while an automatic labelling run is going on. */
 export function useLabels(notebookId: string) {
+  const shared = useIsSharedView(notebookId)
   return useQuery({
     ...getNotebookLabelsQuery(notebookId),
+    enabled: !shared,
     refetchInterval: (query) => (query.state.data?.auto.status === "running" ? POLL_MS : false),
   })
 }

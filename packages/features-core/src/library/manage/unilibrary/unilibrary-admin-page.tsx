@@ -19,7 +19,7 @@ export function UniLibraryAdminPage() {
       <div className="flex w-full min-w-0 flex-col gap-6">
         <SettingsPanel />
         <StatusPanel />
-        <p role="note" className="bg-muted flex items-start gap-2 rounded-xl border p-4 text-sm">
+        <p role="note" className="bg-muted flex items-start gap-2 rounded-card border p-4 text-sm">
           <IconInfoCircle className="mt-0.5 size-5 shrink-0" aria-hidden />
           <span>
             <span className="font-medium">{t("coming.title")}</span> {t("coming.text")}

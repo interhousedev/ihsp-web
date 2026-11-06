@@ -2,7 +2,7 @@
 
 import { isApiError } from "@ihsp/api"
 import { useErrorMessage, useT } from "@ihsp/i18n"
-import { Button, Empty, EmptyContent, EmptyDescription, EmptyHeader, EmptyMedia, EmptyTitle, Icons } from "@ihsp/ui"
+import { Button, Icons, StateView } from "@ihsp/ui"
 import { useRouter } from "next/navigation"
 import { useEffect, useState } from "react"
 import { FullScreenSpinner } from "./full-screen-spinner"
@@ -38,20 +38,17 @@ export function AuthCallback() {
 
   return (
     <main className="flex min-h-dvh items-center justify-center p-4">
-      <Empty>
-        <EmptyHeader>
-          <EmptyMedia variant="icon">
-            <Icons.alertCircle aria-hidden />
-          </EmptyMedia>
-          <EmptyTitle>{t("auth.callbackFailed")}</EmptyTitle>
-          <EmptyDescription>{isApiError(error) ? errorMessage(error) : t("errors.generic")}</EmptyDescription>
-        </EmptyHeader>
-        <EmptyContent>
+      <StateView
+        state="error"
+        className="border-0"
+        title={t("auth.callbackFailed")}
+        description={isApiError(error) ? errorMessage(error) : t("errors.generic")}
+        action={
           <Button className="min-h-11" onClick={() => void login("/", { manual: true })}>
             {t("auth.tryAgain")}
           </Button>
-        </EmptyContent>
-      </Empty>
+        }
+      />
     </main>
   )
 }

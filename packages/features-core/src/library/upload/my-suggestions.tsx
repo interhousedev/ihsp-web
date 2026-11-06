@@ -2,7 +2,7 @@
 
 import { getMySuggestionsQuery, type MySuggestion } from "@ihsp/api"
 import { formatDate, useT } from "@ihsp/i18n"
-import { Badge, Skeleton, StateView, buttonVariants } from "@ihsp/ui"
+import { Badge, buttonVariants, Skeleton, StateView } from "@ihsp/ui"
 import { useQuery } from "@tanstack/react-query"
 import Link from "next/link"
 import { itemHref, uploadHref } from "../utils/hrefs"
@@ -34,11 +34,11 @@ export function MySuggestions() {
       ) : query.isError ? (
         <StateView state="error" error={query.error} onRetry={() => void query.refetch()} />
       ) : rows.length === 0 ? (
-        <p className="text-muted-foreground text-sm">{t("empty")}</p>
+        <StateView state="empty" emptyText={t("empty")} />
       ) : (
         <ul className="flex flex-col gap-2">
           {rows.map((row) => (
-            <li key={row.id} className="flex flex-col gap-1 rounded-xl border p-3">
+            <li key={row.id} className="flex flex-col gap-1 rounded-card border p-3">
               <div className="flex flex-wrap items-center justify-between gap-2">
                 <span className="font-medium break-words">{row.title}</span>
                 <Badge variant={VARIANT[row.status]}>{t(`status.${row.status}`)}</Badge>

@@ -2,8 +2,8 @@
 
 import type { SourceDetail } from "@ihsp/api"
 import { useT } from "@ihsp/i18n"
-import { Button, Input, Label, Textarea } from "@ihsp/ui"
-import { IconArrowLeft, IconLoader2 } from "@ihsp/ui"
+import { Button, Input, Label, LoadingButton, Textarea } from "@ihsp/ui"
+import { IconArrowLeft } from "@ihsp/ui"
 import { useId, useState } from "react"
 import { useAddSources, useUpdateSource } from "../api"
 import { CitedMarkdown } from "../chat"
@@ -23,6 +23,7 @@ type NoteFormProps = {
 /** Title + Markdown body with Save note; a note with citations is read-only until the citations are removed. */
 export function NoteForm({ notebookId, source, onClose }: NoteFormProps) {
   const t = useT("notebooks")
+  const tCommon = useT("common")
   const { openSource } = useWorkspace()
   const errorMessage = useNotebookErrorMessage()
   const titleId = useId()
@@ -79,10 +80,15 @@ export function NoteForm({ notebookId, source, onClose }: NoteFormProps) {
         <Button type="button" variant="outline" className="min-h-11 md:min-h-8" onClick={onClose}>
           {t("note.cancel")}
         </Button>
-        <Button type="submit" className="min-h-11 md:min-h-8" disabled={!canSave}>
-          {pending ? <IconLoader2 aria-hidden className="animate-spin motion-reduce:animate-none" /> : null}
+        <LoadingButton
+          type="submit"
+          className="min-h-11 md:min-h-8"
+          disabled={!canSave}
+          loading={pending}
+          loadingLabel={tCommon("saving")}
+        >
           {t("note.save")}
-        </Button>
+        </LoadingButton>
       </header>
       <div className="min-h-0 flex-1 overflow-y-auto">
         <div className="mx-auto flex max-w-3xl flex-col gap-4 p-4">

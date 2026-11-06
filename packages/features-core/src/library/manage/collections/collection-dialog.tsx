@@ -9,17 +9,7 @@ import {
   type ManageCollection,
 } from "@ihsp/api"
 import { useErrorMessage, useT } from "@ihsp/i18n"
-import {
-  Button,
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogFooter,
-  DialogHeader,
-  DialogTitle,
-  Skeleton,
-  Switch,
-} from "@ihsp/ui"
+import { Button, ResponsiveDialog, Skeleton, Switch } from "@ihsp/ui"
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query"
 import { useEffect, useId, useState } from "react"
 import { CoverImage } from "../../catalog/cover-image"
@@ -105,82 +95,80 @@ export function CollectionDialog({ target, onClose }: { target: CollectionTarget
   const loadingItems = existing !== null && detail.isPending
 
   return (
-    <Dialog open={target !== null} onOpenChange={(open) => !open && onClose()}>
-      <DialogContent className="max-h-[90dvh] overflow-y-auto sm:max-w-2xl">
-        <DialogHeader>
-          <DialogTitle>{existing ? t("editTitle") : t("addTitle")}</DialogTitle>
-          <DialogDescription>{t("dialogHint")}</DialogDescription>
-        </DialogHeader>
-        <form
-          className="flex flex-col gap-5"
-          noValidate
-          onSubmit={(event) => {
-            event.preventDefault()
-            setAttempted(true)
-            if (complete && !loadingItems && !save.isPending) save.mutate()
-          }}
-        >
-          <LocalizedFields
-            label={t("titleField")}
-            required
-            values={form.title}
-            showErrors={attempted}
-            onChange={(title) => setForm((current) => ({ ...current, title }))}
+    <ResponsiveDialog
+      open={target !== null}
+      onOpenChange={(open) => !open && onClose()}
+      title={existing ? t("editTitle") : t("addTitle")}
+      description={t("dialogHint")}
+      size="lg"
+      noValidate
+      onSubmit={(event) => {
+        event.preventDefault()
+        setAttempted(true)
+        if (complete && !loadingItems && !save.isPending) save.mutate()
+      }}
+      footer={
+        <>
+          <Button type="button" variant="outline" className="min-h-11 md:min-h-8" onClick={onClose}>
+            {common("cancel")}
+          </Button>
+          <Button type="submit" className="min-h-11 md:min-h-8" disabled={save.isPending || loadingItems}>
+            {t("save")}
+          </Button>
+        </>
+      }
+    >
+      <LocalizedFields
+        label={t("titleField")}
+        required
+        values={form.title}
+        showErrors={attempted}
+        onChange={(title) => setForm((current) => ({ ...current, title }))}
+      />
+      <LocalizedFields
+        label={t("descriptionField")}
+        multiline
+        values={form.description}
+        onChange={(description) => setForm((current) => ({ ...current, description }))}
+      />
+      <div className="flex min-h-11 items-center justify-between gap-3">
+        <div className="min-w-0">
+          <p id={`${id}-published`} className="text-sm font-medium">
+            {t("published")}
+          </p>
+          <p className="text-muted-foreground text-xs">{t("publishedHint")}</p>
+        </div>
+        <Switch
+          checked={form.published}
+          aria-labelledby={`${id}-published`}
+          onCheckedChange={(published) => setForm((current) => ({ ...current, published }))}
+        />
+      </div>
+      <div className="flex items-start gap-3">
+        <CoverImage src={form.coverUrl} className="aspect-[3/4] w-20 shrink-0 rounded-md" />
+        <div className="flex min-w-0 flex-col gap-2">
+          <p className="text-sm font-medium">{t("cover")}</p>
+          <FileUploadButton
+            purpose="library_cover"
+            accept=".jpg,.jpeg,.png,.webp"
+            label={form.coverUrl || form.coverFileId ? t("coverReplace") : t("coverChoose")}
+            onUploaded={(file) =>
+              setForm((current) => ({ ...current, coverFileId: file.id, coverUrl: null, coverName: file.name }))
+            }
           />
-          <LocalizedFields
-            label={t("descriptionField")}
-            multiline
-            values={form.description}
-            onChange={(description) => setForm((current) => ({ ...current, description }))}
-          />
-          <div className="flex min-h-11 items-center justify-between gap-3">
-            <div className="min-w-0">
-              <p id={`${id}-published`} className="text-sm font-medium">
-                {t("published")}
-              </p>
-              <p className="text-muted-foreground text-xs">{t("publishedHint")}</p>
-            </div>
-            <Switch
-              checked={form.published}
-              aria-labelledby={`${id}-published`}
-              onCheckedChange={(published) => setForm((current) => ({ ...current, published }))}
-            />
-          </div>
-          <div className="flex items-start gap-3">
-            <CoverImage src={form.coverUrl} className="aspect-[3/4] w-20 shrink-0 rounded-md" />
-            <div className="flex min-w-0 flex-col gap-2">
-              <p className="text-sm font-medium">{t("cover")}</p>
-              <FileUploadButton
-                purpose="library_cover"
-                accept=".jpg,.jpeg,.png,.webp"
-                label={form.coverUrl || form.coverFileId ? t("coverReplace") : t("coverChoose")}
-                onUploaded={(file) =>
-                  setForm((current) => ({ ...current, coverFileId: file.id, coverUrl: null, coverName: file.name }))
-                }
-              />
-              {form.coverName ? <p className="text-sm">{t("coverNew", { name: form.coverName })}</p> : null}
-            </div>
-          </div>
-          {loadingItems ? (
-            <Skeleton className="h-24 w-full rounded-lg" />
-          ) : (
-            <ItemPicker selected={form.items} onChange={(items) => setForm((current) => ({ ...current, items }))} />
-          )}
-          {save.isError ? (
-            <p role="alert" className="text-destructive text-sm">
-              {errorMessage(save.error)}
-            </p>
-          ) : null}
-          <DialogFooter>
-            <Button type="button" variant="outline" className="min-h-11 md:min-h-8" onClick={onClose}>
-              {common("cancel")}
-            </Button>
-            <Button type="submit" className="min-h-11 md:min-h-8" disabled={save.isPending || loadingItems}>
-              {t("save")}
-            </Button>
-          </DialogFooter>
-        </form>
-      </DialogContent>
-    </Dialog>
+          {form.coverName ? <p className="text-sm">{t("coverNew", { name: form.coverName })}</p> : null}
+        </div>
+      </div>
+      {loadingItems ? (
+        <Skeleton className="h-24 w-full rounded-lg" />
+      ) : (
+        <ItemPicker selected={form.items} onChange={(items) => setForm((current) => ({ ...current, items }))} />
+      )}
+      {save.isError ? (
+        <p role="alert" className="text-destructive text-sm">
+          {errorMessage(save.error)}
+        </p>
+      ) : null}
+    </ResponsiveDialog>
   )
 }

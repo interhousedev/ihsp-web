@@ -57,6 +57,12 @@ export function useAllNotebooks(q?: string, enabled = true) {
   }
 }
 
+/** True when the cached notebook is read through a share: its owner-only routes answer 404 for this person. */
+export function useIsSharedView(id: string): boolean {
+  const cached = useQuery({ ...getNotebookQuery(id), enabled: false })
+  return cached.data?.shared === true
+}
+
 /**
  * One notebook; opening it sets `last_opened_at` on the server. While the summary is `stale` or `building` (sources
  * were added or removed) the notebook is refetched every 4 s, for at most two minutes, so the summary and the

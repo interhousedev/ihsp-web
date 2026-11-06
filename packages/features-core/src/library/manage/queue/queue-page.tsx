@@ -133,7 +133,7 @@ export function QueuePage() {
 
         <div
           ref={previewRef}
-          className="bg-card min-w-0 rounded-xl border p-4 md:sticky md:top-16 md:max-h-[calc(100dvh-5rem)] md:overflow-y-auto"
+          className="bg-card min-w-0 rounded-card border p-4 md:sticky md:top-16 md:max-h-[calc(100dvh-5rem)] md:overflow-y-auto"
         >
           {selected ? (
             <div className="flex flex-col gap-2">

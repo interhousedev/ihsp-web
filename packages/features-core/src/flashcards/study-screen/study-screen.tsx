@@ -39,6 +39,11 @@ export type StudyScreenProps = {
   onLimits?: (() => void) | undefined
   /** Where "Back to the deck" leads on the finished screen. */
   exitHref?: string | undefined
+  /** Starts a practice round from the finished screen; leave out to hide "Study again". */
+  onRestart?: (() => void) | undefined
+  isRestarting?: boolean
+  /** Cards left in a practice round; above zero shows that the answers do not change the schedule. */
+  practiceRemaining?: number | undefined
   /** `embedded` is the compact form inside a lesson step: no top buttons, no minimum height. */
   variant?: "page" | "embedded"
   className?: string
@@ -68,6 +73,9 @@ export function StudyScreen({
   onEdit,
   onLimits,
   exitHref,
+  onRestart,
+  isRestarting = false,
+  practiceRemaining = 0,
   variant = "page",
   className,
 }: StudyScreenProps) {
@@ -108,6 +116,19 @@ export function StudyScreen({
         {reviewed > 0 ? (
           <p className="text-muted-foreground text-sm">{t("done.reviewed", { count: reviewed })}</p>
         ) : null}
+        {error ? (
+          <p role="alert" className="text-destructive text-sm">
+            {error}
+          </p>
+        ) : null}
+        {onRestart ? (
+          <div className="flex flex-col items-center gap-2">
+            <Button type="button" className="min-h-11 px-5" disabled={isRestarting} onClick={onRestart}>
+              {t("done.restart")}
+            </Button>
+            <p className="text-muted-foreground max-w-sm text-xs">{t("done.restartHint")}</p>
+          </div>
+        ) : null}
         {exitHref ? (
           <Link href={exitHref} className={cn(buttonVariants({ variant: "outline" }), "min-h-11 px-5")}>
             {t("done.back")}
@@ -134,6 +155,11 @@ export function StudyScreen({
         </div>
         <StudyCounts counts={counts} queue={queue ?? queueOf(card)} />
       </div>
+      {practiceRemaining > 0 ? (
+        <p role="status" className="bg-muted rounded-lg px-3 py-2 text-center text-sm">
+          {t("practice", { count: practiceRemaining })}
+        </p>
+      ) : null}
 
       <div
         className={cn(

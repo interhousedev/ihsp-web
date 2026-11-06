@@ -57,7 +57,7 @@ export function ItemCardView({
   return (
     <article
       className={cn(
-        "bg-card text-card-foreground focus-within:ring-ring relative flex gap-3 rounded-xl border p-3 transition-shadow focus-within:ring-2 hover:shadow-sm",
+        "bg-card text-card-foreground focus-within:ring-ring relative flex gap-3 rounded-card border p-3 transition-shadow focus-within:ring-2 hover:shadow-sm",
         list ? "flex-row items-start" : "flex-col",
         className,
       )}

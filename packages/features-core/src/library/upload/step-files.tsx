@@ -66,7 +66,7 @@ export function StepFiles({
     <div className="flex flex-col gap-2">
       <h3 className="text-base font-semibold">{t("photosHeading")}</h3>
       {existingFile && values.photos.length === 0 ? (
-        <p className="bg-muted/40 rounded-xl border p-3 text-sm" data-testid="existing-file">
+        <p className="bg-muted/40 rounded-card border p-3 text-sm" data-testid="existing-file">
           {t("existingPhotos", { pages: existingFile.pages ?? 0 })}
         </p>
       ) : null}

@@ -14,21 +14,32 @@ export function QueryState<T>({
   isEmpty,
   emptyText,
   emptyAction,
+  isFiltered,
+  onReset,
   rows,
+  skeleton,
   children,
 }: {
   query: Pick<UseQueryResult<T>, "data" | "isPending" | "isError" | "error"> & { refetch: () => unknown }
   isEmpty?: (data: T) => boolean
   emptyText?: string
   emptyAction?: ReactNode
+  /** A search or filter is active, so an empty result means "nothing matches", with a reset. */
+  isFiltered?: boolean
+  onReset?: () => void
   rows?: number
+  /** A skeleton shaped like the content, shown instead of the rows. */
+  skeleton?: ReactNode
   children: (data: T) => ReactNode
 }) {
   if (query.data !== undefined) {
-    if (isEmpty?.(query.data)) return <StateView state="empty" emptyText={emptyText} action={emptyAction} />
+    if (isEmpty?.(query.data)) {
+      if (isFiltered) return <StateView state="filtered" onReset={onReset} />
+      return <StateView state="empty" emptyText={emptyText} action={emptyAction} />
+    }
     return <>{children(query.data)}</>
   }
-  if (query.isPending) return <StateView state="loading" rows={rows} />
+  if (query.isPending) return <StateView state="loading" rows={rows} skeleton={skeleton} />
   if (query.isError) {
     const offline = isNetworkError(query.error)
     return (

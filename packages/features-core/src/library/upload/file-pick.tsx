@@ -77,7 +77,7 @@ export function FilePick({
         </p>
       </div>
       {file ? (
-        <div className="bg-card flex items-center gap-3 rounded-xl border p-3" data-testid="chosen-file">
+        <div className="bg-card flex items-center gap-3 rounded-card border p-3" data-testid="chosen-file">
           <IconFileTypePdf className="size-6 shrink-0" aria-hidden />
           <div className="min-w-0 flex-1">
             <p className="truncate text-sm font-medium">{file.name}</p>
@@ -89,7 +89,7 @@ export function FilePick({
           </Button>
         </div>
       ) : existing ? (
-        <div className="bg-muted/40 flex items-center gap-3 rounded-xl border p-3" data-testid="existing-file">
+        <div className="bg-muted/40 flex items-center gap-3 rounded-card border p-3" data-testid="existing-file">
           <IconFileTypePdf className="size-6 shrink-0" aria-hidden />
           <div className="min-w-0 flex-1">
             <p className="text-sm font-medium">{t("current")}</p>

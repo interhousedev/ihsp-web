@@ -84,12 +84,12 @@ describe("PhotoField", () => {
 
     fireEvent.change(screen.getByLabelText("Photo"), { target: { files: [pngFile()] } })
 
-    expect(await screen.findByRole("status")).toHaveTextContent("Uploading…")
+    expect(await screen.findByText("Uploading…")).toBeTruthy()
     expect(screen.getByRole("button", { name: "Upload photo" })).toBeDisabled()
     expect(sent.map((file) => file.name)).toEqual(["teacher.png"])
 
     control.finish?.()
-    await waitFor(() => expect(screen.queryByRole("status")).toBeNull())
+    await waitFor(() => expect(screen.queryByText("Uploading…")).toBeNull())
     expect(screen.getByRole("button", { name: "Upload photo" })).not.toBeDisabled()
   })
 

@@ -138,21 +138,21 @@ export function SuggestBookEditor({ initialTitle = "" }: { initialTitle?: string
           }}
         />
 
-        <section aria-labelledby="suggest-details-title" className="flex flex-col gap-4 rounded-xl border p-4">
+        <section aria-labelledby="suggest-details-title" className="flex flex-col gap-4 rounded-card border p-4">
           <h2 id="suggest-details-title" className="text-lg font-semibold">
             {editor("metadata")}
           </h2>
           <BookMetadataFields form={form} issues={issues} disabled={send.isPending} onChange={update} />
         </section>
 
-        <section aria-labelledby="suggest-subjects-title" className="flex flex-col gap-4 rounded-xl border p-4">
+        <section aria-labelledby="suggest-subjects-title" className="flex flex-col gap-4 rounded-card border p-4">
           <h2 id="suggest-subjects-title" className="text-lg font-semibold">
             {editor("subjectsAndTopics")}
           </h2>
           <BookSubjectsTopics form={form} issues={issues} disabled={send.isPending} onChange={update} mode="suggest" />
         </section>
 
-        <section aria-labelledby="suggest-source-title" className="flex flex-col gap-4 rounded-xl border p-4">
+        <section aria-labelledby="suggest-source-title" className="flex flex-col gap-4 rounded-card border p-4">
           <h2 id="suggest-source-title" className="text-lg font-semibold">
             {t("sourceTitle")}
           </h2>

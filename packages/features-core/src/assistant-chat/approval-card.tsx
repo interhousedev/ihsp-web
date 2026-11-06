@@ -111,7 +111,7 @@ export function ApprovalCard({ call, busy, onApprove, onReject }: ApprovalCardPr
     <section
       aria-label={preview?.title ?? call.note}
       data-status={call.status}
-      className="bg-card flex flex-col gap-3 rounded-xl border p-3 shadow-xs"
+      className="bg-card flex flex-col gap-3 rounded-card border p-3 shadow-xs"
     >
       <header className="flex flex-wrap items-start justify-between gap-2">
         <h3 className="min-w-0 text-sm font-semibold break-words">{preview?.title ?? call.note}</h3>

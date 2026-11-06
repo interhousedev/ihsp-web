@@ -2,9 +2,16 @@
 
 import type { ReportFormat } from "@ihsp/api"
 import { useT } from "@ihsp/i18n"
-import { IconFileText, IconListDetails, IconMessageQuestion, IconNews, IconPencil, IconTimeline } from "@ihsp/ui"
+import {
+  IconFileText,
+  IconListDetails,
+  IconMessageQuestion,
+  IconNews,
+  IconPencil,
+  IconTimeline,
+  ResponsiveDialog,
+} from "@ihsp/ui"
 import type { Icon } from "@ihsp/ui"
-import { ResponsiveDialog } from "./responsive-dialog"
 
 /** The report formats of the picker; the conspect has its own tile. */
 export type PickableFormat = Exclude<ReportFormat, "conspect">

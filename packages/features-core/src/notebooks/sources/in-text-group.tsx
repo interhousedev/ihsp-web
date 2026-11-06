@@ -2,7 +2,7 @@
 
 import type { SourceSearchGroup } from "@ihsp/api"
 import { useT } from "@ihsp/i18n"
-import { IconLoader2 } from "@ihsp/ui"
+import { Spinner } from "@ihsp/ui"
 import { useWorkspace } from "../workspace-context"
 import { InTextSource } from "./in-text-source"
 
@@ -30,7 +30,7 @@ export function InTextGroup({ groups, pending, query }: InTextGroupProps) {
       </h3>
       {pending ? (
         <p role="status" className="text-muted-foreground flex items-center gap-1.5 px-2 py-1 text-xs">
-          <IconLoader2 aria-hidden className="size-3.5 shrink-0 animate-spin motion-reduce:animate-none" />
+          <Spinner aria-hidden className="size-3.5 shrink-0" />
           {t("sources.inTextLoading")}
         </p>
       ) : null}

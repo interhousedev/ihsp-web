@@ -2,7 +2,7 @@
 
 import { getMeSubjectQuery, type ResourceItem, type SubjectDetail } from "@ihsp/api"
 import { useFormatters, useT } from "@ihsp/i18n"
-import { Dialog, DialogContent, DialogHeader, DialogTitle, Input, StateView } from "@ihsp/ui"
+import { Input, ResponsiveDialog, StateView } from "@ihsp/ui"
 import { IconBook, IconSchool } from "@ihsp/ui"
 import { useQuery } from "@tanstack/react-query"
 import { useState } from "react"
@@ -75,57 +75,54 @@ export function AttachPickerDialog({ subjectId, mode, onOpenChange, onPick }: At
   const Icon = mode === "material" ? IconBook : IconSchool
 
   return (
-    <Dialog
+    <ResponsiveDialog
       open={mode !== null}
       onOpenChange={(open) => {
         if (!open) setSearch("")
         onOpenChange(open)
       }}
+      size="sm"
+      title={title}
     >
-      <DialogContent className="flex max-h-[85dvh] flex-col gap-3">
-        <DialogHeader>
-          <DialogTitle>{title}</DialogTitle>
-        </DialogHeader>
-        <Input
-          type="search"
-          value={search}
-          aria-label={t("attach.search")}
-          placeholder={t("attach.search")}
-          className="h-11 md:h-8"
-          onChange={(event) => setSearch(event.target.value)}
-        />
-        <div className="min-h-0 flex-1 overflow-y-auto">
-          {detail.isPending ? (
-            <StateView state="loading" rows={3} />
-          ) : detail.isError ? (
-            <StateView state="error" error={detail.error} onRetry={() => void detail.refetch()} />
-          ) : shown.length === 0 ? (
-            <StateView state="empty" emptyText={t("attach.empty")} />
-          ) : (
-            <ul className="flex flex-col gap-1.5">
-              {shown.map((row) => (
-                <li key={row.key}>
-                  <button
-                    type="button"
-                    className="hover:bg-muted focus-visible:ring-ring flex min-h-11 w-full items-center gap-3 rounded-lg border px-3 py-2 text-start outline-hidden focus-visible:ring-2"
-                    onClick={() => {
-                      onPick(row.item)
-                      setSearch("")
-                      onOpenChange(false)
-                    }}
-                  >
-                    <Icon className="text-muted-foreground size-5 shrink-0" aria-hidden />
-                    <span className="flex min-w-0 flex-1 flex-col">
-                      <span className="truncate text-sm font-medium">{row.label}</span>
-                      {row.meta ? <span className="text-muted-foreground truncate text-xs">{row.meta}</span> : null}
-                    </span>
-                  </button>
-                </li>
-              ))}
-            </ul>
-          )}
-        </div>
-      </DialogContent>
-    </Dialog>
+      <Input
+        type="search"
+        value={search}
+        aria-label={t("attach.search")}
+        placeholder={t("attach.search")}
+        className="h-11 md:h-8"
+        onChange={(event) => setSearch(event.target.value)}
+      />
+      <div className="min-h-0 flex-1 overflow-y-auto">
+        {detail.isPending ? (
+          <StateView state="loading" rows={3} />
+        ) : detail.isError ? (
+          <StateView state="error" error={detail.error} onRetry={() => void detail.refetch()} />
+        ) : shown.length === 0 ? (
+          <StateView state="empty" emptyText={t("attach.empty")} />
+        ) : (
+          <ul className="flex flex-col gap-1.5">
+            {shown.map((row) => (
+              <li key={row.key}>
+                <button
+                  type="button"
+                  className="hover:bg-muted focus-visible:ring-ring flex min-h-11 w-full items-center gap-3 rounded-lg border px-3 py-2 text-start outline-hidden focus-visible:ring-2"
+                  onClick={() => {
+                    onPick(row.item)
+                    setSearch("")
+                    onOpenChange(false)
+                  }}
+                >
+                  <Icon className="text-muted-foreground size-5 shrink-0" aria-hidden />
+                  <span className="flex min-w-0 flex-1 flex-col">
+                    <span className="truncate text-sm font-medium">{row.label}</span>
+                    {row.meta ? <span className="text-muted-foreground truncate text-xs">{row.meta}</span> : null}
+                  </span>
+                </button>
+              </li>
+            ))}
+          </ul>
+        )}
+      </div>
+    </ResponsiveDialog>
   )
 }

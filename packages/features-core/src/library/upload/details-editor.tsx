@@ -58,7 +58,7 @@ export function MaterialDetailsEditor({ item, initialBody = "" }: { item: ItemDe
         if (!titleMissing && !bodyMissing) save.mutate()
       }}
     >
-      <p className="bg-muted/40 rounded-xl border p-3 text-sm">
+      <p className="bg-muted/40 rounded-card border p-3 text-sm">
         {t("statusNote", { status: itemT(`status.${item.status}`) })}
       </p>
       <UploadReviewNote reason={item.status_reason} message={item.status_note} />

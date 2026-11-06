@@ -2,7 +2,7 @@
 
 import type { Slide } from "@ihsp/api"
 import { useT } from "@ihsp/i18n"
-import { Button, Icons, Textarea } from "@ihsp/ui"
+import { Button, Icons, LoadingButton, Textarea } from "@ihsp/ui"
 import { useNotebookErrorMessage } from "../../lib/use-notebook-error"
 import { slideName } from "./slide-deck-state"
 import type { SlideRevision } from "./use-slide-revision"
@@ -28,7 +28,7 @@ export function RevisePanel({ slides, slide, number, revision, blocked, onSelect
   return (
     <section
       aria-label={t("reviseTitle", { n: number })}
-      className="bg-card flex flex-col gap-4 rounded-xl border p-3 md:p-4"
+      className="bg-card flex flex-col gap-4 rounded-card border p-3 md:p-4"
     >
       <div className="flex flex-col gap-1">
         <h3 className="text-sm font-semibold">{t("reviseTitle", { n: number })}</h3>
@@ -102,15 +102,17 @@ export function RevisePanel({ slides, slide, number, revision, blocked, onSelect
         </div>
       ) : null}
 
-      <Button
+      <LoadingButton
         type="button"
         className="min-h-11 self-start md:min-h-8"
-        disabled={pending.length === 0 || blocked || isPending}
+        disabled={pending.length === 0 || blocked}
+        loading={isPending}
+        loadingLabel={t("generating")}
         onClick={revision.generate}
       >
-        {isPending ? <Icons.spinner className="animate-spin" aria-hidden /> : <Icons.sparkles aria-hidden />}
-        {isPending ? t("generating") : t("generateRevised")}
-      </Button>
+        <Icons.sparkles aria-hidden />
+        {t("generateRevised")}
+      </LoadingButton>
     </section>
   )
 }

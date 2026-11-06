@@ -3,17 +3,7 @@
 import { getConfig } from "@ihsp/config"
 import { useT } from "@ihsp/i18n"
 import { isMiniApp } from "@ihsp/telegram/core"
-import {
-  Button,
-  Empty,
-  EmptyContent,
-  EmptyDescription,
-  EmptyHeader,
-  EmptyMedia,
-  EmptyTitle,
-  Icons,
-  buttonVariants,
-} from "@ihsp/ui"
+import { Button, buttonVariants, Icons, StateView } from "@ihsp/ui"
 import type { ReactNode } from "react"
 import { FullScreenSpinner } from "./full-screen-spinner"
 import { retryBootstrap } from "./session"
@@ -24,23 +14,23 @@ function NotLinked() {
   const bot = getConfig().BOT_USERNAME
   return (
     <div className="flex min-h-dvh items-center justify-center p-4">
-      <Empty>
-        <EmptyHeader>
-          <EmptyMedia variant="icon">
-            <Icons.send aria-hidden />
-          </EmptyMedia>
-          <EmptyTitle>{t("auth.telegramTitle")}</EmptyTitle>
-          <EmptyDescription>{t("auth.telegramDescription")}</EmptyDescription>
-        </EmptyHeader>
-        <EmptyContent>
-          <a href={`https://t.me/${bot}`} className={buttonVariants({ className: "min-h-11" })}>
-            {t("auth.telegramOpenBot", { bot })}
-          </a>
-          <Button variant="outline" className="min-h-11" onClick={() => void retryBootstrap()}>
-            {t("common.retry")}
-          </Button>
-        </EmptyContent>
-      </Empty>
+      <StateView
+        state="empty"
+        className="border-0"
+        icon={<Icons.send aria-hidden />}
+        title={t("auth.telegramTitle")}
+        description={t("auth.telegramDescription")}
+        action={
+          <>
+            <a href={`https://t.me/${bot}`} className={buttonVariants({ className: "min-h-11" })}>
+              {t("auth.telegramOpenBot", { bot })}
+            </a>
+            <Button variant="outline" className="min-h-11" onClick={() => void retryBootstrap()}>
+              {t("common.retry")}
+            </Button>
+          </>
+        }
+      />
     </div>
   )
 }

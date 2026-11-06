@@ -53,7 +53,7 @@ export function PhotoRow({
       style={{ transform: CSS.Transform.toString(transform), transition }}
       data-photo-key={photo.key}
       className={cn(
-        "bg-card flex flex-wrap items-center gap-3 rounded-xl border p-2",
+        "bg-card flex flex-wrap items-center gap-3 rounded-card border p-2",
         isDragging && "relative z-10 opacity-80 shadow-lg",
       )}
     >

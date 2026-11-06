@@ -1,15 +1,15 @@
 "use client"
 
-import { getNotebookSourceFileUrlQuery, type SourceFile } from "@ihsp/api"
+import { getNotebookSourceFileUrl, getNotebookSourceFileUrlQuery, type SourceFile } from "@ihsp/api"
 import { useT } from "@ihsp/i18n"
-import { Button, Skeleton, cn } from "@ihsp/ui"
+import { Button, Skeleton, cn, formatBytes } from "@ihsp/ui"
 import { IconArrowsMaximize, IconDownload } from "@ihsp/ui"
 import { useQuery } from "@tanstack/react-query"
 import { Suspense, lazy, useId, useState } from "react"
 import { fileKindOf, type FileKind } from "../../file-upload-button/drive-picker/file-kind"
 import { FileKindIcon } from "../../file-upload-button/drive-picker/file-visual"
+import { useFileOpener } from "../../file-item/file-actions"
 import { SourcePdfView } from "./source-pdf-view"
-import { useFormatBytes } from "./use-format-bytes"
 
 // The full-size viewer (lightbox, PDF frame, player) is loaded only when it is opened.
 const SourceFileDialog = lazy(() => import("./source-file-dialog").then((m) => ({ default: m.SourceFileDialog })))
@@ -54,16 +54,15 @@ export function useSourceFileUrl(
  */
 export function SourceFilePreview({ notebookId, sourceId, file }: SourceFilePreviewProps) {
   const t = useT("notebooks")
-  const formatBytes = useFormatBytes()
+  const opener = useFileOpener()
   const labelId = useId()
   const kind = previewKindOf(file)
   const viewable = kind !== "card"
   const [open, setOpen] = useState(false)
   const inlineUrl = useSourceFileUrl(notebookId, sourceId, "inline", viewable)
-  const downloadUrl = useSourceFileUrl(notebookId, sourceId, "attachment")
 
   return (
-    <section aria-labelledby={labelId} className="bg-card flex flex-col gap-3 rounded-xl border p-3">
+    <section aria-labelledby={labelId} className="bg-card flex flex-col gap-3 rounded-card border p-3">
       <h3 id={labelId} className="sr-only">
         {t("viewer.filePreview.label")}
       </h3>
@@ -106,11 +105,16 @@ export function SourceFilePreview({ notebookId, sourceId, file }: SourceFilePrev
           </Button>
         ) : null}
         <Button
+          type="button"
           variant="outline"
           size="sm"
           className="gap-1"
-          disabled={!downloadUrl}
-          render={<a href={downloadUrl ?? undefined} download={file.name} rel="noopener" />}
+          disabled={opener.pending}
+          onClick={() =>
+            void opener.open(() =>
+              getNotebookSourceFileUrl(notebookId, sourceId, { disposition: "attachment" }).then(({ url }) => url),
+            )
+          }
         >
           <IconDownload aria-hidden />
           {t("viewer.filePreview.download")}

@@ -16,7 +16,7 @@ export function VisibilityPanel({
 }) {
   const t = useT("library.manage.editor.visibility")
   return (
-    <section aria-labelledby="book-visibility-title" className="flex flex-col gap-4 rounded-xl border p-4">
+    <section aria-labelledby="book-visibility-title" className="flex flex-col gap-4 rounded-card border p-4">
       <h2 id="book-visibility-title" className="text-lg font-semibold">
         {t("title")}
       </h2>

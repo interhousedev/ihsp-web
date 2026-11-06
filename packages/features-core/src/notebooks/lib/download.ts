@@ -33,7 +33,9 @@ export function fileNameFor(title: string, extension: string, fallback = "notebo
   const slug = title
     .normalize("NFKD")
     .replace(/[^\p{L}\p{N}]+/gu, "-")
-    .replace(/^-+|-+$/g, "")
+    .split("-")
+    .filter(Boolean)
+    .join("-")
     .toLowerCase()
   return `${slug || fallback}.${extension}`
 }

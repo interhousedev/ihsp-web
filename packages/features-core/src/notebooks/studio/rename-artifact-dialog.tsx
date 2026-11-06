@@ -2,7 +2,7 @@
 
 import type { ArtifactItem } from "@ihsp/api"
 import { useT } from "@ihsp/i18n"
-import { Button, Dialog, DialogContent, DialogFooter, DialogHeader, DialogTitle, Input, Label } from "@ihsp/ui"
+import { Button, Input, Label, ResponsiveDialog } from "@ihsp/ui"
 import { useId, useState } from "react"
 import { useRenameArtifact } from "../api/use-artifacts"
 import { useNotebookErrorMessage } from "../lib/use-notebook-error"
@@ -35,44 +35,42 @@ export function RenameArtifactDialog({
   const trimmed = title.trim()
 
   return (
-    <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent>
-        <form
-          className="flex flex-col gap-4"
-          onSubmit={(event) => {
-            event.preventDefault()
-            if (trimmed === "") return
-            rename.mutate({ id: item.id, title: trimmed }, { onSuccess: () => onOpenChange(false) })
-          }}
-        >
-          <DialogHeader>
-            <DialogTitle>{t("renameTitle")}</DialogTitle>
-          </DialogHeader>
-          <div className="flex flex-col gap-1">
-            <Label htmlFor={inputId}>{t("renameLabel")}</Label>
-            <Input
-              id={inputId}
-              value={title}
-              maxLength={MAX_TITLE_LENGTH}
-              className="min-h-11"
-              onChange={(event) => setTitle(event.target.value)}
-            />
-          </div>
-          {rename.isError ? (
-            <p role="alert" className="text-destructive text-sm">
-              {errorMessage(rename.error)}
-            </p>
-          ) : null}
-          <DialogFooter>
-            <Button type="button" variant="outline" className="min-h-11" onClick={() => onOpenChange(false)}>
-              {root("common.cancel")}
-            </Button>
-            <Button type="submit" className="min-h-11" disabled={rename.isPending || trimmed === ""}>
-              {root("common.save")}
-            </Button>
-          </DialogFooter>
-        </form>
-      </DialogContent>
-    </Dialog>
+    <ResponsiveDialog
+      open={open}
+      onOpenChange={onOpenChange}
+      size="sm"
+      title={t("renameTitle")}
+      onSubmit={(event) => {
+        event.preventDefault()
+        if (trimmed === "") return
+        rename.mutate({ id: item.id, title: trimmed }, { onSuccess: () => onOpenChange(false) })
+      }}
+      footer={
+        <>
+          <Button type="button" variant="outline" className="min-h-11" onClick={() => onOpenChange(false)}>
+            {root("common.cancel")}
+          </Button>
+          <Button type="submit" className="min-h-11" disabled={rename.isPending || trimmed === ""}>
+            {root("common.save")}
+          </Button>
+        </>
+      }
+    >
+      <div className="flex flex-col gap-1">
+        <Label htmlFor={inputId}>{t("renameLabel")}</Label>
+        <Input
+          id={inputId}
+          value={title}
+          maxLength={MAX_TITLE_LENGTH}
+          className="min-h-11"
+          onChange={(event) => setTitle(event.target.value)}
+        />
+      </div>
+      {rename.isError ? (
+        <p role="alert" className="text-destructive text-sm">
+          {errorMessage(rename.error)}
+        </p>
+      ) : null}
+    </ResponsiveDialog>
   )
 }

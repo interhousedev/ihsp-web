@@ -41,13 +41,38 @@ export function chartModel(stat: CertificateStatsType) {
   return { config, rows }
 }
 
-function TypeChart({ stat, title }: { stat: CertificateStatsType; title: string }) {
+/** Rows of the distribution of a starred number: how many entries have each value, over all groups. */
+export function distributionModel(stat: CertificateStatsType, countLabel: string) {
+  const config: ChartConfig = { count: { label: countLabel, color: levelColor(0, 1) } }
+  const rows = stat.levels.map((value) => ({
+    value,
+    count: stat.groups.reduce((sum, group) => sum + (group.counts[value] ?? 0), 0),
+  }))
+  return { config, rows }
+}
+
+/** An average for display, with the locale's decimal sign and no thousands grouping; "—" when none. */
+export function formatAverage(value: number | null, locale: string): string {
+  return value === null ? "—" : value.toLocaleString(locale, { maximumFractionDigits: 1, useGrouping: false })
+}
+
+/** The label of the starred field of a type, in the locale (its key when the type is unknown). */
+export function groupingLabel(types: CertificateType[], stat: CertificateStatsType, locale: string): string {
+  const field = types
+    .find((type) => type.id === stat.type_id)
+    ?.custom_fields.find((item) => item.key === stat.primary_key)
+  const labels = (field?.label ?? {}) as Record<string, string | undefined>
+  return field ? labels[locale] || field.label.en || field.key : (stat.primary_key ?? "")
+}
+
+function TypeChart({ stat, title, grouping }: { stat: CertificateStatsType; title: string; grouping?: string }) {
   const t = useT("certificates.stats")
   const { config, rows } = chartModel(stat)
   return (
     <Card>
       <CardHeader>
         <CardTitle>{title}</CardTitle>
+        {grouping ? <p className="text-muted-foreground text-sm">{t("groupedBy", { field: grouping })}</p> : null}
       </CardHeader>
       <CardContent>
         <ChartContainer config={config} className="aspect-auto h-64 w-full" aria-label={`${title}: ${t("count")}`}>
@@ -77,7 +102,53 @@ function TypeChart({ stat, title }: { stat: CertificateStatsType; title: string 
   )
 }
 
-/** Stacked bars per certificate type: the count by level in each group. */
+/** A starred number: the distribution of its values, the average overall and per group. */
+function NumberStat({ stat, title, grouping }: { stat: CertificateStatsType; title: string; grouping: string }) {
+  const t = useT("certificates.stats")
+  const locale = useLocale()
+  const { config, rows } = distributionModel(stat, t("count"))
+  return (
+    <Card>
+      <CardHeader>
+        <CardTitle>{title}</CardTitle>
+        <p className="text-muted-foreground text-sm">{t("groupedBy", { field: grouping })}</p>
+      </CardHeader>
+      <CardContent className="grid gap-4">
+        <p className="text-lg font-medium">{t("average", { value: formatAverage(stat.average, locale) })}</p>
+        <ChartContainer
+          config={config}
+          className="aspect-auto h-48 w-full"
+          aria-label={`${title}: ${t("distribution")}`}
+        >
+          <BarChart data={rows}>
+            <CartesianGrid vertical={false} />
+            <XAxis dataKey="value" tickLine={false} axisLine={false} />
+            <YAxis allowDecimals={false} width={28} />
+            <ChartTooltip content={<ChartTooltipContent />} />
+            <Bar dataKey="count" fill="var(--color-count)" />
+          </BarChart>
+        </ChartContainer>
+        <ul className="grid gap-2">
+          {stat.groups.map((group) => (
+            <li key={group.group_id} className="rounded-md border p-3 text-sm">
+              <div className="flex items-center justify-between gap-2">
+                <span className="font-medium">{group.group_name}</span>
+                <span>{t("average", { value: formatAverage(group.average, locale) })}</span>
+              </div>
+              <p className="text-muted-foreground">
+                {Object.entries(group.counts)
+                  .map(([value, count]) => `${value} × ${count}`)
+                  .join(", ")}
+              </p>
+            </li>
+          ))}
+        </ul>
+      </CardContent>
+    </Card>
+  )
+}
+
+/** Stacked bars per certificate type: the count by level in each group, or by the starred field. */
 export function CertificateStats({ filters, types }: { filters: CertificateFilters; types: CertificateType[] }) {
   const t = useT("certificates.stats")
   const locale = useLocale()
@@ -88,18 +159,19 @@ export function CertificateStats({ filters, types }: { filters: CertificateFilte
   if (stats.length === 0) return <StateView state="empty" emptyText={t("empty")} />
   return (
     <div className="grid grid-cols-1 gap-4 xl:grid-cols-2">
-      {stats.map((stat) => (
-        <TypeChart
-          key={stat.type_id}
-          stat={stat}
-          title={
-            typeName(
-              types.find((type) => type.id === stat.type_id),
-              locale,
-            ) || stat.type_id
-          }
-        />
-      ))}
+      {stats.map((stat) => {
+        const title =
+          typeName(
+            types.find((type) => type.id === stat.type_id),
+            locale,
+          ) || stat.type_id
+        const grouping = stat.primary_key ? groupingLabel(types, stat, locale) : undefined
+        return stat.primary_kind === "number" && grouping ? (
+          <NumberStat key={stat.type_id} stat={stat} title={title} grouping={grouping} />
+        ) : (
+          <TypeChart key={stat.type_id} stat={stat} title={title} grouping={grouping} />
+        )
+      })}
     </div>
   )
 }

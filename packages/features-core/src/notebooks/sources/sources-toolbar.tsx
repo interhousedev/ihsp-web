@@ -8,8 +8,9 @@ import {
   DropdownMenuRadioGroup,
   DropdownMenuRadioItem,
   DropdownMenuTrigger,
+  Spinner,
 } from "@ihsp/ui"
-import { IconCategory, IconList, IconLoader2, IconRefresh, IconSearch, IconTag, IconTagStarred } from "@ihsp/ui"
+import { IconCategory, IconList, IconRefresh, IconSearch, IconTag, IconTagStarred } from "@ihsp/ui"
 import type { RefObject } from "react"
 import type { SelectionState } from "../lib/sort-sources"
 import { SelectionCheckbox } from "./selection-checkbox"
@@ -87,11 +88,7 @@ export function SourcesToolbar({
           disabled={autoLabel.busy || autoLabel.disabled}
           onClick={autoLabel.onStart}
         >
-          {autoLabel.busy ? (
-            <IconLoader2 aria-hidden className="animate-spin motion-reduce:animate-none" />
-          ) : (
-            <IconTagStarred aria-hidden />
-          )}
+          {autoLabel.busy ? <Spinner aria-hidden /> : <IconTagStarred aria-hidden />}
         </Button>
       ) : null}
       {hasStale ? (

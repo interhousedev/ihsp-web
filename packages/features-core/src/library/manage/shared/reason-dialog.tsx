@@ -1,19 +1,7 @@
 "use client"
 
 import { useErrorMessage, useT } from "@ihsp/i18n"
-import {
-  Button,
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogFooter,
-  DialogHeader,
-  DialogTitle,
-  Input,
-  Label,
-  Dropdown,
-  Textarea,
-} from "@ihsp/ui"
+import { Button, Input, Label, Dropdown, ResponsiveDialog, Textarea } from "@ihsp/ui"
 import { useEffect, useId, useState } from "react"
 
 export type ReasonDialogProps = {
@@ -95,115 +83,113 @@ export function ReasonDialog({
   const showNoteMissing = attempted && noteMissing
 
   return (
-    <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent>
-        <DialogHeader>
-          <DialogTitle>{title}</DialogTitle>
-          {description ? <DialogDescription>{description}</DialogDescription> : null}
-        </DialogHeader>
-        <form
-          className="flex flex-col gap-4"
-          noValidate
-          onSubmit={(event) => {
-            event.preventDefault()
-            setAttempted(true)
-            if (missing || noteMissing) return
-            if (coded) onSubmit(chosen, note.trim() || undefined)
-            else onSubmit(reason.trim())
-          }}
-        >
-          {coded && codes.length > 0 ? (
-            <div className="flex flex-col gap-1.5">
-              <Label htmlFor={`${fieldId}-code`}>{t("reasonLabel")}</Label>
-              <Dropdown
-                id={`${fieldId}-code`}
-                className="w-full"
-                value={code}
-                onValueChange={setPicked}
-                options={[
-                  ...codes.map((value) => ({ value, label: t(`reasonCodes.${value}`) })),
-                  { value: OTHER, label: t("reasonCodes.other") },
-                ]}
-              />
-            </div>
-          ) : null}
-          {ownWords ? (
-            <div className="flex flex-col gap-1.5">
-              <Label htmlFor={fieldId}>{coded && codes.length > 0 ? t("reasonOwn") : t("reasonLabel")}</Label>
-              {coded ? (
-                <Input
-                  id={fieldId}
-                  value={reason}
-                  maxLength={MAX_REASON}
-                  required={required}
-                  aria-invalid={showMissing}
-                  aria-describedby={showMissing ? `${fieldId}-hint` : undefined}
-                  className="min-h-11 md:min-h-8"
-                  onChange={(event) => setReason(event.target.value)}
-                />
-              ) : (
-                <Textarea
-                  id={fieldId}
-                  value={reason}
-                  rows={4}
-                  required={required}
-                  aria-invalid={showMissing}
-                  aria-describedby={showMissing ? `${fieldId}-hint` : undefined}
-                  onChange={(event) => setReason(event.target.value)}
-                />
-              )}
-              {showMissing ? (
-                <p id={`${fieldId}-hint`} role="alert" className="text-destructive text-sm">
-                  {t("reasonRequired")}
-                </p>
-              ) : null}
-            </div>
-          ) : null}
+    <ResponsiveDialog
+      open={open}
+      onOpenChange={onOpenChange}
+      title={title}
+      description={description}
+      size="sm"
+      noValidate
+      onSubmit={(event) => {
+        event.preventDefault()
+        setAttempted(true)
+        if (missing || noteMissing) return
+        if (coded) onSubmit(chosen, note.trim() || undefined)
+        else onSubmit(reason.trim())
+      }}
+      footer={
+        <>
+          <Button
+            type="button"
+            variant="outline"
+            className="min-h-11 md:min-h-8"
+            disabled={pending}
+            onClick={() => onOpenChange(false)}
+          >
+            {common("cancel")}
+          </Button>
+          <Button
+            type="submit"
+            variant={destructive ? "destructive" : "default"}
+            className="min-h-11 md:min-h-8"
+            disabled={pending}
+          >
+            {confirmLabel}
+          </Button>
+        </>
+      }
+    >
+      {coded && codes.length > 0 ? (
+        <div className="flex flex-col gap-1.5">
+          <Label htmlFor={`${fieldId}-code`}>{t("reasonLabel")}</Label>
+          <Dropdown
+            id={`${fieldId}-code`}
+            className="w-full"
+            value={code}
+            onValueChange={setPicked}
+            options={[
+              ...codes.map((value) => ({ value, label: t(`reasonCodes.${value}`) })),
+              { value: OTHER, label: t("reasonCodes.other") },
+            ]}
+          />
+        </div>
+      ) : null}
+      {ownWords ? (
+        <div className="flex flex-col gap-1.5">
+          <Label htmlFor={fieldId}>{coded && codes.length > 0 ? t("reasonOwn") : t("reasonLabel")}</Label>
           {coded ? (
-            <div className="flex flex-col gap-1.5">
-              <Label htmlFor={`${fieldId}-note`}>{noteRequired ? t("noteLabel") : t("noteLabelOptional")}</Label>
-              <Textarea
-                id={`${fieldId}-note`}
-                value={note}
-                rows={4}
-                maxLength={MAX_NOTE}
-                aria-invalid={showNoteMissing}
-                aria-describedby={showNoteMissing ? `${fieldId}-note-hint` : undefined}
-                onChange={(event) => setNote(event.target.value)}
-              />
-              {showNoteMissing ? (
-                <p id={`${fieldId}-note-hint`} role="alert" className="text-destructive text-sm">
-                  {t("noteRequired")}
-                </p>
-              ) : null}
-            </div>
-          ) : null}
-          {error ? (
-            <p role="alert" className="text-destructive text-sm">
-              {errorMessage(error)}
+            <Input
+              id={fieldId}
+              value={reason}
+              maxLength={MAX_REASON}
+              required={required}
+              aria-invalid={showMissing}
+              aria-describedby={showMissing ? `${fieldId}-hint` : undefined}
+              className="min-h-11 md:min-h-8"
+              onChange={(event) => setReason(event.target.value)}
+            />
+          ) : (
+            <Textarea
+              id={fieldId}
+              value={reason}
+              rows={4}
+              required={required}
+              aria-invalid={showMissing}
+              aria-describedby={showMissing ? `${fieldId}-hint` : undefined}
+              onChange={(event) => setReason(event.target.value)}
+            />
+          )}
+          {showMissing ? (
+            <p id={`${fieldId}-hint`} role="alert" className="text-destructive text-sm">
+              {t("reasonRequired")}
             </p>
           ) : null}
-          <DialogFooter>
-            <Button
-              type="button"
-              variant="outline"
-              className="min-h-11 md:min-h-8"
-              disabled={pending}
-              onClick={() => onOpenChange(false)}
-            >
-              {common("cancel")}
-            </Button>
-            <Button
-              type="submit"
-              variant={destructive ? "destructive" : "default"}
-              className="min-h-11 md:min-h-8"
-              disabled={pending}
-            >
-              {confirmLabel}
-            </Button>
-          </DialogFooter>
-        </form>
-      </DialogContent>
-    </Dialog>
+        </div>
+      ) : null}
+      {coded ? (
+        <div className="flex flex-col gap-1.5">
+          <Label htmlFor={`${fieldId}-note`}>{noteRequired ? t("noteLabel") : t("noteLabelOptional")}</Label>
+          <Textarea
+            id={`${fieldId}-note`}
+            value={note}
+            rows={4}
+            maxLength={MAX_NOTE}
+            aria-invalid={showNoteMissing}
+            aria-describedby={showNoteMissing ? `${fieldId}-note-hint` : undefined}
+            onChange={(event) => setNote(event.target.value)}
+          />
+          {showNoteMissing ? (
+            <p id={`${fieldId}-note-hint`} role="alert" className="text-destructive text-sm">
+              {t("noteRequired")}
+            </p>
+          ) : null}
+        </div>
+      ) : null}
+      {error ? (
+        <p role="alert" className="text-destructive text-sm">
+          {errorMessage(error)}
+        </p>
+      ) : null}
+    </ResponsiveDialog>
   )
 }

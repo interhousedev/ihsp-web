@@ -3,6 +3,7 @@
 import { useT } from "@ihsp/i18n"
 import { Input, PageContainer, StateView } from "@ihsp/ui"
 import { useEffect, useMemo, useState } from "react"
+import { BackLink } from "../shell/back-link"
 import { type LicensedPackage, loadLicensedPackages } from "./licenses"
 
 const LINK = "focus-visible:ring-ring rounded-sm underline-offset-4 outline-hidden hover:underline focus-visible:ring-2"
@@ -38,6 +39,8 @@ export function LicensePackagesPage() {
 
   return (
     <PageContainer title={t("packagesShow")} width="narrow">
+      {/* Opened directly or replacing the view in an installed app, this page must still have a way out. */}
+      <BackLink href="/" label={t("packagesHome")} />
       {failed ? (
         <p role="alert" className="text-destructive text-sm">
           {t("loadFailed")}
@@ -57,7 +60,7 @@ export function LicensePackagesPage() {
             {t("found", { count: shown.length })}
           </p>
           {shown.length === 0 ? (
-            <p className="text-muted-foreground text-sm">{t("empty")}</p>
+            <StateView state="filtered" emptyText={t("empty")} onReset={() => setQuery("")} />
           ) : (
             <ul aria-label={t("listLabel")} className="flex flex-col divide-y text-sm">
               {shown.map((item) => (

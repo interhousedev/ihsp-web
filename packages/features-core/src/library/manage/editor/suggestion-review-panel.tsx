@@ -35,7 +35,10 @@ export function SuggestionReviewPanel({
   const link = safeHttpUrl(suggestion.url)
   const pending = suggestion.status === "new"
   return (
-    <section aria-labelledby="book-suggestion-title" className="bg-muted/40 flex flex-col gap-3 rounded-xl border p-4">
+    <section
+      aria-labelledby="book-suggestion-title"
+      className="bg-muted/40 flex flex-col gap-3 rounded-card border p-4"
+    >
       <h2 id="book-suggestion-title" className="flex items-center gap-2 text-lg font-semibold">
         {t("title")}
         <Badge variant={pending ? "secondary" : "outline"}>{t(`status.${suggestion.status}`)}</Badge>

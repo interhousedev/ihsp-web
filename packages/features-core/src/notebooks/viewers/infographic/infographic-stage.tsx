@@ -70,7 +70,7 @@ export function InfographicStage({ artifact, content }: InfographicStageProps) {
           {t("pngFailed")}
         </p>
       ) : null}
-      <section aria-label={t("canvas")} className="bg-muted/40 overflow-x-auto rounded-xl border p-2 md:p-4">
+      <section aria-label={t("canvas")} className="bg-muted/40 overflow-x-auto rounded-card border p-2 md:p-4">
         <div ref={containerRef} className="w-full">
           <div
             data-testid="infographic-scaler"

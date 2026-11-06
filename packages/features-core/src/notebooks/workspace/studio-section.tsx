@@ -21,7 +21,11 @@ export function StudioSection({ notebook, onCollapse, hidden, id }: StudioSectio
       hidden={hidden}
       className="flex min-h-0 min-w-0 flex-1 flex-col print:hidden"
     >
-      <StudioPanel notebook={notebook} {...(onCollapse ? { onCollapse } : {})} />
+      {notebook.shared ? (
+        <p className="text-muted-foreground p-4 text-sm">{t("share.noStudio")}</p>
+      ) : (
+        <StudioPanel notebook={notebook} {...(onCollapse ? { onCollapse } : {})} />
+      )}
     </section>
   )
 }

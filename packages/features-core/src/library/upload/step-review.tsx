@@ -56,7 +56,7 @@ export function StepReview({
 
   return (
     <div className="flex flex-col gap-4">
-      <dl className="flex flex-col gap-2 rounded-xl border p-4">
+      <dl className="flex flex-col gap-2 rounded-card border p-4">
         <Row label={t("kind")}>{values.kind ? t(`kindName.${values.kind}`) : "–"}</Row>
         <Row label={t("title")}>
           <span className="font-medium">{values.title}</span>
@@ -81,7 +81,7 @@ export function StepReview({
           </Badge>
         </Row>
       </dl>
-      <SubmitNote className="bg-muted/40 rounded-xl border p-3 text-sm font-medium" />
+      <SubmitNote className="bg-muted/40 rounded-card border p-3 text-sm font-medium" />
     </div>
   )
 }

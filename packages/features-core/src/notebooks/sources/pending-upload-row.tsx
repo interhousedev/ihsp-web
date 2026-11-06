@@ -1,8 +1,8 @@
 "use client"
 
 import { useT } from "@ihsp/i18n"
-import { Button, cn } from "@ihsp/ui"
-import { IconAlertTriangle, IconLoader2, IconX } from "@ihsp/ui"
+import { Button, cn, Spinner } from "@ihsp/ui"
+import { IconAlertTriangle, IconX } from "@ihsp/ui"
 import { AiReadingIcon } from "./ai-status-icon"
 import type { UploadRow } from "./use-upload-to-notebook"
 
@@ -77,10 +77,7 @@ export function PendingUploadRow({ row, onDismiss }: PendingUploadRowProps) {
             <ProgressRing fraction={row.fraction} />
           </span>
         ) : (
-          <IconLoader2
-            aria-hidden
-            className="text-muted-foreground size-5 shrink-0 animate-spin motion-reduce:animate-none"
-          />
+          <Spinner aria-hidden className="text-muted-foreground size-5 shrink-0" />
         )}
         <span className="flex min-w-0 flex-1 flex-col">
           <span className="truncate text-sm font-medium" title={row.name}>

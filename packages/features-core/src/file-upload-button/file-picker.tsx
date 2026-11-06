@@ -2,7 +2,7 @@
 
 import { getMeFilesQuery, type FileItem, type FileTypeFilter } from "@ihsp/api"
 import { useT } from "@ihsp/i18n"
-import { Button, Dropdown, Icons, Input, StateView } from "@ihsp/ui"
+import { Button, Dropdown, Icons, Input, StateView, formatBytes } from "@ihsp/ui"
 import { useQuery } from "@tanstack/react-query"
 import { useDeferredValue, useState } from "react"
 
@@ -10,12 +10,6 @@ import { useDeferredValue, useState } from "react"
 export const FILE_PICKER_PAGE_SIZE = 6
 
 const TYPES: readonly FileTypeFilter[] = ["pdf", "doc", "sheet", "slides", "text", "image"]
-
-function formatSize(bytes: number): string {
-  if (bytes < 1024) return `${bytes} B`
-  if (bytes < 1024 * 1024) return `${(bytes / 1024).toFixed(1)} KB`
-  return `${(bytes / (1024 * 1024)).toFixed(1)} MB`
-}
 
 /**
  * Picks one of the caller's files: search by name, filter by type, sort recent or older, six per page with
@@ -103,7 +97,7 @@ export function FilePicker({
               onClick={() => onPick(file)}
             >
               <span className="min-w-0 truncate">{file.name}</span>
-              <span className="text-muted-foreground shrink-0 text-xs">{formatSize(file.byte_size)}</span>
+              <span className="text-muted-foreground shrink-0 text-xs">{formatBytes(file.byte_size)}</span>
             </Button>
           </li>
         ))}

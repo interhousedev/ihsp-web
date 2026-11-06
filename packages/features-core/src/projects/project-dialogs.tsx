@@ -2,17 +2,7 @@
 
 import type { ProjectResponse } from "@ihsp/api"
 import { useErrorMessage, useT } from "@ihsp/i18n"
-import {
-  Button,
-  ConfirmDialog,
-  Dialog,
-  DialogContent,
-  DialogFooter,
-  DialogHeader,
-  DialogTitle,
-  Input,
-  Label,
-} from "@ihsp/ui"
+import { Button, ConfirmDialog, Input, Label, ResponsiveDialog } from "@ihsp/ui"
 import { useEffect, useId, useState, type FormEvent } from "react"
 import { normalizeProjectName } from "./project-name"
 
@@ -56,35 +46,28 @@ function NameDialog({
   }
 
   return (
-    <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent>
-        <form onSubmit={submit} className="flex flex-col gap-4">
-          <DialogHeader>
-            <DialogTitle>{title}</DialogTitle>
-          </DialogHeader>
-          <div className="flex flex-col gap-2">
-            <Label htmlFor={inputId}>{t("nameLabel")}</Label>
-            <Input
-              id={inputId}
-              value={name}
-              autoFocus
-              maxLength={120}
-              onChange={(event) => setName(event.target.value)}
-            />
-            {error ? (
-              <p role="alert" className="text-destructive text-sm">
-                {errorMessage(error)}
-              </p>
-            ) : null}
-          </div>
-          <DialogFooter>
-            <Button type="submit" disabled={normalized === null || pending} className="min-h-11 md:min-h-9">
-              {submitLabel}
-            </Button>
-          </DialogFooter>
-        </form>
-      </DialogContent>
-    </Dialog>
+    <ResponsiveDialog
+      open={open}
+      onOpenChange={onOpenChange}
+      title={title}
+      size="sm"
+      onSubmit={submit}
+      footer={
+        <Button type="submit" disabled={normalized === null || pending} className="min-h-11 md:min-h-9">
+          {submitLabel}
+        </Button>
+      }
+    >
+      <div className="flex flex-col gap-2">
+        <Label htmlFor={inputId}>{t("nameLabel")}</Label>
+        <Input id={inputId} value={name} autoFocus maxLength={120} onChange={(event) => setName(event.target.value)} />
+        {error ? (
+          <p role="alert" className="text-destructive text-sm">
+            {errorMessage(error)}
+          </p>
+        ) : null}
+      </div>
+    </ResponsiveDialog>
   )
 }
 

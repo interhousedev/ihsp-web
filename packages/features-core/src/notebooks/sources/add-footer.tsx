@@ -1,8 +1,8 @@
 "use client"
 
 import { useT } from "@ihsp/i18n"
-import { Button } from "@ihsp/ui"
-import { IconAlertTriangle, IconLoader2 } from "@ihsp/ui"
+import { LoadingButton } from "@ihsp/ui"
+import { IconAlertTriangle } from "@ihsp/ui"
 import type { Rejection } from "./use-add-submit"
 
 type AddFooterProps = {
@@ -20,6 +20,7 @@ type AddFooterProps = {
 /** "N selected", the refused items with their reasons, and the one button that adds everything. */
 export function AddFooter({ count, pending, tooMany, capacity, rejections, error, onSubmit }: AddFooterProps) {
   const t = useT("notebooks")
+  const tCommon = useT("common")
   return (
     <div className="flex shrink-0 flex-col gap-2 border-t pt-3">
       {rejections.length > 0 ? (
@@ -48,10 +49,16 @@ export function AddFooter({ count, pending, tooMany, capacity, rejections, error
         <p className="text-muted-foreground text-sm" aria-live="polite">
           {t("add.selected", { count })}
         </p>
-        <Button type="button" className="min-h-11" disabled={count === 0 || tooMany || pending} onClick={onSubmit}>
-          {pending ? <IconLoader2 aria-hidden className="animate-spin motion-reduce:animate-none" /> : null}
+        <LoadingButton
+          type="button"
+          className="min-h-11"
+          disabled={count === 0 || tooMany}
+          loading={pending}
+          loadingLabel={tCommon("loading")}
+          onClick={onSubmit}
+        >
           {t("add.submit", { count })}
-        </Button>
+        </LoadingButton>
       </div>
     </div>
   )

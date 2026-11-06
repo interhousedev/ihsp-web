@@ -61,7 +61,7 @@ export function StatusPanel() {
   const status = useQuery(getUniLibraryStatusQuery())
 
   return (
-    <section aria-labelledby="unilibrary-status" className="flex flex-col gap-4 rounded-xl border p-4">
+    <section aria-labelledby="unilibrary-status" className="flex flex-col gap-4 rounded-card border p-4">
       <h2 id="unilibrary-status" className="text-lg font-semibold">
         {t("title")}
       </h2>

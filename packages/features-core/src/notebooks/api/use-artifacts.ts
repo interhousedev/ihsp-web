@@ -28,13 +28,16 @@ import {
 import { useMutation, useQuery, useQueryClient, type QueryClient } from "@tanstack/react-query"
 import { useEffect } from "react"
 import { isActive } from "../lib/artifact-kinds"
+import { useIsSharedView } from "./use-notebooks"
 
 const POLL_MS = 3000
 
 /** The Studio list (newest first, no content); polls every 3 s while anything is `queued` or `generating`. */
 export function useArtifacts(notebookId: string) {
+  const shared = useIsSharedView(notebookId)
   return useQuery({
     ...getArtifactsQuery(notebookId),
+    enabled: !shared,
     refetchInterval: (query) => ((query.state.data ?? []).some(isActive) ? POLL_MS : false),
     // A hidden tab must not freeze a "generating" row; the list catches up while the user is away.
     refetchIntervalInBackground: true,

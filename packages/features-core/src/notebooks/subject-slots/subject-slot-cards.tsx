@@ -40,7 +40,7 @@ function SlotCard({
         disabled={open.isPending}
         onClick={() => open.mutate(slot, { onSuccess: onOpened })}
         className={cn(
-          "bg-card hover:bg-muted/50 focus-visible:ring-ring ring-foreground/10 flex h-full w-full flex-col rounded-xl border-dashed text-start ring-1 transition-colors outline-none focus-visible:ring-2 disabled:opacity-60",
+          "bg-card hover:bg-muted/50 focus-visible:ring-ring ring-foreground/10 flex h-full w-full flex-col rounded-card border-dashed text-start ring-1 transition-colors outline-none focus-visible:ring-2 disabled:opacity-60",
           compact ? "min-h-20 gap-1.5 p-3" : "min-h-32 gap-3 p-4",
         )}
       >

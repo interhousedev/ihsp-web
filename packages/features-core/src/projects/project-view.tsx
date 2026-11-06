@@ -1,6 +1,6 @@
 "use client"
 
-import type { ChatItem, FileItem } from "@ihsp/api"
+import type { ChatItem, FileItem as ApiFile } from "@ihsp/api"
 import { useErrorMessage, useFormatters, useT } from "@ihsp/i18n"
 import {
   Button,
@@ -9,7 +9,6 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
   IconDots,
-  IconFileText,
   IconFolder,
   IconPaperclip,
   IconX,
@@ -23,6 +22,7 @@ import Link from "next/link"
 import { useRouter } from "next/navigation"
 import { useId, useState, type ReactNode } from "react"
 import { toast } from "sonner"
+import { FileItem } from "../file-item/file-item"
 import { AttachFilesDialog } from "../assistant-chat/attach-files-dialog"
 import { useAssistantScope } from "../assistant-chat/assistant-context"
 import { limitState } from "../assistant-chat/limit-info"
@@ -92,7 +92,7 @@ export function ProjectView({ projectId, basePath, navButtons, trailing }: Proje
   const current = project.data
   const limit = limitState(usage.data)
 
-  async function handleSend(text: string, files: FileItem[], options?: PillSendOptions): Promise<boolean> {
+  async function handleSend(text: string, files: ApiFile[], options?: PillSendOptions): Promise<boolean> {
     const web = options?.webSearch === true
     try {
       const chat = await createChat.mutateAsync({})
@@ -304,25 +304,25 @@ function ProjectSources({ projectId }: { projectId: string }) {
         <p className="text-muted-foreground px-3 py-4 text-sm">{t("sourcesEmpty")}</p>
       ) : null}
       {items.length > 0 ? (
-        <ul className="flex flex-col">
+        <ul className="flex flex-col gap-2">
           {items.map((file) => (
-            <li
+            <FileItem
+              as="li"
               key={file.file_id}
-              className="border-border/60 flex min-h-12 items-center gap-3 border-b px-3 last:border-b-0"
-            >
-              <IconFileText className="text-muted-foreground size-4 shrink-0" aria-hidden />
-              <span className="min-w-0 flex-1 truncate text-sm">{file.name}</span>
-              <Button
-                type="button"
-                variant="ghost"
-                size="icon"
-                className="size-11 shrink-0 md:size-9"
-                aria-label={t("removeSource", { name: file.name })}
-                onClick={() => detach.mutate(file.file_id, { onError: (error) => toast.error(errorMessage(error)) })}
-              >
-                <IconX aria-hidden />
-              </Button>
-            </li>
+              name={file.name}
+              actions={
+                <Button
+                  type="button"
+                  variant="ghost"
+                  size="icon"
+                  className="size-11 shrink-0 md:size-9"
+                  aria-label={t("removeSource", { name: file.name })}
+                  onClick={() => detach.mutate(file.file_id, { onError: (error) => toast.error(errorMessage(error)) })}
+                >
+                  <IconX aria-hidden />
+                </Button>
+              }
+            />
           ))}
         </ul>
       ) : null}

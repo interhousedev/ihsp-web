@@ -2,7 +2,7 @@
 
 import type { FeedbackArea } from "@ihsp/api"
 import { useT } from "@ihsp/i18n"
-import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@ihsp/ui"
+import { ResponsiveDialog } from "@ihsp/ui"
 import { FeedbackForm } from "./feedback-form"
 
 export type FeedbackDialogProps = {
@@ -16,13 +16,8 @@ export type FeedbackDialogProps = {
 export function FeedbackDialog({ open, onOpenChange, defaultArea }: FeedbackDialogProps) {
   const t = useT("feedback")
   return (
-    <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="max-h-[90dvh] overflow-y-auto">
-        <DialogHeader>
-          <DialogTitle>{t("dialog.title")}</DialogTitle>
-        </DialogHeader>
-        <FeedbackForm defaultArea={defaultArea} onClose={() => onOpenChange(false)} />
-      </DialogContent>
-    </Dialog>
+    <ResponsiveDialog open={open} onOpenChange={onOpenChange} title={t("dialog.title")} size="sm">
+      <FeedbackForm defaultArea={defaultArea} onClose={() => onOpenChange(false)} />
+    </ResponsiveDialog>
   )
 }

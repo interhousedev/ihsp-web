@@ -51,7 +51,7 @@ export function CollectionsPage() {
           {list.data.map((collection) => {
             const name = pickLocalized(collection.title, locale)
             return (
-              <li key={collection.id} className="flex items-center gap-3 rounded-xl border p-3">
+              <li key={collection.id} className="flex items-center gap-3 rounded-card border p-3">
                 <CoverImage src={collection.cover_url} className="aspect-[3/4] w-14 shrink-0 rounded-md" />
                 <div className="flex min-w-0 flex-1 flex-col gap-1">
                   <span className="font-medium break-words">{name}</span>

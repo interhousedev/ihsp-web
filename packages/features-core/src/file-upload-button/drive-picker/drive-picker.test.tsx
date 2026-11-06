@@ -3,7 +3,7 @@ import type { FileItem } from "@ihsp/api"
 import { apiUrl, fileImage, filePdf, renderWithProviders, server, setDropdownValue } from "@ihsp/test-utils"
 import { configure, fireEvent, screen, waitFor, within } from "@testing-library/react"
 import { HttpResponse, http } from "msw"
-import { formatFileSize } from "./file-kind"
+import { formatBytes } from "@ihsp/ui"
 import { DrivePicker } from "./drive-picker"
 
 configure({ asyncUtilTimeout: 8000 })
@@ -150,7 +150,7 @@ describe("DrivePicker", () => {
     const preview = screen.getByTestId("drive-preview")
     expect(preview.querySelector("img")).toBeNull()
     expect(preview.querySelector("iframe")).toBeNull()
-    expect(within(preview).getByText(formatFileSize(filePdf.byte_size))).toBeInTheDocument()
+    expect(within(preview).getByText(formatBytes(filePdf.byte_size))).toBeInTheDocument()
     expect(within(preview).getByText("application/pdf")).toBeInTheDocument()
   })
 

@@ -10,11 +10,11 @@ import {
   type ReadingListDetail,
 } from "@ihsp/api"
 import { useErrorMessage, useT } from "@ihsp/i18n"
-import { Button, ConfirmDialog, Icons, buttonVariants } from "@ihsp/ui"
+import { Button, ConfirmDialog, Icons, SaveBar, buttonVariants } from "@ihsp/ui"
 import { useMutation, useQueryClient } from "@tanstack/react-query"
 import Link from "next/link"
 import { useRouter } from "next/navigation"
-import { useEffect, useRef, useState } from "react"
+import { useRef, useState } from "react"
 import { toast } from "sonner"
 import { useUniLibraryEnabled } from "../../hooks/use-uni-library"
 import { listHref, listsHref } from "../../utils/hrefs"
@@ -79,13 +79,6 @@ export function ListEditorForm({ list }: { list?: ReadingListDetail }) {
     setTouched(true)
     setEntries(next)
   }
-
-  useEffect(() => {
-    if (!touched) return
-    const listener = (event: BeforeUnloadEvent) => event.preventDefault()
-    window.addEventListener("beforeunload", listener)
-    return () => window.removeEventListener("beforeunload", listener)
-  }, [touched])
 
   function addItem(card: ItemCard) {
     if (!card.id || hasItem(entries, card.id) || full) return
@@ -159,7 +152,7 @@ export function ListEditorForm({ list }: { list?: ReadingListDetail }) {
           </p>
         </div>
         {shown.length === 0 ? (
-          <p className="text-muted-foreground rounded-xl border border-dashed p-4 text-sm">{t("entries.empty")}</p>
+          <p className="text-muted-foreground rounded-card border border-dashed p-4 text-sm">{t("entries.empty")}</p>
         ) : (
           <EntryList
             entries={shown}
@@ -177,7 +170,7 @@ export function ListEditorForm({ list }: { list?: ReadingListDetail }) {
         <p className="sr-only" role="status" aria-live="polite">
           {announcement}
         </p>
-        <div className="bg-muted/30 flex flex-col gap-6 rounded-xl border p-4">
+        <div className="bg-muted/30 flex flex-col gap-6 rounded-card border p-4">
           <EntrySearch full={full} isAdded={(card) => card.id !== null && hasItem(entries, card.id)} onAdd={addItem} />
           <EntryLinkForm full={full} onAdd={addLink} />
         </div>
@@ -194,30 +187,25 @@ export function ListEditorForm({ list }: { list?: ReadingListDetail }) {
         </p>
       ) : null}
 
-      <div className="flex flex-wrap items-center justify-between gap-2">
-        <div className="flex flex-wrap items-center gap-2">
-          <Link
-            href={list ? listHref(list.id) : listsHref()}
-            className={buttonVariants({ variant: "ghost", className: "min-h-11" })}
+      <SaveBar dirty={touched} saving={save.isPending} canSave submit showSaved={false} saveLabel={t("save")}>
+        <Link
+          href={list ? listHref(list.id) : listsHref()}
+          className={buttonVariants({ variant: "ghost", className: "min-h-11 md:min-h-8" })}
+        >
+          {t("cancel")}
+        </Link>
+        {list ? (
+          <Button
+            type="button"
+            variant="ghost"
+            className="text-destructive min-h-11 md:min-h-8"
+            onClick={() => setDeleting(true)}
           >
-            {t("cancel")}
-          </Link>
-          {list ? (
-            <Button
-              type="button"
-              variant="ghost"
-              className="text-destructive min-h-11"
-              onClick={() => setDeleting(true)}
-            >
-              <Icons.trash aria-hidden />
-              {t("delete")}
-            </Button>
-          ) : null}
-        </div>
-        <Button type="submit" className="min-h-11" disabled={save.isPending}>
-          {save.isPending ? t("saving") : t("save")}
-        </Button>
-      </div>
+            <Icons.trash aria-hidden />
+            {t("delete")}
+          </Button>
+        ) : null}
+      </SaveBar>
 
       <ConfirmDialog
         open={deleting}

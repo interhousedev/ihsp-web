@@ -3,14 +3,16 @@
 import type { FlashcardSetItem, FlashcardStats } from "@ihsp/api"
 import { useT } from "@ihsp/i18n"
 import {
+  AiMark,
   Badge,
   Button,
+  cn,
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger,
   Icons,
-  cn,
+  StateView,
 } from "@ihsp/ui"
 import Link from "next/link"
 import { useRef, useState } from "react"
@@ -29,6 +31,8 @@ export type DeckListProps = {
   onCreateDeck: () => void
   /** Called with the chosen `.txt`, `.csv` or `.tsv` file; leave out to hide "Import file". */
   onImportFile?: (file: File) => void
+  /** Opens the dialog that combines sets; leave out to hide "Combine decks". */
+  onMerge?: () => void
   /** Called with the share slug of a deck to copy; leave out to hide "Get shared". */
   onGetShared?: (slug: string) => void
   /** The gear menu of a row; a deck has the entries whose callback is given. */
@@ -55,6 +59,7 @@ export function DeckList({
   getDeckHref,
   onCreateDeck,
   onImportFile,
+  onMerge,
   onGetShared,
   onDeckOptions,
   onDeckEdit,
@@ -70,7 +75,7 @@ export function DeckList({
   return (
     <div className={cn("flex w-full min-w-0 flex-col gap-6", className)}>
       {decks.length === 0 ? (
-        <p className="text-muted-foreground rounded-xl border border-dashed p-6 text-center text-sm">{t("empty")}</p>
+        <StateView state="empty" emptyText={t("empty")} />
       ) : (
         <table className="w-full table-fixed text-sm">
           <thead>
@@ -104,7 +109,8 @@ export function DeckList({
                     >
                       <span className="truncate">{deck.title}</span>
                     </Link>
-                    {deck.source !== "manual" ? (
+                    {deck.source === "mcp" ? <AiMark label={t("source.mcp")} /> : null}
+                    {deck.source === "ai" || deck.source === "copied" ? (
                       <Badge variant="secondary" className="shrink-0 font-normal">
                         {t(`source.${deck.source}`)}
                       </Badge>
@@ -182,6 +188,11 @@ export function DeckList({
         <Button type="button" variant="outline" className={buttonClass} onClick={onCreateDeck}>
           {t("createDeck")}
         </Button>
+        {onMerge && decks.length >= 2 ? (
+          <Button type="button" variant="outline" className={buttonClass} onClick={onMerge}>
+            {t("merge")}
+          </Button>
+        ) : null}
         {onImportFile ? (
           <>
             <Button type="button" variant="outline" className={buttonClass} onClick={() => fileInput.current?.click()}>

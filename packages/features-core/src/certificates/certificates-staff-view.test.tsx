@@ -77,7 +77,10 @@ describe("certificates staff view", () => {
     const { config, rows } = chartModel({
       type_id: "t",
       levels: ["A1", "B1"],
-      groups: [{ group_id: "g", group_name: "2TN2", counts: { B1: 3 } }],
+      groups: [{ group_id: "g", group_name: "2TN2", counts: { B1: 3 }, average: null }],
+      primary_key: null,
+      primary_kind: null,
+      average: null,
     })
 
     expect(Object.keys(config)).toEqual(["l0", "l1"])

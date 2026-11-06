@@ -2,12 +2,27 @@
 
 import { useSortable } from "@dnd-kit/sortable"
 import { CSS } from "@dnd-kit/utilities"
+import type { FlashcardHardness } from "@ihsp/api"
 import { useT } from "@ihsp/i18n"
-import { Button, Icons, Label, Markdown, Textarea, cn } from "@ihsp/ui"
+import {
+  Button,
+  Icons,
+  Label,
+  Markdown,
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+  Textarea,
+  cn,
+} from "@ihsp/ui"
 import { useId, type ClipboardEvent, type KeyboardEvent } from "react"
 import { CARD_TEXT_MAX } from "../utils/limits"
 import type { EditorRow } from "../utils/editor-rows"
 import { looksLikeImport } from "../utils/parse-import"
+
+const HARDNESS: readonly FlashcardHardness[] = ["easy", "medium", "hard"]
 
 export type CardEditorRowProps = {
   row: EditorRow
@@ -16,7 +31,7 @@ export type CardEditorRowProps = {
   invalid: boolean
   preview: boolean
   autoFocus: boolean
-  onChange: (key: string, patch: Partial<Pick<EditorRow, "front" | "back">>) => void
+  onChange: (key: string, patch: Partial<Pick<EditorRow, "front" | "back" | "hardness">>) => void
   onRemove: (key: string) => void
   /** Alt plus an arrow key on the handle: move one place up or down. */
   onMove: (index: number, delta: -1 | 1) => void
@@ -39,6 +54,7 @@ export function CardEditorRow({
   const t = useT("flashcards.editor")
   const frontId = useId()
   const backId = useId()
+  const hardnessId = useId()
   const { attributes, listeners, setNodeRef, setActivatorNodeRef, transform, transition, isDragging } = useSortable({
     id: row.key,
   })
@@ -72,7 +88,7 @@ export function CardEditorRow({
       data-invalid={invalid ? "true" : "false"}
       data-row-key={row.key}
       className={cn(
-        "bg-card flex flex-col gap-3 rounded-xl border p-3 md:p-4",
+        "bg-card flex flex-col gap-3 rounded-card border p-3 md:p-4",
         invalid && "border-destructive",
         isDragging && "relative z-10 opacity-80 shadow-lg",
       )}
@@ -144,6 +160,29 @@ export function CardEditorRow({
           </Label>
           {preview && row.back.trim() ? <Markdown className="bg-muted/50 rounded-md p-2">{row.back}</Markdown> : null}
         </div>
+      </div>
+
+      <div className="flex flex-wrap items-center gap-2">
+        <Label htmlFor={hardnessId} className="text-muted-foreground text-xs font-semibold">
+          {t("hardness.label")}
+          <span className="sr-only"> {n}</span>
+        </Label>
+        <Select
+          value={row.hardness ?? "medium"}
+          items={HARDNESS.map((value) => ({ value, label: t(`hardness.${value}`) }))}
+          onValueChange={(value) => value && onChange(row.key, { hardness: value as FlashcardHardness })}
+        >
+          <SelectTrigger id={hardnessId} className="min-h-11 md:min-h-8">
+            <SelectValue />
+          </SelectTrigger>
+          <SelectContent>
+            {HARDNESS.map((value) => (
+              <SelectItem key={value} value={value}>
+                {t(`hardness.${value}`)}
+              </SelectItem>
+            ))}
+          </SelectContent>
+        </Select>
       </div>
 
       {invalid ? (

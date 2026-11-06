@@ -2,18 +2,7 @@
 
 import type { SourceItem } from "@ihsp/api"
 import { useT } from "@ihsp/i18n"
-import {
-  Button,
-  Checkbox,
-  Dialog,
-  DialogContent,
-  DialogFooter,
-  DialogHeader,
-  DialogTitle,
-  Input,
-  Label,
-  LoadingButton,
-} from "@ihsp/ui"
+import { Button, Checkbox, Input, Label, LoadingButton, ResponsiveDialog } from "@ihsp/ui"
 import { useId, useState } from "react"
 import { useLoadedNotebook } from "../api"
 import { useCombineNotes } from "./use-combine-notes"
@@ -61,69 +50,61 @@ export function CombineNotesDialog({ notebookId, notes, open, onOpenChange }: Co
   }
 
   return (
-    <Dialog open={open} onOpenChange={change}>
-      <DialogContent>
-        <form
-          className="flex flex-col gap-4"
-          onSubmit={(event) => {
-            event.preventDefault()
-            if (!pending && trimmed !== "") void submit()
-          }}
-        >
-          <DialogHeader>
-            <DialogTitle>{t("combine.title")}</DialogTitle>
-          </DialogHeader>
-          <div className="flex flex-col gap-1">
-            <Label htmlFor={titleId}>{t("combine.titleLabel")}</Label>
-            <Input
-              id={titleId}
-              value={title}
-              maxLength={MAX_TITLE_LENGTH}
-              className="min-h-11"
-              onChange={(event) => setEdited(event.target.value)}
-            />
-          </div>
-          <ol
-            aria-label={t("combine.listLabel")}
-            className="max-h-40 list-decimal overflow-y-auto rounded-lg border py-2 pe-3 ps-8 text-sm"
+    <ResponsiveDialog
+      open={open}
+      onOpenChange={change}
+      size="sm"
+      title={t("combine.title")}
+      onSubmit={(event) => {
+        event.preventDefault()
+        if (!pending && trimmed !== "") void submit()
+      }}
+      footer={
+        <>
+          <Button type="button" variant="outline" className="min-h-11" disabled={pending} onClick={() => change(false)}>
+            {t("combine.cancel")}
+          </Button>
+          <LoadingButton
+            type="submit"
+            className="min-h-11"
+            loading={pending}
+            loadingLabel={t("combine.working")}
+            disabled={trimmed === ""}
           >
-            {ordered.map((note) => (
-              <li key={note.id} className="py-0.5 break-words">
-                {note.title}
-              </li>
-            ))}
-          </ol>
-          <label className="flex min-h-11 items-center gap-2 text-sm md:min-h-8">
-            <Checkbox checked={unselect} onCheckedChange={(checked) => setUnselect(checked === true)} />
-            <span>{t("combine.unselect")}</span>
-          </label>
-          {error ? (
-            <p role="alert" className="text-destructive text-sm">
-              {error}
-            </p>
-          ) : null}
-          <DialogFooter>
-            <Button
-              type="button"
-              variant="outline"
-              className="min-h-11"
-              disabled={pending}
-              onClick={() => change(false)}
-            >
-              {t("combine.cancel")}
-            </Button>
-            <LoadingButton
-              type="submit"
-              className="min-h-11"
-              loading={pending}
-              loadingLabel={t("combine.working")}
-              disabled={trimmed === ""}
-            >
-              {t("combine.submit")}
-            </LoadingButton>
-          </DialogFooter>
-        </form>
-      </DialogContent>
-    </Dialog>
+            {t("combine.submit")}
+          </LoadingButton>
+        </>
+      }
+    >
+      <div className="flex flex-col gap-1">
+        <Label htmlFor={titleId}>{t("combine.titleLabel")}</Label>
+        <Input
+          id={titleId}
+          value={title}
+          maxLength={MAX_TITLE_LENGTH}
+          className="min-h-11"
+          onChange={(event) => setEdited(event.target.value)}
+        />
+      </div>
+      <ol
+        aria-label={t("combine.listLabel")}
+        className="max-h-40 list-decimal overflow-y-auto rounded-lg border py-2 pe-3 ps-8 text-sm"
+      >
+        {ordered.map((note) => (
+          <li key={note.id} className="py-0.5 break-words">
+            {note.title}
+          </li>
+        ))}
+      </ol>
+      <label className="flex min-h-11 items-center gap-2 text-sm md:min-h-8">
+        <Checkbox checked={unselect} onCheckedChange={(checked) => setUnselect(checked === true)} />
+        <span>{t("combine.unselect")}</span>
+      </label>
+      {error ? (
+        <p role="alert" className="text-destructive text-sm">
+          {error}
+        </p>
+      ) : null}
+    </ResponsiveDialog>
   )
 }

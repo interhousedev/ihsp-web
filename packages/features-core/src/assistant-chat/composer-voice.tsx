@@ -1,7 +1,7 @@
 "use client"
 
 import { useT } from "@ihsp/i18n"
-import { Button, IconArrowUp, IconLoader2, IconX } from "@ihsp/ui"
+import { Button, IconArrowUp, IconX, Spinner } from "@ihsp/ui"
 import { useCallback, useRef, useState } from "react"
 import { WAVE_BAR_PX, WAVE_PITCH_PX, waveSlots } from "./voice-format"
 
@@ -111,7 +111,7 @@ export function ComposerVoiceBar({ phase, levels, onCancel, onStop, onSend }: Co
           aria-busy="true"
           disabled
         >
-          <IconLoader2 className="size-4 animate-spin motion-reduce:animate-none" aria-hidden />
+          <Spinner className="size-4" aria-hidden />
         </Button>
       )}
       <Button

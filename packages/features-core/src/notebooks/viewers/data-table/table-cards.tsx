@@ -17,7 +17,7 @@ export function TableCards({ columns, rows, refsIndex }: TableCardsProps) {
   return (
     <ul className="flex flex-col gap-3">
       {rows.map(({ row, index }) => (
-        <li key={index} className="bg-card rounded-xl border p-4">
+        <li key={index} className="bg-card rounded-card border p-4">
           <dl className="flex flex-col gap-2">
             {columns.map((column, columnIndex) => (
               <div key={column.key} className="flex flex-col gap-0.5">

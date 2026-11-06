@@ -20,7 +20,7 @@ export function PublishChecklist({
   const id = useId()
   const allOk = items.every((item) => item.ok)
   return (
-    <section aria-labelledby={`${id}-title`} className="flex flex-col gap-3 rounded-xl border p-4">
+    <section aria-labelledby={`${id}-title`} className="flex flex-col gap-3 rounded-card border p-4">
       <div>
         <h2 id={`${id}-title`} className="text-lg font-semibold">
           {t("title")}

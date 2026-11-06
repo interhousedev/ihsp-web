@@ -2,7 +2,7 @@
 
 import type { ExerciseQuestion } from "@ihsp/api"
 import { useT } from "@ihsp/i18n"
-import { Input, cn } from "@ihsp/ui"
+import { Input, Select, SelectContent, SelectItem, SelectTrigger, SelectValue, cn } from "@ihsp/ui"
 import { useId } from "react"
 import { withinLimit, type ExerciseAnswer } from "./grading"
 
@@ -79,28 +79,35 @@ function MatchingInput({ question, answer, submitted, onAnswer }: InputProps) {
         const value = given[item.id] ?? ""
         const right = value === item.answer
         return (
-          <label key={item.id} className="flex flex-col gap-1 text-sm sm:flex-row sm:items-center sm:justify-between">
+          <div key={item.id} className="flex flex-col gap-1 text-sm sm:flex-row sm:items-center sm:justify-between">
             <span className="min-w-0">{item.text}</span>
             <span className="flex items-center gap-2">
-              <select
-                className={cn(
-                  "border-input bg-background min-h-11 rounded-md border px-2 text-sm md:min-h-8",
-                  submitted && (right ? "border-success" : "border-destructive"),
-                )}
-                value={value}
+              <Select
+                value={value || null}
                 disabled={submitted}
-                onChange={(event) => onAnswer({ ...given, [item.id]: event.target.value })}
+                items={[
+                  { value: null, label: t("choose") },
+                  ...question.options.map((option) => ({ value: option.id, label: option.id })),
+                ]}
+                onValueChange={(next: string | null) => onAnswer({ ...given, [item.id]: next ?? "" })}
               >
-                <option value="">{t("choose")}</option>
-                {question.options.map((option) => (
-                  <option key={option.id} value={option.id}>
-                    {option.id}
-                  </option>
-                ))}
-              </select>
+                <SelectTrigger
+                  aria-label={item.text}
+                  className={cn("min-h-11 md:min-h-8", submitted && (right ? "border-success" : "border-destructive"))}
+                >
+                  <SelectValue />
+                </SelectTrigger>
+                <SelectContent>
+                  {question.options.map((option) => (
+                    <SelectItem key={option.id} value={option.id}>
+                      {option.id}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
               {submitted && !right ? <span className="text-xs text-success">{item.answer}</span> : null}
             </span>
-          </label>
+          </div>
         )
       })}
     </div>

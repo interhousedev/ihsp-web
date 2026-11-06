@@ -3,7 +3,9 @@
 import { useAuthStore } from "@ihsp/auth"
 import { getConfig, type AppEnv } from "@ihsp/config"
 import { useT } from "@ihsp/i18n"
+import { isMiniApp } from "@ihsp/telegram/core"
 import type { PlatformLink } from "@ihsp/ui"
+import type { MouseEvent } from "react"
 import { installAppUrl, isPwaMode } from "../pwa/utils/app-mode"
 import { hubInstallUrl } from "../pwa/utils/hub-install"
 import { platformKeysFor, type PlatformKey } from "./platform-keys"
@@ -25,6 +27,18 @@ export function installAnchorUrl(hub: string, key: PlatformKey): string {
   return hubInstallUrl(hub, key)
 }
 
+/** Inside Telegram another platform leaves through the SDK: the webview would lose the signed launch parameters. */
+function leaveMiniApp(href: string) {
+  return (event: MouseEvent) => {
+    event.preventDefault()
+    import("@ihsp/telegram")
+      .then(({ openExternalLink }) => {
+        if (!openExternalLink(href)) window.location.assign(href)
+      })
+      .catch(() => window.location.assign(href))
+  }
+}
+
 /**
  * The IHSP platforms the logged-in user can open, for `UserMenu`'s `platforms` prop: SP / Staff / Admin / LMS / ID by
  * role, addresses from the runtime config, the app the user is in marked as current. Empty while logged out. It reads
@@ -37,15 +51,20 @@ export function usePlatformLinks(): PlatformLink[] {
 
   const config = getConfig()
   const hub = isPwaMode() ? installAppUrl() : null
+  const miniApp = isMiniApp()
   // An optional address (`LIBRARY_URL`) that is not configured hides its entry.
   return platformKeysFor(roles)
     .filter((key) => config[URL_KEYS[key]])
-    .map((key) => ({
-      key,
-      name: t(`${key}.name`),
-      description: t(`${key}.description`),
-      href: hub && HUB_ANCHORS.includes(key) ? installAnchorUrl(hub, key) : String(config[URL_KEYS[key]]),
-      // The installable app (client `app`) is the student portal in another host.
-      current: (config.OAUTH_CLIENT_ID === "app" ? "sp" : config.OAUTH_CLIENT_ID) === key,
-    }))
+    .map((key) => {
+      const href = hub && HUB_ANCHORS.includes(key) ? installAnchorUrl(hub, key) : String(config[URL_KEYS[key]])
+      return {
+        key,
+        name: t(`${key}.name`),
+        description: t(`${key}.description`),
+        href,
+        // The installable app (client `app`) is the student portal in another host.
+        current: (config.OAUTH_CLIENT_ID === "app" ? "sp" : config.OAUTH_CLIENT_ID) === key,
+        ...(miniApp ? { onClick: leaveMiniApp(href) } : {}),
+      }
+    })
 }
