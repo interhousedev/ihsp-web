@@ -260,6 +260,8 @@
       "no-emis-link": "Your account is not linked to EMIS.",
       "emis-profile-mismatch": "These EMIS credentials belong to a different EMIS account.",
       "wrong-password": "The password is wrong.",
+      "wrong-emis-password": "The current EMIS password is wrong.",
+      "emis-new-password-rejected": "EMIS refused the new password. Choose a different one.",
       "delete-forbidden": "This account cannot be deleted here. Contact Administration.",
       "admin-server-forbidden": "Only verified clients can connect to the Administration server.",
       "password-policy": "The password does not meet the requirements.",

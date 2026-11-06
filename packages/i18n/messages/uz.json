@@ -260,6 +260,8 @@
       "no-emis-link": "Akkauntingiz EMIS bilan bogʻlanmagan.",
       "emis-profile-mismatch": "Bu EMIS maʼlumotlari boshqa EMIS akkauntiga tegishli.",
       "wrong-password": "Parol notoʻgʻri.",
+      "wrong-emis-password": "Joriy EMIS paroli notoʻgʻri.",
+      "emis-new-password-rejected": "EMIS yangi parolni qabul qilmadi. Boshqa parol tanlang.",
       "delete-forbidden": "Bu akkauntni bu yerda oʻchirib boʻlmaydi. Maʼmuriyatga murojaat qiling.",
       "admin-server-forbidden": "Maʼmuriyat serveriga faqat tasdiqlangan mijozlar ulanishi mumkin.",
       "password-policy": "Parol talablarga javob bermaydi.",
