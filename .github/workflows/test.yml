@@ -1,9 +1,11 @@
-# Full test run on every pull request to main: unit and component tests of every package and app,
+# Full test run on every push and pull request to main: unit and component tests of every package and app,
 # the deploy tests, and the API contract against the vendored openapi.json.
 # Secret scanning is in security.yml (gitleaks).
 name: Test
 
 on:
+  push:
+    branches: [main]
   pull_request:
     branches: [main]
   merge_group:

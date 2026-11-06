@@ -4,9 +4,36 @@ All notable changes to this project are documented here. The format follows [Kee
 
 ## [Unreleased]
 
+## [1.1.0] - 2026-11-06
+
+- Sharing: share a notebook or file by sign-in link or with named people, chat read-only in a private thread on your own limits, copy a shared notebook, attach one as live base materials.
+
 ### Added
 
+- Certificate files open in the system browser from the Telegram mini app.
+- The Test workflow also runs on pushes to `main`.
+- One share menu for files that says which link is public and which requires sign-in.
+- Connectors page: accept or decline new MCP permissions without Telegram, and see or stop your media links.
+- Flash cards: merge sets, per-card statistics, restart a study session and set settings.
+- Staff certificate statistics by a type's starred field, with an average when that field is a number.
+- Lesson time blocks per weekday, Saturday and Sunday included, in the timetable editor.
+- MCP: Gemini setup with OAuth in the connector wizard, the connector activity page, and a page that opens media links.
+- Refreshed student pages: today, timetable, grades, homework, subjects, lessons, files, notebooks and my group.
 - `release` project skill: local CI, changelog, tagging, and image builds.
+- Bottom bar in the ID app, and a platforms section in the "More" sheet.
+- Telegram theme and safe areas in the LMS and library mini apps.
+- A way back to the home page on the open source packages page.
+
+### Changed
+
+- Files look and behave the same across apps: one row, type icons, size format, preview and download. In the Telegram mini app, downloads open in the system browser.
+- Navigation uses one icon and one name per destination across apps, and "More" lights up on pages without a tab.
+- Telegram's Back button replaces the shell's history buttons in the mini app, and links to other apps leave through Telegram.
+
+### Known issues
+
+- Telegram behaviour has not been checked on a real device, and Gemini sign-in has not been tried against the real service.
+- MCP media links work as bearer links for 5 hours.
 
 ## [1.0.18] - 2026-11-05
 

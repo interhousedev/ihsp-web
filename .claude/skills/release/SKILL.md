@@ -16,7 +16,7 @@ scripts/ci_local.sh test        # one stage
 scripts/security_scan.sh semgrep
 ```
 
-Logs are in `reports/ci-local/`. The GitHub Test workflow runs only on pull requests, so a direct push to `main` is not tested in CI. The `test` stage is the only full run: do it on the commit you will release.
+Logs are in `reports/ci-local/`. The GitHub Test workflow runs on pull requests and on pushes to `main`. Still run the `test` stage on the commit you will release.
 
 ## 2. Update the changelog
 
@@ -26,7 +26,7 @@ When dependencies changed, also run `bun run generate-licenses`. When the backen
 
 ## 3. Push and wait for CI
 
-Commit in layers, signed, then push `main`. Wait until Security, Lint, CodeQL and Build image pass on that commit (`gh run list -c <sha>`).
+Commit in layers, signed, then push `main`. Wait until Test, Security, Lint, CodeQL and Build image pass on that commit (`gh run list -c <sha>`).
 
 ## 4. Tag
 

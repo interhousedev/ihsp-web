@@ -181,7 +181,7 @@ CI builds and publishes the image `ghcr.io/<owner>/ihsp-web`. The apps are built
 | Workflow | When | What |
 |---|---|---|
 | `lint.yml` | every push and pull request | `oxlint`, `oxfmt --check`, typecheck of every workspace and of `e2e` |
-| `test.yml` | pull requests to `main` | `bun run test` in every workspace, `bun test deploy`, regeneration of the API client from `packages/api/openapi.json` with `git diff --exit-code`, `contract:check`, a secrets scan |
+| `test.yml` | pull requests and pushes to `main` | `bun run test` in every workspace, `bun test deploy`, regeneration of the API client from `packages/api/openapi.json` with `git diff --exit-code`, `contract:check`, a secrets scan |
 | `build.yml` | pushes to `main`, tags `v*`, manual | builds the apps, builds and pushes `ghcr.io/<owner>/ihsp-web`, SBOM and provenance, Trivy scan (fails on fixable critical and high findings), keyless cosign signature, channel tags |
 | `codeql.yml` | pull requests, `main`, weekly | CodeQL for JavaScript and TypeScript |
 
