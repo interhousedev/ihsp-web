@@ -91,11 +91,14 @@ describe("QueryPersistence", () => {
       queryClient.setQueryData(["me", "messages"], { secret: true })
     })
 
-    await waitFor(() => expect(window.localStorage.getItem(PERSIST_STORAGE_KEY)).not.toBeNull(), { timeout: 5000 })
+    // The persister may store an empty snapshot first, so wait for the one with the query.
+    const storedKeys = () => {
+      const stored = JSON.parse(window.localStorage.getItem(PERSIST_STORAGE_KEY) ?? "{}")
+      return (stored.clientState?.queries ?? []).map((query: { queryKey: unknown[] }) => query.queryKey)
+    }
+    await waitFor(() => expect(storedKeys()).toEqual([["me", "timetable"]]), { timeout: 5000 })
     const stored = JSON.parse(window.localStorage.getItem(PERSIST_STORAGE_KEY) ?? "{}")
     expect(stored.buster).toBe(userMe.id)
-    const keys = stored.clientState.queries.map((query: { queryKey: unknown[] }) => query.queryKey)
-    expect(keys).toEqual([["me", "timetable"]])
   })
 
   test("without a session nothing is restored or stored", async () => {
