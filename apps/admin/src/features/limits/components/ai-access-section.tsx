@@ -13,7 +13,7 @@ import { useT } from "@ihsp/i18n"
 import { Button, Card, CardContent, CardHeader, CardTitle, ConfirmDialog, Input, Label, Switch } from "@ihsp/ui"
 import { useQuery } from "@tanstack/react-query"
 import { useState } from "react"
-import { QueryState } from "../../shared/components/query-state"
+import { QueryState } from "@ihsp/features-core"
 import { useAdminMutation } from "../../shared/hooks/use-admin-mutation"
 
 type Scope = "ai_chat_blocked" | "ai_notebooks_blocked"

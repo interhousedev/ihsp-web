@@ -38,10 +38,10 @@
     "knowledge": "Knowledge base",
     "workOffs": "Work-off tasks",
     "loginCues": "Login cues",
-    "botPosts": "Bot posts"
+    "botPosts": "Bot posts",
+    "mcpActivity": "MCP activity"
   },
   "shared": {
-    "filters": "Filters",
     "lessonList": "Lessons by date",
     "exportCsv": "Export CSV",
     "noLessons": "No lessons.",
@@ -788,6 +788,7 @@
         "bellTime": "Every period needs a start time that is before its end time.",
         "bellWeekdays": "Every period needs at least one weekday.",
         "bellDuplicate": "A period appears twice on the same weekday.",
+        "bellOverlap": "Two periods of one day overlap in time.",
         "controlIncomplete": "A control week needs both a first and a last day.",
         "controlOrder": "A control week must end on or after the day it starts.",
         "controlOutside": "A control week must lie inside the term.",
@@ -813,7 +814,10 @@
       "overridden": "Edited",
       "overriddenHint": "Differs from EMIS ({start}–{end})",
       "reset": "Reset to EMIS",
-      "rowMenu": "Actions for period {period}"
+      "rowMenu": "Actions for period {period}",
+      "days": "Day of the week",
+      "emptyDay": "No lessons on this day. Add a period or copy another day.",
+      "copyFrom": "Copy from another day"
     },
     "days": {
       "nonStudy": "Non-study days",
@@ -2078,5 +2082,27 @@
     "wrongType": "Choose a JPEG or PNG image.",
     "tooLarge": "The photo is larger than 5 MB.",
     "close": "Close"
+  },
+  "mcpActivity": {
+    "title": "MCP activity",
+    "summaryTitle": "Last 7 days by tool",
+    "callsTitle": "Calls",
+    "userId": "User ID",
+    "outcome": "Result",
+    "outcomeAll": "All results",
+    "empty": "No calls match these filters.",
+    "deletedKey": "Deleted key",
+    "duration": "{ms} ms",
+    "counts": "{calls} calls, {errors} errors",
+    "newer": "Newer",
+    "older": "Older",
+    "outcomes": {
+      "ok": "Success",
+      "denied": "Denied",
+      "rate_limited": "Rate limited",
+      "not_found": "Not found",
+      "invalid": "Invalid input",
+      "error": "Error"
+    }
   }
 }

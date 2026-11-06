@@ -2,7 +2,19 @@
 
 import type { UsageResponse, UsageRow, UsageTopUser } from "@ihsp/api"
 import { useFormatters, useT } from "@ihsp/i18n"
-import { Card, CardContent, CardHeader, CardTitle, Stat } from "@ihsp/ui"
+import {
+  Card,
+  CardContent,
+  CardHeader,
+  CardTitle,
+  Stat,
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "@ihsp/ui"
 import { compact, tokens, usd } from "../utils"
 
 /** The four numbers of today and the month, as cards. */
@@ -89,32 +101,34 @@ export function TopUsersCard({ users }: { users: UsageTopUser[] }) {
         {users.length === 0 ? (
           <p className="text-muted-foreground py-6 text-center text-sm">{t("top.empty")}</p>
         ) : (
-          <div className="overflow-x-auto">
-            <table className="w-full min-w-[30rem] text-sm">
-              <thead>
-                <tr className="text-muted-foreground text-start text-xs">
-                  <th className="py-2 pe-3 text-start font-medium">{t("top.user")}</th>
-                  <th className="py-2 pe-3 text-start font-medium">{t("top.role")}</th>
-                  <th className="py-2 pe-3 text-end font-medium">{t("top.calls")}</th>
-                  <th className="py-2 pe-3 text-end font-medium">{t("top.tokens")}</th>
-                  <th className="py-2 text-end font-medium">{t("top.cost")}</th>
-                </tr>
-              </thead>
-              <tbody>
+          <div className="min-w-0">
+            <Table className="min-w-[30rem]">
+              <TableHeader>
+                <TableRow className="text-muted-foreground text-xs">
+                  <TableHead className="py-2 pe-3 text-start font-medium">{t("top.user")}</TableHead>
+                  <TableHead className="py-2 pe-3 text-start font-medium">{t("top.role")}</TableHead>
+                  <TableHead className="py-2 pe-3 text-end font-medium">{t("top.calls")}</TableHead>
+                  <TableHead className="py-2 pe-3 text-end font-medium">{t("top.tokens")}</TableHead>
+                  <TableHead className="py-2 text-end font-medium">{t("top.cost")}</TableHead>
+                </TableRow>
+              </TableHeader>
+              <TableBody>
                 {users.map((user) => (
-                  <tr key={user.user_id} className="border-t">
-                    <td className="py-2 pe-3">
+                  <TableRow key={user.user_id}>
+                    <TableCell className="py-2 pe-3">
                       <div className="font-medium">{user.name}</div>
                       {user.login ? <div className="text-muted-foreground text-xs">{user.login}</div> : null}
-                    </td>
-                    <td className="py-2 pe-3">{t.has(`roles.${user.role}`) ? t(`roles.${user.role}`) : user.role}</td>
-                    <td className="py-2 pe-3 text-end tabular-nums">{compact(user.calls, f.locale)}</td>
-                    <td className="py-2 pe-3 text-end tabular-nums">{compact(tokens(user), f.locale)}</td>
-                    <td className="py-2 text-end tabular-nums">{usd(user.cost_usd, f.locale)}</td>
-                  </tr>
+                    </TableCell>
+                    <TableCell className="py-2 pe-3">
+                      {t.has(`roles.${user.role}`) ? t(`roles.${user.role}`) : user.role}
+                    </TableCell>
+                    <TableCell className="py-2 pe-3 text-end tabular-nums">{compact(user.calls, f.locale)}</TableCell>
+                    <TableCell className="py-2 pe-3 text-end tabular-nums">{compact(tokens(user), f.locale)}</TableCell>
+                    <TableCell className="py-2 text-end tabular-nums">{usd(user.cost_usd, f.locale)}</TableCell>
+                  </TableRow>
                 ))}
-              </tbody>
-            </table>
+              </TableBody>
+            </Table>
           </div>
         )}
       </CardContent>

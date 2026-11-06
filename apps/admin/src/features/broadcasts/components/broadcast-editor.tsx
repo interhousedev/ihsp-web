@@ -9,13 +9,12 @@ import {
   postAdminBroadcastSend,
   type BroadcastItem,
 } from "@ihsp/api"
-import { FileUploadButton } from "@ihsp/features-core"
+import { BackLink, FileUploadButton } from "@ihsp/features-core"
 import { useFormatters, useT } from "@ihsp/i18n"
 import { Alert, AlertDescription, Button, ConfirmDialog, Input, PageContainer } from "@ihsp/ui"
 import { IconX } from "@ihsp/ui"
 import { useRouter } from "next/navigation"
 import { useState } from "react"
-import { BackLink } from "../../shared/components/back-link"
 import { LabeledField } from "../../shared/components/labeled-field"
 import { StatusBadge } from "../../shared/components/status-badge"
 import { useAdminMutation } from "../../shared/hooks/use-admin-mutation"

@@ -9,10 +9,9 @@ import {
   type ModerationItem,
 } from "@ihsp/api"
 import { useFormatters, useT } from "@ihsp/i18n"
-import { Badge, Button, CopyButton, PageContainer } from "@ihsp/ui"
+import { Badge, Button, CopyButton, PageContainer, ListToolbar, type ToolbarFilter } from "@ihsp/ui"
 import { useQuery } from "@tanstack/react-query"
 import { useMemo, useState } from "react"
-import { ListToolbar, type ToolbarFilter } from "../../shared/components/list-toolbar"
 import { PagedTable } from "../../shared/components/paged-table"
 import { ReasonDialog } from "../../shared/components/reason-dialog"
 import { useAdminMutation } from "../../shared/hooks/use-admin-mutation"

@@ -5,8 +5,7 @@ import { useT } from "@ihsp/i18n"
 import { PageContainer, StateView, Tabs, TabsContent, TabsList, TabsTrigger } from "@ihsp/ui"
 import { useQuery } from "@tanstack/react-query"
 import { parseAsString, parseAsStringLiteral, useQueryState } from "nuqs"
-import { BackLink } from "../../shared/components/back-link"
-import { QueryState } from "../../shared/components/query-state"
+import { BackLink, QueryState } from "@ihsp/features-core"
 import { GroupCurriculumTab } from "./group-curriculum-tab"
 import { GroupPeopleCard } from "./group-people-card"
 import { GroupPhotosExportButton } from "./group-photos-export-button"
@@ -39,7 +38,7 @@ export function GroupDetailPage() {
       {(group) => (
         <PageContainer
           title={group.name}
-          description={[
+          meta={[
             group.current_semester ? t("view.semester", { semester: group.current_semester }) : null,
             group.emis_group_id ? `EMIS ${group.emis_group_id}` : null,
           ]

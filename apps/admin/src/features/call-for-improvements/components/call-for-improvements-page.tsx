@@ -21,10 +21,11 @@ import {
   TableHead,
   TableHeader,
   TableRow,
+  ListToolbar,
+  type ToolbarFilter,
 } from "@ihsp/ui"
 import Link from "next/link"
 import { useMemo } from "react"
-import { ListToolbar, type ToolbarFilter } from "../../shared/components/list-toolbar"
 import { useFilterState } from "../../shared/hooks/use-filter-state"
 import { usePagedList } from "../../shared/hooks/use-paged-list"
 import { TOUCH } from "../../shared/utils/touch"

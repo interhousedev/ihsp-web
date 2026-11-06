@@ -2,7 +2,7 @@
 
 import { postAdminTimetableCopy, type Term } from "@ihsp/api"
 import { useT } from "@ihsp/i18n"
-import { Button, Dialog, DialogContent, DialogFooter, DialogHeader, DialogTitle } from "@ihsp/ui"
+import { Button, ResponsiveDialog } from "@ihsp/ui"
 import { useEffect, useState } from "react"
 import { LabeledField } from "../../shared/components/labeled-field"
 import { SelectField } from "../../shared/components/select-field"
@@ -40,40 +40,38 @@ export function CopyTermDialog({
   })
 
   return (
-    <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent>
-        <form
-          className="grid gap-4"
-          onSubmit={(event) => {
-            event.preventDefault()
-            if (sourceId) copy.mutate()
-          }}
-        >
-          <DialogHeader>
-            <DialogTitle>{t("title", { year: target.academic_year, half: target.half })}</DialogTitle>
-          </DialogHeader>
-          <LabeledField label={t("from")} htmlFor="copy-from" required>
-            <SelectField
-              id="copy-from"
-              value={sourceId}
-              emptyLabel={t("choose")}
-              options={sources.map((term) => ({
-                value: term.id,
-                label: t("termLabel", { year: term.academic_year, half: term.half }),
-              }))}
-              onChange={setSourceId}
-            />
-          </LabeledField>
-          <DialogFooter>
-            <Button type="button" variant="outline" className={TOUCH} onClick={() => onOpenChange(false)}>
-              {t("cancel")}
-            </Button>
-            <Button type="submit" className={TOUCH} disabled={!sourceId || copy.isPending}>
-              {t("submit")}
-            </Button>
-          </DialogFooter>
-        </form>
-      </DialogContent>
-    </Dialog>
+    <ResponsiveDialog
+      open={open}
+      onOpenChange={onOpenChange}
+      size="sm"
+      title={t("title", { year: target.academic_year, half: target.half })}
+      onSubmit={(event) => {
+        event.preventDefault()
+        if (sourceId) copy.mutate()
+      }}
+      footer={
+        <>
+          <Button type="button" variant="outline" className={TOUCH} onClick={() => onOpenChange(false)}>
+            {t("cancel")}
+          </Button>
+          <Button type="submit" className={TOUCH} disabled={!sourceId || copy.isPending}>
+            {t("submit")}
+          </Button>
+        </>
+      }
+    >
+      <LabeledField label={t("from")} htmlFor="copy-from" required>
+        <SelectField
+          id="copy-from"
+          value={sourceId}
+          emptyLabel={t("choose")}
+          options={sources.map((term) => ({
+            value: term.id,
+            label: t("termLabel", { year: term.academic_year, half: term.half }),
+          }))}
+          onChange={setSourceId}
+        />
+      </LabeledField>
+    </ResponsiveDialog>
   )
 }

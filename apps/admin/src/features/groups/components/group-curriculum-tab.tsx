@@ -5,7 +5,7 @@ import { CurriculumPanel } from "@ihsp/features-core"
 import { useT } from "@ihsp/i18n"
 import { Alert, AlertDescription, Button } from "@ihsp/ui"
 import { useQuery } from "@tanstack/react-query"
-import { QueryState } from "../../shared/components/query-state"
+import { QueryState } from "@ihsp/features-core"
 import { useAdminMutation } from "../../shared/hooks/use-admin-mutation"
 import { TOUCH } from "../../shared/utils/touch"
 

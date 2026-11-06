@@ -409,6 +409,8 @@ describe("keys used in the code", () => {
       "callForImprovements.detail.channel.${delivery.channel}": ["telegram", "mail"],
       "callForImprovements.detail.delivery.${delivery.status}": ["sent", "failed", "unavailable"],
       "workOffs.itemStatus.${item.status}": ["assigned", "done"],
+      "mcpActivity.outcomes.${call.outcome}": ["ok", "denied", "rate_limited", "not_found", "invalid", "error"],
+      "mcpActivity.outcomes.${value}": ["ok", "denied", "rate_limited", "not_found", "invalid", "error"],
     }
     const unknown = [...dynamic.keys()].filter((key) => !(key in expected))
     expect(unknown).toEqual([])

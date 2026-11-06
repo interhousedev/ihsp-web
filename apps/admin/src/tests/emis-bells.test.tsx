@@ -65,8 +65,6 @@ describe("bells editor", () => {
     expect(within(emisRow).getByLabelText("Period")).toBeDisabled()
     expect(within(manualRow).getByLabelText("Period")).toBeEnabled()
     for (const label of ["Start", "End"]) expect(within(emisRow).getByLabelText(label)).toBeEnabled()
-    const days = within(emisRow).getByRole("group", { name: "Weekdays of period 1" })
-    for (const day of within(days).getAllByRole("button")) expect(day).toBeEnabled()
   })
 
   test("there are no explanatory paragraphs above the rows", () => {
@@ -82,21 +80,21 @@ describe("bells editor", () => {
 
     setValue(within(emisRow).getByLabelText("End"), "09:00")
 
+    // Monday got its own time, so the other days of the period keep theirs as an override.
     expect(onChange).toHaveBeenLastCalledWith([
-      { ...mixed[0], end: "09:00", source: "override", emis_start: "08:30", emis_end: "09:15" },
+      { ...mixed[0], end: "09:00", weekdays: [1], source: "override", emis_start: "08:30", emis_end: "09:15" },
+      { ...mixed[0], weekdays: [2, 3, 4, 5], source: "override", emis_start: "08:30", emis_end: "09:15" },
       mixed[1],
     ])
   })
 
-  test("Friday can be deselected on an EMIS bell", () => {
-    const { onChange } = renderEditor(mixed)
-    const emisRow = screen.getAllByRole("listitem")[0] as HTMLElement
-    const friday = within(within(emisRow).getByRole("group", { name: "Weekdays of period 1" })).getAllByRole(
-      "button",
-    )[4] as HTMLElement
-    expect(friday).toHaveAttribute("aria-pressed", "true")
+  test("a period from EMIS can be removed from Friday and the rest of the week stays", async () => {
+    const onChange = mock((_bells: Bell[]) => undefined)
+    const { user } = renderAdmin(<BellsEditor bells={mixed} onChange={onChange} />)
+    fireEvent.click(screen.getByRole("button", { name: "Friday" }))
 
-    fireEvent.click(friday)
+    await user.click(screen.getByRole("button", { name: "Actions for period 1" }))
+    await user.click(await screen.findByRole("menuitem", { name: "Remove period 1" }))
 
     expect(onChange).toHaveBeenLastCalledWith([
       { ...mixed[0], weekdays: [1, 2, 3, 4], source: "override", emis_start: "08:30", emis_end: "09:15" },
@@ -134,33 +132,32 @@ describe("bells editor", () => {
     ])
   })
 
-  test("a bell set by hand stays editable: times, weekdays and removing from the menu", async () => {
+  test("a bell set by hand stays editable on its day: time and removing from the menu", async () => {
     const onChange = mock((_bells: Bell[]) => undefined)
     const { user } = renderAdmin(<BellsEditor bells={mixed} onChange={onChange} />)
     const manualRow = screen.getAllByRole("listitem")[1] as HTMLElement
 
     setValue(within(manualRow).getByLabelText("Start"), "14:20")
-    expect(onChange).toHaveBeenLastCalledWith([mixed[0], { ...mixed[1], start: "14:20" }])
-
-    const friday = within(within(manualRow).getByRole("group", { name: "Weekdays of period 7" })).getAllByRole(
-      "button",
-    )[4] as HTMLElement
-    fireEvent.click(friday)
-    expect(onChange).toHaveBeenLastCalledWith([mixed[0], { ...mixed[1], weekdays: [1, 2, 3, 4] }])
+    expect(onChange).toHaveBeenLastCalledWith([
+      mixed[0],
+      { ...mixed[1], start: "14:20", weekdays: [1] },
+      { ...mixed[1], weekdays: [2, 3, 4, 5] },
+    ])
 
     await user.click(within(manualRow).getByRole("button", { name: "Actions for period 7" }))
     await user.click(await screen.findByRole("menuitem", { name: "Remove period 7" }))
-    expect(onChange).toHaveBeenLastCalledWith([mixed[0]])
+    expect(onChange).toHaveBeenLastCalledWith([mixed[0], { ...mixed[1], weekdays: [2, 3, 4, 5] }])
   })
 
-  test("a new period is set by hand", () => {
+  test("a new period is set by hand on the chosen day", () => {
     const { onChange } = renderEditor(mixed)
 
     fireEvent.click(screen.getByRole("button", { name: "Add period" }))
 
     expect(onChange).toHaveBeenLastCalledWith([
-      ...mixed,
-      { period: 8, start: "", end: "", weekdays: [1, 2, 3, 4, 5], source: "manual" },
+      mixed[0],
+      mixed[1],
+      { period: 8, start: "", end: "", weekdays: [1], source: "manual" },
     ])
   })
 

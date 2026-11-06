@@ -2,9 +2,19 @@
 
 import type { Term, TimetableEntry } from "@ihsp/api"
 import { useFormatters, useT } from "@ihsp/i18n"
-import { Button, Icons } from "@ihsp/ui"
-import { STUDY_WEEKDAYS, weekdayDate } from "../../shared/utils/weekdays"
+import { Button, Icons, Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@ihsp/ui"
+import { ALL_WEEKDAYS, STUDY_WEEKDAYS, weekdayDate } from "../../shared/utils/weekdays"
 import { EntryChip, type TimetableView } from "./entry-chip"
+
+/** Monday to Friday, plus Saturday and Sunday once they have blocks or entries. */
+export function termWeekdays(term: Term, entries: TimetableEntry[] = []): number[] {
+  return ALL_WEEKDAYS.filter(
+    (day) =>
+      STUDY_WEEKDAYS.some((study) => study === day) ||
+      term.bells.some((bell) => bell.weekdays.includes(day)) ||
+      entries.some((entry) => entry.weekday === day),
+  )
+}
 
 /** The periods of a term (union over all weekdays), sorted. */
 export function termPeriods(term: Term): number[] {
@@ -34,37 +44,37 @@ export function TimetableGrid({ term, entries, view, onAdd, onOpen }: Props) {
   const t = useT("timetable")
   const f = useFormatters()
   const periods = termPeriods(term)
+  const days = termWeekdays(term, entries)
   return (
-    <div className="overflow-x-auto rounded-lg border">
-      <table className="w-full min-w-[56rem] table-fixed border-collapse text-sm">
+    <div className="min-w-0 overflow-hidden rounded-lg border">
+      <Table className="min-w-[56rem] table-fixed border-collapse">
         <caption className="sr-only">{t("gridCaption")}</caption>
-        <thead>
-          <tr className="bg-muted">
-            <th scope="col" className="w-24 p-2 text-start font-medium">
+        <TableHeader>
+          <TableRow className="bg-muted">
+            <TableHead scope="col" className="w-24 p-2 text-start font-medium">
               {t("period")}
-            </th>
-            {STUDY_WEEKDAYS.map((weekday) => (
-              <th key={weekday} scope="col" className="p-2 text-start font-medium">
+            </TableHead>
+            {days.map((weekday) => (
+              <TableHead key={weekday} scope="col" className="p-2 text-start font-medium">
                 {f.weekday(weekdayDate(weekday), "long")}
-              </th>
+              </TableHead>
             ))}
-          </tr>
-        </thead>
-        <tbody>
+          </TableRow>
+        </TableHeader>
+        <TableBody>
           {periods.map((period) => (
-            <tr key={period} className="border-t align-top">
-              <th scope="row" className="p-2 text-start font-medium">
+            <TableRow key={period} className="align-top">
+              <TableHead scope="row" className="p-2 text-start font-medium">
                 <span>{period}</span>
-                <span className="text-muted-foreground block text-xs font-normal">
-                  {STUDY_WEEKDAYS.map((weekday) => bellTime(term, period, weekday)).find((time) => time !== null) ?? ""}
-                </span>
-              </th>
-              {STUDY_WEEKDAYS.map((weekday) => {
+              </TableHead>
+              {days.map((weekday) => {
                 const inCell = cellEntries(entries, weekday, period)
-                const hasBell = bellTime(term, period, weekday) !== null
+                const time = bellTime(term, period, weekday)
+                const hasBell = time !== null
                 return (
-                  <td key={weekday} className={`p-1 ${hasBell ? "" : "bg-muted/40"}`}>
+                  <TableCell key={weekday} className={`p-1 ${hasBell ? "" : "bg-muted/40"}`}>
                     <div className="flex flex-col gap-1">
+                      {time ? <span className="text-muted-foreground px-1 text-xs">{time}</span> : null}
                       {inCell.map((entry) => (
                         <EntryChip key={entry.id} entry={entry} view={view} onOpen={() => onOpen(entry)} />
                       ))}
@@ -81,13 +91,13 @@ export function TimetableGrid({ term, entries, view, onAdd, onOpen }: Props) {
                         </Button>
                       ) : null}
                     </div>
-                  </td>
+                  </TableCell>
                 )
               })}
-            </tr>
+            </TableRow>
           ))}
-        </tbody>
-      </table>
+        </TableBody>
+      </Table>
     </div>
   )
 }

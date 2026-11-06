@@ -2,7 +2,7 @@
 
 import { type AdminJob, getAdminJobsQuery, keys, postAdminJobCancel } from "@ihsp/api"
 import { useFormatters, useT } from "@ihsp/i18n"
-import { Button } from "@ihsp/ui"
+import { Button, StateView } from "@ihsp/ui"
 import { useQuery } from "@tanstack/react-query"
 import { StatusBadge } from "../../shared/components/status-badge"
 import { useAdminMutation } from "../../shared/hooks/use-admin-mutation"
@@ -30,8 +30,8 @@ export function ProcessesTab() {
   })
   const jobs = query.data?.items ?? []
 
-  if (query.isPending) return <p className="text-muted-foreground text-sm">{t("loading")}</p>
-  if (jobs.length === 0) return <p className="text-muted-foreground text-sm">{t("empty")}</p>
+  if (query.isPending) return <StateView state="loading" />
+  if (jobs.length === 0) return <StateView state="empty" emptyText={t("empty")} />
 
   return (
     <ul className="flex flex-col gap-2" aria-label={t("title")}>

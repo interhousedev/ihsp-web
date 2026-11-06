@@ -6,7 +6,7 @@ import { Badge, Button, Dropdown, PageContainer, type DropdownOption } from "@ih
 import { useQuery } from "@tanstack/react-query"
 import { parseAsInteger, parseAsString, parseAsStringLiteral, useQueryStates } from "nuqs"
 import { useMemo } from "react"
-import { QueryState } from "../../shared/components/query-state"
+import { QueryState } from "@ihsp/features-core"
 
 const ALL = "all"
 const PAGE_SIZE = 20

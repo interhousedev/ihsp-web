@@ -2,8 +2,8 @@
 
 import type { ControlPeriods } from "@ihsp/api"
 import { useFormatters, useT } from "@ihsp/i18n"
+import type { ToolbarFilter } from "@ihsp/ui"
 import { useMemo } from "react"
-import type { ToolbarFilter } from "../../shared/components/list-toolbar"
 import { useControlLabel } from "../../shared/hooks/use-control-label"
 import { useGroupOptions, useSubjectOptions } from "../../shared/hooks/use-lookups"
 import { CONTROL_NAMES } from "../../shared/utils/controls"

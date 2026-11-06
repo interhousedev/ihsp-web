@@ -9,7 +9,7 @@ import {
 import { useFormatters, useT } from "@ihsp/i18n"
 import { Badge, Button, Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@ihsp/ui"
 import { useQuery } from "@tanstack/react-query"
-import { QueryState } from "../../shared/components/query-state"
+import { QueryState } from "@ihsp/features-core"
 import { TOUCH } from "../../shared/utils/touch"
 
 const PAGE_SIZE = 20

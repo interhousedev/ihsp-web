@@ -65,14 +65,14 @@ describe("term form (ACA-4, ADM-18)", () => {
     expect(validateTerm({ ...form, bells: friday })).toEqual([])
   })
 
-  test("a stored term that still lists Saturday opens without it, and a Saturday-only bell is left out", () => {
-    const legacy: Bell[] = [
+  test("Saturday blocks of a stored term stay in the form and in a new term from it", () => {
+    const stored: Bell[] = [
       { period: 1, start: "08:30", end: "09:15", weekdays: [1, 2, 3, 4, 5, 6], source: "manual" },
       { period: 2, start: "09:25", end: "10:10", weekdays: [6], source: "manual" },
     ]
-    const term = { ...currentTerm, bells: legacy }
-    expect(termToForm(term).bells).toEqual([{ ...legacy[0], weekdays: [1, 2, 3, 4, 5] }])
-    expect(emptyTermForm(term).bells.map((bell) => bell.weekdays)).toEqual([[1, 2, 3, 4, 5]])
+    const term = { ...currentTerm, bells: stored }
+    expect(termToForm(term).bells).toEqual(stored)
+    expect(emptyTermForm(term).bells.map((bell) => bell.weekdays)).toEqual([[1, 2, 3, 4, 5, 6], [6]])
     expect(validateTerm(termToForm(term))).toEqual([])
   })
 

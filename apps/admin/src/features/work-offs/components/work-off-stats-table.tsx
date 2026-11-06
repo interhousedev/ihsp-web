@@ -4,7 +4,7 @@ import { getAdminWorkOffStatsQuery, type WorkOffGroupBy } from "@ihsp/api"
 import { useT } from "@ihsp/i18n"
 import { Button, Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@ihsp/ui"
 import { useQuery } from "@tanstack/react-query"
-import { QueryState } from "../../shared/components/query-state"
+import { QueryState } from "@ihsp/features-core"
 
 /** Open and done counts per key, the most open first; a row opens the drill-down. */
 export function WorkOffStatsTable({

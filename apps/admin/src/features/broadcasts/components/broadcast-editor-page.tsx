@@ -3,7 +3,7 @@
 import { getAdminBroadcast, keys } from "@ihsp/api"
 import { useQuery } from "@tanstack/react-query"
 import { parseAsString, useQueryState } from "nuqs"
-import { QueryState } from "../../shared/components/query-state"
+import { QueryState } from "@ihsp/features-core"
 import { BroadcastEditor } from "./broadcast-editor"
 
 /** `/broadcasts/edit/` starts a new draft; `?id=` opens an existing broadcast. */

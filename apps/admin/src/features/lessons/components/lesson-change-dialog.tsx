@@ -2,18 +2,7 @@
 
 import { getConflictList, patchAdminLesson, type Conflict, type LessonItem, type LessonPatchBody } from "@ihsp/api"
 import { useErrorMessage, useT } from "@ihsp/i18n"
-import {
-  Alert,
-  AlertDescription,
-  Button,
-  DatePicker,
-  Dialog,
-  DialogContent,
-  DialogFooter,
-  DialogHeader,
-  DialogTitle,
-  Input,
-} from "@ihsp/ui"
+import { Alert, AlertDescription, Button, DatePicker, ResponsiveDialog, Input } from "@ihsp/ui"
 import { useEffect, useId, useState } from "react"
 import { LabeledField } from "../../shared/components/labeled-field"
 import { SelectField } from "../../shared/components/select-field"
@@ -88,109 +77,107 @@ export function LessonChangeDialog({ lesson, onClose }: { lesson: LessonItem; on
     setForm((current) => ({ ...current, [field]: value }))
 
   return (
-    <Dialog open onOpenChange={(open) => (open ? undefined : onClose())}>
-      <DialogContent className="max-h-[92dvh] overflow-y-auto sm:max-w-xl">
-        <form
-          className="grid gap-4"
-          onSubmit={(event) => {
-            event.preventDefault()
-            if (changed) save.mutate()
-          }}
-        >
-          <DialogHeader>
-            <DialogTitle>{t("title", { subject: lesson.subject.name })}</DialogTitle>
-          </DialogHeader>
-          <LabeledField label={t("status")} htmlFor="lesson-status">
-            <SelectField
-              id="lesson-status"
-              value={form.status}
-              options={[
-                { value: "scheduled", label: t("scheduled") },
-                { value: "cancelled", label: t("cancelled") },
-              ]}
-              onChange={(value) => set("status", value === "cancelled" ? "cancelled" : "scheduled")}
-            />
-          </LabeledField>
-          <div className="grid gap-4 sm:grid-cols-2">
-            <LabeledField label={t("date")} htmlFor="lesson-date">
-              <DatePicker id="lesson-date" value={form.date} onChange={(date) => set("date", date)} />
-            </LabeledField>
-            <LabeledField label={t("period")} htmlFor="lesson-period">
-              <SelectField
-                id="lesson-period"
-                value={String(form.period)}
-                options={LESSON_PERIODS.map((period) => ({ value: String(period), label: String(period) }))}
-                onChange={(value) => set("period", Number(value))}
-              />
-            </LabeledField>
-          </div>
-          <LabeledField label={t("subject")} htmlFor="lesson-subject">
-            <SelectField
-              id="lesson-subject"
-              value={form.subject_id}
-              options={(subjects.data ?? []).map((subject) => ({ value: subject.id, label: subject.name.en }))}
-              onChange={(value) => set("subject_id", value)}
-            />
-          </LabeledField>
-          <LabeledField label={t("teacher")} htmlFor="lesson-teacher">
-            <SelectField
-              id="lesson-teacher"
-              value={form.teacher_id}
-              emptyLabel={t("noTeacher")}
-              options={(teachers.data ?? []).map((teacher) => ({ value: teacher.id, label: fullName(teacher) }))}
-              onChange={(value) => set("teacher_id", value)}
-            />
-          </LabeledField>
-          <LabeledField label={t("room")} htmlFor="lesson-room">
-            <Input
-              id="lesson-room"
-              list={roomListId}
-              value={form.room_name}
-              className={TOUCH}
-              autoComplete="off"
-              onChange={(event) => set("room_name", event.target.value)}
-            />
-            <datalist id={roomListId}>
-              {(rooms.data ?? []).map((room) => (
-                <option key={room.id} value={room.name} />
+    <ResponsiveDialog
+      open
+      onOpenChange={(open) => (open ? undefined : onClose())}
+      size="lg"
+      title={t("title", { subject: lesson.subject.name })}
+      onSubmit={(event) => {
+        event.preventDefault()
+        if (changed) save.mutate()
+      }}
+      footer={
+        <>
+          <Button type="button" variant="outline" className={TOUCH} onClick={onClose}>
+            {t("cancel")}
+          </Button>
+          <Button type="submit" className={TOUCH} disabled={!changed || save.isPending}>
+            {t("save")}
+          </Button>
+        </>
+      }
+    >
+      <LabeledField label={t("status")} htmlFor="lesson-status">
+        <SelectField
+          id="lesson-status"
+          value={form.status}
+          options={[
+            { value: "scheduled", label: t("scheduled") },
+            { value: "cancelled", label: t("cancelled") },
+          ]}
+          onChange={(value) => set("status", value === "cancelled" ? "cancelled" : "scheduled")}
+        />
+      </LabeledField>
+      <div className="grid gap-4 sm:grid-cols-2">
+        <LabeledField label={t("date")} htmlFor="lesson-date">
+          <DatePicker id="lesson-date" value={form.date} onChange={(date) => set("date", date)} />
+        </LabeledField>
+        <LabeledField label={t("period")} htmlFor="lesson-period">
+          <SelectField
+            id="lesson-period"
+            value={String(form.period)}
+            options={LESSON_PERIODS.map((period) => ({ value: String(period), label: String(period) }))}
+            onChange={(value) => set("period", Number(value))}
+          />
+        </LabeledField>
+      </div>
+      <LabeledField label={t("subject")} htmlFor="lesson-subject">
+        <SelectField
+          id="lesson-subject"
+          value={form.subject_id}
+          options={(subjects.data ?? []).map((subject) => ({ value: subject.id, label: subject.name.en }))}
+          onChange={(value) => set("subject_id", value)}
+        />
+      </LabeledField>
+      <LabeledField label={t("teacher")} htmlFor="lesson-teacher">
+        <SelectField
+          id="lesson-teacher"
+          value={form.teacher_id}
+          emptyLabel={t("noTeacher")}
+          options={(teachers.data ?? []).map((teacher) => ({ value: teacher.id, label: fullName(teacher) }))}
+          onChange={(value) => set("teacher_id", value)}
+        />
+      </LabeledField>
+      <LabeledField label={t("room")} htmlFor="lesson-room">
+        <Input
+          id="lesson-room"
+          list={roomListId}
+          value={form.room_name}
+          className={TOUCH}
+          autoComplete="off"
+          onChange={(event) => set("room_name", event.target.value)}
+        />
+        <datalist id={roomListId}>
+          {(rooms.data ?? []).map((room) => (
+            <option key={room.id} value={room.name} />
+          ))}
+        </datalist>
+      </LabeledField>
+      <LabeledField label={t("topic")} htmlFor="lesson-topic">
+        <Input
+          id="lesson-topic"
+          value={form.topic}
+          maxLength={200}
+          className={TOUCH}
+          onChange={(event) => set("topic", event.target.value)}
+        />
+      </LabeledField>
+      {conflicts.length > 0 ? (
+        <Alert variant="destructive" role="alert">
+          <AlertDescription>
+            <ul className="list-disc ps-4">
+              {conflicts.map((conflict, index) => (
+                <li key={index}>{conflict.description}</li>
               ))}
-            </datalist>
-          </LabeledField>
-          <LabeledField label={t("topic")} htmlFor="lesson-topic">
-            <Input
-              id="lesson-topic"
-              value={form.topic}
-              maxLength={200}
-              className={TOUCH}
-              onChange={(event) => set("topic", event.target.value)}
-            />
-          </LabeledField>
-          {conflicts.length > 0 ? (
-            <Alert variant="destructive" role="alert">
-              <AlertDescription>
-                <ul className="list-disc ps-4">
-                  {conflicts.map((conflict, index) => (
-                    <li key={index}>{conflict.description}</li>
-                  ))}
-                </ul>
-              </AlertDescription>
-            </Alert>
-          ) : save.isError ? (
-            <Alert variant="destructive" role="alert">
-              <AlertDescription>{errorMessage(save.error)}</AlertDescription>
-            </Alert>
-          ) : null}
-          <p className="text-muted-foreground text-xs">{t("notifyHint")}</p>
-          <DialogFooter>
-            <Button type="button" variant="outline" className={TOUCH} onClick={onClose}>
-              {t("cancel")}
-            </Button>
-            <Button type="submit" className={TOUCH} disabled={!changed || save.isPending}>
-              {t("save")}
-            </Button>
-          </DialogFooter>
-        </form>
-      </DialogContent>
-    </Dialog>
+            </ul>
+          </AlertDescription>
+        </Alert>
+      ) : save.isError ? (
+        <Alert variant="destructive" role="alert">
+          <AlertDescription>{errorMessage(save.error)}</AlertDescription>
+        </Alert>
+      ) : null}
+      <p className="text-muted-foreground text-xs">{t("notifyHint")}</p>
+    </ResponsiveDialog>
   )
 }

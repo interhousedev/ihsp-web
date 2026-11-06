@@ -8,7 +8,7 @@ import {
   type StudentSyncStatus,
 } from "@ihsp/api"
 import { useFormatters, useT } from "@ihsp/i18n"
-import { ConfirmDialog } from "@ihsp/ui"
+import { ConfirmDialog, Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@ihsp/ui"
 import { useQuery } from "@tanstack/react-query"
 import { useState } from "react"
 import { StatusBadge } from "../../shared/components/status-badge"
@@ -45,33 +45,33 @@ export function StudentSyncs() {
       {loading ? <p className="text-muted-foreground text-sm">{t("loading")}</p> : null}
       {!loading && rows.length === 0 ? <p className="text-muted-foreground text-sm">{t("studentSyncsEmpty")}</p> : null}
       {rows.length > 0 ? (
-        <div className="overflow-x-auto">
-          <table className="w-full text-sm">
-            <thead className="text-muted-foreground text-left">
-              <tr>
-                <th className="py-1 pr-3 font-medium">{t("studentSyncsColumns.student")}</th>
-                <th className="py-1 pr-3 font-medium">{t("studentSyncsColumns.status")}</th>
-                <th className="py-1 pr-3 font-medium">{t("studentSyncsColumns.attempts")}</th>
-                <th className="py-1 pr-3 font-medium">{t("studentSyncsColumns.lastError")}</th>
-                <th className="py-1 pr-3 font-medium">{t("studentSyncsColumns.finished")}</th>
-                <th className="py-1 pr-3 font-medium">
+        <div className="min-w-0">
+          <Table>
+            <TableHeader className="text-muted-foreground">
+              <TableRow>
+                <TableHead>{t("studentSyncsColumns.student")}</TableHead>
+                <TableHead>{t("studentSyncsColumns.status")}</TableHead>
+                <TableHead>{t("studentSyncsColumns.attempts")}</TableHead>
+                <TableHead>{t("studentSyncsColumns.lastError")}</TableHead>
+                <TableHead>{t("studentSyncsColumns.finished")}</TableHead>
+                <TableHead>
                   <span className="sr-only">{t("studentStop")}</span>
-                </th>
-              </tr>
-            </thead>
-            <tbody>
+                </TableHead>
+              </TableRow>
+            </TableHeader>
+            <TableBody>
               {rows.map((row) => (
-                <tr key={row.user_id} className="border-t">
-                  <td className="py-1 pr-3 font-mono text-xs">{row.user_id}</td>
-                  <td className="py-1 pr-3">
+                <TableRow key={row.user_id}>
+                  <TableCell className="font-mono text-xs">{row.user_id}</TableCell>
+                  <TableCell>
                     <StatusBadge status={row.status} />
-                  </td>
-                  <td className="py-1 pr-3 tabular-nums">
+                  </TableCell>
+                  <TableCell className="tabular-nums">
                     {t("studentSyncsAttempts", { n: row.attempts, max: row.max_attempts ?? row.attempts })}
-                  </td>
-                  <td className="py-1 pr-3 break-all text-xs">{row.last_error ?? "—"}</td>
-                  <td className="py-1 pr-3">{row.finished_at ? f.dateTime(row.finished_at) : "—"}</td>
-                  <td className="py-1 pr-3">
+                  </TableCell>
+                  <TableCell className="break-all text-xs">{row.last_error ?? "—"}</TableCell>
+                  <TableCell>{row.finished_at ? f.dateTime(row.finished_at) : "—"}</TableCell>
+                  <TableCell>
                     {row.status === "running" ? (
                       <button
                         type="button"
@@ -81,11 +81,11 @@ export function StudentSyncs() {
                         {t("studentStop")}
                       </button>
                     ) : null}
-                  </td>
-                </tr>
+                  </TableCell>
+                </TableRow>
               ))}
-            </tbody>
-          </table>
+            </TableBody>
+          </Table>
         </div>
       ) : null}
       <ConfirmDialog

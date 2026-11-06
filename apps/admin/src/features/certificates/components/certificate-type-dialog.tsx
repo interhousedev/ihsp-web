@@ -8,7 +8,7 @@ import {
   type CertificateTypeInput,
 } from "@ihsp/api"
 import { useT } from "@ihsp/i18n"
-import { Button, Dialog, DialogContent, DialogFooter, DialogHeader, DialogTitle, Input } from "@ihsp/ui"
+import { Button, ResponsiveDialog, Input } from "@ihsp/ui"
 import { useState } from "react"
 import { LabeledField } from "../../shared/components/labeled-field"
 import { useAdminMutation } from "../../shared/hooks/use-admin-mutation"
@@ -42,55 +42,53 @@ export function CertificateTypeDialog({ type, onClose }: { type: CertificateType
       custom_fields: customFields.map(fromDraft),
     })
   return (
-    <Dialog open onOpenChange={(open) => (open ? undefined : onClose())}>
-      <DialogContent className="flex max-h-[85dvh] flex-col gap-0 p-0 sm:max-w-lg">
-        <form
-          className="flex min-h-0 flex-1 flex-col"
-          onSubmit={(event) => {
-            event.preventDefault()
-            if (valid) submit()
-          }}
-        >
-          <DialogHeader className="border-b p-4 pr-12">
-            <DialogTitle>{type ? t("edit", { name: type.name.en }) : t("add")}</DialogTitle>
-          </DialogHeader>
-          <div className="grid min-h-0 flex-1 content-start gap-4 overflow-y-auto p-4">
-            <LabeledField label={t("code")} htmlFor="cert-code" required>
-              <Input
-                id="cert-code"
-                className={TOUCH}
-                value={code}
-                disabled={type?.builtin}
-                onChange={(e) => setCode(e.target.value)}
-              />
-            </LabeledField>
-            {(["uz", "ru", "en"] as const).map((lang) => (
-              <LabeledField
-                key={lang}
-                label={t(`name${lang === "uz" ? "Uz" : lang === "ru" ? "Ru" : "En"}`)}
-                htmlFor={`cert-name-${lang}`}
-                required
-              >
-                <Input
-                  id={`cert-name-${lang}`}
-                  className={TOUCH}
-                  value={names[lang]}
-                  onChange={(e) => setNames({ ...names, [lang]: e.target.value })}
-                />
-              </LabeledField>
-            ))}
-            <CustomFieldsEditor fields={customFields} onChange={setCustomFields} />
-          </div>
-          <DialogFooter className="border-t p-4">
-            <Button type="button" variant="outline" className={TOUCH} onClick={onClose}>
-              {t("cancel")}
-            </Button>
-            <Button type="submit" className={TOUCH} disabled={!valid || save.isPending}>
-              {t("save")}
-            </Button>
-          </DialogFooter>
-        </form>
-      </DialogContent>
-    </Dialog>
+    <ResponsiveDialog
+      open
+      onOpenChange={(open) => (open ? undefined : onClose())}
+      size="md"
+      title={type ? t("edit", { name: type.name.en }) : t("add")}
+      onSubmit={(event) => {
+        event.preventDefault()
+        if (valid) submit()
+      }}
+      footer={
+        <>
+          <Button type="button" variant="outline" className={TOUCH} onClick={onClose}>
+            {t("cancel")}
+          </Button>
+          <Button type="submit" className={TOUCH} disabled={!valid || save.isPending}>
+            {t("save")}
+          </Button>
+        </>
+      }
+    >
+      <>
+        <LabeledField label={t("code")} htmlFor="cert-code" required>
+          <Input
+            id="cert-code"
+            className={TOUCH}
+            value={code}
+            disabled={type?.builtin}
+            onChange={(e) => setCode(e.target.value)}
+          />
+        </LabeledField>
+        {(["uz", "ru", "en"] as const).map((lang) => (
+          <LabeledField
+            key={lang}
+            label={t(`name${lang === "uz" ? "Uz" : lang === "ru" ? "Ru" : "En"}`)}
+            htmlFor={`cert-name-${lang}`}
+            required
+          >
+            <Input
+              id={`cert-name-${lang}`}
+              className={TOUCH}
+              value={names[lang]}
+              onChange={(e) => setNames({ ...names, [lang]: e.target.value })}
+            />
+          </LabeledField>
+        ))}
+        <CustomFieldsEditor fields={customFields} onChange={setCustomFields} />
+      </>
+    </ResponsiveDialog>
   )
 }

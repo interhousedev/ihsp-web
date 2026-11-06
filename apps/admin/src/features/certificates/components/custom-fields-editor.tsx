@@ -13,6 +13,7 @@ import {
   IconChevronUp,
   IconPencil,
   IconPlus,
+  IconStar,
   IconTrash,
   IconX,
   Input,
@@ -34,6 +35,8 @@ export type DraftField = {
   required: boolean
   options: string[]
   allow_other: boolean
+  /** The priority star: statistics group or average by this field (one per type). */
+  primary: boolean
 }
 
 const KINDS: CustomFieldKind[] = ["text", "number", "single", "multi"]
@@ -50,6 +53,7 @@ export function toDraft(field: CustomField): DraftField {
     required: field.required,
     options: [...field.options],
     allow_other: field.allow_other,
+    primary: field.primary,
   }
 }
 
@@ -62,6 +66,7 @@ export function fromDraft(draft: DraftField): CustomField {
     required: draft.required,
     options: choice ? draft.options : [],
     allow_other: choice && draft.allow_other,
+    primary: draft.primary && draft.kind !== "multi",
   }
 }
 
@@ -75,7 +80,15 @@ export function draftValid(draft: DraftField): boolean {
 }
 
 function newDraft(): DraftField {
-  return { key: "", kind: "text", label: { uz: "", ru: "", en: "" }, required: false, options: [], allow_other: false }
+  return {
+    key: "",
+    kind: "text",
+    label: { uz: "", ru: "", en: "" },
+    required: false,
+    options: [],
+    allow_other: false,
+    primary: false,
+  }
 }
 
 /** Compact list of a type's custom fields; one field is edited in a side panel. */
@@ -99,9 +112,13 @@ export function CustomFieldsEditor({
   const remove = (index: number) => onChange(fields.filter((_, i) => i !== index))
   const save = (draft: DraftField) => {
     if (!panel) return
-    onChange(panel.index === null ? [...fields, draft] : fields.map((item, i) => (i === panel.index ? draft : item)))
+    const kept = { ...draft, primary: draft.primary && draft.kind !== "multi" }
+    onChange(panel.index === null ? [...fields, kept] : fields.map((item, i) => (i === panel.index ? kept : item)))
     setPanel(null)
   }
+  /** Star one field; starring another moves the star, so a type has at most one. */
+  const star = (index: number) =>
+    onChange(fields.map((item, i) => ({ ...item, primary: i === index ? !item.primary : false })))
   return (
     <section className="grid gap-3">
       <div className="flex items-center justify-between gap-2">
@@ -130,6 +147,18 @@ export function CustomFieldsEditor({
                 </div>
                 <Badge variant="secondary">{t(KIND_KEYS[field.kind])}</Badge>
                 {field.required ? <Badge variant="outline">{t("requiredBadge")}</Badge> : null}
+                <Button
+                  type="button"
+                  variant="ghost"
+                  size="icon"
+                  className={TOUCH_ICON}
+                  aria-label={t("starField", { name })}
+                  aria-pressed={field.primary}
+                  disabled={field.kind === "multi"}
+                  onClick={() => star(index)}
+                >
+                  <IconStar aria-hidden className={field.primary ? "fill-current text-primary" : undefined} />
+                </Button>
                 <Button
                   type="button"
                   variant="ghost"

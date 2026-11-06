@@ -60,7 +60,7 @@ describe("lesson page", () => {
   test("goes back to the lessons list", async () => {
     renderAdmin(<LessonViewPage />, { route: ROUTE })
 
-    const back = await screen.findByRole("link", { name: "Lessons" })
+    const back = await screen.findByRole("link", { name: /Lessons/ })
     expect(back.getAttribute("href")).toMatch(/^\/lessons\/?$/)
   })
 

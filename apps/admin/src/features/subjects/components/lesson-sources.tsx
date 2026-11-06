@@ -5,7 +5,7 @@ import { useT } from "@ihsp/i18n"
 import { Badge, Button, buttonVariants, cn, Dropdown, formatBytes, Icons } from "@ihsp/ui"
 import { useQuery } from "@tanstack/react-query"
 import { useEffect, useState } from "react"
-import { QueryState } from "../../shared/components/query-state"
+import { QueryState } from "@ihsp/features-core"
 import { TOUCH } from "../../shared/utils/touch"
 
 const PAGE_SIZE = 20

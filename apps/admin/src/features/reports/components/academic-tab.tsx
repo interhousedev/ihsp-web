@@ -6,7 +6,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@ihsp/ui"
 import { ChartContainer, ChartTooltip, ChartTooltipContent, type ChartConfig } from "@ihsp/ui/chart"
 import { useQueries, useQuery } from "@tanstack/react-query"
 import { Bar, BarChart, CartesianGrid, Cell, XAxis, YAxis } from "recharts"
-import { QueryState } from "../../shared/components/query-state"
+import { QueryState } from "@ihsp/features-core"
 import { percent } from "../utils"
 
 const MARK_COLORS: Record<string, string> = {

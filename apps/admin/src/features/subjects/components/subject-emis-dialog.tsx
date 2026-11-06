@@ -9,19 +9,10 @@ import {
   type Term,
 } from "@ihsp/api"
 import { useT } from "@ihsp/i18n"
-import {
-  Button,
-  Checkbox,
-  ConfirmDialog,
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogHeader,
-  DialogTitle,
-} from "@ihsp/ui"
+import { Button, Checkbox, ConfirmDialog, ResponsiveDialog } from "@ihsp/ui"
 import { useQuery } from "@tanstack/react-query"
 import { useState } from "react"
-import { QueryState } from "../../shared/components/query-state"
+import { QueryState } from "@ihsp/features-core"
 import { useAdminMutation } from "../../shared/hooks/use-admin-mutation"
 import { useTerms } from "../../shared/hooks/use-lookups"
 import { TOUCH } from "../../shared/utils/touch"
@@ -174,18 +165,13 @@ export function SubjectEmisDialog({
 }) {
   const t = useT("subjects.emis")
   return (
-    <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="max-h-[90dvh] overflow-y-auto sm:max-w-lg">
-        {subject ? (
-          <>
-            <DialogHeader>
-              <DialogTitle>{t("title", { name: subject.name.en })}</DialogTitle>
-              <DialogDescription>{t("description")}</DialogDescription>
-            </DialogHeader>
-            <EmisBody key={subject.id} subject={subject} />
-          </>
-        ) : null}
-      </DialogContent>
-    </Dialog>
+    <ResponsiveDialog
+      open={open}
+      onOpenChange={onOpenChange}
+      title={subject ? t("title", { name: subject.name.en }) : ""}
+      description={subject ? t("description") : undefined}
+    >
+      {subject ? <EmisBody key={subject.id} subject={subject} /> : null}
+    </ResponsiveDialog>
   )
 }

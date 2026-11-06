@@ -6,7 +6,7 @@ import { Badge, Card, CardContent, CardHeader, CardTitle } from "@ihsp/ui"
 import { useQuery } from "@tanstack/react-query"
 import Link from "next/link"
 import { parseAsString, useQueryStates } from "nuqs"
-import { QueryState } from "../../shared/components/query-state"
+import { QueryState } from "@ihsp/features-core"
 import { audienceLabel, fullName } from "../../shared/utils/names"
 import { DateRangeFields } from "./date-range-fields"
 

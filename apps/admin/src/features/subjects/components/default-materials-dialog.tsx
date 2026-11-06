@@ -8,10 +8,10 @@ import {
   type SubjectMaterialKind,
 } from "@ihsp/api"
 import { useErrorMessage, useT } from "@ihsp/i18n"
-import { Badge, Button, Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, Icons } from "@ihsp/ui"
+import { Badge, Button, Icons, ResponsiveDialog } from "@ihsp/ui"
 import { useQuery } from "@tanstack/react-query"
 import { useState } from "react"
-import { QueryState } from "../../shared/components/query-state"
+import { QueryState } from "@ihsp/features-core"
 import { useAdminMutation } from "../../shared/hooks/use-admin-mutation"
 import { TOUCH, TOUCH_ICON } from "../../shared/utils/touch"
 import { DefaultMaterialForm } from "./default-material-form"
@@ -122,18 +122,13 @@ export function DefaultMaterialsDialog({
 }) {
   const t = useT("subjects.materials")
   return (
-    <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="max-h-[90dvh] overflow-y-auto sm:max-w-lg">
-        {eduSubjectId !== null ? (
-          <>
-            <DialogHeader>
-              <DialogTitle>{t("title", { label: label ?? t("emisLabel", { id: eduSubjectId }) })}</DialogTitle>
-              <DialogDescription>{t("description", { id: eduSubjectId })}</DialogDescription>
-            </DialogHeader>
-            <MaterialsBody key={eduSubjectId} eduSubjectId={eduSubjectId} />
-          </>
-        ) : null}
-      </DialogContent>
-    </Dialog>
+    <ResponsiveDialog
+      open={open}
+      onOpenChange={onOpenChange}
+      title={eduSubjectId !== null ? t("title", { label: label ?? t("emisLabel", { id: eduSubjectId }) }) : ""}
+      description={eduSubjectId !== null ? t("description", { id: eduSubjectId }) : undefined}
+    >
+      {eduSubjectId !== null ? <MaterialsBody key={eduSubjectId} eduSubjectId={eduSubjectId} /> : null}
+    </ResponsiveDialog>
   )
 }

@@ -7,17 +7,7 @@ import {
   type StaffAssessmentItem,
 } from "@ihsp/api"
 import { useErrorMessage, useT } from "@ihsp/i18n"
-import {
-  Alert,
-  AlertDescription,
-  Button,
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogFooter,
-  DialogHeader,
-  DialogTitle,
-} from "@ihsp/ui"
+import { Alert, AlertDescription, Button, ResponsiveDialog } from "@ihsp/ui"
 import { useState } from "react"
 import { useAdminMutation } from "../../shared/hooks/use-admin-mutation"
 import { useControlLabel } from "../../shared/hooks/use-control-label"
@@ -97,67 +87,60 @@ export function ExamDialog({
       : null
 
   return (
-    <Dialog
+    <ResponsiveDialog
       open
       onOpenChange={(open) => {
         if (!open) onClose()
       }}
+      size="lg"
+      noValidate
+      title={title}
+      description={description}
+      onSubmit={(event) => {
+        event.preventDefault()
+        if (issues.length > 0) {
+          setShowIssues(true)
+          return
+        }
+        // Nothing was changed: there is nothing to send.
+        if (patch && Object.keys(patch).length === 0) onClose()
+        else save.mutate()
+      }}
+      footer={
+        <>
+          <Button type="button" variant="outline" className={TOUCH} onClick={onClose}>
+            {t("cancel")}
+          </Button>
+          <Button type="submit" className={TOUCH} disabled={save.isPending}>
+            {mode === "create" ? t("create") : mode === "edit" ? t("save") : t("setDate")}
+          </Button>
+        </>
+      }
     >
-      <DialogContent className="max-h-[92dvh] overflow-y-auto sm:max-w-xl">
-        <form
-          className="grid gap-4"
-          noValidate
-          onSubmit={(event) => {
-            event.preventDefault()
-            if (issues.length > 0) {
-              setShowIssues(true)
-              return
-            }
-            // Nothing was changed: there is nothing to send.
-            if (patch && Object.keys(patch).length === 0) onClose()
-            else save.mutate()
-          }}
-        >
-          <DialogHeader>
-            <DialogTitle>{title}</DialogTitle>
-            {description ? <DialogDescription>{description}</DialogDescription> : null}
-          </DialogHeader>
+      <ExamFormFields
+        form={form}
+        onChange={setForm}
+        fixedSubject={mode === "create" ? null : subject}
+        fixedAudience={mode === "setDate" ? groups : null}
+        periods={periods}
+      />
 
-          <ExamFormFields
-            form={form}
-            onChange={setForm}
-            fixedSubject={mode === "create" ? null : subject}
-            fixedAudience={mode === "setDate" ? groups : null}
-            periods={periods}
-          />
-
-          {showIssues && issues.length > 0 ? (
-            <Alert variant="destructive" role="alert">
-              <AlertDescription>
-                <ul className="list-disc ps-4">
-                  {issues.map((issue) => (
-                    <li key={issue}>{tIssues(issue)}</li>
-                  ))}
-                </ul>
-              </AlertDescription>
-            </Alert>
-          ) : null}
-          {save.isError ? (
-            <Alert variant="destructive" role="alert">
-              <AlertDescription>{errorMessage(save.error)}</AlertDescription>
-            </Alert>
-          ) : null}
-
-          <DialogFooter>
-            <Button type="button" variant="outline" className={TOUCH} onClick={onClose}>
-              {t("cancel")}
-            </Button>
-            <Button type="submit" className={TOUCH} disabled={save.isPending}>
-              {mode === "create" ? t("create") : mode === "edit" ? t("save") : t("setDate")}
-            </Button>
-          </DialogFooter>
-        </form>
-      </DialogContent>
-    </Dialog>
+      {showIssues && issues.length > 0 ? (
+        <Alert variant="destructive" role="alert">
+          <AlertDescription>
+            <ul className="list-disc ps-4">
+              {issues.map((issue) => (
+                <li key={issue}>{tIssues(issue)}</li>
+              ))}
+            </ul>
+          </AlertDescription>
+        </Alert>
+      ) : null}
+      {save.isError ? (
+        <Alert variant="destructive" role="alert">
+          <AlertDescription>{errorMessage(save.error)}</AlertDescription>
+        </Alert>
+      ) : null}
+    </ResponsiveDialog>
   )
 }

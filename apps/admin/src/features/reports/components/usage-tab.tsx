@@ -6,7 +6,7 @@ import { Card, CardContent, CardHeader, CardTitle, Stat } from "@ihsp/ui"
 import { ChartContainer, ChartTooltip, ChartTooltipContent, type ChartConfig } from "@ihsp/ui/chart"
 import { useQuery } from "@tanstack/react-query"
 import { Area, AreaChart, Bar, BarChart, CartesianGrid, XAxis, YAxis } from "recharts"
-import { QueryState } from "../../shared/components/query-state"
+import { QueryState } from "@ihsp/features-core"
 import { formatBytes, formatCount } from "../utils"
 
 function DayChart({

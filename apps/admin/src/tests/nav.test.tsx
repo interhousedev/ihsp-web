@@ -35,7 +35,12 @@ describe("admin sidebar (ADM-1)", () => {
   test("Operations holds Monitoring, Logs and Limits & usage, and Tools no longer has Limits", () => {
     const groups = renderNav()
 
-    expect(itemsOf(groups, "Operations").map((item) => item.url)).toEqual(["/monitoring/", "/logs/", "/limits/"])
+    expect(itemsOf(groups, "Operations").map((item) => item.url)).toEqual([
+      "/monitoring/",
+      "/logs/",
+      "/mcp-activity/",
+      "/limits/",
+    ])
     expect(itemsOf(groups, "Reports").map((item) => item.title)).not.toContain("Monitoring")
     expect(itemsOf(groups, "Tools").map((item) => item.url)).not.toContain("/limits/")
   })

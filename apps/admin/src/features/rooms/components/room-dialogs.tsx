@@ -9,7 +9,7 @@ import {
   type Room,
 } from "@ihsp/api"
 import { useT } from "@ihsp/i18n"
-import { Button, ConfirmDialog, Dialog, DialogContent, DialogFooter, DialogHeader, DialogTitle, Input } from "@ihsp/ui"
+import { Button, ConfirmDialog, Input, ResponsiveDialog } from "@ihsp/ui"
 import { useState } from "react"
 import { LabeledField } from "../../shared/components/labeled-field"
 import { SelectField } from "../../shared/components/select-field"
@@ -31,38 +31,36 @@ function RenameDialog({ room, onClose }: { room: Room; onClose: () => void }) {
   })
   const valid = name.trim() !== "" && name.trim() !== room.name
   return (
-    <Dialog open onOpenChange={(open) => (open ? undefined : onClose())}>
-      <DialogContent>
-        <form
-          className="grid gap-4"
-          onSubmit={(event) => {
-            event.preventDefault()
-            if (valid) rename.mutate()
-          }}
-        >
-          <DialogHeader>
-            <DialogTitle>{t("title", { name: room.name })}</DialogTitle>
-          </DialogHeader>
-          <LabeledField label={t("name")} htmlFor="room-name" required>
-            <Input
-              id="room-name"
-              value={name}
-              className={TOUCH}
-              maxLength={32}
-              onChange={(event) => setName(event.target.value)}
-            />
-          </LabeledField>
-          <DialogFooter>
-            <Button type="button" variant="outline" className={TOUCH} onClick={onClose}>
-              {t("cancel")}
-            </Button>
-            <Button type="submit" className={TOUCH} disabled={!valid || rename.isPending}>
-              {t("submit")}
-            </Button>
-          </DialogFooter>
-        </form>
-      </DialogContent>
-    </Dialog>
+    <ResponsiveDialog
+      open
+      onOpenChange={(open) => (open ? undefined : onClose())}
+      size="sm"
+      title={t("title", { name: room.name })}
+      onSubmit={(event) => {
+        event.preventDefault()
+        if (valid) rename.mutate()
+      }}
+      footer={
+        <>
+          <Button type="button" variant="outline" className={TOUCH} onClick={onClose}>
+            {t("cancel")}
+          </Button>
+          <Button type="submit" className={TOUCH} disabled={!valid || rename.isPending}>
+            {t("submit")}
+          </Button>
+        </>
+      }
+    >
+      <LabeledField label={t("name")} htmlFor="room-name" required>
+        <Input
+          id="room-name"
+          value={name}
+          className={TOUCH}
+          maxLength={32}
+          onChange={(event) => setName(event.target.value)}
+        />
+      </LabeledField>
+    </ResponsiveDialog>
   )
 }
 
@@ -77,38 +75,36 @@ function MergeDialog({ room, rooms, onClose }: { room: Room; rooms: Room[]; onCl
   })
   const targets = rooms.filter((item) => item.id !== room.id && item.status === "active")
   return (
-    <Dialog open onOpenChange={(open) => (open ? undefined : onClose())}>
-      <DialogContent>
-        <form
-          className="grid gap-4"
-          onSubmit={(event) => {
-            event.preventDefault()
-            if (targetId) merge.mutate()
-          }}
-        >
-          <DialogHeader>
-            <DialogTitle>{t("title", { name: room.name })}</DialogTitle>
-          </DialogHeader>
-          <LabeledField label={t("target")} htmlFor="room-merge-target" required>
-            <SelectField
-              id="room-merge-target"
-              value={targetId}
-              emptyLabel={t("choose")}
-              options={targets.map((item) => ({ value: item.id, label: item.name }))}
-              onChange={setTargetId}
-            />
-          </LabeledField>
-          <DialogFooter>
-            <Button type="button" variant="outline" className={TOUCH} onClick={onClose}>
-              {t("cancel")}
-            </Button>
-            <Button type="submit" variant="destructive" className={TOUCH} disabled={!targetId || merge.isPending}>
-              {t("submit")}
-            </Button>
-          </DialogFooter>
-        </form>
-      </DialogContent>
-    </Dialog>
+    <ResponsiveDialog
+      open
+      onOpenChange={(open) => (open ? undefined : onClose())}
+      size="sm"
+      title={t("title", { name: room.name })}
+      onSubmit={(event) => {
+        event.preventDefault()
+        if (targetId) merge.mutate()
+      }}
+      footer={
+        <>
+          <Button type="button" variant="outline" className={TOUCH} onClick={onClose}>
+            {t("cancel")}
+          </Button>
+          <Button type="submit" variant="destructive" className={TOUCH} disabled={!targetId || merge.isPending}>
+            {t("submit")}
+          </Button>
+        </>
+      }
+    >
+      <LabeledField label={t("target")} htmlFor="room-merge-target" required>
+        <SelectField
+          id="room-merge-target"
+          value={targetId}
+          emptyLabel={t("choose")}
+          options={targets.map((item) => ({ value: item.id, label: item.name }))}
+          onChange={setTargetId}
+        />
+      </LabeledField>
+    </ResponsiveDialog>
   )
 }
 

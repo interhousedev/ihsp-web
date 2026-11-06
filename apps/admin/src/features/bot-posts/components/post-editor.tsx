@@ -16,6 +16,11 @@ import {
   ConfirmDialog,
   Input,
   Label,
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
   Switch,
   Tabs,
   TabsContent,
@@ -213,19 +218,25 @@ export function PostEditor({
 
       <div className="flex flex-col gap-2">
         <Label htmlFor="bot-post-audience">{t("editor.audience")}</Label>
-        <select
-          id="bot-post-audience"
-          className="border-input bg-background h-10 rounded-md border px-3 text-sm"
+        <Select
           value={form.audience}
           disabled={busy}
-          onChange={(event) => setForm((current) => ({ ...current, audience: event.target.value as BotPostAudience }))}
+          items={AUDIENCES.map((audience) => ({ value: audience, label: t(`audience.${audience}`) }))}
+          onValueChange={(audience) =>
+            audience && setForm((current) => ({ ...current, audience: audience as BotPostAudience }))
+          }
         >
-          {AUDIENCES.map((audience) => (
-            <option key={audience} value={audience}>
-              {t(`audience.${audience}`)}
-            </option>
-          ))}
-        </select>
+          <SelectTrigger id="bot-post-audience" className="min-h-11 w-full md:min-h-8">
+            <SelectValue />
+          </SelectTrigger>
+          <SelectContent>
+            {AUDIENCES.map((audience) => (
+              <SelectItem key={audience} value={audience}>
+                {t(`audience.${audience}`)}
+              </SelectItem>
+            ))}
+          </SelectContent>
+        </Select>
       </div>
 
       <div className="flex items-center gap-3">
@@ -241,22 +252,23 @@ export function PostEditor({
       {canDeleteBotPost(post) ? (
         <div className="flex flex-col gap-2">
           <Label htmlFor="bot-post-parent">{t("editor.parent")}</Label>
-          <select
-            id="bot-post-parent"
-            className="border-input bg-background h-10 rounded-md border px-3 text-sm"
-            value=""
+          <Select
+            value={null}
             disabled={busy || targets.length === 0}
-            onChange={(event) => move.mutate({ id: post.id, parentId: event.target.value })}
+            items={[{ value: null, label: t("editor.moveTo") }]}
+            onValueChange={(parentId: string | null) => parentId && move.mutate({ id: post.id, parentId })}
           >
-            <option value="" disabled>
-              {t("editor.moveTo")}
-            </option>
-            {targets.map((target) => (
-              <option key={target.id} value={target.id}>
-                {localized(target.title, locale) || target.slug}
-              </option>
-            ))}
-          </select>
+            <SelectTrigger id="bot-post-parent" className="min-h-11 w-full md:min-h-8">
+              <SelectValue />
+            </SelectTrigger>
+            <SelectContent>
+              {targets.map((target) => (
+                <SelectItem key={target.id} value={target.id}>
+                  {localized(target.title, locale) || target.slug}
+                </SelectItem>
+              ))}
+            </SelectContent>
+          </Select>
         </div>
       ) : null}
 

@@ -2,11 +2,10 @@
 
 import { getAdminGroupsQuery, getGroupsStats, keys, type GroupItem, type GroupStat } from "@ihsp/api"
 import { useT } from "@ihsp/i18n"
-import { Button, Icons, PageContainer } from "@ihsp/ui"
+import { Button, Icons, PageContainer, ListToolbar, type ToolbarFilter } from "@ihsp/ui"
 import { useQuery } from "@tanstack/react-query"
 import Link from "next/link"
 import { useMemo, useState } from "react"
-import { ListToolbar, type ToolbarFilter } from "../../shared/components/list-toolbar"
 import { PagedTable } from "../../shared/components/paged-table"
 import { StatusBadge } from "../../shared/components/status-badge"
 import { useFilterState } from "../../shared/hooks/use-filter-state"

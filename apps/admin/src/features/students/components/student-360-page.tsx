@@ -5,9 +5,8 @@ import { useT } from "@ihsp/i18n"
 import { PageContainer, StateView, Tabs, TabsContent, TabsList, TabsTrigger } from "@ihsp/ui"
 import { useQuery } from "@tanstack/react-query"
 import { parseAsString, useQueryState } from "nuqs"
-import { BackLink } from "../../shared/components/back-link"
+import { BackLink, QueryState } from "@ihsp/features-core"
 import { LessonList } from "../../shared/components/lesson-list"
-import { QueryState } from "../../shared/components/query-state"
 import { fullName } from "../../shared/utils/names"
 import { StudentAccountTab } from "./student-account-tab"
 import { StudentAttendanceTab } from "./student-attendance-tab"
@@ -43,7 +42,7 @@ export function Student360Page() {
       {(data) => (
         <PageContainer
           title={fullName(data.profile)}
-          description={`${data.profile.group.name}${data.profile.login ? ` · ${data.profile.login}` : ""}`}
+          meta={`${data.profile.group.name}${data.profile.login ? ` · ${data.profile.login}` : ""}`}
           actions={<BackLink href="/students/" label={t("title")} />}
         >
           <Tabs

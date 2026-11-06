@@ -13,7 +13,7 @@ import { Button, Card, CardContent, CardHeader, CardTitle, Input, Label } from "
 import { useQuery } from "@tanstack/react-query"
 import { useState } from "react"
 import { CheckField } from "../../shared/components/check-field"
-import { QueryState } from "../../shared/components/query-state"
+import { QueryState } from "@ihsp/features-core"
 import { useAdminMutation } from "../../shared/hooks/use-admin-mutation"
 import { LIMIT_GROUPS, limitNumber, UNLIMITED } from "../utils"
 

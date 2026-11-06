@@ -2,7 +2,7 @@
 
 import { keys, postAdminGroups } from "@ihsp/api"
 import { useT } from "@ihsp/i18n"
-import { Button, Dialog, DialogContent, DialogFooter, DialogHeader, DialogTitle, Input } from "@ihsp/ui"
+import { Button, Input, ResponsiveDialog } from "@ihsp/ui"
 import { useEffect, useState } from "react"
 import { LabeledField } from "../../shared/components/labeled-field"
 import { useAdminMutation } from "../../shared/hooks/use-admin-mutation"
@@ -41,55 +41,53 @@ export function CreateGroupDialog({ open, onOpenChange }: { open: boolean; onOpe
   })
 
   return (
-    <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent>
-        <form
-          className="grid gap-4"
-          onSubmit={(event) => {
-            event.preventDefault()
-            if (name.trim()) create.mutate()
-          }}
-        >
-          <DialogHeader>
-            <DialogTitle>{t("title")}</DialogTitle>
-          </DialogHeader>
-          <LabeledField label={t("name")} htmlFor="group-name" required>
-            <Input
-              id="group-name"
-              value={name}
-              className={TOUCH}
-              maxLength={32}
-              onChange={(event) => setName(event.target.value)}
-            />
-          </LabeledField>
-          <LabeledField label={t("emisId")} htmlFor="group-emis">
-            <Input
-              id="group-emis"
-              inputMode="numeric"
-              value={emisId}
-              className={TOUCH}
-              onChange={(event) => setEmisId(event.target.value.replace(/\D/g, ""))}
-            />
-          </LabeledField>
-          <LabeledField label={t("semester")} htmlFor="group-semester">
-            <Input
-              id="group-semester"
-              inputMode="numeric"
-              value={semester}
-              className={TOUCH}
-              onChange={(event) => setSemester(event.target.value.replace(/\D/g, "").slice(0, 2))}
-            />
-          </LabeledField>
-          <DialogFooter>
-            <Button type="button" variant="outline" className={TOUCH} onClick={() => onOpenChange(false)}>
-              {t("cancel")}
-            </Button>
-            <Button type="submit" className={TOUCH} disabled={!name.trim() || create.isPending}>
-              {t("submit")}
-            </Button>
-          </DialogFooter>
-        </form>
-      </DialogContent>
-    </Dialog>
+    <ResponsiveDialog
+      open={open}
+      onOpenChange={onOpenChange}
+      size="sm"
+      title={t("title")}
+      onSubmit={(event) => {
+        event.preventDefault()
+        if (name.trim()) create.mutate()
+      }}
+      footer={
+        <>
+          <Button type="button" variant="outline" className={TOUCH} onClick={() => onOpenChange(false)}>
+            {t("cancel")}
+          </Button>
+          <Button type="submit" className={TOUCH} disabled={!name.trim() || create.isPending}>
+            {t("submit")}
+          </Button>
+        </>
+      }
+    >
+      <LabeledField label={t("name")} htmlFor="group-name" required>
+        <Input
+          id="group-name"
+          value={name}
+          className={TOUCH}
+          maxLength={32}
+          onChange={(event) => setName(event.target.value)}
+        />
+      </LabeledField>
+      <LabeledField label={t("emisId")} htmlFor="group-emis">
+        <Input
+          id="group-emis"
+          inputMode="numeric"
+          value={emisId}
+          className={TOUCH}
+          onChange={(event) => setEmisId(event.target.value.replace(/\D/g, ""))}
+        />
+      </LabeledField>
+      <LabeledField label={t("semester")} htmlFor="group-semester">
+        <Input
+          id="group-semester"
+          inputMode="numeric"
+          value={semester}
+          className={TOUCH}
+          onChange={(event) => setSemester(event.target.value.replace(/\D/g, "").slice(0, 2))}
+        />
+      </LabeledField>
+    </ResponsiveDialog>
   )
 }

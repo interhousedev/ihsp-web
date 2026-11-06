@@ -1,16 +1,7 @@
 "use client"
 
 import { useT } from "@ihsp/i18n"
-import {
-  Button,
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogFooter,
-  DialogHeader,
-  DialogTitle,
-  Textarea,
-} from "@ihsp/ui"
+import { Button, ResponsiveDialog, Textarea } from "@ihsp/ui"
 import { useEffect, useId, useState } from "react"
 import { TOUCH } from "../utils/touch"
 import { LabeledField } from "./labeled-field"
@@ -50,49 +41,47 @@ export function ReasonDialog({
 
   const trimmed = reason.trim()
   return (
-    <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent>
-        <form
-          className="grid gap-4"
-          onSubmit={(event) => {
-            event.preventDefault()
-            if (trimmed) onSubmit(trimmed)
-          }}
-        >
-          <DialogHeader>
-            <DialogTitle>{title}</DialogTitle>
-            {description ? <DialogDescription>{description}</DialogDescription> : null}
-          </DialogHeader>
-          <LabeledField label={reasonLabel} htmlFor={fieldId} required>
-            <Textarea
-              id={fieldId}
-              value={reason}
-              maxLength={500}
-              rows={3}
-              onChange={(event) => setReason(event.target.value)}
-            />
-          </LabeledField>
-          <DialogFooter>
-            <Button
-              type="button"
-              variant="outline"
-              className={TOUCH}
-              disabled={loading}
-              onClick={() => onOpenChange(false)}
-            >
-              {t("common.cancel")}
-            </Button>
-            <Button
-              type="submit"
-              variant={destructive ? "destructive" : "default"}
-              className={TOUCH}
-              disabled={loading || trimmed === ""}
-            >
-              {confirmLabel}
-            </Button>
-          </DialogFooter>
-        </form>
-      </DialogContent>
-    </Dialog>
+    <ResponsiveDialog
+      open={open}
+      onOpenChange={onOpenChange}
+      size="sm"
+      title={title}
+      description={description}
+      onSubmit={(event) => {
+        event.preventDefault()
+        if (trimmed) onSubmit(trimmed)
+      }}
+      footer={
+        <>
+          <Button
+            type="button"
+            variant="outline"
+            className={TOUCH}
+            disabled={loading}
+            onClick={() => onOpenChange(false)}
+          >
+            {t("common.cancel")}
+          </Button>
+          <Button
+            type="submit"
+            variant={destructive ? "destructive" : "default"}
+            className={TOUCH}
+            disabled={loading || trimmed === ""}
+          >
+            {confirmLabel}
+          </Button>
+        </>
+      }
+    >
+      <LabeledField label={reasonLabel} htmlFor={fieldId} required>
+        <Textarea
+          id={fieldId}
+          value={reason}
+          maxLength={500}
+          rows={3}
+          onChange={(event) => setReason(event.target.value)}
+        />
+      </LabeledField>
+    </ResponsiveDialog>
   )
 }

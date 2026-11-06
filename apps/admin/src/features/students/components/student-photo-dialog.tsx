@@ -3,7 +3,7 @@
 import { keys, putAdminUserPhoto, type StudentItem } from "@ihsp/api"
 import { PHOTO_ACCEPT, photoProblem } from "@ihsp/features-core"
 import { useErrorMessage, useT } from "@ihsp/i18n"
-import { Button, Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, Icons } from "@ihsp/ui"
+import { Button, Icons, LoadingButton, ResponsiveDialog } from "@ihsp/ui"
 import { useQueryClient } from "@tanstack/react-query"
 import { useEffect, useRef, useState } from "react"
 import { toast } from "sonner"
@@ -17,19 +17,14 @@ import { useCamera } from "./use-camera"
 export function StudentPhotoDialog({ student, onClose }: { student: StudentItem | null; onClose: () => void }) {
   const t = useT("studentPhoto")
   return (
-    <Dialog open={student !== null} onOpenChange={(open) => !open && onClose()}>
-      <DialogContent className="max-w-lg">
-        {student ? (
-          <>
-            <DialogHeader>
-              <DialogTitle>{t("title", { name: fullName(student) })}</DialogTitle>
-              <DialogDescription>{t("hint")}</DialogDescription>
-            </DialogHeader>
-            <PhotoBody key={student.user_id} student={student} />
-          </>
-        ) : null}
-      </DialogContent>
-    </Dialog>
+    <ResponsiveDialog
+      open={student !== null}
+      onOpenChange={(open) => !open && onClose()}
+      title={student ? t("title", { name: fullName(student) }) : ""}
+      description={student ? t("hint") : undefined}
+    >
+      {student ? <PhotoBody key={student.user_id} student={student} /> : null}
+    </ResponsiveDialog>
   )
 }
 
@@ -168,10 +163,16 @@ function PhotoBody({ student }: { student: StudentItem }) {
       <div className="flex flex-wrap gap-2">
         {chosen ? (
           <>
-            <Button type="button" className="min-h-11 md:min-h-8" disabled={saving} onClick={() => void upload()}>
-              {saving ? <Icons.spinner aria-hidden className="animate-spin" /> : <Icons.upload aria-hidden />}
-              {saving ? t("uploading") : t("upload")}
-            </Button>
+            <LoadingButton
+              type="button"
+              className="min-h-11 md:min-h-8"
+              loading={saving}
+              loadingLabel={t("uploading")}
+              onClick={() => void upload()}
+            >
+              <Icons.upload aria-hidden />
+              {t("upload")}
+            </LoadingButton>
             <Button
               type="button"
               variant="outline"

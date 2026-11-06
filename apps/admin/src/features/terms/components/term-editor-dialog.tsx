@@ -2,18 +2,7 @@
 
 import { keys, patchAdminTerm, postAdminTerms, type Term } from "@ihsp/api"
 import { useErrorMessage, useT } from "@ihsp/i18n"
-import {
-  Alert,
-  AlertDescription,
-  Button,
-  DatePicker,
-  Dialog,
-  DialogContent,
-  DialogFooter,
-  DialogHeader,
-  DialogTitle,
-  Input,
-} from "@ihsp/ui"
+import { Alert, AlertDescription, Button, DatePicker, Input, ResponsiveDialog } from "@ihsp/ui"
 import { useEffect, useState } from "react"
 import { LabeledField } from "../../shared/components/labeled-field"
 import { SelectField } from "../../shared/components/select-field"
@@ -60,108 +49,104 @@ export function TermEditorDialog({
   })
 
   return (
-    <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="max-h-[92dvh] overflow-y-auto sm:max-w-3xl">
-        <form
-          className="grid gap-5"
-          noValidate
-          onSubmit={(event) => {
-            event.preventDefault()
-            if (issues.length > 0) {
-              setShowIssues(true)
-              return
-            }
-            save.mutate()
-          }}
-        >
-          <DialogHeader>
-            <DialogTitle>{term ? t("editTitle", { year: term.academic_year }) : t("createTitle")}</DialogTitle>
-          </DialogHeader>
-
-          <div className="grid gap-4 sm:grid-cols-2">
-            <LabeledField label={t("year")} htmlFor="term-year" required>
-              <Input
-                id="term-year"
-                value={form.academic_year}
-                className={TOUCH}
-                onChange={(event) => setForm({ ...form, academic_year: event.target.value })}
-              />
-            </LabeledField>
-            <LabeledField label={t("half")} htmlFor="term-half" required>
-              <SelectField
-                id="term-half"
-                value={String(form.half)}
-                options={[
-                  { value: "1", label: t("half1") },
-                  { value: "2", label: t("half2") },
-                ]}
-                onChange={(value) => setForm({ ...form, half: value === "2" ? 2 : 1 })}
-              />
-            </LabeledField>
-            <LabeledField label={t("starts")} htmlFor="term-starts" required>
-              <DatePicker
-                id="term-starts"
-                value={form.starts_on}
-                onChange={(date) => setForm({ ...form, starts_on: date })}
-              />
-            </LabeledField>
-            <LabeledField label={t("ends")} htmlFor="term-ends" required>
-              <DatePicker
-                id="term-ends"
-                value={form.ends_on}
-                min={form.starts_on ?? undefined}
-                onChange={(date) => setForm({ ...form, ends_on: date })}
-              />
-            </LabeledField>
-          </div>
-
-          <ControlWeeksEditor
-            value={form.control_periods}
-            onChange={(control_periods) => setForm({ ...form, control_periods })}
-            termStart={form.starts_on}
-            termEnd={form.ends_on}
-            issues={showIssues ? controlIssues(form) : {}}
+    <ResponsiveDialog
+      open={open}
+      onOpenChange={onOpenChange}
+      size="lg"
+      noValidate
+      title={term ? t("editTitle", { year: term.academic_year }) : t("createTitle")}
+      onSubmit={(event) => {
+        event.preventDefault()
+        if (issues.length > 0) {
+          setShowIssues(true)
+          return
+        }
+        save.mutate()
+      }}
+      footer={
+        <>
+          <Button type="button" variant="outline" className={TOUCH} onClick={() => onOpenChange(false)}>
+            {t("cancel")}
+          </Button>
+          <Button type="submit" className={TOUCH} disabled={save.isPending}>
+            {t("save")}
+          </Button>
+        </>
+      }
+    >
+      <div className="grid gap-4 sm:grid-cols-2">
+        <LabeledField label={t("year")} htmlFor="term-year" required>
+          <Input
+            id="term-year"
+            value={form.academic_year}
+            className={TOUCH}
+            onChange={(event) => setForm({ ...form, academic_year: event.target.value })}
           />
-
-          <section className="flex flex-col gap-2">
-            <h3 className="text-sm font-semibold">{t("bells")}</h3>
-            <BellsEditor bells={form.bells} onChange={(bells) => setForm({ ...form, bells })} />
-          </section>
-
-          <DaysEditor
-            nonStudyDays={form.non_study_days}
-            movedDays={form.moved_days}
-            onNonStudyChange={(days) => setForm({ ...form, non_study_days: days })}
-            onMovedChange={(days) => setForm({ ...form, moved_days: days })}
+        </LabeledField>
+        <LabeledField label={t("half")} htmlFor="term-half" required>
+          <SelectField
+            id="term-half"
+            value={String(form.half)}
+            options={[
+              { value: "1", label: t("half1") },
+              { value: "2", label: t("half2") },
+            ]}
+            onChange={(value) => setForm({ ...form, half: value === "2" ? 2 : 1 })}
           />
+        </LabeledField>
+        <LabeledField label={t("starts")} htmlFor="term-starts" required>
+          <DatePicker
+            id="term-starts"
+            value={form.starts_on}
+            onChange={(date) => setForm({ ...form, starts_on: date })}
+          />
+        </LabeledField>
+        <LabeledField label={t("ends")} htmlFor="term-ends" required>
+          <DatePicker
+            id="term-ends"
+            value={form.ends_on}
+            min={form.starts_on ?? undefined}
+            onChange={(date) => setForm({ ...form, ends_on: date })}
+          />
+        </LabeledField>
+      </div>
 
-          {showIssues && issues.length > 0 ? (
-            <Alert variant="destructive" role="alert">
-              <AlertDescription>
-                <ul className="list-disc ps-4">
-                  {issues.map((issue) => (
-                    <li key={issue}>{t(`issues.${issue}`)}</li>
-                  ))}
-                </ul>
-              </AlertDescription>
-            </Alert>
-          ) : null}
-          {save.isError ? (
-            <Alert variant="destructive" role="alert">
-              <AlertDescription>{errorMessage(save.error)}</AlertDescription>
-            </Alert>
-          ) : null}
+      <ControlWeeksEditor
+        value={form.control_periods}
+        onChange={(control_periods) => setForm({ ...form, control_periods })}
+        termStart={form.starts_on}
+        termEnd={form.ends_on}
+        issues={showIssues ? controlIssues(form) : {}}
+      />
 
-          <DialogFooter>
-            <Button type="button" variant="outline" className={TOUCH} onClick={() => onOpenChange(false)}>
-              {t("cancel")}
-            </Button>
-            <Button type="submit" className={TOUCH} disabled={save.isPending}>
-              {t("save")}
-            </Button>
-          </DialogFooter>
-        </form>
-      </DialogContent>
-    </Dialog>
+      <section className="flex flex-col gap-2">
+        <h3 className="text-sm font-semibold">{t("bells")}</h3>
+        <BellsEditor bells={form.bells} onChange={(bells) => setForm({ ...form, bells })} />
+      </section>
+
+      <DaysEditor
+        nonStudyDays={form.non_study_days}
+        movedDays={form.moved_days}
+        onNonStudyChange={(days) => setForm({ ...form, non_study_days: days })}
+        onMovedChange={(days) => setForm({ ...form, moved_days: days })}
+      />
+
+      {showIssues && issues.length > 0 ? (
+        <Alert variant="destructive" role="alert">
+          <AlertDescription>
+            <ul className="list-disc ps-4">
+              {issues.map((issue) => (
+                <li key={issue}>{t(`issues.${issue}`)}</li>
+              ))}
+            </ul>
+          </AlertDescription>
+        </Alert>
+      ) : null}
+      {save.isError ? (
+        <Alert variant="destructive" role="alert">
+          <AlertDescription>{errorMessage(save.error)}</AlertDescription>
+        </Alert>
+      ) : null}
+    </ResponsiveDialog>
   )
 }

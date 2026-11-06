@@ -1,14 +1,4 @@
-/** Bytes as `12.4 MB`; storage sizes are far below a petabyte. */
-export function formatBytes(value: number): string {
-  const units = ["B", "KB", "MB", "GB", "TB"]
-  let size = value
-  let unit = 0
-  while (size >= 1024 && unit < units.length - 1) {
-    size /= 1024
-    unit += 1
-  }
-  return `${unit === 0 ? size : size.toFixed(1)} ${units[unit]}`
-}
+export { formatBytes } from "@ihsp/ui"
 
 /** Tokens as `12k` or `1.2M`. */
 export function formatCount(value: number): string {

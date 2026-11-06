@@ -2,7 +2,7 @@
 
 import { keys, patchAdminUser, type AdminUser } from "@ihsp/api"
 import { useErrorMessage, useT } from "@ihsp/i18n"
-import { Button, Dialog, DialogContent, DialogFooter, DialogHeader, DialogTitle, Input } from "@ihsp/ui"
+import { Button, Input, ResponsiveDialog } from "@ihsp/ui"
 import { useEffect, useState } from "react"
 import { LabeledField } from "../../shared/components/labeled-field"
 import { useAdminMutation } from "../../shared/hooks/use-admin-mutation"
@@ -57,77 +57,75 @@ export function EditUserDialog({
 
   const valid = lastName.trim() !== "" && firstName.trim() !== "" && login.trim() !== ""
   return (
-    <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent>
-        <form
-          className="grid gap-4"
-          onSubmit={(event) => {
-            event.preventDefault()
-            if (valid) save.mutate()
-          }}
-        >
-          <DialogHeader>
-            <DialogTitle>{t("title")}</DialogTitle>
-          </DialogHeader>
-          <LabeledField label={t("lastName")} htmlFor="edit-user-last-name" required>
-            <Input
-              id="edit-user-last-name"
-              value={lastName}
-              className={TOUCH}
-              onChange={(event) => setLastName(event.target.value)}
-            />
-          </LabeledField>
-          <LabeledField label={t("firstName")} htmlFor="edit-user-first-name" required>
-            <Input
-              id="edit-user-first-name"
-              value={firstName}
-              className={TOUCH}
-              onChange={(event) => setFirstName(event.target.value)}
-            />
-          </LabeledField>
-          <LabeledField label={t("middleName")} htmlFor="edit-user-middle-name">
-            <Input
-              id="edit-user-middle-name"
-              value={middleName}
-              className={TOUCH}
-              onChange={(event) => setMiddleName(event.target.value)}
-            />
-          </LabeledField>
-          <LabeledField label={t("login")} htmlFor="edit-user-login" required>
-            <Input
-              id="edit-user-login"
-              value={login}
-              autoComplete="off"
-              spellCheck={false}
-              className={TOUCH}
-              aria-invalid={save.error ? true : undefined}
-              onChange={(event) => setLogin(event.target.value)}
-            />
-          </LabeledField>
-          <LabeledField label={t("email")} htmlFor="edit-user-email">
-            <Input
-              id="edit-user-email"
-              type="email"
-              value={email}
-              className={TOUCH}
-              onChange={(event) => setEmail(event.target.value)}
-            />
-          </LabeledField>
-          {save.isError ? (
-            <p role="alert" className="text-destructive text-sm">
-              {errorMessage(save.error)}
-            </p>
-          ) : null}
-          <DialogFooter>
-            <Button type="button" variant="outline" className={TOUCH} onClick={() => onOpenChange(false)}>
-              {t("cancel")}
-            </Button>
-            <Button type="submit" className={TOUCH} disabled={!valid || save.isPending}>
-              {t("save")}
-            </Button>
-          </DialogFooter>
-        </form>
-      </DialogContent>
-    </Dialog>
+    <ResponsiveDialog
+      open={open}
+      onOpenChange={onOpenChange}
+      size="sm"
+      title={t("title")}
+      onSubmit={(event) => {
+        event.preventDefault()
+        if (valid) save.mutate()
+      }}
+      footer={
+        <>
+          <Button type="button" variant="outline" className={TOUCH} onClick={() => onOpenChange(false)}>
+            {t("cancel")}
+          </Button>
+          <Button type="submit" className={TOUCH} disabled={!valid || save.isPending}>
+            {t("save")}
+          </Button>
+        </>
+      }
+    >
+      <LabeledField label={t("lastName")} htmlFor="edit-user-last-name" required>
+        <Input
+          id="edit-user-last-name"
+          value={lastName}
+          className={TOUCH}
+          onChange={(event) => setLastName(event.target.value)}
+        />
+      </LabeledField>
+      <LabeledField label={t("firstName")} htmlFor="edit-user-first-name" required>
+        <Input
+          id="edit-user-first-name"
+          value={firstName}
+          className={TOUCH}
+          onChange={(event) => setFirstName(event.target.value)}
+        />
+      </LabeledField>
+      <LabeledField label={t("middleName")} htmlFor="edit-user-middle-name">
+        <Input
+          id="edit-user-middle-name"
+          value={middleName}
+          className={TOUCH}
+          onChange={(event) => setMiddleName(event.target.value)}
+        />
+      </LabeledField>
+      <LabeledField label={t("login")} htmlFor="edit-user-login" required>
+        <Input
+          id="edit-user-login"
+          value={login}
+          autoComplete="off"
+          spellCheck={false}
+          className={TOUCH}
+          aria-invalid={save.error ? true : undefined}
+          onChange={(event) => setLogin(event.target.value)}
+        />
+      </LabeledField>
+      <LabeledField label={t("email")} htmlFor="edit-user-email">
+        <Input
+          id="edit-user-email"
+          type="email"
+          value={email}
+          className={TOUCH}
+          onChange={(event) => setEmail(event.target.value)}
+        />
+      </LabeledField>
+      {save.isError ? (
+        <p role="alert" className="text-destructive text-sm">
+          {errorMessage(save.error)}
+        </p>
+      ) : null}
+    </ResponsiveDialog>
   )
 }

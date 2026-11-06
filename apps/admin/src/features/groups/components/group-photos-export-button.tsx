@@ -2,7 +2,7 @@
 
 import { getAdminGroupPhotosZip } from "@ihsp/api"
 import { useErrorMessage, useT } from "@ihsp/i18n"
-import { Button, Icons } from "@ihsp/ui"
+import { Icons, LoadingButton } from "@ihsp/ui"
 import { useState } from "react"
 import { toast } from "sonner"
 import { downloadBlob } from "../../shared/utils/csv"
@@ -39,15 +39,16 @@ export function GroupPhotosExportButton({ groupId, groupName }: { groupId: strin
   }
 
   return (
-    <Button
+    <LoadingButton
       type="button"
       variant="outline"
       className="min-h-11 md:min-h-8"
-      disabled={pending}
+      loading={pending}
+      loadingLabel={t("view.exportingPhotos")}
       onClick={() => void run()}
     >
-      {pending ? <Icons.spinner aria-hidden className="animate-spin" /> : <Icons.upload aria-hidden />}
-      {pending ? t("view.exportingPhotos") : t("view.exportPhotos")}
-    </Button>
+      <Icons.upload aria-hidden />
+      {t("view.exportPhotos")}
+    </LoadingButton>
   )
 }

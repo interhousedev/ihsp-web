@@ -2,10 +2,9 @@
 
 import { getAdminSubjectMaterialGroupsQuery, getAdminSubjectsQuery, patchAdminSubject, type Subject } from "@ihsp/api"
 import { useT } from "@ihsp/i18n"
-import { Button, Icons, PageContainer } from "@ihsp/ui"
+import { Button, Icons, PageContainer, ListToolbar, type ToolbarFilter } from "@ihsp/ui"
 import { useQuery } from "@tanstack/react-query"
 import { useCallback, useMemo, useState } from "react"
-import { ListToolbar, type ToolbarFilter } from "../../shared/components/list-toolbar"
 import { PagedTable } from "../../shared/components/paged-table"
 import { useAdminMutation } from "../../shared/hooks/use-admin-mutation"
 import { useFilterState } from "../../shared/hooks/use-filter-state"

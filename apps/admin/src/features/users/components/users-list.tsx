@@ -2,11 +2,10 @@
 
 import { getAdminUsers, keys, postAdminUserBlock, type AdminUser, type Role } from "@ihsp/api"
 import { useFormatters, useT } from "@ihsp/i18n"
-import { Badge, Button } from "@ihsp/ui"
+import { Badge, Button, ListToolbar, type ToolbarFilter } from "@ihsp/ui"
 import Link from "next/link"
 import { useMemo, useState } from "react"
 import { ExportButton } from "../../shared/components/export-button"
-import { ListToolbar, type ToolbarFilter } from "../../shared/components/list-toolbar"
 import { PagedTable } from "../../shared/components/paged-table"
 import { ReasonDialog } from "../../shared/components/reason-dialog"
 import { StatusBadge } from "../../shared/components/status-badge"

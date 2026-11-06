@@ -24,7 +24,7 @@ import {
 import { useQuery } from "@tanstack/react-query"
 import { parseAsArrayOf, parseAsInteger, parseAsString, useQueryStates } from "nuqs"
 import { useEffect, useMemo, useState } from "react"
-import { QueryState } from "../../shared/components/query-state"
+import { QueryState } from "@ihsp/features-core"
 import { useAdminMutation } from "../../shared/hooks/use-admin-mutation"
 import { TOUCH, TOUCH_ICON } from "../../shared/utils/touch"
 import { KnowledgeDialog } from "./knowledge-dialog"

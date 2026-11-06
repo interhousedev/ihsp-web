@@ -4,9 +4,9 @@ import type { Term, TimetableEntry } from "@ihsp/api"
 import { useFormatters, useT } from "@ihsp/i18n"
 import { Button, Icons } from "@ihsp/ui"
 import { TOUCH } from "../../shared/utils/touch"
-import { STUDY_WEEKDAYS, weekdayDate } from "../../shared/utils/weekdays"
+import { weekdayDate } from "../../shared/utils/weekdays"
 import { EntryChip, type TimetableView } from "./entry-chip"
-import { bellTime, termPeriods } from "./timetable-grid"
+import { bellTime, termPeriods, termWeekdays } from "./timetable-grid"
 
 /** The phone layout of the timetable: one card per weekday, one row per period. */
 export function TimetableDayList({
@@ -27,7 +27,7 @@ export function TimetableDayList({
   const periods = termPeriods(term)
   return (
     <div className="flex flex-col gap-4">
-      {STUDY_WEEKDAYS.map((weekday) => {
+      {termWeekdays(term, entries).map((weekday) => {
         const dayName = f.weekday(weekdayDate(weekday), "long")
         return (
           <section key={weekday} aria-label={dayName} className="rounded-lg border">

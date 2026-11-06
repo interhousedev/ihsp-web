@@ -20,18 +20,14 @@ import {
   CardHeader,
   CardTitle,
   ConfirmDialog,
-  Dialog,
-  DialogContent,
-  DialogFooter,
-  DialogHeader,
-  DialogTitle,
+  ResponsiveDialog,
   Dropdown,
   Input,
   Label,
 } from "@ihsp/ui"
 import { useQuery } from "@tanstack/react-query"
 import { useState } from "react"
-import { QueryState } from "../../shared/components/query-state"
+import { QueryState } from "@ihsp/features-core"
 import { useAdminMutation } from "../../shared/hooks/use-admin-mutation"
 import { limitNumber } from "../utils"
 
@@ -182,135 +178,129 @@ export function ExtensionDialog({ open, onOpenChange }: { open: boolean; onOpenC
   }
 
   return (
-    <Dialog
+    <ResponsiveDialog
       open={open}
       onOpenChange={(next) => {
         if (!next) reset()
         onOpenChange(next)
       }}
-    >
-      <DialogContent>
-        <DialogHeader>
-          <DialogTitle>{t("extensions.dialog.title")}</DialogTitle>
-        </DialogHeader>
-        {student ? (
-          <div className="flex flex-col gap-4">
-            <div className="flex items-center justify-between gap-2 text-sm">
-              <span className="font-medium">
-                {t("extensions.dialog.student")}: {student.name}
-              </span>
-              <Button type="button" size="sm" variant="ghost" onClick={() => setStudent(null)}>
-                {t("extensions.dialog.change")}
-              </Button>
-            </div>
-            <div className="flex gap-2" role="group" aria-label={t("extensions.dialog.mode")}>
-              <Button
-                type="button"
-                size="sm"
-                variant={mode === "multiplier" ? "default" : "outline"}
-                aria-pressed={mode === "multiplier"}
-                onClick={() => setMode("multiplier")}
-              >
-                {t("extensions.dialog.multiplier")}
-              </Button>
-              <Button
-                type="button"
-                size="sm"
-                variant={mode === "values" ? "default" : "outline"}
-                aria-pressed={mode === "values"}
-                onClick={() => setMode("values")}
-              >
-                {t("extensions.dialog.custom")}
-              </Button>
-            </div>
-            {mode === "multiplier" ? (
-              <div className="flex flex-col gap-1.5">
-                <Label htmlFor="ext-multiplier">{t("extensions.dialog.multiplier")}</Label>
-                <Dropdown
-                  id="ext-multiplier"
-                  value={String(multiplier)}
-                  onValueChange={(next) => setMultiplier(Number(next))}
-                  options={MULTIPLIERS.map((value) => ({
-                    value: String(value),
-                    label: t("extensions.multiplier", { value }),
-                  }))}
-                />
-              </div>
-            ) : (
-              <div className="flex max-h-72 flex-col gap-3 overflow-y-auto">
-                <p className="text-muted-foreground text-xs">{t("extensions.dialog.customHint")}</p>
-                <QueryState query={limits} rows={2}>
-                  {({ limits: items }) => (
-                    <>
-                      {items.map((item: LimitItem) => (
-                        <div key={item.key} className="grid grid-cols-[1fr_auto] items-center gap-2">
-                          <Label htmlFor={`ext-${item.key}`} className="text-xs">
-                            {item.key}
-                          </Label>
-                          <Input
-                            id={`ext-${item.key}`}
-                            inputMode="numeric"
-                            className="w-28 text-end tabular-nums"
-                            value={custom[item.key] ?? ""}
-                            onChange={(event) => setCustom({ ...custom, [item.key]: event.target.value })}
-                          />
-                        </div>
-                      ))}
-                    </>
-                  )}
-                </QueryState>
-              </div>
-            )}
-            <div className="flex flex-col gap-1.5">
-              <Label htmlFor="ext-expires">{t("extensions.dialog.expires")}</Label>
-              <Input
-                id="ext-expires"
-                type="date"
-                value={expires}
-                onChange={(event) => setExpires(event.target.value)}
-              />
-            </div>
-            <div className="flex flex-col gap-1.5">
-              <Label htmlFor="ext-note">{t("extensions.dialog.note")}</Label>
-              <Input id="ext-note" value={note} maxLength={500} onChange={(event) => setNote(event.target.value)} />
-            </div>
-            {formError ? (
-              <p role="alert" className="text-destructive text-sm">
-                {formError}
-              </p>
-            ) : null}
-          </div>
-        ) : (
-          <div className="flex flex-col gap-3">
-            <div className="flex flex-col gap-1.5">
-              <Label htmlFor="ext-search">{t("extensions.dialog.search")}</Label>
-              <Input id="ext-search" value={search} onChange={(event) => setSearch(event.target.value)} />
-            </div>
-            {query.length >= 2 && found.data && found.data.items.length === 0 ? (
-              <p className="text-muted-foreground text-sm">{t("extensions.dialog.noResults")}</p>
-            ) : null}
-            <ul className="flex flex-col">
-              {(found.data?.items ?? []).map((candidate) => (
-                <li key={candidate.id}>
-                  <button
-                    type="button"
-                    className="hover:bg-muted flex w-full flex-col rounded-md px-2 py-2 text-start text-sm"
-                    onClick={() => setStudent(candidate)}
-                  >
-                    <span className="font-medium">{candidate.name}</span>
-                    {candidate.login ? <span className="text-muted-foreground text-xs">{candidate.login}</span> : null}
-                  </button>
-                </li>
-              ))}
-            </ul>
-          </div>
-        )}
-        <DialogFooter>
+      size="md"
+      title={t("extensions.dialog.title")}
+      footer={
+        <>
           <Button type="button" onClick={submit} disabled={!student || save.isPending}>
             {t("extensions.dialog.save")}
           </Button>
-        </DialogFooter>
-      </DialogContent>
-    </Dialog>
+        </>
+      }
+    >
+      {student ? (
+        <div className="flex flex-col gap-4">
+          <div className="flex items-center justify-between gap-2 text-sm">
+            <span className="font-medium">
+              {t("extensions.dialog.student")}: {student.name}
+            </span>
+            <Button type="button" size="sm" variant="ghost" onClick={() => setStudent(null)}>
+              {t("extensions.dialog.change")}
+            </Button>
+          </div>
+          <div className="flex gap-2" role="group" aria-label={t("extensions.dialog.mode")}>
+            <Button
+              type="button"
+              size="sm"
+              variant={mode === "multiplier" ? "default" : "outline"}
+              aria-pressed={mode === "multiplier"}
+              onClick={() => setMode("multiplier")}
+            >
+              {t("extensions.dialog.multiplier")}
+            </Button>
+            <Button
+              type="button"
+              size="sm"
+              variant={mode === "values" ? "default" : "outline"}
+              aria-pressed={mode === "values"}
+              onClick={() => setMode("values")}
+            >
+              {t("extensions.dialog.custom")}
+            </Button>
+          </div>
+          {mode === "multiplier" ? (
+            <div className="flex flex-col gap-1.5">
+              <Label htmlFor="ext-multiplier">{t("extensions.dialog.multiplier")}</Label>
+              <Dropdown
+                id="ext-multiplier"
+                value={String(multiplier)}
+                onValueChange={(next) => setMultiplier(Number(next))}
+                options={MULTIPLIERS.map((value) => ({
+                  value: String(value),
+                  label: t("extensions.multiplier", { value }),
+                }))}
+              />
+            </div>
+          ) : (
+            <div className="flex max-h-72 flex-col gap-3 overflow-y-auto">
+              <p className="text-muted-foreground text-xs">{t("extensions.dialog.customHint")}</p>
+              <QueryState query={limits} rows={2}>
+                {({ limits: items }) => (
+                  <>
+                    {items.map((item: LimitItem) => (
+                      <div key={item.key} className="grid grid-cols-[1fr_auto] items-center gap-2">
+                        <Label htmlFor={`ext-${item.key}`} className="text-xs">
+                          {item.key}
+                        </Label>
+                        <Input
+                          id={`ext-${item.key}`}
+                          inputMode="numeric"
+                          className="w-28 text-end tabular-nums"
+                          value={custom[item.key] ?? ""}
+                          onChange={(event) => setCustom({ ...custom, [item.key]: event.target.value })}
+                        />
+                      </div>
+                    ))}
+                  </>
+                )}
+              </QueryState>
+            </div>
+          )}
+          <div className="flex flex-col gap-1.5">
+            <Label htmlFor="ext-expires">{t("extensions.dialog.expires")}</Label>
+            <Input id="ext-expires" type="date" value={expires} onChange={(event) => setExpires(event.target.value)} />
+          </div>
+          <div className="flex flex-col gap-1.5">
+            <Label htmlFor="ext-note">{t("extensions.dialog.note")}</Label>
+            <Input id="ext-note" value={note} maxLength={500} onChange={(event) => setNote(event.target.value)} />
+          </div>
+          {formError ? (
+            <p role="alert" className="text-destructive text-sm">
+              {formError}
+            </p>
+          ) : null}
+        </div>
+      ) : (
+        <div className="flex flex-col gap-3">
+          <div className="flex flex-col gap-1.5">
+            <Label htmlFor="ext-search">{t("extensions.dialog.search")}</Label>
+            <Input id="ext-search" value={search} onChange={(event) => setSearch(event.target.value)} />
+          </div>
+          {query.length >= 2 && found.data && found.data.items.length === 0 ? (
+            <p className="text-muted-foreground text-sm">{t("extensions.dialog.noResults")}</p>
+          ) : null}
+          <ul className="flex flex-col">
+            {(found.data?.items ?? []).map((candidate) => (
+              <li key={candidate.id}>
+                <button
+                  type="button"
+                  className="hover:bg-muted flex w-full flex-col rounded-md px-2 py-2 text-start text-sm"
+                  onClick={() => setStudent(candidate)}
+                >
+                  <span className="font-medium">{candidate.name}</span>
+                  {candidate.login ? <span className="text-muted-foreground text-xs">{candidate.login}</span> : null}
+                </button>
+              </li>
+            ))}
+          </ul>
+        </div>
+      )}
+    </ResponsiveDialog>
   )
 }

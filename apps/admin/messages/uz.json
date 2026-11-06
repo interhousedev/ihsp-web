@@ -38,10 +38,10 @@
     "knowledge": "Bilimlar bazasi",
     "workOffs": "Qayta topshirish",
     "loginCues": "Roʻyxatga olish loginlari",
-    "botPosts": "Bot postlari"
+    "botPosts": "Bot postlari",
+    "mcpActivity": "MCP faolligi"
   },
   "shared": {
-    "filters": "Filtrlar",
     "lessonList": "Sanalar boʻyicha darslar",
     "exportCsv": "CSV ga eksport",
     "noLessons": "Darslar yoʻq.",
@@ -788,6 +788,7 @@
         "bellTime": "Har bir darsning boshlanish vaqti tugash vaqtidan oldin boʻlishi kerak.",
         "bellWeekdays": "Har bir darsda kamida bitta hafta kuni boʻlishi kerak.",
         "bellDuplicate": "Bir dars bir hafta kunida ikki marta koʻrsatilgan.",
+        "bellOverlap": "Bir kundagi ikki dars vaqti bir-biriga toʻgʻri keladi.",
         "controlIncomplete": "Nazorat haftasi uchun birinchi va oxirgi kun kerak.",
         "controlOrder": "Nazorat haftasi boshlangan kundan oldin tugamasligi kerak.",
         "controlOutside": "Nazorat haftasi semestr ichida boʻlishi kerak.",
@@ -813,7 +814,10 @@
       "overridden": "Oʻzgartirilgan",
       "overriddenHint": "EMIS dan farq qiladi ({start}–{end})",
       "reset": "EMIS ga qaytarish",
-      "rowMenu": "{period}-dars amallari"
+      "rowMenu": "{period}-dars amallari",
+      "days": "Hafta kuni",
+      "emptyDay": "Bu kunda dars yoʻq. Dars qoʻshing yoki boshqa kundan nusxa oling.",
+      "copyFrom": "Boshqa kundan nusxa olish"
     },
     "days": {
       "nonStudy": "Dam olish kunlari",
@@ -2078,5 +2082,27 @@
     "wrongType": "JPEG yoki PNG rasmini tanlang.",
     "tooLarge": "Surat 5 MB dan katta.",
     "close": "Yopish"
+  },
+  "mcpActivity": {
+    "title": "MCP faolligi",
+    "summaryTitle": "Soʻnggi 7 kun, vositalar boʻyicha",
+    "callsTitle": "Chaqiruvlar",
+    "userId": "Foydalanuvchi IDsi",
+    "outcome": "Natija",
+    "outcomeAll": "Barcha natijalar",
+    "empty": "Bu filtrlarga mos chaqiruvlar yoʻq.",
+    "deletedKey": "Oʻchirilgan kalit",
+    "duration": "{ms} ms",
+    "counts": "chaqiruvlar: {calls}, xatolar: {errors}",
+    "newer": "Yangiroq",
+    "older": "Eskiroq",
+    "outcomes": {
+      "ok": "Muvaffaqiyatli",
+      "denied": "Rad etildi",
+      "rate_limited": "Limitdan oshdi",
+      "not_found": "Topilmadi",
+      "invalid": "Notoʻgʻri maʼlumot",
+      "error": "Xato"
+    }
   }
 }

@@ -2,18 +2,7 @@
 
 import { postAdminUserResetPasswordLink } from "@ihsp/api"
 import { useT } from "@ihsp/i18n"
-import {
-  Button,
-  CopyButton,
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogFooter,
-  DialogHeader,
-  DialogTitle,
-  Input,
-  QrCode,
-} from "@ihsp/ui"
+import { Button, CopyButton, ResponsiveDialog, Input, QrCode } from "@ihsp/ui"
 import { useState } from "react"
 import { useAdminMutation } from "../../shared/hooks/use-admin-mutation"
 import { TOUCH } from "../../shared/utils/touch"
@@ -42,34 +31,36 @@ export function ResetLinkButton({ userId }: { userId: string }) {
       >
         {t("button")}
       </Button>
-      <Dialog open={link !== null} onOpenChange={(open) => (open ? undefined : setLink(null))}>
-        <DialogContent>
-          <DialogHeader>
-            <DialogTitle>{t("title")}</DialogTitle>
-            <DialogDescription>{t("description")}</DialogDescription>
-          </DialogHeader>
-          <div className="flex gap-2">
-            <Input
-              readOnly
-              value={link ?? ""}
-              aria-label={t("title")}
-              className={TOUCH}
-              onFocus={(event) => event.currentTarget.select()}
-            />
-            <CopyButton value={link ?? ""} />
-          </div>
-          {link ? (
-            <div className="flex justify-center">
-              <QrCode value={link} label={t("qrAlt")} />
-            </div>
-          ) : null}
-          <DialogFooter>
+      <ResponsiveDialog
+        open={link !== null}
+        onOpenChange={(open) => (open ? undefined : setLink(null))}
+        size="sm"
+        title={t("title")}
+        description={t("description")}
+        footer={
+          <>
             <Button type="button" className={TOUCH} onClick={() => setLink(null)}>
               {t("close")}
             </Button>
-          </DialogFooter>
-        </DialogContent>
-      </Dialog>
+          </>
+        }
+      >
+        <div className="flex gap-2">
+          <Input
+            readOnly
+            value={link ?? ""}
+            aria-label={t("title")}
+            className={TOUCH}
+            onFocus={(event) => event.currentTarget.select()}
+          />
+          <CopyButton value={link ?? ""} />
+        </div>
+        {link ? (
+          <div className="flex justify-center">
+            <QrCode value={link} label={t("qrAlt")} />
+          </div>
+        ) : null}
+      </ResponsiveDialog>
     </div>
   )
 }

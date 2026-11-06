@@ -2,18 +2,7 @@
 
 import { postAdminUserResetOtp, postAdminUserResetPassword } from "@ihsp/api"
 import { useT } from "@ihsp/i18n"
-import {
-  Button,
-  ConfirmDialog,
-  CopyButton,
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogFooter,
-  DialogHeader,
-  DialogTitle,
-  Input,
-} from "@ihsp/ui"
+import { Button, ConfirmDialog, CopyButton, ResponsiveDialog, Input } from "@ihsp/ui"
 import { toast } from "sonner"
 import { useState } from "react"
 import { useAdminMutation } from "../../shared/hooks/use-admin-mutation"
@@ -70,29 +59,31 @@ export function CredentialResetActions({ userId, name }: { userId: string; name:
         loading={resetOtp.isPending}
         onConfirm={() => resetOtp.mutate()}
       />
-      <Dialog open={link !== null} onOpenChange={(open) => (open ? undefined : setLink(null))}>
-        <DialogContent>
-          <DialogHeader>
-            <DialogTitle>{t("linkTitle")}</DialogTitle>
-            <DialogDescription>{t("linkDescription")}</DialogDescription>
-          </DialogHeader>
-          <div className="flex gap-2">
-            <Input
-              readOnly
-              value={link ?? ""}
-              aria-label={t("linkTitle")}
-              className={TOUCH}
-              onFocus={(event) => event.currentTarget.select()}
-            />
-            <CopyButton value={link ?? ""} />
-          </div>
-          <DialogFooter>
+      <ResponsiveDialog
+        open={link !== null}
+        onOpenChange={(open) => (open ? undefined : setLink(null))}
+        size="sm"
+        title={t("linkTitle")}
+        description={t("linkDescription")}
+        footer={
+          <>
             <Button type="button" className={TOUCH} onClick={() => setLink(null)}>
               {t("close")}
             </Button>
-          </DialogFooter>
-        </DialogContent>
-      </Dialog>
+          </>
+        }
+      >
+        <div className="flex gap-2">
+          <Input
+            readOnly
+            value={link ?? ""}
+            aria-label={t("linkTitle")}
+            className={TOUCH}
+            onFocus={(event) => event.currentTarget.select()}
+          />
+          <CopyButton value={link ?? ""} />
+        </div>
+      </ResponsiveDialog>
     </div>
   )
 }

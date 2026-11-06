@@ -136,6 +136,54 @@ describe("certificate types page", () => {
     expect(body).toMatchObject({ custom_fields: [{ key: "second" }, { key: "first" }] })
   })
 
+  test("starring a field moves the one star of the type and is saved on that field", async () => {
+    let body: Record<string, unknown> | null = null
+    server.use(
+      http.post(apiUrl("/v1/certificates/admin/types"), async ({ request }) => {
+        body = (await request.json()) as Record<string, unknown>
+        return HttpResponse.json({ ...(body as object), id: "n", builtin: false }, { status: 201 })
+      }),
+    )
+    const { user } = renderAdmin(<CertificateTypesPage />, { route: "/certificate-types/" })
+    await screen.findByText("IELTS")
+
+    await user.click(screen.getByRole("button", { name: "Add type" }))
+    const dialog = await screen.findByRole("dialog")
+    setDropdownValue(within(dialog).getByLabelText(/Code/), "toefl")
+    setDropdownValue(within(dialog).getByLabelText(/Name \(English\)/), "TOEFL")
+    setDropdownValue(within(dialog).getByLabelText(/Name \(Uzbek\)/), "TOEFL")
+    setDropdownValue(within(dialog).getByLabelText(/Name \(Russian\)/), "TOEFL")
+    for (const key of ["first", "second"]) {
+      await user.click(within(dialog).getByRole("button", { name: "Add field" }))
+      const panel = await screen.findByRole("dialog", { name: "New field" })
+      setDropdownValue(within(panel).getByLabelText("Key"), key)
+      setDropdownValue(within(panel).getByLabelText("Label (en)"), key)
+      setDropdownValue(within(panel).getByLabelText("Label (uz)"), key)
+      setDropdownValue(within(panel).getByLabelText("Label (ru)"), key)
+      await user.click(within(panel).getByRole("button", { name: "Done" }))
+    }
+
+    await user.click(within(dialog).getByRole("button", { name: "Group statistics by first" }))
+    expect(within(dialog).getByRole("button", { name: "Group statistics by first" })).toHaveAttribute(
+      "aria-pressed",
+      "true",
+    )
+    await user.click(within(dialog).getByRole("button", { name: "Group statistics by second" }))
+    expect(within(dialog).getByRole("button", { name: "Group statistics by first" })).toHaveAttribute(
+      "aria-pressed",
+      "false",
+    )
+    await user.click(within(dialog).getByRole("button", { name: "Save" }))
+
+    await waitFor(() => expect(body).not.toBeNull())
+    expect(body).toMatchObject({
+      custom_fields: [
+        { key: "first", primary: false },
+        { key: "second", primary: true },
+      ],
+    })
+  })
+
   test("deleting asks first", async () => {
     let deleted: string | null = null
     server.use(

@@ -10,7 +10,7 @@ import {
 import { useErrorMessage, useT } from "@ihsp/i18n"
 import { Alert, AlertDescription, Button, Input, LoadingButton, PageContainer } from "@ihsp/ui"
 import { useRef, useState } from "react"
-import { BackLink } from "../../shared/components/back-link"
+import { BackLink } from "@ihsp/features-core"
 import { LabeledField } from "../../shared/components/labeled-field"
 import { useAdminMutation } from "../../shared/hooks/use-admin-mutation"
 import { TOUCH } from "../../shared/utils/touch"

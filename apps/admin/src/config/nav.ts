@@ -32,7 +32,7 @@ export function useNav(): { groups: NavGroup[] } {
             { title: t("terms"), url: "/terms/", icon: "terms" },
             { title: t("timetable"), url: "/timetable/", icon: "timetable" },
             { title: t("lessons"), url: "/lessons/", icon: "calendarEvent" },
-            { title: t("exams"), url: "/exams/", icon: "forms" },
+            { title: t("exams"), url: "/exams/", icon: "exams" },
             { title: t("knowledge"), url: "/knowledge/", icon: "library" },
           ],
         },
@@ -42,8 +42,8 @@ export function useNav(): { groups: NavGroup[] } {
             { title: t("attendance"), url: "/attendance/", icon: "attendance" },
             { title: t("workOffs"), url: "/work-offs/", icon: "homework" },
             { title: t("reports"), url: "/reports/", icon: "reports" },
-            { title: t("certificates"), url: "/certificates/", icon: "grades" },
-            { title: t("certificateTypes"), url: "/certificate-types/", icon: "badgeCheck" },
+            { title: t("certificates"), url: "/certificates/", icon: "certificates" },
+            { title: t("certificateTypes"), url: "/certificate-types/", icon: "forms" },
           ],
         },
         {
@@ -51,6 +51,7 @@ export function useNav(): { groups: NavGroup[] } {
           items: [
             { title: t("monitoring"), url: "/monitoring/", icon: "monitoring" },
             { title: t("logs"), url: "/logs/", icon: "warning" },
+            { title: t("mcpActivity"), url: "/mcp-activity/", icon: "connectors" },
             { title: t("limits"), url: "/limits/", icon: "adjustments" },
           ],
         },

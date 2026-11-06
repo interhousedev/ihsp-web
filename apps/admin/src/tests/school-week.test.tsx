@@ -65,22 +65,18 @@ describe("the school week in the timetable", () => {
 })
 
 describe("the school week in the terms editor", () => {
-  test("every bell row has five weekday chips, Monday to Friday", async () => {
+  test("the blocks are edited one day at a time, for all seven days", async () => {
     const { user } = renderAdmin(<TermsPage />, { route: "/terms/" })
     await screen.findByText("2026-2027, half 1")
 
     await user.click(screen.getAllByRole("button", { name: "Edit" })[0] as HTMLElement)
     const dialog = await screen.findByRole("dialog")
 
-    const rows = within(dialog).getAllByRole("group", { name: /^Weekdays of period/ })
-    expect(rows).toHaveLength(currentTerm.bells.length)
-    for (const row of rows) {
-      expect(
-        within(row)
-          .getAllByRole("button")
-          .map((chip) => chip.textContent),
-      ).toEqual(["Mon", "Tue", "Wed", "Thu", "Fri"])
-    }
+    const days = within(dialog).getByRole("group", { name: "Day of the week" })
+    expect(within(days).getAllByRole("button")).toHaveLength(7)
+    expect(within(dialog).getAllByLabelText("Start")).toHaveLength(
+      currentTerm.bells.filter((bell) => bell.weekdays.includes(1)).length,
+    )
   })
 
   test("the term card names the weekdays of a bell only when it does not run on all school days", () => {

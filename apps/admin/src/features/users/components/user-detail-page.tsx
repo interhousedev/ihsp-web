@@ -7,8 +7,7 @@ import { useQuery } from "@tanstack/react-query"
 import { parseAsString, useQueryState } from "nuqs"
 import { useState, type ReactNode } from "react"
 import { ExtensionBadge } from "../../limits/components/extension-badge"
-import { BackLink } from "../../shared/components/back-link"
-import { QueryState } from "../../shared/components/query-state"
+import { BackLink, QueryState } from "@ihsp/features-core"
 import { StatusBadge } from "../../shared/components/status-badge"
 import { fullNameWithMiddle } from "../../shared/utils/names"
 import { TOUCH } from "../../shared/utils/touch"
@@ -43,7 +42,7 @@ function DetailBody({ user }: { user: AdminUserDetail }) {
   return (
     <PageContainer
       title={name}
-      description={[user.login, user.recovery_email].filter(Boolean).join(" · ")}
+      meta={[user.login, user.recovery_email].filter(Boolean).join(" · ")}
       actions={
         <>
           <BackLink href="/users/" label={t("back")} />

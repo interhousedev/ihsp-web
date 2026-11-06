@@ -2,16 +2,7 @@
 
 import { keys, postAdminUserSetPassword } from "@ihsp/api"
 import { useT } from "@ihsp/i18n"
-import {
-  Button,
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogFooter,
-  DialogHeader,
-  DialogTitle,
-  Input,
-} from "@ihsp/ui"
+import { Button, ResponsiveDialog, Input } from "@ihsp/ui"
 import { useEffect, useState } from "react"
 import { CheckField } from "../../shared/components/check-field"
 import { LabeledField } from "../../shared/components/labeled-field"
@@ -58,40 +49,38 @@ export function SetPasswordDialog({
 
   const valid = isStrongPassword(password)
   return (
-    <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent>
-        <form
-          className="grid gap-4"
-          onSubmit={(event) => {
-            event.preventDefault()
-            if (valid) save.mutate()
-          }}
-        >
-          <DialogHeader>
-            <DialogTitle>{t("title", { name })}</DialogTitle>
-            <DialogDescription>{t("description")}</DialogDescription>
-          </DialogHeader>
-          <LabeledField label={t("password")} htmlFor="set-password" description={t("rules")} required>
-            <Input
-              id="set-password"
-              type="text"
-              autoComplete="off"
-              value={password}
-              className={TOUCH}
-              onChange={(event) => setPassword(event.target.value)}
-            />
-          </LabeledField>
-          <CheckField checked={requireChange} onChange={setRequireChange} label={t("requireChange")} />
-          <DialogFooter>
-            <Button type="button" variant="outline" className={TOUCH} onClick={() => onOpenChange(false)}>
-              {t("cancel")}
-            </Button>
-            <Button type="submit" className={TOUCH} disabled={!valid || save.isPending}>
-              {t("save")}
-            </Button>
-          </DialogFooter>
-        </form>
-      </DialogContent>
-    </Dialog>
+    <ResponsiveDialog
+      open={open}
+      onOpenChange={onOpenChange}
+      size="sm"
+      title={t("title", { name })}
+      description={t("description")}
+      onSubmit={(event) => {
+        event.preventDefault()
+        if (valid) save.mutate()
+      }}
+      footer={
+        <>
+          <Button type="button" variant="outline" className={TOUCH} onClick={() => onOpenChange(false)}>
+            {t("cancel")}
+          </Button>
+          <Button type="submit" className={TOUCH} disabled={!valid || save.isPending}>
+            {t("save")}
+          </Button>
+        </>
+      }
+    >
+      <LabeledField label={t("password")} htmlFor="set-password" description={t("rules")} required>
+        <Input
+          id="set-password"
+          type="text"
+          autoComplete="off"
+          value={password}
+          className={TOUCH}
+          onChange={(event) => setPassword(event.target.value)}
+        />
+      </LabeledField>
+      <CheckField checked={requireChange} onChange={setRequireChange} label={t("requireChange")} />
+    </ResponsiveDialog>
   )
 }

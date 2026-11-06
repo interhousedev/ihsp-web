@@ -12,7 +12,7 @@ configureTests()
 describe("reports utils", () => {
   test("formats bytes, counts and shares", () => {
     expect(formatBytes(512)).toBe("512 B")
-    expect(formatBytes(5_368_709_120)).toBe("5.0 GB")
+    expect(formatBytes(5_368_709_120)).toBe("5 GB")
     expect(formatCount(120_000)).toBe("120k")
     expect(formatCount(1_200_000)).toBe("1.2M")
     expect(percent(0.974)).toBe(97)
@@ -48,7 +48,7 @@ describe("reports page", () => {
   test("the usage tab shows storage and the two daily charts", async () => {
     renderAdmin(<ReportsPage />, { route: "/reports/?tab=usage" })
 
-    expect(await screen.findByText("5.0 GB")).toBeInTheDocument()
+    expect(await screen.findByText("5 GB")).toBeInTheDocument()
     expect(screen.getByText("321 files")).toBeInTheDocument()
     expect(await screen.findByRole("img", { name: "Active users per day" })).toBeInTheDocument()
     expect(await screen.findByRole("img", { name: "Assistant tokens per day" })).toBeInTheDocument()
