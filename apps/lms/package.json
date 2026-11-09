@@ -19,6 +19,6 @@
     "@ihsp/i18n": "workspace:*",
     "@ihsp/telegram": "workspace:*",
     "@ihsp/ui": "workspace:*",
-    "h5p-standalone": "3.8.0"
+    "h5p-standalone": "3.8.2"
   }
 }
