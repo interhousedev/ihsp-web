@@ -213,11 +213,15 @@ export const studentAttendance: StudentAttendance = {
     { date: "2026-10-06", absences: 1 },
   ],
   missed: [
-    { lesson: pastLesson(1, "2026-10-06", "chemistry", 1), excused: false },
-    { lesson: pastLesson(2, "2026-09-30", "english", 3), excused: false },
-    { lesson: pastLesson(3, "2026-09-23", "math", 1), excused: false },
-    { lesson: pastLesson(4, "2026-09-23", "history", 4), excused: true },
-    { lesson: pastLesson(5, "2026-09-09", "math", 2), excused: false },
+    { lesson: pastLesson(1, "2026-10-06", "chemistry", 1), excused: false, excuse: null },
+    { lesson: pastLesson(2, "2026-09-30", "english", 3), excused: false, excuse: null },
+    { lesson: pastLesson(3, "2026-09-23", "math", 1), excused: false, excuse: null },
+    {
+      lesson: pastLesson(4, "2026-09-23", "history", 4),
+      excused: true,
+      excuse: { id: null, template_code: "", origin: "teacher" },
+    },
+    { lesson: pastLesson(5, "2026-09-09", "math", 2), excused: false, excuse: null },
   ],
   not_taken: 1,
 }
@@ -316,6 +320,7 @@ export const journal: Journal = {
       absent: index === 1 && lesson.date === "2026-10-05",
       late: false,
       excused: false,
+      excuse: null,
       marks: index === 0 && lesson.date === "2026-10-05" ? [4] : [],
       temporary_mark: index === 1 && lesson.id === physicsLessons[0]?.id ? { value: 3, comment: "Oral answer" } : null,
     })),

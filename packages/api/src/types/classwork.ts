@@ -1,7 +1,7 @@
 // Academic — classwork (backend § API contract → "Academic — classwork (B4)", Schemas and the attendance body addition).
 
 import type { CommonWorkOffChoice, WorkOffChoice, WorkOffItem, WorkOffMode } from "./work-offs-staff"
-import type { AttendanceState, DateRangeParams, PersonRef, SubjectRef } from "./common"
+import type { AttendanceState, DateRangeParams, ExcuseRef, PersonRef, SubjectRef } from "./common"
 import type { ResourceItem } from "./links"
 import type { MarkItem } from "./marks"
 import type { GroupStudent, LessonItem } from "./schedule"
@@ -46,7 +46,7 @@ export type StudentAttendance = {
   to: string
   summary: { subject: SubjectRef; absences: number; excused: number; lessons: number; rate: number | null }[]
   days: { date: string; absences: number }[]
-  missed: { lesson: LessonItem; excused: boolean }[]
+  missed: { lesson: LessonItem; excused: boolean; excuse: ExcuseRef | null }[]
   not_taken: number
 }
 
@@ -115,6 +115,7 @@ export type Journal = {
       absent: boolean
       late: boolean
       excused: boolean
+      excuse: ExcuseRef | null
       marks: number[]
       /** A temporary mark the teacher gave, not in EMIS yet (null when none). */
       temporary_mark: { value: number; comment: string | null } | null

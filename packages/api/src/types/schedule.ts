@@ -1,6 +1,6 @@
 // Academic — schedule (backend § API contract → "Academic — schedule (B3)" and Schemas).
 
-import type { DateRangeParams, PageParams, PersonRef, RoomRefLite, SubjectRef } from "./common"
+import type { DateRangeParams, ExcuseRef, PageParams, PersonRef, RoomRefLite, SubjectRef } from "./common"
 
 /**
  * Who set a bell: the EMIS `class-hours` sync (`emis`, the default), Administration for a period of their own
@@ -156,6 +156,9 @@ export type LessonItem = {
   /** Students marked absent; `null` while no attendance sheet was submitted. */
   absent_count?: number | null
   late_count?: number | null
+  /** Student timetable only: the student was absent and excused; `excuse` is set then. */
+  excused?: boolean
+  excuse?: ExcuseRef | null
 }
 
 export type ExtraLessonInput = {

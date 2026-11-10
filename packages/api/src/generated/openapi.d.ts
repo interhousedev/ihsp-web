@@ -2702,6 +2702,26 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/v1/admin/users/{user_id}/face-photo": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get User Face Photo
+         * @description A student's or teacher's face photo as a short-lived link; 404 without one.
+         */
+        get: operations["get_user_face_photo_v1_admin_users__user_id__face_photo_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/v1/admin/vault/status": {
         parameters: {
             query?: never;
@@ -10337,7 +10357,7 @@ export interface paths {
         };
         /**
          * Get Public Visualization
-         * @description Return a shared bot answer: 404 unknown or revoked, 410 expired.
+         * @description Return a shared bot answer (`m-` or guest `g-`): 404 unknown, 410 expired.
          */
         get: operations["get_public_visualization_v1_public_visualizations__slug__get"];
         put?: never;
@@ -11506,6 +11526,7 @@ export interface components {
              * Format: date
              */
             date: string;
+            excuse?: components["schemas"]["ExcuseRefResponse"] | null;
             /** Excused */
             excused: boolean;
             /**
@@ -15557,7 +15578,7 @@ export interface components {
              */
             at: string;
             /** Excused */
-            excused: boolean | null;
+            excused: boolean;
             /**
              * Id
              * Format: uuid
@@ -16327,16 +16348,13 @@ export interface components {
          * @description The official excuse that covers an absence.
          */
         ExcuseRefResponse: {
-            /**
-             * Id
-             * Format: uuid
-             */
-            id: string;
+            /** Id */
+            id: string | null;
             /**
              * Origin
              * @enum {string}
              */
-            origin: "request" | "curator";
+            origin: "request" | "curator" | "teacher";
             /** Template Code */
             template_code: string;
         };
@@ -16618,6 +16636,19 @@ export interface components {
             locked: boolean;
             /** Photo Url */
             photo_url: string | null;
+            /** Updated At */
+            updated_at: string | null;
+        };
+        /**
+         * FacePhotoOut
+         * @description A user's face photo for administrators.
+         */
+        FacePhotoOut: {
+            /**
+             * Photo Url
+             * @description Link to the photo, valid for five minutes.
+             */
+            photo_url: string;
             /** Updated At */
             updated_at: string | null;
         };
@@ -25741,6 +25772,12 @@ export interface components {
              * Format: date-time
              */
             ends_at: string;
+            excuse?: components["schemas"]["ExcuseRefResponse"] | null;
+            /**
+             * Excused
+             * @default false
+             */
+            excused?: boolean;
             /** Has Homework */
             has_homework: boolean;
             /**
@@ -28764,12 +28801,12 @@ export interface components {
              * Kind
              * @enum {string}
              */
-            kind: "timetable" | "homework" | "marks" | "exams" | "flashcards_due" | "notebook_prompt" | "attendance" | "clock_next_lesson" | "upcoming_controls" | "next_lesson" | "today_lessons" | "semester_summary" | "announcements" | "new_marks" | "alerts" | "get_started";
+            kind: "timetable" | "homework" | "marks" | "exams" | "flashcards_due" | "notebook_prompt" | "attendance" | "clock_next_lesson" | "upcoming_controls" | "next_lesson" | "today_lessons" | "semester_summary" | "announcements" | "new_marks" | "alerts" | "get_started" | "library_loans" | "notebook_recents";
             /**
              * Size
              * @enum {string}
              */
-            size: "1x1" | "1x2" | "2x1" | "2x2" | "2x4";
+            size: "1x1" | "1x2" | "2x1" | "2x2" | "2x4" | "4x1";
             /** X */
             x: number;
             /** Y */
@@ -28795,12 +28832,12 @@ export interface components {
              * Kind
              * @enum {string}
              */
-            kind: "timetable" | "homework" | "marks" | "exams" | "flashcards_due" | "notebook_prompt" | "attendance" | "clock_next_lesson" | "upcoming_controls" | "next_lesson" | "today_lessons" | "semester_summary" | "announcements" | "new_marks" | "alerts" | "get_started";
+            kind: "timetable" | "homework" | "marks" | "exams" | "flashcards_due" | "notebook_prompt" | "attendance" | "clock_next_lesson" | "upcoming_controls" | "next_lesson" | "today_lessons" | "semester_summary" | "announcements" | "new_marks" | "alerts" | "get_started" | "library_loans" | "notebook_recents";
             /**
              * Size
              * @enum {string}
              */
-            size: "1x1" | "1x2" | "2x1" | "2x2" | "2x4";
+            size: "1x1" | "1x2" | "2x1" | "2x2" | "2x4" | "4x1";
             /** Text Color */
             text_color: string | null;
             /** X */
@@ -35835,6 +35872,37 @@ export interface operations {
                 };
                 content: {
                     "application/json": components["schemas"]["app__interfaces__http__v1__admin_users__schemas__AdminUserResponse"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    get_user_face_photo_v1_admin_users__user_id__face_photo_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                user_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["FacePhotoOut"];
                 };
             };
             /** @description Validation Error */

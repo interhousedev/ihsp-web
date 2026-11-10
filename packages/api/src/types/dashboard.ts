@@ -17,9 +17,11 @@ export type DashboardWidgetKind =
   | "new_marks"
   | "alerts"
   | "get_started"
+  | "library_loans"
+  | "notebook_recents"
 
 /** Columns x rows on a 4-column grid (2 columns on a phone). */
-export type DashboardWidgetSize = "1x1" | "1x2" | "2x1" | "2x2" | "2x4"
+export type DashboardWidgetSize = "1x1" | "1x2" | "2x1" | "2x2" | "2x4" | "4x1"
 
 export type DashboardWidget = {
   id: string

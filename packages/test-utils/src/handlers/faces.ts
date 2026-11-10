@@ -43,7 +43,7 @@ function seedCalls(): Record<string, DeviceCallOut[]> {
         status: "matched",
         matched_user_id: "user-student-1",
         matched_name: "Aliyev Ali",
-        excused: null,
+        excused: false,
       },
       {
         id: "call-2",
@@ -51,7 +51,7 @@ function seedCalls(): Record<string, DeviceCallOut[]> {
         status: "no_match",
         matched_user_id: null,
         matched_name: null,
-        excused: null,
+        excused: false,
       },
     ],
   }
@@ -119,6 +119,11 @@ export const facesHandlers = [
   http.delete(apiUrl("/v1/staff/students/:studentId/face"), ({ params }) => {
     students.delete(String(params.studentId))
     return noContent()
+  }),
+  http.get(apiUrl("/v1/admin/users/:userId/face-photo"), ({ params }) => {
+    const face = students.get(String(params.userId))
+    if (!face?.photo_url) return notFound("Face photo")
+    return HttpResponse.json({ photo_url: face.photo_url, updated_at: face.updated_at })
   }),
   http.get(apiUrl("/v1/admin/devices"), () => HttpResponse.json({ items: devices })),
   http.post(apiUrl("/v1/admin/devices"), async ({ request }) => {

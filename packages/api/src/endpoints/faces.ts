@@ -13,6 +13,12 @@ export type FaceOut = {
   updated_at: string | null
 }
 
+/** A user's face photo for administrators; the link is valid for five minutes. */
+export type FacePhotoOut = {
+  photo_url: string
+  updated_at: string | null
+}
+
 /** An entrance device; its token is never returned again. */
 export type DeviceOut = {
   id: string
@@ -43,7 +49,7 @@ export type DeviceCallOut = {
   status: string
   matched_user_id: string | null
   matched_name: string | null
-  excused: boolean | null
+  excused: boolean
 }
 
 export type DeviceCallListOut = { items: DeviceCallOut[] }
@@ -111,4 +117,14 @@ export const getAdminDeviceCallsQuery = (deviceId: string) =>
   queryOptions({
     queryKey: keys.admin.deviceCalls(deviceId),
     queryFn: ({ signal }) => getAdminDeviceCalls(deviceId, { signal }),
+  })
+
+/** GET /v1/admin/users/{user_id}/face-photo — admin only; the face photo of a student or teacher, 404 when none. */
+export function getAdminUserFacePhoto(userId: string, opts?: RequestOptions): Promise<FacePhotoOut> {
+  return api.get<FacePhotoOut>(`/v1/admin/users/${seg(userId)}/face-photo`, opts)
+}
+export const getAdminUserFacePhotoQuery = (userId: string) =>
+  queryOptions({
+    queryKey: keys.admin.userFacePhoto(userId),
+    queryFn: ({ signal }) => getAdminUserFacePhoto(userId, { signal }),
   })

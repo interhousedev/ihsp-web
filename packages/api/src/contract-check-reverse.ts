@@ -25,7 +25,7 @@ import type { getCourseSteps, getNotebookUsageOf, postApplyArtifact, postApplyPr
 import type { getAdminGroupCurriculum, getMeCurriculum, postAdminGroupCurriculumSync } from "./endpoints/curriculum"
 import type { getMeDashboard, putMeDashboard } from "./endpoints/dashboard"
 import type { getAdminExcuse, getAdminExcuses, getMeExcuse, getMeExcuseTemplates, getMeExcuses, getStaffExcuse, getStaffExcuses, patchStaffExcuse, postAdminExcuseApprove, postAdminExcuseMessage, postAdminExcuseReject, postMeExcuse, postMeExcuseCancel, postMeExcuseMessage, postStaffExcuse, postStaffExcuseApprove, postStaffExcuseMessage, postStaffExcuseReject, postStaffExcuseRevoke } from "./endpoints/excuses"
-import type { getAdminDeviceCalls, getAdminDevices, getMyFace, postAdminDevice, postAdminDeviceRevoke, putMyFace, putStudentFace } from "./endpoints/faces"
+import type { getAdminDeviceCalls, getAdminDevices, getAdminUserFacePhoto, getMyFace, postAdminDevice, postAdminDeviceRevoke, putMyFace, putStudentFace } from "./endpoints/faces"
 import type { getFeedback, getMyFeedback, postFeedback } from "./endpoints/feedback"
 import type { deleteFile, getFile, getFileUrl, getMeFiles, getMeStorage, patchFile, postFileComplete, postFiles } from "./endpoints/files"
 import type { getMeFlashcardSet, getMeFlashcardSetCardStats, getMeFlashcardSetStudy, getMeFlashcardSets, getMeFlashcardSetsStats, patchMeFlashcardSet, postMeFlashcardReview, postMeFlashcardSetStudyRestart, postMeFlashcardSets, postMeFlashcardSetsCopy, postMeFlashcardSetsMerge, putMeFlashcardSetCards } from "./endpoints/flashcards"
@@ -633,6 +633,10 @@ export const served_postAdminDeviceRevoke: Awaited<ReturnType<typeof postAdminDe
 // GET /v1/admin/devices/{device_id}/calls — getAdminDeviceCalls
 declare const gen_getAdminDeviceCalls: ResponseOf<"/v1/admin/devices/{device_id}/calls", "get">
 export const served_getAdminDeviceCalls: Awaited<ReturnType<typeof getAdminDeviceCalls>> = gen_getAdminDeviceCalls
+
+// GET /v1/admin/users/{user_id}/face-photo — getAdminUserFacePhoto
+declare const gen_getAdminUserFacePhoto: ResponseOf<"/v1/admin/users/{user_id}/face-photo", "get">
+export const served_getAdminUserFacePhoto: Awaited<ReturnType<typeof getAdminUserFacePhoto>> = gen_getAdminUserFacePhoto
 
 // POST /v1/feedback — postFeedback
 declare const gen_postFeedback: ResponseOf<"/v1/feedback", "post">

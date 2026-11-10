@@ -1,5 +1,6 @@
 // A teacher's subject group (or subgroup) and one student's record in it.
 // TODO(contract): replace with generated
+import type { ExcuseRef } from "./common"
 
 /** A student of the group; `subgroup` is null when none is assigned. */
 export type TeachingRosterStudent = {
@@ -61,6 +62,7 @@ export type TeachingAbsence = {
   lesson_id: string
   date: string
   excused: boolean
+  excuse?: ExcuseRef | null
 }
 
 /** GET .../students/{student_id}: marks of the newest semester (average on the 5-point scale), homework, attendance. */

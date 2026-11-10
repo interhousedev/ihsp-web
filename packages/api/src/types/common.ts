@@ -28,5 +28,8 @@ export type ReviewRating = "again" | "hard" | "medium" | "easy"
 /** Marks and attendance state of a student at a lesson. */
 export type AttendanceState = "present" | "late" | "absent" | "excused" | "not_taken"
 
+/** The excuse that covers an absence; `id` is null for a teacher's own mark. */
+export type ExcuseRef = { id: string | null; template_code: string; origin: "request" | "curator" | "teacher" }
+
 /** Subgroup number of a group, or no subgroup. */
 export type Subgroup = 1 | 2 | null
