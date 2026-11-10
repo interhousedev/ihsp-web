@@ -52,7 +52,7 @@ describe("bottom bar config", () => {
 
   test("a stored account list with Today is migrated once and flagged", async () => {
     const bodies: Record<string, unknown>[] = []
-    const session = studentWith({ bottom_nav: ["today", "grades"], onboarding_dismissed: ["welcome"] })
+    const session = studentWith({ bottom_nav: ["today", "grades"], onboarding_dismissed: ["tour", "welcome"] })
     server.use(
       http.get(apiUrl("/v1/id/me"), () => HttpResponse.json(session.user)),
       http.patch(apiUrl("/v1/id/me/preferences"), async ({ request }) => {
@@ -73,7 +73,7 @@ describe("bottom bar config", () => {
     expect(within(bar).getByRole("link", { name: "Home" })).toBeInTheDocument()
     await waitFor(() =>
       expect(bodies).toEqual([
-        { bottom_nav: ["dashboard", "grades"], onboarding_dismissed: ["welcome", DASHBOARD_MIGRATED] },
+        { bottom_nav: ["dashboard", "grades"], onboarding_dismissed: ["tour", "welcome", DASHBOARD_MIGRATED] },
       ]),
     )
   })
@@ -104,7 +104,7 @@ describe("bottom bar config", () => {
 
   test("the legacy entry is moved to bottom_nav once", async () => {
     const bodies: Record<string, unknown>[] = []
-    const session = studentWith({ onboarding_dismissed: ["welcome", `${BOTTOM_BAR_PREFIX}files,grades`] })
+    const session = studentWith({ onboarding_dismissed: ["tour", "welcome", `${BOTTOM_BAR_PREFIX}files,grades`] })
     server.use(
       http.get(apiUrl("/v1/id/me"), () => HttpResponse.json(session.user)),
       http.patch(apiUrl("/v1/id/me/preferences"), async ({ request }) => {
@@ -123,7 +123,7 @@ describe("bottom bar config", () => {
     await screen.findByText("page body")
     await waitFor(() =>
       expect(bodies).toEqual([
-        { bottom_nav: ["files", "grades"], onboarding_dismissed: ["welcome", DASHBOARD_MIGRATED] },
+        { bottom_nav: ["files", "grades"], onboarding_dismissed: ["tour", "welcome", DASHBOARD_MIGRATED] },
       ]),
     )
   })

@@ -3,7 +3,13 @@
 import type { Role } from "@ihsp/api"
 import { useSession } from "@ihsp/auth"
 import { deleteStaffMePhoto, getStaffMeContacts, keys, putStaffMeContacts, putStaffMePhoto } from "@ihsp/api"
-import { LicenseSection, NotificationSettingsForm, PhotoField, TeacherContactsForm } from "@ihsp/features-core"
+import {
+  ReplayTourButton,
+  LicenseSection,
+  NotificationSettingsForm,
+  PhotoField,
+  TeacherContactsForm,
+} from "@ihsp/features-core"
 import { AppLockSection } from "@ihsp/features-core/pwa/lock"
 import { useT } from "@ihsp/i18n"
 import { PageContainer } from "@ihsp/ui"
@@ -19,6 +25,7 @@ const NOTIFICATION_ROLES: Role[] = ["teacher"]
 /** Settings (STF-10): language and theme, the Telegram link, and the lesson links and end-of-lesson prompt. */
 export function SettingsPage() {
   const t = useT("settings")
+  const tOnboarding = useT("onboarding.replay")
   const { session } = useSession()
   const [photoUrl, setPhotoUrl] = useState<string | null | undefined>(undefined)
   if (!session) return null
@@ -52,6 +59,9 @@ export function SettingsPage() {
           </SettingsSection>
           <SettingsSection title={t("workOffs.title")}>
             <WorkOffTemplates />
+          </SettingsSection>
+          <SettingsSection title={tOnboarding("title")}>
+            <ReplayTourButton />
           </SettingsSection>
           <AppLockSection />
           <LicenseSection />

@@ -1,7 +1,8 @@
 "use client"
 
 import { RequireAuth, RequireRole } from "@ihsp/auth"
-import { PageLoading, ShellNavControls, usePlatformLinks } from "@ihsp/features-core"
+import { HelpWidget, OnboardingTour, PageLoading, ShellNavControls, usePlatformLinks } from "@ihsp/features-core"
+import { getConfig } from "@ihsp/config"
 import { AppShell } from "@ihsp/ui"
 import { Suspense, type ReactNode } from "react"
 import { useNav } from "../../../config/nav"
@@ -43,6 +44,12 @@ function StaffFrame({ children }: { children: ReactNode }) {
     >
       <CuratedGroupsError />
       <Suspense fallback={<PageLoading />}>{children}</Suspense>
+      <OnboardingTour
+        variant="staff"
+        settingsHref="/settings/"
+        connectAiHref={`${getConfig().ID_URL}/connectors/new/`}
+      />
+      <HelpWidget />
     </AppShell>
   )
 }

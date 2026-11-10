@@ -2,7 +2,7 @@
 
 import { getMeProfileQuery } from "@ihsp/api"
 import { useSession } from "@ihsp/auth"
-import { FeedbackDialog, LicenseSection, NotificationSettingsForm } from "@ihsp/features-core"
+import { ReplayTourButton, FeedbackDialog, LicenseSection, NotificationSettingsForm } from "@ihsp/features-core"
 import { useT } from "@ihsp/i18n"
 import { Button, PageContainer } from "@ihsp/ui"
 import { useQuery } from "@tanstack/react-query"
@@ -22,6 +22,7 @@ import { TelegramHint } from "./telegram-hint"
 /** Settings (WEB-29, UF-WEB-17): language and theme, notifications (as BOT-13), the calendar feed. */
 export function SettingsPage() {
   const t = useT("settings")
+  const tOnboarding = useT("onboarding.replay")
   const tProfile = useT("profile")
   const tFeedback = useT("feedback")
   const { session } = useSession()
@@ -45,6 +46,9 @@ export function SettingsPage() {
           </SettingsSection>
           <SettingsSection title={t("emisSync.title")}>
             <EmisSyncSection />
+          </SettingsSection>
+          <SettingsSection title={tOnboarding("title")}>
+            <ReplayTourButton />
           </SettingsSection>
           <AppLockSection />
           <SettingsSection title={tFeedback("menu.suggest")}>

@@ -1,8 +1,9 @@
 "use client"
 
 import { RequireAuth, RequireRole } from "@ihsp/auth"
-import { PageLoading, ShellNavControls } from "@ihsp/features-core"
+import { HelpWidget, OnboardingTour, PageLoading, ShellNavControls } from "@ihsp/features-core"
 import { isPwaMode } from "@ihsp/features-core/pwa"
+import { getConfig } from "@ihsp/config"
 import { AppShell } from "@ihsp/ui"
 import { Suspense, type ReactNode } from "react"
 import { useNav } from "../../../config/nav"
@@ -35,6 +36,12 @@ export function SpShell({ children, hideBottomNav = false }: { children: ReactNo
             controls={<ShellHeader nav={nav.groups} />}
           >
             <Suspense fallback={<PageLoading />}>{children}</Suspense>
+            <OnboardingTour
+              variant="student"
+              settingsHref="/settings/"
+              connectAiHref={`${getConfig().ID_URL}/connectors/new/`}
+            />
+            {hideBottomNav ? null : <HelpWidget />}
           </AppShell>
         </QueryPersistence>
       </RequireRole>

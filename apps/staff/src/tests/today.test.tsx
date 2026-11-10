@@ -147,7 +147,7 @@ describe("Get started card", () => {
     const started = await card("Get started")
     await user.click(within(started).getByRole("button", { name: "Hide" }))
 
-    await waitFor(() => expect(bodies).toEqual([{ onboarding_dismissed: ["telegram", "notifications"] }]))
+    await waitFor(() => expect(bodies).toEqual([{ onboarding_dismissed: ["tour", "telegram", "notifications"] }]))
     await waitFor(() => expect(screen.queryByText("Get started")).not.toBeInTheDocument())
   })
 

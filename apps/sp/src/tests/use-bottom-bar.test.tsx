@@ -67,7 +67,9 @@ describe("useBottomBar", () => {
     await waitFor(() => expect(screen.getByTestId("ids").textContent).toBe("grades,dashboard"))
     expect(JSON.parse(window.localStorage.getItem(storageKey) ?? "[]")).toEqual(["grades", "dashboard"])
     await waitFor(() =>
-      expect(bodies).toEqual([{ bottom_nav: ["grades", "dashboard"], onboarding_dismissed: [DASHBOARD_MIGRATED] }]),
+      expect(bodies).toEqual([
+        { bottom_nav: ["grades", "dashboard"], onboarding_dismissed: ["tour", DASHBOARD_MIGRATED] },
+      ]),
     )
   })
 })
