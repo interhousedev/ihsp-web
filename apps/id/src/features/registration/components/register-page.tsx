@@ -188,7 +188,8 @@ export function RegisterPage() {
       topAction={
         <Button
           type="button"
-          className="h-auto min-h-11 whitespace-normal text-base"
+          variant="outline"
+          className="h-auto min-h-11 whitespace-normal text-sm"
           onClick={() => setStep({ kind: "cue-group" })}
         >
           {t("register.pickLink")}
@@ -199,7 +200,7 @@ export function RegisterPage() {
           <Button
             type="button"
             variant="link"
-            className="h-auto min-h-11 whitespace-normal text-base"
+            className="h-auto min-h-9 whitespace-normal text-sm"
             onClick={() => {
               start.reset()
               setStep({ kind: "first-time" })

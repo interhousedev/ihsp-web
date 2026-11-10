@@ -105,6 +105,11 @@
     "action": "Открыть коннекторы",
     "code": "Код ошибки: {code}"
   },
+  "splitPanel": {
+    "photoAlt": "Здание Академического лицея International House Tashkent",
+    "motto": "Non scholae sed vitae discimus",
+    "mottoTranslation": "Мы учимся не для школы, а для жизни"
+  },
   "logout": {
     "title": "Выходим из аккаунта",
     "description": "Один момент…",

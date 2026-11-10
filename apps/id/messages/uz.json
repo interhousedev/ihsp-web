@@ -105,6 +105,11 @@
     "action": "Konnektorlarni ochish",
     "code": "Xato kodi: {code}"
   },
+  "splitPanel": {
+    "photoAlt": "International House Tashkent akademik litseyining binosi",
+    "motto": "Non scholae sed vitae discimus",
+    "mottoTranslation": "Biz maktab uchun emas, hayot uchun oʻqiymiz"
+  },
   "logout": {
     "title": "Hisobdan chiqilmoqda",
     "description": "Bir lahza…",
