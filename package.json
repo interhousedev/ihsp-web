@@ -90,7 +90,7 @@
     "@types/react": "19.2.14",
     "@types/react-dom": "19.2.3",
     "micromark-util-types": "2.0.3",
-    "msw": "^2.11.0",
+    "msw": "^3.0.3",
     "openapi-typescript": "^7.9.0",
     "oxfmt": "^0.42.0",
     "oxlint": "^1.57.0",
