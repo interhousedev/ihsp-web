@@ -28,7 +28,14 @@ function serve(slug: string, status = 200) {
 describe("visualization page", () => {
   test("recognizes m- slugs", () => {
     expect(isVisualizationSlug("m-3f2c")).toBe(true)
+    expect(isVisualizationSlug("g-3f2c")).toBe(true)
     expect(isVisualizationSlug("c-3f2c")).toBe(false)
+  })
+
+  test("renders a g- guest slug as a visualization", async () => {
+    serve("g-abc")
+    renderShare(<ShareViewer />, { route: shareRoute("g-abc") })
+    expect(await screen.findByText("Average", {}, { timeout: 8000 })).toBeInTheDocument()
   })
 
   test("renders the text and the OpenUI block, forces light, shows no user name", async () => {

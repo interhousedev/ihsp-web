@@ -19,9 +19,24 @@ export function getPublicVisualization(slug: string, opts?: RequestOptions): Pro
   return api.get<PublicVisualization>(`/v1/public/visualizations/${seg(slug)}`, { ...opts, auth: "none" })
 }
 
-/** Slugs of shared bot answers start with `m-`. */
+/** Slugs of shared bot answers start with `m-` (signed-in assistant) or `g-` (guest bot). */
 export function isVisualizationSlug(slug: string): boolean {
-  return slug.startsWith("m-")
+  return slug.startsWith("m-") || slug.startsWith("g-")
+}
+
+/** Opened as a Telegram Mini App (the bot's web_app button): tell Telegram the page is ready and expand it. */
+function useTelegramMiniApp() {
+  useEffect(() => {
+    let cancelled = false
+    import("@ihsp/telegram")
+      .then(async (telegram) => {
+        if (!cancelled && telegram.isMiniApp()) await telegram.initTelegram()
+      })
+      .catch((error: unknown) => console.error("[telegram] init failed", error))
+    return () => {
+      cancelled = true
+    }
+  }, [])
 }
 
 /** Shares the page: the system sheet when there is one, else the address goes to the clipboard and a toast says so. */
@@ -62,6 +77,7 @@ function useForceLight() {
 export function VisualizationView({ slug }: { slug: string }) {
   const t = useT("share.visualization")
   useForceLight()
+  useTelegramMiniApp()
   const query = useQuery({
     queryKey: ["public", "visualizations", slug],
     queryFn: ({ signal }) => getPublicVisualization(slug, { signal }),
