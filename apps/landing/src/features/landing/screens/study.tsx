@@ -43,7 +43,7 @@ export function TimetablePhone() {
         </div>
         <ul className="flex flex-col gap-2">
           {LESSONS.map((lesson, index) => (
-            <li key={lesson.time} className="bg-card flex items-stretch gap-3 rounded-xl border p-3">
+            <li key={lesson.time} className="bg-card rounded-card flex items-stretch gap-3 border p-3">
               <span className="flex w-12 flex-col justify-center text-xs tabular-nums">
                 <span className="text-foreground font-semibold">{lesson.time}</span>
                 <span className="text-muted-foreground">{LESSON_ENDS[index]}</span>
@@ -97,7 +97,7 @@ export function MarksPhone() {
             </Card>
           ))}
         </div>
-        <div className="flex items-center justify-between rounded-xl border px-4 py-3">
+        <div className="rounded-card flex items-center justify-between border px-4 py-3">
           <span className="text-muted-foreground text-xs">{t("gpa")}</span>
           <span className="text-xl font-semibold tabular-nums">4.5</span>
         </div>

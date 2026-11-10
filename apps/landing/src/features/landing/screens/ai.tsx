@@ -74,7 +74,7 @@ export function NotebookLaptop() {
               </p>
             </div>
           </div>
-          <div className="text-muted-foreground mt-auto flex items-center gap-2 rounded-xl border px-3 py-2 text-[13px]">
+          <div className="text-muted-foreground rounded-card mt-auto flex items-center gap-2 border px-3 py-2 text-[13px]">
             <span className="flex-1">{t("askPlaceholder")}</span>
             <IconSend className="size-4" aria-hidden />
           </div>

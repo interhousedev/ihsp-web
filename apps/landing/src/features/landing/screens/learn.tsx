@@ -19,7 +19,7 @@ export function LibraryPhone() {
         </div>
         <ul className="flex flex-col gap-2">
           {BOOKS.map((key, index) => (
-            <li key={key} className="bg-card flex gap-3 rounded-xl border p-3">
+            <li key={key} className="bg-card rounded-card flex gap-3 border p-3">
               <span
                 aria-hidden
                 className="h-16 w-11 shrink-0 rounded-md bg-gradient-to-br from-[var(--brand)] to-[var(--brand-strong)]"
@@ -69,7 +69,7 @@ export function LmsTablet() {
             {LESSONS_STATE.map((state, index) => (
               <li
                 key={index}
-                className={`flex items-center gap-3 rounded-xl border p-3 ${state === "current" ? "ring-2 ring-[var(--brand)]" : ""}`}
+                className={`rounded-card flex items-center gap-3 border p-3 ${state === "current" ? "ring-2 ring-[var(--brand)]" : ""}`}
               >
                 {state === "done" ? (
                   <IconCircleCheck className="size-5 text-[var(--brand-text)]" aria-hidden />

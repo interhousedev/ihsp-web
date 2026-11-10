@@ -41,7 +41,7 @@ export function JournalLaptop() {
           {t("subjects.math")} · 1TN1
           <IconChevronDown className="size-4" aria-hidden />
         </div>
-        <div className="overflow-hidden rounded-xl border">
+        <div className="rounded-card overflow-hidden border">
           <div className="bg-muted/50 grid grid-cols-[150px_repeat(4,1fr)] border-b text-center text-xs">
             <span className="px-3 py-2 text-left font-medium">{t("student")}</span>
             {["2 Sep", "4 Sep", "9 Sep", "11 Sep"].map((date, index) => (
@@ -132,7 +132,7 @@ export function ExcusesTablet() {
                 {t(`thread.${author}`)}
               </div>
             ))}
-            <div className="text-muted-foreground mt-auto flex items-center gap-2 rounded-xl border px-3 py-2 text-[13px]">
+            <div className="text-muted-foreground rounded-card mt-auto flex items-center gap-2 border px-3 py-2 text-[13px]">
               <IconPaperclip className="size-4" aria-hidden />
               <span className="flex-1">{t("replyPlaceholder")}</span>
               <IconMessage className="size-4" aria-hidden />

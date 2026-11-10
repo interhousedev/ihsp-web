@@ -46,7 +46,7 @@ export function Ecosystem() {
             <li key={key}>
               <Reveal
                 delay={index * 60}
-                className="bg-card h-full rounded-2xl border p-5 transition-shadow hover:shadow-lg"
+                className="bg-card rounded-card h-full border p-5 transition-shadow hover:shadow-lg"
               >
                 <span className="mb-3 inline-flex size-11 items-center justify-center rounded-xl bg-[var(--brand-soft)] text-[var(--brand-text)]">
                   <Glyph aria-hidden className="size-6" />
