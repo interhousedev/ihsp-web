@@ -22,13 +22,26 @@ function Field({ label, children }: { label: string; children: ReactNode }) {
   )
 }
 
-const TEXT_LAYOUTS: readonly Slide["layout"][] = ["title", "agenda", "section", "bullets", "summary"]
+const TEXT_LAYOUTS: readonly Slide["layout"][] = [
+  "title",
+  "agenda",
+  "section",
+  "bullets",
+  "summary",
+  "two_column",
+  "image_left",
+  "image_right",
+  "full_image",
+  "stats",
+  "timeline",
+  "comparison",
+]
 
-/** Edit fields for the selected slide; which ones appear depends on its layout. The stage above shows the result. */
+/** Edit fields for the selected slide; which ones appear depends on its layout. The stage above shows the result. Pictures are not edited here; patches never touch `image`. */
 export function SlideEditor({ slide, number, onPatch }: SlideEditorProps) {
   const t = useT("notebooks.slides")
   const textual = TEXT_LAYOUTS.includes(slide.layout)
-  const { left, right, quote } = slide
+  const { left, right, quote, stats, timeline } = slide
 
   return (
     <section
@@ -44,6 +57,68 @@ export function SlideEditor({ slide, number, onPatch }: SlideEditorProps) {
           onChange={(event) => onPatch({ title: event.target.value })}
         />
       </Field>
+
+      {textual ? (
+        <Field label={t("field.subtitle")}>
+          <Input
+            value={slide.subtitle ?? ""}
+            className="h-11 md:h-9"
+            onChange={(event) => onPatch({ subtitle: event.target.value || null })}
+          />
+        </Field>
+      ) : null}
+
+      {stats && stats.length > 0 ? (
+        <fieldset className="flex flex-col gap-2">
+          <legend className="text-muted-foreground text-xs font-medium">{t("field.stats")}</legend>
+          {stats.map((stat, index) => (
+            <div key={index} className="grid gap-2 md:grid-cols-2">
+              <Input
+                value={stat.value}
+                aria-label={t("field.statValue", { n: index + 1 })}
+                className="h-11 md:h-9"
+                onChange={(event) =>
+                  onPatch({ stats: stats.map((s, i) => (i === index ? { ...s, value: event.target.value } : s)) })
+                }
+              />
+              <Input
+                value={stat.label}
+                aria-label={t("field.statLabel", { n: index + 1 })}
+                className="h-11 md:h-9"
+                onChange={(event) =>
+                  onPatch({ stats: stats.map((s, i) => (i === index ? { ...s, label: event.target.value } : s)) })
+                }
+              />
+            </div>
+          ))}
+        </fieldset>
+      ) : null}
+
+      {timeline && timeline.length > 0 ? (
+        <fieldset className="flex flex-col gap-2">
+          <legend className="text-muted-foreground text-xs font-medium">{t("field.timeline")}</legend>
+          {timeline.map((item, index) => (
+            <div key={index} className="grid gap-2 md:grid-cols-[8rem_1fr]">
+              <Input
+                value={item.when}
+                aria-label={t("field.timelineWhen", { n: index + 1 })}
+                className="h-11 md:h-9"
+                onChange={(event) =>
+                  onPatch({ timeline: timeline.map((s, i) => (i === index ? { ...s, when: event.target.value } : s)) })
+                }
+              />
+              <Input
+                value={item.label}
+                aria-label={t("field.timelineLabel", { n: index + 1 })}
+                className="h-11 md:h-9"
+                onChange={(event) =>
+                  onPatch({ timeline: timeline.map((s, i) => (i === index ? { ...s, label: event.target.value } : s)) })
+                }
+              />
+            </div>
+          ))}
+        </fieldset>
+      ) : null}
 
       {textual ? (
         <>

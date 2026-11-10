@@ -637,6 +637,12 @@
     },
     "item": {
       "generating": "Generating… this can take a minute. You can leave this page.",
+      "stage": {
+        "planning": "Planning the deck…",
+        "researching": "Researching the topic…",
+        "images": "Finding images…",
+        "designing": "Designing the slides…"
+      },
       "failed": "Could not create",
       "retry": "Try again",
       "new": "New",
@@ -768,9 +774,18 @@
         "rightHeading": "Right column heading",
         "leftBullet": "Left column, bullet {n}",
         "rightBullet": "Right column, bullet {n}",
+        "subtitle": "Subtitle",
+        "stats": "Key figures",
+        "statValue": "Figure {n}: value",
+        "statLabel": "Figure {n}: caption",
+        "timeline": "Timeline",
+        "timelineWhen": "Step {n}: date",
+        "timelineLabel": "Step {n}: event",
         "visualHint": "Idea for a picture"
       },
       "hint": "Picture idea: {hint}",
+      "imageBy": "Image: {attribution}",
+      "imageSource": "Source",
       "notesEmpty": "No speaker notes for this slide.",
       "print": "Print / PDF",
       "copyOutline": "Copy outline",

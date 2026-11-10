@@ -15,6 +15,14 @@ type ArtifactPendingProps = {
   onRetried: () => void
 }
 
+const STAGES = ["planning", "researching", "images", "designing"] as const
+
+/** The generation stage of a running artifact; read defensively because the API types gain `stage` later. */
+export function artifactStage(artifact: object): (typeof STAGES)[number] | null {
+  if (!("stage" in artifact)) return null
+  return STAGES.find((stage) => stage === artifact.stage) ?? null
+}
+
 /** What the viewer shows instead of the content while the item is queued, generating, failed or canceled. */
 export function ArtifactPending({ notebookId, artifact, onRetried }: ArtifactPendingProps) {
   const t = useT("notebooks")
@@ -55,10 +63,12 @@ export function ArtifactPending({ notebookId, artifact, onRetried }: ArtifactPen
     )
   }
 
+  const stage = artifactStage(artifact)
+
   return (
     <div role="status" className="flex flex-col items-center gap-3 p-8 text-center">
       <Spinner aria-hidden className="text-primary size-8" />
-      <p className="max-w-prose text-sm">{t("item.generating")}</p>
+      <p className="max-w-prose text-sm">{stage ? t(`item.stage.${stage}`) : t("item.generating")}</p>
       {artifact.progress !== null ? (
         <div className="w-full max-w-xs">
           <ViewerProgress value={Math.round(artifact.progress * 100)} max={100} label={t("item.generating")} />

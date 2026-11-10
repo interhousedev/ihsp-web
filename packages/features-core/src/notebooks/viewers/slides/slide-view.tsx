@@ -4,11 +4,14 @@ import type { Slide } from "@ihsp/api"
 import type { ComponentType } from "react"
 import { AgendaSlide } from "./layouts/agenda-slide"
 import { BulletsSlide } from "./layouts/bullets-slide"
+import { FullImageSlide, ImageLeftSlide, ImageRightSlide } from "./layouts/image-slide"
 import type { LayoutProps } from "./layouts/layout-props"
 import { QuoteSlide } from "./layouts/quote-slide"
 import { SectionSlide } from "./layouts/section-slide"
+import { StatsSlide } from "./layouts/stats-slide"
 import { SummarySlide } from "./layouts/summary-slide"
 import { TableSlide } from "./layouts/table-slide"
+import { TimelineSlide } from "./layouts/timeline-slide"
 import { TitleSlide } from "./layouts/title-slide"
 import { TwoColumnsSlide } from "./layouts/two-columns-slide"
 import { SlideFrame } from "./slide-frame"
@@ -21,6 +24,13 @@ const LAYOUTS: Record<Slide["layout"], ComponentType<LayoutProps>> = {
   section: SectionSlide,
   bullets: BulletsSlide,
   two_columns: TwoColumnsSlide,
+  two_column: TwoColumnsSlide,
+  comparison: TwoColumnsSlide,
+  image_left: ImageLeftSlide,
+  image_right: ImageRightSlide,
+  full_image: FullImageSlide,
+  stats: StatsSlide,
+  timeline: TimelineSlide,
   quote: QuoteSlide,
   table: TableSlide,
   summary: SummarySlide,

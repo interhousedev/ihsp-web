@@ -637,6 +637,12 @@
     },
     "item": {
       "generating": "Yaratilmoqda… bu bir daqiqa olishi mumkin. Sahifani tark etishingiz mumkin.",
+      "stage": {
+        "planning": "Taqdimot rejalashtirilmoqda…",
+        "researching": "Mavzu oʻrganilmoqda…",
+        "images": "Rasmlar qidirilmoqda…",
+        "designing": "Slaydlar bezatilmoqda…"
+      },
       "failed": "Yaratib boʻlmadi",
       "retry": "Qayta urinib koʻrish",
       "new": "Yangi",
@@ -768,9 +774,18 @@
         "rightHeading": "Oʻng ustun sarlavhasi",
         "leftBullet": "Chap ustun, {n}-band",
         "rightBullet": "Oʻng ustun, {n}-band",
+        "subtitle": "Subtitr",
+        "stats": "Asosiy raqamlar",
+        "statValue": "{n}-raqam: qiymati",
+        "statLabel": "{n}-raqam: izohi",
+        "timeline": "Xronologiya",
+        "timelineWhen": "{n}-qadam: sana",
+        "timelineLabel": "{n}-qadam: voqea",
         "visualHint": "Rasm uchun gʻoya"
       },
       "hint": "Rasm gʻoyasi: {hint}",
+      "imageBy": "Rasm: {attribution}",
+      "imageSource": "Manba",
       "notesEmpty": "Bu slaydda qaydlar yoʻq.",
       "print": "Chop etish / PDF",
       "copyOutline": "Rejani nusxalash",

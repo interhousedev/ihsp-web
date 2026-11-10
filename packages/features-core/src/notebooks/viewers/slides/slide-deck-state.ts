@@ -61,6 +61,8 @@ export function textTier(slide: Slide): TextTier {
     ...(slide.left?.bullets ?? []),
     ...(slide.right?.bullets ?? []),
     ...(slide.table?.rows.flat() ?? []),
+    ...(slide.stats?.flatMap((stat) => [stat.value, stat.label]) ?? []),
+    ...(slide.timeline?.flatMap((item) => [item.when, item.label]) ?? []),
   ]
   const characters = parts.reduce((sum, part) => sum + part.length, 0)
   if (characters > 520) return 2
