@@ -1,6 +1,6 @@
 "use client"
 
-import { TotpSettingsPage } from "@/features/security/components/totp-settings-page"
+import { TotpSettingsPage } from "@ihsp/features-core/id-account"
 
 export default function Page() {
   return <TotpSettingsPage />

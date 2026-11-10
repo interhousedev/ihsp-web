@@ -23,7 +23,8 @@
     "mail": "Email",
     "subjects": "Subjects",
     "certificates": "Certificates",
-    "temporaryMarks": "Pending for EMIS"
+    "temporaryMarks": "Pending for EMIS",
+    "excuses": "Excuses"
   },
   "audience": {
     "subgroup": "{group} · subgroup {number}"
@@ -138,7 +139,8 @@
     "temporaryMark": "Temporary mark",
     "temporaryMarkFor": "Temporary mark for {name}, {date}",
     "temporaryState": "temporary mark {value}",
-    "temporaryMarkHint": "Temporary marks stay here until you put them into EMIS."
+    "temporaryMarkHint": "Temporary marks stay here until you put them into EMIS.",
+    "excusedLocked": "Excused: this absence is locked. Remove the excuse to change it."
   },
   "group": {
     "noGroup": "You do not curate a group.",
@@ -173,6 +175,10 @@
         "absences": "The absence rate is above the threshold.",
         "gpa_drop": "The GPA is lower than in the previous semester.",
         "no_subgroup": "Sees both subgroups until you assign one."
+      },
+      "face": {
+        "title": "Entrance photo",
+        "hint": "The entrance device recognises the student by this photo. A photo set here the student cannot change."
       }
     },
     "subgroups": {
@@ -560,5 +566,90 @@
   "shell": {
     "groupsError": "Could not load your groups.",
     "retry": "Retry"
+  },
+  "excuses": {
+    "title": "Excuses",
+    "tabs": {
+      "pending": "Pending",
+      "approved": "Approved"
+    },
+    "empty": {
+      "pending": "No excuses waiting for a decision.",
+      "approved": "No approved excuses."
+    },
+    "loadMore": "Show more",
+    "create": "Excuse a student",
+    "status": {
+      "pending": "Pending",
+      "approved": "Approved",
+      "rejected": "Rejected",
+      "cancelled": "Cancelled",
+      "revoked": "Revoked"
+    },
+    "origin": "Created by the curator",
+    "period": "{from} – {to}",
+    "openEnded": "{from} – until further notice",
+    "lessonsCount": "{count, plural, one {# lesson} other {# lessons}}",
+    "open": "Open excuse of {name}",
+    "detail": {
+      "reason": "Reason",
+      "period": "Period",
+      "template": "Type",
+      "decision": "Decision",
+      "noReason": "No reason given"
+    },
+    "actions": {
+      "approve": "Approve",
+      "reject": "Reject",
+      "revoke": "Revoke",
+      "end": "End excuse",
+      "endOn": "Last day of the excuse",
+      "endSave": "Save end date"
+    },
+    "decision": {
+      "approve": "Approve the excuse",
+      "reject": "Reject the excuse",
+      "revoke": "Revoke the excuse",
+      "comment": "Comment",
+      "placeholder": "Visible to the student",
+      "submit": "Confirm",
+      "cancel": "Cancel",
+      "approved": "Excuse approved",
+      "rejected": "Excuse rejected",
+      "revoked": "Excuse revoked",
+      "ended": "End date saved"
+    },
+    "thread": {
+      "title": "Messages",
+      "empty": "No messages yet.",
+      "label": "Message",
+      "placeholder": "Write a message",
+      "send": "Send",
+      "attach": "Attach files",
+      "sent": "Message sent",
+      "download": "Open {name}"
+    },
+    "form": {
+      "title": "Excuse a student",
+      "student": "Student",
+      "studentPlaceholder": "Choose a student",
+      "template": "Type",
+      "templatePlaceholder": "Choose a type",
+      "startsOn": "From",
+      "endsOn": "Until",
+      "endsOnHint": "Leave empty if the end is not known yet.",
+      "scope": "Applies to",
+      "scopeDays": "Whole days",
+      "scopeLessons": "Specific lessons",
+      "lessons": "Lessons",
+      "lessonsEmpty": "No lessons in this period.",
+      "reason": "Reason",
+      "documents": "Documents",
+      "documentRequired": "This type needs a document.",
+      "submit": "Create excuse",
+      "created": "Student excused",
+      "noGroup": "You do not curate a group.",
+      "clearEnd": "Clear end date"
+    }
   }
 }

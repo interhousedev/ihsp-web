@@ -2,7 +2,7 @@
 
 import { LanguageSwitcher, ThemeToggle } from "@ihsp/ui"
 import type { ReactNode } from "react"
-import { useTr } from "../hooks/use-tr"
+import { useTr } from "@ihsp/features-core/id-account"
 import { SecurityContactButton } from "./security-contact-button"
 
 /** Centered, sidebar-free page frame of the login, registration, recovery and mini app pages (works at 360 px). */

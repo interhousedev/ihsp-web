@@ -5,9 +5,8 @@ import { Button, useAppForm } from "@ihsp/ui"
 import { useMutation } from "@tanstack/react-query"
 import { useMemo } from "react"
 import { z } from "zod"
-import { ErrorAlert } from "../../shared/components/error-alert"
+import { ErrorAlert, useTr } from "@ihsp/features-core/id-account"
 import { FlowCard } from "../../shared/components/flow-card"
-import { useTr } from "../../shared/hooks/use-tr"
 
 type RegisterCuePasswordStepProps = {
   cue: LoginCueName

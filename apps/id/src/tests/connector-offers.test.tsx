@@ -3,7 +3,7 @@ import { describe, expect, test } from "bun:test"
 import { apiUrl, server } from "@ihsp/test-utils"
 import { screen, waitFor } from "@testing-library/react"
 import { HttpResponse, http } from "msw"
-import { ConnectorsPage } from "../features/connectors/components/connectors-page"
+import { ConnectorsPage } from "@ihsp/features-core/id-account"
 import { clickButton, findButton, LOGGED_IN, renderId, allowSlowTests } from "./helpers"
 
 allowSlowTests()

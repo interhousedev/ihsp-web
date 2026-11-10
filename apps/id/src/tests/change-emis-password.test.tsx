@@ -2,7 +2,7 @@ import { describe, expect, test } from "bun:test"
 import { apiUrl, server } from "@ihsp/test-utils"
 import { screen } from "@testing-library/react"
 import { HttpResponse, http } from "msw"
-import { ChangeEmisPasswordForm } from "../features/security/components/change-emis-password-form"
+import { ChangeEmisPasswordForm } from "@ihsp/features-core/id-account"
 import { allowSlowTests, clickButton, fillField, findButton, LOGGED_IN, renderId } from "./helpers"
 
 allowSlowTests()

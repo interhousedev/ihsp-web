@@ -2,10 +2,8 @@
 
 import { Button, Label, LoadingButton, RadioGroup, RadioGroupItem } from "@ihsp/ui"
 import { useState } from "react"
-import { ErrorAlert } from "../../shared/components/error-alert"
+import { ErrorAlert, TextField, useTr } from "@ihsp/features-core/id-account"
 import { FlowCard } from "../../shared/components/flow-card"
-import { TextField } from "../../shared/components/text-field"
-import { useTr } from "../../shared/hooks/use-tr"
 
 type Method = "birth-date" | "unique"
 

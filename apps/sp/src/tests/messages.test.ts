@@ -126,6 +126,7 @@ describe("keys used in the code", () => {
         "grades",
         "homework",
         "exams",
+        "excuses",
         "assistant",
         "notebooks",
         "flashcards",
@@ -203,6 +204,9 @@ describe("keys used in the code", () => {
       "subjects.hub.kind.${row.kind}": ["lecture", "practice", "midterm", "final", "other"],
       "timetable.fields.${change.field}": ["room", "teacher", "subject", "date", "period", "topic"],
       "settings.general.themes.${value}": ["light", "dark", "system"],
+      "excuses.status.${status}": ["pending", "approved", "rejected", "cancelled"],
+      "excuses.origin.${excuse.origin}": ["request", "curator"],
+      "excuses.form.errors.${formError}": ["template", "dates", "document"],
       "feedback.status.${item.status}": ["new", "in_review", "planned", "done", "rejected"],
       "feedback.kind.${item.kind}": ["bug", "idea", "other"],
       "feedback.area.${item.area}": [

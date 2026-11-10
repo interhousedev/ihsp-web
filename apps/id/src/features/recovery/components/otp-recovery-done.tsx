@@ -1,10 +1,8 @@
 "use client"
 
 import { useFormatters } from "@ihsp/i18n"
-import { InfoAlert } from "../../shared/components/error-alert"
+import { InfoAlert, LinkButton, useTr } from "@ihsp/features-core/id-account"
 import { FlowCard } from "../../shared/components/flow-card"
-import { LinkButton } from "../../shared/components/link-button"
-import { useTr } from "../../shared/hooks/use-tr"
 
 /** The reset is scheduled: it takes effect at `effectiveAt` (24 hours later) unless a linked account cancels it. */
 export function OtpRecoveryDone({ effectiveAt }: { effectiveAt: string }) {

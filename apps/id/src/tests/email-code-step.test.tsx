@@ -3,7 +3,7 @@ import { describe, expect, mock, test } from "bun:test"
 import { apiUrl, server, userMe } from "@ihsp/test-utils"
 import { screen, waitFor } from "@testing-library/react"
 import { HttpResponse, http } from "msw"
-import { EmailCodeStep } from "../features/security/components/email-code-step"
+import { EmailCodeStep } from "@ihsp/features-core/id-account"
 import { clickButton, fillField, renderId, allowSlowTests } from "./helpers"
 import { problem } from "./problem"
 

@@ -1,9 +1,8 @@
 "use client"
 
 import { Button } from "@ihsp/ui"
-import { InfoAlert } from "../../shared/components/error-alert"
+import { InfoAlert, useTr } from "@ihsp/features-core/id-account"
 import { FlowCard } from "../../shared/components/flow-card"
-import { useTr } from "../../shared/hooks/use-tr"
 import { signInWithTicket } from "../../shared/utils/login-ticket"
 
 /** The password was changed; every other session was revoked and this device stays signed in. */

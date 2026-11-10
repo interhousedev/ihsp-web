@@ -1,6 +1,6 @@
 "use client"
 
-import { useTr } from "../hooks/use-tr"
+import { useTr } from "@ihsp/features-core/id-account"
 
 /** "Step 2 of 3" with a segmented bar (registration, reclaim, activation). */
 export function StepIndicator({ current, total }: { current: number; total: number }) {

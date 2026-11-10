@@ -3,7 +3,7 @@
 import { filterNavGroups, type BottomNavItem, type NavGroup } from "@ihsp/ui"
 import { useMemo } from "react"
 import { buildIdBottom, buildIdNav } from "../../../config/nav"
-import { useTr } from "../../shared/hooks/use-tr"
+import { useTr } from "@ihsp/features-core/id-account"
 
 /** The translated security navigation, filtered by the user's roles. */
 export function useIdNav(roles: readonly string[]): NavGroup[] {

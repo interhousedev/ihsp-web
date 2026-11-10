@@ -3,12 +3,9 @@
 import { Button, LoadingButton, useAppForm } from "@ihsp/ui"
 import { useMemo, useState } from "react"
 import { z } from "zod"
-import { ErrorAlert, InfoAlert } from "../../shared/components/error-alert"
+import { ErrorAlert, InfoAlert, LinkButton, requiredText, useTr } from "@ihsp/features-core/id-account"
 import { FlowCard } from "../../shared/components/flow-card"
-import { LinkButton } from "../../shared/components/link-button"
 import { TextLink } from "../../shared/components/text-link"
-import { useTr } from "../../shared/hooks/use-tr"
-import { requiredText } from "../../shared/utils/schemas"
 import { readSession, TELEGRAM_NEW_LOGIN_KEY } from "../../shared/utils/storage"
 import { useTelegramLogin, type TelegramCredentials } from "../hooks/use-telegram-login"
 

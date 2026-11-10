@@ -1,7 +1,7 @@
 "use client"
 
 import { FlowCard } from "../../shared/components/flow-card"
-import { useTr } from "../../shared/hooks/use-tr"
+import { useTr } from "@ihsp/features-core/id-account"
 
 /** UF-BOT-01 3b: `initData` is invalid or older than 24 hours. */
 export function MiniAppSessionExpired() {

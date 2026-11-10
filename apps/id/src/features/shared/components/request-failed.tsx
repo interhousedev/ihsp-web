@@ -1,8 +1,7 @@
 "use client"
 
 import { Button } from "@ihsp/ui"
-import { useTr } from "../hooks/use-tr"
-import { ErrorAlert } from "./error-alert"
+import { ErrorAlert, useTr } from "@ihsp/features-core/id-account"
 import { FlowCard } from "./flow-card"
 
 /** A card for a page whose first request failed, with **Try again**. */

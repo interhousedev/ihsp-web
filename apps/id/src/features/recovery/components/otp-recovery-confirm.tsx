@@ -2,9 +2,8 @@
 
 import { postIdRecoveryOtpConfirm, postIdRecoveryOtpRequest } from "@ihsp/api"
 import { useMutation } from "@tanstack/react-query"
-import { CodeStep } from "../../shared/components/code-step"
+import { CodeStep, useTr } from "@ihsp/features-core/id-account"
 import { FlowCard } from "../../shared/components/flow-card"
-import { useTr } from "../../shared/hooks/use-tr"
 
 type OtpRecoveryConfirmProps = { login: string; onDone: (effectiveAt: string) => void }
 

@@ -32,7 +32,12 @@ describe("admin sidebar (ADM-1)", () => {
     expect(itemsOf(groups, "Academics").map((item) => item.title)).not.toContain("Certificate types")
   })
 
-  test("Operations holds Monitoring, Logs and Limits & usage, and Tools no longer has Limits", () => {
+  test("Excuses sit in Reports with their own icon", () => {
+    const items = itemsOf(renderNav(), "Reports")
+    expect(items.find((item) => item.url === "/excuses/")?.title).toBe("Excuses")
+  })
+
+  test("Operations holds Monitoring, Logs, Limits & usage and Devices, and Tools no longer has Limits", () => {
     const groups = renderNav()
 
     expect(itemsOf(groups, "Operations").map((item) => item.url)).toEqual([
@@ -40,6 +45,8 @@ describe("admin sidebar (ADM-1)", () => {
       "/logs/",
       "/mcp-activity/",
       "/limits/",
+      "/devices/",
+      "/vault/",
     ])
     expect(itemsOf(groups, "Reports").map((item) => item.title)).not.toContain("Monitoring")
     expect(itemsOf(groups, "Tools").map((item) => item.url)).not.toContain("/limits/")

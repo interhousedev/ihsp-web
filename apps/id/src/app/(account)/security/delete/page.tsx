@@ -1,6 +1,6 @@
 "use client"
 
-import { DeleteAccountPage } from "@/features/security/components/delete-account-page"
+import { DeleteAccountPage } from "@ihsp/features-core/id-account"
 
 export default function Page() {
   return <DeleteAccountPage />

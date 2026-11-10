@@ -14,7 +14,8 @@
     "./pwa/head": "./src/pwa/utils/pwa-head.ts",
     "./library-test-support": "./src/library/test-support.tsx",
     "./telemetry": "./src/telemetry/index.ts",
-    "./openui": "./src/openui/index.ts"
+    "./openui": "./src/openui/index.ts",
+    "./id-account": "./src/id-account/index.ts"
   },
   "scripts": {
     "typecheck": "tsc --noEmit",

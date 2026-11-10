@@ -21,7 +21,7 @@ export function PasswordRules({ password }: { password: string }) {
         <li
           key={rule}
           data-met={result[rule]}
-          className={`flex items-center gap-2 ${result[rule] ? "text-emerald-600 dark:text-emerald-400" : "text-muted-foreground"}`}
+          className={`flex items-center gap-2 ${result[rule] ? "text-success" : "text-muted-foreground"}`}
         >
           {result[rule] ? (
             <IconCircleCheckFilled className="size-4" aria-hidden />

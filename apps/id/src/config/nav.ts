@@ -2,6 +2,7 @@ import type { BottomNavItem, NavGroup } from "@ihsp/ui"
 import {
   IconActivity,
   IconBrandTelegram,
+  IconCode,
   IconDeviceMobileMessage,
   IconDevices,
   IconKey,
@@ -12,7 +13,7 @@ import {
   IconShieldLock,
   IconTrash,
 } from "@ihsp/ui"
-import type { Translate } from "../features/shared/hooks/use-tr"
+import { type Translate } from "@ihsp/features-core/id-account"
 
 /** The phone bottom bar; "More" with everything else is added by the shell. */
 export function buildIdBottom(t: Translate): BottomNavItem[] {
@@ -44,7 +45,10 @@ export function buildIdNav(t: Translate): NavGroup[] {
     },
     {
       label: t("idNav.integrations"),
-      items: [{ title: t("idNav.connectors"), url: "/connectors/", icon: IconPlugConnected }],
+      items: [
+        { title: t("idNav.connectors"), url: "/connectors/", icon: IconPlugConnected },
+        { title: t("idNav.personalTokens"), url: "/personal-tokens/", icon: IconCode },
+      ],
     },
     {
       label: t("idNav.account"),

@@ -12,9 +12,7 @@ import {
 } from "@ihsp/test-utils"
 import { fireEvent, screen, waitFor } from "@testing-library/react"
 import { HttpResponse, http } from "msw"
-import { ConnectorsPage } from "../features/connectors/components/connectors-page"
-import { NewConnectorPage } from "../features/connectors/components/new-connector-page"
-import { expiryOptions } from "../features/connectors/utils/connector-config"
+import { ConnectorsPage, NewConnectorPage, expiryOptions } from "@ihsp/features-core/id-account"
 import { clickButton, fillField, findButton, LOGGED_IN, renderId, allowSlowTests } from "./helpers"
 
 allowSlowTests()

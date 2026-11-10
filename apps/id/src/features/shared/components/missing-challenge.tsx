@@ -1,8 +1,7 @@
 "use client"
 
-import { useTr } from "../hooks/use-tr"
+import { LinkButton, useTr } from "@ihsp/features-core/id-account"
 import { FlowCard } from "./flow-card"
-import { LinkButton } from "./link-button"
 
 /** Shown when a Hydra page (`/login/`, `/consent/`, `/logout/`) is opened without its challenge. */
 export function MissingChallenge() {

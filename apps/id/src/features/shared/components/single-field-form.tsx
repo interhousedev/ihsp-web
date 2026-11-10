@@ -3,9 +3,7 @@
 import { LoadingButton, useAppForm } from "@ihsp/ui"
 import { useMemo, type ComponentProps } from "react"
 import { z } from "zod"
-import { useTr } from "../hooks/use-tr"
-import { emailText, requiredText } from "../utils/schemas"
-import { ErrorAlert } from "./error-alert"
+import { ErrorAlert, emailText, requiredText, useTr } from "@ihsp/features-core/id-account"
 
 type SingleFieldFormProps = {
   label: string

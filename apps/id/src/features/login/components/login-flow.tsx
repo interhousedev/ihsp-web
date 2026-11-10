@@ -3,7 +3,7 @@
 import { useState } from "react"
 import { FlowSkeleton } from "../../shared/components/flow-skeleton"
 import { RequestFailed } from "../../shared/components/request-failed"
-import { useTr } from "../../shared/hooks/use-tr"
+import { useTr } from "@ihsp/features-core/id-account"
 import { useClientHint } from "../hooks/use-client-hint"
 import { useLoginInfo } from "../hooks/use-login-info"
 import { useTicketLogin } from "../hooks/use-ticket-login"

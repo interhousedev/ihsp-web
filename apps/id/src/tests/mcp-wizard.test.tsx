@@ -3,8 +3,7 @@ import { describe, expect, test } from "bun:test"
 import { apiUrl, mcpClientSecret, server } from "@ihsp/test-utils"
 import { fireEvent, screen, waitFor } from "@testing-library/react"
 import { HttpResponse, http } from "msw"
-import { NewConnectorPage } from "../features/connectors/components/new-connector-page"
-import { MCP_LINKS } from "../features/connectors/utils/mcp-wizard"
+import { MCP_LINKS, NewConnectorPage } from "@ihsp/features-core/id-account"
 import { allowSlowTests, clickButton, fillField, findButton, findLink, LOGGED_IN, renderId } from "./helpers"
 
 allowSlowTests()

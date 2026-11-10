@@ -1,8 +1,6 @@
 "use client"
 
-import { CheckboxRow } from "../../shared/components/checkbox-row"
-import { useTr } from "../../shared/hooks/use-tr"
-import { scopeHintKey } from "../../connectors/utils/connector-config"
+import { CheckboxRow, scopeHintKey, useTr } from "@ihsp/features-core/id-account"
 
 type ScopeCheckboxProps = {
   scope: string

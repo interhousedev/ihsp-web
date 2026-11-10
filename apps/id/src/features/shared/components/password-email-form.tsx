@@ -3,10 +3,15 @@
 import { LoadingButton, useAppForm } from "@ihsp/ui"
 import { useMemo, type ReactNode } from "react"
 import { z } from "zod"
-import { useTr } from "../hooks/use-tr"
-import { emailText, mismatchIssue, newPasswordText, passwordsMatch } from "../utils/schemas"
-import { ErrorAlert } from "./error-alert"
-import { PasswordRules } from "./password-rules"
+import {
+  ErrorAlert,
+  PasswordRules,
+  emailText,
+  mismatchIssue,
+  newPasswordText,
+  passwordsMatch,
+  useTr,
+} from "@ihsp/features-core/id-account"
 
 export type PasswordEmailValues = { password: string; email: string; confirmed: boolean }
 

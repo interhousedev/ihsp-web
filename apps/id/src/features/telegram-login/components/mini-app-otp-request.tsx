@@ -5,7 +5,7 @@ import { Button } from "@ihsp/ui"
 import { useMutation } from "@tanstack/react-query"
 import { FlowCard } from "../../shared/components/flow-card"
 import { SingleFieldForm } from "../../shared/components/single-field-form"
-import { useTr } from "../../shared/hooks/use-tr"
+import { useTr } from "@ihsp/features-core/id-account"
 
 /** Passwordless OTP in the mini app, step 1: the login. The answer never says whether OTP is enabled (ID-13). */
 type MiniAppOtpRequestProps = { initData: string; onSent: (login: string) => void; onBack: () => void }

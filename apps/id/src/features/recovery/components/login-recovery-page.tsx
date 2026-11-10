@@ -3,10 +3,9 @@
 import { postIdRecoveryLogin } from "@ihsp/api"
 import { useMutation } from "@tanstack/react-query"
 import { FlowCard } from "../../shared/components/flow-card"
-import { InfoAlert } from "../../shared/components/error-alert"
+import { InfoAlert, useTr } from "@ihsp/features-core/id-account"
 import { SingleFieldForm } from "../../shared/components/single-field-form"
 import { TextLink } from "../../shared/components/text-link"
-import { useTr } from "../../shared/hooks/use-tr"
 
 /** `/recovery/login/` (UF-ID-10): the login is emailed to the recovery address; the answer is always the same. */
 export function LoginRecoveryPage() {

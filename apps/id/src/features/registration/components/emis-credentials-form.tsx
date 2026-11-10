@@ -4,13 +4,10 @@ import { isApiError } from "@ihsp/api"
 import { Alert, AlertDescription, LoadingButton, useAppForm } from "@ihsp/ui"
 import { useMemo, type ReactNode } from "react"
 import { z } from "zod"
-import { ErrorAlert } from "../../shared/components/error-alert"
+import { ErrorAlert, LinkButton, requiredText, useTr } from "@ihsp/features-core/id-account"
 import { FlowCard } from "../../shared/components/flow-card"
-import { LinkButton } from "../../shared/components/link-button"
 import { StepIndicator } from "../../shared/components/step-indicator"
-import { useTr } from "../../shared/hooks/use-tr"
 import { withChallenge } from "../../shared/utils/challenge"
-import { requiredText } from "../../shared/utils/schemas"
 
 type EmisCredentialsFormProps = {
   title: string

@@ -1,8 +1,7 @@
 "use client"
 
 import { FlowCard } from "../../shared/components/flow-card"
-import { LinkButton } from "../../shared/components/link-button"
-import { useTr } from "../../shared/hooks/use-tr"
+import { LinkButton, useTr } from "@ihsp/features-core/id-account"
 
 /** UF-ID-13 2a: the link expired (72 hours) or was used. */
 export function ActivationInvalid() {

@@ -4,15 +4,15 @@ import { postIdLoginPasskey, postIdLoginPasskeyOptions, type LoginResult } from 
 import { IconFingerprint, LoadingButton } from "@ihsp/ui"
 import { useMutation } from "@tanstack/react-query"
 import { useEffect, useRef } from "react"
-import { ErrorAlert } from "../../shared/components/error-alert"
-import { useTr } from "../../shared/hooks/use-tr"
-import { followChallengeUsed } from "../../shared/utils/challenge"
 import {
+  ErrorAlert,
   conditionalMediationSupported,
   getPasskey,
   isPasskeyCancel,
   passkeysSupported,
-} from "../../shared/utils/webauthn"
+  useTr,
+} from "@ihsp/features-core/id-account"
+import { followChallengeUsed } from "../../shared/utils/challenge"
 
 type PasskeyLoginButtonProps = {
   challenge: string

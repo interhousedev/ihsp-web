@@ -1,6 +1,6 @@
 "use client"
 
-import { PasswordChangePage } from "@/features/security/components/password-change-page"
+import { PasswordChangePage } from "@ihsp/features-core/id-account"
 
 export default function Page() {
   return <PasswordChangePage />

@@ -1,12 +1,12 @@
 "use client"
 
 import { Suspense } from "react"
-import { ActivityPage } from "@/features/connectors/components/activity-page"
+import { ConnectorActivityPage } from "@ihsp/features-core/id-account"
 
 export default function Page() {
   return (
     <Suspense>
-      <ActivityPage />
+      <ConnectorActivityPage />
     </Suspense>
   )
 }

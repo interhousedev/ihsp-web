@@ -1,6 +1,6 @@
 "use client"
 
-import { AppearancePage } from "@/features/appearance/components/appearance-page"
+import { AppearancePage } from "@ihsp/features-core/id-account"
 
 export default function Page() {
   return <AppearancePage />

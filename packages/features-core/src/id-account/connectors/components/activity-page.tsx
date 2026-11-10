@@ -35,7 +35,7 @@ function CallRow({ call }: { call: McpActivityItem }) {
 }
 
 /** `/connectors/activity/` (B1): what the user's MCP keys did; redacted, kept for 90 days. */
-export function ActivityPage() {
+export function ConnectorActivityPage() {
   const t = useTr()
   const [{ outcome, connector }, setFilters] = useQueryStates({
     outcome: parseAsStringLiteral(MCP_OUTCOMES),

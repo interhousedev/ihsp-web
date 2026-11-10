@@ -6,7 +6,7 @@ import { useState } from "react"
 import { FlowCard } from "../../shared/components/flow-card"
 import { SingleFieldForm } from "../../shared/components/single-field-form"
 import { TextLink } from "../../shared/components/text-link"
-import { useTr } from "../../shared/hooks/use-tr"
+import { useTr } from "@ihsp/features-core/id-account"
 import { PasswordRecoveryConfirm } from "./password-recovery-confirm"
 import { PasswordRecoveryDone } from "./password-recovery-done"
 

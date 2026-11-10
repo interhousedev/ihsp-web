@@ -1,6 +1,7 @@
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@ihsp/ui"
 import Link from "next/link"
 import type { ComponentType, ReactNode } from "react"
+import { useIdHref } from "../../shared/hooks/use-id-href"
 
 type SecurityCardProps = {
   href: string
@@ -13,9 +14,11 @@ type SecurityCardProps = {
 }
 
 /** One tile of the security overview; the whole tile is a link (at least 44 px tall). */
-export function SecurityCard({ href, title, description, icon: Icon, status, destructive }: SecurityCardProps) {
+export function SecurityCard({ href: path, title, description, icon: Icon, status, destructive }: SecurityCardProps) {
+  const { href, external } = useIdHref()(path)
+  const Anchor = external ? "a" : Link
   return (
-    <Link href={href} className="focus-visible:ring-ring/50 block rounded-xl outline-none focus-visible:ring-3">
+    <Anchor href={href} className="focus-visible:ring-ring/50 block rounded-xl outline-none focus-visible:ring-3">
       <Card className="hover:bg-muted/50 h-full transition-colors">
         <CardHeader className="flex-row items-start gap-3">
           <Icon className={`mt-0.5 size-5 shrink-0 ${destructive ? "text-destructive" : "text-muted-foreground"}`} />
@@ -26,6 +29,6 @@ export function SecurityCard({ href, title, description, icon: Icon, status, des
         </CardHeader>
         {status ? <CardContent>{status}</CardContent> : null}
       </Card>
-    </Link>
+    </Anchor>
   )
 }

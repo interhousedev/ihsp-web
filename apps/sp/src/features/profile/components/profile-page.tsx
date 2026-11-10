@@ -41,7 +41,13 @@ export function ProfilePage() {
   return (
     <PageContainer
       title={t("title")}
-      actions={<LinkButton href={`${getConfig().ID_URL}/security/`}>{t("security")}</LinkButton>}
+      actions={
+        <div className="flex flex-wrap gap-2">
+          <LinkButton href="/profile/account/">{t("accountLink")}</LinkButton>
+          <LinkButton href="/profile/face/">{t("faceLink")}</LinkButton>
+          <LinkButton href={`${getConfig().ID_URL}/security/`}>{t("security")}</LinkButton>
+        </div>
+      }
     >
       <ProfileSections />
     </PageContainer>

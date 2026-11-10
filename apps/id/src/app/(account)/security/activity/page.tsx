@@ -1,6 +1,6 @@
 "use client"
 
-import { ActivityPage } from "@/features/security/components/activity-page"
+import { ActivityPage } from "@ihsp/features-core/id-account"
 
 export default function Page() {
   return <ActivityPage />

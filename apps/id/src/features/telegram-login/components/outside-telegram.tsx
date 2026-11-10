@@ -2,8 +2,7 @@
 
 import { getConfig } from "@ihsp/config"
 import { FlowCard } from "../../shared/components/flow-card"
-import { LinkButton } from "../../shared/components/link-button"
-import { useTr } from "../../shared/hooks/use-tr"
+import { LinkButton, useTr } from "@ihsp/features-core/id-account"
 import { removeSession, TELEGRAM_INIT_DATA_KEY } from "../../shared/utils/storage"
 import { useEffect } from "react"
 

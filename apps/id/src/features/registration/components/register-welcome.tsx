@@ -3,8 +3,7 @@
 import { getConfig } from "@ihsp/config"
 import { Button, IconBrandTelegram, IconShieldCheck, IconUserCheck } from "@ihsp/ui"
 import { FlowCard } from "../../shared/components/flow-card"
-import { LinkButton } from "../../shared/components/link-button"
-import { useTr } from "../../shared/hooks/use-tr"
+import { LinkButton, useTr } from "@ihsp/features-core/id-account"
 
 const POINT_ICONS = { account: IconUserCheck, codes: IconBrandTelegram, security: IconShieldCheck }
 const DEFAULT_LIBRARY_URL = "https://lib.ihsu.uz"

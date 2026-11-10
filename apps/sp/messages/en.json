@@ -55,7 +55,8 @@
       "files": "Files",
       "links": "Links",
       "notifications": "Alerts",
-      "settings": "Settings"
+      "settings": "Settings",
+      "excuses": "Excuses"
     },
     "dashboard": "Home",
     "today": "Today",
@@ -79,7 +80,8 @@
     "groupStudyTools": "Study tools",
     "groupInbox": "Inbox",
     "groupAccount": "Account",
-    "mail": "Email"
+    "mail": "Email",
+    "excuses": "Excuses"
   },
   "attendanceStates": {
     "late": "Late",
@@ -301,7 +303,8 @@
       "date": "Date",
       "period": "Period",
       "topic": "Topic"
-    }
+    },
+    "excused": "Excused"
   },
   "calendarFeed": {
     "subscribe": "Subscribe to calendar",
@@ -460,7 +463,11 @@
       "next": "Next study day",
       "pick": "Pick a date",
       "viewsLabel": "Show marks by",
-      "views": { "day": "Day", "week": "Week", "month": "Month" },
+      "views": {
+        "day": "Day",
+        "week": "Week",
+        "month": "Month"
+      },
       "previousWeek": "Previous week",
       "nextWeek": "Next week",
       "previousMonth": "Previous month",
@@ -868,7 +875,13 @@
       "title": "Storage",
       "used": "{used} of {quota} used",
       "clearedOn": "Files of this term are deleted on {date}."
-    }
+    },
+    "accountPage": {
+      "title": "Account",
+      "security": "Security"
+    },
+    "accountLink": "Account and security",
+    "faceLink": "Face recognition"
   },
   "settings": {
     "title": "Settings",
@@ -919,5 +932,76 @@
   "weekPager": {
     "previous": "Previous week",
     "next": "Next week"
+  },
+  "face": {
+    "title": "Entrance photo",
+    "back": "Profile",
+    "photo": "Photo",
+    "you": "you",
+    "locked": "This photo was set by your curator or an administrator. Only the curator or an administrator can change it.",
+    "purpose": "The entrance device compares your face with this photo to let you in and note your attendance.",
+    "privacy": "Only you, your curator and administrators can see the photo. It is used only for the entrance device; remove it at any time."
+  },
+  "excuses": {
+    "status": {
+      "pending": "Pending",
+      "approved": "Approved",
+      "rejected": "Rejected",
+      "cancelled": "Cancelled"
+    },
+    "origin": {
+      "request": "Your request",
+      "curator": "Added by a curator"
+    },
+    "untitled": "Excuse",
+    "dates": {
+      "from": "From {date}",
+      "range": "{from} – {to}"
+    },
+    "page": {
+      "title": "Excuses",
+      "new": "New request",
+      "empty": "No excuse requests yet"
+    },
+    "form": {
+      "title": "New excuse request",
+      "template": "Reason",
+      "templatePlaceholder": "Choose a reason",
+      "documentHint": "This reason needs a document.",
+      "startsOn": "From",
+      "endsOn": "Until (optional)",
+      "endsOnPlaceholder": "Open-ended",
+      "lessons": "Only these lessons (optional)",
+      "noLessons": "No lessons in this period",
+      "lessonLabel": "Period {period}: {subject}",
+      "reason": "Details",
+      "documents": "Documents",
+      "attach": "Attach a file",
+      "removeFile": "Remove {name}",
+      "cancel": "Cancel",
+      "sending": "Sending…",
+      "submit": "Send request",
+      "errors": {
+        "template": "Choose a reason.",
+        "dates": "The end date is before the start date.",
+        "document": "Attach a document for this reason."
+      }
+    },
+    "detail": {
+      "title": "Excuse",
+      "back": "All excuses",
+      "notFound": "Excuse not found",
+      "lessons": "{count, plural, one {# lesson} other {# lessons}}",
+      "decision": "Decision",
+      "cancel": "Cancel request",
+      "cancelConfirm": "Cancel this request?"
+    },
+    "thread": {
+      "title": "Conversation",
+      "empty": "No messages yet",
+      "write": "Message",
+      "send": "Send",
+      "sending": "Sending…"
+    }
   }
 }

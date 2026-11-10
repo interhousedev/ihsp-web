@@ -41,6 +41,7 @@ export function useNav(): { groups: NavGroup[] } {
           items: [
             { title: t("attendance"), url: "/attendance/", icon: "attendance" },
             { title: t("workOffs"), url: "/work-offs/", icon: "homework" },
+            { title: t("excuses"), url: "/excuses/", icon: "mail" },
             { title: t("reports"), url: "/reports/", icon: "reports" },
             { title: t("certificates"), url: "/certificates/", icon: "certificates" },
             { title: t("certificateTypes"), url: "/certificate-types/", icon: "forms" },
@@ -53,6 +54,8 @@ export function useNav(): { groups: NavGroup[] } {
             { title: t("logs"), url: "/logs/", icon: "warning" },
             { title: t("mcpActivity"), url: "/mcp-activity/", icon: "connectors" },
             { title: t("limits"), url: "/limits/", icon: "adjustments" },
+            { title: t("devices"), url: "/devices/", icon: "laptop" },
+            { title: t("vault"), url: "/vault/", icon: "lock" },
           ],
         },
         {

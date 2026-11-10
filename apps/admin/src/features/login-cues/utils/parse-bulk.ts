@@ -46,7 +46,12 @@ const CSV_SEPARATOR = /[;\t,]/
  * cells are removed.
  */
 export function fileTextToBulkLines(content: string): string {
-  const unquote = (cell: string) => cell.trim().replace(/^"(.*)"$/, "$1").replaceAll('""', '"').trim()
+  const unquote = (cell: string) =>
+    cell
+      .trim()
+      .replace(/^"(.*)"$/, "$1")
+      .replaceAll('""', '"')
+      .trim()
   const lines = content.replace(/^\uFEFF/, "").split(/\r?\n/)
   const out: string[] = []
   lines.forEach((raw, index) => {
@@ -58,7 +63,9 @@ export function fileTextToBulkLines(content: string): string {
       return
     }
     const login = unquote(line.slice(0, match.index))
-    const name = unquote(line.slice(match.index + 1)).replace(/[;\t,]+$/, "").trim()
+    const name = unquote(line.slice(match.index + 1))
+      .replace(/[;\t,]+$/, "")
+      .trim()
     if (index === 0 && !DIGITS.test(login)) return
     out.push(`${login};${name}`)
   })

@@ -55,7 +55,8 @@
       "files": "Fayllar",
       "links": "Havolalar",
       "notifications": "Xabarlar",
-      "settings": "Sozlama"
+      "settings": "Sozlama",
+      "excuses": "Sabablar"
     },
     "dashboard": "Bosh sahifa",
     "today": "Bugun",
@@ -79,7 +80,8 @@
     "groupStudyTools": "Oʻqish vositalari",
     "groupInbox": "Kelganlar",
     "groupAccount": "Hisob",
-    "mail": "Pochta"
+    "mail": "Pochta",
+    "excuses": "Sababli qoldirish"
   },
   "attendanceStates": {
     "late": "Kech qoldi",
@@ -301,7 +303,8 @@
       "date": "Sana",
       "period": "Juftlik",
       "topic": "Mavzu"
-    }
+    },
+    "excused": "Sababli"
   },
   "calendarFeed": {
     "subscribe": "Kalendarga obuna boʻlish",
@@ -460,7 +463,11 @@
       "next": "Keyingi oʻquv kuni",
       "pick": "Sanani tanlang",
       "viewsLabel": "Baholarni koʻrsatish",
-      "views": { "day": "Kun", "week": "Hafta", "month": "Oy" },
+      "views": {
+        "day": "Kun",
+        "week": "Hafta",
+        "month": "Oy"
+      },
       "previousWeek": "Oldingi hafta",
       "nextWeek": "Keyingi hafta",
       "previousMonth": "Oldingi oy",
@@ -868,7 +875,13 @@
       "title": "Xotira",
       "used": "{quota} dan {used} band",
       "clearedOn": "Shu semestr fayllari {date} kuni oʻchiriladi."
-    }
+    },
+    "accountPage": {
+      "title": "Akkaunt",
+      "security": "Xavfsizlik"
+    },
+    "accountLink": "Akkaunt va xavfsizlik",
+    "faceLink": "Yuzni tanish"
   },
   "settings": {
     "title": "Sozlamalar",
@@ -919,5 +932,76 @@
   "weekPager": {
     "previous": "Oldingi hafta",
     "next": "Keyingi hafta"
+  },
+  "face": {
+    "title": "Kirish uchun surat",
+    "back": "Profil",
+    "photo": "Surat",
+    "you": "siz",
+    "locked": "Bu suratni kuratoringiz yoki administrator qoʻygan. Uni faqat kurator yoki administrator oʻzgartira oladi.",
+    "purpose": "Kirishdagi qurilma sizni oʻtkazish va davomatni belgilash uchun yuzingizni shu surat bilan solishtiradi.",
+    "privacy": "Suratni faqat siz, kuratoringiz va administratorlar koʻra oladi. U faqat kirish qurilmasi uchun ishlatiladi; istalgan payt oʻchirishingiz mumkin."
+  },
+  "excuses": {
+    "status": {
+      "pending": "Ko‘rib chiqilmoqda",
+      "approved": "Tasdiqlangan",
+      "rejected": "Rad etilgan",
+      "cancelled": "Bekor qilingan"
+    },
+    "origin": {
+      "request": "Sizning arizangiz",
+      "curator": "Kurator qo‘shgan"
+    },
+    "untitled": "Sabab",
+    "dates": {
+      "from": "{date} dan",
+      "range": "{from} – {to}"
+    },
+    "page": {
+      "title": "Sababli qoldirish",
+      "new": "Yangi ariza",
+      "empty": "Hozircha ariza yo‘q"
+    },
+    "form": {
+      "title": "Yangi ariza",
+      "template": "Sabab",
+      "templatePlaceholder": "Sababni tanlang",
+      "documentHint": "Bu sabab uchun hujjat kerak.",
+      "startsOn": "Boshlanishi",
+      "endsOn": "Tugashi (ixtiyoriy)",
+      "endsOnPlaceholder": "Muddatsiz",
+      "lessons": "Faqat shu darslar (ixtiyoriy)",
+      "noLessons": "Bu davrda dars yo‘q",
+      "lessonLabel": "{period}-dars: {subject}",
+      "reason": "Tafsilotlar",
+      "documents": "Hujjatlar",
+      "attach": "Fayl biriktirish",
+      "removeFile": "{name} ni olib tashlash",
+      "cancel": "Bekor qilish",
+      "sending": "Yuborilmoqda…",
+      "submit": "Ariza yuborish",
+      "errors": {
+        "template": "Sababni tanlang.",
+        "dates": "Tugash sanasi boshlanish sanasidan oldin.",
+        "document": "Bu sabab uchun hujjat biriktiring."
+      }
+    },
+    "detail": {
+      "title": "Sabab",
+      "back": "Barcha arizalar",
+      "notFound": "Ariza topilmadi",
+      "lessons": "{count, plural, one {# dars} other {# dars}}",
+      "decision": "Qaror",
+      "cancel": "Arizani bekor qilish",
+      "cancelConfirm": "Bu ariza bekor qilinsinmi?"
+    },
+    "thread": {
+      "title": "Yozishmalar",
+      "empty": "Hozircha xabar yo‘q",
+      "write": "Xabar",
+      "send": "Yuborish",
+      "sending": "Yuborilmoqda…"
+    }
   }
 }

@@ -5,8 +5,7 @@ import { getConfig } from "@ihsp/config"
 import { Button, QrCode, IconBrandTelegram, IconCircleCheck, IconKey, IconShieldCheck } from "@ihsp/ui"
 import { useQuery } from "@tanstack/react-query"
 import { FlowCard } from "../../shared/components/flow-card"
-import { LinkButton } from "../../shared/components/link-button"
-import { useTr } from "../../shared/hooks/use-tr"
+import { LinkButton, useTr } from "@ihsp/features-core/id-account"
 
 const POLL_MS = 3000
 

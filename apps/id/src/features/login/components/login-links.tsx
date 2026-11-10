@@ -1,7 +1,7 @@
 "use client"
 
 import { useId, useState } from "react"
-import { useTr } from "../../shared/hooks/use-tr"
+import { useTr } from "@ihsp/features-core/id-account"
 import { TextLink } from "../../shared/components/text-link"
 
 /**

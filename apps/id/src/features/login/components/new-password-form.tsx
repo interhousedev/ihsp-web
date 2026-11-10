@@ -5,12 +5,16 @@ import { LoadingButton, useAppForm } from "@ihsp/ui"
 import { useMutation } from "@tanstack/react-query"
 import { useMemo } from "react"
 import { z } from "zod"
-import { ErrorAlert } from "../../shared/components/error-alert"
+import {
+  ErrorAlert,
+  PasswordRules,
+  mismatchIssue,
+  newPasswordText,
+  passwordsMatch,
+  useTr,
+} from "@ihsp/features-core/id-account"
 import { FlowCard } from "../../shared/components/flow-card"
-import { PasswordRules } from "../../shared/components/password-rules"
-import { useTr } from "../../shared/hooks/use-tr"
 import { followChallengeUsed } from "../../shared/utils/challenge"
-import { mismatchIssue, newPasswordText, passwordsMatch } from "../../shared/utils/schemas"
 import { applyLoginResult } from "../utils/login-result"
 
 type NewPasswordFormProps = { challenge: string; ticket: string }

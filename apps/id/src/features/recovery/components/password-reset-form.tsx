@@ -3,10 +3,15 @@
 import { LoadingButton, useAppForm } from "@ihsp/ui"
 import { useMemo, type ReactNode } from "react"
 import { z } from "zod"
-import { ErrorAlert } from "../../shared/components/error-alert"
-import { PasswordRules } from "../../shared/components/password-rules"
-import { useTr } from "../../shared/hooks/use-tr"
-import { codeText, mismatchIssue, newPasswordText, passwordsMatch } from "../../shared/utils/schemas"
+import {
+  ErrorAlert,
+  PasswordRules,
+  codeText,
+  mismatchIssue,
+  newPasswordText,
+  passwordsMatch,
+  useTr,
+} from "@ihsp/features-core/id-account"
 
 type PasswordResetFormProps = {
   pending: boolean

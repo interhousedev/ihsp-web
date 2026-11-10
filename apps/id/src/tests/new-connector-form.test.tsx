@@ -3,7 +3,7 @@ import { describe, expect, mock, test } from "bun:test"
 import { adminMe, apiUrl, connectorToken, connectors, scopeCatalog, server, userMe } from "@ihsp/test-utils"
 import { screen, waitFor } from "@testing-library/react"
 import { HttpResponse, http } from "msw"
-import { NewConnectorForm } from "../features/connectors/components/new-connector-form"
+import { NewConnectorForm } from "@ihsp/features-core/id-account"
 import { clickButton, fillField, renderId, allowSlowTests } from "./helpers"
 import { problem } from "./problem"
 

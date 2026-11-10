@@ -3,10 +3,8 @@
 import { postIdRecoveryPasswordConfirm, postIdRecoveryPasswordRequest } from "@ihsp/api"
 import { Button } from "@ihsp/ui"
 import { useMutation } from "@tanstack/react-query"
-import { RESEND_SECONDS } from "../../shared/components/code-step"
+import { RESEND_SECONDS, useCountdown, useTr } from "@ihsp/features-core/id-account"
 import { FlowCard } from "../../shared/components/flow-card"
-import { useCountdown } from "../../shared/hooks/use-countdown"
-import { useTr } from "../../shared/hooks/use-tr"
 import { PasswordResetForm } from "./password-reset-form"
 
 type PasswordRecoveryConfirmProps = { identifier: string; onDone: (ticket: string) => void }

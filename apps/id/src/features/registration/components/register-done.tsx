@@ -2,8 +2,7 @@
 
 import { getConfig } from "@ihsp/config"
 import { FlowCard } from "../../shared/components/flow-card"
-import { LinkButton } from "../../shared/components/link-button"
-import { useTr } from "../../shared/hooks/use-tr"
+import { LinkButton, useTr } from "@ihsp/features-core/id-account"
 
 /** The account exists (outside Telegram: inside the Telegram web UI the registration goes on to the mini app login). */
 export function RegisterDone({ login }: { login: string }) {

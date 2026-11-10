@@ -107,6 +107,8 @@ describe("keys used in the code", () => {
 
   test("the keys built at run time have messages for every value", () => {
     const expected: Record<string, string[]> = {
+      "excuses.tabs.${value}": ["pending", "approved"],
+      "excuses.empty.${tab}": ["pending", "approved"],
       "notifications.filters.${value}": ["all", "activity", "announcements"],
       "notificationSettings.marks.type.${value}": ["lesson", "midterm", "final"],
       "today.getStarted.steps.${step.id}.title": ["telegram", "notifications"],

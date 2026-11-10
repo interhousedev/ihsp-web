@@ -1,8 +1,7 @@
 "use client"
 
 import { isApiError } from "@ihsp/api"
-import { useTr } from "../../shared/hooks/use-tr"
-import { ErrorAlert } from "../../shared/components/error-alert"
+import { ErrorAlert, useTr } from "@ihsp/features-core/id-account"
 import { clientUrl } from "../../shared/utils/client-url"
 
 /** A failed login step; when the role is missing it also links back to the app the user came from. */

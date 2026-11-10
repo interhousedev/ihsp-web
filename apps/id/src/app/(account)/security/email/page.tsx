@@ -1,6 +1,6 @@
 "use client"
 
-import { EmailChangePage } from "@/features/security/components/email-change-page"
+import { EmailChangePage } from "@ihsp/features-core/id-account"
 
 export default function Page() {
   return <EmailChangePage />

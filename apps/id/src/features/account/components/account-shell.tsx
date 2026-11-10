@@ -5,7 +5,7 @@ import { logout, useSession } from "@ihsp/auth"
 import { ShellNavControls, useLicenseMenu, usePlatformLinks } from "@ihsp/features-core"
 import { AppShell, SidebarBrand, UserMenu } from "@ihsp/ui"
 import type { ReactNode } from "react"
-import { useTr } from "../../shared/hooks/use-tr"
+import { useTr } from "@ihsp/features-core/id-account"
 import { useIdBottom, useIdNav } from "../hooks/use-id-nav"
 
 /** Frame of the security pages: sidebar (a sheet on phones) with the account menu: license, language, theme and log out. */

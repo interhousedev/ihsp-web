@@ -39,7 +39,10 @@
     "workOffs": "Work-off tasks",
     "loginCues": "Login cues",
     "botPosts": "Bot posts",
-    "mcpActivity": "MCP activity"
+    "mcpActivity": "MCP activity",
+    "vault": "Vault",
+    "devices": "Devices",
+    "excuses": "Excuses"
   },
   "shared": {
     "lessonList": "Lessons by date",
@@ -2105,6 +2108,119 @@
       "not_found": "Not found",
       "invalid": "Invalid input",
       "error": "Error"
+    }
+  },
+  "vault": {
+    "title": "Vault",
+    "status": "Status",
+    "sealed": "Sealed",
+    "unsealed": "Unsealed",
+    "progress": "{progress} of {threshold} key shares entered",
+    "form": {
+      "title": "Enter a key share",
+      "key": "Key share",
+      "otp": "Confirmation code",
+      "submit": "Send key share",
+      "sending": "Sending…"
+    },
+    "errors": {
+      "rejected": "The key share was rejected.",
+      "unavailable": "The vault is unavailable. Try again later.",
+      "generic": "Could not send the key share."
+    }
+  },
+  "devices": {
+    "title": "Entrance devices",
+    "add": "Add device",
+    "empty": "No devices yet.",
+    "createTitle": "New device",
+    "create": "Create",
+    "name": "Name",
+    "statusActive": "Active",
+    "statusRevoked": "Revoked",
+    "created": "Created {date}",
+    "lastUsed": "last used {date}",
+    "neverUsed": "never used",
+    "calls": "Calls",
+    "viewCalls": "Calls of {name}",
+    "revokeAction": "Revoke",
+    "revoke": "Revoke {name}",
+    "revokeTitle": "Revoke {name}?",
+    "revokeText": "The device stops working at once. This cannot be undone; create a new device instead.",
+    "revoked": "Device revoked",
+    "tokenTitle": "Token of {name}",
+    "tokenWarning": "Copy the token now. It is shown only once and cannot be recovered.",
+    "tokenLabel": "Device token",
+    "copied": "Copied",
+    "tokenDone": "I copied it",
+    "callsTitle": "Calls of {name}",
+    "callsHint": "The last 7 days.",
+    "callsEmpty": "No calls in the last 7 days.",
+    "callsNobody": "Nobody recognised",
+    "callsExcused": "Excused"
+  },
+  "studentFace": {
+    "column": "Entrance photo",
+    "action": "Entrance photo",
+    "title": "Entrance photo of {name}",
+    "hint": "JPEG or PNG, up to 5 MB. The student cannot change a photo set here."
+  },
+  "excuses": {
+    "title": "Excuses",
+    "tabs": {
+      "pending": "Pending",
+      "approved": "Approved",
+      "rejected": "Rejected",
+      "all": "All"
+    },
+    "empty": "No excuses here.",
+    "loadMore": "Show more",
+    "student": "Student",
+    "type": "Type",
+    "period": "{from} – {to}",
+    "status": {
+      "pending": "Pending",
+      "approved": "Approved",
+      "rejected": "Rejected",
+      "cancelled": "Cancelled",
+      "revoked": "Revoked"
+    },
+    "open": "Open excuse of {name}",
+    "openEnded": "{from} – until further notice",
+    "range": "{from} – {to}",
+    "detail": {
+      "reason": "Reason",
+      "period": "Period",
+      "template": "Type",
+      "decision": "Decision",
+      "noReason": "No reason given"
+    },
+    "actions": {
+      "approve": "Approve",
+      "reject": "Reject"
+    },
+    "decision": {
+      "approve": "Approve the excuse",
+      "reject": "Reject the excuse",
+      "revoke": "Revoke the excuse",
+      "comment": "Comment",
+      "placeholder": "Visible to the student",
+      "submit": "Confirm",
+      "cancel": "Cancel",
+      "approved": "Excuse approved",
+      "rejected": "Excuse rejected",
+      "revoked": "Excuse revoked",
+      "ended": "End date saved"
+    },
+    "thread": {
+      "title": "Messages",
+      "empty": "No messages yet.",
+      "label": "Message",
+      "placeholder": "Write a message",
+      "send": "Send",
+      "attach": "Attach files",
+      "sent": "Message sent",
+      "download": "Open {name}"
     }
   }
 }

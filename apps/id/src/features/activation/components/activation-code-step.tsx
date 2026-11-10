@@ -3,10 +3,9 @@
 import { postIdActivation, postIdActivationEmail } from "@ihsp/api"
 import { Button } from "@ihsp/ui"
 import { useMutation } from "@tanstack/react-query"
-import { CodeStep } from "../../shared/components/code-step"
+import { CodeStep, useTr } from "@ihsp/features-core/id-account"
 import { FlowCard } from "../../shared/components/flow-card"
 import { StepIndicator } from "../../shared/components/step-indicator"
-import { useTr } from "../../shared/hooks/use-tr"
 
 type ActivationCodeStepProps = {
   token: string

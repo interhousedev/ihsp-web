@@ -1,7 +1,7 @@
 /** UF-MCP-05, MCP-5: the setup wizard's rules, kept apart from the screens so they can be checked without rendering. */
 import { describe, expect, test } from "bun:test"
 import type { OAuthSettingsResponse } from "@ihsp/api"
-import enMessages from "../../../../messages/en.json"
+import enMessages from "@ihsp/i18n/messages/en.json"
 import {
   isSafeRedirectUri,
   MCP_LINKS,

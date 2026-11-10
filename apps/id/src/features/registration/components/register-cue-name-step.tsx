@@ -3,9 +3,8 @@
 import { getIdLoginCueNamesQuery, type LoginCueGroup, type LoginCueName } from "@ihsp/api"
 import { Button } from "@ihsp/ui"
 import { useQuery } from "@tanstack/react-query"
-import { ErrorAlert } from "../../shared/components/error-alert"
+import { ErrorAlert, useTr } from "@ihsp/features-core/id-account"
 import { FlowCard } from "../../shared/components/flow-card"
-import { useTr } from "../../shared/hooks/use-tr"
 
 type RegisterCueNameStepProps = {
   group: LoginCueGroup

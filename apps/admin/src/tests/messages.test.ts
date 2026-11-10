@@ -217,6 +217,7 @@ describe("keys used in the code", () => {
     const roles = ["student", "teacher", "admin", "lms_admin"]
     const views = ["group", "student", "subject", "teacher"]
     const expected: Record<string, string[]> = {
+      "excuses.tabs.${value}": ["pending", "approved", "rejected", "all"],
       // The student assistant workspace (features-core/assistant-chat) shares this folder with the admin chat.
       "assistant.home.greeting${greeting}": ["1", "2", "3", "4"],
       "assistant.composer.voice.${failed}": [

@@ -6,7 +6,7 @@ import { useQuery } from "@tanstack/react-query"
 import { useEffect } from "react"
 import { FlowCard } from "../../shared/components/flow-card"
 import { RequestFailed } from "../../shared/components/request-failed"
-import { useTr } from "../../shared/hooks/use-tr"
+import { useTr } from "@ihsp/features-core/id-account"
 import { challengeUsedTarget } from "../../shared/utils/challenge"
 import { redirectTo } from "../../shared/utils/redirect"
 

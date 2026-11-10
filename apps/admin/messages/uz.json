@@ -39,7 +39,10 @@
     "workOffs": "Qayta topshirish",
     "loginCues": "Roʻyxatga olish loginlari",
     "botPosts": "Bot postlari",
-    "mcpActivity": "MCP faolligi"
+    "mcpActivity": "MCP faolligi",
+    "vault": "Ombor",
+    "devices": "Qurilmalar",
+    "excuses": "Sababli qoldirishlar"
   },
   "shared": {
     "lessonList": "Sanalar boʻyicha darslar",
@@ -2105,6 +2108,119 @@
       "not_found": "Topilmadi",
       "invalid": "Notoʻgʻri maʼlumot",
       "error": "Xato"
+    }
+  },
+  "vault": {
+    "title": "Sirlar ombori",
+    "status": "Holati",
+    "sealed": "Muhrlangan",
+    "unsealed": "Ochilgan",
+    "progress": "Kiritilgan kalit ulushlari: {progress} / {threshold}",
+    "form": {
+      "title": "Kalit ulushini kiriting",
+      "key": "Kalit ulushi",
+      "otp": "Tasdiqlash kodi",
+      "submit": "Ulushni yuborish",
+      "sending": "Yuborilmoqda…"
+    },
+    "errors": {
+      "rejected": "Kalit ulushi rad etildi.",
+      "unavailable": "Ombor mavjud emas. Keyinroq urinib koʼring.",
+      "generic": "Kalit ulushini yuborib boʼlmadi."
+    }
+  },
+  "devices": {
+    "title": "Kirish qurilmalari",
+    "add": "Qurilma qoʻshish",
+    "empty": "Hozircha qurilmalar yoʻq.",
+    "createTitle": "Yangi qurilma",
+    "create": "Yaratish",
+    "name": "Nomi",
+    "statusActive": "Faol",
+    "statusRevoked": "Bekor qilingan",
+    "created": "Yaratilgan: {date}",
+    "lastUsed": "oxirgi soʻrov: {date}",
+    "neverUsed": "soʻrov boʻlmagan",
+    "calls": "Soʻrovlar",
+    "viewCalls": "{name} soʻrovlari",
+    "revokeAction": "Bekor qilish",
+    "revoke": "{name} qurilmasini bekor qilish",
+    "revokeTitle": "{name} bekor qilinsinmi?",
+    "revokeText": "Qurilma darhol ishlamay qoladi. Buni qaytarib boʻlmaydi; yangi qurilma yarating.",
+    "revoked": "Qurilma bekor qilindi",
+    "tokenTitle": "{name} tokeni",
+    "tokenWarning": "Tokenni hozir nusxalang. U faqat bir marta koʻrsatiladi va uni tiklab boʻlmaydi.",
+    "tokenLabel": "Qurilma tokeni",
+    "copied": "Nusxalandi",
+    "tokenDone": "Nusxaladim",
+    "callsTitle": "{name} soʻrovlari",
+    "callsHint": "Oxirgi 7 kun.",
+    "callsEmpty": "Oxirgi 7 kunda soʻrov boʻlmagan.",
+    "callsNobody": "Hech kim aniqlanmadi",
+    "callsExcused": "Sababli"
+  },
+  "studentFace": {
+    "column": "Kirish surati",
+    "action": "Kirish surati",
+    "title": "Kirish surati: {name}",
+    "hint": "JPEG yoki PNG, 5 MB gacha. Bu yerda qoʻyilgan suratni oʻquvchi oʻzgartira olmaydi."
+  },
+  "excuses": {
+    "title": "Sababli qoldirishlar",
+    "tabs": {
+      "pending": "Kutilmoqda",
+      "approved": "Tasdiqlangan",
+      "rejected": "Rad etilgan",
+      "all": "Hammasi"
+    },
+    "empty": "Bu yerda hech narsa yo‘q.",
+    "loadMore": "Yana ko‘rsatish",
+    "student": "O‘quvchi",
+    "type": "Turi",
+    "period": "{from} – {to}",
+    "status": {
+      "pending": "Kutilmoqda",
+      "approved": "Tasdiqlangan",
+      "rejected": "Rad etilgan",
+      "cancelled": "Bekor qilingan",
+      "revoked": "Qaytarib olingan"
+    },
+    "open": "Sababni ochish: {name}",
+    "openEnded": "{from} – keyingi ko‘rsatmagacha",
+    "range": "{from} – {to}",
+    "detail": {
+      "reason": "Sabab",
+      "period": "Davr",
+      "template": "Turi",
+      "decision": "Qaror",
+      "noReason": "Sabab ko‘rsatilmagan"
+    },
+    "actions": {
+      "approve": "Tasdiqlash",
+      "reject": "Rad etish"
+    },
+    "decision": {
+      "approve": "Sababni tasdiqlash",
+      "reject": "Sababni rad etish",
+      "revoke": "Sababni qaytarib olish",
+      "comment": "Izoh",
+      "placeholder": "O‘quvchi ko‘radi",
+      "submit": "Tasdiqlash",
+      "cancel": "Bekor qilish",
+      "approved": "Sabab tasdiqlandi",
+      "rejected": "Sabab rad etildi",
+      "revoked": "Sabab qaytarib olindi",
+      "ended": "Tugash sanasi saqlandi"
+    },
+    "thread": {
+      "title": "Xabarlar",
+      "empty": "Hozircha xabarlar yo‘q.",
+      "label": "Xabar",
+      "placeholder": "Xabar yozing",
+      "send": "Yuborish",
+      "attach": "Fayllarni biriktirish",
+      "sent": "Xabar yuborildi",
+      "download": "Ochish: {name}"
     }
   }
 }

@@ -3,10 +3,9 @@
 import { postRegisterEmail, type RegistrationStart } from "@ihsp/api"
 import { useMutation } from "@tanstack/react-query"
 import { FlowCard } from "../../shared/components/flow-card"
-import { InfoAlert } from "../../shared/components/error-alert"
+import { InfoAlert, useTr } from "@ihsp/features-core/id-account"
 import { PasswordEmailForm, type PasswordEmailValues } from "../../shared/components/password-email-form"
 import { StepIndicator } from "../../shared/components/step-indicator"
-import { useTr } from "../../shared/hooks/use-tr"
 
 type RegisterProfileStepProps = {
   start: RegistrationStart

@@ -1,6 +1,6 @@
 "use client"
 
-import { PasskeysPage } from "@/features/security/components/passkeys-page"
+import { PasskeysPage } from "@ihsp/features-core/id-account"
 
 export default function Page() {
   return <PasskeysPage />

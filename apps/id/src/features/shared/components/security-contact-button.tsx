@@ -3,7 +3,7 @@
 import { readConfig } from "@ihsp/config"
 import { Button, ResponsiveDialog } from "@ihsp/ui"
 import { useEffect, useState } from "react"
-import { useTr } from "../hooks/use-tr"
+import { useTr } from "@ihsp/features-core/id-account"
 import { parseSecurityContact } from "../utils/security-contact"
 
 /**

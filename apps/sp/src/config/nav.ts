@@ -31,6 +31,7 @@ export function useNav(): { groups: NavGroup[]; bottom: BottomNavItem[] } {
             grades,
             homework,
             { title: t("exams"), url: "/exams/", icon: "exams" },
+            { title: t("excuses"), url: "/excuses/", icon: "checks" },
             { title: t("teachers"), url: "/teachers/", icon: IconUserCircle },
             ...(isHead ? [{ title: t("myGroup"), url: "/my-group/", icon: "groups" as const }] : []),
           ],

@@ -6,8 +6,7 @@ import { AppThemeProvider } from "@ihsp/ui"
 import { screen, waitFor } from "@testing-library/react"
 import { HttpResponse, http } from "msw"
 import { buildIdNav } from "../config/nav"
-import { AppearancePage } from "../features/appearance/components/appearance-page"
-import { SecurityPage } from "../features/security/components/security-page"
+import { AppearancePage, SecurityPage } from "@ihsp/features-core/id-account"
 import { LOGGED_IN, allowSlowTests, findLink, renderId } from "./helpers"
 
 allowSlowTests()

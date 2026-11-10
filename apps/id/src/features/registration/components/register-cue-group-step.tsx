@@ -4,9 +4,8 @@ import { getIdLoginCueGroupsQuery, type LoginCueGroup } from "@ihsp/api"
 import { Button, Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@ihsp/ui"
 import { useQuery } from "@tanstack/react-query"
 import { useState } from "react"
-import { ErrorAlert } from "../../shared/components/error-alert"
+import { ErrorAlert, useTr } from "@ihsp/features-core/id-account"
 import { FlowCard } from "../../shared/components/flow-card"
-import { useTr } from "../../shared/hooks/use-tr"
 
 type RegisterCueGroupStepProps = {
   onPicked: (group: LoginCueGroup) => void

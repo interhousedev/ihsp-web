@@ -3,10 +3,8 @@
 import { postTelegramLogin, postTelegramOtpRequest } from "@ihsp/api"
 import { Button } from "@ihsp/ui"
 import { useMutation } from "@tanstack/react-query"
-import { CodeStep } from "../../shared/components/code-step"
+import { CodeStep, InfoAlert, useTr } from "@ihsp/features-core/id-account"
 import { FlowCard } from "../../shared/components/flow-card"
-import { InfoAlert } from "../../shared/components/error-alert"
-import { useTr } from "../../shared/hooks/use-tr"
 import { useTelegramLogin } from "../hooks/use-telegram-login"
 
 type MiniAppCodeFormProps = {

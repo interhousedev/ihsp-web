@@ -3,14 +3,16 @@ import { beforeEach, describe, expect, test } from "bun:test"
 import { adminMe, apiUrl, server, teacherMe, userMe } from "@ihsp/test-utils"
 import { screen, waitFor } from "@testing-library/react"
 import { HttpResponse, http } from "msw"
-import { ActivityPage } from "../features/security/components/activity-page"
-import { DeleteAccountPage } from "../features/security/components/delete-account-page"
-import { EmailChangePage } from "../features/security/components/email-change-page"
-import { OtpSettingsPage } from "../features/security/components/otp-settings-page"
-import { PasswordChangePage } from "../features/security/components/password-change-page"
-import { SecurityPage } from "../features/security/components/security-page"
-import { SessionsPage } from "../features/security/components/sessions-page"
-import { TelegramLinksPage } from "../features/security/components/telegram-links-page"
+import {
+  ActivityPage,
+  DeleteAccountPage,
+  EmailChangePage,
+  OtpSettingsPage,
+  PasswordChangePage,
+  SecurityPage,
+  SessionsPage,
+  TelegramLinksPage,
+} from "@ihsp/features-core/id-account"
 import { clickButton, fillField, findButton, findLink, LOGGED_IN, renderId, allowSlowTests } from "./helpers"
 import { redirectToMock } from "./redirect-mock"
 

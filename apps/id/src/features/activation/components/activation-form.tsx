@@ -5,7 +5,7 @@ import { useMutation } from "@tanstack/react-query"
 import { FlowCard } from "../../shared/components/flow-card"
 import { PasswordEmailForm, type PasswordEmailValues } from "../../shared/components/password-email-form"
 import { StepIndicator } from "../../shared/components/step-indicator"
-import { useTr } from "../../shared/hooks/use-tr"
+import { useTr } from "@ihsp/features-core/id-account"
 
 type ActivationFormProps = {
   token: string

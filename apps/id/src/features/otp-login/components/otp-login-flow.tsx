@@ -4,7 +4,7 @@ import { useState } from "react"
 import { useLoginInfo } from "../../login/hooks/use-login-info"
 import { FlowSkeleton } from "../../shared/components/flow-skeleton"
 import { RequestFailed } from "../../shared/components/request-failed"
-import { useTr } from "../../shared/hooks/use-tr"
+import { useTr } from "@ihsp/features-core/id-account"
 import { OtpCodeForm } from "./otp-code-form"
 import { OtpRequestForm } from "./otp-request-form"
 

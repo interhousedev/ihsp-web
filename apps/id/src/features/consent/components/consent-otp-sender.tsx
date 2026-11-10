@@ -3,8 +3,7 @@
 import { postConsentOtp } from "@ihsp/api"
 import { LoadingButton } from "@ihsp/ui"
 import { useMutation } from "@tanstack/react-query"
-import { ErrorAlert } from "../../shared/components/error-alert"
-import { useTr } from "../../shared/hooks/use-tr"
+import { ErrorAlert, useTr } from "@ihsp/features-core/id-account"
 
 /**
  * **Send code** of an Administration consent: `POST /v1/id/consent/otp` names the user through the consent challenge,

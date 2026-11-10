@@ -1,6 +1,6 @@
 "use client"
 
-import { OtpSettingsPage } from "@/features/security/components/otp-settings-page"
+import { OtpSettingsPage } from "@ihsp/features-core/id-account"
 
 export default function Page() {
   return <OtpSettingsPage />

@@ -28,7 +28,7 @@ export function installAnchorUrl(hub: string, key: PlatformKey): string {
 }
 
 /** Inside Telegram another platform leaves through the SDK: the webview would lose the signed launch parameters. */
-function leaveMiniApp(href: string) {
+export function leaveMiniApp(href: string) {
   return (event: MouseEvent) => {
     event.preventDefault()
     import("@ihsp/telegram")

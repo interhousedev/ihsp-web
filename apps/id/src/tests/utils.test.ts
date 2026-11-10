@@ -1,11 +1,17 @@
 /** Pure helpers: password rules (ID-4), error mapping, device text, connector snippet, redirects. */
 import { describe, expect, test } from "bun:test"
 import { ApiError, errorMessageKey } from "@ihsp/api"
-import { connectorConfigSnippet, humanizeKey, mcpServerUrl } from "../features/connectors/utils/connector-config"
-import { describeDevice } from "../features/shared/utils/describe-device"
+import {
+  checkPassword,
+  connectorConfigSnippet,
+  describeDevice,
+  humanizeKey,
+  idErrorKey,
+  idErrorValues,
+  isPasswordValid,
+  mcpServerUrl,
+} from "@ihsp/features-core/id-account"
 import { challengeUsedTarget, withChallenge } from "../features/shared/utils/challenge"
-import { idErrorKey, idErrorValues } from "../features/shared/utils/error-key"
-import { checkPassword, isPasswordValid } from "../features/shared/utils/password-rules"
 import { isEmail } from "../features/shared/utils/is-email"
 import { toolsForScope } from "../features/consent/utils/scope-tools"
 import { scopeCatalog } from "@ihsp/test-utils"

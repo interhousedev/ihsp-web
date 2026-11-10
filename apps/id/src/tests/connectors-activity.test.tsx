@@ -3,10 +3,10 @@ import { describe, expect, test } from "bun:test"
 import { apiUrl, server } from "@ihsp/test-utils"
 import { screen } from "@testing-library/react"
 import { HttpResponse, http } from "msw"
-import en from "../../messages/en.json"
-import ru from "../../messages/ru.json"
-import uz from "../../messages/uz.json"
-import { ActivityPage } from "../features/connectors/components/activity-page"
+import en from "@ihsp/i18n/messages/en.json"
+import ru from "@ihsp/i18n/messages/ru.json"
+import uz from "@ihsp/i18n/messages/uz.json"
+import { ConnectorActivityPage } from "@ihsp/features-core/id-account"
 import { allowSlowTests, LOGGED_IN, renderId } from "./helpers"
 
 allowSlowTests()
@@ -35,7 +35,7 @@ const STUDENT_SCOPES = [
 
 describe("connector activity", () => {
   test("lists a call with its key and outcome", async () => {
-    renderId(<ActivityPage />, { route: "/connectors/activity/", session: LOGGED_IN })
+    renderId(<ConnectorActivityPage />, { route: "/connectors/activity/", session: LOGGED_IN })
 
     expect(await screen.findByText("get_marks")).toBeInTheDocument()
     expect(screen.getByText("Claude Desktop")).toBeInTheDocument()
@@ -45,7 +45,7 @@ describe("connector activity", () => {
     server.use(
       http.get(apiUrl("/v1/id/me/connectors/activity"), () => HttpResponse.json({ items: [], next_cursor: null })),
     )
-    renderId(<ActivityPage />, { route: "/connectors/activity/", session: LOGGED_IN })
+    renderId(<ConnectorActivityPage />, { route: "/connectors/activity/", session: LOGGED_IN })
 
     expect(await screen.findByText("Your keys have not made any calls yet.")).toBeInTheDocument()
   })

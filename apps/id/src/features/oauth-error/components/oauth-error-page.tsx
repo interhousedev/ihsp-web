@@ -1,9 +1,8 @@
 "use client"
 
 import { FlowCard } from "../../shared/components/flow-card"
-import { LinkButton } from "../../shared/components/link-button"
+import { LinkButton, useTr } from "@ihsp/features-core/id-account"
 import { useQueryParam } from "../../shared/hooks/use-query-param"
-import { useTr } from "../../shared/hooks/use-tr"
 
 const ERROR_CODE = /^[a-z_]{1,64}$/
 
