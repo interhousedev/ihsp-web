@@ -1,6 +1,14 @@
 "use client"
 
-import { DEFAULT_LOCALE, TIME_ZONE, mergeMessages, useLocaleStore, type Locale, type Messages } from "@ihsp/i18n"
+import {
+  DEFAULT_LOCALE,
+  TIME_ZONE,
+  applyBrand,
+  mergeMessages,
+  useLocaleStore,
+  type Locale,
+  type Messages,
+} from "@ihsp/i18n"
 import sharedEn from "@ihsp/i18n/messages/en.json"
 import sharedRu from "@ihsp/i18n/messages/ru.json"
 import sharedUz from "@ihsp/i18n/messages/uz.json"
@@ -15,9 +23,9 @@ import uz from "../../messages/uz.json"
  * a language switch needs no request. No ConfigGate: the page renders without `/env.js`; links read it after mount.
  */
 export const LANDING_MESSAGES: Record<Locale, Messages> = {
-  uz: mergeMessages(sharedUz as Messages, uz as Messages),
-  ru: mergeMessages(sharedRu as Messages, ru as Messages),
-  en: mergeMessages(sharedEn as Messages, en as Messages),
+  uz: applyBrand(mergeMessages(sharedUz as Messages, uz as Messages)),
+  ru: applyBrand(mergeMessages(sharedRu as Messages, ru as Messages)),
+  en: applyBrand(mergeMessages(sharedEn as Messages, en as Messages)),
 }
 
 export function Providers({ children }: { children: ReactNode }) {
