@@ -215,6 +215,7 @@
       "no": "Not registered"
     },
     "columns": {
+      "avatar": "Photo",
       "name": "Name",
       "login": "Login",
       "group": "Group",
@@ -417,6 +418,7 @@
       "deactivated": "Deactivated"
     },
     "columns": {
+      "avatar": "Photo",
       "name": "Name",
       "login": "Login",
       "roles": "Roles",
@@ -2116,6 +2118,11 @@
     "sealed": "Sealed",
     "unsealed": "Unsealed",
     "progress": "{progress} of {threshold} key shares entered",
+    "banner": {
+      "title": "The secrets vault is sealed",
+      "description": "Administrators who use an authenticator app cannot sign in until it is unsealed.",
+      "action": "Unseal the vault"
+    },
     "form": {
       "title": "Enter a key share",
       "key": "Key share",

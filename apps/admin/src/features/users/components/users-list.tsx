@@ -5,6 +5,7 @@ import { useFormatters, useT } from "@ihsp/i18n"
 import { Badge, Button, ListToolbar, type ToolbarFilter } from "@ihsp/ui"
 import Link from "next/link"
 import { useMemo, useState } from "react"
+import { FaceAvatar } from "../../shared/components/face-avatar"
 import { ExportButton } from "../../shared/components/export-button"
 import { PagedTable } from "../../shared/components/paged-table"
 import { ReasonDialog } from "../../shared/components/reason-dialog"
@@ -88,6 +89,9 @@ export function UsersList() {
         all: tSel("selectAll"),
         row: (user) => tSel("selectRow", { name: fullNameWithMiddle(user) }),
       }),
+      col<AdminUser>("avatar", t("columns.avatar"), (user) => (
+        <FaceAvatar userId={user.id} name={fullNameWithMiddle(user)} />
+      )),
       col<AdminUser>(
         "name",
         t("columns.name"),

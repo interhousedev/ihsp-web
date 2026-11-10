@@ -215,6 +215,7 @@
       "no": "Roʻyxatdan oʻtmagan"
     },
     "columns": {
+      "avatar": "Surat",
       "name": "Ism",
       "login": "Login",
       "group": "Guruh",
@@ -417,6 +418,7 @@
       "deactivated": "Faolsizlantirilgan"
     },
     "columns": {
+      "avatar": "Surat",
       "name": "Ism",
       "login": "Login",
       "roles": "Rollar",
@@ -2116,6 +2118,11 @@
     "sealed": "Muhrlangan",
     "unsealed": "Ochilgan",
     "progress": "Kiritilgan kalit ulushlari: {progress} / {threshold}",
+    "banner": {
+      "title": "Sirlar ombori muhrlangan",
+      "description": "Autentifikator ilovasidan foydalanuvchi administratorlar ombor ochilmaguncha tizimga kira olmaydi.",
+      "action": "Omborni ochish"
+    },
     "form": {
       "title": "Kalit ulushini kiriting",
       "key": "Kalit ulushi",

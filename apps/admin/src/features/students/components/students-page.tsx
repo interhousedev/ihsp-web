@@ -5,6 +5,7 @@ import { useFormatters, useT } from "@ihsp/i18n"
 import { Badge, Button, Icons, PageContainer, buttonVariants, ListToolbar, type ToolbarFilter } from "@ihsp/ui"
 import Link from "next/link"
 import { useMemo, useState } from "react"
+import { FaceAvatar } from "../../shared/components/face-avatar"
 import { ExportButton } from "../../shared/components/export-button"
 import { PagedTable } from "../../shared/components/paged-table"
 import { StatusBadge } from "../../shared/components/status-badge"
@@ -97,6 +98,9 @@ export function StudentsPage() {
         all: tSel("selectAll"),
         row: (student) => tSel("selectRow", { name: fullName(student) }),
       }),
+      col<StudentItem>("avatar", t("columns.avatar"), (student) => (
+        <FaceAvatar userId={student.user_id} name={fullName(student)} />
+      )),
       col<StudentItem>(
         "name",
         t("columns.name"),

@@ -7,6 +7,7 @@ import { Suspense, type ReactNode } from "react"
 import { useNav } from "../../../config/nav"
 import { AdminBrand } from "./admin-brand"
 import { ProfileMenu } from "./profile-menu"
+import { VaultSealedBanner } from "../../vault/components/vault-sealed-banner"
 
 function PageLoading() {
   return (
@@ -32,6 +33,9 @@ export function AdminFrame({ children }: { children: ReactNode }) {
           controlsLeading={<ShellNavControls />}
           controls={<ThemeToggle />}
         >
+          <div className="p-4 pb-0 md:px-6 md:pt-6" data-shell-flush>
+            <VaultSealedBanner />
+          </div>
           <Suspense fallback={<PageLoading />}>{children}</Suspense>
         </AppShell>
       </RequireRole>
