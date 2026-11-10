@@ -1,1 +1,5 @@
 # Accepted Trivy findings, one ID per line, each with the reason and a review date.
+
+# libxslt 1.1.43-r4 is not yet in the Alpine repositories (apk upgrade still yields r3); nginx never runs XSLT. Review 2026-11-25.
+CVE-2026-87636
+CVE-2026-9947
