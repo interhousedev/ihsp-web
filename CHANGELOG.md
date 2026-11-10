@@ -4,6 +4,8 @@ All notable changes to this project are documented here. The format follows [Kee
 
 ## [Unreleased]
 
+## [1.2.0] - 2026-11-10
+
 ### Added
 
 - Admin: upload login cues from a CSV, TSV or TXT file; a Vault unseal page; entrance devices (keys shown once, revocation, 7-day call log).
@@ -24,6 +26,10 @@ All notable changes to this project are documented here. The format follows [Kee
 
 - Landing: brand placeholders (`{orgAlias}`, `{appMy}`) were shown as message keys.
 - iht.id registration: the long "never logged into EMIS" button no longer clips its text.
+
+### Known issues
+
+- Dashboard: homework and flash card widgets show empty-state text instead of 0; the library widget shows the reading shelf without due dates.
 
 ## [1.1.1] - 2026-11-06
 
