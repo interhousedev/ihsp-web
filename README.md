@@ -15,7 +15,7 @@
   <a href="#apps">Apps</a> ·
   <a href="#architecture">Architecture</a> ·
   <a href="#security">Security</a> ·
-  <a href="#quick-start">Quick start</a> ·
+  <a href="#run">Run</a> ·
   <a href="#tests-and-checks">Testing</a> ·
   <a href="#deployment">Deploy</a> ·
   <a href="CONTRIBUTING.md">Contributing</a> ·
@@ -24,24 +24,37 @@
 
 # iht-web
 
+**The web apps of the IHT platform: eight statically exported Next.js apps and their shared packages.**
+
 Web apps of the IHT platform: the student and staff platform of the Academic Lyceum International House Tashkent (internal name IHSP, Interhouse Student Platform). It covers daily school life: calendar, marks, homework, attendance, an AI study assistant with notebooks, a library, courses (LMS), files and links, a student mailbox and a Telegram mini app.
 
 The backend lives in the sibling repository `iht-backend`. This repository holds eight statically exported Next.js apps, the shared packages, the nginx image that serves them, and the end-to-end tests.
 
-## Apps
+## Overview
+
+### Apps
 
 | App | Directory | What it does | Screenshot |
 |---|---|---|---|
-| **id** (IHT ID) | `apps/id` | Sign-in, registration, one-time codes, Telegram login, account security; the OAuth front end for Ory Hydra. | _screenshot pending_ |
-| **sp** (my.iht) | `apps/sp` | The student app: today, timetable, marks, homework, AI assistant, notebooks, mail, files. Also the PWA and the Telegram mini app. | <img src="apps/landing/public/screens/sp-home.webp" width="160" alt="my.iht home"> <img src="apps/landing/public/screens/sp-assistant.webp" width="160" alt="my.iht assistant"> |
-| **staff** (IHT Учителям) | `apps/staff` | Teachers and curators: journal, attendance, work-offs, classes. | <img src="apps/landing/public/screens/staff-journal.webp" width="160" alt="Staff journal"> |
-| **admin** | `apps/admin` | Administration: users, roles, broadcasts, knowledge base, AI limits and usage, jobs and logs. | _screenshot pending_ |
-| **lms** | `apps/lms` | Courses: modules, lessons and steps, editor for course staff. | <img src="apps/landing/public/screens/lms-course.webp" width="160" alt="LMS course"> |
-| **share** | `apps/share` | Public read-only pages for shared chats and flash card sets. | _screenshot pending_ |
-| **library** | `apps/library` | Catalogue, reader and librarian tools. | <img src="apps/landing/public/screens/library-catalog.webp" width="160" alt="Library catalogue"> |
-| **landing** | `apps/landing` | Public landing page for applicants and students. | _screenshot pending_ |
+| **id** (IHT ID) | `apps/id` | Sign-in, registration, one-time codes, Telegram login, account security; the OAuth front end for Ory Hydra. | <img src="docs/assets/screens/id-sign-in.png" width="160" alt="IHT ID sign-in"> |
+| **sp** (my.iht) | `apps/sp` | The student app: today, timetable, marks, homework, AI assistant, notebooks, mail, files. Also the PWA and the Telegram mini app. | <img src="docs/assets/screens/sp-home.png" width="160" alt="my.iht home"> <img src="docs/assets/screens/sp-assistant.png" width="160" alt="my.iht assistant"> |
+| **staff** (IHT Учителям) | `apps/staff` | Teachers and curators: journal, attendance, work-offs, classes. | <img src="docs/assets/screens/staff-journal.png" width="160" alt="Staff journal"> |
+| **admin** | `apps/admin` | Administration: users, roles, broadcasts, knowledge base, AI limits and usage, jobs and logs. | <img src="docs/assets/screens/admin-students.png" width="160" alt="Admin students"> |
+| **lms** | `apps/lms` | Courses: modules, lessons and steps, editor for course staff. | <img src="docs/assets/screens/lms-catalog.png" width="160" alt="LMS catalogue"> |
+| **share** | `apps/share` | Public read-only pages for shared chats and flash card sets. | — |
+| **library** | `apps/library` | Catalogue, reader and librarian tools. | <img src="docs/assets/screens/library-catalog.png" width="160" alt="Library catalogue"> |
+| **landing** | `apps/landing` | Public landing page for applicants and students. | <img src="docs/assets/screens/landing-home.png" width="160" alt="Landing"> |
 
-More screens: [timetable](apps/landing/public/screens/sp-timetable.webp), [marks](apps/landing/public/screens/sp-marks.webp), [notebooks](apps/landing/public/screens/sp-notebooks.webp).
+More screens: [timetable](docs/assets/screens/sp-timetable.png), [marks](docs/assets/screens/sp-marks.png), [notebooks](docs/assets/screens/sp-notebooks.png). Every app has its own README (banner, Overview, Run, Configuration, Screens, Links); screenshots are `docs/assets/screens/<app>-<screen>.png`.
+
+## Screens
+
+Screenshots are stored in `docs/assets/screens/` as `<app>-<screen>.png` (for example `sp-home.png`, `staff-journal.png`, `lms-catalog.png`, `library-catalog.png`) and are shown in the table above and in each app README.
+
+## Links
+
+- Backend: the sibling repository `iht-backend` ([README](../iht-backend/README.md)); the contract is [`packages/api/openapi.json`](packages/api/openapi.json).
+- [CONTRIBUTING.md](CONTRIBUTING.md), [CODESTYLE.md](CODESTYLE.md), [SECURITY.md](SECURITY.md)
 
 ## Apps and hosts
 
@@ -93,7 +106,7 @@ flowchart LR
 
 Report vulnerabilities privately; see [SECURITY.md](SECURITY.md).
 
-## Quick start
+## Run
 
 ```bash
 git clone https://github.com/interhousedev/ihsp-web.git iht-web
@@ -143,7 +156,11 @@ Demo logins (local stack only): `abdullayev.alisher` / `StudentDemo1`, `usmonov.
 
 Runtime configuration: in development each app serves its own `public/env.js` with dev values; in the container `deploy/entrypoint.sh` renders `deploy/env.js.template` with `envsubst` from variables such as `IHSP_WEB_API_URL`, `IHSP_WEB_ID_URL`, `IHSP_WEB_HYDRA_URL`, `APP_ENV` and `PWA_APPS`. Never read configuration at module scope; call `getConfig()`.
 
-## Fake and real modes
+## Configuration
+
+Runtime configuration reaches the apps only through `/env.js` (`window.__ENV__`, read with `getConfig()`); the container entrypoint renders it from environment variables.
+
+### Fake and real modes
 
 The web repository has no secrets. Whether the backend uses real EMIS, OpenRouter, Exa or Telegram is decided by the backend's git-ignored `.env.local` (see the iht-backend README). The web apps behave the same in both modes.
 

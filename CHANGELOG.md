@@ -7,10 +7,23 @@ All notable changes to this project are documented here. The format follows [Kee
 ### Added
 
 - Admin: upload login cues from a CSV, TSV or TXT file; a Vault unseal page; entrance devices (keys shown once, revocation, 7-day call log).
+- Share: visualizations of guest bot answers (`g-` slugs); opened as a Telegram Mini App, the view calls `ready()` and expands.
 - iht.id: personal API tokens with expiry, revocation and last use; the account pages also appear in my.iht under the profile.
 - Face photos: students upload their own in the profile unless a curator or administrator set one; curators manage their students' photos.
 - Excuses: students request excuses with documents and a message thread; curators approve, reject, revoke and create exclusions; excused lessons are locked in the journal.
 - Onboarding tour, a floating assistant and an app-map search in my.iht and the staff app.
+- my.iht dashboard: an even grid with drag to reorder in edit mode, new library and recent notebook widgets, a full-width size, and the same loading, empty and error states on every card; one column on phones.
+- Admin: a banner when Vault is sealed, linking to the unseal page; administrators see students' face photos.
+
+### Changed
+
+- Timetable, journal and attendance use the backend's single `excused` flag.
+- READMEs: unified banners and current screenshots.
+
+### Fixed
+
+- Landing: brand placeholders (`{orgAlias}`, `{appMy}`) were shown as message keys.
+- iht.id registration: the long "never logged into EMIS" button no longer clips its text.
 
 ## [1.1.1] - 2026-11-06
 

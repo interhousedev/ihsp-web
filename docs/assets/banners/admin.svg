@@ -1,0 +1,37 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="320" viewBox="0 0 1280 320" role="img" aria-labelledby="t d">
+  <title id="t">IHT Admin</title>
+  <desc id="d">Users, roles, broadcasts, AI limits and monitoring</desc>
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#1c2c63"/>
+      <stop offset="0.6" stop-color="#273d88"/>
+      <stop offset="1" stop-color="#5b6fc9"/>
+    </linearGradient>
+    <radialGradient id="glow1" cx="0.5" cy="0.5" r="0.5"><stop offset="0" stop-color="#a9b8f0" stop-opacity="0.75"/><stop offset="1" stop-color="#a9b8f0" stop-opacity="0"/></radialGradient>
+    <radialGradient id="glow2" cx="0.5" cy="0.5" r="0.5"><stop offset="0" stop-color="#5b6fc9" stop-opacity="0.9"/><stop offset="1" stop-color="#5b6fc9" stop-opacity="0"/></radialGradient>
+    <linearGradient id="sheen" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#ffffff" stop-opacity="0.38"/><stop offset="1" stop-color="#ffffff" stop-opacity="0.06"/>
+    </linearGradient>
+    <filter id="blur" x="-20%" y="-20%" width="140%" height="140%"><feGaussianBlur stdDeviation="28"/></filter>
+    <filter id="soft" x="-20%" y="-20%" width="140%" height="140%"><feGaussianBlur stdDeviation="2"/></filter>
+    <clipPath id="card"><rect width="1280" height="320" rx="24"/></clipPath>
+    <clipPath id="tile"><rect width="500" height="500" rx="110"/></clipPath>
+  </defs>
+  <g clip-path="url(#card)">
+    <rect width="1280" height="320" fill="url(#bg)"/>
+    <g filter="url(#blur)">
+      <circle cx="1040" cy="40" r="170" fill="url(#glow1)"/>
+      <circle cx="820" cy="300" r="150" fill="url(#glow2)"/>
+      <circle cx="140" cy="300" r="130" fill="url(#glow1)" opacity="0.6"/>
+    </g>
+    <rect x="40" y="36" width="1200" height="248" rx="28" fill="url(#sheen)" stroke="#ffffff" stroke-opacity="0.4" stroke-width="1.5"/>
+    <rect x="41" y="37" width="1198" height="60" rx="27" fill="#ffffff" fill-opacity="0.08" filter="url(#soft)"/>
+    <g transform="translate(84 84) scale(0.3)" >
+      <g clip-path="url(#tile)"><rect width="500" height="500" fill="#273D88"/><path d="M198.839 114C206.868 114 214.443 117.182 220.2 122.938L241.562 144.3H371.7C388.365 144.3 402 157.935 402 174.6V356.4C402 373.065 388.365 386.7 371.7 386.7H129.3C112.635 386.7 99.0001 373.065 99 356.4V144.3C99.0001 127.635 112.635 114 129.3 114H198.839ZM129.3 174.6V356.4H371.7V174.6H129.3ZM256.863 204.9C262.166 204.901 266.558 209.293 266.559 214.596V220.505C271.861 222.474 276.861 225.352 281.255 229.14L286.405 226.11C287.508 225.457 288.729 225.029 289.998 224.851C291.267 224.672 292.558 224.748 293.798 225.072C295.038 225.396 296.201 225.962 297.221 226.738C298.24 227.515 299.095 228.486 299.737 229.595L306.101 240.654C308.827 245.351 307.313 251.259 302.616 253.986L297.616 256.864C298.071 259.743 298.374 262.622 298.374 265.5C298.374 268.379 298.222 271.257 297.616 274.136L302.616 277.014C307.161 279.741 308.827 285.649 306.101 290.346L299.737 301.405C297.01 305.95 291.102 307.618 286.405 304.891L281.255 301.86C276.861 305.648 271.861 308.527 266.559 310.496V316.404C266.559 321.707 262.166 326.1 256.863 326.101H244.137C238.834 326.1 234.441 321.707 234.441 316.404V310.496C229.139 308.527 224.139 305.648 219.745 301.86L214.595 304.891C209.898 307.618 203.99 305.95 201.263 301.405L194.899 290.346C192.173 285.649 193.687 279.741 198.384 277.014L203.384 274.136C202.929 271.257 202.626 268.379 202.626 265.5C202.626 262.622 202.778 259.743 203.384 256.864L198.384 253.986C193.839 251.259 192.173 245.351 194.899 240.654L201.263 229.595C202.588 227.386 204.725 225.783 207.218 225.132C209.71 224.481 212.358 224.832 214.595 226.11L219.745 229.14C224.139 225.352 229.139 222.474 234.441 220.505V214.596C234.442 209.293 238.834 204.901 244.137 204.9H256.863ZM250.5 242.018C237.774 242.018 227.018 252.774 227.018 265.5C227.018 278.226 237.774 288.982 250.5 288.982C263.226 288.982 273.982 278.226 273.982 265.5C273.982 252.774 263.226 242.018 250.5 242.018Z" fill="white"/></g>
+    </g>
+    <rect x="84" y="84" width="150" height="150" rx="33" fill="none" stroke="#ffffff" stroke-opacity="0.55" stroke-width="2"/>
+    <text x="268" y="150" font-family="Inter, system-ui, sans-serif" font-size="58" font-weight="700" fill="#ffffff">IHT Admin</text>
+    <text x="270" y="192" font-family="Inter, system-ui, sans-serif" font-size="22" fill="#e1e7fa">Users, roles, broadcasts, AI limits and monitoring</text>
+    <g transform="translate(270 218)" font-family="Inter, system-ui, sans-serif" font-size="15" font-weight="600" fill="#ffffff"><rect x="0" width="86" height="34" rx="17" fill="#ffffff" fill-opacity="0.16" stroke="#ffffff" stroke-opacity="0.35"/><text x="43.0" y="22" text-anchor="middle">Users</text><rect x="98" width="126" height="34" rx="17" fill="#ffffff" fill-opacity="0.16" stroke="#ffffff" stroke-opacity="0.35"/><text x="161.0" y="22" text-anchor="middle">Knowledge</text><rect x="236" width="96" height="34" rx="17" fill="#ffffff" fill-opacity="0.16" stroke="#ffffff" stroke-opacity="0.35"/><text x="284.0" y="22" text-anchor="middle">Limits</text></g>
+  </g>
+</svg>
