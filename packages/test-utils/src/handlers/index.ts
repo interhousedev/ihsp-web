@@ -19,6 +19,8 @@ import { flashcardsHandlers } from "./flashcards"
 import { idHandlers } from "./id"
 import { idAdminHandlers } from "./id-admin"
 import { idFactorsHandlers } from "./id-factors"
+import { idPersonalTokensHandlers } from "./id-personal-tokens"
+import { adminVaultHandlers } from "./admin-vault"
 import { libraryHandlers } from "./library"
 import { lessonSourcesHandlers } from "./lesson-sources"
 import { linksHandlers } from "./links"
@@ -44,11 +46,14 @@ import { myGroupHandlers } from "./my-group"
 import { teachersHandlers } from "./teachers"
 import { webSearchHandlers } from "./web-search"
 import { workOffsMeHandlers } from "./work-offs-me"
+import { excusesHandlers } from "./excuses"
 import { workOffsStaffHandlers } from "./work-offs-staff"
 import { adminWorkOffsHandlers } from "./work-offs-admin"
 import { loginCuesHandlers } from "./login-cues"
+import { appMapHandlers } from "./app-map"
 import { botPostsHandlers } from "./bot-posts"
 import { feedbackHandlers } from "./feedback"
+import { facesHandlers } from "./faces"
 import { adminFeedbackHandlers } from "./admin-feedback"
 
 export { errorHandlers } from "./errors"
@@ -58,6 +63,9 @@ export { resetTemporaryMarks } from "./temporary-marks"
 export { resetMeSyncState } from "./me-sync"
 export { certificatesImported, resetCertificatesState, setCertificatesStaffForbidden } from "./certificates"
 export { resetAdminJobs } from "./admin-jobs"
+export { personalTokenSecret, resetPersonalTokens } from "./id-personal-tokens"
+export { resetAdminVault } from "./admin-vault"
+export { resetFaces, setMyFace } from "./faces"
 export { resetAdminKnowledge } from "./admin-knowledge"
 export { resetAdminAiState } from "./admin-ai"
 export { resetAiProjectsState } from "./ai-projects"
@@ -95,6 +103,7 @@ export { resetPresentationPlansState } from "./presentation-plans"
 export { resetLessonSourcesState } from "./lesson-sources"
 export { feedbackFixtures } from "./feedback"
 export { resetStaffSubjectsState } from "./staff-subjects"
+export { currentExcuses, resetExcusesState, seedExcuse } from "./excuses"
 export { resetWorkOffsStaffState, seedStaffWorkOffs, staffWorkOffsOf } from "./work-offs-staff"
 export { resetSubjectMaterialsState } from "./subject-materials"
 export { resetTeacherContacts, resetTeacherPhotos, teacherPhotoUploads, type TeacherPhotoUpload } from "./teachers"
@@ -121,6 +130,8 @@ export {
   flashcardsHandlers,
   idAdminHandlers,
   idFactorsHandlers,
+  idPersonalTokensHandlers,
+  adminVaultHandlers,
   idHandlers,
   libraryHandlers,
   lessonSourcesHandlers,
@@ -146,9 +157,11 @@ export {
   myGroupHandlers,
   webSearchHandlers,
   workOffsMeHandlers,
+  excusesHandlers,
   workOffsStaffHandlers,
   adminWorkOffsHandlers,
   loginCuesHandlers,
+  appMapHandlers,
   botPostsHandlers,
 }
 
@@ -162,9 +175,12 @@ export const allHandlers = [
   ...oauthHandlers,
   ...idHandlers,
   ...idFactorsHandlers,
+  ...idPersonalTokensHandlers,
+  ...adminVaultHandlers,
   ...idAdminHandlers,
   ...registrationHandlers,
   ...loginCuesHandlers,
+  ...appMapHandlers,
   ...botPostsHandlers,
   ...feedbackHandlers,
   ...adminFeedbackHandlers,
@@ -181,6 +197,7 @@ export const allHandlers = [
   ...temporaryMarksHandlers,
   ...classworkHandlers,
   ...workOffsMeHandlers,
+  ...excusesHandlers,
   ...workOffsStaffHandlers,
   ...adminWorkOffsHandlers,
   ...marksHandlers,
@@ -196,6 +213,7 @@ export const allHandlers = [
   ...certificatesHandlers,
   ...webSearchHandlers,
   ...adminAiHandlers,
+  ...facesHandlers,
   ...aiHandlers,
   ...flashcardsHandlers,
   ...dashboardHandlers,

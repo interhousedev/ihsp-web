@@ -592,6 +592,170 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/v1/admin/devices": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * List Devices
+         * @description Every device, newest first.
+         */
+        get: operations["list_devices_v1_admin_devices_get"];
+        put?: never;
+        /**
+         * Create Device
+         * @description Create a device; the token is in this response only.
+         */
+        post: operations["create_device_v1_admin_devices_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/admin/devices/{device_id}/calls": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * List Device Calls
+         * @description The device's requests of the last 7 days.
+         */
+        get: operations["list_device_calls_v1_admin_devices__device_id__calls_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/admin/devices/{device_id}/revoke": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Revoke Device
+         * @description Stop the device's token from working.
+         */
+        post: operations["revoke_device_v1_admin_devices__device_id__revoke_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/admin/excuses": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * List Excuses
+         * @description Every excuse, newest first.
+         */
+        get: operations["list_excuses_v1_admin_excuses_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/admin/excuses/{excuse_id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get Excuse
+         * @description One excuse with its thread.
+         */
+        get: operations["get_excuse_v1_admin_excuses__excuse_id__get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/admin/excuses/{excuse_id}/approve": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Approve
+         * @description Approve a pending request.
+         */
+        post: operations["approve_v1_admin_excuses__excuse_id__approve_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/admin/excuses/{excuse_id}/messages": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Post Message
+         * @description Write in the thread.
+         */
+        post: operations["post_message_v1_admin_excuses__excuse_id__messages_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/admin/excuses/{excuse_id}/reject": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Reject
+         * @description Reject a pending request.
+         */
+        post: operations["reject_v1_admin_excuses__excuse_id__reject_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/v1/admin/feedback": {
         parameters: {
             query?: never;
@@ -2538,6 +2702,46 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/v1/admin/vault/status": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Vault Status
+         * @description Seal state of Vault.
+         */
+        get: operations["vault_status_v1_admin_vault_status_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/admin/vault/unseal": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Vault Unseal
+         * @description Submit one unseal key share.
+         */
+        post: operations["vault_unseal_v1_admin_vault_unseal_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/v1/admin/work-offs": {
         parameters: {
             query?: never;
@@ -2897,6 +3101,26 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/v1/app-map": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get App Map
+         * @description List the pages of every app that the caller's roles may open.
+         */
+        get: operations["get_app_map_v1_app_map_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/v1/app/version": {
         parameters: {
             query?: never;
@@ -3243,6 +3467,26 @@ export interface paths {
         get: operations["list_types_v1_certificates_types_get"];
         put?: never;
         post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/device/identify": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Identify
+         * @description Recognise the student on the photo and record the passage.
+         */
+        post: operations["identify_v1_device_identify_post"];
         delete?: never;
         options?: never;
         head?: never;
@@ -4596,6 +4840,50 @@ export interface paths {
          */
         post: operations["post_totp_setup_v1_id_me_totp_setup_post"];
         delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/id/personal-tokens": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * List Personal Tokens
+         * @description The caller's tokens, newest first.
+         */
+        get: operations["list_personal_tokens_v1_id_personal_tokens_get"];
+        put?: never;
+        /**
+         * Create Personal Token
+         * @description Create a token (OTP step-up); the secret is in this response only.
+         */
+        post: operations["create_personal_token_v1_id_personal_tokens_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/id/personal-tokens/{token_id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post?: never;
+        /**
+         * Revoke Personal Token
+         * @description Revoke at once.
+         */
+        delete: operations["revoke_personal_token_v1_id_personal_tokens__token_id__delete"];
         options?: never;
         head?: never;
         patch?: never;
@@ -7284,6 +7572,138 @@ export interface paths {
         put: operations["put_dashboard_v1_me_dashboard_put"];
         post?: never;
         delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/me/excuse-templates": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * List Templates
+         * @description Active reasons for the request form, in display order.
+         */
+        get: operations["list_templates_v1_me_excuse_templates_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/me/excuses": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * List Mine
+         * @description The caller's excuses, newest first.
+         */
+        get: operations["list_mine_v1_me_excuses_get"];
+        put?: never;
+        /**
+         * Request Excuse
+         * @description Ask the curator to excuse absences; the request starts pending.
+         */
+        post: operations["request_excuse_v1_me_excuses_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/me/excuses/{excuse_id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get Mine
+         * @description One of the caller's excuses with its thread; a stranger's answers 404.
+         */
+        get: operations["get_mine_v1_me_excuses__excuse_id__get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/me/excuses/{excuse_id}/cancel": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Cancel
+         * @description Withdraw a pending request.
+         */
+        post: operations["cancel_v1_me_excuses__excuse_id__cancel_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/me/excuses/{excuse_id}/messages": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Post Message
+         * @description Write to the curator; files must be the caller's ready files.
+         */
+        post: operations["post_message_v1_me_excuses__excuse_id__messages_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/me/face": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get My Face
+         * @description Whether the caller has a face on file and whether staff locked it.
+         */
+        get: operations["get_my_face_v1_me_face_get"];
+        /**
+         * Put My Face
+         * @description Upload the caller's face (JPEG or PNG, up to 5 MB, exactly one face).
+         */
+        put: operations["put_my_face_v1_me_face_put"];
+        post?: never;
+        /**
+         * Delete My Face
+         * @description Remove the caller's face; refused while staff hold it.
+         */
+        delete: operations["delete_my_face_v1_me_face_delete"];
         options?: never;
         head?: never;
         patch?: never;
@@ -10016,6 +10436,134 @@ export interface paths {
         patch: operations["update_assessment_v1_staff_assessments__assessment_id__patch"];
         trace?: never;
     };
+    "/v1/staff/excuses": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * List Excuses
+         * @description Excuses of the students the caller curates (all students for Administration).
+         */
+        get: operations["list_excuses_v1_staff_excuses_get"];
+        put?: never;
+        /**
+         * Create Exclusion
+         * @description Excuse a student from the curator's side; approved at once.
+         */
+        post: operations["create_exclusion_v1_staff_excuses_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/staff/excuses/{excuse_id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get Excuse
+         * @description One excuse with its thread; a stranger's student answers 404.
+         */
+        get: operations["get_excuse_v1_staff_excuses__excuse_id__get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        /**
+         * End Excuse
+         * @description Close an approved excuse on a date.
+         */
+        patch: operations["end_excuse_v1_staff_excuses__excuse_id__patch"];
+        trace?: never;
+    };
+    "/v1/staff/excuses/{excuse_id}/approve": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Approve
+         * @description Approve a pending request.
+         */
+        post: operations["approve_v1_staff_excuses__excuse_id__approve_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/staff/excuses/{excuse_id}/messages": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Post Message
+         * @description Write to the student.
+         */
+        post: operations["post_message_v1_staff_excuses__excuse_id__messages_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/staff/excuses/{excuse_id}/reject": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Reject
+         * @description Reject a pending request.
+         */
+        post: operations["reject_v1_staff_excuses__excuse_id__reject_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/staff/excuses/{excuse_id}/revoke": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Revoke
+         * @description Withdraw an approved excuse.
+         */
+        post: operations["revoke_v1_staff_excuses__excuse_id__revoke_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/v1/staff/groups": {
         parameters: {
             query?: never;
@@ -10555,6 +11103,30 @@ export interface paths {
          * @description Remove the caller's photo; nothing happens when there is none.
          */
         delete: operations["delete_my_photo_v1_staff_me_photo_delete"];
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/staff/students/{student_id}/face": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        /**
+         * Put Student Face
+         * @description Set a student's face; the student cannot change it afterwards.
+         */
+        put: operations["put_student_face_v1_staff_students__student_id__face_put"];
+        post?: never;
+        /**
+         * Delete Student Face
+         * @description Remove a student's face and release the lock.
+         */
+        delete: operations["delete_student_face_v1_staff_students__student_id__face_delete"];
         options?: never;
         head?: never;
         patch?: never;
@@ -11107,7 +11679,7 @@ export interface components {
              */
             area: "id" | "my" | "staff" | "admin" | "lms" | "library" | "share" | "bot" | "ai" | "notebooks" | "mail" | "other";
             /** Attachments */
-            attachments: components["schemas"]["AttachmentOut"][];
+            attachments: components["schemas"]["app__interfaces__http__v1__feedback__schemas__AttachmentOut"][];
             /**
              * Created At
              * Format: date-time
@@ -11156,7 +11728,7 @@ export interface components {
              */
             area: "id" | "my" | "staff" | "admin" | "lms" | "library" | "share" | "bot" | "ai" | "notebooks" | "mail" | "other";
             /** Attachments */
-            attachments: components["schemas"]["AttachmentOut"][];
+            attachments: components["schemas"]["app__interfaces__http__v1__feedback__schemas__AttachmentOut"][];
             /**
              * Created At
              * Format: date-time
@@ -11610,6 +12182,34 @@ export interface components {
             tolerance: number;
             /** Value */
             value?: number | null;
+        };
+        /**
+         * AppMapItem
+         * @description One page of an app (or a bot command, which has no URL).
+         */
+        AppMapItem: {
+            /** App */
+            app: string;
+            /** Id */
+            id: string;
+            /** Keywords */
+            keywords: string[];
+            /** Path */
+            path: string;
+            /** Title */
+            title: {
+                [key: string]: string;
+            };
+            /** Url */
+            url: string | null;
+        };
+        /**
+         * AppMapResponse
+         * @description The pages the user may open.
+         */
+        AppMapResponse: {
+            /** Items */
+            items: components["schemas"]["AppMapItem"][];
         };
         /**
          * AppVersionResponse
@@ -12083,25 +12683,6 @@ export interface components {
             title: string;
         };
         /**
-         * AttachmentOut
-         * @description An attached file; ``download_url`` is presigned and valid for one hour.
-         */
-        AttachmentOut: {
-            /** Download Url */
-            download_url: string;
-            /**
-             * File Id
-             * Format: uuid
-             */
-            file_id: string;
-            /** Mime */
-            mime: string;
-            /** Name */
-            name: string;
-            /** Size */
-            size: number;
-        };
-        /**
          * AttendanceLessonResponse
          * @description A lesson of today with attendance and homework badges.
          */
@@ -12521,8 +13102,19 @@ export interface components {
             /** File */
             file: string;
         };
+        /** Body_identify_v1_device_identify_post */
+        Body_identify_v1_device_identify_post: {
+            direction: components["schemas"]["Direction"];
+            /** File */
+            file: string;
+        };
         /** Body_import_preview_v1_admin_students_import_post */
         Body_import_preview_v1_admin_students_import_post: {
+            /** File */
+            file: string;
+        };
+        /** Body_put_my_face_v1_me_face_put */
+        Body_put_my_face_v1_me_face_put: {
             /** File */
             file: string;
         };
@@ -12533,6 +13125,11 @@ export interface components {
         };
         /** Body_put_photo_v1_admin_users__id__photo_put */
         Body_put_photo_v1_admin_users__id__photo_put: {
+            /** File */
+            file: string;
+        };
+        /** Body_put_student_face_v1_staff_students__student_id__face_put */
+        Body_put_student_face_v1_staff_students__student_id__face_put: {
             /** File */
             file: string;
         };
@@ -14302,6 +14899,23 @@ export interface components {
             title?: string | null;
         };
         /**
+         * CreatePersonalTokenBody
+         * @description POST /v1/id/personal-tokens.
+         */
+        CreatePersonalTokenBody: {
+            /**
+             * Expires In Days
+             * @enum {integer}
+             */
+            expires_in_days: 30 | 90 | 365;
+            /** Name */
+            name: string;
+            /** Otp Code */
+            otp_code?: string | null;
+            /** Scopes */
+            scopes: ("me:read" | "me:write")[];
+        };
+        /**
          * CreateReadingListBody
          * @description `ReadingListInput`.
          */
@@ -14925,6 +15539,106 @@ export interface components {
             status: "sent" | "failed" | "unavailable";
         };
         /**
+         * DeviceCallListOut
+         * @description The last 7 days of a device.
+         */
+        DeviceCallListOut: {
+            /** Items */
+            items: components["schemas"]["DeviceCallOut"][];
+        };
+        /**
+         * DeviceCallOut
+         * @description One request of a device.
+         */
+        DeviceCallOut: {
+            /**
+             * At
+             * Format: date-time
+             */
+            at: string;
+            /** Excused */
+            excused: boolean | null;
+            /**
+             * Id
+             * Format: uuid
+             */
+            id: string;
+            /** Matched Name */
+            matched_name: string | null;
+            /** Matched User Id */
+            matched_user_id: string | null;
+            /** Status */
+            status: string;
+        };
+        /**
+         * DeviceCreateIn
+         * @description A new device.
+         */
+        DeviceCreateIn: {
+            /** Name */
+            name: string;
+        };
+        /**
+         * DeviceCreatedOut
+         * @description A new device; `token` is shown only in this response.
+         */
+        DeviceCreatedOut: {
+            /**
+             * Created At
+             * Format: date-time
+             */
+            created_at: string;
+            /**
+             * Id
+             * Format: uuid
+             */
+            id: string;
+            /** Key Prefix */
+            key_prefix: string;
+            /** Name */
+            name: string;
+            /** Token */
+            token: string;
+        };
+        /**
+         * DeviceListOut
+         * @description All devices.
+         */
+        DeviceListOut: {
+            /** Items */
+            items: components["schemas"]["DeviceOut"][];
+        };
+        /**
+         * DeviceOut
+         * @description An entrance device (never its token).
+         */
+        DeviceOut: {
+            /**
+             * Created At
+             * Format: date-time
+             */
+            created_at: string;
+            /**
+             * Id
+             * Format: uuid
+             */
+            id: string;
+            /** Key Prefix */
+            key_prefix: string;
+            /** Last Used At */
+            last_used_at: string | null;
+            /** Name */
+            name: string;
+            /** Revoked At */
+            revoked_at: string | null;
+        };
+        /**
+         * Direction
+         * @description Which way a person went through the entrance.
+         * @enum {string}
+         */
+        Direction: "in" | "out";
+        /**
          * DisableBody
          * @description Why a link is disabled.
          */
@@ -15452,6 +16166,237 @@ export interface components {
             student_id: string;
         };
         /**
+         * ExcuseDecisionIn
+         * @description Body of approve, reject and revoke.
+         */
+        ExcuseDecisionIn: {
+            /** Comment */
+            comment?: string | null;
+        };
+        /**
+         * ExcuseEndIn
+         * @description Body of PATCH /v1/staff/excuses/{id}.
+         */
+        ExcuseEndIn: {
+            /**
+             * Ends On
+             * Format: date
+             */
+            ends_on: string;
+        };
+        /**
+         * ExcuseExclusionIn
+         * @description Body of POST /v1/staff/excuses; ``starts_on`` defaults to today.
+         */
+        ExcuseExclusionIn: {
+            /** Ends On */
+            ends_on?: string | null;
+            /** Lesson Ids */
+            lesson_ids?: string[];
+            /** Reason */
+            reason?: string | null;
+            /** Starts On */
+            starts_on?: string | null;
+            /**
+             * Student Id
+             * Format: uuid
+             */
+            student_id: string;
+            /** Subject Ids */
+            subject_ids?: string[];
+            /**
+             * Template Id
+             * Format: uuid
+             */
+            template_id: string;
+        };
+        /**
+         * ExcuseListOut
+         * @description A page of excuses, newest first.
+         */
+        ExcuseListOut: {
+            /** Items */
+            items: components["schemas"]["ExcuseOut"][];
+            /** Next Cursor */
+            next_cursor: string | null;
+        };
+        /**
+         * ExcuseMessageIn
+         * @description Body of POST /v1/*\/excuses/{id}/messages.
+         */
+        ExcuseMessageIn: {
+            /** Body */
+            body?: string | null;
+            /** File Ids */
+            file_ids?: string[];
+        };
+        /**
+         * ExcuseMessageOut
+         * @description One line of the thread.
+         */
+        ExcuseMessageOut: {
+            /** Attachments */
+            attachments: components["schemas"]["app__interfaces__http__v1__me_excuses__schemas__AttachmentOut"][];
+            /**
+             * Author Id
+             * Format: uuid
+             */
+            author_id: string;
+            /** Author Name */
+            author_name: string;
+            /** Body */
+            body: string;
+            /**
+             * Created At
+             * Format: date-time
+             */
+            created_at: string;
+            /**
+             * Id
+             * Format: uuid
+             */
+            id: string;
+        };
+        /**
+         * ExcuseOut
+         * @description An excuse; ``thread`` is filled on the detail and after a mutation.
+         */
+        ExcuseOut: {
+            /**
+             * Created At
+             * Format: date-time
+             */
+            created_at: string;
+            /**
+             * Created By
+             * Format: uuid
+             */
+            created_by: string;
+            /** Decided At */
+            decided_at: string | null;
+            /** Decided By */
+            decided_by: string | null;
+            /** Decision Comment */
+            decision_comment: string | null;
+            /** Ends On */
+            ends_on: string | null;
+            /**
+             * Id
+             * Format: uuid
+             */
+            id: string;
+            /** Lesson Ids */
+            lesson_ids: string[];
+            /**
+             * Origin
+             * @enum {string}
+             */
+            origin: "request" | "curator";
+            /** Reason */
+            reason: string;
+            /**
+             * Starts On
+             * Format: date
+             */
+            starts_on: string;
+            /**
+             * Status
+             * @enum {string}
+             */
+            status: "pending" | "approved" | "rejected" | "cancelled";
+            /**
+             * Student Id
+             * Format: uuid
+             */
+            student_id: string;
+            /** Student Name */
+            student_name: string;
+            /** Subject Ids */
+            subject_ids: string[];
+            template: components["schemas"]["ExcuseTemplateOut"] | null;
+            /** Thread */
+            thread: components["schemas"]["ExcuseMessageOut"][];
+            /**
+             * Updated At
+             * Format: date-time
+             */
+            updated_at: string;
+        };
+        /**
+         * ExcuseRefResponse
+         * @description The official excuse that covers an absence.
+         */
+        ExcuseRefResponse: {
+            /**
+             * Id
+             * Format: uuid
+             */
+            id: string;
+            /**
+             * Origin
+             * @enum {string}
+             */
+            origin: "request" | "curator";
+            /** Template Code */
+            template_code: string;
+        };
+        /**
+         * ExcuseRequestIn
+         * @description Body of POST /v1/me/excuses.
+         */
+        ExcuseRequestIn: {
+            /** Ends On */
+            ends_on?: string | null;
+            /** File Ids */
+            file_ids?: string[];
+            /** Lesson Ids */
+            lesson_ids?: string[];
+            /**
+             * Reason
+             * @default
+             */
+            reason: string;
+            /**
+             * Starts On
+             * Format: date
+             */
+            starts_on: string;
+            /** Subject Ids */
+            subject_ids?: string[];
+            /**
+             * Template Id
+             * Format: uuid
+             */
+            template_id: string;
+        };
+        /**
+         * ExcuseTemplateListOut
+         * @description GET /v1/me/excuse-templates.
+         */
+        ExcuseTemplateListOut: {
+            /** Items */
+            items: components["schemas"]["ExcuseTemplateOut"][];
+        };
+        /**
+         * ExcuseTemplateOut
+         * @description A ready reason of the request form.
+         */
+        ExcuseTemplateOut: {
+            /** Code */
+            code: string;
+            /**
+             * Id
+             * Format: uuid
+             */
+            id: string;
+            /** Requires Document */
+            requires_document: boolean;
+            /** Title */
+            title: {
+                [key: string]: string;
+            };
+        };
+        /**
          * ExerciseCreate
          * @description A practice exercise (passages and typed questions).
          */
@@ -15660,6 +16605,23 @@ export interface components {
             topic?: string | null;
         };
         /**
+         * FaceOut
+         * @description Whether a face is on file.
+         */
+        FaceOut: {
+            /** Has Face */
+            has_face: boolean;
+            /**
+             * Locked
+             * @description Set by staff: the student cannot change it.
+             */
+            locked: boolean;
+            /** Photo Url */
+            photo_url: string | null;
+            /** Updated At */
+            updated_at: string | null;
+        };
+        /**
          * FeedAction
          * @description `POST .../feeds/{id}/{action}`; only enable and disable work without a sync.
          * @enum {string}
@@ -15756,7 +16718,7 @@ export interface components {
              */
             area: "id" | "my" | "staff" | "admin" | "lms" | "library" | "share" | "bot" | "ai" | "notebooks" | "mail" | "other";
             /** Attachments */
-            attachments: components["schemas"]["AttachmentOut"][];
+            attachments: components["schemas"]["app__interfaces__http__v1__feedback__schemas__AttachmentOut"][];
             /**
              * Created At
              * Format: date-time
@@ -15834,7 +16796,7 @@ export interface components {
              */
             area: "id" | "my" | "staff" | "admin" | "lms" | "library" | "share" | "bot" | "ai" | "notebooks" | "mail" | "other";
             /** Attachments */
-            attachments: components["schemas"]["AttachmentOut"][];
+            attachments: components["schemas"]["app__interfaces__http__v1__feedback__schemas__AttachmentOut"][];
             /**
              * Created At
              * Format: date-time
@@ -16669,6 +17631,32 @@ export interface components {
             note: string | null;
         };
         /**
+         * IdentifiedStudentOut
+         * @description The student the entrance recognised.
+         */
+        IdentifiedStudentOut: {
+            /** Full Name */
+            full_name: string;
+            /** Group */
+            group: string;
+            /**
+             * Id
+             * Format: uuid
+             */
+            id: string;
+        };
+        /**
+         * IdentifyOut
+         * @description The answer to the entrance device.
+         */
+        IdentifyOut: {
+            /** Excuse Until */
+            excuse_until: string | null;
+            /** Excused */
+            excused: boolean;
+            student: components["schemas"]["IdentifiedStudentOut"] | null;
+        };
+        /**
          * ImportBody
          * @description `POST /manage/library/import`: the CSV is uploaded first.
          */
@@ -17101,6 +18089,7 @@ export interface components {
         JournalCellResponse: {
             /** Absent */
             absent: boolean;
+            excuse?: components["schemas"]["ExcuseRefResponse"] | null;
             /** Excused */
             excused: boolean;
             /**
@@ -19940,6 +20929,15 @@ export interface components {
             ticket: string;
         };
         /**
+         * NewPersonalTokenResponse
+         * @description The new token; `token` is shown once.
+         */
+        NewPersonalTokenResponse: {
+            personal_token: components["schemas"]["PersonalTokenResponse"];
+            /** Token */
+            token: string;
+        };
+        /**
          * NextSectionResponse
          * @description `{item_id, item_title, section}`: the suggested section.
          */
@@ -20920,6 +21918,37 @@ export interface components {
             id: string;
             /** Name */
             name: string;
+        };
+        /**
+         * PersonalTokenResponse
+         * @description Personal token metadata (never the secret).
+         */
+        PersonalTokenResponse: {
+            /**
+             * Created At
+             * Format: date-time
+             */
+            created_at: string;
+            /**
+             * Expires At
+             * Format: date-time
+             */
+            expires_at: string;
+            /**
+             * Id
+             * Format: uuid
+             */
+            id: string;
+            /** Last Used At */
+            last_used_at: string | null;
+            /** Name */
+            name: string;
+            /** Prefix */
+            prefix: string;
+            /** Revoked At */
+            revoked_at: string | null;
+            /** Scopes */
+            scopes: string[];
         };
         /**
          * PinExternalBody
@@ -22681,7 +23710,7 @@ export interface components {
          */
         ResponseOut: {
             /** Attachments */
-            attachments: components["schemas"]["AttachmentOut"][];
+            attachments: components["schemas"]["app__interfaces__http__v1__feedback__schemas__AttachmentOut"][];
             /** Author Name */
             author_name: string;
             /** Channels */
@@ -22957,6 +23986,7 @@ export interface components {
             absent: boolean;
             /** Counted */
             counted: boolean;
+            excuse?: components["schemas"]["ExcuseRefResponse"] | null;
             /** Excuse Comment */
             excuse_comment: string | null;
             /** Excused */
@@ -27187,7 +28217,7 @@ export interface components {
              * Kind
              * @enum {string}
              */
-            kind: "link" | "lesson" | "chat" | "notebook";
+            kind: "link" | "lesson" | "chat" | "notebook" | "excuse";
             /** Label */
             label: string;
         };
@@ -27205,7 +28235,7 @@ export interface components {
              * Kind
              * @enum {string}
              */
-            kind: "link" | "lesson" | "chat" | "notebook";
+            kind: "link" | "lesson" | "chat" | "notebook" | "excuse";
             /** Label */
             label: string;
         };
@@ -27223,7 +28253,7 @@ export interface components {
              * Kind
              * @enum {string}
              */
-            kind: "link" | "lesson" | "chat" | "notebook";
+            kind: "link" | "lesson" | "chat" | "notebook" | "excuse";
             /** Label */
             label: string;
         };
@@ -27443,6 +28473,33 @@ export interface components {
             min: number;
             /** Name */
             name: string;
+        };
+        /**
+         * VaultStatusResponse
+         * @description Seal state.
+         */
+        VaultStatusResponse: {
+            /** Progress */
+            progress: number;
+            /** Sealed */
+            sealed: boolean;
+            /** Shares */
+            shares: number;
+            /** Threshold */
+            threshold: number;
+        };
+        /**
+         * VaultUnsealBody
+         * @description POST /v1/admin/vault/unseal; the key is never echoed or logged.
+         */
+        VaultUnsealBody: {
+            /**
+             * Key
+             * Format: password
+             */
+            key: string;
+            /** Otp Code */
+            otp_code?: string | null;
         };
         /**
          * VerifyBody
@@ -28515,6 +29572,7 @@ export interface components {
          * @description A row of `StudentAttendance.missed`.
          */
         app__interfaces__http__v1__composition__shared_schemas__MissedLessonResponse: {
+            excuse?: components["schemas"]["ExcuseRefResponse"] | null;
             /** Excused */
             excused: boolean;
             lesson: components["schemas"]["app__interfaces__http__v1__composition__shared_schemas__LessonItemResponse"];
@@ -28659,6 +29717,25 @@ export interface components {
             telegram_user_id: number;
             /** Username */
             username: string | null;
+        };
+        /**
+         * AttachmentOut
+         * @description An attached file; ``download_url`` is presigned and valid for one hour.
+         */
+        app__interfaces__http__v1__feedback__schemas__AttachmentOut: {
+            /** Download Url */
+            download_url: string;
+            /**
+             * File Id
+             * Format: uuid
+             */
+            file_id: string;
+            /** Mime */
+            mime: string;
+            /** Name */
+            name: string;
+            /** Size */
+            size: number;
         };
         /**
          * FileItem
@@ -29028,6 +30105,7 @@ export interface components {
          * @description A missed lesson.
          */
         app__interfaces__http__v1__me_classwork__schemas__MissedLessonResponse: {
+            excuse?: components["schemas"]["ExcuseRefResponse"] | null;
             /** Excused */
             excused: boolean;
             lesson: components["schemas"]["app__interfaces__http__v1__me_classwork__schemas__LessonItemResponse"];
@@ -29115,6 +30193,25 @@ export interface components {
             name: string;
             /** Short Name */
             short_name: string;
+        };
+        /**
+         * AttachmentOut
+         * @description A file of a thread line with a one-hour download URL.
+         */
+        app__interfaces__http__v1__me_excuses__schemas__AttachmentOut: {
+            /** Download Url */
+            download_url: string;
+            /**
+             * File Id
+             * Format: uuid
+             */
+            file_id: string;
+            /** Mime */
+            mime: string;
+            /** Name */
+            name: string;
+            /** Size */
+            size: number;
         };
         /**
          * PersonRef
@@ -30740,6 +31837,290 @@ export interface operations {
                 };
                 content: {
                     "application/json": components["schemas"]["AdminDashboardResponse"];
+                };
+            };
+        };
+    };
+    list_devices_v1_admin_devices_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["DeviceListOut"];
+                };
+            };
+        };
+    };
+    create_device_v1_admin_devices_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["DeviceCreateIn"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["DeviceCreatedOut"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    list_device_calls_v1_admin_devices__device_id__calls_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                device_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["DeviceCallListOut"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    revoke_device_v1_admin_devices__device_id__revoke_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                device_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["DeviceOut"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    list_excuses_v1_admin_excuses_get: {
+        parameters: {
+            query?: {
+                status?: ("pending" | "approved" | "rejected" | "cancelled") | null;
+                student_id?: string | null;
+                cursor?: string | null;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ExcuseListOut"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    get_excuse_v1_admin_excuses__excuse_id__get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                excuse_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ExcuseOut"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    approve_v1_admin_excuses__excuse_id__approve_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                excuse_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["ExcuseDecisionIn"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ExcuseOut"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    post_message_v1_admin_excuses__excuse_id__messages_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                excuse_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["ExcuseMessageIn"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ExcuseOut"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    reject_v1_admin_excuses__excuse_id__reject_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                excuse_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["ExcuseDecisionIn"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ExcuseOut"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
                 };
             };
         };
@@ -34467,6 +35848,59 @@ export interface operations {
             };
         };
     };
+    vault_status_v1_admin_vault_status_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["VaultStatusResponse"];
+                };
+            };
+        };
+    };
+    vault_unseal_v1_admin_vault_unseal_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["VaultUnsealBody"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["VaultStatusResponse"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
     list_admin_work_offs_v1_admin_work_offs_get: {
         parameters: {
             query?: {
@@ -35198,6 +36632,26 @@ export interface operations {
             };
         };
     };
+    get_app_map_v1_app_map_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["AppMapResponse"];
+                };
+            };
+        };
+    };
     get_app_version_v1_app_version_get: {
         parameters: {
             query?: never;
@@ -35801,6 +37255,41 @@ export interface operations {
                 };
                 content: {
                     "application/json": components["schemas"]["CertificateTypeResponse"][];
+                };
+            };
+        };
+    };
+    identify_v1_device_identify_post: {
+        parameters: {
+            query?: never;
+            header?: {
+                authorization?: string | null;
+            };
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "multipart/form-data": components["schemas"]["Body_identify_v1_device_identify_post"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["IdentifyOut"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
                 };
             };
         };
@@ -38122,6 +39611,88 @@ export interface operations {
                 };
                 content: {
                     "application/json": components["schemas"]["TotpSetupResponse"];
+                };
+            };
+        };
+    };
+    list_personal_tokens_v1_id_personal_tokens_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["PersonalTokenResponse"][];
+                };
+            };
+        };
+    };
+    create_personal_token_v1_id_personal_tokens_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["CreatePersonalTokenBody"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["NewPersonalTokenResponse"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    revoke_personal_token_v1_id_personal_tokens__token_id__delete: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                token_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            204: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
                 };
             };
         };
@@ -43046,6 +44617,259 @@ export interface operations {
                 content: {
                     "application/json": components["schemas"]["HTTPValidationError"];
                 };
+            };
+        };
+    };
+    list_templates_v1_me_excuse_templates_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ExcuseTemplateListOut"];
+                };
+            };
+        };
+    };
+    list_mine_v1_me_excuses_get: {
+        parameters: {
+            query?: {
+                status?: ("pending" | "approved" | "rejected" | "cancelled") | null;
+                cursor?: string | null;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ExcuseListOut"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    request_excuse_v1_me_excuses_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["ExcuseRequestIn"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ExcuseOut"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    get_mine_v1_me_excuses__excuse_id__get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                excuse_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ExcuseOut"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    cancel_v1_me_excuses__excuse_id__cancel_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                excuse_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ExcuseOut"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    post_message_v1_me_excuses__excuse_id__messages_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                excuse_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["ExcuseMessageIn"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ExcuseOut"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    get_my_face_v1_me_face_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["FaceOut"];
+                };
+            };
+        };
+    };
+    put_my_face_v1_me_face_put: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "multipart/form-data": components["schemas"]["Body_put_my_face_v1_me_face_put"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["FaceOut"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    delete_my_face_v1_me_face_delete: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            204: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
             };
         };
     };
@@ -48094,6 +49918,278 @@ export interface operations {
             };
         };
     };
+    list_excuses_v1_staff_excuses_get: {
+        parameters: {
+            query?: {
+                status?: ("pending" | "approved" | "rejected" | "cancelled") | null;
+                student_id?: string | null;
+                cursor?: string | null;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ExcuseListOut"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    create_exclusion_v1_staff_excuses_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["ExcuseExclusionIn"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ExcuseOut"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    get_excuse_v1_staff_excuses__excuse_id__get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                excuse_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ExcuseOut"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    end_excuse_v1_staff_excuses__excuse_id__patch: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                excuse_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["ExcuseEndIn"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ExcuseOut"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    approve_v1_staff_excuses__excuse_id__approve_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                excuse_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["ExcuseDecisionIn"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ExcuseOut"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    post_message_v1_staff_excuses__excuse_id__messages_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                excuse_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["ExcuseMessageIn"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ExcuseOut"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    reject_v1_staff_excuses__excuse_id__reject_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                excuse_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["ExcuseDecisionIn"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ExcuseOut"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    revoke_v1_staff_excuses__excuse_id__revoke_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                excuse_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["ExcuseDecisionIn"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ExcuseOut"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
     list_groups_v1_staff_groups_get: {
         parameters: {
             query?: never;
@@ -49090,6 +51186,70 @@ export interface operations {
                 };
                 content: {
                     "application/json": components["schemas"]["UserPhotoResponse"];
+                };
+            };
+        };
+    };
+    put_student_face_v1_staff_students__student_id__face_put: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                student_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "multipart/form-data": components["schemas"]["Body_put_student_face_v1_staff_students__student_id__face_put"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["FaceOut"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    delete_student_face_v1_staff_students__student_id__face_delete: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                student_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            204: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
                 };
             };
         };

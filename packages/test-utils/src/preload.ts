@@ -45,6 +45,8 @@ const {
   resetFactorsState,
   resetMeSyncState,
   resetAdminJobs,
+  resetPersonalTokens,
+  resetAdminVault,
   resetAdminKnowledge,
   resetCreatedFiles,
   resetLibraryState,
@@ -55,10 +57,12 @@ const {
   resetSubjectMaterialsState,
   resetTeacherContacts,
   resetTeacherPhotos,
+  resetFaces,
   resetAdminAiState,
   resetAiProjectsState,
   resetWebSearchState,
   resetWorkOffsStaffState,
+  resetExcusesState,
 } = await import("./handlers")
 const { resetTestRouter, testNavigation } = await import("./router")
 
@@ -98,6 +102,7 @@ afterEach(() => {
   resetPresentationPlansState()
   resetTeacherContacts()
   resetTeacherPhotos()
+  resetFaces()
   resetAssessments()
   resetSharing()
   resetTemporaryMarks()
@@ -105,8 +110,11 @@ afterEach(() => {
   resetCertificatesState()
   resetFactorsState()
   resetAdminJobs()
+  resetPersonalTokens()
+  resetAdminVault()
   resetAdminKnowledge()
   resetWorkOffsStaffState()
+  resetExcusesState()
   window.localStorage.clear()
   window.sessionStorage.clear()
   resetTestRouter()

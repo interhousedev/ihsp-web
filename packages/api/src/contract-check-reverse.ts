@@ -12,7 +12,9 @@ import type { getAdminFeedback, getAdminFeedbackItem, patchAdminFeedback, postAd
 import type { getAdminJobs, postAdminJobCancel } from "./endpoints/admin-jobs"
 import type { getAdminKnowledge, getAdminKnowledgeEntry, patchAdminKnowledge, postAdminKnowledge } from "./endpoints/admin-knowledge"
 import type { getAdminLogIssues } from "./endpoints/admin-logs"
+import type { getAdminVaultStatus, postAdminVaultUnseal } from "./endpoints/admin-vault"
 import type { getAiChat, getAiChats, getAiProjectFiles, getAiProjects, getAiUsage, getAiWebSearch, patchAiChat, patchAiProject, postAiChatMessages, postAiChatRegenerate, postAiChatToolCallApprove, postAiChatToolCallReject, postAiChats, postAiProject } from "./endpoints/ai"
+import type { getAppMap } from "./endpoints/app-map"
 import type { getAdminAssessments, getMeAssessments, getMeSubjectPlanner, getStaffAssessments, patchAdminAssessment, patchStaffAssessment, postAdminAssessment, postMeAssessment, postStaffAssessment } from "./endpoints/assessments"
 import type { getAdminBotPost, getAdminBotPostTree, patchAdminBotPost, postAdminBotPost, postAdminBotPostMove, postAdminBotPostsReorder } from "./endpoints/bot-posts"
 import type { getAdminBroadcast, getAdminBroadcasts, patchAdminBroadcast, postAdminBroadcastCancel, postAdminBroadcastSend, postAdminBroadcasts, postAdminBroadcastsAudienceCount } from "./endpoints/broadcasts"
@@ -22,11 +24,13 @@ import type { getAdminDashboard, getAdminGroupsStats, getAdminStudent, getAdminT
 import type { getCourseSteps, getNotebookUsageOf, postApplyArtifact, postApplyPreview, postCourseNotebook, postCourseWorkspace } from "./endpoints/course-workspace"
 import type { getAdminGroupCurriculum, getMeCurriculum, postAdminGroupCurriculumSync } from "./endpoints/curriculum"
 import type { getMeDashboard, putMeDashboard } from "./endpoints/dashboard"
+import type { getAdminExcuse, getAdminExcuses, getMeExcuse, getMeExcuseTemplates, getMeExcuses, getStaffExcuse, getStaffExcuses, patchStaffExcuse, postAdminExcuseApprove, postAdminExcuseMessage, postAdminExcuseReject, postMeExcuse, postMeExcuseCancel, postMeExcuseMessage, postStaffExcuse, postStaffExcuseApprove, postStaffExcuseMessage, postStaffExcuseReject, postStaffExcuseRevoke } from "./endpoints/excuses"
+import type { getAdminDeviceCalls, getAdminDevices, getMyFace, postAdminDevice, postAdminDeviceRevoke, putMyFace, putStudentFace } from "./endpoints/faces"
 import type { getFeedback, getMyFeedback, postFeedback } from "./endpoints/feedback"
 import type { deleteFile, getFile, getFileUrl, getMeFiles, getMeStorage, patchFile, postFileComplete, postFiles } from "./endpoints/files"
 import type { getMeFlashcardSet, getMeFlashcardSetCardStats, getMeFlashcardSetStudy, getMeFlashcardSets, getMeFlashcardSetsStats, patchMeFlashcardSet, postMeFlashcardReview, postMeFlashcardSetStudyRestart, postMeFlashcardSets, postMeFlashcardSetsCopy, postMeFlashcardSetsMerge, putMeFlashcardSetCards } from "./endpoints/flashcards"
 import type { getGroupProgress, getMyGroupProgress } from "./endpoints/group-progress"
-import type { deleteIdMe, getIdActivation, getIdConsent, getIdLogin, getIdLogout, getIdMcpScopes, getIdMe, getIdMeActivity, getIdMeConnectorOffers, getIdMeConnectors, getIdMeMcpClients, getIdMeMcpSetup, getIdMeSessions, getIdMeTelegram, patchIdMePreferences, patchIdMeTelegram, postIdActivation, postIdConsent, postIdLogin, postIdLoginEmisResolve, postIdLoginOtp, postIdLoginOtpRequest, postIdLoginPassword, postIdLoginRestore, postIdLoginRestoreDecline, postIdLoginTicket, postIdMeConnectorOfferDecision, postIdMeConnectors, postIdMeEmailChangeConfirm, postIdMeEmisPassword, postIdMeMcpClient, postIdMeMcpSetup, postIdMeOtpDisable, postIdMeOtpEnableConfirm, postIdRecoveryOtpConfirm, postIdRecoveryPasswordConfirm, postIdTelegramLogin, postIdTelegramOtpRequest, postIdTelegramStatus, postRegisterTelegramStatus } from "./endpoints/id"
+import type { deleteIdMe, getIdActivation, getIdConsent, getIdLogin, getIdLogout, getIdMcpScopes, getIdMe, getIdMeActivity, getIdMeConnectorOffers, getIdMeConnectors, getIdMeMcpClients, getIdMeMcpSetup, getIdMeSessions, getIdMeTelegram, getIdPersonalTokens, patchIdMePreferences, patchIdMeTelegram, postIdActivation, postIdConsent, postIdLogin, postIdLoginEmisResolve, postIdLoginOtp, postIdLoginOtpRequest, postIdLoginPassword, postIdLoginRestore, postIdLoginRestoreDecline, postIdLoginTicket, postIdMeConnectorOfferDecision, postIdMeConnectors, postIdMeEmailChangeConfirm, postIdMeEmisPassword, postIdMeMcpClient, postIdMeMcpSetup, postIdMeOtpDisable, postIdMeOtpEnableConfirm, postIdPersonalTokens, postIdRecoveryOtpConfirm, postIdRecoveryPasswordConfirm, postIdTelegramLogin, postIdTelegramOtpRequest, postIdTelegramStatus, postRegisterTelegramStatus } from "./endpoints/id"
 import type { getAdminAudit, getAdminOauthClients, getAdminSettings, getAdminTeachers, getAdminUser, getAdminUsers, patchAdminTeacher, patchAdminUser, postAdminOauthClientVerify, postAdminTeacherDeactivate, postAdminTeachers, postAdminUserBlock, postAdminUserMailResume, postAdminUserMailSuspend, postAdminUserResetPassword, postAdminUserResetPasswordLink, postAdminUserRoles, postAdminUserUnblock, putAdminSettings } from "./endpoints/id-admin"
 import type { getIdMeSecurity, patchIdMePasskey, postIdLoginPasskey, postIdLoginPasskeyOptions, postIdLoginTotp, postIdMePasskey, postIdMePasskeyOptions, postIdMePasswordLoginDisable, postIdMeTotpConfirm, postIdMeTotpDisable, postIdMeTotpSetup } from "./endpoints/id-factors"
 import type { getAdminInsights } from "./endpoints/insights"
@@ -142,6 +146,14 @@ export const served_patchAdminKnowledge: Awaited<ReturnType<typeof patchAdminKno
 declare const gen_getAdminLogIssues: ResponseOf<"/v1/admin/logs/issues", "get">
 export const served_getAdminLogIssues: Awaited<ReturnType<typeof getAdminLogIssues>> = gen_getAdminLogIssues
 
+// GET /v1/admin/vault/status — getAdminVaultStatus
+declare const gen_getAdminVaultStatus: ResponseOf<"/v1/admin/vault/status", "get">
+export const served_getAdminVaultStatus: Awaited<ReturnType<typeof getAdminVaultStatus>> = gen_getAdminVaultStatus
+
+// POST /v1/admin/vault/unseal — postAdminVaultUnseal
+declare const gen_postAdminVaultUnseal: ResponseOf<"/v1/admin/vault/unseal", "post">
+export const served_postAdminVaultUnseal: Awaited<ReturnType<typeof postAdminVaultUnseal>> = gen_postAdminVaultUnseal
+
 // GET /v1/ai/chats — getAiChats
 declare const gen_getAiChats: ResponseOf<"/v1/ai/chats", "get">
 export const served_getAiChats: Awaited<ReturnType<typeof getAiChats>> = gen_getAiChats
@@ -197,6 +209,10 @@ export const served_patchAiProject: Awaited<ReturnType<typeof patchAiProject>> =
 // GET /v1/ai/projects/{project_id}/files — getAiProjectFiles
 declare const gen_getAiProjectFiles: ResponseOf<"/v1/ai/projects/{project_id}/files", "get">
 export const served_getAiProjectFiles: Awaited<ReturnType<typeof getAiProjectFiles>> = gen_getAiProjectFiles
+
+// GET /v1/app-map — getAppMap
+declare const gen_getAppMap: ResponseOf<"/v1/app-map", "get">
+export const served_getAppMap: Awaited<ReturnType<typeof getAppMap>> = gen_getAppMap
 
 // GET /v1/me/assessments — getMeAssessments
 declare const gen_getMeAssessments: ResponseOf<"/v1/me/assessments", "get">
@@ -513,6 +529,110 @@ export const served_getMeDashboard: Awaited<ReturnType<typeof getMeDashboard>> =
 // PUT /v1/me/dashboard — putMeDashboard
 declare const gen_putMeDashboard: ResponseOf<"/v1/me/dashboard", "put">
 export const served_putMeDashboard: Awaited<ReturnType<typeof putMeDashboard>> = gen_putMeDashboard
+
+// GET /v1/me/excuse-templates — getMeExcuseTemplates
+declare const gen_getMeExcuseTemplates: ResponseOf<"/v1/me/excuse-templates", "get">
+export const served_getMeExcuseTemplates: Awaited<ReturnType<typeof getMeExcuseTemplates>> = gen_getMeExcuseTemplates
+
+// GET /v1/me/excuses — getMeExcuses
+declare const gen_getMeExcuses: ResponseOf<"/v1/me/excuses", "get">
+export const served_getMeExcuses: Awaited<ReturnType<typeof getMeExcuses>> = gen_getMeExcuses
+
+// POST /v1/me/excuses — postMeExcuse
+declare const gen_postMeExcuse: ResponseOf<"/v1/me/excuses", "post">
+export const served_postMeExcuse: Awaited<ReturnType<typeof postMeExcuse>> = gen_postMeExcuse
+
+// GET /v1/me/excuses/{excuse_id} — getMeExcuse
+declare const gen_getMeExcuse: ResponseOf<"/v1/me/excuses/{excuse_id}", "get">
+export const served_getMeExcuse: Awaited<ReturnType<typeof getMeExcuse>> = gen_getMeExcuse
+
+// POST /v1/me/excuses/{excuse_id}/cancel — postMeExcuseCancel
+declare const gen_postMeExcuseCancel: ResponseOf<"/v1/me/excuses/{excuse_id}/cancel", "post">
+export const served_postMeExcuseCancel: Awaited<ReturnType<typeof postMeExcuseCancel>> = gen_postMeExcuseCancel
+
+// POST /v1/me/excuses/{excuse_id}/messages — postMeExcuseMessage
+declare const gen_postMeExcuseMessage: ResponseOf<"/v1/me/excuses/{excuse_id}/messages", "post">
+export const served_postMeExcuseMessage: Awaited<ReturnType<typeof postMeExcuseMessage>> = gen_postMeExcuseMessage
+
+// GET /v1/staff/excuses — getStaffExcuses
+declare const gen_getStaffExcuses: ResponseOf<"/v1/staff/excuses", "get">
+export const served_getStaffExcuses: Awaited<ReturnType<typeof getStaffExcuses>> = gen_getStaffExcuses
+
+// POST /v1/staff/excuses — postStaffExcuse
+declare const gen_postStaffExcuse: ResponseOf<"/v1/staff/excuses", "post">
+export const served_postStaffExcuse: Awaited<ReturnType<typeof postStaffExcuse>> = gen_postStaffExcuse
+
+// GET /v1/staff/excuses/{excuse_id} — getStaffExcuse
+declare const gen_getStaffExcuse: ResponseOf<"/v1/staff/excuses/{excuse_id}", "get">
+export const served_getStaffExcuse: Awaited<ReturnType<typeof getStaffExcuse>> = gen_getStaffExcuse
+
+// PATCH /v1/staff/excuses/{excuse_id} — patchStaffExcuse
+declare const gen_patchStaffExcuse: ResponseOf<"/v1/staff/excuses/{excuse_id}", "patch">
+export const served_patchStaffExcuse: Awaited<ReturnType<typeof patchStaffExcuse>> = gen_patchStaffExcuse
+
+// POST /v1/staff/excuses/{excuse_id}/approve — postStaffExcuseApprove
+declare const gen_postStaffExcuseApprove: ResponseOf<"/v1/staff/excuses/{excuse_id}/approve", "post">
+export const served_postStaffExcuseApprove: Awaited<ReturnType<typeof postStaffExcuseApprove>> = gen_postStaffExcuseApprove
+
+// POST /v1/staff/excuses/{excuse_id}/reject — postStaffExcuseReject
+declare const gen_postStaffExcuseReject: ResponseOf<"/v1/staff/excuses/{excuse_id}/reject", "post">
+export const served_postStaffExcuseReject: Awaited<ReturnType<typeof postStaffExcuseReject>> = gen_postStaffExcuseReject
+
+// POST /v1/staff/excuses/{excuse_id}/revoke — postStaffExcuseRevoke
+declare const gen_postStaffExcuseRevoke: ResponseOf<"/v1/staff/excuses/{excuse_id}/revoke", "post">
+export const served_postStaffExcuseRevoke: Awaited<ReturnType<typeof postStaffExcuseRevoke>> = gen_postStaffExcuseRevoke
+
+// POST /v1/staff/excuses/{excuse_id}/messages — postStaffExcuseMessage
+declare const gen_postStaffExcuseMessage: ResponseOf<"/v1/staff/excuses/{excuse_id}/messages", "post">
+export const served_postStaffExcuseMessage: Awaited<ReturnType<typeof postStaffExcuseMessage>> = gen_postStaffExcuseMessage
+
+// GET /v1/admin/excuses — getAdminExcuses
+declare const gen_getAdminExcuses: ResponseOf<"/v1/admin/excuses", "get">
+export const served_getAdminExcuses: Awaited<ReturnType<typeof getAdminExcuses>> = gen_getAdminExcuses
+
+// GET /v1/admin/excuses/{excuse_id} — getAdminExcuse
+declare const gen_getAdminExcuse: ResponseOf<"/v1/admin/excuses/{excuse_id}", "get">
+export const served_getAdminExcuse: Awaited<ReturnType<typeof getAdminExcuse>> = gen_getAdminExcuse
+
+// POST /v1/admin/excuses/{excuse_id}/approve — postAdminExcuseApprove
+declare const gen_postAdminExcuseApprove: ResponseOf<"/v1/admin/excuses/{excuse_id}/approve", "post">
+export const served_postAdminExcuseApprove: Awaited<ReturnType<typeof postAdminExcuseApprove>> = gen_postAdminExcuseApprove
+
+// POST /v1/admin/excuses/{excuse_id}/reject — postAdminExcuseReject
+declare const gen_postAdminExcuseReject: ResponseOf<"/v1/admin/excuses/{excuse_id}/reject", "post">
+export const served_postAdminExcuseReject: Awaited<ReturnType<typeof postAdminExcuseReject>> = gen_postAdminExcuseReject
+
+// POST /v1/admin/excuses/{excuse_id}/messages — postAdminExcuseMessage
+declare const gen_postAdminExcuseMessage: ResponseOf<"/v1/admin/excuses/{excuse_id}/messages", "post">
+export const served_postAdminExcuseMessage: Awaited<ReturnType<typeof postAdminExcuseMessage>> = gen_postAdminExcuseMessage
+
+// GET /v1/me/face — getMyFace
+declare const gen_getMyFace: ResponseOf<"/v1/me/face", "get">
+export const served_getMyFace: Awaited<ReturnType<typeof getMyFace>> = gen_getMyFace
+
+// PUT /v1/me/face — putMyFace
+declare const gen_putMyFace: ResponseOf<"/v1/me/face", "put">
+export const served_putMyFace: Awaited<ReturnType<typeof putMyFace>> = gen_putMyFace
+
+// PUT /v1/staff/students/{student_id}/face — putStudentFace
+declare const gen_putStudentFace: ResponseOf<"/v1/staff/students/{student_id}/face", "put">
+export const served_putStudentFace: Awaited<ReturnType<typeof putStudentFace>> = gen_putStudentFace
+
+// GET /v1/admin/devices — getAdminDevices
+declare const gen_getAdminDevices: ResponseOf<"/v1/admin/devices", "get">
+export const served_getAdminDevices: Awaited<ReturnType<typeof getAdminDevices>> = gen_getAdminDevices
+
+// POST /v1/admin/devices — postAdminDevice
+declare const gen_postAdminDevice: ResponseOf<"/v1/admin/devices", "post">
+export const served_postAdminDevice: Awaited<ReturnType<typeof postAdminDevice>> = gen_postAdminDevice
+
+// POST /v1/admin/devices/{device_id}/revoke — postAdminDeviceRevoke
+declare const gen_postAdminDeviceRevoke: ResponseOf<"/v1/admin/devices/{device_id}/revoke", "post">
+export const served_postAdminDeviceRevoke: Awaited<ReturnType<typeof postAdminDeviceRevoke>> = gen_postAdminDeviceRevoke
+
+// GET /v1/admin/devices/{device_id}/calls — getAdminDeviceCalls
+declare const gen_getAdminDeviceCalls: ResponseOf<"/v1/admin/devices/{device_id}/calls", "get">
+export const served_getAdminDeviceCalls: Awaited<ReturnType<typeof getAdminDeviceCalls>> = gen_getAdminDeviceCalls
 
 // POST /v1/feedback — postFeedback
 declare const gen_postFeedback: ResponseOf<"/v1/feedback", "post">
@@ -877,6 +997,14 @@ export const served_deleteIdMe: Awaited<ReturnType<typeof deleteIdMe>> = gen_del
 // POST /v1/id/register/telegram-status — postRegisterTelegramStatus
 declare const gen_postRegisterTelegramStatus: ResponseOf<"/v1/id/register/telegram-status", "post">
 export const served_postRegisterTelegramStatus: Awaited<ReturnType<typeof postRegisterTelegramStatus>> = gen_postRegisterTelegramStatus
+
+// GET /v1/id/personal-tokens — getIdPersonalTokens
+declare const gen_getIdPersonalTokens: ResponseOf<"/v1/id/personal-tokens", "get">
+export const served_getIdPersonalTokens: Awaited<ReturnType<typeof getIdPersonalTokens>> = gen_getIdPersonalTokens
+
+// POST /v1/id/personal-tokens — postIdPersonalTokens
+declare const gen_postIdPersonalTokens: ResponseOf<"/v1/id/personal-tokens", "post">
+export const served_postIdPersonalTokens: Awaited<ReturnType<typeof postIdPersonalTokens>> = gen_postIdPersonalTokens
 
 // GET /v1/id/me/mcp-setup/{service} — getIdMeMcpSetup
 declare const gen_getIdMeMcpSetup: ResponseOf<"/v1/id/me/mcp-setup/{service}", "get">

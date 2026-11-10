@@ -11,7 +11,9 @@ import type { getAdminFeedback, getAdminFeedbackItem, patchAdminFeedback, postAd
 import type { getAdminJobs, postAdminJobCancel } from "./endpoints/admin-jobs"
 import type { getAdminKnowledge, getAdminKnowledgeEntry, patchAdminKnowledge, postAdminKnowledge } from "./endpoints/admin-knowledge"
 import type { getAdminLogIssues } from "./endpoints/admin-logs"
+import type { getAdminVaultStatus, postAdminVaultUnseal } from "./endpoints/admin-vault"
 import type { getAiChat, getAiChats, getAiProjectFiles, getAiProjects, getAiUsage, getAiWebSearch, patchAiChat, patchAiProject, postAiChatMessages, postAiChatRegenerate, postAiChatToolCallApprove, postAiChatToolCallReject, postAiChats, postAiProject } from "./endpoints/ai"
+import type { getAppMap } from "./endpoints/app-map"
 import type { getAdminAssessments, getMeAssessments, getMeSubjectPlanner, getStaffAssessments, patchAdminAssessment, patchStaffAssessment, postAdminAssessment, postMeAssessment, postStaffAssessment } from "./endpoints/assessments"
 import type { getAdminBotPost, getAdminBotPostTree, patchAdminBotPost, postAdminBotPost, postAdminBotPostMove, postAdminBotPostsReorder } from "./endpoints/bot-posts"
 import type { getAdminBroadcast, getAdminBroadcasts, patchAdminBroadcast, postAdminBroadcastCancel, postAdminBroadcastSend, postAdminBroadcasts, postAdminBroadcastsAudienceCount } from "./endpoints/broadcasts"
@@ -21,11 +23,13 @@ import type { getAdminDashboard, getAdminGroupsStats, getAdminStudent, getAdminT
 import type { getCourseSteps, getNotebookUsageOf, postApplyArtifact, postApplyPreview, postCourseNotebook, postCourseWorkspace } from "./endpoints/course-workspace"
 import type { getAdminGroupCurriculum, getMeCurriculum, postAdminGroupCurriculumSync } from "./endpoints/curriculum"
 import type { getMeDashboard, putMeDashboard } from "./endpoints/dashboard"
+import type { getAdminExcuse, getAdminExcuses, getMeExcuse, getMeExcuseTemplates, getMeExcuses, getStaffExcuse, getStaffExcuses, patchStaffExcuse, postAdminExcuseApprove, postAdminExcuseMessage, postAdminExcuseReject, postMeExcuse, postMeExcuseCancel, postMeExcuseMessage, postStaffExcuse, postStaffExcuseApprove, postStaffExcuseMessage, postStaffExcuseReject, postStaffExcuseRevoke } from "./endpoints/excuses"
+import type { getAdminDeviceCalls, getAdminDevices, getMyFace, postAdminDevice, postAdminDeviceRevoke, putMyFace, putStudentFace } from "./endpoints/faces"
 import type { getFeedback, getMyFeedback, postFeedback } from "./endpoints/feedback"
 import type { deleteFile, getFile, getFileUrl, getMeFiles, getMeStorage, patchFile, postFileComplete, postFiles } from "./endpoints/files"
 import type { getMeFlashcardSet, getMeFlashcardSetCardStats, getMeFlashcardSetStudy, getMeFlashcardSets, getMeFlashcardSetsStats, patchMeFlashcardSet, postMeFlashcardReview, postMeFlashcardSetStudyRestart, postMeFlashcardSets, postMeFlashcardSetsCopy, postMeFlashcardSetsMerge, putMeFlashcardSetCards } from "./endpoints/flashcards"
 import type { getGroupProgress, getMyGroupProgress } from "./endpoints/group-progress"
-import type { deleteIdMe, getIdActivation, getIdConsent, getIdLogin, getIdLogout, getIdMcpScopes, getIdMe, getIdMeActivity, getIdMeConnectorOffers, getIdMeConnectors, getIdMeMcpClients, getIdMeMcpSetup, getIdMeSessions, getIdMeTelegram, patchIdMePreferences, patchIdMeTelegram, postIdActivation, postIdConsent, postIdLogin, postIdLoginEmisResolve, postIdLoginOtp, postIdLoginOtpRequest, postIdLoginPassword, postIdLoginRestore, postIdLoginRestoreDecline, postIdLoginTicket, postIdMeConnectorOfferDecision, postIdMeConnectors, postIdMeEmailChangeConfirm, postIdMeEmisPassword, postIdMeMcpClient, postIdMeMcpSetup, postIdMeOtpDisable, postIdMeOtpEnableConfirm, postIdRecoveryOtpConfirm, postIdRecoveryPasswordConfirm, postIdTelegramLogin, postIdTelegramOtpRequest, postIdTelegramStatus, postRegisterTelegramStatus } from "./endpoints/id"
+import type { deleteIdMe, getIdActivation, getIdConsent, getIdLogin, getIdLogout, getIdMcpScopes, getIdMe, getIdMeActivity, getIdMeConnectorOffers, getIdMeConnectors, getIdMeMcpClients, getIdMeMcpSetup, getIdMeSessions, getIdMeTelegram, getIdPersonalTokens, patchIdMePreferences, patchIdMeTelegram, postIdActivation, postIdConsent, postIdLogin, postIdLoginEmisResolve, postIdLoginOtp, postIdLoginOtpRequest, postIdLoginPassword, postIdLoginRestore, postIdLoginRestoreDecline, postIdLoginTicket, postIdMeConnectorOfferDecision, postIdMeConnectors, postIdMeEmailChangeConfirm, postIdMeEmisPassword, postIdMeMcpClient, postIdMeMcpSetup, postIdMeOtpDisable, postIdMeOtpEnableConfirm, postIdPersonalTokens, postIdRecoveryOtpConfirm, postIdRecoveryPasswordConfirm, postIdTelegramLogin, postIdTelegramOtpRequest, postIdTelegramStatus, postRegisterTelegramStatus } from "./endpoints/id"
 import type { getAdminAudit, getAdminOauthClients, getAdminSettings, getAdminTeachers, getAdminUser, getAdminUsers, patchAdminTeacher, patchAdminUser, postAdminOauthClientVerify, postAdminTeacherDeactivate, postAdminTeachers, postAdminUserBlock, postAdminUserMailResume, postAdminUserMailSuspend, postAdminUserResetPassword, postAdminUserResetPasswordLink, postAdminUserRoles, postAdminUserUnblock, putAdminSettings } from "./endpoints/id-admin"
 import type { getIdMeSecurity, patchIdMePasskey, postIdLoginPasskey, postIdLoginPasskeyOptions, postIdLoginTotp, postIdMePasskey, postIdMePasskeyOptions, postIdMePasswordLoginDisable, postIdMeTotpConfirm, postIdMeTotpDisable, postIdMeTotpSetup } from "./endpoints/id-factors"
 import type { getAdminInsights } from "./endpoints/insights"
@@ -68,10 +72,11 @@ import type { PageParams } from "./types/common"
 import type { SearchParams, SendOutboundMailBody, SentMailParams } from "./types/composition"
 import type { ApplyBody, CourseWorkspaceBody } from "./types/course-workspace"
 import type { DashboardSaveBody } from "./types/dashboard"
+import type { ExcuseDecisionBody, ExcuseEndBody, ExcuseExclusionBody, ExcuseMessageBody, ExcuseRequestBody, MyExcusesParams, StaffExcusesParams } from "./types/excuses"
 import type { FeedbackCreateBody } from "./types/feedback"
 import type { FileCreateBody, FileRenameBody, FileUrlParams, MyFilesParams } from "./types/files"
 import type { FlashcardCardsBody, FlashcardCopyBody, FlashcardMergeBody, FlashcardReviewBody, FlashcardSetCreateBody, FlashcardSetPatchBody, FlashcardStatsParams } from "./types/flashcards"
-import type { ActivationBody, ActivationEmailBody, ActivityParams, ConnectorCreateBody, ConsentBody, ConsentOtpBody, CreateMcpClientBody, DeleteAccountBody, EmailChangeBody, EmailChangeConfirmBody, EmisLoginResolveBody, EmisPasswordBody, LoginBody, LoginOtpBody, LoginOtpRequestBody, LoginPasswordBody, LoginRestoreBody, LoginTicketBody, OtpDisableBody, OtpEnableBody, OtpEnableConfirmBody, PasswordChangeBody, RecoveryLoginBody, RecoveryOtpCancelBody, RecoveryOtpConfirmBody, RecoveryOtpRequestBody, RecoveryPasswordConfirmBody, RecoveryPasswordRequestBody, TelegramLoginBody, TelegramOtpRequestBody, TelegramPatchBody, TelegramStatusBody, UserPreferencesPatch } from "./types/id"
+import type { ActivationBody, ActivationEmailBody, ActivityParams, ConnectorCreateBody, ConsentBody, ConsentOtpBody, CreateMcpClientBody, DeleteAccountBody, EmailChangeBody, EmailChangeConfirmBody, EmisLoginResolveBody, EmisPasswordBody, LoginBody, LoginOtpBody, LoginOtpRequestBody, LoginPasswordBody, LoginRestoreBody, LoginTicketBody, OtpDisableBody, OtpEnableBody, OtpEnableConfirmBody, PasswordChangeBody, PersonalTokenCreateBody, RecoveryLoginBody, RecoveryOtpCancelBody, RecoveryOtpConfirmBody, RecoveryOtpRequestBody, RecoveryPasswordConfirmBody, RecoveryPasswordRequestBody, TelegramLoginBody, TelegramOtpRequestBody, TelegramPatchBody, TelegramStatusBody, UserPreferencesPatch } from "./types/id"
 import type { AdminAuditParams, AdminTeachersParams, AdminUsersParams, BlockUserBody, MailSuspendBody, OauthClientVerifyBody, PlatformSettingsBody, SetPasswordBody, TeacherCreateBody, TeacherPatchBody, UserPatchBody, UserRolesBody } from "./types/id-admin"
 import type { LoginPasskeyBody, LoginPasskeyOptionsBody, LoginTotpBody, PasskeyRegisterBody, PasskeyRenameBody, TotpCodeBody } from "./types/id-factors"
 import type { EmisSourcesHiddenBody, LessonSourcesParams } from "./types/lesson-sources"
@@ -228,6 +233,14 @@ export type route_deleteAdminKnowledge = OperationOf<"/v1/admin/knowledge/{entry
 declare const res_getAdminLogIssues: Awaited<ReturnType<typeof getAdminLogIssues>>
 export const response_getAdminLogIssues: ResponseOf<"/v1/admin/logs/issues", "get"> = res_getAdminLogIssues
 
+// GET /v1/admin/vault/status — getAdminVaultStatus
+declare const res_getAdminVaultStatus: Awaited<ReturnType<typeof getAdminVaultStatus>>
+export const response_getAdminVaultStatus: ResponseOf<"/v1/admin/vault/status", "get"> = res_getAdminVaultStatus
+
+// POST /v1/admin/vault/unseal — postAdminVaultUnseal
+declare const res_postAdminVaultUnseal: Awaited<ReturnType<typeof postAdminVaultUnseal>>
+export const response_postAdminVaultUnseal: ResponseOf<"/v1/admin/vault/unseal", "post"> = res_postAdminVaultUnseal
+
 // GET /v1/ai/chats — getAiChats
 declare const res_getAiChats: Awaited<ReturnType<typeof getAiChats>>
 export const response_getAiChats: ResponseOf<"/v1/ai/chats", "get"> = res_getAiChats
@@ -315,6 +328,10 @@ export const response_getAiProjectFiles: ResponseOf<"/v1/ai/projects/{project_id
 export type route_postAiProjectFile = OperationOf<"/v1/ai/projects/{project_id}/files", "post">
 declare const req_postAiProjectFile: AttachFileBody
 export const request_postAiProjectFile: RequestOf<"/v1/ai/projects/{project_id}/files", "post"> = req_postAiProjectFile
+
+// GET /v1/app-map — getAppMap
+declare const res_getAppMap: Awaited<ReturnType<typeof getAppMap>>
+export const response_getAppMap: ResponseOf<"/v1/app-map", "get"> = res_getAppMap
 
 // GET /v1/me/assessments — getMeAssessments
 declare const res_getMeAssessments: Awaited<ReturnType<typeof getMeAssessments>>
@@ -775,6 +792,146 @@ declare const res_putMeDashboard: Awaited<ReturnType<typeof putMeDashboard>>
 export const response_putMeDashboard: ResponseOf<"/v1/me/dashboard", "put"> = res_putMeDashboard
 declare const req_putMeDashboard: DashboardSaveBody
 export const request_putMeDashboard: RequestOf<"/v1/me/dashboard", "put"> = req_putMeDashboard
+
+// GET /v1/me/excuse-templates — getMeExcuseTemplates
+declare const res_getMeExcuseTemplates: Awaited<ReturnType<typeof getMeExcuseTemplates>>
+export const response_getMeExcuseTemplates: ResponseOf<"/v1/me/excuse-templates", "get"> = res_getMeExcuseTemplates
+
+// GET /v1/me/excuses — getMeExcuses
+declare const res_getMeExcuses: Awaited<ReturnType<typeof getMeExcuses>>
+export const response_getMeExcuses: ResponseOf<"/v1/me/excuses", "get"> = res_getMeExcuses
+declare const query_getMeExcuses: MyExcusesParams
+export const query_ok_getMeExcuses: QueryOf<"/v1/me/excuses", "get"> = query_getMeExcuses
+
+// POST /v1/me/excuses — postMeExcuse
+declare const res_postMeExcuse: Awaited<ReturnType<typeof postMeExcuse>>
+export const response_postMeExcuse: ResponseOf<"/v1/me/excuses", "post"> = res_postMeExcuse
+declare const req_postMeExcuse: ExcuseRequestBody
+export const request_postMeExcuse: RequestOf<"/v1/me/excuses", "post"> = req_postMeExcuse
+
+// GET /v1/me/excuses/{excuse_id} — getMeExcuse
+declare const res_getMeExcuse: Awaited<ReturnType<typeof getMeExcuse>>
+export const response_getMeExcuse: ResponseOf<"/v1/me/excuses/{excuse_id}", "get"> = res_getMeExcuse
+
+// POST /v1/me/excuses/{excuse_id}/cancel — postMeExcuseCancel
+declare const res_postMeExcuseCancel: Awaited<ReturnType<typeof postMeExcuseCancel>>
+export const response_postMeExcuseCancel: ResponseOf<"/v1/me/excuses/{excuse_id}/cancel", "post"> = res_postMeExcuseCancel
+
+// POST /v1/me/excuses/{excuse_id}/messages — postMeExcuseMessage
+declare const res_postMeExcuseMessage: Awaited<ReturnType<typeof postMeExcuseMessage>>
+export const response_postMeExcuseMessage: ResponseOf<"/v1/me/excuses/{excuse_id}/messages", "post"> = res_postMeExcuseMessage
+declare const req_postMeExcuseMessage: ExcuseMessageBody
+export const request_postMeExcuseMessage: RequestOf<"/v1/me/excuses/{excuse_id}/messages", "post"> = req_postMeExcuseMessage
+
+// GET /v1/staff/excuses — getStaffExcuses
+declare const res_getStaffExcuses: Awaited<ReturnType<typeof getStaffExcuses>>
+export const response_getStaffExcuses: ResponseOf<"/v1/staff/excuses", "get"> = res_getStaffExcuses
+declare const query_getStaffExcuses: StaffExcusesParams
+export const query_ok_getStaffExcuses: QueryOf<"/v1/staff/excuses", "get"> = query_getStaffExcuses
+
+// POST /v1/staff/excuses — postStaffExcuse
+declare const res_postStaffExcuse: Awaited<ReturnType<typeof postStaffExcuse>>
+export const response_postStaffExcuse: ResponseOf<"/v1/staff/excuses", "post"> = res_postStaffExcuse
+declare const req_postStaffExcuse: ExcuseExclusionBody
+export const request_postStaffExcuse: RequestOf<"/v1/staff/excuses", "post"> = req_postStaffExcuse
+
+// GET /v1/staff/excuses/{excuse_id} — getStaffExcuse
+declare const res_getStaffExcuse: Awaited<ReturnType<typeof getStaffExcuse>>
+export const response_getStaffExcuse: ResponseOf<"/v1/staff/excuses/{excuse_id}", "get"> = res_getStaffExcuse
+
+// PATCH /v1/staff/excuses/{excuse_id} — patchStaffExcuse
+declare const res_patchStaffExcuse: Awaited<ReturnType<typeof patchStaffExcuse>>
+export const response_patchStaffExcuse: ResponseOf<"/v1/staff/excuses/{excuse_id}", "patch"> = res_patchStaffExcuse
+declare const req_patchStaffExcuse: ExcuseEndBody
+export const request_patchStaffExcuse: RequestOf<"/v1/staff/excuses/{excuse_id}", "patch"> = req_patchStaffExcuse
+
+// POST /v1/staff/excuses/{excuse_id}/approve — postStaffExcuseApprove
+declare const res_postStaffExcuseApprove: Awaited<ReturnType<typeof postStaffExcuseApprove>>
+export const response_postStaffExcuseApprove: ResponseOf<"/v1/staff/excuses/{excuse_id}/approve", "post"> = res_postStaffExcuseApprove
+declare const req_postStaffExcuseApprove: ExcuseDecisionBody
+export const request_postStaffExcuseApprove: RequestOf<"/v1/staff/excuses/{excuse_id}/approve", "post"> = req_postStaffExcuseApprove
+
+// POST /v1/staff/excuses/{excuse_id}/reject — postStaffExcuseReject
+declare const res_postStaffExcuseReject: Awaited<ReturnType<typeof postStaffExcuseReject>>
+export const response_postStaffExcuseReject: ResponseOf<"/v1/staff/excuses/{excuse_id}/reject", "post"> = res_postStaffExcuseReject
+declare const req_postStaffExcuseReject: ExcuseDecisionBody
+export const request_postStaffExcuseReject: RequestOf<"/v1/staff/excuses/{excuse_id}/reject", "post"> = req_postStaffExcuseReject
+
+// POST /v1/staff/excuses/{excuse_id}/revoke — postStaffExcuseRevoke
+declare const res_postStaffExcuseRevoke: Awaited<ReturnType<typeof postStaffExcuseRevoke>>
+export const response_postStaffExcuseRevoke: ResponseOf<"/v1/staff/excuses/{excuse_id}/revoke", "post"> = res_postStaffExcuseRevoke
+declare const req_postStaffExcuseRevoke: ExcuseDecisionBody
+export const request_postStaffExcuseRevoke: RequestOf<"/v1/staff/excuses/{excuse_id}/revoke", "post"> = req_postStaffExcuseRevoke
+
+// POST /v1/staff/excuses/{excuse_id}/messages — postStaffExcuseMessage
+declare const res_postStaffExcuseMessage: Awaited<ReturnType<typeof postStaffExcuseMessage>>
+export const response_postStaffExcuseMessage: ResponseOf<"/v1/staff/excuses/{excuse_id}/messages", "post"> = res_postStaffExcuseMessage
+declare const req_postStaffExcuseMessage: ExcuseMessageBody
+export const request_postStaffExcuseMessage: RequestOf<"/v1/staff/excuses/{excuse_id}/messages", "post"> = req_postStaffExcuseMessage
+
+// GET /v1/admin/excuses — getAdminExcuses
+declare const res_getAdminExcuses: Awaited<ReturnType<typeof getAdminExcuses>>
+export const response_getAdminExcuses: ResponseOf<"/v1/admin/excuses", "get"> = res_getAdminExcuses
+declare const query_getAdminExcuses: StaffExcusesParams
+export const query_ok_getAdminExcuses: QueryOf<"/v1/admin/excuses", "get"> = query_getAdminExcuses
+
+// GET /v1/admin/excuses/{excuse_id} — getAdminExcuse
+declare const res_getAdminExcuse: Awaited<ReturnType<typeof getAdminExcuse>>
+export const response_getAdminExcuse: ResponseOf<"/v1/admin/excuses/{excuse_id}", "get"> = res_getAdminExcuse
+
+// POST /v1/admin/excuses/{excuse_id}/approve — postAdminExcuseApprove
+declare const res_postAdminExcuseApprove: Awaited<ReturnType<typeof postAdminExcuseApprove>>
+export const response_postAdminExcuseApprove: ResponseOf<"/v1/admin/excuses/{excuse_id}/approve", "post"> = res_postAdminExcuseApprove
+declare const req_postAdminExcuseApprove: ExcuseDecisionBody
+export const request_postAdminExcuseApprove: RequestOf<"/v1/admin/excuses/{excuse_id}/approve", "post"> = req_postAdminExcuseApprove
+
+// POST /v1/admin/excuses/{excuse_id}/reject — postAdminExcuseReject
+declare const res_postAdminExcuseReject: Awaited<ReturnType<typeof postAdminExcuseReject>>
+export const response_postAdminExcuseReject: ResponseOf<"/v1/admin/excuses/{excuse_id}/reject", "post"> = res_postAdminExcuseReject
+declare const req_postAdminExcuseReject: ExcuseDecisionBody
+export const request_postAdminExcuseReject: RequestOf<"/v1/admin/excuses/{excuse_id}/reject", "post"> = req_postAdminExcuseReject
+
+// POST /v1/admin/excuses/{excuse_id}/messages — postAdminExcuseMessage
+declare const res_postAdminExcuseMessage: Awaited<ReturnType<typeof postAdminExcuseMessage>>
+export const response_postAdminExcuseMessage: ResponseOf<"/v1/admin/excuses/{excuse_id}/messages", "post"> = res_postAdminExcuseMessage
+declare const req_postAdminExcuseMessage: ExcuseMessageBody
+export const request_postAdminExcuseMessage: RequestOf<"/v1/admin/excuses/{excuse_id}/messages", "post"> = req_postAdminExcuseMessage
+
+// GET /v1/me/face — getMyFace
+declare const res_getMyFace: Awaited<ReturnType<typeof getMyFace>>
+export const response_getMyFace: ResponseOf<"/v1/me/face", "get"> = res_getMyFace
+
+// PUT /v1/me/face — putMyFace
+declare const res_putMyFace: Awaited<ReturnType<typeof putMyFace>>
+export const response_putMyFace: ResponseOf<"/v1/me/face", "put"> = res_putMyFace
+
+// DELETE /v1/me/face — deleteMyFace
+// no JSON success response (204, CSV, calendar or HTML): only the route is checked
+export type route_deleteMyFace = OperationOf<"/v1/me/face", "delete">
+
+// PUT /v1/staff/students/{student_id}/face — putStudentFace
+declare const res_putStudentFace: Awaited<ReturnType<typeof putStudentFace>>
+export const response_putStudentFace: ResponseOf<"/v1/staff/students/{student_id}/face", "put"> = res_putStudentFace
+
+// DELETE /v1/staff/students/{student_id}/face — deleteStudentFace
+// no JSON success response (204, CSV, calendar or HTML): only the route is checked
+export type route_deleteStudentFace = OperationOf<"/v1/staff/students/{student_id}/face", "delete">
+
+// GET /v1/admin/devices — getAdminDevices
+declare const res_getAdminDevices: Awaited<ReturnType<typeof getAdminDevices>>
+export const response_getAdminDevices: ResponseOf<"/v1/admin/devices", "get"> = res_getAdminDevices
+
+// POST /v1/admin/devices — postAdminDevice
+declare const res_postAdminDevice: Awaited<ReturnType<typeof postAdminDevice>>
+export const response_postAdminDevice: ResponseOf<"/v1/admin/devices", "post"> = res_postAdminDevice
+
+// POST /v1/admin/devices/{device_id}/revoke — postAdminDeviceRevoke
+declare const res_postAdminDeviceRevoke: Awaited<ReturnType<typeof postAdminDeviceRevoke>>
+export const response_postAdminDeviceRevoke: ResponseOf<"/v1/admin/devices/{device_id}/revoke", "post"> = res_postAdminDeviceRevoke
+
+// GET /v1/admin/devices/{device_id}/calls — getAdminDeviceCalls
+declare const res_getAdminDeviceCalls: Awaited<ReturnType<typeof getAdminDeviceCalls>>
+export const response_getAdminDeviceCalls: ResponseOf<"/v1/admin/devices/{device_id}/calls", "get"> = res_getAdminDeviceCalls
 
 // POST /v1/feedback — postFeedback
 declare const res_postFeedback: Awaited<ReturnType<typeof postFeedback>>
@@ -1343,6 +1500,20 @@ export type route_postIdMeEmisPasswordChange = OperationOf<"/v1/id/me/emis-passw
 // POST /v1/id/register/telegram-status — postRegisterTelegramStatus
 declare const res_postRegisterTelegramStatus: Awaited<ReturnType<typeof postRegisterTelegramStatus>>
 export const response_postRegisterTelegramStatus: ResponseOf<"/v1/id/register/telegram-status", "post"> = res_postRegisterTelegramStatus
+
+// GET /v1/id/personal-tokens — getIdPersonalTokens
+declare const res_getIdPersonalTokens: Awaited<ReturnType<typeof getIdPersonalTokens>>
+export const response_getIdPersonalTokens: ResponseOf<"/v1/id/personal-tokens", "get"> = res_getIdPersonalTokens
+
+// POST /v1/id/personal-tokens — postIdPersonalTokens
+declare const res_postIdPersonalTokens: Awaited<ReturnType<typeof postIdPersonalTokens>>
+export const response_postIdPersonalTokens: ResponseOf<"/v1/id/personal-tokens", "post"> = res_postIdPersonalTokens
+declare const req_postIdPersonalTokens: PersonalTokenCreateBody
+export const request_postIdPersonalTokens: RequestOf<"/v1/id/personal-tokens", "post"> = req_postIdPersonalTokens
+
+// DELETE /v1/id/personal-tokens/{token_id} — deleteIdPersonalToken
+// no JSON success response (204, CSV, calendar or HTML): only the route is checked
+export type route_deleteIdPersonalToken = OperationOf<"/v1/id/personal-tokens/{token_id}", "delete">
 
 // POST /v1/id/me/step-up — postIdMeStepUp
 // no JSON success response (204, CSV, calendar or HTML): only the route is checked

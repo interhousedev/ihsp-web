@@ -34,7 +34,7 @@ export const userPreferences: UserPreferences = {
   mail_forward_to_telegram: true,
   notify_push: true,
   today_cards: ["now", "timeline", "due", "marks", "semester", "announcements", "alerts"],
-  onboarding_dismissed: [],
+  onboarding_dismissed: ["tour"],
   bottom_nav: null,
   seen_marks_at: null,
 }

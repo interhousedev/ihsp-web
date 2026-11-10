@@ -5,6 +5,9 @@ import { keys } from "../keys"
 import { queryOptions, seg, type RequestOptions } from "../query"
 import type { NoContent, Page, RedirectResponse } from "../types/common"
 import type {
+  PersonalToken,
+  PersonalTokenCreateBody,
+  PersonalTokenCreated,
   ActivationBody,
   ActivationEmailBody,
   ActivationInfo,
@@ -417,6 +420,26 @@ export function postRegisterTelegramStatus(
   opts?: RequestOptions,
 ): Promise<{ linked: boolean }> {
   return api.post<{ linked: boolean }>("/v1/id/register/telegram-status", body, { ...opts, auth: "none" })
+}
+
+/** GET /v1/id/personal-tokens — bearer; my personal access tokens, newest first. */
+export function getIdPersonalTokens(opts?: RequestOptions): Promise<PersonalToken[]> {
+  return api.get<PersonalToken[]>("/v1/id/personal-tokens", opts)
+}
+export const getIdPersonalTokensQuery = () =>
+  queryOptions({ queryKey: keys.id.personalTokens(), queryFn: ({ signal }) => getIdPersonalTokens({ signal }) })
+
+/** POST /v1/id/personal-tokens — bearer; `201`, the token in the response is shown once. */
+export function postIdPersonalTokens(
+  body: PersonalTokenCreateBody,
+  opts?: RequestOptions,
+): Promise<PersonalTokenCreated> {
+  return api.post<PersonalTokenCreated>("/v1/id/personal-tokens", body, opts)
+}
+
+/** DELETE /v1/id/personal-tokens/{token_id} — bearer; `204`. */
+export function deleteIdPersonalToken(tokenId: string, opts?: RequestOptions): Promise<NoContent> {
+  return api.delete<NoContent>(`/v1/id/personal-tokens/${seg(tokenId)}`, opts)
 }
 
 /** POST /v1/id/me/step-up — bearer (contract addition); `202`, sends an OTP before connectors and account deletion. */

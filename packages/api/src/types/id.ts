@@ -242,6 +242,28 @@ export type ConnectorCreateBody = {
 /** `token` is shown to the user once. */
 export type ConnectorCreated = { connector: Connector; token: string }
 
+export type PersonalTokenScope = "me:read" | "me:write"
+
+/** A personal access token (`ihsp_pat_…`) for scripts; only the prefix is stored readable. */
+export type PersonalToken = {
+  id: string
+  name: string
+  prefix: string
+  scopes: string[]
+  created_at: string
+  expires_at: string
+  last_used_at: string | null
+  revoked_at: string | null
+}
+export type PersonalTokenCreateBody = {
+  name: string
+  scopes: PersonalTokenScope[]
+  expires_in_days: 30 | 90 | 365
+  otp_code?: string | null
+}
+/** `token` is shown to the user once. */
+export type PersonalTokenCreated = { personal_token: PersonalToken; token: string }
+
 export type EmisPasswordBody = { emis_password: string }
 export type EmisPasswordResponse = { emis_status: "active" | "needs_reauth" }
 

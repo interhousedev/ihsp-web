@@ -4,6 +4,7 @@
 const params = <T extends object>(value: T | undefined): T | Record<string, never> => value ?? {}
 
 export const keys = {
+  appMap: () => ["app-map"] as const,
   certificates: {
     all: () => ["certificates"] as const,
     types: () => ["certificates", "types"] as const,
@@ -26,6 +27,7 @@ export const keys = {
     telegram: () => ["id", "telegram"] as const,
     activity: (filters?: object) => ["id", "activity", params(filters)] as const,
     connectors: () => ["id", "connectors"] as const,
+    personalTokens: () => ["id", "personal-tokens"] as const,
     scopeOffers: () => ["id", "connectors", "offers"] as const,
     mediaGrants: () => ["id", "connectors", "media-grants"] as const,
     connectorActivity: (filters?: object) => ["id", "connectors", "activity", params(filters)] as const,
@@ -85,6 +87,9 @@ export const keys = {
     },
     syncRuns: (filters?: object) => ["admin", "sync-runs", params(filters)] as const,
     jobs: () => ["admin", "jobs"] as const,
+    vaultStatus: () => ["admin", "vault", "status"] as const,
+    devices: () => ["admin", "devices"] as const,
+    deviceCalls: (id: string) => ["admin", "devices", id, "calls"] as const,
     logs: (filters?: object) => ["admin", "logs", params(filters)] as const,
     mcpActivity: (filters?: object) => ["admin", "mcp-activity", params(filters)] as const,
     mcpActivitySummary: (filters?: object) => ["admin", "mcp-activity", "summary", params(filters)] as const,
@@ -98,6 +103,8 @@ export const keys = {
       tree: () => ["admin", "bot-posts", "tree"] as const,
     },
     insights: () => ["admin", "insights"] as const,
+    excuses: (filters?: object) => ["admin", "excuses", "list", params(filters)] as const,
+    excuse: (id: string) => ["admin", "excuses", "detail", id] as const,
     workOffs: {
       stats: (filters?: object) => ["admin", "work-offs", "stats", params(filters)] as const,
       list: (filters?: object) => ["admin", "work-offs", "list", params(filters)] as const,
@@ -121,6 +128,8 @@ export const keys = {
     all: () => ["staff"] as const,
     contacts: () => ["staff", "contacts"] as const,
     workOffTemplates: () => ["staff", "work-off-templates"] as const,
+    excuses: (filters?: object) => ["staff", "excuses", "list", params(filters)] as const,
+    excuse: (id: string) => ["staff", "excuses", "detail", id] as const,
     today: () => ["staff", "today"] as const,
     assessments: (filters?: object) => ["staff", "assessments", params(filters)] as const,
     timetable: (filters?: object) => ["staff", "timetable", params(filters)] as const,
@@ -141,12 +150,16 @@ export const keys = {
   me: {
     all: () => ["me"] as const,
     profile: () => ["me", "profile"] as const,
+    face: () => ["me", "face"] as const,
     today: () => ["me", "today"] as const,
     timetable: (filters?: object) => ["me", "timetable", params(filters)] as const,
     homework: (filters?: object) => ["me", "homework", params(filters)] as const,
     group: () => ["me", "group"] as const,
     groupRating: (filters?: object) => ["me", "group-rating", params(filters)] as const,
     workOffs: (filters?: object) => ["me", "work-offs", params(filters)] as const,
+    excuseTemplates: () => ["me", "excuse-templates"] as const,
+    excuses: (filters?: object) => ["me", "excuses", "list", params(filters)] as const,
+    excuse: (id: string) => ["me", "excuses", "detail", id] as const,
     attendance: (filters?: object) => ["me", "attendance", params(filters)] as const,
     subjects: (filters?: object) => ["me", "subjects", params(filters)] as const,
     subject: (id: string, filters?: object) => ["me", "subjects", id, params(filters)] as const,
