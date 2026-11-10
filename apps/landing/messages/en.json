@@ -6,134 +6,272 @@
     "skip": "Skip to content",
     "logoAlt": "{orgAlias} logo",
     "brand": "{orgAlias}",
-    "headline": "Making everyday studying at {orgAlias} more convenient",
-    "lead": "One platform of the Academic Lyceum {orgName} for students, teachers, staff and applicants.",
-    "ctaApply": "Want to apply to {orgAlias}? Ask the {appMy} AI to learn more!",
-    "ctaApplyHint": "Opens the Telegram bot in guest mode",
-    "ctaStudent": "Already a student? It's your personal helper: new marks notifications, timetable, homework, AI study notebooks…",
-    "ctaStudentButton": "Open {appMy}",
-    "why": {
-      "title": "Why {appMy}?",
-      "lead": "Everything you need for a school day in one place, on the phone and in Telegram."
+    "nav": {
+      "label": "Main",
+      "features": "Features",
+      "ecosystem": "Everything in one",
+      "journal": "For teachers",
+      "bot": "Telegram",
+      "signIn": "Sign in",
+      "menu": "Menu",
+      "close": "Close"
     },
-    "how": {
-      "title": "How {appMy} helps you study"
+    "hero": {
+      "title": "Everyday school life in one app",
+      "lead": "Marks, timetable, homework, AI study notebooks and excuses: for students, teachers and parents of {orgAlias}.",
+      "cta": "Sign in to {appMy}",
+      "bot": "Open the Telegram bot",
+      "laptopAlt": "The home page of {appMy} on a laptop",
+      "phoneAlt": "The home page of {appMy} on a phone",
+      "scroll": "Scroll to features"
     },
-    "benefits": {
-      "marks": {
-        "title": "Marks, ПК and ИК",
-        "text": "A notification as soon as a new mark, Промежуточный контроль or Итоговый контроль result appears."
+    "eco": {
+      "headline": "Everything the lyceum needs in one account",
+      "hint": "One sign-in opens every app.",
+      "tiles": {
+        "dashboard": "Home",
+        "timetable": "Timetable",
+        "marks": "Marks",
+        "journal": "Teachers' journal",
+        "assistant": "AI assistant",
+        "notebooks": "Notebooks and Studio",
+        "library": "Library",
+        "lms": "Courses",
+        "bot": "Telegram bot",
+        "excuses": "Excuses"
+      }
+    },
+    "sections": {
+      "dashboard": {
+        "title": "Your day at a glance",
+        "text": "The home page gathers what matters today.",
+        "p1": "Today's lessons with rooms and teachers",
+        "p2": "GPA, absences and homework in one place",
+        "p3": "Latest marks, notebooks and library at hand",
+        "alt": "The home page on a tablet"
       },
       "timetable": {
-        "title": "Timetable",
-        "text": "Today's lessons, rooms and changes at a glance, Monday to Friday."
-      },
-      "homework": {
-        "title": "Homework",
-        "text": "Tasks from every subject with deadlines, so nothing is forgotten."
-      },
-      "attendance": {
-        "title": "Attendance",
-        "text": "Your absences and work-offs, clear and up to date."
+        "title": "Timetable and marks without asking around",
+        "text": "The school week from Monday to Friday and every mark, as soon as it is set.",
+        "p1": "Changes and moved lessons show up at once",
+        "p2": "Marks by subject with the average",
+        "p3": "A notification for every new mark",
+        "alt": "The timetable on a phone",
+        "alt2": "Marks on a phone"
       },
       "assistant": {
-        "title": "AI assistant",
-        "text": "Ask about any topic and get an explanation that fits your lessons."
+        "title": "An AI assistant and notebooks that learn with you",
+        "text": "Add lessons, files and notes as sources and ask questions: answers cite where they come from.",
+        "p1": "Notebooks built from your own sources",
+        "p2": "Studio makes quizzes, flash cards, mind maps and reports",
+        "p3": "Web search is a switch you control",
+        "alt": "An AI notebook on a laptop"
       },
-      "notebooks": {
-        "title": "Notebooks and Studio",
-        "text": "AI study notebooks from your materials: summaries, quizzes and more."
-      },
-      "flashcards": {
-        "title": "Flashcards",
-        "text": "Make card sets and repeat them right before the test."
-      },
-      "mail": {
-        "title": "Mail",
-        "text": "A student mailbox for messages from the lyceum."
+      "journal": {
+        "title": "A journal that saves teachers' time",
+        "text": "Marks and attendance for a whole class on one screen.",
+        "p1": "Marks and attendance by lesson",
+        "p2": "Excused absences are marked automatically",
+        "p3": "Export the journal in one click",
+        "alt": "The teachers' journal on a laptop"
       },
       "library": {
-        "title": "Library",
-        "text": "Find and read books from the lyceum library online."
+        "title": "Library and courses in the same place",
+        "text": "Find a book, see if it is free, and continue your course where you stopped.",
+        "p1": "One search across the catalogue",
+        "p2": "Course outlines with progress",
+        "p3": "Certificates for finished courses",
+        "alt": "A course on a tablet",
+        "alt2": "Library search on a phone"
       },
       "bot": {
-        "title": "Telegram bot",
-        "text": "Marks, timetable and the assistant right inside Telegram."
+        "title": "Telegram bot and mini app",
+        "text": "Marks and the timetable arrive in the chat; the full app opens inside Telegram.",
+        "p1": "New marks and tomorrow's lessons in the chat",
+        "p2": "Ask the assistant right in Telegram",
+        "p3": "The mini app signs you in by itself",
+        "alt": "The Telegram bot on a phone",
+        "alt2": "The mini app on a phone"
+      },
+      "excuses": {
+        "title": "Excuses with a clear status",
+        "text": "Send a note and documents, follow the decision and chat with the curator.",
+        "p1": "Pending, approved or rejected at a glance",
+        "p2": "Documents attached to the request",
+        "p3": "Approved excuses reach the journal",
+        "alt": "Excuses on a tablet"
       }
     },
-    "platforms": {
-      "title": "One platform, several apps",
-      "lead": "Real screens of the apps on a phone.",
-      "open": "Open {name}",
-      "screenAlt": "Screenshot of {name}: {screen}",
-      "sp": {
-        "name": "{appMy}",
-        "for": "For students",
-        "features": {
-          "f1": "Home with today's lessons",
-          "f2": "Marks and timetable",
-          "f3": "AI assistant and notebooks"
+    "cta": {
+      "title": "Ready to start?",
+      "text": "Sign in with your lyceum account and everything is already there.",
+      "button": "Sign in to {appMy}",
+      "bot": "Open the Telegram bot"
+    },
+    "demo": {
+      "appName": "{appMy}",
+      "appStaff": "{appStaff}",
+      "weekday": "Monday",
+      "room": "Room",
+      "gpa": "GPA",
+      "grades": "Marks",
+      "dashboard": "Home",
+      "todayLessons": "Today's lessons",
+      "nav": {
+        "home": "Home",
+        "calendar": "Calendar",
+        "marks": "Marks",
+        "tasks": "Tasks",
+        "library": "Library",
+        "assistant": "Assistant",
+        "journal": "Journal",
+        "attendance": "Attendance"
+      },
+      "subjects": {
+        "math": "Mathematics",
+        "physics": "Physics",
+        "english": "English",
+        "russian": "Russian",
+        "uzbek": "Uzbek",
+        "chemistry": "Chemistry",
+        "history": "History",
+        "biology": "Biology"
+      },
+      "gpaHint": "This quarter",
+      "absences": "Absences",
+      "absencesHint": "This month",
+      "homework": "Homework",
+      "homeworkHint": "Due this week",
+      "recentMarks": "Recent marks",
+      "recentNotebook": "Notebook",
+      "notebookTitle": "Photosynthesis",
+      "notebookMeta": "3 sources",
+      "libraryWidget": "Library",
+      "bookTitle": "Physics, grade 10",
+      "available": "Available",
+      "onLoan": "On loan",
+      "days": {
+        "mon": "Mon",
+        "tue": "Tue",
+        "wed": "Wed",
+        "thu": "Thu",
+        "fri": "Fri"
+      },
+      "moved": "Moved",
+      "newMark": "New mark",
+      "pk": "Interim control (ПК)",
+      "new": "New",
+      "sources": "Sources",
+      "source": {
+        "lesson": "Lesson: Photosynthesis",
+        "file": "Textbook, chapter 4",
+        "text": "My notes"
+      },
+      "sourceKind": {
+        "lesson": "Lesson",
+        "file": "PDF",
+        "text": "Text"
+      },
+      "question": "Why do leaves turn yellow in autumn?",
+      "answer": "Chlorophyll breaks down, and the yellow and orange pigments that were hidden underneath become visible.",
+      "ai": "AI",
+      "web": "Web",
+      "askPlaceholder": "Ask about your sources",
+      "studio": "Studio",
+      "studioKind": {
+        "quiz": "Quiz",
+        "cards": "Flash cards",
+        "map": "Mind map",
+        "report": "Report"
+      },
+      "quizReady": "Quiz is ready",
+      "quizMeta": "10 questions",
+      "export": "Export",
+      "student": "Student",
+      "notTaken": "Not taken",
+      "taken": "Taken",
+      "dates": {
+        "0": "2 Sep",
+        "1": "4 Sep",
+        "2": "9 Sep",
+        "3": "11 Sep"
+      },
+      "flags": {
+        "absent": "Absent",
+        "late": "Late",
+        "excused": "Excused"
+      },
+      "journalHint": "Excused lessons are locked for marks.",
+      "excuses": "Excuses",
+      "excuseTitle": {
+        "pending": "Sick leave",
+        "approved": "Family event",
+        "rejected": "Late arrival"
+      },
+      "status": {
+        "pending": "Pending",
+        "approved": "Approved",
+        "rejected": "Rejected"
+      },
+      "excuseDates": {
+        "pending": "9–10 Sep",
+        "approved": "2 Sep",
+        "rejected": "26 Aug"
+      },
+      "document": "Doctor's note.pdf",
+      "thread": {
+        "student": "I was ill, the note is attached.",
+        "curator": "Thank you, I am reviewing it."
+      },
+      "replyPlaceholder": "Write a message",
+      "librarySearch": "Search the library",
+      "books": {
+        "a": {
+          "title": "Physics, grade 10",
+          "author": "V. Petrov"
         },
-        "screens": {
-          "home": "home screen",
-          "timetable": "timetable",
-          "notebooks": "AI notebooks"
+        "b": {
+          "title": "Algebra and analysis",
+          "author": "M. Ivanov"
+        },
+        "c": {
+          "title": "English grammar in use",
+          "author": "R. Murphy"
         }
       },
-      "staff": {
-        "name": "{appStaff}",
-        "for": "For teachers and curators",
-        "features": {
-          "f1": "Class journal",
-          "f2": "Attendance and work-offs",
-          "f3": "Homework for groups"
-        },
-        "screens": {
-          "journal": "class journal"
-        }
+      "course": "Introduction to programming",
+      "courseCert": "Certificate",
+      "courseLevel": "Beginner",
+      "courseHint": "Finish all modules to get it.",
+      "module": {
+        "0": "Welcome",
+        "1": "Variables",
+        "2": "Loops",
+        "3": "Final test"
       },
-      "lms": {
-        "name": "{appLms}",
-        "for": "Courses",
-        "features": {
-          "f1": "Course catalog",
-          "f2": "Lessons and tests",
-          "f3": "Progress tracking"
-        },
-        "screens": {
-          "course": "course catalog"
-        }
+      "moduleKind": {
+        "0": "Video",
+        "1": "Test"
       },
-      "library": {
-        "name": "{appLibrary}",
-        "for": "Library",
-        "features": {
-          "f1": "Book catalog",
-          "f2": "Online reader",
-          "f3": "Book suggestions"
-        },
-        "screens": {
-          "catalog": "library catalog"
-        }
-      },
-      "bot": {
-        "name": "Telegram bot",
-        "for": "In Telegram",
-        "features": {
-          "f1": "Guest mode for applicants",
-          "f2": "Mark notifications",
-          "f3": "The AI assistant in chat"
-        },
-        "screens": {
-          "assistant": "AI assistant"
-        }
-      }
+      "botName": "{appMy}",
+      "bot": "bot",
+      "botMarkTitle": "New mark: 5",
+      "botMark": "Mathematics, Interim control (ПК)",
+      "botTomorrow": "Tomorrow's lessons",
+      "botAsk": "What is homework in physics?",
+      "botAnswer": "Problems 12–15 on page 84, due Thursday.",
+      "botPlaceholder": "Message"
     },
     "footer": {
       "apps": "Apps",
       "security": "Security contact",
       "language": "Language",
-      "rights": "Academic Lyceum {orgName}"
+      "rights": "Academic Lyceum {orgName}",
+      "sp": "{appMy}",
+      "staff": "{appStaff}",
+      "lms": "{appLms}",
+      "library": "{appLibrary}",
+      "bot": "Telegram bot"
     }
   }
 }

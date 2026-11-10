@@ -1,4 +1,5 @@
 import "@ihsp/ui/styles"
+import "./landing.css"
 import { BRAND } from "@ihsp/config/brand"
 import type { Metadata, Viewport } from "next"
 import type { ReactNode } from "react"

@@ -1,4 +1,4 @@
-/** The landing page renders its hero, CTAs, sections, screenshots and the footer contact from the runtime config. */
+/** The landing page renders its hero, CTAs, feature sections and the footer contact from the runtime config. */
 import { afterEach, describe, expect, test } from "bun:test"
 import { resetConfig } from "@ihsp/config"
 import { I18nTestProvider } from "@ihsp/i18n"
@@ -21,22 +21,34 @@ afterEach(() => {
   resetConfig()
 })
 
+const SECTION_HEADINGS = [
+  "Your day at a glance",
+  "Timetable and marks without asking around",
+  "An AI assistant and notebooks that learn with you",
+  "A journal that saves teachers' time",
+  "Library and courses in the same place",
+  "Telegram bot and mini app",
+  "Excuses with a clear status",
+  "Everything the lyceum needs in one account",
+  "Ready to start?",
+]
+
 describe("LandingPage", () => {
   test("renders the hero, the CTAs and every section", async () => {
     window.__ENV__ = { ...TEST_ENV, BOT_USERNAME: "ihtbot", SECURITY_CONTACT: "sec@example.org, @sec_team (Telegram)" }
     resetConfig()
     renderLanding()
 
-    expect(screen.getByRole("heading", { level: 1 }).textContent).toContain(
-      "Making everyday studying at Interhouse more convenient",
-    )
-    expect(screen.getByRole("img", { name: "Interhouse logo" })).toBeTruthy()
-    const apply = screen.getByRole("link", { name: /Want to apply to Interhouse/ })
-    await waitFor(() => expect(apply.getAttribute("href")).toBe("https://t.me/ihtbot"))
-    expect(screen.getAllByRole("link", { name: "Open my.iht" })[0]?.getAttribute("href")).toBe(`${TEST_ENV.SP_URL}/`)
-    expect(screen.getByRole("heading", { name: "Why my.iht?" })).toBeTruthy()
-    expect(screen.getByRole("heading", { name: "How my.iht helps you study" })).toBeTruthy()
-    expect(screen.getAllByRole("img", { name: /^Screenshot of / }).length).toBe(7)
+    expect(screen.getByRole("heading", { level: 1 }).textContent).toContain("Everyday school life in one app")
+    expect(screen.getAllByRole("img", { name: "Interhouse logo" }).length).toBeGreaterThan(0)
+    for (const name of SECTION_HEADINGS) {
+      expect(screen.getByRole("heading", { name })).toBeTruthy()
+    }
+    const bots = screen.getAllByRole("link", { name: "Open the Telegram bot" })
+    await waitFor(() => expect(bots[0]?.getAttribute("href")).toBe("https://t.me/ihtbot"))
+    const signIn = screen.getAllByRole("link", { name: /^Sign in/ })
+    expect(signIn.length).toBeGreaterThan(1)
+    for (const link of signIn) expect(link.getAttribute("href")).toBe(`${TEST_ENV.SP_URL}/`)
     expect(screen.getByRole("link", { name: "sec@example.org" }).getAttribute("href")).toBe("mailto:sec@example.org")
     expect(screen.getByRole("link", { name: "@sec_team" }).getAttribute("href")).toBe("https://t.me/sec_team")
     expect(screen.getByRole("group", { name: "Language" })).toBeTruthy()

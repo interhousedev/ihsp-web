@@ -6,134 +6,272 @@
     "skip": "Asosiy qismga oʻtish",
     "logoAlt": "{orgAlias} logotipi",
     "brand": "{orgAlias}",
-    "headline": "{orgAlias}’da har kungi oʻqishni yanada qulay qilamiz",
-    "lead": "{orgName} akademik litseyining oʻquvchilar, oʻqituvchilar, xodimlar va abituriyentlar uchun yagona platformasi.",
-    "ctaApply": "{orgAlias}’ga hujjat topshirmoqchimisiz? Batafsil bilish uchun {appMy} sunʼiy intellektidan soʻrang!",
-    "ctaApplyHint": "Telegram botini mehmon rejimida ochadi",
-    "ctaStudent": "Allaqachon oʻqiyapsizmi? Bu sizning shaxsiy yordamchingiz: yangi baholar haqida xabarlar, dars jadvali, uy vazifalari, AI oʻquv daftarlari…",
-    "ctaStudentButton": "{appMy}’ni ochish",
-    "why": {
-      "title": "Nega {appMy}?",
-      "lead": "Oʻquv kuni uchun kerakli hamma narsa bir joyda: telefonda va Telegramda."
+    "nav": {
+      "label": "Asosiy navigatsiya",
+      "features": "Imkoniyatlar",
+      "ecosystem": "Hammasi bir joyda",
+      "journal": "Oʻqituvchilarga",
+      "bot": "Telegram",
+      "signIn": "Kirish",
+      "menu": "Menyu",
+      "close": "Yopish"
     },
-    "how": {
-      "title": "{appMy} oʻqishga qanday yordam beradi"
+    "hero": {
+      "title": "Maktab hayoti bitta ilovada",
+      "lead": "Baholar, dars jadvali, uy vazifalari, sunʼiy intellektli oʻquv daftarlari va uzr xatlari: {orgAlias} oʻquvchilari, oʻqituvchilari va ota-onalari uchun.",
+      "cta": "{appMy} ga kirish",
+      "bot": "Telegram botni ochish",
+      "laptopAlt": "Noutbukda {appMy} bosh sahifasi",
+      "phoneAlt": "Telefonda {appMy} bosh sahifasi",
+      "scroll": "Imkoniyatlarga oʻtish"
     },
-    "benefits": {
-      "marks": {
-        "title": "Baholar, ПК va ИК",
-        "text": "Yangi baho yoki Промежуточный контроль (ПК) va Итоговый контроль (ИК) natijasi chiqishi bilan xabar."
+    "eco": {
+      "headline": "Litseyga kerak hamma narsa bitta akkauntda",
+      "hint": "Bitta kirish barcha ilovalarni ochadi.",
+      "tiles": {
+        "dashboard": "Bosh sahifa",
+        "timetable": "Dars jadvali",
+        "marks": "Baholar",
+        "journal": "Oʻqituvchi jurnali",
+        "assistant": "AI yordamchi",
+        "notebooks": "Daftarlar va Studio",
+        "library": "Kutubxona",
+        "lms": "Kurslar",
+        "bot": "Telegram bot",
+        "excuses": "Uzr xatlari"
+      }
+    },
+    "sections": {
+      "dashboard": {
+        "title": "Kuningiz bir qarashda",
+        "text": "Bosh sahifa bugun muhim boʻlgan hamma narsani jamlaydi.",
+        "p1": "Bugungi darslar, xonalar va oʻqituvchilar bilan",
+        "p2": "Oʻrtacha ball, qoldirilgan darslar va vazifalar bir joyda",
+        "p3": "Soʻnggi baholar, daftarlar va kutubxona qoʻl ostida",
+        "alt": "Planshetda bosh sahifa"
       },
       "timetable": {
-        "title": "Dars jadvali",
-        "text": "Dushanbadan jumagacha bugungi darslar, xonalar va oʻzgarishlar."
-      },
-      "homework": {
-        "title": "Uy vazifalari",
-        "text": "Barcha fanlardan muddatli vazifalar — hech narsa esdan chiqmaydi."
-      },
-      "attendance": {
-        "title": "Davomat",
-        "text": "Qoldirilgan darslar va ularni qoplash — aniq va dolzarb."
+        "title": "Dars jadvali va baholar — soʻrab yurmasdan",
+        "text": "Dushanbadan jumagacha boʻlgan oʻquv haftasi va har bir baho qoʻyilishi bilan.",
+        "p1": "Oʻzgarishlar va koʻchirilgan darslar darhol koʻrinadi",
+        "p2": "Fanlar kesimida baholar va oʻrtacha ball",
+        "p3": "Har bir yangi baho haqida bildirishnoma",
+        "alt": "Telefonda dars jadvali",
+        "alt2": "Telefonda baholar"
       },
       "assistant": {
-        "title": "AI yordamchi",
-        "text": "Istalgan mavzu haqida soʻrang va darslaringizga mos tushuntirish oling."
+        "title": "Siz bilan birga oʻrganadigan AI yordamchi va daftarlar",
+        "text": "Darslar, fayllar va yozuvlarni manba sifatida qoʻshing va savol bering: javoblar manbaga havola qiladi.",
+        "p1": "Oʻz manbalaringizdan daftarlar",
+        "p2": "Studio test, kartochkalar, aqliy xarita va hisobot yaratadi",
+        "p3": "Internetdan qidirishni oʻzingiz yoqasiz",
+        "alt": "Noutbukda AI daftar"
       },
-      "notebooks": {
-        "title": "Daftarlar va Studio",
-        "text": "Materiallaringizdan AI daftarlar: konspektlar, testlar va boshqalar."
-      },
-      "flashcards": {
-        "title": "Kartochkalar",
-        "text": "Kartochkalar toʻplamini tuzing va nazoratdan oldin takrorlang."
-      },
-      "mail": {
-        "title": "Pochta",
-        "text": "Litseydan xatlar uchun oʻquvchi pochta qutisi."
+      "journal": {
+        "title": "Oʻqituvchining vaqtini tejaydigan jurnal",
+        "text": "Butun sinfning baholari va davomati bitta ekranda.",
+        "p1": "Darslar boʻyicha baholar va davomat",
+        "p2": "Sababli qoldirilgan darslar avtomatik belgilanadi",
+        "p3": "Jurnalni bir bosishda eksport qilish",
+        "alt": "Noutbukda oʻqituvchi jurnali"
       },
       "library": {
-        "title": "Kutubxona",
-        "text": "Litsey kutubxonasidagi kitoblarni onlayn toping va oʻqing."
+        "title": "Kutubxona va kurslar bir joyda",
+        "text": "Kitobni toping, boʻshligini bilib oling va kursni toʻxtagan joyingizdan davom ettiring.",
+        "p1": "Katalog boʻyicha yagona qidiruv",
+        "p2": "Kurs rejasi va jarayon",
+        "p3": "Tugatilgan kurslar uchun sertifikatlar",
+        "alt": "Planshetda kurs",
+        "alt2": "Telefonda kutubxona qidiruvi"
       },
       "bot": {
-        "title": "Telegram bot",
-        "text": "Baholar, jadval va yordamchi toʻgʻridan-toʻgʻri Telegramda."
+        "title": "Telegram bot va mini ilova",
+        "text": "Baholar va dars jadvali chatga keladi, toʻliq ilova esa Telegramning oʻzida ochiladi.",
+        "p1": "Yangi baholar va ertangi darslar chatda",
+        "p2": "Yordamchiga Telegramning oʻzida savol bering",
+        "p3": "Mini ilova akkauntga oʻzi kiradi",
+        "alt": "Telefonda Telegram bot",
+        "alt2": "Telefonda mini ilova"
+      },
+      "excuses": {
+        "title": "Holati tushunarli uzr xatlari",
+        "text": "Izoh va hujjatlarni yuboring, qarorni kuzating va kurator bilan yozishing.",
+        "p1": "Koʻrib chiqilmoqda, tasdiqlangan yoki rad etilgan: bir qarashda",
+        "p2": "Hujjatlar arizaga biriktiriladi",
+        "p3": "Tasdiqlangan uzr xatlari jurnalga tushadi",
+        "alt": "Planshetda uzr xatlari"
       }
     },
-    "platforms": {
-      "title": "Bitta platforma, bir nechta ilova",
-      "lead": "Ilovalarning telefondagi haqiqiy ekranlari.",
-      "open": "{name}ni ochish",
-      "screenAlt": "{name} ekrani: {screen}",
-      "sp": {
-        "name": "{appMy}",
-        "for": "Oʻquvchilar uchun",
-        "features": {
-          "f1": "Bugungi darslar bilan bosh sahifa",
-          "f2": "Baholar va jadval",
-          "f3": "AI yordamchi va daftarlar"
+    "cta": {
+      "title": "Boshlashga tayyormisiz?",
+      "text": "Litsey akkauntingiz bilan kiring, hammasi allaqachon shu yerda.",
+      "button": "{appMy} ga kirish",
+      "bot": "Telegram botni ochish"
+    },
+    "demo": {
+      "appName": "{appMy}",
+      "appStaff": "{appStaff}",
+      "weekday": "Dushanba",
+      "room": "Xona",
+      "gpa": "Oʻrtacha ball",
+      "grades": "Baholar",
+      "dashboard": "Bosh sahifa",
+      "todayLessons": "Bugungi darslar",
+      "nav": {
+        "home": "Bosh sahifa",
+        "calendar": "Jadval",
+        "marks": "Baholar",
+        "tasks": "Vazifalar",
+        "library": "Kutubxona",
+        "assistant": "Yordamchi",
+        "journal": "Jurnal",
+        "attendance": "Davomat"
+      },
+      "subjects": {
+        "math": "Matematika",
+        "physics": "Fizika",
+        "english": "Ingliz tili",
+        "russian": "Rus tili",
+        "uzbek": "Oʻzbek tili",
+        "chemistry": "Kimyo",
+        "history": "Tarix",
+        "biology": "Biologiya"
+      },
+      "gpaHint": "Shu chorakda",
+      "absences": "Qoldirilgan darslar",
+      "absencesHint": "Shu oyda",
+      "homework": "Vazifalar",
+      "homeworkHint": "Shu hafta ichida",
+      "recentMarks": "Soʻnggi baholar",
+      "recentNotebook": "Daftar",
+      "notebookTitle": "Fotosintez",
+      "notebookMeta": "3 ta manba",
+      "libraryWidget": "Kutubxona",
+      "bookTitle": "Fizika, 10-sinf",
+      "available": "Mavjud",
+      "onLoan": "Qoʻlda",
+      "days": {
+        "mon": "Du",
+        "tue": "Se",
+        "wed": "Ch",
+        "thu": "Pa",
+        "fri": "Ju"
+      },
+      "moved": "Koʻchirildi",
+      "newMark": "Yangi baho",
+      "pk": "Oraliq nazorat (ON)",
+      "new": "Yangi",
+      "sources": "Manbalar",
+      "source": {
+        "lesson": "Dars: Fotosintez",
+        "file": "Darslik, 4-bob",
+        "text": "Yozuvlarim"
+      },
+      "sourceKind": {
+        "lesson": "Dars",
+        "file": "PDF",
+        "text": "Matn"
+      },
+      "question": "Kuzda barglar nega sargʻayadi?",
+      "answer": "Xlorofill parchalanadi va uning ostida yashiringan sariq va toʻq sariq pigmentlar koʻrinib qoladi.",
+      "ai": "AI",
+      "web": "Internet",
+      "askPlaceholder": "Manbalaringiz haqida soʻrang",
+      "studio": "Studio",
+      "studioKind": {
+        "quiz": "Test",
+        "cards": "Kartochkalar",
+        "map": "Aqliy xarita",
+        "report": "Hisobot"
+      },
+      "quizReady": "Test tayyor",
+      "quizMeta": "10 ta savol",
+      "export": "Eksport",
+      "student": "Oʻquvchi",
+      "notTaken": "Oʻtkazilmagan",
+      "taken": "Oʻtkazilgan",
+      "dates": {
+        "0": "2-sen",
+        "1": "4-sen",
+        "2": "9-sen",
+        "3": "11-sen"
+      },
+      "flags": {
+        "absent": "Yoʻq",
+        "late": "Kechikdi",
+        "excused": "Sababli"
+      },
+      "journalHint": "Sababli darslarga baho qoʻyib boʻlmaydi.",
+      "excuses": "Uzr xatlari",
+      "excuseTitle": {
+        "pending": "Kasallik",
+        "approved": "Oilaviy tadbir",
+        "rejected": "Kechikish"
+      },
+      "status": {
+        "pending": "Koʻrib chiqilmoqda",
+        "approved": "Tasdiqlangan",
+        "rejected": "Rad etilgan"
+      },
+      "excuseDates": {
+        "pending": "9–10-sen",
+        "approved": "2-sen",
+        "rejected": "26-avg"
+      },
+      "document": "Shifokor maʼlumotnomasi.pdf",
+      "thread": {
+        "student": "Kasal edim, maʼlumotnoma ilova qilindi.",
+        "curator": "Rahmat, koʻrib chiqyapman."
+      },
+      "replyPlaceholder": "Xabar yozing",
+      "librarySearch": "Kutubxonadan qidirish",
+      "books": {
+        "a": {
+          "title": "Fizika, 10-sinf",
+          "author": "V. Petrov"
         },
-        "screens": {
-          "home": "bosh sahifa",
-          "timetable": "dars jadvali",
-          "notebooks": "AI daftarlar"
+        "b": {
+          "title": "Algebra va analiz",
+          "author": "M. Ivanov"
+        },
+        "c": {
+          "title": "English Grammar in Use",
+          "author": "R. Murphy"
         }
       },
-      "staff": {
-        "name": "{appStaff}",
-        "for": "Oʻqituvchilar va kuratorlar uchun",
-        "features": {
-          "f1": "Sinf jurnali",
-          "f2": "Davomat va qoplash",
-          "f3": "Guruhlar uchun uy vazifalari"
-        },
-        "screens": {
-          "journal": "sinf jurnali"
-        }
+      "course": "Dasturlashga kirish",
+      "courseCert": "Sertifikat",
+      "courseLevel": "Boshlangʻich",
+      "courseHint": "Olish uchun barcha modullarni tugating.",
+      "module": {
+        "0": "Tanishuv",
+        "1": "Oʻzgaruvchilar",
+        "2": "Sikllar",
+        "3": "Yakuniy test"
       },
-      "lms": {
-        "name": "{appLms}",
-        "for": "Kurslar",
-        "features": {
-          "f1": "Kurslar katalogi",
-          "f2": "Darslar va testlar",
-          "f3": "Natijalarni kuzatish"
-        },
-        "screens": {
-          "course": "kurslar katalogi"
-        }
+      "moduleKind": {
+        "0": "Video",
+        "1": "Test"
       },
-      "library": {
-        "name": "{appLibrary}",
-        "for": "Kutubxona",
-        "features": {
-          "f1": "Kitoblar katalogi",
-          "f2": "Onlayn oʻqish",
-          "f3": "Kitob taklif qilish"
-        },
-        "screens": {
-          "catalog": "kutubxona katalogi"
-        }
-      },
-      "bot": {
-        "name": "Telegram bot",
-        "for": "Telegramda",
-        "features": {
-          "f1": "Abituriyentlar uchun mehmon rejimi",
-          "f2": "Baholar haqida xabarlar",
-          "f3": "Chatdagi AI yordamchi"
-        },
-        "screens": {
-          "assistant": "AI yordamchi"
-        }
-      }
+      "botName": "{appMy}",
+      "bot": "bot",
+      "botMarkTitle": "Yangi baho: 5",
+      "botMark": "Matematika, Oraliq nazorat (ON)",
+      "botTomorrow": "Ertangi darslar",
+      "botAsk": "Fizikadan nima berildi?",
+      "botAnswer": "84-betdagi 12–15-masalalar, payshanbagacha.",
+      "botPlaceholder": "Xabar"
     },
     "footer": {
       "apps": "Ilovalar",
       "security": "Xavfsizlik boʻyicha aloqa",
       "language": "Til",
-      "rights": "{orgName} akademik litseyi"
+      "rights": "{orgName} akademik litseyi",
+      "sp": "{appMy}",
+      "staff": "{appStaff}",
+      "lms": "{appLms}",
+      "library": "{appLibrary}",
+      "bot": "Telegram bot"
     }
   }
 }

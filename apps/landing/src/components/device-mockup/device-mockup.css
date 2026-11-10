@@ -1,0 +1,322 @@
+/*
+ * Device anatomy adapted from react-mockframe (MIT, (c) 2026 Mohammed Banani), itself adapted
+ * from Marvel devices.css (MIT, (c) 2014 Marvelapp); see apps/site/THIRD_PARTY_NOTICES.md.
+ * One shell (DeviceShell) takes every device's geometry as CSS variables in the source's px
+ * (lib/devices.ts); the rig scales it to the stage. Changing the variables morphs the shell.
+ */
+.device-stage {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 16 / 10;
+}
+.device-rig {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform-origin: 50% 50%;
+}
+
+.dv {
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+.dv-body {
+  position: absolute;
+  z-index: 1;
+  left: var(--body-x);
+  top: var(--body-y);
+  width: var(--body-w);
+  height: var(--body-h);
+  padding: var(--bezel);
+  border-radius: var(--body-radius);
+  background: var(--bezel-color);
+  box-shadow: var(--rings);
+}
+.dv-screen {
+  position: relative;
+  z-index: 3;
+  width: var(--screen-w);
+  height: var(--screen-h);
+  overflow: hidden;
+  border-radius: var(--screen-radius);
+  background: oklch(0.975 0.006 250);
+  /* Clip iframe corners on WebKit while the radius animates. */
+  isolation: isolate;
+}
+.dark .dv-screen {
+  background: oklch(0.17 0.02 265);
+}
+
+/* Dynamic Island, punch-hole or a dot: one element morphing between them. */
+.dv-cutout {
+  position: absolute;
+  z-index: 10;
+  left: var(--cutout-x);
+  top: var(--cutout-y);
+  width: var(--cutout-w);
+  height: var(--cutout-h);
+  border-radius: var(--cutout-radius);
+  background: oklch(0 0 0);
+}
+.dv-lens {
+  position: absolute;
+  left: calc(var(--lens-x) - var(--lens-size) / 2);
+  top: calc(var(--lens-y) - var(--lens-size) / 2);
+  width: var(--lens-size);
+  height: var(--lens-size);
+  border-radius: 50%;
+  background: radial-gradient(
+    circle at 50% 40%,
+    oklch(0.401 0.137 279) 0%,
+    oklch(0.283 0.121 277) 25%,
+    oklch(0.181 0.071 279) 50%,
+    oklch(0.326 0.053 230) 66%,
+    oklch(0.174 0.018 249) 80%,
+    oklch(0.127 0.009 254) 100%
+  );
+}
+.dv-button {
+  position: absolute;
+  z-index: 0;
+  border-radius: 1.5px;
+  background: var(--button-bg);
+  box-shadow:
+    inset 0 1px 0.5px rgb(255 255 255 / 0.3),
+    inset 0 -1px 0.5px rgb(255 255 255 / 0.3);
+  opacity: 0;
+}
+.dv-button[data-on] {
+  opacity: 1;
+}
+
+/* Extras: hidden unless the shell lists them in data-extras, so they fade during a morph. */
+.dv-strip,
+.dv-earpiece,
+.dv-hinge,
+.dv-spine,
+.dv-base,
+.dv-feet {
+  position: absolute;
+  opacity: 0;
+}
+.dv[data-extras~="strips"] .dv-strip,
+.dv[data-extras~="earpiece"] .dv-earpiece,
+.dv[data-extras~="hinge"] .dv-hinge,
+.dv[data-extras~="spine"] .dv-spine,
+.dv[data-extras~="base"] :is(.dv-base, .dv-feet) {
+  opacity: 1;
+}
+/* Phone earpiece slit between the band and the glass. */
+.dv-earpiece {
+  z-index: 4;
+  top: 6.33px;
+  left: 50%;
+  width: 162px;
+  height: 2.33px;
+  translate: -50% 0;
+  border-radius: 0 0 2px 2px;
+  background: oklch(0.085 0 0);
+}
+/* Foldable (closed): the band differs per edge; the rings follow the top, these strips the others. */
+.dv-strip {
+  z-index: 2;
+}
+.dv-strip--l {
+  top: 6px;
+  bottom: 6px;
+  left: 0;
+  width: 13.33px;
+  background: var(--strip-l);
+  mask-image: linear-gradient(to bottom, transparent, oklch(0 0 0) 6px, oklch(0 0 0) calc(100% - 6px), transparent);
+}
+.dv-strip--r {
+  top: 70px;
+  bottom: 70px;
+  right: 0;
+  width: 14.67px;
+  background: var(--strip-r);
+  mask-image: linear-gradient(to bottom, transparent, oklch(0 0 0) 24px, oklch(0 0 0) calc(100% - 24px), transparent);
+}
+.dv-strip--b {
+  right: 70px;
+  bottom: 0;
+  left: 6px;
+  height: 14.67px;
+  background: var(--strip-b);
+  mask-image: linear-gradient(to right, transparent, oklch(0 0 0) 6px, oklch(0 0 0) calc(100% - 24px), transparent);
+}
+/* The other half's spine peeking out on the hinge side (closed foldable). */
+.dv-spine {
+  z-index: 0;
+  left: calc(var(--body-x) - 11.67px);
+  top: calc(var(--body-y) + 6px);
+  width: 16px;
+  height: calc(var(--body-h) - 12px);
+  border-radius: 12px 0 0 12px;
+  background: var(--spine);
+}
+/* Hinge cover slots above and below the fold (open foldable). */
+.dv-hinge {
+  z-index: 2;
+  left: 50%;
+  width: 68px;
+  height: 2.67px;
+  translate: -50% 0;
+  border-radius: 1.33px;
+  background: var(--hinge-slot);
+}
+.dv-hinge::before {
+  content: "";
+  position: absolute;
+  left: 50%;
+  width: 1.33px;
+  height: 2.67px;
+  translate: -50% 0;
+  background: var(--hinge-hi);
+}
+.dv-hinge--top {
+  top: 6.33px;
+}
+.dv-hinge--top::before {
+  top: -2.67px;
+}
+.dv-hinge--bottom {
+  bottom: 6.33px;
+}
+.dv-hinge--bottom::before {
+  bottom: -2.67px;
+}
+/* Laptop base: a flat slab wider than the lid with the thumb scoop, then the feet. */
+.dv-base {
+  z-index: 5;
+  left: calc(var(--body-x) - 106px);
+  top: calc(var(--body-y) + var(--body-h) - 7px);
+  width: calc(var(--body-w) + 212px);
+  height: 39.4px;
+  border-radius: 3px 3px 19px 19px;
+  background: var(--base);
+}
+.dv-base::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 50%;
+  width: 200px;
+  height: 9px;
+  translate: -50% 0;
+  background:
+    radial-gradient(circle at 0 100%, transparent 9px, var(--scoop-top) 9.5px) left top / 9px 9px no-repeat,
+    radial-gradient(circle at 100% 100%, transparent 9px, var(--scoop-top) 9.5px) right top / 9px 9px no-repeat;
+}
+.dv-base::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 50%;
+  width: 182px;
+  height: 14.9px;
+  translate: -50% 0;
+  border-radius: 0 0 9px 9px;
+  background: var(--scoop);
+  box-shadow: inset 0 -1px 1.5px rgb(0 0 0 / 0.18);
+}
+.dv-feet {
+  z-index: 4;
+  left: calc(var(--body-x) - 40px);
+  top: calc(var(--body-y) + var(--body-h) + 31.7px);
+  width: calc(var(--body-w) + 80px);
+  height: 7px;
+}
+.dv-feet::before,
+.dv-feet::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  width: 80px;
+  height: 100%;
+  border-radius: 0 0 5px 5px;
+  background: var(--foot);
+  box-shadow: inset 0 -1px 1px rgb(255 255 255 / 0.12);
+}
+.dv-feet::before {
+  left: 0;
+}
+.dv-feet::after {
+  right: 0;
+}
+.dv-live {
+  filter: drop-shadow(0 40px 50px rgb(10 30 70 / 0.35));
+}
+
+/* Morph: every geometry property springs; colours and extras follow. */
+.device-stage[data-animate]
+  :is(
+    .device-rig,
+    .dv,
+    .dv-body,
+    .dv-screen,
+    .dv-cutout,
+    .dv-lens,
+    .dv-button,
+    .dv-spine,
+    .dv-base,
+    .dv-feet,
+    .dv-strip,
+    .dv-earpiece,
+    .dv-hinge
+  ) {
+  transition-property:
+    width, height, left, top, padding, border-radius, box-shadow, background-color, opacity, transform;
+  transition-duration: var(--device-duration);
+  transition-timing-function: var(--device-ease);
+}
+.device-stage[data-animate] :is(.dv-strip, .dv-earpiece, .dv-hinge, .dv-spine, .dv-base, .dv-feet) {
+  transition-duration: calc(var(--device-duration) / 2);
+  transition-timing-function: ease;
+}
+/* The fold: the rig follows the fold's timing and the live shell waits behind the scene. */
+.device-stage[data-folding] .device-rig {
+  transition:
+    width var(--fold-duration) var(--fold-ease),
+    height var(--fold-duration) var(--fold-ease),
+    transform var(--fold-duration) var(--fold-ease);
+}
+.device-stage[data-folding] .dv-live {
+  visibility: hidden;
+}
+
+.device-frame {
+  position: absolute;
+  top: 0;
+  left: 0;
+  border: 0;
+  transform-origin: 0 0;
+  opacity: 0;
+  transition: opacity var(--screen-fade) ease;
+}
+.device-frame[data-visible] {
+  opacity: 1;
+}
+
+/* Reduced motion: no morph. The device fades out, geometry and screen swap at the midpoint, then it fades in. */
+.device-stage[data-reduced]
+  :is(
+    .device-rig,
+    .dv,
+    .dv-body,
+    .dv-screen,
+    .dv-cutout,
+    .dv-lens,
+    .dv-button,
+    .dv-spine,
+    .dv-base,
+    .dv-feet,
+    .dv-strip,
+    .dv-earpiece,
+    .dv-hinge,
+    .device-frame
+  ) {
+  transition-duration: 0s;
+  transition-delay: calc(var(--reduced-fade) / 2);
+}
