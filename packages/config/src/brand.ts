@@ -60,6 +60,12 @@ export const BRAND = {
   },
   /** Paths under each app's `public/` (the files themselves are per app). */
   logos: { svg: "/icons/logo.svg", png64: "/icons/logo-64.png" },
+  /** The campus photo of the split sign-in layout (`/campus.webp` of the id app) and its attribution. */
+  campusPhoto: {
+    credit: "© RASH.IHT, CC BY-SA 4.0",
+    source:
+      "https://commons.wikimedia.org/wiki/File:International_House-Tashkent_academic_lyceum_Under_TIIAME_National_Research_University.jpg",
+  },
   repositories: {
     web: "https://github.com/interhousedev/ihsp-web",
     backend: "https://github.com/interhousedev/ihsp-backend",

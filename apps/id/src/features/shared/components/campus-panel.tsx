@@ -26,12 +26,12 @@ export function CampusPanel() {
           <figcaption className="text-sm text-white/80">{t("splitPanel.mottoTranslation")}</figcaption>
         </figure>
         <a
-          href="https://commons.wikimedia.org/wiki/File:International_House-Tashkent_academic_lyceum_Under_TIIAME_National_Research_University.jpg"
+          href={BRAND.campusPhoto.source}
           target="_blank"
           rel="noreferrer"
           className="absolute right-4 bottom-3 text-[10px] text-white/50 hover:text-white/80"
         >
-          © RASH.IHT, CC BY-SA 4.0
+          {BRAND.campusPhoto.credit}
         </a>
       </div>
     </aside>

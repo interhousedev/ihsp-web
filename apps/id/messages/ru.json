@@ -106,7 +106,7 @@
     "code": "Код ошибки: {code}"
   },
   "splitPanel": {
-    "photoAlt": "Здание Академического лицея International House Tashkent",
+    "photoAlt": "Здание Академического лицея {orgName}",
     "motto": "Non scholae sed vitae discimus",
     "mottoTranslation": "Мы учимся не для школы, а для жизни"
   },

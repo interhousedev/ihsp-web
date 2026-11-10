@@ -106,7 +106,7 @@
     "code": "Xato kodi: {code}"
   },
   "splitPanel": {
-    "photoAlt": "International House Tashkent akademik litseyining binosi",
+    "photoAlt": "{orgName} akademik litseyining binosi",
     "motto": "Non scholae sed vitae discimus",
     "mottoTranslation": "Biz maktab uchun emas, hayot uchun oʻqiymiz"
   },

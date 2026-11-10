@@ -106,7 +106,7 @@
     "code": "Error code: {code}"
   },
   "splitPanel": {
-    "photoAlt": "The building of the Academic Lyceum International House Tashkent",
+    "photoAlt": "The building of the Academic Lyceum {orgName}",
     "motto": "Non scholae sed vitae discimus",
     "mottoTranslation": "We learn not for school, but for life"
   },
