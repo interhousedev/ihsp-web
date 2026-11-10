@@ -4,11 +4,15 @@ All notable changes to this project are documented here. The format follows [Kee
 
 ## [Unreleased]
 
+## [1.3.0] - 2026-11-11
+
+1.2.1 was not released for the web; its changes ship in 1.3.0.
+
 ### Added
 
+- Notebooks: the slide deck viewer draws the new layouts (stats, timeline, comparison, image left or right, full image) with the picture credit linking to its source, and a generating deck shows its stage (planning, researching, images, designing).
 - Landing: a device switcher (phone, tablet, laptop, foldable) under the hero; the default is detected from the visitor's device after load, and the hero preview shows the matching screen.
-
-## [1.2.1] - 2026-11-11
+- Admin: the role editor treats teachers as LMS administrators by default.
 
 ### Changed
 
