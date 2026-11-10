@@ -4,6 +4,15 @@ All notable changes to this project are documented here. The format follows [Kee
 
 ## [Unreleased]
 
+## [1.2.1] - 2026-11-11
+
+### Changed
+
+- Landing: full rework with a compacting pill header, a scroll-driven hero, device mockups of the real product UI (dashboard, timetable, marks, AI notebooks, journal, library, LMS, Telegram bot, excuses), reveal-on-scroll and a sign-in call to action in uz, ru and en. The old screenshots were removed.
+- Admin: the Vault unseal page sends the key share only, without a confirmation code.
+- admin.iht and iht.id: new favicon, app icons and sidebar logo.
+- iht.id: sign-in and registration use a split layout with a campus photo and the lyceum motto on the right (hidden below `lg`); the "I don't remember my EMIS ID" and "never logged into EMIS" actions are now secondary and link style.
+
 ## [1.2.0] - 2026-11-10
 
 ### Added
