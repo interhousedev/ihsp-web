@@ -6,6 +6,7 @@ import { Badge, Sheet, SheetContent, SheetDescription, SheetHeader, SheetTitle }
 import { LinkButton } from "../../shared/components/link-button"
 import { fullName } from "../../shared/utils/people"
 import { formatGpa, formatRate } from "../utils/students"
+import { StudentFace } from "./student-face"
 
 /**
  * The student card of the curator (UF-STF-09 step 2): subgroup, absence rate, semester GPA and why the student is
@@ -66,6 +67,7 @@ export function StudentDrawer({
               ) : (
                 <p className="text-muted-foreground text-sm">{t("noFlags")}</p>
               )}
+              <StudentFace key={student.user_id} studentId={student.user_id} name={fullName(student)} />
               <div className="flex flex-wrap gap-2">
                 <LinkButton
                   href={`/students/view/?id=${encodeURIComponent(student.user_id)}&group=${encodeURIComponent(groupId)}`}

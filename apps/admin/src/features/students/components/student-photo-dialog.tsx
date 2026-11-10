@@ -1,14 +1,13 @@
 "use client"
 
 import { keys, putAdminUserPhoto, type StudentItem } from "@ihsp/api"
-import { PHOTO_ACCEPT, photoProblem } from "@ihsp/features-core"
+import { PHOTO_ACCEPT, photoProblem, useCamera } from "@ihsp/features-core"
 import { useErrorMessage, useT } from "@ihsp/i18n"
 import { Button, Icons, LoadingButton, ResponsiveDialog } from "@ihsp/ui"
 import { useQueryClient } from "@tanstack/react-query"
 import { useEffect, useRef, useState } from "react"
 import { toast } from "sonner"
 import { fullName } from "../../shared/utils/names"
-import { useCamera } from "./use-camera"
 
 /**
  * The student's photo (ADM-PHOTO-1): the current one, a live camera capture with retake, or a file picked from the device.

@@ -17,6 +17,7 @@ import { fetchAllPages } from "../../shared/utils/fetch-all-pages"
 import { fullName } from "../../shared/utils/names"
 import { TOUCH } from "../../shared/utils/touch"
 import { STUDENT_FILTER_KEYS, studentParams } from "../utils/student-params"
+import { StudentFaceDialog } from "./student-face-dialog"
 import { StudentPhotoDialog } from "./student-photo-dialog"
 
 /** Students list (ADM-3, UF-ADM-03): search and filters in the URL, rows open the Student 360 page, CSV export. */
@@ -24,7 +25,9 @@ export function StudentsPage() {
   const t = useT("students")
   const tSel = useT("shared.selection")
   const tPhoto = useT("studentPhoto")
+  const tFace = useT("studentFace")
   const [photoStudent, setPhotoStudent] = useState<StudentItem | null>(null)
+  const [faceStudent, setFaceStudent] = useState<StudentItem | null>(null)
   const f = useFormatters()
   const filters = useFilterState(STUDENT_FILTER_KEYS)
   const groups = useGroupOptions()
@@ -144,8 +147,14 @@ export function StudentsPage() {
           {tPhoto("action")}
         </Button>
       )),
+      col<StudentItem>("face", tFace("column"), (student) => (
+        <Button type="button" variant="outline" size="sm" className={TOUCH} onClick={() => setFaceStudent(student)}>
+          <Icons.upload aria-hidden />
+          {tFace("action")}
+        </Button>
+      )),
     ],
-    [f, t, tSel, tPhoto],
+    [f, t, tSel, tPhoto, tFace],
   )
 
   function studentsCsv(rows: StudentItem[]) {
@@ -206,6 +215,7 @@ export function StudentsPage() {
         }
       />
       <StudentPhotoDialog student={photoStudent} onClose={() => setPhotoStudent(null)} />
+      <StudentFaceDialog student={faceStudent} onClose={() => setFaceStudent(null)} />
     </PageContainer>
   )
 }
