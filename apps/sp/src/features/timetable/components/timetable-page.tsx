@@ -59,6 +59,10 @@ export function TimetablePage() {
   const profile = useQuery(getMeProfileQuery())
   const subgroupUnset = profile.data?.subgroup === null
   const attendance = useAttendance(null, null)
+  const excusedLessonIds = useMemo(
+    () => new Set((attendance.data?.missed ?? []).filter((row) => row.excused).map((row) => row.lesson.id)),
+    [attendance.data],
+  )
   const { hidden, setHidden } = useHideOtherSubgroup()
   const pxPerMinute = isMobile ? PHONE_PX_PER_MINUTE : DESKTOP_PX_PER_MINUTE
   const legend: { state: MarkedState; label: string }[] = [
@@ -127,6 +131,7 @@ export function TimetablePage() {
                     now={now}
                     showSubgroup={hint}
                     results={results}
+                    excusedLessonIds={excusedLessonIds}
                     statuses={statuses}
                     onDayChange={(next) => void setDay(next)}
                     onStep={(direction) => void setDay(stepDate("day", day, direction, allLessons))}
@@ -147,6 +152,7 @@ export function TimetablePage() {
                     now={now}
                     showSubgroup={hint}
                     results={results}
+                    excusedLessonIds={excusedLessonIds}
                   />
                 )}
               </>

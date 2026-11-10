@@ -23,3 +23,8 @@ export function stateOfCell(cell: Pick<Cell, "absent" | "late" | "excused">): At
 export function canExcuse(cell: Pick<Cell, "absent">, editable: boolean): boolean {
   return editable && cell.absent
 }
+
+/** An excused absence is held by an excuse (or the curator's mark): its status control is off and the server answers 409 `academic.attendance_excused_locked`. */
+export function isExcusedLocked(cell: Pick<Cell, "absent" | "excused">, editable: boolean): boolean {
+  return editable && cell.absent && cell.excused
+}

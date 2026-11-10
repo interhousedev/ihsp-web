@@ -20,6 +20,7 @@ export function TimetableLessonBlock({
   now,
   showSubgroup = false,
   result,
+  excused = false,
 }: {
   /** `subgroup.is_own_subgroup === false`: the other subgroup's lesson, shown dimmed and labelled. */
   lesson: StudentLessonItem
@@ -28,6 +29,8 @@ export function TimetableLessonBlock({
   showSubgroup?: boolean
   /** Attendance and mark; shown only for lessons that started before `now`. */
   result?: LessonResult
+  /** The absence is officially excused (an approved excuse). */
+  excused?: boolean
 }) {
   const t = useT("timetable")
   const ta = useT("attendanceStates")
@@ -110,6 +113,7 @@ export function TimetableLessonBlock({
         {shown && shown.mark !== null ? <MarkBadge mark={shown.mark} size="sm" /> : null}
         {cancelled ? <Badge variant="destructive">{t("cancelled")}</Badge> : null}
         {current ? <Badge>{t("now")}</Badge> : null}
+        {excused ? <Badge variant="secondary">{t("excused")}</Badge> : null}
         {otherSubgroup ? (
           <Badge variant="outline">{t("otherSubgroup", { name: otherSubgroup.subgroup_name })}</Badge>
         ) : null}

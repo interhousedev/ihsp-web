@@ -25,6 +25,7 @@ export function TimetableDayView({
   now,
   showSubgroup,
   results,
+  excusedLessonIds,
   statuses,
   onDayChange,
   onStep,
@@ -36,6 +37,7 @@ export function TimetableDayView({
   now: number
   showSubgroup: boolean
   results: ReadonlyMap<string, LessonResult>
+  excusedLessonIds: ReadonlySet<string>
   statuses: ReadonlyMap<string, MarkedState>
   onDayChange: (date: string) => void
   onStep: (direction: 1 | -1) => void
@@ -89,6 +91,7 @@ export function TimetableDayView({
           now={now}
           showSubgroup={showSubgroup}
           results={results}
+          excusedLessonIds={excusedLessonIds}
         />
       )}
     </div>

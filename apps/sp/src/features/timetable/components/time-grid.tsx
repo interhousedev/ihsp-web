@@ -42,6 +42,7 @@ export function TimeGrid({
   now,
   showSubgroup = false,
   results,
+  excusedLessonIds,
 }: {
   columns: TimeColumn[]
   pxPerMinute: number
@@ -51,6 +52,7 @@ export function TimeGrid({
   now: number
   showSubgroup?: boolean
   results?: ReadonlyMap<string, LessonResult>
+  excusedLessonIds?: ReadonlySet<string>
 }) {
   const t = useT("timetable")
   const intervals = columns.flatMap((column) => column.lessons.map(intervalOf))
@@ -142,6 +144,7 @@ export function TimeGrid({
                           now={now}
                           showSubgroup={showSubgroup}
                           result={results?.get(lesson.id)}
+                          excused={excusedLessonIds?.has(lesson.id)}
                         />
                       </li>
                     )

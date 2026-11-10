@@ -91,7 +91,8 @@ export function JournalGrid({ journal, params }: { journal: Journal; params: Jou
 
   function onError(error: unknown, key: string) {
     setFailed((current) => new Set(current).add(key))
-    const conflict = isApiError(error) && (error.status === 409 || error.type === "common/conflict")
+    const locked = isApiError(error) && error.type === "academic.attendance_excused_locked"
+    const conflict = !locked && isApiError(error) && (error.status === 409 || error.type === "common/conflict")
     toast.error(conflict ? t("conflictReloaded") : errorMessage(error))
   }
 

@@ -4,7 +4,7 @@ import type { Journal } from "@ihsp/api"
 import { useT } from "@ihsp/i18n"
 import { AttendanceStatus } from "@ihsp/features-core"
 import { IconFileText, MarkBadge, cn } from "@ihsp/ui"
-import { canExcuse, stateOfCell } from "./attendance-rules"
+import { canExcuse, isExcusedLocked, stateOfCell } from "./attendance-rules"
 
 const lateCell = "rounded-md bg-warning-muted ring-1 ring-warning/50"
 const failedCell = "rounded-md ring-2 ring-destructive"
@@ -68,24 +68,28 @@ export function AttendanceCell({
   const state = cell.temporary_mark ? `${base}, ${t("temporaryState", { value: cell.temporary_mark.value })}` : base
   const label = t("cellLabel", { name: studentName, date, state })
   const positionAttrs = position ? { "data-row": position.row, "data-col": position.col } : {}
+  const locked = isExcusedLocked(cell, editable)
 
-  if (!editable) {
-    return (
-      <div
-        aria-label={label}
-        role="img"
-        tabIndex={tabIndex}
-        {...positionAttrs}
-        className={cn(
-          "focus-visible:ring-ring flex min-h-11 min-w-11 items-center justify-center rounded-md outline-none focus-visible:ring-2",
-          cell.late && lateCell,
-        )}
-      >
-        {content}
-      </div>
-    )
-  }
-  const button = (
+  const readOnly = (
+    <div
+      aria-label={label}
+      role="img"
+      tabIndex={tabIndex}
+      data-excused-locked={locked || undefined}
+      title={locked ? t("excusedLocked") : undefined}
+      {...positionAttrs}
+      className={cn(
+        "focus-visible:ring-ring flex min-h-11 min-w-11 items-center justify-center rounded-md outline-none focus-visible:ring-2",
+        cell.late && lateCell,
+      )}
+    >
+      {content}
+    </div>
+  )
+  if (!editable) return readOnly
+  const button = locked ? (
+    readOnly
+  ) : (
     <button
       type="button"
       aria-label={failed ? `${label} · ${t("notSaved")}` : label}
