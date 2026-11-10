@@ -14,11 +14,12 @@ import { userInvalidations } from "./block-actions"
 const GRANTABLE: readonly Role[] = ["admin", "lms_admin", "lms_creator", "librarian"]
 
 /**
- * `lms_admin` is an extra role of Administration, so it is offered to (and kept by) holders of `admin` only; a course creator is
- * a teacher or an administrator. A role that is already selected always stays on the list.
+ * `lms_admin` is offered to (and kept by) teachers and holders of `admin`; a course creator is a teacher or an
+ * administrator. A role that is already selected always stays on the list.
  */
 function isOffered(role: Role, selected: readonly Role[]): boolean {
-  if (role === "lms_admin") return selected.includes("admin")
+  if (role === "lms_admin")
+    return selected.some((item) => item === "teacher" || item === "admin" || item === "lms_admin")
   if (role === "lms_creator") {
     return selected.some((item) => item === "teacher" || item === "admin" || item === "lms_creator")
   }
@@ -27,8 +28,8 @@ function isOffered(role: Role, selected: readonly Role[]): boolean {
 
 /**
  * Grant or revoke Administration, LMS admin, LMS course creator and Librarian (UF-ADM-11 step 3). A change logs the user out
- * everywhere and a new Administration member sets up OTP at the next login, so it asks for confirmation first. Taking
- * Administration away takes LMS admin with it.
+ * everywhere and a new Administration member sets up OTP at the next login, so it asks for confirmation first. Teachers
+ * are LMS admins by default (an administrator can remove it); without teacher and Administration the role goes away.
  */
 export function RolesEditor({ user }: { user: AdminUser }) {
   const t = useT("users.roles")
@@ -42,7 +43,8 @@ export function RolesEditor({ user }: { user: AdminUser }) {
   function toggle(role: Role, checked: boolean) {
     setSelected((current) => {
       const next = checked ? [...current, role] : current.filter((item) => item !== role)
-      return role === "admin" && !checked ? next.filter((item) => item !== "lms_admin") : next
+      const keepsBase = next.includes("teacher") || next.includes("admin")
+      return role === "admin" && !checked && !keepsBase ? next.filter((item) => item !== "lms_admin") : next
     })
   }
 

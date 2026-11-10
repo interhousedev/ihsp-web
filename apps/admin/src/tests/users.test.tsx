@@ -105,14 +105,14 @@ describe("users list", () => {
 })
 
 describe("roles editor", () => {
-  test("offers LMS admin only to a member of Administration and the course creator to teachers and admins", () => {
+  test("offers LMS admin and the course creator to teachers and admins, nothing to a student", () => {
     const student = renderAdmin(<RolesEditor user={adminStudentUser} />)
     expect(screen.queryByRole("checkbox", { name: "LMS admin" })).toBeNull()
     expect(screen.queryByRole("checkbox", { name: "LMS course creator" })).toBeNull()
     student.unmount()
 
     const teacher = renderAdmin(<RolesEditor user={adminTeacherUser} />)
-    expect(screen.queryByRole("checkbox", { name: "LMS admin" })).toBeNull()
+    expect(screen.getByRole("checkbox", { name: "LMS admin" })).not.toBeChecked()
     expect(screen.getByRole("checkbox", { name: "LMS course creator" })).not.toBeChecked()
     teacher.unmount()
 
