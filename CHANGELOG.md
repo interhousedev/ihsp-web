@@ -4,6 +4,10 @@ All notable changes to this project are documented here. The format follows [Kee
 
 ## [Unreleased]
 
+### Added
+
+- Landing: a device switcher (phone, tablet, laptop, foldable) under the hero; the default is detected from the visitor's device after load, and the hero preview shows the matching screen.
+
 ## [1.2.1] - 2026-11-11
 
 ### Changed

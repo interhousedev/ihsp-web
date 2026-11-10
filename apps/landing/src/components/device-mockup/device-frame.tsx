@@ -3,10 +3,11 @@
 import { cn } from "@ihsp/ui"
 import { useEffect, useLayoutEffect, useRef, useState, type ReactNode } from "react"
 import { DeviceShell } from "./device-shell"
-import { SHELLS } from "./devices"
+import { SHELLS, shellOf, type DeviceId } from "./devices"
 import "./device-mockup.css"
 
-export type DeviceKind = "laptop" | "phone" | "tablet"
+/** Every device of the catalog; the foldable is shown open (its inner display). */
+export type DeviceKind = DeviceId
 
 /** The device finish follows the `dark` class of `<html>` (set by the theme script). */
 function useFinish(): "light" | "dark" {
@@ -40,7 +41,8 @@ export function DeviceFrame({
   className?: string
 }) {
   const finish = useFinish()
-  const geometry = SHELLS[device]
+  const shell = shellOf(device, "open")
+  const geometry = SHELLS[shell]
   const { footprint, viewport, screen } = geometry
   const box = useRef<HTMLDivElement>(null)
   const [scale, setScale] = useState(0)
@@ -74,7 +76,7 @@ export function DeviceFrame({
           visibility: scale ? undefined : "hidden",
         }}
       >
-        <DeviceShell shell={device} finish={finish}>
+        <DeviceShell shell={shell} finish={finish}>
           <div
             aria-hidden
             inert

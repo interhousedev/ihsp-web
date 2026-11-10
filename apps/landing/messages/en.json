@@ -23,7 +23,16 @@
       "bot": "Open the Telegram bot",
       "laptopAlt": "The home page of {appMy} on a laptop",
       "phoneAlt": "The home page of {appMy} on a phone",
-      "scroll": "Scroll to features"
+      "scroll": "Scroll to features",
+      "tabletAlt": "The home page of {appMy} on a tablet",
+      "foldableAlt": "The home page of {appMy} on a foldable",
+      "devices": {
+        "label": "Choose a device",
+        "phone": "Phone",
+        "tablet": "Tablet",
+        "laptop": "Laptop (Mac)",
+        "foldable": "Foldable"
+      }
     },
     "eco": {
       "headline": "Everything the lyceum needs in one account",

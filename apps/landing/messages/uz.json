@@ -23,7 +23,16 @@
       "bot": "Telegram botni ochish",
       "laptopAlt": "Noutbukda {appMy} bosh sahifasi",
       "phoneAlt": "Telefonda {appMy} bosh sahifasi",
-      "scroll": "Imkoniyatlarga oʻtish"
+      "scroll": "Imkoniyatlarga oʻtish",
+      "tabletAlt": "Planshetda {appMy} bosh sahifasi",
+      "foldableAlt": "Buklanuvchi qurilmada {appMy} bosh sahifasi",
+      "devices": {
+        "label": "Qurilmani tanlang",
+        "phone": "Telefon",
+        "tablet": "Planshet",
+        "laptop": "Kompyuter (Mac)",
+        "foldable": "Buklanuvchi"
+      }
     },
     "eco": {
       "headline": "Litseyga kerak hamma narsa bitta akkauntda",
