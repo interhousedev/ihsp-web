@@ -527,9 +527,33 @@ export type DataTableContent = {
   columns: { key: string; label: string; type: "text" | "number" | "date" }[]
   rows: { cells: Record<string, string>; refs: string[] }[]
 }
+/** A picture of a slide: an uploaded file or a found image with its credit. `url` is a ready-to-show address. */
+export type SlideImage = {
+  file_id?: string | null
+  alt?: string | null
+  attribution?: string | null
+  source_url?: string | null
+  license?: string | null
+  url?: string | null
+}
 export type Slide = {
   id: string
-  layout: "title" | "agenda" | "section" | "bullets" | "two_columns" | "quote" | "table" | "summary"
+  layout:
+    | "title"
+    | "agenda"
+    | "section"
+    | "bullets"
+    | "two_columns"
+    | "two_column"
+    | "quote"
+    | "table"
+    | "summary"
+    | "image_left"
+    | "image_right"
+    | "full_image"
+    | "stats"
+    | "timeline"
+    | "comparison"
   title: string
   bullets?: string[]
   body?: string
@@ -537,6 +561,10 @@ export type Slide = {
   right?: { heading: string; bullets: string[] }
   quote?: { text: string; attribution: string | null }
   table?: { columns: string[]; rows: string[][] }
+  subtitle?: string | null
+  stats?: { value: string; label: string }[]
+  timeline?: { when: string; label: string }[]
+  image?: SlideImage | null
   notes: string
   visual_hint?: string | null
   refs: string[]
