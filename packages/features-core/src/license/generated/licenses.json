@@ -3291,6 +3291,13 @@
       "ecosystem": "npm"
     },
     {
+      "name": "numpy",
+      "version": "2.5.4",
+      "license": "BSD-3-Clause AND 0BSD AND MIT AND Zlib AND CC0-1.0",
+      "url": "https://numpy.org",
+      "ecosystem": "PyPI"
+    },
+    {
       "name": "nuqs",
       "version": "2.10.1",
       "license": "MIT",
@@ -3310,6 +3317,13 @@
       "license": "MIT",
       "url": "https://github.com/sindresorhus/onetime",
       "ecosystem": "npm"
+    },
+    {
+      "name": "opencv-python-headless",
+      "version": "5.0.0.93",
+      "license": "Apache 2.0",
+      "url": "https://github.com/opencv/opencv-python",
+      "ecosystem": "PyPI"
     },
     {
       "name": "openpyxl",

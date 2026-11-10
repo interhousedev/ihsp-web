@@ -4,6 +4,14 @@ All notable changes to this project are documented here. The format follows [Kee
 
 ## [Unreleased]
 
+### Added
+
+- Admin: upload login cues from a CSV, TSV or TXT file; a Vault unseal page; entrance devices (keys shown once, revocation, 7-day call log).
+- iht.id: personal API tokens with expiry, revocation and last use; the account pages also appear in my.iht under the profile.
+- Face photos: students upload their own in the profile unless a curator or administrator set one; curators manage their students' photos.
+- Excuses: students request excuses with documents and a message thread; curators approve, reject, revoke and create exclusions; excused lessons are locked in the journal.
+- Onboarding tour, a floating assistant and an app-map search in my.iht and the staff app.
+
 ## [1.1.1] - 2026-11-06
 
 ### Added
