@@ -27,7 +27,7 @@ export function AccountShell({ children }: { children: ReactNode }) {
         <SidebarBrand
           name={t("idCommon.brand")}
           // oxlint-disable-next-line nextjs/no-img-element -- static export, the logo is a plain file of /public
-          logo={<img src="/icons/icon-192.png" alt="" width={24} height={24} />}
+          logo={<img src="/icons/logo.svg" alt="" width={24} height={24} className="rounded-md" />}
         />
       }
       controlsLeading={<ShellNavControls home="/security/" />}

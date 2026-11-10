@@ -11,6 +11,7 @@ export const metadata: Metadata = {
   description: "Administration of people, timetable and communication",
   icons: {
     icon: [
+      { url: "/icons/logo.svg", type: "image/svg+xml" },
       { url: "/favicon.ico", sizes: "any" },
       { url: "/icons/icon-192.png", type: "image/png", sizes: "192x192" },
     ],

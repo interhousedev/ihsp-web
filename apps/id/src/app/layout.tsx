@@ -12,6 +12,7 @@ export const metadata: Metadata = {
   description: "Log in, registration and account security",
   icons: {
     icon: [
+      { url: "/icons/logo.svg", type: "image/svg+xml" },
       { url: "/favicon.ico", sizes: "any" },
       { url: "/icons/icon-192.png", type: "image/png", sizes: "192x192" },
     ],
