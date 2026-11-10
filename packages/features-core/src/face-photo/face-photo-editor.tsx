@@ -124,6 +124,7 @@ export function FacePhotoEditor({
   const cameraProblem =
     camera.status === "unavailable" ? t("cameraUnavailable") : camera.status === "denied" ? t("cameraDenied") : null
   const busy = pending !== null
+  const previewSrc = previewUrl !== null && /^blob:[\w:/.-]+$/.test(previewUrl) ? previewUrl : null
 
   return (
     <div className="flex flex-col gap-4">
@@ -138,10 +139,10 @@ export function FacePhotoEditor({
             </span>
           )}
         </figure>
-        {previewUrl?.startsWith("blob:") && chosen ? (
+        {previewSrc && chosen ? (
           <figure className="flex flex-col gap-1">
             <figcaption className="text-muted-foreground text-xs">{t("preview")}</figcaption>
-            <img src={previewUrl} alt={t("preview")} className="size-28 rounded-md object-cover" />
+            <img src={previewSrc} alt={t("preview")} className="size-28 rounded-md object-cover" />
           </figure>
         ) : null}
       </div>

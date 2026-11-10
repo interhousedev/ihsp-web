@@ -19,20 +19,40 @@ export type McpLinkKey = keyof typeof MCP_LINKS
 
 export type LinkedSegment = { type: "text"; text: string } | { type: "link"; label: string; href: string }
 
-const LINK_PATTERN = /\[([^\]]+)\]\(([A-Za-z]+)\)/g
+/** Finds `[label](key)` markers in linear time: label is non-empty without `]`, key is letters only. */
+function findLinkMarkers(text: string): { index: number; length: number; label: string; key: string }[] {
+  const found: { index: number; length: number; label: string; key: string }[] = []
+  let close = -1
+  let i = text.indexOf("[")
+  while (i !== -1) {
+    if (close <= i) close = text.indexOf("]", i + 1)
+    if (close === -1) break
+    if (close > i + 1 && text[close + 1] === "(") {
+      let k = close + 2
+      while (k < text.length && /[A-Za-z]/.test(text.charAt(k))) k++
+      if (k > close + 2 && text[k] === ")") {
+        found.push({ index: i, length: k + 1 - i, label: text.slice(i + 1, close), key: text.slice(close + 2, k) })
+        i = text.indexOf("[", k + 1)
+        continue
+      }
+    }
+    i = text.indexOf("[", i + 1)
+  }
+  return found
+}
 
 /** Splits `text` at `[label](key)` markers. A key outside `MCP_LINKS` leaves its label as plain text. */
 export function parseLinkedText(text: string): LinkedSegment[] {
   const segments: LinkedSegment[] = []
   let last = 0
-  for (const match of text.matchAll(LINK_PATTERN)) {
-    const index = match.index ?? 0
+  for (const match of findLinkMarkers(text)) {
+    const index = match.index
     if (index > last) segments.push({ type: "text", text: text.slice(last, index) })
-    const label = match[1] ?? ""
-    const key = match[2] ?? ""
+    const label = match.label
+    const key = match.key
     const href = Object.prototype.hasOwnProperty.call(MCP_LINKS, key) ? MCP_LINKS[key as McpLinkKey] : null
     segments.push(href ? { type: "link", label, href } : { type: "text", text: label })
-    last = index + match[0].length
+    last = index + match.length
   }
   if (last < text.length) segments.push({ type: "text", text: text.slice(last) })
   return segments

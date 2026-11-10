@@ -14,7 +14,9 @@ export function allowedServers(catalog: ScopeCatalog | undefined, roles: readonl
 }
 
 export function mcpServerUrl(mcpUrl: string, server: McpServer): string {
-  return `${mcpUrl.replace(/\/+$/, "")}/${server}`
+  let end = mcpUrl.length
+  while (end > 0 && mcpUrl.charCodeAt(end - 1) === 47) end--
+  return `${mcpUrl.slice(0, end)}/${server}`
 }
 
 /** The config an AI client needs: server URL and the bearer header (UF-MCP-01 step 5). */
