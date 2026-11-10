@@ -28535,8 +28535,6 @@ export interface components {
              * Format: password
              */
             key: string;
-            /** Otp Code */
-            otp_code?: string | null;
         };
         /**
          * VerifyBody

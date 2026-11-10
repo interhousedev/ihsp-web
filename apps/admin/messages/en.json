@@ -2126,7 +2126,6 @@
     "form": {
       "title": "Enter a key share",
       "key": "Key share",
-      "otp": "Confirmation code",
       "submit": "Send key share",
       "sending": "Sending…"
     },

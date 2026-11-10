@@ -12,10 +12,9 @@ export type VaultStatus = {
   shares: number
 }
 
-/** The key share is never kept after the request; `otp_code` is the step-up code. */
+/** The key share is never kept after the request. */
 export type VaultUnsealBody = {
   key: string
-  otp_code?: string | null
 }
 
 /** GET /v1/admin/vault/status — admin. */

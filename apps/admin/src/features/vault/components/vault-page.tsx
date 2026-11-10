@@ -24,26 +24,24 @@ const ERROR_KEYS: Record<string, string> = {
   "id/vault-unavailable": "errors.unavailable",
 }
 
-/** Vault: seal state and key-share progress; one key share (plus an OTP code) is sent per submit and never kept. */
+/** Vault: seal state and key-share progress; one key share is sent per submit and never kept. */
 export function VaultPage() {
   const t = useT("vault")
   const status = useQuery(getAdminVaultStatusQuery())
   const queryClient = useQueryClient()
   const keyId = useId()
-  const otpId = useId()
   const formRef = useRef<HTMLFormElement>(null)
   const unseal = useMutation({
-    mutationFn: (body: { key: string; otp_code: string }) => postAdminVaultUnseal(body),
+    mutationFn: (body: { key: string }) => postAdminVaultUnseal(body),
     onSuccess: (next) => queryClient.setQueryData(keys.admin.vaultStatus(), next),
   })
 
   function submit(form: HTMLFormElement) {
     const data = new FormData(form)
     const key = String(data.get("key") ?? "")
-    const otp = String(data.get("otp_code") ?? "").trim()
     form.reset()
     if (key === "") return
-    unseal.mutate({ key, otp_code: otp })
+    unseal.mutate({ key })
   }
 
   const errorKey = unseal.error instanceof ApiError ? ERROR_KEYS[unseal.error.type] : undefined
@@ -87,10 +85,6 @@ export function VaultPage() {
             <div className="grid gap-2">
               <FieldLabel htmlFor={keyId}>{t("form.key")}</FieldLabel>
               <Input id={keyId} name="key" type="password" autoComplete="off" spellCheck={false} />
-            </div>
-            <div className="grid gap-2">
-              <FieldLabel htmlFor={otpId}>{t("form.otp")}</FieldLabel>
-              <Input id={otpId} name="otp_code" inputMode="numeric" autoComplete="off" maxLength={6} />
             </div>
             {unseal.error ? (
               <Alert variant="destructive" role="alert">
