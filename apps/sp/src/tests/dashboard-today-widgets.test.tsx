@@ -99,6 +99,17 @@ describe("needs attention", () => {
   })
 })
 
+describe("card states", () => {
+  test("flash cards show an empty state when nothing is due", async () => {
+    server.use(http.get(apiUrl("/v1/me/flashcard-sets"), () => HttpResponse.json([])))
+    layoutOf(widget("flashcards_due", "1x1"))
+    renderSp(<Dashboard />)
+
+    const tile = await waitForTile("flashcards_due")
+    expect(await within(tile).findByTestId("card-empty")).toBeInTheDocument()
+  })
+})
+
 describe("the Today layout", () => {
   test("a saved layout from before gets the new widgets once", async () => {
     renderSp(<Dashboard />)
@@ -145,13 +156,14 @@ describe("the Today layout", () => {
       expect(within(catalogue).getByRole("heading", { name })).toBeInTheDocument()
   })
 
-  test("the grid is one column on a phone and 4 on a desktop, with rows as tall as their content", async () => {
+  test("the grid is one column on a phone, 2 at sm and 4 on a desktop with equal-height rows", async () => {
     renderSp(<Dashboard />)
     const grid = await screen.findByTestId("dashboard-grid")
     expect(grid.className).toContain("grid-cols-1")
+    expect(grid.className).toContain("sm:grid-cols-2")
     expect(grid.className).toContain("md:grid-cols-4")
-    expect(grid.className).toContain("auto-rows-min")
-    expect(grid.className).toContain("items-start")
+    expect(grid.className).toContain("auto-rows-auto")
+    expect(grid.className).toContain("md:auto-rows-[var(--dashboard-row)]")
   })
 
   test("a retired kind left in a saved layout is not shown, and an edit drops it", async () => {

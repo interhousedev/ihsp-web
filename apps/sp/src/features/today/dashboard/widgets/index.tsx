@@ -10,10 +10,12 @@ import { ExamsWidget } from "./exams-widget"
 import { FlashcardsDueWidget } from "./flashcards-widget"
 import { GetStartedWidget } from "./get-started-widget"
 import { HomeworkWidget } from "./homework-widget"
+import { LibraryLoansWidget } from "./library-loans-widget"
 import { MarksWidget } from "./marks-widget"
 import { NextLessonWidget } from "./next-lesson-widget"
 import { NewMarksWidget } from "./new-marks-widget"
 import { NotebookPromptWidget } from "./notebook-prompt-widget"
+import { NotebookRecentsWidget } from "./notebook-recents-widget"
 import { NowNextWidget } from "./now-next-widget"
 import { SemesterSummaryWidget } from "./semester-summary-widget"
 import { TodayLessonsWidget } from "./today-lessons-widget"
@@ -39,4 +41,6 @@ export const WIDGET_VIEWS: Record<DashboardWidgetKind, WidgetView> = {
   new_marks: NewMarksWidget,
   alerts: AlertsWidget,
   get_started: GetStartedWidget,
+  library_loans: LibraryLoansWidget,
+  notebook_recents: NotebookRecentsWidget,
 }

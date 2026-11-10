@@ -4,7 +4,7 @@ import { useT } from "@ihsp/i18n"
 import { useAlerts } from "../../hooks/use-today"
 import { numberParam, seminarAlertParams } from "../../utils/alert-text"
 import type { Widget } from "../model"
-import { WidgetFrame } from "../widget-frame"
+import { CardEmpty, WidgetFrame } from "../widget-frame"
 import { BigNumber, Lines, listRows } from "./shared"
 
 /** What needs attention: the count, and from 2x1 up one line per alert. */
@@ -13,15 +13,23 @@ export function AlertsWidget({ widget, editing }: { widget: Widget; editing?: bo
   const d = useT("today.dashboard")
   // EMIS sync status is staff information: a student does not see it as an attention item. The AI wizard prompt has
   // its own dismissible notice (ConnectAiNotice), so it is not counted here.
-  const alerts = (useAlerts().data ?? []).filter((alert) => alert.kind !== "sync_failed" && alert.kind !== "connect_ai")
+  const query = useAlerts()
+  const alerts = (query.data ?? []).filter((alert) => alert.kind !== "sync_failed" && alert.kind !== "connect_ai")
   const text = (alert: (typeof alerts)[number]) =>
     alert.kind === "seminar_soon"
       ? t("short.seminar_soon", seminarAlertParams(alert))
       : t(`short.${alert.kind}`, { count: numberParam(alert, "count") })
   return (
-    <WidgetFrame widget={widget} editing={editing} title={t("title")} href={alerts[0]?.action_url ?? "/settings/"}>
+    <WidgetFrame
+      widget={widget}
+      editing={editing}
+      title={t("title")}
+      href={alerts[0]?.action_url ?? "/settings/"}
+      status={query.isPending ? "loading" : query.isError ? "error" : undefined}
+      onRetry={() => void query.refetch()}
+    >
       {alerts.length === 0 ? (
-        <span className="text-sm">{d("noAlerts")}</span>
+        <CardEmpty text={d("noAlerts")} />
       ) : widget.size === "1x1" ? (
         <BigNumber value={alerts.length} label={d("alertsCount")} />
       ) : (

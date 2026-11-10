@@ -11,7 +11,8 @@ export function SemesterSummaryWidget({ widget, editing }: { widget: Widget; edi
   const t = useT("today.semester")
   const d = useT("today.dashboard")
   const f = useFormatters()
-  const today = useToday().data
+  const query = useToday()
+  const today = query.data
   const semester = today?.semester
   const gpa = semester?.gpa ?? null
   const importing = today ? today.synced_at === null && gpa === null : false
@@ -24,6 +25,8 @@ export function SemesterSummaryWidget({ widget, editing }: { widget: Widget; edi
       editing={editing}
       title={semester?.semester ? t("titleNumber", { number: semester.semester }) : t("title")}
       href="/grades/"
+      status={query.isPending ? "loading" : query.isError ? "error" : undefined}
+      onRetry={() => void query.refetch()}
     >
       {importing ? (
         <span className="text-xs">{t("importing")}</span>

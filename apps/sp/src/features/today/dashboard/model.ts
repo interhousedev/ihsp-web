@@ -17,12 +17,14 @@ export const WIDGET_SIZES: Record<DashboardWidgetKind, readonly DashboardWidgetS
   clock_next_lesson: ["1x1", "2x1", "2x2"],
   upcoming_controls: ["2x1", "1x1", "2x2"],
   next_lesson: ["2x1", "1x1", "2x2"],
-  today_lessons: ["2x2", "2x1", "2x4"],
+  today_lessons: ["2x2", "2x1", "2x4", "4x1"],
   semester_summary: ["1x1", "2x1", "2x2"],
-  announcements: ["2x1", "2x2", "2x4"],
+  announcements: ["2x1", "2x2", "2x4", "4x1"],
   new_marks: ["1x1", "2x1", "2x2"],
-  alerts: ["2x1", "1x1", "2x2"],
+  alerts: ["2x1", "1x1", "2x2", "4x1"],
   get_started: ["2x1", "2x2"],
+  library_loans: ["1x1", "2x1", "2x2"],
+  notebook_recents: ["2x1", "2x2", "2x4"],
 }
 
 /**
@@ -63,7 +65,7 @@ export const WIDGET_GROUPS: readonly {
   { id: "news", kinds: ["announcements"] },
   {
     id: "tools",
-    kinds: ["flashcards_due", "notebook_prompt", "get_started"],
+    kinds: ["flashcards_due", "notebook_prompt", "notebook_recents", "library_loans", "get_started"],
   },
 ]
 

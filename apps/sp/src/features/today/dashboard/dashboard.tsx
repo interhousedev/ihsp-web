@@ -82,6 +82,17 @@ export function Dashboard() {
                 <Icons.plusCircle aria-hidden />
                 {t("add")}
               </Button>
+              <Button
+                type="button"
+                variant="outline"
+                size="sm"
+                onClick={() => {
+                  setDraft(inOrder(shownWidgets(query.data.widgets)))
+                  setSelectedId(null)
+                }}
+              >
+                {t("reset")}
+              </Button>
               <Button type="button" variant="ghost" size="sm" onClick={finish}>
                 {t("cancel")}
               </Button>

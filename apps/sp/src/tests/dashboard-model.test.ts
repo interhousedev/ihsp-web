@@ -6,6 +6,7 @@ import {
   colorWidget,
   contrastRatio,
   pack,
+  moveWidget,
   removeWidget,
   resizeWidget,
   shownWidgets,
@@ -70,6 +71,14 @@ describe("dashboard packing", () => {
 
     expect(left).toHaveLength(1)
     expect(left[0]).toMatchObject({ id: second.id, x: 0, y: 0 })
+  })
+
+  test("moveWidget reorders and packs", () => {
+    const a = widget("homework", "1x1")
+    const b = widget("exams", "1x1")
+    const c = widget("attendance", "2x1")
+    const moved = moveWidget(pack([a, b, c]), a.id, 2)
+    expect([...moved].sort((p, q) => p.y - q.y || p.x - q.x).map((w) => w.id)).toEqual([b.id, c.id, a.id])
   })
 })
 

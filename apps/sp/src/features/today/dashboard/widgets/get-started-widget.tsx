@@ -3,7 +3,7 @@
 import { useT } from "@ihsp/i18n"
 import { useGetStarted } from "../../hooks/use-get-started"
 import type { Widget } from "../model"
-import { WidgetFrame } from "../widget-frame"
+import { CardEmpty, WidgetFrame } from "../widget-frame"
 import { BigNumber, Lines } from "./shared"
 
 /** The first-visit steps still open (Telegram, subgroup, notifications); "all set" once none is left. */
@@ -15,7 +15,7 @@ export function GetStartedWidget({ widget, editing }: { widget: Widget; editing?
   return (
     <WidgetFrame widget={widget} editing={editing} title={t("title")} href={open[0]?.href ?? "/settings/"}>
       {open.length === 0 ? (
-        <span className="text-sm">{d("allSet")}</span>
+        <CardEmpty text={d("allSet")} />
       ) : widget.size === "2x1" ? (
         <BigNumber value={open.length} label={d("stepsLeft")} />
       ) : (

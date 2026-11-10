@@ -8,7 +8,7 @@ type CatalogEntry = {
   icon: ComponentType<{ className?: string }>
 }
 
-const ICONS: Record<DashboardWidgetKind, CatalogEntry["icon"]> = {
+export const WIDGET_ICONS: Record<DashboardWidgetKind, CatalogEntry["icon"]> = {
   timetable: Icons.calendar,
   homework: Icons.journal,
   marks: Icons.check,
@@ -25,6 +25,8 @@ const ICONS: Record<DashboardWidgetKind, CatalogEntry["icon"]> = {
   new_marks: Icons.check,
   alerts: Icons.warning,
   get_started: Icons.circleCheck,
+  library_loans: Icons.journal,
+  notebook_recents: Icons.chat,
 }
 
 /** The widgets a student can add, by group; the titles are `today.dashboard.kinds.<kind>` and `groups.<id>`. */
@@ -33,5 +35,5 @@ export const WIDGET_CATALOG: readonly {
   entries: readonly CatalogEntry[]
 }[] = WIDGET_GROUPS.map(({ id, kinds }) => ({
   id,
-  entries: kinds.map((kind) => ({ kind, icon: ICONS[kind] })),
+  entries: kinds.map((kind) => ({ kind, icon: WIDGET_ICONS[kind] })),
 }))

@@ -1952,7 +1952,8 @@
       "totp-state": "The authenticator app is already in this state. Reload the page.",
       "login-cue-not-found": "This name is no longer on the list. Pick your name again.",
       "login-cue-group-not-found": "This group is no longer available. Pick your group again.",
-      "login-cue-unavailable": "This name was already used for an account. Ask Administration for help."
+      "login-cue-unavailable": "This name was already used for an account. Ask Administration for help.",
+      "vault-sealed": "The secrets vault is sealed, so the authenticator app cannot be checked. Sign in with a one-time code instead, then unseal the vault in the admin app."
     },
     "emis": {
       "auth-failed": "Wrong EMIS login or password.",

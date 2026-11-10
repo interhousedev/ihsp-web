@@ -10,7 +10,7 @@ import { EXAMS_HREF } from "../../../exams/utils/hrefs"
 import { nextControls } from "../../../exams/utils/next-controls"
 import { useNow } from "../../../shared/hooks/use-now"
 import type { Widget } from "../model"
-import { WidgetFrame } from "../widget-frame"
+import { CardEmpty, WidgetFrame } from "../widget-frame"
 import { listRows } from "./shared"
 
 const DAYS_AHEAD = 14
@@ -30,7 +30,14 @@ export function UpcomingControlsWidget({ widget, editing }: { widget: Widget; ed
       when: labels.countdown(item),
     })
   return (
-    <WidgetFrame widget={widget} editing={editing} title={t("title")} href={EXAMS_HREF}>
+    <WidgetFrame
+      widget={widget}
+      editing={editing}
+      title={t("title")}
+      href={EXAMS_HREF}
+      status={query.isPending ? "loading" : query.isError ? "error" : undefined}
+      onRetry={() => void query.refetch()}
+    >
       {next ? (
         <>
           <span className="line-clamp-2 text-sm leading-tight font-semibold" data-testid="exam-next">
@@ -52,7 +59,7 @@ export function UpcomingControlsWidget({ widget, editing }: { widget: Widget; ed
           ) : null}
         </>
       ) : (
-        <span className="text-sm">{d("noExams")}</span>
+        <CardEmpty text={d("noExams")} />
       )}
     </WidgetFrame>
   )

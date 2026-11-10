@@ -3,7 +3,7 @@
 import { useFormatters, useT } from "@ihsp/i18n"
 import { useToday } from "../../hooks/use-today"
 import { spanOf, type Widget } from "../model"
-import { WidgetFrame } from "../widget-frame"
+import { CardEmpty, WidgetFrame } from "../widget-frame"
 
 /** How many lessons a tile has room for. */
 function capacity(widget: Widget): number {
@@ -16,12 +16,20 @@ export function TodayLessonsWidget({ widget, editing }: { widget: Widget; editin
   const t = useT("today.timeline")
   const d = useT("today.dashboard")
   const f = useFormatters()
-  const lessons = useToday().data?.lessons ?? []
+  const query = useToday()
+  const lessons = query.data?.lessons ?? []
   const wide = spanOf(widget.size).rows > 1
   return (
-    <WidgetFrame widget={widget} editing={editing} title={t("title")} href="/timetable/">
+    <WidgetFrame
+      widget={widget}
+      editing={editing}
+      title={t("title")}
+      href="/timetable/"
+      status={query.isPending ? "loading" : query.isError ? "error" : undefined}
+      onRetry={() => void query.refetch()}
+    >
       {lessons.length === 0 ? (
-        <span className="text-sm">{d("noLessons")}</span>
+        <CardEmpty text={d("noLessons")} />
       ) : (
         <ul className="flex min-h-0 flex-col gap-0.5 text-xs">
           {lessons.slice(0, capacity(widget)).map((lesson) => (

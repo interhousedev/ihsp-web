@@ -3,18 +3,21 @@
 import { useFormatters, useT } from "@ihsp/i18n"
 import { useToday } from "../../hooks/use-today"
 import type { Widget } from "../model"
-import { WidgetFrame } from "../widget-frame"
+import { CardEmpty, WidgetFrame } from "../widget-frame"
 
 export function NextLessonWidget({ widget, editing }: { widget: Widget; editing?: boolean }) {
   const t = useT("today.dashboard")
   const f = useFormatters()
-  const lesson = useToday().data?.now_or_next
+  const query = useToday()
+  const lesson = query.data?.now_or_next
   return (
     <WidgetFrame
       widget={widget}
       editing={editing}
       title={t("kinds.clock_next_lesson")}
       href={lesson ? `/lessons/view/?id=${encodeURIComponent(lesson.id)}` : "/timetable/"}
+      status={query.isPending ? "loading" : query.isError ? "error" : undefined}
+      onRetry={() => void query.refetch()}
     >
       {lesson ? (
         <>
@@ -25,7 +28,7 @@ export function NextLessonWidget({ widget, editing }: { widget: Widget; editing?
           </span>
         </>
       ) : (
-        <span className="text-sm">{t("noLesson")}</span>
+        <CardEmpty text={t("noLesson")} />
       )}
     </WidgetFrame>
   )

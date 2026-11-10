@@ -1952,7 +1952,8 @@
       "totp-state": "Autentifikator ilovasi allaqachon shu holatda. Sahifani yangilang.",
       "login-cue-not-found": "Bu ism roʻyxatda yoʻq. Ismingizni qayta tanlang.",
       "login-cue-group-not-found": "Bu guruh endi mavjud emas. Guruhni qayta tanlang.",
-      "login-cue-unavailable": "Bu ism allaqachon hisob uchun ishlatilgan. Maʼmuriyatga murojaat qiling."
+      "login-cue-unavailable": "Bu ism allaqachon hisob uchun ishlatilgan. Maʼmuriyatga murojaat qiling.",
+      "vault-sealed": "Sirlar ombori muhrlangan, shuning uchun autentifikator ilovasini tekshirib boʻlmaydi. Bir martalik kod bilan kiring, soʻng omborni administrator ilovasida oching."
     },
     "emis": {
       "auth-failed": "EMIS logini yoki paroli notoʻgʻri.",

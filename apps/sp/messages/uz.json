@@ -220,6 +220,13 @@
       "noLesson": "Keyingi dars yoʻq.",
       "noLessons": "Bugun dars yoʻq.",
       "noExams": "Yaqin orada nazorat yoʻq.",
+      "showAll": "Hammasini koʻrsatish",
+      "reset": "Oʻzgarishlarni bekor qilish",
+      "retry": "Qayta urinish",
+      "cardError": "Yuklab boʻlmadi.",
+      "noHomework": "Bajariladigan vazifa yoʻq.",
+      "noCards": "Takrorlanadigan kartochka yoʻq.",
+      "dragHandle": "Tartibni oʻzgartirish uchun torting",
       "homeworkDue": "bajarish kerak",
       "gpa": "GPA (5 dan)",
       "cardsDue": "takrorlanadigan kartochka",
@@ -241,7 +248,9 @@
         "announcements": "Eʼlonlar",
         "new_marks": "Yangi baholar",
         "alerts": "Eʼtibor kerak",
-        "get_started": "Boshlash"
+        "get_started": "Boshlash",
+        "library_loans": "Kutubxona: oʻqiyapman",
+        "notebook_recents": "Oxirgi daftarlar"
       },
       "notebookPrompt": {
         "templates": {
@@ -261,6 +270,10 @@
       "noNewMarks": "Yangi baholar yoʻq.",
       "newMarks": "yangi baho",
       "noAlerts": "Eʼtibor talab qiladigan narsa yoʻq.",
+      "noAttendance": "Davomat maʼlumoti hali yoʻq.",
+      "noLoans": "Hozir hech qanday kitob oʻqimayapsiz.",
+      "loansCount": "oʻqilayotgan kitob",
+      "noNotebooks": "Daftarlar hali yoʻq.",
       "alertsCount": "koʻrish kerak",
       "allSet": "Hammasi tayyor.",
       "stepsLeft": "qadam qoldi"

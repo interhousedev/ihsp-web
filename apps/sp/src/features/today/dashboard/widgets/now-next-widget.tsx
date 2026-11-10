@@ -6,7 +6,7 @@ import { shortName } from "../../../shared/utils/people"
 import { useToday } from "../../hooks/use-today"
 import { remainingMinutes } from "../../utils/countdown"
 import type { Widget } from "../model"
-import { WidgetFrame } from "../widget-frame"
+import { CardEmpty, WidgetFrame } from "../widget-frame"
 
 /** Next lesson: subject and countdown at 1x1; 2x1 adds time, room and materials; 2x2 adds the teacher. */
 export function NowNextWidget({ widget, editing }: { widget: Widget; editing?: boolean }) {
@@ -29,6 +29,8 @@ export function NowNextWidget({ widget, editing }: { widget: Widget; editing?: b
       editing={editing}
       title={running ? t("titleNow") : t("titleNext")}
       href={lesson ? `/lessons/view/?id=${encodeURIComponent(lesson.id)}` : "/timetable/"}
+      status={query.isPending ? "loading" : query.isError ? "error" : undefined}
+      onRetry={() => void query.refetch()}
     >
       {lesson ? (
         <>
@@ -52,7 +54,7 @@ export function NowNextWidget({ widget, editing }: { widget: Widget; editing?: b
           {detailed && lesson.teacher ? <span className="text-xs opacity-80">{shortName(lesson.teacher)}</span> : null}
         </>
       ) : (
-        <span className="text-sm">{d("noLesson")}</span>
+        <CardEmpty text={d("noLesson")} />
       )}
     </WidgetFrame>
   )

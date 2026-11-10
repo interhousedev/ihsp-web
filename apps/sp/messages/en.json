@@ -220,6 +220,13 @@
       "noLesson": "Nothing up next.",
       "noLessons": "No lessons today.",
       "noExams": "No controls soon.",
+      "showAll": "Show all",
+      "reset": "Reset changes",
+      "retry": "Try again",
+      "cardError": "Could not load.",
+      "noHomework": "Nothing to do.",
+      "noCards": "No cards due.",
+      "dragHandle": "Drag to reorder",
       "homeworkDue": "to do",
       "gpa": "GPA (out of 5)",
       "cardsDue": "cards due",
@@ -241,7 +248,9 @@
         "announcements": "Announcements",
         "new_marks": "New marks",
         "alerts": "Needs attention",
-        "get_started": "Get started"
+        "get_started": "Get started",
+        "library_loans": "Library: reading",
+        "notebook_recents": "Recent notebooks"
       },
       "notebookPrompt": {
         "templates": {
@@ -261,6 +270,10 @@
       "noNewMarks": "No new marks.",
       "newMarks": "new marks",
       "noAlerts": "Nothing needs attention.",
+      "noAttendance": "No attendance data yet.",
+      "noLoans": "You are not reading any book.",
+      "loansCount": "books in progress",
+      "noNotebooks": "No notebooks yet.",
       "alertsCount": "to look at",
       "allSet": "All set.",
       "stepsLeft": "steps left"
