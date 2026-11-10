@@ -536,11 +536,11 @@ describe("Today controls widget", () => {
     expect(within(card).getByText("No controls soon.")).toBeInTheDocument()
   })
 
-  test("says there is nothing soon when the request fails, and the rest of Today stays", async () => {
+  test("shows the card error when the request fails, and the rest of Today stays", async () => {
     server.use(http.get(apiUrl("/v1/me/assessments"), () => HttpResponse.json({}, { status: 500 })))
     renderSp(<DashboardPage />)
 
     const card = await findCard("Controls coming up")
-    expect(within(card).getByText("No controls soon.")).toBeInTheDocument()
+    expect(within(card).getByTestId("card-error")).toBeInTheDocument()
   })
 })

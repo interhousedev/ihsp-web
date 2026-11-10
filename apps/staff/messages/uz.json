@@ -140,7 +140,11 @@
     "temporaryMarkFor": "Vaqtinchalik baho: {name}, {date}",
     "temporaryState": "vaqtinchalik baho {value}",
     "temporaryMarkHint": "Vaqtinchalik baholar EMIS ga kiritilguncha shu yerda saqlanadi.",
-    "excusedLocked": "Sababli: bu qoldirish qulflangan. O‘zgartirish uchun sababni olib tashlang."
+    "excusedLocked": "Sababli: bu qoldirish qulflangan. O‘zgartirish uchun sababni olib tashlang.",
+    "excuseBadge": "Sabab",
+    "excuseOriginRequest": "Sababli: tasdiqlangan ariza",
+    "excuseOriginCurator": "Sababli: kurator",
+    "excuseOriginTeacher": "Sababli: o‘qituvchi belgisi"
   },
   "group": {
     "noGroup": "Siz guruhga rahbarlik qilmaysiz.",

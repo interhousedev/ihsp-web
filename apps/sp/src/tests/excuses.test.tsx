@@ -1,6 +1,6 @@
 /** EXC-WEB-01..03: the student's excuses: detail thread, cancel, and the form's document rule. */
 import { describe, expect, test } from "bun:test"
-import { apiUrl, server, studentAttendance, weekLessons } from "@ihsp/test-utils"
+import { apiUrl, server, weekLessons } from "@ihsp/test-utils"
 import { screen } from "@testing-library/react"
 import { HttpResponse, http } from "msw"
 import { ExcusePage } from "../features/excuses/components/excuse-page"
@@ -54,8 +54,14 @@ describe("EXC-WEB-04 the timetable", () => {
     setViewportWidth(1280)
     const lesson = weekLessons.find((item) => item.status !== "cancelled") as (typeof weekLessons)[number]
     server.use(
-      http.get(apiUrl("/v1/me/attendance"), () =>
-        HttpResponse.json({ ...studentAttendance, missed: [{ lesson, excused: true }] }),
+      http.get(apiUrl("/v1/me/timetable"), () =>
+        HttpResponse.json(
+          weekLessons.map((item) =>
+            item.id === lesson.id
+              ? { ...item, excused: true, excuse: { id: null, template_code: "", origin: "teacher" } }
+              : item,
+          ),
+        ),
       ),
     )
     renderSp(<TimetablePage />, { route: "/timetable/" })

@@ -140,7 +140,11 @@
     "temporaryMarkFor": "Temporary mark for {name}, {date}",
     "temporaryState": "temporary mark {value}",
     "temporaryMarkHint": "Temporary marks stay here until you put them into EMIS.",
-    "excusedLocked": "Excused: this absence is locked. Remove the excuse to change it."
+    "excusedLocked": "Excused: this absence is locked. Remove the excuse to change it.",
+    "excuseBadge": "Excuse",
+    "excuseOriginRequest": "Excused by an approved request",
+    "excuseOriginCurator": "Excused by the curator",
+    "excuseOriginTeacher": "Excused by the teacher"
   },
   "group": {
     "noGroup": "You do not curate a group.",

@@ -60,8 +60,8 @@ export function TimetablePage() {
   const subgroupUnset = profile.data?.subgroup === null
   const attendance = useAttendance(null, null)
   const excusedLessonIds = useMemo(
-    () => new Set((attendance.data?.missed ?? []).filter((row) => row.excused).map((row) => row.lesson.id)),
-    [attendance.data],
+    () => new Set((lessonsQuery.data ?? []).filter((lesson) => lesson.excused).map((lesson) => lesson.id)),
+    [lessonsQuery.data],
   )
   const { hidden, setHidden } = useHideOtherSubgroup()
   const pxPerMinute = isMobile ? PHONE_PX_PER_MINUTE : DESKTOP_PX_PER_MINUTE

@@ -9,6 +9,12 @@ import { canExcuse, isExcusedLocked, stateOfCell } from "./attendance-rules"
 const lateCell = "rounded-md bg-warning-muted ring-1 ring-warning/50"
 const failedCell = "rounded-md ring-2 ring-destructive"
 
+const EXCUSE_ORIGIN_KEY = {
+  request: "excuseOriginRequest",
+  curator: "excuseOriginCurator",
+  teacher: "excuseOriginTeacher",
+} as const
+
 type Cell = Journal["students"][number]["cells"][number]
 
 /**
@@ -49,6 +55,16 @@ export function AttendanceCell({
   const content = (
     <span className="flex min-h-6 flex-wrap items-center justify-center gap-0.5">
       <AttendanceStatus state={status} notTaken={notTaken} />
+      {cell.absent && cell.excuse ? (
+        <span
+          title={t(EXCUSE_ORIGIN_KEY[cell.excuse.origin])}
+          data-testid="excuse-badge"
+          data-origin={cell.excuse.origin}
+          className="bg-muted text-muted-foreground rounded-md px-1 py-0.5 text-[10px] font-medium"
+        >
+          {t("excuseBadge")}
+        </span>
+      ) : null}
       {cell.marks.map((mark, index) => (
         <MarkBadge key={index} mark={mark} size="sm" />
       ))}
