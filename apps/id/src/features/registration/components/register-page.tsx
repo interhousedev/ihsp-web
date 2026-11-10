@@ -199,7 +199,7 @@ export function RegisterPage() {
           <Button
             type="button"
             variant="link"
-            className="h-11 text-base"
+            className="h-auto min-h-11 whitespace-normal text-base"
             onClick={() => {
               start.reset()
               setStep({ kind: "first-time" })
