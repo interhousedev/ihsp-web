@@ -1974,6 +1974,8 @@
     "bulk": {
       "title": "Paste a list",
       "lines": "Lines",
+      "file": "File (CSV or TXT)",
+      "fileHint": "Columns: login, full name. From Excel use \"Save as CSV\". The lines below fill in from the file.",
       "hint": "One student per line: login;full name",
       "placeholder": "20240123;Aliyev Ali",
       "preview": "Lines recognised: {count}.",

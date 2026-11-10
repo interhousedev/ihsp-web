@@ -2,16 +2,16 @@
 
 import { getAdminGroupsQuery, postAdminLoginCuesBulk } from "@ihsp/api"
 import { useT } from "@ihsp/i18n"
-import { Button, Textarea, ResponsiveDialog } from "@ihsp/ui"
+import { Button, Input, Textarea, ResponsiveDialog } from "@ihsp/ui"
 import { useQuery } from "@tanstack/react-query"
 import { useMemo, useState } from "react"
 import { LabeledField } from "../../shared/components/labeled-field"
 import { SelectField } from "../../shared/components/select-field"
 import { useAdminMutation } from "../../shared/hooks/use-admin-mutation"
 import { TOUCH } from "../../shared/utils/touch"
-import { parseBulkLines } from "../utils/parse-bulk"
+import { fileTextToBulkLines, parseBulkLines } from "../utils/parse-bulk"
 
-/** Pastes many cues at once: one `login;full name` per line, all for the chosen group. */
+/** Pastes or uploads (CSV/TSV/TXT) many cues at once: one `login;full name` per line, all for the chosen group. */
 export function LoginCueBulkDialog({
   open,
   onOpenChange,
@@ -66,6 +66,18 @@ export function LoginCueBulkDialog({
           emptyLabel={t("form.chooseGroup")}
           options={(groups.data ?? []).map((group) => ({ value: group.id, label: group.name }))}
           onChange={setGroupId}
+        />
+      </LabeledField>
+      <LabeledField label={t("bulk.file")} htmlFor="login-cue-bulk-file" description={t("bulk.fileHint")}>
+        <Input
+          id="login-cue-bulk-file"
+          type="file"
+          accept=".csv,.tsv,.txt,text/csv,text/plain,text/tab-separated-values"
+          className={TOUCH}
+          onChange={(event) => {
+            const file = event.target.files?.[0]
+            if (file !== undefined) void file.text().then((content) => setText(fileTextToBulkLines(content)))
+          }}
         />
       </LabeledField>
       <LabeledField label={t("bulk.lines")} htmlFor="login-cue-bulk-lines" description={t("bulk.hint")} required>

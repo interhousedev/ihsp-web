@@ -37,3 +37,30 @@ export function parseBulkLines(text: string): BulkParseResult {
   })
   return { items, errors }
 }
+
+const CSV_SEPARATOR = /[;\t,]/
+
+/**
+ * Turns an uploaded CSV/TSV/TXT file (`login,full name`, `login;full name` or tab-separated; Excel "Save as CSV")
+ * into the pasted-lines format. A first row whose login cell is not digits is a header and is dropped; quotes around
+ * cells are removed.
+ */
+export function fileTextToBulkLines(content: string): string {
+  const unquote = (cell: string) => cell.trim().replace(/^"(.*)"$/, "$1").replaceAll('""', '"').trim()
+  const lines = content.replace(/^\uFEFF/, "").split(/\r?\n/)
+  const out: string[] = []
+  lines.forEach((raw, index) => {
+    const line = raw.trim()
+    if (line === "") return
+    const match = CSV_SEPARATOR.exec(line)
+    if (match === null) {
+      out.push(line)
+      return
+    }
+    const login = unquote(line.slice(0, match.index))
+    const name = unquote(line.slice(match.index + 1)).replace(/[;\t,]+$/, "").trim()
+    if (index === 0 && !DIGITS.test(login)) return
+    out.push(`${login};${name}`)
+  })
+  return out.join("\n")
+}

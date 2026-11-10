@@ -1974,6 +1974,8 @@
     "bulk": {
       "title": "Roʻyxatni joylash",
       "lines": "Qatorlar",
+      "file": "Fayl (CSV yoki TXT)",
+      "fileHint": "Ustunlar: login, toʻliq ism. Excelʼda «CSV sifatida saqlash». Quyidagi qatorlar fayldan toʻldiriladi.",
       "hint": "Har bir talaba uchun bitta qator: login;toʻliq ism",
       "placeholder": "20240123;Aliyev Ali",
       "preview": "Tanilgan qatorlar: {count}.",
