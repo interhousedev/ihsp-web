@@ -86,7 +86,7 @@
     "@testing-library/user-event": "^14.6.8",
     "@types/bun": "^1.4.4",
     "@types/mdast": "4.0.4",
-    "@types/node": "22.10.2",
+    "@types/node": "26.6.6",
     "@types/react": "19.2.14",
     "@types/react-dom": "19.2.3",
     "micromark-util-types": "2.0.3",
