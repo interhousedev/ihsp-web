@@ -131,7 +131,6 @@
       "description": "Check your details, then set a password and a recovery email.",
       "name": "Name",
       "group": "Group",
-      "login": "Your login",
       "imported": "Administration already added {name} ({group}). If this is you, confirm.",
       "isThisYou": "Yes, this is me",
       "submit": "Send code to the email"
@@ -141,6 +140,11 @@
       "description": "We sent a 6-digit code to {email}.",
       "submit": "Create account",
       "changeEmail": "Change the email"
+    },
+    "loginCard": {
+      "title": "Your login",
+      "copy": "Copy login",
+      "hint": "Sign in with this login or with your EMIS ID."
     },
     "done": {
       "title": "Account created",

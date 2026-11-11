@@ -3,19 +3,21 @@
 import { getConfig } from "@ihsp/config"
 import { Button, IconBrandTelegram, IconShieldCheck, IconUserCheck } from "@ihsp/ui"
 import { FlowCard } from "../../shared/components/flow-card"
+import { LoginNameCard } from "./login-name-card"
 import { LinkButton, useTr } from "@ihsp/features-core/id-account"
 
 const POINT_ICONS = { account: IconUserCheck, codes: IconBrandTelegram, security: IconShieldCheck }
 const DEFAULT_LIBRARY_URL = "https://lib.ihsu.uz"
 
 /** Shown once, right after the account is created; "Continue" resumes the login (or shows the login name). */
-export function RegisterWelcome({ onContinue }: { onContinue: () => void }) {
+export function RegisterWelcome({ login, onContinue }: { login: string; onContinue: () => void }) {
   const t = useTr()
   const config = getConfig()
   const points = ["account", "codes", "security"] as const
 
   return (
     <FlowCard title={t("register.welcome.title")} description={t("register.welcome.description")}>
+      <LoginNameCard login={login} />
       <ul className="text-muted-foreground grid gap-3 text-sm">
         {points.map((point) => {
           const Icon = POINT_ICONS[point]

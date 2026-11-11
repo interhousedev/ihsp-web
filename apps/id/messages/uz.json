@@ -131,7 +131,6 @@
       "description": "Maʼlumotlarni tekshiring, soʻng parol va tiklash uchun pochta kiriting.",
       "name": "Ism",
       "group": "Guruh",
-      "login": "Sizning loginingiz",
       "imported": "Maʼmuriyat {name} ({group}) ni qoʻshgan. Siz boʻlsangiz, tasdiqlang.",
       "isThisYou": "Ha, bu men",
       "submit": "Kodni pochtaga yuborish"
@@ -141,6 +140,11 @@
       "description": "6 xonali kodni {email} manziliga yubordik.",
       "submit": "Hisob yaratish",
       "changeEmail": "Pochtani oʻzgartirish"
+    },
+    "loginCard": {
+      "title": "Loginingiz",
+      "copy": "Loginni nusxalash",
+      "hint": "Shu login yoki EMIS ID bilan kiring."
     },
     "done": {
       "title": "Hisob yaratildi",

@@ -4,6 +4,7 @@ import { Button, LoadingButton, useAppForm } from "@ihsp/ui"
 import { useMemo, useState } from "react"
 import { z } from "zod"
 import { ErrorAlert, InfoAlert, LinkButton, requiredText, useTr } from "@ihsp/features-core/id-account"
+import { LoginNameCard } from "../../registration/components/login-name-card"
 import { FlowCard } from "../../shared/components/flow-card"
 import { TextLink } from "../../shared/components/text-link"
 import { readSession, TELEGRAM_NEW_LOGIN_KEY } from "../../shared/utils/storage"
@@ -43,7 +44,12 @@ export function MiniAppPasswordForm({ initData, onLinked, onSecondFactor, onOtp 
       description={t("miniApp.description")}
       footer={<TextLink href="/recovery/password/">{t("login.forgotPassword")}</TextLink>}
     >
-      {newLogin ? <InfoAlert>{t("miniApp.registered", { login: newLogin })}</InfoAlert> : null}
+      {newLogin ? (
+        <>
+          <InfoAlert>{t("miniApp.registered", { login: newLogin })}</InfoAlert>
+          <LoginNameCard login={newLogin} />
+        </>
+      ) : null}
       <form
         noValidate
         className="grid gap-4"

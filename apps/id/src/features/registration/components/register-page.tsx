@@ -170,7 +170,7 @@ export function RegisterPage() {
   if (step.kind === "welcome") {
     const after: AfterRegistration = { login: step.login, redirectTo: step.redirectTo, ticket: step.ticket }
     const onContinue = () => continueRegistration(after, () => setStep({ kind: "done", login: step.login }))
-    return <RegisterWelcome onContinue={onContinue} />
+    return <RegisterWelcome login={step.login} onContinue={onContinue} />
   }
   if (step.kind === "done") return <RegisterDone login={step.login} />
   return (

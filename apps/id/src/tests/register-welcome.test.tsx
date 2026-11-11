@@ -1,15 +1,17 @@
 /** The welcome screen shown once after registration. */
 import { describe, expect, mock, test } from "bun:test"
 import { getConfig } from "@ihsp/config"
+import { screen } from "@testing-library/react"
 import { RegisterWelcome } from "../features/registration/components/register-welcome"
 import { clickButton, findHeading, findLink, renderId } from "./helpers"
 
 describe("registration welcome", () => {
   test("explains IHT ID, suggests library and LMS, and Continue resumes", async () => {
     const onContinue = mock(() => {})
-    renderId(<RegisterWelcome onContinue={onContinue} />, { route: "/register/" })
+    renderId(<RegisterWelcome login="ivanov.petr" onContinue={onContinue} />, { route: "/register/" })
 
     await findHeading("Welcome to IHT ID")
+    expect(await screen.findByText("ivanov.petr")).toBeInTheDocument()
     expect((await findLink("Open library")).getAttribute("href")).toStartWith(
       getConfig().LIBRARY_URL ?? "https://lib.ihsu.uz",
     )

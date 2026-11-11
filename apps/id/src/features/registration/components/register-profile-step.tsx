@@ -5,6 +5,7 @@ import { useMutation } from "@tanstack/react-query"
 import { FlowCard } from "../../shared/components/flow-card"
 import { InfoAlert, useTr } from "@ihsp/features-core/id-account"
 import { PasswordEmailForm, type PasswordEmailValues } from "../../shared/components/password-email-form"
+import { LoginNameCard } from "./login-name-card"
 import { StepIndicator } from "../../shared/components/step-indicator"
 
 type RegisterProfileStepProps = {
@@ -33,13 +34,8 @@ export function RegisterProfileStep({ start, onSent, hideLogin = false }: Regist
         <dd className="font-medium">{fullName}</dd>
         <dt className="text-muted-foreground">{t("register.profile.group")}</dt>
         <dd className="font-medium">{profile.group_name}</dd>
-        {hideLogin ? null : (
-          <>
-            <dt className="text-muted-foreground">{t("register.profile.login")}</dt>
-            <dd className="font-medium break-all">{profile.login}</dd>
-          </>
-        )}
       </dl>
+      {hideLogin ? null : <LoginNameCard login={profile.login} />}
       {match ? (
         <InfoAlert>
           {t("register.profile.imported", { name: `${match.last_name} ${match.first_name}`, group: match.group_name })}
