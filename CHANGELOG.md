@@ -4,6 +4,8 @@ All notable changes to this project are documented here. The format follows [Kee
 
 ## [Unreleased]
 
+## [1.4.0] - 2026-11-13
+
 ### Added
 
 - Homework: students hand in files (with an optional comment) on a homework card, see whether it was handed in on time, replace or withdraw it; teachers see who handed in, who was late and who is missing on the lesson page, with links to the files.
