@@ -10,7 +10,7 @@ export function LoginNameCard({ login }: { login: string }) {
   return (
     <section
       aria-label={t("register.loginCard.title")}
-      className="rounded-xl border-2 border-primary/40 bg-primary/5 p-4"
+      className="rounded-card border-2 border-primary/40 bg-primary/5 p-4"
     >
       <p className="text-sm font-medium text-muted-foreground">{t("register.loginCard.title")}</p>
       <div className="mt-1 flex flex-wrap items-center justify-between gap-3">

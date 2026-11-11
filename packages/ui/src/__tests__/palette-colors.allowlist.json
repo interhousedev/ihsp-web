@@ -1,4 +1,5 @@
 [
+  "apps/landing/src/features/landing/flags.tsx",
   "apps/landing/src/features/landing/phone-frame.tsx",
   "apps/lms/src/features/settings/components/accent-picker.tsx",
   "apps/lms/src/features/settings/utils/color.ts",
