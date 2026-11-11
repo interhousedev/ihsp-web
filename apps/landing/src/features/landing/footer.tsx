@@ -4,7 +4,6 @@ import { useT } from "@ihsp/i18n"
 import { IconBrandTelegram } from "@ihsp/ui"
 import { ctaPrimary, ctaSecondary } from "./hero"
 import { useLandingLinks } from "./links"
-import { LocaleSwitch } from "./locale-switch"
 import { Reveal } from "./reveal"
 import { parseSecurityContact } from "./security-contact"
 
@@ -36,7 +35,7 @@ export function FinalCta() {
   const links = useLandingLinks()
   return (
     <section aria-labelledby="cta-title" className="px-4 py-16 sm:py-24">
-      <Reveal className="mx-auto max-w-4xl rounded-[32px] bg-[var(--brand-soft)] px-6 py-14 text-center sm:px-12">
+      <Reveal className="mx-auto max-w-4xl rounded-[32px] bg-[var(--brand-soft)] px-5 py-12 text-center sm:px-12">
         <h2 id="cta-title" className="text-3xl font-bold tracking-tight text-balance sm:text-5xl">
           {t("title")}
         </h2>
@@ -69,7 +68,7 @@ export function SiteFooter() {
       <div className="mx-auto grid max-w-6xl gap-6 px-4 py-8 sm:grid-cols-2">
         <nav aria-label={t("footer.apps")}>
           <h2 className="mb-2 font-semibold">{t("footer.apps")}</h2>
-          <ul className="flex flex-wrap gap-x-4">
+          <ul className="flex flex-wrap gap-x-5">
             {apps.map(([name, href]) => (
               <li key={name}>
                 <a href={`${href}/`} className="inline-flex min-h-11 items-center underline-offset-4 hover:underline">
@@ -84,8 +83,7 @@ export function SiteFooter() {
             </li>
           </ul>
         </nav>
-        <div className="grid gap-3 sm:justify-items-end">
-          <LocaleSwitch />
+        <div className="grid gap-3 sm:justify-items-end empty:hidden">
           {links.securityContact ? <SecurityContact contact={links.securityContact} /> : null}
         </div>
         <p className="text-muted-foreground text-sm sm:col-span-2">© {t("footer.rights")}</p>

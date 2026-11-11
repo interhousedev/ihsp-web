@@ -1,0 +1,89 @@
+/* Animated backdrop: drifting brand-tinted blobs and a slow grid sweep. Only transform and opacity animate. */
+.backdrop {
+  position: absolute;
+  inset: 0;
+  z-index: -10;
+  overflow: hidden;
+  pointer-events: none;
+  contain: strict;
+}
+.backdrop-blob {
+  position: absolute;
+  width: min(60vw, 640px);
+  aspect-ratio: 1;
+  border-radius: 9999px;
+  opacity: 0.55;
+  will-change: transform;
+  background: radial-gradient(closest-side, var(--blob, var(--brand-soft)), transparent);
+}
+.backdrop[data-tone="strong"] .backdrop-blob {
+  opacity: 0.8;
+}
+.backdrop-blob--a {
+  --blob: color-mix(in oklab, var(--brand) 34%, transparent);
+  top: -18%;
+  left: -12%;
+  animation: backdrop-drift-a 22s ease-in-out infinite alternate;
+}
+.backdrop-blob--b {
+  --blob: color-mix(in oklab, var(--brand) 22%, #38bdf8 18%);
+  top: -10%;
+  right: -16%;
+  animation: backdrop-drift-b 28s ease-in-out infinite alternate;
+}
+.backdrop-blob--c {
+  --blob: color-mix(in oklab, var(--brand) 18%, #a78bfa 22%);
+  bottom: -30%;
+  left: 28%;
+  animation: backdrop-drift-c 34s ease-in-out infinite alternate;
+}
+.backdrop-grid {
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(to right, color-mix(in oklab, var(--foreground) 7%, transparent) 1px, transparent 1px),
+    linear-gradient(to bottom, color-mix(in oklab, var(--foreground) 7%, transparent) 1px, transparent 1px);
+  background-size: 56px 56px;
+  mask-image: radial-gradient(ellipse at 50% 0%, #000 0%, transparent 70%);
+}
+.backdrop-beam {
+  position: absolute;
+  top: -10%;
+  left: 0;
+  width: 40%;
+  height: 120%;
+  opacity: 0.5;
+  background: linear-gradient(100deg, transparent, color-mix(in oklab, var(--brand) 14%, transparent), transparent);
+  transform: translate3d(-120%, 0, 0) skewX(-14deg);
+  animation: backdrop-sweep 16s linear infinite;
+  will-change: transform;
+}
+@keyframes backdrop-drift-a {
+  to {
+    transform: translate3d(14vw, 10%, 0) scale(1.15);
+  }
+}
+@keyframes backdrop-drift-b {
+  to {
+    transform: translate3d(-12vw, 16%, 0) scale(0.9);
+  }
+}
+@keyframes backdrop-drift-c {
+  to {
+    transform: translate3d(-18vw, -12%, 0) scale(1.2);
+  }
+}
+@keyframes backdrop-sweep {
+  to {
+    transform: translate3d(360%, 0, 0) skewX(-14deg);
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .backdrop-blob,
+  .backdrop-beam {
+    animation: none;
+  }
+  .backdrop-beam {
+    display: none;
+  }
+}

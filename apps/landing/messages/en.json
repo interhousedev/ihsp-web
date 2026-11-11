@@ -14,11 +14,12 @@
       "bot": "Telegram",
       "signIn": "Sign in",
       "menu": "Menu",
-      "close": "Close"
+      "close": "Close",
+      "mcp": "AI tools"
     },
     "hero": {
       "title": "Everyday school life in one app",
-      "lead": "Marks, timetable, homework, AI study notebooks and excuses: for students, teachers and parents of {orgAlias}.",
+      "lead": "Marks, timetable, homework, AI study notebooks and excuses: for students and teachers of {orgAlias}.",
       "cta": "Sign in to {appMy}",
       "bot": "Open the Telegram bot",
       "laptopAlt": "The home page of {appMy} on a laptop",
@@ -281,6 +282,28 @@
       "lms": "{appLms}",
       "library": "{appLibrary}",
       "bot": "Telegram bot"
+    },
+    "banner": {
+      "label": "Questions from applicants",
+      "intro": "Prospective student or a parent of one? Ask your questions in our unofficial",
+      "bot": "Telegram bot",
+      "joiner": "or the official support (",
+      "support": "@ihtsupport",
+      "end": ")."
+    },
+    "mcp": {
+      "title": "Connect your own AI assistant",
+      "text": "The platform runs MCP servers, so students and teachers can link ChatGPT, Claude or any other MCP-capable assistant to their account. You choose what it may access in the ID app, scope by scope.",
+      "p1": "Ask about the timetable, homework and marks",
+      "p2": "Upload files and hand in homework",
+      "p3": "Teachers manage lessons and homework",
+      "consent": "Access is granted per scope and can be revoked at any time.",
+      "tiles": {
+        "ask": "Timetable, homework, marks",
+        "files": "Upload files",
+        "submit": "Hand in homework",
+        "teach": "Lessons and homework for teachers"
+      }
     }
   }
 }

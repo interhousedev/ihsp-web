@@ -7,6 +7,12 @@ All notable changes to this project are documented here. The format follows [Kee
 ### Added
 
 - Homework: students hand in files (with an optional comment) on a homework card, see whether it was handed in on time, replace or withdraw it; teachers see who handed in, who was late and who is missing on the lesson page, with links to the files.
+- Registration: every ending (done screen, welcome, Telegram mini app) shows the new login highlighted with a copy button and a hint that it or the EMIS ID signs in.
+- Landing: language switcher with flags in the header, a note for prospective students and parents (unofficial bot, official support @ihtsupport), a section on connecting ChatGPT, Claude and other MCP assistants, a chapter rail and animated backgrounds; the Uzbek copy uses the new Latin alphabet.
+
+### Changed
+
+- Landing: switching devices morphs one device shell on a spring (as on cloudlet.dev) instead of remounting it; mobile layouts tightened; the copy no longer mentions parents of students.
 
 ## [1.3.0] - 2026-11-11
 

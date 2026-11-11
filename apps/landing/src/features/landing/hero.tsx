@@ -2,9 +2,12 @@
 
 import { BRAND } from "@ihsp/config/brand"
 import { useT } from "@ihsp/i18n"
-import { cn, IconArrowDown, IconBrandTelegram } from "@ihsp/ui"
-import { useEffect, useRef, useState } from "react"
-import { DeviceFrame, type DeviceKind } from "../../components/device-mockup/device-frame"
+import { IconArrowDown, IconBrandTelegram } from "@ihsp/ui"
+import { useEffect, useMemo, useRef, useState } from "react"
+import { AnimatedBackdrop } from "../../components/backgrounds"
+import { useFinish, type DeviceKind } from "../../components/device-mockup/device-frame"
+import { DeviceStage } from "../../components/device-mockup/device-stage"
+import type { FoldPose } from "../../components/device-mockup/devices"
 import { detectDevice, readDeviceSignals } from "./detect-device"
 import { DeviceSwitcher } from "./device-switcher"
 import { useLandingLinks } from "./links"
@@ -16,20 +19,7 @@ export const ctaPrimary =
 export const ctaSecondary =
   "inline-flex min-h-12 items-center justify-center gap-2 rounded-full border px-7 text-base font-semibold transition-colors hover:bg-muted focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--brand)]"
 
-const WIDTH: Record<DeviceKind, string> = {
-  laptop: "max-w-[860px]",
-  tablet: "max-w-[560px]",
-  foldable: "max-w-[700px]",
-  phone: "max-w-[270px]",
-}
-
-function Screen({ device }: { device: DeviceKind }) {
-  if (device === "phone") return <DashboardPhone />
-  if (device === "laptop") return <DashboardLaptop />
-  return <DashboardTablet />
-}
-
-/** The first screen: headline, the sign-in call and a laptop and a phone that drift apart while the page scrolls. */
+/** The first screen: headline, the sign-in call and one device that morphs between laptop, phone, tablet and foldable. */
 export function Hero() {
   const t = useT("landing")
   const links = useLandingLinks()
@@ -37,9 +27,31 @@ export function Hero() {
   const stage = useRef<HTMLDivElement>(null)
   // The static page always starts on the laptop; the visitor's own device is picked after mount.
   const [device, setDevice] = useState<DeviceKind>("laptop")
+  // Choosing the foldable shows it closed, then unfolds it (the 3D fold); other devices have no pose.
+  const [pose, setPose] = useState<FoldPose>("open")
+  const finish = useFinish()
   useEffect(() => {
     setDevice(detectDevice(readDeviceSignals()))
   }, [])
+  const choose = (next: DeviceKind) => {
+    setDevice(next)
+    setPose(next === "foldable" && !reduced ? "closed" : "open")
+  }
+  useEffect(() => {
+    if (device !== "foldable" || pose !== "closed") return
+    const timer = setTimeout(() => setPose("open"), 900)
+    return () => clearTimeout(timer)
+  }, [device, pose])
+  const screens = useMemo(
+    () => ({
+      laptop: <DashboardLaptop />,
+      phone: <DashboardPhone />,
+      tablet: <DashboardTablet />,
+      foldable: pose === "open" ? <DashboardTablet /> : <DashboardPhone />,
+    }),
+    [pose],
+  )
+  const foldScreens = useMemo(() => ({ open: <DashboardTablet />, closed: <DashboardPhone /> }), [])
 
   useEffect(() => {
     const node = stage.current
@@ -62,11 +74,8 @@ export function Hero() {
   }, [reduced])
 
   return (
-    <section id="top" className="relative overflow-hidden px-4 pt-28 pb-10 sm:pt-36">
-      <div
-        aria-hidden
-        className="pointer-events-none absolute inset-x-0 top-0 -z-10 h-[620px] bg-[radial-gradient(ellipse_at_50%_0%,var(--brand-soft),transparent_70%)]"
-      />
+    <section id="top" className="relative isolate overflow-hidden px-4 pt-28 pb-10 sm:pt-36">
+      <AnimatedBackdrop grid beam />
       <div className="mx-auto max-w-4xl text-center">
         <h1 className="text-4xl font-bold tracking-tight text-balance sm:text-6xl">
           <span className="text-[var(--brand-text)]">{BRAND.apps.sp.name}</span>
@@ -83,36 +92,28 @@ export function Hero() {
           </a>
         </div>
       </div>
-      <div className="mt-10 flex justify-center">
-        <DeviceSwitcher value={device} onChange={setDevice} />
+      <div className="mt-8 flex max-w-full justify-center sm:mt-10">
+        <DeviceSwitcher value={device} onChange={choose} />
       </div>
       <div
         ref={stage}
         style={{ "--p": 0 } as React.CSSProperties}
-        className="relative mx-auto mt-8 max-w-5xl pb-10 sm:mt-10"
+        className="relative mx-auto mt-4 w-full max-w-5xl pb-6 sm:mt-6 sm:pb-10"
       >
         <div
-          className={cn(
-            "mx-auto w-full will-change-transform",
-            WIDTH[device],
-            !reduced && "transition-[max-width] duration-500 ease-out",
-          )}
+          className="will-change-transform"
           style={{ transform: "translateY(calc(var(--p) * 40px)) scale(calc(1 - var(--p) * 0.04))" }}
         >
-          <DeviceFrame key={device} device={device} label={t(`hero.${device}Alt`)}>
-            <Screen device={device} />
-          </DeviceFrame>
+          <DeviceStage
+            device={device}
+            pose={pose}
+            finish={finish}
+            screens={screens}
+            foldScreens={foldScreens}
+            reduced={reduced}
+            label={t(`hero.${device}Alt`)}
+          />
         </div>
-        {device === "laptop" && (
-          <div
-            className="absolute right-[-2%] bottom-0 w-[24%] min-w-[96px] will-change-transform sm:right-[2%]"
-            style={{ transform: "translateY(calc(var(--p) * -90px)) rotate(calc(var(--p) * 4deg))" }}
-          >
-            <DeviceFrame device="phone" label={t("hero.phoneAlt")}>
-              <DashboardPhone />
-            </DeviceFrame>
-          </div>
-        )}
       </div>
       <a
         href="#features"

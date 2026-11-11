@@ -24,11 +24,14 @@ export function FeatureSection({
     <section
       id={id}
       aria-labelledby={`${id}-title`}
-      className={cn("scroll-mt-24 px-4 py-16 sm:py-24", tint && "bg-muted/40")}
+      className={cn("scroll-mt-24 px-4 py-12 sm:py-24", tint && "bg-muted/40")}
     >
-      <div className="mx-auto grid max-w-6xl items-center gap-10 lg:grid-cols-2 lg:gap-16">
+      <div className="mx-auto grid max-w-6xl items-center gap-8 lg:grid-cols-2 lg:gap-16">
         <Reveal className={cn(reverse && "lg:order-2")}>
-          <h2 id={`${id}-title`} className="text-3xl font-bold tracking-tight text-balance sm:text-4xl">
+          <h2
+            id={`${id}-title`}
+            className="text-2xl font-bold tracking-tight text-balance min-[400px]:text-3xl sm:text-4xl"
+          >
             {title}
           </h2>
           <p className="text-muted-foreground mt-4 text-lg">{text}</p>
@@ -43,7 +46,7 @@ export function FeatureSection({
             ))}
           </ul>
         </Reveal>
-        <Reveal delay={150} className="flex items-center justify-center">
+        <Reveal delay={150} className="flex min-w-0 items-center justify-center">
           {children}
         </Reveal>
       </div>

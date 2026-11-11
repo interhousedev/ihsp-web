@@ -10,7 +10,7 @@ import "./device-mockup.css"
 export type DeviceKind = DeviceId
 
 /** The device finish follows the `dark` class of `<html>` (set by the theme script). */
-function useFinish(): "light" | "dark" {
+export function useFinish(): "light" | "dark" {
   const [finish, setFinish] = useState<"light" | "dark">("light")
   useEffect(() => {
     const root = document.documentElement

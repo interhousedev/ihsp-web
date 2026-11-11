@@ -1,48 +1,49 @@
 {
   "landing": {
     "meta": {
-      "title": "{appMy} — {orgAlias} oʻquvchilar platformasi"
+      "title": "{appMy} — {orgAlias} öquvçilar platformasi"
     },
-    "skip": "Asosiy qismga oʻtish",
+    "skip": "Asosiy qismga ötiş",
     "logoAlt": "{orgAlias} logotipi",
     "brand": "{orgAlias}",
     "nav": {
       "label": "Asosiy navigatsiya",
       "features": "Imkoniyatlar",
       "ecosystem": "Hammasi bir joyda",
-      "journal": "Oʻqituvchilarga",
+      "journal": "Öqituvçilarga",
       "bot": "Telegram",
-      "signIn": "Kirish",
+      "signIn": "Kiriş",
       "menu": "Menyu",
-      "close": "Yopish"
+      "close": "Yopiş",
+      "mcp": "AI ulanishi"
     },
     "hero": {
       "title": "Maktab hayoti bitta ilovada",
-      "lead": "Baholar, dars jadvali, uy vazifalari, sunʼiy intellektli oʻquv daftarlari va uzr xatlari: {orgAlias} oʻquvchilari, oʻqituvchilari va ota-onalari uchun.",
-      "cta": "{appMy} ga kirish",
-      "bot": "Telegram botni ochish",
-      "laptopAlt": "Noutbukda {appMy} bosh sahifasi",
-      "phoneAlt": "Telefonda {appMy} bosh sahifasi",
-      "scroll": "Imkoniyatlarga oʻtish",
-      "tabletAlt": "Planshetda {appMy} bosh sahifasi",
-      "foldableAlt": "Buklanuvchi qurilmada {appMy} bosh sahifasi",
+      "lead": "Baholar, dars jadvali, uy vazifalari, sunʼiy intellektli öquv daftarlari va uzr xatlari: {orgAlias} öquvçilari va öqituvçilari uçun.",
+      "cta": "{appMy} ga kiriş",
+      "bot": "Telegram botni oçiş",
+      "laptopAlt": "Noutbukda {appMy} boş sahifasi",
+      "phoneAlt": "Telefonda {appMy} boş sahifasi",
+      "scroll": "Imkoniyatlarga ötiş",
+      "tabletAlt": "Planşetda {appMy} boş sahifasi",
+      "foldableAlt": "Buklanuvçi qurilmada {appMy} boş sahifasi",
       "devices": {
         "label": "Qurilmani tanlang",
         "phone": "Telefon",
-        "tablet": "Planshet",
+        "tablet": "Planşet",
         "laptop": "Kompyuter (Mac)",
-        "foldable": "Buklanuvchi"
+        "foldable": "Buklanuvçi"
       }
     },
     "eco": {
       "headline": "Litseyga kerak hamma narsa bitta akkauntda",
-      "hint": "Bitta kirish barcha ilovalarni ochadi.",
+      "hint": "Bitta kiriş barça ilovalarni oçadi.",
       "tiles": {
-        "dashboard": "Bosh sahifa",
+        "dashboard": "Boş sahifa",
         "timetable": "Dars jadvali",
         "marks": "Baholar",
-        "journal": "Oʻqituvchi jurnali",
-        "assistant": "AI yordamchi",
+        "journal": "Öqituvçi jurnali",
+        "assistant": "AI yordamçi",
         "notebooks": "Daftarlar va Studio",
         "library": "Kutubxona",
         "lms": "Kurslar",
@@ -52,87 +53,87 @@
     },
     "sections": {
       "dashboard": {
-        "title": "Kuningiz bir qarashda",
-        "text": "Bosh sahifa bugun muhim boʻlgan hamma narsani jamlaydi.",
-        "p1": "Bugungi darslar, xonalar va oʻqituvchilar bilan",
-        "p2": "Oʻrtacha ball, qoldirilgan darslar va vazifalar bir joyda",
-        "p3": "Soʻnggi baholar, daftarlar va kutubxona qoʻl ostida",
-        "alt": "Planshetda bosh sahifa"
+        "title": "Kuningiz bir qaraşda",
+        "text": "Boş sahifa bugun muhim bölgan hamma narsani jamlaydi.",
+        "p1": "Bugungi darslar, xonalar va öqituvçilar bilan",
+        "p2": "Örtaça ball, qoldirilgan darslar va vazifalar bir joyda",
+        "p3": "Sönggi baholar, daftarlar va kutubxona qöl ostida",
+        "alt": "Planşetda boş sahifa"
       },
       "timetable": {
-        "title": "Dars jadvali va baholar — soʻrab yurmasdan",
-        "text": "Dushanbadan jumagacha boʻlgan oʻquv haftasi va har bir baho qoʻyilishi bilan.",
-        "p1": "Oʻzgarishlar va koʻchirilgan darslar darhol koʻrinadi",
-        "p2": "Fanlar kesimida baholar va oʻrtacha ball",
-        "p3": "Har bir yangi baho haqida bildirishnoma",
+        "title": "Dars jadvali va baholar — sörab yurmasdan",
+        "text": "Duşanbadan jumagaça bölgan öquv haftasi va har bir baho qöyilişi bilan.",
+        "p1": "Özgarişlar va köçirilgan darslar darhol körinadi",
+        "p2": "Fanlar kesimida baholar va örtaça ball",
+        "p3": "Har bir yangi baho haqida bildirişnoma",
         "alt": "Telefonda dars jadvali",
         "alt2": "Telefonda baholar"
       },
       "assistant": {
-        "title": "Siz bilan birga oʻrganadigan AI yordamchi va daftarlar",
-        "text": "Darslar, fayllar va yozuvlarni manba sifatida qoʻshing va savol bering: javoblar manbaga havola qiladi.",
-        "p1": "Oʻz manbalaringizdan daftarlar",
-        "p2": "Studio test, kartochkalar, aqliy xarita va hisobot yaratadi",
-        "p3": "Internetdan qidirishni oʻzingiz yoqasiz",
+        "title": "Siz bilan birga örganadigan AI yordamçi va daftarlar",
+        "text": "Darslar, fayllar va yozuvlarni manba sifatida qöşing va savol bering: javoblar manbaga havola qiladi.",
+        "p1": "Öz manbalaringizdan daftarlar",
+        "p2": "Studio test, kartoçkalar, aqliy xarita va hisobot yaratadi",
+        "p3": "Internetdan qidirişni özingiz yoqasiz",
         "alt": "Noutbukda AI daftar"
       },
       "journal": {
-        "title": "Oʻqituvchining vaqtini tejaydigan jurnal",
+        "title": "Öqituvçining vaqtini tejaydigan jurnal",
         "text": "Butun sinfning baholari va davomati bitta ekranda.",
-        "p1": "Darslar boʻyicha baholar va davomat",
+        "p1": "Darslar böyiça baholar va davomat",
         "p2": "Sababli qoldirilgan darslar avtomatik belgilanadi",
-        "p3": "Jurnalni bir bosishda eksport qilish",
-        "alt": "Noutbukda oʻqituvchi jurnali"
+        "p3": "Jurnalni bir bosişda eksport qiliş",
+        "alt": "Noutbukda öqituvçi jurnali"
       },
       "library": {
         "title": "Kutubxona va kurslar bir joyda",
-        "text": "Kitobni toping, boʻshligini bilib oling va kursni toʻxtagan joyingizdan davom ettiring.",
-        "p1": "Katalog boʻyicha yagona qidiruv",
+        "text": "Kitobni toping, böşligini bilib oling va kursni töxtagan joyingizdan davom ettiring.",
+        "p1": "Katalog böyiça yagona qidiruv",
         "p2": "Kurs rejasi va jarayon",
-        "p3": "Tugatilgan kurslar uchun sertifikatlar",
-        "alt": "Planshetda kurs",
+        "p3": "Tugatilgan kurslar uçun sertifikatlar",
+        "alt": "Planşetda kurs",
         "alt2": "Telefonda kutubxona qidiruvi"
       },
       "bot": {
         "title": "Telegram bot va mini ilova",
-        "text": "Baholar va dars jadvali chatga keladi, toʻliq ilova esa Telegramning oʻzida ochiladi.",
-        "p1": "Yangi baholar va ertangi darslar chatda",
-        "p2": "Yordamchiga Telegramning oʻzida savol bering",
-        "p3": "Mini ilova akkauntga oʻzi kiradi",
+        "text": "Baholar va dars jadvali çatga keladi, töliq ilova esa Telegramning özida oçiladi.",
+        "p1": "Yangi baholar va ertangi darslar çatda",
+        "p2": "Yordamçiga Telegramning özida savol bering",
+        "p3": "Mini ilova akkauntga özi kiradi",
         "alt": "Telefonda Telegram bot",
         "alt2": "Telefonda mini ilova"
       },
       "excuses": {
-        "title": "Holati tushunarli uzr xatlari",
-        "text": "Izoh va hujjatlarni yuboring, qarorni kuzating va kurator bilan yozishing.",
-        "p1": "Koʻrib chiqilmoqda, tasdiqlangan yoki rad etilgan: bir qarashda",
+        "title": "Holati tuşunarli uzr xatlari",
+        "text": "Izoh va hujjatlarni yuboring, qarorni kuzating va kurator bilan yozişing.",
+        "p1": "Körib çiqilmoqda, tasdiqlangan yoki rad etilgan: bir qaraşda",
         "p2": "Hujjatlar arizaga biriktiriladi",
-        "p3": "Tasdiqlangan uzr xatlari jurnalga tushadi",
-        "alt": "Planshetda uzr xatlari"
+        "p3": "Tasdiqlangan uzr xatlari jurnalga tuşadi",
+        "alt": "Planşetda uzr xatlari"
       }
     },
     "cta": {
-      "title": "Boshlashga tayyormisiz?",
-      "text": "Litsey akkauntingiz bilan kiring, hammasi allaqachon shu yerda.",
-      "button": "{appMy} ga kirish",
-      "bot": "Telegram botni ochish"
+      "title": "Boşlaşga tayyormisiz?",
+      "text": "Litsey akkauntingiz bilan kiring, hammasi allaqaçon şu yerda.",
+      "button": "{appMy} ga kiriş",
+      "bot": "Telegram botni oçiş"
     },
     "demo": {
       "appName": "{appMy}",
       "appStaff": "{appStaff}",
-      "weekday": "Dushanba",
+      "weekday": "Duşanba",
       "room": "Xona",
-      "gpa": "Oʻrtacha ball",
+      "gpa": "Örtaça ball",
       "grades": "Baholar",
-      "dashboard": "Bosh sahifa",
+      "dashboard": "Boş sahifa",
       "todayLessons": "Bugungi darslar",
       "nav": {
-        "home": "Bosh sahifa",
+        "home": "Boş sahifa",
         "calendar": "Jadval",
         "marks": "Baholar",
         "tasks": "Vazifalar",
         "library": "Kutubxona",
-        "assistant": "Yordamchi",
+        "assistant": "Yordamçi",
         "journal": "Jurnal",
         "attendance": "Davomat"
       },
@@ -141,32 +142,32 @@
         "physics": "Fizika",
         "english": "Ingliz tili",
         "russian": "Rus tili",
-        "uzbek": "Oʻzbek tili",
+        "uzbek": "Özbek tili",
         "chemistry": "Kimyo",
         "history": "Tarix",
         "biology": "Biologiya"
       },
-      "gpaHint": "Shu chorakda",
+      "gpaHint": "Şu çorakda",
       "absences": "Qoldirilgan darslar",
-      "absencesHint": "Shu oyda",
+      "absencesHint": "Şu oyda",
       "homework": "Vazifalar",
-      "homeworkHint": "Shu hafta ichida",
-      "recentMarks": "Soʻnggi baholar",
+      "homeworkHint": "Şu hafta içida",
+      "recentMarks": "Sönggi baholar",
       "recentNotebook": "Daftar",
       "notebookTitle": "Fotosintez",
       "notebookMeta": "3 ta manba",
       "libraryWidget": "Kutubxona",
       "bookTitle": "Fizika, 10-sinf",
       "available": "Mavjud",
-      "onLoan": "Qoʻlda",
+      "onLoan": "Qölda",
       "days": {
         "mon": "Du",
         "tue": "Se",
-        "wed": "Ch",
+        "wed": "Ç",
         "thu": "Pa",
         "fri": "Ju"
       },
-      "moved": "Koʻchirildi",
+      "moved": "Köçirildi",
       "newMark": "Yangi baho",
       "pk": "Oraliq nazorat (ON)",
       "new": "Yangi",
@@ -181,24 +182,24 @@
         "file": "PDF",
         "text": "Matn"
       },
-      "question": "Kuzda barglar nega sargʻayadi?",
-      "answer": "Xlorofill parchalanadi va uning ostida yashiringan sariq va toʻq sariq pigmentlar koʻrinib qoladi.",
+      "question": "Kuzda barglar nega sarğayadi?",
+      "answer": "Xlorofill parçalanadi va uning ostida yaşiringan sariq va töq sariq pigmentlar körinib qoladi.",
       "ai": "AI",
       "web": "Internet",
-      "askPlaceholder": "Manbalaringiz haqida soʻrang",
+      "askPlaceholder": "Manbalaringiz haqida sörang",
       "studio": "Studio",
       "studioKind": {
         "quiz": "Test",
-        "cards": "Kartochkalar",
+        "cards": "Kartoçkalar",
         "map": "Aqliy xarita",
         "report": "Hisobot"
       },
       "quizReady": "Test tayyor",
       "quizMeta": "10 ta savol",
       "export": "Eksport",
-      "student": "Oʻquvchi",
-      "notTaken": "Oʻtkazilmagan",
-      "taken": "Oʻtkazilgan",
+      "student": "Öquvçi",
+      "notTaken": "Ötkazilmagan",
+      "taken": "Ötkazilgan",
       "dates": {
         "0": "2-sen",
         "1": "4-sen",
@@ -206,19 +207,19 @@
         "3": "11-sen"
       },
       "flags": {
-        "absent": "Yoʻq",
-        "late": "Kechikdi",
+        "absent": "Yöq",
+        "late": "Keçikdi",
         "excused": "Sababli"
       },
-      "journalHint": "Sababli darslarga baho qoʻyib boʻlmaydi.",
+      "journalHint": "Sababli darslarga baho qöyib bölmaydi.",
       "excuses": "Uzr xatlari",
       "excuseTitle": {
         "pending": "Kasallik",
         "approved": "Oilaviy tadbir",
-        "rejected": "Kechikish"
+        "rejected": "Keçikiş"
       },
       "status": {
-        "pending": "Koʻrib chiqilmoqda",
+        "pending": "Körib çiqilmoqda",
         "approved": "Tasdiqlangan",
         "rejected": "Rad etilgan"
       },
@@ -227,13 +228,13 @@
         "approved": "2-sen",
         "rejected": "26-avg"
       },
-      "document": "Shifokor maʼlumotnomasi.pdf",
+      "document": "Şifokor maʼlumotnomasi.pdf",
       "thread": {
         "student": "Kasal edim, maʼlumotnoma ilova qilindi.",
-        "curator": "Rahmat, koʻrib chiqyapman."
+        "curator": "Rahmat, körib çiqyapman."
       },
       "replyPlaceholder": "Xabar yozing",
-      "librarySearch": "Kutubxonadan qidirish",
+      "librarySearch": "Kutubxonadan qidiriş",
       "books": {
         "a": {
           "title": "Fizika, 10-sinf",
@@ -248,13 +249,13 @@
           "author": "R. Murphy"
         }
       },
-      "course": "Dasturlashga kirish",
+      "course": "Dasturlaşga kiriş",
       "courseCert": "Sertifikat",
-      "courseLevel": "Boshlangʻich",
-      "courseHint": "Olish uchun barcha modullarni tugating.",
+      "courseLevel": "Boşlanğiç",
+      "courseHint": "Oliş uçun barça modullarni tugating.",
       "module": {
-        "0": "Tanishuv",
-        "1": "Oʻzgaruvchilar",
+        "0": "Tanişuv",
+        "1": "Özgaruvçilar",
         "2": "Sikllar",
         "3": "Yakuniy test"
       },
@@ -268,12 +269,12 @@
       "botMark": "Matematika, Oraliq nazorat (ON)",
       "botTomorrow": "Ertangi darslar",
       "botAsk": "Fizikadan nima berildi?",
-      "botAnswer": "84-betdagi 12–15-masalalar, payshanbagacha.",
+      "botAnswer": "84-betdagi 12–15-masalalar, payşanbagaça.",
       "botPlaceholder": "Xabar"
     },
     "footer": {
       "apps": "Ilovalar",
-      "security": "Xavfsizlik boʻyicha aloqa",
+      "security": "Xavfsizlik böyiça aloqa",
       "language": "Til",
       "rights": "{orgName} akademik litseyi",
       "sp": "{appMy}",
@@ -281,6 +282,28 @@
       "lms": "{appLms}",
       "library": "{appLibrary}",
       "bot": "Telegram bot"
+    },
+    "banner": {
+      "label": "Abituriyentlar savollari",
+      "intro": "Abituriyent yoki abituriyentning ota-onasimisiz? Savollaringizni norasmiy",
+      "bot": "Telegram botimizga",
+      "joiner": "yoki rasmiy yordam xizmatiga (",
+      "support": "@ihtsupport",
+      "end": ") bering."
+    },
+    "mcp": {
+      "title": "Öz AI yordamçingizni ulang",
+      "text": "Platformada MCP serverlar işlaydi: öquvçilar va öqituvçilar akkauntiga ÇatGPT, Claude yoki MCP qöllab-quvvatlaydigan boşqa yordamçini ulaşi mumkin. Ruxsatlarni ID ilovasida har bir doira böyiça özingiz tanlaysiz.",
+      "p1": "Dars jadvali, vazifalar va baholar haqida sörang",
+      "p2": "Fayllarni yuklang va uy vazifalarini topşiring",
+      "p3": "Öqituvçilar darslar va vazifalarni boşqaradi",
+      "consent": "Ruxsat har bir doira böyiça beriladi va istalgan vaqtda bekor qilinadi.",
+      "tiles": {
+        "ask": "Jadval, vazifalar, baholar",
+        "files": "Fayl yuklaş",
+        "submit": "Vazifa topşiriş",
+        "teach": "Öqituvçilar uçun darslar va vazifalar"
+      }
     }
   }
 }

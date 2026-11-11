@@ -3,7 +3,7 @@ import { afterEach, describe, expect, test } from "bun:test"
 import { resetConfig } from "@ihsp/config"
 import { I18nTestProvider } from "@ihsp/i18n"
 import { TEST_ENV } from "@ihsp/test-utils"
-import { render, screen, waitFor } from "@testing-library/react"
+import { render, screen, waitFor, within } from "@testing-library/react"
 import { LANDING_MESSAGES } from "../app/providers"
 import { LandingPage } from "../features/landing/landing-page"
 import { botUrl } from "../features/landing/links"
@@ -30,6 +30,7 @@ const SECTION_HEADINGS = [
   "Telegram bot and mini app",
   "Excuses with a clear status",
   "Everything the lyceum needs in one account",
+  "Connect your own AI assistant",
   "Ready to start?",
 ]
 
@@ -51,7 +52,13 @@ describe("LandingPage", () => {
     for (const link of signIn) expect(link.getAttribute("href")).toBe(`${TEST_ENV.SP_URL}/`)
     expect(screen.getByRole("link", { name: "sec@example.org" }).getAttribute("href")).toBe("mailto:sec@example.org")
     expect(screen.getByRole("link", { name: "@sec_team" }).getAttribute("href")).toBe("https://t.me/sec_team")
-    expect(screen.getByRole("group", { name: "Language" })).toBeTruthy()
+    const language = screen.getByRole("group", { name: "Language" })
+    expect(
+      within(language)
+        .getAllByRole("button")
+        .map((b) => b.getAttribute("aria-label")),
+    ).toEqual(["Özbekça", "Русский", "English"])
+    expect(screen.getByRole("link", { name: "@ihtsupport" }).getAttribute("href")).toBe("https://t.me/ihtsupport")
   })
 
   test("hides the security contact when it is empty", () => {

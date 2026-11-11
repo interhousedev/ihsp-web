@@ -320,3 +320,64 @@
   transition-duration: 0s;
   transition-delay: calc(var(--reduced-fade) / 2);
 }
+
+/* ---------- Fold scene: two 3D leaves hinged in the middle (from react-mockframe) ---------- */
+
+.fold-scene {
+  position: absolute;
+  top: 0;
+  z-index: 2;
+  transform-style: preserve-3d;
+  perspective-origin: 50% 50%;
+  transition: left var(--fold-duration) var(--fold-ease);
+}
+.fold-leaf {
+  position: absolute;
+  top: 0;
+  width: 50%;
+  height: 100%;
+  transform-style: preserve-3d;
+}
+.fold-leaf--left {
+  left: 0;
+  transform-origin: 100% 50%;
+  transition: transform var(--fold-duration) var(--fold-ease);
+}
+.fold-leaf--right {
+  left: 50%;
+  transform-origin: 0 50%;
+  transform: translateZ(-0.5px);
+}
+.fold-face {
+  position: absolute;
+  inset: 0;
+  backface-visibility: hidden;
+}
+.fold-face--front {
+  clip-path: inset(-12px 0 -12px -12px);
+}
+.fold-face--right {
+  clip-path: inset(-12px -12px -12px 0);
+}
+.fold-face--right > .dv {
+  left: -100%;
+}
+.fold-face--back {
+  transform: rotateY(180deg);
+}
+.fold-face--back > .dv {
+  left: -11.67px;
+}
+
+/* Phones: a squarer stage so the tall devices keep a readable size. */
+@media (max-width: 639px) {
+  .device-stage {
+    aspect-ratio: 1 / 1;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .fold-scene,
+  .fold-leaf--left {
+    transition: none;
+  }
+}
