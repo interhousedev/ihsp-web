@@ -15,6 +15,9 @@ import type {
   HomeworkItem,
   HomeworkListParams,
   HomeworkNoteBody,
+  HomeworkSubmission,
+  HomeworkSubmissionBody,
+  LessonHomeworkSubmissions,
   Journal,
   JournalOption,
   JournalParams,
@@ -77,6 +80,33 @@ export function putMeHomeworkNote(
   opts?: RequestOptions,
 ): Promise<HomeworkItem> {
   return api.put<HomeworkItem>(`/v1/me/homework/${seg(lessonId)}/note`, body, opts)
+}
+
+/** PUT /v1/me/homework/{lesson_id}/submission — student; saves or replaces the submission (late after the due date). */
+export function submitHomework(
+  lessonId: string,
+  body: HomeworkSubmissionBody,
+  opts?: RequestOptions,
+): Promise<HomeworkSubmission> {
+  return api.put<HomeworkSubmission>(`/v1/me/homework/${seg(lessonId)}/submission`, body, opts)
+}
+
+/** GET /v1/me/homework/{lesson_id}/submission — student; 404 when nothing was submitted. */
+export function getHomeworkSubmission(lessonId: string, opts?: RequestOptions): Promise<HomeworkSubmission> {
+  return api.get<HomeworkSubmission>(`/v1/me/homework/${seg(lessonId)}/submission`, opts)
+}
+
+/** DELETE /v1/me/homework/{lesson_id}/submission — student; 204. */
+export function withdrawHomeworkSubmission(lessonId: string, opts?: RequestOptions): Promise<void> {
+  return api.delete<void>(`/v1/me/homework/${seg(lessonId)}/submission`, opts)
+}
+
+/** GET /v1/staff/lessons/{lesson_id}/homework/submissions — teacher of the lesson; files carry presigned URLs. */
+export function getLessonHomeworkSubmissions(
+  lessonId: string,
+  opts?: RequestOptions,
+): Promise<LessonHomeworkSubmissions> {
+  return api.get<LessonHomeworkSubmissions>(`/v1/staff/lessons/${seg(lessonId)}/homework/submissions`, opts)
 }
 
 /** GET /v1/me/attendance?from&to — student. */

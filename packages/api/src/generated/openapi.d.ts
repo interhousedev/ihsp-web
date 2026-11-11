@@ -8152,6 +8152,34 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/v1/me/homework/{lesson_id}/submission": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get Homework Submission
+         * @description Return the caller's submission or 404.
+         */
+        get: operations["get_homework_submission_v1_me_homework__lesson_id__submission_get"];
+        /**
+         * Submit Homework
+         * @description Save or replace the submission; after the due date it counts as late.
+         */
+        put: operations["submit_homework_v1_me_homework__lesson_id__submission_put"];
+        post?: never;
+        /**
+         * Withdraw Homework Submission
+         * @description Delete the caller's submission; the files stay in their storage.
+         */
+        delete: operations["withdraw_homework_submission_v1_me_homework__lesson_id__submission_delete"];
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/v1/me/lesson-results": {
         parameters: {
             query?: never;
@@ -10945,6 +10973,26 @@ export interface paths {
          * @description Save the topic.
          */
         put: operations["set_topic_v1_staff_lessons__id__topic_put"];
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/staff/lessons/{lesson_id}/homework/submissions": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * List Homework Submissions
+         * @description Return who handed the homework in, with the files.
+         */
+        get: operations["list_homework_submissions_v1_staff_lessons__lesson_id__homework_submissions_get"];
+        put?: never;
         post?: never;
         delete?: never;
         options?: never;
@@ -17664,6 +17712,55 @@ export interface components {
         HomeworkNoteBody: {
             /** Note */
             note: string | null;
+        };
+        /**
+         * HomeworkSubmissionBody
+         * @description Body of ``PUT /v1/me/homework/{lesson_id}/submission``.
+         */
+        HomeworkSubmissionBody: {
+            /** Comment */
+            comment?: string | null;
+            /** File Ids */
+            file_ids: string[];
+        };
+        /**
+         * HomeworkSubmissionResponse
+         * @description ``HomeworkSubmission``: the student's own submission.
+         */
+        HomeworkSubmissionResponse: {
+            /** Comment */
+            comment: string | null;
+            /** Files */
+            files: components["schemas"]["SubmissionFileResponse"][];
+            /**
+             * Lesson Id
+             * Format: uuid
+             */
+            lesson_id: string;
+            /**
+             * Status
+             * @enum {string}
+             */
+            status: "submitted" | "late";
+            /**
+             * Submitted At
+             * Format: date-time
+             */
+            submitted_at: string;
+        };
+        /**
+         * HomeworkSubmissionsResponse
+         * @description ``HomeworkSubmissions``: the teacher's view of a lesson's homework.
+         */
+        HomeworkSubmissionsResponse: {
+            counts: components["schemas"]["SubmissionCountsResponse"];
+            /**
+             * Lesson Id
+             * Format: uuid
+             */
+            lesson_id: string;
+            /** Students */
+            students: components["schemas"]["StaffSubmissionRowResponse"][];
         };
         /**
          * IdentifiedStudentOut
@@ -25346,6 +25443,7 @@ export interface components {
             due_auto: boolean;
             /** Due Date */
             due_date: string | null;
+            submissions?: components["schemas"]["SubmissionCountsShortResponse"] | null;
             /** Text */
             text: string;
         };
@@ -25461,6 +25559,47 @@ export interface components {
              * Format: uuid
              */
             subject_id: string;
+        };
+        /**
+         * StaffSubmissionFileResponse
+         * @description A handed-in file with a time-limited download link.
+         */
+        StaffSubmissionFileResponse: {
+            /** Content Type */
+            content_type: string;
+            /** Download Url */
+            download_url: string;
+            /**
+             * Id
+             * Format: uuid
+             */
+            id: string;
+            /** Name */
+            name: string;
+            /** Size */
+            size: number;
+        };
+        /**
+         * StaffSubmissionRowResponse
+         * @description One student of the lesson and what they handed in.
+         */
+        StaffSubmissionRowResponse: {
+            /** Comment */
+            comment: string | null;
+            /** Files */
+            files: components["schemas"]["StaffSubmissionFileResponse"][];
+            /** Group Name */
+            group_name: string;
+            /**
+             * Status
+             * @enum {string}
+             */
+            status: "submitted" | "late" | "missing";
+            student: components["schemas"]["app__interfaces__http__v1__me_classwork__schemas__PersonRefResponse"];
+            /** Subgroup */
+            subgroup: number | null;
+            /** Submitted At */
+            submitted_at: string | null;
         };
         /**
          * StaffTodayResponse
@@ -26416,6 +26555,65 @@ export interface components {
          * @enum {string}
          */
         SubjectRole: "textbook" | "core" | "supplementary" | "reference";
+        /**
+         * SubmissionCountsResponse
+         * @description Totals over the lesson's students.
+         */
+        SubmissionCountsResponse: {
+            /** Late */
+            late: number;
+            /** Missing */
+            missing: number;
+            /** Submitted */
+            submitted: number;
+            /** Total */
+            total: number;
+        };
+        /**
+         * SubmissionCountsShortResponse
+         * @description How many students handed the homework in.
+         */
+        SubmissionCountsShortResponse: {
+            /** Submitted */
+            submitted: number;
+            /** Total */
+            total: number;
+        };
+        /**
+         * SubmissionFileResponse
+         * @description A stored file attached to a homework submission.
+         */
+        SubmissionFileResponse: {
+            /** Content Type */
+            content_type: string;
+            /**
+             * Id
+             * Format: uuid
+             */
+            id: string;
+            /** Name */
+            name: string;
+            /** Size */
+            size: number;
+        };
+        /**
+         * SubmissionSummaryResponse
+         * @description What the student handed in for a homework item.
+         */
+        SubmissionSummaryResponse: {
+            /** File Count */
+            file_count: number;
+            /**
+             * Status
+             * @enum {string}
+             */
+            status: "submitted" | "late";
+            /**
+             * Submitted At
+             * Format: date-time
+             */
+            submitted_at: string;
+        };
         /**
          * SubmitAttendanceBody
          * @description Body of ``PUT /v1/staff/lessons/{id}/attendance``.
@@ -30075,6 +30273,7 @@ export interface components {
             /** Note */
             note: string | null;
             subject: components["schemas"]["app__interfaces__http__v1__me_classwork__schemas__SubjectRefResponse"];
+            submission?: components["schemas"]["SubmissionSummaryResponse"] | null;
             teacher: components["schemas"]["app__interfaces__http__v1__me_classwork__schemas__PersonRefResponse"] | null;
             /** Text */
             text: string;
@@ -45737,6 +45936,101 @@ export interface operations {
             };
         };
     };
+    get_homework_submission_v1_me_homework__lesson_id__submission_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                lesson_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HomeworkSubmissionResponse"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    submit_homework_v1_me_homework__lesson_id__submission_put: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                lesson_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["HomeworkSubmissionBody"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HomeworkSubmissionResponse"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    withdraw_homework_submission_v1_me_homework__lesson_id__submission_delete: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                lesson_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            204: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
     list_lesson_results_v1_me_lesson_results_get: {
         parameters: {
             query: {
@@ -50881,6 +51175,37 @@ export interface operations {
                 };
                 content: {
                     "application/json": components["schemas"]["StaffLessonResponse"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    list_homework_submissions_v1_staff_lessons__lesson_id__homework_submissions_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                lesson_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HomeworkSubmissionsResponse"];
                 };
             };
             /** @description Validation Error */

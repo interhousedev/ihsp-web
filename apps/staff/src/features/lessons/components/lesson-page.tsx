@@ -5,6 +5,7 @@ import { useT } from "@ihsp/i18n"
 import { PageContainer, StateView } from "@ihsp/ui"
 import { parseAsString, useQueryState } from "nuqs"
 import { useEffect } from "react"
+import { HomeworkSubmissionsSection } from "./homework-submissions-section"
 import { TemporaryMarksSection } from "./temporary-marks-section"
 
 /**
@@ -46,6 +47,7 @@ export function LessonPage() {
               addMaterialOpen={add === "material"}
               onAddMaterialClosed={() => void setAdd(null)}
             />
+            {data.homework ? <HomeworkSubmissionsSection lessonId={data.lesson.id} /> : null}
             <TemporaryMarksSection lessonId={data.lesson.id} roster={data.attendance.roster} />
           </>
         )}

@@ -18,6 +18,50 @@ export type HomeworkItem = {
   updated: boolean
   done_at: string | null
   note: string | null
+  /** What the student handed in; `null` (or absent in older responses) when nothing was submitted. */
+  submission?: HomeworkSubmissionSummary | null
+}
+
+export type HomeworkSubmissionStatus = "submitted" | "late"
+
+/** `GET /v1/me/homework` item field: the status of the student's submission. */
+export type HomeworkSubmissionSummary = {
+  status: HomeworkSubmissionStatus
+  file_count: number
+  submitted_at: string
+}
+
+export type HomeworkSubmissionFile = { id: string; name: string; size: number; content_type: string }
+
+/** The student's own submission (`/v1/me/homework/{lesson_id}/submission`). */
+export type HomeworkSubmission = {
+  lesson_id: string
+  status: HomeworkSubmissionStatus
+  comment: string | null
+  files: HomeworkSubmissionFile[]
+  submitted_at: string
+}
+
+/** Body of `PUT /v1/me/homework/{lesson_id}/submission`: 1 to 10 file ids. */
+export type HomeworkSubmissionBody = { file_ids: string[]; comment?: string | null }
+
+export type StaffSubmissionFile = HomeworkSubmissionFile & { download_url: string }
+
+export type StaffSubmissionRow = {
+  student: PersonRef
+  group_name: string
+  subgroup: number | null
+  status: HomeworkSubmissionStatus | "missing"
+  submitted_at: string | null
+  comment: string | null
+  files: StaffSubmissionFile[]
+}
+
+/** The teacher's view of a lesson's homework submissions. */
+export type LessonHomeworkSubmissions = {
+  lesson_id: string
+  counts: { submitted: number; late: number; missing: number; total: number }
+  students: StaffSubmissionRow[]
 }
 
 export type StudentToday = {
@@ -91,7 +135,12 @@ export type StaffLesson = {
   lesson: LessonItem
   materials: ResourceItem[]
   attachments: ResourceItem[]
-  homework: { text: string; due_date: string | null; due_auto: boolean } | null
+  homework: {
+    text: string
+    due_date: string | null
+    due_auto: boolean
+    submissions?: { submitted: number; total: number } | null
+  } | null
   attendance: AttendanceSheet
 }
 

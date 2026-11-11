@@ -550,6 +550,17 @@
       "range": "{from}–{to} / {total}"
     }
   },
+  "homeworkSubmissions": {
+    "title": "Topshirilgan uy vazifalari",
+    "badge": "Topshirdi: {submitted}/{total}",
+    "counts": "Topshirdi: {submitted} · Kechikib: {late} · Topshirmadi: {missing}",
+    "empty": "Bu darsda o'quvchilar yo'q.",
+    "status": {
+      "submitted": "Topshirildi",
+      "late": "Kechikdi",
+      "missing": "Topshirilmadi"
+    }
+  },
   "temporaryMarks": {
     "journalTitle": "Jurnal",
     "note": "Bu baholar EMISga kiritilgunча vaqtinchalik.",

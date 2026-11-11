@@ -5,6 +5,7 @@ import type {
   HomeworkItem,
   Journal,
   JournalOption,
+  LessonHomeworkSubmissions,
   LessonItem,
   MissingAttendanceItem,
   StaffLesson,
@@ -49,6 +50,7 @@ export const homeworkMath: HomeworkItem = {
   updated: false,
   done_at: null,
   note: null,
+  submission: null,
 }
 
 export const homeworkPhysics: HomeworkItem = {
@@ -62,6 +64,7 @@ export const homeworkPhysics: HomeworkItem = {
   updated: true,
   done_at: null,
   note: null,
+  submission: null,
 }
 
 export const homeworkEnglish: HomeworkItem = {
@@ -88,6 +91,7 @@ export const homeworkChemistry: HomeworkItem = {
   updated: false,
   done_at: null,
   note: null,
+  submission: null,
 }
 
 export const homeworkHistory: HomeworkItem = {
@@ -101,6 +105,7 @@ export const homeworkHistory: HomeworkItem = {
   updated: false,
   done_at: "2026-10-06T18:00:00Z",
   note: null,
+  submission: null,
 }
 
 /** Open and past due: given on Monday for Tuesday, so it is one day overdue on the fixture Wednesday. */
@@ -115,6 +120,7 @@ export const homeworkOverdue: HomeworkItem = {
   updated: false,
   done_at: null,
   note: null,
+  submission: null,
 }
 
 export const homeworkItems: HomeworkItem[] = [
@@ -275,7 +281,14 @@ export function staffLessonFor(id: string): StaffLesson | undefined {
     lesson,
     materials: isPhysicsToday ? resourceItems.filter((item) => item.role === "material") : [],
     attachments: isPhysicsToday ? [resourceAttachment] : [],
-    homework: homework ? { text: homework.text, due_date: homework.due_date, due_auto: isPhysicsToday } : null,
+    homework: homework
+      ? {
+          text: homework.text,
+          due_date: homework.due_date,
+          due_auto: isPhysicsToday,
+          submissions: { submitted: isPhysicsToday ? 1 : 0, total: 2 },
+        }
+      : null,
     attendance: { ...sheet, lesson_id: lesson.id },
   }
 }
@@ -388,3 +401,40 @@ export const temporaryMarks: TemporaryMark[] = [
     updated_at: FIXTURE_NOW,
   },
 ]
+
+// --- Homework submissions (teacher view) ---
+
+export function lessonHomeworkSubmissionsFor(lessonId: string): LessonHomeworkSubmissions {
+  return {
+    lesson_id: lessonId,
+    counts: { submitted: 1, late: 0, missing: 1, total: 2 },
+    students: [
+      {
+        student: { id: ids.student2, first_name: "Aisha", last_name: "Karimova" },
+        group_name: "10-A",
+        subgroup: null,
+        status: "submitted",
+        submitted_at: "2026-10-07T04:30:00Z",
+        comment: "Problem 16 was hard",
+        files: [
+          {
+            id: uuid(9, 1),
+            name: "solutions.pdf",
+            size: 120_000,
+            content_type: "application/pdf",
+            download_url: "https://files.example.test/solutions.pdf?sig=1",
+          },
+        ],
+      },
+      {
+        student: { id: ids.student3, first_name: "Timur", last_name: "Nazarov" },
+        group_name: "10-A",
+        subgroup: null,
+        status: "missing",
+        submitted_at: null,
+        comment: null,
+        files: [],
+      },
+    ],
+  }
+}

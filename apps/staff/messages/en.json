@@ -550,6 +550,17 @@
       "range": "{from}–{to} of {total}"
     }
   },
+  "homeworkSubmissions": {
+    "title": "Submitted homework",
+    "badge": "{submitted}/{total} submitted",
+    "counts": "Submitted: {submitted} · Late: {late} · Missing: {missing}",
+    "empty": "No students in this lesson.",
+    "status": {
+      "submitted": "Submitted",
+      "late": "Late",
+      "missing": "Missing"
+    }
+  },
   "temporaryMarks": {
     "journalTitle": "Journal",
     "note": "These marks are temporary until you put them into EMIS.",

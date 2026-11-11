@@ -3,6 +3,8 @@ import type {
   AttendanceSubmitBody,
   HomeworkDoneBody,
   HomeworkNoteBody,
+  HomeworkSubmission,
+  HomeworkSubmissionBody,
   JournalToggleBody,
   StaffHomeworkBody,
   StaffTopicBody,
@@ -16,6 +18,7 @@ import {
   homeworkItems,
   journal,
   journalOptions,
+  lessonHomeworkSubmissionsFor,
   missingAttendance,
   staffLessonFor,
   staffToday,
@@ -25,7 +28,7 @@ import {
 } from "../fixtures/classwork"
 import { FIXTURE_NOW } from "../fixtures/world"
 import { staffWorkOffsOf } from "./work-offs-staff"
-import { apiUrl, notFound, param, query, readJson } from "./utils"
+import { apiUrl, noContent, notFound, param, query, readJson } from "./utils"
 
 function csv(rows: (string | number)[][], filename: string): Response {
   const body = rows.map((row) => row.map((cell) => `"${String(cell).replace(/"/g, '""')}"`).join(",")).join("\n")
@@ -35,6 +38,19 @@ function csv(rows: (string | number)[][], filename: string): Response {
       "Content-Disposition": `attachment; filename="${filename}"`,
     },
   })
+}
+
+/** Submissions saved through the handlers, by lesson id; the homework list reflects them. */
+const submissions = new Map<string, HomeworkSubmission>()
+
+function withSubmission<T extends { lesson_id: string }>(item: T): T & { submission: object | null } {
+  const saved = submissions.get(item.lesson_id)
+  return {
+    ...item,
+    submission: saved
+      ? { status: saved.status, file_count: saved.files.length, submitted_at: saved.submitted_at }
+      : null,
+  }
 }
 
 function homeworkFor(lessonId: string) {
@@ -58,7 +74,7 @@ export const classworkHandlers = [
     const status = query(request).get("status")
     const known =
       status === "overdue" || status === "upcoming" || status === "later" || status === "done" ? status : null
-    return HttpResponse.json(homeworkByStatus(known))
+    return HttpResponse.json(homeworkByStatus(known).map(withSubmission))
   }),
   http.put(apiUrl("/v1/me/homework/:lessonId/done"), async ({ params, request }) => {
     const item = homeworkFor(param(params, "lessonId"))
@@ -77,6 +93,34 @@ export const classworkHandlers = [
     const body = await readJson<HomeworkNoteBody>(request)
     return HttpResponse.json({ ...item, note: body.note ?? null })
   }),
+  http.get(apiUrl("/v1/me/homework/:lessonId/submission"), ({ params }) => {
+    const saved = submissions.get(param(params, "lessonId"))
+    return saved ? HttpResponse.json(saved) : notFound("Submission")
+  }),
+  http.put(apiUrl("/v1/me/homework/:lessonId/submission"), async ({ params, request }) => {
+    const lessonId = param(params, "lessonId")
+    const item = homeworkFor(lessonId)
+    if (!item) return notFound("Homework")
+    const body = await readJson<HomeworkSubmissionBody>(request)
+    const saved: HomeworkSubmission = {
+      lesson_id: lessonId,
+      status: item.due_date !== null && item.days_overdue > 0 ? "late" : "submitted",
+      comment: body.comment ?? null,
+      files: (body.file_ids ?? []).map((id, index) => ({
+        id,
+        name: `file-${index + 1}.pdf`,
+        size: 1000,
+        content_type: "application/pdf",
+      })),
+      submitted_at: FIXTURE_NOW,
+    }
+    submissions.set(lessonId, saved)
+    return HttpResponse.json(saved)
+  }),
+  http.delete(apiUrl("/v1/me/homework/:lessonId/submission"), ({ params }) => {
+    submissions.delete(param(params, "lessonId"))
+    return noContent()
+  }),
   http.get(apiUrl("/v1/me/attendance"), ({ request }) => {
     const search = query(request)
     return HttpResponse.json({
@@ -91,6 +135,10 @@ export const classworkHandlers = [
   http.get(apiUrl("/v1/staff/lessons/:id"), ({ params }) => {
     const lesson = lessonWithWorkOffs(param(params, "id"))
     return lesson ? HttpResponse.json(lesson) : notFound("Lesson")
+  }),
+  http.get(apiUrl("/v1/staff/lessons/:id/homework/submissions"), ({ params }) => {
+    const id = param(params, "id")
+    return staffLessonFor(id) ? HttpResponse.json(lessonHomeworkSubmissionsFor(id)) : notFound("Lesson")
   }),
   http.put(apiUrl("/v1/staff/lessons/:id/homework"), async ({ params, request }) => {
     const lesson = staffLessonFor(param(params, "id"))

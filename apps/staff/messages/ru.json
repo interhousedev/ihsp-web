@@ -550,6 +550,17 @@
       "range": "{from}–{to} из {total}"
     }
   },
+  "homeworkSubmissions": {
+    "title": "Сданные домашние задания",
+    "badge": "Сдали {submitted}/{total}",
+    "counts": "Сдали: {submitted} · С опозданием: {late} · Не сдали: {missing}",
+    "empty": "На этом занятии нет учеников.",
+    "status": {
+      "submitted": "Сдано",
+      "late": "С опозданием",
+      "missing": "Не сдано"
+    }
+  },
   "temporaryMarks": {
     "journalTitle": "Журнал",
     "note": "Эти оценки временные, пока вы не внесёте их в EMIS.",

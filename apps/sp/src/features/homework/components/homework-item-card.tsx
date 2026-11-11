@@ -7,6 +7,7 @@ import Link from "next/link"
 import { shortName } from "../../shared/utils/people"
 import { useSetHomeworkDone } from "../hooks/use-homework"
 import { HomeworkNoteField } from "./homework-note-field"
+import { HomeworkSubmissionPanel } from "./homework-submission-panel"
 
 /**
  * One homework item (WEB-19, WEB-20): tick box, subject, task, teacher, due date, the lesson it was given at,
@@ -62,6 +63,9 @@ export function HomeworkItemCard({ item, withNote = true }: { item: HomeworkItem
           >
             {t("openLesson")}
           </Link>
+        </div>
+        <div className="mt-2">
+          <HomeworkSubmissionPanel lessonId={item.lesson_id} submission={item.submission ?? null} />
         </div>
         {withNote ? (
           <div className="mt-2">
