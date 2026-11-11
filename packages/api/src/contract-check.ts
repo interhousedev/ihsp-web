@@ -18,7 +18,7 @@ import type { getAdminAssessments, getMeAssessments, getMeSubjectPlanner, getSta
 import type { getAdminBotPost, getAdminBotPostTree, patchAdminBotPost, postAdminBotPost, postAdminBotPostMove, postAdminBotPostsReorder } from "./endpoints/bot-posts"
 import type { getAdminBroadcast, getAdminBroadcasts, patchAdminBroadcast, postAdminBroadcastCancel, postAdminBroadcastSend, postAdminBroadcasts, postAdminBroadcastsAudienceCount } from "./endpoints/broadcasts"
 import type { getCertificateFileUrl, getCertificateGroups, getCertificateRanking, getCertificateStats, getCertificateTypes, getCustomFieldValues, getMyCertificates, getStaffCertificates, patchCertificateType, postCertificateExport, postCertificateType, postImportCertificatesFromEmis, postMyCertificate, postMyCertificateFile } from "./endpoints/certificates"
-import type { deleteStaffLessonHomework, getAdminAttendance, getAdminAttendanceMissing, getMeAttendance, getMeHomework, getMeLesson, getMeToday, getStaffGroupAttendance, getStaffGroupStudents, getStaffJournal, getStaffJournalOptions, getStaffLesson, getStaffLessonTemporaryMarks, getStaffTemporaryMarksPending, getStaffToday, postStaffJournalToggle, putMeHomeworkDone, putMeHomeworkNote, putStaffLessonAttendance, putStaffLessonAttendanceExcuse, putStaffLessonHomework, putStaffLessonTemporaryMark, putStaffLessonTopic } from "./endpoints/classwork"
+import type { deleteStaffLessonHomework, getAdminAttendance, getAdminAttendanceMissing, getHomeworkSubmission, getLessonHomeworkSubmissions, getMeAttendance, getMeHomework, getMeLesson, getMeToday, getStaffGroupAttendance, getStaffGroupStudents, getStaffJournal, getStaffJournalOptions, getStaffLesson, getStaffLessonTemporaryMarks, getStaffTemporaryMarksPending, getStaffToday, postStaffJournalToggle, putMeHomeworkDone, putMeHomeworkNote, putStaffLessonAttendance, putStaffLessonAttendanceExcuse, putStaffLessonHomework, putStaffLessonTemporaryMark, putStaffLessonTopic, submitHomework } from "./endpoints/classwork"
 import type { getAdminDashboard, getAdminGroupsStats, getAdminStudent, getAdminTeacherProfile, getMeAlerts, getMeOutboundMail, getMeSearch, postMeCalendarToken, postMeOutboundMail } from "./endpoints/composition"
 import type { getCourseSteps, getNotebookUsageOf, postApplyArtifact, postApplyPreview, postCourseNotebook, postCourseWorkspace } from "./endpoints/course-workspace"
 import type { getAdminGroupCurriculum, getMeCurriculum, postAdminGroupCurriculumSync } from "./endpoints/curriculum"
@@ -67,7 +67,7 @@ import type { AssessmentCreateBody, AssessmentPatchBody, AssessmentProposalBody,
 import type { BotPostCreate, BotPostMove, BotPostPatch, BotPostReorder } from "./types/bot-posts"
 import type { AudienceCountBody, BroadcastInput, BroadcastPatchBody, BroadcastSendBody, BroadcastsParams } from "./types/broadcasts"
 import type { CertificateEntryInput, CertificateExportBody, CertificateFilters, CertificateTypeInput, StaffCertificateParams } from "./types/certificates"
-import type { AdminAttendanceParams, AttendanceExcuseBody, AttendanceSubmitBody, GroupAttendanceParams, HomeworkDoneBody, HomeworkListParams, HomeworkNoteBody, JournalParams, JournalToggleBody, MissingAttendanceParams, StaffHomeworkBody, StaffTopicBody, StudentAttendanceParams, TemporaryMarkBody } from "./types/classwork"
+import type { AdminAttendanceParams, AttendanceExcuseBody, AttendanceSubmitBody, GroupAttendanceParams, HomeworkDoneBody, HomeworkListParams, HomeworkNoteBody, HomeworkSubmissionBody, JournalParams, JournalToggleBody, MissingAttendanceParams, StaffHomeworkBody, StaffTopicBody, StudentAttendanceParams, TemporaryMarkBody } from "./types/classwork"
 import type { PageParams } from "./types/common"
 import type { SearchParams, SendOutboundMailBody, SentMailParams } from "./types/composition"
 import type { ApplyBody, CourseWorkspaceBody } from "./types/course-workspace"
@@ -578,6 +578,24 @@ declare const res_putMeHomeworkNote: Awaited<ReturnType<typeof putMeHomeworkNote
 export const response_putMeHomeworkNote: ResponseOf<"/v1/me/homework/{lesson_id}/note", "put"> = res_putMeHomeworkNote
 declare const req_putMeHomeworkNote: HomeworkNoteBody
 export const request_putMeHomeworkNote: RequestOf<"/v1/me/homework/{lesson_id}/note", "put"> = req_putMeHomeworkNote
+
+// PUT /v1/me/homework/{lesson_id}/submission — submitHomework
+declare const res_submitHomework: Awaited<ReturnType<typeof submitHomework>>
+export const response_submitHomework: ResponseOf<"/v1/me/homework/{lesson_id}/submission", "put"> = res_submitHomework
+declare const req_submitHomework: HomeworkSubmissionBody
+export const request_submitHomework: RequestOf<"/v1/me/homework/{lesson_id}/submission", "put"> = req_submitHomework
+
+// GET /v1/me/homework/{lesson_id}/submission — getHomeworkSubmission
+declare const res_getHomeworkSubmission: Awaited<ReturnType<typeof getHomeworkSubmission>>
+export const response_getHomeworkSubmission: ResponseOf<"/v1/me/homework/{lesson_id}/submission", "get"> = res_getHomeworkSubmission
+
+// DELETE /v1/me/homework/{lesson_id}/submission — withdrawHomeworkSubmission
+// no JSON success response (204, CSV, calendar or HTML): only the route is checked
+export type route_withdrawHomeworkSubmission = OperationOf<"/v1/me/homework/{lesson_id}/submission", "delete">
+
+// GET /v1/staff/lessons/{lesson_id}/homework/submissions — getLessonHomeworkSubmissions
+declare const res_getLessonHomeworkSubmissions: Awaited<ReturnType<typeof getLessonHomeworkSubmissions>>
+export const response_getLessonHomeworkSubmissions: ResponseOf<"/v1/staff/lessons/{lesson_id}/homework/submissions", "get"> = res_getLessonHomeworkSubmissions
 
 // GET /v1/me/attendance — getMeAttendance
 declare const res_getMeAttendance: Awaited<ReturnType<typeof getMeAttendance>>
