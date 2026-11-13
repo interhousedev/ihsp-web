@@ -21,10 +21,13 @@ export const MATH_OPTIONS: KatexOptions = {
 let loaded: Katex | null = null
 let loading: Promise<Katex> | null = null
 
+/** The stylesheet and fonts ride with the KaTeX chunk, not the global CSS every page blocks on. */
+const loadKatexStyles = () => import("katex/dist/katex.min.css")
+
 /** Loads KaTeX once, on the first formula (it is a separate chunk, so pages without math don't download it). */
 export function loadKatex(): Promise<Katex> {
-  loading ??= import("katex").then(
-    (module) => {
+  loading ??= Promise.all([import("katex"), loadKatexStyles()]).then(
+    ([module]) => {
       loaded = module.default
       return module.default
     },

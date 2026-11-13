@@ -5,9 +5,6 @@
 /* Self-hosted variable Inter with the Latin, Latin Extended and Cyrillic subsets (uz, ru, en). */
 @import "@fontsource-variable/inter/wght.css";
 
-/* KaTeX for formulas in Markdown: the stylesheet and its fonts are bundled with the app (CSP `font-src 'self'`). */
-@import "katex/dist/katex.min.css";
-
 /* Class names used by the shared packages (ui, auth, features-core). The app's own src is detected automatically. */
 @source '../../../';
 
