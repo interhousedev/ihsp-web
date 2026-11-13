@@ -227,7 +227,8 @@ describe("login cues bulk actions", () => {
     fireEvent.click(within(dialog).getByText("Delete", { selector: "button" }))
 
     await waitFor(() => expect(sizes).toEqual([500, 1]), { timeout: 15000 })
-  })
+    // Rendering 501 rows takes about 30 s on CI runners.
+  }, 120_000)
 
   test("LC-ADM-09 changing the group filter clears the selection", async () => {
     server.use(http.get(apiUrl("/v1/admin/login-cues"), () => HttpResponse.json([cue])))
