@@ -55,6 +55,7 @@ const HANDLER_ONLY = new Set([
   "GET /r/{}",
   "PUT /uploads/{}",
   "GET /library/files/{}",
+  "GET /v1/public/student-cards/{}/photo",
 ])
 
 describe("MSW handlers cover the typed API client", () => {
