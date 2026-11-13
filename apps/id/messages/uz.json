@@ -184,9 +184,8 @@
       "emisId": "EMIS ID",
       "useBirthDate": "Tugʻilgan sana",
       "useUnique": "Litsey menga maxsus parol bergan",
-      "birthDate": "Tugʻilgan sana (KKOOYYYY)",
-      "birthDateHint": "Masalan, 28012009.",
-      "birthDateInvalid": "Haqiqiy sanani KKOOYYYY koʻrinishida kiriting.",
+      "birthDate": "Tugʻilgan sana",
+      "birthDatePick": "Sanani tanlang",
       "unique": "Maxsus parol",
       "back": "Orqaga"
     },

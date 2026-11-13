@@ -184,9 +184,8 @@
       "emisId": "EMIS ID",
       "useBirthDate": "Date of birth",
       "useUnique": "My lyceum gave me a unique password",
-      "birthDate": "Date of birth (DDMMYYYY)",
-      "birthDateHint": "For example, 28012009.",
-      "birthDateInvalid": "Enter a real date as DDMMYYYY.",
+      "birthDate": "Date of birth",
+      "birthDatePick": "Choose the date",
       "unique": "Unique password",
       "back": "Back"
     },

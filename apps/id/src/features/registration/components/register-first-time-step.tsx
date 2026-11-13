@@ -1,13 +1,23 @@
 "use client"
 
-import { Button, Label, LoadingButton, RadioGroup, RadioGroupItem } from "@ihsp/ui"
+import { Button, DatePicker, Label, LoadingButton, RadioGroup, RadioGroupItem } from "@ihsp/ui"
 import { useState } from "react"
 import { ErrorAlert, TextField, useTr } from "@ihsp/features-core/id-account"
 import { FlowCard } from "../../shared/components/flow-card"
 
 type Method = "birth-date" | "unique"
 
-const BIRTH_DATE = /^(0[1-9]|[12]\d|3[01])(0[1-9]|1[0-2])(19|20)\d{2}$/
+/** EMIS expects the date of birth as DDMMYYYY; the picker gives YYYY-MM-DD. */
+const toEmisDate = (iso: string) => {
+  const [year = "", month = "", day = ""] = iso.split("-")
+  return `${day}${month}${year}`
+}
+
+const pad = (value: number) => String(value).padStart(2, "0")
+const today = () => {
+  const now = new Date()
+  return `${now.getFullYear()}-${pad(now.getMonth() + 1)}-${pad(now.getDate())}`
+}
 
 type RegisterFirstTimeStepProps = {
   pending: boolean
@@ -24,10 +34,11 @@ export function RegisterFirstTimeStep({ pending, error, onSubmit, onBack }: Regi
   const t = useTr()
   const [emisId, setEmisId] = useState("")
   const [method, setMethod] = useState<Method>("birth-date")
-  const [birthDate, setBirthDate] = useState("")
+  const [birthDate, setBirthDate] = useState<string | null>(null)
   const [unique, setUnique] = useState("")
-  const birthDateInvalid = method === "birth-date" && birthDate.length === 8 && !BIRTH_DATE.test(birthDate)
-  const credential = method === "birth-date" ? (BIRTH_DATE.test(birthDate) ? birthDate : "") : unique
+  const credential = method === "birth-date" ? (birthDate ? toEmisDate(birthDate) : "") : unique
+  const max = today()
+  const typicalBirthYear = Number(max.slice(0, 4)) - 16
   const ready = emisId.trim().length > 0 && credential.length > 0
 
   return (
@@ -57,17 +68,20 @@ export function RegisterFirstTimeStep({ pending, error, onSubmit, onBack }: Regi
             <Label htmlFor="first-time-unique">{t("register.firstTime.useUnique")}</Label>
           </div>
         </RadioGroup>
-        <TextField
-          label={t("register.firstTime.birthDate")}
-          description={t("register.firstTime.birthDateHint")}
-          inputMode="numeric"
-          autoComplete="off"
-          maxLength={8}
-          disabled={method !== "birth-date"}
-          error={birthDateInvalid ? t("register.firstTime.birthDateInvalid") : null}
-          value={method === "birth-date" ? birthDate : ""}
-          onValueChange={(value) => setBirthDate(value.replace(/\D/g, ""))}
-        />
+        <div className="grid gap-2">
+          <Label htmlFor="first-time-birth-date-picker">{t("register.firstTime.birthDate")}</Label>
+          <DatePicker
+            id="first-time-birth-date-picker"
+            value={method === "birth-date" ? birthDate : null}
+            onChange={setBirthDate}
+            placeholder={t("register.firstTime.birthDatePick")}
+            disabled={method !== "birth-date"}
+            min="1950-01-01"
+            max={max}
+            defaultMonth={`${typicalBirthYear}-01-01`}
+            yearDropdown
+          />
+        </div>
         {method === "unique" ? (
           <TextField
             label={t("register.firstTime.unique")}

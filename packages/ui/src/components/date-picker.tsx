@@ -18,7 +18,11 @@ function toIso(date: Date): IsoDate {
   return `${date.getFullYear()}-${pad(date.getMonth() + 1)}-${pad(date.getDate())}`
 }
 
-/** Single date as `YYYY-MM-DD` (the API's date format), shown in the user's language. */
+/**
+ * Single date as `YYYY-MM-DD` (the API's date format), shown in the user's language. `yearDropdown` shows month and
+ * year selects bounded by `min`/`max`, for dates far from today such as a date of birth; `defaultMonth` is the month
+ * the calendar opens on while nothing is chosen.
+ */
 export function DatePicker({
   value,
   onChange,
@@ -28,6 +32,8 @@ export function DatePicker({
   disabled,
   id,
   className,
+  yearDropdown = false,
+  defaultMonth,
   "aria-label": ariaLabel,
 }: {
   value: IsoDate | null | undefined
@@ -38,6 +44,8 @@ export function DatePicker({
   disabled?: boolean
   id?: string
   className?: string
+  yearDropdown?: boolean
+  defaultMonth?: IsoDate
   "aria-label"?: string
 }) {
   const t = useT()
@@ -70,6 +78,10 @@ export function DatePicker({
           disabled={[...(min ? [{ before: toLocalDate(min) }] : []), ...(max ? [{ after: toLocalDate(max) }] : [])]}
           weekStartsOn={1}
           autoFocus
+          {...(yearDropdown ? { captionLayout: "dropdown" as const } : {})}
+          {...(min ? { startMonth: toLocalDate(min) } : {})}
+          {...(max ? { endMonth: toLocalDate(max) } : {})}
+          {...((value ?? defaultMonth) ? { defaultMonth: toLocalDate((value ?? defaultMonth) as IsoDate) } : {})}
         />
       </PopoverContent>
     </Popover>

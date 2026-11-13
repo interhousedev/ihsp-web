@@ -1,6 +1,6 @@
 import { describe, expect, test } from "bun:test"
 import { apiUrl, server } from "@ihsp/test-utils"
-import { screen } from "@testing-library/react"
+import { fireEvent, screen, within } from "@testing-library/react"
 import { HttpResponse, http } from "msw"
 import { RegisterPage } from "../features/registration/components/register-page"
 import { allowSlowTests, clickButton, fillField, findButton, renderId } from "./helpers"
@@ -24,18 +24,15 @@ describe("first-time EMIS registration", () => {
     renderId(<RegisterPage />, { route: "/register/" })
     await clickButton(LINK)
     await fillField("EMIS ID", " 12345 ")
-    await fillField(/Date of birth \(DDMMYYYY\)/, "28012009")
+    expect(((await findButton(/^Continue$/)) as HTMLButtonElement).disabled).toBe(true)
+    await clickButton(/Date of birth/)
+    const dialog = await screen.findByRole("dialog")
+    const [month, year] = within(dialog).getAllByRole("combobox") as HTMLSelectElement[]
+    fireEvent.change(year as HTMLSelectElement, { target: { value: "2009" } })
+    fireEvent.change(month as HTMLSelectElement, { target: { value: "0" } })
+    fireEvent.click(within(dialog).getByRole("button", { name: /January 28.*2009/ }))
     await clickButton(/^Continue$/)
     await screen.findByRole("alert")
     expect(sent).toEqual({ emis_login: "12345", emis_password: "28012009" })
-  })
-
-  test("refuses an impossible date", async () => {
-    renderId(<RegisterPage />, { route: "/register/" })
-    await clickButton(LINK)
-    await fillField("EMIS ID", "12345")
-    await fillField(/Date of birth \(DDMMYYYY\)/, "99999999")
-    await screen.findByText(/real date/i)
-    expect(((await findButton(/^Continue$/)) as HTMLButtonElement).disabled).toBe(true)
   })
 })
