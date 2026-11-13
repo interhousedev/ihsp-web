@@ -43,6 +43,8 @@ USER root
 
 # Security fixes published after the base image was built (the Trivy gate in build.yml blocks fixable HIGH and
 # CRITICAL findings). Only upgrades what the image has; nothing is added.
+# Bump APK_UPGRADE_EPOCH to invalidate the cached upgrade layer when a new fix lands in Alpine.
+ARG APK_UPGRADE_EPOCH=2026-11-13
 RUN apk upgrade --no-cache
 
 # envsubst (from gettext) is part of the base image; fail the build here, not at container start, if not
