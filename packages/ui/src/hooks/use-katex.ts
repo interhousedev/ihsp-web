@@ -1,3 +1,4 @@
+/// <reference path="./katex-css.d.ts" />
 "use client"
 
 import type { KatexOptions } from "katex"
