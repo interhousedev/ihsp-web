@@ -1,6 +1,6 @@
 # Build stage: only the static exports leave it (see the nginx stage). Nothing else of the builder
 # (node_modules, sources, bun itself) reaches the image.
-FROM oven/bun:1.3.14-alpine@sha256:5acc90a93e91ff07bf72aa90a7c9f0fa189765aec90b47bdbf2152d2196383c0 AS builder
+FROM oven/bun:1.4.4-alpine@sha256:4cf82f5686b196504fe119db3fcd9185b191f82ece82c40680e597228ec6070a AS builder
 
 WORKDIR /app
 
@@ -35,7 +35,7 @@ RUN bun deploy/csp-hash.ts
 
 # nginx stage: the unprivileged nginx image (runs as uid 101, listens on 8080). Identical to the nginx
 # stage of deploy/Dockerfile.prebuilt, which deploy/docker.test.ts checks.
-FROM nginxinc/nginx-unprivileged:1.30.1-alpine@sha256:acc3239879a65d9e3d250b21847ec3f34f33367017394d22830242af15cf1cb0
+FROM nginxinc/nginx-unprivileged:1.31.7-alpine@sha256:b5047b9b76845eac124358373c6852377c52e4b05834a47647e955dd91cb8f1e
 
 # Build steps run as root; the container runs as the nginx user (see USER below) and everything it
 # ships stays root-owned and read-only for it
