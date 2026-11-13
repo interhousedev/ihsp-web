@@ -1,3 +1,5 @@
+// Every workspace typechecks this file through its own tsconfig; the reference brings the CSS module declaration along.
+// oxlint-disable-next-line typescript/triple-slash-reference
 /// <reference path="./katex-css.d.ts" />
 "use client"
 

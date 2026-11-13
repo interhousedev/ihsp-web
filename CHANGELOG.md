@@ -9,6 +9,9 @@ All notable changes to this project are documented here. The format follows [Kee
 - id: a step-up code that could not be delivered shows a translated error instead of a silent success.
 - Faster first load: the KaTeX stylesheet and the QR code renderer load only on the pages that use them.
 - Share app: public student card page `/ai/card/?t=<token>` with photo, details and a validity countdown; an expired code shows a clear message.
+- Admin: login cues can be selected in bulk (mobile cards and table) to delete, copy or export as CSV; the page and its menu item disappear when the backend switches cues off.
+- id: the "pick your name" cue path shows only when the backend enables login cues (`/v1/public/client-config`).
+- Personal tokens and entrance devices link to their documentation; the links come from the backend configuration.
 - Admin: honours rules in the platform settings (red diploma, gold and silver medals, medal certificate serials), each rule with a switch and the limits of 4s from 0 to 20.
 - sp: identity header on the dashboard (photo, name, group, course) that compacts on scroll and opens a student card sheet with a self-renewing QR; Homework by date with a Monday–Friday strip; the homework widget shows the week; Today lessons shows the next study day when today is over.
 

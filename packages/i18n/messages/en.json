@@ -2519,6 +2519,7 @@
   },
   "personalTokens": {
     "title": "Personal tokens",
+    "docs": "How personal tokens work",
     "empty": "No personal tokens yet.",
     "scopes": "Scopes",
     "lastUsed": "Last used",

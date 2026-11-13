@@ -2519,6 +2519,7 @@
   },
   "personalTokens": {
     "title": "Shaxsiy tokenlar",
+    "docs": "Shaxsiy tokenlar qanday ishlaydi",
     "empty": "Hozircha shaxsiy tokenlar yoʼq.",
     "scopes": "Ruxsatlar",
     "lastUsed": "Oxirgi foydalanish",

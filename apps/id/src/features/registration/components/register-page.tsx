@@ -8,7 +8,7 @@ import { useState } from "react"
 import { EMIS_LOGIN_PARAM } from "../../login/utils/emis-login"
 import { TextLink } from "../../shared/components/text-link"
 import { useQueryParam } from "../../shared/hooks/use-query-param"
-import { useTr } from "@ihsp/features-core/id-account"
+import { useClientConfig, useTr } from "@ihsp/features-core/id-account"
 import { withChallenge } from "../../shared/utils/challenge"
 import { signInWithTicket } from "../../shared/utils/login-ticket"
 import { redirectTo } from "../../shared/utils/redirect"
@@ -66,6 +66,8 @@ function finishInMiniApp(after: AfterRegistration): void {
 /** `/register/`: three steps of the EMIS registration (UF-ID-01). Carries `login_challenge` when it comes from a login. */
 export function RegisterPage() {
   const t = useTr()
+  // Loading and failure count as "off": the cue path is never offered (and never requested) without the flag.
+  const cuesEnabled = useClientConfig()?.features.login_cues === true
   const loginChallenge = useQueryParam("login_challenge")
   // Set when the IHT ID login page sent an all-digit (EMIS-style) login here; the password is never carried over.
   const emisLogin = useQueryParam(EMIS_LOGIN_PARAM)
@@ -186,14 +188,16 @@ export function RegisterPage() {
       initialLogin={emisLogin ?? ""}
       notice={emisLogin ? t("register.emisLoginNotice") : undefined}
       topAction={
-        <Button
-          type="button"
-          variant="outline"
-          className="h-auto min-h-11 whitespace-normal text-sm"
-          onClick={() => setStep({ kind: "cue-group" })}
-        >
-          {t("register.pickLink")}
-        </Button>
+        cuesEnabled ? (
+          <Button
+            type="button"
+            variant="outline"
+            className="h-auto min-h-11 whitespace-normal text-sm"
+            onClick={() => setStep({ kind: "cue-group" })}
+          >
+            {t("register.pickLink")}
+          </Button>
+        ) : undefined
       }
       footer={
         <>

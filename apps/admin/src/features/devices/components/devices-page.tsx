@@ -1,6 +1,13 @@
 "use client"
 
-import { type DeviceCreatedOut, type DeviceOut, getAdminDevicesQuery, keys, postAdminDeviceRevoke } from "@ihsp/api"
+import {
+  type DeviceCreatedOut,
+  type DeviceOut,
+  clientConfigQuery,
+  getAdminDevicesQuery,
+  keys,
+  postAdminDeviceRevoke,
+} from "@ihsp/api"
 import { useFormatters, useT } from "@ihsp/i18n"
 import { Badge, Button, ConfirmDialog, IconPlus, PageContainer, StateView } from "@ihsp/ui"
 import { useQuery } from "@tanstack/react-query"
@@ -16,6 +23,7 @@ export function DevicesPage() {
   const t = useT("devices")
   const f = useFormatters()
   const devices = useQuery(getAdminDevicesQuery())
+  const docsUrl = useQuery(clientConfigQuery()).data?.docs.entrance_devices_url
   const [creating, setCreating] = useState(false)
   const [created, setCreated] = useState<DeviceCreatedOut | null>(null)
   const [viewing, setViewing] = useState<DeviceOut | null>(null)
@@ -37,6 +45,16 @@ export function DevicesPage() {
         </Button>
       }
     >
+      {docsUrl ? (
+        <a
+          href={docsUrl}
+          target="_blank"
+          rel="noreferrer"
+          className="mb-3 inline-block text-sm underline underline-offset-4"
+        >
+          {t("docs")}
+        </a>
+      ) : null}
       {devices.isPending ? (
         <StateView state="loading" />
       ) : devices.isError ? (

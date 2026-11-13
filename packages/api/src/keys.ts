@@ -341,6 +341,7 @@ export const keys = {
     },
   },
   public: {
+    clientConfig: () => ["public", "client-config"] as const,
     share: (slug: string) => ["public", "shares", slug] as const,
     studentCard: (token: string) => ["public", "student-cards", token] as const,
   },

@@ -1,7 +1,8 @@
 /** Personal access tokens: list, create (secret shown once, OTP step-up) and revoke. */
 import { describe, expect, test } from "bun:test"
-import { personalTokenSecret } from "@ihsp/test-utils"
+import { apiUrl, clientConfig, personalTokenSecret, problem, server } from "@ihsp/test-utils"
 import { screen } from "@testing-library/react"
+import { HttpResponse, http } from "msw"
 import { PersonalTokensPage } from "@ihsp/features-core/id-account"
 import { allowSlowTests, clickButton, fillField, findButton, LOGGED_IN, renderId } from "./helpers"
 
@@ -50,5 +51,43 @@ describe("personal tokens page", () => {
 
     expect(await screen.findByText("No personal tokens yet.")).toBeInTheDocument()
     expect(screen.queryByText("Grades script")).not.toBeInTheDocument()
+  })
+})
+
+describe("personal tokens documentation link", () => {
+  test("links to the configured page in a new tab", async () => {
+    const { user } = render()
+
+    const link = await screen.findAllByRole("link", { name: "How personal tokens work" })
+    expect(link[0]).toHaveAttribute("href", "https://docs.iht.test/personal-tokens")
+    expect(link[0]).toHaveAttribute("target", "_blank")
+    expect(link[0]).toHaveAttribute("rel", "noreferrer")
+    await user.click(await findButton("New token"))
+    expect(await screen.findAllByRole("link", { name: "How personal tokens work" })).not.toHaveLength(0)
+  })
+
+  test("is hidden when the docs URL is not configured", async () => {
+    server.use(
+      http.get(apiUrl("/v1/public/client-config"), () =>
+        HttpResponse.json({ ...clientConfig, docs: { ...clientConfig.docs, personal_tokens_url: null } }),
+      ),
+    )
+    render()
+
+    await screen.findByText("Grades script")
+    expect(screen.queryByRole("link", { name: "How personal tokens work" })).toBeNull()
+  })
+})
+
+describe("step-up sender", () => {
+  test("shows the translated message when the code cannot be delivered", async () => {
+    server.use(
+      http.post(apiUrl("/v1/id/me/step-up"), () => problem(503, "id/otp-delivery-failed", "Could not send the code")),
+    )
+    render()
+
+    await clickButton("New token")
+    await clickButton("Send code")
+    expect(await screen.findByText("Could not send the code. Try again in a minute.")).toBeInTheDocument()
   })
 })

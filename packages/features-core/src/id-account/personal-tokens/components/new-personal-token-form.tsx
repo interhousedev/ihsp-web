@@ -7,8 +7,10 @@ import { useId, useState } from "react"
 import { CheckboxRow } from "../../shared/components/checkbox-row"
 import { CodeInput } from "../../shared/components/code-input"
 import { ErrorAlert } from "../../shared/components/error-alert"
+import { DocsLink } from "../../shared/components/docs-link"
 import { StepUpSender } from "../../shared/components/step-up-sender"
 import { TextField } from "../../shared/components/text-field"
+import { useClientConfig } from "../../shared/hooks/use-client-config"
 import { useTr } from "../../shared/hooks/use-tr"
 
 const SCOPES: PersonalTokenScope[] = ["me:read", "me:write"]
@@ -22,6 +24,7 @@ type NewPersonalTokenFormProps = {
 /** Name, scopes, expiry and an OTP step-up check; the token itself comes back once in the response. */
 export function NewPersonalTokenForm({ onCreated, onCancel }: NewPersonalTokenFormProps) {
   const t = useTr()
+  const docsUrl = useClientConfig()?.docs.personal_tokens_url
   const expiryId = useId()
   const [name, setName] = useState("")
   const [scopes, setScopes] = useState<PersonalTokenScope[]>(["me:read"])
@@ -109,6 +112,7 @@ export function NewPersonalTokenForm({ onCreated, onCancel }: NewPersonalTokenFo
             ) : null}
           </div>
           <ErrorAlert error={mutation.error} />
+          <DocsLink href={docsUrl}>{t("personalTokens.docs")}</DocsLink>
           <div className="flex flex-wrap gap-2">
             <LoadingButton
               type="submit"

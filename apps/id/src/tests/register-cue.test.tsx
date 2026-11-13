@@ -1,6 +1,6 @@
 /** Pick your name: group, then name, then EMIS password; the numeric EMIS login is never shown or sent. */
 import { describe, expect, test } from "bun:test"
-import { apiUrl, server } from "@ihsp/test-utils"
+import { apiUrl, clientConfig, server } from "@ihsp/test-utils"
 import { fireEvent, screen, waitFor } from "@testing-library/react"
 import { HttpResponse, http } from "msw"
 import { RegisterPage } from "../features/registration/components/register-page"
@@ -25,6 +25,9 @@ describe("registration by picking a name", () => {
     let cueBody = null as Record<string, unknown> | null
     let namesPath = ""
     server.use(
+      http.get(apiUrl("/v1/public/client-config"), () =>
+        HttpResponse.json({ ...clientConfig, features: { login_cues: true } }),
+      ),
       http.get(apiUrl("/v1/id/login-cues/groups"), () => HttpResponse.json([{ group_id: "g-2tn2", name: "2TN2" }])),
       http.get(apiUrl("/v1/id/login-cues/groups/:groupId"), ({ request }) => {
         namesPath = new URL(request.url).pathname
@@ -55,5 +58,20 @@ describe("registration by picking a name", () => {
     expect(namesPath).toBe("/v1/id/login-cues/groups/g-2tn2")
     expect(await screen.findByRole("heading", { name: "Is this you?" })).toBeInTheDocument()
     expect(screen.queryByText("20240123456")).toBeNull()
+  })
+
+  test("RC-PICK-02 hides the pick-a-name path while login cues are off and never asks for cue groups", async () => {
+    let cueRequests = 0
+    server.use(
+      http.get(apiUrl("/v1/id/login-cues/groups"), () => {
+        cueRequests += 1
+        return HttpResponse.json([])
+      }),
+    )
+    renderId(<RegisterPage />, { route: "/register/" })
+
+    expect(await screen.findByLabelText("EMIS password")).toBeInTheDocument()
+    await waitFor(() => expect(screen.queryByRole("button", { name: /I don't remember my EMIS ID/ })).toBeNull())
+    expect(cueRequests).toBe(0)
   })
 })

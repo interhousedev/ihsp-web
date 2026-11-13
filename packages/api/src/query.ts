@@ -5,6 +5,8 @@
 export type QueryDefinition<T> = {
   queryKey: readonly unknown[]
   queryFn: (context: { signal?: AbortSignal }) => Promise<T>
+  /** Milliseconds the cached result counts as fresh. */
+  staleTime?: number
 }
 
 export function queryOptions<T>(definition: QueryDefinition<T>): QueryDefinition<T> {
