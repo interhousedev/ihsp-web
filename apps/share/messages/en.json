@@ -60,6 +60,17 @@
       "expiredTitle": "This link has expired",
       "expiredDescription": "Visualization links work for a limited time. Ask for a new one in the bot.",
       "openApp": "Open {appMy}"
+    },
+    "card": {
+      "expiredTitle": "This card code has expired",
+      "expiredDescription": "Ask the student to show a new QR code.",
+      "lyceum": "Lyceum",
+      "group": "Group",
+      "course": "Course",
+      "direction": "Direction",
+      "speciality": "Speciality",
+      "validUntil": "Valid until {time}",
+      "expiresIn": "{time} left"
     }
   }
 }

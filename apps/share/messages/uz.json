@@ -60,6 +60,17 @@
       "expiredTitle": "Havola muddati tugagan",
       "expiredDescription": "Vizualizatsiya havolalari cheklangan vaqt ishlaydi. Botdan yangisini so‘rang.",
       "openApp": "{appMy} ni ochish"
+    },
+    "card": {
+      "expiredTitle": "Karta kodining amal qilish muddati tugagan",
+      "expiredDescription": "Talabadan yangi QR-kodni ko‘rsatishini so‘rang.",
+      "lyceum": "Litsey",
+      "group": "Guruh",
+      "course": "Kurs",
+      "direction": "Yo‘nalish",
+      "speciality": "Mutaxassislik",
+      "validUntil": "{time} gacha amal qiladi",
+      "expiresIn": "{time} qoldi"
     }
   }
 }
