@@ -18,6 +18,7 @@ import {
   shownWidgets,
   type Widget,
 } from "./model"
+import { IdentityHeader } from "./identity-header"
 import { useDashboard, useSaveDashboard } from "./use-dashboard"
 
 /**
@@ -71,6 +72,7 @@ export function Dashboard() {
 
   return (
     <section aria-labelledby="dashboard-title" className="mb-4 flex flex-col gap-3">
+      <IdentityHeader />
       <div className="flex items-center justify-between gap-2">
         <h2 id="dashboard-title" className="text-base font-semibold">
           {t("title")}

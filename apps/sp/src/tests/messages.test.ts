@@ -22,6 +22,11 @@ const STUDY_TOOLS = [
   "app/notebooks",
   // The installable app: keys live in `messages/<locale>/pwa.json`, checked by pwa-messages.test.ts.
   "features/pwa",
+  // Red diploma and medals: keys live in `messages/<locale>/honours.json`, checked by honours.test.tsx.
+  "features/honours",
+  "app/honours",
+  // The student card sheet: keys live in `messages/<locale>/student-card.json`, checked by student-card.test.tsx.
+  "features/student-card",
 ]
 const SOURCES = [
   "apps/sp/src",

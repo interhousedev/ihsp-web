@@ -1,0 +1,15 @@
+{
+  "studentCard": {
+    "title": "Student card",
+    "photoAlt": "Photo of {name}",
+    "group": "Group",
+    "course": "Course",
+    "direction": "Direction",
+    "speciality": "Speciality",
+    "qrLabel": "QR code of the student card",
+    "refreshIn": "New code in {seconds} s",
+    "qrFailed": "Could not create the code. Trying again.",
+    "loadFailed": "Could not load the card.",
+    "retry": "Try again"
+  }
+}

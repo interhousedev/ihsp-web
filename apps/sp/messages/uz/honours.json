@@ -1,0 +1,42 @@
+{
+  "honours": {
+    "title": "Qizil diplom va medallar",
+    "back": "Baholar",
+    "empty": "Hozircha maʼlumot yoʻq.",
+    "awards": {
+      "red_diploma": "Qizil diplom",
+      "gold_medal": "Oltin medal",
+      "silver_medal": "Kumush medal"
+    },
+    "status": {
+      "eligible": "Mos kelasiz",
+      "blocked": "Mos kelmaysiz"
+    },
+    "rule": {
+      "passed": "Bajarilgan",
+      "failed": "Bajarilmagan"
+    },
+    "rules": {
+      "red_diploma_max_fours": "Semestr baholarida “4” lar soni chegaradan oshmagan",
+      "medal_certificate": "Attestat medalga huquq beradi",
+      "gold_controls_all_five": "Barcha oraliq (ON) va yakuniy (YaN) nazoratlardan faqat “5”",
+      "gold_semester_all_five": "Semestr baholarining hammasi “5”",
+      "silver_controls_all_five": "Barcha oraliq (ON) va yakuniy (YaN) nazoratlardan faqat “5”",
+      "silver_semester_max_fours": "Semestr baholarida “4” lar soni chegaradan oshmagan"
+    },
+    "unknownRule": "Qoida: {rule}",
+    "blocking": {
+      "title": "Toʻsiq boʻlayotgan baholar",
+      "item": "{subject}, {semester}-semestr, {type}: {value}"
+    },
+    "types": {
+      "semester": "semestr bahosi",
+      "midterm": "oraliq nazorat (ON)",
+      "final": "yakuniy nazorat (YaN)"
+    },
+    "serial": {
+      "known": "Attestat seriyasi: {serial}",
+      "missing": "Attestat seriyasi EMISda yoʻq, shuning uchun attestat qoidasini tekshirib boʻlmaydi."
+    }
+  }
+}

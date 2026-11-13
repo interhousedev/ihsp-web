@@ -3,6 +3,7 @@
 import { useT } from "@ihsp/i18n"
 import type { TargetView } from "../utils/planner-view"
 import { PairsTable } from "./pairs-table"
+import { PathsList } from "./paths-list"
 
 /** What a target asks for, in one sentence (and the table of finals when both kinds of control are left). */
 export function TargetAdvice({ view }: { view: TargetView }) {
@@ -14,6 +15,8 @@ export function TargetAdvice({ view }: { view: TargetView }) {
       return <p className="text-sm">{t("notReachable")}</p>
     case "unknown":
       return <p className="text-sm">{t("unknown")}</p>
+    case "paths":
+      return <PathsList paths={view.paths} midtermCount={view.midtermCount} />
     case "single":
       return (
         <p className="text-sm">

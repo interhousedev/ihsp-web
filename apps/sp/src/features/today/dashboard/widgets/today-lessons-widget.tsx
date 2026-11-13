@@ -1,6 +1,10 @@
 "use client"
 
-import { useFormatters, useT } from "@ihsp/i18n"
+import { getMeTimetableQuery } from "@ihsp/api"
+import { todayIso, useFormatters, useT } from "@ihsp/i18n"
+import { useQuery } from "@tanstack/react-query"
+import { lessonsOn } from "../../../timetable/utils/week"
+import { nextStudyDay, todayIsOver } from "../../utils/next-study-day"
 import { useToday } from "../../hooks/use-today"
 import { spanOf, type Widget } from "../model"
 import { CardEmpty, WidgetFrame } from "../widget-frame"
@@ -17,7 +21,14 @@ export function TodayLessonsWidget({ widget, editing }: { widget: Widget; editin
   const d = useT("today.dashboard")
   const f = useFormatters()
   const query = useToday()
-  const lessons = query.data?.lessons ?? []
+  const todayLessons = query.data?.lessons ?? []
+  // Nothing left today (weekend, holiday, after the last lesson): show the next study day instead.
+  const over = query.data !== undefined && todayIsOver(todayLessons)
+  const day = nextStudyDay(query.data?.next_study_day ?? null, todayIso())
+  const next = useQuery({ ...getMeTimetableQuery({ from: day, to: day }), enabled: over })
+  const upcoming = over ? lessonsOn(next.data ?? [], day) : []
+  const showNext = over && upcoming.length > 0
+  const lessons = showNext ? upcoming.map((lesson) => ({ ...lesson, state: "later" as const })) : todayLessons
   const wide = spanOf(widget.size).rows > 1
   return (
     <WidgetFrame
@@ -31,30 +42,37 @@ export function TodayLessonsWidget({ widget, editing }: { widget: Widget; editin
       {lessons.length === 0 ? (
         <CardEmpty text={d("noLessons")} />
       ) : (
-        <ul className="flex min-h-0 flex-col gap-0.5 text-xs">
-          {lessons.slice(0, capacity(widget)).map((lesson) => (
-            <li
-              key={lesson.id}
-              data-lesson-state={lesson.state}
-              aria-current={lesson.state === "now" ? "true" : undefined}
-              className={`flex items-baseline gap-2 truncate rounded-md px-1 py-0.5 ${
-                lesson.state === "now"
-                  ? "bg-primary text-primary-foreground font-semibold"
-                  : lesson.state === "done"
-                    ? "opacity-60"
-                    : lesson.state === "cancelled"
-                      ? "line-through opacity-60"
-                      : ""
-              }`}
-            >
-              <span className="tabular-nums">{f.time(lesson.starts_at)}</span>
-              <span className="truncate">{lesson.subject.name}</span>
-              {wide && lesson.room?.name ? (
-                <span className="ml-auto shrink-0 opacity-80">{lesson.room.name}</span>
-              ) : null}
-            </li>
-          ))}
-        </ul>
+        <>
+          {showNext ? (
+            <p data-testid="next-study-day" className="text-xs font-medium opacity-80">
+              {d("nextStudyDay", { day: f.date(day, { weekday: "long", day: "numeric", month: "short" }) })}
+            </p>
+          ) : null}
+          <ul className="flex min-h-0 flex-col gap-0.5 text-xs">
+            {lessons.slice(0, capacity(widget)).map((lesson) => (
+              <li
+                key={lesson.id}
+                data-lesson-state={lesson.state}
+                aria-current={lesson.state === "now" ? "true" : undefined}
+                className={`flex items-baseline gap-2 truncate rounded-md px-1 py-0.5 ${
+                  lesson.state === "now"
+                    ? "bg-primary text-primary-foreground font-semibold"
+                    : lesson.state === "done"
+                      ? "opacity-60"
+                      : lesson.state === "cancelled"
+                        ? "line-through opacity-60"
+                        : ""
+                }`}
+              >
+                <span className="tabular-nums">{f.time(lesson.starts_at)}</span>
+                <span className="truncate">{lesson.subject.name}</span>
+                {wide && lesson.room?.name ? (
+                  <span className="ml-auto shrink-0 opacity-80">{lesson.room.name}</span>
+                ) : null}
+              </li>
+            ))}
+          </ul>
+        </>
       )}
     </WidgetFrame>
   )

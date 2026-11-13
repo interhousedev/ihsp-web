@@ -227,6 +227,10 @@
       "noHomework": "Bajariladigan vazifa yoʻq.",
       "noCards": "Takrorlanadigan kartochka yoʻq.",
       "dragHandle": "Tartibni oʻzgartirish uchun torting",
+      "nextStudyDay": "Keyingi oʻquv kuni: {day}",
+      "studentCard": "Talaba kartasi",
+      "groupCourse": "{group} · {course}-kurs",
+      "homeworkWeek": "Kunlar boʻyicha vazifalar",
       "homeworkDue": "bajarish kerak",
       "gpa": "GPA (5 dan)",
       "cardsDue": "takrorlanadigan kartochka",
@@ -451,6 +455,11 @@
       "day": "Kunlar boʻyicha",
       "record": "Yozuv daftarchasi"
     },
+    "ratingBook": {
+      "button": "Reyting kitobi (PDF)",
+      "error": "Reyting kitobini ochib boʻlmadi."
+    },
+    "honoursLink": "Qizil diplom va medallar",
     "emis": {
       "title": "EMIS parolini yangilash kerak",
       "text": "Yangi parolni kiritmaguningizcha baholar yangilanmaydi. Eski baholar koʻrinib turadi.",
@@ -724,6 +733,14 @@
       "midterm": "{count, plural, other {Qolgan {count} ta oraliq nazoratning har biridan kamida {value} oling.}}",
       "final": "Yakuniy nazoratdan kamida {value} oling.",
       "both": "Qolgan har bir nazoratdan kamida {value} oling.",
+      "paths": {
+        "title": "Unga qanday erishish mumkin",
+        "line": "{parts} oling.",
+        "fives": "darslardan yana {count} ta “5”",
+        "midterm": "{count, plural, other {qolgan oraliq nazorat (ON)dan kamida {value}}}",
+        "final": "yakuniy nazorat (YaN)dan kamida {value}",
+        "alternative": "yoki"
+      },
       "pairs": {
         "caption": "Oraliq baho boʻyicha eng past yakuniy baho",
         "midterm": "Oraliq baho",
@@ -815,10 +832,16 @@
     },
     "overdueBy": "{count, plural, other {Muddati # kun oʻtgan}}",
     "tabs": {
+      "date": "Sanalar boʻyicha",
       "upcoming": "Yaqin",
       "later": "Keyinroq",
       "done": "Bajarilgan",
       "subject": "Fanlar boʻyicha"
+    },
+    "dates": {
+      "empty": "Bu hafta vazifa yoʻq.",
+      "previousWeek": "Oldingi hafta",
+      "nextWeek": "Keyingi hafta"
     },
     "empty": {
       "upcoming": "Topshiriladigan vazifa yoʻq.",

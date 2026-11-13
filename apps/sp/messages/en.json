@@ -227,6 +227,10 @@
       "noHomework": "Nothing to do.",
       "noCards": "No cards due.",
       "dragHandle": "Drag to reorder",
+      "nextStudyDay": "Next study day: {day}",
+      "studentCard": "Student card",
+      "groupCourse": "{group} · course {course}",
+      "homeworkWeek": "Homework by day",
       "homeworkDue": "to do",
       "gpa": "GPA (out of 5)",
       "cardsDue": "cards due",
@@ -451,6 +455,11 @@
       "day": "By day",
       "record": "Grade book"
     },
+    "ratingBook": {
+      "button": "Rating book (PDF)",
+      "error": "Could not open the rating book."
+    },
+    "honoursLink": "Red diploma and medals",
     "emis": {
       "title": "EMIS password needs updating",
       "text": "Marks are not updated until you enter the new password. Old marks stay visible.",
@@ -724,6 +733,14 @@
       "midterm": "{count, plural, one {Get at least a {value} on the remaining midterm.} other {Get at least a {value} on each of the # remaining midterms.}}",
       "final": "Get at least a {value} on the final.",
       "both": "Get at least a {value} on every remaining control.",
+      "paths": {
+        "title": "How to reach it",
+        "line": "Get {parts}.",
+        "fives": "{count, plural, one {# more five} other {# more fives}} on lessons",
+        "midterm": "at least {value} on {count, plural, one {the remaining midterm (PC)} other {each remaining midterm (PC)}}",
+        "final": "at least {value} on the final (FC)",
+        "alternative": "or"
+      },
       "pairs": {
         "caption": "Lowest final for each midterm mark",
         "midterm": "Midterm mark",
@@ -815,10 +832,16 @@
     },
     "overdueBy": "{count, plural, one {# day overdue} other {# days overdue}}",
     "tabs": {
+      "date": "By date",
       "upcoming": "Upcoming",
       "later": "Later",
       "done": "Done",
       "subject": "By subject"
+    },
+    "dates": {
+      "empty": "No homework this week.",
+      "previousWeek": "Previous week",
+      "nextWeek": "Next week"
     },
     "empty": {
       "upcoming": "Nothing due.",

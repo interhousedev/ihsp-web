@@ -13,7 +13,7 @@ afterEach(unfreezeTime)
 
 describe("Work-offs in the to-do list", () => {
   test("open work-offs lead the Upcoming list, labelled, with subject, lesson date, text and due date", async () => {
-    renderSp(<HomeworkPage />, { route: "/homework/" })
+    renderSp(<HomeworkPage />, { route: "/homework/?tab=upcoming" })
 
     const items = await screen.findAllByTestId("work-off-item")
     const first = items[0] as HTMLElement
@@ -32,7 +32,7 @@ describe("Work-offs in the to-do list", () => {
   })
 
   test("an overdue work-off is styled as overdue", async () => {
-    renderSp(<HomeworkPage />, { route: "/homework/" })
+    renderSp(<HomeworkPage />, { route: "/homework/?tab=upcoming" })
 
     const items = await screen.findAllByTestId("work-off-item")
     const overdue = items[1] as HTMLElement
@@ -44,7 +44,7 @@ describe("Work-offs in the to-do list", () => {
   })
 
   test("the item links to the lesson it was given for", async () => {
-    renderSp(<HomeworkPage />, { route: "/homework/" })
+    renderSp(<HomeworkPage />, { route: "/homework/?tab=upcoming" })
 
     const first = (await screen.findAllByTestId("work-off-item"))[0] as HTMLElement
     const link = within(first).getByRole("link")
@@ -59,7 +59,7 @@ describe("Work-offs in the to-do list", () => {
         HttpResponse.json([myWorkOff({ due_date: null, subject_name: "Chemistry" })]),
       ),
     )
-    renderSp(<HomeworkPage />, { route: "/homework/" })
+    renderSp(<HomeworkPage />, { route: "/homework/?tab=upcoming" })
 
     const item = (await screen.findByTestId("work-off-item")) as HTMLElement
 
@@ -78,7 +78,7 @@ describe("Work-offs in the to-do list", () => {
       http.get(apiUrl("/v1/me/homework"), () => HttpResponse.json([])),
       http.get(apiUrl("/v1/me/work-offs"), () => HttpResponse.json([myWorkOff()])),
     )
-    renderSp(<HomeworkPage />, { route: "/homework/" })
+    renderSp(<HomeworkPage />, { route: "/homework/?tab=upcoming" })
 
     expect(await screen.findByTestId("work-off-item")).toBeInTheDocument()
     expect(screen.queryByText("Nothing due.")).not.toBeInTheDocument()

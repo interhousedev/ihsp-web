@@ -7,10 +7,11 @@ import { QueryState } from "@ihsp/features-core"
 import { useHomeworkList, useOpenWorkOffs } from "../hooks/use-homework"
 import { HomeworkItemCard } from "./homework-item-card"
 import { OverdueSection } from "./overdue-section"
+import { HomeworkByDate } from "./homework-by-date"
 import { HomeworkBySubject } from "./homework-by-subject"
 import { WorkOffTodoItem } from "./work-off-todo-item"
 
-const TABS = ["upcoming", "later", "done", "subject"] as const
+const TABS = ["date", "upcoming", "later", "done", "subject"] as const
 
 /**
  * Homework (WEB-18–20, UF-WEB-13): the highlighted Overdue group first, then the Upcoming, Later and Done lists with
@@ -18,15 +19,15 @@ const TABS = ["upcoming", "later", "done", "subject"] as const
  */
 export function HomeworkPage() {
   const t = useT("homework")
-  const [tab, setTab] = useQueryState("tab", parseAsStringLiteral(TABS).withDefault("upcoming"))
-  const query = useHomeworkList(tab === "subject" ? "upcoming" : tab)
+  const [tab, setTab] = useQueryState("tab", parseAsStringLiteral(TABS).withDefault("date"))
+  const query = useHomeworkList(tab === "subject" || tab === "date" ? "upcoming" : tab)
   const workOffs = useOpenWorkOffs()
   const leadingWorkOffs = tab === "upcoming" ? (workOffs.data ?? []) : []
 
   return (
     <PageContainer title={t("title")}>
       <OverdueSection />
-      <Tabs value={tab} onValueChange={(value) => void setTab(TABS.find((item) => item === value) ?? "upcoming")}>
+      <Tabs value={tab} onValueChange={(value) => void setTab(TABS.find((item) => item === value) ?? "date")}>
         <TabsList className="h-auto min-h-11 w-full md:w-fit">
           {TABS.map((value) => (
             <TabsTrigger key={value} value={value} className="min-h-11 px-3">
@@ -35,7 +36,9 @@ export function HomeworkPage() {
           ))}
         </TabsList>
       </Tabs>
-      {tab === "subject" ? (
+      {tab === "date" ? (
+        <HomeworkByDate />
+      ) : tab === "subject" ? (
         <HomeworkBySubject />
       ) : (
         <QueryState

@@ -1,0 +1,42 @@
+{
+  "honours": {
+    "title": "Red diploma and medals",
+    "back": "Grades",
+    "empty": "No data yet.",
+    "awards": {
+      "red_diploma": "Red diploma",
+      "gold_medal": "Gold medal",
+      "silver_medal": "Silver medal"
+    },
+    "status": {
+      "eligible": "Eligible",
+      "blocked": "Not eligible"
+    },
+    "rule": {
+      "passed": "Met",
+      "failed": "Not met"
+    },
+    "rules": {
+      "red_diploma_max_fours": "Few enough semester marks of 4",
+      "medal_certificate": "School certificate qualifies for a medal",
+      "gold_controls_all_five": "Only 5 on every midterm (PC) and final (FC)",
+      "gold_semester_all_five": "Only 5 as semester marks",
+      "silver_controls_all_five": "Only 5 on every midterm (PC) and final (FC)",
+      "silver_semester_max_fours": "Few enough semester marks of 4"
+    },
+    "unknownRule": "Rule: {rule}",
+    "blocking": {
+      "title": "Marks in the way",
+      "item": "{subject}, semester {semester}, {type}: {value}"
+    },
+    "types": {
+      "semester": "semester mark",
+      "midterm": "midterm (PC)",
+      "final": "final (FC)"
+    },
+    "serial": {
+      "known": "School certificate serial: {serial}",
+      "missing": "The school certificate serial is not in EMIS, so the certificate rule cannot be checked."
+    }
+  }
+}

@@ -34,7 +34,7 @@ function recordDone(): { bodies: unknown[]; lessons: string[] } {
 
 describe("Homework page", () => {
   test("Upcoming shows the homework due next study day with subject, task, teacher and dates", async () => {
-    renderSp(<HomeworkPage />, { route: "/homework/" })
+    renderSp(<HomeworkPage />, { route: "/homework/?tab=upcoming" })
 
     const item = (await screen.findByText(homeworkMath.text)).closest("li") as HTMLElement
 
@@ -47,7 +47,7 @@ describe("Homework page", () => {
   test("ticking an item calls putHomeworkDone and moves it out of Upcoming", async () => {
     const seen = recordDone()
     server.use(http.get(apiUrl("/v1/me/work-offs"), () => HttpResponse.json([])))
-    const { user } = renderSp(<HomeworkPage />, { route: "/homework/" })
+    const { user } = renderSp(<HomeworkPage />, { route: "/homework/?tab=upcoming" })
 
     await user.click(await screen.findByRole("checkbox", { name: "Done: Mathematics" }))
 
@@ -58,7 +58,7 @@ describe("Homework page", () => {
   })
 
   test("the Overdue group comes first, is highlighted and says how many days overdue", async () => {
-    renderSp(<HomeworkPage />, { route: "/homework/" })
+    renderSp(<HomeworkPage />, { route: "/homework/?tab=upcoming" })
 
     const overdue = await screen.findByTestId("homework-overdue")
 
@@ -74,7 +74,7 @@ describe("Homework page", () => {
 
   test("ticking an overdue item calls putHomeworkDone and clears the Overdue group", async () => {
     const seen = recordDone()
-    const { user } = renderSp(<HomeworkPage />, { route: "/homework/" })
+    const { user } = renderSp(<HomeworkPage />, { route: "/homework/?tab=upcoming" })
 
     const overdue = await screen.findByTestId("homework-overdue")
     await user.click(within(overdue).getByRole("checkbox", { name: "Done: Physics" }))
@@ -90,7 +90,7 @@ describe("Homework page", () => {
         HttpResponse.json(new URL(request.url).searchParams.get("status") === "overdue" ? [] : [homeworkMath]),
       ),
     )
-    renderSp(<HomeworkPage />, { route: "/homework/" })
+    renderSp(<HomeworkPage />, { route: "/homework/?tab=upcoming" })
 
     await screen.findByText(homeworkMath.text)
 
@@ -105,7 +105,7 @@ describe("Homework page", () => {
           : HttpResponse.json([homeworkMath]),
       ),
     )
-    renderSp(<HomeworkPage />, { route: "/homework/" })
+    renderSp(<HomeworkPage />, { route: "/homework/?tab=upcoming" })
 
     const overdue = await screen.findByTestId("homework-overdue")
 
@@ -137,7 +137,7 @@ describe("Homework page", () => {
         return HttpResponse.json({ ...homeworkMath, note: body.note })
       }),
     )
-    renderSp(<HomeworkPage />, { route: "/homework/" })
+    renderSp(<HomeworkPage />, { route: "/homework/?tab=upcoming" })
 
     const item = (await screen.findByText(homeworkMath.text)).closest("li") as HTMLElement
     expect(within(item).queryByRole("button", { name: "Save" })).toBeNull()
@@ -160,7 +160,7 @@ describe("Homework page", () => {
         return HttpResponse.json({ ...homeworkMath, note: body.note })
       }),
     )
-    renderSp(<HomeworkPage />, { route: "/homework/" })
+    renderSp(<HomeworkPage />, { route: "/homework/?tab=upcoming" })
 
     const item = (await screen.findByText(homeworkMath.text)).closest("li") as HTMLElement
     const field = within(item).getByLabelText("Private note")
@@ -176,7 +176,7 @@ describe("Homework page", () => {
         HttpResponse.json({ type: "common/unavailable", title: "Unavailable", status: 503 }, { status: 503 }),
       ),
     )
-    renderSp(<HomeworkPage />, { route: "/homework/" })
+    renderSp(<HomeworkPage />, { route: "/homework/?tab=upcoming" })
 
     const item = (await screen.findByText(homeworkMath.text)).closest("li") as HTMLElement
     const field = within(item).getByLabelText("Private note")

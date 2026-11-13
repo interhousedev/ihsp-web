@@ -4,6 +4,14 @@ All notable changes to this project are documented here. The format follows [Kee
 
 ## [Unreleased]
 
+- sp: honours page (red diploma, gold and silver medals with the blocking marks), mark planner shows the ways to reach a grade, and a Rating book (PDF) button on the grades page.
+- id: First login to EMIS asks for the date of birth with a calendar picker (month and year dropdowns) instead of a typed date.
+- id: a step-up code that could not be delivered shows a translated error instead of a silent success.
+- Faster first load: the KaTeX stylesheet and the QR code renderer load only on the pages that use them.
+- Share app: public student card page `/ai/card/?t=<token>` with photo, details and a validity countdown; an expired code shows a clear message.
+- Admin: honours rules in the platform settings (red diploma, gold and silver medals, medal certificate serials), each rule with a switch and the limits of 4s from 0 to 20.
+- sp: identity header on the dashboard (photo, name, group, course) that compacts on scroll and opens a student card sheet with a self-renewing QR; Homework by date with a Monday–Friday strip; the homework widget shows the week; Today lessons shows the next study day when today is over.
+
 ## [1.4.0] - 2026-11-11
 
 ### Added

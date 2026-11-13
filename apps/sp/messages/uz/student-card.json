@@ -1,0 +1,15 @@
+{
+  "studentCard": {
+    "title": "Talaba kartasi",
+    "photoAlt": "Surat: {name}",
+    "group": "Guruh",
+    "course": "Kurs",
+    "direction": "Yoʻnalish",
+    "speciality": "Mutaxassislik",
+    "qrLabel": "Talaba kartasining QR kodi",
+    "refreshIn": "Yangi kod {seconds} soniyadan keyin",
+    "qrFailed": "Kodni yaratib boʻlmadi. Qayta urinilmoqda.",
+    "loadFailed": "Kartani yuklab boʻlmadi.",
+    "retry": "Qayta urinish"
+  }
+}

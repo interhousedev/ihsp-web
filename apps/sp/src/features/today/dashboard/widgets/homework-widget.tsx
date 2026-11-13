@@ -5,6 +5,7 @@ import { useOpenWorkOffs } from "../../../homework/hooks/use-homework"
 import { useToday } from "../../hooks/use-today"
 import type { Widget } from "../model"
 import { CardEmpty, WidgetFrame } from "../widget-frame"
+import { HomeworkWeekRow } from "./homework-week-row"
 import { BigNumber, Lines, listRows } from "./shared"
 
 export function HomeworkWidget({ widget, editing }: { widget: Widget; editing?: boolean }) {
@@ -28,7 +29,10 @@ export function HomeworkWidget({ widget, editing }: { widget: Widget; editing?: 
         <>
           <BigNumber value={total} label={t("homeworkDue")} />
           {widget.size !== "1x1" ? (
-            <Lines items={due.slice(0, listRows(widget)).map((item) => item.subject.name)} />
+            <>
+              <HomeworkWeekRow />
+              <Lines items={due.slice(0, listRows(widget)).map((item) => item.subject.name)} />
+            </>
           ) : null}
         </>
       )}
