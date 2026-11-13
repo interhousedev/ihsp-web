@@ -1953,7 +1953,8 @@
       "login-cue-not-found": "This name is no longer on the list. Pick your name again.",
       "login-cue-group-not-found": "This group is no longer available. Pick your group again.",
       "login-cue-unavailable": "This name was already used for an account. Ask Administration for help.",
-      "vault-sealed": "The secrets vault is sealed, so the authenticator app cannot be checked. Sign in with a one-time code instead, then unseal the vault in the admin app."
+      "vault-sealed": "The secrets vault is sealed, so the authenticator app cannot be checked. Sign in with a one-time code instead, then unseal the vault in the admin app.",
+      "otp-delivery-failed": "Could not send the code. Try again in a minute."
     },
     "emis": {
       "auth-failed": "Wrong EMIS login or password.",
