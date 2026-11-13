@@ -229,8 +229,10 @@
       "dragHandle": "Drag to reorder",
       "nextStudyDay": "Next study day: {day}",
       "studentCard": "Student card",
-      "groupCourse": "{group} · course {course}",
+      "course": "course {course}",
       "homeworkWeek": "Homework by day",
+      "homeworkDueMark": "homework due",
+      "homeworkOverdueMark": "homework overdue",
       "homeworkDue": "to do",
       "gpa": "GPA (out of 5)",
       "cardsDue": "cards due",
@@ -304,6 +306,8 @@
     "legend": "Attendance colours",
     "freeGap": "Free: {minutes} min",
     "breakGap": "Break: {minutes} min",
+    "homeworkDueMark": "homework due",
+    "homeworkOverdueMark": "homework overdue",
     "days": "Days of the week",
     "room": "Room {name}",
     "now": "Now",
@@ -739,7 +743,7 @@
         "fives": "{count, plural, one {# more five} other {# more fives}} on lessons",
         "midterm": "at least {value} on {count, plural, one {the remaining midterm (PC)} other {each remaining midterm (PC)}}",
         "final": "at least {value} on the final (FC)",
-        "alternative": "or"
+        "alternativeLine": "Or get {parts}."
       },
       "pairs": {
         "caption": "Lowest final for each midterm mark",
@@ -840,6 +844,8 @@
     },
     "dates": {
       "empty": "No homework this week.",
+      "emptyDay": "No homework on this day.",
+      "showWeek": "Show whole week",
       "previousWeek": "Previous week",
       "nextWeek": "Next week"
     },

@@ -56,7 +56,12 @@ export function WeekStrip({
             key={date}
             variant={date === selected ? "default" : "outline"}
             aria-pressed={date === selected}
-            aria-label={f.date(date, { weekday: "long", day: "numeric", month: "long" })}
+            aria-label={[
+              f.date(date, { weekday: "long", day: "numeric", month: "long" }),
+              mark ? t(mark === "error" ? "homeworkOverdueMark" : "homeworkDueMark") : null,
+            ]
+              .filter(Boolean)
+              .join(", ")}
             className={cn(
               "relative h-auto min-h-11 flex-col gap-0 px-0 py-1",
               date === today && date !== selected && "border-primary",

@@ -229,8 +229,10 @@
       "dragHandle": "Перетащите, чтобы изменить порядок",
       "nextStudyDay": "Следующий учебный день: {day}",
       "studentCard": "Студенческая карта",
-      "groupCourse": "{group} · {course} курс",
+      "course": "{course} курс",
       "homeworkWeek": "Задания по дням",
+      "homeworkDueMark": "задание к сроку",
+      "homeworkOverdueMark": "задание просрочено",
       "homeworkDue": "к выполнению",
       "gpa": "GPA (из 5)",
       "cardsDue": "карточек к повторению",
@@ -304,6 +306,8 @@
     "legend": "Цвета посещаемости",
     "freeGap": "Окно: {minutes} мин",
     "breakGap": "Перемена: {minutes} мин",
+    "homeworkDueMark": "задание к сроку",
+    "homeworkOverdueMark": "задание просрочено",
     "days": "Дни недели",
     "room": "Ауд. {name}",
     "now": "Сейчас",
@@ -739,7 +743,7 @@
         "fives": "{count, plural, one {ещё # пятёрку} few {ещё # пятёрки} many {ещё # пятёрок} other {ещё # пятёрки}} за уроки",
         "midterm": "не ниже {value} за {count, plural, one {оставшийся ПК} other {каждый оставшийся ПК}}",
         "final": "не ниже {value} за ИК",
-        "alternative": "или"
+        "alternativeLine": "Или получите {parts}."
       },
       "pairs": {
         "caption": "Минимальная итоговая для каждой оценки за промежуточный",
@@ -840,6 +844,8 @@
     },
     "dates": {
       "empty": "На этой неделе заданий нет.",
+      "emptyDay": "На этот день заданий нет.",
+      "showWeek": "Показать всю неделю",
       "previousWeek": "Предыдущая неделя",
       "nextWeek": "Следующая неделя"
     },

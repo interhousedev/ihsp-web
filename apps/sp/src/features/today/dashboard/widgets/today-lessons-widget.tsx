@@ -36,20 +36,26 @@ export function TodayLessonsWidget({ widget, editing }: { widget: Widget; editin
       editing={editing}
       title={t("title")}
       href="/timetable/"
-      status={query.isPending ? "loading" : query.isError ? "error" : undefined}
-      onRetry={() => void query.refetch()}
+      status={
+        query.isPending || (over && next.isPending)
+          ? "loading"
+          : query.isError || (over && next.isError)
+            ? "error"
+            : undefined
+      }
+      onRetry={() => void (query.isError ? query.refetch() : next.refetch())}
     >
       {lessons.length === 0 ? (
         <CardEmpty text={d("noLessons")} />
       ) : (
         <>
           {showNext ? (
-            <p data-testid="next-study-day" className="text-xs font-medium opacity-80">
-              {d("nextStudyDay", { day: f.date(day, { weekday: "long", day: "numeric", month: "short" }) })}
+            <p data-testid="next-study-day" className="truncate text-xs font-medium opacity-80">
+              {d("nextStudyDay", { day: f.date(day, { weekday: "short", day: "numeric", month: "short" }) })}
             </p>
           ) : null}
           <ul className="flex min-h-0 flex-col gap-0.5 text-xs">
-            {lessons.slice(0, capacity(widget)).map((lesson) => (
+            {lessons.slice(0, showNext ? capacity(widget) - 1 : capacity(widget)).map((lesson) => (
               <li
                 key={lesson.id}
                 data-lesson-state={lesson.state}

@@ -13,7 +13,7 @@ import { HomeworkItemCard } from "./homework-item-card"
 
 /**
  * Homework by due date: a Monday-to-Friday strip with a dot on each day that has homework (red when something is
- * overdue) and the week's tasks below, grouped by their due date. A tapped day scrolls to its group.
+ * overdue) and the week's tasks below, grouped by their due date. A tapped day narrows the list to that day.
  */
 export function HomeworkByDate() {
   const t = useT("homework.dates")
@@ -21,17 +21,24 @@ export function HomeworkByDate() {
   const today = todayIso()
   const [week, setWeek] = useState(() => schoolWeekOf(today))
   const [selected, setSelected] = useState(today)
+  /** The tapped day; the list shows only its tasks until it is cleared. */
+  const [onlyDay, setOnlyDay] = useState<string | null>(null)
   const query = useQuery(getMeHomeworkQuery({ from: week.from, to: week.to }))
 
   const pick = (date: string) => {
     setSelected(date)
-    document.getElementById(`homework-day-${date}`)?.scrollIntoView?.({ behavior: "smooth", block: "start" })
+    setOnlyDay(date)
   }
   const move = (weeks: -1 | 1) => {
     const next = shiftWeek(week.from, weeks)
     setWeek(next)
     setSelected(next.from)
+    setOnlyDay(null)
   }
+  const daysOf = (items: Parameters<typeof groupByDueDate>[0]) =>
+    groupByDueDate(items).filter((day) =>
+      onlyDay ? day.date === onlyDay : day.date >= week.from && day.date <= week.to,
+    )
 
   return (
     <div className="flex flex-col gap-4">
@@ -68,17 +75,32 @@ export function HomeworkByDate() {
           <Icons.chevronRight aria-hidden />
         </Button>
       </div>
-      <QueryState query={query} isEmpty={() => false}>
+      <QueryState
+        query={query}
+        isEmpty={(items) => daysOf(items).length === 0}
+        emptyText={onlyDay ? t("emptyDay") : t("empty")}
+        emptyAction={
+          onlyDay ? (
+            <Button type="button" variant="outline" size="sm" onClick={() => setOnlyDay(null)}>
+              {t("showWeek")}
+            </Button>
+          ) : undefined
+        }
+      >
         {(items) => {
-          const days = groupByDueDate(items).filter((day) => day.date >= week.from && day.date <= week.to)
-          if (days.length === 0) return <p className="text-muted-foreground text-sm">{t("empty")}</p>
+          const days = daysOf(items)
           return (
             <div className="flex flex-col gap-5">
+              {onlyDay ? (
+                <Button type="button" variant="ghost" size="sm" className="self-start" onClick={() => setOnlyDay(null)}>
+                  {t("showWeek")}
+                </Button>
+              ) : null}
               {days.map((day) => (
                 <section
                   key={day.date}
                   id={`homework-day-${day.date}`}
-                  className="flex scroll-mt-16 flex-col gap-2"
+                  className="flex flex-col gap-2"
                   aria-labelledby={`homework-day-title-${day.date}`}
                 >
                   <h3

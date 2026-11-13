@@ -14,6 +14,7 @@ All notable changes to this project are documented here. The format follows [Kee
 - Personal tokens and entrance devices link to their documentation; the links come from the backend configuration.
 - Admin: honours rules in the platform settings (red diploma, gold and silver medals, medal certificate serials), each rule with a switch and the limits of 4s from 0 to 20.
 - sp: identity header on the dashboard (photo, name, group, course) that compacts on scroll and opens a student card sheet with a self-renewing QR; Homework by date with a Monday–Friday strip; the homework widget shows the week; Today lessons shows the next study day when today is over.
+- UX review fixes: date of birth can also be typed (DD.MM.YYYY) and the calendar follows the UI language; login cues bulk delete in chunks of 500, copies name and group, hides actions when switched off; checkbox shows an indeterminate state; honours rules validate only enabled rules and flag duplicate serials; the dashboard header, today's lessons, homework day filter, student card and rating book button handle loading, errors and the Telegram mini app; the share card counts down by server time; docs links say they open in a new tab.
 
 ## [1.4.0] - 2026-11-11
 

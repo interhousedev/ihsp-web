@@ -2,15 +2,18 @@
 
 import { useEffect, useState } from "react"
 
-/** Seconds left until `expiresAt` (never below 0), ticking every second. */
-export function useSecondsLeft(expiresAt: string): number {
+/**
+ * Seconds left until `expiresAt` (never below 0), ticking every second. `offsetMs` is the server clock minus the local
+ * one, so the count does not depend on a visitor's wrong clock.
+ */
+export function useSecondsLeft(expiresAt: string, offsetMs = 0): number {
   const end = new Date(expiresAt).getTime()
-  const [now, setNow] = useState(() => Date.now())
+  const [now, setNow] = useState(() => Date.now() + offsetMs)
   useEffect(() => {
-    setNow(Date.now())
-    const id = setInterval(() => setNow(Date.now()), 1000)
+    setNow(Date.now() + offsetMs)
+    const id = setInterval(() => setNow(Date.now() + offsetMs), 1000)
     return () => clearInterval(id)
-  }, [expiresAt])
+  }, [expiresAt, offsetMs])
   return Math.max(0, Math.ceil((end - now) / 1000))
 }
 

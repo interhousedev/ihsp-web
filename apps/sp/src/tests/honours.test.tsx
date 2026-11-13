@@ -84,7 +84,7 @@ describe("HON-2 planner paths", () => {
 
     const list = await screen.findByTestId("planner-paths")
     expect(list).toHaveTextContent("Get 2 more fives on lessons and at least 4 on the final (FC).")
-    expect(list).toHaveTextContent(/or\s*Get at least 5 on the remaining midterm \(PC\) and at least 5 on the final/)
+    expect(list).toHaveTextContent(/Or get at least 5 on the remaining midterm \(PC\) and at least 5 on the final/)
   })
 })
 

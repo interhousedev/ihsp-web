@@ -4,7 +4,7 @@ import { getMeStudentCardQuery } from "@ihsp/api"
 import { useSession } from "@ihsp/auth"
 import { TeacherAvatar } from "@ihsp/features-core"
 import { useT } from "@ihsp/i18n"
-import { Button, cn, Icons } from "@ihsp/ui"
+import { Button, cn, Icons, Skeleton } from "@ihsp/ui"
 import { useQuery } from "@tanstack/react-query"
 import { useState } from "react"
 import { StudentCardSheet } from "../../student-card/components/student-card-sheet"
@@ -17,12 +17,25 @@ import { useScrolled } from "./use-scrolled"
 export function IdentityHeader() {
   const t = useT("today.dashboard")
   const { session } = useSession()
-  const card = useQuery(getMeStudentCardQuery()).data
+  const query = useQuery(getMeStudentCardQuery())
+  const card = query.data
   const compact = useScrolled()
   const [open, setOpen] = useState(false)
 
-  if (!card) return null
-  const name = `${card.first_name} ${card.last_name}`.trim()
+  const user = session?.user
+  const name = card
+    ? `${card.first_name} ${card.last_name}`.trim()
+    : user
+      ? `${user.first_name} ${user.last_name}`.trim()
+      : ""
+  const pending = query.isPending
+  if (!card && !pending && !name) return null
+  const parts = card
+    ? [card.group || null, card.course != null ? t("course", { course: card.course }) : null].filter(
+        (part): part is string => part !== null,
+      )
+    : []
+  const hasPhoto = card ? card.has_photo : Boolean(user?.photo_url)
 
   return (
     <header
@@ -35,17 +48,24 @@ export function IdentityHeader() {
     >
       <TeacherAvatar
         name={name}
-        photoUrl={card.has_photo ? (session?.user.photo_url ?? null) : null}
+        photoUrl={hasPhoto ? (user?.photo_url ?? null) : null}
         size={compact ? "default" : "lg"}
         decorative
       />
       <div className="flex min-w-0 flex-1 flex-col">
-        <p className={cn("truncate font-semibold", compact ? "text-sm" : "text-lg")}>{name}</p>
-        {!compact ? (
-          <p className="text-muted-foreground truncate text-sm">
-            {t("groupCourse", { group: card.group ?? "", course: card.course ?? "" })}
-          </p>
-        ) : null}
+        {pending ? (
+          <>
+            <Skeleton className={compact ? "h-5 w-32" : "h-7 w-40"} />
+            {!compact ? <Skeleton className="mt-0.5 h-5 w-24" /> : null}
+          </>
+        ) : (
+          <>
+            <p className={cn("truncate font-semibold", compact ? "text-sm" : "text-lg")}>{name}</p>
+            {!compact && parts.length > 0 ? (
+              <p className="text-muted-foreground truncate text-sm">{parts.join(" · ")}</p>
+            ) : null}
+          </>
+        )}
       </div>
       <Button
         type="button"

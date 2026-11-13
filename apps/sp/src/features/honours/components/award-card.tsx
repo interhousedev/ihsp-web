@@ -9,11 +9,13 @@ import { RuleRow } from "./rule-row"
 export function AwardCard({ award }: { award: HonourAward }) {
   const t = useT("honours")
   return (
-    <section aria-label={t(`awards.${award.kind}`)} data-testid={`honours-award-${award.kind}`}>
+    <section aria-labelledby={`honours-award-title-${award.kind}`} data-testid={`honours-award-${award.kind}`}>
       <Card size="sm">
         <CardContent className="flex flex-col gap-3">
           <div className="flex flex-wrap items-center justify-between gap-2">
-            <h2 className="text-base font-semibold">{t(`awards.${award.kind}`)}</h2>
+            <h2 id={`honours-award-title-${award.kind}`} className="text-base font-semibold">
+              {t(`awards.${award.kind}`)}
+            </h2>
             <Badge
               variant="outline"
               className={cn(

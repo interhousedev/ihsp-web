@@ -44,7 +44,9 @@ export function StudentCardSheet({ open, onOpenChange }: { open: boolean; onOpen
           <div className="flex flex-col gap-0.5">
             <p className="text-xl font-semibold">{data.first_name}</p>
             <p className="text-xl font-semibold">{data.last_name}</p>
-            {data.lyceum_name ? <p className="text-muted-foreground text-sm">{data.lyceum_name[locale]}</p> : null}
+            {data.lyceum_name ? (
+              <p className="text-muted-foreground text-sm">{data.lyceum_name[locale] ?? data.lyceum_name.en}</p>
+            ) : null}
           </div>
           <dl className="grid w-full grid-cols-[auto_1fr] gap-x-4 gap-y-1 text-left text-sm">
             {facts
@@ -58,18 +60,23 @@ export function StudentCardSheet({ open, onOpenChange }: { open: boolean; onOpen
           </dl>
           <div className="flex flex-col items-center gap-2">
             {qr.token ? (
-              <div data-testid="card-qr" data-card-url={cardUrl(getConfig().SHARE_URL, qr.token)}>
+              <div
+                data-testid="card-qr"
+                data-stale={qr.failed}
+                className={qr.failed ? "opacity-30" : undefined}
+                data-card-url={cardUrl(getConfig().SHARE_URL, qr.token)}
+              >
                 <QrCode value={cardUrl(getConfig().SHARE_URL, qr.token)} label={t("qrLabel")} />
               </div>
             ) : (
               <StateView state="loading" rows={1} />
             )}
-            <p
-              role="timer"
-              aria-live="off"
-              className={qr.failed ? "text-destructive text-sm" : "text-muted-foreground text-sm"}
-            >
-              {qr.failed ? `${t("qrFailed")} ` : ""}
+            {qr.failed ? (
+              <p role="alert" className="text-destructive text-sm">
+                {t("qrFailed")}
+              </p>
+            ) : null}
+            <p role="timer" aria-live="off" className="text-muted-foreground text-sm">
               {t("refreshIn", { seconds: qr.secondsLeft })}
             </p>
           </div>

@@ -229,8 +229,10 @@
       "dragHandle": "Tartibni oʻzgartirish uchun torting",
       "nextStudyDay": "Keyingi oʻquv kuni: {day}",
       "studentCard": "Talaba kartasi",
-      "groupCourse": "{group} · {course}-kurs",
+      "course": "{course}-kurs",
       "homeworkWeek": "Kunlar boʻyicha vazifalar",
+      "homeworkDueMark": "vazifa muddati",
+      "homeworkOverdueMark": "vazifa muddati oʻtgan",
       "homeworkDue": "bajarish kerak",
       "gpa": "GPA (5 dan)",
       "cardsDue": "takrorlanadigan kartochka",
@@ -304,6 +306,8 @@
     "legend": "Davomat ranglari",
     "freeGap": "Boʻsh vaqt: {minutes} daq",
     "breakGap": "Tanaffus: {minutes} daq",
+    "homeworkDueMark": "vazifa muddati",
+    "homeworkOverdueMark": "vazifa muddati oʻtgan",
     "days": "Hafta kunlari",
     "room": "{name}-xona",
     "now": "Hozir",
@@ -737,9 +741,9 @@
         "title": "Unga qanday erishish mumkin",
         "line": "{parts} oling.",
         "fives": "darslardan yana {count} ta “5”",
-        "midterm": "{count, plural, other {qolgan oraliq nazorat (ON)dan kamida {value}}}",
+        "midterm": "{count, plural, =1 {qolgan oraliq nazorat (ON)dan kamida {value}} other {har bir qolgan oraliq nazorat (ON)dan kamida {value}}}",
         "final": "yakuniy nazorat (YaN)dan kamida {value}",
-        "alternative": "yoki"
+        "alternativeLine": "Yoki {parts} oling."
       },
       "pairs": {
         "caption": "Oraliq baho boʻyicha eng past yakuniy baho",
@@ -840,6 +844,8 @@
     },
     "dates": {
       "empty": "Bu hafta vazifa yoʻq.",
+      "emptyDay": "Bu kunga vazifa yoʻq.",
+      "showWeek": "Butun haftani koʻrsatish",
       "previousWeek": "Oldingi hafta",
       "nextWeek": "Keyingi hafta"
     },

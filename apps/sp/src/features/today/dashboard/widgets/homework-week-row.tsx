@@ -37,6 +37,9 @@ export function HomeworkWeekRow() {
                 mark === "error" ? "bg-destructive" : mark ? "bg-primary" : "bg-transparent",
               )}
             />
+            {mark ? (
+              <span className="sr-only">{t(mark === "error" ? "homeworkOverdueMark" : "homeworkDueMark")}</span>
+            ) : null}
           </li>
         )
       })}

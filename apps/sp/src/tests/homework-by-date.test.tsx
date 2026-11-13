@@ -29,4 +29,19 @@ describe("HW-DATE homework by date", () => {
     fireEvent.click(await screen.findByRole("button", { name: /next week/i }))
     expect(await screen.findByText(/no homework/i)).toBeTruthy()
   })
+
+  test("tapping a day narrows the list to it, with an empty state for a free day", async () => {
+    server.use(
+      http.get(apiUrl("/v1/me/homework"), () =>
+        HttpResponse.json([{ ...homeworkMath, due_date: "2026-10-08", done_at: null, days_overdue: 0 }]),
+      ),
+    )
+    renderSp(<HomeworkByDate />)
+    expect(await screen.findByText(homeworkMath.text)).toBeTruthy()
+    fireEvent.click(screen.getByRole("button", { name: /Friday/ }))
+    expect(await screen.findByText(/no homework on this day/i)).toBeTruthy()
+    expect(screen.queryByText(homeworkMath.text)).toBeNull()
+    fireEvent.click(screen.getByRole("button", { name: /show whole week/i }))
+    expect(await screen.findByText(homeworkMath.text)).toBeTruthy()
+  })
 })
