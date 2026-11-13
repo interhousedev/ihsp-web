@@ -1988,6 +1988,20 @@
     "confirmDelete": "Delete",
     "deleted": "Login cue deleted",
     "created": "Login cue added",
+    "disabled": "Login cues are switched off.",
+    "select": {
+      "all": "Select all",
+      "row": "Select {name}",
+      "count": "Selected: {count}",
+      "clear": "Clear selection",
+      "delete": "Delete selected",
+      "copy": "Copy selected",
+      "export": "Export CSV",
+      "copied": "Copied {count} lines",
+      "deleteTitle": "Delete {count} login cues?",
+      "deleted": "Deleted login cues: {count}",
+      "csvName": "login-cues.csv"
+    },
     "form": {
       "title": "Add login cue",
       "fullName": "Full name",
@@ -2161,6 +2175,7 @@
   },
   "devices": {
     "title": "Entrance devices",
+    "docs": "How entrance devices work",
     "add": "Add device",
     "empty": "No devices yet.",
     "createTitle": "New device",

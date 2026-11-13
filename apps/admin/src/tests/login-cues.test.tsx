@@ -136,3 +136,67 @@ describe("login cues page", () => {
     await waitFor(() => expect(deleted).toBe(true))
   })
 })
+
+describe("login cues mass select", () => {
+  const second = { ...cue, id: "cue-2", full_name: "Karimova Dilnoza" }
+  const third = { ...cue, id: "cue-3", full_name: "Sodiqov Sardor" }
+
+  test("LC-ADM-05 deletes the selected cues in one request and drops them from the list", async () => {
+    let rows = [cue, second, third]
+    let body = null as { ids: string[] } | null
+    server.use(
+      http.get(apiUrl("/v1/admin/login-cues"), () => HttpResponse.json(rows)),
+      http.post(apiUrl("/v1/admin/login-cues/bulk-delete"), async ({ request }) => {
+        body = (await request.json()) as { ids: string[] }
+        rows = rows.filter((row) => !body?.ids.includes(row.id))
+        return HttpResponse.json({ deleted: body.ids.length })
+      }),
+    )
+    const { user } = renderAdmin(<LoginCuesPage />, { route: "/login-cues/" })
+    const table = await screen.findByRole("table")
+
+    await user.click(within(table).getByRole("checkbox", { name: "Select Aliyev Ali" }))
+    await user.click(within(table).getByRole("checkbox", { name: "Select Sodiqov Sardor" }))
+    expect(screen.getByText("Selected: 2")).toBeInTheDocument()
+    await user.click(screen.getByRole("button", { name: "Delete selected" }))
+    const dialog = await screen.findByRole("alertdialog")
+    await user.click(within(dialog).getByRole("button", { name: "Delete" }))
+
+    await waitFor(() => expect(body).not.toBeNull())
+    expect(body?.ids).toEqual(["cue-1", "cue-3"])
+    await waitFor(() => expect(within(screen.getByRole("table")).queryByText("Aliyev Ali")).toBeNull())
+    expect(within(screen.getByRole("table")).getByText("Karimova Dilnoza")).toBeInTheDocument()
+    expect(screen.queryByText(/Selected:/)).toBeNull()
+  })
+
+  test("LC-ADM-06 select all toggles every visible cue and clear selection resets", async () => {
+    server.use(http.get(apiUrl("/v1/admin/login-cues"), () => HttpResponse.json([cue, second])))
+    const { user } = renderAdmin(<LoginCuesPage />, { route: "/login-cues/" })
+    const table = await screen.findByRole("table")
+
+    const all = screen.getByRole("checkbox", { name: "Select all" })
+    await user.click(all)
+    expect(screen.getByText("Selected: 2")).toBeInTheDocument()
+    expect(within(table).getByRole("checkbox", { name: "Select Aliyev Ali" })).toBeChecked()
+    await user.click(all)
+    expect(screen.queryByText(/Selected:/)).toBeNull()
+
+    await user.click(within(table).getByRole("checkbox", { name: "Select Aliyev Ali" }))
+    await user.click(screen.getByRole("button", { name: "Clear selection" }))
+    expect(screen.queryByText(/Selected:/)).toBeNull()
+  })
+
+  test("LC-ADM-07 shows an empty state when the feature is switched off", async () => {
+    server.use(
+      http.get(apiUrl("/v1/admin/login-cues"), () =>
+        HttpResponse.json(
+          { type: "notebooks/feature-disabled", title: "Feature disabled", status: 404 },
+          { status: 404, headers: { "content-type": "application/problem+json" } },
+        ),
+      ),
+    )
+    renderAdmin(<LoginCuesPage />, { route: "/login-cues/" })
+
+    expect(await screen.findByText("Login cues are switched off.")).toBeInTheDocument()
+  })
+})

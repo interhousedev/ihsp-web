@@ -1,4 +1,10 @@
-import type { LoginCueBody, LoginCueBulkBody, LoginCueResponse, RegisterCueBody } from "@ihsp/api"
+import type {
+  LoginCueBody,
+  LoginCueBulkBody,
+  LoginCueBulkDeleteBody,
+  LoginCueResponse,
+  RegisterCueBody,
+} from "@ihsp/api"
 import { HttpResponse, http } from "msw"
 import { loginCueGroups, loginCueNames, loginCues } from "../fixtures/login-cues"
 import { registrationStart } from "../fixtures/registration"
@@ -26,6 +32,11 @@ export const loginCuesHandlers = [
     const body = await readJson<LoginCueBulkBody>(request)
     const created = (body.items ?? []).map((item, index) => toResponse(item, `cue-bulk-${index + 1}`))
     return HttpResponse.json({ created }, { status: 201 })
+  }),
+  http.post(apiUrl("/v1/admin/login-cues/bulk-delete"), async ({ request }) => {
+    const body = await readJson<LoginCueBulkDeleteBody>(request)
+    const known = new Set(loginCues.map((cue) => cue.id))
+    return HttpResponse.json({ deleted: (body.ids ?? []).filter((id) => known.has(id)).length })
   }),
   http.get(apiUrl("/v1/admin/login-cues"), ({ request }) => {
     const groupId = query(request).get("group_id")

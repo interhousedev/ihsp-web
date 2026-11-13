@@ -1,7 +1,9 @@
 "use client"
 
+import { getAdminSettingsQuery } from "@ihsp/api"
 import { useT } from "@ihsp/i18n"
 import type { NavGroup } from "@ihsp/ui"
+import { useQuery } from "@tanstack/react-query"
 import { useMemo } from "react"
 
 /**
@@ -10,6 +12,9 @@ import { useMemo } from "react"
  */
 export function useNav(): { groups: NavGroup[] } {
   const t = useT("nav")
+  const settings = useQuery(getAdminSettingsQuery())
+  // Shown until the settings say the feature is off.
+  const loginCues = settings.data?.features.login_cues !== false
   return useMemo(
     () => ({
       groups: [
@@ -20,7 +25,7 @@ export function useNav(): { groups: NavGroup[] } {
             { title: t("students"), url: "/students/", icon: "students" },
             { title: t("teachers"), url: "/teachers/", icon: "userPen" },
             { title: t("users"), url: "/users/", icon: "account" },
-            { title: t("loginCues"), url: "/login-cues/", icon: "login" },
+            ...(loginCues ? [{ title: t("loginCues"), url: "/login-cues/", icon: "login" as const }] : []),
           ],
         },
         {
@@ -74,6 +79,6 @@ export function useNav(): { groups: NavGroup[] } {
         },
       ],
     }),
-    [t],
+    [t, loginCues],
   )
 }

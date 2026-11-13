@@ -1988,6 +1988,20 @@
     "confirmDelete": "Oʻchirish",
     "deleted": "Variant oʻchirildi",
     "created": "Variant qoʻshildi",
+    "disabled": "Ism variantlari oʻchirilgan.",
+    "select": {
+      "all": "Hammasini tanlash",
+      "row": "Tanlash: {name}",
+      "count": "Tanlangan: {count}",
+      "clear": "Tanlovni bekor qilish",
+      "delete": "Tanlanganlarni oʻchirish",
+      "copy": "Tanlanganlarni nusxalash",
+      "export": "CSV eksport",
+      "copied": "Nusxalangan qatorlar: {count}",
+      "deleteTitle": "{count} ta variant oʻchirilsinmi?",
+      "deleted": "Oʻchirilgan variantlar: {count}",
+      "csvName": "login-cues.csv"
+    },
     "form": {
       "title": "Ism variantini qoʻshish",
       "fullName": "Toʻliq ism",
@@ -2161,6 +2175,7 @@
   },
   "devices": {
     "title": "Kirish qurilmalari",
+    "docs": "Kirish qurilmalari qanday ishlaydi",
     "add": "Qurilma qoʻshish",
     "empty": "Hozircha qurilmalar yoʻq.",
     "createTitle": "Yangi qurilma",

@@ -30,3 +30,7 @@ export type LoginCueName = { cue_id: string; display_name: string }
 
 /** POST /v1/id/register/emis/cue: the picked cue and the EMIS password; returns the same start as /v1/id/register/emis. */
 export type RegisterCueBody = { cue_id: string; emis_password: string }
+
+/** POST /v1/admin/login-cues/bulk-delete; 1 to 500 ids, unknown ids are skipped. */
+export type LoginCueBulkDeleteBody = { ids: string[] }
+export type LoginCueBulkDeleteResponse = { deleted: number }

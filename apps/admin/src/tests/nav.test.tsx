@@ -1,6 +1,9 @@
 /** ADM-1: the sidebar groups and the icons of its items; the groups stay small and the same icon never stands for two pages. */
 import { describe, expect, test } from "bun:test"
 import { useNav } from "../config/nav"
+import { apiUrl, platformSettings, server } from "@ihsp/test-utils"
+import { waitFor } from "@testing-library/react"
+import { HttpResponse, http } from "msw"
 import { configureTests, renderAdmin } from "./helpers"
 
 configureTests()
@@ -62,6 +65,20 @@ describe("admin sidebar (ADM-1)", () => {
     expect(icons.every((icon) => icon !== undefined)).toBe(true)
     expect(new Set(icons).size).toBe(4)
     expect(new Set(all.map((item) => item.icon)).size).toBeGreaterThan(all.length / 2)
+  })
+
+  test("Login cues leave the sidebar when the feature is switched off", async () => {
+    server.use(
+      http.get(apiUrl("/v1/admin/settings"), () =>
+        HttpResponse.json({ ...platformSettings, features: { ...platformSettings.features, login_cues: false } }),
+      ),
+    )
+    const box: { groups: Groups } = { groups: [] }
+    renderAdmin(<NavProbe box={box} />)
+    expect(itemsOf(box.groups, "People").map((item) => item.url)).toContain("/login-cues/")
+    await waitFor(() => {
+      expect(itemsOf(box.groups, "People").map((item) => item.url)).not.toContain("/login-cues/")
+    })
   })
 
   test("the groups keep the spec order", () => {

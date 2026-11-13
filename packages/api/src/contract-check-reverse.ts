@@ -30,6 +30,7 @@ import type { getFeedback, getMyFeedback, postFeedback } from "./endpoints/feedb
 import type { deleteFile, getFile, getFileUrl, getMeFiles, getMeStorage, patchFile, postFileComplete, postFiles } from "./endpoints/files"
 import type { getMeFlashcardSet, getMeFlashcardSetCardStats, getMeFlashcardSetStudy, getMeFlashcardSets, getMeFlashcardSetsStats, patchMeFlashcardSet, postMeFlashcardReview, postMeFlashcardSetStudyRestart, postMeFlashcardSets, postMeFlashcardSetsCopy, postMeFlashcardSetsMerge, putMeFlashcardSetCards } from "./endpoints/flashcards"
 import type { getGroupProgress, getMyGroupProgress } from "./endpoints/group-progress"
+import type { getMeEmisRatingBook, getMeHonours } from "./endpoints/honours"
 import type { deleteIdMe, getIdActivation, getIdConsent, getIdLogin, getIdLogout, getIdMcpScopes, getIdMe, getIdMeActivity, getIdMeConnectorOffers, getIdMeConnectors, getIdMeMcpClients, getIdMeMcpSetup, getIdMeSessions, getIdMeTelegram, getIdPersonalTokens, patchIdMePreferences, patchIdMeTelegram, postIdActivation, postIdConsent, postIdLogin, postIdLoginEmisResolve, postIdLoginOtp, postIdLoginOtpRequest, postIdLoginPassword, postIdLoginRestore, postIdLoginRestoreDecline, postIdLoginTicket, postIdMeConnectorOfferDecision, postIdMeConnectors, postIdMeEmailChangeConfirm, postIdMeEmisPassword, postIdMeMcpClient, postIdMeMcpSetup, postIdMeOtpDisable, postIdMeOtpEnableConfirm, postIdPersonalTokens, postIdRecoveryOtpConfirm, postIdRecoveryPasswordConfirm, postIdTelegramLogin, postIdTelegramOtpRequest, postIdTelegramStatus, postRegisterTelegramStatus } from "./endpoints/id"
 import type { getAdminAudit, getAdminOauthClients, getAdminSettings, getAdminTeachers, getAdminUser, getAdminUsers, patchAdminTeacher, patchAdminUser, postAdminOauthClientVerify, postAdminTeacherDeactivate, postAdminTeachers, postAdminUserBlock, postAdminUserMailResume, postAdminUserMailSuspend, postAdminUserResetPassword, postAdminUserResetPasswordLink, postAdminUserRoles, postAdminUserUnblock, putAdminSettings } from "./endpoints/id-admin"
 import type { getIdMeSecurity, patchIdMePasskey, postIdLoginPasskey, postIdLoginPasskeyOptions, postIdLoginTotp, postIdMePasskey, postIdMePasskeyOptions, postIdMePasswordLoginDisable, postIdMeTotpConfirm, postIdMeTotpDisable, postIdMeTotpSetup } from "./endpoints/id-factors"
@@ -52,10 +53,12 @@ import type { getNotifications, getNotificationsUnreadCount } from "./endpoints/
 import type { postOauthLogout, postOauthRefresh, postOauthTelegram, postOauthToken, postOauthTokenHook } from "./endpoints/oauth"
 import type { confirmPresentationPlan, getPresentationPlan, patchPresentationPlan, postPresentationPlan } from "./endpoints/presentation-plans"
 import type { getPublicShare, postPublicReports } from "./endpoints/public"
+import type { getPublicStudentCard } from "./endpoints/public-student-cards"
 import type { getPushConfig, postPushSubscription } from "./endpoints/push"
 import type { getInternalEmisProfile, getInternalEmisRatings, getInternalEmisSubjects, postIdReclaimEmail, postIdReclaimEmis, postIdRegisterComplete, postIdRegisterEmail, postIdRegisterEmis } from "./endpoints/registration"
 import type { getAdminGroup, getAdminGroups, getAdminLessons, getAdminRooms, getAdminStudents, getAdminSubjects, getAdminTerms, getAdminTimetable, getMeProfile, getMeTimetable, getStaffGroup, getStaffGroups, getStaffTimetable, patchAdminGroup, patchAdminLesson, patchAdminRoom, patchAdminSubject, patchAdminTerm, patchAdminTimetable, postAdminGroups, postAdminLessons, postAdminRoomArchive, postAdminRoomMerge, postAdminRoomRegeneratePin, postAdminStudentsImport, postAdminStudentsImportConfirm, postAdminSubjects, postAdminTerms, postAdminTimetable, postAdminTimetableCheck, postAdminTimetableCopy, putAdminGroupSubgroups, putStaffGroupSubgroups } from "./endpoints/schedule"
 import type { getFileShares, getLinkedSets, getNotebookShares, getShareRecipients, getSharedFileUrl, getSharedFiles, getSharedNotebooks, postFileShareLink, postJoinFile, postJoinNotebook, postLinkedSet, postNotebookCopy, postNotebookShareLink } from "./endpoints/sharing"
+import type { getMeStudentCard, postMeStudentCardToken } from "./endpoints/student-card"
 import type { deleteAdminUserPhoto, deleteStaffMePhoto, getAdminTeacherContacts, getMeTeacher, getMeTeacherTimetable, getMeTeachers, getStaffMeContacts, putAdminTeacherContacts, putAdminUserPhoto, putStaffMeContacts, putStaffMePhoto } from "./endpoints/teachers"
 import type { getAdminWorkOffStats, getAdminWorkOffs } from "./endpoints/work-offs-admin"
 import type { getMeWorkOffs } from "./endpoints/work-offs-me"
@@ -749,6 +752,14 @@ export const served_getGroupProgress: Awaited<ReturnType<typeof getGroupProgress
 // GET /v1/me/group/progress — getMyGroupProgress
 declare const gen_getMyGroupProgress: ResponseOf<"/v1/me/group/progress", "get">
 export const served_getMyGroupProgress: Awaited<ReturnType<typeof getMyGroupProgress>> = gen_getMyGroupProgress
+
+// GET /v1/me/honours — getMeHonours
+declare const gen_getMeHonours: ResponseOf<"/v1/me/honours", "get">
+export const served_getMeHonours: Awaited<ReturnType<typeof getMeHonours>> = gen_getMeHonours
+
+// GET /v1/me/emis/rating-book — getMeEmisRatingBook
+declare const gen_getMeEmisRatingBook: ResponseOf<"/v1/me/emis/rating-book", "get">
+export const served_getMeEmisRatingBook: Awaited<ReturnType<typeof getMeEmisRatingBook>> = gen_getMeEmisRatingBook
 
 // GET /v1/admin/users — getAdminUsers
 declare const gen_getAdminUsers: ResponseOf<"/v1/admin/users", "get">
@@ -1910,6 +1921,10 @@ export const served_patchPresentationPlan: Awaited<ReturnType<typeof patchPresen
 declare const gen_confirmPresentationPlan: ResponseOf<"/v1/notebooks/{notebook_id}/presentation-plans/{plan_id}/confirm", "post">
 export const served_confirmPresentationPlan: Awaited<ReturnType<typeof confirmPresentationPlan>> = gen_confirmPresentationPlan
 
+// GET /v1/public/student-cards/{token} — getPublicStudentCard
+declare const gen_getPublicStudentCard: ResponseOf<"/v1/public/student-cards/{token}", "get">
+export const served_getPublicStudentCard: Awaited<ReturnType<typeof getPublicStudentCard>> = gen_getPublicStudentCard
+
 // GET /v1/public/shares/{slug} — getPublicShare
 declare const gen_getPublicShare: ResponseOf<"/v1/public/shares/{slug}", "get">
 export const served_getPublicShare: Awaited<ReturnType<typeof getPublicShare>> = gen_getPublicShare
@@ -2141,6 +2156,14 @@ export const served_getFileShares: Awaited<ReturnType<typeof getFileShares>> = g
 // POST /v1/files/{file_id}/shares/link — postFileShareLink
 declare const gen_postFileShareLink: ResponseOf<"/v1/files/{file_id}/shares/link", "post">
 export const served_postFileShareLink: Awaited<ReturnType<typeof postFileShareLink>> = gen_postFileShareLink
+
+// GET /v1/me/student-card — getMeStudentCard
+declare const gen_getMeStudentCard: ResponseOf<"/v1/me/student-card", "get">
+export const served_getMeStudentCard: Awaited<ReturnType<typeof getMeStudentCard>> = gen_getMeStudentCard
+
+// POST /v1/me/student-card/tokens — postMeStudentCardToken
+declare const gen_postMeStudentCardToken: ResponseOf<"/v1/me/student-card/tokens", "post">
+export const served_postMeStudentCardToken: Awaited<ReturnType<typeof postMeStudentCardToken>> = gen_postMeStudentCardToken
 
 // GET /v1/me/teachers — getMeTeachers
 declare const gen_getMeTeachers: ResponseOf<"/v1/me/teachers", "get">

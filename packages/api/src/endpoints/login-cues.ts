@@ -7,6 +7,8 @@ import type { NoContent } from "../types/common"
 import type {
   LoginCueBody,
   LoginCueBulkBody,
+  LoginCueBulkDeleteBody,
+  LoginCueBulkDeleteResponse,
   LoginCueBulkResponse,
   LoginCueGroup,
   LoginCueName,
@@ -34,6 +36,14 @@ export function postAdminLoginCue(body: LoginCueBody, opts?: RequestOptions): Pr
 /** POST /v1/admin/login-cues/bulk — admin; 1 to 500 cues, all or nothing. */
 export function postAdminLoginCuesBulk(body: LoginCueBulkBody, opts?: RequestOptions): Promise<LoginCueBulkResponse> {
   return api.post<LoginCueBulkResponse>("/v1/admin/login-cues/bulk", body, opts)
+}
+
+/** POST /v1/admin/login-cues/bulk-delete — admin; deletes several cues, unknown ids are skipped. */
+export function postAdminLoginCuesBulkDelete(
+  body: LoginCueBulkDeleteBody,
+  opts?: RequestOptions,
+): Promise<LoginCueBulkDeleteResponse> {
+  return api.post<LoginCueBulkDeleteResponse>("/v1/admin/login-cues/bulk-delete", body, opts)
 }
 
 /** DELETE /v1/admin/login-cues/{cue_id} — admin. */

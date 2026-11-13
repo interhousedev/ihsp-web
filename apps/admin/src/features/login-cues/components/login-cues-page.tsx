@@ -1,10 +1,18 @@
 "use client"
 
-import { deleteAdminLoginCue, getAdminGroupsQuery, getAdminLoginCuesQuery, type LoginCueResponse } from "@ihsp/api"
+import {
+  deleteAdminLoginCue,
+  getAdminGroupsQuery,
+  getAdminLoginCuesQuery,
+  isApiError,
+  postAdminLoginCuesBulkDelete,
+  type LoginCueResponse,
+} from "@ihsp/api"
 import { useLocale, useT } from "@ihsp/i18n"
 import {
   Badge,
   Button,
+  Checkbox,
   ConfirmDialog,
   IconPlus,
   IconTrash,
@@ -19,12 +27,19 @@ import {
 } from "@ihsp/ui"
 import { useQuery } from "@tanstack/react-query"
 import { useState } from "react"
+import { toast } from "sonner"
 import { SelectField } from "../../shared/components/select-field"
 import { useAdminMutation } from "../../shared/hooks/use-admin-mutation"
 import { useFilterState } from "../../shared/hooks/use-filter-state"
+import { downloadCsv } from "../../shared/utils/csv"
 import { TOUCH, TOUCH_ICON } from "../../shared/utils/touch"
 import { LoginCueBulkDialog } from "./login-cue-bulk-dialog"
 import { LoginCueDialog } from "./login-cue-dialog"
+
+/** The pasted-list line the bulk dialog parses: `login;full name`. */
+function toLine(cue: LoginCueResponse): string {
+  return `${cue.login_masked};${cue.full_name}`
+}
 
 const FILTER_KEYS = ["group_id"] as const
 
@@ -46,6 +61,43 @@ export function LoginCuesPage() {
     onSuccess: () => setDeleting(null),
   })
   const rows = cues.data ?? []
+  const [picked, setPicked] = useState<ReadonlySet<string>>(new Set())
+  const [deletingSelected, setDeletingSelected] = useState(false)
+  // Only cues that are still in the visible list count as selected.
+  const selected = rows.filter((cue) => picked.has(cue.id))
+  const allSelected = rows.length > 0 && selected.length === rows.length
+  const someSelected = selected.length > 0 && !allSelected
+  const toggle = (id: string, on: boolean) =>
+    setPicked((prev) => {
+      const next = new Set(prev)
+      if (on) next.add(id)
+      else next.delete(id)
+      return next
+    })
+  const toggleAll = (on: boolean) => setPicked(on ? new Set(rows.map((cue) => cue.id)) : new Set())
+  const removeSelected = useAdminMutation({
+    mutationFn: (ids: string[]) => postAdminLoginCuesBulkDelete({ ids }),
+    invalidate: [["admin", "login-cues"]],
+    success: (data) => t("select.deleted", { count: data.deleted }),
+    onSuccess: () => {
+      setPicked(new Set())
+      setDeletingSelected(false)
+    },
+  })
+  const copySelected = async () => {
+    await navigator.clipboard.writeText(selected.map(toLine).join("\n"))
+    toast.success(t("select.copied", { count: selected.length }))
+  }
+  const exportSelected = () =>
+    downloadCsv(t("select.csvName"), [
+      [t("columns.name"), t("columns.group"), t("columns.login"), t("columns.status")],
+      ...selected.map((cue) => [
+        cue.full_name,
+        cue.group_name,
+        cue.login_masked,
+        cue.consumed_at !== null ? t("status.used") : t("status.free"),
+      ]),
+    ])
 
   return (
     <PageContainer
@@ -73,16 +125,50 @@ export function LoginCuesPage() {
       </div>
       {cues.isPending ? (
         <StateView state="loading" />
+      ) : cues.isError && isApiError(cues.error) && cues.error.status === 404 ? (
+        <StateView state="empty" emptyText={t("disabled")} />
       ) : cues.isError ? (
         <StateView state="error" error={cues.error} onRetry={() => void cues.refetch()} />
       ) : rows.length === 0 ? (
         <StateView state="empty" emptyText={t("empty")} />
       ) : (
         <>
+          <div className="mb-3 flex flex-wrap items-center gap-2">
+            <label className="flex items-center gap-2 text-sm">
+              <Checkbox
+                checked={allSelected}
+                indeterminate={someSelected}
+                onCheckedChange={(checked) => toggleAll(checked === true)}
+              />
+              {t("select.all")}
+            </label>
+            {selected.length > 0 ? (
+              <div role="toolbar" className="flex flex-wrap items-center gap-2">
+                <span className="text-sm font-medium">{t("select.count", { count: selected.length })}</span>
+                <Button type="button" variant="outline" size="sm" onClick={() => void copySelected()}>
+                  {t("select.copy")}
+                </Button>
+                <Button type="button" variant="outline" size="sm" onClick={exportSelected}>
+                  {t("select.export")}
+                </Button>
+                <Button type="button" variant="destructive" size="sm" onClick={() => setDeletingSelected(true)}>
+                  {t("select.delete")}
+                </Button>
+                <Button type="button" variant="ghost" size="sm" onClick={() => setPicked(new Set())}>
+                  {t("select.clear")}
+                </Button>
+              </div>
+            ) : null}
+          </div>
           <ul className="grid gap-2 md:hidden" aria-label={t("title")}>
             {rows.map((cue) => (
               <li key={cue.id} className="flex items-start justify-between gap-3 rounded-lg border p-3">
-                <span className="grid gap-1">
+                <Checkbox
+                  aria-label={t("select.row", { name: cue.full_name })}
+                  checked={picked.has(cue.id)}
+                  onCheckedChange={(checked) => toggle(cue.id, checked === true)}
+                />
+                <span className="grid flex-1 gap-1">
                   <span className="font-medium">{cue.full_name}</span>
                   <span className="text-muted-foreground text-sm">{cue.group_name}</span>
                   <span className="font-mono text-xs">{cue.login_masked}</span>
@@ -96,6 +182,7 @@ export function LoginCuesPage() {
             <Table>
               <TableHeader>
                 <TableRow>
+                  <TableHead className="w-10" />
                   <TableHead>{t("columns.name")}</TableHead>
                   <TableHead>{t("columns.group")}</TableHead>
                   <TableHead>{t("columns.login")}</TableHead>
@@ -109,6 +196,13 @@ export function LoginCuesPage() {
               <TableBody>
                 {rows.map((cue) => (
                   <TableRow key={cue.id}>
+                    <TableCell>
+                      <Checkbox
+                        aria-label={t("select.row", { name: cue.full_name })}
+                        checked={picked.has(cue.id)}
+                        onCheckedChange={(checked) => toggle(cue.id, checked === true)}
+                      />
+                    </TableCell>
                     <TableCell className="font-medium">{cue.full_name}</TableCell>
                     <TableCell>{cue.group_name}</TableCell>
                     <TableCell className="font-mono text-xs">{cue.login_masked}</TableCell>
@@ -142,6 +236,18 @@ export function LoginCuesPage() {
           destructive
           loading={remove.isPending}
           onConfirm={() => remove.mutate(deleting)}
+        />
+      ) : null}
+      {deletingSelected ? (
+        <ConfirmDialog
+          open
+          onOpenChange={(open) => (open ? undefined : setDeletingSelected(false))}
+          title={t("select.deleteTitle", { count: selected.length })}
+          description={t("deleteText")}
+          confirmLabel={t("confirmDelete")}
+          destructive
+          loading={removeSelected.isPending}
+          onConfirm={() => removeSelected.mutate(selected.map((cue) => cue.id))}
         />
       ) : null}
     </PageContainer>

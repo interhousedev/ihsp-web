@@ -1388,6 +1388,26 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/v1/admin/login-cues/bulk-delete": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Bulk Delete Login Cues
+         * @description Delete several cues (consumed ones too); unknown ids are skipped.
+         */
+        post: operations["bulk_delete_login_cues_v1_admin_login_cues_bulk_delete_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/v1/admin/login-cues/{cue_id}": {
         parameters: {
             query?: never;
@@ -10436,6 +10456,26 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/v1/public/client-config": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get Client Config
+         * @description Return the public feature flags and documentation links.
+         */
+        get: operations["get_client_config_v1_public_client_config_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/v1/public/reports": {
         parameters: {
             query?: never;
@@ -13677,6 +13717,22 @@ export interface components {
             session: components["schemas"]["app__interfaces__http__v1__notebooks__schemas_common__UsagePartResponse"];
         };
         /**
+         * BulkDeleteLoginCuesBody
+         * @description Cue ids to delete.
+         */
+        BulkDeleteLoginCuesBody: {
+            /** Ids */
+            ids: string[];
+        };
+        /**
+         * BulkDeleteLoginCuesResponse
+         * @description How many cues were deleted.
+         */
+        BulkDeleteLoginCuesResponse: {
+            /** Deleted */
+            deleted: number;
+        };
+        /**
          * BulkLoginCuesBody
          * @description Several cues at once; all of them are created or none.
          */
@@ -14304,6 +14360,32 @@ export interface components {
         ClientBody: {
             /** Client Id */
             client_id: string;
+        };
+        /**
+         * ClientConfigResponse
+         * @description Public client configuration.
+         */
+        ClientConfigResponse: {
+            docs: components["schemas"]["ClientDocs"];
+            features: components["schemas"]["ClientFeatures"];
+        };
+        /**
+         * ClientDocs
+         * @description Links to the documentation pages; null when not configured.
+         */
+        ClientDocs: {
+            /** Entrance Devices Url */
+            entrance_devices_url: string | null;
+            /** Personal Tokens Url */
+            personal_tokens_url: string | null;
+        };
+        /**
+         * ClientFeatures
+         * @description Feature flags the web apps need before sign-in.
+         */
+        ClientFeatures: {
+            /** Login Cues */
+            login_cues: boolean;
         };
         /**
          * CodeBody
@@ -34016,6 +34098,39 @@ export interface operations {
             };
         };
     };
+    bulk_delete_login_cues_v1_admin_login_cues_bulk_delete_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["BulkDeleteLoginCuesBody"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["BulkDeleteLoginCuesResponse"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
     delete_login_cue_v1_admin_login_cues__cue_id__delete: {
         parameters: {
             query?: never;
@@ -50460,6 +50575,26 @@ export interface operations {
                 };
                 content: {
                     "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    get_client_config_v1_public_client_config_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ClientConfigResponse"];
                 };
             };
         };
