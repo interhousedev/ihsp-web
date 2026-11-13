@@ -13,6 +13,8 @@ import { DEFAULT_HONOURS } from "../features/settings/components/honours-section
 
 configureTests()
 
+const MOST_FOURS = "Allow at most this many semester marks of 4 (of 4 semesters)"
+
 describe("platform settings", () => {
   test("shows the saved values and the read-only feature flags", async () => {
     renderAdmin(<SettingsPage />, { route: "/settings/" })
@@ -88,7 +90,7 @@ describe("platform settings", () => {
     const { user } = renderAdmin(<SettingsPage />, { route: "/settings/" })
 
     await user.click(await screen.findByRole("checkbox", { name: "All semester marks are 5" }))
-    const limits = screen.getAllByLabelText("Most semester marks of 4")
+    const limits = screen.getAllByLabelText(MOST_FOURS)
     setValue(limits[0] as HTMLElement, "3")
     await user.type(screen.getByLabelText("New serial"), "XY-1")
     await user.click(screen.getByRole("button", { name: "Add" }))
@@ -107,13 +109,38 @@ describe("platform settings", () => {
   test("a limit outside 0..20 blocks saving", async () => {
     renderAdmin(<SettingsPage />, { route: "/settings/" })
 
-    const limits = await screen.findAllByLabelText("Most semester marks of 4")
+    const limits = await screen.findAllByLabelText(MOST_FOURS)
     setValue(limits[0] as HTMLElement, "21")
     expect(screen.getByRole("alert")).toHaveTextContent("Enter a whole number from 0 to 20.")
     expect(screen.getByRole("button", { name: "Save" })).toBeDisabled()
     setValue(limits[0] as HTMLElement, "20")
     expect(screen.queryByRole("alert")).toBeNull()
     expect(screen.getByRole("button", { name: "Save" })).toBeEnabled()
+  })
+
+  test("a disabled rule with an emptied limit does not block saving", async () => {
+    const { user } = renderAdmin(<SettingsPage />, { route: "/settings/" })
+
+    const limits = await screen.findAllByLabelText(MOST_FOURS)
+    setValue(limits[0] as HTMLElement, "")
+    expect(screen.getByRole("button", { name: "Save" })).toBeDisabled()
+    expect(limits[0]).toHaveAttribute("aria-describedby")
+    await user.click(screen.getAllByRole("checkbox", { name: /Allow semester marks of 4/ })[0] as HTMLElement)
+    expect(screen.queryByRole("alert")).toBeNull()
+    expect(screen.getByRole("button", { name: "Save" })).toBeEnabled()
+  })
+
+  test("a typed serial is added on leaving the field and a duplicate is flagged", async () => {
+    const { user } = renderAdmin(<SettingsPage />, { route: "/settings/" })
+
+    const input = await screen.findByLabelText("New serial")
+    await user.type(input, "tma")
+    expect(screen.getByRole("alert")).toHaveTextContent("This serial is already on the list.")
+    expect(input).toHaveAttribute("aria-describedby", "honours-serial-duplicate")
+    await user.clear(input)
+    await user.type(input, "ZZ-9")
+    await user.tab()
+    expect(screen.getByLabelText("Accepted serials")).toHaveTextContent("ZZ-9")
   })
 })
 

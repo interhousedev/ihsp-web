@@ -1496,26 +1496,27 @@
     "honours": {
       "title": "Mukofot qoidalari",
       "awards": {
-        "red_diploma": "Qizil diplom",
-        "gold_medal": "Oltin medal",
-        "silver_medal": "Kumush medal",
-        "certificate": "Medallar uchun attestat (oltin va kumush)"
+        "red_diploma": "Qizil diplom: shartlar",
+        "gold_medal": "Oltin medal: shartlar",
+        "silver_medal": "Kumush medal: shartlar",
+        "certificate": "Medallar uchun attestat (oltin va kumush): qabul qilinadigan seriyalar"
       },
       "rules": {
-        "red_diploma_max_fours": "Semestr baholaridagi 4 larni cheklash",
+        "red_diploma_max_fours": "Semestr baholaridagi 4 larga ruxsat berish (quyidagi chegaragacha)",
         "gold_controls_all_five": "Barcha oraliq va yakuniy nazoratlar (ПК va ИК) 5 ga",
         "gold_semester_all_five": "Barcha semestr baholari 5",
         "silver_controls_all_five": "Barcha oraliq va yakuniy nazoratlar (ПК va ИК) 5 ga",
-        "silver_semester_max_fours": "Semestr baholaridagi 4 larni cheklash",
+        "silver_semester_max_fours": "Semestr baholaridagi 4 larga ruxsat berish (quyidagi chegaragacha)",
         "medal_certificate": "Attestat seriyasi roʻyxatda boʻlishi kerak"
       },
-      "maxFours": "Semestr baholaridagi 4 lar soni koʻpi bilan",
+      "maxFours": "Semestr baholaridagi 4 lar soni koʻpi bilan (4 ta semestrdan)",
       "maxInvalid": "0 dan {max} gacha butun son kiriting.",
       "serials": "Qabul qilinadigan seriyalar",
       "newSerial": "Yangi seriya",
       "addSerial": "Qoʻshish",
       "removeSerial": "{serial} ni oʻchirish",
-      "serialsEmpty": "Kamida bitta seriya qoʻshing yoki qoidani oʻchiring."
+      "serialsEmpty": "Kamida bitta seriya qoʻshing yoki qoidani oʻchiring.",
+      "serialDuplicate": "Bu seriya roʻyxatda allaqachon bor."
     },
     "features": "Server funksiyalari",
     "on": "yoq",
@@ -1986,24 +1987,28 @@
     "deleteTitle": "{name} oʻchirilsinmi?",
     "deleteText": "Talaba bu ismni roʻyxatga olishda koʻrmaydi.",
     "confirmDelete": "Oʻchirish",
-    "deleted": "Variant oʻchirildi",
-    "created": "Variant qoʻshildi",
-    "disabled": "Ism variantlari oʻchirilgan.",
+    "deleted": "Login oʻchirildi",
+    "created": "Login qoʻshildi",
+    "disabled": "Ism variantlari funksiyasi oʻchirib qoʻyilgan.",
     "select": {
       "all": "Hammasini tanlash",
+      "column": "Tanlash",
       "row": "Tanlash: {name}",
       "count": "Tanlangan: {count}",
+      "region": "Tanlangan loginlar",
       "clear": "Tanlovni bekor qilish",
       "delete": "Tanlanganlarni oʻchirish",
-      "copy": "Tanlanganlarni nusxalash",
+      "copy": "Ismlarni nusxalash",
       "export": "CSV eksport",
-      "copied": "Nusxalangan qatorlar: {count}",
-      "deleteTitle": "{count} ta variant oʻchirilsinmi?",
-      "deleted": "Oʻchirilgan variantlar: {count}",
+      "copied": "{count, plural, one {# ta ism nusxalandi} other {# ta ism nusxalandi}}",
+      "deleteTitle": "{count, plural, one {# ta login oʻchirilsinmi?} other {# ta login oʻchirilsinmi?}}",
+      "deleteText": "Talabalar tanlangan ismlarni roʻyxatga olishda koʻrmaydi.",
+      "deleted": "{count, plural, one {# ta login oʻchirildi} other {# ta login oʻchirildi}}",
+      "deletePartial": "{total} tadan {done} tasi oʻchirildi. Qolganlari tanlangan holda qoladi.",
       "csvName": "login-cues.csv"
     },
     "form": {
-      "title": "Ism variantini qoʻshish",
+      "title": "Login qoʻshish",
       "fullName": "Toʻliq ism",
       "group": "Guruh",
       "chooseGroup": "Guruhni tanlang",
@@ -2024,7 +2029,7 @@
       "preview": "Tanilgan qatorlar: {count}.",
       "errors": "Qatorlarni tekshiring: {lines}.",
       "submit": "Hammasini qoʻshish",
-      "done": "{count} ta variant qoʻshildi"
+      "done": "{count} ta login qoʻshildi"
     }
   },
   "botPosts": {

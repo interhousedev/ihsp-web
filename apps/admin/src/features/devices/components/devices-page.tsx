@@ -8,6 +8,7 @@ import {
   keys,
   postAdminDeviceRevoke,
 } from "@ihsp/api"
+import { DocsLink } from "@ihsp/features-core/id-account"
 import { useFormatters, useT } from "@ihsp/i18n"
 import { Badge, Button, ConfirmDialog, IconPlus, PageContainer, StateView } from "@ihsp/ui"
 import { useQuery } from "@tanstack/react-query"
@@ -46,14 +47,9 @@ export function DevicesPage() {
       }
     >
       {docsUrl ? (
-        <a
-          href={docsUrl}
-          target="_blank"
-          rel="noreferrer"
-          className="mb-3 inline-block text-sm underline underline-offset-4"
-        >
-          {t("docs")}
-        </a>
+        <div className="mb-3">
+          <DocsLink href={docsUrl}>{t("docs")}</DocsLink>
+        </div>
       ) : null}
       {devices.isPending ? (
         <StateView state="loading" />

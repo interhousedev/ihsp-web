@@ -1496,26 +1496,27 @@
     "honours": {
       "title": "Honours rules",
       "awards": {
-        "red_diploma": "Red diploma",
-        "gold_medal": "Gold medal",
-        "silver_medal": "Silver medal",
-        "certificate": "Medal certificate (gold and silver)"
+        "red_diploma": "Red diploma: conditions",
+        "gold_medal": "Gold medal: conditions",
+        "silver_medal": "Silver medal: conditions",
+        "certificate": "Medal certificate (gold and silver): accepted serials"
       },
       "rules": {
-        "red_diploma_max_fours": "Limit the semester marks of 4",
+        "red_diploma_max_fours": "Allow semester marks of 4 (up to the limit below)",
         "gold_controls_all_five": "All midterm and final controls (ПК and ИК) are 5",
         "gold_semester_all_five": "All semester marks are 5",
         "silver_controls_all_five": "All midterm and final controls (ПК and ИК) are 5",
-        "silver_semester_max_fours": "Limit the semester marks of 4",
+        "silver_semester_max_fours": "Allow semester marks of 4 (up to the limit below)",
         "medal_certificate": "The school certificate serial must be on the list"
       },
-      "maxFours": "Most semester marks of 4",
+      "maxFours": "Allow at most this many semester marks of 4 (of 4 semesters)",
       "maxInvalid": "Enter a whole number from 0 to {max}.",
       "serials": "Accepted serials",
       "newSerial": "New serial",
       "addSerial": "Add",
       "removeSerial": "Remove {serial}",
-      "serialsEmpty": "Add at least one serial or turn the rule off."
+      "serialsEmpty": "Add at least one serial or turn the rule off.",
+      "serialDuplicate": "This serial is already on the list."
     },
     "features": "Server features",
     "on": "on",
@@ -1991,15 +1992,19 @@
     "disabled": "Login cues are switched off.",
     "select": {
       "all": "Select all",
+      "column": "Selection",
       "row": "Select {name}",
       "count": "Selected: {count}",
+      "region": "Selected login cues",
       "clear": "Clear selection",
       "delete": "Delete selected",
-      "copy": "Copy selected",
+      "copy": "Copy names",
       "export": "Export CSV",
-      "copied": "Copied {count} lines",
-      "deleteTitle": "Delete {count} login cues?",
-      "deleted": "Deleted login cues: {count}",
+      "copied": "{count, plural, one {Copied # name} other {Copied # names}}",
+      "deleteTitle": "{count, plural, one {Delete # login cue?} other {Delete # login cues?}}",
+      "deleteText": "Students will no longer see the selected names at registration.",
+      "deleted": "{count, plural, one {Deleted # login cue} other {Deleted # login cues}}",
+      "deletePartial": "Deleted {done} of {total}. The rest stay selected.",
       "csvName": "login-cues.csv"
     },
     "form": {

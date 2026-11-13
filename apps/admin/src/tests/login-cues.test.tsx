@@ -1,7 +1,7 @@
 /** Login cues (admin): list with a group filter, add one cue with validation, paste many, delete with confirmation. */
 import { describe, expect, test } from "bun:test"
-import { apiUrl, ids, selectDropdownOption, server, setDropdownValue } from "@ihsp/test-utils"
-import { screen, waitFor, within } from "@testing-library/react"
+import { apiUrl, ids, platformSettings, selectDropdownOption, server, setDropdownValue } from "@ihsp/test-utils"
+import { fireEvent, screen, waitFor, within } from "@testing-library/react"
 import { HttpResponse, http } from "msw"
 import { LoginCuesPage } from "../features/login-cues/components/login-cues-page"
 import { configureTests, renderAdmin, setValue } from "./helpers"
@@ -198,5 +198,60 @@ describe("login cues mass select", () => {
     renderAdmin(<LoginCuesPage />, { route: "/login-cues/" })
 
     expect(await screen.findByText("Login cues are switched off.")).toBeInTheDocument()
+  })
+})
+
+describe("login cues bulk actions", () => {
+  test("LC-ADM-08 deletes 501 selected cues in two sequential requests of at most 500", async () => {
+    const many = Array.from({ length: 501 }, (_, index) => ({
+      ...cue,
+      id: `cue-${index}`,
+      full_name: `Student ${index}`,
+    }))
+    const sizes: number[] = []
+    server.use(
+      http.get(apiUrl("/v1/admin/login-cues"), () => HttpResponse.json(many)),
+      http.post(apiUrl("/v1/admin/login-cues/bulk-delete"), async ({ request }) => {
+        const { ids: sent } = (await request.json()) as { ids: string[] }
+        sizes.push(sent.length)
+        return HttpResponse.json({ deleted: sent.length })
+      }),
+    )
+    renderAdmin(<LoginCuesPage />, { route: "/login-cues/" })
+    // 501 rows make role queries slow: use text queries and direct events.
+    await screen.findByText("Student 500", { selector: "td" })
+
+    fireEvent.click(screen.getByText("Select all"))
+    fireEvent.click(await screen.findByText("Delete selected"))
+    const dialog = await screen.findByRole("alertdialog")
+    fireEvent.click(within(dialog).getByText("Delete", { selector: "button" }))
+
+    await waitFor(() => expect(sizes).toEqual([500, 1]), { timeout: 15000 })
+  })
+
+  test("LC-ADM-09 changing the group filter clears the selection", async () => {
+    server.use(http.get(apiUrl("/v1/admin/login-cues"), () => HttpResponse.json([cue])))
+    const { user } = renderAdmin(<LoginCuesPage />, { route: "/login-cues/" })
+    const table = await screen.findByRole("table")
+
+    await user.click(within(table).getByRole("checkbox", { name: "Select Aliyev Ali" }))
+    expect(screen.getByText("Selected: 1")).toBeInTheDocument()
+    await selectDropdownOption(user, screen.getByRole("combobox", { name: "Filter by group" }), "2TN2")
+
+    await waitFor(() => expect(screen.queryByText(/Selected:/)).toBeNull())
+  })
+
+  test("LC-ADM-10 hides add, paste list and the group filter when the settings switch the feature off", async () => {
+    server.use(
+      http.get(apiUrl("/v1/admin/settings"), () =>
+        HttpResponse.json({ ...platformSettings, features: { ...platformSettings.features, login_cues: false } }),
+      ),
+    )
+    renderAdmin(<LoginCuesPage />, { route: "/login-cues/" })
+
+    expect(await screen.findByText("Login cues are switched off.")).toBeInTheDocument()
+    expect(screen.queryByRole("button", { name: "Add name" })).toBeNull()
+    expect(screen.queryByRole("button", { name: "Paste list" })).toBeNull()
+    expect(screen.queryByRole("combobox", { name: "Filter by group" })).toBeNull()
   })
 })

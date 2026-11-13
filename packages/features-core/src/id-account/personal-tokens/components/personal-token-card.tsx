@@ -5,15 +5,12 @@ import { useFormatters } from "@ihsp/i18n"
 import { Badge, Button, Card, CardContent, ConfirmDialog } from "@ihsp/ui"
 import { useMutation, useQueryClient } from "@tanstack/react-query"
 import { useState } from "react"
-import { DocsLink } from "../../shared/components/docs-link"
 import { ErrorAlert } from "../../shared/components/error-alert"
-import { useClientConfig } from "../../shared/hooks/use-client-config"
 import { useTr } from "../../shared/hooks/use-tr"
 
 /** One personal token: prefix, scopes, expires and last used, and **Revoke** (immediate, with a confirmation). */
 export function PersonalTokenCard({ token }: { token: PersonalToken }) {
   const t = useTr()
-  const docsUrl = useClientConfig()?.docs.personal_tokens_url
   const format = useFormatters()
   const queryClient = useQueryClient()
   const [confirming, setConfirming] = useState(false)
@@ -59,7 +56,6 @@ export function PersonalTokenCard({ token }: { token: PersonalToken }) {
           <dt>{t("personalTokens.expires")}</dt>
           <dd>{format.dateTime(token.expires_at)}</dd>
         </dl>
-        <DocsLink href={docsUrl}>{t("personalTokens.docs")}</DocsLink>
       </CardContent>
       <ConfirmDialog
         open={confirming}

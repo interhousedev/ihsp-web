@@ -31,8 +31,8 @@ export function isValidMax(max: number): boolean {
 export function honoursValid(rules: AdminHonoursRules): boolean {
   const { medal_certificate: certificate } = rules
   return (
-    isValidMax(rules.red_diploma_max_fours.max) &&
-    isValidMax(rules.silver_semester_max_fours.max) &&
+    (!rules.red_diploma_max_fours.enabled || isValidMax(rules.red_diploma_max_fours.max)) &&
+    (!rules.silver_semester_max_fours.enabled || isValidMax(rules.silver_semester_max_fours.max)) &&
     (!certificate.enabled || certificate.serials.length > 0)
   )
 }
@@ -41,18 +41,28 @@ function MaxFoursRule({
   id,
   label,
   rule,
+  fallbackMax,
   onChange,
 }: {
   id: string
   label: string
   rule: HonoursMaxFoursRule
+  fallbackMax: number
   onChange: (rule: HonoursMaxFoursRule) => void
 }) {
   const t = useT("settings.honours")
-  const invalid = !isValidMax(rule.max)
+  const invalid = rule.enabled && !isValidMax(rule.max)
+  const errorId = `${id}-error`
   return (
     <div className="grid gap-2">
-      <CheckField checked={rule.enabled} onChange={(enabled) => onChange({ ...rule, enabled })} label={label} />
+      <CheckField
+        checked={rule.enabled}
+        // A switched-off rule keeps a sendable number, so an emptied field never reaches the API as null.
+        onChange={(enabled) =>
+          onChange({ ...rule, enabled, max: !enabled && !isValidMax(rule.max) ? fallbackMax : rule.max })
+        }
+        label={label}
+      />
       <div className="grid gap-1 pl-6">
         <label htmlFor={id} className="text-muted-foreground text-xs">
           {t("maxFours")}
@@ -66,6 +76,7 @@ function MaxFoursRule({
           step={1}
           disabled={!rule.enabled}
           aria-invalid={invalid}
+          aria-describedby={invalid ? errorId : undefined}
           value={Number.isNaN(rule.max) ? "" : rule.max}
           className={`${TOUCH} w-28`}
           onChange={(event) =>
@@ -73,7 +84,7 @@ function MaxFoursRule({
           }
         />
         {invalid ? (
-          <p role="alert" className="text-destructive text-xs">
+          <p id={errorId} role="alert" className="text-destructive text-xs">
             {t("maxInvalid", { max: HONOURS_MAX_FOURS_LIMIT })}
           </p>
         ) : null}
@@ -94,12 +105,14 @@ function SerialsRule({
   const t = useT("settings.honours")
   const [draft, setDraft] = useState("")
   const value = draft.trim()
-  const duplicate = serials.some((serial) => serial.toLowerCase() === value.toLowerCase())
+  const duplicate = value !== "" && serials.some((serial) => serial.toLowerCase() === value.toLowerCase())
   const add = () => {
-    if (!value || duplicate) return
+    if (!enabled || !value || duplicate) return
     onChange({ enabled, serials: [...serials, value] })
     setDraft("")
   }
+  const emptyShown = enabled && serials.length === 0
+  const describedBy = duplicate ? "honours-serial-duplicate" : emptyShown ? "honours-serials-empty" : undefined
   return (
     <div className="grid gap-2">
       <CheckField
@@ -116,18 +129,19 @@ function SerialsRule({
                 {serial}
                 <button
                   type="button"
-                  className="inline-flex size-4 items-center justify-center rounded-full"
+                  disabled={!enabled}
+                  className="-my-2.5 -mr-1 inline-flex size-11 items-center justify-center rounded-full outline-none focus-visible:ring-[3px] focus-visible:ring-ring/50 disabled:opacity-50 md:m-0 md:size-6"
                   aria-label={t("removeSerial", { serial })}
                   onClick={() => onChange({ enabled, serials: serials.filter((item) => item !== serial) })}
                 >
-                  <RegistryIcon name="close" />
+                  <RegistryIcon name="close" className="mx-auto" />
                 </button>
               </Badge>
             </li>
           ))}
         </ul>
-        {enabled && serials.length === 0 ? (
-          <p role="alert" className="text-destructive text-xs">
+        {emptyShown ? (
+          <p id="honours-serials-empty" role="alert" className="text-destructive text-xs">
             {t("serialsEmpty")}
           </p>
         ) : null}
@@ -135,9 +149,13 @@ function SerialsRule({
           <Input
             value={draft}
             maxLength={SERIAL_MAX}
+            disabled={!enabled}
             aria-label={t("newSerial")}
+            aria-invalid={duplicate || emptyShown}
+            aria-describedby={describedBy}
             className={TOUCH}
             onChange={(event) => setDraft(event.target.value)}
+            onBlur={add}
             onKeyDown={(event) => {
               if (event.key === "Enter") {
                 event.preventDefault()
@@ -145,11 +163,22 @@ function SerialsRule({
               }
             }}
           />
-          <Button type="button" variant="outline" className={TOUCH} disabled={!value || duplicate} onClick={add}>
+          <Button
+            type="button"
+            variant="outline"
+            className={TOUCH}
+            disabled={!enabled || !value || duplicate}
+            onClick={add}
+          >
             <RegistryIcon name="add" />
             {t("addSerial")}
           </Button>
         </div>
+        {duplicate ? (
+          <p id="honours-serial-duplicate" role="alert" className="text-destructive text-xs">
+            {t("serialDuplicate")}
+          </p>
+        ) : null}
       </div>
     </div>
   )
@@ -177,6 +206,7 @@ export function HonoursSection({
       id={`honours-${key}`}
       label={t(`rules.${key}`)}
       rule={value[key]}
+      fallbackMax={DEFAULT_HONOURS[key].max}
       onChange={(rule) => onChange({ ...value, [key]: rule })}
     />
   )

@@ -58,12 +58,13 @@ describe("personal tokens documentation link", () => {
   test("links to the configured page in a new tab", async () => {
     const { user } = render()
 
-    const link = await screen.findAllByRole("link", { name: "How personal tokens work" })
-    expect(link[0]).toHaveAttribute("href", "https://docs.iht.test/personal-tokens")
-    expect(link[0]).toHaveAttribute("target", "_blank")
-    expect(link[0]).toHaveAttribute("rel", "noreferrer")
+    // One link for the whole page, not one per token card.
+    const link = await screen.findByRole("link", { name: /How personal tokens work/ })
+    expect(link).toHaveAttribute("href", "https://docs.iht.test/personal-tokens")
+    expect(link).toHaveAttribute("target", "_blank")
+    expect(link).toHaveAttribute("rel", "noreferrer")
     await user.click(await findButton("New token"))
-    expect(await screen.findAllByRole("link", { name: "How personal tokens work" })).not.toHaveLength(0)
+    expect(await screen.findAllByRole("link", { name: /How personal tokens work/ })).toHaveLength(1)
   })
 
   test("is hidden when the docs URL is not configured", async () => {
@@ -75,7 +76,7 @@ describe("personal tokens documentation link", () => {
     render()
 
     await screen.findByText("Grades script")
-    expect(screen.queryByRole("link", { name: "How personal tokens work" })).toBeNull()
+    expect(screen.queryByRole("link", { name: /How personal tokens work/ })).toBeNull()
   })
 })
 
@@ -88,6 +89,6 @@ describe("step-up sender", () => {
 
     await clickButton("New token")
     await clickButton("Send code")
-    expect(await screen.findByText("Could not send the code. Try again in a minute.")).toBeInTheDocument()
+    expect(await screen.findByText("Could not send the code. Try again.")).toBeInTheDocument()
   })
 })

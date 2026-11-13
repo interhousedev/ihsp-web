@@ -4,7 +4,9 @@ import { getIdPersonalTokensQuery, keys, type PersonalTokenCreated } from "@ihsp
 import { Button, PageContainer, StateView } from "@ihsp/ui"
 import { useQuery, useQueryClient } from "@tanstack/react-query"
 import { useState } from "react"
+import { DocsLink } from "../../shared/components/docs-link"
 import { QueryBoundary } from "../../shared/components/query-boundary"
+import { useClientConfig } from "../../shared/hooks/use-client-config"
 import { useTr } from "../../shared/hooks/use-tr"
 import { NewPersonalTokenForm } from "./new-personal-token-form"
 import { PersonalTokenCard } from "./personal-token-card"
@@ -15,6 +17,7 @@ type View = { kind: "list" } | { kind: "form" } | { kind: "secret"; created: Per
 /** `/personal-tokens/`: tokens for scripts, newest first; the secret of a new one is shown once. */
 export function PersonalTokensPage() {
   const t = useTr()
+  const docsUrl = useClientConfig()?.docs.personal_tokens_url
   const query = useQuery(getIdPersonalTokensQuery())
   const queryClient = useQueryClient()
   const [view, setView] = useState<View>({ kind: "list" })
@@ -31,6 +34,7 @@ export function PersonalTokensPage() {
         ) : null
       }
     >
+      {view.kind === "list" ? <DocsLink href={docsUrl}>{t("personalTokens.docs")}</DocsLink> : null}
       {view.kind === "secret" ? (
         <PersonalTokenSecret created={view.created} onDone={() => setView({ kind: "list" })} />
       ) : null}
