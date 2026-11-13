@@ -68,20 +68,21 @@ export function RegisterFirstTimeStep({ pending, error, onSubmit, onBack }: Regi
             <Label htmlFor="first-time-unique">{t("register.firstTime.useUnique")}</Label>
           </div>
         </RadioGroup>
-        <div className="grid gap-2">
-          <Label htmlFor="first-time-birth-date-picker">{t("register.firstTime.birthDate")}</Label>
+        {method === "birth-date" ? (
           <DatePicker
             id="first-time-birth-date-picker"
-            value={method === "birth-date" ? birthDate : null}
+            aria-label={t("register.firstTime.birthDate")}
+            value={birthDate}
             onChange={setBirthDate}
-            placeholder={t("register.firstTime.birthDatePick")}
-            disabled={method !== "birth-date"}
             min="1950-01-01"
             max={max}
             defaultMonth={`${typicalBirthYear}-01-01`}
             yearDropdown
+            typed
+            required
+            closeOnSelect
           />
-        </div>
+        ) : null}
         {method === "unique" ? (
           <TextField
             label={t("register.firstTime.unique")}

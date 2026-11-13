@@ -67,7 +67,8 @@ function finishInMiniApp(after: AfterRegistration): void {
 export function RegisterPage() {
   const t = useTr()
   // Loading and failure count as "off": the cue path is never offered (and never requested) without the flag.
-  const cuesEnabled = useClientConfig()?.features.login_cues === true
+  const clientConfig = useClientConfig()
+  const cuesEnabled = clientConfig?.features.login_cues === true
   const loginChallenge = useQueryParam("login_challenge")
   // Set when the IHT ID login page sent an all-digit (EMIS-style) login here; the password is never carried over.
   const emisLogin = useQueryParam(EMIS_LOGIN_PARAM)
@@ -197,6 +198,9 @@ export function RegisterPage() {
           >
             {t("register.pickLink")}
           </Button>
+        ) : clientConfig === undefined ? (
+          // The flag is still loading: keep the button's room so the form does not jump when it arrives.
+          <div aria-hidden className="min-h-11" />
         ) : undefined
       }
       footer={

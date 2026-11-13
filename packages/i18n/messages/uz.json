@@ -59,6 +59,7 @@
     "more": "Yana",
     "copy": "Nusxalash",
     "copied": "Nusxalandi",
+    "opensInNewTab": "(yangi varaqda ochiladi)",
     "yes": "Ha",
     "no": "Yoʻq",
     "open": "Ochish",
@@ -1954,7 +1955,7 @@
       "login-cue-group-not-found": "Bu guruh endi mavjud emas. Guruhni qayta tanlang.",
       "login-cue-unavailable": "Bu ism allaqachon hisob uchun ishlatilgan. Maʼmuriyatga murojaat qiling.",
       "vault-sealed": "Sirlar ombori muhrlangan, shuning uchun autentifikator ilovasini tekshirib boʻlmaydi. Bir martalik kod bilan kiring, soʻng omborni administrator ilovasida oching.",
-      "otp-delivery-failed": "Kodni yuborib boʻlmadi. Bir daqiqadan soʻng qayta urinib koʻring."
+      "otp-delivery-failed": "Kodni yuborib boʻlmadi. Qayta urinib koʻring."
     },
     "emis": {
       "auth-failed": "EMIS logini yoki paroli notoʻgʻri.",
