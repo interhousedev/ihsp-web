@@ -1493,6 +1493,30 @@
     },
     "save": "Save",
     "saved": "Settings saved",
+    "honours": {
+      "title": "Honours rules",
+      "awards": {
+        "red_diploma": "Red diploma",
+        "gold_medal": "Gold medal",
+        "silver_medal": "Silver medal",
+        "certificate": "Medal certificate (gold and silver)"
+      },
+      "rules": {
+        "red_diploma_max_fours": "Limit the semester marks of 4",
+        "gold_controls_all_five": "All midterm and final controls (ПК and ИК) are 5",
+        "gold_semester_all_five": "All semester marks are 5",
+        "silver_controls_all_five": "All midterm and final controls (ПК and ИК) are 5",
+        "silver_semester_max_fours": "Limit the semester marks of 4",
+        "medal_certificate": "The school certificate serial must be on the list"
+      },
+      "maxFours": "Most semester marks of 4",
+      "maxInvalid": "Enter a whole number from 0 to {max}.",
+      "serials": "Accepted serials",
+      "newSerial": "New serial",
+      "addSerial": "Add",
+      "removeSerial": "Remove {serial}",
+      "serialsEmpty": "Add at least one serial or turn the rule off."
+    },
     "features": "Server features",
     "on": "on",
     "off": "off",

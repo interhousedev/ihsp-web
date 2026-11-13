@@ -1,6 +1,7 @@
 "use client"
 
 import {
+  type AdminHonoursRules,
   getAdminSettingsQuery,
   keys,
   putAdminSettings,
@@ -15,6 +16,7 @@ import { Badge, Button, Card, CardContent, CardHeader, CardTitle, Input, PageCon
 import { useQuery } from "@tanstack/react-query"
 import { useState } from "react"
 import { CheckField } from "../../shared/components/check-field"
+import { DEFAULT_HONOURS, HonoursSection, honoursValid } from "./honours-section"
 import { LabeledField } from "../../shared/components/labeled-field"
 import { QueryState } from "@ihsp/features-core"
 import { SelectField } from "../../shared/components/select-field"
@@ -52,20 +54,26 @@ export function prettifyKey(key: string): string {
   return words.charAt(0).toUpperCase() + words.slice(1)
 }
 
-function toForm(settings: PlatformSettings): PlatformSettingsBody {
+type FormState = PlatformSettingsBody & { honours: AdminHonoursRules }
+
+function toForm(settings: PlatformSettings): FormState {
   return {
     school_name: settings.school_name,
     support_contact: settings.support_contact,
     change_password_on_login: settings.change_password_on_login,
     default_language: settings.default_language,
+    honours: settings.honours ?? DEFAULT_HONOURS,
   }
 }
 
 function SettingsForm({ settings }: { settings: PlatformSettings }) {
   const t = useT("settings")
-  const [form, setForm] = useState<PlatformSettingsBody>(toForm(settings))
+  const [form, setForm] = useState<FormState>(toForm(settings))
   const saved = toForm(settings)
-  const dirty = (Object.keys(saved) as (keyof PlatformSettingsBody)[]).some((key) => form[key] !== saved[key])
+  const dirty = (Object.keys(saved) as (keyof FormState)[]).some(
+    (key) => JSON.stringify(form[key]) !== JSON.stringify(saved[key]),
+  )
+  const valid = honoursValid(form.honours)
 
   const save = useAdminMutation({
     mutationFn: () =>
@@ -86,7 +94,7 @@ function SettingsForm({ settings }: { settings: PlatformSettings }) {
         className="grid max-w-2xl gap-6"
         onSubmit={(event) => {
           event.preventDefault()
-          if (dirty) save.mutate()
+          if (dirty && valid) save.mutate()
         }}
       >
         <Card>
@@ -137,8 +145,9 @@ function SettingsForm({ settings }: { settings: PlatformSettings }) {
             </p>
           </CardContent>
         </Card>
+        <HonoursSection value={form.honours} onChange={(honours) => setForm({ ...form, honours })} />
         <div>
-          <Button type="submit" className={TOUCH} disabled={!dirty || save.isPending}>
+          <Button type="submit" className={TOUCH} disabled={!dirty || !valid || save.isPending}>
             {t("save")}
           </Button>
         </div>

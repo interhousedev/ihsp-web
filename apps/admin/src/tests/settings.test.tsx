@@ -9,6 +9,7 @@ import { EditUserDialog } from "../features/users/components/edit-user-dialog"
 import { isStrongPassword } from "../features/users/components/set-password-dialog"
 import { UserDetailPage } from "../features/users/components/user-detail-page"
 import { configureTests, renderAdmin, setValue, waitUntil } from "./helpers"
+import { DEFAULT_HONOURS } from "../features/settings/components/honours-section"
 
 configureTests()
 
@@ -63,7 +64,56 @@ describe("platform settings", () => {
       support_contact: "help@example.org",
       change_password_on_login: true,
       default_language: "ru",
+      honours: DEFAULT_HONOURS,
     })
+  })
+
+  test("shows the default honours rules when none are saved", async () => {
+    renderAdmin(<SettingsPage />, { route: "/settings/" })
+
+    expect(await screen.findByRole("checkbox", { name: "All semester marks are 5" })).toBeChecked()
+    expect(screen.getByLabelText("Accepted serials")).toHaveTextContent("TM-A")
+    expect(screen.getByLabelText("Accepted serials")).toHaveTextContent("TMA")
+    expect(screen.getByRole("button", { name: "Save" })).toBeDisabled()
+  })
+
+  test("toggling a rule, a limit and a serial saves the full honours object", async () => {
+    let body: { honours?: unknown } | undefined
+    server.use(
+      http.put(apiUrl("/v1/admin/settings"), async ({ request }) => {
+        body = (await request.json()) as { honours?: unknown }
+        return HttpResponse.json({ ...platformSettings, ...body })
+      }),
+    )
+    const { user } = renderAdmin(<SettingsPage />, { route: "/settings/" })
+
+    await user.click(await screen.findByRole("checkbox", { name: "All semester marks are 5" }))
+    const limits = screen.getAllByLabelText("Most semester marks of 4")
+    setValue(limits[0] as HTMLElement, "3")
+    await user.type(screen.getByLabelText("New serial"), "XY-1")
+    await user.click(screen.getByRole("button", { name: "Add" }))
+    await user.click(screen.getByRole("button", { name: "Remove TMA" }))
+    await user.click(screen.getByRole("button", { name: "Save" }))
+
+    await waitUntil(() => body !== undefined, "no request")
+    expect(body?.honours).toEqual({
+      ...DEFAULT_HONOURS,
+      red_diploma_max_fours: { enabled: true, max: 3 },
+      gold_semester_all_five: { enabled: false },
+      medal_certificate: { enabled: true, serials: ["TM-A", "XY-1"] },
+    })
+  })
+
+  test("a limit outside 0..20 blocks saving", async () => {
+    renderAdmin(<SettingsPage />, { route: "/settings/" })
+
+    const limits = await screen.findAllByLabelText("Most semester marks of 4")
+    setValue(limits[0] as HTMLElement, "21")
+    expect(screen.getByRole("alert")).toHaveTextContent("Enter a whole number from 0 to 20.")
+    expect(screen.getByRole("button", { name: "Save" })).toBeDisabled()
+    setValue(limits[0] as HTMLElement, "20")
+    expect(screen.queryByRole("alert")).toBeNull()
+    expect(screen.getByRole("button", { name: "Save" })).toBeEnabled()
   })
 })
 

@@ -1493,6 +1493,30 @@
     },
     "save": "Saqlash",
     "saved": "Sozlamalar saqlandi",
+    "honours": {
+      "title": "Mukofot qoidalari",
+      "awards": {
+        "red_diploma": "Qizil diplom",
+        "gold_medal": "Oltin medal",
+        "silver_medal": "Kumush medal",
+        "certificate": "Medallar uchun attestat (oltin va kumush)"
+      },
+      "rules": {
+        "red_diploma_max_fours": "Semestr baholaridagi 4 larni cheklash",
+        "gold_controls_all_five": "Barcha oraliq va yakuniy nazoratlar (ПК va ИК) 5 ga",
+        "gold_semester_all_five": "Barcha semestr baholari 5",
+        "silver_controls_all_five": "Barcha oraliq va yakuniy nazoratlar (ПК va ИК) 5 ga",
+        "silver_semester_max_fours": "Semestr baholaridagi 4 larni cheklash",
+        "medal_certificate": "Attestat seriyasi roʻyxatda boʻlishi kerak"
+      },
+      "maxFours": "Semestr baholaridagi 4 lar soni koʻpi bilan",
+      "maxInvalid": "0 dan {max} gacha butun son kiriting.",
+      "serials": "Qabul qilinadigan seriyalar",
+      "newSerial": "Yangi seriya",
+      "addSerial": "Qoʻshish",
+      "removeSerial": "{serial} ni oʻchirish",
+      "serialsEmpty": "Kamida bitta seriya qoʻshing yoki qoidani oʻchiring."
+    },
     "features": "Server funksiyalari",
     "on": "yoq",
     "off": "oʻch",
