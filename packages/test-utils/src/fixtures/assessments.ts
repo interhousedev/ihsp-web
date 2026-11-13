@@ -140,6 +140,7 @@ function target(grade: 5 | 4 | 3, spec: Partial<PlannerTarget>): PlannerTarget {
     min_value: null,
     min_both: null,
     pairs: [],
+    paths: [],
     ...spec,
   }
 }

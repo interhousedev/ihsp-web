@@ -92,6 +92,7 @@ import {
   IconPizza,
   IconPlus,
   IconProps,
+  IconQrcode,
   IconRosetteDiscountCheck,
   IconSearch,
   IconSelector,
@@ -237,6 +238,7 @@ export const Icons = {
   exclusive: IconStar,
   sparkles: IconSparkles,
   badgeCheck: IconRosetteDiscountCheck,
+  qrCode: IconQrcode,
   lock: IconLock,
 
   // Data / Charts

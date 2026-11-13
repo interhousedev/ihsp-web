@@ -118,7 +118,12 @@ export type PlannerTarget = {
   /** Both kinds remaining: the lowest mark that works on every remaining control, and the lowest final per midterm mark. */
   min_both: number | null
   pairs: { midterm: number; min_final: number | null }[]
+  /** Pareto-minimal ways to reach the grade; empty when it is secured, out of reach or unknown. */
+  paths: PlannerPath[]
 }
+
+/** One way to reach a target: extra lesson fives, and the lowest mark on each remaining midterm and on the final. */
+export type PlannerPath = { extra_lesson_fives: number; midterm: number | null; final: number | null }
 
 export type SubjectPlanner = {
   subject: { id: string; name: string; short_name: string }

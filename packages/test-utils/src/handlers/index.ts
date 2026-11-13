@@ -1,3 +1,5 @@
+import { studentCardHandlers } from "./student-card"
+import { honoursHandlers } from "./honours"
 import { adminAiHandlers } from "./admin-ai"
 import { aiHandlers } from "./ai"
 import { assessmentsHandlers } from "./assessments"
@@ -227,6 +229,9 @@ export const allHandlers = [
   ...subjectMaterialsHandlers,
   ...staffSubjectsHandlers,
   ...presentationPlansHandlers,
+  ...honoursHandlers,
+  ...studentCardHandlers,
 ]
 export { notHeadStudentResponse } from "./group-progress"
 export { resetSharing, sharingState } from "./sharing"
+export { resetStudentCardTokens } from "./student-card"

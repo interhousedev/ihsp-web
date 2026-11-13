@@ -1,5 +1,6 @@
 import { HttpResponse, http } from "msw"
 import { publicShareGoneSlug, publicShares, roomPageHtml, shortLinkHtml } from "../fixtures/public"
+import { publicStudentCardHandlers } from "./public-student-cards"
 import { accepted, apiUrl, param, problem } from "./utils"
 
 function html(body: string): Response {
@@ -17,4 +18,5 @@ export const publicHandlers = [
   http.post(apiUrl("/v1/public/reports"), () => accepted()),
   http.get(apiUrl("/s/:slug"), () => html(shortLinkHtml)),
   http.get(apiUrl("/r/:roomSlug"), () => html(roomPageHtml)),
+  ...publicStudentCardHandlers,
 ]

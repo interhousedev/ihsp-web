@@ -117,5 +117,6 @@ export const platformSettings: PlatformSettings = {
   support_contact: "",
   change_password_on_login: false,
   default_language: "ru",
+  honours: null,
   features: { notebooks: true, ai_assistant: true, lms: true, change_password_on_login: false },
 }

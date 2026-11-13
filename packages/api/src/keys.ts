@@ -152,6 +152,7 @@ export const keys = {
     all: () => ["me"] as const,
     profile: () => ["me", "profile"] as const,
     face: () => ["me", "face"] as const,
+    studentCard: () => ["me", "student-card"] as const,
     today: () => ["me", "today"] as const,
     timetable: (filters?: object) => ["me", "timetable", params(filters)] as const,
     homework: (filters?: object) => ["me", "homework", params(filters)] as const,
@@ -341,5 +342,6 @@ export const keys = {
   },
   public: {
     share: (slug: string) => ["public", "shares", slug] as const,
+    studentCard: (token: string) => ["public", "student-cards", token] as const,
   },
 } as const

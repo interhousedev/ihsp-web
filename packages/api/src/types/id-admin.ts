@@ -78,12 +78,29 @@ export type OauthClientVerifyBody = { verified: boolean }
 
 export type PlatformLocale = "uz" | "ru" | "en"
 
-/** `PUT /v1/admin/settings` body: every editable setting. */
+/** A honours rule without a parameter. */
+export type HonoursFlagRule = { enabled: boolean }
+/** A honours rule limiting the semester marks of 4 (`max` 0..20). */
+export type HonoursMaxFoursRule = { enabled: boolean; max: number }
+/** The school certificate serials that count as a medal certificate. */
+export type HonoursSerialsRule = { enabled: boolean; serials: string[] }
+/** Which rules count for the red diploma and the gold and silver medals. */
+export type AdminHonoursRules = {
+  red_diploma_max_fours: HonoursMaxFoursRule
+  medal_certificate: HonoursSerialsRule
+  gold_controls_all_five: HonoursFlagRule
+  gold_semester_all_five: HonoursFlagRule
+  silver_controls_all_five: HonoursFlagRule
+  silver_semester_max_fours: HonoursMaxFoursRule
+}
+
+/** `PUT /v1/admin/settings` body: every editable setting; `honours` holds all six rules, `null` keeps them unchanged. */
 export type PlatformSettingsBody = {
   school_name: string
   support_contact: string
   change_password_on_login: boolean
   default_language: PlatformLocale
+  honours: AdminHonoursRules | null
 }
 
 /** `GET /v1/admin/settings`: the editable settings and the read-only feature flags. */

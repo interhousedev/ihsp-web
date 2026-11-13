@@ -124,6 +124,26 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/internal/emis/{user_id}/rating-book": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get Rating Book
+         * @description Have EMIS build the student's rating book and return its PDF address.
+         */
+        get: operations["get_rating_book_internal_emis__user_id__rating_book_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/internal/emis/{user_id}/ratings": {
         parameters: {
             query?: never;
@@ -7597,6 +7617,26 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/v1/me/emis/rating-book": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get Rating Book
+         * @description Return the link to the student's EMIS rating book.
+         */
+        get: operations["get_rating_book_v1_me_emis_rating_book_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/v1/me/excuse-templates": {
         parameters: {
             query?: never;
@@ -8180,6 +8220,26 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/v1/me/honours": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get Honours
+         * @description Return the student's eligibility for the red diploma and the medals.
+         */
+        get: operations["get_honours_v1_me_honours_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/v1/me/lesson-results": {
         parameters: {
             query?: never;
@@ -8614,6 +8674,46 @@ export interface paths {
         get: operations["get_storage_v1_me_storage_get"];
         put?: never;
         post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/me/student-card": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get Student Card
+         * @description Return the caller's student card.
+         */
+        get: operations["get_student_card_v1_me_student_card_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/me/student-card/tokens": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Issue Student Card Token
+         * @description Issue a two-minute token that shows the card to a verifier.
+         */
+        post: operations["issue_student_card_token_v1_me_student_card_tokens_post"];
         delete?: never;
         options?: never;
         head?: never;
@@ -10368,6 +10468,46 @@ export interface paths {
          * @description Return a shared chat or flash card set without login (SHR-2, UF-PUB-01).
          */
         get: operations["get_public_share_v1_public_shares__slug__get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/public/student-cards/{token}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get Public Student Card
+         * @description Return the card behind a token; 404 when it is unknown or expired.
+         */
+        get: operations["get_public_student_card_v1_public_student_cards__token__get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/public/student-cards/{token}/photo": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get Public Student Card Photo
+         * @description Return the photo behind a token; never cached.
+         */
+        get: operations["get_public_student_card_photo_v1_public_student_cards__token__photo_get"];
         put?: never;
         post?: never;
         delete?: never;
@@ -16042,6 +16182,8 @@ export interface components {
             current_semester: number | null;
             /** Curriculum Id */
             curriculum_id: number | null;
+            /** Direction */
+            direction?: string | null;
             /** Emis Student Id */
             emis_student_id: number;
             /** First Name */
@@ -16052,10 +16194,17 @@ export interface components {
             group_name: string;
             /** Institution Id */
             institution_id: number;
+            institution_name?: components["schemas"]["EmisNameResponse"] | null;
             /** Last Name */
             last_name: string;
             /** Middle Name */
             middle_name: string | null;
+            /** School Certificate Number */
+            school_certificate_number?: string | null;
+            /** School Certificate Serial */
+            school_certificate_serial?: string | null;
+            /** Speciality */
+            speciality?: string | null;
         };
         /**
          * EmisPullBody
@@ -16077,6 +16226,14 @@ export interface components {
             teacher_id?: string | null;
             /** Terms */
             terms?: components["schemas"]["TermChoice"][] | null;
+        };
+        /**
+         * EmisRatingBookResponse
+         * @description The address of the student's rating book PDF.
+         */
+        EmisRatingBookResponse: {
+            /** Url */
+            url: string;
         };
         /**
          * EmisSemesterDatesResponse
@@ -17761,6 +17918,105 @@ export interface components {
             lesson_id: string;
             /** Students */
             students: components["schemas"]["StaffSubmissionRowResponse"][];
+        };
+        /**
+         * HonourAward
+         * @description An award with its enabled rules.
+         */
+        HonourAward: {
+            /** Eligible */
+            eligible: boolean;
+            /**
+             * Kind
+             * @enum {string}
+             */
+            kind: "red_diploma" | "gold_medal" | "silver_medal";
+            /** Rules */
+            rules: components["schemas"]["HonourRule"][];
+        };
+        /**
+         * HonourBlocking
+         * @description A mark that keeps a rule from passing.
+         */
+        HonourBlocking: {
+            /** Semester */
+            semester: number;
+            /**
+             * Subject Id
+             * Format: uuid
+             */
+            subject_id: string;
+            /** Subject Name */
+            subject_name: string;
+            /**
+             * Type
+             * @enum {string}
+             */
+            type: "semester" | "midterm" | "final";
+            /** Value */
+            value: number;
+        };
+        /**
+         * HonourRule
+         * @description One enabled honours rule and its outcome.
+         */
+        HonourRule: {
+            /** Blocking */
+            blocking: components["schemas"]["HonourBlocking"][];
+            /** Passed */
+            passed: boolean;
+            /** Rule */
+            rule: string;
+        };
+        /**
+         * HonoursBody
+         * @description Which rules count for the red diploma and the gold and silver medals.
+         */
+        HonoursBody: {
+            gold_controls_all_five: components["schemas"]["HonoursFlagBody"];
+            gold_semester_all_five: components["schemas"]["HonoursFlagBody"];
+            medal_certificate: components["schemas"]["HonoursSerialsBody"];
+            red_diploma_max_fours: components["schemas"]["HonoursMaxFoursBody"];
+            silver_controls_all_five: components["schemas"]["HonoursFlagBody"];
+            silver_semester_max_fours: components["schemas"]["HonoursMaxFoursBody"];
+        };
+        /**
+         * HonoursFlagBody
+         * @description A honours rule without a parameter.
+         */
+        HonoursFlagBody: {
+            /** Enabled */
+            enabled: boolean;
+        };
+        /**
+         * HonoursMaxFoursBody
+         * @description A honours rule limiting the semester marks of 4.
+         */
+        HonoursMaxFoursBody: {
+            /** Enabled */
+            enabled: boolean;
+            /** Max */
+            max: number;
+        };
+        /**
+         * HonoursResponse
+         * @description Eligibility for the red diploma and the medals.
+         */
+        HonoursResponse: {
+            /** Awards */
+            awards: components["schemas"]["HonourAward"][];
+            /** School Certificate Serial */
+            school_certificate_serial: string | null;
+        };
+        /**
+         * HonoursSerialsBody
+         * @description The school certificate serials that count as a medal certificate.
+         */
+        HonoursSerialsBody: {
+            /** Enabled */
+            enabled: boolean;
+            /** Serials */
+            serials: string[];
         };
         /**
          * IdentifiedStudentOut
@@ -20212,6 +20468,18 @@ export interface components {
             logout_url: string;
         };
         /**
+         * LyceumNameOut
+         * @description The lyceum name in the three languages.
+         */
+        LyceumNameOut: {
+            /** En */
+            en: string;
+            /** Ru */
+            ru: string;
+            /** Uz */
+            uz: string;
+        };
+        /**
          * ManageCollectionResponse
          * @description `ManageCollection`: all languages and the stored item ids.
          */
@@ -22269,6 +22537,18 @@ export interface components {
             min_final: number | null;
         };
         /**
+         * PlannerPath
+         * @description A Pareto-minimal way to reach the target.
+         */
+        PlannerPath: {
+            /** Extra Lesson Fives */
+            extra_lesson_fives: number;
+            /** Final */
+            final: number | null;
+            /** Midterm */
+            midterm: number | null;
+        };
+        /**
          * PlannerPrediction
          * @description The semester mark if pending controls get the assumed marks.
          */
@@ -22318,6 +22598,8 @@ export interface components {
             min_value: number | null;
             /** Pairs */
             pairs: components["schemas"]["PlannerPair"][];
+            /** Paths */
+            paths: components["schemas"]["PlannerPath"][];
             /**
              * Status
              * @enum {string}
@@ -22351,6 +22633,8 @@ export interface components {
              * @enum {string}
              */
             default_language: "uz" | "ru" | "en";
+            /** @description Left out: the saved rules stay. */
+            honours?: components["schemas"]["HonoursBody"] | null;
             /** School Name */
             school_name: string;
             /** Support Contact */
@@ -22375,6 +22659,7 @@ export interface components {
             features: {
                 [key: string]: boolean;
             };
+            honours: components["schemas"]["HonoursBody"];
             /** School Name */
             school_name: string;
             /** Support Contact */
@@ -22822,6 +23107,32 @@ export interface components {
             title: string;
         };
         /**
+         * PublicStudentCardResponse
+         * @description The card seen through a token; the owner's id is not part of it.
+         */
+        PublicStudentCardResponse: {
+            /** Course */
+            course: number | null;
+            /** Direction */
+            direction: string | null;
+            /**
+             * Expires At
+             * Format: date-time
+             */
+            expires_at: string;
+            /** First Name */
+            first_name: string;
+            /** Group */
+            group: string | null;
+            /** Has Photo */
+            has_photo: boolean;
+            /** Last Name */
+            last_name: string;
+            lyceum_name: components["schemas"]["LyceumNameOut"] | null;
+            /** Speciality */
+            speciality: string | null;
+        };
+        /**
          * PublicVisualization
          * @description A shared answer with OpenUI blocks: nothing but its text and dates.
          */
@@ -23235,6 +23546,14 @@ export interface components {
          * @enum {string}
          */
         Rating: "again" | "hard" | "medium" | "easy";
+        /**
+         * RatingBookResponse
+         * @description Link to the EMIS rating book PDF.
+         */
+        RatingBookResponse: {
+            /** Url */
+            url: string;
+        };
         /**
          * ReadingListCardResponse
          * @description `ReadingListCard`.
@@ -25859,6 +26178,42 @@ export interface components {
             telegram: components["schemas"]["app__interfaces__http__v1__composition__shared_schemas__TelegramAccountResponse"][];
             /** Timetable Week */
             timetable_week: components["schemas"]["app__interfaces__http__v1__composition__shared_schemas__LessonItemResponse"][];
+        };
+        /**
+         * StudentCardResponse
+         * @description The student's own card.
+         */
+        StudentCardResponse: {
+            /** Course */
+            course: number | null;
+            /** Direction */
+            direction: string | null;
+            /** First Name */
+            first_name: string;
+            /** Group */
+            group: string | null;
+            /** Has Photo */
+            has_photo: boolean;
+            /** Last Name */
+            last_name: string;
+            lyceum_name: components["schemas"]["LyceumNameOut"] | null;
+            /** Speciality */
+            speciality: string | null;
+        };
+        /**
+         * StudentCardTokenResponse
+         * @description A share token: shown as a QR code, valid for two minutes.
+         */
+        StudentCardTokenResponse: {
+            /**
+             * Expires At
+             * Format: date-time
+             */
+            expires_at: string;
+            /** Refresh In */
+            refresh_in: number;
+            /** Token */
+            token: string;
         };
         /**
          * StudentItemResponse
@@ -31139,6 +31494,37 @@ export interface operations {
                 };
                 content: {
                     "application/json": components["schemas"]["EmisProfileResponse"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    get_rating_book_internal_emis__user_id__rating_book_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                user_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["EmisRatingBookResponse"];
                 };
             };
             /** @description Validation Error */
@@ -44889,6 +45275,26 @@ export interface operations {
             };
         };
     };
+    get_rating_book_v1_me_emis_rating_book_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["RatingBookResponse"];
+                };
+            };
+        };
+    };
     list_templates_v1_me_excuse_templates_get: {
         parameters: {
             query?: never;
@@ -46031,6 +46437,26 @@ export interface operations {
             };
         };
     };
+    get_honours_v1_me_honours_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HonoursResponse"];
+                };
+            };
+        };
+    };
     list_lesson_results_v1_me_lesson_results_get: {
         parameters: {
             query: {
@@ -46812,6 +47238,46 @@ export interface operations {
                 };
                 content: {
                     "application/json": components["schemas"]["StorageResponse"];
+                };
+            };
+        };
+    };
+    get_student_card_v1_me_student_card_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["StudentCardResponse"];
+                };
+            };
+        };
+    };
+    issue_student_card_token_v1_me_student_card_tokens_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["StudentCardTokenResponse"];
                 };
             };
         };
@@ -50049,6 +50515,68 @@ export interface operations {
                 };
                 content: {
                     "application/json": components["schemas"]["PublicShare"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    get_public_student_card_v1_public_student_cards__token__get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                token: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["PublicStudentCardResponse"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    get_public_student_card_photo_v1_public_student_cards__token__photo_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                token: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "image/*": unknown;
                 };
             };
             /** @description Validation Error */
