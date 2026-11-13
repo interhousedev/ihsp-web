@@ -20,6 +20,7 @@ import type { getAdminBotPost, getAdminBotPostTree, patchAdminBotPost, postAdmin
 import type { getAdminBroadcast, getAdminBroadcasts, patchAdminBroadcast, postAdminBroadcastCancel, postAdminBroadcastSend, postAdminBroadcasts, postAdminBroadcastsAudienceCount } from "./endpoints/broadcasts"
 import type { getCertificateFileUrl, getCertificateGroups, getCertificateRanking, getCertificateStats, getCertificateTypes, getCustomFieldValues, getMyCertificates, getStaffCertificates, patchCertificateType, postCertificateExport, postCertificateType, postImportCertificatesFromEmis, postMyCertificate, postMyCertificateFile } from "./endpoints/certificates"
 import type { deleteStaffLessonHomework, getAdminAttendance, getAdminAttendanceMissing, getHomeworkSubmission, getLessonHomeworkSubmissions, getMeAttendance, getMeHomework, getMeLesson, getMeToday, getStaffGroupAttendance, getStaffGroupStudents, getStaffJournal, getStaffJournalOptions, getStaffLesson, getStaffLessonTemporaryMarks, getStaffTemporaryMarksPending, getStaffToday, postStaffJournalToggle, putMeHomeworkDone, putMeHomeworkNote, putStaffLessonAttendance, putStaffLessonAttendanceExcuse, putStaffLessonHomework, putStaffLessonTemporaryMark, putStaffLessonTopic, submitHomework } from "./endpoints/classwork"
+import type { getClientConfig } from "./endpoints/client-config"
 import type { getAdminDashboard, getAdminGroupsStats, getAdminStudent, getAdminTeacherProfile, getMeAlerts, getMeOutboundMail, getMeSearch, postMeCalendarToken, postMeOutboundMail } from "./endpoints/composition"
 import type { getCourseSteps, getNotebookUsageOf, postApplyArtifact, postApplyPreview, postCourseNotebook, postCourseWorkspace } from "./endpoints/course-workspace"
 import type { getAdminGroupCurriculum, getMeCurriculum, postAdminGroupCurriculumSync } from "./endpoints/curriculum"
@@ -43,7 +44,7 @@ import type { postLmsCourseCopy, postLmsCourseImport } from "./endpoints/lms-ims
 import type { getLmsH5PLaunch, getLmsPreviewH5PLaunch, postLmsH5PPackage, postLmsH5PResult, postLmsInteractionAnswer } from "./endpoints/lms-interactive"
 import type { getLmsAttempt, getLmsCourse, getLmsCourseStep, getLmsCourseStudents, getLmsCourses, getLmsMediaGrants, getLmsMyCourses, getLmsPreviewStepVideo, getLmsStepCardsNext, getLmsStepVideo, postLmsAttemptOverride, postLmsAttemptSubmit, postLmsCourseEnroll, postLmsJoin, postLmsMediaRedeem, postLmsStepBlockAttempts, postLmsStepCardReview, postLmsStepViewed, putLmsAttemptAnswers } from "./endpoints/lms-learning"
 import type { getLmsCourseSettings, patchLmsCourseDetails, postLmsCourseJoinCode, postLmsCourseLinkCheck } from "./endpoints/lms-settings"
-import type { getAdminLoginCues, getIdLoginCueGroups, getIdLoginCueNames, postAdminLoginCue, postAdminLoginCuesBulk, postIdRegisterCue } from "./endpoints/login-cues"
+import type { getAdminLoginCues, getIdLoginCueGroups, getIdLoginCueNames, postAdminLoginCue, postAdminLoginCuesBulk, postAdminLoginCuesBulkDelete, postIdRegisterCue } from "./endpoints/login-cues"
 import type { getAdminSubjectPeople, getAdminSyncRuns, getMeGrades, getMeGradesDay, getMeGroupRating, getMeLessonResults, getMeRecordBook, getMeSubject, getMeSubjectLessons, getMeSubjects, postAdminStudentSyncStop, postAdminSubjectEmisPull, postAdminSyncMaterials, postAdminSyncRun, postAdminSyncRunStop } from "./endpoints/marks"
 import type { getAdminMcpActivity, getAdminMcpActivitySummary, getIdMeConnectorsActivity } from "./endpoints/mcp-activity"
 import type { getAdminStudentSync, getAdminStudentSyncs, getMeSync, postAdminStudentSync, postMeSync } from "./endpoints/me-sync"
@@ -464,6 +465,10 @@ export const served_putStaffLessonTemporaryMark: Awaited<ReturnType<typeof putSt
 // GET /v1/staff/temporary-marks/pending — getStaffTemporaryMarksPending
 declare const gen_getStaffTemporaryMarksPending: ResponseOf<"/v1/staff/temporary-marks/pending", "get">
 export const served_getStaffTemporaryMarksPending: Awaited<ReturnType<typeof getStaffTemporaryMarksPending>> = gen_getStaffTemporaryMarksPending
+
+// GET /v1/public/client-config — getClientConfig
+declare const gen_getClientConfig: ResponseOf<"/v1/public/client-config", "get">
+export const served_getClientConfig: Awaited<ReturnType<typeof getClientConfig>> = gen_getClientConfig
 
 // GET /v1/me/alerts — getMeAlerts
 declare const gen_getMeAlerts: ResponseOf<"/v1/me/alerts", "get">
@@ -1556,6 +1561,10 @@ export const served_postAdminLoginCue: Awaited<ReturnType<typeof postAdminLoginC
 // POST /v1/admin/login-cues/bulk — postAdminLoginCuesBulk
 declare const gen_postAdminLoginCuesBulk: ResponseOf<"/v1/admin/login-cues/bulk", "post">
 export const served_postAdminLoginCuesBulk: Awaited<ReturnType<typeof postAdminLoginCuesBulk>> = gen_postAdminLoginCuesBulk
+
+// POST /v1/admin/login-cues/bulk-delete — postAdminLoginCuesBulkDelete
+declare const gen_postAdminLoginCuesBulkDelete: ResponseOf<"/v1/admin/login-cues/bulk-delete", "post">
+export const served_postAdminLoginCuesBulkDelete: Awaited<ReturnType<typeof postAdminLoginCuesBulkDelete>> = gen_postAdminLoginCuesBulkDelete
 
 // GET /v1/id/login-cues/groups — getIdLoginCueGroups
 declare const gen_getIdLoginCueGroups: ResponseOf<"/v1/id/login-cues/groups", "get">

@@ -19,6 +19,7 @@ import type { getAdminBotPost, getAdminBotPostTree, patchAdminBotPost, postAdmin
 import type { getAdminBroadcast, getAdminBroadcasts, patchAdminBroadcast, postAdminBroadcastCancel, postAdminBroadcastSend, postAdminBroadcasts, postAdminBroadcastsAudienceCount } from "./endpoints/broadcasts"
 import type { getCertificateFileUrl, getCertificateGroups, getCertificateRanking, getCertificateStats, getCertificateTypes, getCustomFieldValues, getMyCertificates, getStaffCertificates, patchCertificateType, postCertificateExport, postCertificateType, postImportCertificatesFromEmis, postMyCertificate, postMyCertificateFile } from "./endpoints/certificates"
 import type { deleteStaffLessonHomework, getAdminAttendance, getAdminAttendanceMissing, getHomeworkSubmission, getLessonHomeworkSubmissions, getMeAttendance, getMeHomework, getMeLesson, getMeToday, getStaffGroupAttendance, getStaffGroupStudents, getStaffJournal, getStaffJournalOptions, getStaffLesson, getStaffLessonTemporaryMarks, getStaffTemporaryMarksPending, getStaffToday, postStaffJournalToggle, putMeHomeworkDone, putMeHomeworkNote, putStaffLessonAttendance, putStaffLessonAttendanceExcuse, putStaffLessonHomework, putStaffLessonTemporaryMark, putStaffLessonTopic, submitHomework } from "./endpoints/classwork"
+import type { getClientConfig } from "./endpoints/client-config"
 import type { getAdminDashboard, getAdminGroupsStats, getAdminStudent, getAdminTeacherProfile, getMeAlerts, getMeOutboundMail, getMeSearch, postMeCalendarToken, postMeOutboundMail } from "./endpoints/composition"
 import type { getCourseSteps, getNotebookUsageOf, postApplyArtifact, postApplyPreview, postCourseNotebook, postCourseWorkspace } from "./endpoints/course-workspace"
 import type { getAdminGroupCurriculum, getMeCurriculum, postAdminGroupCurriculumSync } from "./endpoints/curriculum"
@@ -42,7 +43,7 @@ import type { postLmsCourseCopy, postLmsCourseImport } from "./endpoints/lms-ims
 import type { getLmsH5PLaunch, getLmsPreviewH5PLaunch, postLmsH5PPackage, postLmsH5PResult, postLmsInteractionAnswer } from "./endpoints/lms-interactive"
 import type { getLmsAttempt, getLmsCourse, getLmsCourseStep, getLmsCourseStudents, getLmsCourses, getLmsMediaGrants, getLmsMyCourses, getLmsPreviewStepVideo, getLmsStepCardsNext, getLmsStepVideo, postLmsAttemptOverride, postLmsAttemptSubmit, postLmsCourseEnroll, postLmsJoin, postLmsMediaRedeem, postLmsStepBlockAttempts, postLmsStepCardReview, postLmsStepViewed, putLmsAttemptAnswers } from "./endpoints/lms-learning"
 import type { getLmsCourseSettings, patchLmsCourseDetails, postLmsCourseJoinCode, postLmsCourseLinkCheck } from "./endpoints/lms-settings"
-import type { getAdminLoginCues, getIdLoginCueGroups, getIdLoginCueNames, postAdminLoginCue, postAdminLoginCuesBulk, postIdRegisterCue } from "./endpoints/login-cues"
+import type { getAdminLoginCues, getIdLoginCueGroups, getIdLoginCueNames, postAdminLoginCue, postAdminLoginCuesBulk, postAdminLoginCuesBulkDelete, postIdRegisterCue } from "./endpoints/login-cues"
 import type { getAdminSubjectPeople, getAdminSyncRuns, getMeGrades, getMeGradesDay, getMeGroupRating, getMeLessonResults, getMeRecordBook, getMeSubject, getMeSubjectLessons, getMeSubjects, postAdminStudentSyncStop, postAdminSubjectEmisPull, postAdminSyncMaterials, postAdminSyncRun, postAdminSyncRunStop } from "./endpoints/marks"
 import type { getAdminMcpActivity, getAdminMcpActivitySummary, getIdMeConnectorsActivity } from "./endpoints/mcp-activity"
 import type { getAdminStudentSync, getAdminStudentSyncs, getMeSync, postAdminStudentSync, postMeSync } from "./endpoints/me-sync"
@@ -87,7 +88,7 @@ import type { AnnotationInput, AnnotationsParams, AnnotationsSyncBody, ApproveSu
 import type { LinkCreateBody, LinkDisableBody, ModerationQueueParams, ModerationSearchParams, MyLinksParams, ResourceCreateBody, ResourceHideBody, ShareCreateBody } from "./types/links"
 import type { CheckpointBody, CourseBroadcastBody, CourseBroadcastPatchBody, CourseCreateBody, CourseSettingsBody, CourseStaffBody, CourseStaffPatchBody, DraftMetaBody, OutlineOpsBody, PublishBody, RestoreRevisionBody, StepCreateBody, StepDraftBody, VersionCompareParams } from "./types/lms-authoring"
 import type { AttemptAnswersBody, AttemptOverrideBody, AttemptStartParams, CourseCatalogParams, CourseJoinBody, LmsCardReviewBody, MediaRedeemBody } from "./types/lms-learning"
-import type { LoginCueBody, LoginCueBulkBody, LoginCuesParams, RegisterCueBody } from "./types/login-cues"
+import type { LoginCueBody, LoginCueBulkBody, LoginCueBulkDeleteBody, LoginCuesParams, RegisterCueBody } from "./types/login-cues"
 import type { ResyncMaterialsBody, SemesterParams, SubjectEmisPullBody, SubjectLessonsParams, SyncRunBody, SyncRunsParams } from "./types/marks"
 import type { ArtifactCreate, ArtifactPatchBody, ArtifactProgressBody, ArtifactsParams, AttachArtifactBody, DiscoverBody, ExerciseFeedbackBody, LabelCreateBody, LabelPatchBody, NotebookCreateBody, NotebookFeedbackBody, NotebookMessageBody, NotebookPatchBody, NotebooksParams, PassageParams, PassagesParams, SaveNoteBody, SaveToFilesBody, SlidesPutBody, SlidesReviseBody, SourceLabelsBody, SourcePatchBody, SourceSearchParams, SourcesAddBody, SourcesSelectBody, StaffSubjectMaterialCreateBody, SubjectMaterialCreateBody } from "./types/notebooks"
 import type { NotificationsParams } from "./types/notifications"
@@ -715,6 +716,10 @@ export type route_deleteStaffLessonTemporaryMark = OperationOf<"/v1/staff/lesson
 // GET /v1/staff/temporary-marks/pending — getStaffTemporaryMarksPending
 declare const res_getStaffTemporaryMarksPending: Awaited<ReturnType<typeof getStaffTemporaryMarksPending>>
 export const response_getStaffTemporaryMarksPending: ResponseOf<"/v1/staff/temporary-marks/pending", "get"> = res_getStaffTemporaryMarksPending
+
+// GET /v1/public/client-config — getClientConfig
+declare const res_getClientConfig: Awaited<ReturnType<typeof getClientConfig>>
+export const response_getClientConfig: ResponseOf<"/v1/public/client-config", "get"> = res_getClientConfig
 
 // GET /v1/me/alerts — getMeAlerts
 declare const res_getMeAlerts: Awaited<ReturnType<typeof getMeAlerts>>
@@ -2263,6 +2268,12 @@ declare const res_postAdminLoginCuesBulk: Awaited<ReturnType<typeof postAdminLog
 export const response_postAdminLoginCuesBulk: ResponseOf<"/v1/admin/login-cues/bulk", "post"> = res_postAdminLoginCuesBulk
 declare const req_postAdminLoginCuesBulk: LoginCueBulkBody
 export const request_postAdminLoginCuesBulk: RequestOf<"/v1/admin/login-cues/bulk", "post"> = req_postAdminLoginCuesBulk
+
+// POST /v1/admin/login-cues/bulk-delete — postAdminLoginCuesBulkDelete
+declare const res_postAdminLoginCuesBulkDelete: Awaited<ReturnType<typeof postAdminLoginCuesBulkDelete>>
+export const response_postAdminLoginCuesBulkDelete: ResponseOf<"/v1/admin/login-cues/bulk-delete", "post"> = res_postAdminLoginCuesBulkDelete
+declare const req_postAdminLoginCuesBulkDelete: LoginCueBulkDeleteBody
+export const request_postAdminLoginCuesBulkDelete: RequestOf<"/v1/admin/login-cues/bulk-delete", "post"> = req_postAdminLoginCuesBulkDelete
 
 // DELETE /v1/admin/login-cues/{cue_id} — deleteAdminLoginCue
 // no JSON success response (204, CSV, calendar or HTML): only the route is checked
