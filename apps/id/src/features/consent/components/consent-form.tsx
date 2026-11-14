@@ -16,6 +16,8 @@ const SERVER_KEYS = {
   student: "consent.server.student",
   lms: "consent.server.lms",
   admin: "consent.server.admin",
+  teacher: "consent.server.teacher",
+  app: "consent.server.app",
 } as const
 
 type ConsentFormProps = { challenge: string; info: ConsentInfo; catalog: ScopeCatalog | undefined }

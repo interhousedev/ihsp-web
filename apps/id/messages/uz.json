@@ -89,7 +89,9 @@
     "server": {
       "student": "Talabalar",
       "lms": "LMS kurslari",
-      "admin": "Maʼmuriyat"
+      "admin": "Maʼmuriyat",
+      "teacher": "Oʻqituvchilar",
+      "app": "Barcha maktab vositalarim"
     },
     "scopes": "Soʻralayotgan ruxsatlar",
     "tools": "Vositalar: {tools}",

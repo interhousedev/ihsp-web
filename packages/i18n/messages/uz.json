@@ -2220,7 +2220,9 @@
     "server": {
       "student": "Talabalar",
       "lms": "LMS kurslari",
-      "admin": "Maʼmuriyat"
+      "admin": "Maʼmuriyat",
+      "teacher": "Oʻqituvchilar",
+      "app": "Barcha maktab vositalarim"
     },
     "presets": {
       "study_planner": "Oʻqish rejalashtiruvchisi",

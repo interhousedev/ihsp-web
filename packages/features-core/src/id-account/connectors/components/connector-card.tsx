@@ -12,6 +12,8 @@ const SERVER_KEYS = {
   student: "connectors.server.student",
   lms: "connectors.server.lms",
   admin: "connectors.server.admin",
+  teacher: "connectors.server.teacher",
+  app: "connectors.server.app",
 } as const
 
 function isExpired(connector: Connector): boolean {

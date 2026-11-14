@@ -2220,7 +2220,9 @@
     "server": {
       "student": "Students",
       "lms": "LMS Course",
-      "admin": "Administration"
+      "admin": "Administration",
+      "teacher": "Teachers",
+      "app": "All my school tools"
     },
     "presets": {
       "study_planner": "Study planner",

@@ -89,7 +89,9 @@
     "server": {
       "student": "Students",
       "lms": "LMS Course",
-      "admin": "Administration"
+      "admin": "Administration",
+      "teacher": "Teachers",
+      "app": "All my school tools"
     },
     "scopes": "Access it asks for",
     "tools": "Tools: {tools}",

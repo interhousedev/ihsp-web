@@ -12071,7 +12071,7 @@ export interface components {
              * Server
              * @enum {string}
              */
-            server: "student" | "lms" | "admin" | "teacher";
+            server: "student" | "lms" | "admin" | "teacher" | "app";
             /** Tool */
             tool: string;
             /**
@@ -14605,7 +14605,7 @@ export interface components {
              * Server
              * @enum {string}
              */
-            server: "student" | "lms" | "admin" | "teacher";
+            server: "student" | "lms" | "admin" | "teacher" | "app";
             /** Token Prefix */
             token_prefix: string | null;
         };
@@ -14644,7 +14644,7 @@ export interface components {
             /** Requires Otp */
             requires_otp: boolean;
             /** Server */
-            server: ("student" | "lms" | "admin" | "teacher") | null;
+            server: ("student" | "lms" | "admin" | "teacher" | "app") | null;
             /** Verified */
             verified: boolean;
         };
@@ -15107,7 +15107,7 @@ export interface components {
              * Server
              * @enum {string}
              */
-            server: "student" | "lms" | "admin" | "teacher";
+            server: "student" | "lms" | "admin" | "teacher" | "app";
         };
         /**
          * CreateCourseBody
@@ -15176,7 +15176,7 @@ export interface components {
              * Server
              * @enum {string}
              */
-            server: "student" | "lms" | "admin" | "teacher";
+            server: "student" | "lms" | "admin" | "teacher" | "app";
             /**
              * Service
              * @enum {string}
@@ -20826,7 +20826,7 @@ export interface components {
              * Server
              * @enum {string}
              */
-            server: "student" | "lms" | "admin" | "teacher";
+            server: "student" | "lms" | "admin" | "teacher" | "app";
             /** Tool */
             tool: string;
         };
@@ -20860,7 +20860,7 @@ export interface components {
             /** Redirect Uris */
             redirect_uris: string[];
             /** Server */
-            server: ("student" | "lms" | "admin" | "teacher") | null;
+            server: ("student" | "lms" | "admin" | "teacher" | "app") | null;
             /** Service */
             service: string | null;
         };
@@ -20885,7 +20885,7 @@ export interface components {
              * Server
              * @enum {string}
              */
-            server: "student" | "lms" | "admin" | "teacher";
+            server: "student" | "lms" | "admin" | "teacher" | "app";
             /** Server Url */
             server_url: string;
             /**
@@ -24734,7 +24734,7 @@ export interface components {
              * Server
              * @enum {string}
              */
-            server: "student" | "lms" | "admin" | "teacher";
+            server: "student" | "lms" | "admin" | "teacher" | "app";
             /** Write Scopes */
             write_scopes: string[];
         };
@@ -24999,7 +24999,7 @@ export interface components {
              * Server
              * @enum {string}
              */
-            server: "student" | "lms" | "admin" | "teacher";
+            server: "student" | "lms" | "admin" | "teacher" | "app";
         };
         /**
          * SetDetailResponse
@@ -34199,7 +34199,7 @@ export interface operations {
             query?: {
                 user_id?: string | null;
                 connector_id?: string | null;
-                server?: ("student" | "lms" | "admin" | "teacher") | null;
+                server?: ("student" | "lms" | "admin" | "teacher" | "app") | null;
                 tool?: string | null;
                 outcome?: ("ok" | "denied" | "rate_limited" | "not_found" | "invalid" | "error") | null;
                 from?: string | null;
@@ -39749,7 +39749,7 @@ export interface operations {
     get_mcp_setup_v1_id_me_mcp_setup__service__get: {
         parameters: {
             query?: {
-                server?: "student" | "lms" | "admin" | "teacher";
+                server?: "student" | "lms" | "admin" | "teacher" | "app";
             };
             header?: never;
             path: {
@@ -39782,7 +39782,7 @@ export interface operations {
     provision_mcp_setup_v1_id_me_mcp_setup__service__post: {
         parameters: {
             query?: {
-                server?: "student" | "lms" | "admin" | "teacher";
+                server?: "student" | "lms" | "admin" | "teacher" | "app";
             };
             header?: never;
             path: {

@@ -30,7 +30,11 @@ export function humanizeKey(key: string): string {
   return text.charAt(0).toUpperCase() + text.slice(1)
 }
 
-/** `lms.modules.write` -> `lms_modules_write`: message keys cannot contain dots. */
+/**
+ * `lms.modules.write` -> `lms_modules_write`: message keys cannot contain dots. Scopes of the
+ * universal server carry their source server (`teacher:marks:write`) and share its hint.
+ */
 export function scopeHintKey(scope: string): string {
-  return `connectors.scopeHints.${scope.replace(/[.:]/g, "_")}`
+  const plain = scope.replace(/^(student|teacher|lms):/, "")
+  return `connectors.scopeHints.${plain.replace(/[.:]/g, "_")}`
 }
