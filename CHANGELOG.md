@@ -4,6 +4,10 @@ All notable changes to this project are documented here. The format follows [Kee
 
 ## [Unreleased]
 
+## [1.5.1] - 2026-11-14
+
+- id: connectors and the consent screen name the teacher MCP server and the universal `app` server; scopes of `app` (`teacher:marks:write`) reuse the hints of their source server.
+
 ## [1.5.0] - 2026-11-14
 
 - sp: honours page (red diploma, gold and silver medals with the blocking marks), mark planner shows the ways to reach a grade, and a Rating book (PDF) button on the grades page.
