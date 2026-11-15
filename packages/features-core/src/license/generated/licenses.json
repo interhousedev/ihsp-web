@@ -1205,6 +1205,13 @@
       "ecosystem": "PyPI"
     },
     {
+      "name": "backoff",
+      "version": "2.2.1",
+      "license": "MIT",
+      "url": "https://github.com/litl/backoff",
+      "ecosystem": "PyPI"
+    },
+    {
       "name": "bail",
       "version": "2.0.2",
       "license": "MIT",
@@ -1660,6 +1667,13 @@
       "ecosystem": "npm"
     },
     {
+      "name": "googleapis-common-protos",
+      "version": "1.76.0",
+      "license": "Apache-2.0",
+      "url": "https://github.com/googleapis/google-cloud-python/tree/main/packages/googleapis-common-protos",
+      "ecosystem": "PyPI"
+    },
+    {
       "name": "graceful-fs",
       "version": "4.2.11",
       "license": "ISC",
@@ -1945,6 +1959,13 @@
       "license": "MIT",
       "url": "https://katex.org",
       "ecosystem": "npm"
+    },
+    {
+      "name": "langfuse",
+      "version": "5.2.0",
+      "license": "MIT",
+      "url": "https://langfuse.com",
+      "ecosystem": "PyPI"
     },
     {
       "name": "lightningcss",
@@ -2479,6 +2500,55 @@
       "ecosystem": "PyPI"
     },
     {
+      "name": "opentelemetry-exporter-http-transport",
+      "version": "0.66b2",
+      "license": "Apache-2.0",
+      "url": "https://github.com/open-telemetry/opentelemetry-python/tree/main/exporter/opentelemetry-exporter-http-transport",
+      "ecosystem": "PyPI"
+    },
+    {
+      "name": "opentelemetry-exporter-otlp-common",
+      "version": "0.66b2",
+      "license": "Apache-2.0",
+      "url": "https://github.com/open-telemetry/opentelemetry-python/tree/main/exporter/opentelemetry-exporter-otlp-common",
+      "ecosystem": "PyPI"
+    },
+    {
+      "name": "opentelemetry-exporter-otlp-proto-common",
+      "version": "1.45.2",
+      "license": "Apache-2.0",
+      "url": "https://github.com/open-telemetry/opentelemetry-python/tree/main/exporter/opentelemetry-exporter-otlp-proto-common",
+      "ecosystem": "PyPI"
+    },
+    {
+      "name": "opentelemetry-exporter-otlp-proto-http",
+      "version": "1.45.2",
+      "license": "Apache-2.0",
+      "url": "https://github.com/open-telemetry/opentelemetry-python/tree/main/exporter/opentelemetry-exporter-otlp-proto-http",
+      "ecosystem": "PyPI"
+    },
+    {
+      "name": "opentelemetry-proto",
+      "version": "1.45.2",
+      "license": "Apache-2.0",
+      "url": "https://github.com/open-telemetry/opentelemetry-python/tree/main/opentelemetry-proto",
+      "ecosystem": "PyPI"
+    },
+    {
+      "name": "opentelemetry-sdk",
+      "version": "1.45.2",
+      "license": "Apache-2.0",
+      "url": "https://github.com/open-telemetry/opentelemetry-python/tree/main/opentelemetry-sdk",
+      "ecosystem": "PyPI"
+    },
+    {
+      "name": "opentelemetry-semantic-conventions",
+      "version": "0.66b2",
+      "license": "Apache-2.0",
+      "url": "https://github.com/open-telemetry/opentelemetry-python/tree/main/opentelemetry-semantic-conventions",
+      "ecosystem": "PyPI"
+    },
+    {
       "name": "orderedmap",
       "version": "2.1.1",
       "license": "MIT",
@@ -2666,6 +2736,13 @@
       "license": "MIT",
       "url": "https://code.haverbeke.berlin/prosemirror/prosemirror-view",
       "ecosystem": "npm"
+    },
+    {
+      "name": "protobuf",
+      "version": "7.36.2",
+      "license": "3-Clause BSD License",
+      "url": "https://developers.google.com/protocol-buffers/",
+      "ecosystem": "PyPI"
     },
     {
       "name": "py-vapid",
