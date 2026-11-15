@@ -2,6 +2,7 @@
 
 import { useT } from "@ihsp/i18n"
 import { buttonVariants } from "@ihsp/ui"
+import { ConnectAiLink } from "../connect-ai"
 import type { LimitState } from "./limit-info"
 import { showsMcpPrompt } from "./limit-info"
 
@@ -16,9 +17,9 @@ export function LimitMcpPrompt({ limit, connectorsHref }: { limit: LimitState; c
     <section role="status" className="bg-muted grid gap-2 rounded-card p-4">
       <h2 className="text-sm font-semibold">{t("title")}</h2>
       <p className="text-muted-foreground text-sm">{t("text")}</p>
-      <a href={connectorsHref} rel="noopener noreferrer" className={buttonVariants({ className: "w-fit" })}>
+      <ConnectAiLink href={connectorsHref} className={buttonVariants({ className: "w-fit" })}>
         {t("action")}
-      </a>
+      </ConnectAiLink>
     </section>
   )
 }

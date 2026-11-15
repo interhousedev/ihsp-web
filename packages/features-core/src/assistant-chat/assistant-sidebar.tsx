@@ -3,6 +3,7 @@
 import { useT } from "@ihsp/i18n"
 import { Button } from "@ihsp/ui"
 import { IconBooks, IconEdit, IconLayoutSidebarLeftCollapse, IconLink, IconSearch } from "@ihsp/ui"
+import { ConnectAiLink } from "../connect-ai"
 import Link from "next/link"
 import { useRouter } from "next/navigation"
 import { useState } from "react"
@@ -98,12 +99,12 @@ export function AssistantSidebar({
         </Link>
       ) : null}
       {connectorsHref ? (
-        <a href={connectorsHref} rel="noopener noreferrer" onClick={onNavigate} className={SIDEBAR_ROW}>
+        <ConnectAiLink href={connectorsHref} onOpen={onNavigate} onClick={onNavigate} className={SIDEBAR_ROW}>
           <SidebarIcon>
             <IconLink className="size-4" aria-hidden />
           </SidebarIcon>
           {t("sidebar.connectAi", { app: appName ?? "" })}
-        </a>
+        </ConnectAiLink>
       ) : null}
       {/* Everything below the pinned rows scrolls as one column, so a long project list never squeezes Recents. */}
       <div data-scroll="sections" className="mt-3 flex min-h-0 flex-1 flex-col gap-4 overflow-y-auto">

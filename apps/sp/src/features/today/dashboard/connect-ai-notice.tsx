@@ -1,7 +1,7 @@
 "use client"
 
 import { getConfig } from "@ihsp/config"
-import { usePreferences, useUpdatePreferences } from "@ihsp/features-core"
+import { ConnectAiLink, usePreferences, useUpdatePreferences } from "@ihsp/features-core"
 import { useT } from "@ihsp/i18n"
 import { Button, buttonVariants } from "@ihsp/ui"
 import { useAlerts } from "../hooks/use-today"
@@ -30,13 +30,12 @@ export function ConnectAiNotice() {
       <h2 className="text-sm font-semibold">{t("title", { app: app("name") })}</h2>
       <p className="text-muted-foreground text-sm">{t("text")}</p>
       <div className="flex flex-wrap gap-2">
-        <a
+        <ConnectAiLink
           href={alert.action_url ?? `${getConfig().ID_URL}/connectors/new/`}
-          rel="noopener noreferrer"
           className={buttonVariants({ className: "w-fit" })}
         >
           {t("action")}
-        </a>
+        </ConnectAiLink>
         <Button
           type="button"
           variant="ghost"
