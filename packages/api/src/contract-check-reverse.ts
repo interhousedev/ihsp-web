@@ -35,7 +35,7 @@ import type { getMeFlashcardSet, getMeFlashcardSetCardStats, getMeFlashcardSetSt
 import type { getGroupProgress, getMyGroupProgress } from "./endpoints/group-progress"
 import type { getMeEmisRatingBook, getMeHonours } from "./endpoints/honours"
 import type { deleteIdMe, getIdActivation, getIdConsent, getIdLogin, getIdLogout, getIdMcpScopes, getIdMe, getIdMeActivity, getIdMeConnectorOffers, getIdMeConnectors, getIdMeMcpClients, getIdMeMcpSetup, getIdMeSessions, getIdMeTelegram, getIdPersonalTokens, patchIdMePreferences, patchIdMeTelegram, postIdActivation, postIdConsent, postIdLogin, postIdLoginEmisResolve, postIdLoginOtp, postIdLoginOtpRequest, postIdLoginPassword, postIdLoginRestore, postIdLoginRestoreDecline, postIdLoginTicket, postIdMeConnectorOfferDecision, postIdMeConnectors, postIdMeEmailChangeConfirm, postIdMeEmisPassword, postIdMeMcpClient, postIdMeMcpSetup, postIdMeOtpDisable, postIdMeOtpEnableConfirm, postIdPersonalTokens, postIdRecoveryOtpConfirm, postIdRecoveryPasswordConfirm, postIdTelegramLogin, postIdTelegramOtpRequest, postIdTelegramStatus, postRegisterTelegramStatus } from "./endpoints/id"
-import type { getAdminAudit, getAdminOauthClients, getAdminSettings, getAdminTeachers, getAdminUser, getAdminUsers, patchAdminTeacher, patchAdminUser, postAdminOauthClientVerify, postAdminTeacherDeactivate, postAdminTeachers, postAdminUserBlock, postAdminUserMailResume, postAdminUserMailSuspend, postAdminUserResetPassword, postAdminUserResetPasswordLink, postAdminUserRoles, postAdminUserUnblock, putAdminSettings } from "./endpoints/id-admin"
+import type { deleteLyceumLogo, getAdminAudit, getAdminOauthClients, getAdminSettings, getAdminTeachers, getAdminUser, getAdminUsers, patchAdminTeacher, patchAdminUser, postAdminOauthClientVerify, postAdminTeacherDeactivate, postAdminTeachers, postAdminUserBlock, postAdminUserMailResume, postAdminUserMailSuspend, postAdminUserResetPassword, postAdminUserResetPasswordLink, postAdminUserRoles, postAdminUserUnblock, putAdminSettings, putLyceumLogo } from "./endpoints/id-admin"
 import type { getIdMeSecurity, patchIdMePasskey, postIdLoginPasskey, postIdLoginPasskeyOptions, postIdLoginTotp, postIdMePasskey, postIdMePasskeyOptions, postIdMePasswordLoginDisable, postIdMeTotpConfirm, postIdMeTotpDisable, postIdMeTotpSetup } from "./endpoints/id-factors"
 import type { getAdminInsights } from "./endpoints/insights"
 import type { getAdminLegalAcceptances, getAdminLegalDocuments, getLegalDocument, getLegalDocuments, getMeLegalPending, postAdminLegalPublish, postMeLegalAccept, putAdminLegalDraft } from "./endpoints/legal"
@@ -879,6 +879,14 @@ export const served_postAdminOauthClientVerify: Awaited<ReturnType<typeof postAd
 // GET /v1/admin/settings — getAdminSettings
 declare const gen_getAdminSettings: ResponseOf<"/v1/admin/settings", "get">
 export const served_getAdminSettings: Awaited<ReturnType<typeof getAdminSettings>> = gen_getAdminSettings
+
+// PUT /v1/admin/settings/lyceum-logo — putLyceumLogo
+declare const gen_putLyceumLogo: ResponseOf<"/v1/admin/settings/lyceum-logo", "put">
+export const served_putLyceumLogo: Awaited<ReturnType<typeof putLyceumLogo>> = gen_putLyceumLogo
+
+// DELETE /v1/admin/settings/lyceum-logo — deleteLyceumLogo
+declare const gen_deleteLyceumLogo: ResponseOf<"/v1/admin/settings/lyceum-logo", "delete">
+export const served_deleteLyceumLogo: Awaited<ReturnType<typeof deleteLyceumLogo>> = gen_deleteLyceumLogo
 
 // PUT /v1/admin/settings — putAdminSettings
 declare const gen_putAdminSettings: ResponseOf<"/v1/admin/settings", "put">
