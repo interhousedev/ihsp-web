@@ -3229,7 +3229,7 @@
     },
     {
       "name": "taskiq",
-      "version": "0.13.0",
+      "version": "0.12.6",
       "license": "MIT",
       "url": "https://taskiq-python.github.io/",
       "ecosystem": "PyPI"
