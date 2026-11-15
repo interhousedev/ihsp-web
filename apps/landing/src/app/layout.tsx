@@ -3,12 +3,27 @@ import "./landing.css"
 import { BRAND } from "@ihsp/config/brand"
 import type { Metadata, Viewport } from "next"
 import type { ReactNode } from "react"
+import { ORGANIZATION_JSON_LD } from "./json-ld"
 import { LANG_INIT_SCRIPT } from "./lang-init"
 import { Providers } from "./providers"
 
+const TITLE = `${BRAND.apps.sp.name} — ${BRAND.orgAlias}`
+const DESCRIPTION = `Making everyday studying at ${BRAND.orgAlias} more convenient: marks, timetable, homework, AI study notebooks.`
+
+// The language is chosen on the client, so there is one URL and no hreflang alternates.
 export const metadata: Metadata = {
-  title: `${BRAND.apps.sp.name} — ${BRAND.orgAlias}`,
-  description: `Making everyday studying at ${BRAND.orgAlias} more convenient: marks, timetable, homework, AI study notebooks.`,
+  metadataBase: new URL(`https://${BRAND.landingHost}`),
+  title: TITLE,
+  description: DESCRIPTION,
+  alternates: { canonical: "/" },
+  openGraph: {
+    type: "website",
+    url: "/",
+    siteName: BRAND.orgName,
+    title: TITLE,
+    description: DESCRIPTION,
+    images: [BRAND.logos.png64],
+  },
   icons: {
     icon: [
       { url: "/favicon.ico", sizes: "any" },
@@ -40,6 +55,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
         <script src="/env.js" />
         <script dangerouslySetInnerHTML={{ __html: LANDING_THEME_SCRIPT }} />
         <script dangerouslySetInnerHTML={{ __html: LANG_INIT_SCRIPT }} />
+        <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(ORGANIZATION_JSON_LD) }} />
       </head>
       <body className="landing bg-background text-foreground min-h-dvh overflow-x-hidden font-sans antialiased">
         <Providers>{children}</Providers>

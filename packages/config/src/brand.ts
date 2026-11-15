@@ -22,6 +22,8 @@ export const BRAND = {
   orgName,
   /** The familiar name of the school. */
   orgAlias: "Interhouse",
+  /** Public host of the landing site (canonical URLs, sitemap, structured data). */
+  landingHost: "ihsu.uz",
   /** Address of the library printed in the sign-up text. */
   libraryHost: "lib.ihsu.uz",
   apps: {

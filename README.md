@@ -71,6 +71,17 @@ Screenshots are stored in `docs/assets/screens/` as `<app>-<screen>.png` (for ex
 
 The API and MCP servers are `api.ihsu.uz` and `mcp.ihsu.uz`, served by iht-backend. The directory name `sp` is historic; the product is my.iht.
 
+### Search indexing (Google Search Console)
+
+Submit these sitemaps, one property per host:
+
+| Host | Sitemap | Produced by |
+|---|---|---|
+| `ihsu.uz` | `https://ihsu.uz/sitemap.xml` | `apps/landing` static export (`robots.txt` too) |
+| `lib.ihsu.uz` | `https://lib.ihsu.uz/sitemap.xml` (index of `sitemap-pages.xml` and `sitemap-books.xml`) | iht-backend, `api` process; only public published books and materials |
+
+`lms.ihsu.uz` has no public page (every course page needs a sign-in), so its `robots.txt` disallows everything and it has no sitemap. The signed-in pages of the library are `noindex`.
+
 ## Architecture
 
 ```mermaid

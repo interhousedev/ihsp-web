@@ -10,6 +10,14 @@ import { Providers } from "./providers"
 export const metadata: Metadata = {
   title: BRAND.apps.library.name,
   description: "Books, textbooks and study materials of the lyceum",
+  metadataBase: new URL(`https://${BRAND.libraryHost}`),
+  openGraph: {
+    type: "website",
+    siteName: BRAND.apps.library.name,
+    title: BRAND.apps.library.name,
+    description: "Books, textbooks and study materials of the lyceum",
+    images: [BRAND.logos.png64],
+  },
   icons: {
     icon: [
       { url: "/favicon.ico", sizes: "any" },

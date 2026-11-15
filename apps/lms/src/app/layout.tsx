@@ -10,6 +10,8 @@ import { Providers } from "./providers"
 export const metadata: Metadata = {
   title: BRAND.apps.lms.name,
   description: "Courses, tests and course editor",
+  // Every page needs a sign-in; the robots.txt closes the site too.
+  robots: { index: false, follow: false },
   icons: {
     icon: [
       { url: "/favicon.ico", sizes: "any" },
