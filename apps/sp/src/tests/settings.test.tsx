@@ -34,7 +34,7 @@ function recordPatches(): Record<string, unknown>[] {
 
 describe("settings page", () => {
   test("the language switcher is full width on a 360 px phone and 12 rem wide from md up", async () => {
-    renderSp(<SettingsPage />, { route: "/settings/" })
+    renderSp(<SettingsPage />, { route: "/settings/?section=appearance" })
 
     const row = (await screen.findByText("Language")).parentElement
     const control = row?.querySelector<HTMLElement>("[class*='md:h-8']")
@@ -43,12 +43,35 @@ describe("settings page", () => {
     expect(control?.className).not.toMatch(/(^|\s)w-48(\s|$)/)
   })
 
-  test("has the general, notification and calendar sections", async () => {
+  test("the index lists the topics and each opens its own page with a way back", async () => {
     renderSp(<SettingsPage />, { route: "/settings/" })
 
-    for (const title of ["General", "Notifications", "Calendar feed"]) {
-      expect((await screen.findAllByText(title)).length).toBeGreaterThan(0)
+    for (const title of [
+      "Profile",
+      "Language and appearance",
+      "Notifications",
+      "Calendar and sync",
+      "Security",
+      "Help and about",
+    ]) {
+      expect(await screen.findByRole("link", { name: new RegExp(title) })).toBeInTheDocument()
     }
+    expect(screen.getByRole("link", { name: /Calendar and sync/ }).getAttribute("href")).toBe(
+      "/settings?section=schedule",
+    )
+  })
+
+  test("a topic page has its sections and a link back to the index", async () => {
+    renderSp(<SettingsPage />, { route: "/settings/?section=appearance" })
+
+    expect(await screen.findByText("General")).toBeInTheDocument()
+    expect(screen.getByRole("link", { name: "All settings" }).getAttribute("href")).toMatch(/^\/settings\/?$/)
+  })
+
+  test("an unknown topic shows the index", async () => {
+    renderSp(<SettingsPage />, { route: "/settings/?section=nope" })
+
+    expect(await screen.findByRole("link", { name: /Help and about/ })).toBeInTheDocument()
   })
 
   test("the theme is applied and saved in the account", async () => {
@@ -57,7 +80,7 @@ describe("settings page", () => {
       <ThemePreferenceSync>
         <SettingsPage />
       </ThemePreferenceSync>,
-      { route: "/settings/" },
+      { route: "/settings/?section=appearance" },
     )
 
     await user.click(await screen.findByRole("button", { name: "Dark" }))
@@ -66,7 +89,10 @@ describe("settings page", () => {
   })
 
   test("a student without Telegram is told where notifications go", async () => {
-    renderSp(<SettingsPage />, { route: "/settings/", session: { user: { ...userMe, telegram: [] } } })
+    renderSp(<SettingsPage />, {
+      route: "/settings/?section=notifications",
+      session: { user: { ...userMe, telegram: [] } },
+    })
 
     expect(await screen.findByText(/Notifications go to Telegram/)).toBeInTheDocument()
     expect(screen.getByRole("link", { name: "Link Telegram" }).getAttribute("href")).toBe(
@@ -75,15 +101,15 @@ describe("settings page", () => {
   })
 
   test("a student with Telegram does not see the hint", async () => {
-    renderSp(<SettingsPage />, { route: "/settings/" })
+    renderSp(<SettingsPage />, { route: "/settings/?section=notifications" })
 
-    await screen.findByText("Calendar feed")
+    await screen.findByRole("switch", { name: "Push notifications on this device" })
 
     expect(screen.queryByText(/Notifications go to Telegram/)).not.toBeInTheDocument()
   })
 
   test("the calendar feed is created on demand", async () => {
-    const { user } = renderSp(<SettingsPage />, { route: "/settings/" })
+    const { user } = renderSp(<SettingsPage />, { route: "/settings/?section=schedule" })
 
     await user.click(await screen.findByRole("button", { name: "Create link" }))
 
@@ -185,7 +211,7 @@ describe("push notifications on this device", () => {
   })
 
   test("the settings page offers the switch and explains why it cannot be used in a plain browser tab", async () => {
-    renderSp(<SettingsPage />, { route: "/settings/" })
+    renderSp(<SettingsPage />, { route: "/settings/?section=notifications" })
 
     expect(await screen.findByRole("switch", { name: "Push notifications on this device" })).toBeInTheDocument()
     expect(await screen.findByText("This browser cannot show push notifications.")).toBeInTheDocument()
@@ -204,7 +230,7 @@ describe("push notifications on this device", () => {
     const registration = { pushManager: { getSubscription: async () => null } } as unknown as ServiceWorkerRegistration
     trackServiceWorkerRegistration(Promise.resolve(registration))
 
-    renderSp(<SettingsPage />, { route: "/settings/" })
+    renderSp(<SettingsPage />, { route: "/settings/?section=notifications" })
 
     expect(await screen.findByText(/Get your notifications on this device/)).toBeInTheDocument()
   })
