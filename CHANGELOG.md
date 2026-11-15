@@ -4,6 +4,20 @@ All notable changes to this project are documented here. The format follows [Kee
 
 ## [Unreleased]
 
+### Added
+
+- my.iht: the AI assistant is a floating circle that expands into a chat panel, with "New chat"; collapsing keeps the current chat. It replaces the assistant nav item and the help widget there.
+
+### Changed
+
+- my.iht home: the header shows only the student's face and opens the profile; the QR student card moved to the profile page; duplicate lessons, stat tiles and tile grid are gone.
+- Mobile: the top controls pill is centred; search opens full-screen with the keyboard, and the input no longer zooms on iOS.
+
+### Fixed
+
+- Profile menus and the profile page show the user's photo, refreshed right after a face upload.
+- A stale cached bundle that meets newer messages reloads once per deploy instead of showing raw keys; a test checks every literal translation key in uz, ru and en.
+
 ## [1.6.2] - 2026-11-15
 
 ### Changed
