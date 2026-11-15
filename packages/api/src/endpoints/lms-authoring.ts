@@ -5,7 +5,9 @@ import { keys } from "../keys"
 import { queryOptions, seg, type RequestOptions } from "../query"
 import type { NoContent, Page, PageParams } from "../types/common"
 import type {
+  AccessRuleBody,
   CheckpointBody,
+  CourseAccessRules,
   CourseBroadcast,
   CourseBroadcastBody,
   CourseBroadcastPatchBody,
@@ -299,3 +301,32 @@ export const getLmsCourseBroadcastsQuery = (courseId: string) =>
     queryKey: keys.lms.broadcasts(courseId),
     queryFn: ({ signal }) => getLmsCourseBroadcasts(courseId, { signal }),
   })
+
+/** GET /v1/lms/courses/{id}/access — any course staff. */
+export function getLmsCourseAccess(courseId: string, opts?: RequestOptions): Promise<CourseAccessRules> {
+  return api.get<CourseAccessRules>(`/v1/lms/courses/${seg(courseId)}/access`, opts)
+}
+export const getLmsCourseAccessQuery = (courseId: string) =>
+  queryOptions({
+    queryKey: keys.lms.access(courseId),
+    queryFn: ({ signal }) => getLmsCourseAccess(courseId, { signal }),
+  })
+
+/** PUT /v1/lms/courses/{id}/access — the owner or an LMS admin. */
+export function putLmsCourseAccess(
+  courseId: string,
+  body: AccessRuleBody,
+  opts?: RequestOptions,
+): Promise<CourseAccessRules> {
+  return api.put<CourseAccessRules>(`/v1/lms/courses/${seg(courseId)}/access`, body, opts)
+}
+
+/** PUT /v1/lms/courses/{id}/steps/{step_id}/access — the owner or an LMS admin. */
+export function putLmsStepAccess(
+  courseId: string,
+  stepId: string,
+  body: AccessRuleBody,
+  opts?: RequestOptions,
+): Promise<CourseAccessRules> {
+  return api.put<CourseAccessRules>(`/v1/lms/courses/${seg(courseId)}/steps/${seg(stepId)}/access`, body, opts)
+}

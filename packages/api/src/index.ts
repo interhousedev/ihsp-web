@@ -113,6 +113,8 @@ export * from "./endpoints/lms-imscc"
 export * from "./endpoints/lms-settings"
 export * from "./types/bot-posts"
 export * from "./endpoints/bot-posts"
+export * from "./types/bots"
+export * from "./endpoints/bots"
 
 export * from "./types/admin-feedback"
 export * from "./endpoints/admin-feedback"

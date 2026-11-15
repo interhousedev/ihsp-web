@@ -1,5 +1,8 @@
 import type {
+  AccessRule,
+  AccessRuleBody,
   CheckpointBody,
+  CourseAccessRules,
   CourseBroadcast,
   CourseBroadcastBody,
   CourseBroadcastPatchBody,
@@ -33,7 +36,7 @@ import {
   versionItems,
   versionView,
 } from "../fixtures/lms-authoring"
-import { courseStaff, stepViewTest } from "../fixtures/lms-learning"
+import { courseAccessRules, courseStaff, stepViewTest } from "../fixtures/lms-learning"
 import { FIXTURE_NOW, persons } from "../fixtures/world"
 import { apiUrl, nextId, noContent, notFound, paginate, param, problem, query, readJson } from "./utils"
 
@@ -82,6 +85,17 @@ function creatorFor(person: { id: string; first_name: string; last_name: string 
     last_name: person.last_name,
     middle_name: null,
     status: "active",
+  }
+}
+
+/** The rule a PUT body saves: chosen people get a name from their id. */
+function accessRuleOf(body: AccessRuleBody): AccessRule {
+  const chosen = body.audience === "chosen"
+  return {
+    audience: body.audience,
+    when_denied: body.when_denied ?? "hidden",
+    group_ids: chosen ? (body.group_ids ?? []) : [],
+    users: chosen ? (body.user_ids ?? []).map((id) => ({ id, name: `User ${id.slice(0, 4)}` })) : [],
   }
 }
 
@@ -235,6 +249,23 @@ export const lmsAuthoringHandlers = [
 
   // --- Staff. The login `nobody` does not exist (`404 id/user-not-found`). ---
   http.get(apiUrl("/v1/lms/courses/:id/staff"), () => HttpResponse.json(courseStaff)),
+  // Access rules: the course rule and the restricted lessons. A PUT answers with the rules as they would be saved.
+  http.get(apiUrl("/v1/lms/courses/:id/access"), () => HttpResponse.json(courseAccessRules)),
+  http.put(apiUrl("/v1/lms/courses/:id/access"), async ({ request }) => {
+    const body = (await readJson<AccessRuleBody>(request)) as AccessRuleBody
+    const saved: CourseAccessRules = { ...courseAccessRules, course: accessRuleOf(body) }
+    return HttpResponse.json(saved)
+  }),
+  http.put(apiUrl("/v1/lms/courses/:id/steps/:stepId/access"), async ({ params, request }) => {
+    const body = (await readJson<AccessRuleBody>(request)) as AccessRuleBody
+    const rule = accessRuleOf(body)
+    const stepId = param(params, "stepId")
+    const steps =
+      body.audience === "public"
+        ? courseAccessRules.steps.filter((item) => item.step_id !== stepId)
+        : [...courseAccessRules.steps.filter((item) => item.step_id !== stepId), { step_id: stepId, rule }]
+    return HttpResponse.json({ ...courseAccessRules, steps })
+  }),
   http.post(apiUrl("/v1/lms/courses/:id/staff"), async ({ request }) => {
     const body = await readJson<CourseStaffBody>(request)
     if (body.login === "nobody") return problem(404, "id/user-not-found", "No user with this login")

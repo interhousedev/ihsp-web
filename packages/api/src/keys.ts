@@ -118,6 +118,10 @@ export const keys = {
       all: () => ["admin", "bot-posts"] as const,
       tree: () => ["admin", "bot-posts", "tree"] as const,
     },
+    bots: {
+      all: () => ["admin", "bots"] as const,
+      list: () => ["admin", "bots", "list"] as const,
+    },
     insights: () => ["admin", "insights"] as const,
     excuses: (filters?: object) => ["admin", "excuses", "list", params(filters)] as const,
     excuse: (id: string) => ["admin", "excuses", "detail", id] as const,
@@ -271,6 +275,7 @@ export const keys = {
     staff: (courseId: string) => ["lms", "course", courseId, "staff"] as const,
     broadcasts: (courseId: string) => ["lms", "course", courseId, "broadcasts"] as const,
     creators: () => ["lms", "creators"] as const,
+    access: (courseId: string) => ["lms", "course", courseId, "access"] as const,
     preview: (courseId: string, stepId: string) => ["lms", "course", courseId, "preview", stepId] as const,
   },
   staffSubjects: {

@@ -11,6 +11,8 @@ export type DataExport = {
   expires_at: string | null
   byte_size: number | null
 }
+/** Body of the export request: the code sent by `POST /v1/id/me/step-up`. */
+export type DataExportBody = { otp_code: string }
 export type DataExportList = { items: DataExport[] }
 /** A presigned URL valid for `expires_in` seconds. */
 export type DataExportDownload = { url: string; expires_in?: number }

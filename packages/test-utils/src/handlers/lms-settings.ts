@@ -139,6 +139,11 @@ export const lmsSettingsHandlers = [
     }
     return HttpResponse.json(linkCheck)
   }),
+  http.get(apiUrl("/v1/lms/public/courses/:slug/landing"), ({ params }) => {
+    const slug = param(params, "slug")
+    if (slug !== courseLandingFixture.slug && slug !== courseLandingFixture.id) return notFound("Course")
+    return HttpResponse.json({ ...courseLandingFixture, preview: false })
+  }),
   http.get(apiUrl("/v1/lms/courses/:slug/landing"), ({ params, request }) => {
     const slug = param(params, "slug")
     if (slug !== courseLandingFixture.slug && slug !== courseLandingFixture.id) return notFound("Course")

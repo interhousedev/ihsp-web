@@ -7,6 +7,7 @@ import type {
   AdminErasureList,
   AdminErasureParams,
   DataExport,
+  DataExportBody,
   DataExportDownload,
   DataExportList,
   ErasureRequest,
@@ -24,9 +25,9 @@ export const getMePrivacyExportsQuery = () =>
     queryFn: ({ signal }) => getMePrivacyExports({ signal }),
   })
 
-/** POST /v1/me/privacy/exports — bearer; `202`, queues an export of the caller's data. */
-export function postMePrivacyExport(opts?: RequestOptions): Promise<DataExport> {
-  return api.post<DataExport>("/v1/me/privacy/exports", undefined, opts)
+/** POST /v1/me/privacy/exports — bearer + step-up code; `202`, queues an export of the caller's data. */
+export function postMePrivacyExport(body: DataExportBody, opts?: RequestOptions): Promise<DataExport> {
+  return api.post<DataExport>("/v1/me/privacy/exports", body, opts)
 }
 
 /** GET /v1/me/privacy/exports/{export_id}/download — owner only; a presigned URL valid for 60 seconds. */

@@ -2,7 +2,7 @@
 
 import type { PersonRef } from "./common"
 import type { H5PBlock, InteractiveVideoBlock } from "./lms-interactive"
-import type { CourseStaffItem, OutlineSection } from "./lms-learning"
+import type { AccessAudience, CourseStaffItem, OutlineSection, WhenDenied } from "./lms-learning"
 
 export type TestConfig = {
   max_attempts: number | null
@@ -211,3 +211,28 @@ export type CourseSettingsBody = {
   cover_file_id?: string | null
 }
 export type InviteCodeResponse = { invite_code: string }
+
+/** A chosen person of an access rule, with a name for the editor. */
+export type AccessUser = { id: string; name: string }
+
+/** The audience of a course or a lesson; the lists count only for `chosen`. */
+export type AccessRule = {
+  audience: AccessAudience
+  when_denied: WhenDenied
+  group_ids: string[]
+  users: AccessUser[]
+}
+
+/** PUT body: chosen people go by id. */
+export type AccessRuleBody = {
+  audience: AccessAudience
+  when_denied?: WhenDenied
+  group_ids?: string[]
+  user_ids?: string[]
+}
+
+/** The course rule and the rule of every restricted lesson. */
+export type CourseAccessRules = {
+  course: AccessRule
+  steps: { step_id: string; rule: AccessRule }[]
+}

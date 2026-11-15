@@ -58,6 +58,7 @@ import { loginCuesHandlers } from "./login-cues"
 import { appMapHandlers } from "./app-map"
 import { clientConfigHandlers } from "./client-config"
 import { botPostsHandlers } from "./bot-posts"
+import { botsHandlers } from "./bots"
 import { feedbackHandlers } from "./feedback"
 import { facesHandlers } from "./faces"
 import { onboardingHandlers } from "./onboarding"
@@ -174,6 +175,7 @@ export {
   appMapHandlers,
   clientConfigHandlers,
   botPostsHandlers,
+  botsHandlers,
   legalHandlers,
   privacyHandlers,
 }
@@ -197,6 +199,7 @@ export const allHandlers = [
   ...appMapHandlers,
   ...clientConfigHandlers,
   ...botPostsHandlers,
+  ...botsHandlers,
   ...feedbackHandlers,
   ...adminFeedbackHandlers,
   ...scheduleHandlers,

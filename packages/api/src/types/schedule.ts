@@ -210,7 +210,7 @@ export type StudentProfile = {
   first_name: string
   last_name: string
   mailbox: string | null
-  group: { id: string; name: string }
+  group: { id: string; name: string } | null
   subgroup: 1 | 2 | null
   curator: PersonRef | null
   head_student: PersonRef | null

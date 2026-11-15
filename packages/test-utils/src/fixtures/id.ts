@@ -32,6 +32,7 @@ export const userPreferences: UserPreferences = {
   lessons_links_lead_min: 5,
   lessons_prompt_enabled: true,
   mail_forward_to_telegram: true,
+  hide_photo_from_classmates: false,
   notify_push: true,
   today_cards: ["now", "timeline", "due", "marks", "semester", "announcements", "alerts"],
   onboarding_dismissed: ["tour"],

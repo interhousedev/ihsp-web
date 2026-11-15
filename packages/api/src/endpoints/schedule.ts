@@ -99,9 +99,15 @@ export function patchAdminGroup(id: string, body: GroupPatchBody, opts?: Request
   return api.patch<GroupDetail>(`/v1/admin/groups/${seg(id)}`, body, opts)
 }
 
-/** DELETE /v1/admin/groups/{id} — admin; students are detached, not deleted; `204`. */
-export function deleteAdminGroup(id: string, opts?: RequestOptions): Promise<NoContent> {
-  return api.delete<NoContent>(`/v1/admin/groups/${seg(id)}`, opts)
+/**
+ * DELETE /v1/admin/groups/{id} — admin; students are detached, not deleted, or moved to `moveStudentsTo`
+ * (a group other than the deleted one, else 422 `academic/target-group-invalid`); `204`.
+ */
+export function deleteAdminGroup(id: string, moveStudentsTo?: string, opts?: RequestOptions): Promise<NoContent> {
+  return api.delete<NoContent>(`/v1/admin/groups/${seg(id)}`, {
+    ...opts,
+    query: moveStudentsTo ? { move_students_to: moveStudentsTo } : undefined,
+  })
 }
 
 /** PUT /v1/admin/groups/{id}/subgroups — admin. */
@@ -267,6 +273,15 @@ export const getAdminStudentsQuery = (params?: AdminStudentsParams) =>
     queryKey: keys.admin.students.list(params),
     queryFn: ({ signal }) => getAdminStudents(params, { signal }),
   })
+
+/** PUT /v1/admin/students/{user_id}/group — admin; `group_id: null` leaves the student without a group; `204`. */
+export function putAdminStudentGroup(
+  userId: string,
+  groupId: string | null,
+  opts?: RequestOptions,
+): Promise<NoContent> {
+  return api.put<NoContent>(`/v1/admin/students/${seg(userId)}/group`, { group_id: groupId }, opts)
+}
 
 /** POST /v1/admin/students/import — admin; multipart `file` (CSV). */
 export function postAdminStudentsImport(file: File, opts?: RequestOptions): Promise<ImportPreview> {

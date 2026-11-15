@@ -389,6 +389,7 @@ export const scheduleHandlers = [
     )
     return HttpResponse.json(paginate(items, request))
   }),
+  http.put(apiUrl("/v1/admin/students/:userId/group"), () => noContent()),
   http.post(apiUrl("/v1/admin/students/import"), () => HttpResponse.json(importPreview)),
   http.post(apiUrl("/v1/admin/students/import/:importId/confirm"), ({ params }) =>
     param(params, "importId") === importPreview.import_id ? HttpResponse.json(importConfirmResult) : notFound("Import"),

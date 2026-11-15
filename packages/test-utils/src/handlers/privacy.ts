@@ -1,15 +1,17 @@
 import type { RejectErasureBody } from "@ihsp/api"
 import { HttpResponse, http } from "msw"
 import { adminErasureRequests, dataExport, erasureRequest } from "../fixtures/privacy"
-import { apiUrl, param, readJson } from "./utils"
+import { apiUrl, param, problem, readJson } from "./utils"
 
 export const privacyHandlers = [
   http.get(apiUrl("/v1/me/privacy/exports"), () => HttpResponse.json({ items: [] })),
-  http.post(apiUrl("/v1/me/privacy/exports"), () =>
-    HttpResponse.json(dataExport({ status: "queued", finished_at: null, expires_at: null, byte_size: null }), {
+  http.post(apiUrl("/v1/me/privacy/exports"), async ({ request }) => {
+    const body = await readJson<{ otp_code: string }>(request)
+    if (body.otp_code !== "123456") return problem(403, "identity/step-up-invalid", "The code is wrong")
+    return HttpResponse.json(dataExport({ status: "queued", finished_at: null, expires_at: null, byte_size: null }), {
       status: 202,
-    }),
-  ),
+    })
+  }),
   http.get(apiUrl("/v1/me/privacy/exports/:id/download"), () =>
     HttpResponse.json({ url: "https://files.example.test/export.zip", expires_in: 60 }),
   ),

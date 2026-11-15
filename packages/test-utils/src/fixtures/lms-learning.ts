@@ -3,6 +3,7 @@ import type {
   AttemptReview,
   AttemptView,
   CourseCard,
+  CourseAccessRules,
   CoursePage,
   CourseStaffItem,
   CourseStudent,
@@ -275,4 +276,22 @@ export const attemptReview: AttemptReview = {
   revision_id: "0000000f-0000-4000-8000-000000000002",
   override_score: null,
   override_comment: null,
+}
+
+/** A course nobody restricted: public, no lesson rules. */
+export const courseAccessRules: CourseAccessRules = {
+  course: { audience: "public", when_denied: "hidden", group_ids: [], users: [] },
+  steps: [],
+}
+
+/** The course page of a signed-in student who is not in the chosen audience: it stays visible, locked, with a contact. */
+export const coursePageLocked: CoursePage = {
+  ...coursePageNotEnrolled,
+  access: "chosen",
+  locked: true,
+  contact: { name: "Aziza Karimova", telegram: "aziza_k" },
+  outline: coursePageNotEnrolled.outline.map((section) => ({
+    ...section,
+    steps: section.steps.map((step) => ({ ...step, access: "chosen" as const, locked: true })),
+  })),
 }

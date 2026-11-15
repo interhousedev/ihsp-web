@@ -464,6 +464,92 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/v1/admin/bots": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * List Bots
+         * @description Every registered bot with its feature switches and member count.
+         */
+        get: operations["list_bots_v1_admin_bots_get"];
+        put?: never;
+        /**
+         * Add Bot
+         * @description Register a bot; it starts with every feature off (bot process restart).
+         *
+         *     Needs a fresh step-up code (403 ``identity/step-up-invalid``).
+         */
+        post: operations["add_bot_v1_admin_bots_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/admin/bots/announcements": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Announce
+         * @description Send a draft broadcast through the selected bots; needs step-up.
+         */
+        post: operations["announce_v1_admin_bots_announcements_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/admin/bots/{bot_id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        /**
+         * Update Bot
+         * @description Rename, switch on or off, or change feature switches; needs step-up.
+         */
+        patch: operations["update_bot_v1_admin_bots__bot_id__patch"];
+        trace?: never;
+    };
+    "/v1/admin/bots/{bot_id}/rotate-token": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Rotate Token
+         * @description Replace the token of the same Telegram bot; needs step-up.
+         */
+        post: operations["rotate_token_v1_admin_bots__bot_id__rotate_token_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/v1/admin/broadcasts": {
         parameters: {
             query?: never;
@@ -900,7 +986,7 @@ export interface paths {
         post?: never;
         /**
          * Delete Group
-         * @description Delete a group; its students stay as users without a group.
+         * @description Delete a group; its students move to the target group or lose their group.
          */
         delete: operations["delete_group_v1_admin_groups__group_id__delete"];
         options?: never;
@@ -2077,6 +2163,26 @@ export interface paths {
          */
         get: operations["get_student_360_v1_admin_students__user_id__get"];
         put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/admin/students/{user_id}/group": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        /**
+         * Set Student Group
+         * @description Set or change the student's group; null detaches the student.
+         */
+        put: operations["set_student_group_v1_admin_students__user_id__group_put"];
         post?: never;
         delete?: never;
         options?: never;
@@ -6381,6 +6487,30 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/v1/lms/courses/{course_id}/access": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get Access
+         * @description Return the course rule and the rules of restricted lessons (course staff).
+         */
+        get: operations["get_access_v1_lms_courses__course_id__access_get"];
+        /**
+         * Set Course Access
+         * @description Set the course audience; the owner or an LMS admin only.
+         */
+        put: operations["set_course_access_v1_lms_courses__course_id__access_put"];
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/v1/lms/courses/{course_id}/compare": {
         parameters: {
             query?: never;
@@ -6857,6 +6987,26 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/v1/lms/courses/{course_id}/steps/{step_id}/access": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        /**
+         * Set Step Access
+         * @description Set a lesson audience; it applies only inside an accessible course.
+         */
+        put: operations["set_step_access_v1_lms_courses__course_id__steps__step_id__access_put"];
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/v1/lms/courses/{course_id}/steps/{step_id}/blocks/{block_id}/h5p": {
         parameters: {
             query?: never;
@@ -7129,6 +7279,86 @@ export interface paths {
          * @description Return the courses the caller studies and the courses they manage.
          */
         get: operations["list_my_courses_v1_lms_my_courses_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/lms/public/courses": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * List Public Courses
+         * @description List the courses a guest may read, optionally filtered by title.
+         */
+        get: operations["list_public_courses_v1_lms_public_courses_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/lms/public/courses/{course_id}/steps/{step_id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get Public Step
+         * @description Return a lesson of a public course without answers or personal state.
+         */
+        get: operations["get_public_step_v1_lms_public_courses__course_id__steps__step_id__get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/lms/public/courses/{slug}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get Public Course
+         * @description Show a public course: description, staff names and outline, no progress.
+         */
+        get: operations["get_public_course_v1_lms_public_courses__slug__get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/lms/public/courses/{slug}/landing": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get Public Course Landing
+         * @description Describe a public course (what it teaches, authors, syllabus).
+         */
+        get: operations["get_public_course_landing_v1_lms_public_courses__slug__landing_get"];
         put?: never;
         post?: never;
         delete?: never;
@@ -9103,7 +9333,7 @@ export interface paths {
         put?: never;
         /**
          * Request Export
-         * @description Queue an export of the caller's data (one per 24 hours).
+         * @description Queue an export of the caller's data (one per 24 hours); needs step-up.
          */
         post: operations["request_export_v1_me_privacy_exports_post"];
         delete?: never;
@@ -12403,6 +12633,44 @@ export interface components {
             name: string;
         };
         /**
+         * AccessRuleBody
+         * @description The audience; the lists count only for `chosen`.
+         */
+        AccessRuleBody: {
+            audience: components["schemas"]["Audience"];
+            /** Group Ids */
+            group_ids?: string[];
+            /** User Ids */
+            user_ids?: string[];
+            /** @default hidden */
+            when_denied: components["schemas"]["WhenDenied"];
+        };
+        /**
+         * AccessRuleView
+         * @description `AccessRule`: the audience of a course or a lesson.
+         */
+        AccessRuleView: {
+            audience: components["schemas"]["Audience"];
+            /** Group Ids */
+            group_ids: string[];
+            /** Users */
+            users: components["schemas"]["AccessUserView"][];
+            when_denied: components["schemas"]["WhenDenied"];
+        };
+        /**
+         * AccessUserView
+         * @description A chosen person, with a name for the editor.
+         */
+        AccessUserView: {
+            /**
+             * Id
+             * Format: uuid
+             */
+            id: string;
+            /** Name */
+            name: string;
+        };
+        /**
          * ActivateBody
          * @description POST /v1/id/activation/{token}.
          *
@@ -13144,6 +13412,41 @@ export interface components {
             items: components["schemas"]["AnnotationResponse"][];
         };
         /**
+         * AnnouncementBody
+         * @description Send a draft broadcast through the selected bots, in this order.
+         */
+        AnnouncementBody: {
+            /** Bot Ids */
+            bot_ids: string[];
+            /**
+             * Broadcast Id
+             * Format: uuid
+             */
+            broadcast_id: string;
+            /**
+             * Otp Code
+             * @description Step-up code from POST /v1/id/me/step-up.
+             */
+            otp_code: string;
+        };
+        /**
+         * AnnouncementOut
+         * @description Recipients in total and per bot.
+         */
+        AnnouncementOut: {
+            /**
+             * Broadcast Id
+             * Format: uuid
+             */
+            broadcast_id: string;
+            /** Per Bot */
+            per_bot: {
+                [key: string]: number;
+            };
+            /** Recipients */
+            recipients: number;
+        };
+        /**
          * AnswerConfig
          * @description Accepted answers of a text or number question.
          */
@@ -13795,6 +14098,12 @@ export interface components {
             work_offs?: components["schemas"]["WorkOffResponse"][];
         };
         /**
+         * Audience
+         * @description Who may open the item.
+         * @enum {string}
+         */
+        Audience: "public" | "signed_in" | "students" | "chosen";
+        /**
          * AudienceBody
          * @description Who receives a broadcast: everyone, or the union of roles, groups, semesters.
          */
@@ -14340,6 +14649,110 @@ export interface components {
              * Format: uuid
              */
             topic_id: string;
+        };
+        /**
+         * BotCreateBody
+         * @description Register a bot; the token is checked with Telegram's getMe.
+         */
+        BotCreateBody: {
+            /** Name */
+            name: string;
+            /**
+             * Otp Code
+             * @description Step-up code from POST /v1/id/me/step-up.
+             */
+            otp_code: string;
+            /**
+             * Token
+             * @description The BotFather token; never returned.
+             */
+            token: string;
+        };
+        /**
+         * BotOut
+         * @description One bot; the token appears only as a mask of its last characters.
+         */
+        BotOut: {
+            /**
+             * Created At
+             * Format: date-time
+             */
+            created_at: string;
+            /** Enabled */
+            enabled: boolean;
+            /**
+             * Features
+             * @description ai_agent, open_ai_agent, commands, notifications, announcements, mini_app.
+             */
+            features: {
+                [key: string]: boolean;
+            };
+            /**
+             * Id
+             * Format: uuid
+             */
+            id: string;
+            /** Is Default */
+            is_default: boolean;
+            /**
+             * Members
+             * @description Linked users who wrote to this bot.
+             */
+            members: number;
+            /** Name */
+            name: string;
+            /** Token Mask */
+            token_mask: string;
+            /**
+             * Updated At
+             * Format: date-time
+             */
+            updated_at: string;
+            /** Username */
+            username: string;
+        };
+        /**
+         * BotPatchBody
+         * @description Change some fields; omitted fields stay. Needs a fresh step-up code.
+         */
+        BotPatchBody: {
+            /** Enabled */
+            enabled?: boolean | null;
+            /** Features */
+            features?: {
+                [key: string]: boolean;
+            } | null;
+            /** Name */
+            name?: string | null;
+            /**
+             * Otp Code
+             * @description Step-up code from POST /v1/id/me/step-up.
+             */
+            otp_code: string;
+        };
+        /**
+         * BotTokenBody
+         * @description A new token for the same bot.
+         */
+        BotTokenBody: {
+            /**
+             * Otp Code
+             * @description Step-up code from POST /v1/id/me/step-up.
+             */
+            otp_code: string;
+            /**
+             * Token
+             * @description The BotFather token; never returned.
+             */
+            token: string;
+        };
+        /**
+         * BotsResponse
+         * @description Every registered bot, the default first.
+         */
+        BotsResponse: {
+            /** Items */
+            items: components["schemas"]["BotOut"][];
         };
         /**
          * BreakerState
@@ -15518,6 +15931,15 @@ export interface components {
             new: number;
             /** Review */
             review: number;
+        };
+        /**
+         * CourseAccessRulesView
+         * @description `CourseAccessRules`: the course rule and every restricted lesson.
+         */
+        CourseAccessRulesView: {
+            course: components["schemas"]["AccessRuleView"];
+            /** Steps */
+            steps: components["schemas"]["StepAccessRuleView"][];
         };
         /**
          * CourseBroadcastBody
@@ -17653,6 +18075,14 @@ export interface components {
             expires_in: number;
             /** Url */
             url: string;
+        };
+        /**
+         * ExportIn
+         * @description The step-up code sent by ``POST /v1/id/me/step-up``.
+         */
+        ExportIn: {
+            /** Otp Code */
+            otp_code: string;
         };
         /**
          * ExportListOut
@@ -19954,12 +20384,28 @@ export interface components {
             id: string;
         };
         /**
+         * LearningContactView
+         * @description Whom to ask for access to a locked item with a chosen audience.
+         */
+        LearningContactView: {
+            /** Name */
+            name: string;
+            /** Telegram */
+            telegram?: string | null;
+        };
+        /**
          * LearningCourseCardView
          * @description `CourseCard`: a course in the catalog and in My courses.
          */
         LearningCourseCardView: {
             /** Accent Color */
             accent_color?: string | null;
+            /**
+             * Access
+             * @default public
+             * @enum {string}
+             */
+            access: "public" | "signed_in" | "students" | "chosen";
             /** Cover File Id */
             cover_file_id?: string | null;
             /** Cover Url */
@@ -19971,6 +20417,11 @@ export interface components {
              * Format: uuid
              */
             id: string;
+            /**
+             * Locked
+             * @default false
+             */
+            locked: boolean;
             /** Progress Pct */
             progress_pct: number | null;
             /** Slug */
@@ -19999,10 +20450,17 @@ export interface components {
         LearningCoursePageView: {
             /** Accent Color */
             accent_color?: string | null;
+            /**
+             * Access
+             * @default public
+             * @enum {string}
+             */
+            access: "public" | "signed_in" | "students" | "chosen";
             /** Can Edit */
             can_edit: boolean;
             /** Changed Since Last Visit */
             changed_since_last_visit: string[];
+            contact?: components["schemas"]["LearningContactView"] | null;
             /** Cover File Id */
             cover_file_id?: string | null;
             /** Cover Url */
@@ -20016,6 +20474,11 @@ export interface components {
              * Format: uuid
              */
             id: string;
+            /**
+             * Locked
+             * @default false
+             */
+            locked: boolean;
             /** Outline */
             outline: components["schemas"]["LearningOutlineSectionView"][];
             /** Points Earned */
@@ -20099,6 +20562,86 @@ export interface components {
              * @enum {string}
              */
             type: "flashcards";
+        };
+        /**
+         * LearningGuestCoursePageView
+         * @description The course page for guests: no ids or permissions of the staff.
+         */
+        LearningGuestCoursePageView: {
+            /** Accent Color */
+            accent_color?: string | null;
+            /**
+             * Access
+             * @default public
+             * @enum {string}
+             */
+            access: "public" | "signed_in" | "students" | "chosen";
+            /** Can Edit */
+            can_edit: boolean;
+            /** Changed Since Last Visit */
+            changed_since_last_visit: string[];
+            contact?: components["schemas"]["LearningContactView"] | null;
+            /** Cover File Id */
+            cover_file_id?: string | null;
+            /** Cover Url */
+            cover_url: string | null;
+            /** Description */
+            description: string;
+            /** Enrolled */
+            enrolled: boolean;
+            /**
+             * Id
+             * Format: uuid
+             */
+            id: string;
+            /**
+             * Locked
+             * @default false
+             */
+            locked: boolean;
+            /** Outline */
+            outline: components["schemas"]["LearningOutlineSectionView"][];
+            /** Points Earned */
+            points_earned?: number | null;
+            /**
+             * Points Total
+             * @default 0
+             */
+            points_total: number;
+            /** Progress Pct */
+            progress_pct: number | null;
+            /** Slug */
+            slug: string;
+            /** Staff */
+            staff: components["schemas"]["LearningGuestStaffItemView"][];
+            /** Steps Completed */
+            steps_completed?: number | null;
+            /** Steps Count */
+            steps_count: number;
+            /**
+             * Summary
+             * @default
+             */
+            summary: string;
+            /** Title */
+            title: string;
+            /** Updated At */
+            updated_at: string | null;
+            /**
+             * Visibility
+             * @enum {string}
+             */
+            visibility: "public" | "invite";
+        };
+        /**
+         * LearningGuestStaffItemView
+         * @description A staff member as guests see them: the display name and order only.
+         */
+        LearningGuestStaffItemView: {
+            /** Name */
+            name: string;
+            /** Position */
+            position: number;
         };
         /**
          * LearningH5PBlockView
@@ -20394,10 +20937,21 @@ export interface components {
          * @description One step in an outline section.
          */
         LearningOutlineStepView: {
+            /**
+             * Access
+             * @default public
+             * @enum {string}
+             */
+            access: "public" | "signed_in" | "students" | "chosen";
             /** Badge */
             badge?: ("new" | "changed") | null;
             /** Completed */
             completed?: boolean | null;
+            /**
+             * Locked
+             * @default false
+             */
+            locked: boolean;
             /** Points Earned */
             points_earned?: number | null;
             /**
@@ -24008,6 +24562,8 @@ export interface components {
             alerts_semester_mark_below?: number | null;
             /** Bottom Nav */
             bottom_nav?: string[] | null;
+            /** Hide Photo From Classmates */
+            hide_photo_from_classmates?: boolean | null;
             /** Lessons Links Lead Min */
             lessons_links_lead_min?: number | null;
             /** Lessons Prompt Enabled */
@@ -27275,6 +27831,18 @@ export interface components {
          */
         StatusReasonCode: "withdrawn_by_owner" | "reported" | "superseded" | "account_closed" | "unpublished" | "takedown";
         /**
+         * StepAccessRuleView
+         * @description The rule of one lesson that is not public.
+         */
+        StepAccessRuleView: {
+            rule: components["schemas"]["AccessRuleView"];
+            /**
+             * Step Id
+             * Format: uuid
+             */
+            step_id: string;
+        };
+        /**
          * StepContent
          * @description Title and blocks of a step (``CourseStep.draft``, ``StepRevision.content``).
          */
@@ -27415,7 +27983,7 @@ export interface components {
             emis_status: string | null;
             /** First Name */
             first_name: string;
-            group: components["schemas"]["app__interfaces__http__v1__composition__shared_schemas__GroupRefResponse"];
+            group: components["schemas"]["app__interfaces__http__v1__composition__shared_schemas__GroupRefResponse"] | null;
             head_student: components["schemas"]["app__interfaces__http__v1__composition__shared_schemas__PersonRefResponse"] | null;
             /** Last Name */
             last_name: string;
@@ -27489,6 +28057,14 @@ export interface components {
             refresh_in: number;
             /** Token */
             token: string;
+        };
+        /**
+         * StudentGroupBody
+         * @description The new group of a student; null leaves the student without a group.
+         */
+        StudentGroupBody: {
+            /** Group Id */
+            group_id: string | null;
         };
         /**
          * StudentItemResponse
@@ -27599,6 +28175,11 @@ export interface components {
             /** Can Attach */
             can_attach: boolean;
             homework: components["schemas"]["app__interfaces__http__v1__me_classwork__schemas__HomeworkItemResponse"] | null;
+            /**
+             * Homework Files
+             * @default []
+             */
+            homework_files: components["schemas"]["ResourceItemResponse"][];
             lesson: components["schemas"]["app__interfaces__http__v1__me_classwork__schemas__LessonItemResponse"];
             /** Materials */
             materials: components["schemas"]["ResourceItemResponse"][];
@@ -27637,7 +28218,7 @@ export interface components {
             emis_status: string | null;
             /** First Name */
             first_name: string;
-            group: components["schemas"]["app__interfaces__http__v1__me_schedule__schemas__GroupRefResponse"];
+            group: components["schemas"]["app__interfaces__http__v1__me_schedule__schemas__GroupRefResponse"] | null;
             head_student: components["schemas"]["app__interfaces__http__v1__admin_schedule__shared_schemas__PersonRefResponse"] | null;
             /** Last Name */
             last_name: string;
@@ -30258,6 +30839,11 @@ export interface components {
             /** @default {} */
             contacts: components["schemas"]["TeacherContacts"];
             /**
+             * Hide Photo From Classmates
+             * @default false
+             */
+            hide_photo_from_classmates: boolean;
+            /**
              * Lessons Links Lead Min
              * @default 5
              */
@@ -30654,6 +31240,12 @@ export interface components {
             /** Query */
             query: string;
         };
+        /**
+         * WhenDenied
+         * @description What the people outside the audience see.
+         * @enum {string}
+         */
+        WhenDenied: "hidden" | "locked";
         /**
          * Widget
          * @description One tile of the dashboard grid.
@@ -33506,6 +34098,162 @@ export interface operations {
             };
         };
     };
+    list_bots_v1_admin_bots_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["BotsResponse"];
+                };
+            };
+        };
+    };
+    add_bot_v1_admin_bots_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["BotCreateBody"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["BotOut"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    announce_v1_admin_bots_announcements_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["AnnouncementBody"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["AnnouncementOut"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    update_bot_v1_admin_bots__bot_id__patch: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                bot_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["BotPatchBody"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["BotOut"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    rotate_token_v1_admin_bots__bot_id__rotate_token_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                bot_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["BotTokenBody"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["BotOut"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
     list_broadcasts_v1_admin_broadcasts_get: {
         parameters: {
             query?: {
@@ -34323,7 +35071,9 @@ export interface operations {
     };
     delete_group_v1_admin_groups__group_id__delete: {
         parameters: {
-            query?: never;
+            query?: {
+                move_students_to?: string | null;
+            };
             header?: never;
             path: {
                 group_id: string;
@@ -36496,6 +37246,39 @@ export interface operations {
                 content: {
                     "application/json": components["schemas"]["Student360Response"];
                 };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    set_student_group_v1_admin_students__user_id__group_put: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                user_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["StudentGroupBody"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            204: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
             };
             /** @description Validation Error */
             422: {
@@ -44248,6 +45031,72 @@ export interface operations {
             };
         };
     };
+    get_access_v1_lms_courses__course_id__access_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                course_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["CourseAccessRulesView"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    set_course_access_v1_lms_courses__course_id__access_put: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                course_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["AccessRuleBody"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["CourseAccessRulesView"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
     compare_versions_v1_lms_courses__course_id__compare_get: {
         parameters: {
             query: {
@@ -45130,6 +45979,42 @@ export interface operations {
             };
         };
     };
+    set_step_access_v1_lms_courses__course_id__steps__step_id__access_put: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                course_id: string;
+                step_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["AccessRuleBody"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["CourseAccessRulesView"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
     get_h5p_launch_v1_lms_courses__course_id__steps__step_id__blocks__block_id__h5p_get: {
         parameters: {
             query?: never;
@@ -45548,6 +46433,131 @@ export interface operations {
                 };
                 content: {
                     "application/json": components["schemas"]["LearningMyCoursesView"];
+                };
+            };
+        };
+    };
+    list_public_courses_v1_lms_public_courses_get: {
+        parameters: {
+            query?: {
+                query?: string | null;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["LearningCourseCardView"][];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    get_public_step_v1_lms_public_courses__course_id__steps__step_id__get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                course_id: string;
+                step_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["LearningStepView"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    get_public_course_v1_lms_public_courses__slug__get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                slug: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["LearningGuestCoursePageView"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    get_public_course_landing_v1_lms_public_courses__slug__landing_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                slug: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["LearningLandingView"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
                 };
             };
         };
@@ -49242,7 +50252,11 @@ export interface operations {
             path?: never;
             cookie?: never;
         };
-        requestBody?: never;
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["ExportIn"];
+            };
+        };
         responses: {
             /** @description Successful Response */
             202: {
@@ -49251,6 +50265,15 @@ export interface operations {
                 };
                 content: {
                     "application/json": components["schemas"]["ExportOut"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
                 };
             };
         };

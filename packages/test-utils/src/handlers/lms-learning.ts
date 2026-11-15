@@ -32,6 +32,31 @@ export const lmsLearningHandlers = [
       courseCards.filter((course) => matches(course.title, needle) || matches(course.description, needle)),
     )
   }),
+  // The guest reads of published public courses.
+  http.get(apiUrl("/v1/lms/public/courses"), ({ request }) => {
+    const needle = query(request).get("query")
+    return HttpResponse.json(
+      courseCards.filter((course) => matches(course.title, needle) || matches(course.description, needle)),
+    )
+  }),
+  http.get(apiUrl("/v1/lms/public/courses/:slug"), ({ params }) => {
+    const slug = param(params, "slug")
+    return slug === coursePage.slug || slug === coursePage.id
+      ? HttpResponse.json({
+          ...coursePage,
+          enrolled: false,
+          can_edit: false,
+          staff: coursePage.staff.map((item) => ({
+            name: `${item.user.first_name} ${item.user.last_name}`,
+            position: item.position,
+          })),
+        })
+      : notFound("Course")
+  }),
+  http.get(apiUrl("/v1/lms/public/courses/:courseId/steps/:stepId"), ({ params }) => {
+    const step = stepViews.find((item) => item.step_id === param(params, "stepId"))
+    return step ? HttpResponse.json(step) : notFound("Step")
+  }),
   http.get(apiUrl("/v1/lms/my-courses"), () => HttpResponse.json(myCourses)),
   http.get(apiUrl("/v1/lms/courses/:slug"), ({ params }) => {
     const slug = param(params, "slug")

@@ -18,7 +18,16 @@ export type CourseCard = {
   summary?: string | null
   accent_color?: string | null
   cover_file_id?: string | null
+  /** Who may open the course; `locked` is true when this caller may not (the card stays visible with a lock). */
+  access?: AccessAudience
+  locked?: boolean
 }
+
+export type AccessAudience = "public" | "signed_in" | "students" | "chosen"
+export type WhenDenied = "hidden" | "locked"
+
+/** Whom to ask for access to a locked item with a chosen audience. */
+export type LearningContact = { name: string; telegram?: string | null }
 
 export type CourseStaffItem = {
   user: PersonRef
@@ -46,6 +55,9 @@ export type OutlineSection = {
 export type LearnerOutlineSection = Omit<OutlineSection, "steps"> & {
   steps: (Omit<OutlineSection["steps"][number], "badge"> & {
     badge?: "new" | "changed" | null
+    access?: AccessAudience
+    /** The caller may not open this lesson; it shows with a lock. */
+    locked?: boolean
     /** Points of the lesson's tests (0 for a lesson without tests). */
     points_total: number
     /** Points the student earned in the lesson; `null` when not enrolled. */
@@ -65,6 +77,13 @@ export type CoursePage = CourseCard & {
   points_total: number
   /** Points the student earned; `null` when not enrolled. */
   points_earned: number | null
+  /** Whom to ask when the course or a lesson is locked for a chosen audience. */
+  contact?: LearningContact | null
+}
+
+/** The course page for guests: staff are name and position only. */
+export type GuestCoursePage = Omit<CoursePage, "staff"> & {
+  staff: { name: string; position: number }[]
 }
 
 /** A presigned GET of an uploaded lesson video (the storage answers `Range` requests, so seeking works). */

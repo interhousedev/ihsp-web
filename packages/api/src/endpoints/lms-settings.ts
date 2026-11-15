@@ -177,3 +177,13 @@ export const getLmsCourseLandingQuery = (slug: string, preview = false) =>
     queryKey: lmsLandingKey(slug, preview),
     queryFn: ({ signal }) => getLmsCourseLanding(slug, preview, { signal }),
   })
+
+/** GET /v1/lms/public/courses/{slug}/landing — no token; the landing of a published public course. */
+export function getPublicLmsCourseLanding(slug: string, opts?: RequestOptions): Promise<CourseLanding> {
+  return api.get<CourseLanding>(`/v1/lms/public/courses/${seg(slug)}/landing`, { ...opts, auth: "none" })
+}
+export const getPublicLmsCourseLandingQuery = (slug: string) =>
+  queryOptions({
+    queryKey: ["lms", "public", "course", slug, "landing"] as const,
+    queryFn: ({ signal }) => getPublicLmsCourseLanding(slug, { signal }),
+  })

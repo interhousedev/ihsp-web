@@ -14,6 +14,7 @@ import type {
   CourseCatalogParams,
   CourseJoinBody,
   CoursePage,
+  GuestCoursePage,
   CourseStudent,
   LmsCardReviewBody,
   LmsCardStudy,
@@ -223,3 +224,48 @@ export const getMyCourses = getLmsMyCourses
 export const getCoursePage = getLmsCourse
 export const postEnroll = postLmsCourseEnroll
 export const postJoin = postLmsJoin
+
+// The guest side: published public courses read without signing in. No token is sent and a 401 never starts a login.
+
+/** GET /v1/lms/public/courses?query — no token; published public courses. */
+export function getPublicLmsCourses(params?: CourseCatalogParams, opts?: RequestOptions): Promise<CourseCard[]> {
+  return api.get<CourseCard[]>("/v1/lms/public/courses", { ...opts, auth: "none", query: params })
+}
+export const getPublicLmsCoursesQuery = (params?: CourseCatalogParams) =>
+  queryOptions({
+    queryKey: ["lms", "public", "courses", params?.query ?? ""] as const,
+    queryFn: ({ signal }) => getPublicLmsCourses(params, { signal }),
+  })
+
+/** GET /v1/lms/public/courses/{slug or id} — no token; the course page without progress. */
+export function getPublicLmsCourse(ref: string, opts?: RequestOptions): Promise<GuestCoursePage> {
+  return api.get<GuestCoursePage>(`/v1/lms/public/courses/${seg(ref)}`, { ...opts, auth: "none" })
+}
+/** The guest page in the shape of the personal one: a staff member has a name and no account, so the id is the order. */
+export const getPublicLmsCourseQuery = (ref: string) =>
+  queryOptions({
+    queryKey: ["lms", "public", "course", ref] as const,
+    queryFn: async ({ signal }): Promise<CoursePage> => {
+      const page = await getPublicLmsCourse(ref, { signal })
+      return {
+        ...page,
+        staff: page.staff.map((item) => ({
+          user: { id: `guest-${item.position}`, first_name: item.name, last_name: "" },
+          role: "",
+          permissions: [],
+          show_on_page: true,
+          position: item.position,
+        })),
+      }
+    },
+  })
+
+/** GET /v1/lms/public/courses/{id}/steps/{step_id} — no token; a lesson without answers or personal state. */
+export function getPublicLmsCourseStep(courseId: string, stepId: string, opts?: RequestOptions): Promise<StepView> {
+  return api.get<StepView>(`/v1/lms/public/courses/${seg(courseId)}/steps/${seg(stepId)}`, { ...opts, auth: "none" })
+}
+export const getPublicLmsCourseStepQuery = (courseId: string, stepId: string) =>
+  queryOptions({
+    queryKey: ["lms", "public", "course", courseId, "steps", stepId] as const,
+    queryFn: ({ signal }) => getPublicLmsCourseStep(courseId, stepId, { signal }),
+  })

@@ -72,6 +72,7 @@ export type UserPreferences = {
   lessons_prompt_enabled: boolean
   mail_forward_to_telegram: boolean
   /** Web Push on the account's devices (each device is switched on in its own settings). */
+  hide_photo_from_classmates: boolean
   notify_push: boolean
   today_cards: string[]
   onboarding_dismissed: string[]

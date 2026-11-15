@@ -486,4 +486,14 @@ export const libraryManageHandlers = [
     const result: ImportResult = { created: 2, errors: [{ row: 4, message: "Missing rights class" }] }
     return HttpResponse.json(result)
   }),
+
+  /** Both backfills only queue a job: `202`, no body. */
+  http.post(apiUrl("/v1/manage/library/covers/backfill"), ({ request }) => {
+    const actor = staffOnly(request)
+    return actor instanceof Response ? actor : new HttpResponse(null, { status: 202 })
+  }),
+  http.post(apiUrl("/v1/manage/library/pages/backfill"), ({ request }) => {
+    const actor = staffOnly(request)
+    return actor instanceof Response ? actor : new HttpResponse(null, { status: 202 })
+  }),
 ]

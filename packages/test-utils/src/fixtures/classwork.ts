@@ -183,6 +183,7 @@ export function studentLessonFor(id: string): StudentLesson | undefined {
     my_mark: marks.filter((item) => item.lesson_id === lesson.id),
     my_attendance: past ? "present" : "not_taken",
     can_attach: lesson.date >= FIXTURE_TODAY,
+    homework_files: isPhysicsToday ? resourceItems.filter((item) => item.role === "homework") : [],
   }
 }
 

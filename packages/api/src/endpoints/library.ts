@@ -525,6 +525,16 @@ export function postManageBookFile(id: string, body: BookFileBody, opts?: Reques
   return api.post<ItemFile>(`/v1/manage/library/books/${seg(id)}/files`, body, opts)
 }
 
+/** POST /v1/manage/library/covers/backfill — `202`, no body: cutting covers for books without one runs as a job. */
+export function postManageCoversBackfill(opts?: RequestOptions): Promise<NoContent> {
+  return api.post<NoContent>("/v1/manage/library/covers/backfill", undefined, opts)
+}
+
+/** POST /v1/manage/library/pages/backfill — `202`, no body: rebuilding the stored page text of old items runs as a job. */
+export function postManagePagesBackfill(opts?: RequestOptions): Promise<NoContent> {
+  return api.post<NoContent>("/v1/manage/library/pages/backfill", undefined, opts)
+}
+
 /** POST /v1/manage/library/import — CSV bulk import; good rows become drafts. */
 export function postManageImport(body: ImportBody, opts?: RequestOptions): Promise<ImportResult> {
   return api.post<ImportResult>("/v1/manage/library/import", body, opts)

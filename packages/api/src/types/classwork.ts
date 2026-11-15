@@ -83,6 +83,8 @@ export type StudentLesson = {
   my_mark: MarkItem[]
   my_attendance: AttendanceState
   can_attach: boolean
+  /** Files the teacher attached to the homework (role `homework`). */
+  homework_files?: ResourceItem[]
 }
 
 export type StudentAttendance = {
