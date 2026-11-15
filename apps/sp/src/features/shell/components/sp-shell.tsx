@@ -1,17 +1,27 @@
 "use client"
+import { LegalGate, MaintenanceBanner } from "@ihsp/features-core"
 
 import { RequireAuth, RequireRole } from "@ihsp/auth"
-import { HelpWidget, OnboardingTour, PageLoading, ShellNavControls } from "@ihsp/features-core"
+import { ConnectAiDialogHost, HelpWidget, OnboardingTour, PageLoading, ShellNavControls } from "@ihsp/features-core"
 import { isPwaMode } from "@ihsp/features-core/pwa"
 import { getConfig } from "@ihsp/config"
 import { AppShell } from "@ihsp/ui"
 import { Suspense, type ReactNode } from "react"
 import { useNav } from "../../../config/nav"
+import { OnboardingGate } from "../../onboarding/components/onboarding-gate"
 import { QueryPersistence } from "../../offline/components/query-persistence"
 import { SpBottomNav } from "./sp-bottom-nav"
 import { ProfileMenu } from "./profile-menu"
 import { ShellHeader } from "./shell-header"
 import { SpBrand } from "./sp-brand"
+
+const TOUR_PLACES = [
+  { key: "assistant", href: "/assistant/" },
+  { key: "notebooks", href: "/notebooks/" },
+  { key: "flashcards", href: "/flashcards/" },
+  { key: "mail", href: "/mail/" },
+  { key: "certificates", href: "/profile/#certificates-title" },
+] as const
 
 /**
  * The frame of every page of this app: login check, student role check, offline cache, sidebar and the phone bottom bar
@@ -34,14 +44,19 @@ export function SpShell({ children, hideBottomNav = false }: { children: ReactNo
             sidebarFooter={<ProfileMenu variant="row" />}
             controlsLeading={<ShellNavControls />}
             controls={<ShellHeader nav={nav.groups} />}
+            floating={hideBottomNav ? null : <HelpWidget />}
           >
+            <MaintenanceBanner />
             <Suspense fallback={<PageLoading />}>{children}</Suspense>
+            <LegalGate />
             <OnboardingTour
               variant="student"
               settingsHref="/settings/"
               connectAiHref={`${getConfig().ID_URL}/connectors/new/`}
+              places={TOUR_PLACES}
             />
-            {hideBottomNav ? null : <HelpWidget />}
+            <ConnectAiDialogHost />
+            <OnboardingGate />
           </AppShell>
         </QueryPersistence>
       </RequireRole>
