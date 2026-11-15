@@ -6,6 +6,7 @@ import { PageContainer, StateView, Tabs, TabsContent, TabsList, TabsTrigger } fr
 import { useQuery } from "@tanstack/react-query"
 import { parseAsString, parseAsStringLiteral, useQueryState } from "nuqs"
 import { BackLink, QueryState } from "@ihsp/features-core"
+import { DeleteGroupButton } from "./delete-group-button"
 import { GroupCurriculumTab } from "./group-curriculum-tab"
 import { GroupPeopleCard } from "./group-people-card"
 import { GroupPhotosExportButton } from "./group-photos-export-button"
@@ -47,6 +48,7 @@ export function GroupDetailPage() {
           actions={
             <>
               <GroupPhotosExportButton groupId={group.id} groupName={group.name} />
+              <DeleteGroupButton groupId={group.id} groupName={group.name} />
               <BackLink href="/groups/" label={t("title")} />
             </>
           }
