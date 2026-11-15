@@ -7,6 +7,9 @@
     "speciality": "Mutaxassislik",
     "qrLabel": "Talaba kartasining QR kodi",
     "refreshIn": "Yangi kod {seconds} soniyadan keyin",
-    "qrFailed": "Kodni yaratib boʻlmadi. Qayta urinilmoqda."
+    "qrFailed": "Kodni yaratib boʻlmadi. Qayta urinilmoqda.",
+    "loadFailed": "Kartani yuklab boʻlmadi.",
+    "relinkHint": "EMIS bilan bogʻlanishni yangilash kerak. EMIS parolini yangilang va qayta urinib koʻring.",
+    "relinkAction": "EMIS parolini yangilash"
   }
 }

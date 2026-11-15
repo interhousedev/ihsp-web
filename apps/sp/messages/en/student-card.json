@@ -7,6 +7,9 @@
     "speciality": "Speciality",
     "qrLabel": "QR code of the student card",
     "refreshIn": "New code in {seconds} s",
-    "qrFailed": "Could not create the code. Trying again."
+    "qrFailed": "Could not create the code. Trying again.",
+    "loadFailed": "Could not load the card.",
+    "relinkHint": "Your EMIS link needs to be renewed. Update the EMIS password, then try again.",
+    "relinkAction": "Update EMIS password"
   }
 }

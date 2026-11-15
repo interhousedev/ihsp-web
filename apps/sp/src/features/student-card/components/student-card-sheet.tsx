@@ -8,6 +8,7 @@ import { useLocale, useT } from "@ihsp/i18n"
 import { QrCode, ResponsiveDialog, StateView } from "@ihsp/ui"
 import { useQuery } from "@tanstack/react-query"
 import { useCardToken } from "../hooks/use-card-token"
+import { StudentCardError, retryCardQuery } from "./student-card-error"
 import { cardUrl } from "../utils/card-url"
 
 /** The student card in a bottom sheet (a dialog on a desktop) with a QR code of a token that renews while it is open. */
@@ -15,7 +16,7 @@ export function StudentCardSheet({ open, onOpenChange }: { open: boolean; onOpen
   const t = useT("studentCard")
   const locale = useLocale() as "uz" | "ru" | "en"
   const { session } = useSession()
-  const card = useQuery({ ...getMeStudentCardQuery(), enabled: open })
+  const card = useQuery({ ...getMeStudentCardQuery(), enabled: open, retry: retryCardQuery })
   const qr = useCardToken(open)
 
   const data = card.data
@@ -32,12 +33,11 @@ export function StudentCardSheet({ open, onOpenChange }: { open: boolean; onOpen
   return (
     <ResponsiveDialog open={open} onOpenChange={onOpenChange} title={t("title")} size="sm">
       {!data ? (
-        <StateView
-          state={card.isError ? "error" : "loading"}
-          error={card.error}
-          onRetry={() => void card.refetch()}
-          rows={3}
-        />
+        card.isError ? (
+          <StudentCardError error={card.error} onRetry={() => void card.refetch()} />
+        ) : (
+          <StateView state="loading" rows={3} />
+        )
       ) : (
         <div className="flex flex-col items-center gap-4 text-center">
           <TeacherAvatar name={name} photoUrl={data.has_photo ? (session?.user.photo_url ?? null) : null} size="lg" />
