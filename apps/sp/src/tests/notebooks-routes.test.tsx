@@ -37,13 +37,13 @@ describe("/notebooks/", () => {
     expect(screen.getByRole("button", { name: "Open search" })).toBeInTheDocument()
   })
 
-  test("the sidebar has Notebooks between the Assistant and Flash cards", async () => {
+  test("the sidebar has Notebooks without the Assistant, before Flash cards", async () => {
     renderNotebooksSp(<NotebooksRoute />, { route: "/notebooks/" })
     await screen.findByRole("link", { name: /Photosynthesis/ })
 
     const names = screen.getAllByRole("link").map((link) => link.textContent?.trim())
-    expect(names.indexOf("Assistant")).toBeGreaterThan(-1)
-    expect(names.indexOf("Notebooks")).toBeGreaterThan(names.indexOf("Assistant"))
+    expect(names).not.toContain("Assistant")
+    expect(names.indexOf("Notebooks")).toBeGreaterThan(-1)
     expect(names.indexOf("Flash cards")).toBeGreaterThan(names.indexOf("Notebooks"))
     expect(screen.getAllByRole("link", { name: "Notebooks" })[0]?.getAttribute("href")).toMatch(/^\/notebooks\/?$/)
   })

@@ -201,5 +201,18 @@
       "created": "Havola yaratildi: {url}",
       "createdCopied": "Havola yaratildi va nusxalandi: {url}"
     }
+  },
+  "assistantBubble": {
+    "open": "Yordamchini ochish",
+    "collapse": "Yordamchini yigʻish",
+    "title": "Yordamchi",
+    "newChat": "Yangi chat",
+    "openFull": "Toʻliq ekranda ochish",
+    "starting": "Chat boshlanmoqda…",
+    "error": "Chatni boshlab boʻlmadi.",
+    "retry": "Qayta urinish",
+    "placeholder": "Yordamchidan soʻrang…",
+    "emptyTitle": "Qanday yordam beray?",
+    "emptyBody": "Darslar, uy vazifasi yoki ilovada nimani qayerdan topish haqida soʻrang."
   }
 }

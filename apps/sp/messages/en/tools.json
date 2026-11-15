@@ -201,5 +201,18 @@
       "created": "Link created: {url}",
       "createdCopied": "Link created and copied: {url}"
     }
+  },
+  "assistantBubble": {
+    "open": "Open the assistant",
+    "collapse": "Collapse the assistant",
+    "title": "Assistant",
+    "newChat": "New chat",
+    "openFull": "Open in full screen",
+    "starting": "Starting a chat…",
+    "error": "Could not start the chat.",
+    "retry": "Try again",
+    "placeholder": "Ask the assistant…",
+    "emptyTitle": "How can I help?",
+    "emptyBody": "Ask about your lessons, homework or where to find something in the app."
   }
 }

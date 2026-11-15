@@ -39,7 +39,6 @@ export function useNav(): { groups: NavGroup[]; bottom: BottomNavItem[] } {
         {
           label: t("groupStudyTools"),
           items: [
-            { title: t("assistant"), url: "/assistant/", icon: "assistant" },
             { title: t("notebooks"), url: "/notebooks/", icon: "notebooks" },
             { title: t("flashcards"), url: "/flashcards/", icon: "flashcards" },
             { title: t("files"), url: "/files/", icon: "files" },
