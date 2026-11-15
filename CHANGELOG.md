@@ -4,6 +4,8 @@ All notable changes to this project are documented here. The format follows [Kee
 
 ## [Unreleased]
 
+## [1.6.3] - 2026-11-16
+
 ### Added
 
 - my.iht: the AI assistant is a floating circle that expands into a chat panel, with "New chat"; collapsing keeps the current chat. It replaces the assistant nav item and the help widget there.
