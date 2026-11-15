@@ -7,6 +7,7 @@ import type {
   AssessmentCreateBody,
   AssessmentItem,
   AssessmentList,
+  ControlPeriodList,
   AssessmentPatchBody,
   AssessmentProposalBody,
   AssessmentsParams,
@@ -28,6 +29,19 @@ export const getMeAssessmentsQuery = (params?: AssessmentsParams) =>
   queryOptions({
     queryKey: keys.me.assessments(params),
     queryFn: ({ signal }) => getMeAssessments(params, { signal }),
+  })
+
+/** GET /v1/me/academic/control-periods?from&to — student: every control week with its exams left and taken. */
+export function getMeControlPeriods(
+  params?: { from?: string; to?: string },
+  opts?: RequestOptions,
+): Promise<ControlPeriodList> {
+  return api.get<ControlPeriodList>("/v1/me/academic/control-periods", { ...opts, query: params })
+}
+export const getMeControlPeriodsQuery = (params?: { from?: string; to?: string }) =>
+  queryOptions({
+    queryKey: keys.me.controlPeriods(params),
+    queryFn: ({ signal }) => getMeControlPeriods(params, { signal }),
   })
 
 /** POST /v1/me/assessments — student (the group's head student only); the control stays tentative. */

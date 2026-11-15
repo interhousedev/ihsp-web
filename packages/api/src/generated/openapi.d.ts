@@ -898,7 +898,11 @@ export interface paths {
         get: operations["get_group_v1_admin_groups__group_id__get"];
         put?: never;
         post?: never;
-        delete?: never;
+        /**
+         * Delete Group
+         * @description Delete a group; its students stay as users without a group.
+         */
+        delete: operations["delete_group_v1_admin_groups__group_id__delete"];
         options?: never;
         head?: never;
         /**
@@ -1098,6 +1102,86 @@ export interface paths {
          * @description Change the sent fields; the entry is embedded again.
          */
         patch: operations["update_entry_v1_admin_knowledge__entry_id__patch"];
+        trace?: never;
+    };
+    "/v1/admin/legal/acceptances": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Acceptance Counts
+         * @description Acceptances of the current version of each published kind.
+         */
+        get: operations["acceptance_counts_v1_admin_legal_acceptances_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/admin/legal/documents": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * List All
+         * @description Every version of every kind.
+         */
+        get: operations["list_all_v1_admin_legal_documents_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/admin/legal/drafts/{kind}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        /**
+         * Save Draft
+         * @description Create or replace the draft of the kind.
+         */
+        put: operations["save_draft_v1_admin_legal_drafts__kind__put"];
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/admin/legal/drafts/{kind}/publish": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Publish
+         * @description Publish the draft: every user has to accept it.
+         */
+        post: operations["publish_v1_admin_legal_drafts__kind__publish_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
         trace?: never;
     };
     "/v1/admin/lessons": {
@@ -1488,6 +1572,66 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/v1/admin/migration": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get Migration
+         * @description Return the migration phase and the progress of its steps.
+         */
+        get: operations["get_migration_v1_admin_migration_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/admin/migration/rollback": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Rollback Migration
+         * @description Leave maintenance mode; the source data was never touched.
+         */
+        post: operations["rollback_migration_v1_admin_migration_rollback_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/admin/migration/start": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Start Migration
+         * @description Queue the migration; the platform turns read-only at once.
+         */
+        post: operations["start_migration_v1_admin_migration_start_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/v1/admin/moderation/queue": {
         parameters: {
             query?: never;
@@ -1670,6 +1814,66 @@ export interface paths {
          * @description Move a post with its subtree under another parent (no cycles, not the root).
          */
         post: operations["move_post_v1_admin_posts__post_id__move_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/admin/privacy/erasure-requests": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * List Requests
+         * @description Requests newest first, with the requester's name, login and roles.
+         */
+        get: operations["list_requests_v1_admin_privacy_erasure_requests_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/admin/privacy/erasure-requests/{request_id}/approve": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Approve
+         * @description Approve: the account is closed and the 30-day window starts.
+         */
+        post: operations["approve_v1_admin_privacy_erasure_requests__request_id__approve_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/admin/privacy/erasure-requests/{request_id}/reject": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Reject
+         * @description Reject: the account stays; the user is told why.
+         */
+        post: operations["reject_v1_admin_privacy_erasure_requests__request_id__reject_post"];
         delete?: never;
         options?: never;
         head?: never;
@@ -4237,7 +4441,7 @@ export interface paths {
         post?: never;
         /**
          * Delete Account
-         * @description Delete the account; personal data goes after 30 days (ID-29).
+         * @description Ask for the deletion; an administrator reviews it, then 30 days run (ID-29).
          */
         delete: operations["delete_account_v1_id_me_delete"];
         options?: never;
@@ -5289,6 +5493,46 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/v1/legal/documents": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * List Documents
+         * @description The current published version of every kind that has one.
+         */
+        get: operations["list_documents_v1_legal_documents_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/legal/documents/{kind}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get Document
+         * @description The current published version of one kind (404 when none).
+         */
+        get: operations["get_document_v1_legal_documents__kind__get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/v1/lessons/{lesson_id}/resources": {
         parameters: {
             query?: never;
@@ -5617,6 +5861,26 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/v1/library/items/{item_id}/text/search": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Search Item Text
+         * @description Occurrences of `q` in the item's text: page, snippet and where on the page.
+         */
+        get: operations["search_item_text_v1_library_items__item_id__text_search_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/v1/library/materials": {
         parameters: {
             query?: never;
@@ -5765,6 +6029,26 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/v1/library/reading-lists/order": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        /**
+         * Reorder Reading Lists
+         * @description Set the sequence of lists (librarians and Administration; others get 403).
+         */
+        put: operations["reorder_reading_lists_v1_library_reading_lists_order_put"];
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/v1/library/reading-lists/{list_id}": {
         parameters: {
             query?: never;
@@ -5806,6 +6090,26 @@ export interface paths {
          * @description Replace all entries at once (at most 100, else `422 library/list-too-long`).
          */
         put: operations["replace_list_entries_v1_library_reading_lists__list_id__items_put"];
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/library/reading-lists/{list_id}/pin": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        /**
+         * Pin Reading List
+         * @description Pin or unpin a list (librarians and Administration; others get 403).
+         */
+        put: operations["pin_reading_list_v1_library_reading_lists__list_id__pin_put"];
         post?: never;
         delete?: never;
         options?: never;
@@ -7253,6 +7557,26 @@ export interface paths {
         patch: operations["update_collection_v1_manage_library_collections__collection_id__patch"];
         trace?: never;
     };
+    "/v1/manage/library/covers/backfill": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Backfill Covers
+         * @description Start cutting covers for books without one; manual covers stay.
+         */
+        post: operations["backfill_covers_v1_manage_library_covers_backfill_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/v1/manage/library/import": {
         parameters: {
             query?: never;
@@ -7287,6 +7611,26 @@ export interface paths {
          * @description Decide; a reason is required except for approve, `403 library/own-item`.
          */
         post: operations["review_item_v1_manage_library_items__item_id___action__post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/manage/library/pages/backfill": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Backfill Item Pages
+         * @description Start rebuilding the stored page text (folded text, word boxes) of old items.
+         */
+        post: operations["backfill_item_pages_v1_manage_library_pages_backfill_post"];
         delete?: never;
         options?: never;
         head?: never;
@@ -7507,6 +7851,26 @@ export interface paths {
          * @description Change the sent fields of a topic.
          */
         patch: operations["update_topic_v1_manage_library_topics__topic_id__patch"];
+        trace?: never;
+    };
+    "/v1/me/academic/control-periods": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * List Control Periods
+         * @description Return the control weeks with the exams left and the marks taken.
+         */
+        get: operations["list_control_periods_v1_me_academic_control_periods_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
         trace?: never;
     };
     "/v1/me/alerts": {
@@ -8260,6 +8624,46 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/v1/me/legal/accept": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Accept
+         * @description Accept current versions; stale ones answer 409. Returns what is left.
+         */
+        post: operations["accept_v1_me_legal_accept_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/me/legal/pending": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get Pending
+         * @description Current documents the user has not accepted yet.
+         */
+        get: operations["get_pending_v1_me_legal_pending_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/v1/me/lesson-results": {
         parameters: {
             query?: never;
@@ -8428,6 +8832,30 @@ export interface paths {
         patch: operations["update_annotation_v1_me_library_annotations__annotation_id__patch"];
         trace?: never;
     };
+    "/v1/me/library/markup/{item_id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get Markup
+         * @description The caller's own markup of the item.
+         */
+        get: operations["get_markup_v1_me_library_markup__item_id__get"];
+        /**
+         * Save Markup
+         * @description Replace the caller's markup of the item; no shapes at all removes it.
+         */
+        put: operations["save_markup_v1_me_library_markup__item_id__put"];
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/v1/me/library/progress/{item_id}": {
         parameters: {
             query?: never;
@@ -8552,6 +8980,66 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/v1/me/onboarding": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get Onboarding
+         * @description The steps the caller still has to see (none unless they are a student).
+         */
+        get: operations["get_onboarding_v1_me_onboarding_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/me/onboarding/certificates/done": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Certificates Done
+         * @description Mark the certificates step done or skipped; it is not shown again.
+         */
+        post: operations["certificates_done_v1_me_onboarding_certificates_done_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/me/onboarding/certificates/refresh-emis": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Refresh Emis
+         * @description Import the caller's EMIS certificates again and return all their entries.
+         */
+        post: operations["refresh_emis_v1_me_onboarding_certificates_refresh_emis_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/v1/me/outbound-mail": {
         parameters: {
             query?: never;
@@ -8570,6 +9058,74 @@ export interface paths {
          * @description Send an email to anyone from the platform; one attachment from My files.
          */
         post: operations["send_outbound_mail_v1_me_outbound_mail_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/me/privacy/erasure": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get Erasure
+         * @description The caller's open erasure request.
+         */
+        get: operations["get_erasure_v1_me_privacy_erasure_get"];
+        put?: never;
+        post?: never;
+        /**
+         * Cancel Erasure
+         * @description Withdraw a request that is still waiting for review.
+         */
+        delete: operations["cancel_erasure_v1_me_privacy_erasure_delete"];
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/me/privacy/exports": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * List Exports
+         * @description The caller's recent exports.
+         */
+        get: operations["list_exports_v1_me_privacy_exports_get"];
+        put?: never;
+        /**
+         * Request Export
+         * @description Queue an export of the caller's data (one per 24 hours).
+         */
+        post: operations["request_export_v1_me_privacy_exports_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/me/privacy/exports/{export_id}/download": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Download Export
+         * @description A 60-second link to the archive; 404 unless it is the caller's own, ready.
+         */
+        get: operations["download_export_v1_me_privacy_exports__export_id__download_get"];
+        put?: never;
+        post?: never;
         delete?: never;
         options?: never;
         head?: never;
@@ -10476,6 +11032,26 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/v1/public/maintenance": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get Maintenance
+         * @description Return the maintenance state the web apps show as a banner (never cached).
+         */
+        get: operations["get_maintenance_v1_public_maintenance_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/v1/public/reports": {
         parameters: {
             query?: never;
@@ -11764,6 +12340,60 @@ export interface components {
             lesson_id: string;
         };
         /**
+         * AcceptIn
+         * @description Body of POST /v1/me/legal/accept; versions must be the current ones.
+         */
+        AcceptIn: {
+            /** Items */
+            items: components["schemas"]["AcceptItemIn"][];
+        };
+        /**
+         * AcceptItemIn
+         * @description One accepted version.
+         */
+        AcceptItemIn: {
+            /**
+             * Kind
+             * @enum {string}
+             */
+            kind: "privacy" | "terms" | "biometric" | "ai";
+            /** Version */
+            version: number;
+        };
+        /**
+         * AcceptanceCountOut
+         * @description Users that accepted the current version of a kind.
+         */
+        AcceptanceCountOut: {
+            /** Accepted Count */
+            accepted_count: number;
+            /**
+             * Kind
+             * @enum {string}
+             */
+            kind: "privacy" | "terms" | "biometric" | "ai";
+            /** Version */
+            version: number;
+        };
+        /**
+         * AcceptanceCountsOut
+         * @description One count per published kind.
+         */
+        AcceptanceCountsOut: {
+            /** Items */
+            items: components["schemas"]["AcceptanceCountOut"][];
+        };
+        /**
+         * AcceptedLegalItem
+         * @description One legal document version the student accepted.
+         */
+        AcceptedLegalItem: {
+            /** Kind */
+            kind: string;
+            /** Version */
+            version: number;
+        };
+        /**
          * AccessOptionResponse
          * @description An access filter option.
          */
@@ -11916,6 +12546,109 @@ export interface components {
             scheduled_broadcasts: components["schemas"]["BroadcastItemResponse"][];
             sync: components["schemas"]["SyncOverviewResponse"];
             today: components["schemas"]["TodayCountsResponse"];
+        };
+        /**
+         * AdminDocumentListOut
+         * @description Every version of every kind, by kind then newest first.
+         */
+        AdminDocumentListOut: {
+            /** Items */
+            items: components["schemas"]["AdminDocumentOut"][];
+        };
+        /**
+         * AdminDocumentOut
+         * @description A version of a document with the texts of every language.
+         */
+        AdminDocumentOut: {
+            /** Announcement */
+            announcement: {
+                [key: string]: string;
+            } | null;
+            /** Body Markdown */
+            body_markdown: {
+                [key: string]: string;
+            };
+            /**
+             * Created At
+             * Format: date-time
+             */
+            created_at: string;
+            /**
+             * Id
+             * Format: uuid
+             */
+            id: string;
+            /**
+             * Kind
+             * @enum {string}
+             */
+            kind: "privacy" | "terms" | "biometric" | "ai";
+            /** Published At */
+            published_at: string | null;
+            /** Published By */
+            published_by: string | null;
+            /**
+             * Status
+             * @enum {string}
+             */
+            status: "draft" | "published";
+            /** Title */
+            title: {
+                [key: string]: string;
+            };
+            /**
+             * Updated At
+             * Format: date-time
+             */
+            updated_at: string;
+            /** Version */
+            version: number;
+        };
+        /**
+         * AdminErasureListOut
+         * @description A page of the admin queue.
+         */
+        AdminErasureListOut: {
+            /** Items */
+            items: components["schemas"]["AdminErasureOut"][];
+        };
+        /**
+         * AdminErasureOut
+         * @description A request in the admin queue, with the requester.
+         */
+        AdminErasureOut: {
+            /** Closes On */
+            closes_on: string | null;
+            /** Decided At */
+            decided_at: string | null;
+            /**
+             * Id
+             * Format: uuid
+             */
+            id: string;
+            /** Login */
+            login: string | null;
+            /** Name */
+            name: string | null;
+            /** Reject Reason */
+            reject_reason: string | null;
+            /**
+             * Requested At
+             * Format: date-time
+             */
+            requested_at: string;
+            /** Roles */
+            roles: string[];
+            /**
+             * Status
+             * @enum {string}
+             */
+            status: "pending_review" | "approved" | "rejected" | "completed" | "cancelled";
+            /**
+             * User Id
+             * Format: uuid
+             */
+            user_id: string;
         };
         /**
          * AdminFeedbackDetail
@@ -14513,6 +15246,8 @@ export interface components {
          * @description The password, the emailed code and the optional import confirmation.
          */
         CompleteRegistrationBody: {
+            /** Accepted Legal */
+            accepted_legal?: components["schemas"]["AcceptedLegalItem"][];
             /**
              * Confirm Import Match
              * @default false
@@ -14657,6 +15392,34 @@ export interface components {
             consent_challenge: string;
         };
         /**
+         * ControlExamResponse
+         * @description One subject's exam in a control week; ``date`` is null until a teacher sets it.
+         *
+         *     ``state`` is ``taken`` when the exam has a mark or its date has passed; a taken
+         *     exam with a null ``mark`` has no mark yet.
+         */
+        ControlExamResponse: {
+            /** Date */
+            date: string | null;
+            /** Mark */
+            mark: number | null;
+            /** Room */
+            room: string | null;
+            /** Starts At */
+            starts_at: string | null;
+            /**
+             * State
+             * @enum {string}
+             */
+            state: "upcoming" | "taken";
+            /**
+             * Status
+             * @enum {string}
+             */
+            status: "planned" | "tentative" | "cancelled";
+            subject: components["schemas"]["AssessmentSubject"];
+        };
+        /**
          * ControlPeriod
          * @description The dates of a control week: both ends are control days.
          */
@@ -14671,6 +15434,42 @@ export interface components {
              * Format: date
              */
             start: string;
+        };
+        /**
+         * ControlPeriodItem
+         * @description A control week (ПК 1, ПК 2 or ИК) with the student's exams in it.
+         */
+        ControlPeriodItem: {
+            /**
+             * Control
+             * @enum {string}
+             */
+            control: "midterm_1" | "midterm_2" | "final";
+            /**
+             * End
+             * Format: date
+             */
+            end: string;
+            /** Exams */
+            exams: components["schemas"]["ControlExamResponse"][];
+            /**
+             * Kind
+             * @enum {string}
+             */
+            kind: "midterm" | "final" | "other";
+            /**
+             * Start
+             * Format: date
+             */
+            start: string;
+        };
+        /**
+         * ControlPeriodListResponse
+         * @description Control weeks overlapping the window, oldest first.
+         */
+        ControlPeriodListResponse: {
+            /** Items */
+            items: components["schemas"]["ControlPeriodItem"][];
         };
         /**
          * ControlPeriodResponse
@@ -15800,14 +16599,16 @@ export interface components {
         };
         /**
          * DeleteAccountResponse
-         * @description When the personal data is removed.
+         * @description The erasure request waiting for an administrator's review.
          */
         DeleteAccountResponse: {
             /**
-             * Closes On
-             * Format: date
+             * Request Id
+             * Format: uuid
              */
-            closes_on: string;
+            request_id: string;
+            /** Status */
+            status: string;
         };
         /**
          * DeleteFileResponse
@@ -16034,6 +16835,24 @@ export interface components {
             expires_at: string;
             /** Url */
             url: string;
+        };
+        /**
+         * DraftIn
+         * @description Body of PUT /v1/admin/legal/drafts/{kind}; keys are uz, ru and en.
+         */
+        DraftIn: {
+            /** Announcement */
+            announcement?: {
+                [key: string]: string;
+            } | null;
+            /** Body Markdown */
+            body_markdown?: {
+                [key: string]: string;
+            };
+            /** Title */
+            title?: {
+                [key: string]: string;
+            };
         };
         /**
          * EmailChangeBody
@@ -16453,6 +17272,33 @@ export interface components {
             to_date: string | null;
         };
         /**
+         * ErasureRequestOut
+         * @description An account erasure request.
+         */
+        ErasureRequestOut: {
+            /** Closes On */
+            closes_on: string | null;
+            /** Decided At */
+            decided_at: string | null;
+            /**
+             * Id
+             * Format: uuid
+             */
+            id: string;
+            /** Reject Reason */
+            reject_reason: string | null;
+            /**
+             * Requested At
+             * Format: date-time
+             */
+            requested_at: string;
+            /**
+             * Status
+             * @enum {string}
+             */
+            status: "pending_review" | "approved" | "rejected" | "completed" | "cancelled";
+        };
+        /**
          * ExcludedRefResponse
          * @description A material left out of an auto notebook.
          */
@@ -16794,6 +17640,54 @@ export interface components {
             /** File Ids */
             file_ids?: string[] | null;
             filters?: components["schemas"]["StaffFiltersBody"] | null;
+        };
+        /**
+         * ExportDownloadOut
+         * @description A presigned URL valid for 60 seconds.
+         */
+        ExportDownloadOut: {
+            /**
+             * Expires In
+             * @default 60
+             */
+            expires_in?: number;
+            /** Url */
+            url: string;
+        };
+        /**
+         * ExportListOut
+         * @description The caller's recent exports, newest first.
+         */
+        ExportListOut: {
+            /** Items */
+            items: components["schemas"]["ExportOut"][];
+        };
+        /**
+         * ExportOut
+         * @description A data export.
+         */
+        ExportOut: {
+            /** Byte Size */
+            byte_size: number | null;
+            /**
+             * Created At
+             * Format: date-time
+             */
+            created_at: string;
+            /** Expires At */
+            expires_at: string | null;
+            /** Finished At */
+            finished_at: string | null;
+            /**
+             * Id
+             * Format: uuid
+             */
+            id: string;
+            /**
+             * Status
+             * @enum {string}
+             */
+            status: "queued" | "running" | "ready" | "failed";
         };
         /**
          * ExtensionBody
@@ -17630,6 +18524,8 @@ export interface components {
             is_me: boolean;
             /** Last Name */
             last_name: string;
+            /** Photo Url */
+            photo_url: string | null;
         };
         /**
          * GroupPatchBody
@@ -17661,6 +18557,8 @@ export interface components {
             id: string;
             /** Last Name */
             last_name: string;
+            /** Photo Url */
+            photo_url: string | null;
         };
         /**
          * GroupProgressCell
@@ -17826,6 +18724,8 @@ export interface components {
             id: string;
             /** Last Name */
             last_name: string;
+            /** Photo Url */
+            photo_url: string | null;
         };
         /**
          * H5PBlock
@@ -18489,6 +19389,18 @@ export interface components {
         ItemTextSchema: {
             /** Pages */
             pages: components["schemas"]["TextPageSchema"][];
+        };
+        /**
+         * ItemTextSearchSchema
+         * @description `ItemTextSearch`: hits in page order.
+         */
+        ItemTextSearchSchema: {
+            /** Hits */
+            hits: components["schemas"]["TextHitSchema"][];
+            /** Query */
+            query: string;
+            /** Truncated */
+            truncated: boolean;
         };
         /**
          * ItemType
@@ -19746,6 +20658,37 @@ export interface components {
             url: string;
         };
         /**
+         * LegalDocumentListOut
+         * @description Current documents, one per published kind.
+         */
+        LegalDocumentListOut: {
+            /** Items */
+            items: components["schemas"]["LegalDocumentOut"][];
+        };
+        /**
+         * LegalDocumentOut
+         * @description The current published version of a kind, in one language.
+         */
+        LegalDocumentOut: {
+            /** Announcement */
+            announcement: string | null;
+            /** Body Markdown */
+            body_markdown: string;
+            /**
+             * Kind
+             * @enum {string}
+             */
+            kind: "privacy" | "terms" | "biometric" | "ai";
+            /** Locale */
+            locale: string;
+            /** Published At */
+            published_at: string | null;
+            /** Title */
+            title: string;
+            /** Version */
+            version: number;
+        };
+        /**
          * LessonDraftCreate
          * @description The blocks of one lesson (course workspaces only).
          */
@@ -20562,6 +21505,20 @@ export interface components {
             uz: string;
         };
         /**
+         * MaintenanceResponse
+         * @description Whether the platform is read-only because it is being moved to a new server.
+         */
+        MaintenanceResponse: {
+            /** Active */
+            active: boolean;
+            /** Moved */
+            moved: boolean;
+            /** Since */
+            since: string | null;
+            /** Target Url */
+            target_url: string | null;
+        };
+        /**
          * ManageCollectionResponse
          * @description `ManageCollection`: all languages and the stored item ids.
          */
@@ -20711,6 +21668,59 @@ export interface components {
             distribution: {
                 [key: string]: number;
             };
+        };
+        /**
+         * MarkupBody
+         * @description `PUT /me/library/markup/{item_id}`: the whole markup; shapes by page number.
+         */
+        MarkupBody: {
+            /**
+             * File Id
+             * Format: uuid
+             */
+            file_id: string;
+            /** Pages */
+            pages?: {
+                [key: string]: components["schemas"]["MarkupShapeSchema"][];
+            };
+        };
+        /**
+         * MarkupResponse
+         * @description `Markup`: the caller's own markup of the item (empty when there is none).
+         */
+        MarkupResponse: {
+            /** File Id */
+            file_id: string | null;
+            /**
+             * Item Id
+             * Format: uuid
+             */
+            item_id: string;
+            /** Pages */
+            pages: {
+                [key: string]: components["schemas"]["MarkupShapeSchema"][];
+            };
+            /** Updated At */
+            updated_at: string | null;
+        };
+        /**
+         * MarkupShapeSchema
+         * @description A stroke or figure: points are fractions of the page, `width` of its width.
+         */
+        MarkupShapeSchema: {
+            /** Color */
+            color: string;
+            /** Id */
+            id: string;
+            /** Points */
+            points: number[][];
+            /**
+             * Tool
+             * @enum {string}
+             */
+            tool: "pen" | "pencil" | "highlighter" | "rect" | "ellipse" | "line" | "arrow";
+            /** Width */
+            width: number;
         };
         /**
          * MaterialBlockSchema
@@ -21034,6 +22044,49 @@ export interface components {
          */
         MessageRole: "user" | "assistant";
         /**
+         * MigrationStatusResponse
+         * @description The migration in progress; `phase` is ``idle`` when there is none.
+         */
+        MigrationStatusResponse: {
+            /** Configured */
+            configured: boolean;
+            /** Dry Run */
+            dry_run: boolean;
+            /** Error */
+            error: string | null;
+            /** Migration Id */
+            migration_id: string | null;
+            /** Phase */
+            phase: string;
+            /** Requested At */
+            requested_at: string | null;
+            /** Stale */
+            stale: boolean;
+            /** Steps */
+            steps: components["schemas"]["MigrationStep"][];
+            /** Target Host */
+            target_host: string | null;
+            /** Target Port */
+            target_port: number | null;
+            /** Target Url */
+            target_url: string | null;
+            /** Updated At */
+            updated_at: string | null;
+        };
+        /**
+         * MigrationStep
+         * @description One step of the copy with its progress.
+         */
+        MigrationStep: {
+            /** Key */
+            key: string;
+            /**
+             * State
+             * @enum {string}
+             */
+            state: "pending" | "running" | "done";
+        };
+        /**
          * MindMapCreate
          * @description A mind map.
          */
@@ -21186,6 +22239,13 @@ export interface components {
             date: string;
             /** Follows Weekday */
             follows_weekday: number;
+        };
+        /**
+         * MyErasureOut
+         * @description The caller's open request, if any.
+         */
+        MyErasureOut: {
+            request: components["schemas"]["ErasureRequestOut"] | null;
         };
         /**
          * MyGroupResponse
@@ -21860,6 +22920,36 @@ export interface components {
             max_items: number;
         };
         /**
+         * OnboardingOut
+         * @description The steps the caller still has to see; empty for non-students.
+         */
+        OnboardingOut: {
+            /**
+             * Required
+             * @description True while a required step is not done.
+             */
+            required: boolean;
+            /** Steps */
+            steps: components["schemas"]["OnboardingStepOut"][];
+        };
+        /**
+         * OnboardingStepOut
+         * @description One step of the wizard.
+         */
+        OnboardingStepOut: {
+            /** Done */
+            done: boolean;
+            /**
+             * Key
+             * @enum {string}
+             */
+            key: "selfie" | "certificates";
+            /** Required */
+            required: boolean;
+            /** Skippable */
+            skippable: boolean;
+        };
+        /**
          * OpenCourseWorkspaceBody
          * @description POST /v1/notebooks/course-workspaces.
          */
@@ -22349,6 +23439,39 @@ export interface components {
             steps: components["schemas"]["PendingStepView"][];
         };
         /**
+         * PendingItemOut
+         * @description A document to accept; ``previously_accepted_version`` is null for a first.
+         */
+        PendingItemOut: {
+            /** Announcement */
+            announcement: string | null;
+            /** Body Markdown */
+            body_markdown: string;
+            /**
+             * Kind
+             * @enum {string}
+             */
+            kind: "privacy" | "terms" | "biometric" | "ai";
+            /** Locale */
+            locale: string;
+            /** Previously Accepted Version */
+            previously_accepted_version: number | null;
+            /** Published At */
+            published_at: string | null;
+            /** Title */
+            title: string;
+            /** Version */
+            version: number;
+        };
+        /**
+         * PendingOut
+         * @description What the user has to accept; empty when nothing is pending.
+         */
+        PendingOut: {
+            /** Items */
+            items: components["schemas"]["PendingItemOut"][];
+        };
+        /**
          * PendingStepView
          * @description One pending step change.
          */
@@ -22442,6 +23565,14 @@ export interface components {
              * @enum {integer}
              */
             category: 1 | 2 | 3 | 4;
+        };
+        /**
+         * PinReadingListBody
+         * @description `PUT /library/reading-lists/{id}/pin`: `{pinned}`.
+         */
+        PinReadingListBody: {
+            /** Pinned */
+            pinned: boolean;
         };
         /**
          * PlanConfirmResponse
@@ -23657,7 +24788,11 @@ export interface components {
              */
             id: string;
             owner: components["schemas"]["PersonResponse"];
+            /** Pinned */
+            pinned: boolean;
             scope: components["schemas"]["ListScope"];
+            /** Sort Order */
+            sort_order: number;
             status: components["schemas"]["ListStatus"];
             subject: components["schemas"]["SubjectRefSchema"] | null;
             /** Term Half */
@@ -23699,7 +24834,11 @@ export interface components {
              */
             id: string;
             owner: components["schemas"]["PersonResponse"];
+            /** Pinned */
+            pinned: boolean;
             scope: components["schemas"]["ListScope"];
+            /** Sort Order */
+            sort_order: number;
             status: components["schemas"]["ListStatus"];
             subject: components["schemas"]["SubjectRefSchema"] | null;
             /** Term Half */
@@ -23880,6 +25019,14 @@ export interface components {
             redirect_to: string;
         };
         /**
+         * RefreshEmisOut
+         * @description The caller's certificates after the EMIS import.
+         */
+        RefreshEmisOut: {
+            /** Entries */
+            entries: components["schemas"]["CertificateEntryResponse"][];
+        };
+        /**
          * RegisterBody
          * @description The fields that are read; any other client metadata is ignored.
          */
@@ -23950,6 +25097,14 @@ export interface components {
             profile: components["schemas"]["RegistrationProfileResponse"];
             /** Registration Token */
             registration_token: string;
+        };
+        /**
+         * RejectIn
+         * @description The reason is shown to the user.
+         */
+        RejectIn: {
+            /** Reason */
+            reason?: string | null;
         };
         /**
          * RejectToolCallBody
@@ -24045,6 +25200,14 @@ export interface components {
             ids: string[];
             /** Parent Id */
             parent_id?: string | null;
+        };
+        /**
+         * ReorderReadingListsBody
+         * @description `PUT /library/reading-lists/order`: the lists in their new sequence.
+         */
+        ReorderReadingListsBody: {
+            /** Ids */
+            ids: string[];
         };
         /**
          * ReplaceCardsBody
@@ -24446,6 +25609,14 @@ export interface components {
              * @default []
              */
             revoke?: components["schemas"]["Role"][];
+        };
+        /**
+         * RollbackBody
+         * @description Step-up code for leaving maintenance mode.
+         */
+        RollbackBody: {
+            /** Otp Code */
+            otp_code: string;
         };
         /**
          * RoomMergeBody
@@ -26035,6 +27206,28 @@ export interface components {
          */
         StartLabelsResponse: {
             status: components["schemas"]["LabelRunStatus"];
+        };
+        /**
+         * StartMigrationBody
+         * @description The target server and its one-time pairing token.
+         */
+        StartMigrationBody: {
+            /** Otp Code */
+            otp_code: string;
+            /**
+             * Pairing Token
+             * Format: password
+             */
+            pairing_token: string;
+            /** Target Host */
+            target_host: string;
+            /**
+             * Target Port
+             * @default 22
+             */
+            target_port?: number;
+            /** Target Url */
+            target_url?: string | null;
         };
         /**
          * StartReclaimBody
@@ -27986,6 +29179,40 @@ export interface components {
             type: "text";
         };
         /**
+         * TextBoxSchema
+         * @description A rectangle on a page, as fractions of it (origin at the top left).
+         */
+        TextBoxSchema: {
+            /** H */
+            h: number;
+            /** W */
+            w: number;
+            /** X */
+            x: number;
+            /** Y */
+            y: number;
+        };
+        /**
+         * TextHitSchema
+         * @description One occurrence of the query on a page.
+         */
+        TextHitSchema: {
+            /** Boxes */
+            boxes: components["schemas"]["TextBoxSchema"][];
+            /** End */
+            end: number;
+            /** Page */
+            page: number;
+            snippet: components["schemas"]["TextSnippetSchema"];
+            /**
+             * Source
+             * @enum {string}
+             */
+            source: "text_layer" | "ocr";
+            /** Start */
+            start: number;
+        };
+        /**
          * TextInput
          * @description Pasted text.
          */
@@ -28009,6 +29236,18 @@ export interface components {
             page: number;
             /** Text */
             text: string;
+        };
+        /**
+         * TextSnippetSchema
+         * @description The text around a hit.
+         */
+        TextSnippetSchema: {
+            /** Match */
+            match: string;
+            /** Post */
+            post: string;
+            /** Pre */
+            pre: string;
         };
         /**
          * TextStatus
@@ -33082,6 +34321,35 @@ export interface operations {
             };
         };
     };
+    delete_group_v1_admin_groups__group_id__delete: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                group_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            204: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
     update_group_v1_admin_groups__group_id__patch: {
         parameters: {
             query?: never;
@@ -33465,6 +34733,112 @@ export interface operations {
                 };
                 content: {
                     "application/json": components["schemas"]["KnowledgeEntryResponse"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    acceptance_counts_v1_admin_legal_acceptances_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["AcceptanceCountsOut"];
+                };
+            };
+        };
+    };
+    list_all_v1_admin_legal_documents_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["AdminDocumentListOut"];
+                };
+            };
+        };
+    };
+    save_draft_v1_admin_legal_drafts__kind__put: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                kind: "privacy" | "terms" | "biometric" | "ai";
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["DraftIn"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["AdminDocumentOut"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    publish_v1_admin_legal_drafts__kind__publish_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                kind: "privacy" | "terms" | "biometric" | "ai";
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["AdminDocumentOut"];
                 };
             };
             /** @description Validation Error */
@@ -34264,6 +35638,92 @@ export interface operations {
             };
         };
     };
+    get_migration_v1_admin_migration_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["MigrationStatusResponse"];
+                };
+            };
+        };
+    };
+    rollback_migration_v1_admin_migration_rollback_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["RollbackBody"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["MigrationStatusResponse"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    start_migration_v1_admin_migration_start_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["StartMigrationBody"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["MigrationStatusResponse"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
     queue_v1_admin_moderation_queue_get: {
         parameters: {
             query?: {
@@ -34587,6 +36047,105 @@ export interface operations {
                 };
                 content: {
                     "application/json": components["schemas"]["PostOut"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    list_requests_v1_admin_privacy_erasure_requests_get: {
+        parameters: {
+            query?: {
+                status?: ("pending_review" | "approved" | "rejected" | "completed" | "cancelled") | null;
+                limit?: number;
+                offset?: number;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["AdminErasureListOut"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    approve_v1_admin_privacy_erasure_requests__request_id__approve_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                request_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErasureRequestOut"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    reject_v1_admin_privacy_erasure_requests__request_id__reject_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                request_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["RejectIn"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErasureRequestOut"];
                 };
             };
             /** @description Validation Error */
@@ -41018,6 +42577,72 @@ export interface operations {
             };
         };
     };
+    list_documents_v1_legal_documents_get: {
+        parameters: {
+            query?: {
+                /** @description uz, ru or en; default Accept-Language */
+                locale?: string | null;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["LegalDocumentListOut"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    get_document_v1_legal_documents__kind__get: {
+        parameters: {
+            query?: {
+                /** @description uz, ru or en; default Accept-Language */
+                locale?: string | null;
+            };
+            header?: never;
+            path: {
+                kind: "privacy" | "terms" | "biometric" | "ai";
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["LegalDocumentOut"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
     list_resources_v1_lessons__lesson_id__resources_get: {
         parameters: {
             query?: never;
@@ -41633,6 +43258,40 @@ export interface operations {
             };
         };
     };
+    search_item_text_v1_library_items__item_id__text_search_get: {
+        parameters: {
+            query: {
+                q: string;
+                limit?: number;
+            };
+            header?: never;
+            path: {
+                item_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ItemTextSearchSchema"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
     create_material_v1_library_materials_post: {
         parameters: {
             query?: never;
@@ -41932,6 +43591,37 @@ export interface operations {
             };
         };
     };
+    reorder_reading_lists_v1_library_reading_lists_order_put: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["ReorderReadingListsBody"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            204: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
     get_reading_list_v1_library_reading_lists__list_id__get: {
         parameters: {
             query?: never;
@@ -42045,6 +43735,43 @@ export interface operations {
         requestBody: {
             content: {
                 "application/json": components["schemas"]["ReplaceEntriesBody"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ReadingListDetailResponse"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    pin_reading_list_v1_library_reading_lists__list_id__pin_put: {
+        parameters: {
+            query?: never;
+            header?: {
+                "Accept-Language"?: string | null;
+            };
+            path: {
+                list_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["PinReadingListBody"];
             };
         };
         responses: {
@@ -44661,6 +46388,26 @@ export interface operations {
             };
         };
     };
+    backfill_covers_v1_manage_library_covers_backfill_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            202: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": unknown;
+                };
+            };
+        };
+    };
     import_books_v1_manage_library_import_post: {
         parameters: {
             query?: never;
@@ -44730,6 +46477,26 @@ export interface operations {
                 };
                 content: {
                     "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    backfill_item_pages_v1_manage_library_pages_backfill_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            202: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": unknown;
                 };
             };
         };
@@ -45166,6 +46933,38 @@ export interface operations {
                 };
                 content: {
                     "application/json": components["schemas"]["ManageTopicResponse"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    list_control_periods_v1_me_academic_control_periods_get: {
+        parameters: {
+            query?: {
+                from?: string | null;
+                to?: string | null;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ControlPeriodListResponse"];
                 };
             };
             /** @description Validation Error */
@@ -46572,6 +48371,74 @@ export interface operations {
             };
         };
     };
+    accept_v1_me_legal_accept_post: {
+        parameters: {
+            query?: {
+                /** @description uz, ru or en; default Accept-Language */
+                locale?: string | null;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["AcceptIn"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["PendingOut"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    get_pending_v1_me_legal_pending_get: {
+        parameters: {
+            query?: {
+                /** @description uz, ru or en; default Accept-Language */
+                locale?: string | null;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["PendingOut"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
     list_lesson_results_v1_me_lesson_results_get: {
         parameters: {
             query: {
@@ -46894,6 +48761,72 @@ export interface operations {
             };
         };
     };
+    get_markup_v1_me_library_markup__item_id__get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                item_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["MarkupResponse"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    save_markup_v1_me_library_markup__item_id__put: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                item_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["MarkupBody"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["MarkupResponse"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
     save_progress_v1_me_library_progress__item_id__put: {
         parameters: {
             query?: never;
@@ -47117,6 +49050,66 @@ export interface operations {
             };
         };
     };
+    get_onboarding_v1_me_onboarding_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["OnboardingOut"];
+                };
+            };
+        };
+    };
+    certificates_done_v1_me_onboarding_certificates_done_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["OnboardingOut"];
+                };
+            };
+        };
+    };
+    refresh_emis_v1_me_onboarding_certificates_refresh_emis_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["RefreshEmisOut"];
+                };
+            };
+        };
+    };
     list_sent_mail_v1_me_outbound_mail_get: {
         parameters: {
             query?: {
@@ -47169,6 +49162,117 @@ export interface operations {
                 };
                 content: {
                     "application/json": components["schemas"]["SendOutboundResponse"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    get_erasure_v1_me_privacy_erasure_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["MyErasureOut"];
+                };
+            };
+        };
+    };
+    cancel_erasure_v1_me_privacy_erasure_delete: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErasureRequestOut"];
+                };
+            };
+        };
+    };
+    list_exports_v1_me_privacy_exports_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ExportListOut"];
+                };
+            };
+        };
+    };
+    request_export_v1_me_privacy_exports_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            202: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ExportOut"];
+                };
+            };
+        };
+    };
+    download_export_v1_me_privacy_exports__export_id__download_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                export_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ExportDownloadOut"];
                 };
             };
             /** @description Validation Error */
@@ -50595,6 +52699,26 @@ export interface operations {
                 };
                 content: {
                     "application/json": components["schemas"]["ClientConfigResponse"];
+                };
+            };
+        };
+    };
+    get_maintenance_v1_public_maintenance_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["MaintenanceResponse"];
                 };
             };
         };

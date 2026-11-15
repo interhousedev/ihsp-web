@@ -396,7 +396,7 @@ export function postIdMeEmisPassword(body: EmisPasswordBody, opts?: RequestOptio
   return api.post<EmisPasswordResponse>("/v1/id/me/emis-password", body, opts)
 }
 
-/** DELETE /v1/id/me — bearer (B2); `202 {closes_on}`. */
+/** DELETE /v1/id/me — bearer (B2); `202 {request_id, status}`; opens an erasure request that an administrator reviews. */
 export function deleteIdMe(body: DeleteAccountBody, opts?: RequestOptions): Promise<DeleteAccountResponse> {
   return api.delete<DeleteAccountResponse>("/v1/id/me", { ...opts, body })
 }

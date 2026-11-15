@@ -6,7 +6,14 @@ import type {
   StaffAssessmentItem,
 } from "@ihsp/api"
 import { HttpResponse, http } from "msw"
-import { assessmentIds, assessments, plannerFor, plannerMath, staffAssessments } from "../fixtures/assessments"
+import {
+  assessmentIds,
+  assessments,
+  controlPeriodItems,
+  plannerFor,
+  plannerMath,
+  staffAssessments,
+} from "../fixtures/assessments"
 import { ids, persons, subjectRefs } from "../fixtures/world"
 import { apiUrl, nextId, noContent, notFound, param, query, readJson } from "./utils"
 
@@ -112,6 +119,13 @@ function staffHandlers(prefix: "/v1/staff/assessments" | "/v1/admin/assessments"
 }
 
 export const assessmentsHandlers = [
+  http.get(apiUrl("/v1/me/academic/control-periods"), ({ request }) => {
+    const search = query(request)
+    const from = search.get("from")
+    const to = search.get("to")
+    const items = controlPeriodItems.filter((entry) => (!from || entry.end >= from) && (!to || entry.start <= to))
+    return HttpResponse.json({ items })
+  }),
   http.get(apiUrl("/v1/me/assessments"), ({ request }) => {
     const search = query(request)
     const items = [...assessments, ...studentExtra]

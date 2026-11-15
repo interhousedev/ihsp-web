@@ -33,10 +33,14 @@ import type {
   ItemFileUrl,
   ItemText,
   ItemTextParams,
+  ItemTextSearch,
+  ItemTextSearchParams,
   ItemsParams,
   LibraryGroup,
+  LibraryMarkup,
   LibraryStats,
   ManageCollection,
+  MarkupBody,
   ManageQueueRow,
   ManageTopic,
   MaterialFilesBody,
@@ -120,6 +124,14 @@ export function getLibraryFileUrl(
 /** GET /v1/library/items/{id}/text — pages of extracted text (rights and status checked). */
 export function getLibraryItemText(id: string, params?: ItemTextParams, opts?: RequestOptions): Promise<ItemText> {
   return api.get<ItemText>(`/v1/library/items/${seg(id)}/text`, { ...opts, query: params })
+}
+/** GET /v1/library/items/{id}/text/search — hits in the stored page text (any case, diacritics; Uzbek in either script). */
+export function searchLibraryItemText(
+  id: string,
+  params: ItemTextSearchParams,
+  opts?: RequestOptions,
+): Promise<ItemTextSearch> {
+  return api.get<ItemTextSearch>(`/v1/library/items/${seg(id)}/text/search`, { ...opts, query: params })
 }
 export const getLibraryItemTextQuery = (id: string, params?: ItemTextParams) =>
   queryOptions({
@@ -237,6 +249,20 @@ export function putReadingListItems(
   return api.put<ReadingListDetail>(`/v1/library/reading-lists/${seg(id)}/items`, body, opts)
 }
 
+/** PUT /v1/library/reading-lists/{id}/pin — librarians only (`403` otherwise). */
+export function putReadingListPin(
+  id: string,
+  body: { pinned: boolean },
+  opts?: RequestOptions,
+): Promise<ReadingListDetail> {
+  return api.put<ReadingListDetail>(`/v1/library/reading-lists/${seg(id)}/pin`, body, opts)
+}
+
+/** PUT /v1/library/reading-lists/order — the lists in their new sequence, librarians only; `204`. */
+export function putReadingListOrder(body: { ids: string[] }, opts?: RequestOptions): Promise<NoContent> {
+  return api.put<NoContent>("/v1/library/reading-lists/order", body, opts)
+}
+
 // - - - UniLibrary (server-side only; link-only records) - - -
 
 /** GET /v1/library/external/unilibrary/search — not stored; `stale` when the cache answered because of a failure. */
@@ -305,6 +331,16 @@ export function deleteShelfEntry(itemId: string, opts?: RequestOptions): Promise
 /** PUT /v1/me/library/progress/{item_id} — `204`; `409 library/not-supported` for external items. */
 export function putLibraryProgress(itemId: string, body: ProgressBody, opts?: RequestOptions): Promise<NoContent> {
   return api.put<NoContent>(`/v1/me/library/progress/${seg(itemId)}`, body, opts)
+}
+
+/** GET /v1/me/library/markup/{item_id} — the caller's own page markup (empty when there is none). */
+export function getLibraryMarkup(itemId: string, opts?: RequestOptions): Promise<LibraryMarkup> {
+  return api.get<LibraryMarkup>(`/v1/me/library/markup/${seg(itemId)}`, opts)
+}
+
+/** PUT /v1/me/library/markup/{item_id} — replaces the whole markup; no shapes removes it. */
+export function putLibraryMarkup(itemId: string, body: MarkupBody, opts?: RequestOptions): Promise<LibraryMarkup> {
+  return api.put<LibraryMarkup>(`/v1/me/library/markup/${seg(itemId)}`, body, opts)
 }
 
 /** GET /v1/me/library/annotations?item_id&kind&color&q&cursor — private to the owner. */

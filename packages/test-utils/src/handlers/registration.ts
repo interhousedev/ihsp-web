@@ -9,6 +9,7 @@ import {
   registrationStart,
   registrationStartWithImport,
 } from "../fixtures/registration"
+import { legalDocuments } from "../fixtures/legal"
 import { accepted, apiUrl, noContent, problem, query, readJson } from "./utils"
 
 /**
@@ -41,6 +42,11 @@ export const registrationHandlers = [
   http.post(apiUrl("/v1/id/register/telegram-status"), () => HttpResponse.json({ linked: false })),
   http.post(apiUrl("/v1/id/register/complete"), async ({ request }) => {
     const body = await readJson<RegisterCompleteBody>(request)
+    // Every published document must be ticked at its current version.
+    const consented = legalDocuments.every((doc) =>
+      body.accepted_legal?.some((item) => item.kind === doc.kind && item.version === doc.version),
+    )
+    if (!consented) return problem(422, "legal/consent-required", "Accept every document to continue")
     return HttpResponse.json({
       ...registerCompleteResponse,
       redirect_to: body.login_challenge ? "http://localhost:4444/oauth2/auth?login_verifier=test" : null,

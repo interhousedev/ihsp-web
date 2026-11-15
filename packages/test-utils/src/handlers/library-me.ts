@@ -254,6 +254,19 @@ export const libraryMeHandlers = [
     return noContent()
   }),
 
+  // --- Markup: the reader's drawings; the mock keeps none, so every item opens clean ---
+  http.get(apiUrl("/v1/me/library/markup/:itemId"), ({ params, request }) => {
+    const actor = signedIn(request)
+    if (actor instanceof Response) return actor
+    return HttpResponse.json({ item_id: param(params, "itemId"), file_id: null, pages: {}, updated_at: null })
+  }),
+  http.put(apiUrl("/v1/me/library/markup/:itemId"), async ({ params, request }) => {
+    const actor = signedIn(request)
+    if (actor instanceof Response) return actor
+    const body = await readJson<{ file_id: string; pages: unknown }>(request)
+    return HttpResponse.json({ item_id: param(params, "itemId"), ...body, updated_at: stamp() })
+  }),
+
   // --- Annotations ---
   http.get(apiUrl("/v1/me/library/annotations/export"), ({ request }) => {
     const actor = signedIn(request)

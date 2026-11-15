@@ -5,6 +5,20 @@ const params = <T extends object>(value: T | undefined): T | Record<string, neve
 
 export const keys = {
   appMap: () => ["app-map"] as const,
+  legal: {
+    all: () => ["legal"] as const,
+    documents: (locale: string) => ["legal", "documents", locale] as const,
+    document: (kind: string, locale: string) => ["legal", "documents", locale, kind] as const,
+    pending: () => ["legal", "pending"] as const,
+    admin: () => ["legal", "admin"] as const,
+    acceptances: () => ["legal", "acceptances"] as const,
+  },
+  privacy: {
+    all: () => ["privacy"] as const,
+    exports: () => ["privacy", "exports"] as const,
+    erasure: () => ["privacy", "erasure"] as const,
+    adminErasure: (filters?: object) => ["privacy", "admin-erasure", params(filters)] as const,
+  },
   certificates: {
     all: () => ["certificates"] as const,
     types: () => ["certificates", "types"] as const,
@@ -88,6 +102,7 @@ export const keys = {
     syncRuns: (filters?: object) => ["admin", "sync-runs", params(filters)] as const,
     jobs: () => ["admin", "jobs"] as const,
     vaultStatus: () => ["admin", "vault", "status"] as const,
+    migration: () => ["admin", "migration"] as const,
     userFacePhoto: (userId: string) => ["admin", "users", userId, "face-photo"] as const,
     devices: () => ["admin", "devices"] as const,
     deviceCalls: (id: string) => ["admin", "devices", id, "calls"] as const,
@@ -152,6 +167,7 @@ export const keys = {
     all: () => ["me"] as const,
     profile: () => ["me", "profile"] as const,
     face: () => ["me", "face"] as const,
+    onboarding: () => ["me", "onboarding"] as const,
     studentCard: () => ["me", "student-card"] as const,
     today: () => ["me", "today"] as const,
     timetable: (filters?: object) => ["me", "timetable", params(filters)] as const,
@@ -173,6 +189,7 @@ export const keys = {
     curriculum: () => ["me", "curriculum"] as const,
     sync: () => ["me", "sync"] as const,
     assessments: (filters?: object) => ["me", "assessments", params(filters)] as const,
+    controlPeriods: (filters?: object) => ["me", "control-periods", params(filters)] as const,
     planner: (subjectId: string, filters?: object) =>
       ["me", "subjects", subjectId, "planner", params(filters)] as const,
     alerts: () => ["me", "alerts"] as const,
@@ -342,6 +359,7 @@ export const keys = {
   },
   public: {
     clientConfig: () => ["public", "client-config"] as const,
+    maintenance: () => ["public", "maintenance"] as const,
     share: (slug: string) => ["public", "shares", slug] as const,
     studentCard: (token: string) => ["public", "student-cards", token] as const,
   },

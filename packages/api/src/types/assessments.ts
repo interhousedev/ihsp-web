@@ -34,6 +34,28 @@ export type AssessmentItem = {
 
 export type AssessmentList = { items: AssessmentItem[] }
 
+/** An exam of a control week: `taken` once it has a mark or its date has passed (`mark: null` is "no mark yet"). */
+export type ControlExam = {
+  subject: { id: string; name: string; short_name: string }
+  date: string | null
+  starts_at: string | null
+  room: string | null
+  status: AssessmentStatus
+  state: "upcoming" | "taken"
+  mark: number | null
+}
+
+/** A ПК or ИК week with the student's exams in it. */
+export type ControlPeriodItem = {
+  control: ControlName
+  kind: AssessmentKind
+  start: string
+  end: string
+  exams: ControlExam[]
+}
+
+export type ControlPeriodList = { items: ControlPeriodItem[] }
+
 /** The staff and admin variant: with the audience and the author (`created_at`/`created_by` are null for a week without a date). */
 export type StaffAssessmentItem = AssessmentItem & {
   audience: AudienceItem[]

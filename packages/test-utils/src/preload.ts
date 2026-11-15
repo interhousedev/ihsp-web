@@ -46,6 +46,7 @@ const {
   resetMeSyncState,
   resetAdminJobs,
   resetPersonalTokens,
+  resetAdminMigration,
   resetAdminVault,
   resetAdminKnowledge,
   resetCreatedFiles,
@@ -58,6 +59,7 @@ const {
   resetTeacherContacts,
   resetTeacherPhotos,
   resetFaces,
+  resetOnboarding,
   resetAdminAiState,
   resetAiProjectsState,
   resetWebSearchState,
@@ -103,6 +105,7 @@ afterEach(() => {
   resetTeacherContacts()
   resetTeacherPhotos()
   resetFaces()
+  resetOnboarding()
   resetAssessments()
   resetSharing()
   resetTemporaryMarks()
@@ -111,6 +114,7 @@ afterEach(() => {
   resetFactorsState()
   resetAdminJobs()
   resetPersonalTokens()
+  resetAdminMigration()
   resetAdminVault()
   resetAdminKnowledge()
   resetWorkOffsStaffState()

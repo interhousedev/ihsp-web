@@ -1,3 +1,5 @@
+import { privacyHandlers } from "./privacy"
+import { legalHandlers } from "./legal"
 import { studentCardHandlers } from "./student-card"
 import { honoursHandlers } from "./honours"
 import { adminAiHandlers } from "./admin-ai"
@@ -22,6 +24,7 @@ import { idHandlers } from "./id"
 import { idAdminHandlers } from "./id-admin"
 import { idFactorsHandlers } from "./id-factors"
 import { idPersonalTokensHandlers } from "./id-personal-tokens"
+import { adminMigrationHandlers } from "./admin-migration"
 import { adminVaultHandlers } from "./admin-vault"
 import { libraryHandlers } from "./library"
 import { lessonSourcesHandlers } from "./lesson-sources"
@@ -57,6 +60,7 @@ import { clientConfigHandlers } from "./client-config"
 import { botPostsHandlers } from "./bot-posts"
 import { feedbackHandlers } from "./feedback"
 import { facesHandlers } from "./faces"
+import { onboardingHandlers } from "./onboarding"
 import { adminFeedbackHandlers } from "./admin-feedback"
 
 export { errorHandlers } from "./errors"
@@ -67,8 +71,10 @@ export { resetMeSyncState } from "./me-sync"
 export { certificatesImported, resetCertificatesState, setCertificatesStaffForbidden } from "./certificates"
 export { resetAdminJobs } from "./admin-jobs"
 export { personalTokenSecret, resetPersonalTokens } from "./id-personal-tokens"
+export { resetAdminMigration, setAdminMigration } from "./admin-migration"
 export { resetAdminVault } from "./admin-vault"
 export { resetFaces, setMyFace } from "./faces"
+export { onboardingCalls, resetOnboarding, setOnboarding, setOnboardingEmisEntries } from "./onboarding"
 export { resetAdminKnowledge } from "./admin-knowledge"
 export { resetAdminAiState } from "./admin-ai"
 export { resetAiProjectsState } from "./ai-projects"
@@ -134,6 +140,7 @@ export {
   idAdminHandlers,
   idFactorsHandlers,
   idPersonalTokensHandlers,
+  adminMigrationHandlers,
   adminVaultHandlers,
   idHandlers,
   libraryHandlers,
@@ -167,6 +174,8 @@ export {
   appMapHandlers,
   clientConfigHandlers,
   botPostsHandlers,
+  legalHandlers,
+  privacyHandlers,
 }
 
 /**
@@ -180,6 +189,7 @@ export const allHandlers = [
   ...idHandlers,
   ...idFactorsHandlers,
   ...idPersonalTokensHandlers,
+  ...adminMigrationHandlers,
   ...adminVaultHandlers,
   ...idAdminHandlers,
   ...registrationHandlers,
@@ -219,6 +229,7 @@ export const allHandlers = [
   ...webSearchHandlers,
   ...adminAiHandlers,
   ...facesHandlers,
+  ...onboardingHandlers,
   ...aiHandlers,
   ...flashcardsHandlers,
   ...dashboardHandlers,
@@ -234,6 +245,8 @@ export const allHandlers = [
   ...presentationPlansHandlers,
   ...honoursHandlers,
   ...studentCardHandlers,
+  ...legalHandlers,
+  ...privacyHandlers,
 ]
 export { notHeadStudentResponse } from "./group-progress"
 export { resetSharing, sharingState } from "./sharing"

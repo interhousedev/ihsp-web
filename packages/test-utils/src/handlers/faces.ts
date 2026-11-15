@@ -1,6 +1,7 @@
 import type { DeviceCallOut, DeviceCreateIn, DeviceOut, FaceOut } from "@ihsp/api"
 import { HttpResponse, http } from "msw"
 import { apiUrl, noContent, notFound, problem, readJson } from "./utils"
+import { markSelfieDone } from "./onboarding"
 
 const PHOTO_TYPES = ["image/jpeg", "image/png"]
 const PHOTO_MAX_BYTES = 5 * 1024 * 1024
@@ -102,6 +103,7 @@ export const facesHandlers = [
     const received = await receive(request)
     if (received instanceof Response) return received
     mine = saved(false)
+    markSelfieDone()
     return HttpResponse.json(mine)
   }),
   http.delete(apiUrl("/v1/me/face"), () => {

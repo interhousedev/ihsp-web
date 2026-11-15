@@ -3,7 +3,7 @@
 import type { TeacherContacts } from "./teachers"
 
 /** A person of the group, by name. */
-export type GroupPersonRef = { id: string; first_name: string; last_name: string }
+export type GroupPersonRef = { id: string; first_name: string; last_name: string; photo_url: string | null }
 
 /** The homeroom teacher, with the public contacts shown to students. */
 export type GroupTeacherRef = GroupPersonRef & { contacts: TeacherContacts }

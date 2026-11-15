@@ -1,4 +1,12 @@
-import type { AssessmentItem, ControlPeriods, PlannerTarget, StaffAssessmentItem, SubjectPlanner } from "@ihsp/api"
+import type {
+  AssessmentItem,
+  ControlExam,
+  ControlPeriodItem,
+  ControlPeriods,
+  PlannerTarget,
+  StaffAssessmentItem,
+  SubjectPlanner,
+} from "@ihsp/api"
 import { ids, persons, subjectRefs, uuid } from "./world"
 import type { SubjectKey } from "./world"
 
@@ -194,3 +202,41 @@ export function plannerFor(subject: SubjectKey, lessonAverage: number | null): S
     assumptions: lessonAverage === null ? ["rounding", "no_lesson_marks"] : plannerMath.assumptions,
   }
 }
+
+function controlExam(
+  subject: SubjectKey,
+  spec: Pick<ControlExam, "date" | "state" | "mark"> & Partial<ControlExam>,
+): ControlExam {
+  return { subject: subjectRefs[subject], starts_at: null, room: null, status: "planned", ...spec }
+}
+
+/** The control weeks of the student: the ПК 1 week runs over the fixture "today" (2026-10-07), the ИК week is ahead. */
+export const controlPeriodItems: ControlPeriodItem[] = [
+  {
+    control: "midterm_1",
+    kind: "midterm",
+    start: "2026-10-05",
+    end: "2026-10-09",
+    exams: [
+      controlExam("chemistry", { date: "2026-10-05", state: "taken", mark: 4 }),
+      controlExam("history", { date: "2026-10-06", state: "taken", mark: null }),
+      controlExam("math", {
+        date: "2026-10-08",
+        starts_at: "2026-10-08T05:00:00Z",
+        room: "204",
+        state: "upcoming",
+        mark: null,
+      }),
+      controlExam("english", { date: null, state: "upcoming", mark: null }),
+    ],
+  },
+  {
+    control: "final",
+    kind: "final",
+    start: "2026-12-14",
+    end: "2026-12-18",
+    exams: [
+      controlExam("physics", { date: "2026-12-16", starts_at: "2026-12-16T04:00:00Z", state: "upcoming", mark: null }),
+    ],
+  },
+]

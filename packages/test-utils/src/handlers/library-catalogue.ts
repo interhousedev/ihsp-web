@@ -6,6 +6,8 @@ import type {
   ItemCard,
   ItemFileUrl,
   ItemText,
+  ItemTextHit,
+  ItemTextSearch,
   ReadingListCard,
   ReadingListDetail,
   ReadingListInput,
@@ -167,6 +169,8 @@ function listCard(detail: ReadingListDetail): ReadingListCard {
     entry_count: detail.entry_count,
     essential_count: detail.essential_count,
     essential_done: detail.essential_done,
+    pinned: detail.pinned,
+    sort_order: detail.sort_order,
     updated_at: detail.updated_at,
   }
 }
@@ -304,6 +308,43 @@ export const libraryCatalogueHandlers = [
     })
   }),
 
+  http.get(apiUrl("/v1/library/items/:id/text/search"), ({ params, request }) => {
+    const actor = signedIn(request)
+    if (actor instanceof Response) return actor
+    const stored = visibleItem(actor, param(params, "id"))
+    if (!stored) return itemNotFound()
+    if (stored.detail.kind === "external") return notSupported()
+    if (!libraryCan(actor, stored.detail, stored.ownerId).read) return forbidden()
+    const search = query(request)
+    const q = (search.get("q") ?? "").trim()
+    if (!q) return problem(422, "validation/invalid", "q is required")
+    const limit = Number(search.get("limit") ?? 50) || 50
+    const needle = q.toLocaleLowerCase()
+    const hits: ItemTextHit[] = []
+    stored.text.forEach((text, index) => {
+      const hay = text.toLocaleLowerCase()
+      let at = hay.indexOf(needle)
+      while (at >= 0) {
+        const end = at + needle.length
+        hits.push({
+          page: index + 1,
+          snippet: {
+            pre: text.slice(Math.max(0, at - 40), at),
+            match: text.slice(at, end),
+            post: text.slice(end, end + 40),
+          },
+          start: at,
+          end,
+          boxes: [],
+          source: "text_layer",
+        })
+        at = hay.indexOf(needle, end)
+      }
+    })
+    const body: ItemTextSearch = { query: q, hits: hits.slice(0, limit), truncated: hits.length > limit }
+    return HttpResponse.json(body)
+  }),
+
   http.get(apiUrl("/v1/library/items/:id/text"), ({ params, request }) => {
     const actor = signedIn(request)
     if (actor instanceof Response) return actor
@@ -380,8 +421,35 @@ export const libraryCatalogueHandlers = [
         if (search.get("status") && d.status !== search.get("status")) return false
         return true
       })
+      .sort((a, b) => Number(b.pinned) - Number(a.pinned) || a.sort_order - b.sort_order)
       .map(listCard)
     return HttpResponse.json(cards)
+  }),
+
+  /** Librarians only: the listed lists take the slots they occupy, in the given sequence. */
+  http.put(apiUrl("/v1/library/reading-lists/order"), async ({ request }) => {
+    const actor = signedIn(request)
+    if (actor instanceof Response) return actor
+    if (!isLibraryStaff(actor)) return forbidden()
+    const { ids = [] } = await readJson<{ ids?: string[] }>(request)
+    const lists = ids.map((id) => state.lists.get(id))
+    if (lists.some((l) => !l) || new Set(ids).size !== ids.length) return invalid("ids", "Unknown or repeated list")
+    const slots = lists.map((l) => l!.detail.sort_order).sort((a, b) => a - b)
+    lists.forEach((l, i) => {
+      l!.detail = { ...l!.detail, sort_order: slots[i]! }
+    })
+    return noContent()
+  }),
+
+  http.put(apiUrl("/v1/library/reading-lists/:id/pin"), async ({ params, request }) => {
+    const actor = signedIn(request)
+    if (actor instanceof Response) return actor
+    if (!isLibraryStaff(actor)) return forbidden()
+    const list = findList(actor, param(params, "id"))
+    if (!list) return listNotFound()
+    const { pinned = false } = await readJson<{ pinned?: boolean }>(request)
+    list.detail = { ...list.detail, pinned }
+    return HttpResponse.json(listDetailFor(actor, list))
   }),
 
   http.get(apiUrl("/v1/library/reading-lists/:id"), ({ params, request }) => {
@@ -411,6 +479,8 @@ export const libraryCatalogueHandlers = [
       entry_count: 0,
       essential_count: 0,
       essential_done: 0,
+      pinned: false,
+      sort_order: Math.max(0, ...[...state.lists.values()].map((l) => l.detail.sort_order)) + 1,
       updated_at: stamp(),
       group_ids: body.group_ids ?? [],
       entries: [],

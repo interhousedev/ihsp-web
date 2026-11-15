@@ -99,6 +99,11 @@ export function patchAdminGroup(id: string, body: GroupPatchBody, opts?: Request
   return api.patch<GroupDetail>(`/v1/admin/groups/${seg(id)}`, body, opts)
 }
 
+/** DELETE /v1/admin/groups/{id} — admin; students are detached, not deleted; `204`. */
+export function deleteAdminGroup(id: string, opts?: RequestOptions): Promise<NoContent> {
+  return api.delete<NoContent>(`/v1/admin/groups/${seg(id)}`, opts)
+}
+
 /** PUT /v1/admin/groups/{id}/subgroups — admin. */
 export function putAdminGroupSubgroups(
   id: string,

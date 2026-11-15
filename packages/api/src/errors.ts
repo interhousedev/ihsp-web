@@ -91,8 +91,13 @@ export async function parseApiError(response: Response): Promise<ApiError> {
 export function errorMessageKey(error: unknown, has?: (key: string) => boolean): string {
   if (!isApiError(error) || !error.type) return "errors.generic"
   const key = `errors.${error.type.split("/").join(".")}`
-  if (has && !has(key)) return "errors.generic"
+  if (has && !has(key)) return isEmisProblem(error) ? "errors.emis.upstream" : "errors.generic"
   return key
+}
+
+/** True for a problem of EMIS (the state system): its type starts with `emis/`. The fault is not ours. */
+export function isEmisProblem(error: unknown): boolean {
+  return isApiError(error) && typeof error.type === "string" && error.type.startsWith("emis/")
 }
 
 /** Reads `params.<name>` of an API error with a type guard supplied by the caller. */
@@ -120,4 +125,42 @@ export function getRetryAfter(error: unknown): number | undefined {
   if (!isApiError(error)) return undefined
   const value = error.params.retry_after
   return typeof value === "number" ? value : undefined
+}
+
+/** One form field the backend blames for a failed request. */
+export type FieldIssue = {
+  /** Field name as the backend sent it (`reason`, `ends_on`, `items.0.name`). */
+  field: string
+  /** The backend's own text (FastAPI `msg`); null for problems that only carry a field name. */
+  detail: string | null
+}
+
+const LOC_PREFIXES = new Set(["body", "query", "path", "header", "cookie"])
+
+/**
+ * The form fields an error points at. Understands the two shapes of the backend:
+ * a domain problem with `params.field` (a name) or `params.fields` (a list of names, or an object keyed by name),
+ * and the `common/request-validation` problem whose `errors[].loc` is `["body", "reason"]`.
+ * Returns an empty list when the error is not tied to a field.
+ */
+export function getFieldIssues(error: unknown): FieldIssue[] {
+  if (!isApiError(error)) return []
+  const issues: FieldIssue[] = []
+  const seen = new Set<string>()
+  const add = (field: unknown, detail: string | null = null) => {
+    if (typeof field !== "string" || field === "" || seen.has(field)) return
+    seen.add(field)
+    issues.push({ field, detail })
+  }
+  add(error.params.field)
+  const fields = error.params.fields
+  if (Array.isArray(fields)) fields.forEach((name) => add(name))
+  else if (isRecord(fields)) Object.keys(fields).forEach((name) => add(name))
+  for (const item of error.errors ?? []) {
+    if (!isRecord(item) || !Array.isArray(item.loc)) continue
+    const loc = item.loc.filter((part): part is string | number => typeof part === "string" || typeof part === "number")
+    const path = loc[0] !== undefined && LOC_PREFIXES.has(String(loc[0])) ? loc.slice(1) : loc
+    add(path.join("."), typeof item.msg === "string" ? item.msg : null)
+  }
+  return issues
 }

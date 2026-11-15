@@ -27,6 +27,8 @@ export type RegisterCompleteBody = {
   email_code: string
   confirm_import_match?: boolean
   login_challenge?: string
+  /** Every published legal document the user ticked (`422 legal/consent-required` when one is missing). */
+  accepted_legal?: { kind: string; version: number }[]
 }
 /** `login_ticket` (TODO(contract)): set without a login challenge; IHT ID redeems it on its own login. */
 export type RegisterCompleteResponse = {

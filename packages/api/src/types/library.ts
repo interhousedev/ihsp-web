@@ -243,6 +243,20 @@ export type ItemFileUrl = { url: string; expires_at: string; content_type: strin
 export type ItemTextParams = { page_from?: number; page_to?: number }
 export type ItemText = { pages: { page: number; text: string }[] }
 
+/** A rectangle on a page as fractions of it (origin at the top left). */
+export type ItemTextBox = { x: number; y: number; w: number; h: number }
+/** `GET /library/items/{id}/text/search?q&limit`: occurrences with page, snippet and boxes, in page order. */
+export type ItemTextSearchParams = { q: string; limit?: number }
+export type ItemTextHit = {
+  page: number
+  snippet: { pre: string; match: string; post: string }
+  start: number
+  end: number
+  boxes: ItemTextBox[]
+  source: "text_layer" | "ocr"
+}
+export type ItemTextSearch = { query: string; hits: ItemTextHit[]; truncated: boolean }
+
 /**
  * `GET /library/subjects` (*anon*): the subjects that have library items, with counts. Not in § 7.1, but the home
  * page's subject shelves and every subject filter need it.
@@ -303,6 +317,8 @@ export interface ReadingListCard {
   entry_count: number
   essential_count: number
   essential_done: number
+  pinned: boolean
+  sort_order: number
   updated_at: string
 }
 
@@ -789,3 +805,27 @@ export interface SanctionBody {
 
 /** A page of cards, as most list endpoints answer. */
 export type ItemCardPage = Page<ItemCard>
+
+// Page markup of the PDF reader (`GET`/`PUT /me/library/markup/{item_id}`). Points are fractions (0 to 1) of the page and
+// `width` is a fraction of the page width, so a drawing scales with the zoom.
+export type MarkupTool = "pen" | "pencil" | "highlighter" | "rect" | "ellipse" | "line" | "arrow"
+export interface MarkupShape {
+  id: string
+  tool: MarkupTool
+  /** `#rrggbb`. */
+  color: string
+  width: number
+  points: [number, number][]
+}
+/** Shapes by page number (as a string key). */
+export type MarkupPages = Record<string, MarkupShape[]>
+export interface MarkupBody {
+  file_id: string
+  pages: MarkupPages
+}
+export interface LibraryMarkup {
+  item_id: string
+  file_id: string | null
+  pages: MarkupPages
+  updated_at: string | null
+}

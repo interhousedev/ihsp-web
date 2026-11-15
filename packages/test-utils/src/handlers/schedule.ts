@@ -189,6 +189,10 @@ export const scheduleHandlers = [
       head_student: body.head_student_id === undefined ? group.head_student : personById(body.head_student_id),
     })
   }),
+  http.delete(apiUrl("/v1/admin/groups/:id"), ({ params }) => {
+    const group = groupDetailFor(param(params, "id"))
+    return group ? noContent() : notFound("Group")
+  }),
   http.put(apiUrl("/v1/admin/groups/:id/subgroups"), async ({ params, request }) => {
     const group = groupDetailFor(param(params, "id"))
     if (!group) return notFound("Group")

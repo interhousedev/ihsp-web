@@ -5,6 +5,7 @@ const homeroom = {
   id: ids.teacherRakhimov,
   first_name: "Dilnoza",
   last_name: "Rakhimova",
+  photo_url: "https://files.example.test/faces/rakhimova.jpg",
   contacts: {
     telegram: "dilnoza_r",
     email: null,
@@ -22,12 +23,33 @@ export const myGroupForHead: MyGroup = {
   size: 4,
   is_head_student: true,
   homeroom_teacher: homeroom,
-  head_student: { id: ids.student, first_name: "Demo", last_name: "Student" },
+  head_student: { id: ids.student, first_name: "Demo", last_name: "Student", photo_url: null },
   members: [
-    { id: ids.student2, first_name: "Aziza", last_name: "Karimova", is_head_student: false, is_me: false },
-    { id: ids.student, first_name: "Demo", last_name: "Student", is_head_student: true, is_me: true },
-    { id: ids.student3, first_name: "Bobur", last_name: "Rashidov", is_head_student: false, is_me: false },
-    { id: ids.student4, first_name: "Malika", last_name: "Sadykova", is_head_student: false, is_me: false },
+    {
+      id: ids.student2,
+      first_name: "Aziza",
+      last_name: "Karimova",
+      photo_url: "https://files.example.test/faces/karimova.jpg",
+      is_head_student: false,
+      is_me: false,
+    },
+    { id: ids.student, first_name: "Demo", last_name: "Student", photo_url: null, is_head_student: true, is_me: true },
+    {
+      id: ids.student3,
+      first_name: "Bobur",
+      last_name: "Rashidov",
+      photo_url: null,
+      is_head_student: false,
+      is_me: false,
+    },
+    {
+      id: ids.student4,
+      first_name: "Malika",
+      last_name: "Sadykova",
+      photo_url: null,
+      is_head_student: false,
+      is_me: false,
+    },
   ],
 }
 
@@ -35,7 +57,7 @@ export const myGroupForHead: MyGroup = {
 export const myGroupForMember: MyGroup = {
   ...myGroupForHead,
   is_head_student: false,
-  head_student: { id: ids.student2, first_name: "Aziza", last_name: "Karimova" },
+  head_student: { id: ids.student2, first_name: "Aziza", last_name: "Karimova", photo_url: null },
   members: myGroupForHead.members.map((m) => ({
     ...m,
     is_head_student: m.id === ids.student2,

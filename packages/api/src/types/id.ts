@@ -268,7 +268,8 @@ export type EmisPasswordBody = { emis_password: string }
 export type EmisPasswordResponse = { emis_status: "active" | "needs_reauth" }
 
 export type DeleteAccountBody = { password: string; otp_code?: string }
-export type DeleteAccountResponse = { closes_on: string }
+/** The erasure request that waits for an administrator's review. */
+export type DeleteAccountResponse = { request_id: string; status: string }
 
 // --- MCP setup wizard (GET /v1/id/me/mcp-setup/{service}, /v1/id/me/mcp-clients) ---
 
