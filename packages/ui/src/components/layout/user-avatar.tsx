@@ -23,7 +23,7 @@ export function initials(name: string): string {
 export function UserAvatar({ name, imageUrl, subtitle, showInfo = false, className }: UserAvatarProps) {
   return (
     <div className="flex min-w-0 items-center gap-2">
-      <Avatar className={cn("size-8", className)}>
+      <Avatar className={cn("size-8 shrink-0", className)}>
         {imageUrl ? <AvatarImage src={imageUrl} alt="" /> : null}
         <AvatarFallback className="rounded-full text-xs">{initials(name)}</AvatarFallback>
       </Avatar>

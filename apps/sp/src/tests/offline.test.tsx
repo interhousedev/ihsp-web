@@ -133,6 +133,20 @@ describe("OfflineIndicator", () => {
     await waitFor(() => expect(screen.queryByText("Offline")).toBeNull())
   })
 
+  test("a failed maintenance poll does not show the badge", async () => {
+    const queryClient = createTestQueryClient()
+    renderSp(<OfflineIndicator />, { queryClient })
+
+    await act(async () => {
+      await queryClient
+        .fetchQuery({
+          queryKey: ["public", "maintenance"],
+          queryFn: () => Promise.reject(networkError(new Error("down"))),
+        })
+        .catch(() => undefined)
+    })
+    expect(screen.queryByText("Offline")).toBeNull()
+  })
   test("offline, it says how old the cached pages are", async () => {
     const queryClient = createTestQueryClient()
     queryClient.setQueryData(["me", "today"], { semester: 1 })
