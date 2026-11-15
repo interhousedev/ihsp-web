@@ -10,7 +10,7 @@ import { filterGroups } from "../features/settings/components/group-picker"
 import { computeCropRect } from "../features/settings/utils/crop"
 import { moveItem, validateSettings } from "../features/settings/utils/validate"
 import { CourseCardView, courseCardHref } from "../features/shared/components/course-card-view"
-import { authorSession, readBody, renderLms } from "./helpers"
+import { authorSession, pickSection, readBody, renderLms } from "./helpers"
 
 setDefaultTimeout(60_000)
 beforeEach(() => resetLmsSettings())
@@ -198,9 +198,9 @@ describe("landing page", () => {
     expect(screen.getByText("4 h per week")).toBeInTheDocument()
     expect(screen.getByText("10 weeks")).toBeInTheDocument()
     expect(screen.getByText("Differentiate a function")).toBeInTheDocument()
-    await user.click(screen.getByRole("tab", { name: "Syllabus" }))
+    await pickSection(user, "Syllabus")
     expect(await screen.findByText("Limits")).toBeInTheDocument()
-    await user.click(screen.getByRole("tab", { name: "Staff" }))
+    await pickSection(user, "Staff")
     expect(await screen.findByText("Rakhimov Timur")).toBeInTheDocument()
   })
 

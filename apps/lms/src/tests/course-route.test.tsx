@@ -7,7 +7,7 @@ import { CourseRoute } from "../features/courses/components/course-route"
 import { StepPlayer } from "../features/player/components/step-player"
 import { resolveCourseUrl } from "../features/shared/utils/course-path"
 import { hrefs } from "../features/shared/utils/hrefs"
-import { renderLms } from "./helpers"
+import { openSectionMenu, pickSection, renderLms } from "./helpers"
 
 setDefaultTimeout(60_000)
 
@@ -126,6 +126,8 @@ describe("the unified page", () => {
       http.get(apiUrl("/v1/lms/courses/:ref"), () => HttpResponse.json({ ...coursePage, enrolled: true })),
     )
     const { user } = renderPlayer()
+    expect(screen.queryByRole("tablist", { name: "Course sections" })).not.toBeInTheDocument()
+    await openSectionMenu(user)
     for (const name of [
       "Lesson",
       "About",
@@ -135,10 +137,13 @@ describe("the unified page", () => {
       "Updates",
       "Notebook",
       "AI chat",
-    ])
-      expect(await screen.findByRole("tab", { name })).toBeInTheDocument()
-    await user.click(screen.getByRole("tab", { name: "Syllabus" }))
-    expect(await screen.findByRole("tab", { name: "Syllabus", selected: true })).toBeInTheDocument()
+    ]) {
+      expect(await screen.findByRole("menuitem", { name })).toBeInTheDocument()
+    }
+    expect(screen.getByRole("menuitem", { name: "Lesson" })).toHaveAttribute("aria-current", "page")
+    await user.click(screen.getByRole("menuitem", { name: "Syllabus" }))
+    await openSectionMenu(user)
+    expect(await screen.findByRole("menuitem", { name: "Syllabus" })).toHaveAttribute("aria-current", "page")
   })
 
   it("keeps the staff controls reachable from About", async () => {
@@ -148,7 +153,7 @@ describe("the unified page", () => {
       ),
     )
     const { user } = renderPlayer()
-    await user.click(await screen.findByRole("tab", { name: "About" }))
+    await pickSection(user, "About")
     const edit = await screen.findByRole("link", { name: "Edit" })
     expect(edit.getAttribute("href")).toContain(`id=${coursePage.id}`)
   })

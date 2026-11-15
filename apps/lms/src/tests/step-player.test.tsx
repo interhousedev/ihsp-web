@@ -155,7 +155,7 @@ describe("step player: the course sidebar", () => {
     expect(
       screen.getByRole("progressbar", { name: /Course progress: \d+\/\d+ lessons · 2\/3 points/ }),
     ).toBeInTheDocument()
-    expect(screen.getByText("Derivatives 101")).toBeInTheDocument()
+    expect(screen.getAllByText("Derivatives 101").length).toBeGreaterThanOrEqual(1)
   })
 
   it("opens as a drawer on a phone", async () => {

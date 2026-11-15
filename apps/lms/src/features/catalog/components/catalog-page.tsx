@@ -1,10 +1,11 @@
 "use client"
 
-import { getLmsCoursesQuery } from "@ihsp/api"
+import { useSession } from "@ihsp/auth"
 import { useT } from "@ihsp/i18n"
 import { Icons, ListToolbar, PageContainer, useDebounce } from "@ihsp/ui"
 import { keepPreviousData, useQuery } from "@tanstack/react-query"
 import { useState } from "react"
+import { reads } from "../../shared/hooks/use-guest"
 import { CourseCardView } from "../../shared/components/course-card-view"
 import { QueryState } from "@ihsp/features-core"
 import { StepikScope } from "../../shared/components/stepik-scope"
@@ -16,8 +17,9 @@ export function CatalogPage() {
   const t = useT("catalog")
   const [text, setText] = useState("")
   const query = useDebounce(text.trim(), 300)
+  const guest = useSession().status === "anonymous"
   const courses = useQuery({
-    ...getLmsCoursesQuery(query ? { query } : undefined),
+    ...reads.courses(guest, query),
     placeholderData: keepPreviousData,
   })
 
@@ -26,10 +28,12 @@ export function CatalogPage() {
       <PageContainer
         title={t("title")}
         actions={
-          <LinkButton href={hrefs.join()} variant="outline" className="min-h-11 md:min-h-8">
-            <Icons.links aria-hidden />
-            {t("enterCode")}
-          </LinkButton>
+          guest ? undefined : (
+            <LinkButton href={hrefs.join()} variant="outline" className="min-h-11 md:min-h-8">
+              <Icons.links aria-hidden />
+              {t("enterCode")}
+            </LinkButton>
+          )
         }
       >
         <ListToolbar

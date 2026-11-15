@@ -9,6 +9,8 @@ import { LinkButton } from "../../shared/components/link-button"
 import { courseProgress, formatPoints } from "../../shared/utils/course-progress"
 import { hrefs } from "../../shared/utils/hrefs"
 import { continueStep } from "../../shared/utils/outline"
+import { LockedNotice } from "../../shared/components/locked-notice"
+import { SignInButton } from "../../shell/components/sign-in-button"
 import { useEnroll } from "../hooks/use-enroll"
 
 const CTA = "min-h-11 w-full text-base font-semibold"
@@ -17,8 +19,9 @@ const CTA = "min-h-11 w-full text-base font-semibold"
  * The side card of the course page, like Stepik's: the cover, the big green button (Join course, or Continue once
  * enrolled), the progress of an enrolled student, the size of the course and the staff's Edit and Preview links.
  */
-export function CoursePromoCard({ page }: { page: CoursePage }) {
+export function CoursePromoCard({ page, guest = false }: { page: CoursePage; guest?: boolean }) {
   const t = useT("course")
+  const tGuest = useT("guest")
   const format = useFormatters()
   const errorMessage = useErrorMessage()
   const enroll = useEnroll(page.slug)
@@ -51,7 +54,14 @@ export function CoursePromoCard({ page }: { page: CoursePage }) {
             {t("continue")}
           </LinkButton>
         ) : null}
-        {!page.enrolled && page.visibility === "public" ? (
+        {page.locked ? <LockedNotice kind="course" contact={page.contact} /> : null}
+        {guest && !page.locked ? (
+          <div className="flex flex-col gap-2">
+            <p className="text-muted-foreground text-sm">{tGuest("courseCta")}</p>
+            <SignInButton className={CTA} />
+          </div>
+        ) : null}
+        {!guest && !page.locked && !page.enrolled && page.visibility === "public" ? (
           <LoadingButton
             onClick={() => enroll.mutate(page.id, { onSuccess: () => toast.success(t("enrolled")) })}
             loading={enroll.isPending}
@@ -60,7 +70,7 @@ export function CoursePromoCard({ page }: { page: CoursePage }) {
             {t("enroll")}
           </LoadingButton>
         ) : null}
-        {!page.enrolled && page.visibility === "invite" ? (
+        {!guest && !page.locked && !page.enrolled && page.visibility === "invite" ? (
           <LinkButton href={hrefs.join()} className={CTA}>
             {t("enterCode")}
           </LinkButton>

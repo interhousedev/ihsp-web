@@ -1,9 +1,10 @@
 "use client"
 
 import { NotebookWorkspace, useOpenCourseNotebook } from "@ihsp/features-core"
-import { getLmsCourseLandingQuery, type CoursePage } from "@ihsp/api"
+import type { CoursePage } from "@ihsp/api"
+import { useSession } from "@ihsp/auth"
 import { useT } from "@ihsp/i18n"
-import { Alert, AlertDescription, Button, Skeleton, Tabs, TabsContent, TabsList, TabsTrigger } from "@ihsp/ui"
+import { Alert, AlertDescription, Button, Skeleton } from "@ihsp/ui"
 import { useQuery } from "@tanstack/react-query"
 import { parseAsStringLiteral, useQueryState } from "nuqs"
 import { useEffect, useRef, type ReactNode } from "react"
@@ -11,7 +12,9 @@ import { CourseOutline } from "../../courses/components/course-outline"
 import { ProgressTab, UpdatesTab } from "../../courses/components/course-page"
 import { CoursePromoCard } from "../../courses/components/course-promo-card"
 import { LandingAbout } from "../../landing/components/landing-page"
+import { reads } from "../../shared/hooks/use-guest"
 import { StaffList } from "../../shared/components/staff-list"
+import { SectionMenu } from "../../shared/components/section-menu"
 
 const COURSE_TABS = ["about", "syllabus", "staff", "progress", "updates", "notebook", "ai"] as const
 type CourseTab = (typeof COURSE_TABS)[number]
@@ -33,7 +36,7 @@ export function CourseSections({ course, lesson }: { course: CoursePage | null; 
   const active = tab !== null && tab !== LESSON && available.includes(tab) ? tab : LESSON
 
   const landing = useQuery({
-    ...getLmsCourseLandingQuery(course?.slug ?? "", false),
+    ...reads.landing(useSession().status === "anonymous", course?.slug ?? ""),
     enabled: course !== null && active === "about",
   })
 
@@ -47,28 +50,27 @@ export function CourseSections({ course, lesson }: { course: CoursePage | null; 
     openNotebook(courseId)
   }, [active, courseId, openNotebook])
 
-  return (
-    <Tabs
-      value={active}
-      onValueChange={(value) => void setTab(value === LESSON ? null : (value as CourseTab))}
-      className="flex h-full min-h-0 flex-col gap-0"
+  const items = [
+    { key: LESSON, label: player("lesson") },
+    ...available.map((key) => ({ key, label: t(`tabs.${key}`) })),
+  ]
+  const heading = (
+    <SectionMenu
+      items={items}
+      active={active}
+      onSelect={(key) => void setTab(key === LESSON ? null : (key as CourseTab))}
     >
-      <TabsList
-        variant="line"
-        aria-label={t("tabsLabel")}
-        className="bg-background w-full shrink-0 justify-start overflow-x-auto border-b px-2"
-      >
-        <TabsTrigger value={LESSON} className="min-h-11 flex-none md:min-h-8">
-          {player("lesson")}
-        </TabsTrigger>
-        {available.map((key) => (
-          <TabsTrigger key={key} value={key} className="min-h-11 flex-none md:min-h-8">
-            {t(`tabs.${key}`)}
-          </TabsTrigger>
-        ))}
-      </TabsList>
+      {course?.title ?? t("title")}
+    </SectionMenu>
+  )
+
+  return (
+    <div className="flex h-full min-h-0 flex-col gap-0">
+      <div className="bg-background w-full shrink-0 border-b px-2 py-1">
+        {active === LESSON ? <p>{heading}</p> : <h1>{heading}</h1>}
+      </div>
       {active === "notebook" ? (
-        <TabsContent value="notebook" className="min-h-0 flex-1 overflow-hidden">
+        <div className="min-h-0 flex-1 overflow-hidden">
           {notebook.isError ? (
             <Alert variant="destructive" className="m-4 w-auto">
               <AlertDescription>{t("notebookFailed")}</AlertDescription>
@@ -78,9 +80,9 @@ export function CourseSections({ course, lesson }: { course: CoursePage | null; 
           ) : (
             <Skeleton className="m-4 h-96 rounded-xl" />
           )}
-        </TabsContent>
+        </div>
       ) : (
-        <TabsContent value={active} className="min-h-0 flex-1 overflow-y-auto">
+        <div className="min-h-0 flex-1 overflow-y-auto">
           {active === LESSON ? (
             lesson
           ) : course ? (
@@ -111,8 +113,8 @@ export function CourseSections({ course, lesson }: { course: CoursePage | null; 
               ) : null}
             </div>
           ) : null}
-        </TabsContent>
+        </div>
       )}
-    </Tabs>
+    </div>
   )
 }

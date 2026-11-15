@@ -5,7 +5,7 @@ import { HttpResponse, http } from "msw"
 import en from "../../messages/en.json"
 import { CoursePage } from "../features/courses/components/course-page"
 import { CourseNotebooksPage } from "../features/notebooks/components/course-notebooks-page"
-import { renderLms } from "./helpers"
+import { openSectionMenu, pickSection, renderLms } from "./helpers"
 
 // The first render of a page in a cold test run takes several seconds.
 setDefaultTimeout(60_000)
@@ -49,17 +49,18 @@ describe("course notebook tab", () => {
     )
     const { user } = renderLms(<CoursePage slug={coursePage.slug} />)
 
-    await user.click(await screen.findByRole("tab", { name: "Notebook" }))
+    await pickSection(user, "Notebook")
 
     await waitFor(() => expect(posted).toBe(1))
   })
 
   it("is not offered to someone who is not enrolled", async () => {
     server.use(http.get(apiUrl("/v1/lms/courses/:slug"), () => HttpResponse.json(coursePageNotEnrolled)))
-    renderLms(<CoursePage slug={coursePageNotEnrolled.slug} />)
+    const { user } = renderLms(<CoursePage slug={coursePageNotEnrolled.slug} />)
 
     expect(await screen.findByRole("heading", { level: 1, name: coursePageNotEnrolled.title })).toBeInTheDocument()
-    expect(screen.queryByRole("tab", { name: "Notebook" })).not.toBeInTheDocument()
+    await openSectionMenu(user)
+    expect(screen.queryByRole("menuitem", { name: "Notebook" })).not.toBeInTheDocument()
   })
 })
 

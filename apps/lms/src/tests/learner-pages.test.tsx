@@ -6,7 +6,7 @@ import { CatalogPage } from "../features/catalog/components/catalog-page"
 import { CoursePage } from "../features/courses/components/course-page"
 import { JoinPage } from "../features/courses/components/join-page"
 import { MyCoursesPage } from "../features/courses/components/my-courses-page"
-import { readBody, renderLms } from "./helpers"
+import { pickSection, readBody, renderLms } from "./helpers"
 
 // The first render of a page in a cold test run takes several seconds.
 setDefaultTimeout(60_000)
@@ -47,7 +47,7 @@ describe("course page", () => {
   it("shows staff with their roles, the outline marks, progress and the Updated note", async () => {
     const { user } = renderLms(<CoursePage slug={coursePage.slug} />, { route: `/course/${coursePage.slug}/` })
     expect(await screen.findByRole("heading", { name: "Derivatives 101", level: 1 })).toBeInTheDocument()
-    await user.click(screen.getByRole("tab", { name: "Staff" }))
+    await pickSection(user, "Staff")
     expect(await screen.findByText("Rakhimov Timur")).toBeInTheDocument()
     expect(screen.getByText("Author")).toBeInTheDocument()
     // The hidden staff member ("show on page" off) is not part of the page the server sends.
@@ -57,7 +57,7 @@ describe("course page", () => {
     expect(
       screen.getByText(/2 lessons are new or changed; your completed lessons stay completed\./),
     ).toBeInTheDocument()
-    await user.click(screen.getByRole("tab", { name: "Syllabus" }))
+    await pickSection(user, "Syllabus")
     expect(screen.getByText("Changed")).toBeInTheDocument()
     expect(screen.getByText("New")).toBeInTheDocument()
     expect(screen.getByLabelText("Completed")).toBeInTheDocument()
@@ -69,7 +69,7 @@ describe("course page", () => {
 
   it("numbers the modules and lessons of the syllabus and sizes the course in the side card", async () => {
     const { user } = renderLms(<CoursePage slug={coursePage.slug} />)
-    await user.click(await screen.findByRole("tab", { name: "Syllabus" }))
+    await pickSection(user, "Syllabus")
     const syllabus = await screen.findByRole("tabpanel")
     const modules = within(syllabus).getAllByRole("heading", { level: 3 })
     expect(modules.map((item) => item.textContent)).toEqual(["1Introduction", "2Rules and practice"])
@@ -100,7 +100,7 @@ describe("course page", () => {
       }),
     )
     const { user } = renderLms(<CoursePage slug={coursePage.slug} />)
-    await user.click(await screen.findByRole("tab", { name: "Syllabus" }))
+    await pickSection(user, "Syllabus")
     // Steps are not links before enrolling.
     expect(await screen.findByText("Derivative rules quiz")).toBeInTheDocument()
     expect(screen.queryByRole("link", { name: /Derivative rules quiz/ })).not.toBeInTheDocument()

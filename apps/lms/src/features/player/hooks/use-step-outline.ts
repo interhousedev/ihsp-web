@@ -1,13 +1,9 @@
 "use client"
 
-import {
-  getLmsCourseDraftQuery,
-  getLmsCourseQuery,
-  getLmsMyCoursesQuery,
-  type CoursePage,
-  type OutlineSection,
-} from "@ihsp/api"
+import { getLmsCourseDraftQuery, getLmsMyCoursesQuery, type CoursePage, type OutlineSection } from "@ihsp/api"
+import { useSession } from "@ihsp/auth"
 import { useQuery } from "@tanstack/react-query"
+import { reads } from "../../shared/hooks/use-guest"
 
 export type StepOutline = {
   outline: OutlineSection[] | null
@@ -33,12 +29,14 @@ export function useStepOutline({
   preview: boolean
 }): StepOutline {
   // The course page is served by slug only and the player's address has the id: the student's courses map one to the other.
-  const mine = useQuery({ ...getLmsMyCoursesQuery(), enabled: !preview && slug === null, retry: false })
+  // A guest has no courses of their own: the public page takes the id as well.
+  const guest = useSession().status === "anonymous"
+  const mine = useQuery({ ...getLmsMyCoursesQuery(), enabled: !preview && !guest && slug === null, retry: false })
   const known =
     slug ?? [...(mine.data?.enrolled ?? []), ...(mine.data?.managed ?? [])].find((item) => item.id === courseId)?.slug
   const course = useQuery({
-    ...getLmsCourseQuery(known ?? courseId),
-    enabled: !preview && (known !== undefined || !mine.isPending),
+    ...reads.course(guest, known ?? courseId),
+    enabled: !preview && (guest || known !== undefined || !mine.isPending),
     retry: false,
   })
   const draft = useQuery({ ...getLmsCourseDraftQuery(courseId), enabled: preview, retry: false })

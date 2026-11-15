@@ -14,6 +14,9 @@ import { SectionDropZone } from "./section-drop-zone"
 export function OutlineSectionCard({
   section,
   canEdit,
+  courseId,
+  canManageAccess,
+  restrictedSteps,
   onRename,
   onMoveSection,
   onRemoveSection,
@@ -23,6 +26,10 @@ export function OutlineSectionCard({
 }: {
   section: OutlineSection
   canEdit: boolean
+  courseId: string
+  canManageAccess: boolean
+  /** Ids of the lessons that have an access rule. */
+  restrictedSteps: ReadonlySet<string>
   onRename: (title: string) => void
   onMoveSection: (direction: "up" | "down") => void
   onRemoveSection: () => void
@@ -140,6 +147,9 @@ export function OutlineSectionCard({
               key={step.step_id}
               step={step}
               canEdit={canEdit}
+              courseId={courseId}
+              canManageAccess={canManageAccess}
+              restricted={restrictedSteps.has(step.step_id)}
               onMove={(direction) => onMoveStep(step.step_id, direction)}
               onRemove={() => onRemoveStep(step.step_id)}
             />

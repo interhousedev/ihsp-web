@@ -12,6 +12,7 @@ import { hrefs } from "../../shared/utils/hrefs"
 import { useDraftActions } from "../hooks/use-course-draft"
 import { useOutlineDnd } from "../hooks/use-outline-dnd"
 import { moveSectionOps, moveStepOps, sectionDragId } from "../utils/outline-ops"
+import { useAccessRules, useCanManageAccess } from "../../access/hooks/use-access-rules"
 import { AddStepDialog } from "./add-step-dialog"
 import { OutlineSectionCard } from "./outline-section-card"
 
@@ -26,6 +27,9 @@ export function OutlineEditor({ draft, canEdit }: { draft: CourseDraft; canEdit:
   const errorMessage = useErrorMessage()
   const router = useRouter()
   const actions = useDraftActions(draft.id)
+  const canManageAccess = useCanManageAccess(draft.my_permissions)
+  const accessRules = useAccessRules(draft.id)
+  const restrictedSteps = new Set(accessRules.data?.steps.map((item) => item.step_id))
   const fieldErrors = useServerFieldErrors(actions.outline.error)
   const [newSection, setNewSection] = useState("")
   const [addStepTo, setAddStepTo] = useState<string | null>(null)
@@ -86,6 +90,9 @@ export function OutlineEditor({ draft, canEdit }: { draft: CourseDraft; canEdit:
                 key={section.id}
                 section={section}
                 canEdit={canEdit}
+                courseId={draft.id}
+                canManageAccess={canManageAccess}
+                restrictedSteps={restrictedSteps}
                 onRename={(title) => send([{ op: "rename_section", section_id: section.id, title }])}
                 onMoveSection={(direction) => send(moveSectionOps(draft.outline, section.id, direction))}
                 onRemoveSection={() => setRemoval({ kind: "section", id: section.id, title: section.title })}

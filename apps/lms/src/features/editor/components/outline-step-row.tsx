@@ -6,6 +6,8 @@ import type { OutlineSection } from "@ihsp/api"
 import { useT } from "@ihsp/i18n"
 import { Button, Icons, cn } from "@ihsp/ui"
 import Link from "next/link"
+import { useState } from "react"
+import { LessonAccessDialog } from "../../access/components/lesson-access-dialog"
 import { OutlineBadge } from "../../shared/components/outline-badge"
 import { hrefs } from "../../shared/utils/hrefs"
 import { stepDragId } from "../utils/outline-ops"
@@ -16,15 +18,24 @@ type OutlineStep = OutlineSection["steps"][number]
 export function OutlineStepRow({
   step,
   canEdit,
+  courseId,
+  canManageAccess,
+  restricted,
   onMove,
   onRemove,
 }: {
   step: OutlineStep
   canEdit: boolean
+  courseId: string
+  canManageAccess: boolean
+  /** The lesson has an access rule of its own. */
+  restricted: boolean
   onMove: (direction: "up" | "down") => void
   onRemove: () => void
 }) {
   const t = useT("outline")
+  const ta = useT("access")
+  const [accessOpen, setAccessOpen] = useState(false)
   const { attributes, listeners, setNodeRef, setActivatorNodeRef, transform, transition, isDragging } = useSortable({
     id: stepDragId(step.step_id),
     disabled: !canEdit,
@@ -58,6 +69,31 @@ export function OutlineStepRow({
         {step.title}
       </Link>
       <OutlineBadge kind={step.badge} />
+      {restricted ? (
+        <span className="text-muted-foreground flex items-center gap-1 text-xs">
+          <Icons.lock className="size-3.5" aria-hidden />
+          {ta("restricted")}
+        </span>
+      ) : null}
+      <Button
+        variant="ghost"
+        size="icon"
+        onClick={() => setAccessOpen(true)}
+        aria-label={`${ta("open")}: ${step.title}`}
+        className="size-11 md:size-8"
+      >
+        <Icons.lock aria-hidden />
+      </Button>
+      {accessOpen ? (
+        <LessonAccessDialog
+          courseId={courseId}
+          stepId={step.step_id}
+          title={step.title}
+          canManage={canManageAccess}
+          open
+          onOpenChange={setAccessOpen}
+        />
+      ) : null}
       {canEdit ? (
         <div className="ms-auto flex items-center">
           <Button

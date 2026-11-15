@@ -1,10 +1,13 @@
 "use client"
 
-import { getLmsCoursePreviewStepQuery, getLmsCourseStepQuery } from "@ihsp/api"
+import { getLmsCoursePreviewStepQuery, isApiError } from "@ihsp/api"
+import { useSession } from "@ihsp/auth"
 import { useT } from "@ihsp/i18n"
 import { useQuery } from "@tanstack/react-query"
 import { useEffect, useState } from "react"
+import { LockedNotice } from "../../shared/components/locked-notice"
 import { QueryState } from "@ihsp/features-core"
+import { reads } from "../../shared/hooks/use-guest"
 import { hrefs } from "../../shared/utils/hrefs"
 import { lessonNumbers } from "../../shared/utils/outline"
 import { useMarkViewed } from "../hooks/use-mark-viewed"
@@ -41,12 +44,12 @@ export function StepPlayer({
   mode: "learn" | "preview"
 }) {
   const t = useT("player")
+  const tGuest = useT("guest")
   const preview = mode === "preview"
-  const step = useQuery(
-    preview ? getLmsCoursePreviewStepQuery(courseId, stepId) : getLmsCourseStepQuery(courseId, stepId),
-  )
+  const guest = useSession().status === "anonymous"
+  const step = useQuery(preview ? getLmsCoursePreviewStepQuery(courseId, stepId) : reads.step(guest, courseId, stepId))
   const around = useStepOutline({ courseId, slug, preview })
-  useMarkViewed({ courseId, stepId, slug: around.slug, step: step.data, enabled: !preview })
+  useMarkViewed({ courseId, stepId, slug: around.slug, step: step.data, enabled: !preview && !guest })
 
   // Without `block` in the address the first step not passed opens, and stays open while the passes change.
   const [entry, setEntry] = useState<number | null>(null)
@@ -60,18 +63,29 @@ export function StepPlayer({
   const stepHref = (id: string, number?: number) =>
     preview ? hrefs.preview(courseId, id, number) : hrefs.step(courseId, id, number)
   const targetHref = (target: NavTarget) => stepHref(target.stepId, target.block ?? undefined)
-  const backHref = preview ? hrefs.edit(courseId) : hrefs.myCourses()
+  const backHref = preview ? hrefs.edit(courseId) : guest ? hrefs.catalog() : hrefs.myCourses()
 
   const links: SidebarLink[] = preview
     ? [{ key: "editor", label: t("backToEditor"), href: hrefs.edit(courseId) }]
     : [
         ...(around.course?.can_edit ? [{ key: "edit", label: t("editCourse"), href: hrefs.edit(courseId) }] : []),
-        { key: "my", label: t("myCourses"), href: hrefs.myCourses() },
+        guest
+          ? { key: "catalog", label: tGuest("catalog"), href: hrefs.catalog() }
+          : { key: "my", label: t("myCourses"), href: hrefs.myCourses() },
       ]
   const numbers = around.outline ? lessonNumbers(around.outline) : null
   const { previous, next } = blockTargets({ stepId, index, total: blocks.length, outline: around.outline })
 
-  const lesson = (
+  const outlineLocked = around.outline?.some((section) =>
+    section.steps.some((item) => item.step_id === stepId && "locked" in item && item.locked),
+  )
+  const locked = (outlineLocked ?? false) || isContentLocked(step.error)
+
+  const lesson = locked ? (
+    <div className="px-4 py-5 md:px-6">
+      <LockedNotice kind="lesson" contact={around.course?.contact} />
+    </div>
+  ) : (
     <QueryState query={step} rows={3}>
       {(data) => {
         const current = data.blocks[index]
@@ -116,4 +130,9 @@ export function StepPlayer({
       {preview ? lesson : <CourseSections course={around.course} lesson={lesson} />}
     </LearnerFrame>
   )
+}
+
+/** The backend refuses a lesson the caller may not open with `403 lms/content-locked`. */
+function isContentLocked(error: unknown): boolean {
+  return isApiError(error) && error.status === 403 && error.type === "lms/content-locked"
 }

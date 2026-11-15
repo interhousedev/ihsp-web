@@ -18,6 +18,7 @@ export function SidebarLesson({
   active,
   completed,
   badge,
+  locked = false,
 }: {
   number: string
   title: string
@@ -25,9 +26,11 @@ export function SidebarLesson({
   active: boolean
   completed: boolean
   badge: "new" | "changed" | "removed" | "mcp" | "ai" | null
+  locked?: boolean
 }) {
   const t = useT("player")
   const badges = useT("badges")
+  const ta = useT("access")
   const closeDrawer = useCloseDrawer()
   const ref = useRef<HTMLAnchorElement>(null)
 
@@ -62,6 +65,9 @@ export function SidebarLesson({
           aria-label={badges(badge)}
           title={badges(badge)}
         />
+      ) : null}
+      {locked ? (
+        <Icons.lock aria-label={ta("locked")} role="img" className="size-4 shrink-0 text-(--stepik-chrome-muted)" />
       ) : null}
       {completed ? (
         <Icons.check aria-label={t("lessonCompleted")} role="img" className="size-4 shrink-0 text-(--stepik-green)" />

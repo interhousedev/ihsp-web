@@ -31,6 +31,7 @@ export function CourseCardView({
   className?: string
 }) {
   const t = useT("courseCard")
+  const ta = useT("access")
   const href = courseCardHref(course)
   return (
     <Card
@@ -54,6 +55,12 @@ export function CourseCardView({
         ) : null}
         <p className="text-muted-foreground flex flex-wrap items-center gap-x-3 gap-y-1 text-xs">
           <span>{t("lessons", { count: course.steps_count })}</span>
+          {course.locked ? (
+            <Badge variant="outline">
+              <Icons.lock aria-hidden />
+              {ta("locked")}
+            </Badge>
+          ) : null}
           {course.visibility === "invite" ? (
             <Badge variant="outline">
               <Icons.lock aria-hidden />

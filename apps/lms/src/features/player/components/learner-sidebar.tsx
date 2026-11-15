@@ -58,6 +58,7 @@ export function LearnerSidebar({
                     active={step.step_id === currentStepId}
                     completed={step.completed ?? false}
                     badge={step.badge ?? null}
+                    locked={"locked" in step && step.locked === true}
                   />
                 </li>
               ))}

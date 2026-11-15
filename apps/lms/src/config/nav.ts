@@ -14,11 +14,13 @@ export function useNav(): { groups: NavGroup[]; bottom: BottomNavItem[] } {
   const t = useT("nav")
   const { session } = useSession()
   const roles = session?.user.roles
+  const guest = session === null || session === undefined
   return useMemo(() => {
     const catalog = { title: t("catalog"), url: "/", icon: "courses", match: "exact" } as const
     const my = { title: t("my"), url: "/my/", icon: "subjects" } as const
     const notebooks = { title: t("notebooks"), url: "/notebooks/", icon: "notebooks" } as const
     const join = { title: t("join"), url: "/join/", icon: "login" } as const
+    if (guest) return { groups: [{ label: t("groupLearn"), items: [catalog] }], bottom: [catalog] }
     const groups: NavGroup[] = [
       { label: t("groupLearn"), items: [catalog, my, notebooks, join] },
       {
@@ -27,5 +29,5 @@ export function useNav(): { groups: NavGroup[]; bottom: BottomNavItem[] } {
       },
     ]
     return { groups: filterNavGroups(groups, roles ?? []), bottom: [catalog, my, join] }
-  }, [t, roles])
+  }, [t, roles, guest])
 }

@@ -10,12 +10,13 @@ import { useCourseDraft } from "../../editor/hooks/use-course-draft"
 import { EditorFrame } from "../../editor/components/editor-frame"
 import { QueryState } from "@ihsp/features-core"
 import { useSettingsForm } from "../hooks/use-settings-form"
+import { CourseAccessTab } from "../../access/components/course-access-tab"
 import { DetailsTab } from "./details-tab"
 import { NavigationTab } from "./navigation-tab"
 import { SettingsSidebar } from "./settings-sidebar"
 import { VisibilityTab } from "./visibility-tab"
 
-const TABS = ["details", "visibility", "navigation"] as const
+const TABS = ["details", "visibility", "access", "navigation"] as const
 type Tab = (typeof TABS)[number]
 
 function SettingsBody({ draft, pollMs }: { draft: CourseDraft; pollMs?: number }) {
@@ -88,6 +89,7 @@ function SettingsBody({ draft, pollMs }: { draft: CourseDraft; pollMs?: number }
                 />
               ) : null}
               {tab === "visibility" ? <VisibilityTab form={form} draft={draft} /> : null}
+              {tab === "access" ? <CourseAccessTab courseId={draft.id} permissions={draft.my_permissions} /> : null}
               {tab === "navigation" ? <NavigationTab form={form} /> : null}
             </div>
             {form.serverError ? (

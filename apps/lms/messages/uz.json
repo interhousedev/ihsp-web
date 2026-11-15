@@ -91,7 +91,6 @@
       "notebook": "Bloknot",
       "ai": "AI chat"
     },
-    "tabsLabel": "Kurs boʻlimlari",
     "progressEmpty": "Natijani koʻrish uchun kursga yoziling.",
     "updatesEmpty": "Oxirgi tashrifingizdan beri yangi yoki oʻzgargan narsa yoʻq.",
     "updatesLabel": "Yangi yoki oʻzgargan darslar",
@@ -1055,7 +1054,8 @@
     "tab": {
       "details": "Tavsif",
       "visibility": "Kirish",
-      "navigation": "Navigatsiya"
+      "navigation": "Navigatsiya",
+      "access": "Kirish"
     },
     "removeItem": "Oʻchirish: {item}",
     "add": "Qoʻshish",
@@ -1219,5 +1219,47 @@
     "loading": "Ochilmoqda…",
     "notAvailable": "Bu havola mavjud emas.",
     "open": "Faylni ochish"
+  },
+  "guest": {
+    "signIn": "Kirish",
+    "catalog": "Kurslar",
+    "courseCta": "Kursga yozilish, testlarni topshirish va natijalarni saqlash uchun tizimga kiring.",
+    "testCta": "Bu testni topshirish uchun tizimga kiring.",
+    "cardsCta": "Bu kartochkalar bilan mashq qilish uchun tizimga kiring.",
+    "mediaCta": "Bu materialni ochish uchun tizimga kiring."
+  },
+  "access": {
+    "courseTitle": "Kirish",
+    "lessonTitle": "«{title}» ga kirish",
+    "audience": "Kim ochishi mumkin",
+    "whenDenied": "Boshqalar nimani ko‘radi",
+    "audiences": {
+      "public": "Hamma",
+      "signed_in": "Tizimga kirgan foydalanuvchilar",
+      "students": "Litsey o‘quvchilari",
+      "chosen": "Tanlangan guruhlar va odamlar"
+    },
+    "denied": {
+      "hidden": "Yashirin",
+      "locked": "Qulf bilan ko‘rsatiladi"
+    },
+    "groups": "Guruhlar",
+    "noGroups": "Guruhlar tanlanmagan.",
+    "users": "Odamlar",
+    "usersChosen": "Tanlangan odamlar",
+    "userSearch": "Kurs o‘quvchilari va xodimlarini qidirish",
+    "userList": "Kurs odamlari",
+    "userRemove": "{name} ni olib tashlash",
+    "readOnly": "Kirishni faqat kurs egasi yoki LMS administratori o‘zgartira oladi.",
+    "save": "Saqlash",
+    "close": "Yopish",
+    "open": "Darsga kirish",
+    "restricted": "Cheklangan",
+    "lockedTitle": "Bu dars yopiq",
+    "lockedCourseTitle": "Bu kurs yopiq",
+    "lockedHint": "Kirish faqat tanlangan odamlar uchun ochiq.",
+    "contactHint": "Kirish uchun {name} ga yozing.",
+    "contactTelegram": "Telegram: @{handle}",
+    "locked": "Yopiq"
   }
 }

@@ -1,7 +1,7 @@
 "use client"
 import { LegalGate } from "@ihsp/features-core"
 
-import { RequireAuth } from "@ihsp/auth"
+import { AccessGate, type Access } from "./access-gate"
 import { Suspense, type ReactNode } from "react"
 import { PageLoading } from "@ihsp/features-core"
 
@@ -10,11 +10,11 @@ import { PageLoading } from "@ihsp/features-core"
  * course sidebar), so it does not sit inside the sidebar shell of the other pages. The `Suspense` covers the pages that
  * read the address.
  */
-export function LearnerShell({ children }: { children: ReactNode }) {
+export function LearnerShell({ children, access = "auth" }: { children: ReactNode; access?: Access }) {
   return (
-    <RequireAuth>
+    <AccessGate access={access}>
       <Suspense fallback={<PageLoading />}>{children}</Suspense>
       <LegalGate />
-    </RequireAuth>
+    </AccessGate>
   )
 }

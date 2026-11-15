@@ -1,8 +1,11 @@
 "use client"
 
 import type { StepView } from "@ihsp/api"
+import { useSession } from "@ihsp/auth"
+import { useT } from "@ihsp/i18n"
 import { Markdown } from "@ihsp/ui"
 import { useEffect, useRef } from "react"
+import { SignInButton } from "../../shell/components/sign-in-button"
 import { FlashcardsBlock } from "./flashcards-block"
 import { H5PBlock } from "./h5p-block"
 import { InteractiveVideoBlock } from "./interactive-video-block"
@@ -32,6 +35,16 @@ export function StepContent({
   focusKey: string
 }) {
   const region = useRef<HTMLDivElement>(null)
+  const t = useT("guest")
+  const guest = useSession().status === "anonymous"
+  // Tests, flash cards, H5P, interactive and uploaded videos belong to a signed-in learner; the rest reads for everyone.
+  const needsSignIn =
+    guest &&
+    (block.type === "test" ||
+      block.type === "flashcards" ||
+      block.type === "h5p" ||
+      block.type === "interactive_video" ||
+      (block.type === "video" && Boolean(block.file_id)))
   const shown = useRef(focusKey)
 
   useEffect(() => {
@@ -42,7 +55,14 @@ export function StepContent({
 
   return (
     <div ref={region} tabIndex={-1} className="px-4 py-5 outline-none md:px-6" data-block-type={block.type}>
-      {block.type === "text" ? (
+      {needsSignIn ? (
+        <div className="flex flex-col items-start gap-3 rounded-lg border p-4">
+          <p className="text-sm">
+            {t(block.type === "test" ? "testCta" : block.type === "flashcards" ? "cardsCta" : "mediaCta")}
+          </p>
+          <SignInButton />
+        </div>
+      ) : block.type === "text" ? (
         <Markdown key={block.id} className="text-base">
           {block.markdown}
         </Markdown>

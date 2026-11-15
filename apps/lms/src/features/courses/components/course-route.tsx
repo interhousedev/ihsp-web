@@ -1,8 +1,9 @@
 "use client"
 
-import { getLmsCourseQuery } from "@ihsp/api"
+import { useSession } from "@ihsp/auth"
 import { useQuery } from "@tanstack/react-query"
 import { useEffect, useSyncExternalStore, type MouseEvent } from "react"
+import { reads } from "../../shared/hooks/use-guest"
 import { StepPlayer } from "../../player/components/step-player"
 import { MissingParam } from "../../shared/components/missing-param"
 import { isPlayerPath, resolveCourseUrl } from "../../shared/utils/course-path"
@@ -57,7 +58,12 @@ function keepStepLinksInShell(event: MouseEvent) {
  * without lessons, see the landing with the Enroll button.
  */
 function CourseEntry({ courseRef, preview }: { courseRef: string; preview: boolean }) {
-  const course = useQuery({ ...getLmsCourseQuery(courseRef), enabled: !preview, retry: false })
+  const { status } = useSession()
+  const course = useQuery({
+    ...reads.course(status === "anonymous", courseRef),
+    enabled: !preview && status !== "loading",
+    retry: false,
+  })
   const page = course.data
   const target = !preview && page && (page.enrolled || page.can_edit) ? continueStep(page.outline) : null
 
@@ -66,9 +72,9 @@ function CourseEntry({ courseRef, preview }: { courseRef: string; preview: boole
     moveTo(hrefs.step(page.id, target.step_id) + window.location.search, "replace")
   }, [page, target])
 
-  if (target || (!preview && course.isPending)) return <PageLoading />
+  if (target || (!preview && (status === "loading" || course.isPending))) return <PageLoading />
   return (
-    <LmsShell>
+    <LmsShell access={preview ? "auth" : "public"}>
       <CoursePage slug={page?.slug ?? courseRef} preview={preview} />
     </LmsShell>
   )
@@ -97,7 +103,7 @@ export function CourseRoute() {
   if (target.kind === "entry") return <CourseEntry courseRef={target.ref} preview={target.preview} />
   return (
     <div className="contents" onClickCapture={keepStepLinksInShell}>
-      <LearnerShell>
+      <LearnerShell access="public">
         <StepPlayer
           key={target.stepId}
           courseId={target.courseId}

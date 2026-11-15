@@ -91,7 +91,6 @@
       "notebook": "Notebook",
       "ai": "AI chat"
     },
-    "tabsLabel": "Course sections",
     "progressEmpty": "Join the course to see your progress.",
     "updatesEmpty": "Nothing is new or changed since your last visit.",
     "updatesLabel": "Lessons that are new or changed",
@@ -1055,7 +1054,8 @@
     "tab": {
       "details": "Details",
       "visibility": "Visibility",
-      "navigation": "Navigation"
+      "navigation": "Navigation",
+      "access": "Access"
     },
     "removeItem": "Remove {item}",
     "add": "Add",
@@ -1219,5 +1219,47 @@
     "loading": "Opening…",
     "notAvailable": "This link is not available.",
     "open": "Open the file"
+  },
+  "guest": {
+    "signIn": "Sign in",
+    "catalog": "Courses",
+    "courseCta": "Sign in to join the course, take tests and keep your progress.",
+    "testCta": "Sign in to take this test.",
+    "cardsCta": "Sign in to study these cards.",
+    "mediaCta": "Sign in to open this material."
+  },
+  "access": {
+    "courseTitle": "Access",
+    "lessonTitle": "Access to \"{title}\"",
+    "audience": "Who can open it",
+    "whenDenied": "What others see",
+    "audiences": {
+      "public": "Everyone",
+      "signed_in": "Signed-in users",
+      "students": "Students of the lyceum",
+      "chosen": "Chosen groups and people"
+    },
+    "denied": {
+      "hidden": "Hidden",
+      "locked": "Shown with a lock"
+    },
+    "groups": "Groups",
+    "noGroups": "No groups chosen.",
+    "users": "People",
+    "usersChosen": "Chosen people",
+    "userSearch": "Search students and staff of the course",
+    "userList": "People of the course",
+    "userRemove": "Remove {name}",
+    "readOnly": "Only the course owner or an LMS administrator can change access.",
+    "save": "Save",
+    "close": "Close",
+    "open": "Lesson access",
+    "restricted": "Restricted",
+    "lockedTitle": "This lesson is locked",
+    "lockedCourseTitle": "This course is locked",
+    "lockedHint": "Access is limited to chosen people.",
+    "contactHint": "To get access, write to {name}.",
+    "contactTelegram": "Telegram: @{handle}",
+    "locked": "Locked"
   }
 }

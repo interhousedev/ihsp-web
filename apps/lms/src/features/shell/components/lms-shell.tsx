@@ -1,23 +1,26 @@
 "use client"
 import { LegalGate, MaintenanceBanner } from "@ihsp/features-core"
 
-import { RequireAuth } from "@ihsp/auth"
+import { useSession } from "@ihsp/auth"
 import { PageLoading, ShellNavControls, usePlatformLinks } from "@ihsp/features-core"
 import { AppShell, OfflineBadge } from "@ihsp/ui"
 import { Suspense, type ReactNode } from "react"
 import { useNav } from "../../../config/nav"
+import { AccessGate, type Access } from "./access-gate"
 import { LmsBrand } from "./lms-brand"
 import { ProfileMenu } from "./profile-menu"
+import { SignInButton } from "./sign-in-button"
 
 /**
  * The frame of every page of this app: login check, sidebar, phone bottom bar and the header with the profile menu.
  * Every page does `<LmsShell><YourPage /></LmsShell>`; the `Suspense` covers pages that read the address.
  */
-export function LmsShell({ children }: { children: ReactNode }) {
+export function LmsShell({ children, access = "auth" }: { children: ReactNode; access?: Access }) {
   const nav = useNav()
+  const { status } = useSession()
   const platforms = usePlatformLinks()
   return (
-    <RequireAuth>
+    <AccessGate access={access}>
       <AppShell
         nav={nav.groups}
         bottomNav={nav.bottom}
@@ -25,12 +28,17 @@ export function LmsShell({ children }: { children: ReactNode }) {
         brand={<LmsBrand />}
         sidebarFooter={<ProfileMenu variant="row" />}
         controlsLeading={<ShellNavControls />}
-        controls={<OfflineBadge />}
+        controls={
+          <>
+            {status === "anonymous" ? <SignInButton /> : null}
+            <OfflineBadge />
+          </>
+        }
       >
         <MaintenanceBanner />
         <Suspense fallback={<PageLoading />}>{children}</Suspense>
         <LegalGate />
       </AppShell>
-    </RequireAuth>
+    </AccessGate>
   )
 }

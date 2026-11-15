@@ -1,12 +1,8 @@
 "use client"
 
 import { NotebookWorkspace, useOpenCourseNotebook } from "@ihsp/features-core"
-import {
-  getLmsCourseLandingQuery,
-  getLmsCourseQuery,
-  type CourseLanding,
-  type CoursePage as CoursePageData,
-} from "@ihsp/api"
+import type { CourseLanding, CoursePage as CoursePageData } from "@ihsp/api"
+import { useSession } from "@ihsp/auth"
 import { useFormatters, useT } from "@ihsp/i18n"
 import {
   Alert,
@@ -18,13 +14,12 @@ import {
   StateView,
   Tabs,
   TabsContent,
-  TabsList,
-  TabsTrigger,
 } from "@ihsp/ui"
 import { useQuery } from "@tanstack/react-query"
 import { parseAsStringLiteral, useQueryState } from "nuqs"
 import { useEffect, useRef } from "react"
 import { LandingAbout, LandingAuthors, LandingEnrolBox, LandingSyllabus } from "../../landing/components/landing-page"
+import { reads } from "../../shared/hooks/use-guest"
 import { LinkButton } from "../../shared/components/link-button"
 import { OutlineBadge } from "../../shared/components/outline-badge"
 import { StaffList } from "../../shared/components/staff-list"
@@ -34,6 +29,7 @@ import { courseProgress, formatPoints } from "../../shared/utils/course-progress
 import { notebookHref } from "../../notebooks/utils/hrefs"
 import { CourseOutline } from "./course-outline"
 import { CoursePromoCard } from "./course-promo-card"
+import { SectionMenu } from "../../shared/components/section-menu"
 
 /** The tabs of the course page, in Stepik's order. The learner tabs show only to enrolled students. */
 const TABS = ["about", "syllabus", "staff", "progress", "updates", "notebook", "ai"] as const
@@ -156,12 +152,16 @@ function CourseBody({
   enrolled,
   tab,
   notebook,
+  guest,
+  title,
 }: {
   course: CoursePageData | undefined
   landing: CourseLanding | undefined
   enrolled: boolean
   tab: Tab
   notebook: ReturnType<typeof useOpenCourseNotebook>
+  guest: boolean
+  title: string
 }) {
   const t = useT("course")
   const notebookId = notebook.data?.id ?? null
@@ -171,13 +171,15 @@ function CourseBody({
 
   return (
     <Tabs value={active} onValueChange={(value) => void setTab(value as Tab)} className="min-w-0 flex-1">
-      <TabsList variant="line" aria-label={t("tabsLabel")} className="max-w-full justify-start overflow-x-auto">
-        {available.map((key) => (
-          <TabsTrigger key={key} value={key} className="min-h-11 shrink-0 md:min-h-8">
-            {t(`tabs.${key}`)}
-          </TabsTrigger>
-        ))}
-      </TabsList>
+      <h1>
+        <SectionMenu
+          items={available.map((key) => ({ key, label: t(`tabs.${key}`) }))}
+          active={active}
+          onSelect={(key) => void setTab(key as Tab)}
+        >
+          {title}
+        </SectionMenu>
+      </h1>
       <TabsContent value="about" className="pt-4">
         {landing ? (
           <LandingAbout landing={landing} />
@@ -187,7 +189,7 @@ function CourseBody({
       </TabsContent>
       <TabsContent value="syllabus" className="pt-4">
         {course ? (
-          <CourseOutline page={course} linkSteps={enrolled || course.can_edit} />
+          <CourseOutline page={course} linkSteps={enrolled || course.can_edit || guest} />
         ) : landing ? (
           <LandingSyllabus landing={landing} />
         ) : null}
@@ -224,8 +226,9 @@ export function CoursePage({ slug, preview = false }: { slug: string; preview?: 
   const t = useT("course")
   const tLanding = useT("courseLanding")
   const [tab] = useQueryState("tab", tabParser)
-  const landing = useQuery(getLmsCourseLandingQuery(slug, preview))
-  const page = useQuery({ ...getLmsCourseQuery(slug), enabled: !preview })
+  const guest = useSession().status === "anonymous"
+  const landing = useQuery(reads.landing(guest, slug, preview))
+  const page = useQuery({ ...reads.course(guest, slug), enabled: !preview })
   const course = preview ? undefined : page.data
   const info = landing.data
   const enrolled = course?.enrolled ?? info?.enrolment.enrolled ?? false
@@ -265,7 +268,7 @@ export function CoursePage({ slug, preview = false }: { slug: string; preview?: 
   const title = info?.friendly_name || info?.title || course?.title || t("title")
   return (
     <StepikScope>
-      <PageContainer title={title}>
+      <div data-shell-flush className="flex min-w-0 flex-1 flex-col gap-4 px-4 pt-3 pb-6 md:px-6 md:pt-7">
         <div style={accentStyle(info?.accent_color ?? course?.accent_color)} className="flex min-w-0 flex-col gap-6">
           {info?.preview ? (
             <Alert>
@@ -282,10 +285,18 @@ export function CoursePage({ slug, preview = false }: { slug: string; preview?: 
             </Alert>
           ) : null}
           <div className="grid items-start gap-6 lg:grid-cols-[minmax(0,1fr)_20rem]">
-            <CourseBody course={course} landing={info} enrolled={enrolled} tab={tab} notebook={openNotebook} />
+            <CourseBody
+              course={course}
+              landing={info}
+              enrolled={enrolled}
+              tab={tab}
+              notebook={openNotebook}
+              guest={guest}
+              title={title}
+            />
             <div className="order-first lg:sticky lg:top-16 lg:order-last">
               {course ? (
-                <CoursePromoCard page={course} />
+                <CoursePromoCard page={course} guest={guest} />
               ) : info ? (
                 <div className="overflow-hidden rounded-card border p-4">
                   <LandingEnrolBox landing={info} />
@@ -294,7 +305,7 @@ export function CoursePage({ slug, preview = false }: { slug: string; preview?: 
             </div>
           </div>
         </div>
-      </PageContainer>
+      </div>
     </StepikScope>
   )
 }
