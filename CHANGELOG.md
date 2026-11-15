@@ -4,6 +4,12 @@ All notable changes to this project are documented here. The format follows [Kee
 
 ## [Unreleased]
 
+## [1.6.2] - 2026-11-15
+
+### Changed
+
+- No web changes; this version only follows backend 1.6.2, since both images share one deploy tag.
+
 ## [1.6.1] - 2026-11-15
 
 ### Changed
