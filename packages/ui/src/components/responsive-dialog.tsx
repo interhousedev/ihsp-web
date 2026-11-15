@@ -1,7 +1,7 @@
 "use client"
 
 import { useT } from "@ihsp/i18n"
-import { useState, type ComponentProps, type FormEventHandler, type ReactNode } from "react"
+import { useState, type ComponentProps, type FormEventHandler, type ReactNode, type Ref } from "react"
 import { useIsMobile } from "../hooks/use-mobile"
 import { cn } from "../lib/utils"
 import { IconX } from "./icons"
@@ -38,6 +38,8 @@ export type ResponsiveDialogProps = {
   /** Wraps the body and the footer in a form, so Enter submits and footer buttons can be `type="submit"`. */
   onSubmit?: FormEventHandler<HTMLFormElement>
   noValidate?: boolean
+  /** Ref of the form element, for server field errors. */
+  formRef?: Ref<HTMLFormElement>
   /** Extra classes of the desktop dialog, only for what a size preset cannot express. */
   className?: string
   bodyClassName?: string
@@ -65,6 +67,7 @@ export function ResponsiveDialog({
   size = "md",
   onSubmit,
   noValidate,
+  formRef,
   className,
   bodyClassName,
   initialFocus,
@@ -80,7 +83,7 @@ export function ResponsiveDialog({
 
   const inForm = (content: ReactNode) =>
     onSubmit ? (
-      <form className="contents" noValidate={noValidate} onSubmit={onSubmit}>
+      <form ref={formRef} className="contents" noValidate={noValidate} onSubmit={onSubmit}>
         {content}
       </form>
     ) : (

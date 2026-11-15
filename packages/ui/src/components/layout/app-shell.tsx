@@ -27,8 +27,12 @@ export type AppShellProps = {
   brand?: ReactNode
   /** Bottom of the sidebar: the user block. */
   sidebarFooter?: ReactNode
+  /** A search field under the brand (and at the top of the phone "More" sheet). */
+  sidebarSearch?: ReactNode
   /** The user's platforms for the "More" sheet of `bottomNav` (`usePlatformLinks()`). */
   platforms?: PlatformLink[]
+  /** Fixed widgets (help button) rendered outside the animated page wrapper so no transform traps them. */
+  floating?: ReactNode
   children: ReactNode
 }
 
@@ -93,8 +97,10 @@ export function AppShell({
   controls,
   brand,
   sidebarFooter,
+  sidebarSearch,
   controlsLeading,
   platforms,
+  floating,
   children,
 }: AppShellProps) {
   const t = useT()
@@ -107,7 +113,7 @@ export function AppShell({
       >
         {t("common.skipToContent")}
       </a>
-      <AppSidebar nav={nav} brand={brand} footer={sidebarFooter} />
+      <AppSidebar nav={nav} brand={brand} footer={sidebarFooter} search={sidebarSearch} />
       <SidebarInset
         id="main-content"
         tabIndex={-1}
@@ -130,9 +136,16 @@ export function AppShell({
         >
           {children}
         </div>
+        {floating}
         {bottomBar ??
           (bottomNav ? (
-            <BottomNav items={bottomNav} more={nav} moreFooter={sidebarFooter} platforms={platforms} />
+            <BottomNav
+              items={bottomNav}
+              more={nav}
+              moreFooter={sidebarFooter}
+              moreSearch={sidebarSearch}
+              platforms={platforms}
+            />
           ) : null)}
       </SidebarInset>
     </SidebarProvider>

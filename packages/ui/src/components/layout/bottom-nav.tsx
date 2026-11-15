@@ -31,6 +31,8 @@ export type BottomNavProps = {
   testId?: string
   /** The account row at the end of the "More" sheet: phones have no sidebar to hold it. */
   moreFooter?: ReactNode
+  /** A search field at the top of the "More" sheet. */
+  moreSearch?: ReactNode
   /** The user's platforms, listed by name in the "More" sheet: the way to another app on a phone. */
   platforms?: PlatformLink[]
 }
@@ -46,6 +48,7 @@ export function BottomNav({
   excludeVisibleFromMore = false,
   testId,
   moreFooter,
+  moreSearch,
   platforms = [],
 }: BottomNavProps) {
   const t = useT()
@@ -125,6 +128,7 @@ export function BottomNav({
             <SheetHeader>
               <SheetTitle>{t("nav.moreTitle")}</SheetTitle>
             </SheetHeader>
+            {moreSearch ? <div className="px-4 pb-3">{moreSearch}</div> : null}
             <nav ref={moreNav} aria-label={t("nav.main")} className="flex flex-col gap-4 px-4 pb-4">
               {(moreGroups ?? []).map((group, index) => (
                 <div key={group.label ?? index} className="flex flex-col gap-1">

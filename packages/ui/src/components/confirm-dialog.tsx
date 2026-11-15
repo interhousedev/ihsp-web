@@ -23,6 +23,8 @@ export type ConfirmDialogProps = {
   /** Red confirm button for irreversible actions. */
   destructive?: boolean
   loading?: boolean
+  /** Disables only the confirm button (a typed confirmation that does not match yet). */
+  confirmDisabled?: boolean
   onConfirm: () => void | Promise<void>
   /** Extra content between the description and the buttons (a reason field, for example). */
   children?: ReactNode
@@ -38,21 +40,26 @@ export function ConfirmDialog({
   cancelLabel,
   destructive = false,
   loading = false,
+  confirmDisabled = false,
   onConfirm,
   children,
 }: ConfirmDialogProps) {
   const t = useT()
   return (
     <AlertDialog open={open} onOpenChange={onOpenChange}>
-      <AlertDialogContent>
+      <AlertDialogContent className="grid-cols-1 [&>*]:min-w-0">
         <AlertDialogHeader>
-          <AlertDialogTitle>{title}</AlertDialogTitle>
+          <AlertDialogTitle className="[overflow-wrap:anywhere]">{title}</AlertDialogTitle>
           {description ? <AlertDialogDescription>{description}</AlertDialogDescription> : null}
         </AlertDialogHeader>
         {children}
         <AlertDialogFooter>
           <AlertDialogCancel disabled={loading}>{cancelLabel ?? t("common.cancel")}</AlertDialogCancel>
-          <Button variant={destructive ? "destructive" : "default"} disabled={loading} onClick={() => void onConfirm()}>
+          <Button
+            variant={destructive ? "destructive" : "default"}
+            disabled={loading || confirmDisabled}
+            onClick={() => void onConfirm()}
+          >
             {confirmLabel ?? t("common.confirm")}
           </Button>
         </AlertDialogFooter>

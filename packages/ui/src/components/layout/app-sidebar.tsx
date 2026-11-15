@@ -89,11 +89,22 @@ function NavBranch({ item, pathname }: { item: NavItem; pathname: string | null 
  * phones (handled by `Sidebar`). The bottom of the panel is the account row (`footer`: the app's profile menu in its
  * `row` variant), separated from the navigation by a hairline.
  */
-export function AppSidebar({ nav, brand, footer }: { nav: NavGroup[]; brand?: ReactNode; footer?: ReactNode }) {
+export function AppSidebar({
+  nav,
+  brand,
+  footer,
+  search,
+}: {
+  nav: NavGroup[]
+  brand?: ReactNode
+  footer?: ReactNode
+  search?: ReactNode
+}) {
   const pathname = usePathname()
   return (
     <Sidebar collapsible="icon" variant="floating">
       {brand ? <SidebarHeader>{brand}</SidebarHeader> : null}
+      {search ? <div className="px-2 group-data-[collapsible=icon]:hidden">{search}</div> : null}
       <SidebarContent className="overflow-x-hidden">
         {nav.map((group, index) => (
           <SidebarGroup key={group.label ?? `group-${index}`} className="py-0">

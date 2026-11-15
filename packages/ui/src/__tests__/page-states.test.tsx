@@ -20,6 +20,22 @@ describe("StateView filtered", () => {
   })
 })
 
+describe("StateView error copy", () => {
+  it("blames EMIS for emis/unavailable and any other emis/ type", () => {
+    const { rerender } = renderWithProviders(<StateView state="error" error={{ type: "emis/unavailable" }} />)
+    expect(screen.getByRole("alert")).toHaveTextContent("EMIS is not responding")
+    rerender(<StateView state="error" error={{ type: "emis/whatever" }} />)
+    expect(screen.getByRole("alert")).toHaveTextContent("EMIS's side")
+  })
+
+  it("keeps the generic copy for a non-EMIS 503", () => {
+    renderWithProviders(<StateView state="error" error={{ type: "common/unavailable", status: 503 }} />)
+    const text = screen.getByRole("alert").textContent ?? ""
+    expect(text).not.toMatch(/EMIS/)
+    expect(text).toContain("Something went wrong")
+  })
+})
+
 describe("StateView slots", () => {
   it("shows the given skeleton instead of the rows while loading", () => {
     const { container } = renderWithProviders(<StateView state="loading" skeleton={<div data-testid="shape" />} />)

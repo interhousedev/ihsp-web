@@ -225,7 +225,7 @@ body {
   }
 }
 @utility page-enter {
-  animation: page-enter var(--motion-duration-slow) var(--motion-ease-standard) both;
+  animation: page-enter var(--motion-duration-slow) var(--motion-ease-standard) backwards;
   @media (prefers-reduced-motion: reduce) {
     animation: none;
   }

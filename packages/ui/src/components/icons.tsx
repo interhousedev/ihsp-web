@@ -51,6 +51,7 @@ import {
   IconCircleX,
   IconClipboardText,
   IconClock,
+  IconServerCog,
   IconCode,
   IconCommand,
   IconCreditCard,
@@ -90,6 +91,8 @@ import {
   IconPhone,
   IconPhoto,
   IconPizza,
+  IconPin,
+  IconPinFilled,
   IconPlus,
   IconProps,
   IconQrcode,
@@ -209,6 +212,8 @@ export const Icons = {
 
   // Actions
   add: IconPlus,
+  pin: IconPin,
+  pinFilled: IconPinFilled,
   edit: IconEdit,
   upload: IconUpload,
   share: IconShare,
@@ -240,6 +245,7 @@ export const Icons = {
   badgeCheck: IconRosetteDiscountCheck,
   qrCode: IconQrcode,
   lock: IconLock,
+  server: IconServerCog,
 
   // Data / Charts
   trendingDown: IconTrendingDown,
