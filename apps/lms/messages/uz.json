@@ -1055,7 +1055,7 @@
       "details": "Tavsif",
       "visibility": "Kirish",
       "navigation": "Navigatsiya",
-      "access": "Kirish"
+      "access": "Kim koʻradi"
     },
     "removeItem": "Oʻchirish: {item}",
     "add": "Qoʻshish",
@@ -1252,6 +1252,7 @@
     "userRemove": "{name} ni olib tashlash",
     "readOnly": "Kirishni faqat kurs egasi yoki LMS administratori o‘zgartira oladi.",
     "save": "Saqlash",
+    "saved": "Kirish saqlandi",
     "close": "Yopish",
     "open": "Darsga kirish",
     "restricted": "Cheklangan",

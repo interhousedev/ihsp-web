@@ -1,6 +1,8 @@
 "use client"
 
 import { useSession } from "@ihsp/auth"
+import { useT } from "@ihsp/i18n"
+import { PageContainer, StateView } from "@ihsp/ui"
 import { useQuery } from "@tanstack/react-query"
 import { useEffect, useSyncExternalStore, type MouseEvent } from "react"
 import { reads } from "../../shared/hooks/use-guest"
@@ -58,6 +60,7 @@ function keepStepLinksInShell(event: MouseEvent) {
  * without lessons, see the landing with the Enroll button.
  */
 function CourseEntry({ courseRef, preview }: { courseRef: string; preview: boolean }) {
+  const t = useT("course")
   const { status } = useSession()
   const course = useQuery({
     ...reads.course(status === "anonymous", courseRef),
@@ -73,6 +76,16 @@ function CourseEntry({ courseRef, preview }: { courseRef: string; preview: boole
   }, [page, target])
 
   if (target || (!preview && (status === "loading" || course.isPending))) return <PageLoading />
+  // A refused or missing course is final here: mounting the page would ask for the same course again, over and over.
+  if (!preview && course.isError) {
+    return (
+      <LmsShell access="public">
+        <PageContainer title={t("title")}>
+          <StateView state="error" error={course.error} onRetry={() => void course.refetch()} />
+        </PageContainer>
+      </LmsShell>
+    )
+  }
   return (
     <LmsShell access={preview ? "auth" : "public"}>
       <CoursePage slug={page?.slug ?? courseRef} preview={preview} />

@@ -109,13 +109,15 @@ function SettingsBody({ draft, pollMs }: { draft: CourseDraft; pollMs?: number }
                 <AlertDescription>{errorMessage(meta.error)}</AlertDescription>
               </Alert>
             ) : null}
-            <SaveBar
-              dirty={form.dirty || metaDirty}
-              saving={form.save.isPending || meta.isPending}
-              canSave={(form.dirty || metaDirty) && !form.invalid}
-              saveLabel={t("save")}
-              onSave={() => void save()}
-            />
+            {tab !== "access" || form.dirty || metaDirty ? (
+              <SaveBar
+                dirty={form.dirty || metaDirty}
+                saving={form.save.isPending || meta.isPending}
+                canSave={(form.dirty || metaDirty) && !form.invalid}
+                saveLabel={t("save")}
+                onSave={() => void save()}
+              />
+            ) : null}
           </div>
           <SettingsSidebar settings={settings} pollMs={pollMs} />
         </div>

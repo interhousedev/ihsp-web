@@ -1,6 +1,6 @@
 import { afterEach, describe, expect, it, setDefaultTimeout } from "bun:test"
 import { readFileSync } from "node:fs"
-import { apiUrl, coursePage, ids, server, stepViewTest } from "@ihsp/test-utils"
+import { apiUrl, coursePage, ids, problem, server, stepViewTest } from "@ihsp/test-utils"
 import { screen, waitFor } from "@testing-library/react"
 import { HttpResponse, http } from "msw"
 import { CourseRoute } from "../features/courses/components/course-route"
@@ -156,5 +156,22 @@ describe("the unified page", () => {
     await pickSection(user, "About")
     const edit = await screen.findByRole("link", { name: "Edit" })
     expect(edit.getAttribute("href")).toContain(`id=${coursePage.id}`)
+  })
+})
+
+describe("a course that cannot be opened", () => {
+  it("ends in an error state on 404 instead of an endless skeleton", async () => {
+    let calls = 0
+    server.use(
+      http.get(apiUrl("/v1/lms/courses/:ref"), () => {
+        calls += 1
+        return problem(404, "lms/course-not-found", "Not found")
+      }),
+      http.get(apiUrl("/v1/lms/courses/:slug/landing"), () => problem(404, "lms/course-not-found", "Not found")),
+    )
+    renderLms(<CourseRoute />, { route: `/course/${ids.course}/` })
+    expect(await screen.findByRole("alert", {}, { timeout: 5000 })).toBeTruthy()
+    expect(document.querySelector("[aria-busy=true]")).toBeNull()
+    expect(calls).toBeLessThanOrEqual(2)
   })
 })

@@ -1055,7 +1055,7 @@
       "details": "Details",
       "visibility": "Visibility",
       "navigation": "Navigation",
-      "access": "Access"
+      "access": "Who can see"
     },
     "removeItem": "Remove {item}",
     "add": "Add",
@@ -1252,6 +1252,7 @@
     "userRemove": "Remove {name}",
     "readOnly": "Only the course owner or an LMS administrator can change access.",
     "save": "Save",
+    "saved": "Access saved",
     "close": "Close",
     "open": "Lesson access",
     "restricted": "Restricted",

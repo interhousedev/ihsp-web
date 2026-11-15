@@ -42,6 +42,8 @@ export function AccessRuleForm({
     audience !== rule.audience ||
     (audience !== "public" && denied !== rule.when_denied) ||
     (chosen && (groups.join() !== rule.group_ids.join() || users.join() !== rule.users.map((u) => u.id).join()))
+  const nobodyChosen = chosen && groups.length === 0 && users.length === 0
+  const canSave = dirty && !nobodyChosen
   function save() {
     onSave(
       audience === "public"
@@ -113,7 +115,7 @@ export function AccessRuleForm({
         <p className="text-muted-foreground text-xs">{t("readOnly")}</p>
       ) : (
         <div>
-          <LoadingButton loading={pending} disabled={!dirty} onClick={save} className="min-h-11 md:min-h-8">
+          <LoadingButton loading={pending} disabled={!canSave} onClick={save} className="min-h-11 md:min-h-8">
             {t("save")}
           </LoadingButton>
         </div>

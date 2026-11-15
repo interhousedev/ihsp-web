@@ -14,6 +14,7 @@ import { lessonNumbers } from "../../shared/utils/outline"
  */
 export function CourseOutline({ page, linkSteps }: { page: CoursePage; linkSteps: boolean }) {
   const t = useT("course")
+  const ta = useT("access")
   const changed = new Set(page.changed_since_last_visit)
   const numbers = lessonNumbers(page.outline)
 
@@ -47,6 +48,13 @@ export function CourseOutline({ page, linkSteps }: { page: CoursePage; linkSteps
                     </span>
                     <span className="min-w-0 flex-1 break-words">{step.title}</span>
                     <OutlineBadge kind={badge} />
+                    {step.locked ? (
+                      <Icons.lock
+                        aria-label={ta("locked")}
+                        role="img"
+                        className="text-muted-foreground size-4 shrink-0"
+                      />
+                    ) : null}
                     {step.completed ? (
                       <Icons.circleCheck className="text-primary size-5 shrink-0" aria-label={t("completed")} />
                     ) : null}
