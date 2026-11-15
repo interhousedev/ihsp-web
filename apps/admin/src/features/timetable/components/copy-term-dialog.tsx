@@ -1,5 +1,6 @@
 "use client"
 
+import { useServerFieldErrors } from "@ihsp/features-core"
 import { postAdminTimetableCopy, type Term } from "@ihsp/api"
 import { useT } from "@ihsp/i18n"
 import { Button, ResponsiveDialog } from "@ihsp/ui"
@@ -38,9 +39,11 @@ export function CopyTermDialog({
     success: (data) => t("done", { count: data.created }),
     onSuccess: () => onOpenChange(false),
   })
+  const fieldErrors = useServerFieldErrors(copy.error)
 
   return (
     <ResponsiveDialog
+      formRef={fieldErrors.ref}
       open={open}
       onOpenChange={onOpenChange}
       size="sm"

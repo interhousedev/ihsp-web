@@ -1,7 +1,7 @@
 "use client"
 
 import type { FileItem } from "@ihsp/api"
-import { DrivePicker } from "@ihsp/features-core"
+import { DrivePicker, useServerFieldErrors } from "@ihsp/features-core"
 import { useErrorMessage, useT } from "@ihsp/i18n"
 import { Button, Icons, Input, ResponsiveDialog, Tabs, TabsContent, TabsList, TabsTrigger } from "@ihsp/ui"
 import { useState } from "react"
@@ -18,6 +18,7 @@ export function AddAttachmentDialog({ lessonId }: { lessonId: string }) {
   const [url, setUrl] = useState("")
   const [picking, setPicking] = useState(false)
   const add = useAddAttachment(lessonId)
+  const fieldErrors = useServerFieldErrors(add.error)
 
   function finish() {
     setOpen(false)
@@ -70,6 +71,7 @@ export function AddAttachmentDialog({ lessonId }: { lessonId: string }) {
           </TabsContent>
           <TabsContent value="link" className="pt-3">
             <form
+              ref={fieldErrors.ref}
               className="flex flex-col gap-3"
               onSubmit={(event) => {
                 event.preventDefault()

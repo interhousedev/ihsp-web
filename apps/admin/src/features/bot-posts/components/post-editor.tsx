@@ -1,5 +1,6 @@
 "use client"
 
+import { useServerFieldErrors } from "@ihsp/features-core"
 import {
   isApiError,
   BOT_POST_LIMITS,
@@ -101,6 +102,7 @@ export function PostEditor({
   const targets = moveTargets(root, post).filter((target) => target.id !== post.parent_id)
   const busy = save.isPending || create.isPending || remove.isPending || move.isPending
   const failure = save.error ?? create.error ?? move.error ?? remove.error
+  const fieldErrors = useServerFieldErrors(failure)
 
   function setTitle(code: BotLocale, value: string) {
     setForm((current) => ({ ...current, title: { ...current.title, [code]: value } }))
@@ -159,7 +161,7 @@ export function PostEditor({
   const buttonPreview = form.buttons.map((button) => ({ label: localized(button.label, locale), url: button.url }))
 
   return (
-    <form onSubmit={submit} className="flex flex-col gap-6">
+    <form ref={fieldErrors.ref} onSubmit={submit} className="flex flex-col gap-6">
       <ErrorLine error={failure} />
 
       <div className="flex flex-col gap-2">

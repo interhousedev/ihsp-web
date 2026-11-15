@@ -1,5 +1,6 @@
 "use client"
 
+import { useServerFieldErrors } from "@ihsp/features-core"
 import type { FlashcardSetDetail } from "@ihsp/api"
 import { useErrorMessage, useT } from "@ihsp/i18n"
 import { Button, Label, ResponsiveDialog, Textarea } from "@ihsp/ui"
@@ -14,11 +15,13 @@ export function DescriptionDialog({ deck, open, onOpenChange }: DescriptionDialo
   const t = useT("flashcards.descriptionDialog")
   const errorMessage = useErrorMessage()
   const update = useUpdateFlashcardSet(deck.id)
+  const fieldErrors = useServerFieldErrors(update.error)
   const id = useId()
   const [text, setText] = useState(deck.description ?? "")
 
   return (
     <ResponsiveDialog
+      formRef={fieldErrors.ref}
       open={open}
       onOpenChange={(next) => {
         if (next) setText(deck.description ?? "")

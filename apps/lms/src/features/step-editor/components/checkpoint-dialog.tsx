@@ -1,5 +1,6 @@
 "use client"
 
+import { useServerFieldErrors } from "@ihsp/features-core"
 import { useErrorMessage, useT } from "@ihsp/i18n"
 import { Alert, AlertDescription, Button, Field, FieldLabel, Input, LoadingButton, ResponsiveDialog } from "@ihsp/ui"
 import { useState, type FormEvent } from "react"
@@ -18,6 +19,7 @@ export function CheckpointDialog({
   error: unknown
   onCreate: (label: string) => void
 }) {
+  const fieldErrors = useServerFieldErrors(error)
   const t = useT("checkpoint")
   const tc = useT("common")
   const errorMessage = useErrorMessage()
@@ -28,6 +30,7 @@ export function CheckpointDialog({
   }
   return (
     <ResponsiveDialog
+      formRef={fieldErrors.ref}
       open={open}
       onOpenChange={onOpenChange}
       title={t("title")}

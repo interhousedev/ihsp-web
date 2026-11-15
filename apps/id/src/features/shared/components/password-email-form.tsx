@@ -1,5 +1,6 @@
 "use client"
 
+import { useServerFieldErrors } from "@ihsp/features-core"
 import { LoadingButton, useAppForm } from "@ihsp/ui"
 import { useMemo, type ReactNode } from "react"
 import { z } from "zod"
@@ -34,6 +35,7 @@ export function PasswordEmailForm({
   confirmation,
   children,
 }: PasswordEmailFormProps) {
+  const fieldErrors = useServerFieldErrors(error)
   const t = useTr()
   const mustConfirm = confirmation?.required === true
   const schema = useMemo(
@@ -61,6 +63,7 @@ export function PasswordEmailForm({
 
   return (
     <form
+      ref={fieldErrors.ref}
       noValidate
       className="grid gap-4"
       onSubmit={(event) => {

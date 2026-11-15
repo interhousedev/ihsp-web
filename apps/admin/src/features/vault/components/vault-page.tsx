@@ -1,7 +1,7 @@
 "use client"
 
 import { ApiError, getAdminVaultStatusQuery, keys, postAdminVaultUnseal } from "@ihsp/api"
-import { QueryState } from "@ihsp/features-core"
+import { QueryState, useServerFieldErrors } from "@ihsp/features-core"
 import { useT } from "@ihsp/i18n"
 import {
   Alert,
@@ -35,6 +35,7 @@ export function VaultPage() {
     mutationFn: (body: { key: string }) => postAdminVaultUnseal(body),
     onSuccess: (next) => queryClient.setQueryData(keys.admin.vaultStatus(), next),
   })
+  const fieldErrors = useServerFieldErrors(unseal.error)
 
   function submit(form: HTMLFormElement) {
     const data = new FormData(form)
@@ -73,7 +74,10 @@ export function VaultPage() {
         </CardHeader>
         <CardContent>
           <form
-            ref={formRef}
+            ref={(node) => {
+              formRef.current = node
+              fieldErrors.ref.current = node
+            }}
             noValidate
             autoComplete="off"
             className="grid gap-4"

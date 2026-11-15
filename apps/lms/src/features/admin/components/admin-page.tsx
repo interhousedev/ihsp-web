@@ -1,5 +1,6 @@
 "use client"
 
+import { useServerFieldErrors } from "@ihsp/features-core"
 import { postLmsCourses, type CourseDraft } from "@ihsp/api"
 import { useSession } from "@ihsp/auth"
 import { useErrorMessage, useT } from "@ihsp/i18n"
@@ -45,6 +46,7 @@ export function AdminPage() {
     mutationFn: (body) => postLmsCourses(body),
     onSuccess: (draft) => router.push(hrefs.edit(draft.id)),
   })
+  const fieldErrors = useServerFieldErrors(create.error)
 
   const parsed = courseFormSchema.safeParse({ title, slug, visibility })
   const titleInvalid = submitted && title.trim() === ""
@@ -60,7 +62,7 @@ export function AdminPage() {
     <PageContainer title={t("title")}>
       <Card className="max-w-lg">
         <CardContent>
-          <form onSubmit={submit} className="flex flex-col gap-4" noValidate>
+          <form ref={fieldErrors.ref} onSubmit={submit} className="flex flex-col gap-4" noValidate>
             <Field>
               <FieldLabel htmlFor="course-new-title">{t("courseTitle")}</FieldLabel>
               <Input

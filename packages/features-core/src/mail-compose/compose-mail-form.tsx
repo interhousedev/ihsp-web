@@ -1,5 +1,6 @@
 "use client"
 
+import { useServerFieldErrors } from "../form-errors"
 import { postMeOutboundMail, type FileItem } from "@ihsp/api"
 import { useErrorMessage, useT } from "@ihsp/i18n"
 import { Button, Icons, Input, Label, Textarea } from "@ihsp/ui"
@@ -67,11 +68,13 @@ export function ComposeMailForm({
       onSent?.()
     },
   })
+  const fieldErrors = useServerFieldErrors(send.error)
 
   const canSend = parseRecipients(to).length > 0 && subject.trim() !== "" && body.trim() !== "" && !send.isPending
 
   return (
     <form
+      ref={fieldErrors.ref}
       className={className}
       onSubmit={(event) => {
         event.preventDefault()

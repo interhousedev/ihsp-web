@@ -9,7 +9,7 @@ import {
 } from "@ihsp/api"
 import { useT } from "@ihsp/i18n"
 import { Button, Checkbox, Icons, Label, Textarea } from "@ihsp/ui"
-import { FileUploadButton } from "@ihsp/features-core"
+import { FileUploadButton, useServerFieldErrors } from "@ihsp/features-core"
 import { useState, type FormEvent } from "react"
 import { useAdminMutation } from "../../shared/hooks/use-admin-mutation"
 import { TOUCH } from "../../shared/utils/touch"
@@ -40,6 +40,7 @@ export function FeedbackReplyForm({ feedbackId }: { feedbackId: string }) {
       setFiles([])
     },
   })
+  const fieldErrors = useServerFieldErrors(reply.error)
 
   const toggle = (channel: AdminFeedbackChannel, checked: boolean) =>
     setChannels((current) =>
@@ -57,7 +58,7 @@ export function FeedbackReplyForm({ feedbackId }: { feedbackId: string }) {
   }
 
   return (
-    <form onSubmit={submit} noValidate className="flex flex-col gap-4">
+    <form ref={fieldErrors.ref} onSubmit={submit} noValidate className="flex flex-col gap-4">
       <div className="grid gap-2">
         <Label htmlFor="feedback-reply-text">{t("detail.reply.text")}</Label>
         <Textarea

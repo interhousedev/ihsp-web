@@ -1,5 +1,6 @@
 "use client"
 
+import { useServerFieldErrors } from "@ihsp/features-core"
 import { LoadingButton, useAppForm } from "@ihsp/ui"
 import { useMemo, type ReactNode } from "react"
 import { z } from "zod"
@@ -23,6 +24,7 @@ type PasswordResetFormProps = {
 
 /** The code from the email plus the new password (UF-ID-07 step 3). */
 export function PasswordResetForm({ pending, error, onSubmit, resend }: PasswordResetFormProps) {
+  const fieldErrors = useServerFieldErrors(error)
   const t = useTr()
   const schema = useMemo(
     () =>
@@ -38,6 +40,7 @@ export function PasswordResetForm({ pending, error, onSubmit, resend }: Password
   })
   return (
     <form
+      ref={fieldErrors.ref}
       noValidate
       className="grid gap-4"
       onSubmit={(event) => {

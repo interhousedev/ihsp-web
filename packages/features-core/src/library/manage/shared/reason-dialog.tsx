@@ -1,5 +1,6 @@
 "use client"
 
+import { useServerFieldErrors } from "../../../form-errors"
 import { useErrorMessage, useT } from "@ihsp/i18n"
 import { Button, Input, Label, Dropdown, ResponsiveDialog, Textarea } from "@ihsp/ui"
 import { useEffect, useId, useState } from "react"
@@ -54,6 +55,7 @@ export function ReasonDialog({
   noteRequired = false,
   onSubmit,
 }: ReasonDialogProps) {
+  const fieldErrors = useServerFieldErrors(error)
   const t = useT("library.manage")
   const common = useT("common")
   const errorMessage = useErrorMessage()
@@ -84,6 +86,7 @@ export function ReasonDialog({
 
   return (
     <ResponsiveDialog
+      formRef={fieldErrors.ref}
       open={open}
       onOpenChange={onOpenChange}
       title={title}

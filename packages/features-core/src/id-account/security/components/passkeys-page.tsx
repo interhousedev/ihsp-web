@@ -1,5 +1,6 @@
 "use client"
 
+import { useServerFieldErrors } from "../../../form-errors"
 import {
   deleteIdMePasskey,
   getIdMeSecurityQuery,
@@ -140,6 +141,7 @@ function PasskeyRow({ passkey }: { passkey: Passkey }) {
       refresh.invalidate()
     },
   })
+  const fieldErrors = useServerFieldErrors(rename.error ?? remove.error)
 
   return (
     <li>
@@ -158,6 +160,7 @@ function PasskeyRow({ passkey }: { passkey: Passkey }) {
             </div>
           ) : (
             <form
+              ref={fieldErrors.ref}
               className="flex flex-wrap items-center gap-2"
               onSubmit={(event) => {
                 event.preventDefault()

@@ -1,5 +1,6 @@
 "use client"
 
+import { useServerFieldErrors } from "@ihsp/features-core"
 import { keys, patchLmsCourseBroadcast, type CourseBroadcast } from "@ihsp/api"
 import { useErrorMessage, useT } from "@ihsp/i18n"
 import {
@@ -45,6 +46,7 @@ export function CourseBroadcastEditDialog({
       onClose()
     },
   })
+  const fieldErrors = useServerFieldErrors(save.error)
 
   function submit(event: FormEvent) {
     event.preventDefault()
@@ -56,6 +58,7 @@ export function CourseBroadcastEditDialog({
 
   return (
     <ResponsiveDialog
+      formRef={fieldErrors.ref}
       open
       onOpenChange={(open) => (open ? undefined : onClose())}
       title={t("editTitle")}

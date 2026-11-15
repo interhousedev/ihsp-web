@@ -1,5 +1,6 @@
 "use client"
 
+import { useServerFieldErrors } from "../form-errors"
 import type { Role } from "@ihsp/api"
 import { useErrorMessage, useT } from "@ihsp/i18n"
 import { PushToggle, type GetRegistration } from "../push"
@@ -37,6 +38,7 @@ export function NotificationSettingsForm({
   const errorMessage = useErrorMessage()
   const preferences = usePreferences()
   const update = useUpdatePreferences()
+  const fieldErrors = useServerFieldErrors(update.error)
 
   if (!preferences) return null
   const isStudent = roles.includes("student")
@@ -44,7 +46,7 @@ export function NotificationSettingsForm({
   const save = update.mutate
 
   return (
-    <form className="flex flex-col gap-6" onSubmit={(event) => event.preventDefault()}>
+    <form ref={fieldErrors.ref} className="flex flex-col gap-6" onSubmit={(event) => event.preventDefault()}>
       {isStudent ? <MarksSection preferences={preferences} onChange={save} /> : null}
       {isStudent ? <AlertsSection preferences={preferences} onChange={save} /> : null}
       {isTeacher || isHeadStudent ? (

@@ -1,5 +1,6 @@
 "use client"
 
+import { useServerFieldErrors } from "@ihsp/features-core"
 import type { AssessmentKind, ControlName } from "@ihsp/api"
 import { useErrorMessage, useT } from "@ihsp/i18n"
 import { Button, DatePicker, Dropdown, LoadingButton, useAppForm } from "@ihsp/ui"
@@ -123,12 +124,14 @@ export function ExamForm({
   }
 
   const error = editing ? update.error : create.error
+  const fieldErrors = useServerFieldErrors(error)
   const failed = editing ? update.isError : create.isError
   const confirming = state.mode === "edit" && state.item.status === "tentative"
   const audienceEditable = state.mode !== "edit" || state.item.audience.length === 1
 
   return (
     <form
+      ref={fieldErrors.ref}
       noValidate
       className="grid gap-4"
       onSubmit={(event) => {

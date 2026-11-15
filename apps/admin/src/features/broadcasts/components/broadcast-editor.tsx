@@ -9,7 +9,7 @@ import {
   postAdminBroadcastSend,
   type BroadcastItem,
 } from "@ihsp/api"
-import { BackLink, FileUploadButton } from "@ihsp/features-core"
+import { BackLink, FileUploadButton, useServerFieldErrors } from "@ihsp/features-core"
 import { useFormatters, useT } from "@ihsp/i18n"
 import { Alert, AlertDescription, Button, ConfirmDialog, Input, PageContainer } from "@ihsp/ui"
 import { IconX } from "@ihsp/ui"
@@ -103,6 +103,7 @@ export function BroadcastEditor({ item }: { item: BroadcastItem | null }) {
     success: t("cancelledDone"),
     onSuccess: () => setCancelOpen(false),
   })
+  const fieldErrors = useServerFieldErrors(save.error ?? preview.error ?? send.error ?? cancel.error)
 
   const busy = save.isPending || preview.isPending || send.isPending
   const title = item ? item.title : t("newTitle")
@@ -132,6 +133,7 @@ export function BroadcastEditor({ item }: { item: BroadcastItem | null }) {
 
       <div className="grid gap-6 lg:grid-cols-[minmax(0,1fr)_22rem]">
         <form
+          ref={fieldErrors.ref}
           className="flex flex-col gap-5"
           onSubmit={(event) => {
             event.preventDefault()

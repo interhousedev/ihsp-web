@@ -1,5 +1,6 @@
 "use client"
 
+import { useServerFieldErrors } from "@ihsp/features-core"
 import {
   keys,
   patchCertificateType,
@@ -28,6 +29,7 @@ export function CertificateTypeDialog({ type, onClose }: { type: CertificateType
     success: type ? t("updated") : t("created"),
     onSuccess: onClose,
   })
+  const fieldErrors = useServerFieldErrors(save.error)
   const valid =
     code.trim() !== "" &&
     names.en.trim() !== "" &&
@@ -43,6 +45,7 @@ export function CertificateTypeDialog({ type, onClose }: { type: CertificateType
     })
   return (
     <ResponsiveDialog
+      formRef={fieldErrors.ref}
       open
       onOpenChange={(open) => (open ? undefined : onClose())}
       size="md"

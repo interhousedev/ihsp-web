@@ -1,5 +1,6 @@
 "use client"
 
+import { useServerFieldErrors } from "../../form-errors"
 import { keys, patchMaterial, type ItemDetail } from "@ihsp/api"
 import { useT } from "@ihsp/i18n"
 import { Button, buttonVariants } from "@ihsp/ui"
@@ -43,6 +44,7 @@ export function MaterialDetailsEditor({ item, initialBody = "" }: { item: ItemDe
       void queryClient.invalidateQueries({ queryKey: keys.library.all() })
     },
   })
+  const fieldErrors = useServerFieldErrors(save.error)
 
   const titleMissing = values.title.trim() === ""
   const bodyMissing = markdown && values.body.trim() === ""
@@ -50,6 +52,7 @@ export function MaterialDetailsEditor({ item, initialBody = "" }: { item: ItemDe
 
   return (
     <form
+      ref={fieldErrors.ref}
       noValidate
       className="mx-auto flex w-full max-w-3xl flex-col gap-6"
       onSubmit={(event) => {

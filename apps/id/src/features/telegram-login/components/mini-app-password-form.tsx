@@ -1,5 +1,6 @@
 "use client"
 
+import { useServerFieldErrors } from "@ihsp/features-core"
 import { Button, LoadingButton, useAppForm } from "@ihsp/ui"
 import { useMemo, useState } from "react"
 import { z } from "zod"
@@ -30,6 +31,7 @@ export function MiniAppPasswordForm({ initData, onLinked, onSecondFactor, onOtp 
     onSecondFactor: (credentials: TelegramCredentials) =>
       onSecondFactor({ login: credentials.login, password: credentials.password ?? "" }),
   })
+  const fieldErrors = useServerFieldErrors(mutation.error)
   const form = useAppForm({
     defaultValues: { login: newLogin ?? "", password: "" },
     validators: { onSubmit: schema },
@@ -51,6 +53,7 @@ export function MiniAppPasswordForm({ initData, onLinked, onSecondFactor, onOtp 
         </>
       ) : null}
       <form
+        ref={fieldErrors.ref}
         noValidate
         className="grid gap-4"
         onSubmit={(event) => {

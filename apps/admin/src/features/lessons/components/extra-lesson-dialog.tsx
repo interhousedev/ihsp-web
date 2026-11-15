@@ -1,5 +1,6 @@
 "use client"
 
+import { useServerFieldErrors } from "@ihsp/features-core"
 import { getConflictList, postAdminLessons, type Conflict } from "@ihsp/api"
 import { todayIso, useErrorMessage, useT } from "@ihsp/i18n"
 import { Alert, AlertDescription, Button, DatePicker, ResponsiveDialog, Input } from "@ihsp/ui"
@@ -60,11 +61,13 @@ export function ExtraLessonDialog({ open, onOpenChange }: { open: boolean; onOpe
     inlineError: true,
     onSuccess: () => onOpenChange(false),
   })
+  const fieldErrors = useServerFieldErrors(create.error)
   const conflicts = getConflictList<Conflict>(create.error) ?? []
   const valid = date !== null && subjectId !== "" && audience.length > 0
 
   return (
     <ResponsiveDialog
+      formRef={fieldErrors.ref}
       open={open}
       onOpenChange={onOpenChange}
       size="lg"

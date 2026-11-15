@@ -1,5 +1,6 @@
 "use client"
 
+import { useServerFieldErrors } from "../../form-errors"
 import type { SourceItem } from "@ihsp/api"
 import { useT } from "@ihsp/i18n"
 import { Button, Input, Label, ResponsiveDialog } from "@ihsp/ui"
@@ -18,6 +19,7 @@ type RenameSourceDialogProps = {
 
 /** Rename a source (the title that rows, citations and the viewer show). */
 export function RenameSourceDialog({ source, pending, error, onClose, onSave }: RenameSourceDialogProps) {
+  const fieldErrors = useServerFieldErrors(error)
   const t = useT("notebooks")
   const errorMessage = useNotebookErrorMessage()
   const inputId = useId()
@@ -31,6 +33,7 @@ export function RenameSourceDialog({ source, pending, error, onClose, onSave }: 
 
   return (
     <ResponsiveDialog
+      formRef={fieldErrors.ref}
       open={source !== null}
       onOpenChange={(open) => !open && onClose()}
       size="sm"

@@ -9,7 +9,7 @@ import {
   type PlatformSettings,
   type PlatformSettingsBody,
 } from "@ihsp/api"
-import { LicenseSection } from "@ihsp/features-core"
+import { LicenseSection, useServerFieldErrors } from "@ihsp/features-core"
 import { AppLockSection } from "@ihsp/features-core/pwa/lock"
 import { useT } from "@ihsp/i18n"
 import { Badge, Button, Card, CardContent, CardHeader, CardTitle, Input, PageContainer } from "@ihsp/ui"
@@ -86,11 +86,13 @@ function SettingsForm({ settings }: { settings: PlatformSettings }) {
     success: t("saved"),
     onSuccess: (data) => setForm(toForm(data)),
   })
+  const fieldErrors = useServerFieldErrors(save.error)
 
   const featureKeys = Object.keys(settings.features).sort()
   return (
     <PageContainer title={t("title")}>
       <form
+        ref={fieldErrors.ref}
         className="grid max-w-2xl gap-6"
         onSubmit={(event) => {
           event.preventDefault()

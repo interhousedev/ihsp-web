@@ -1,5 +1,6 @@
 "use client"
 
+import { useServerFieldErrors } from "@ihsp/features-core"
 import { isApiError } from "@ihsp/api"
 import { Alert, AlertDescription, LoadingButton, useAppForm } from "@ihsp/ui"
 import { useMemo, type ReactNode } from "react"
@@ -43,6 +44,7 @@ export function EmisCredentialsForm({
   topAction,
   notice,
 }: EmisCredentialsFormProps) {
+  const fieldErrors = useServerFieldErrors(error)
   const t = useTr()
   const schema = useMemo(
     () =>
@@ -66,6 +68,7 @@ export function EmisCredentialsForm({
         </Alert>
       ) : null}
       <form
+        ref={fieldErrors.ref}
         noValidate
         className="grid gap-4"
         onSubmit={(event) => {

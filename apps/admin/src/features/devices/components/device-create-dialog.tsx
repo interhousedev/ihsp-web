@@ -1,5 +1,6 @@
 "use client"
 
+import { useServerFieldErrors } from "@ihsp/features-core"
 import { type DeviceCreatedOut, keys, postAdminDevice } from "@ihsp/api"
 import { useErrorMessage, useT } from "@ihsp/i18n"
 import { Button, Input, Label, LoadingButton, ResponsiveDialog } from "@ihsp/ui"
@@ -25,10 +26,12 @@ export function DeviceCreateDialog({
     inlineError: true,
     onSuccess: onCreated,
   })
+  const fieldErrors = useServerFieldErrors(create.error)
   const trimmed = name.trim()
 
   return (
     <ResponsiveDialog
+      formRef={fieldErrors.ref}
       open
       onOpenChange={(open) => !open && onClose()}
       title={t("createTitle")}

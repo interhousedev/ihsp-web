@@ -1,5 +1,6 @@
 "use client"
 
+import { useServerFieldErrors } from "../../form-errors"
 import { postItemReport, type LibraryReportReason } from "@ihsp/api"
 import { useErrorMessage, useT } from "@ihsp/i18n"
 import { Button, Label, ResponsiveDialog, Textarea } from "@ihsp/ui"
@@ -48,9 +49,11 @@ export function ReportDialog({
       onOpenChange(false)
     },
   })
+  const fieldErrors = useServerFieldErrors(send.error)
 
   return (
     <ResponsiveDialog
+      formRef={fieldErrors.ref}
       open={open}
       onOpenChange={onOpenChange}
       title={t("title")}

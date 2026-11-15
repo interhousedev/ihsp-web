@@ -1,5 +1,6 @@
 "use client"
 
+import { useServerFieldErrors } from "../../../form-errors"
 import { keys, postSuggestion, type FileItem } from "@ihsp/api"
 import { useErrorMessage, useT } from "@ihsp/i18n"
 import { Button, Input, PageContainer, Textarea, buttonVariants } from "@ihsp/ui"
@@ -86,6 +87,7 @@ export function SuggestBookEditor({ initialTitle = "" }: { initialTitle?: string
       await queryClient.invalidateQueries({ queryKey: keys.library.mySuggestions() })
     },
   })
+  const fieldErrors = useServerFieldErrors(send.error)
 
   return (
     <PageContainer
@@ -109,6 +111,7 @@ export function SuggestBookEditor({ initialTitle = "" }: { initialTitle?: string
       }
     >
       <form
+        ref={fieldErrors.ref}
         className="flex max-w-4xl flex-col gap-6"
         noValidate
         onSubmit={(event) => {

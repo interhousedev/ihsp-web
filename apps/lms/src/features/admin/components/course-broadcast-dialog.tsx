@@ -1,5 +1,6 @@
 "use client"
 
+import { useServerFieldErrors } from "@ihsp/features-core"
 import { keys, postLmsCourseBroadcast, type CourseBroadcast } from "@ihsp/api"
 import { useErrorMessage, useT } from "@ihsp/i18n"
 import {
@@ -46,6 +47,7 @@ export function CourseBroadcastDialog({
       void queryClient.invalidateQueries({ queryKey: keys.lms.broadcasts(courseId) })
     },
   })
+  const fieldErrors = useServerFieldErrors(send.error)
 
   function close(next: boolean) {
     if (!next) {
@@ -64,6 +66,7 @@ export function CourseBroadcastDialog({
 
   return (
     <ResponsiveDialog
+      formRef={fieldErrors.ref}
       open={open}
       onOpenChange={close}
       title={t("dialogTitle")}

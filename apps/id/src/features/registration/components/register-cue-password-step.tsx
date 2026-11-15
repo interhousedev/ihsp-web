@@ -1,5 +1,6 @@
 "use client"
 
+import { useServerFieldErrors } from "@ihsp/features-core"
 import { postIdRegisterCue, type LoginCueName, type RegistrationStart } from "@ihsp/api"
 import { Button, useAppForm } from "@ihsp/ui"
 import { useMutation } from "@tanstack/react-query"
@@ -22,6 +23,7 @@ export function RegisterCuePasswordStep({ cue, onStarted, onBack }: RegisterCueP
     mutationFn: (emisPassword: string) => postIdRegisterCue({ cue_id: cue.cue_id, emis_password: emisPassword }),
     onSuccess: (result) => onStarted(result),
   })
+  const fieldErrors = useServerFieldErrors(start.error)
   const form = useAppForm({
     defaultValues: { emis_password: "" },
     validators: { onSubmit: schema },
@@ -31,6 +33,7 @@ export function RegisterCuePasswordStep({ cue, onStarted, onBack }: RegisterCueP
   return (
     <FlowCard title={t("register.cue.passwordTitle")} description={cue.display_name}>
       <form
+        ref={fieldErrors.ref}
         noValidate
         className="grid gap-4"
         onSubmit={(event) => {

@@ -1,5 +1,6 @@
 "use client"
 
+import { useServerFieldErrors } from "@ihsp/features-core"
 import { getAdminGroupsQuery, postAdminLoginCuesBulk } from "@ihsp/api"
 import { useT } from "@ihsp/i18n"
 import { Button, Input, Textarea, ResponsiveDialog } from "@ihsp/ui"
@@ -37,9 +38,11 @@ export function LoginCueBulkDialog({
       onOpenChange(false)
     },
   })
+  const fieldErrors = useServerFieldErrors(upload.error)
 
   return (
     <ResponsiveDialog
+      formRef={fieldErrors.ref}
       open={open}
       onOpenChange={onOpenChange}
       size="md"

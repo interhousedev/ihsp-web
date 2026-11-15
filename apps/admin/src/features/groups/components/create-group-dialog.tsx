@@ -1,5 +1,6 @@
 "use client"
 
+import { useServerFieldErrors } from "@ihsp/features-core"
 import { keys, postAdminGroups } from "@ihsp/api"
 import { useT } from "@ihsp/i18n"
 import { Button, Input, ResponsiveDialog } from "@ihsp/ui"
@@ -39,9 +40,11 @@ export function CreateGroupDialog({ open, onOpenChange }: { open: boolean; onOpe
     success: t("done", { name: name.trim() }),
     onSuccess: () => onOpenChange(false),
   })
+  const fieldErrors = useServerFieldErrors(create.error)
 
   return (
     <ResponsiveDialog
+      formRef={fieldErrors.ref}
       open={open}
       onOpenChange={onOpenChange}
       size="sm"

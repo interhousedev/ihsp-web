@@ -1,5 +1,6 @@
 "use client"
 
+import { useServerFieldErrors } from "@ihsp/features-core"
 import type { CourseStaffItem } from "@ihsp/api"
 import { useErrorMessage, useT } from "@ihsp/i18n"
 import {
@@ -46,6 +47,7 @@ export function StaffFormDialog({
   error: unknown
   onSubmit: (values: StaffFormValues) => void
 }) {
+  const fieldErrors = useServerFieldErrors(error)
   const t = useT("staff")
   const tc = useT("common")
   const errorMessage = useErrorMessage()
@@ -80,6 +82,7 @@ export function StaffFormDialog({
 
   return (
     <ResponsiveDialog
+      formRef={fieldErrors.ref}
       open={open}
       onOpenChange={onOpenChange}
       title={mode === "add" ? t("addTitle") : t("editTitle")}

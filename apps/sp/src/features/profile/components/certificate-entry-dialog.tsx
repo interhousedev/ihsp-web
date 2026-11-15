@@ -9,7 +9,7 @@ import {
   type CertificateType,
   type CustomValue,
 } from "@ihsp/api"
-import { CustomFieldInputs, typeName } from "@ihsp/features-core"
+import { CustomFieldInputs, typeName, useServerFieldErrors } from "@ihsp/features-core"
 import { useErrorMessage, useLocale, useT } from "@ihsp/i18n"
 import { Button, ResponsiveDialog } from "@ihsp/ui"
 import { useMutation, useQueryClient } from "@tanstack/react-query"
@@ -42,6 +42,7 @@ export function CertificateEntryDialog({
     },
     onError: (error) => toast.error(errorMessage(error)),
   })
+  const fieldErrors = useServerFieldErrors(save.error)
 
   const valid = type.custom_fields.every((field) => !field.required || custom[field.key] !== undefined)
   const submit = () =>
@@ -52,6 +53,7 @@ export function CertificateEntryDialog({
 
   return (
     <ResponsiveDialog
+      formRef={fieldErrors.ref}
       open
       onOpenChange={(open) => (open ? undefined : onClose())}
       title={entry ? t("editEntry", { type: name }) : t("addEntry", { type: name })}

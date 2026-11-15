@@ -1,5 +1,6 @@
 "use client"
 
+import { useServerFieldErrors } from "../../../form-errors"
 import { postPassword } from "@ihsp/api"
 import { Alert, AlertDescription, Card, CardContent, LoadingButton, PageContainer, useAppForm } from "@ihsp/ui"
 import { useMutation } from "@tanstack/react-query"
@@ -28,6 +29,7 @@ export function PasswordChangePage() {
     mutationFn: (values: { current: string; password: string }) =>
       postPassword({ current_password: values.current, new_password: values.password }),
   })
+  const fieldErrors = useServerFieldErrors(mutation.error)
   const form = useAppForm({
     defaultValues: { current: "", password: "", confirm: "" },
     validators: { onSubmit: schema },
@@ -45,6 +47,7 @@ export function PasswordChangePage() {
       <Card>
         <CardContent>
           <form
+            ref={fieldErrors.ref}
             noValidate
             className="grid gap-4"
             onSubmit={(event) => {

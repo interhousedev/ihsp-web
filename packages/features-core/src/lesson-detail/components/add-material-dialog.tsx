@@ -1,5 +1,6 @@
 "use client"
 
+import { useServerFieldErrors } from "../../form-errors"
 import type { FileItem, LessonItem } from "@ihsp/api"
 import { useSession } from "@ihsp/auth"
 import { useErrorMessage, useFormatters, useT } from "@ihsp/i18n"
@@ -55,6 +56,7 @@ export function AddMaterialDialog({
   // The backend allows "also add to" only to the teachers of the lessons; Administration adds to this lesson only.
   const canAlsoAdd = session?.user.roles.includes("teacher") ?? false
   const add = useAddResource(lesson.id)
+  const fieldErrors = useServerFieldErrors(add.error)
   const others = useSameSubjectLessons(lesson, open && canAlsoAdd)
 
   function changeOpen(next: boolean) {
@@ -153,6 +155,7 @@ export function AddMaterialDialog({
           </TabsContent>
           <TabsContent value="link" className="pt-3">
             <form
+              ref={fieldErrors.ref}
               className="flex flex-col gap-3"
               onSubmit={(event) => {
                 event.preventDefault()

@@ -10,7 +10,7 @@ import {
 import { useErrorMessage, useT } from "@ihsp/i18n"
 import { Alert, AlertDescription, Button, Input, LoadingButton, PageContainer } from "@ihsp/ui"
 import { useRef, useState } from "react"
-import { BackLink } from "@ihsp/features-core"
+import { BackLink, useServerFieldErrors } from "@ihsp/features-core"
 import { LabeledField } from "../../shared/components/labeled-field"
 import { useAdminMutation } from "../../shared/hooks/use-admin-mutation"
 import { TOUCH } from "../../shared/utils/touch"
@@ -44,10 +44,12 @@ export function ImportPage() {
       setPreview(null)
     },
   })
+  const fieldErrors = useServerFieldErrors(upload.error ?? confirm.error)
 
   return (
     <PageContainer title={t("title")} actions={<BackLink href="/students/" label={t("back")} />}>
       <form
+        ref={fieldErrors.ref}
         className="flex max-w-xl flex-col gap-3"
         onSubmit={(event) => {
           event.preventDefault()

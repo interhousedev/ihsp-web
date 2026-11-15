@@ -1,5 +1,6 @@
 "use client"
 
+import { useServerFieldErrors } from "@ihsp/features-core"
 import { keys, postAdminUserSetPassword } from "@ihsp/api"
 import { useT } from "@ihsp/i18n"
 import { Button, ResponsiveDialog, Input } from "@ihsp/ui"
@@ -46,10 +47,12 @@ export function SetPasswordDialog({
     success: t("saved", { name }),
     onSuccess: () => onOpenChange(false),
   })
+  const fieldErrors = useServerFieldErrors(save.error)
 
   const valid = isStrongPassword(password)
   return (
     <ResponsiveDialog
+      formRef={fieldErrors.ref}
       open={open}
       onOpenChange={onOpenChange}
       size="sm"

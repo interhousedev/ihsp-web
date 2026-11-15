@@ -1,5 +1,6 @@
 "use client"
 
+import { useServerFieldErrors } from "@ihsp/features-core"
 import type { FlashcardSetDetail, FlashcardSetPatchBody } from "@ihsp/api"
 import { useErrorMessage, useT } from "@ihsp/i18n"
 import { Button, Input, Label, Textarea } from "@ihsp/ui"
@@ -22,6 +23,7 @@ export function SetSettingsForm({ set, onSaved }: { set: FlashcardSetDetail; onS
   const t = useT("flashcards.options")
   const errorMessage = useErrorMessage()
   const update = useUpdateFlashcardSet(set.id)
+  const fieldErrors = useServerFieldErrors(update.error)
   const ids = { title: useId(), description: useId(), newPerDay: useId(), reviewsPerDay: useId() }
   const [title, setTitle] = useState(set.title)
   const [description, setDescription] = useState(set.description ?? "")
@@ -61,6 +63,7 @@ export function SetSettingsForm({ set, onSaved }: { set: FlashcardSetDetail; onS
 
   return (
     <form
+      ref={fieldErrors.ref}
       className="flex flex-col gap-4"
       onSubmit={(event) => {
         event.preventDefault()

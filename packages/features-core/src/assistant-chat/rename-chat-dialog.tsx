@@ -1,5 +1,6 @@
 "use client"
 
+import { useServerFieldErrors } from "../form-errors"
 import type { ChatItem } from "@ihsp/api"
 import { useErrorMessage, useT } from "@ihsp/i18n"
 import { Button, Input, Label, ResponsiveDialog } from "@ihsp/ui"
@@ -16,6 +17,7 @@ type RenameChatDialogProps = {
 }
 
 export function RenameChatDialog({ chat, pending, error, onClose, onSave }: RenameChatDialogProps) {
+  const fieldErrors = useServerFieldErrors(error)
   const t = useT("assistant.rename")
   const errorMessage = useErrorMessage()
   const inputId = useId()
@@ -29,6 +31,7 @@ export function RenameChatDialog({ chat, pending, error, onClose, onSave }: Rena
 
   return (
     <ResponsiveDialog
+      formRef={fieldErrors.ref}
       open={chat !== null}
       onOpenChange={(open) => {
         if (!open) onClose()

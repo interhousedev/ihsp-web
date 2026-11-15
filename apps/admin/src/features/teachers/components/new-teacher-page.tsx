@@ -5,7 +5,7 @@ import { useT } from "@ihsp/i18n"
 import { Alert, AlertDescription, Button, CopyButton, Input, PageContainer, LoadingButton } from "@ihsp/ui"
 import Link from "next/link"
 import { useState } from "react"
-import { BackLink } from "@ihsp/features-core"
+import { BackLink, useServerFieldErrors } from "@ihsp/features-core"
 import { LabeledField } from "../../shared/components/labeled-field"
 import { useAdminMutation } from "../../shared/hooks/use-admin-mutation"
 import { TOUCH } from "../../shared/utils/touch"
@@ -39,6 +39,7 @@ export function NewTeacherPage() {
     invalidate: [keys.admin.teachers.all(), keys.admin.users.all()],
     onSuccess: (data) => setCreated(data),
   })
+  const fieldErrors = useServerFieldErrors(create.error)
 
   const valid = form.last_name.trim() !== "" && form.first_name.trim() !== "" && EMAIL_PATTERN.test(form.email.trim())
 
@@ -109,6 +110,7 @@ export function NewTeacherPage() {
   return (
     <PageContainer title={t("title")} actions={<BackLink href="/teachers/" label={t("back")} />}>
       <form
+        ref={fieldErrors.ref}
         className="flex max-w-xl flex-col gap-4"
         onSubmit={(event) => {
           event.preventDefault()

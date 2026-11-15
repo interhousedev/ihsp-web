@@ -1,5 +1,6 @@
 "use client"
 
+import { useServerFieldErrors } from "../../../form-errors"
 import {
   getLibraryCollectionQuery,
   keys,
@@ -90,12 +91,14 @@ export function CollectionDialog({ target, onClose }: { target: CollectionTarget
       onClose()
     },
   })
+  const fieldErrors = useServerFieldErrors(detail.error ?? save.error)
 
   const complete = Object.values(form.title).every((text) => text.trim() !== "")
   const loadingItems = existing !== null && detail.isPending
 
   return (
     <ResponsiveDialog
+      formRef={fieldErrors.ref}
       open={target !== null}
       onOpenChange={(open) => !open && onClose()}
       title={existing ? t("editTitle") : t("addTitle")}

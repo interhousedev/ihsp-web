@@ -1,7 +1,7 @@
 "use client"
 
 import { keys, postAdminSubjectMaterial, type SubjectMaterialCreateBody, type SubjectMaterialKind } from "@ihsp/api"
-import { FileUploadButton } from "@ihsp/features-core"
+import { FileUploadButton, useServerFieldErrors } from "@ihsp/features-core"
 import { useErrorMessage, useT } from "@ihsp/i18n"
 import { Button, Icons, Input, ToggleGroup, ToggleGroupItem } from "@ihsp/ui"
 import { useId, useState } from "react"
@@ -62,6 +62,7 @@ export function DefaultMaterialForm({ eduSubjectId }: { eduSubjectId: number }) 
       setBook(null)
     },
   })
+  const fieldErrors = useServerFieldErrors(add.error)
 
   /** A picked file or book names the material until the administrator types a title of their own. */
   function suggestTitle(name: string) {
@@ -74,6 +75,7 @@ export function DefaultMaterialForm({ eduSubjectId }: { eduSubjectId: number }) 
 
   return (
     <form
+      ref={fieldErrors.ref}
       className="flex flex-col gap-3 rounded-lg border p-3"
       onSubmit={(event) => {
         event.preventDefault()

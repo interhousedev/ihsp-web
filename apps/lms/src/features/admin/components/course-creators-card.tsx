@@ -28,7 +28,7 @@ import {
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query"
 import { useState, type FormEvent } from "react"
 import { toast } from "sonner"
-import { QueryState } from "@ihsp/features-core"
+import { QueryState, useServerFieldErrors } from "@ihsp/features-core"
 import { personName } from "../../shared/utils/people"
 
 /** Only teachers and administrators can become course creators (the backend refuses students with a 422). */
@@ -58,6 +58,7 @@ export function CourseCreatorsCard() {
       toast.success(t("creators.added", { name: personName(creator) }))
     },
   })
+  const fieldErrors = useServerFieldErrors(add.error)
   const remove = useMutation<unknown, unknown, CourseCreator>({
     mutationFn: (creator) => deleteLmsCreator(creator.id),
     onSuccess: (_result, creator) => {
@@ -81,7 +82,7 @@ export function CourseCreatorsCard() {
         <CardTitle>{t("creators.title")}</CardTitle>
       </CardHeader>
       <CardContent className="flex flex-col gap-4">
-        <form onSubmit={search} className="flex flex-col gap-2" role="search">
+        <form ref={fieldErrors.ref} onSubmit={search} className="flex flex-col gap-2" role="search">
           <Field>
             <FieldLabel htmlFor="course-creator-search">{t("creators.search")}</FieldLabel>
             <div className="flex gap-2">

@@ -1,5 +1,6 @@
 "use client"
 
+import { useServerFieldErrors } from "@ihsp/features-core"
 import { keys, patchAdminUser, type AdminUser } from "@ihsp/api"
 import { useErrorMessage, useT } from "@ihsp/i18n"
 import { Button, Input, ResponsiveDialog } from "@ihsp/ui"
@@ -54,10 +55,12 @@ export function EditUserDialog({
     success: t("saved"),
     onSuccess: () => onOpenChange(false),
   })
+  const fieldErrors = useServerFieldErrors(save.error)
 
   const valid = lastName.trim() !== "" && firstName.trim() !== "" && login.trim() !== ""
   return (
     <ResponsiveDialog
+      formRef={fieldErrors.ref}
       open={open}
       onOpenChange={onOpenChange}
       size="sm"

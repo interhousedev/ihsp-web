@@ -1,5 +1,6 @@
 "use client"
 
+import { useServerFieldErrors } from "@ihsp/features-core"
 import { postLogin, type LoginInfo } from "@ihsp/api"
 import { LoadingButton, Separator, useAppForm } from "@ihsp/ui"
 import { useMutation } from "@tanstack/react-query"
@@ -57,6 +58,7 @@ export function PasswordLoginForm({
       followChallengeUsed(error)
     },
   })
+  const fieldErrors = useServerFieldErrors(mutation.error)
   const form = useAppForm({
     defaultValues: { login: "", password: "", remember: true } as PasswordCredentials,
     validators: { onSubmit: schema },
@@ -86,6 +88,7 @@ export function PasswordLoginForm({
         <Separator className="flex-1" />
       </div>
       <form
+        ref={fieldErrors.ref}
         noValidate
         className="grid gap-4"
         onSubmit={(event) => {

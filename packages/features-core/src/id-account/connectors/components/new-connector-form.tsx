@@ -1,5 +1,6 @@
 "use client"
 
+import { useServerFieldErrors } from "../../../form-errors"
 import { postConnector, type ConnectorCreated, type ScopeCatalog, type UserMe } from "@ihsp/api"
 import {
   Card,
@@ -63,6 +64,7 @@ export function NewConnectorForm({ catalog, user, onCreated }: NewConnectorFormP
       }),
     onSuccess: onCreated,
   })
+  const fieldErrors = useServerFieldErrors(mutation.error)
 
   function changeServer(next: McpServer) {
     setServer(next)
@@ -98,6 +100,7 @@ export function NewConnectorForm({ catalog, user, onCreated }: NewConnectorFormP
       </CardHeader>
       <CardContent>
         <form
+          ref={fieldErrors.ref}
           noValidate
           className="grid gap-5"
           onSubmit={(event) => {

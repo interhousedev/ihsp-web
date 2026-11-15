@@ -1,5 +1,6 @@
 "use client"
 
+import { useServerFieldErrors } from "../../../form-errors"
 import { useT } from "@ihsp/i18n"
 import { Button, Input, Label, ResponsiveDialog } from "@ihsp/ui"
 import { useId, useState } from "react"
@@ -33,11 +34,13 @@ function RenameForm({
   const errorMessage = useNotebookErrorMessage()
   const inputId = useId()
   const rename = useRenameArtifact(notebookId)
+  const fieldErrors = useServerFieldErrors(rename.error)
   const [value, setValue] = useState(title)
   const trimmed = value.trim()
 
   return (
     <ResponsiveDialog
+      formRef={fieldErrors.ref}
       open
       onOpenChange={(next) => !next && onClose()}
       size="sm"

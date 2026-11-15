@@ -1,5 +1,6 @@
 "use client"
 
+import { useServerFieldErrors } from "@ihsp/features-core"
 import type { FlashcardSetItem } from "@ihsp/api"
 import { useErrorMessage, useT } from "@ihsp/i18n"
 import { Button, Input, Label, ResponsiveDialog } from "@ihsp/ui"
@@ -23,6 +24,7 @@ export function MergeSetsDialog({ decks, open, onOpenChange }: MergeSetsDialogPr
   const errorMessage = useErrorMessage()
   const router = useRouter()
   const merge = useMergeFlashcardSets()
+  const fieldErrors = useServerFieldErrors(merge.error)
   const titleId = useId()
   const [selected, setSelected] = useState<string[]>([])
   const [title, setTitle] = useState("")
@@ -48,6 +50,7 @@ export function MergeSetsDialog({ decks, open, onOpenChange }: MergeSetsDialogPr
 
   return (
     <ResponsiveDialog
+      formRef={fieldErrors.ref}
       open={open}
       onOpenChange={onOpenChange}
       title={t("mergeTitle")}

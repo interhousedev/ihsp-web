@@ -1,5 +1,6 @@
 "use client"
 
+import { useServerFieldErrors } from "@ihsp/features-core"
 import { postLoginPassword } from "@ihsp/api"
 import { LoadingButton, useAppForm } from "@ihsp/ui"
 import { useMutation } from "@tanstack/react-query"
@@ -33,6 +34,7 @@ export function NewPasswordForm({ challenge, ticket }: NewPasswordFormProps) {
       followChallengeUsed(error)
     },
   })
+  const fieldErrors = useServerFieldErrors(mutation.error)
   const form = useAppForm({
     defaultValues: { password: "", confirm: "" },
     validators: { onSubmit: schema },
@@ -44,6 +46,7 @@ export function NewPasswordForm({ challenge, ticket }: NewPasswordFormProps) {
   return (
     <FlowCard title={t("login.passwordChange.title")} description={t("login.passwordChange.description")}>
       <form
+        ref={fieldErrors.ref}
         noValidate
         className="grid gap-4"
         onSubmit={(event) => {

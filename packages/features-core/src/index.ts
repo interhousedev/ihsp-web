@@ -1,3 +1,4 @@
+export * from "./legal"
 // @ihsp/features-core: features shared by several apps.
 // Each folder owns its `index.ts`: notification-* by W2, assistant-chat and file-upload-button by W3,
 // platform-links and theme-preference-sync by the shell work, push (Web Push on this device) by the PUSH work.
@@ -25,10 +26,13 @@ export * from "./face-photo"
 export * from "./teacher-photo"
 export * from "./curriculum"
 export * from "./shell"
+export * from "./maintenance"
 export * from "./agent-steps"
 export * from "./group-progress"
 export * from "./certificates"
 export * from "./temporary-gpa"
 export * from "./license"
 export * from "./onboarding"
+export * from "./connect-ai"
 export * from "./help-widget"
+export * from "./form-errors"

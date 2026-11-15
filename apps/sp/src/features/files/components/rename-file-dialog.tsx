@@ -1,5 +1,6 @@
 "use client"
 
+import { useServerFieldErrors } from "@ihsp/features-core"
 import type { FileItem } from "@ihsp/api"
 import { useErrorMessage, useT } from "@ihsp/i18n"
 import { Button, Input, Label, ResponsiveDialog } from "@ihsp/ui"
@@ -12,12 +13,14 @@ function RenameFileForm({ file, onClose }: { file: FileItem; onClose: () => void
   const t = useT("files.rename")
   const errorMessage = useErrorMessage()
   const rename = useRenameFile()
+  const fieldErrors = useServerFieldErrors(rename.error)
   const inputId = useId()
   const [name, setName] = useState(file.name)
   const trimmed = name.trim()
 
   return (
     <ResponsiveDialog
+      formRef={fieldErrors.ref}
       open
       onOpenChange={(open) => {
         if (!open) onClose()

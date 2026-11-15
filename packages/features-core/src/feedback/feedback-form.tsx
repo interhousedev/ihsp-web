@@ -1,5 +1,6 @@
 "use client"
 
+import { useServerFieldErrors } from "../form-errors"
 import {
   ApiError,
   FEEDBACK_DESCRIPTION_MAX,
@@ -52,6 +53,7 @@ export function FeedbackForm({ defaultArea, onClose }: FeedbackFormProps) {
       void queryClient.invalidateQueries({ queryKey: keys.feedback.mine() })
     },
   })
+  const fieldErrors = useServerFieldErrors(mutation.error)
 
   const trimmedTitle = title.trim()
   const trimmedDescription = description.trim()
@@ -95,7 +97,7 @@ export function FeedbackForm({ defaultArea, onClose }: FeedbackFormProps) {
     (mutation.error.status === 429 || mutation.error.type === "feedback/rate-limited")
 
   return (
-    <form onSubmit={handleSubmit} className="flex flex-col gap-4" noValidate>
+    <form ref={fieldErrors.ref} onSubmit={handleSubmit} className="flex flex-col gap-4" noValidate>
       <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
         <div className="flex flex-col gap-2">
           <span className="text-sm font-medium">{t("dialog.kind")}</span>

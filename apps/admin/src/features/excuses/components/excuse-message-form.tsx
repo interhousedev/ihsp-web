@@ -1,7 +1,7 @@
 "use client"
 
 import type { ExcuseMessageBody } from "@ihsp/api"
-import { FileUploadButton } from "@ihsp/features-core"
+import { FileUploadButton, useServerFieldErrors } from "@ihsp/features-core"
 import { useErrorMessage, useT } from "@ihsp/i18n"
 import { Button, Textarea } from "@ihsp/ui"
 import { useState, type FormEvent } from "react"
@@ -20,6 +20,8 @@ export function ExcuseMessageForm({
   const t = useT("excuses.thread")
   const errorMessage = useErrorMessage()
   const [text, setText] = useState("")
+  const [failure, setFailure] = useState<unknown>(null)
+  const fieldErrors = useServerFieldErrors(failure)
   const [files, setFiles] = useState<{ id: string; name: string }[]>([])
 
   const submit = (event: FormEvent) => {
@@ -30,15 +32,20 @@ export function ExcuseMessageForm({
       () => {
         setText("")
         setFiles([])
+        setFailure(null)
         toast.success(t("sent"))
       },
-      (error: unknown) => toast.error(errorMessage(error)),
+      (error: unknown) => {
+        setFailure(error)
+        toast.error(errorMessage(error))
+      },
     )
   }
 
   return (
-    <form onSubmit={submit} className="flex flex-col gap-2">
+    <form ref={fieldErrors.ref} onSubmit={submit} className="flex flex-col gap-2">
       <Textarea
+        name="body"
         value={text}
         aria-label={t("label")}
         placeholder={t("placeholder")}

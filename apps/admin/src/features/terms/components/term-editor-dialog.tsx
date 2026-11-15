@@ -1,5 +1,6 @@
 "use client"
 
+import { useServerFieldErrors } from "@ihsp/features-core"
 import { keys, patchAdminTerm, postAdminTerms, type Term } from "@ihsp/api"
 import { useErrorMessage, useT } from "@ihsp/i18n"
 import { Alert, AlertDescription, Button, DatePicker, Input, ResponsiveDialog } from "@ihsp/ui"
@@ -47,9 +48,11 @@ export function TermEditorDialog({
     onSuccess: () => onOpenChange(false),
     inlineError: true,
   })
+  const fieldErrors = useServerFieldErrors(save.error)
 
   return (
     <ResponsiveDialog
+      formRef={fieldErrors.ref}
       open={open}
       onOpenChange={onOpenChange}
       size="lg"

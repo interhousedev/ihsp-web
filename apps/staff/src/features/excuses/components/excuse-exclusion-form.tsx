@@ -1,7 +1,7 @@
 "use client"
 
 import { getMeExcuseTemplatesQuery, getStaffGroupQuery, type ExcuseExclusionBody, type GroupItem } from "@ihsp/api"
-import { QueryState } from "@ihsp/features-core"
+import { QueryState, useServerFieldErrors } from "@ihsp/features-core"
 import { FileUploadButton } from "@ihsp/features-core"
 import { todayIso, useErrorMessage, useLocale, useT } from "@ihsp/i18n"
 import { Button, DatePicker, Dropdown, LoadingButton, Textarea } from "@ihsp/ui"
@@ -24,6 +24,7 @@ export function ExcuseExclusionForm({ group, onDone }: { group: GroupItem; onDon
   const groupQuery = useQuery(getStaffGroupQuery(group.id))
   const templatesQuery = useQuery(getMeExcuseTemplatesQuery())
   const create = useCreateExclusion()
+  const fieldErrors = useServerFieldErrors(create.error)
 
   const [studentId, setStudentId] = useState("")
   const [templateId, setTemplateId] = useState("")
@@ -64,7 +65,7 @@ export function ExcuseExclusionForm({ group, onDone }: { group: GroupItem; onDon
   }
 
   return (
-    <form onSubmit={submit} noValidate className="flex flex-col gap-4">
+    <form ref={fieldErrors.ref} onSubmit={submit} noValidate className="flex flex-col gap-4">
       <div className="flex flex-col gap-1.5">
         <label htmlFor={ids.student} className="text-sm font-medium">
           {t("student")}

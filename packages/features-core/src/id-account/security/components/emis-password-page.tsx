@@ -1,5 +1,6 @@
 "use client"
 
+import { useServerFieldErrors } from "../../../form-errors"
 import { getIdMeQuery, keys, postEmisPassword } from "@ihsp/api"
 import {
   Alert,
@@ -32,6 +33,7 @@ export function EmisPasswordPage() {
     mutationFn: (password: string) => postEmisPassword({ emis_password: password }),
     onSuccess: () => queryClient.invalidateQueries({ queryKey: keys.id.me() }),
   })
+  const fieldErrors = useServerFieldErrors(mutation.error)
   const form = useAppForm({
     defaultValues: { password: "" },
     validators: { onSubmit: schema },
@@ -57,6 +59,7 @@ export function EmisPasswordPage() {
               </CardHeader>
               <CardContent>
                 <form
+                  ref={fieldErrors.ref}
                   noValidate
                   className="grid gap-4"
                   onSubmit={(event) => {

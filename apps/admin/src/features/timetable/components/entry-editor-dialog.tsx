@@ -1,5 +1,6 @@
 "use client"
 
+import { useServerFieldErrors } from "@ihsp/features-core"
 import {
   deleteAdminTimetable,
   getConflictList,
@@ -126,6 +127,7 @@ export function EntryEditorDialog({
       onClose()
     },
   })
+  const fieldErrors = useServerFieldErrors(save.error ?? remove.error)
 
   const subject = subjects.data?.find((item) => item.id === form.subject_id)
   const suggestSplit = !entry && !splitNext && subject?.can_be_divided === true && isWholeGroupOnly(form.audience)
@@ -150,6 +152,7 @@ export function EntryEditorDialog({
   return (
     <>
       <ResponsiveDialog
+        formRef={fieldErrors.ref}
         open={open}
         onOpenChange={(next) => (next ? undefined : onClose())}
         size="lg"

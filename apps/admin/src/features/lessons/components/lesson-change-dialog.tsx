@@ -1,5 +1,6 @@
 "use client"
 
+import { useServerFieldErrors } from "@ihsp/features-core"
 import { getConflictList, patchAdminLesson, type Conflict, type LessonItem, type LessonPatchBody } from "@ihsp/api"
 import { useErrorMessage, useT } from "@ihsp/i18n"
 import { Alert, AlertDescription, Button, DatePicker, ResponsiveDialog, Input } from "@ihsp/ui"
@@ -72,12 +73,14 @@ export function LessonChangeDialog({ lesson, onClose }: { lesson: LessonItem; on
     inlineError: true,
     onSuccess: onClose,
   })
+  const fieldErrors = useServerFieldErrors(save.error)
   const conflicts = getConflictList<Conflict>(save.error) ?? []
   const set = <K extends keyof FormState>(field: K, value: FormState[K]) =>
     setForm((current) => ({ ...current, [field]: value }))
 
   return (
     <ResponsiveDialog
+      formRef={fieldErrors.ref}
       open
       onOpenChange={(open) => (open ? undefined : onClose())}
       size="lg"

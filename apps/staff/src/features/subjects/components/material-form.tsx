@@ -6,7 +6,7 @@ import {
   type StaffSubjectMaterialCreateBody,
   type SubjectMaterialKind,
 } from "@ihsp/api"
-import { DrivePicker } from "@ihsp/features-core"
+import { DrivePicker, useServerFieldErrors } from "@ihsp/features-core"
 import { useErrorMessage, useT } from "@ihsp/i18n"
 import { Button, Icons, Input, Label, useDebounce } from "@ihsp/ui"
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query"
@@ -106,11 +106,13 @@ export function MaterialForm({
       await client.invalidateQueries({ queryKey: ["staff-subjects"] })
     },
   })
+  const fieldErrors = useServerFieldErrors(add.error)
   const body = bodyOf(kind, title, { file, url, book })
   const suggest = (name: string) => setTitle((current) => (current.trim() === "" ? name.slice(0, MAX_TITLE) : current))
 
   return (
     <form
+      ref={fieldErrors.ref}
       className="flex flex-col gap-3 rounded-lg border p-3"
       onSubmit={(event) => {
         event.preventDefault()

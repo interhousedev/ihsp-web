@@ -1,5 +1,6 @@
 "use client"
 
+import { useServerFieldErrors } from "../../../form-errors"
 import { postChangeEmisPassword } from "@ihsp/api"
 import {
   Alert,
@@ -48,6 +49,7 @@ export function ChangeEmisPasswordForm() {
       setCode("")
     },
   })
+  const fieldErrors = useServerFieldErrors(mutation.error)
   const mismatch = repeat.length > 0 && next !== repeat
   const factorReady = factor === "password" ? accountPassword.length > 0 : code.length === 6
   const ready = current.length > 0 && next.length > 0 && next === repeat && factorReady
@@ -60,6 +62,7 @@ export function ChangeEmisPasswordForm() {
       </CardHeader>
       <CardContent>
         <form
+          ref={fieldErrors.ref}
           noValidate
           className="grid gap-4"
           onSubmit={(event) => {

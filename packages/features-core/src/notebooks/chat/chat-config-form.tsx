@@ -1,5 +1,6 @@
 "use client"
 
+import { useServerFieldErrors } from "../../form-errors"
 import type { ChatConfig, ChatStyle, NotebookDetail } from "@ihsp/api"
 import { useT } from "@ihsp/i18n"
 import { Button, Label, Dropdown, ResponsiveDialog, Textarea, ToggleGroup, ToggleGroupItem } from "@ihsp/ui"
@@ -36,6 +37,7 @@ export function ChatConfigForm({ notebook, onClose }: ChatConfigFormProps) {
   const tcourse = useT("notebooks.course")
   const errorMessage = useNotebookErrorMessage()
   const update = useUpdateNotebook(notebook.id)
+  const fieldErrors = useServerFieldErrors(update.error)
   const ids = useId()
   const config = notebook.chat_config
   const [style, setStyle] = useState<ChatStyle>(config.style)
@@ -67,6 +69,7 @@ export function ChatConfigForm({ notebook, onClose }: ChatConfigFormProps) {
 
   return (
     <ResponsiveDialog
+      formRef={fieldErrors.ref}
       open
       onOpenChange={(next) => !next && onClose()}
       size="sm"

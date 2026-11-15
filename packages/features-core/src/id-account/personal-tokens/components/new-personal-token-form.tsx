@@ -1,5 +1,6 @@
 "use client"
 
+import { useServerFieldErrors } from "../../../form-errors"
 import { postIdPersonalTokens, type PersonalTokenCreated, type PersonalTokenScope } from "@ihsp/api"
 import { Button, Card, CardContent, CardHeader, CardTitle, Dropdown, FieldLabel, LoadingButton } from "@ihsp/ui"
 import { useMutation } from "@tanstack/react-query"
@@ -35,6 +36,7 @@ export function NewPersonalTokenForm({ onCreated, onCancel }: NewPersonalTokenFo
     mutationFn: () => postIdPersonalTokens({ name: name.trim(), scopes, expires_in_days: days, otp_code: code }),
     onSuccess: onCreated,
   })
+  const fieldErrors = useServerFieldErrors(mutation.error)
 
   function toggle(scope: PersonalTokenScope, checked: boolean) {
     setScopes(checked ? [...scopes, scope] : scopes.filter((item) => item !== scope))
@@ -50,6 +52,7 @@ export function NewPersonalTokenForm({ onCreated, onCancel }: NewPersonalTokenFo
       </CardHeader>
       <CardContent>
         <form
+          ref={fieldErrors.ref}
           noValidate
           className="grid gap-5"
           onSubmit={(event) => {

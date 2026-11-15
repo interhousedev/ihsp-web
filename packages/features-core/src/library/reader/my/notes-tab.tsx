@@ -1,5 +1,6 @@
 "use client"
 
+import { useServerFieldErrors } from "../../../form-errors"
 import {
   getAnnotations,
   getAnnotationsExport,
@@ -85,12 +86,14 @@ export function NotesTab() {
     },
     onError: (error) => toast.error(errorMessage(error)),
   })
+  const fieldErrors = useServerFieldErrors(exporting.error)
 
   const filtered = q !== "" || color !== null
   return (
     <div className="flex flex-col gap-4">
       <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
         <form
+          ref={fieldErrors.ref}
           role="search"
           aria-label={t("searchLabel")}
           className="flex-1 sm:max-w-sm"

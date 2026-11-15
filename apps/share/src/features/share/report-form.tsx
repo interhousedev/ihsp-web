@@ -1,5 +1,6 @@
 "use client"
 
+import { useServerFieldErrors } from "@ihsp/features-core"
 import { isApiError, postPublicReports, type ReportReason } from "@ihsp/api"
 import { useErrorMessage, useT } from "@ihsp/i18n"
 import { Alert, AlertDescription, Button, Dropdown, LoadingButton, Textarea } from "@ihsp/ui"
@@ -27,6 +28,7 @@ export function ReportForm({ slug }: { slug: string }) {
         comment: comment.trim() === "" ? undefined : comment.trim(),
       }),
   })
+  const fieldErrors = useServerFieldErrors(report.error)
 
   if (report.isSuccess) {
     return (
@@ -46,6 +48,7 @@ export function ReportForm({ slug }: { slug: string }) {
 
   return (
     <form
+      ref={fieldErrors.ref}
       className="bg-card flex flex-col gap-4 rounded-card border p-4"
       onSubmit={(event) => {
         event.preventDefault()

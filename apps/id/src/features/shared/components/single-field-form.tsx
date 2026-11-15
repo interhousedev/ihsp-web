@@ -1,5 +1,6 @@
 "use client"
 
+import { useServerFieldErrors } from "@ihsp/features-core"
 import { LoadingButton, useAppForm } from "@ihsp/ui"
 import { useMemo, type ComponentProps } from "react"
 import { z } from "zod"
@@ -27,6 +28,7 @@ export function SingleFieldForm({
   onSubmit,
   autoComplete,
 }: SingleFieldFormProps) {
+  const fieldErrors = useServerFieldErrors(error)
   const t = useTr()
   const schema = useMemo(() => z.object({ value: kind === "email" ? emailText(t) : requiredText(t) }), [t, kind])
   const form = useAppForm({
@@ -36,6 +38,7 @@ export function SingleFieldForm({
   })
   return (
     <form
+      ref={fieldErrors.ref}
       noValidate
       className="grid gap-4"
       onSubmit={(event) => {

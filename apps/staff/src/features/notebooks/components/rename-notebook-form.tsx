@@ -1,7 +1,7 @@
 "use client"
 
 import type { NotebookItem } from "@ihsp/api"
-import { useNotebookErrorMessage, useUpdateNotebook } from "@ihsp/features-core"
+import { useNotebookErrorMessage, useUpdateNotebook, useServerFieldErrors } from "@ihsp/features-core"
 import { useT } from "@ihsp/i18n"
 import { Button, Input, Label, ResponsiveDialog } from "@ihsp/ui"
 import { useId, useState } from "react"
@@ -21,12 +21,14 @@ export function RenameNotebookForm({ notebook, open, onOpenChange }: RenameNoteb
   const common = useT("common")
   const errorMessage = useNotebookErrorMessage()
   const update = useUpdateNotebook(notebook.id)
+  const fieldErrors = useServerFieldErrors(update.error)
   const inputId = useId()
   const [title, setTitle] = useState(notebook.title)
   const trimmed = title.trim()
 
   return (
     <ResponsiveDialog
+      formRef={fieldErrors.ref}
       open={open}
       onOpenChange={onOpenChange}
       size="sm"

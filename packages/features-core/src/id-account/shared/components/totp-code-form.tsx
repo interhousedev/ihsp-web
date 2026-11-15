@@ -1,5 +1,6 @@
 "use client"
 
+import { useServerFieldErrors } from "../../../form-errors"
 import { Button, LoadingButton, useAppForm } from "@ihsp/ui"
 import { useMemo, useState } from "react"
 import { z } from "zod"
@@ -26,6 +27,7 @@ export function TotpCodeForm({
   allowRecovery = true,
   destructive = false,
 }: TotpCodeFormProps) {
+  const fieldErrors = useServerFieldErrors(error)
   const t = useTr()
   const [recovery, setRecovery] = useState(false)
   const schema = useMemo(
@@ -48,6 +50,7 @@ export function TotpCodeForm({
 
   return (
     <form
+      ref={fieldErrors.ref}
       noValidate
       className="grid gap-4"
       onSubmit={(event) => {

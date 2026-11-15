@@ -1,5 +1,6 @@
 "use client"
 
+import { useServerFieldErrors } from "../../../form-errors"
 import { useReasonText } from "../../upload/reason-text"
 import { isApiError } from "@ihsp/api"
 import { useT } from "@ihsp/i18n"
@@ -55,6 +56,7 @@ function ManageBookEditor({
   const status = useT("library.item.status")
   const reasonText = useReasonText()
   const editor = useBookEditor(id, initialTitle, fromSuggestion)
+  const fieldErrors = useServerFieldErrors(editor.save.error)
   const [coverName, setCoverName] = useState<string | null>(null)
 
   if (id !== null && editor.loading) {
@@ -104,6 +106,7 @@ function ManageBookEditor({
       }
     >
       <form
+        ref={fieldErrors.ref}
         className="flex max-w-4xl flex-col gap-6"
         noValidate
         onSubmit={(event) => {

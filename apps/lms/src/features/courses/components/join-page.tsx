@@ -1,5 +1,6 @@
 "use client"
 
+import { useServerFieldErrors } from "@ihsp/features-core"
 import { isApiError, keys, postLmsJoin, type CoursePage } from "@ihsp/api"
 import { useErrorMessage, useT } from "@ihsp/i18n"
 import {
@@ -36,6 +37,7 @@ export function JoinPage() {
       router.push(hrefs.course(page.slug))
     },
   })
+  const fieldErrors = useServerFieldErrors(join.error)
 
   function submit(event: FormEvent) {
     event.preventDefault()
@@ -50,7 +52,7 @@ export function JoinPage() {
       <PageContainer title={t("title")}>
         <Card className="max-w-md">
           <CardContent>
-            <form onSubmit={submit} className="flex flex-col gap-4" noValidate>
+            <form ref={fieldErrors.ref} onSubmit={submit} className="flex flex-col gap-4" noValidate>
               <Field>
                 <FieldLabel htmlFor="join-code">{t("codeLabel")}</FieldLabel>
                 <Input

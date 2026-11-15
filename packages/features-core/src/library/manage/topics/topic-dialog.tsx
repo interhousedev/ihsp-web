@@ -1,5 +1,6 @@
 "use client"
 
+import { useServerFieldErrors } from "../../../form-errors"
 import { keys, patchManageTopic, postManageTopic, type ManageTopic } from "@ihsp/api"
 import { useErrorMessage, useT } from "@ihsp/i18n"
 import { Button, Input, Label, Dropdown, ResponsiveDialog } from "@ihsp/ui"
@@ -68,12 +69,14 @@ export function TopicDialog({ target, onClose }: { target: TopicTarget | null; o
       onClose()
     },
   })
+  const fieldErrors = useServerFieldErrors(save.error)
 
   const complete = name.uz.trim() !== "" && name.ru.trim() !== "" && name.en.trim() !== ""
   const title = target?.mode === "edit" ? t("editTitle") : target?.parent ? t("addChildTitle") : t("addTitle")
 
   return (
     <ResponsiveDialog
+      formRef={fieldErrors.ref}
       open={target !== null}
       onOpenChange={(open) => !open && onClose()}
       title={title}

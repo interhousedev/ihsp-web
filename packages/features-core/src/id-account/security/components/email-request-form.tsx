@@ -1,5 +1,6 @@
 "use client"
 
+import { useServerFieldErrors } from "../../../form-errors"
 import { postIdMeEmailChange } from "@ihsp/api"
 import { LoadingButton, useAppForm } from "@ihsp/ui"
 import { useMutation } from "@tanstack/react-query"
@@ -23,6 +24,7 @@ export function EmailRequestForm({ onSent }: { onSent: (values: EmailChangeValue
       postIdMeEmailChange({ password: values.password, new_email: values.email }),
     onSuccess: (_result, values) => onSent(values),
   })
+  const fieldErrors = useServerFieldErrors(mutation.error)
   const form = useAppForm({
     defaultValues: { password: "", email: "" },
     validators: { onSubmit: schema },
@@ -33,6 +35,7 @@ export function EmailRequestForm({ onSent }: { onSent: (values: EmailChangeValue
 
   return (
     <form
+      ref={fieldErrors.ref}
       noValidate
       className="grid gap-4"
       onSubmit={(event) => {

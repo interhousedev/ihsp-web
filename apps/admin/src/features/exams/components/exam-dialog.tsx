@@ -1,5 +1,6 @@
 "use client"
 
+import { useServerFieldErrors } from "@ihsp/features-core"
 import {
   patchAdminAssessment,
   postAdminAssessment,
@@ -74,6 +75,7 @@ export function ExamDialog({
     onSuccess: onClose,
     inlineError: true,
   })
+  const fieldErrors = useServerFieldErrors(save.error)
 
   const title =
     mode === "create"
@@ -88,6 +90,7 @@ export function ExamDialog({
 
   return (
     <ResponsiveDialog
+      formRef={fieldErrors.ref}
       open
       onOpenChange={(open) => {
         if (!open) onClose()

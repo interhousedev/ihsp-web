@@ -1,5 +1,6 @@
 "use client"
 
+import { useServerFieldErrors } from "@ihsp/features-core"
 import { keys, patchAdminKnowledge, postAdminKnowledge, type KnowledgeEntry } from "@ihsp/api"
 import { useErrorMessage, useT } from "@ihsp/i18n"
 import { Button, Checkbox, ResponsiveDialog, Input, Textarea } from "@ihsp/ui"
@@ -35,6 +36,7 @@ export function KnowledgeDialog({ entry, onClose }: { entry: KnowledgeEntry | nu
     onSuccess: onClose,
     inlineError: true,
   })
+  const fieldErrors = useServerFieldErrors(save.error)
   const valid = key.trim() !== "" && value.trim() !== ""
   const submit = () =>
     save.mutate({
@@ -47,6 +49,7 @@ export function KnowledgeDialog({ entry, onClose }: { entry: KnowledgeEntry | nu
     })
   return (
     <ResponsiveDialog
+      formRef={fieldErrors.ref}
       open
       onOpenChange={(open) => (open ? undefined : onClose())}
       size="md"

@@ -1,5 +1,6 @@
 "use client"
 
+import { useServerFieldErrors } from "@ihsp/features-core"
 import { getAdminGroupsQuery, postAdminLoginCue } from "@ihsp/api"
 import { useT } from "@ihsp/i18n"
 import { Button, useAppForm, ResponsiveDialog } from "@ihsp/ui"
@@ -43,6 +44,7 @@ export function LoginCueDialog({
     success: t("created"),
     onSuccess: () => onOpenChange(false),
   })
+  const fieldErrors = useServerFieldErrors(create.error)
   const form = useAppForm({
     defaultValues: { full_name: "", group_id: defaultGroupId, emis_login: "" } as Values,
     validators: { onSubmit: schema },
@@ -51,6 +53,7 @@ export function LoginCueDialog({
 
   return (
     <ResponsiveDialog
+      formRef={fieldErrors.ref}
       open={open}
       onOpenChange={onOpenChange}
       size="sm"

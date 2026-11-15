@@ -5,6 +5,7 @@ import { useT } from "@ihsp/i18n"
 import { Button, Input, Label, LoadingButton, Textarea } from "@ihsp/ui"
 import { IconArrowLeft } from "@ihsp/ui"
 import { useId, useState } from "react"
+import { useServerFieldErrors } from "../../form-errors"
 import { useAddSources, useUpdateSource } from "../api"
 import { CitedMarkdown } from "../chat"
 import { stripCitations } from "../lib/citations"
@@ -30,6 +31,7 @@ export function NoteForm({ notebookId, source, onClose }: NoteFormProps) {
   const bodyId = useId()
   const add = useAddSources(notebookId)
   const update = useUpdateSource(notebookId)
+  const fieldErrors = useServerFieldErrors(add.error ?? update.error)
   const [title, setTitle] = useState(source?.title ?? "")
   const [body, setBody] = useState(source?.body_md ?? "")
   const [citationsRemoved, setCitationsRemoved] = useState(false)
@@ -64,6 +66,7 @@ export function NoteForm({ notebookId, source, onClose }: NoteFormProps) {
 
   return (
     <form
+      ref={fieldErrors.ref}
       aria-label={source ? source.title : t("note.new")}
       className="flex h-full min-h-0 flex-col"
       onSubmit={(event) => {

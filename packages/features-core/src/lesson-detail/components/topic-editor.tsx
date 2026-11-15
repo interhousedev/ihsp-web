@@ -1,5 +1,6 @@
 "use client"
 
+import { useServerFieldErrors } from "../../form-errors"
 import type { StaffLesson } from "@ihsp/api"
 import { useErrorMessage, useT } from "@ihsp/i18n"
 import { Button, Card, CardContent, CardHeader, CardTitle, Input } from "@ihsp/ui"
@@ -14,6 +15,7 @@ export function TopicEditor({ lesson }: { lesson: StaffLesson["lesson"] }) {
   const inputId = useId()
   const [value, setValue] = useState(lesson.topic ?? "")
   const save = useSaveTopic(lesson.id)
+  const fieldErrors = useServerFieldErrors(save.error)
   const unchanged = value.trim() === (lesson.topic ?? "")
 
   return (
@@ -25,6 +27,7 @@ export function TopicEditor({ lesson }: { lesson: StaffLesson["lesson"] }) {
       </CardHeader>
       <CardContent>
         <form
+          ref={fieldErrors.ref}
           className="flex flex-col gap-2 sm:flex-row"
           onSubmit={(event) => {
             event.preventDefault()

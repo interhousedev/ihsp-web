@@ -1,5 +1,6 @@
 "use client"
 
+import { useServerFieldErrors } from "../../../form-errors"
 import {
   deleteReadingList,
   keys,
@@ -106,6 +107,7 @@ export function ListEditorForm({ list }: { list?: ReadingListDetail }) {
       router.push(listHref(saved.id))
     },
   })
+  const fieldErrors = useServerFieldErrors(save.error)
 
   const remove = useMutation({
     mutationFn: () => deleteReadingList(list!.id),
@@ -128,6 +130,7 @@ export function ListEditorForm({ list }: { list?: ReadingListDetail }) {
 
   return (
     <form
+      ref={fieldErrors.ref}
       noValidate
       className="mx-auto flex w-full max-w-4xl flex-col gap-8"
       onSubmit={(event) => {

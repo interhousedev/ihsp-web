@@ -1,7 +1,7 @@
 "use client"
 
 import type { ExcuseRequestBody, FileItem } from "@ihsp/api"
-import { FileUploadButton, QueryState } from "@ihsp/features-core"
+import { FileUploadButton, QueryState, useServerFieldErrors } from "@ihsp/features-core"
 import { getMeExcuseTemplatesQuery } from "@ihsp/api"
 import { todayIso, useErrorMessage, useLocale, useT, type IsoDate } from "@ihsp/i18n"
 import { Button, DatePicker, Dropdown, Label, Textarea } from "@ihsp/ui"
@@ -39,6 +39,7 @@ export function ExcuseRequestForm({ onDone, onCancel }: { onDone: (id: string) =
   const [reason, setReason] = useState("")
   const [files, setFiles] = useState<FileItem[]>([])
   const [formError, setFormError] = useState<FormError>(null)
+  const fieldErrors = useServerFieldErrors(create.error)
 
   function submit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault()
@@ -61,13 +62,13 @@ export function ExcuseRequestForm({ onDone, onCancel }: { onDone: (id: string) =
   }
 
   return (
-    <form onSubmit={submit} className="flex flex-col gap-4" noValidate>
+    <form ref={fieldErrors.ref} onSubmit={submit} className="flex flex-col gap-4" noValidate>
       <QueryState query={templates} rows={1}>
         {(data) => (
           <div className="flex flex-col gap-2">
-            <Label htmlFor={`${ids}-template`}>{t("form.template")}</Label>
+            <Label htmlFor={`${ids}-template_id`}>{t("form.template")}</Label>
             <Dropdown
-              id={`${ids}-template`}
+              id={`${ids}-template_id`}
               aria-label={t("form.template")}
               placeholder={t("form.templatePlaceholder")}
               value={templateId}
@@ -85,9 +86,9 @@ export function ExcuseRequestForm({ onDone, onCancel }: { onDone: (id: string) =
       </QueryState>
       <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
         <div className="flex flex-col gap-2">
-          <Label htmlFor={`${ids}-from`}>{t("form.startsOn")}</Label>
+          <Label htmlFor={`${ids}-starts_on`}>{t("form.startsOn")}</Label>
           <DatePicker
-            id={`${ids}-from`}
+            id={`${ids}-starts_on`}
             value={startsOn}
             onChange={(date) => {
               if (date) setStartsOn(date)
@@ -96,9 +97,9 @@ export function ExcuseRequestForm({ onDone, onCancel }: { onDone: (id: string) =
           />
         </div>
         <div className="flex flex-col gap-2">
-          <Label htmlFor={`${ids}-to`}>{t("form.endsOn")}</Label>
+          <Label htmlFor={`${ids}-ends_on`}>{t("form.endsOn")}</Label>
           <DatePicker
-            id={`${ids}-to`}
+            id={`${ids}-ends_on`}
             value={endsOn}
             min={startsOn}
             placeholder={t("form.endsOnPlaceholder")}

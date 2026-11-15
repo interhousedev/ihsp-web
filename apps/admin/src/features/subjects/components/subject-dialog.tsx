@@ -1,5 +1,6 @@
 "use client"
 
+import { useServerFieldErrors } from "@ihsp/features-core"
 import { patchAdminSubject, postAdminSubjects, type Subject } from "@ihsp/api"
 import { useT } from "@ihsp/i18n"
 import { Button, Input, ResponsiveDialog } from "@ihsp/ui"
@@ -54,12 +55,14 @@ export function SubjectDialog({
     success: subject ? t("saved") : t("created"),
     onSuccess: () => onOpenChange(false),
   })
+  const fieldErrors = useServerFieldErrors(save.error)
 
   const valid = form.uz.trim() !== "" && form.ru.trim() !== "" && form.en.trim() !== ""
   const set = (field: keyof FormState) => (value: string) => setForm((current) => ({ ...current, [field]: value }))
 
   return (
     <ResponsiveDialog
+      formRef={fieldErrors.ref}
       open={open}
       onOpenChange={onOpenChange}
       size="md"

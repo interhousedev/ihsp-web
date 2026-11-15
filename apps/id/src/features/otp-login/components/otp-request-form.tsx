@@ -1,5 +1,6 @@
 "use client"
 
+import { useServerFieldErrors } from "@ihsp/features-core"
 import { postLoginOtpRequest } from "@ihsp/api"
 import { LoadingButton, useAppForm } from "@ihsp/ui"
 import { useMutation } from "@tanstack/react-query"
@@ -24,6 +25,7 @@ export function OtpRequestForm({ challenge, clientName, onSent }: OtpRequestForm
       followChallengeUsed(error)
     },
   })
+  const fieldErrors = useServerFieldErrors(mutation.error)
   const form = useAppForm({
     defaultValues: { login: "" },
     validators: { onSubmit: schema },
@@ -46,6 +48,7 @@ export function OtpRequestForm({ challenge, clientName, onSent }: OtpRequestForm
       }
     >
       <form
+        ref={fieldErrors.ref}
         noValidate
         className="grid gap-4"
         onSubmit={(event) => {

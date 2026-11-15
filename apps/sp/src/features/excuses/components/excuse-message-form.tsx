@@ -1,7 +1,7 @@
 "use client"
 
 import type { FileItem } from "@ihsp/api"
-import { FileUploadButton } from "@ihsp/features-core"
+import { FileUploadButton, useServerFieldErrors } from "@ihsp/features-core"
 import { useErrorMessage, useT } from "@ihsp/i18n"
 import { Button, Label, Textarea } from "@ihsp/ui"
 import { useId, useState, type FormEvent } from "react"
@@ -15,6 +15,7 @@ export function ExcuseMessageForm({ excuseId }: { excuseId: string }) {
   const errorMessage = useErrorMessage()
   const id = useId()
   const post = usePostExcuseMessage(excuseId)
+  const fieldErrors = useServerFieldErrors(post.error)
   const [body, setBody] = useState("")
   const [files, setFiles] = useState<FileItem[]>([])
   const canSend = (body.trim().length > 0 || files.length > 0) && !post.isPending
@@ -34,9 +35,15 @@ export function ExcuseMessageForm({ excuseId }: { excuseId: string }) {
   }
 
   return (
-    <form onSubmit={submit} className="flex flex-col gap-3" noValidate>
-      <Label htmlFor={id}>{t("thread.write")}</Label>
-      <Textarea id={id} value={body} maxLength={BODY_MAX} rows={3} onChange={(event) => setBody(event.target.value)} />
+    <form ref={fieldErrors.ref} onSubmit={submit} className="flex flex-col gap-3" noValidate>
+      <Label htmlFor={`${id}-body`}>{t("thread.write")}</Label>
+      <Textarea
+        id={`${id}-body`}
+        value={body}
+        maxLength={BODY_MAX}
+        rows={3}
+        onChange={(event) => setBody(event.target.value)}
+      />
       {files.length > 0 ? (
         <ul className="text-muted-foreground flex flex-col gap-1 text-sm">
           {files.map((file) => (

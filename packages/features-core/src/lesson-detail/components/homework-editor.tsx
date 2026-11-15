@@ -1,5 +1,6 @@
 "use client"
 
+import { useServerFieldErrors } from "../../form-errors"
 import type { StaffLesson } from "@ihsp/api"
 import { useErrorMessage, useFormatters, useT } from "@ihsp/i18n"
 import { Button, Card, CardContent, CardHeader, CardTitle, ConfirmDialog, DatePicker, Textarea } from "@ihsp/ui"
@@ -33,6 +34,7 @@ export function HomeworkEditor({
   const [due, setDue] = useState<Due>(() => initialDue(homework))
   const [confirmDelete, setConfirmDelete] = useState(false)
   const save = useSaveHomework(lesson.id)
+  const fieldErrors = useServerFieldErrors(save.error)
   const remove = useDeleteHomework(lesson.id)
 
   const trimmed = text.trim()
@@ -73,6 +75,7 @@ export function HomeworkEditor({
         </CardHeader>
         <CardContent className="flex flex-col gap-3">
           <form
+            ref={fieldErrors.ref}
             className="flex flex-col gap-3"
             onSubmit={(event) => {
               event.preventDefault()

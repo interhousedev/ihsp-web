@@ -1,5 +1,6 @@
 "use client"
 
+import { useServerFieldErrors } from "@ihsp/features-core"
 import { DndContext } from "@dnd-kit/core"
 import { SortableContext, verticalListSortingStrategy } from "@dnd-kit/sortable"
 import type { CourseDraft, OutlineOp } from "@ihsp/api"
@@ -25,6 +26,7 @@ export function OutlineEditor({ draft, canEdit }: { draft: CourseDraft; canEdit:
   const errorMessage = useErrorMessage()
   const router = useRouter()
   const actions = useDraftActions(draft.id)
+  const fieldErrors = useServerFieldErrors(actions.outline.error)
   const [newSection, setNewSection] = useState("")
   const [addStepTo, setAddStepTo] = useState<string | null>(null)
   const [removal, setRemoval] = useState<Removal | null>(null)
@@ -103,7 +105,7 @@ export function OutlineEditor({ draft, canEdit }: { draft: CourseDraft; canEdit:
       </DndContext>
 
       {canEdit ? (
-        <form onSubmit={addSection} className="flex flex-wrap items-end gap-2">
+        <form ref={fieldErrors.ref} onSubmit={addSection} className="flex flex-wrap items-end gap-2">
           <div className="flex min-w-[10rem] flex-1 flex-col gap-1">
             <label htmlFor="new-section-title" className="text-sm font-medium">
               {t("newSection")}

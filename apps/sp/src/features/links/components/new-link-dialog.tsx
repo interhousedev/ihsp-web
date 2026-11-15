@@ -1,7 +1,7 @@
 "use client"
 
 import { getMeFilesQuery, type FileItem, type LinkCreateBody } from "@ihsp/api"
-import { FileUploadButton } from "@ihsp/features-core"
+import { FileUploadButton, useServerFieldErrors } from "@ihsp/features-core"
 import { useErrorMessage, useT } from "@ihsp/i18n"
 import { Button, Dropdown, Input, Label, ResponsiveDialog } from "@ihsp/ui"
 import { useQuery, useQueryClient } from "@tanstack/react-query"
@@ -36,6 +36,7 @@ export function NewLinkDialog({ open, onOpenChange }: NewLinkDialogProps) {
   const [uploaded, setUploaded] = useState<FileItem[]>([])
 
   const files = useQuery({ ...getMeFilesQuery({ limit: 100 }), enabled: open && mode === "file" })
+  const fieldErrors = useServerFieldErrors(create.error ?? files.error)
   const options = [...uploaded, ...(files.data?.items ?? [])].filter(
     (file, index, all) => file.status === "ready" && all.findIndex((other) => other.id === file.id) === index,
   )
@@ -66,6 +67,7 @@ export function NewLinkDialog({ open, onOpenChange }: NewLinkDialogProps) {
 
   return (
     <ResponsiveDialog
+      formRef={fieldErrors.ref}
       open={open}
       onOpenChange={onOpenChange}
       title={t("title")}

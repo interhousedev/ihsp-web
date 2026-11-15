@@ -1,5 +1,6 @@
 "use client"
 
+import { useServerFieldErrors } from "../form-errors"
 import type { TeacherContacts } from "@ihsp/api"
 import { isApiError } from "@ihsp/api"
 import { useT } from "@ihsp/i18n"
@@ -60,6 +61,7 @@ export function TeacherContactsForm({ queryKey, load, save }: TeacherContactsFor
       toast.success(t("saved"))
     },
   })
+  const fieldErrors = useServerFieldErrors(mutation.error)
   const failure = mutation.isError
     ? isApiError(mutation.error) && mutation.error.status === 422
       ? t("invalid")
@@ -88,6 +90,7 @@ export function TeacherContactsForm({ queryKey, load, save }: TeacherContactsFor
 
   return (
     <form
+      ref={fieldErrors.ref}
       className="flex flex-col gap-4"
       onSubmit={(event) => {
         event.preventDefault()

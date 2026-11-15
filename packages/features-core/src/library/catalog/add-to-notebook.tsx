@@ -1,5 +1,6 @@
 "use client"
 
+import { useServerFieldErrors } from "../../form-errors"
 import { getNotebooksQuery, postNotebook, postNotebookSources } from "@ihsp/api"
 import { useErrorMessage, useT } from "@ihsp/i18n"
 import { Button, Dropdown, DropdownMenuItem, Input, Label, ResponsiveDialog, cn } from "@ihsp/ui"
@@ -82,12 +83,14 @@ export function AddDialog({
       })
     },
   })
+  const fieldErrors = useServerFieldErrors(add.error)
 
   const chapters = (toc ?? []).filter((entry) => entry.page !== undefined)
   const rangeInvalid = !whole && parsePage(from) === null && parsePage(to) === null
 
   return (
     <ResponsiveDialog
+      formRef={fieldErrors.ref}
       open={open}
       onOpenChange={onOpenChange}
       title={t("title")}

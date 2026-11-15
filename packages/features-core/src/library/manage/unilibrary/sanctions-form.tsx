@@ -1,5 +1,6 @@
 "use client"
 
+import { useServerFieldErrors } from "../../../form-errors"
 import { postLibrarySanction, type Sanction } from "@ihsp/api"
 import { useErrorMessage, useFormatters, useT } from "@ihsp/i18n"
 import { Button, Dropdown, Input, Label, Textarea } from "@ihsp/ui"
@@ -38,6 +39,7 @@ export function SanctionsForm() {
       setAttempted(false)
     },
   })
+  const fieldErrors = useServerFieldErrors(create.error)
 
   const idInvalid = !UUID.test(userId.trim())
   const reasonMissing = reason.trim() === ""
@@ -51,6 +53,7 @@ export function SanctionsForm() {
         <p className="text-muted-foreground text-sm">{t("description")}</p>
       </div>
       <form
+        ref={fieldErrors.ref}
         className="flex max-w-xl flex-col gap-4"
         noValidate
         onSubmit={(event) => {

@@ -1,5 +1,6 @@
 "use client"
 
+import { useServerFieldErrors } from "../../../form-errors"
 import type { ReportResolveAction } from "@ihsp/api"
 import { useErrorMessage, useT } from "@ihsp/i18n"
 import { Button, Label, ResponsiveDialog } from "@ihsp/ui"
@@ -26,6 +27,7 @@ export function ReportResolveDialog({
   onOpenChange: (open: boolean) => void
   onSubmit: (action: ReportResolveAction) => void
 }) {
+  const fieldErrors = useServerFieldErrors(error)
   const t = useT("library.manage.resolve")
   const common = useT("common")
   const errorMessage = useErrorMessage()
@@ -37,6 +39,7 @@ export function ReportResolveDialog({
 
   return (
     <ResponsiveDialog
+      formRef={fieldErrors.ref}
       open={open}
       onOpenChange={onOpenChange}
       title={t("title")}

@@ -1,5 +1,6 @@
 "use client"
 
+import { useServerFieldErrors } from "@ihsp/features-core"
 import { keys, postLmsAttemptOverride, type AttemptReview } from "@ihsp/api"
 import { useErrorMessage, useT } from "@ihsp/i18n"
 import { Alert, AlertDescription, Field, FieldLabel, Input, LoadingButton, Textarea } from "@ihsp/ui"
@@ -21,6 +22,7 @@ export function OverrideForm({ attempt, courseId }: { attempt: AttemptReview; co
       if (courseId) void queryClient.invalidateQueries({ queryKey: keys.lms.students(courseId) })
     },
   })
+  const fieldErrors = useServerFieldErrors(override.error)
 
   const value = Number(score)
   const valid =
@@ -32,7 +34,7 @@ export function OverrideForm({ attempt, courseId }: { attempt: AttemptReview; co
   }
 
   return (
-    <form onSubmit={submit} className="flex flex-col gap-3" noValidate>
+    <form ref={fieldErrors.ref} onSubmit={submit} className="flex flex-col gap-3" noValidate>
       <h2 className="text-base font-semibold">{t("overrideTitle")}</h2>
       <Field>
         <FieldLabel htmlFor="override-score">{t("overrideScore", { max: attempt.max_score })}</FieldLabel>

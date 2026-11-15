@@ -1,5 +1,6 @@
 "use client"
 
+import { useServerFieldErrors } from "../form-errors"
 import type { ProjectResponse } from "@ihsp/api"
 import { useErrorMessage, useT } from "@ihsp/i18n"
 import { Button, ConfirmDialog, Input, Label, ResponsiveDialog } from "@ihsp/ui"
@@ -28,6 +29,7 @@ function NameDialog({
   error,
   onSubmit,
 }: NameDialogProps) {
+  const fieldErrors = useServerFieldErrors(error)
   const t = useT("assistant.projects")
   const errorMessage = useErrorMessage()
   const inputId = useId()
@@ -47,6 +49,7 @@ function NameDialog({
 
   return (
     <ResponsiveDialog
+      formRef={fieldErrors.ref}
       open={open}
       onOpenChange={onOpenChange}
       title={title}

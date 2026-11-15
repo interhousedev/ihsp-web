@@ -1,5 +1,6 @@
 "use client"
 
+import { useServerFieldErrors } from "../../form-errors"
 import type { ArtifactItem } from "@ihsp/api"
 import { useT } from "@ihsp/i18n"
 import { Button, Input, Label, ResponsiveDialog } from "@ihsp/ui"
@@ -30,12 +31,14 @@ export function RenameArtifactDialog({
   const root = useT()
   const errorMessage = useNotebookErrorMessage()
   const rename = useRenameArtifact(notebookId)
+  const fieldErrors = useServerFieldErrors(rename.error)
   const inputId = useId()
   const [title, setTitle] = useState(item.title || fallbackTitle)
   const trimmed = title.trim()
 
   return (
     <ResponsiveDialog
+      formRef={fieldErrors.ref}
       open={open}
       onOpenChange={onOpenChange}
       size="sm"
