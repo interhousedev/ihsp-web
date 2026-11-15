@@ -6,14 +6,24 @@ import { useEffect, useRef, useState, type ReactNode } from "react"
 import { useLocaleStore } from "./locale-store"
 import { TIME_ZONE, type Locale } from "./locales"
 import { loadMessages, type MessageLoader, type Messages } from "./messages"
+import { checkStaleBuildInBrowser } from "./stale-build"
 
 export type AppName = "id" | "sp" | "staff" | "admin" | "lms" | "share" | "library"
 
 type Loaded = { locale: Locale; messages: Messages }
 
+/**
+ * A missing key in production usually means old JavaScript is running against newer messages (a tab or cached page
+ * from before a deployment renamed a key). The key is logged; the page reloads only when the deployed build differs
+ * from the running one (`stale-build.ts`).
+ */
 function handleError(error: { code?: string; message: string }): void {
-  // Missing keys are a development problem; the visible fallback is the key itself.
-  if (process.env.NODE_ENV !== "production") console.warn(`[i18n] ${error.message}`)
+  if (process.env.NODE_ENV !== "production") {
+    console.warn(`[i18n] ${error.message}`)
+    return
+  }
+  console.warn(`[i18n] ${error.message}`)
+  if (error.code === "MISSING_MESSAGE") checkStaleBuildInBrowser()
 }
 
 function messageFallback({ namespace, key }: { namespace?: string; key: string }): string {
