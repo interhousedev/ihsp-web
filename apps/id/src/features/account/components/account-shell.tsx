@@ -1,4 +1,5 @@
 "use client"
+import { LegalGate, MaintenanceBanner } from "@ihsp/features-core"
 
 import { patchPreferences } from "@ihsp/api"
 import { logout, useSession } from "@ihsp/auth"
@@ -48,7 +49,9 @@ export function AccountShell({ children }: { children: ReactNode }) {
         ) : null
       }
     >
+      <MaintenanceBanner />
       {children}
+      <LegalGate />
     </AppShell>
   )
 }

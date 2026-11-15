@@ -61,6 +61,9 @@ export function useNav(): { groups: NavGroup[] } {
             { title: t("limits"), url: "/limits/", icon: "adjustments" },
             { title: t("devices"), url: "/devices/", icon: "laptop" },
             { title: t("vault"), url: "/vault/", icon: "lock" },
+            { title: t("migration"), url: "/migration/", icon: "server" },
+            { title: t("legal"), url: "/legal/", icon: "fileTypeDoc" },
+            { title: t("erasure"), url: "/erasure/", icon: "trash" },
           ],
         },
         {

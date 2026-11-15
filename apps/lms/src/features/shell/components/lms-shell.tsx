@@ -1,4 +1,5 @@
 "use client"
+import { LegalGate, MaintenanceBanner } from "@ihsp/features-core"
 
 import { RequireAuth } from "@ihsp/auth"
 import { PageLoading, ShellNavControls, usePlatformLinks } from "@ihsp/features-core"
@@ -26,7 +27,9 @@ export function LmsShell({ children }: { children: ReactNode }) {
         controlsLeading={<ShellNavControls />}
         controls={<OfflineBadge />}
       >
+        <MaintenanceBanner />
         <Suspense fallback={<PageLoading />}>{children}</Suspense>
+        <LegalGate />
       </AppShell>
     </RequireAuth>
   )

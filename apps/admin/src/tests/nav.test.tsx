@@ -50,6 +50,9 @@ describe("admin sidebar (ADM-1)", () => {
       "/limits/",
       "/devices/",
       "/vault/",
+      "/migration/",
+      "/legal/",
+      "/erasure/",
     ])
     expect(itemsOf(groups, "Reports").map((item) => item.title)).not.toContain("Monitoring")
     expect(itemsOf(groups, "Tools").map((item) => item.url)).not.toContain("/limits/")

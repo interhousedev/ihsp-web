@@ -1,4 +1,5 @@
 "use client"
+import { LegalGate } from "@ihsp/features-core"
 
 import { RequireAuth } from "@ihsp/auth"
 import { Suspense, type ReactNode } from "react"
@@ -13,6 +14,7 @@ export function LearnerShell({ children }: { children: ReactNode }) {
   return (
     <RequireAuth>
       <Suspense fallback={<PageLoading />}>{children}</Suspense>
+      <LegalGate />
     </RequireAuth>
   )
 }

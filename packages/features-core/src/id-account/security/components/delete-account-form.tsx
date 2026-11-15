@@ -1,7 +1,6 @@
 "use client"
 
-import { deleteMe, type UserMe } from "@ihsp/api"
-import { useFormatters } from "@ihsp/i18n"
+import { deleteMe, keys, type UserMe } from "@ihsp/api"
 import {
   Alert,
   AlertDescription,
@@ -14,7 +13,7 @@ import {
   ConfirmDialog,
   LoadingButton,
 } from "@ihsp/ui"
-import { useMutation } from "@tanstack/react-query"
+import { useMutation, useQueryClient } from "@tanstack/react-query"
 import { useState } from "react"
 import { CodeInput } from "../../shared/components/code-input"
 import { ErrorAlert } from "../../shared/components/error-alert"
@@ -32,15 +31,16 @@ const DELETED_KEYS = [
 ] as const
 const KEPT_KEYS = ["security.delete.kept.attendance", "security.delete.kept.marks"] as const
 
-/** What is deleted and kept, then the password (and the OTP) behind a final confirmation dialog. */
+/** What is deleted and kept, then the password (and the OTP) behind a final confirmation dialog; it opens an erasure request. */
 export function DeleteAccountForm({ user }: { user: UserMe }) {
   const t = useTr()
-  const format = useFormatters()
+  const queryClient = useQueryClient()
   const [password, setPassword] = useState("")
   const [code, setCode] = useState("")
   const [confirming, setConfirming] = useState(false)
   const mutation = useMutation({
     mutationFn: () => deleteMe({ password, otp_code: code || undefined }),
+    onSuccess: () => queryClient.invalidateQueries({ queryKey: keys.privacy.erasure() }),
     onSettled: () => setConfirming(false),
   })
   const needsCode = user.otp_enabled
@@ -50,9 +50,7 @@ export function DeleteAccountForm({ user }: { user: UserMe }) {
     return (
       <Alert role="status">
         <AlertTitle>{t("security.delete.doneTitle")}</AlertTitle>
-        <AlertDescription>
-          {t("security.delete.doneDescription", { date: format.date(mutation.data.closes_on) })}
-        </AlertDescription>
+        <AlertDescription>{t("security.delete.doneDescription")}</AlertDescription>
       </Alert>
     )
   }

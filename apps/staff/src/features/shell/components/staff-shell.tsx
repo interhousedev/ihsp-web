@@ -1,4 +1,5 @@
 "use client"
+import { LegalGate, MaintenanceBanner } from "@ihsp/features-core"
 
 import { RequireAuth, RequireRole } from "@ihsp/auth"
 import { HelpWidget, OnboardingTour, PageLoading, ShellNavControls, usePlatformLinks } from "@ihsp/features-core"
@@ -43,7 +44,9 @@ function StaffFrame({ children }: { children: ReactNode }) {
       controls={<ShellHeader nav={nav.groups} />}
     >
       <CuratedGroupsError />
+      <MaintenanceBanner />
       <Suspense fallback={<PageLoading />}>{children}</Suspense>
+      <LegalGate />
       <OnboardingTour
         variant="staff"
         settingsHref="/settings/"

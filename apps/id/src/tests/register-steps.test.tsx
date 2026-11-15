@@ -1,12 +1,20 @@
 /** UF-ID-01 steps 2-3 and the EMIS credentials form, each on its own. */
 import { describe, expect, mock, test } from "bun:test"
 import { apiUrl, server } from "@ihsp/test-utils"
-import { screen, waitFor } from "@testing-library/react"
+import { fireEvent, screen, waitFor } from "@testing-library/react"
 import { HttpResponse, http } from "msw"
 import { EmisCredentialsForm } from "../features/registration/components/emis-credentials-form"
 import { RegisterCodeStep } from "../features/registration/components/register-code-step"
 import { RegisterProfileStep } from "../features/registration/components/register-profile-step"
-import { clickButton, fillField, renderId, allowSlowTests } from "./helpers"
+import {
+  ACCEPTED_LEGAL,
+  clickButton,
+  createAccount,
+  fillField,
+  findConsentBoxes,
+  renderId,
+  allowSlowTests,
+} from "./helpers"
 import { problem } from "./problem"
 
 allowSlowTests()
@@ -111,7 +119,7 @@ describe("RegisterCodeStep", () => {
 
     expect(await screen.findByText("We sent a 6-digit code to aleksey@example.org.")).toBeInTheDocument()
     await fillField("Code", "123456")
-    await clickButton("Create account")
+    await createAccount()
 
     await waitFor(() => expect(onCompleted).toHaveBeenCalledTimes(1))
     expect(body).toEqual({
@@ -120,6 +128,7 @@ describe("RegisterCodeStep", () => {
       email_code: "123456",
       confirm_import_match: true,
       login_challenge: "login-1",
+      accepted_legal: ACCEPTED_LEGAL,
     })
     expect((onCompleted.mock.calls[0] as unknown[])[0]).toEqual(response)
   })
@@ -144,10 +153,38 @@ describe("RegisterCodeStep", () => {
     )
 
     await fillField("Code", "123456")
-    await clickButton("Create account")
+    await createAccount()
 
     await waitFor(() => expect(onCompleted).toHaveBeenCalled())
-    expect(body).toEqual({ registration_token: "reg-token-1", password: "Secret123", email_code: "123456" })
+    expect(body).toEqual({
+      registration_token: "reg-token-1",
+      password: "Secret123",
+      email_code: "123456",
+      accepted_legal: ACCEPTED_LEGAL,
+    })
+  })
+
+  test("creating the account stays disabled until every document is ticked", async () => {
+    let called = false
+    server.use(
+      http.post(apiUrl("/v1/id/register/complete"), () => {
+        called = true
+        return HttpResponse.json({ login: "x", redirect_to: null })
+      }),
+    )
+    renderId(<RegisterCodeStep {...props} onBack={() => undefined} onCompleted={() => undefined} />)
+
+    await fillField("Code", "123456")
+    const boxes = await findConsentBoxes()
+    expect(boxes).toHaveLength(4)
+    const submit = () => screen.getByRole("button", { name: "Create account", hidden: true })
+    expect(submit()).toBeDisabled()
+    for (const box of boxes.slice(0, 3)) fireEvent.click(box)
+    await waitFor(() => expect(boxes[2]).toBeChecked())
+    expect(submit()).toBeDisabled()
+    fireEvent.click(boxes[3] as HTMLElement)
+    await waitFor(() => expect(submit()).toBeEnabled())
+    expect(called).toBe(false)
   })
 
   test("a wrong code shows the error and does not complete", async () => {
@@ -158,7 +195,7 @@ describe("RegisterCodeStep", () => {
     renderId(<RegisterCodeStep {...props} onBack={() => undefined} onCompleted={onCompleted} />)
 
     await fillField("Code", "000000")
-    await clickButton("Create account")
+    await createAccount()
 
     expect(await screen.findByText("Wrong code. Attempts left: 2.")).toBeInTheDocument()
     expect(onCompleted).not.toHaveBeenCalled()

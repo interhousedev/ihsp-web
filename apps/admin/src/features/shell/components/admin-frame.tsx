@@ -1,4 +1,5 @@
 "use client"
+import { LegalGate, MaintenanceBanner } from "@ihsp/features-core"
 
 import { RequireAuth, RequireRole } from "@ihsp/auth"
 import { ShellNavControls } from "@ihsp/features-core"
@@ -35,8 +36,10 @@ export function AdminFrame({ children }: { children: ReactNode }) {
         >
           <div className="p-4 pb-0 md:px-6 md:pt-6" data-shell-flush>
             <VaultSealedBanner />
+            <MaintenanceBanner className="m-0" />
           </div>
           <Suspense fallback={<PageLoading />}>{children}</Suspense>
+          <LegalGate />
         </AppShell>
       </RequireRole>
     </RequireAuth>

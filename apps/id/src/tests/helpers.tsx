@@ -1,6 +1,6 @@
-import { setDefaultTimeout } from "bun:test"
+import { expect, setDefaultTimeout } from "bun:test"
 import { renderWithProviders, type RenderWithProvidersOptions } from "@ihsp/test-utils"
-import { configure, fireEvent, screen } from "@testing-library/react"
+import { configure, fireEvent, screen, waitFor } from "@testing-library/react"
 import type { ReactElement } from "react"
 import enMessages from "../../messages/en.json"
 
@@ -43,3 +43,19 @@ export function findHeading(name: string | RegExp): Promise<HTMLElement> {
 export async function clickButton(name: string | RegExp): Promise<void> {
   fireEvent.click(await findButton(name))
 }
+
+/** The consent checkboxes (Base UI also renders a hidden native input, which has no label link). */
+export async function findConsentBoxes(): Promise<HTMLElement[]> {
+  const all = await screen.findAllByRole("checkbox", { hidden: true })
+  return all.filter((box) => box.hasAttribute("aria-labelledby"))
+}
+
+/** Ticks every published legal document of the consent list, then presses "Create account". */
+export async function createAccount(): Promise<void> {
+  for (const box of await findConsentBoxes()) fireEvent.click(box)
+  await waitFor(() => expect(screen.getByRole("button", { name: "Create account", hidden: true })).toBeEnabled())
+  await clickButton("Create account")
+}
+
+/** `accepted_legal` of the published fixture documents. */
+export const ACCEPTED_LEGAL = ["privacy", "terms", "biometric", "ai"].map((kind) => ({ kind, version: 1 }))

@@ -1,6 +1,6 @@
 /** UF-ID-04-UF-ID-06, UF-ID-09, UF-ID-11, UF-ID-12, UF-ID-14, UF-ID-16: the security pages. */
 import { beforeEach, describe, expect, test } from "bun:test"
-import { adminMe, apiUrl, server, teacherMe, userMe } from "@ihsp/test-utils"
+import { adminMe, apiUrl, dataExport, erasureRequest, server, teacherMe, userMe } from "@ihsp/test-utils"
 import { screen, waitFor } from "@testing-library/react"
 import { HttpResponse, http } from "msw"
 import {
@@ -227,28 +227,91 @@ describe("activity and account deletion", () => {
     expect(await findLink("Change password")).toBeInTheDocument()
   })
 
-  test("deleting needs the password and a final confirmation, then shows when data is removed", async () => {
+  test("deleting needs the password and a final confirmation, then opens a request for review", async () => {
     let body = null as { password: string } | null
     server.use(
       http.delete(apiUrl("/v1/id/me"), async ({ request }) => {
         body = (await request.json()) as { password: string }
-        return HttpResponse.json({ closes_on: "2026-11-06" }, { status: 202 })
+        return HttpResponse.json({ request_id: erasureRequest().id, status: "pending_review" }, { status: 202 })
       }),
     )
     const { user } = renderId(<DeleteAccountPage />, { route: "/security/delete/", session: LOGGED_IN })
 
     expect(await screen.findByText("Attendance records, with your name")).toBeInTheDocument()
-    const submit = await findButton("Delete my account")
+    const submit = await findButton("Request account deletion")
     expect(submit).toBeDisabled()
     await fillField("Current password", "Secret123")
-    await user.click(await findButton("Delete my account"))
+    await user.click(await findButton("Request account deletion"))
     await screen.findByText("Delete your account?")
     expect(body).toBeNull()
     await user.click(
-      (await screen.findAllByRole("button", { name: "Delete my account", hidden: true })).at(-1) as HTMLElement,
+      (await screen.findAllByRole("button", { name: "Request account deletion", hidden: true })).at(-1) as HTMLElement,
     )
 
-    expect(await screen.findByText("Account scheduled for deletion")).toBeInTheDocument()
+    expect(await screen.findByText("Request sent")).toBeInTheDocument()
     expect(body).toEqual({ password: "Secret123" })
+  })
+
+  test("an open erasure request shows the pending state and can be cancelled", async () => {
+    let open: ReturnType<typeof erasureRequest> | null = erasureRequest()
+    let cancelled = 0
+    server.use(
+      http.get(apiUrl("/v1/me/privacy/erasure"), () => HttpResponse.json({ request: open })),
+      http.delete(apiUrl("/v1/me/privacy/erasure"), () => {
+        cancelled += 1
+        const done = erasureRequest({ status: "cancelled" })
+        open = null
+        return HttpResponse.json(done)
+      }),
+    )
+    const { user } = renderId(<DeleteAccountPage />, { route: "/security/delete/", session: LOGGED_IN })
+
+    expect(await screen.findByText("Waiting for review")).toBeInTheDocument()
+    expect(screen.getByText(/An administrator reviews every request/)).toBeInTheDocument()
+    await user.click(await findButton("Cancel the request"))
+
+    await waitFor(() => expect(cancelled).toBe(1))
+    expect(await findButton("Request account deletion")).toBeInTheDocument()
+  })
+})
+
+describe("data export", () => {
+  test("requesting an export shows it preparing; a ready export downloads through the owner endpoint", async () => {
+    let items: ReturnType<typeof dataExport>[] = []
+    const opened: string[] = []
+    const realOpen = window.open
+    window.open = ((url: string) => {
+      opened.push(url)
+      return null
+    }) as typeof window.open
+    server.use(http.get(apiUrl("/v1/me/privacy/exports"), () => HttpResponse.json({ items })))
+    try {
+      const { user } = renderId(<DeleteAccountPage />, { route: "/security/delete/", session: LOGGED_IN })
+
+      await findButton("Request an export")
+      items = [dataExport({ status: "queued", finished_at: null, expires_at: null, byte_size: null })]
+      await user.click(await findButton("Request an export"))
+      expect(await screen.findByText("Preparing")).toBeInTheDocument()
+
+      items = [dataExport()]
+      await waitFor(() => expect(screen.queryByText("Preparing")).not.toBeInTheDocument(), { timeout: 8000 })
+      await user.click(await findButton("Download"))
+
+      await waitFor(() => expect(opened).toEqual(["https://files.example.test/export.zip"]))
+    } finally {
+      window.open = realOpen
+    }
+  })
+
+  test("an export past its expiry is shown as expired and cannot be downloaded", async () => {
+    server.use(
+      http.get(apiUrl("/v1/me/privacy/exports"), () =>
+        HttpResponse.json({ items: [dataExport({ expires_at: "2020-01-01T00:00:00Z" })] }),
+      ),
+    )
+    renderId(<DeleteAccountPage />, { route: "/security/delete/", session: LOGGED_IN })
+
+    expect(await screen.findByText("Expired")).toBeInTheDocument()
+    expect(screen.queryByRole("button", { name: "Download" })).not.toBeInTheDocument()
   })
 })

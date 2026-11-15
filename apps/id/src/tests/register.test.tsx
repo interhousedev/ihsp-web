@@ -6,7 +6,16 @@ import { HttpResponse, http } from "msw"
 import { RegisterPage } from "../features/registration/components/register-page"
 import { LOGIN_TICKET_KEY } from "../features/shared/utils/login-ticket"
 import { TELEGRAM_NEW_LOGIN_KEY } from "../features/shared/utils/storage"
-import { clickButton, fillField, findHeading, findLink, renderId, allowSlowTests } from "./helpers"
+import {
+  ACCEPTED_LEGAL,
+  clickButton,
+  createAccount,
+  fillField,
+  findHeading,
+  findLink,
+  renderId,
+  allowSlowTests,
+} from "./helpers"
 import { redirectToMock } from "./redirect-mock"
 
 allowSlowTests()
@@ -17,6 +26,7 @@ type CompleteBody = {
   email_code: string
   confirm_import_match?: boolean
   login_challenge?: string
+  accepted_legal?: { kind: string; version: number }[]
 }
 
 async function submitEmis(login: string, password = "emis-secret"): Promise<void> {
@@ -45,7 +55,7 @@ describe("registration", () => {
     await clickButton("Send code to the email")
     await findHeading("Confirm your email")
     await fillField("Code", "123456")
-    await clickButton("Create account")
+    await createAccount()
 
     try {
       // Back to the mini app login page, which links this Telegram account to the new login.
@@ -81,7 +91,7 @@ describe("registration", () => {
     await findHeading("Confirm your email")
     expect(screen.getByText("We sent a 6-digit code to aleksey@example.org.")).toBeInTheDocument()
     await fillField("Code", "123456")
-    await clickButton("Create account")
+    await createAccount()
 
     await findHeading("Welcome to IHT ID")
     await clickButton("Continue")
@@ -92,6 +102,7 @@ describe("registration", () => {
       password: "Secret123",
       email_code: "123456",
       confirm_import_match: true,
+      accepted_legal: ACCEPTED_LEGAL,
     })
   })
 
@@ -111,7 +122,7 @@ describe("registration", () => {
     await clickButton("Send code to the email")
     await findHeading("Confirm your email")
     await fillField("Code", "123456")
-    await clickButton("Create account")
+    await createAccount()
     await findHeading("Welcome to IHT ID")
     await clickButton("Continue")
 
@@ -153,7 +164,7 @@ describe("registration", () => {
     await clickButton("Send code to the email")
     await findHeading("Confirm your email")
     await fillField("Code", "123456")
-    await clickButton("Create account")
+    await createAccount()
 
     await findHeading("Welcome to IHT ID")
     expect(redirectToMock).not.toHaveBeenCalled()
