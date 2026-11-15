@@ -75,6 +75,46 @@ describe("api client", () => {
     expect(unauthorized).toBe(0)
   })
 
+  test("a 401 with a domain type (emis/auth-failed) is an ApiError: no refresh, no retry, no sign-out", async () => {
+    let unauthorized = 0
+    const { api, refreshes, calls } = client(
+      [
+        new Response(JSON.stringify({ type: "emis/auth-failed", title: "EMIS", status: 401 }), {
+          status: 401,
+          headers: { "Content-Type": "application/problem+json" },
+        }),
+      ],
+      {
+        onUnauthorized: () => {
+          unauthorized += 1
+        },
+      },
+    )
+    const error = await api.get("/v1/me/student-card").catch((cause: unknown) => cause)
+    expect(isApiError(error) && error.type).toBe("emis/auth-failed")
+    expect(refreshes()).toBe(0)
+    expect(calls).toHaveLength(1)
+    expect(unauthorized).toBe(0)
+  })
+
+  test("an auth/unauthorized 401 refreshes once, retries once and never refreshes again", async () => {
+    const body = () =>
+      new Response(JSON.stringify({ type: "auth/unauthorized", title: "No session", status: 401 }), {
+        status: 401,
+        headers: { "Content-Type": "application/problem+json" },
+      })
+    let unauthorized = 0
+    const { api, refreshes, calls } = client([body(), body()], {
+      onUnauthorized: () => {
+        unauthorized += 1
+      },
+    })
+    await expect(api.get("/v1/me/today")).rejects.toBeDefined()
+    expect(refreshes()).toBe(1)
+    expect(calls).toHaveLength(2)
+    expect(unauthorized).toBe(1)
+  })
+
   test("application/problem+json becomes an ApiError with type, status and params", async () => {
     const { api } = client([
       json(

@@ -29,6 +29,10 @@ const LOGOUT_HOLD_MS = 30_000
 const PENDING_KEY = "ihsp.oauth.pending"
 const ATTEMPTS_KEY = "ihsp.oauth.attempts"
 const RETRY_KEY = "ihsp.oauth.retry"
+/** Time of the last automatic redirect to the login; kept across a finished login, so a "successful" loop is caught. */
+const REDIRECT_KEY = "ihsp.oauth.redirect"
+/** At most one automatic (guarded) login redirect within this time. */
+const REDIRECT_WINDOW_MS = 30_000
 /** Set when this browser session has tried a silent single sign-on, so it is tried once and never loops. */
 const SILENT_KEY = "ihsp.oauth.silent"
 const CALLBACK_PATH = "/auth/callback/"
@@ -69,6 +73,7 @@ export function resetAuthState(): void {
   refreshInflight = null
   bootstrapInflight = null
   releaseLoginHold()
+  forgetRedirect()
   resetAuthStore()
 }
 
@@ -154,6 +159,26 @@ async function restartLogin(returnTo: string | undefined): Promise<Promise<strin
   return new Promise<string>(() => undefined)
 }
 
+/** Allows one guarded redirect per `REDIRECT_WINDOW_MS`; without a working sessionStorage none is allowed. */
+function markRedirect(now: number): boolean {
+  try {
+    const last = Number(window.sessionStorage.getItem(REDIRECT_KEY))
+    if (last && now - last < REDIRECT_WINDOW_MS) return false
+    window.sessionStorage.setItem(REDIRECT_KEY, String(now))
+    return true
+  } catch {
+    return false
+  }
+}
+
+function forgetRedirect(): void {
+  try {
+    window.sessionStorage.removeItem(REDIRECT_KEY)
+  } catch {
+    // nothing to clear
+  }
+}
+
 function clearLoginBookkeeping(): void {
   try {
     window.sessionStorage.removeItem(ATTEMPTS_KEY)
@@ -207,6 +232,8 @@ export type LoginOptions = {
   silent?: boolean
   /** A click of the user ("Log in again"): not limited by the loop guard, and it resets the guard. */
   manual?: boolean
+  /** An automatic redirect after a lost session: at most one per 30 s, then `AuthError("login-loop")` (signed-out state). */
+  guard?: boolean
 }
 
 /**
@@ -230,6 +257,8 @@ async function startLogin(returnTo: string, options: LoginOptions): Promise<void
   const now = Date.now()
   const attempts = options.manual ? [] : readAttempts(now)
   if (attempts.length >= LOOP_LIMIT) throw new AuthError("login-loop")
+  if (options.guard && !markRedirect(now)) throw new AuthError("login-loop")
+  if (options.manual) forgetRedirect()
   writeAttempts([...attempts, now])
 
   const config = getConfig()

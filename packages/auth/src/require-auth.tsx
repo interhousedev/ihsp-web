@@ -22,7 +22,7 @@ export function RequireAuth({ children }: { children: ReactNode }) {
 
   useEffect(() => {
     if (status !== "anonymous") return
-    login().catch(() => setStopped(true))
+    login(undefined, { guard: true }).catch(() => setStopped(true))
   }, [status])
 
   if (status === "authenticated") return <>{children}</>

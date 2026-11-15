@@ -8,6 +8,21 @@ function trimTrailingSlashes(value: string): string {
   return value.slice(0, end)
 }
 
+/**
+ * Whether a 401 means that OUR session is invalid: no problem body, a bare `http/401`, or an `auth/*` type
+ * (`auth/unauthorized` is the backend's). A 401 with a domain or upstream type (`emis/auth-failed`) is an ordinary
+ * API error: refreshing or logging in again cannot fix it. The body is read from a clone.
+ */
+async function isSessionProblem(response: Response): Promise<boolean> {
+  try {
+    const body: unknown = await response.clone().json()
+    if (typeof body !== "object" || body === null || !("type" in body) || typeof body.type !== "string") return true
+    return body.type.startsWith("auth/") || body.type.startsWith("http/")
+  } catch {
+    return true
+  }
+}
+
 export type HttpMethod = "GET" | "POST" | "PUT" | "PATCH" | "DELETE"
 
 export type QueryValue = string | number | boolean | null | undefined | readonly (string | number)[]
@@ -142,7 +157,8 @@ export function createApiClient(options: ApiClientOptions): ApiClient {
 
   async function request<T>(req: ApiRequest): Promise<T> {
     let response = await send(req)
-    if (response.status === 401 && (req.auth ?? "bearer") === "bearer") {
+    if (response.status === 401 && (req.auth ?? "bearer") === "bearer" && (await isSessionProblem(response))) {
+      // One refresh and one retry per request; a 401 after that is final and never refreshes again.
       const refreshed = await refreshOnce()
       if (refreshed) response = await send(req)
       // A 401 from another host (`baseUrl` override: short links, rooms) says nothing about our session.

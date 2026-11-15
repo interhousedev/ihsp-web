@@ -74,6 +74,17 @@ describe("login redirect", () => {
     await expect(login("/")).resolves.toBeUndefined()
   })
 
+  it("a guarded (automatic) redirect happens once per 30 s; the second one is refused, a manual one is allowed", async () => {
+    const { replace } = quiet()
+
+    await login("/", { guard: true })
+    await expect(login("/", { guard: true })).rejects.toMatchObject({ code: "login-loop" })
+    expect(replace).toHaveBeenCalledTimes(1)
+
+    await login("/", { manual: true })
+    expect(replace).toHaveBeenCalledTimes(2)
+  })
+
   it("a finished login clears the attempts", async () => {
     quiet()
     for (let attempt = 0; attempt < 3; attempt += 1) await login("/")
