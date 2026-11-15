@@ -2,7 +2,7 @@
 
 import type { StudentProfile, UserMe } from "@ihsp/api"
 import { useT } from "@ihsp/i18n"
-import { CopyButton } from "@ihsp/ui"
+import { CopyButton, UserAvatar } from "@ihsp/ui"
 import { fullName } from "../../shared/utils/people"
 import { InfoRow } from "./info-row"
 import { ProfileCard } from "./profile-card"
@@ -13,6 +13,7 @@ export function AccountCard({ profile, account }: { profile: StudentProfile; acc
   const mailbox = profile.mailbox ?? account?.mailbox ?? null
   return (
     <ProfileCard title={t("title")}>
+      <UserAvatar name={fullName(profile)} imageUrl={account?.photo_url} className="mb-2 size-16 text-lg" />
       <dl className="divide-y">
         <InfoRow label={t("name")}>{fullName(profile)}</InfoRow>
         <InfoRow label={t("login")}>{profile.login ?? "–"}</InfoRow>

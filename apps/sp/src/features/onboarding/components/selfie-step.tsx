@@ -1,7 +1,7 @@
 "use client"
 
 import { keys, putMyFace } from "@ihsp/api"
-import { useCamera } from "@ihsp/features-core"
+import { refreshSessionUser, useCamera } from "@ihsp/features-core"
 import { useErrorMessage, useT } from "@ihsp/i18n"
 import { Button } from "@ihsp/ui"
 import { useQueryClient } from "@tanstack/react-query"
@@ -77,6 +77,7 @@ export function SelfieStep() {
       await Promise.all([
         queryClient.invalidateQueries({ queryKey: keys.me.face() }),
         queryClient.invalidateQueries({ queryKey: keys.me.onboarding() }),
+        refreshSessionUser(queryClient),
       ])
     } catch (error) {
       setFailure(errorMessage(error))

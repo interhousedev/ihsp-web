@@ -18,13 +18,14 @@ export function ProfileMenu({ variant = "avatar" }: { variant?: "avatar" | "row"
   const installItem = useInstallMenuItem()
   const feedback = useFeedbackMenu({ area: "my", mineHref: "/feedback/" })
   if (!session) return null
-  const { first_name, last_name, login } = session.user
+  const { first_name, last_name, login, photo_url } = session.user
 
   const name = `${last_name} ${first_name}`
   const menu = (
     <UserMenu
       name={name}
       subtitle={login}
+      imageUrl={photo_url}
       variant={variant}
       items={[
         {
@@ -65,7 +66,7 @@ export function ProfileMenu({ variant = "avatar" }: { variant?: "avatar" | "row"
         aria-label={t("settings")}
         className="flex size-11 items-center justify-center rounded-full md:hidden"
       >
-        <UserAvatar name={name} />
+        <UserAvatar name={name} imageUrl={photo_url} />
       </Link>
       <div className="hidden md:block">{menu}</div>
       {feedback.dialog}

@@ -1,8 +1,10 @@
 /** FACE-SP-1: the entrance photo page: locked state, upload errors, remove. */
 import { describe, expect, test } from "bun:test"
-import { setMyFace } from "@ihsp/test-utils"
+import { useAuthStore } from "@ihsp/auth"
+import { apiUrl, server, setMyFace, userMe } from "@ihsp/test-utils"
 import { screen, waitFor, within } from "@testing-library/react"
 import userEvent from "@testing-library/user-event"
+import { HttpResponse, http } from "msw"
 import { FacePage } from "../features/face/components/face-page"
 import { configureTests, renderSp } from "./helpers"
 
@@ -57,5 +59,17 @@ describe("face page", () => {
     const dialog = await screen.findByRole("alertdialog")
     await user.click(within(dialog).getByRole("button", { name: "Remove photo" }))
     await waitFor(() => expect(screen.queryByRole("button", { name: "Remove photo" })).not.toBeInTheDocument())
+  })
+
+  test("a saved photo becomes the profile photo of the session user at once", async () => {
+    const user = userEvent.setup()
+    const photoUrl = "https://files.example.test/me.jpg"
+    server.use(http.get(apiUrl("/v1/id/me"), () => HttpResponse.json({ ...userMe, photo_url: photoUrl })))
+    renderSp(<FacePage />, { route: "/profile/face/" })
+    await screen.findByRole("button", { name: "Choose a file" })
+
+    await user.upload(screen.getByLabelText("Choose a file"), jpeg("me.jpg"))
+    await user.click(await screen.findByRole("button", { name: "Save photo" }))
+    await waitFor(() => expect(useAuthStore.getState().user?.photo_url).toBe(photoUrl))
   })
 })

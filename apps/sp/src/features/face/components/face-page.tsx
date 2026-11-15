@@ -1,7 +1,7 @@
 "use client"
 
 import { deleteMyFace, getMyFaceQuery, keys, putMyFace } from "@ihsp/api"
-import { BackLink, FacePhotoEditor, QueryState } from "@ihsp/features-core"
+import { BackLink, FacePhotoEditor, QueryState, refreshSessionUser } from "@ihsp/features-core"
 import { useT } from "@ihsp/i18n"
 import { Card, CardContent, CardHeader, CardTitle, PageContainer } from "@ihsp/ui"
 import { useQuery, useQueryClient } from "@tanstack/react-query"
@@ -11,7 +11,9 @@ export function FacePage() {
   const t = useT("face")
   const face = useQuery(getMyFaceQuery())
   const queryClient = useQueryClient()
-  const refresh = () => queryClient.invalidateQueries({ queryKey: keys.me.face() })
+  // A new face is also the profile photo: the session user is reloaded so every avatar shows it.
+  const refresh = () =>
+    Promise.all([queryClient.invalidateQueries({ queryKey: keys.me.face() }), refreshSessionUser(queryClient)])
 
   return (
     <PageContainer title={t("title")}>
