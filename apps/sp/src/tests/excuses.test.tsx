@@ -1,7 +1,7 @@
 /** EXC-WEB-01..03: the student's excuses: detail thread, cancel, and the form's document rule. */
 import { describe, expect, test } from "bun:test"
 import { apiUrl, server, weekLessons } from "@ihsp/test-utils"
-import { screen } from "@testing-library/react"
+import { screen, waitFor } from "@testing-library/react"
 import { HttpResponse, http } from "msw"
 import { ExcusePage } from "../features/excuses/components/excuse-page"
 import { ExcusesPage } from "../features/excuses/components/excuses-page"
@@ -67,5 +67,36 @@ describe("EXC-WEB-04 the timetable", () => {
     renderSp(<TimetablePage />, { route: "/timetable/" })
     expect((await screen.findAllByText("Excused")).length).toBeGreaterThan(0)
     unfreezeTime()
+  })
+})
+
+describe("EXC-WEB-03 a field error from the server", () => {
+  test("a 422 with params.field=reason marks the note invalid and keeps the summary", async () => {
+    server.use(
+      http.post(apiUrl("/v1/me/excuses"), () =>
+        HttpResponse.json(
+          {
+            type: "academic.excuse_invalid",
+            title: "Invalid",
+            status: 422,
+            message_key: "excuse-invalid",
+            params: { field: "reason" },
+          },
+          { status: 422, headers: { "content-type": "application/problem+json" } },
+        ),
+      ),
+    )
+    const { user } = renderSp(<ExcusesPage />, { route: "/excuses/" })
+    await user.click(await screen.findByRole("button", { name: "New request" }))
+    await user.click(await screen.findByRole("combobox", { name: "Reason" }))
+    await user.click(await screen.findByRole("option", { name: "Illness" }))
+    await user.click(screen.getByRole("button", { name: "Send request" }))
+    const note = await screen.findByLabelText("Details")
+    await waitFor(() => expect(note).toHaveAttribute("aria-invalid", "true"))
+    expect(note.getAttribute("aria-describedby")).toBeTruthy()
+    expect(
+      document.getElementById(note.getAttribute("aria-describedby") as string)?.textContent?.length,
+    ).toBeGreaterThan(0)
+    expect(note).toHaveFocus()
   })
 })

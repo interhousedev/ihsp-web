@@ -7,7 +7,7 @@ import { HttpResponse, http } from "msw"
 import { GradesPage } from "../features/grades/components/grades-page"
 import { SubjectPage } from "../features/subjects/components/subject-page"
 import { TimetablePage } from "../features/timetable/components/timetable-page"
-import { HIDE_OTHER_SUBGROUP } from "../features/timetable/hooks/use-hide-other-subgroup"
+import { SHOW_OTHER_SUBGROUP } from "../features/timetable/hooks/use-show-other-subgroup"
 import { configureTests, freezeTime, renderSp, setViewportWidth, studentWith, unfreezeTime } from "./helpers"
 
 configureTests()
@@ -18,7 +18,7 @@ beforeEach(() => {
 })
 afterEach(unfreezeTime)
 
-const LABEL = "Do not show other subgroup lessons"
+const LABEL = "Show other subgroup lessons"
 
 function serveOtherSubgroup() {
   server.use(
@@ -41,7 +41,7 @@ function serveOtherSubgroup() {
 }
 
 describe("other subgroup toggle", () => {
-  test("turning it on hides the other subgroup's lesson and saves the choice in the account", async () => {
+  test("other subgroup lessons are hidden by default and the toggle shows them and saves the choice", async () => {
     serveOtherSubgroup()
     const saved: unknown[] = []
     server.use(
@@ -56,22 +56,24 @@ describe("other subgroup toggle", () => {
       session: studentWith({ onboarding_dismissed: [] }),
     })
 
-    await waitFor(() => expect(container.querySelectorAll("[data-other-subgroup]")).toHaveLength(1))
-    await userEvent.setup().click(screen.getByRole("switch", { name: LABEL }))
+    const toggle = await screen.findByRole("switch", { name: LABEL })
+    expect(toggle).not.toBeChecked()
+    expect(container.querySelector("[data-other-subgroup]")).toBeNull()
+    await userEvent.setup().click(toggle)
 
-    await waitFor(() => expect(saved).toEqual([{ onboarding_dismissed: [HIDE_OTHER_SUBGROUP] }]))
-    await waitFor(() => expect(container.querySelector("[data-other-subgroup]")).toBeNull())
+    await waitFor(() => expect(saved).toEqual([{ onboarding_dismissed: [SHOW_OTHER_SUBGROUP] }]))
+    await waitFor(() => expect(container.querySelectorAll("[data-other-subgroup]")).toHaveLength(1))
   })
 
-  test("a saved choice hides the lesson and keeps the toggle to turn it off", async () => {
+  test("a saved choice shows the lesson and keeps the toggle to turn it off", async () => {
     serveOtherSubgroup()
     const { container } = renderSp(<TimetablePage />, {
       route: "/timetable/?view=week",
-      session: studentWith({ onboarding_dismissed: [HIDE_OTHER_SUBGROUP] }),
+      session: studentWith({ onboarding_dismissed: [SHOW_OTHER_SUBGROUP] }),
     })
 
-    expect(await screen.findByRole("switch", { name: LABEL })).toBeInTheDocument()
-    expect(container.querySelector("[data-other-subgroup]")).toBeNull()
+    expect(await screen.findByRole("switch", { name: LABEL })).toBeChecked()
+    await waitFor(() => expect(container.querySelectorAll("[data-other-subgroup]")).toHaveLength(1))
     expect(container.querySelector("a[href*='lesson-a']")).not.toBeNull()
   })
 

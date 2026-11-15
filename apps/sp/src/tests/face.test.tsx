@@ -20,6 +20,12 @@ describe("face page", () => {
     expect(screen.queryByRole("button", { name: "Remove photo" })).not.toBeInTheDocument()
   })
 
+  test("the photo page says classmates, teachers and administration can see the photo", async () => {
+    renderSp(<FacePage />, { route: "/profile/face/" })
+
+    expect(await screen.findByText(/visible to your classmates, teachers and the administration/)).toBeInTheDocument()
+  })
+
   test("FACE-SP-2: the server's reasons are shown for a photo without a face", async () => {
     const user = userEvent.setup()
     renderSp(<FacePage />, { route: "/profile/face/" })

@@ -19,7 +19,7 @@ export function AccountCard({ profile, account }: { profile: StudentProfile; acc
         <InfoRow label={t("mailbox")}>
           {mailbox ? (
             <>
-              <span className="min-w-0 truncate">{mailbox}</span>
+              <span className="min-w-0 break-all">{mailbox}</span>
               <CopyButton value={mailbox} variant="ghost" />
             </>
           ) : (

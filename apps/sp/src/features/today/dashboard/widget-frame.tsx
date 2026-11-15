@@ -88,9 +88,9 @@ export function DashboardCard({
   const linked = href && !editing
   const body = (
     <>
-      <header className="flex items-center gap-1.5 text-xs font-medium">
+      <header className="flex items-start gap-1.5 text-xs font-medium">
         <Icon aria-hidden className="size-4 shrink-0 opacity-80" />
-        <span className="min-w-0 flex-1 truncate opacity-80">{title}</span>
+        <span className="min-w-0 flex-1 leading-tight break-words opacity-80">{title}</span>
         {linked ? (
           <span className="flex shrink-0 items-center text-[11px] opacity-70">
             {t("showAll")}

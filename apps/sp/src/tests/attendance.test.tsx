@@ -62,7 +62,8 @@ describe("month view of the calendar", () => {
   test("tapping a day opens it in the day view", async () => {
     const { user } = renderSp(<TimetablePage />, { route: MONTH })
 
-    await user.click(await screen.findByRole("button", { name: /^6 October: 1 absence$/ }))
+    // 6 October lies in a control week and opens its dialog; 13 October is a plain day.
+    await user.click(await screen.findByRole("button", { name: /^13 October/ }))
 
     expect(await screen.findByRole("button", { name: /^Tuesday/ })).toHaveAttribute("aria-pressed", "true")
     expect(screen.queryByText("Missed lessons")).not.toBeInTheDocument()

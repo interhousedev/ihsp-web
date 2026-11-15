@@ -27,11 +27,13 @@ export function StorageCard() {
                   quota: formatBytes(storage.quota_bytes),
                 })}
               />
-              <p className="text-sm">
+              <p className="text-sm break-words">
                 {t("used", { used: formatBytes(storage.used_bytes), quota: formatBytes(storage.quota_bytes) })}
               </p>
               {storage.expires_on ? (
-                <p className="text-muted-foreground text-xs">{t("clearedOn", { date: f.date(storage.expires_on) })}</p>
+                <p className="text-muted-foreground text-xs break-words whitespace-normal">
+                  {t("clearedOn", { date: f.date(storage.expires_on) })}
+                </p>
               ) : null}
             </div>
           )

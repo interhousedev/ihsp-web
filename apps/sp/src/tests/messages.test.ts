@@ -53,10 +53,11 @@ function sourceFiles(dir: string): string[] {
   })
 }
 
-/** `{count}`, `{date}` … the argument names of an ICU message (plural branches only add `#`). */
+/** `{count}`, `{date}` … the argument names of an ICU message (plural branch bodies like `one {absence}` are text). */
 function argumentNames(text: string): string[] {
   const names = new Set<string>()
-  for (const match of text.matchAll(/\{(\w+)(?:,|\})/g)) names.add(match[1] as string)
+  for (const match of text.matchAll(/(?<!\b(?:zero|one|two|few|many|other|=\d+)\s*)\{(\w+)(?:,|\})/g))
+    names.add(match[1] as string)
   return [...names].toSorted()
 }
 
@@ -140,6 +141,16 @@ describe("keys used in the code", () => {
         "notifications",
         "settings",
       ],
+      "settings.groups.${group}.title": ["profile", "appearance", "notifications", "schedule", "security", "help"],
+      "settings.groups.${group.id}.title": ["profile", "appearance", "notifications", "schedule", "security", "help"],
+      "settings.groups.${group.id}.description": [
+        "profile",
+        "appearance",
+        "notifications",
+        "schedule",
+        "security",
+        "help",
+      ],
       "notifications.filters.${value}": ["all", "activity", "announcements"],
       "notificationSettings.marks.type.${value}": ["lesson", "midterm", "final"],
       "today.alerts.actions.${alert.kind}": [
@@ -207,6 +218,8 @@ describe("keys used in the code", () => {
       "subjects.overview.type.${type}": ["lesson", "midterm", "final"],
       "subjects.marks.type.${mark.type}": ["lesson", "midterm", "final"],
       "subjects.hub.kind.${row.kind}": ["lecture", "practice", "midterm", "final", "other"],
+      "timetable.controlPeriod.short.${period.control}": ["midterm_1", "midterm_2", "final"],
+      "timetable.controlPeriod.full.${period.control}": ["midterm_1", "midterm_2", "final"],
       "timetable.fields.${change.field}": ["room", "teacher", "subject", "date", "period", "topic"],
       "settings.general.themes.${value}": ["light", "dark", "system"],
       "excuses.status.${status}": ["pending", "approved", "rejected", "cancelled"],

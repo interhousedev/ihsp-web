@@ -73,11 +73,11 @@ export function Dashboard() {
   return (
     <section aria-labelledby="dashboard-title" className="mb-4 flex flex-col gap-3">
       <IdentityHeader />
-      <div className="flex items-center justify-between gap-2">
+      <div className="flex flex-wrap items-center justify-between gap-2">
         <h2 id="dashboard-title" className="text-base font-semibold">
           {t("title")}
         </h2>
-        <div className="flex gap-2">
+        <div className="flex flex-wrap justify-end gap-2">
           {editing ? (
             <>
               <Button type="button" variant="outline" size="sm" onClick={() => setAdding((open) => !open)}>

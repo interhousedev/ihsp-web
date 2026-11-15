@@ -26,7 +26,7 @@ export function NotificationBell() {
         {count > 0 ? (
           <span
             data-testid="unread-count"
-            className="bg-primary text-primary-foreground pointer-events-none absolute end-0 top-0 min-w-4 rounded-full px-1 text-center text-[10px] leading-4 font-semibold"
+            className="bg-primary text-primary-foreground pointer-events-none absolute end-0.5 top-0.5 min-w-4 rounded-full px-1 text-center text-[10px] leading-4 font-semibold"
           >
             {count > 99 ? "99+" : count}
           </span>

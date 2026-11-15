@@ -34,7 +34,9 @@ export function SemesterSummaryWidget({ widget, editing }: { widget: Widget; edi
         <>
           <div className="flex items-end gap-4">
             <BigNumber value={gpa === null ? "–" : gpa.toFixed(2)} label={d("gpa")} />
-            {!compact ? <BigNumber value={semester?.absences ?? "–"} label={t("absences")} /> : null}
+            {!compact ? (
+              <BigNumber value={semester?.absences ?? "–"} label={d("absences", { count: semester?.absences ?? 0 })} />
+            ) : null}
           </div>
           {gpa !== null ? (
             <div

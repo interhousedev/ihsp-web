@@ -48,7 +48,7 @@ export function CertificatesSection() {
         <Button
           type="button"
           variant="outline"
-          className="min-h-11 md:min-h-8"
+          className="h-auto min-h-11 max-w-full py-1.5 text-left whitespace-normal md:min-h-8"
           disabled={importEmis.isPending}
           onClick={() => importEmis.mutate()}
         >

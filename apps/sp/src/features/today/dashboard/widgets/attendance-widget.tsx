@@ -22,7 +22,7 @@ export function AttendanceWidget({ widget, editing }: { widget: Widget; editing?
       {absences === undefined ? (
         <CardEmpty text={t("noAttendance")} />
       ) : (
-        <BigNumber value={absences} label={t("absences")} />
+        <BigNumber value={absences} label={t("absences", { count: absences })} />
       )}
     </WidgetFrame>
   )
