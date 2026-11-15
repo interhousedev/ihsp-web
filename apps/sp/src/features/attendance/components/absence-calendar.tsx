@@ -1,11 +1,13 @@
 "use client"
 
-import { getMeLessonResultsQuery, getMeTimetableQuery, type StudentAttendance } from "@ihsp/api"
+import { getMeLessonResultsQuery, getMeTimetableQuery, type ControlPeriodItem, type StudentAttendance } from "@ihsp/api"
 import { addDays, todayIso, useFormatters, useT } from "@ihsp/i18n"
 import { Button, Icons, cn } from "@ihsp/ui"
 import { useQuery } from "@tanstack/react-query"
 import { useMemo } from "react"
 import { useCurriculum } from "../../subjects/hooks/use-curriculum"
+import { ControlPeriodBar } from "../../timetable/components/control-period-bar"
+import { periodEdge, periodOn } from "../../timetable/utils/control-periods"
 import { academicWeek } from "../../timetable/utils/academic-week"
 import { isWeekend } from "../../timetable/utils/week"
 import { dayStatus } from "../utils/lesson-states"
@@ -23,12 +25,17 @@ export function AbsenceCalendar({
   month,
   onMonthChange,
   onSelect,
+  periods = [],
+  onOpenPeriod,
 }: {
   days: StudentAttendance["days"]
   /** `2026-10` */
   month: string
   onMonthChange: (month: string) => void
   onSelect: (date: string) => void
+  /** Control weeks drawn as a bar on every date of the period; a date inside one opens `onOpenPeriod`. */
+  periods?: readonly ControlPeriodItem[]
+  onOpenPeriod?: (period: ControlPeriodItem) => void
 }) {
   const t = useT("attendance.calendar")
   const f = useFormatters()
@@ -104,11 +111,14 @@ export function AbsenceCalendar({
             const isPresent = !isLate && count === 0 && status.get(date) === "present"
             const isToday = date === today
             const plain = f.date(date, { day: "numeric", month: "long" })
+            const period = onOpenPeriod ? periodOn(periods, date) : undefined
+            const edge = period ? periodEdge(period, date) : null
             return (
               <Button
                 key={date}
                 variant="ghost"
                 aria-label={count > 0 ? t("dayWithAbsences", { date: plain, count }) : plain}
+                aria-describedby={period ? `control-${date}` : undefined}
                 aria-current={isToday ? "date" : undefined}
                 data-weekend={isWeekend(date) ? "true" : "false"}
                 className={cn(
@@ -117,7 +127,7 @@ export function AbsenceCalendar({
                   // Saturday and Sunday have no lessons; the text keeps AA contrast but reads as quieter than a school day.
                   isWeekend(date) && "text-foreground/70",
                 )}
-                onClick={() => onSelect(date)}
+                onClick={() => (period && onOpenPeriod ? onOpenPeriod(period) : onSelect(date))}
               >
                 <span
                   className={cn(
@@ -138,6 +148,15 @@ export function AbsenceCalendar({
                     <span data-dot="present" className={cn("size-1.5 rounded-full", STATE_TONE.present.dot)} />
                   ) : null}
                 </span>
+                {period && edge ? (
+                  <ControlPeriodBar
+                    period={period}
+                    edge={edge}
+                    showLabel={edge === "start" || edge === "single" || new Date(`${date}T00:00:00Z`).getUTCDay() === 1}
+                    id={`control-${date}`}
+                    className="mt-0.5"
+                  />
+                ) : null}
               </Button>
             )
           })}

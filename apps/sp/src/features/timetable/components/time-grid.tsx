@@ -1,6 +1,6 @@
 "use client"
 
-import type { LessonItem, LessonResult } from "@ihsp/api"
+import type { ControlPeriodItem, LessonItem, LessonResult } from "@ihsp/api"
 import { useT } from "@ihsp/i18n"
 import { cn } from "@ihsp/ui"
 import {
@@ -15,6 +15,8 @@ import {
   timelineRange,
   type Gap,
 } from "../utils/timeline"
+import { periodEdge, periodOn } from "../utils/control-periods"
+import { ControlPeriodBar } from "./control-period-bar"
 import { TimetableLessonBlock } from "./timetable-lesson-block"
 
 export type TimeColumn = {
@@ -28,6 +30,7 @@ export type TimeColumn = {
 
 const AXIS_WIDTH = 52
 const HEADER_HEIGHT = 48
+const ALL_DAY_HEIGHT = 24
 
 /**
  * A day or a week on a vertical time axis: every lesson block is placed by its start and end (proportional to the
@@ -43,6 +46,8 @@ export function TimeGrid({
   showSubgroup = false,
   results,
   excusedLessonIds,
+  periods = [],
+  onOpenPeriod,
 }: {
   columns: TimeColumn[]
   pxPerMinute: number
@@ -53,6 +58,9 @@ export function TimeGrid({
   showSubgroup?: boolean
   results?: ReadonlyMap<string, LessonResult>
   excusedLessonIds?: ReadonlySet<string>
+  /** Control weeks: an all-day bar under the header of every date inside one. */
+  periods?: readonly ControlPeriodItem[]
+  onOpenPeriod?: (period: ControlPeriodItem) => void
 }) {
   const t = useT("timetable")
   const intervals = columns.flatMap((column) => column.lessons.map(intervalOf))
@@ -66,12 +74,16 @@ export function TimeGrid({
       ? minutesToPx(nowMinute - range.startMin, pxPerMinute)
       : null
   const marks = hourMarks(range)
+  const allDay = onOpenPeriod ? columns.some((column) => periodOn(periods, column.key)) : false
+  // The term is written on the first column of the period in this grid.
+  const labelled = new Set<string>()
 
   return (
     <div className="overflow-x-auto rounded-lg border">
       <div className="flex" style={{ minWidth: AXIS_WIDTH + columns.length * minColumnWidth }}>
         <div className="relative shrink-0" style={{ width: AXIS_WIDTH }} aria-hidden>
           {showHeaders ? <div style={{ height: HEADER_HEIGHT }} /> : null}
+          {allDay ? <div style={{ height: ALL_DAY_HEIGHT }} /> : null}
           <div className="relative" style={{ height: bodyHeight }}>
             {marks.map((minute) => (
               <span
@@ -98,6 +110,24 @@ export function TimeGrid({
                 {column.sublabel ? (
                   <span className="text-muted-foreground text-xs leading-tight">{column.sublabel}</span>
                 ) : null}
+              </div>
+            ) : null}
+            {allDay ? (
+              <div className="flex items-center border-b" style={{ height: ALL_DAY_HEIGHT }}>
+                {(() => {
+                  const period = periodOn(periods, column.key)
+                  if (!period || !onOpenPeriod) return null
+                  const first = !labelled.has(period.start) || column.key === period.start
+                  labelled.add(period.start)
+                  return (
+                    <ControlPeriodBar
+                      period={period}
+                      edge={periodEdge(period, column.key)}
+                      showLabel={first}
+                      onOpen={() => onOpenPeriod(period)}
+                    />
+                  )
+                })()}
               </div>
             ) : null}
             <div className="relative" style={{ height: bodyHeight }}>

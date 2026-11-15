@@ -7,7 +7,8 @@ import { googleCalendarUrl, webcalUrl } from "../features/calendar-feed/utils/fe
 import { describeChanges } from "../features/shared/utils/describe-changes"
 import { TimetablePage } from "../features/timetable/components/timetable-page"
 import { isIsoDate, lessonsOn, subgroupsOf, weekDays, weekRange } from "../features/timetable/utils/week"
-import { configureTests, freezeTime, renderSp, setViewportWidth, unfreezeTime } from "./helpers"
+import { configureTests, freezeTime, renderSp, setViewportWidth, studentWith, unfreezeTime } from "./helpers"
+import { SHOW_OTHER_SUBGROUP } from "../features/timetable/hooks/use-show-other-subgroup"
 
 configureTests()
 
@@ -132,7 +133,10 @@ describe("calendar week view", () => {
         ]),
       ),
     )
-    const { container } = renderSp(<TimetablePage />, { route: "/timetable/" })
+    const { container } = renderSp(<TimetablePage />, {
+      route: "/timetable/",
+      session: studentWith({ onboarding_dismissed: [SHOW_OTHER_SUBGROUP] }),
+    })
 
     await waitFor(() => expect(container.querySelectorAll("[data-other-subgroup]")).toHaveLength(1))
     const other = container.querySelector("[data-other-subgroup]")

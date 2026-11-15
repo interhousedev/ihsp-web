@@ -3,10 +3,12 @@
 import { getMeLessonResultsQuery, getMeProfileQuery, getMeTimetableQuery, type StudentLessonItem } from "@ihsp/api"
 import { startOfWeek, todayIso, useFormatters, useT } from "@ihsp/i18n"
 import { Alert, AlertDescription, cn, PageContainer, StateView, Switch, useIsMobile } from "@ihsp/ui"
-import { useHideOtherSubgroup } from "../hooks/use-hide-other-subgroup"
+import { useControlPeriods } from "../hooks/use-control-periods"
+import { useShowOtherSubgroup } from "../hooks/use-show-other-subgroup"
 import { useQuery } from "@tanstack/react-query"
 import { parseAsString, useQueryState } from "nuqs"
-import { useMemo } from "react"
+import { useMemo, useState } from "react"
+import type { ControlPeriodItem } from "@ihsp/api"
 import { WorkOffCard } from "../../attendance/components/work-off-card"
 import { AttendanceOverview } from "../../attendance/components/attendance-overview"
 import { useAttendance } from "../../attendance/hooks/use-attendance"
@@ -19,6 +21,7 @@ import { useNow } from "../../shared/hooks/use-now"
 import { DESKTOP_PX_PER_MINUTE, PHONE_PX_PER_MINUTE } from "../utils/timeline"
 import { isIsoDate, lessonsOn, studyDayOf, subgroupsOf, weekDays, weekRange } from "../utils/week"
 import { parseView, stepDate, type CalendarView } from "../utils/view"
+import { ControlPeriodDialog } from "./control-period-dialog"
 import { CalendarToolbar } from "./calendar-toolbar"
 import { TimeGrid } from "./time-grid"
 import { TimetableDayView } from "./timetable-day-view"
@@ -63,7 +66,9 @@ export function TimetablePage() {
     () => new Set((lessonsQuery.data ?? []).filter((lesson) => lesson.excused).map((lesson) => lesson.id)),
     [lessonsQuery.data],
   )
-  const { hidden, setHidden } = useHideOtherSubgroup()
+  const periods = useControlPeriods()
+  const [opened, setOpened] = useState<ControlPeriodItem | null>(null)
+  const { shown, setShown } = useShowOtherSubgroup()
   const pxPerMinute = isMobile ? PHONE_PX_PER_MINUTE : DESKTOP_PX_PER_MINUTE
   const legend: { state: MarkedState; label: string }[] = [
     { state: "present", label: ta("present") },
@@ -97,6 +102,8 @@ export function TimetablePage() {
               days={data.days}
               missed={data.missed}
               onMonthChange={(next) => void setDay(`${next}-01`)}
+              periods={periods}
+              onOpenPeriod={setOpened}
               onPickDay={(date) => {
                 void setView("day")
                 void setDay(date)
@@ -108,7 +115,7 @@ export function TimetablePage() {
         <QueryState query={lessonsQuery} rows={4}>
           {(allLessons) => {
             const hint = subgroupUnset && allLessons.some((lesson) => subgroupsOf(lesson).length > 0)
-            const lessons = hidden ? allLessons.filter((lesson) => !isOther(lesson)) : allLessons
+            const lessons = shown ? allLessons : allLessons.filter((lesson) => !isOther(lesson))
             return (
               <>
                 {hint ? (
@@ -116,10 +123,10 @@ export function TimetablePage() {
                     <AlertDescription>{t("subgroupHint")}</AlertDescription>
                   </Alert>
                 ) : null}
-                {hidden || allLessons.some(isOther) ? (
+                {shown || allLessons.some(isOther) ? (
                   <label className="flex min-h-11 w-fit items-center gap-2 text-sm md:min-h-8">
-                    <Switch checked={hidden} onCheckedChange={setHidden} />
-                    {t("hideOtherSubgroup")}
+                    <Switch checked={shown} onCheckedChange={setShown} />
+                    {t("showOtherSubgroup")}
                   </label>
                 ) : null}
                 {view === "day" ? (
@@ -133,6 +140,8 @@ export function TimetablePage() {
                     results={results}
                     excusedLessonIds={excusedLessonIds}
                     statuses={statuses}
+                    periods={periods}
+                    onOpenPeriod={setOpened}
                     onDayChange={(next) => void setDay(next)}
                     onStep={(direction) => void setDay(stepDate("day", day, direction, allLessons))}
                   />
@@ -153,6 +162,8 @@ export function TimetablePage() {
                     showSubgroup={hint}
                     results={results}
                     excusedLessonIds={excusedLessonIds}
+                    periods={periods}
+                    onOpenPeriod={setOpened}
                   />
                 )}
               </>
@@ -164,6 +175,7 @@ export function TimetablePage() {
         {(data) => <AttendanceOverview data={data} month={month} />}
       </QueryState>
       <WorkOffCard />
+      <ControlPeriodDialog period={opened} onClose={() => setOpened(null)} />
     </PageContainer>
   )
 }

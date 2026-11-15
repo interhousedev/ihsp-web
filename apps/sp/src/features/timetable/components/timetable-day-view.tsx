@@ -1,12 +1,14 @@
 "use client"
 
-import type { LessonItem, LessonResult } from "@ihsp/api"
+import type { ControlPeriodItem, LessonItem, LessonResult } from "@ihsp/api"
 import { useFormatters, useT } from "@ihsp/i18n"
 import { StateView } from "@ihsp/ui"
 import { useRef, type TouchEvent } from "react"
 import type { MarkedState } from "../../attendance/utils/lesson-states"
+import { periodEdge, periodOn } from "../utils/control-periods"
 import { lessonsOn } from "../utils/week"
 import { PHONE_PX_PER_MINUTE } from "../utils/timeline"
+import { ControlPeriodBar } from "./control-period-bar"
 import { TimeGrid } from "./time-grid"
 import { WeekStrip } from "./week-strip"
 
@@ -29,6 +31,8 @@ export function TimetableDayView({
   statuses,
   onDayChange,
   onStep,
+  periods,
+  onOpenPeriod,
 }: {
   day: string
   monday: string
@@ -41,10 +45,13 @@ export function TimetableDayView({
   statuses: ReadonlyMap<string, MarkedState>
   onDayChange: (date: string) => void
   onStep: (direction: 1 | -1) => void
+  periods: readonly ControlPeriodItem[]
+  onOpenPeriod: (period: ControlPeriodItem) => void
 }) {
   const t = useT("timetable")
   const f = useFormatters()
   const items = lessonsOn(lessons, day)
+  const period = periodOn(periods, day)
   const start = useRef<{ x: number; y: number } | null>(null)
 
   function onTouchStart(event: TouchEvent) {
@@ -72,6 +79,15 @@ export function TimetableDayView({
         statuses={statuses}
         onChange={onDayChange}
       />
+      {period ? (
+        <ControlPeriodBar
+          period={period}
+          edge={periodEdge(period, day)}
+          showLabel
+          onOpen={() => onOpenPeriod(period)}
+          className="rounded-md"
+        />
+      ) : null}
       {items.length === 0 ? (
         <StateView state="empty" emptyText={t("noLessons")} />
       ) : (
