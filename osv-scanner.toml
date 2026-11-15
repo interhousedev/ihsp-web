@@ -1,10 +1,2 @@
 # osv-scanner configuration. Each ignore is time-boxed: after ignoreUntil the advisory is reported again.
 # Review by 2027-02-04.
-
-# minimatch 5.1.9 (dev only: openapi-typescript -> @redocly/openapi-core, which pins ^5). The advisory describes the
-# optimizationLevel preprocessing of minimatch 10; the 5.x code has neither that option nor firstPhasePreProcess, and
-# the tool only runs on our own openapi.json. Only the advisory's range (everything below 11.0.1) matches.
-[[IgnoredVulns]]
-id = "GHSA-g3hv-75wg-m249"
-ignoreUntil = 2027-02-04
-reason = "minimatch 5.1.9: dev tooling only, the vulnerable optimizationLevel code does not exist in 5.x"

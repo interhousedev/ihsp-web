@@ -167,7 +167,7 @@ describe("Docker build inputs", () => {
   it("the nginx stages run unprivileged on 8080 with busybox wget (no curl, bash or apk packages)", () => {
     for (const name of ["Dockerfile", "Dockerfile.prebuilt"]) {
       const text = read(name)
-      expect(text).toMatch(/^FROM nginxinc\/nginx-unprivileged:1\.30\.1-alpine@sha256:[0-9a-f]{64}$/m)
+      expect(text).toMatch(/^FROM nginxinc\/nginx-unprivileged:1\.31\.7-alpine@sha256:[0-9a-f]{64}$/m)
       // The security upgrade runs as root, before the stage returns to the unprivileged user
       const upgrade = text.indexOf("RUN apk upgrade --no-cache\n")
       expect(upgrade).toBeGreaterThan(text.indexOf("USER root\n"))

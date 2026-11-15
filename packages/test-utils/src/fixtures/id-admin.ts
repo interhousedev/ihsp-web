@@ -75,15 +75,13 @@ export const adminTeachers: AdminUser[] = [
     { ...persons.smirnova, login: "smirnova.elena" },
     { ...persons.yusupov, login: "yusupov.farrukh" },
     { ...persons.karimova, login: "karimova.dilnoza" },
-  ].map(
-    (teacher): AdminUser => ({
-      ...adminTeacherUser,
-      id: teacher.id,
-      login: teacher.login,
-      first_name: teacher.first_name,
-      last_name: teacher.last_name,
-    }),
-  ),
+  ].map((teacher): AdminUser => ({
+    ...adminTeacherUser,
+    id: teacher.id,
+    login: teacher.login,
+    first_name: teacher.first_name,
+    last_name: teacher.last_name,
+  })),
 ]
 
 export const adminUserDetail: AdminUserDetail = {

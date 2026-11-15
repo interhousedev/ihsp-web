@@ -9,7 +9,7 @@ type Squeezed = { text: string; origin: number[] }
 function squeeze(source: string): Squeezed {
   let text = ""
   const origin: number[] = []
-  for (let index = 0; index < source.length; ) {
+  for (let index = 0; index < source.length;) {
     const point = source.codePointAt(index)!
     const char = String.fromCodePoint(point)
     if (!/\s|\u00ad|\u200b/u.test(char)) {
