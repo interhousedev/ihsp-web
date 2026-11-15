@@ -43,6 +43,12 @@ describe("profile page", () => {
     expect(link.getAttribute("href")).toBe("http://localhost:3001/security/emis/")
   })
 
+  test("the student card (QR) opens from the profile page", async () => {
+    renderSp(<ProfilePage />, { route: "/profile/" })
+
+    expect(await screen.findByRole("button", { name: "Student card" })).toBeInTheDocument()
+  })
+
   test("Telegram lists the linked accounts and leads to the ID service", async () => {
     renderSp(<ProfilePage />, { route: "/profile/" })
 

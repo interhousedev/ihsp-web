@@ -93,33 +93,10 @@
   "home": {
     "title": "Bosh sahifa",
     "course": "{course}-kurs",
+    "openProfile": "Profilni ochish",
     "studentCard": "Talaba kartasi",
     "notifications": "Bildirishnomalar",
-    "notificationsCount": "Bildirishnomalar, oʻqilmagan: {count}",
-    "stats": {
-      "attendance": "Qoldirilgan",
-      "average": "Oʻrtacha",
-      "rating": "Reyting"
-    },
-    "lessons": "Bugungi darslar",
-    "all": "Hammasi",
-    "noLessons": "Bugun dars yoʻq",
-    "lessonsError": "Darslarni yuklab boʻlmadi",
-    "sections": "Boʻlimlar",
-    "tiles": {
-      "timetable": "Dars jadvali",
-      "subjects": "Fanlar",
-      "grades": "Baholar",
-      "homework": "Uy vazifalari",
-      "exams": "Imtihonlar",
-      "excuses": "Sabablar",
-      "certificates": "Maʼlumotnomalar",
-      "teachers": "Oʻqituvchilar",
-      "myGroup": "Mening guruhim",
-      "notebooks": "Daftarlar",
-      "flashcards": "Kartochkalar",
-      "files": "Fayllar"
-    }
+    "notificationsCount": "Bildirishnomalar, oʻqilmagan: {count}"
   },
   "dashboard": {
     "title": "Bosh sahifa",

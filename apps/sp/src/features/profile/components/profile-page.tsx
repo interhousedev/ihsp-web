@@ -3,6 +3,7 @@
 import { getConfig } from "@ihsp/config"
 import { useT } from "@ihsp/i18n"
 import { PageContainer } from "@ihsp/ui"
+import { StudentCardButton } from "../../student-card/components/student-card-button"
 import { LinkButton } from "../../shared/components/link-button"
 import { QueryState } from "@ihsp/features-core"
 import { useAccount, useProfile } from "../hooks/use-profile"
@@ -43,6 +44,7 @@ export function ProfilePage() {
       title={t("title")}
       actions={
         <div className="flex flex-wrap gap-2">
+          <StudentCardButton />
           <LinkButton href="/profile/account/">{t("accountLink")}</LinkButton>
           <LinkButton href="/profile/face/">{t("faceLink")}</LinkButton>
           <LinkButton href={`${getConfig().ID_URL}/security/`}>{t("security")}</LinkButton>

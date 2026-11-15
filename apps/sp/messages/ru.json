@@ -93,33 +93,10 @@
   "home": {
     "title": "Главная",
     "course": "{course}-курс",
+    "openProfile": "Открыть профиль",
     "studentCard": "Студенческий билет",
     "notifications": "Уведомления",
-    "notificationsCount": "Уведомления, непрочитанных: {count}",
-    "stats": {
-      "attendance": "Пропуски",
-      "average": "Средний балл",
-      "rating": "Рейтинг"
-    },
-    "lessons": "Уроки сегодня",
-    "all": "Все",
-    "noLessons": "Сегодня уроков нет",
-    "lessonsError": "Не удалось загрузить уроки",
-    "sections": "Разделы",
-    "tiles": {
-      "timetable": "Расписание",
-      "subjects": "Предметы",
-      "grades": "Оценки",
-      "homework": "Задания",
-      "exams": "Экзамены",
-      "excuses": "Причины",
-      "certificates": "Справки",
-      "teachers": "Преподаватели",
-      "myGroup": "Моя группа",
-      "notebooks": "Блокноты",
-      "flashcards": "Карточки",
-      "files": "Файлы"
-    }
+    "notificationsCount": "Уведомления, непрочитанных: {count}"
   },
   "dashboard": {
     "title": "Главная",

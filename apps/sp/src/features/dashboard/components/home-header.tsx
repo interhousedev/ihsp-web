@@ -2,36 +2,23 @@
 
 import { TeacherAvatar } from "@ihsp/features-core"
 import { useT } from "@ihsp/i18n"
-import { Icons, Skeleton } from "@ihsp/ui"
-import { useState } from "react"
+import Link from "next/link"
 import { useScrolled } from "../../today/dashboard/use-scrolled"
-import { StudentCardSheet } from "../../student-card/components/student-card-sheet"
 import { useHomeStudent } from "../hooks/use-home-student"
-import { HomeStatTiles } from "./home-stat-tiles"
 
-const SQUARE_BUTTON =
-  "bg-card text-primary focus-visible:ring-ring relative inline-flex size-11 shrink-0 items-center justify-center rounded-xl shadow-sm outline-none focus-visible:ring-2"
-
-function HeaderButtons({ onOpenCard }: { onOpenCard: () => void }) {
-  const t = useT("home")
-  return (
-    <button type="button" className={SQUARE_BUTTON} aria-label={t("studentCard")} onClick={onOpenCard}>
-      <Icons.qrCode className="size-5" aria-hidden />
-    </button>
-  )
-}
+const PROFILE_HREF = "/profile/"
+const LINK_RING = "focus-visible:ring-ring rounded-full outline-none focus-visible:ring-2"
 
 /**
- * The brand-coloured top of Home: avatar, name, `group | N-course`, the student card and notification buttons and the
- * three stat tiles. It scrolls away with the page; once it is out of view an opaque compact bar (name and buttons) sticks
- * to the top. The bar is a zero-height sticky anchor with an absolutely placed, opaque bar, so showing it never moves
- * the content and nothing shows through it. It keeps its end clear of the shell's floating controls.
+ * The brand-coloured top of Home: just the student's face, a link to the profile. It scrolls away with the page; once
+ * it is out of view an opaque compact bar (small face and name, one link to the profile) sticks to the top. The bar is a
+ * zero-height sticky anchor with an absolutely placed, opaque bar, so showing it never moves the content and nothing
+ * shows through it. It keeps its end clear of the shell's floating controls.
  */
 export function HomeHeader() {
+  const t = useT("home")
   const student = useHomeStudent()
   const compact = useScrolled(24)
-  const [open, setOpen] = useState(false)
-  const openCard = () => setOpen(true)
 
   return (
     <>
@@ -45,37 +32,26 @@ export function HomeHeader() {
             compact ? "translate-y-0" : "-translate-y-full"
           }`}
         >
-          <p className="min-w-0 flex-1 truncate text-base font-semibold">{student.name}</p>
-          <HeaderButtons onOpenCard={openCard} />
-          <span aria-hidden className="w-(--shell-controls-width,0px) shrink-0" />
+          {/* Below md the shell's floating controls sit centred: only the face, on the start side, keeps the centre clear. */}
+          <Link
+            href={PROFILE_HREF}
+            aria-label={t("openProfile")}
+            className="flex min-w-0 items-center gap-3 rounded-lg outline-none focus-visible:ring-2 focus-visible:ring-current md:flex-1"
+          >
+            <TeacherAvatar name={student.name} photoUrl={student.photoUrl} size="default" decorative />
+            <span className="hidden min-w-0 flex-1 truncate text-base font-semibold md:block">{student.name}</span>
+          </Link>
+          <span aria-hidden className="hidden w-(--shell-controls-width,0px) shrink-0 md:block" />
         </div>
       </div>
       <header
         data-testid="home-header"
-        className="bg-primary text-primary-foreground flex flex-col gap-4 rounded-b-3xl px-4 pt-(--shell-top-reserve) pb-5"
+        className="bg-primary text-primary-foreground flex justify-center rounded-b-3xl px-4 pt-(--shell-top-reserve) pb-5"
       >
-        <div className="mx-auto flex w-full max-w-4xl items-center gap-3">
+        <Link href={PROFILE_HREF} aria-label={t("openProfile")} className={LINK_RING}>
           <TeacherAvatar name={student.name} photoUrl={student.photoUrl} size="lg" decorative />
-          <div className="flex min-w-0 flex-1 flex-col">
-            {student.pending ? (
-              <>
-                <Skeleton className="h-6 w-40 max-w-full" />
-                <Skeleton className="mt-1 h-4 w-28" />
-              </>
-            ) : (
-              <>
-                <h1 className="line-clamp-2 text-lg leading-tight font-semibold break-words">{student.name}</h1>
-                {student.line ? <p className="truncate text-sm opacity-90">{student.line}</p> : null}
-              </>
-            )}
-          </div>
-          <HeaderButtons onOpenCard={openCard} />
-        </div>
-        <div className="mx-auto w-full max-w-4xl">
-          <HomeStatTiles />
-        </div>
+        </Link>
       </header>
-      <StudentCardSheet open={open} onOpenChange={setOpen} />
     </>
   )
 }

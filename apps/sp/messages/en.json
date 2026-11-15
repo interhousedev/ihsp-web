@@ -93,33 +93,10 @@
   "home": {
     "title": "Home",
     "course": "Course {course}",
+    "openProfile": "Open profile",
     "studentCard": "Student card",
     "notifications": "Notifications",
-    "notificationsCount": "Notifications, {count} unread",
-    "stats": {
-      "attendance": "Missed",
-      "average": "Average",
-      "rating": "Rating"
-    },
-    "lessons": "Today's lessons",
-    "all": "All",
-    "noLessons": "No lessons today",
-    "lessonsError": "Could not load today's lessons",
-    "sections": "Sections",
-    "tiles": {
-      "timetable": "Timetable",
-      "subjects": "Subjects",
-      "grades": "Marks",
-      "homework": "Homework",
-      "exams": "Exams",
-      "excuses": "Excuses",
-      "certificates": "Certificates",
-      "teachers": "Teachers",
-      "myGroup": "My group",
-      "notebooks": "Notebooks",
-      "flashcards": "Flash cards",
-      "files": "Files"
-    }
+    "notificationsCount": "Notifications, {count} unread"
   },
   "dashboard": {
     "title": "Dashboard",

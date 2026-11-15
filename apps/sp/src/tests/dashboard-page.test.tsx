@@ -1,7 +1,7 @@
 /** The Home page (`/`): the student's widget grid, the only Today-style page; `/today/` redirects here. */
 import { afterEach, beforeEach, describe, expect, test } from "bun:test"
 import { apiUrl, server } from "@ihsp/test-utils"
-import { act, screen } from "@testing-library/react"
+import { act, screen, within } from "@testing-library/react"
 import { HttpResponse, http } from "msw"
 import { DashboardPage } from "../features/dashboard/components/dashboard-page"
 import { configureTests, findCard, freezeTime, renderSp, unfreezeTime } from "./helpers"
@@ -27,18 +27,22 @@ describe("Home", () => {
     expect(await screen.findByRole("button", { name: /try again/i })).toBeInTheDocument()
   })
 
-  test("shows the header with the three stat tiles, the lessons section and the tile grid", async () => {
+  test("the header is just the student's face, a link to the profile; nothing repeats the navigation", async () => {
     renderSp(<DashboardPage />)
 
     expect(await screen.findByTestId("home-header")).toBeInTheDocument()
-    const stats = screen.getByTestId("home-stats")
-    expect(stats.textContent).toContain("Rating")
-    expect(stats.textContent).toContain("-")
-    const all = await screen.findByRole("link", { name: "All" })
-    expect(all.getAttribute("href")).toMatch(/^\/timetable\/?$/)
-    const nav = screen.getByRole("navigation", { name: "Sections" })
-    expect(nav.querySelectorAll("a").length).toBeGreaterThanOrEqual(8)
-    expect(screen.getByRole("button", { name: "Student card" })).toBeInTheDocument()
+    const face = within(screen.getByTestId("home-header")).getByRole("link", { name: "Open profile" })
+    expect(face.getAttribute("href")).toMatch(/^\/profile\/?$/)
+    expect(screen.queryByTestId("home-stats")).toBeNull()
+    expect(screen.queryByRole("navigation", { name: "Sections" })).toBeNull()
+    expect(screen.queryByRole("button", { name: "Student card" })).toBeNull()
+  })
+
+  test("the compact bar links the face and the name to the profile", async () => {
+    renderSp(<DashboardPage />)
+    const bar = await screen.findByTestId("home-compact-bar")
+    const link = bar.querySelector("a") as HTMLAnchorElement
+    expect(link.getAttribute("href")).toMatch(/^\/profile\/?$/)
   })
 
   test("the compact bar appears after scrolling", async () => {
