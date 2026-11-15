@@ -2,6 +2,7 @@
 
 import {
   getMyGroupProgressQuery,
+  isApiError,
   getMyGroupQuery,
   type GroupMemberRow,
   type GroupPersonRef,
@@ -10,15 +11,15 @@ import {
 } from "@ihsp/api"
 import { GroupProgressSection } from "@ihsp/features-core"
 import { useT } from "@ihsp/i18n"
-import { Avatar, AvatarFallback, Badge, PageContainer, StateView } from "@ihsp/ui"
+import { Badge, PageContainer, StateView, UserAvatar } from "@ihsp/ui"
 import { useQuery } from "@tanstack/react-query"
 import type { ReactNode } from "react"
 import { GroupRatingSection } from "@/features/grades/components/group-rating-section"
 
 type Person = GroupPersonRef | GroupTeacherRef
 
-function initials(person: Person): string {
-  return `${person.first_name.charAt(0)}${person.last_name.charAt(0)}`.toUpperCase()
+function fullName(person: Person): string {
+  return `${person.first_name} ${person.last_name}`
 }
 
 /** The public contacts a student may see of the homeroom teacher; blank ones are left out. */
@@ -54,12 +55,8 @@ function RoleCard({ label, person, children }: { label: string; person: Person |
       <p className="text-muted-foreground text-xs font-medium">{label}</p>
       {person ? (
         <div className="flex items-center gap-3">
-          <Avatar className="size-11 shrink-0">
-            <AvatarFallback>{initials(person)}</AvatarFallback>
-          </Avatar>
-          <p className="min-w-0 font-semibold break-words">
-            {person.first_name} {person.last_name}
-          </p>
+          <UserAvatar name={fullName(person)} imageUrl={person.photo_url} className="size-14 text-base" />
+          <p className="min-w-0 font-semibold break-words">{fullName(person)}</p>
         </div>
       ) : (
         <p className="text-muted-foreground text-sm">{t("notAssigned")}</p>
@@ -78,7 +75,7 @@ function TeacherContactList({ contacts }: { contacts: TeacherContacts }) {
       {lines.map((line) => (
         <div key={line.key} className="contents">
           <dt className="text-muted-foreground">{t(CONTACT_LABEL[line.key])}</dt>
-          <dd className="break-all">{line.value}</dd>
+          <dd className="break-words">{line.value}</dd>
         </div>
       ))}
     </dl>
@@ -87,17 +84,17 @@ function TeacherContactList({ contacts }: { contacts: TeacherContacts }) {
 
 function MemberList({ members }: { members: GroupMemberRow[] }) {
   const t = useT("myGroup")
+  if (members.length === 0) return null
   return (
     <section aria-labelledby="my-group-members" className="flex flex-col gap-2">
       <h2 id="my-group-members" className="text-base font-semibold">
         {t("members")}
       </h2>
-      <ul aria-label={t("members")} className="bg-card divide-y rounded-card border">
+      <ul aria-label={t("members")} className="grid grid-cols-1 gap-2 min-[400px]:grid-cols-2 lg:grid-cols-3">
         {members.map((member) => (
-          <li key={member.id} className="flex min-h-11 items-center justify-between gap-3 px-4 py-2">
-            <span className="min-w-0 break-words">
-              {member.first_name} {member.last_name}
-            </span>
+          <li key={member.id} className="bg-card flex min-h-14 items-center gap-3 rounded-card border p-3">
+            <UserAvatar name={fullName(member)} imageUrl={member.photo_url} className="size-10 text-sm" />
+            <span className="min-w-0 flex-1 break-words">{fullName(member)}</span>
             <span className="flex shrink-0 gap-1">
               {member.is_head_student ? <Badge variant="secondary">{t("head")}</Badge> : null}
               {member.is_me ? <Badge variant="outline">{t("you")}</Badge> : null}
@@ -144,6 +141,8 @@ export function MyGroupPage() {
             </>
           ) : null}
         </div>
+      ) : isApiError(query.error) && query.error.type === "academic/student-not-found" ? (
+        <StateView state="empty" emptyText={t("noGroup")} />
       ) : (
         <StateView
           state={query.isError ? "error" : "loading"}

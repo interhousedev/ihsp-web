@@ -1,6 +1,6 @@
 /** My group: the group card, homeroom teacher, head student and members; marks only for the head student. */
 import { describe, expect, test } from "bun:test"
-import { apiUrl, myGroupForMember, myGroupUnassigned, server } from "@ihsp/test-utils"
+import { apiUrl, problem, myGroupForMember, myGroupUnassigned, server } from "@ihsp/test-utils"
 import { screen, within } from "@testing-library/react"
 import { HttpResponse, http } from "msw"
 import { MyGroupPage } from "../features/my-group/components/my-group-page"
@@ -77,5 +77,37 @@ describe("my group", () => {
     renderSp(<MyGroupPage />)
 
     expect(await screen.findByRole("alert")).toBeInTheDocument()
+  })
+
+  test("classmates are shown in a grid with an initials fallback", async () => {
+    renderSp(<MyGroupPage />)
+
+    const members = await screen.findByRole("list", { name: "Members" })
+    const bobur = within(members)
+      .getAllByRole("listitem")
+      .find((item) => item.textContent?.includes("Bobur Rashidov"))
+    expect(bobur).toHaveTextContent("BR")
+  })
+
+  test("shows a loading state before the group arrives", () => {
+    server.use(http.get(apiUrl("/v1/me/group"), () => new Promise(() => {})))
+
+    renderSp(<MyGroupPage />)
+
+    expect(screen.queryByRole("region", { name: "2TN2" })).not.toBeInTheDocument()
+    expect(screen.queryByRole("list", { name: "Members" })).not.toBeInTheDocument()
+  })
+
+  test("a student without a group sees an empty state, not an error", async () => {
+    server.use(
+      http.get(apiUrl("/v1/me/group"), () =>
+        problem(404, "academic/student-not-found", "The user has no student record"),
+      ),
+    )
+
+    renderSp(<MyGroupPage />)
+
+    expect(await screen.findByText("You are not in a group yet")).toBeInTheDocument()
+    expect(screen.queryByRole("button", { name: "Try again" })).not.toBeInTheDocument()
   })
 })
