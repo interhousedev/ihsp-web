@@ -1,8 +1,9 @@
-import type { ItemDetail, ItemFile, TocEntry } from "@ihsp/api"
+import type { ItemDetail, ItemFile, MarkupShape, TocEntry } from "@ihsp/api"
 import type { Ref } from "react"
 import type { FileLinks } from "./lib/file-link"
 import type { Locator } from "./lib/locator"
 import type { ReaderSettings } from "./lib/reader-settings"
+import type { MarkupDraw } from "./markup-layer"
 import type { ViewAnnotation } from "./use-reader-annotations"
 
 // The contract between the reader frame (toolbar, panels, keys, annotations) and the three views (PDF, EPUB, text).
@@ -36,6 +37,8 @@ export type SearchHit = {
   cfi: string | null
   label: string | null
   excerpt: { pre: string; match: string; post: string }
+  /** PDF: the stored boxes of the hit as fractions of the page. */
+  boxes?: readonly { x: number; y: number; w: number; h: number }[]
 }
 
 /** A contents entry as the views navigate it: a page, or an href of the EPUB. */
@@ -78,6 +81,9 @@ export type ReaderViewProps = {
   onAnnotationClick(id: string): void
   onReady(info: { pages: number | null; title: string | null }): void
   onError(error: unknown): void
+  /** Drawings by page (PDF only) and the tool that adds more; `draw: null` means no tool is chosen. */
+  markup?: Readonly<Record<number, readonly MarkupShape[]>>
+  draw?: MarkupDraw | null
   /** The reader handle; set when the view is ready. */
   ref?: Ref<ReaderHandle>
 }

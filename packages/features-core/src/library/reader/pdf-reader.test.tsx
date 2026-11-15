@@ -1,12 +1,13 @@
 import { describe, expect, it, mock } from "bun:test"
-import { libDetails } from "@ihsp/test-utils"
+import { apiUrl, libDetails, server } from "@ihsp/test-utils"
 import { act, screen, waitFor } from "@testing-library/react"
+import { http, HttpResponse } from "msw"
 import { createRef, type RefObject } from "react"
 import { allowSlowRenders, renderLibrary } from "../test-support"
 import { createFileLinks } from "./lib/file-link"
 import { DEFAULT_SETTINGS } from "./lib/reader-settings"
 import { PdfReader } from "./pdf-reader"
-import type { ReaderHandle, ReaderPosition, ReaderSelection, ReaderViewProps } from "./reader-types"
+import type { ReaderHandle, SearchHit, ReaderPosition, ReaderSelection, ReaderViewProps } from "./reader-types"
 import { createFakePdf } from "./testing/fake-engines"
 
 allowSlowRenders()
@@ -125,36 +126,41 @@ describe("PdfReader", () => {
     expect(selections.at(-1)).toMatchObject({ text: "Velocity on page 7.", page: 7, locator: { page: 7 } })
   })
 
-  it("searches the pages in order and finds Uzbek text in either script", async () => {
-    const fake = createFakePdf(4, (page) => (page === 3 ? "Ўзбек тили va o'zbek adabiyoti" : `Page ${page}`))
-    const handle = createRef<ReaderHandle>()
-    renderLibrary(
-      <PdfReader
-        item={item}
-        file={file}
-        links={links}
-        start={null}
-        annotations={[]}
-        settings={DEFAULT_SETTINGS}
-        language="uz"
-        onPosition={() => undefined}
-        onSelection={() => undefined}
-        onAnnotationClick={() => undefined}
-        onReady={() => undefined}
-        onError={() => undefined}
-        ref={handle}
-        loadEngine={async () => fake.engine}
-      />,
+  it("searches through the server, without rendering a page, and marks the stored boxes of the hit", async () => {
+    let asked: URL | null = null
+    server.use(
+      http.get(apiUrl(`/v1/library/items/${item.id}/text/search`), ({ request }) => {
+        asked = new URL(request.url)
+        return HttpResponse.json({
+          query: "o'zbek",
+          truncated: false,
+          hits: [
+            {
+              page: 3,
+              snippet: { pre: "Ўзбек тили va ", match: "o'zbek", post: " adabiyoti" },
+              start: 14,
+              end: 20,
+              boxes: [{ x: 0.1, y: 0.2, w: 0.3, h: 0.05 }],
+              source: "ocr",
+            },
+          ],
+        })
+      }),
     )
+    const { handle } = setup({}, 4)
     await waitFor(() => expect(handle.current).not.toBeNull())
 
-    const hits = []
+    const hits: SearchHit[] = []
     for await (const hit of handle.current!.search!("o'zbek", new AbortController().signal)) hits.push(hit)
 
-    expect(hits.map((hit) => [hit.page, hit.excerpt.match])).toEqual([
-      [3, "Ўзбек"],
-      [3, "o'zbek"],
-    ])
+    expect(asked!.searchParams.get("q")).toBe("o'zbek")
+    expect(hits.map((hit) => [hit.page, hit.excerpt.match])).toEqual([[3, "o'zbek"]])
+
+    act(() => handle.current!.showHit!(hits[0]!))
+    await waitFor(() => expect(document.querySelector("[data-search-hit]")).not.toBeNull(), { timeout: 3000 })
+    const mark = document.querySelector<HTMLElement>("[data-search-hit]")!
+    expect(mark.style.left).toBe("10%")
+    expect(mark.style.top).toBe("20%")
   })
 
   it("shows the contents found in the file when the server has none", async () => {

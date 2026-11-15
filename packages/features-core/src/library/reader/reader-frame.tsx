@@ -3,7 +3,8 @@
 import type { Annotation, AnnotationColor, ItemDetail, ItemFile } from "@ihsp/api"
 import { useT } from "@ihsp/i18n"
 import { StateView, useIsMobile } from "@ihsp/ui"
-import { useCallback, useEffect, useMemo, useRef, useState } from "react"
+import { useRouter } from "next/navigation"
+import { useCallback, useEffect, useMemo, useRef, useState, type MouseEvent } from "react"
 import { toast } from "sonner"
 import { AddToNotebookDialog, ReportDialog } from "../catalog"
 import { useLibraryAccess } from "../hooks/use-library-access"
@@ -40,6 +41,12 @@ import { TocPanel } from "./toc-panel"
 import { useInertShell } from "./use-inert-shell"
 import { useProgressSaver } from "./use-progress-saver"
 import { useReaderAnnotations, type ViewAnnotation } from "./use-reader-annotations"
+import { useReaderMarkup } from "./use-reader-markup"
+import { MARKUP_COLORS } from "./lib/colors"
+import { MARKUP_WIDTHS } from "./lib/markup"
+import { MarkupExitDialog } from "./markup-exit-dialog"
+import type { MarkupDraw } from "./markup-layer"
+import { MarkupToolbar, type MarkupToolChoice } from "./markup-toolbar"
 import { useReaderKeys } from "./use-reader-keys"
 
 export type ReaderFrameProps = {
@@ -89,6 +96,7 @@ export function ReaderFrame({ item, file, start, startFraction, engines }: Reade
   const [settings, updateSettings] = useReaderSettings()
   const notes = useReaderAnnotations({ itemId, fileId: file.id, enabled: signedIn })
   const progress = useProgressSaver({ itemId, fileId: file.id, enabled: signedIn })
+  const markup = useReaderMarkup({ itemId, fileId: file.id, signedIn })
   const view = useRef<ReaderHandle>(null)
   const root = useRef<HTMLDivElement>(null)
 
@@ -290,6 +298,34 @@ export function ReaderFrame({ item, file, start, startFraction, engines }: Reade
     }
   })
 
+  // - - - Drawings (PDF) - - -
+
+  const router = useRouter()
+  const [markupOpen, setMarkupOpen] = useState(false)
+  const [tool, setTool] = useState<MarkupToolChoice | null>("pen")
+  const [color, setColor] = useState<string>(MARKUP_COLORS[0])
+  const [width, setWidth] = useState<number>(MARKUP_WIDTHS[1])
+  const [exitOpen, setExitOpen] = useState(false)
+  const { add: addShape, erase: eraseShape } = markup
+  const draw = useMemo<MarkupDraw | null>(
+    () => (markupOpen && tool ? { tool, color, width, onAdd: addShape, onErase: eraseShape } : null),
+    [markupOpen, tool, color, width, addShape, eraseShape],
+  )
+  const backHref = itemHref(itemId)
+  const leave = () => router.push(backHref)
+  function onBack(event: MouseEvent<HTMLAnchorElement>) {
+    if (!markup.dirty) return
+    event.preventDefault()
+    setExitOpen(true)
+  }
+  const { dirty: markupDirty } = markup
+  useEffect(() => {
+    if (!markupDirty) return
+    const warn = (event: BeforeUnloadEvent) => event.preventDefault()
+    window.addEventListener("beforeunload", warn)
+    return () => window.removeEventListener("beforeunload", warn)
+  }, [markupDirty])
+
   // - - - The view - - -
 
   const common: ReaderViewProps = {
@@ -307,6 +343,7 @@ export function ReaderFrame({ item, file, start, startFraction, engines }: Reade
     onReady,
     onError,
     ref: view,
+    ...(format === "pdf" ? { markup: markup.pages, draw } : {}),
   }
   const reader =
     format === "pdf" ? (
@@ -355,7 +392,24 @@ export function ReaderFrame({ item, file, start, startFraction, engines }: Reade
         onSettings={() => setSettingsOpen(true)}
         onMenu={() => setMenuOpen(true)}
         waiting={notes.waiting}
+        onBack={onBack}
+        {...(format === "pdf" ? { onMarkup: () => setMarkupOpen((open) => !open), markupOpen } : {})}
       />
+      {markupOpen && format === "pdf" ? (
+        <MarkupToolbar
+          markup={markup}
+          tool={tool}
+          onTool={setTool}
+          color={color}
+          onColor={setColor}
+          width={width}
+          onWidth={setWidth}
+          onClose={() => {
+            setMarkupOpen(false)
+            setTool(null)
+          }}
+        />
+      ) : null}
       {file.text_status === "no_text" ? (
         <p role="status" className="bg-muted text-muted-foreground shrink-0 border-b px-3 py-2 text-xs">
           {t("noText")}
@@ -476,6 +530,22 @@ export function ReaderFrame({ item, file, start, startFraction, engines }: Reade
         />
       ) : null}
       <ReportDialog itemId={itemId} open={reportOpen} onOpenChange={setReportOpen} />
+      <MarkupExitDialog
+        open={exitOpen}
+        canSave={markup.canPersist}
+        saving={markup.saving}
+        onSave={() => {
+          void markup.save().then((saved) => {
+            if (saved) leave()
+            else setExitOpen(false)
+          })
+        }}
+        onDiscard={() => {
+          markup.discard()
+          leave()
+        }}
+        onStay={() => setExitOpen(false)}
+      />
     </div>
   )
 }

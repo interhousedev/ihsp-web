@@ -456,6 +456,24 @@ describe("ReaderPage: keyboard", () => {
 
 describe("ReaderPage: search and contents", () => {
   it("finds the text on the pages and goes to the hit", async () => {
+    server.use(
+      http.get(apiUrl(`/v1/library/items/*/text/search`), () =>
+        HttpResponse.json({
+          query: "second line of page 4",
+          truncated: false,
+          hits: [
+            {
+              page: 4,
+              snippet: { pre: "Velocity on page 4.\n", match: "Second line of page 4", post: "." },
+              start: 20,
+              end: 41,
+              boxes: [{ x: 0.1, y: 0.2, w: 0.3, h: 0.05 }],
+              source: "text_layer",
+            },
+          ],
+        }),
+      ),
+    )
     const { user } = renderPdf(`${PDF_ROUTE}&page=1`, false, 6)
     await screen.findByRole("button", { name: "Page 1 of 6" })
     await user.click(screen.getByRole("button", { name: "Search in this item" }))
@@ -468,6 +486,11 @@ describe("ReaderPage: search and contents", () => {
   })
 
   it("says when nothing was found", async () => {
+    server.use(
+      http.get(apiUrl(`/v1/library/items/*/text/search`), () =>
+        HttpResponse.json({ query: "zzzz", truncated: false, hits: [] }),
+      ),
+    )
     const { user } = renderPdf(`${PDF_ROUTE}&page=1`, false, 3)
     await user.click(await screen.findByRole("button", { name: "Search in this item" }))
 

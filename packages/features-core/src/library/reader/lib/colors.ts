@@ -46,6 +46,9 @@ export const EPUB_FILL: Record<AnnotationColor, string> = {
   pink: "#f472b6",
 }
 
+/** Ink for the markup tools; stored with the drawing, so fixed values rather than theme tokens. */
+export const MARKUP_COLORS = ["#e53935", "#fb8c00", "#fdd835", "#43a047", "#1e88e5", "#8e24aa", "#212121"] as const
+
 export function isAnnotationColor(value: unknown): value is AnnotationColor {
   return typeof value === "string" && (ANNOTATION_COLORS as readonly string[]).includes(value)
 }

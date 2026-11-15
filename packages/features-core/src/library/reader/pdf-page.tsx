@@ -1,9 +1,11 @@
 "use client"
 
 import { useT } from "@ihsp/i18n"
+import type { ItemTextBox, MarkupShape } from "@ihsp/api"
 import { Skeleton } from "@ihsp/ui"
 import { memo, useEffect, useMemo, useRef, useState } from "react"
 import { HighlightLayer } from "./highlight-layer"
+import { MarkupLayer, type MarkupDraw } from "./markup-layer"
 import { isCancelled, type PdfDocumentHandle, type PdfPageHandle } from "./lib/pdf-types"
 import type { ViewAnnotation } from "./use-reader-annotations"
 
@@ -19,7 +21,11 @@ export type PdfPageProps = {
   onSize(number: number, size: { width: number; height: number }): void
   annotations: readonly ViewAnnotation[]
   searchText: string | null
+  searchBoxes: readonly ItemTextBox[] | null
   onNoteClick(id: string): void
+  /** The drawings on this page and the tool that draws more (`null`: the page is only read). */
+  markup: readonly MarkupShape[]
+  draw: MarkupDraw | null
 }
 
 /**
@@ -37,7 +43,10 @@ export const PdfPage = memo(function PdfPage({
   onSize,
   annotations,
   searchText,
+  searchBoxes,
   onNoteClick,
+  markup,
+  draw,
 }: PdfPageProps) {
   const t = useT("library.reader")
   const canvasRef = useRef<HTMLCanvasElement>(null)
@@ -104,10 +113,14 @@ export const PdfPage = memo(function PdfPage({
         anchor={box}
         annotations={ownAnnotations}
         searchText={searchText}
+        searchBoxes={searchBoxes}
         onNoteClick={onNoteClick}
         version={drawn}
         multiply
       />
+      {markup.length > 0 || draw ? (
+        <MarkupLayer page={number} width={width} height={height} shapes={markup} draw={draw} />
+      ) : null}
     </div>
   )
 })

@@ -94,7 +94,37 @@
         "keys": "Esc",
         "action": "Закрыть панель или снять выделение"
       }
-    }
+    },
+    "markup": "Рисовать на странице",
+    "markupTools": "Инструменты рисования",
+    "markupColor": "Цвет {color}",
+    "tool": {
+      "pen": "Ручка",
+      "pencil": "Карандаш",
+      "highlighter": "Маркер",
+      "rect": "Прямоугольник",
+      "ellipse": "Эллипс",
+      "line": "Линия",
+      "arrow": "Стрелка",
+      "eraser": "Ластик"
+    },
+    "width": {
+      "thin": "Тонкая",
+      "medium": "Средняя",
+      "thick": "Толстая"
+    },
+    "undo": "Отменить",
+    "redo": "Повторить",
+    "markupTemporary": "Временно",
+    "markupSave": "Сохранить",
+    "markupSaveFailed": "Не сохранилось, повторить",
+    "markupClose": "Закрыть инструменты рисования",
+    "markupPdfOnly": "Рисовать можно в файлах PDF.",
+    "markupExitTitle": "Несохранённые рисунки",
+    "markupExitBody": "Сохранить рисунки в этом издании или отбросить их?",
+    "markupExitVisitor": "Рисунки временные и пропадут.",
+    "markupStay": "Продолжить",
+    "markupDiscard": "Отбросить"
   },
   "annotation": {
     "selection": "Выделенный текст",

@@ -1,5 +1,6 @@
 "use client"
 
+import type { ItemTextBox, MarkupShape } from "@ihsp/api"
 import { useT } from "@ihsp/i18n"
 import { StateView } from "@ihsp/ui"
 import {
@@ -34,6 +35,7 @@ const ESTIMATE: Size = { width: 595, height: 842 }
 /** happy-dom and a window that is not laid out yet report 0: use a phone-sized window. */
 const FALLBACK_WINDOW: Size = { width: 360, height: 640 }
 const NO_ANNOTATIONS: readonly ViewAnnotation[] = []
+const NO_SHAPES: readonly MarkupShape[] = []
 
 function useWindowSize(ref: RefObject<HTMLElement | null>): Size {
   const [size, setSize] = useState<Size>(FALLBACK_WINDOW)
@@ -56,16 +58,18 @@ function useWindowSize(ref: RefObject<HTMLElement | null>): Size {
 type ViewportProps = ReaderViewProps & { doc: PdfDocumentHandle }
 
 function PdfViewport({
+  item,
   doc,
   start,
   startFraction,
   annotations,
   settings,
-  language,
   onPosition,
   onSelection,
   onAnnotationClick,
   onReady,
+  markup,
+  draw,
   ref,
 }: ViewportProps) {
   const t = useT("library.reader")
@@ -75,7 +79,7 @@ function PdfViewport({
   const sizes = useRef(new Map<number, Size>())
   const [sizesVersion, setSizesVersion] = useState(0)
   const [scrollTop, setScrollTop] = useState(0)
-  const [search, setSearch] = useState<{ page: number; text: string } | null>(null)
+  const [search, setSearch] = useState<{ page: number; text: string; boxes: readonly ItemTextBox[] } | null>(null)
   const pageCount = doc.pageCount
 
   const onSize = useCallback((number: number, size: Size) => {
@@ -230,16 +234,24 @@ function PdfViewport({
       },
       search: (query, signal) =>
         (async function* (): AsyncGenerator<SearchHit> {
+          if (!item.id) return
           let count = 0
-          for await (const hit of searchPdf(doc, query, language, signal)) {
+          for await (const hit of searchPdf(item.id, query, signal)) {
             count += 1
-            yield { id: `p${hit.page}-${count}`, page: hit.page, cfi: null, label: null, excerpt: hit.excerpt }
+            yield {
+              id: `p${hit.page}-${count}`,
+              page: hit.page,
+              cfi: null,
+              label: null,
+              excerpt: hit.excerpt,
+              boxes: hit.boxes,
+            }
           }
         })(),
       showHit: (hit) => {
         if (!hit.page) return
         goToPage(hit.page)
-        setSearch({ page: hit.page, text: hit.excerpt.match })
+        setSearch({ page: hit.page, text: hit.excerpt.match, boxes: hit.boxes ?? [] })
       },
       clearSearch: () => setSearch(null),
       loadToc: async () => {
@@ -247,7 +259,7 @@ function PdfViewport({
         return outline.map((entry) => ({ title: entry.title, level: entry.level, page: entry.page, href: null }))
       },
     }),
-    [goToPage, currentPage, pageCount, doc, language],
+    [goToPage, currentPage, pageCount, doc, item.id],
   )
 
   // Nothing is drawn before the first page has told its size: the scale would change once it arrives.
@@ -266,7 +278,10 @@ function PdfViewport({
         onSize={onSize}
         annotations={byPage.get(index + 1) ?? NO_ANNOTATIONS}
         searchText={search?.page === index + 1 ? search.text : null}
+        searchBoxes={search?.page === index + 1 ? search.boxes : null}
         onNoteClick={onAnnotationClick}
+        markup={markup?.[index + 1] ?? NO_SHAPES}
+        draw={draw ?? null}
       />,
     )
   }

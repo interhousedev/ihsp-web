@@ -1,6 +1,6 @@
 "use client"
 
-import type { AnnotationColor, AnnotationKind } from "@ihsp/api"
+import type { AnnotationColor, AnnotationKind, ItemTextBox } from "@ihsp/api"
 import { useT } from "@ihsp/i18n"
 import { cn } from "@ihsp/ui"
 import { useLayoutEffect, useState } from "react"
@@ -18,6 +18,8 @@ export type HighlightLayerProps = {
   annotations: readonly { id: string; kind: AnnotationKind; color: AnnotationColor; quote: string | null }[]
   /** A found text to mark with an outline (the current search result). */
   searchText?: string | null
+  /** Stored boxes of the current search result, as fractions of the page (wins over `searchText`). */
+  searchBoxes?: readonly ItemTextBox[] | null
   onNoteClick(id: string): void
   /** Changes whenever the text was drawn again (a new zoom, a finished page), so the rectangles are measured again. */
   version: number
@@ -35,6 +37,7 @@ export function HighlightLayer({
   anchor,
   annotations,
   searchText,
+  searchBoxes,
   onNoteClick,
   version,
   multiply = false,
@@ -61,7 +64,7 @@ export function HighlightLayer({
         if (boxes.length > 0) next.push({ id: annotation.id, color: annotation.color, kind: annotation.kind, boxes })
       }
       setDrawn(next)
-      const hit = searchText ? findQuoteRange(textRoot, searchText) : null
+      const hit = searchText && !searchBoxes?.length ? findQuoteRange(textRoot, searchText) : null
       setFound(hit ? rangeBoxes(hit, origin) : [])
     }
     measure()
@@ -69,9 +72,9 @@ export function HighlightLayer({
     observer?.observe(anchor)
     return () => observer?.disconnect()
     // oxlint-disable-next-line react/exhaustive-effect-dependencies -- `version` is only a trigger: it changes when the text was drawn again
-  }, [textRoot, anchor, annotations, searchText, version])
+  }, [textRoot, anchor, annotations, searchText, searchBoxes, version])
 
-  if (drawn.length === 0 && found.length === 0) return null
+  if (drawn.length === 0 && found.length === 0 && !searchBoxes?.length) return null
   return (
     <div className="pointer-events-none absolute inset-0 z-[2]">
       {drawn.map((entry) =>
@@ -95,6 +98,19 @@ export function HighlightLayer({
           data-search-hit
           className="ring-primary absolute rounded-[2px] ring-2"
           style={{ left: box.left - 1, top: box.top - 1, width: box.width + 2, height: box.height + 2 }}
+        />
+      ))}
+      {searchBoxes?.map((box, index) => (
+        <span
+          key={`stored-${index}`}
+          data-search-hit
+          className="ring-primary absolute rounded-[2px] ring-2"
+          style={{
+            left: `${box.x * 100}%`,
+            top: `${box.y * 100}%`,
+            width: `${box.w * 100}%`,
+            height: `${box.h * 100}%`,
+          }}
         />
       ))}
       {drawn

@@ -94,7 +94,37 @@
         "keys": "Esc",
         "action": "Close a panel or clear the selection"
       }
-    }
+    },
+    "markup": "Draw on the page",
+    "markupTools": "Drawing tools",
+    "markupColor": "Colour {color}",
+    "tool": {
+      "pen": "Pen",
+      "pencil": "Pencil",
+      "highlighter": "Highlighter",
+      "rect": "Rectangle",
+      "ellipse": "Ellipse",
+      "line": "Line",
+      "arrow": "Arrow",
+      "eraser": "Eraser"
+    },
+    "width": {
+      "thin": "Thin",
+      "medium": "Medium",
+      "thick": "Thick"
+    },
+    "undo": "Undo",
+    "redo": "Redo",
+    "markupTemporary": "Temporary",
+    "markupSave": "Save",
+    "markupSaveFailed": "Save failed, retry",
+    "markupClose": "Close the drawing tools",
+    "markupPdfOnly": "Drawing works in PDF files.",
+    "markupExitTitle": "Unsaved drawings",
+    "markupExitBody": "Save the drawings on this item or discard them?",
+    "markupExitVisitor": "The drawings are temporary and will be lost.",
+    "markupStay": "Keep drawing",
+    "markupDiscard": "Discard"
   },
   "annotation": {
     "selection": "Selected text",

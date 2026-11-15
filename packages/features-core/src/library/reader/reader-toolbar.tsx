@@ -2,8 +2,17 @@
 
 import { useT } from "@ihsp/i18n"
 import { Button, OfflineBadge, buttonVariants, cn } from "@ihsp/ui"
-import { IconArrowLeft, IconDotsVertical, IconHighlight, IconList, IconSearch, IconSettings } from "@ihsp/ui"
+import {
+  IconArrowLeft,
+  IconDotsVertical,
+  IconHighlight,
+  IconList,
+  IconPencil,
+  IconSearch,
+  IconSettings,
+} from "@ihsp/ui"
 import Link from "next/link"
+import type { MouseEvent } from "react"
 
 export type ReaderToolbarProps = {
   title: string
@@ -14,6 +23,11 @@ export type ReaderToolbarProps = {
   notesOpen: boolean
   onSettings(): void
   onMenu(): void
+  /** PDF: opens the drawing tools. */
+  onMarkup?: () => void
+  markupOpen?: boolean
+  /** Runs before the back link navigates; it may cancel it (`preventDefault`) to ask about unsaved drawings. */
+  onBack?: (event: MouseEvent<HTMLAnchorElement>) => void
   /** Changes that wait for the network. */
   waiting: number
 }
@@ -30,6 +44,9 @@ export function ReaderToolbar({
   notesOpen,
   onSettings,
   onMenu,
+  onMarkup,
+  markupOpen = false,
+  onBack,
   waiting,
 }: ReaderToolbarProps) {
   const t = useT("library.reader")
@@ -38,6 +55,7 @@ export function ReaderToolbar({
     <header className="bg-background flex shrink-0 items-center gap-1 border-b px-2 pt-[var(--safe-top,0px)]">
       <Link
         href={backHref}
+        onClick={onBack}
         aria-label={t("back")}
         className={buttonVariants({ variant: "ghost", size: "icon", className: ICON_BUTTON })}
       >
@@ -83,6 +101,19 @@ export function ReaderToolbar({
       >
         <IconHighlight aria-hidden />
       </Button>
+      {onMarkup ? (
+        <Button
+          type="button"
+          variant={markupOpen ? "secondary" : "ghost"}
+          size="icon"
+          aria-label={t("markup")}
+          aria-pressed={markupOpen}
+          className={ICON_BUTTON}
+          onClick={onMarkup}
+        >
+          <IconPencil aria-hidden />
+        </Button>
+      ) : null}
       <Button
         type="button"
         variant="ghost"

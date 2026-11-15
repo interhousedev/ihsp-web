@@ -94,7 +94,37 @@
         "keys": "Esc",
         "action": "Panelni yopish yoki tanlovni bekor qilish"
       }
-    }
+    },
+    "markup": "Sahifaga chizish",
+    "markupTools": "Chizish vositalari",
+    "markupColor": "Rang {color}",
+    "tool": {
+      "pen": "Qalam",
+      "pencil": "Qora qalam",
+      "highlighter": "Marker",
+      "rect": "Toʻrtburchak",
+      "ellipse": "Ellips",
+      "line": "Chiziq",
+      "arrow": "Strelka",
+      "eraser": "Oʻchirgʻich"
+    },
+    "width": {
+      "thin": "Ingichka",
+      "medium": "Oʻrtacha",
+      "thick": "Qalin"
+    },
+    "undo": "Bekor qilish",
+    "redo": "Qaytarish",
+    "markupTemporary": "Vaqtinchalik",
+    "markupSave": "Saqlash",
+    "markupSaveFailed": "Saqlanmadi, qayta urining",
+    "markupClose": "Chizish vositalarini yopish",
+    "markupPdfOnly": "Chizish faqat PDF fayllarda ishlaydi.",
+    "markupExitTitle": "Saqlanmagan chizmalar",
+    "markupExitBody": "Chizmalarni shu nashrda saqlaysizmi yoki bekor qilasizmi?",
+    "markupExitVisitor": "Chizmalar vaqtinchalik va yoʻqoladi.",
+    "markupStay": "Davom etish",
+    "markupDiscard": "Bekor qilish"
   },
   "annotation": {
     "selection": "Tanlangan matn",
