@@ -66,3 +66,26 @@ describe("CommandPalette", () => {
     expect(search).not.toHaveBeenCalled()
   })
 })
+
+describe("CommandPalette on phones", () => {
+  it("focuses a field in the tap, then the search input, which is 16 px (text-base) with a search enter key", async () => {
+    renderWithProviders(<CommandPalette onNavigate={() => {}} />, {})
+    const warmup = document.querySelector<HTMLInputElement>("input[aria-hidden]")
+    fireEvent.click(await screen.findByRole("button", { name: "Open search" }))
+    expect(warmup).not.toBeNull()
+
+    const input = await screen.findByPlaceholderText("Type a command or search…")
+    expect(input.className).toContain("text-base")
+    expect(input.getAttribute("enterkeyhint")).toBe("search")
+    await waitFor(() => expect(document.activeElement).toBe(input))
+  })
+
+  it("clears the query with the clear button", async () => {
+    renderWithProviders(<CommandPalette onNavigate={() => {}} />, {})
+    fireEvent.click(await screen.findByRole("button", { name: "Open search" }))
+    const input = (await screen.findByPlaceholderText("Type a command or search…")) as HTMLInputElement
+    setDropdownValue(input, "abc")
+    fireEvent.click(await screen.findByRole("button", { name: "Clear" }))
+    await waitFor(() => expect(input.value).toBe(""))
+  })
+})

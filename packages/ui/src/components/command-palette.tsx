@@ -2,7 +2,7 @@
 
 import { useT } from "@ihsp/i18n"
 import { useRouter } from "next/navigation"
-import { useEffect, useMemo, useRef, useState, type ReactNode } from "react"
+import { useEffect, useMemo, useRef, useState, type CSSProperties, type MouseEvent, type ReactNode } from "react"
 import { useDebounce } from "../hooks/use-debounce"
 import { Icons } from "./icons"
 import { NavIconView } from "./layout/nav-icon"
@@ -69,12 +69,20 @@ export function CommandPalette({ nav = [], search, onNavigate, trigger }: Comman
     const onKeyDown = (event: KeyboardEvent) => {
       if (event.key.toLowerCase() === "k" && (event.metaKey || event.ctrlKey)) {
         event.preventDefault()
+        const active = document.activeElement
+        if (active instanceof HTMLElement && active !== warmupRef.current && active !== inputRef.current) {
+          returnFocusRef.current = active
+        }
         setOpen((value) => !value)
       }
     }
     window.addEventListener("keydown", onKeyDown)
     return () => window.removeEventListener("keydown", onKeyDown)
   }, [])
+  const warmupRef = useRef<HTMLInputElement>(null)
+  const inputRef = useRef<HTMLInputElement>(null)
+  const returnFocusRef = useRef<HTMLElement | null>(null)
+  const [viewport, setViewport] = useState<CSSProperties>()
 
   useEffect(() => {
     const run = searchRef.current
@@ -100,6 +108,30 @@ export function CommandPalette({ nav = [], search, onNavigate, trigger }: Comman
     }
   }, [debounced, open])
 
+  // Phone keyboard: size the sheet to the visual viewport so the results stay above the keyboard.
+  useEffect(() => {
+    const vv = typeof window === "undefined" ? undefined : window.visualViewport
+    if (!open || !vv) return
+    const update = () =>
+      setViewport({
+        "--sheet-height": `${Math.round(vv.height)}px`,
+        "--sheet-top": `${Math.round(vv.offsetTop)}px`,
+      } as CSSProperties)
+    update()
+    vv.addEventListener("resize", update)
+    vv.addEventListener("scroll", update)
+    return () => {
+      vv.removeEventListener("resize", update)
+      vv.removeEventListener("scroll", update)
+    }
+  }, [open])
+
+  function openSearch(event: MouseEvent<HTMLElement>) {
+    returnFocusRef.current = event.currentTarget
+    warmupRef.current?.focus({ preventScroll: true })
+    setOpen(true)
+  }
+
   const navItems = useMemo(() => {
     const needle = query.trim().toLowerCase()
     return nav
@@ -118,18 +150,60 @@ export function CommandPalette({ nav = [], search, onNavigate, trigger }: Comman
 
   return (
     <>
+      {/* iOS opens the keyboard only for focus set inside the tap. The dialog mounts a frame later, so this always-
+          mounted field takes focus in the tap and the real input (below) takes it over once it exists. */}
+      <input
+        ref={warmupRef}
+        aria-hidden
+        tabIndex={-1}
+        readOnly
+        enterKeyHint="search"
+        className="pointer-events-none fixed start-0 top-0 size-px opacity-0"
+      />
       {trigger ?? (
-        <IconButton icon={Icons.search} variant="ghost" onClick={() => setOpen(true)} aria-label={t("command.open")} />
+        <IconButton icon={Icons.search} variant="ghost" onClick={openSearch} aria-label={t("command.open")} />
       )}
       <CommandDialog
         open={open}
         onOpenChange={setOpen}
+        mobileSheet
+        contentStyle={viewport}
+        initialFocus={inputRef}
+        finalFocus={() => returnFocusRef.current ?? true}
         title={t("command.open")}
         description={t("command.placeholder")}
       >
-        <Command shouldFilter={false} loop>
-          <CommandInput value={query} onValueChange={setQuery} placeholder={t("command.placeholder")} />
-          <CommandList>
+        <Command shouldFilter={false} loop className="h-full">
+          <CommandInput
+            ref={inputRef}
+            value={query}
+            onValueChange={setQuery}
+            placeholder={t("command.placeholder")}
+            enterKeyHint="search"
+            inputMode="search"
+            autoComplete="off"
+            autoCorrect="off"
+            autoCapitalize="none"
+            spellCheck={false}
+            endAddon={
+              query ? (
+                <button
+                  type="button"
+                  aria-label={t("common.clear")}
+                  // keep the keyboard up: do not let the button take focus from the input
+                  onPointerDown={(event) => event.preventDefault()}
+                  onClick={() => {
+                    setQuery("")
+                    inputRef.current?.focus()
+                  }}
+                  className="text-muted-foreground hover:text-foreground flex size-8 items-center justify-center rounded-md"
+                >
+                  <Icons.close className="size-4" />
+                </button>
+              ) : null
+            }
+          />
+          <CommandList className="max-sm:max-h-none max-sm:flex-1">
             <CommandEmpty>{searching ? t("command.searching") : t("command.empty")}</CommandEmpty>
             {grouped.map((group) => (
               <CommandGroup key={group.section} heading={group.section}>

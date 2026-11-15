@@ -27,12 +27,21 @@ function CommandDialog({
   children,
   className,
   showCloseButton = false,
+  mobileSheet = false,
+  contentStyle,
+  initialFocus,
+  finalFocus,
   ...props
 }: Omit<React.ComponentProps<typeof Dialog>, "children"> & {
   title?: string
   description?: string
   className?: string
   showCloseButton?: boolean
+  /** Full-screen sheet under 640 px instead of a bottom sheet (search on phones). */
+  mobileSheet?: boolean
+  contentStyle?: React.CSSProperties
+  initialFocus?: React.ComponentProps<typeof DialogContent>["initialFocus"]
+  finalFocus?: React.ComponentProps<typeof DialogContent>["finalFocus"]
   children: React.ReactNode
 }) {
   return (
@@ -42,7 +51,15 @@ function CommandDialog({
         <DialogDescription>{description}</DialogDescription>
       </DialogHeader>
       <DialogContent
-        className={cn("top-1/3 translate-y-0 overflow-hidden rounded-xl! p-0", className)}
+        className={cn(
+          "top-1/3 translate-y-0 overflow-hidden rounded-xl! p-0",
+          mobileSheet &&
+            "max-sm:top-(--sheet-top,0px) max-sm:bottom-auto max-sm:h-(--sheet-height,100dvh) max-sm:max-h-none max-sm:rounded-none! max-sm:pb-0",
+          className,
+        )}
+        style={contentStyle}
+        initialFocus={initialFocus}
+        finalFocus={finalFocus}
         showCloseButton={showCloseButton}
       >
         {children}
@@ -51,18 +68,27 @@ function CommandDialog({
   )
 }
 
-function CommandInput({ className, ...props }: React.ComponentProps<typeof CommandPrimitive.Input>) {
+function CommandInput({
+  className,
+  endAddon,
+  ...props
+}: React.ComponentProps<typeof CommandPrimitive.Input> & { endAddon?: React.ReactNode }) {
   return (
     <div data-slot="command-input-wrapper" className="p-1 pb-0">
-      <InputGroup className="h-8! rounded-lg! border-input/30 bg-input/30 shadow-none! *:data-[slot=input-group-addon]:pl-2!">
+      <InputGroup className="h-11! rounded-lg! border-input/30 bg-input/30 shadow-none! sm:h-8! *:data-[slot=input-group-addon]:pl-2!">
         <CommandPrimitive.Input
           data-slot="command-input"
-          className={cn("w-full text-sm outline-hidden disabled:cursor-not-allowed disabled:opacity-50", className)}
+          // 16 px on phones: iOS Safari zooms into any focused field below that.
+          className={cn(
+            "w-full text-base outline-hidden disabled:cursor-not-allowed disabled:opacity-50 sm:text-sm",
+            className,
+          )}
           {...props}
         />
         <InputGroupAddon>
           <IconSearch className="size-4 shrink-0 opacity-50" />
         </InputGroupAddon>
+        {endAddon ? <InputGroupAddon align="inline-end">{endAddon}</InputGroupAddon> : null}
       </InputGroup>
     </div>
   )

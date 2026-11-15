@@ -77,7 +77,7 @@ function FloatingControls({ children }: { children: ReactNode }) {
     <div
       ref={ref}
       data-slot="shell-controls"
-      className="glass fixed end-[calc(var(--safe-right)+0.5rem)] top-[calc(var(--safe-top)+0.5rem)] z-30 flex max-w-[calc(100vw-var(--safe-right)-1rem)] items-center gap-0.5 rounded-xl p-1 print:hidden"
+      className="glass fixed end-[calc(var(--safe-right)+0.5rem)] top-[calc(var(--safe-top)+0.5rem)] z-30 flex max-w-[calc(100vw-var(--safe-right)-1rem)] items-center gap-0.5 rounded-xl p-1 max-md:end-auto max-md:left-1/2 max-md:-translate-x-1/2 print:hidden"
     >
       {children}
     </div>
