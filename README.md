@@ -37,9 +37,9 @@ The backend lives in the sibling repository `iht-backend`. This repository holds
 | App | Directory | What it does | Screenshot |
 |---|---|---|---|
 | **id** (IHT ID) | `apps/id` | Sign-in, registration, one-time codes, Telegram login, account security; the OAuth front end for Ory Hydra. | <img src="docs/assets/screens/id-sign-in.png" width="160" alt="IHT ID sign-in"> |
-| **sp** (my.iht) | `apps/sp` | The student app: today, timetable, marks, homework, AI assistant, notebooks, mail, files. Also the PWA and the Telegram mini app. | <img src="docs/assets/screens/sp-home.png" width="160" alt="my.iht home"> <img src="docs/assets/screens/sp-assistant.png" width="160" alt="my.iht assistant"> |
+| **sp** (my.iht) | `apps/sp` | The student app: today, timetable with a lesson sheet, marks and the rating book, homework, AI assistant (with a quick popover in the header), notebooks, mail, files. Also the PWA and the Telegram mini app. | <img src="docs/assets/screens/sp-home.png" width="160" alt="my.iht home"> <img src="docs/assets/screens/sp-assistant.png" width="160" alt="my.iht assistant"> |
 | **staff** (IHT Учителям) | `apps/staff` | Teachers and curators: journal, attendance, work-offs, classes. | <img src="docs/assets/screens/staff-journal.png" width="160" alt="Staff journal"> |
-| **admin** | `apps/admin` | Administration: users, roles, broadcasts, knowledge base, AI limits and usage, jobs and logs. | <img src="docs/assets/screens/admin-students.png" width="160" alt="Admin students"> |
+| **admin** | `apps/admin` | Administration: users, roles, Telegram bots, broadcasts, knowledge base, AI limits and usage, jobs and logs. | <img src="docs/assets/screens/admin-students.png" width="160" alt="Admin students"> |
 | **lms** | `apps/lms` | Courses: modules, lessons and steps, editor for course staff. | <img src="docs/assets/screens/lms-catalog.png" width="160" alt="LMS catalogue"> |
 | **share** | `apps/share` | Public read-only pages for shared chats and flash card sets. | — |
 | **library** | `apps/library` | Catalogue, reader and librarian tools. | <img src="docs/assets/screens/library-catalog.png" width="160" alt="Library catalogue"> |
@@ -165,7 +165,7 @@ To run the whole product in Docker instead, use `scripts/local_up.sh` in iht-bac
 
 Demo logins (local stack only): `abdullayev.alisher` / `StudentDemo1`, `usmonov.bobur` / `TeacherDemo1`, `admin.ihsp` / `AdminDemo1` (needs a one-time code from Mailpit), `tursunov.sardor` / `LibrarianDemo1`.
 
-Runtime configuration: in development each app serves its own `public/env.js` with dev values; in the container `deploy/entrypoint.sh` renders `deploy/env.js.template` with `envsubst` from variables such as `IHSP_WEB_API_URL`, `IHSP_WEB_ID_URL`, `IHSP_WEB_HYDRA_URL`, `APP_ENV` and `PWA_APPS`. Never read configuration at module scope; call `getConfig()`.
+Runtime configuration: in development each app serves its own `public/env.js` with dev values; in the container `deploy/entrypoint.sh` renders `deploy/env.js.template` with `envsubst` from variables such as `IHSP_WEB_API_URL`, `IHSP_WEB_ID_URL`, `IHSP_WEB_HYDRA_URL`, `APP_ENV` and `PWA_APPS`. The optional `/env.js` key `LYCEUM_LOGO` (path or URL, read with `getConfig()`; not in the container template) replaces the lyceum logo shown on the student card. Never read configuration at module scope; call `getConfig()`.
 
 ## Configuration
 

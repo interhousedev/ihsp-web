@@ -4,6 +4,18 @@ All notable changes to this project are documented here. The format follows [Kee
 
 ## [Unreleased]
 
+## [1.6.0] - 2026-11-15
+
+### Added
+
+- Admin: a Bots page to add Telegram bots (token checked by Telegram, shown masked), enable them, switch features (assistant, guest assistant, commands, notifications, announcements, mini app), rotate tokens and send a draft broadcast as an announcement through chosen bots. Every change needs a step-up code; edits on a bot card are kept as a draft until "Save changes".
+- lms: course Access tab and a per-lesson access dialog (public, signed in, students, chosen groups and users; hidden or locked), lock badges on cards and lessons, and a locked-lesson notice with the course lead as contact.
+
+### Changed
+
+- sp: the student group can be unset (`profile.group` is `null`); the account card says so and the rating book falls back to "-".
+- The phone More sheet is non-modal: a tap outside closes it and reaches the page.
+
 ## [1.5.1] - 2026-11-14
 
 - id: connectors and the consent screen name the teacher MCP server and the universal `app` server; scopes of `app` (`teacher:marks:write`) reuse the hints of their source server.

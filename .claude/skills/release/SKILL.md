@@ -1,6 +1,6 @@
 ---
 name: release
-description: Use when running CI locally, building or pushing the web image, updating CHANGELOG.md, or releasing and tagging a new version of iht-web.
+description: Use when running CI locally, building or pushing the web image, updating CHANGELOG.md and the docs site, or releasing and tagging a new version of iht-web.
 ---
 
 # Release
@@ -21,6 +21,8 @@ Logs are in `reports/ci-local/`. The GitHub Test workflow runs on pull requests 
 ## 2. Update the changelog
 
 Move the entries from `[Unreleased]` in `CHANGELOG.md` to `## [X.Y.Z] - YYYY-MM-DD`, adding anything missing from `git log <last tag>..HEAD`. Write for readers, not commit by commit. List known issues. Commit it with the release, before the tag.
+
+When user-facing behaviour changed, also update the public documentation site: it lives in `iht-backend` (`docs/*.md`, `mkdocs.yml`) and is published to GitHub Pages by its `docs.yml` workflow. Edit the matching pages there, and the READMEs here whose facts changed, in the same release. Do not add new design documents to either repository.
 
 When dependencies changed, also run `bun run generate-licenses`. When the backend API changed, also run `bun run sync:openapi`. Commit the results.
 
