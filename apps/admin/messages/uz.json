@@ -41,8 +41,11 @@
     "botPosts": "Bot postlari",
     "mcpActivity": "MCP faolligi",
     "vault": "Ombor",
+    "migration": "Serverni koʻchirish",
     "devices": "Qurilmalar",
-    "excuses": "Sababli qoldirishlar"
+    "excuses": "Sababli qoldirishlar",
+    "legal": "Huquqiy hujjatlar",
+    "erasure": "Oʻchirish soʻrovlari"
   },
   "shared": {
     "lessonList": "Sanalar boʻyicha darslar",
@@ -515,6 +518,15 @@
     "new": "Yangi guruh",
     "empty": "Hozircha guruhlar yoʻq.",
     "notSelected": "Roʻyxatdan guruhni tanlang.",
+    "delete": {
+      "action": "Guruhni oʻchirish",
+      "title": "{name} guruhi oʻchirilsinmi?",
+      "description": "Guruh va uning dars jadvali oʻchiriladi. Talabalar oʻchirilmaydi: ular guruhsiz tizimda qoladi.",
+      "confirmLabel": "Tasdiqlash uchun guruh nomini kiriting: {name}",
+      "submit": "Guruhni oʻchirish",
+      "keep": "Guruhni qoldirish",
+      "done": "{name} guruhi oʻchirildi"
+    },
     "filters": {
       "status": "Holati",
       "allStatuses": "Istalgan holat"
@@ -2178,6 +2190,66 @@
       "generic": "Kalit ulushini yuborib boʼlmadi."
     }
   },
+  "migration": {
+    "title": "Serverni koʻchirish",
+    "status": "Holat",
+    "phase": {
+      "idle": "Koʻchirish yoʻq",
+      "queued": "Navbatda",
+      "running": "Bajarilmoqda",
+      "completed": "Yakunlandi",
+      "failed": "Xatolik",
+      "cancelling": "Qaytarilmoqda"
+    },
+    "dryRun": "Sinov ishga tushirish",
+    "notConfigured": "Bu oʻrnatmada koʻchirish sozlanmagan.",
+    "stale": "Koʻchirish bajaruvchisi anchadan beri xabar bermadi. Xostni tekshiring.",
+    "readOnly": "Koʻchirish qaytarilguncha yoki yakunlanguncha platforma faqat oʻqish rejimida.",
+    "target": "Maqsad: {host}:{port}",
+    "since": "Boshlangan: {date}",
+    "steps": "Qadamlar",
+    "stepState": {
+      "pending": "Kutilmoqda",
+      "running": "Bajarilmoqda",
+      "done": "Tayyor",
+      "failed": "Xatolik"
+    },
+    "stepName": {
+      "stop_services": "Xizmatlarni toʻxtatish",
+      "dump_postgres": "PostgreSQL dampi",
+      "snapshot_redis": "Redis surati",
+      "copy_objects": "Fayllarni nusxalash",
+      "copy_config": "Sozlamalarni nusxalash",
+      "copy_vault": "Maxfiy ombor nusxasi",
+      "copy_backups": "Zaxira nusxalarni koʻchirish",
+      "transfer": "Uzatish",
+      "verify": "Tekshirish"
+    },
+    "failedTitle": "Koʻchirish xatolik bilan tugadi",
+    "completedTitle": "Koʻchirish yakunlandi",
+    "completedDescription": "Platforma yangi serverda ishlayapti. Uni tekshiring va DNS ni almashtiring. Qaytarish bu serverni ishga qaytaradi.",
+    "openTarget": "Yangi serverni ochish",
+    "form": {
+      "title": "Koʻchirishni boshlash",
+      "description": "Platforma darhol faqat oʻqish rejimiga oʻtadi. Asl maʼlumotlar oʻzgarmaydi.",
+      "host": "Maqsad xost",
+      "port": "SSH port",
+      "url": "Yangi sayt manzili (ixtiyoriy)",
+      "token": "Juftlash tokeni",
+      "code": "Tasdiqlash kodi",
+      "start": "Koʻchirishni boshlash",
+      "starting": "Boshlanmoqda…",
+      "confirmTitle": "Koʻchirish boshlansinmi?",
+      "confirmDescription": "Koʻchirish qaytarilguncha bu serverda yozish toʻxtaydi."
+    },
+    "rollback": {
+      "button": "Qaytarish",
+      "title": "Koʻchirish qaytarilsinmi?",
+      "description": "Bu server xizmat rejimidan chiqib, ishlashda davom etadi. Asl maʼlumotlarga tegilmagan.",
+      "confirm": "Qaytarish",
+      "code": "Tasdiqlash kodi"
+    }
+  },
   "devices": {
     "title": "Kirish qurilmalari",
     "docs": "Kirish qurilmalari qanday ishlaydi",
@@ -2272,5 +2344,65 @@
       "sent": "Xabar yuborildi",
       "download": "Ochish: {name}"
     }
+  },
+  "legal": {
+    "title": "Huquqiy hujjatlar",
+    "list": "Huquqiy hujjatlar",
+    "kinds": {
+      "privacy": "Maxfiylik siyosati",
+      "terms": "Foydalanish shartlari",
+      "biometric": "Biometrik maʼlumotlarga rozilik",
+      "ai": "SI bilan ishlashga rozilik"
+    },
+    "draftBadge": "Qoralama v{version}",
+    "version": "Chop etilgan versiya",
+    "publishedAt": "Chop etilgan",
+    "accepted": "Qabul qilganlar",
+    "notPublished": "Hali chop etilmagan",
+    "edit": "Tahrirlash",
+    "editor": {
+      "heading": "{kind}: qoralama",
+      "locale": "Til",
+      "title": "Sarlavha",
+      "body": "Matn (Markdown)",
+      "announcement": "Oʼzgarish haqida eʼlon (Markdown, ixtiyoriy)",
+      "preview": "Koʼrib chiqish",
+      "saveDraft": "Qoralamani saqlash",
+      "saving": "Saqlanmoqda…",
+      "saved": "Qoralama saqlandi.",
+      "publish": "Chop etish",
+      "close": "Yopish"
+    },
+    "publishTitle": "“{kind}” chop etilsinmi?",
+    "publishText": "Davom etish uchun har bir foydalanuvchi yangi versiyani qaytadan qabul qilishi kerak.",
+    "publishConfirm": "Chop etish",
+    "errors": {
+      "noDraft": "Chop etish uchun qoralama yoʼq. Avval qoralamani saqlang."
+    }
+  },
+  "erasure": {
+    "title": "Oʻchirish soʻrovlari",
+    "empty": "Oʻchirish soʻrovlari yoʻq.",
+    "status": {
+      "pending_review": "Koʻrib chiqilmoqda",
+      "approved": "Tasdiqlangan",
+      "rejected": "Rad etilgan",
+      "completed": "Bajarilgan",
+      "cancelled": "Bekor qilingan"
+    },
+    "requested": "Soʻralgan sana: {date}",
+    "closesOn": "Maʼlumotlar {date} sanasida oʻchiriladi",
+    "reasonShown": "Foydalanuvchiga koʻrsatilgan sabab: {reason}",
+    "approveAction": "Tasdiqlash",
+    "rejectAction": "Rad etish",
+    "approveFor": "{name} soʻrovini tasdiqlash",
+    "rejectFor": "{name} soʻrovini rad etish",
+    "approveTitle": "{name} hisobini oʻchirishni tasdiqlaysizmi?",
+    "approveText": "Buni bekor qilib boʻlmaydi. Hisob yopiladi, shaxsiy maʼlumotlar butunlay oʻchiriladi.",
+    "rejectTitle": "{name} soʻrovini rad etasizmi?",
+    "rejectText": "Hisob oʻzgarishsiz qoladi, foydalanuvchi soʻrov rad etilganini koʻradi.",
+    "reason": "Foydalanuvchiga sabab (ixtiyoriy)",
+    "approved": "Soʻrov tasdiqlandi",
+    "rejected": "Soʻrov rad etildi"
   }
 }

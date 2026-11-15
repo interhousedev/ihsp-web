@@ -366,6 +366,9 @@ describe("keys used in the code", () => {
       "timetable.noEntities.${view}": ["group", "teacher", "room"],
       "timetable.parityShort.${entry.week_parity}": ["odd", "even"],
       "timetable.views.${item}": ["group", "teacher", "room"],
+      "legal.kinds.${kind}": ["privacy", "terms", "biometric", "ai"],
+      "legal.kinds.${state.kind}": ["privacy", "terms", "biometric", "ai"],
+      "erasure.status.${request.status}": ["pending_review", "approved", "rejected", "completed", "cancelled"],
       "limits.features.${name}": LIMIT_FEATURES,
       "limits.roles.${user.role}": LIMIT_ROLES,
       "limits.roles.${key}": LIMIT_ROLES,
@@ -420,6 +423,19 @@ describe("keys used in the code", () => {
       "workOffs.itemStatus.${item.status}": ["assigned", "done"],
       "mcpActivity.outcomes.${call.outcome}": ["ok", "denied", "rate_limited", "not_found", "invalid", "error"],
       "mcpActivity.outcomes.${value}": ["ok", "denied", "rate_limited", "not_found", "invalid", "error"],
+      "migration.phase.${phase}": ["idle", "queued", "running", "completed", "failed", "cancelling"],
+      "migration.stepState.${state}": ["pending", "running", "done", "failed"],
+      "migration.stepName.${step.key}": [
+        "stop_services",
+        "dump_postgres",
+        "snapshot_redis",
+        "copy_objects",
+        "copy_config",
+        "copy_vault",
+        "copy_backups",
+        "transfer",
+        "verify",
+      ],
     }
     const unknown = [...dynamic.keys()].filter((key) => !(key in expected))
     expect(unknown).toEqual([])

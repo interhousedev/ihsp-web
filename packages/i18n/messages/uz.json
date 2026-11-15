@@ -218,7 +218,29 @@
       "description": "Hisob va xavfsizlik"
     }
   },
+  "legal": {
+    "loading": "Hujjat yuklanmoqda",
+    "consent": {
+      "title": "Hujjatlar",
+      "accept": "Qabul qilaman: {title}",
+      "read": "Matnni oʻqish",
+      "open": "Yangi oynada ochish",
+      "required": "Davom etish uchun barcha hujjatlarni qabul qiling.",
+      "loadFailed": "Hujjatlarni yuklab boʻlmadi."
+    },
+    "gate": {
+      "title": "Hujjatlar yangilandi",
+      "readFull": "Toʻliq matnni oʻqish",
+      "accept": "Qabul qilish va davom etish",
+      "signOut": "Chiqish"
+    }
+  },
   "errors": {
+    "legal": {
+      "stale-version": "Yangi versiya eʼlon qilindi. Uni koʻrib chiqib, qayta qabul qiling.",
+      "incomplete": "Avval barcha tillarda sarlavha va matnni toʻldiring.",
+      "consent-required": "Davom etish uchun barcha hujjatlarni qabul qiling."
+    },
     "generic": "Nimadir xato ketdi. Birozdan soʻng qayta urinib koʻring.",
     "network": {
       "unreachable": "Server bilan aloqa yoʻq. Internetni tekshirib, qayta urinib koʻring."
@@ -243,7 +265,8 @@
     },
     "emis": {
       "auth-failed": "EMIS bu login va parolni qabul qilmadi.",
-      "unavailable": "EMIS hozir ishlamayapti. Keyinroq urinib koʻring.",
+      "unavailable": "EMIS javob bermayapti. Muammo EMIS tomonida, bizda emas. Keyinroq urinib koʻring.",
+      "upstream": "Muammo EMIS (davlat tizimi) tomonida, bizda emas. Keyinroq urinib koʻring.",
       "credentials-missing": "Bu hisob uchun ishlaydigan EMIS kirish maʼlumoti saqlanmagan. EMIS ni ulash uchun qayta kiring."
     },
     "id": {
@@ -420,7 +443,10 @@
       "broadcast-empty-audience": "Tanlangan auditoriyada qabul qiluvchilar yoʻq.",
       "broadcast-text-too-long": "Matn bitta Telegram xabari uchun juda uzun ({limit} belgidan {length} tasi).",
       "broadcast-no-telegram": "Koʻrib chiqishni olish uchun Telegram akkauntini ulang.",
-      "broadcast-time-invalid": "Rejalashtirilgan vaqtda vaqt mintaqasi koʻrsatilishi kerak."
+      "broadcast-time-invalid": "Rejalashtirilgan vaqtda vaqt mintaqasi koʻrsatilishi kerak.",
+      "migration-not-configured": "Bu oʻrnatmada koʻchirish sozlanmagan.",
+      "migration-not-allowed": "Joriy koʻchirish bosqichida bu amal mumkin emas.",
+      "migration-invalid-input": "Maqsad xost, port, manzil va juftlash tokenini tekshiring."
     },
     "academic": {
       "excuse-not-found": "Uzrli sabab topilmadi.",
@@ -1603,6 +1629,7 @@
     "error": "Guruh baholarini yuklab boʻlmadi."
   },
   "myGroup": {
+    "noGroup": "Siz hali guruhga aʼzo emassiz",
     "size": "Oʻquvchilar: {count}",
     "homeroomTeacher": "Sinf rahbari",
     "headStudent": "Sinf sardori",
@@ -2139,14 +2166,19 @@
         "attendance": "Ismingiz bilan davomat yozuvlari",
         "marks": "Ismingiz bilan baholar tarixi"
       },
-      "thirtyDays": "Hisob darhol yopiladi. Shaxsiy maʼlumotlar 30 kundan keyin oʻchiriladi.",
+      "thirtyDays": "Avval soʻrovni administrator koʻrib chiqadi. Tasdiqlangach, hisob yopiladi va shaxsiy maʼlumotlar oʻchiriladi.",
       "confirmTitle": "Tasdiqlash",
       "confirmDescription": "Parolni va OTP yoqilgan boʻlsa, kodni kiriting.",
-      "submit": "Hisobimni oʻchirish",
+      "submit": "Hisobni oʻchirishni soʻrash",
       "dialogTitle": "Hisobni oʻchirasizmi?",
-      "dialogDescription": "Hamma qurilmalardan chiqarilasiz. Buni bekor qilib boʻlmaydi.",
-      "doneTitle": "Hisob oʻchirishga rejalashtirildi",
-      "doneDescription": "Hisobingiz {date} sanasida oʻchiriladi. Fikringiz oʻzgardimi? Shu sanagacha qayta kiring va «Tiklash» ni tanlang."
+      "dialogDescription": "Soʻrov administratorga koʻrib chiqish uchun yuboriladi. Tasdiqlanmaguncha uni bekor qilish mumkin.",
+      "doneTitle": "Soʻrov yuborildi",
+      "doneDescription": "Administrator soʻrovingizni koʻrib chiqadi. Tasdiqlanmaguncha uni shu yerda bekor qilishingiz mumkin.",
+      "pendingTitle": "Oʻchirish soʻrovi",
+      "pendingDescription": "Administrator har bir soʻrovni biror narsa oʻchirilishidan oldin koʻrib chiqadi. Tasdiqlanmaguncha uni bekor qilish mumkin.",
+      "pendingStatus": "Koʻrib chiqilmoqda",
+      "pendingSince": "Soʻralgan sana: {date}",
+      "cancelRequest": "Soʻrovni bekor qilish"
     },
     "totp": {
       "title": "Autentifikator ilovasi",
@@ -2190,6 +2222,18 @@
       "passwordDisable": "Parol bilan kirishni oʻchirish",
       "passwordDisableTitle": "Faqat kirish kalitlari bilan kirilsinmi?",
       "passwordDisableDescription": "Parol kirish uchun ishlamay qoladi. Qayta yoqish uchun parolni tiklang."
+    },
+    "export": {
+      "title": "Maʼlumotlarimni yuklab olish",
+      "description": "Maʼlumotlaringizning fayl koʻrinishidagi nusxasi. Tayyorlash bir necha daqiqa olishi mumkin.",
+      "request": "Eksport soʻrash",
+      "download": "Yuklab olish",
+      "preparing": "Tayyorlanmoqda",
+      "ready": "Tayyor",
+      "expired": "Muddati tugagan",
+      "failed": "Bajarilmadi",
+      "requested": "Soʻralgan sana: {date}",
+      "until": "{date} gacha mavjud"
     }
   },
   "appearance": {
@@ -2463,6 +2507,34 @@
     "next": "Keyingi",
     "done": "Boshlash",
     "skip": "Tanishuvni oʻtkazib yuborish",
+    "openIn": "{name}ni ochish",
+    "pill": {
+      "label": "Tanishuv turi",
+      "resume": "Turga qaytish",
+      "end": "Tugatish"
+    },
+    "places": {
+      "title": "{brand}dagi boʻlimlaringiz",
+      "body": "Har kuni foydalanadigan narsalaringiz bir bosishda.",
+      "assistant": "Yordamchi",
+      "assistantHint": "Dars jadvali, baholar va uy vazifalari haqida soʻrang.",
+      "notebooks": "Daftarlar",
+      "notebooksHint": "Oʻz manbalaringiz asosida oʻqing, xulosa va testlar yarating.",
+      "flashcards": "Kartochkalar",
+      "flashcardsHint": "Atamalarni oraliq takrorlash bilan eslab qoling.",
+      "mail": "Pochta",
+      "mailHint": "Oʻqituvchilar va maktabdan xabarlar.",
+      "certificates": "Sertifikatlar",
+      "certificatesHint": "Profilingizdagi sertifikat va yutuqlaringiz."
+    },
+    "library": {
+      "title": "Kutubxona",
+      "body": "{appLibrary} maktab kitoblari va materiallarini saqlaydi: qidiring, oʻqing va oling."
+    },
+    "lms": {
+      "title": "Kurslar",
+      "body": "{appLms}da kurslaringiz, darslaringiz va topshiriqlaringiz joylashgan."
+    },
     "replay": {
       "title": "Tanishuv turi",
       "description": "Ilova nima qilishini va avval qaysi sozlamalarni belgilashni yana koʻring.",
@@ -2576,5 +2648,11 @@
     "tooLarge": "Rasm 5 MB dan katta.",
     "cameraUnavailable": "Kamera mavjud emas. Fayl tanlang.",
     "cameraDenied": "Kameraga ruxsat berilmadi. Brauzerda ruxsat bering yoki fayl tanlang."
+  },
+  "maintenance": {
+    "title": "Texnik ishlar",
+    "description": "Platforma boshqa serverga koʻchirilmoqda va faqat oʻqish rejimida. Oʻzgarishlar saqlanmaydi.",
+    "moved": "Platforma yangi serverga koʻchdi.",
+    "open": "Yangi serverni ochish"
   }
 }

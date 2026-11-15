@@ -9,8 +9,58 @@ function toDate(value: DateInput): Date {
   return value instanceof Date ? value : new Date(value)
 }
 
+const UZ_MONTHS_LONG = [
+  "yanvar",
+  "fevral",
+  "mart",
+  "aprel",
+  "may",
+  "iyun",
+  "iyul",
+  "avgust",
+  "sentabr",
+  "oktabr",
+  "noyabr",
+  "dekabr",
+]
+const UZ_MONTHS_SHORT = ["yan", "fev", "mar", "apr", "may", "iyn", "iyl", "avg", "sen", "okt", "noy", "dek"]
+const UZ_WEEKDAYS_LONG = ["yakshanba", "dushanba", "seshanba", "chorshanba", "payshanba", "juma", "shanba"]
+const UZ_WEEKDAYS_SHORT = ["Yak", "Dush", "Sesh", "Chor", "Pay", "Jum", "Shan"]
+const UZ_WEEKDAYS_NARROW = ["Y", "D", "S", "C", "P", "J", "S"]
+const EN_WEEKDAYS = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"]
+
+/**
+ * Some browsers (Chrome) ship no Uzbek date data and print `M11 15, Sun`. Rebuild the output from English parts
+ * with Uzbek month and weekday names; day, year and time come from the same formatter so the order stays the same.
+ */
+function formatUzFallback(date: Date, options: Intl.DateTimeFormatOptions): string {
+  const base = { timeZone: TIME_ZONE }
+  const month = Number(new Intl.DateTimeFormat("en-GB", { ...base, month: "numeric" }).format(date)) - 1
+  const weekday = EN_WEEKDAYS.indexOf(new Intl.DateTimeFormat("en-GB", { ...base, weekday: "short" }).format(date))
+  const parts = new Intl.DateTimeFormat("en-GB", { ...base, ...options }).formatToParts(date)
+  return parts
+    .map((part) => {
+      if (part.type === "month" && Number.isNaN(Number(part.value))) {
+        return (options.month === "long" ? UZ_MONTHS_LONG : UZ_MONTHS_SHORT)[month] ?? part.value
+      }
+      if (part.type === "weekday") {
+        const names =
+          options.weekday === "long"
+            ? UZ_WEEKDAYS_LONG
+            : options.weekday === "narrow"
+              ? UZ_WEEKDAYS_NARROW
+              : UZ_WEEKDAYS_SHORT
+        return names[weekday] ?? part.value
+      }
+      return part.value
+    })
+    .join("")
+}
+
 function format(value: DateInput, locale: Locale, options: Intl.DateTimeFormatOptions): string {
-  return new Intl.DateTimeFormat(INTL_LOCALES[locale], { timeZone: TIME_ZONE, ...options }).format(toDate(value))
+  const date = toDate(value)
+  const text = new Intl.DateTimeFormat(INTL_LOCALES[locale], { timeZone: TIME_ZONE, ...options }).format(date)
+  return locale === "uz" && /M\d+/.test(text) ? formatUzFallback(date, options) : text
 }
 
 /** `7 Oct 2026` style date in Asia/Tashkent. Date-only strings (`2026-10-07`) stay on that day. */

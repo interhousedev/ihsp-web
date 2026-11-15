@@ -236,7 +236,7 @@
       "homeworkDue": "to do",
       "gpa": "GPA (out of 5)",
       "cardsDue": "cards due",
-      "absences": "absences",
+      "absences": "{count, plural, one {absence} other {absences}}",
       "anySubject": "your subject",
       "kinds": {
         "timetable": "Schedule",
@@ -293,13 +293,33 @@
   },
   "timetable": {
     "title": "Calendar",
+    "controlPeriod": {
+      "short": {
+        "midterm_1": "PC 1",
+        "midterm_2": "PC 2",
+        "final": "FC"
+      },
+      "full": {
+        "midterm_1": "Midterm control 1 (PC)",
+        "midterm_2": "Midterm control 2 (PC)",
+        "final": "Final control (FC)"
+      },
+      "open": "{term}, {period}: exams and marks",
+      "left": "Exams left to take",
+      "marks": "Current marks",
+      "noneLeft": "No exams left.",
+      "noneTaken": "No exams taken yet.",
+      "noMark": "No mark yet",
+      "noDate": "Date not set yet",
+      "mark": "Mark {value}"
+    },
     "views": {
       "day": "Day",
       "week": "Week",
       "month": "Month"
     },
     "viewsLabel": "Calendar view",
-    "hideOtherSubgroup": "Do not show other subgroup lessons",
+    "showOtherSubgroup": "Show other subgroup lessons",
     "today": "Today",
     "previousMonth": "Previous month",
     "nextMonth": "Next month",
@@ -939,6 +959,15 @@
   },
   "settings": {
     "title": "Settings",
+    "allSettings": "All settings",
+    "groups": {
+      "profile": { "title": "Profile", "description": "Your details, class and linked accounts." },
+      "appearance": { "title": "Language and appearance", "description": "Language, theme and the phone bottom bar." },
+      "notifications": { "title": "Notifications", "description": "What reaches the app, Telegram and push." },
+      "schedule": { "title": "Calendar and sync", "description": "Calendar feed and EMIS sync." },
+      "security": { "title": "Security", "description": "App lock and your account security." },
+      "help": { "title": "Help and about", "description": "Welcome tour, feedback and licenses." }
+    },
     "general": {
       "title": "General",
       "language": "Language",
@@ -994,7 +1023,7 @@
     "you": "you",
     "locked": "This photo was set by your curator or an administrator. Only the curator or an administrator can change it.",
     "purpose": "The entrance device compares your face with this photo to let you in and note your attendance.",
-    "privacy": "Only you, your curator and administrators can see the photo. It is used only for the entrance device; remove it at any time."
+    "privacy": "Your photo is visible to your classmates, teachers and the administration. It is also used for the entrance device; remove it at any time."
   },
   "excuses": {
     "status": {
@@ -1056,6 +1085,52 @@
       "write": "Message",
       "send": "Send",
       "sending": "Sending…"
+    }
+  },
+  "onboarding": {
+    "label": "Getting started",
+    "stepOf": "Step {current} of {total}",
+    "steps": "Steps",
+    "stepSelfie": "Photo",
+    "stepCertificates": "Certificates",
+    "stepDone": "done",
+    "stepCurrent": "current",
+    "selfie": {
+      "title": "Take a selfie",
+      "intro": "The entrance device recognises you by this photo. Look straight at the camera in good light, one person only.",
+      "privacy": "Your photo is visible to your classmates, teachers and the administration. It is also used for the entrance device.",
+      "openCamera": "Open camera",
+      "cameraStarting": "Starting the camera…",
+      "cameraHint": "Your browser will ask for permission to use the front camera.",
+      "cameraDenied": "Camera access is blocked. Allow the camera for this site in the browser settings, or take a photo with the button below.",
+      "cameraUnavailable": "No camera could be used on this device. Take a photo with the button below.",
+      "liveLabel": "Camera preview. Place your face inside the oval.",
+      "guide": "Keep your face inside the oval",
+      "capture": "Take photo",
+      "retake": "Retake",
+      "confirm": "Use this photo",
+      "saving": "Saving…",
+      "chooseFile": "Take or choose a photo",
+      "previewAlt": "Your photo",
+      "wrongType": "Only JPEG or PNG images are accepted.",
+      "tooLarge": "The image is larger than 5 MB.",
+      "captureFailed": "The photo could not be taken. Try again."
+    },
+    "certificates": {
+      "title": "Your certificates",
+      "intro": "Certificates are used for the school statistics. You can add or change them later in Profile.",
+      "loading": "Loading your National Certificate and CEFR results from EMIS…",
+      "loaded": "Loaded from EMIS: {count, plural, one {# certificate} other {# certificates}}.",
+      "loadedNone": "EMIS has no certificates for you yet.",
+      "emisFailed": "Could not load certificates from EMIS. {reason} You can add them yourself or skip this step.",
+      "retry": "Try again",
+      "empty": "Nothing added yet.",
+      "add": "Add",
+      "addEntry": "Add {type}",
+      "yours": "Added certificates",
+      "done": "Done",
+      "skip": "Skip for now",
+      "saving": "Saving…"
     }
   }
 }

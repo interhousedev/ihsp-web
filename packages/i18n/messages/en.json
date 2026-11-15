@@ -218,7 +218,29 @@
       "description": "Account & security"
     }
   },
+  "legal": {
+    "loading": "Loading the document",
+    "consent": {
+      "title": "Documents",
+      "accept": "I accept: {title}",
+      "read": "Read the text",
+      "open": "Open in a new tab",
+      "required": "Accept every document to continue.",
+      "loadFailed": "The documents could not be loaded."
+    },
+    "gate": {
+      "title": "Documents were updated",
+      "readFull": "Read the full text",
+      "accept": "Accept and continue",
+      "signOut": "Sign out"
+    }
+  },
   "errors": {
+    "legal": {
+      "stale-version": "A newer version was published. Review it and accept again.",
+      "incomplete": "Fill in the title and text in every language first.",
+      "consent-required": "Accept every document to continue."
+    },
     "generic": "Something went wrong. Try again in a moment.",
     "network": {
       "unreachable": "No connection to the server. Check your internet and try again."
@@ -243,7 +265,8 @@
     },
     "emis": {
       "auth-failed": "EMIS did not accept this login and password.",
-      "unavailable": "EMIS is not available right now. Try again later.",
+      "unavailable": "EMIS is not responding. The problem is on EMIS's side, not ours. Try again later.",
+      "upstream": "The problem is on EMIS's side (the state system), not ours. Try again later.",
       "credentials-missing": "No working EMIS login is stored for this account. Sign in again to link EMIS."
     },
     "id": {
@@ -420,7 +443,10 @@
       "broadcast-empty-audience": "The audience has no recipients.",
       "broadcast-text-too-long": "The text is too long for one Telegram message ({length} of {limit} characters).",
       "broadcast-no-telegram": "Link a Telegram account to receive the preview.",
-      "broadcast-time-invalid": "The scheduled time must include a time zone."
+      "broadcast-time-invalid": "The scheduled time must include a time zone.",
+      "migration-not-configured": "Migration is not set up on this deployment.",
+      "migration-not-allowed": "This action is not possible in the current migration phase.",
+      "migration-invalid-input": "Check the target host, port, address and pairing token."
     },
     "academic": {
       "excuse-not-found": "Excuse not found.",
@@ -1603,6 +1629,7 @@
     "error": "Could not load the group marks."
   },
   "myGroup": {
+    "noGroup": "You are not in a group yet",
     "size": "Students: {count}",
     "homeroomTeacher": "Homeroom teacher",
     "headStudent": "Head student",
@@ -2139,14 +2166,19 @@
         "attendance": "Attendance records, with your name",
         "marks": "Marks history, with your name"
       },
-      "thirtyDays": "Your account is closed at once. Personal data is removed after 30 days.",
+      "thirtyDays": "An administrator reviews your request first. Once approved, your account is closed and personal data is removed.",
       "confirmTitle": "Confirm",
       "confirmDescription": "Enter your password and, if OTP login is on, the code.",
-      "submit": "Delete my account",
+      "submit": "Request account deletion",
       "dialogTitle": "Delete your account?",
-      "dialogDescription": "You are logged out everywhere and cannot undo this.",
-      "doneTitle": "Account scheduled for deletion",
-      "doneDescription": "Your account will be deleted on {date}. Changed your mind? Log in again before then and choose Restore."
+      "dialogDescription": "Your request goes to an administrator for review. You can cancel it until it is approved.",
+      "doneTitle": "Request sent",
+      "doneDescription": "An administrator will review your request. You can cancel it here until it is approved.",
+      "pendingTitle": "Deletion request",
+      "pendingDescription": "An administrator reviews every request before anything is deleted. You can cancel it until it is approved.",
+      "pendingStatus": "Waiting for review",
+      "pendingSince": "Requested {date}",
+      "cancelRequest": "Cancel the request"
     },
     "totp": {
       "title": "Authenticator app",
@@ -2190,6 +2222,18 @@
       "passwordDisable": "Turn off password sign-in",
       "passwordDisableTitle": "Sign in with passkeys only?",
       "passwordDisableDescription": "Your password will stop working for sign-in. To turn it back on, reset the password."
+    },
+    "export": {
+      "title": "Download my data",
+      "description": "A copy of your data as a file. Preparing it can take a few minutes.",
+      "request": "Request an export",
+      "download": "Download",
+      "preparing": "Preparing",
+      "ready": "Ready",
+      "expired": "Expired",
+      "failed": "Failed",
+      "requested": "Requested {date}",
+      "until": "available until {date}"
     }
   },
   "appearance": {
@@ -2463,6 +2507,34 @@
     "next": "Next",
     "done": "Get started",
     "skip": "Skip the tour",
+    "openIn": "Open {name}",
+    "pill": {
+      "label": "Welcome tour",
+      "resume": "Back to tour",
+      "end": "End"
+    },
+    "places": {
+      "title": "Your places in {brand}",
+      "body": "Everything you use day to day is one tap away.",
+      "assistant": "Assistant",
+      "assistantHint": "Ask about your schedule, grades and homework.",
+      "notebooks": "Notebooks",
+      "notebooksHint": "Study from your own sources and generate summaries and quizzes.",
+      "flashcards": "Flash cards",
+      "flashcardsHint": "Memorise terms with spaced repetition.",
+      "mail": "Mail",
+      "mailHint": "Messages from teachers and the school.",
+      "certificates": "Certificates",
+      "certificatesHint": "Your certificates and achievements in your profile."
+    },
+    "library": {
+      "title": "The library",
+      "body": "{appLibrary} holds the school's books and materials: search, read and borrow."
+    },
+    "lms": {
+      "title": "Courses",
+      "body": "{appLms} is where your courses, lessons and assignments live."
+    },
     "replay": {
       "title": "Welcome tour",
       "description": "See again what this app does and which settings to set first.",
@@ -2576,5 +2648,11 @@
     "tooLarge": "The image is larger than 5 MB.",
     "cameraUnavailable": "The camera is not available. Choose a file instead.",
     "cameraDenied": "Camera access was refused. Allow it in the browser or choose a file."
+  },
+  "maintenance": {
+    "title": "Maintenance",
+    "description": "The platform is being moved to another server and is read-only. Changes are not saved.",
+    "moved": "The platform has moved to a new server.",
+    "open": "Open the new server"
   }
 }

@@ -16,6 +16,11 @@
     "delete": "Удалить аккаунт",
     "personalTokens": "Персональные токены"
   },
+  "home": {
+    "title": "Добро пожаловать в {appId}",
+    "haveAccount": "У меня есть аккаунт {appId}",
+    "register": "Регистрация через EMIS"
+  },
   "login": {
     "title": "Вход",
     "description": "чтобы продолжить в «{client}»",

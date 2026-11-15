@@ -236,7 +236,7 @@
       "homeworkDue": "bajarish kerak",
       "gpa": "GPA (5 dan)",
       "cardsDue": "takrorlanadigan kartochka",
-      "absences": "qoldirilgan dars",
+      "absences": "{count, plural, other {qoldirilgan dars}}",
       "anySubject": "faningiz",
       "kinds": {
         "timetable": "Jadval",
@@ -287,19 +287,39 @@
     "connectAi": {
       "title": "Sunʼiy intellektni {app} ga ulash",
       "text": "Maʼlumotlaringiz bilan oʻz sunʼiy intellekt ilovangizda davom eting.",
-      "action": "ИИ-ilovani sozlash",
+      "action": "Sunʼiy intellekt ilovasini sozlash",
       "dismiss": "Hozir emas"
     }
   },
   "timetable": {
     "title": "Taqvim",
+    "controlPeriod": {
+      "short": {
+        "midterm_1": "ON 1",
+        "midterm_2": "ON 2",
+        "final": "YaN"
+      },
+      "full": {
+        "midterm_1": "1-oraliq nazorat (ON)",
+        "midterm_2": "2-oraliq nazorat (ON)",
+        "final": "Yakuniy nazorat (YaN)"
+      },
+      "open": "{term}, {period}: imtihonlar va baholar",
+      "left": "Topshirish kerak",
+      "marks": "Joriy baholar",
+      "noneLeft": "Topshiriladigan imtihon qolmadi.",
+      "noneTaken": "Hali hech narsa topshirilmagan.",
+      "noMark": "Baho hali yoʻq",
+      "noDate": "Sana hali belgilanmagan",
+      "mark": "Baho {value}"
+    },
     "views": {
       "day": "Kun",
       "week": "Hafta",
       "month": "Oy"
     },
     "viewsLabel": "Taqvim koʻrinishi",
-    "hideOtherSubgroup": "Boshqa kichik guruh darslarini koʻrsatmaslik",
+    "showOtherSubgroup": "Boshqa kichik guruh darslarini koʻrsatish",
     "today": "Bugun",
     "previousMonth": "Oldingi oy",
     "nextMonth": "Keyingi oy",
@@ -939,6 +959,15 @@
   },
   "settings": {
     "title": "Sozlamalar",
+    "allSettings": "Barcha sozlamalar",
+    "groups": {
+      "profile": { "title": "Profil", "description": "Maʼlumotlaringiz, sinfingiz va ulangan hisoblar." },
+      "appearance": { "title": "Til va koʻrinish", "description": "Til, mavzu va telefondagi pastki panel." },
+      "notifications": { "title": "Bildirishnomalar", "description": "Ilovaga, Telegramga va pushga nima keladi." },
+      "schedule": { "title": "Kalendar va sinxronlash", "description": "Kalendar lentasi va EMIS bilan sinxronlash." },
+      "security": { "title": "Xavfsizlik", "description": "Ilovani qulflash va hisob xavfsizligi." },
+      "help": { "title": "Yordam va maʼlumot", "description": "Tanishuv turi, fikr-mulohaza va litsenziyalar." }
+    },
     "general": {
       "title": "Umumiy",
       "language": "Til",
@@ -994,7 +1023,7 @@
     "you": "siz",
     "locked": "Bu suratni kuratoringiz yoki administrator qoʻygan. Uni faqat kurator yoki administrator oʻzgartira oladi.",
     "purpose": "Kirishdagi qurilma sizni oʻtkazish va davomatni belgilash uchun yuzingizni shu surat bilan solishtiradi.",
-    "privacy": "Suratni faqat siz, kuratoringiz va administratorlar koʻra oladi. U faqat kirish qurilmasi uchun ishlatiladi; istalgan payt oʻchirishingiz mumkin."
+    "privacy": "Suratingizni sinfdoshlaringiz, oʻqituvchilar va maʼmuriyat koʻra oladi. U kirish qurilmasi uchun ham ishlatiladi; istalgan payt oʻchirishingiz mumkin."
   },
   "excuses": {
     "status": {
@@ -1056,6 +1085,52 @@
       "write": "Xabar",
       "send": "Yuborish",
       "sending": "Yuborilmoqda…"
+    }
+  },
+  "onboarding": {
+    "label": "Boshlash",
+    "stepOf": "{current}-qadam, jami {total} ta",
+    "steps": "Qadamlar",
+    "stepSelfie": "Surat",
+    "stepCertificates": "Sertifikatlar",
+    "stepDone": "bajarildi",
+    "stepCurrent": "joriy",
+    "selfie": {
+      "title": "Selfi oling",
+      "intro": "Kirish qurilmasi sizni shu surat orqali taniydi. Yaxshi yorugʻlikda kameraga toʻgʻri qarang, kadrda faqat siz boʻling.",
+      "privacy": "Suratingizni sinfdoshlaringiz, oʻqituvchilar va maʼmuriyat koʻradi. U kirish qurilmasi uchun ham ishlatiladi.",
+      "openCamera": "Kamerani ochish",
+      "cameraStarting": "Kamera ishga tushmoqda…",
+      "cameraHint": "Brauzer old kameradan foydalanishga ruxsat soʻraydi.",
+      "cameraDenied": "Kameraga ruxsat berilmagan. Brauzer sozlamalarida bu sayt uchun kameraga ruxsat bering yoki quyidagi tugma bilan surat oling.",
+      "cameraUnavailable": "Bu qurilmada kamerani ishlatib boʻlmadi. Quyidagi tugma bilan surat oling.",
+      "liveLabel": "Kamera koʻrinishi. Yuzingizni oval ichiga joylang.",
+      "guide": "Yuzingizni oval ichida ushlang",
+      "capture": "Surat olish",
+      "retake": "Qayta olish",
+      "confirm": "Shu suratdan foydalanish",
+      "saving": "Saqlanmoqda…",
+      "chooseFile": "Surat olish yoki tanlash",
+      "previewAlt": "Sizning suratingiz",
+      "wrongType": "Faqat JPEG yoki PNG rasmlar qabul qilinadi.",
+      "tooLarge": "Rasm 5 MB dan katta.",
+      "captureFailed": "Surat olib boʻlmadi. Qayta urinib koʻring."
+    },
+    "certificates": {
+      "title": "Sertifikatlaringiz",
+      "intro": "Sertifikatlar litsey statistikasi uchun ishlatiladi. Ularni keyinroq Profilda qoʻshish yoki oʻzgartirish mumkin.",
+      "loading": "EMIS dan Milliy sertifikat va CEFR natijalaringiz yuklanmoqda…",
+      "loaded": "EMIS dan yuklandi: {count, plural, one {# ta sertifikat} other {# ta sertifikat}}.",
+      "loadedNone": "EMIS da hozircha sertifikatlaringiz yoʻq.",
+      "emisFailed": "EMIS dan sertifikatlarni yuklab boʻlmadi. {reason} Ularni oʻzingiz qoʻshishingiz yoki bu qadamni oʻtkazib yuborishingiz mumkin.",
+      "retry": "Qayta urinish",
+      "empty": "Hozircha hech narsa qoʻshilmagan.",
+      "add": "Qoʻshish",
+      "addEntry": "Qoʻshish: {type}",
+      "yours": "Qoʻshilgan sertifikatlar",
+      "done": "Tayyor",
+      "skip": "Hozircha oʻtkazib yuborish",
+      "saving": "Saqlanmoqda…"
     }
   }
 }

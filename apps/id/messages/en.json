@@ -16,6 +16,11 @@
     "delete": "Delete account",
     "personalTokens": "Personal tokens"
   },
+  "home": {
+    "title": "Welcome to {appId}",
+    "haveAccount": "I have an {appId} account",
+    "register": "Register with EMIS"
+  },
   "login": {
     "title": "Log in",
     "description": "to continue to {client}",

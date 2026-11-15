@@ -16,6 +16,11 @@
     "delete": "Hisobni oʻchirish",
     "personalTokens": "Shaxsiy tokenlar"
   },
+  "home": {
+    "title": "{appId} ga xush kelibsiz",
+    "haveAccount": "Menda {appId} akkaunti bor",
+    "register": "EMIS orqali roʻyxatdan oʻtish"
+  },
   "login": {
     "title": "Kirish",
     "description": "«{client}» ga davom etish uchun",

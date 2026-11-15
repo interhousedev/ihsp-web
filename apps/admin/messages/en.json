@@ -41,8 +41,11 @@
     "botPosts": "Bot posts",
     "mcpActivity": "MCP activity",
     "vault": "Vault",
+    "migration": "Server migration",
     "devices": "Devices",
-    "excuses": "Excuses"
+    "excuses": "Excuses",
+    "legal": "Legal documents",
+    "erasure": "Erasure requests"
   },
   "shared": {
     "lessonList": "Lessons by date",
@@ -515,6 +518,15 @@
     "new": "New group",
     "empty": "No groups yet.",
     "notSelected": "Choose a group from the list.",
+    "delete": {
+      "action": "Delete group",
+      "title": "Delete group {name}?",
+      "description": "The group will be removed and its group schedule deleted. Its students are not deleted: they stay in the system without a group.",
+      "confirmLabel": "Type the group name {name} to confirm",
+      "submit": "Delete group",
+      "keep": "Keep group",
+      "done": "Group {name} deleted"
+    },
     "filters": {
       "status": "Status",
       "allStatuses": "Any status"
@@ -2178,6 +2190,66 @@
       "generic": "Could not send the key share."
     }
   },
+  "migration": {
+    "title": "Server migration",
+    "status": "Status",
+    "phase": {
+      "idle": "Idle",
+      "queued": "Queued",
+      "running": "Running",
+      "completed": "Completed",
+      "failed": "Failed",
+      "cancelling": "Rolling back"
+    },
+    "dryRun": "Dry run",
+    "notConfigured": "Migration is not set up on this deployment.",
+    "stale": "The migration runner has not reported for a while. Check the host.",
+    "readOnly": "The platform is read-only until the migration is rolled back or finished.",
+    "target": "Target: {host}:{port}",
+    "since": "Started {date}",
+    "steps": "Steps",
+    "stepState": {
+      "pending": "Waiting",
+      "running": "In progress",
+      "done": "Done",
+      "failed": "Failed"
+    },
+    "stepName": {
+      "stop_services": "Stop services",
+      "dump_postgres": "Dump PostgreSQL",
+      "snapshot_redis": "Snapshot Redis",
+      "copy_objects": "Copy files",
+      "copy_config": "Copy configuration",
+      "copy_vault": "Copy the vault",
+      "copy_backups": "Copy backups",
+      "transfer": "Transfer",
+      "verify": "Verify"
+    },
+    "failedTitle": "The migration failed",
+    "completedTitle": "The migration is complete",
+    "completedDescription": "The platform now runs on the new server. Check it, then switch DNS. Rolling back returns this server to service.",
+    "openTarget": "Open the new server",
+    "form": {
+      "title": "Start a migration",
+      "description": "The platform turns read-only at once. Source data is never changed.",
+      "host": "Target host",
+      "port": "SSH port",
+      "url": "New site address (optional)",
+      "token": "Pairing token",
+      "code": "Confirmation code",
+      "start": "Start the migration",
+      "starting": "Starting…",
+      "confirmTitle": "Start the migration?",
+      "confirmDescription": "Writes stop on this server until the migration is rolled back."
+    },
+    "rollback": {
+      "button": "Roll back",
+      "title": "Roll back the migration?",
+      "description": "This server leaves maintenance mode and keeps serving. The source data was never touched.",
+      "confirm": "Roll back",
+      "code": "Confirmation code"
+    }
+  },
   "devices": {
     "title": "Entrance devices",
     "docs": "How entrance devices work",
@@ -2272,5 +2344,65 @@
       "sent": "Message sent",
       "download": "Open {name}"
     }
+  },
+  "legal": {
+    "title": "Legal documents",
+    "list": "Legal documents",
+    "kinds": {
+      "privacy": "Privacy policy",
+      "terms": "Terms of use",
+      "biometric": "Biometric data consent",
+      "ai": "AI processing consent"
+    },
+    "draftBadge": "Draft v{version}",
+    "version": "Published version",
+    "publishedAt": "Published",
+    "accepted": "Accepted",
+    "notPublished": "Not published yet",
+    "edit": "Edit",
+    "editor": {
+      "heading": "{kind}: draft",
+      "locale": "Language",
+      "title": "Title",
+      "body": "Text (Markdown)",
+      "announcement": "Announcement of the change (Markdown, optional)",
+      "preview": "Preview",
+      "saveDraft": "Save draft",
+      "saving": "Saving…",
+      "saved": "Draft saved.",
+      "publish": "Publish",
+      "close": "Close"
+    },
+    "publishTitle": "Publish {kind}?",
+    "publishText": "Every user must accept the new version again before they can continue.",
+    "publishConfirm": "Publish",
+    "errors": {
+      "noDraft": "There is no draft to publish. Save a draft first."
+    }
+  },
+  "erasure": {
+    "title": "Erasure requests",
+    "empty": "No erasure requests.",
+    "status": {
+      "pending_review": "Awaiting review",
+      "approved": "Approved",
+      "rejected": "Rejected",
+      "completed": "Completed",
+      "cancelled": "Cancelled"
+    },
+    "requested": "Requested {date}",
+    "closesOn": "Data removed on {date}",
+    "reasonShown": "Reason shown to the user: {reason}",
+    "approveAction": "Approve",
+    "rejectAction": "Reject",
+    "approveFor": "Approve the request of {name}",
+    "rejectFor": "Reject the request of {name}",
+    "approveTitle": "Approve the erasure of {name}?",
+    "approveText": "This cannot be undone. The account is closed and the personal data is permanently removed.",
+    "rejectTitle": "Reject the request of {name}?",
+    "rejectText": "The account stays as it is and the user sees that the request was rejected.",
+    "reason": "Reason shown to the user (optional)",
+    "approved": "Request approved",
+    "rejected": "Request rejected"
   }
 }
