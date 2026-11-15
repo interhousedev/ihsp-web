@@ -2,7 +2,7 @@
 
 import type { ReadingListCard as ReadingListCardData } from "@ihsp/api"
 import { useT } from "@ihsp/i18n"
-import { Badge, Progress, ProgressIndicator, ProgressTrack } from "@ihsp/ui"
+import { Badge, Icons, Progress, ProgressIndicator, ProgressTrack } from "@ihsp/ui"
 import Link from "next/link"
 import { listHref } from "../../utils/hrefs"
 
@@ -18,6 +18,12 @@ export function ReadingListCardView({ list }: { list: ReadingListCardData }) {
         </Link>
       </h3>
       <div className="flex flex-wrap items-center gap-1.5 text-xs">
+        {list.pinned ? (
+          <Badge variant="secondary">
+            <Icons.pinFilled aria-hidden className="size-3" />
+            {t("pinned")}
+          </Badge>
+        ) : null}
         {list.subject ? <Badge variant="secondary">{list.subject.name}</Badge> : null}
         {list.year_of_study ? <Badge variant="outline">{t("yearOfStudy", { year: list.year_of_study })}</Badge> : null}
         {list.status !== "published" ? <Badge variant="outline">{t(list.status)}</Badge> : null}

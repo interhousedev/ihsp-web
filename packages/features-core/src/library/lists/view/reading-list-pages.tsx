@@ -11,12 +11,13 @@ import { NotAvailable } from "../../catalog/not-available"
 import { useLibraryAccess } from "../../hooks/use-library-access"
 import { listEditHref } from "../../utils/hrefs"
 import { ReadingListCardView } from "./reading-list-card"
+import { SortableReadingLists, inShownOrder } from "./reading-list-sortable"
 import { ReadingListView } from "./reading-list-view"
 
 /** `/lists/`: the reading lists of my groups (students) or my subjects (teachers), with "New list" for those who write them. */
 export function ReadingListsPage() {
   const t = useT("library.readingList")
-  const { canWriteLists } = useLibraryAccess()
+  const { canWriteLists, canManage } = useLibraryAccess()
   const query = useQuery(getReadingListsQuery())
   return (
     <PageContainer
@@ -36,9 +37,11 @@ export function ReadingListsPage() {
         <StateView state="error" error={query.error} onRetry={() => void query.refetch()} />
       ) : query.data.length === 0 ? (
         <StateView state="empty" emptyText={t("empty")} />
+      ) : canManage ? (
+        <SortableReadingLists lists={query.data} />
       ) : (
         <ul className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
-          {query.data.map((list) => (
+          {inShownOrder(query.data).map((list) => (
             <li key={list.id}>
               <ReadingListCardView list={list} />
             </li>
