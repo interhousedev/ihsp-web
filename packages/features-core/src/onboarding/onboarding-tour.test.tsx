@@ -1,8 +1,9 @@
-import { describe, expect, it } from "bun:test"
+import { beforeEach, describe, expect, it } from "bun:test"
 import { renderWithProviders, userMe, userPreferences } from "@ihsp/test-utils"
 import { getSession } from "@ihsp/auth"
 import { act, screen, waitFor } from "@testing-library/react"
 import { OnboardingTour } from "./onboarding-tour"
+import { resetTourState } from "./tour-store"
 import { replayOnboardingTour } from "./use-onboarding-tour"
 
 const fresh = { ...userMe, preferences: { ...userPreferences, onboarding_dismissed: [] } }
@@ -12,12 +13,15 @@ const tour = (
 )
 
 describe("OnboardingTour", () => {
+  beforeEach(resetTourState)
+
   it("opens on the first visit and walks through its steps", async () => {
     const { user } = renderWithProviders(tour, { session: { user: fresh } })
 
     expect(await screen.findByRole("dialog")).toBeInTheDocument()
-    await user.click(screen.getByRole("button", { name: "Next" }))
-    await user.click(screen.getByRole("button", { name: "Next" }))
+    while (screen.queryByRole("button", { name: "Next" })) {
+      await user.click(screen.getByRole("button", { name: "Next" }))
+    }
     expect(screen.getByRole("link", { name: /Connect your AI/ })).toHaveAttribute(
       "href",
       "http://id.test/connectors/new/",
@@ -43,5 +47,26 @@ describe("OnboardingTour", () => {
     act(() => replayOnboardingTour())
 
     expect(await screen.findByRole("dialog")).toBeInTheDocument()
+  })
+
+  it("closing the dialog sets the tour aside; the pill resumes it at the same step and End dismisses it", async () => {
+    const { user } = renderWithProviders(tour, { session: { user: fresh } })
+    await screen.findByRole("dialog")
+    await user.click(screen.getByRole("button", { name: "Next" }))
+
+    await user.keyboard("{Escape}")
+
+    const pill = await screen.findByRole("region", { name: "Welcome tour" })
+    expect(screen.queryByRole("dialog")).not.toBeInTheDocument()
+    expect(getSession()?.user.preferences.onboarding_dismissed).not.toContain("tour")
+    await user.click(screen.getByRole("button", { name: "Back to tour" }))
+    expect(await screen.findByRole("dialog")).toBeInTheDocument()
+    expect(screen.getByText(/Step 2 of \d+/)).toBeInTheDocument()
+    expect(pill).not.toBeInTheDocument()
+
+    await user.keyboard("{Escape}")
+    await user.click(await screen.findByRole("button", { name: "End" }))
+    await waitFor(() => expect(getSession()?.user.preferences.onboarding_dismissed).toContain("tour"))
+    expect(screen.queryByRole("region", { name: "Welcome tour" })).not.toBeInTheDocument()
   })
 })

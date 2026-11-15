@@ -1,7 +1,8 @@
 "use client"
 
-import { useEffect, useState } from "react"
+import { useEffect } from "react"
 import { usePreferences, useUpdatePreferences } from "../notification-settings-form"
+import { resetTourState, setTourState, useTourState } from "./tour-store"
 
 /** The id the tour leaves in `preferences.onboarding_dismissed` (the same list as the Today get-started steps). */
 export const TOUR_DISMISSED_ID = "tour"
@@ -13,27 +14,50 @@ export function replayOnboardingTour(): void {
   window.dispatchEvent(new Event(REPLAY_EVENT))
 }
 
+export type OnboardingTourControls = {
+  /** The dialog is showing. */
+  open: boolean
+  /** Running but set aside: the "Back to tour" pill shows instead of the dialog. */
+  paused: boolean
+  index: number
+  setIndex: (index: number) => void
+  /** Sets the tour aside without ending it (clicking out of it, following a link to a place). */
+  pause: () => void
+  resume: () => void
+  /** Ends the tour: it is remembered and never shows by itself again. */
+  close: () => void
+}
+
 /**
- * State of the first-run tour: open on the first visit (the id is not in `onboarding_dismissed`) or on replay.
- * Closing it by any way (skip, finish, a link inside it) remembers the id, so it never shows by itself again.
+ * State of the first-run tour: running on the first visit (the id is not in `onboarding_dismissed`) or on replay.
+ * Ending it (skip, finish, end in the pill) remembers the id. Closing the dialog only pauses it.
  */
-export function useOnboardingTour(): { open: boolean; close: () => void } {
+export function useOnboardingTour(): OnboardingTourControls {
   const preferences = usePreferences()
   const update = useUpdatePreferences()
-  const [replay, setReplay] = useState(false)
+  const { replay, paused, index } = useTourState()
 
   useEffect(() => {
-    const onReplay = () => setReplay(true)
+    const onReplay = () => setTourState({ replay: true, paused: false, index: 0 })
     window.addEventListener(REPLAY_EVENT, onReplay)
     return () => window.removeEventListener(REPLAY_EVENT, onReplay)
   }, [])
 
   const dismissed = preferences?.onboarding_dismissed ?? []
   const firstRun = preferences !== null && !dismissed.includes(TOUR_DISMISSED_ID)
+  const running = firstRun || replay
 
   const close = () => {
-    setReplay(false)
+    resetTourState()
     if (firstRun) update.mutate({ onboarding_dismissed: [...new Set([...dismissed, TOUR_DISMISSED_ID])] })
   }
-  return { open: firstRun || replay, close }
+  return {
+    open: running && !paused,
+    paused: running && paused,
+    index,
+    setIndex: (next) => setTourState({ index: next }),
+    pause: () => setTourState({ paused: true }),
+    resume: () => setTourState({ paused: false }),
+    close,
+  }
 }
