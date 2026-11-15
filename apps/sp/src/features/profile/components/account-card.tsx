@@ -26,7 +26,7 @@ export function AccountCard({ profile, account }: { profile: StudentProfile; acc
             "–"
           )}
         </InfoRow>
-        <InfoRow label={t("group")}>{profile.group.name}</InfoRow>
+        <InfoRow label={t("group")}>{profile.group?.name ?? t("groupUnset")}</InfoRow>
         <InfoRow label={t("subgroup")}>{profile.subgroup ?? t("subgroupUnset")}</InfoRow>
         <InfoRow label={t("curator")}>{profile.curator ? fullName(profile.curator) : "–"}</InfoRow>
         <InfoRow label={t("headStudent")}>{profile.head_student ? fullName(profile.head_student) : "–"}</InfoRow>

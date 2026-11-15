@@ -74,13 +74,13 @@ describe("other subgroup toggle", () => {
 
     expect(await screen.findByRole("switch", { name: LABEL })).toBeChecked()
     await waitFor(() => expect(container.querySelectorAll("[data-other-subgroup]")).toHaveLength(1))
-    expect(container.querySelector("a[href*='lesson-a']")).not.toBeNull()
+    expect(container.querySelector("[data-lesson-id='lesson-a']")).not.toBeNull()
   })
 
   test("a week without the other subgroup's lessons has no toggle", async () => {
     const { container } = renderSp(<TimetablePage />, { route: "/timetable/?view=week" })
 
-    await waitFor(() => expect(container.querySelector("a[href^='/lessons/view']")).not.toBeNull())
+    await waitFor(() => expect(container.querySelector("[data-lesson-id]")).not.toBeNull())
     expect(screen.queryByRole("switch", { name: LABEL })).not.toBeInTheDocument()
   })
 })

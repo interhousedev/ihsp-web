@@ -19,11 +19,11 @@ afterEach(() => {
 })
 
 describe("grade tabs", () => {
-  test("the tabs are By day, Semester and Grade book, and By day opens first", async () => {
+  test("the tabs are By day, Semester, Grade book and Rating book, and By day opens first", async () => {
     renderSp(<GradesPage />, { route: "/grades/" })
 
     const tabs = await screen.findAllByRole("tab")
-    expect(tabs.map((tab) => tab.textContent)).toEqual(["By day", "Semester", "Grade book"])
+    expect(tabs.map((tab) => tab.textContent)).toEqual(["By day", "Semester", "Grade book", "Rating book"])
     expect(tabs[0]).toHaveAttribute("aria-selected", "true")
     expect(await screen.findByRole("button", { name: "Pick a date" })).toBeInTheDocument()
   })

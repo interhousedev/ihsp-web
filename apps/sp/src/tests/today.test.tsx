@@ -21,10 +21,11 @@ describe("Today page", () => {
 
     const outside = [...document.querySelectorAll("section")].filter(
       (section) =>
-        !section.hasAttribute("data-widget-id") && section.getAttribute("aria-labelledby") !== "dashboard-title",
+        !section.hasAttribute("data-widget-id") &&
+        !["dashboard-title", "home-lessons-title"].includes(section.getAttribute("aria-labelledby") ?? ""),
     )
     expect(outside).toHaveLength(0)
-    for (const title of ["Today's lessons", "Semester 4", "Announcements", "Needs your attention", "New marks"]) {
+    for (const title of ["Semester 4", "Announcements", "Needs your attention", "New marks"]) {
       const card = await findCard(title)
       expect(card.closest('[data-testid="dashboard-grid"]')).not.toBeNull()
     }

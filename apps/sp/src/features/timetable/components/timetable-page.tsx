@@ -16,13 +16,14 @@ import { dayStatus, type MarkedState } from "../../attendance/utils/lesson-state
 import { monthOf } from "../../attendance/utils/month-grid"
 import { STATE_TONE } from "../../attendance/utils/state-tone"
 import { CalendarFeedDialog } from "../../calendar-feed/components/calendar-feed-dialog"
-import { QueryState } from "@ihsp/features-core"
+import { BackLink, QueryState } from "@ihsp/features-core"
 import { useNow } from "../../shared/hooks/use-now"
 import { DESKTOP_PX_PER_MINUTE, PHONE_PX_PER_MINUTE } from "../utils/timeline"
 import { isIsoDate, lessonsOn, studyDayOf, subgroupsOf, weekDays, weekRange } from "../utils/week"
 import { parseView, stepDate, type CalendarView } from "../utils/view"
 import { ControlPeriodDialog } from "./control-period-dialog"
 import { CalendarToolbar } from "./calendar-toolbar"
+import { LessonSheet } from "./lesson-sheet"
 import { TimeGrid } from "./time-grid"
 import { TimetableDayView } from "./timetable-day-view"
 import { TimetableMonthView } from "./timetable-month-view"
@@ -51,7 +52,8 @@ export function TimetablePage() {
   const focus = isIsoDate(dayParam) ? dayParam : focusToday
   const focusWeek = useQuery(getMeTimetableQuery(weekRange(startOfWeek(focus)))).data
   const focusOpen = focusWeek?.some((lesson) => lesson.date === focus) ?? false
-  const day = view === "day" && !focusOpen ? studyDayOf(focus) : focus
+  // The day view opens a weekend picked explicitly (it shows the empty state); only the default focus skips it.
+  const day = view === "day" && !focusOpen && !isIsoDate(dayParam) ? studyDayOf(focus) : focus
   const monday = startOfWeek(day)
   const month = monthOf(day)
   const range = weekRange(monday)
@@ -67,6 +69,7 @@ export function TimetablePage() {
     [lessonsQuery.data],
   )
   const periods = useControlPeriods()
+  const [lessonId, setLessonId] = useState<string | null>(null)
   const [opened, setOpened] = useState<ControlPeriodItem | null>(null)
   const { shown, setShown } = useShowOtherSubgroup()
   const pxPerMinute = isMobile ? PHONE_PX_PER_MINUTE : DESKTOP_PX_PER_MINUTE
@@ -77,7 +80,11 @@ export function TimetablePage() {
   ]
 
   return (
-    <PageContainer title={t("title")} actions={<CalendarFeedDialog />}>
+    <PageContainer
+      title={t("title")}
+      back={<BackLink href="/" label={t("backHome")} />}
+      actions={<CalendarFeedDialog />}
+    >
       <CalendarToolbar
         view={view}
         day={day}
@@ -142,6 +149,7 @@ export function TimetablePage() {
                     statuses={statuses}
                     periods={periods}
                     onOpenPeriod={setOpened}
+                    onOpenLesson={setLessonId}
                     onDayChange={(next) => void setDay(next)}
                     onStep={(direction) => void setDay(stepDate("day", day, direction, allLessons))}
                   />
@@ -164,6 +172,7 @@ export function TimetablePage() {
                     excusedLessonIds={excusedLessonIds}
                     periods={periods}
                     onOpenPeriod={setOpened}
+                    onOpenLesson={setLessonId}
                   />
                 )}
               </>
@@ -175,6 +184,7 @@ export function TimetablePage() {
         {(data) => <AttendanceOverview data={data} month={month} />}
       </QueryState>
       <WorkOffCard />
+      <LessonSheet lessonId={lessonId} title={t("sheet.close")} onClose={() => setLessonId(null)} />
       <ControlPeriodDialog period={opened} onClose={() => setOpened(null)} />
     </PageContainer>
   )

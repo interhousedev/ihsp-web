@@ -14,6 +14,7 @@ import { useT } from "@ihsp/i18n"
 import { Badge, PageContainer, StateView, UserAvatar } from "@ihsp/ui"
 import { useQuery } from "@tanstack/react-query"
 import type { ReactNode } from "react"
+import { HidePhotoSwitch } from "./hide-photo-switch"
 import { GroupRatingSection } from "@/features/grades/components/group-rating-section"
 
 type Person = GroupPersonRef | GroupTeacherRef
@@ -116,7 +117,7 @@ export function MyGroupPage() {
   return (
     <PageContainer title={nav("myGroup")}>
       {group ? (
-        <div className="flex flex-col gap-4">
+        <div className="flex flex-col gap-4 pb-20">
           <section
             aria-label={group.name}
             className="bg-card text-card-foreground flex flex-col gap-1 rounded-card border p-4"
@@ -130,6 +131,10 @@ export function MyGroupPage() {
               {group.homeroom_teacher ? <TeacherContactList contacts={group.homeroom_teacher.contacts} /> : null}
             </RoleCard>
             <RoleCard label={t("headStudent")} person={group.head_student} />
+          </div>
+
+          <div className="bg-card rounded-card border px-4 py-1">
+            <HidePhotoSwitch />
           </div>
 
           <MemberList members={group.members} />

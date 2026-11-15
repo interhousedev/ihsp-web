@@ -1,18 +1,24 @@
 "use client"
 
-import { useFormatters, useT } from "@ihsp/i18n"
-import { PageContainer } from "@ihsp/ui"
-import { useNow } from "../../shared/hooks/use-now"
 import { Dashboard } from "../../today/dashboard/dashboard"
+import { HomeHeader } from "./home-header"
+import { HomeLessons } from "./home-lessons"
+import { HomeTileGrid } from "./home-tile-grid"
 
-/** Home, the landing page (`/`): the student's widget grid (today's lessons, marks, semester, and the other widgets). */
+/**
+ * Home, the landing page (`/`), laid out like the EMIS app: the brand header with the stat tiles, today's lessons, the
+ * grid of pages, and below it the student's own widget grid. The page is flush: the header runs under the shell's floating
+ * controls and reserves their row itself.
+ */
 export function DashboardPage() {
-  const t = useT("dashboard")
-  const f = useFormatters()
-  const now = useNow(60_000)
   return (
-    <PageContainer title={t("title")} meta={f.date(now, { weekday: "long", day: "numeric", month: "long" })}>
-      <Dashboard />
-    </PageContainer>
+    <div data-shell-flush className="flex min-w-0 flex-1 flex-col gap-5 pb-24 max-md:-mt-(--shell-top-reserve)">
+      <HomeHeader />
+      <div className="mx-auto flex w-full max-w-4xl flex-col gap-5 px-4 md:px-6">
+        <HomeLessons />
+        <HomeTileGrid />
+        <Dashboard />
+      </div>
+    </div>
   )
 }

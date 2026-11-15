@@ -90,6 +90,37 @@
     "excused": "Sababli",
     "not_taken": "Hali belgilanmagan"
   },
+  "home": {
+    "title": "Bosh sahifa",
+    "course": "{course}-kurs",
+    "studentCard": "Talaba kartasi",
+    "notifications": "Bildirishnomalar",
+    "notificationsCount": "Bildirishnomalar, oʻqilmagan: {count}",
+    "stats": {
+      "attendance": "Qoldirilgan",
+      "average": "Oʻrtacha",
+      "rating": "Reyting"
+    },
+    "lessons": "Bugungi darslar",
+    "all": "Hammasi",
+    "noLessons": "Bugun dars yoʻq",
+    "lessonsError": "Darslarni yuklab boʻlmadi",
+    "sections": "Boʻlimlar",
+    "tiles": {
+      "timetable": "Dars jadvali",
+      "subjects": "Fanlar",
+      "grades": "Baholar",
+      "homework": "Uy vazifalari",
+      "exams": "Imtihonlar",
+      "excuses": "Sabablar",
+      "certificates": "Maʼlumotnomalar",
+      "teachers": "Oʻqituvchilar",
+      "myGroup": "Mening guruhim",
+      "notebooks": "Daftarlar",
+      "flashcards": "Kartochkalar",
+      "files": "Fayllar"
+    }
+  },
   "dashboard": {
     "title": "Bosh sahifa",
     "lessons": "Bugungi darslar",
@@ -292,7 +323,7 @@
     }
   },
   "timetable": {
-    "title": "Taqvim",
+    "title": "Dars jadvali",
     "controlPeriod": {
       "short": {
         "midterm_1": "ON 1",
@@ -345,7 +376,34 @@
       "period": "Juftlik",
       "topic": "Mavzu"
     },
-    "excused": "Sababli"
+    "excused": "Sababli",
+    "backHome": "Bosh sahifa",
+    "openCalendar": "Sanani tanlash",
+    "sheet": {
+      "type": "Turi",
+      "kinds": {
+        "lecture": "Maʼruza",
+        "practice": "Amaliyot",
+        "midterm": "Oraliq nazorat (ON)",
+        "final": "Yakuniy nazorat (YN)",
+        "other": "Dars"
+      },
+      "group": "Guruh",
+      "comment": "Izoh",
+      "load": "Materiallar",
+      "homework": "Uy vazifasi",
+      "noHomework": "Uy vazifasi yoʻq.",
+      "noLoad": "Materiallar yoʻq.",
+      "mark": "Baho",
+      "noMark": "Baho hali yoʻq",
+      "due": "Muddat: {date}",
+      "full": "Dars sahifasini ochish",
+      "cancelled": "Bekor qilingan",
+      "close": "Dars tafsilotlari",
+      "time": "Vaqt",
+      "teacher": "Oʻqituvchi",
+      "room": "Xona"
+    }
   },
   "calendarFeed": {
     "subscribe": "Kalendarga obuna boʻlish",
@@ -477,11 +535,35 @@
     "tabs": {
       "semester": "Semestr",
       "day": "Kunlar boʻyicha",
-      "record": "Yozuv daftarchasi"
+      "record": "Yozuv daftarchasi",
+      "book": "Reyting daftarcha"
     },
     "ratingBook": {
-      "button": "Reyting kitobi (PDF)",
-      "error": "Reyting kitobini ochib boʻlmadi."
+      "empty": "Hozircha baholar yoʻq.",
+      "download": "PDF yuklab olish",
+      "share": "Ulashish",
+      "copied": "Havola nusxalandi",
+      "shareError": "Havolani ulashib boʻlmadi.",
+      "doc": {
+        "ministry": "Oʻzbekiston Respublikasi Oliy taʼlim, fan va innovatsiyalar vazirligi",
+        "title": "REYTING DAFTARCHA / РЕЙТИНГОВАЯ КНИЖКА",
+        "institution": "Taʼlim muassasasi",
+        "student": "Talaba",
+        "group": "Guruh",
+        "speciality": "Mutaxassislik",
+        "educationType": "Taʼlim turi",
+        "form": "Taʼlim shakli",
+        "course": "Kurs",
+        "language": "Taʼlim tili",
+        "academicYear": "Oʻquv yili",
+        "number": "T/R",
+        "subjects": "Fanlar",
+        "mark": "Baho",
+        "semester": "{number}-semestr",
+        "page": "{page}-bet, jami {total}"
+      },
+      "button": "Reyting daftarcha (PDF)",
+      "error": "Reyting daftarchani ochib boʻlmadi."
     },
     "honoursLink": "Qizil diplom va medallar",
     "emis": {
@@ -925,6 +1007,7 @@
       "group": "Guruh",
       "subgroup": "Kichik guruh",
       "subgroupUnset": "Hali belgilanmagan",
+      "groupUnset": "Guruh hali tayinlanmagan",
       "curator": "Kurator",
       "headStudent": "Guruh sardori"
     },
@@ -961,12 +1044,30 @@
     "title": "Sozlamalar",
     "allSettings": "Barcha sozlamalar",
     "groups": {
-      "profile": { "title": "Profil", "description": "Maʼlumotlaringiz, sinfingiz va ulangan hisoblar." },
-      "appearance": { "title": "Til va koʻrinish", "description": "Til, mavzu va telefondagi pastki panel." },
-      "notifications": { "title": "Bildirishnomalar", "description": "Ilovaga, Telegramga va pushga nima keladi." },
-      "schedule": { "title": "Kalendar va sinxronlash", "description": "Kalendar lentasi va EMIS bilan sinxronlash." },
-      "security": { "title": "Xavfsizlik", "description": "Ilovani qulflash va hisob xavfsizligi." },
-      "help": { "title": "Yordam va maʼlumot", "description": "Tanishuv turi, fikr-mulohaza va litsenziyalar." }
+      "profile": {
+        "title": "Profil",
+        "description": "Maʼlumotlaringiz, sinfingiz va ulangan hisoblar."
+      },
+      "appearance": {
+        "title": "Til va koʻrinish",
+        "description": "Til, mavzu va telefondagi pastki panel."
+      },
+      "notifications": {
+        "title": "Bildirishnomalar",
+        "description": "Ilovaga, Telegramga va pushga nima keladi."
+      },
+      "schedule": {
+        "title": "Kalendar va sinxronlash",
+        "description": "Kalendar lentasi va EMIS bilan sinxronlash."
+      },
+      "security": {
+        "title": "Xavfsizlik",
+        "description": "Ilovani qulflash va hisob xavfsizligi."
+      },
+      "help": {
+        "title": "Yordam va maʼlumot",
+        "description": "Tanishuv turi, fikr-mulohaza va litsenziyalar."
+      }
     },
     "general": {
       "title": "Umumiy",
@@ -1044,7 +1145,7 @@
     "page": {
       "title": "Sababli qoldirish",
       "new": "Yangi ariza",
-      "empty": "Hozircha ariza yo‘q"
+      "empty": "Hozircha ariza yoʻq"
     },
     "form": {
       "title": "Yangi ariza",
@@ -1055,7 +1156,7 @@
       "endsOn": "Tugashi (ixtiyoriy)",
       "endsOnPlaceholder": "Muddatsiz",
       "lessons": "Faqat shu darslar (ixtiyoriy)",
-      "noLessons": "Bu davrda dars yo‘q",
+      "noLessons": "Bu davrda dars yoʻq",
       "lessonLabel": "{period}-dars: {subject}",
       "reason": "Tafsilotlar",
       "documents": "Hujjatlar",
@@ -1081,7 +1182,7 @@
     },
     "thread": {
       "title": "Yozishmalar",
-      "empty": "Hozircha xabar yo‘q",
+      "empty": "Hozircha xabar yoʻq",
       "write": "Xabar",
       "send": "Yuborish",
       "sending": "Yuborilmoqda…"

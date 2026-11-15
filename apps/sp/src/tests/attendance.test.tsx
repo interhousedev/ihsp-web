@@ -75,7 +75,7 @@ describe("month view of the calendar", () => {
     await screen.findByRole("heading", { name: "Missed lessons" })
 
     // The fixture has one missed lesson in October (6 October, Chemistry); the others are in September.
-    const links = screen.getAllByRole("link")
+    const links = screen.getAllByRole("link").filter((link) => link.getAttribute("href")?.startsWith("/lessons/view"))
     expect(links).toHaveLength(1)
     expect(within(links[0] as HTMLElement).getByText("Chemistry")).toBeInTheDocument()
   })

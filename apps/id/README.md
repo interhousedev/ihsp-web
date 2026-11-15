@@ -4,7 +4,7 @@
 
 # IHT ID
 
-Sign-in, registration, one-time codes, Telegram login and account security; the OAuth front end for Ory Hydra (PKCE).
+Sign-in, registration, one-time codes, Telegram login, account security and personal tokens (`/personal-tokens`); the OAuth front end for Ory Hydra (PKCE).
 
 ## Overview
 

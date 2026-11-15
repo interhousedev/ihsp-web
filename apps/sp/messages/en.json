@@ -90,6 +90,37 @@
     "excused": "Excused",
     "not_taken": "Not taken yet"
   },
+  "home": {
+    "title": "Home",
+    "course": "Course {course}",
+    "studentCard": "Student card",
+    "notifications": "Notifications",
+    "notificationsCount": "Notifications, {count} unread",
+    "stats": {
+      "attendance": "Missed",
+      "average": "Average",
+      "rating": "Rating"
+    },
+    "lessons": "Today's lessons",
+    "all": "All",
+    "noLessons": "No lessons today",
+    "lessonsError": "Could not load today's lessons",
+    "sections": "Sections",
+    "tiles": {
+      "timetable": "Timetable",
+      "subjects": "Subjects",
+      "grades": "Marks",
+      "homework": "Homework",
+      "exams": "Exams",
+      "excuses": "Excuses",
+      "certificates": "Certificates",
+      "teachers": "Teachers",
+      "myGroup": "My group",
+      "notebooks": "Notebooks",
+      "flashcards": "Flash cards",
+      "files": "Files"
+    }
+  },
   "dashboard": {
     "title": "Dashboard",
     "lessons": "Today's lessons",
@@ -292,7 +323,7 @@
     }
   },
   "timetable": {
-    "title": "Calendar",
+    "title": "Timetable",
     "controlPeriod": {
       "short": {
         "midterm_1": "PC 1",
@@ -345,7 +376,34 @@
       "period": "Period",
       "topic": "Topic"
     },
-    "excused": "Excused"
+    "excused": "Excused",
+    "backHome": "Home",
+    "openCalendar": "Pick a date",
+    "sheet": {
+      "type": "Type",
+      "kinds": {
+        "lecture": "Lecture",
+        "practice": "Practice",
+        "midterm": "Midterm (PC)",
+        "final": "Final (FC)",
+        "other": "Lesson"
+      },
+      "group": "Group",
+      "comment": "Comment",
+      "load": "Materials",
+      "homework": "Homework",
+      "noHomework": "No homework.",
+      "noLoad": "No materials.",
+      "mark": "Mark",
+      "noMark": "No mark yet",
+      "due": "Due {date}",
+      "full": "Open the lesson page",
+      "cancelled": "Cancelled",
+      "close": "Lesson details",
+      "time": "Time",
+      "teacher": "Teacher",
+      "room": "Room"
+    }
   },
   "calendarFeed": {
     "subscribe": "Subscribe to calendar",
@@ -477,9 +535,33 @@
     "tabs": {
       "semester": "Semester",
       "day": "By day",
-      "record": "Grade book"
+      "record": "Grade book",
+      "book": "Rating book"
     },
     "ratingBook": {
+      "empty": "No marks yet.",
+      "download": "Download PDF",
+      "share": "Share",
+      "copied": "Link copied",
+      "shareError": "Could not share the link.",
+      "doc": {
+        "ministry": "Ministry of Higher Education, Science and Innovation of the Republic of Uzbekistan",
+        "title": "REYTING DAFTARCHA / RATING BOOK",
+        "institution": "Educational institution",
+        "student": "Student",
+        "group": "Group",
+        "speciality": "Speciality",
+        "educationType": "Type of education",
+        "form": "Form of study",
+        "course": "Course",
+        "language": "Language of study",
+        "academicYear": "Academic year",
+        "number": "№",
+        "subjects": "Subjects",
+        "mark": "Mark",
+        "semester": "Semester {number}",
+        "page": "Page {page} of {total}"
+      },
       "button": "Rating book (PDF)",
       "error": "Could not open the rating book."
     },
@@ -925,6 +1007,7 @@
       "group": "Group",
       "subgroup": "Subgroup",
       "subgroupUnset": "Not set yet",
+      "groupUnset": "No group yet",
       "curator": "Curator",
       "headStudent": "Head student"
     },
@@ -961,12 +1044,30 @@
     "title": "Settings",
     "allSettings": "All settings",
     "groups": {
-      "profile": { "title": "Profile", "description": "Your details, class and linked accounts." },
-      "appearance": { "title": "Language and appearance", "description": "Language, theme and the phone bottom bar." },
-      "notifications": { "title": "Notifications", "description": "What reaches the app, Telegram and push." },
-      "schedule": { "title": "Calendar and sync", "description": "Calendar feed and EMIS sync." },
-      "security": { "title": "Security", "description": "App lock and your account security." },
-      "help": { "title": "Help and about", "description": "Welcome tour, feedback and licenses." }
+      "profile": {
+        "title": "Profile",
+        "description": "Your details, class and linked accounts."
+      },
+      "appearance": {
+        "title": "Language and appearance",
+        "description": "Language, theme and the phone bottom bar."
+      },
+      "notifications": {
+        "title": "Notifications",
+        "description": "What reaches the app, Telegram and push."
+      },
+      "schedule": {
+        "title": "Calendar and sync",
+        "description": "Calendar feed and EMIS sync."
+      },
+      "security": {
+        "title": "Security",
+        "description": "App lock and your account security."
+      },
+      "help": {
+        "title": "Help and about",
+        "description": "Welcome tour, feedback and licenses."
+      }
     },
     "general": {
       "title": "General",

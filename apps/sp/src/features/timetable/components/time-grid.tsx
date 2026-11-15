@@ -14,6 +14,7 @@ import {
   minutesToPx,
   timelineRange,
   type Gap,
+  type Interval,
 } from "../utils/timeline"
 import { periodEdge, periodOn } from "../utils/control-periods"
 import { ControlPeriodBar } from "./control-period-bar"
@@ -48,6 +49,8 @@ export function TimeGrid({
   excusedLessonIds,
   periods = [],
   onOpenPeriod,
+  onOpenLesson,
+  baseRange,
 }: {
   columns: TimeColumn[]
   pxPerMinute: number
@@ -61,10 +64,13 @@ export function TimeGrid({
   /** Control weeks: an all-day bar under the header of every date inside one. */
   periods?: readonly ControlPeriodItem[]
   onOpenPeriod?: (period: ControlPeriodItem) => void
+  onOpenLesson: (lessonId: string) => void
+  /** Hours always drawn (the day view: 08:00 to 18:00); lessons outside it widen the axis. */
+  baseRange?: Interval
 }) {
   const t = useT("timetable")
   const intervals = columns.flatMap((column) => column.lessons.map(intervalOf))
-  const range = timelineRange(intervals)
+  const range = timelineRange(baseRange ? [...intervals, baseRange] : intervals)
   if (!range) return null
 
   const bodyHeight = minutesToPx(range.endMin - range.startMin, pxPerMinute)
@@ -88,7 +94,10 @@ export function TimeGrid({
             {marks.map((minute) => (
               <span
                 key={minute}
-                className="text-muted-foreground absolute right-1.5 -translate-y-1/2 text-[11px] tabular-nums"
+                className={cn(
+                  "text-muted-foreground absolute right-1.5 text-[11px] tabular-nums",
+                  minute === range.startMin ? "translate-y-0" : "-translate-y-1/2",
+                )}
                 style={{ top: minutesToPx(minute - range.startMin, pxPerMinute) }}
               >
                 {clockOf(minute)}
@@ -175,6 +184,7 @@ export function TimeGrid({
                           showSubgroup={showSubgroup}
                           result={results?.get(lesson.id)}
                           excused={excusedLessonIds?.has(lesson.id)}
+                          onOpen={onOpenLesson}
                         />
                       </li>
                     )

@@ -2,18 +2,20 @@
 
 import type { ControlPeriodItem, LessonItem, LessonResult } from "@ihsp/api"
 import { useFormatters, useT } from "@ihsp/i18n"
-import { StateView } from "@ihsp/ui"
+import { DatePicker, StateView } from "@ihsp/ui"
 import { useRef, type TouchEvent } from "react"
 import type { MarkedState } from "../../attendance/utils/lesson-states"
 import { periodEdge, periodOn } from "../utils/control-periods"
-import { lessonsOn } from "../utils/week"
+import { lessonsOn, weekDays } from "../utils/week"
 import { PHONE_PX_PER_MINUTE } from "../utils/timeline"
 import { ControlPeriodBar } from "./control-period-bar"
 import { TimeGrid } from "./time-grid"
-import { WeekStrip } from "./week-strip"
+import { DayPills } from "./day-pills"
 
 /** A horizontal swipe of at least this many px (and more horizontal than vertical) changes the day. */
 const SWIPE_MIN_PX = 56
+/** The day view always draws 08:00 to 18:00. */
+const DAY_RANGE = { startMin: 8 * 60, endMin: 18 * 60 }
 
 /**
  * One day as a calendar day view: the week strip to pick the day, then the time axis with the lessons placed by their
@@ -33,6 +35,7 @@ export function TimetableDayView({
   onStep,
   periods,
   onOpenPeriod,
+  onOpenLesson,
 }: {
   day: string
   monday: string
@@ -47,6 +50,7 @@ export function TimetableDayView({
   onStep: (direction: 1 | -1) => void
   periods: readonly ControlPeriodItem[]
   onOpenPeriod: (period: ControlPeriodItem) => void
+  onOpenLesson: (lessonId: string) => void
 }) {
   const t = useT("timetable")
   const f = useFormatters()
@@ -71,9 +75,19 @@ export function TimetableDayView({
 
   return (
     <div className="flex flex-col gap-3" onTouchStart={onTouchStart} onTouchEnd={onTouchEnd}>
-      <WeekStrip
-        monday={monday}
-        lessons={lessons}
+      <div className="flex items-center justify-between gap-2">
+        <p className="text-base font-semibold first-letter:uppercase">
+          {f.date(day, { month: "long", year: "numeric" })}
+        </p>
+        <DatePicker
+          iconOnly
+          value={day}
+          onChange={(date) => date && onDayChange(date)}
+          aria-label={t("openCalendar")}
+        />
+      </div>
+      <DayPills
+        days={weekDays(monday, [{ date: day }])}
         selected={day}
         today={today}
         statuses={statuses}
@@ -108,6 +122,8 @@ export function TimetableDayView({
           showSubgroup={showSubgroup}
           results={results}
           excusedLessonIds={excusedLessonIds}
+          onOpenLesson={onOpenLesson}
+          baseRange={DAY_RANGE}
         />
       )}
     </div>

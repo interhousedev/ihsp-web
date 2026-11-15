@@ -35,10 +35,10 @@ describe("timetable attendance dots", () => {
 
     await waitFor(() => expect(screen.getAllByRole("img", { name: "Present" }).length).toBeGreaterThan(0))
     expect(screen.getAllByRole("img", { name: "Present" })[0]?.getAttribute("class")).toContain("text-success")
-    const absent = screen.getAllByRole("img", { name: "Absent" })[0]?.closest("a")
+    const absent = screen.getAllByRole("img", { name: "Absent" })[0]?.closest("button")
     expect(absent?.getAttribute("data-attendance")).toBe("absent")
     expect(absent?.className).toContain("bg-destructive")
-    const late = screen.getAllByRole("img", { name: "Late" })[0]?.closest("a")
+    const late = screen.getAllByRole("img", { name: "Late" })[0]?.closest("button")
     expect(late?.getAttribute("data-attendance")).toBe("late")
     expect(late?.className).toContain("bg-warning")
   })

@@ -164,7 +164,8 @@ describe("catalogue search in the sidebar", () => {
     await screen.findByText("page body")
 
     await user.click(await screen.findByRole("button", { name: "More" }))
-    const box = await screen.findByRole("searchbox", { name: "Search the catalogue" })
+    const sheet = await screen.findByRole("dialog")
+    const box = within(sheet).getByRole("searchbox", { name: "Search the catalogue" })
     await user.type(box, "physics{Enter}")
 
     await waitFor(() => expect(testRouter.push).toHaveBeenCalledWith("/browse/?q=physics"))

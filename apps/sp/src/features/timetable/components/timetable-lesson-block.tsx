@@ -3,7 +3,6 @@
 import type { LessonResult, StudentLessonItem } from "@ihsp/api"
 import { useFormatters, useT } from "@ihsp/i18n"
 import { Badge, Icons, MarkBadge, cn } from "@ihsp/ui"
-import Link from "next/link"
 import { STATE_TONE } from "../../attendance/utils/state-tone"
 import { describeChanges } from "../../shared/utils/describe-changes"
 import { isLessonNow } from "../../shared/utils/period-times"
@@ -21,6 +20,7 @@ export function TimetableLessonBlock({
   showSubgroup = false,
   result,
   excused = false,
+  onOpen,
 }: {
   /** `subgroup.is_own_subgroup === false`: the other subgroup's lesson, shown dimmed and labelled. */
   lesson: StudentLessonItem
@@ -31,6 +31,8 @@ export function TimetableLessonBlock({
   result?: LessonResult
   /** The absence is officially excused (an approved excuse). */
   excused?: boolean
+  /** Opens the lesson sheet. */
+  onOpen: (lessonId: string) => void
 }) {
   const t = useT("timetable")
   const ta = useT("attendanceStates")
@@ -57,15 +59,17 @@ export function TimetableLessonBlock({
   ]
 
   return (
-    <Link
-      href={`/lessons/view/?id=${encodeURIComponent(lesson.id)}`}
+    <button
+      type="button"
+      data-lesson-id={lesson.id}
+      onClick={() => onOpen(lesson.id)}
       title={details.filter(Boolean).join(" · ")}
       data-current={current}
       data-cancelled={cancelled}
       data-attendance={attendance ?? undefined}
       data-other-subgroup={otherSubgroup ? true : undefined}
       className={cn(
-        "hover:bg-accent focus-visible:ring-ring flex h-full min-w-0 flex-col gap-0.5 overflow-hidden rounded-md border p-1.5 text-xs leading-tight outline-none focus-visible:ring-2",
+        "hover:bg-accent focus-visible:ring-ring border-l-primary flex h-full w-full min-w-0 cursor-pointer flex-col items-stretch border-l-4 text-start gap-0.5 overflow-hidden rounded-md border p-1.5 text-xs leading-tight outline-none focus-visible:ring-2",
         attendance ? STATE_TONE[attendance].block : "bg-card",
         current && "border-primary ring-primary ring-1",
         cancelled && "opacity-60",
@@ -110,7 +114,7 @@ export function TimetableLessonBlock({
             {ta("late")}
           </span>
         ) : null}
-        {shown && shown.mark !== null ? <MarkBadge mark={shown.mark} size="sm" /> : null}
+        {!cancelled ? <MarkBadge mark={shown?.mark ?? null} size="sm" /> : null}
         {cancelled ? <Badge variant="destructive">{t("cancelled")}</Badge> : null}
         {current ? <Badge>{t("now")}</Badge> : null}
         {excused ? <Badge variant="secondary">{t("excused")}</Badge> : null}
@@ -123,6 +127,6 @@ export function TimetableLessonBlock({
           </Badge>
         ))}
       </span>
-    </Link>
+    </button>
   )
 }

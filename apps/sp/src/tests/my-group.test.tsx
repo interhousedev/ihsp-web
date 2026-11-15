@@ -1,7 +1,8 @@
 /** My group: the group card, homeroom teacher, head student and members; marks only for the head student. */
 import { describe, expect, test } from "bun:test"
-import { apiUrl, problem, myGroupForMember, myGroupUnassigned, server } from "@ihsp/test-utils"
-import { screen, within } from "@testing-library/react"
+import { apiUrl, problem, myGroupForMember, myGroupUnassigned, server, userPreferences } from "@ihsp/test-utils"
+import { screen, waitFor, within } from "@testing-library/react"
+import userEvent from "@testing-library/user-event"
 import { HttpResponse, http } from "msw"
 import { MyGroupPage } from "../features/my-group/components/my-group-page"
 import { configureTests, renderSp } from "./helpers"
@@ -109,5 +110,24 @@ describe("my group", () => {
 
     expect(await screen.findByText("You are not in a group yet")).toBeInTheDocument()
     expect(screen.queryByRole("button", { name: "Try again" })).not.toBeInTheDocument()
+  })
+
+  test("the photo switch saves the opt-out through the preferences API", async () => {
+    const patches: unknown[] = []
+    server.use(
+      http.patch(apiUrl("/v1/id/me/preferences"), async ({ request }) => {
+        const patch = await request.json()
+        patches.push(patch)
+        return HttpResponse.json({ ...userPreferences, ...(patch as object) })
+      }),
+    )
+    renderSp(<MyGroupPage />)
+
+    const toggle = await screen.findByRole("switch", { name: "Do not show my photo to my classmates" })
+    expect(toggle).not.toBeChecked()
+    await userEvent.click(toggle)
+
+    await waitFor(() => expect(patches).toEqual([{ hide_photo_from_classmates: true }]))
+    await waitFor(() => expect(toggle).toBeChecked())
   })
 })

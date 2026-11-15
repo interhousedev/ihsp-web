@@ -2,6 +2,7 @@
 
 import { useUpdatePreferences } from "@ihsp/features-core"
 import { useT } from "@ihsp/i18n"
+import { HidePhotoSwitch } from "@/features/my-group/components/hide-photo-switch"
 import { LanguageSwitcher, THEME_CHOICES, ToggleGroup, ToggleGroupItem, isThemeChoice, useThemeChoice } from "@ihsp/ui"
 
 /** Language and theme: applied at once and saved in the account (UF-WEB-17 step 1). */
@@ -36,6 +37,7 @@ export function GeneralSettings() {
           ))}
         </ToggleGroup>
       </div>
+      <HidePhotoSwitch />
     </div>
   )
 }

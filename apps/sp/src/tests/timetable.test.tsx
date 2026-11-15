@@ -21,9 +21,9 @@ afterEach(() => {
   setViewportWidth(1280)
 })
 
-/** The block of a lesson on the grid (a link to the lesson page; the href may come without the trailing slash). */
+/** The block of a lesson on the grid (a button that opens the lesson sheet). */
 function blockOf(id: string): HTMLElement {
-  const block = document.querySelector(`a[href*="/lessons/view"][href*="${encodeURIComponent(id)}"]`)
+  const block = document.querySelector(`[data-lesson-id="${id}"]`)
   if (!block) throw new Error(`no block for ${id}`)
   return block as HTMLElement
 }
@@ -45,7 +45,7 @@ describe("calendar week view", () => {
     expect(await screen.findByText("08:00")).toBeInTheDocument()
     expect(screen.getByText("14:00")).toBeInTheDocument()
     // The fixture has two Saturday lessons, so Saturday gets a column and they are drawn too.
-    expect(document.querySelectorAll("a[href*='/lessons/view']")).toHaveLength(weekLessons.length)
+    expect(document.querySelectorAll("[data-lesson-id]")).toHaveLength(weekLessons.length)
     expect(screen.getAllByText("Mathematics").length).toBeGreaterThan(0)
   })
 
@@ -140,7 +140,7 @@ describe("calendar week view", () => {
 
     await waitFor(() => expect(container.querySelectorAll("[data-other-subgroup]")).toHaveLength(1))
     const other = container.querySelector("[data-other-subgroup]")
-    expect(other?.getAttribute("href")).toContain("lesson-b")
+    expect(other?.getAttribute("data-lesson-id")).toBe("lesson-b")
     expect(other?.textContent).toContain("2TN2/2")
   })
 
@@ -408,5 +408,28 @@ describe("week helpers", () => {
       { field: "teacher", from: "–", to: "B A" },
     ])
     expect(describeChanges(null)).toEqual([])
+  })
+})
+
+describe("lesson sheet", () => {
+  test("a click on a lesson opens its details: homework, load and the mark", async () => {
+    setViewportWidth(360)
+    renderSp(<TimetablePage />, { route: "/timetable/" })
+
+    await waitFor(() => expect(lessonSlots()).toHaveLength(6))
+    fireEvent.click(blockOf(lessonId(3, 1)))
+
+    const dialog = await screen.findByRole("dialog")
+    expect(await within(dialog).findByText("Homework")).toBeInTheDocument()
+    expect(within(dialog).getByText("Materials")).toBeInTheDocument()
+    expect(within(dialog).getByText("Mark")).toBeInTheDocument()
+  })
+
+  test("a weekend picked in the address is an empty day, not a redirect", async () => {
+    setViewportWidth(360)
+    renderSp(<TimetablePage />, { route: "/timetable/?view=day&day=2026-10-11" })
+
+    expect(await screen.findByText("No lessons on this day.")).toBeInTheDocument()
+    expect(screen.getByRole("button", { name: /^Sunday/ })).toHaveAttribute("aria-pressed", "true")
   })
 })

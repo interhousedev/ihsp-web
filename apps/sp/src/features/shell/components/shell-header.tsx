@@ -1,7 +1,7 @@
 "use client"
 
 import { getConfig } from "@ihsp/config"
-import { NotificationBell, studentRoutes, usePaletteSearch } from "@ihsp/features-core"
+import { NotificationBell, QuickAssistant, studentRoutes, usePaletteSearch } from "@ihsp/features-core"
 import { CommandPalette, type NavGroup } from "@ihsp/ui"
 import { useMemo } from "react"
 import { OfflineIndicator } from "../../offline/components/offline-indicator"
@@ -15,6 +15,7 @@ export function ShellHeader({ nav }: { nav: NavGroup[] }) {
     <>
       <OfflineIndicator />
       <CommandPalette nav={nav} search={search} />
+      <QuickAssistant />
       <NotificationBell />
     </>
   )

@@ -1,4 +1,5 @@
 /** UF-ID-04-UF-ID-06, UF-ID-09, UF-ID-11, UF-ID-12, UF-ID-14, UF-ID-16: the security pages. */
+import { getSession } from "@ihsp/auth"
 import { beforeEach, describe, expect, test } from "bun:test"
 import { adminMe, apiUrl, dataExport, erasureRequest, server, teacherMe, userMe } from "@ihsp/test-utils"
 import { screen, waitFor } from "@testing-library/react"
@@ -29,6 +30,12 @@ describe("security overview", () => {
     expect(await findLink(/Delete account/)).toBeInTheDocument()
     expect((await findLink(/Sessions/)).getAttribute("href")).toMatch(/^\/security\/sessions\/?$/)
     expect((await findLink(/Connectors/)).getAttribute("href")).toMatch(/^\/connectors\/?$/)
+  })
+
+  test("the overview links to the data export section for every user", async () => {
+    renderId(<SecurityPage />, { route: "/security/", session: teacher })
+
+    expect((await findLink(/Download my data/)).getAttribute("href")).toMatch(/^\/security\/delete\/?#export$/)
   })
 
   test("a teacher has no EMIS or delete card", async () => {
@@ -290,6 +297,7 @@ describe("data export", () => {
 
       await findButton("Request an export")
       items = [dataExport({ status: "queued", finished_at: null, expires_at: null, byte_size: null })]
+      await fillField("Code", "123456")
       await user.click(await findButton("Request an export"))
       expect(await screen.findByText("Preparing")).toBeInTheDocument()
 
@@ -301,6 +309,17 @@ describe("data export", () => {
     } finally {
       window.open = realOpen
     }
+  })
+
+  test("an export request without the step-up code is disabled; a wrong code shows an inline error and keeps the session", async () => {
+    const { user } = renderId(<DeleteAccountPage />, { route: "/security/delete/", session: LOGGED_IN })
+
+    expect(await findButton("Request an export")).toBeDisabled()
+    await fillField("Code", "000000")
+    await user.click(await findButton("Request an export"))
+    expect(await screen.findByRole("alert")).toHaveTextContent("The code is wrong or expired. Request a new code")
+    expect(getSession()).not.toBeNull()
+    expect(await findButton("Request an export")).toBeInTheDocument()
   })
 
   test("an export past its expiry is shown as expired and cannot be downloaded", async () => {

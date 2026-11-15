@@ -4,7 +4,7 @@
 
 # my.iht
 
-The student app: today, timetable, marks, homework, AI assistant, notebooks and Studio, mail, files, flash cards. It is also the PWA and the Telegram mini app.
+The student app: today, timetable with a lesson sheet, marks and the rating book, homework, AI assistant (plus a quick assistant popover in the header), notebooks and Studio, mail, files, flash cards. It is also the PWA and the Telegram mini app.
 
 ## Overview
 

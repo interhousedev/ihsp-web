@@ -2,6 +2,7 @@
 
 import { getMeStudentCardQuery } from "@ihsp/api"
 import { useSession } from "@ihsp/auth"
+import { BRAND } from "@ihsp/config/brand"
 import { getConfig } from "@ihsp/config"
 import { TeacherAvatar } from "@ihsp/features-core"
 import { useLocale, useT } from "@ihsp/i18n"
@@ -40,6 +41,13 @@ export function StudentCardSheet({ open, onOpenChange }: { open: boolean; onOpen
         )
       ) : (
         <div className="flex flex-col items-center gap-4 text-center">
+          {/* oxlint-disable-next-line nextjs/no-img-element -- static export, the logo is a plain file or URL */}
+          <img
+            data-testid="card-lyceum-logo"
+            src={getConfig().LYCEUM_LOGO ?? BRAND.lyceumLogo}
+            alt={data.lyceum_name ? (data.lyceum_name[locale] ?? data.lyceum_name.en) : ""}
+            className="size-14 rounded-full object-cover"
+          />
           <TeacherAvatar name={name} photoUrl={data.has_photo ? (session?.user.photo_url ?? null) : null} size="lg" />
           <div className="flex flex-col gap-0.5">
             <p className="text-xl font-semibold">{data.first_name}</p>
