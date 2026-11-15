@@ -2,13 +2,16 @@
 
 import { deleteAdminGroup, isApiError, keys } from "@ihsp/api"
 import { useErrorMessage, useT } from "@ihsp/i18n"
-import { Alert, AlertDescription, Button, ConfirmDialog, Icons, Input, Label } from "@ihsp/ui"
+import { Alert, AlertDescription, Button, ConfirmDialog, Icons, Input, Label, Switch } from "@ihsp/ui"
 import { useRouter } from "next/navigation"
 import { useEffect, useRef, useState } from "react"
+import { SelectField } from "../../shared/components/select-field"
+import { useGroupOptions } from "../../shared/hooks/use-lookups"
 import { useAdminMutation } from "../../shared/hooks/use-admin-mutation"
 
 /**
- * Danger action of the group page. The dialog says the students are detached, not deleted, and the confirm button
+ * Danger action of the group page. The dialog says the students are detached, not deleted, unless the switch moves
+ * them to another group (picked from the active groups), and the confirm button
  * stays disabled until the group name is typed. On success the list is refreshed and the page goes back to it. A 404
  * means the group is already gone: the error stays in the dialog and closing it leads to the list.
  */
@@ -18,19 +21,24 @@ export function DeleteGroupButton({ groupId, groupName }: { groupId: string; gro
   const router = useRouter()
   const [open, setOpen] = useState(false)
   const [typed, setTyped] = useState("")
+  const [moving, setMoving] = useState(false)
+  const [target, setTarget] = useState("")
+  const groups = useGroupOptions()
+  const targets = (groups.data ?? []).filter((group) => group.id !== groupId)
+  const targetName = targets.find((group) => group.id === target)?.name ?? ""
   const busy = useRef(false)
   const errorRef = useRef<HTMLDivElement>(null)
   const remove = useAdminMutation({
-    mutationFn: () => deleteAdminGroup(groupId),
-    invalidate: [keys.admin.groups.all()],
-    success: t("done", { name: groupName }),
+    mutationFn: () => deleteAdminGroup(groupId, moving ? target : undefined),
+    invalidate: [keys.admin.groups.all(), keys.admin.students.all()],
+    success: () => (moving ? t("doneMoved", { name: groupName, target: targetName }) : t("done", { name: groupName })),
     onSuccess: () => {
       setOpen(false)
       router.push("/groups/")
     },
     inlineError: true,
   })
-  const matches = typed.trim() === groupName
+  const matches = typed.trim() === groupName && (!moving || target !== "")
   const gone = remove.isError && isApiError(remove.error) && remove.error.status === 404
 
   // The confirm button is disabled while the request runs, which drops the focus; the error takes it over.
@@ -53,6 +61,8 @@ export function DeleteGroupButton({ groupId, groupName }: { groupId: string; gro
     if (!next) {
       busy.current = false
       setTyped("")
+      setMoving(false)
+      setTarget("")
       remove.reset()
       if (gone) router.push("/groups/")
     }
@@ -87,6 +97,32 @@ export function DeleteGroupButton({ groupId, groupName }: { groupId: string; gro
             className="min-h-11 md:min-h-8"
             onChange={(event) => setTyped(event.target.value)}
           />
+        </div>
+        <div className="flex min-w-0 flex-col gap-2">
+          <div className="flex items-center gap-3">
+            <Switch
+              id="delete-group-move"
+              checked={moving}
+              disabled={targets.length === 0}
+              onCheckedChange={(checked) => setMoving(checked)}
+            />
+            <Label htmlFor="delete-group-move" className="leading-normal">
+              {t("moveToggle")}
+            </Label>
+          </div>
+          {targets.length === 0 && groups.isSuccess ? (
+            <p className="text-muted-foreground text-sm">{t("moveNoGroups")}</p>
+          ) : null}
+          {moving ? (
+            <SelectField
+              id="delete-group-target"
+              aria-label={t("moveTarget")}
+              value={target}
+              emptyLabel={t("moveTarget")}
+              options={targets.map((group) => ({ value: group.id, label: group.name }))}
+              onChange={setTarget}
+            />
+          ) : null}
         </div>
         {remove.isError ? (
           <Alert ref={errorRef} tabIndex={-1} variant="destructive" role="alert" className="[overflow-wrap:anywhere]">

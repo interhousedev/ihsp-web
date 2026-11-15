@@ -1,6 +1,6 @@
 /** ADM-3, ADM-17, UF-ADM-03, UF-ADM-14: students list, Student 360, CSV import preview and confirm. */
 import { describe, expect, test } from "bun:test"
-import { apiUrl, ids, server, student360 } from "@ihsp/test-utils"
+import { apiUrl, ids, selectDropdownValue, server, student360 } from "@ihsp/test-utils"
 import { screen, within } from "@testing-library/react"
 import { HttpResponse, http } from "msw"
 import { ImportPage } from "../features/students/components/import-page"
@@ -64,6 +64,54 @@ describe("Student 360", () => {
     await user.click(screen.getByRole("tab", { name: "Account" }))
     expect(await screen.findByRole("button", { name: "Revoke sessions" })).toBeInTheDocument()
     expect(screen.getByRole("button", { name: "Block" })).toBeInTheDocument()
+  })
+})
+
+describe("Student 360: group selector", () => {
+  test("an administrator changes the group of the student", async () => {
+    const calls: unknown[] = []
+    server.use(
+      http.put(apiUrl("/v1/admin/students/:userId/group"), async ({ request }) => {
+        calls.push(await request.json())
+        return new HttpResponse(null, { status: 204 })
+      }),
+    )
+    const { user } = renderAdmin(<Student360Page />, { route: `/students/view/?id=${ids.student}` })
+
+    const selector = await screen.findByLabelText("Group of the student")
+    await waitUntil(() => !(selector as HTMLButtonElement).disabled, "selector stays disabled")
+    await selectDropdownValue(user, selector, ids.group1TN1)
+
+    await waitUntil(() => calls.length > 0, "no request")
+    expect(calls).toEqual([{ group_id: ids.group1TN1 }])
+  })
+
+  test("choosing No group detaches the student", async () => {
+    const calls: unknown[] = []
+    server.use(
+      http.put(apiUrl("/v1/admin/students/:userId/group"), async ({ request }) => {
+        calls.push(await request.json())
+        return new HttpResponse(null, { status: 204 })
+      }),
+    )
+    const { user } = renderAdmin(<Student360Page />, { route: `/students/view/?id=${ids.student}` })
+
+    const selector = await screen.findByLabelText("Group of the student")
+    await waitUntil(() => !(selector as HTMLButtonElement).disabled, "selector stays disabled")
+    await selectDropdownValue(user, selector, "")
+
+    await waitUntil(() => calls.length > 0, "no request")
+    expect(calls).toEqual([{ group_id: null }])
+  })
+
+  test("a student without a group opens with No group in the header and selector", async () => {
+    const detached = { ...student360, profile: { ...student360.profile, group: null } }
+    server.use(http.get(apiUrl("/v1/admin/students/:userId"), () => HttpResponse.json(detached)))
+    renderAdmin(<Student360Page />, { route: `/students/view/?id=${ids.student}` })
+
+    const selector = await screen.findByLabelText("Group of the student")
+    expect(selector.textContent).toContain("No group")
+    expect(screen.getAllByText(/No group/).length).toBeGreaterThan(1)
   })
 })
 

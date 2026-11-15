@@ -39,6 +39,7 @@
     "workOffs": "Qayta topshirish",
     "loginCues": "Roʻyxatga olish loginlari",
     "botPosts": "Bot postlari",
+    "bots": "Botlar",
     "mcpActivity": "MCP faolligi",
     "vault": "Ombor",
     "migration": "Serverni koʻchirish",
@@ -240,6 +241,9 @@
       "login": "Login",
       "mailbox": "Pochta qutisi",
       "group": "Guruh",
+      "groupSelect": "Talabaning guruhi",
+      "noGroup": "Guruhsiz",
+      "groupSaved": "Guruh oʻzgartirildi",
       "subgroup": "Kichik guruh",
       "semester": "Semestr",
       "curator": "Kurator",
@@ -521,7 +525,11 @@
     "delete": {
       "action": "Guruhni oʻchirish",
       "title": "{name} guruhi oʻchirilsinmi?",
-      "description": "Guruh va uning dars jadvali oʻchiriladi. Talabalar oʻchirilmaydi: ular guruhsiz tizimda qoladi.",
+      "description": "Guruh va uning jadvali oʻchiriladi. Talabalar oʻchirilmaydi: ular guruhsiz qoladi yoki ularni boshqa guruhga koʻchirishingiz mumkin.",
+      "moveToggle": "Barcha talabalarni boshqa guruhga koʻchirish",
+      "moveTarget": "Qabul qiluvchi guruh",
+      "moveNoGroups": "Talabalarni koʻchirish uchun boshqa guruh yoʻq.",
+      "doneMoved": "{name} guruhi oʻchirildi, talabalar {target} guruhiga koʻchirildi",
       "confirmLabel": "Tasdiqlash uchun guruh nomini kiriting: {name}",
       "submit": "Guruhni oʻchirish",
       "keep": "Guruhni qoldirish",
@@ -2404,5 +2412,56 @@
     "reason": "Foydalanuvchiga sabab (ixtiyoriy)",
     "approved": "Soʻrov tasdiqlandi",
     "rejected": "Soʻrov rad etildi"
+  },
+  "bots": {
+    "title": "Botlar",
+    "empty": "Hozircha botlar yoʻq.",
+    "loading": "Botlar yuklanmoqda…",
+    "loadFailed": "Botlarni yuklab boʻlmadi.",
+    "added": "Bot qoʻshildi",
+    "saved": "Bot saqlandi",
+    "rotated": "Token almashtirildi",
+    "default": "Asosiy",
+    "defaultHint": "Asosiy bot shaxsiy bildirishnomalarni yuboradi, uni oʻchirib boʻlmaydi.",
+    "token": "Token",
+    "members": "Foydalanuvchilar",
+    "enabled": "Yoqilgan",
+    "add": {
+      "title": "Bot qoʻshish",
+      "name": "Nomi",
+      "token": "@BotFather bergan token",
+      "tokenHint": "Kamida 20 belgi, @BotFather bergan formatda (raqamlar:harflar).",
+      "submit": "Qoʻshish"
+    },
+    "features": {
+      "title": "Funksiyalar",
+      "ai_agent": "Tizimga kirganlar uchun yordamchi",
+      "open_ai_agent": "Mehmonlar uchun yordamchi",
+      "commands": "Buyruqlar menyusi",
+      "notifications": "Bildirishnomalar",
+      "announcements": "Eʼlonlar",
+      "mini_app": "Mini ilova tugmasi"
+    },
+    "stepUp": {
+      "code": "Tasdiqlash kodi"
+    },
+    "edit": {
+      "submit": "Oʻzgarishlarni saqlash"
+    },
+    "rotate": {
+      "label": "Yangi token",
+      "submit": "Tokenni almashtirish",
+      "defaultHint": "Asosiy bot uchun tokenni server sozlamalarida ham yangilang: mini ilovaga kirish uni tekshiradi."
+    },
+    "announce": {
+      "title": "Botlar orqali eʼlon",
+      "broadcast": "Xabar qoralamasi",
+      "pick": "Qoralamani tanlang",
+      "noDrafts": "Qoralamalar yoʻq",
+      "bots": "Botlar",
+      "noBots": "Yoqilgan botlarning hech birida eʼlonlar yoqilmagan.",
+      "submit": "Yuborish",
+      "sent": "{count} ta qabul qiluvchiga yuborildi"
+    }
   }
 }

@@ -39,6 +39,7 @@
     "workOffs": "Work-off tasks",
     "loginCues": "Login cues",
     "botPosts": "Bot posts",
+    "bots": "Bots",
     "mcpActivity": "MCP activity",
     "vault": "Vault",
     "migration": "Server migration",
@@ -240,6 +241,9 @@
       "login": "Login",
       "mailbox": "Mailbox",
       "group": "Group",
+      "groupSelect": "Group of the student",
+      "noGroup": "No group",
+      "groupSaved": "Group changed",
       "subgroup": "Subgroup",
       "semester": "Semester",
       "curator": "Curator",
@@ -521,7 +525,11 @@
     "delete": {
       "action": "Delete group",
       "title": "Delete group {name}?",
-      "description": "The group will be removed and its group schedule deleted. Its students are not deleted: they stay in the system without a group.",
+      "description": "The group will be removed and its group schedule deleted. Its students are not deleted: they stay in the system without a group, or you can move them to another group.",
+      "moveToggle": "Move all students to another group",
+      "moveTarget": "Target group",
+      "moveNoGroups": "No other group to move the students to.",
+      "doneMoved": "Group {name} deleted, students moved to {target}",
       "confirmLabel": "Type the group name {name} to confirm",
       "submit": "Delete group",
       "keep": "Keep group",
@@ -2404,5 +2412,56 @@
     "reason": "Reason shown to the user (optional)",
     "approved": "Request approved",
     "rejected": "Request rejected"
+  },
+  "bots": {
+    "title": "Bots",
+    "empty": "No bots yet.",
+    "loading": "Loading bots…",
+    "loadFailed": "Could not load the bots.",
+    "added": "Bot added",
+    "saved": "Bot saved",
+    "rotated": "Token replaced",
+    "default": "Main",
+    "defaultHint": "The main bot sends personal notifications and cannot be turned off.",
+    "token": "Token",
+    "members": "Users",
+    "enabled": "Enabled",
+    "add": {
+      "title": "Add a bot",
+      "name": "Name",
+      "token": "Token from @BotFather",
+      "tokenHint": "At least 20 characters, as issued by @BotFather (digits:letters).",
+      "submit": "Add"
+    },
+    "features": {
+      "title": "Features",
+      "ai_agent": "Assistant for signed-in users",
+      "open_ai_agent": "Assistant for guests",
+      "commands": "Commands menu",
+      "notifications": "Notifications",
+      "announcements": "Announcements",
+      "mini_app": "Mini app button"
+    },
+    "stepUp": {
+      "code": "Confirmation code"
+    },
+    "edit": {
+      "submit": "Save changes"
+    },
+    "rotate": {
+      "label": "New token",
+      "submit": "Replace token",
+      "defaultHint": "For the main bot also update the token in the server settings: the mini app sign-in still checks it."
+    },
+    "announce": {
+      "title": "Announce through bots",
+      "broadcast": "Draft broadcast",
+      "pick": "Choose a draft",
+      "noDrafts": "No drafts",
+      "bots": "Bots",
+      "noBots": "No enabled bot has announcements on.",
+      "submit": "Send",
+      "sent": "Sent to {count} recipients"
+    }
   }
 }

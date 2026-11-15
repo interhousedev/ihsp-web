@@ -42,7 +42,7 @@ export function Student360Page() {
       {(data) => (
         <PageContainer
           title={fullName(data.profile)}
-          meta={`${data.profile.group.name}${data.profile.login ? ` · ${data.profile.login}` : ""}`}
+          meta={[data.profile.group?.name ?? t("overview.noGroup"), data.profile.login].filter(Boolean).join(" · ")}
           actions={<BackLink href="/students/" label={t("title")} />}
         >
           <Tabs

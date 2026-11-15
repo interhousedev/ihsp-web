@@ -1,8 +1,11 @@
 "use client"
 
-import type { Student360 } from "@ihsp/api"
+import { keys, putAdminStudentGroup, type Student360 } from "@ihsp/api"
 import { useFormatters, useT } from "@ihsp/i18n"
 import { Card, CardContent } from "@ihsp/ui"
+import { SelectField } from "../../shared/components/select-field"
+import { useGroupOptions } from "../../shared/hooks/use-lookups"
+import { useAdminMutation } from "../../shared/hooks/use-admin-mutation"
 import { StatusBadge } from "../../shared/components/status-badge"
 import { fullName } from "../../shared/utils/names"
 import { StudentSyncCard } from "./student-sync-card"
@@ -11,10 +14,32 @@ import { StudentSyncCard } from "./student-sync-card"
 export function StudentOverviewTab({ profile, userId }: { profile: Student360["profile"]; userId: string }) {
   const t = useT("students")
   const f = useFormatters()
+  const groups = useGroupOptions()
+  const setGroup = useAdminMutation({
+    mutationFn: (groupId: string) => putAdminStudentGroup(userId, groupId || null),
+    invalidate: [keys.admin.students.all(), keys.admin.groups.all()],
+    success: t("overview.groupSaved"),
+  })
+  const options = (groups.data ?? []).map((group) => ({ value: group.id, label: group.name }))
+  const current = profile.group
+  if (current && !options.some((option) => option.value === current.id)) {
+    options.unshift({ value: current.id, label: current.name })
+  }
   const rows: [string, React.ReactNode][] = [
     [t("overview.login"), profile.login ?? "—"],
     [t("overview.mailbox"), profile.mailbox ?? "—"],
-    [t("overview.group"), profile.group.name],
+    [
+      t("overview.group"),
+      <SelectField
+        key="group"
+        aria-label={t("overview.groupSelect")}
+        value={current?.id ?? ""}
+        emptyLabel={t("overview.noGroup")}
+        options={options}
+        disabled={setGroup.isPending || groups.isPending}
+        onChange={(value) => setGroup.mutate(value)}
+      />,
+    ],
     [t("overview.subgroup"), profile.subgroup ?? "—"],
     [t("overview.semester"), profile.current_semester ?? "—"],
     [t("overview.curator"), profile.curator ? fullName(profile.curator) : "—"],

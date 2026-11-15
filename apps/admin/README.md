@@ -4,7 +4,7 @@
 
 # IHT Admin
 
-Administration: users and roles, broadcasts, knowledge base, AI limits and usage, jobs, logs and face-photo thumbnails.
+Administration: users and roles, Telegram bots, broadcasts, knowledge base, AI limits and usage, jobs, logs and face-photo thumbnails.
 
 ## Overview
 

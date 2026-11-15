@@ -74,6 +74,7 @@ export function useNav(): { groups: NavGroup[] } {
           label: t("groupTools"),
           items: [
             { title: t("botPosts"), url: "/bot-posts/", icon: "post" },
+            { title: t("bots"), url: "/bots/", icon: "send" },
             { title: t("moderation"), url: "/moderation/", icon: "moderation" },
             { title: t("callForImprovements"), url: "/call-for-improvements/", icon: "chat" },
             { title: t("assistant"), url: "/assistant/", icon: "assistant" },
