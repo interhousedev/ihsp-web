@@ -9,12 +9,25 @@ All notable changes to this project are documented here. The format follows [Kee
 ### Added
 
 - Admin: a Bots page to add Telegram bots (token checked by Telegram, shown masked), enable them, switch features (assistant, guest assistant, commands, notifications, announcements, mini app), rotate tokens and send a draft broadcast as an announcement through chosen bots. Every change needs a step-up code; edits on a bot card are kept as a draft until "Save changes".
-- lms: course Access tab and a per-lesson access dialog (public, signed in, students, chosen groups and users; hidden or locked), lock badges on cards and lessons, and a locked-lesson notice with the course lead as contact.
+- lms: course "Who can see" tab and a per-lesson access dialog (public, signed in, students, chosen groups and users; hidden or locked), lock badges on cards, the outline and the syllabus, an "Access saved" toast, and a locked-lesson notice with the course lead as contact.
+- Legal: documents to accept in a consent gate on every app, a data export (with step-up code) and an account erasure request; admin pages to edit and publish documents and review erasures.
+- Admin: server migration page, a maintenance banner in every app, group delete, a library metadata backfill button, and a lyceum logo upload in the platform settings (png, jpeg or webp up to 1 MiB).
+- sp: my group page with photos (students can opt out), settings groups, onboarding (selfie, certificates) and a product tour, ПК/ИК control periods in the timetable, EMIS-like student screens, a student card error state and the lyceum logo uploaded by administrators (the `LYCEUM_LOGO` runtime setting is removed).
+- Assistant: "Connect my AI" dialog, quick AI questions, and a notice when a chat continues in Telegram.
+- Library: reading lists (pinned and ordered by librarians), catalogue search and reader markup.
+- lms: public courses for guests and course outlines grouped by section.
+- SEO: sitemaps, robots and indexing metadata for the public apps.
+- Forms show server field errors; sign-in refreshes only on session 401s and avoids redirect loops.
 
 ### Changed
 
 - sp: the student group can be unset (`profile.group` is `null`); the account card says so and the rating book falls back to "-".
 - The phone More sheet is non-modal: a tap outside closes it and reaches the page.
+
+### Fixed
+
+- lms: a course the student cannot open shows an error state instead of an endless skeleton and repeated requests.
+- Admin: a wrong step-up code on the Bots page shows its own message instead of a generic error.
 
 ## [1.5.1] - 2026-11-14
 
