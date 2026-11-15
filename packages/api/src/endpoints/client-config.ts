@@ -1,5 +1,6 @@
 // Public client configuration: which optional features are on and where the documentation lives.
 
+import { getConfig } from "@ihsp/config"
 import { api } from "../client"
 import { keys } from "../keys"
 import { queryOptions, type RequestOptions } from "../query"
@@ -16,3 +17,8 @@ export const clientConfigQuery = () =>
     queryFn: ({ signal }) => getClientConfig({ signal }),
     staleTime: 10 * 60 * 1000,
   })
+
+/** Makes an API-relative link (`/v1/public/lyceum-logo?v=…`) absolute against the API base URL. */
+export function apiAbsoluteUrl(path: string): string {
+  return `${getConfig().API_URL.replace(/\/+$/, "")}${path}`
+}

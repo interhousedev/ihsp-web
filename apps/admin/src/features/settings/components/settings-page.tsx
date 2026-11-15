@@ -16,6 +16,7 @@ import { Badge, Button, Card, CardContent, CardHeader, CardTitle, Input, PageCon
 import { useQuery } from "@tanstack/react-query"
 import { useState } from "react"
 import { CheckField } from "../../shared/components/check-field"
+import { LyceumLogoSection } from "./lyceum-logo-section"
 import { DEFAULT_HONOURS, HonoursSection, honoursValid } from "./honours-section"
 import { LabeledField } from "../../shared/components/labeled-field"
 import { QueryState } from "@ihsp/features-core"
@@ -147,6 +148,7 @@ function SettingsForm({ settings }: { settings: PlatformSettings }) {
             </p>
           </CardContent>
         </Card>
+        <LyceumLogoSection logoUrl={settings.lyceum_logo_url ?? null} />
         <HonoursSection value={form.honours} onChange={(honours) => setForm({ ...form, honours })} />
         <div>
           <Button type="submit" className={TOUCH} disabled={!dirty || !valid || save.isPending}>

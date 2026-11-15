@@ -242,6 +242,9 @@
       "consent-required": "Davom etish uchun barcha hujjatlarni qabul qiling."
     },
     "generic": "Nimadir xato ketdi. Birozdan soʻng qayta urinib koʻring.",
+    "identity": {
+      "step-up-invalid": "Kod notoʻgʻri yoki muddati oʻtgan. Yangi kod soʻrang va qayta urinib koʻring."
+    },
     "network": {
       "unreachable": "Server bilan aloqa yoʻq. Internetni tekshirib, qayta urinib koʻring."
     },
@@ -436,6 +439,8 @@
       "attachment-not-found": "Biriktirilgan fayl sizning fayllaringiz orasida topilmadi."
     },
     "admin": {
+      "logo-type-not-allowed": "Logotip PNG, JPEG yoki WebP rasmi bo‘lishi kerak.",
+      "logo-too-large": "Logotip 1 MB dan katta.",
       "bot-not-found": "Bot topilmadi.",
       "bot-exists": "Bu bot allaqachon qoʻshilgan.",
       "bot-token-invalid": "Telegram bu tokenni qabul qilmadi.",

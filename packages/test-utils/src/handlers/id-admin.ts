@@ -43,6 +43,9 @@ function filterUsers(users: AdminUser[], request: Request): AdminUser[] {
   )
 }
 
+const LOGO_TYPES = ["image/png", "image/jpeg", "image/webp"]
+const LOGO_MAX_BYTES = 1024 * 1024
+
 export const idAdminHandlers = [
   http.get(apiUrl("/v1/admin/users"), ({ request }) =>
     HttpResponse.json(paginate(filterUsers(adminUsers, request), request)),
@@ -97,6 +100,18 @@ export const idAdminHandlers = [
     const body = await readJson<PlatformSettingsBody>(request)
     return HttpResponse.json({ ...platformSettings, ...body } satisfies PlatformSettings)
   }),
+  http.put(apiUrl("/v1/admin/settings/lyceum-logo"), async ({ request }) => {
+    const form = await request.formData().catch(() => null)
+    const file = form?.get("file")
+    if (!file || typeof file === "string" || !LOGO_TYPES.includes(file.type)) {
+      return problem(422, "admin/logo-type-not-allowed", "The logo must be PNG, JPEG or WebP")
+    }
+    if (file.size > LOGO_MAX_BYTES) return problem(413, "admin/logo-too-large", "The logo is too large")
+    return HttpResponse.json({ ...platformSettings, lyceum_logo_url: "/v1/public/lyceum-logo?v=abc123" })
+  }),
+  http.delete(apiUrl("/v1/admin/settings/lyceum-logo"), () =>
+    HttpResponse.json({ ...platformSettings, lyceum_logo_url: null }),
+  ),
   http.post(apiUrl("/v1/admin/users/:id/sessions/revoke"), () => noContent()),
   http.post(apiUrl("/v1/admin/users/:id/reset-password"), () => HttpResponse.json(resetPasswordResponse)),
   http.post(apiUrl("/v1/admin/users/:id/reset-password-link"), () => HttpResponse.json(resetPasswordResponse)),

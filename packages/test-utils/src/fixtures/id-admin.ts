@@ -118,5 +118,6 @@ export const platformSettings: PlatformSettings = {
   change_password_on_login: false,
   default_language: "ru",
   honours: null,
+  lyceum_logo_url: null,
   features: { notebooks: true, ai_assistant: true, lms: true, change_password_on_login: false, login_cues: true },
 }

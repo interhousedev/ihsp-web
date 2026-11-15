@@ -242,6 +242,9 @@
       "consent-required": "Accept every document to continue."
     },
     "generic": "Something went wrong. Try again in a moment.",
+    "identity": {
+      "step-up-invalid": "The code is wrong or expired. Request a new code and try again."
+    },
     "network": {
       "unreachable": "No connection to the server. Check your internet and try again."
     },
@@ -436,6 +439,8 @@
       "attachment-not-found": "The attached file was not found in your files."
     },
     "admin": {
+      "logo-type-not-allowed": "The logo must be a PNG, JPEG or WebP image.",
+      "logo-too-large": "The logo is larger than 1 MB.",
       "bot-not-found": "Bot not found.",
       "bot-exists": "This bot is already added.",
       "bot-token-invalid": "Telegram did not accept this token.",

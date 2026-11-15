@@ -1,8 +1,9 @@
 /** Platform settings page, editing a user and setting an initial password (T5.3). */
-import { describe, expect, test } from "bun:test"
+import { describe, expect, spyOn, test } from "bun:test"
 import { adminTeacherUser, apiUrl, ids, platformSettings, server } from "@ihsp/test-utils"
-import { screen, within } from "@testing-library/react"
+import { fireEvent, screen, within } from "@testing-library/react"
 import { HttpResponse, http } from "msw"
+import { toast } from "sonner"
 import { SettingsPage } from "../features/settings/components/settings-page"
 import { TeacherProfilePage } from "../features/teachers/components/teacher-profile-page"
 import { EditUserDialog } from "../features/users/components/edit-user-dialog"
@@ -222,5 +223,78 @@ describe("initial password", () => {
 
     await waitUntil(() => body !== undefined, "no request")
     expect(body).toEqual({ password: "Strong-Pass-1", require_change: true })
+  })
+})
+
+describe("lyceum logo", () => {
+  test("uploads a logo, previews it and removes it after a confirmation", async () => {
+    let logo: string | null = null
+    server.use(
+      http.get(apiUrl("/v1/admin/settings"), () => HttpResponse.json({ ...platformSettings, lyceum_logo_url: logo })),
+      http.put(apiUrl("/v1/admin/settings/lyceum-logo"), () => {
+        logo = "/v1/public/lyceum-logo?v=abc123"
+        return HttpResponse.json({ ...platformSettings, lyceum_logo_url: logo })
+      }),
+      http.delete(apiUrl("/v1/admin/settings/lyceum-logo"), () => {
+        logo = null
+        return HttpResponse.json(platformSettings)
+      }),
+    )
+    const { user } = renderAdmin(<SettingsPage />, { route: "/settings/" })
+    expect(await screen.findByText("No logo uploaded; the built-in one is used.")).toBeInTheDocument()
+
+    fireEvent.change(screen.getByTestId("lyceum-logo-input"), {
+      target: { files: [new File([new Uint8Array(2048)], "logo.png", { type: "image/png" })] },
+    })
+    const preview = await screen.findByTestId("lyceum-logo-preview")
+    expect(preview.getAttribute("src")).toEndWith("/v1/public/lyceum-logo?v=abc123")
+
+    await user.click(screen.getByRole("button", { name: "Remove logo" }))
+    const confirm = await screen.findByRole("alertdialog")
+    await user.click(within(confirm).getByRole("button", { name: "Remove logo" }))
+    expect(await screen.findByText("No logo uploaded; the built-in one is used.")).toBeInTheDocument()
+  })
+
+  test("a wrong type or an oversized file is refused before it is sent", async () => {
+    const error = spyOn(toast, "error").mockImplementation(() => "")
+    let sent = 0
+    server.use(
+      http.put(apiUrl("/v1/admin/settings/lyceum-logo"), () => {
+        sent += 1
+        return HttpResponse.json(platformSettings)
+      }),
+    )
+    renderAdmin(<SettingsPage />, { route: "/settings/" })
+    const input = await screen.findByTestId("lyceum-logo-input")
+
+    fireEvent.change(input, { target: { files: [new File(["GIF89a"], "a.gif", { type: "image/gif" })] } })
+    await waitUntil(() => error.mock.calls.length === 1, "no type toast")
+    expect(error.mock.calls[0]?.[0]).toBe("Only PNG, JPEG or WebP images are accepted.")
+    fireEvent.change(input, {
+      target: { files: [new File([new Uint8Array(1024 * 1024 + 1)], "big.png", { type: "image/png" })] },
+    })
+    await waitUntil(() => error.mock.calls.length === 2, "no size toast")
+    expect(error.mock.calls[1]?.[0]).toBe("The file is larger than 1 MB.")
+    expect(sent).toBe(0)
+    error.mockRestore()
+  })
+
+  test("the server's problem types show translated messages", async () => {
+    const error = spyOn(toast, "error").mockImplementation(() => "")
+    server.use(
+      http.put(apiUrl("/v1/admin/settings/lyceum-logo"), () =>
+        HttpResponse.json(
+          { type: "admin/logo-too-large", title: "Too large", status: 413 },
+          { status: 413, headers: { "content-type": "application/problem+json" } },
+        ),
+      ),
+    )
+    renderAdmin(<SettingsPage />, { route: "/settings/" })
+    fireEvent.change(await screen.findByTestId("lyceum-logo-input"), {
+      target: { files: [new File([new Uint8Array(10)], "a.png", { type: "image/png" })] },
+    })
+    await waitUntil(() => error.mock.calls.length === 1, "no error toast")
+    expect(error.mock.calls[0]?.[0]).toBe("The logo is larger than 1 MB.")
+    error.mockRestore()
   })
 })

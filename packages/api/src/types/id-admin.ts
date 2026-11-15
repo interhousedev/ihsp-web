@@ -104,4 +104,8 @@ export type PlatformSettingsBody = {
 }
 
 /** `GET /v1/admin/settings`: the editable settings and the read-only feature flags. */
-export type PlatformSettings = PlatformSettingsBody & { features: Record<string, boolean> }
+export type PlatformSettings = PlatformSettingsBody & {
+  features: Record<string, boolean>
+  /** API-relative link of the uploaded lyceum logo (`/v1/public/lyceum-logo?v=…`); `null` when none. */
+  lyceum_logo_url?: string | null
+}

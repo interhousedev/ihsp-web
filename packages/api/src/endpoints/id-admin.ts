@@ -164,6 +164,23 @@ export function getAdminSettings(opts?: RequestOptions): Promise<PlatformSetting
 export const getAdminSettingsQuery = () =>
   queryOptions({ queryKey: keys.admin.settings(), queryFn: ({ signal }) => getAdminSettings({ signal }) })
 
+/** PUT /v1/admin/settings/lyceum-logo — admin; multipart `file` (PNG, JPEG or WebP, up to 1 MiB); `admin/logo-type-not-allowed` 422, `admin/logo-too-large` 413. */
+export function putLyceumLogo(file: File, opts?: RequestOptions): Promise<PlatformSettings> {
+  const form = new FormData()
+  form.append("file", file)
+  return api.request<PlatformSettings>({
+    ...opts,
+    method: "PUT",
+    path: "/v1/admin/settings/lyceum-logo",
+    formData: form,
+  })
+}
+
+/** DELETE /v1/admin/settings/lyceum-logo — admin; removes the uploaded logo. */
+export function deleteLyceumLogo(opts?: RequestOptions): Promise<PlatformSettings> {
+  return api.delete<PlatformSettings>("/v1/admin/settings/lyceum-logo", opts)
+}
+
 /** PUT /v1/admin/settings — admin; saves every editable setting. */
 export function putAdminSettings(body: PlatformSettingsBody, opts?: RequestOptions): Promise<PlatformSettings> {
   return api.put<PlatformSettings>("/v1/admin/settings", body, opts)

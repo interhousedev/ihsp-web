@@ -2090,6 +2090,30 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/v1/admin/settings/lyceum-logo": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        /**
+         * Put Lyceum Logo
+         * @description Upload the lyceum logo (PNG, JPEG or WebP, at most 1 MiB).
+         */
+        put: operations["put_lyceum_logo_v1_admin_settings_lyceum_logo_put"];
+        post?: never;
+        /**
+         * Delete Lyceum Logo
+         * @description Remove the lyceum logo.
+         */
+        delete: operations["delete_lyceum_logo_v1_admin_settings_lyceum_logo_delete"];
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/v1/admin/students": {
         parameters: {
             query?: never;
@@ -11262,6 +11286,26 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/v1/public/lyceum-logo": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get Lyceum Logo
+         * @description Stream the uploaded lyceum logo; immutable cache when asked with ``?v=``.
+         */
+        get: operations["get_lyceum_logo_v1_public_lyceum_logo_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/v1/public/maintenance": {
         parameters: {
             query?: never;
@@ -14408,6 +14452,11 @@ export interface components {
             /** File */
             file: string;
         };
+        /** Body_put_lyceum_logo_v1_admin_settings_lyceum_logo_put */
+        Body_put_lyceum_logo_v1_admin_settings_lyceum_logo_put: {
+            /** File */
+            file: string;
+        };
         /** Body_put_my_face_v1_me_face_put */
         Body_put_my_face_v1_me_face_put: {
             /** File */
@@ -15508,10 +15557,19 @@ export interface components {
             client_id: string;
         };
         /**
+         * ClientBranding
+         * @description Branding set by Administration.
+         */
+        ClientBranding: {
+            /** Lyceum Logo Url */
+            lyceum_logo_url: string | null;
+        };
+        /**
          * ClientConfigResponse
          * @description Public client configuration.
          */
         ClientConfigResponse: {
+            branding: components["schemas"]["ClientBranding"];
             docs: components["schemas"]["ClientDocs"];
             features: components["schemas"]["ClientFeatures"];
         };
@@ -24427,6 +24485,11 @@ export interface components {
                 [key: string]: boolean;
             };
             honours: components["schemas"]["HonoursBody"];
+            /**
+             * Lyceum Logo Url
+             * @description API-relative link of the uploaded lyceum logo; null when none.
+             */
+            lyceum_logo_url?: string | null;
             /** School Name */
             school_name: string;
             /** Support Contact */
@@ -37121,6 +37184,59 @@ export interface operations {
                 };
                 content: {
                     "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    put_lyceum_logo_v1_admin_settings_lyceum_logo_put: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "multipart/form-data": components["schemas"]["Body_put_lyceum_logo_v1_admin_settings_lyceum_logo_put"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["PlatformSettingsResponse"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    delete_lyceum_logo_v1_admin_settings_lyceum_logo_delete: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["PlatformSettingsResponse"];
                 };
             };
         };
@@ -53722,6 +53838,37 @@ export interface operations {
                 };
                 content: {
                     "application/json": components["schemas"]["ClientConfigResponse"];
+                };
+            };
+        };
+    };
+    get_lyceum_logo_v1_public_lyceum_logo_get: {
+        parameters: {
+            query?: {
+                v?: string | null;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "image/*": unknown;
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
                 };
             };
         };

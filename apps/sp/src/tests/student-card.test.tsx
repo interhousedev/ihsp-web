@@ -1,9 +1,10 @@
 /** CARD-1: the student-card sheet shows the card. CARD-2 (fake timers) lives in student-card-qr.test.tsx: under Bun 1.3 it hangs when it shares a file with this test. */
 import { beforeEach, describe, expect, test } from "bun:test"
-import { apiUrl, resetStudentCardTokens, server, studentCardToken } from "@ihsp/test-utils"
+import { BRAND } from "@ihsp/config/brand"
+import { apiUrl, clientConfig, resetStudentCardTokens, server, studentCardToken } from "@ihsp/test-utils"
 import { mergeMessages, type Messages } from "@ihsp/i18n"
 import { HttpResponse, http } from "msw"
-import { act, screen } from "@testing-library/react"
+import { act, screen, waitFor } from "@testing-library/react"
 import { useState } from "react"
 import en from "../../messages/en.json"
 import cardEn from "../../messages/en/student-card.json"
@@ -58,5 +59,45 @@ describe("CARD-1: the sheet", () => {
     expect(screen.getByText("Biology")).toBeInTheDocument()
     expect(screen.getByText("11-A")).toBeInTheDocument()
     expect(screen.queryByText("Direction")).not.toBeInTheDocument()
+  })
+
+  test("uses the logo from the client configuration, else the built-in one", async () => {
+    const card = () =>
+      http.get(apiUrl("/v1/me/student-card"), () =>
+        HttpResponse.json({
+          first_name: "A",
+          last_name: "B",
+          group: "11-A",
+          course: 2,
+          lyceum_name: null,
+          direction: "",
+          speciality: "",
+          has_photo: false,
+        }),
+      )
+    server.use(
+      card(),
+      http.get(apiUrl("/v1/public/client-config"), () =>
+        HttpResponse.json({
+          ...clientConfig,
+          branding: { lyceum_logo_url: "/v1/public/lyceum-logo?v=abc123" },
+        }),
+      ),
+    )
+    const first = renderSp(<Harness />, { messages })
+    await act(async () => screen.getByText("open card").click())
+    await waitFor(() =>
+      expect(screen.getByTestId("card-lyceum-logo").getAttribute("src")).toEndWith("/v1/public/lyceum-logo?v=abc123"),
+    )
+    first.unmount()
+
+    server.use(
+      card(),
+      http.get(apiUrl("/v1/public/client-config"), () => HttpResponse.json(clientConfig)),
+    )
+    renderSp(<Harness />, { messages })
+    await act(async () => screen.getByText("open card").click())
+    const logo = await screen.findByTestId("card-lyceum-logo")
+    expect(logo.getAttribute("src")).toBe(BRAND.lyceumLogo)
   })
 })

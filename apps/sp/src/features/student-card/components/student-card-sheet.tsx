@@ -1,6 +1,6 @@
 "use client"
 
-import { getMeStudentCardQuery } from "@ihsp/api"
+import { apiAbsoluteUrl, clientConfigQuery, getMeStudentCardQuery } from "@ihsp/api"
 import { useSession } from "@ihsp/auth"
 import { BRAND } from "@ihsp/config/brand"
 import { getConfig } from "@ihsp/config"
@@ -19,6 +19,8 @@ export function StudentCardSheet({ open, onOpenChange }: { open: boolean; onOpen
   const { session } = useSession()
   const card = useQuery({ ...getMeStudentCardQuery(), enabled: open, retry: retryCardQuery })
   const qr = useCardToken(open)
+  const clientConfig = useQuery(clientConfigQuery())
+  const logoPath = clientConfig.data?.branding.lyceum_logo_url
 
   const data = card.data
   const name = data ? `${data.first_name} ${data.last_name}`.trim() : ""
@@ -44,7 +46,7 @@ export function StudentCardSheet({ open, onOpenChange }: { open: boolean; onOpen
           {/* oxlint-disable-next-line nextjs/no-img-element -- static export, the logo is a plain file or URL */}
           <img
             data-testid="card-lyceum-logo"
-            src={getConfig().LYCEUM_LOGO ?? BRAND.lyceumLogo}
+            src={logoPath ? apiAbsoluteUrl(logoPath) : BRAND.lyceumLogo}
             alt={data.lyceum_name ? (data.lyceum_name[locale] ?? data.lyceum_name.en) : ""}
             className="size-14 rounded-full object-cover"
           />

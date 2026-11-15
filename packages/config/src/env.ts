@@ -43,7 +43,6 @@ export const envSchema = z.object({
   STORAGE_ORIGIN: url,
   SENTRY_DSN: optionalText,
   SECURITY_CONTACT: optionalText,
-  LYCEUM_LOGO: optionalText,
 })
 
 /** Runtime configuration rendered into `/env.js` at container start from the `IHSP_WEB_*` variables; the app reads it from `window.__ENV__`. */
@@ -72,6 +71,4 @@ export type AppEnv = {
   SENTRY_DSN?: string
   /** Plain-text security contact (an email and a Telegram handle) shown by the id app; absent hides the button. */
   SECURITY_CONTACT?: string
-  /** Path or URL of the lyceum logo on the student card; absent uses `BRAND.lyceumLogo`. */
-  LYCEUM_LOGO?: string
 }

@@ -165,7 +165,7 @@ To run the whole product in Docker instead, use `scripts/local_up.sh` in iht-bac
 
 Demo logins (local stack only): `abdullayev.alisher` / `StudentDemo1`, `usmonov.bobur` / `TeacherDemo1`, `admin.ihsp` / `AdminDemo1` (needs a one-time code from Mailpit), `tursunov.sardor` / `LibrarianDemo1`.
 
-Runtime configuration: in development each app serves its own `public/env.js` with dev values; in the container `deploy/entrypoint.sh` renders `deploy/env.js.template` with `envsubst` from variables such as `IHSP_WEB_API_URL`, `IHSP_WEB_ID_URL`, `IHSP_WEB_HYDRA_URL`, `APP_ENV` and `PWA_APPS`. The optional `/env.js` key `LYCEUM_LOGO` (path or URL, read with `getConfig()`; not in the container template) replaces the lyceum logo shown on the student card. Never read configuration at module scope; call `getConfig()`.
+Runtime configuration: in development each app serves its own `public/env.js` with dev values; in the container `deploy/entrypoint.sh` renders `deploy/env.js.template` with `envsubst` from variables such as `IHSP_WEB_API_URL`, `IHSP_WEB_ID_URL`, `IHSP_WEB_HYDRA_URL`, `APP_ENV` and `PWA_APPS`. The lyceum logo on the student card is uploaded by an administrator on the Settings page and read from the public client configuration; `BRAND.lyceumLogo` is the fallback. Never read configuration at module scope; call `getConfig()`.
 
 ## Configuration
 
