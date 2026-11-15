@@ -6,6 +6,7 @@ import { getConfig } from "@ihsp/config"
 import { useErrorMessage, useT } from "@ihsp/i18n"
 import { Alert, Button, Dialog, DialogContent, DialogFooter, DialogHeader, DialogTitle } from "@ihsp/ui"
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query"
+import { useEffect } from "react"
 import { LegalDocumentView } from "./legal-document-view"
 import { legalHref } from "./use-legal-documents"
 
@@ -27,6 +28,32 @@ function PendingItem({ item }: { item: PendingLegalItem }) {
   )
 }
 
+/** The backend refuses every route (403) until the current documents are accepted. */
+export const ACCEPTANCE_REQUIRED = "legal/acceptance-required"
+
+/** Refetches the pending list whenever any request is refused for missing consent, so the gate shows at once. */
+function useRefetchOnAcceptanceRequired(enabled: boolean) {
+  const queryClient = useQueryClient()
+  useEffect(() => {
+    if (!enabled) return undefined
+    const onError = (error: unknown) => {
+      if (isApiError(error) && error.type === ACCEPTANCE_REQUIRED) {
+        void queryClient.invalidateQueries({ queryKey: keys.legal.pending() })
+      }
+    }
+    const offQueries = queryClient.getQueryCache().subscribe((event) => {
+      if (event.type === "updated" && event.action.type === "error") onError(event.action.error)
+    })
+    const offMutations = queryClient.getMutationCache().subscribe((event) => {
+      if (event.type === "updated" && event.action.type === "error") onError(event.action.error)
+    })
+    return () => {
+      offQueries()
+      offMutations()
+    }
+  }, [enabled, queryClient])
+}
+
 /**
  * Blocks the signed-in user until every newly published document is accepted. It cannot be dismissed; the only
  * other way out is to sign out. Mounted once in each authenticated shell.
@@ -38,6 +65,7 @@ export function LegalGate() {
   const queryClient = useQueryClient()
   const pending = useQuery({ ...getMeLegalPendingQuery(), enabled: status === "authenticated" })
   const items = pending.data?.items ?? []
+  useRefetchOnAcceptanceRequired(status === "authenticated")
 
   const accept = useMutation({
     mutationFn: () => postMeLegalAccept({ items: items.map(({ kind, version }) => ({ kind, version })) }),

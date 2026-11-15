@@ -18,6 +18,7 @@ import { useInfiniteQuery } from "@tanstack/react-query"
 import Link from "next/link"
 import { useState } from "react"
 import { manageBookEditHref } from "../../utils/hrefs"
+import { BackfillButton } from "./backfill-button"
 import { BooksTable } from "./books-table"
 import { BulkImport } from "./bulk-import"
 
@@ -52,6 +53,7 @@ export function BooksPage() {
       title={t("title")}
       actions={
         <>
+          <BackfillButton />
           <Button type="button" variant="outline" className="min-h-11 md:min-h-8" onClick={() => setImporting(true)}>
             <IconFileImport aria-hidden />
             {t("import")}

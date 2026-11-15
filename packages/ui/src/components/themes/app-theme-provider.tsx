@@ -20,6 +20,9 @@ export function AppThemeProvider({ children }: { children: ReactNode }) {
       enableSystem
       disableTransitionOnChange
       enableColorScheme
+      // The root layout's `THEME_INIT_SCRIPT` already applies the stored mode before first paint; a data-block type
+      // keeps next-themes' own inline script inert (React warns about executable scripts rendered on the client).
+      scriptProps={{ type: "application/json" }}
     >
       <ActiveThemeProvider>
         {children}

@@ -62,6 +62,11 @@ export const BRAND = {
   },
   /** Paths under each app's `public/` (the files themselves are per app). */
   logos: { svg: "/icons/logo.svg", png64: "/icons/logo-64.png" },
+  /**
+   * The lyceum's own logo on the student card, shown in a circle: the teachers app logo (`/icons/lyceum-logo.png` of the
+   * student app). The operator may point `LYCEUM_LOGO` of `/env.js` (`getConfig().LYCEUM_LOGO`) at another path or URL.
+   */
+  lyceumLogo: "/icons/lyceum-logo.png",
   /** The campus photo of the split sign-in layout (`/campus.webp` of the id app) and its attribution. */
   campusPhoto: {
     credit: "© RASH.IHT, CC BY-SA 4.0",

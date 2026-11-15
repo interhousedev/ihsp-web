@@ -436,6 +436,16 @@
       "attachment-not-found": "The attached file was not found in your files."
     },
     "admin": {
+      "bot-not-found": "Bot not found.",
+      "bot-exists": "This bot is already added.",
+      "bot-token-invalid": "Telegram did not accept this token.",
+      "bot-token-mismatch": "The new token belongs to a different bot.",
+      "bot-default-locked": "The main bot cannot be turned off.",
+      "bot-default-token-env": "The main bot's token is set in the server environment. Change it there and restart the server.",
+      "bot-feature-unknown": "Unknown bot feature.",
+      "bot-name-invalid": "Enter a name of up to 80 characters.",
+      "bot-announcements-off": "Announcements are turned off for one of the selected bots.",
+      "bot-vault-unavailable": "The token store is unavailable. Try again later.",
       "broadcast-not-found": "Broadcast not found.",
       "broadcast-not-editable": "Only drafts and scheduled broadcasts can be edited.",
       "broadcast-not-sendable": "Only drafts and scheduled broadcasts can be sent.",
@@ -871,6 +881,14 @@
       "greeting4": "How can I help, {name}?",
       "placeholder": "Ask the assistant",
       "chips": "Suggestions"
+    },
+    "quick": {
+      "open": "Quick AI helper",
+      "title": "Quick question",
+      "placeholder": "Ask anything",
+      "send": "Send",
+      "thinking": "Thinking…",
+      "openChat": "Open in chat"
     },
     "disclaimer": "The assistant is AI and can make mistakes. Check important information.",
     "addToNotebook": {
@@ -1637,6 +1655,8 @@
     "members": "Members",
     "head": "Head",
     "you": "You",
+    "hidePhoto": "Do not show my photo to my classmates",
+    "hidePhotoHint": "Classmates see your initials instead. You still see your own photo.",
     "contacts": "Contacts",
     "telegram": "Telegram",
     "email": "Email",
@@ -1950,6 +1970,9 @@
   "idErrors": {
     "generic": "Something went wrong. Try again in a moment.",
     "network": "No connection to the server. Check your internet and try again.",
+    "identity": {
+      "step-up-invalid": "The code is wrong or expired. Request a new code and try again."
+    },
     "auth": {
       "unauthorized": "Wrong login or password.",
       "invalid-credentials": "Wrong login or password.",
@@ -2019,6 +2042,7 @@
       "emisNeedsReauth": "Needs a new password",
       "connectors": "Connectors",
       "appearance": "Appearance",
+      "export": "Download my data",
       "delete": "Delete account",
       "totp": "Authenticator app",
       "passkeys": "Passkeys",

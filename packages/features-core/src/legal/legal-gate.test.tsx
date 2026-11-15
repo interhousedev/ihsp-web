@@ -1,4 +1,5 @@
 import { describe, expect, it } from "bun:test"
+import { ApiError } from "@ihsp/api"
 import { apiUrl, pendingLegalItem, renderWithProviders, server } from "@ihsp/test-utils"
 import { screen, waitFor } from "@testing-library/react"
 import { HttpResponse, http } from "msw"
@@ -31,5 +32,27 @@ describe("LegalGate", () => {
     await user.click(screen.getByRole("button", { name: "Accept and continue" }))
     await waitFor(() => expect(screen.queryByRole("dialog")).not.toBeInTheDocument())
     expect(accepted).toEqual({ items: [{ kind: "privacy", version: 2 }] })
+  })
+
+  it("shows the gate when any request is refused for missing consent", async () => {
+    const { queryClient } = renderWithProviders(<LegalGate />)
+    await waitFor(() => expect(queryClient.getQueryData(["legal", "pending"])).toBeDefined())
+    expect(screen.queryByRole("dialog")).not.toBeInTheDocument()
+
+    server.use(
+      http.get(apiUrl("/v1/me/legal/pending"), () => HttpResponse.json({ items: [pendingLegalItem("privacy")] })),
+    )
+    const refused = new ApiError({ type: "legal/acceptance-required", status: 403, title: "Forbidden" })
+    await queryClient
+      .fetchQuery({
+        queryKey: ["notes"],
+        queryFn: () => {
+          throw refused
+        },
+        retry: false,
+      })
+      .catch(() => undefined)
+
+    expect(await screen.findByRole("dialog")).toBeInTheDocument()
   })
 })

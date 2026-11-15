@@ -10,8 +10,11 @@ import {
 import { useFormatters } from "@ihsp/i18n"
 import { Badge, Card, CardContent, CardDescription, CardHeader, CardTitle, LoadingButton } from "@ihsp/ui"
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query"
+import { useState } from "react"
 import { openFileUrl } from "../../../file-item/open-file-url"
+import { CodeInput } from "../../shared/components/code-input"
 import { ErrorAlert } from "../../shared/components/error-alert"
+import { StepUpSender } from "../../shared/components/step-up-sender"
 import { useTr } from "../../shared/hooks/use-tr"
 
 const POLL_MS = 5000
@@ -37,16 +40,20 @@ export function DataExportCard() {
   })
   const latest = exports.data?.items[0]
   const state = latest ? exportState(latest) : null
+  const [code, setCode] = useState("")
   const request = useMutation({
-    mutationFn: () => postMePrivacyExport(),
-    onSuccess: () => queryClient.invalidateQueries({ queryKey: keys.privacy.exports() }),
+    mutationFn: () => postMePrivacyExport({ otp_code: code }),
+    onSuccess: () => {
+      setCode("")
+      return queryClient.invalidateQueries({ queryKey: keys.privacy.exports() })
+    },
   })
   const download = useMutation({
     mutationFn: async (id: string) => openFileUrl((await getMePrivacyExportDownload(id)).url),
   })
 
   return (
-    <Card>
+    <Card id="export" className="scroll-mt-20">
       <CardHeader>
         <CardTitle>{t("security.export.title")}</CardTitle>
         <CardDescription>{t("security.export.description")}</CardDescription>
@@ -62,6 +69,12 @@ export function DataExportCard() {
                 : ""}
             </span>
           </p>
+        ) : null}
+        {state !== "preparing" ? (
+          <div className="grid gap-3">
+            <CodeInput value={code} onChange={setCode} label={t("idCommon.code")} />
+            <StepUpSender />
+          </div>
         ) : null}
         <ErrorAlert error={request.error ?? download.error ?? (exports.isError ? exports.error : null)} />
         <div className="flex flex-wrap gap-2">
@@ -81,7 +94,7 @@ export function DataExportCard() {
               variant={state === "ready" ? "outline" : "default"}
               loading={request.isPending}
               loadingLabel={t("idCommon.working")}
-              disabled={exports.isPending}
+              disabled={exports.isPending || code.length !== 6}
               onClick={() => request.mutate()}
             >
               {t("security.export.request")}

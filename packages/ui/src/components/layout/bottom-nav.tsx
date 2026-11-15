@@ -123,8 +123,12 @@ export function BottomNav({
         ) : null}
       </nav>
       {more ? (
-        <Sheet open={moreOpen} onOpenChange={setMoreOpen}>
-          <SheetContent side="bottom" className="max-h-[85dvh] overflow-y-auto pb-[var(--safe-bottom)]">
+        <Sheet open={moreOpen} onOpenChange={setMoreOpen} modal={false}>
+          <SheetContent
+            side="bottom"
+            overlayClassName="pointer-events-none"
+            className="max-h-[85dvh] overflow-y-auto pb-[var(--safe-bottom)]"
+          >
             <SheetHeader>
               <SheetTitle>{t("nav.moreTitle")}</SheetTitle>
             </SheetHeader>

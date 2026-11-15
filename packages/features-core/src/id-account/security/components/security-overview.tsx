@@ -8,6 +8,7 @@ import {
   IconDeviceMobileMessage,
   IconDevices,
   IconFingerprint,
+  IconFileZip,
   IconShieldLock,
   IconKey,
   IconMail,
@@ -99,6 +100,7 @@ export function SecurityOverview({ user }: { user: UserMe }) {
         ) : null}
         <SecurityCard href="/connectors/" icon={IconPlugConnected} title={t("security.cards.connectors")} />
         <SecurityCard href="/appearance/" icon={IconPalette} title={t("security.cards.appearance")} />
+        <SecurityCard href="/security/delete/#export" icon={IconFileZip} title={t("security.cards.export")} />
         {isStudent ? (
           <SecurityCard href="/security/delete/" icon={IconTrash} destructive title={t("security.cards.delete")} />
         ) : null}

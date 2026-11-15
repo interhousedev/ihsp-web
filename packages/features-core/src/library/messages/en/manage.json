@@ -203,6 +203,13 @@
       "filters": "Find books",
       "search": "Search by title or author",
       "statusFilter": "Status",
+      "backfill": {
+        "button": "Rebuild covers and text",
+        "title": "Rebuild covers and page text?",
+        "description": "Covers will be cut for books without one (manual covers stay) and the stored page text of old items will be rebuilt. This runs in the background and may take a while.",
+        "confirm": "Start",
+        "started": "Started. Covers and page text are being rebuilt in the background."
+      },
       "allStatuses": "All statuses",
       "empty": "There are no books yet.",
       "noMatches": "No books match this search.",

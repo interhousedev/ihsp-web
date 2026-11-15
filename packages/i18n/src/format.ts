@@ -60,7 +60,9 @@ function formatUzFallback(date: Date, options: Intl.DateTimeFormatOptions): stri
 function format(value: DateInput, locale: Locale, options: Intl.DateTimeFormatOptions): string {
   const date = toDate(value)
   const text = new Intl.DateTimeFormat(INTL_LOCALES[locale], { timeZone: TIME_ZONE, ...options }).format(date)
-  return locale === "uz" && /M\d+/.test(text) ? formatUzFallback(date, options) : text
+  return locale === "uz" && (/M\d+/.test(text) || (options.weekday && !options.month))
+    ? formatUzFallback(date, options)
+    : text
 }
 
 /** `7 Oct 2026` style date in Asia/Tashkent. Date-only strings (`2026-10-07`) stay on that day. */

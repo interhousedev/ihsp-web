@@ -203,6 +203,13 @@
       "filters": "Kitoblarni topish",
       "search": "Nomi yoki muallifi boʻyicha qidirish",
       "statusFilter": "Holat",
+      "backfill": {
+        "button": "Muqova va matnni qayta tiklash",
+        "title": "Muqova va sahifa matni qayta tiklansinmi?",
+        "description": "Muqovasiz kitoblar uchun muqova yaratiladi (qoʻlda qoʻyilganlari qoladi), eski materiallarning saqlangan sahifa matni qayta tiklanadi. Bu fonda bajariladi va biroz vaqt olishi mumkin.",
+        "confirm": "Boshlash",
+        "started": "Boshlandi. Muqova va sahifa matni fonda qayta tiklanmoqda."
+      },
       "allStatuses": "Barcha holatlar",
       "empty": "Hozircha kitoblar yoʻq.",
       "noMatches": "Bu qidiruv boʻyicha kitob topilmadi.",

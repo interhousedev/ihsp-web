@@ -71,6 +71,7 @@ export function DatePicker({
   required = false,
   closeOnSelect = false,
   "aria-label": ariaLabel,
+  iconOnly = false,
 }: {
   value: IsoDate | null | undefined
   onChange: (date: IsoDate | null) => void
@@ -86,6 +87,8 @@ export function DatePicker({
   required?: boolean
   closeOnSelect?: boolean
   "aria-label"?: string
+  /** Only the calendar button (no date text, no typed field); the button is named by `aria-label`. */
+  iconOnly?: boolean
 }) {
   const t = useT()
   const f = useFormatters()
@@ -150,9 +153,11 @@ export function DatePicker({
               id={typed ? undefined : id}
               variant="outline"
               disabled={disabled}
-              aria-label={typed ? t("calendar.pickDate") : ariaLabel}
+              aria-label={
+                typed ? t("calendar.pickDate") : (ariaLabel ?? (iconOnly ? t("calendar.pickDate") : undefined))
+              }
               className={cn(
-                typed
+                typed || iconOnly
                   ? "size-11 shrink-0 p-0 md:size-8"
                   : cn(
                       "min-h-11 w-full justify-start text-left font-normal md:min-h-8",
@@ -163,8 +168,8 @@ export function DatePicker({
             />
           }
         >
-          <Icons.calendar className={cn("size-4", !typed && "mr-2")} aria-hidden />
-          {typed ? null : value ? f.date(value) : (placeholder ?? t("calendar.pickDate"))}
+          <Icons.calendar className={cn("size-4", !typed && !iconOnly && "mr-2")} aria-hidden />
+          {typed || iconOnly ? null : value ? f.date(value) : (placeholder ?? t("calendar.pickDate"))}
         </PopoverTrigger>
         <PopoverContent className="w-auto p-0" align="start">
           {required ? (

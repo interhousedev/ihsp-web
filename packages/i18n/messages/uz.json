@@ -436,6 +436,16 @@
       "attachment-not-found": "Biriktirilgan fayl sizning fayllaringiz orasida topilmadi."
     },
     "admin": {
+      "bot-not-found": "Bot topilmadi.",
+      "bot-exists": "Bu bot allaqachon qoʻshilgan.",
+      "bot-token-invalid": "Telegram bu tokenni qabul qilmadi.",
+      "bot-token-mismatch": "Yangi token boshqa botga tegishli.",
+      "bot-default-locked": "Asosiy botni oʻchirib boʻlmaydi.",
+      "bot-default-token-env": "Asosiy bot tokeni server muhitida belgilanadi. Uni oʻsha yerda oʻzgartiring va serverni qayta ishga tushiring.",
+      "bot-feature-unknown": "Botning nomaʼlum funksiyasi.",
+      "bot-name-invalid": "80 belgigacha nom kiriting.",
+      "bot-announcements-off": "Tanlangan botlardan birida eʼlonlar oʻchirilgan.",
+      "bot-vault-unavailable": "Tokenlar ombori ishlamayapti. Keyinroq urinib koʻring.",
       "broadcast-not-found": "Xabar topilmadi.",
       "broadcast-not-editable": "Faqat qoralama va rejalashtirilgan xabarlarni tahrirlash mumkin.",
       "broadcast-not-sendable": "Faqat qoralama yoki rejalashtirilgan xabarni yuborish mumkin.",
@@ -871,6 +881,14 @@
       "greeting4": "Qanday yordam bera olaman, {name}?",
       "placeholder": "Yordamchidan soʻrang",
       "chips": "Takliflar"
+    },
+    "quick": {
+      "open": "Tezkor AI yordamchi",
+      "title": "Tezkor savol",
+      "placeholder": "Istalgan narsani soʻrang",
+      "send": "Yuborish",
+      "thinking": "Oʻylayapman…",
+      "openChat": "Chatda ochish"
     },
     "disclaimer": "Yordamchi — sunʼiy intellekt, u xato qilishi mumkin. Muhim maʼlumotni tekshiring.",
     "addToNotebook": {
@@ -1637,6 +1655,8 @@
     "members": "Aʼzolar",
     "head": "Sardor",
     "you": "Siz",
+    "hidePhoto": "Rasmimni guruhdoshlarimga koʻrsatmaslik",
+    "hidePhotoHint": "Guruhdoshlar rasm oʻrniga bosh harflarni koʻradi. Oʻz rasmingizni oʻzingiz koʻraverasiz.",
     "contacts": "Aloqa",
     "telegram": "Telegram",
     "email": "Elektron pochta",
@@ -1950,6 +1970,9 @@
   "idErrors": {
     "generic": "Nimadir xato ketdi. Birozdan keyin qayta urinib koʻring.",
     "network": "Serverga ulanib boʻlmadi. Internetni tekshirib, qayta urinib koʻring.",
+    "identity": {
+      "step-up-invalid": "Kod notoʻgʻri yoki muddati oʻtgan. Yangi kod soʻrang va qayta urinib koʻring."
+    },
     "auth": {
       "unauthorized": "Login yoki parol notoʻgʻri.",
       "invalid-credentials": "Login yoki parol notoʻgʻri.",
@@ -2019,6 +2042,7 @@
       "emisNeedsReauth": "Yangi parol kerak",
       "connectors": "Konnektorlar",
       "appearance": "Koʻrinish",
+      "export": "Maʼlumotlarimni yuklab olish",
       "delete": "Hisobni oʻchirish",
       "totp": "Autentifikator ilovasi",
       "passkeys": "Kirish kalitlari",

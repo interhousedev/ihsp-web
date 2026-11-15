@@ -14,6 +14,7 @@ export { CopyLinkButton } from "./copy-link-button"
 export { AssistantProvider, useAssistantScope, type AssistantFeatures } from "./assistant-context"
 export { AssistantChatPane } from "./assistant-chat-pane"
 export { UsageButton } from "./sidebar-usage"
+export { QuickAssistant } from "./quick-assistant"
 export { SlashChip, SlashMenu } from "./slash-menu"
 export {
   SLASH_COMMANDS,

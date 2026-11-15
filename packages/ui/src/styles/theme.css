@@ -102,6 +102,8 @@ body {
   --info: oklch(0.75 0.12 240);
   --info-foreground: oklch(0.15 0.03 240);
   --info-muted: oklch(0.3 0.06 245);
+  --mark-2: oklch(0.78 0.14 25);
+  --mark-2-muted: oklch(0.32 0.09 25);
 }
 
 @theme inline {
