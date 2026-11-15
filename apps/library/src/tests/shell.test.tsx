@@ -1,8 +1,8 @@
 /** The library shell: public pages for visitors, the signed-in entries, the librarian group and the role guard. */
 import { describe, expect, it } from "bun:test"
 import { resetConfig } from "@ihsp/config"
-import { apiUrl, problem, server, setLibraryActor, teacherMe, userMe } from "@ihsp/test-utils"
-import { screen, within } from "@testing-library/react"
+import { apiUrl, problem, server, setLibraryActor, teacherMe, testRouter, userMe } from "@ihsp/test-utils"
+import { screen, waitFor, within } from "@testing-library/react"
 import { http } from "msw"
 import { useNav } from "../config/nav"
 import { LibraryShell } from "../features/shell/components/library-shell"
@@ -150,5 +150,23 @@ describe("LibraryShell", () => {
     const menu = await screen.findByRole("menu")
     expect(within(menu).getByRole("menuitem", { name: /library\.iht/ })).toHaveAttribute("aria-current", "page")
     expect(within(menu).getByRole("menuitem", { name: /Учителям/ })).toHaveAttribute("href", "http://localhost:3003")
+  })
+})
+
+describe("catalogue search in the sidebar", () => {
+  it("is in the phone More sheet and opens the browse page with the query", async () => {
+    asLibrary()
+    const { user } = renderLibraryApp(
+      <LibraryShell access="auth">
+        <p>page body</p>
+      </LibraryShell>,
+    )
+    await screen.findByText("page body")
+
+    await user.click(await screen.findByRole("button", { name: "More" }))
+    const box = await screen.findByRole("searchbox", { name: "Search the catalogue" })
+    await user.type(box, "physics{Enter}")
+
+    await waitFor(() => expect(testRouter.push).toHaveBeenCalledWith("/browse/?q=physics"))
   })
 })

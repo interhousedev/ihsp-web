@@ -22,6 +22,7 @@
     "unilibrary": "UniLibrary"
   },
   "shell": {
-    "signIn": "Войти"
+    "signIn": "Войти",
+    "searchLabel": "Поиск по каталогу"
   }
 }

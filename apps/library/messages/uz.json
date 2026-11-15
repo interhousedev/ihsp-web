@@ -22,6 +22,7 @@
     "unilibrary": "UniLibrary"
   },
   "shell": {
-    "signIn": "Kirish"
+    "signIn": "Kirish",
+    "searchLabel": "Katalogdan qidirish"
   }
 }

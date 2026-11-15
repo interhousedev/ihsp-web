@@ -1,4 +1,5 @@
 "use client"
+import { LegalGate, MaintenanceBanner } from "@ihsp/features-core"
 
 import type { Role } from "@ihsp/api"
 import { RequireAuth, RequireRole } from "@ihsp/auth"
@@ -7,6 +8,7 @@ import { AppShell, OfflineBadge } from "@ihsp/ui"
 import { Suspense, type ReactNode } from "react"
 import { useNav } from "../../../config/nav"
 import { LibraryBrand } from "./library-brand"
+import { CatalogueSearch } from "./catalogue-search"
 import { ProfileMenu } from "./profile-menu"
 import { SignInButton } from "./sign-in-button"
 
@@ -38,10 +40,13 @@ function Frame({ children }: { children: ReactNode }) {
       bottomNav={nav.bottom}
       platforms={platforms}
       brand={<LibraryBrand />}
+      sidebarSearch={<CatalogueSearch />}
       sidebarFooter={<ProfileMenu variant="row" />}
       controls={<Header />}
     >
+      <MaintenanceBanner />
       <Suspense fallback={<PageLoading />}>{children}</Suspense>
+      <LegalGate />
     </AppShell>
   )
 }
