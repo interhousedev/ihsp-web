@@ -134,6 +134,13 @@ export const keys = {
     aiExtensions: (filters?: object) => ["admin", "ai", "extensions", params(filters)] as const,
     aiStudents: (q: string) => ["admin", "ai", "students", q] as const,
     aiAccess: (userId: string) => ["admin", "ai", "access", userId] as const,
+    prompts: {
+      list: () => ["admin", "ai", "prompts", "list"] as const,
+      all: () => ["admin", "ai", "prompts"] as const,
+      detail: (filters?: object) => ["admin", "ai", "prompts", "detail", params(filters)] as const,
+      analytics: (filters?: object) => ["admin", "ai", "prompts", "analytics", params(filters)] as const,
+    },
+    admissionPickup: () => ["admin", "admission", "pickup"] as const,
     broadcasts: {
       all: () => ["admin", "broadcasts"] as const,
       list: (filters?: object) => ["admin", "broadcasts", "list", params(filters)] as const,

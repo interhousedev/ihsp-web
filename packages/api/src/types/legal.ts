@@ -1,12 +1,40 @@
 // Legal documents: public texts, the re-accept gate and the admin editor (tag `legal`).
 
-export type LegalKind = "privacy" | "terms" | "biometric" | "ai"
+export type LegalKind =
+  | "privacy"
+  | "terms"
+  | "biometric"
+  | "ai"
+  | "admission_privacy"
+  | "admission_terms"
+  | "admission_disclaimer"
+/** `global` applies to every app; otherwise the name of one app. */
+export const LEGAL_SCOPES = [
+  "global",
+  "id",
+  "sp",
+  "staff",
+  "admin",
+  "lms",
+  "library",
+  "share",
+  "landing",
+  "admission",
+] as const
+export type LegalScope = (typeof LEGAL_SCOPES)[number]
 export type LegalLocale = "uz" | "ru" | "en"
 
 export const LEGAL_KINDS: readonly LegalKind[] = ["privacy", "terms", "biometric", "ai"]
+export const ALL_LEGAL_KINDS: readonly LegalKind[] = [
+  ...LEGAL_KINDS,
+  "admission_privacy",
+  "admission_terms",
+  "admission_disclaimer",
+]
 
 export type LegalDocument = {
   kind: LegalKind
+  app_scope: LegalScope
   version: number
   locale: string
   title: string
@@ -27,6 +55,7 @@ type PerLocale = Record<string, string>
 export type AdminLegalDocument = {
   id: string
   kind: LegalKind
+  app_scope: LegalScope
   version: number
   status: "draft" | "published"
   title: PerLocale
@@ -45,5 +74,10 @@ export type LegalDraftBody = {
   announcement?: PerLocale | null
 }
 
-export type LegalAcceptanceCount = { kind: LegalKind; version: number; accepted_count: number }
+export type LegalAcceptanceCount = {
+  kind: LegalKind
+  app_scope: LegalScope
+  version: number
+  accepted_count: number
+}
 export type LegalAcceptanceCounts = { items: LegalAcceptanceCount[] }

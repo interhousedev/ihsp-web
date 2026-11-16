@@ -12,6 +12,8 @@ import type {
   AdminUserDetail,
   AdminUsersParams,
   BlockUserBody,
+  InvitedUser,
+  UserCreateBody,
   MailSuspendBody,
   OauthClientItem,
   OauthClientVerifyBody,
@@ -35,6 +37,11 @@ export const getAdminUsersQuery = (params?: AdminUsersParams) =>
     queryKey: keys.admin.users.list(params),
     queryFn: ({ signal }) => getAdminUsers(params, { signal }),
   })
+
+/** POST /v1/admin/users — admin; a non-student, non-teacher account and its one-time invitation link. */
+export function postAdminUsers(body: UserCreateBody, opts?: RequestOptions): Promise<InvitedUser> {
+  return api.post<InvitedUser>("/v1/admin/users", body, opts)
+}
 
 /** GET /v1/admin/users/{id} — admin. */
 export function getAdminUser(id: string, opts?: RequestOptions): Promise<AdminUserDetail> {

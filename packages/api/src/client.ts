@@ -79,6 +79,8 @@ export type ApiClientOptions = {
   onUnauthorized: () => void
   /** Defaults to `getConfig().API_URL`. */
   baseUrl?: () => string
+  /** Defaults to `getConfig().APP_NAME`; sent as the `X-IHSP-App` header when set. */
+  appName?: () => string | undefined
   fetch?: typeof fetch
 }
 
@@ -99,6 +101,7 @@ export function buildQueryString(query: QueryParams | undefined): string {
 
 export function createApiClient(options: ApiClientOptions): ApiClient {
   const resolveBase = options.baseUrl ?? (() => getConfig().API_URL)
+  const resolveApp = options.appName ?? (() => getConfig().APP_NAME)
   const doFetch: (input: string, init: RequestInit) => Promise<Response> =
     options.fetch ?? ((input, init) => globalThis.fetch(input, init))
   let refreshing: Promise<boolean> | null = null
@@ -129,6 +132,8 @@ export function createApiClient(options: ApiClientOptions): ApiClient {
         request.responseType === "json" || !request.responseType ? "application/json, application/problem+json" : "*/*",
       )
     }
+    const app = resolveApp()
+    if (app && !headers.has("X-IHSP-App")) headers.set("X-IHSP-App", app)
     let body: BodyInit | undefined
     if (request.formData) {
       body = request.formData

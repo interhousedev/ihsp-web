@@ -12,6 +12,7 @@ import type {
   LegalDocumentList,
   LegalDraftBody,
   LegalKind,
+  LegalScope,
   PendingLegal,
 } from "../types/legal"
 
@@ -64,14 +65,25 @@ export const getAdminLegalDocumentsQuery = () =>
 export function putAdminLegalDraft(
   kind: LegalKind,
   body: LegalDraftBody,
+  appScope: LegalScope = "global",
   opts?: RequestOptions,
 ): Promise<AdminLegalDocument> {
-  return api.put<AdminLegalDocument>(`/v1/admin/legal/drafts/${seg(kind)}`, body, opts)
+  return api.put<AdminLegalDocument>(`/v1/admin/legal/drafts/${seg(kind)}`, body, {
+    ...opts,
+    query: { app_scope: appScope },
+  })
 }
 
 /** POST /v1/admin/legal/drafts/{kind}/publish — admin; `422 legal/incomplete` when a locale is missing. */
-export function postAdminLegalPublish(kind: LegalKind, opts?: RequestOptions): Promise<AdminLegalDocument> {
-  return api.post<AdminLegalDocument>(`/v1/admin/legal/drafts/${seg(kind)}/publish`, undefined, opts)
+export function postAdminLegalPublish(
+  kind: LegalKind,
+  appScope: LegalScope = "global",
+  opts?: RequestOptions,
+): Promise<AdminLegalDocument> {
+  return api.post<AdminLegalDocument>(`/v1/admin/legal/drafts/${seg(kind)}/publish`, undefined, {
+    ...opts,
+    query: { app_scope: appScope },
+  })
 }
 
 /** GET /v1/admin/legal/acceptances — admin; accepted counts per kind and version. */

@@ -3,6 +3,9 @@
 import type { PageParams, Role } from "./common"
 import type { AuditItem, SessionItem, TelegramAccount } from "./id"
 
+export const ACCOUNT_KINDS = ["school", "alumni", "external", "staff"] as const
+export type AccountKind = (typeof ACCOUNT_KINDS)[number]
+
 export type AdminUser = {
   id: string
   login: string | null
@@ -19,6 +22,8 @@ export type AdminUser = {
   photo_url: string | null
   created_at: string | null
   last_login_at: string | null
+  phone?: string | null
+  account_kind?: AccountKind
 }
 
 export type AdminUserDetail = AdminUser & {
@@ -32,8 +37,26 @@ export type AdminUserDetail = AdminUser & {
 /** Account states of the identity module. */
 export type UserStatus = "active" | "blocked" | "deactivated" | "deleted" | "pending_activation" | "unregistered"
 
-export type AdminUsersParams = PageParams & { query?: string; role?: Role; status?: UserStatus }
+export type AdminUsersParams = PageParams & {
+  query?: string
+  role?: Role
+  status?: UserStatus
+  account_kind?: AccountKind
+}
 export type AdminTeachersParams = PageParams & { query?: string; status?: UserStatus }
+
+/** `POST /v1/admin/users`: a staff-like account without EMIS (no student or teacher role). */
+export type UserCreateBody = {
+  last_name: string
+  first_name: string
+  middle_name?: string | null
+  phone?: string | null
+  email?: string | null
+  account_kind: AccountKind
+  roles: Role[]
+}
+/** The created account and its one-time Telegram invitation (`https://t.me/<bot>?start=inv_<code>`). */
+export type InvitedUser = { user: AdminUser; invite_url: string }
 
 export type BlockUserBody = { reason: string }
 export type UserRolesBody = { grant: Role[]; revoke: Role[] }

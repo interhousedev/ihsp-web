@@ -13,6 +13,7 @@ import type { getAdminJobs, postAdminJobCancel } from "./endpoints/admin-jobs"
 import type { getAdminKnowledge, getAdminKnowledgeEntry, patchAdminKnowledge, postAdminKnowledge } from "./endpoints/admin-knowledge"
 import type { getAdminLogIssues } from "./endpoints/admin-logs"
 import type { getAdminMigration, postAdminMigrationRollback, postAdminMigrationStart } from "./endpoints/admin-migration"
+import type { activateAdminPrompt, getAdminPrompt, getAdminPromptAnalytics, getAdminPrompts, getAdmissionPickup, putAdminPrompt, putAdmissionPickup } from "./endpoints/admin-prompts"
 import type { getAdminVaultStatus, postAdminVaultUnseal } from "./endpoints/admin-vault"
 import type { getAiChat, getAiChats, getAiProjectFiles, getAiProjects, getAiUsage, getAiWebSearch, patchAiChat, patchAiProject, postAiChatMessages, postAiChatRegenerate, postAiChatToolCallApprove, postAiChatToolCallReject, postAiChats, postAiProject } from "./endpoints/ai"
 import type { getAppMap } from "./endpoints/app-map"
@@ -35,7 +36,7 @@ import type { getMeFlashcardSet, getMeFlashcardSetCardStats, getMeFlashcardSetSt
 import type { getGroupProgress, getMyGroupProgress } from "./endpoints/group-progress"
 import type { getMeEmisRatingBook, getMeHonours } from "./endpoints/honours"
 import type { deleteIdMe, getIdActivation, getIdConsent, getIdLogin, getIdLogout, getIdMcpScopes, getIdMe, getIdMeActivity, getIdMeConnectorOffers, getIdMeConnectors, getIdMeMcpClients, getIdMeMcpSetup, getIdMeSessions, getIdMeTelegram, getIdPersonalTokens, patchIdMePreferences, patchIdMeTelegram, postIdActivation, postIdConsent, postIdLogin, postIdLoginEmisResolve, postIdLoginOtp, postIdLoginOtpRequest, postIdLoginPassword, postIdLoginRestore, postIdLoginRestoreDecline, postIdLoginTicket, postIdMeConnectorOfferDecision, postIdMeConnectors, postIdMeEmailChangeConfirm, postIdMeEmisPassword, postIdMeMcpClient, postIdMeMcpSetup, postIdMeOtpDisable, postIdMeOtpEnableConfirm, postIdPersonalTokens, postIdRecoveryOtpConfirm, postIdRecoveryPasswordConfirm, postIdTelegramLogin, postIdTelegramOtpRequest, postIdTelegramStatus, postRegisterTelegramStatus } from "./endpoints/id"
-import type { deleteLyceumLogo, getAdminAudit, getAdminOauthClients, getAdminSettings, getAdminTeachers, getAdminUser, getAdminUsers, patchAdminTeacher, patchAdminUser, postAdminOauthClientVerify, postAdminTeacherDeactivate, postAdminTeachers, postAdminUserBlock, postAdminUserMailResume, postAdminUserMailSuspend, postAdminUserResetPassword, postAdminUserResetPasswordLink, postAdminUserRoles, postAdminUserUnblock, putAdminSettings, putLyceumLogo } from "./endpoints/id-admin"
+import type { deleteLyceumLogo, getAdminAudit, getAdminOauthClients, getAdminSettings, getAdminTeachers, getAdminUser, getAdminUsers, patchAdminTeacher, patchAdminUser, postAdminOauthClientVerify, postAdminTeacherDeactivate, postAdminTeachers, postAdminUserBlock, postAdminUserMailResume, postAdminUserMailSuspend, postAdminUserResetPassword, postAdminUserResetPasswordLink, postAdminUserRoles, postAdminUserUnblock, postAdminUsers, putAdminSettings, putLyceumLogo } from "./endpoints/id-admin"
 import type { getIdMeSecurity, patchIdMePasskey, postIdLoginPasskey, postIdLoginPasskeyOptions, postIdLoginTotp, postIdMePasskey, postIdMePasskeyOptions, postIdMePasswordLoginDisable, postIdMeTotpConfirm, postIdMeTotpDisable, postIdMeTotpSetup } from "./endpoints/id-factors"
 import type { getAdminInsights } from "./endpoints/insights"
 import type { getAdminLegalAcceptances, getAdminLegalDocuments, getLegalDocument, getLegalDocuments, getMeLegalPending, postAdminLegalPublish, postMeLegalAccept, putAdminLegalDraft } from "./endpoints/legal"
@@ -167,6 +168,34 @@ export const served_postAdminMigrationStart: Awaited<ReturnType<typeof postAdmin
 // POST /v1/admin/migration/rollback — postAdminMigrationRollback
 declare const gen_postAdminMigrationRollback: ResponseOf<"/v1/admin/migration/rollback", "post">
 export const served_postAdminMigrationRollback: Awaited<ReturnType<typeof postAdminMigrationRollback>> = gen_postAdminMigrationRollback
+
+// GET /v1/admin/ai/prompts — getAdminPrompts
+declare const gen_getAdminPrompts: ResponseOf<"/v1/admin/ai/prompts", "get">
+export const served_getAdminPrompts: Awaited<ReturnType<typeof getAdminPrompts>> = gen_getAdminPrompts
+
+// GET /v1/admin/ai/prompts/{task}/{name} — getAdminPrompt
+declare const gen_getAdminPrompt: ResponseOf<"/v1/admin/ai/prompts/{task}/{name}", "get">
+export const served_getAdminPrompt: Awaited<ReturnType<typeof getAdminPrompt>> = gen_getAdminPrompt
+
+// PUT /v1/admin/ai/prompts/{task}/{name} — putAdminPrompt
+declare const gen_putAdminPrompt: ResponseOf<"/v1/admin/ai/prompts/{task}/{name}", "put">
+export const served_putAdminPrompt: Awaited<ReturnType<typeof putAdminPrompt>> = gen_putAdminPrompt
+
+// POST /v1/admin/ai/prompts/{task}/{name}/versions/{version}/activate — activateAdminPrompt
+declare const gen_activateAdminPrompt: ResponseOf<"/v1/admin/ai/prompts/{task}/{name}/versions/{version}/activate", "post">
+export const served_activateAdminPrompt: Awaited<ReturnType<typeof activateAdminPrompt>> = gen_activateAdminPrompt
+
+// GET /v1/admin/ai/prompts/analytics — getAdminPromptAnalytics
+declare const gen_getAdminPromptAnalytics: ResponseOf<"/v1/admin/ai/prompts/analytics", "get">
+export const served_getAdminPromptAnalytics: Awaited<ReturnType<typeof getAdminPromptAnalytics>> = gen_getAdminPromptAnalytics
+
+// GET /v1/admission/officer/settings — getAdmissionPickup
+declare const gen_getAdmissionPickup: ResponseOf<"/v1/admission/officer/settings", "get">
+export const served_getAdmissionPickup: Awaited<ReturnType<typeof getAdmissionPickup>> = gen_getAdmissionPickup
+
+// PUT /v1/admission/officer/settings — putAdmissionPickup
+declare const gen_putAdmissionPickup: ResponseOf<"/v1/admission/officer/settings", "put">
+export const served_putAdmissionPickup: Awaited<ReturnType<typeof putAdmissionPickup>> = gen_putAdmissionPickup
 
 // GET /v1/admin/vault/status — getAdminVaultStatus
 declare const gen_getAdminVaultStatus: ResponseOf<"/v1/admin/vault/status", "get">
@@ -811,6 +840,10 @@ export const served_getMeEmisRatingBook: Awaited<ReturnType<typeof getMeEmisRati
 // GET /v1/admin/users — getAdminUsers
 declare const gen_getAdminUsers: ResponseOf<"/v1/admin/users", "get">
 export const served_getAdminUsers: Awaited<ReturnType<typeof getAdminUsers>> = gen_getAdminUsers
+
+// POST /v1/admin/users — postAdminUsers
+declare const gen_postAdminUsers: ResponseOf<"/v1/admin/users", "post">
+export const served_postAdminUsers: Awaited<ReturnType<typeof postAdminUsers>> = gen_postAdminUsers
 
 // GET /v1/admin/users/{id} — getAdminUser
 declare const gen_getAdminUser: ResponseOf<"/v1/admin/users/{id}", "get">

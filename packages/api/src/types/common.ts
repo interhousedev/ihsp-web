@@ -1,6 +1,15 @@
 // Shared primitives of backend/openapi/openapi.json.
 
-export type Role = "student" | "teacher" | "admin" | "lms_admin" | "lms_creator" | "librarian"
+export type Role =
+  | "student"
+  | "teacher"
+  | "admin"
+  | "lms_admin"
+  | "lms_creator"
+  | "librarian"
+  | "counselor"
+  | "mentor"
+  | "transcript_officer"
 
 export type PersonRef = { id: string; first_name: string; last_name: string }
 /** `name` is in the caller's locale with fallback uz -> ru -> en. */

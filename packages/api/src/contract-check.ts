@@ -12,6 +12,7 @@ import type { getAdminJobs, postAdminJobCancel } from "./endpoints/admin-jobs"
 import type { getAdminKnowledge, getAdminKnowledgeEntry, patchAdminKnowledge, postAdminKnowledge } from "./endpoints/admin-knowledge"
 import type { getAdminLogIssues } from "./endpoints/admin-logs"
 import type { getAdminMigration, postAdminMigrationRollback, postAdminMigrationStart } from "./endpoints/admin-migration"
+import type { activateAdminPrompt, getAdminPrompt, getAdminPromptAnalytics, getAdminPrompts, getAdmissionPickup, putAdminPrompt, putAdmissionPickup } from "./endpoints/admin-prompts"
 import type { getAdminVaultStatus, postAdminVaultUnseal } from "./endpoints/admin-vault"
 import type { getAiChat, getAiChats, getAiProjectFiles, getAiProjects, getAiUsage, getAiWebSearch, patchAiChat, patchAiProject, postAiChatMessages, postAiChatRegenerate, postAiChatToolCallApprove, postAiChatToolCallReject, postAiChats, postAiProject } from "./endpoints/ai"
 import type { getAppMap } from "./endpoints/app-map"
@@ -34,7 +35,7 @@ import type { getMeFlashcardSet, getMeFlashcardSetCardStats, getMeFlashcardSetSt
 import type { getGroupProgress, getMyGroupProgress } from "./endpoints/group-progress"
 import type { getMeEmisRatingBook, getMeHonours } from "./endpoints/honours"
 import type { deleteIdMe, getIdActivation, getIdConsent, getIdLogin, getIdLogout, getIdMcpScopes, getIdMe, getIdMeActivity, getIdMeConnectorOffers, getIdMeConnectors, getIdMeMcpClients, getIdMeMcpSetup, getIdMeSessions, getIdMeTelegram, getIdPersonalTokens, patchIdMePreferences, patchIdMeTelegram, postIdActivation, postIdConsent, postIdLogin, postIdLoginEmisResolve, postIdLoginOtp, postIdLoginOtpRequest, postIdLoginPassword, postIdLoginRestore, postIdLoginRestoreDecline, postIdLoginTicket, postIdMeConnectorOfferDecision, postIdMeConnectors, postIdMeEmailChangeConfirm, postIdMeEmisPassword, postIdMeMcpClient, postIdMeMcpSetup, postIdMeOtpDisable, postIdMeOtpEnableConfirm, postIdPersonalTokens, postIdRecoveryOtpConfirm, postIdRecoveryPasswordConfirm, postIdTelegramLogin, postIdTelegramOtpRequest, postIdTelegramStatus, postRegisterTelegramStatus } from "./endpoints/id"
-import type { deleteLyceumLogo, getAdminAudit, getAdminOauthClients, getAdminSettings, getAdminTeachers, getAdminUser, getAdminUsers, patchAdminTeacher, patchAdminUser, postAdminOauthClientVerify, postAdminTeacherDeactivate, postAdminTeachers, postAdminUserBlock, postAdminUserMailResume, postAdminUserMailSuspend, postAdminUserResetPassword, postAdminUserResetPasswordLink, postAdminUserRoles, postAdminUserUnblock, putAdminSettings, putLyceumLogo } from "./endpoints/id-admin"
+import type { deleteLyceumLogo, getAdminAudit, getAdminOauthClients, getAdminSettings, getAdminTeachers, getAdminUser, getAdminUsers, patchAdminTeacher, patchAdminUser, postAdminOauthClientVerify, postAdminTeacherDeactivate, postAdminTeachers, postAdminUserBlock, postAdminUserMailResume, postAdminUserMailSuspend, postAdminUserResetPassword, postAdminUserResetPasswordLink, postAdminUserRoles, postAdminUserUnblock, postAdminUsers, putAdminSettings, putLyceumLogo } from "./endpoints/id-admin"
 import type { getIdMeSecurity, patchIdMePasskey, postIdLoginPasskey, postIdLoginPasskeyOptions, postIdLoginTotp, postIdMePasskey, postIdMePasskeyOptions, postIdMePasswordLoginDisable, postIdMeTotpConfirm, postIdMeTotpDisable, postIdMeTotpSetup } from "./endpoints/id-factors"
 import type { getAdminInsights } from "./endpoints/insights"
 import type { getAdminLegalAcceptances, getAdminLegalDocuments, getLegalDocument, getLegalDocuments, getMeLegalPending, postAdminLegalPublish, postMeLegalAccept, putAdminLegalDraft } from "./endpoints/legal"
@@ -72,6 +73,7 @@ import type { getWorkOffTemplates, patchWorkOff, postWorkOffTemplate, putWorkOff
 import type { AdminUsageParams, AiAccessBody, ExtensionBody, ExtensionsParams, LimitsBody } from "./types/admin-ai"
 import type { AdminFeedbackListParams, AdminFeedbackResponseInput, AdminFeedbackStatusPatch } from "./types/admin-feedback"
 import type { KnowledgeEntryInput, KnowledgeEntryPatch, KnowledgeParams } from "./types/admin-knowledge"
+import type { AdmissionPickupBody, PromptAnalyticsParams, PromptBody, PromptDetailParams } from "./types/admin-prompts"
 import type { AttachFileBody, ChatCreateBody, ChatMessageBody, ChatPatchBody, ChatsParams, MessageFeedbackBody, ProjectBody, ProjectPatchBody, ToolCallRejectBody, UsageParams } from "./types/ai"
 import type { AssessmentCreateBody, AssessmentPatchBody, AssessmentProposalBody, AssessmentsParams, PlannerParams, StaffAssessmentsParams } from "./types/assessments"
 import type { BotPostCreate, BotPostMove, BotPostPatch, BotPostReorder } from "./types/bot-posts"
@@ -88,7 +90,7 @@ import type { FeedbackCreateBody } from "./types/feedback"
 import type { FileCreateBody, FileRenameBody, FileUrlParams, MyFilesParams } from "./types/files"
 import type { FlashcardCardsBody, FlashcardCopyBody, FlashcardMergeBody, FlashcardReviewBody, FlashcardSetCreateBody, FlashcardSetPatchBody, FlashcardStatsParams } from "./types/flashcards"
 import type { ActivationBody, ActivationEmailBody, ActivityParams, ConnectorCreateBody, ConsentBody, ConsentOtpBody, CreateMcpClientBody, DeleteAccountBody, EmailChangeBody, EmailChangeConfirmBody, EmisLoginResolveBody, EmisPasswordBody, LoginBody, LoginOtpBody, LoginOtpRequestBody, LoginPasswordBody, LoginRestoreBody, LoginTicketBody, OtpDisableBody, OtpEnableBody, OtpEnableConfirmBody, PasswordChangeBody, PersonalTokenCreateBody, RecoveryLoginBody, RecoveryOtpCancelBody, RecoveryOtpConfirmBody, RecoveryOtpRequestBody, RecoveryPasswordConfirmBody, RecoveryPasswordRequestBody, TelegramLoginBody, TelegramOtpRequestBody, TelegramPatchBody, TelegramStatusBody, UserPreferencesPatch } from "./types/id"
-import type { AdminAuditParams, AdminTeachersParams, AdminUsersParams, BlockUserBody, MailSuspendBody, OauthClientVerifyBody, PlatformSettingsBody, SetPasswordBody, TeacherCreateBody, TeacherPatchBody, UserPatchBody, UserRolesBody } from "./types/id-admin"
+import type { AdminAuditParams, AdminTeachersParams, AdminUsersParams, BlockUserBody, MailSuspendBody, OauthClientVerifyBody, PlatformSettingsBody, SetPasswordBody, TeacherCreateBody, TeacherPatchBody, UserCreateBody, UserPatchBody, UserRolesBody } from "./types/id-admin"
 import type { LoginPasskeyBody, LoginPasskeyOptionsBody, LoginTotpBody, PasskeyRegisterBody, PasskeyRenameBody, TotpCodeBody } from "./types/id-factors"
 import type { AcceptLegalBody, LegalDraftBody } from "./types/legal"
 import type { EmisSourcesHiddenBody, LessonSourcesParams } from "./types/lesson-sources"
@@ -257,6 +259,48 @@ export const response_postAdminMigrationStart: ResponseOf<"/v1/admin/migration/s
 // POST /v1/admin/migration/rollback — postAdminMigrationRollback
 declare const res_postAdminMigrationRollback: Awaited<ReturnType<typeof postAdminMigrationRollback>>
 export const response_postAdminMigrationRollback: ResponseOf<"/v1/admin/migration/rollback", "post"> = res_postAdminMigrationRollback
+
+// GET /v1/admin/ai/prompts — getAdminPrompts
+declare const res_getAdminPrompts: Awaited<ReturnType<typeof getAdminPrompts>>
+export const response_getAdminPrompts: ResponseOf<"/v1/admin/ai/prompts", "get"> = res_getAdminPrompts
+
+// GET /v1/admin/ai/prompts/{task}/{name} — getAdminPrompt
+declare const res_getAdminPrompt: Awaited<ReturnType<typeof getAdminPrompt>>
+export const response_getAdminPrompt: ResponseOf<"/v1/admin/ai/prompts/{task}/{name}", "get"> = res_getAdminPrompt
+declare const query_getAdminPrompt: PromptDetailParams
+export const query_ok_getAdminPrompt: QueryOf<"/v1/admin/ai/prompts/{task}/{name}", "get"> = query_getAdminPrompt
+
+// PUT /v1/admin/ai/prompts/{task}/{name} — putAdminPrompt
+declare const res_putAdminPrompt: Awaited<ReturnType<typeof putAdminPrompt>>
+export const response_putAdminPrompt: ResponseOf<"/v1/admin/ai/prompts/{task}/{name}", "put"> = res_putAdminPrompt
+declare const req_putAdminPrompt: PromptBody
+export const request_putAdminPrompt: RequestOf<"/v1/admin/ai/prompts/{task}/{name}", "put"> = req_putAdminPrompt
+
+// DELETE /v1/admin/ai/prompts/{task}/{name} — revertAdminPrompt
+// no JSON success response (204, CSV, calendar or HTML): only the route is checked
+export type route_revertAdminPrompt = OperationOf<"/v1/admin/ai/prompts/{task}/{name}", "delete">
+declare const query_revertAdminPrompt: PromptDetailParams
+export const query_ok_revertAdminPrompt: QueryOf<"/v1/admin/ai/prompts/{task}/{name}", "delete"> = query_revertAdminPrompt
+
+// POST /v1/admin/ai/prompts/{task}/{name}/versions/{version}/activate — activateAdminPrompt
+declare const res_activateAdminPrompt: Awaited<ReturnType<typeof activateAdminPrompt>>
+export const response_activateAdminPrompt: ResponseOf<"/v1/admin/ai/prompts/{task}/{name}/versions/{version}/activate", "post"> = res_activateAdminPrompt
+
+// GET /v1/admin/ai/prompts/analytics — getAdminPromptAnalytics
+declare const res_getAdminPromptAnalytics: Awaited<ReturnType<typeof getAdminPromptAnalytics>>
+export const response_getAdminPromptAnalytics: ResponseOf<"/v1/admin/ai/prompts/analytics", "get"> = res_getAdminPromptAnalytics
+declare const query_getAdminPromptAnalytics: PromptAnalyticsParams
+export const query_ok_getAdminPromptAnalytics: QueryOf<"/v1/admin/ai/prompts/analytics", "get"> = query_getAdminPromptAnalytics
+
+// GET /v1/admission/officer/settings — getAdmissionPickup
+declare const res_getAdmissionPickup: Awaited<ReturnType<typeof getAdmissionPickup>>
+export const response_getAdmissionPickup: ResponseOf<"/v1/admission/officer/settings", "get"> = res_getAdmissionPickup
+
+// PUT /v1/admission/officer/settings — putAdmissionPickup
+declare const res_putAdmissionPickup: Awaited<ReturnType<typeof putAdmissionPickup>>
+export const response_putAdmissionPickup: ResponseOf<"/v1/admission/officer/settings", "put"> = res_putAdmissionPickup
+declare const req_putAdmissionPickup: AdmissionPickupBody
+export const request_putAdmissionPickup: RequestOf<"/v1/admission/officer/settings", "put"> = req_putAdmissionPickup
 
 // GET /v1/admin/vault/status — getAdminVaultStatus
 declare const res_getAdminVaultStatus: Awaited<ReturnType<typeof getAdminVaultStatus>>
@@ -1157,6 +1201,12 @@ declare const res_getAdminUsers: Awaited<ReturnType<typeof getAdminUsers>>
 export const response_getAdminUsers: ResponseOf<"/v1/admin/users", "get"> = res_getAdminUsers
 declare const query_getAdminUsers: AdminUsersParams
 export const query_ok_getAdminUsers: QueryOf<"/v1/admin/users", "get"> = query_getAdminUsers
+
+// POST /v1/admin/users — postAdminUsers
+declare const res_postAdminUsers: Awaited<ReturnType<typeof postAdminUsers>>
+export const response_postAdminUsers: ResponseOf<"/v1/admin/users", "post"> = res_postAdminUsers
+declare const req_postAdminUsers: UserCreateBody
+export const request_postAdminUsers: RequestOf<"/v1/admin/users", "post"> = req_postAdminUsers
 
 // GET /v1/admin/users/{id} — getAdminUser
 declare const res_getAdminUser: Awaited<ReturnType<typeof getAdminUser>>
