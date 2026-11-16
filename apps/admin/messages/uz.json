@@ -46,7 +46,8 @@
     "devices": "Qurilmalar",
     "excuses": "Sababli qoldirishlar",
     "legal": "Huquqiy hujjatlar",
-    "erasure": "Oʻchirish soʻrovlari"
+    "erasure": "Oʻchirish soʻrovlari",
+    "prompts": "AI promptlari"
   },
   "shared": {
     "lessonList": "Sanalar boʻyicha darslar",
@@ -403,7 +404,9 @@
       "role": "Rol",
       "allRoles": "Istalgan rol",
       "status": "Holati",
-      "allStatuses": "Istalgan holat"
+      "allStatuses": "Istalgan holat",
+      "accountKind": "Hisob turi",
+      "allAccountKinds": "Istalgan tur"
     },
     "roles": {
       "student": "Talaba",
@@ -416,7 +419,10 @@
       "save": "Rollarni saqlash",
       "saved": "{name} rollari saqlandi",
       "confirmTitle": "Rollar oʻzgartirilsinmi?",
-      "confirmDescription": "Foydalanuvchi hamma joydan chiqariladi. Maʼmuriyatning yangi aʼzosi kirishda bir martalik kod sozlaydi."
+      "confirmDescription": "Foydalanuvchi hamma joydan chiqariladi. Maʼmuriyatning yangi aʼzosi kirishda bir martalik kod sozlaydi.",
+      "counselor": "Maslahatchi",
+      "mentor": "Mentor",
+      "transcript_officer": "Transkript masʼuli"
     },
     "status": {
       "active": "Faol",
@@ -430,7 +436,9 @@
       "login": "Login",
       "roles": "Rollar",
       "status": "Holati",
-      "lastLogin": "Oxirgi kirish"
+      "lastLogin": "Oxirgi kirish",
+      "phone": "Telefon",
+      "accountKind": "Hisob turi"
     },
     "detail": {
       "back": "Foydalanuvchilar va rollar",
@@ -515,6 +523,32 @@
       "description": "Bu havolani foydalanuvchiga bering. U parolni tiklash havolasi kabi ishlaydi va faqat bir marta koʻrsatiladi.",
       "qrAlt": "Parolni tiklash havolasining QR kodi",
       "close": "Tayyor"
+    },
+    "create": {
+      "open": "Foydalanuvchi yaratish",
+      "title": "Foydalanuvchi yaratish",
+      "description": "Xodimlar va boshqa hisoblar uchun. Talabalar EMISʼdan keladi, oʻqituvchilarning oʻz shakli bor.",
+      "lastName": "Familiya",
+      "firstName": "Ism",
+      "middleName": "Otasining ismi",
+      "phone": "Telefon",
+      "email": "Email (ixtiyoriy)",
+      "accountKind": "Hisob turi",
+      "roles": "Rollar",
+      "cancel": "Bekor qilish",
+      "submit": "Yaratish",
+      "resultTitle": "Foydalanuvchi yaratildi",
+      "resultDescription": "{name} shu bir martalik taklif orqali kiradi.",
+      "inviteLink": "Taklif havolasi",
+      "inviteHint": "Uni foydalanuvchiga yuboring yoki QR-kodni koʻrsating. Bir marta koʻrsatiladi.",
+      "qr": "Taklif havolasining QR-kodi",
+      "done": "Tayyor",
+      "kinds": {
+        "school": "Maktab",
+        "alumni": "Bitiruvchi",
+        "external": "Tashqi",
+        "staff": "Xodim"
+      }
     }
   },
   "groups": {
@@ -1619,7 +1653,8 @@
         "smart": "Aqlli yordamchi",
         "notebooks": "Bloknotlar va Studiya",
         "web_search": "Internet qidiruvi",
-        "lms": "Kurs muallifligi"
+        "lms": "Kurs muallifligi",
+        "admission": "Qabul"
       },
       "value": "Qiymat",
       "default": "Standart: {value}",
@@ -1807,6 +1842,19 @@
       "lms_ai_max_tool_steps": {
         "label": "Muallif yordamchisi vosita qadamlari",
         "hint": "Muallif yordamchisining bitta javobida modelga eng koʻp murojaatlar."
+      }
+    },
+    "admission": {
+      "title": "Qabul sozlamalari",
+      "description": "Abituriyentlar maʼlumotnomalarni qayerdan oladi. Qabulning AI limitlari yuqoridagi muharrirda.",
+      "pickup": "Olish joyi ({language})",
+      "save": "Saqlash",
+      "saved": "Olish joyi saqlandi.",
+      "failed": "Olish joyini saqlab boʻlmadi.",
+      "languages": {
+        "uz": "oʻzbekcha",
+        "ru": "ruscha",
+        "en": "inglizcha"
       }
     }
   },
@@ -2373,7 +2421,10 @@
       "privacy": "Maxfiylik siyosati",
       "terms": "Foydalanish shartlari",
       "biometric": "Biometrik maʼlumotlarga rozilik",
-      "ai": "SI bilan ishlashga rozilik"
+      "ai": "SI bilan ishlashga rozilik",
+      "admission_privacy": "Qabul: maxfiylik siyosati",
+      "admission_terms": "Qabul: foydalanish shartlari",
+      "admission_disclaimer": "Qabul: masʼuliyatdan voz kechish"
     },
     "draftBadge": "Qoralama v{version}",
     "version": "Chop etilgan versiya",
@@ -2391,15 +2442,29 @@
       "saveDraft": "Qoralamani saqlash",
       "saving": "Saqlanmoqda…",
       "saved": "Qoralama saqlandi.",
-      "publish": "Chop etish",
+      "publish": "Yangi versiyani chop etish",
       "close": "Yopish"
     },
-    "publishTitle": "“{kind}” chop etilsinmi?",
+    "publishTitle": "“{kind}” {scope} uchun chop etilsinmi?",
     "publishText": "Davom etish uchun har bir foydalanuvchi yangi versiyani qaytadan qabul qilishi kerak.",
     "publishConfirm": "Chop etish",
     "errors": {
       "noDraft": "Chop etish uchun qoralama yoʼq. Avval qoralamani saqlang."
-    }
+    },
+    "scopes": {
+      "id": "Kirish (id)",
+      "sp": "Talaba portali",
+      "staff": "Xodimlar portali",
+      "admin": "Maʼmuriyat",
+      "lms": "LMS",
+      "library": "Kutubxona",
+      "share": "Fayl almashish",
+      "landing": "Bosh sahifa",
+      "admission": "Qabul",
+      "global": "Barcha ilovalar"
+    },
+    "scopeFilter": "Ilova",
+    "allScopes": "Barcha ilovalar"
   },
   "erasure": {
     "title": "Oʻchirish soʻrovlari",
@@ -2475,6 +2540,60 @@
       "noBots": "Yoqilgan botlarning hech birida eʼlonlar yoqilmagan.",
       "submit": "Yuborish",
       "sent": "{count} ta qabul qiluvchiga yuborildi"
+    }
+  },
+  "prompts": {
+    "title": "AI promptlari",
+    "description": "Modellarga beriladigan matnlar, ularning versiyalari va har bir versiya natijalari.",
+    "list": {
+      "title": "Promptlar",
+      "empty": "Tahrirlanadigan prompt yoʻq.",
+      "overridden": "Tahrirlangan"
+    },
+    "locales": {
+      "all": "Barcha tillar",
+      "uz": "Oʻzbekcha",
+      "ru": "Ruscha",
+      "en": "Inglizcha"
+    },
+    "editor": {
+      "choose": "Tahrirlash uchun promptni tanlang.",
+      "locale": "Til",
+      "text": "Prompt matni",
+      "note": "Izoh (ixtiyoriy)",
+      "save": "Yangi versiya sifatida saqlash",
+      "saved": "{version}-versiya saqlandi va faol.",
+      "failed": "Promptni saqlab boʻlmadi.",
+      "builtin": "Oʻrnatilgan",
+      "revert": "Oʻrnatilganga qaytarish",
+      "revertTitle": "Oʻrnatilgan matnga qaytarilsinmi?",
+      "revertDescription": "Tahrirlangan versiyalar tarixda qoladi, oʻrnatilgan matn faol boʻladi.",
+      "revertConfirm": "Qaytarish",
+      "reverted": "Oʻrnatilgan matnga qaytarildi.",
+      "missingPlaceholders": "Yetishmayotgan oʻrinbosarlar: {list}"
+    },
+    "diff": {
+      "title": "Oʻrnatilgan matndan farqi",
+      "same": "Matn oʻrnatilgan matn bilan bir xil."
+    },
+    "history": {
+      "title": "Tarix",
+      "empty": "Saqlangan versiyalar hali yoʻq.",
+      "version": "{version}-versiya",
+      "active": "Faol",
+      "activate": "Yoqish",
+      "activateVersion": "{version}-versiyani yoqish",
+      "activated": "{version}-versiya faol."
+    },
+    "analytics": {
+      "title": "Versiyalar boʻyicha natijalar (30 kun)",
+      "empty": "Bu davrda chaqiruvlar boʻlmagan.",
+      "task": "Vazifa",
+      "version": "Versiya",
+      "calls": "Chaqiruvlar",
+      "tokens": "Tokenlar",
+      "cost": "Narxi",
+      "errors": "Xatolar"
     }
   }
 }

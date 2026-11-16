@@ -6,6 +6,7 @@ import { useErrorMessage, useT } from "@ihsp/i18n"
 import {
   Alert,
   AlertDescription,
+  Badge,
   Button,
   Card,
   CardContent,
@@ -85,19 +86,24 @@ export function LegalEditor({ state, onClose }: LegalEditorProps) {
   const [locale, setLocale] = useState<LegalEditorLocale>("uz")
   const [confirming, setConfirming] = useState(false)
   const kind: LegalKind = state.kind
+  const scope = state.scope
 
   const refresh = () => queryClient.invalidateQueries({ queryKey: keys.legal.all() })
   const save = useMutation({
     mutationFn: () =>
-      putAdminLegalDraft(kind, {
-        title: form.title,
-        body_markdown: form.body,
-        announcement: LEGAL_LOCALES.some((code) => form.announcement[code].trim() !== "") ? form.announcement : null,
-      }),
+      putAdminLegalDraft(
+        kind,
+        {
+          title: form.title,
+          body_markdown: form.body,
+          announcement: LEGAL_LOCALES.some((code) => form.announcement[code].trim() !== "") ? form.announcement : null,
+        },
+        scope,
+      ),
     onSuccess: refresh,
   })
   const publish = useMutation({
-    mutationFn: () => postAdminLegalPublish(kind),
+    mutationFn: () => postAdminLegalPublish(kind, scope),
     onSuccess: async () => {
       setConfirming(false)
       await refresh()
@@ -116,7 +122,10 @@ export function LegalEditor({ state, onClose }: LegalEditorProps) {
   return (
     <Card>
       <CardHeader>
-        <CardTitle>{t("editor.heading", { kind: t(`kinds.${kind}`) })}</CardTitle>
+        <CardTitle className="flex flex-wrap items-center gap-2">
+          {t("editor.heading", { kind: t(`kinds.${kind}`) })}
+          <Badge variant="outline">{t(`scopes.${scope}`)}</Badge>
+        </CardTitle>
       </CardHeader>
       <CardContent className="grid gap-4">
         <Tabs value={locale} onValueChange={(value) => setLocale(value as LegalEditorLocale)}>
@@ -166,8 +175,8 @@ export function LegalEditor({ state, onClose }: LegalEditorProps) {
       <ConfirmDialog
         open={confirming}
         onOpenChange={setConfirming}
-        title={t("publishTitle", { kind: t(`kinds.${kind}`) })}
-        description={t("publishText")}
+        title={t("publishTitle", { kind: t(`kinds.${kind}`), scope: t(`scopes.${scope}`) })}
+        description={t("publishText", { scope: t(`scopes.${scope}`) })}
         confirmLabel={t("publishConfirm")}
         destructive
         loading={publish.isPending}

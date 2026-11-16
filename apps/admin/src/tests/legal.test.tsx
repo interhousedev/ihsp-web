@@ -13,11 +13,26 @@ describe("legal documents page", () => {
     renderAdmin(<LegalPage />, { route: "/legal/" })
 
     const list = await screen.findByRole("list", { name: "Legal documents" })
-    await waitFor(() => expect(within(list).getAllByRole("listitem")).toHaveLength(4))
+    await waitFor(() => expect(within(list).getAllByRole("listitem")).toHaveLength(5))
     expect(within(list).getByText("Privacy policy")).toBeInTheDocument()
     expect(within(list).getByText("Draft v2")).toBeInTheDocument()
     await waitFor(() => expect(within(list).getByText("120")).toBeInTheDocument())
     expect(within(list).getByText("118")).toBeInTheDocument()
+  })
+
+  test("the app filter narrows the list to one app and shows the app of each document", async () => {
+    const { user } = renderAdmin(<LegalPage />, { route: "/legal/" })
+
+    const list = await screen.findByRole("list", { name: "Legal documents" })
+    await waitFor(() => expect(within(list).getAllByRole("listitem")).toHaveLength(5))
+    expect(within(list).getAllByText("Admission").length).toBeGreaterThan(0)
+    expect(within(list).getAllByText("All apps").length).toBe(4)
+
+    await user.click(screen.getByRole("combobox", { name: "App" }))
+    await user.click(await screen.findByRole("option", { name: "Admission" }))
+
+    await waitFor(() => expect(within(list).queryByText("All apps")).not.toBeInTheDocument())
+    expect(within(list).getByText("Admission: privacy policy")).toBeInTheDocument()
   })
 
   test("saves the draft with the three languages", async () => {
@@ -52,7 +67,7 @@ describe("legal documents page", () => {
     const { user } = renderAdmin(<LegalPage />, { route: "/legal/" })
 
     await user.click((await screen.findAllByRole("button", { name: "Edit" }))[0] as HTMLElement)
-    await user.click(await screen.findByRole("button", { name: "Publish" }))
+    await user.click(await screen.findByRole("button", { name: "Publish new version" }))
     expect(
       await screen.findByText("Every user must accept the new version again before they can continue."),
     ).toBeInTheDocument()
@@ -76,7 +91,7 @@ describe("legal documents page", () => {
     const { user } = renderAdmin(<LegalPage />, { route: "/legal/" })
 
     await user.click((await screen.findAllByRole("button", { name: "Edit" }))[0] as HTMLElement)
-    await user.click(await screen.findByRole("button", { name: "Publish" }))
+    await user.click(await screen.findByRole("button", { name: "Publish new version" }))
     await user.click(within(screen.getByRole("alertdialog")).getByRole("button", { name: "Publish" }))
 
     expect(await screen.findByText("Fill in the title and text in every language first.")).toBeInTheDocument()

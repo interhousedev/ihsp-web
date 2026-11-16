@@ -59,6 +59,7 @@ export function useNav(): { groups: NavGroup[] } {
             { title: t("logs"), url: "/logs/", icon: "warning" },
             { title: t("mcpActivity"), url: "/mcp-activity/", icon: "connectors" },
             { title: t("limits"), url: "/limits/", icon: "adjustments" },
+            { title: t("prompts"), url: "/prompts/", icon: "sparkles" },
             { title: t("devices"), url: "/devices/", icon: "laptop" },
             { title: t("vault"), url: "/vault/", icon: "lock" },
             { title: t("migration"), url: "/migration/", icon: "server" },

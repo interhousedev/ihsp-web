@@ -46,7 +46,8 @@
     "devices": "Devices",
     "excuses": "Excuses",
     "legal": "Legal documents",
-    "erasure": "Erasure requests"
+    "erasure": "Erasure requests",
+    "prompts": "AI prompts"
   },
   "shared": {
     "lessonList": "Lessons by date",
@@ -403,7 +404,9 @@
       "role": "Role",
       "allRoles": "Any role",
       "status": "Status",
-      "allStatuses": "Any status"
+      "allStatuses": "Any status",
+      "accountKind": "Account kind",
+      "allAccountKinds": "Any kind"
     },
     "roles": {
       "student": "Student",
@@ -416,7 +419,10 @@
       "save": "Save roles",
       "saved": "Roles of {name} saved",
       "confirmTitle": "Change roles?",
-      "confirmDescription": "The user is logged out everywhere. A new Administration member sets up a one-time code at next login."
+      "confirmDescription": "The user is logged out everywhere. A new Administration member sets up a one-time code at next login.",
+      "counselor": "Counselor",
+      "mentor": "Mentor",
+      "transcript_officer": "Transcript officer"
     },
     "status": {
       "active": "Active",
@@ -430,7 +436,9 @@
       "login": "Login",
       "roles": "Roles",
       "status": "Status",
-      "lastLogin": "Last login"
+      "lastLogin": "Last login",
+      "phone": "Phone",
+      "accountKind": "Account kind"
     },
     "detail": {
       "back": "Users & roles",
@@ -515,6 +523,32 @@
       "description": "Give this link to the user. It works like the reset link from the password reset and is shown only once.",
       "qrAlt": "QR code of the reset password link",
       "close": "Done"
+    },
+    "create": {
+      "open": "Create user",
+      "title": "Create user",
+      "description": "For staff and other accounts. Students come from EMIS and teachers have their own form.",
+      "lastName": "Last name",
+      "firstName": "First name",
+      "middleName": "Middle name",
+      "phone": "Phone",
+      "email": "Email (optional)",
+      "accountKind": "Account kind",
+      "roles": "Roles",
+      "cancel": "Cancel",
+      "submit": "Create",
+      "resultTitle": "User created",
+      "resultDescription": "{name} can sign in through this one-time invitation.",
+      "inviteLink": "Invitation link",
+      "inviteHint": "Send it to the user or let them scan the code. Shown once.",
+      "qr": "QR code of the invitation link",
+      "done": "Done",
+      "kinds": {
+        "school": "School",
+        "alumni": "Alumni",
+        "external": "External",
+        "staff": "Staff"
+      }
     }
   },
   "groups": {
@@ -1619,7 +1653,8 @@
         "smart": "Smart assistant",
         "notebooks": "Notebooks & Studio",
         "web_search": "Web search",
-        "lms": "LMS authoring"
+        "lms": "LMS authoring",
+        "admission": "Admission"
       },
       "value": "Value",
       "default": "Default: {value}",
@@ -1807,6 +1842,19 @@
       "lms_ai_max_tool_steps": {
         "label": "Author assistant tool steps",
         "hint": "Most model requests in one author assistant answer."
+      }
+    },
+    "admission": {
+      "title": "Admission settings",
+      "description": "Where applicants pick up their transcripts. The admission AI limits are in the editor above.",
+      "pickup": "Pickup location ({language})",
+      "save": "Save",
+      "saved": "Pickup location saved.",
+      "failed": "Could not save the pickup location.",
+      "languages": {
+        "uz": "Uzbek",
+        "ru": "Russian",
+        "en": "English"
       }
     }
   },
@@ -2373,7 +2421,10 @@
       "privacy": "Privacy policy",
       "terms": "Terms of use",
       "biometric": "Biometric data consent",
-      "ai": "AI processing consent"
+      "ai": "AI processing consent",
+      "admission_privacy": "Admission: privacy policy",
+      "admission_terms": "Admission: terms of use",
+      "admission_disclaimer": "Admission: disclaimer"
     },
     "draftBadge": "Draft v{version}",
     "version": "Published version",
@@ -2391,15 +2442,29 @@
       "saveDraft": "Save draft",
       "saving": "Saving…",
       "saved": "Draft saved.",
-      "publish": "Publish",
+      "publish": "Publish new version",
       "close": "Close"
     },
-    "publishTitle": "Publish {kind}?",
+    "publishTitle": "Publish {kind} for {scope}?",
     "publishText": "Every user must accept the new version again before they can continue.",
     "publishConfirm": "Publish",
     "errors": {
       "noDraft": "There is no draft to publish. Save a draft first."
-    }
+    },
+    "scopes": {
+      "id": "Sign-in (id)",
+      "sp": "Student portal",
+      "staff": "Staff portal",
+      "admin": "Administration",
+      "lms": "LMS",
+      "library": "Library",
+      "share": "Sharing",
+      "landing": "Landing page",
+      "admission": "Admission",
+      "global": "All apps"
+    },
+    "scopeFilter": "App",
+    "allScopes": "All apps"
   },
   "erasure": {
     "title": "Erasure requests",
@@ -2475,6 +2540,60 @@
       "noBots": "No enabled bot has announcements on.",
       "submit": "Send",
       "sent": "Sent to {count} recipients"
+    }
+  },
+  "prompts": {
+    "title": "AI prompts",
+    "description": "The texts the models are given, their versions and how each version performs.",
+    "list": {
+      "title": "Prompts",
+      "empty": "No prompts to edit.",
+      "overridden": "Edited"
+    },
+    "locales": {
+      "all": "All languages",
+      "uz": "Uzbek",
+      "ru": "Russian",
+      "en": "English"
+    },
+    "editor": {
+      "choose": "Choose a prompt to edit.",
+      "locale": "Language",
+      "text": "Prompt text",
+      "note": "Note (optional)",
+      "save": "Save as new version",
+      "saved": "Version {version} saved and active.",
+      "failed": "Could not save the prompt.",
+      "builtin": "Built-in",
+      "revert": "Revert to built-in",
+      "revertTitle": "Revert to the built-in text?",
+      "revertDescription": "The edited versions stay in the history; the built-in text becomes active.",
+      "revertConfirm": "Revert",
+      "reverted": "Reverted to the built-in text.",
+      "missingPlaceholders": "Missing placeholders: {list}"
+    },
+    "diff": {
+      "title": "Difference from the built-in text",
+      "same": "The text equals the built-in one."
+    },
+    "history": {
+      "title": "History",
+      "empty": "No saved versions yet.",
+      "version": "Version {version}",
+      "active": "Active",
+      "activate": "Activate",
+      "activateVersion": "Activate version {version}",
+      "activated": "Version {version} is active."
+    },
+    "analytics": {
+      "title": "Performance by version (30 days)",
+      "empty": "No calls in this period.",
+      "task": "Task",
+      "version": "Version",
+      "calls": "Calls",
+      "tokens": "Tokens",
+      "cost": "Cost",
+      "errors": "Errors"
     }
   }
 }

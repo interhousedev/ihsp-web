@@ -8,6 +8,7 @@ import { parseAsStringLiteral, useQueryState } from "nuqs"
 import { lazy, Suspense } from "react"
 import { QueryState } from "@ihsp/features-core"
 import { rangeOf, RANGES, todayIso, type RangeKey } from "../utils"
+import { AdmissionSettingsSection } from "./admission-settings-section"
 import { AiAccessSection } from "./ai-access-section"
 import { ExtensionsSection } from "./extensions-section"
 import { LimitsEditor } from "./limits-editor"
@@ -75,6 +76,7 @@ export function LimitsPage() {
       </div>
       <div className="grid gap-4 xl:grid-cols-2">
         <AiAccessSection />
+        <AdmissionSettingsSection />
       </div>
     </PageContainer>
   )

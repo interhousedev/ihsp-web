@@ -1,6 +1,14 @@
 "use client"
 
-import { getAdminUsers, keys, postAdminUserBlock, type AdminUser, type Role } from "@ihsp/api"
+import {
+  ACCOUNT_KINDS,
+  getAdminUsers,
+  keys,
+  postAdminUserBlock,
+  type AccountKind,
+  type AdminUser,
+  type Role,
+} from "@ihsp/api"
 import { useFormatters, useT } from "@ihsp/i18n"
 import { Badge, Button, ListToolbar, type ToolbarFilter } from "@ihsp/ui"
 import Link from "next/link"
@@ -17,14 +25,29 @@ import { col, selectCol } from "../../shared/utils/columns"
 import { downloadCsv } from "../../shared/utils/csv"
 import { fetchAllPages } from "../../shared/utils/fetch-all-pages"
 import { fullNameWithMiddle } from "../../shared/utils/names"
+import { RoleChips } from "./role-chips"
 import { userStatusParam } from "../../shared/utils/status-param"
 
-export const ROLES: readonly Role[] = ["student", "teacher", "admin", "lms_admin", "lms_creator", "librarian"]
-const FILTER_KEYS = ["query", "role", "status"] as const
+export const ROLES: readonly Role[] = [
+  "student",
+  "teacher",
+  "admin",
+  "lms_admin",
+  "lms_creator",
+  "librarian",
+  "counselor",
+  "mentor",
+  "transcript_officer",
+]
+const FILTER_KEYS = ["query", "role", "status", "account_kind"] as const
 const STATUSES = ["active", "pending_activation", "blocked", "deactivated"] as const
 
 function isRole(value: string | null): value is Role {
   return value !== null && (ROLES as readonly string[]).includes(value)
+}
+
+function isAccountKind(value: string | null): value is AccountKind {
+  return value !== null && (ACCOUNT_KINDS as readonly string[]).includes(value)
 }
 
 type Blocking = { users: AdminUser[]; clear: () => void }
@@ -55,6 +78,7 @@ export function UsersList() {
       query: filters.values.query ?? undefined,
       role: isRole(filters.values.role) ? filters.values.role : undefined,
       status: userStatusParam(filters.values.status),
+      account_kind: isAccountKind(filters.values.account_kind) ? filters.values.account_kind : undefined,
     }),
     [filters.values],
   )
@@ -78,6 +102,13 @@ export function UsersList() {
         label: t("filters.status"),
         allLabel: t("filters.allStatuses"),
         options: STATUSES.map((value) => ({ value, label: t(`status.${value}`) })),
+      },
+      {
+        kind: "select",
+        key: "account_kind",
+        label: t("filters.accountKind"),
+        allLabel: t("filters.allAccountKinds"),
+        options: ACCOUNT_KINDS.map((value) => ({ value, label: t(`create.kinds.${value}`) })),
       },
     ],
     [t],
@@ -106,20 +137,16 @@ export function UsersList() {
         { sort: fullNameWithMiddle },
       ),
       col<AdminUser>("login", t("columns.login"), (user) => user.login ?? "—", { sort: (user) => user.login }),
+      col<AdminUser>("phone", t("columns.phone"), (user) => user.phone ?? "—", { sort: (user) => user.phone }),
       col<AdminUser>(
-        "roles",
-        t("columns.roles"),
-        (user) => (
-          <span className="flex flex-wrap gap-1">
-            {user.roles.map((role) => (
-              <Badge key={role} variant={role === "admin" ? "default" : "outline"}>
-                {t(`roles.${role}`)}
-              </Badge>
-            ))}
-          </span>
-        ),
-        { sort: (user) => user.roles.map((role) => t(`roles.${role}`)).join(" ") },
+        "account_kind",
+        t("columns.accountKind"),
+        (user) => (user.account_kind ? t(`create.kinds.${user.account_kind}`) : "—"),
+        { sort: (user) => user.account_kind },
       ),
+      col<AdminUser>("roles", t("columns.roles"), (user) => <RoleChips roles={user.roles} />, {
+        sort: (user) => user.roles.map((role) => t(`roles.${role}`)).join(" "),
+      }),
       col<AdminUser>(
         "status",
         t("columns.status"),
@@ -143,10 +170,20 @@ export function UsersList() {
 
   function usersCsv(rows: AdminUser[]) {
     downloadCsv("users.csv", [
-      [t("columns.name"), t("columns.login"), t("columns.roles"), t("columns.status"), t("columns.lastLogin")],
+      [
+        t("columns.name"),
+        t("columns.login"),
+        t("columns.phone"),
+        t("columns.accountKind"),
+        t("columns.roles"),
+        t("columns.status"),
+        t("columns.lastLogin"),
+      ],
       ...rows.map((user) => [
         fullNameWithMiddle(user),
         user.login,
+        user.phone,
+        user.account_kind,
         user.roles.join(" "),
         user.status,
         user.last_login_at,

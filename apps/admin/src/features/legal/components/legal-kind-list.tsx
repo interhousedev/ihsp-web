@@ -1,28 +1,28 @@
 "use client"
 
-import type { LegalKind } from "@ihsp/api"
 import { useFormatters, useT } from "@ihsp/i18n"
 import { Badge, Button, Card, CardContent, CardHeader, CardTitle } from "@ihsp/ui"
-import type { LegalKindState } from "../utils"
+import type { LegalKindState, LegalRow } from "../utils"
 
 type LegalKindListProps = {
   states: readonly LegalKindState[]
-  selected: LegalKind | null
-  onSelect: (kind: LegalKind) => void
+  selected: LegalRow | null
+  onSelect: (row: LegalRow) => void
 }
 
-/** The four kinds with the current published version, its date, the draft status and the acceptance count. */
+/** The kinds, each for one app, with the current published version, its date, the draft status and the acceptance count. */
 export function LegalKindList({ states, selected, onSelect }: LegalKindListProps) {
   const t = useT("legal")
   const f = useFormatters()
   return (
     <ul className="grid gap-3 md:grid-cols-2" aria-label={t("list")}>
       {states.map((state) => (
-        <li key={state.kind}>
-          <Card data-selected={selected === state.kind}>
+        <li key={`${state.scope}:${state.kind}`}>
+          <Card data-selected={selected?.kind === state.kind && selected.scope === state.scope}>
             <CardHeader>
               <CardTitle className="flex flex-wrap items-center gap-2">
                 {t(`kinds.${state.kind}`)}
+                <Badge variant="outline">{t(`scopes.${state.scope}`)}</Badge>
                 {state.draft ? (
                   <Badge variant="secondary">{t("draftBadge", { version: state.draft.version })}</Badge>
                 ) : null}
@@ -47,7 +47,11 @@ export function LegalKindList({ states, selected, onSelect }: LegalKindListProps
               ) : (
                 <p className="text-muted-foreground">{t("notPublished")}</p>
               )}
-              <Button type="button" variant="outline" onClick={() => onSelect(state.kind)}>
+              <Button
+                type="button"
+                variant="outline"
+                onClick={() => onSelect({ kind: state.kind, scope: state.scope })}
+              >
                 {t("edit")}
               </Button>
             </CardContent>

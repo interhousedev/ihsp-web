@@ -101,6 +101,7 @@ const AUDIT_EVENT_KEYS = [
   "oauthClientVerified",
   "emisPasswordUpdated",
 ]
+const LEGAL_SCOPES = ["admin", "admission", "global", "id", "landing", "library", "lms", "share", "sp", "staff"]
 /** The shared features read their texts from the namespaces of the app that uses them. */
 const SOURCES = [
   "apps/admin/src",
@@ -350,6 +351,14 @@ describe("keys used in the code", () => {
         "controlSequence",
       ],
       "settings.languages.${locale}": ["uz", "ru", "en"],
+      "limits.admission.languages.${locale}": ["uz", "ru", "en"],
+      "users.create.kinds.${kind}": ["school", "alumni", "external", "staff"],
+      "users.create.kinds.${value}": ["school", "alumni", "external", "staff"],
+      "users.create.kinds.${user.account_kind}": ["school", "alumni", "external", "staff"],
+      "prompts.locales.${value}": ["all", "uz", "ru", "en"],
+      "legal.scopes.${state.scope}": LEGAL_SCOPES,
+      "legal.scopes.${scope}": LEGAL_SCOPES,
+      "legal.scopes.${value}": LEGAL_SCOPES,
       "settings.featureLabels.${key}": FEATURE_FLAGS,
       "settings.featureDescriptions.${key}": FEATURE_FLAGS,
       "settings.honours.rules.${key}": [

@@ -11,7 +11,15 @@ import { TOUCH } from "../../shared/utils/touch"
 import { userInvalidations } from "./block-actions"
 
 /** Roles an administrator may grant or revoke. Student and teacher come from EMIS and from teacher accounts. */
-const GRANTABLE: readonly Role[] = ["admin", "lms_admin", "lms_creator", "librarian"]
+const GRANTABLE: readonly Role[] = [
+  "admin",
+  "lms_admin",
+  "lms_creator",
+  "librarian",
+  "counselor",
+  "mentor",
+  "transcript_officer",
+]
 
 /**
  * `lms_admin` is offered to (and kept by) teachers and holders of `admin`; a course creator is a teacher or an

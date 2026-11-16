@@ -80,6 +80,47 @@ describe("users list", () => {
     expect(screen.getAllByText("Administration").length).toBeGreaterThan(0)
   })
 
+  test("creating a user shows the invite link, a copy button and a QR code", async () => {
+    let body: Record<string, unknown> | null = null
+    server.use(
+      http.post(apiUrl("/v1/admin/users"), async ({ request }) => {
+        body = (await request.json()) as Record<string, unknown>
+        return HttpResponse.json({ user: adminAdminUser, invite_url: "https://t.me/ihsp_bot?start=inv_abc" })
+      }),
+    )
+    const { user } = renderAdmin(<UsersPage />, { route: "/users/" })
+    await user.click(await screen.findByRole("button", { name: "Create user" }))
+
+    const dialog = await screen.findByRole("dialog")
+    setValue(within(dialog).getByLabelText(/^Last name/), "Karimov")
+    setValue(within(dialog).getByLabelText(/^First name/), "Aziz")
+    setValue(within(dialog).getByLabelText(/^Phone/), "+998901234567")
+    await user.click(within(dialog).getByRole("checkbox", { name: "Counselor" }))
+    await user.click(within(dialog).getByRole("button", { name: "Create" }))
+
+    await waitUntil(() => body !== null)
+    expect(body).toMatchObject({ last_name: "Karimov", first_name: "Aziz", roles: ["counselor"] })
+    const result = await screen.findByRole("dialog")
+    expect(within(result).getByRole("textbox", { name: "Invitation link" })).toHaveValue(
+      "https://t.me/ihsp_bot?start=inv_abc",
+    )
+    expect(within(result).getByRole("img", { name: "QR code of the invitation link" })).toBeInTheDocument()
+    expect(within(result).getByRole("button", { name: "Copy" })).toBeInTheDocument()
+  })
+
+  test("the account kind filter is sent to the API", async () => {
+    const kinds: Array<string | null> = []
+    server.use(
+      http.get(apiUrl("/v1/admin/users"), ({ request }) => {
+        kinds.push(new URL(request.url).searchParams.get("account_kind"))
+        return HttpResponse.json({ items: [adminStudentUser], total: 1, limit: 50, offset: 0 })
+      }),
+    )
+    renderAdmin(<UsersPage />, { route: "/users/?account_kind=alumni" })
+
+    await waitUntil(() => kinds.includes("alumni"))
+  })
+
   test("the OAuth clients tab verifies a client", async () => {
     let body: unknown
     server.use(
