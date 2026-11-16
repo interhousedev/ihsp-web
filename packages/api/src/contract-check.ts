@@ -12,7 +12,7 @@ import type { getAdminJobs, postAdminJobCancel } from "./endpoints/admin-jobs"
 import type { getAdminKnowledge, getAdminKnowledgeEntry, patchAdminKnowledge, postAdminKnowledge } from "./endpoints/admin-knowledge"
 import type { getAdminLogIssues } from "./endpoints/admin-logs"
 import type { getAdminMigration, postAdminMigrationRollback, postAdminMigrationStart } from "./endpoints/admin-migration"
-import type { activateAdminPrompt, getAdminPrompt, getAdminPromptAnalytics, getAdminPrompts, getAdmissionPickup, putAdminPrompt, putAdmissionPickup } from "./endpoints/admin-prompts"
+import type { activateAdminPrompt, getAdminPrompt, getAdminPromptAnalytics, getAdminPromptCalls, getAdminPrompts, getAdmissionPickup, putAdminPrompt, putAdmissionPickup } from "./endpoints/admin-prompts"
 import type { getAdminVaultStatus, postAdminVaultUnseal } from "./endpoints/admin-vault"
 import type { getAiChat, getAiChats, getAiProjectFiles, getAiProjects, getAiUsage, getAiWebSearch, patchAiChat, patchAiProject, postAiChatMessages, postAiChatRegenerate, postAiChatToolCallApprove, postAiChatToolCallReject, postAiChats, postAiProject } from "./endpoints/ai"
 import type { getAppMap } from "./endpoints/app-map"
@@ -73,7 +73,7 @@ import type { getWorkOffTemplates, patchWorkOff, postWorkOffTemplate, putWorkOff
 import type { AdminUsageParams, AiAccessBody, ExtensionBody, ExtensionsParams, LimitsBody } from "./types/admin-ai"
 import type { AdminFeedbackListParams, AdminFeedbackResponseInput, AdminFeedbackStatusPatch } from "./types/admin-feedback"
 import type { KnowledgeEntryInput, KnowledgeEntryPatch, KnowledgeParams } from "./types/admin-knowledge"
-import type { AdmissionPickupBody, PromptAnalyticsParams, PromptBody, PromptDetailParams } from "./types/admin-prompts"
+import type { AdmissionPickupBody, PromptAnalyticsParams, PromptBody, PromptCallsParams, PromptDetailParams } from "./types/admin-prompts"
 import type { AttachFileBody, ChatCreateBody, ChatMessageBody, ChatPatchBody, ChatsParams, MessageFeedbackBody, ProjectBody, ProjectPatchBody, ToolCallRejectBody, UsageParams } from "./types/ai"
 import type { AssessmentCreateBody, AssessmentPatchBody, AssessmentProposalBody, AssessmentsParams, PlannerParams, StaffAssessmentsParams } from "./types/assessments"
 import type { BotPostCreate, BotPostMove, BotPostPatch, BotPostReorder } from "./types/bot-posts"
@@ -291,6 +291,12 @@ declare const res_getAdminPromptAnalytics: Awaited<ReturnType<typeof getAdminPro
 export const response_getAdminPromptAnalytics: ResponseOf<"/v1/admin/ai/prompts/analytics", "get"> = res_getAdminPromptAnalytics
 declare const query_getAdminPromptAnalytics: PromptAnalyticsParams
 export const query_ok_getAdminPromptAnalytics: QueryOf<"/v1/admin/ai/prompts/analytics", "get"> = query_getAdminPromptAnalytics
+
+// GET /v1/admin/ai/prompts/analytics/calls — getAdminPromptCalls
+declare const res_getAdminPromptCalls: Awaited<ReturnType<typeof getAdminPromptCalls>>
+export const response_getAdminPromptCalls: ResponseOf<"/v1/admin/ai/prompts/analytics/calls", "get"> = res_getAdminPromptCalls
+declare const query_getAdminPromptCalls: PromptCallsParams
+export const query_ok_getAdminPromptCalls: QueryOf<"/v1/admin/ai/prompts/analytics/calls", "get"> = query_getAdminPromptCalls
 
 // GET /v1/admission/officer/settings — getAdmissionPickup
 declare const res_getAdmissionPickup: Awaited<ReturnType<typeof getAdmissionPickup>>

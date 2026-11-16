@@ -13,7 +13,7 @@ import type { getAdminJobs, postAdminJobCancel } from "./endpoints/admin-jobs"
 import type { getAdminKnowledge, getAdminKnowledgeEntry, patchAdminKnowledge, postAdminKnowledge } from "./endpoints/admin-knowledge"
 import type { getAdminLogIssues } from "./endpoints/admin-logs"
 import type { getAdminMigration, postAdminMigrationRollback, postAdminMigrationStart } from "./endpoints/admin-migration"
-import type { activateAdminPrompt, getAdminPrompt, getAdminPromptAnalytics, getAdminPrompts, getAdmissionPickup, putAdminPrompt, putAdmissionPickup } from "./endpoints/admin-prompts"
+import type { activateAdminPrompt, getAdminPrompt, getAdminPromptAnalytics, getAdminPromptCalls, getAdminPrompts, getAdmissionPickup, putAdminPrompt, putAdmissionPickup } from "./endpoints/admin-prompts"
 import type { getAdminVaultStatus, postAdminVaultUnseal } from "./endpoints/admin-vault"
 import type { getAiChat, getAiChats, getAiProjectFiles, getAiProjects, getAiUsage, getAiWebSearch, patchAiChat, patchAiProject, postAiChatMessages, postAiChatRegenerate, postAiChatToolCallApprove, postAiChatToolCallReject, postAiChats, postAiProject } from "./endpoints/ai"
 import type { getAppMap } from "./endpoints/app-map"
@@ -188,6 +188,10 @@ export const served_activateAdminPrompt: Awaited<ReturnType<typeof activateAdmin
 // GET /v1/admin/ai/prompts/analytics — getAdminPromptAnalytics
 declare const gen_getAdminPromptAnalytics: ResponseOf<"/v1/admin/ai/prompts/analytics", "get">
 export const served_getAdminPromptAnalytics: Awaited<ReturnType<typeof getAdminPromptAnalytics>> = gen_getAdminPromptAnalytics
+
+// GET /v1/admin/ai/prompts/analytics/calls — getAdminPromptCalls
+declare const gen_getAdminPromptCalls: ResponseOf<"/v1/admin/ai/prompts/analytics/calls", "get">
+export const served_getAdminPromptCalls: Awaited<ReturnType<typeof getAdminPromptCalls>> = gen_getAdminPromptCalls
 
 // GET /v1/admission/officer/settings — getAdmissionPickup
 declare const gen_getAdmissionPickup: ResponseOf<"/v1/admission/officer/settings", "get">

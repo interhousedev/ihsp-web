@@ -37,6 +37,8 @@ export type ApiRequest = {
   body?: unknown
   /** Sent as multipart (sets no `Content-Type`, the browser adds the boundary). */
   formData?: FormData
+  /** Sent as is with its own type as `Content-Type` (raw audio uploads). */
+  blob?: Blob
   /** `bearer` (default) sends `Authorization` and retries once after a refresh on 401; `none` sends no token and never retries. */
   auth?: "bearer" | "none"
   /** `include` only for the cookie endpoints under `/v1/oauth/`. */
@@ -57,7 +59,7 @@ export type ApiRequest = {
   baseUrl?: string
 }
 
-export type CallOptions = Omit<ApiRequest, "method" | "path" | "body" | "formData">
+export type CallOptions = Omit<ApiRequest, "method" | "path" | "body" | "formData" | "blob">
 
 export type ApiClient = {
   request<T>(request: ApiRequest): Promise<T>
@@ -137,6 +139,9 @@ export function createApiClient(options: ApiClientOptions): ApiClient {
     let body: BodyInit | undefined
     if (request.formData) {
       body = request.formData
+    } else if (request.blob) {
+      headers.set("Content-Type", request.blob.type || "application/octet-stream")
+      body = request.blob
     } else if (request.body !== undefined) {
       headers.set("Content-Type", "application/json")
       body = JSON.stringify(request.body)

@@ -51,6 +51,7 @@ export * from "./types/excuses"
 export * from "./types/login-cues"
 export * from "./types/client-config"
 export * from "./types/feedback"
+export * from "./types/admission"
 
 export * from "./endpoints/oauth"
 export * from "./endpoints/certificates"

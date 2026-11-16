@@ -139,6 +139,7 @@ export const keys = {
       all: () => ["admin", "ai", "prompts"] as const,
       detail: (filters?: object) => ["admin", "ai", "prompts", "detail", params(filters)] as const,
       analytics: (filters?: object) => ["admin", "ai", "prompts", "analytics", params(filters)] as const,
+      calls: (filters?: object) => ["admin", "ai", "prompts", "calls", params(filters)] as const,
     },
     admissionPickup: () => ["admin", "admission", "pickup"] as const,
     broadcasts: {

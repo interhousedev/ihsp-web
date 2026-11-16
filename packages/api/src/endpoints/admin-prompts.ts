@@ -9,6 +9,8 @@ import type {
   PromptAnalyticsParams,
   PromptAnalyticsResponse,
   PromptBody,
+  PromptCallsParams,
+  PromptCallsResponse,
   PromptDetail,
   PromptDetailParams,
   PromptRef,
@@ -70,6 +72,16 @@ export const getAdminPromptAnalyticsQuery = (params?: PromptAnalyticsParams) =>
   queryOptions({
     queryKey: keys.admin.prompts.analytics(params),
     queryFn: ({ signal }) => getAdminPromptAnalytics(params, { signal }),
+  })
+
+/** GET /v1/admin/ai/prompts/analytics/calls — admin; the latest calls of a task (metadata only). */
+export function getAdminPromptCalls(params: PromptCallsParams, opts?: RequestOptions): Promise<PromptCallsResponse> {
+  return api.get<PromptCallsResponse>("/v1/admin/ai/prompts/analytics/calls", { ...opts, query: params })
+}
+export const getAdminPromptCallsQuery = (params: PromptCallsParams) =>
+  queryOptions({
+    queryKey: keys.admin.prompts.calls(params),
+    queryFn: ({ signal }) => getAdminPromptCalls(params, { signal }),
   })
 
 /** GET /v1/admission/officer/settings — the pickup location per locale. */

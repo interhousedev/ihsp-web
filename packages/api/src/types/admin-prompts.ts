@@ -12,6 +12,10 @@ export type PromptBody = Schemas["PromptBody"]
 export type PromptStats = Schemas["PromptStatsOut"]
 export type PromptAnalyticsResponse = Schemas["PromptAnalyticsResponse"]
 
+export type PromptCall = Schemas["PromptCallOut"]
+export type PromptCallsResponse = Schemas["PromptCallsResponse"]
+export type PromptCallsParams = { task: string; version?: number; limit?: number }
+
 /** A prompt locale: "" applies to every locale. */
 export type PromptLocale = NonNullable<PromptBody["locale"]>
 
