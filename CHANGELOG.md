@@ -7,6 +7,7 @@ All notable changes to this project are documented here. The format follows [Kee
 ### Added
 
 - admission.ihsu.uz: a new app for university applications: profile setup with background questions, activities and honors with AI review and interview, future plans, the university chooser, documents and deadlines, and staff views for counselors, transcript officers and mentors.
+- admission.ihsu.uz workflow: the journey path, preferences questionnaire, Discover swipe deck, chances tab, university logos and covers, career quiz saved per user, documents checklist priorities, mentoring switches, voice input disclosure, the admission icon, and separate mobile, tablet and desktop layouts.
 - Admin: a users page that creates staff accounts, admin-editable AI prompts with versions and analytics, and legal documents per app with forced re-acceptance.
 - Share: a guest page for admission help requests.
 
