@@ -9,6 +9,7 @@ University admission preparation: profile, activities and honors, plans, univers
 - Every API request carries `X-IHSP-App: admission` (from `APP_NAME` in `/env.js`).
 - Option lists, limits and flags come from `GET /v1/admission/config`, never from this app.
 - UI text is in `messages/<locale>.json` for uz, ru and en.
+- `/career/` connects interests and activities to professions, majors/minors and an evidence-backed distinctive strength. Microphone recording requires explicit consent; audio is sent for transcription and discarded, while the editable transcript becomes an answer. Recording stops after 60 seconds.
 
 ## Run
 

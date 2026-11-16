@@ -1,7 +1,7 @@
 "use client"
 
-import { StepPage } from "../../features/steps/components/step-page"
+import { CoursesPage } from "../../features/courses/components/courses-page"
 
 export default function Page() {
-  return <StepPage page="courses" icon="courses" />
+  return <CoursesPage />
 }
