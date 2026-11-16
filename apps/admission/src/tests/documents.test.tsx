@@ -1,7 +1,7 @@
 /** Officer Done and Undo, the student checklist, and a document upload. */
 import { describe, expect, it } from "bun:test"
 import { apiUrl, server } from "@ihsp/test-utils"
-import { fireEvent, screen, waitFor } from "@testing-library/react"
+import { fireEvent, screen, waitFor, within } from "@testing-library/react"
 import userEvent from "@testing-library/user-event"
 import { http, HttpResponse } from "msw"
 import { ChecklistSection } from "../features/documents/components/checklist-section"
@@ -53,6 +53,9 @@ describe("transcript officer queue", () => {
     await screen.findByText("Aziza Karimova")
 
     await userEvent.click(screen.getByRole("button", { name: "Done" }))
+    const dialog = await screen.findByRole("alertdialog")
+    expect(bodies).toEqual([])
+    await userEvent.click(within(dialog).getByRole("button", { name: "Done" }))
     await waitFor(() => expect(bodies).toEqual([{ lock_version: 3 }]))
     const undo = await screen.findByRole("button", { name: "Undo" })
 
@@ -127,5 +130,25 @@ describe("document upload", () => {
     fireEvent.change(screen.getByTestId("file-input"), { target: { files: [file] } })
     await waitFor(() => expect(name).toBe("passport.pdf"))
     expect(kind as unknown).toBe("other")
+  })
+  it("takes the upload rules from the config, warns about scanning and blocks a big file", async () => {
+    let posted = false
+    server.use(
+      http.get(apiUrl("/v1/admission/config"), () =>
+        HttpResponse.json({ limits: { upload_max_bytes: 1048576 }, options: { upload_mime: ["application/pdf"] } }),
+      ),
+      http.post(apiUrl("/v1/admission/documents"), () => {
+        posted = true
+        return HttpResponse.json({})
+      }),
+    )
+    renderAdmissionApp(<UploadForm />)
+    await screen.findByText(/not scanned for viruses/)
+    expect(screen.getByText(/PDF, up to 1 MB/)).toBeTruthy()
+    expect(screen.getByTestId("file-input").getAttribute("accept")).toBe("application/pdf")
+    const big = new File([new Uint8Array(2 * 1048576)], "big.pdf", { type: "application/pdf" })
+    fireEvent.change(screen.getByTestId("file-input"), { target: { files: [big] } })
+    await Bun.sleep(50)
+    expect(posted).toBe(false)
   })
 })

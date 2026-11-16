@@ -40,12 +40,16 @@ describe("AdmissionShell", () => {
       </AdmissionShell>,
     )
     expect(await screen.findByText("page body")).toBeInTheDocument()
-    expect(labels().slice(0, 6)).toEqual([
+    expect(labels().slice(0, 10)).toEqual([
       "Home",
+      "Journey",
       "Profile",
       "Activities & honors",
       "Future plans",
+      "Tasks",
       "Universities",
+      "Discover",
+      "Essays",
       "Documents & deadlines",
     ])
     expect(labels()).toContain("Courses")
@@ -54,7 +58,7 @@ describe("AdmissionShell", () => {
 
   it("shows a teacher the staff group", async () => {
     renderAdmissionApp(
-      <AdmissionShell>
+      <AdmissionShell anyone>
         <p>page body</p>
         <NavProbe />
       </AdmissionShell>,
@@ -62,6 +66,37 @@ describe("AdmissionShell", () => {
     )
     await screen.findByText("page body")
     expect(labels()).toContain("Caseload")
+  })
+})
+
+describe("staff nav by role", () => {
+  async function navFor(role: "mentor" | "counselor" | "admin" | "transcript_officer") {
+    renderAdmissionApp(
+      <AdmissionShell anyone>
+        <p>page body</p>
+        <NavProbe />
+      </AdmissionShell>,
+      { session: { user: { ...userMe, roles: [role] } } },
+    )
+    await screen.findByText("page body")
+    return labels()
+  }
+
+  it("hides the settings from a mentor", async () => {
+    const items = await navFor("mentor")
+    expect(items).toContain("Caseload")
+    expect(items).not.toContain("Admission management")
+  })
+
+  it("shows counselors and admins the settings", async () => {
+    expect(await navFor("counselor")).toContain("Admission management")
+  })
+
+  it("shows an officer only documents and transcripts", async () => {
+    const items = await navFor("transcript_officer")
+    expect(items).toContain("Transcripts")
+    expect(items).not.toContain("Caseload")
+    expect(items).not.toContain("Admission management")
   })
 })
 

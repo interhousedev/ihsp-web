@@ -1,11 +1,11 @@
 /** Caseload filters, saved views and the comment visibility toggle. */
 import { describe, expect, it } from "bun:test"
-import { apiUrl, server, userMe } from "@ihsp/test-utils"
+import { apiUrl, server, testRouter, userMe } from "@ihsp/test-utils"
 import { fireEvent, screen, waitFor } from "@testing-library/react"
 import userEvent from "@testing-library/user-event"
 import { http, HttpResponse } from "msw"
 import { CommentsPanel } from "../features/comments/components/comments-panel"
-import { CaseloadContent } from "../features/staff/components/caseload-page"
+import { CaseloadContent, CaseloadPage } from "../features/staff/components/caseload-page"
 import { renderAdmissionApp } from "./helpers"
 
 const counselor = { session: { user: { ...userMe, roles: ["counselor" as const] } } }
@@ -154,5 +154,14 @@ describe("comment visibility", () => {
     renderAdmissionApp(<CommentsPanel target={target} />, counselor)
     const pills = await screen.findAllByTestId("comment-visibility")
     expect(pills.map((p) => p.textContent)).toEqual(["Staff only", "Visible to the student"])
+  })
+})
+
+describe("caseload page", () => {
+  it("sends a transcript officer to the transcripts queue", async () => {
+    renderAdmissionApp(<CaseloadPage />, {
+      session: { user: { ...userMe, roles: ["transcript_officer" as const] } },
+    })
+    await waitFor(() => expect(testRouter.replace).toHaveBeenCalledWith("/staff/transcripts/"))
   })
 })

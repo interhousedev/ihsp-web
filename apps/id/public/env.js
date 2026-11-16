@@ -8,6 +8,7 @@ window.__ENV__ = {
   ADMIN_URL: "http://localhost:3004",
   LMS_URL: "http://localhost:3005",
   LIBRARY_URL: "http://localhost:3008",
+  ADMISSION_URL: "http://localhost:3009",
   SHARE_URL: "http://localhost:3006/ai",
   SHORT_LINKS_URL: "http://localhost:3006",
   ROOMS_URL: "http://localhost:8000",
