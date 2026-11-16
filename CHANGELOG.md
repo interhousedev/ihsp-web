@@ -4,6 +4,12 @@ All notable changes to this project are documented here. The format follows [Kee
 
 ## [Unreleased]
 
+### Added
+
+- admission.ihsu.uz: a new app for university applications: profile setup with background questions, activities and honors with AI review and interview, future plans, the university chooser, documents and deadlines, and staff views for counselors, transcript officers and mentors.
+- Admin: a users page that creates staff accounts, admin-editable AI prompts with versions and analytics, and legal documents per app with forced re-acceptance.
+- Share: a guest page for admission help requests.
+
 ## [1.6.3] - 2026-11-16
 
 ### Added

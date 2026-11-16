@@ -31,6 +31,8 @@ Use oxlint and oxfmt, never prettier or eslint. Run `bun run test` only for the 
 
 `packages/api/openapi.json` is a vendored copy of `iht-backend/openapi/openapi.json`. When the backend changes a route or schema, run `bun run sync:openapi` (it reads `${IHSP_BACKEND_DIR:-../iht-backend}/openapi/openapi.json`), then fix the endpoint types, MSW handlers and fixtures that no longer match, and commit the document and the generated files together. Do not edit generated files by hand. Report backend deviations instead of working around them.
 
+When a web change depends on a backend change that touches the database (a migration, a new column or table), the backend's `scripts/check_migrations.sh` must have passed before the web work is called done. The local CI (`scripts/ci_local.sh`, stage `contract`) runs `bun run contract:check` after regenerating the client; keep it there.
+
 ## Working rules
 
 - **Use parallel subagents.** Work fast: split independent work among parallel Sonnet subagents (about 7 to 10 at most), each with a precise, self-contained task and its own set of files.

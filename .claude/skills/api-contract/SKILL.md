@@ -20,3 +20,4 @@ Then fix endpoint types, MSW handlers and fixtures that no longer match, and com
 - Errors are `application/problem+json` with a stable `type`; map the type to an i18n key.
 - If the backend document is wrong, report the deviation to the backend; do not work around it with casts.
 - A removed or renamed field is a breaking change: search all apps and `packages/features-core` before syncing.
+- When the backend change touches the database, `iht-backend/scripts/check_migrations.sh` must have passed before the web work is done (see CLAUDE.md).

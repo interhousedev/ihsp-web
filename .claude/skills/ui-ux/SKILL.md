@@ -18,7 +18,6 @@ Students mostly use phones, often inside the Telegram webview. Design for that f
 
 ## Layout
 - **Mobile first at 360 px.** Build the 360 px layout, then widen. Check 360, 768 and 1280 px.
-- **Tables become cards below 768 px.** Use the data table from `@ihsp/ui`, which switches to a card list; never ship a horizontally scrolling table on phones.
 - **Touch targets at least 44 px** (icon buttons included). Phones get the bottom bar; desktop gets the sidebar.
 - **One overflow menu on phones.** When an app passes `bottomNav` or `bottomBar` to `AppShell`, the sidebar toggle is hidden under 768 px and the bottom bar's "More" sheet holds every other destination and a platforms section for moving between apps. "More" lights up when the current page has no tab, so one slot is always active. The id app has a bottom bar too; admin has none.
 - **One name, one icon.** A destination uses the same icon in every app, and two destinations in one app never share an icon. `packages/ui/src/__tests__/nav-routes.test.ts` checks this, label parity and that every nav link is a route. Staff keep "Контроли" / "Nazoratlar" on purpose: that page covers ПК and ИК.
