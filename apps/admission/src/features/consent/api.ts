@@ -1,6 +1,15 @@
 // Admission consent, legal re-acceptance and privacy endpoints (shapes follow packages/api/openapi.json).
 
-import { api, keys, queryOptions } from "@ihsp/api"
+import {
+  type AdmissionAudit,
+  type AdmissionConsent,
+  type AdmissionDataExport,
+  type AdmissionErased,
+  type AdmissionPurposeList,
+  api,
+  keys,
+  queryOptions,
+} from "@ihsp/api"
 
 export type AdmissionLegalKind =
   | "privacy"
@@ -35,30 +44,12 @@ export type PendingItem = {
 }
 export type Pending = { items: PendingItem[] }
 
-export type PurposeGrant = {
-  purpose: string
-  method: string
-  given_at: string
-  withdrawn_at: string | null
-  active: boolean
-}
-export type Consent = { grants: PurposeGrant[]; non_ai_mode: boolean }
-
-export type AuditRecord = {
-  at: string
-  actor_kind: string
-  action: string
-  object_type: string | null
-  object_id: string | null
-  staff_role_id: string | null
-}
-export type Audit = { items: AuditRecord[] }
-export type DataExport = {
-  generated_at: string
-  tables: Record<string, Record<string, unknown>[]>
-  access_log: AuditRecord[]
-}
-export type Erased = { deleted: Record<string, number> }
+export type Consent = AdmissionConsent
+export type PurposeGrant = Consent["grants"][number]
+export type AuditRecord = AdmissionAudit["items"][number]
+export type Audit = AdmissionAudit
+export type DataExport = AdmissionDataExport
+export type Erased = AdmissionErased
 
 export const consentKeys = {
   consent: () => ["admission", "consent"] as const,
@@ -78,11 +69,11 @@ export function getConsent(signal?: AbortSignal): Promise<Consent> {
 export const consentQuery = () =>
   queryOptions({ queryKey: consentKeys.consent(), queryFn: ({ signal }) => getConsent(signal) })
 
-export type Purpose = { id: string; title: Record<string, string>; text: Record<string, string> }
+export type Purpose = AdmissionPurposeList["items"][number]
 export const purposesQuery = () =>
   queryOptions({
     queryKey: ["admission", "consent", "purposes"] as const,
-    queryFn: ({ signal }) => api.get<{ items: Purpose[] }>("/v1/admission/consent/purposes", { signal }),
+    queryFn: ({ signal }) => api.get<AdmissionPurposeList>("/v1/admission/consent/purposes", { signal }),
     staleTime: 5 * 60_000,
   })
 

@@ -1,13 +1,15 @@
 "use client"
 
 import { useErrorMessage, useT } from "@ihsp/i18n"
-import { Button, PageHeader, Skeleton, StateView, StatusBadge } from "@ihsp/ui"
+import { Button, Icons, PageHeader, Skeleton, StateView, StatusBadge } from "@ihsp/ui"
 import { useState } from "react"
 import { toast } from "sonner"
-import { CASELOAD_ROLES } from "../../../config/nav"
+import { ScrollFade } from "../../../components/scroll-fade"
+import { CURATOR_ROLES } from "../../../config/nav"
 import { AdmissionShell } from "../../shell/components/admission-shell"
 import { useProposals, useReviewProposal, type Proposal, type ProposalStatus } from "../api"
 import { ProposeDialog } from "./propose-dialog"
+import { QueryError } from "../../shell/components/query-error"
 
 const TONES = { pending: "neutral", approved: "success", rejected: "destructive" } as const
 
@@ -66,17 +68,26 @@ export function CatalogStaffBody() {
   const query = useProposals(filter)
   let body
   if (query.isPending) body = <Skeleton className="h-32 w-full" />
-  else if (query.isError) body = <StateView state="error" onRetry={() => void query.refetch()} />
+  else if (query.isError) body = <QueryError error={query.error} onRetry={() => void query.refetch()} />
   else if (query.data.items.length === 0)
-    body = <StateView state="empty" title={t("emptyTitle")} description={t("emptyText")} />
+    body = (
+      <StateView
+        state="empty"
+        icon={<Icons.inbox className="size-8" />}
+        title={t("emptyTitle")}
+        description={t("emptyText")}
+      />
+    )
   else {
     const canReview = query.data.can_review
     body = (
-      <ul className="flex flex-col gap-2">
-        {query.data.items.map((item) => (
-          <Row key={item.id} item={item} canReview={canReview} />
-        ))}
-      </ul>
+      <ScrollFade maxHeight="calc(100dvh - 20rem)">
+        <ul className="flex flex-col gap-2">
+          {query.data.items.map((item) => (
+            <Row key={item.id} item={item} canReview={canReview} />
+          ))}
+        </ul>
+      </ScrollFade>
     )
   }
   return (
@@ -115,7 +126,7 @@ export function CatalogStaffBody() {
 
 export function CatalogStaffPage() {
   return (
-    <AdmissionShell roles={[...CASELOAD_ROLES]}>
+    <AdmissionShell roles={[...CURATOR_ROLES]}>
       <CatalogStaffBody />
     </AdmissionShell>
   )

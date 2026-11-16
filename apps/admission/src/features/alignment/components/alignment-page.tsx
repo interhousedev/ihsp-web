@@ -66,7 +66,7 @@ export function AlignmentPage() {
         icon="lock"
         title={t("consentTitle")}
         action={
-          <Link href="/consent/" className={buttonVariants()}>
+          <Link href="/settings/#consent" className={buttonVariants()}>
             {t("goConsent")}
           </Link>
         }

@@ -16,6 +16,16 @@ import { useState, type FormEvent } from "react"
 import { toast } from "sonner"
 import { useCreateProposal, useInstitutionSearch, type InstitutionHit, type ProposalKind } from "../api"
 
+/** Empty is fine (the field is optional); anything else must be an https URL. */
+function isHttps(value: string): boolean {
+  if (value.trim() === "") return true
+  try {
+    return new URL(value.trim()).protocol === "https:"
+  } catch {
+    return false
+  }
+}
+
 const KINDS: ProposalKind[] = ["institution", "scholarship"]
 const PROVIDERS = ["institution", "government", "foundation"] as const
 const BASES = ["merit", "need", "government", "sports", "work_study"] as const
@@ -33,16 +43,25 @@ export function ProposeDialog({ open, onOpenChange }: { open: boolean; onOpenCha
   const [basis, setBasis] = useState<string>(BASES[0])
   const [sourceUrl, setSourceUrl] = useState("")
   const [note, setNote] = useState("")
+  const [logoUrl, setLogoUrl] = useState("")
+  const [coverUrl, setCoverUrl] = useState("")
   const [q, setQ] = useState("")
   const [target, setTarget] = useState<InstitutionHit | null>(null)
   const hits = useInstitutionSearch(kind === "institution" && !target ? q : "")
 
   const fields: Record<string, unknown> =
     kind === "institution"
-      ? { name, country: country.toUpperCase(), city }
+      ? {
+          name,
+          country: country.toUpperCase(),
+          city,
+          logo_url: logoUrl.trim(),
+          cover_url: coverUrl.trim(),
+        }
       : { name, provider, basis, country: country.toUpperCase() }
   const filled = Object.values(fields).some((value) => value !== "")
-  const ready = filled && sourceUrl.trim() !== "" && (target !== null || name.trim() !== "")
+  const mediaValid = kind !== "institution" || (isHttps(logoUrl) && isHttps(coverUrl))
+  const ready = mediaValid && filled && sourceUrl.trim() !== "" && (target !== null || name.trim() !== "")
 
   async function submit(event: FormEvent) {
     event.preventDefault()
@@ -169,6 +188,32 @@ export function ProposeDialog({ open, onOpenChange }: { open: boolean; onOpenCha
             </Select>
           </>
         )}
+        {kind === "institution" ? (
+          <>
+            {(
+              [
+                ["logoLabel", logoUrl, setLogoUrl],
+                ["coverLabel", coverUrl, setCoverUrl],
+              ] as const
+            ).map(([label, value, set]) => (
+              <label key={label} className="flex flex-col gap-1 text-sm">
+                {t(label)}
+                <Input
+                  type="url"
+                  inputMode="url"
+                  value={value}
+                  aria-invalid={!isHttps(value)}
+                  onChange={(e) => set(e.target.value)}
+                />
+                {!isHttps(value) ? (
+                  <span role="alert" className="text-destructive text-xs">
+                    {t("httpsError")}
+                  </span>
+                ) : null}
+              </label>
+            ))}
+          </>
+        ) : null}
         <label className="flex flex-col gap-1 text-sm">
           {t("sourceLabel")}
           <Input type="url" inputMode="url" value={sourceUrl} onChange={(e) => setSourceUrl(e.target.value)} />

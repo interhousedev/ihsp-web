@@ -41,6 +41,9 @@ export function DocumentRow({ doc }: { doc: AdmissionDocument }) {
           {doc.reject_note ? `: ${doc.reject_note}` : ""}
         </p>
       )}
+      {doc.versions.find((v) => v.version === doc.current_version)?.scan_status === "unscanned" && (
+        <p className="text-muted-foreground text-xs">{t("unscannedFile")}</p>
+      )}
       <div className="flex flex-wrap gap-2">
         {doc.can_download ? (
           <Button type="button" variant="outline" size="sm" onClick={() => void open()}>

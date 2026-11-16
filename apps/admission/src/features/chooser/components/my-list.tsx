@@ -1,12 +1,15 @@
 "use client"
 
 import { useErrorMessage, useT } from "@ihsp/i18n"
-import { Alert, AlertDescription, Button, Icons, Reveal, SortableList, StateView, Textarea } from "@ihsp/ui"
+import { Alert, AlertDescription, cn, Icons, Pill, Reveal, SortableList, StateView, Textarea, Button } from "@ihsp/ui"
 import Link from "next/link"
 import { useState } from "react"
+import { AsideCard, SplitLayout } from "../../../components/lib/split-layout"
+import { UnderlineTabs } from "../../../components/lib/underline-tabs"
+import { ScrollFade } from "../../../components/scroll-fade"
 import { useList, usePatchEntry, useRemoveEntry } from "../hooks"
 import { useWorkflow } from "../../../lib/config"
-import type { Bucket, ListEntry } from "../types"
+import type { Bucket, ListEntry, Round } from "../types"
 import { AffordabilityPanel } from "./affordability-panel"
 import { EstimateView } from "./estimate-view"
 import { useOptionLabel } from "./option-label"
@@ -19,12 +22,13 @@ function EntryRow({ entry }: { entry: ListEntry }) {
   const errorMessage = useErrorMessage()
   const bucketLabel = useOptionLabel("bucket")
   const roundLabel = useOptionLabel("round")
+  const countryLabel = useOptionLabel("country")
   const workflow = useWorkflow()
   const patch = usePatchEntry()
   const remove = useRemoveEntry()
   const [notes, setNotes] = useState(entry.notes ?? "")
   const [open, setOpen] = useState(false)
-  const change = (body: { bucket?: Bucket; round?: ListEntry["round"]; notes?: string }) =>
+  const change = (body: { bucket?: Bucket; round?: Round; notes?: string }) =>
     patch.mutate({ id: entry.id, body: { lock_version: entry.lock_version, ...body } })
   const error = patch.error ?? remove.error
 
@@ -39,7 +43,7 @@ function EntryRow({ entry }: { entry: ListEntry }) {
             {entry.institution.name}
           </Link>
           <p className="text-muted-foreground text-xs">
-            {[entry.institution.city, entry.institution.country].filter(Boolean).join(", ")}
+            {[entry.institution.city, countryLabel(entry.institution.country)].filter(Boolean).join(", ")}
           </p>
         </div>
         <div className="flex flex-wrap items-center gap-2">
@@ -60,7 +64,7 @@ function EntryRow({ entry }: { entry: ListEntry }) {
             aria-label={t("list.round")}
             className={SELECT}
             value={entry.round}
-            onChange={(event) => change({ round: event.target.value as ListEntry["round"] })}
+            onChange={(event) => change({ round: event.target.value as Round })}
           >
             {workflow.rounds.map(({ id: round }) => (
               <option key={round} value={round}>
@@ -114,12 +118,21 @@ function EntryRow({ entry }: { entry: ListEntry }) {
   )
 }
 
+const GROUP_TONE = { reach: "warning", target: "primary", safety: "success", none: "neutral" } as const
+const GROUP_TINT = {
+  reach: "bg-warning/10",
+  target: "bg-primary/10",
+  safety: "bg-success/10",
+  none: "bg-muted",
+} as const
+
 /** The student's list in three buckets. The order inside a bucket is the student's own; it is never sorted by chance. */
 export function MyList() {
   const t = useT("chooser")
   const list = useList()
   const { buckets } = useWorkflow()
   const [order, setOrder] = useState<Record<string, string[]>>({})
+  const [tab, setTab] = useState("")
   if (list.isLoading) return <StateView state="loading" rows={3} />
   if (list.isError) return <StateView state="error" error={list.error} onRetry={() => void list.refetch()} />
   const entries = list.data ?? []
@@ -147,41 +160,78 @@ export function MyList() {
   const sorted = (key: string, items: ListEntry[]) => {
     const ids = order[key] ?? []
     const rank = (entry: ListEntry) => (ids.includes(entry.id) ? ids.indexOf(entry.id) : ids.length)
-    return [...items].sort((a, b) => rank(a) - rank(b))
+    return items.toSorted((a, b) => rank(a) - rank(b))
   }
   const noSafety = groups.find((group) => group.key === "safety")?.entries.length === 0
 
+  const visible = groups.filter((group) => group.key !== "none" || group.entries.length > 0)
+  const active =
+    visible.find((group) => group.key === tab) ?? visible.find((group) => group.entries.length > 0) ?? visible[0]
+
   return (
-    <div className="flex flex-col gap-6">
-      {noSafety ? (
-        <Alert>
-          <Icons.info aria-hidden />
-          <AlertDescription>{t("list.noSafety")}</AlertDescription>
-        </Alert>
-      ) : null}
-      {groups
-        .filter((group) => group.key !== "none" || group.entries.length > 0)
-        .map((group) => (
-          <section key={group.key} className="flex flex-col gap-2" aria-label={t(`list.groups.${group.key}`)}>
-            <h3 className="text-sm font-semibold">
-              {t(`list.groups.${group.key}`)}{" "}
-              <span className="text-muted-foreground font-normal">({group.entries.length})</span>
-            </h3>
-            {group.entries.length === 0 ? (
-              <p className="text-muted-foreground text-xs">{t("list.groupEmpty")}</p>
-            ) : (
+    <SplitLayout
+      aside={
+        <>
+          <AsideCard title={t("list.view.summaryTitle")} icon={<Icons.homework aria-hidden className="size-4" />}>
+            <Pill tone="primary" className="self-start">
+              {t("list.view.total", { count: entries.length })}
+            </Pill>
+            <ul className="flex flex-col gap-2">
+              {visible.map((group) => (
+                <li key={group.key} className={cn("flex items-start gap-3 rounded-lg p-2", GROUP_TINT[group.key])}>
+                  <span className="text-lg font-semibold tabular-nums">{group.entries.length}</span>
+                  <span className="flex min-w-0 flex-col">
+                    <span className="text-sm font-medium">{t(`list.groups.${group.key}`)}</span>
+                    <span className="text-muted-foreground text-xs">{t(`list.view.hint.${group.key}`)}</span>
+                  </span>
+                </li>
+              ))}
+            </ul>
+          </AsideCard>
+          {noSafety ? (
+            <Alert>
+              <Icons.info aria-hidden />
+              <AlertDescription>{t("list.noSafety")}</AlertDescription>
+            </Alert>
+          ) : null}
+        </>
+      }
+    >
+      <div className="flex flex-col gap-4">
+        <UnderlineTabs
+          label={t("list.view.tabs")}
+          value={active.key}
+          onValueChange={setTab}
+          tabs={visible.map((group) => ({
+            value: group.key,
+            label: t(`list.groups.${group.key}`),
+            count: group.entries.length,
+            tone: GROUP_TONE[group.key],
+          }))}
+        />
+        <section aria-label={t(`list.groups.${active.key}`)} className="flex flex-col gap-2">
+          {active.entries.length === 0 ? (
+            <StateView
+              state="empty"
+              icon={<Icons.homework aria-hidden />}
+              title={t(`list.groups.${active.key}`)}
+              description={t("list.groupEmpty")}
+            />
+          ) : (
+            <ScrollFade maxHeight="75vh">
               <SortableList
-                items={sorted(group.key, group.entries)}
-                label={t(`list.groups.${group.key}`)}
+                items={sorted(active.key, active.entries)}
+                label={t(`list.groups.${active.key}`)}
                 handleLabel={t("list.drag")}
                 onReorder={(next) =>
-                  setOrder((current) => ({ ...current, [group.key]: next.map((entry) => entry.id) }))
+                  setOrder((current) => ({ ...current, [active.key]: next.map((entry) => entry.id) }))
                 }
                 renderItem={(entry) => <EntryRow entry={entry} />}
               />
-            )}
-          </section>
-        ))}
-    </div>
+            </ScrollFade>
+          )}
+        </section>
+      </div>
+    </SplitLayout>
   )
 }

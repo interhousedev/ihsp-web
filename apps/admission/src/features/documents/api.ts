@@ -39,6 +39,20 @@ export type ChecklistItem = {
   due_utc: string | null
   document_id: string | null
   source_url: string | null
+  important: boolean
+  urgent_override: boolean | null
+  institution_name?: string | null
+  app_path: string | null
+  urgent: boolean
+  quadrant: "do" | "schedule" | "delegate" | "drop"
+}
+
+export type ChecklistPatch = {
+  status?: string
+  document_id?: string | null
+  important?: boolean
+  urgent_override?: boolean | null
+  source_url?: string | null
 }
 
 export const DOCUMENTS_KEY = ["admission", "documents"] as const
@@ -78,7 +92,7 @@ export function attachDocument(id: string, listEntryId: string) {
   })
 }
 
-export function patchChecklistItem(id: string, body: { status?: string; document_id?: string | null }) {
+export function patchChecklistItem(id: string, body: ChecklistPatch) {
   return getApiClient().patch<ChecklistItem>(`${BASE}/checklist/${encodeURIComponent(id)}`, body)
 }
 
@@ -86,6 +100,13 @@ export function useDocuments() {
   return useQuery({
     queryKey: DOCUMENTS_KEY,
     queryFn: () => getApiClient().get<AdmissionDocument[]>(`${BASE}/documents`),
+  })
+}
+
+export function useStudentChecklist(studentId: string) {
+  return useQuery({
+    queryKey: [...CHECKLIST_KEY, studentId],
+    queryFn: () => getApiClient().get<ChecklistItem[]>(`${BASE}/checklist?student_id=${encodeURIComponent(studentId)}`),
   })
 }
 
@@ -138,8 +159,7 @@ export function useReviewDocument() {
 export function usePatchChecklist() {
   const invalidate = useInvalidate()
   return useMutation({
-    mutationFn: ({ id, ...body }: { id: string; status?: string; document_id?: string | null }) =>
-      patchChecklistItem(id, body),
+    mutationFn: ({ id, ...body }: { id: string } & ChecklistPatch) => patchChecklistItem(id, body),
     onSuccess: invalidate,
   })
 }

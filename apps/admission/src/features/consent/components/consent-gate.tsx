@@ -99,7 +99,11 @@ export function AdmissionConsentGate() {
         items: items.map(({ kind, version, app_scope }) => ({ kind, version, app_scope })),
         guardian_attested: guardian,
       }),
-    onSuccess: (remaining) => queryClient.setQueryData(keys.legal.pending(), remaining),
+    onSuccess: (remaining) => {
+      queryClient.setQueryData(keys.legal.pending(), remaining)
+      // Everything fetched while the documents were pending failed with 403: load it again.
+      void queryClient.invalidateQueries()
+    },
     onError: (error) => {
       setAttempt((value) => value + 1)
       // A newer version was published meanwhile: show the fresh list instead of accepting a stale one.
@@ -108,6 +112,9 @@ export function AdmissionConsentGate() {
       }
     },
   })
+
+  const guardianMissing =
+    accept.isError && isApiError(accept.error) && accept.error.type === "legal/guardian-attestation-required"
 
   if (!authenticated || items.length === 0) return null
 
@@ -135,10 +142,13 @@ export function AdmissionConsentGate() {
             />
           ))}
         </ul>
-        <div className="flex items-start gap-2.5">
+        <div
+          className={`flex items-start gap-2.5 rounded-md border p-3 ${guardianMissing ? "border-destructive" : "border-foreground/30"}`}
+        >
           <Checkbox
-            className="mt-0.5"
+            className="mt-0.5 border-foreground/60 bg-background"
             aria-labelledby={guardianId}
+            aria-invalid={guardianMissing}
             checked={guardian}
             disabled={accept.isPending}
             onCheckedChange={(value) => setGuardian(value === true)}

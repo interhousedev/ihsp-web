@@ -12,7 +12,7 @@ export type Facets = {
 }
 
 function distinct(values: Iterable<string>): string[] {
-  return [...new Set(values)].sort((a, b) => a.localeCompare(b))
+  return [...new Set(values)].toSorted((a, b) => a.localeCompare(b))
 }
 
 function strings(value: unknown): string[] {
@@ -21,12 +21,13 @@ function strings(value: unknown): string[] {
   return []
 }
 
+const factPresent = (key: string) => (item: Institution) => {
+  const value = item.facts[key]?.value
+  return value !== null && value !== undefined && value !== ""
+}
+
 export function deriveFacets(items: Institution[]): Facets {
   const has = (test: (item: Institution) => boolean) => items.some(test)
-  const factPresent = (key: string) => (item: Institution) => {
-    const value = item.facts[key]?.value
-    return value !== null && value !== undefined && value !== ""
-  }
   const empty = new Set<FilterKey>()
   if (!has(factPresent("city_type"))) empty.add("cityType")
   if (!has(factPresent("study_type"))) empty.add("studyType")

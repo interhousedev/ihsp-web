@@ -19,13 +19,14 @@ export function ScholarshipsView() {
   const config = useAdmissionConfig()
   const { facets } = useFacets()
   const basisLabel = useOptionLabel("scholarshipBasis")
+  const countryLabel = useOptionLabel("country")
   const [country, setCountry] = useState("")
   const [basis, setBasis] = useState("")
   const query = useScholarships({ ...(country ? { country } : {}), ...(basis ? { basis } : {}) })
   return (
-    <div className="flex flex-col gap-4">
+    <div className="flex min-w-0 flex-col gap-4">
       <div className="grid gap-3 sm:grid-cols-2">
-        <div className="flex flex-col gap-1.5">
+        <div className="flex min-w-0 flex-col gap-1.5">
           <Label htmlFor="s-country">{t("filters.country")}</Label>
           <select
             id="s-country"
@@ -36,12 +37,12 @@ export function ScholarshipsView() {
             <option value="">{t("filters.any")}</option>
             {(facets?.countries ?? []).map((value) => (
               <option key={value} value={value}>
-                {value}
+                {countryLabel(value)}
               </option>
             ))}
           </select>
         </div>
-        <div className="flex flex-col gap-1.5">
+        <div className="flex min-w-0 flex-col gap-1.5">
           <Label htmlFor="s-basis">{t("scholarships.basis")}</Label>
           <select id="s-basis" className={SELECT} value={basis} onChange={(event) => setBasis(event.target.value)}>
             <option value="">{t("filters.any")}</option>

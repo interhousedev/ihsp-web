@@ -9,6 +9,7 @@ import { AdmissionShell } from "../../shell/components/admission-shell"
 import { downloadDocument, useReviewDocument, useStaffDocuments, type AdmissionDocument } from "../api"
 import { DocumentStatus } from "./document-status"
 import { RejectDialog } from "./reject-dialog"
+import { QueryError } from "../../shell/components/query-error"
 
 const FILTERS = ["none", "accepted", "rejected"] as const
 
@@ -61,7 +62,7 @@ export function StaffDocumentsPage() {
   const query = useStaffDocuments(filter)
   let body
   if (query.isPending) body = <Skeleton className="h-32 w-full" />
-  else if (query.isError) body = <StateView state="error" onRetry={() => void query.refetch()} />
+  else if (query.isError) body = <QueryError error={query.error} onRetry={() => void query.refetch()} />
   else if (query.data.length === 0) body = <StateView state="empty" title={t("queueEmpty")} />
   else
     body = (

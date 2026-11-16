@@ -15,6 +15,8 @@ export function coverage(item: Pick<Scholarship, "coverage_min" | "coverage_max"
 export function ScholarshipList({ items }: { items: Scholarship[] }) {
   const t = useT("chooser")
   const basisLabel = useOptionLabel("scholarshipBasis")
+  const countryLabel = useOptionLabel("country")
+  const coverLabel = useOptionLabel("fact")
   if (items.length === 0)
     return (
       <StateView
@@ -27,7 +29,10 @@ export function ScholarshipList({ items }: { items: Scholarship[] }) {
   return (
     <ul className="flex flex-col gap-3" aria-label={t("scholarships.title")}>
       {items.map((item) => (
-        <li key={item.id} className="bg-card border-hairline-strong rounded-card flex flex-col gap-2 border p-4">
+        <li
+          key={item.id}
+          className="bg-card border-hairline-strong rounded-card flex min-w-0 flex-col gap-2 overflow-hidden border p-4 [overflow-wrap:anywhere]"
+        >
           <div className="flex flex-wrap items-start justify-between gap-2">
             <div>
               <h3 className="text-sm font-semibold">{item.name}</h3>
@@ -39,10 +44,10 @@ export function ScholarshipList({ items }: { items: Scholarship[] }) {
           </div>
           <div className="flex flex-wrap gap-2">
             {item.basis ? <Pill tone="primary">{basisLabel(item.basis)}</Pill> : null}
-            {item.country ? <Pill>{item.country}</Pill> : null}
+            {item.country ? <Pill>{countryLabel(item.country)}</Pill> : null}
             {item.cycle ? <Pill>{item.cycle}</Pill> : null}
             {item.covers.map((cover) => (
-              <Pill key={cover}>{cover}</Pill>
+              <Pill key={cover}>{coverLabel(cover)}</Pill>
             ))}
           </div>
           {item.url ? (

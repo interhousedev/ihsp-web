@@ -1,14 +1,29 @@
 "use client"
 
 import { useErrorMessage, useT } from "@ihsp/i18n"
-import { Button, ConfirmDialog, PageHeader, Skeleton, StateView, StatusBadge } from "@ihsp/ui"
+import {
+  Alert,
+  AlertDescription,
+  Button,
+  ConfirmDialog,
+  cn,
+  Icons,
+  PageHeader,
+  Skeleton,
+  StateView,
+  StatusBadge,
+} from "@ihsp/ui"
 import { useState } from "react"
+import { AsideCard, HeadingIcon, SplitLayout } from "../../../components/lib/split-layout"
+import { UnderlineTabs } from "../../../components/lib/underline-tabs"
+import { ScrollFade } from "../../../components/scroll-fade"
 import { toast } from "sonner"
-import { CASELOAD_ROLES } from "../../../config/nav"
+import { CURATOR_ROLES } from "../../../config/nav"
 import { AdmissionShell } from "../../shell/components/admission-shell"
 import { useRemoveDeadline, useStaffDeadlines, type Deadline } from "../api"
 import { CreateDeadlineDialog } from "./create-deadline-dialog"
 import { DeadlineDialog } from "./deadline-dialog"
+import { QueryError } from "../../shell/components/query-error"
 
 function Row({ item }: { item: Deadline }) {
   const t = useT("deadlines")
@@ -17,15 +32,23 @@ function Row({ item }: { item: Deadline }) {
   const [editing, setEditing] = useState(false)
   const [removing, setRemoving] = useState(false)
   return (
-    <li className="bg-card flex flex-wrap items-center justify-between gap-2 rounded-card border p-3">
-      <div className="flex flex-col">
-        <span className="font-medium">
-          {item.round} {item.cycle}
-        </span>
-        <span className="text-muted-foreground text-xs">{item.local_date ?? t("noDate")}</span>
+    <li
+      className={cn(
+        "flex flex-wrap items-center justify-between gap-2 rounded-card border p-3",
+        item.status === "confirmed" ? "bg-success/10" : "bg-warning/10",
+      )}
+    >
+      <div className="flex items-center gap-3">
+        <Icons.calendarEvent aria-hidden className="text-muted-foreground size-5 shrink-0" />
+        <div className="flex flex-col">
+          <span className="font-medium">
+            {item.round} {item.cycle}
+          </span>
+          <span className="text-muted-foreground text-xs">{item.local_date ?? t("noDate")}</span>
+        </div>
       </div>
       <div className="flex items-center gap-2">
-        <StatusBadge tone={item.status === "confirmed" ? "success" : "neutral"} label={t(`status.${item.status}`)} />
+        <StatusBadge tone={item.status === "confirmed" ? "success" : "warning"} label={t(`status.${item.status}`)} />
         <Button type="button" variant="outline" size="sm" onClick={() => setEditing(true)}>
           {t("edit")}
         </Button>
@@ -56,23 +79,33 @@ export function StaffDeadlinesPage() {
   const t = useT("deadlines")
   const query = useStaffDeadlines()
   const [creating, setCreating] = useState(false)
+  const [tab, setTab] = useState("all")
+  const items = query.data ?? []
+  const confirmed = items.filter((item) => item.status === "confirmed")
+  const pending = items.filter((item) => item.status !== "confirmed")
+  const undated = items.filter((item) => item.local_date === null).length
+  const shown = tab === "confirmed" ? confirmed : tab === "pending" ? pending : items
   let body
   if (query.isPending) body = <Skeleton className="h-32 w-full" />
-  else if (query.isError) body = <StateView state="error" onRetry={() => void query.refetch()} />
-  else if (query.data.length === 0) body = <StateView state="empty" title={t("staffEmpty")} />
+  else if (query.isError) body = <QueryError error={query.error} onRetry={() => void query.refetch()} />
+  else if (shown.length === 0)
+    body = <StateView state="empty" icon={<Icons.calendar aria-hidden />} title={t("staffEmpty")} />
   else
     body = (
-      <ul className="flex flex-col gap-2">
-        {query.data.map((item) => (
-          <Row key={item.id} item={item} />
-        ))}
-      </ul>
+      <ScrollFade maxHeight="70vh">
+        <ul className="grid gap-2 md:grid-cols-2 xl:grid-cols-1 2xl:grid-cols-2">
+          {shown.map((item) => (
+            <Row key={item.id} item={item} />
+          ))}
+        </ul>
+      </ScrollFade>
     )
   return (
-    <AdmissionShell roles={[...CASELOAD_ROLES]}>
-      <div className="mx-auto flex w-full max-w-3xl flex-col gap-6 p-4 md:p-6">
+    <AdmissionShell roles={[...CURATOR_ROLES]}>
+      <div className="mx-auto flex w-full max-w-6xl flex-col gap-6 p-4 md:p-6">
         <PageHeader
           title={t("staffTitle")}
+          back={<HeadingIcon name="calendar" />}
           actions={
             <Button type="button" size="sm" onClick={() => setCreating(true)}>
               {t("createButton")}
@@ -80,7 +113,44 @@ export function StaffDeadlinesPage() {
           }
         />
         {creating && <CreateDeadlineDialog open onOpenChange={setCreating} />}
-        {body}
+        <SplitLayout
+          aside={
+            <>
+              <AsideCard title={t("view.summaryTitle")} icon={<Icons.calendarEvent aria-hidden className="size-4" />}>
+                <div className="grid grid-cols-2 gap-2">
+                  <div className="bg-success/10 flex flex-col rounded-lg p-3">
+                    <span className="text-lg font-semibold tabular-nums">{confirmed.length}</span>
+                    <span className="text-muted-foreground text-xs">{t("status.confirmed")}</span>
+                  </div>
+                  <div className="bg-warning/10 flex flex-col rounded-lg p-3">
+                    <span className="text-lg font-semibold tabular-nums">{pending.length}</span>
+                    <span className="text-muted-foreground text-xs">{t("view.pending")}</span>
+                  </div>
+                </div>
+              </AsideCard>
+              {undated > 0 ? (
+                <Alert>
+                  <Icons.warning aria-hidden />
+                  <AlertDescription>{t("view.undated", { count: undated })}</AlertDescription>
+                </Alert>
+              ) : null}
+            </>
+          }
+        >
+          <div className="flex flex-col gap-4">
+            <UnderlineTabs
+              label={t("view.tabs")}
+              value={tab}
+              onValueChange={setTab}
+              tabs={[
+                { value: "all", label: t("view.all"), count: items.length, tone: "neutral" },
+                { value: "confirmed", label: t("status.confirmed"), count: confirmed.length, tone: "success" },
+                { value: "pending", label: t("view.pending"), count: pending.length, tone: "warning" },
+              ]}
+            />
+            {body}
+          </div>
+        </SplitLayout>
       </div>
     </AdmissionShell>
   )

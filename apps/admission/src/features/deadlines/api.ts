@@ -1,49 +1,21 @@
 "use client"
 
-import { getApiClient } from "@ihsp/api"
+import {
+  type AdmissionDeadline,
+  type AdmissionDeadlineIn,
+  type AdmissionDeadlinePatchIn,
+  type AdmissionMilestone,
+  type AdmissionReminderPrefs,
+  getApiClient,
+} from "@ihsp/api"
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query"
 
 const BASE = "/v1/admission"
 
-export type Milestone = {
-  id: string
-  list_entry_id: string
-  kind: string
-  due_utc: string | null
-  predicted: boolean
-  institution_id: string
-  institution_name: string
-}
-
-export type Deadline = {
-  id: string
-  institution_id: string
-  cycle: number
-  round: string
-  program_id: string | null
-  precision: string
-  source_text: string | null
-  source_tz: string | null
-  local_date: string | null
-  cutoff_time: string | null
-  instant_utc: string | null
-  binding: boolean
-  applies_to: string | null
-  status: string
-  version: number
-}
-
-export type DeadlineBody = {
-  status?: string | null
-  precision?: string | null
-  source_text?: string | null
-  local_date?: string | null
-  cutoff_time?: string | null
-  source_tz?: string | null
-  binding?: boolean | null
-}
-
-export type ReminderPrefs = { offsets_days: number[]; channels: string[]; quiet_from: string; quiet_to: string }
+export type Milestone = AdmissionMilestone
+export type Deadline = AdmissionDeadline
+export type DeadlineBody = AdmissionDeadlinePatchIn
+export type ReminderPrefs = AdmissionReminderPrefs
 
 export const DEADLINES_KEY = ["admission", "deadlines"] as const
 export const PREFS_KEY = ["admission", "reminder-prefs"] as const
@@ -89,7 +61,7 @@ export function useRemoveDeadline() {
   })
 }
 
-export type DeadlineCreateBody = DeadlineBody & { institution_id: string; cycle: number; round: string }
+export type DeadlineCreateBody = AdmissionDeadlineIn
 export type InstitutionHit = { id: string; name: string; country: string }
 
 export function useInstitutionSearch(q: string) {

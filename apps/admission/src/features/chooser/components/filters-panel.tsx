@@ -57,6 +57,8 @@ function Select({
   )
 }
 
+const identity = (value: string) => value
+
 /** The catalog filters as a form: nothing is searched until "Apply". Options come from the config and the catalog. */
 export function FiltersPanel({
   filters,
@@ -71,10 +73,11 @@ export function FiltersPanel({
   const config = useAdmissionConfig()
   const cityLabel = useOptionLabel("cityType")
   const aidLabel = useOptionLabel("aid")
+  const countryLabel = useOptionLabel("country")
+  const studyLabel = useOptionLabel("studyType")
   const [draft, setDraft] = useState(filters)
   const set = <K extends FilterKey>(key: K, value: Filters[K]) => setDraft((current) => ({ ...current, [key]: value }))
   const noData = (key: FilterKey) => facets?.empty.has(key) ?? false
-  const identity = (value: string) => value
   const cityTypes = configOptions(config.data, "city_types").filter((value) => value !== "any")
 
   return (
@@ -91,7 +94,7 @@ export function FiltersPanel({
           id="f-country"
           value={draft.country}
           options={facets?.countries ?? []}
-          labelOf={identity}
+          labelOf={countryLabel}
           onChange={(v) => set("country", v)}
         />
       </Field>
@@ -118,7 +121,7 @@ export function FiltersPanel({
           id="f-study"
           value={draft.studyType}
           options={facets?.studyTypes ?? []}
-          labelOf={identity}
+          labelOf={studyLabel}
           onChange={(v) => set("studyType", v)}
         />
       </Field>

@@ -1,6 +1,6 @@
 "use client"
 
-import { useErrorMessage, useT } from "@ihsp/i18n"
+import { useT } from "@ihsp/i18n"
 import {
   Button,
   Icons,
@@ -34,7 +34,6 @@ export function dataLessFilters(active: FilterKey[], empty: Set<FilterKey> | und
 
 export function SearchView() {
   const t = useT("chooser")
-  const errorMessage = useErrorMessage()
   const router = useRouter()
   const pathname = usePathname()
   const params = useSearchParams()
@@ -84,10 +83,10 @@ export function SearchView() {
     )
   else
     results = (
-      <div className="flex flex-col gap-3">
-        <ul className="grid gap-3 lg:grid-cols-2" aria-label={t("results")}>
+      <div className="flex min-w-0 flex-col gap-3">
+        <ul className="grid min-w-0 gap-3 lg:grid-cols-2" aria-label={t("results")}>
           {items.map((institution) => (
-            <li key={institution.id}>
+            <li key={institution.id} className="min-w-0">
               <InstitutionCard institution={institution} />
             </li>
           ))}
@@ -106,7 +105,7 @@ export function SearchView() {
     )
 
   return (
-    <div className="grid gap-6 md:grid-cols-[16rem_1fr]">
+    <div className="grid gap-6 md:grid-cols-[16rem_minmax(0,1fr)]">
       {isMobile ? null : <aside className="flex flex-col gap-3">{panel}</aside>}
       <div className="flex min-w-0 flex-col gap-4">
         <form
