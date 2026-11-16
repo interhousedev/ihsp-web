@@ -4,7 +4,7 @@
 # the iht-backend repo scripts/local_up.sh builds the apps one at a time on the host and packs the result:
 #
 #   cd web && bun install --frozen-lockfile
-#   for app in id sp staff admin lms share library landing; do bun run --filter "./apps/$app" build; done
+#   for app in id sp staff admin lms share library admission landing; do bun run --filter "./apps/$app" build; done
 #   bun deploy/csp-hash.ts               # per-page script-src <meta> (same step as deploy/Dockerfile)
 #   docker build -f deploy/Dockerfile.prebuilt -t ihsp-web:local .
 #
@@ -47,6 +47,7 @@ COPY apps/staff/out /srv/staff
 COPY apps/admin/out /srv/admin
 COPY apps/lms/out /srv/lms
 COPY apps/library/out /srv/library
+COPY apps/admission/out /srv/admission
 COPY apps/landing/out /srv/landing
 COPY apps/share/out /srv/share/ai
 

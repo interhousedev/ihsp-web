@@ -91,7 +91,17 @@ describe("buildCspMeta", () => {
 
 describe("apps", () => {
   it("hashes the exports of every app, the library and the landing included", () => {
-    expect([...APPS].toSorted()).toEqual(["admin", "id", "landing", "library", "lms", "share", "sp", "staff"])
+    expect([...APPS].toSorted()).toEqual([
+      "admin",
+      "admission",
+      "id",
+      "landing",
+      "library",
+      "lms",
+      "share",
+      "sp",
+      "staff",
+    ])
   })
 
   it("adds a directive to the page policy of the library only", () => {

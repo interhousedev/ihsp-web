@@ -83,7 +83,21 @@ describe("Docker build inputs", () => {
   })
 
   it("nginx site configs exist", () => {
-    const sites = ["default", "sp", "app", "id", "share", "staff", "admin", "lms", "library", "api", "mcp", "root"]
+    const sites = [
+      "default",
+      "sp",
+      "app",
+      "id",
+      "share",
+      "staff",
+      "admin",
+      "lms",
+      "library",
+      "admission",
+      "api",
+      "mcp",
+      "root",
+    ]
     for (const site of sites) {
       expect(fs.existsSync(path.join(sitesDir, `${site}.conf`))).toBe(true)
     }
@@ -122,6 +136,12 @@ describe("Docker build inputs", () => {
     expect(dockerfile).not.toMatch(/\/etc\/nginx\/(conf\.d|snippets)\/?\s*$/m)
   })
 
+  it("both dockerfiles put the admission export into /srv/admission and the prebuilt context allows it", () => {
+    expect(read("Dockerfile")).toContain("COPY --from=builder /app/apps/admission/out /srv/admission\n")
+    expect(read("Dockerfile.prebuilt")).toContain("COPY apps/admission/out /srv/admission\n")
+    expect(read("Dockerfile.prebuilt.dockerignore")).toContain("!apps/admission/out\n")
+  })
+
   it("both dockerfiles put the library export into /srv/library and the prebuilt context allows it", () => {
     expect(read("Dockerfile")).toContain("COPY --from=builder /app/apps/library/out /srv/library\n")
     expect(read("Dockerfile.prebuilt")).toContain("COPY apps/library/out /srv/library\n")
@@ -133,7 +153,7 @@ describe("Docker build inputs", () => {
   })
 
   it("both dockerfiles place every app in the same directory", () => {
-    for (const app of ["id", "sp", "staff", "admin", "lms", "share", "library", "landing"]) {
+    for (const app of ["id", "sp", "staff", "admin", "lms", "share", "library", "admission", "landing"]) {
       const target = app === "share" ? "/srv/share/ai" : `/srv/${app}`
       expect(read("Dockerfile")).toContain(`COPY --from=builder /app/apps/${app}/out ${target}\n`)
       expect(read("Dockerfile.prebuilt")).toContain(`COPY apps/${app}/out ${target}\n`)
@@ -145,7 +165,9 @@ describe("Docker build inputs", () => {
       .split("\n")
       .filter((l) => l && !l.startsWith("#"))
     expect(rules[0]).toBe("*")
-    const apps = ["id", "sp", "staff", "admin", "lms", "share", "library", "landing"].map((a) => `!apps/${a}/out`)
+    const apps = ["id", "sp", "staff", "admin", "lms", "share", "library", "admission", "landing"].map(
+      (a) => `!apps/${a}/out`,
+    )
     expect(new Set(rules.slice(1))).toEqual(new Set(["!deploy", ...apps]))
   })
 
@@ -196,6 +218,7 @@ describe("Docker build inputs", () => {
       "admin.conf": "admin",
       "lms.conf": "lms",
       "library.conf": "library",
+      "admission.conf": "admission",
       "root.conf": "landing",
       "app.conf": "app-env",
       "share.conf": "share/ai",
@@ -750,6 +773,22 @@ describe.skipIf(!haveTools)("entrypoint.sh rendering", () => {
     expect(run.envJs("library")).toContain('LIBRARY_URL: "https://library.example.test"')
     expect(run.envJs("sp")).toContain('LIBRARY_URL: "https://library.example.test"')
     expect(run.envJs("app-env")).toContain('LIBRARY_URL: "https://library.example.test"')
+  })
+
+  it("renders the admission host, URL, client and X-IHSP-App name", () => {
+    const run = runEntrypoint({
+      APP_HOST_ADMISSION: "admission.example.test",
+      IHSP_WEB_ADMISSION_URL: "https://admission.example.test",
+    })
+    expect(run.exitCode).toBe(0)
+    expect(run.conf("admission.conf")).toContain("server_name admission.example.test;")
+    expect(run.conf("admission.conf")).toContain("root /srv/admission;")
+    expect(run.envJs("admission")).toContain('OAUTH_CLIENT_ID: "admission"')
+    expect(run.envJs("admission")).toContain('APP_NAME: "admission"')
+    expect(run.envJs("admission")).toContain('APP_MODE: "sp"')
+    expect(run.envJs("sp")).toContain('ADMISSION_URL: "https://admission.example.test"')
+    expect(run.envJs("app-env")).toContain('APP_NAME: "sp"')
+    expect(run.envJs("share/ai")).toContain('APP_NAME: "share"')
   })
 
   it("renders nothing with a leftover ${...}", () => {

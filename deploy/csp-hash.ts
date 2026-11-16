@@ -16,7 +16,7 @@ import * as crypto from "node:crypto"
 import * as fs from "node:fs"
 import * as path from "node:path"
 
-export const APPS = ["id", "sp", "staff", "admin", "lms", "share", "library", "landing"] as const
+export const APPS = ["id", "sp", "staff", "admin", "lms", "share", "library", "admission", "landing"] as const
 
 /**
  * Directives some apps add to their page policy, after `script-src`.

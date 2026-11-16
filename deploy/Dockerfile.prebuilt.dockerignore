@@ -7,5 +7,6 @@
 !apps/admin/out
 !apps/lms/out
 !apps/library/out
+!apps/admission/out
 !apps/landing/out
 !apps/share/out

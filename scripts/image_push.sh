@@ -63,7 +63,7 @@ if [ "$skip_apps" -eq 0 ]; then
         *) app_version=1.0.0 ;;
     esac
     [ -d node_modules ] || bun install --frozen-lockfile
-    for app in id sp staff admin lms share library; do
+    for app in id sp staff admin lms share library admission; do
         echo "==> building $app (app version $app_version)"
         NEXT_TELEMETRY_DISABLED=1 NEXT_PUBLIC_APP_VERSION=$app_version bun run --filter "./apps/$app" build > /dev/null
     done

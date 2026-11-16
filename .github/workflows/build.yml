@@ -87,7 +87,7 @@ jobs:
           else
             export NEXT_PUBLIC_APP_VERSION="1.0.0"
           fi
-          for app in id sp staff admin lms share library landing; do
+          for app in id sp staff admin lms share library admission landing; do
             echo "::group::build $app"
             bun run --filter "./apps/$app" build
             echo "::endgroup::"

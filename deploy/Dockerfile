@@ -64,6 +64,7 @@ COPY --from=builder /app/apps/staff/out /srv/staff
 COPY --from=builder /app/apps/admin/out /srv/admin
 COPY --from=builder /app/apps/lms/out /srv/lms
 COPY --from=builder /app/apps/library/out /srv/library
+COPY --from=builder /app/apps/admission/out /srv/admission
 COPY --from=builder /app/apps/landing/out /srv/landing
 COPY --from=builder /app/apps/share/out /srv/share/ai
 
