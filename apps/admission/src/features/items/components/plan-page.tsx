@@ -6,6 +6,7 @@ import { Alert, AlertDescription, Button, buttonVariants, Icons, Input, Label, P
 import Link from "next/link"
 import { useState, type FormEvent } from "react"
 import { AdmissionShell } from "../../shell/components/admission-shell"
+import { useScreenContext } from "../../assistant/screen-context"
 import { useItems } from "../api"
 import {
   MILESTONE_STATUSES,
@@ -72,7 +73,7 @@ function Suggest({ milestones }: { milestones: Milestone[] }) {
         <Alert>
           <AlertDescription className="flex flex-wrap items-center gap-2">
             {t("plan.consent")}
-            <Link href="/consent/" className={buttonVariants({ size: "sm" })}>
+            <Link href="/settings/#consent" className={buttonVariants({ size: "sm" })}>
               {t("plan.consentLink")}
             </Link>
           </AlertDescription>
@@ -276,6 +277,14 @@ export function PlanBody() {
     a === "" ? 1 : b === "" ? -1 : a.localeCompare(b),
   )
   const planned = (items.data ?? []).filter((i) => i.metrics.some((m) => m.horizon === "projected"))
+  useScreenContext({
+    title: t("plan.title"),
+    summary: `Goal plan: ${milestones.length} milestones, ${planned.length} items with projected numbers. Items: ${(
+      items.data ?? []
+    )
+      .map((i) => i.title)
+      .join("; ")}`,
+  })
   return (
     <>
       <div className="mx-auto flex w-full max-w-3xl flex-col gap-4 p-4 md:p-6">

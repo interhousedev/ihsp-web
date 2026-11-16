@@ -1,14 +1,19 @@
 "use client"
 
+import { useSession } from "@ihsp/auth"
 import { useT } from "@ihsp/i18n"
 import { Icons, PageHeader, Skeleton, StateView } from "@ihsp/ui"
-import { useMemo, useState } from "react"
+import { useRouter } from "next/navigation"
+import { useEffect, useMemo, useState } from "react"
+import { PageLoading } from "@ihsp/features-core"
 import { useAdmissionConfig } from "../../../lib/config"
 import { AdmissionShell } from "../../shell/components/admission-shell"
 import { useCaseload, type CaseloadFilters } from "../api"
+import { StaffOverview } from "../../home/components/staff-overview"
 import { CaseloadFiltersBar, type FilterOption } from "./caseload-filters"
 import { CaseloadList } from "./caseload-list"
 import { SavedViews } from "./saved-views"
+import { QueryError } from "../../shell/components/query-error"
 
 export const STAFF_ROLES = ["teacher", "admin", "counselor", "mentor"] as const
 
@@ -45,12 +50,13 @@ export function CaseloadContent() {
   return (
     <div className="mx-auto flex w-full max-w-4xl flex-col gap-4 p-4 md:p-6">
       <PageHeader title={t("caseload.title")} />
+      {all.data ? <StaffOverview items={all.data.items} /> : null}
       <SavedViews filters={filters} onApply={(view) => setFilters(view.filters)} />
       <CaseloadFiltersBar filters={filters} stages={stages} groups={groups} onChange={setFilters} />
       {filtered.isPending ? (
         <Skeleton className="h-40 w-full" />
       ) : filtered.isError ? (
-        <StateView state="error" onRetry={() => void filtered.refetch()} />
+        <QueryError error={filtered.error} onRetry={() => void filtered.refetch()} />
       ) : filtered.data.items.length === 0 ? (
         <StateView
           state={active ? "filtered" : "empty"}
@@ -65,7 +71,17 @@ export function CaseloadContent() {
   )
 }
 
+/** Transcript officers have no caseload: `/staff/` sends them to their queue. */
 export function CaseloadPage() {
+  const router = useRouter()
+  const { session } = useSession()
+  const roles = session?.user.roles
+  const officerOnly =
+    !!roles?.includes("transcript_officer") && !roles.some((role) => (STAFF_ROLES as readonly string[]).includes(role))
+  useEffect(() => {
+    if (officerOnly) router.replace("/staff/transcripts/")
+  }, [officerOnly, router])
+  if (officerOnly) return <PageLoading />
   return (
     <AdmissionShell roles={[...STAFF_ROLES]}>
       <CaseloadContent />

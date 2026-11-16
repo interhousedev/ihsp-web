@@ -1,7 +1,10 @@
 "use client"
 
-import { useT } from "@ihsp/i18n"
+import { useLocale, useT } from "@ihsp/i18n"
+import { useMemo } from "react"
 import { ChoiceCard, ChoiceCardGroup, Icons, Input, Pill, TagInput, Textarea } from "@ihsp/ui"
+import { useAdmissionConfig } from "../../../lib/config"
+import { configOptions } from "../../chooser/config-options"
 import type { AnswerValue, Question } from "../types"
 import { useProfileText } from "../lib/use-profile-text"
 
@@ -15,6 +18,31 @@ const LONG_TEXT = 120
 
 function asStrings(value: AnswerValue | undefined): string[] {
   return Array.isArray(value) ? (value as unknown[]).filter((item): item is string => typeof item === "string") : []
+}
+
+/** Countries (ISO codes, named by the browser in the UI language) or study fields; the lists come from the backend. */
+function TagsField({ question, value, onChange, label }: FieldProps & { label: string }) {
+  const t = useT("profile")
+  const locale = useLocale()
+  const config = useAdmissionConfig()
+  const options = useMemo(() => {
+    if (question.kind === "country") {
+      const names = new Intl.DisplayNames([locale], { type: "region" })
+      return configOptions(config.data, "countries").map((code) => ({ value: code, label: names.of(code) ?? code }))
+    }
+    return configOptions(config.data, "fields").map((name) => ({ value: name, label: name }))
+  }, [question.kind, config.data, locale])
+  return (
+    <TagInput
+      aria-label={label}
+      value={asStrings(value)}
+      max={question.max_choices ?? undefined}
+      options={options.length > 0 ? options : undefined}
+      placeholder={t("tagPlaceholder")}
+      removeLabel={(tag) => t("removeTag", { tag })}
+      onChange={onChange}
+    />
+  )
 }
 
 function ChoiceField({ question, value, onChange, multiple }: FieldProps & { multiple: boolean }) {
@@ -148,16 +176,7 @@ export function QuestionField(props: FieldProps) {
     }
     case "country":
     case "combobox":
-      return (
-        <TagInput
-          aria-label={label}
-          value={asStrings(value)}
-          max={question.max_choices ?? undefined}
-          placeholder={t("tagPlaceholder")}
-          removeLabel={(tag) => t("removeTag", { tag })}
-          onChange={onChange}
-        />
-      )
+      return <TagsField question={question} value={value} onChange={onChange} label={label} />
     case "date":
       return (
         <Input
@@ -178,9 +197,10 @@ export function QuestionField(props: FieldProps) {
 }
 
 /** Marks an answer that came from the lyceum record. */
-export function PrefillBadge({ question }: { question: Question }) {
+export function PrefillBadge({ question, answered }: { question: Question; answered: boolean }) {
   const t = useT("profile")
   const source = question.prefill_source
+  if (!answered) return null
   if (source !== "emis" && source !== "emis_locked" && source !== "academic_gpa") return null
   return (
     <Pill tone="primary" className="self-start">

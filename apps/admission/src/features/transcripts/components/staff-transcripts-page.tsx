@@ -4,6 +4,7 @@ import { useT } from "@ihsp/i18n"
 import { PageHeader } from "@ihsp/ui"
 import { useSession } from "@ihsp/auth"
 import { DOCUMENT_ROLES } from "../../../config/nav"
+import { CoveringOfficers } from "../../staff/components/covering-officers"
 import { AdmissionShell } from "../../shell/components/admission-shell"
 import { OfficerQueue } from "./officer-queue"
 import { PickupForm } from "./pickup-form"
@@ -13,13 +14,18 @@ function Body() {
   const { session } = useSession()
   const roles: readonly string[] = session?.user.roles ?? []
   const officer = roles.includes("transcript_officer")
-  return officer ? (
+  return (
     <>
-      <PickupForm />
-      <OfficerQueue />
+      {roles.includes("admin") ? <CoveringOfficers /> : null}
+      {officer ? (
+        <>
+          <PickupForm />
+          <OfficerQueue />
+        </>
+      ) : (
+        <StaffOverview />
+      )}
     </>
-  ) : (
-    <StaffOverview />
   )
 }
 

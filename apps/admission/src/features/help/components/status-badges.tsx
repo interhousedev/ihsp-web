@@ -21,6 +21,8 @@ const PROOF_TONE: Record<string, StatusTone> = {
   unverified: "neutral",
   unverifiable: "neutral",
   self_provided: "neutral",
+  checked: "success",
+  failed: "destructive",
 }
 
 /** The text for a backend value: our translation when we have one, else the value itself. */

@@ -8,21 +8,11 @@ import { useState } from "react"
 import { HelpRequestButton } from "../../help/components/help-request-dialog"
 import { ProofList } from "../../help/components/proof-list"
 import { AdmissionShell } from "../../shell/components/admission-shell"
-import { useDeleteItem, useItem, usePatchItem, type Item, type Rewrite } from "../api"
-import { formValid, ItemFields, toInput, type FormState } from "./item-fields"
+import { incompleteFields, useDeleteItem, useItem, usePatchItem, type Item, type ItemKind, type Rewrite } from "../api"
+import { formValid, ItemFields, toForm, toInput, type FormState } from "./item-fields"
 import { InterviewPanel } from "./interview-panel"
 import { MetricsEditor } from "./metrics-editor"
 import { ReviewSection } from "./review-card"
-
-const toForm = (item: Item): FormState => ({
-  title: item.title,
-  organization: item.organization,
-  description: item.description,
-  category: item.category ?? "",
-  grades: item.grades,
-  hours: item.hours_per_week?.toString() ?? "",
-  weeks: item.weeks_per_year?.toString() ?? "",
-})
 
 const FIELD: Record<keyof Rewrite, keyof FormState> = {
   position: "title",
@@ -57,7 +47,13 @@ function Editor({ item }: { item: Item }) {
           patch.mutate({ ...toInput(form), lock_version: item.lock_version })
         }}
       >
-        <ItemFields idPrefix="edit" value={form} onChange={setForm} />
+        <ItemFields
+          kind={item.kind as ItemKind}
+          idPrefix="edit"
+          value={form}
+          onChange={setForm}
+          errors={incompleteFields(patch.error)}
+        />
         <div className="flex flex-wrap items-center gap-2">
           <Button type="submit" disabled={!formValid(form) || patch.isPending}>
             {t("form.save")}
@@ -71,7 +67,7 @@ function Editor({ item }: { item: Item }) {
               {t("saved")}
             </span>
           ) : null}
-          {patch.isError ? (
+          {patch.isError && incompleteFields(patch.error).length === 0 ? (
             <span role="alert" className="text-destructive text-sm">
               {errorMessage(patch.error)}
             </span>

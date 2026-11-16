@@ -44,7 +44,7 @@ export function WordsPage() {
           icon="lock"
           title={t("consentTitle")}
           action={
-            <Link href="/consent/" className={buttonVariants()}>
+            <Link href="/settings/#consent" className={buttonVariants()}>
               {t("goConsent")}
             </Link>
           }
@@ -225,7 +225,7 @@ function WordsEditor({ initial }: { initial: WordsState }) {
       ) : err?.type === "admission/consent_required" ? (
         <Alert variant="destructive">
           <AlertDescription>
-            {t("consentTitle")} <Link href="/consent/">{t("goConsent")}</Link>
+            {t("consentTitle")} <Link href="/settings/#consent">{t("goConsent")}</Link>
           </AlertDescription>
         </Alert>
       ) : err ? (

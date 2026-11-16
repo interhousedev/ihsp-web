@@ -3,6 +3,7 @@
 import { useErrorMessage, useT } from "@ihsp/i18n"
 import { Alert, Button, ConfirmDialog, Icons, Input } from "@ihsp/ui"
 import { useMutation, useQueryClient } from "@tanstack/react-query"
+import { useRouter } from "next/navigation"
 import { useState } from "react"
 import { eraseData, getExport } from "../../consent/api"
 
@@ -20,6 +21,7 @@ export function DataControls() {
   const t = useT("privacy")
   const errorMessage = useErrorMessage()
   const queryClient = useQueryClient()
+  const router = useRouter()
   const [open, setOpen] = useState(false)
   const [typed, setTyped] = useState("")
   const word = t("erase.word")
@@ -33,7 +35,8 @@ export function DataControls() {
     onSuccess: () => {
       setOpen(false)
       setTyped("")
-      void queryClient.invalidateQueries({ queryKey: ["admission"] })
+      queryClient.removeQueries({ queryKey: ["admission"] })
+      router.replace("/setup/")
     },
   })
   const total = Object.values(erase.data?.deleted ?? {}).reduce((sum, count) => sum + count, 0)

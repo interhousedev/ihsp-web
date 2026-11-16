@@ -17,9 +17,14 @@ export function RequestDialog() {
   async function submit(event: FormEvent) {
     event.preventDefault()
     try {
-      await request.mutateAsync(note.trim())
-      toast.success(t("requested"))
+      const result = await request.mutateAsync(note.trim())
       setOpen(false)
+      if (result.reused) {
+        // An open request exists: the typed purpose stays in the field instead of being lost.
+        toast.info(t("alreadyOpen"))
+        return
+      }
+      toast.success(t("requested"))
       setNote("")
     } catch (error) {
       toast.error(errorMessage(error))

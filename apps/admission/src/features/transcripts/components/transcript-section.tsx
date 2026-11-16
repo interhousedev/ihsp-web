@@ -3,10 +3,11 @@
 import { useErrorMessage, useFormatters, useT } from "@ihsp/i18n"
 import { Button, Skeleton, StateView } from "@ihsp/ui"
 import { toast } from "sonner"
-import { FilePickButton } from "../../documents/components/file-pick-button"
+import { FilePickButton, UploadHint } from "../../documents/components/file-pick-button"
 import { useCancelTranscript, useMyTranscripts, useUploadScan, type Transcript } from "../api"
 import { RequestDialog } from "./request-dialog"
 import { TranscriptStatus } from "./transcript-status"
+import { QueryError } from "../../shell/components/query-error"
 
 function TranscriptCard({ item }: { item: Transcript }) {
   const t = useT("transcripts")
@@ -36,6 +37,7 @@ function TranscriptCard({ item }: { item: Transcript }) {
             onPick={(file) => scan.mutate({ id: item.id, file }, { onError })}
           />
         )}
+        {item.status === "ready" && !item.document_id && <UploadHint />}
         {item.status === "ready" && item.document_id && <span className="text-xs">{t("scanUploaded")}</span>}
         {item.status === "requested" && (
           <Button
@@ -59,7 +61,7 @@ export function TranscriptSection() {
   const query = useMyTranscripts()
   let body
   if (query.isPending) body = <Skeleton className="h-24 w-full" />
-  else if (query.isError) body = <StateView state="error" onRetry={() => void query.refetch()} />
+  else if (query.isError) body = <QueryError error={query.error} onRetry={() => void query.refetch()} />
   else if (query.data.length === 0) body = <StateView state="empty" title={t("empty")} />
   else
     body = (

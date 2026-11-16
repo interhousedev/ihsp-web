@@ -4,6 +4,7 @@ import { useErrorMessage, useFormatters, useLocale, useT } from "@ihsp/i18n"
 import { Alert, Skeleton, Switch } from "@ihsp/ui"
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query"
 import { useId } from "react"
+import { toast } from "sonner"
 import {
   consentKeys,
   consentQuery,
@@ -21,7 +22,7 @@ function PurposeRow({
   onChange,
 }: {
   purpose: Purpose
-  grant: Consent["grants"][number] | undefined
+  grant: (Consent["grants"][number] & { reconsent_required?: boolean }) | undefined
   busy: boolean
   onChange: (checked: boolean) => void
 }) {
@@ -39,6 +40,11 @@ function PurposeRow({
         {grant?.active ? (
           <p className="text-muted-foreground text-xs">
             {t("purposes.givenAt", { date: format.date(grant.given_at) })}
+          </p>
+        ) : null}
+        {grant?.reconsent_required ? (
+          <p role="status" className="text-destructive text-xs">
+            {t("purposes.reconsent")}
           </p>
         ) : null}
         {grant && !grant.active && grant.withdrawn_at ? (
@@ -62,18 +68,22 @@ export function PurposeConsents() {
   const change = useMutation({
     mutationFn: ({ purpose, checked }: { purpose: string; checked: boolean }) =>
       checked ? putConsent([purpose]) : deleteConsent(purpose),
-    onSuccess: (data) => queryClient.setQueryData(consentKeys.consent(), data),
+    onSuccess: (data) => {
+      queryClient.setQueryData(consentKeys.consent(), data)
+      toast.success(t("purposes.saved"))
+    },
   })
 
   const grants = consent.data?.grants ?? []
   const purposes = catalog.data?.items ?? []
 
   return (
-    <section className="grid gap-2" aria-labelledby="purposes-title">
+    <section id="consent" className="grid scroll-mt-20 gap-2" aria-labelledby="purposes-title">
       <h2 id="purposes-title" className="text-base font-semibold">
         {t("purposes.title")}
       </h2>
       <p className="text-muted-foreground text-sm">{t("purposes.intro")}</p>
+      <p className="text-muted-foreground text-sm">{t("purposes.voice")}</p>
       {consent.isPending || catalog.isPending ? <Skeleton className="h-40 w-full" /> : null}
       {consent.isError || catalog.isError ? (
         <Alert variant="destructive">{errorMessage(consent.error ?? catalog.error)}</Alert>

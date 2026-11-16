@@ -6,6 +6,7 @@ import { useState } from "react"
 import { toast } from "sonner"
 import { useRemindTranscript, useStaffTranscripts } from "../api"
 import { TranscriptStatus } from "./transcript-status"
+import { QueryError } from "../../shell/components/query-error"
 
 const FILTERS = ["requested", "ready", "cancelled"] as const
 
@@ -19,7 +20,7 @@ export function StaffOverview() {
   const remind = useRemindTranscript()
   let body
   if (query.isPending) body = <Skeleton className="h-24 w-full" />
-  else if (query.isError) body = <StateView state="error" onRetry={() => void query.refetch()} />
+  else if (query.isError) body = <QueryError error={query.error} onRetry={() => void query.refetch()} />
   else if (query.data.length === 0) body = <StateView state="empty" title={t("overviewEmpty")} />
   else
     body = (

@@ -1,14 +1,48 @@
 "use client"
 
 import type { Role } from "@ihsp/api"
-import { RequireAuth, RequireRole } from "@ihsp/auth"
+import { RequireAuth, RequireRole, useSession } from "@ihsp/auth"
 import { MaintenanceBanner, PageLoading, ShellNavControls, usePlatformLinks } from "@ihsp/features-core"
-import { AppShell, OfflineBadge } from "@ihsp/ui"
-import { Suspense, type ReactNode } from "react"
-import { useNav } from "../../../config/nav"
+import { useT } from "@ihsp/i18n"
+import { AppShell, buttonVariants, Icons, OfflineBadge, StateView } from "@ihsp/ui"
+import Link from "next/link"
+import { useRouter } from "next/navigation"
+import { Suspense, useEffect, type ReactNode } from "react"
+import { isStaffOnly, landingFor, useNav } from "../../../config/nav"
 import { AdmissionBrand } from "./admission-brand"
+import { AssistantLauncher, ScreenContextProvider } from "../../assistant"
 import { AdmissionConsentGate } from "../../consent/components/consent-gate"
 import { ProfileMenu } from "./profile-menu"
+
+/** Applicant pages: staff without the student role get a "no access" screen with a way to their own page. */
+function StudentArea({ home, children }: { home?: boolean; children: ReactNode }) {
+  const t = useT()
+  const router = useRouter()
+  const { session } = useSession()
+  const roles = session?.user.roles
+  const staffOnly = isStaffOnly(roles)
+  useEffect(() => {
+    if (home && staffOnly) router.replace(landingFor(roles))
+  }, [home, staffOnly, roles, router])
+  if (!staffOnly) return <>{children}</>
+  if (home) return <PageLoading />
+  return (
+    <div className="flex min-h-[60dvh] items-center justify-center p-4">
+      <StateView
+        state="empty"
+        className="border-0"
+        icon={<Icons.lock aria-hidden />}
+        title={t("auth.forbiddenTitle")}
+        description={t("nav.studentOnly")}
+        action={
+          <Link href={landingFor(roles)} className={buttonVariants()}>
+            {t("nav.toStaff")}
+          </Link>
+        }
+      />
+    </div>
+  )
+}
 
 function Frame({ children }: { children: ReactNode }) {
   const nav = useNav()
@@ -23,21 +57,43 @@ function Frame({ children }: { children: ReactNode }) {
       sidebarFooter={<ProfileMenu variant="row" />}
       controls={<OfflineBadge />}
     >
-      <MaintenanceBanner />
-      <Suspense fallback={<PageLoading />}>{children}</Suspense>
-      <AdmissionConsentGate />
+      <ScreenContextProvider>
+        <MaintenanceBanner />
+        <Suspense fallback={<PageLoading />}>{children}</Suspense>
+        <AdmissionConsentGate />
+        <AssistantLauncher />
+      </ScreenContextProvider>
     </AppShell>
   )
 }
 
 /**
- * The frame of every page: sign-in is required; `roles` additionally limits the page (the staff area).
+ * The frame of every page: sign-in is required; `roles` limits the page to those roles (the staff area), `anyone`
+ * opens it to every signed-in user (settings); otherwise it is an applicant page and staff-only users are turned away.
  * The `Suspense` covers pages that read the address.
  */
-export function AdmissionShell({ roles, children }: { roles?: Role[]; children: ReactNode }) {
+export function AdmissionShell({
+  roles,
+  anyone,
+  home,
+  children,
+}: {
+  roles?: Role[]
+  anyone?: boolean
+  /** The landing page: staff-only users are sent to their own start page instead of seeing "no access". */
+  home?: boolean
+  children: ReactNode
+}) {
+  const body = roles ? (
+    <RequireRole role={roles}>{children}</RequireRole>
+  ) : anyone ? (
+    children
+  ) : (
+    <StudentArea home={home}>{children}</StudentArea>
+  )
   return (
     <RequireAuth>
-      <Frame>{roles ? <RequireRole role={roles}>{children}</RequireRole> : children}</Frame>
+      <Frame>{body}</Frame>
     </RequireAuth>
   )
 }

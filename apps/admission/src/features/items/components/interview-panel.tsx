@@ -24,7 +24,7 @@ export function InterviewPanel({
   const [answers, setAnswers] = useState<Record<string, string>>({})
   const rounds = interview.data?.rounds ?? []
   const last = rounds.at(-1)
-  const questions = last?.questions.questions ?? []
+  const questions = last?.questions ?? []
   const pending = !!last && !interview.data?.ready && questions.length > 0
 
   const send = () => {
@@ -64,7 +64,7 @@ export function InterviewPanel({
           {interview.data?.safeguarding ? <p className="text-sm">{t("review.safeguarding")}</p> : null}
           {rounds.map((round) => (
             <div key={round.round} className="flex flex-col gap-2">
-              {(round.questions.questions ?? []).map((q, i) => (
+              {round.questions.map((q, i) => (
                 <div key={i} className="flex flex-col gap-1">
                   <p className="bg-muted w-fit max-w-full rounded-card px-3 py-2 text-sm">{q.question}</p>
                   {round.answers[String(i)] ? (

@@ -1,6 +1,16 @@
 "use client"
 
-import { getApiClient } from "@ihsp/api"
+import {
+  type AdmissionAssignment,
+  type AdmissionAssignmentIn,
+  type AdmissionCaseloadItem,
+  type AdmissionListEntry,
+  type AdmissionStudentAlignment,
+  type AdmissionStudentCourse,
+  type AdmissionStudentProfile,
+  type AdmissionStudentWords,
+  getApiClient,
+} from "@ihsp/api"
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query"
 
 export type CaseloadFilters = {
@@ -10,17 +20,7 @@ export type CaseloadFilters = {
   group_id?: string | null
 }
 
-export type CaseloadItem = {
-  student_id: string
-  student_name: string | null
-  group_id: string | null
-  group_name: string | null
-  stage: string | null
-  next_due: string | null
-  overdue: number
-  open_help: number
-  limited: boolean
-}
+export type CaseloadItem = AdmissionCaseloadItem
 
 export type SavedView = {
   id: string
@@ -33,56 +33,16 @@ export type SavedView = {
 
 export type SavedViewInput = { name: string; filters: CaseloadFilters; sort?: string | null; is_default?: boolean }
 
-export type Assignment = {
-  id: string
-  user_id: string
-  staff_role_id: string
-  scope_kind: string
-  scope_ref: string | null
-  starts_at: string
-  expires_at: string | null
-}
+export type Assignment = AdmissionAssignment
 
-export type AssignmentInput = {
-  user_id: string
-  staff_role_id: string
-  scope_kind: string
-  scope_ref: string
-  expires_at?: string | null
-}
+export type AssignmentInput = AdmissionAssignmentIn
 
-export type StudentProfile = {
-  student_id: string
-  account_kind: string
-  stage: string
-  answers: Record<string, unknown>
-  missing_required: string[]
-  setup_completed: boolean
-}
-export type StudentWords = {
-  words: unknown[]
-  candidates: unknown[]
-  source: string
-  version: number
-  confirmed_at: string | null
-}
-export type StudentAlignment = {
-  overall: string | null
-  grades: Record<string, unknown>
-  safety_flag: string
-  message_key: string | null
-  stale: boolean
-  created_at: string | null
-}
-export type StudentCourse = {
-  id: string | null
-  title: string
-  provider: string | null
-  level: string | null
-  year: number | null
-  grade: string | null
-  included: boolean
-}
+export type StudentProfile = AdmissionStudentProfile
+export type StudentWords = AdmissionStudentWords
+export type StudentAlignment = AdmissionStudentAlignment
+export type StudentCourse = AdmissionStudentCourse
+
+export type StudentListEntry = AdmissionListEntry
 
 export const staffKeys = {
   caseload: (filters: CaseloadFilters) => ["admission", "staff", "caseload", filters] as const,
@@ -146,6 +106,83 @@ export function useAssignmentMutations() {
   return { assign, unassign }
 }
 
+export type CoveringOfficer = {
+  assignment_id: string
+  user_id: string
+  name: string | null
+  login: string | null
+  starts_at: string
+  expires_at: string | null
+}
+
+const COVER_PATH = "/v1/admission/staff/all-students-officers"
+
+/** GET /v1/admission/staff/all-students-officers (admin only). */
+export function useCoveringOfficers(enabled: boolean) {
+  return useQuery({
+    queryKey: ["admission", "staff", "covering-officers"],
+    enabled,
+    queryFn: ({ signal }) => getApiClient().get<{ items: CoveringOfficer[] }>(COVER_PATH, { signal }),
+  })
+}
+
+/** GET .../all-students-officers/candidates: active transcript officers by name. */
+export function useOfficerCandidates(q: string, enabled: boolean) {
+  const term = q.trim()
+  return useQuery({
+    queryKey: ["admission", "staff", "officer-candidates", term],
+    enabled: enabled && term.length >= ASSIGNABLE_SEARCH_MIN,
+    queryFn: ({ signal }) =>
+      getApiClient().get<{ items: AssignableUser[] }>(`${COVER_PATH}/candidates`, { query: { q: term }, signal }),
+  })
+}
+
+/** POST / DELETE .../all-students-officers: grant or revoke "covers all students". */
+export function useCoverMutations() {
+  const client = useQueryClient()
+  const refresh = () => client.invalidateQueries({ queryKey: ["admission", "staff", "covering-officers"] })
+  const grant = useMutation({
+    mutationFn: (userId: string) => getApiClient().post<CoveringOfficer>(COVER_PATH, { user_id: userId }),
+    onSuccess: refresh,
+  })
+  const revoke = useMutation({
+    mutationFn: (assignmentId: string) => getApiClient().delete<void>(`${COVER_PATH}/${assignmentId}`),
+    onSuccess: refresh,
+  })
+  return { grant, revoke }
+}
+
+export type AssignableUser = { user_id: string; name: string; login: string | null; kinds: string[] }
+export type AssignableRole = { id: string; kind: string; name: string; name_i18n: Record<string, string> }
+
+export const ASSIGNABLE_SEARCH_MIN = 2
+
+/** GET /v1/admission/staff/assignable-users: active counselors, mentors and officers by name. */
+export function useAssignableUsers(studentId: string, q: string, enabled: boolean) {
+  const term = q.trim()
+  return useQuery({
+    queryKey: ["admission", "staff", "assignable-users", studentId, term],
+    enabled: enabled && term.length >= ASSIGNABLE_SEARCH_MIN,
+    queryFn: ({ signal }) =>
+      getApiClient().get<{ items: AssignableUser[] }>("/v1/admission/staff/assignable-users", {
+        query: { student_id: studentId, q: term },
+        signal,
+      }),
+  })
+}
+
+/** GET /v1/admission/staff/assignable-roles: the sub-roles the caller may delegate. */
+export function useAssignableRoles(studentId: string, enabled: boolean) {
+  return useQuery({
+    queryKey: ["admission", "staff", "assignable-roles", studentId],
+    enabled,
+    queryFn: () =>
+      getApiClient().get<{ items: AssignableRole[] }>("/v1/admission/staff/assignable-roles", {
+        query: { student_id: studentId },
+      }),
+  })
+}
+
 export type StudentSection = "profile" | "words" | "alignment" | "courses" | "list"
 
 type SectionData = {
@@ -153,7 +190,7 @@ type SectionData = {
   words: StudentWords
   alignment: StudentAlignment
   courses: { items: StudentCourse[] }
-  list: { items?: Record<string, unknown>[] } & Record<string, unknown>
+  list: StudentListEntry[]
 }
 
 /** GET /v1/admission/students/{id}/{section}; a tab asks only for its own section. */

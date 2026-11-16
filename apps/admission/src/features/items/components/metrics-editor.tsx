@@ -3,6 +3,7 @@
 import { useErrorMessage, useT } from "@ihsp/i18n"
 import { Button, Icons, Input, Label } from "@ihsp/ui"
 import { useState } from "react"
+import { toast } from "sonner"
 import { useSetMetrics, type Horizon, type Metric } from "../api"
 
 type Row = { key: number; label: string; value: string; unit: string; horizon: Horizon; target_date: string }
@@ -12,7 +13,7 @@ const toRows = (metrics: Metric[]): Row[] =>
     key,
     label: m.label,
     value: m.value,
-    unit: m.unit,
+    unit: m.unit ?? "",
     horizon: m.horizon === "projected" ? "projected" : "current",
     target_date: m.target_date ?? "",
   }))
@@ -41,6 +42,7 @@ export function MetricsEditor({ itemId, metrics }: { itemId: string; metrics: Me
         horizon: r.horizon,
         target_date: r.horizon === "projected" && r.target_date ? r.target_date : null,
       })),
+      { onSuccess: () => toast.success(t("saved")) },
     )
 
   return (

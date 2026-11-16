@@ -1,5 +1,5 @@
 import { apiUrl, server } from "@ihsp/test-utils"
-import { fireEvent, screen, waitFor } from "@testing-library/react"
+import { fireEvent, screen, waitFor, within } from "@testing-library/react"
 import { HttpResponse, http } from "msw"
 import { describe, expect, mock, test } from "bun:test"
 import type { ReactNode } from "react"
@@ -36,6 +36,7 @@ import type { Item, Review } from "./api"
 
 const item = (id: string, title: string, position: number): Item => ({
   id,
+  student_id: "s1",
   kind: "activity",
   title,
   organization: "Org",
@@ -49,6 +50,9 @@ const item = (id: string, title: string, position: number): Item => ({
   metrics: [],
   review: null,
   review_stale: false,
+  status: "draft",
+  timing: [],
+  intend_in_college: null,
 })
 
 const review: Review = {
@@ -109,6 +113,55 @@ describe("items", () => {
   test("a card links to its editor", () => {
     renderAdmissionApp(<ItemCard item={item("a", "Robotics", 0)} />)
     expect(screen.getByRole("link").getAttribute("href")).toMatch(/^\/activities\/view\/?\?id=a$/)
+  })
+
+  const board = (items: () => Item[]) =>
+    server.use(
+      http.get(apiUrl("/v1/admission/config"), () =>
+        HttpResponse.json({
+          item_caps: { activities: 10, honors: 5, drafts: 30 },
+          options: { item_grades: ["9", "10"] },
+        }),
+      ),
+      http.get(apiUrl("/v1/admission/me/items"), () => HttpResponse.json({ items: items(), next_cursor: null })),
+    )
+
+  test("a card moves from Draft to Ready after marking it ready", async () => {
+    let current = [item("a", "Robotics", 0)]
+    board(() => current)
+    server.use(
+      http.patch(apiUrl("/v1/admission/me/items/a"), async () => {
+        current = [{ ...current[0]!, status: "ready" }]
+        return HttpResponse.json(current[0])
+      }),
+    )
+    renderAdmissionApp(<ItemList />)
+    await screen.findByText("Robotics")
+    expect(within(screen.getByRole("region", { name: "Draft" })).getByText("Robotics")).toBeTruthy()
+    fireEvent.click(screen.getByRole("button", { name: "Edit" }))
+    fireEvent.click(await screen.findByRole("radio", { name: "Ready" }))
+    fireEvent.click(screen.getByRole("button", { name: "Save" }))
+    await waitFor(() =>
+      expect(within(screen.getByRole("region", { name: "Ready" })).getByText("Robotics")).toBeTruthy(),
+    )
+  })
+
+  test("marking ready with missing fields shows field errors", async () => {
+    board(() => [item("a", "Robotics", 0)])
+    server.use(
+      http.patch(apiUrl("/v1/admission/me/items/a"), () =>
+        HttpResponse.json(
+          { type: "admission/item_incomplete", title: "Incomplete", status: 422, params: { fields: ["category"] } },
+          { status: 422, headers: { "content-type": "application/problem+json" } },
+        ),
+      ),
+    )
+    renderAdmissionApp(<ItemList />)
+    await screen.findByText("Robotics")
+    fireEvent.click(screen.getByRole("button", { name: "Edit" }))
+    fireEvent.click(await screen.findByRole("radio", { name: "Ready" }))
+    fireEvent.click(screen.getByRole("button", { name: "Save" }))
+    expect(await screen.findByText("Required to mark as ready")).toBeTruthy()
   })
 
   test("reorder posts the ids of the new order", async () => {

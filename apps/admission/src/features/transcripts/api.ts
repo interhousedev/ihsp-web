@@ -33,10 +33,10 @@ export function useMyTranscripts() {
   })
 }
 
-export function useOfficerTranscripts() {
+export function useOfficerTranscripts(status: Transcript["status"] = "requested") {
   return useQuery({
-    queryKey: OFFICER_KEY,
-    queryFn: () => getApiClient().get<Transcript[]>(`${BASE}/officer/transcripts`),
+    queryKey: [...OFFICER_KEY, status],
+    queryFn: () => getApiClient().get<Transcript[]>(`${BASE}/officer/transcripts`, { query: { status } }),
   })
 }
 

@@ -132,7 +132,7 @@ function WizardBody({ config, initial }: { config: AdmissionConfig; initial: Pro
                   {text.hint(question.id) ? (
                     <p className="text-muted-foreground text-sm">{text.hint(question.id)}</p>
                   ) : null}
-                  <PrefillBadge question={question} />
+                  <PrefillBadge question={question} answered={isAnswered(answers[question.id])} />
                   <QuestionField
                     question={question}
                     value={answers[question.id]}

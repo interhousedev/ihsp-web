@@ -1,92 +1,52 @@
 "use client"
 
-import { getApiClient, seg } from "@ihsp/api"
+import {
+  type AdmissionItem,
+  type AdmissionItemIn,
+  type AdmissionItemInterview,
+  type AdmissionItemMetricIn,
+  type AdmissionItemReview,
+  getApiClient,
+  seg,
+} from "@ihsp/api"
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query"
 
-export type ItemKind = "activity" | "honor"
-export type Horizon = "current" | "projected"
+export type ItemKind = AdmissionItemIn["kind"]
+export type ItemStatus = NonNullable<AdmissionItemIn["status"]>
+export type ItemGrade = NonNullable<AdmissionItemIn["grades"]>[number]
+export type ItemTiming = NonNullable<AdmissionItemIn["timing"]>[number]
+export type Metric = AdmissionItem["metrics"][number]
+export type MetricInput = AdmissionItemMetricIn
+export type Horizon = MetricInput["horizon"]
 export const DIMENSIONS = ["clarity", "role_name", "impact", "alignment"] as const
 export type Dimension = (typeof DIMENSIONS)[number]
-
-export type Metric = {
-  id: string
-  label: string
-  value: string
-  unit: string
-  horizon: string
-  as_of: string | null
-  target_date: string | null
-  provenance: string
-}
-
-export type MetricInput = {
-  label: string
-  value: number | string
-  unit: string
-  horizon: Horizon
-  target_date?: string | null
-}
-
+export type ItemInput = AdmissionItemIn
 export type ReviewDimension = { dim: string; grade: string; evidence: string; suggestion: string }
 export type Rewrite = { position: string; org: string; description: string }
 
-/** Mirrors `ReviewOut`; `payload` is empty with `safety_flag: "safeguarding"`. */
-export type Review = {
-  id: string
-  target_id: string
+/** The contract types `payload` as an open object; empty with `safety_flag: "safeguarding"`. */
+export type Review = Omit<AdmissionItemReview, "payload" | "grades"> & {
   grades: Record<string, string>
-  overall: string | null
   payload: {
     dimensions?: ReviewDimension[]
     rewrite?: Rewrite | null
     missing_facts?: string[]
     message_key?: string
   }
-  safety_flag: string
-  status: string
-  created_at: string
 }
 
-/** Mirrors `ItemOut`. */
-export type Item = {
-  id: string
-  kind: string
-  title: string
-  organization: string
-  description: string
-  category: string | null
-  grades: number[]
-  hours_per_week: number | null
-  weeks_per_year: number | null
-  position: number
-  lock_version: number
-  metrics: Metric[]
-  review: Review | null
-  review_stale: boolean
-}
-
-export type ItemInput = {
-  kind: ItemKind
-  title: string
-  organization: string
-  description: string
-  category?: string | null
-  grades: number[]
-  hours_per_week: number | null
-  weeks_per_year: number | null
-}
+/** `kind` and `status` are plain strings in the response; `review` is narrowed below. */
+export type Item = Omit<AdmissionItem, "review"> & { review: Review | null }
 
 export type InterviewQuestion = { gap?: string; question: string; why_it_matters?: string; options?: string[] }
-export type Interview = {
-  item_id: string
+/** The contract types questions, answers and proposal as open objects. */
+export type Interview = Omit<AdmissionItemInterview, "rounds" | "proposal"> & {
   rounds: {
     round: number
-    questions: { questions?: InterviewQuestion[] } & Record<string, unknown>
+    questions: InterviewQuestion[]
     answers: Record<string, string>
   }[]
-  ready: boolean
   proposal: Rewrite | null
-  safeguarding: boolean
 }
 
 export const itemKeys = {
@@ -189,4 +149,10 @@ export function usePostInterview(id: string) {
       getApiClient().post<Interview>(`${BASE}/items/${seg(id)}/interview`, body),
     onSuccess: (data) => qc.setQueryData(itemKeys.interview(id), data),
   })
+}
+
+/** The field names of an `admission/item_incomplete` problem (`params.fields`), else none. */
+export function incompleteFields(error: unknown): string[] {
+  const fields = (error as { params?: { fields?: unknown } } | null)?.params?.fields
+  return Array.isArray(fields) ? fields.filter((f): f is string => typeof f === "string") : []
 }

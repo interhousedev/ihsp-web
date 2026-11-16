@@ -11,6 +11,8 @@ export function AuditList() {
   const errorMessage = useErrorMessage()
   const format = useFormatters()
   const audit = useQuery(auditQuery())
+  const label = (group: string, value: string) =>
+    t.has(`audit.${group}.${value}`) ? t(`audit.${group}.${value}`) : value
   return (
     <section className="grid gap-2" aria-labelledby="audit-title">
       <h2 id="audit-title" className="text-base font-semibold">
@@ -25,7 +27,7 @@ export function AuditList() {
           {audit.data.items.map((record, index) => (
             <li key={`${record.at}-${index}`} className="flex flex-wrap justify-between gap-2 px-3 py-2 text-sm">
               <span>
-                {record.actor_kind} · {record.action}
+                {label("actors", record.actor_kind)} · {label("actions", record.action)}
                 {record.object_type ? ` · ${record.object_type}` : ""}
               </span>
               <time className="text-muted-foreground" dateTime={record.at}>
