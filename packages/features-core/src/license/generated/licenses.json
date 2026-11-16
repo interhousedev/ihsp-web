@@ -1653,6 +1653,13 @@
       "ecosystem": "npm"
     },
     {
+      "name": "framer-motion",
+      "version": "14.10.1",
+      "license": "MIT",
+      "url": "https://github.com/motiondivision/motion/",
+      "ecosystem": "npm"
+    },
+    {
       "name": "frozenlist",
       "version": "1.8.0",
       "license": "Apache-2.0",
@@ -2378,6 +2385,27 @@
       "version": "3.0.1",
       "license": "MIT",
       "url": "https://github.com/developit/mitt",
+      "ecosystem": "npm"
+    },
+    {
+      "name": "motion",
+      "version": "14.10.1",
+      "license": "MIT",
+      "url": "https://github.com/motiondivision/motion",
+      "ecosystem": "npm"
+    },
+    {
+      "name": "motion-dom",
+      "version": "14.10.1",
+      "license": "MIT",
+      "url": "https://github.com/motiondivision/motion",
+      "ecosystem": "npm"
+    },
+    {
+      "name": "motion-utils",
+      "version": "14.7.0",
+      "license": "MIT",
+      "url": "https://github.com/motiondivision/motion",
       "ecosystem": "npm"
     },
     {

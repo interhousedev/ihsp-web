@@ -32,7 +32,7 @@ function PendingItem({ item }: { item: PendingLegalItem }) {
 export const ACCEPTANCE_REQUIRED = "legal/acceptance-required"
 
 /** Refetches the pending list whenever any request is refused for missing consent, so the gate shows at once. */
-function useRefetchOnAcceptanceRequired(enabled: boolean) {
+export function useRefetchOnAcceptanceRequired(enabled: boolean) {
   const queryClient = useQueryClient()
   useEffect(() => {
     if (!enabled) return undefined

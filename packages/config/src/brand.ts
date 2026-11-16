@@ -26,6 +26,8 @@ export const BRAND = {
   landingHost: "ihsu.uz",
   /** Address of the library printed in the sign-up text. */
   libraryHost: "lib.ihsu.uz",
+  /** Public host of the admission app. */
+  admissionHost: "admission.ihsu.uz",
   apps: {
     id: { name: `${name} ID` },
     sp: {
@@ -58,6 +60,7 @@ export const BRAND = {
       manifestDescription: `Books, textbooks and study materials of ${orgName}.`,
       manifestColor: manifestBrandColor,
     },
+    admission: { name: "admission.iht" },
     share: { name: `${name} shares` },
   },
   /** Paths under each app's `public/` (the files themselves are per app). */
@@ -103,6 +106,7 @@ export const BRAND_MESSAGE_VALUES = {
   appAdmin: BRAND.apps.admin.name,
   appLms: BRAND.apps.lms.name,
   appLibrary: BRAND.apps.library.name,
+  appAdmission: BRAND.apps.admission.name,
   appShare: BRAND.apps.share.name,
 } as const
 

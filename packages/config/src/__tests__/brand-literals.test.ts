@@ -9,7 +9,7 @@ import { BRAND_MESSAGE_VALUES, BRAND_PWA_APPS, fillBrand } from "../brand"
  * tests may assert the rendered names. Comments are ignored in code, because prose about the product is no output.
  */
 const webRoot = resolve(import.meta.dir, "../../../..")
-const LITERAL = /\b(?:IHT|Interhouse|International House)\b|\b(?:my|staff|lms|library|admin|id)\.iht\b/
+const LITERAL = /\b(?:IHT|Interhouse|International House)\b|\b(?:my|staff|lms|library|admission|admin|id)\.iht\b/
 const ALLOWED = new Set(["packages/config/src/brand.ts", "packages/config/src/__tests__/brand-literals.test.ts"])
 const skip = new Set(["node_modules", ".next", "out", "dist", ".turbo", "coverage", "__tests__", "tests", "generated"])
 

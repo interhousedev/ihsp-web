@@ -12,6 +12,9 @@ const BY_ROLE: Record<Role, readonly PlatformKey[]> = {
   lms_admin: ["lms", "library", "id"],
   lms_creator: ["lms", "library", "id"],
   librarian: ["library", "id"],
+  counselor: ["id"],
+  mentor: ["id"],
+  transcript_officer: ["id"],
 }
 
 /**

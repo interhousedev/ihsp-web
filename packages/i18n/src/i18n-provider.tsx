@@ -8,7 +8,7 @@ import { TIME_ZONE, type Locale } from "./locales"
 import { loadMessages, type MessageLoader, type Messages } from "./messages"
 import { checkStaleBuildInBrowser } from "./stale-build"
 
-export type AppName = "id" | "sp" | "staff" | "admin" | "lms" | "share" | "library"
+export type AppName = "id" | "sp" | "staff" | "admin" | "lms" | "share" | "library" | "admission"
 
 type Loaded = { locale: Locale; messages: Messages }
 

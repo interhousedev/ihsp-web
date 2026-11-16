@@ -9,7 +9,18 @@ const optionalText = z
   .optional()
   .transform((value) => (value ? value : undefined))
 
-export const OAUTH_CLIENT_IDS = ["id", "sp", "staff", "admin", "lms", "share", "app", "library", "landing"] as const
+export const OAUTH_CLIENT_IDS = [
+  "id",
+  "sp",
+  "staff",
+  "admin",
+  "lms",
+  "share",
+  "app",
+  "library",
+  "admission",
+  "landing",
+] as const
 
 /**
  * What an app runs as. `pwa` turns it into an installable app (manifest, service worker, offline page, forced updates):
@@ -40,6 +51,8 @@ export const envSchema = z.object({
   APP_MODE: z.preprocess(emptyToUndefined, z.enum(APP_MODES).default("sp")),
   APP_URL: z.preprocess(emptyToUndefined, url.optional()),
   LIBRARY_URL: z.preprocess(emptyToUndefined, url.optional()),
+  ADMISSION_URL: z.preprocess(emptyToUndefined, url.optional()),
+  APP_NAME: optionalText,
   STORAGE_ORIGIN: url,
   SENTRY_DSN: optionalText,
   SECURITY_CONTACT: optionalText,
@@ -60,13 +73,17 @@ export type AppEnv = {
   ROOMS_URL: string
   MCP_URL: string
   BOT_USERNAME: string
-  OAUTH_CLIENT_ID: "id" | "sp" | "staff" | "admin" | "lms" | "share" | "app" | "library" | "landing"
+  OAUTH_CLIENT_ID: "id" | "sp" | "staff" | "admin" | "lms" | "share" | "app" | "library" | "admission" | "landing"
   /** `pwa` on an installable-app host, `web` (or the older `sp`) everywhere else. */
   APP_MODE: "web" | "sp" | "pwa"
   /** Address of the installable app (`https://app.ihsu.uz`); the portal links to it. Absent when there is none. */
   APP_URL?: string
   /** Address of the library (`https://lib.ihsu.uz`); the profile menus link to it. Absent when there is none. */
   LIBRARY_URL?: string
+  /** Address of the admission app (`https://admission.ihsu.uz`). Absent when there is none. */
+  ADMISSION_URL?: string
+  /** Name of the app, sent to the API as `X-IHSP-App` on every request (the legal documents and limits are per app). */
+  APP_NAME?: string
   STORAGE_ORIGIN: string
   SENTRY_DSN?: string
   /** Plain-text security contact (an email and a Telegram handle) shown by the id app; absent hides the button. */
