@@ -16,6 +16,7 @@ const URL_KEYS: Record<PlatformKey, keyof AppEnv> = {
   admin: "ADMIN_URL",
   lms: "LMS_URL",
   library: "LIBRARY_URL",
+  admission: "ADMISSION_URL",
   id: "ID_URL",
 }
 

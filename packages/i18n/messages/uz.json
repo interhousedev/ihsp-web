@@ -213,6 +213,10 @@
       "name": "{appLibrary}",
       "description": "Kitoblar va materiallar"
     },
+    "admission": {
+      "name": "{appAdmission}",
+      "description": "Oliy oʻquv yurtlariga topshirish"
+    },
     "id": {
       "name": "{appId}",
       "description": "Hisob va xavfsizlik"
@@ -239,7 +243,8 @@
     "legal": {
       "stale-version": "Yangi versiya eʼlon qilindi. Uni koʻrib chiqib, qayta qabul qiling.",
       "incomplete": "Avval barcha tillarda sarlavha va matnni toʻldiring.",
-      "consent-required": "Davom etish uchun barcha hujjatlarni qabul qiling."
+      "consent-required": "Davom etish uchun barcha hujjatlarni qabul qiling.",
+      "guardian-attestation-required": "Qonuniy vakilingiz bunga rozilik bergani haqidagi katakchani belgilang."
     },
     "generic": "Nimadir xato ketdi. Birozdan soʻng qayta urinib koʻring.",
     "identity": {
@@ -439,7 +444,7 @@
       "attachment-not-found": "Biriktirilgan fayl sizning fayllaringiz orasida topilmadi."
     },
     "admin": {
-      "logo-type-not-allowed": "Logotip PNG, JPEG yoki WebP rasmi bo‘lishi kerak.",
+      "logo-type-not-allowed": "Logotip PNG, JPEG yoki WebP rasmi boʻlishi kerak.",
       "logo-too-large": "Logotip 1 MB dan katta.",
       "bot-not-found": "Bot topilmadi.",
       "bot-exists": "Bu bot allaqachon qoʻshilgan.",
@@ -577,9 +582,9 @@
     },
     "temporary-mark": {
       "not-found": "Vaqtinchalik baho topilmadi.",
-      "student-not-in-lesson": "Bu o‘quvchi darsda yo‘q.",
-      "value-invalid": "Vaqtinchalik baho 2 dan 5 gacha bo‘lishi kerak.",
-      "comment-invalid": "Izoh 500 belgigacha bo‘lishi mumkin."
+      "student-not-in-lesson": "Bu oʻquvchi darsda yoʻq.",
+      "value-invalid": "Vaqtinchalik baho 2 dan 5 gacha boʻlishi kerak.",
+      "comment-invalid": "Izoh 500 belgigacha boʻlishi mumkin."
     },
     "faces": {
       "locked": "Bu suratni kurator yoki administrator qoʻygan. Uni faqat ular oʻzgartira oladi.",
@@ -1833,41 +1838,41 @@
   },
   "feedback": {
     "menu": {
-      "suggest": "G‘oya taklif qilish yoki muammo haqida xabar berish",
+      "suggest": "Gʻoya taklif qilish yoki muammo haqida xabar berish",
       "mine": "Mening murojaatlarim"
     },
     "dialog": {
-      "title": "G‘oya taklif qilish yoki muammo haqida xabar berish",
+      "title": "Gʻoya taklif qilish yoki muammo haqida xabar berish",
       "kind": "Turi",
-      "area": "Bo‘lim",
+      "area": "Boʻlim",
       "titleField": "Sarlavha",
       "description": "Batafsil",
       "attachments": "Skrinshotlar yoki fayllar",
       "attachmentsHint": "10 tagacha rasm. Ularni shu yerga tashlang yoki fayl tanlang.",
       "chooseFiles": "Fayllarni tanlash",
-      "dropHere": "Qo‘shish uchun tashlang",
-      "remove": "O‘chirish",
+      "dropHere": "Qoʻshish uchun tashlang",
+      "remove": "Oʻchirish",
       "cancel": "Bekor qilish",
       "submit": "Yuborish",
       "sending": "Yuborilmoqda…",
       "sent": "Rahmat. Xabaringiz qabul qilindi.",
       "close": "Yopish",
-      "tooMany": "Ko‘pi bilan 10 ta fayl biriktirish mumkin.",
+      "tooMany": "Koʻpi bilan 10 ta fayl biriktirish mumkin.",
       "notImage": "Faqat rasmlarni biriktirish mumkin.",
-      "rateLimited": "Siz juda ko‘p xabar yubordingiz. Keyinroq urinib ko‘ring.",
+      "rateLimited": "Siz juda koʻp xabar yubordingiz. Keyinroq urinib koʻring.",
       "uploading": "Yuklanmoqda {percent}%",
       "uploadFailed": "Fayl yuklanmadi.",
       "uploadRejected": "Fayl rad etildi."
     },
     "kind": {
-      "idea": "G‘oya",
+      "idea": "Gʻoya",
       "bug": "Muammo",
       "other": "Boshqa"
     },
     "area": {
       "id": "{appId}",
       "my": "{appMy}",
-      "staff": "{brand} O‘qituvchilar",
+      "staff": "{brand} Oʻqituvchilar",
       "admin": "Boshqaruv",
       "lms": "LMS",
       "library": "Kutubxona",
@@ -1880,7 +1885,7 @@
     },
     "status": {
       "new": "Yangi",
-      "in_review": "Ko‘rib chiqilmoqda",
+      "in_review": "Koʻrib chiqilmoqda",
       "planned": "Rejalashtirilgan",
       "done": "Bajarildi",
       "rejected": "Rad etildi"
@@ -1888,9 +1893,9 @@
     "page": {
       "title": "Mening murojaatlarim",
       "empty": "Siz hali murojaat yubormagansiz.",
-      "showResponses": "Javoblarni ko‘rsatish",
+      "showResponses": "Javoblarni koʻrsatish",
       "hideResponses": "Javoblarni yashirish",
-      "noResponses": "Hozircha javob yo‘q.",
+      "noResponses": "Hozircha javob yoʻq.",
       "responses": "Javoblar",
       "sentAt": "Yuborilgan: {date}",
       "openFile": "Faylni ochish",
@@ -1969,7 +1974,7 @@
     "securityContact": {
       "button": "Xavfsizlik aloqasi",
       "title": "Xavfsizlik aloqasi",
-      "hint": "Hisobingizga boshqa birov kirganiga shubhangiz bo‘lsa, shu yerga yozing."
+      "hint": "Hisobingizga boshqa birov kirganiga shubhangiz boʻlsa, shu yerga yozing."
     }
   },
   "idErrors": {

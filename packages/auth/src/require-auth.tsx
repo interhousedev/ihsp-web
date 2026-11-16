@@ -20,6 +20,14 @@ export function RequireAuth({ children }: { children: ReactNode }) {
   const networkError = useAuthStore((state) => state.networkError)
   const [stopped, setStopped] = useState(false)
 
+  // The browser is back online: retry the failed start by itself instead of waiting for a click.
+  useEffect(() => {
+    if (!networkError) return
+    const retry = () => void retryBootstrap()
+    window.addEventListener("online", retry)
+    return () => window.removeEventListener("online", retry)
+  }, [networkError])
+
   useEffect(() => {
     if (status !== "anonymous") return
     login(undefined, { guard: true }).catch(() => setStopped(true))

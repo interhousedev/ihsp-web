@@ -33,7 +33,7 @@ export type UserMenuItem = {
 
 /** A platform of the IHSP family the user can open from the menu (built by `usePlatformLinks` in `@ihsp/features-core`). */
 export type PlatformLink = {
-  key: "sp" | "staff" | "admin" | "lms" | "library" | "id"
+  key: "sp" | "staff" | "admin" | "lms" | "library" | "admission" | "id"
   /** Site name: my.iht, IHT Учителям, admin.iht, lms.iht, library.iht, IHT ID. */
   name: string
   /** What the platform is for, already translated. */

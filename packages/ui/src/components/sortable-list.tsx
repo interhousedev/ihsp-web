@@ -38,7 +38,7 @@ function SortableRow({ id, handleLabel, children }: { id: string; handleLabel: s
         type="button"
         ref={setActivatorNodeRef}
         aria-label={handleLabel}
-        className="text-muted-foreground hover:bg-accent flex size-9 shrink-0 cursor-grab touch-none items-center justify-center rounded-lg focus-visible:ring-[3px] focus-visible:ring-ring/50 focus-visible:outline-none active:cursor-grabbing"
+        className="text-muted-foreground hover:bg-accent flex size-11 md:size-9 shrink-0 cursor-grab touch-none items-center justify-center rounded-lg focus-visible:ring-[3px] focus-visible:ring-ring/50 focus-visible:outline-none active:cursor-grabbing"
         {...attributes}
         {...listeners}
       >

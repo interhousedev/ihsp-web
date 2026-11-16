@@ -213,6 +213,10 @@
       "name": "{appLibrary}",
       "description": "Books & materials"
     },
+    "admission": {
+      "name": "{appAdmission}",
+      "description": "Applying to universities"
+    },
     "id": {
       "name": "{appId}",
       "description": "Account & security"
@@ -239,7 +243,8 @@
     "legal": {
       "stale-version": "A newer version was published. Review it and accept again.",
       "incomplete": "Fill in the title and text in every language first.",
-      "consent-required": "Accept every document to continue."
+      "consent-required": "Accept every document to continue.",
+      "guardian-attestation-required": "Tick the box to confirm that your legal guardian has approved this."
     },
     "generic": "Something went wrong. Try again in a moment.",
     "identity": {

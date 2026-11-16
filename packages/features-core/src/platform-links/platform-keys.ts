@@ -1,20 +1,20 @@
 import type { Role } from "@ihsp/api"
 
-export type PlatformKey = "sp" | "staff" | "admin" | "lms" | "library" | "id"
+export type PlatformKey = "sp" | "staff" | "admin" | "lms" | "library" | "admission" | "id"
 
 /** Display order of the platforms in the profile menu. */
-const ORDER: readonly PlatformKey[] = ["sp", "staff", "admin", "lms", "library", "id"]
+const ORDER: readonly PlatformKey[] = ["sp", "staff", "admin", "lms", "library", "admission", "id"]
 
 const BY_ROLE: Record<Role, readonly PlatformKey[]> = {
-  student: ["sp", "lms", "library", "id"],
-  teacher: ["staff", "lms", "library", "id"],
-  admin: ["admin", "lms", "library", "id"],
-  lms_admin: ["lms", "library", "id"],
-  lms_creator: ["lms", "library", "id"],
-  librarian: ["library", "id"],
-  counselor: ["id"],
-  mentor: ["id"],
-  transcript_officer: ["id"],
+  student: ["sp", "lms", "library", "admission", "id"],
+  teacher: ["staff", "lms", "library", "admission", "id"],
+  admin: ["admin", "lms", "library", "admission", "id"],
+  lms_admin: ["lms", "library", "admission", "id"],
+  lms_creator: ["lms", "library", "admission", "id"],
+  librarian: ["library", "admission", "id"],
+  counselor: ["admission", "id"],
+  mentor: ["admission", "id"],
+  transcript_officer: ["admission", "id"],
 }
 
 /**

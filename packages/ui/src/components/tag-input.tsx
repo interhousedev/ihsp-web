@@ -8,13 +8,17 @@ import { Pill } from "./pill"
 /**
  * Free-text tags: Enter or a comma adds the typed text, Backspace in an empty field removes the last tag. Duplicates
  * (ignoring case) and tags beyond `max` are dropped. All labels come from the caller, so the text is translated there.
+ * With `options` the field is a searchable multi-select: only listed values can be added, each shown by its label.
  */
+export type TagOption = { value: string; label: string }
+
 export function TagInput({
   value,
   onChange,
   placeholder,
   removeLabel,
   max,
+  options,
   maxLength = 60,
   disabled,
   id,
@@ -27,6 +31,7 @@ export function TagInput({
   /** Accessible name of a tag's remove button; gets the tag's text. */
   removeLabel: (tag: string) => string
   max?: number
+  options?: TagOption[]
   maxLength?: number
   disabled?: boolean
   id?: string
@@ -36,17 +41,36 @@ export function TagInput({
   const [draft, setDraft] = useState("")
   const full = max !== undefined && value.length >= max
 
+  const labelOf = (tag: string) => options?.find((option) => option.value === tag)?.label ?? tag
+  const query = draft.trim().toLowerCase()
+  const matches = options
+    ? options
+        .filter((option) => !value.includes(option.value) && (!query || option.label.toLowerCase().includes(query)))
+        .slice(0, 8)
+    : []
+
   function commit(text: string) {
-    const tag = text.trim().slice(0, maxLength)
+    let tag = text.trim().slice(0, maxLength)
     setDraft("")
+    if (options) {
+      const found = options.find((option) => option.label.toLowerCase() === tag.toLowerCase())
+      if (!found) return
+      tag = found.value
+    }
     if (!tag || full || value.some((existing) => existing.toLowerCase() === tag.toLowerCase())) return
     onChange([...value, tag])
+  }
+
+  function add(tag: string) {
+    setDraft("")
+    if (!full) onChange([...value, tag])
   }
 
   function onKeyDown(event: KeyboardEvent<HTMLInputElement>) {
     if (event.key === "Enter" || event.key === ",") {
       event.preventDefault()
-      commit(draft)
+      if (options && matches[0]) add(matches[0].value)
+      else commit(draft)
     } else if (event.key === "Backspace" && draft === "" && value.length > 0) {
       onChange(value.slice(0, -1))
     }
@@ -55,7 +79,7 @@ export function TagInput({
   return (
     <div
       className={cn(
-        "border-input bg-background flex min-h-10 flex-wrap items-center gap-1.5 rounded-lg border px-2 py-1.5",
+        "border-input bg-background relative flex min-h-10 flex-wrap items-center gap-1.5 rounded-lg border px-2 py-1.5",
         "focus-within:border-ring focus-within:ring-[3px] focus-within:ring-ring/50",
         disabled && "opacity-50",
         className,
@@ -63,11 +87,11 @@ export function TagInput({
     >
       {value.map((tag) => (
         <Pill key={tag} className="h-6 gap-1 pr-1 pl-2.5 text-xs">
-          {tag}
+          {labelOf(tag)}
           <button
             type="button"
             disabled={disabled}
-            aria-label={removeLabel(tag)}
+            aria-label={removeLabel(labelOf(tag))}
             onClick={() => onChange(value.filter((existing) => existing !== tag))}
             className="hover:bg-accent flex size-5 cursor-pointer items-center justify-center rounded-full focus-visible:ring-2 focus-visible:ring-ring focus-visible:outline-none"
           >
@@ -84,9 +108,25 @@ export function TagInput({
         maxLength={maxLength}
         onChange={(event) => setDraft(event.target.value)}
         onKeyDown={onKeyDown}
-        onBlur={() => commit(draft)}
+        onBlur={() => (options ? setDraft("") : commit(draft))}
         className="placeholder:text-muted-foreground min-w-24 flex-1 bg-transparent text-sm outline-none"
       />
+      {options && query && matches.length > 0 && (
+        <ul className="bg-popover text-popover-foreground absolute inset-x-0 top-full z-20 mt-1 max-h-56 overflow-auto rounded-lg border p-1 shadow-md">
+          {matches.map((option) => (
+            <li key={option.value}>
+              <button
+                type="button"
+                onMouseDown={(event) => event.preventDefault()}
+                onClick={() => add(option.value)}
+                className="hover:bg-accent min-h-11 w-full cursor-pointer rounded-md px-2 text-left text-sm md:min-h-8"
+              >
+                {option.label}
+              </button>
+            </li>
+          ))}
+        </ul>
+      )}
     </div>
   )
 }

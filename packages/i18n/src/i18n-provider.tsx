@@ -30,13 +30,26 @@ function messageFallback({ namespace, key }: { namespace?: string; key: string }
   return namespace ? `${namespace}.${key}` : key
 }
 
-function MessagesFailed() {
+/** Bundled on purpose: this screen shows when the message chunks themselves could not be loaded (offline). */
+const FAILED_TEXT: Record<Locale, { text: string; reload: string }> = {
+  en: { text: "The page could not be loaded.", reload: "Reload" },
+  ru: { text: "Не удалось загрузить страницу.", reload: "Обновить" },
+  uz: { text: "Sahifani yuklab boʻlmadi.", reload: "Yangilash" },
+}
+
+function MessagesFailed({ locale }: { locale: Locale }) {
+  const { text, reload } = FAILED_TEXT[locale]
+  useEffect(() => {
+    const retry = () => window.location.reload()
+    window.addEventListener("online", retry)
+    return () => window.removeEventListener("online", retry)
+  }, [])
   return (
     <div role="alert" style={{ display: "grid", minHeight: "100dvh", placeItems: "center", padding: 16 }}>
       <p style={{ margin: 0, textAlign: "center" }}>
-        The page could not be loaded.{" "}
+        {text}{" "}
         <button type="button" onClick={() => window.location.reload()} style={{ textDecoration: "underline" }}>
-          Reload
+          {reload}
         </button>
       </p>
     </div>
@@ -97,7 +110,7 @@ export function I18nProvider({
 
   // Until the messages exist: the same spinner as the static HTML and the app's own loading states. A failed load
   // (stale chunk after a deployment, offline) must not leave a blank page: offer a reload in plain words.
-  if (!loaded) return failed ? <MessagesFailed /> : <BootSplash />
+  if (!loaded) return failed ? <MessagesFailed locale={locale} /> : <BootSplash />
 
   return (
     <NextIntlClientProvider

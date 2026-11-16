@@ -29,31 +29,31 @@ function linksFor(
 }
 
 describe("platformKeysFor", () => {
-  it("gives a student SP, LMS, the Library and ID", () => {
-    expect(platformKeysFor(["student"])).toEqual(["sp", "lms", "library", "id"])
+  it("gives a student SP, LMS, the Library, Admission and ID", () => {
+    expect(platformKeysFor(["student"])).toEqual(["sp", "lms", "library", "admission", "id"])
   })
 
   it("gives a teacher Staff, LMS, the Library and ID", () => {
-    expect(platformKeysFor(["teacher"])).toEqual(["staff", "lms", "library", "id"])
+    expect(platformKeysFor(["teacher"])).toEqual(["staff", "lms", "library", "admission", "id"])
   })
 
   it("gives an admin Admin, LMS, the Library and ID, and Staff only when the admin is also a teacher", () => {
-    expect(platformKeysFor(["admin"])).toEqual(["admin", "lms", "library", "id"])
-    expect(platformKeysFor(["admin", "teacher"])).toEqual(["staff", "admin", "lms", "library", "id"])
+    expect(platformKeysFor(["admin"])).toEqual(["admin", "lms", "library", "admission", "id"])
+    expect(platformKeysFor(["admin", "teacher"])).toEqual(["staff", "admin", "lms", "library", "admission", "id"])
   })
 
   it("gives an LMS administrator LMS, the Library and ID", () => {
-    expect(platformKeysFor(["lms_admin"])).toEqual(["lms", "library", "id"])
+    expect(platformKeysFor(["lms_admin"])).toEqual(["lms", "library", "admission", "id"])
   })
 
   it("gives a course creator LMS, the Library and ID, next to the teacher's Staff", () => {
-    expect(platformKeysFor(["lms_creator"])).toEqual(["lms", "library", "id"])
-    expect(platformKeysFor(["teacher", "lms_creator"])).toEqual(["staff", "lms", "library", "id"])
+    expect(platformKeysFor(["lms_creator"])).toEqual(["lms", "library", "admission", "id"])
+    expect(platformKeysFor(["teacher", "lms_creator"])).toEqual(["staff", "lms", "library", "admission", "id"])
   })
 
   it("gives a librarian the Library and ID, and adds up with the student roles", () => {
-    expect(platformKeysFor(["librarian"])).toEqual(["library", "id"])
-    expect(platformKeysFor(["student", "librarian"])).toEqual(["sp", "lms", "library", "id"])
+    expect(platformKeysFor(["librarian"])).toEqual(["library", "admission", "id"])
+    expect(platformKeysFor(["student", "librarian"])).toEqual(["sp", "lms", "library", "admission", "id"])
   })
 
   it("always offers the account", () => {
@@ -69,6 +69,7 @@ describe("usePlatformLinks", () => {
       ["sp", "my.iht", "Student portal", "http://localhost:3002"],
       ["lms", "lms.iht", "Courses", "http://localhost:3005"],
       ["library", "library.iht", "Books & materials", "http://localhost:3008"],
+      ["admission", "admission.iht", "Applying to universities", "http://localhost:3009"],
       ["id", "IHT ID", "Account & security", "http://localhost:3001"],
     ])
   })
@@ -81,7 +82,7 @@ describe("usePlatformLinks", () => {
       session: { user: { ...userMe, roles: ["student"] } },
     })
 
-    expect(seen.map((link) => link.key)).toEqual(["sp", "lms", "id"])
+    expect(seen.map((link) => link.key)).toEqual(["sp", "lms", "admission", "id"])
   })
 
   it("sends the separately installed apps to their install steps on the apps hub in the installed app", () => {
@@ -93,6 +94,7 @@ describe("usePlatformLinks", () => {
         ["sp", "http://localhost:3002"],
         ["lms", "https://app.ihsu.uz/install/?app=lms"],
         ["library", "https://app.ihsu.uz/install/?app=library"],
+        ["admission", "http://localhost:3009"],
         ["id", "http://localhost:3001"],
       ])
     } finally {

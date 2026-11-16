@@ -17,6 +17,7 @@ export const TEST_ENV: AppEnv = {
   ADMIN_URL: "http://localhost:3004",
   LMS_URL: "http://localhost:3005",
   LIBRARY_URL: "http://localhost:3008",
+  ADMISSION_URL: "http://localhost:3009",
   SHARE_URL: "http://localhost:3006",
   SHORT_LINKS_URL: "http://localhost:8000",
   ROOMS_URL: "http://localhost:8000",

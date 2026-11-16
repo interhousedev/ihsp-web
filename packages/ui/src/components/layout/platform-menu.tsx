@@ -15,6 +15,7 @@ export const PLATFORM_ICONS: Record<PlatformLink["key"], IconName> = {
   admin: "settings",
   lms: "courses",
   library: "library",
+  admission: "admission",
   id: "account",
 }
 
