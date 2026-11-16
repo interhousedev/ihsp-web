@@ -3,7 +3,7 @@
 import type { PromptSlot } from "@ihsp/api"
 import { useT } from "@ihsp/i18n"
 import { Badge, Button, Card, CardContent, CardHeader, CardTitle } from "@ihsp/ui"
-import { slotKey } from "../utils"
+import { slotKey, summaryKey } from "../utils"
 
 /** Every editable slot, grouped by the AI task it belongs to. */
 export function PromptList({
@@ -41,7 +41,7 @@ export function PromptList({
                   >
                     <span className="flex min-w-0 flex-col">
                       <span className="text-sm font-medium">{slot.name}</span>
-                      <span className="text-muted-foreground text-xs">{slot.summary}</span>
+                      <span className="text-muted-foreground text-xs">{t.has(summaryKey(slot.summary)) ? t(summaryKey(slot.summary)) : slot.summary}</span>
                     </span>
                     {slot.overridden ? <Badge variant="secondary">{t("list.overridden")}</Badge> : null}
                   </Button>

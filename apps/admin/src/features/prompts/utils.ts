@@ -43,3 +43,11 @@ export function parseSlotKey(key: string | null): { task: string; name: string }
   const at = key.indexOf("/")
   return at > 0 && at < key.length - 1 ? { task: key.slice(0, at), name: key.slice(at + 1) } : null
 }
+
+/** The message key of a slot's description: the backend summary as a snake_case slug. */
+export function summaryKey(summary: string): string {
+  return `summaries.${summary
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, "_")
+    .replace(/^_|_$/g, "")}`
+}

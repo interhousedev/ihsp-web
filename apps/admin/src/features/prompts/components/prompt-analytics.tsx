@@ -8,12 +8,7 @@ import {
   CardContent,
   CardHeader,
   CardTitle,
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableHeader,
-  TableRow,
+  ResponsiveTable,
 } from "@ihsp/ui"
 import { useQuery } from "@tanstack/react-query"
 import { addDays, compact, todayIso, usd } from "../../limits/utils"
@@ -32,32 +27,47 @@ export function PromptAnalytics({ task }: { task?: string }) {
       <CardContent>
         <QueryState query={query} rows={3} isEmpty={(data) => data.items.length === 0} emptyText={t("analytics.empty")}>
           {({ items }) => (
-            <Table>
-              <TableHeader>
-                <TableRow>
-                  <TableHead>{t("analytics.task")}</TableHead>
-                  <TableHead>{t("analytics.version")}</TableHead>
-                  <TableHead className="text-end">{t("analytics.calls")}</TableHead>
-                  <TableHead className="text-end">{t("analytics.tokens")}</TableHead>
-                  <TableHead className="text-end">{t("analytics.cost")}</TableHead>
-                  <TableHead className="text-end">{t("analytics.errors")}</TableHead>
-                </TableRow>
-              </TableHeader>
-              <TableBody>
-                {items.map((row) => (
-                  <TableRow key={`${row.task}:${row.version}`}>
-                    <TableCell>{row.task}</TableCell>
-                    <TableCell>{row.version === 0 ? t("editor.builtin") : `v${row.version}`}</TableCell>
-                    <TableCell className="text-end tabular-nums">{compact(row.calls, f.locale)}</TableCell>
-                    <TableCell className="text-end tabular-nums">
-                      {compact(row.input_tokens + row.output_tokens, f.locale)}
-                    </TableCell>
-                    <TableCell className="text-end tabular-nums">{usd(row.cost_usd, f.locale)}</TableCell>
-                    <TableCell className="text-end tabular-nums">{Math.round(row.error_rate * 1000) / 10}%</TableCell>
-                  </TableRow>
-                ))}
-              </TableBody>
-            </Table>
+            <ResponsiveTable
+              label={t("analytics.title")}
+              rows={items}
+              rowKey={(row) => `${row.task}:${row.version}`}
+              columns={[
+                { id: "task", header: t("analytics.task"), role: "title", cell: (row) => row.task },
+                {
+                  id: "version",
+                  header: t("analytics.version"),
+                  cell: (row) => (row.version === 0 ? t("editor.builtin") : `v${row.version}`),
+                },
+                {
+                  id: "calls",
+                  header: t("analytics.calls"),
+                  headClassName: "text-end",
+                  cellClassName: "text-end tabular-nums",
+                  cell: (row) => compact(row.calls, f.locale),
+                },
+                {
+                  id: "tokens",
+                  header: t("analytics.tokens"),
+                  headClassName: "text-end",
+                  cellClassName: "text-end tabular-nums",
+                  cell: (row) => compact(row.input_tokens + row.output_tokens, f.locale),
+                },
+                {
+                  id: "cost",
+                  header: t("analytics.cost"),
+                  headClassName: "text-end",
+                  cellClassName: "text-end tabular-nums",
+                  cell: (row) => usd(row.cost_usd, f.locale),
+                },
+                {
+                  id: "errors",
+                  header: t("analytics.errors"),
+                  headClassName: "text-end",
+                  cellClassName: "text-end tabular-nums",
+                  cell: (row) => `${Math.round(row.error_rate * 1000) / 10}%`,
+                },
+              ]}
+            />
           )}
         </QueryState>
       </CardContent>

@@ -39,6 +39,7 @@ type FormState = {
   account_kind: AccountKind
   roles: Role[]
 }
+const EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
 const EMPTY: FormState = {
   last_name: "",
   first_name: "",
@@ -74,7 +75,8 @@ export function CreateUserDialog({ open, onOpenChange }: { open: boolean; onOpen
     onSuccess: setCreated,
   })
   const fieldErrors = useServerFieldErrors(create.error)
-  const valid = form.last_name.trim() !== "" && form.first_name.trim() !== "" && form.roles.length > 0
+  const emailInvalid = form.email.trim() !== "" && !EMAIL_PATTERN.test(form.email.trim())
+  const valid = form.last_name.trim() !== "" && form.first_name.trim() !== "" && form.roles.length > 0 && !emailInvalid
 
   function toggle(role: Role, checked: boolean) {
     setForm((current) => ({
@@ -122,6 +124,7 @@ export function CreateUserDialog({ open, onOpenChange }: { open: boolean; onOpen
       open={open}
       onOpenChange={onOpenChange}
       size="md"
+      noValidate
       title={t("title")}
       description={t("description")}
       onSubmit={(event) => {
@@ -182,10 +185,15 @@ export function CreateUserDialog({ open, onOpenChange }: { open: boolean; onOpen
           onChange={(event) => setForm({ ...form, phone: event.target.value })}
         />
       </LabeledField>
-      <LabeledField label={t("email")} htmlFor="create-user-email">
+      <LabeledField
+        label={t("email")}
+        htmlFor="create-user-email"
+        description={emailInvalid ? t("emailInvalid") : undefined}
+      >
         <Input
           id="create-user-email"
           type="email"
+          aria-invalid={emailInvalid}
           value={form.email}
           className={TOUCH}
           onChange={(event) => setForm({ ...form, email: event.target.value })}

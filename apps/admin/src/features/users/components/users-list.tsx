@@ -120,30 +120,23 @@ export function UsersList() {
         all: tSel("selectAll"),
         row: (user) => tSel("selectRow", { name: fullNameWithMiddle(user) }),
       }),
-      col<AdminUser>("avatar", t("columns.avatar"), (user) => (
-        <FaceAvatar userId={user.id} name={fullNameWithMiddle(user)} />
-      )),
       col<AdminUser>(
         "name",
         t("columns.name"),
         (user) => (
-          <Link
-            href={`/users/view/?id=${encodeURIComponent(user.id)}`}
-            className="font-medium underline-offset-4 hover:underline"
-          >
-            {fullNameWithMiddle(user)}
-          </Link>
+          <span className="flex items-center gap-2">
+            <FaceAvatar userId={user.id} name={fullNameWithMiddle(user)} />
+            <Link
+              href={`/users/view/?id=${encodeURIComponent(user.id)}`}
+              className="font-medium underline-offset-4 hover:underline"
+            >
+              {fullNameWithMiddle(user)}
+            </Link>
+          </span>
         ),
         { sort: fullNameWithMiddle },
       ),
       col<AdminUser>("login", t("columns.login"), (user) => user.login ?? "—", { sort: (user) => user.login }),
-      col<AdminUser>("phone", t("columns.phone"), (user) => user.phone ?? "—", { sort: (user) => user.phone }),
-      col<AdminUser>(
-        "account_kind",
-        t("columns.accountKind"),
-        (user) => (user.account_kind ? t(`create.kinds.${user.account_kind}`) : "—"),
-        { sort: (user) => user.account_kind },
-      ),
       col<AdminUser>("roles", t("columns.roles"), (user) => <RoleChips roles={user.roles} />, {
         sort: (user) => user.roles.map((role) => t(`roles.${role}`)).join(" "),
       }),

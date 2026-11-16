@@ -3,7 +3,7 @@
 import { getAdminLegalAcceptancesQuery, getAdminLegalDocumentsQuery, LEGAL_SCOPES, type LegalScope } from "@ihsp/api"
 import { QueryState } from "@ihsp/features-core"
 import { useT } from "@ihsp/i18n"
-import { PageContainer } from "@ihsp/ui"
+import { PageContainer, Sheet, SheetContent, SheetDescription, SheetTitle } from "@ihsp/ui"
 import { useQuery } from "@tanstack/react-query"
 import { useState } from "react"
 import { SelectField } from "../../shared/components/select-field"
@@ -42,13 +42,19 @@ export function LegalPage() {
           return (
             <>
               <LegalKindList states={states} selected={selected} onSelect={setSelected} />
-              {current ? (
-                <LegalEditor
-                  key={`${current.scope}:${current.kind}`}
-                  state={current}
-                  onClose={() => setSelected(null)}
-                />
-              ) : null}
+              <Sheet open={current !== undefined} onOpenChange={(open) => !open && setSelected(null)}>
+                <SheetContent side="right" className="w-full overflow-y-auto sm:max-w-5xl">
+                  <SheetTitle className="sr-only">{t("title")}</SheetTitle>
+                  <SheetDescription className="sr-only">{t("editor.publishHint")}</SheetDescription>
+                  {current ? (
+                    <LegalEditor
+                      key={`${current.scope}:${current.kind}`}
+                      state={current}
+                      onClose={() => setSelected(null)}
+                    />
+                  ) : null}
+                </SheetContent>
+              </Sheet>
             </>
           )
         }}

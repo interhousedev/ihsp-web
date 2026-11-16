@@ -24,6 +24,7 @@ import {
 } from "@ihsp/ui"
 import { useMutation, useQueryClient } from "@tanstack/react-query"
 import { useId, useState } from "react"
+import { toast } from "sonner"
 import { formFrom, LEGAL_LOCALES, type LegalEditorLocale, type LegalForm, type LegalKindState } from "../utils"
 
 type LegalEditorProps = { state: LegalKindState; onClose: () => void }
@@ -50,7 +51,7 @@ function LocalePane({
           <FieldLabel htmlFor={`${id}-body`}>{t("editor.body")}</FieldLabel>
           <Textarea
             id={`${id}-body`}
-            rows={14}
+            rows={24}
             className="font-mono text-sm"
             value={form.body[locale]}
             onChange={(e) => onChange("body", e.target.value)}
@@ -100,13 +101,17 @@ export function LegalEditor({ state, onClose }: LegalEditorProps) {
         },
         scope,
       ),
-    onSuccess: refresh,
+    onSuccess: async () => {
+      await refresh()
+      toast.success(t("editor.saved"))
+    },
   })
   const publish = useMutation({
     mutationFn: () => postAdminLegalPublish(kind, scope),
     onSuccess: async () => {
       setConfirming(false)
       await refresh()
+      toast.success(t("editor.published"))
       onClose()
     },
     onError: () => setConfirming(false),
@@ -153,7 +158,7 @@ export function LegalEditor({ state, onClose }: LegalEditorProps) {
             <AlertDescription>{message}</AlertDescription>
           </Alert>
         ) : null}
-        {save.isSuccess && !error ? <p className="text-sm text-muted-foreground">{t("editor.saved")}</p> : null}
+        <p className="text-sm text-muted-foreground">{t("editor.publishHint")}</p>
         <div className="flex flex-wrap gap-2">
           <LoadingButton
             type="button"

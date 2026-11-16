@@ -8,6 +8,7 @@ import { useQuery } from "@tanstack/react-query"
 import { parseAsString, useQueryState } from "nuqs"
 import { parseSlotKey } from "../utils"
 import { PromptAnalytics } from "./prompt-analytics"
+import { PromptCalls } from "./prompt-calls"
 import { PromptEditor } from "./prompt-editor"
 import { PromptList } from "./prompt-list"
 
@@ -31,6 +32,7 @@ export function PromptsPage() {
         )}
       </div>
       <PromptAnalytics task={selected?.task} />
+      {selected ? <PromptCalls task={selected.task} /> : null}
     </PageContainer>
   )
 }

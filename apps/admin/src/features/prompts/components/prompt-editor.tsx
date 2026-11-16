@@ -28,7 +28,7 @@ import { useQuery } from "@tanstack/react-query"
 import { useState } from "react"
 import { SelectField } from "../../shared/components/select-field"
 import { useAdminMutation } from "../../shared/hooks/use-admin-mutation"
-import { PROMPT_LOCALES } from "../utils"
+import { PROMPT_LOCALES, summaryKey } from "../utils"
 import { PromptDiff } from "./prompt-diff"
 import { PromptHistory } from "./prompt-history"
 
@@ -88,7 +88,7 @@ function EditorForm({ detail, locale }: { detail: PromptDetail; locale: PromptLo
   const changed = text !== detail.text
   return (
     <div className="flex flex-col gap-4">
-      <p className="text-muted-foreground text-sm">{detail.summary}</p>
+      <p className="text-muted-foreground text-sm">{t.has(summaryKey(detail.summary)) ? t(summaryKey(detail.summary)) : detail.summary}</p>
       <div className="flex flex-wrap items-center gap-2 text-xs">
         <Badge variant="secondary">
           {detail.version === 0 ? t("editor.builtin") : t("history.version", { version: detail.version })}
