@@ -1,0 +1,1174 @@
+{
+  "app": {
+    "name": "{appAdmission}",
+    "description": "Preparing applications to universities"
+  },
+  "nav": {
+    "home": "Home",
+    "profile": "Profile",
+    "activities": "Activities & honors",
+    "plans": "Future plans",
+    "universities": "Universities",
+    "documents": "Documents & deadlines",
+    "courses": "Courses",
+    "settings": "Settings",
+    "groupSteps": "Application",
+    "groupMore": "More",
+    "groupStaff": "Staff",
+    "caseload": "Caseload",
+    "staffDocuments": "Documents queue",
+    "transcripts": "Transcripts",
+    "deadlines": "Deadlines",
+    "catalog": "Catalog review",
+    "inbox": "Comment inbox",
+    "help": "Help"
+  },
+  "home": {
+    "title": "Your application",
+    "stepsLabel": "Application steps",
+    "steps": {
+      "profile": "Profile",
+      "activities": "Activities & honors",
+      "plans": "Future plans",
+      "universities": "Universities",
+      "documents": "Documents & deadlines",
+      "id": "iht.id"
+    },
+    "linksLabel": "Quick links",
+    "links": {
+      "words": "Three words",
+      "alignment": "Alignment",
+      "courses": "Courses"
+    }
+  },
+  "pages": {
+    "profile": {
+      "title": "Profile",
+      "emptyTitle": "Your profile is empty",
+      "emptyText": "Answers you give will appear here."
+    },
+    "activities": {
+      "title": "Activities & honors",
+      "emptyTitle": "No activities yet",
+      "emptyText": "Your activities and honors will appear here."
+    },
+    "plans": {
+      "title": "Future plans",
+      "emptyTitle": "No plans yet",
+      "emptyText": "Your goals and plans will appear here."
+    },
+    "universities": {
+      "title": "Universities",
+      "emptyTitle": "No universities yet",
+      "emptyText": "Universities you add will appear here."
+    },
+    "documents": {
+      "title": "Documents & deadlines",
+      "emptyTitle": "No documents yet",
+      "emptyText": "Documents and deadlines will appear here."
+    },
+    "courses": {
+      "title": "Courses",
+      "emptyTitle": "No courses yet",
+      "emptyText": "Courses will appear here."
+    },
+    "settings": {
+      "title": "Settings",
+      "emptyTitle": "Nothing to set yet",
+      "emptyText": "Your settings will appear here."
+    },
+    "caseload": {
+      "title": "Caseload",
+      "emptyTitle": "No students yet",
+      "emptyText": "Students assigned to you will appear here."
+    },
+    "staffDocuments": {
+      "title": "Documents queue",
+      "emptyTitle": "No documents to review",
+      "emptyText": "Uploaded documents will appear here."
+    },
+    "transcripts": {
+      "title": "Transcripts",
+      "emptyTitle": "No transcript requests",
+      "emptyText": "Transcript requests will appear here."
+    },
+    "staffDeadlines": {
+      "title": "Deadlines",
+      "emptyTitle": "No deadlines yet",
+      "emptyText": "Deadlines will appear here."
+    },
+    "catalog": {
+      "title": "Catalog review",
+      "emptyTitle": "Nothing to review",
+      "emptyText": "Catalog proposals will appear here."
+    }
+  },
+  "consent": {
+    "title": "Before you continue",
+    "accept": "I have read and accept: {title}",
+    "updated": "updated to version {version}",
+    "read": "Read the document",
+    "guardian": "If I am under 18: my legal guardian has approved this and acknowledges it.",
+    "tickFirst": "Tick the boxes above to unlock the slider.",
+    "slideHint": "Slide to confirm that you decide for yourself; AI and staff only advise.",
+    "slide": "Slide to agree",
+    "slideDone": "Agreed",
+    "signOut": "Sign out",
+    "continue": "Continue"
+  },
+  "privacy": {
+    "title": "Settings and privacy",
+    "purposes": {
+      "title": "What we may use your data for",
+      "intro": "Each switch is a separate permission. You can withdraw any of them at any time.",
+      "givenAt": "Allowed on {date}",
+      "withdrawnAt": "Withdrawn on {date}",
+      "nonAi": "AI is off for you: no AI feature will process your data."
+    },
+    "data": {
+      "title": "Your data"
+    },
+    "export": {
+      "text": "Download everything we store about your admission as a JSON file.",
+      "action": "Download my data"
+    },
+    "erase": {
+      "word": "DELETE",
+      "text": "Erase all admission data we hold about you. This cannot be undone.",
+      "action": "Erase my data",
+      "title": "Erase all admission data?",
+      "warning": "Your profile, essays, plans and consents will be deleted permanently.",
+      "confirm": "Erase",
+      "typePrompt": "Type {word} to confirm",
+      "done": "Erased {count} records."
+    },
+    "audit": {
+      "title": "Who viewed my data",
+      "intro": "Every time staff open your data, it is recorded here.",
+      "empty": "Nobody has viewed your data yet."
+    }
+  },
+  "staff": {
+    "caseload": {
+      "title": "Caseload",
+      "listLabel": "Students",
+      "noGroup": "No group",
+      "student": "student {id}",
+      "nextDue": "Next deadline {date}",
+      "noDeadline": "No deadlines",
+      "overdue": "{count} overdue",
+      "help": "{count} help requests",
+      "limited": "Limited access",
+      "emptyTitle": "No students yet",
+      "emptyText": "Students assigned to you will appear here."
+    },
+    "filters": {
+      "title": "Filters",
+      "any": "Any",
+      "stage": "Stage",
+      "group": "Group",
+      "deadlineBefore": "Deadline before",
+      "risk": "At risk only",
+      "clear": "Clear filters"
+    },
+    "stages": {
+      "setup": "Profile setup",
+      "words": "Words",
+      "items": "Activities",
+      "chooser": "Universities",
+      "docs": "Documents",
+      "submitted": "Submitted"
+    },
+    "views": {
+      "title": "Saved views",
+      "delete": "Delete view {name}",
+      "name": "View name",
+      "save": "Save",
+      "saveCurrent": "Save current filters",
+      "limitReached": "You can keep at most {limit} saved views.",
+      "limitReachedPlain": "You have reached the saved views limit."
+    },
+    "tabs": {
+      "profile": "Profile",
+      "words": "Words",
+      "alignment": "Alignment",
+      "courses": "Courses",
+      "list": "List",
+      "comments": "Comments"
+    },
+    "student": {
+      "title": "Student",
+      "back": "Back to caseload",
+      "noId": "No student selected",
+      "setupDone": "Setup completed",
+      "setupOpen": "Setup in progress",
+      "missing": "Missing: {list}",
+      "wordsEmpty": "No words yet",
+      "alignmentEmpty": "No alignment yet",
+      "stale": "Outdated",
+      "coursesEmpty": "No courses",
+      "listEmpty": "The list is empty"
+    },
+    "assign": {
+      "open": "Assign staff",
+      "title": "Assign staff member",
+      "userId": "User ID",
+      "roleId": "Staff role ID",
+      "submit": "Assign",
+      "done": "Assigned"
+    }
+  },
+  "comments": {
+    "title": "Comments",
+    "bodyLabel": "Comment",
+    "bodyPlaceholder": "Write a comment",
+    "staffOnly": "Staff only",
+    "visibleToStudent": "Visible to the student",
+    "send": "Send",
+    "delete": "Delete comment",
+    "loadError": "Could not load comments",
+    "emptyTitle": "No comments yet",
+    "emptyText": "Write the first comment.",
+    "inboxTitle": "Comment inbox",
+    "inboxEmptyTitle": "Inbox is empty",
+    "inboxEmptyText": "New comments will appear here.",
+    "openStudent": "Open student"
+  },
+  "chooser": {
+    "title": "Choose a university",
+    "sections": {
+      "label": "Chooser sections",
+      "search": "Search",
+      "list": "My list",
+      "scholarships": "Scholarships"
+    },
+    "verified": "Verified",
+    "unverified": "Not verified",
+    "source": "Source: {source}",
+    "noSource": "No source recorded",
+    "stale": "May be out of date",
+    "yes": "Yes",
+    "no": "No",
+    "cost": "Cost: {amount} per year",
+    "scholarshipCount": "{count} scholarships",
+    "inList": "In my list",
+    "addToList": "Add to my list",
+    "noResults": "Nothing matches these filters.",
+    "results": "{count} universities",
+    "loadMore": "Show more",
+    "searchLabel": "Search universities",
+    "searchPlaceholder": "Name or city",
+    "searchButton": "Search",
+    "filters": {
+      "title": "Filters",
+      "any": "Any",
+      "noDataHint": "No data yet",
+      "q": "Search",
+      "country": "Country",
+      "field": "Field of study",
+      "cityType": "City type",
+      "studyType": "Study type",
+      "maxCrime": "Max crime index (safety)",
+      "aid": "Financial aid",
+      "maxCost": "Max cost per year",
+      "scholarships": "Has scholarships",
+      "apply": "Apply",
+      "reset": "Reset"
+    },
+    "noData": {
+      "title": "No data for this filter yet",
+      "text": "The catalog has no recorded values for: {filters}. This is not an empty result: nothing has been collected yet.",
+      "clear": "Clear these filters"
+    },
+    "summary": {
+      "title": "AI summary",
+      "generate": "Generate summary",
+      "refresh": "Refresh",
+      "loading": "Writing the summary…",
+      "missing": "Not recorded: {items}",
+      "factsOnly": "Built only from recorded facts.",
+      "hint": "Uses only the facts above."
+    },
+    "tabs": {
+      "overview": "Overview",
+      "admission": "Admission",
+      "cost": "Cost",
+      "scholarships": "Scholarships",
+      "safety": "Safety",
+      "deadlines": "Deadlines"
+    },
+    "tabEmpty": {
+      "title": "Nothing recorded here yet",
+      "text": "No verified facts for this section exist yet."
+    },
+    "facts": {
+      "acceptance_rate": "Acceptance rate (%)",
+      "test_policy": "Test policy",
+      "intl_tuition_usd": "Tuition for internationals (USD)",
+      "intl_coa_usd": "Total cost of attendance (USD)",
+      "aid_basis": "Aid basis",
+      "merit_for_internationals": "Merit aid for internationals",
+      "crime_index": "Crime index"
+    },
+    "scholarships": {
+      "emptyTitle": "No scholarships recorded",
+      "emptyText": "No scholarships are recorded for this filter.",
+      "title": "Scholarships",
+      "coverage": "Covers {value}",
+      "basis": "Basis"
+    },
+    "detail": {
+      "missingTitle": "University not found",
+      "back": "Back to search"
+    },
+    "estimate": {
+      "range": "Estimated chance {low}–{high}%",
+      "notPrediction": "Not a prediction.",
+      "sources": "Based on: {sources}",
+      "how": "How it is computed",
+      "method": "Method version {version}",
+      "hidden": "Personal estimates are not available yet.",
+      "overridden": "Set by a counselor"
+    },
+    "list": {
+      "emptyTitle": "Your list is empty",
+      "emptyText": "Add universities from the search to compare them.",
+      "find": "Find universities",
+      "noSafety": "Your list has no safety option yet. Add at least one.",
+      "groups": {
+        "reach": "Reach",
+        "target": "Target",
+        "safety": "Safety",
+        "none": "Not sorted"
+      },
+      "groupEmpty": "Nothing here yet.",
+      "bucket": "Group",
+      "noBucket": "Not sorted",
+      "round": "Round",
+      "remove": "Remove {name}",
+      "drag": "Drag to reorder",
+      "more": "Notes and affordability",
+      "less": "Hide",
+      "notes": "Notes"
+    },
+    "afford": {
+      "title": "Affordability",
+      "check": "Check affordability",
+      "notChecked": "Not checked yet",
+      "coa": "Total cost",
+      "confirmedAid": "Confirmed aid",
+      "estimatedAid": "Estimated aid",
+      "gap": "Gap",
+      "bindingTitle": "{round} is binding",
+      "bindingText": "If you are admitted you must attend, and the cost does not fit yet. A counselor must sign off first.",
+      "acknowledge": "I understand",
+      "requestSignOff": "Request counselor sign-off",
+      "waiting": "Waiting for counselor sign-off",
+      "signedOff": "Signed off by a counselor"
+    },
+    "options": {
+      "cityType": {
+        "big_city": "Big city",
+        "college_town": "College town",
+        "campus": "Campus",
+        "small_city": "Small city"
+      },
+      "aid": {
+        "need_aware": "Need-aware",
+        "need_blind_full": "Need-blind, full need met",
+        "merit_only": "Merit only",
+        "none": "No aid"
+      },
+      "scholarshipBasis": {
+        "merit": "Merit",
+        "need": "Need",
+        "government": "Government",
+        "sports": "Sports",
+        "work_study": "Work-study"
+      },
+      "estimate": {
+        "safety": "Safety",
+        "target": "Target",
+        "reach": "Reach",
+        "unknown": "Not enough data"
+      },
+      "bucket": {
+        "reach": "Reach",
+        "target": "Target",
+        "safety": "Safety"
+      },
+      "round": {
+        "ED": "ED",
+        "ED2": "ED2",
+        "EA": "EA",
+        "REA": "REA",
+        "RD": "RD",
+        "ROLLING": "Rolling"
+      },
+      "affordability": {
+        "feasible": "Fits the budget",
+        "gap": "Cost gap",
+        "unknown": "Unknown",
+        "signed_off": "Signed off"
+      }
+    }
+  },
+  "profile": {
+    "title": "Profile setup",
+    "back": "Back",
+    "next": "Next",
+    "skip": "Skip",
+    "saveExit": "Save and exit",
+    "step": "Step {current} of {total}",
+    "progress": "Setup progress",
+    "reviewTitle": "Review your answers",
+    "edit": "Edit",
+    "finish": "Finish",
+    "missing": "{count} required questions are not answered",
+    "notAnswered": "Not answered",
+    "yes": "Yes",
+    "no": "No",
+    "rangeFrom": "From",
+    "rangeTo": "To",
+    "tagPlaceholder": "Type and press Enter",
+    "removeTag": "Remove {tag}",
+    "fromRecord": "From your school record",
+    "saving": "Saving…",
+    "saved": "Saved",
+    "notSaved": "Not saved",
+    "retry": "Try again",
+    "section": {
+      "about": "About you",
+      "school": "School",
+      "tests": "Tests",
+      "goals": "Goals",
+      "where": "Where to study",
+      "money": "Money",
+      "wellbeing": "Wellbeing"
+    },
+    "q": {
+      "q01": {
+        "label": "Full name"
+      },
+      "q02": {
+        "label": "Date of birth"
+      },
+      "q03": {
+        "label": "Gender"
+      },
+      "q04": {
+        "label": "Country of citizenship"
+      },
+      "q05": {
+        "label": "Country of residence"
+      },
+      "q06": {
+        "label": "Do you hold a residence permit abroad?"
+      },
+      "q07": {
+        "label": "Languages you speak"
+      },
+      "q08": {
+        "label": "Current school year"
+      },
+      "q09": {
+        "label": "School record"
+      },
+      "q10": {
+        "label": "GPA"
+      },
+      "q11": {
+        "label": "Other exam score"
+      },
+      "q12": {
+        "label": "Favourite subjects"
+      },
+      "q13": {
+        "label": "Do you take extra classes?"
+      },
+      "q14": {
+        "label": "English tests"
+      },
+      "q15": {
+        "label": "SAT or ACT"
+      },
+      "q16": {
+        "label": "Other tests"
+      },
+      "q17": {
+        "label": "What matters most to you in a university?"
+      },
+      "q18": {
+        "label": "Fields you want to study"
+      },
+      "q19": {
+        "label": "Other fields you consider"
+      },
+      "q20": {
+        "label": "A project you are proud of"
+      },
+      "q21": {
+        "label": "Something you do for others"
+      },
+      "q22": {
+        "label": "What makes you curious"
+      },
+      "q23": {
+        "label": "Describe yourself in your own words"
+      },
+      "q24": {
+        "label": "Countries you want to study in"
+      },
+      "q25": {
+        "label": "Study level"
+      },
+      "q26": {
+        "label": "Teaching languages you accept"
+      },
+      "q27": {
+        "label": "Type of city"
+      },
+      "q28": {
+        "label": "University size"
+      },
+      "q29": {
+        "label": "Climate or distance from home"
+      },
+      "q30": {
+        "label": "Open to universities in countries not on your list"
+      },
+      "q31": {
+        "label": "Importance of the right to work after graduation"
+      },
+      "q32": {
+        "label": "Yearly budget"
+      },
+      "q33": {
+        "label": "Financial aid you need"
+      },
+      "q34": {
+        "label": "Aid you can use"
+      },
+      "q35": {
+        "label": "Can your family pay the full fee?"
+      },
+      "q36": {
+        "label": "Needs on campus"
+      },
+      "q37": {
+        "label": "Anything else we should know"
+      },
+      "q38": {
+        "label": "Alumni: are you applying again?"
+      }
+    },
+    "o": {
+      "female": "Female",
+      "male": "Male",
+      "applying": "Yes, applying",
+      "grade_10": "Grade 10",
+      "grade_11": "Grade 11",
+      "graduated": "Graduated",
+      "gap_year": "Gap year",
+      "math": "Mathematics",
+      "physics": "Physics",
+      "chemistry": "Chemistry",
+      "biology": "Biology",
+      "informatics": "Computer science",
+      "english": "English",
+      "history": "History",
+      "geography": "Geography",
+      "literature": "Literature",
+      "economics": "Economics",
+      "ielts": "IELTS",
+      "toefl": "TOEFL",
+      "duolingo": "Duolingo",
+      "none": "None",
+      "planned": "Planned",
+      "taken": "Taken",
+      "not_planning": "Not planning",
+      "ap": "AP",
+      "a_level": "A-levels",
+      "subject": "SAT Subject",
+      "nuet": "NUET",
+      "dtm": "DTM",
+      "academics": "Academics",
+      "campus_life": "Campus life",
+      "new_experiences": "New experiences",
+      "everything": "Everything",
+      "bachelor": "Bachelor",
+      "foundation": "Foundation",
+      "two_plus_two": "2+2",
+      "big_city": "Big city",
+      "college_town": "College town",
+      "campus": "Campus",
+      "small_city": "Small city",
+      "any": "Any",
+      "small": "Small",
+      "medium": "Medium",
+      "large": "Large",
+      "warm": "Warm",
+      "mild": "Mild",
+      "cold": "Cold",
+      "near": "Near home",
+      "far": "Far from home",
+      "important": "Important",
+      "nice": "Nice to have",
+      "not_important": "Not important",
+      "under_5k": "Under $5k",
+      "5k_15k": "$5k–15k",
+      "15k_30k": "$15k–30k",
+      "30k_50k": "$30k–50k",
+      "over_50k": "Over $50k",
+      "partial": "Partial aid",
+      "full": "Full aid",
+      "merit": "Merit",
+      "need": "Need-based",
+      "government": "Government",
+      "sports": "Sports",
+      "work_study": "Work-study",
+      "can_pay": "Can pay",
+      "need_waiver": "Need a waiver",
+      "not_sure": "Not sure",
+      "halal_food": "Halal food",
+      "prayer_room": "Prayer room",
+      "community": "Community",
+      "yes": "Yes",
+      "no": "No",
+      "en": "English",
+      "de": "German",
+      "ru": "Russian",
+      "tr": "Turkish",
+      "ko": "Korean",
+      "ja": "Japanese",
+      "zh": "Chinese",
+      "it": "Italian",
+      "fr": "French",
+      "uz": "Uzbek",
+      "q33": {
+        "none": "No aid needed"
+      },
+      "q29": {
+        "medium": "Medium distance",
+        "any": "Any"
+      }
+    }
+  },
+  "words": {
+    "title": "Your three words",
+    "slots": "Your words",
+    "placeholder": "Type a word and press Enter",
+    "remove": "Remove {tag}",
+    "count": "{count} of {total} words",
+    "suggestions": "Suggestions",
+    "suggest": "Suggest words",
+    "again": "Suggest again",
+    "thinking": "Thinking…",
+    "cancel": "Cancel",
+    "add": "Add “{word}”",
+    "why": "Why “{word}”?",
+    "quota": "AI limit reached: {limit} per {period}. You can still type your own words.",
+    "lock": "Lock words",
+    "lockTitle": "Lock these words?",
+    "lockBody": "Your reviews will be redone against the new words. The old version stays in history.",
+    "change": "Change words",
+    "toAlignment": "See alignment",
+    "consentTitle": "Give consent first to use suggestions.",
+    "goConsent": "Go to consent",
+    "conflict": "Your words changed elsewhere. Reload and try again."
+  },
+  "alignment": {
+    "title": "Alignment",
+    "overall": "Overall",
+    "grade": "Grade {grade}",
+    "stale": "Out of date",
+    "refresh": "Refresh",
+    "refreshing": "Refreshing…",
+    "create": "Create report",
+    "emptyTitle": "No report yet",
+    "noWordsTitle": "Set your three words first.",
+    "goWords": "Go to words",
+    "consentTitle": "Give consent first to build the report.",
+    "goConsent": "Go to consent",
+    "quota": "AI limit reached: {limit} per {period}.",
+    "injection": "Some text looked like instructions to the reviewer and was ignored.",
+    "gaps": "Gaps",
+    "orphans": "Not linked to any word",
+    "carriers": "Carried by: {list}",
+    "level": {
+      "strong": "Strong",
+      "weak": "Partial",
+      "none": "Missing"
+    },
+    "kind": {
+      "answer": "Answer",
+      "course": "Course"
+    },
+    "safeguardingTitle": "We are here for you",
+    "safeguardingBody": "It sounds like things may be hard right now. You are not alone: please talk to a counselor or a trusted adult at school. This map is paused."
+  },
+  "help": {
+    "board": {
+      "title": "Help",
+      "mine": "My requests",
+      "mineEmpty": "No requests yet",
+      "assigned": "Assigned to me",
+      "assignedEmpty": "Nothing assigned",
+      "links": "Guest links"
+    },
+    "status": {
+      "open": "Open",
+      "assigned": "Assigned",
+      "accepted": "Accepted",
+      "declined": "Declined",
+      "delivered": "Delivered",
+      "closed": "Closed",
+      "cancelled": "Cancelled",
+      "expired": "Expired"
+    },
+    "kind": {
+      "website": "Website",
+      "design": "Design",
+      "proof": "Proof",
+      "other": "Other"
+    },
+    "action": {
+      "accept": "Accept",
+      "decline": "Decline",
+      "deliver": "Mark as delivered",
+      "close": "Close",
+      "cancel": "Cancel request"
+    },
+    "respond": {
+      "text": "Your reply",
+      "url": "Link (https)",
+      "send": "Send"
+    },
+    "detail": {
+      "activities": "Activities",
+      "responses": "Replies",
+      "noResponses": "No replies yet",
+      "fromGuest": "Guest",
+      "fromHelper": "Helper",
+      "missing": "Request not found",
+      "back": "Back to help"
+    },
+    "helper": {
+      "searchPlaceholder": "Search a mentor or counselor",
+      "minChars": "Type at least {count} characters",
+      "error": "Search failed",
+      "none": "Nobody found"
+    },
+    "link": {
+      "createdTitle": "Guest link ready",
+      "done": "Done",
+      "shownOnce": "This link is shown only once. Copy it now.",
+      "urlLabel": "Link",
+      "copy": "Copy link",
+      "copiedShort": "Copied",
+      "copyFailed": "Could not copy the link",
+      "qr": "QR code of the link",
+      "empty": "No guest links",
+      "state": {
+        "active": "Active",
+        "expired": "Expired",
+        "revoked": "Revoked"
+      },
+      "claimed": "Claimed",
+      "meta": "Until {expires} · opened {used} of {max}",
+      "rotate": "Rotate",
+      "revoke": "Revoke",
+      "rotateTitle": "Rotate this link?",
+      "rotateText": "The old link stops working and a new one is created.",
+      "revokeTitle": "Revoke this link?",
+      "revokeText": "Anyone with it loses access."
+    },
+    "request": {
+      "title": "Ask for help",
+      "kind": "What do you need?",
+      "brief": "Describe the request",
+      "briefPlaceholder": "What should the helper do?",
+      "who": "Who will help",
+      "who_account": "A person on the platform",
+      "who_link": "Someone outside, by link",
+      "changeHelper": "Change",
+      "days": "Link lifetime, days",
+      "scopeNote": "The guest sees only the activities needed for this request.",
+      "send": "Send request",
+      "createLink": "Create link",
+      "open": "Ask for help"
+    },
+    "proof": {
+      "title": "Proofs",
+      "add": "Add proof",
+      "addTitle": "Add a proof",
+      "empty": "No proofs yet",
+      "rejected": "The file was rejected",
+      "url": "Link (https)",
+      "file": "File",
+      "mode_url": "Link",
+      "mode_file": "File",
+      "problem_empty": "Enter a link",
+      "problem_length": "The link is too long",
+      "problem_malformed": "This is not a valid link",
+      "problem_scheme": "Only https links are accepted",
+      "problem_port": "Custom ports are not allowed",
+      "problem_host": "This address is not allowed"
+    },
+    "proofStatus": {
+      "pending": "Checking",
+      "verified": "Verified",
+      "partial": "Partly verified",
+      "unverified": "Not verified",
+      "unverifiable": "Cannot be verified",
+      "self_provided": "Self-provided"
+    }
+  },
+  "items": {
+    "title": "Activities & honors",
+    "tabs": {
+      "activity": "Activities",
+      "honor": "Honors"
+    },
+    "add": "Add",
+    "count": "{count} of {max}",
+    "capReached": "Common App allows {max}; replace one to add another.",
+    "saved": "Saved",
+    "dragHandle": "Drag to reorder: {title}",
+    "empty": {
+      "activity": {
+        "title": "No activities yet",
+        "text": "Add what you do outside class."
+      },
+      "honor": {
+        "title": "No honors yet",
+        "text": "Add awards and recognitions."
+      }
+    },
+    "card": {
+      "hours": "{h} h/week, {w} weeks/year",
+      "metrics": "{count} numbers",
+      "noMetrics": "No numbers yet"
+    },
+    "new": {
+      "activity": "New activity",
+      "honor": "New honor",
+      "create": "Create"
+    },
+    "form": {
+      "english": "English, as in Common App",
+      "title": "Position or title",
+      "organization": "Organization",
+      "description": "Description",
+      "grades": "Grades",
+      "hours": "Hours per week",
+      "weeks": "Weeks per year",
+      "save": "Save"
+    },
+    "delete": {
+      "button": "Delete",
+      "title": "Delete this item?",
+      "text": "Its numbers, reviews and proofs are removed too."
+    },
+    "metrics": {
+      "title": "Numbers",
+      "empty": "No numbers yet.",
+      "current": "Current",
+      "plansTo": "Plans to",
+      "label": "What",
+      "value": "Value",
+      "unit": "Unit",
+      "targetDate": "Target date",
+      "remove": "Remove number {n}",
+      "addCurrent": "Add current number",
+      "addProjected": "Add planned number",
+      "save": "Save numbers"
+    },
+    "review": {
+      "title": "Review",
+      "run": "Review this item",
+      "rerun": "Review again",
+      "running": "Reviewing…",
+      "none": "Not reviewed yet.",
+      "overall": "Overall",
+      "stale": "The item changed since this review.",
+      "flagged": "Some text looked like instructions to the reviewer and was ignored.",
+      "safeguarding": "If something here worries you, please talk to a counselor or a trusted adult. No grade is given.",
+      "gradeLabel": "{dim}: grade {grade}",
+      "dim": {
+        "overall": "Overall",
+        "clarity": "Clarity",
+        "role_name": "Role name",
+        "impact": "Impact",
+        "alignment": "Alignment"
+      },
+      "missing": "Facts to add",
+      "helpful": "Helpful",
+      "disagree": "Disagree?",
+      "thanks": "Thanks for the feedback."
+    },
+    "interview": {
+      "title": "Interview",
+      "start": "Start interview",
+      "restart": "Start over",
+      "loading": "Thinking…",
+      "send": "Send answers",
+      "proposal": "Proposed wording",
+      "apply": "Apply",
+      "field": {
+        "position": "Position",
+        "org": "Organization",
+        "description": "Description"
+      }
+    },
+    "plan": {
+      "title": "Future plans",
+      "emptyTitle": "No plans yet",
+      "emptyText": "Add a milestone to start your plan.",
+      "milestone": "Milestone",
+      "month": "Month",
+      "item": "Linked activity",
+      "noItem": "None",
+      "add": "Add milestone",
+      "remove": "Remove {title}",
+      "status": "Status",
+      "statuses": {
+        "planned": "Planned",
+        "done": "Done",
+        "dropped": "Dropped"
+      },
+      "noMonth": "No date",
+      "cap": "Up to {max} milestones.",
+      "projected": "Planned numbers",
+      "target": "Target number",
+      "targetValue": "Target: {value}",
+      "suggest": "Suggest milestones",
+      "consent": "Turn on AI processing in your consents to get suggestions.",
+      "consentLink": "Open consents",
+      "quota": "AI suggestion limit reached. Try again later.",
+      "accept": "Add",
+      "dismiss": "Dismiss",
+      "accepted": "{count} to add",
+      "savePlan": "Save plan"
+    }
+  },
+  "documents": {
+    "title": "Documents",
+    "checklistTitle": "Checklist",
+    "checklistEmpty": "Nothing to prepare yet. Add a university to your list.",
+    "filesTitle": "My files",
+    "empty": "No files uploaded yet.",
+    "kindLabel": "Document type",
+    "upload": "Upload a file",
+    "uploaded": "File uploaded",
+    "uploadNewVersion": "Upload a new version",
+    "replaceFile": "Replace file",
+    "download": "Open",
+    "confidential": "Confidential: only the status is shown",
+    "attachedTo": "{count, plural, one {Attached to # list} other {Attached to # lists}}",
+    "versionNumber": "version {version}",
+    "rejectedNoReason": "Rejected",
+    "due": "due {date}",
+    "queueTitle": "Documents to review",
+    "queueEmpty": "No documents here.",
+    "accept": "Accept",
+    "reject": "Reject",
+    "rejectTitle": "Reject the document",
+    "reasonLabel": "Reason",
+    "noteLabel": "Note for the student (up to 300 characters)",
+    "kind": {
+      "transcript": "Transcript",
+      "school_report": "School report",
+      "rec": "Recommendation",
+      "certificate": "Certificate",
+      "passport": "Passport",
+      "translation": "Translation",
+      "test_report": "Test report",
+      "bank": "Bank statement",
+      "other": "Other"
+    },
+    "state": {
+      "checking": "Checking",
+      "blocked": "Blocked by antivirus",
+      "rejected": "Rejected",
+      "accepted": "Accepted",
+      "attached": "Attached",
+      "uploaded": "Uploaded"
+    },
+    "reason": {
+      "illegible": "Illegible scan",
+      "wrong_document": "Wrong document",
+      "expired": "Expired",
+      "other": "Other reason"
+    },
+    "owner": {
+      "student": "You",
+      "institution": "The school",
+      "counselor": "Counselor",
+      "teacher": "Teacher"
+    },
+    "checklistStatus": {
+      "todo": "To do",
+      "in_progress": "In progress",
+      "done": "Done",
+      "n_a": "Not applicable",
+      "confirm_with_uni": "Confirm with the university"
+    },
+    "filter": {
+      "none": "To review",
+      "accepted": "Accepted",
+      "rejected": "Rejected"
+    },
+    "checklist": {
+      "transcript": "Order your school transcript",
+      "passport": "Passport copy",
+      "translation": "Certified translations",
+      "application_form": "Application form",
+      "essay": "Essays",
+      "recommendation": "Teacher recommendation",
+      "school_report": "School report from the counselor",
+      "test_report": "Official test scores",
+      "aid_forms": "Financial aid forms and bank statement",
+      "fee": "Application fee or fee waiver",
+      "binding_agreement": "Binding early decision agreement"
+    }
+  },
+  "transcripts": {
+    "title": "Transcripts",
+    "staffTitle": "Transcript requests",
+    "request": "Request a transcript",
+    "requestTitle": "Request a paper transcript",
+    "requestSubmit": "Send request",
+    "requested": "Request sent",
+    "destinationLabel": "Where it is going (optional)",
+    "noDestination": "Transcript",
+    "requestedOn": "Requested {date}",
+    "pickupAt": "Pick it up at: {place}",
+    "uploadScan": "Upload the scan",
+    "scanUploaded": "Scan uploaded",
+    "cancel": "Cancel request",
+    "empty": "No transcript requests yet.",
+    "officerEmpty": "No transcript requests to handle.",
+    "overviewEmpty": "No requests in this status.",
+    "done": "Done",
+    "undo": "Undo",
+    "undoUntil": "Undo possible until {time}",
+    "remind": "Remind the officer",
+    "reminded": "Reminder sent",
+    "pickupTitle": "Pickup place",
+    "pickupSave": "Save",
+    "pickupSaved": "Pickup place saved",
+    "status": {
+      "requested": "Requested",
+      "ready": "Ready",
+      "cancelled": "Cancelled"
+    },
+    "locale": {
+      "uz": "Uzbek",
+      "ru": "Russian",
+      "en": "English"
+    }
+  },
+  "deadlines": {
+    "title": "Deadlines",
+    "empty": "No deadlines yet. They appear when you add universities.",
+    "noDate": "No date yet",
+    "predicted": "Predicted",
+    "overdue": "Overdue",
+    "prefsTitle": "Reminders",
+    "prefsSaved": "Reminder settings saved",
+    "offsetsLabel": "Remind me",
+    "daysBefore": "{days, plural, one {# day before} other {# days before}}",
+    "channelsLabel": "Where",
+    "quietFrom": "Quiet from",
+    "quietTo": "Quiet until",
+    "save": "Save",
+    "staffTitle": "Deadline catalog",
+    "staffEmpty": "No deadlines in the catalog.",
+    "edit": "Edit",
+    "editTitle": "Edit the deadline",
+    "remove": "Remove",
+    "removeTitle": "Remove this deadline?",
+    "statusLabel": "Status",
+    "dateLabel": "Date",
+    "sourceLabel": "Source quote",
+    "status": {
+      "confirmed": "Confirmed",
+      "predicted": "Predicted",
+      "unknown": "Unknown",
+      "confirm_with_uni": "Confirm with the university"
+    },
+    "channel": {
+      "telegram": "Telegram",
+      "push": "Push",
+      "email": "Email"
+    },
+    "milestone": {
+      "application": "Application",
+      "aid": "Financial aid",
+      "test_send": "Send test scores",
+      "rec": "Recommendations",
+      "docs": "Documents",
+      "decision": "Decision",
+      "deposit": "Deposit",
+      "fee": "Application fee"
+    },
+    "createButton": "Add a deadline",
+    "createTitle": "Add a deadline",
+    "institutionLabel": "University",
+    "searchLabel": "Search universities",
+    "noResults": "No universities found",
+    "cycleLabel": "Cycle (year)",
+    "roundLabel": "Round"
+  },
+  "catalogStaff": {
+    "title": "Catalog review",
+    "proposeButton": "Propose a change",
+    "proposeTitle": "Propose a catalog change",
+    "kindLabel": "What",
+    "kind": {
+      "institution": "University",
+      "scholarship": "Scholarship"
+    },
+    "editLabel": "Edit an existing university (optional)",
+    "searchLabel": "Search universities",
+    "noResults": "No universities found",
+    "clear": "Clear",
+    "nameLabel": "Name",
+    "countryLabel": "Country (2 letters)",
+    "cityLabel": "City",
+    "providerLabel": "Provider",
+    "provider": {
+      "institution": "University",
+      "government": "Government",
+      "foundation": "Foundation"
+    },
+    "basisLabel": "Basis",
+    "basis": {
+      "merit": "Merit",
+      "need": "Need",
+      "government": "Government",
+      "sports": "Sports",
+      "work_study": "Work-study"
+    },
+    "sourceLabel": "Source link (https)",
+    "noteLabel": "Note",
+    "submit": "Send",
+    "sent": "Proposal sent",
+    "filterPending": "Waiting",
+    "filterAll": "All",
+    "emptyTitle": "No proposals",
+    "emptyText": "Proposed changes will appear here.",
+    "status": {
+      "pending": "Waiting",
+      "approved": "Approved",
+      "rejected": "Rejected"
+    },
+    "approve": "Approve",
+    "reject": "Reject",
+    "reviewNoteLabel": "Reviewer note",
+    "reviewed": "Review saved",
+    "newItem": "New",
+    "editItem": "Edit"
+  }
+}

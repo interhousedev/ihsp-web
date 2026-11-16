@@ -1,0 +1,21 @@
+{
+  "name": "@ihsp/admission",
+  "version": "0.0.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev -p 3009",
+    "build": "bun run build:brand && next build",
+    "build:brand": "bun ../../packages/config/scripts/generate-brand-assets.ts",
+    "typecheck": "tsc --noEmit",
+    "test": "bun test --timeout 30000 --preload ../../packages/test-utils/src/preload.ts"
+  },
+  "dependencies": {
+    "@ihsp/api": "workspace:*",
+    "@ihsp/auth": "workspace:*",
+    "@ihsp/config": "workspace:*",
+    "@ihsp/features-core": "workspace:*",
+    "@ihsp/i18n": "workspace:*",
+    "@ihsp/telegram": "workspace:*",
+    "@ihsp/ui": "workspace:*"
+  }
+}

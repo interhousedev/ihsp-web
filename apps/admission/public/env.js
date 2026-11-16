@@ -1,0 +1,22 @@
+window.__ENV__ = {
+  APP_ENV: "dev",
+  API_URL: "http://localhost:8000",
+  ID_URL: "http://localhost:3001",
+  HYDRA_URL: "http://localhost:4444",
+  SP_URL: "http://localhost:3002",
+  STAFF_URL: "http://localhost:3003",
+  ADMIN_URL: "http://localhost:3004",
+  LMS_URL: "http://localhost:3005",
+  LIBRARY_URL: "http://localhost:3008",
+  ADMISSION_URL: "http://localhost:3009",
+  SHARE_URL: "http://localhost:3006/ai",
+  SHORT_LINKS_URL: "http://localhost:3006",
+  ROOMS_URL: "http://localhost:8000",
+  MCP_URL: "http://localhost:8000/mcp",
+  BOT_USERNAME: "ihspbot",
+  OAUTH_CLIENT_ID: "admission",
+  // Sent as the X-IHSP-App header of every API request.
+  APP_NAME: "admission",
+  APP_MODE: "web",
+  STORAGE_ORIGIN: "http://localhost:9000",
+};
