@@ -9,12 +9,14 @@ import type {
   Role,
   TeacherCreateBody,
   TeacherPatchBody,
+  UserCreateBody,
   UserPatchBody,
   UserRolesBody,
 } from "@ihsp/api"
 import { HttpResponse, http } from "msw"
 import { auditItems } from "../fixtures/id"
 import {
+  adminAdminUser,
   adminTeacherUser,
   adminTeachers,
   adminUserDetail,
@@ -35,11 +37,13 @@ function filterUsers(users: AdminUser[], request: Request): AdminUser[] {
   const needle = search.get("query")
   const role = search.get("role")
   const status = search.get("status")
+  const accountKind = search.get("account_kind")
   return users.filter(
     (user) =>
       (matches(user.login, needle) || matches(`${user.first_name} ${user.last_name}`, needle)) &&
       (!role || user.roles.includes(role as Role)) &&
-      (!status || user.status === status),
+      (!status || user.status === status) &&
+      (!accountKind || user.account_kind === accountKind),
   )
 }
 
@@ -47,6 +51,23 @@ const LOGO_TYPES = ["image/png", "image/jpeg", "image/webp"]
 const LOGO_MAX_BYTES = 1024 * 1024
 
 export const idAdminHandlers = [
+  http.post(apiUrl("/v1/admin/users"), async ({ request }) => {
+    const body = (await readJson<UserCreateBody>(request)) as UserCreateBody
+    const user: AdminUser = {
+      ...adminAdminUser,
+      id: nextId(1),
+      login: `${body.last_name.toLowerCase()}.${body.first_name.toLowerCase()}`,
+      first_name: body.first_name,
+      last_name: body.last_name,
+      middle_name: body.middle_name ?? null,
+      phone: body.phone ?? null,
+      account_kind: body.account_kind,
+      roles: body.roles,
+      status: "pending_activation",
+      recovery_email: body.email ?? null,
+    }
+    return HttpResponse.json({ user, invite_url: "https://t.me/ihsp_bot?start=inv_abc" })
+  }),
   http.get(apiUrl("/v1/admin/users"), ({ request }) =>
     HttpResponse.json(paginate(filterUsers(adminUsers, request), request)),
   ),

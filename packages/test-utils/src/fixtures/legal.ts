@@ -6,6 +6,7 @@ const KINDS: readonly LegalKind[] = ["privacy", "terms", "biometric", "ai"]
 export function legalDocument(kind: LegalKind, locale = "en", version = 1): LegalDocument {
   return {
     kind,
+    app_scope: "global",
     version,
     locale,
     title: `Document ${kind}`,
@@ -35,6 +36,7 @@ export function adminLegalDocument(
   return {
     id: `00000000-0000-4000-8000-0000000000${KINDS.indexOf(kind)}${version}`,
     kind,
+    app_scope: "global",
     version,
     status,
     title: perLocale(`Title ${kind}`),
@@ -47,8 +49,15 @@ export function adminLegalDocument(
   }
 }
 
-/** Every kind has a published version 1; `privacy` also has a draft version 2. */
+/** Every kind has a published version 1; `privacy` also has a draft version 2; one document is admission-only. */
 export const adminLegalDocuments: AdminLegalDocument[] = [
   adminLegalDocument("privacy", 2, "draft"),
   ...KINDS.map((kind) => adminLegalDocument(kind, 1, "published")),
+  {
+    ...adminLegalDocument("privacy", 1, "published"),
+    id: "00000000-0000-4000-8000-000000000099",
+    kind: "admission_privacy",
+    app_scope: "admission",
+    title: { uz: "Admission privacy uz", ru: "Admission privacy ru", en: "Admission privacy en" },
+  },
 ]

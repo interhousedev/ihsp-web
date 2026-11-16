@@ -56,6 +56,7 @@ import { workOffsStaffHandlers } from "./work-offs-staff"
 import { adminWorkOffsHandlers } from "./work-offs-admin"
 import { loginCuesHandlers } from "./login-cues"
 import { appMapHandlers } from "./app-map"
+import { adminPromptsHandlers } from "./admin-prompts"
 import { clientConfigHandlers } from "./client-config"
 import { botPostsHandlers } from "./bot-posts"
 import { botsHandlers } from "./bots"
@@ -173,6 +174,7 @@ export {
   adminWorkOffsHandlers,
   loginCuesHandlers,
   appMapHandlers,
+  adminPromptsHandlers,
   clientConfigHandlers,
   botPostsHandlers,
   botsHandlers,
@@ -197,6 +199,7 @@ export const allHandlers = [
   ...registrationHandlers,
   ...loginCuesHandlers,
   ...appMapHandlers,
+  ...adminPromptsHandlers,
   ...clientConfigHandlers,
   ...botPostsHandlers,
   ...botsHandlers,

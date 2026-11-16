@@ -24,6 +24,7 @@ export const TEST_ENV: AppEnv = {
   BOT_USERNAME: "ihspbot",
   OAUTH_CLIENT_ID: "sp",
   APP_MODE: "sp",
+  APP_NAME: "sp",
   STORAGE_ORIGIN: TEST_STORAGE_URL,
   SECURITY_CONTACT: "alex@sayfi.uz, @megaplov (Telegram)",
 }
