@@ -33,7 +33,6 @@ const labels = {
   saveError: "Oops",
   step: (c: number, t: number) => `Q${c}/${t}`,
   progress: "Progress",
-  guide: "Guide",
 }
 
 function Harness({

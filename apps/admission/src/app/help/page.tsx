@@ -1,7 +1,7 @@
 "use client"
 
-import { HelpPage } from "../../features/help/components/help-board"
+import { ConsultationsPage } from "../../features/consultations/components/consultations-page"
 
 export default function Page() {
-  return <HelpPage />
+  return <ConsultationsPage />
 }

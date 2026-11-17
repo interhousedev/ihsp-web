@@ -81,7 +81,7 @@ describe("AppReviewPanel", () => {
     expect(await screen.findByText("The review could not be finished. Try again later.")).toBeInTheDocument()
     await userEvent.click(screen.getByRole("button", { name: /Version 2/ }))
     expect(await screen.findByText("Strong engineering spike")).toBeInTheDocument()
-    expect(screen.getByText("72")).toBeInTheDocument()
+    expect(screen.getByText("72%")).toBeInTheDocument()
     expect(screen.getByText("Draft the main essay")).toBeInTheDocument()
     expect(screen.getByText("No data yet")).toBeInTheDocument()
   })
@@ -120,9 +120,6 @@ describe("AppReviewPanel", () => {
         return HttpResponse.json({ items: [calls === 1 ? first : calls === 2 ? second : final] })
       }),
     )
-  it("moves the progress as sections finish", async () => {
-    const running: AppReview = { ...base, status: "running", sections: done.sections }
-    server.use(http.get(URL, () => HttpResponse.json({ items: [running] })))
     renderAdmissionApp(<AppReviewPanel />)
     const card = await screen.findByTestId("section-activities")
     expect(card).toHaveAttribute("data-state", "loading")
@@ -134,8 +131,6 @@ describe("AppReviewPanel", () => {
     expect(calls).toBe(stopped)
     await waitFor(() => expect(calls).toBe(3))
   }, 20000)
-    expect(await screen.findByText("2 of 7 parts reviewed")).toBeInTheDocument()
-  })
 
   it("explains the weekly limit", async () => {
     server.use(

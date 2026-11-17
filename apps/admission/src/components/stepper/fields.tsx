@@ -10,6 +10,7 @@ import {
   SelectValue,
   cn,
 } from "@ihsp/ui"
+import { StudyFieldSelect } from "../../features/chooser/components/study-field-select"
 import { useId } from "react"
 import type { StepOption, StepQuestion, StepValue } from "./types"
 
@@ -39,7 +40,7 @@ function OptionBody({ option }: { option: StepOption }) {
 /** Single choice (radio cards) and boolean pairs. */
 export function ChoiceField({ question, value, onChange, compact, disabled }: FieldProps) {
   const name = useId()
-  const columns = compact ? 1 : question.options.length >= 3 ? 3 : 2
+  const columns = compact ? 1 : question.options.length === 3 ? 3 : 2
   return (
     <ChoiceCardGroup
       legend={compact ? question.title : <span className="sr-only">{question.title}</span>}
@@ -102,6 +103,24 @@ export function SelectField({ question, value, onChange, compact, disabled }: Fi
   const labelId = useId()
   const current = typeof value === "string" ? value : null
   const items = question.options.map((option) => ({ value: option.value, label: option.label }))
+  if (question.sheet) {
+    const groups = [{ id: question.id, label: "", items: items.map(({ value, label }) => ({ id: value, label })) }]
+    return (
+      <div className="flex flex-col gap-1.5">
+        <span id={labelId} className={compact ? "text-sm font-medium" : "sr-only"}>
+          {question.title}
+        </span>
+        <StudyFieldSelect
+          id={`${labelId}-sheet`}
+          value={current ?? ""}
+          groups={groups}
+          placeholder={question.placeholder}
+          disabled={disabled}
+          onChange={onChange}
+        />
+      </div>
+    )
+  }
   return (
     <div className="flex flex-col gap-1.5">
       {compact ? (

@@ -52,6 +52,22 @@ describe("discover swipe", () => {
   })
 })
 
+describe("discover explainer", () => {
+  test("shows on the first visit and stays dismissed", async () => {
+    window.localStorage.clear()
+    server.use(
+      http.get(apiUrl("/v1/admission/matches"), () => HttpResponse.json({ items: [match("u1", "Alpha College")] })),
+      http.get(apiUrl("/v1/admission/preferences"), () =>
+        HttpResponse.json({ answers: {}, tags: [], completed: false, updated_at: null }),
+      ),
+    )
+    renderAdmissionApp(<DiscoverPage />)
+    fireEvent.click(await screen.findByRole("button", { name: "Got it" }))
+    expect(screen.queryByRole("button", { name: "Got it" })).toBeNull()
+    expect(window.localStorage.getItem(`admission.discover.explainer.${userMe.id}`)).toBe("1")
+  })
+})
+
 describe("discover exhaustion", () => {
   test("refetches matches when the deck runs low and undo waits for the decision", async () => {
     let fetches = 0

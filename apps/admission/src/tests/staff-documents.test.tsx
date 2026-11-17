@@ -133,13 +133,37 @@ describe("staff deadlines", () => {
     await userEvent.type(date, "2027-01-10")
     await userEvent.click(screen.getByRole("button", { name: "Save" }))
     await waitFor(() => expect(patches).toHaveLength(1))
-    expect(patches[0]).toMatchObject({ status: "predicted", local_date: "2027-01-10" })
+    expect(patches[0]).toEqual({ local_date: "2027-01-10" })
+  })
+
+  it("lists the university and a formatted date, and edits the citation alone", async () => {
+    const patches: unknown[] = []
+    server.use(
+      configHandler,
+      http.get(apiUrl("/v1/admission/staff/deadlines"), () =>
+        HttpResponse.json([{ ...deadline, institution_name: "MIT", status: "confirmed" }]),
+      ),
+      http.patch(apiUrl(`/v1/admission/staff/deadlines/${ID}`), async ({ request }) => {
+        patches.push(await request.json())
+        return HttpResponse.json(deadline)
+      }),
+    )
+    renderAdmissionApp(<StaffDeadlinesPage />, staff)
+    expect(await screen.findByText("MIT")).toBeTruthy()
+    expect(screen.queryByText("2027-01-05")).toBeNull()
+    expect(screen.getByText(/Regular Decision \(RD\)/)).toBeTruthy()
+    await userEvent.click(screen.getByRole("button", { name: "Edit" }))
+    expect(await screen.findByRole("combobox", { name: "Status" })).toBeTruthy()
+    await userEvent.type(await screen.findByLabelText("Source quote"), "site")
+    await userEvent.click(screen.getByRole("button", { name: "Save" }))
+    await waitFor(() => expect(patches).toHaveLength(1))
+    expect(patches[0]).toEqual({ source_text: "site" })
   })
 
   it("removes a deadline after confirmation", async () => {
     let removed = false
     server.use(
-      http.get(apiUrl("/v1/admission/staff/deadlines"), () => HttpResponse.json([deadline])),
+      http.get(apiUrl("/v1/admission/staff/deadlines"), () => HttpResponse.json(removed ? [] : [deadline])),
       http.delete(apiUrl(`/v1/admission/staff/deadlines/${ID}`), () => {
         removed = true
         return new HttpResponse(null, { status: 204 })
@@ -150,6 +174,7 @@ describe("staff deadlines", () => {
     const buttons = await screen.findAllByRole("button", { name: "Remove" })
     await userEvent.click(buttons[buttons.length - 1])
     await waitFor(() => expect(removed).toBe(true))
+    await waitFor(() => expect(screen.queryByRole("button", { name: "Edit" })).toBeNull())
   })
 
   it("creates a deadline for a university found by search", async () => {
@@ -165,6 +190,10 @@ describe("staff deadlines", () => {
       }),
     )
     renderAdmissionApp(<CreateDeadlineDialog open onOpenChange={() => {}} />, staff)
+    expect(await screen.findByRole("combobox", { name: "Round" })).toBeTruthy()
+    await waitFor(() =>
+      expect(screen.getByRole("combobox", { name: "Round" }).textContent).toContain("Regular Decision (RD)"),
+    )
     await userEvent.type(await screen.findByLabelText("Search universities"), "mit")
     await userEvent.click(await screen.findByRole("button", { name: "MIT" }))
     await userEvent.click(screen.getByRole("button", { name: "Save" }))

@@ -5,12 +5,15 @@ import { useT } from "@ihsp/i18n"
 import { type BottomNavItem, type NavGroup } from "@ihsp/ui"
 import { useMemo } from "react"
 
-/** Roles that see the caseload, deadlines and catalog. */
-export const CASELOAD_ROLES = ["teacher", "admin", "counselor", "mentor"] as const
+/** Admission staff (backend `STAFF_ROLES` minus transcript officers): caseload, inbox, KB, consultations. Teachers have no admission access. */
+export const CASELOAD_ROLES = ["admin", "counselor", "mentor"] as const
 /** Roles that manage deadlines, the catalog and opportunity moderation (mentors only read and comment). */
-export const CURATOR_ROLES = ["teacher", "admin", "counselor"] as const
+export const CURATOR_ROLES = ["admin", "counselor"] as const
 /** Roles that see documents and transcripts: the caseload roles and transcript officers. */
 export const DOCUMENT_ROLES = [...CASELOAD_ROLES, "transcript_officer"] as const
+
+/** Roles that read the comment reports (backend `opportunities:moderate`; staff holding only a grant open the URL). */
+export const MODERATOR_ROLES = ["admin"] as const
 
 type RoleList = readonly string[] | undefined
 /** Counselors and administrators edit the admission settings (test catalog, readiness weights, career). */
@@ -20,6 +23,11 @@ const hasAny = (roles: RoleList, wanted: readonly string[]) => !!roles?.some((ro
 /** A staff member without the student role: no applicant pages, only the staff area and settings. */
 export function isStaffOnly(roles: RoleList): boolean {
   return hasAny(roles, DOCUMENT_ROLES) && !hasAny(roles, ["student"])
+}
+
+/** Neither an applicant nor admission staff (a teacher, an LMS author): the admission app has nothing for them. */
+export function hasNoAdmissionAccess(roles: RoleList): boolean {
+  return !hasAny(roles, DOCUMENT_ROLES) && !hasAny(roles, ["student"])
 }
 
 /** The page a signed-in user starts on: transcript officers on their queue, other staff on the caseload. */
@@ -35,6 +43,7 @@ export function useNav(): { groups: NavGroup[]; bottom: BottomNavItem[] } {
   const roles = session?.user.roles
   return useMemo(() => {
     const staffOnly = isStaffOnly(roles)
+    const noAccess = hasNoAdmissionAccess(roles)
     const isStaff = hasAny(roles, CASELOAD_ROLES)
     const isCurator = hasAny(roles, CURATOR_ROLES)
     const isDocStaff = hasAny(roles, DOCUMENT_ROLES)
@@ -79,6 +88,12 @@ export function useNav(): { groups: NavGroup[]; bottom: BottomNavItem[] } {
       { title: t("consultationsQueue"), url: "/staff/consultations/", icon: "chat", visible: isStaff },
     ]
     const staffGroup: NavGroup = { label: t("groupStaff"), items: staffItems.filter((item) => item.visible !== false) }
+    if (noAccess) {
+      return {
+        groups: [{ label: t("groupMore"), items: [settings] }],
+        bottom: [{ ...settings, title: t("short.settings") }],
+      }
+    }
     if (staffOnly) {
       const bottom: BottomNavItem[] = [
         ...(isStaff

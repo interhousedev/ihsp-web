@@ -120,6 +120,13 @@ describe("comment visibility", () => {
     expect((await post(false)).visibility).toBe("student_and_staff")
   })
 
+  it("hides the visibility switch from the student themself", async () => {
+    server.use(http.get(apiUrl("/v1/admission/comments"), () => HttpResponse.json({ items: [] })))
+    renderAdmissionApp(<CommentsPanel target={{ ...target, studentId: userMe.id }} />)
+    await screen.findByRole("textbox")
+    expect(screen.queryByRole("switch")).toBeNull()
+  })
+
   it("is staff-only once the switch is on", async () => {
     const sent = await post(true)
     expect(sent.visibility).toBe("staff_only")

@@ -1,9 +1,11 @@
 import { describe, expect, test } from "bun:test"
 import { apiUrl, server } from "@ihsp/test-utils"
+import { useQuery } from "@tanstack/react-query"
 import { screen, waitFor } from "@testing-library/react"
 import { http, HttpResponse } from "msw"
 import type { AdmissionUniChat } from "@ihsp/api"
 import { useTagLabel } from "../features/discover/components/tag-label"
+import { uniChatKey } from "../features/discover/hooks"
 import { useRunDefault } from "../features/discover/use-run-default"
 import { renderAdmissionApp } from "./helpers"
 
@@ -89,5 +91,22 @@ describe("discover auto research", () => {
     expect(await screen.findByText("idle")).toBeInTheDocument()
     await Bun.sleep(50)
     expect(calls).toEqual([])
+  })
+
+  test("a failed auto-run clears the pending flag so the manual run is enabled", async () => {
+    server.use(
+      http.post(apiUrl("/v1/admission/uni-chats/u1/run-default"), () => new HttpResponse(null, { status: 500 })),
+    )
+    function Cached() {
+      const { data } = useQuery({ queryKey: uniChatKey("u1"), queryFn: () => chat, staleTime: Infinity })
+      const { state } = useRunDefault(data)
+      return (
+        <p>
+          {state.status}:{String(data?.auto_run_pending)}
+        </p>
+      )
+    }
+    renderAdmissionApp(<Cached />)
+    expect(await screen.findByText("error:false")).toBeInTheDocument()
   })
 })

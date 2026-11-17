@@ -45,7 +45,7 @@ describe("AdmissionShell", () => {
       "Journey",
       "Profile",
       "Activities & honors",
-      "Future plans",
+      "Activities plan",
       "Tasks",
       "Universities",
       "Discover",
@@ -56,7 +56,7 @@ describe("AdmissionShell", () => {
     expect(labels()).not.toContain("Caseload")
   })
 
-  it("shows a teacher the staff group", async () => {
+  it("shows a teacher no staff entries: admission staff is a separate role", async () => {
     renderAdmissionApp(
       <AdmissionShell anyone>
         <p>page body</p>
@@ -65,7 +65,21 @@ describe("AdmissionShell", () => {
       { session: { user: { ...userMe, roles: ["teacher"] } } },
     )
     await screen.findByText("page body")
-    expect(labels()).toContain("Caseload")
+    expect(labels()).not.toContain("Caseload")
+    expect(labels()).not.toContain("Knowledge base editor")
+  })
+
+  it("shows a user without an admission role one no-access page and no applicant nav", async () => {
+    renderAdmissionApp(
+      <AdmissionShell>
+        <p>page body</p>
+        <NavProbe />
+      </AdmissionShell>,
+      { session: { user: { ...userMe, roles: ["teacher"] } } },
+    )
+    await screen.findByText(/Your account has no access to it/)
+    expect(screen.queryByText("page body")).toBeNull()
+    expect(screen.queryByText("Journey")).toBeNull()
   })
 })
 
@@ -88,8 +102,19 @@ describe("staff nav by role", () => {
     expect(items).not.toContain("Admission management")
   })
 
+  it("offers a mentor the knowledge base editor but not the deadlines or catalog", async () => {
+    const items = await navFor("mentor")
+    expect(items).toContain("Knowledge base editor")
+    expect(items).not.toContain("Deadlines")
+    expect(items).not.toContain("Catalog review")
+  })
+
   it("shows counselors and admins the settings", async () => {
     expect(await navFor("counselor")).toContain("Admission management")
+  })
+
+  it("shows the comment reports to administrators only, as the backend does", async () => {
+    expect(await navFor("counselor")).not.toContain("Reports")
   })
 
   it("shows an officer only documents and transcripts", async () => {

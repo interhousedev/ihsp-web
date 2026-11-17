@@ -18,6 +18,13 @@ export function institution(overrides: Partial<Institution> = {}): Institution {
     aid_basis: null,
     merit_available: null,
     scholarship_count: 0,
+    aliases: [],
+    deadlines: [],
+    sources: [],
+    highlights: [],
+    name_local: null,
+    logo_zoom: 1,
+    logo_fit: "circle",
     ...overrides,
   }
 }
@@ -55,6 +62,7 @@ export function listEntry(overrides: Partial<ListEntry> = {}): ListEntry {
     affordability: null,
     estimate: estimate(),
     lock_version: 1,
+    cycle: null,
     ...overrides,
   }
 }
@@ -68,6 +76,25 @@ export function mockChooser(options: { items?: Institution[]; list?: ListEntry[]
       catalogRequests.push(new URL(request.url))
       return HttpResponse.json({ items: options.items ?? [], next_cursor: null })
     }),
+    http.get(apiUrl("/v1/admission/catalog/facets"), () =>
+      HttpResponse.json([
+        { param: "country", label: "Country", kind: "select", options: [{ value: "Testland", label: "Testland" }] },
+        { param: "setting", label: "Setting", kind: "select", options: [{ value: "urban", label: "Urban" }] },
+        { param: "cycle", label: "Cycle", kind: "select", options: [{ value: "2026-27", label: "2026-27" }] },
+      ]),
+    ),
+    http.get(apiUrl("/v1/admission/catalog/study-fields"), () =>
+      HttpResponse.json([
+        {
+          id: "g1",
+          label: "Sciences",
+          items: [
+            { id: "physics", label: "Physics" },
+            { id: "biology", label: "Biology" },
+          ],
+        },
+      ]),
+    ),
     http.get(apiUrl("/v1/admission/config"), () => HttpResponse.json({ options: { city_types: ["any"] } })),
     http.get(apiUrl("/v1/admission/list"), () => HttpResponse.json(options.list ?? [])),
     http.post(apiUrl("/v1/admission/list"), async ({ request }) => {

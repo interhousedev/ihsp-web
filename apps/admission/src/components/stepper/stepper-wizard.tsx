@@ -1,7 +1,7 @@
 "use client"
 
 import { Button, Icons, cn } from "@ihsp/ui"
-import { useEffect, useRef, useState, type FormEvent, type ReactNode } from "react"
+import { useEffect, useRef, useState, type FormEvent } from "react"
 import { QuestionField } from "./fields"
 import { canAdvance } from "./logic"
 import type { StepAnswers, StepQuestion, StepValue } from "./types"
@@ -16,7 +16,6 @@ export type StepperLabels = {
   step: (current: number, total: number) => string
   /** Accessible name of the progress bar. */
   progress: string
-  guide: string
 }
 
 export type StepperWizardProps = {
@@ -30,8 +29,6 @@ export type StepperWizardProps = {
   /** Next on the last question, after `onStepDone`. */
   onFinish: () => void
   labels: StepperLabels
-  /** The guide panel of the step (an assistant, say); defaults to the question's `guide` text. */
-  renderGuide?: (question: StepQuestion, index: number) => ReactNode
   className?: string
 }
 
@@ -52,8 +49,8 @@ function sectionSegments(questions: StepQuestion[], step: number) {
 
 /**
  * One question per screen: progress (linear on phones, segmented by section from tablet width), the section eyebrow,
- * the question as a card / chip / select field, Back and Next (disabled until the question is answered). The guide
- * panel sits beside the question on desktop and in a disclosure below it on smaller screens.
+ * the question as a card / chip / select field, Back and Next (disabled until the question is answered). The
+ * question's `guide` is one muted line under the title.
  */
 export function StepperWizard({
   questions,
@@ -63,7 +60,6 @@ export function StepperWizard({
   onStepDone,
   onFinish,
   labels,
-  renderGuide,
   className,
 }: StepperWizardProps) {
   const [step, setStep] = useState(() => Math.min(Math.max(initialStep, 0), Math.max(questions.length - 1, 0)))
@@ -80,11 +76,6 @@ export function StepperWizard({
   if (!question) return null
   const last = step === questions.length - 1
   const ready = canAdvance(question, answers) && !busy
-  const guide = renderGuide ? (
-    renderGuide(question, step)
-  ) : question.guide ? (
-    <p className="text-sm">{question.guide}</p>
-  ) : null
   const segments = sectionSegments(questions, step)
 
   async function next(event?: FormEvent) {
@@ -142,7 +133,7 @@ export function StepperWizard({
         </ol>
       </div>
 
-      <div className="grid gap-5 lg:grid-cols-[minmax(0,1fr)_20rem] lg:gap-8 xl:grid-cols-[minmax(0,1fr)_24rem]">
+      <div className="w-full max-w-2xl">
         <form onSubmit={(event) => void next(event)} className="flex min-w-0 flex-col gap-6">
           <header className="flex flex-col gap-2">
             <p className="text-muted-foreground text-xs font-medium tracking-wide uppercase">
@@ -151,6 +142,7 @@ export function StepperWizard({
             <h2 ref={heading} tabIndex={-1} className="text-2xl font-semibold tracking-tight outline-none md:text-3xl">
               {question.title}
             </h2>
+            {question.guide ? <p className="text-muted-foreground text-sm">{question.guide}</p> : null}
           </header>
           <QuestionField
             key={question.id}
@@ -164,12 +156,6 @@ export function StepperWizard({
               {labels.saveError}
             </p>
           ) : null}
-          {guide ? (
-            <details className="bg-card rounded-card border-hairline-strong border p-3 lg:hidden">
-              <summary className="cursor-pointer text-sm font-medium">{labels.guide}</summary>
-              <div className="mt-2">{guide}</div>
-            </details>
-          ) : null}
           <div className="bg-background/95 sticky bottom-0 -mx-4 flex items-center justify-between gap-2 border-t px-4 py-3 backdrop-blur md:static md:mx-0 md:border-0 md:bg-transparent md:p-0">
             <Button type="button" variant="outline" disabled={step === 0 || busy} onClick={() => setStep(step - 1)}>
               <Icons.chevronLeft />
@@ -181,18 +167,6 @@ export function StepperWizard({
             </Button>
           </div>
         </form>
-        {guide ? (
-          <aside
-            aria-label={labels.guide}
-            className="bg-card rounded-card border-hairline-strong hidden h-fit self-start border p-4 lg:block"
-          >
-            <div className="text-muted-foreground mb-2 flex items-center gap-2 text-xs font-medium uppercase">
-              <Icons.sparkles aria-hidden />
-              {labels.guide}
-            </div>
-            {guide}
-          </aside>
-        ) : null}
       </div>
     </section>
   )

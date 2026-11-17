@@ -33,6 +33,8 @@ export type StepQuestion = {
   placeholder?: string
   /** Next stays open without an answer (the guide invites leaving it open). */
   optional?: boolean
+  /** A `select` shown as the searchable bottom sheet of the field pickers instead of a dropdown (long lists). */
+  sheet?: boolean
   /** Helper text of the guide panel when no custom `renderGuide` is given. */
   guide?: string
 }
