@@ -40,10 +40,26 @@ export function CalendarView() {
         <div className="flex items-center gap-2">
           <Button variant="outline" onClick={() => shift(-1)} aria-label={t("calendar.previous")}>
             ←
+          <Button
+            variant="outline"
+            size="icon"
+            className="min-h-11 min-w-11 md:min-h-9 md:min-w-9"
+            onClick={() => shift(-1)}
+            aria-label={t("calendar.previous")}
+          >
+            <Icons.chevronLeft aria-hidden />
           </Button>
           <span className="text-sm">{date(`${start}T12:00:00+05:00`, { month: "long", year: "numeric" })}</span>
           <Button variant="outline" onClick={() => shift(1)} aria-label={t("calendar.next")}>
             →
+          <Button
+            variant="outline"
+            size="icon"
+            className="min-h-11 min-w-11 md:min-h-9 md:min-w-9"
+            onClick={() => shift(1)}
+            aria-label={t("calendar.next")}
+          >
+            <Icons.chevronRight aria-hidden />
           </Button>
         </div>
       </div>
@@ -53,6 +69,13 @@ export function CalendarView() {
         <StateView state="error" error={query.error} onRetry={() => void query.refetch()} />
       ) : (
         <>
+          <div className="text-muted-foreground grid grid-cols-7 gap-1 text-center text-xs font-medium" aria-hidden>
+            {Array.from({ length: 7 }, (_, i) => (
+              <span key={i} className="min-w-0 truncate">
+                {date(`2024-01-0${i + 1}T12:00:00+05:00`, { weekday: "short" })}
+              </span>
+            ))}
+          </div>
           <div className="grid grid-cols-7 gap-1">
             {Array.from({ length: days }, (_, i) => {
               const day = `${month}-${String(i + 1).padStart(2, "0")}`

@@ -259,7 +259,13 @@ export function ReadinessWidget() {
 
 function ActivityCard({ item }: { item: Item }) {
   const t = useT("home.dash")
-  const category = item.category ? prettify(item.category) : t("activities.noCategory")
+  const tItems = useT("items")
+  const honor = item.kind === "honor"
+  const category = item.category
+    ? tItems.has(`${honor ? "recognition" : "category"}.${item.category}`)
+      ? tItems(`${honor ? "recognition" : "category"}.${item.category}`)
+      : prettify(item.category)
+    : t("activities.noCategory")
   const ready = item.status === "ready"
   return (
     <Link
@@ -343,14 +349,19 @@ function CollegeCard({ entry, match }: { entry: ListEntry; match: Match | undefi
       <div className="flex items-center gap-3">
         <LogoAvatar name={entry.institution.name} src={entry.institution.logo_url} className="size-10 ring-0" />
         <div className="min-w-0 flex-1">
-          <p className="truncate text-sm font-semibold">{entry.institution.name}</p>
+          <Link
+            href={`/chooser/institution/?id=${encodeURIComponent(entry.institution.id)}`}
+            className="block truncate text-sm font-semibold hover:underline after:absolute after:inset-0 after:content-['']"
+          >
+            {entry.institution.name}
+          </Link>
           <p className="text-muted-foreground flex items-center gap-1 truncate text-xs">
             <Icons.pin aria-hidden className="size-3 shrink-0" />
             <span className="truncate">{place || t("colleges.noLocation")}</span>
           </p>
         </div>
       </div>
-      <div className="flex items-center justify-between gap-2">
+      <div className="flex flex-wrap items-center justify-between gap-x-2 gap-y-1">
         {isMatchStatus(bucket) ? (
           <Pill tone={STATUS_TONE[bucket]} className="h-6 px-2 text-xs">
             {discover(`status.${bucket}`)}

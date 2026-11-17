@@ -5,7 +5,8 @@ import { Button, Icons, PageHeader, Pill, Skeleton, StateView, Switch } from "@i
 import { useId, useState } from "react"
 import { toast } from "sonner"
 import { AdmissionShell } from "../../shell/components/admission-shell"
-import { COURSE_SOURCES, useCourseMutations, useCourses, type Course, type CourseSource } from "../api"
+import { COURSE_SOURCES, useAddLmsCourse, useCourseMutations, useCourses, type Course, type CourseSource } from "../api"
+import { FreeCourses } from "./free-courses"
 import { ManualCourseDialog } from "./manual-course-dialog"
 
 function CourseRow({ course }: { course: Course }) {
@@ -13,12 +14,24 @@ function CourseRow({ course }: { course: Course }) {
   const errorMessage = useErrorMessage()
   const { include } = useCourseMutations()
   const id = useId()
+  const addLms = useAddLmsCourse()
+  const busy = include.isPending || addLms.isPending
   const meta = [course.provider, course.level, course.year, course.grade].filter((v) => v !== null && v !== "")
 
   async function toggle(included: boolean) {
     if (!course.id) return
     try {
       await include.mutateAsync({ id: course.id, included })
+    } catch (error) {
+      toast.error(errorMessage(error))
+    }
+  }
+
+  async function add() {
+    try {
+      if (course.id) await include.mutateAsync({ id: course.id, included: true })
+      else if (course.source === "lms" && course.source_ref) await addLms.mutateAsync(course.source_ref)
+      toast.success(t("added"))
     } catch (error) {
       toast.error(errorMessage(error))
     }
@@ -31,10 +44,16 @@ function CourseRow({ course }: { course: Course }) {
         {meta.length > 0 ? <p className="text-muted-foreground truncate text-sm">{meta.join(" · ")}</p> : null}
       </div>
       <div className="flex shrink-0 items-center gap-2">
+        {!course.included ? (
+          <Button size="sm" variant="outline" disabled={busy} onClick={() => void add()}>
+            <Icons.add aria-hidden className="size-4" />
+            {t("add")}
+          </Button>
+        ) : null}
         <label htmlFor={id} className="text-muted-foreground text-xs">
           {t("included")}
         </label>
-        <Switch id={id} checked={course.included} disabled={!course.id || include.isPending} onCheckedChange={toggle} />
+        <Switch id={id} checked={course.included} disabled={!course.id || busy} onCheckedChange={toggle} />
       </div>
     </li>
   )
@@ -86,6 +105,7 @@ export function CoursesPage() {
             <SourceSection key={source} source={source} courses={query.data.items.filter((c) => c.source === source)} />
           ))
         )}
+        <FreeCourses />
         <ManualCourseDialog open={adding} onOpenChange={setAdding} />
       </div>
     </AdmissionShell>

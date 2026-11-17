@@ -52,3 +52,13 @@ export function useCourseMutations() {
   })
   return { add, include }
 }
+
+/** POST /courses/lms/{id}: one-click add of an LMS course to the profile (idempotent). */
+export function useAddLmsCourse() {
+  const client = useQueryClient()
+  return useMutation({
+    mutationFn: (lmsCourseId: string) =>
+      getApiClient().post<Course>(`/v1/admission/courses/lms/${encodeURIComponent(lmsCourseId)}`, {}),
+    onSuccess: () => client.invalidateQueries({ queryKey: COURSES_KEY }),
+  })
+}

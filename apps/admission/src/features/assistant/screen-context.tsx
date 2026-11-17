@@ -2,7 +2,7 @@
 
 import { usePathname } from "next/navigation"
 import { createContext, useCallback, useContext, useEffect, useMemo, useRef, type ReactNode } from "react"
-import type { ScreenPayload } from "./api"
+type ScreenPayload = { path: string; title: string; summary: string }
 
 export const SUMMARY_LIMIT = 6000
 
