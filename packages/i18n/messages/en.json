@@ -2048,7 +2048,11 @@
       "teacher": "Teacher",
       "admin": "Administration",
       "lms_admin": "LMS admin",
-      "lms_creator": "LMS course creator"
+      "lms_creator": "LMS course creator",
+      "counselor": "Counselor",
+      "mentor": "Mentor",
+      "transcript_officer": "Transcript officer",
+      "librarian": "Librarian"
     },
     "cards": {
       "password": "Password",
@@ -2287,7 +2291,10 @@
     "theme": "Theme",
     "light": "Light",
     "dark": "Dark",
-    "system": "System"
+    "system": "System",
+    "lightHint": "Always bright",
+    "darkHint": "Always dark",
+    "systemHint": "Follows your device"
   },
   "connectors": {
     "title": "Connectors",

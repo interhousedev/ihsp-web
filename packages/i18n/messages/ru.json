@@ -2048,7 +2048,11 @@
       "teacher": "Преподаватель",
       "admin": "Администрация",
       "lms_admin": "Администратор LMS",
-      "lms_creator": "Автор курсов LMS"
+      "lms_creator": "Автор курсов LMS",
+      "counselor": "Консультант",
+      "mentor": "Наставник",
+      "transcript_officer": "Сотрудник по транскриптам",
+      "librarian": "Библиотекарь"
     },
     "cards": {
       "password": "Пароль",
@@ -2287,7 +2291,10 @@
     "theme": "Тема",
     "light": "Светлая",
     "dark": "Тёмная",
-    "system": "Системная"
+    "system": "Системная",
+    "lightHint": "Всегда светлая",
+    "darkHint": "Всегда тёмная",
+    "systemHint": "Как на устройстве"
   },
   "connectors": {
     "title": "Коннекторы",

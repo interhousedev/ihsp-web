@@ -2048,7 +2048,11 @@
       "teacher": "Oʻqituvchi",
       "admin": "Maʼmuriyat",
       "lms_admin": "LMS administratori",
-      "lms_creator": "LMS kurs muallifi"
+      "lms_creator": "LMS kurs muallifi",
+      "counselor": "Maslahatchi",
+      "mentor": "Mentor",
+      "transcript_officer": "Transkript xodimi",
+      "librarian": "Kutubxonachi"
     },
     "cards": {
       "password": "Parol",
@@ -2287,7 +2291,10 @@
     "theme": "Mavzu",
     "light": "Yorugʻ",
     "dark": "Qorongʻi",
-    "system": "Tizim"
+    "system": "Tizim",
+    "lightHint": "Doim yorugʻ",
+    "darkHint": "Doim qorongʻi",
+    "systemHint": "Qurilma sozlamasiga mos"
   },
   "connectors": {
     "title": "Konnektorlar",
