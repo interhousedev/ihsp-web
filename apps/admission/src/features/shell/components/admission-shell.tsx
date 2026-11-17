@@ -46,6 +46,8 @@ function StudentArea({ home, children }: { home?: boolean; children: ReactNode }
 
 function Frame({ children }: { children: ReactNode }) {
   const nav = useNav()
+  const { session } = useSession()
+  const showTour = tour && !hasNoAdmissionAccess(session?.user.roles)
   const platforms = usePlatformLinks()
   return (
     <AppShell
@@ -60,6 +62,7 @@ function Frame({ children }: { children: ReactNode }) {
       <ScreenContextProvider>
         <MaintenanceBanner />
         <Suspense fallback={<PageLoading />}>{children}</Suspense>
+        <div className="h-20 md:hidden" aria-hidden />
         <AdmissionConsentGate />
         <AssistantLauncher />
       </ScreenContextProvider>

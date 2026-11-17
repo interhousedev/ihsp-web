@@ -11,8 +11,12 @@ export function AuditList() {
   const errorMessage = useErrorMessage()
   const format = useFormatters()
   const audit = useQuery(auditQuery())
-  const label = (group: string, value: string) =>
-    t.has(`audit.${group}.${value}`) ? t(`audit.${group}.${value}`) : value
+  const label = (group: string, value: string) => {
+    const key = value.replaceAll(".", "_")
+    if (t.has(`audit.${group}.${key}`)) return t(`audit.${group}.${key}`)
+    const text = value.replace(/[._]/g, " ")
+    return text.charAt(0).toUpperCase() + text.slice(1)
+  }
   return (
     <section className="grid gap-2" aria-labelledby="audit-title">
       <h2 id="audit-title" className="text-base font-semibold">
@@ -28,7 +32,7 @@ export function AuditList() {
             <li key={`${record.at}-${index}`} className="flex flex-wrap justify-between gap-2 px-3 py-2 text-sm">
               <span>
                 {label("actors", record.actor_kind)} · {label("actions", record.action)}
-                {record.object_type ? ` · ${record.object_type}` : ""}
+                {record.object_type ? ` · ${label("objectTypes", record.object_type)}` : ""}
               </span>
               <time className="text-muted-foreground" dateTime={record.at}>
                 {format.dateTime(record.at)}

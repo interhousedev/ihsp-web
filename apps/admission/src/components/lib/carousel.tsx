@@ -41,7 +41,7 @@ export function Carousel({ label, className, children }: { label: string; classN
         ref={ref}
         aria-label={label}
         onScroll={measure}
-        className="-mx-4 flex snap-x snap-mandatory gap-3 overflow-x-auto scroll-smooth px-4 pb-1 [scrollbar-width:none] md:mx-0 md:px-0 [&::-webkit-scrollbar]:hidden"
+        className="-mx-4 flex snap-x snap-mandatory gap-3 overflow-x-auto scroll-smooth px-4 pb-1 [scrollbar-width:none] md:mx-0 md:scroll-px-10 md:px-10 [&::-webkit-scrollbar]:hidden"
       >
         {children}
       </ul>

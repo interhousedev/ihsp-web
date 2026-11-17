@@ -129,3 +129,58 @@ describe("supplemental prompts editor", () => {
     expect(currentCycle(new Date(2027, 2, 1))).toBe("2026-27")
   })
 })
+
+describe("supplemental prompts editor", () => {
+  test("prefills the cycle and PUTs the edited prompts", async () => {
+    let body: unknown = null
+    const existing = [
+      {
+        cycle: "2026-27",
+        prompts: [
+          {
+            position: 1,
+            prompt: "Why us?",
+            word_limit: 200,
+            required: true,
+            source_url: null,
+            status: "same",
+            previous_text: null,
+          },
+        ],
+      },
+    ]
+    server.use(
+      http.get(apiUrl("/v1/admission/catalog/institutions"), () =>
+        HttpResponse.json({ items: [{ id: "i1", name: "Test University", country: "GB" }], next_cursor: null }),
+      ),
+      http.get(apiUrl("/v1/admission/catalog/institutions/i1/supp-prompts"), () => HttpResponse.json(existing)),
+      http.put(apiUrl("/v1/admission/staff/catalog/institutions/i1/supp-prompts/2026-27"), async ({ request }) => {
+        body = await request.json()
+        return HttpResponse.json(existing)
+      }),
+    )
+    renderAdmissionApp(<SuppPromptsEditor open onOpenChange={() => {}} />)
+    fireEvent.change(await screen.findByLabelText("Edit an existing university (optional)"), {
+      target: { value: "Test" },
+    })
+    fireEvent.click(await screen.findByRole("button", { name: "Test University" }))
+    fireEvent.change(screen.getByLabelText("Admission cycle"), { target: { value: "2026-27" } })
+    expect(await screen.findByDisplayValue("Why us?")).toBeTruthy()
+    fireEvent.click(screen.getByRole("button", { name: "Add a prompt" }))
+    fireEvent.change(screen.getAllByLabelText("Prompt text")[1]!, { target: { value: "Tell us more." } })
+    fireEvent.click(screen.getByRole("button", { name: "Save prompts" }))
+    await waitFor(() =>
+      expect(body).toEqual({
+        prompts: [
+          { prompt: "Why us?", word_limit: 200, required: true, source_url: null },
+          { prompt: "Tell us more.", word_limit: null, required: true, source_url: null },
+        ],
+      }),
+    )
+  })
+
+  test("names the current cycle from August", () => {
+    expect(currentCycle(new Date(2026, 10, 17))).toBe("2026-27")
+    expect(currentCycle(new Date(2027, 2, 1))).toBe("2026-27")
+  })
+})

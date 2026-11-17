@@ -422,23 +422,61 @@
     "name": "{appAdmission}",
     "description": "Universitetga qabulga tayyorgarlik"
   },
-  "assistant": {
+  "assistantDock": {
     "open": "Yordamchini ochish",
     "title": "Yordamchi",
     "close": "Yopish",
-    "placeholder": "Qabul haqida sorang…",
-    "send": "Yuborish",
     "newChat": "Yangi suhbat",
-    "history": "Suhbatlar tarixi",
-    "noHistory": "Oldingi suhbatlar yoʼq",
-    "deleteChat": "Suhbatni oʼchirish",
-    "untitled": "Nomsiz suhbat",
-    "thinking": "Oʼylayapman…",
-    "welcome": "Salom! Rejangiz, universitetlar, esselar va muddatlar haqidagi savollarga javob beraman.",
-    "sources": "Manbalar",
-    "addTask": "Vazifa qoʼshish",
-    "taskAdded": "Vazifa qoʼshildi",
-    "taskDue": "Muddat: {date}"
+    "placeholder": "Qabul haqida sorang…",
+    "error": "Yordamchini ishga tushirib boʼlmadi.",
+    "retry": "Qayta urinish",
+    "prompt": {
+      "label": "AIʼingizni ulang",
+      "text": "Qabul maʼlumotlaringizni ChatGPT, Claude yoki istalgan MCP vositasida ishlating.",
+      "connect": "Ulash",
+      "dismiss": "Hozir emas"
+    },
+    "mcp": {
+      "open": "Ulash va xotira",
+      "title": "AI vositasini ulash",
+      "back": "Suhbatga qaytish",
+      "loading": "Yuklanmoqda…",
+      "loadFailed": "Ulanish maʼlumotlarini yuklab boʼlmadi.",
+      "name": "Token nomi",
+      "scopes": "Ruxsat",
+      "scope": {
+        "read": "Arizalarim va rejamni oʼqish",
+        "memory": "Xotira qaydlarini oʼqish va yozish",
+        "docs": "Hujjatlarni yuklash",
+        "documents": "Hujjatlarimni oʼqish va yuklab olish"
+      },
+      "expiry": "Amal qilish muddati",
+      "days": "{days} kun",
+      "create": "Token yaratish",
+      "createFailed": "Tokenni yaratib boʼlmadi.",
+      "shownOnce": "Tokenni hozir nusxalang. U faqat bir marta koʼrsatiladi.",
+      "copyToken": "Tokenni nusxalash",
+      "copyConfig": "Konfiguratsiyani nusxalash",
+      "done": "Tayyor",
+      "noTokens": "Faol tokenlar yoʼq.",
+      "expiresOn": "tugaydi: {date}",
+      "revoke": "{name} tokenini bekor qilish",
+      "revokeFailed": "Tokenni bekor qilib boʼlmadi.",
+      "notesTitle": "Xotira"
+    },
+    "notes": {
+      "placeholder": "Yordamchi nimani eslab qolsin…",
+      "add": "Qayd qoʼshish",
+      "addFailed": "Qaydni saqlab boʼlmadi.",
+      "delete": "Qaydni oʼchirish",
+      "deleteFailed": "Qaydni oʼchirib boʼlmadi.",
+      "empty": "Hozircha qaydlar yoʼq.",
+      "source": {
+        "app": "Shu yerda qoʼshilgan",
+        "mcp": "Ulangan vosita qoʼshgan",
+        "assistant": "Yordamchi qoʼshgan"
+      }
+    }
   },
   "essays": {
     "title": "Esselar",
@@ -536,6 +574,7 @@
       "restoreText": "Avval joriy matn versiya sifatida saqlanadi."
     },
     "ideas": {
+      "expansionTab": "AI gʻoyasi",
       "title": "Gʻoyalar doskasi",
       "body": "Gʻoya",
       "tags": "Teglar, vergul bilan",
@@ -551,6 +590,7 @@
       "delete": "Gʻoyani oʻchirish"
     },
     "coach": {
+      "tab": "AI yordamchi",
       "title": "SI yordami",
       "note": "Yordamchilar savol beradi va maslahat beradi, lekin essengizni hech qachon yozmaydi.",
       "brainstorm": "Aqliy hujum",
@@ -568,6 +608,10 @@
     }
   },
   "nav": {
+    "reports": "Shikoyatlar",
+    "kbEditor": "Bilimlar bazasi muharriri",
+    "outcomes": "Qabul natijalari",
+    "faq": "Bilimlar bazasi",
     "career": "Kasb tanlash",
     "tests": "Testlar va sertifikatlar",
     "admissionSettings": "Qabulni boshqarish",
@@ -857,29 +901,85 @@
       "intro": "Xodimlar maʼlumotlaringizni ochganda, bu yerda qayd etiladi.",
       "empty": "Maʼlumotlaringizni hali hech kim koʻrmagan.",
       "actions": {
-        "consent.granted": "Ruxsat berildi",
-        "consent.withdrawn": "Ruxsat qaytarib olindi",
-        "data.erased": "Maʼlumotlar oʻchirildi",
-        "data.exported": "Maʼlumotlar yuklab olindi",
-        "document.downloaded": "Hujjat yuklab olindi",
-        "document.reviewed": "Hujjat koʻrib chiqildi",
-        "document.uploaded": "Hujjat yuklandi",
-        "guest_link.claimed": "Mehmon havolasi qabul qilindi",
-        "guest_link.created": "Mehmon havolasi yaratildi",
-        "guest_link.responded": "Mehmon javob berdi",
-        "guest_link.revoked": "Mehmon havolasi bekor qilindi",
-        "guest_link.rotated": "Mehmon havolasi yangilandi",
-        "guest_link.session": "Mehmon havolani ochdi",
-        "list.affordability_sign_off": "Narx maqsadga muvofiqligi tasdiqlandi",
-        "list.label_override": "Roʻyxat belgisi oʻzgartirildi",
-        "transcript.cancelled": "Maʼlumotnoma soʻrovi bekor qilindi",
-        "transcript.listed": "Maʼlumotnoma soʻrovlari koʻrildi",
-        "transcript.ready": "Maʼlumotnoma tayyor deb belgilandi",
-        "transcript.requested": "Maʼlumotnoma soʻraldi",
-        "transcript.undo": "Maʼlumotnoma holati qaytarildi"
+        "career_major_saved": "Mutaxassislik saqlandi",
+        "career_question_saved": "Karyera testi javobi saqlandi",
+        "catalog_logo_edited": "Kollej logotipi oʻzgartirildi",
+        "catalog_proposal_approved": "Katalog taklifi tasdiqlandi",
+        "catalog_proposal_rejected": "Katalog taklifi rad etildi",
+        "catalog_supp_prompts_replaced": "Qoʻshimcha esse mavzulari almashtirildi",
+        "consent_granted": "Ruxsat berildi",
+        "consent_withdrawn": "Ruxsat qaytarib olindi",
+        "consultation_accepted": "Konsultatsiya qabul qilindi",
+        "consultation_cancelled": "Konsultatsiya bekor qilindi",
+        "consultation_completed": "Konsultatsiya oʻtkazildi",
+        "consultation_confirmed": "Konsultatsiya vaqti tasdiqlandi",
+        "consultation_declined": "Konsultatsiya rad etildi",
+        "consultation_proposed": "Konsultatsiyaning boshqa vaqti taklif qilindi",
+        "consultation_rejected": "Taklif qilingan konsultatsiya vaqti rad etildi",
+        "consultation_requested": "Konsultatsiya soʻraldi",
+        "data_erased": "Maʼlumotlar oʻchirildi",
+        "data_exported": "Maʼlumotlar yuklab olindi",
+        "document_downloaded": "Hujjat yuklab olindi",
+        "document_reviewed": "Hujjat koʻrib chiqildi",
+        "document_uploaded": "Hujjat yuklandi",
+        "guest_link_claimed": "Mehmon havolasi qabul qilindi",
+        "guest_link_created": "Mehmon havolasi yaratildi",
+        "guest_link_responded": "Mehmon javob berdi",
+        "guest_link_revoked": "Mehmon havolasi bekor qilindi",
+        "guest_link_rotated": "Mehmon havolasi yangilandi",
+        "guest_link_session": "Mehmon havolani ochdi",
+        "list_affordability_sign_off": "Narx maqsadga muvofiqligi tasdiqlandi",
+        "list_label_override": "Roʻyxat belgisi oʻzgartirildi",
+        "memory_note_created": "Yordamchi xotirasiga qayd qoʻshildi",
+        "memory_note_deleted": "Yordamchi xotirasidagi qayd oʻchirildi",
+        "officer_covers_all_granted": "Barcha oʻquvchilarga ruxsat berildi",
+        "officer_covers_all_revoked": "Barcha oʻquvchilarga ruxsat qaytarib olindi",
+        "officer_pickup_changed": "Maʼlumotnomani olish usuli oʻzgartirildi",
+        "student_homework": "Uy vazifalari koʻrildi",
+        "student_mail": "Pochta koʻrildi",
+        "student_marks": "Baholar koʻrildi",
+        "student_viewed": "Oʻquvchi profili koʻrildi",
+        "student_work_offs": "Qayta topshirishlar koʻrildi",
+        "task_created": "Vazifa yaratildi",
+        "task_deleted": "Vazifa oʻchirildi",
+        "task_updated": "Vazifa yangilandi",
+        "transcript_cancelled": "Maʼlumotnoma soʻrovi bekor qilindi",
+        "transcript_listed": "Maʼlumotnoma soʻrovlari koʻrildi",
+        "transcript_ready": "Maʼlumotnoma tayyor deb belgilandi",
+        "transcript_requested": "Maʼlumotnoma soʻraldi",
+        "transcript_undo": "Maʼlumotnoma holati qaytarildi"
+      },
+      "objectTypes": {
+        "alignment": "Moslik",
+        "app_review": "Ariza tekshiruvi",
+        "assignment": "Topshiriq",
+        "calendar": "Kalendar",
+        "career": "Karyera",
+        "catalog_institution": "Kollej",
+        "checklist": "Nazorat roʻyxati",
+        "consultation": "Konsultatsiya",
+        "courses": "Kurslar",
+        "document": "Hujjat",
+        "essay": "Esse",
+        "goal_plan": "Maqsadlar rejasi",
+        "guest_link": "Mehmon havolasi",
+        "items": "Elementlar",
+        "list": "Roʻyxat",
+        "list_entry": "Roʻyxat yozuvi",
+        "memory_note": "Xotira qaydi",
+        "opportunity_plan": "Imkoniyatlar rejasi",
+        "outcome_summary": "Natijalar xulosasi",
+        "profile": "Profil",
+        "proof": "Tasdiq",
+        "readiness": "Tayyorlik",
+        "student": "Talaba",
+        "task": "Vazifa",
+        "test_score": "Test natijasi",
+        "transcript": "Maʼlumotnoma",
+        "words": "Soʻzlar"
       },
       "actors": {
-        "user": "Xodim yoki siz",
+        "user": "Tizimga kirgan foydalanuvchi (xodim yoki siz)",
         "guest": "Mehmon",
         "system": "Tizim"
       }
@@ -1003,6 +1103,8 @@
   "chooser": {
     "title": "Universitet tanlash",
     "planning": {
+      "tab": "AI tahlili",
+      "suggestTab": "AI takliflari",
       "title": "Roʼyxat muvozanati",
       "suggest": "AI bilan universitet tanlash",
       "noSuggestions": "Yozilgan katalogda yangi tavsiyalar yoʼq.",
@@ -1047,11 +1149,12 @@
     "yes": "Ha",
     "no": "Yoʻq",
     "cost": "Narxi: yiliga {amount}",
-    "scholarshipCount": "Stipendiyalar: {count}",
+    "scholarshipCount": "{count, plural, other {Stipendiyalar: #}}",
     "inList": "Roʻyxatimda",
     "addToList": "Roʻyxatimga qoʻshish",
     "noResults": "Bu filtrlarga hech narsa mos kelmadi.",
     "results": "Universitetlar: {count}",
+    "resultsMore": "Universitetlar: {count}+",
     "loadMore": "Yana koʻrsatish",
     "searchLabel": "Universitetlarni qidirish",
     "searchPlaceholder": "Nomi yoki shahar",
@@ -1078,6 +1181,7 @@
       "clear": "Bu filtrlarni olib tashlash"
     },
     "summary": {
+      "tab": "AI xulosasi",
       "title": "AI xulosasi",
       "generate": "Xulosa tuzish",
       "refresh": "Yangilash",
@@ -1825,7 +1929,15 @@
     "countOpen": "{count} ta yozuv",
     "capReached": "Common App {max} tagacha ruxsat beradi; yangisini qoʻshish uchun birini almashtiring.",
     "saved": "Saqlandi",
-    "dragHandle": "Tartibni oʻzgartirish uchun sudrang: {title}",
+    "board": {
+      "instructions": "Kartani olish uchun probelni bosing. Chap va oʻng strelkalar Qoralamalar va Tayyor oʻrtasida almashtiradi, yuqori va pastki strelkalar joyini belgilaydi, probel qoʻyadi, Escape bekor qiladi.",
+      "pickup": "«{title}» olindi.",
+      "over": "«{title}» «{column}» ustida.",
+      "drop": "«{title}» «{column}» ga qoʻyildi.",
+      "cancel": "«{title}» ni koʻchirish bekor qilindi.",
+      "incomplete": "«{title}» ni tayyor deb belgilash uchun yana bir nechta maydonni toʻldiring.",
+      "addDetails": "Toʻldirish"
+    },
     "empty": {
       "activity": {
         "title": "Hali faoliyat yoʻq",
@@ -1890,6 +2002,7 @@
       "save": "Raqamlarni saqlash"
     },
     "review": {
+      "tab": "AI tahlili",
       "title": "Baholash",
       "run": "Yozuvni baholash",
       "rerun": "Qayta baholash",
@@ -1913,6 +2026,7 @@
       "thanks": "Fikringiz uchun rahmat."
     },
     "interview": {
+      "tab": "AI intervyu",
       "title": "Intervyu",
       "start": "Intervyuni boshlash",
       "restart": "Qaytadan boshlash",
@@ -1927,6 +2041,7 @@
       }
     },
     "plan": {
+      "suggestTab": "AI takliflari",
       "title": "Kelajak rejalari",
       "emptyTitle": "Hali reja yoʻq",
       "emptyText": "Rejani boshlash uchun bosqich qoʻshing.",
@@ -1973,6 +2088,56 @@
       "state_regional": "Viloyat / respublika",
       "national": "Milliy",
       "international": "Xalqaro"
+    },
+    "category": {
+      "academic": "Oʻqish",
+      "arts": "Sanʼat",
+      "athletics": "Sport",
+      "leadership_service": "Liderlik va koʻngillilik",
+      "cultural_global": "Madaniyat va xalqaro tajriba",
+      "stem_research": "STEM va tadqiqot",
+      "other": "Boshqa"
+    },
+    "grade": {
+      "title": "Nomi",
+      "description": "Tavsif",
+      "label": "{part}: baho {grade}",
+      "stale": "Baholangandan keyin oʻzgargan",
+      "run": "Baholash",
+      "rerun": "Qayta baholash",
+      "running": "Baholanmoqda…",
+      "none": "Hali baholanmagan"
+    },
+    "stat": {
+      "hours": "Haftasiga soat",
+      "weeks": "Yiliga hafta"
+    },
+    "wizard": {
+      "step": "{total} dan {n}-qadam",
+      "category": "Bu qanday mashgʻulot?",
+      "details": "Nom bering va tavsiflang",
+      "extra": "Qayerda, qachon va qancha",
+      "next": "Keyingi",
+      "back": "Orqaga",
+      "ofHours": "168 dan",
+      "ofWeeks": "52 dan"
+    },
+    "honorsScroll": "Mukofotlaringiz",
+    "analytics": {
+      "title": "Mashgʻulotlaringiz qisqacha",
+      "byCategory": "Toifalar boʻyicha",
+      "byGrade": "Nom bahosi boʻyicha",
+      "total": "Mashgʻulotlar",
+      "hours": "Yiliga soat",
+      "graded": "Baholangan",
+      "count": "{count}"
+    },
+    "whatIf": {
+      "label": "Agar…",
+      "title": "Mashgʻulotlardagi oʻzgarishni sinab koʻring",
+      "placeholder": "Agar dasturlash klubini boshlasam-chi? Shaxmatni tashlasam-chi?",
+      "submit": "Baholash",
+      "running": "Baholanmoqda…"
     },
     "timing": {
       "school_year": "Oʻquv yili davomida",
@@ -2574,6 +2739,51 @@
       "bar": "{title}: {from} dan {to} gacha"
     }
   },
+  "tour": {
+    "label": "Platforma boʻylab tur",
+    "introTitle": "Boshlaymiz",
+    "introText": "Siz foydalanadigan sahifalar boʻylab qisqa tur. U davom etayotganda istalgan joyni bosishingiz mumkin.",
+    "start": "Boshlash",
+    "skip": "Oʻtkazib yuborish",
+    "next": "Keyingi",
+    "back": "Orqaga",
+    "finish": "Tayyor",
+    "step": "{total} dan {current}",
+    "collapse": "Turni yigʻish",
+    "expand": "Turni davom ettirish",
+    "close": "Turni tugatish",
+    "drag": "Turni koʻchirish",
+    "steps": {
+      "home": {
+        "title": "Bosh sahifa",
+        "text": "Keyingi qadamingiz va muddatlar shu yerda."
+      },
+      "journey": {
+        "title": "Yoʻl",
+        "text": "Butun ariza yoʻl sifatida. Har safar bitta keyingi harakat."
+      },
+      "profile": {
+        "title": "Profil",
+        "text": "Bir nechta savolga javob bering. Bilganimizni oldindan toʻldiramiz."
+      },
+      "activities": {
+        "title": "Faoliyatlar",
+        "text": "Dars tashqarisidagi ishlaringizni qoʻshing. Qabul komissiyalari buni diqqat bilan oʻqiydi."
+      },
+      "plans": {
+        "title": "Reja",
+        "text": "Imtihonlar va muddatlar taqvimi."
+      },
+      "universities": {
+        "title": "Universitetlar",
+        "text": "Roʻyxat tuzing va qayerga mosligingizni koʻring."
+      },
+      "documents": {
+        "title": "Hujjatlar",
+        "text": "Transkript va sertifikatlar bir joyda."
+      }
+    }
+  },
   "journey": {
     "title": "Sizning yoʻlingiz",
     "progress": "{total} ta bosqichdan {done} tasi",
@@ -2670,14 +2880,12 @@
     },
     "context": {
       "empty": "Lentada kollejlar qolmadi.",
-      "title": "Bu kollej haqida",
-      "hint": "Yuqoridagi kartochka uchun tezkor amallar.",
-      "perYear": "yiliga {amount}",
-      "actions": {
-        "open": "Sahifani ochish",
-        "chances": "Imkoniyatlarim",
-        "scholarships": "Stipendiyalar"
-      }
+      "open": "Sahifani ochish"
+    },
+    "explainer": {
+      "title": "Lenta qanday ishlaydi",
+      "text": "Kollejni oʻtkazib yuborish uchun kartochkani chapga, qiziqsangiz oʻngga suring. Tugmalar yoki klaviatura strelkalaridan ham foydalanishingiz mumkin.",
+      "dismiss": "Tushunarli"
     },
     "algorithm": {
       "open": "Algoritmingiz",

@@ -40,7 +40,7 @@ export function useNav(): { groups: NavGroup[]; bottom: BottomNavItem[] } {
     const isDocStaff = hasAny(roles, DOCUMENT_ROLES)
     const home = { title: t("home"), url: "/", icon: "home", match: "exact" } as const
     const journey = { title: t("journey"), url: "/journey/", icon: "route" } as const
-    const profile = { title: t("profile"), url: "/setup/", icon: "profile" } as const
+    const profile = { title: t("profile"), url: "/profile/", icon: "profile" } as const
     const activities = { title: t("activities"), url: "/activities/", icon: "sparkles" } as const
     const plans = { title: t("plans"), url: "/plan/", icon: "calendar" } as const
     const tasks = { title: t("tasks"), url: "/tasks/", icon: "kanban" } as const
@@ -62,7 +62,21 @@ export function useNav(): { groups: NavGroup[]; bottom: BottomNavItem[] } {
         icon: "settings",
         visible: hasAny(roles, SETTINGS_ROLES),
       },
-      { title: t("opportunitiesReview"), url: "/staff/opportunities/", icon: "moderation", visible: isCurator },
+      {
+        title: t("opportunitiesReview"),
+        url: "/staff/opportunities/",
+        icon: "moderation",
+        match: "exact",
+        visible: isCurator,
+      },
+      {
+        title: t("reports"),
+        url: "/staff/opportunities/reports/",
+        icon: "flag",
+        visible: hasAny(roles, MODERATOR_ROLES),
+      },
+      { title: t("kbEditor"), url: "/staff/kb/", icon: "help", visible: isStaff },
+      { title: t("consultationsQueue"), url: "/staff/consultations/", icon: "chat", visible: isStaff },
     ]
     const staffGroup: NavGroup = { label: t("groupStaff"), items: staffItems.filter((item) => item.visible !== false) }
     if (staffOnly) {
@@ -90,9 +104,12 @@ export function useNav(): { groups: NavGroup[]; bottom: BottomNavItem[] } {
         items: [
           { title: t("career"), url: "/career/", icon: "sparkles" },
           { title: t("opportunities"), url: "/opportunities/", icon: "exams" },
+          { title: t("outcomes"), url: "/outcomes/", icon: "trendingUp" },
+          { title: t("faq"), url: "/faq/", icon: "chat" },
           { title: t("tests"), url: "/tests/", icon: "certificates" },
           { title: t("courses"), url: "/courses/", icon: "courses" },
           { title: t("help"), url: "/help/", icon: "help" },
+          { title: t("docProcess"), url: "/documents/#document-process", icon: "post" },
           settings,
         ],
       },

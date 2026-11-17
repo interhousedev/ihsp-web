@@ -72,6 +72,26 @@ export function DiscoverPage() {
     })
   }, [served, fetching])
 
+  const exhausted = Boolean(matches.data) && remaining.length <= 2
+  const settling = decide.isPending
+  const fetching = matches.isFetching
+  useEffect(() => {
+    if (!exhausted || settling || fetching || history.length === 0) return
+    void client.invalidateQueries({ queryKey: ["admission", "matches"] })
+  }, [exhausted, settling, fetching, history.length, client])
+
+  const served = matches.data?.items
+  useEffect(() => {
+    if (!served || fetching) return
+    const present = new Set(served.map((match) => match.university_id))
+    setHistory((current) => {
+      const kept = current.filter(
+        (entry, index) => index === current.length - 1 || present.has(entry.match.university_id),
+      )
+      return kept.length === current.length ? current : kept
+    })
+  }, [served, fetching])
+
   const onSwipe = useCallback(
     (match: Match, direction: SwipeDirection) => {
       setHistory((current) => [...current, { match, direction }])

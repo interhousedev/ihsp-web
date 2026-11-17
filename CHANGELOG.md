@@ -8,8 +8,10 @@ All notable changes to this project are documented here. The format follows [Kee
 
 - admission.ihsu.uz: a new app for university applications: profile setup with background questions, activities and honors with AI review and interview, future plans, the university chooser, documents and deadlines, and staff views for counselors, transcript officers and mentors.
 - admission.ihsu.uz workflow: the journey path, preferences questionnaire, Discover swipe deck, chances tab, university logos and covers, career quiz saved per user, documents checklist priorities, mentoring switches, voice input disclosure, the admission icon, and separate mobile, tablet and desktop layouts.
+- admission.ihsu.uz refinement: step-by-step algorithm quiz, a setup wizard with a movable guide, a Kollegio-style profile, activity and honor cards that drag between statuses, one university list with cycle, test-optional and field-of-study filters, Discover with a swipe explainer and per-university AI chat, the AI popup with tools across pages, opportunities and scholarships with detail views and comments, outcomes, a prep Gantt, LMS and free university courses, essays with supplemental prompts and reviews, consultations, the FAQ and knowledge chat with MCP connect, and staff editors for the catalog, logos, deadlines and the knowledge base.
 - Admin: a users page that creates staff accounts, admin-editable AI prompts with versions and analytics, and legal documents per app with forced re-acceptance.
 - Share: a guest page for admission help requests.
+- admission.ihsu.uz access and polish: a no-access page for accounts without admission roles, the `admission:documents` MCP token scope, consultations limited to assigned staff, grouped document checklist, prep calendar and Gantt that open on current content, translated SCEA rounds and audit types, and the AI popup that focuses its composer and stays out of the FAQ and the tour.
 
 ## [1.6.3] - 2026-11-16
 

@@ -170,6 +170,30 @@ export function History({
 }
 export function ReviewView({ review }: { review: AppReview }) {
   const t = useT("appReview")
+  if (items.length < 2) return null
+  return (
+    <section className="flex flex-col gap-2">
+      <h2 className="text-sm font-medium">{t("history")}</h2>
+      <ul className="flex flex-wrap gap-2">
+        {items.map((review) => (
+          <li key={review.id}>
+            <Button
+              size="sm"
+              variant={review.id === current?.id ? "secondary" : "outline"}
+              aria-pressed={review.id === current?.id}
+              onClick={() => onSelect(review.id)}
+            >
+              {t("version", { n: String(review.version) })}
+              <span className="text-muted-foreground text-xs">{t(`status.${review.status}`)}</span>
+            </Button>
+          </li>
+        ))}
+      </ul>
+    </section>
+  )
+}
+export function ReviewView({ review }: { review: AppReview }) {
+  const t = useT("appReview")
   if (isActive(review)) {
     const live = SECTION_KEYS.map(
       (key): ReviewSection =>

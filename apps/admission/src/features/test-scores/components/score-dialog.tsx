@@ -46,6 +46,14 @@ function FieldError({ message }: { message: string | undefined }) {
   ) : null
 }
 
+function FieldError({ message }: { message: string | undefined }) {
+  return message ? (
+    <p role="alert" className="text-destructive text-xs">
+      {message}
+    </p>
+  ) : null
+}
+
 function SectionField({
   section,
   value,
@@ -321,7 +329,14 @@ export function ScoreDialog({
             </div>
             <div className="flex flex-col gap-1">
               <Label htmlFor="score-url">{t("verificationUrl")}</Label>
-              <Input id="score-url" type="url" value={url} maxLength={500} onChange={(e) => setUrl(e.target.value)} />
+              <Input
+                className="h-11 md:h-8"
+                id="score-url"
+                type="url"
+                value={url}
+                maxLength={500}
+                onChange={(e) => setUrl(e.target.value)}
+              />
               <FieldError message={fieldCopy(problem, copy, "verification_url")} />
             </div>
             <div className="flex flex-col gap-1">

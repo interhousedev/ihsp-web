@@ -220,3 +220,17 @@ export function useSuppPrompts(institutionId: string | null) {
       }),
   })
 }
+
+export type SuppCycle = AdmissionSuppCycle
+
+/** The supplemental prompts of a college per cycle, newest first, each marked against the year before. */
+export function useSuppPrompts(institutionId: string | null) {
+  return useQuery({
+    queryKey: ["admission", "supp-prompts", institutionId ?? ""] as const,
+    enabled: !!institutionId,
+    queryFn: ({ signal }) =>
+      getApiClient().get<SuppCycle[]>(`${BASE}/catalog/institutions/${seg(institutionId ?? "")}/supp-prompts`, {
+        signal,
+      }),
+  })
+}

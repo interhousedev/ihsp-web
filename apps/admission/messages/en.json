@@ -422,23 +422,61 @@
     "name": "{appAdmission}",
     "description": "Preparing applications to universities"
   },
-  "assistant": {
+  "assistantDock": {
     "open": "Open assistant",
     "title": "Assistant",
     "close": "Close",
-    "placeholder": "Ask about your applications…",
-    "send": "Send",
     "newChat": "New chat",
-    "history": "Chat history",
-    "noHistory": "No earlier chats",
-    "deleteChat": "Delete chat",
-    "untitled": "Untitled chat",
-    "thinking": "Thinking…",
-    "welcome": "Hi! I can answer questions about your plan, universities, essays and deadlines.",
-    "sources": "Sources",
-    "addTask": "Add task",
-    "taskAdded": "Task added",
-    "taskDue": "Due {date}"
+    "placeholder": "Ask about your applications…",
+    "error": "The assistant could not start.",
+    "retry": "Try again",
+    "prompt": {
+      "label": "Connect your AI",
+      "text": "Use your admission data in ChatGPT, Claude or any MCP tool.",
+      "connect": "Connect",
+      "dismiss": "Not now"
+    },
+    "mcp": {
+      "open": "Connect tools and memory",
+      "title": "Connect an AI tool",
+      "back": "Back to chat",
+      "loading": "Loading…",
+      "loadFailed": "Could not load the connection details.",
+      "name": "Token name",
+      "scopes": "Access",
+      "scope": {
+        "read": "Read my applications and plan",
+        "memory": "Read and write memory notes",
+        "docs": "Upload documents",
+        "documents": "Read and download my documents"
+      },
+      "expiry": "Expires in",
+      "days": "{days} days",
+      "create": "Create token",
+      "createFailed": "Could not create the token.",
+      "shownOnce": "Copy the token now. It is shown only once.",
+      "copyToken": "Copy token",
+      "copyConfig": "Copy config",
+      "done": "Done",
+      "noTokens": "No active tokens.",
+      "expiresOn": "expires {date}",
+      "revoke": "Revoke {name}",
+      "revokeFailed": "Could not revoke the token.",
+      "notesTitle": "Memory"
+    },
+    "notes": {
+      "placeholder": "Something the assistant should remember…",
+      "add": "Add note",
+      "addFailed": "Could not save the note.",
+      "delete": "Delete note",
+      "deleteFailed": "Could not delete the note.",
+      "empty": "No notes yet.",
+      "source": {
+        "app": "Added here",
+        "mcp": "Added by a connected tool",
+        "assistant": "Added by the assistant"
+      }
+    }
   },
   "essays": {
     "title": "Essays",
@@ -536,6 +574,7 @@
       "restoreText": "The current text is saved as a version first."
     },
     "ideas": {
+      "expansionTab": "AI idea",
       "title": "Ideas board",
       "body": "Idea",
       "tags": "Tags, separated by commas",
@@ -551,6 +590,7 @@
       "delete": "Delete idea"
     },
     "coach": {
+      "tab": "AI coach",
       "title": "AI help",
       "note": "The helpers ask questions and give advice; they never write your essay.",
       "brainstorm": "Brainstorm",
@@ -568,6 +608,10 @@
     }
   },
   "nav": {
+    "reports": "Reports",
+    "kbEditor": "Knowledge base editor",
+    "outcomes": "Admission results",
+    "faq": "Knowledge base",
     "career": "Career exploration",
     "tests": "Tests and certificates",
     "admissionSettings": "Admission management",
@@ -857,29 +901,85 @@
       "intro": "Every time staff open your data, it is recorded here.",
       "empty": "Nobody has viewed your data yet.",
       "actions": {
-        "consent.granted": "Permission given",
-        "consent.withdrawn": "Permission withdrawn",
-        "data.erased": "Data erased",
-        "data.exported": "Data exported",
-        "document.downloaded": "Document downloaded",
-        "document.reviewed": "Document reviewed",
-        "document.uploaded": "Document uploaded",
-        "guest_link.claimed": "Guest link claimed",
-        "guest_link.created": "Guest link created",
-        "guest_link.responded": "Guest replied",
-        "guest_link.revoked": "Guest link revoked",
-        "guest_link.rotated": "Guest link renewed",
-        "guest_link.session": "Guest opened the link",
-        "list.affordability_sign_off": "Affordability signed off",
-        "list.label_override": "List label changed",
-        "transcript.cancelled": "Transcript request cancelled",
-        "transcript.listed": "Transcript requests viewed",
-        "transcript.ready": "Transcript marked ready",
-        "transcript.requested": "Transcript requested",
-        "transcript.undo": "Transcript status undone"
+        "career_major_saved": "Major saved",
+        "career_question_saved": "Career answer saved",
+        "catalog_logo_edited": "College logo edited",
+        "catalog_proposal_approved": "Catalog proposal approved",
+        "catalog_proposal_rejected": "Catalog proposal rejected",
+        "catalog_supp_prompts_replaced": "Supplemental prompts replaced",
+        "consent_granted": "Permission given",
+        "consent_withdrawn": "Permission withdrawn",
+        "consultation_accepted": "Consultation accepted",
+        "consultation_cancelled": "Consultation cancelled",
+        "consultation_completed": "Consultation completed",
+        "consultation_confirmed": "Consultation time confirmed",
+        "consultation_declined": "Consultation declined",
+        "consultation_proposed": "Another consultation time proposed",
+        "consultation_rejected": "Proposed consultation time declined",
+        "consultation_requested": "Consultation requested",
+        "data_erased": "Data erased",
+        "data_exported": "Data exported",
+        "document_downloaded": "Document downloaded",
+        "document_reviewed": "Document reviewed",
+        "document_uploaded": "Document uploaded",
+        "guest_link_claimed": "Guest link claimed",
+        "guest_link_created": "Guest link created",
+        "guest_link_responded": "Guest replied",
+        "guest_link_revoked": "Guest link revoked",
+        "guest_link_rotated": "Guest link renewed",
+        "guest_link_session": "Guest opened the link",
+        "list_affordability_sign_off": "Affordability signed off",
+        "list_label_override": "List label changed",
+        "memory_note_created": "Assistant memory note added",
+        "memory_note_deleted": "Assistant memory note deleted",
+        "officer_covers_all_granted": "Access to all students granted",
+        "officer_covers_all_revoked": "Access to all students revoked",
+        "officer_pickup_changed": "Transcript pickup changed",
+        "student_homework": "Homework viewed",
+        "student_mail": "Mail viewed",
+        "student_marks": "Marks viewed",
+        "student_viewed": "Student profile viewed",
+        "student_work_offs": "Work-offs viewed",
+        "task_created": "Task created",
+        "task_deleted": "Task deleted",
+        "task_updated": "Task updated",
+        "transcript_cancelled": "Transcript request cancelled",
+        "transcript_listed": "Transcript requests viewed",
+        "transcript_ready": "Transcript marked ready",
+        "transcript_requested": "Transcript requested",
+        "transcript_undo": "Transcript status undone"
+      },
+      "objectTypes": {
+        "alignment": "Alignment",
+        "app_review": "Application review",
+        "assignment": "Assignment",
+        "calendar": "Calendar",
+        "career": "Career",
+        "catalog_institution": "College",
+        "checklist": "Checklist",
+        "consultation": "Consultation",
+        "courses": "Courses",
+        "document": "Document",
+        "essay": "Essay",
+        "goal_plan": "Goal plan",
+        "guest_link": "Guest link",
+        "items": "Items",
+        "list": "List",
+        "list_entry": "List entry",
+        "memory_note": "Memory note",
+        "opportunity_plan": "Opportunity plan",
+        "outcome_summary": "Outcome summary",
+        "profile": "Profile",
+        "proof": "Proof",
+        "readiness": "Readiness",
+        "student": "Student",
+        "task": "Task",
+        "test_score": "Test score",
+        "transcript": "Transcript",
+        "words": "Words"
       },
       "actors": {
-        "user": "Staff or you",
+        "user": "Signed-in user (staff or you)",
         "guest": "Guest",
         "system": "System"
       }
@@ -1003,6 +1103,8 @@
   "chooser": {
     "title": "Choose a university",
     "planning": {
+      "tab": "AI insight",
+      "suggestTab": "AI suggestions",
       "title": "List balance",
       "suggest": "Suggest universities with AI",
       "noSuggestions": "No new suggestions from the recorded catalog.",
@@ -1047,11 +1149,12 @@
     "yes": "Yes",
     "no": "No",
     "cost": "Cost: {amount} per year",
-    "scholarshipCount": "{count} scholarships",
+    "scholarshipCount": "{count, plural, one {# scholarship} other {# scholarships}}",
     "inList": "In my list",
     "addToList": "Add to my list",
     "noResults": "Nothing matches these filters.",
     "results": "{count} universities",
+    "resultsMore": "{count}+ universities",
     "loadMore": "Show more",
     "searchLabel": "Search universities",
     "searchPlaceholder": "Name or city",
@@ -1078,6 +1181,7 @@
       "clear": "Clear these filters"
     },
     "summary": {
+      "tab": "AI summary",
       "title": "AI summary",
       "generate": "Generate summary",
       "refresh": "Refresh",
@@ -1825,7 +1929,15 @@
     "countOpen": "{count, plural, one {# entry} other {# entries}}",
     "capReached": "Common App allows {max}; replace one to add another.",
     "saved": "Saved",
-    "dragHandle": "Drag to reorder: {title}",
+    "board": {
+      "instructions": "Press Space to pick up a card. Use the left and right arrows to switch between Drafts and Ready, up and down to place it, Space to drop and Escape to cancel.",
+      "pickup": "Picked up {title}.",
+      "over": "{title} is over {column}.",
+      "drop": "{title} dropped in {column}.",
+      "cancel": "Move of {title} cancelled.",
+      "incomplete": "{title} needs a few more details before it can be marked ready.",
+      "addDetails": "Add details"
+    },
     "empty": {
       "activity": {
         "title": "No activities yet",
@@ -1890,6 +2002,7 @@
       "save": "Save numbers"
     },
     "review": {
+      "tab": "AI review",
       "title": "Review",
       "run": "Review this item",
       "rerun": "Review again",
@@ -1913,6 +2026,7 @@
       "thanks": "Thanks for the feedback."
     },
     "interview": {
+      "tab": "AI interview",
       "title": "Interview",
       "start": "Start interview",
       "restart": "Start over",
@@ -1927,6 +2041,7 @@
       }
     },
     "plan": {
+      "suggestTab": "AI suggestions",
       "title": "Future plans",
       "emptyTitle": "No plans yet",
       "emptyText": "Add a milestone to start your plan.",
@@ -1973,6 +2088,56 @@
       "state_regional": "State / regional",
       "national": "National",
       "international": "International"
+    },
+    "category": {
+      "academic": "Academic",
+      "arts": "Arts",
+      "athletics": "Athletics",
+      "leadership_service": "Leadership & service",
+      "cultural_global": "Cultural & global",
+      "stem_research": "STEM & research",
+      "other": "Other"
+    },
+    "grade": {
+      "title": "Title",
+      "description": "Description",
+      "label": "{part}: grade {grade}",
+      "stale": "Edited since it was graded",
+      "run": "Grade",
+      "rerun": "Regrade",
+      "running": "Grading…",
+      "none": "Not graded yet"
+    },
+    "stat": {
+      "hours": "Hours per week",
+      "weeks": "Weeks per year"
+    },
+    "wizard": {
+      "step": "Step {n} of {total}",
+      "category": "What kind of activity is it?",
+      "details": "Name it and describe it",
+      "extra": "Where, when and how much",
+      "next": "Next",
+      "back": "Back",
+      "ofHours": "of 168",
+      "ofWeeks": "of 52"
+    },
+    "honorsScroll": "Your honors",
+    "analytics": {
+      "title": "Your activities at a glance",
+      "byCategory": "By category",
+      "byGrade": "By title grade",
+      "total": "Activities",
+      "hours": "Hours per year",
+      "graded": "Graded",
+      "count": "{count}"
+    },
+    "whatIf": {
+      "label": "What if",
+      "title": "Test a change to your activities",
+      "placeholder": "What if I start a coding club? What if I drop chess?",
+      "submit": "Evaluate",
+      "running": "Evaluating…"
     },
     "timing": {
       "school_year": "During school year",
@@ -2574,6 +2739,51 @@
       "bar": "{title}: {from} to {to}"
     }
   },
+  "tour": {
+    "label": "Guided tour",
+    "introTitle": "Let’s get you started",
+    "introText": "A one-minute tour of the pages you will use. You can keep clicking anywhere while it runs.",
+    "start": "Start tour",
+    "skip": "Skip",
+    "next": "Next",
+    "back": "Back",
+    "finish": "Done",
+    "step": "{current} of {total}",
+    "collapse": "Minimise the tour",
+    "expand": "Continue the tour",
+    "close": "End the tour",
+    "drag": "Move the tour",
+    "steps": {
+      "home": {
+        "title": "Home",
+        "text": "Your next step and deadlines wait here."
+      },
+      "journey": {
+        "title": "Journey",
+        "text": "The whole application as a path. One next action at a time."
+      },
+      "profile": {
+        "title": "Profile",
+        "text": "Answer a few questions. We prefill what we already know."
+      },
+      "activities": {
+        "title": "Activities",
+        "text": "Add what you do outside class. Admissions read this closely."
+      },
+      "plans": {
+        "title": "Plan",
+        "text": "Your calendar of exams and deadlines."
+      },
+      "universities": {
+        "title": "Universities",
+        "text": "Build your list and see where you fit."
+      },
+      "documents": {
+        "title": "Documents",
+        "text": "Keep transcripts and certificates in one place."
+      }
+    }
+  },
   "journey": {
     "title": "Your journey",
     "progress": "{done} of {total} milestones",
@@ -2670,14 +2880,12 @@
     },
     "context": {
       "empty": "No colleges left in your feed.",
-      "title": "About this college",
-      "hint": "Shortcuts for the card on top.",
-      "perYear": "{amount} per year",
-      "actions": {
-        "open": "Open page",
-        "chances": "See my chances",
-        "scholarships": "Scholarships"
-      }
+      "open": "Open page"
+    },
+    "explainer": {
+      "title": "How the deck works",
+      "text": "Swipe left to skip a college, swipe right if you are interested. You can also use the buttons or the arrow keys.",
+      "dismiss": "Got it"
     },
     "algorithm": {
       "open": "Your Algorithm",
