@@ -33,3 +33,11 @@ describe("answer mapping", () => {
     expect(resumeIndex(qs, { experience: "social", setting: "city", prestige: false })).toBe(3)
   })
 })
+
+describe("traits", () => {
+  test("is a quiz-only answer: no preference payload, but merged into the values", async () => {
+    const { mergeValues } = await import("./mapping")
+    expect(answerToPayload("traits", ["arts"])).toEqual({})
+    expect(mergeValues({ traits: ["arts"] }, {} as never).traits).toEqual(["arts"])
+  })
+})

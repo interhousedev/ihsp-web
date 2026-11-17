@@ -1,15 +1,21 @@
 "use client"
 
+import { normalizeStudyGroups } from "./study-label"
 import { useInfiniteQuery, useMutation, useQuery, useQueryClient } from "@tanstack/react-query"
+import { getApiClient } from "@ihsp/api"
+import { useLocale } from "@ihsp/i18n"
 import { useMemo } from "react"
-import { EMPTY_FILTERS, type Filters } from "./filters"
-import { deriveFacets } from "./facets"
+import type { Filters } from "./filters"
+import { tidyStudyGroups, toFacets } from "./facets"
 import {
   addToList,
   checkAffordability,
+  getFacets,
   getInstitution,
   getList,
   getScholarships,
+  getStudyFields,
+  getUniSuggestions,
   patchListEntry,
   postSummary,
   removeListEntry,
@@ -21,12 +27,11 @@ import type { ListEntry, ListPatchBody } from "./types"
 
 /** Page size of the catalog search; the backend allows 1 to 50. */
 export const PAGE_SIZE = 20
-/** Facets are read from the largest page the backend serves. */
-const FACET_LIMIT = 50
 
 const KEYS = {
   search: (filters: Filters) => ["admission", "catalog", "search", filters] as const,
-  facets: ["admission", "catalog", "facets"] as const,
+  facets: (locale: string) => ["admission", "catalog", "facets", locale] as const,
+  studyFields: (locale: string) => ["admission", "catalog", "study-fields", locale] as const,
   institution: (id: string) => ["admission", "catalog", "institution", id] as const,
   scholarships: (filters: ScholarshipFilters) => ["admission", "catalog", "scholarships", filters] as const,
   list: ["admission", "list"] as const,
@@ -41,15 +46,31 @@ export function useInstitutionSearch(filters: Filters) {
   })
 }
 
-/** Filter options and the filters without any data, from an unfiltered catalog page. */
+/** The catalog's filters with localized labels and options (`GET /catalog/facets`). */
 export function useFacets() {
+  const locale = useLocale()
   const query = useQuery({
-    queryKey: KEYS.facets,
-    queryFn: ({ signal }) => searchInstitutions(EMPTY_FILTERS, 0, FACET_LIMIT, signal),
+    queryKey: KEYS.facets(locale),
+    queryFn: ({ signal }) => getFacets(locale, signal),
     staleTime: 5 * 60_000,
   })
-  const facets = useMemo(() => (query.data ? deriveFacets(query.data.items) : null), [query.data])
+  const facets = useMemo(() => (query.data ? toFacets(query.data) : null), [query.data])
   return { facets, isLoading: query.isLoading }
+}
+
+/** Fields of study grouped by family, sorted and deduplicated (`GET /catalog/study-fields`). */
+export function useStudyFields() {
+  const locale = useLocale()
+  const query = useQuery({
+    queryKey: KEYS.studyFields(locale),
+    queryFn: ({ signal }) => getStudyFields(locale, signal),
+    staleTime: 30 * 60_000,
+  })
+  const groups = useMemo(
+    () => (query.data ? normalizeStudyGroups(tidyStudyGroups(query.data), locale) : []),
+    [query.data, locale],
+  )
+  return { groups, isLoading: query.isLoading }
 }
 
 export function useInstitution(id: string | null) {
@@ -70,6 +91,31 @@ export function useScholarships(filters: ScholarshipFilters) {
 
 export function useList() {
   return useQuery({ queryKey: KEYS.list, queryFn: ({ signal }) => getList(signal) })
+}
+
+export type ListInsights = {
+  entries: {
+    entry_id: string
+    institution_id: string
+    classification: { effective: string | null; source: string; reasons: string[] }
+  }[]
+  balance: { reach: number; target: number; safety: number; unlabelled: number; status: string }
+}
+
+/** The backend's classification of the list: the one source of every reach/target/safety label and count. */
+export function useListInsights() {
+  const list = useList()
+  return useQuery({
+    queryKey: ["admission", "list-insights", list.data],
+    queryFn: () => getApiClient().get<ListInsights>("/v1/admission/list/insights"),
+  })
+}
+
+/** The label in force for an entry (staff, student or computed); the student's own bucket until insights arrive. */
+export function useEntryLabel(): (entry: ListEntry) => string | null {
+  const insights = useListInsights()
+  const byEntry = new Map((insights.data?.entries ?? []).map((row) => [row.entry_id, row.classification.effective]))
+  return (entry) => (byEntry.has(entry.id) ? (byEntry.get(entry.id) ?? null) : entry.bucket)
 }
 
 /** Puts a changed entry into the cached list (the server's answer carries the new `lock_version`). */
@@ -121,4 +167,14 @@ export function useAffordability() {
       onSettled: () => client.invalidateQueries({ queryKey: KEYS.list }),
     }),
   }
+}
+
+/** AI-written questions worth asking about one university (`GET /uni-chats/{id}/suggestions`). */
+export function useUniSuggestions(id: string) {
+  const locale = useLocale()
+  return useQuery({
+    queryKey: ["admission", "uni-suggestions", id, locale] as const,
+    queryFn: ({ signal }) => getUniSuggestions(id, locale, signal),
+    staleTime: 10 * 60_000,
+  })
 }

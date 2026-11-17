@@ -1,4 +1,12 @@
-import { getApiClient, type AdmissionChances, type AdmissionMatchDecision, type AdmissionMatchList } from "@ihsp/api"
+import type { UniSuggestions } from "../chooser/types"
+import {
+  getApiClient,
+  type AdmissionChances,
+  type AdmissionDefaultPrompt,
+  type AdmissionMatchDecision,
+  type AdmissionMatchList,
+  type AdmissionUniChat,
+} from "@ihsp/api"
 
 const BASE = "/v1/admission"
 
@@ -16,4 +24,37 @@ export function deleteDecision(id: string) {
 
 export function getChances(id: string, signal?: AbortSignal) {
   return getApiClient().get<AdmissionChances>(`${BASE}/universities/${encodeURIComponent(id)}/chances`, { signal })
+}
+
+export function openUniChat(institutionId: string) {
+  return getApiClient().post<AdmissionUniChat>(`${BASE}/uni-chats/${encodeURIComponent(institutionId)}`)
+}
+
+/** The suggestion chips come in `locale` (the backend reads Accept-Language). */
+export function getUniChatSuggestions(institutionId: string, locale: string, signal?: AbortSignal) {
+  return getApiClient().get<UniSuggestions>(`${BASE}/uni-chats/${encodeURIComponent(institutionId)}/suggestions`, {
+    headers: { "Accept-Language": locale },
+    signal,
+  })
+}
+
+export function getDefaultPrompt(signal?: AbortSignal) {
+  return getApiClient().get<AdmissionDefaultPrompt>(`${BASE}/uni-chat/default-prompt`, { signal })
+}
+
+export function putDefaultPrompt(prompt: string) {
+  return getApiClient().put<AdmissionDefaultPrompt>(`${BASE}/uni-chat/default-prompt`, { prompt })
+}
+
+/** Opens the SSE variant of the default-prompt run; a 204 answer (already auto-run) has no stream. */
+export function streamRunDefault(institutionId: string, auto: boolean, locale: string, signal?: AbortSignal) {
+  return getApiClient().request<Response>({
+    method: "POST",
+    path: `${BASE}/uni-chats/${encodeURIComponent(institutionId)}/run-default`,
+    query: { auto },
+    // The built-in research prompt is written in the app's language, not the browser's.
+    headers: { Accept: "text/event-stream", "Accept-Language": locale },
+    responseType: "stream",
+    signal,
+  })
 }

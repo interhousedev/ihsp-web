@@ -3,11 +3,12 @@
 import { useErrorMessage, useT } from "@ihsp/i18n"
 import { Alert, AlertDescription, cn, Icons, Pill, Reveal, SortableList, StateView, Textarea, Button } from "@ihsp/ui"
 import Link from "next/link"
+import { usePathname, useRouter, useSearchParams } from "next/navigation"
 import { useState } from "react"
 import { AsideCard, SplitLayout } from "../../../components/lib/split-layout"
 import { UnderlineTabs } from "../../../components/lib/underline-tabs"
 import { ScrollFade } from "../../../components/scroll-fade"
-import { useList, usePatchEntry, useRemoveEntry } from "../hooks"
+import { useEntryLabel, useList, usePatchEntry, useRemoveEntry } from "../hooks"
 import { useWorkflow } from "../../../lib/config"
 import type { Bucket, ListEntry, Round } from "../types"
 import { AffordabilityPanel } from "./affordability-panel"
@@ -130,13 +131,27 @@ const GROUP_TINT = {
 export function MyList() {
   const t = useT("chooser")
   const list = useList()
+  const labelOf = useEntryLabel()
   const { buckets } = useWorkflow()
   const [order, setOrder] = useState<Record<string, string[]>>({})
   const [tab, setTab] = useState("")
+  const router = useRouter()
+  const pathname = usePathname()
+  const params = useSearchParams()
+  const cycle = params.get("cycle") ?? ""
+  function setCycle(value: string) {
+    const next = new URLSearchParams(params.toString())
+    if (value) next.set("cycle", value)
+    else next.delete("cycle")
+    const query = next.toString()
+    router.replace(query ? `${pathname}?${query}` : pathname)
+  }
   if (list.isLoading) return <StateView state="loading" rows={3} />
   if (list.isError) return <StateView state="error" error={list.error} onRetry={() => void list.refetch()} />
-  const entries = list.data ?? []
-  if (entries.length === 0)
+  const all = list.data ?? []
+  const cycles = [...new Set(all.flatMap((entry) => (entry.cycle ? [entry.cycle] : [])))].toSorted()
+  const entries = cycle ? all.filter((entry) => entry.cycle === cycle) : all
+  if (all.length === 0)
     return (
       <StateView
         state="empty"
@@ -153,9 +168,9 @@ export function MyList() {
   const groups: { key: Bucket | "none"; entries: ListEntry[] }[] = [
     ...buckets.map((bucket) => ({
       key: bucket as Bucket,
-      entries: entries.filter((entry) => entry.bucket === bucket),
+      entries: entries.filter((entry) => labelOf(entry) === bucket),
     })),
-    { key: "none" as const, entries: entries.filter((entry) => entry.bucket === null) },
+    { key: "none" as const, entries: entries.filter((entry) => !buckets.some((bucket) => bucket === labelOf(entry))) },
   ]
   const sorted = (key: string, items: ListEntry[]) => {
     const ids = order[key] ?? []
@@ -198,6 +213,19 @@ export function MyList() {
       }
     >
       <div className="flex flex-col gap-4">
+        {cycles.length > 0 ? (
+          <label className="flex items-center gap-2 text-sm">
+            {t("list.cycle")}
+            <select className={SELECT} value={cycle} onChange={(event) => setCycle(event.target.value)}>
+              <option value="">{t("filters.any")}</option>
+              {cycles.map((value) => (
+                <option key={value} value={value}>
+                  {value}
+                </option>
+              ))}
+            </select>
+          </label>
+        ) : null}
         <UnderlineTabs
           label={t("list.view.tabs")}
           value={active.key}

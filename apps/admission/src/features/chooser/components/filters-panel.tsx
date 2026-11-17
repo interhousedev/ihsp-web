@@ -3,22 +3,20 @@
 import { useT } from "@ihsp/i18n"
 import { Button, Icons, Input, Label, Switch } from "@ihsp/ui"
 import { useState, type ReactNode } from "react"
-import { configOptions } from "../config-options"
+import { facetOf } from "../facets"
+import { EMPTY_FILTERS, SELECT_FILTERS, type FilterKey, type Filters } from "../filters"
 import type { Facets } from "../facets"
-import { EMPTY_FILTERS, type FilterKey, type Filters } from "../filters"
-import { useAdmissionConfig } from "../../../lib/config"
-import { useOptionLabel } from "./option-label"
+import type { StudyGroup } from "../types"
+import { StudyFieldSelect } from "./study-field-select"
 
 const CONTROL =
   "border-input bg-background h-11 w-full rounded-lg border px-2.5 text-sm md:h-9 focus-visible:ring-[3px] focus-visible:ring-ring/50 focus-visible:outline-none disabled:opacity-50"
 
-function Field({ id, label, noData, children }: { id: string; label: string; noData: boolean; children: ReactNode }) {
-  const t = useT("chooser")
+function Field({ id, label, children }: { id: string; label: string; children: ReactNode }) {
   return (
     <div className="flex flex-col gap-1.5">
       <Label htmlFor={id}>{label}</Label>
       {children}
-      {noData ? <p className="text-muted-foreground text-xs">{t("filters.noDataHint")}</p> : null}
     </div>
   )
 }
@@ -27,58 +25,46 @@ function Select({
   id,
   value,
   options,
-  labelOf,
   onChange,
 }: {
   id: string
   value: string
-  options: string[]
-  labelOf: (value: string) => string
+  options: { value: string; label: string }[]
   onChange: (value: string) => void
 }) {
   const t = useT("chooser")
   // A value from the address that the catalog no longer lists stays selectable so it can be cleared.
-  const all = value && !options.includes(value) ? [value, ...options] : options
+  const all =
+    value && !options.some((option) => option.value === value) ? [{ value, label: value }, ...options] : options
   return (
-    <select
-      id={id}
-      className={CONTROL}
-      value={value}
-      disabled={all.length === 0}
-      onChange={(event) => onChange(event.target.value)}
-    >
+    <select id={id} className={CONTROL} value={value} onChange={(event) => onChange(event.target.value)}>
       <option value="">{t("filters.any")}</option>
       {all.map((option) => (
-        <option key={option} value={option}>
-          {labelOf(option)}
+        <option key={option.value} value={option.value}>
+          {option.label}
         </option>
       ))}
     </select>
   )
 }
 
-const identity = (value: string) => value
-
-/** The catalog filters as a form: nothing is searched until "Apply". Options come from the config and the catalog. */
+/** The catalog filters as a form: nothing is searched until "Apply". Labels and options come from the catalog's facets. */
 export function FiltersPanel({
   filters,
   facets,
+  groups,
   onApply,
 }: {
   filters: Filters
   facets: Facets | null
+  groups: StudyGroup[]
   onApply: (filters: Filters) => void
 }) {
   const t = useT("chooser")
-  const config = useAdmissionConfig()
-  const cityLabel = useOptionLabel("cityType")
-  const aidLabel = useOptionLabel("aid")
-  const countryLabel = useOptionLabel("country")
-  const studyLabel = useOptionLabel("studyType")
   const [draft, setDraft] = useState(filters)
   const set = <K extends FilterKey>(key: K, value: Filters[K]) => setDraft((current) => ({ ...current, [key]: value }))
-  const noData = (key: FilterKey) => facets?.empty.has(key) ?? false
-  const cityTypes = configOptions(config.data, "city_types").filter((value) => value !== "any")
+  const merit = facetOf(facets?.list, "merit_intl")
+  const cost = facetOf(facets?.list, "max_cost")
 
   return (
     <form
@@ -89,71 +75,40 @@ export function FiltersPanel({
         onApply(draft)
       }}
     >
-      <Field id="f-country" label={t("filters.country")} noData={false}>
-        <Select
-          id="f-country"
-          value={draft.country}
-          options={facets?.countries ?? []}
-          labelOf={countryLabel}
-          onChange={(v) => set("country", v)}
-        />
+      {SELECT_FILTERS.map(({ param, key }) => {
+        const facet = facetOf(facets?.list, param)
+        if (!facet) return null
+        const value = draft[key] as string
+        return (
+          <Field key={param} id={`f-${param}`} label={facet.label}>
+            <Select id={`f-${param}`} value={value} options={facet.options} onChange={(v) => set(key, v as never)} />
+          </Field>
+        )
+      })}
+      <Field id="f-field" label={t("filters.field")}>
+        <StudyFieldSelect id="f-field" value={draft.field} groups={groups} onChange={(v) => set("field", v)} />
       </Field>
-      <Field id="f-field" label={t("filters.field")} noData={noData("field")}>
-        <Select
-          id="f-field"
-          value={draft.field}
-          options={facets?.fields ?? []}
-          labelOf={identity}
-          onChange={(v) => set("field", v)}
-        />
-      </Field>
-      <Field id="f-city" label={t("filters.cityType")} noData={noData("cityType")}>
-        <Select
-          id="f-city"
-          value={draft.cityType}
-          options={cityTypes}
-          labelOf={cityLabel}
-          onChange={(v) => set("cityType", v)}
-        />
-      </Field>
-      <Field id="f-study" label={t("filters.studyType")} noData={noData("studyType")}>
-        <Select
-          id="f-study"
-          value={draft.studyType}
-          options={facets?.studyTypes ?? []}
-          labelOf={studyLabel}
-          onChange={(v) => set("studyType", v)}
-        />
-      </Field>
-      <Field id="f-crime" label={t("filters.maxCrime")} noData={noData("maxCrime")}>
+      <Field id="f-max_cost" label={cost?.label ?? t("filters.maxCost")}>
         <Input
-          id="f-crime"
-          type="number"
-          inputMode="decimal"
-          min={0}
-          value={draft.maxCrime}
-          onChange={(event) => set("maxCrime", event.target.value)}
-        />
-      </Field>
-      <Field id="f-aid" label={t("filters.aid")} noData={noData("aid")}>
-        <Select
-          id="f-aid"
-          value={draft.aid}
-          options={facets?.aidBases ?? []}
-          labelOf={aidLabel}
-          onChange={(v) => set("aid", v)}
-        />
-      </Field>
-      <Field id="f-cost" label={t("filters.maxCost")} noData={noData("maxCost")}>
-        <Input
-          id="f-cost"
+          id="f-max_cost"
           type="number"
           inputMode="numeric"
           min={0}
+          max={cost?.max ?? undefined}
           value={draft.maxCost}
           onChange={(event) => set("maxCost", event.target.value)}
         />
       </Field>
+      {merit ? (
+        <div className="flex items-center justify-between gap-3">
+          <Label htmlFor="f-merit_intl">{merit.label}</Label>
+          <Switch
+            id="f-merit_intl"
+            checked={draft.meritIntl}
+            onCheckedChange={(checked) => set("meritIntl", checked)}
+          />
+        </div>
+      ) : null}
       <div className="flex items-center justify-between gap-3">
         <Label htmlFor="f-scholarships">{t("filters.scholarships")}</Label>
         <Switch
@@ -171,7 +126,7 @@ export function FiltersPanel({
           type="button"
           variant="outline"
           onClick={() => {
-            const cleared = { ...EMPTY_FILTERS, q: draft.q }
+            const cleared = { ...EMPTY_FILTERS, q: draft.q, sort: draft.sort }
             setDraft(cleared)
             onApply(cleared)
           }}

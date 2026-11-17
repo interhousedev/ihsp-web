@@ -1,4 +1,4 @@
-import { firstUnanswered, type StepAnswers, type StepQuestion } from "../../components/stepper"
+import { firstUnanswered, type StepAnswers, type StepQuestion, type StepValue } from "../../components/stepper"
 import type { AdmissionPreferenceAnswers as PreferenceAnswers } from "@ihsp/api"
 
 /** Answers that are booleans in the contract; the stepper holds them as "true" / "false". */
@@ -21,6 +21,7 @@ export const FIELD_ORDER = [
   "small_classes",
   "ec_important",
   "food_important",
+  "traits",
   "major",
   "prestige",
   "academics_first",
@@ -39,6 +40,7 @@ export const SECTION_OF: Record<PreferenceField, "vibe" | "academics" | "financi
   small_classes: "vibe",
   ec_important: "vibe",
   food_important: "vibe",
+  traits: "vibe",
   major: "academics",
   prestige: "academics",
   academics_first: "academics",
@@ -49,8 +51,12 @@ export const SECTION_OF: Record<PreferenceField, "vibe" | "academics" | "financi
 
 const isBooleanField = (field: string) => (BOOLEAN_FIELDS as readonly string[]).includes(field)
 
+/** Questions the preferences contract has no field for; they are stored only with the quiz answers. */
+export const QUIZ_ONLY_FIELDS: readonly string[] = ["traits"]
+
 /** One answered question as the partial PUT body. */
 export function answerToPayload(field: string, value: string | string[] | undefined): PreferenceAnswers {
+  if (QUIZ_ONLY_FIELDS.includes(field)) return {}
   if (typeof value !== "string" || value === "") return field === "region" ? { region: null } : {}
   return { [field]: isBooleanField(field) ? value === "true" : value } as PreferenceAnswers
 }
@@ -72,3 +78,12 @@ export function resumeIndex(questions: StepQuestion[], answers: PreferenceAnswer
 
 /** `region:Uzbekistan` → `region_Uzbekistan`: the message key of a tag. */
 export const tagMessageKey = (tag: string) => tag.replaceAll(":", "_")
+
+/** Saved quiz answers as the stepper's values; the preferences win where both hold a field. */
+export function mergeValues(quiz: Record<string, unknown> | undefined, answers: PreferenceAnswers): StepAnswers {
+  const values: StepAnswers = {}
+  for (const [field, value] of Object.entries(quiz ?? {})) {
+    if (typeof value === "string" || Array.isArray(value)) values[field] = value as StepValue
+  }
+  return { ...values, ...answersToValues(answers) }
+}

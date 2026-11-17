@@ -3,6 +3,9 @@
 import { useT } from "@ihsp/i18n"
 import { Icons, Pill } from "@ihsp/ui"
 import Link from "next/link"
+import { LogoAvatar } from "../../../components/lib/photo-header"
+import { facetOf, optionLabel } from "../facets"
+import { useFacets } from "../hooks"
 import type { Institution } from "../types"
 import { AddToListButton } from "./add-to-list-button"
 import { useOptionLabel } from "./option-label"
@@ -18,11 +21,21 @@ export function InstitutionCard({ institution }: { institution: Institution }) {
   const t = useT("chooser")
   const aidLabel = useOptionLabel("aid")
   const countryLabel = useOptionLabel("country")
+  const { facets } = useFacets()
+  const policy = typeof institution.facts.test_policy?.value === "string" ? institution.facts.test_policy.value : null
+  const policyLabel = policy ? optionLabel(facetOf(facets?.list, "test_policy"), policy) : null
   const place = [institution.city, countryLabel(institution.country)].filter(Boolean).join(", ")
   return (
     <article className="bg-card border-hairline-strong rounded-card flex min-w-0 flex-col gap-3 border p-4">
       <header className="flex flex-wrap items-start justify-between gap-2">
-        <div className="min-w-0">
+        <LogoAvatar
+          name={institution.name}
+          src={institution.logo_url}
+          fit={institution.logo_fit}
+          zoom={institution.logo_zoom}
+          className="size-12 ring-0"
+        />
+        <div className="min-w-0 flex-1">
           <h3 className="text-base font-semibold">
             <Link href={`/chooser/institution/?id=${encodeURIComponent(institution.id)}`} className="hover:underline">
               {institution.name}
@@ -33,6 +46,11 @@ export function InstitutionCard({ institution }: { institution: Institution }) {
         <VerifiedBadge verified={institution.verified} />
       </header>
       <ul className="flex flex-wrap gap-2">
+        {policyLabel ? (
+          <li>
+            <Pill>{policyLabel}</Pill>
+          </li>
+        ) : null}
         {institution.coa_total ? (
           <li>
             <Pill>

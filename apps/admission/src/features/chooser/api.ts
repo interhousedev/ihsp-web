@@ -4,13 +4,16 @@ import { filtersToQuery } from "./filters"
 import type {
   Affordability,
   Estimate,
+  Facet,
   Institution,
   InstitutionPage,
   ListAddBody,
   ListEntry,
   ListPatchBody,
   Scholarship,
+  StudyGroup,
   Summary,
+  UniSuggestions,
 } from "./types"
 
 const BASE = "/v1/admission"
@@ -18,6 +21,17 @@ const BASE = "/v1/admission"
 export function searchInstitutions(filters: Filters, cursor: number, limit: number, signal?: AbortSignal) {
   return getApiClient().get<InstitutionPage>(`${BASE}/catalog/institutions`, {
     query: { ...filtersToQuery(filters), cursor, limit },
+    signal,
+  })
+}
+
+export function getFacets(locale: string, signal?: AbortSignal) {
+  return getApiClient().get<Facet[]>(`${BASE}/catalog/facets`, { headers: { "Accept-Language": locale }, signal })
+}
+
+export function getStudyFields(locale: string, signal?: AbortSignal) {
+  return getApiClient().get<StudyGroup[]>(`${BASE}/catalog/study-fields`, {
+    headers: { "Accept-Language": locale },
     signal,
   })
 }
@@ -64,4 +78,11 @@ export function requestSignOff(id: string) {
 
 export function getEstimate(id: string, signal?: AbortSignal) {
   return getApiClient().get<Estimate>(`${BASE}/list/${encodeURIComponent(id)}/estimate`, { signal })
+}
+
+export function getUniSuggestions(id: string, locale: string, signal?: AbortSignal) {
+  return getApiClient().get<UniSuggestions>(`${BASE}/uni-chats/${encodeURIComponent(id)}/suggestions`, {
+    headers: { "Accept-Language": locale },
+    signal,
+  })
 }

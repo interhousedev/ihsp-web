@@ -1,6 +1,6 @@
 "use client"
 
-import { useT } from "@ihsp/i18n"
+import { useLocale, useT } from "@ihsp/i18n"
 import { Button, Icons, StateView, Tabs, TabsContent, TabsList, TabsTrigger } from "@ihsp/ui"
 import Link from "next/link"
 import { usePathname, useRouter, useSearchParams } from "next/navigation"
@@ -10,11 +10,12 @@ import { percent } from "../../discover/format"
 import { StatusPill } from "../../discover/components/status-pill"
 import { useChances, useMatches } from "../../discover/hooks"
 import { useInstitution, useScholarships } from "../hooks"
-import type { Fact, Institution } from "../types"
+import type { Deadline as DeadlineItem, Fact, Institution } from "../types"
+import { OutcomeSummary } from "../../outcomes/components/outcome-summary"
 import { AddToListButton } from "./add-to-list-button"
 import { AiSummary } from "./ai-summary"
 import { FactRows } from "./fact-rows"
-import { FactSource, VerifiedBadge } from "./fact-source"
+import { VerifiedBadge } from "./fact-source"
 import { formatMoney } from "./institution-card"
 import { ChancesView } from "./chances-view"
 import { ScholarshipList } from "./scholarships-table"
@@ -26,6 +27,9 @@ const TAB_FACTS = {
   cost: ["intl_tuition_usd", "intl_coa_usd", "aid_basis", "merit_for_internationals"],
   safety: ["crime_index"],
 } as const
+
+/** Raw keys that are shown elsewhere (or are internal) and never as a fact row. */
+const HIDDEN_FACTS = ["deadlines", "city_type", "fields", "institution_type"]
 
 const TABS = ["cost", "admission", "campus", "chances"] as const
 type Tab = (typeof TABS)[number]
@@ -46,27 +50,27 @@ function pick(institution: Institution, keys: readonly string[]): [string, Fact]
   })
 }
 
-type Deadline = { plan?: string; date?: string; cycle?: string; note?: string; source_url?: string }
+/** "Early Decision · Nov 2": the short label when the backend gives one, otherwise the plan and a readable date. */
+export function deadlineText(deadline: DeadlineItem, locale: string): string {
+  if (deadline.label_short) return deadline.label_short
+  const parsed = new Date(`${deadline.date}T00:00:00`)
+  const date = Number.isNaN(parsed.getTime())
+    ? deadline.date
+    : new Intl.DateTimeFormat(locale, { month: "short", day: "numeric" }).format(parsed)
+  return [deadline.plan, date].filter(Boolean).join(" · ")
+}
 
-function Deadlines({ fact }: { fact: Fact | undefined }) {
-  const t = useT("chooser")
-  const items = Array.isArray(fact?.value) ? (fact.value as Deadline[]) : []
-  if (!fact || items.length === 0)
-    return <StateView state="empty" title={t("tabEmpty.title")} description={t("tabEmpty.text")} />
+function Deadlines({ items }: { items: DeadlineItem[] }) {
+  const locale = useLocale()
   return (
-    <div className="flex flex-col gap-3">
-      <ul className="flex flex-col gap-2">
-        {items.map((item, index) => (
-          <li key={`${item.plan}-${index}`} className="flex flex-wrap items-baseline gap-x-3 text-sm">
-            <span className="font-medium">{item.plan}</span>
-            <span>{item.date}</span>
-            {item.cycle ? <span className="text-muted-foreground">{item.cycle}</span> : null}
-            {item.note ? <span className="text-muted-foreground">{item.note}</span> : null}
-          </li>
-        ))}
-      </ul>
-      <FactSource fact={fact} />
-    </div>
+    <ul className="flex flex-col gap-2" aria-label="deadlines">
+      {items.map((item, index) => (
+        <li key={`${item.plan}-${item.date}-${index}`} className="flex flex-wrap items-baseline gap-x-3 text-sm">
+          <span className="font-medium">{deadlineText(item, locale)}</span>
+          {item.cycle ? <span className="text-muted-foreground">{item.cycle}</span> : null}
+        </li>
+      ))}
+    </ul>
   )
 }
 
@@ -78,9 +82,8 @@ function Panel({ value, children }: { value: Tab; children: ReactNode }) {
   )
 }
 
-function firstDeadline(institution: Institution): Deadline | undefined {
-  const value = institution.facts.deadlines?.value
-  return Array.isArray(value) ? (value as Deadline[]).find((item) => item.date) : undefined
+function firstDeadline(institution: Institution): DeadlineItem | undefined {
+  return institution.deadlines.find((item) => item.date)
 }
 
 function Stat({ label, children }: { label: string; children: ReactNode }) {
@@ -130,18 +133,22 @@ function DetailBody({ institution }: { institution: Institution }) {
   const tab: Tab = isTab(requested) ? requested : "cost"
   const scholarships = useScholarships({ institution_id: institution.id })
   const chances = useChances(institution.id)
-  const shown = new Set<string>([...Object.values(TAB_FACTS).flat(), "deadlines"])
+  const shown = new Set<string>([...Object.values(TAB_FACTS).flat(), ...HIDDEN_FACTS])
   const other = Object.entries(institution.facts).filter(([key]) => !shown.has(key.toLowerCase()))
   const rate = pick(institution, ["acceptance_rate"])[0]?.[1]
   const rateValue = typeof rate?.value === "number" ? rate.value : null
-  const kind = pick(institution, ["institution_type"])[0]?.[1]
+  const kind = institution.facts.institution_type ?? pick(institution, ["institution_type"])[0]?.[1]
   const deadline = firstDeadline(institution)
   const costFacts = pick(institution, TAB_FACTS.cost).filter(([, fact]) => hasValue(fact))
   const admissionFacts = pick(institution, TAB_FACTS.admission).filter(([, fact]) => hasValue(fact))
   const campusFacts = [...pick(institution, TAB_FACTS.safety), ...other].filter(([, fact]) => hasValue(fact))
-  const hasDeadlines = Array.isArray(institution.facts.deadlines?.value) && institution.facts.deadlines.value.length > 0
+  const locale = useLocale()
+  const loose = t as unknown as { (key: string): string; has: (key: string) => boolean }
+  const factName = (key: string) =>
+    loose.has(`facts.${key.toLowerCase()}`) ? loose(`facts.${key.toLowerCase()}`) : key
   const kindLabel = (value: string) =>
     loose.has(`options.studyType.${value.toLowerCase()}`) ? loose(`options.studyType.${value.toLowerCase()}`) : value
+  const hasDeadlines = institution.deadlines.length > 0
   const aid = scholarships.data ?? []
 
   function select(next: string) {
@@ -156,6 +163,8 @@ function DetailBody({ institution }: { institution: Institution }) {
         name={institution.name}
         coverUrl={institution.cover_url}
         logoUrl={institution.logo_url}
+        logoFit={institution.logo_fit}
+        logoZoom={institution.logo_zoom}
         title={institution.name}
         subtitle={[institution.city, countryLabel(institution.country)].filter(Boolean).join(", ")}
         actions={
@@ -185,7 +194,7 @@ function DetailBody({ institution }: { institution: Institution }) {
           {institution.coa_total ? (
             <Stat label={t("detail.stats.cost")}>{formatMoney(institution.coa_total, institution.coa_currency)}</Stat>
           ) : null}
-          {deadline?.date ? <Stat label={t("detail.stats.deadline")}>{deadline.date}</Stat> : null}
+          {deadline ? <Stat label={t("detail.stats.deadline")}>{deadlineText(deadline, locale)}</Stat> : null}
         </dl>
       </PhotoHeader>
       <Tabs value={tab} onValueChange={(value) => select(String(value))}>
@@ -198,7 +207,7 @@ function DetailBody({ institution }: { institution: Institution }) {
         </TabsList>
         <Panel value="cost">
           <div className="flex flex-col gap-4">
-            {costFacts.length > 0 ? <FactRows facts={costFacts} /> : null}
+            {costFacts.length > 0 ? <FactRows facts={costFacts} sources={institution.sources} /> : null}
             {scholarships.isLoading ? (
               <StateView state="loading" rows={2} />
             ) : scholarships.isError ? (
@@ -213,8 +222,8 @@ function DetailBody({ institution }: { institution: Institution }) {
         </Panel>
         <Panel value="admission">
           <div className="flex flex-col gap-4">
-            {admissionFacts.length > 0 ? <FactRows facts={admissionFacts} /> : null}
-            {hasDeadlines ? <Deadlines fact={institution.facts.deadlines} /> : null}
+            {admissionFacts.length > 0 ? <FactRows facts={admissionFacts} sources={institution.sources} /> : null}
+            {hasDeadlines ? <Deadlines items={institution.deadlines} /> : null}
             {admissionFacts.length === 0 && !hasDeadlines ? (
               <StateView state="empty" title={t("tabEmpty.title")} description={t("tabEmpty.text")} />
             ) : null}
@@ -223,13 +232,46 @@ function DetailBody({ institution }: { institution: Institution }) {
         <Panel value="campus">
           <div className="flex flex-col gap-4">
             <AiSummary institutionId={institution.id} />
-            {campusFacts.length > 0 ? <FactRows facts={campusFacts} /> : null}
+            {institution.highlights.length > 0 ? (
+              <dl className="grid gap-3 sm:grid-cols-2" data-testid="highlights" aria-label={t("detail.highlights")}>
+                {institution.highlights.map((highlight) => (
+                  <div key={highlight.key} className="bg-card border-hairline-strong rounded-card border p-3">
+                    <dt className="text-muted-foreground text-xs">{highlight.label}</dt>
+                    <dd className="text-sm font-semibold">{highlight.value_text}</dd>
+                  </div>
+                ))}
+              </dl>
+            ) : null}
+            {campusFacts.length > 0 ? <FactRows facts={campusFacts} sources={institution.sources} /> : null}
           </div>
         </Panel>
         <Panel value="chances">
           <ChancesView institutionId={institution.id} />
         </Panel>
       </Tabs>
+      <section aria-label={t("detail.outcomes")} className="flex flex-col gap-2">
+        <h3 className="text-base font-semibold">{t("detail.outcomes")}</h3>
+        <OutcomeSummary institutionId={institution.id} />
+      </section>
+      {institution.sources.length > 0 ? (
+        <p className="text-muted-foreground flex flex-wrap items-center gap-x-3 gap-y-1 text-xs" data-testid="sources">
+          <span>{t("detail.sources")}</span>
+          {institution.sources
+            .filter((source) => source.url)
+            .map((source) => (
+              <a
+                key={`${source.key}-${source.url}`}
+                href={source.url ?? undefined}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-primary underline-offset-2 hover:underline"
+              >
+                {factName(source.key)}
+                {source.year ? ` ${source.year}` : ""}
+              </a>
+            ))}
+        </p>
+      ) : null}
       <SuggestedColleges currentId={institution.id} />
     </div>
   )

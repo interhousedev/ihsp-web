@@ -1,7 +1,8 @@
 "use client"
 
+import { AppPageHeader, pageClass } from "../../../components/lib/page"
 import { useT } from "@ihsp/i18n"
-import { PageHeader } from "@ihsp/ui"
+
 import Link from "next/link"
 import { usePathname } from "next/navigation"
 import { Suspense, type ReactNode } from "react"
@@ -31,8 +32,8 @@ export function ChooserPage({ children, title }: { children: ReactNode; title?: 
         title={title ?? (inPrograms ? t("programsTitle") : t("title"))}
         summary={`University chooser, section ${pathname}. ${inPrograms ? "Programs" : "Universities"} tab.`}
       />
-      <div className="mx-auto flex w-full min-w-0 max-w-5xl flex-col gap-6 p-4 md:p-6">
-        <PageHeader title={title ?? (inPrograms ? t("programsTitle") : t("title"))} />
+      <div className={pageClass("wide")}>
+        <AppPageHeader icon="search" title={title ?? (inPrograms ? t("programsTitle") : t("title"))} />
         <nav aria-label={t("tabs.label")} className="flex gap-2 overflow-x-auto border-b">
           {TABS.map(({ key, href, active }) => (
             <Link

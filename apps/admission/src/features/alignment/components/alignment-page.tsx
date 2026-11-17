@@ -1,5 +1,6 @@
 "use client"
 
+import { AppPageHeader, pageClass } from "../../../components/lib/page"
 import { ApiError } from "@ihsp/api"
 import { useT } from "@ihsp/i18n"
 import {
@@ -9,7 +10,6 @@ import {
   buttonVariants,
   GradeChip,
   Icons,
-  PageHeader,
   Pill,
   Reveal,
   Skeleton,
@@ -90,8 +90,8 @@ export function AlignmentPage() {
 
   return (
     <AdmissionShell>
-      <div className="mx-auto flex w-full max-w-3xl flex-col gap-6 p-4 md:p-6">
-        <PageHeader title={t("title")} />
+      <div className={pageClass("narrow")}>
+        <AppPageHeader icon="route" title={t("title")} />
         {err?.type === "admission/quota_exceeded" ? (
           <Alert variant="destructive">
             <AlertDescription>

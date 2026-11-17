@@ -4,19 +4,11 @@ import { getApiClient } from "@ihsp/api"
 import { useErrorMessage, useLocale, useT } from "@ihsp/i18n"
 import { Button, Icons, Pill, StateView } from "@ihsp/ui"
 import { AiTabCard } from "@/components/ai-tab-card"
-import { useMutation, useQuery } from "@tanstack/react-query"
-import { useList } from "../hooks"
+import { useMutation } from "@tanstack/react-query"
+import { useList, useListInsights } from "../hooks"
 import { AddToListButton } from "./add-to-list-button"
 import { useOptionLabel } from "./option-label"
 
-type Insights = {
-  entries: {
-    entry_id: string
-    institution_id: string
-    classification: { effective: string | null; source: string; reasons: string[] }
-  }[]
-  balance: { reach: number; target: number; safety: number; unlabelled: number; status: string }
-}
 type Suggestion = { institution_id: string; name: string; country: string; label: string; reason: string }
 
 /** Explain the computed list balance and offer consent-gated AI additions, never auto-adding them. */
@@ -27,10 +19,7 @@ export function ListPlanning() {
   const label = useOptionLabel("bucket")
   const country = useOptionLabel("country")
   const list = useList()
-  const insights = useQuery({
-    queryKey: ["admission", "list-insights", list.data],
-    queryFn: () => getApiClient().get<Insights>("/v1/admission/list/insights"),
-  })
+  const insights = useListInsights()
   const suggest = useMutation({
     mutationFn: () =>
       getApiClient().post<{ items: Suggestion[] }>("/v1/admission/list/suggest", undefined, {

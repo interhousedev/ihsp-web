@@ -12,9 +12,9 @@ import { ScreenSummary } from "../../assistant/screen-context"
 import { AlgorithmPanel } from "../../algorithm/components/algorithm-panel"
 import { AdmissionShell } from "../../shell/components/admission-shell"
 import { useDecide, useMatches, useUndoDecision } from "../hooks"
-import { ContextPanel } from "./context-panel"
 import { MatchCard } from "./match-card"
 import { SwipeExplainer } from "./swipe-explainer"
+import { UniChatPanel } from "./uni-chat-panel"
 
 /** Three columns need 1440px; below that the algorithm moves into a dialog so deck and chat keep their width. */
 type Layout = "mobile" | "tablet" | "desktop" | "wide"
@@ -36,6 +36,7 @@ const COLUMN_HEIGHT = "calc(100dvh - 9rem)"
 /** The Kollegio-style matching feed: algorithm, swipe deck and assistant context. */
 export function DiscoverPage() {
   const t = useT("discover")
+  const tChat = useT("uniChat")
   const errorMessage = useErrorMessage()
   const client = useQueryClient()
   const layout = useSyncExternalStore(subscribe, snapshot, serverSnapshot)
@@ -45,32 +46,13 @@ export function DiscoverPage() {
   const [history, setHistory] = useState<Decided[]>([])
   const [stamp, setStamp] = useState<string | null>(null)
   const [panelOpen, setPanelOpen] = useState(false)
+  const [chatOpen, setChatOpen] = useState(false)
 
   const remaining = useMemo(() => {
     const seen = new Set(history.map((entry) => entry.match.university_id))
     return (matches.data?.items ?? []).filter((match) => !seen.has(match.university_id))
   }, [matches.data, history])
   const top = remaining[0]
-
-  const exhausted = Boolean(matches.data) && remaining.length <= 2
-  const settling = decide.isPending
-  const fetching = matches.isFetching
-  useEffect(() => {
-    if (!exhausted || settling || fetching || history.length === 0) return
-    void client.invalidateQueries({ queryKey: ["admission", "matches"] })
-  }, [exhausted, settling, fetching, history.length, client])
-
-  const served = matches.data?.items
-  useEffect(() => {
-    if (!served || fetching) return
-    const present = new Set(served.map((match) => match.university_id))
-    setHistory((current) => {
-      const kept = current.filter(
-        (entry, index) => index === current.length - 1 || present.has(entry.match.university_id),
-      )
-      return kept.length === current.length ? current : kept
-    })
-  }, [served, fetching])
 
   const exhausted = Boolean(matches.data) && remaining.length <= 2
   const settling = decide.isPending
@@ -125,7 +107,7 @@ export function DiscoverPage() {
 
   const refresh = () => void client.invalidateQueries({ queryKey: ["admission", "matches"] })
   const algorithm = <AlgorithmPanel onSaved={refresh} />
-  const context = <ContextPanel match={top} />
+  const context = <UniChatPanel match={top} />
 
   const deck = matches.isLoading ? (
     <StateView state="loading" rows={4} />
@@ -187,10 +169,16 @@ export function DiscoverPage() {
         <div className="flex flex-wrap items-center justify-between gap-2">
           <h1 className="text-xl font-semibold">{t("title")}</h1>
           {layout === "mobile" ? (
-            <Button type="button" variant="outline" size="sm" onClick={() => setPanelOpen(true)}>
-              <Icons.discover aria-hidden />
-              {t("algorithm.open")}
-            </Button>
+            <div className="flex flex-wrap gap-2">
+              <Button type="button" variant="outline" size="sm" onClick={() => setChatOpen(true)}>
+                <Icons.sparkles aria-hidden />
+                {tChat("ask")}
+              </Button>
+              <Button type="button" variant="outline" size="sm" onClick={() => setPanelOpen(true)}>
+                <Icons.discover aria-hidden />
+                {t("algorithm.open")}
+              </Button>
+            </div>
           ) : null}
           {layout === "desktop" ? (
             <Button type="button" variant="outline" size="sm" onClick={() => setPanelOpen(true)}>
@@ -249,10 +237,10 @@ export function DiscoverPage() {
           <>
             {deck}
             <ResponsiveDialog open={panelOpen} onOpenChange={setPanelOpen} title={t("algorithm.title")}>
-              <div className="flex flex-col gap-6">
-                {algorithm}
-                {context}
-              </div>
+              {algorithm}
+            </ResponsiveDialog>
+            <ResponsiveDialog open={chatOpen} onOpenChange={setChatOpen} title={tChat("tab")}>
+              {context}
             </ResponsiveDialog>
           </>
         )}

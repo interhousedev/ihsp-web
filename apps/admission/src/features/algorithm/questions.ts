@@ -40,10 +40,21 @@ const FIXED: Partial<Record<PreferenceField, Fixed>> = {
       ["far", "✈️"],
     ],
   },
+  traits: {
+    kind: "multi",
+    options: [
+      ["research", "🔬"],
+      ["sports", "⚽"],
+      ["arts", "🎨"],
+      ["community", "🤝"],
+      ["startups", "🚀"],
+      ["outdoors", "🏕️"],
+    ],
+  },
   small_classes: PAIR("🙋", "🏛️"),
   ec_important: PAIR("⚽", "📚"),
   food_important: PAIR("🍽️", "🥪"),
-  prestige: PAIR("🏆", "🐮"),
+  prestige: PAIR("🏆", ""),
   academics_first: PAIR("📖", "🎉"),
   need_aid: PAIR("🤲", "💪"),
   budget: {
@@ -94,7 +105,7 @@ export function buildQuestions(t: Translate, sources: QuestionSources): StepQues
       ]
       return { ...base, kind: "select" as const, options, placeholder: t("placeholder"), optional: true }
     }
-    return { ...base, kind: "select" as const, options: sources.majors, placeholder: t("placeholder") }
+    return { ...base, kind: "select" as const, options: sources.majors, placeholder: t("placeholder"), sheet: true }
   })
 }
 
@@ -109,8 +120,9 @@ export function tagLabel(tag: string, t: Translate, sources: QuestionSources): s
   return t(`tags.${tag.replaceAll(":", "_")}`)
 }
 
-/** Label of one stored answer, for the summary sentence. */
-export function answerLabel(field: PreferenceField, value: string | null | undefined, questions: StepQuestion[]) {
-  if (value === undefined || value === null) return undefined
-  return questions.find((question) => question.id === field)?.options.find((option) => option.value === value)?.label
+const NONE = "none"
+
+/** Values of the `summary.sentence` message; a part left open is `none`, which the message leaves out. */
+export function sentenceValues(parts: { major?: string; budget?: string; region?: string }) {
+  return { major: parts.major || NONE, budget: parts.budget || NONE, region: parts.region || NONE }
 }

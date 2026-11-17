@@ -4,7 +4,7 @@ import { Accordion, AccordionContent, AccordionItem, AccordionTrigger, Skeleton,
 import { useState } from "react"
 import { QuestionField, type StepAnswers, type StepValue } from "../../../components/stepper"
 import { useAlgorithm } from "../hooks"
-import { answersToValues, SECTION_OF } from "../mapping"
+import { mergeValues, SECTION_OF } from "../mapping"
 import { tagLabel } from "../questions"
 import { TagChips } from "./tag-chips"
 
@@ -23,13 +23,13 @@ export type AlgorithmPanelProps = {
  * saved with PUT /v1/admission/preferences as soon as it changes. Self-contained: it loads and saves by itself.
  */
 export function AlgorithmPanel({ className, defaultOpen = ["vibe"], onSaved }: AlgorithmPanelProps) {
-  const { t, preferences, sources, questions, save } = useAlgorithm()
+  const { t, preferences, quiz, sources, questions, save } = useAlgorithm()
   const [failed, setFailed] = useState(false)
   if (preferences.isError) {
     return <StateView state="error" error={preferences.error} onRetry={() => void preferences.refetch()} />
   }
   if (!preferences.data) return <Skeleton className={cn("h-64 w-full", className)} />
-  const values: StepAnswers = answersToValues(preferences.data.answers)
+  const values: StepAnswers = mergeValues(quiz.data?.answers, preferences.data.answers)
 
   function change(field: string, value: StepValue) {
     setFailed(false)

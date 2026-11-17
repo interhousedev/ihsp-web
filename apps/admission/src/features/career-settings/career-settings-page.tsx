@@ -1,5 +1,6 @@
 "use client"
 
+import { AppPageHeader, pageClass } from "../../components/lib/page"
 import { useErrorMessage, useLocale, useT } from "@ihsp/i18n"
 import {
   Badge,
@@ -10,7 +11,6 @@ import {
   Input,
   Label,
   LoadingButton,
-  PageHeader,
   ResponsiveDialog,
   StateView,
 } from "@ihsp/ui"
@@ -243,8 +243,8 @@ export function CareerSettingsBody() {
   const [majorDialog, setMajorDialog] = useState<{ major?: CareerMajor } | null>(null)
 
   return (
-    <div className="mx-auto flex w-full max-w-3xl flex-col gap-8 p-4 md:p-6">
-      <PageHeader title={t("title")} />
+    <div className={pageClass("narrow")}>
+      <AppPageHeader icon="settings" title={t("title")} />
       <section className="flex flex-col gap-3" aria-labelledby="career-questions">
         <div className="flex items-center justify-between gap-2">
           <h2 id="career-questions" className="text-lg font-semibold">

@@ -22,7 +22,7 @@ function Stat({ label, value, tone }: { label: string; value: string; tone?: str
 export function MatchCard({ match }: { match: Match }) {
   const t = useT("discover")
   const countryLabel = useOptionLabel("country")
-  const typeLabel = useOptionLabel("type")
+  const typeLabel = useOptionLabel("studyType")
   const tagLabel = useTagLabel()
   const place = [match.city, countryLabel(match.country)].filter(Boolean).join(", ")
   const dash = "—"

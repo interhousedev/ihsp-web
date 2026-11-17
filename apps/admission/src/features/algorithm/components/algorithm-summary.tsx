@@ -2,9 +2,8 @@
 
 import { Button } from "@ihsp/ui"
 import Link from "next/link"
-import type { StepQuestion } from "../../../components/stepper"
 import type { AdmissionPreferences as Preferences } from "@ihsp/api"
-import { answerLabel, tagLabel, type QuestionSources } from "../questions"
+import { sentenceValues, tagLabel, type QuestionSources } from "../questions"
 import { TagChips } from "./tag-chips"
 
 type Translate = (key: string, values?: Record<string, string>) => string
@@ -12,21 +11,19 @@ type Translate = (key: string, values?: Record<string, string>) => string
 /** "Your tags": the chips, the one-sentence profile and the way on to the swipe page. */
 export function AlgorithmSummary({
   preferences,
-  questions,
   sources,
   t,
   onEdit,
 }: {
   preferences: Preferences
-  questions: StepQuestion[]
   sources: QuestionSources
   t: Translate
   onEdit: () => void
 }) {
   const { answers } = preferences
-  const major = sources.majors.find((item) => item.value === answers.major)?.label ?? t("summary.anyMajor")
-  const budget = answerLabel("budget", answers.budget, questions) ?? t("summary.anyBudget")
-  const region = !answers.region || answers.region === "any" ? t("summary.anyRegion") : answers.region
+  const major = sources.majors.find((item) => item.value === answers.major)?.label
+  const budget = answers.budget && answers.budget !== "any" ? t(`summary.budgetPhrase.${answers.budget}`) : undefined
+  const region = !answers.region || answers.region === "any" ? undefined : sources.regionName(answers.region)
   return (
     <section className="flex flex-col gap-6" aria-labelledby="algorithm-summary-title">
       <header className="flex flex-col gap-2">
@@ -35,7 +32,7 @@ export function AlgorithmSummary({
           {t("summary.title")}
         </h2>
       </header>
-      <p className="text-lg md:text-xl">{t("summary.sentence", { major, budget, region })}</p>
+      <p className="text-lg md:text-xl">{t("summary.sentence", sentenceValues({ major, budget, region }))}</p>
       <TagChips tags={preferences.tags.map((tag) => ({ key: tag, label: tagLabel(tag, t, sources) }))} />
       <div className="flex flex-col-reverse gap-2 sm:flex-row sm:items-center sm:justify-between">
         <Button type="button" variant="outline" onClick={onEdit}>

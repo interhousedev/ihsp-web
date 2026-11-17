@@ -2,9 +2,11 @@
 
 import { useT } from "@ihsp/i18n"
 import { Icons, StateView, cn } from "@ihsp/ui"
+import { AiTabCard } from "@/components/ai-tab-card"
 import Link from "next/link"
 import type { AdmissionChanceFactor as ChanceFactor } from "@ihsp/api"
 import { useChances } from "../../discover/hooks"
+import { useUniSuggestions } from "../hooks"
 import { StatusPill } from "../../discover/components/status-pill"
 import { ChanceChart } from "./chance-chart"
 import { useOptionLabel } from "./option-label"
@@ -59,6 +61,83 @@ export function FactorCard({ factor }: { factor: ChanceFactor }) {
   )
 }
 
+const STRENGTHEN_KEYS = ["academics", "course_rigor", "activities"] as const
+
+/**
+ * "What to strengthen": the academic and activity factors that are not strong yet, each with what to do and a link to
+ * the place to do it. Built from the factors the backend computed; nothing is invented here.
+ */
+export function StrengthenCard({ factors, institutionId }: { factors: ChanceFactor[]; institutionId: string }) {
+  const t = useT("chooser")
+  const ai = useUniSuggestions(institutionId).data
+  const questions = ai?.questions ?? []
+  const sections = [
+    { key: "academic", items: ai?.academic ?? [] },
+    { key: "activities", items: ai?.activities ?? [] },
+  ].filter((section) => section.items.length > 0)
+  const items = factors.filter(
+    (factor) => (STRENGTHEN_KEYS as readonly string[]).includes(factor.key) && factor.level !== "strong",
+  )
+  return (
+    <AiTabCard
+      role="region"
+      aria-labelledby="strengthen-title"
+      label={t("strengthen.tab")}
+      icon={<Icons.sparkles aria-hidden />}
+    >
+      <h3 id="strengthen-title" className="text-sm font-semibold">
+        {t("strengthen.title")}
+      </h3>
+      {items.length === 0 ? (
+        <p className="text-muted-foreground text-sm">{t("strengthen.none")}</p>
+      ) : (
+        <ul className="flex flex-col gap-3">
+          {items.map((factor) => (
+            <li key={factor.key} data-testid={`strengthen-${factor.key}`} className="flex flex-col gap-1">
+              <span className="text-sm font-medium">{t(`chances.factors.${factor.key}`)}</span>
+              <span className="text-muted-foreground text-sm">
+                {t(`strengthen.advice.${factor.key}.${factor.level}`)}
+              </span>
+              {factor.action ? (
+                <Link
+                  href={factor.action.href}
+                  className="text-primary inline-flex items-center gap-1 text-sm font-medium"
+                >
+                  {t("chances.action")}
+                  <Icons.arrowRight aria-hidden className="size-4" />
+                </Link>
+              ) : null}
+            </li>
+          ))}
+        </ul>
+      )}
+      {sections.map((section) => (
+        <div key={section.key} className="flex flex-col gap-2" data-testid={`ai-${section.key}`}>
+          <h4 className="text-sm font-medium">{t(`strengthen.ai.${section.key}`)}</h4>
+          <ul className="flex flex-col gap-2 text-sm">
+            {section.items.map((item) => (
+              <li key={item.title} className="flex flex-col">
+                <span className="font-medium">{item.title}</span>
+                <span className="text-muted-foreground">{item.detail}</span>
+              </li>
+            ))}
+          </ul>
+        </div>
+      ))}
+      {questions.length > 0 ? (
+        <div className="flex flex-col gap-2">
+          <h4 className="text-sm font-medium">{t("strengthen.ask")}</h4>
+          <ul data-testid="strengthen-suggestions" className="text-muted-foreground flex flex-col gap-1 text-sm">
+            {questions.map((question) => (
+              <li key={question}>{question}</li>
+            ))}
+          </ul>
+        </div>
+      ) : null}
+    </AiTabCard>
+  )
+}
+
 /** "What shapes your chances": status, five factor cards and the what-if chart. */
 export function ChancesView({ institutionId }: { institutionId: string }) {
   const t = useT("chooser")
@@ -79,6 +158,7 @@ export function ChancesView({ institutionId }: { institutionId: string }) {
           <FactorCard key={factor.key} factor={factor} />
         ))}
       </ul>
+      <StrengthenCard factors={chances.factors} institutionId={institutionId} />
       <ChanceChart simulation={chances.simulation} />
     </div>
   )

@@ -2,8 +2,8 @@
 
 import { useT } from "@ihsp/i18n"
 import { StateView } from "@ihsp/ui"
-import type { Fact } from "../types"
-import { FactSource } from "./fact-source"
+import type { Fact, Source } from "../types"
+import { FactSource, sourceOf } from "./fact-source"
 import { useOptionLabel } from "./option-label"
 
 type Loose = { (key: string, values?: Record<string, string | number>): string; has: (key: string) => boolean }
@@ -32,7 +32,7 @@ function useFormat() {
 }
 
 /** The recorded facts of one tab, each with its source; nothing recorded is said plainly. */
-export function FactRows({ facts }: { facts: [string, Fact][] }) {
+export function FactRows({ facts, sources }: { facts: [string, Fact][]; sources: Source[] }) {
   const t = useT("chooser") as unknown as Loose
   const format = useFormat()
   const seen = new Set<string>()
@@ -52,7 +52,7 @@ export function FactRows({ facts }: { facts: [string, Fact][] }) {
           </dt>
           <dd className="flex min-w-0 flex-col gap-1">
             <span className="text-sm font-medium">{format(fact.value)}</span>
-            <FactSource fact={fact} />
+            <FactSource fact={fact} source={sourceOf(sources, key)} />
           </dd>
         </div>
       ))}
