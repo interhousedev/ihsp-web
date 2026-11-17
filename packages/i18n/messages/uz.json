@@ -1024,6 +1024,18 @@
       "failed": "Xato",
       "target": "Obyekt"
     },
+    "suggestion": {
+      "add": "Qoʻshish",
+      "requested": "Soʻraldi",
+      "open": "Ochish",
+      "addPrompt": "{type} «{title}» (kind {kind}, id {id}) ni roʻyxatimga qoʻsh.",
+      "type": {
+        "course": "Kurs",
+        "opportunity": "Imkoniyat",
+        "scholarship": "Stipendiya",
+        "university": "Universitet"
+      }
+    },
     "limitMcp": {
       "title": "Oʻz ilovangizda davom eting",
       "text": "Assistent limiti hozircha tugadi. Maʼlumotlaringiz bilan ishlashni davom ettirish uchun oʻz sunʼiy intellekt ilovangizni {appMy} ga ulang.",

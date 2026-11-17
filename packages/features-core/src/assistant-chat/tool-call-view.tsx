@@ -4,6 +4,7 @@ import type { ToolCallView as ToolCall } from "@ihsp/api"
 import { IconSearch } from "@ihsp/ui"
 import { ApprovalCard } from "./approval-card"
 import { DocumentCard } from "./document-card"
+import { SuggestionCards } from "./suggestion-cards"
 
 type ToolCallViewProps = {
   call: ToolCall
@@ -14,6 +15,7 @@ type ToolCallViewProps = {
 
 /** Read tools are one-line "Looked up …" notes (AI-2); write tools are approval cards. */
 export function ToolCallView({ call, busy, onApprove, onReject }: ToolCallViewProps) {
+  if (call.cards?.length) return <SuggestionCards cards={call.cards} busy={busy} />
   if (call.document) return <DocumentCard document={call.document} />
   if (call.access === "read" || (!call.preview && call.status === "done")) {
     return (

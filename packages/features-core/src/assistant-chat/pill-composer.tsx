@@ -484,7 +484,7 @@ export function PillComposer({
             : t("webQuota", { remaining: webQuota.remaining ?? 0, limit: webQuota.quota.limit })}
         </p>
       ) : null}
-      <p className="text-muted-foreground hidden truncate px-4 text-center text-[11px] sm:block">
+      <p className="text-muted-foreground hidden px-4 text-center text-[11px] text-balance sm:block">
         {tRoot("disclaimer")}
       </p>
       <AttachFilesDialog

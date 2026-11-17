@@ -11,6 +11,7 @@ import { useEffect, useRef, useState, type ReactNode } from "react"
 import { toast } from "sonner"
 import { useWebSearchErrorMessage, webSearchFailure } from "../web-search"
 import { useAssistantScope } from "./assistant-context"
+import { ChatCommandsProvider } from "./chat-commands"
 import { parseSlashText } from "./slash-commands"
 import { ChatMessageList, type PendingMessage } from "./chat-message-list"
 import { ChatPaneHeader } from "./chat-pane-header"
@@ -105,6 +106,12 @@ export function AssistantChatPane({
   const regeneratingSeq = regenerate.isPending && lastMessage?.role === "assistant" ? lastMessage.seq : null
   const followKey = `${chat.isSuccess}:${messages?.length ?? 0}:${pending?.text ?? ""}:${busy}:${live?.text.length ?? 0}:${live?.status ?? ""}`
   const { containerRef, atBottom, onScroll, scrollToBottom } = useStickToBottom(followKey)
+
+  // An empty conversation shows its starters from the top, not scrolled to the end.
+  const isEmpty = chat.isSuccess && detail?.messages.length === 0 && pending === null && live === null
+  useEffect(() => {
+    if (isEmpty && containerRef.current) containerRef.current.scrollTop = 0
+  }, [isEmpty, containerRef])
 
   // The status, steps and streamed text of the turn that runs; cleared when it ends.
   const listen = (event: AiStreamEvent) => setLive((current) => applyLiveEvent(current ?? EMPTY_LIVE, event))
@@ -217,6 +224,7 @@ export function AssistantChatPane({
   const shownError = actionError ?? decide.error
 
   return (
+    <ChatCommandsProvider value={{ say: (text) => (busy ? Promise.resolve(false) : runTurn(text, [], false)) }}>
     <section aria-label={detail.title} className="flex min-h-0 min-w-0 flex-1 flex-col">
       {bare ? null : (
         <ChatPaneHeader
@@ -298,5 +306,6 @@ export function AssistantChatPane({
       </div>
       {actions.dialogs}
     </section>
+    </ChatCommandsProvider>
   )
 }

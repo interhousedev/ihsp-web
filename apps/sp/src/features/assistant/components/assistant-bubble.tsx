@@ -168,14 +168,15 @@ export function AssistantBubble() {
 
   return (
     <div
+      key={open ? "open" : "closed"}
       // The onboarding gate hides the floating widgets (`[data-help-widget]`) until the first steps are done.
       data-help-widget
       className={cn(
-        "fixed z-40 overflow-hidden shadow-lg transition-[width,height,border-radius,inset-inline-end] duration-300 ease-out motion-reduce:transition-none",
+        "fixed z-40 shadow-lg motion-safe:animate-in motion-safe:fade-in-0 motion-safe:duration-300 motion-safe:ease-out",
         BOTTOM,
         open
-          ? "bg-popover text-popover-foreground rounded-card end-3 h-[min(36rem,calc(100dvh-var(--bottom-nav-height,0px)-var(--safe-bottom,0px)-var(--safe-top,0px)-6rem))] w-[calc(100vw-1.5rem)] border md:end-4 md:h-[min(36rem,calc(100dvh-var(--safe-bottom,0px)-var(--safe-top,0px)-6rem))] md:w-[24rem]"
-          : "end-4 size-12 rounded-full",
+          ? "bg-popover text-popover-foreground rounded-card end-3 h-[min(36rem,calc(100dvh-var(--bottom-nav-height,0px)-var(--safe-bottom,0px)-var(--safe-top,0px)-6rem))] w-[calc(100vw-1.5rem)] origin-bottom-right overflow-hidden border motion-safe:zoom-in-90 motion-safe:slide-in-from-bottom-6 md:end-4 md:h-[min(36rem,calc(100dvh-var(--safe-bottom,0px)-var(--safe-top,0px)-6rem))] md:w-[24rem]"
+          : "end-4 size-12 origin-bottom-right rounded-full motion-safe:zoom-in-50",
       )}
     >
       {open ? (

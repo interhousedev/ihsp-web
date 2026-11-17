@@ -108,5 +108,13 @@ export function visibleCalls(message: ChatMessageView, hidden: ReadonlySet<strin
  */
 export function answerText(message: ChatMessageView): string {
   if (message.tool_calls.some((call) => call.status === "pending_approval")) return ""
-  return message.text
+  return stripWebResults(message.text)
+}
+
+/** Old stored answers may carry the search context that was once sent to the model; it is never shown. */
+export function stripWebResults(text: string): string {
+  return text
+    .replace(/<web_results>[\s\S]*?(<\/web_results>|$)/g, "")
+    .replace(/^\[Web search results for this message.*(\r?\n|$)/gm, "")
+    .trim()
 }

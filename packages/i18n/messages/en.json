@@ -1024,6 +1024,18 @@
       "failed": "Failed",
       "target": "Item"
     },
+    "suggestion": {
+      "add": "Add",
+      "requested": "Requested",
+      "open": "Open",
+      "addPrompt": "Add the {type} \"{title}\" (kind {kind}, id {id}) to my list.",
+      "type": {
+        "course": "Course",
+        "opportunity": "Opportunity",
+        "scholarship": "Scholarship",
+        "university": "University"
+      }
+    },
     "limitMcp": {
       "title": "Keep going in your own AI app",
       "text": "Your assistant limit is used up for now. Connect your own AI app to {appMy} to keep working with your data.",
