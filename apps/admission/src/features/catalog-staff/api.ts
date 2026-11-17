@@ -1,6 +1,12 @@
 "use client"
 
-import { getApiClient } from "@ihsp/api"
+import {
+  type AdmissionLogoPatchIn,
+  type AdmissionSuppCycle,
+  type AdmissionSuppPromptIn,
+  getApiClient,
+  seg,
+} from "@ihsp/api"
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query"
 
 const BASE = "/v1/admission/staff/catalog/proposals"
@@ -74,5 +80,33 @@ export function useInstitutionSearch(q: string) {
           signal,
         })
         .then((page) => page.items),
+  })
+}
+
+export type SuppCycle = AdmissionSuppCycle
+export type SuppPromptInput = AdmissionSuppPromptIn
+
+const suppKey = (id: string) => ["admission", "supp-prompts", id] as const
+
+/** Every cycle of a college's supplemental prompts, newest first. */
+export function useSuppCycles(id: string | null) {
+  return useQuery({
+    queryKey: suppKey(id ?? ""),
+    enabled: !!id,
+    queryFn: ({ signal }) =>
+      getApiClient().get<SuppCycle[]>(`/v1/admission/catalog/institutions/${seg(id ?? "")}/supp-prompts`, { signal }),
+  })
+}
+
+/** PUT /staff/catalog/institutions/{id}/supp-prompts/{cycle}: replaces the prompts of one cycle. */
+export function usePutSuppPrompts() {
+  const client = useQueryClient()
+  return useMutation({
+    mutationFn: ({ id, cycle, prompts }: { id: string; cycle: string; prompts: SuppPromptInput[] }) =>
+      getApiClient().put<SuppCycle[]>(
+        `/v1/admission/staff/catalog/institutions/${seg(id)}/supp-prompts/${seg(cycle)}`,
+        { prompts },
+      ),
+    onSuccess: (cycles, { id }) => client.setQueryData(suppKey(id), cycles),
   })
 }

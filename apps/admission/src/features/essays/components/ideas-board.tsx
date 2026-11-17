@@ -2,6 +2,7 @@
 
 import { useErrorMessage, useT } from "@ihsp/i18n"
 import { Badge, Button, Icons, Input, Label, Skeleton, StateView } from "@ihsp/ui"
+import { AiTabCard } from "@/components/ai-tab-card"
 import { useState, type FormEvent } from "react"
 import { toast } from "sonner"
 import {
@@ -74,14 +75,18 @@ function IdeaCard({ idea }: { idea: Idea }) {
       </div>
       <CoachError error={expand.error} />
       {expansion ? (
-        <div className="bg-muted/40 flex flex-col gap-1 rounded-md p-2 text-sm animate-in fade-in">
+        <AiTabCard
+          label={t("ideas.expansionTab")}
+          icon={<Icons.sparkles aria-hidden />}
+          className="animate-in fade-in gap-1 text-sm"
+        >
           <p>{expansion.fit}</p>
           <ul className="list-disc pl-5">
             {expansion.angles.map((a) => (
               <li key={a}>{a}</li>
             ))}
           </ul>
-        </div>
+        </AiTabCard>
       ) : null}
     </li>
   )

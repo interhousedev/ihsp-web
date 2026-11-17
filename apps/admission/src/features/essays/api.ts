@@ -16,6 +16,7 @@ import {
   type AdmissionIdeaPatch,
   type AdmissionPlanSection,
   type AdmissionSharedEssay,
+  type AdmissionSuppCycle,
   getApiClient,
   seg,
 } from "@ihsp/api"
@@ -203,5 +204,19 @@ export function useExpandIdea() {
 export function useCoach<T>(id: string, helper: "brainstorm" | "outline" | "feedback") {
   return useMutation({
     mutationFn: () => getApiClient().post<T>(`${BASE}/essays/${seg(id)}/coach/${helper}`, {}),
+  })
+}
+
+export type SuppCycle = AdmissionSuppCycle
+
+/** The supplemental prompts of a college per cycle, newest first, each marked against the year before. */
+export function useSuppPrompts(institutionId: string | null) {
+  return useQuery({
+    queryKey: ["admission", "supp-prompts", institutionId ?? ""] as const,
+    enabled: !!institutionId,
+    queryFn: ({ signal }) =>
+      getApiClient().get<SuppCycle[]>(`${BASE}/catalog/institutions/${seg(institutionId ?? "")}/supp-prompts`, {
+        signal,
+      }),
   })
 }

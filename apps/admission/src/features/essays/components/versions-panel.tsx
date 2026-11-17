@@ -7,7 +7,7 @@ import { toast } from "sonner"
 import { useShareVersion, useSnapshot, useVersions, type Essay, type EssayVersion } from "../api"
 import { wordDiff } from "../diff"
 
-function Diff({ older, newer }: { older: string; newer: string }) {
+export function Diff({ older, newer }: { older: string; newer: string }) {
   const t = useT("essays")
   const parts = wordDiff(older, newer)
   if (!parts) return <p className="text-muted-foreground text-sm">{t("versions.tooLong")}</p>

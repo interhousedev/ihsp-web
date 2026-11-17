@@ -2,6 +2,7 @@
 
 import { useT } from "@ihsp/i18n"
 import { Button, Icons } from "@ihsp/ui"
+import { AiTabCard } from "@/components/ai-tab-card"
 import type { ReactNode } from "react"
 import { useCoach, type CoachFeedback, type CoachOutline, type CoachQuestions, type PlanSection } from "../api"
 import { CoachError } from "./coach-error"
@@ -23,8 +24,9 @@ function Helper({
   error: unknown
   children: ReactNode
 }) {
+  const t = useT("essays")
   return (
-    <div className="border-hairline flex flex-col gap-2 rounded-card border p-3">
+    <AiTabCard label={t("coach.tab")} icon={<Icons.sparkles aria-hidden />} className="gap-2">
       <div className="flex flex-wrap items-center justify-between gap-2">
         <p className="text-muted-foreground text-sm">{hint}</p>
         <Button type="button" size="sm" variant="outline" disabled={pending || disabled} onClick={onRun}>
@@ -34,7 +36,7 @@ function Helper({
       </div>
       <CoachError error={error} />
       {children}
-    </div>
+    </AiTabCard>
   )
 }
 

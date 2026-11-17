@@ -174,7 +174,7 @@ export function EssayEditor({ essay }: { essay: Essay }) {
         title={draft.title || t("untitled")}
         meta={t(`kind.${essay.kind}`)}
       />
-      <div className="grid gap-6 lg:grid-cols-[minmax(0,1fr)_minmax(0,24rem)]">
+      <div className="grid grid-cols-1 gap-6 lg:grid-cols-[minmax(0,1fr)_minmax(0,24rem)]">
         <div className="flex flex-col gap-3">
           <div className="flex flex-col gap-1">
             <Label htmlFor="essay-title-edit">{t("titleLabel")}</Label>
