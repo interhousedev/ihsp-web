@@ -75,6 +75,7 @@ const submission: Submission = {
 function common() {
   server.use(
     http.get(apiUrl(`${BASE}/taxonomy`), () => HttpResponse.json(taxonomy)),
+    http.get(apiUrl("/v1/admission/orgs"), () => HttpResponse.json({ items: [], can_moderate: false })),
     http.get(apiUrl(BASE), () => HttpResponse.json({ items: [opportunity], total: 1, page: 1, size: 200 })),
     http.get(apiUrl(`${BASE}/plan`), () => HttpResponse.json({ ...plan, entries: [], opportunities: [] })),
   )

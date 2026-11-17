@@ -15,11 +15,10 @@ import {
   Icons,
 } from "@ihsp/ui"
 import Link from "next/link"
-import { useRouter } from "next/navigation"
 import { useMemo, useState, type FormEvent } from "react"
 import { toast } from "sonner"
 import { HeadingIcon } from "../../../components/lib/split-layout"
-import { UnderlineTabs } from "../../../components/lib/underline-tabs"
+import { OpportunityTabs } from "./opportunity-tabs"
 import { ScrollFade } from "../../../components/scroll-fade"
 import { AdmissionShell } from "../../shell/components/admission-shell"
 import {
@@ -253,7 +252,6 @@ function Entry({ item, grade }: { item: Opportunity; grade: number | null }) {
 
 export function PlanBody() {
   const t = useT("opportunities")
-  const router = useRouter()
   const query = usePlan()
   const titles = useMemo(() => new Map(query.data?.opportunities.map((o) => [o.id, o.fields.title])), [query.data])
   let body
@@ -329,23 +327,7 @@ export function PlanBody() {
   return (
     <div className="mx-auto flex w-full max-w-6xl flex-col gap-6 p-4 md:p-6">
       <PageHeader title={t("planTitle")} back={<HeadingIcon name="heart" />} />
-      <UnderlineTabs
-        label={t("view.tabs")}
-        value="plan"
-        onValueChange={(v) => {
-          if (v === "catalog") router.push("/opportunities/")
-        }}
-        tabs={[
-          { value: "catalog", label: t("view.catalog"), icon: "courses" },
-          {
-            value: "plan",
-            label: t("view.plan"),
-            icon: "heart",
-            count: query.data?.entries.length ?? 0,
-            tone: "primary",
-          },
-        ]}
-      />
+      <OpportunityTabs value="plan" planCount={query.data?.entries.length ?? 0} />
       {body}
     </div>
   )

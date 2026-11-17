@@ -2,6 +2,7 @@
 
 import { useErrorMessage, useLocale, useT } from "@ihsp/i18n"
 import { Button, Icons, Input, PageHeader, Skeleton, StateView, StatusBadge } from "@ihsp/ui"
+import Link from "next/link"
 import { useState, type FormEvent } from "react"
 import { toast } from "sonner"
 import { CURATOR_ROLES } from "../../../config/nav"
@@ -20,6 +21,7 @@ import {
   type TaxonomyLevel,
 } from "../../opportunities/api"
 import { SubmitDialog } from "../../opportunities/components/submit-dialog"
+import { OrgsEditor } from "./orgs-editor"
 import { QueryError } from "../../shell/components/query-error"
 
 const TONES = { pending: "neutral", approved: "success", rejected: "destructive" } as const
@@ -238,6 +240,9 @@ export function OpportunitiesStaffBody() {
           </Button>
         }
       />
+      <Link href="/staff/opportunities/reports/" className="text-primary text-sm hover:underline">
+        {t("reports.title")}
+      </Link>
       <div className="flex gap-2">
         {(["pending", null] as const).map((value) => (
           <Button
@@ -253,6 +258,7 @@ export function OpportunitiesStaffBody() {
       </div>
       {creating && <SubmitDialog open onOpenChange={setCreating} />}
       {body}
+      {query.data?.can_moderate && <OrgsEditor />}
       {query.data?.can_moderate && <TaxonomyEditor />}
     </div>
   )

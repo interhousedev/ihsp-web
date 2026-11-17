@@ -5,29 +5,22 @@ import { Button, Icons, Input, Pill, ResponsiveDialog, Skeleton, StateView } fro
 import { useState } from "react"
 import Link from "next/link"
 import { toast } from "sonner"
+import { LogoAvatar } from "../../../components/lib/photo-header"
 import { AsideCard, SplitLayout } from "../../../components/lib/split-layout"
 import { ScrollFade } from "../../../components/scroll-fade"
 import { usePlan, usePrograms, useRemoveFromPlan, useSaveToPlan, type ProgramItem } from "../api"
 
 const PAGE_SIZE = 10
 
-/** The program's logo, or its first letters when it has none or the image fails. */
+/** The program's logo, or its monogram when it has none or the image fails. */
 function Logo({ item }: { item: ProgramItem }) {
-  const [failed, setFailed] = useState(false)
-  const url = item.fields.logo_url
-  if (url && !failed) {
-    // eslint-disable-next-line @next/next/no-img-element
-    return (
-      <img src={url} alt="" className="size-12 shrink-0 rounded-lg object-contain" onError={() => setFailed(true)} />
-    )
-  }
   return (
-    <span
-      aria-hidden
-      className="bg-muted text-muted-foreground flex size-12 shrink-0 items-center justify-center rounded-lg text-sm font-semibold"
-    >
-      {item.fields.title.slice(0, 2).toUpperCase()}
-    </span>
+    <LogoAvatar
+      name={item.org?.name ?? item.fields.title}
+      src={item.org?.logo_url ?? item.fields.logo_url}
+      fit="contain"
+      className="size-12 shrink-0 ring-0"
+    />
   )
 }
 

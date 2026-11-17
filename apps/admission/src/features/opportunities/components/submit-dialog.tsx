@@ -15,10 +15,50 @@ import {
 } from "@ihsp/ui"
 import { useState, type FormEvent } from "react"
 import { toast } from "sonner"
-import { localName, useSubmitOpportunity, useTaxonomy, type Opportunity, type OpportunityKind } from "../api"
+import {
+  localName,
+  useOrgs,
+  useSubmitOpportunity,
+  useTaxonomy,
+  type AwardType,
+  type CreditKind,
+  type Opportunity,
+  type OpportunityKind,
+  type Scope,
+} from "../api"
 
-const KINDS: OpportunityKind[] = ["exam", "certification", "course", "event", "recurring"]
+type Coverage = NonNullable<Opportunity["fields"]["coverage"]>[number]
+const KINDS: OpportunityKind[] = ["exam", "certification", "course", "scholarship", "event", "recurring"]
+const AWARDS: AwardType[] = ["scholarship", "fellowship", "grant", "tuition_waiver", "program"]
+const SCOPES: Scope[] = ["local", "international"]
+const COVERAGES: Coverage[] = ["full_tuition", "partial_tuition", "stipend", "cash", "travel"]
+const CREDITS: CreditKind[] = ["none", "possible", "yes"]
 const GRADES = [9, 10, 11, 12]
+
+function NativeSelect<T extends string>({
+  label,
+  value,
+  onChange,
+  children,
+}: {
+  label: string
+  value: T | ""
+  onChange: (value: T | "") => void
+  children: React.ReactNode
+}) {
+  return (
+    <label className="flex flex-col gap-1 text-sm">
+      {label}
+      <select
+        className="border-input bg-background h-10 rounded-md border px-3 text-sm"
+        value={value}
+        onChange={(e) => onChange(e.target.value as T | "")}
+      >
+        {children}
+      </select>
+    </label>
+  )
+}
 
 /** Every add or edit goes to the moderation queue; `target` makes it an edit of a published entry. */
 export function SubmitDialog({
@@ -48,6 +88,17 @@ export function SubmitDialog({
   const [lastYear, setLastYear] = useState(base?.last_year_dates?.[0] ?? "")
   const [recurrence, setRecurrence] = useState(base?.recurrence ?? "")
   const [note, setNote] = useState("")
+  const orgs = useOrgs()
+  const [orgId, setOrgId] = useState(base?.org_id ?? "")
+  const [awardType, setAwardType] = useState<AwardType | "">(base?.award_type ?? "")
+  const [scope, setScope] = useState<Scope | "">(base?.scope ?? "")
+  const [coverage, setCoverage] = useState<Coverage[]>(base?.coverage ?? [])
+  const [amountText, setAmountText] = useState(base?.amount_text ?? "")
+  const [essay, setEssay] = useState(base?.essay_required ?? false)
+  const [eligibility, setEligibility] = useState(base?.eligibility ?? "")
+  const [sourceUrl, setSourceUrl] = useState(base?.source_url ?? "")
+  const [credit, setCredit] = useState<CreditKind>(base?.college_credit ?? "none")
+  const [creditNote, setCreditNote] = useState(base?.credit_note ?? "")
   const ready = title.trim() !== "" && subjects.length > 0
 
   const toggle = <T,>(list: T[], value: T) =>
@@ -74,6 +125,16 @@ export function SubmitDialog({
           recurrence: kind === "recurring" ? recurrence.trim() || null : null,
           lms_course_id: base?.lms_course_id ?? null,
           materials: base?.materials ?? [],
+          org_id: kind === "scholarship" ? orgId || null : null,
+          award_type: kind === "scholarship" ? awardType || null : null,
+          scope: kind === "scholarship" ? scope || null : null,
+          coverage: kind === "scholarship" ? coverage : [],
+          amount_text: kind === "scholarship" ? amountText.trim() || null : null,
+          essay_required: kind === "scholarship" && essay,
+          eligibility: kind === "scholarship" ? eligibility.trim() || null : null,
+          source_url: kind === "scholarship" ? sourceUrl.trim() || null : null,
+          college_credit: kind === "scholarship" || kind === "course" ? credit : "none",
+          credit_note: kind === "scholarship" || kind === "course" ? creditNote.trim() || null : null,
         },
       })
       toast.success(t("submitted"))
@@ -185,6 +246,82 @@ export function SubmitDialog({
               placeholder="FREQ=MONTHLY;BYMONTHDAY=15"
             />
           </label>
+        )}
+        {kind === "scholarship" && (
+          <fieldset className="flex flex-col gap-3 text-sm">
+            <legend className="sr-only">{t("scholarships.title")}</legend>
+            <div className="grid gap-3 sm:grid-cols-3">
+              <NativeSelect label={t("scholarships.orgLabel")} value={orgId} onChange={setOrgId}>
+                <option value="">{t("any")}</option>
+                {orgs.data?.items.map((o) => (
+                  <option key={o.id} value={o.id}>
+                    {o.name}
+                  </option>
+                ))}
+              </NativeSelect>
+              <NativeSelect label={t("scholarships.awardLabel")} value={awardType} onChange={setAwardType}>
+                <option value="">{t("any")}</option>
+                {AWARDS.map((a) => (
+                  <option key={a} value={a}>
+                    {t(`award.${a}`)}
+                  </option>
+                ))}
+              </NativeSelect>
+              <NativeSelect label={t("scholarships.scopeLabel")} value={scope} onChange={setScope}>
+                <option value="">{t("any")}</option>
+                {SCOPES.map((s) => (
+                  <option key={s} value={s}>
+                    {t(`scope.${s}`)}
+                  </option>
+                ))}
+              </NativeSelect>
+            </div>
+            <div className="flex flex-wrap gap-1" role="group" aria-label={t("scholarships.coverageLabel")}>
+              {COVERAGES.map((c) => (
+                <Button
+                  key={c}
+                  type="button"
+                  size="sm"
+                  variant={coverage.includes(c) ? "default" : "outline"}
+                  aria-pressed={coverage.includes(c)}
+                  onClick={() => setCoverage(toggle(coverage, c))}
+                >
+                  {t(`coverage.${c}`)}
+                </Button>
+              ))}
+            </div>
+            <label className="flex flex-col gap-1">
+              {t("scholarships.amountLabel")}
+              <Input value={amountText} onChange={(e) => setAmountText(e.target.value)} maxLength={200} />
+            </label>
+            <label className="flex items-center gap-2">
+              <input type="checkbox" checked={essay} onChange={(e) => setEssay(e.target.checked)} />
+              {t("scholarships.essay")}
+            </label>
+            <label className="flex flex-col gap-1">
+              {t("scholarships.eligibilityLabel")}
+              <Textarea value={eligibility} onChange={(e) => setEligibility(e.target.value)} maxLength={2000} />
+            </label>
+            <label className="flex flex-col gap-1">
+              {t("scholarships.sourceLabel")}
+              <Input type="url" value={sourceUrl} onChange={(e) => setSourceUrl(e.target.value)} />
+            </label>
+          </fieldset>
+        )}
+        {(kind === "scholarship" || kind === "course") && (
+          <div className="grid gap-3 sm:grid-cols-2">
+            <NativeSelect label={t("scholarships.creditLabel")} value={credit} onChange={(v) => setCredit(v || "none")}>
+              {CREDITS.map((c) => (
+                <option key={c} value={c}>
+                  {t(`credit.${c}`)}
+                </option>
+              ))}
+            </NativeSelect>
+            <label className="flex flex-col gap-1 text-sm">
+              {t("scholarships.creditNoteLabel")}
+              <Input value={creditNote} onChange={(e) => setCreditNote(e.target.value)} maxLength={500} />
+            </label>
+          </div>
         )}
         <label className="flex flex-col gap-1 text-sm">
           {t("noteLabel")}

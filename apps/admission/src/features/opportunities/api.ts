@@ -9,6 +9,14 @@ import {
   type AdmissionOpportunity,
   type AdmissionOpportunityFields,
   type AdmissionOpportunityList,
+  type AdmissionOpportunityDetail,
+  type AdmissionOppComment,
+  type AdmissionOppReport,
+  type AdmissionOppReportList,
+  type AdmissionOrg,
+  type AdmissionOrgIn,
+  type AdmissionOrgList,
+  type AdmissionOrgPatch,
   type AdmissionPlan,
   type AdmissionPlanAnalytics,
   type AdmissionPlanDeadline,
@@ -60,6 +68,17 @@ export type Plan = AdmissionPlan
 
 export type AiPlan = AdmissionAiPlan
 
+export type OpportunityDetail = AdmissionOpportunityDetail
+export type OppComment = AdmissionOppComment
+export type OppReport = AdmissionOppReport
+export type Org = AdmissionOrg
+export type OrgInput = AdmissionOrgIn
+export type OrgPatch = AdmissionOrgPatch
+export type AwardType = NonNullable<OpportunityFields["award_type"]>
+export type Scope = NonNullable<OpportunityFields["scope"]>
+export type CreditKind = NonNullable<OpportunityFields["college_credit"]>
+export type OrgKind = OrgInput["kind"]
+
 export type CatalogFilter = {
   field_id?: string
   subfield_id?: string
@@ -67,6 +86,10 @@ export type CatalogFilter = {
   kind?: OpportunityKind
   grade?: number
   q?: string
+  award_type?: AwardType
+  scope?: Scope
+  org_id?: string
+  college_credit?: CreditKind
 }
 
 export type ProgramExtras = {
@@ -211,5 +234,92 @@ export function useDeleteTaxonomyNode() {
   return useMutation({
     mutationFn: (id: string) => getApiClient().delete<void>(`${STAFF}/taxonomy/${encodeURIComponent(id)}`),
     onSuccess: () => client.invalidateQueries({ queryKey: TAXONOMY_KEY }),
+  })
+}
+
+const COMMENTS_KEY = [...OPPORTUNITIES_KEY, "detail"] as const
+const ORGS_KEY = [...OPPORTUNITIES_KEY, "orgs"] as const
+const REPORTS_KEY = [...OPPORTUNITIES_KEY, "reports"] as const
+const COMMENT = "/v1/admission/opportunity-comments"
+const STAFF_COMMENT = "/v1/admission/staff/opportunity-comments"
+const ORG = "/v1/admission/staff/orgs"
+
+/** GET /opportunities/{id}: the entry, its organization and its visible comments. */
+export function useOpportunity(id: string | null) {
+  return useQuery({
+    queryKey: [...COMMENTS_KEY, id] as const,
+    queryFn: ({ signal }) =>
+      getApiClient().get<OpportunityDetail>(`${BASE}/${encodeURIComponent(id ?? "")}`, { signal }),
+    enabled: id !== null,
+  })
+}
+
+/** Comments are published at once; every mutation refreshes the detail page (and the reports queue). */
+export function useCommentMutations(opportunityId: string) {
+  const client = useQueryClient()
+  const refresh = () => {
+    void client.invalidateQueries({ queryKey: [...COMMENTS_KEY, opportunityId] })
+    void client.invalidateQueries({ queryKey: REPORTS_KEY })
+  }
+  const post = useMutation({
+    mutationFn: (body: string) =>
+      getApiClient().post<OppComment>(`${BASE}/${encodeURIComponent(opportunityId)}/comments`, { body }),
+    onSuccess: refresh,
+  })
+  const remove = useMutation({
+    mutationFn: (id: string) => getApiClient().delete<void>(`${COMMENT}/${encodeURIComponent(id)}`),
+    onSuccess: refresh,
+  })
+  const report = useMutation({
+    mutationFn: ({ id, reason }: { id: string; reason: string }) =>
+      getApiClient().post<void>(`${COMMENT}/${encodeURIComponent(id)}/report`, { reason }),
+  })
+  const hide = useMutation({
+    mutationFn: ({ id, hidden }: { id: string; hidden: boolean }) =>
+      getApiClient().post<OppComment>(`${STAFF_COMMENT}/${encodeURIComponent(id)}/${hidden ? "hide" : "unhide"}`, {}),
+    onSuccess: refresh,
+  })
+  return { post, remove, report, hide }
+}
+
+export function useOrgs() {
+  return useQuery({
+    queryKey: ORGS_KEY,
+    queryFn: () => getApiClient().get<AdmissionOrgList>("/v1/admission/orgs"),
+  })
+}
+
+export function useOrgMutations() {
+  const client = useQueryClient()
+  const refresh = () => client.invalidateQueries({ queryKey: OPPORTUNITIES_KEY })
+  const create = useMutation({
+    mutationFn: (body: OrgInput) => getApiClient().post<Org>(ORG, body),
+    onSuccess: refresh,
+  })
+  const update = useMutation({
+    mutationFn: ({ id, ...body }: { id: string } & OrgPatch) =>
+      getApiClient().patch<Org>(`${ORG}/${encodeURIComponent(id)}`, body),
+    onSuccess: refresh,
+  })
+  const remove = useMutation({
+    mutationFn: (id: string) => getApiClient().delete<void>(`${ORG}/${encodeURIComponent(id)}`),
+    onSuccess: refresh,
+  })
+  return { create, update, remove }
+}
+
+/** GET /staff/opportunities/reports: open comment reports. */
+export function useReports() {
+  return useQuery({
+    queryKey: REPORTS_KEY,
+    queryFn: () => getApiClient().get<AdmissionOppReportList>(`${STAFF}/reports`),
+  })
+}
+
+export function useDismissReport() {
+  const client = useQueryClient()
+  return useMutation({
+    mutationFn: (id: string) => getApiClient().post<void>(`${STAFF}/reports/${encodeURIComponent(id)}/dismiss`, {}),
+    onSuccess: () => client.invalidateQueries({ queryKey: REPORTS_KEY }),
   })
 }

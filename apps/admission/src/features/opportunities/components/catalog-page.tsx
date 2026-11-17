@@ -15,11 +15,10 @@ import {
   Skeleton,
   StateView,
 } from "@ihsp/ui"
-import { useRouter } from "next/navigation"
 import { useMemo, useState } from "react"
 import { toast } from "sonner"
 import { AsideCard, HeadingIcon, SplitLayout } from "../../../components/lib/split-layout"
-import { UnderlineTabs } from "../../../components/lib/underline-tabs"
+import { OpportunityTabs } from "./opportunity-tabs"
 import { ScrollFade } from "../../../components/scroll-fade"
 import { AdmissionShell } from "../../shell/components/admission-shell"
 import {
@@ -35,11 +34,11 @@ import {
 import { OpportunityCard, SaveButton } from "./opportunity-card"
 import { SubmitDialog } from "./submit-dialog"
 
-export const KINDS: OpportunityKind[] = ["exam", "certification", "course", "event", "recurring"]
+export const KINDS: OpportunityKind[] = ["exam", "certification", "course", "scholarship", "event", "recurring"]
 export const GRADES = [9, 10, 11, 12] as const
 const ANY = "any"
 
-function FilterSelect({
+export function FilterSelect({
   label,
   value,
   onChange,
@@ -76,7 +75,6 @@ export function CatalogBody() {
   const errorMessage = useErrorMessage()
   const [filter, setFilter] = useState<CatalogFilter>({})
   const [suggesting, setSuggesting] = useState(false)
-  const router = useRouter()
   const taxonomy = useTaxonomy()
   const list = useOpportunities(filter)
   const plan = usePlan()
@@ -182,23 +180,7 @@ export function CatalogBody() {
         }
       >
         <div className="flex flex-col gap-4">
-          <UnderlineTabs
-            label={t("view.tabs")}
-            value="catalog"
-            onValueChange={(v) => {
-              if (v === "plan") router.push("/opportunities/plan/")
-            }}
-            tabs={[
-              { value: "catalog", label: t("view.catalog"), icon: "courses" },
-              {
-                value: "plan",
-                label: t("view.plan"),
-                icon: "heart",
-                count: plan.data?.entries.length ?? 0,
-                tone: "primary",
-              },
-            ]}
-          />
+          <OpportunityTabs value="catalog" planCount={plan.data?.entries.length ?? 0} />
           {suggesting && <SubmitDialog open onOpenChange={setSuggesting} />}
           <ScrollFade maxHeight="75vh">{body}</ScrollFade>
         </div>

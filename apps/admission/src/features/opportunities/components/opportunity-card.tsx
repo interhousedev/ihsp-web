@@ -2,7 +2,9 @@
 
 import { formatDate, useT } from "@ihsp/i18n"
 import { Badge, Button, Icons, Pill } from "@ihsp/ui"
+import Link from "next/link"
 import type { ReactNode } from "react"
+import { detailHref } from "./scholarship-card"
 import type { Opportunity, OpportunityKind } from "../api"
 
 export const KIND_TONE = {
@@ -10,6 +12,7 @@ export const KIND_TONE = {
   certification: "success",
   course: "primary",
   event: "neutral",
+  scholarship: "success",
   recurring: "neutral",
   program: "primary",
 } as const satisfies Record<OpportunityKind, "warning" | "success" | "primary" | "neutral">
@@ -18,6 +21,7 @@ const KIND_ICON = {
   exam: "exams",
   certification: "certificates",
   course: "courses",
+  scholarship: "certificates",
   event: "calendarEvent",
   recurring: "clock",
   program: "globe",
@@ -31,7 +35,9 @@ export function OpportunityCard({ item, action }: { item: Opportunity; action?: 
     <li className="bg-card flex flex-col gap-2 rounded-card border p-4 transition-shadow hover:shadow-sm">
       <div className="flex flex-wrap items-start justify-between gap-2">
         <div className="flex min-w-0 flex-col gap-1">
-          <span className="font-medium">{f.title}</span>
+          <Link href={detailHref(item.id)} className="font-medium hover:underline">
+            {f.title}
+          </Link>
           <span className="text-muted-foreground flex flex-wrap items-center gap-2 text-xs">
             <Pill tone={KIND_TONE[f.kind]} className="gap-1">
               {(() => {
