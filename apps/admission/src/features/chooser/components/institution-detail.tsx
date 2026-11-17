@@ -140,6 +140,8 @@ function DetailBody({ institution }: { institution: Institution }) {
   const admissionFacts = pick(institution, TAB_FACTS.admission).filter(([, fact]) => hasValue(fact))
   const campusFacts = [...pick(institution, TAB_FACTS.safety), ...other].filter(([, fact]) => hasValue(fact))
   const hasDeadlines = Array.isArray(institution.facts.deadlines?.value) && institution.facts.deadlines.value.length > 0
+  const kindLabel = (value: string) =>
+    loose.has(`options.studyType.${value.toLowerCase()}`) ? loose(`options.studyType.${value.toLowerCase()}`) : value
   const aid = scholarships.data ?? []
 
   function select(next: string) {
@@ -179,7 +181,7 @@ function DetailBody({ institution }: { institution: Institution }) {
             </Stat>
           ) : null}
           {rateValue !== null ? <Stat label={t("detail.stats.admissionRate")}>{percent(rateValue)}</Stat> : null}
-          {kind && hasValue(kind) ? <Stat label={t("detail.stats.type")}>{String(kind.value)}</Stat> : null}
+          {kind && hasValue(kind) ? <Stat label={t("detail.stats.type")}>{kindLabel(String(kind.value))}</Stat> : null}
           {institution.coa_total ? (
             <Stat label={t("detail.stats.cost")}>{formatMoney(institution.coa_total, institution.coa_currency)}</Stat>
           ) : null}

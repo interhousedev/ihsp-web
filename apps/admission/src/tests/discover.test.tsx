@@ -1,5 +1,5 @@
 import { describe, expect, test } from "bun:test"
-import { apiUrl, server } from "@ihsp/test-utils"
+import { apiUrl, server, userMe } from "@ihsp/test-utils"
 import { fireEvent, screen, waitFor } from "@testing-library/react"
 import { http, HttpResponse } from "msw"
 import { LogoAvatar, monogram, PhotoHeader } from "../components/lib/photo-header"
@@ -110,7 +110,7 @@ describe("FactorCard", () => {
 describe("PhotoHeader", () => {
   test("falls back to a gradient and a monogram without media", () => {
     renderAdmissionApp(<PhotoHeader name="Harvard University" title="Harvard University" />)
-    expect(screen.getByTestId("photo-header-cover").style.backgroundImage).toBe("")
+    expect(screen.queryByTestId("photo-header-cover")).toBeNull()
     expect(screen.getByText(monogram("Harvard University"))).toBeInTheDocument()
   })
   test("uses the cover when given", () => {

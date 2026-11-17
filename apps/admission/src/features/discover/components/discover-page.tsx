@@ -14,15 +14,20 @@ import { AdmissionShell } from "../../shell/components/admission-shell"
 import { useDecide, useMatches, useUndoDecision } from "../hooks"
 import { ContextPanel } from "./context-panel"
 import { MatchCard } from "./match-card"
+import { SwipeExplainer } from "./swipe-explainer"
 
-type Layout = "mobile" | "tablet" | "desktop"
+/** Three columns need 1440px; below that the algorithm moves into a dialog so deck and chat keep their width. */
+type Layout = "mobile" | "tablet" | "desktop" | "wide"
 
 function subscribe(onChange: () => void) {
   window.addEventListener("resize", onChange)
   return () => window.removeEventListener("resize", onChange)
 }
-const snapshot = (): Layout => (window.innerWidth < 768 ? "mobile" : window.innerWidth < 1024 ? "tablet" : "desktop")
-const serverSnapshot = (): Layout => "desktop"
+const snapshot = (): Layout => {
+  const width = window.innerWidth
+  return width < 768 ? "mobile" : width < 1024 ? "tablet" : width < 1440 ? "desktop" : "wide"
+}
+const serverSnapshot = (): Layout => "wide"
 
 type Decided = { match: Match; direction: SwipeDirection }
 
@@ -107,18 +112,21 @@ export function DiscoverPage() {
   ) : matches.isError ? (
     <StateView state="error" error={matches.error} onRetry={() => void matches.refetch()} />
   ) : (
-    <div className="mx-auto flex w-full max-w-md flex-col gap-4">
-      <SwipeDeck
-        className="h-[min(34rem,calc(100dvh-22rem))] min-h-[20rem] md:h-[min(34rem,calc(100dvh-16rem))] md:min-h-[26rem]"
-        items={remaining}
-        getKey={(match) => match.university_id}
-        renderCard={(match) => <MatchCard match={match} />}
-        onSwipe={onSwipe}
-        rightStamp={t("stamp.interested")}
-        leftStamp={t("stamp.notMyVibe")}
-        label={t("deck.label")}
-        empty={<StateView state="empty" title={t("empty.title")} description={t("empty.text")} />}
-      />
+    <div className="mx-auto flex w-full min-w-0 max-w-md flex-col gap-4">
+      <SwipeExplainer />
+      <div className="rounded-card relative isolate z-0 min-w-0 overflow-hidden">
+        <SwipeDeck
+          className="h-[min(34rem,calc(100dvh-22rem))] min-h-[20rem] md:h-[min(34rem,calc(100dvh-16rem))] md:min-h-[26rem]"
+          items={remaining}
+          getKey={(match) => match.university_id}
+          renderCard={(match) => <MatchCard match={match} />}
+          onSwipe={onSwipe}
+          rightStamp={t("stamp.interested")}
+          leftStamp={t("stamp.notMyVibe")}
+          label={t("deck.label")}
+          empty={<StateView state="empty" title={t("empty.title")} description={t("empty.text")} />}
+        />
+      </div>
       <p role="status" aria-live="polite" className="text-success h-5 text-center text-sm font-medium">
         {stamp}
       </p>
@@ -156,9 +164,15 @@ export function DiscoverPage() {
         }
       />
       <div className="mx-auto flex w-full min-w-0 max-w-screen-2xl flex-col gap-4 p-4 md:p-6">
-        <div className="flex items-center justify-between gap-2">
+        <div className="flex flex-wrap items-center justify-between gap-2">
           <h1 className="text-xl font-semibold">{t("title")}</h1>
           {layout === "mobile" ? (
+            <Button type="button" variant="outline" size="sm" onClick={() => setPanelOpen(true)}>
+              <Icons.discover aria-hidden />
+              {t("algorithm.open")}
+            </Button>
+          ) : null}
+          {layout === "desktop" ? (
             <Button type="button" variant="outline" size="sm" onClick={() => setPanelOpen(true)}>
               <Icons.discover aria-hidden />
               {t("algorithm.open")}
@@ -177,15 +191,29 @@ export function DiscoverPage() {
             </Button>
           ) : null}
         </div>
-        {layout === "desktop" ? (
-          <div className="grid grid-cols-[20rem_minmax(0,1fr)_20rem] items-start gap-6">
+        {layout === "wide" ? (
+          <div className="grid grid-cols-[20rem_minmax(0,1fr)_22rem] items-start gap-6">
             <ScrollFade maxHeight={COLUMN_HEIGHT} className="pr-2">
               {algorithm}
             </ScrollFade>
             {deck}
-            <ScrollFade maxHeight={COLUMN_HEIGHT} className="pr-2">
-              {context}
-            </ScrollFade>
+            <aside data-testid="discover-side-slot" className="relative z-10 min-w-0">
+              <ScrollFade maxHeight={COLUMN_HEIGHT} className="pr-2">
+                {context}
+              </ScrollFade>
+            </aside>
+          </div>
+        ) : layout === "desktop" ? (
+          <div className="grid grid-cols-[minmax(0,1fr)_24rem] items-start gap-6">
+            {deck}
+            <aside data-testid="discover-side-slot" className="relative z-10 min-w-0">
+              <ScrollFade maxHeight={COLUMN_HEIGHT} className="pr-2">
+                {context}
+              </ScrollFade>
+            </aside>
+            <ResponsiveDialog open={panelOpen} onOpenChange={setPanelOpen} title={t("algorithm.title")}>
+              {algorithm}
+            </ResponsiveDialog>
           </div>
         ) : layout === "tablet" ? (
           <div className={panelOpen ? "grid grid-cols-[minmax(0,1fr)_18rem] items-start gap-4" : "grid grid-cols-1"}>

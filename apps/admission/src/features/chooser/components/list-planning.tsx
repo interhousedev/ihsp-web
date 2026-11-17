@@ -2,7 +2,8 @@
 
 import { getApiClient } from "@ihsp/api"
 import { useErrorMessage, useLocale, useT } from "@ihsp/i18n"
-import { Button, Pill, StateView } from "@ihsp/ui"
+import { Button, Icons, Pill, StateView } from "@ihsp/ui"
+import { AiTabCard } from "@/components/ai-tab-card"
 import { useMutation, useQuery } from "@tanstack/react-query"
 import { useList } from "../hooks"
 import { AddToListButton } from "./add-to-list-button"
@@ -37,7 +38,12 @@ export function ListPlanning() {
       }),
   })
   return (
-    <section className="flex min-w-0 flex-col gap-3 rounded-lg border p-4" aria-label={t("planning.title")}>
+    <AiTabCard
+      role="region"
+      aria-label={t("planning.title")}
+      label={t("planning.tab")}
+      icon={<Icons.sparkles aria-hidden />}
+    >
       <h2 className="font-semibold">{t("planning.title")}</h2>
       {insights.isPending ? (
         <StateView state="loading" rows={1} />
@@ -95,6 +101,6 @@ export function ListPlanning() {
           </ul>
         )
       ) : null}
-    </section>
+    </AiTabCard>
   )
 }

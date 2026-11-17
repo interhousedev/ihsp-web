@@ -2,6 +2,7 @@
 
 import { useErrorMessage, useLocale, useT } from "@ihsp/i18n"
 import { Button, Icons, Reveal, Skeleton } from "@ihsp/ui"
+import { AiTabCard } from "@/components/ai-tab-card"
 import { useSummary } from "../hooks"
 
 /** A short summary of the recorded facts, written by the model on request; it is not stored. */
@@ -11,10 +12,14 @@ export function AiSummary({ institutionId }: { institutionId: string }) {
   const errorMessage = useErrorMessage()
   const summary = useSummary(institutionId, locale)
   return (
-    <section aria-labelledby="ai-summary-title" className="bg-muted/40 rounded-card flex flex-col gap-3 p-4">
+    <AiTabCard
+      role="region"
+      aria-labelledby="ai-summary-title"
+      label={t("summary.tab")}
+      icon={<Icons.sparkles aria-hidden />}
+    >
       <div className="flex flex-wrap items-center justify-between gap-2">
-        <h3 id="ai-summary-title" className="flex items-center gap-2 text-sm font-semibold">
-          <Icons.sparkles className="size-4" aria-hidden />
+        <h3 id="ai-summary-title" className="text-sm font-semibold">
           {t("summary.title")}
         </h3>
         <Button type="button" variant="outline" size="sm" disabled={summary.isPending} onClick={() => summary.mutate()}>
@@ -45,6 +50,6 @@ export function AiSummary({ institutionId }: { institutionId: string }) {
       ) : (
         <p className="text-muted-foreground text-xs">{summary.isPending ? "" : t("summary.hint")}</p>
       )}
-    </section>
+    </AiTabCard>
   )
 }
