@@ -62,3 +62,38 @@ export function useAddLmsCourse() {
     onSuccess: () => client.invalidateQueries({ queryKey: COURSES_KEY }),
   })
 }
+
+export type LmsCatalogCard = {
+  id: string
+  title: string
+  summary: string | null
+  cover_url: string | null
+  locked: boolean
+}
+
+/** GET /v1/lms/courses: published LMS catalog, filtered by title. */
+export function useLmsCatalog(query: string, enabled: boolean) {
+  return useQuery({
+    queryKey: ["admission", "lms-catalog", query] as const,
+    enabled,
+    queryFn: ({ signal }) =>
+      getApiClient().get<LmsCatalogCard[]>("/v1/lms/courses", { query: query ? { query } : {}, signal }),
+  })
+}
+
+/** Enrols the student when needed (POST /v1/lms/courses/{id}/enroll), then stores the course on the profile. */
+export function useEnrollAndAddLmsCourse() {
+  const client = useQueryClient()
+  return useMutation({
+    mutationFn: async ({ id, enrolled }: { id: string; enrolled: boolean }) => {
+      const api = getApiClient()
+      if (!enrolled) await api.post(`/v1/lms/courses/${encodeURIComponent(id)}/enroll`, {})
+      const course = await api.post<Course>(`/v1/admission/courses/lms/${encodeURIComponent(id)}`, {})
+      // The add is idempotent and returns an excluded row unchanged: put it back on the profile.
+      if (!course.included && course.id)
+        return api.patch<Course>(`/v1/admission/courses/${course.id}`, { included: true })
+      return course
+    },
+    onSuccess: () => client.invalidateQueries({ queryKey: COURSES_KEY }),
+  })
+}

@@ -57,7 +57,11 @@ export function useRemoveDeadline() {
   const client = useQueryClient()
   return useMutation({
     mutationFn: (id: string) => getApiClient().delete<void>(`${BASE}/staff/deadlines/${encodeURIComponent(id)}`),
-    onSuccess: () => client.invalidateQueries({ queryKey: STAFF_DEADLINES_KEY }),
+    onSuccess: (_data, id) => {
+      // The row leaves the list at once; the refetch then brings the retired (unknown) version back.
+      client.setQueryData<Deadline[]>(STAFF_DEADLINES_KEY, (rows) => rows?.filter((row) => row.id !== id))
+      return client.invalidateQueries({ queryKey: STAFF_DEADLINES_KEY })
+    },
   })
 }
 

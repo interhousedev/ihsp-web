@@ -1,7 +1,7 @@
 "use client"
 
 import { useFormatters, useT } from "@ihsp/i18n"
-import { Button, StateView } from "@ihsp/ui"
+import { Button, Icons, StateView } from "@ihsp/ui"
 import Link from "next/link"
 import { useState } from "react"
 import { useCalendar } from "../calendar-api"
@@ -38,8 +38,6 @@ export function CalendarView() {
       <div className="flex flex-wrap items-center justify-between gap-2">
         <h2 className="text-lg font-semibold">{t("calendar.title")}</h2>
         <div className="flex items-center gap-2">
-          <Button variant="outline" onClick={() => shift(-1)} aria-label={t("calendar.previous")}>
-            ←
           <Button
             variant="outline"
             size="icon"
@@ -50,8 +48,6 @@ export function CalendarView() {
             <Icons.chevronLeft aria-hidden />
           </Button>
           <span className="text-sm">{date(`${start}T12:00:00+05:00`, { month: "long", year: "numeric" })}</span>
-          <Button variant="outline" onClick={() => shift(1)} aria-label={t("calendar.next")}>
-            →
           <Button
             variant="outline"
             size="icon"

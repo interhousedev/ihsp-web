@@ -36,6 +36,7 @@ function serve(readiness: Record<string, unknown>) {
         ],
       }),
     ),
+    http.get(apiUrl("/v1/admission/outcomes"), () => HttpResponse.json({ items: [] })),
     http.get(apiUrl("/v1/admission/preferences"), () => HttpResponse.json({})),
     http.get(apiUrl("/v1/admission/matches"), () => HttpResponse.json({ items: [], next_cursor: null })),
     http.get(apiUrl("/v1/admission/me/items"), () =>

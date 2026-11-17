@@ -1,11 +1,13 @@
 "use client"
 
+import { AppPageHeader, pageClass } from "../../../components/lib/page"
 import { useErrorMessage, useT } from "@ihsp/i18n"
-import { Button, Icons, PageHeader, Pill, Skeleton, StateView, Switch } from "@ihsp/ui"
+import { Button, Icons, Pill, Skeleton, StateView, Switch } from "@ihsp/ui"
 import { useId, useState } from "react"
 import { toast } from "sonner"
 import { AdmissionShell } from "../../shell/components/admission-shell"
 import { COURSE_SOURCES, useAddLmsCourse, useCourseMutations, useCourses, type Course, type CourseSource } from "../api"
+import { AddCourseDialog, type AddCourseTab } from "./add-course-dialog"
 import { FreeCourses } from "./free-courses"
 import { ManualCourseDialog } from "./manual-course-dialog"
 
@@ -59,7 +61,7 @@ function CourseRow({ course }: { course: Course }) {
   )
 }
 
-function SourceSection({ source, courses }: { source: CourseSource; courses: Course[] }) {
+function SourceSection({ source, courses, onFind }: { source: CourseSource; courses: Course[]; onFind: () => void }) {
   const t = useT("courses")
   return (
     <section className="flex flex-col gap-2" aria-labelledby={`courses-${source}`}>
@@ -68,7 +70,15 @@ function SourceSection({ source, courses }: { source: CourseSource; courses: Cou
         <Pill>{courses.length}</Pill>
       </h2>
       {courses.length === 0 ? (
-        <p className="text-muted-foreground rounded-card border border-dashed p-3 text-sm">{t(`empty.${source}`)}</p>
+        <div className="text-muted-foreground flex flex-wrap items-center justify-between gap-2 rounded-card border border-dashed p-3 text-sm">
+          <p>{t(`empty.${source}`)}</p>
+          {source === "lms" ? (
+            <Button size="sm" variant="outline" onClick={onFind}>
+              <Icons.search aria-hidden className="size-4" />
+              {t("lmsPicker.cta")}
+            </Button>
+          ) : null}
+        </div>
       ) : (
         <ul className="flex flex-col gap-2">
           {courses.map((course) => (
@@ -83,16 +93,23 @@ function SourceSection({ source, courses }: { source: CourseSource; courses: Cou
 export function CoursesPage() {
   const t = useT("courses")
   const query = useCourses()
-  const [adding, setAdding] = useState(false)
+  const [picking, setPicking] = useState(false)
+  const [tab, setTab] = useState<AddCourseTab>("lms")
+  const [manual, setManual] = useState(false)
+  const open = (next: AddCourseTab) => {
+    setTab(next)
+    setPicking(true)
+  }
   return (
     <AdmissionShell>
-      <div className="mx-auto flex w-full max-w-3xl flex-col gap-6 p-4 md:p-6">
-        <PageHeader
+      <div className={pageClass("narrow")}>
+        <AppPageHeader
+          icon="courses"
           title={t("title")}
           actions={
-            <Button onClick={() => setAdding(true)}>
+            <Button onClick={() => open("lms")}>
               <Icons.add className="size-4" />
-              {t("manual.open")}
+              {t("addDialog.title")}
             </Button>
           }
         />
@@ -102,11 +119,26 @@ export function CoursesPage() {
           <StateView state="error" error={query.error} onRetry={() => void query.refetch()} />
         ) : (
           COURSE_SOURCES.map((source) => (
-            <SourceSection key={source} source={source} courses={query.data.items.filter((c) => c.source === source)} />
+            <SourceSection
+              key={source}
+              source={source}
+              courses={query.data.items.filter((c) => c.source === source)}
+              onFind={() => open("lms")}
+            />
           ))
         )}
         <FreeCourses />
-        <ManualCourseDialog open={adding} onOpenChange={setAdding} />
+        <AddCourseDialog
+          open={picking}
+          onOpenChange={setPicking}
+          tab={tab}
+          onTabChange={setTab}
+          onManual={() => {
+            setPicking(false)
+            setManual(true)
+          }}
+        />
+        <ManualCourseDialog open={manual} onOpenChange={setManual} />
       </div>
     </AdmissionShell>
   )

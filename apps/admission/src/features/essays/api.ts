@@ -207,17 +207,34 @@ export function useCoach<T>(id: string, helper: "brainstorm" | "outline" | "feed
   })
 }
 
-export type SuppCycle = AdmissionSuppCycle
+/** Mirrors `CoachReviewIn.mode`. */
+export const REVIEW_MODES = ["overall", "sentences", "both", "partial"] as const
+export type ReviewMode = (typeof REVIEW_MODES)[number]
+/** Mirrors `CoachRefineIn.action`. */
+export const REFINE_ACTIONS = ["reword", "transition", "merge"] as const
+export type RefineAction = (typeof REFINE_ACTIONS)[number]
 
-/** The supplemental prompts of a college per cycle, newest first, each marked against the year before. */
-export function useSuppPrompts(institutionId: string | null) {
-  return useQuery({
-    queryKey: ["admission", "supp-prompts", institutionId ?? ""] as const,
-    enabled: !!institutionId,
-    queryFn: ({ signal }) =>
-      getApiClient().get<SuppCycle[]>(`${BASE}/catalog/institutions/${seg(institutionId ?? "")}/supp-prompts`, {
-        signal,
-      }),
+export type LifeStoryReading = { drivers: string[]; support: string[]; leave_out: string[]; ideas: string[] }
+
+/** Reviews the saved draft in a mode; `excerpt` is the passage of the `partial` mode. */
+export function useReview(id: string) {
+  return useMutation({
+    mutationFn: (body: { mode: ReviewMode; excerpt: string }) =>
+      getApiClient().post<CoachFeedback>(`${BASE}/essays/${seg(id)}/coach/review`, body),
+  })
+}
+
+/** Hints for rewording, connecting or merging one passage; the coach never returns new text. */
+export function useRefine(id: string) {
+  return useMutation({
+    mutationFn: (body: { action: RefineAction; text: string }) =>
+      getApiClient().post<{ hints: string[] }>(`${BASE}/essays/${seg(id)}/coach/refine`, body),
+  })
+}
+
+export function useLifeStory() {
+  return useMutation({
+    mutationFn: (text: string) => getApiClient().post<LifeStoryReading>(`${BASE}/essay-life-story`, { text }),
   })
 }
 

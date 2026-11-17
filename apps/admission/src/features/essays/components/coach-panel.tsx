@@ -4,7 +4,7 @@ import { useT } from "@ihsp/i18n"
 import { Button, Icons } from "@ihsp/ui"
 import { AiTabCard } from "@/components/ai-tab-card"
 import type { ReactNode } from "react"
-import { useCoach, type CoachFeedback, type CoachOutline, type CoachQuestions, type PlanSection } from "../api"
+import { useCoach, type CoachOutline, type CoachQuestions, type PlanSection } from "../api"
 import { CoachError } from "./coach-error"
 
 function Helper({
@@ -41,7 +41,7 @@ function Helper({
 }
 
 /**
- * The AI coach asks questions, proposes an outline and gives feedback on the saved draft; it never writes
+ * The AI coach asks questions, and proposes an outline; it never writes
  * the essay. Each helper runs on the last saved text, so the editor saves before calling it.
  */
 export function CoachPanel({
@@ -56,7 +56,6 @@ export function CoachPanel({
   const t = useT("essays")
   const brainstorm = useCoach<CoachQuestions>(essayId, "brainstorm")
   const outline = useCoach<CoachOutline>(essayId, "outline")
-  const feedback = useCoach<CoachFeedback>(essayId, "feedback")
   const run = (m: { mutate: () => void }) =>
     void beforeRun().then(
       () => m.mutate(),
@@ -106,31 +105,6 @@ export function CoachPanel({
             >
               {t("coach.useOutline")}
             </Button>
-          </div>
-        ) : null}
-      </Helper>
-      <Helper
-        label={t("coach.feedback")}
-        hint={t("coach.feedbackHint")}
-        pending={feedback.isPending}
-        onRun={() => run(feedback)}
-        error={feedback.error}
-      >
-        {feedback.data ? (
-          <div className="flex flex-col gap-2 text-sm animate-in fade-in">
-            <p>{feedback.data.summary}</p>
-            <h4 className="font-medium">{t("coach.strengths")}</h4>
-            <ul className="list-disc pl-5">
-              {feedback.data.strengths.map((s) => (
-                <li key={s}>{s}</li>
-              ))}
-            </ul>
-            <h4 className="font-medium">{t("coach.suggestions")}</h4>
-            <ul className="list-disc pl-5">
-              {feedback.data.suggestions.map((s) => (
-                <li key={s}>{s}</li>
-              ))}
-            </ul>
           </div>
         ) : null}
       </Helper>

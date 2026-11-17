@@ -13,7 +13,7 @@ import {
 } from "@ihsp/ui"
 import { useState, type FormEvent } from "react"
 import { toast } from "sonner"
-import { useEditDeadline, type Deadline } from "../api"
+import { useEditDeadline, type Deadline, type DeadlineBody } from "../api"
 import { useWorkflow } from "../../../lib/config"
 
 /** PATCH /staff/deadlines/{id}: status, date and the source quote. */
@@ -32,12 +32,18 @@ export function DeadlineDialog({
   const edit = useEditDeadline()
   const [status, setStatus] = useState(item.status)
   const [localDate, setLocalDate] = useState(item.local_date ?? "")
+  const statusItems = workflow.deadline_statuses.map((id) => ({ value: id, label: t(`status.${id}`) }))
   const [source, setSource] = useState(item.source_text ?? "")
 
   async function submit(event: FormEvent) {
     event.preventDefault()
     try {
-      await edit.mutateAsync({ id: item.id, status, local_date: localDate || null, source_text: source || null })
+      const body: DeadlineBody & { id: string } = { id: item.id }
+      if (status !== item.status) body.status = status
+      if (localDate !== (item.local_date ?? "")) body.local_date = localDate || null
+      if (source !== (item.source_text ?? "")) body.source_text = source || null
+      await edit.mutateAsync(body)
+      toast.success(t("saved"))
       onOpenChange(false)
     } catch (error) {
       toast.error(errorMessage(error))
@@ -57,18 +63,21 @@ export function DeadlineDialog({
       }
     >
       <div className="flex flex-col gap-3">
-        <Select value={status} onValueChange={(value) => value && setStatus(value)}>
-          <SelectTrigger aria-label={t("statusLabel")} className="min-h-11 w-full md:min-h-8">
-            <SelectValue />
-          </SelectTrigger>
-          <SelectContent>
-            {workflow.deadline_statuses.map((value) => (
-              <SelectItem key={value} value={value}>
-                {t(`status.${value}`)}
-              </SelectItem>
-            ))}
-          </SelectContent>
-        </Select>
+        <div className="flex flex-col gap-1 text-sm">
+          <span id="deadline-edit-status-label">{t("statusLabel")}</span>
+          <Select items={statusItems} value={status} onValueChange={(value) => value && setStatus(value)}>
+            <SelectTrigger aria-labelledby="deadline-edit-status-label" className="min-h-11 w-full md:min-h-8">
+              <SelectValue placeholder={t("selectPlaceholder")} />
+            </SelectTrigger>
+            <SelectContent>
+              {statusItems.map(({ value, label }) => (
+                <SelectItem key={value} value={value}>
+                  {label}
+                </SelectItem>
+              ))}
+            </SelectContent>
+          </Select>
+        </div>
         <label className="flex flex-col gap-1 text-sm">
           {t("dateLabel")}
           <Input type="date" value={localDate} onChange={(e) => setLocalDate(e.target.value)} />

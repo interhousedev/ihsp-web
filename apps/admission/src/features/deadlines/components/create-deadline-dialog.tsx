@@ -30,6 +30,11 @@ export function CreateDeadlineDialog({ open, onOpenChange }: { open: boolean; on
   const workflow = useWorkflow()
   const [localDate, setLocalDate] = useState("")
   const hits = useInstitutionSearch(picked ? "" : q)
+  const roundItems = workflow.rounds.map(({ id }) => ({ value: id, label: t(`round.${id}`) }))
+  const statusItems = workflow.deadline_statuses.map((id) => ({ value: id, label: t(`status.${id}`) }))
+  // Controlled from the first render: "" until the workflow arrives, then the first option.
+  const roundValue = round || workflow.rounds[0]?.id || ""
+  const statusValue = status || workflow.deadline_statuses[0] || ""
 
   async function submit(event: FormEvent) {
     event.preventDefault()
@@ -38,8 +43,8 @@ export function CreateDeadlineDialog({ open, onOpenChange }: { open: boolean; on
       await create.mutateAsync({
         institution_id: picked.id,
         cycle: Number(cycle),
-        round: round || workflow.rounds[0]?.id,
-        status: status || workflow.deadline_statuses[0],
+        round: roundValue,
+        status: statusValue,
         local_date: localDate || null,
       })
       onOpenChange(false)
@@ -98,30 +103,36 @@ export function CreateDeadlineDialog({ open, onOpenChange }: { open: boolean; on
           {t("cycleLabel")}
           <Input type="number" value={cycle} onChange={(e) => setCycle(e.target.value)} />
         </label>
-        <Select value={round || workflow.rounds[0]?.id} onValueChange={(value) => value && setRound(value)}>
-          <SelectTrigger aria-label={t("roundLabel")} className="min-h-11 w-full md:min-h-8">
-            <SelectValue />
-          </SelectTrigger>
-          <SelectContent>
-            {workflow.rounds.map(({ id: value }) => (
-              <SelectItem key={value} value={value}>
-                {value}
-              </SelectItem>
-            ))}
-          </SelectContent>
-        </Select>
-        <Select value={status || workflow.deadline_statuses[0]} onValueChange={(value) => value && setStatus(value)}>
-          <SelectTrigger aria-label={t("statusLabel")} className="min-h-11 w-full md:min-h-8">
-            <SelectValue />
-          </SelectTrigger>
-          <SelectContent>
-            {workflow.deadline_statuses.map((value) => (
-              <SelectItem key={value} value={value}>
-                {t(`status.${value}`)}
-              </SelectItem>
-            ))}
-          </SelectContent>
-        </Select>
+        <div className="flex flex-col gap-1 text-sm">
+          <span id="deadline-round-label">{t("roundLabel")}</span>
+          <Select items={roundItems} value={roundValue} onValueChange={(value) => value && setRound(value)}>
+            <SelectTrigger aria-labelledby="deadline-round-label" className="min-h-11 w-full md:min-h-8">
+              <SelectValue placeholder={t("selectPlaceholder")} />
+            </SelectTrigger>
+            <SelectContent>
+              {roundItems.map(({ value, label }) => (
+                <SelectItem key={value} value={value}>
+                  {label}
+                </SelectItem>
+              ))}
+            </SelectContent>
+          </Select>
+        </div>
+        <div className="flex flex-col gap-1 text-sm">
+          <span id="deadline-status-label">{t("statusLabel")}</span>
+          <Select items={statusItems} value={statusValue} onValueChange={(value) => value && setStatus(value)}>
+            <SelectTrigger aria-labelledby="deadline-status-label" className="min-h-11 w-full md:min-h-8">
+              <SelectValue placeholder={t("selectPlaceholder")} />
+            </SelectTrigger>
+            <SelectContent>
+              {statusItems.map(({ value, label }) => (
+                <SelectItem key={value} value={value}>
+                  {label}
+                </SelectItem>
+              ))}
+            </SelectContent>
+          </Select>
+        </div>
         <label className="flex flex-col gap-1 text-sm">
           {t("dateLabel")}
           <Input type="date" value={localDate} onChange={(e) => setLocalDate(e.target.value)} />

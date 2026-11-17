@@ -18,15 +18,17 @@ import {
 import Link from "next/link"
 import { useState, type ReactNode } from "react"
 import { Carousel, Slide } from "../../../components/lib/carousel"
+import { BarList } from "../../../components/lib/page"
 import { LogoAvatar } from "../../../components/lib/photo-header"
 import { ScrollFade } from "../../../components/scroll-fade"
 import type { AdmissionMatch as Match, AdmissionMatchStatus as MatchStatus } from "@ihsp/api"
-import { useList } from "../../chooser/hooks"
+import { useEntryLabel, useList } from "../../chooser/hooks"
 import type { ListEntry } from "../../chooser/types"
 import { useCalendar } from "../../deadlines/calendar-api"
 import { useMatches } from "../../discover/hooks"
 import { STATUS_TONE } from "../../discover/format"
 import { useItems, type Item } from "../../items/api"
+import { DeadlineNudges } from "./deadline-nudges"
 import { JourneyHero } from "../../journey/journey-hero"
 import { useJourney } from "../../journey/api"
 import { useReadiness } from "../../readiness/api"
@@ -62,19 +64,17 @@ function isMatchStatus(value: string | null | undefined): value is MatchStatus {
   return value === "safety" || value === "target" || value === "reach"
 }
 
-function scoreBar(score: number): string {
-  return score >= 80 ? "bg-success" : score >= 40 ? "bg-warning" : "bg-destructive"
-}
-
 function Section({
   title,
   icon,
   href,
+  action,
   children,
 }: {
   title: string
   icon: ReactNode
   href?: string
+  action?: ReactNode
   children: ReactNode
 }) {
   const t = useT("home.widgets")
@@ -85,6 +85,7 @@ function Section({
           {icon}
           {title}
         </h2>
+        {action}
         {href ? (
           <Link
             href={href}
@@ -180,10 +181,15 @@ export function MadeForHeader() {
         </h1>
       </div>
       {colleges.length > 0 ? (
-        <ul aria-label={t("topColleges")} className="flex shrink-0 -space-x-3">
+        <ul aria-label={t("topColleges")} className="flex shrink-0 items-center -space-x-2 pl-2">
           {colleges.map((college) => (
             <li key={college.name} title={college.name}>
-              <LogoAvatar name={college.name} src={college.logo} className="size-10 md:size-12" />
+              <LogoAvatar
+                name={college.name}
+                src={college.logo}
+                fit="contain"
+                className="ring-background size-10 shrink-0 overflow-hidden rounded-full ring-2 **:text-xs md:size-12"
+              />
             </li>
           ))}
         </ul>
@@ -212,26 +218,17 @@ export function ReadinessWidget() {
           ) : (
             <div className="flex flex-col items-center gap-4 md:flex-row md:items-start xl:flex-col xl:items-center">
               <ReadinessRing percent={readiness.data.percent} />
-              <ScrollFade maxHeight="16rem" className="w-full">
-                <ul className="flex w-full flex-col gap-3 py-1">
-                  {readiness.data.components.map((component) => (
-                    <li key={component.key} className="flex flex-col gap-1">
-                      <div className="flex items-center justify-between gap-2 text-sm">
-                        <span className="font-medium">{t(`components.${component.key}`)}</span>
-                        <span className="text-muted-foreground text-xs tabular-nums">
-                          {component.score}% · {t("weight", { weight: component.weight })}
-                        </span>
-                      </div>
-                      <div className="bg-muted h-1.5 overflow-hidden rounded-full">
-                        <div
-                          className={cn(
-                            "h-full rounded-full transition-[width] duration-700 ease-out",
-                            scoreBar(component.score),
-                          )}
-                          style={{ width: `${component.score}%` }}
-                        />
-                      </div>
-                      {component.next_action && component.url_path ? (
+              <div className="w-full">
+                <BarList
+                  toned
+                  className="w-full gap-3 py-1"
+                  items={readiness.data.components.map((component) => ({
+                    key: component.key,
+                    label: t(`components.${component.key}`),
+                    value: component.score,
+                    display: `${component.score}% · ${t("weight", { weight: component.weight })}`,
+                    footer:
+                      component.next_action && component.url_path ? (
                         <Link
                           href={component.url_path}
                           className="text-muted-foreground hover:text-foreground flex min-h-11 items-center gap-1 text-xs"
@@ -244,11 +241,10 @@ export function ReadinessWidget() {
                           <Icons.check className="size-3" />
                           {t("done")}
                         </span>
-                      )}
-                    </li>
-                  ))}
-                </ul>
-              </ScrollFade>
+                      ),
+                  }))}
+                />
+              </div>
             </div>
           )}
         </CardContent>
@@ -282,20 +278,24 @@ function ActivityCard({ item }: { item: Item }) {
       </div>
       <p className="line-clamp-2 min-h-10 text-sm font-semibold">{item.title}</p>
       <dl className="text-muted-foreground flex gap-4 text-xs">
-        <div>
-          <dt className="sr-only">{t("activities.hours")}</dt>
-          <dd className="flex items-center gap-1 tabular-nums">
-            <Icons.clock aria-hidden className="size-3" />
-            {t("activities.hoursValue", { count: item.hours_per_week ?? 0 })}
-          </dd>
-        </div>
-        <div>
-          <dt className="sr-only">{t("activities.weeks")}</dt>
-          <dd className="flex items-center gap-1 tabular-nums">
-            <Icons.calendar aria-hidden className="size-3" />
-            {t("activities.weeksValue", { count: item.weeks_per_year ?? 0 })}
-          </dd>
-        </div>
+        {item.hours_per_week ? (
+          <div>
+            <dt className="sr-only">{t("activities.hours")}</dt>
+            <dd className="flex items-center gap-1 tabular-nums">
+              <Icons.clock aria-hidden className="size-3" />
+              {t("activities.hoursValue", { count: item.hours_per_week })}
+            </dd>
+          </div>
+        ) : null}
+        {item.weeks_per_year ? (
+          <div>
+            <dt className="sr-only">{t("activities.weeks")}</dt>
+            <dd className="flex items-center gap-1 tabular-nums">
+              <Icons.calendar aria-hidden className="size-3" />
+              {t("activities.weeksValue", { count: item.weeks_per_year })}
+            </dd>
+          </div>
+        ) : null}
       </dl>
     </Link>
   )
@@ -303,7 +303,8 @@ function ActivityCard({ item }: { item: Item }) {
 
 export function ActivitiesCarousel() {
   const t = useT("home.dash")
-  const items = useItems("activity")
+  const query = useItems("activity")
+  const items = { ...query, data: query.data?.filter((item) => item.kind === "activity") }
   return (
     <Section
       title={t("activities.title")}
@@ -338,14 +339,14 @@ function admissionRate(entry: ListEntry, match: Match | undefined): number | nul
   return typeof value === "number" ? (value > 1 ? value / 100 : value) : null
 }
 
-function CollegeCard({ entry, match }: { entry: ListEntry; match: Match | undefined }) {
+function CollegeCard({ entry, match, label }: { entry: ListEntry; match: Match | undefined; label: string | null }) {
   const t = useT("home.dash")
   const discover = useT("discover")
   const place = [entry.institution.city, entry.institution.country].filter(Boolean).join(", ")
   const rate = admissionRate(entry, match)
-  const bucket = entry.bucket
+  const bucket = label
   return (
-    <div className="bg-card border-hairline-strong rounded-card flex h-full flex-col gap-3 border p-4 shadow-sm">
+    <div className="bg-card border-hairline-strong rounded-card hover:border-primary/40 relative flex h-full flex-col gap-3 border p-4 shadow-sm transition-colors">
       <div className="flex items-center gap-3">
         <LogoAvatar name={entry.institution.name} src={entry.institution.logo_url} className="size-10 ring-0" />
         <div className="min-w-0 flex-1">
@@ -371,20 +372,20 @@ function CollegeCard({ entry, match }: { entry: ListEntry; match: Match | undefi
             {t("colleges.unsorted")}
           </Pill>
         )}
-        <span className="text-muted-foreground text-xs tabular-nums">
+        <span className="text-muted-foreground min-w-0 text-right text-xs break-words whitespace-normal tabular-nums">
           {rate == null ? t("colleges.rateUnknown") : t("colleges.rate", { percent: Math.round(rate * 100) })}
         </span>
       </div>
       <div className="mt-auto flex gap-2">
         <Link
           href={`/chooser/institution/?id=${encodeURIComponent(entry.institution.id)}`}
-          className={cn(buttonVariants({ variant: "outline", size: "sm" }), "min-h-11 flex-1 md:min-h-9")}
+          className={cn(buttonVariants({ variant: "outline", size: "sm" }), "relative z-10 min-h-11 flex-1 md:min-h-9")}
         >
           {t("colleges.open")}
         </Link>
         <Link
           href="/chooser/list/"
-          className={cn(buttonVariants({ variant: "ghost", size: "sm" }), "min-h-11 flex-1 md:min-h-9")}
+          className={cn(buttonVariants({ variant: "ghost", size: "sm" }), "relative z-10 min-h-11 flex-1 md:min-h-9")}
         >
           {t("colleges.compare")}
         </Link>
@@ -397,6 +398,7 @@ export function CollegesCarousel() {
   const t = useT("home.dash")
   const list = useList()
   const matches = useMatches()
+  const labelOf = useEntryLabel()
   const byId = new Map((matches.data?.items ?? []).map((match) => [match.university_id, match]))
   const entries = list.data ?? []
   return (
@@ -404,6 +406,16 @@ export function CollegesCarousel() {
       title={t("colleges.title")}
       icon={<Icons.globe aria-hidden className="text-primary size-4" />}
       href="/chooser/list/"
+      action={
+        <Link
+          href="/colleges/discover/"
+          aria-label={t("colleges.add")}
+          title={t("colleges.add")}
+          className={cn(buttonVariants({ variant: "outline", size: "icon" }), "size-11 md:size-9")}
+        >
+          <Icons.add aria-hidden className="size-4" />
+        </Link>
+      }
     >
       {list.isPending ? (
         <Skeleton className="h-40 w-full" />
@@ -418,7 +430,7 @@ export function CollegesCarousel() {
         <Carousel label={t("colleges.title")}>
           {entries.map((entry) => (
             <Slide key={entry.id}>
-              <CollegeCard entry={entry} match={byId.get(entry.institution.id)} />
+              <CollegeCard entry={entry} match={byId.get(entry.institution.id)} label={labelOf(entry)} />
             </Slide>
           ))}
         </Carousel>
@@ -595,6 +607,46 @@ export function NewHere() {
   )
 }
 
+const TOOLS = [
+  { key: "words", href: "/words/", icon: Icons.text },
+  { key: "alignment", href: "/alignment/", icon: Icons.target },
+  { key: "courses", href: "/courses/", icon: Icons.homework },
+] as const
+
+/** Quick links to the self-reflection and course tools, as one card of rows. */
+export function ToolsCard() {
+  const t = useT("home")
+  return (
+    <Reveal>
+      <Card>
+        <CardHeader>
+          <CardTitle className="text-base">{t("linksLabel")}</CardTitle>
+        </CardHeader>
+        <CardContent>
+          <ul className="grid gap-2 md:grid-cols-3">
+            {TOOLS.map(({ key, href, icon: Icon }) => (
+              <li key={key}>
+                <Link
+                  href={href}
+                  className="hover:border-primary/40 border-hairline-strong rounded-card flex h-full items-start gap-3 border p-3"
+                >
+                  <span className="bg-primary/10 text-primary flex size-9 shrink-0 items-center justify-center rounded-full">
+                    <Icon aria-hidden className="size-4" />
+                  </span>
+                  <span className="flex min-w-0 flex-col gap-0.5">
+                    <span className="text-sm font-semibold">{t(`links.${key}`)}</span>
+                    <span className="text-muted-foreground text-xs">{t(`linksText.${key}`)}</span>
+                  </span>
+                </Link>
+              </li>
+            ))}
+          </ul>
+        </CardContent>
+      </Card>
+    </Reveal>
+  )
+}
+
 /**
  * The student home dashboard. Desktop: main column plus an aside; tablet: the aside is a two-column grid below the
  * main column; mobile: one column with snap carousels.
@@ -604,18 +656,24 @@ export function HomeWidgets() {
     <div className="grid grid-cols-[minmax(0,1fr)] gap-6 xl:grid-cols-[minmax(0,1fr)_22rem]">
       <div className="flex min-w-0 flex-col gap-6">
         <JourneyHero />
+        <DeadlineNudges />
         <ActivitiesCarousel />
         <CollegesCarousel />
         <ChancesBanner />
         <NewHere />
+        <div className="grid gap-4 md:grid-cols-2">
+          <TasksWidget />
+          <ScoresWidget />
+        </div>
+        <ToolsCard />
       </div>
       <aside className="grid content-start gap-4 md:grid-cols-2 xl:grid-cols-1">
         <div className="md:col-span-2 xl:col-span-1">
           <ReadinessWidget />
         </div>
-        <DeadlinesWidget />
-        <TasksWidget />
-        <ScoresWidget />
+        <div className="md:col-span-2 xl:col-span-1">
+          <DeadlinesWidget />
+        </div>
       </aside>
     </div>
   )

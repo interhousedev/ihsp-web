@@ -1,22 +1,10 @@
 "use client"
 
-import {
-  Alert,
-  AlertDescription,
-  Button,
-  ConfirmDialog,
-  cn,
-  Icons,
-  PageHeader,
-  Skeleton,
-  StateView,
-  StatusBadge,
-} from "@ihsp/ui"
 import { AppPageHeader, pageClass } from "../../../components/lib/page"
 import { useErrorMessage, useFormatters, useT } from "@ihsp/i18n"
 import { Alert, AlertDescription, Button, ConfirmDialog, cn, Icons, Skeleton, StateView, StatusBadge } from "@ihsp/ui"
 import { useState } from "react"
-import { AsideCard, HeadingIcon, SplitLayout } from "../../../components/lib/split-layout"
+import { AsideCard, SplitLayout } from "../../../components/lib/split-layout"
 import { UnderlineTabs } from "../../../components/lib/underline-tabs"
 import { ScrollFade } from "../../../components/scroll-fade"
 import { toast } from "sonner"
@@ -31,6 +19,7 @@ function Row({ item }: { item: Deadline }) {
   const t = useT("deadlines")
   const errorMessage = useErrorMessage()
   const remove = useRemoveDeadline()
+  const format = useFormatters()
   const [editing, setEditing] = useState(false)
   const [removing, setRemoving] = useState(false)
   return (
@@ -43,14 +32,22 @@ function Row({ item }: { item: Deadline }) {
       <div className="flex items-center gap-3">
         <Icons.calendarEvent aria-hidden className="text-muted-foreground size-5 shrink-0" />
         <div className="flex flex-col">
-          <span className="font-medium">
-            {item.round} {item.cycle}
+          <span className="font-medium">{item.institution_name || t("unknownInstitution")}</span>
+          <span className="text-muted-foreground text-xs">
+            {t(`round.${item.round}`)} · {item.cycle}
           </span>
-          <span className="text-muted-foreground text-xs">{item.local_date ?? t("noDate")}</span>
+          <span className="text-muted-foreground text-xs">
+            {item.local_date
+              ? format.date(`${item.local_date}T00:00:00+05:00`, { year: "numeric", month: "long", day: "numeric" })
+              : t("noDate")}
+          </span>
         </div>
       </div>
       <div className="flex items-center gap-2">
-        <StatusBadge tone={item.status === "confirmed" ? "success" : "warning"} label={t(`status.${item.status}`)} />
+        <StatusBadge
+          tone={item.status === "confirmed" ? "success" : "warning"}
+          label={item.status === "confirmed" ? t("status.confirmed") : t("view.pending")}
+        />
         <Button type="button" variant="outline" size="sm" onClick={() => setEditing(true)}>
           {t("edit")}
         </Button>
@@ -104,10 +101,10 @@ export function StaffDeadlinesPage() {
     )
   return (
     <AdmissionShell roles={[...CURATOR_ROLES]}>
-      <div className="mx-auto flex w-full max-w-6xl flex-col gap-6 p-4 md:p-6">
-        <PageHeader
+      <div className={pageClass("wide")}>
+        <AppPageHeader
+          icon="calendar"
           title={t("staffTitle")}
-          back={<HeadingIcon name="calendar" />}
           actions={
             <Button type="button" size="sm" onClick={() => setCreating(true)}>
               {t("createButton")}

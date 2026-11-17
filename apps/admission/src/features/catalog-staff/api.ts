@@ -69,6 +69,25 @@ export function useReviewProposal() {
 
 export type InstitutionHit = { id: string; name: string; country: string }
 
+/** Hits whose name matches the query (prefix first, then substring), at most `limit`; the catalog also matches cities and fields. */
+export function rankByName(hits: InstitutionHit[], q: string, limit = 8): InstitutionHit[] {
+  const needle = q.trim().toLowerCase()
+  const rank = (hit: InstitutionHit) => {
+    const name = hit.name.toLowerCase()
+    return name.startsWith(needle)
+      ? 0
+      : name.split(/[\s,-]+/).some((w) => w.startsWith(needle))
+        ? 1
+        : name.includes(needle)
+          ? 2
+          : 3
+  }
+  return hits
+    .filter((hit) => rank(hit) < 3)
+    .sort((a, b) => rank(a) - rank(b))
+    .slice(0, limit)
+}
+
 export function useInstitutionSearch(q: string) {
   return useQuery({
     queryKey: ["admission", "catalog-proposal-institutions", q] as const,
@@ -76,38 +95,22 @@ export function useInstitutionSearch(q: string) {
     queryFn: ({ signal }) =>
       getApiClient()
         .get<{ items: InstitutionHit[] }>("/v1/admission/catalog/institutions", {
-          query: { q: q.trim(), limit: 8 },
+          query: { q: q.trim(), limit: 30 },
           signal,
         })
-        .then((page) => page.items),
+        .then((page) => rankByName(page.items, q)),
   })
 }
 
-export type SuppCycle = AdmissionSuppCycle
-export type SuppPromptInput = AdmissionSuppPromptIn
+export type LogoPatch = AdmissionLogoPatchIn
 
-const suppKey = (id: string) => ["admission", "supp-prompts", id] as const
-
-/** Every cycle of a college's supplemental prompts, newest first. */
-export function useSuppCycles(id: string | null) {
-  return useQuery({
-    queryKey: suppKey(id ?? ""),
-    enabled: !!id,
-    queryFn: ({ signal }) =>
-      getApiClient().get<SuppCycle[]>(`/v1/admission/catalog/institutions/${seg(id ?? "")}/supp-prompts`, { signal }),
-  })
-}
-
-/** PUT /staff/catalog/institutions/{id}/supp-prompts/{cycle}: replaces the prompts of one cycle. */
-export function usePutSuppPrompts() {
+/** PATCH /staff/catalog/institutions/{id}: how the logo is shown, saved directly. */
+export function usePatchLogo() {
   const client = useQueryClient()
   return useMutation({
-    mutationFn: ({ id, cycle, prompts }: { id: string; cycle: string; prompts: SuppPromptInput[] }) =>
-      getApiClient().put<SuppCycle[]>(
-        `/v1/admission/staff/catalog/institutions/${seg(id)}/supp-prompts/${seg(cycle)}`,
-        { prompts },
-      ),
-    onSuccess: (cycles, { id }) => client.setQueryData(suppKey(id), cycles),
+    mutationFn: ({ id, ...body }: LogoPatch & { id: string }) =>
+      getApiClient().patch(`/v1/admission/staff/catalog/institutions/${encodeURIComponent(id)}`, body),
+    onSuccess: () => client.invalidateQueries({ queryKey: ["admission"] }),
   })
 }
 

@@ -1,8 +1,8 @@
 "use client"
 
+import { pageClass } from "../../../components/lib/page"
 import { useT } from "@ihsp/i18n"
-import { buttonVariants, type StepperItem } from "@ihsp/ui"
-import Link from "next/link"
+import { type StepperItem } from "@ihsp/ui"
 import { useMemo } from "react"
 import { useProfile } from "../../profile/api"
 import { AdmissionShell } from "../../shell/components/admission-shell"
@@ -42,20 +42,9 @@ export function HomePage() {
         title={t("title")}
         summary={`Home. Application steps: ${items.map((i) => `${i.label} (${i.status})`).join(", ")}.`}
       />
-      <div className="mx-auto flex w-full max-w-6xl flex-col gap-6 overflow-x-clip p-4 md:p-6">
+      <div className={pageClass("wide", "overflow-x-clip")}>
         <MadeForHeader />
         <HomeWidgets />
-        <nav aria-label={t("linksLabel")} className="flex flex-wrap gap-2">
-          <Link href="/words/" className={buttonVariants({ variant: "outline" })}>
-            {t("links.words")}
-          </Link>
-          <Link href="/alignment/" className={buttonVariants({ variant: "outline" })}>
-            {t("links.alignment")}
-          </Link>
-          <Link href="/courses/" className={buttonVariants({ variant: "outline" })}>
-            {t("links.courses")}
-          </Link>
-        </nav>
       </div>
     </AdmissionShell>
   )

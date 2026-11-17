@@ -1,5 +1,6 @@
 "use client"
 
+import { pageClass } from "../../../components/lib/page"
 import { ApiError } from "@ihsp/api"
 import { useSession } from "@ihsp/auth"
 import { useErrorMessage, useT } from "@ihsp/i18n"
@@ -14,7 +15,6 @@ import {
   StateView,
   Tabs,
   TabsContent,
-  TabsList,
   TabsTrigger,
   Textarea,
 } from "@ihsp/ui"
@@ -26,6 +26,12 @@ import { AdmissionShell } from "../../shell/components/admission-shell"
 import { useEssay, useRestore, useSaveEssay, type Essay, type EssayLink, type PlanSection } from "../api"
 import { countWords } from "../diff"
 import { CoachPanel } from "./coach-panel"
+import { DraftSwitcher } from "./draft-switcher"
+import { ScrollTabsList } from "./scroll-tabs-list"
+import { RefinePanel } from "./refine-panel"
+import { ReviewPanel } from "./review-panel"
+import { SuppInfo } from "./supp-info"
+import { useEssayLabel } from "./supp-label"
 import { IdeasBoard } from "./ideas-board"
 import { PlanPane } from "./plan-pane"
 import { VersionsPanel } from "./versions-panel"
@@ -60,6 +66,7 @@ const draftOf = (e: Essay): Draft => ({
  */
 export function EssayEditor({ essay }: { essay: Essay }) {
   const t = useT("essays")
+  const { label } = useEssayLabel()
   const errorMessage = useErrorMessage()
   const { session } = useSession()
   const save = useSaveEssay(essay.id)
@@ -164,18 +171,24 @@ export function EssayEditor({ essay }: { essay: Essay }) {
             : t("save.saved")
 
   return (
-    <div className="flex flex-col gap-4">
+    <div className={pageClass("wide")}>
       <PageHeader
         back={
-          <Link href="/essays/" aria-label={t("back")} className="text-muted-foreground hover:text-foreground">
+          <Link
+            href="/essays/"
+            aria-label={t("back")}
+            className="text-muted-foreground hover:text-foreground inline-flex size-11 items-center justify-center md:size-6"
+          >
             <Icons.chevronLeft aria-hidden />
           </Link>
         }
-        title={draft.title || t("untitled")}
+        title={label({ ...essay, title: draft.title })}
         meta={t(`kind.${essay.kind}`)}
+        actions={<DraftSwitcher currentId={essay.id} />}
       />
       <div className="grid grid-cols-1 gap-6 lg:grid-cols-[minmax(0,1fr)_minmax(0,24rem)]">
         <div className="flex flex-col gap-3">
+          {essay.kind === "supplemental" ? <SuppInfo essay={essay} /> : null}
           <div className="flex flex-col gap-1">
             <Label htmlFor="essay-title-edit">{t("titleLabel")}</Label>
             <Input
@@ -266,18 +279,37 @@ export function EssayEditor({ essay }: { essay: Essay }) {
           ) : null}
         </div>
         <Tabs defaultValue="plan" className="flex flex-col gap-3">
-          <TabsList className="max-w-full overflow-x-auto">
-            <TabsTrigger value="plan">{t("tabs.plan")}</TabsTrigger>
-            <TabsTrigger value="coach">{t("tabs.coach")}</TabsTrigger>
-            <TabsTrigger value="versions">{t("tabs.versions")}</TabsTrigger>
-            <TabsTrigger value="ideas">{t("tabs.ideas")}</TabsTrigger>
-            <TabsTrigger value="comments">{t("tabs.comments")}</TabsTrigger>
-          </TabsList>
+          <ScrollTabsList>
+            <TabsTrigger value="plan" className="shrink-0 flex-none font-medium">
+              {t("tabs.plan")}
+            </TabsTrigger>
+            <TabsTrigger value="review" className="shrink-0 flex-none font-medium">
+              {t("tabs.review")}
+            </TabsTrigger>
+            <TabsTrigger value="refine" className="shrink-0 flex-none font-medium">
+              {t("tabs.refine")}
+            </TabsTrigger>
+            <TabsTrigger value="versions" className="shrink-0 flex-none font-medium">
+              {t("tabs.versions")}
+            </TabsTrigger>
+            <TabsTrigger value="ideas" className="shrink-0 flex-none font-medium">
+              {t("tabs.ideas")}
+            </TabsTrigger>
+            <TabsTrigger value="comments" className="shrink-0 flex-none font-medium">
+              {t("tabs.comments")}
+            </TabsTrigger>
+          </ScrollTabsList>
           <TabsContent value="plan">
-            <PlanPane plan={draft.plan} notes={draft.notes} links={draft.links} onChange={update} />
+            <div className="flex flex-col gap-3">
+              <PlanPane plan={draft.plan} notes={draft.notes} links={draft.links} onChange={update} />
+              <CoachPanel essayId={essay.id} beforeRun={flush} onUseOutline={(plan) => update({ plan })} />
+            </div>
           </TabsContent>
-          <TabsContent value="coach">
-            <CoachPanel essayId={essay.id} beforeRun={flush} onUseOutline={(plan) => update({ plan })} />
+          <TabsContent value="review">
+            <ReviewPanel essayId={essay.id} beforeRun={flush} />
+          </TabsContent>
+          <TabsContent value="refine">
+            <RefinePanel essayId={essay.id} />
           </TabsContent>
           <TabsContent value="versions">
             <VersionsPanel

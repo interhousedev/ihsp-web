@@ -4,9 +4,11 @@ import { HttpResponse, http } from "msw"
 import { describe, expect, test } from "bun:test"
 import { renderAdmissionApp } from "../../tests/helpers"
 import { CatalogStaffBody } from "./components/catalog-staff-page"
+import { LogoTuner } from "./components/logo-tuner"
 import { ProposeDialog } from "./components/propose-dialog"
 import { SuppPromptsEditor, currentCycle } from "./components/supp-prompts-editor"
-import type { Proposal } from "./api"
+import { institution } from "../../tests/chooser-handlers"
+import { rankByName, type InstitutionHit, type Proposal } from "./api"
 
 const URL_PATH = "/v1/admission/staff/catalog/proposals"
 
@@ -73,6 +75,29 @@ describe("catalog staff", () => {
       }),
     )
   })
+
+  test("tuning a logo saves zoom and fit directly", async () => {
+    let body: unknown
+    server.use(
+      http.get(apiUrl("/v1/admission/catalog/institutions"), () =>
+        HttpResponse.json({ items: [{ id: "i1", name: "Test University", country: "GB" }], next_cursor: null }),
+      ),
+      http.get(apiUrl("/v1/admission/catalog/institutions/i1"), () => HttpResponse.json(institution())),
+      http.patch(apiUrl("/v1/admission/staff/catalog/institutions/i1"), async ({ request }) => {
+        body = await request.json()
+        return HttpResponse.json({ id: "i1", name: "Test University", facts: [], deadlines: [] })
+      }),
+    )
+    renderAdmissionApp(<LogoTuner open onOpenChange={() => {}} />)
+    fireEvent.change(await screen.findByLabelText("University"), {
+      target: { value: "Test" },
+    })
+    fireEvent.click(await screen.findByRole("button", { name: "Test University" }))
+    fireEvent.change(await screen.findByRole("slider"), { target: { value: "2.5" } })
+    fireEvent.click(screen.getByRole("button", { name: "Whole logo" }))
+    fireEvent.click(screen.getByRole("button", { name: "Send" }))
+    await waitFor(() => expect(body).toEqual({ logo_zoom: 2.5, logo_fit: "contain" }))
+  })
 })
 
 describe("supplemental prompts editor", () => {
@@ -130,57 +155,11 @@ describe("supplemental prompts editor", () => {
   })
 })
 
-describe("supplemental prompts editor", () => {
-  test("prefills the cycle and PUTs the edited prompts", async () => {
-    let body: unknown = null
-    const existing = [
-      {
-        cycle: "2026-27",
-        prompts: [
-          {
-            position: 1,
-            prompt: "Why us?",
-            word_limit: 200,
-            required: true,
-            source_url: null,
-            status: "same",
-            previous_text: null,
-          },
-        ],
-      },
-    ]
-    server.use(
-      http.get(apiUrl("/v1/admission/catalog/institutions"), () =>
-        HttpResponse.json({ items: [{ id: "i1", name: "Test University", country: "GB" }], next_cursor: null }),
-      ),
-      http.get(apiUrl("/v1/admission/catalog/institutions/i1/supp-prompts"), () => HttpResponse.json(existing)),
-      http.put(apiUrl("/v1/admission/staff/catalog/institutions/i1/supp-prompts/2026-27"), async ({ request }) => {
-        body = await request.json()
-        return HttpResponse.json(existing)
-      }),
-    )
-    renderAdmissionApp(<SuppPromptsEditor open onOpenChange={() => {}} />)
-    fireEvent.change(await screen.findByLabelText("Edit an existing university (optional)"), {
-      target: { value: "Test" },
-    })
-    fireEvent.click(await screen.findByRole("button", { name: "Test University" }))
-    fireEvent.change(screen.getByLabelText("Admission cycle"), { target: { value: "2026-27" } })
-    expect(await screen.findByDisplayValue("Why us?")).toBeTruthy()
-    fireEvent.click(screen.getByRole("button", { name: "Add a prompt" }))
-    fireEvent.change(screen.getAllByLabelText("Prompt text")[1]!, { target: { value: "Tell us more." } })
-    fireEvent.click(screen.getByRole("button", { name: "Save prompts" }))
-    await waitFor(() =>
-      expect(body).toEqual({
-        prompts: [
-          { prompt: "Why us?", word_limit: 200, required: true, source_url: null },
-          { prompt: "Tell us more.", word_limit: null, required: true, source_url: null },
-        ],
-      }),
-    )
-  })
-
-  test("names the current cycle from August", () => {
-    expect(currentCycle(new Date(2026, 10, 17))).toBe("2026-27")
-    expect(currentCycle(new Date(2027, 2, 1))).toBe("2026-27")
+describe("university name search", () => {
+  const hit = (name: string) => ({ id: name, name }) as InstitutionHit
+  test("keeps only name matches, prefix first, limited", () => {
+    const hits = [hit("Oxford"), hit("Univ of Harlow"), hit("Harvard University"), hit("Charles")]
+    expect(rankByName(hits, "Har").map((h) => h.name)).toEqual(["Harvard University", "Univ of Harlow", "Charles"])
+    expect(rankByName(hits, "Har", 1)).toHaveLength(1)
   })
 })

@@ -7,6 +7,7 @@ import type { Essay, EssaySummary } from "./api"
 import { CoachPanel } from "./components/coach-panel"
 import { EssayEditor } from "./components/essay-editor"
 import { EssaysBody } from "./components/essays-page"
+import { LifeStory } from "./components/life-story"
 import { wordDiff } from "./diff"
 
 const essay: Essay = {
@@ -33,9 +34,34 @@ const editorHandlers = () => [
   http.get(apiUrl("/v1/admission/me/items"), () => HttpResponse.json({ items: [], next_cursor: null })),
   http.get(apiUrl("/v1/admission/essays/e1"), () => HttpResponse.json(essay)),
   http.get(apiUrl("/v1/admission/me/profile"), () => HttpResponse.json({ answers: {} })),
+  http.get(apiUrl("/v1/admission/list"), () => HttpResponse.json({ items: [] })),
+  http.get(apiUrl("/v1/admission/essays"), () => HttpResponse.json({ items: [summary(essay)] })),
 ]
 
+const consentBody = (active: boolean) => ({
+  grants: [{ purpose: "admission_ai", active, granted_at: "2026-01-01T00:00:00Z", withdrawn_at: null }],
+})
+
 describe("essays", () => {
+  test("the AI help card shows the lock only without consent", async () => {
+    for (const granted of [false, true]) {
+      server.use(
+        http.get(apiUrl("/v1/admission/essays"), () => HttpResponse.json({ items: [summary(essay)] })),
+        http.get(apiUrl("/v1/admission/consent"), () => HttpResponse.json(consentBody(granted))),
+      )
+      const view = renderAdmissionApp(<EssaysBody />)
+      if (granted) {
+        await screen.findByText(/AI help is on/)
+        await waitFor(() => expect(screen.queryByText(/needs your consent/)).toBeNull())
+      } else {
+        await screen.findByText(/needs your consent/)
+      }
+      // Let the Reveal fade-in finish; happy-dom rejects an animation cancelled by unmount.
+      await Bun.sleep(300)
+      view.unmount()
+    }
+  })
+
   test("lists essays and creates one", async () => {
     let body: unknown
     server.use(
@@ -118,6 +144,59 @@ describe("essays", () => {
     fireEvent.click(screen.getByRole("button", { name: /Brainstorm/ }))
     const link = await screen.findByRole("link", { name: "Open consent settings" })
     expect(link.getAttribute("href")).toMatch(/^\/settings\/?#consent$/)
+  })
+
+  test("the review tab posts the chosen mode", async () => {
+    let body: unknown
+    server.use(
+      ...editorHandlers(),
+      http.patch(apiUrl("/v1/admission/essays/e1"), () => HttpResponse.json(essay)),
+      http.post(apiUrl("/v1/admission/essays/e1/coach/review"), async ({ request }) => {
+        body = await request.json()
+        return HttpResponse.json({
+          summary: "Clear voice",
+          strengths: [],
+          suggestions: [],
+          sentences: [{ quote: "One two", comment: "Add detail" }],
+        })
+      }),
+    )
+    renderAdmissionApp(<EssayEditor essay={essay} />)
+    fireEvent.click(screen.getByRole("tab", { name: "Review" }))
+    fireEvent.click(await screen.findByRole("radio", { name: "Sentence by sentence" }))
+    fireEvent.click(screen.getByRole("button", { name: "Review" }))
+    await screen.findByText("Add detail")
+    expect(body).toMatchObject({ mode: "sentences" })
+  })
+
+  test("the refine tab posts the action and passage", async () => {
+    let body: unknown
+    server.use(
+      ...editorHandlers(),
+      http.post(apiUrl("/v1/admission/essays/e1/coach/refine"), async ({ request }) => {
+        body = await request.json()
+        return HttpResponse.json({ hints: ["Name the moment"] })
+      }),
+    )
+    renderAdmissionApp(<EssayEditor essay={essay} />)
+    fireEvent.click(screen.getByRole("tab", { name: "Refine" }))
+    fireEvent.click(await screen.findByRole("radio", { name: "Transition" }))
+    fireEvent.change(screen.getByLabelText("Passage to refine"), { target: { value: "It began." } })
+    fireEvent.click(screen.getByRole("button", { name: "Get hints" }))
+    await screen.findByText("Name the moment")
+    expect(body).toEqual({ action: "transition", text: "It began." })
+  })
+
+  test("the life story is read by the AI", async () => {
+    server.use(
+      http.post(apiUrl("/v1/admission/essay-life-story"), () =>
+        HttpResponse.json({ drivers: ["Curiosity"], support: ["Physics"], leave_out: [], ideas: [] }),
+      ),
+    )
+    renderAdmissionApp(<LifeStory />)
+    fireEvent.change(screen.getByLabelText("Write freely about your life"), { target: { value: "I grew up." } })
+    fireEvent.click(screen.getByRole("button", { name: "Find what drives me" }))
+    await screen.findByText("Curiosity")
   })
 
   test("wordDiff marks inserted and deleted words", () => {

@@ -1,13 +1,16 @@
 "use client"
 
+import { AppPageHeader, pageClass } from "../../../components/lib/page"
 import { useErrorMessage, useT } from "@ihsp/i18n"
-import { Button, Icons, PageHeader, Skeleton, StateView, StatusBadge } from "@ihsp/ui"
+import { Button, Icons, Skeleton, StateView, StatusBadge } from "@ihsp/ui"
 import { useState } from "react"
 import { toast } from "sonner"
 import { ScrollFade } from "../../../components/scroll-fade"
 import { CURATOR_ROLES } from "../../../config/nav"
 import { AdmissionShell } from "../../shell/components/admission-shell"
 import { useProposals, useReviewProposal, type Proposal, type ProposalStatus } from "../api"
+import { LogoTuner } from "./logo-tuner"
+import { SuppPromptsEditor } from "./supp-prompts-editor"
 import { ProposeDialog } from "./propose-dialog"
 import { QueryError } from "../../shell/components/query-error"
 
@@ -65,6 +68,8 @@ export function CatalogStaffBody() {
   const t = useT("catalogStaff")
   const [filter, setFilter] = useState<ProposalStatus | null>("pending")
   const [creating, setCreating] = useState(false)
+  const [tuning, setTuning] = useState(false)
+  const [prompting, setPrompting] = useState(false)
   const query = useProposals(filter)
   let body
   if (query.isPending) body = <Skeleton className="h-32 w-full" />
@@ -91,16 +96,25 @@ export function CatalogStaffBody() {
     )
   }
   return (
-    <div className="mx-auto flex w-full max-w-3xl flex-col gap-6 p-4 md:p-6">
-      <PageHeader
+    <div className={pageClass("narrow")}>
+      <AppPageHeader
+        icon="search"
         title={t("title")}
         actions={
-          <Button type="button" size="sm" onClick={() => setCreating(true)}>
-            {t("proposeButton")}
-          </Button>
+          <div className="flex flex-wrap gap-2">
+            <Button type="button" size="sm" variant="outline" onClick={() => setPrompting(true)}>
+              {t("suppButton")}
+            </Button>
+            <Button type="button" size="sm" variant="outline" onClick={() => setTuning(true)}>
+              {t("logoButton")}
+            </Button>
+            <Button type="button" size="sm" onClick={() => setCreating(true)}>
+              {t("proposeButton")}
+            </Button>
+          </div>
         }
       />
-      <div className="flex gap-2">
+      <div className="flex flex-wrap gap-2">
         <Button
           type="button"
           size="sm"
@@ -119,6 +133,8 @@ export function CatalogStaffBody() {
         </Button>
       </div>
       {creating && <ProposeDialog open onOpenChange={setCreating} />}
+      {tuning && <LogoTuner open onOpenChange={setTuning} />}
+      {prompting && <SuppPromptsEditor open onOpenChange={setPrompting} />}
       {body}
     </div>
   )

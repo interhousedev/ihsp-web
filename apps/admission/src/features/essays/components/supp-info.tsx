@@ -1,0 +1,49 @@
+"use client"
+
+import { useT } from "@ihsp/i18n"
+import { Icons } from "@ihsp/ui"
+import Link from "next/link"
+import { AsideCard } from "../../../components/lib/split-layout"
+import { useList } from "../../chooser/hooks"
+import type { Essay } from "../api"
+import { SuppPrompts } from "./supp-prompts"
+
+/** What the student knows about a supplemental essay: the college, its prompt, the limit and the college's prompts. */
+export function SuppInfo({ essay }: { essay: Essay }) {
+  const t = useT("essays")
+  const entry = useList().data?.find((e) => e.id === essay.list_entry_id)
+  const name = entry?.institution.name
+  return (
+    <AsideCard title={t("supp.panel")} icon={<Icons.post aria-hidden className="size-4" />}>
+      <dl className="flex flex-col gap-2 text-sm">
+        <div>
+          <dt className="text-muted-foreground text-xs">{t("college")}</dt>
+          <dd>
+            {name ? (
+              <Link href="/chooser/">{name}</Link>
+            ) : (
+              <span className="text-muted-foreground">{t("supp.noCollege")}</span>
+            )}
+          </dd>
+        </div>
+        <div>
+          <dt className="text-muted-foreground text-xs">{t("promptLabel")}</dt>
+          <dd className="whitespace-pre-wrap">
+            {essay.prompt_text || <span className="text-muted-foreground">—</span>}
+          </dd>
+        </div>
+        {essay.word_limit ? (
+          <div>
+            <dt className="text-muted-foreground text-xs">{t("wordLimit")}</dt>
+            <dd>{essay.word_limit}</dd>
+          </div>
+        ) : null}
+      </dl>
+      {entry && name ? (
+        <div className="mt-4 border-t pt-4">
+          <SuppPrompts institutionId={entry.institution.id} listEntryId={entry.id} college={name} />
+        </div>
+      ) : null}
+    </AsideCard>
+  )
+}
