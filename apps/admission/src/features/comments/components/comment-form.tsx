@@ -9,8 +9,11 @@ import type { CommentVisibility } from "../api"
 export function CommentForm({
   pending,
   onSubmit,
+  canHide = true,
 }: {
   pending: boolean
+  /** False for the student themself: they cannot make a comment staff-only. */
+  canHide?: boolean
   onSubmit: (input: { body: string; visibility: CommentVisibility }) => Promise<unknown>
 }) {
   const t = useT("comments")
@@ -22,7 +25,7 @@ export function CommentForm({
     event.preventDefault()
     const text = body.trim()
     if (!text) return
-    await onSubmit({ body: text, visibility: staffOnly ? "staff_only" : "student_and_staff" })
+    await onSubmit({ body: text, visibility: canHide && staffOnly ? "staff_only" : "student_and_staff" })
     setBody("")
   }
 
@@ -36,10 +39,14 @@ export function CommentForm({
         disabled={pending}
       />
       <div className="flex flex-wrap items-center justify-between gap-3">
-        <label htmlFor={id} className="flex items-center gap-2 text-sm">
-          <Switch id={id} checked={staffOnly} onCheckedChange={setStaffOnly} aria-label={t("staffOnly")} />
-          <span>{staffOnly ? t("staffOnly") : t("visibleToStudent")}</span>
-        </label>
+        {canHide ? (
+          <label htmlFor={id} className="flex items-center gap-2 text-sm">
+            <Switch id={id} checked={staffOnly} onCheckedChange={setStaffOnly} aria-label={t("staffOnly")} />
+            <span>{staffOnly ? t("staffOnly") : t("visibleToStudent")}</span>
+          </label>
+        ) : (
+          <span />
+        )}
         <Button type="submit" disabled={pending || !body.trim()}>
           <Icons.send className="size-4" />
           {t("send")}

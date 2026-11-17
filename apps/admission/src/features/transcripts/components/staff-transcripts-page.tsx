@@ -1,7 +1,8 @@
 "use client"
 
+import { AppPageHeader, pageClass } from "../../../components/lib/page"
 import { useT } from "@ihsp/i18n"
-import { PageHeader } from "@ihsp/ui"
+
 import { useSession } from "@ihsp/auth"
 import { DOCUMENT_ROLES } from "../../../config/nav"
 import { CoveringOfficers } from "../../staff/components/covering-officers"
@@ -33,8 +34,8 @@ export function StaffTranscriptsPage() {
   const t = useT("transcripts")
   return (
     <AdmissionShell roles={[...DOCUMENT_ROLES]}>
-      <div className="mx-auto flex w-full max-w-3xl flex-col gap-6 p-4 md:p-6">
-        <PageHeader title={t("staffTitle")} />
+      <div className={pageClass("narrow")}>
+        <AppPageHeader icon="page" title={t("staffTitle")} />
         <Body />
       </div>
     </AdmissionShell>

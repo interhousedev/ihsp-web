@@ -1,10 +1,12 @@
 "use client"
 
+import { AppPageHeader, pageClass } from "../../../components/lib/page"
 import { useT } from "@ihsp/i18n"
-import { PageHeader, Skeleton, StateView } from "@ihsp/ui"
+import { Button, Icons, Skeleton, StateView } from "@ihsp/ui"
 import { AdmissionShell } from "../../shell/components/admission-shell"
 import { TranscriptSection } from "../../transcripts/components/transcript-section"
 import { CalendarView } from "../../deadlines/components/calendar-view"
+import { DocumentProcess } from "../../document-process/components/document-process"
 import { useDocuments } from "../api"
 import { ChecklistSection } from "./checklist-section"
 import { DocumentRow } from "./document-row"
@@ -29,8 +31,17 @@ export function DocumentsPage() {
   const t = useT("documents")
   return (
     <AdmissionShell>
-      <div className="mx-auto flex w-full max-w-3xl flex-col gap-6 p-4 md:p-6">
-        <PageHeader title={t("title")} />
+      <div className={pageClass("narrow")}>
+        <AppPageHeader
+          icon="files"
+          title={t("title")}
+          actions={
+            <Button variant="outline" size="sm" render={<a href="#document-process" />} nativeButton={false}>
+              <Icons.route data-icon="inline-start" aria-hidden />
+              {t("processLink")}
+            </Button>
+          }
+        />
         <section className="flex flex-col gap-3">
           <h2 className="text-lg font-semibold">{t("checklistTitle")}</h2>
           <ChecklistSection />
@@ -42,6 +53,7 @@ export function DocumentsPage() {
           <DocumentList />
         </section>
         <TranscriptSection />
+        <DocumentProcess />
       </div>
     </AdmissionShell>
   )

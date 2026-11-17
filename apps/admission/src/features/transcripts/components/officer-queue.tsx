@@ -49,8 +49,7 @@ function OfficerRow({ item }: { item: Transcript }) {
         <div className="flex flex-col">
           <span className="font-medium">{item.student_name}</span>
           <span className="text-muted-foreground text-xs">
-            {item.class_name}
-            {item.requested_at ? ` · ${date(item.requested_at)}` : ""}
+            {[item.class_name, item.requested_at ? date(item.requested_at) : null].filter(Boolean).join(" · ")}
           </span>
         </div>
         <TranscriptStatus status={item.status} />

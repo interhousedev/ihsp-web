@@ -17,9 +17,12 @@ function ItemLinks({ item }: { item: ChecklistItem }) {
   const t = useT("documents")
   if (!item.app_path && !item.source_url) return null
   return (
-    <div className="flex flex-wrap items-center gap-3 text-xs">
+    <div className="relative z-10 flex flex-wrap items-center gap-x-4 text-xs">
       {item.app_path && (
-        <Link href={item.app_path} className="text-primary font-medium underline-offset-2 hover:underline">
+        <Link
+          href={item.app_path}
+          className="text-primary inline-flex min-h-11 items-center font-medium md:min-h-0 underline-offset-2 hover:underline"
+        >
           {t("openPage")}
         </Link>
       )}
@@ -28,7 +31,7 @@ function ItemLinks({ item }: { item: ChecklistItem }) {
           href={item.source_url}
           target="_blank"
           rel="noopener noreferrer"
-          className="text-primary inline-flex items-center gap-1 font-medium underline-offset-2 hover:underline"
+          className="text-primary inline-flex min-h-11 items-center gap-1 font-medium md:min-h-0 underline-offset-2 hover:underline"
         >
           {t("openLink")}
           <Icons.externalLink aria-hidden className="size-3.5" />
@@ -49,8 +52,10 @@ function ChecklistRow({ item }: { item: ChecklistItem }) {
   const send = (body: Parameters<typeof patch.mutate>[0]) =>
     patch.mutate(body, { onError: (error) => toast.error(errorMessage(error)) })
   return (
-    <li className="flex items-start gap-3 py-2">
+    <li className="relative flex items-start gap-3 py-2">
+      {/* The checkbox's hit area is stretched over the whole row; links and buttons sit above it. */}
       <Checkbox
+        className="static after:absolute after:inset-0 after:cursor-pointer"
         aria-label={item.institution_name ? `${title} · ${item.institution_name}` : title}
         checked={done}
         disabled={patch.isPending}
@@ -76,6 +81,7 @@ function ChecklistRow({ item }: { item: ChecklistItem }) {
             size="sm"
             variant={item.important ? "default" : "outline"}
             aria-pressed={item.important}
+            className="relative z-10 min-h-11 md:min-h-8"
             disabled={patch.isPending}
             onClick={() => send({ id: item.id, important: !item.important })}
           >
@@ -84,6 +90,42 @@ function ChecklistRow({ item }: { item: ChecklistItem }) {
         )}
       </div>
     </li>
+  )
+}
+
+/** Items grouped by institution (general ones first), each group collapsible; only the first starts open. */
+function groupByInstitution(items: readonly ChecklistItem[]): { name: string; items: ChecklistItem[] }[] {
+  const groups = new Map<string, ChecklistItem[]>()
+  for (const item of items) {
+    const name = item.institution_name ?? ""
+    groups.set(name, [...(groups.get(name) ?? []), item])
+  }
+  return [...groups]
+    .map(([name, list]) => ({ name, items: list }))
+    .sort((a, b) => Number(b.name === "") - Number(a.name === ""))
+}
+
+function ChecklistGroups({ items }: { items: readonly ChecklistItem[] }) {
+  const t = useT("documents")
+  return (
+    <div className="flex flex-col divide-y">
+      {groupByInstitution(items).map((group, index) => (
+        <details key={group.name} open={index === 0} className="group py-1">
+          <summary className="flex min-h-11 cursor-pointer list-none items-center gap-2 text-sm font-semibold [&::-webkit-details-marker]:hidden">
+            <Icons.chevronRight aria-hidden className="size-4 transition-transform group-open:rotate-90" />
+            <span className="min-w-0 flex-1 truncate">{group.name || t("groupGeneral")}</span>
+            <span className="text-muted-foreground text-xs font-normal">
+              {group.items.filter((item) => item.status === DONE).length}/{group.items.length}
+            </span>
+          </summary>
+          <ul className="divide-y" aria-label={group.name || t("groupGeneral")}>
+            {group.items.map((item) => (
+              <ChecklistRow key={item.id} item={item} />
+            ))}
+          </ul>
+        </details>
+      ))}
+    </div>
   )
 }
 
@@ -167,11 +209,7 @@ export function ChecklistSection() {
             </section>
           ))
         ) : (
-          <ul className="divide-y" aria-label={t("checklistTitle")}>
-            {sortChecklist(query.data, sort).map((item) => (
-              <ChecklistRow key={item.id} item={item} />
-            ))}
-          </ul>
+          <ChecklistGroups items={sortChecklist(query.data, sort)} />
         )}
       </div>
     </div>

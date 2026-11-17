@@ -1,6 +1,7 @@
 "use client"
 
 import { useErrorMessage, useT } from "@ihsp/i18n"
+import { useSession } from "@ihsp/auth"
 import { AnimatedPresence, Reveal, Skeleton, StateView } from "@ihsp/ui"
 import { toast } from "sonner"
 import { useComments, useDeleteComment, usePostComment, type CommentTarget } from "../api"
@@ -10,6 +11,8 @@ import { CommentItem } from "./comment-item"
 /** The comments of one object (GET/POST/DELETE /comments) and a form to add one. */
 export function CommentsPanel({ target }: { target: CommentTarget }) {
   const t = useT("comments")
+  const { session } = useSession()
+  const isOwner = session?.user.id === target.studentId
   const errorMessage = useErrorMessage()
   const query = useComments(target)
   const post = usePostComment(target)
@@ -18,7 +21,11 @@ export function CommentsPanel({ target }: { target: CommentTarget }) {
 
   return (
     <section className="flex flex-col gap-4" aria-label={t("title")}>
-      <CommentForm pending={post.isPending} onSubmit={(input) => post.mutateAsync(input).catch(fail)} />
+      <CommentForm
+        canHide={!isOwner}
+        pending={post.isPending}
+        onSubmit={(input) => post.mutateAsync(input).catch(fail)}
+      />
       {query.isPending ? (
         <Skeleton className="h-20 w-full" />
       ) : query.isError ? (

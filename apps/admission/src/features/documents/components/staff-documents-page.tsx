@@ -1,9 +1,11 @@
 "use client"
 
+import { AppPageHeader, pageClass } from "../../../components/lib/page"
 import { useErrorMessage, useT } from "@ihsp/i18n"
-import { Button, Icons, PageHeader, Skeleton, StateView, Tabs, TabsList, TabsTrigger } from "@ihsp/ui"
+import { Button, Icons, Skeleton, StateView, Tabs, TabsTrigger } from "@ihsp/ui"
 import { useState } from "react"
 import { toast } from "sonner"
+import { ScrollTabsList } from "../../essays/components/scroll-tabs-list"
 import { DOCUMENT_ROLES } from "../../../config/nav"
 import { AdmissionShell } from "../../shell/components/admission-shell"
 import { downloadDocument, useReviewDocument, useStaffDocuments, type AdmissionDocument } from "../api"
@@ -74,16 +76,16 @@ export function StaffDocumentsPage() {
     )
   return (
     <AdmissionShell roles={[...DOCUMENT_ROLES]}>
-      <div className="mx-auto flex w-full max-w-3xl flex-col gap-6 p-4 md:p-6">
-        <PageHeader title={t("queueTitle")} />
+      <div className={pageClass("narrow")}>
+        <AppPageHeader icon="files" title={t("queueTitle")} />
         <Tabs value={filter} onValueChange={(value) => setFilter(value as (typeof FILTERS)[number])}>
-          <TabsList>
+          <ScrollTabsList>
             {FILTERS.map((value) => (
               <TabsTrigger key={value} value={value}>
                 {t(`filter.${value}`)}
               </TabsTrigger>
             ))}
-          </TabsList>
+          </ScrollTabsList>
         </Tabs>
         {body}
       </div>

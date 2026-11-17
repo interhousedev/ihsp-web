@@ -32,10 +32,12 @@ export function PickupForm() {
   return (
     <form onSubmit={submit} className="flex flex-col gap-3 rounded-card border p-3">
       <h2 className="text-lg font-semibold">{t("pickupTitle")}</h2>
+      <p className="text-muted-foreground text-sm">{t("pickupHint")}</p>
       {LOCALES.map((locale) => (
         <label key={locale} className="flex flex-col gap-1 text-sm">
           {t(`locale.${locale}`)}
           <Input
+            placeholder={t("pickupPlaceholder")}
             value={values[locale] ?? ""}
             onChange={(event) => setValues((prev) => ({ ...prev, [locale]: event.target.value }))}
           />
