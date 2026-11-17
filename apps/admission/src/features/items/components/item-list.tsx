@@ -1,17 +1,7 @@
 "use client"
 
 import { useT } from "@ihsp/i18n"
-import {
-  Button,
-  ConfirmDialog,
-  Icons,
-  PageHeader,
-  Pill,
-  StateView,
-  Tabs,
-  TabsList,
-  TabsTrigger,
-} from "@ihsp/ui"
+import { Button, ConfirmDialog, Icons, PageHeader, Pill, StateView, Tabs, TabsList, TabsTrigger } from "@ihsp/ui"
 import { useRouter, useSearchParams } from "next/navigation"
 import { useState } from "react"
 import { AdmissionShell } from "../../shell/components/admission-shell"

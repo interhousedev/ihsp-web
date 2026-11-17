@@ -1,5 +1,6 @@
 "use client"
 
+import { AppPageHeader, pageClass } from "../../../components/lib/page"
 import { ApiError } from "@ihsp/api"
 import { useT } from "@ihsp/i18n"
 import {
@@ -9,7 +10,6 @@ import {
   buttonVariants,
   ConfirmDialog,
   Icons,
-  PageHeader,
   Pill,
   Reveal,
   useMotionReduced,
@@ -29,37 +29,38 @@ function errorOf(error: unknown): ApiError | null {
   return error instanceof ApiError ? error : null
 }
 
-export function WordsPage() {
+/** The three words (or why they cannot be shown); used by the page and by the profile. */
+export function WordsBody() {
   const t = useT("words")
   const query = useWords()
-  let body
-  if (query.isPending) {
-    body = <Skeleton className="h-40 w-full" />
-  } else if (query.isError) {
+  if (query.isPending) return <Skeleton className="h-40 w-full" />
+  if (query.isError) {
     const err = errorOf(query.error)
-    body =
-      err?.type === "admission/consent_required" ? (
-        <StateView
-          state="error"
-          icon="lock"
-          title={t("consentTitle")}
-          action={
-            <Link href="/settings/#consent" className={buttonVariants()}>
-              {t("goConsent")}
-            </Link>
-          }
-        />
-      ) : (
-        <StateView state="error" error={query.error} onRetry={() => void query.refetch()} />
-      )
-  } else {
-    body = <WordsEditor key={query.data.lock_version ?? "new"} initial={query.data} />
+    return err?.type === "admission/consent_required" ? (
+      <StateView
+        state="error"
+        icon="lock"
+        title={t("consentTitle")}
+        action={
+          <Link href="/settings/#consent" className={buttonVariants()}>
+            {t("goConsent")}
+          </Link>
+        }
+      />
+    ) : (
+      <StateView state="error" error={query.error} onRetry={() => void query.refetch()} />
+    )
   }
+  return <WordsEditor key={query.data.lock_version ?? "new"} initial={query.data} />
+}
+
+export function WordsPage() {
+  const t = useT("words")
   return (
     <AdmissionShell>
-      <div className="mx-auto flex w-full max-w-3xl flex-col gap-6 p-4 md:p-6">
-        <PageHeader title={t("title")} />
-        {body}
+      <div className={pageClass("narrow")}>
+        <AppPageHeader icon="post" title={t("title")} />
+        <WordsBody />
       </div>
     </AdmissionShell>
   )

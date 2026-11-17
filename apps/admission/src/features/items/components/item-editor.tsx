@@ -5,8 +5,8 @@ import { Button, ConfirmDialog, Icons, PageHeader, StateView } from "@ihsp/ui"
 import Link from "next/link"
 import { useRouter, useSearchParams } from "next/navigation"
 import { useState } from "react"
-import { HelpRequestButton } from "../../help/components/help-request-dialog"
-import { ProofList } from "../../help/components/proof-list"
+import { RequestConsultationButton } from "../../consultations/components/request-dialog"
+import { ProofList } from "../../proofs/components/proof-list"
 import { AdmissionShell } from "../../shell/components/admission-shell"
 import { incompleteFields, useDeleteItem, useItem, usePatchItem, type Item, type ItemKind, type Rewrite } from "../api"
 import { formValid, ItemFields, toForm, toInput, type FormState } from "./item-fields"
@@ -81,7 +81,7 @@ function Editor({ item }: { item: Item }) {
       <ReviewSection itemId={item.id} review={item.review} stale={item.review_stale} />
       <ProofList itemId={item.id} />
       <div>
-        <HelpRequestButton itemId={item.id} />
+        <RequestConsultationButton link={{ kind: "activity", id: item.id }} />
       </div>
       <ConfirmDialog
         open={confirming}

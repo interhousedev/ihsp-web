@@ -8,9 +8,10 @@ import { AppShell, buttonVariants, Icons, OfflineBadge, StateView } from "@ihsp/
 import Link from "next/link"
 import { useRouter } from "next/navigation"
 import { Suspense, useEffect, type ReactNode } from "react"
-import { isStaffOnly, landingFor, useNav } from "../../../config/nav"
+import { hasNoAdmissionAccess, isStaffOnly, landingFor, useNav } from "../../../config/nav"
 import { AdmissionBrand } from "./admission-brand"
 import { AssistantLauncher, ScreenContextProvider } from "../../assistant"
+import { StudentTour } from "../../steps"
 import { AdmissionConsentGate } from "../../consent/components/consent-gate"
 import { ProfileMenu } from "./profile-menu"
 
@@ -24,6 +25,19 @@ function StudentArea({ home, children }: { home?: boolean; children: ReactNode }
   useEffect(() => {
     if (home && staffOnly) router.replace(landingFor(roles))
   }, [home, staffOnly, roles, router])
+  if (hasNoAdmissionAccess(roles)) {
+    return (
+      <div className="flex min-h-[60dvh] items-center justify-center p-4">
+        <StateView
+          state="empty"
+          className="border-0"
+          icon={<Icons.lock aria-hidden />}
+          title={t("auth.forbiddenTitle")}
+          description={t("nav.noAdmission")}
+        />
+      </div>
+    )
+  }
   if (!staffOnly) return <>{children}</>
   if (home) return <PageLoading />
   return (
@@ -44,7 +58,7 @@ function StudentArea({ home, children }: { home?: boolean; children: ReactNode }
   )
 }
 
-function Frame({ children }: { children: ReactNode }) {
+function Frame({ tour, children }: { tour: boolean; children: ReactNode }) {
   const nav = useNav()
   const { session } = useSession()
   const showTour = tour && !hasNoAdmissionAccess(session?.user.roles)
@@ -65,6 +79,7 @@ function Frame({ children }: { children: ReactNode }) {
         <div className="h-20 md:hidden" aria-hidden />
         <AdmissionConsentGate />
         <AssistantLauncher />
+        {showTour ? <StudentTour /> : null}
       </ScreenContextProvider>
     </AppShell>
   )
@@ -96,7 +111,7 @@ export function AdmissionShell({
   )
   return (
     <RequireAuth>
-      <Frame>{body}</Frame>
+      <Frame tour={!roles}>{body}</Frame>
     </RequireAuth>
   )
 }

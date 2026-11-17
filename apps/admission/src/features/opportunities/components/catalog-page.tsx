@@ -1,11 +1,11 @@
 "use client"
 
+import { AppPageHeader, pageClass } from "../../../components/lib/page"
 import { useErrorMessage, useLocale, useT } from "@ihsp/i18n"
 import {
   Button,
   Icons,
   Input,
-  PageHeader,
   Pill,
   Select,
   SelectContent,
@@ -15,9 +15,9 @@ import {
   Skeleton,
   StateView,
 } from "@ihsp/ui"
-import { useMemo, useState } from "react"
+import { useId, useMemo, useState } from "react"
 import { toast } from "sonner"
-import { AsideCard, HeadingIcon, SplitLayout } from "../../../components/lib/split-layout"
+import { AsideCard, SplitLayout } from "../../../components/lib/split-layout"
 import { OpportunityTabs } from "./opportunity-tabs"
 import { ScrollFade } from "../../../components/scroll-fade"
 import { AdmissionShell } from "../../shell/components/admission-shell"
@@ -43,29 +43,38 @@ export function FilterSelect({
   value,
   onChange,
   options,
+  anyLabel,
 }: {
   label: string
+  /** The "any" option text, e.g. "Any scope"; defaults to "<label>: any". */
+  anyLabel?: string
   value: string | undefined
   onChange: (value: string | undefined) => void
   options: { value: string; label: string }[]
 }) {
   const t = useT("opportunities")
+  const id = useId()
+  const any = anyLabel ?? `${label}: ${t("any")}`
+  const shown = value ? (options.find((o) => o.value === value)?.label ?? value) : any
   return (
-    <Select value={value ?? ANY} onValueChange={(v) => onChange(!v || v === ANY ? undefined : v)}>
-      <SelectTrigger aria-label={label} className="w-full sm:w-44">
-        <SelectValue />
-      </SelectTrigger>
-      <SelectContent>
-        <SelectItem value={ANY}>
-          {label}: {t("any")}
-        </SelectItem>
-        {options.map((o) => (
-          <SelectItem key={o.value} value={o.value}>
-            {o.label}
-          </SelectItem>
-        ))}
-      </SelectContent>
-    </Select>
+    <div className="flex min-w-0 flex-col gap-1">
+      <span id={id} className="text-muted-foreground text-xs font-medium">
+        {label}
+      </span>
+      <Select value={value ?? ANY} onValueChange={(v) => onChange(!v || v === ANY ? undefined : v)}>
+        <SelectTrigger aria-labelledby={id} className="w-full">
+          <SelectValue>{shown}</SelectValue>
+        </SelectTrigger>
+        <SelectContent>
+          <SelectItem value={ANY}>{any}</SelectItem>
+          {options.map((o) => (
+            <SelectItem key={o.value} value={o.value}>
+              {o.label}
+            </SelectItem>
+          ))}
+        </SelectContent>
+      </Select>
+    </div>
   )
 }
 
@@ -122,10 +131,10 @@ export function CatalogBody() {
     )
 
   return (
-    <div className="mx-auto flex w-full max-w-6xl flex-col gap-6 p-4 md:p-6">
-      <PageHeader
+    <div className={pageClass("wide")}>
+      <AppPageHeader
+        icon="courses"
         title={t("title")}
-        back={<HeadingIcon name="courses" />}
         actions={
           <Button type="button" size="sm" variant="outline" onClick={() => setSuggesting(true)}>
             <Icons.add aria-hidden />

@@ -1,8 +1,10 @@
 "use client"
 
+import { AppPageHeader, pageClass } from "../../components/lib/page"
 import { useT } from "@ihsp/i18n"
-import { buttonVariants, cn, Icons, PageHeader, Reveal, Skeleton } from "@ihsp/ui"
+import { buttonVariants, cn, Icons, Reveal, Skeleton } from "@ihsp/ui"
 import Link from "next/link"
+import { useState } from "react"
 import { ScreenSummary } from "../assistant/screen-context"
 import { AdmissionShell } from "../shell/components/admission-shell"
 import { useJourney } from "./api"
@@ -167,18 +169,32 @@ function NextCard({ milestone }: { milestone: Milestone }) {
   )
 }
 
+const NEXT_UP_LIMIT = 2
+
 function NextUp({ journey }: { journey: Journey }) {
   const t = useT("journey")
+  const [all, setAll] = useState(false)
   if (journey.upNext.length === 0) return null
+  const shown = all ? journey.upNext : journey.upNext.slice(0, NEXT_UP_LIMIT)
   return (
     <Reveal>
       <section className="flex flex-col gap-3 [grid-area:next]">
         <h2 className="text-base font-semibold">{t("nextUp")}</h2>
         <ul className="flex flex-col gap-2">
-          {journey.upNext.map((m) => (
+          {shown.map((m) => (
             <NextCard key={m.key} milestone={m} />
           ))}
         </ul>
+        {journey.upNext.length > NEXT_UP_LIMIT && (
+          <button
+            type="button"
+            className="text-primary min-h-11 self-start text-sm font-medium hover:underline"
+            aria-expanded={all}
+            onClick={() => setAll(!all)}
+          >
+            {all ? t("showFewer") : t("showAll")}
+          </button>
+        )}
       </section>
     </Reveal>
   )
@@ -209,8 +225,8 @@ export function JourneyPage() {
         title={t("title")}
         summary={journey ? `Journey: ${journey.done} of ${journey.total} milestones done.` : "Journey."}
       />
-      <div className="mx-auto flex w-full max-w-7xl flex-col gap-6 p-4 md:p-6">
-        <PageHeader title={t("title")} />
+      <div className={pageClass("wide")}>
+        <AppPageHeader icon="route" title={t("title")} />
         {error ? (
           <p role="alert" className="text-destructive text-sm">
             {t("loadError")}

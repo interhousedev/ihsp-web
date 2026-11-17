@@ -1,5 +1,6 @@
 "use client"
 
+import { AppPageHeader, PageSection, pageClass, ProgressRing } from "../../../components/lib/page"
 import { ApiError } from "@ihsp/api"
 import { useT } from "@ihsp/i18n"
 import {
@@ -8,7 +9,6 @@ import {
   Button,
   buttonVariants,
   Icons,
-  PageHeader,
   Pill,
   Progress,
   Reveal,
@@ -102,8 +102,9 @@ export function AppReviewPanel() {
   }
 
   return (
-    <div className="mx-auto flex w-full max-w-3xl flex-col gap-6 p-4 md:p-6">
-      <PageHeader
+    <div className={pageClass("narrow")}>
+      <AppPageHeader
+        icon="badgeCheck"
         title={t("title")}
         actions={
           current ? (
@@ -170,30 +171,6 @@ export function History({
 }
 export function ReviewView({ review }: { review: AppReview }) {
   const t = useT("appReview")
-  if (items.length < 2) return null
-  return (
-    <section className="flex flex-col gap-2">
-      <h2 className="text-sm font-medium">{t("history")}</h2>
-      <ul className="flex flex-wrap gap-2">
-        {items.map((review) => (
-          <li key={review.id}>
-            <Button
-              size="sm"
-              variant={review.id === current?.id ? "secondary" : "outline"}
-              aria-pressed={review.id === current?.id}
-              onClick={() => onSelect(review.id)}
-            >
-              {t("version", { n: String(review.version) })}
-              <span className="text-muted-foreground text-xs">{t(`status.${review.status}`)}</span>
-            </Button>
-          </li>
-        ))}
-      </ul>
-    </section>
-  )
-}
-export function ReviewView({ review }: { review: AppReview }) {
-  const t = useT("appReview")
   if (isActive(review)) {
     const live = SECTION_KEYS.map(
       (key): ReviewSection =>
@@ -234,17 +211,19 @@ export function ReviewView({ review }: { review: AppReview }) {
   return (
     <Reveal>
       <div className="flex flex-col gap-6">
-        <section className="flex flex-col gap-2 rounded-lg border p-4">
-          <div className="flex flex-wrap items-center gap-2">
-            <span className="text-3xl font-semibold tabular-nums">{report.overall_score}</span>
-            <span className="text-muted-foreground text-sm">{t("outOf100")}</span>
-            {report.fallback ? <Pill>{t("fallback")}</Pill> : null}
+        <section className="bg-card rounded-card flex flex-col items-center gap-5 border p-6 sm:flex-row">
+          <ProgressRing percent={report.overall_score} label={t("outOf100")} />
+          <div className="flex min-w-0 flex-col gap-2">
+            <div className="flex flex-wrap items-center gap-2">
+              <span className="text-muted-foreground text-sm">{t("outOf100")}</span>
+              {report.fallback ? <Pill>{t("fallback")}</Pill> : null}
+            </div>
+            <p className="text-lg font-semibold">{report.headline}</p>
+            <p className="text-sm">
+              <span className="font-medium">{t("spike", { score: String(report.spike.score) })}</span>{" "}
+              {report.spike.comment}
+            </p>
           </div>
-          <p className="font-medium">{report.headline}</p>
-          <p className="text-sm">
-            <span className="font-medium">{t("spike", { score: String(report.spike.score) })}</span>{" "}
-            {report.spike.comment}
-          </p>
         </section>
         {report.injection_suspected ? (
           <Alert>
@@ -269,8 +248,7 @@ export function ReviewView({ review }: { review: AppReview }) {
             </ol>
           </section>
         ) : null}
-        <section className="flex flex-col gap-3">
-          <h2 className="text-sm font-medium">{t("sections")}</h2>
+        <PageSection title={t("sections")} className="gap-3">
           {report.section_scores.map((score) => (
             <SectionCard
               key={score.section}
@@ -280,7 +258,7 @@ export function ReviewView({ review }: { review: AppReview }) {
               name={t(`section.${score.section}`)}
             />
           ))}
-        </section>
+        </PageSection>
       </div>
     </Reveal>
   )

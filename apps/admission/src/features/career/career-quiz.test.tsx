@@ -1,12 +1,12 @@
 import { apiUrl, server } from "@ihsp/test-utils"
 import { fireEvent, screen, waitFor } from "@testing-library/react"
 import { HttpResponse, http } from "msw"
-import { afterEach, describe, expect, test } from "bun:test"
+import { describe, expect, test } from "bun:test"
 import { renderAdmissionApp } from "../../tests/helpers"
 import { CareerPage } from "./components/career-page"
+import { mockChooser } from "../../tests/chooser-handlers"
+import { mockQuizzes } from "../../tests/quiz-handlers"
 import { QUIZ, recommend } from "./quiz"
-
-afterEach(() => window.localStorage.clear())
 
 const major = (code: string, sort: number) => ({
   id: code,
@@ -31,6 +31,7 @@ const plan = (majors: string[] = []) => ({
 })
 
 function setup(puts: unknown[]) {
+  const quizzes = mockQuizzes()
   server.use(
     http.get(apiUrl("/v1/admission/career"), () => HttpResponse.json(plan())),
     http.get(apiUrl("/v1/admission/career/majors"), () => HttpResponse.json({ items: MAJORS })),
@@ -41,6 +42,7 @@ function setup(puts: unknown[]) {
       return HttpResponse.json({ ...plan(body.majors), lock_version: 4 })
     }),
   )
+  return quizzes
 }
 
 async function answerAll() {
@@ -79,6 +81,7 @@ describe("career quiz", () => {
     expect(bar).toHaveAttribute("aria-valuenow", "1")
     expect(screen.getAllByRole("radio").length).toBe(4)
     fireEvent.click(screen.getAllByRole("radio")[0]!)
+    await waitFor(() => expect(screen.getByRole("button", { name: "Next" })).toBeEnabled())
     fireEvent.click(screen.getByRole("button", { name: "Next" }))
     await waitFor(() => expect(screen.getByRole("progressbar")).toHaveAttribute("aria-valuenow", "2"))
     fireEvent.click(screen.getAllByRole("button", { name: "Back" }).at(-1)!)
@@ -106,17 +109,29 @@ describe("career quiz", () => {
 
 describe("career quiz persistence", () => {
   test("restores finished results after a reload and clears them on redo", async () => {
-    setup([])
+    const store = setup([])
     const first = renderAdmissionApp(<CareerPage />)
     await answerAll()
     expect(await screen.findByText("Here's what might be your thing")).toBeInTheDocument()
-    expect(Object.keys(window.localStorage).some((k) => k.startsWith("admission.career.quiz."))).toBe(true)
+    await waitFor(() => expect(store.quizzes.career.completed).toBe(true))
+    expect(Object.keys(store.quizzes.career.answers).length).toBe(QUIZ.length)
     first.unmount()
     renderAdmissionApp(<CareerPage />)
     expect(await screen.findByText("Here's what might be your thing")).toBeInTheDocument()
     fireEvent.click(screen.getByRole("button", { name: "Redo my recommendations" }))
     await waitFor(() => expect(screen.getByRole("progressbar")).toHaveAttribute("aria-valuenow", "1"))
-    expect(Object.keys(window.localStorage).some((k) => k.startsWith("admission.career.quiz."))).toBe(false)
+    await waitFor(() => expect(store.quizzes.career).toEqual({ answers: {}, completed: false }))
+  })
+
+  test("saves the intended study fields of the chooser catalog from the career page", async () => {
+    const store = setup([])
+    mockChooser()
+    renderAdmissionApp(<CareerPage />)
+    expect(screen.queryByRole("checkbox", { name: "Photography" })).not.toBeInTheDocument()
+    fireEvent.click(await screen.findByRole("button", { name: "Add a field" }))
+    fireEvent.click(await screen.findByRole("button", { name: "Biology" }))
+    expect(await screen.findByText("Autosaved")).toBeInTheDocument()
+    expect(store.quizzes.career.answers.study_fields).toEqual(["biology"])
   })
 
   test("shows the saved career choice when there is no saved quiz", async () => {

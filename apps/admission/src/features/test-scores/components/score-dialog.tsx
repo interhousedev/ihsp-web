@@ -24,7 +24,7 @@ import {
   type ScoreTest,
 } from "../api"
 
-const SELECT = "border-input bg-background h-9 rounded-md border px-3 text-sm"
+const SELECT = "border-input bg-background h-11 rounded-md border px-3 text-sm md:h-9"
 const CERTIFICATE_KIND = "test_report"
 
 type Values = Record<string, string>
@@ -36,14 +36,6 @@ function initial(entry: ScoreEntry | undefined): Values {
 /** The value sent for one section: a number for ranges, the chosen text for choices. */
 function parsed(section: ScoreSection, raw: string): number | string {
   return (section.choices?.length ?? 0) > 0 ? raw : Number(raw)
-}
-
-function FieldError({ message }: { message: string | undefined }) {
-  return message ? (
-    <p role="alert" className="text-destructive text-xs">
-      {message}
-    </p>
-  ) : null
 }
 
 function FieldError({ message }: { message: string | undefined }) {
@@ -85,6 +77,7 @@ function SectionField({
         </select>
       ) : (
         <Input
+          className="h-11 md:h-8"
           id={id}
           type="number"
           inputMode="decimal"
@@ -133,6 +126,7 @@ export function ScoreDialog({
   const [fileName, setFileName] = useState("")
   const fileInput = useRef<HTMLInputElement>(null)
   const test = tests.find((item) => item.id === testId)
+  const [pickError, setPickError] = useState(false)
   const [problem, setProblem] = useState<FieldProblem | null>(null)
   const copy = { status: t("problems.status"), verification_url: t("problems.verificationUrl") }
   const handled =
@@ -144,6 +138,7 @@ export function ScoreDialog({
 
   function pickTest(id: string) {
     setTestId(id)
+    setPickError(false)
     setValues({})
     setTotal("")
     setLabel("")
@@ -163,7 +158,10 @@ export function ScoreDialog({
 
   async function send(event: FormEvent) {
     event.preventDefault()
-    if (!test) return
+    if (!test) {
+      setPickError(true)
+      return
+    }
     const sections: Record<string, number | string> = {}
     for (const section of test.sections) {
       const raw = values[section.key]
@@ -203,7 +201,7 @@ export function ScoreDialog({
       title={entry ? t("editTitle") : t("addTitle")}
       onSubmit={send}
       footer={
-        <LoadingButton type="submit" disabled={!test} loading={save.isPending}>
+        <LoadingButton type="submit" loading={save.isPending}>
           {t("save")}
         </LoadingButton>
       }
@@ -225,6 +223,7 @@ export function ScoreDialog({
               </option>
             ))}
           </select>
+          <FieldError message={pickError ? t("problems.pickTest") : undefined} />
         </div>
         {problem && !handled ? <FieldError message={problem.title} /> : null}
         {test ? (
@@ -248,24 +247,48 @@ export function ScoreDialog({
             {test.needs_label ? (
               <div className="flex flex-col gap-1">
                 <Label htmlFor="score-label">{t("label")}</Label>
-                <Input id="score-label" value={label} maxLength={120} onChange={(e) => setLabel(e.target.value)} />
+                <Input
+                  className="h-11 md:h-8"
+                  id="score-label"
+                  value={label}
+                  maxLength={120}
+                  onChange={(e) => setLabel(e.target.value)}
+                />
               </div>
             ) : null}
             {test.needs_level ? (
               <div className="flex flex-col gap-1">
                 <Label htmlFor="score-level">{t("level")}</Label>
-                <Input id="score-level" value={level} maxLength={60} onChange={(e) => setLevel(e.target.value)} />
+                <Input
+                  className="h-11 md:h-8"
+                  id="score-level"
+                  value={level}
+                  maxLength={60}
+                  onChange={(e) => setLevel(e.target.value)}
+                />
               </div>
             ) : null}
             <div className="grid gap-3 sm:grid-cols-2">
               <div className="flex flex-col gap-1">
                 <Label htmlFor="score-deadline">{t("registrationDeadline")}</Label>
-                <Input id="score-deadline" type="date" value={deadline} onChange={(e) => setDeadline(e.target.value)} />
+                <Input
+                  className="h-11 md:h-8"
+                  id="score-deadline"
+                  type="date"
+                  value={deadline}
+                  onChange={(e) => setDeadline(e.target.value)}
+                />
                 <FieldError message={fieldMessage(problem, "registration_deadline")} />
               </div>
               <div className="flex flex-col gap-1">
                 <Label htmlFor="score-date">{t("testDate")}</Label>
-                <Input id="score-date" type="date" value={testDate} onChange={(e) => setTestDate(e.target.value)} />
+                <Input
+                  className="h-11 md:h-8"
+                  id="score-date"
+                  type="date"
+                  value={testDate}
+                  onChange={(e) => setTestDate(e.target.value)}
+                />
                 <FieldError message={fieldMessage(problem, "test_date")} />
               </div>
             </div>

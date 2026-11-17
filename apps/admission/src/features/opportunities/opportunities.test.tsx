@@ -5,6 +5,7 @@ import { describe, expect, test } from "bun:test"
 import { renderAdmissionApp } from "../../tests/helpers"
 import { OpportunitiesStaffBody } from "../opportunities-staff/components/opportunities-staff-page"
 import type { Opportunity, Plan, Submission, Taxonomy } from "./api"
+import { ScholarshipsBody } from "./components/scholarships-page"
 import { CatalogBody } from "./components/catalog-page"
 import { ProgramsBody } from "./components/programs-tab"
 import { PlanBody } from "./components/plan-page"
@@ -37,12 +38,14 @@ const fields = {
   lms_course_id: null,
   materials: [],
   online: false,
+  essay_required: false,
 }
 
 const opportunity: Opportunity = {
   id: "o1",
   fields,
   archived: false,
+  comment_count: 0,
   created_at: "2026-01-01T00:00:00Z",
   updated_at: "2026-01-01T00:00:00Z",
   lock_version: 0,
@@ -188,5 +191,19 @@ describe("opportunities", () => {
     expect(await screen.findByText("YYGS")).toBeTruthy()
     expect(screen.getByText("Page 2 of 2")).toBeTruthy()
     expect(pages).toContain("2")
+  })
+
+  test("scholarship filters have visible labels and an 'Any' option text", async () => {
+    server.use(
+      http.get(apiUrl(`${BASE}`), () => HttpResponse.json({ items: [], next_cursor: null })),
+      http.get(apiUrl(`${BASE}/orgs`), () => HttpResponse.json({ items: [] })),
+      http.get(apiUrl(`${BASE}/plan`), () => HttpResponse.json({ ...plan, entries: [], opportunities: [] })),
+    )
+    renderAdmissionApp(<ScholarshipsBody />)
+    for (const label of ["Scope", "Type", "Organization", "College credit"])
+      expect(await screen.findByText(label)).toBeTruthy()
+    expect(screen.getByText("Any scope")).toBeTruthy()
+    expect(screen.getByText("Save scholarships with the heart to keep them here.")).toBeTruthy()
+    expect(screen.queryByRole("heading", { level: 1, name: "Scholarships" })).toBeNull()
   })
 })

@@ -1,7 +1,8 @@
 import { apiUrl, server } from "@ihsp/test-utils"
 import { act, fireEvent, screen, waitFor, within } from "@testing-library/react"
 import { HttpResponse, http } from "msw"
-import { describe, expect, mock, test } from "bun:test"
+import { describe, expect, mock, spyOn, test } from "bun:test"
+import { toast } from "sonner"
 import * as dnd from "@dnd-kit/core"
 import type { DragEndEvent } from "@dnd-kit/core"
 import type { ComponentProps } from "react"
@@ -45,6 +46,8 @@ const item = (id: string, title: string, position: number): Item => ({
   status: "draft",
   timing: [],
   intend_in_college: null,
+  grade: null,
+  grade_stale: false,
 })
 
 const review: Review = {
@@ -81,9 +84,64 @@ describe("items", () => {
     renderAdmissionApp(<ItemList />)
     await screen.findByText("Robotics")
     fireEvent.click(screen.getByRole("button", { name: "Add" }))
+    fireEvent.click(await screen.findByRole("radio", { name: "Arts" }))
+    fireEvent.click(screen.getByRole("button", { name: "Next" }))
     fireEvent.change(await screen.findByLabelText("Position or title"), { target: { value: "Chess" } })
+    fireEvent.click(screen.getByRole("button", { name: "Next" }))
+    fireEvent.change(await screen.findByLabelText(/Hours per week/), { target: { value: "3" } })
     fireEvent.click(screen.getByRole("button", { name: "Create" }))
-    await waitFor(() => expect(body).toMatchObject({ kind: "activity", title: "Chess" }))
+    await waitFor(() =>
+      expect(body).toMatchObject({ kind: "activity", title: "Chess", category: "arts", hours_per_week: 3 }),
+    )
+  })
+
+  const graded = (stale = false): Item => ({
+    ...item("a", "Robotics", 0),
+    grade: { title_grade: "A", title_tip: "Crisp", description_grade: "C", description_tip: "Add detail", model: "m" },
+    grade_stale: stale,
+  })
+
+  test("a card shows grade pills and regrades on demand", async () => {
+    let called = false
+    server.use(
+      http.post(apiUrl("/v1/admission/me/items/a/grade"), () => {
+        called = true
+        return HttpResponse.json(graded().grade)
+      }),
+    )
+    renderAdmissionApp(<ItemCard item={graded(true)} />)
+    expect(screen.getByRole("img", { name: "Title: grade A" })).toBeTruthy()
+    expect(screen.getByRole("img", { name: "Description: grade C" })).toBeTruthy()
+    expect(screen.getByText("Edited since it was graded")).toBeTruthy()
+    fireEvent.click(screen.getByRole("button", { name: "Regrade" }))
+    await waitFor(() => expect(called).toBe(true))
+  })
+
+  test("honors scroll and activities show analytics and the what-if", async () => {
+    let message = ""
+    server.use(
+      http.get(apiUrl("/v1/admission/config"), () => HttpResponse.json({ item_caps: { activities: 10, honors: 5 } })),
+      http.get(apiUrl("/v1/admission/me/items"), () =>
+        HttpResponse.json({ items: [graded(), { ...item("h", "Olympiad", 1), kind: "honor" }], next_cursor: null }),
+      ),
+      http.post(apiUrl("/v1/ai/chats"), () => HttpResponse.json({ id: "c1" }, { status: 201 })),
+      http.post(apiUrl("/v1/ai/chats/c1/messages"), async ({ request }) => {
+        message = ((await request.json()) as { text: string }).text
+        return HttpResponse.json({
+          chat: { id: "c1" },
+          new_messages: [{ seq: 2, role: "assistant", text: "Keep the club" }],
+          status: "done",
+        })
+      }),
+    )
+    renderAdmissionApp(<ItemList />)
+    await screen.findByText("Robotics")
+    expect(screen.getByText("By category")).toBeTruthy()
+    expect(screen.getByText("By title grade")).toBeTruthy()
+    fireEvent.change(screen.getByLabelText("Test a change to your activities"), { target: { value: "Drop chess" } })
+    fireEvent.click(screen.getByRole("button", { name: "Evaluate" }))
+    await screen.findByText("Keep the club")
+    expect(message).toContain("Drop chess")
   })
 
   test("renders the four graded dimensions", () => {

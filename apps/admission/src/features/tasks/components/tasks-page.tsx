@@ -1,7 +1,8 @@
 "use client"
 
+import { AppPageHeader, pageClass } from "../../../components/lib/page"
 import { useErrorMessage, useT } from "@ihsp/i18n"
-import { Button, ConfirmDialog, Icons, PageHeader, Pill, StateView, Tabs, TabsList, TabsTrigger } from "@ihsp/ui"
+import { Button, ConfirmDialog, Icons, Pill, StateView, Tabs, TabsList, TabsTrigger } from "@ihsp/ui"
 import { ScrollFade } from "@/components/scroll-fade"
 import { useEffect, useState } from "react"
 import { AdmissionShell } from "../../shell/components/admission-shell"
@@ -210,7 +211,6 @@ export function TasksPage() {
   const t = useT("tasks")
   return (
     <AdmissionShell>
-        <PageHeader back={<Icons.kanban aria-hidden className="text-primary size-7" />} title={t("title")} />
       <div className={pageClass("wide")}>
         <AppPageHeader icon="kanban" title={t("title")} />
         <TasksBody />

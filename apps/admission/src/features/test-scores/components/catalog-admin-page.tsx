@@ -1,5 +1,6 @@
 "use client"
 
+import { AppPageHeader, pageClass } from "../../../components/lib/page"
 import { useErrorMessage, useLocale, useT } from "@ihsp/i18n"
 import {
   Badge,
@@ -11,7 +12,6 @@ import {
   Input,
   Label,
   LoadingButton,
-  PageHeader,
   ResponsiveDialog,
   StateView,
 } from "@ihsp/ui"
@@ -290,7 +290,8 @@ export function CatalogAdminBody() {
 
   return (
     <div className="flex flex-col gap-6">
-      <PageHeader
+      <AppPageHeader
+        icon="certificates"
         title={t("title")}
         actions={
           <Button type="button" onClick={() => setDialog({})}>
@@ -358,7 +359,7 @@ export function CatalogAdminBody() {
 export function CatalogAdminPage() {
   return (
     <AdmissionShell roles={["admin", "counselor"]}>
-      <div className="mx-auto w-full max-w-3xl p-4">
+      <div className={pageClass("narrow")}>
         <CatalogAdminBody />
       </div>
     </AdmissionShell>

@@ -1,7 +1,8 @@
 "use client"
 
+import { AppPageHeader, pageClass } from "../../../components/lib/page"
 import { useErrorMessage, useLocale, useT } from "@ihsp/i18n"
-import { Button, Icons, Input, PageHeader, Skeleton, StateView, StatusBadge } from "@ihsp/ui"
+import { Button, Icons, Input, Skeleton, StateView, StatusBadge } from "@ihsp/ui"
 import Link from "next/link"
 import { useState, type FormEvent } from "react"
 import { toast } from "sonner"
@@ -231,8 +232,9 @@ export function OpportunitiesStaffBody() {
       </ul>
     )
   return (
-    <div className="mx-auto flex w-full max-w-3xl flex-col gap-6 p-4 md:p-6">
-      <PageHeader
+    <div className={pageClass("narrow")}>
+      <AppPageHeader
+        icon="sparkles"
         title={t("title")}
         actions={
           <Button type="button" size="sm" onClick={() => setCreating(true)}>

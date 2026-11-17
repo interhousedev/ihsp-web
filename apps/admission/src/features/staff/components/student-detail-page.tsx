@@ -1,5 +1,6 @@
 "use client"
 
+import { pageClass } from "../../../components/lib/page"
 import { useSession } from "@ihsp/auth"
 import { useT } from "@ihsp/i18n"
 import { Icons, PageHeader, StateView, Tabs, TabsContent, TabsList, TabsTrigger } from "@ihsp/ui"
@@ -53,8 +54,7 @@ export function StudentDetailPage() {
   const id = params.get("id") ?? ""
   const requested = params.get("tab")
   const roles = session?.user.roles ?? []
-  const mentorOnly =
-    roles.includes("mentor") && !roles.some((r) => r === "teacher" || r === "admin" || r === "counselor")
+  const mentorOnly = roles.includes("mentor") && !roles.some((r) => r === "admin" || r === "counselor")
   const tabs = STUDENT_TABS.filter((value) => value !== "checklist" || !mentorOnly)
   const tab: StudentTab = tabs.find((value) => value === requested) ?? "profile"
   const canAssign = roles.some((role) => role === "admin" || role === "counselor")
@@ -63,7 +63,7 @@ export function StudentDetailPage() {
 
   return (
     <AdmissionShell roles={[...STAFF_ROLES]}>
-      <div className="mx-auto flex w-full max-w-4xl flex-col gap-4 p-4 md:p-6 xl:max-w-6xl">
+      <div className={pageClass("wide")}>
         <PageHeader
           title={name ?? t("student.title")}
           back={

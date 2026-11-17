@@ -2,8 +2,16 @@
 
 import { useT } from "@ihsp/i18n"
 import { Input, Label, Textarea } from "@ihsp/ui"
+import {
+  ACTIVITY_CATEGORIES,
+  type Item,
+  type ItemGrade,
+  type ItemInput,
+  type ItemKind,
+  type ItemStatus,
+  type ItemTiming,
+} from "../api"
 import { useAdmissionConfig } from "../../../lib/config"
-import type { Item, ItemGrade, ItemInput, ItemKind, ItemStatus, ItemTiming } from "../api"
 
 /** Limits of the backend: title 60, description 150 (honors 100). */
 export const LIMITS = { title: 60, organization: 100, activityDescription: 150, honorDescription: 100 } as const
@@ -154,7 +162,7 @@ export function ItemFields({
           ) : null}
           {categories.map((c) => (
             <option key={c} value={c}>
-              {activity ? c : t(`recognition.${c}`)}
+              {activity ? t(`category.${c}`) : t(`recognition.${c}`)}
             </option>
           ))}
         </select>

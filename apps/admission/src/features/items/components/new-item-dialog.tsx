@@ -1,11 +1,11 @@
 "use client"
 
 import { useErrorMessage, useT } from "@ihsp/i18n"
-import { Button, ResponsiveDialog } from "@ihsp/ui"
+import { ResponsiveDialog } from "@ihsp/ui"
 import { useState, type FormEvent } from "react"
 import { incompleteFields, useCreateItem, type ItemKind } from "../api"
 import { ActivityWizard } from "./activity-wizard"
-import { emptyForm, formValid, ItemFields, toInput, type FormState } from "./item-fields"
+import { emptyForm, toInput, type FormState } from "./item-fields"
 
 export function NewItemDialog({
   kind,
@@ -42,11 +42,12 @@ export function NewItemDialog({
   return (
     <ResponsiveDialog
       open={open}
-      onOpenChange={onOpenChange}
+      onOpenChange={(next) => {
+        if (!next) setStep(1)
+        onOpenChange(next)
+      }}
       title={t(`new.${kind}`)}
       onSubmit={submit}
-      footer={
-      }
     >
       <ActivityWizard kind={kind} value={form} onChange={setForm} onStepChange={setStep} />
       {create.isError && missing.length === 0 ? (

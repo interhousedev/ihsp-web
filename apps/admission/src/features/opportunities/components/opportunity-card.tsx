@@ -4,6 +4,7 @@ import { formatDate, useT } from "@ihsp/i18n"
 import { Badge, Button, Icons, Pill } from "@ihsp/ui"
 import Link from "next/link"
 import type { ReactNode } from "react"
+import { LogoAvatar } from "../../../components/lib/photo-header"
 import { detailHref } from "./scholarship-card"
 import type { Opportunity, OpportunityKind } from "../api"
 
@@ -34,7 +35,13 @@ export function OpportunityCard({ item, action }: { item: Opportunity; action?: 
   return (
     <li className="bg-card flex flex-col gap-2 rounded-card border p-4 transition-shadow hover:shadow-sm">
       <div className="flex flex-wrap items-start justify-between gap-2">
-        <div className="flex min-w-0 flex-col gap-1">
+        <LogoAvatar
+          name={item.org?.name ?? f.provider ?? f.title}
+          src={item.org?.logo_url ?? f.logo_url}
+          fit="contain"
+          className="size-10 shrink-0 ring-0"
+        />
+        <div className="flex min-w-0 flex-1 flex-col gap-1">
           <Link href={detailHref(item.id)} className="font-medium hover:underline">
             {f.title}
           </Link>

@@ -1,7 +1,8 @@
 "use client"
 
+import { AppPageHeader, pageClass } from "../../components/lib/page"
 import { useErrorMessage, useT } from "@ihsp/i18n"
-import { Card, CardContent, Input, Label, LoadingButton, PageHeader, StateView } from "@ihsp/ui"
+import { Card, CardContent, Input, Label, LoadingButton, StateView } from "@ihsp/ui"
 import { useState, type FormEvent } from "react"
 import { toast } from "sonner"
 import { AdmissionShell } from "../shell/components/admission-shell"
@@ -67,7 +68,7 @@ export function ReadinessWeightsBody() {
   const weights = useReadinessWeights()
   return (
     <div className="flex flex-col gap-6">
-      <PageHeader title={t("title")} />
+      <AppPageHeader icon="adjustments" title={t("title")} />
       {weights.isError ? (
         <StateView state="error" error={weights.error} onRetry={() => void weights.refetch()} />
       ) : !weights.data ? (
@@ -82,7 +83,7 @@ export function ReadinessWeightsBody() {
 export function ReadinessWeightsPage() {
   return (
     <AdmissionShell roles={["admin", "counselor"]}>
-      <div className="mx-auto w-full max-w-3xl p-4">
+      <div className={pageClass("narrow")}>
         <ReadinessWeightsBody />
       </div>
     </AdmissionShell>

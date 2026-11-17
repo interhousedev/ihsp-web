@@ -1,7 +1,8 @@
 "use client"
 
+import { AppPageHeader, pageClass } from "../../../components/lib/page"
 import { useT } from "@ihsp/i18n"
-import { Card, CardContent, PageHeader } from "@ihsp/ui"
+import { Card, CardContent } from "@ihsp/ui"
 import Link from "next/link"
 import { AdmissionShell } from "../../shell/components/admission-shell"
 
@@ -15,8 +16,8 @@ const ITEMS = [
 export function SettingsHubBody() {
   const t = useT("settingsHub")
   return (
-    <div className="flex flex-col gap-6">
-      <PageHeader title={t("title")} />
+    <div className={pageClass("narrow")}>
+      <AppPageHeader icon="settings" title={t("title")} />
       <ul className="grid gap-3 md:grid-cols-2">
         {ITEMS.map((item) => (
           <li key={item.key}>

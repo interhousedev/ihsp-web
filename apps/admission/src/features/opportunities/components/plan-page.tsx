@@ -1,5 +1,6 @@
 "use client"
 
+import { AppPageHeader, pageClass } from "../../../components/lib/page"
 import { ApiError } from "@ihsp/api"
 import { formatDate, useErrorMessage, useLocale, useT } from "@ihsp/i18n"
 import {
@@ -9,7 +10,6 @@ import {
   buttonVariants,
   Input,
   LoadingButton,
-  PageHeader,
   Skeleton,
   StateView,
   Icons,
@@ -17,7 +17,6 @@ import {
 import Link from "next/link"
 import { useMemo, useState, type FormEvent } from "react"
 import { toast } from "sonner"
-import { HeadingIcon } from "../../../components/lib/split-layout"
 import { OpportunityTabs } from "./opportunity-tabs"
 import { ScrollFade } from "../../../components/scroll-fade"
 import { AdmissionShell } from "../../shell/components/admission-shell"
@@ -325,8 +324,8 @@ export function PlanBody() {
     )
   }
   return (
-    <div className="mx-auto flex w-full max-w-6xl flex-col gap-6 p-4 md:p-6">
-      <PageHeader title={t("planTitle")} back={<HeadingIcon name="heart" />} />
+    <div className={pageClass("wide")}>
+      <AppPageHeader icon="heart" title={t("planTitle")} />
       <OpportunityTabs value="plan" planCount={query.data?.entries.length ?? 0} />
       {body}
     </div>

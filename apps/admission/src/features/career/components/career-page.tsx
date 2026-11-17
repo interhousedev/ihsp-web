@@ -1,61 +1,56 @@
 "use client"
 
-import { useSession } from "@ihsp/auth"
+import { pageClass } from "../../../components/lib/page"
 import { useT } from "@ihsp/i18n"
 import { StateView } from "@ihsp/ui"
 import { useQuery, useQueryClient } from "@tanstack/react-query"
-import { useEffect, useState } from "react"
+import { useState } from "react"
 import { AdmissionShell } from "../../shell/components/admission-shell"
+import { READINESS_KEY } from "../../readiness/api"
 import { careerKeys, careerMajorsQuery, careerPlanQuery, putChoice, type CareerPlan } from "../api"
 import { StepperWizard, type StepQuestion } from "../../../components/stepper"
+import { StudyFieldsPicker } from "../../profile/components/study-fields-picker"
+import { detailsKey, useQuiz, useSaveQuiz } from "../../profile/details-api"
+import { STUDY_FIELDS_KEY, readStudyFields } from "../../profile/study-fields"
 import { QUIZ, recommend } from "../quiz"
 import { CareerDeepDive } from "./career-deep-dive"
 import { CareerResults } from "./career-results"
 
 const MAJORS_MAX = 3
 
-const storageKey = (userId: string) => `admission.career.quiz.${userId}`
-
-function loadQuiz(userId: string): { answers: Record<string, string>; done: boolean } | null {
-  try {
-    const raw = window.localStorage.getItem(storageKey(userId))
-    if (!raw) return null
-    const parsed = JSON.parse(raw) as { answers?: Record<string, string>; done?: boolean }
-    return { answers: parsed.answers ?? {}, done: parsed.done === true }
-  } catch {
-    return null
-  }
-}
-
-function saveQuiz(userId: string, answers: Record<string, string>, done: boolean) {
-  try {
-    window.localStorage.setItem(storageKey(userId), JSON.stringify({ answers, done }))
-  } catch {
-    /* storage unavailable: the quiz still works in memory */
-  }
+function InterestsSection() {
+  const t = useT("profilePage")
+  return (
+    <section aria-labelledby="career-interests" className="flex w-full min-w-0 flex-col gap-4">
+      <h2 id="career-interests" className="text-lg font-semibold">
+        {t("interests.fields")}
+      </h2>
+      <StudyFieldsPicker />
+    </section>
+  )
 }
 
 export function CareerPage() {
   const t = useT("career")
-  const { session } = useSession()
-  const userId = session?.user.id
   const client = useQueryClient()
   const plan = useQuery(careerPlanQuery())
   const majors = useQuery(careerMajorsQuery())
-  const [answers, setAnswers] = useState<Record<string, string>>({})
+  // The answers and the "done" flag are stored with the account (`/me/quizzes/career`), so they survive a reload.
+  const quiz = useQuiz("career")
+  const saveQuiz = useSaveQuiz("career")
   const [round, setRound] = useState(0)
-  const [done, setDone] = useState(false)
   const [retaking, setRetaking] = useState(false)
-  const [restored, setRestored] = useState(false)
-  useEffect(() => {
-    if (!userId) return
-    const saved = loadQuiz(userId)
-    if (saved) {
-      setAnswers(saved.answers)
-      setDone(saved.done)
-    }
-    setRestored(true)
-  }, [userId])
+  const answers: Record<string, string> = Object.fromEntries(
+    Object.entries(quiz.data?.answers ?? {}).filter((entry): entry is [string, string] => typeof entry[1] === "string"),
+  )
+  const studyFields = readStudyFields(quiz.data?.answers)
+  /** The quiz is stored whole: the study fields chosen on the profile ride along with every answer. */
+  const withStudyFields = (next: Record<string, string>) => ({
+    ...next,
+    ...(studyFields.length > 0 ? { [STUDY_FIELDS_KEY]: studyFields } : {}),
+  })
+  const done = quiz.data?.completed === true
+  const restored = quiz.isSuccess || quiz.isError
   const [busy, setBusy] = useState(false)
   const [error, setError] = useState<unknown>(null)
   const data = plan.data
@@ -73,6 +68,9 @@ export function CareerPage() {
         current.lock_version,
       )
       client.setQueryData(careerKeys.plan(), saved)
+      // The profile's field count and the readiness behind the dashboard read the same plan.
+      void client.invalidateQueries({ queryKey: detailsKey })
+      void client.invalidateQueries({ queryKey: READINESS_KEY })
     } catch (e) {
       setError(e)
     } finally {
@@ -109,32 +107,33 @@ export function CareerPage() {
             busy={busy}
             onAdd={(code) => void add(code, data)}
             onRedo={() => {
-              if (userId) window.localStorage.removeItem(storageKey(userId))
-              setAnswers({})
-              setDone(false)
+              saveQuiz.mutate({ answers: withStudyFields({}), completed: false })
               setRetaking(true)
               setRound(round + 1)
             }}
           />
-          <div className="mx-auto w-full max-w-5xl px-4 md:px-6">
+          <div className={pageClass("narrow", "py-0 md:py-0")}>
             <CareerDeepDive data={data} />
+          </div>
+          <div className={pageClass("narrow", "py-0 md:py-0")}>
+            <InterestsSection />
           </div>
         </div>
       )}
       {data && majors.data && restored && !showResults && (
-        <div className="mx-auto w-full max-w-5xl p-4 md:p-6">
+        <div className={pageClass("narrow")}>
           <StepperWizard
             key={round}
             questions={questions}
             answers={answers}
             onAnswer={(id, value) => {
-              const next = { ...answers, [id]: typeof value === "string" ? value : "" }
-              setAnswers(next)
-              if (userId) saveQuiz(userId, next, false)
+              saveQuiz.mutate({
+                answers: withStudyFields({ ...answers, [id]: typeof value === "string" ? value : "" }),
+                completed: false,
+              })
             }}
             onFinish={() => {
-              setDone(true)
-              if (userId) saveQuiz(userId, answers, true)
+              saveQuiz.mutate({ answers: withStudyFields(answers), completed: true })
             }}
             labels={{
               back: t("back"),
@@ -144,9 +143,9 @@ export function CareerPage() {
               saveError: t("saveError"),
               step: (current, total) => t("progress", { current, total }),
               progress: t("title"),
-              guide: t("hint"),
             }}
           />
+          <InterestsSection />
         </div>
       )}
     </AdmissionShell>

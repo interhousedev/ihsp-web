@@ -68,8 +68,8 @@ describe("privacy settings", () => {
           items: [
             {
               at: "2026-01-02T10:00:00Z",
-              actor_kind: "staff",
-              action: "view",
+              actor_kind: "user",
+              action: "student.viewed",
               object_type: "profile",
               object_id: "1",
               staff_role_id: null,
@@ -79,7 +79,7 @@ describe("privacy settings", () => {
       ),
     )
     renderAdmissionApp(<AuditList />)
-    expect(await screen.findByText(/staff · view · profile/)).toBeTruthy()
+    expect(await screen.findByText(/Signed-in user .* · Student profile viewed · Profile/)).toBeTruthy()
   })
 
   test("erasing sends the student back to onboarding and says what stays", async () => {

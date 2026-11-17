@@ -1,7 +1,8 @@
 "use client"
 
+import { AppPageHeader, pageClass } from "../../../components/lib/page"
 import { useT } from "@ihsp/i18n"
-import { AnimatedPresence, Button, Icons, PageHeader, Progress, Reveal, StateView } from "@ihsp/ui"
+import { AnimatedPresence, Button, Icons, Progress, Reveal, StateView } from "@ihsp/ui"
 import { useRouter, useSearchParams } from "next/navigation"
 import { useEffect, useRef, useState, type FormEvent, type KeyboardEvent } from "react"
 import { AdmissionShell } from "../../shell/components/admission-shell"
@@ -69,7 +70,7 @@ function WizardBody({ config, initial }: { config: AdmissionConfig; initial: Pro
     setFinishing(true)
     await flush()
     setFinishing(false)
-    router.push("/words/")
+    router.push("/profile/?tab=details#three-words")
   }
 
   function onSubmit(event: FormEvent) {
@@ -94,8 +95,12 @@ function WizardBody({ config, initial }: { config: AdmissionConfig; initial: Pro
 
   return (
     <AdmissionShell>
-      <div className="mx-auto flex w-full max-w-3xl flex-col gap-6 p-4 md:p-6">
-        <PageHeader title={t("title")} actions={<SaveBadge state={state} onRetry={() => void retry()} />} />
+      <div className={pageClass("narrow")}>
+        <AppPageHeader
+          icon="profile"
+          title={t("title")}
+          actions={<SaveBadge state={state} onRetry={() => void retry()} />}
+        />
         <div className="flex flex-col gap-2">
           <div className="flex items-center justify-between text-sm">
             <Button type="button" variant="ghost" size="sm" onClick={() => void back()}>
@@ -181,7 +186,7 @@ export function SetupWizard() {
   if (config.isError || profile.isError) {
     return (
       <AdmissionShell>
-        <div className="mx-auto w-full max-w-3xl p-4 md:p-6">
+        <div className={pageClass("narrow")}>
           <StateView
             state="error"
             error={config.error ?? profile.error}
@@ -197,8 +202,8 @@ export function SetupWizard() {
   if (!config.data || !profile.data) {
     return (
       <AdmissionShell>
-        <div className="mx-auto w-full max-w-3xl p-4 md:p-6">
-          <PageHeader title={t("title")} />
+        <div className={pageClass("narrow")}>
+          <AppPageHeader icon="profile" title={t("title")} />
           <StateView state="loading" />
         </div>
       </AdmissionShell>

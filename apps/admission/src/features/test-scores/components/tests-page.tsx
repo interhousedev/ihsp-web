@@ -1,5 +1,6 @@
 "use client"
 
+import { AppPageHeader, pageClass, StatCard, StatGrid } from "../../../components/lib/page"
 import { formatDate, useErrorMessage, useLocale, useT } from "@ihsp/i18n"
 import {
   Badge,
@@ -9,7 +10,6 @@ import {
   CardContent,
   ConfirmDialog,
   Icons,
-  PageHeader,
   Pill,
   Progress,
   StateView,
@@ -17,8 +17,8 @@ import {
   TabsList,
   TabsTrigger,
 } from "@ihsp/ui"
+import Link from "next/link"
 import { useState } from "react"
-import { ScrollFade } from "@/components/scroll-fade"
 import { toast } from "sonner"
 import { useScreenContext } from "../../assistant/screen-context"
 import { downloadDocument } from "../../documents/api"
@@ -114,9 +114,10 @@ function ScoreCard({
               {entry.label ? ` · ${entry.label}` : ""}
               {entry.level ? ` · ${entry.level}` : ""}
             </h3>
-            {(entry.test_date ?? entry.registration_deadline) ? (
+            {entry.test_date ? <p className="text-muted-foreground text-xs">{formatDate(entry.test_date)}</p> : null}
+            {entry.registration_deadline ? (
               <p className="text-muted-foreground text-xs">
-                {formatDate((entry.test_date ?? entry.registration_deadline)!)}
+                {t("registrationDeadline")}: {formatDate(entry.registration_deadline)}
               </p>
             ) : null}
           </div>
@@ -263,20 +264,16 @@ function BestScores({ overview, tests }: { overview: ScoreOverview; tests: Score
           {t("summaryEmpty")}
         </p>
       ) : (
-        <ScrollFade maxHeight={420} className="flex flex-col gap-2">
-          {rows.map((row) => {
-            const test = tests.find((x) => x.id === row.test_id)!
-            return (
-              <div
-                key={row.test_id}
-                className="border-hairline bg-card flex items-center justify-between gap-2 rounded-card border p-3"
-              >
-                <span className="text-sm">{scoreName(test.names, locale)}</span>
-                <Pill tone="success">{row.best_total}</Pill>
-              </div>
-            )
-          })}
-        </ScrollFade>
+        <StatGrid className="grid-cols-1 lg:grid-cols-1">
+          {rows.map((row) => (
+            <StatCard
+              key={row.test_id}
+              label={scoreName(tests.find((x) => x.id === row.test_id)!.names, locale)}
+              value={row.best_total}
+              icon="certificates"
+            />
+          ))}
+        </StatGrid>
       )}
     </aside>
   )
@@ -304,8 +301,8 @@ export function TestsBody({ studentId, staffEmpty }: { studentId?: string; staff
   return (
     <div className="flex flex-col gap-6">
       {studentId ? null : (
-        <PageHeader
-          back={<Icons.certificates aria-hidden className="text-primary size-7" />}
+        <AppPageHeader
+          icon="certificates"
           title={t("title")}
           actions={
             overview?.is_owner ? (
@@ -316,6 +313,15 @@ export function TestsBody({ studentId, staffEmpty }: { studentId?: string; staff
             ) : null
           }
         />
+      )}
+      {studentId ? null : (
+        <Link
+          href="/deadlines/"
+          className={buttonVariants({ variant: "outline", className: "min-h-11 self-start md:min-h-9" })}
+        >
+          <Icons.calendarEvent aria-hidden />
+          {t("openPrepCalendar")}
+        </Link>
       )}
       {failed ? (
         <StateView state="error" error={failed.error} onRetry={() => void failed.refetch()} />
@@ -373,7 +379,7 @@ export function TestsBody({ studentId, staffEmpty }: { studentId?: string; staff
 export function TestsPage() {
   return (
     <AdmissionShell>
-      <div className="mx-auto w-full max-w-3xl p-4 xl:max-w-6xl">
+      <div className={pageClass("wide")}>
         <TestsBody />
       </div>
     </AdmissionShell>

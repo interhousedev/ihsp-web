@@ -1,5 +1,6 @@
 "use client"
 
+import { pageClass } from "../../../components/lib/page"
 import { useLocale, useT } from "@ihsp/i18n"
 import { Button, Icons } from "@ihsp/ui"
 import Link from "next/link"
@@ -31,13 +32,17 @@ export function CareerResults({
     const major = majors.find((m) => m.code === code)
     return major ? pick(major.name, locale) : code
   }
+  // Answers that voted for fewer of the shown majors say more about this one: cite those first.
+  const shared = (answer: readonly [string, string]) =>
+    recommendations.filter((r) => r.because.some(([q, o]) => q === answer[0] && o === answer[1])).length
   const picks = (r: Recommendation) =>
-    r.because
+    [...r.because]
+      .sort((x, y) => shared(x) - shared(y))
       .slice(0, 2)
       .map(([question, option]) => t(`quiz.${question}.${option}`))
       .join("; ")
   return (
-    <div className="mx-auto flex w-full max-w-5xl flex-col gap-6 p-4 md:gap-8 md:p-6">
+    <div className={pageClass("narrow")}>
       <header className="space-y-2">
         <h1 className="text-2xl font-bold md:text-3xl lg:text-4xl">{t("resultsTitle")}</h1>
         <p className="text-muted-foreground">{t("resultsText")}</p>
@@ -45,7 +50,7 @@ export function CareerResults({
       {recommendations.length === 0 && plan.majors.length > 0 ? null : recommendations.length === 0 ? (
         <p className="rounded-card border p-4">{t("noResults")}</p>
       ) : (
-        <ul className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+        <ul className="grid gap-4 sm:grid-cols-2">
           {recommendations.map((r) => {
             const added = plan.majors.includes(r.code)
             return (

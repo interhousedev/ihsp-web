@@ -1,8 +1,9 @@
 "use client"
 
+import { AppPageHeader, pageClass } from "../../../components/lib/page"
 import type { Role } from "@ihsp/api"
 import { useT } from "@ihsp/i18n"
-import { Icons, PageHeader, StateView } from "@ihsp/ui"
+import { Icons, StateView } from "@ihsp/ui"
 import { AdmissionShell } from "../../shell/components/admission-shell"
 
 /** A page of the admission flow: title and a real empty state until the screen's data exists. */
@@ -11,8 +12,8 @@ export function StepPage({ page, icon, roles }: { page: string; icon: keyof type
   const Icon = Icons[icon]
   return (
     <AdmissionShell roles={roles}>
-      <div className="mx-auto flex w-full max-w-3xl flex-col gap-6 p-4 md:p-6">
-        <PageHeader title={t(`${page}.title`)} />
+      <div className={pageClass("narrow")}>
+        <AppPageHeader icon="sparkles" title={t(`${page}.title`)} />
         <StateView
           state="empty"
           icon={<Icon className="size-8" />}

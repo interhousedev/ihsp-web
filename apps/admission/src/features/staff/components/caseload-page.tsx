@@ -1,8 +1,9 @@
 "use client"
 
+import { AppPageHeader, pageClass } from "../../../components/lib/page"
 import { useSession } from "@ihsp/auth"
 import { useT } from "@ihsp/i18n"
-import { Icons, PageHeader, Skeleton, StateView } from "@ihsp/ui"
+import { Icons, Skeleton, StateView } from "@ihsp/ui"
 import { useRouter } from "next/navigation"
 import { useEffect, useMemo, useState } from "react"
 import { PageLoading } from "@ihsp/features-core"
@@ -15,7 +16,7 @@ import { CaseloadList } from "./caseload-list"
 import { SavedViews } from "./saved-views"
 import { QueryError } from "../../shell/components/query-error"
 
-export const STAFF_ROLES = ["teacher", "admin", "counselor", "mentor"] as const
+export const STAFF_ROLES = ["admin", "counselor", "mentor"] as const
 
 /** Stage labels fall back to the raw value, so a stage the web does not know still shows. */
 function useStageLabel() {
@@ -48,8 +49,8 @@ export function CaseloadContent() {
   const active = Boolean(filters.stage || filters.risk || filters.deadline_before || filters.group_id)
 
   return (
-    <div className="mx-auto flex w-full max-w-4xl flex-col gap-4 p-4 md:p-6">
-      <PageHeader title={t("caseload.title")} />
+    <div className={pageClass("default")}>
+      <AppPageHeader icon="teams" title={t("caseload.title")} />
       {all.data ? <StaffOverview items={all.data.items} /> : null}
       <SavedViews filters={filters} onApply={(view) => setFilters(view.filters)} />
       <CaseloadFiltersBar filters={filters} stages={stages} groups={groups} onChange={setFilters} />

@@ -11,6 +11,8 @@ import { McpPrompt } from "./mcp-prompt"
 import { usePathname } from "next/navigation"
 import { tourKey, useTourOpen } from "../steps"
 
+const SUGGESTIONS = ["1", "2", "3", "4"] as const
+
 /**
  * Floating button at the bottom right of every applicant page. It opens a rectangular chat popup (about half the page
  * on wide screens, a bottom sheet on phones). The popup stays mounted after the first open and is shown and hidden with
@@ -26,6 +28,7 @@ function AssistantDock({ userId }: { userId: string }) {
   const t = useT("assistantDock")
   const [open, setOpen] = useState(false)
   const [opened, setOpened] = useState(false)
+  const [prefill, setPrefill] = useState<{ key: number; text: string } | null>(null)
   const [view, setView] = useState<"chat" | "mcp">("chat")
   const chat = useDockChat(userId, opened)
   const launcher = useRef<HTMLButtonElement>(null)
@@ -143,6 +146,26 @@ function AssistantDock({ userId }: { userId: string }) {
                   navButtons={null}
                   bare
                   placeholder={t("placeholder")}
+                  emptyText={t("emptyText")}
+                  prefill={prefill}
+                  empty={
+                    <div
+                      className="mx-auto flex w-full max-w-sm flex-col gap-2 px-4 pb-4"
+                      data-testid="dock-suggestions"
+                    >
+                      <p className="text-muted-foreground text-xs font-medium">{t("suggestionsLabel")}</p>
+                      {SUGGESTIONS.map((id) => (
+                        <button
+                          key={id}
+                          type="button"
+                          className="hover:bg-muted min-h-11 rounded-xl border px-3 py-2 text-start text-sm"
+                          onClick={() => setPrefill({ key: Date.now(), text: t(`suggestions.${id}`) })}
+                        >
+                          {t(`suggestions.${id}`)}
+                        </button>
+                      ))}
+                    </div>
+                  }
                 />
               ) : chat.failed ? (
                 <div className="flex flex-1 flex-col items-center justify-center gap-3 p-6 text-center">
