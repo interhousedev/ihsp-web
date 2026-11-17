@@ -16,6 +16,16 @@ export type ItemStatus = NonNullable<AdmissionItemIn["status"]>
 export type ItemGrade = NonNullable<AdmissionItemIn["grades"]>[number]
 export type ItemTiming = NonNullable<AdmissionItemIn["timing"]>[number]
 export type Metric = AdmissionItem["metrics"][number]
+/** The activity categories of the backend (`options.activity_categories` of the config carries the same list). */
+export const ACTIVITY_CATEGORIES = [
+  "academic",
+  "arts",
+  "athletics",
+  "leadership_service",
+  "cultural_global",
+  "stem_research",
+  "other",
+] as const
 export type MetricInput = AdmissionItemMetricIn
 export type Horizon = MetricInput["horizon"]
 export const DIMENSIONS = ["clarity", "role_name", "impact", "alignment"] as const
@@ -110,6 +120,31 @@ export function useReorderItems() {
   })
 }
 
+type ItemsData = { items: Item[] }
+
+/** Moves an item between draft and ready; the card jumps at once and returns if the server refuses. */
+export function useMoveItem() {
+  const qc = useQueryClient()
+  return useMutation({
+    mutationFn: ({ item, status }: { item: Item; status: ItemStatus }) =>
+      getApiClient().patch<Item>(`${BASE}/items/${seg(item.id)}`, { status, lock_version: item.lock_version }),
+    onMutate: async ({ item, status }) => {
+      await qc.cancelQueries({ queryKey: itemKeys.all })
+      const previous = qc.getQueriesData<ItemsData>({ queryKey: itemKeys.all })
+      qc.setQueriesData<ItemsData>({ queryKey: itemKeys.all }, (data) =>
+        data && Array.isArray(data.items)
+          ? { ...data, items: data.items.map((i) => (i.id === item.id ? { ...i, status } : i)) }
+          : data,
+      )
+      return { previous }
+    },
+    onError: (_error, _vars, context) => {
+      for (const [key, data] of context?.previous ?? []) qc.setQueryData(key, data)
+    },
+    onSettled: () => qc.invalidateQueries({ queryKey: itemKeys.all }),
+  })
+}
+
 export function useSetMetrics(id: string) {
   const invalidate = useInvalidate()
   return useMutation({
@@ -123,6 +158,15 @@ export function useReview(id: string) {
   const invalidate = useInvalidate()
   return useMutation({
     mutationFn: () => getApiClient().post<Review>(`${BASE}/items/${seg(id)}/review`),
+    onSuccess: invalidate,
+  })
+}
+
+/** AI grade A-E of the title and the description, with a one-line tip each; cached per content by the backend. */
+export function useGradeItem(id: string) {
+  const invalidate = useInvalidate()
+  return useMutation({
+    mutationFn: () => getApiClient().post<NonNullable<Item["grade"]>>(`${BASE}/items/${seg(id)}/grade`),
     onSuccess: invalidate,
   })
 }

@@ -1,33 +1,25 @@
 import { apiUrl, server } from "@ihsp/test-utils"
-import { fireEvent, screen, waitFor, within } from "@testing-library/react"
+import { act, fireEvent, screen, waitFor, within } from "@testing-library/react"
 import { HttpResponse, http } from "msw"
 import { describe, expect, mock, test } from "bun:test"
-import type { ReactNode } from "react"
-import * as ui from "@ihsp/ui"
+import * as dnd from "@dnd-kit/core"
+import type { DragEndEvent } from "@dnd-kit/core"
+import type { ComponentProps } from "react"
 import { renderAdmissionApp } from "../../tests/helpers"
-// dnd-kit needs layout to move by keyboard; the stub exercises the `onReorder` contract of `SortableList`.
-mock.module("@ihsp/ui", () => ({
-  ...ui,
-  SortableList: ({
-    items,
-    onReorder,
-    renderItem,
-  }: {
-    items: { id: string }[]
-    onReorder: (items: { id: string }[]) => void
-    renderItem: (item: never, index: number) => ReactNode
-  }) => (
-    <div>
-      {items.map((item, index) => (
-        <div key={item.id}>{renderItem(item as never, index)}</div>
-      ))}
-      <button type="button" onClick={() => onReorder([...items].reverse())}>
-        swap
-      </button>
-    </div>
-  ),
+
+// dnd-kit has no layout in happy-dom, so pointer and keyboard drags cannot run; the board's `onDragEnd` is
+// captured and called with the ids a real drag would produce.
+const RealDndContext = dnd.DndContext
+let dragEnd: ((event: DragEndEvent) => void) | undefined
+mock.module("@dnd-kit/core", () => ({
+  ...dnd,
+  DndContext: (props: ComponentProps<typeof RealDndContext>) => {
+    dragEnd = props.onDragEnd
+    return <RealDndContext {...props} />
+  },
 }))
 
+import { ItemBoard } from "./components/item-board"
 import { ItemCard } from "./components/item-card"
 import { ItemList } from "./components/item-list"
 import { PlanBody } from "./components/plan-page"
@@ -164,7 +156,71 @@ describe("items", () => {
     expect(await screen.findByText("Required to mark as ready")).toBeTruthy()
   })
 
-  test("reorder posts the ids of the new order", async () => {
+  const drop = (active: string, over: string) =>
+    act(() => dragEnd?.({ active: { id: active }, over: { id: over } } as DragEndEvent))
+
+  test("dragging a card onto the other column moves an activity to Ready", async () => {
+    let body: unknown
+    let current = [item("a", "Robotics", 0)]
+    board(() => current)
+    server.use(
+      http.patch(apiUrl("/v1/admission/me/items/a"), async ({ request }) => {
+        body = await request.json()
+        current = [{ ...current[0]!, status: "ready", lock_version: 2 }]
+        return HttpResponse.json(current[0])
+      }),
+    )
+    renderAdmissionApp(<ItemList />)
+    await screen.findByText("Robotics")
+    await drop("a", "column:ready")
+    // The card jumps at once, before the server answers.
+    await waitFor(() =>
+      expect(within(screen.getByRole("region", { name: "Ready" })).getByText("Robotics")).toBeTruthy(),
+    )
+    await waitFor(() => expect(body).toEqual({ status: "ready", lock_version: 1 }))
+    expect(within(screen.getByRole("region", { name: "Ready" })).getByText("Robotics")).toBeTruthy()
+  })
+
+  test("dragging a honor onto a card of the other column moves it back to Draft", async () => {
+    let body: unknown
+    const honor = { ...item("h", "Olympiad", 0), kind: "honor" as const, status: "ready" as const }
+    server.use(
+      http.patch(apiUrl("/v1/admission/me/items/h"), async ({ request }) => {
+        body = await request.json()
+        return HttpResponse.json({ ...honor, status: "draft" })
+      }),
+    )
+    renderAdmissionApp(
+      <ItemBoard drafts={[item("d", "Chess", 0)]} ready={[honor]} onEdit={() => {}} onDelete={() => {}} />,
+    )
+    await drop("h", "item:d")
+    await waitFor(() => expect(body).toEqual({ status: "draft", lock_version: 1 }))
+  })
+
+  test("a refused move returns the card and offers Add details in a toast", async () => {
+    const message = spyOn(toast, "message").mockImplementation(() => "")
+    board(() => [item("a", "Robotics", 0)])
+    server.use(
+      http.patch(apiUrl("/v1/admission/me/items/a"), () =>
+        HttpResponse.json(
+          { type: "admission/item_incomplete", title: "Incomplete", status: 422, params: { fields: ["category"] } },
+          { status: 422, headers: { "content-type": "application/problem+json" } },
+        ),
+      ),
+    )
+    renderAdmissionApp(<ItemList />)
+    await screen.findByText("Robotics")
+    await drop("a", "column:ready")
+    await waitFor(() => expect(message).toHaveBeenCalled())
+    const [text, options] = message.mock.calls[0] as unknown as [string, { action: { label: string } }]
+    expect(text).toMatch(/needs a few more details/)
+    expect(options.action.label).toBe("Add details")
+    expect(screen.queryByRole("dialog")).toBeNull()
+    expect(within(screen.getByRole("region", { name: "Draft" })).getByText("Robotics")).toBeTruthy()
+    message.mockRestore()
+  })
+
+  test("dropping a card on another card of its column posts the new order", async () => {
     let body: unknown
     const items = [item("a", "Robotics", 0), item("b", "Chess", 1)]
     server.use(
@@ -176,7 +232,8 @@ describe("items", () => {
       }),
     )
     renderAdmissionApp(<ItemList />)
-    fireEvent.click(await screen.findByRole("button", { name: "swap" }))
+    await screen.findByText("Chess")
+    await drop("a", "item:b")
     await waitFor(() => expect(body).toEqual({ ids: ["b", "a"] }), { timeout: 2000 })
   })
 })

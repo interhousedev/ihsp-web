@@ -5,8 +5,8 @@ import { Input, Label, Textarea } from "@ihsp/ui"
 import { useAdmissionConfig } from "../../../lib/config"
 import type { Item, ItemGrade, ItemInput, ItemKind, ItemStatus, ItemTiming } from "../api"
 
-/** Common App limits; the backend enforces the same numbers. */
-export const LIMITS = { title: 50, organization: 100, activityDescription: 150, honorDescription: 100 } as const
+/** Limits of the backend: title 60, description 150 (honors 100). */
+export const LIMITS = { title: 60, organization: 100, activityDescription: 150, honorDescription: 100 } as const
 /** Grade level 13 is "post-graduate". */
 export const POST_GRAD = 13
 
@@ -101,7 +101,8 @@ export function ItemFields({
 }) {
   const t = useT("items")
   const options = useAdmissionConfig().data?.options
-  const categories = optionList(options, kind === "honor" ? "recognition_levels" : "activity_types")
+  const configured = optionList(options, kind === "honor" ? "recognition_levels" : "activity_categories")
+  const categories = configured.length > 0 ? configured : kind === "honor" ? [] : [...ACTIVITY_CATEGORIES]
   const grades = optionList(options, "item_grades").map(Number) as ItemGrade[]
   const timings = optionList(options, "activity_timing") as ItemTiming[]
   const set = (patch: Partial<FormState>) => onChange({ ...value, ...patch })

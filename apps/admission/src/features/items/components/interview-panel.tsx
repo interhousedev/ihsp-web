@@ -2,6 +2,7 @@
 
 import { useErrorMessage, useT } from "@ihsp/i18n"
 import { Button, Icons, Textarea } from "@ihsp/ui"
+import { AiTabCard } from "@/components/ai-tab-card"
 import { useState } from "react"
 import { useInterview, usePostInterview, type Rewrite } from "../api"
 
@@ -33,7 +34,12 @@ export function InterviewPanel({
   const proposal = interview.data?.proposal
 
   return (
-    <section aria-label={t("interview.title")} className="flex flex-col gap-3">
+    <AiTabCard
+      role="region"
+      aria-label={t("interview.title")}
+      label={t("interview.tab")}
+      icon={<Icons.sparkles aria-hidden />}
+    >
       <div className="flex flex-wrap items-center justify-between gap-2">
         <h2 className="text-lg font-semibold">{t("interview.title")}</h2>
         {!open ? (
@@ -139,6 +145,6 @@ export function InterviewPanel({
           ) : null}
         </div>
       ) : null}
-    </section>
+    </AiTabCard>
   )
 }

@@ -12,6 +12,7 @@ import { incompleteFields, useDeleteItem, useItem, usePatchItem, type Item, type
 import { formValid, ItemFields, toForm, toInput, type FormState } from "./item-fields"
 import { InterviewPanel } from "./interview-panel"
 import { MetricsEditor } from "./metrics-editor"
+import { ItemGrades } from "./item-grades"
 import { ReviewSection } from "./review-card"
 
 const FIELD: Record<keyof Rewrite, keyof FormState> = {
@@ -76,6 +77,7 @@ function Editor({ item }: { item: Item }) {
       </form>
       <InterviewPanel itemId={item.id} onApply={(field, value) => setForm((f) => ({ ...f, [FIELD[field]]: value }))} />
       <MetricsEditor key={item.lock_version} itemId={item.id} metrics={item.metrics} />
+      <ItemGrades item={item} tips />
       <ReviewSection itemId={item.id} review={item.review} stale={item.review_stale} />
       <ProofList itemId={item.id} />
       <div>

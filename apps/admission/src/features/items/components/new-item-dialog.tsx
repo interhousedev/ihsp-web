@@ -4,6 +4,7 @@ import { useErrorMessage, useT } from "@ihsp/i18n"
 import { Button, ResponsiveDialog } from "@ihsp/ui"
 import { useState, type FormEvent } from "react"
 import { incompleteFields, useCreateItem, type ItemKind } from "../api"
+import { ActivityWizard } from "./activity-wizard"
 import { emptyForm, formValid, ItemFields, toInput, type FormState } from "./item-fields"
 
 export function NewItemDialog({
@@ -21,14 +22,17 @@ export function NewItemDialog({
   const errorMessage = useErrorMessage()
   const create = useCreateItem()
   const [form, setForm] = useState<FormState>(emptyForm)
+  const [step, setStep] = useState(1)
   const missing = incompleteFields(create.error)
   const submit = (event: FormEvent) => {
     event.preventDefault()
+    if (step < 3) return
     create.mutate(
       { kind, ...toInput(form) },
       {
         onSuccess: (item) => {
           setForm(emptyForm)
+          setStep(1)
           onOpenChange(false)
           onCreated?.(item.id)
         },
@@ -42,12 +46,9 @@ export function NewItemDialog({
       title={t(`new.${kind}`)}
       onSubmit={submit}
       footer={
-        <Button type="submit" disabled={!formValid(form) || create.isPending}>
-          {t("new.create")}
-        </Button>
       }
     >
-      <ItemFields kind={kind} idPrefix="new" value={form} onChange={setForm} errors={missing} />
+      <ActivityWizard kind={kind} value={form} onChange={setForm} onStepChange={setStep} />
       {create.isError && missing.length === 0 ? (
         <p role="alert" className="text-destructive mt-2 text-sm">
           {errorMessage(create.error)}

@@ -2,6 +2,7 @@
 
 import { useErrorMessage, useT } from "@ihsp/i18n"
 import { Alert, AlertDescription, Button, GradeChip, GRADES, Icons, type Grade } from "@ihsp/ui"
+import { AiTabCard } from "@/components/ai-tab-card"
 import { useState } from "react"
 import { DIMENSIONS, useReview, useReviewFeedback, type Review } from "../api"
 
@@ -123,7 +124,12 @@ export function ReviewSection({ itemId, review, stale }: { itemId: string; revie
   const [shown, setShown] = useState<Review | null>(null)
   const current = shown ?? review
   return (
-    <section aria-label={t("review.title")} className="flex flex-col gap-3">
+    <AiTabCard
+      role="region"
+      aria-label={t("review.title")}
+      label={t("review.tab")}
+      icon={<Icons.sparkles aria-hidden />}
+    >
       <div className="flex flex-wrap items-center justify-between gap-2">
         <h2 className="text-lg font-semibold">{t("review.title")}</h2>
         <Button
@@ -147,6 +153,6 @@ export function ReviewSection({ itemId, review, stale }: { itemId: string; revie
       ) : (
         <p className="text-muted-foreground text-sm">{t("review.none")}</p>
       )}
-    </section>
+    </AiTabCard>
   )
 }

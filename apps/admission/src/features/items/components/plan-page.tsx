@@ -3,6 +3,7 @@
 import { useErrorMessage, useT } from "@ihsp/i18n"
 import { ApiError } from "@ihsp/api"
 import { Alert, AlertDescription, Button, buttonVariants, Icons, Input, Label, PageHeader, StateView } from "@ihsp/ui"
+import { AiTabCard } from "@/components/ai-tab-card"
 import Link from "next/link"
 import { useState, type FormEvent } from "react"
 import { AdmissionShell } from "../../shell/components/admission-shell"
@@ -58,7 +59,7 @@ function Suggest({ milestones }: { milestones: Milestone[] }) {
       },
     )
   return (
-    <section className="flex flex-col gap-2">
+    <AiTabCard role="region" label={t("plan.suggestTab")} icon={<Icons.sparkles aria-hidden />} className="gap-2">
       <Button
         type="button"
         variant="outline"
@@ -133,7 +134,7 @@ function Suggest({ milestones }: { milestones: Milestone[] }) {
           </Button>
         </div>
       ) : null}
-    </section>
+    </AiTabCard>
   )
 }
 
