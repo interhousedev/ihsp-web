@@ -243,7 +243,13 @@ export type ConnectorCreateBody = {
 /** `token` is shown to the user once. */
 export type ConnectorCreated = { connector: Connector; token: string }
 
-export type PersonalTokenScope = "me:read" | "me:write"
+export type PersonalTokenScope =
+  | "me:read"
+  | "me:write"
+  | "admission:read"
+  | "admission:memory"
+  | "admission:docs"
+  | "admission:documents"
 
 /** A personal access token (`ihsp_pat_…`) for scripts; only the prefix is stored readable. */
 export type PersonalToken = {

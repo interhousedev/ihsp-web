@@ -1,8 +1,9 @@
 // AI assistants (backend § API contract → "AI assistants (B9)" and Schemas).
 
+import type { components } from "../generated/openapi-served"
 import type { PageParams } from "./common"
 
-export type AssistantKind = "student" | "admin" | "lms_author"
+export type AssistantKind = "student" | "admin" | "lms_author" | "admission"
 
 export type ChatItem = {
   id: string
@@ -51,6 +52,8 @@ export type DocumentCard = {
   size: number
 }
 
+export type SuggestionCard = components["schemas"]["SuggestionCardResponse"]
+
 export type ToolCallView = {
   id: string
   tool: string
@@ -66,6 +69,8 @@ export type ToolCallView = {
   expires_at: string | null
   /** Set for a finished `make_document` call. */
   document?: DocumentCard | null
+  /** Set for a finished `admission_suggest` call. */
+  cards?: SuggestionCard[]
 }
 
 export type ChatMessageView = {
