@@ -43,10 +43,14 @@ type AssistantChatPaneProps = {
   bare?: boolean
   /** Shown in the empty conversation (starter chips). */
   empty?: ReactNode
+  /** Replaces the default empty-conversation text (the LMS one) with the app's own. */
+  emptyText?: string
   /** The composer placeholder; the assistant's by default. */
   placeholder?: string
   /** Fills the composer from outside (starter chips, command chips). */
   prefill?: PillComposerProps["prefill"]
+  /** Shown right above the composer (quick question chips). */
+  aboveComposer?: ReactNode
   /** After an approved tool call finished (the author assistant refreshes the editor). */
   onToolApproved?: () => void
 }
@@ -67,8 +71,10 @@ export function AssistantChatPane({
   trailing,
   bare = false,
   empty,
+  emptyText,
   placeholder,
   prefill,
+  aboveComposer,
   onToolApproved,
 }: AssistantChatPaneProps) {
   const { assistant, courseId, features } = useAssistantScope()
@@ -225,87 +231,89 @@ export function AssistantChatPane({
 
   return (
     <ChatCommandsProvider value={{ say: (text) => (busy ? Promise.resolve(false) : runTurn(text, [], false)) }}>
-    <section aria-label={detail.title} className="flex min-h-0 min-w-0 flex-1 flex-col">
-      {bare ? null : (
-        <ChatPaneHeader
-          chat={detail}
-          homeHref={`${basePath}/`}
-          navButtons={navButtons}
-          actions={actions}
-          trailing={trailing}
-        />
-      )}
-      {detail.shared && features.share ? (
-        <Alert className="mx-auto mt-2 w-[calc(100%-2rem)] max-w-3xl">
-          <IconShare aria-hidden />
-          <AlertDescription>{t("chat.sharedBanner")}</AlertDescription>
-        </Alert>
-      ) : null}
-      <div className="relative min-h-0 flex-1">
-        <div ref={containerRef} onScroll={onScroll} className="h-full overflow-y-auto">
-          <ChatMessageList
+      <section aria-label={detail.title} className="flex min-h-0 min-w-0 flex-1 flex-col">
+        {bare ? null : (
+          <ChatPaneHeader
             chat={detail}
-            ratings={ratings}
-            pending={pending}
-            busy={busy}
-            live={live}
-            regeneratingSeq={regeneratingSeq}
-            limitReachedTurn={send.data?.status === "limit_reached"}
+            homeHref={`${basePath}/`}
+            navButtons={navButtons}
             actions={actions}
-            onApprove={handleApprove}
-            onReject={handleReject}
-            onRate={handleRate}
-            onRegenerate={handleRegenerate}
+            trailing={trailing}
           />
-          {detail.messages.length === 0 && pending === null ? empty : null}
-        </div>
-        {atBottom ? null : (
-          <Button
-            type="button"
-            variant="outline"
-            size="icon"
-            className="bg-background absolute start-1/2 bottom-3 size-11 -translate-x-1/2 rounded-full shadow-md rtl:translate-x-1/2"
-            aria-label={t("message.scrollDown")}
-            onClick={() => scrollToBottom(true)}
-          >
-            <IconArrowDown aria-hidden />
-          </Button>
         )}
-      </div>
-      <div className="shrink-0 px-4 pt-1 pb-3">
-        <div className="mx-auto flex w-full max-w-3xl flex-col gap-2">
-          {shownError ? (
-            <div className="flex flex-wrap items-center gap-x-3 gap-y-1">
-              <p role="alert" className="text-destructive text-sm">
-                {webErrorMessage(shownError) ?? errorMessage(shownError)}
-              </p>
-              {webFailed && webFailed.error === shownError ? (
-                <Button
-                  type="button"
-                  variant="outline"
-                  className="min-h-11 md:min-h-8"
-                  onClick={() => void handleSendWithoutWeb()}
-                >
-                  {t("message.sendWithoutWeb")}
-                </Button>
-              ) : null}
-            </div>
-          ) : null}
-          <LimitMcpPrompt limit={limit} connectorsHref={`${getConfig().ID_URL}/connectors/new/`} />
-          <PillComposer
-            ref={composer}
-            chatId={chatId}
-            sending={send.isPending}
-            limit={limit}
-            onSend={handleSend}
-            onStop={() => abort.current?.abort()}
-            placeholder={placeholder ?? t("composer.placeholder")}
-            prefill={prefill}
-          />
+        {detail.shared && features.share ? (
+          <Alert className="mx-auto mt-2 w-[calc(100%-2rem)] max-w-3xl">
+            <IconShare aria-hidden />
+            <AlertDescription>{t("chat.sharedBanner")}</AlertDescription>
+          </Alert>
+        ) : null}
+        <div className="relative min-h-0 flex-1">
+          <div ref={containerRef} onScroll={onScroll} className="h-full overflow-y-auto">
+            <ChatMessageList
+              chat={detail}
+              emptyText={emptyText}
+              ratings={ratings}
+              pending={pending}
+              busy={busy}
+              live={live}
+              regeneratingSeq={regeneratingSeq}
+              limitReachedTurn={send.data?.status === "limit_reached"}
+              actions={actions}
+              onApprove={handleApprove}
+              onReject={handleReject}
+              onRate={handleRate}
+              onRegenerate={handleRegenerate}
+            />
+            {detail.messages.length === 0 && pending === null ? empty : null}
+          </div>
+          {atBottom ? null : (
+            <Button
+              type="button"
+              variant="outline"
+              size="icon"
+              className="bg-background absolute start-1/2 bottom-3 size-11 -translate-x-1/2 rounded-full shadow-md rtl:translate-x-1/2"
+              aria-label={t("message.scrollDown")}
+              onClick={() => scrollToBottom(true)}
+            >
+              <IconArrowDown aria-hidden />
+            </Button>
+          )}
         </div>
-      </div>
-      {actions.dialogs}
-    </section>
+        <div className="shrink-0 px-4 pt-1 pb-3">
+          <div className="mx-auto flex w-full max-w-3xl flex-col gap-2">
+            {shownError ? (
+              <div className="flex flex-wrap items-center gap-x-3 gap-y-1">
+                <p role="alert" className="text-destructive text-sm">
+                  {webErrorMessage(shownError) ?? errorMessage(shownError)}
+                </p>
+                {webFailed && webFailed.error === shownError ? (
+                  <Button
+                    type="button"
+                    variant="outline"
+                    className="min-h-11 md:min-h-8"
+                    onClick={() => void handleSendWithoutWeb()}
+                  >
+                    {t("message.sendWithoutWeb")}
+                  </Button>
+                ) : null}
+              </div>
+            ) : null}
+            {aboveComposer}
+            <LimitMcpPrompt limit={limit} connectorsHref={`${getConfig().ID_URL}/connectors/new/`} />
+            <PillComposer
+              ref={composer}
+              chatId={chatId}
+              sending={send.isPending}
+              limit={limit}
+              onSend={handleSend}
+              onStop={() => abort.current?.abort()}
+              placeholder={placeholder ?? t("composer.placeholder")}
+              prefill={prefill}
+            />
+          </div>
+        </div>
+        {actions.dialogs}
+      </section>
     </ChatCommandsProvider>
   )
 }

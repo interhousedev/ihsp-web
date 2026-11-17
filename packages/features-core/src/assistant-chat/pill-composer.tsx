@@ -140,6 +140,7 @@ export function PillComposer({
     return () => transcription.current?.abort()
   }, [])
 
+  const [plusOpen, setPlusOpen] = useState(false)
   const prefillKey = prefill?.key
   const prefillText = prefill?.text
   const prefillCommand = prefill?.command
@@ -171,6 +172,7 @@ export function PillComposer({
 
   async function submit() {
     if (!canSend) return
+    setPlusOpen(false)
     const draft = { text: text.trim(), files, command }
     returned.current = null
     setText("")
@@ -431,6 +433,8 @@ export function PillComposer({
                     onUpload={() => uploadRef.current?.open()}
                     onPickFiles={() => setPickerOpen(true)}
                     onAskNotebook={askNotebook}
+                    open={plusOpen}
+                    onOpenChange={setPlusOpen}
                   />
                 ) : (
                   <span className="w-2 shrink-0" aria-hidden />

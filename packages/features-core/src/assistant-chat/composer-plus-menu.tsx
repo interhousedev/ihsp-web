@@ -17,7 +17,7 @@ import {
   DropdownMenuTrigger,
 } from "@ihsp/ui"
 import { IconBooks, IconFiles, IconNotebook, IconPlus, IconSchool, IconUpload, IconWorld } from "@ihsp/ui"
-import { useRef, type RefObject } from "react"
+import { useEffect, useRef, type RefObject } from "react"
 import { useNotebooks } from "../notebooks/api"
 import { slashInfo, type SlashName } from "./slash-commands"
 import type { WebQuotaState } from "../web-search"
@@ -88,6 +88,9 @@ type ComposerPlusMenuProps = {
   onUpload: () => void
   onPickFiles: () => void
   onAskNotebook: (notebook: NotebookItem) => void
+  /** Controlled open state: the composer closes the menu when a message is sent. */
+  open: boolean
+  onOpenChange: (open: boolean) => void
 }
 
 /**
@@ -106,6 +109,8 @@ export function ComposerPlusMenu({
   onUpload,
   onPickFiles,
   onAskNotebook,
+  open,
+  onOpenChange,
 }: ComposerPlusMenuProps) {
   const t = useT("assistant.composer")
   const toolPicked = useRef(false)
@@ -115,8 +120,27 @@ export function ComposerPlusMenu({
     onStudyTool(name)
   }
 
+  // Escape and a press outside close the menu even when focus has moved to the message field.
+  useEffect(() => {
+    if (!open) return
+    const onKey = (event: KeyboardEvent) => {
+      if (event.key === "Escape") onOpenChange(false)
+    }
+    const onPointer = (event: PointerEvent) => {
+      const target = event.target as Element | null
+      if (target?.closest('[data-slot="dropdown-menu-content"], [role="menu"], [aria-haspopup="menu"]')) return
+      onOpenChange(false)
+    }
+    document.addEventListener("keydown", onKey)
+    document.addEventListener("pointerdown", onPointer)
+    return () => {
+      document.removeEventListener("keydown", onKey)
+      document.removeEventListener("pointerdown", onPointer)
+    }
+  }, [open, onOpenChange])
+
   return (
-    <DropdownMenu>
+    <DropdownMenu open={open} onOpenChange={onOpenChange}>
       <DropdownMenuTrigger
         disabled={disabled}
         render={

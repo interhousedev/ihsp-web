@@ -19,6 +19,7 @@ const FEATURES: Record<AssistantKind, AssistantFeatures> = {
   student: { notebooks: true, share: true, plus: true, tier: true },
   admin: { notebooks: false, share: false, plus: false, tier: false },
   lms_author: { notebooks: false, share: false, plus: false, tier: false },
+  admission: { notebooks: false, share: false, plus: true, tier: true },
 }
 
 export type AssistantScope = {

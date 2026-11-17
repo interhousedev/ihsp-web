@@ -16,6 +16,8 @@ export type PendingMessage = { text: string; fileIds: string[] }
 
 type ChatMessageListProps = {
   chat: ChatDetail
+  /** The empty-conversation text; the LMS one by default. */
+  emptyText?: string
   ratings: Readonly<Record<number, Rating>>
   /** The student's message while its answer is on the way. */
   pending: PendingMessage | null
@@ -36,6 +38,7 @@ type ChatMessageListProps = {
 /** The conversation as a centred column: bubbles for the student, plain Markdown with actions for the assistant. */
 export function ChatMessageList({
   chat,
+  emptyText,
   ratings,
   pending,
   busy,
@@ -73,7 +76,7 @@ export function ChatMessageList({
       className="mx-auto flex w-full max-w-3xl flex-col gap-6 px-4 py-6"
     >
       {messages.length === 0 && pending === null ? (
-        <p className="text-muted-foreground m-auto max-w-sm py-10 text-center text-sm">{t("emptyChat")}</p>
+        <p className="text-muted-foreground m-auto max-w-sm py-10 text-center text-sm">{emptyText ?? t("emptyChat")}</p>
       ) : null}
       {messages.map((message, index) => {
         if (message.role === "user") return <UserMessage key={message.seq} message={message} />
