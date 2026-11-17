@@ -8,6 +8,7 @@ import { AdmissionShell } from "../../shell/components/admission-shell"
 import { useProfile, useWizardConfig } from "../api"
 import { useProfileAnswers } from "../hooks/use-profile-answers"
 import { useProfileText } from "../lib/use-profile-text"
+import { setupSteps } from "../lib/setup-steps"
 import { isAnswered, missingRequired, visibleQuestions } from "../lib/visibility"
 import type { AdmissionConfig, Profile } from "../types"
 import { PrefillBadge, QuestionField } from "./question-field"
@@ -22,12 +23,18 @@ function WizardBody({ config, initial }: { config: AdmissionConfig; initial: Pro
   const router = useRouter()
   const params = useSearchParams()
   const { answers, profile, state, setAnswer, flush, retry } = useProfileAnswers(initial)
-  const questions = visibleQuestions(config, { answers, accountKind: initial.account_kind })
-  const missing = missingRequired(questions, answers)
+  const everyQuestion = visibleQuestions(config, { answers, accountKind: initial.account_kind })
+  const missing = missingRequired(everyQuestion, answers)
+  const [known] = useState(() => initial.answers)
+  const [reopened, setReopened] = useState<string[]>(() => {
+    const wanted = params.get("q")
+    return wanted && wanted !== REVIEW ? [wanted] : []
+  })
+  const questions = setupSteps(everyQuestion, known, reopened)
 
   const [current, setCurrent] = useState<string>(() => {
     const wanted = params.get("q")
-    if (wanted === REVIEW || questions.some((question) => question.id === wanted)) return wanted as string
+    if (wanted === REVIEW || everyQuestion.some((question) => question.id === wanted)) return wanted as string
     return initial.next_question ?? (initial.setup_completed ? REVIEW : (questions[0]?.id ?? REVIEW))
   })
   const heading = useRef<HTMLHeadingElement>(null)
@@ -41,6 +48,7 @@ function WizardBody({ config, initial }: { config: AdmissionConfig; initial: Pro
   useEffect(() => heading.current?.focus(), [current])
 
   function go(id: string) {
+    if (id !== REVIEW) setReopened((list) => (list.includes(id) ? list : [...list, id]))
     setCurrent(id)
     router.replace(`/setup/?q=${id}`)
   }
@@ -111,7 +119,7 @@ function WizardBody({ config, initial }: { config: AdmissionConfig; initial: Pro
                     {t("reviewTitle")}
                   </h1>
                   <ReviewScreen
-                    questions={questions}
+                    questions={everyQuestion}
                     answers={answers}
                     missing={missing}
                     busy={finishing || state === "saving"}
