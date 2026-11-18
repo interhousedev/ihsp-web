@@ -67,6 +67,8 @@ export type AdmissionCoachQuestions = Served["CoachQuestionsOut"]
 export type AdmissionCoachExpansion = Served["CoachExpansionOut"]
 export type AdmissionCoachOutline = Served["CoachOutlineOut"]
 export type AdmissionCoachFeedback = Served["CoachFeedbackOut"]
+export type AdmissionCoachCheck = Served["CoachCheckOut"]
+export type AdmissionCoachCheckDimension = Served["CoachCheckDimensionOut"]
 
 // Career
 export type AdmissionCareerQuestion = Served[`${Adm}routes_career__QuestionOut`]
@@ -100,6 +102,18 @@ export type AdmissionAffordability = Served["AffordabilityOut"]
 export type AdmissionListEntry = Served["ListEntryOut"]
 export type AdmissionListAddIn = Schemas["ListAddIn"]
 export type AdmissionListPatchIn = Schemas["ListPatchIn"]
+export type AdmissionDetailGroup = Served["DetailGroupOut"]
+export type AdmissionDetailRow = Served["DetailRowOut"]
+export type AdmissionImportanceFactor = Served["ImportanceFactorOut"]
+
+// Catalog facts for international applicants (staff proposals and the agent API)
+export type AdmissionFactSpec = Served["FactSpecOut"]
+export type AdmissionFactSpecGroup = Served["FactSpecGroupOut"]
+export type AdmissionFactSpecItem = Served["FactSpecItemOut"]
+export type AdmissionFactSpecOption = Served["FactSpecOptionOut"]
+export type AdmissionFactSpecPart = Served["FactSpecPartOut"]
+export type AdmissionCatalogFactIn = Schemas["CatalogFactIn"]
+export type AdmissionCatalogFact = Served["CatalogFactOut"]
 
 // Deadlines
 export type AdmissionMilestone = Served[`${Adm}routes_documents__MilestoneOut`]

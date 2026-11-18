@@ -250,6 +250,7 @@ export type PersonalTokenScope =
   | "admission:memory"
   | "admission:docs"
   | "admission:documents"
+  | "admission:catalog"
 
 /** A personal access token (`ihsp_pat_…`) for scripts; only the prefix is stored readable. */
 export type PersonalToken = {

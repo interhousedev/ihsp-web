@@ -4652,6 +4652,26 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/v1/admission/essays/{essay_id}/coach/check": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Coach Check
+         * @description Score my draft on six dimensions against its prompt (AI consent, daily limit).
+         */
+        post: operations["admission_check_essay"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/v1/admission/essays/{essay_id}/coach/feedback": {
         parameters: {
             query?: never;
@@ -6447,6 +6467,26 @@ export interface paths {
          * @description Revoke a delegated assignment and its children.
          */
         delete: operations["admission_revoke_assignment"];
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/admission/staff/catalog/fact-spec": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Catalog Fact Spec
+         * @description The international facts the proposal form can fill, labelled by locale.
+         */
+        get: operations["admission_catalog_fact_spec"];
+        put?: never;
+        post?: never;
+        delete?: never;
         options?: never;
         head?: never;
         patch?: never;
@@ -20253,12 +20293,44 @@ export interface components {
             items: components["schemas"]["CaseloadItemOut"][];
         };
         /**
+         * CatalogFactIn
+         * @description One international fact with the page it comes from.
+         */
+        CatalogFactIn: {
+            /** Note */
+            note?: string | null;
+            /** Source Url */
+            source_url: string;
+            /** Value */
+            value: unknown;
+            /** Year */
+            year: number;
+        };
+        /**
+         * CatalogFactOut
+         * @description A fact of a proposal.
+         */
+        CatalogFactOut: {
+            /** Note */
+            note?: string | null;
+            /** Source Url */
+            source_url: string;
+            /** Value */
+            value: unknown;
+            /** Year */
+            year: number;
+        };
+        /**
          * CatalogProposalIn
          * @description Propose a new institution or scholarship, or an edit of an existing one.
          */
         CatalogProposalIn: {
+            /** Facts */
+            facts?: {
+                [key: string]: components["schemas"]["CatalogFactIn"];
+            };
             /** Fields */
-            fields: {
+            fields?: {
                 [key: string]: unknown;
             };
             /**
@@ -20295,6 +20367,10 @@ export interface components {
              * Format: date-time
              */
             created_at: string;
+            /** Facts */
+            facts?: {
+                [key: string]: components["schemas"]["CatalogFactOut"];
+            };
             /** Fields */
             fields: {
                 [key: string]: unknown;
@@ -20968,6 +21044,68 @@ export interface components {
         ClientFeatures: {
             /** Login Cues */
             login_cues: boolean;
+        };
+        /**
+         * CoachCheckDimensionOut
+         * @description One rubric dimension: score 0-5, a verified quote and a comment.
+         */
+        CoachCheckDimensionOut: {
+            /** Comment */
+            comment: string;
+            /**
+             * Dim
+             * @enum {string}
+             */
+            dim: "hook" | "theme" | "detail" | "authenticity" | "reflection" | "writing";
+            /** Quote */
+            quote: string | null;
+            /** Score */
+            score: number;
+        };
+        /**
+         * CoachCheckOut
+         * @description The draft scored on six dimensions against its prompt; not stored.
+         */
+        CoachCheckOut: {
+            /**
+             * Band
+             * @enum {string}
+             */
+            band: "exceptional" | "strong" | "solid" | "developing" | "weak";
+            /** Dimensions */
+            dimensions: components["schemas"]["CoachCheckDimensionOut"][];
+            /** First Fix */
+            first_fix: string;
+            /** Flagged Paragraph */
+            flagged_paragraph: number | null;
+            /** Flagged Reason */
+            flagged_reason: string;
+            /** Flagged Text */
+            flagged_text: string | null;
+            /** Generic */
+            generic: boolean;
+            /** Over Limit */
+            over_limit: boolean;
+            /**
+             * Prompt Fit
+             * @enum {string}
+             */
+            prompt_fit: "yes" | "partial" | "no" | "unknown";
+            /** Prompt Fit Reason */
+            prompt_fit_reason: string;
+            /** Score */
+            score: number;
+            /**
+             * Strongest
+             * @enum {string}
+             */
+            strongest: "hook" | "theme" | "detail" | "authenticity" | "reflection" | "writing";
+            /** Summary */
+            summary: string;
+            /** Word Count */
+            word_count: number;
+            /** Word Limit */
+            word_limit: number | null;
         };
         /**
          * CoachExpansionOut
@@ -22344,7 +22482,7 @@ export interface components {
             /** Otp Code */
             otp_code?: string | null;
             /** Scopes */
-            scopes: ("me:read" | "me:write" | "admission:read" | "admission:memory" | "admission:docs" | "admission:documents")[];
+            scopes: ("me:read" | "me:write" | "admission:read" | "admission:memory" | "admission:docs" | "admission:documents" | "admission:catalog")[];
         };
         /**
          * CreateReadingListBody
@@ -23098,6 +23236,38 @@ export interface components {
              * @enum {string}
              */
             status: "sent" | "failed" | "unavailable";
+        };
+        /**
+         * DetailGroupOut
+         * @description Facts of one registry group.
+         */
+        DetailGroupOut: {
+            /** Key */
+            key: string;
+            /** Label */
+            label: string;
+            /** Rows */
+            rows: components["schemas"]["DetailRowOut"][];
+        };
+        /**
+         * DetailRowOut
+         * @description One fact of a school in the detail view, with display text.
+         */
+        DetailRowOut: {
+            /** Key */
+            key: string;
+            /** Kind */
+            kind: string;
+            /** Label */
+            label: string;
+            /** Source Url */
+            source_url: string | null;
+            /** Value */
+            value: unknown;
+            /** Value Text */
+            value_text: string;
+            /** Year */
+            year: number | null;
         };
         /**
          * DeviceCallListOut
@@ -24717,6 +24887,76 @@ export interface components {
             verified: boolean;
         };
         /**
+         * FactSpecGroupOut
+         * @description A group of facts on the staff form.
+         */
+        FactSpecGroupOut: {
+            /** Facts */
+            facts: components["schemas"]["FactSpecItemOut"][];
+            /** Key */
+            key: string;
+            /** Label */
+            label: string;
+        };
+        /**
+         * FactSpecItemOut
+         * @description One fact the staff form can fill in.
+         */
+        FactSpecItemOut: {
+            /** Key */
+            key: string;
+            /** Kind */
+            kind: string;
+            /** Label */
+            label: string;
+            /** Max */
+            max: number | null;
+            /** Min */
+            min: number | null;
+            /** Options */
+            options: components["schemas"]["FactSpecOptionOut"][];
+            /** Parts */
+            parts: components["schemas"]["FactSpecPartOut"][];
+            /** Step */
+            step: number | null;
+            /** Unit */
+            unit: string | null;
+        };
+        /**
+         * FactSpecOptionOut
+         * @description One allowed value of a choice fact.
+         */
+        FactSpecOptionOut: {
+            /** Label */
+            label: string;
+            /** Value */
+            value: string;
+        };
+        /**
+         * FactSpecOut
+         * @description The registry of international facts, labelled in the caller's language.
+         */
+        FactSpecOut: {
+            /** Groups */
+            groups: components["schemas"]["FactSpecGroupOut"][];
+        };
+        /**
+         * FactSpecPartOut
+         * @description One part of a composite fact (range ends, factor levels).
+         */
+        FactSpecPartOut: {
+            /** Key */
+            key: string;
+            /** Label */
+            label: string;
+            /** Max */
+            max: number | null;
+            /** Min */
+            min: number | null;
+            /** Step */
+            step: number | null;
+        };
+        /**
          * FeedAction
          * @description `POST .../feeds/{id}/{action}`; only enable and disable work without a sync.
          * @enum {string}
@@ -26124,6 +26364,18 @@ export interface components {
          */
         Importance: "essential" | "recommended" | "further";
         /**
+         * ImportanceFactorOut
+         * @description How much one factor weighs in the school's admission decision.
+         */
+        ImportanceFactorOut: {
+            /** Importance */
+            importance: string;
+            /** Key */
+            key: string;
+            /** Label */
+            label: string;
+        };
+        /**
          * ImportedMatchResponse
          * @description An imported record that may be the student's.
          */
@@ -26214,6 +26466,16 @@ export interface components {
             cover_url: string | null;
             /** Deadlines */
             deadlines: components["schemas"]["app__interfaces__http__v1__admission__routes_chooser__DeadlineOut"][];
+            /**
+             * Details
+             * @default []
+             */
+            details: components["schemas"]["DetailGroupOut"][];
+            /**
+             * Factors
+             * @default []
+             */
+            factors: components["schemas"]["ImportanceFactorOut"][];
             /** Facts */
             facts: {
                 [key: string]: components["schemas"]["FactOut"];
@@ -41849,6 +42111,8 @@ export interface components {
          * @description One application deadline with plain text only.
          */
         app__interfaces__http__v1__admission__routes_chooser__DeadlineOut: {
+            /** Binding */
+            binding?: boolean | null;
             /** Cycle */
             cycle: string | null;
             /**
@@ -41862,6 +42126,8 @@ export interface components {
             notify_by: string | null;
             /** Plan */
             plan: string;
+            /** Time Zone */
+            time_zone?: string | null;
         };
         /**
          * AttachmentOut
@@ -52270,6 +52536,39 @@ export interface operations {
             };
         };
     };
+    admission_check_essay: {
+        parameters: {
+            query?: never;
+            header?: {
+                "Accept-Language"?: string | null;
+            };
+            path: {
+                essay_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["CoachCheckOut"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
     admission_coach_essay_feedback: {
         parameters: {
             query?: never;
@@ -55663,6 +55962,37 @@ export interface operations {
                     [name: string]: unknown;
                 };
                 content?: never;
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    admission_catalog_fact_spec: {
+        parameters: {
+            query?: never;
+            header?: {
+                "Accept-Language"?: string | null;
+            };
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["FactSpecOut"];
+                };
             };
             /** @description Validation Error */
             422: {
