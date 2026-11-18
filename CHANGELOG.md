@@ -12,6 +12,7 @@ All notable changes to this project are documented here. The format follows [Kee
 - Admin: a users page that creates staff accounts, admin-editable AI prompts with versions and analytics, and legal documents per app with forced re-acceptance.
 - Share: a guest page for admission help requests.
 - admission.ihsu.uz access and polish: a no-access page for accounts without admission roles, the `admission:documents` MCP token scope, consultations limited to assigned staff, grouped document checklist, prep calendar and Gantt that open on current content, translated SCEA rounds and audit types, and the AI popup that focuses its composer and stays out of the FAQ and the tour.
+- admission.ihsu.uz international students: a college picker with search, acceptance rates and test policies; the next deadline and an inline "Add a university" row in my list; a school details page with sections, sourced facts, admission factors and deadline tables; an essay check with six scored dimensions, a band and a "How we score" explainer; counselor proposals with international facts, each with its own source and year; and an agent token card for the `admission:catalog` scope that reads the catalog and proposes changes but never approves them.
 
 ## [1.6.3] - 2026-11-16
 
