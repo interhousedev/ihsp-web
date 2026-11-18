@@ -522,6 +522,16 @@
     "words": "{count, plural, one {# word} other {# words}}",
     "wordsOf": "{count} of {limit} words",
     "overLimit": "{count, plural, one {# word} other {# words}} over the limit",
+    "promptEmpty": "No prompt yet",
+    "promptShow": "Show prompt",
+    "promptHide": "Hide prompt",
+    "metaWords": "Words",
+    "metaWordsOf": "{count} / {limit}",
+    "metaStatus": "Status",
+    "statusValue": {
+      "draft": "Draft",
+      "final": "Final"
+    },
     "kindLabel": "Type",
     "kind": {
       "personal_statement": "Personal statement",
@@ -707,6 +717,58 @@
       "support": "Fields and topics to support",
       "leaveOut": "What to leave out",
       "ideas": "Essay ideas"
+    }
+  },
+  "essayCheck": {
+    "tab": "Essay check",
+    "hint": "Scores the saved draft against its prompt on six points.",
+    "run": "Check essay",
+    "running": "Checking…",
+    "tooShort": "Write at least {min} words to check this essay (now {count})",
+    "scoreLabel": "Score {score} out of 100",
+    "range": "{from}–{to}",
+    "band": {
+      "exceptional": "Exceptional",
+      "strong": "Strong",
+      "solid": "Solid",
+      "developing": "Developing",
+      "weak": "Weak"
+    },
+    "promptFit": "Prompt fit",
+    "fit": {
+      "yes": "Answers the prompt",
+      "partial": "Partly answers it",
+      "no": "Misses the prompt",
+      "unknown": "No prompt set"
+    },
+    "dim": {
+      "hook": "Hook",
+      "theme": "Theme",
+      "detail": "Detail",
+      "authenticity": "Authenticity",
+      "reflection": "Reflection",
+      "writing": "Writing"
+    },
+    "dimHint": {
+      "hook": "the opening makes a reader want to continue",
+      "theme": "one clear idea runs through the essay",
+      "detail": "specific scenes and facts instead of general claims",
+      "authenticity": "it sounds like you and could not be anyone else’s",
+      "reflection": "it shows what you learned and how you changed",
+      "writing": "clear, correct and well-paced sentences"
+    },
+    "strongest": "Strongest",
+    "firstFix": "First fix",
+    "flagged": "Paragraph to revisit",
+    "generic": "This reads as a generic essay. Add details only you could write.",
+    "overLimit": "The essay has {count} words; the limit is {limit}.",
+    "how": {
+      "open": "How we score",
+      "title": "How we score",
+      "intro": "The check rates six points of your essay. It reads only the saved text and its prompt.",
+      "scale": "Each point gets 0 to 5: 0 is missing, 5 is excellent.",
+      "formula": "Score = the sum of the six points ÷ 30 × 100.",
+      "limits": "The score is writing feedback. It does not compare you with other students and says nothing about admission chances."
     }
   },
   "nav": {
@@ -1273,6 +1335,40 @@
     "inboxEmptyText": "New comments will appear here.",
     "openStudent": "Open student"
   },
+  "chooserDetails": {
+    "nav": "Sections",
+    "groups": {
+      "overview": "Overview",
+      "selectivity": "Selectivity",
+      "costs": "Costs and aid",
+      "english": "English",
+      "credentials": "Credentials",
+      "application": "Application",
+      "visa": "Visa",
+      "chances": "Your chances"
+    },
+    "unverified": "Unverified",
+    "sourceLink": "Source {host}",
+    "stats": {
+      "intlCost": "International cost",
+      "aid": "Financial aid",
+      "testPolicy": "Test policy"
+    },
+    "factors": {
+      "title": "Admission factors",
+      "legend": "Importance legend"
+    },
+    "importance": {
+      "very_important": "Very important",
+      "important": "Important",
+      "considered": "Considered",
+      "not_considered": "Not considered"
+    },
+    "deadlines": {
+      "title": "Application deadlines",
+      "binding": "Binding"
+    }
+  },
   "chooser": {
     "title": "Choose a university",
     "planning": {
@@ -1403,7 +1499,7 @@
       },
       "highlights": "Highlights",
       "sources": "Sources",
-      "outcomes": "Where IHT students applied"
+      "outcomes": "Where {brand} students applied"
     },
     "estimate": {
       "range": "Estimated chance {low}–{high}%",
@@ -1445,7 +1541,13 @@
       "more": "Notes and affordability",
       "less": "Hide",
       "notes": "Notes",
-      "cycle": "Cycle"
+      "cycle": "Cycle",
+      "addSchool": "Add a university",
+      "addCancel": "Cancel",
+      "binding": "Binding",
+      "deadline": "Next deadline",
+      "noDeadline": "No deadline",
+      "added": "Already in your list"
     },
     "afford": {
       "title": "Affordability",
@@ -1645,6 +1747,30 @@
         "academic": "Academics",
         "activities": "Activities"
       }
+    }
+  },
+  "chooserPicker": {
+    "placeholder": "Search universities",
+    "label": "University",
+    "featured": "Featured",
+    "yourList": "Your list",
+    "popular": "Popular",
+    "results": "Universities",
+    "searching": "Searching",
+    "empty": "No universities match \"{query}\"",
+    "error": "Could not load universities.",
+    "retry": "Try again",
+    "add": "Add a university",
+    "addNamed": "Add \"{query}\"",
+    "skip": "Skip",
+    "clear": "Clear selection",
+    "acceptance": "{rate} admitted",
+    "policy": {
+      "required": "Tests required",
+      "optional": "Test optional",
+      "blind": "Test blind",
+      "flexible": "Test flexible",
+      "not_applicable": "No tests"
     }
   },
   "profile": {
@@ -2581,6 +2707,77 @@
     "suppAdd": "Add a prompt",
     "suppSave": "Save prompts",
     "suppSaved": "Prompts saved"
+  },
+  "catalogFacts": {
+    "choose": "Choose",
+    "yes": "Yes",
+    "no": "No",
+    "unknown": "Unknown",
+    "amount": "{label}: amount",
+    "currency": "{label}: currency",
+    "min": "{label} min",
+    "max": "{label} max",
+    "importance": {
+      "very_important": "Very important",
+      "important": "Important",
+      "considered": "Considered",
+      "not_considered": "Not considered"
+    },
+    "removeField": "Remove {name}",
+    "searchFields": "Search fields of study",
+    "binding": "Binding",
+    "nonBinding": "Not binding",
+    "deadlinePlan": "Plan",
+    "deadlineDate": "Date",
+    "deadlineCycle": "Cycle (YYYY-YY)",
+    "deadlineBinding": "Binding",
+    "deadlineZone": "Time zone",
+    "deadlineNote": "Note",
+    "deadlineRemove": "Remove",
+    "deadlineAdd": "Add a deadline",
+    "deadlineAddFor": "Add a deadline: {label}",
+    "sourceUrl": "Source link (https)",
+    "sourceYear": "Year",
+    "sourceNote": "Note on the source",
+    "sameSource": "Same source for this section",
+    "filled": "{count} filled",
+    "factInvalid": "A fact was rejected: {reason}",
+    "reason": {
+      "unknown_key": "unknown fact",
+      "value": "the value is not valid",
+      "source_url": "the source link is not valid",
+      "year": "the year is not valid",
+      "note": "the note is not valid",
+      "text": "the text is not valid",
+      "kind": "the value has the wrong kind"
+    },
+    "limit": "The limit of proposals is reached: {limit}",
+    "duplicateInstitution": "This school is already in the catalog.",
+    "openInstitution": "Open it",
+    "duplicatePending": "A proposal for this school is already pending.",
+    "openPending": "Open pending proposals",
+    "newSchool": "New school",
+    "next": "Next",
+    "domainLabel": "Website domain",
+    "aliasesLabel": "Other names (comma separated)",
+    "factsLoading": "Loading the facts",
+    "factsError": "The facts could not be loaded",
+    "otherGroup": "Other",
+    "tokenTitle": "Catalog agent token",
+    "tokenHelp": "An agent with this token can read the catalog and propose changes. It cannot approve them and sees no student data.",
+    "tokenName": "Token name",
+    "tokenExpiry": "Valid for",
+    "tokenDays": "{days} days",
+    "tokenCreate": "Create token",
+    "tokenShownOnce": "Copy the token now. It is shown only once.",
+    "tokenCopy": "Copy token",
+    "tokenDone": "Done",
+    "tokenNone": "No catalog tokens yet",
+    "tokenExpires": "expires {date}",
+    "tokenRevoke": "Revoke {name}",
+    "tokenRevokeFailed": "The token could not be revoked",
+    "tokenCreateFailed": "The token could not be created",
+    "tokenCodeFailed": "The code could not be sent"
   },
   "courses": {
     "add": "Add",

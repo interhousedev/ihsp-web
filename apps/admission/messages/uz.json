@@ -522,6 +522,16 @@
     "words": "{count, plural, other {# soʻz}}",
     "wordsOf": "{count} / {limit} soʻz",
     "overLimit": "Limitdan {count, plural, other {# soʻz}} ortiq",
+    "promptEmpty": "Mavzu hali yoʻq",
+    "promptShow": "Mavzuni koʻrsatish",
+    "promptHide": "Mavzuni yashirish",
+    "metaWords": "Soʻzlar",
+    "metaWordsOf": "{count} / {limit}",
+    "metaStatus": "Holat",
+    "statusValue": {
+      "draft": "Qoralama",
+      "final": "Yakuniy"
+    },
     "kindLabel": "Turi",
     "kind": {
       "personal_statement": "Shaxsiy esse",
@@ -707,6 +717,58 @@
       "support": "Qo‘llab-quvvatlanadigan yo‘nalish va mavzular",
       "leaveOut": "Nimani qoldirish kerak",
       "ideas": "Esse g‘oyalari"
+    }
+  },
+  "essayCheck": {
+    "tab": "Inshoni tekshirish",
+    "hint": "Saqlangan qoralamani mavzuga nisbatan oltita band boʻyicha baholaydi.",
+    "run": "Inshoni tekshirish",
+    "running": "Tekshirilmoqda…",
+    "tooShort": "Inshoni tekshirish uchun kamida {min} soʻz yozing (hozir {count})",
+    "scoreLabel": "Baho: 100 dan {score}",
+    "range": "{from}–{to}",
+    "band": {
+      "exceptional": "Ajoyib",
+      "strong": "Kuchli",
+      "solid": "Puxta",
+      "developing": "Rivojlanmoqda",
+      "weak": "Zaif"
+    },
+    "promptFit": "Mavzuga mosligi",
+    "fit": {
+      "yes": "Mavzuga javob beradi",
+      "partial": "Qisman javob beradi",
+      "no": "Mavzuga javob bermaydi",
+      "unknown": "Mavzu kiritilmagan"
+    },
+    "dim": {
+      "hook": "Boshlanish",
+      "theme": "Gʻoya",
+      "detail": "Tafsilotlar",
+      "authenticity": "Samimiylik",
+      "reflection": "Fikr yuritish",
+      "writing": "Bayon"
+    },
+    "dimHint": {
+      "hook": "boshlanish oʻqishni davom ettirishga undaydi",
+      "theme": "insho boʻylab bitta aniq gʻoya oʻtadi",
+      "detail": "umumiy gaplar oʻrniga aniq voqea va faktlar",
+      "authenticity": "matn aynan siz kabi yangraydi",
+      "reflection": "nimani oʻrganganingiz va qanday oʻzgarganingiz koʻrinadi",
+      "writing": "tushunarli, savodli va ravon jumlalar"
+    },
+    "strongest": "Eng kuchli tomoni",
+    "firstFix": "Birinchi tuzatish",
+    "flagged": "Qayta koʻrib chiqiladigan xatboshi",
+    "generic": "Insho shablon taassurotini beradi. Faqat siz yoza oladigan tafsilotlarni qoʻshing.",
+    "overLimit": "Inshoda {count} soʻz bor, limit — {limit}.",
+    "how": {
+      "open": "Qanday baholaymiz",
+      "title": "Qanday baholaymiz",
+      "intro": "Tekshiruv inshoni oltita band boʻyicha baholaydi. U faqat saqlangan matn va mavzuni oʻqiydi.",
+      "scale": "Har bir band 0 dan 5 gacha baholanadi: 0 — yoʻq, 5 — aʼlo.",
+      "formula": "Baho = oltita band yigʻindisi ÷ 30 × 100.",
+      "limits": "Baho — matn boʻyicha fikr-mulohaza. U sizni boshqa oʻquvchilar bilan solishtirmaydi va qabul qilinish imkoniyati haqida hech narsa demaydi."
     }
   },
   "nav": {
@@ -1273,6 +1335,40 @@
     "inboxEmptyText": "Yangi izohlar shu yerda koʻrinadi.",
     "openStudent": "Oʻquvchini ochish"
   },
+  "chooserDetails": {
+    "nav": "Boʻlimlar",
+    "groups": {
+      "overview": "Umumiy maʼlumot",
+      "selectivity": "Saralash",
+      "costs": "Xarajat va yordam",
+      "english": "Ingliz tili",
+      "credentials": "Hujjatlar",
+      "application": "Hujjat topshirish",
+      "visa": "Viza",
+      "chances": "Sizning imkoniyatlaringiz"
+    },
+    "unverified": "Tasdiqlanmagan",
+    "sourceLink": "Manba {host}",
+    "stats": {
+      "intlCost": "Xorijliklar uchun xarajat",
+      "aid": "Moliyaviy yordam",
+      "testPolicy": "Test siyosati"
+    },
+    "factors": {
+      "title": "Qabul omillari",
+      "legend": "Muhimlik belgilari"
+    },
+    "importance": {
+      "very_important": "Juda muhim",
+      "important": "Muhim",
+      "considered": "Hisobga olinadi",
+      "not_considered": "Hisobga olinmaydi"
+    },
+    "deadlines": {
+      "title": "Hujjat topshirish muddatlari",
+      "binding": "Majburiy"
+    }
+  },
   "chooser": {
     "title": "Universitet tanlash",
     "planning": {
@@ -1403,7 +1499,7 @@
       },
       "highlights": "Asosiysi",
       "sources": "Manbalar",
-      "outcomes": "IHT oʻquvchilari qayerga topshirgan"
+      "outcomes": "{brand} oʻquvchilari qayerga topshirgan"
     },
     "estimate": {
       "range": "Taxminiy imkoniyat {low}–{high}%",
@@ -1445,7 +1541,13 @@
       "more": "Eslatmalar va narx",
       "less": "Yashirish",
       "notes": "Eslatmalar",
-      "cycle": "Sikl"
+      "cycle": "Sikl",
+      "addSchool": "Universitet qoʻshish",
+      "addCancel": "Bekor qilish",
+      "binding": "Majburiy",
+      "deadline": "Eng yaqin muddat",
+      "noDeadline": "Muddat yoʻq",
+      "added": "Roʻyxatingizda bor"
     },
     "afford": {
       "title": "Narx boʻyicha imkoniyat",
@@ -1478,12 +1580,12 @@
         "test_optional": "Testlar ixtiyoriy",
         "test_required": "Testlar majburiy",
         "test_blind": "Testlar hisobga olinmaydi",
-        "tuition": "Oʼqish haqi",
-        "fees": "Yigʼimlar",
+        "tuition": "Oʻqish haqi",
+        "fees": "Yigʻimlar",
         "housing": "Turar joy",
         "living": "Kundalik xarajatlar",
-        "travel": "Yoʼl xarajatlari",
-        "full": "Toʼliq moliyalashtirish",
+        "travel": "Yoʻl xarajatlari",
+        "full": "Toʻliq moliyalashtirish",
         "partial": "Qisman moliyalashtirish",
         "merit": "Yutuqlar uchun",
         "need": "Moliyaviy ehtiyoj asosida",
@@ -1530,7 +1632,7 @@
         "ROLLING": "Doimiy"
       },
       "affordability": {
-        "feasible": "Byudjetga sigʼadi",
+        "feasible": "Byudjetga sigʻadi",
         "gap": "Narx farqi bor",
         "unknown": "Nomaʼlum",
         "signed_off": "Kelishilgan"
@@ -1635,7 +1737,7 @@
           "unknown": "Murakkabligini koʻrsatish uchun kurslaringizni qoʻshing."
         },
         "activities": {
-          "weak": "Doimiy mas’uliyatni koʻrsatadigan chuqurroq faoliyat yoki yetakchilik rolini oling.",
+          "weak": "Doimiy masʼuliyatni koʻrsatadigan chuqurroq faoliyat yoki yetakchilik rolini oling.",
           "ok": "Yana bir-ikki faoliyat profilni toʻldiradi.",
           "unknown": "Ahamiyatini koʻrish uchun faoliyatlaringizni qoʻshing."
         }
@@ -1645,6 +1747,30 @@
         "academic": "Oʻqish",
         "activities": "Faoliyatlar"
       }
+    }
+  },
+  "chooserPicker": {
+    "placeholder": "Universitet qidirish",
+    "label": "Universitet",
+    "featured": "Tavsiya etilganlar",
+    "yourList": "Sizning roʻyxatingiz",
+    "popular": "Mashhurlari",
+    "results": "Universitetlar",
+    "searching": "Qidirilmoqda",
+    "empty": "“{query}” boʻyicha universitet topilmadi",
+    "error": "Universitetlarni yuklab boʻlmadi.",
+    "retry": "Qayta urinish",
+    "add": "Universitet qoʻshish",
+    "addNamed": "“{query}” qoʻshish",
+    "skip": "Oʻtkazib yuborish",
+    "clear": "Tanlovni bekor qilish",
+    "acceptance": "Qabul: {rate}",
+    "policy": {
+      "required": "Test majburiy",
+      "optional": "Test ixtiyoriy",
+      "blind": "Test hisobga olinmaydi",
+      "flexible": "Test moslashuvchan",
+      "not_applicable": "Testsiz"
     }
   },
   "profile": {
@@ -2581,6 +2707,77 @@
     "suppAdd": "Mavzu qo‘shish",
     "suppSave": "Mavzularni saqlash",
     "suppSaved": "Mavzular saqlandi"
+  },
+  "catalogFacts": {
+    "choose": "Tanlang",
+    "yes": "Ha",
+    "no": "Yoʻq",
+    "unknown": "Nomaʼlum",
+    "amount": "{label}: summa",
+    "currency": "{label}: valyuta",
+    "min": "{label}, dan",
+    "max": "{label}, gacha",
+    "importance": {
+      "very_important": "Juda muhim",
+      "important": "Muhim",
+      "considered": "Hisobga olinadi",
+      "not_considered": "Hisobga olinmaydi"
+    },
+    "removeField": "Olib tashlash: {name}",
+    "searchFields": "Yoʻnalishlarni qidirish",
+    "binding": "Majburiy",
+    "nonBinding": "Majburiy emas",
+    "deadlinePlan": "Reja",
+    "deadlineDate": "Sana",
+    "deadlineCycle": "Davr (YYYY-YY)",
+    "deadlineBinding": "Majburiyat",
+    "deadlineZone": "Vaqt mintaqasi",
+    "deadlineNote": "Izoh",
+    "deadlineRemove": "Olib tashlash",
+    "deadlineAdd": "Muddat qoʼshish",
+    "deadlineAddFor": "Muddat qoʼshish: {label}",
+    "sourceUrl": "Manba havolasi (https)",
+    "sourceYear": "Yil",
+    "sourceNote": "Manba izohi",
+    "sameSource": "Boʻlim uchun bitta manba",
+    "filled": "Toʻldirildi: {count}",
+    "factInvalid": "Maʼlumot rad etildi: {reason}",
+    "reason": {
+      "unknown_key": "nomaʼlum maʼlumot",
+      "value": "qiymat yaroqsiz",
+      "source_url": "manba havolasi yaroqsiz",
+      "year": "yil yaroqsiz",
+      "note": "izoh yaroqsiz",
+      "text": "matn yaroqsiz",
+      "kind": "qiymat turi mos emas"
+    },
+    "limit": "Takliflar chegarasiga yetildi: {limit}",
+    "duplicateInstitution": "Bu maktab katalogda allaqachon bor.",
+    "openInstitution": "Ochish",
+    "duplicatePending": "Bu maktab uchun taklif allaqachon koʻrib chiqilmoqda.",
+    "openPending": "Kutilayotgan takliflarni ochish",
+    "newSchool": "Yangi maktab",
+    "next": "Keyingisi",
+    "domainLabel": "Sayt domeni",
+    "aliasesLabel": "Boshqa nomlari (vergul bilan)",
+    "factsLoading": "Maʼlumotlar yuklanmoqda",
+    "factsError": "Maʼlumotlarni yuklab boʻlmadi",
+    "otherGroup": "Boshqa",
+    "tokenTitle": "Katalog agenti tokeni",
+    "tokenHelp": "Bu token bilan agent katalogni oʻqiydi va oʻzgarishlar taklif qiladi. Ularni tasdiqlay olmaydi va oʻquvchilar maʼlumotini koʻrmaydi.",
+    "tokenName": "Token nomi",
+    "tokenExpiry": "Amal qilish muddati",
+    "tokenDays": "{days} kun",
+    "tokenCreate": "Token yaratish",
+    "tokenShownOnce": "Tokenni hozir nusxalang. U faqat bir marta koʻrsatiladi.",
+    "tokenCopy": "Tokenni nusxalash",
+    "tokenDone": "Tayyor",
+    "tokenNone": "Katalog tokenlari hali yoʻq",
+    "tokenExpires": "tugaydi: {date}",
+    "tokenRevoke": "Bekor qilish: {name}",
+    "tokenRevokeFailed": "Tokenni bekor qilib boʻlmadi",
+    "tokenCreateFailed": "Tokenni yaratib boʻlmadi",
+    "tokenCodeFailed": "Kodni yuborib boʻlmadi"
   },
   "courses": {
     "add": "Qoʼshish",
