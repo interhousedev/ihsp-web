@@ -433,6 +433,7 @@ describe("keys used in the code", () => {
       ],
       "callForImprovements.status.${value}": ["new", "in_review", "planned", "done", "rejected"],
       "callForImprovements.status.${status}": ["new", "in_review", "planned", "done", "rejected"],
+      "assistant.suggestion.type.${card.type}": ["course", "opportunity", "scholarship", "university"],
       "callForImprovements.source.${item.source}": ["web", "bot"],
       "callForImprovements.detail.channel.${channel}": ["telegram", "mail"],
       "callForImprovements.detail.channel.${delivery.channel}": ["telegram", "mail"],

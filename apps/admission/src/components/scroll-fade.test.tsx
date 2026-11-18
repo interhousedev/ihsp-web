@@ -1,9 +1,22 @@
 import { fireEvent, render } from "@testing-library/react"
-import { describe, expect, test } from "bun:test"
+import { afterEach, describe, expect, test } from "bun:test"
 import { ScrollFade } from "./scroll-fade"
 
+const proto = HTMLElement.prototype
+const saved = {
+  scrollHeight: Object.getOwnPropertyDescriptor(proto, "scrollHeight"),
+  clientHeight: Object.getOwnPropertyDescriptor(proto, "clientHeight"),
+}
+
+// The stubs live on the shared prototype: put the originals back so later files see real layout values.
+afterEach(() => {
+  for (const [name, descriptor] of Object.entries(saved)) {
+    if (descriptor) Object.defineProperty(proto, name, descriptor)
+    else Reflect.deleteProperty(proto, name)
+  }
+})
+
 function setup(scrollHeight: number, clientHeight: number) {
-  const proto = HTMLElement.prototype
   Object.defineProperty(proto, "scrollHeight", { configurable: true, get: () => scrollHeight })
   Object.defineProperty(proto, "clientHeight", { configurable: true, get: () => clientHeight })
   return render(

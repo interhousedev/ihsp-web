@@ -29,7 +29,7 @@ export function SuggestionCards({ cards, busy }: SuggestionCardsProps) {
       {cards.map((card) => {
         const done = requested.has(`${card.type}:${card.id}`)
         return (
-          <li key={`${card.type}:${card.id}`} className="bg-card flex flex-col gap-2 rounded-xl border p-3">
+          <li key={`${card.type}:${card.id}`} className="bg-card flex flex-col gap-2 rounded-card border p-3">
             <p className="text-muted-foreground text-xs font-medium uppercase">{t(`type.${card.type}`)}</p>
             <p className="text-sm font-semibold break-words">{card.title}</p>
             {card.reason ? <p className="text-muted-foreground text-sm break-words">{card.reason}</p> : null}

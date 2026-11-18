@@ -22,6 +22,7 @@ export const adminPromptsHandlers = [
   http.get(apiUrl("/v1/admin/ai/prompts/analytics"), () =>
     HttpResponse.json({ from: "2026-01-01", to: "2026-01-31", items: [] }),
   ),
+  http.get(apiUrl("/v1/admin/ai/prompts/analytics/calls"), () => HttpResponse.json({ items: [] })),
   http.post(apiUrl("/v1/admin/ai/prompts/:task/:name/versions/:version/activate"), ({ params }) =>
     HttpResponse.json(version(Number(param(params, "version")))),
   ),

@@ -32,7 +32,7 @@ export function McpPrompt({ onConnect }: { onConnect: () => void }) {
 
   return (
     <div
-      className="bg-muted/50 mx-4 mt-3 flex shrink-0 items-center gap-2 rounded-xl border px-3 py-1 [@media(max-height:34rem)]:hidden"
+      className="bg-muted/50 mx-4 mt-3 flex shrink-0 items-center gap-2 rounded-card border px-3 py-1 [@media(max-height:34rem)]:hidden"
       data-testid="mcp-prompt"
     >
       <Icons.connectors className="text-muted-foreground size-4 shrink-0" aria-hidden />

@@ -87,7 +87,7 @@ function AssistantDock({ userId }: { userId: string }) {
           ref={panel}
           className={cn(
             "bg-background fixed inset-x-0 bottom-0 z-50 flex h-[85dvh] origin-bottom-right flex-col overflow-hidden rounded-t-2xl border shadow-2xl",
-            "md:inset-x-auto md:right-6 md:bottom-6 md:h-[70dvh] md:max-h-[44rem] md:min-h-[26rem] md:w-[28rem] md:rounded-2xl",
+            "md:inset-x-auto md:right-6 md:bottom-6 md:h-[70dvh] md:max-h-[44rem] md:min-h-[26rem] md:w-[28rem] md:rounded-card",
             "motion-safe:transition-[transform,opacity] motion-safe:duration-200 motion-safe:ease-out",
             open ? "translate-y-0 scale-100 opacity-100" : "pointer-events-none translate-y-6 scale-95 opacity-0",
           )}
@@ -158,7 +158,7 @@ function AssistantDock({ userId }: { userId: string }) {
                         <button
                           key={id}
                           type="button"
-                          className="hover:bg-muted min-h-11 rounded-xl border px-3 py-2 text-start text-sm"
+                          className="hover:bg-muted min-h-11 rounded-card border px-3 py-2 text-start text-sm"
                           onClick={() => setPrefill({ key: Date.now(), text: t(`suggestions.${id}`) })}
                         >
                           {t(`suggestions.${id}`)}
