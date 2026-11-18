@@ -20,6 +20,9 @@ import { formatMoney } from "./institution-card"
 import { ChancesView } from "./chances-view"
 import { ScholarshipList } from "./scholarships-table"
 import { useOptionLabel } from "./option-label"
+import { rowText } from "./detail/groups"
+import { RichDetail } from "./detail/rich-detail"
+import { sectionId } from "./detail/section-id"
 
 /** Which recorded facts each tab shows; facts outside the lists go to "Campus & outcomes". */
 const TAB_FACTS = {
@@ -143,6 +146,11 @@ function DetailBody({ institution }: { institution: Institution }) {
   const admissionFacts = pick(institution, TAB_FACTS.admission).filter(([, fact]) => hasValue(fact))
   const campusFacts = [...pick(institution, TAB_FACTS.safety), ...other].filter(([, fact]) => hasValue(fact))
   const locale = useLocale()
+  const tDetails = useT("chooserDetails")
+  const rich = institution.details.length > 0
+  const intlCost = rowText(institution.details, "intl_coa_usd")
+  const aidBasis = rowText(institution.details, "aid_basis")
+  const testPolicy = rowText(institution.details, "test_policy")
   const loose = t as unknown as { (key: string): string; has: (key: string) => boolean }
   const factName = (key: string) =>
     loose.has(`facts.${key.toLowerCase()}`) ? loose(`facts.${key.toLowerCase()}`) : key
@@ -150,6 +158,24 @@ function DetailBody({ institution }: { institution: Institution }) {
     loose.has(`options.studyType.${value.toLowerCase()}`) ? loose(`options.studyType.${value.toLowerCase()}`) : value
   const hasDeadlines = institution.deadlines.length > 0
   const aid = scholarships.data ?? []
+  const scholarshipBlock = scholarships.isLoading ? (
+    <StateView state="loading" rows={2} />
+  ) : scholarships.isError ? (
+    <StateView state="error" error={scholarships.error} onRetry={() => void scholarships.refetch()} />
+  ) : aid.length > 0 ? (
+    <ScholarshipList items={aid} />
+  ) : null
+  const highlightBlock =
+    institution.highlights.length > 0 ? (
+      <dl className="grid gap-3 sm:grid-cols-2" data-testid="highlights" aria-label={t("detail.highlights")}>
+        {institution.highlights.map((highlight) => (
+          <div key={highlight.key} className="bg-card border-hairline-strong rounded-card border p-3">
+            <dt className="text-muted-foreground text-xs">{highlight.label}</dt>
+            <dd className="text-sm font-semibold">{highlight.value_text}</dd>
+          </div>
+        ))}
+      </dl>
+    ) : null
 
   function select(next: string) {
     const nextParams = new URLSearchParams(params.toString())
@@ -169,7 +195,17 @@ function DetailBody({ institution }: { institution: Institution }) {
         subtitle={[institution.city, countryLabel(institution.country)].filter(Boolean).join(", ")}
         actions={
           <>
-            <Button type="button" variant="outline" onClick={() => select("chances")}>
+            <Button
+              type="button"
+              variant="outline"
+              onClick={() =>
+                rich
+                  ? document
+                      .getElementById(sectionId("chances"))
+                      ?.scrollIntoView({ behavior: "smooth", block: "start" })
+                  : select("chances")
+              }
+            >
               <Icons.target aria-hidden />
               {t("detail.seeChances")}
             </Button>
@@ -195,60 +231,57 @@ function DetailBody({ institution }: { institution: Institution }) {
             <Stat label={t("detail.stats.cost")}>{formatMoney(institution.coa_total, institution.coa_currency)}</Stat>
           ) : null}
           {deadline ? <Stat label={t("detail.stats.deadline")}>{deadlineText(deadline, locale)}</Stat> : null}
+          {rich && intlCost ? <Stat label={tDetails("stats.intlCost")}>{intlCost}</Stat> : null}
+          {rich && aidBasis ? <Stat label={tDetails("stats.aid")}>{aidBasis}</Stat> : null}
+          {rich && testPolicy ? <Stat label={tDetails("stats.testPolicy")}>{testPolicy}</Stat> : null}
         </dl>
       </PhotoHeader>
-      <Tabs value={tab} onValueChange={(value) => select(String(value))}>
-        <TabsList className="max-w-full overflow-x-auto">
-          {TABS.map((name) => (
-            <TabsTrigger key={name} value={name}>
-              {t(`tabs.${name}`)}
-            </TabsTrigger>
-          ))}
-        </TabsList>
-        <Panel value="cost">
-          <div className="flex flex-col gap-4">
-            {costFacts.length > 0 ? <FactRows facts={costFacts} sources={institution.sources} /> : null}
-            {scholarships.isLoading ? (
-              <StateView state="loading" rows={2} />
-            ) : scholarships.isError ? (
-              <StateView state="error" error={scholarships.error} onRetry={() => void scholarships.refetch()} />
-            ) : aid.length > 0 ? (
-              <ScholarshipList items={aid} />
-            ) : null}
-            {costFacts.length === 0 && !scholarships.isLoading && !scholarships.isError && aid.length === 0 ? (
-              <StateView state="empty" title={t("tabEmpty.title")} description={t("tabEmpty.text")} />
-            ) : null}
-          </div>
-        </Panel>
-        <Panel value="admission">
-          <div className="flex flex-col gap-4">
-            {admissionFacts.length > 0 ? <FactRows facts={admissionFacts} sources={institution.sources} /> : null}
-            {hasDeadlines ? <Deadlines items={institution.deadlines} /> : null}
-            {admissionFacts.length === 0 && !hasDeadlines ? (
-              <StateView state="empty" title={t("tabEmpty.title")} description={t("tabEmpty.text")} />
-            ) : null}
-          </div>
-        </Panel>
-        <Panel value="campus">
-          <div className="flex flex-col gap-4">
-            <AiSummary institutionId={institution.id} />
-            {institution.highlights.length > 0 ? (
-              <dl className="grid gap-3 sm:grid-cols-2" data-testid="highlights" aria-label={t("detail.highlights")}>
-                {institution.highlights.map((highlight) => (
-                  <div key={highlight.key} className="bg-card border-hairline-strong rounded-card border p-3">
-                    <dt className="text-muted-foreground text-xs">{highlight.label}</dt>
-                    <dd className="text-sm font-semibold">{highlight.value_text}</dd>
-                  </div>
-                ))}
-              </dl>
-            ) : null}
-            {campusFacts.length > 0 ? <FactRows facts={campusFacts} sources={institution.sources} /> : null}
-          </div>
-        </Panel>
-        <Panel value="chances">
-          <ChancesView institutionId={institution.id} />
-        </Panel>
-      </Tabs>
+      {rich ? <RichDetail institution={institution} chances={<ChancesView institutionId={institution.id} />} /> : null}
+      {rich ? (
+        <div className="flex flex-col gap-4">
+          {scholarshipBlock}
+          <AiSummary institutionId={institution.id} />
+          {highlightBlock}
+        </div>
+      ) : (
+        <Tabs value={tab} onValueChange={(value) => select(String(value))}>
+          <TabsList className="max-w-full overflow-x-auto">
+            {TABS.map((name) => (
+              <TabsTrigger key={name} value={name}>
+                {t(`tabs.${name}`)}
+              </TabsTrigger>
+            ))}
+          </TabsList>
+          <Panel value="cost">
+            <div className="flex flex-col gap-4">
+              {costFacts.length > 0 ? <FactRows facts={costFacts} sources={institution.sources} /> : null}
+              {scholarshipBlock}
+              {costFacts.length === 0 && !scholarships.isLoading && !scholarships.isError && aid.length === 0 ? (
+                <StateView state="empty" title={t("tabEmpty.title")} description={t("tabEmpty.text")} />
+              ) : null}
+            </div>
+          </Panel>
+          <Panel value="admission">
+            <div className="flex flex-col gap-4">
+              {admissionFacts.length > 0 ? <FactRows facts={admissionFacts} sources={institution.sources} /> : null}
+              {hasDeadlines ? <Deadlines items={institution.deadlines} /> : null}
+              {admissionFacts.length === 0 && !hasDeadlines ? (
+                <StateView state="empty" title={t("tabEmpty.title")} description={t("tabEmpty.text")} />
+              ) : null}
+            </div>
+          </Panel>
+          <Panel value="campus">
+            <div className="flex flex-col gap-4">
+              <AiSummary institutionId={institution.id} />
+              {highlightBlock}
+              {campusFacts.length > 0 ? <FactRows facts={campusFacts} sources={institution.sources} /> : null}
+            </div>
+          </Panel>
+          <Panel value="chances">
+            <ChancesView institutionId={institution.id} />
+          </Panel>
+        </Tabs>
+      )}
       <section aria-label={t("detail.outcomes")} className="flex flex-col gap-2">
         <h3 className="text-base font-semibold">{t("detail.outcomes")}</h3>
         <OutcomeSummary institutionId={institution.id} />
