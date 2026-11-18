@@ -2,6 +2,7 @@
 
 import {
   type AdmissionCoachExpansion,
+  type AdmissionCoachCheck,
   type AdmissionCoachFeedback,
   type AdmissionCoachOutline,
   type AdmissionCoachQuestions,
@@ -20,6 +21,7 @@ import {
   getApiClient,
   seg,
 } from "@ihsp/api"
+import { useLocale } from "@ihsp/i18n"
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query"
 
 /** Mirrors the backend `EssayKindT` literal of the essays contract. */
@@ -42,6 +44,7 @@ export type CoachQuestions = AdmissionCoachQuestions
 export type CoachExpansion = AdmissionCoachExpansion
 export type CoachOutline = AdmissionCoachOutline
 export type CoachFeedback = AdmissionCoachFeedback
+export type CoachCheck = AdmissionCoachCheck
 
 const BASE = "/v1/admission"
 export const essayKeys = {
@@ -202,8 +205,25 @@ export function useExpandIdea() {
 }
 
 export function useCoach<T>(id: string, helper: "brainstorm" | "outline" | "feedback") {
+  const locale = useLocale()
   return useMutation({
-    mutationFn: () => getApiClient().post<T>(`${BASE}/essays/${seg(id)}/coach/${helper}`, {}),
+    mutationFn: () =>
+      getApiClient().post<T>(
+        `${BASE}/essays/${seg(id)}/coach/${helper}`,
+        {},
+        { headers: { "Accept-Language": locale } },
+      ),
+  })
+}
+
+/** Scores the saved draft against its prompt and the six-part rubric; the locale rides on Accept-Language. */
+export function useCheckEssay(id: string) {
+  const locale = useLocale()
+  return useMutation({
+    mutationFn: () =>
+      getApiClient().post<CoachCheck>(`${BASE}/essays/${seg(id)}/coach/check`, undefined, {
+        headers: { "Accept-Language": locale },
+      }),
   })
 }
 

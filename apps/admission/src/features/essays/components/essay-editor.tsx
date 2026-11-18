@@ -29,6 +29,8 @@ import { CoachPanel } from "./coach-panel"
 import { DraftSwitcher } from "./draft-switcher"
 import { ScrollTabsList } from "./scroll-tabs-list"
 import { RefinePanel } from "./refine-panel"
+import { CheckPanel } from "./check-panel"
+import { EssayMeta } from "./essay-meta"
 import { ReviewPanel } from "./review-panel"
 import { SuppInfo } from "./supp-info"
 import { useEssayLabel } from "./supp-label"
@@ -66,6 +68,7 @@ const draftOf = (e: Essay): Draft => ({
  */
 export function EssayEditor({ essay }: { essay: Essay }) {
   const t = useT("essays")
+  const tc = useT("essayCheck")
   const { label } = useEssayLabel()
   const errorMessage = useErrorMessage()
   const { session } = useSession()
@@ -198,29 +201,14 @@ export function EssayEditor({ essay }: { essay: Essay }) {
               onChange={(e) => update({ title: e.target.value })}
             />
           </div>
-          <div className="flex flex-col gap-1">
-            <Label htmlFor="essay-limit-edit">{t("wordLimit")}</Label>
-            <Input
-              id="essay-limit-edit"
-              type="number"
-              min={1}
-              inputMode="numeric"
-              className="w-32"
-              value={draft.word_limit ?? ""}
-              onChange={(e) =>
-                update({ word_limit: e.target.value === "" ? null : Math.floor(Number(e.target.value)) })
-              }
-            />
-          </div>
-          <div className="flex flex-col gap-1">
-            <Label htmlFor="essay-prompt-edit">{t("promptLabel")}</Label>
-            <Textarea
-              id="essay-prompt-edit"
-              rows={2}
-              value={draft.prompt_text}
-              onChange={(e) => update({ prompt_text: e.target.value })}
-            />
-          </div>
+          <EssayMeta
+            prompt={draft.prompt_text}
+            wordLimit={draft.word_limit}
+            words={words}
+            status={essay.status === "final" ? "final" : "draft"}
+            onPrompt={(prompt_text) => update({ prompt_text })}
+            onWordLimit={(word_limit) => update({ word_limit })}
+          />
           <div className="flex flex-col gap-1">
             <Label htmlFor="essay-body">{t("body")}</Label>
             <Textarea
@@ -283,6 +271,9 @@ export function EssayEditor({ essay }: { essay: Essay }) {
             <TabsTrigger value="plan" className="shrink-0 flex-none font-medium">
               {t("tabs.plan")}
             </TabsTrigger>
+            <TabsTrigger value="check" className="shrink-0 flex-none font-medium">
+              {tc("tab")}
+            </TabsTrigger>
             <TabsTrigger value="review" className="shrink-0 flex-none font-medium">
               {t("tabs.review")}
             </TabsTrigger>
@@ -304,6 +295,9 @@ export function EssayEditor({ essay }: { essay: Essay }) {
               <PlanPane plan={draft.plan} notes={draft.notes} links={draft.links} onChange={update} />
               <CoachPanel essayId={essay.id} beforeRun={flush} onUseOutline={(plan) => update({ plan })} />
             </div>
+          </TabsContent>
+          <TabsContent value="check">
+            <CheckPanel essayId={essay.id} beforeRun={flush} />
           </TabsContent>
           <TabsContent value="review">
             <ReviewPanel essayId={essay.id} beforeRun={flush} />
