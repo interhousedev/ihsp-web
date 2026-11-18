@@ -1,7 +1,7 @@
 "use client"
 
 import { normalizeStudyGroups } from "./study-label"
-import { useInfiniteQuery, useMutation, useQuery, useQueryClient } from "@tanstack/react-query"
+import { useInfiniteQuery, useMutation, useQueries, useQuery, useQueryClient } from "@tanstack/react-query"
 import { getApiClient } from "@ihsp/api"
 import { useLocale } from "@ihsp/i18n"
 import { useMemo } from "react"
@@ -21,6 +21,7 @@ import {
   removeListEntry,
   requestSignOff,
   searchInstitutions,
+  searchInstitutionsByText,
   type ScholarshipFilters,
 } from "./api"
 import type { ListEntry, ListPatchBody } from "./types"
@@ -44,6 +45,31 @@ export function useInstitutionSearch(filters: Filters) {
     queryFn: ({ pageParam, signal }) => searchInstitutions(filters, pageParam, PAGE_SIZE, signal),
     getNextPageParam: (last) => last.next_cursor ?? undefined,
   })
+}
+
+/** Picker results for the typed text (the caller debounces); `limit` matches. */
+export function useInstitutionPickerSearch(q: string, limit: number, enabled = true) {
+  return useQuery({
+    queryKey: ["admission", "catalog", "picker", q, limit] as const,
+    queryFn: ({ signal }) => searchInstitutionsByText(q, limit, signal),
+    enabled,
+    staleTime: 60_000,
+  })
+}
+
+/** Institutions by id (the detail endpoint, shared with the detail page's cache), in the order of `ids`. */
+export function useInstitutionsByIds(ids: string[]) {
+  const results = useQueries({
+    queries: ids.map((id) => ({
+      queryKey: KEYS.institution(id),
+      queryFn: ({ signal }: { signal: AbortSignal }) => getInstitution(id, signal),
+      staleTime: 5 * 60_000,
+    })),
+  })
+  return {
+    institutions: results.flatMap((result) => (result.data ? [result.data] : [])),
+    isLoading: results.some((result) => result.isLoading),
+  }
 }
 
 /** The catalog's filters with localized labels and options (`GET /catalog/facets`). */

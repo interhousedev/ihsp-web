@@ -22,11 +22,69 @@ export function institution(overrides: Partial<Institution> = {}): Institution {
     deadlines: [],
     sources: [],
     highlights: [],
+    details: [],
+    factors: [],
     name_local: null,
     logo_zoom: 1,
     logo_fit: "circle",
     ...overrides,
   }
+}
+
+/** A school with details in several groups, admission factors and a binding ED deadline. */
+export function richInstitution(overrides: Partial<Institution> = {}): Institution {
+  return institution({
+    id: "i2",
+    name: "Rich University",
+    details: [
+      {
+        key: "selectivity",
+        label: "Selectivity",
+        rows: [
+          {
+            key: "acceptance_rate",
+            label: "Acceptance rate",
+            kind: "range",
+            value: { min: 4, max: 6 },
+            value_text: "4-6%",
+            source_url: "https://www.rich.edu/facts",
+            year: 2025,
+          },
+        ],
+      },
+      {
+        key: "costs",
+        label: "Costs and aid",
+        rows: [
+          {
+            key: "intl_coa_usd",
+            label: "International cost of attendance",
+            kind: "money",
+            value: 90000,
+            value_text: "$90 000",
+            source_url: null,
+            year: null,
+          },
+        ],
+      },
+    ],
+    factors: [
+      { key: "gpa", label: "GPA", importance: "very_important" },
+      { key: "interview", label: "Interview", importance: "not_considered" },
+    ],
+    deadlines: [
+      {
+        plan: "ED",
+        date: "2026-11-02",
+        notify_by: null,
+        cycle: "2026-27",
+        label_short: "Early Decision · Nov 2",
+        binding: true,
+        time_zone: "America/New_York",
+      },
+    ],
+    ...overrides,
+  })
 }
 
 export function estimate(overrides: Partial<Estimate> = {}): Estimate {
@@ -97,6 +155,12 @@ export function mockChooser(options: { items?: Institution[]; list?: ListEntry[]
     ),
     http.get(apiUrl("/v1/admission/config"), () => HttpResponse.json({ options: { city_types: ["any"] } })),
     http.get(apiUrl("/v1/admission/list"), () => HttpResponse.json(options.list ?? [])),
+    http.get(apiUrl("/v1/admission/list/insights"), () =>
+      HttpResponse.json({
+        entries: [],
+        balance: { reach: 0, target: 0, safety: 0, unlabelled: 0, status: "empty" },
+      }),
+    ),
     http.post(apiUrl("/v1/admission/list"), async ({ request }) => {
       listPosts.push(await request.json())
       return HttpResponse.json(listEntry(), { status: 201 })

@@ -1,6 +1,6 @@
 import { getApiClient } from "@ihsp/api"
 import type { Filters } from "./filters"
-import { filtersToQuery } from "./filters"
+import { EMPTY_FILTERS, filtersToQuery } from "./filters"
 import type {
   Affordability,
   Estimate,
@@ -23,6 +23,11 @@ export function searchInstitutions(filters: Filters, cursor: number, limit: numb
     query: { ...filtersToQuery(filters), cursor, limit },
     signal,
   })
+}
+
+/** Text search for the college picker: the first `limit` matches of `q` (an empty `q` returns the catalog's default order). */
+export function searchInstitutionsByText(q: string, limit: number, signal?: AbortSignal) {
+  return searchInstitutions({ ...EMPTY_FILTERS, q }, 0, limit, signal)
 }
 
 export function getFacets(locale: string, signal?: AbortSignal) {

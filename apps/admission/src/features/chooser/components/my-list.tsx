@@ -1,6 +1,6 @@
 "use client"
 
-import { useErrorMessage, useT } from "@ihsp/i18n"
+import { todayIso, useErrorMessage, useLocale, useT } from "@ihsp/i18n"
 import { Alert, AlertDescription, cn, Icons, Pill, Reveal, SortableList, StateView, Textarea, Button } from "@ihsp/ui"
 import Link from "next/link"
 import { usePathname, useRouter, useSearchParams } from "next/navigation"
@@ -8,12 +8,91 @@ import { useState } from "react"
 import { AsideCard, SplitLayout } from "../../../components/lib/split-layout"
 import { UnderlineTabs } from "../../../components/lib/underline-tabs"
 import { ScrollFade } from "../../../components/scroll-fade"
-import { useEntryLabel, useList, usePatchEntry, useRemoveEntry } from "../hooks"
+import { useAddToList, useEntryLabel, useList, usePatchEntry, useRemoveEntry } from "../hooks"
 import { useWorkflow } from "../../../lib/config"
-import type { Bucket, ListEntry, Round } from "../types"
+import { LogoAvatar } from "../../../components/lib/photo-header"
+import { useNow } from "../../../lib/use-now"
+import type { Bucket, Deadline, ListEntry, Round } from "../types"
 import { AffordabilityPanel } from "./affordability-panel"
 import { EstimateView } from "./estimate-view"
+import { InstitutionCombobox } from "./institution-combobox"
 import { useOptionLabel } from "./option-label"
+
+/** The earliest deadline that is not past, with its plan and a "binding" marker. */
+export function NextDeadline({ deadlines }: { deadlines: Deadline[] }) {
+  const t = useT("chooser")
+  const locale = useLocale()
+  const today = todayIso(useNow(60_000))
+  const next = deadlines.filter((item) => item.date >= today).toSorted((a, b) => a.date.localeCompare(b.date))[0]
+  if (!next) return <p className="text-muted-foreground mt-0.5 text-xs">{t("list.noDeadline")}</p>
+  const date = new Intl.DateTimeFormat(locale, {
+    day: "numeric",
+    month: "short",
+    year: "numeric",
+    timeZone: "UTC",
+  }).format(new Date(`${next.date}T00:00:00Z`))
+  return (
+    <p className="mt-0.5 flex flex-wrap items-center gap-1.5 text-xs">
+      <span className="text-muted-foreground">{t("list.deadline")}</span>
+      <span className="tabular-nums">{date}</span>
+      <Pill>{next.plan}</Pill>
+      {next.binding === true ? <Pill tone="warning">{t("list.binding")}</Pill> : null}
+    </p>
+  )
+}
+
+/** The inline "Add a university" row at the bottom of the list: it opens the picker and adds the pick. */
+function AddSchoolRow() {
+  const t = useT("chooser")
+  const errorMessage = useErrorMessage()
+  const list = useList()
+  const add = useAddToList()
+  const [open, setOpen] = useState(false)
+  const [pending, setPending] = useState(false)
+  if (!open)
+    return (
+      <button
+        type="button"
+        className="border-hairline-strong text-muted-foreground hover:text-foreground hover:bg-muted flex w-full items-center gap-2 rounded-lg border border-dashed px-3 py-2.5 text-sm"
+        onClick={() => setOpen(true)}
+      >
+        <Icons.add aria-hidden className="size-4" />
+        {t("list.addSchool")}
+      </button>
+    )
+  const listed = new Set(list.data?.map((entry) => entry.institution.id))
+  return (
+    <div className="flex flex-col gap-2">
+      <div className="flex items-start gap-2">
+        <div className="min-w-0 flex-1">
+          <InstitutionCombobox
+            autoFocus
+            value={null}
+            onChange={(picked) => {
+              if (!picked || listed.has(picked.id) || pending) return
+              setPending(true)
+              add.mutate(
+                { institution_id: picked.id },
+                {
+                  onSuccess: () => setOpen(false),
+                  onSettled: () => setPending(false),
+                },
+              )
+            }}
+          />
+        </div>
+        <Button type="button" variant="ghost" onClick={() => setOpen(false)}>
+          {t("list.addCancel")}
+        </Button>
+      </div>
+      {add.isError ? (
+        <p role="alert" className="text-destructive text-xs">
+          {errorMessage(add.error)}
+        </p>
+      ) : null}
+    </div>
+  )
+}
 
 const SELECT =
   "border-input bg-background h-11 rounded-lg border px-2 text-sm md:h-8 focus-visible:ring-[3px] focus-visible:ring-ring/50 focus-visible:outline-none"
@@ -36,16 +115,26 @@ function EntryRow({ entry }: { entry: ListEntry }) {
   return (
     <div className="flex flex-col gap-3 py-1">
       <div className="flex flex-wrap items-center justify-between gap-2">
-        <div className="min-w-0">
-          <Link
-            href={`/chooser/institution/?id=${encodeURIComponent(entry.institution.id)}`}
-            className="font-medium hover:underline"
-          >
-            {entry.institution.name}
-          </Link>
-          <p className="text-muted-foreground text-xs">
-            {[entry.institution.city, countryLabel(entry.institution.country)].filter(Boolean).join(", ")}
-          </p>
+        <div className="flex min-w-0 flex-1 items-center gap-3">
+          <LogoAvatar
+            name={entry.institution.name}
+            src={entry.institution.logo_url}
+            fit={entry.institution.logo_fit}
+            zoom={entry.institution.logo_zoom}
+            className="size-9 text-xs ring-0"
+          />
+          <div className="min-w-0">
+            <Link
+              href={`/chooser/institution/?id=${encodeURIComponent(entry.institution.id)}`}
+              className="text-sm font-medium hover:underline"
+            >
+              {entry.institution.name}
+            </Link>
+            <p className="text-muted-foreground text-xs">
+              {[entry.institution.city, countryLabel(entry.institution.country)].filter(Boolean).join(", ")}
+            </p>
+            <NextDeadline deadlines={entry.institution.deadlines} />
+          </div>
         </div>
         <div className="flex flex-wrap items-center gap-2">
           <select
@@ -153,17 +242,20 @@ export function MyList() {
   const entries = cycle ? all.filter((entry) => entry.cycle === cycle) : all
   if (all.length === 0)
     return (
-      <StateView
-        state="empty"
-        icon={<Icons.search className="size-8" aria-hidden />}
-        title={t("list.emptyTitle")}
-        description={t("list.emptyText")}
-        action={
-          <Link href="/chooser/search/" className="text-primary text-sm underline-offset-2 hover:underline">
-            {t("list.find")}
-          </Link>
-        }
-      />
+      <div className="flex flex-col gap-4">
+        <StateView
+          state="empty"
+          icon={<Icons.search className="size-8" aria-hidden />}
+          title={t("list.emptyTitle")}
+          description={t("list.emptyText")}
+          action={
+            <Link href="/chooser/search/" className="text-primary text-sm underline-offset-2 hover:underline">
+              {t("list.find")}
+            </Link>
+          }
+        />
+        <AddSchoolRow />
+      </div>
     )
   const groups: { key: Bucket | "none"; entries: ListEntry[] }[] = [
     ...buckets.map((bucket) => ({
@@ -259,6 +351,7 @@ export function MyList() {
             </ScrollFade>
           )}
         </section>
+        <AddSchoolRow />
       </div>
     </SplitLayout>
   )
