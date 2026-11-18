@@ -11,6 +11,8 @@ import { AdmissionShell } from "../../shell/components/admission-shell"
 import { useProposals, useReviewProposal, type Proposal, type ProposalStatus } from "../api"
 import { LogoTuner } from "./logo-tuner"
 import { SuppPromptsEditor } from "./supp-prompts-editor"
+import { CatalogTokenCard } from "./catalog-token-card"
+import { ProposalFacts } from "./proposal-facts"
 import { ProposeDialog } from "./propose-dialog"
 import { QueryError } from "../../shell/components/query-error"
 
@@ -46,9 +48,15 @@ function Row({ item, canReview }: { item: Proposal; canReview: boolean }) {
           </div>
         ))}
       </dl>
-      <a className="text-primary text-sm break-all underline" href={item.source_url} target="_blank" rel="noreferrer">
+      <a
+        className="text-primary text-sm break-all underline"
+        href={item.source_url}
+        target="_blank"
+        rel="noopener noreferrer"
+      >
         {item.source_url}
       </a>
+      {item.facts && Object.keys(item.facts).length > 0 && <ProposalFacts facts={item.facts} />}
       {item.note && <p className="text-sm">{item.note}</p>}
       {canReview && item.status === "pending" && (
         <div className="flex gap-2">
@@ -136,6 +144,7 @@ export function CatalogStaffBody() {
       {tuning && <LogoTuner open onOpenChange={setTuning} />}
       {prompting && <SuppPromptsEditor open onOpenChange={setPrompting} />}
       {body}
+      <CatalogTokenCard />
     </div>
   )
 }

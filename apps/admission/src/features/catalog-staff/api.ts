@@ -1,15 +1,28 @@
 "use client"
 
 import {
+  type AdmissionCatalogFact,
+  type AdmissionCatalogFactIn,
+  type AdmissionFactSpec,
+  type AdmissionFactSpecGroup,
+  type AdmissionFactSpecItem,
   type AdmissionLogoPatchIn,
   type AdmissionSuppCycle,
   type AdmissionSuppPromptIn,
   getApiClient,
   seg,
 } from "@ihsp/api"
+import { useLocale } from "@ihsp/i18n"
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query"
 
+const SPEC = "/v1/admission/staff/catalog/fact-spec"
 const BASE = "/v1/admission/staff/catalog/proposals"
+
+/** One proposed fact as the server returns it. */
+export type ProposalFact = AdmissionCatalogFact
+export type FactSpec = AdmissionFactSpec
+export type FactSpecGroup = AdmissionFactSpecGroup
+export type FactSpecItem = AdmissionFactSpecItem
 
 export type ProposalKind = "institution" | "scholarship"
 export type ProposalStatus = "pending" | "approved" | "rejected"
@@ -29,6 +42,7 @@ export type Proposal = {
   review_note: string | null
   applied_id: string | null
   lock_version: number
+  facts?: Record<string, ProposalFact>
 }
 
 export type ProposalList = { items: Proposal[]; can_review: boolean }
@@ -39,6 +53,7 @@ export type ProposalInput = {
   fields: Record<string, unknown>
   source_url: string
   note?: string | null
+  facts?: Record<string, AdmissionCatalogFactIn>
 }
 
 export const PROPOSALS_KEY = ["admission", "catalog-proposals"] as const
@@ -64,6 +79,16 @@ export function useReviewProposal() {
     mutationFn: ({ id, ...body }: { id: string; approve: boolean; note?: string | null; lock_version: number }) =>
       getApiClient().post<Proposal>(`${BASE}/${encodeURIComponent(id)}/review`, body),
     onSuccess: () => client.invalidateQueries({ queryKey: PROPOSALS_KEY }),
+  })
+}
+
+/** GET /staff/catalog/fact-spec: the facts the form can fill, labelled in the request language (Accept-Language). */
+export function useFactSpec() {
+  const locale = useLocale()
+  return useQuery({
+    queryKey: ["admission", "catalog-fact-spec", locale] as const,
+    queryFn: ({ signal }) => getApiClient().get<FactSpec>(SPEC, { headers: { "Accept-Language": locale }, signal }),
+    staleTime: 30 * 60_000,
   })
 }
 

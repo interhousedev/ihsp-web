@@ -61,7 +61,9 @@ describe("catalog staff", () => {
       }),
     )
     renderAdmissionApp(<ProposeDialog open onOpenChange={() => {}} />)
-    fireEvent.change(await screen.findByLabelText("Name"), { target: { value: "Test University" } })
+    fireEvent.change(await screen.findByLabelText("University"), { target: { value: "Test University" } })
+    fireEvent.mouseDown(await screen.findByRole("option", { name: /Add "Test University"/ }))
+    expect(await screen.findByDisplayValue("Test University")).toBeTruthy()
     fireEvent.change(screen.getByLabelText("Country (2 letters)"), { target: { value: "gb" } })
     fireEvent.change(screen.getByLabelText("Source link (https)"), { target: { value: "https://example.edu/a" } })
     fireEvent.click(screen.getByRole("button", { name: "Send" }))

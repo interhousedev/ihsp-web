@@ -56,13 +56,15 @@ export function useDeleteMemoryNote() {
   })
 }
 
-/** The personal tokens of the account that carry an admission scope. */
+/** The personal tokens of the account that carry an admission MCP scope (not the catalog agent scope). */
 export function useAdmissionTokens() {
   return useQuery({
     ...getIdPersonalTokensQuery(),
     select: (tokens) =>
       tokens.filter(
-        (token) => token.revoked_at === null && token.scopes.some((scope) => scope.startsWith("admission:")),
+        (token) =>
+          token.revoked_at === null &&
+          token.scopes.some((scope) => scope.startsWith("admission:") && scope !== "admission:catalog"),
       ),
   })
 }
