@@ -1,11 +1,14 @@
 import { apiUrl, server } from "@ihsp/test-utils"
 import { fireEvent, screen, waitFor, within } from "@testing-library/react"
 import { afterEach, describe, expect, it, spyOn } from "bun:test"
+import { MotionGlobalConfig } from "motion/react"
 import { http, HttpResponse } from "msw"
 import { toast } from "sonner"
 import { MyList } from "../features/chooser/components/my-list"
 import { institution, listEntry, mockChooser } from "./chooser-handlers"
 import { renderAdmissionApp } from "./helpers"
+
+MotionGlobalConfig.skipAnimations = true
 
 const messages = {
   chooser: {
