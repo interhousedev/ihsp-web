@@ -61,3 +61,9 @@ export function useOnboardingTour(): OnboardingTourControls {
     close,
   }
 }
+
+/** True while the first-run tour (or a replay) is showing or set aside: other promos wait until it ends. */
+export function useTourPending(): boolean {
+  const { open, paused } = useOnboardingTour()
+  return open || paused
+}

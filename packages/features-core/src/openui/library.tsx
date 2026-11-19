@@ -24,7 +24,8 @@ import { z } from "zod"
 import catalog from "./catalog.json"
 import { SeriesChart } from "./charts"
 import { FlowDiagram } from "./flow"
-import { clamp, safeHttpsUrl, str } from "./safe"
+import Link from "next/link"
+import { clamp, safeLinkUrl, str, type LinkPolicy } from "./safe"
 
 const text = z.union([z.string(), z.number()])
 const children = z.array(z.unknown())
@@ -251,44 +252,60 @@ const Timetable = defineComponent({
 
 type LinkItem = { title: string; url: string; description?: string }
 
-const LinkList = defineComponent({
-  name: "LinkList",
-  description: "A list of https links with short descriptions.",
-  props: z.object({
-    links: z.array(z.object({ title: z.string(), url: z.string(), description: z.string().optional() })),
-    title: z.string().optional(),
-  }),
-  component: ({ props }: ComponentRenderProps<{ links: LinkItem[]; title?: string }>) => (
-    <div className="flex min-w-0 flex-col gap-2">
-      {props.title ? <p className="text-sm font-medium">{str(props.title)}</p> : null}
-      <ul className="flex flex-col gap-2">
-        {clamp(props.links, 12).map((link, index) => {
-          const href = safeHttpsUrl(link.url)
-          return (
-            <li key={index} className="flex min-w-0 flex-col text-sm">
-              {href ? (
-                <a
-                  href={href}
-                  target="_blank"
-                  rel="noopener noreferrer nofollow"
-                  className={cn(
-                    buttonVariants({ variant: "link" }),
-                    "h-auto min-h-11 justify-start px-0 text-start break-words whitespace-normal [overflow-wrap:anywhere]",
-                  )}
-                >
-                  {str(link.title)}
-                </a>
-              ) : (
-                <span className="break-words">{str(link.title)}</span>
-              )}
-              {link.description ? <span className="text-muted-foreground text-xs">{str(link.description)}</span> : null}
-            </li>
-          )
-        })}
-      </ul>
-    </div>
-  ),
-})
+const LINK_CLASS = cn(
+  buttonVariants({ variant: "link" }),
+  "h-auto min-h-11 justify-start px-0 text-start break-words whitespace-normal [overflow-wrap:anywhere]",
+)
+
+/** https: and mailto: open outside the app; an app-relative path navigates in it. */
+function LinkAnchor({ href, className, children }: { href: string; className: string; children: ReactNode }) {
+  if (href.startsWith("/")) {
+    return (
+      <Link href={href} className={className}>
+        {children}
+      </Link>
+    )
+  }
+  return (
+    <a href={href} target="_blank" rel="noopener noreferrer nofollow" className={className}>
+      {children}
+    </a>
+  )
+}
+
+const linkList = (policy: LinkPolicy) =>
+  defineComponent({
+    name: "LinkList",
+    description: "A list of https links with short descriptions.",
+    props: z.object({
+      links: z.array(z.object({ title: z.string(), url: z.string(), description: z.string().optional() })),
+      title: z.string().optional(),
+    }),
+    component: ({ props }: ComponentRenderProps<{ links: LinkItem[]; title?: string }>) => (
+      <div className="flex min-w-0 flex-col gap-2">
+        {props.title ? <p className="text-sm font-medium">{str(props.title)}</p> : null}
+        <ul className="flex flex-col gap-2">
+          {clamp(props.links, 12).map((link, index) => {
+            const href = safeLinkUrl(link.url, policy)
+            return (
+              <li key={index} className="flex min-w-0 flex-col text-sm">
+                {href ? (
+                  <LinkAnchor href={href} className={LINK_CLASS}>
+                    {str(link.title)}
+                  </LinkAnchor>
+                ) : (
+                  <span className="break-words">{str(link.title)}</span>
+                )}
+                {link.description ? (
+                  <span className="text-muted-foreground text-xs">{str(link.description)}</span>
+                ) : null}
+              </li>
+            )
+          })}
+        </ul>
+      </div>
+    ),
+  })
 
 const Flow = defineComponent({
   name: "Flow",
@@ -299,7 +316,20 @@ const Flow = defineComponent({
   ),
 })
 
-const ALL = [Stack, Card, TextBlock, StatGrid, Table, BarChart, LineChart, Progress, Timetable, LinkList, Flow]
+const components = (policy: LinkPolicy) => [
+  Stack,
+  Card,
+  TextBlock,
+  StatGrid,
+  Table,
+  BarChart,
+  LineChart,
+  Progress,
+  Timetable,
+  linkList(policy),
+  Flow,
+]
+const ALL = components("https")
 const STUDIO_NAMES = new Set(catalog.components.filter((c) => c.subsets.includes("studio")).map((c) => c.name))
 
 export const chatLibrary = createLibrary({ components: ALL, root: catalog.root })
@@ -307,3 +337,6 @@ export const studioLibrary = createLibrary({
   components: ALL.filter((component) => STUDIO_NAMES.has(component.name)),
   root: catalog.root,
 })
+
+/** The chat catalogue whose links may also be mailto: or app-relative; used only by the knowledge base reader. */
+export const kbLibrary = createLibrary({ components: components("kb"), root: catalog.root })

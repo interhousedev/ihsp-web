@@ -23,6 +23,17 @@ export function safeHttpsUrl(url: unknown): string | null {
   }
 }
 
+/** Which link targets a block may carry: chat is https only; the knowledge base also allows mailto: and "/…" paths. */
+export type LinkPolicy = "https" | "kb"
+
+/** The URL when the policy allows it (https: always; mailto: and app-relative "/…" under "kb"), else null. */
+export function safeLinkUrl(url: unknown, policy: LinkPolicy = "https"): string | null {
+  const https = safeHttpsUrl(url)
+  if (https !== null || policy === "https" || typeof url !== "string") return https
+  const value = url.trim()
+  return /^mailto:[^\s<>"]+$/i.test(value) || /^\/(?!\/)[^\s<>"\\]*$/.test(value) ? value : null
+}
+
 /** All strings in an OpenUI block source, for the readable fallback (no raw source dump). */
 export function stringsInBlock(code: string): string[] {
   const found: string[] = []

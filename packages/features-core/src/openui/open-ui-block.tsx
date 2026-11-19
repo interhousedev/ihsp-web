@@ -5,7 +5,7 @@ import { Skeleton } from "@ihsp/ui"
 import { Renderer, type Library } from "@openuidev/react-lang"
 import { Component, useMemo, type ReactNode } from "react"
 import { isRenderable } from "./renderable"
-import { stringsInBlock } from "./safe"
+import { stringsInBlock, type LinkPolicy } from "./safe"
 
 function BlockFallback({ code }: { code: string }) {
   const t = useT("openui")
@@ -50,12 +50,15 @@ export function OpenUiBlock({
   code,
   library,
   isStreaming = false,
+  links = "https",
 }: {
   code: string
   library: Library
   isStreaming?: boolean
+  /** `kb` also accepts mailto: and app-relative links; only the knowledge base reader sets it. */
+  links?: LinkPolicy
 }) {
-  const ok = useMemo(() => isRenderable(code, library), [code, library])
+  const ok = useMemo(() => isRenderable(code, library, links), [code, library, links])
   const fallback = <BlockFallback code={code} />
   if (!ok) return isStreaming ? <OpenUiSkeleton /> : fallback
   return (

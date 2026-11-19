@@ -1,6 +1,6 @@
 import { createParser, type Library } from "@openuidev/react-lang"
 import catalog from "./catalog.json"
-import { safeHttpsUrl } from "./safe"
+import { safeLinkUrl, type LinkPolicy } from "./safe"
 
 // The same rules as the backend validator (app/shared/openui/validate.py), checked on the
 // shared corpus (corpus.json). The parser alone accepts partial trees and state references.
@@ -9,8 +9,8 @@ const URL_PROP = /\burl\s*:\s*"((?:\\.|[^"\\])*)"/g
 const ROOT = /^\s*root\s*=/m
 
 /** True when the block parses to a complete tree that the catalogue allows, with no missing references. */
-export function isRenderable(code: string, library: Library): boolean {
-  if (!ROOT.test(code) || UNSAFE_TEXT.test(code) || hasUnsafeSource(code)) return false
+export function isRenderable(code: string, library: Library, links: LinkPolicy = "https"): boolean {
+  if (!ROOT.test(code) || UNSAFE_TEXT.test(code) || hasUnsafeSource(code, links)) return false
   try {
     const result = createParser(library.toJSONSchema(), library.root).parse(code)
     return (
@@ -56,11 +56,11 @@ export function withoutStringText(code: string): string {
 }
 
 /** State references and functions, and links that are not https, outside of the strings' text. */
-function hasUnsafeSource(code: string): boolean {
+function hasUnsafeSource(code: string, links: LinkPolicy): boolean {
   if (/[$@]/.test(withoutStringText(code))) return true
   for (const match of code.matchAll(URL_PROP)) {
     const url = match[1] ?? ""
-    if (safeHttpsUrl(url) === null || /\s/.test(url)) return true
+    if (safeLinkUrl(url, links) === null || /\s/.test(url)) return true
   }
   return false
 }
