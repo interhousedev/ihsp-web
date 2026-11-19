@@ -9,11 +9,14 @@ import Link from "next/link"
 import { useRouter } from "next/navigation"
 import { Suspense, useEffect, type ReactNode } from "react"
 import { hasNoAdmissionAccess, isStaffOnly, landingFor, useNav } from "../../../config/nav"
+import { SectionTabs } from "../../../components/section-tabs"
 import { AdmissionBrand } from "./admission-brand"
 import { AssistantLauncher, ScreenContextProvider } from "../../assistant"
 import { StudentTour } from "../../steps"
 import { AdmissionConsentGate } from "../../consent/components/consent-gate"
 import { ProfileMenu } from "./profile-menu"
+import { SecondaryMenu } from "./secondary-menu"
+import { SectionBottomBar } from "./section-bottom-bar"
 
 /** Applicant pages: staff without the student role get a "no access" screen with a way to their own page. */
 function StudentArea({ home, children }: { home?: boolean; children: ReactNode }) {
@@ -61,20 +64,33 @@ function StudentArea({ home, children }: { home?: boolean; children: ReactNode }
 function Frame({ tour, children }: { tour: boolean; children: ReactNode }) {
   const nav = useNav()
   const { session } = useSession()
-  const showTour = tour && !hasNoAdmissionAccess(session?.user.roles)
+  const roles = session?.user.roles
+  const showTour = tour && !hasNoAdmissionAccess(roles)
   const platforms = usePlatformLinks()
+  // Applicants get the five-section bar and a header menu; staff and users without access keep the stock bar with "More".
+  const sectionNav = !isStaffOnly(roles) && !hasNoAdmissionAccess(roles)
+  const [, secondary, ...staff] = nav.groups
   return (
     <AppShell
       controlsLeading={<ShellNavControls />}
       nav={nav.groups}
-      bottomNav={nav.bottom}
+      bottomNav={sectionNav ? undefined : nav.bottom}
+      bottomBar={sectionNav ? <SectionBottomBar items={nav.bottom} /> : undefined}
       platforms={platforms}
       brand={<AdmissionBrand />}
       sidebarFooter={<ProfileMenu variant="row" />}
-      controls={<OfflineBadge />}
+      controls={
+        <>
+          <OfflineBadge />
+          {sectionNav ? (
+            <SecondaryMenu links={secondary?.items ?? []} staff={staff.flatMap((group) => group.items)} />
+          ) : null}
+        </>
+      }
     >
       <ScreenContextProvider>
         <MaintenanceBanner />
+        {sectionNav ? <SectionTabs /> : null}
         <Suspense fallback={<PageLoading />}>{children}</Suspense>
         <div className="h-20 md:hidden" aria-hidden />
         <AdmissionConsentGate />

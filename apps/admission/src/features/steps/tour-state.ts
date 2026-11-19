@@ -4,12 +4,11 @@ export type TourStop = { id: string; href: string }
 /** The pages of the applicant flow in the order a new student needs them. Messages: `tour.steps.<id>.{title,text}`. */
 export const TOUR_STOPS: readonly TourStop[] = [
   { id: "home", href: "/" },
-  { id: "journey", href: "/journey/" },
-  { id: "profile", href: "/setup/" },
+  { id: "career", href: "/career/" },
   { id: "activities", href: "/activities/" },
-  { id: "plans", href: "/plan/" },
-  { id: "universities", href: "/chooser/" },
-  { id: "documents", href: "/documents/" },
+  { id: "universities", href: "/chooser/list/" },
+  { id: "essays", href: "/essays/" },
+  { id: "apply", href: "/documents/" },
 ]
 
 export type TourPoint = { x: number; y: number }

@@ -119,7 +119,7 @@ export function TourGuide({ storageKey }: { storageKey: string }) {
           style={placed(state.card ?? (state.dot ? { x: state.dot.x, y: state.dot.y + 52 } : null), phone)}
           className={cn(
             "bg-card text-card-foreground pointer-events-auto fixed flex flex-col gap-3 rounded-card border p-4 shadow-xl",
-            "inset-x-2 bottom-[calc(var(--bottom-nav-height,4rem)+var(--safe-bottom,0px)+0.5rem)]",
+            "max-h-[60dvh] overflow-y-auto inset-x-2 bottom-[calc(var(--bottom-nav-height,4.5rem)+var(--safe-bottom,0px)+0.5rem)]",
             "md:inset-x-auto md:top-auto md:right-4 md:bottom-4 md:left-auto md:w-80",
           )}
         >

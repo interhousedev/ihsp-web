@@ -8,6 +8,8 @@ export type StepOption = {
   label: string
   /** Decoration only (hidden from screen readers); the label carries the meaning. */
   emoji?: string
+  /** A multi-choice chip that excludes the others (e.g. "Anywhere"): picking it clears them, picking another clears it. */
+  exclusive?: boolean
   icon?: ReactNode
   description?: string
 }

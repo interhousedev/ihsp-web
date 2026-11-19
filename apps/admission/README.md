@@ -11,6 +11,22 @@ University admission preparation: profile, activities and honors, plans, univers
 - UI text is in `messages/<locale>.json` for uz, ru and en.
 - `/career/` connects interests and activities to professions, majors/minors and an evidence-backed distinctive strength. Microphone recording requires explicit consent; audio is sent for transcription and discarded, while the editable transcript becomes an answer. Recording stops after 60 seconds.
 
+## Routes
+
+The logo opens Home (`/`, section cards, Continue, tasks and deadlines). The sidebar has five sections whose parts are route-backed tabs:
+
+| Section | Routes |
+|---|---|
+| Career & study | `/career/` with `?tab=explore`, `field`, `future` |
+| Activities & honors | `/activities/` (items open in a popup, `?item=<id>` or `new`), `/plan/`, `/opportunities/`, `/tests/`, `/courses/` |
+| Universities & budget | `/chooser/list/`, `/chooser/search/` (`?view=discover`, `?prefs=1`), `/chooser/budget/` (`?view=scholarships`), `/chooser/institution/` |
+| Essays | `/essays/` (tabs include `story`, `examples`, `alignment`), `/essays/edit/` |
+| Documents & applying | `/documents/`, `/deadlines/`, `/tasks/`, `/review/`, `/outcomes/` |
+
+Secondary links: `/faq/`, `/help/`, `/settings/` (`?tab=profile`). Staff pages are under `/staff/`, including `/staff/exemplars/` and `/staff/prompt-studio/`. `/setup/` is the first-run wizard, outside the nav.
+
+Old routes (`/journey/`, `/profile/`, `/words/`, `/alignment/`, `/colleges/*`, `/chooser/`, `/chooser/programs/`, `/chooser/scholarships/`, `/opportunities/plan/`, `/activities/view/`) redirect client-side to the new places and keep the query and hash.
+
 ## Run
 
 ```bash

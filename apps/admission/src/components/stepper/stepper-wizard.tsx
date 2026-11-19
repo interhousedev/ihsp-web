@@ -147,7 +147,7 @@ export function StepperWizard({
           <QuestionField
             key={question.id}
             question={question}
-            value={answers[question.id]}
+            value={answers[question.id] ?? ""}
             onChange={(value) => onAnswer(question.id, value)}
             disabled={busy}
           />

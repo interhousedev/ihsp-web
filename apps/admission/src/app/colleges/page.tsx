@@ -1,11 +1,9 @@
 "use client"
 
-import { useRouter } from "next/navigation"
-import { useEffect } from "react"
+import { RouteRedirect, type RedirectTarget } from "../../components/route-redirect"
 
-/** `/colleges/` has no page of its own: it opens the chooser. */
+const target: RedirectTarget = () => ({ to: "/chooser/search/" })
+
 export default function Page() {
-  const router = useRouter()
-  useEffect(() => router.replace("/chooser/"), [router])
-  return null
+  return <RouteRedirect target={target} />
 }

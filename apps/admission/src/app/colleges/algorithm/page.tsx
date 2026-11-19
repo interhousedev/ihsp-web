@@ -1,7 +1,9 @@
 "use client"
 
-import { AlgorithmPage } from "../../../features/algorithm/components/algorithm-page"
+import { RouteRedirect, type RedirectTarget } from "../../../components/route-redirect"
+
+const target: RedirectTarget = () => ({ to: "/chooser/search/?prefs=1" })
 
 export default function Page() {
-  return <AlgorithmPage />
+  return <RouteRedirect target={target} />
 }

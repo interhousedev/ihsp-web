@@ -1,7 +1,9 @@
 "use client"
 
-import { JourneyPage } from "../../features/journey/journey-page"
+import { RouteRedirect, type RedirectTarget } from "../../components/route-redirect"
+
+const target: RedirectTarget = () => ({ to: "/#journey" })
 
 export default function Page() {
-  return <JourneyPage />
+  return <RouteRedirect target={target} />
 }

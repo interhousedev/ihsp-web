@@ -5,6 +5,112 @@ import { useT } from "@ihsp/i18n"
 import { type BottomNavItem, type NavGroup } from "@ihsp/ui"
 import { useMemo } from "react"
 
+/** The five student sections, in sidebar and phone-bar order (see the IA: Career, Activities, Universities, Essays, Apply). */
+export const SECTION_IDS = ["career", "activities", "universities", "essays", "apply"] as const
+export type SectionId = (typeof SECTION_IDS)[number]
+
+/** One part of a section: a route (`/plan/`) or a query tab (`/career/?tab=field`). Titles: `nav.parts.<id>`. */
+export type SectionPart = { id: string; url: string; isDefault?: boolean }
+
+export type Section = {
+  id: SectionId
+  /** Where the sidebar and the phone bar lead. */
+  url: string
+  icon: "discover" | "sparkles" | "search" | "post" | "files"
+  /** Path prefixes that belong to the section; the longest match wins. */
+  prefixes: readonly string[]
+  parts: readonly SectionPart[]
+}
+
+export const SECTIONS: Record<SectionId, Section> = {
+  career: {
+    id: "career",
+    url: "/career/",
+    icon: "discover",
+    prefixes: ["/career"],
+    parts: [
+      { id: "explore", url: "/career/?tab=explore", isDefault: true },
+      { id: "field", url: "/career/?tab=field" },
+      { id: "future", url: "/career/?tab=future" },
+    ],
+  },
+  activities: {
+    id: "activities",
+    url: "/activities/",
+    icon: "sparkles",
+    prefixes: ["/activities", "/plan", "/opportunities", "/tests", "/courses"],
+    parts: [
+      { id: "done", url: "/activities/" },
+      { id: "planned", url: "/plan/" },
+      { id: "ideas", url: "/opportunities/" },
+      { id: "tests", url: "/tests/" },
+      { id: "courses", url: "/courses/" },
+    ],
+  },
+  universities: {
+    id: "universities",
+    url: "/chooser/list/",
+    icon: "search",
+    prefixes: ["/chooser"],
+    parts: [
+      { id: "list", url: "/chooser/list/" },
+      { id: "search", url: "/chooser/search/" },
+      { id: "budget", url: "/chooser/budget/" },
+    ],
+  },
+  essays: {
+    id: "essays",
+    url: "/essays/",
+    icon: "post",
+    prefixes: ["/essays"],
+    parts: [
+      { id: "essays", url: "/essays/?tab=essays", isDefault: true },
+      { id: "colleges", url: "/essays/?tab=colleges" },
+      { id: "ideas", url: "/essays/?tab=ideas" },
+      { id: "story", url: "/essays/?tab=story" },
+      { id: "examples", url: "/essays/?tab=examples" },
+      { id: "alignment", url: "/essays/?tab=alignment" },
+    ],
+  },
+  apply: {
+    id: "apply",
+    url: "/documents/",
+    icon: "files",
+    prefixes: ["/documents", "/deadlines", "/tasks", "/review", "/outcomes"],
+    parts: [
+      { id: "applications", url: "/documents/" },
+      { id: "deadlines", url: "/deadlines/" },
+      { id: "tasks", url: "/tasks/" },
+      { id: "review", url: "/review/" },
+      { id: "results", url: "/outcomes/" },
+    ],
+  },
+}
+
+/** Secondary student links (sidebar footer group, phone header menu). Titles: `nav.<id>`. */
+export const SECONDARY_LINKS = [
+  { id: "faq", url: "/faq/", icon: "chat" },
+  { id: "help", url: "/help/", icon: "help" },
+  { id: "settings", url: "/settings/", icon: "settings" },
+] as const
+
+/** The section a path belongs to (longest matching prefix), or `null` for Home, Settings, staff pages and the like. */
+export function sectionFor(pathname: string | null | undefined): Section | null {
+  if (!pathname) return null
+  const path = (pathname.split(/[?#]/)[0] ?? "").replace(/\/+$/, "") || "/"
+  let best: Section | null = null
+  let bestLength = -1
+  for (const section of Object.values(SECTIONS)) {
+    for (const prefix of section.prefixes) {
+      if ((path === prefix || path.startsWith(`${prefix}/`)) && prefix.length > bestLength) {
+        best = section
+        bestLength = prefix.length
+      }
+    }
+  }
+  return best
+}
+
 /** Admission staff (backend `STAFF_ROLES` minus transcript officers): caseload, inbox, KB, consultations. Teachers have no admission access. */
 export const CASELOAD_ROLES = ["admin", "counselor", "mentor"] as const
 /** Roles that manage deadlines, the catalog and opportunity moderation (mentors only read and comment). */
@@ -36,7 +142,7 @@ export function landingFor(roles: RoleList): string {
   return hasAny(roles, CASELOAD_ROLES) ? "/staff/" : "/staff/transcripts/"
 }
 
-/** Sidebar groups and the phone bottom bar. Applicants see the application, staff only the staff area. */
+/** Sidebar groups and the phone bottom bar. Applicants see the five sections, staff only the staff area. */
 export function useNav(): { groups: NavGroup[]; bottom: BottomNavItem[] } {
   const t = useT("nav")
   const { session } = useSession()
@@ -47,17 +153,8 @@ export function useNav(): { groups: NavGroup[]; bottom: BottomNavItem[] } {
     const isStaff = hasAny(roles, CASELOAD_ROLES)
     const isCurator = hasAny(roles, CURATOR_ROLES)
     const isDocStaff = hasAny(roles, DOCUMENT_ROLES)
-    const home = { title: t("home"), url: "/", icon: "home", match: "exact" } as const
-    const journey = { title: t("journey"), url: "/journey/", icon: "route" } as const
-    const profile = { title: t("profile"), url: "/profile/", icon: "profile" } as const
-    const activities = { title: t("activities"), url: "/activities/", icon: "sparkles" } as const
-    const plans = { title: t("plans"), url: "/plan/", icon: "calendar" } as const
-    const tasks = { title: t("tasks"), url: "/tasks/", icon: "kanban" } as const
-    const universities = { title: t("universities"), url: "/chooser/", icon: "search" } as const
-    const discover = { title: t("discover"), url: "/colleges/discover/", icon: "discover" } as const
-    const essays = { title: t("essays"), url: "/essays/", icon: "post" } as const
-    const documents = { title: t("documents"), url: "/documents/", icon: "files" } as const
     const settings = { title: t("settings"), url: "/settings/", icon: "settings" } as const
+    const secondary = SECONDARY_LINKS.map((link) => ({ title: t(link.id), url: link.url, icon: link.icon }))
     const staffItems: NavGroup["items"] = [
       { title: t("caseload"), url: "/staff/", icon: "teams", match: "exact", visible: isStaff },
       { title: t("inbox"), url: "/staff/inbox/", icon: "inbox", visible: isStaff },
@@ -65,6 +162,8 @@ export function useNav(): { groups: NavGroup[]; bottom: BottomNavItem[] } {
       { title: t("transcripts"), url: "/staff/transcripts/", icon: "page", visible: isDocStaff },
       { title: t("deadlines"), url: "/staff/deadlines/", icon: "calendarEvent", visible: isCurator },
       { title: t("catalog"), url: "/staff/catalog/", icon: "search", visible: isCurator },
+      { title: t("exemplars"), url: "/staff/exemplars/", icon: "post", visible: isCurator },
+      { title: t("promptStudio"), url: "/staff/prompt-studio/", icon: "sparkles", visible: isCurator },
       {
         title: t("admissionSettings"),
         url: "/staff/settings/",
@@ -108,35 +207,23 @@ export function useNav(): { groups: NavGroup[]; bottom: BottomNavItem[] } {
       ]
       return { groups: [staffGroup, { label: t("groupMore"), items: [settings] }], bottom }
     }
-    const review = { title: t("review"), url: "/review/", icon: "sparkles" } as const
+    const sections = SECTION_IDS.map((id) => ({
+      title: t(`sections.${id}`),
+      url: SECTIONS[id].url,
+      icon: SECTIONS[id].icon,
+      matchPrefixes: SECTIONS[id].prefixes,
+    }))
     const groups: NavGroup[] = [
-      {
-        label: t("groupSteps"),
-        items: [home, journey, profile, activities, plans, tasks, universities, discover, essays, documents, review],
-      },
-      {
-        label: t("groupMore"),
-        items: [
-          { title: t("career"), url: "/career/", icon: "sparkles" },
-          { title: t("opportunities"), url: "/opportunities/", icon: "exams" },
-          { title: t("outcomes"), url: "/outcomes/", icon: "trendingUp" },
-          { title: t("faq"), url: "/faq/", icon: "chat" },
-          { title: t("tests"), url: "/tests/", icon: "certificates" },
-          { title: t("courses"), url: "/courses/", icon: "courses" },
-          { title: t("help"), url: "/help/", icon: "help" },
-          { title: t("docProcess"), url: "/documents/#document-process", icon: "post" },
-          settings,
-        ],
-      },
+      { items: sections },
+      { label: t("groupMore"), items: secondary },
       // Applicants have no staff entries; an empty group would still show its label.
       ...(isDocStaff ? [staffGroup] : []),
     ]
-    const bottom: BottomNavItem[] = [
-      { ...home, title: t("short.home") },
-      { ...activities, title: t("short.activities") },
-      { ...universities, title: t("short.universities") },
-      { ...documents, title: t("short.documents") },
-    ]
+    const bottom: BottomNavItem[] = SECTION_IDS.map((id) => ({
+      title: t(`short.${id}`),
+      url: SECTIONS[id].url,
+      icon: SECTIONS[id].icon,
+    }))
     return { groups, bottom }
   }, [t, roles])
 }

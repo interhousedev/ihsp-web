@@ -63,6 +63,14 @@ export function ChoiceField({ question, value, onChange, compact, disabled }: Fi
   )
 }
 
+/** The picks after toggling `option`; an exclusive option replaces all others and any other pick drops it. */
+function toggled(options: StepOption[], picked: string[], option: StepOption): string[] {
+  if (picked.includes(option.value)) return picked.filter((item) => item !== option.value)
+  if (option.exclusive) return [option.value]
+  const exclusive = new Set(options.filter((item) => item.exclusive).map((item) => item.value))
+  return [...picked.filter((item) => !exclusive.has(item)), option.value]
+}
+
 /** Several picks as toggle chips (checkboxes). */
 export function ChipsField({ question, value, onChange, disabled }: FieldProps) {
   const picked = Array.isArray(value) ? value : []
@@ -85,9 +93,7 @@ export function ChipsField({ question, value, onChange, disabled }: FieldProps) 
                 className="sr-only"
                 checked={on}
                 disabled={disabled}
-                onChange={() =>
-                  onChange(on ? picked.filter((item) => item !== option.value) : [...picked, option.value])
-                }
+                onChange={() => onChange(toggled(question.options, picked, option))}
               />
               <OptionBody option={option} />
             </label>
@@ -132,7 +138,7 @@ export function SelectField({ question, value, onChange, compact, disabled }: Fi
           {question.title}
         </span>
       )}
-      <Select items={items} value={current} disabled={disabled} onValueChange={(next) => next && onChange(next)}>
+      <Select items={items} value={current ?? ""} disabled={disabled} onValueChange={(next) => next && onChange(next)}>
         <SelectTrigger aria-labelledby={labelId} className="w-full">
           <SelectValue placeholder={question.placeholder} />
         </SelectTrigger>

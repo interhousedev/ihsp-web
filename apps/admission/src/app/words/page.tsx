@@ -1,12 +1,9 @@
 "use client"
 
-import { Suspense } from "react"
-import { WordsPage } from "../../features/words/components/words-page"
+import { RouteRedirect, type RedirectTarget } from "../../components/route-redirect"
+
+const target: RedirectTarget = () => ({ to: "/essays/?tab=story#words" })
 
 export default function Page() {
-  return (
-    <Suspense>
-      <WordsPage />
-    </Suspense>
-  )
+  return <RouteRedirect target={target} />
 }

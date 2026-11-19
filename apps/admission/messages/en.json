@@ -44,10 +44,6 @@
         "title": "Which country or region do you prefer?",
         "guide": "Pick a place, or keep it open to see colleges everywhere."
       },
-      "distance": {
-        "title": "How far from home are you comfortable going?",
-        "guide": "Distance changes travel cost and how often you can visit family."
-      },
       "small_classes": {
         "title": "I would hate to sit in large lectures throughout most of college",
         "guide": "Class size shapes how much attention you get from teachers."
@@ -99,15 +95,11 @@
       "setting": {
         "rural": "Rural",
         "suburban": "Suburban",
-        "city": "City"
+        "city": "City",
+        "any": "No preference"
       },
       "region": {
         "any": "No preference"
-      },
-      "distance": {
-        "any": "Distance doesn't matter; I'm looking for the right fit",
-        "near": "Close to home",
-        "far": "Far from home is fine"
       },
       "small_classes": {
         "true": "True story",
@@ -431,7 +423,14 @@
     "record": "Record answer",
     "stop": "Stop and transcribe",
     "listen": "Read question aloud",
-    "voiceConsent": "Voice answers need your AI consent. Turn it on in settings."
+    "voiceConsent": "Voice answers need your AI consent. Turn it on in settings.",
+    "tabs": {
+      "label": "Career sections",
+      "explore": "Explore",
+      "field": "Field of study",
+      "future": "Future"
+    },
+    "nextActivities": "Find activities for {fields}"
   },
   "app": {
     "name": "{appAdmission}",
@@ -717,7 +716,42 @@
       "support": "Fields and topics to support",
       "leaveOut": "What to leave out",
       "ideas": "Essay ideas"
-    }
+    },
+    "backToList": "Back to my list",
+    "story": {
+      "wordsTitle": "Your three words"
+    },
+    "colleges": {
+      "emptyTitle": "No universities on your list",
+      "emptyText": "Add universities to see their essay prompts here."
+    },
+    "examples": {
+      "emptyTitle": "No examples yet",
+      "emptyText": "Admitted essays for your universities will appear here.",
+      "readFull": "Read the full essay",
+      "showAll": "Show all universities",
+      "onlyMine": "Only my list"
+    },
+    "editor": {
+      "share": "Share",
+      "versions": "Version history",
+      "tools": "Plan & tools",
+      "toolbar": "Editor toolbar",
+      "undo": "Undo",
+      "redo": "Redo",
+      "close": "Close",
+      "rail": {
+        "title": "Document tabs",
+        "add": "New essay"
+      },
+      "comments": {
+        "emptyTitle": "No feedback yet",
+        "emptyText": "Share the essay to collect comments from classmates, parents or a counselor.",
+        "detached": "The text has changed since this comment",
+        "resolved": "Resolved"
+      }
+    },
+    "nextStep": "Check application requirements"
   },
   "essayCheck": {
     "tab": "Essay check",
@@ -789,13 +823,16 @@
     "short": {
       "home": "Home",
       "activities": "Activities",
-      "universities": "Colleges",
+      "universities": "Universities",
       "documents": "Documents",
       "caseload": "Caseload",
       "inbox": "Inbox",
       "staffDocuments": "Queue",
       "transcripts": "Transcripts",
-      "settings": "Settings"
+      "settings": "Settings",
+      "career": "Career",
+      "essays": "Essays",
+      "apply": "Apply"
     },
     "home": "Home",
     "journey": "Journey",
@@ -819,7 +856,41 @@
     "opportunities": "Opportunities",
     "tasks": "Tasks",
     "opportunitiesReview": "Opportunities review",
-    "discover": "Discover"
+    "discover": "Discover",
+    "sections": {
+      "career": "Career & study",
+      "activities": "Activities & honors",
+      "universities": "Universities & budget",
+      "essays": "Essays",
+      "apply": "Documents & applying"
+    },
+    "parts": {
+      "explore": "Explore",
+      "field": "Field of study",
+      "future": "Future",
+      "done": "Done",
+      "planned": "Planned",
+      "ideas": "Ideas",
+      "tests": "Tests",
+      "courses": "My courses",
+      "list": "My list",
+      "search": "Search",
+      "budget": "Budget",
+      "essays": "Drafts",
+      "colleges": "By university",
+      "story": "Life story",
+      "examples": "Examples",
+      "alignment": "Alignment",
+      "applications": "Applications",
+      "deadlines": "Deadlines",
+      "tasks": "Tasks",
+      "review": "Review",
+      "results": "Results"
+    },
+    "sectionParts": "{section}: parts",
+    "menu": "More",
+    "exemplars": "Exemplars",
+    "promptStudio": "Prompt studio"
   },
   "outcomes": {
     "title": "Outcomes",
@@ -1001,6 +1072,73 @@
       "words": "Describe yourself in three words",
       "alignment": "See how your activities match your majors",
       "courses": "Free courses worth taking"
+    },
+    "startHere": {
+      "title": "Start here",
+      "dismiss": "Hide the start guide",
+      "show": "Show the start guide",
+      "assistantPrompt": "I don't know what to do",
+      "steps": {
+        "quiz": {
+          "title": "Take the career quiz",
+          "text": "Find fields of study that fit you."
+        },
+        "opportunities": {
+          "title": "Explore opportunities",
+          "text": "Activities, competitions and summer programs to build your activities and honours."
+        },
+        "courses": {
+          "title": "Browse courses",
+          "text": "Pick up the subjects you need."
+        },
+        "howItWorks": {
+          "title": "How applying works",
+          "text": "Read the knowledge base."
+        },
+        "journey": {
+          "title": "Follow the journey",
+          "text": "See the steps and their order."
+        },
+        "assistant": {
+          "title": "Ask the assistant",
+          "text": "Start with: I don't know what to do."
+        }
+      },
+      "quiz": {
+        "label": "Take the 10-minute quiz",
+        "hint": "Find fields of study that fit you"
+      }
+    },
+    "sections": {
+      "label": "Sections",
+      "career": {
+        "title": "Career & study"
+      },
+      "activities": {
+        "title": "Activities & honors"
+      },
+      "universities": {
+        "title": "Universities & budget"
+      },
+      "essays": {
+        "title": "Essays"
+      },
+      "apply": {
+        "title": "Documents & applying"
+      },
+      "status": {
+        "loading": "Loading…",
+        "careerField": "Field: {field}",
+        "careerNone": "Choose a field of study",
+        "activities": "{count, plural, one {# entry} other {# entries}}",
+        "universities": "{count, plural, one {# university on your list} other {# universities on your list}}",
+        "percent": "{percent}% ready"
+      },
+      "continue": {
+        "title": "Your next step",
+        "cta": "Continue",
+        "allDone": "Every readiness step has its next action done."
+      }
     }
   },
   "pages": {
@@ -1082,7 +1220,8 @@
       "tabs": "Settings sections",
       "privacy": "Privacy",
       "data": "My data",
-      "activity": "Access log"
+      "activity": "Access log",
+      "profile": "Profile"
     },
     "mentoring": {
       "title": "Mentoring",
@@ -1408,7 +1547,8 @@
       "label": "Chooser sections",
       "search": "Search",
       "list": "My list",
-      "scholarships": "Scholarships"
+      "scholarships": "Scholarships",
+      "budget": "Budget"
     },
     "verified": "Verified",
     "unverified": "Not verified",
@@ -1499,7 +1639,9 @@
       },
       "highlights": "Highlights",
       "sources": "Sources",
-      "outcomes": "Where {brand} students applied"
+      "outcomes": "Where {brand} students applied",
+      "perYear": "{value} / year",
+      "sourceLabel": "Official website"
     },
     "estimate": {
       "range": "Estimated chance {low}–{high}%",
@@ -1547,7 +1689,35 @@
       "binding": "Binding",
       "deadline": "Next deadline",
       "noDeadline": "No deadline",
-      "added": "Already in your list"
+      "added": "Already in your list",
+      "conflicts": {
+        "title": "Check your early applications",
+        "toast": "Early-round conflict: {text}",
+        "explain": {
+          "multiple_ed": "{names}: only one binding Early Decision (ED) application is allowed.",
+          "ed_with_restrictive": "{names}: Early Decision (ED) cannot be combined with a restrictive early round (REA or SCEA).",
+          "multiple_restrictive": "{names}: most universities allow only one restrictive early round (REA or SCEA).",
+          "restrictive_with_early": "{names}: check the rules, a restrictive early round can limit other early applications.",
+          "multiple_ed2": "{names}: only one binding Early Decision II (ED2) application is allowed."
+        },
+        "badge": {
+          "multiple_ed": "Several ED",
+          "ed_with_restrictive": "ED and REA/SCEA",
+          "multiple_restrictive": "Several REA/SCEA",
+          "restrictive_with_early": "Check early rules",
+          "multiple_ed2": "Several ED2"
+        }
+      },
+      "links": {
+        "label": "Links of {name}",
+        "university": "University",
+        "essays": "Essays",
+        "documents": "Documents"
+      },
+      "next": {
+        "budget": "Check application budget",
+        "essays": "Start essays for {count, plural, one {# university} other {# universities}}"
+      }
     },
     "afford": {
       "title": "Affordability",
@@ -1590,7 +1760,8 @@
         "merit": "Merit-based",
         "need": "Need-based",
         "need_based": "Need-based",
-        "merit_based": "Merit-based"
+        "merit_based": "Merit-based",
+        "institution": "Institution"
       },
       "cityType": {
         "big_city": "Big city",
@@ -1610,7 +1781,10 @@
         "need": "Need",
         "government": "Government",
         "sports": "Sports",
-        "work_study": "Work-study"
+        "work_study": "Work-study",
+        "institution": "From the institution",
+        "country": "From the country",
+        "external": "External"
       },
       "estimate": {
         "safety": "Safety",
@@ -1629,7 +1803,8 @@
         "EA": "EA",
         "REA": "REA",
         "RD": "RD",
-        "ROLLING": "Rolling"
+        "ROLLING": "Rolling",
+        "SCEA": "Single-Choice Early Action"
       },
       "affordability": {
         "feasible": "Fits the budget",
@@ -1747,6 +1922,24 @@
         "academic": "Academics",
         "activities": "Activities"
       }
+    },
+    "view": {
+      "label": "View",
+      "list": "List",
+      "discover": "Discover"
+    },
+    "prefs": {
+      "open": "Preferences",
+      "title": "Your preferences"
+    },
+    "fieldFocus": {
+      "chip": "Field of study: {labels}",
+      "change": "change",
+      "bannerTitle": "Choose your field of study",
+      "bannerAction": "Choose a field"
+    },
+    "nextStep": {
+      "review": "Review my list ({count})"
     }
   },
   "chooserPicker": {
@@ -1771,6 +1964,48 @@
       "blind": "Test blind",
       "flexible": "Test flexible",
       "not_applicable": "No tests"
+    },
+    "fieldNames": {
+      "accounting": "Accounting",
+      "agriculture": "Agriculture",
+      "anthropology": "Anthropology",
+      "architecture": "Architecture",
+      "arts": "Arts",
+      "biology": "Biology",
+      "business": "Business",
+      "chemistry": "Chemistry",
+      "communication": "Communication",
+      "computer-science": "Computer science",
+      "data-science": "Data science",
+      "design": "Design",
+      "economics": "Economics",
+      "education": "Education",
+      "engineering": "Engineering",
+      "environmental-science": "Environmental science",
+      "finance": "Finance",
+      "geography": "Geography",
+      "history": "History",
+      "international-relations": "International relations",
+      "journalism": "Journalism",
+      "languages": "Languages",
+      "law": "Law",
+      "linguistics": "Linguistics",
+      "literature": "Literature",
+      "management": "Management",
+      "marketing": "Marketing",
+      "mathematics": "Mathematics",
+      "medicine": "Medicine",
+      "music": "Music",
+      "nursing": "Nursing",
+      "philosophy": "Philosophy",
+      "physics": "Physics",
+      "political-science": "Political science",
+      "psychology": "Psychology",
+      "public-health": "Public health",
+      "sociology": "Sociology",
+      "sports": "Sports",
+      "statistics": "Statistics",
+      "theology": "Theology"
     }
   },
   "profile": {
@@ -2011,7 +2246,11 @@
       "q29": {
         "medium": "Medium distance",
         "any": "Any"
-      }
+      },
+      "sat_erw": "SAT English"
+    },
+    "oh": {
+      "sat_erw": "Only some universities accept SAT English as proof of English"
     }
   },
   "words": {
@@ -2101,7 +2340,9 @@
       "strength": "Strength",
       "risk": "Risk",
       "gap": "Gap"
-    }
+    },
+    "nextOutcomes": "Record results",
+    "nextOutcomesHint": "Note the decisions you receive to keep your plan up to date."
   },
   "alignment": {
     "title": "Alignment",
@@ -2285,7 +2526,13 @@
       "accept": "Add",
       "dismiss": "Dismiss",
       "accepted": "{count} to add",
-      "savePlan": "Save plan"
+      "savePlan": "Save plan",
+      "addToAchievements": "Add to achievements",
+      "view": {
+        "label": "Plan views",
+        "milestones": "Milestones",
+        "saved": "Saved opportunities"
+      }
     },
     "status": {
       "draft": "Draft",
@@ -2363,6 +2610,27 @@
     },
     "edit": {
       "title": "Edit item"
+    },
+    "notFound": "This item no longer exists",
+    "suggest": {
+      "title": "Ways to start",
+      "plan": "Plan it",
+      "course": {
+        "title": "Take a course",
+        "text": "Find an online or local course that fits your interests."
+      },
+      "certification": {
+        "title": "Earn a certification",
+        "text": "Pick a recognized certificate and add it as an honor."
+      },
+      "exam": {
+        "title": "Prepare for mandatory exams",
+        "text": "See the required tests and book your dates."
+      }
+    },
+    "nextStep": {
+      "explore": "Explore universities",
+      "exploreHint": "See which universities fit these activities"
     }
   },
   "documents": {
@@ -2486,7 +2754,13 @@
       "fee": "Application fee or fee waiver",
       "binding_agreement": "Binding early decision agreement"
     },
-    "processLink": "Document process"
+    "processLink": "Document process",
+    "deadlinesLink": "Deadlines calendar",
+    "backToList": "Back to my list",
+    "nextSearch": "Find universities to add",
+    "nextSearchHint": "Your checklist fills in once your list has universities.",
+    "nextReview": "Run application review",
+    "nextReviewHint": "Get a check of your whole application before you open official portals."
   },
   "transcripts": {
     "doneToast": "Marked ready: {name}",
@@ -2706,7 +2980,11 @@
     "suppRemove": "Remove",
     "suppAdd": "Add a prompt",
     "suppSave": "Save prompts",
-    "suppSaved": "Prompts saved"
+    "suppSaved": "Prompts saved",
+    "rejectTitle": "Reject this proposal?",
+    "rejectDescription": "The author sees the reason.",
+    "rejectReasonLabel": "Reason (optional)",
+    "requiredHint": "Add at least one detail or fact and an https source link to send."
   },
   "catalogFacts": {
     "choose": "Choose",
@@ -2777,7 +3055,18 @@
     "tokenRevoke": "Revoke {name}",
     "tokenRevokeFailed": "The token could not be revoked",
     "tokenCreateFailed": "The token could not be created",
-    "tokenCodeFailed": "The code could not be sent"
+    "tokenCodeFailed": "The code could not be sent",
+    "from": "From",
+    "to": "To",
+    "tokenCodeWrong": "The code is wrong. Check it or send a new one.",
+    "tokenRevoked": "Token revoked",
+    "groupLabel": {
+      "final_results_before_enrolment": "Final results before enrolment"
+    },
+    "rangeError": "Enter a number from {min} to {max}",
+    "suppPromptsTitle": "Supplement prompts",
+    "suppPromptLimit": "{count} words max",
+    "suppPromptOptional": "Optional"
   },
   "courses": {
     "add": "Add",
@@ -2951,7 +3240,8 @@
       "event": "Event",
       "recurring": "Recurring",
       "program": "Program",
-      "scholarship": "Scholarship"
+      "scholarship": "Scholarship",
+      "research": "Research"
     },
     "dateKind": {
       "registration": "Registration closes",
@@ -3009,7 +3299,31 @@
       "consent": "The AI planner needs your consent to AI processing.",
       "consentLink": "Open settings",
       "quota": "You have used this week's AI plans. Try again later."
-    }
+    },
+    "forYou": "For you",
+    "studyFieldsLabel": "Fields of study",
+    "studyFieldsAdd": "Choose fields of study",
+    "studyFieldRemove": "Remove {field}",
+    "categories": {
+      "label": "Categories",
+      "all": "All",
+      "course": "Courses",
+      "certification": "Certifications",
+      "research": "Fellowships & research",
+      "event": "Events",
+      "program": "Programs",
+      "exam": "Exams",
+      "scholarship": "Scholarships"
+    },
+    "sorting": {
+      "label": "Sort by",
+      "banner": "Sorted by your field: {fields}",
+      "change": "Change",
+      "relevance": "Relevance to you",
+      "title": "Title"
+    },
+    "openPlan": "Open my plan",
+    "nextPlanHint": "Your saved opportunities and deadlines are in the plan."
   },
   "opportunitiesStaff": {
     "reports": {
@@ -3222,7 +3536,7 @@
     "steps": {
       "home": {
         "title": "Home",
-        "text": "Your next step and deadlines wait here."
+        "text": "Your next step, tasks and deadlines wait here."
       },
       "journey": {
         "title": "Journey",
@@ -3233,20 +3547,32 @@
         "text": "Answer a few questions. We prefill what we already know."
       },
       "activities": {
-        "title": "Activities",
-        "text": "Add what you do outside class. Admissions read this closely."
+        "title": "Activities & honors",
+        "text": "What you have done, what you plan, tests and courses. Admissions read this closely."
       },
       "plans": {
         "title": "Plan",
         "text": "Your calendar of exams and deadlines."
       },
       "universities": {
-        "title": "Universities",
-        "text": "Build your list and see where you fit."
+        "title": "Universities & budget",
+        "text": "Build your list, search and compare, and check what applying costs."
       },
       "documents": {
         "title": "Documents",
         "text": "Keep transcripts and certificates in one place."
+      },
+      "career": {
+        "title": "Career & study",
+        "text": "Explore careers, choose a field of study and see where it leads."
+      },
+      "essays": {
+        "title": "Essays",
+        "text": "Drafts, a prompt for each university and feedback."
+      },
+      "apply": {
+        "title": "Documents & applying",
+        "text": "Applications, deadlines, tasks, review and results in one place."
       }
     }
   },
@@ -3456,7 +3782,44 @@
       "save": "Save",
       "cancel": "Cancel",
       "readOnly": "You can read the articles but not edit them.",
-      "empty": "No articles yet."
+      "empty": "No articles yet.",
+      "block": {
+        "insert": "Insert block",
+        "limit": "At most {max} blocks",
+        "tooMany": "A text can have at most {max} blocks of up to 6000 characters each",
+        "kind": {
+          "button": "Button",
+          "linkCard": "Link card",
+          "callout": "Callout",
+          "steps": "Steps",
+          "card": "Card"
+        },
+        "field": {
+          "title": "Title",
+          "text": "Text",
+          "label": "Link text",
+          "url": "Link address",
+          "tone": "Type",
+          "steps": "Steps, one per line"
+        },
+        "tone": {
+          "info": "Info",
+          "warning": "Warning"
+        },
+        "invalid": {
+          "title": "Enter a short title",
+          "text": "Enter a short text",
+          "label": "Enter the link text",
+          "url": "The address must start with https:, mailto: or /",
+          "steps": "Enter 1 to 8 steps",
+          "tone": "Choose a type",
+          "source": "This block is not valid"
+        },
+        "apply": "Apply",
+        "cancel": "Cancel",
+        "edit": "Edit",
+        "remove": "Remove"
+      }
     },
     "retry": "Try again"
   },
@@ -3644,6 +4007,229 @@
       "requested": "Requested",
       "ready": "Ready",
       "not_tracked": "Not tracked"
+    }
+  },
+  "richText": {
+    "toolbar": "Formatting",
+    "tool": {
+      "bold": "Bold",
+      "italic": "Italic",
+      "h2": "Heading 2",
+      "h3": "Heading 3",
+      "bullet": "Bulleted list",
+      "ordered": "Numbered list",
+      "quote": "Quote",
+      "link": "Link",
+      "undo": "Undo",
+      "redo": "Redo"
+    },
+    "linkUrl": "Link address",
+    "linkApply": "Apply",
+    "linkCancel": "Cancel",
+    "linkInvalid": "Use a link that starts with https://, mailto: or /",
+    "mode": {
+      "label": "Editing mode",
+      "visual": "Visual",
+      "markdown": "Markdown"
+    },
+    "preview": "Preview",
+    "previewEmpty": "Nothing to preview yet.",
+    "lossyNotice": "This text has formulas, tables or other Markdown that the visual editor would change. It stays in Markdown mode.",
+    "lossyWarning": "This text has formulas, tables or other Markdown that the visual editor may change."
+  },
+  "budget": {
+    "views": {
+      "label": "Budget views",
+      "budget": "Budget",
+      "scholarships": "Scholarships"
+    },
+    "apply": {
+      "title": "Cost to apply"
+    },
+    "feeUnknown": "Fee unknown",
+    "statusFor": "Fee status for {name}",
+    "status": {
+      "unpaid": "Unpaid",
+      "paid": "Paid",
+      "waiver_requested": "Waiver requested",
+      "waiver_approved": "Waiver approved"
+    },
+    "aidForms": "Financial aid forms",
+    "noAidForms": "No aid forms required",
+    "aidFormsUnknown": "Aid forms unknown",
+    "form": {
+      "css_profile": "CSS Profile",
+      "fafsa": "FAFSA",
+      "idoc": "IDOC",
+      "institutional": "Institutional form"
+    },
+    "aidDeadline": "Aid deadline {date}",
+    "totals": {
+      "title": "Application fees",
+      "paid": "paid {amount}",
+      "waived": "waived {amount}",
+      "unknown": "{count} unknown",
+      "cssProfile": "CSS Profile: {count} universities — fees on College Board"
+    },
+    "attend": {
+      "title": "Cost to attend",
+      "university": "University",
+      "annual": "Per year",
+      "aid": "Aid estimate",
+      "gap": "Gap"
+    },
+    "empty": "Your list is empty. Add universities to see what applying costs.",
+    "emptyAction": "Find universities",
+    "startEssays": "Start essays for {count} universities",
+    "moreScholarships": "More scholarships and opportunities"
+  },
+  "essayReview": {
+    "title": "Essay review",
+    "pick": "Universities (up to {max})",
+    "emptyList": "Add universities to your list to review the essay for them.",
+    "run": "Review",
+    "running": "Reviewing…",
+    "refresh": "Refresh",
+    "stale": "Outdated",
+    "quota": "You have used all reviews for this week. Try again next week.",
+    "base": {
+      "title": "Essay review",
+      "criteria": "Criteria",
+      "strengths": "Strengths",
+      "improvements": "Improvements"
+    },
+    "uni": {
+      "alignment": "Alignment: {score}%",
+      "emphasise": "What to emphasise",
+      "edits": "Specific edits",
+      "risks": "Risks",
+      "level": {
+        "strong": "strong",
+        "partial": "partial",
+        "missing": "missing"
+      }
+    }
+  },
+  "exemplarsStaff": {
+    "title": "Essay exemplars",
+    "create": "Add exemplar",
+    "createTitle": "New exemplar",
+    "editTitle": "Edit exemplar",
+    "edit": "Edit",
+    "archive": "Archive",
+    "archived": "Exemplar archived",
+    "archiveTitle": "Archive exemplar",
+    "archiveDescription": "Students will no longer see {title}.",
+    "import": "Import",
+    "importTitle": "Import exemplars",
+    "importLabel": "JSON: a list of up to {limit} exemplars (title, kind, body, source_url)",
+    "importInvalid": "Paste a JSON list of 1 to {limit} exemplars with title, kind, body and source_url.",
+    "imported": "Added drafts: {created}. Already in the library: {duplicates}.",
+    "searchLabel": "Search exemplars",
+    "anyStatus": "Any status",
+    "emptyTitle": "No exemplars found",
+    "fieldTitle": "Title",
+    "fieldKind": "Kind",
+    "fieldStatus": "Status",
+    "fieldInstitution": "Institution",
+    "fieldSchoolName": "School name",
+    "fieldYear": "Admission year",
+    "fieldSourceUrl": "Source URL",
+    "fieldSourceName": "Source name",
+    "fieldPrompt": "Essay prompt",
+    "fieldNotes": "Attribution and consent note",
+    "fieldTags": "Tags (comma separated)",
+    "fieldBody": "Essay text",
+    "words": "{count, plural, one {# word} other {# words}}",
+    "required": "Required",
+    "urlInvalid": "Enter an http or https URL",
+    "yearInvalid": "Enter a year between 1900 and 2100",
+    "save": "Save",
+    "saved": "Exemplar saved",
+    "duplicate": "This exemplar is already in the library.",
+    "kind": {
+      "personal_statement": "Personal statement",
+      "supplement": "Supplement",
+      "why_us": "Why us",
+      "activity": "Activity",
+      "other": "Other"
+    },
+    "status": {
+      "draft": "Draft",
+      "published": "Published",
+      "archived": "Archived"
+    }
+  },
+  "essayInvites": {
+    "title": "Share for review",
+    "description": "Anyone with the link can read this essay until it expires or you revoke it.",
+    "formLabel": "New review link",
+    "audienceLabel": "Who is it for",
+    "audience": {
+      "classmate": "Classmate",
+      "parent": "Parent",
+      "counselor": "Counselor",
+      "other": "Other"
+    },
+    "canComment": "Can comment",
+    "readOnly": "Read only",
+    "ttlLabel": "Expires in (days)",
+    "ttlInvalid": "Enter a whole number from {min} to {max}.",
+    "create": "Create link",
+    "linkLabel": "Review link",
+    "linkOnce": "Copy this link now. It is shown only once.",
+    "copy": "Copy link",
+    "activeTitle": "Active links",
+    "none": "No active links.",
+    "expires": "Expires {time}",
+    "comments": "{count, plural, one {# comment} other {# comments}}",
+    "revoke": "Revoke"
+  },
+  "promptStudio": {
+    "title": "Prompt studio",
+    "slots": "Prompts",
+    "empty": "No editable prompts",
+    "builtin": "Built-in",
+    "versionLabel": "Version {version}",
+    "active": "Active",
+    "placeholders": "Placeholders",
+    "editor": "Prompt text",
+    "note": "Note",
+    "discard": "Discard changes",
+    "publish": "Publish as new version",
+    "saved": "Version {version} is active",
+    "versions": "Versions",
+    "noVersions": "No saved versions yet",
+    "loadIntoEditor": "Load into editor",
+    "activate": "Make active",
+    "activated": "Version {version} is active",
+    "revert": "Revert to built-in",
+    "revertTitle": "Revert to the built-in prompt?",
+    "revertText": "The saved override is dropped and the built-in text applies again.",
+    "reverted": "The built-in prompt applies",
+    "limit": "30 test runs per day, one per sample",
+    "samplesMax": "At most 3 samples per test",
+    "issue": {
+      "empty": "The prompt is empty",
+      "tooLong": "The prompt is longer than 50000 characters",
+      "unknownPlaceholder": "The prompt uses a placeholder this slot does not have",
+      "badFormat": "The prompt has unbalanced braces",
+      "missingFairness": "The prompt does not forbid bias by gender, race, religion, nationality, disability, income or immigration status"
+    },
+    "test": {
+      "title": "Test run",
+      "sample": "Sample {n}",
+      "remove": "Remove",
+      "exemplar": "Sample source",
+      "pasteOwn": "Paste an essay",
+      "add": "Add a sample",
+      "institution": "University (optional)",
+      "run": "Run test",
+      "running": "Running",
+      "scoreDelta": "Score {delta}",
+      "band": "Band {before} to {after}",
+      "active": "Active prompt",
+      "draft": "Draft"
     }
   }
 }
