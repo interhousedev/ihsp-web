@@ -25,7 +25,8 @@ import { Placeholder } from "@tiptap/extension-placeholder"
 import { Markdown } from "@tiptap/markdown"
 import { EditorContent, useEditor, useEditorState, type Editor, type Extensions, type JSONContent } from "@tiptap/react"
 import { StarterKit } from "@tiptap/starter-kit"
-import { useEffect, useMemo, useRef, useState, type FormEvent, type ReactNode } from "react"
+import { useEffect, useMemo, useRef, useState, type ReactNode } from "react"
+import { cleanMarkdown } from "./clean-markdown"
 
 /** Only https:, mailto: and app-relative ("/…", not "//host") links are accepted; javascript:, data: and the rest are not. */
 export function isSafeLinkUrl(url: string): boolean {
@@ -111,6 +112,7 @@ export function RichTextEditor({
   defaultMode = "visual",
   allowMarkdownMode = true,
   previewLabel,
+  renderPreview,
 }: {
   value: string
   onChange: (markdown: string) => void
@@ -130,6 +132,8 @@ export function RichTextEditor({
   allowMarkdownMode?: boolean
   /** The accessible name of the preview region (default: the shared "Preview"). */
   previewLabel?: string
+  /** Draws the Markdown preview; the default is the plain shared Markdown renderer. */
+  renderPreview?: (markdown: string) => ReactNode
 }) {
   const t = useT("richText")
   const [linkOpen, setLinkOpen] = useState(false)
@@ -169,7 +173,7 @@ export function RichTextEditor({
       },
     },
     onUpdate: ({ editor: current }) => {
-      const markdown = current.getMarkdown()
+      const markdown = cleanMarkdown(current.getMarkdown())
       if (limit.current !== undefined && markdown.length > limit.current) {
         current.commands.undo()
         return
@@ -197,7 +201,7 @@ export function RichTextEditor({
   // Load a value that came from outside; typing already produced the current one, so the caret stays put.
   useEffect(() => {
     if (!editor || editor.isDestroyed || markdownMode) return
-    if (value === lastEmitted.current || value === editor.getMarkdown()) return
+    if (value === lastEmitted.current || value === cleanMarkdown(editor.getMarkdown())) return
     lastEmitted.current = value
     editor.commands.setContent(value, { emitUpdate: false, contentType: "markdown" })
   }, [editor, value, markdownMode])
@@ -227,7 +231,7 @@ export function RichTextEditor({
       link: current?.isActive("link") ?? false,
       canUndo: current?.can().undo() ?? false,
       canRedo: current?.can().redo() ?? false,
-      length: current?.getMarkdown().length ?? 0,
+      length: current ? cleanMarkdown(current.getMarkdown()).length : 0,
     }),
   })
 
@@ -238,8 +242,7 @@ export function RichTextEditor({
     setLinkOpen(true)
   }
 
-  function applyLink(event: FormEvent) {
-    event.preventDefault()
+  function applyLink() {
     if (!editor) return
     const url = linkUrl.trim()
     if (url === "") {
@@ -316,7 +319,7 @@ export function RichTextEditor({
         </p>
       ) : null}
       {linkOpen && !markdownMode ? (
-        <form className="flex flex-wrap items-center gap-2" onSubmit={applyLink}>
+        <div className="flex flex-wrap items-center gap-2">
           <Input
             value={linkUrl}
             aria-label={t("linkUrl")}
@@ -327,8 +330,14 @@ export function RichTextEditor({
               setLinkUrl(event.target.value)
               setLinkError(false)
             }}
+            onKeyDown={(event) => {
+              if (event.key !== "Enter") return
+              event.preventDefault()
+              event.stopPropagation()
+              applyLink()
+            }}
           />
-          <Button type="submit" size="sm">
+          <Button type="button" size="sm" onClick={applyLink}>
             {t("linkApply")}
           </Button>
           <Button type="button" size="sm" variant="outline" onClick={() => setLinkOpen(false)}>
@@ -339,7 +348,7 @@ export function RichTextEditor({
               {t("linkInvalid")}
             </p>
           ) : null}
-        </form>
+        </div>
       ) : null}
       {markdownMode ? (
         <div className="grid gap-3 md:grid-cols-2">
@@ -361,7 +370,7 @@ export function RichTextEditor({
             {value.trim() === "" ? (
               <p className="text-muted-foreground text-sm italic">{t("previewEmpty")}</p>
             ) : (
-              <MarkdownView>{value}</MarkdownView>
+              (renderPreview?.(value) ?? <MarkdownView>{value}</MarkdownView>)
             )}
           </section>
         </div>

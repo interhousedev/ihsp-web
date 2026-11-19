@@ -25,6 +25,13 @@ const PHOTO_TYPES = ["image/jpeg", "image/png"]
 const PHOTO_MAX_BYTES = 5 * 1024 * 1024
 
 let photoSequence = 0
+/** The caller's photo after this test's uploads and removals; `undefined` means the fixture user decides. */
+let ownPhotoUrl: string | null | undefined
+
+/** The caller's own photo URL as changed by this test (`undefined` when it was never changed). */
+export function currentOwnPhotoUrl(): string | null | undefined {
+  return ownPhotoUrl
+}
 
 /** One photo upload as the server received it (after the multipart body was read). */
 export type TeacherPhotoUpload = { owner: string; name: string; type: string; size: number }
@@ -38,6 +45,7 @@ export function teacherPhotoUploads(): TeacherPhotoUpload[] {
 export function resetTeacherPhotos(): void {
   photoUploads.length = 0
   photoSequence = 0
+  ownPhotoUrl = undefined
 }
 
 /** Reads the `file` part and applies the server rules: JPEG or PNG, at most 5 MB, not empty. */
@@ -52,12 +60,13 @@ async function receivePhoto(owner: string, request: Request): Promise<Response> 
   }
   photoUploads.push({ owner, name: file.name, type: file.type, size: file.size })
   photoSequence += 1
-  return HttpResponse.json({
-    photo_url: `https://files.example.test/photos/${encodeURIComponent(owner)}-${photoSequence}.jpg`,
-  })
+  const photo_url = `https://files.example.test/photos/${encodeURIComponent(owner)}-${photoSequence}.jpg`
+  if (owner === "me") ownPhotoUrl = photo_url
+  return HttpResponse.json({ photo_url })
 }
 
-function removePhoto(): Response {
+function removePhoto(owner: string): Response {
+  if (owner === "me") ownPhotoUrl = null
   return HttpResponse.json({ photo_url: null })
 }
 
@@ -81,8 +90,10 @@ export const teachersHandlers = [
     contacts.set("me", body)
     return HttpResponse.json(body)
   }),
+  http.put(apiUrl("/v1/me/photo"), ({ request }) => receivePhoto("me", request)),
   http.put(apiUrl("/v1/staff/me/photo"), ({ request }) => receivePhoto("me", request)),
-  http.delete(apiUrl("/v1/staff/me/photo"), () => removePhoto()),
+  http.delete(apiUrl("/v1/me/photo"), () => removePhoto("me")),
+  http.delete(apiUrl("/v1/staff/me/photo"), () => removePhoto("me")),
   http.get(apiUrl("/v1/admin/teacher-contacts/:id"), ({ params }) =>
     HttpResponse.json(contacts.get(param(params, "id")) ?? NO_CONTACTS),
   ),
@@ -99,6 +110,6 @@ export const teachersHandlers = [
   http.delete(apiUrl("/v1/admin/users/:id/photo"), ({ params }) => {
     const id = param(params, "id")
     if (!adminUsers.some((user) => user.id === id)) return notFound("User")
-    return removePhoto()
+    return removePhoto(id)
   }),
 ]

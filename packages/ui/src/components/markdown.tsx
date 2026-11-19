@@ -25,9 +25,13 @@ export function isAllowedImageSource(src: string, origin: string | null = storag
   return origin !== null && (src === origin || src.startsWith(`${origin}/`))
 }
 
+/** Optional filter of link targets: a rejected link is shown as plain text. */
+const AllowLinkContext = createContext<((href: string) => boolean) | null>(null)
+
 function MarkdownLink({ href, children }: { href?: string; children?: ReactNode }) {
   const t = useT()
-  if (!href) return <span>{children}</span>
+  const allow = useContext(AllowLinkContext)
+  if (!href || (allow && !allow(href))) return <span>{children}</span>
   const internal = href.startsWith("#") || (href.startsWith("/") && !href.startsWith("//"))
   if (internal) {
     return (
@@ -241,20 +245,25 @@ export function Markdown({
   children,
   className,
   renderText,
+  allowLink,
   ...props
 }: {
   children: string
   className?: string
   /** Renders the plain text of paragraphs, list items, headings, table cells and bold/italic runs (e.g. citation chips). */
   renderText?: RenderText
+  /** Only links this returns true for are drawn as links (the knowledge base allows https:, mailto: and "/…"). */
+  allowLink?: (href: string) => boolean
 } & Omit<ComponentProps<"div">, "children">) {
   return (
     <div className={cn("text-sm break-words", className)} {...props}>
-      <RenderTextContext.Provider value={renderText ?? null}>
-        <ReactMarkdown remarkPlugins={markdownRemarkPlugins} components={components}>
-          {children}
-        </ReactMarkdown>
-      </RenderTextContext.Provider>
+      <AllowLinkContext.Provider value={allowLink ?? null}>
+        <RenderTextContext.Provider value={renderText ?? null}>
+          <ReactMarkdown remarkPlugins={markdownRemarkPlugins} components={components}>
+            {children}
+          </ReactMarkdown>
+        </RenderTextContext.Provider>
+      </AllowLinkContext.Provider>
     </div>
   )
 }

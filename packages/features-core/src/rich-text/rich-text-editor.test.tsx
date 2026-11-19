@@ -3,6 +3,7 @@ import { fireEvent, screen, waitFor } from "@testing-library/react"
 import { useState } from "react"
 import { RichTextEditor, isSafeLinkUrl } from "./rich-text-editor"
 import { renderRichText } from "./test-support"
+import { cleanMarkdown } from "./clean-markdown"
 
 describe("isSafeLinkUrl", () => {
   test("accepts https, mailto and app-relative links", () => {
@@ -61,7 +62,7 @@ describe("RichTextEditor", () => {
     fireEvent.click(link)
     const input = await screen.findByRole("textbox", { name: "Link address" })
     fireEvent.change(input, { target: { value: "javascript:alert(1)" } })
-    fireEvent.submit(input.closest("form") as HTMLFormElement)
+    fireEvent.click(screen.getByRole("button", { name: "Apply" }))
     expect(await screen.findByRole("alert")).toBeTruthy()
     expect(onChange).not.toHaveBeenCalled()
   })
@@ -121,5 +122,38 @@ describe("RichTextEditor", () => {
     renderRichText(<Harness initial="a" allowMarkdownMode={false} />)
     await screen.findByRole("textbox", { name: "Body" })
     expect(screen.queryByRole("button", { name: "Markdown" })).toBeNull()
+  })
+})
+
+describe("link apply inside an outer form (ADM-KB-FIX-1)", () => {
+  test("Apply and Enter never submit the enclosing form", async () => {
+    const onSubmit = mock((event: { preventDefault: () => void }) => event.preventDefault())
+    renderRichText(
+      <form onSubmit={onSubmit}>
+        <RichTextEditor value="text" onChange={() => {}} ariaLabel="Body" />
+      </form>,
+    )
+    await screen.findByRole("textbox", { name: "Body" })
+    const link = screen.getByRole("button", { name: "Link" }) as HTMLButtonElement
+    await waitFor(() => expect(link.disabled).toBe(false))
+    fireEvent.click(link)
+    const input = await screen.findByRole("textbox", { name: "Link address" })
+    expect(input.closest("form")).toBe(document.querySelector("form"))
+    fireEvent.change(input, { target: { value: "https://example.com/" } })
+    fireEvent.click(screen.getByRole("button", { name: "Apply" }))
+    await waitFor(() => expect(screen.queryByRole("textbox", { name: "Link address" })).toBeNull())
+    fireEvent.click(link)
+    const again = await screen.findByRole("textbox", { name: "Link address" })
+    fireEvent.keyDown(again, { key: "Enter" })
+    expect(onSubmit).not.toHaveBeenCalled()
+  })
+})
+
+describe("cleanMarkdown (ADM-KB-FIX-3)", () => {
+  test("drops &nbsp; paragraphs and extra blank lines but keeps code fences", () => {
+    const out = cleanMarkdown("a\n\n&nbsp;\n\n\n\nb\n\n&nbsp;\n")
+    expect(out).toBe("a\n\nb")
+    expect(out).not.toContain("&nbsp;")
+    expect(cleanMarkdown("```\nx\n\n\ny\n```\n\n&nbsp;")).toBe("```\nx\n\n\ny\n```")
   })
 })

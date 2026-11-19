@@ -53,6 +53,9 @@ const Stack = defineComponent({
   ),
 })
 
+/** A callout marker (ℹ or ⚠) the knowledge base editor stores as the card subtitle. */
+const isMark = (value: string | undefined): value is string => value === "ℹ" || value === "⚠"
+
 const Card = defineComponent({
   name: "Card",
   description: "A titled card that groups a few components.",
@@ -63,8 +66,19 @@ const Card = defineComponent({
   }: ComponentRenderProps<{ title: string; children: unknown[]; subtitle?: string }>) => (
     <UiCard className="min-w-0">
       <CardHeader>
-        <CardTitle className="text-base break-words">{str(props.title)}</CardTitle>
-        {props.subtitle ? <CardDescription className="break-words">{str(props.subtitle)}</CardDescription> : null}
+        {isMark(props.subtitle) ? (
+          <div data-slot="openui-card-heading" className="flex min-w-0 items-center gap-2">
+            <span aria-hidden className="shrink-0 leading-none">
+              {props.subtitle}
+            </span>
+            <CardTitle className="text-base break-words">{str(props.title)}</CardTitle>
+          </div>
+        ) : (
+          <CardTitle className="text-base break-words">{str(props.title)}</CardTitle>
+        )}
+        {props.subtitle && !isMark(props.subtitle) ? (
+          <CardDescription className="break-words">{str(props.subtitle)}</CardDescription>
+        ) : null}
       </CardHeader>
       <CardContent className="flex min-w-0 flex-col gap-3">
         <Nodes list={props.children} render={renderNode} />
@@ -273,6 +287,11 @@ function LinkAnchor({ href, className, children }: { href: string; className: st
   )
 }
 
+const BUTTON_CLASS = cn(
+  buttonVariants({ variant: "default" }),
+  "h-auto min-h-11 w-fit max-w-full text-center break-words whitespace-normal [overflow-wrap:anywhere]",
+)
+
 const linkList = (policy: LinkPolicy) =>
   defineComponent({
     name: "LinkList",
@@ -281,30 +300,43 @@ const linkList = (policy: LinkPolicy) =>
       links: z.array(z.object({ title: z.string(), url: z.string(), description: z.string().optional() })),
       title: z.string().optional(),
     }),
-    component: ({ props }: ComponentRenderProps<{ links: LinkItem[]; title?: string }>) => (
-      <div className="flex min-w-0 flex-col gap-2">
-        {props.title ? <p className="text-sm font-medium">{str(props.title)}</p> : null}
-        <ul className="flex flex-col gap-2">
-          {clamp(props.links, 12).map((link, index) => {
-            const href = safeLinkUrl(link.url, policy)
-            return (
-              <li key={index} className="flex min-w-0 flex-col text-sm">
-                {href ? (
-                  <LinkAnchor href={href} className={LINK_CLASS}>
-                    {str(link.title)}
-                  </LinkAnchor>
-                ) : (
-                  <span className="break-words">{str(link.title)}</span>
-                )}
-                {link.description ? (
-                  <span className="text-muted-foreground text-xs">{str(link.description)}</span>
-                ) : null}
-              </li>
-            )
-          })}
-        </ul>
-      </div>
-    ),
+    component: ({ props }: ComponentRenderProps<{ links: LinkItem[]; title?: string }>) => {
+      /** The knowledge base Button block: one lone link, drawn with the button style. */
+      const asButton = policy === "kb" && props.links.length === 1 && !props.title && !props.links[0]?.description
+      return (
+        <div className="flex min-w-0 flex-col gap-2">
+          {props.title ? <p className="text-sm font-medium">{str(props.title)}</p> : null}
+          <ul className="flex flex-col gap-2">
+            {clamp(props.links, 12).map((link, index) => {
+              const href = safeLinkUrl(link.url, policy)
+              if (href && asButton) {
+                return (
+                  <li key={index} className="flex min-w-0">
+                    <LinkAnchor href={href} className={BUTTON_CLASS}>
+                      {str(link.title)}
+                    </LinkAnchor>
+                  </li>
+                )
+              }
+              return (
+                <li key={index} className="flex min-w-0 flex-col text-sm">
+                  {href ? (
+                    <LinkAnchor href={href} className={LINK_CLASS}>
+                      {str(link.title)}
+                    </LinkAnchor>
+                  ) : (
+                    <span className="break-words">{str(link.title)}</span>
+                  )}
+                  {link.description ? (
+                    <span className="text-muted-foreground text-xs">{str(link.description)}</span>
+                  ) : null}
+                </li>
+              )
+            })}
+          </ul>
+        </div>
+      )
+    },
   })
 
 const Flow = defineComponent({

@@ -136,9 +136,7 @@ export function BottomNav({
             <nav ref={moreNav} aria-label={t("nav.main")} className="flex flex-col gap-4 px-4 pb-4">
               {(moreGroups ?? []).map((group, index) => (
                 <div key={group.label ?? index} className="flex flex-col gap-1">
-                  {group.label ? (
-                    <p className="text-muted-foreground px-3 text-xs font-medium uppercase">{group.label}</p>
-                  ) : null}
+                  {group.label ? <p className="text-muted-foreground px-3 text-xs font-medium">{group.label}</p> : null}
                   {group.items.map((item) => {
                     const active = isActivePath(pathname, item.url, item.match)
                     return (
@@ -161,7 +159,7 @@ export function BottomNav({
               ))}
               {otherPlatforms.length > 0 ? (
                 <div data-slot="more-platforms" className="flex flex-col gap-1">
-                  <p className="text-muted-foreground px-3 text-xs font-medium uppercase">{t("platforms.title")}</p>
+                  <p className="text-muted-foreground px-3 text-xs font-medium">{t("platforms.title")}</p>
                   {otherPlatforms.map((platform) => (
                     <a
                       key={platform.key}

@@ -29,7 +29,7 @@ export function OfflineBadge({ forceVisible = false }: { forceVisible?: boolean 
   const online = useOnline()
   if (online && !forceVisible) return null
   return (
-    <Badge variant="secondary" role="status" className="gap-1">
+    <Badge variant="secondary" role="status" className="shrink-0 gap-1 whitespace-nowrap">
       <Icons.offline className="size-3.5" aria-hidden />
       {t("common.offline")}
     </Badge>

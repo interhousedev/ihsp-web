@@ -26,7 +26,7 @@ export function LanguageSwitcher({ onChange, className }: { onChange?: (locale: 
     >
       <SelectTrigger
         aria-label={t("locale.switcher")}
-        className={cn("rounded-full border-transparent bg-muted hover:bg-muted/70", className)}
+        className={cn("min-h-11 rounded-full md:min-h-8 border-transparent bg-muted hover:bg-muted/70", className)}
       >
         <Icons.globe className="text-muted-foreground size-4" aria-hidden />
         <SelectValue />

@@ -2,6 +2,7 @@
 
 import { useT } from "@ihsp/i18n"
 import { cn, initials } from "@ihsp/ui"
+import { useState } from "react"
 
 const SIZES = {
   sm: "size-6 text-[10px]",
@@ -19,24 +20,36 @@ export type TeacherAvatarProps = {
   className?: string
 }
 
-/** A teacher's photo in a circle, or their initials when there is none. */
+/**
+ * A person's photo in a circle. The initials are always underneath: they show while the photo loads and stay when it
+ * fails (an expired presigned address, a 404), so the circle is never empty.
+ */
 export function TeacherAvatar({ name, photoUrl, size = "default", decorative = false, className }: TeacherAvatarProps) {
   const t = useT("teacherPhoto")
+  // The address that failed; a new address gets another try.
+  const [failedUrl, setFailedUrl] = useState<string | null>(null)
+  const photo = photoUrl && photoUrl !== failedUrl ? photoUrl : null
   return (
     <span
       data-testid="teacher-avatar"
       aria-hidden={decorative || undefined}
       className={cn(
-        "bg-muted text-muted-foreground inline-flex shrink-0 items-center justify-center overflow-hidden rounded-full font-medium select-none",
+        "bg-muted text-muted-foreground relative inline-flex shrink-0 items-center justify-center overflow-hidden rounded-full font-medium select-none",
         SIZES[size],
         className,
       )}
     >
-      {photoUrl ? (
-        <img src={photoUrl} alt={decorative ? "" : t("alt", { name })} className="size-full object-cover" />
-      ) : (
-        initials(name)
-      )}
+      <span data-testid="teacher-avatar-initials" aria-hidden={photo !== null || undefined}>
+        {initials(name)}
+      </span>
+      {photo ? (
+        <img
+          src={photo}
+          alt={decorative ? "" : t("alt", { name })}
+          className="absolute inset-0 size-full object-cover"
+          onError={() => setFailedUrl(photo)}
+        />
+      ) : null}
     </span>
   )
 }

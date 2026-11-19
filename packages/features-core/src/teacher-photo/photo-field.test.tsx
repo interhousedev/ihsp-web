@@ -16,6 +16,7 @@ function renderField(
     photoUrl: string | null
     onUpload: (file: File) => Promise<unknown>
     onRemove: () => Promise<unknown>
+    removeDescription: string
   }> = {},
 ) {
   const props = {
@@ -104,7 +105,8 @@ describe("PhotoField", () => {
     const input = screen.getByLabelText("Photo")
 
     fireEvent.change(input, { target: { files: [new File(["x"], "anim.gif", { type: "image/gif" })] } })
-    expect(await screen.findByRole("alert")).toHaveTextContent("Choose a JPEG or PNG image.")
+    // The client check uses the server's wording for the same 422.
+    expect(await screen.findByRole("alert")).toHaveTextContent("Only JPEG or PNG photos are accepted.")
 
     const big = new File([new Uint8Array(PHOTO_MAX_BYTES + 1)], "big.jpg", { type: "image/jpeg" })
     fireEvent.change(input, { target: { files: [big] } })
@@ -163,5 +165,13 @@ describe("PhotoField", () => {
     await waitFor(() => expect(screen.queryByRole("alertdialog")).toBeNull())
     expect(removed).toBe(0)
     expect(screen.getByRole("img", { name: "Photo of Kalandarova Gavxar" })).toBeInTheDocument()
+  })
+})
+
+describe("PhotoField remove confirmation", () => {
+  it("shows the description given by the parent", async () => {
+    renderField({ photoUrl: PHOTO, removeDescription: "Custom removal text." })
+    fireEvent.click(screen.getByRole("button", { name: "Remove photo" }))
+    expect(await screen.findByRole("alertdialog")).toHaveTextContent("Custom removal text.")
   })
 })

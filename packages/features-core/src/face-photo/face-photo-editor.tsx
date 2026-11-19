@@ -214,7 +214,7 @@ export function FacePhotoEditor({
                     disabled={busy}
                     onClick={() => void camera.start()}
                   >
-                    <Icons.upload aria-hidden />
+                    <Icons.camera aria-hidden />
                     {t("takePhoto")}
                   </Button>
                 ) : null}
@@ -225,7 +225,7 @@ export function FacePhotoEditor({
                   disabled={busy}
                   onClick={() => files.current?.click()}
                 >
-                  <Icons.upload aria-hidden />
+                  <Icons.media aria-hidden />
                   {t("chooseFile")}
                 </Button>
                 {removable ? (

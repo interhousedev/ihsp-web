@@ -5,6 +5,7 @@ import { UserMenu, type UserMenuItem } from "@ihsp/ui"
 import { useInstallAppMenuItem } from "../pwa/hooks/use-install-app-menu-item"
 import { usePlatformLinks } from "../platform-links/use-platform-links"
 import { useUpdatePreferences } from "../notification-settings-form/use-update-preferences"
+import { useSessionUserSync } from "./use-session-user-sync"
 
 /**
  * Profile menu in the header: the app's own items (Profile, Settings), "Install the app" when it applies, language,
@@ -16,6 +17,7 @@ export function ProfileMenu({ items = [], onBeforeLogout }: { items?: UserMenuIt
   const update = useUpdatePreferences()
   const platforms = usePlatformLinks()
   const installItem = useInstallAppMenuItem()
+  useSessionUserSync()
   if (!session) return null
   const { first_name, last_name, login, photo_url } = session.user
   return (

@@ -13,6 +13,8 @@ export type NavItem = {
   icon?: NavIcon
   /** `prefix` (default): active on the URL and its sub-pages; `exact`: only on the URL. */
   match?: "exact" | "prefix"
+  /** Extra path prefixes that also light the item (a section whose pages live outside its landing URL). */
+  matchPrefixes?: readonly string[]
   /** Shown only to users who have at least one of these roles; no `roles` means everyone. */
   roles?: readonly string[]
   /** Hidden when false (for example "My group" when the teacher curates no group). */
@@ -47,9 +49,15 @@ export function normalizePath(path: string): string {
   return trimmed === "" ? "/" : trimmed
 }
 
-export function isActivePath(pathname: string | null, url: string, match: "exact" | "prefix" = "prefix"): boolean {
+export function isActivePath(
+  pathname: string | null,
+  url: string,
+  match: "exact" | "prefix" = "prefix",
+  matchPrefixes: readonly string[] = [],
+): boolean {
   if (pathname === null) return false
   const current = normalizePath(pathname)
+  if (matchPrefixes.some((prefix) => isActivePath(pathname, prefix, "prefix"))) return true
   const target = normalizePath(url)
   if (current === target) return true
   if (match === "exact" || target === "/") return false

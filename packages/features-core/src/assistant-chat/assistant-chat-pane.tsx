@@ -1,6 +1,6 @@
 "use client"
 
-import { keys, type AiStreamEvent, type FileItem } from "@ihsp/api"
+import { isApiError, keys, type AiStreamEvent, type FileItem } from "@ihsp/api"
 import { getConfig } from "@ihsp/config"
 import { useErrorMessage, useT } from "@ihsp/i18n"
 import { Alert, AlertDescription, Button, StateView } from "@ihsp/ui"
@@ -53,6 +53,15 @@ type AssistantChatPaneProps = {
   aboveComposer?: ReactNode
   /** After an approved tool call finished (the author assistant refreshes the editor). */
   onToolApproved?: () => void
+  /**
+   * Replaces the error line and the composer when the server answers `…/consent_required` (an app that gates the
+   * assistant on a consent). `retry` sends the refused message again once the consent is granted.
+   */
+  consentCard?: (ctx: { retry: () => void }) => ReactNode
+}
+
+function isConsentRequired(error: unknown): boolean {
+  return isApiError(error) && error.type.endsWith("consent_required")
 }
 
 function isAbort(error: unknown, signal: AbortSignal): boolean {
@@ -76,6 +85,7 @@ export function AssistantChatPane({
   prefill,
   aboveComposer,
   onToolApproved,
+  consentCard,
 }: AssistantChatPaneProps) {
   const { assistant, courseId, features } = useAssistantScope()
   const t = useT("assistant")
@@ -94,6 +104,7 @@ export function AssistantChatPane({
   const [actionError, setActionError] = useState<unknown>(null)
   // The message that a web search failure kept from going out, so it can be sent once more without the search.
   const [webFailed, setWebFailed] = useState<{ error: unknown; text: string; fileIds: string[] } | null>(null)
+  const [consentFailed, setConsentFailed] = useState<{ text: string; fileIds: string[]; web: boolean } | null>(null)
   const [ratings, setRatings] = useState<Record<number, Rating>>({})
   const abort = useRef<AbortController | null>(null)
   const composer = useRef<PillComposerHandle>(null)
@@ -128,6 +139,7 @@ export function AssistantChatPane({
     abort.current = controller
     setActionError(null)
     setWebFailed(null)
+    setConsentFailed(null)
     setPending({ text, fileIds })
     // A slash command goes to the agent as {command, args}; it maps the command to its prompt or tool.
     const call = parseSlashText(text)
@@ -147,6 +159,7 @@ export function AssistantChatPane({
         void queryClient.invalidateQueries({ queryKey: keys.ai.chat(chatId) })
       } else {
         setActionError(error)
+        if (consentCard && isConsentRequired(error)) setConsentFailed({ text, fileIds, web: webSearch })
         if (webSearch && webSearchFailure(error) !== null) {
           // The switch goes off (the quota is read again by the send), and the text can go out without the search.
           composer.current?.turnWebOff()
@@ -228,6 +241,13 @@ export function AssistantChatPane({
   }
 
   const shownError = actionError ?? decide.error
+  const needsConsent = consentCard !== undefined && isConsentRequired(shownError)
+  function retryAfterConsent() {
+    const failed = consentFailed
+    setActionError(null)
+    setConsentFailed(null)
+    if (failed) void runTurn(failed.text, failed.fileIds, failed.web)
+  }
 
   return (
     <ChatCommandsProvider value={{ say: (text) => (busy ? Promise.resolve(false) : runTurn(text, [], false)) }}>
@@ -281,7 +301,7 @@ export function AssistantChatPane({
         </div>
         <div className="shrink-0 px-4 pt-1 pb-3">
           <div className="mx-auto flex w-full max-w-3xl flex-col gap-2">
-            {shownError ? (
+            {shownError && !needsConsent ? (
               <div className="flex flex-wrap items-center gap-x-3 gap-y-1">
                 <p role="alert" className="text-destructive text-sm">
                   {webErrorMessage(shownError) ?? errorMessage(shownError)}
@@ -300,16 +320,20 @@ export function AssistantChatPane({
             ) : null}
             {aboveComposer}
             <LimitMcpPrompt limit={limit} connectorsHref={`${getConfig().ID_URL}/connectors/new/`} />
-            <PillComposer
-              ref={composer}
-              chatId={chatId}
-              sending={send.isPending}
-              limit={limit}
-              onSend={handleSend}
-              onStop={() => abort.current?.abort()}
-              placeholder={placeholder ?? t("composer.placeholder")}
-              prefill={prefill}
-            />
+            {needsConsent && consentCard ? (
+              consentCard({ retry: retryAfterConsent })
+            ) : (
+              <PillComposer
+                ref={composer}
+                chatId={chatId}
+                sending={send.isPending}
+                limit={limit}
+                onSend={handleSend}
+                onStop={() => abort.current?.abort()}
+                placeholder={placeholder ?? t("composer.placeholder")}
+                prefill={prefill}
+              />
+            )}
           </div>
         </div>
         {actions.dialogs}

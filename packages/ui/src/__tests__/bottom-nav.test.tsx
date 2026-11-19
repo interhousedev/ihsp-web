@@ -62,6 +62,11 @@ describe("isActivePath", () => {
     expect(isActivePath("/lessons/view/", "/", "prefix")).toBe(false)
     expect(isActivePath("/grades/day/", "/grades/", "exact")).toBe(false)
   })
+
+  it("lights an item on its matchPrefixes", () => {
+    expect(isActivePath("/plan/x", "/activities/", "prefix", ["/plan/"])).toBe(true)
+    expect(isActivePath("/planet/", "/activities/", "prefix", ["/plan/"])).toBe(false)
+  })
 })
 
 describe("filterNavGroups", () => {

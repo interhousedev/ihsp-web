@@ -40,6 +40,7 @@ import {
   userPreferences,
 } from "../fixtures/id"
 import { accepted, apiUrl, nextId, noContent, notFound, paginate, param, problem, query, readJson } from "./utils"
+import { currentOwnPhotoUrl } from "./teachers"
 
 /** The user a bearer token stands for: a token containing `teacher` or `admin` gives that role, anything else the student. */
 export function userForRequest(request: Request): UserMe {
@@ -170,7 +171,11 @@ export const idHandlers = [
   http.get(apiUrl("/v1/id/mcp-scopes"), () => HttpResponse.json(scopeCatalog)),
 
   // --- Account ---
-  http.get(apiUrl("/v1/id/me"), ({ request }) => HttpResponse.json(userForRequest(request))),
+  http.get(apiUrl("/v1/id/me"), ({ request }) => {
+    const me = userForRequest(request)
+    const photo_url = currentOwnPhotoUrl()
+    return HttpResponse.json(photo_url === undefined ? me : { ...me, photo_url })
+  }),
   http.patch(apiUrl("/v1/id/me/preferences"), async ({ request }) => {
     const patch = await readJson<UserPreferences>(request)
     return HttpResponse.json({ ...userPreferences, ...patch })

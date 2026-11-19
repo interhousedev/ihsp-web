@@ -32,7 +32,7 @@ import { isActivePath, type NavGroup, type NavItem } from "./nav-types"
 const LABEL_CLASS = "min-w-0 flex-1 truncate transition-opacity duration-200 group-data-[collapsible=icon]:opacity-0"
 
 function NavLink({ item, pathname }: { item: NavItem; pathname: string | null }) {
-  const active = isActivePath(pathname, item.url, item.match)
+  const active = isActivePath(pathname, item.url, item.match, item.matchPrefixes)
   const link = item.external ? (
     <a href={item.url} target="_blank" rel="noopener noreferrer" aria-label={item.title} />
   ) : (
@@ -56,7 +56,7 @@ function NavLink({ item, pathname }: { item: NavItem; pathname: string | null })
 }
 
 function NavBranch({ item, pathname }: { item: NavItem; pathname: string | null }) {
-  const active = isActivePath(pathname, item.url, item.match)
+  const active = isActivePath(pathname, item.url, item.match, item.matchPrefixes)
   return (
     <Collapsible defaultOpen={active} render={<SidebarMenuItem />}>
       <CollapsibleTrigger

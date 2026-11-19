@@ -18,6 +18,7 @@ import {
   IconTrash,
 } from "@ihsp/ui"
 import { useQuery } from "@tanstack/react-query"
+import { fullName } from "../../../lesson-detail/utils/people"
 import { useTr } from "../../shared/hooks/use-tr"
 import { EmisReauthBanner } from "./emis-reauth-banner"
 import { OnOffBadge } from "./on-off-badge"
@@ -32,9 +33,7 @@ export function SecurityOverview({ user }: { user: UserMe }) {
     <div className="grid gap-4">
       {user.emis_status === "needs_reauth" ? <EmisReauthBanner /> : null}
       <section className="flex flex-wrap items-center gap-2" aria-label={t("security.profile")}>
-        <span className="text-lg font-medium">
-          {user.last_name} {user.first_name}
-        </span>
+        <span className="text-lg font-medium">{fullName(user)}</span>
         {user.login ? <code className="text-muted-foreground text-sm">{user.login}</code> : null}
         {user.roles.map((role) => (
           <Badge key={role} variant="outline">

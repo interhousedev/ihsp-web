@@ -102,7 +102,12 @@ export function UserMenu({
           <UserAvatar name={name} imageUrl={imageUrl} />
         )}
       </DropdownMenuTrigger>
-      <DropdownMenuContent className="w-64" align={row ? "start" : "end"} side={row ? "top" : "bottom"} sideOffset={10}>
+      <DropdownMenuContent
+        className="max-h-[calc(100dvh-4rem)] w-64 overflow-y-auto"
+        align={row ? "start" : "end"}
+        side={row ? "top" : "bottom"}
+        sideOffset={10}
+      >
         <DropdownMenuGroup>
           <DropdownMenuLabel className="p-0 font-normal">
             <div className="px-1 py-1.5">
@@ -183,20 +188,21 @@ export function UserMenu({
         <DropdownMenuGroup>
           <DropdownMenuLabel>{t("common.theme")}</DropdownMenuLabel>
           <DropdownMenuRadioGroup
+            className="flex gap-1 px-1"
             value={theme}
             onValueChange={(value) => {
               if (isThemeChoice(value)) setTheme(value)
             }}
           >
             {THEME_CHOICES.map((mode) => (
-              <DropdownMenuRadioItem key={mode} value={mode} className="min-h-11 md:min-h-8">
+              <DropdownMenuRadioItem key={mode} value={mode} className="min-h-11 flex-1 justify-center md:min-h-8">
                 {t(`theme.${mode}`)}
               </DropdownMenuRadioItem>
             ))}
           </DropdownMenuRadioGroup>
         </DropdownMenuGroup>
         <DropdownMenuSeparator />
-        <DropdownMenuGroup>
+        <DropdownMenuGroup className="bg-popover sticky bottom-0">
           <DropdownMenuItem className="min-h-11 md:min-h-8" onClick={onLogout}>
             <Icons.logout aria-hidden />
             {t("common.logout")}

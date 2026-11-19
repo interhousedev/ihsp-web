@@ -3,10 +3,12 @@
 import { useTheme } from "next-themes"
 import { Toaster as Sonner, ToasterProps } from "sonner"
 
+import { useIsMobile } from "../../hooks/use-mobile"
 import { MOTION } from "../../lib/motion"
 
 const Toaster = ({ ...props }: ToasterProps) => {
   const { theme = "system" } = useTheme()
+  const mobile = useIsMobile()
 
   return (
     <Sonner
@@ -19,7 +21,8 @@ const Toaster = ({ ...props }: ToasterProps) => {
           "--normal-border": "var(--border)",
         } as React.CSSProperties
       }
-      position="top-center"
+      position={mobile ? "top-center" : "bottom-right"}
+      mobileOffset={{ top: "calc(var(--header-height) + var(--safe-top, 0px) + 0.5rem)" }}
       {...props}
     />
   )

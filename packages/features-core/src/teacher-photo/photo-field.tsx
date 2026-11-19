@@ -16,6 +16,8 @@ export type PhotoFieldProps = {
   onUpload: (file: File) => Promise<unknown>
   /** Removes the photo; rejects with the API error. */
   onRemove: () => Promise<unknown>
+  /** Replaces the remove-confirmation text (for example when another photo takes over after the removal). */
+  removeDescription?: string
 }
 
 type Pending = "upload" | "remove" | null
@@ -24,7 +26,7 @@ type Pending = "upload" | "remove" | null
  * The profile photo of a teacher: the current picture, a button to upload a JPEG or PNG up to 5 MB, and a button to
  * remove it. The file is checked before it is sent. The parent saves the result (the new link) in its own state.
  */
-export function PhotoField({ name, photoUrl, onUpload, onRemove }: PhotoFieldProps) {
+export function PhotoField({ name, photoUrl, onUpload, onRemove, removeDescription }: PhotoFieldProps) {
   const t = useT("teacherPhoto")
   const tCommon = useT("common")
   const errorMessage = useErrorMessage()
@@ -32,13 +34,20 @@ export function PhotoField({ name, photoUrl, onUpload, onRemove }: PhotoFieldPro
   const [pending, setPending] = useState<Pending>(null)
   const [failure, setFailure] = useState<string | null>(null)
   const [confirmingRemove, setConfirmingRemove] = useState(false)
+  const savedToast = useRef<string | number | null>(null)
+
+  function dismissSaved() {
+    if (savedToast.current !== null) toast.dismiss(savedToast.current)
+    savedToast.current = null
+  }
 
   async function run(kind: Exclude<Pending, null>, action: () => Promise<unknown>, done: string) {
+    dismissSaved()
     setPending(kind)
     setFailure(null)
     try {
       await action()
-      toast.success(done)
+      savedToast.current = toast.success(done)
     } catch (error) {
       setFailure(errorMessage(error))
     } finally {
@@ -48,9 +57,15 @@ export function PhotoField({ name, photoUrl, onUpload, onRemove }: PhotoFieldPro
 
   function pick(file: File | undefined) {
     if (!file) return
+    dismissSaved()
     const problem = photoProblem(file)
     if (problem) {
-      setFailure(t(problem))
+      // The same wording as the server's 422 for a wrong type.
+      setFailure(
+        problem === "wrongType"
+          ? errorMessage(Object.assign(new Error("wrong type"), { type: "id/photo-type-not-allowed" }))
+          : t(problem),
+      )
       return
     }
     void run("upload", () => onUpload(file), t("saved"))
@@ -116,7 +131,7 @@ export function PhotoField({ name, photoUrl, onUpload, onRemove }: PhotoFieldPro
         open={confirmingRemove}
         onOpenChange={setConfirmingRemove}
         title={t("removeTitle")}
-        description={t("removeDescription")}
+        description={removeDescription ?? t("removeDescription")}
         confirmLabel={t("remove")}
         destructive
         loading={pending === "remove"}
