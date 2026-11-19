@@ -85,7 +85,7 @@ function SectionEditor({
         <Input
           aria-label={t("sectionKey")}
           placeholder={t("sectionKey")}
-          value={form.key}
+          value={form.key ?? ""}
           onChange={(e) => set({ key: e.target.value })}
         />
         {LOCALES.map((locale) => (
@@ -103,27 +103,27 @@ function SectionEditor({
           type="number"
           aria-label={t("min")}
           placeholder={t("min")}
-          value={form.min}
+          value={form.min ?? ""}
           onChange={(e) => set({ min: e.target.value })}
         />
         <Input
           type="number"
           aria-label={t("max")}
           placeholder={t("max")}
-          value={form.max}
+          value={form.max ?? ""}
           onChange={(e) => set({ max: e.target.value })}
         />
         <Input
           type="number"
           aria-label={t("step")}
           placeholder={t("step")}
-          value={form.step}
+          value={form.step ?? ""}
           onChange={(e) => set({ step: e.target.value })}
         />
         <Input
           aria-label={t("choices")}
           placeholder={t("choices")}
-          value={form.choices}
+          value={form.choices ?? ""}
           onChange={(e) => set({ choices: e.target.value })}
         />
       </div>

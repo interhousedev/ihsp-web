@@ -20,8 +20,3 @@ export function chosenStudyFields(groups: StudyGroup[], chosen: readonly string[
   const labels = new Map(groups.flatMap((group) => group.items.map((item) => [item.id, item.label] as const)))
   return chosen.map((id) => ({ id, label: labels.get(id) ?? id }))
 }
-
-/** How many intended fields the profile has: the chosen study fields plus the majors added from the career results. */
-export function intendedFieldCount(studyFields: readonly string[], careerMajors: readonly string[]): number {
-  return studyFields.length + careerMajors.length
-}

@@ -1,7 +1,8 @@
 "use client"
 
 import { useErrorMessage, useT } from "@ihsp/i18n"
-import { Button, Icons, Input, LoadingButton, ResponsiveDialog, Textarea } from "@ihsp/ui"
+import { RichTextEditor } from "@ihsp/features-core/rich-text"
+import { Button, Icons, Input, LoadingButton, ResponsiveDialog } from "@ihsp/ui"
 import { useState, type FormEvent } from "react"
 import {
   clearProblemToast,
@@ -124,11 +125,17 @@ export function TaskFormDialog({
           <Input value={title} maxLength={200} onChange={(e) => setTitle(e.target.value)} required />
           <FieldError message={fieldMessage(problem, "title")} />
         </label>
-        <label className="flex flex-col gap-1 text-sm">
+        <div className="flex flex-col gap-1 text-sm">
           {t("form.description")}
-          <Textarea value={description} rows={4} onChange={(e) => setDescription(e.target.value)} />
+          <RichTextEditor
+            value={description}
+            onChange={setDescription}
+            ariaLabel={t("form.description")}
+            minHeight="8rem"
+            invalid={fieldMessage(problem, "description") !== undefined}
+          />
           <FieldError message={fieldMessage(problem, "description")} />
-        </label>
+        </div>
         <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
           <label className="flex flex-col gap-1 text-sm">
             {t("form.start")}

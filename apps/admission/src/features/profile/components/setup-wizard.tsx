@@ -9,7 +9,7 @@ import { AdmissionShell } from "../../shell/components/admission-shell"
 import { useProfile, useWizardConfig } from "../api"
 import { useProfileAnswers } from "../hooks/use-profile-answers"
 import { useProfileText } from "../lib/use-profile-text"
-import { setupSteps } from "../lib/setup-steps"
+import { MOVED_QUESTIONS, setupSteps } from "../lib/setup-steps"
 import { isAnswered, missingRequired, visibleQuestions } from "../lib/visibility"
 import type { AdmissionConfig, Profile } from "../types"
 import { PrefillBadge, QuestionField } from "./question-field"
@@ -24,7 +24,9 @@ function WizardBody({ config, initial }: { config: AdmissionConfig; initial: Pro
   const router = useRouter()
   const params = useSearchParams()
   const { answers, profile, state, setAnswer, flush, retry } = useProfileAnswers(initial)
-  const everyQuestion = visibleQuestions(config, { answers, accountKind: initial.account_kind })
+  const everyQuestion = visibleQuestions(config, { answers, accountKind: initial.account_kind }).filter(
+    (question) => !MOVED_QUESTIONS.includes(question.id),
+  )
   const missing = missingRequired(everyQuestion, answers)
   const [known] = useState(() => initial.answers)
   const [reopened, setReopened] = useState<string[]>(() => {
@@ -70,7 +72,7 @@ function WizardBody({ config, initial }: { config: AdmissionConfig; initial: Pro
     setFinishing(true)
     await flush()
     setFinishing(false)
-    router.push("/profile/?tab=details#three-words")
+    router.push("/settings/?tab=profile&section=details#three-words")
   }
 
   function onSubmit(event: FormEvent) {

@@ -173,7 +173,7 @@ export function ItemFields({
         <Input
           id={`${idPrefix}-title`}
           maxLength={LIMITS.title}
-          value={value.title}
+          value={value.title ?? ""}
           onChange={(e) => set({ title: e.target.value })}
         />
         {counter(value.title, LIMITS.title)}
@@ -184,7 +184,7 @@ export function ItemFields({
         <Input
           id={`${idPrefix}-org`}
           maxLength={LIMITS.organization}
-          value={value.organization}
+          value={value.organization ?? ""}
           onChange={(e) => set({ organization: e.target.value })}
         />
         {counter(value.organization, LIMITS.organization)}
@@ -196,7 +196,7 @@ export function ItemFields({
           id={`${idPrefix}-desc`}
           rows={3}
           maxLength={dMax}
-          value={value.description}
+          value={value.description ?? ""}
           onChange={(e) => set({ description: e.target.value })}
         />
         {counter(value.description, dMax)}
@@ -244,7 +244,7 @@ export function ItemFields({
               <Input
                 id={`${idPrefix}-hours`}
                 inputMode="numeric"
-                value={value.hours}
+                value={value.hours ?? ""}
                 onChange={(e) => set({ hours: e.target.value })}
               />
               {err("hours_per_week")}
@@ -254,7 +254,7 @@ export function ItemFields({
               <Input
                 id={`${idPrefix}-weeks`}
                 inputMode="numeric"
-                value={value.weeks}
+                value={value.weeks ?? ""}
                 onChange={(e) => set({ weeks: e.target.value })}
               />
               {err("weeks_per_year")}

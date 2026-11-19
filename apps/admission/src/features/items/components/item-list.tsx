@@ -2,15 +2,19 @@
 
 import { useT } from "@ihsp/i18n"
 import { Button, ConfirmDialog, Icons, PageHeader, Pill, StateView, Tabs, TabsList, TabsTrigger } from "@ihsp/ui"
-import { useRouter, useSearchParams } from "next/navigation"
-import { useState } from "react"
+import { usePathname, useRouter, useSearchParams } from "next/navigation"
+import { useEffect, useRef, useState } from "react"
+import { toast } from "sonner"
+import { NextStep } from "../../../components/next-step"
 import { AdmissionShell } from "../../shell/components/admission-shell"
 import { useAdmissionConfig } from "../../../lib/config"
 import { useDeleteItem, useItems, type Item, type ItemKind, type ItemStatus } from "../api"
+import { EmptySuggestions } from "./empty-suggestions"
 import { EditItemDialog } from "./edit-item-dialog"
 import { ItemAnalytics } from "./item-analytics"
 import { ItemBoard } from "./item-board"
 import { ItemCard } from "./item-card"
+import { emptyForm, toForm } from "./item-fields"
 import { NewItemDialog } from "./new-item-dialog"
 import { WhatIfCard } from "./what-if-card"
 
@@ -30,8 +34,38 @@ export function ItemList() {
   const caps = useAdmissionConfig().data?.item_caps
   const cap = caps?.[CAP_KEY[kind]]
   const remove = useDeleteItem()
-  const [adding, setAdding] = useState(false)
-  const [editing, setEditing] = useState<Item | null>(null)
+  const pathname = usePathname()
+  const itemParam = params.get("item")
+  const fromParam = params.get("from")
+  const seen = useRef(new Set<string>())
+  const editing = itemParam && itemParam !== "new" ? items.data?.find((i) => i.id === itemParam) : undefined
+  const planned = fromParam ? items.data?.find((i) => i.id === fromParam) : undefined
+  /** Rewrites the query string; opening pushes a history entry so Back closes the popup, closing replaces it. */
+  const setParams = (change: (next: URLSearchParams) => void, push = false) => {
+    const next = new URLSearchParams(params.toString())
+    change(next)
+    const query = next.toString()
+    const href = query ? `${pathname}?${query}` : pathname
+    if (push) router.push(href)
+    else router.replace(href)
+  }
+  const closeItem = () =>
+    setParams((next) => {
+      next.delete("item")
+      next.delete("from")
+    })
+  const openItem = (item: Item) => setParams((next) => next.set("item", item.id), true)
+  if (editing) seen.current.add(editing.id)
+  const unknown = Boolean(
+    itemParam && itemParam !== "new" && items.isSuccess && !editing && !seen.current.has(itemParam),
+  )
+  const creating = itemParam === "new" && (!fromParam || items.isSuccess)
+  useEffect(() => {
+    if (!unknown) return
+    toast.error(t("notFound"))
+    closeItem()
+    // eslint-disable-next-line react-hooks/exhaustive-deps -- closeItem is rebuilt every render; `unknown` is the trigger
+  }, [unknown])
   const [deleting, setDeleting] = useState<Item | null>(null)
   const ofKind = items.data?.filter((i) => i.kind === kind).sort((a, b) => a.position - b.position) ?? []
   const drafts = ofKind.filter((i) => i.status === "draft")
@@ -68,7 +102,12 @@ export function ItemList() {
                   : t("count", { count: ready.length, max: cap })}
             </p>
           </div>
-          <Button type="button" size="sm" disabled={draftFull} onClick={() => setAdding(true)}>
+          <Button
+            type="button"
+            size="sm"
+            disabled={draftFull}
+            onClick={() => setParams((next) => next.set("item", "new"), true)}
+          >
             <Icons.add aria-hidden />
             {t("add")}
           </Button>
@@ -83,8 +122,9 @@ export function ItemList() {
             icon={kind === "honor" ? <Icons.certificates aria-hidden /> : <Icons.sparkles aria-hidden />}
           />
         ) : null}
+        {items.isSuccess && items.data.length === 0 ? <EmptySuggestions /> : null}
         {ofKind.length > 0 && kind === "activity" ? (
-          <ItemBoard drafts={drafts} ready={ready} onEdit={setEditing} onDelete={setDeleting} />
+          <ItemBoard drafts={drafts} ready={ready} onEdit={openItem} onDelete={setDeleting} />
         ) : null}
         {ofKind.length > 0 && kind === "honor" ? (
           <ul
@@ -93,21 +133,31 @@ export function ItemList() {
           >
             {ofKind.map((item) => (
               <li key={item.id} className="w-72 shrink-0 snap-start">
-                <ItemCard item={item} onEdit={setEditing} onDelete={setDeleting} className="h-full" />
+                <ItemCard item={item} onEdit={openItem} onDelete={setDeleting} className="h-full" />
               </li>
             ))}
           </ul>
         ) : null}
         {kind === "activity" && ofKind.length > 0 ? <ItemAnalytics items={ofKind} /> : null}
         {kind === "activity" ? <WhatIfCard /> : null}
+        <NextStep href="/chooser/search/" label={t("nextStep.explore")} hint={t("nextStep.exploreHint")} />
       </div>
-      <NewItemDialog
-        kind={kind}
-        open={adding}
-        onOpenChange={setAdding}
-        onCreated={(id) => router.push(`/activities/view/?id=${encodeURIComponent(id)}`)}
-      />
-      {editing ? <EditItemDialog key={editing.id} item={editing} onClose={() => setEditing(null)} /> : null}
+      {creating ? (
+        <NewItemDialog
+          key={fromParam ?? "new"}
+          kind={planned && planned.kind === "honor" ? "honor" : kind}
+          open
+          initial={planned ? { ...toForm(planned), status: "draft" } : emptyForm}
+          onOpenChange={(open) => !open && closeItem()}
+          onCreated={(id) =>
+            setParams((next) => {
+              next.set("item", id)
+              next.delete("from")
+            })
+          }
+        />
+      ) : null}
+      {editing ? <EditItemDialog key={editing.id} item={editing} onClose={closeItem} /> : null}
       <ConfirmDialog
         open={deleting !== null}
         onOpenChange={(open) => !open && setDeleting(null)}

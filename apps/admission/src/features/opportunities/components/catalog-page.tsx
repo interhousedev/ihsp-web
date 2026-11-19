@@ -15,6 +15,8 @@ import {
   Skeleton,
   StateView,
 } from "@ihsp/ui"
+import { useQuery } from "@tanstack/react-query"
+import { usePathname, useRouter, useSearchParams } from "next/navigation"
 import { useId, useMemo, useState } from "react"
 import { toast } from "sonner"
 import { AsideCard, SplitLayout } from "../../../components/lib/split-layout"
@@ -29,14 +31,17 @@ import {
   useSaveToPlan,
   useTaxonomy,
   type CatalogFilter,
-  type OpportunityKind,
+  type CatalogSort,
 } from "../api"
+import { careerPlanQuery } from "../../career/api"
+import { CategoryTabs, RelevanceBar, parseCategory, parseSort, type Category } from "./catalog-controls"
+import { NextStep } from "../../../components/next-step"
 import { OpportunityCard, SaveButton } from "./opportunity-card"
 import { SubmitDialog } from "./submit-dialog"
 
-export const KINDS: OpportunityKind[] = ["exam", "certification", "course", "scholarship", "event", "recurring"]
 export const GRADES = [9, 10, 11, 12] as const
 const ANY = "any"
+const PLAN_HREF = "/plan/?view=saved"
 
 export function FilterSelect({
   label,
@@ -82,9 +87,19 @@ export function CatalogBody() {
   const t = useT("opportunities")
   const locale = useLocale()
   const errorMessage = useErrorMessage()
-  const [filter, setFilter] = useState<CatalogFilter>({})
+  const params = useSearchParams()
+  const router = useRouter()
+  const pathname = usePathname()
+  const category = parseCategory(params.get("kind"))
+  const [other, setFilter] = useState<CatalogFilter>({})
+  const filter: CatalogFilter = {
+    ...other,
+    kind: category === "all" ? undefined : category,
+    sort: parseSort(params.get("sort")),
+  }
   const [suggesting, setSuggesting] = useState(false)
   const taxonomy = useTaxonomy()
+  const career = useQuery(careerPlanQuery())
   const list = useOpportunities(filter)
   const plan = usePlan()
   const save = useSaveToPlan()
@@ -93,10 +108,31 @@ export function CatalogBody() {
   const fields = taxonomy.data?.fields ?? []
   const subfields = fields.find((f) => f.id === filter.field_id)?.subfields ?? []
 
+  function setQuery(change: { kind?: Category | null; sort?: CatalogSort }) {
+    const next = new URLSearchParams(params.toString())
+    if (change.kind !== undefined) {
+      if (change.kind === null) next.delete("kind")
+      else next.set("kind", change.kind)
+    }
+    if (change.sort) next.set("sort", change.sort)
+    const text = next.toString()
+    router.replace(text ? `${pathname}?${text}` : pathname)
+  }
+
   function toggle(id: string, grades: number[]) {
     const opts = { onError: (error: unknown) => toast.error(errorMessage(error)) }
     if (saved.has(id)) remove.mutate(id, opts)
-    else save.mutate({ id, planned_grade: grades[0] ?? null }, { ...opts, onSuccess: () => toast.success(t("saved")) })
+    else
+      save.mutate(
+        { id, planned_grade: grades[0] ?? null },
+        {
+          ...opts,
+          onSuccess: () =>
+            toast.success(t("saved"), {
+              action: { label: t("openPlan"), onClick: () => router.push(PLAN_HREF) },
+            }),
+        },
+      )
   }
 
   let body
@@ -168,12 +204,6 @@ export function CatalogBody() {
                 />
               )}
               <FilterSelect
-                label={t("kindLabel")}
-                value={filter.kind}
-                onChange={(v) => setFilter({ ...filter, kind: v as OpportunityKind | undefined })}
-                options={KINDS.map((k) => ({ value: k, label: t(`kind.${k}`) }))}
-              />
-              <FilterSelect
                 label={t("gradeLabel")}
                 value={filter.grade?.toString()}
                 onChange={(v) => setFilter({ ...filter, grade: v ? Number(v) : undefined })}
@@ -190,8 +220,17 @@ export function CatalogBody() {
       >
         <div className="flex flex-col gap-4">
           <OpportunityTabs value="catalog" planCount={plan.data?.entries.length ?? 0} />
+          <CategoryTabs value={category} onChange={(next) => setQuery({ kind: next === "all" ? null : next })} />
+          {list.data ? (
+            <RelevanceBar
+              sort={list.data.sort}
+              labels={career.data?.study_focus.labels ?? []}
+              onSort={(next) => setQuery({ sort: next })}
+            />
+          ) : null}
           {suggesting && <SubmitDialog open onOpenChange={setSuggesting} />}
           <ScrollFade maxHeight="75vh">{body}</ScrollFade>
+          {saved.size > 0 ? <NextStep href={PLAN_HREF} label={t("openPlan")} hint={t("nextPlanHint")} /> : null}
         </div>
       </SplitLayout>
     </div>

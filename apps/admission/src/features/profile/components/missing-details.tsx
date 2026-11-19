@@ -8,9 +8,9 @@ import type { MissingDetail } from "../details-api"
 /** Where each missing item of `/me/profile/details` is completed. */
 const TARGET: Record<string, string> = {
   setup: "/setup/",
-  three_words: "/profile/?tab=details#three-words",
-  interest_fields: "/profile/?tab=background#interest-areas",
-  service_interests: "/profile/?tab=background#services",
+  three_words: "/settings/?tab=profile&section=details#three-words",
+  interest_fields: "/settings/?tab=profile&section=background#interest-areas",
+  service_interests: "/settings/?tab=profile&section=background#services",
   career_quiz: "/career/",
   algorithm_quiz: "/colleges/algorithm/",
   activities: "/activities/",
@@ -31,7 +31,7 @@ export function MissingDetails({ missing }: { missing: MissingDetail[] }) {
           {missing.map((item) => (
             <li key={item.key}>
               <Link
-                href={TARGET[item.key] ?? "/profile/"}
+                href={TARGET[item.key] ?? "/settings/?tab=profile"}
                 className="bg-card border-hairline hover:bg-accent rounded-card flex items-center justify-between gap-3 border px-4 py-3 text-sm transition-colors"
               >
                 <span>{t.has(`missingItem.${item.key}`) ? t(`missingItem.${item.key}`) : item.label}</span>

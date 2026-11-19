@@ -94,7 +94,8 @@ function BackgroundTab({ config, profile }: { config: AdmissionConfig; profile: 
   )
 }
 
-function ProfileBody() {
+/** The profile content; `base` is the URL prefix the sub-tab (`details`, `background`) is written after. */
+export function ProfileBody({ base = "/profile/?section=" }: { base?: string }) {
   const t = useT("profilePage")
   const router = useRouter()
   const params = useSearchParams()
@@ -102,7 +103,8 @@ function ProfileBody() {
   const details = useProfileDetails()
   const config = useWizardConfig()
   const profile = useProfile()
-  const tab: Tab = params.get("tab") === "background" ? "background" : "details"
+  const wanted = params.get("section") ?? params.get("tab")
+  const tab: Tab = wanted === "background" ? "background" : "details"
 
   if (details.isError || config.isError || profile.isError) {
     return (
@@ -140,7 +142,7 @@ function ProfileBody() {
               { value: "background", label: t("background") },
             ]}
             value={tab}
-            onValueChange={(next) => router.replace(`/profile/?tab=${next}`)}
+            onValueChange={(next) => router.replace(`${base}${next}`)}
           />
           {tab === "details" ? (
             <DetailsTab config={config.data} profile={profile.data} />

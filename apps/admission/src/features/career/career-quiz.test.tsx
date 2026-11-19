@@ -126,7 +126,7 @@ describe("career quiz persistence", () => {
   test("saves the intended study fields of the chooser catalog from the career page", async () => {
     const store = setup([])
     mockChooser()
-    renderAdmissionApp(<CareerPage />)
+    renderAdmissionApp(<CareerPage />, { route: "/career/?tab=field" })
     expect(screen.queryByRole("checkbox", { name: "Photography" })).not.toBeInTheDocument()
     fireEvent.click(await screen.findByRole("button", { name: "Add a field" }))
     fireEvent.click(await screen.findByRole("button", { name: "Biology" }))
@@ -139,5 +139,26 @@ describe("career quiz persistence", () => {
     server.use(http.get(apiUrl("/v1/admission/career"), () => HttpResponse.json(plan(["physics"]))))
     renderAdmissionApp(<CareerPage />)
     expect(await screen.findByTestId("profile-majors")).toBeInTheDocument()
+  })
+})
+
+describe("career tabs and field counter", () => {
+  test("the Field of study tab opens from the URL and counts study_focus", async () => {
+    mockQuizzes()
+    server.use(
+      http.get(apiUrl("/v1/admission/career"), () =>
+        HttpResponse.json({ ...plan(["data_science"]), study_focus: { field_ids: ["a", "b"], labels: ["A", "B"] } }),
+      ),
+      http.get(apiUrl("/v1/admission/career/majors"), () => HttpResponse.json({ items: MAJORS })),
+    )
+    mockChooser()
+    renderAdmissionApp(<CareerPage />, {
+      route: "/career/?tab=field",
+      messages: { career: { nextActivities: "Find activities for {fields}" } },
+    })
+    expect(await screen.findByText("2 selected")).toBeTruthy()
+    const cta = screen.getByRole("link", { name: "Find activities for A, B" })
+    expect(cta.getAttribute("href")).toBe("/opportunities")
+    expect(screen.getByRole("tab", { name: /Field of study/ }).getAttribute("aria-selected")).toBe("true")
   })
 })

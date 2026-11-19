@@ -13,7 +13,9 @@ import {
   SelectValue,
   Textarea,
 } from "@ihsp/ui"
+import { RichTextEditor } from "@ihsp/features-core/rich-text"
 import { useState, type FormEvent } from "react"
+import { StudyFieldsField } from "./study-fields-field"
 import { toast } from "sonner"
 import {
   localName,
@@ -28,7 +30,7 @@ import {
 } from "../api"
 
 type Coverage = NonNullable<Opportunity["fields"]["coverage"]>[number]
-const KINDS: OpportunityKind[] = ["exam", "certification", "course", "scholarship", "event", "recurring"]
+const KINDS: OpportunityKind[] = ["exam", "certification", "course", "scholarship", "research", "event", "recurring"]
 const AWARDS: AwardType[] = ["scholarship", "fellowship", "grant", "tuition_waiver", "program"]
 const SCOPES: Scope[] = ["local", "international"]
 const COVERAGES: Coverage[] = ["full_tuition", "partial_tuition", "stipend", "cash", "travel"]
@@ -82,6 +84,7 @@ export function SubmitDialog({
   const [url, setUrl] = useState(base?.url ?? "")
   const [provider, setProvider] = useState(base?.provider ?? "")
   const [subjects, setSubjects] = useState<string[]>(base?.subject_ids ?? [])
+  const [studyFields, setStudyFields] = useState<string[]>(base?.study_field_ids ?? [])
   const [grades, setGrades] = useState<number[]>(base?.grades ?? [])
   const [registration, setRegistration] = useState(base?.registration_deadlines?.[0] ?? "")
   const [exam, setExam] = useState(base?.exam_dates?.[0] ?? "")
@@ -118,6 +121,7 @@ export function SubmitDialog({
           url: url.trim() || null,
           provider: provider.trim() || null,
           subject_ids: subjects,
+          study_field_ids: studyFields,
           grades: [...grades].sort(),
           registration_deadlines: one(registration),
           exam_dates: one(exam),
@@ -173,10 +177,17 @@ export function SubmitDialog({
           {t("titleLabel")}
           <Input value={title} onChange={(e) => setTitle(e.target.value)} maxLength={200} />
         </label>
-        <label className="flex flex-col gap-1 text-sm">
+        <div className="flex flex-col gap-1 text-sm">
           {t("summaryLabel")}
-          <Textarea value={summary} onChange={(e) => setSummary(e.target.value)} maxLength={2000} />
-        </label>
+          <RichTextEditor
+            value={summary}
+            onChange={setSummary}
+            ariaLabel={t("summaryLabel")}
+            maxLength={2000}
+            minHeight="8rem"
+          />
+        </div>
+        <StudyFieldsField value={studyFields} onChange={setStudyFields} />
         <label className="flex flex-col gap-1 text-sm">
           {t("urlLabel")}
           <Input type="url" value={url} onChange={(e) => setUrl(e.target.value)} />

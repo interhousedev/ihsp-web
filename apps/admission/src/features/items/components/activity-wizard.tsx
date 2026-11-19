@@ -87,7 +87,7 @@ export function ActivityWizard({
             <Input
               id="wizard-title"
               maxLength={LIMITS.title}
-              value={value.title}
+              value={value.title ?? ""}
               onChange={(e) => set({ title: e.target.value })}
             />
             <Counter text={value.title} max={LIMITS.title} />
@@ -98,7 +98,7 @@ export function ActivityWizard({
               id="wizard-desc"
               rows={4}
               maxLength={descriptionMax}
-              value={value.description}
+              value={value.description ?? ""}
               onChange={(e) => set({ description: e.target.value })}
             />
             <Counter text={value.description} max={descriptionMax} />
@@ -113,7 +113,7 @@ export function ActivityWizard({
             <Input
               id="wizard-org"
               maxLength={LIMITS.organization}
-              value={value.organization}
+              value={value.organization ?? ""}
               onChange={(e) => set({ organization: e.target.value })}
             />
           </div>
@@ -146,7 +146,7 @@ export function ActivityWizard({
                 <Input
                   id="wizard-hours"
                   inputMode="numeric"
-                  value={value.hours}
+                  value={value.hours ?? ""}
                   onChange={(e) => set({ hours: e.target.value })}
                 />
                 <span className="text-muted-foreground text-xs">{t("wizard.ofHours")}</span>
@@ -156,7 +156,7 @@ export function ActivityWizard({
                 <Input
                   id="wizard-weeks"
                   inputMode="numeric"
-                  value={value.weeks}
+                  value={value.weeks ?? ""}
                   onChange={(e) => set({ weeks: e.target.value })}
                 />
                 <span className="text-muted-foreground text-xs">{t("wizard.ofWeeks")}</span>

@@ -1,11 +1,12 @@
 import { apiUrl, server } from "@ihsp/test-utils"
-import { act, fireEvent, screen, waitFor, within } from "@testing-library/react"
+import { act, cleanup, fireEvent, screen, waitFor, within } from "@testing-library/react"
 import { HttpResponse, http } from "msw"
 import { describe, expect, mock, spyOn, test } from "bun:test"
 import { toast } from "sonner"
 import * as dnd from "@dnd-kit/core"
 import type { DragEndEvent } from "@dnd-kit/core"
 import type { ComponentProps } from "react"
+import { testRouter } from "@ihsp/test-utils"
 import { renderAdmissionApp } from "../../tests/helpers"
 
 // dnd-kit has no layout in happy-dom, so pointer and keyboard drags cannot run; the board's `onDragEnd` is
@@ -84,6 +85,9 @@ describe("items", () => {
     renderAdmissionApp(<ItemList />)
     await screen.findByText("Robotics")
     fireEvent.click(screen.getByRole("button", { name: "Add" }))
+    expect(testRouter.push).toHaveBeenCalledWith("/?item=new")
+    cleanup()
+    renderAdmissionApp(<ItemList />, { route: "/?item=new" })
     fireEvent.click(await screen.findByRole("radio", { name: "Arts" }))
     fireEvent.click(screen.getByRole("button", { name: "Next" }))
     fireEvent.change(await screen.findByLabelText("Position or title"), { target: { value: "Chess" } })
@@ -144,6 +148,59 @@ describe("items", () => {
     expect(message).toContain("Drop chess")
   })
 
+  describe("popup editor in the URL", () => {
+    const listHandlers = (items: Item[]) =>
+      server.use(
+        http.get(apiUrl("/v1/admission/config"), () => HttpResponse.json({ item_caps: { activities: 10, honors: 5 } })),
+        http.get(apiUrl("/v1/admission/me/items"), () => HttpResponse.json({ items, next_cursor: null })),
+      )
+
+    test("?item=<id> opens that item's editor and closing clears the param", async () => {
+      listHandlers([item("a", "Robotics", 0)])
+      testRouter.replace.mockClear()
+      renderAdmissionApp(<ItemList />, { route: "/activities/?kind=activity&item=a" })
+      const dialog = await screen.findByRole("dialog")
+      expect(within(dialog).getByDisplayValue("Robotics")).toBeTruthy()
+      fireEvent.keyDown(dialog, { key: "Escape" })
+      await waitFor(() => expect(testRouter.replace).toHaveBeenCalledWith("/activities/?kind=activity"))
+    })
+
+    test("?item=new opens the create dialog", async () => {
+      listHandlers([item("a", "Robotics", 0)])
+      renderAdmissionApp(<ItemList />, { route: "/activities/?item=new" })
+      expect(await screen.findByRole("dialog", { name: "New activity" })).toBeTruthy()
+    })
+
+    test("?item=new&from=<id> prefills from the planned item", async () => {
+      listHandlers([item("a", "Robotics", 0)])
+      renderAdmissionApp(<ItemList />, { route: "/activities/?item=new&from=a" })
+      await screen.findByRole("dialog", { name: "New activity" })
+      fireEvent.click(await screen.findByRole("radio", { name: "Arts" }))
+      fireEvent.click(screen.getByRole("button", { name: "Next" }))
+      expect(((await screen.findByLabelText("Position or title")) as HTMLInputElement).value).toBe("Robotics")
+    })
+
+    test("an unknown id shows a toast and clears the param", async () => {
+      listHandlers([item("a", "Robotics", 0)])
+      const error = spyOn(toast, "error").mockImplementation(() => "")
+      testRouter.replace.mockClear()
+      renderAdmissionApp(<ItemList />, { route: "/activities/?item=nope&kind=honor" })
+      await waitFor(() => expect(error).toHaveBeenCalled())
+      expect(testRouter.replace).toHaveBeenCalledWith("/activities/?kind=honor")
+      error.mockRestore()
+    })
+
+    test("an empty list suggests where to start", async () => {
+      listHandlers([])
+      renderAdmissionApp(<ItemList />)
+      const link = (name: string) => screen.findByRole("link", { name: new RegExp(name) })
+      expect((await link("Take a course")).getAttribute("href")).toBe("/opportunities?kind=course")
+      expect((await link("Earn a certification")).getAttribute("href")).toBe("/opportunities?kind=certification")
+      expect((await link("mandatory exams")).getAttribute("href")).toBe("/tests")
+      expect((await link("Plan it")).getAttribute("href")).toBe("/plan")
+    })
+  })
+
   test("renders the four graded dimensions", () => {
     renderAdmissionApp(<ReviewCard review={review} />)
     expect(screen.getByRole("heading", { name: "Overall" })).toBeTruthy()
@@ -162,7 +219,7 @@ describe("items", () => {
 
   test("a card links to its editor", () => {
     renderAdmissionApp(<ItemCard item={item("a", "Robotics", 0)} />)
-    expect(screen.getByRole("link").getAttribute("href")).toMatch(/^\/activities\/view\/?\?id=a$/)
+    expect(screen.getByRole("link").getAttribute("href")).toMatch(/^\/activities\?kind=activity&item=a$/)
   })
 
   const board = (items: () => Item[]) =>
@@ -185,14 +242,13 @@ describe("items", () => {
         return HttpResponse.json(current[0])
       }),
     )
-    renderAdmissionApp(<ItemList />)
-    await screen.findByText("Robotics")
-    expect(within(screen.getByRole("region", { name: "Draft" })).getByText("Robotics")).toBeTruthy()
-    fireEvent.click(screen.getByRole("button", { name: "Edit" }))
+    renderAdmissionApp(<ItemList />, { route: "/activities/?kind=activity&item=a" })
+    await screen.findByRole("dialog")
+    expect(within(screen.getByRole("region", { name: "Draft", hidden: true })).getByText("Robotics")).toBeTruthy()
     fireEvent.click(await screen.findByRole("radio", { name: "Ready" }))
     fireEvent.click(screen.getByRole("button", { name: "Save" }))
     await waitFor(() =>
-      expect(within(screen.getByRole("region", { name: "Ready" })).getByText("Robotics")).toBeTruthy(),
+      expect(within(screen.getByRole("region", { name: "Ready", hidden: true })).getByText("Robotics")).toBeTruthy(),
     )
   })
 
@@ -206,9 +262,8 @@ describe("items", () => {
         ),
       ),
     )
-    renderAdmissionApp(<ItemList />)
-    await screen.findByText("Robotics")
-    fireEvent.click(screen.getByRole("button", { name: "Edit" }))
+    renderAdmissionApp(<ItemList />, { route: "/activities/?kind=activity&item=a" })
+    await screen.findByRole("dialog")
     fireEvent.click(await screen.findByRole("radio", { name: "Ready" }))
     fireEvent.click(screen.getByRole("button", { name: "Save" }))
     expect(await screen.findByText("Required to mark as ready")).toBeTruthy()
@@ -369,6 +424,44 @@ describe("plan", () => {
     await waitFor(() => expect(patch).toEqual({ lock_version: 3, status: "done" }))
     fireEvent.click(screen.getByRole("button", { name: "Remove Sit the SAT" }))
     await waitFor(() => expect(deleted).toBe("m1"))
+  })
+})
+
+describe("pathway links", () => {
+  test("activities suggest exploring universities", async () => {
+    server.use(http.get(apiUrl("/v1/admission/me/items"), () => HttpResponse.json({ items: [], next_cursor: null })))
+    renderAdmissionApp(<ItemList />, {
+      messages: { items: { nextStep: { explore: "Explore universities", exploreHint: "h" } } },
+    })
+    const link = await screen.findByRole("link", { name: /Explore universities/ })
+    expect(link.getAttribute("href")).toBe("/chooser/search")
+  })
+
+  test("a done milestone linked to an item offers adding it to achievements", async () => {
+    server.use(
+      http.get(apiUrl("/v1/admission/me/items"), () => HttpResponse.json({ items: [item("a", "Robotics", 0)] })),
+      http.get(apiUrl("/v1/admission/goal-plan"), () =>
+        HttpResponse.json({
+          items: [
+            {
+              id: "m1",
+              item_id: "a",
+              title: "Finish club",
+              due_month: null,
+              target_value: null,
+              status: "done",
+              source: "student",
+              sort_order: 0,
+              lock_version: 1,
+            },
+          ],
+          next_cursor: null,
+        }),
+      ),
+    )
+    renderAdmissionApp(<PlanBody />, { messages: { items: { plan: { addToAchievements: "Add to achievements" } } } })
+    const link = await screen.findByRole("link", { name: "Add to achievements" })
+    expect(link.getAttribute("href")).toBe("/activities?item=new&from=a")
   })
 })
 

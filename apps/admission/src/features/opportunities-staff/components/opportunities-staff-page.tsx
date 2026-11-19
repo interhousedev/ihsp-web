@@ -195,7 +195,7 @@ function TaxonomyEditor() {
               key={l}
               aria-label={t(`nameIn.${l}`)}
               placeholder={t(`nameIn.${l}`)}
-              value={names[l]}
+              value={names[l] ?? ""}
               onChange={(e) => setNames({ ...names, [l]: e.target.value })}
             />
           ))}

@@ -44,7 +44,7 @@ function WeightsForm({ initial }: { initial: Record<string, number> }) {
                   type="number"
                   min={0}
                   step="any"
-                  value={values[key]}
+                  value={values[key] ?? ""}
                   onChange={(e) => setValues({ ...values, [key]: e.target.value })}
                 />
               </div>

@@ -79,6 +79,10 @@ export type Scope = NonNullable<OpportunityFields["scope"]>
 export type CreditKind = NonNullable<OpportunityFields["college_credit"]>
 export type OrgKind = OrgInput["kind"]
 
+/** Orders the catalog offers; the server picks "relevance" when the student has fields of study, else "title". */
+export const CATALOG_SORTS = ["relevance", "title"] as const
+export type CatalogSort = (typeof CATALOG_SORTS)[number]
+
 export type CatalogFilter = {
   field_id?: string
   subfield_id?: string
@@ -90,6 +94,7 @@ export type CatalogFilter = {
   scope?: Scope
   org_id?: string
   college_credit?: CreditKind
+  sort?: CatalogSort
 }
 
 export type ProgramExtras = {

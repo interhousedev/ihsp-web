@@ -48,6 +48,7 @@ const opportunity: Opportunity = {
   comment_count: 0,
   created_at: "2026-01-01T00:00:00Z",
   updated_at: "2026-01-01T00:00:00Z",
+  for_you: false,
   lock_version: 0,
   upcoming: [{ day: "2026-10-03", kind: "exam", projected: false }],
 }

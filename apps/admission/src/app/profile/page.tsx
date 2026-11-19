@@ -1,12 +1,14 @@
 "use client"
 
-import { Suspense } from "react"
-import { ProfilePage } from "../../features/profile/components/profile-page"
+import { RouteRedirect, type RedirectTarget } from "../../components/route-redirect"
+
+/** The old profile tabs (`details`, `background`) become the `section` of the settings tab. */
+const target: RedirectTarget = (params) => {
+  const tab = params.get("tab")
+  const section = tab === "details" || tab === "background" ? `&section=${tab}` : ""
+  return { to: `/settings/?tab=profile${section}`, drop: ["tab"] }
+}
 
 export default function Page() {
-  return (
-    <Suspense>
-      <ProfilePage />
-    </Suspense>
-  )
+  return <RouteRedirect target={target} />
 }

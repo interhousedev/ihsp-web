@@ -12,16 +12,19 @@ export function NewItemDialog({
   open,
   onOpenChange,
   onCreated,
+  initial = emptyForm,
 }: {
   kind: ItemKind
   open: boolean
   onOpenChange: (open: boolean) => void
   onCreated?: (id: string) => void
+  /** Prefill, e.g. from a planned item. */
+  initial?: FormState
 }) {
   const t = useT("items")
   const errorMessage = useErrorMessage()
   const create = useCreateItem()
-  const [form, setForm] = useState<FormState>(emptyForm)
+  const [form, setForm] = useState<FormState>(initial)
   const [step, setStep] = useState(1)
   const missing = incompleteFields(create.error)
   const submit = (event: FormEvent) => {

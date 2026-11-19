@@ -8,13 +8,7 @@ import { careerKeys, careerMajorsQuery, careerPlanQuery, pick, putChoice } from 
 import { StudyFieldSheet } from "../../chooser/components/study-field-select"
 import { useStudyFields } from "../../chooser/hooks"
 import { detailsKey, useQuiz, useSaveQuiz } from "../details-api"
-import {
-  STUDY_FIELDS_KEY,
-  chosenStudyFields,
-  intendedFieldCount,
-  readStudyFields,
-  toggleStudyField,
-} from "../study-fields"
+import { STUDY_FIELDS_KEY, chosenStudyFields, readStudyFields, toggleStudyField } from "../study-fields"
 
 /**
  * "Intended field of study": the chosen fields as removable chips and the grouped, searchable sheet of the chooser to
@@ -60,14 +54,18 @@ export function StudyFieldsPicker() {
   const picked = save.isPending && save.variables ? readStudyFields(save.variables.answers) : chosen
 
   function change(next: string[]) {
-    save.mutate({ ...stored, answers: { ...stored.answers, [STUDY_FIELDS_KEY]: next } })
+    save.mutate(
+      { ...stored, answers: { ...stored.answers, [STUDY_FIELDS_KEY]: next } },
+      // The counter reads `study_focus` of the plan, the one union of majors, quiz fields and legacy answers.
+      { onSuccess: () => void client.invalidateQueries({ queryKey: careerKeys.plan() }) },
+    )
   }
 
   return (
     <div className="flex flex-col gap-3">
       <div className="flex min-h-6 items-center gap-3 text-sm">
         <span className="text-muted-foreground tabular-nums">
-          {t("selected", { count: intendedFieldCount(picked, plan.data?.majors ?? []) })}
+          {t("selected", { count: plan.data?.study_focus?.field_ids.length ?? 0 })}
         </span>
         <span role="status" aria-live="polite">
           {save.isPending ? <Pill>{t("saving")}</Pill> : null}

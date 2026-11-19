@@ -3,8 +3,11 @@
 import { pageClass } from "../../../components/lib/page"
 import { useT } from "@ihsp/i18n"
 import { StateView } from "@ihsp/ui"
+import { useRouter, useSearchParams } from "next/navigation"
+import { UnderlineTabs } from "../../../components/lib/underline-tabs"
 import { useQuery, useQueryClient } from "@tanstack/react-query"
-import { useState } from "react"
+import { Suspense, useState } from "react"
+import { NextStep } from "../../../components/next-step"
 import { AdmissionShell } from "../../shell/components/admission-shell"
 import { READINESS_KEY } from "../../readiness/api"
 import { careerKeys, careerMajorsQuery, careerPlanQuery, putChoice, type CareerPlan } from "../api"
@@ -30,8 +33,59 @@ function InterestsSection() {
   )
 }
 
-export function CareerPage() {
+const TABS = ["explore", "field", "future"] as const
+type CareerTab = (typeof TABS)[number]
+
+/** The tab of `?tab=`; anything else is Explore. */
+export function careerTab(value: string | null): CareerTab {
+  return TABS.find((tab) => tab === value) ?? "explore"
+}
+
+function FieldTab() {
   const t = useT("career")
+  const plan = useQuery(careerPlanQuery())
+  const labels = plan.data?.study_focus?.labels ?? []
+  return (
+    <div className={pageClass("narrow")}>
+      <InterestsSection />
+      {labels.length > 0 && (
+        <NextStep href="/opportunities/" label={t("nextActivities", { fields: labels.join(", ") })} />
+      )}
+    </div>
+  )
+}
+
+function TabStrip({ tab }: { tab: CareerTab }) {
+  const t = useT("career")
+  const router = useRouter()
+  const plan = useQuery(careerPlanQuery())
+  return (
+    <div className={pageClass("narrow", "pb-0 md:pb-0")}>
+      <UnderlineTabs
+        label={t("tabs.label")}
+        value={tab}
+        onValueChange={(next) => router.replace(`/career/?tab=${next}`)}
+        tabs={[
+          { value: "explore", label: t("tabs.explore") },
+          { value: "field", label: t("tabs.field"), count: plan.data?.study_focus?.field_ids.length ?? 0 },
+          { value: "future", label: t("tabs.future") },
+        ]}
+      />
+    </div>
+  )
+}
+
+export function CareerPage() {
+  return (
+    <Suspense>
+      <CareerContent />
+    </Suspense>
+  )
+}
+
+function CareerContent() {
+  const t = useT("career")
+  const tab = careerTab(useSearchParams().get("tab"))
   const client = useQueryClient()
   const plan = useQuery(careerPlanQuery())
   const majors = useQuery(careerMajorsQuery())
@@ -92,10 +146,17 @@ export function CareerPage() {
   }))
   return (
     <AdmissionShell>
+      <TabStrip tab={tab} />
+      {tab === "field" && <FieldTab />}
+      {tab === "future" && data && (
+        <div className={pageClass("narrow")}>
+          <CareerDeepDive data={data} />
+        </div>
+      )}
       {error != null && <StateView state="error" error={error} />}
       {plan.isError && <StateView state="error" error={plan.error} onRetry={() => void plan.refetch()} />}
       {majors.isError && <StateView state="error" error={majors.error} onRetry={() => void majors.refetch()} />}
-      {data && majors.data && restored && showResults && (
+      {tab === "explore" && data && majors.data && restored && showResults && (
         <div className="space-y-6 pb-6">
           <CareerResults
             recommendations={recommend(
@@ -112,15 +173,9 @@ export function CareerPage() {
               setRound(round + 1)
             }}
           />
-          <div className={pageClass("narrow", "py-0 md:py-0")}>
-            <CareerDeepDive data={data} />
-          </div>
-          <div className={pageClass("narrow", "py-0 md:py-0")}>
-            <InterestsSection />
-          </div>
         </div>
       )}
-      {data && majors.data && restored && !showResults && (
+      {tab === "explore" && data && majors.data && restored && !showResults && (
         <div className={pageClass("narrow")}>
           <StepperWizard
             key={round}
@@ -145,7 +200,6 @@ export function CareerPage() {
               progress: t("title"),
             }}
           />
-          <InterestsSection />
         </div>
       )}
     </AdmissionShell>

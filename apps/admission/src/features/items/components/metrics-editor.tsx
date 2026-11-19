@@ -67,7 +67,7 @@ export function MetricsEditor({ itemId, metrics }: { itemId: string; metrics: Me
                   <Input
                     id={`${id}-label`}
                     maxLength={80}
-                    value={row.label}
+                    value={row.label ?? ""}
                     onChange={(e) => update(row.key, { label: e.target.value })}
                   />
                 </div>
@@ -76,7 +76,7 @@ export function MetricsEditor({ itemId, metrics }: { itemId: string; metrics: Me
                   <Input
                     id={`${id}-value`}
                     inputMode="decimal"
-                    value={row.value}
+                    value={row.value ?? ""}
                     onChange={(e) => update(row.key, { value: e.target.value })}
                   />
                 </div>
@@ -85,7 +85,7 @@ export function MetricsEditor({ itemId, metrics }: { itemId: string; metrics: Me
                   <Input
                     id={`${id}-unit`}
                     maxLength={24}
-                    value={row.unit}
+                    value={row.unit ?? ""}
                     onChange={(e) => update(row.key, { unit: e.target.value })}
                   />
                 </div>
@@ -106,7 +106,7 @@ export function MetricsEditor({ itemId, metrics }: { itemId: string; metrics: Me
                   <Input
                     id={`${id}-date`}
                     type="date"
-                    value={row.target_date}
+                    value={row.target_date ?? ""}
                     onChange={(e) => update(row.key, { target_date: e.target.value })}
                   />
                 </div>

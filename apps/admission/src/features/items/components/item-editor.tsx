@@ -1,14 +1,11 @@
 "use client"
 
 import { useErrorMessage, useT } from "@ihsp/i18n"
-import { Button, ConfirmDialog, Icons, PageHeader, StateView } from "@ihsp/ui"
-import Link from "next/link"
-import { useRouter, useSearchParams } from "next/navigation"
+import { Button, ConfirmDialog, Icons } from "@ihsp/ui"
 import { useState } from "react"
 import { RequestConsultationButton } from "../../consultations/components/request-dialog"
 import { ProofList } from "../../proofs/components/proof-list"
-import { AdmissionShell } from "../../shell/components/admission-shell"
-import { incompleteFields, useDeleteItem, useItem, usePatchItem, type Item, type ItemKind, type Rewrite } from "../api"
+import { incompleteFields, useDeleteItem, usePatchItem, type Item, type ItemKind, type Rewrite } from "../api"
 import { formValid, ItemFields, toForm, toInput, type FormState } from "./item-fields"
 import { InterviewPanel } from "./interview-panel"
 import { MetricsEditor } from "./metrics-editor"
@@ -21,26 +18,17 @@ const FIELD: Record<keyof Rewrite, keyof FormState> = {
   description: "description",
 }
 
-function Editor({ item }: { item: Item }) {
+/** The full editor of one item (fields, metrics, review, proofs); `onDeleted` runs after the item is removed. */
+export function ItemEditor({ item, onDeleted }: { item: Item; onDeleted: () => void }) {
   const t = useT("items")
   const errorMessage = useErrorMessage()
-  const router = useRouter()
   const patch = usePatchItem(item.id)
   const remove = useDeleteItem()
   const [form, setForm] = useState<FormState>(() => toForm(item))
   const [confirming, setConfirming] = useState(false)
-  const back = `/activities/?kind=${item.kind}`
 
   return (
-    <div className="mx-auto flex w-full max-w-3xl flex-col gap-8 p-4 md:p-6">
-      <PageHeader title={item.title} />
-      <Link
-        href={back}
-        className="text-muted-foreground flex min-h-11 w-fit items-center gap-1 text-sm hover:underline"
-      >
-        <Icons.chevronLeft aria-hidden className="size-4" />
-        {t(`tabs.${item.kind === "honor" ? "honor" : "activity"}`)}
-      </Link>
+    <div className="flex flex-col gap-8">
       <form
         className="flex flex-col gap-3"
         onSubmit={(e) => {
@@ -90,22 +78,8 @@ function Editor({ item }: { item: Item }) {
         description={t("delete.text")}
         confirmLabel={t("delete.button")}
         destructive
-        onConfirm={() => remove.mutate(item.id, { onSuccess: () => router.push(back) })}
+        onConfirm={() => remove.mutate(item.id, { onSuccess: onDeleted })}
       />
     </div>
-  )
-}
-
-/** The editor of one item, `?id=`. */
-export function ItemEditorPage() {
-  const id = useSearchParams().get("id")
-  const item = useItem(id)
-  return (
-    <AdmissionShell>
-      {item.isPending ? <StateView state="loading" /> : null}
-      {item.isError ? <StateView state="error" error={item.error} onRetry={() => item.refetch()} /> : null}
-      {item.isSuccess && !item.data ? <StateView state="empty" icon={<Icons.sparkles aria-hidden />} /> : null}
-      {item.data ? <Editor key={item.data.id} item={item.data} /> : null}
-    </AdmissionShell>
   )
 }

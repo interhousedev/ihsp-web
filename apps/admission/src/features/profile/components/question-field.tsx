@@ -63,6 +63,7 @@ function ChoiceField({ question, value, onChange, multiple }: FieldProps & { mul
             checked={checked}
             disabled={multiple && full && !checked}
             title={text.option(question.id, option)}
+            description={text.optionHint(option)}
             onChange={() =>
               onChange(
                 multiple ? (checked ? selected.filter((item) => item !== option) : [...selected, option]) : option,

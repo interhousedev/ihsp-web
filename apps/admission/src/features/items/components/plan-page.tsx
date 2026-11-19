@@ -5,9 +5,12 @@ import { ApiError } from "@ihsp/api"
 import { Alert, AlertDescription, Button, buttonVariants, Icons, Input, Label, PageHeader, StateView } from "@ihsp/ui"
 import { AiTabCard } from "@/components/ai-tab-card"
 import Link from "next/link"
+import { useRouter, useSearchParams } from "next/navigation"
 import { useState, type FormEvent } from "react"
+import { UnderlineTabs } from "../../../components/lib/underline-tabs"
 import { AdmissionShell } from "../../shell/components/admission-shell"
 import { useScreenContext } from "../../assistant/screen-context"
+import { PlanBody as OpportunityPlanBody } from "../../opportunities/components/plan-page"
 import { useItems } from "../api"
 import {
   MILESTONE_STATUSES,
@@ -244,8 +247,16 @@ function MilestoneRow({ m, itemTitle }: { m: Milestone; itemTitle: string | null
         </p>
       ) : null}
       {itemTitle && m.item_id ? (
-        <Link href={`/activities/view/?id=${encodeURIComponent(m.item_id)}`} className="text-sm underline">
+        <Link href={`/activities/?item=${encodeURIComponent(m.item_id)}`} className="text-sm underline">
           {itemTitle}
+        </Link>
+      ) : null}
+      {m.status === "done" && m.item_id ? (
+        <Link
+          href={`/activities/?item=new&from=${encodeURIComponent(m.item_id)}`}
+          className={buttonVariants({ size: "sm", variant: "outline", className: "w-fit" })}
+        >
+          {t("plan.addToAchievements")}
         </Link>
       ) : null}
       <div role="group" aria-label={t("plan.status")} className="flex flex-wrap gap-2">
@@ -329,7 +340,7 @@ export function PlanBody() {
               {planned.map((item) => (
                 <li key={item.id} className="border-hairline flex flex-col gap-1 rounded-card border p-3 text-sm">
                   <Link
-                    href={`/activities/view/?id=${encodeURIComponent(item.id)}`}
+                    href={`/activities/?item=${encodeURIComponent(item.id)}`}
                     className="font-medium hover:underline"
                   >
                     {item.title}
@@ -352,10 +363,28 @@ export function PlanBody() {
   )
 }
 
+const VIEWS = ["milestones", "saved"] as const
+
+/** Milestones and the saved opportunities in one page, switched by `?view=saved`. */
 export function PlanPage() {
+  const t = useT("items")
+  const router = useRouter()
+  const view = useSearchParams().get("view") === "saved" ? "saved" : "milestones"
   return (
     <AdmissionShell>
-      <PlanBody />
+      <div className="mx-auto flex w-full max-w-3xl flex-col gap-4 px-4 pt-4 md:px-6 md:pt-6">
+        <UnderlineTabs
+          label={t("plan.view.label")}
+          value={view}
+          onValueChange={(next) => {
+            if (next !== view && VIEWS.some((v) => v === next)) {
+              router.replace(next === "saved" ? "/plan/?view=saved" : "/plan/")
+            }
+          }}
+          tabs={VIEWS.map((v) => ({ value: v, label: t(`plan.view.${v}`) }))}
+        />
+      </div>
+      {view === "saved" ? <OpportunityPlanBody /> : <PlanBody />}
     </AdmissionShell>
   )
 }

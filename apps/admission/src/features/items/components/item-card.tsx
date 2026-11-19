@@ -53,7 +53,7 @@ export function ItemCard({
     >
       <div className="flex min-w-0 flex-1 flex-col gap-3">
         <Link
-          href={`/activities/view/?id=${encodeURIComponent(item.id)}`}
+          href={`/activities/?kind=${item.kind}&item=${encodeURIComponent(item.id)}`}
           className="hover:bg-muted/40 flex min-h-11 min-w-0 flex-col gap-1.5 rounded-md transition-colors"
         >
           <span className="flex flex-wrap items-center gap-1.5">

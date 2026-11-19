@@ -8,6 +8,7 @@ export function useProfileText() {
   return {
     label: (id: string) => (t.has(`q.${id}.label`) ? t(`q.${id}.label`) : id),
     hint: (id: string) => (t.has(`q.${id}.hint`) ? t(`q.${id}.hint`) : null),
+    optionHint: (option: string) => (t.has(`oh.${option}`) ? t(`oh.${option}`) : undefined),
     section: (id: string) => (t.has(`section.${id}`) ? t(`section.${id}`) : id),
     sectionIntro: (id: string) => (t.has(`sectionIntro.${id}`) ? t(`sectionIntro.${id}`) : null),
     option: (questionId: string, option: string) => {

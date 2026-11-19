@@ -16,6 +16,7 @@ export const KIND_TONE = {
   scholarship: "success",
   recurring: "neutral",
   program: "primary",
+  research: "primary",
 } as const satisfies Record<OpportunityKind, "warning" | "success" | "primary" | "neutral">
 
 const KIND_ICON = {
@@ -26,6 +27,7 @@ const KIND_ICON = {
   event: "calendarEvent",
   recurring: "clock",
   program: "globe",
+  research: "sparkles",
 } as const satisfies Record<OpportunityKind, keyof typeof Icons>
 
 /** One catalog entry: kind, grades, the next dates (projected ones marked) and its materials. */
@@ -45,6 +47,12 @@ export function OpportunityCard({ item, action }: { item: Opportunity; action?: 
           <Link href={detailHref(item.id)} className="font-medium hover:underline">
             {f.title}
           </Link>
+          {item.for_you ? (
+            <Pill tone="primary" className="gap-1 self-start">
+              <Icons.sparkles aria-hidden className="size-3" />
+              {t("forYou")}
+            </Pill>
+          ) : null}
           <span className="text-muted-foreground flex flex-wrap items-center gap-2 text-xs">
             <Pill tone={KIND_TONE[f.kind]} className="gap-1">
               {(() => {

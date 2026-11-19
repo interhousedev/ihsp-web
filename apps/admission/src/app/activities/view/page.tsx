@@ -1,12 +1,13 @@
 "use client"
 
-import { Suspense } from "react"
-import { ItemEditorPage } from "../../../features/items/components/item-editor"
+import { RouteRedirect, type RedirectTarget } from "../../../components/route-redirect"
+
+/** `/activities/view/?id=X` -> `/activities/?item=X`; no id opens the new-item popup. */
+const target: RedirectTarget = (params) => ({
+  to: `/activities/?item=${encodeURIComponent(params.get("id") || "new")}`,
+  drop: ["id"],
+})
 
 export default function Page() {
-  return (
-    <Suspense>
-      <ItemEditorPage />
-    </Suspense>
-  )
+  return <RouteRedirect target={target} />
 }
