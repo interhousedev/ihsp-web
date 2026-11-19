@@ -9,14 +9,28 @@ function trimTrailingSlashes(value: string): string {
 }
 
 /**
+ * 401 types that reject the credentials of one action (a wrong one-time code or current password while signed
+ * in), not the session: refreshing cannot fix them and signing the user out would lose their work.
+ */
+const ACTION_CREDENTIAL_TYPES: Record<string, true> = {
+  "auth/invalid-credentials": true,
+  "auth/otp-invalid": true,
+  "auth/passkey-invalid": true,
+  "auth/password-disabled": true,
+  "auth/second-factor-required": true,
+}
+
+/**
  * Whether a 401 means that OUR session is invalid: no problem body, a bare `http/401`, or an `auth/*` type
- * (`auth/unauthorized` is the backend's). A 401 with a domain or upstream type (`emis/auth-failed`) is an ordinary
- * API error: refreshing or logging in again cannot fix it. The body is read from a clone.
+ * (`auth/unauthorized` is the backend's) other than the action credential types. A 401 with a domain or upstream
+ * type (`emis/auth-failed`) is an ordinary API error: refreshing or logging in again cannot fix it. The body is read
+ * from a clone.
  */
 async function isSessionProblem(response: Response): Promise<boolean> {
   try {
     const body: unknown = await response.clone().json()
     if (typeof body !== "object" || body === null || !("type" in body) || typeof body.type !== "string") return true
+    if (ACTION_CREDENTIAL_TYPES[body.type] === true) return false
     return body.type.startsWith("auth/") || body.type.startsWith("http/")
   } catch {
     return true

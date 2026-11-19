@@ -34,7 +34,7 @@ import type { deleteFile, getFile, getFileUrl, getMeFiles, getMeStorage, patchFi
 import type { getMeFlashcardSet, getMeFlashcardSetCardStats, getMeFlashcardSetStudy, getMeFlashcardSets, getMeFlashcardSetsStats, patchMeFlashcardSet, postMeFlashcardReview, postMeFlashcardSetStudyRestart, postMeFlashcardSets, postMeFlashcardSetsCopy, postMeFlashcardSetsMerge, putMeFlashcardSetCards } from "./endpoints/flashcards"
 import type { getGroupProgress, getMyGroupProgress } from "./endpoints/group-progress"
 import type { getMeEmisRatingBook, getMeHonours } from "./endpoints/honours"
-import type { deleteIdMe, getIdActivation, getIdConsent, getIdLogin, getIdLogout, getIdMcpScopes, getIdMe, getIdMeActivity, getIdMeConnectorOffers, getIdMeConnectors, getIdMeMcpClients, getIdMeMcpSetup, getIdMeSessions, getIdMeTelegram, getIdPersonalTokens, patchIdMePreferences, patchIdMeTelegram, postIdActivation, postIdConsent, postIdLogin, postIdLoginEmisResolve, postIdLoginOtp, postIdLoginOtpRequest, postIdLoginPassword, postIdLoginRestore, postIdLoginRestoreDecline, postIdLoginTicket, postIdMeConnectorOfferDecision, postIdMeConnectors, postIdMeEmailChangeConfirm, postIdMeEmisPassword, postIdMeMcpClient, postIdMeMcpSetup, postIdMeOtpDisable, postIdMeOtpEnableConfirm, postIdPersonalTokens, postIdRecoveryOtpConfirm, postIdRecoveryPasswordConfirm, postIdTelegramLogin, postIdTelegramOtpRequest, postIdTelegramStatus, postRegisterTelegramStatus } from "./endpoints/id"
+import type { deleteIdMe, deleteMePhoto, getIdActivation, getIdConsent, getIdLogin, getIdLogout, getIdMcpScopes, getIdMe, getIdMeActivity, getIdMeConnectorOffers, getIdMeConnectors, getIdMeMcpClients, getIdMeMcpSetup, getIdMeSessions, getIdMeTelegram, getIdPersonalTokens, patchIdMePreferences, patchIdMeTelegram, postIdActivation, postIdConsent, postIdLogin, postIdLoginEmisResolve, postIdLoginOtp, postIdLoginOtpRequest, postIdLoginPassword, postIdLoginRestore, postIdLoginRestoreDecline, postIdLoginTicket, postIdMeConnectorOfferDecision, postIdMeConnectors, postIdMeEmailChangeConfirm, postIdMeEmisPassword, postIdMeMcpClient, postIdMeMcpSetup, postIdMeOtpDisable, postIdMeOtpEnableConfirm, postIdPersonalTokens, postIdRecoveryOtpConfirm, postIdRecoveryPasswordConfirm, postIdTelegramLogin, postIdTelegramOtpRequest, postIdTelegramStatus, postRegisterTelegramStatus, putMePhoto } from "./endpoints/id"
 import type { deleteLyceumLogo, getAdminAudit, getAdminOauthClients, getAdminSettings, getAdminTeachers, getAdminUser, getAdminUsers, patchAdminTeacher, patchAdminUser, postAdminOauthClientVerify, postAdminTeacherDeactivate, postAdminTeachers, postAdminUserBlock, postAdminUserMailResume, postAdminUserMailSuspend, postAdminUserResetPassword, postAdminUserResetPasswordLink, postAdminUserRoles, postAdminUserUnblock, postAdminUsers, putAdminSettings, putLyceumLogo } from "./endpoints/id-admin"
 import type { getIdMeSecurity, patchIdMePasskey, postIdLoginPasskey, postIdLoginPasskeyOptions, postIdLoginTotp, postIdMePasskey, postIdMePasskeyOptions, postIdMePasswordLoginDisable, postIdMeTotpConfirm, postIdMeTotpDisable, postIdMeTotpSetup } from "./endpoints/id-factors"
 import type { getAdminInsights } from "./endpoints/insights"
@@ -1539,6 +1539,14 @@ export const response_getIdMcpScopes: ResponseOf<"/v1/id/mcp-scopes", "get"> = r
 // GET /v1/id/me — getIdMe
 declare const res_getIdMe: Awaited<ReturnType<typeof getIdMe>>
 export const response_getIdMe: ResponseOf<"/v1/id/me", "get"> = res_getIdMe
+
+// PUT /v1/me/photo — putMePhoto
+declare const res_putMePhoto: Awaited<ReturnType<typeof putMePhoto>>
+export const response_putMePhoto: ResponseOf<"/v1/me/photo", "put"> = res_putMePhoto
+
+// DELETE /v1/me/photo — deleteMePhoto
+declare const res_deleteMePhoto: Awaited<ReturnType<typeof deleteMePhoto>>
+export const response_deleteMePhoto: ResponseOf<"/v1/me/photo", "delete"> = res_deleteMePhoto
 
 // PATCH /v1/id/me/preferences — patchIdMePreferences
 declare const res_patchIdMePreferences: Awaited<ReturnType<typeof patchIdMePreferences>>

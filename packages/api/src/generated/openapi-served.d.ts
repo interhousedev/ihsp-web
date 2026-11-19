@@ -3932,6 +3932,29 @@ export interface paths {
         patch: operations["admission_patch_checklist"];
         trace?: never;
     };
+    "/v1/admission/chooser/budget": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get Budget
+         * @description Return the application budget of my list (staff pass `student_id`).
+         *
+         *     Unreadable students answer 404. Cost to attend is null where the caller
+         *     may not see amounts.
+         */
+        get: operations["admission_chooser_budget"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/v1/admission/comments": {
         parameters: {
             query?: never;
@@ -4672,6 +4695,26 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/v1/admission/essays/{essay_id}/coach/check/latest": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Latest Check
+         * @description My latest stored check; 404 before the first check, no model call.
+         */
+        get: operations["admission_get_latest_essay_check"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/v1/admission/essays/{essay_id}/coach/feedback": {
         parameters: {
             query?: never;
@@ -4746,6 +4789,122 @@ export interface paths {
          * @description Review my draft overall, by sentence, both or one excerpt (AI consent).
          */
         post: operations["admission_coach_essay_review"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/admission/essays/{essay_id}/feedback": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * List Feedback
+         * @description Every comment on my essay, placed in the current text.
+         */
+        get: operations["admission_list_essay_feedback"];
+        put?: never;
+        /**
+         * Add Feedback
+         * @description Add my own note or a reply.
+         */
+        post: operations["admission_add_essay_feedback"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/admission/essays/{essay_id}/feedback/{feedback_id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post?: never;
+        /**
+         * Delete Feedback
+         * @description Delete a comment with its replies.
+         */
+        delete: operations["admission_delete_essay_feedback"];
+        options?: never;
+        head?: never;
+        /**
+         * Patch Feedback
+         * @description Resolve a comment or open it again.
+         */
+        patch: operations["admission_patch_essay_feedback"];
+        trace?: never;
+    };
+    "/v1/admission/essays/{essay_id}/invites": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * List Invites
+         * @description The review links of my essay.
+         */
+        get: operations["admission_list_essay_invites"];
+        put?: never;
+        /**
+         * Create Invite
+         * @description Make a review link of my essay; the token is shown only here.
+         */
+        post: operations["admission_create_essay_invite"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/admission/essays/{essay_id}/invites/{invite_id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post?: never;
+        /**
+         * Revoke Invite
+         * @description Switch a review link off.
+         */
+        delete: operations["admission_revoke_essay_invite"];
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/admission/essays/{essay_id}/reviews": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get Reviews
+         * @description My stored essay reviews, marked stale when the essay changed; no model call.
+         */
+        get: operations["admission_get_essay_reviews"];
+        put?: never;
+        /**
+         * Run Reviews
+         * @description Review my essay and its fit with up to 5 universities (AI consent, limit).
+         */
+        post: operations["admission_run_essay_reviews"];
         delete?: never;
         options?: never;
         head?: never;
@@ -4829,6 +4988,46 @@ export interface paths {
          * @description Share or unshare a version with my mentors and counselors.
          */
         put: operations["admission_share_essay_version"];
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/admission/exemplars": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * List Public Exemplars
+         * @description Published exemplars as 80-word excerpts with their source.
+         */
+        get: operations["admission_list_public_exemplars"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/admission/exemplars/{exemplar_id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get Public Exemplar
+         * @description One published exemplar as an excerpt; a draft answers 404.
+         */
+        get: operations["admission_get_public_exemplar"];
+        put?: never;
         post?: never;
         delete?: never;
         options?: never;
@@ -6648,6 +6847,78 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/v1/admission/staff/exemplars": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * List Exemplars
+         * @description The library with bodies, newest first (exemplars:curate).
+         */
+        get: operations["admission_list_exemplars"];
+        put?: never;
+        /**
+         * Create Exemplar
+         * @description Add an exemplar; a catalog token always creates a draft.
+         */
+        post: operations["admission_create_exemplar"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/admission/staff/exemplars/import": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Import Exemplars
+         * @description Import up to 50 drafts; duplicates by (source_url, title) are skipped.
+         */
+        post: operations["admission_import_exemplars"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/admission/staff/exemplars/{exemplar_id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get Exemplar
+         * @description One exemplar with its body (exemplars:curate).
+         */
+        get: operations["admission_get_exemplar"];
+        put?: never;
+        post?: never;
+        /**
+         * Delete Exemplar
+         * @description Delete an exemplar for good.
+         */
+        delete: operations["admission_delete_exemplar"];
+        options?: never;
+        head?: never;
+        /**
+         * Patch Exemplar
+         * @description Edit, publish (status=published) or archive an exemplar.
+         */
+        patch: operations["admission_patch_exemplar"];
+        trace?: never;
+    };
     "/v1/admission/staff/opportunities/reports": {
         parameters: {
             query?: never;
@@ -6854,6 +7125,94 @@ export interface paths {
          * @description Change an organization (staff).
          */
         patch: operations["admission_update_org"];
+        trace?: never;
+    };
+    "/v1/admission/staff/prompt-studio/slots": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * List Slots
+         * @description The four editable reviewer prompts with their active text.
+         */
+        get: operations["admission_prompt_studio_slots"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/admission/staff/prompt-studio/slots/{task}/{name}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get Slot
+         * @description One slot with the text in force for a locale and its versions.
+         */
+        get: operations["admission_prompt_studio_slot"];
+        /**
+         * Save Version
+         * @description Store a validated draft as the new active version.
+         */
+        put: operations["admission_prompt_studio_save"];
+        post?: never;
+        /**
+         * Revert Slot
+         * @description Drop the override so the built-in text applies again.
+         */
+        delete: operations["admission_prompt_studio_revert"];
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/admission/staff/prompt-studio/slots/{task}/{name}/test": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Test Slot
+         * @description Run the draft and the active prompt on pasted samples and compare.
+         */
+        post: operations["admission_prompt_studio_test"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/admission/staff/prompt-studio/slots/{task}/{name}/versions/{version}/activate": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Activate Version
+         * @description Make a stored version the active one.
+         */
+        post: operations["admission_prompt_studio_activate"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
         trace?: never;
     };
     "/v1/admission/staff/saved-views": {
@@ -13851,6 +14210,30 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/v1/me/photo": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        /**
+         * Put My Profile Photo
+         * @description Replace the caller's photo, any role (JPEG or PNG, up to 5 MB).
+         */
+        put: operations["me_put_photo"];
+        post?: never;
+        /**
+         * Delete My Profile Photo
+         * @description Remove the caller's photo; nothing happens when there is none.
+         */
+        delete: operations["me_delete_photo"];
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/v1/me/privacy/erasure": {
         parameters: {
             query?: never;
@@ -15799,6 +16182,46 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/v1/public/admission/essay-review/comments": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Add Comment
+         * @description Leave a comment through a review link (no account).
+         */
+        post: operations["admission_add_essay_review_comment"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/public/admission/essay-review/open": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Open Review
+         * @description Open an essay through a review link (no account).
+         */
+        post: operations["admission_open_essay_review"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/v1/public/client-config": {
         parameters: {
             query?: never;
@@ -16725,13 +17148,15 @@ export interface paths {
         get?: never;
         /**
          * Put My Photo
-         * @description Replace the caller's photo (JPEG or PNG, up to 5 MB).
+         * @deprecated
+         * @description Replace the teacher's photo (deprecated: use PUT /v1/me/photo).
          */
         put: operations["put_my_photo_v1_staff_me_photo_put"];
         post?: never;
         /**
          * Delete My Photo
-         * @description Remove the caller's photo; nothing happens when there is none.
+         * @deprecated
+         * @description Remove the teacher's photo (deprecated: use DELETE /v1/me/photo).
          */
         delete: operations["delete_my_photo_v1_staff_me_photo_delete"];
         options?: never;
@@ -18399,6 +18824,20 @@ export interface components {
             min_supported: string;
         };
         /**
+         * ApplicationFeeOut
+         * @description A cited application fee.
+         */
+        ApplicationFeeOut: {
+            /** Amount */
+            amount: string;
+            /** Currency */
+            currency: string;
+            /** Source Url */
+            source_url: string | null;
+            /** Year */
+            year: number | null;
+        };
+        /**
          * ApplyBody
          * @description What the author chose in the Apply dialog (all fields optional).
          *
@@ -19228,6 +19667,36 @@ export interface components {
             unlabelled: number;
         };
         /**
+         * BaseReviewOut
+         * @description The review of the writing; the same for every university.
+         */
+        BaseReviewOut: {
+            /** Band */
+            band: string;
+            /** Dimensions */
+            dimensions: components["schemas"]["DimensionScoreOut"][];
+            /** Generic */
+            generic: boolean;
+            /** Improvements */
+            improvements: string[];
+            /** Over Limit */
+            over_limit: boolean;
+            /** Paragraphs */
+            paragraphs: components["schemas"]["ParagraphNoteOut"][];
+            /** Patterns */
+            patterns: components["schemas"]["ExemplarPatternOut"][];
+            /** Score */
+            score: number;
+            /** Strengths */
+            strengths: string[];
+            /** Summary */
+            summary: string;
+            /** Word Count */
+            word_count: number;
+            /** Word Limit */
+            word_limit: number | null;
+        };
+        /**
          * Bell
          * @description Start and end of one period on some weekdays (jsonb of Term.bells).
          *
@@ -19466,6 +19935,11 @@ export interface components {
         };
         /** Body_import_preview_v1_admin_students_import_post */
         Body_import_preview_v1_admin_students_import_post: {
+            /** File */
+            file: string;
+        };
+        /** Body_me_put_photo */
+        Body_me_put_photo: {
             /** File */
             file: string;
         };
@@ -19921,12 +20395,82 @@ export interface components {
             title: string;
         };
         /**
+         * BudgetInstitutionOut
+         * @description The institution fields the budget table shows.
+         */
+        BudgetInstitutionOut: {
+            /**
+             * Id
+             * Format: uuid
+             */
+            id: string;
+            /**
+             * Logo Fit
+             * @enum {string}
+             */
+            logo_fit: "circle" | "contain";
+            /** Logo Url */
+            logo_url: string | null;
+            /** Logo Zoom */
+            logo_zoom: number;
+            /** Name */
+            name: string;
+        };
+        /**
+         * BudgetOut
+         * @description The application budget of a list.
+         */
+        BudgetOut: {
+            /** Rows */
+            rows: components["schemas"]["BudgetRowOut"][];
+            totals: components["schemas"]["BudgetTotalsOut"];
+        };
+        /**
          * BudgetResponse
          * @description The session and the day budget.
          */
         BudgetResponse: {
             day: components["schemas"]["app__interfaces__http__v1__notebooks__schemas_common__UsagePartResponse"];
             session: components["schemas"]["app__interfaces__http__v1__notebooks__schemas_common__UsagePartResponse"];
+        };
+        /**
+         * BudgetRowOut
+         * @description One list entry of the budget.
+         */
+        BudgetRowOut: {
+            /** Aid Deadline */
+            aid_deadline: string | null;
+            /** Aid Forms */
+            aid_forms: ("css_profile" | "fafsa" | "idoc" | "institutional")[];
+            /** Aid Forms Known */
+            aid_forms_known: boolean;
+            application_fee: components["schemas"]["ApplicationFeeOut"] | null;
+            cost_to_attend: components["schemas"]["CostToAttendOut"] | null;
+            /**
+             * Entry Id
+             * Format: uuid
+             */
+            entry_id: string;
+            /**
+             * Fee Status
+             * @enum {string}
+             */
+            fee_status: "unpaid" | "paid" | "waiver_requested" | "waiver_approved";
+            institution: components["schemas"]["BudgetInstitutionOut"];
+            /** Round */
+            round: string;
+        };
+        /**
+         * BudgetTotalsOut
+         * @description Totals per currency; currencies are never summed together.
+         */
+        BudgetTotalsOut: {
+            /** By Currency */
+            by_currency: components["schemas"]["CurrencyTotalOut"][];
+            /** Css Profile Schools */
+            css_profile_schools: number;
+            /** Unknown Fee Count */
+            unknown_fee_count: number;
         };
         /**
          * BulkDeleteLoginCuesBody
@@ -20192,6 +20736,7 @@ export interface components {
              * Format: uuid
              */
             student_id: string;
+            study_focus: components["schemas"]["StudyFocusOut"];
         };
         /**
          * CartridgeImportReport
@@ -20321,6 +20866,138 @@ export interface components {
             year: number;
         };
         /**
+         * CatalogFieldsIn
+         * @description Plain fields of an institution or scholarship; unknown keys are ignored.
+         *
+         *     Institutions: name, country (required when creating), name_local, city,
+         *     website_domain, kind, size_band, setting, languages, aliases, logo_url,
+         *     logo_zoom, logo_fit, logo_aspect, cover_url. Scholarships: name, provider,
+         *     basis (required when creating), institution_id, country, coverage_pct_min,
+         *     coverage_pct_max, covers, eligibility, url, cycle. Values are checked on save.
+         */
+        CatalogFieldsIn: {
+            /**
+             * Aliases
+             * @description List of other names, <= 50.
+             */
+            aliases?: unknown;
+            /**
+             * Basis
+             * @description Scholarship: merit | need | government | sports | work_study.
+             */
+            basis?: unknown;
+            /**
+             * City
+             * @description City, at most 120 characters.
+             */
+            city?: unknown;
+            /**
+             * Country
+             * @description ISO 3166-1 alpha-2 code, e.g. `GB`; stored upper.
+             */
+            country?: unknown;
+            /**
+             * Cover Url
+             * @description https cover image address.
+             */
+            cover_url?: unknown;
+            /**
+             * Coverage Pct Max
+             * @description Scholarship: 0-100.
+             */
+            coverage_pct_max?: unknown;
+            /**
+             * Coverage Pct Min
+             * @description Scholarship: 0-100.
+             */
+            coverage_pct_min?: unknown;
+            /**
+             * Covers
+             * @description Scholarship: what it covers.
+             */
+            covers?: unknown;
+            /**
+             * Cycle
+             * @description Scholarship: start year, 2000-2100.
+             */
+            cycle?: unknown;
+            /**
+             * Eligibility
+             * @description Scholarship: JSON object.
+             */
+            eligibility?: unknown;
+            /**
+             * Institution Id
+             * @description Scholarship: school id.
+             */
+            institution_id?: unknown;
+            /**
+             * Kind
+             * @description university | college | foundation_provider.
+             */
+            kind?: unknown;
+            /**
+             * Languages
+             * @description List of teaching languages.
+             */
+            languages?: unknown;
+            /**
+             * Logo Aspect
+             * @description Logo width / height ratio.
+             */
+            logo_aspect?: unknown;
+            /**
+             * Logo Fit
+             * @description circle | contain.
+             */
+            logo_fit?: unknown;
+            /**
+             * Logo Url
+             * @description https image address.
+             */
+            logo_url?: unknown;
+            /**
+             * Logo Zoom
+             * @description Logo zoom, 0.5 to 3.0.
+             */
+            logo_zoom?: unknown;
+            /**
+             * Name
+             * @description Name, at most 200 characters.
+             */
+            name?: unknown;
+            /**
+             * Name Local
+             * @description Name in the local language.
+             */
+            name_local?: unknown;
+            /**
+             * Provider
+             * @description Scholarship: institution|government|foundation.
+             */
+            provider?: unknown;
+            /**
+             * Setting
+             * @description big_city | college_town | campus | small_city.
+             */
+            setting?: unknown;
+            /**
+             * Size Band
+             * @description Size band label, <= 10 chars.
+             */
+            size_band?: unknown;
+            /**
+             * Url
+             * @description Scholarship: page address.
+             */
+            url?: unknown;
+            /**
+             * Website Domain
+             * @description Site domain without scheme, e.g. `ox.ac.uk`.
+             */
+            website_domain?: unknown;
+        };
+        /**
          * CatalogProposalIn
          * @description Propose a new institution or scholarship, or an edit of an existing one.
          */
@@ -20329,10 +21006,7 @@ export interface components {
             facts?: {
                 [key: string]: components["schemas"]["CatalogFactIn"];
             };
-            /** Fields */
-            fields?: {
-                [key: string]: unknown;
-            };
+            fields?: components["schemas"]["CatalogFieldsIn"];
             /**
              * Kind
              * @enum {string}
@@ -20342,6 +21016,11 @@ export interface components {
             note?: string | null;
             /** Source Url */
             source_url: string;
+            /**
+             * Supp Prompts
+             * @description Institutions only. Applied like the staff supplement PUT.
+             */
+            supp_prompts?: components["schemas"]["SuppPromptProposalIn"][];
             /** Target Id */
             target_id?: string | null;
         };
@@ -20407,6 +21086,8 @@ export interface components {
              * @enum {string}
              */
             status: "pending" | "approved" | "rejected";
+            /** Supp Prompts */
+            supp_prompts?: components["schemas"]["SuppPromptProposalOut"][];
             /** Target Id */
             target_id: string | null;
         };
@@ -20880,6 +21561,19 @@ export interface components {
             institution_name?: string | null;
             /** List Entry Id */
             list_entry_id: string | null;
+            /**
+             * Logo Fit
+             * @default circle
+             * @enum {string}
+             */
+            logo_fit: "circle" | "contain";
+            /** Logo Url */
+            logo_url?: string | null;
+            /**
+             * Logo Zoom
+             * @default 1
+             */
+            logo_zoom: number;
             /** Owner */
             owner: string;
             /**
@@ -21064,7 +21758,7 @@ export interface components {
         };
         /**
          * CoachCheckOut
-         * @description The draft scored on six dimensions against its prompt; not stored.
+         * @description The draft scored on six dimensions against its prompt; the latest is stored.
          */
         CoachCheckOut: {
             /**
@@ -21285,39 +21979,6 @@ export interface components {
             slug: string;
             /** Title */
             title: string;
-        };
-        /**
-         * CommentIn
-         * @description A new comment.
-         */
-        CommentIn: {
-            /** Anchor */
-            anchor?: {
-                [key: string]: unknown;
-            } | null;
-            /** Body */
-            body: string;
-            /**
-             * Student Id
-             * Format: uuid
-             */
-            student_id: string;
-            /**
-             * Target Id
-             * Format: uuid
-             */
-            target_id: string;
-            /**
-             * Target Kind
-             * @enum {string}
-             */
-            target_kind: "profile" | "help_request" | "item" | "list_entry" | "essay" | "words";
-            /**
-             * Visibility
-             * @default student_and_staff
-             * @enum {string}
-             */
-            visibility: "staff_only" | "student_and_staff";
         };
         /**
          * CommentListOut
@@ -21884,6 +22545,20 @@ export interface components {
         CopyResponse: {
             /** Created */
             created: number;
+        };
+        /**
+         * CostToAttendOut
+         * @description Yearly cost to attend; separate from the cost to apply.
+         */
+        CostToAttendOut: {
+            /** Aid Estimate */
+            aid_estimate: string | null;
+            /** Annual Cost */
+            annual_cost: string;
+            /** Currency */
+            currency: string;
+            /** Gap */
+            gap: string | null;
         };
         /**
          * CountsResponse
@@ -22678,6 +23353,20 @@ export interface components {
             user_id: string;
         };
         /**
+         * CurrencyTotalOut
+         * @description Fee totals of one currency.
+         */
+        CurrencyTotalOut: {
+            /** Currency */
+            currency: string;
+            /** Known Total */
+            known_total: string;
+            /** Paid Total */
+            paid_total: string;
+            /** Waived Total */
+            waived_total: string;
+        };
+        /**
          * CurriculumDirectionResponse
          * @description The education direction.
          */
@@ -23238,6 +23927,20 @@ export interface components {
             status: "sent" | "failed" | "unavailable";
         };
         /**
+         * DeltaOut
+         * @description How the draft differs from the active prompt.
+         */
+        DeltaOut: {
+            /** Band After */
+            band_after: string | null;
+            /** Band Before */
+            band_before: string | null;
+            /** Band Changed */
+            band_changed: boolean;
+            /** Score Delta */
+            score_delta: number | null;
+        };
+        /**
          * DetailGroupOut
          * @description Facts of one registry group.
          */
@@ -23362,6 +24065,20 @@ export interface components {
             name: string;
             /** Revoked At */
             revoked_at: string | null;
+        };
+        /**
+         * DimensionScoreOut
+         * @description One rubric dimension scored 0 to 5 with a verbatim quote.
+         */
+        DimensionScoreOut: {
+            /** Comment */
+            comment: string;
+            /** Key */
+            key: string;
+            /** Quote */
+            quote: string | null;
+            /** Score */
+            score: number;
         };
         /**
          * Direction
@@ -23500,7 +24217,7 @@ export interface components {
              */
             student_id: string;
             /** Versions */
-            versions: components["schemas"]["VersionOut"][];
+            versions: components["schemas"]["app__interfaces__http__v1__admission__routes_documents__VersionOut"][];
             /** Visibility */
             visibility: string;
         };
@@ -24142,6 +24859,32 @@ export interface components {
             word_limit?: number | null;
         };
         /**
+         * EssayReviewsIn
+         * @description The universities to review the essay for; `refresh` ignores stored results.
+         */
+        EssayReviewsIn: {
+            /** Institution Ids */
+            institution_ids?: string[];
+            /**
+             * Refresh
+             * @default false
+             */
+            refresh: boolean;
+        };
+        /**
+         * EssayReviewsOut
+         * @description The base review (null before the first run) and the university reviews.
+         */
+        EssayReviewsOut: {
+            base: components["schemas"]["BaseReviewOut"] | null;
+            /** Base Cached */
+            base_cached: boolean;
+            /** Base Stale */
+            base_stale: boolean;
+            /** Universities */
+            universities: components["schemas"]["UniEntryOut"][];
+        };
+        /**
          * EssaySummaryOut
          * @description A row of the essays list.
          */
@@ -24557,6 +25300,250 @@ export interface components {
             };
         };
         /**
+         * ExemplarExcerptListOut
+         * @description A page of excerpts.
+         */
+        ExemplarExcerptListOut: {
+            /** Items */
+            items: components["schemas"]["ExemplarExcerptOut"][];
+            /** Total */
+            total: number;
+        };
+        /**
+         * ExemplarExcerptOut
+         * @description What a student sees: an excerpt of about 80 words and the source.
+         */
+        ExemplarExcerptOut: {
+            /** Excerpt */
+            excerpt: string;
+            /**
+             * Id
+             * Format: uuid
+             */
+            id: string;
+            /** Institution Id */
+            institution_id: string | null;
+            /**
+             * Kind
+             * @enum {string}
+             */
+            kind: "personal_statement" | "supplement" | "why_us" | "activity" | "other";
+            /** Language */
+            language: string;
+            /** Prompt */
+            prompt: string;
+            /** School Name */
+            school_name: string;
+            /** Source Name */
+            source_name: string;
+            /** Source Url */
+            source_url: string;
+            /** Tags */
+            tags: string[];
+            /** Title */
+            title: string;
+            /** Word Count */
+            word_count: number;
+            /** Year */
+            year: number | null;
+        };
+        /**
+         * ExemplarImportIn
+         * @description Up to 50 exemplars; all are stored as drafts.
+         */
+        ExemplarImportIn: {
+            /** Items */
+            items: components["schemas"]["ExemplarIn"][];
+        };
+        /**
+         * ExemplarImportOut
+         * @description New drafts and the ids of exemplars that were already there.
+         */
+        ExemplarImportOut: {
+            /** Created */
+            created: components["schemas"]["ExemplarOut"][];
+            /** Duplicates */
+            duplicates: string[];
+        };
+        /**
+         * ExemplarIn
+         * @description A new exemplar; a catalog token always gets a draft.
+         */
+        ExemplarIn: {
+            /** Body */
+            body: string;
+            /** Institution Id */
+            institution_id?: string | null;
+            /**
+             * Kind
+             * @enum {string}
+             */
+            kind: "personal_statement" | "supplement" | "why_us" | "activity" | "other";
+            /**
+             * Language
+             * @default en
+             */
+            language: string;
+            /**
+             * Notes
+             * @default
+             */
+            notes: string;
+            /**
+             * Prompt
+             * @default
+             */
+            prompt: string;
+            /**
+             * School Name
+             * @default
+             */
+            school_name: string;
+            /**
+             * Source Name
+             * @default
+             */
+            source_name: string;
+            /** Source Url */
+            source_url: string;
+            /**
+             * Status
+             * @default draft
+             * @enum {string}
+             */
+            status: "draft" | "published" | "archived";
+            /** Tags */
+            tags?: string[];
+            /** Title */
+            title: string;
+            /** Year */
+            year?: number | null;
+        };
+        /**
+         * ExemplarListOut
+         * @description A page of exemplars for curators.
+         */
+        ExemplarListOut: {
+            /** Items */
+            items: components["schemas"]["ExemplarOut"][];
+            /** Total */
+            total: number;
+        };
+        /**
+         * ExemplarOut
+         * @description An exemplar with its body, for curators.
+         */
+        ExemplarOut: {
+            /** Body */
+            body: string;
+            /**
+             * Created At
+             * Format: date-time
+             */
+            created_at: string;
+            /** Created By */
+            created_by: string | null;
+            /**
+             * Id
+             * Format: uuid
+             */
+            id: string;
+            /** Institution Id */
+            institution_id: string | null;
+            /**
+             * Kind
+             * @enum {string}
+             */
+            kind: "personal_statement" | "supplement" | "why_us" | "activity" | "other";
+            /** Language */
+            language: string;
+            /** Lock Version */
+            lock_version: number;
+            /** Notes */
+            notes: string;
+            /** Prompt */
+            prompt: string;
+            /** School Name */
+            school_name: string;
+            /** Source Name */
+            source_name: string;
+            /** Source Url */
+            source_url: string;
+            /**
+             * Status
+             * @enum {string}
+             */
+            status: "draft" | "published" | "archived";
+            /** Tags */
+            tags: string[];
+            /** Title */
+            title: string;
+            /**
+             * Updated At
+             * Format: date-time
+             */
+            updated_at: string;
+            /** Updated By */
+            updated_by: string | null;
+            /** Word Count */
+            word_count: number;
+            /** Year */
+            year: number | null;
+        };
+        /**
+         * ExemplarPatchIn
+         * @description Changed fields only, with the lock of the version they were read at.
+         */
+        ExemplarPatchIn: {
+            /** Body */
+            body?: string | null;
+            /** Institution Id */
+            institution_id?: string | null;
+            /** Kind */
+            kind?: ("personal_statement" | "supplement" | "why_us" | "activity" | "other") | null;
+            /** Language */
+            language?: string | null;
+            /** Lock Version */
+            lock_version: number;
+            /** Notes */
+            notes?: string | null;
+            /** Prompt */
+            prompt?: string | null;
+            /** School Name */
+            school_name?: string | null;
+            /** Source Name */
+            source_name?: string | null;
+            /** Source Url */
+            source_url?: string | null;
+            /** Status */
+            status?: ("draft" | "published" | "archived") | null;
+            /** Tags */
+            tags?: string[] | null;
+            /** Title */
+            title?: string | null;
+            /** Year */
+            year?: number | null;
+        };
+        /**
+         * ExemplarPatternOut
+         * @description A pattern of a published exemplar the draft could use.
+         */
+        ExemplarPatternOut: {
+            /**
+             * Exemplar Id
+             * Format: uuid
+             */
+            exemplar_id: string;
+            /** Pattern */
+            pattern: string;
+            /** School Name */
+            school_name: string;
+            /** Source Url */
+            source_url: string;
+            /** Title */
+            title: string;
+        };
+        /**
          * ExerciseCreate
          * @description A practice exercise (passages and typed questions).
          */
@@ -24903,6 +25890,11 @@ export interface components {
          * @description One fact the staff form can fill in.
          */
         FactSpecItemOut: {
+            /**
+             * Example
+             * @description A valid sample `value` of this fact.
+             */
+            example: unknown;
             /** Key */
             key: string;
             /** Kind */
@@ -24921,6 +25913,11 @@ export interface components {
             step: number | null;
             /** Unit */
             unit: string | null;
+            /**
+             * Value Shape
+             * @description Shape of `value` in a proposal fact, as text.
+             */
+            value_shape: string;
         };
         /**
          * FactSpecOptionOut
@@ -25113,56 +26110,12 @@ export interface components {
             title: string;
         };
         /**
-         * FeedbackListOut
-         * @description Body of GET /v1/feedback/mine.
+         * FeedbackPatchIn
+         * @description Resolve a comment or open it again.
          */
-        FeedbackListOut: {
-            /** Items */
-            items: components["schemas"]["FeedbackOut"][];
-        };
-        /**
-         * FeedbackOut
-         * @description A feedback item as its reporter sees it.
-         */
-        FeedbackOut: {
-            /**
-             * Area
-             * @enum {string}
-             */
-            area: "id" | "my" | "staff" | "admin" | "lms" | "library" | "share" | "bot" | "ai" | "notebooks" | "mail" | "other";
-            /** Attachments */
-            attachments: components["schemas"]["app__interfaces__http__v1__feedback__schemas__AttachmentOut"][];
-            /**
-             * Created At
-             * Format: date-time
-             */
-            created_at: string;
-            /** Description */
-            description: string;
-            /**
-             * Id
-             * Format: uuid
-             */
-            id: string;
-            /**
-             * Kind
-             * @enum {string}
-             */
-            kind: "idea" | "bug" | "other";
-            /** Response Count */
-            response_count: number;
-            /**
-             * Source
-             * @enum {string}
-             */
-            source: "web" | "bot";
-            /**
-             * Status
-             * @enum {string}
-             */
-            status: "new" | "in_review" | "planned" | "done" | "rejected";
-            /** Title */
-            title: string;
+        FeedbackPatchIn: {
+            /** Resolved */
+            resolved: boolean;
         };
         /**
          * FeedbackStatusIn
@@ -25531,6 +26484,27 @@ export interface components {
             variables?: string[];
         };
         /**
+         * GoalAlignmentOut
+         * @description How the essay meets one sourced goal of the university.
+         */
+        GoalAlignmentOut: {
+            /**
+             * Alignment
+             * @enum {string}
+             */
+            alignment: "strong" | "partial" | "missing";
+            /** Evidence */
+            evidence: string | null;
+            /** Goal */
+            goal: string;
+            /** Key */
+            key: string;
+            /** Source Url */
+            source_url: string | null;
+            /** Suggestion */
+            suggestion: string;
+        };
+        /**
          * GoalPlanOut
          * @description The milestones in display order.
          */
@@ -25875,6 +26849,75 @@ export interface components {
             last_name: string;
             /** Photo Url */
             photo_url: string | null;
+        };
+        /**
+         * GuestCommentOut
+         * @description A comment left through this link.
+         */
+        GuestCommentOut: {
+            /** Anchor End */
+            anchor_end: number | null;
+            /** Anchor Start */
+            anchor_start: number | null;
+            /** Author Name */
+            author_name: string;
+            /** Body */
+            body: string;
+            /**
+             * Created At
+             * Format: date-time
+             */
+            created_at: string;
+            /** Detached */
+            detached: boolean;
+            /**
+             * Id
+             * Format: uuid
+             */
+            id: string;
+            /** Parent Id */
+            parent_id: string | null;
+            /** Quote */
+            quote: string | null;
+            /** Resolved */
+            resolved: boolean;
+        };
+        /**
+         * GuestEssayOut
+         * @description The essay as a reviewer sees it, with no owner identity.
+         */
+        GuestEssayOut: {
+            /** Body */
+            body: string;
+            /** Kind */
+            kind: string;
+            /** Prompt Text */
+            prompt_text: string;
+            /** Title */
+            title: string;
+            /** Word Count */
+            word_count: number;
+        };
+        /**
+         * GuestReviewOut
+         * @description What a link opens: the essay and the comments of this link.
+         */
+        GuestReviewOut: {
+            /**
+             * Audience
+             * @enum {string}
+             */
+            audience: "classmate" | "parent" | "counselor" | "other";
+            /** Can Comment */
+            can_comment: boolean;
+            /** Comments */
+            comments: components["schemas"]["GuestCommentOut"][];
+            essay: components["schemas"]["GuestEssayOut"];
+            /**
+             * Expires At
+             * Format: date-time
+             */
+            expires_at: string;
         };
         /**
          * H5PBlock
@@ -26683,6 +27726,105 @@ export interface components {
             invite_code: string;
         };
         /**
+         * InviteCreatedOut
+         * @description A new link with its plain token, shown this once.
+         */
+        InviteCreatedOut: {
+            /** Active */
+            active: boolean;
+            /**
+             * Audience
+             * @enum {string}
+             */
+            audience: "classmate" | "parent" | "counselor" | "other";
+            /** Can Comment */
+            can_comment: boolean;
+            /** Created At */
+            created_at: string | null;
+            /**
+             * Expires At
+             * Format: date-time
+             */
+            expires_at: string;
+            /**
+             * Id
+             * Format: uuid
+             */
+            id: string;
+            /** Label */
+            label: string | null;
+            /** Last Opened At */
+            last_opened_at: string | null;
+            /** Revoked At */
+            revoked_at: string | null;
+            /** Token */
+            token: string;
+        };
+        /**
+         * InviteIn
+         * @description A new review link.
+         */
+        InviteIn: {
+            /**
+             * Audience
+             * @enum {string}
+             */
+            audience: "classmate" | "parent" | "counselor" | "other";
+            /**
+             * Can Comment
+             * @default true
+             */
+            can_comment: boolean;
+            /** Label */
+            label?: string | null;
+            /**
+             * Ttl Days
+             * @default 30
+             */
+            ttl_days: number;
+        };
+        /**
+         * InviteListOut
+         * @description The links of an essay.
+         */
+        InviteListOut: {
+            /** Items */
+            items: components["schemas"]["InviteOut"][];
+        };
+        /**
+         * InviteOut
+         * @description A review link; the token is never shown again.
+         */
+        InviteOut: {
+            /** Active */
+            active: boolean;
+            /**
+             * Audience
+             * @enum {string}
+             */
+            audience: "classmate" | "parent" | "counselor" | "other";
+            /** Can Comment */
+            can_comment: boolean;
+            /** Created At */
+            created_at: string | null;
+            /**
+             * Expires At
+             * Format: date-time
+             */
+            expires_at: string;
+            /**
+             * Id
+             * Format: uuid
+             */
+            id: string;
+            /** Label */
+            label: string | null;
+            /** Last Opened At */
+            last_opened_at: string | null;
+            /** Revoked At */
+            revoked_at: string | null;
+        };
+        /**
          * InvitedUserResponse
          * @description The created account and its one-time Telegram invitation.
          */
@@ -26693,6 +27835,21 @@ export interface components {
              */
             invite_url: string;
             user: components["schemas"]["app__interfaces__http__v1__admin_users__schemas__AdminUserResponse"];
+        };
+        /**
+         * IssueOut
+         * @description A finding of the draft validation.
+         */
+        IssueOut: {
+            /** Code */
+            code: string;
+            /** Detail */
+            detail: string;
+            /**
+             * Severity
+             * @enum {string}
+             */
+            severity: "error" | "warning";
         };
         /**
          * IssuedFeedOut
@@ -27414,6 +28571,58 @@ export interface components {
          * @enum {string}
          */
         LabelRunStatus: "idle" | "running" | "failed";
+        /**
+         * LatestCheckOut
+         * @description The stored latest check; `stale` when the draft changed since.
+         */
+        LatestCheckOut: {
+            /**
+             * Band
+             * @enum {string}
+             */
+            band: "exceptional" | "strong" | "solid" | "developing" | "weak";
+            /**
+             * Created At
+             * Format: date-time
+             */
+            created_at: string;
+            /** Dimensions */
+            dimensions: components["schemas"]["CoachCheckDimensionOut"][];
+            /** First Fix */
+            first_fix: string;
+            /** Flagged Paragraph */
+            flagged_paragraph: number | null;
+            /** Flagged Reason */
+            flagged_reason: string;
+            /** Flagged Text */
+            flagged_text: string | null;
+            /** Generic */
+            generic: boolean;
+            /** Over Limit */
+            over_limit: boolean;
+            /**
+             * Prompt Fit
+             * @enum {string}
+             */
+            prompt_fit: "yes" | "partial" | "no" | "unknown";
+            /** Prompt Fit Reason */
+            prompt_fit_reason: string;
+            /** Score */
+            score: number;
+            /** Stale */
+            stale: boolean;
+            /**
+             * Strongest
+             * @enum {string}
+             */
+            strongest: "hook" | "theme" | "detail" | "authenticity" | "reflection" | "writing";
+            /** Summary */
+            summary: string;
+            /** Word Count */
+            word_count: number;
+            /** Word Limit */
+            word_limit: number | null;
+        };
         /**
          * LearningAnswerBody
          * @description `Answer`: the chosen options, a text or a number (one of them per question).
@@ -29140,7 +30349,7 @@ export interface components {
              * @default RD
              * @enum {string}
              */
-            round: "ED" | "ED2" | "EA" | "REA" | "RD" | "ROLLING";
+            round: "ED" | "ED2" | "EA" | "REA" | "SCEA" | "RD" | "ROLLING";
         };
         /**
          * ListEntryOut
@@ -29152,9 +30361,16 @@ export interface components {
             affordability_status: string;
             /** Bucket */
             bucket: string | null;
+            /** Conflicts */
+            conflicts: components["schemas"]["PlanConflictOut"][];
             /** Cycle */
             cycle: string | null;
             estimate: components["schemas"]["EstimateOut"];
+            /**
+             * Fee Status
+             * @enum {string}
+             */
+            fee_status: "unpaid" | "paid" | "waiver_requested" | "waiver_approved";
             /**
              * Id
              * Format: uuid
@@ -29199,12 +30415,14 @@ export interface components {
             bucket?: ("reach" | "target" | "safety") | null;
             /** Cycle */
             cycle?: string | null;
+            /** Fee Status */
+            fee_status?: ("unpaid" | "paid" | "waiver_requested" | "waiver_approved") | null;
             /** Lock Version */
             lock_version: number;
             /** Notes */
             notes?: string | null;
             /** Round */
-            round?: ("ED" | "ED2" | "EA" | "REA" | "RD" | "ROLLING") | null;
+            round?: ("ED" | "ED2" | "EA" | "REA" | "SCEA" | "RD" | "ROLLING") | null;
             /** Status */
             status?: ("considering" | "applying" | "applied" | "dropped") | null;
         };
@@ -30841,6 +32059,22 @@ export interface components {
             suggestion: components["schemas"]["NextSectionResponse"] | null;
         };
         /**
+         * NoteIn
+         * @description My own note, or a reply to a comment.
+         */
+        NoteIn: {
+            /** Anchor End */
+            anchor_end?: number | null;
+            /** Anchor Start */
+            anchor_start?: number | null;
+            /** Body */
+            body: string;
+            /** Parent Id */
+            parent_id?: string | null;
+            /** Quote */
+            quote?: string | null;
+        };
+        /**
          * NoteInput
          * @description A note written by the student.
          */
@@ -31321,6 +32555,14 @@ export interface components {
             course_id: string;
         };
         /**
+         * OpenIn
+         * @description The token from the link fragment.
+         */
+        OpenIn: {
+            /** Token */
+            token: string;
+        };
+        /**
          * OppCommentIn
          * @description Post a comment.
          */
@@ -31439,6 +32681,11 @@ export interface components {
             created_at: string;
             fields: components["schemas"]["OpportunityFields"];
             /**
+             * For You
+             * @default false
+             */
+            for_you: boolean;
+            /**
              * Id
              * Format: uuid
              */
@@ -31496,7 +32743,7 @@ export interface components {
              * Kind
              * @enum {string}
              */
-            kind: "exam" | "certification" | "course" | "event" | "recurring" | "program" | "scholarship";
+            kind: "exam" | "certification" | "course" | "event" | "recurring" | "program" | "scholarship" | "research";
             /** Last Year Dates */
             last_year_dates?: string[];
             /** Lms Course Id */
@@ -31526,6 +32773,8 @@ export interface components {
             scope?: ("local" | "international") | null;
             /** Source Url */
             source_url?: string | null;
+            /** Study Field Ids */
+            study_field_ids?: string[];
             /** Subject Ids */
             subject_ids?: string[];
             /** Summary */
@@ -31548,6 +32797,11 @@ export interface components {
             page: number;
             /** Size */
             size: number;
+            /**
+             * Sort
+             * @enum {string}
+             */
+            sort: "title" | "ranking" | "acceptance" | "tuition" | "relevance";
             /** Total */
             total: number;
         };
@@ -31569,6 +32823,11 @@ export interface components {
              */
             created_at: string;
             fields: components["schemas"]["OpportunityFields"];
+            /**
+             * For You
+             * @default false
+             */
+            for_you: boolean;
             /**
              * Id
              * Format: uuid
@@ -31914,6 +33173,19 @@ export interface components {
             institution_id: string;
             /** Institution Name */
             institution_name: string;
+            /**
+             * Logo Fit
+             * @default circle
+             * @enum {string}
+             */
+            logo_fit: "circle" | "contain";
+            /** Logo Url */
+            logo_url?: string | null;
+            /**
+             * Logo Zoom
+             * @default 1
+             */
+            logo_zoom: number;
             /** Names */
             names: components["schemas"]["SharedNameOut"][];
         };
@@ -32117,6 +33389,16 @@ export interface components {
             left: string;
             /** Right */
             right: string;
+        };
+        /**
+         * ParagraphNoteOut
+         * @description A note on one paragraph; `paragraph` is 1-based.
+         */
+        ParagraphNoteOut: {
+            /** Note */
+            note: string;
+            /** Paragraph */
+            paragraph: number;
         };
         /**
          * PassageDetailResponse
@@ -32431,6 +33713,21 @@ export interface components {
         PlanConfirmResponse: {
             artifact: components["schemas"]["ArtifactItemResponse"];
             plan: components["schemas"]["PresentationPlanResponse"];
+        };
+        /**
+         * PlanConflictOut
+         * @description A warning about conflicting early-application plans; never blocks.
+         */
+        PlanConflictOut: {
+            /** Code */
+            code: string;
+            /** Entry Ids */
+            entry_ids: string[];
+            /**
+             * Severity
+             * @enum {string}
+             */
+            severity: "conflict" | "check";
         };
         /**
          * PlanCreateBody
@@ -32920,8 +34217,6 @@ export interface components {
             budget?: ("under_10k" | "under_30k" | "under_50k" | "any") | null;
             /** Cost Major */
             cost_major?: boolean | null;
-            /** Distance */
-            distance?: ("any" | "near" | "far") | null;
             /** Ec Important */
             ec_important?: boolean | null;
             /** Experience */
@@ -32935,9 +34230,9 @@ export interface components {
             /** Prestige */
             prestige?: boolean | null;
             /** Region */
-            region?: string | null;
+            region?: string[] | null;
             /** Setting */
-            setting?: ("rural" | "suburban" | "city") | null;
+            setting?: ("rural" | "suburban" | "city")[] | null;
             /** Small Classes */
             small_classes?: boolean | null;
         };
@@ -33155,6 +34450,24 @@ export interface components {
             step_id: string;
             /** Title */
             title: string;
+        };
+        /**
+         * ProblemOut
+         * @description problem+json body of a refused request.
+         */
+        ProblemOut: {
+            /** Message Key */
+            message_key: string;
+            /** Params */
+            params: {
+                [key: string]: unknown;
+            };
+            /** Status */
+            status: number;
+            /** Title */
+            title: string;
+            /** Type */
+            type: string;
         };
         /**
          * ProblemResponse
@@ -34781,6 +36094,16 @@ export interface components {
             style?: ("outline" | "cornell" | "thesis") | null;
         };
         /**
+         * ReportOut
+         * @description The comparison on every sample.
+         */
+        ReportOut: {
+            /** Results */
+            results: components["schemas"]["SampleResultOut"][];
+            /** Warnings */
+            warnings: components["schemas"]["IssueOut"][];
+        };
+        /**
          * ReportReason
          * @description Why a user reports an item.
          * @enum {string}
@@ -35404,12 +36727,57 @@ export interface components {
             id: string;
         };
         /**
+         * RunOut
+         * @description One model run.
+         */
+        RunOut: {
+            /** Model */
+            model: string;
+            /** Output */
+            output: {
+                [key: string]: unknown;
+            };
+        };
+        /**
          * RunSyncBody
          * @description Start a sync for one student, or for everybody when ``user_id`` is absent.
          */
         RunSyncBody: {
             /** User Id */
             user_id?: string | null;
+        };
+        /**
+         * SampleIn
+         * @description A pasted essay or a library exemplar; never a student's essay.
+         */
+        SampleIn: {
+            /** Exemplar Id */
+            exemplar_id?: string | null;
+            /**
+             * Kind
+             * @default personal_statement
+             */
+            kind: string;
+            /**
+             * Prompt Text
+             * @default
+             */
+            prompt_text: string;
+            /** Text */
+            text?: string | null;
+        };
+        /**
+         * SampleResultOut
+         * @description Both runs on one sample.
+         */
+        SampleResultOut: {
+            active: components["schemas"]["RunOut"];
+            delta: components["schemas"]["DeltaOut"];
+            draft: components["schemas"]["RunOut"];
+            /** Exemplar Id */
+            exemplar_id: string | null;
+            /** Label */
+            label: string;
         };
         /**
          * SanctionBody
@@ -35472,6 +36840,25 @@ export interface components {
             widgets: components["schemas"]["Widget"][];
         };
         /**
+         * SaveIn
+         * @description A new prompt version.
+         */
+        SaveIn: {
+            /**
+             * Locale
+             * @default
+             * @enum {string}
+             */
+            locale: "" | "uz" | "ru" | "en";
+            /**
+             * Note
+             * @default
+             */
+            note: string;
+            /** Text */
+            text: string;
+        };
+        /**
          * SaveNoteBody
          * @description `POST /notebooks/{id}/chat/messages/{mid}/save-note`.
          */
@@ -35512,6 +36899,15 @@ export interface components {
             id: string;
             /** Name */
             name: string;
+        };
+        /**
+         * SavedOut
+         * @description A stored version with the non-blocking findings.
+         */
+        SavedOut: {
+            version: components["schemas"]["app__interfaces__http__v1__admission__routes_prompt_studio__VersionOut"];
+            /** Warnings */
+            warnings: components["schemas"]["IssueOut"][];
         };
         /**
          * SavedViewIn
@@ -36741,6 +38137,40 @@ export interface components {
             source_ids?: string[] | null;
         };
         /**
+         * SlotListOut
+         * @description The editable slots.
+         */
+        SlotListOut: {
+            /** Items */
+            items: components["schemas"]["SlotOut"][];
+        };
+        /**
+         * SlotOut
+         * @description A prompt slot with its active text and history.
+         */
+        SlotOut: {
+            /** Active Hash */
+            active_hash: string;
+            /** Active Text */
+            active_text: string;
+            /** Active Version */
+            active_version: number;
+            /** Builtin */
+            builtin: string;
+            /** Fields */
+            fields: string[];
+            /** Name */
+            name: string;
+            /** Summary */
+            summary: string;
+            /** Task */
+            task: string;
+            /** Template */
+            template: boolean;
+            /** Versions */
+            versions: components["schemas"]["app__interfaces__http__v1__admission__routes_prompt_studio__VersionOut"][];
+        };
+        /**
          * SnapshotIn
          * @description Save a version now; `name` is optional.
          */
@@ -37957,6 +39387,20 @@ export interface components {
             items: components["schemas"]["StudentOut"][];
         };
         /**
+         * StudioTestIn
+         * @description A draft to run against the active prompt.
+         */
+        StudioTestIn: {
+            /** Institution Id */
+            institution_id?: string | null;
+            /** Locale */
+            locale?: ("uz" | "ru" | "en") | null;
+            /** Samples */
+            samples: components["schemas"]["SampleIn"][];
+            /** Text */
+            text: string;
+        };
+        /**
          * StudyCardResponse
          * @description The card to show now.
          */
@@ -37972,6 +39416,16 @@ export interface components {
             id: string;
             /** State */
             state: string;
+        };
+        /**
+         * StudyFocusOut
+         * @description The field of study from the plan, the career quiz and the setup answer.
+         */
+        StudyFocusOut: {
+            /** Field Ids */
+            field_ids: string[];
+            /** Labels */
+            labels: string[];
         };
         /**
          * StudyGroupOut
@@ -38868,6 +40322,47 @@ export interface components {
              * @enum {string}
              */
             status: "new" | "changed" | "same" | "removed";
+            /** Word Limit */
+            word_limit: number | null;
+        };
+        /**
+         * SuppPromptProposalIn
+         * @description One supplement prompt of a proposal, with the page it was read on.
+         */
+        SuppPromptProposalIn: {
+            /**
+             * Cycle
+             * @description Admission cycle, e.g. "2025-26".
+             */
+            cycle: string;
+            /** Prompt */
+            prompt: string;
+            /**
+             * Required
+             * @default true
+             */
+            required: boolean;
+            /**
+             * Source Url
+             * @description https page.
+             */
+            source_url: string;
+            /** Word Limit */
+            word_limit?: number | null;
+        };
+        /**
+         * SuppPromptProposalOut
+         * @description A supplement prompt carried by a proposal.
+         */
+        SuppPromptProposalOut: {
+            /** Cycle */
+            cycle: string;
+            /** Prompt */
+            prompt: string;
+            /** Required */
+            required: boolean;
+            /** Source Url */
+            source_url: string;
             /** Word Limit */
             word_limit: number | null;
         };
@@ -40417,6 +41912,24 @@ export interface components {
             questions: string[];
         };
         /**
+         * UniEntryOut
+         * @description The review for one university; `stale` when the essay changed since.
+         */
+        UniEntryOut: {
+            /** Cached */
+            cached: boolean;
+            /**
+             * Institution Id
+             * Format: uuid
+             */
+            institution_id: string;
+            /** Name */
+            name: string;
+            review: components["schemas"]["UniReviewOut"];
+            /** Stale */
+            stale: boolean;
+        };
+        /**
          * UniLibraryAccessFilter
          * @description `?access=` of the search; `any` sends no access filter.
          * @enum {string}
@@ -40483,6 +41996,24 @@ export interface components {
             languages: components["schemas"]["TaxonomyEntryResponse"][];
             /** Types */
             types: components["schemas"]["TaxonomyEntryResponse"][];
+        };
+        /**
+         * UniReviewOut
+         * @description The fit with one university; `alignment` is 0 to 100.
+         */
+        UniReviewOut: {
+            /** Alignment */
+            alignment: number;
+            /** Fit Summary */
+            fit_summary: string;
+            /** Goals */
+            goals: components["schemas"]["GoalAlignmentOut"][];
+            /** Risks */
+            risks: string[];
+            /** Sourced */
+            sourced: boolean;
+            /** Supplement Tips */
+            supplement_tips: string[];
         };
         /**
          * UnreadCountResponse
@@ -41262,23 +42793,6 @@ export interface components {
             description: string;
             /** Title */
             title: string;
-        };
-        /**
-         * VersionOut
-         * @description One uploaded version of a document.
-         */
-        VersionOut: {
-            /**
-             * File Id
-             * Format: uuid
-             */
-            file_id: string;
-            /** Scan Status */
-            scan_status: string;
-            /** Uploaded At */
-            uploaded_at: string | null;
-            /** Version */
-            version: number;
         };
         /**
          * VersionResponse
@@ -42186,6 +43700,19 @@ export interface components {
             institution_name: string;
             /** Local Date */
             local_date: string | null;
+            /**
+             * Logo Fit
+             * @default circle
+             * @enum {string}
+             */
+            logo_fit: "circle" | "contain";
+            /** Logo Url */
+            logo_url?: string | null;
+            /**
+             * Logo Zoom
+             * @default 1
+             */
+            logo_zoom: number;
             /** Precision */
             precision: string;
             /** Program Id */
@@ -42227,6 +43754,19 @@ export interface components {
              * Format: uuid
              */
             list_entry_id: string;
+            /**
+             * Logo Fit
+             * @default circle
+             * @enum {string}
+             */
+            logo_fit: "circle" | "contain";
+            /** Logo Url */
+            logo_url?: string | null;
+            /**
+             * Logo Zoom
+             * @default 1
+             */
+            logo_zoom: number;
             /** Predicted */
             predicted: boolean;
         };
@@ -42274,6 +43814,89 @@ export interface components {
             student_name?: string | null;
             /** Undo Until */
             undo_until: string | null;
+        };
+        /**
+         * VersionOut
+         * @description One uploaded version of a document.
+         */
+        app__interfaces__http__v1__admission__routes_documents__VersionOut: {
+            /**
+             * File Id
+             * Format: uuid
+             */
+            file_id: string;
+            /** Scan Status */
+            scan_status: string;
+            /** Uploaded At */
+            uploaded_at: string | null;
+            /** Version */
+            version: number;
+        };
+        /**
+         * FeedbackListOut
+         * @description Every comment on an essay.
+         */
+        app__interfaces__http__v1__admission__routes_essay_invites__FeedbackListOut: {
+            /** Items */
+            items: components["schemas"]["app__interfaces__http__v1__admission__routes_essay_invites__FeedbackOut"][];
+        };
+        /**
+         * FeedbackOut
+         * @description A comment placed in the current text.
+         */
+        app__interfaces__http__v1__admission__routes_essay_invites__FeedbackOut: {
+            /** Anchor End */
+            anchor_end: number | null;
+            /** Anchor Start */
+            anchor_start: number | null;
+            /** Audience */
+            audience: ("classmate" | "parent" | "counselor" | "other") | null;
+            /** Author Name */
+            author_name: string;
+            /** Body */
+            body: string;
+            /**
+             * Created At
+             * Format: date-time
+             */
+            created_at: string;
+            /** Detached */
+            detached: boolean;
+            /**
+             * Id
+             * Format: uuid
+             */
+            id: string;
+            /** Invite Id */
+            invite_id: string | null;
+            /** Invite Label */
+            invite_label: string | null;
+            /** Mine */
+            mine: boolean;
+            /** Parent Id */
+            parent_id: string | null;
+            /** Quote */
+            quote: string | null;
+            /** Resolved At */
+            resolved_at: string | null;
+        };
+        /**
+         * CommentIn
+         * @description A guest comment, optionally anchored to a quoted span.
+         */
+        app__interfaces__http__v1__admission__routes_essay_review_public__CommentIn: {
+            /** Anchor End */
+            anchor_end?: number | null;
+            /** Anchor Start */
+            anchor_start?: number | null;
+            /** Author Name */
+            author_name: string;
+            /** Body */
+            body: string;
+            /** Quote */
+            quote?: string | null;
+            /** Token */
+            token: string;
         };
         /**
          * MilestoneOut
@@ -42329,6 +43952,29 @@ export interface components {
             kind: "unfair" | "helpful";
             /** Note */
             note?: string | null;
+        };
+        /**
+         * VersionOut
+         * @description One stored prompt version.
+         */
+        app__interfaces__http__v1__admission__routes_prompt_studio__VersionOut: {
+            /** Active */
+            active: boolean;
+            /**
+             * Created At
+             * Format: date-time
+             */
+            created_at: string;
+            /** Hash */
+            hash: string;
+            /** Locale */
+            locale: string;
+            /** Note */
+            note: string;
+            /** Text */
+            text: string;
+            /** Version */
+            version: number;
         };
         /**
          * AcceptIn
@@ -42465,6 +44111,39 @@ export interface components {
              * Format: uuid
              */
             user_id: string;
+        };
+        /**
+         * CommentIn
+         * @description A new comment.
+         */
+        app__interfaces__http__v1__admission__schemas_staff__CommentIn: {
+            /** Anchor */
+            anchor?: {
+                [key: string]: unknown;
+            } | null;
+            /** Body */
+            body: string;
+            /**
+             * Student Id
+             * Format: uuid
+             */
+            student_id: string;
+            /**
+             * Target Id
+             * Format: uuid
+             */
+            target_id: string;
+            /**
+             * Target Kind
+             * @enum {string}
+             */
+            target_kind: "profile" | "help_request" | "item" | "list_entry" | "essay" | "words";
+            /**
+             * Visibility
+             * @default student_and_staff
+             * @enum {string}
+             */
+            visibility: "staff_only" | "student_and_staff";
         };
         /**
          * SendMessageBody
@@ -42954,6 +44633,58 @@ export interface components {
             kind: "idea" | "bug" | "other";
             /** Page Url */
             page_url?: string | null;
+            /** Title */
+            title: string;
+        };
+        /**
+         * FeedbackListOut
+         * @description Body of GET /v1/feedback/mine.
+         */
+        app__interfaces__http__v1__feedback__schemas__FeedbackListOut: {
+            /** Items */
+            items: components["schemas"]["app__interfaces__http__v1__feedback__schemas__FeedbackOut"][];
+        };
+        /**
+         * FeedbackOut
+         * @description A feedback item as its reporter sees it.
+         */
+        app__interfaces__http__v1__feedback__schemas__FeedbackOut: {
+            /**
+             * Area
+             * @enum {string}
+             */
+            area: "id" | "my" | "staff" | "admin" | "lms" | "library" | "share" | "bot" | "ai" | "notebooks" | "mail" | "other";
+            /** Attachments */
+            attachments: components["schemas"]["app__interfaces__http__v1__feedback__schemas__AttachmentOut"][];
+            /**
+             * Created At
+             * Format: date-time
+             */
+            created_at: string;
+            /** Description */
+            description: string;
+            /**
+             * Id
+             * Format: uuid
+             */
+            id: string;
+            /**
+             * Kind
+             * @enum {string}
+             */
+            kind: "idea" | "bug" | "other";
+            /** Response Count */
+            response_count: number;
+            /**
+             * Source
+             * @enum {string}
+             */
+            source: "web" | "bot";
+            /**
+             * Status
+             * @enum {string}
+             */
+            status: "new" | "in_review" | "planned" | "done" | "rejected";
             /** Title */
             title: string;
         };
@@ -50436,7 +52167,9 @@ export interface operations {
     admission_career_get: {
         parameters: {
             query?: never;
-            header?: never;
+            header?: {
+                "Accept-Language"?: string | null;
+            };
             path?: never;
             cookie?: never;
         };
@@ -50449,6 +52182,15 @@ export interface operations {
                 };
                 content: {
                     "application/json": components["schemas"]["CareerPlanOut"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
                 };
             };
         };
@@ -50632,7 +52374,9 @@ export interface operations {
     admission_career_put_answers: {
         parameters: {
             query?: never;
-            header?: never;
+            header?: {
+                "Accept-Language"?: string | null;
+            };
             path?: never;
             cookie?: never;
         };
@@ -50665,7 +52409,9 @@ export interface operations {
     admission_career_put_choice: {
         parameters: {
             query?: never;
-            header?: never;
+            header?: {
+                "Accept-Language"?: string | null;
+            };
             path?: never;
             cookie?: never;
         };
@@ -50800,7 +52546,9 @@ export interface operations {
     admission_career_put_shortlist: {
         parameters: {
             query?: never;
-            header?: never;
+            header?: {
+                "Accept-Language"?: string | null;
+            };
             path?: never;
             cookie?: never;
         };
@@ -50833,7 +52581,9 @@ export interface operations {
     admission_career_put_spike: {
         parameters: {
             query?: never;
-            header?: never;
+            header?: {
+                "Accept-Language"?: string | null;
+            };
             path?: never;
             cookie?: never;
         };
@@ -51201,6 +52951,40 @@ export interface operations {
             };
         };
     };
+    admission_chooser_budget: {
+        parameters: {
+            query?: {
+                student_id?: string | null;
+                cycle?: string | null;
+            };
+            header?: {
+                "Accept-Language"?: string | null;
+            };
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["BudgetOut"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
     admission_list_comments: {
         parameters: {
             query: {
@@ -51243,7 +53027,7 @@ export interface operations {
         };
         requestBody: {
             content: {
-                "application/json": components["schemas"]["CommentIn"];
+                "application/json": components["schemas"]["app__interfaces__http__v1__admission__schemas_staff__CommentIn"];
             };
         };
         responses: {
@@ -52569,6 +54353,53 @@ export interface operations {
             };
         };
     };
+    admission_get_latest_essay_check: {
+        parameters: {
+            query?: never;
+            header?: {
+                "Accept-Language"?: string | null;
+            };
+            path: {
+                essay_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["LatestCheckOut"];
+                };
+            };
+            /** @description Not my essay, or it has never been checked. */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+            /** @description The essay key service is down. */
+            503: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
     admission_coach_essay_feedback: {
         parameters: {
             query?: never;
@@ -52705,6 +54536,475 @@ export interface operations {
                 };
                 content: {
                     "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    admission_list_essay_feedback: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                essay_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["app__interfaces__http__v1__admission__routes_essay_invites__FeedbackListOut"];
+                };
+            };
+            /** @description Not my essay or no such row. */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ProblemOut"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+            /** @description The essay key service is down. */
+            503: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ProblemOut"];
+                };
+            };
+        };
+    };
+    admission_add_essay_feedback: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                essay_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["NoteIn"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["app__interfaces__http__v1__admission__routes_essay_invites__FeedbackOut"];
+                };
+            };
+            /** @description Not my essay or no such row. */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ProblemOut"];
+                };
+            };
+            /** @description A field breaks a rule. */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ProblemOut"];
+                };
+            };
+            /** @description The essay key service is down. */
+            503: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ProblemOut"];
+                };
+            };
+        };
+    };
+    admission_delete_essay_feedback: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                essay_id: string;
+                feedback_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            204: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Not my essay or no such row. */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ProblemOut"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    admission_patch_essay_feedback: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                essay_id: string;
+                feedback_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["FeedbackPatchIn"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["app__interfaces__http__v1__admission__routes_essay_invites__FeedbackOut"];
+                };
+            };
+            /** @description Not my essay or no such row. */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ProblemOut"];
+                };
+            };
+            /** @description A field breaks a rule. */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ProblemOut"];
+                };
+            };
+            /** @description The essay key service is down. */
+            503: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ProblemOut"];
+                };
+            };
+        };
+    };
+    admission_list_essay_invites: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                essay_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["InviteListOut"];
+                };
+            };
+            /** @description Not my essay or no such row. */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ProblemOut"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+            /** @description The essay key service is down. */
+            503: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ProblemOut"];
+                };
+            };
+        };
+    };
+    admission_create_essay_invite: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                essay_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["InviteIn"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["InviteCreatedOut"];
+                };
+            };
+            /** @description Not my essay or no such row. */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ProblemOut"];
+                };
+            };
+            /** @description A field breaks a rule, or 20 links are already active. */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ProblemOut"];
+                };
+            };
+            /** @description The essay key service is down. */
+            503: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ProblemOut"];
+                };
+            };
+        };
+    };
+    admission_revoke_essay_invite: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                essay_id: string;
+                invite_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            204: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Not my essay or no such row. */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ProblemOut"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    admission_get_essay_reviews: {
+        parameters: {
+            query?: never;
+            header?: {
+                "Accept-Language"?: string | null;
+            };
+            path: {
+                essay_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["EssayReviewsOut"];
+                };
+            };
+            /** @description Not the owner, or no AI consent. */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ProblemOut"];
+                };
+            };
+            /** @description Not my essay or no such university. */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ProblemOut"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+            /** @description The essay key service is down. */
+            503: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ProblemOut"];
+                };
+            };
+        };
+    };
+    admission_run_essay_reviews: {
+        parameters: {
+            query?: never;
+            header?: {
+                "Accept-Language"?: string | null;
+            };
+            path: {
+                essay_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["EssayReviewsIn"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["EssayReviewsOut"];
+                };
+            };
+            /** @description Not the owner, or no AI consent. */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ProblemOut"];
+                };
+            };
+            /** @description Not my essay or no such university. */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ProblemOut"];
+                };
+            };
+            /** @description More than 5 universities, or the essay has under 50 words. */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ProblemOut"];
+                };
+            };
+            /** @description The weekly limit is used up. */
+            429: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ProblemOut"];
+                };
+            };
+            /** @description The essay key service is down. */
+            503: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ProblemOut"];
                 };
             };
         };
@@ -52865,6 +55165,81 @@ export interface operations {
                 };
                 content: {
                     "application/json": components["schemas"]["EssayVersionOut"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    admission_list_public_exemplars: {
+        parameters: {
+            query?: {
+                kind?: ("personal_statement" | "supplement" | "why_us" | "activity" | "other") | null;
+                institution_id?: string | null;
+                q?: string | null;
+                limit?: number;
+                offset?: number;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ExemplarExcerptListOut"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    admission_get_public_exemplar: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                exemplar_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ExemplarExcerptOut"];
+                };
+            };
+            /** @description No such exemplar. */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ProblemOut"];
                 };
             };
             /** @description Validation Error */
@@ -53181,13 +55556,13 @@ export interface operations {
                     "application/json": components["schemas"]["KbArticleOut"];
                 };
             };
-            /** @description Validation Error */
+            /** @description A field breaks a rule, or the body has more than 3 OpenUI blocks, a block over 6000 characters, a bad block or a link that is not https, mailto or relative. */
             422: {
                 headers: {
                     [name: string]: unknown;
                 };
                 content: {
-                    "application/json": components["schemas"]["HTTPValidationError"];
+                    "application/json": components["schemas"]["ProblemOut"];
                 };
             };
         };
@@ -53276,13 +55651,13 @@ export interface operations {
                     "application/json": components["schemas"]["KbArticleOut"];
                 };
             };
-            /** @description Validation Error */
+            /** @description A field breaks a rule, or the body has more than 3 OpenUI blocks, a block over 6000 characters, a bad block or a link that is not https, mailto or relative. */
             422: {
                 headers: {
                     [name: string]: unknown;
                 };
                 content: {
-                    "application/json": components["schemas"]["HTTPValidationError"];
+                    "application/json": components["schemas"]["ProblemOut"];
                 };
             };
         };
@@ -54864,7 +57239,7 @@ export interface operations {
                 field_id?: string | null;
                 subfield_id?: string | null;
                 subject_id?: string | null;
-                kind?: ("exam" | "certification" | "course" | "event" | "recurring" | "program" | "scholarship") | null;
+                kind?: ("exam" | "certification" | "course" | "event" | "recurring" | "program" | "scholarship" | "research") | null;
                 grade?: number | null;
                 q?: string | null;
                 country?: string | null;
@@ -54875,7 +57250,7 @@ export interface operations {
                 scope?: ("local" | "international") | null;
                 org_id?: string | null;
                 college_credit?: ("none" | "possible" | "yes") | null;
-                sort?: "title" | "ranking" | "acceptance" | "tuition";
+                sort?: ("title" | "ranking" | "acceptance" | "tuition" | "relevance") | null;
                 page?: number;
                 size?: number;
             };
@@ -56366,6 +58741,320 @@ export interface operations {
             };
         };
     };
+    admission_list_exemplars: {
+        parameters: {
+            query?: {
+                status?: ("draft" | "published" | "archived") | null;
+                kind?: ("personal_statement" | "supplement" | "why_us" | "activity" | "other") | null;
+                institution_id?: string | null;
+                q?: string | null;
+                limit?: number;
+                offset?: number;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ExemplarListOut"];
+                };
+            };
+            /** @description No exemplars:curate. */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ProblemOut"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    admission_create_exemplar: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["ExemplarIn"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ExemplarOut"];
+                };
+            };
+            /** @description No exemplars:curate. */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ProblemOut"];
+                };
+            };
+            /** @description Same source link and title exist. */
+            409: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ProblemOut"];
+                };
+            };
+            /** @description A field breaks a rule. */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ProblemOut"];
+                };
+            };
+            /** @description Token write limit reached. */
+            429: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ProblemOut"];
+                };
+            };
+        };
+    };
+    admission_import_exemplars: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["ExemplarImportIn"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ExemplarImportOut"];
+                };
+            };
+            /** @description No exemplars:curate. */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ProblemOut"];
+                };
+            };
+            /** @description A field breaks a rule. */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ProblemOut"];
+                };
+            };
+            /** @description Token write limit reached. */
+            429: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ProblemOut"];
+                };
+            };
+        };
+    };
+    admission_get_exemplar: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                exemplar_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ExemplarOut"];
+                };
+            };
+            /** @description No exemplars:curate. */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ProblemOut"];
+                };
+            };
+            /** @description No such exemplar. */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ProblemOut"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    admission_delete_exemplar: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                exemplar_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            204: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description No exemplars:curate. */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ProblemOut"];
+                };
+            };
+            /** @description No such exemplar. */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ProblemOut"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    admission_patch_exemplar: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                exemplar_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["ExemplarPatchIn"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ExemplarOut"];
+                };
+            };
+            /** @description No exemplars:curate. */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ProblemOut"];
+                };
+            };
+            /** @description No such exemplar. */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ProblemOut"];
+                };
+            };
+            /** @description Stale lock_version or duplicate link and title. */
+            409: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ProblemOut"];
+                };
+            };
+            /** @description A field breaks a rule. */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ProblemOut"];
+                };
+            };
+        };
+    };
     admission_list_opportunity_comment_reports: {
         parameters: {
             query?: never;
@@ -56739,6 +59428,287 @@ export interface operations {
             };
         };
     };
+    admission_prompt_studio_slots: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["SlotListOut"];
+                };
+            };
+            /** @description The caller may not edit the essay prompts */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Unknown slot, version, exemplar or university */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description The draft or the samples are invalid */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
+    admission_prompt_studio_slot: {
+        parameters: {
+            query?: {
+                locale?: "" | "uz" | "ru" | "en";
+            };
+            header?: never;
+            path: {
+                task: string;
+                name: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["SlotOut"];
+                };
+            };
+            /** @description The caller may not edit the essay prompts */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Unknown slot, version, exemplar or university */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description The draft or the samples are invalid */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
+    admission_prompt_studio_save: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                task: string;
+                name: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["SaveIn"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["SavedOut"];
+                };
+            };
+            /** @description The caller may not edit the essay prompts */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Unknown slot, version, exemplar or university */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description The draft or the samples are invalid */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
+    admission_prompt_studio_revert: {
+        parameters: {
+            query?: {
+                locale?: "" | "uz" | "ru" | "en";
+            };
+            header?: never;
+            path: {
+                task: string;
+                name: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            204: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description The caller may not edit the essay prompts */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Unknown slot, version, exemplar or university */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description The draft or the samples are invalid */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
+    admission_prompt_studio_test: {
+        parameters: {
+            query?: never;
+            header?: {
+                "Accept-Language"?: string | null;
+            };
+            path: {
+                task: string;
+                name: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["StudioTestIn"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ReportOut"];
+                };
+            };
+            /** @description The caller may not edit the essay prompts */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Unknown slot, version, exemplar or university */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description The draft or the samples are invalid */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Daily test-run limit reached */
+            429: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
+    admission_prompt_studio_activate: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                task: string;
+                name: string;
+                version: number;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["app__interfaces__http__v1__admission__routes_prompt_studio__VersionOut"];
+                };
+            };
+            /** @description The caller may not edit the essay prompts */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Unknown slot, version, exemplar or university */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description The draft or the samples are invalid */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
     admission_list_saved_views: {
         parameters: {
             query?: never;
@@ -57049,7 +60019,9 @@ export interface operations {
     admission_career_get_student: {
         parameters: {
             query?: never;
-            header?: never;
+            header?: {
+                "Accept-Language"?: string | null;
+            };
             path: {
                 student_id: string;
             };
@@ -59714,7 +62686,7 @@ export interface operations {
                     [name: string]: unknown;
                 };
                 content: {
-                    "application/json": components["schemas"]["FeedbackOut"];
+                    "application/json": components["schemas"]["app__interfaces__http__v1__feedback__schemas__FeedbackOut"];
                 };
             };
             /** @description Validation Error */
@@ -59743,7 +62715,7 @@ export interface operations {
                     [name: string]: unknown;
                 };
                 content: {
-                    "application/json": components["schemas"]["FeedbackListOut"];
+                    "application/json": components["schemas"]["app__interfaces__http__v1__feedback__schemas__FeedbackListOut"];
                 };
             };
         };
@@ -69478,6 +72450,85 @@ export interface operations {
             };
         };
     };
+    me_put_photo: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "multipart/form-data": components["schemas"]["Body_me_put_photo"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["UserPhotoResponse"];
+                };
+            };
+            /** @description Not signed in. */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description The account no longer exists. */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description The photo is larger than 5 MB. */
+            413: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description The photo is empty, not JPEG or PNG, or unreadable. */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
+    me_delete_photo: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["UserPhotoResponse"];
+                };
+            };
+            /** @description Not signed in. */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
     get_erasure_v1_me_privacy_erasure_get: {
         parameters: {
             query?: never;
@@ -72995,6 +76046,135 @@ export interface operations {
                 };
                 content: {
                     "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    admission_add_essay_review_comment: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["app__interfaces__http__v1__admission__routes_essay_review_public__CommentIn"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["GuestCommentOut"];
+                };
+            };
+            /** @description The link is read-only. */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ProblemOut"];
+                };
+            };
+            /** @description Unknown, expired or revoked. */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ProblemOut"];
+                };
+            };
+            /** @description A field breaks a rule. */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ProblemOut"];
+                };
+            };
+            /** @description Too many requests. */
+            429: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ProblemOut"];
+                };
+            };
+            /** @description The essay key service is down. */
+            503: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ProblemOut"];
+                };
+            };
+        };
+    };
+    admission_open_essay_review: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["OpenIn"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["GuestReviewOut"];
+                };
+            };
+            /** @description Unknown, expired or revoked. */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ProblemOut"];
+                };
+            };
+            /** @description A field breaks a rule. */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ProblemOut"];
+                };
+            };
+            /** @description Too many requests. */
+            429: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ProblemOut"];
+                };
+            };
+            /** @description The essay key service is down. */
+            503: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ProblemOut"];
                 };
             };
         };

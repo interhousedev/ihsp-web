@@ -4,6 +4,7 @@ import { api } from "../client"
 import { keys } from "../keys"
 import { queryOptions, seg, type RequestOptions } from "../query"
 import type { NoContent, Page, RedirectResponse } from "../types/common"
+import type { UserPhotoResponse } from "../types/teachers"
 import type {
   PersonalToken,
   PersonalTokenCreateBody,
@@ -274,6 +275,18 @@ export function getIdMe(opts?: RequestOptions): Promise<UserMe> {
   return api.get<UserMe>("/v1/id/me", opts)
 }
 export const getIdMeQuery = () => queryOptions({ queryKey: keys.id.me(), queryFn: ({ signal }) => getIdMe({ signal }) })
+
+/** PUT /v1/me/photo — any role: multipart `file`, JPEG or PNG up to 5 MB; `422` for another type, `413` for a larger file. */
+export function putMePhoto(file: File, opts?: RequestOptions): Promise<UserPhotoResponse> {
+  const form = new FormData()
+  form.append("file", file)
+  return api.request<UserPhotoResponse>({ ...opts, method: "PUT", path: "/v1/me/photo", formData: form })
+}
+
+/** DELETE /v1/me/photo — any role: removes the caller's photo; nothing happens when there is none. */
+export function deleteMePhoto(opts?: RequestOptions): Promise<UserPhotoResponse> {
+  return api.delete<UserPhotoResponse>("/v1/me/photo", opts)
+}
 
 /** PATCH /v1/id/me/preferences — bearer; partial `UserPreferences`. */
 export function patchIdMePreferences(body: UserPreferencesPatch, opts?: RequestOptions): Promise<UserPreferences> {

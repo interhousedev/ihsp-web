@@ -97,6 +97,28 @@ describe("api client", () => {
     expect(unauthorized).toBe(0)
   })
 
+  test("a 401 for one action's credentials (auth/otp-invalid) is an ApiError: no refresh, no sign-out", async () => {
+    let unauthorized = 0
+    const { api, refreshes, calls } = client(
+      [
+        new Response(JSON.stringify({ type: "auth/otp-invalid", title: "Wrong code", status: 401 }), {
+          status: 401,
+          headers: { "Content-Type": "application/problem+json" },
+        }),
+      ],
+      {
+        onUnauthorized: () => {
+          unauthorized += 1
+        },
+      },
+    )
+    const error = await api.post("/v1/id/personal-tokens", { otp_code: "000000" }).catch((cause: unknown) => cause)
+    expect(isApiError(error) && error.type).toBe("auth/otp-invalid")
+    expect(refreshes()).toBe(0)
+    expect(calls).toHaveLength(1)
+    expect(unauthorized).toBe(0)
+  })
+
   test("an auth/unauthorized 401 refreshes once, retries once and never refreshes again", async () => {
     const body = () =>
       new Response(JSON.stringify({ type: "auth/unauthorized", title: "No session", status: 401 }), {

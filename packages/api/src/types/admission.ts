@@ -12,6 +12,7 @@ type Adm = "app__interfaces__http__v1__admission__"
 // Application review
 export type AdmissionReview = Served["AppReviewOut"]
 export type AdmissionReviewList = Served["AppReviewListOut"]
+export type AdmissionBudget = Served["BudgetOut"]
 
 // Opportunities
 export type AdmissionOpportunityFields = Served["OpportunityFields"]
