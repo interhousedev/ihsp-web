@@ -1,8 +1,8 @@
 import { apiUrl, server } from "@ihsp/test-utils"
-import { screen } from "@testing-library/react"
+import { screen, waitFor } from "@testing-library/react"
 import { HttpResponse, http } from "msw"
-import { describe, expect, test } from "bun:test"
-import Page from "../app/colleges/discover/page"
+import { afterEach, beforeEach, describe, expect, test } from "bun:test"
+import { SearchView } from "../features/chooser/components/search-view"
 import { renderAdmissionApp } from "./helpers"
 import { mockQuizzes } from "./quiz-handlers"
 
@@ -13,18 +13,29 @@ function other() {
   )
 }
 
+/** The algorithm sits inline only in the wide layout (from 1440px); narrower, it lives in a dialog. */
+let width = 0
+beforeEach(() => {
+  width = window.innerWidth
+  window.innerWidth = 1600
+})
+afterEach(() => {
+  window.innerWidth = width
+})
+
 describe("discover gate", () => {
   test("shows the algorithm while its quiz is incomplete", async () => {
     mockQuizzes()
     other()
-    renderAdmissionApp(<Page />)
-    expect(await screen.findByRole("progressbar")).toBeInTheDocument()
+    renderAdmissionApp(<SearchView />, { route: "/chooser/search/?view=discover" })
+    expect(await screen.findByRole("heading", { name: "Your Algorithm" })).toBeInTheDocument()
+    expect(screen.getByText("Answer the questions to get your tags.")).toBeInTheDocument()
   })
-  test("does not show the algorithm once the quiz is complete", async () => {
+  test("shows the swipe deck once the quiz is complete", async () => {
     mockQuizzes({ algorithm: { answers: {}, completed: true } })
     other()
-    renderAdmissionApp(<Page />)
-    await new Promise((r) => setTimeout(r, 600))
-    expect(screen.queryByRole("progressbar")).toBeNull()
+    renderAdmissionApp(<SearchView />, { route: "/chooser/search/?view=discover" })
+    expect(await screen.findByTestId("discover-side-slot")).toBeInTheDocument()
+    await waitFor(() => expect(screen.getAllByRole("status").length).toBeGreaterThan(0))
   })
 })

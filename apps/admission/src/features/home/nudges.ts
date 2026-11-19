@@ -77,3 +77,8 @@ export function buildNudges(
   }
   return nudges.toSorted((a, b) => (a.kind === b.kind ? a.days - b.days : a.kind === "last-chance" ? -1 : 1))
 }
+
+/** The "start here" rule: a student with no list item and no chosen field of study is still undecided. */
+export function isUndecided({ listCount, hasField }: { listCount: number; hasField: boolean }): boolean {
+  return listCount === 0 && !hasField
+}

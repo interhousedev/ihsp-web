@@ -4,6 +4,7 @@ import { useT } from "@ihsp/i18n"
 import { buttonVariants, cn, Icons } from "@ihsp/ui"
 import Link from "next/link"
 import { useState } from "react"
+import { LogoAvatar } from "../../../components/lib/photo-header"
 import { useList } from "../../chooser/hooks"
 import { useCalendar } from "../../deadlines/calendar-api"
 import { useOutcomes } from "../../outcomes/api"
@@ -29,6 +30,13 @@ function NudgeCard({ nudge }: { nudge: Nudge }) {
       )}
     >
       <p className="flex min-w-0 items-center gap-3 text-sm font-medium">
+        <LogoAvatar
+          name={name}
+          src={nudge.entry.institution.logo_url}
+          fit={nudge.entry.institution.logo_fit}
+          zoom={nudge.entry.institution.logo_zoom}
+          className="size-8 shrink-0 ring-0"
+        />
         {adding ? (
           <Icons.check aria-hidden className="text-primary size-4 shrink-0" />
         ) : (

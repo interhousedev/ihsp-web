@@ -162,6 +162,26 @@ describe("knowledge base", () => {
     expect(screen.getByText("Body of Visa basics")).toBeInTheDocument()
   })
 
+  test("the reader draws a relative-link button in-app and drops a javascript: link", async () => {
+    const body = [
+      "```openui",
+      'root = Stack([LinkList([{title: "Pay here", url: "/payments/"}, {title: "Mail us", url: "mailto:a@iht.uz"}])])',
+      "```",
+      "",
+      "[evil](javascript:alert(1)) and [fine](https://iht.uz)",
+    ].join("\n")
+    server.use(
+      http.get(apiUrl("/v1/admission/kb/articles/k9"), () => HttpResponse.json(article("k9", "Pay", { body }))),
+    )
+    renderAdmissionApp(<ArticleReader id="k9" />)
+    const pay = await screen.findByRole("link", { name: "Pay here" })
+    expect(pay.getAttribute("href")).toBe("/payments")
+    expect(pay.getAttribute("target")).toBeNull()
+    expect(screen.getByRole("link", { name: "Mail us" }).getAttribute("href")).toBe("mailto:a@iht.uz")
+    expect(screen.getByRole("link", { name: "fine" }).getAttribute("target")).toBe("_blank")
+    expect(screen.queryByRole("link", { name: "evil" })).toBeNull()
+  })
+
   test("the editor creates an article only when can_edit is true", async () => {
     server.use(
       http.get(apiUrl("/v1/admission/kb/articles"), () =>
@@ -185,13 +205,19 @@ describe("knowledge base", () => {
     renderAdmissionApp(<StaffKbPage />, counselor)
     fireEvent.click(await screen.findByRole("button", { name: "New article" }))
     fireEvent.change(await screen.findByLabelText("Title"), { target: { value: "Fees" } })
-    fireEvent.change(screen.getByLabelText("Text (Markdown)"), { target: { value: "Pay here" } })
+    fireEvent.click(await screen.findByRole("button", { name: "Insert block" }))
+    fireEvent.click(await screen.findByRole("menuitem", { name: "Button" }))
+    fireEvent.change(await screen.findByLabelText("Link text"), { target: { value: "Pay here" } })
+    fireEvent.change(screen.getByLabelText("Link address"), { target: { value: "/payments/" } })
+    fireEvent.click(screen.getByRole("button", { name: "Apply" }))
     fireEvent.change(screen.getByLabelText("Tags, comma separated"), { target: { value: "money, money, visa" } })
     fireEvent.click(screen.getByRole("button", { name: "Save" }))
     await waitFor(() =>
       expect(created).toEqual({
         title: "Fees",
-        body: "Pay here",
+        body: expect.stringContaining(
+          '```openui\nroot = Stack([LinkList([{title: "Pay here", url: "/payments/"}])])\n```',
+        ),
         locale: "ru",
         tags: ["money", "visa"],
         status: "draft",

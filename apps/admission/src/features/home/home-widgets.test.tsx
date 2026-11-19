@@ -1,9 +1,12 @@
 import { apiUrl, server } from "@ihsp/test-utils"
-import { screen } from "@testing-library/react"
+import { screen, within } from "@testing-library/react"
 import { HttpResponse, http } from "msw"
 import { describe, expect, test } from "bun:test"
+import { MotionGlobalConfig } from "motion/react"
 import { renderAdmissionApp } from "../../tests/helpers"
 import { HomeWidgets } from "./components/home-widgets"
+
+MotionGlobalConfig.skipAnimations = true
 
 const names = { en: "SAT" }
 
@@ -38,6 +41,7 @@ function serve(readiness: Record<string, unknown>) {
     ),
     http.get(apiUrl("/v1/admission/outcomes"), () => HttpResponse.json({ items: [] })),
     http.get(apiUrl("/v1/admission/preferences"), () => HttpResponse.json({})),
+    http.get(apiUrl("/v1/admission/career"), () => HttpResponse.json({ study_focus: { field_ids: [], labels: [] } })),
     http.get(apiUrl("/v1/admission/matches"), () => HttpResponse.json({ items: [], next_cursor: null })),
     http.get(apiUrl("/v1/admission/me/items"), () =>
       HttpResponse.json({
@@ -89,7 +93,8 @@ describe("home widgets", () => {
     expect(screen.getByText("42%")).toBeTruthy()
     expect(screen.getByText("50% · weight 20")).toBeTruthy()
     expect(screen.getByRole("link", { name: "Write or finish an essay" }).getAttribute("href")).toBe("/essays")
-    expect(screen.getByText("Done")).toBeTruthy()
+    const readinessCard = screen.getByRole("progressbar", { name: "College readiness" }).closest("[data-slot=card]")
+    expect(within(readinessCard as HTMLElement).getByText("Done")).toBeTruthy()
     expect(await screen.findByText("MIT early action")).toBeTruthy()
     expect(await screen.findByText("Request recommendation")).toBeTruthy()
     expect(screen.getByText("Overdue")).toBeTruthy()
@@ -110,6 +115,7 @@ describe("home widgets", () => {
       http.get(apiUrl("/v1/admission/tasks"), () => HttpResponse.json({ items: [] })),
       http.get(apiUrl("/v1/admission/me/items"), () => HttpResponse.json({ items: [], next_cursor: null })),
       http.get(apiUrl("/v1/admission/preferences"), () => HttpResponse.json({})),
+      http.get(apiUrl("/v1/admission/career"), () => HttpResponse.json({ study_focus: { field_ids: [], labels: [] } })),
       http.get(apiUrl("/v1/admission/matches"), () => HttpResponse.json({ items: [], next_cursor: null })),
       http.get(apiUrl("/v1/admission/list"), () => HttpResponse.json([])),
       http.get(apiUrl("/v1/admission/test-scores/catalog"), () => HttpResponse.json({ items: [], can_edit: false })),

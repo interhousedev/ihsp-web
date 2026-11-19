@@ -117,10 +117,12 @@ export function listEntry(overrides: Partial<ListEntry> = {}): ListEntry {
     label_override: null,
     override_note: null,
     affordability_status: "unknown",
+    fee_status: "unpaid",
     affordability: null,
     estimate: estimate(),
     lock_version: 1,
     cycle: null,
+    conflicts: [],
     ...overrides,
   }
 }
@@ -133,6 +135,12 @@ export function mockChooser(options: { items?: Institution[]; list?: ListEntry[]
     http.get(apiUrl("/v1/admission/catalog/institutions"), ({ request }) => {
       catalogRequests.push(new URL(request.url))
       return HttpResponse.json({ items: options.items ?? [], next_cursor: null })
+    }),
+    http.get(apiUrl("/v1/admission/catalog/institutions/:id"), ({ params }) => {
+      const found = (options.items ?? []).find((item) => item.id === params.id)
+      return found
+        ? HttpResponse.json(found)
+        : HttpResponse.json({ type: "not-found", title: "Not found", status: 404 }, { status: 404 })
     }),
     http.get(apiUrl("/v1/admission/catalog/facets"), () =>
       HttpResponse.json([

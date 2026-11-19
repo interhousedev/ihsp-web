@@ -29,7 +29,8 @@ import { useMatches } from "../../discover/hooks"
 import { STATUS_TONE } from "../../discover/format"
 import { useItems, type Item } from "../../items/api"
 import { DeadlineNudges } from "./deadline-nudges"
-import { JourneyHero } from "../../journey/journey-hero"
+import { StartHereCard } from "./start-here-card"
+import { ContinueAction, JourneySection, SectionCards } from "./home-sections"
 import { useJourney } from "../../journey/api"
 import { useReadiness } from "../../readiness/api"
 import { ReadinessRing } from "../../readiness/readiness-ring"
@@ -408,7 +409,7 @@ export function CollegesCarousel() {
       href="/chooser/list/"
       action={
         <Link
-          href="/colleges/discover/"
+          href="/chooser/search/?view=discover"
           aria-label={t("colleges.add")}
           title={t("colleges.add")}
           className={cn(buttonVariants({ variant: "outline", size: "icon" }), "size-11 md:size-9")}
@@ -422,7 +423,7 @@ export function CollegesCarousel() {
       ) : entries.length === 0 ? (
         <Empty icon={<Icons.globe aria-hidden className="size-6" />}>
           {t("colleges.empty")}{" "}
-          <Link href="/colleges/discover" className="text-foreground underline">
+          <Link href="/chooser/search/?view=discover" className="text-foreground underline">
             {t("colleges.discover")}
           </Link>
         </Empty>
@@ -553,7 +554,9 @@ export function ChancesBanner() {
   const list = useList()
   const matches = useMatches()
   const target = list.data?.[0]?.institution.id ?? matches.data?.items[0]?.university_id
-  const href = target ? `/chooser/institution/?id=${encodeURIComponent(target)}&tab=chances` : "/colleges/discover"
+  const href = target
+    ? `/chooser/institution/?id=${encodeURIComponent(target)}&tab=chances`
+    : "/chooser/search/?view=discover"
   return (
     <Reveal>
       <div className="bg-primary/10 border-primary/20 rounded-card flex flex-col gap-3 border p-4 sm:flex-row sm:items-center sm:justify-between">
@@ -574,8 +577,8 @@ export function ChancesBanner() {
 }
 
 const NEW_HERE = [
-  { key: "journey", href: "/journey/", icon: Icons.route, tint: "bg-primary/10 text-primary" },
-  { key: "discover", href: "/colleges/discover", icon: Icons.globe, tint: "bg-success-muted text-success" },
+  { key: "journey", href: "/#journey", icon: Icons.route, tint: "bg-primary/10 text-primary" },
+  { key: "discover", href: "/chooser/search/?view=discover", icon: Icons.globe, tint: "bg-success-muted text-success" },
   { key: "career", href: "/career/", icon: Icons.sparkles, tint: "bg-warning-muted text-warning" },
 ] as const
 
@@ -608,8 +611,8 @@ export function NewHere() {
 }
 
 const TOOLS = [
-  { key: "words", href: "/words/", icon: Icons.text },
-  { key: "alignment", href: "/alignment/", icon: Icons.target },
+  { key: "words", href: "/essays/?tab=story#words", icon: Icons.text },
+  { key: "alignment", href: "/essays/?tab=alignment", icon: Icons.target },
   { key: "courses", href: "/courses/", icon: Icons.homework },
 ] as const
 
@@ -655,7 +658,9 @@ export function HomeWidgets() {
   return (
     <div className="grid grid-cols-[minmax(0,1fr)] gap-6 xl:grid-cols-[minmax(0,1fr)_22rem]">
       <div className="flex min-w-0 flex-col gap-6">
-        <JourneyHero />
+        <ContinueAction />
+        <SectionCards />
+        <StartHereCard />
         <DeadlineNudges />
         <ActivitiesCarousel />
         <CollegesCarousel />
@@ -666,6 +671,7 @@ export function HomeWidgets() {
           <ScoresWidget />
         </div>
         <ToolsCard />
+        <JourneySection />
       </div>
       <aside className="grid content-start gap-4 md:grid-cols-2 xl:grid-cols-1">
         <div className="md:col-span-2 xl:col-span-1">

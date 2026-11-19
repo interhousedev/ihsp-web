@@ -41,6 +41,24 @@ describe("setup wizard", () => {
   })
 })
 
+describe("setup wizard moved questions", () => {
+  it("has no residence, field of study or destination steps, and hints SAT English", async () => {
+    setTestRoute("/setup/")
+    useSetupHandlers(
+      wizardConfig([
+        question({ id: "q05", required: true }),
+        question({ id: "q14", required: true, kind: "multi", options: ["ielts", "sat_erw"] }),
+        question({ id: "q18", required: true }),
+        question({ id: "q24", required: true }),
+      ]),
+      profile({ next_question: "q14" }),
+    )
+    renderAdmissionApp(<SetupWizard />)
+    expect(await screen.findByText("Step 1 of 1")).toBeInTheDocument()
+    expect(screen.getByText("Only some universities accept SAT English as proof of English")).toBeInTheDocument()
+  })
+})
+
 const words = (extra = {}) => ({
   words: [],
   candidates: [],

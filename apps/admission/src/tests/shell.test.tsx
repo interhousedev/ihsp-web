@@ -40,19 +40,17 @@ describe("AdmissionShell", () => {
       </AdmissionShell>,
     )
     expect(await screen.findByText("page body")).toBeInTheDocument()
-    expect(labels().slice(0, 10)).toEqual([
-      "Home",
-      "Journey",
-      "Profile",
+    expect(labels()).toEqual([
+      "Career & study",
       "Activities & honors",
-      "Activities plan",
-      "Tasks",
-      "Universities",
-      "Discover",
+      "Universities & budget",
       "Essays",
-      "Documents & deadlines",
+      "Documents & applying",
+      "Knowledge base",
+      "Consultations",
+      "Settings",
     ])
-    expect(labels()).toContain("Courses")
+    expect(labels()).not.toContain("Home")
     expect(labels()).not.toContain("Caseload")
   })
 
@@ -79,7 +77,7 @@ describe("AdmissionShell", () => {
     )
     await screen.findByText(/Your account has no access to it/)
     expect(screen.queryByText("page body")).toBeNull()
-    expect(screen.queryByText("Journey")).toBeNull()
+    expect(screen.queryByText("Career & study")).toBeNull()
   })
 })
 

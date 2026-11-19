@@ -15,7 +15,7 @@ const STEPS = [
   { id: "profile", url: "/setup/" },
   { id: "activities", url: "/activities/" },
   { id: "plans", url: "/plan/" },
-  { id: "universities", url: "/chooser/" },
+  { id: "universities", url: "/chooser/list/" },
   { id: "documents", url: "/documents/" },
 ] as const
 

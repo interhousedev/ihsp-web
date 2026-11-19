@@ -1,7 +1,7 @@
 import { describe, expect, test } from "bun:test"
 import type { ListEntry } from "../chooser/types"
 import type { CalendarEntry } from "../deadlines/calendar-api"
-import { buildNudges } from "./nudges"
+import { buildNudges, isUndecided } from "./nudges"
 
 const entry = (id: string, status: string) =>
   ({ id, status, institution: { id: `i-${id}`, name: id } }) as unknown as ListEntry
@@ -35,5 +35,14 @@ describe("buildNudges", () => {
     const items = [cal("a", "2026-02-01"), cal("b", "2026-02-01")]
     const nudges = buildNudges(entries, items, new Set(["i-b"]), "2026-03-01")
     expect(nudges.map((nudge) => [nudge.kind, nudge.entry.id])).toEqual([["add-result", "a"]])
+  })
+})
+
+describe("isUndecided", () => {
+  test("ADM-UNDEC-1: undecided only without list items and without a field", () => {
+    expect(isUndecided({ listCount: 0, hasField: false })).toBe(true)
+    expect(isUndecided({ listCount: 1, hasField: false })).toBe(false)
+    expect(isUndecided({ listCount: 0, hasField: true })).toBe(false)
+    expect(isUndecided({ listCount: 3, hasField: true })).toBe(false)
   })
 })
