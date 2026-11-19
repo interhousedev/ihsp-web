@@ -2,7 +2,9 @@
 
 import { useErrorMessage, useLocale, useT } from "@ihsp/i18n"
 import { Alert, AlertDescription, AlertTitle, Button, Icons, Label } from "@ihsp/ui"
+import Link from "next/link"
 import { useState } from "react"
+import { useProfile } from "../../profile/api"
 import { useAffordability } from "../hooks"
 import { useWorkflow } from "../../../lib/config"
 import type { ListEntry } from "../types"
@@ -27,6 +29,11 @@ export function AffordabilityPanel({ entry }: { entry: ListEntry }) {
     binding && (status === "signed_off" || (status !== null && workflow.affordability_ack_statuses.includes(status)))
   const requestedAt = result?.requested_sign_off_at ?? null
   const error = check.error ?? signOff.error
+  const profile = useProfile()
+  // The family budget is the profile's money answer (q32); only reported missing once the profile has loaded.
+  const noBudget = profile.data !== undefined && !profile.data.answers?.q32
+  const noCost = (result?.coa_total ?? entry.institution.coa_total) === null
+  const unresolved = status === "unknown" || status === "gap"
   const money = (value: string | null) => (value === null ? "—" : (formatCurrency(value, currency, locale) ?? value))
 
   return (
@@ -64,6 +71,21 @@ export function AffordabilityPanel({ entry }: { entry: ListEntry }) {
             </div>
           ))}
         </dl>
+      ) : null}
+      {unresolved ? (
+        <ul className="text-muted-foreground flex flex-col gap-1 text-xs" data-testid="afford-why">
+          {noCost ? <li>{t("afford.why.noCost")}</li> : null}
+          {noBudget ? (
+            <li>
+              {t("afford.why.noBudget")}{" "}
+              <Link href="/setup/?q=q32" className="text-primary underline-offset-2 hover:underline">
+                {t("afford.why.budgetLink")}
+              </Link>
+            </li>
+          ) : null}
+          {status === "gap" && result?.gap ? <li>{t("afford.why.gap", { gap: money(result.gap) })}</li> : null}
+          {binding ? <li>{t("afford.why.unlock")}</li> : null}
+        </ul>
       ) : null}
       {needsSignOff && (signedOffAt || status === "signed_off") ? (
         <p className="text-success flex items-center gap-1 text-sm">

@@ -84,4 +84,35 @@ describe("checklist", () => {
     ).not.toBeNull()
     expect(screen.getAllByText("YC").length).toBeGreaterThan(0)
   })
+
+  test("ADM-DOCS-1 a group shows its next open deadline and the official portal", async () => {
+    serve([
+      {
+        ...base,
+        id: "a",
+        institution_name: "Uni A",
+        due_utc: "2027-03-10T00:00:00Z",
+        institution_website_url: "https://uni.example/apply",
+      },
+      { ...base, id: "b", institution_name: "Uni A", due_utc: "2027-02-01T00:00:00Z" },
+    ])
+    renderAdmissionApp(<ChecklistSection />)
+    const portal = await screen.findByRole("link", { name: /Open official portal/ })
+    expect(portal.getAttribute("href")).toBe("https://uni.example/apply")
+    expect(portal.getAttribute("target")).toBe("_blank")
+    expect(screen.getAllByText(/Next deadline/).length).toBeGreaterThan(0)
+  })
+
+  test("ADM-DOCS-2 ?entry= opens and highlights that university", async () => {
+    serve([
+      { ...base, id: "a", institution_name: "Uni A", list_entry_id: "e1" },
+      { ...base, id: "b", institution_name: "Uni B", list_entry_id: "e2" },
+    ])
+    const { container } = renderAdmissionApp(<ChecklistSection />, { route: "/documents/?entry=e2" })
+    await screen.findByText("Uni B")
+    const open = container.querySelectorAll("details[open]")
+    expect(open.length).toBe(1)
+    expect(open[0].getAttribute("data-focused")).toBe("true")
+    expect(open[0].textContent).toContain("Uni B")
+  })
 })

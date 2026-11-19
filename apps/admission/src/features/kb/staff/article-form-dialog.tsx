@@ -2,8 +2,9 @@
 
 import { useErrorMessage, useT } from "@ihsp/i18n"
 import { RichTextEditor } from "@ihsp/features-core/rich-text"
-import { Button, Input, ResponsiveDialog } from "@ihsp/ui"
-import { useEffect, useState } from "react"
+import { kbLibrary, MessageWithOpenUi, safeLinkUrl } from "@ihsp/features-core/openui"
+import { Button, Input, Markdown, ResponsiveDialog } from "@ihsp/ui"
+import { useEffect, useState, type FormEvent } from "react"
 import { toast } from "sonner"
 import { useCreateKbArticle, useUpdateKbArticle, type KbArticle } from "../api"
 import { bodyBlocks, MAX_BLOCKS } from "../openui-source"
@@ -81,7 +82,9 @@ export function ArticleFormDialog({
       toast.error(errorMessage(error))
     },
   }
-  const submit = () => {
+  const submit = (event: FormEvent<HTMLFormElement>) => {
+    event.preventDefault()
+    setServerError(null)
     const fields = {
       title: draft.title.trim(),
       body: draft.body,
@@ -127,6 +130,16 @@ export function ArticleFormDialog({
             extensions={EXTENSIONS}
             invalid={!bodyOk || serverError !== null}
             toolbarExtra={<InsertBlockMenu body={draft.body} onBody={(body) => set("body", body)} />}
+            renderPreview={(markdown) => (
+              <MessageWithOpenUi
+                text={markdown}
+                library={kbLibrary}
+                links="kb"
+                renderMarkdown={(part) => (
+                  <Markdown allowLink={(href) => safeLinkUrl(href, "kb") !== null}>{part}</Markdown>
+                )}
+              />
+            )}
           />
           {!bodyOk ? (
             <p role="alert" className="text-destructive text-xs font-normal">

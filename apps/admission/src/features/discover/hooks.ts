@@ -57,13 +57,14 @@ export const uniChatKey = (id: string) => ["admission", "uni-chat", id] as const
 
 /** Opens (and on the first visit creates) the student's chat of one university; the answer is kept for the session. */
 export function useUniChat(institutionId: string | undefined) {
+  const locale = useLocale()
   return useQuery({
     queryKey: uniChatKey(institutionId ?? ""),
     enabled: Boolean(institutionId),
     staleTime: Infinity,
     refetchOnWindowFocus: false,
     retry: false,
-    queryFn: () => openUniChat(institutionId as string),
+    queryFn: () => openUniChat(institutionId as string, locale),
   })
 }
 

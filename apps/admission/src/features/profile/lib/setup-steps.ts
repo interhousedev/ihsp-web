@@ -4,6 +4,14 @@ import { isAnswered } from "./visibility"
 /** Residence, field of study and destination countries are edited in Settings, Career and Search; legacy answers stay readable. */
 export const MOVED_QUESTIONS: readonly string[] = ["q05", "q18", "q24"]
 
+/** The wizard covers About, School and Exams only; goals, where-to-study and money questions live on their own pages. */
+export const WIZARD_SECTIONS: readonly string[] = ["about", "school", "tests"]
+
+/** The questions the wizard and its review show: the wizard sections minus the questions that moved. */
+export function wizardQuestions(questions: Question[]): Question[] {
+  return questions.filter((q) => WIZARD_SECTIONS.includes(q.section) && !MOVED_QUESTIONS.includes(q.id))
+}
+
 /**
  * The screens of the first setup: only what the student must answer. Skipped here (all stay editable from the review):
  * locked questions (the school fills them), answers already known from the school record, and optional detail

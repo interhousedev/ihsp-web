@@ -1,8 +1,24 @@
 import { describe, expect, it } from "bun:test"
 import { question } from "../../../tests/admission-handlers"
-import { setupSteps } from "./setup-steps"
+import { setupSteps, wizardQuestions } from "./setup-steps"
 
 const ids = (list: { id: string }[]) => list.map((q) => q.id)
+
+describe("wizardQuestions (ADM-SETUP-2/3)", () => {
+  it("keeps About, School and Exams; drops goals, where, money and moved questions", () => {
+    const list = [
+      question({ id: "q01", section: "about" }),
+      question({ id: "q08", section: "school" }),
+      question({ id: "q14", section: "tests" }),
+      question({ id: "q20", section: "goals" }),
+      question({ id: "q26", section: "where" }),
+      question({ id: "q29", section: "where" }),
+      question({ id: "q30", section: "money" }),
+      question({ id: "q05", section: "about" }),
+    ]
+    expect(ids(wizardQuestions(list))).toEqual(["q01", "q08", "q14"])
+  })
+})
 
 describe("setupSteps", () => {
   const questions = [

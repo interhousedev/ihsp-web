@@ -1,10 +1,9 @@
 "use client"
 
 import { pageClass } from "../../../components/lib/page"
-import { useT } from "@ihsp/i18n"
+import { useLocale, useT } from "@ihsp/i18n"
 import { StateView } from "@ihsp/ui"
-import { useRouter, useSearchParams } from "next/navigation"
-import { UnderlineTabs } from "../../../components/lib/underline-tabs"
+import { useSearchParams } from "next/navigation"
 import { useQuery, useQueryClient } from "@tanstack/react-query"
 import { Suspense, useState } from "react"
 import { NextStep } from "../../../components/next-step"
@@ -17,6 +16,7 @@ import { detailsKey, useQuiz, useSaveQuiz } from "../../profile/details-api"
 import { STUDY_FIELDS_KEY, readStudyFields } from "../../profile/study-fields"
 import { QUIZ, recommend } from "../quiz"
 import { CareerDeepDive } from "./career-deep-dive"
+import { listLabels } from "../list-labels"
 import { CareerResults } from "./career-results"
 
 const MAJORS_MAX = 3
@@ -43,34 +43,15 @@ export function careerTab(value: string | null): CareerTab {
 
 function FieldTab() {
   const t = useT("career")
+  const locale = useLocale()
   const plan = useQuery(careerPlanQuery())
   const labels = plan.data?.study_focus?.labels ?? []
   return (
     <div className={pageClass("narrow")}>
       <InterestsSection />
       {labels.length > 0 && (
-        <NextStep href="/opportunities/" label={t("nextActivities", { fields: labels.join(", ") })} />
+        <NextStep href="/opportunities/" label={t("nextActivities", { fields: listLabels(labels, locale) })} />
       )}
-    </div>
-  )
-}
-
-function TabStrip({ tab }: { tab: CareerTab }) {
-  const t = useT("career")
-  const router = useRouter()
-  const plan = useQuery(careerPlanQuery())
-  return (
-    <div className={pageClass("narrow", "pb-0 md:pb-0")}>
-      <UnderlineTabs
-        label={t("tabs.label")}
-        value={tab}
-        onValueChange={(next) => router.replace(`/career/?tab=${next}`)}
-        tabs={[
-          { value: "explore", label: t("tabs.explore") },
-          { value: "field", label: t("tabs.field"), count: plan.data?.study_focus?.field_ids.length ?? 0 },
-          { value: "future", label: t("tabs.future") },
-        ]}
-      />
     </div>
   )
 }
@@ -146,7 +127,6 @@ function CareerContent() {
   }))
   return (
     <AdmissionShell>
-      <TabStrip tab={tab} />
       {tab === "field" && <FieldTab />}
       {tab === "future" && data && (
         <div className={pageClass("narrow")}>

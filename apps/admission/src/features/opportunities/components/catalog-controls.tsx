@@ -6,7 +6,7 @@ import Link from "next/link"
 import { UnderlineTabs } from "../../../components/lib/underline-tabs"
 import { CATALOG_SORTS, type CatalogSort, type OpportunityKind } from "../api"
 
-/** The catalog categories in tab order; "all" has no `kind`. Fellowships are filed under research. */
+/** The catalog kinds in tab order; "all" has no `kind`. Scholarships live in Universities & budget, exams in Tests. */
 export const CATEGORIES = [
   "all",
   "course",
@@ -14,8 +14,6 @@ export const CATEGORIES = [
   "research",
   "event",
   "program",
-  "exam",
-  "scholarship",
 ] as const satisfies readonly (OpportunityKind | "all")[]
 export type Category = (typeof CATEGORIES)[number]
 
@@ -26,8 +24,6 @@ const CATEGORY_ICON = {
   research: "sparkles",
   event: "calendarEvent",
   program: "globe",
-  exam: "exams",
-  scholarship: "certificates",
 } as const satisfies Record<Category, string>
 
 /** The `?kind=` value as a category; anything unknown means "all". */
@@ -70,10 +66,12 @@ export function RelevanceBar({
         <p className="text-muted-foreground flex flex-wrap items-center gap-1">
           <Icons.sparkles aria-hidden className="size-4" />
           {t("sorting.banner", { fields: labels.join(", ") })}
-          {" · "}
-          <Link href="/career/?tab=field" className="text-primary underline">
-            {t("sorting.change")}
-          </Link>
+          <span className="whitespace-nowrap">
+            {"· "}
+            <Link href="/career/?tab=field" className="text-primary underline">
+              {t("sorting.change")}
+            </Link>
+          </span>
         </p>
       ) : (
         <span />

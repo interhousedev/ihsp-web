@@ -92,7 +92,11 @@ function Frame({ tour, children }: { tour: boolean; children: ReactNode }) {
         <MaintenanceBanner />
         {sectionNav ? <SectionTabs /> : null}
         <Suspense fallback={<PageLoading />}>{children}</Suspense>
-        <div className="h-20 md:hidden" aria-hidden />
+        <div
+          data-testid="phone-bottom-reserve"
+          className="h-[calc(var(--safe-bottom,0px)+9.5rem)] md:hidden"
+          aria-hidden
+        />
         <AdmissionConsentGate />
         <AssistantLauncher />
         {showTour ? <StudentTour /> : null}

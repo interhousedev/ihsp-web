@@ -234,3 +234,28 @@ describe("essays", () => {
     view.unmount()
   })
 })
+
+describe("ADM-ESSAYS-TABS", () => {
+  const empty = () =>
+    server.use(
+      http.get(apiUrl("/v1/admission/essays"), () => HttpResponse.json({ items: [] })),
+      http.get(apiUrl("/v1/admission/list"), () => HttpResponse.json([])),
+    )
+
+  test("ADM-ESSAYS-TABS-1 a missing tab is written to the address with replace", async () => {
+    empty()
+    const view = renderAdmissionApp(<EssaysBody />, { route: "/essays/?entry=e9" })
+    await waitFor(() => expect(testRouter.replace).toHaveBeenCalledWith("/essays/?entry=e9&tab=essays"))
+    await Bun.sleep(300)
+    view.unmount()
+  })
+
+  test("ADM-ESSAYS-TABS-2 a deep link selects the tab and leaves the address alone", async () => {
+    empty()
+    const view = renderAdmissionApp(<EssaysBody />, { route: "/essays/?tab=ideas" })
+    await waitFor(() => expect(document.getElementById("ideas-title")).toBeTruthy())
+    expect(testRouter.replace).not.toHaveBeenCalledWith(expect.stringContaining("tab=essays"))
+    await Bun.sleep(300)
+    view.unmount()
+  })
+})

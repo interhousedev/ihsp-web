@@ -3,7 +3,8 @@
 import { useErrorMessage, useFormatters, useT } from "@ihsp/i18n"
 import { Button, Checkbox, Icons, Skeleton, StateView, StatusBadge } from "@ihsp/ui"
 import Link from "next/link"
-import { useState } from "react"
+import { useSearchParams } from "next/navigation"
+import { useEffect, useRef, useState } from "react"
 import { toast } from "sonner"
 import { NextStep } from "../../../components/next-step"
 import { LogoAvatar } from "../../../components/lib/photo-header"
@@ -118,34 +119,100 @@ function groupByInstitution(
     .sort((a, b) => Number(b.name === "") - Number(a.name === ""))
 }
 
-function ChecklistGroups({ items }: { items: readonly ChecklistItem[] }) {
+/** The earliest deadline of the group's open items. */
+function nextDeadline(items: readonly ChecklistItem[]): string | null {
+  const dates = items.filter((item) => item.status !== DONE && item.due_utc).map((item) => item.due_utc as string)
+  return dates.length ? dates.reduce((a, b) => (Date.parse(a) <= Date.parse(b) ? a : b)) : null
+}
+
+function InstitutionGroup({
+  group,
+  defaultOpen,
+  focused,
+}: {
+  group: ReturnType<typeof groupByInstitution>[number]
+  defaultOpen: boolean
+  focused: boolean
+}) {
   const t = useT("documents")
+  const { date } = useFormatters()
+  const ref = useRef<HTMLDetailsElement>(null)
+  useEffect(() => {
+    if (!focused || !ref.current) return
+    ref.current.open = true
+    ref.current.scrollIntoView?.({ block: "center" })
+  }, [focused])
+  const deadline = nextDeadline(group.items)
+  const portal = group.items.find((item) => item.institution_website_url)?.institution_website_url
+  return (
+    <details
+      ref={ref}
+      open={defaultOpen || focused}
+      data-focused={focused || undefined}
+      className={`group py-1 ${focused ? "bg-accent/40 rounded-card" : ""}`}
+    >
+      <summary className="flex min-h-11 cursor-pointer list-none items-center gap-2 text-sm font-semibold [&::-webkit-details-marker]:hidden">
+        <Icons.chevronRight aria-hidden className="size-4 transition-transform group-open:rotate-90" />
+        {group.name ? (
+          <LogoAvatar
+            name={group.name}
+            src={group.logo.logo_url}
+            fit={group.logo.logo_fit}
+            zoom={group.logo.logo_zoom}
+            className="size-6 ring-0"
+          />
+        ) : null}
+        <span className="min-w-0 flex-1 truncate">{group.name || t("groupGeneral")}</span>
+        {group.name && deadline ? (
+          <span className="text-muted-foreground hidden text-xs font-normal sm:inline">
+            {t("nextDeadline", { date: date(deadline) })}
+          </span>
+        ) : null}
+        <span className="text-muted-foreground text-xs font-normal">
+          {group.items.filter((item) => item.status === DONE).length}/{group.items.length}
+        </span>
+      </summary>
+      {group.name && (deadline || portal) ? (
+        <div className="flex flex-wrap items-center gap-x-4 ps-6 text-xs">
+          {deadline ? (
+            <span className="text-muted-foreground sm:hidden">{t("nextDeadline", { date: date(deadline) })}</span>
+          ) : null}
+          {portal ? (
+            <a
+              href={portal}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-primary inline-flex min-h-11 items-center gap-1 font-medium underline-offset-2 hover:underline md:min-h-0"
+            >
+              {t("openPortal")}
+              <Icons.externalLink aria-hidden className="size-3.5" />
+              <span className="sr-only">{t("newTab")}</span>
+            </a>
+          ) : null}
+        </div>
+      ) : null}
+      <ul className="divide-y" aria-label={group.name || t("groupGeneral")}>
+        {group.items.map((item) => (
+          <ChecklistRow key={item.id} item={item} />
+        ))}
+      </ul>
+    </details>
+  )
+}
+
+function ChecklistGroups({ items }: { items: readonly ChecklistItem[] }) {
+  const entry = useSearchParams().get("entry")
+  const groups = groupByInstitution(items)
+  const focusedIndex = entry ? groups.findIndex((g) => g.items.some((i) => i.list_entry_id === entry)) : -1
   return (
     <div className="flex flex-col divide-y">
-      {groupByInstitution(items).map((group, index) => (
-        <details key={group.name} open={index === 0} className="group py-1">
-          <summary className="flex min-h-11 cursor-pointer list-none items-center gap-2 text-sm font-semibold [&::-webkit-details-marker]:hidden">
-            <Icons.chevronRight aria-hidden className="size-4 transition-transform group-open:rotate-90" />
-            {group.name ? (
-              <LogoAvatar
-                name={group.name}
-                src={group.logo.logo_url}
-                fit={group.logo.logo_fit}
-                zoom={group.logo.logo_zoom}
-                className="size-6 ring-0"
-              />
-            ) : null}
-            <span className="min-w-0 flex-1 truncate">{group.name || t("groupGeneral")}</span>
-            <span className="text-muted-foreground text-xs font-normal">
-              {group.items.filter((item) => item.status === DONE).length}/{group.items.length}
-            </span>
-          </summary>
-          <ul className="divide-y" aria-label={group.name || t("groupGeneral")}>
-            {group.items.map((item) => (
-              <ChecklistRow key={item.id} item={item} />
-            ))}
-          </ul>
-        </details>
+      {groups.map((group, index) => (
+        <InstitutionGroup
+          key={group.name}
+          group={group}
+          defaultOpen={focusedIndex < 0 && index === 0}
+          focused={index === focusedIndex}
+        />
       ))}
     </div>
   )

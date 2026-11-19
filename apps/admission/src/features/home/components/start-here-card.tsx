@@ -5,7 +5,6 @@ import { useT } from "@ihsp/i18n"
 import { Button, buttonVariants, Card, CardContent, CardHeader, CardTitle, cn, Icons } from "@ihsp/ui"
 import Link from "next/link"
 import { useEffect, useState } from "react"
-import { NextStep } from "../../../components/next-step"
 import { useList } from "../../chooser/hooks"
 import { useReadiness } from "../../readiness/api"
 import { isUndecided } from "../nudges"
@@ -16,7 +15,7 @@ export const ASSISTANT_PREFILL_EVENT = "admission:assistant-prefill"
 export const startHereKey = (userId: string) => `ihsp:admission:start-here-dismissed:${userId}`
 
 const LINK_STEPS = [
-  { key: "quiz", href: "/career/", icon: Icons.sparkles },
+  { key: "quiz", href: "/career/?tab=explore", icon: Icons.sparkles },
   { key: "opportunities", href: "/opportunities/", icon: Icons.exams },
   { key: "courses", href: "/courses/", icon: Icons.courses },
   { key: "howItWorks", href: "/faq/", icon: Icons.help },
@@ -93,19 +92,19 @@ export function StartHereCard() {
         </Button>
       </CardHeader>
       <CardContent className="flex flex-col gap-3">
-        <ol className="grid gap-2 md:grid-cols-2">
+        <ol className="grid grid-cols-2 gap-2">
           {LINK_STEPS.map(({ key, href, icon: Icon }) => (
             <li key={key}>
               <Link
                 href={href}
-                className="hover:border-primary/40 border-hairline-strong rounded-card focus-visible:ring-ring flex min-h-11 h-full items-start gap-3 border p-3 focus-visible:ring-2 focus-visible:outline-none"
+                className="hover:border-primary/40 border-hairline-strong rounded-card focus-visible:ring-ring flex min-h-11 h-full items-start gap-2 border p-2.5 focus-visible:ring-2 focus-visible:outline-none md:gap-3 md:p-3"
               >
-                <span className="bg-primary/10 text-primary flex size-9 shrink-0 items-center justify-center rounded-full">
+                <span className="bg-primary/10 text-primary flex size-8 shrink-0 items-center justify-center rounded-full">
                   <Icon aria-hidden className="size-4" />
                 </span>
                 <span className="flex min-w-0 flex-col gap-0.5">
                   <span className="text-sm font-semibold">{t(`steps.${key}.title`)}</span>
-                  <span className="text-muted-foreground text-xs">{t(`steps.${key}.text`)}</span>
+                  <span className="text-muted-foreground hidden text-xs md:block">{t(`steps.${key}.text`)}</span>
                 </span>
               </Link>
             </li>
@@ -115,7 +114,7 @@ export function StartHereCard() {
               type="button"
               className={cn(
                 buttonVariants({ variant: "outline" }),
-                "rounded-card h-full min-h-11 w-full items-start justify-start gap-3 p-3 text-start whitespace-normal",
+                "rounded-card h-full min-h-11 w-full items-start justify-start gap-2 p-2.5 text-start whitespace-normal md:gap-3 md:p-3",
               )}
               onClick={() =>
                 window.dispatchEvent(
@@ -123,17 +122,18 @@ export function StartHereCard() {
                 )
               }
             >
-              <span className="bg-primary/10 text-primary flex size-9 shrink-0 items-center justify-center rounded-full">
+              <span className="bg-primary/10 text-primary flex size-8 shrink-0 items-center justify-center rounded-full">
                 <Icons.chat aria-hidden className="size-4" />
               </span>
               <span className="flex min-w-0 flex-col gap-0.5">
                 <span className="text-sm font-semibold">{t("steps.assistant.title")}</span>
-                <span className="text-muted-foreground text-xs font-normal">{t("steps.assistant.text")}</span>
+                <span className="text-muted-foreground hidden text-xs font-normal md:block">
+                  {t("steps.assistant.text")}
+                </span>
               </span>
             </button>
           </li>
         </ol>
-        <NextStep href="/career/?tab=explore" label={t("quiz.label")} hint={t("quiz.hint")} />
       </CardContent>
     </Card>
   )

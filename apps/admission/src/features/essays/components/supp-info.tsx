@@ -39,22 +39,15 @@ export function SuppInfo({ essay }: { essay: Essay }) {
             )}
           </dd>
         </div>
-        <div>
-          <dt className="text-muted-foreground text-xs">{t("promptLabel")}</dt>
-          <dd className="whitespace-pre-wrap">
-            {essay.prompt_text || <span className="text-muted-foreground">—</span>}
-          </dd>
-        </div>
-        {essay.word_limit ? (
-          <div>
-            <dt className="text-muted-foreground text-xs">{t("wordLimit")}</dt>
-            <dd>{essay.word_limit}</dd>
-          </div>
-        ) : null}
       </dl>
       {entry && name ? (
         <div className="mt-4 border-t pt-4">
-          <SuppPrompts institutionId={entry.institution.id} listEntryId={entry.id} college={name} />
+          <SuppPrompts
+            institutionId={entry.institution.id}
+            listEntryId={entry.id}
+            college={name}
+            websiteUrl={entry.institution.website_url}
+          />
         </div>
       ) : null}
     </AsideCard>

@@ -98,6 +98,7 @@ export function CatalogBody() {
     sort: parseSort(params.get("sort")),
   }
   const [suggesting, setSuggesting] = useState(false)
+  const [filtersOpen, setFiltersOpen] = useState(false)
   const taxonomy = useTaxonomy()
   const career = useQuery(careerPlanQuery())
   const list = useOpportunities(filter)
@@ -181,41 +182,58 @@ export function CatalogBody() {
       <SplitLayout
         asideFirst
         aside={
-          <AsideCard title={t("view.filtersTitle")} icon={<Icons.search aria-hidden className="size-4" />}>
-            <div className="grid gap-2 sm:grid-cols-2 md:grid-cols-1">
-              <Input
-                aria-label={t("searchLabel")}
-                placeholder={t("searchLabel")}
-                value={filter.q ?? ""}
-                onChange={(e) => setFilter({ ...filter, q: e.target.value || undefined })}
-              />
-              <FilterSelect
-                label={t("fieldLabel")}
-                value={filter.field_id}
-                onChange={(v) => setFilter({ ...filter, field_id: v, subfield_id: undefined, subject_id: undefined })}
-                options={fields.map((f) => ({ value: f.id, label: localName(f.name, locale) }))}
-              />
-              {subfields.length > 0 && (
-                <FilterSelect
-                  label={t("subfieldLabel")}
-                  value={filter.subfield_id}
-                  onChange={(v) => setFilter({ ...filter, subfield_id: v, subject_id: undefined })}
-                  options={subfields.map((s) => ({ value: s.id, label: localName(s.name, locale) }))}
-                />
-              )}
-              <FilterSelect
-                label={t("gradeLabel")}
-                value={filter.grade?.toString()}
-                onChange={(v) => setFilter({ ...filter, grade: v ? Number(v) : undefined })}
-                options={GRADES.map((g) => ({ value: String(g), label: t("gradeShort", { grade: g }) }))}
-              />
+          <>
+            <Button
+              type="button"
+              variant="outline"
+              size="sm"
+              className="self-start md:hidden"
+              aria-expanded={filtersOpen}
+              onClick={() => setFiltersOpen((open) => !open)}
+            >
+              <Icons.search aria-hidden className="size-4" />
+              {t("view.filtersTitle")}
+            </Button>
+            <div className={filtersOpen ? "" : "hidden md:block"}>
+              <AsideCard title={t("view.filtersTitle")} icon={<Icons.search aria-hidden className="size-4" />}>
+                <div className="grid gap-2 sm:grid-cols-2 md:grid-cols-1">
+                  <Input
+                    aria-label={t("searchLabel")}
+                    placeholder={t("searchLabel")}
+                    value={filter.q ?? ""}
+                    onChange={(e) => setFilter({ ...filter, q: e.target.value || undefined })}
+                  />
+                  <FilterSelect
+                    label={t("fieldLabel")}
+                    value={filter.field_id}
+                    onChange={(v) =>
+                      setFilter({ ...filter, field_id: v, subfield_id: undefined, subject_id: undefined })
+                    }
+                    options={fields.map((f) => ({ value: f.id, label: localName(f.name, locale) }))}
+                  />
+                  {subfields.length > 0 && (
+                    <FilterSelect
+                      label={t("subfieldLabel")}
+                      value={filter.subfield_id}
+                      onChange={(v) => setFilter({ ...filter, subfield_id: v, subject_id: undefined })}
+                      options={subfields.map((s) => ({ value: s.id, label: localName(s.name, locale) }))}
+                    />
+                  )}
+                  <FilterSelect
+                    label={t("gradeLabel")}
+                    value={filter.grade?.toString()}
+                    onChange={(v) => setFilter({ ...filter, grade: v ? Number(v) : undefined })}
+                    options={GRADES.map((g) => ({ value: String(g), label: t("gradeShort", { grade: g }) }))}
+                  />
+                </div>
+                {list.data ? (
+                  <Pill tone="primary" className="self-start">
+                    {t("view.results", { count: list.data.items.length })}
+                  </Pill>
+                ) : null}
+              </AsideCard>
             </div>
-            {list.data ? (
-              <Pill tone="primary" className="self-start">
-                {t("view.results", { count: list.data.items.length })}
-              </Pill>
-            ) : null}
-          </AsideCard>
+          </>
         }
       >
         <div className="flex flex-col gap-4">

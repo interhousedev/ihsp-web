@@ -161,3 +161,57 @@ describe("AssistantLauncher: suggestion approval", () => {
     await waitFor(() => expect(approved).toBe(1))
   })
 })
+
+describe("AssistantLauncher consent", () => {
+  beforeEach(() => window.localStorage.clear())
+
+  function serveConsentRefusal() {
+    let sends = 0
+    let put: unknown = null
+    server.use(
+      http.post(apiUrl("/v1/ai/chats"), () => {
+        const { messages: _m, shared: _s, ...item } = detail
+        return HttpResponse.json(item)
+      }),
+      http.get(apiUrl("/v1/ai/chats/:id"), () => HttpResponse.json(detail)),
+      http.post(apiUrl(`/v1/ai/chats/${CHAT}/messages`), () => {
+        sends += 1
+        if (sends === 1) {
+          return HttpResponse.json(
+            { type: "admission/consent_required", title: "Consent required", status: 403 },
+            { status: 403, headers: { "content-type": "application/problem+json" } },
+          )
+        }
+        return HttpResponse.json(turnResultApproved)
+      }),
+      http.put(apiUrl("/v1/admission/consent"), async ({ request }) => {
+        put = await request.json()
+        return HttpResponse.json({ grants: [] })
+      }),
+    )
+    return { sends: () => sends, put: () => put }
+  }
+
+  it("ADM-CONSENT-1 shows the consent card instead of the composer and links to the settings", async () => {
+    serveConsentRefusal()
+    const view = renderAdmissionApp(<AssistantLauncher />)
+    await view.user.click(screen.getByRole("button", { name: "Open assistant" }))
+    const field = await screen.findByRole("textbox")
+    await view.user.type(field, "hello{Enter}")
+    const card = await screen.findByTestId("assistant-consent")
+    expect(card).toBeInTheDocument()
+    expect(screen.queryByText("Something went wrong")).toBeNull()
+    expect(screen.getByRole("link", { name: "Privacy settings" }).getAttribute("href")).toStartWith("/settings")
+  })
+
+  it("ADM-CONSENT-2 grants admission_ai and sends the refused message again", async () => {
+    const calls = serveConsentRefusal()
+    const view = renderAdmissionApp(<AssistantLauncher />)
+    await view.user.click(screen.getByRole("button", { name: "Open assistant" }))
+    await view.user.type(await screen.findByRole("textbox"), "hello{Enter}")
+    await view.user.click(await screen.findByRole("button", { name: "Allow AI help" }))
+    await waitFor(() => expect(calls.sends()).toBe(2))
+    expect(calls.put()).toEqual({ purposes: ["admission_ai"] })
+    await waitFor(() => expect(screen.queryByTestId("assistant-consent")).toBeNull())
+  })
+})

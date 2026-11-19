@@ -4,6 +4,7 @@ import { getApiClient } from "@ihsp/api"
 import { useErrorMessage, useLocale, useT } from "@ihsp/i18n"
 import { Button, Icons, Pill, StateView } from "@ihsp/ui"
 import { AiTabCard } from "@/components/ai-tab-card"
+import { useState } from "react"
 import { useMutation } from "@tanstack/react-query"
 import { useList, useListInsights } from "../hooks"
 import { AddToListButton } from "./add-to-list-button"
@@ -20,6 +21,7 @@ export function ListPlanning() {
   const country = useOptionLabel("country")
   const list = useList()
   const insights = useListInsights()
+  const [details, setDetails] = useState(false)
   const suggest = useMutation({
     mutationFn: () =>
       getApiClient().post<{ items: Suggestion[] }>("/v1/admission/list/suggest", undefined, {
@@ -48,19 +50,31 @@ export function ListPlanning() {
               </Pill>
             ))}
           </div>
-          <ul className="flex flex-col gap-2">
-            {insights.data.entries.map((entry) => {
-              const institution = list.data?.find((item) => item.id === entry.entry_id)?.institution
-              return (
-                <li key={entry.entry_id} className="text-sm">
-                  <span className="font-medium">{institution?.name}</span>
-                  {" · "}
-                  {entry.classification.effective ? label(entry.classification.effective) : t("list.noBucket")}
-                  <span className="text-muted-foreground">{` · ${t(`planning.source.${entry.classification.source}`)}`}</span>
-                </li>
-              )
-            })}
-          </ul>
+          <Button
+            type="button"
+            variant="link"
+            size="sm"
+            className="w-fit px-0"
+            aria-expanded={details}
+            onClick={() => setDetails((value) => !value)}
+          >
+            {details ? t("planning.hideDetails") : t("planning.showDetails")}
+          </Button>
+          {details ? (
+            <ul className="flex flex-col gap-2">
+              {insights.data.entries.map((entry) => {
+                const institution = list.data?.find((item) => item.id === entry.entry_id)?.institution
+                return (
+                  <li key={entry.entry_id} className="text-sm">
+                    <span className="font-medium">{institution?.name}</span>
+                    {" · "}
+                    {entry.classification.effective ? label(entry.classification.effective) : t("list.noBucket")}
+                    <span className="text-muted-foreground">{` · ${t(`planning.source.${entry.classification.source}`)}`}</span>
+                  </li>
+                )
+              })}
+            </ul>
+          ) : null}
         </>
       )}
       <Button variant="outline" disabled={suggest.isPending} onClick={() => suggest.mutate()}>

@@ -16,36 +16,20 @@ const SECTIONS = [
   { key: "budget", href: "/chooser/budget/" },
 ] as const
 
-const TABS = [
-  { key: "universities", href: "/chooser/search/", active: (p: string) => !p.startsWith("/chooser/programs/") },
-  { key: "programs", href: "/chooser/programs/", active: (p: string) => p.startsWith("/chooser/programs/") },
-] as const
-
-/** The frame of the chooser pages: title, the section strip, and the page body. */
+/** The frame of the chooser pages: title, the section strip (once), and the page body. Programs live at /opportunities/. */
 export function ChooserPage({ children, title }: { children: ReactNode; title?: string }) {
   const t = useT("chooser")
   const pathname = usePathname()
   const inPrograms = pathname.startsWith("/chooser/programs/")
+  const heading = title ?? (inPrograms ? t("programsTitle") : t("title"))
   return (
     <AdmissionShell>
       <ScreenSummary
-        title={title ?? (inPrograms ? t("programsTitle") : t("title"))}
+        title={heading}
         summary={`University chooser, section ${pathname}. ${inPrograms ? "Programs" : "Universities"} tab.`}
       />
-      <div className={pageClass("wide")}>
-        <AppPageHeader icon="search" title={title ?? (inPrograms ? t("programsTitle") : t("title"))} />
-        <nav aria-label={t("tabs.label")} className="flex gap-2 overflow-x-auto border-b">
-          {TABS.map(({ key, href, active }) => (
-            <Link
-              key={key}
-              href={href}
-              aria-current={active(pathname) ? "page" : undefined}
-              className="aria-[current=page]:border-primary aria-[current=page]:text-foreground text-muted-foreground -mb-px inline-flex min-h-11 items-center border-b-2 border-transparent px-4 text-sm font-medium whitespace-nowrap md:min-h-9"
-            >
-              {t(`tabs.${key}`)}
-            </Link>
-          ))}
-        </nav>
+      <div className={pageClass("wide", "md:gap-4 md:py-6")}>
+        <AppPageHeader icon="search" title={heading} />
         {inPrograms ? null : (
           <nav aria-label={t("sections.label")} className="flex gap-2 overflow-x-auto">
             {SECTIONS.map(({ key, href }) => (

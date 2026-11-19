@@ -7,10 +7,11 @@ import { useSearchParams } from "next/navigation"
 import type { ReactNode } from "react"
 import { toast } from "sonner"
 import { LogoAvatar } from "../../../components/lib/photo-header"
-import { AppPageHeader, pageClass } from "../../../components/lib/page"
+import { pageClass } from "../../../components/lib/page"
 import { AdmissionShell } from "../../shell/components/admission-shell"
 import { useOpportunity, usePlan, useRemoveFromPlan, useSaveToPlan } from "../api"
 import { OpportunityComments } from "./opportunity-comments"
+import { KIND_TONE } from "./opportunity-card"
 import { AwardPill } from "./scholarship-card"
 
 function Fact({ label, children }: { label: string; children: ReactNode }) {
@@ -61,7 +62,21 @@ export function OpportunityDetailBody() {
           className="size-14 ring-0"
         />
         <div className="flex min-w-0 flex-1 flex-col gap-2">
-          <AppPageHeader icon="certificates" title={f.title} />
+          <h1 className="text-xl font-semibold break-words">{f.title}</h1>
+          <div className="flex flex-wrap items-center gap-2">
+            <Pill tone={KIND_TONE[f.kind]}>{t(`kind.${f.kind}`)}</Pill>
+            {f.provider ? <span className="text-muted-foreground text-sm">{f.provider}</span> : null}
+          </div>
+          {item.upcoming.length > 0 ? (
+            <ul className="text-muted-foreground flex flex-wrap gap-x-4 gap-y-1 text-sm">
+              {item.upcoming.slice(0, 3).map((d) => (
+                <li key={`${d.kind}-${d.day}`} className="flex items-center gap-1">
+                  <Icons.calendarEvent aria-hidden className="size-4 shrink-0" />
+                  {t(`dateKind.${d.kind}`)}: {formatDate(d.day)}
+                </li>
+              ))}
+            </ul>
+          ) : null}
           <div className="flex flex-wrap items-center gap-2">
             {f.award_type ? <AwardPill award={f.award_type} /> : null}
             {f.scope ? <Pill tone="neutral">{t(`scope.${f.scope}`)}</Pill> : null}
@@ -75,10 +90,17 @@ export function OpportunityDetailBody() {
             ) : null}
           </div>
         </div>
-        <Button variant="outline" aria-pressed={saved} disabled={busy} onClick={toggle}>
-          <Icons.heart aria-hidden className={saved ? "fill-destructive text-destructive size-4" : "size-4"} />
-          {saved ? t("removeFromPlan") : t("saveToPlan")}
-        </Button>
+        <div className="flex shrink-0 flex-col items-end gap-2">
+          <Button variant="outline" aria-pressed={saved} disabled={busy} onClick={toggle}>
+            <Icons.heart aria-hidden className={saved ? "fill-destructive text-destructive size-4" : "size-4"} />
+            {saved ? t("removeFromPlan") : t("saveToPlan")}
+          </Button>
+          {saved ? (
+            <Link href="/plan/?view=saved" className="text-primary text-sm hover:underline">
+              {t("openPlan")}
+            </Link>
+          ) : null}
+        </div>
       </div>
 
       {f.summary ? <p className="text-sm whitespace-pre-wrap">{f.summary}</p> : null}

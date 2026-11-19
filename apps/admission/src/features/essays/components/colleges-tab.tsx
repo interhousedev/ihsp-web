@@ -43,7 +43,12 @@ export function CollegesTab({ entryId }: { entryId: string | null }) {
             />
             <h3 className="font-medium">{e.institution.name}</h3>
           </div>
-          <SuppPrompts institutionId={e.institution.id} listEntryId={e.id} college={e.institution.name} />
+          <SuppPrompts
+            institutionId={e.institution.id}
+            listEntryId={e.id}
+            college={e.institution.name}
+            websiteUrl={e.institution.website_url}
+          />
         </li>
       ))}
     </ul>

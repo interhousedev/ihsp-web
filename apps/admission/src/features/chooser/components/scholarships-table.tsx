@@ -15,6 +15,7 @@ export function coverage(item: Pick<Scholarship, "coverage_min" | "coverage_max"
 export function ScholarshipList({ items }: { items: Scholarship[] }) {
   const t = useT("chooser")
   const basisLabel = useOptionLabel("scholarshipBasis")
+  const providerLabel = useOptionLabel("scholarshipProvider")
   const countryLabel = useOptionLabel("country")
   const coverLabel = useOptionLabel("fact")
   if (items.length === 0)
@@ -38,7 +39,7 @@ export function ScholarshipList({ items }: { items: Scholarship[] }) {
             <div className="flex flex-wrap items-start justify-between gap-2">
               <div>
                 <h4 className="text-sm font-semibold">{item.name}</h4>
-                {item.provider ? <p className="text-muted-foreground text-xs">{item.provider}</p> : null}
+                {item.provider ? <p className="text-muted-foreground text-xs">{providerLabel(item.provider)}</p> : null}
               </div>
               {coverage(item) ? (
                 <Pill tone="success">{t("scholarships.coverage", { value: coverage(item) as string })}</Pill>

@@ -161,7 +161,7 @@ export function SearchView() {
   return (
     <div className="grid gap-6 md:grid-cols-[16rem_minmax(0,1fr)]">
       {isMobile ? null : (
-        <aside className="flex flex-col gap-3 md:sticky md:top-4 md:max-h-[calc(100dvh-8rem)] md:self-start md:overflow-y-auto md:pr-1">
+        <aside className="flex flex-col gap-3 md:sticky md:top-4 md:max-h-[calc(100dvh-9rem)] md:self-start md:overflow-y-auto md:pr-1">
           {panel}
         </aside>
       )}
@@ -228,7 +228,7 @@ export function SearchView() {
             </label>
           </div>
         ) : null}
-        <ScrollFade maxHeight={isMobile ? undefined : "calc(100dvh - 26rem)"} className="pr-1">
+        <ScrollFade maxHeight={isMobile ? undefined : "calc(100dvh - 22rem)"} className="pr-1">
           {results}
         </ScrollFade>
         <NextStep href="/chooser/list/" label={t("nextStep.review", { count: list.data?.length ?? 0 })} />

@@ -6,7 +6,7 @@ import { Button, buttonVariants, cn, Icons, Input, Label, Pill, Reveal, StateVie
 import Link from "next/link"
 import { useQuery } from "@tanstack/react-query"
 import { useRouter, useSearchParams } from "next/navigation"
-import { Suspense, useState, type FormEvent } from "react"
+import { Suspense, useEffect, useState, type FormEvent } from "react"
 import { AsideCard, SplitLayout } from "../../../components/lib/split-layout"
 import { LogoAvatar } from "../../../components/lib/photo-header"
 import { ScrollFade } from "../../../components/scroll-fade"
@@ -24,6 +24,8 @@ import { IdeasBoard } from "./ideas-board"
 import { LifeStory } from "./life-story"
 import { PromptCarousel } from "./prompt-carousel"
 import { useEssayLabel } from "./supp-label"
+
+const ESSAY_TABS = new Set(["essays", "colleges", "ideas", "story", "examples", "alignment"])
 
 const SELECT = "border-input bg-background h-9 rounded-md border px-3 text-sm"
 
@@ -104,7 +106,12 @@ function NewEssay({ onDone }: { onDone: () => void }) {
           ) : null}
         </div>
       ) : null}
-      <PromptCarousel onPick={setPrompt} />
+      <PromptCarousel
+        supplementalFor={
+          kind === "supplemental" ? (list.data?.find((e) => e.id === entry)?.institution.id ?? null) : undefined
+        }
+        onPick={setPrompt}
+      />
       <div className="flex flex-col gap-1">
         <Label htmlFor="essay-title">{t("titleLabel")}</Label>
         <Input id="essay-title" value={title} maxLength={120} onChange={(e) => setTitle(e.target.value)} />
@@ -144,7 +151,16 @@ export function EssaysBody() {
   const all = query.data?.items ?? []
   const essays = all.filter((e) => (e.kind === "other") === (group === "scholarships"))
   const params = useSearchParams()
-  const tab = params.get("tab") ?? "essays"
+  const router = useRouter()
+  const rawTab = params.get("tab")
+  const tab = rawTab && ESSAY_TABS.has(rawTab) ? rawTab : "essays"
+  // Keep the address route-backed: a missing or unknown ?tab= becomes the tab that is shown.
+  useEffect(() => {
+    if (rawTab === tab) return
+    const next = new URLSearchParams(params.toString())
+    next.set("tab", tab)
+    router.replace(`/essays/?${next.toString()}`)
+  }, [rawTab, tab, params, router])
   const entryId = params.get("entry")
   const list = useList()
   const entryOf = (id: string | null) => list.data?.find((x) => x.id === id)?.institution

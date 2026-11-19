@@ -88,6 +88,16 @@ export function toInput(f: FormState): Omit<ItemInput, "kind"> {
   }
 }
 
+/** A typed month ("2027-02", "2027-2", "02.2027", "02/2027") as the first day of that month ("2027-02-01"), or null. */
+export function parseMonth(raw: string): string | null {
+  const text = raw.trim()
+  const match = /^(\d{4})[-/.](\d{1,2})$/.exec(text) ?? /^(\d{1,2})[-/.](\d{4})$/.exec(text)
+  if (!match) return null
+  const [year, month] = match[1]!.length === 4 ? [match[1]!, match[2]!] : [match[2]!, match[1]!]
+  const m = Number(month)
+  return m >= 1 && m <= 12 ? `${year}-${String(m).padStart(2, "0")}-01` : null
+}
+
 const optionList = (options: unknown, key: string): string[] => {
   const list = (options as Record<string, unknown> | undefined)?.[key]
   return Array.isArray(list) ? (list as string[]) : []

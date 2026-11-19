@@ -196,14 +196,16 @@ export function EssayEditor({ essay }: { essay: Essay }) {
         onShare={() => setShareOpen(true)}
         commentsOpen={panel === "comments"}
       />
-      <Toolbar
-        words={words}
-        wordLimit={draft.word_limit}
-        onUndo={() => history("undo")}
-        onRedo={() => history("redo")}
-        onReview={() => openPanel("review")}
-        onTools={() => openPanel("tools")}
-      />
+      <div data-testid="editor-toolbar-bar" className="bg-background sticky top-[calc(var(--safe-top,0px)+4rem)] z-20">
+        <Toolbar
+          words={words}
+          wordLimit={draft.word_limit}
+          onUndo={() => history("undo")}
+          onRedo={() => history("redo")}
+          onReview={() => openPanel("review")}
+          onTools={() => openPanel("tools")}
+        />
+      </div>
       <div className="flex min-w-0 flex-1 items-start gap-4 p-3 md:p-4">
         <SidePanel
           side="left"
@@ -226,7 +228,7 @@ export function EssayEditor({ essay }: { essay: Essay }) {
           />
           <Paper
             title={draft.title}
-            prompt={draft.prompt_text}
+            prompt=""
             body={draft.body}
             readOnly={state === "conflict"}
             onBody={(next) => update({ body: next })}

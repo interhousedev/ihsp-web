@@ -29,7 +29,7 @@ export function SectionBottomBar({ items }: { items: BottomNavItem[] }) {
             aria-current={current ? "page" : undefined}
             data-active={current}
             className={cn(
-              "press focus-visible:ring-ring relative flex min-h-14 min-w-0 flex-1 flex-col items-center justify-center gap-0.5 rounded-full px-1 text-[11px] leading-tight font-medium outline-none focus-visible:ring-2",
+              "press focus-visible:ring-ring relative flex min-h-14 min-w-0 flex-1 flex-col items-center justify-center gap-0.5 rounded-full px-0.5 text-[10px] leading-tight font-medium outline-none focus-visible:ring-2",
               current ? "text-foreground" : "text-muted-foreground",
             )}
           >
@@ -41,7 +41,7 @@ export function SectionBottomBar({ items }: { items: BottomNavItem[] }) {
             >
               <NavIconView icon={item.icon} className="size-5" />
             </span>
-            <span className="max-w-full truncate">{item.title}</span>
+            <span className="max-w-full text-center break-words">{item.title}</span>
           </Link>
         )
       })}

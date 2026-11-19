@@ -1,7 +1,7 @@
 "use client"
 
 import { useLocale, useT } from "@ihsp/i18n"
-import { useMemo } from "react"
+import { useMemo, useRef } from "react"
 import { ChoiceCard, ChoiceCardGroup, Icons, Input, Pill, TagInput, Textarea } from "@ihsp/ui"
 import { useAdmissionConfig } from "../../../lib/config"
 import { configOptions } from "../../chooser/config-options"
@@ -12,6 +12,8 @@ type FieldProps = {
   question: Question
   value: AnswerValue | undefined
   onChange: (value: AnswerValue) => void
+  /** Reports whether a tag field holds typed text that is not a tag yet. */
+  onDraft?: (typed: boolean) => void
 }
 
 const LONG_TEXT = 120
@@ -21,7 +23,7 @@ function asStrings(value: AnswerValue | undefined): string[] {
 }
 
 /** Countries (ISO codes, named by the browser in the UI language) or study fields; the lists come from the backend. */
-function TagsField({ question, value, onChange, label }: FieldProps & { label: string }) {
+function TagsField({ question, value, onChange, onDraft, label }: FieldProps & { label: string }) {
   const t = useT("profile")
   const locale = useLocale()
   const config = useAdmissionConfig()
@@ -32,16 +34,49 @@ function TagsField({ question, value, onChange, label }: FieldProps & { label: s
     }
     return configOptions(config.data, "fields").map((name) => ({ value: name, label: name }))
   }, [question.kind, config.data, locale])
+  const draft = useRef("")
+  const tags = asStrings(value)
+  const max = question.max_choices ?? undefined
+
+  /** Leaving the field adds the typed text when it names exactly one option, as Enter would. */
+  function commitDraft() {
+    const text = draft.current.trim().toLowerCase()
+    draft.current = ""
+    onDraft?.(false)
+    if (!text || options.length === 0 || (max !== undefined && tags.length >= max)) return
+    const free = options.filter((option) => !tags.includes(option.value))
+    const found =
+      free.find((option) => option.label.toLowerCase() === text) ??
+      free.filter((option) => option.label.toLowerCase().includes(text))[0]
+    if (found) onChange([...tags, found.value])
+  }
+
   return (
-    <TagInput
-      aria-label={label}
-      value={asStrings(value)}
-      max={question.max_choices ?? undefined}
-      options={options.length > 0 ? options : undefined}
-      placeholder={t("tagPlaceholder")}
-      removeLabel={(tag) => t("removeTag", { tag })}
-      onChange={onChange}
-    />
+    <div
+      className="flex flex-col gap-1"
+      onInput={(event) => {
+        draft.current = (event.target as HTMLInputElement).value ?? ""
+        onDraft?.(draft.current.trim() !== "")
+      }}
+      onBlur={(event) => {
+        if (!event.currentTarget.contains(event.relatedTarget as Node | null)) commitDraft()
+      }}
+    >
+      <TagInput
+        aria-label={label}
+        value={tags}
+        max={max}
+        options={options.length > 0 ? options : undefined}
+        placeholder={t("tagPlaceholder")}
+        removeLabel={(tag) => t("removeTag", { tag })}
+        onChange={(next) => {
+          draft.current = ""
+          onDraft?.(false)
+          onChange(next)
+        }}
+      />
+      <span className="text-muted-foreground text-xs">{t("tagHint")}</span>
+    </div>
   )
 }
 
@@ -177,7 +212,7 @@ export function QuestionField(props: FieldProps) {
     }
     case "country":
     case "combobox":
-      return <TagsField question={question} value={value} onChange={onChange} label={label} />
+      return <TagsField {...props} label={label} />
     case "date":
       return (
         <Input

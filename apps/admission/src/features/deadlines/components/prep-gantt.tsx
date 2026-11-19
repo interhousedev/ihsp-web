@@ -131,16 +131,19 @@ export function PrepGantt() {
     return <p className="text-muted-foreground text-sm">{t("empty")}</p>
 
   const pct = (time: number) => ((time - model.start) / model.span) * 100
-  const weekLabel = new Intl.DateTimeFormat(locale, { day: "numeric", month: "short", timeZone: "UTC" })
-  const monthLabel = new Intl.DateTimeFormat(locale, { month: "long", year: "numeric", timeZone: "UTC" })
+  // The shared formatter owns the uz month names (plain Intl answers "M10" there).
+  const at = (time: number, options: Intl.DateTimeFormatOptions) =>
+    date(`${new Date(time).toISOString().slice(0, 10)}T12:00:00+05:00`, options)
+  const weekLabel = { format: (time: number) => at(time, { day: "numeric", month: "short" }) }
+  const monthLabel = { format: (time: number) => at(time, { month: "long", year: "numeric" }) }
   const months: { start: number; count: number; label: string }[] = []
   for (const week of model.weeks) {
     const key = new Date(week + 3 * 86_400_000)
     const last = months[months.length - 1]
-    if (last && monthLabel.format(last.start) === monthLabel.format(key)) last.count += 1
-    else months.push({ start: key.getTime(), count: 1, label: monthLabel.format(key) })
+    if (last && monthLabel.format(last.start) === monthLabel.format(key.getTime())) last.count += 1
+    else months.push({ start: key.getTime(), count: 1, label: monthLabel.format(key.getTime()) })
   }
-  const shortMonth = new Intl.DateTimeFormat(locale, { month: "short", timeZone: "UTC" })
+  const shortMonth = { format: (time: number) => at(time, { month: "short" }) }
   const inTrack = today >= model.start && today < model.start + model.span
   const taskBars = model.bars.filter((bar) => bar.kind === "task")
   const testBars = model.bars.filter((bar) => bar.kind === "test")

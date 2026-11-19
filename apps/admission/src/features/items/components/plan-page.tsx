@@ -7,11 +7,13 @@ import { AiTabCard } from "@/components/ai-tab-card"
 import Link from "next/link"
 import { useRouter, useSearchParams } from "next/navigation"
 import { useState, type FormEvent } from "react"
+import { toast } from "sonner"
 import { UnderlineTabs } from "../../../components/lib/underline-tabs"
 import { AdmissionShell } from "../../shell/components/admission-shell"
 import { useScreenContext } from "../../assistant/screen-context"
 import { PlanBody as OpportunityPlanBody } from "../../opportunities/components/plan-page"
 import { useItems } from "../api"
+import { parseMonth } from "./item-fields"
 import {
   MILESTONE_STATUSES,
   useCreateMilestone,
@@ -151,12 +153,15 @@ function MilestoneAdd({ items }: { items: { id: string; title: string }[] }) {
   const [month, setMonth] = useState("")
   const [itemId, setItemId] = useState("")
   const [target, setTarget] = useState("")
+  const monthValue = parseMonth(month)
+  const monthInvalid = month.trim() !== "" && monthValue === null
   const submit = (event: FormEvent) => {
     event.preventDefault()
+    if (monthInvalid) return
     create.mutate(
       {
         title: title.trim(),
-        due_month: month ? `${month}-01` : null,
+        due_month: monthValue,
         item_id: itemId || null,
         target_value: target.trim() && Number.isFinite(Number(target)) ? Number(target) : null,
       },
@@ -189,7 +194,15 @@ function MilestoneAdd({ items }: { items: { id: string; title: string }[] }) {
         </div>
         <div className="flex flex-col gap-1">
           <Label htmlFor="ms-month">{t("plan.month")}</Label>
-          <Input id="ms-month" type="month" value={month} onChange={(e) => setMonth(e.target.value)} />
+          <Input
+            id="ms-month"
+            placeholder="YYYY-MM"
+            inputMode="numeric"
+            aria-invalid={monthInvalid || undefined}
+            value={month}
+            onChange={(e) => setMonth(e.target.value)}
+          />
+          {monthInvalid ? <p className="text-destructive text-xs">{t("plan.monthInvalid")}</p> : null}
         </div>
         <div className="flex flex-col gap-1">
           <Label htmlFor="ms-item">{t("plan.item")}</Label>
@@ -213,7 +226,7 @@ function MilestoneAdd({ items }: { items: { id: string; title: string }[] }) {
           {errorMessage(create.error)}
         </p>
       ) : null}
-      <Button type="submit" className="self-start" disabled={!title.trim() || create.isPending}>
+      <Button type="submit" className="self-start" disabled={!title.trim() || monthInvalid || create.isPending}>
         {t("plan.add")}
       </Button>
     </form>
@@ -224,6 +237,8 @@ function MilestoneRow({ m, itemTitle }: { m: Milestone; itemTitle: string | null
   const t = useT("items")
   const patch = usePatchMilestone()
   const del = useDeleteMilestone()
+  const router = useRouter()
+  const addHref = `/activities/?item=new&from=${encodeURIComponent(m.id)}`
   return (
     <li className="border-hairline flex flex-col gap-2 rounded-card border p-3 animate-in fade-in">
       <div className="flex flex-wrap items-start justify-between gap-2">
@@ -251,11 +266,8 @@ function MilestoneRow({ m, itemTitle }: { m: Milestone; itemTitle: string | null
           {itemTitle}
         </Link>
       ) : null}
-      {m.status === "done" && m.item_id ? (
-        <Link
-          href={`/activities/?item=new&from=${encodeURIComponent(m.item_id)}`}
-          className={buttonVariants({ size: "sm", variant: "outline", className: "w-fit" })}
-        >
+      {m.status === "done" ? (
+        <Link href={addHref} className={buttonVariants({ size: "sm", variant: "outline", className: "w-fit" })}>
           {t("plan.addToAchievements")}
         </Link>
       ) : null}
@@ -268,7 +280,20 @@ function MilestoneRow({ m, itemTitle }: { m: Milestone; itemTitle: string | null
             variant={m.status === s ? "default" : "outline"}
             aria-pressed={m.status === s}
             disabled={patch.isPending}
-            onClick={() => m.status !== s && patch.mutate({ id: m.id, lock_version: m.lock_version, status: s })}
+            onClick={() =>
+              m.status !== s &&
+              patch.mutate(
+                { id: m.id, lock_version: m.lock_version, status: s },
+                {
+                  onSuccess: () => {
+                    if (s === "done")
+                      toast(t("plan.doneToast"), {
+                        action: { label: t("plan.addToAchievements"), onClick: () => router.push(addHref) },
+                      })
+                  },
+                },
+              )
+            }
           >
             {t(`plan.statuses.${s}`)}
           </Button>

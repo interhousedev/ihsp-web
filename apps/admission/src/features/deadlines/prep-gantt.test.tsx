@@ -79,3 +79,24 @@ describe("PrepGantt", () => {
     expect(screen.getAllByText(/^SAT · /).length).toBeGreaterThan(0)
   })
 })
+
+describe("PrepGantt in Uzbek", () => {
+  test("ADM-UZ-1: month and week labels never read M10 / M11", async () => {
+    const day = new Date(Date.now() + 10 * 86_400_000).toISOString().slice(0, 10)
+    server.use(
+      http.get(apiUrl("/v1/admission/tasks"), () =>
+        HttpResponse.json({
+          items: [{ id: "t1", title: "Task", status: "planned", start_date: null, deadline: day, overdue: false }],
+        }),
+      ),
+      http.get(apiUrl("/v1/admission/test-scores/catalog"), () => HttpResponse.json({ can_edit: false, items: [] })),
+      http.get(apiUrl("/v1/admission/test-scores"), () =>
+        HttpResponse.json({ can_verify: false, is_owner: true, summaries: [], entries: [] }),
+      ),
+      http.get(apiUrl("/v1/admission/calendar"), () => HttpResponse.json({ items: [] })),
+    )
+    const { container } = renderAdmissionApp(<PrepGantt />, { locale: "uz" })
+    await screen.findByRole("link", { name: /Task, / })
+    expect(container.textContent).not.toMatch(/\bM\d{1,2}\b/)
+  })
+})

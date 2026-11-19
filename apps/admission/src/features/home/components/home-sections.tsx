@@ -59,10 +59,14 @@ export function SectionCards() {
                 <Icon aria-hidden className="size-4" />
               </span>
               <span className="flex min-w-0 flex-1 flex-col gap-0.5">
-                <span className="text-sm font-semibold">{t(`${key}.title`)}</span>
-                <span className="text-muted-foreground text-xs">{statuses[key] ?? t("status.loading")}</span>
+                <span className="text-sm font-semibold break-words hyphens-auto">{t(`${key}.title`)}</span>
+                <span className="text-muted-foreground text-xs break-words">
+                  {statuses[key] ?? t("status.loading")}
+                </span>
               </span>
-              <Icons.arrowRight aria-hidden className="text-muted-foreground mt-1 size-4 shrink-0" />
+              <span className="mt-1 flex w-6 shrink-0 justify-end">
+                <Icons.arrowRight aria-hidden className="text-muted-foreground size-4" />
+              </span>
             </Link>
           </li>
         ))}

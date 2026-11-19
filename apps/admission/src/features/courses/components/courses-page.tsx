@@ -42,7 +42,7 @@ function CourseRow({ course }: { course: Course }) {
   return (
     <li className="flex items-center justify-between gap-3 rounded-card border p-3">
       <div className="min-w-0">
-        <p className="truncate font-medium">{course.title}</p>
+        <p className="line-clamp-2 break-words font-medium">{course.title}</p>
         {meta.length > 0 ? <p className="text-muted-foreground truncate text-sm">{meta.join(" · ")}</p> : null}
       </div>
       <div className="flex shrink-0 items-center gap-2">

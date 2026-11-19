@@ -36,17 +36,17 @@ function DetailsTab({ config, profile }: { config: AdmissionConfig; profile: Pro
             return (
               <li
                 key={section}
-                className="bg-card border-hairline rounded-card flex items-center justify-between gap-4 border p-5"
+                className="bg-card border-hairline rounded-card flex flex-wrap items-center justify-between gap-x-4 gap-y-3 border p-5"
               >
                 <div className="flex min-w-0 flex-col gap-1">
                   <h3 className="font-semibold">{text.section(section)}</h3>
-                  <p className="text-muted-foreground text-sm tabular-nums">
+                  <p className="text-muted-foreground text-sm whitespace-nowrap tabular-nums">
                     {t("storyAnswered", { done, total: own.length })}
                   </p>
                 </div>
                 <Link
                   href={`/setup/?q=${first?.id ?? ""}`}
-                  className={buttonVariants({ variant: "outline", size: "sm" })}
+                  className={`${buttonVariants({ variant: "outline", size: "sm" })} shrink-0`}
                 >
                   {done === own.length ? t("review") : t("continue")}
                 </Link>

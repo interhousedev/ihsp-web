@@ -31,18 +31,21 @@ describe("start here card", () => {
     show()
     expect(await screen.findByText("Start here")).toBeTruthy()
     const href = (name: string) => screen.getByRole("link", { name: new RegExp(name) }).getAttribute("href")
-    expect(href("Take the career quiz")).toBe("/career")
+    expect(href("Take the career quiz")).toBe("/career?tab=explore")
     expect(href("Explore opportunities")).toBe("/opportunities")
     expect(href("Browse courses")).toBe("/courses")
     expect(href("How applying works")).toBe("/faq")
     expect(href("Follow the journey")).toBe("/#journey")
   })
 
-  test("pathway: the quiz suggestion links to the explore tab of the career page", async () => {
+  test("ADM-HOME-1: the quiz is one tile linking to the explore tab, with no duplicate row", async () => {
     serve([], 0)
     show()
-    const link = await screen.findByRole("link", { name: /Take the 10-minute quiz/ })
-    expect(link.getAttribute("href")).toBe("/career?tab=explore")
+    await screen.findByText("Start here")
+    const links = screen.getAllByRole("link").filter((l) => l.getAttribute("href") === "/career?tab=explore")
+    expect(links.length).toBe(1)
+    expect(screen.queryByText(/Take the 10-minute quiz/)).toBeNull()
+    expect(screen.getByRole("list").className).toContain("grid-cols-2")
   })
 
   test("ADM-UNDEC-3: hidden when a list item exists", async () => {

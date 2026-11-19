@@ -7,6 +7,7 @@ import type { StepValue } from "../../components/stepper"
 import { fetchQuiz, putQuiz, quizKey, type QuizAnswers } from "../profile/details-api"
 import { careerMajorsQuery, pick } from "../career/api"
 import { useFacets } from "../chooser/hooks"
+import { countryName } from "../chooser/components/option-label"
 import { preferencesKey, preferencesQuery, putPreferences } from "./api"
 import { answerToPayload, mergeValues } from "./mapping"
 import { firstUnanswered } from "../../components/stepper"
@@ -28,10 +29,7 @@ export function useAlgorithm() {
         .filter((major) => major.active)
         .map((major) => ({ value: major.code, label: pick(major.name, locale) })),
       regions: facets?.countries ?? [],
-      regionName: (region) =>
-        /^[a-z]{2}$/i.test(region)
-          ? (new Intl.DisplayNames([locale], { type: "region" }).of(region.toUpperCase()) ?? region)
-          : region,
+      regionName: (region) => countryName(region, locale),
     }),
     [majors.data, facets, locale],
   )

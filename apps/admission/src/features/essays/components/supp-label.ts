@@ -12,7 +12,7 @@ export function useEssayLabel() {
   const college = (entryId?: string | null) => list.data?.find((e) => e.id === entryId)?.institution.name
   const label = (e: Labelled) => {
     const name = e.kind === "supplemental" ? college(e.list_entry_id) : undefined
-    return name ? t("supp.title", { college: name }) : e.title || t("untitled")
+    return e.title || (name ? t("supp.title", { college: name }) : t("untitled"))
   }
   return { label, college }
 }

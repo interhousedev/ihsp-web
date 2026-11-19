@@ -2,12 +2,13 @@
 
 import { useT } from "@ihsp/i18n"
 import { Button, cn, Icons } from "@ihsp/ui"
+import { TOUR_DISMISSED_ID, usePreferences, useUpdatePreferences } from "@ihsp/features-core"
 import { usePathname, useRouter } from "next/navigation"
-import { useEffect, useRef, type CSSProperties } from "react"
+import { useCallback, useEffect, useRef, useState, type CSSProperties } from "react"
 import { useDrag } from "../hooks/use-drag"
 import { usePhone } from "../hooks/use-phone"
 import { useTargetRect } from "../hooks/use-target-rect"
-import { useTour } from "../hooks/use-tour"
+import { useTour, useTourReplay } from "../hooks/use-tour"
 import { TOUR_STOPS, tourReducers, type TourPoint, type TourState } from "../tour-state"
 
 const withSlash = (path: string | null) => (path?.endsWith("/") ? path : `${path ?? ""}/`)
@@ -56,6 +57,31 @@ export function TourGuide({ storageKey }: { storageKey: string }) {
   const step = state?.step ?? 0
   const stop = TOUR_STOPS[step]
 
+  const preferences = usePreferences()
+  const updatePreferences = useUpdatePreferences()
+  const dismissed = preferences?.onboarding_dismissed?.includes(TOUR_DISMISSED_ID) ?? false
+  const [replay, setReplay] = useState(false)
+  useTourReplay(
+    useCallback(() => {
+      setReplay(true)
+      update(tourReducers.start)
+    }, [update]),
+  )
+  // Skip, close and the last Next end the tour here: it is hidden at once and the id is written to the server.
+  useEffect(() => {
+    if (status !== "done") return
+    setReplay(false)
+    if (preferences && !dismissed)
+      updatePreferences.mutate({
+        onboarding_dismissed: [...new Set([...(preferences.onboarding_dismissed ?? []), TOUR_DISMISSED_ID])],
+      })
+    // oxlint-disable-next-line react-hooks/exhaustive-deps
+  }, [status])
+  // A tour already dismissed on the server never reopens from a stale local state (other device, cleared cache).
+  useEffect(() => {
+    if (dismissed && !replay && status && status !== "done") update(tourReducers.finish)
+  }, [dismissed, replay, status, update])
+
   // The tour only opens a page on the student's own Start/Next/Back; it never redirects. `pending` is the page the tour
   // itself just asked for. Landing on the next stop by hand completes that step; any other page minimizes the tour.
   const pending = useRef<string | null>(null)
@@ -80,7 +106,14 @@ export function TourGuide({ storageKey }: { storageKey: string }) {
     update(change)
   }
 
-  if (!state || state.status === "done") return null
+  // The server preference is the truth; the saved state is only this device's cache of the step and positions.
+  // The welcome card appears on Home only, so no other page is covered by a first-run prompt.
+  const home = withSlash(pathname) === "/"
+  const visible =
+    state !== null &&
+    preferences !== null &&
+    (replay || (!dismissed && state.status !== "done" && (state.status !== "intro" || home)))
+  if (!state || !visible) return null
   const last = step === TOUR_STOPS.length - 1
   const stepText = t("step", { current: step + 1, total: TOUR_STOPS.length })
 
@@ -118,8 +151,8 @@ export function TourGuide({ storageKey }: { storageKey: string }) {
           aria-label={t("label")}
           style={placed(state.card ?? (state.dot ? { x: state.dot.x, y: state.dot.y + 52 } : null), phone)}
           className={cn(
-            "bg-card text-card-foreground pointer-events-auto fixed flex flex-col gap-3 rounded-card border p-4 shadow-xl",
-            "max-h-[60dvh] overflow-y-auto inset-x-2 bottom-[calc(var(--bottom-nav-height,4.5rem)+var(--safe-bottom,0px)+0.5rem)]",
+            "bg-card text-card-foreground rounded-card pointer-events-auto fixed flex flex-col gap-2 border p-3 shadow-xl md:gap-3 md:p-4",
+            "max-h-[40dvh] overflow-y-auto inset-x-2 bottom-[calc(var(--bottom-nav-height,4.5rem)+var(--safe-bottom,0px)+0.5rem)] md:max-h-[60dvh]",
             "md:inset-x-auto md:top-auto md:right-4 md:bottom-4 md:left-auto md:w-80",
           )}
         >

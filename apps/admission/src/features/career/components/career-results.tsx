@@ -6,6 +6,7 @@ import { Button, Icons } from "@ihsp/ui"
 import Link from "next/link"
 import { useState } from "react"
 import { pick, type CareerMajor, type CareerPlan } from "../api"
+import { listLabels } from "../list-labels"
 import type { Recommendation } from "../quiz"
 
 /** The recommended majors: cards with a reason, "Add to profile", the explanation, redo and the colleges banner. */
@@ -35,6 +36,8 @@ export function CareerResults({
   // Answers that voted for fewer of the shown majors say more about this one: cite those first.
   const shared = (answer: readonly [string, string]) =>
     recommendations.filter((r) => r.because.some(([q, o]) => q === answer[0] && o === answer[1])).length
+  const focus = plan.study_focus?.labels ?? []
+  const activityFields = listLabels(focus.length > 0 ? focus : plan.majors.map(name), locale)
   const picks = (r: Recommendation) =>
     [...r.because]
       .sort((x, y) => shared(x) - shared(y))
@@ -103,7 +106,13 @@ export function CareerResults({
       {banner && (
         <aside className="bg-accent rounded-card flex flex-col gap-3 p-4 sm:flex-row sm:items-center sm:justify-between">
           <p className="font-semibold">{t("bannerTitle")}</p>
-          <div className="flex items-center gap-2">
+          <div className="flex flex-wrap items-center gap-2">
+            {plan.majors.length + focus.length > 0 && (
+              <Link href="/opportunities/" className="inline-flex min-h-11 items-center gap-2 font-medium underline">
+                {t("bannerActivities", { fields: activityFields })}
+                <Icons.arrowRight aria-hidden className="size-4" />
+              </Link>
+            )}
             <Link href="/colleges/discover" className="inline-flex min-h-11 items-center gap-2 font-medium underline">
               {t("bannerLink")}
               <Icons.arrowRight aria-hidden className="size-4" />

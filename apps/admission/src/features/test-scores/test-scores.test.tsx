@@ -84,6 +84,40 @@ function common(data: ScoreOverview) {
   )
 }
 
+describe("sat english evidence", () => {
+  test("ADM-TESTS-SAT: a sat_erw catalog entry is offered with its 200-800 range", async () => {
+    server.use(
+      http.get(apiUrl(`${BASE}/catalog`), () =>
+        HttpResponse.json({
+          ...catalog,
+          items: [
+            ...catalog.items,
+            {
+              ...catalog.items[0],
+              id: "t-erw",
+              key: "sat_erw",
+              names: { en: "SAT English", ru: "SAT English", uz: "SAT English" },
+              sections: [],
+              total: part("erw", "Reading and Writing", 200, 800, 10),
+              total_mode: "manual",
+              superscore: false,
+            },
+          ],
+        }),
+      ),
+      http.get(apiUrl(BASE), () => HttpResponse.json(overview())),
+    )
+    renderAdmissionApp(<TestsBody />)
+    fireEvent.click(await screen.findByRole("button", { name: /Add result/ }))
+    const select = (await screen.findByLabelText("Test")) as HTMLSelectElement
+    expect([...select.options].some((o) => o.textContent === "SAT English")).toBe(true)
+    fireEvent.change(select, { target: { value: "t-erw" } })
+    const total = (await screen.findByLabelText("Reading and Writing")) as HTMLInputElement
+    expect(total.min).toBe("200")
+    expect(total.max).toBe("800")
+  })
+})
+
 describe("test scores", () => {
   test("the form follows the chosen test and sends validated sections", async () => {
     let body: unknown

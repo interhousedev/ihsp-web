@@ -87,8 +87,10 @@ describe("catalog categories and relevance", () => {
     renderAdmissionApp(<CatalogBody />, { route: "/opportunities/?kind=program" })
     expect(await screen.findByText("Summer CS")).toBeTruthy()
     expect(queries.every((q) => q.get("kind") === "program")).toBe(true)
-    // The strip of the three pages and the category strip each have one selected tab.
-    expect(screen.getAllByRole("tab").filter((tab) => tab.getAttribute("aria-selected") === "true")).toHaveLength(2)
+    // ADM-IDEAS-1: one kind row only, one selected tab, and no scholarships/exam kinds.
+    expect(screen.getAllByRole("tab").filter((tab) => tab.getAttribute("aria-selected") === "true")).toHaveLength(1)
+    expect(screen.getAllByRole("tab")).toHaveLength(6)
+    expect(screen.getByRole("link", { name: "Scholarships" }).getAttribute("href")).toBe("/opportunities/scholarships")
   })
 
   test("choosing a category writes ?kind=", async () => {
@@ -96,9 +98,20 @@ describe("catalog categories and relevance", () => {
     renderAdmissionApp(<CatalogBody />, { route: "/opportunities/" })
     await screen.findByText("Summer CS")
     const tabs = screen.getAllByRole("tab")
-    // 3 page tabs, then all, course, certification, research, event, ...
-    fireEvent.click(tabs[3 + 4]!)
+    // ADM-IDEAS-2: all, course, certification, research, event, program
+    fireEvent.click(tabs[4]!)
     await waitFor(() => expect(testRouter.replace).toHaveBeenCalledWith("/opportunities/?kind=event"))
+  })
+
+  test("ADM-IDEAS-3: filters sit behind a Filters button on phones and Change stays with its text", async () => {
+    mockCatalog("relevance")
+    renderAdmissionApp(<CatalogBody />, { route: "/opportunities/" })
+    await screen.findByText("Summer CS")
+    const toggle = screen.getAllByRole("button", { name: "Filters" })[0]!
+    expect(toggle.getAttribute("aria-expanded")).toBe("false")
+    fireEvent.click(toggle)
+    expect(toggle.getAttribute("aria-expanded")).toBe("true")
+    expect(screen.getByRole("link", { name: "Change" }).parentElement?.className).toContain("whitespace-nowrap")
   })
 
   test("relevance order shows the student's fields and a link to change them; for-you items get a badge", async () => {

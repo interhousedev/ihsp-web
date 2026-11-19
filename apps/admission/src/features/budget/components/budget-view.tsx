@@ -3,6 +3,7 @@
 import { useT } from "@ihsp/i18n"
 import { buttonVariants, StateView } from "@ihsp/ui"
 import Link from "next/link"
+import { CSS_PROFILE_URL } from "../types"
 import { useBudget } from "../hooks"
 import { AttendCosts } from "./attend-costs"
 import { BudgetTotals } from "./budget-totals"
@@ -27,6 +28,8 @@ export function BudgetView() {
         }
       />
     )
+  const unknown = totals.unknown_fee_count > 0 || rows.some((row) => !row.aid_forms_known)
+  const css = rows.some((row) => row.aid_forms.includes("css_profile"))
   return (
     <div className="flex min-w-0 flex-col gap-6">
       <section aria-label={t("apply.title")} className="flex flex-col gap-3">
@@ -38,6 +41,23 @@ export function BudgetView() {
         </ul>
       </section>
       <BudgetTotals totals={totals} />
+      {unknown ? (
+        <section aria-label={t("check.title")} className="flex flex-col gap-1 text-sm">
+          <h2 className="text-base font-semibold">{t("check.title")}</h2>
+          {css ? (
+            <a
+              href={CSS_PROFILE_URL}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="underline underline-offset-2"
+            >
+              {t("check.css")}
+            </a>
+          ) : (
+            <p className="text-muted-foreground">{t("check.generic")}</p>
+          )}
+        </section>
+      ) : null}
       <AttendCosts rows={rows} />
       <div>
         <Link href="/essays/?tab=colleges" className={buttonVariants()}>

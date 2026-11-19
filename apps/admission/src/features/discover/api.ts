@@ -26,8 +26,10 @@ export function getChances(id: string, signal?: AbortSignal) {
   return getApiClient().get<AdmissionChances>(`${BASE}/universities/${encodeURIComponent(id)}/chances`, { signal })
 }
 
-export function openUniChat(institutionId: string) {
-  return getApiClient().post<AdmissionUniChat>(`${BASE}/uni-chats/${encodeURIComponent(institutionId)}`)
+export function openUniChat(institutionId: string, locale: string) {
+  return getApiClient().post<AdmissionUniChat>(`${BASE}/uni-chats/${encodeURIComponent(institutionId)}`, undefined, {
+    headers: { "Accept-Language": locale },
+  })
 }
 
 /** The suggestion chips come in `locale` (the backend reads Accept-Language). */

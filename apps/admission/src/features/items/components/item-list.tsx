@@ -9,6 +9,7 @@ import { NextStep } from "../../../components/next-step"
 import { AdmissionShell } from "../../shell/components/admission-shell"
 import { useAdmissionConfig } from "../../../lib/config"
 import { useDeleteItem, useItems, type Item, type ItemKind, type ItemStatus } from "../api"
+import { useGoalPlan } from "../goal-plan"
 import { EmptySuggestions } from "./empty-suggestions"
 import { EditItemDialog } from "./edit-item-dialog"
 import { ItemAnalytics } from "./item-analytics"
@@ -39,7 +40,9 @@ export function ItemList() {
   const fromParam = params.get("from")
   const seen = useRef(new Set<string>())
   const editing = itemParam && itemParam !== "new" ? items.data?.find((i) => i.id === itemParam) : undefined
-  const planned = fromParam ? items.data?.find((i) => i.id === fromParam) : undefined
+  const goalPlan = useGoalPlan()
+  const milestone = fromParam ? goalPlan.data?.items.find((m) => m.id === fromParam) : undefined
+  const planned = fromParam ? items.data?.find((i) => i.id === (milestone?.item_id ?? fromParam)) : undefined
   /** Rewrites the query string; opening pushes a history entry so Back closes the popup, closing replaces it. */
   const setParams = (change: (next: URLSearchParams) => void, push = false) => {
     const next = new URLSearchParams(params.toString())
@@ -59,7 +62,7 @@ export function ItemList() {
   const unknown = Boolean(
     itemParam && itemParam !== "new" && items.isSuccess && !editing && !seen.current.has(itemParam),
   )
-  const creating = itemParam === "new" && (!fromParam || items.isSuccess)
+  const creating = itemParam === "new" && (!fromParam || (items.isSuccess && !goalPlan.isPending))
   useEffect(() => {
     if (!unknown) return
     toast.error(t("notFound"))
@@ -147,14 +150,15 @@ export function ItemList() {
           key={fromParam ?? "new"}
           kind={planned && planned.kind === "honor" ? "honor" : kind}
           open
-          initial={planned ? { ...toForm(planned), status: "draft" } : emptyForm}
-          onOpenChange={(open) => !open && closeItem()}
-          onCreated={(id) =>
-            setParams((next) => {
-              next.set("item", id)
-              next.delete("from")
-            })
+          initial={
+            planned
+              ? { ...toForm(planned), status: "draft", ...(milestone ? { title: milestone.title } : {}) }
+              : milestone
+                ? { ...emptyForm, title: milestone.title }
+                : emptyForm
           }
+          onOpenChange={(open) => !open && closeItem()}
+          onCreated={closeItem}
         />
       ) : null}
       {editing ? <EditItemDialog key={editing.id} item={editing} onClose={closeItem} /> : null}

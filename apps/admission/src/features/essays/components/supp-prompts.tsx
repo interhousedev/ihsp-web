@@ -1,8 +1,10 @@
 "use client"
 
 import { useErrorMessage, useT } from "@ihsp/i18n"
-import { Badge, Button, Skeleton } from "@ihsp/ui"
+import { Badge, Button, buttonVariants, Label, Skeleton, Textarea } from "@ihsp/ui"
+import Link from "next/link"
 import { useRouter } from "next/navigation"
+import { useState } from "react"
 import { toast } from "sonner"
 import { useCreateEssay, useSuppPrompts, type SuppCycle } from "../api"
 import { Diff } from "./versions-panel"
@@ -19,29 +21,30 @@ export function SuppPrompts({
   institutionId,
   listEntryId,
   college,
+  websiteUrl,
 }: {
   institutionId: string
   listEntryId: string
   college: string
+  websiteUrl?: string | null
 }) {
   const t = useT("essays")
   const errorMessage = useErrorMessage()
   const router = useRouter()
   const query = useSuppPrompts(institutionId)
   const create = useCreateEssay()
+  const [own, setOwn] = useState(false)
+  const [custom, setCustom] = useState("")
   if (query.isPending) return <Skeleton className="h-16 w-full" />
   if (query.isError) return <p className="text-destructive text-sm">{errorMessage(query.error)}</p>
   const current = query.data[0]
-  if (!current) return <p className="text-muted-foreground text-sm">{t("supp.none")}</p>
-  const active = current.prompts.filter((p) => p.status !== "removed")
-  const hasPrevious = query.data.length > 1
-  const start = (p: Prompt) =>
+  const start = (promptText: string, wordLimit: number | null) =>
     create.mutate(
       {
         kind: "supplemental",
         title: t("supp.title", { college }),
-        prompt_text: p.prompt,
-        word_limit: p.word_limit ?? null,
+        prompt_text: promptText,
+        word_limit: wordLimit,
         list_entry_id: listEntryId,
       },
       {
@@ -49,6 +52,59 @@ export function SuppPrompts({
         onError: (error) => toast.error(errorMessage(error)),
       },
     )
+  const active = current ? current.prompts.filter((p) => p.status !== "removed") : []
+  if (!current || active.length === 0) {
+    const promptSource = query.data.flatMap((cycle) => cycle.prompts).find((p) => p.source_url)?.source_url
+    const official = promptSource ?? websiteUrl
+    return (
+      <div className="flex flex-col gap-3 text-sm">
+        <p className="text-muted-foreground">{t("supp.none")}</p>
+        <div className="flex flex-wrap gap-2">
+          {official ? (
+            <a
+              href={official}
+              target="_blank"
+              rel="noreferrer"
+              className={buttonVariants({ variant: "outline", size: "sm" })}
+            >
+              {t("supp.officialPage")}
+            </a>
+          ) : (
+            <Link
+              href={`/chooser/institution/?id=${encodeURIComponent(institutionId)}`}
+              className={buttonVariants({ variant: "outline", size: "sm" })}
+            >
+              {t("supp.openCollege")}
+            </Link>
+          )}
+          <Button type="button" size="sm" variant="outline" aria-expanded={own} onClick={() => setOwn((v) => !v)}>
+            {t("supp.addOwn")}
+          </Button>
+        </div>
+        {own ? (
+          <div className="flex flex-col gap-2">
+            <Label htmlFor={`supp-own-${listEntryId}`}>{t("supp.customPrompt")}</Label>
+            <Textarea
+              id={`supp-own-${listEntryId}`}
+              rows={3}
+              value={custom}
+              onChange={(e) => setCustom(e.target.value)}
+            />
+            <Button
+              type="button"
+              size="sm"
+              className="self-start"
+              disabled={create.isPending || !custom.trim()}
+              onClick={() => start(custom.trim(), null)}
+            >
+              {t("supp.start")}
+            </Button>
+          </div>
+        ) : null}
+      </div>
+    )
+  }
+  const hasPrevious = query.data.length > 1
   return (
     <div className="flex flex-col gap-4 text-sm">
       <section className="flex flex-col gap-2">
@@ -79,7 +135,7 @@ export function SuppPrompts({
                 variant="outline"
                 className="self-start"
                 disabled={create.isPending}
-                onClick={() => start(p)}
+                onClick={() => start(p.prompt, p.word_limit ?? null)}
               >
                 {t("supp.start")}
               </Button>

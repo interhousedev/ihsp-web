@@ -1,5 +1,6 @@
 "use client"
 
+import { isApiError } from "@ihsp/api"
 import { todayIso, useErrorMessage, useLocale, useT } from "@ihsp/i18n"
 import { Alert, AlertDescription, cn, Icons, Pill, Reveal, SortableList, StateView, Textarea, Button } from "@ihsp/ui"
 import { useQuery } from "@tanstack/react-query"
@@ -23,13 +24,41 @@ import { InstitutionCombobox } from "./institution-combobox"
 import { FieldFocus } from "./field-focus"
 import { useOptionLabel } from "./option-label"
 
-/** The earliest deadline that is not past, with its plan and a "binding" marker. */
-export function NextDeadline({ deadlines }: { deadlines: Deadline[] }) {
+/**
+ * The deadline of the entry's chosen round: the next dated one, else the latest past one. A round without a dated
+ * deadline says so and points to the official site when the catalog has one.
+ */
+export function NextDeadline({
+  deadlines,
+  round,
+  officialUrl = null,
+}: {
+  deadlines: Deadline[]
+  round: string
+  officialUrl?: string | null
+}) {
   const t = useT("chooser")
   const locale = useLocale()
+  const roundLabel = useOptionLabel("round")
   const today = todayIso(useNow(60_000))
-  const next = deadlines.filter((item) => item.date >= today).toSorted((a, b) => a.date.localeCompare(b.date))[0]
-  if (!next) return <p className="text-muted-foreground mt-0.5 text-xs">{t("list.noDeadline")}</p>
+  const dated = deadlines.filter((item) => item.plan === round).toSorted((a, b) => a.date.localeCompare(b.date))
+  const next = dated.find((item) => item.date >= today) ?? dated.at(-1)
+  if (!next)
+    return (
+      <p className="text-muted-foreground mt-0.5 flex flex-wrap items-center gap-x-1.5 text-xs">
+        <span>{t("list.deadlineMissing", { round: roundLabel(round) })}</span>
+        {officialUrl ? (
+          <a
+            href={officialUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-primary underline-offset-2 hover:underline"
+          >
+            {t("list.officialSite")}
+          </a>
+        ) : null}
+      </p>
+    )
   const date = new Intl.DateTimeFormat(locale, {
     day: "numeric",
     month: "short",
@@ -99,6 +128,13 @@ function AddSchoolRow() {
   )
 }
 
+const FEE_TONE = {
+  unpaid: "neutral",
+  paid: "success",
+  waiver_requested: "warning",
+  waiver_approved: "success",
+} as const
+
 const SELECT =
   "border-input bg-background h-11 rounded-lg border px-2 text-sm md:h-8 focus-visible:ring-[3px] focus-visible:ring-ring/50 focus-visible:outline-none"
 
@@ -125,6 +161,7 @@ function EntryRow({ entry }: { entry: ListEntry }) {
   const change = (body: { bucket?: Bucket; round?: Round; notes?: string }) =>
     patch.mutate({ id: entry.id, body: { lock_version: entry.lock_version, ...body } })
   const error = patch.error ?? remove.error
+  const gate = isApiError(error) && error.type === "admission/affordability_gate" ? error : null
 
   return (
     <div className="flex flex-col gap-3 py-1">
@@ -147,7 +184,14 @@ function EntryRow({ entry }: { entry: ListEntry }) {
             <p className="text-muted-foreground text-xs">
               {[entry.institution.city, countryLabel(entry.institution.country)].filter(Boolean).join(", ")}
             </p>
-            <NextDeadline deadlines={entry.institution.deadlines} />
+            <NextDeadline
+              deadlines={entry.institution.deadlines}
+              round={entry.round}
+              officialUrl={entry.institution.sources.find((source) => source.url)?.url ?? null}
+            />
+            <Pill tone={FEE_TONE[entry.fee_status]} className="mt-1 h-6 w-fit px-2 text-xs">
+              {t(`list.fee.${entry.fee_status}`)}
+            </Pill>
             <ConflictBadges entry={entry} />
             <nav
               aria-label={t("list.links.label", { name: entry.institution.name })}
@@ -228,7 +272,14 @@ function EntryRow({ entry }: { entry: ListEntry }) {
           <AffordabilityPanel entry={entry} />
         </Reveal>
       ) : null}
-      {error ? (
+      {gate ? (
+        <div role="alert" className="text-destructive flex flex-wrap items-center gap-2 text-xs">
+          <span>{t("list.gate", { institution: String(gate.params.institution ?? entry.institution.name) })}</span>
+          <Button type="button" variant="outline" size="sm" onClick={() => setOpen(true)}>
+            {t("afford.check")}
+          </Button>
+        </div>
+      ) : error ? (
         <p role="alert" className="text-destructive text-xs">
           {errorMessage(error)}
         </p>

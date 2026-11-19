@@ -1,5 +1,5 @@
 /** Setup wizard conditional visibility, the words suggest flow and the safeguarding report. */
-import { describe, expect, it, mock } from "bun:test"
+import { describe, expect, it } from "bun:test"
 import { apiUrl, server, setTestRoute } from "@ihsp/test-utils"
 import { screen, waitFor } from "@testing-library/react"
 import userEvent from "@testing-library/user-event"
@@ -11,18 +11,13 @@ import { renderAdmissionApp } from "./helpers"
 // Without `animate`, motion falls back to its JS animations.
 Object.defineProperty(window.Element.prototype, "animate", { value: undefined, configurable: true })
 
-// The shell (nav, consent gate) is covered by shell.test.tsx; these tests look at the pages only.
-mock.module("../features/shell/components/admission-shell", () => ({
-  AdmissionShell: ({ children }: { children: unknown }) => children,
-}))
-
 const { AlignmentPage } = await import("../features/alignment/components/alignment-page")
 const { SetupWizard } = await import("../features/profile/components/setup-wizard")
 const { WordsPage } = await import("../features/words/components/words-page")
 
 const config = wizardConfig([
   question({ id: "q01", required: true }),
-  question({ id: "q38", section: "goals", kind: "switch", visible_if: "account_kind=alumni" }),
+  question({ id: "q38", section: "school", kind: "switch", visible_if: "account_kind=alumni" }),
 ])
 
 describe("setup wizard", () => {
@@ -56,6 +51,38 @@ describe("setup wizard moved questions", () => {
     renderAdmissionApp(<SetupWizard />)
     expect(await screen.findByText("Step 1 of 1")).toBeInTheDocument()
     expect(screen.getByText("Only some universities accept SAT English as proof of English")).toBeInTheDocument()
+  })
+})
+
+describe("setup wizard scope (ADM-SETUP-2, ADM-SETUP-3)", () => {
+  it("covers only About, School and Exams", async () => {
+    setTestRoute("/setup/")
+    useSetupHandlers(
+      wizardConfig([
+        question({ id: "q01", required: true }),
+        question({ id: "q08", section: "school", required: true }),
+        question({ id: "q14", section: "tests", required: true }),
+        question({ id: "q20", section: "goals", required: true }),
+        question({ id: "q29", section: "where", required: true }),
+        question({ id: "q30", section: "money", required: true }),
+      ]),
+      profile({ next_question: "q01" }),
+    )
+    renderAdmissionApp(<SetupWizard />)
+    expect(await screen.findByText("Step 1 of 3")).toBeInTheDocument()
+  })
+
+  it("shows the tag hint and enables Next once text is typed in the citizenship field", async () => {
+    setTestRoute("/setup/")
+    useSetupHandlers(
+      wizardConfig([question({ id: "q04", kind: "country", required: true })]),
+      profile({ next_question: "q04" }),
+    )
+    renderAdmissionApp(<SetupWizard />)
+    const input = await screen.findByRole("textbox")
+    expect(screen.getByRole("button", { name: "Next" })).toBeDisabled()
+    await userEvent.type(input, "Uz")
+    expect(screen.getByRole("button", { name: "Next" })).toBeEnabled()
   })
 })
 

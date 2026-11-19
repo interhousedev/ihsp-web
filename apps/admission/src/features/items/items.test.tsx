@@ -461,7 +461,7 @@ describe("pathway links", () => {
     )
     renderAdmissionApp(<PlanBody />, { messages: { items: { plan: { addToAchievements: "Add to achievements" } } } })
     const link = await screen.findByRole("link", { name: "Add to achievements" })
-    expect(link.getAttribute("href")).toBe("/activities?item=new&from=a")
+    expect(link.getAttribute("href")).toBe("/activities?item=new&from=m1")
   })
 })
 

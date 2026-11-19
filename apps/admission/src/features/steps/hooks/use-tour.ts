@@ -2,6 +2,20 @@ import { useCallback, useEffect, useState } from "react"
 import { INITIAL_TOUR, loadTour, saveTour, type TourState } from "../tour-state"
 
 const TOUR_EVENT = "admission:tour"
+const REPLAY_EVENT = "admission:tour-replay"
+
+/** Opens the student tour again (the Help "Take the tour" button); the mounted `TourGuide` listens. */
+export function replayStudentTour(): void {
+  window.dispatchEvent(new Event(REPLAY_EVENT))
+}
+
+/** Calls `onReplay` whenever `replayStudentTour` is fired. */
+export function useTourReplay(onReplay: () => void) {
+  useEffect(() => {
+    window.addEventListener(REPLAY_EVENT, onReplay)
+    return () => window.removeEventListener(REPLAY_EVENT, onReplay)
+  }, [onReplay])
+}
 
 /** True while the welcome card or a tour stop is on screen; follows `useTour` updates in the same tab. */
 export function useTourOpen(key: string) {

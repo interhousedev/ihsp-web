@@ -167,18 +167,18 @@ export function ActivityWizard({
       ) : null}
       <div className="flex justify-between gap-2">
         {step > 1 ? (
-          <Button type="button" variant="outline" onClick={() => go(step - 1)}>
+          <Button key="back" type="button" variant="outline" onClick={() => go(step - 1)}>
             {t("wizard.back")}
           </Button>
         ) : (
           <span />
         )}
         {step < STEPS ? (
-          <Button type="button" disabled={!canNext} onClick={() => go(step + 1)}>
+          <Button key="next" type="button" disabled={!canNext} onClick={() => go(step + 1)}>
             {t("wizard.next")}
           </Button>
         ) : (
-          <Button type="submit" disabled={!canNext}>
+          <Button key="create" type="submit" disabled={!canNext}>
             {t("new.create")}
           </Button>
         )}

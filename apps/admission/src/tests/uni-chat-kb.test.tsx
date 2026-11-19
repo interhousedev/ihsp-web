@@ -224,4 +224,27 @@ describe("knowledge base", () => {
       }),
     )
   })
+
+  test("a 422 on Save keeps the dialog open with the error and the draft (ADM-KB-FIX-2)", async () => {
+    server.use(
+      http.get(apiUrl("/v1/admission/kb/articles"), () => HttpResponse.json({ items: [], can_edit: true })),
+      http.post(apiUrl("/v1/admission/kb/articles"), () =>
+        HttpResponse.json(
+          { type: "admission/kb_body_invalid", title: "Invalid body", status: 422, detail: "Bad block" },
+          { status: 422, headers: { "content-type": "application/problem+json" } },
+        ),
+      ),
+    )
+    renderAdmissionApp(<StaffKbPage />, counselor)
+    fireEvent.click(await screen.findByRole("button", { name: "New article" }))
+    fireEvent.change(await screen.findByLabelText("Title"), { target: { value: "Fees" } })
+    fireEvent.click(await screen.findByRole("button", { name: "Insert block" }))
+    fireEvent.click(await screen.findByRole("menuitem", { name: "Button" }))
+    fireEvent.change(await screen.findByLabelText("Link text"), { target: { value: "Pay" } })
+    fireEvent.change(screen.getByLabelText("Link address"), { target: { value: "/payments/" } })
+    fireEvent.click(screen.getByRole("button", { name: "Apply" }))
+    fireEvent.click(screen.getByRole("button", { name: "Save" }))
+    await waitFor(() => expect(screen.getAllByRole("alert").length).toBeGreaterThan(0))
+    expect((screen.getByLabelText("Title") as HTMLInputElement).value).toBe("Fees")
+  })
 })

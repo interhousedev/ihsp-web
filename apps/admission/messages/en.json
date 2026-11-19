@@ -430,7 +430,8 @@
       "field": "Field of study",
       "future": "Future"
     },
-    "nextActivities": "Find activities for {fields}"
+    "nextActivities": "Find activities for {fields}",
+    "bannerActivities": "Find activities: {fields}"
   },
   "app": {
     "name": "{appAdmission}",
@@ -499,6 +500,12 @@
         "mcp": "Added by a connected tool",
         "assistant": "Added by the assistant"
       }
+    },
+    "consent": {
+      "title": "AI help needs your consent",
+      "text": "The assistant uses AI to read your answers. Allow it here or change it later in the privacy settings.",
+      "allow": "Allow AI help",
+      "settings": "Privacy settings"
     }
   },
   "essays": {
@@ -667,7 +674,11 @@
         "same": "Same",
         "removed": "Removed"
       },
-      "none": "No prompts on file for this college yet"
+      "none": "No prompts on file for this college yet",
+      "officialPage": "Open the official essay page",
+      "openCollege": "Open the college page",
+      "addOwn": "Add the prompt yourself",
+      "customPrompt": "Your prompt"
     },
     "prompts": {
       "title": "Prompt ideas",
@@ -1528,7 +1539,9 @@
         "no_safety": "Add a safety option.",
         "too_many_reach": "The list is mostly reach options. Consider more match and safety choices.",
         "balanced": "Your list has a balanced mix of reach, match and safety options."
-      }
+      },
+      "showDetails": "Show details",
+      "hideDetails": "Hide details"
     },
     "tabs": {
       "overview": "Overview",
@@ -1717,6 +1730,15 @@
       "next": {
         "budget": "Check application budget",
         "essays": "Start essays for {count, plural, one {# university} other {# universities}}"
+      },
+      "deadlineMissing": "{round} deadline not on file",
+      "officialSite": "Official site",
+      "gate": "{institution}: a binding round needs a clear affordability check or a counselor sign-off first.",
+      "fee": {
+        "unpaid": "Fee not paid",
+        "paid": "Fee paid",
+        "waiver_requested": "Waiver requested",
+        "waiver_approved": "Waiver approved"
       }
     },
     "afford": {
@@ -1732,7 +1754,14 @@
       "acknowledge": "I understand",
       "requestSignOff": "Request counselor sign-off",
       "waiting": "Waiting for counselor sign-off",
-      "signedOff": "Signed off by a counselor"
+      "signedOff": "Signed off by a counselor",
+      "why": {
+        "noCost": "The cost of this college is not in the catalog yet. Ask your counselor to sign off.",
+        "noBudget": "Your family budget is missing.",
+        "budgetLink": "Add your budget",
+        "gap": "Yearly gap: {gap}.",
+        "unlock": "Binding rounds unlock after a counselor sign-off or a check that fits the budget."
+      }
     },
     "options": {
       "studyType": {
@@ -1811,6 +1840,11 @@
         "gap": "Cost gap",
         "unknown": "Unknown",
         "signed_off": "Signed off"
+      },
+      "scholarshipProvider": {
+        "institution": "Institution",
+        "government": "Government",
+        "foundation": "Foundation"
       }
     },
     "programsTitle": "Choose a program",
@@ -2532,7 +2566,9 @@
         "label": "Plan views",
         "milestones": "Milestones",
         "saved": "Saved opportunities"
-      }
+      },
+      "monthInvalid": "Use the format YYYY-MM, for example 2027-02",
+      "doneToast": "Milestone done"
     },
     "status": {
       "draft": "Draft",
@@ -2550,7 +2586,8 @@
       "school": "School",
       "state_regional": "State / regional",
       "national": "National",
-      "international": "International"
+      "international": "International",
+      "regional": "State / regional"
     },
     "category": {
       "academic": "Academic",
@@ -2760,7 +2797,9 @@
     "nextSearch": "Find universities to add",
     "nextSearchHint": "Your checklist fills in once your list has universities.",
     "nextReview": "Run application review",
-    "nextReviewHint": "Get a check of your whole application before you open official portals."
+    "nextReviewHint": "Get a check of your whole application before you open official portals.",
+    "nextDeadline": "Next deadline: {date}",
+    "openPortal": "Open official portal"
   },
   "transcripts": {
     "doneToast": "Marked ready: {name}",
@@ -3309,7 +3348,7 @@
       "all": "All",
       "course": "Courses",
       "certification": "Certifications",
-      "research": "Fellowships & research",
+      "research": "Research & fellowships",
       "event": "Events",
       "program": "Programs",
       "exam": "Exams",
@@ -3773,7 +3812,7 @@
       "deleted": "Article deleted",
       "saved": "Article saved",
       "fieldTitle": "Title",
-      "body": "Text (Markdown)",
+      "body": "Text",
       "locale": "Language",
       "tags": "Tags, comma separated",
       "published": "Published",
@@ -4081,7 +4120,12 @@
     "empty": "Your list is empty. Add universities to see what applying costs.",
     "emptyAction": "Find universities",
     "startEssays": "Start essays for {count} universities",
-    "moreScholarships": "More scholarships and opportunities"
+    "moreScholarships": "More scholarships and opportunities",
+    "check": {
+      "title": "What to check",
+      "css": "Some fees or aid forms are unknown. The CSS Profile is filed on the College Board site.",
+      "generic": "Some fees or aid forms are unknown: check each college's aid forms."
+    }
   },
   "essayReview": {
     "title": "Essay review",

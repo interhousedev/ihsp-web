@@ -13,6 +13,7 @@ export function institution(overrides: Partial<Institution> = {}): Institution {
     facts: {},
     cover_url: null,
     logo_url: null,
+    website_url: null,
     coa_total: "40000",
     coa_currency: "USD",
     aid_basis: null,

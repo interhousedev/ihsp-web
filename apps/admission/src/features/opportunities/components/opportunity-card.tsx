@@ -31,7 +31,16 @@ const KIND_ICON = {
 } as const satisfies Record<OpportunityKind, keyof typeof Icons>
 
 /** One catalog entry: kind, grades, the next dates (projected ones marked) and its materials. */
-export function OpportunityCard({ item, action }: { item: Opportunity; action?: ReactNode }) {
+export function OpportunityCard({
+  item,
+  action,
+  actionBelow = false,
+}: {
+  item: Opportunity
+  action?: ReactNode
+  /** Puts the action row under the content, for wide controls that would squeeze the title. */
+  actionBelow?: boolean
+}) {
   const t = useT("opportunities")
   const f = item.fields
   return (
@@ -64,7 +73,7 @@ export function OpportunityCard({ item, action }: { item: Opportunity; action?: 
             {f.provider ? f.provider : null}
           </span>
         </div>
-        {action}
+        {!actionBelow && action}
       </div>
       {f.summary && (
         <div className="flex flex-col gap-1">
@@ -122,6 +131,7 @@ export function OpportunityCard({ item, action }: { item: Opportunity; action?: 
           )}
         </div>
       )}
+      {actionBelow && action}
     </li>
   )
 }

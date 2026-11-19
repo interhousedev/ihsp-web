@@ -5,6 +5,7 @@ import { AssistantChatPane, AssistantProvider, TierPicker } from "@ihsp/features
 import { useT } from "@ihsp/i18n"
 import { Button, Icons, Skeleton, cn } from "@ihsp/ui"
 import { useEffect, useRef, useState } from "react"
+import { AssistantConsentCard } from "./consent-card"
 import { useDockChat } from "./dock-chat"
 import { McpPanel } from "./mcp-panel"
 import { McpPrompt } from "./mcp-prompt"
@@ -19,6 +20,39 @@ const SUGGESTIONS = ["1", "2", "3", "4"] as const
  * on wide screens, a bottom sheet on phones). The popup stays mounted after the first open and is shown and hidden with
  * transform and opacity only, so the conversation survives route changes and closing. Only students see it.
  */
+const OVERLAY =
+  '[aria-modal="true"], [role="dialog"][data-state="open"], [role="alertdialog"], [data-vaul-drawer][data-state="open"]'
+const TEXT_FIELD =
+  "textarea, input:not([type=checkbox]):not([type=radio]):not([type=button]):not([type=submit]), [contenteditable=true]"
+
+/** True while another dialog, sheet or drawer is open, or (on phones) a text field has focus: the button would cover it. */
+function useOverlayOpen(): boolean {
+  const [hidden, setHidden] = useState(false)
+  useEffect(() => {
+    const phone = () => typeof window.matchMedia !== "function" || window.matchMedia("(max-width: 767px)").matches
+    const sync = () => {
+      const typing = phone() && !!document.activeElement?.matches(TEXT_FIELD)
+      setHidden(typing || !!document.querySelector(OVERLAY))
+    }
+    sync()
+    const observer = new MutationObserver(sync)
+    observer.observe(document.body, {
+      subtree: true,
+      childList: true,
+      attributes: true,
+      attributeFilter: ["aria-modal", "data-state", "role"],
+    })
+    document.addEventListener("focusin", sync)
+    document.addEventListener("focusout", sync)
+    return () => {
+      observer.disconnect()
+      document.removeEventListener("focusin", sync)
+      document.removeEventListener("focusout", sync)
+    }
+  }, [])
+  return hidden
+}
+
 export function AssistantLauncher() {
   const { session } = useSession()
   if (!session?.user.roles?.includes("student")) return null
@@ -36,7 +70,8 @@ function AssistantDock({ userId }: { userId: string }) {
   const panel = useRef<HTMLElement>(null)
   const path = usePathname()
   const tourOpen = useTourOpen(tourKey(userId))
-  const hideLauncher = tourOpen || path.startsWith("/faq")
+  const overlayOpen = useOverlayOpen()
+  const hideLauncher = tourOpen || path.startsWith("/faq") || overlayOpen
 
   useEffect(() => {
     if (!open) return
@@ -83,7 +118,7 @@ function AssistantDock({ userId }: { userId: string }) {
         tabIndex={open ? -1 : 0}
         onClick={show}
         className={cn(
-          "bg-primary text-primary-foreground fixed right-4 bottom-[calc(var(--bottom-nav-height,4.5rem)+var(--safe-bottom,0px)+0.5rem)] z-40 flex size-14 origin-bottom-right items-center justify-center rounded-full shadow-lg md:right-6 md:bottom-6",
+          "bg-primary text-primary-foreground fixed right-4 bottom-[calc(var(--safe-bottom,0px)+5.25rem)] z-40 flex size-14 origin-bottom-right items-center justify-center rounded-full shadow-lg md:right-6 md:bottom-6",
           "motion-safe:transition-[transform,opacity] motion-safe:duration-200 motion-safe:hover:scale-105",
           open && "pointer-events-none scale-50 opacity-0",
           hideLauncher && "hidden",
@@ -159,6 +194,7 @@ function AssistantDock({ userId }: { userId: string }) {
                   basePath="/"
                   navButtons={null}
                   bare
+                  consentCard={({ retry }) => <AssistantConsentCard retry={retry} />}
                   placeholder={t("placeholder")}
                   emptyText={t("emptyText")}
                   prefill={prefill}

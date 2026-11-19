@@ -42,6 +42,8 @@ export type ChecklistItem = {
   important: boolean
   urgent_override: boolean | null
   institution_name?: string | null
+  /** The institution's official website, when the backend knows it. */
+  institution_website_url?: string | null
   logo_url?: string | null
   logo_fit?: "circle" | "contain"
   logo_zoom?: number

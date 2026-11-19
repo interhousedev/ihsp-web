@@ -26,7 +26,7 @@ function IdeaCard({ idea }: { idea: Idea }) {
   const [expansion, setExpansion] = useState<CoachExpansion | null>(null)
   const fail = (error: unknown) => toast.error(errorMessage(error))
   return (
-    <li className="border-hairline flex flex-col gap-2 rounded-card border p-3 animate-in fade-in">
+    <li className="border-hairline flex min-w-0 flex-col gap-2 rounded-card border p-3 animate-in fade-in">
       <p className="text-sm whitespace-pre-wrap">{idea.body}</p>
       {idea.tags.length ? (
         <div className="flex flex-wrap gap-1">
@@ -37,7 +37,11 @@ function IdeaCard({ idea }: { idea: Idea }) {
           ))}
         </div>
       ) : null}
-      <div className="flex flex-wrap items-center gap-1" role="group" aria-label={t("ideas.statusLabel")}>
+      <div
+        className="flex min-w-0 flex-wrap items-center gap-1 [&_button]:h-auto [&_button]:max-w-full [&_button]:whitespace-normal"
+        role="group"
+        aria-label={t("ideas.statusLabel")}
+      >
         {IDEA_STATUSES.map((s) => (
           <Button
             key={s}
@@ -124,14 +128,20 @@ export function IdeasBoard({ essayId }: { essayId?: string }) {
   }
   const ideas = (query.data?.items ?? []).filter((i) => !essayId || !i.essay_id || i.essay_id === essayId)
   return (
-    <section className="flex flex-col gap-3" aria-labelledby="ideas-title">
+    <section className="flex w-full min-w-0 flex-col gap-3" aria-labelledby="ideas-title">
       <h2 id="ideas-title" className="text-lg font-semibold">
         {t("ideas.title")}
       </h2>
-      <form onSubmit={submit} className="flex flex-col gap-2 sm:flex-row sm:items-end">
-        <div className="flex flex-1 flex-col gap-1">
+      <form onSubmit={submit} className="flex w-full flex-col gap-2 sm:flex-row sm:items-end">
+        <div className="flex w-full min-w-0 flex-1 flex-col gap-1">
           <Label htmlFor="idea-body">{t("ideas.body")}</Label>
-          <Input id="idea-body" value={body} maxLength={1000} onChange={(e) => setBody(e.target.value)} />
+          <Input
+            id="idea-body"
+            className="w-full"
+            value={body}
+            maxLength={1000}
+            onChange={(e) => setBody(e.target.value)}
+          />
         </div>
         <div className="flex flex-col gap-1 sm:w-48">
           <Label htmlFor="idea-tags">{t("ideas.tags")}</Label>
@@ -148,9 +158,12 @@ export function IdeasBoard({ essayId }: { essayId?: string }) {
       ) : ideas.length === 0 ? (
         <p className="text-muted-foreground text-sm">{t("ideas.empty")}</p>
       ) : (
-        <div className="grid gap-3 md:grid-cols-3">
+        <div className="flex snap-x gap-3 overflow-x-auto pb-2 [scrollbar-width:none] md:grid md:grid-cols-3 md:overflow-visible">
           {IDEA_STATUSES.map((s) => (
-            <div key={s} className="flex flex-col gap-2">
+            <div
+              key={s}
+              className="flex min-w-[240px] shrink-0 basis-[85%] snap-start flex-col gap-2 md:min-w-0 md:basis-auto"
+            >
               <h3 className="text-muted-foreground text-sm font-medium">{t(`ideas.status.${s}`)}</h3>
               <ul className="flex flex-col gap-2">
                 {ideas

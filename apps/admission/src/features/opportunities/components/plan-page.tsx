@@ -1,6 +1,6 @@
 "use client"
 
-import { AppPageHeader, pageClass } from "../../../components/lib/page"
+import { pageClass } from "../../../components/lib/page"
 import { ApiError } from "@ihsp/api"
 import { formatDate, useErrorMessage, useLocale, useT } from "@ihsp/i18n"
 import {
@@ -17,7 +17,6 @@ import {
 import Link from "next/link"
 import { useMemo, useState, type FormEvent } from "react"
 import { toast } from "sonner"
-import { OpportunityTabs } from "./opportunity-tabs"
 import { ScrollFade } from "../../../components/scroll-fade"
 import { AdmissionShell } from "../../shell/components/admission-shell"
 import {
@@ -193,25 +192,28 @@ function Analytics({ plan }: { plan: Plan }) {
         </table>
         {a.unplaced > 0 && <p className="text-muted-foreground text-xs">{t("unplaced", { count: a.unplaced })}</p>}
       </div>
-      <div className="bg-card flex flex-col gap-2 rounded-card border p-4">
-        <h2 className="font-medium">{t("coverageTitle")}</h2>
-        <ul className="flex flex-col gap-1 text-sm">
-          {(taxonomy.data?.fields ?? []).map((f) => (
-            <li key={f.id} className="flex justify-between gap-2">
-              <span>{localName(f.name, locale)}</span>
-              <span className={a.coverage[f.id] ? "font-medium" : "text-muted-foreground"}>
-                {a.coverage[f.id] ?? 0}
-              </span>
-            </li>
-          ))}
-        </ul>
-      </div>
+      {(taxonomy.data?.fields ?? []).length > 0 && (
+        <div className="bg-card flex flex-col gap-2 rounded-card border p-4">
+          <h2 className="font-medium">{t("coverageTitle")}</h2>
+          <ul className="flex flex-col gap-1 text-sm">
+            {(taxonomy.data?.fields ?? []).map((f) => (
+              <li key={f.id} className="flex justify-between gap-2">
+                <span>{localName(f.name, locale)}</span>
+                <span className={a.coverage[f.id] ? "font-medium" : "text-muted-foreground"}>
+                  {a.coverage[f.id] ?? 0}
+                </span>
+              </li>
+            ))}
+          </ul>
+        </div>
+      )}
     </section>
   )
 }
 
-function Entry({ item, grade }: { item: Opportunity; grade: number | null }) {
+function Entry({ item, grade, entryId }: { item: Opportunity; grade: number | null; entryId: string }) {
   const t = useT("opportunities")
+  const tItems = useT("items")
   const errorMessage = useErrorMessage()
   const save = useSaveToPlan()
   const remove = useRemoveFromPlan()
@@ -219,8 +221,9 @@ function Entry({ item, grade }: { item: Opportunity; grade: number | null }) {
   return (
     <OpportunityCard
       item={item}
+      actionBelow
       action={
-        <div className="flex flex-wrap gap-1">
+        <div className="flex flex-wrap items-center gap-1">
           {GRADES.map((g) => (
             <Button
               key={g}
@@ -234,6 +237,12 @@ function Entry({ item, grade }: { item: Opportunity; grade: number | null }) {
               {g}
             </Button>
           ))}
+          <Link
+            href={`/activities/?item=new&from=${encodeURIComponent(entryId)}`}
+            className={buttonVariants({ size: "sm", variant: "outline" })}
+          >
+            {tItems("plan.addToAchievements")}
+          </Link>
           <Button
             type="button"
             size="sm"
@@ -316,20 +325,14 @@ export function PlanBody() {
           <ul className="grid gap-3 md:grid-cols-2">
             {plan.entries.map((e) => {
               const item = byId.get(e.opportunity_id)
-              return item ? <Entry key={e.id} item={item} grade={e.planned_grade} /> : null
+              return item ? <Entry key={e.id} item={item} grade={e.planned_grade} entryId={e.id} /> : null
             })}
           </ul>
         </ScrollFade>
       </>
     )
   }
-  return (
-    <div className={pageClass("wide")}>
-      <AppPageHeader icon="heart" title={t("planTitle")} />
-      <OpportunityTabs value="plan" planCount={query.data?.entries.length ?? 0} />
-      {body}
-    </div>
-  )
+  return <div className={pageClass("wide")}>{body}</div>
 }
 
 export function OpportunityPlanPage() {

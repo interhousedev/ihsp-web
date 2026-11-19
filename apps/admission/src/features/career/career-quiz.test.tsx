@@ -157,8 +157,46 @@ describe("career tabs and field counter", () => {
       messages: { career: { nextActivities: "Find activities for {fields}" } },
     })
     expect(await screen.findByText("2 selected")).toBeTruthy()
-    const cta = screen.getByRole("link", { name: "Find activities for A, B" })
+    const cta = screen.getByRole("link", { name: "Find activities for A and B" })
     expect(cta.getAttribute("href")).toBe("/opportunities")
     expect(screen.getByRole("tab", { name: /Field of study/ }).getAttribute("aria-selected")).toBe("true")
+  })
+
+  const fieldPlan = (labels: string[]) => ({
+    ...plan(["data_science"]),
+    study_focus: { field_ids: labels.map((_, n) => `f${n}`), labels },
+  })
+  const copy = { career: { bannerActivities: "Find activities: {fields}" } }
+
+  function finished(labels: string[]) {
+    const quizzes = mockQuizzes()
+    quizzes.quizzes.career = { answers: {}, completed: true }
+    server.use(
+      http.get(apiUrl("/v1/admission/career"), () => HttpResponse.json(fieldPlan(labels))),
+      http.get(apiUrl("/v1/admission/career/majors"), () => HttpResponse.json({ items: MAJORS })),
+    )
+  }
+
+  test("ADM-TABS-1: the explore tab renders one tab bar, with the field badge on it", async () => {
+    finished(["Computer Science"])
+    renderAdmissionApp(<CareerPage />, { route: "/career/?tab=explore", messages: copy })
+    await screen.findByTestId("profile-majors")
+    expect(screen.getAllByRole("tablist")).toHaveLength(1)
+    expect(screen.getAllByRole("tab", { name: /Field of study/ })).toHaveLength(1)
+    expect(screen.getByRole("tab", { name: /Field of study/ }).textContent).toContain("1")
+  })
+
+  test("ADM-CAREER-CTA-1: the results link to activities for the chosen field", async () => {
+    finished(["Computer Science"])
+    renderAdmissionApp(<CareerPage />, { route: "/career/?tab=explore", messages: copy })
+    const cta = await screen.findByRole("link", { name: "Find activities: Computer Science" })
+    expect(cta.getAttribute("href")).toBe("/opportunities")
+    expect(screen.getByRole("link", { name: "Find my colleges" })).toBeInTheDocument()
+  })
+
+  test("ADM-CAREER-CTA-2: two fields are joined as a locale list and keep their case", async () => {
+    finished(["Computer Science", "Data Science"])
+    renderAdmissionApp(<CareerPage />, { route: "/career/?tab=explore", messages: copy })
+    expect(await screen.findByRole("link", { name: "Find activities: Computer Science and Data Science" })).toBeTruthy()
   })
 })

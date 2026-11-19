@@ -430,7 +430,8 @@
       "field": "Taʼlim yoʻnalishi",
       "future": "Kelajak"
     },
-    "nextActivities": "Faoliyatlarni topish: {fields}"
+    "nextActivities": "Faoliyatlarni topish: {fields}",
+    "bannerActivities": "Faoliyatlarni topish: {fields}"
   },
   "app": {
     "name": "{appAdmission}",
@@ -499,6 +500,12 @@
         "mcp": "Ulangan vosita qoʻshgan",
         "assistant": "Yordamchi qoʻshgan"
       }
+    },
+    "consent": {
+      "title": "SI yordami uchun roziligingiz kerak",
+      "text": "Yordamchi javoblaringizni oʻqish uchun SI dan foydalanadi. Bu yerda ruxsat bering yoki keyinroq maxfiylik sozlamalarida oʻzgartiring.",
+      "allow": "SI yordamiga ruxsat berish",
+      "settings": "Maxfiylik sozlamalari"
     }
   },
   "essays": {
@@ -667,7 +674,11 @@
         "same": "Oʻzgarmagan",
         "removed": "Olib tashlangan"
       },
-      "none": "Bu kollej uchun hali mavzular yoʻq"
+      "none": "Bu kollej uchun hali mavzular yoʻq",
+      "officialPage": "Insho uchun rasmiy sahifani ochish",
+      "openCollege": "Universitet sahifasini ochish",
+      "addOwn": "Topshiriqni oʻzingiz qoʻshing",
+      "customPrompt": "Sizning topshiriq"
     },
     "prompts": {
       "title": "Mavzu gʻoyalari",
@@ -1528,7 +1539,9 @@
         "no_safety": "Zaxira variant qoʻshing.",
         "too_many_reach": "Roʻyxatda murakkab variantlar koʻp. Mos va zaxira variantlarni qoʻshing.",
         "balanced": "Roʻyxatda murakkab, mos va zaxira variantlar muvozanatlangan."
-      }
+      },
+      "showDetails": "Tafsilotlarni koʻrsatish",
+      "hideDetails": "Tafsilotlarni yashirish"
     },
     "tabs": {
       "overview": "Umumiy",
@@ -1717,6 +1730,15 @@
       "next": {
         "budget": "Ariza byudjetini tekshirish",
         "essays": "{count} ta universitet uchun insho boshlash"
+      },
+      "deadlineMissing": "{round} raundi muddati kiritilmagan",
+      "officialSite": "Rasmiy sayt",
+      "gate": "{institution}: majburiy raund uchun xarajatni tekshirish yoki maslahatchi tasdigʻi kerak.",
+      "fee": {
+        "unpaid": "Badal toʻlanmagan",
+        "paid": "Badal toʻlangan",
+        "waiver_requested": "Ozod qilish soʻralgan",
+        "waiver_approved": "Ozod qilish tasdiqlangan"
       }
     },
     "afford": {
@@ -1732,7 +1754,14 @@
       "acknowledge": "Tushundim",
       "requestSignOff": "Kurator roziligini soʻrash",
       "waiting": "Kurator roziligi kutilmoqda",
-      "signedOff": "Kurator kelishgan"
+      "signedOff": "Kurator kelishgan",
+      "why": {
+        "noCost": "Bu kollej xarajati hali katalogda yoʻq. Maslahatchidan tasdiq soʻrang.",
+        "noBudget": "Oila byudjeti kiritilmagan.",
+        "budgetLink": "Byudjetni kiritish",
+        "gap": "Yillik farq: {gap}.",
+        "unlock": "Majburiy raundlar maslahatchi tasdigʻi yoki byudjetga mos tekshiruvdan keyin ochiladi."
+      }
     },
     "options": {
       "studyType": {
@@ -1811,6 +1840,11 @@
         "gap": "Narx farqi bor",
         "unknown": "Nomaʼlum",
         "signed_off": "Kelishilgan"
+      },
+      "scholarshipProvider": {
+        "institution": "OTM",
+        "government": "Davlat",
+        "foundation": "Jamgʻarma"
       }
     },
     "programsTitle": "Dastur tanlash",
@@ -2532,7 +2566,9 @@
         "label": "Reja boʻlimlari",
         "milestones": "Bosqichlar",
         "saved": "Saqlangan imkoniyatlar"
-      }
+      },
+      "monthInvalid": "Format YYYY-MM, masalan 2027-02",
+      "doneToast": "Bosqich bajarildi"
     },
     "status": {
       "draft": "Qoralama",
@@ -2550,7 +2586,8 @@
       "school": "Maktab",
       "state_regional": "Viloyat / respublika",
       "national": "Milliy",
-      "international": "Xalqaro"
+      "international": "Xalqaro",
+      "regional": "Viloyat / mintaqaviy"
     },
     "category": {
       "academic": "Oʻqish",
@@ -2760,7 +2797,9 @@
     "nextSearch": "Roʻyxat uchun universitetlarni topish",
     "nextSearchHint": "Roʻyxatda universitetlar paydo boʻlgach, nazorat roʻyxati toʻladi.",
     "nextReview": "Arizani tekshirishni boshlash",
-    "nextReviewHint": "Rasmiy portallarni ochishdan oldin butun arizangizni tekshirtiring."
+    "nextReviewHint": "Rasmiy portallarni ochishdan oldin butun arizangizni tekshirtiring.",
+    "nextDeadline": "Eng yaqin muddat: {date}",
+    "openPortal": "Rasmiy portalni ochish"
   },
   "transcripts": {
     "doneToast": "Tayyor deb belgilandi: {name}",
@@ -3309,7 +3348,7 @@
       "all": "Barchasi",
       "course": "Kurslar",
       "certification": "Sertifikatlar",
-      "research": "Stipendiyalar va tadqiqotlar",
+      "research": "Tadqiqot va fellowship dasturlari",
       "event": "Tadbirlar",
       "program": "Dasturlar",
       "exam": "Imtihonlar",
@@ -3773,7 +3812,7 @@
       "deleted": "Maqola oʻchirildi",
       "saved": "Maqola saqlandi",
       "fieldTitle": "Sarlavha",
-      "body": "Matn (Markdown)",
+      "body": "Matn",
       "locale": "Til",
       "tags": "Teglar, vergul bilan",
       "published": "Chop etilgan",
@@ -4081,7 +4120,12 @@
     "empty": "Roʻyxat boʻsh. Topshirish narxini koʻrish uchun universitetlar qoʻshing.",
     "emptyAction": "Universitet topish",
     "startEssays": "{count} ta universitet uchun inshoni boshlash",
-    "moreScholarships": "Boshqa stipendiyalar va imkoniyatlar"
+    "moreScholarships": "Boshqa stipendiyalar va imkoniyatlar",
+    "check": {
+      "title": "Nimani tekshirish kerak",
+      "css": "Baʼzi toʻlovlar yoki yordam shakllari maʼlum emas. CSS Profile College Board saytida topshiriladi.",
+      "generic": "Baʼzi toʻlovlar yoki yordam shakllari maʼlum emas: har bir kollejning yordam shakllarini tekshiring."
+    }
   },
   "essayReview": {
     "title": "Inshoni tahlil qilish",
