@@ -4,6 +4,13 @@ All notable changes to this project are documented here. The format follows [Kee
 
 ## [Unreleased]
 
+## [1.8.0] - 2026-11-19
+
+### Changed
+
+- admission.ihsu.uz: the roles in the access token decide the layout; student sections only for students, staff sections for staff, both for a counselor who is also a student. Student-only pages show a no-access state for other staff.
+- Universities, scholarships and opportunities sort by nearest deadline; deadlines within 30 days are red with a days-left chip. My list never shows a past deadline. Logos load from Wikimedia again.
+
 ## [1.7.0] - 2026-11-19
 
 ### Highlights
