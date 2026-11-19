@@ -4,6 +4,7 @@ import type { Estimate, Institution, ListEntry } from "../features/chooser/types
 
 export function institution(overrides: Partial<Institution> = {}): Institution {
   return {
+    next_deadline: null,
     id: "i1",
     slug: "uni-one",
     name: "Uni One",

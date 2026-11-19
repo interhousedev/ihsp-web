@@ -2,6 +2,7 @@
 
 import { formatDate, useT } from "@ihsp/i18n"
 import { cn, Icons, Pill } from "@ihsp/ui"
+import { DeadlineDate } from "../../../components/lib/deadline-chip"
 import Link from "next/link"
 import { LogoAvatar } from "../../../components/lib/photo-header"
 import type { AwardType, Opportunity } from "../api"
@@ -31,7 +32,7 @@ export function ScholarshipCard({
 }) {
   const t = useT("opportunities")
   const f = item.fields
-  const deadline = item.upcoming[0]?.day
+  const deadline = item.next_deadline ?? item.upcoming[0]?.day
   const orgName = item.org?.name ?? f.provider
   return (
     <div
@@ -79,7 +80,7 @@ export function ScholarshipCard({
       <p className="mt-auto flex flex-wrap items-baseline gap-x-3 text-lg font-semibold">
         {f.amount_text ? <span className="text-success">{f.amount_text}</span> : null}
         {f.amount_text && deadline ? <span aria-hidden className="bg-border h-5 w-px self-center" /> : null}
-        {deadline ? <span>{formatDate(deadline)}</span> : null}
+        {deadline ? <DeadlineDate date={deadline} text={formatDate(deadline)} className="tabular-nums" /> : null}
         {!f.amount_text && !deadline ? (
           <span className="text-muted-foreground text-sm font-normal">{t("scholarships.noDeadline")}</span>
         ) : null}

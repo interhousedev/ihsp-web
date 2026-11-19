@@ -11,6 +11,7 @@ const BASE = "/v1/admission/opportunities"
 
 const opportunity: Opportunity = {
   id: "o1",
+  next_deadline: null,
   fields: {
     kind: "course",
     title: "Elements of AI",

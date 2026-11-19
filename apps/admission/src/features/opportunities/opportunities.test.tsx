@@ -43,6 +43,7 @@ const fields = {
 
 const opportunity: Opportunity = {
   id: "o1",
+  next_deadline: null,
   fields,
   archived: false,
   comment_count: 0,

@@ -14,6 +14,8 @@ import { UnderlineTabs } from "../../../components/lib/underline-tabs"
 import { ScrollFade } from "../../../components/scroll-fade"
 import { useAddToList, useEntryLabel, useList, usePatchEntry, useRemoveEntry } from "../hooks"
 import { useWorkflow } from "../../../lib/config"
+import { DeadlineChip } from "../../../components/lib/deadline-chip"
+import { deadlineTone } from "../../../lib/deadline-tone"
 import { LogoAvatar } from "../../../components/lib/photo-header"
 import { useNow } from "../../../lib/use-now"
 import type { Bucket, Deadline, ListEntry, Round } from "../types"
@@ -40,7 +42,8 @@ export function NextDeadline({
   const t = useT("chooser")
   const locale = useLocale()
   const roundLabel = useOptionLabel("round")
-  const today = todayIso(useNow(60_000))
+  const now = useNow(60_000)
+  const today = todayIso(now)
   const dated = deadlines.filter((item) => item.plan === round).toSorted((a, b) => a.date.localeCompare(b.date))
   const next = dated.find((item) => item.date >= today) ?? dated.at(-1)
   if (!next)
@@ -68,7 +71,10 @@ export function NextDeadline({
   return (
     <p className="mt-0.5 flex flex-wrap items-center gap-1.5 text-xs">
       <span className="text-muted-foreground">{t("list.deadline")}</span>
-      <span className="tabular-nums">{date}</span>
+      <span className={cn("tabular-nums", deadlineTone(next.date, now) === "urgent" && "text-destructive font-medium")}>
+        {date}
+      </span>
+      <DeadlineChip date={next.date} />
       <Pill>{next.plan}</Pill>
       {next.binding === true ? <Pill tone="warning">{t("list.binding")}</Pill> : null}
     </p>

@@ -1,3 +1,5 @@
+import { compareDeadline } from "../../lib/deadline-tone"
+import type { SortKey } from "./filters"
 import type { Facet, Institution, StudyGroup } from "./types"
 
 /** Display order of the study-field groups' entries: sorted, deduplicated by label. */
@@ -39,8 +41,9 @@ export function toFacets(list: Facet[]): Facets {
 
 export type { Facet, StudyGroup }
 
-/** Sorts the loaded results; "relevance" keeps the order the catalog returned. */
-export function sortInstitutions(items: Institution[], sort: "relevance" | "name" | "cost"): Institution[] {
+/** Sorts the loaded results; "relevance" keeps the order the catalog returned, "deadline" puts the soonest first. */
+export function sortInstitutions(items: Institution[], sort: SortKey): Institution[] {
+  if (sort === "deadline") return items.toSorted((a, b) => compareDeadline(a.next_deadline, b.next_deadline))
   if (sort === "name") return items.toSorted((a, b) => a.name.localeCompare(b.name))
   if (sort === "cost")
     return items.toSorted((a, b) => {

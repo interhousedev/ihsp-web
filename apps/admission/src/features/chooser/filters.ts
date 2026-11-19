@@ -1,7 +1,9 @@
 /** Search filters: the address is the source of truth; every value maps to one query parameter of the catalog. */
 
-export type SortKey = "relevance" | "name" | "cost"
-export const SORTS: SortKey[] = ["relevance", "name", "cost"]
+export type SortKey = "deadline" | "relevance" | "name" | "cost"
+export const SORTS: SortKey[] = ["deadline", "relevance", "name", "cost"]
+/** Approaching application deadlines first, unless the student picks another order. */
+export const DEFAULT_SORT: SortKey = "deadline"
 
 export type Filters = {
   q: string
@@ -18,7 +20,7 @@ export type Filters = {
   aid: string
   scholarships: boolean
   maxCost: string
-  /** Only reorders the loaded results; the catalog has no sort parameter. */
+  /** "deadline" is also sent to the catalog; name and cost only reorder the loaded results. */
   sort: SortKey
 }
 
@@ -35,7 +37,7 @@ export const EMPTY_FILTERS: Filters = {
   aid: "",
   scholarships: false,
   maxCost: "",
-  sort: "relevance",
+  sort: DEFAULT_SORT,
 }
 
 export type FilterKey = keyof Filters
@@ -76,19 +78,23 @@ export function filtersFromParams(params: URLSearchParams): Filters {
     const raw = params.get(FILTER_PARAM[key]) ?? ""
     next[key] = BOOLEAN_KEYS.includes(key) ? raw === "true" : raw
   }
-  const sort = SORTS.includes(next.sort as SortKey) ? (next.sort as SortKey) : "relevance"
+  const sort = SORTS.includes(next.sort as SortKey) ? (next.sort as SortKey) : DEFAULT_SORT
   return { ...(next as Filters), sort }
 }
 
 const isSet = (key: FilterKey, value: string | boolean) =>
-  key === "sort" ? value !== "relevance" : value !== "" && value !== false
+  key === "sort" ? value !== DEFAULT_SORT : value !== "" && value !== false
 
 /** Only the filters that are set, as the catalog's query parameters (sorting is done here, not by the catalog). */
 export function filtersToQuery(filters: Filters): Record<string, string | number | boolean> {
   const query: Record<string, string | number | boolean> = {}
   for (const key of Object.keys(FILTER_PARAM) as FilterKey[]) {
     const value = filters[key]
-    if (key === "sort" || !isSet(key, value)) continue
+    if (key === "sort") {
+      if (value === "deadline") query.sort = "deadline"
+      continue
+    }
+    if (!isSet(key, value)) continue
     query[FILTER_PARAM[key]] = value
   }
   return query

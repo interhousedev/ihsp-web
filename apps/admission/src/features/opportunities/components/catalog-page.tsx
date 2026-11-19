@@ -95,7 +95,7 @@ export function CatalogBody() {
   const filter: CatalogFilter = {
     ...other,
     kind: category === "all" ? undefined : category,
-    sort: parseSort(params.get("sort")),
+    sort: parseSort(params.get("sort")) ?? "deadline",
   }
   const [suggesting, setSuggesting] = useState(false)
   const [filtersOpen, setFiltersOpen] = useState(false)

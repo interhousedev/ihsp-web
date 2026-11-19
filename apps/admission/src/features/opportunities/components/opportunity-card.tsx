@@ -4,6 +4,7 @@ import { formatDate, useT } from "@ihsp/i18n"
 import { Badge, Button, Icons, Pill } from "@ihsp/ui"
 import Link from "next/link"
 import type { ReactNode } from "react"
+import { DeadlineDate } from "../../../components/lib/deadline-chip"
 import { LogoAvatar } from "../../../components/lib/photo-header"
 import { detailHref } from "./scholarship-card"
 import type { Opportunity, OpportunityKind } from "../api"
@@ -97,9 +98,7 @@ export function OpportunityCard({
           {item.upcoming.slice(0, 3).map((d) => (
             <li key={`${d.kind}-${d.day}`} className="flex items-center gap-2">
               <Icons.calendarEvent aria-hidden className="size-4 shrink-0" />
-              <span>
-                {t(`dateKind.${d.kind}`)}: {formatDate(d.day)}
-              </span>
+              <DeadlineDate date={d.day} text={`${t(`dateKind.${d.kind}`)}: ${formatDate(d.day)}`} />
               {d.projected && <span className="text-muted-foreground text-xs">{t("expected")}</span>}
             </li>
           ))}

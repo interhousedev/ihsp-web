@@ -1,7 +1,7 @@
 "use client"
 
-import { useLocale, useT } from "@ihsp/i18n"
-import { Icons, Pill } from "@ihsp/ui"
+import { formatDate, useLocale, useT } from "@ihsp/i18n"
+import { cn, Icons, Pill } from "@ihsp/ui"
 import Link from "next/link"
 import { LogoAvatar } from "../../../components/lib/photo-header"
 import { facetOf, optionLabel } from "../facets"
@@ -11,6 +11,9 @@ import { AddToListButton } from "./add-to-list-button"
 import { useOptionLabel } from "./option-label"
 import { formatCurrency } from "./money"
 import { VerifiedBadge } from "./fact-source"
+import { DeadlineChip } from "../../../components/lib/deadline-chip"
+import { deadlineTone } from "../../../lib/deadline-tone"
+import { useNow } from "../../../lib/use-now"
 
 export function InstitutionCard({ institution }: { institution: Institution }) {
   const locale = useLocale()
@@ -18,6 +21,8 @@ export function InstitutionCard({ institution }: { institution: Institution }) {
   const aidLabel = useOptionLabel("aid")
   const countryLabel = useOptionLabel("country")
   const { facets } = useFacets()
+  const now = useNow(60_000)
+  const urgent = deadlineTone(institution.next_deadline, now) === "urgent"
   const policy = typeof institution.facts.test_policy?.value === "string" ? institution.facts.test_policy.value : null
   const policyLabel = policy ? optionLabel(facetOf(facets?.list, "test_policy"), policy) : null
   const place = [institution.city, countryLabel(institution.country)].filter(Boolean).join(", ")
@@ -38,6 +43,15 @@ export function InstitutionCard({ institution }: { institution: Institution }) {
             </Link>
           </h3>
           <p className="text-muted-foreground text-sm">{place}</p>
+          {institution.next_deadline ? (
+            <p className="mt-0.5 flex flex-wrap items-center gap-x-1.5 gap-y-1 text-xs">
+              <span className="text-muted-foreground">{t("list.deadline")}</span>
+              <span className={cn("tabular-nums", urgent && "text-destructive font-medium")}>
+                {formatDate(institution.next_deadline)}
+              </span>
+              <DeadlineChip date={institution.next_deadline} />
+            </p>
+          ) : null}
         </div>
         <VerifiedBadge verified={institution.verified} />
       </header>
