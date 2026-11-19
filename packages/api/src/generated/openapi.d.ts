@@ -3781,7 +3781,8 @@ export interface paths {
          * Search Institutions
          * @description Search and filter the catalog; name and alias matches come first.
          *
-         *     `setting` is the campus setting (`city_type` is the same filter).
+         *     `setting` is the campus setting (`city_type` is the same filter). `sort=deadline`
+         *     lists the soonest next deadline first, institutions without one last.
          */
         get: operations["admission_search_institutions"];
         put?: never;
@@ -20871,9 +20872,10 @@ export interface components {
          *
          *     Institutions: name, country (required when creating), name_local, city,
          *     website_domain, kind, size_band, setting, languages, aliases, logo_url,
-         *     logo_zoom, logo_fit, logo_aspect, cover_url. Scholarships: name, provider,
-         *     basis (required when creating), institution_id, country, coverage_pct_min,
-         *     coverage_pct_max, covers, eligibility, url, cycle. Values are checked on save.
+         *     logo_zoom, logo_fit, logo_aspect, cover_url, programs. Scholarships: name,
+         *     provider, basis (required when creating), institution_id, country,
+         *     coverage_pct_min, coverage_pct_max, covers, eligibility, url, cycle.
+         *     Values are checked on save.
          */
         CatalogFieldsIn: {
             /**
@@ -20972,6 +20974,11 @@ export interface components {
              */
             name_local?: unknown;
             /**
+             * Programs
+             * @description Study programs, at most 60.
+             */
+            programs?: components["schemas"]["CatalogProgramIn"][] | null;
+            /**
              * Provider
              * @description Scholarship: institution|government|foundation.
              */
@@ -20996,6 +21003,23 @@ export interface components {
              * @description Site domain without scheme, e.g. `ox.ac.uk`.
              */
             website_domain?: unknown;
+        };
+        /**
+         * CatalogProgramIn
+         * @description A study program of an institution; `field_ids` are canonical field ids.
+         */
+        CatalogProgramIn: {
+            /**
+             * Degree
+             * @enum {string}
+             */
+            degree: "bachelor" | "master" | "foundation" | "other";
+            /** Field Ids */
+            field_ids?: string[];
+            /** Name */
+            name: string;
+            /** School */
+            school?: string | null;
         };
         /**
          * CatalogProposalIn
@@ -27547,6 +27571,8 @@ export interface components {
             name: string;
             /** Name Local */
             name_local: string | null;
+            /** Next Deadline */
+            next_deadline: string | null;
             /** Scholarship Count */
             scholarship_count: number;
             /** Slug */
@@ -32712,6 +32738,8 @@ export interface components {
             id: string;
             /** Lock Version */
             lock_version: number;
+            /** Next Deadline */
+            next_deadline: string | null;
             org?: components["schemas"]["OrgOut"] | null;
             /** Upcoming */
             upcoming: components["schemas"]["DatedEventOut"][];
@@ -32821,7 +32849,7 @@ export interface components {
              * Sort
              * @enum {string}
              */
-            sort: "title" | "ranking" | "acceptance" | "tuition" | "relevance";
+            sort: "title" | "ranking" | "acceptance" | "tuition" | "relevance" | "deadline";
             /** Total */
             total: number;
         };
@@ -32855,6 +32883,8 @@ export interface components {
             id: string;
             /** Lock Version */
             lock_version: number;
+            /** Next Deadline */
+            next_deadline: string | null;
             org?: components["schemas"]["OrgOut"] | null;
             /** Upcoming */
             upcoming: components["schemas"]["DatedEventOut"][];
@@ -52755,6 +52785,7 @@ export interface operations {
                 aid?: string | null;
                 scholarships?: boolean | null;
                 max_cost?: number | string | null;
+                sort?: "deadline" | null;
                 cursor?: number;
                 limit?: number;
             };
@@ -57313,7 +57344,7 @@ export interface operations {
                 scope?: ("local" | "international") | null;
                 org_id?: string | null;
                 college_credit?: ("none" | "possible" | "yes") | null;
-                sort?: ("title" | "ranking" | "acceptance" | "tuition" | "relevance") | null;
+                sort?: ("title" | "ranking" | "acceptance" | "tuition" | "relevance" | "deadline") | null;
                 page?: number;
                 size?: number;
             };
