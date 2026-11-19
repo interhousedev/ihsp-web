@@ -40,7 +40,6 @@ export function LogoAvatar({
         <AvatarImage
           src={src}
           alt=""
-          referrerPolicy="no-referrer"
           className="rounded-none bg-white object-contain"
           style={{
             // Zoom above 1 trims the padding (the image still fits its frame, never cropped); below 1 it shrinks.

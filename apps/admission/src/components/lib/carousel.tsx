@@ -36,7 +36,7 @@ export function Carousel({ label, className, children }: { label: string; classN
   }
 
   return (
-    <div className={cn("relative", className)}>
+    <div className={cn("relative min-w-0 max-w-full", className)}>
       <ul
         ref={ref}
         aria-label={label}

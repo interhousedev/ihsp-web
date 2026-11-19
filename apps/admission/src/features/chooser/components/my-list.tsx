@@ -33,10 +33,12 @@ import { useOptionLabel } from "./option-label"
 export function NextDeadline({
   deadlines,
   round,
+  nextDeadline = null,
   officialUrl = null,
 }: {
   deadlines: Deadline[]
   round: string
+  nextDeadline?: string | null
   officialUrl?: string | null
 }) {
   const t = useT("chooser")
@@ -45,7 +47,10 @@ export function NextDeadline({
   const now = useNow(60_000)
   const today = todayIso(now)
   const dated = deadlines.filter((item) => item.plan === round).toSorted((a, b) => a.date.localeCompare(b.date))
-  const next = dated.find((item) => item.date >= today) ?? dated.at(-1)
+  const upcoming = nextDeadline && nextDeadline >= today ? nextDeadline : dated.find((item) => item.date >= today)?.date
+  const next = upcoming ? { date: upcoming, round: dated.find((item) => item.date === upcoming) } : null
+  if (!next && dated.length > 0)
+    return <p className="text-muted-foreground mt-0.5 text-xs">{t("list.noUpcomingDeadline")}</p>
   if (!next)
     return (
       <p className="text-muted-foreground mt-0.5 flex flex-wrap items-center gap-x-1.5 text-xs">
@@ -75,8 +80,8 @@ export function NextDeadline({
         {date}
       </span>
       <DeadlineChip date={next.date} />
-      <Pill>{next.plan}</Pill>
-      {next.binding === true ? <Pill tone="warning">{t("list.binding")}</Pill> : null}
+      {next.round ? <Pill>{next.round.plan}</Pill> : null}
+      {next.round?.binding === true ? <Pill tone="warning">{t("list.binding")}</Pill> : null}
     </p>
   )
 }
@@ -193,6 +198,7 @@ function EntryRow({ entry }: { entry: ListEntry }) {
             <NextDeadline
               deadlines={entry.institution.deadlines}
               round={entry.round}
+              nextDeadline={entry.institution.next_deadline ?? null}
               officialUrl={entry.institution.sources.find((source) => source.url)?.url ?? null}
             />
             <Pill tone={FEE_TONE[entry.fee_status]} className="mt-1 h-6 w-fit px-2 text-xs">

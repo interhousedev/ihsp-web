@@ -47,7 +47,7 @@ export function ScholarshipsBody() {
   const [filter, setFilter] = useState<CatalogFilter>({})
   const [tab, setTab] = useState<CoverageTab>("all")
   const [suggesting, setSuggesting] = useState(false)
-  const list = useOpportunities({ ...filter, kind: "scholarship" })
+  const list = useOpportunities({ ...filter, kind: "scholarship", sort: "deadline" })
   const orgs = useOrgs()
   const plan = usePlan()
   const save = useSaveToPlan()
@@ -97,9 +97,11 @@ export function ScholarshipsBody() {
     )
   else
     body = (
-      <ul className="grid gap-4 sm:grid-cols-2 xl:grid-cols-3">
+      <ul className="grid min-w-0 gap-4 sm:grid-cols-2 xl:grid-cols-3">
         {items.map((item) => (
-          <li key={item.id}>{card(item)}</li>
+          <li key={item.id} className="min-w-0">
+            {card(item)}
+          </li>
         ))}
       </ul>
     )

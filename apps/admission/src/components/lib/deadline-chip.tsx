@@ -17,7 +17,7 @@ export function DeadlineChip({ date, className }: { date: string | null | undefi
   const now = useNow(60_000)
   if (!date || deadlineTone(date, now) !== "urgent") return null
   return (
-    <Pill tone="danger" className={cn("tabular-nums", className)}>
+    <Pill tone="danger" className={cn("h-auto min-w-0 whitespace-normal text-left tabular-nums", className)}>
       {t("daysLeft", { count: daysLeft(date, now) })}
     </Pill>
   )

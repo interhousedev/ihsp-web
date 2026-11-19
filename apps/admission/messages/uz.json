@@ -1734,6 +1734,7 @@
         "essays": "{count} ta universitet uchun insho boshlash"
       },
       "deadlineMissing": "{round} raundi muddati kiritilmagan",
+      "noUpcomingDeadline": "Yaqin muddat yoʼq",
       "officialSite": "Rasmiy sayt",
       "gate": "{institution}: majburiy raund uchun xarajatni tekshirish yoki maslahatchi tasdigʻi kerak.",
       "fee": {

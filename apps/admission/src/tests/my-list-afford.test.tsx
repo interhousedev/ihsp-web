@@ -10,6 +10,7 @@ import { renderAdmissionApp } from "./helpers"
 const messages = {
   chooser: {
     list: {
+      noUpcomingDeadline: "No upcoming deadline",
       deadlineMissing: "{round} deadline not on file",
       officialSite: "Official site",
       gate: "{institution}: a binding round needs a clear affordability check first.",
@@ -116,5 +117,14 @@ describe("my list planning, gate and deadline", () => {
     const link = screen.getByRole("link", { name: "Official site" })
     expect(link.getAttribute("href")).toBe("https://alpha.example/admissions")
     expect(screen.queryByText(/2099/)).toBeNull()
+  })
+
+  it("never shows a past deadline as the next one", async () => {
+    const dated = (plan: string, date: string) => ({ plan, date, notify_by: null, cycle: null, label_short: plan })
+    const inst = institution({ id: "i2", deadlines: [dated("RD", "2020-01-05")], next_deadline: null })
+    mockChooser({ list: [listEntry({ id: "e2", round: "RD", institution: inst })] })
+    renderAdmissionApp(<MyList />, { messages })
+    expect(await screen.findByText("No upcoming deadline")).toBeTruthy()
+    expect(screen.queryByText(/2020/)).toBeNull()
   })
 })

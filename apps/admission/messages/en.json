@@ -1734,6 +1734,7 @@
         "essays": "Start essays for {count, plural, one {# university} other {# universities}}"
       },
       "deadlineMissing": "{round} deadline not on file",
+      "noUpcomingDeadline": "No upcoming deadline",
       "officialSite": "Official site",
       "gate": "{institution}: a binding round needs a clear affordability check or a counselor sign-off first.",
       "fee": {
