@@ -53,7 +53,7 @@ describe("teacher profile photo", () => {
       target: { files: [new File(["GIF89a"], "anim.gif", { type: "image/gif" })] },
     })
 
-    expect(await screen.findByRole("alert")).toHaveTextContent("Choose a JPEG or PNG image.")
+    expect(await screen.findByRole("alert")).toHaveTextContent("Only JPEG or PNG photos are accepted.")
     expect(teacherPhotoUploads()).toEqual([])
   })
 
