@@ -9,6 +9,8 @@ import Link from "next/link"
 import { useRouter } from "next/navigation"
 import { Suspense, useEffect, type ReactNode } from "react"
 import { hasNoAdmissionAccess, isStaffOnly, landingFor, useNav } from "../../../config/nav"
+import { useIsAlumnus } from "../../../config/applicant"
+import { useNotApplicantError } from "../use-not-applicant-error"
 import { SectionTabs } from "../../../components/section-tabs"
 import { AdmissionBrand } from "./admission-brand"
 import { AssistantLauncher, ScreenContextProvider } from "../../assistant"
@@ -24,11 +26,26 @@ function StudentArea({ home, children }: { home?: boolean; children: ReactNode }
   const router = useRouter()
   const { session } = useSession()
   const roles = session?.user.roles
-  const staffOnly = isStaffOnly(roles)
+  const alumnus = useIsAlumnus()
+  const staffOnly = isStaffOnly(roles, alumnus)
+  const notApplicant = useNotApplicantError()
   useEffect(() => {
-    if (home && staffOnly) router.replace(landingFor(roles))
-  }, [home, staffOnly, roles, router])
-  if (hasNoAdmissionAccess(roles)) {
+    if (home && staffOnly) router.replace(landingFor(roles, alumnus))
+  }, [home, staffOnly, roles, alumnus, router])
+  if (notApplicant && !staffOnly) {
+    return (
+      <div className="flex min-h-[60dvh] items-center justify-center p-4">
+        <StateView
+          state="empty"
+          className="border-0"
+          icon={<Icons.lock aria-hidden />}
+          title={t("nav.notApplicantTitle")}
+          description={t("nav.notApplicant")}
+        />
+      </div>
+    )
+  }
+  if (hasNoAdmissionAccess(roles, alumnus)) {
     return (
       <div className="flex min-h-[60dvh] items-center justify-center p-4">
         <StateView
@@ -52,7 +69,7 @@ function StudentArea({ home, children }: { home?: boolean; children: ReactNode }
         title={t("auth.forbiddenTitle")}
         description={t("nav.studentOnly")}
         action={
-          <Link href={landingFor(roles)} className={buttonVariants()}>
+          <Link href={landingFor(roles, alumnus)} className={buttonVariants()}>
             {t("nav.toStaff")}
           </Link>
         }
@@ -65,10 +82,11 @@ function Frame({ tour, children }: { tour: boolean; children: ReactNode }) {
   const nav = useNav()
   const { session } = useSession()
   const roles = session?.user.roles
-  const showTour = tour && !hasNoAdmissionAccess(roles)
+  const alumnus = useIsAlumnus()
+  const showTour = tour && !hasNoAdmissionAccess(roles, alumnus)
   const platforms = usePlatformLinks()
   // Applicants get the five-section bar and a header menu; staff and users without access keep the stock bar with "More".
-  const sectionNav = !isStaffOnly(roles) && !hasNoAdmissionAccess(roles)
+  const sectionNav = !isStaffOnly(roles, alumnus) && !hasNoAdmissionAccess(roles, alumnus)
   const [, secondary, ...staff] = nav.groups
   return (
     <AppShell

@@ -831,6 +831,8 @@
     "studentOnly": "This page is for applicants. Your work is in the staff area.",
     "noAdmission": "The admission app is for applicants and admission staff. Your account has no access to it.",
     "toStaff": "Open staff area",
+    "notApplicantTitle": "Applicants only",
+    "notApplicant": "This section is for applicants. Your account is not an applicant account.",
     "short": {
       "home": "Home",
       "activities": "Activities",
@@ -1926,10 +1928,12 @@
     "resultsLabel": "Universities",
     "sort": {
       "label": "Sort by",
+      "deadline": "Nearest deadline",
       "relevance": "Relevance",
       "name": "Name",
       "cost": "Cost"
     },
+    "daysLeft": "{count, plural, =0 {Due today} one {# day left} other {# days left}}",
     "strengthen": {
       "tab": "AI insight",
       "title": "What to strengthen",
@@ -3360,6 +3364,7 @@
       "banner": "Sorted by your field: {fields}",
       "change": "Change",
       "relevance": "Relevance to you",
+      "deadline": "Nearest deadline",
       "title": "Title"
     },
     "openPlan": "Open my plan",

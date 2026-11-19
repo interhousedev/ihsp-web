@@ -831,6 +831,8 @@
     "studentOnly": "Bu sahifa abituriyentlar uchun. Ishingiz xodimlar boʻlimida.",
     "noAdmission": "Qabul ilovasi abituriyentlar va qabul xodimlari uchun. Hisobingizda unga kirish huquqi yoʻq.",
     "toStaff": "Xodimlar boʻlimini ochish",
+    "notApplicantTitle": "Faqat abituriyentlar uchun",
+    "notApplicant": "Bu boʻlim abituriyentlar uchun. Hisobingiz abituriyent hisobi emas.",
     "short": {
       "home": "Bosh",
       "activities": "Faoliyat",
@@ -1926,10 +1928,12 @@
     "resultsLabel": "Universitetlar",
     "sort": {
       "label": "Saralash",
+      "deadline": "Eng yaqin muddat",
       "relevance": "Mosligi boʻyicha",
       "name": "Nomi boʻyicha",
       "cost": "Narxi boʻyicha"
     },
+    "daysLeft": "{count, plural, =0 {Bugun oxirgi kun} other {# kun qoldi}}",
     "strengthen": {
       "tab": "SI maslahat",
       "title": "Nimani kuchaytirish kerak",
@@ -3360,6 +3364,7 @@
       "banner": "Yoʻnalishingiz boʻyicha saralangan: {fields}",
       "change": "Oʻzgartirish",
       "relevance": "Moslik boʻyicha",
+      "deadline": "Eng yaqin muddat",
       "title": "Nomi boʻyicha"
     },
     "openPlan": "Rejamni ochish",

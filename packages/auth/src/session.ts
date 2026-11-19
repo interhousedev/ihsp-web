@@ -210,12 +210,34 @@ function applyToken(response: TokenResponse): void {
   })
 }
 
-/** Stores the token, loads the user (`GET /v1/id/me`) and marks the session as authenticated. */
+/**
+ * Roles from the `roles` claim of the access token (base64url JWT payload, not verified here: the API verifies it).
+ * `null` when the token has no readable claim; callers then use the roles of `GET /v1/id/me`.
+ */
+export function tokenRoles(accessToken: string): string[] | null {
+  try {
+    const payload = accessToken.split(".")[1]
+    if (!payload) return null
+    const base64 = payload.replace(/-/g, "+").replace(/_/g, "/")
+    const claims: unknown = JSON.parse(new TextDecoder().decode(Uint8Array.from(atob(base64), (c) => c.charCodeAt(0))))
+    if (!claims || typeof claims !== "object" || !("roles" in claims)) return null
+    const roles = claims.roles
+    return Array.isArray(roles) && roles.every((role) => typeof role === "string") ? roles : null
+  } catch {
+    return null
+  }
+}
+
+/** Stores the token, loads the user (`GET /v1/id/me`, roles from the token when present) and marks the session as authenticated. */
 async function establishSession(response: TokenResponse): Promise<void> {
   const store = useAuthStore.getState()
   applyToken(response)
   try {
-    store.setUser(await getMe())
+    const me = await getMe()
+    const roles = tokenRoles(response.access_token)
+    // The token's role list uses the same `Role` values as `UserMe.roles`.
+    const merged: typeof me = roles ? { ...me, roles: roles as typeof me.roles } : me
+    store.setUser(merged)
   } catch (cause) {
     store.clear()
     if (isApiError(cause)) throw cause

@@ -7,6 +7,7 @@ import { Icons } from "@ihsp/ui"
 import { useRouter, useSearchParams } from "next/navigation"
 import { Suspense } from "react"
 import { isStaffOnly } from "../../../config/nav"
+import { useIsAlumnus } from "../../../config/applicant"
 import { AsideCard, SplitLayout } from "../../../components/lib/split-layout"
 import { UnderlineTabs } from "../../../components/lib/underline-tabs"
 import { ScrollFade } from "../../../components/scroll-fade"
@@ -31,6 +32,7 @@ const TABS = ["privacy", "profile", "data", "activity"]
 function SettingsBody() {
   const t = useT("privacy")
   const { session } = useSession()
+  const alumnus = useIsAlumnus()
   const router = useRouter()
   const params = useSearchParams()
   const wanted = params.get("tab") ?? ""
@@ -55,7 +57,7 @@ function SettingsBody() {
           />
           {tab === "privacy" ? (
             <div className="flex flex-col gap-8">
-              {isStaffOnly(session?.user.roles) ? null : <PurposeConsents />}
+              {isStaffOnly(session?.user.roles, alumnus) ? null : <PurposeConsents />}
               <MentoringSwitches />
             </div>
           ) : null}

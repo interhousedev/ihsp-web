@@ -1,6 +1,7 @@
 "use client"
 
 import { useSession } from "@ihsp/auth"
+import { useIsAlumnus } from "./applicant"
 import { useT } from "@ihsp/i18n"
 import { type BottomNavItem, type NavGroup } from "@ihsp/ui"
 import { useMemo } from "react"
@@ -126,19 +127,19 @@ type RoleList = readonly string[] | undefined
 const SETTINGS_ROLES = ["admin", "counselor"] as const
 const hasAny = (roles: RoleList, wanted: readonly string[]) => !!roles?.some((role) => wanted.includes(role))
 
-/** A staff member without the student role: no applicant pages, only the staff area and settings. */
-export function isStaffOnly(roles: RoleList): boolean {
-  return hasAny(roles, DOCUMENT_ROLES) && !hasAny(roles, ["student"])
+/** A staff member who is not student-capable (no `student` role, not an alumnus): only the staff area and settings. */
+export function isStaffOnly(roles: RoleList, alumnus = false): boolean {
+  return hasAny(roles, DOCUMENT_ROLES) && !hasAny(roles, ["student"]) && !alumnus
 }
 
 /** Neither an applicant nor admission staff (a teacher, an LMS author): the admission app has nothing for them. */
-export function hasNoAdmissionAccess(roles: RoleList): boolean {
-  return !hasAny(roles, DOCUMENT_ROLES) && !hasAny(roles, ["student"])
+export function hasNoAdmissionAccess(roles: RoleList, alumnus = false): boolean {
+  return !hasAny(roles, DOCUMENT_ROLES) && !hasAny(roles, ["student"]) && !alumnus
 }
 
 /** The page a signed-in user starts on: transcript officers on their queue, other staff on the caseload. */
-export function landingFor(roles: RoleList): string {
-  if (!isStaffOnly(roles)) return "/"
+export function landingFor(roles: RoleList, alumnus = false): string {
+  if (!isStaffOnly(roles, alumnus)) return "/"
   return hasAny(roles, CASELOAD_ROLES) ? "/staff/" : "/staff/transcripts/"
 }
 
@@ -147,9 +148,10 @@ export function useNav(): { groups: NavGroup[]; bottom: BottomNavItem[] } {
   const t = useT("nav")
   const { session } = useSession()
   const roles = session?.user.roles
+  const alumnus = useIsAlumnus()
   return useMemo(() => {
-    const staffOnly = isStaffOnly(roles)
-    const noAccess = hasNoAdmissionAccess(roles)
+    const staffOnly = isStaffOnly(roles, alumnus)
+    const noAccess = hasNoAdmissionAccess(roles, alumnus)
     const isStaff = hasAny(roles, CASELOAD_ROLES)
     const isCurator = hasAny(roles, CURATOR_ROLES)
     const isDocStaff = hasAny(roles, DOCUMENT_ROLES)
@@ -225,5 +227,5 @@ export function useNav(): { groups: NavGroup[]; bottom: BottomNavItem[] } {
       icon: SECTIONS[id].icon,
     }))
     return { groups, bottom }
-  }, [t, roles])
+  }, [t, roles, alumnus])
 }

@@ -7,6 +7,7 @@ import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query"
 import { useId } from "react"
 import { toast } from "sonner"
 import { isStaffOnly } from "../../../config/nav"
+import { useIsAlumnus } from "../../../config/applicant"
 import { mentoringKeys, mentoringQuery, putMenteeOptIn, putMentorOptIn } from "../../mentoring/api"
 
 function SwitchRow({
@@ -59,7 +60,8 @@ export function MentoringSwitches() {
   })
 
   const data = state.data
-  const showMentee = !isStaffOnly(session?.user.roles)
+  const alumnus = useIsAlumnus()
+  const showMentee = !isStaffOnly(session?.user.roles, alumnus)
   const showMentor = (data?.mentor_assignments ?? 0) > 0
   if (data && !showMentee && !showMentor) return null
 

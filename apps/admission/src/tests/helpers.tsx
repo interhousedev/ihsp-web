@@ -33,6 +33,7 @@ server.resetHandlers(
   http.get(apiUrl(`${A}/orgs`), () => HttpResponse.json({ items: [] })),
   http.get(apiUrl(`${A}/matches`), () => HttpResponse.json({ items: [] })),
   http.get(apiUrl(`${A}/staff/catalog/fact-spec`), () => HttpResponse.json({ groups: [] })),
+  http.get(apiUrl(`${A}/me`), () => HttpResponse.json({ kind: "none", may_enter: false, entitlement_kind: null })),
   http.get(apiUrl(`${A}/config`), notFound),
   http.get(apiUrl(`${A}/consent`), notFound),
   http.post(apiUrl(`${A}/uni-chats/:id`), notFound),
