@@ -2285,7 +2285,8 @@
     },
     "oh": {
       "sat_erw": "Only some universities accept SAT English as proof of English"
-    }
+    },
+    "tagHint": "Type and press Enter, or leave the field, to add it."
   },
   "words": {
     "title": "Your three words",

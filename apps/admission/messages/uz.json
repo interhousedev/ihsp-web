@@ -2285,7 +2285,8 @@
     },
     "oh": {
       "sat_erw": "SAT English ingliz tili bilimi isboti sifatida faqat ayrim universitetlarda qabul qilinadi"
-    }
+    },
+    "tagHint": "Yozing va Enter tugmasini bosing yoki qoʻshish uchun maydondan chiqing."
   },
   "words": {
     "title": "Uch soʻzingiz",
