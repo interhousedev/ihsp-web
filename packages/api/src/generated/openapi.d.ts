@@ -14226,7 +14226,7 @@ export interface paths {
         post?: never;
         /**
          * Delete My Profile Photo
-         * @description Remove the caller's photo; nothing happens when there is none.
+         * @description Remove the uploaded photo; the entrance face photo, if any, takes its place.
          */
         delete: operations["me_delete_photo"];
         options?: never;
@@ -21559,6 +21559,8 @@ export interface components {
             important: boolean;
             /** Institution Name */
             institution_name?: string | null;
+            /** Institution Website Url */
+            institution_website_url?: string | null;
             /** List Entry Id */
             list_entry_id: string | null;
             /**
@@ -27553,6 +27555,8 @@ export interface components {
             sources: components["schemas"]["SourceOut"][];
             /** Verified */
             verified: boolean;
+            /** Website Url */
+            website_url: string | null;
         };
         /**
          * InstitutionPageOut
@@ -31294,6 +31298,22 @@ export interface components {
             shelf_counts: {
                 [key: string]: number;
             };
+        };
+        /**
+         * MePhotoResponse
+         * @description The caller's own photo with where it came from.
+         */
+        MePhotoResponse: {
+            /**
+             * Photo Source
+             * @description An upload or the entrance face photo; null when there is none.
+             */
+            photo_source?: ("upload" | "face") | null;
+            /**
+             * Photo Url
+             * @description Link to the photo, valid for an hour; null when there is none.
+             */
+            photo_url: string | null;
         };
         /**
          * MediaGrantItem
@@ -40288,6 +40308,16 @@ export interface components {
          * @description One prompt to store; the list order gives the position.
          */
         SuppPromptIn: {
+            /** Choice Group */
+            choice_group?: string | null;
+            /** Limit Min */
+            limit_min?: number | null;
+            /**
+             * Limit Unit
+             * @default words
+             * @enum {string}
+             */
+            limit_unit?: "words" | "characters";
             /** Prompt */
             prompt: string;
             /**
@@ -40307,6 +40337,15 @@ export interface components {
          *     `previous_text` is the old wording of a `changed` prompt.
          */
         SuppPromptOut: {
+            /** Choice Group */
+            choice_group: string | null;
+            /** Limit Min */
+            limit_min: number | null;
+            /**
+             * Limit Unit
+             * @enum {string}
+             */
+            limit_unit: "words" | "characters";
             /** Position */
             position: number;
             /** Previous Text */
@@ -40330,11 +40369,21 @@ export interface components {
          * @description One supplement prompt of a proposal, with the page it was read on.
          */
         SuppPromptProposalIn: {
+            /** Choice Group */
+            choice_group?: string | null;
             /**
              * Cycle
              * @description Admission cycle, e.g. "2025-26".
              */
             cycle: string;
+            /** Limit Min */
+            limit_min?: number | null;
+            /**
+             * Limit Unit
+             * @default words
+             * @enum {string}
+             */
+            limit_unit?: "words" | "characters";
             /** Prompt */
             prompt: string;
             /**
@@ -40355,8 +40404,17 @@ export interface components {
          * @description A supplement prompt carried by a proposal.
          */
         SuppPromptProposalOut: {
+            /** Choice Group */
+            choice_group?: string | null;
             /** Cycle */
             cycle: string;
+            /** Limit Min */
+            limit_min?: number | null;
+            /**
+             * Limit Unit
+             * @default words
+             */
+            limit_unit?: string;
             /** Prompt */
             prompt: string;
             /** Required */
@@ -42512,6 +42570,11 @@ export interface components {
             otp_enabled: boolean;
             /** Otp Via Email */
             otp_via_email: boolean;
+            /**
+             * Photo Source
+             * @description Where the photo came from: an upload or the entrance face photo.
+             */
+            photo_source?: ("upload" | "face") | null;
             /** Photo Url */
             photo_url: string | null;
             preferences: components["schemas"]["UserPreferences"];
@@ -72469,7 +72532,7 @@ export interface operations {
                     [name: string]: unknown;
                 };
                 content: {
-                    "application/json": components["schemas"]["UserPhotoResponse"];
+                    "application/json": components["schemas"]["MePhotoResponse"];
                 };
             };
             /** @description Not signed in. */
@@ -72517,7 +72580,7 @@ export interface operations {
                     [name: string]: unknown;
                 };
                 content: {
-                    "application/json": components["schemas"]["UserPhotoResponse"];
+                    "application/json": components["schemas"]["MePhotoResponse"];
                 };
             };
             /** @description Not signed in. */
