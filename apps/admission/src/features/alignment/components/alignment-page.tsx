@@ -21,7 +21,8 @@ import { useState } from "react"
 import { AdmissionShell } from "../../shell/components/admission-shell"
 import { ALIGNMENT_KEY, createAlignment, useAlignment, type Alignment } from "../api"
 
-export function AlignmentPage() {
+/** The alignment report and its actions (shown on the essays page, tab alignment). */
+export function AlignmentBody() {
   const t = useT("alignment")
   const query = useAlignment()
   const queryClient = useQueryClient()
@@ -53,7 +54,7 @@ export function AlignmentPage() {
         state="empty"
         title={t("noWordsTitle")}
         action={
-          <Link href="/words/" className={buttonVariants()}>
+          <Link href="/essays/?tab=story#words" className={buttonVariants()}>
             {t("goWords")}
           </Link>
         }
@@ -89,17 +90,26 @@ export function AlignmentPage() {
   }
 
   return (
+    <div className="flex flex-col gap-4">
+      {err?.type === "admission/quota_exceeded" ? (
+        <Alert variant="destructive">
+          <AlertDescription>
+            {t("quota", { limit: String(err.params.limit ?? ""), period: String(err.params.period ?? "") })}
+          </AlertDescription>
+        </Alert>
+      ) : null}
+      {body}
+    </div>
+  )
+}
+
+export function AlignmentPage() {
+  const t = useT("alignment")
+  return (
     <AdmissionShell>
       <div className={pageClass("narrow")}>
         <AppPageHeader icon="route" title={t("title")} />
-        {err?.type === "admission/quota_exceeded" ? (
-          <Alert variant="destructive">
-            <AlertDescription>
-              {t("quota", { limit: String(err.params.limit ?? ""), period: String(err.params.period ?? "") })}
-            </AlertDescription>
-          </Alert>
-        ) : null}
-        {body}
+        <AlignmentBody />
       </div>
     </AdmissionShell>
   )

@@ -1,12 +1,9 @@
 "use client"
 
-import { Suspense } from "react"
-import { AlignmentPage } from "../../features/alignment/components/alignment-page"
+import { RouteRedirect, type RedirectTarget } from "../../components/route-redirect"
+
+const target: RedirectTarget = () => ({ to: "/essays/?tab=alignment" })
 
 export default function Page() {
-  return (
-    <Suspense>
-      <AlignmentPage />
-    </Suspense>
-  )
+  return <RouteRedirect target={target} />
 }
