@@ -4,6 +4,22 @@ All notable changes to this project are documented here. The format follows [Kee
 
 ## [Unreleased]
 
+## [1.7.0] - 2026-11-19
+
+### Highlights
+
+- admission.ihsu.uz in five sections (Career & study, Activities & honors, Universities & budget, Essays, Documents & applying) with a linked student pathway.
+- Essays: Docs-style editor, base review plus one review per chosen university, review invites for classmates, parents and counselors, admitted-essay examples, a prompt studio for counselors.
+- Universities: multi-select preferences, early-plan conflict warnings (ED/REA/SCEA/EA), an application budget, research opportunities sorted by field of study, supplement prompts with character or word limits and "answer one of" groups.
+- Visual and Markdown rich text editor for the FAQ, library, LMS, legal pages and notes; safe OpenUI buttons and callouts.
+- my.iht: brand header with name and photo, one profile photo rule (the entrance photo is the profile photo until an upload), consistent no-record states, offline bar and menu fixes; a liquid-glass landing page.
+
+### Known issues
+
+- After log out, my.iht lands on the ID welcome page.
+- The web image still uses nginx-unprivileged 1.31.7 (internal only) until 1.31.9 is published.
+- Next.js 16.4.3 has two moderate advisories (GHSA-mfr8-8qww-v76h, GHSA-vc7v-qv4w-wrv8); upgrade pending.
+
 ### Added
 
 - admission.ihsu.uz: a new app for university applications: profile setup with background questions, activities and honors with AI review and interview, future plans, the university chooser, documents and deadlines, and staff views for counselors, transcript officers and mentors.
