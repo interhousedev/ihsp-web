@@ -13,6 +13,17 @@ All notable changes to this project are documented here. The format follows [Kee
 - Share: a guest page for admission help requests.
 - admission.ihsu.uz access and polish: a no-access page for accounts without admission roles, the `admission:documents` MCP token scope, consultations limited to assigned staff, grouped document checklist, prep calendar and Gantt that open on current content, translated SCEA rounds and audit types, and the AI popup that focuses its composer and stays out of the FAQ and the tour.
 - admission.ihsu.uz international students: a college picker with search, acceptance rates and test policies; the next deadline and an inline "Add a university" row in my list; a school details page with sections, sourced facts, admission factors and deadline tables; an essay check with six scored dimensions, a band and a "How we score" explainer; counselor proposals with international facts, each with its own source and year; and an agent token card for the `admission:catalog` scope that reads the catalog and proposes changes but never approves them.
+- admission.ihsu.uz student navigation in five sections (Career & study, Activities & honors, Universities & budget, Essays, Documents & applying) with a Home overview; old routes redirect. Activities open in a popup; search has a discover view and a preferences panel (campus setting, country or region); an application budget page with fee status; ED/REA/SCEA conflict warnings; opportunities with a research kind, study fields and relevance sort; university logos in documents, deadlines and outcomes.
+- admission.ihsu.uz essays: base and per-university reviews, sharing for review with a link, an admitted-essay Examples tab, and for staff the Exemplars and Prompt studio pages.
+- Share: the essay reviewer page for guests with anchored comments.
+- Admin: the "Essay reviewer" group in "Limits & usage".
+- A WYSIWYG editor for descriptions (LMS, library) with a Markdown mode, and rich-text FAQ articles with blocks and safe links.
+- A profile photo for every role, and the user's name and photo in the header.
+- Landing page redesign.
+
+### Upgrade notes
+
+- Needs backend 1.7.0; the committed `packages/api/openapi.json` is already synced (`bun run sync:openapi`).
 
 ## [1.6.3] - 2026-11-16
 

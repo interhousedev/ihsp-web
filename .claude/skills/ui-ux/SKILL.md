@@ -48,3 +48,21 @@ Students mostly use phones, often inside the Telegram webview. Design for that f
 
 ## Accessibility
 Keyboard operable, visible focus, labelled controls, correct roles. The e2e tests run axe; fix violations, do not suppress them.
+
+## Visual gate
+Every UI change follows skill://ui-craft Verify loop (global skill). If it is unavailable: (1) start the app locally; (2) screenshot the changed screens at 360, 768 and 1280 px, light and dark; (3) open the images and fix blank blocks, overflow, overlaps, raw keys; (4) repeat until clean.
+The gate covers every app whose shared shell or `packages/ui` you touched, not only the edited page.
+
+## Artifact rules
+- Never use `bg-primary`/`bg-foreground` as a large surface in the mono theme: it renders as a black/white slab.
+- App shell headers render the signed-in user's avatar and display name at every breakpoint; a header showing only an empty bar is a defect.
+- University logos are `object-contain` with padding; never crop.
+- Never show raw tag or i18n keys: map `major:*` and similar through i18n.
+- Fixed or floating elements never sit inside transformed wrappers (`.page-enter`).
+- Floating toolbars reserve header space.
+- Inputs are at least 16px on mobile (iOS zoom).
+- Fixed-height lists use an edge fade, not visible scrollbars.
+- Gantt/timeline bars always carry a label and a non-black fill.
+
+## Brand assets
+The lyceum crest SVG in the repo is the default; tenants/admins can override logos via config — never hardcode a logo path in components. PWA icons are generated from the crest. No per-app glyph "logos".

@@ -31,3 +31,9 @@ A static export like every app (see `static-export-rules`). Students use it on p
 
 ## Checks
 `cd apps/admission && bun run test`; one build: `bun run --filter ./apps/admission build`. Pages use `StepPage`/`StateView` for empty states until data exists; tests in `src/tests`.
+
+## References
+UI references (Kollegio, Kolly) live in the `temp-kollegio` and `temp-kolly` folders next to the repos. Open the images themselves; never work from prose descriptions. Copy only what fits.
+
+## Review data
+Review with seeded, data-rich demo accounts for each role, never empty-state accounts.
