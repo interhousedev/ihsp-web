@@ -653,196 +653,210 @@
     },
     {
       "name": "@tiptap/core",
-      "version": "3.32.2",
+      "version": "3.33.1",
       "license": "MIT",
       "url": "https://tiptap.dev",
       "ecosystem": "npm"
     },
     {
       "name": "@tiptap/extension-blockquote",
-      "version": "3.32.2",
+      "version": "3.33.1",
       "license": "MIT",
       "url": "https://tiptap.dev",
       "ecosystem": "npm"
     },
     {
       "name": "@tiptap/extension-bold",
-      "version": "3.32.2",
+      "version": "3.33.1",
       "license": "MIT",
       "url": "https://tiptap.dev",
       "ecosystem": "npm"
     },
     {
       "name": "@tiptap/extension-bubble-menu",
-      "version": "3.32.2",
+      "version": "3.33.1",
       "license": "MIT",
       "url": "https://tiptap.dev",
       "ecosystem": "npm"
     },
     {
       "name": "@tiptap/extension-bullet-list",
-      "version": "3.32.2",
+      "version": "3.33.1",
       "license": "MIT",
       "url": "https://tiptap.dev",
       "ecosystem": "npm"
     },
     {
       "name": "@tiptap/extension-code",
-      "version": "3.32.2",
+      "version": "3.33.1",
       "license": "MIT",
       "url": "https://tiptap.dev",
       "ecosystem": "npm"
     },
     {
       "name": "@tiptap/extension-code-block",
-      "version": "3.32.2",
+      "version": "3.33.1",
       "license": "MIT",
       "url": "https://tiptap.dev",
       "ecosystem": "npm"
     },
     {
       "name": "@tiptap/extension-document",
-      "version": "3.32.2",
+      "version": "3.33.1",
       "license": "MIT",
       "url": "https://tiptap.dev",
       "ecosystem": "npm"
     },
     {
       "name": "@tiptap/extension-dropcursor",
-      "version": "3.32.2",
+      "version": "3.33.1",
       "license": "MIT",
       "url": "https://tiptap.dev",
       "ecosystem": "npm"
     },
     {
       "name": "@tiptap/extension-floating-menu",
-      "version": "3.32.2",
+      "version": "3.33.1",
       "license": "MIT",
       "url": "https://tiptap.dev",
       "ecosystem": "npm"
     },
     {
       "name": "@tiptap/extension-gapcursor",
-      "version": "3.32.2",
+      "version": "3.33.1",
       "license": "MIT",
       "url": "https://tiptap.dev",
       "ecosystem": "npm"
     },
     {
       "name": "@tiptap/extension-hard-break",
-      "version": "3.32.2",
+      "version": "3.33.1",
       "license": "MIT",
       "url": "https://tiptap.dev",
       "ecosystem": "npm"
     },
     {
       "name": "@tiptap/extension-heading",
-      "version": "3.32.2",
+      "version": "3.33.1",
       "license": "MIT",
       "url": "https://tiptap.dev",
       "ecosystem": "npm"
     },
     {
       "name": "@tiptap/extension-horizontal-rule",
-      "version": "3.32.2",
+      "version": "3.33.1",
       "license": "MIT",
       "url": "https://tiptap.dev",
       "ecosystem": "npm"
     },
     {
       "name": "@tiptap/extension-italic",
-      "version": "3.32.2",
+      "version": "3.33.1",
       "license": "MIT",
       "url": "https://tiptap.dev",
       "ecosystem": "npm"
     },
     {
       "name": "@tiptap/extension-link",
-      "version": "3.32.2",
+      "version": "3.33.1",
       "license": "MIT",
       "url": "https://tiptap.dev",
       "ecosystem": "npm"
     },
     {
       "name": "@tiptap/extension-list",
-      "version": "3.32.2",
+      "version": "3.33.1",
       "license": "MIT",
       "url": "https://tiptap.dev",
       "ecosystem": "npm"
     },
     {
       "name": "@tiptap/extension-list-item",
-      "version": "3.32.2",
+      "version": "3.33.1",
       "license": "MIT",
       "url": "https://tiptap.dev",
       "ecosystem": "npm"
     },
     {
       "name": "@tiptap/extension-list-keymap",
-      "version": "3.32.2",
+      "version": "3.33.1",
       "license": "MIT",
       "url": "https://tiptap.dev",
       "ecosystem": "npm"
     },
     {
       "name": "@tiptap/extension-ordered-list",
-      "version": "3.32.2",
+      "version": "3.33.1",
       "license": "MIT",
       "url": "https://tiptap.dev",
       "ecosystem": "npm"
     },
     {
       "name": "@tiptap/extension-paragraph",
-      "version": "3.32.2",
+      "version": "3.33.1",
+      "license": "MIT",
+      "url": "https://tiptap.dev",
+      "ecosystem": "npm"
+    },
+    {
+      "name": "@tiptap/extension-placeholder",
+      "version": "3.33.1",
       "license": "MIT",
       "url": "https://tiptap.dev",
       "ecosystem": "npm"
     },
     {
       "name": "@tiptap/extension-strike",
-      "version": "3.32.2",
+      "version": "3.33.1",
       "license": "MIT",
       "url": "https://tiptap.dev",
       "ecosystem": "npm"
     },
     {
       "name": "@tiptap/extension-text",
-      "version": "3.32.2",
+      "version": "3.33.1",
       "license": "MIT",
       "url": "https://tiptap.dev",
       "ecosystem": "npm"
     },
     {
       "name": "@tiptap/extension-underline",
-      "version": "3.32.2",
+      "version": "3.33.1",
       "license": "MIT",
       "url": "https://tiptap.dev",
       "ecosystem": "npm"
     },
     {
       "name": "@tiptap/extensions",
-      "version": "3.32.2",
+      "version": "3.33.1",
+      "license": "MIT",
+      "url": "https://tiptap.dev",
+      "ecosystem": "npm"
+    },
+    {
+      "name": "@tiptap/markdown",
+      "version": "3.33.1",
       "license": "MIT",
       "url": "https://tiptap.dev",
       "ecosystem": "npm"
     },
     {
       "name": "@tiptap/pm",
-      "version": "3.32.2",
+      "version": "3.33.1",
       "license": "MIT",
       "url": "https://tiptap.dev",
       "ecosystem": "npm"
     },
     {
       "name": "@tiptap/react",
-      "version": "3.32.2",
+      "version": "3.33.1",
       "license": "MIT",
       "url": "https://tiptap.dev",
       "ecosystem": "npm"
     },
     {
       "name": "@tiptap/starter-kit",
-      "version": "3.32.2",
+      "version": "3.33.1",
       "license": "MIT",
       "url": "https://tiptap.dev",
       "ecosystem": "npm"
@@ -2042,6 +2056,13 @@
       "version": "3.0.4",
       "license": "MIT",
       "url": "https://github.com/wooorm/markdown-table",
+      "ecosystem": "npm"
+    },
+    {
+      "name": "marked",
+      "version": "17.0.6",
+      "license": "MIT",
+      "url": "https://marked.js.org",
       "ecosystem": "npm"
     },
     {

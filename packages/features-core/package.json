@@ -15,7 +15,8 @@
     "./library-test-support": "./src/library/test-support.tsx",
     "./telemetry": "./src/telemetry/index.ts",
     "./openui": "./src/openui/index.ts",
-    "./id-account": "./src/id-account/index.ts"
+    "./id-account": "./src/id-account/index.ts",
+    "./rich-text": "./src/rich-text/index.ts"
   },
   "scripts": {
     "typecheck": "tsc --noEmit",
@@ -29,6 +30,12 @@
     "@ihsp/telegram": "workspace:*",
     "@ihsp/ui": "workspace:*",
     "@sentry/browser": "10.76.0",
+    "@tiptap/extension-link": "3.33.1",
+    "@tiptap/extension-placeholder": "3.33.1",
+    "@tiptap/markdown": "3.33.1",
+    "@tiptap/pm": "3.33.1",
+    "@tiptap/react": "3.33.1",
+    "@tiptap/starter-kit": "3.33.1",
     "foliate-js": "github:johnfactotum/foliate-js#78914aef4466eb960965702401634c2cb348e9b1",
     "pdfjs-dist": "6.5.438"
   }
