@@ -18,8 +18,6 @@ export type Finish = "light" | "dark"
 /** Page skeleton drawn inside the screen (`components/frame/frame-skeleton.tsx`). */
 export type SkeletonKind = "desktop" | "mobile" | "tablet"
 
-export const DEVICE_IDS: readonly DeviceId[] = ["laptop", "phone", "foldable", "tablet"]
-
 export function shellOf(device: DeviceId, pose: FoldPose): ShellId {
   return device === "foldable" ? `foldable-${pose}` : device
 }
@@ -534,22 +532,3 @@ export function ringShadow(shell: ShellId, finish: Finish): string {
   rings.push(glass ? `inset 0 0 ${glass.blur}px ${glass.spread}px ${palette.glass}` : "inset 0 0 0 0 transparent")
   return rings.join(", ")
 }
-
-/* ---------------------------------------------------------------- fold */
-
-/**
- * Fold animation from react-mockframe's iPhone Duo renderer: two 3D leaves hinged in the
- * middle under the perspective fitted to Apple's half-open render (~29.8° per half at
- * ~2139 px). Closing swings the left leaf over; its back is the outer display.
- */
-export const FOLD = {
-  durationMs: 900,
-  easing: "cubic-bezier(0.45, 0, 0.2, 1)",
-  perspective: 2139,
-  /** The hinge's x in each pose's footprint. */
-  hinge: { closed: DUO_OUTER.spine, open: (DUO_INNER.sw + DUO_INNER.bx) / 2 },
-  /** Left leaf angle per pose (the right leaf stays flat). */
-  leftAngle: { closed: 180, open: 0 },
-  outer: DUO_OUTER,
-  inner: DUO_INNER,
-} as const

@@ -6,9 +6,7 @@ import type { ReactNode } from "react"
 import { ORGANIZATION_JSON_LD } from "./json-ld"
 import { LANG_INIT_SCRIPT } from "./lang-init"
 import { Providers } from "./providers"
-
-const TITLE = `${BRAND.apps.sp.name} — ${BRAND.orgAlias}`
-const DESCRIPTION = `Making everyday studying at ${BRAND.orgAlias} more convenient: marks, timetable, homework, AI study notebooks.`
+import { DESCRIPTION, TITLE } from "./site-meta"
 
 // The language is chosen on the client, so there is one URL and no hreflang alternates.
 export const metadata: Metadata = {

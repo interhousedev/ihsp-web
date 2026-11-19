@@ -12,12 +12,12 @@
   width: min(60vw, 640px);
   aspect-ratio: 1;
   border-radius: 9999px;
-  opacity: 0.55;
+  opacity: 0.4;
   will-change: transform;
   background: radial-gradient(closest-side, var(--blob, var(--brand-soft)), transparent);
 }
 .backdrop[data-tone="strong"] .backdrop-blob {
-  opacity: 0.8;
+  opacity: 0.6;
 }
 .backdrop-blob--a {
   --blob: color-mix(in oklab, var(--brand) 34%, transparent);
@@ -26,13 +26,13 @@
   animation: backdrop-drift-a 22s ease-in-out infinite alternate;
 }
 .backdrop-blob--b {
-  --blob: color-mix(in oklab, var(--brand) 22%, #38bdf8 18%);
+  --blob: color-mix(in oklab, var(--brand) 22%, var(--brand-aqua) 22%);
   top: -10%;
   right: -16%;
   animation: backdrop-drift-b 28s ease-in-out infinite alternate;
 }
 .backdrop-blob--c {
-  --blob: color-mix(in oklab, var(--brand) 18%, #a78bfa 22%);
+  --blob: color-mix(in oklab, var(--brand) 18%, var(--brand-mint) 24%);
   bottom: -30%;
   left: 28%;
   animation: backdrop-drift-c 34s ease-in-out infinite alternate;

@@ -22,6 +22,16 @@ export const DEFAULT_LINKS: LandingLinks = {
   library: "https://lib.ihsu.uz",
 }
 
+/** The public support chat handle; the footer and the applicants note link to it. */
+export const SUPPORT_HANDLE = "ihtsupport"
+export const SUPPORT_URL = `https://t.me/${SUPPORT_HANDLE}`
+
+/** Source repositories (AGPL-3.0-only), see the READMEs. */
+export const SOURCE_URLS = {
+  web: "https://github.com/interhousedev/ihsp-web",
+  backend: "https://github.com/interhousedev/ihsp-backend",
+} as const
+
 export function botUrl(username: string): string {
   return `https://t.me/${encodeURIComponent(username.replace(/^@/, ""))}`
 }

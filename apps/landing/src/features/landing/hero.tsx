@@ -1,127 +1,149 @@
 "use client"
 
-import { BRAND } from "@ihsp/config/brand"
 import { useT } from "@ihsp/i18n"
-import { IconArrowDown, IconBrandTelegram } from "@ihsp/ui"
-import { useEffect, useMemo, useRef, useState } from "react"
-import { AnimatedBackdrop } from "../../components/backgrounds"
-import { useFinish, type DeviceKind } from "../../components/device-mockup/device-frame"
-import { DeviceStage } from "../../components/device-mockup/device-stage"
-import type { FoldPose } from "../../components/device-mockup/devices"
-import { detectDevice, readDeviceSignals } from "./detect-device"
-import { DeviceSwitcher } from "./device-switcher"
-import { useLandingLinks } from "./links"
+import { IconBooks, IconBrandTelegram, IconCalendarWeek, IconChartBar, IconSchool, IconSparkles } from "@ihsp/ui"
+import { useEffect, useState, type ComponentType } from "react"
+import { ctaPrimary, ctaSecondary } from "./cta-styles"
+import { SUPPORT_URL, useLandingLinks } from "./links"
 import { useReducedMotion } from "./reveal"
-import { DashboardLaptop, DashboardPhone, DashboardTablet } from "./screens/dashboard"
 
-export const ctaPrimary =
-  "inline-flex min-h-12 items-center justify-center gap-2 rounded-full bg-[var(--brand)] px-7 text-base font-semibold text-[var(--brand-ink)] shadow-lg transition-colors hover:bg-[var(--brand-strong)] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--brand)]"
-export const ctaSecondary =
-  "inline-flex min-h-12 items-center justify-center gap-2 rounded-full border px-7 text-base font-semibold transition-colors hover:bg-muted focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--brand)]"
+const SOURCES = [
+  { key: "timetable", Icon: IconCalendarWeek, path: "M18 26 C 28 26, 28 40, 36 40" },
+  { key: "marks", Icon: IconChartBar, path: "M18 74 C 28 74, 28 60, 36 60" },
+  { key: "library", Icon: IconBooks, path: "M82 26 C 72 26, 72 40, 64 40" },
+  { key: "courses", Icon: IconSchool, path: "M82 74 C 72 74, 72 60, 64 60" },
+] as const satisfies readonly { key: string; Icon: ComponentType<{ className?: string }>; path: string }[]
 
-/** The first screen: headline, the sign-in call and one device that morphs between laptop, phone, tablet and foldable. */
-export function Hero() {
-  const t = useT("landing")
-  const links = useLandingLinks()
+/** Steps of the example: 1 question, 2..5 one source and its answer line each, 6 the footnote. */
+const LAST_STEP = SOURCES.length + 2
+const FIRST_DELAY = 600
+const STEP_DELAY = 800
+
+/** Plays the example once (after mount); the static page and reduced motion show the finished conversation. */
+function useChatStep(): number {
   const reduced = useReducedMotion()
-  const stage = useRef<HTMLDivElement>(null)
-  // The static page always starts on the laptop; the visitor's own device is picked after mount.
-  const [device, setDevice] = useState<DeviceKind>("laptop")
-  // Choosing the foldable shows it closed, then unfolds it (the 3D fold); other devices have no pose.
-  const [pose, setPose] = useState<FoldPose>("open")
-  const finish = useFinish()
+  const [step, setStep] = useState(LAST_STEP)
   useEffect(() => {
-    setDevice(detectDevice(readDeviceSignals()))
-  }, [])
-  const choose = (next: DeviceKind) => {
-    setDevice(next)
-    setPose(next === "foldable" && !reduced ? "closed" : "open")
-  }
-  useEffect(() => {
-    if (device !== "foldable" || pose !== "closed") return
-    const timer = setTimeout(() => setPose("open"), 900)
-    return () => clearTimeout(timer)
-  }, [device, pose])
-  const screens = useMemo(
-    () => ({
-      laptop: <DashboardLaptop />,
-      phone: <DashboardPhone />,
-      tablet: <DashboardTablet />,
-      foldable: pose === "open" ? <DashboardTablet /> : <DashboardPhone />,
-    }),
-    [pose],
-  )
-  const foldScreens = useMemo(() => ({ open: <DashboardTablet />, closed: <DashboardPhone /> }), [])
-
-  useEffect(() => {
-    const node = stage.current
-    if (!node || reduced) return
-    let frame = 0
-    const update = () => {
-      frame = 0
-      const progress = Math.min(1, Math.max(0, window.scrollY / Math.max(1, window.innerHeight)))
-      node.style.setProperty("--p", progress.toFixed(3))
+    if (reduced) {
+      setStep(LAST_STEP)
+      return
     }
-    const onScroll = () => {
-      if (!frame) frame = requestAnimationFrame(update)
-    }
-    update()
-    window.addEventListener("scroll", onScroll, { passive: true })
-    return () => {
-      window.removeEventListener("scroll", onScroll)
-      if (frame) cancelAnimationFrame(frame)
-    }
+    setStep(0)
+    const timers = Array.from({ length: LAST_STEP }, (_, index) =>
+      setTimeout(() => setStep(index + 1), FIRST_DELAY + index * STEP_DELAY),
+    )
+    return () => timers.forEach(clearTimeout)
   }, [reduced])
+  return step
+}
 
+function Applicants() {
+  const t = useT("landing.banner")
+  const links = useLandingLinks()
   return (
-    <section id="top" className="relative isolate overflow-hidden px-4 pt-28 pb-10 sm:pt-36">
-      <AnimatedBackdrop grid beam />
-      <div className="mx-auto max-w-4xl text-center">
-        <h1 className="text-4xl font-bold tracking-tight text-balance sm:text-6xl">
-          <span className="text-[var(--brand-text)]">{BRAND.apps.sp.name}</span>
-          <span className="block">{t("hero.title")}</span>
+    <aside aria-label={t("label")} className="hero-note">
+      {t("intro")}{" "}
+      <a href={links.bot} target="_blank" rel="noopener noreferrer">
+        {t("bot")}
+      </a>{" "}
+      {t("joiner")}
+      <a href={SUPPORT_URL} target="_blank" rel="noopener noreferrer">
+        {t("support")}
+      </a>
+      {t("end")}
+    </aside>
+  )
+}
+
+/** An illustrative conversation (labelled as an example): the assistant answers from four sources. */
+function ExampleChat({ step }: { step: number }) {
+  const t = useT("landing.hero.chat")
+  return (
+    <div role="group" aria-label={t("label")} className="hero-phone" data-step={step}>
+      <span aria-hidden className="hero-phone-notch" />
+      <div className="hero-phone-screen">
+        <div className="hc-head">
+          <span aria-hidden className="hc-avatar">
+            <IconSparkles className="size-4" />
+          </span>
+          {t("assistant")}
+          <span className="hc-tag">{t("example")}</span>
+        </div>
+        <div className="hc-body">
+          <p className="hc-user" data-on={step >= 1}>
+            {t("question")}
+          </p>
+          <div aria-hidden className="hc-typing" data-on={step === 1}>
+            <span />
+            <span />
+            <span />
+          </div>
+          <div className="hc-answer" data-on={step >= 2}>
+            <p>{t("intro")}</p>
+            <ul>
+              {SOURCES.map(({ key }, index) => (
+                <li key={key} className="hc-line" data-on={step >= index + 2}>
+                  {t(`lines.${key}`)}
+                </li>
+              ))}
+            </ul>
+            <p className="hc-foot" data-on={step >= LAST_STEP}>
+              {t("sources", { count: SOURCES.length })}
+            </p>
+          </div>
+        </div>
+        <div aria-hidden className="hc-input">
+          {t("placeholder")}
+        </div>
+      </div>
+    </div>
+  )
+}
+
+/** The first screen: headline, the two calls to action and an example of the assistant drawing on four sources. */
+export function Hero() {
+  const t = useT("landing.hero")
+  const links = useLandingLinks()
+  const step = useChatStep()
+  return (
+    <section id="top" aria-labelledby="hero-title" className="hero lnd-on-dawn">
+      <div aria-hidden className="hero-bg lnd-dawn" />
+      <div className="hero-inner">
+        <p className="hero-eyebrow">{t("eyebrow")}</p>
+        <h1 id="hero-title" className="hero-title">
+          {t("title")}
         </h1>
-        <p className="text-muted-foreground mx-auto mt-5 max-w-2xl text-lg text-balance">{t("hero.lead")}</p>
-        <div className="mt-8 flex flex-col items-center justify-center gap-3 sm:flex-row">
+        <p className="hero-lead">{t("lead")}</p>
+        <div className="hero-actions">
           <a href={`${links.sp}/`} className={ctaPrimary}>
-            {t("hero.cta")}
+            {t("cta")}
           </a>
           <a href={links.bot} target="_blank" rel="noopener noreferrer" className={ctaSecondary}>
             <IconBrandTelegram aria-hidden className="size-5" />
-            {t("hero.bot")}
+            {t("bot")}
           </a>
         </div>
+        <Applicants />
       </div>
-      <div className="mt-8 flex max-w-full justify-center sm:mt-10">
-        <DeviceSwitcher value={device} onChange={choose} />
+      <div className="hero-stage">
+        <svg aria-hidden focusable="false" className="hero-lines" viewBox="0 0 100 100" preserveAspectRatio="none">
+          {SOURCES.map(({ key, path }, index) => (
+            <path key={key} d={path} pathLength={1} data-on={step >= index + 2} />
+          ))}
+        </svg>
+        <ExampleChat step={step} />
+        {SOURCES.map(({ key, Icon }, index) => (
+          <div key={key} className="hero-src lnd-glass" data-slot={index + 1} data-on={step >= index + 2}>
+            <span aria-hidden className="hero-src-icon">
+              <Icon className="size-6" />
+            </span>
+            <span>
+              <span className="hero-src-title">{t(`sources.${key}.title`)}</span>
+              <span className="hero-src-meta">{t(`sources.${key}.meta`)}</span>
+            </span>
+          </div>
+        ))}
       </div>
-      <div
-        ref={stage}
-        style={{ "--p": 0 } as React.CSSProperties}
-        className="relative mx-auto mt-4 w-full max-w-5xl pb-6 sm:mt-6 sm:pb-10"
-      >
-        <div
-          className="will-change-transform"
-          style={{ transform: "translateY(calc(var(--p) * 40px)) scale(calc(1 - var(--p) * 0.04))" }}
-        >
-          <DeviceStage
-            device={device}
-            pose={pose}
-            finish={finish}
-            screens={screens}
-            foldScreens={foldScreens}
-            reduced={reduced}
-            label={t(`hero.${device}Alt`)}
-          />
-        </div>
-      </div>
-      <a
-        href="#features"
-        aria-label={t("hero.scroll")}
-        className="text-muted-foreground hover:text-foreground mx-auto flex size-11 items-center justify-center rounded-full border motion-safe:animate-bounce"
-      >
-        <IconArrowDown aria-hidden className="size-5" />
-      </a>
     </section>
   )
 }

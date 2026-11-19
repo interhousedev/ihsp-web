@@ -23,6 +23,10 @@ export function useFinish(): "light" | "dark" {
   return finish
 }
 
+/** Below this scale (a laptop under ~360px wide) the page is laid out on `NARROW_VIEWPORT` px. */
+const NARROW_SCALE = 0.3
+const NARROW_VIEWPORT = 560
+
 /**
  * One device (adapted from the component library's `media/device-mockup`): the shell in its natural px, scaled to the
  * width of the parent. The screen holds React content laid out at the device's own viewport and scaled to the glass,
@@ -57,7 +61,13 @@ export function DeviceFrame({
     return () => observer.disconnect()
   }, [footprint.width])
 
-  const fit = screen.width / viewport.width
+  // A laptop in a phone-wide box would shrink its page to ~3px type: lay the page out on a narrower viewport instead,
+  // so the same glass shows larger, readable content.
+  const narrow = shell === "laptop" && scale > 0 && scale < NARROW_SCALE
+  const page = narrow
+    ? { width: NARROW_VIEWPORT, height: Math.round((NARROW_VIEWPORT * viewport.height) / viewport.width) }
+    : viewport
+  const fit = screen.width / page.width
 
   return (
     <div
@@ -81,7 +91,7 @@ export function DeviceFrame({
             aria-hidden
             inert
             className="bg-background text-foreground origin-top-left overflow-hidden text-sm"
-            style={{ width: viewport.width, height: viewport.height, transform: `scale(${fit})` }}
+            style={{ width: page.width, height: page.height, transform: `scale(${fit})` }}
           >
             {children}
           </div>

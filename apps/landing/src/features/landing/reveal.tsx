@@ -16,7 +16,7 @@ export function useReducedMotion(): boolean {
   return reduced
 }
 
-/** Fades and lifts its children in once they scroll into view; shows them as they are under reduced motion. */
+/** Fades and lifts its children (18px, 0.75s) in once they scroll into view; shows them as they are under reduced motion. */
 export function Reveal({
   children,
   className,
@@ -48,12 +48,9 @@ export function Reveal({
   return (
     <div
       ref={ref}
+      data-hidden={hidden}
       style={{ transitionDelay: `${delay}ms` }}
-      className={cn(
-        "transition-[opacity,transform] duration-700 ease-out",
-        hidden ? "translate-y-8 opacity-0" : "translate-y-0 opacity-100",
-        className,
-      )}
+      className={cn("lnd-reveal", className)}
     >
       {children}
     </div>

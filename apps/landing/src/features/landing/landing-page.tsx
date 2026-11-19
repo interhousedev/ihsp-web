@@ -1,42 +1,24 @@
 "use client"
 
 import { useT } from "@ihsp/i18n"
-import { useMemo } from "react"
-import { ChapterRail } from "../../components/chapter-rail"
-import { Ecosystem } from "./ecosystem"
+import { useState } from "react"
+import { AnimatedBackdrop } from "../../components/backgrounds"
+import { AppBento } from "./app-bento"
+import { Faq } from "./faq"
+import { FeatureAccordion } from "./feature-accordion"
 import { FinalCta, SiteFooter } from "./footer"
 import { Hero } from "./hero"
-import {
-  AssistantSection,
-  BotSection,
-  DashboardSection,
-  ExcusesSection,
-  JournalSection,
-  LibrarySection,
-  TimetableSection,
-} from "./sections"
+import { IntegrationOrbit } from "./integration-orbit"
+import { ManifestoDialog } from "./manifesto-dialog"
+import { PillCloud } from "./pill-cloud"
+import { SetupSteps } from "./setup-steps"
 import { SiteHeader } from "./site-header"
-
-/** Height of the fixed header incl. its top margin; chapter jumps land below it. */
-const HEADER_OFFSET = 72
+import { SplitControl, SplitInSight } from "./split-features"
+import { Testimonials } from "./testimonials"
 
 export function LandingPage() {
   const t = useT("landing")
-  const tiles = useT("landing.eco.tiles")
-  const chapters = useMemo(
-    () => [
-      { id: "top", label: tiles("dashboard") },
-      { id: "features", label: t("nav.features") },
-      { id: "timetable", label: tiles("timetable") },
-      { id: "assistant", label: tiles("assistant") },
-      { id: "journal", label: tiles("journal") },
-      { id: "library", label: tiles("library") },
-      { id: "bot", label: tiles("bot") },
-      { id: "excuses", label: tiles("excuses") },
-      { id: "ecosystem", label: t("nav.ecosystem") },
-    ],
-    [t, tiles],
-  )
+  const [manifestoOpen, setManifestoOpen] = useState(false)
   return (
     <>
       <a
@@ -45,23 +27,25 @@ export function LandingPage() {
       >
         {t("skip")}
       </a>
+      <div aria-hidden className="lnd-ambient">
+        <AnimatedBackdrop />
+      </div>
       <SiteHeader />
-      <ChapterRail chapters={chapters} label={t("nav.label")} headerOffset={HEADER_OFFSET} hideBeforeId="start" />
       <main id="main" className="overflow-x-clip">
         <Hero />
-        <DashboardSection />
-        <TimetableSection />
-        <AssistantSection />
-        <JournalSection />
-        <LibrarySection />
-        <BotSection />
-        <ExcusesSection />
-        <Ecosystem />
-        <div id="start">
-          <FinalCta />
-        </div>
+        <PillCloud />
+        <FeatureAccordion />
+        <AppBento />
+        <IntegrationOrbit />
+        <SplitInSight />
+        <SplitControl />
+        <Testimonials />
+        <SetupSteps />
+        <Faq />
+        <FinalCta />
       </main>
-      <SiteFooter />
+      <SiteFooter onOpenManifesto={() => setManifestoOpen(true)} />
+      <ManifestoDialog open={manifestoOpen} onClose={() => setManifestoOpen(false)} />
     </>
   )
 }

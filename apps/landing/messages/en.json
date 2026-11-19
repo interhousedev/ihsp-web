@@ -9,113 +9,58 @@
     "nav": {
       "label": "Main",
       "features": "Features",
-      "ecosystem": "Everything in one",
-      "journal": "For teachers",
-      "bot": "Telegram",
-      "signIn": "Sign in",
       "menu": "Menu",
       "close": "Close",
-      "mcp": "AI tools"
+      "apps": "Apps",
+      "integrations": "Integrations",
+      "control": "Control",
+      "faq": "Questions",
+      "open": "Open app"
     },
     "hero": {
-      "title": "Everyday school life in one app",
-      "lead": "Marks, timetable, homework, AI study notebooks and excuses: for students and teachers of {orgAlias}.",
-      "cta": "Sign in to {appMy}",
+      "title": "Your school day, answered in a chat",
+      "lead": "One account and one chat for the timetable, marks, library and courses of {orgAlias}.",
+      "cta": "Open {appMy}",
       "bot": "Open the Telegram bot",
-      "laptopAlt": "The home page of {appMy} on a laptop",
-      "phoneAlt": "The home page of {appMy} on a phone",
-      "scroll": "Scroll to features",
-      "tabletAlt": "The home page of {appMy} on a tablet",
-      "foldableAlt": "The home page of {appMy} on a foldable",
-      "devices": {
-        "label": "Choose a device",
-        "phone": "Phone",
-        "tablet": "Tablet",
-        "laptop": "Laptop (Mac)",
-        "foldable": "Foldable"
-      }
-    },
-    "eco": {
-      "headline": "Everything the lyceum needs in one account",
-      "hint": "One sign-in opens every app.",
-      "tiles": {
-        "dashboard": "Home",
-        "timetable": "Timetable",
-        "marks": "Marks",
-        "journal": "Teachers' journal",
-        "assistant": "AI assistant",
-        "notebooks": "Notebooks and Studio",
-        "library": "Library",
-        "lms": "Courses",
-        "bot": "Telegram bot",
-        "excuses": "Excuses"
-      }
-    },
-    "sections": {
-      "dashboard": {
-        "title": "Your day at a glance",
-        "text": "The home page gathers what matters today.",
-        "p1": "Today's lessons with rooms and teachers",
-        "p2": "GPA, absences and homework in one place",
-        "p3": "Latest marks, notebooks and library at hand",
-        "alt": "The home page on a tablet"
+      "eyebrow": "For students and teachers of {orgAlias}",
+      "chat": {
+        "label": "Example conversation with the assistant",
+        "assistant": "Assistant",
+        "example": "Example",
+        "question": "What do I have tomorrow?",
+        "intro": "Here is tomorrow:",
+        "lines": {
+          "timetable": "5 lessons, the first is Mathematics at 08:30.",
+          "marks": "A new mark in Physics is waiting for you.",
+          "library": "Physics, grade 10 is due back at the library.",
+          "courses": "Your course continues with Algebra, unit 3."
+        },
+        "sources": "Based on {count} sources",
+        "placeholder": "Ask about your school day"
       },
-      "timetable": {
-        "title": "Timetable and marks without asking around",
-        "text": "The school week from Monday to Friday and every mark, as soon as it is set.",
-        "p1": "Changes and moved lessons show up at once",
-        "p2": "Marks by subject with the average",
-        "p3": "A notification for every new mark",
-        "alt": "The timetable on a phone",
-        "alt2": "Marks on a phone"
-      },
-      "assistant": {
-        "title": "An AI assistant and notebooks that learn with you",
-        "text": "Add lessons, files and notes as sources and ask questions: answers cite where they come from.",
-        "p1": "Notebooks built from your own sources",
-        "p2": "Studio makes quizzes, flash cards, mind maps and reports",
-        "p3": "Web search is a switch you control",
-        "alt": "An AI notebook on a laptop"
-      },
-      "journal": {
-        "title": "A journal that saves teachers' time",
-        "text": "Marks and attendance for a whole class on one screen.",
-        "p1": "Marks and attendance by lesson",
-        "p2": "Excused absences are marked automatically",
-        "p3": "Export the journal in one click",
-        "alt": "The teachers' journal on a laptop"
-      },
-      "library": {
-        "title": "Library and courses in the same place",
-        "text": "Find a book, see if it is free, and continue your course where you stopped.",
-        "p1": "One search across the catalogue",
-        "p2": "Course outlines with progress",
-        "p3": "Certificates for finished courses",
-        "alt": "A course on a tablet",
-        "alt2": "Library search on a phone"
-      },
-      "bot": {
-        "title": "Telegram bot and mini app",
-        "text": "Marks and the timetable arrive in the chat; the full app opens inside Telegram.",
-        "p1": "New marks and tomorrow's lessons in the chat",
-        "p2": "Ask the assistant right in Telegram",
-        "p3": "The mini app signs you in by itself",
-        "alt": "The Telegram bot on a phone",
-        "alt2": "The mini app on a phone"
-      },
-      "excuses": {
-        "title": "Excuses with a clear status",
-        "text": "Send a note and documents, follow the decision and chat with the curator.",
-        "p1": "Pending, approved or rejected at a glance",
-        "p2": "Documents attached to the request",
-        "p3": "Approved excuses reach the journal",
-        "alt": "Excuses on a tablet"
+      "sources": {
+        "timetable": {
+          "title": "Timetable",
+          "meta": "5 lessons"
+        },
+        "marks": {
+          "title": "Marks",
+          "meta": "1 new mark"
+        },
+        "library": {
+          "title": "Library",
+          "meta": "1 book due"
+        },
+        "courses": {
+          "title": "Courses",
+          "meta": "Algebra, unit 3"
+        }
       }
     },
     "cta": {
       "title": "Ready to start?",
       "text": "Sign in with your lyceum account and everything is already there.",
-      "button": "Sign in to {appMy}",
+      "button": "Open {appMy}",
       "bot": "Open the Telegram bot"
     },
     "demo": {
@@ -281,7 +226,18 @@
       "staff": "{appStaff}",
       "lms": "{appLms}",
       "library": "{appLibrary}",
-      "bot": "Telegram bot"
+      "bot": "Telegram bot",
+      "resources": "Resources",
+      "support": "Support",
+      "source": "Source code",
+      "web": "Web apps",
+      "backend": "Backend",
+      "license": "AGPL-3.0-only",
+      "principles": "Principles",
+      "features": "Features",
+      "integrations": "Integrations",
+      "faq": "Questions",
+      "tagline": "Timetable, marks, library and courses in one account."
     },
     "banner": {
       "label": "Questions from applicants",
@@ -291,18 +247,292 @@
       "support": "@ihtsupport",
       "end": ")."
     },
-    "mcp": {
-      "title": "Connect your own AI assistant",
-      "text": "The platform runs MCP servers, so students and teachers can link ChatGPT, Claude or any other MCP-capable assistant to their account. You choose what it may access in the ID app, scope by scope.",
-      "p1": "Ask about the timetable, homework and marks",
-      "p2": "Upload files and hand in homework",
-      "p3": "Teachers manage lessons and homework",
-      "consent": "Access is granted per scope and can be revoked at any time.",
-      "tiles": {
-        "ask": "Timetable, homework, marks",
-        "files": "Upload files",
-        "submit": "Hand in homework",
-        "teach": "Lessons and homework for teachers"
+    "manifesto": {
+      "title": "Principles",
+      "close": "Close",
+      "p1": {
+        "title": "Open source",
+        "text": "The code is open under AGPL-3.0-only."
+      },
+      "p2": {
+        "title": "Three languages",
+        "text": "Every text exists in Uzbek, Russian and English."
+      },
+      "p3": {
+        "title": "Answers with sources",
+        "text": "The assistant answers from your notebooks and the school knowledge base; web search is a switch you control."
+      },
+      "p4": {
+        "title": "Soft AI limits",
+        "text": "Administrators set AI limits and can change them at any time."
+      },
+      "p5": {
+        "title": "Private security",
+        "text": "Vulnerabilities are reported privately and acknowledged within 2 business days; MCP access is granted per scope and can be revoked."
+      }
+    },
+    "pills": {
+      "eyebrow": "Every day",
+      "title": "Ask less, get to it faster",
+      "listLabel": "Things you do in a few taps",
+      "items": {
+        "timetable": "Tomorrow’s timetable",
+        "marks": "Check my marks",
+        "book": "Borrow a library book",
+        "course": "Continue a course",
+        "essay": "Get feedback on an essay",
+        "assistant": "Ask the assistant"
+      }
+    },
+    "features": {
+      "eyebrow": "On your phone",
+      "title": "The whole school day in one app",
+      "listLabel": "Features",
+      "previous": "Previous feature",
+      "next": "Next feature",
+      "items": {
+        "dashboard": {
+          "title": "Today at a glance",
+          "text": "Lessons, new marks, homework and notices on one screen.",
+          "screen": "The {appMy} home screen with today’s lessons and recent marks"
+        },
+        "study": {
+          "title": "Timetable and marks",
+          "text": "The timetable synced from EMIS, marks with interim (ПК) and final (ИК) control, and your GPA.",
+          "screen": "The marks screen with a new mark and the grade point average"
+        },
+        "ai": {
+          "title": "An assistant that knows the school",
+          "text": "Answers with sources from lessons and the school knowledge base, plus notebooks, quizzes and flash cards.",
+          "screen": "The assistant answering a question with sources and Studio outputs"
+        },
+        "learn": {
+          "title": "Library and courses",
+          "text": "Borrow and read books, follow reading plans and continue your courses.",
+          "screen": "The library with a book, a loan and a course in progress"
+        },
+        "bot": {
+          "title": "Notices in Telegram",
+          "text": "New marks and reminders reach you in the bot, and you can chat with the assistant there.",
+          "screen": "The Telegram bot with a new mark notification"
+        }
+      }
+    },
+    "apps": {
+      "eyebrow": "The apps",
+      "title": "One account, every school app",
+      "open": "Open {name}",
+      "example": "Example",
+      "items": {
+        "sp": {
+          "name": "{appMy}",
+          "text": "The student app.",
+          "a1": "See today’s lessons",
+          "a2": "Check marks and GPA",
+          "a3": "Hand in homework"
+        },
+        "staff": {
+          "name": "{appStaff}",
+          "text": "The teacher workspace.",
+          "a1": "Mark attendance",
+          "a2": "Enter marks in the journal",
+          "a3": "Review work-offs"
+        },
+        "lms": {
+          "name": "{appLms}",
+          "text": "Courses and tests.",
+          "a1": "Continue a course",
+          "a2": "Take a test",
+          "a3": "Get a certificate"
+        },
+        "library": {
+          "name": "{appLibrary}",
+          "text": "Books and study materials.",
+          "a1": "Search the catalogue",
+          "a2": "Borrow and read a book",
+          "a3": "Follow a reading plan"
+        },
+        "admission": {
+          "name": "{appAdmission}",
+          "text": "Admission guidance for applicants.",
+          "a1": "Plan your path",
+          "a2": "Find matching universities",
+          "a3": "Track your documents"
+        },
+        "share": {
+          "name": "{appShare}",
+          "text": "Public pages for what you choose to share.",
+          "a1": "Open a shared chat",
+          "a2": "Study a flash card set",
+          "a3": "Share a link"
+        },
+        "admin": {
+          "name": "{appAdmin}",
+          "text": "Administration of people, timetable and limits.",
+          "a1": "Manage people and roles",
+          "a2": "Set AI limits",
+          "a3": "Review logs and feedback"
+        },
+        "id": {
+          "name": "{appId}",
+          "text": "Sign-in for every app.",
+          "a1": "Sign in with a passkey",
+          "a2": "Manage assistant connectors",
+          "a3": "Export your data"
+        }
+      }
+    },
+    "integrations": {
+      "eyebrow": "Connected",
+      "title": "Everything works together",
+      "listLabel": "Connected services and features",
+      "items": {
+        "bot": "Telegram bot",
+        "miniapp": "Telegram mini app",
+        "mcp": "MCP servers",
+        "ics": "Calendar feeds (ICS)",
+        "web": "Web search",
+        "emis": "EMIS timetable sync",
+        "sso": "{appId} single sign-on",
+        "pwa": "Installable app",
+        "mail": "Student mailbox",
+        "notify": "Notifications",
+        "openui": "Interactive answer blocks",
+        "cards": "Flash cards",
+        "notebooks": "Notebooks and Studio",
+        "knowledge": "School knowledge base",
+        "certificates": "Certificates",
+        "links": "Short links",
+        "share": "Sharing pages",
+        "lms": "Courses",
+        "library": "Library catalogue",
+        "admission": "Admission guidance",
+        "assistant": "AI assistant",
+        "export": "Data export",
+        "passkeys": "Passkeys and codes",
+        "languages": "Uzbek, Russian, English"
+      }
+    },
+    "insight": {
+      "eyebrow": "For teachers",
+      "title": "Your classes. In sight.",
+      "screen": "The teacher journal with marks, attendance and homework status",
+      "b1": {
+        "title": "Marks",
+        "text": "Enter marks in the journal and reconcile them with EMIS."
+      },
+      "b2": {
+        "title": "Attendance",
+        "text": "Mark the class in a few taps and review work-offs."
+      },
+      "b3": {
+        "title": "Homework",
+        "text": "See who handed in and who did not."
+      }
+    },
+    "control": {
+      "eyebrow": "Privacy",
+      "title": "You stay in control.",
+      "visualLabel": "Example of assistant connector permissions and call log",
+      "scopesTitle": "Connector",
+      "scope1": "Timetable: read",
+      "scope2": "Marks: read",
+      "scope3": "Courses: publish",
+      "logTitle": "Recent calls",
+      "log1": "Timetable read",
+      "log2": "Marks read",
+      "on": "On",
+      "off": "Off",
+      "b1": {
+        "title": "Consent",
+        "text": "Each assistant gets only the permissions you choose, and the school’s legal consent is enforced on the server."
+      },
+      "b2": {
+        "title": "Call log",
+        "text": "See the calls your assistants made, kept for 90 days. Arguments are redacted and content is never logged."
+      },
+      "b3": {
+        "title": "Your data",
+        "text": "Export your data as a ZIP file or ask for your account to be erased after an administrator’s review."
+      }
+    },
+    "voices": {
+      "eyebrow": "In practice",
+      "title": "What people ask",
+      "example": "Example conversation",
+      "note": "Illustrative examples, not real messages.",
+      "listLabel": "Example conversations",
+      "items": {
+        "student": {
+          "role": "Student",
+          "q": "What do I have tomorrow?",
+          "a": "Five lessons, starting with mathematics at 08:30 in room 101."
+        },
+        "teacher": {
+          "role": "Teacher",
+          "q": "Who has not handed in the homework?",
+          "a": "Three students. I can list them and remind them."
+        },
+        "librarian": {
+          "role": "Librarian",
+          "q": "Which loans are due this week?",
+          "a": "Seven books. The list is ready to send as reminders."
+        },
+        "admin": {
+          "role": "Administrator",
+          "q": "How many assistant requests this week?",
+          "a": "The usage ledger shows the total and the split by task."
+        }
+      }
+    },
+    "start": {
+      "eyebrow": "Get started",
+      "title": "Ready in three steps",
+      "step": "Step {n}",
+      "items": {
+        "s1": {
+          "title": "Sign in",
+          "text": "Use your {appId} account, with a passkey if you set one up."
+        },
+        "s2": {
+          "title": "Link Telegram",
+          "text": "Connect the bot to get marks and reminders where you already chat."
+        },
+        "s3": {
+          "title": "Install or connect",
+          "text": "Install the app on your phone, or connect your own AI assistant over MCP."
+        }
+      }
+    },
+    "faq": {
+      "eyebrow": "Questions",
+      "title": "Frequently asked",
+      "contact": "Still unsure? Write to",
+      "items": {
+        "q1": {
+          "q": "Who is it for?",
+          "a": "Students, teachers, administrators, librarians and course staff of {orgName}."
+        },
+        "q2": {
+          "q": "How do I sign in?",
+          "a": "With your {appId} account. Passkeys and one-time codes add a second factor."
+        },
+        "q3": {
+          "q": "Do I need Telegram?",
+          "a": "No. The bot is optional and brings notices and the assistant into Telegram."
+        },
+        "q4": {
+          "q": "Can I install it?",
+          "a": "Yes. The student app installs on a phone from the browser."
+        },
+        "q5": {
+          "q": "What can an AI assistant see?",
+          "a": "Only what you allow. Each connector has its own permissions and every call is logged."
+        },
+        "q6": {
+          "q": "Which languages are supported?",
+          "a": "Uzbek, Russian and English."
+        }
       }
     }
   }

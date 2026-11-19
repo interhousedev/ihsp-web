@@ -10,7 +10,7 @@ import {
   IconSparkles,
   IconWorld,
 } from "@ihsp/ui"
-import { Screen, SideNav } from "./parts"
+import { PageTitle, Screen, SideNav, TopBar } from "./parts"
 
 const SOURCES = ["lesson", "file", "text"] as const
 const STUDIO = [
@@ -98,6 +98,52 @@ export function NotebookLaptop() {
               <span className="text-muted-foreground block">{t("quizMeta")}</span>
             </CardContent>
           </Card>
+        </div>
+      </div>
+    </Screen>
+  )
+}
+
+/** The assistant on a phone: a question, a grounded answer with its sources and the Studio outputs. */
+export function AssistantPhone() {
+  const t = useT("landing.demo")
+  return (
+    <Screen>
+      <TopBar initials="AA" />
+      <div className="flex flex-1 flex-col gap-3 overflow-hidden px-4 pt-1">
+        <PageTitle>{t("notebookTitle")}</PageTitle>
+        <div className="bg-muted ml-auto max-w-[85%] rounded-2xl rounded-br-sm px-3.5 py-2 text-[13px]">
+          {t("question")}
+        </div>
+        <div className="flex gap-2">
+          <AiMark label={t("ai")} className="mt-1" />
+          <div className="min-w-0 flex-1 text-[13px] leading-relaxed">
+            <p>{t("answer")}</p>
+            <p className="mt-2 flex flex-wrap items-center gap-1.5">
+              <Badge variant="outline">
+                <IconFileText aria-hidden />
+                {t("source.lesson")}
+              </Badge>
+              <Badge variant="outline">
+                <IconWorld aria-hidden />
+                {t("web")}
+              </Badge>
+            </p>
+          </div>
+        </div>
+        <div className="grid grid-cols-2 gap-2">
+          {STUDIO.map(({ key, icon: StudioIcon }) => (
+            <Card key={key} size="sm">
+              <CardContent className="flex items-center gap-2 px-3">
+                <StudioIcon className="size-4 text-[var(--brand-text)]" aria-hidden />
+                <span className="text-[13px] font-medium">{t(`studioKind.${key}`)}</span>
+              </CardContent>
+            </Card>
+          ))}
+        </div>
+        <div className="text-muted-foreground rounded-card mt-auto mb-3 flex items-center gap-2 border px-3 py-2 text-[13px]">
+          <span className="flex-1">{t("askPlaceholder")}</span>
+          <IconSend className="size-4" aria-hidden />
         </div>
       </div>
     </Screen>
