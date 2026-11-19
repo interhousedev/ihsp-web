@@ -31,7 +31,7 @@ export function FileCard({ file, onShare, onRename, onDelete }: FileCardProps) {
       <FileThumb file={file} className="aspect-[4/3] w-full" />
       <div className="flex flex-col gap-2 p-3">
         <FileStatusBadge file={file} />
-        <p className="text-muted-foreground truncate text-xs">
+        <p className="text-muted-foreground text-xs break-words">
           {formatBytes(file.byte_size)} · {format.date(file.created_at)}
         </p>
         <UsedByList items={file.used_by} />

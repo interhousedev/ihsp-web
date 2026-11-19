@@ -5,15 +5,19 @@ import type { BottomNavItem, NavGroup } from "@ihsp/ui"
 import { IconUserCircle } from "@ihsp/ui"
 import { useMemo } from "react"
 import { useIsHeadStudent } from "@/features/exams/hooks/use-exams"
+import { SETTINGS_GROUPS, settingsGroupHref } from "@/features/settings/components/settings-groups"
 
 /**
  * Sidebar groups and the phone bottom bar (WEB-2): Home, Academics, Study tools (pages by the study-tools task),
- * Inbox and Account. The calendar (`/timetable/`, titled Calendar) also holds the attendance. Home (`/`) is the landing
+ * Inbox and Account. The calendar (`/timetable/`, titled Timetable) also holds the attendance. Home (`/`) is the landing
  * page and the only widget grid; `/today/` redirects there. The bar has Home, Calendar, Grades and Homework; "More" is
  * added by the shell.
  */
-export function useNav(): { groups: NavGroup[]; bottom: BottomNavItem[] } {
+export function useNav(): { groups: NavGroup[]; bottom: BottomNavItem[]; search: NavGroup[] } {
   const t = useT("nav")
+  const tProfile = useT("profile")
+  const tFace = useT("face")
+  const tSettings = useT("settings")
   const isHead = useIsHeadStudent()
   return useMemo(() => {
     const dashboard = { title: t("dashboard"), url: "/", icon: "dashboard", match: "exact" } as const
@@ -58,6 +62,22 @@ export function useNav(): { groups: NavGroup[]; bottom: BottomNavItem[] } {
         },
       ],
       bottom: [dashboard, timetable, grades, homework],
+      // Pages that are not in the sidebar but must be found by the command palette (pass `[...groups, ...search]`).
+      search: [
+        {
+          items: [
+            { title: tProfile("title"), url: "/profile/", icon: "profile" },
+            { title: tProfile("photo.title"), url: "/profile/#photo", icon: "camera" },
+            { title: tFace("title"), url: "/profile/face/", icon: "attendance" },
+            { title: tProfile("accountLink"), url: "/profile/account/", icon: "lock" },
+            ...SETTINGS_GROUPS.map((group) => ({
+              title: `${t("settings")} · ${tSettings(`groups.${group.id}.title`)}`,
+              url: settingsGroupHref(group.id),
+              icon: group.icon,
+            })),
+          ],
+        },
+      ],
     }
-  }, [t, isHead])
+  }, [t, tProfile, tFace, tSettings, isHead])
 }

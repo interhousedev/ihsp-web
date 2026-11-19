@@ -32,7 +32,7 @@ export function DayGradesTab() {
       {VIEWS.map((item) => (
         <Button
           key={item}
-          variant={item === view ? "default" : "outline"}
+          variant={item === view ? "secondary" : "ghost"}
           aria-pressed={item === view}
           className="min-h-11 min-w-16 md:min-h-8"
           onClick={() => void setView(item === "day" ? null : item)}

@@ -1,6 +1,14 @@
 /** WEB-2, WEB-4, WEB-30, GEN-9, UF-WEB-14: the app frame, search and offline support. */
 import { afterEach, describe, expect, test } from "bun:test"
-import { apiUrl, emptySearchResults, errorHandlers, searchResults, server, teacherMe } from "@ihsp/test-utils"
+import {
+  apiUrl,
+  createTestQueryClient,
+  emptySearchResults,
+  errorHandlers,
+  searchResults,
+  server,
+  teacherMe,
+} from "@ihsp/test-utils"
 import { getMeToday, getMeTodayQuery } from "@ihsp/api"
 import { studentRoutes, toPaletteResults } from "@ihsp/features-core"
 import { screen, waitFor } from "@testing-library/react"
@@ -70,14 +78,14 @@ describe("app frame", () => {
 
     for (const name of [
       "Home",
-      "Calendar",
+      "Timetable",
       "Subjects",
       "Grades",
       "Homework",
       "Exams",
       "Flash cards",
       "My files",
-      "Links & shares",
+      "Links and shares",
       "Notifications",
       "Settings",
     ]) {
@@ -95,10 +103,10 @@ describe("app frame", () => {
     await screen.findByText("page body")
 
     expect(screen.queryAllByRole("link", { name: "Attendance" })).toHaveLength(0)
-    expect(screen.queryAllByRole("link", { name: "Timetable" })).toHaveLength(0)
+    expect(screen.queryAllByRole("link", { name: "Calendar" })).toHaveLength(0)
   })
 
-  test("the phone bottom bar has Home, Calendar, Grades, Homework and More", async () => {
+  test("the phone bottom bar has Home, Timetable, Grades, Homework and More", async () => {
     setViewportWidth(360)
     renderSp(
       <SpShell>
@@ -113,7 +121,7 @@ describe("app frame", () => {
     expect(bar.querySelector("a")?.getAttribute("href")).toBe("/")
     expect(bar.textContent).toContain("Home")
     expect(bar.textContent).not.toContain("Today")
-    expect(bar.textContent).toContain("Calendar")
+    expect(bar.textContent).toContain("Timetable")
     expect(bar.textContent).toContain("More")
   })
 
@@ -125,12 +133,31 @@ describe("app frame", () => {
       { session: { user: teacherMe } },
     )
 
-    expect(await screen.findByText("No access")).toBeInTheDocument()
+    expect(await screen.findByText("Student account required")).toBeInTheDocument()
     expect(screen.queryByText("page body")).not.toBeInTheDocument()
   })
 })
 
 describe("search", () => {
+  test("SP-UX-NAV-1: the palette finds Profile, photo, entrance photo, account and settings sections", async () => {
+    const { user } = renderSp(
+      <SpShell>
+        <p>page body</p>
+      </SpShell>,
+    )
+    await user.click(await screen.findByRole("button", { name: "Open search" }))
+    const input = await screen.findByPlaceholderText("Type a command or search…")
+    for (const [query, title] of [
+      ["photo", "Profile photo"],
+      ["entrance", "Entrance photo"],
+      ["account", "Account and security"],
+      ["settings", "Settings · Security"],
+    ]) {
+      setValue(input, query)
+      expect((await screen.findAllByText(title)).length).toBeGreaterThan(0)
+    }
+  })
+
   test("results are grouped by section and link to their pages", () => {
     const results = toPaletteResults(searchResults, LABELS, FORMAT, studentRoutes("http://library.localhost"))
 
@@ -216,6 +243,20 @@ describe("offline", () => {
     renderSp(<BadgeProbe />)
 
     expect(await screen.findByText("Offline")).toBeInTheDocument()
+  })
+
+  test("SP-UX-NAV-2: the cache age is hidden below sm, truncated, with the full text in title and aria-label", async () => {
+    const queryClient = createTestQueryClient()
+    queryClient.setQueryData(getMeTodayQuery().queryKey, {})
+    server.use(errorHandlers.networkError)
+    renderSp(<BadgeProbe />, { queryClient })
+
+    await screen.findByText("Offline")
+    const age = await screen.findByTitle(/^Updated /)
+    expect(age.className).toContain("hidden")
+    expect(age.className).toContain("sm:inline")
+    expect(age.className).toContain("truncate")
+    expect(age.getAttribute("aria-label")).toBe(age.getAttribute("title"))
   })
 
   test("the badge is not shown while requests work", async () => {

@@ -1,6 +1,6 @@
 "use client"
 
-import { login, useSession } from "@ihsp/auth"
+import { login, useSession, useSilentSignIn } from "@ihsp/auth"
 import { Button } from "@ihsp/ui"
 import { useSearchParams } from "next/navigation"
 import { useEffect } from "react"
@@ -12,6 +12,12 @@ import { redirectTo } from "../../shared/utils/redirect"
 /** `/` with the query string (Hydra's `login_challenge` and anything else) carried over to the next page. */
 function withQuery(path: string, query: string): string {
   return query ? `${path}?${query}` : path
+}
+
+/** Picks up a sign-in made anywhere on the platform, so a signed-in user never sees the anonymous page. */
+function SilentSignIn() {
+  useSilentSignIn({ always: true })
+  return null
 }
 
 /**
@@ -33,6 +39,7 @@ export function HomePage() {
   if (authenticated || status === "loading") return <FlowSkeleton />
   return (
     <FlowCard title={t("home.title")}>
+      {hasChallenge ? null : <SilentSignIn />}
       {hasChallenge ? (
         <LinkButton href={withQuery("/login/", query)}>{t("home.haveAccount")}</LinkButton>
       ) : (

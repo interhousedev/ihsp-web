@@ -1,7 +1,7 @@
 "use client"
 
 import { getConfig } from "@ihsp/config"
-import { ConnectAiLink, usePreferences, useUpdatePreferences } from "@ihsp/features-core"
+import { ConnectAiLink, usePreferences, useTourPending, useUpdatePreferences } from "@ihsp/features-core"
 import { useT } from "@ihsp/i18n"
 import { Button, buttonVariants } from "@ihsp/ui"
 import { useAlerts } from "../hooks/use-today"
@@ -19,9 +19,10 @@ export function ConnectAiNotice() {
   const alerts = useAlerts()
   const preferences = usePreferences()
   const update = useUpdatePreferences()
+  const tourPending = useTourPending()
 
   const alert = (alerts.data ?? []).find((item) => item.kind === "connect_ai")
-  if (!preferences || !alert) return null
+  if (!preferences || !alert || tourPending) return null
   const dismissed = preferences.onboarding_dismissed
   if (dismissed.includes(CONNECT_AI_DISMISS_ID)) return null
 

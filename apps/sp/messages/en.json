@@ -44,7 +44,7 @@
     "short": {
       "dashboard": "Home",
       "today": "Today",
-      "timetable": "Calendar",
+      "timetable": "Timetable",
       "subjects": "Subjects",
       "grades": "Grades",
       "homework": "Homework",
@@ -60,7 +60,7 @@
     },
     "dashboard": "Home",
     "today": "Today",
-    "timetable": "Calendar",
+    "timetable": "Timetable",
     "subjects": "Subjects",
     "grades": "Grades",
     "homework": "Homework",
@@ -71,14 +71,14 @@
     "notebooks": "Notebooks",
     "flashcards": "Flash cards",
     "files": "My files",
-    "links": "Links & shares",
+    "links": "Links and shares",
     "notifications": "Notifications",
     "profile": "Profile",
     "settings": "Settings",
     "groupHome": "Home",
     "groupAcademics": "Academics",
     "groupStudyTools": "Study tools",
-    "groupInbox": "Inbox",
+    "groupInbox": "Messages",
     "groupAccount": "Account",
     "mail": "Email",
     "excuses": "Excuses"
@@ -96,7 +96,8 @@
     "openProfile": "Open profile",
     "studentCard": "Student card",
     "notifications": "Notifications",
-    "notificationsCount": "Notifications, {count} unread"
+    "notificationsCount": "Notifications, {count} unread",
+    "openProfileNamed": "{name}, open profile"
   },
   "dashboard": {
     "title": "Dashboard",
@@ -846,7 +847,8 @@
       "item": "{type} {value}",
       "remove": "Remove {type} {value}",
       "empty": "No marks tried yet."
-    }
+    },
+    "openSubjects": "Open subjects"
   },
   "attendance": {
     "overviewTitle": "Attendance",
@@ -996,7 +998,8 @@
       "unknown": "Unknown",
       "lastSync": "Last sync",
       "never": "Not synced yet",
-      "update": "Update EMIS password"
+      "update": "Update EMIS password",
+      "authFailedHint": "EMIS rejected the saved password. Update it so your data can load again."
     },
     "telegram": {
       "title": "Telegram",
@@ -1015,7 +1018,12 @@
       "security": "Security"
     },
     "accountLink": "Account and security",
-    "faceLink": "Face recognition"
+    "faceLink": "Face recognition",
+    "photo": {
+      "title": "Profile photo",
+      "rule": "Your entrance photo is your profile photo until you upload another one.",
+      "removeDescription": "The photo you uploaded is removed. The entrance photo is shown instead, if you have one."
+    }
   },
   "settings": {
     "title": "Settings",
@@ -1054,7 +1062,8 @@
         "light": "Light",
         "dark": "Dark",
         "system": "System"
-      }
+      },
+      "photoPrivacy": "Do not show my photo to my classmates"
     },
     "notifications": {
       "title": "Notifications",
@@ -1088,6 +1097,13 @@
       "marks": "marks synced: {n}",
       "lastError": "Reason: {error}",
       "gaveUp": "The sync stopped after {max} attempts. Press the button to retry."
+    },
+    "security": {
+      "account": "Account and security",
+      "openId": "Open {appId}"
+    },
+    "help": {
+      "feedbackTitle": "Feedback"
     }
   },
   "weekPager": {
@@ -1101,7 +1117,8 @@
     "you": "you",
     "locked": "This photo was set by your curator or an administrator. Only the curator or an administrator can change it.",
     "purpose": "The entrance device compares your face with this photo to let you in and note your attendance.",
-    "privacy": "Your photo is visible to your classmates, teachers and the administration. It is also used for the entrance device; remove it at any time."
+    "privacy": "Classmates see it only as your profile photo, and only if you have not turned on “Do not show my photo to my classmates”. Teachers and the administration can see it. Remove it at any time.",
+    "rule": "Your entrance photo is your profile photo until you upload another one."
   },
   "excuses": {
     "status": {
@@ -1210,5 +1227,23 @@
       "skip": "Skip for now",
       "saving": "Saving…"
     }
+  },
+  "studentRecord": {
+    "missing": {
+      "title": "No student record yet",
+      "description": "Your account is not linked to a student record, so this page has nothing to show. Ask the school office to add you to a group."
+    },
+    "emis-failed": {
+      "title": "EMIS did not accept your sign-in",
+      "description": "The school system rejected the saved EMIS password, so your data cannot load. Update the password and this page will work again.",
+      "action": "Update EMIS password"
+    }
+  },
+  "teacherScreen": {
+    "title": "Student account required",
+    "text": "This app is for students. Teachers work in the staff app; account settings are in the ID app.",
+    "staff": "Open staff app",
+    "id": "Open ID",
+    "logout": "Log out"
   }
 }

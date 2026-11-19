@@ -1,5 +1,7 @@
 "use client"
 
+import { NoStudentRecordNotice } from "../../shared/components/no-student-record-notice"
+import { isRecordBlocked, useStudentRecordState } from "../../shared/hooks/use-student-record-state"
 import type { AssessmentItem } from "@ihsp/api"
 import { useT } from "@ihsp/i18n"
 import { PageContainer, SubjectFilter } from "@ihsp/ui"
@@ -36,7 +38,7 @@ function ExamsContent({ items }: { items: AssessmentItem[] }) {
  * Exams (ACA-14): the student's midterm and final controls in "Upcoming" and "Past", with badges for dates nobody
  * confirmed and for control weeks without a date. A head student can suggest a date.
  */
-export function ExamsPage() {
+function ExamsPageContent() {
   const t = useT("exams")
   const query = useExams()
   const isHeadStudent = useIsHeadStudent()
@@ -47,4 +49,18 @@ export function ExamsPage() {
       </QueryState>
     </PageContainer>
   )
+}
+
+/** ExamsPage; a student without a usable academic record sees the explanation instead of the content. */
+export function ExamsPage() {
+  const t = useT("exams")
+  const record = useStudentRecordState()
+  if (isRecordBlocked(record.status)) {
+    return (
+      <PageContainer title={t("title")}>
+        <NoStudentRecordNotice reason={record.status} />
+      </PageContainer>
+    )
+  }
+  return <ExamsPageContent />
 }

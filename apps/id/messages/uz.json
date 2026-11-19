@@ -305,5 +305,10 @@
     "otp": {
       "description": "Loginingizni kiriting. OTP bilan kirish yoqilgan boʻlsa, kod yuboramiz."
     }
+  },
+  "photo": {
+    "title": "Profil rasmi",
+    "description": "Platformada ismingiz yonida koʻrsatiladi. JPEG yoki PNG, 5 MB gacha.",
+    "removeDescription": "Rasm oʻchirilsa, oʻrniga bosh harflaringiz koʻrsatiladi."
   }
 }

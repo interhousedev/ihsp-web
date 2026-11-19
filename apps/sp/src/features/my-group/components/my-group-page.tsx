@@ -2,7 +2,6 @@
 
 import {
   getMyGroupProgressQuery,
-  isApiError,
   getMyGroupQuery,
   type GroupMemberRow,
   type GroupPersonRef,
@@ -16,6 +15,8 @@ import { useQuery } from "@tanstack/react-query"
 import type { ReactNode } from "react"
 import { HidePhotoSwitch } from "./hide-photo-switch"
 import { GroupRatingSection } from "@/features/grades/components/group-rating-section"
+import { NoStudentRecordNotice } from "../../shared/components/no-student-record-notice"
+import { studentRecordStatusOf } from "../../shared/hooks/use-student-record-state"
 
 type Person = GroupPersonRef | GroupTeacherRef
 
@@ -113,6 +114,7 @@ export function MyGroupPage() {
   const nav = useT("nav")
   const query = useQuery(getMyGroupQuery())
   const group = query.data
+  const recordStatus = query.isError ? studentRecordStatusOf(query.error) : null
 
   return (
     <PageContainer title={nav("myGroup")}>
@@ -146,8 +148,8 @@ export function MyGroupPage() {
             </>
           ) : null}
         </div>
-      ) : isApiError(query.error) && query.error.type === "academic/student-not-found" ? (
-        <StateView state="empty" emptyText={t("noGroup")} />
+      ) : recordStatus === "missing" || recordStatus === "emis-failed" ? (
+        <NoStudentRecordNotice reason={recordStatus} />
       ) : (
         <StateView
           state={query.isError ? "error" : "loading"}

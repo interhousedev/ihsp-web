@@ -9,12 +9,13 @@ import { AppShell } from "@ihsp/ui"
 import { Suspense, type ReactNode } from "react"
 import { AssistantBubble } from "../../assistant/components/assistant-bubble"
 import { useNav } from "../../../config/nav"
-import { OnboardingGate } from "../../onboarding/components/onboarding-gate"
+import { OnboardingGate, useOnboardingGatePending } from "../../onboarding/components/onboarding-gate"
 import { QueryPersistence } from "../../offline/components/query-persistence"
 import { SpBottomNav } from "./sp-bottom-nav"
 import { ProfileMenu } from "./profile-menu"
 import { ShellHeader } from "./shell-header"
 import { SpBrand } from "./sp-brand"
+import { TeacherScreen } from "./teacher-screen"
 
 const TOUR_PLACES = [
   { key: "assistant", href: "/assistant/" },
@@ -23,6 +24,20 @@ const TOUR_PLACES = [
   { key: "mail", href: "/mail/" },
   { key: "certificates", href: "/profile/#certificates-title" },
 ] as const
+
+/** The first-run tour opens only once the onboarding gate is done, so two overlays never show at once. */
+export function ShellTour() {
+  const gatePending = useOnboardingGatePending()
+  if (gatePending) return null
+  return (
+    <OnboardingTour
+      variant="student"
+      settingsHref="/settings/"
+      connectAiHref={`${getConfig().ID_URL}/connectors/new/`}
+      places={TOUR_PLACES}
+    />
+  )
+}
 
 /**
  * The frame of every page of this app: login check, student role check, offline cache, sidebar and the phone bottom bar
@@ -35,7 +50,7 @@ export function SpShell({ children, hideBottomNav = false }: { children: ReactNo
   return (
     <RequireAuth>
       {/* oxlint-disable-next-line jsx-a11y/aria-role -- `role` is the IHSP role the user must have, not an ARIA role */}
-      <RequireRole role="student">
+      <RequireRole role="student" fallback={<TeacherScreen />}>
         <QueryPersistence>
           <AppShell
             nav={nav.groups}
@@ -44,18 +59,13 @@ export function SpShell({ children, hideBottomNav = false }: { children: ReactNo
             brand={<SpBrand />}
             sidebarFooter={<ProfileMenu variant="row" />}
             controlsLeading={<ShellNavControls />}
-            controls={<ShellHeader nav={nav.groups} />}
+            controls={<ShellHeader nav={[...nav.groups, ...nav.search]} />}
             floating={hideBottomNav ? null : <AssistantBubble />}
           >
             <MaintenanceBanner />
             <Suspense fallback={<PageLoading />}>{children}</Suspense>
             <LegalGate />
-            <OnboardingTour
-              variant="student"
-              settingsHref="/settings/"
-              connectAiHref={`${getConfig().ID_URL}/connectors/new/`}
-              places={TOUR_PLACES}
-            />
+            <ShellTour />
             <ConnectAiDialogHost />
             <OnboardingGate />
           </AppShell>

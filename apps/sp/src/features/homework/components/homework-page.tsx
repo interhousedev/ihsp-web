@@ -10,6 +10,8 @@ import { OverdueSection } from "./overdue-section"
 import { HomeworkByDate } from "./homework-by-date"
 import { HomeworkBySubject } from "./homework-by-subject"
 import { WorkOffTodoItem } from "./work-off-todo-item"
+import { NoStudentRecordNotice } from "../../shared/components/no-student-record-notice"
+import { isRecordBlocked, useStudentRecordState } from "../../shared/hooks/use-student-record-state"
 
 const TABS = ["date", "upcoming", "later", "done", "subject"] as const
 
@@ -17,7 +19,8 @@ const TABS = ["date", "upcoming", "later", "done", "subject"] as const
  * Homework (WEB-18–20, UF-WEB-13): the highlighted Overdue group first, then the Upcoming, Later and Done lists with
  * tick boxes and private notes. The open work-off tasks lead the Upcoming list.
  */
-export function HomeworkPage() {
+
+function HomeworkContent() {
   const t = useT("homework")
   const [tab, setTab] = useQueryState("tab", parseAsStringLiteral(TABS).withDefault("date"))
   const query = useHomeworkList(tab === "subject" || tab === "date" ? "upcoming" : tab)
@@ -27,10 +30,14 @@ export function HomeworkPage() {
   return (
     <PageContainer title={t("title")}>
       <OverdueSection />
-      <Tabs value={tab} onValueChange={(value) => void setTab(TABS.find((item) => item === value) ?? "date")}>
-        <TabsList className="h-auto min-h-11 w-full md:w-fit">
+      <Tabs
+        value={tab}
+        onValueChange={(value) => void setTab(TABS.find((item) => item === value) ?? "date")}
+        className="min-w-0"
+      >
+        <TabsList className="h-auto min-h-11 w-full max-w-full justify-start overflow-x-auto md:w-fit">
           {TABS.map((value) => (
-            <TabsTrigger key={value} value={value} className="min-h-11 px-3">
+            <TabsTrigger key={value} value={value} className="min-h-11 flex-none px-3">
               {t(`tabs.${value}`)}
             </TabsTrigger>
           ))}
@@ -60,4 +67,18 @@ export function HomeworkPage() {
       )}
     </PageContainer>
   )
+}
+
+/** The homework page; a student without a usable academic record sees the explanation instead of the lists. */
+export function HomeworkPage() {
+  const t = useT("homework")
+  const record = useStudentRecordState()
+  if (isRecordBlocked(record.status)) {
+    return (
+      <PageContainer title={t("title")}>
+        <NoStudentRecordNotice reason={record.status} />
+      </PageContainer>
+    )
+  }
+  return <HomeworkContent />
 }

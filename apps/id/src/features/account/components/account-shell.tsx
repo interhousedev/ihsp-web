@@ -3,7 +3,7 @@ import { LegalGate, MaintenanceBanner } from "@ihsp/features-core"
 
 import { patchPreferences } from "@ihsp/api"
 import { logout, useSession } from "@ihsp/auth"
-import { ShellNavControls, useLicenseMenu, usePlatformLinks } from "@ihsp/features-core"
+import { ShellNavControls, fullName, useLicenseMenu, usePlatformLinks } from "@ihsp/features-core"
 import { AppShell, SidebarBrand, UserMenu } from "@ihsp/ui"
 import type { ReactNode } from "react"
 import { useTr } from "@ihsp/features-core/id-account"
@@ -37,7 +37,7 @@ export function AccountShell({ children }: { children: ReactNode }) {
           <>
             <UserMenu
               variant="row"
-              name={`${user.first_name} ${user.last_name}`}
+              name={fullName(user)}
               subtitle={user.login}
               items={license.items}
               platforms={platforms}

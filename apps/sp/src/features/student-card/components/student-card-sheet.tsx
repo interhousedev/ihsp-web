@@ -9,6 +9,8 @@ import { useLocale, useT } from "@ihsp/i18n"
 import { QrCode, ResponsiveDialog, StateView } from "@ihsp/ui"
 import { useQuery } from "@tanstack/react-query"
 import { useCardToken } from "../hooks/use-card-token"
+import { NoStudentRecordNotice } from "../../shared/components/no-student-record-notice"
+import { studentRecordStatusOf } from "../../shared/hooks/use-student-record-state"
 import { StudentCardError, retryCardQuery } from "./student-card-error"
 import { cardUrl } from "../utils/card-url"
 
@@ -37,7 +39,11 @@ export function StudentCardSheet({ open, onOpenChange }: { open: boolean; onOpen
     <ResponsiveDialog open={open} onOpenChange={onOpenChange} title={t("title")} size="sm">
       {!data ? (
         card.isError ? (
-          <StudentCardError error={card.error} onRetry={() => void card.refetch()} />
+          studentRecordStatusOf(card.error) === "missing" ? (
+            <NoStudentRecordNotice reason="missing" />
+          ) : (
+            <StudentCardError error={card.error} onRetry={() => void card.refetch()} />
+          )
         ) : (
           <StateView state="loading" rows={3} />
         )

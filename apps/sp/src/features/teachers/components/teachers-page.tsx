@@ -1,5 +1,7 @@
 "use client"
 
+import { NoStudentRecordNotice } from "../../shared/components/no-student-record-notice"
+import { isRecordBlocked, useStudentRecordState } from "../../shared/hooks/use-student-record-state"
 import { useT } from "@ihsp/i18n"
 import { PageContainer } from "@ihsp/ui"
 import { QueryState } from "@ihsp/features-core"
@@ -7,7 +9,7 @@ import { useMyTeachers } from "../hooks/use-my-teachers"
 import { TeacherCard } from "./teacher-card"
 
 /** `/teachers/`: the teachers of the student's groups with contacts and where they are now. */
-export function TeachersPage() {
+function TeachersContent() {
   const t = useT("teachers.page")
   const teachers = useMyTeachers()
   return (
@@ -25,4 +27,18 @@ export function TeachersPage() {
       </QueryState>
     </PageContainer>
   )
+}
+
+/** TeachersPage; a student without a usable academic record sees the explanation instead of the content. */
+export function TeachersPage() {
+  const t = useT("teachers.page")
+  const record = useStudentRecordState()
+  if (isRecordBlocked(record.status)) {
+    return (
+      <PageContainer title={t("title")}>
+        <NoStudentRecordNotice reason={record.status} />
+      </PageContainer>
+    )
+  }
+  return <TeachersContent />
 }

@@ -22,10 +22,20 @@ describe("face page", () => {
     expect(screen.queryByRole("button", { name: "Remove photo" })).not.toBeInTheDocument()
   })
 
-  test("the photo page says classmates, teachers and administration can see the photo", async () => {
+  test("SP-UX-FACE-1: the page states the entrance-photo rule and the corrected privacy line", async () => {
     renderSp(<FacePage />, { route: "/profile/face/" })
 
-    expect(await screen.findByText(/visible to your classmates, teachers and the administration/)).toBeInTheDocument()
+    expect(
+      await screen.findByText("Your entrance photo is your profile photo until you upload another one."),
+    ).toBeInTheDocument()
+    expect(screen.getByText(/Do not show my photo to my classmates/)).toBeInTheDocument()
+  })
+
+  test("SP-UX-FACE-2: the camera and file buttons have different icons", async () => {
+    renderSp(<FacePage />, { route: "/profile/face/" })
+    const camera = (await screen.findByRole("button", { name: "Use the camera" })).querySelector("svg")
+    const file = screen.getByRole("button", { name: "Choose a file" }).querySelector("svg")
+    expect(camera?.outerHTML).not.toBe(file?.outerHTML)
   })
 
   test("FACE-SP-2: the server's reasons are shown for a photo without a face", async () => {

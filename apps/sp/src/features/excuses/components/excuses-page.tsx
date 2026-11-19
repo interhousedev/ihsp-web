@@ -1,5 +1,7 @@
 "use client"
 
+import { NoStudentRecordNotice } from "../../shared/components/no-student-record-notice"
+import { isRecordBlocked, useStudentRecordState } from "../../shared/hooks/use-student-record-state"
 import { getMeExcusesQuery } from "@ihsp/api"
 import { QueryState } from "@ihsp/features-core"
 import { useT } from "@ihsp/i18n"
@@ -11,7 +13,7 @@ import { ExcuseCard } from "./excuse-card"
 import { ExcuseRequestForm } from "./excuse-request-form"
 
 /** The student's excuse requests with their statuses and the button that opens the request form. */
-export function ExcusesPage() {
+function ExcusesContent() {
   const t = useT("excuses")
   const router = useRouter()
   const [open, setOpen] = useState(false)
@@ -47,4 +49,18 @@ export function ExcusesPage() {
       </ResponsiveDialog>
     </PageContainer>
   )
+}
+
+/** ExcusesPage; a student without a usable academic record sees the explanation instead of the content. */
+export function ExcusesPage() {
+  const t = useT("excuses")
+  const record = useStudentRecordState()
+  if (isRecordBlocked(record.status)) {
+    return (
+      <PageContainer title={t("page.title")}>
+        <NoStudentRecordNotice reason={record.status} />
+      </PageContainer>
+    )
+  }
+  return <ExcusesContent />
 }

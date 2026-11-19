@@ -124,7 +124,7 @@
       "library_notes": "Kutubxona qaydlari"
     },
     "status": {
-      "aiUnsupported": "AI ishlatmaydi: format qo‘llab-quvvatlanmaydi",
+      "aiUnsupported": "AI ishlatmaydi: format qoʻllab-quvvatlanmaydi",
       "pending": "Kutilmoqda…",
       "processing": "Oʻqilmoqda…",
       "failed": "Oʻqib boʻlmadi",
@@ -269,7 +269,6 @@
       "untitled": "Nomsiz qayd",
       "body": "Qayd",
       "placeholder": "Qaydni shu yerga yozing. Markdown ishlaydi.",
-      "markdownHint": "Markdown qoʻllab-quvvatlanadi: **qalin**, roʻyxatlar, sarlavhalar.",
       "citedHint": "Bu qayd javobdan saqlangan va manbalarga havolalarni saqlab turadi. Matnni tahrirlash uchun ularni olib tashlang."
     },
     "chat": {
@@ -303,7 +302,7 @@
         "label": "Oʻquv materiallarini yaratish",
         "started": "«{kind}» yaratilmoqda.",
         "ready": "«{kind}» tayyor.",
-        "failed": "«{kind}» yaratib bo‘lmadi.",
+        "failed": "«{kind}» yaratib boʻlmadi.",
         "open": "Studiyani ochish"
       },
       "action": {
@@ -311,7 +310,7 @@
         "focus": "Yoʻnalish: {prompt}",
         "created": "«{kind}» yaratilmoqda.",
         "ready": "«{kind}» tayyor.",
-        "failed": "«{kind}» yaratib bo‘lmadi."
+        "failed": "«{kind}» yaratib boʻlmadi."
       },
       "web": "Internetdan ham qidirish",
       "legend": "① manbalaringiz · 🌐 veb-sahifalar",
@@ -435,8 +434,8 @@
         "title": "Reja",
         "delivered": "{requested} tadan {delivered} tasi",
         "rejected": "rad etildi: {count}",
-        "byTemplate": "Shablon bo‘yicha",
-        "byDomain": "Mavzu bo‘yicha",
+        "byTemplate": "Shablon boʻyicha",
+        "byDomain": "Mavzu boʻyicha",
         "sources": "Manba turlari",
         "mode": "Test turi",
         "items": "Elementlar"
@@ -590,20 +589,20 @@
       "mode": {
         "label": "Test turi",
         "auto": "Avto (tavsiya etiladi)",
-        "full_mock": "To‘liq sinov imtihoni",
-        "topic_test": "Mavzu bo‘yicha test",
+        "full_mock": "Toʻliq sinov imtihoni",
+        "topic_test": "Mavzu boʻyicha test",
         "question_type_test": "Bitta savol turi",
-        "vocab_test": "Lug‘at",
+        "vocab_test": "Lugʻat",
         "formula_recall": "Formulalar",
         "concept_check": "Tushunchalar",
         "problem_practice": "Masalalar mashqi",
-        "reading_test": "O‘qish"
+        "reading_test": "Oʻqish"
       },
       "sourceKind": {
-        "vocabulary_list": "Lug‘at ro‘yxati",
-        "problem_set": "Masalalar to‘plami",
+        "vocabulary_list": "Lugʻat roʻyxati",
+        "problem_set": "Masalalar toʻplami",
         "formula_sheet": "Formulalar varaqasi",
-        "reading_passages": "O‘qish matnlari",
+        "reading_passages": "Oʻqish matnlari",
         "textbook_chapter": "Darslik bobi",
         "lecture_notes": "Maʼruza konspekti",
         "exam_paper": "Imtihon varianti",
@@ -1047,13 +1046,13 @@
     "attach": {
       "chips": "Savolga biriktirilgan",
       "remove": "{label} ni olib tashlash",
-      "menu": "Savolga qo‘shish",
+      "menu": "Savolga qoʻshish",
       "upload": "Fayllarni yuklash",
-      "lesson": "Dars qo‘shish",
+      "lesson": "Dars qoʻshish",
       "materials": "Materiallarni qidirish",
       "search": "Qidirish",
       "empty": "Hech narsa topilmadi",
-      "noTopic": "Mavzu hali yo‘q",
+      "noTopic": "Mavzu hali yoʻq",
       "uploadFailed": "{name} yuklanmadi"
     },
     "plan": {
@@ -1175,5 +1174,33 @@
       "plan-too-long": "Rejada {count} ta slayd bor, taqdimotda esa koʻpi bilan {max} ta boʻlishi mumkin. Avval slaydlarni oʻchiring yoki birlashtiring.",
       "plan-confirmed": "Bu reja asosida slaydlar allaqachon yaratilgan."
     }
+  },
+  "richText": {
+    "toolbar": "Formatlash",
+    "tool": {
+      "bold": "Qalin",
+      "italic": "Kursiv",
+      "h2": "2-sarlavha",
+      "h3": "3-sarlavha",
+      "bullet": "Markerli roʻyxat",
+      "ordered": "Raqamlangan roʻyxat",
+      "quote": "Iqtibos",
+      "link": "Havola",
+      "undo": "Bekor qilish",
+      "redo": "Qaytarish"
+    },
+    "linkUrl": "Havola manzili",
+    "linkApply": "Qoʻllash",
+    "linkCancel": "Bekor qilish",
+    "linkInvalid": "Havola https://, mailto: yoki / bilan boshlanishi kerak",
+    "mode": {
+      "label": "Tahrirlash rejimi",
+      "visual": "Vizual",
+      "markdown": "Markdown"
+    },
+    "preview": "Oldindan koʻrish",
+    "previewEmpty": "Hozircha koʻrsatadigan narsa yoʻq.",
+    "lossyNotice": "Matnda formulalar, jadvallar yoki vizual muharrir oʻzgartirib yuboradigan boshqa Markdown belgilari bor. Matn Markdown rejimida qoladi.",
+    "lossyWarning": "Matnda formulalar, jadvallar yoki vizual muharrir oʻzgartirishi mumkin boʻlgan boshqa Markdown belgilari bor."
   }
 }

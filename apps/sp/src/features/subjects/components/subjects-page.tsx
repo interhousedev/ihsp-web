@@ -1,5 +1,7 @@
 "use client"
 
+import { NoStudentRecordNotice } from "../../shared/components/no-student-record-notice"
+import { isRecordBlocked, useStudentRecordState } from "../../shared/hooks/use-student-record-state"
 import { CurriculumPanel } from "@ihsp/features-core"
 import { useT } from "@ihsp/i18n"
 import { PageContainer, SemesterSwitcher } from "@ihsp/ui"
@@ -11,7 +13,7 @@ import { curriculumSubjectOf } from "../utils/curriculum-subject"
 import { SubjectCard } from "./subject-card"
 
 /** Subjects of the semester, switchable to past ones (WEB-7, UF-WEB-05), and the curriculum of the group under them. */
-export function SubjectsPage() {
+function SubjectsContent() {
   const t = useT("subjects")
   const [semesterParam, setSemester] = useQueryState("semester", parseAsInteger)
   const current = useCurrentSemester()
@@ -51,4 +53,18 @@ export function SubjectsPage() {
       </QueryState>
     </PageContainer>
   )
+}
+
+/** SubjectsPage; a student without a usable academic record sees the explanation instead of the content. */
+export function SubjectsPage() {
+  const t = useT("subjects")
+  const record = useStudentRecordState()
+  if (isRecordBlocked(record.status)) {
+    return (
+      <PageContainer title={t("title")}>
+        <NoStudentRecordNotice reason={record.status} />
+      </PageContainer>
+    )
+  }
+  return <SubjectsContent />
 }

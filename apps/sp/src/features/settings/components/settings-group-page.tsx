@@ -10,6 +10,7 @@ import { useQuery } from "@tanstack/react-query"
 import Link from "next/link"
 import { useState, type ReactNode } from "react"
 import { CalendarFeedPanel } from "../../calendar-feed/components/calendar-feed-panel"
+import { StudentCardButton } from "../../student-card/components/student-card-button"
 import { ProfileSections } from "../../profile/components/profile-page"
 import { AppLockSection } from "../../pwa/components/app-lock-section"
 import { getServiceWorkerRegistration } from "../../pwa/utils/service-worker-registration"
@@ -39,6 +40,7 @@ function NotificationsGroup() {
 }
 
 function HelpGroup() {
+  const t = useT("settings")
   const tOnboarding = useT("onboarding.replay")
   const tFeedback = useT("feedback")
   const [feedbackOpen, setFeedbackOpen] = useState(false)
@@ -47,7 +49,7 @@ function HelpGroup() {
       <SettingsSection title={tOnboarding("title")}>
         <ReplayTourButton />
       </SettingsSection>
-      <SettingsSection title={tFeedback("menu.suggest")}>
+      <SettingsSection title={t("help.feedbackTitle")}>
         <div className="flex flex-col gap-2">
           <Button type="button" className="min-h-11 md:min-h-8" onClick={() => setFeedbackOpen(true)}>
             {tFeedback("menu.suggest")}
@@ -62,13 +64,28 @@ function HelpGroup() {
 }
 
 function SecurityGroup() {
-  const tProfile = useT("profile")
+  const t = useT("settings")
   return (
     <>
       <AppLockSection />
-      <div>
-        <LinkButton href={`${getConfig().ID_URL}/security/`}>{tProfile("security")}</LinkButton>
+      <div className="flex flex-wrap gap-2">
+        <LinkButton href="/profile/account/">{t("security.account")}</LinkButton>
+        <LinkButton href={`${getConfig().ID_URL}/security/`}>{t("security.openId")}</LinkButton>
       </div>
+    </>
+  )
+}
+
+function ProfileGroup() {
+  const tProfile = useT("profile")
+  return (
+    <>
+      <div className="flex flex-wrap gap-2">
+        <StudentCardButton />
+        <LinkButton href="/profile/account/">{tProfile("accountLink")}</LinkButton>
+        <LinkButton href="/profile/face/">{tProfile("faceLink")}</LinkButton>
+      </div>
+      <ProfileSections />
     </>
   )
 }
@@ -78,7 +95,7 @@ function GroupBody({ group }: { group: SettingsGroupId }): ReactNode {
   const t = useT("settings")
   switch (group) {
     case "profile":
-      return <ProfileSections />
+      return <ProfileGroup />
     case "appearance":
       return (
         <>

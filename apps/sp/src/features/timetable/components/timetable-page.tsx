@@ -1,5 +1,7 @@
 "use client"
 
+import { NoStudentRecordNotice } from "../../shared/components/no-student-record-notice"
+import { isRecordBlocked, useStudentRecordState } from "../../shared/hooks/use-student-record-state"
 import { getMeLessonResultsQuery, getMeProfileQuery, getMeTimetableQuery, type StudentLessonItem } from "@ihsp/api"
 import { startOfWeek, todayIso, useFormatters, useT } from "@ihsp/i18n"
 import { Alert, AlertDescription, cn, PageContainer, StateView, Switch, useIsMobile } from "@ihsp/ui"
@@ -35,7 +37,7 @@ const isOther = (lesson: StudentLessonItem) => lesson.subgroup?.is_own_subgroup 
  * attendance of each lesson in its colour, the month with the attendance on its days, and the attendance counts. The
  * address keeps the view (`?view=day|week|month`) and the focus date (`?day=`).
  */
-export function TimetablePage() {
+function TimetableContent() {
   const t = useT("timetable")
   const ta = useT("attendanceStates")
   const f = useFormatters()
@@ -188,4 +190,18 @@ export function TimetablePage() {
       <ControlPeriodDialog period={opened} onClose={() => setOpened(null)} />
     </PageContainer>
   )
+}
+
+/** TimetablePage; a student without a usable academic record sees the explanation instead of the content. */
+export function TimetablePage() {
+  const t = useT("timetable")
+  const record = useStudentRecordState()
+  if (isRecordBlocked(record.status)) {
+    return (
+      <PageContainer title={t("title")}>
+        <NoStudentRecordNotice reason={record.status} />
+      </PageContainer>
+    )
+  }
+  return <TimetableContent />
 }

@@ -31,7 +31,7 @@ describe("Home", () => {
     renderSp(<DashboardPage />)
 
     expect(await screen.findByTestId("home-header")).toBeInTheDocument()
-    const face = within(screen.getByTestId("home-header")).getByRole("link", { name: "Open profile" })
+    const face = within(screen.getByTestId("home-header")).getByRole("link", { name: /open profile/i })
     expect(face.getAttribute("href")).toMatch(/^\/profile\/?$/)
     expect(screen.queryByTestId("home-stats")).toBeNull()
     expect(screen.queryByRole("navigation", { name: "Sections" })).toBeNull()

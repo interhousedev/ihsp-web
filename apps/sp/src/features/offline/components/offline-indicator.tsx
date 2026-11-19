@@ -16,11 +16,18 @@ export function OfflineIndicator() {
   const online = useOnline()
   const cachedAt = useCachedDataAge()
   const offline = failed || !online
+  const updated = offline && cachedAt !== null ? t("updated", { when: f.relative(cachedAt) }) : null
   return (
-    <span className="flex items-center gap-2">
+    <span className="flex min-w-0 items-center gap-2">
       <OfflineBadge forceVisible={failed} />
-      {offline && cachedAt !== null ? (
-        <span className="text-muted-foreground text-xs">{t("updated", { when: f.relative(cachedAt) })}</span>
+      {updated ? (
+        <span
+          title={updated}
+          aria-label={updated}
+          className="text-muted-foreground hidden max-w-40 truncate text-xs sm:inline"
+        >
+          {updated}
+        </span>
       ) : null}
     </span>
   )

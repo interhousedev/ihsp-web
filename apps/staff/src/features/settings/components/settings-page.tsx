@@ -2,18 +2,18 @@
 
 import type { Role } from "@ihsp/api"
 import { useSession } from "@ihsp/auth"
-import { deleteStaffMePhoto, getStaffMeContacts, keys, putStaffMeContacts, putStaffMePhoto } from "@ihsp/api"
+import { getStaffMeContacts, keys, putStaffMeContacts } from "@ihsp/api"
 import {
   ReplayTourButton,
   LicenseSection,
   NotificationSettingsForm,
-  PhotoField,
+  MyPhotoField,
+  fullName,
   TeacherContactsForm,
 } from "@ihsp/features-core"
 import { AppLockSection } from "@ihsp/features-core/pwa/lock"
 import { useT } from "@ihsp/i18n"
 import { PageContainer } from "@ihsp/ui"
-import { useState } from "react"
 import { GeneralSettings } from "./general-settings"
 import { SettingsSection } from "./settings-section"
 import { TelegramCard } from "./telegram-card"
@@ -27,10 +27,9 @@ export function SettingsPage() {
   const t = useT("settings")
   const tOnboarding = useT("onboarding.replay")
   const { session } = useSession()
-  const [photoUrl, setPhotoUrl] = useState<string | null | undefined>(undefined)
   if (!session) return null
   const { user } = session
-  const name = [user.last_name, user.first_name, user.middle_name].filter(Boolean).join(" ")
+  const name = fullName(user)
 
   return (
     <PageContainer title={t("title")}>
@@ -43,12 +42,7 @@ export function SettingsPage() {
             <TelegramCard />
           </SettingsSection>
           <SettingsSection title={t("photo.title")} description={t("photo.description")}>
-            <PhotoField
-              name={name}
-              photoUrl={photoUrl === undefined ? user.photo_url : photoUrl}
-              onUpload={async (file) => setPhotoUrl((await putStaffMePhoto(file)).photo_url)}
-              onRemove={async () => setPhotoUrl((await deleteStaffMePhoto()).photo_url)}
-            />
+            <MyPhotoField name={name} />
           </SettingsSection>
           <SettingsSection title={t("contacts.title")} description={t("contacts.description")}>
             <TeacherContactsForm

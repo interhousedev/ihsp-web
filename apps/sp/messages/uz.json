@@ -44,7 +44,7 @@
     "short": {
       "dashboard": "Asosiy",
       "today": "Bugun",
-      "timetable": "Taqvim",
+      "timetable": "Dars jadvali",
       "subjects": "Fanlar",
       "grades": "Baholar",
       "homework": "Vazifa",
@@ -60,7 +60,7 @@
     },
     "dashboard": "Bosh sahifa",
     "today": "Bugun",
-    "timetable": "Taqvim",
+    "timetable": "Dars jadvali",
     "subjects": "Fanlar",
     "grades": "Baholar",
     "homework": "Uy vazifalari",
@@ -78,7 +78,7 @@
     "groupHome": "Bosh sahifa",
     "groupAcademics": "Oʻqish",
     "groupStudyTools": "Oʻqish vositalari",
-    "groupInbox": "Kelganlar",
+    "groupInbox": "Xabarlar",
     "groupAccount": "Hisob",
     "mail": "Pochta",
     "excuses": "Sababli qoldirish"
@@ -96,7 +96,8 @@
     "openProfile": "Profilni ochish",
     "studentCard": "Talaba kartasi",
     "notifications": "Bildirishnomalar",
-    "notificationsCount": "Bildirishnomalar, oʻqilmagan: {count}"
+    "notificationsCount": "Bildirishnomalar, oʻqilmagan: {count}",
+    "openProfileNamed": "{name}, profilni ochish"
   },
   "dashboard": {
     "title": "Bosh sahifa",
@@ -846,7 +847,8 @@
       "item": "{type} {value}",
       "remove": "Olib tashlash: {type} {value}",
       "empty": "Hali hech narsa sinalmadi."
-    }
+    },
+    "openSubjects": "Fanlarni ochish"
   },
   "attendance": {
     "overviewTitle": "Davomat",
@@ -996,7 +998,8 @@
       "unknown": "Nomaʼlum",
       "lastSync": "Oxirgi sinxronlash",
       "never": "Hali sinxronlanmagan",
-      "update": "EMIS parolini yangilash"
+      "update": "EMIS parolini yangilash",
+      "authFailedHint": "EMIS saqlangan parolni rad etdi. Maʼlumotlar qayta yuklanishi uchun uni yangilang."
     },
     "telegram": {
       "title": "Telegram",
@@ -1015,7 +1018,12 @@
       "security": "Xavfsizlik"
     },
     "accountLink": "Akkaunt va xavfsizlik",
-    "faceLink": "Yuzni tanish"
+    "faceLink": "Yuzni tanish",
+    "photo": {
+      "title": "Profil surati",
+      "rule": "Kirish fotosurati yangisini yuklamaguningizcha profil fotosuratingiz hisoblanadi.",
+      "removeDescription": "Siz yuklagan fotosurat oʻchiriladi. Kirish fotosurati bor boʻlsa, oʻrniga shu koʻrsatiladi."
+    }
   },
   "settings": {
     "title": "Sozlamalar",
@@ -1054,7 +1062,8 @@
         "light": "Yorugʻ",
         "dark": "Qorongʻi",
         "system": "Tizim"
-      }
+      },
+      "photoPrivacy": "Rasmimni sinfdoshlarimga koʻrsatmaslik"
     },
     "notifications": {
       "title": "Bildirishnomalar",
@@ -1088,6 +1097,13 @@
       "marks": "sinxronlangan baholar: {n}",
       "lastError": "Sabab: {error}",
       "gaveUp": "Sinxronlash {max} urinishdan keyin to'xtatildi. Qayta urinish uchun tugmani bosing."
+    },
+    "security": {
+      "account": "Hisob va xavfsizlik",
+      "openId": "{appId}ni ochish"
+    },
+    "help": {
+      "feedbackTitle": "Fikr-mulohaza"
     }
   },
   "weekPager": {
@@ -1101,18 +1117,19 @@
     "you": "siz",
     "locked": "Bu suratni kuratoringiz yoki administrator qoʻygan. Uni faqat kurator yoki administrator oʻzgartira oladi.",
     "purpose": "Kirishdagi qurilma sizni oʻtkazish va davomatni belgilash uchun yuzingizni shu surat bilan solishtiradi.",
-    "privacy": "Suratingizni sinfdoshlaringiz, oʻqituvchilar va maʼmuriyat koʻra oladi. U kirish qurilmasi uchun ham ishlatiladi; istalgan payt oʻchirishingiz mumkin."
+    "privacy": "Sinfdoshlaringiz uni faqat profil fotosurati sifatida va faqat «Fotosuratimni sinfdoshlarimga koʻrsatmaslik» yoqilmagan boʻlsa koʻradi. Oʻqituvchilar va maʼmuriyat uni koʻra oladi. Istalgan payt oʻchirishingiz mumkin.",
+    "rule": "Kirish fotosurati yangisini yuklamaguningizcha profil fotosuratingiz hisoblanadi."
   },
   "excuses": {
     "status": {
-      "pending": "Ko‘rib chiqilmoqda",
+      "pending": "Koʻrib chiqilmoqda",
       "approved": "Tasdiqlangan",
       "rejected": "Rad etilgan",
       "cancelled": "Bekor qilingan"
     },
     "origin": {
       "request": "Sizning arizangiz",
-      "curator": "Kurator qo‘shgan"
+      "curator": "Kurator qoʻshgan"
     },
     "untitled": "Sabab",
     "dates": {
@@ -1210,5 +1227,23 @@
       "skip": "Hozircha oʻtkazib yuborish",
       "saving": "Saqlanmoqda…"
     }
+  },
+  "studentRecord": {
+    "missing": {
+      "title": "Oʻquvchi yozuvi hali yoʻq",
+      "description": "Hisobingiz oʻquvchi yozuviga ulanmagan, shuning uchun bu sahifada koʻrsatadigan narsa yoʻq. Oʻquv boʻlimidan sizni guruhga qoʻshishni soʻrang."
+    },
+    "emis-failed": {
+      "title": "EMIS kirishingizni qabul qilmadi",
+      "description": "Maktab tizimi saqlangan EMIS parolini rad etdi, shuning uchun maʼlumotlar yuklanmayapti. Parolni yangilang, sahifa qayta ishlaydi.",
+      "action": "EMIS parolini yangilash"
+    }
+  },
+  "teacherScreen": {
+    "title": "Oʻquvchi hisobi kerak",
+    "text": "Bu ilova oʻquvchilar uchun. Oʻqituvchilar xodimlar ilovasida ishlaydi, hisob sozlamalari ID ilovasida.",
+    "staff": "Xodimlar ilovasini ochish",
+    "id": "ID ni ochish",
+    "logout": "Chiqish"
   }
 }

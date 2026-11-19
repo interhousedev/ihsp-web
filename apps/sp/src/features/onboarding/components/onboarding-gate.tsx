@@ -9,6 +9,16 @@ import { SelfieStep } from "./selfie-step"
 import { StepIndicator, type IndicatorStep } from "./step-indicator"
 
 /**
+ * True while the first-login flow still has to show (loading or a step not done), so no other overlay may open. A
+ * failed request lets the app through, as the gate does.
+ */
+export function useOnboardingGatePending(): boolean {
+  const query = useQuery(getOnboardingQuery())
+  if (query.isError) return false
+  return query.isPending || (query.data?.steps ?? []).some((step) => !step.done)
+}
+
+/**
  * The first-login flow of a student: a full-screen layer over the app while `GET /v1/me/onboarding` lists steps that
  * are not done. There is no close button; the required photo step cannot be left. A failed request lets the app through.
  */

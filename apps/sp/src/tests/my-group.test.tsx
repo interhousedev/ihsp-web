@@ -99,7 +99,7 @@ describe("my group", () => {
     expect(screen.queryByRole("list", { name: "Members" })).not.toBeInTheDocument()
   })
 
-  test("a student without a group sees an empty state, not an error", async () => {
+  test("SP-UX-b1: a student without a record sees the notice, not an error", async () => {
     server.use(
       http.get(apiUrl("/v1/me/group"), () =>
         problem(404, "academic/student-not-found", "The user has no student record"),
@@ -108,7 +108,7 @@ describe("my group", () => {
 
     renderSp(<MyGroupPage />)
 
-    expect(await screen.findByText("You are not in a group yet")).toBeInTheDocument()
+    expect(await screen.findByTestId("no-student-record")).toBeInTheDocument()
     expect(screen.queryByRole("button", { name: "Try again" })).not.toBeInTheDocument()
   })
 

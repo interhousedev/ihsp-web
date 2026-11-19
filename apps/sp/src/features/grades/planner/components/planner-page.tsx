@@ -4,6 +4,7 @@ import { useT } from "@ihsp/i18n"
 import { PageContainer, StateView } from "@ihsp/ui"
 import { parseAsInteger, parseAsString, useQueryState } from "nuqs"
 import { BackLink } from "@ihsp/features-core"
+import { LinkButton } from "../../../shared/components/link-button"
 import { gradesHref } from "../utils/hrefs"
 import { PlannerBody } from "./planner-body"
 
@@ -20,7 +21,11 @@ export function PlannerPage() {
     return (
       <PageContainer title={t("title")}>
         <BackLink href={gradesHref()} label={t("back")} />
-        <StateView state="empty" emptyText={t("noSubject")} />
+        <StateView
+          state="empty"
+          emptyText={t("noSubject")}
+          action={<LinkButton href="/subjects/">{t("openSubjects")}</LinkButton>}
+        />
       </PageContainer>
     )
   }

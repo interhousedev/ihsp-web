@@ -1,5 +1,7 @@
 "use client"
 
+import { NoStudentRecordNotice } from "../../shared/components/no-student-record-notice"
+import { isRecordBlocked, useStudentRecordState } from "../../shared/hooks/use-student-record-state"
 import { useT } from "@ihsp/i18n"
 import { PageContainer, Tabs, TabsContent, TabsList, TabsTrigger } from "@ihsp/ui"
 import { parseAsStringLiteral, useQueryState } from "nuqs"
@@ -13,7 +15,7 @@ import { SemesterGradesTab } from "./semester-grades-tab"
 const TABS = ["day", "semester", "record", "book"] as const
 
 /** Grades (WEB-12–16): `?tab=day|semester|record`. Any other value, such as a removed tab, opens By day. */
-export function GradesPage() {
+function GradesContent() {
   const t = useT("grades")
   const [tab, setTab] = useQueryState("tab", parseAsStringLiteral(TABS).withDefault("day"))
   return (
@@ -27,7 +29,7 @@ export function GradesPage() {
       }
     >
       <Tabs value={tab} onValueChange={(value) => void setTab(TABS.find((item) => item === value) ?? "day")}>
-        <div className="max-w-full overflow-x-auto">
+        <div className="max-w-full overflow-x-auto [mask-image:linear-gradient(to_right,black_calc(100%-2rem),transparent)] md:[mask-image:none]">
           <TabsList className="h-auto min-h-11 w-max min-w-full md:w-fit md:min-w-0">
             {TABS.map((value) => (
               <TabsTrigger key={value} value={value} className="min-h-11 px-3">
@@ -51,4 +53,18 @@ export function GradesPage() {
       </Tabs>
     </PageContainer>
   )
+}
+
+/** GradesPage; a student without a usable academic record sees the explanation instead of the content. */
+export function GradesPage() {
+  const t = useT("grades")
+  const record = useStudentRecordState()
+  if (isRecordBlocked(record.status)) {
+    return (
+      <PageContainer title={t("title")}>
+        <NoStudentRecordNotice reason={record.status} />
+      </PageContainer>
+    )
+  }
+  return <GradesContent />
 }

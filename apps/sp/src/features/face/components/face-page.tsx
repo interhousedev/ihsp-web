@@ -16,8 +16,7 @@ export function FacePage() {
     Promise.all([queryClient.invalidateQueries({ queryKey: keys.me.face() }), refreshSessionUser(queryClient)])
 
   return (
-    <PageContainer title={t("title")}>
-      <BackLink href="/profile/" label={t("back")} />
+    <PageContainer title={t("title")} back={<BackLink href="/profile/" label={t("back")} />}>
       <QueryState query={face} rows={3}>
         {(data) => (
           <Card>
@@ -45,6 +44,7 @@ export function FacePage() {
                 }}
               />
               <p className="text-muted-foreground text-sm">{t("purpose")}</p>
+              <p className="text-sm font-medium">{t("rule")}</p>
               <p className="text-muted-foreground text-sm">{t("privacy")}</p>
             </CardContent>
           </Card>

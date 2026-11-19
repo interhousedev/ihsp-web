@@ -3,8 +3,8 @@
     "page": {
       "title": "Mening fayllarim",
       "upload": "Fayllarni yuklash",
-      "empty": "Hozircha fayllar yo‘q. Birinchisini yuklang.",
-      "loadMore": "Yana ko‘rsatish",
+      "empty": "Hozircha fayllar yoʻq. Birinchisini yuklang.",
+      "loadMore": "Yana koʻrsatish",
       "new": "Yangi",
       "settings": "Sozlamalar",
       "manage": "Boshqarish",
@@ -32,15 +32,15 @@
     "storage": {
       "label": "Band joy",
       "used": "{used} / {quota}",
-      "almostFull": "Deyarli to‘lgan. Keraksiz fayllarni o‘chiring.",
-      "clearedOn": "Bu semestr fayllari {date} kuni o‘chiriladi."
+      "almostFull": "Deyarli toʻlgan. Keraksiz fayllarni oʻchiring.",
+      "clearedOn": "Bu semestr fayllari {date} kuni oʻchiriladi."
     },
     "status": {
       "checking": "Tekshirilmoqda…",
       "rejected": "Rad etildi: {reason}",
       "assistantReady": "Yordamchi uchun tayyor",
       "assistantTooLarge": "Yordamchi uchun juda katta",
-      "assistantUnreadable": "Yordamchi o‘qiy olmaydi"
+      "assistantUnreadable": "Yordamchi oʻqiy olmaydi"
     },
     "usedBy": {
       "label": "Qayerda ishlatilgan",
@@ -50,24 +50,24 @@
       "chat": "Suhbat"
     },
     "row": {
-      "rename": "{name} nomini o‘zgartirish",
-      "renameShort": "Nomini o‘zgartirish",
-      "delete": "{name} faylini o‘chirish",
-      "deleteShort": "O‘chirish",
+      "rename": "{name} nomini oʻzgartirish",
+      "renameShort": "Nomini oʻzgartirish",
+      "delete": "{name} faylini oʻchirish",
+      "deleteShort": "Oʻchirish",
       "more": "{name} fayli amallari"
     },
     "rename": {
-      "title": "Fayl nomini o‘zgartirish",
+      "title": "Fayl nomini oʻzgartirish",
       "label": "Nomi",
       "save": "Saqlash",
       "cancel": "Bekor qilish"
     },
     "delete": {
-      "title": "Bu fayl o‘chirilsinmi?",
-      "description": "“{name}” fayli butunlay o‘chiriladi.",
+      "title": "Bu fayl oʻchirilsinmi?",
+      "description": "“{name}” fayli butunlay oʻchiriladi.",
       "usedWarning": "Fayl ishlatilmoqda. Quyidagilar ishlamay qoladi:",
-      "confirm": "O‘chirish",
-      "deleted": "“{name}” fayli o‘chirildi."
+      "confirm": "Oʻchirish",
+      "deleted": "“{name}” fayli oʻchirildi."
     },
     "sharing": {
       "title": "Odamlar bilan ulashish",
@@ -82,15 +82,15 @@
       "title": "Kartochkalar",
       "allDecks": "Barcha kollodalar",
       "missing": "Kolloda topilmadi.",
-      "importFailed": "Faylni o‘qib bo‘lmadi.",
+      "importFailed": "Faylni oʻqib boʻlmadi.",
       "importEmpty": "Faylda kartochkalar topilmadi. Har qatorga bitta kartochka yozing: atama va taʼrif tab bilan ajratilgan.",
       "imported": "“{title}” kollodasiga {count} ta kartochka import qilindi.",
       "created": "Kolloda yaratildi.",
       "saved": "Kartochkalar saqlandi.",
-      "deleteTitle": "Bu kolloda o‘chirilsinmi?",
-      "deleteDescription": "“{title}” kollodasi, uning barcha kartochkalari va natijalari o‘chiriladi. Ochiq havolalar ishlamay qoladi.",
-      "deleteConfirm": "Kollodani o‘chirish",
-      "deleteFailed": "Kollodani o‘chirib bo‘lmadi.",
+      "deleteTitle": "Bu kolloda oʻchirilsinmi?",
+      "deleteDescription": "“{title}” kollodasi, uning barcha kartochkalari va natijalari oʻchiriladi. Ochiq havolalar ishlamay qoladi.",
+      "deleteConfirm": "Kollodani oʻchirish",
+      "deleteFailed": "Kollodani oʻchirib boʻlmadi.",
       "mergeTitle": "Kollodalarni birlashtirish",
       "mergeHint": "Yangi kollodaga kartochkalar nusxasi tushadi. Tanlangan kollodalar oʻzgarmaydi, bir xil kartochkalar bir marta qoʻshiladi.",
       "mergeSets": "Birlashtiriladigan kollodalar",
@@ -114,7 +114,7 @@
       "saved": "Sozlamalar saqlandi.",
       "shuffle": "Kartochkalarni aralashtirish",
       "shuffleHint": "Yangi kartochkalar va takrorlashlar tasodifiy tartibda keladi.",
-      "delete": "Kollodani o‘chirish"
+      "delete": "Kollodani oʻchirish"
     },
     "descriptionDialog": {
       "title": "Tavsif",
@@ -127,27 +127,27 @@
     "copy": {
       "title": "Ulashilgan kollodani nusxalash",
       "copying": "Kolloda hisobingizga nusxalanmoqda…",
-      "missing": "Nusxalash havolasi to‘liq emas."
+      "missing": "Nusxalash havolasi toʻliq emas."
     }
   },
   "links": {
     "page": {
       "title": "Havolalar va ulashishlar",
       "new": "Yangi qisqa havola",
-      "empty": "Hozircha havolalar yo‘q.",
-      "loadMore": "Yana ko‘rsatish",
+      "empty": "Hozircha havolalar yoʻq.",
+      "loadMore": "Yana koʻrsatish",
       "revokeTitle": "Ulashish bekor qilinsinmi?",
       "revokeDescription": "“{name}” havolasi borlar uchun ishlamay qoladi.",
       "revokeConfirm": "Bekor qilish",
       "revoked": "Ulashish bekor qilindi.",
-      "deleteTitle": "Havola o‘chirilsinmi?",
+      "deleteTitle": "Havola oʻchirilsinmi?",
       "deleteDescription": "“{name}” ishlamay qoladi. Qisqa kod 90 kun qayta ishlatilmaydi.",
-      "deleteConfirm": "O‘chirish",
-      "deleted": "Havola o‘chirildi.",
-      "actionFailed": "Bajarilmadi. Qayta urinib ko‘ring."
+      "deleteConfirm": "Oʻchirish",
+      "deleted": "Havola oʻchirildi.",
+      "actionFailed": "Bajarilmadi. Qayta urinib koʻring."
     },
     "kind": {
-      "filter": "Turi bo‘yicha saralash",
+      "filter": "Turi boʻyicha saralash",
       "all": "Hammasi",
       "url": "Havolalar",
       "file": "Fayllar",
@@ -168,20 +168,20 @@
       },
       "status": {
         "revoked": "Bekor qilingan",
-        "disabled": "O‘chirilgan",
+        "disabled": "Oʻchirilgan",
         "expired": "Muddati tugagan"
       },
       "modeSnapshot": "Surat",
       "modeLive": "Jonli",
-      "hits": "{count} ta o‘tish",
+      "hits": "{count} ta oʻtish",
       "created": "{date} da yaratilgan",
       "expires": "{date} gacha amal qiladi",
       "copy": "Nusxalash",
       "open": "Ochish",
       "revoke": "Bekor qilish",
       "revokeLabel": "{name} ni bekor qilish",
-      "delete": "O‘chirish",
-      "deleteLabel": "{name} ni o‘chirish",
+      "delete": "Oʻchirish",
+      "deleteLabel": "{name} ni oʻchirish",
       "openLesson": "Darsni ochish"
     },
     "new": {
@@ -190,7 +190,7 @@
       "mode_url": "Veb-manzil",
       "mode_file": "Fayl",
       "urlLabel": "Manzil (http yoki https)",
-      "urlInvalid": "http:// yoki https:// bilan boshlanadigan to‘liq manzil kiriting.",
+      "urlInvalid": "http:// yoki https:// bilan boshlanadigan toʻliq manzil kiriting.",
       "fileLabel": "Fayl",
       "chooseFile": "Faylni tanlang",
       "loadingFiles": "Fayllar yuklanmoqda…",

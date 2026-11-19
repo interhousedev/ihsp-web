@@ -305,5 +305,10 @@
     "otp": {
       "description": "Enter your login. We send a code if OTP login is enabled."
     }
+  },
+  "photo": {
+    "title": "Profile photo",
+    "description": "Shown next to your name in the platform. JPEG or PNG, up to 5 MB.",
+    "removeDescription": "Removing the photo shows your initials instead."
   }
 }

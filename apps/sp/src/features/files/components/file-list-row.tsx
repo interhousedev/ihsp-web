@@ -27,7 +27,7 @@ export function FileListRow({ file, onShare, onRename, onDelete }: FileListRowPr
       contentType={file.content_type}
       title={<FileTitle file={file} />}
       badge={<FileStatusBadge file={file} />}
-      meta={[file.content_type, formatBytes(file.byte_size), format.date(file.created_at)]}
+      meta={[formatBytes(file.byte_size), format.date(file.created_at)]}
       details={<UsedByList items={file.used_by} />}
       actions={<FileActions file={file} {...(onShare ? { onShare } : {})} onRename={onRename} onDelete={onDelete} />}
     />
