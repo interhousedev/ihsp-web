@@ -23,7 +23,7 @@ export function AlgorithmSummary({
   const { answers } = preferences
   const major = sources.majors.find((item) => item.value === answers.major)?.label
   const budget = answers.budget && answers.budget !== "any" ? t(`summary.budgetPhrase.${answers.budget}`) : undefined
-  const region = !answers.region || answers.region === "any" ? undefined : sources.regionName(answers.region)
+  const region = answers.region?.length ? answers.region.map((code) => sources.regionName(code)).join(", ") : undefined
   return (
     <section className="flex flex-col gap-6" aria-labelledby="algorithm-summary-title">
       <header className="flex flex-col gap-2">

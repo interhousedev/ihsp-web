@@ -17,7 +17,6 @@ export const FIELD_ORDER = [
   "experience",
   "setting",
   "region",
-  "distance",
   "small_classes",
   "ec_important",
   "food_important",
@@ -36,7 +35,6 @@ export const SECTION_OF: Record<PreferenceField, "vibe" | "academics" | "financi
   experience: "vibe",
   setting: "vibe",
   region: "vibe",
-  distance: "vibe",
   small_classes: "vibe",
   ec_important: "vibe",
   food_important: "vibe",
@@ -54,10 +52,27 @@ const isBooleanField = (field: string) => (BOOLEAN_FIELDS as readonly string[]).
 /** Questions the preferences contract has no field for; they are stored only with the quiz answers. */
 export const QUIZ_ONLY_FIELDS: readonly string[] = ["traits"]
 
+/** Questions answered with several chips; the contract holds lists (`[]` = no preference / anywhere). */
+export const LIST_FIELDS: readonly string[] = ["setting", "region"]
+
+/** The chip that stands for the empty list. */
+export const ANY = "any"
+
+const MAX_SETTINGS = 3
+
 /** One answered question as the partial PUT body. */
 export function answerToPayload(field: string, value: string | string[] | undefined): PreferenceAnswers {
   if (QUIZ_ONLY_FIELDS.includes(field)) return {}
-  if (typeof value !== "string" || value === "") return field === "region" ? { region: null } : {}
+  if (LIST_FIELDS.includes(field)) {
+    if (value === undefined || value === "") return field === "region" ? { region: null } : {}
+    const picked = (Array.isArray(value) ? value : [value]).filter((item) => item !== "" && item !== ANY)
+    if (field === "region") {
+      const codes = [...new Set(picked.map((code) => code.toUpperCase()).filter((code) => /^[A-Z]{2}$/.test(code)))]
+      return { region: codes }
+    }
+    return { setting: [...new Set(picked)].slice(0, MAX_SETTINGS) } as PreferenceAnswers
+  }
+  if (typeof value !== "string" || value === "") return {}
   return { [field]: isBooleanField(field) ? value === "true" : value } as PreferenceAnswers
 }
 
@@ -66,9 +81,20 @@ export function answersToValues(answers: PreferenceAnswers): StepAnswers {
   const values: StepAnswers = {}
   for (const [field, value] of Object.entries(answers)) {
     if (value === undefined || value === null) continue
-    values[field] = typeof value === "boolean" ? String(value) : value
+    values[field] = toStepValue(field, value)
   }
   return values
+}
+
+/** A stored value as the stepper's: lists stay lists (`[]` is the "any" chip), legacy single values become lists. */
+function toStepValue(field: string, value: unknown): StepValue {
+  if (typeof value === "boolean") return String(value)
+  if (LIST_FIELDS.includes(field)) {
+    const list = Array.isArray(value) ? (value as string[]) : typeof value === "string" ? [value] : []
+    const picked = list.filter((item) => item !== "" && item !== ANY)
+    return picked.length > 0 ? picked : [ANY]
+  }
+  return value as StepValue
 }
 
 /** Where to resume: the first unanswered question. */
@@ -83,7 +109,7 @@ export const tagMessageKey = (tag: string) => tag.replaceAll(":", "_")
 export function mergeValues(quiz: Record<string, unknown> | undefined, answers: PreferenceAnswers): StepAnswers {
   const values: StepAnswers = {}
   for (const [field, value] of Object.entries(quiz ?? {})) {
-    if (typeof value === "string" || Array.isArray(value)) values[field] = value as StepValue
+    if (typeof value === "string" || Array.isArray(value)) values[field] = toStepValue(field, value)
   }
   return { ...values, ...answersToValues(answers) }
 }

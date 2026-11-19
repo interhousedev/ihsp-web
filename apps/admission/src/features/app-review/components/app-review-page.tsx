@@ -18,6 +18,7 @@ import {
 import { useQueryClient } from "@tanstack/react-query"
 import Link from "next/link"
 import { useState } from "react"
+import { NextStep } from "../../../components/next-step"
 import { AdmissionShell } from "../../shell/components/admission-shell"
 import {
   isActive,
@@ -132,6 +133,7 @@ export function AppReviewPanel() {
       ) : null}
       {body}
       <History items={items} current={current} onSelect={setSelected} />
+      <NextStep href="/outcomes/" label={t("nextOutcomes")} hint={t("nextOutcomesHint")} />
     </div>
   )
 }

@@ -1,5 +1,5 @@
 import type { StepOption, StepQuestion, StepQuestionKind } from "../../components/stepper"
-import { FIELD_ORDER, SECTION_OF, type PreferenceField } from "./mapping"
+import { ANY, FIELD_ORDER, SECTION_OF, type PreferenceField } from "./mapping"
 
 type Translate = (key: string) => string
 
@@ -25,19 +25,12 @@ const FIXED: Partial<Record<PreferenceField, Fixed>> = {
     ],
   },
   setting: {
-    kind: "single",
+    kind: "multi",
     options: [
+      ["any", "🌍"],
       ["rural", "🌲"],
       ["suburban", "🏘️"],
       ["city", "🏙️"],
-    ],
-  },
-  distance: {
-    kind: "select",
-    options: [
-      ["any", "🌍"],
-      ["near", "🚗"],
-      ["far", "✈️"],
     ],
   },
   traits: {
@@ -95,15 +88,16 @@ export function buildQuestions(t: Translate, sources: QuestionSources): StepQues
         value,
         emoji,
         label: t(`o.${field}.${value}`),
+        exclusive: value === ANY,
       }))
       return { ...base, kind: fixed.kind, options, placeholder: t("placeholder") }
     }
     if (field === "region") {
       const options: StepOption[] = [
-        { value: "any", label: t("o.region.any") },
-        ...sources.regions.map((region) => ({ value: region, label: sources.regionName(region) })),
+        { value: ANY, label: t("o.region.any"), exclusive: true },
+        ...sources.regions.map((region) => ({ value: region.toUpperCase(), label: sources.regionName(region) })),
       ]
-      return { ...base, kind: "select" as const, options, placeholder: t("placeholder"), optional: true }
+      return { ...base, kind: "multi" as const, options, placeholder: t("placeholder") }
     }
     return { ...base, kind: "select" as const, options: sources.majors, placeholder: t("placeholder"), sheet: true }
   })
@@ -112,7 +106,7 @@ export function buildQuestions(t: Translate, sources: QuestionSources): StepQues
 /** Display label of a tag key (`budget:under_10k`, `region:Uzbekistan`, `major:cs`, `prestige`). */
 export function tagLabel(tag: string, t: Translate, sources: QuestionSources): string {
   const [head, rest] = tag.split(":", 2)
-  if (head === "region" && rest && rest !== "any") return sources.regionName(rest)
+  if (head === "region" && rest && rest !== ANY) return sources.regionName(rest)
   if (head === "major" && rest) {
     const found = sources.majors.find((major) => major.value.toLowerCase() === rest.toLowerCase())
     return found?.label ?? rest

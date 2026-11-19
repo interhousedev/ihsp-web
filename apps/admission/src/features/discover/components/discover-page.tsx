@@ -8,9 +8,7 @@ import { toast } from "sonner"
 import { SwipeDeck, type SwipeDirection } from "../../../components/lib/swipe-deck"
 import { ScrollFade } from "../../../components/scroll-fade"
 import type { AdmissionMatch as Match } from "@ihsp/api"
-import { ScreenSummary } from "../../assistant/screen-context"
 import { AlgorithmPanel } from "../../algorithm/components/algorithm-panel"
-import { AdmissionShell } from "../../shell/components/admission-shell"
 import { useDecide, useMatches, useUndoDecision } from "../hooks"
 import { MatchCard } from "./match-card"
 import { SwipeExplainer } from "./swipe-explainer"
@@ -33,7 +31,7 @@ type Decided = { match: Match; direction: SwipeDirection }
 
 const COLUMN_HEIGHT = "calc(100dvh - 9rem)"
 
-/** The Kollegio-style matching feed: algorithm, swipe deck and assistant context. */
+/** The Kollegio-style matching feed, embedded in the chooser search (no page chrome): algorithm, swipe deck and assistant context. */
 export function DiscoverPage() {
   const t = useT("discover")
   const tChat = useT("uniChat")
@@ -158,16 +156,9 @@ export function DiscoverPage() {
   )
 
   return (
-    <AdmissionShell>
-      <ScreenSummary
-        title={t("title")}
-        summary={
-          top ? `Discover colleges. Top card: ${top.name}, ${top.city}, match ${top.match_pct}%.` : "Discover colleges."
-        }
-      />
-      <div className="mx-auto flex w-full min-w-0 max-w-screen-2xl flex-col gap-4 p-4 md:p-6">
-        <div className="flex flex-wrap items-center justify-between gap-2">
-          <h1 className="text-xl font-semibold">{t("title")}</h1>
+    <>
+      <div className="flex w-full min-w-0 flex-col gap-4">
+        <div className="flex flex-wrap items-center justify-end gap-2">
           {layout === "mobile" ? (
             <div className="flex flex-wrap gap-2">
               <Button type="button" variant="outline" size="sm" onClick={() => setChatOpen(true)}>
@@ -245,6 +236,6 @@ export function DiscoverPage() {
           </>
         )}
       </div>
-    </AdmissionShell>
+    </>
   )
 }

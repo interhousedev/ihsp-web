@@ -67,7 +67,7 @@ export function AlgorithmPanel({ className, defaultOpen = ["vibe"], onSaved }: A
                       key={question.id}
                       question={question}
                       compact
-                      value={values[question.id]}
+                      value={values[question.id] ?? ""}
                       disabled={save.isPending}
                       onChange={(value) => change(question.id, value)}
                     />

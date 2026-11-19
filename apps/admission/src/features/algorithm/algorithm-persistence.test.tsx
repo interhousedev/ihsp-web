@@ -28,9 +28,8 @@ describe("algorithm quiz persistence", () => {
       algorithm: {
         answers: {
           experience: "social",
-          setting: "city",
-          region: "any",
-          distance: "any",
+          setting: ["city"],
+          region: [],
           small_classes: "true",
           ec_important: "true",
           food_important: "true",
@@ -47,6 +46,6 @@ describe("algorithm quiz persistence", () => {
     first.unmount()
     renderAdmissionApp(<AlgorithmPage />)
     // Resumes at the first unanswered question (the major), not at the start.
-    await waitFor(() => expect(screen.getByRole("progressbar")).toHaveAttribute("aria-valuenow", "9"))
+    await waitFor(() => expect(screen.getByRole("progressbar")).toHaveAttribute("aria-valuenow", "8"))
   })
 })
