@@ -5,16 +5,21 @@ import { useErrorMessage, useT } from "@ihsp/i18n"
 import { Button, buttonVariants, cn, Icons, Input, Label, Pill, Reveal, StateView, Textarea } from "@ihsp/ui"
 import Link from "next/link"
 import { useQuery } from "@tanstack/react-query"
-import { useRouter } from "next/navigation"
-import { useState, type FormEvent } from "react"
+import { useRouter, useSearchParams } from "next/navigation"
+import { Suspense, useState, type FormEvent } from "react"
 import { AsideCard, SplitLayout } from "../../../components/lib/split-layout"
-import { UnderlineTabs } from "../../../components/lib/underline-tabs"
+import { LogoAvatar } from "../../../components/lib/photo-header"
 import { ScrollFade } from "../../../components/scroll-fade"
 import { consentQuery } from "../../consent/api"
 import { useList } from "../../chooser/hooks"
 import { AdmissionShell } from "../../shell/components/admission-shell"
 import { useScreenContext } from "../../assistant/screen-context"
 import { ESSAY_KINDS, useCreateEssay, useEssays, type EssayKind } from "../api"
+import { AlignmentBody } from "../../alignment/components/alignment-page"
+import { WordsBody } from "../../words/components/words-page"
+import { NextStep } from "../../../components/next-step"
+import { CollegesTab } from "./colleges-tab"
+import { ExemplarsTab } from "./exemplars-tab"
 import { IdeasBoard } from "./ideas-board"
 import { LifeStory } from "./life-story"
 import { PromptCarousel } from "./prompt-carousel"
@@ -94,7 +99,7 @@ function NewEssay({ onDone }: { onDone: () => void }) {
           </select>
           {list.data?.length === 0 ? (
             <p className="text-muted-foreground text-sm">
-              {t("collegeEmpty")} <Link href="/chooser/">{t("collegeOpen")}</Link>
+              {t("collegeEmpty")} <Link href="/chooser/search/">{t("collegeOpen")}</Link>
             </p>
           ) : null}
         </div>
@@ -138,7 +143,11 @@ export function EssaysBody() {
   const [group, setGroup] = useState<"colleges" | "scholarships">("colleges")
   const all = query.data?.items ?? []
   const essays = all.filter((e) => (e.kind === "other") === (group === "scholarships"))
-  const [tab, setTab] = useState("essays")
+  const params = useSearchParams()
+  const tab = params.get("tab") ?? "essays"
+  const entryId = params.get("entry")
+  const list = useList()
+  const entryOf = (id: string | null) => list.data?.find((x) => x.id === id)?.institution
   const consent = useQuery(consentQuery())
   const aiGranted = consent.data?.grants.some((g) => g.purpose === "admission_ai" && g.active) === true
   const aiTarget = all[0]
@@ -157,11 +166,21 @@ export function EssaysBody() {
   })
   return (
     <div className={pageClass("narrow")}>
+      {entryId ? (
+        <Link
+          data-testid="essays-back"
+          href={`/chooser/list/?entry=${encodeURIComponent(entryId)}`}
+          className={cn(buttonVariants({ variant: "ghost", size: "sm" }), "self-start")}
+        >
+          <Icons.chevronLeft aria-hidden />
+          {t("backToList")}
+        </Link>
+      ) : null}
       <AppPageHeader
         icon="post"
         title={t("title")}
         actions={
-          adding ? null : (
+          adding || tab !== "essays" ? null : (
             <Button type="button" onClick={() => setAdding(true)}>
               <Icons.add aria-hidden />
               {t("new")}
@@ -227,35 +246,39 @@ export function EssaysBody() {
         }
       >
         <div className="flex flex-col gap-4">
-          <div role="radiogroup" aria-label={t("group.label")} className="flex gap-2">
-            {(["colleges", "scholarships"] as const).map((g) => (
-              <Button
-                key={g}
-                type="button"
-                size="sm"
-                role="radio"
-                aria-checked={group === g}
-                variant={group === g ? "default" : "outline"}
-                onClick={() => setGroup(g)}
-              >
-                {t(`group.${g}`)}
-              </Button>
-            ))}
-          </div>
-          <UnderlineTabs
-            label={t("view.tabs")}
-            value={tab}
-            onValueChange={setTab}
-            tabs={[
-              { value: "essays", label: t("view.essays"), icon: "post", count: essays.length, tone: "primary" },
-              { value: "life", label: t("view.life"), icon: "chat" },
-              { value: "ideas", label: t("view.ideas"), icon: "sparkles" },
-            ]}
-          />
+          {tab === "essays" ? (
+            <div role="radiogroup" aria-label={t("group.label")} className="flex gap-2">
+              {(["colleges", "scholarships"] as const).map((g) => (
+                <Button
+                  key={g}
+                  type="button"
+                  size="sm"
+                  role="radio"
+                  aria-checked={group === g}
+                  variant={group === g ? "default" : "outline"}
+                  onClick={() => setGroup(g)}
+                >
+                  {t(`group.${g}`)}
+                </Button>
+              ))}
+            </div>
+          ) : null}
           {tab === "ideas" ? (
             <IdeasBoard />
-          ) : tab === "life" ? (
-            <LifeStory />
+          ) : tab === "colleges" ? (
+            <CollegesTab entryId={entryId} />
+          ) : tab === "story" ? (
+            <div className="flex flex-col gap-6">
+              <LifeStory />
+              <section id="words" className="flex scroll-mt-20 flex-col gap-3">
+                <h2 className="text-lg font-semibold">{t("story.wordsTitle")}</h2>
+                <WordsBody />
+              </section>
+            </div>
+          ) : tab === "examples" ? (
+            <ExemplarsTab institutionId={entryOf(entryId)?.id ?? null} />
+          ) : tab === "alignment" ? (
+            <AlignmentBody />
           ) : query.isPending ? (
             <StateView state="loading" rows={3} />
           ) : query.isError ? (
@@ -283,7 +306,18 @@ export function EssaysBody() {
                             {e.status === "final" ? t("final") : t("view.drafts")}
                           </Pill>
                         </span>
-                        <span className="font-medium">{label(e)}</span>
+                        <span className="flex items-center gap-2 font-medium">
+                          {entryOf(e.list_entry_id) ? (
+                            <LogoAvatar
+                              name={entryOf(e.list_entry_id)?.name ?? ""}
+                              src={entryOf(e.list_entry_id)?.logo_url}
+                              fit={entryOf(e.list_entry_id)?.logo_fit}
+                              zoom={entryOf(e.list_entry_id)?.logo_zoom}
+                              className="size-6"
+                            />
+                          ) : null}
+                          {label(e)}
+                        </span>
                         <span className="text-muted-foreground text-sm">
                           {e.word_limit
                             ? t("wordsOf", { count: e.word_count, limit: e.word_limit })
@@ -298,6 +332,10 @@ export function EssaysBody() {
           )}
         </div>
       </SplitLayout>
+      <NextStep
+        href={entryId ? `/documents/?entry=${encodeURIComponent(entryId)}` : "/documents/"}
+        label={t("nextStep")}
+      />
     </div>
   )
 }
@@ -305,7 +343,9 @@ export function EssaysBody() {
 export function EssaysPage() {
   return (
     <AdmissionShell>
-      <EssaysBody />
+      <Suspense>
+        <EssaysBody />
+      </Suspense>
     </AdmissionShell>
   )
 }

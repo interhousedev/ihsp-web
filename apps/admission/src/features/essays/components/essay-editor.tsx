@@ -1,42 +1,29 @@
 "use client"
 
-import { pageClass } from "../../../components/lib/page"
 import { ApiError } from "@ihsp/api"
-import { useSession } from "@ihsp/auth"
 import { useErrorMessage, useT } from "@ihsp/i18n"
-import {
-  Alert,
-  AlertDescription,
-  Button,
-  Icons,
-  Input,
-  Label,
-  PageHeader,
-  StateView,
-  Tabs,
-  TabsContent,
-  TabsTrigger,
-  Textarea,
-} from "@ihsp/ui"
+import { Alert, AlertDescription, Button, StateView } from "@ihsp/ui"
 import Link from "next/link"
 import { useSearchParams } from "next/navigation"
 import { useCallback, useEffect, useRef, useState } from "react"
-import { CommentsPanel } from "../../comments/components/comments-panel"
+import { useList } from "../../chooser/hooks"
+import { ShareDialog } from "../../essay-invites/components/share-dialog"
+import { EssayReviewPanel } from "../../essay-review"
 import { AdmissionShell } from "../../shell/components/admission-shell"
 import { useEssay, useRestore, useSaveEssay, type Essay, type EssayLink, type PlanSection } from "../api"
 import { countWords } from "../diff"
 import { CoachPanel } from "./coach-panel"
-import { DraftSwitcher } from "./draft-switcher"
-import { ScrollTabsList } from "./scroll-tabs-list"
 import { RefinePanel } from "./refine-panel"
 import { CheckPanel } from "./check-panel"
 import { EssayMeta } from "./essay-meta"
-import { ReviewPanel } from "./review-panel"
 import { SuppInfo } from "./supp-info"
-import { useEssayLabel } from "./supp-label"
 import { IdeasBoard } from "./ideas-board"
 import { PlanPane } from "./plan-pane"
 import { VersionsPanel } from "./versions-panel"
+import { CommentsDrawer, DocumentRail, Paper, SidePanel, Toolbar, ToolsPanel, TopBar, type ToolTab } from "./editor"
+import { useWide } from "./editor/use-wide"
+
+type Panel = "comments" | "review" | "tools" | null
 
 /** Quiet time after the last keystroke before the draft is saved. */
 export const AUTOSAVE_MS = 1500
@@ -68,10 +55,7 @@ const draftOf = (e: Essay): Draft => ({
  */
 export function EssayEditor({ essay }: { essay: Essay }) {
   const t = useT("essays")
-  const tc = useT("essayCheck")
-  const { label } = useEssayLabel()
   const errorMessage = useErrorMessage()
-  const { session } = useSession()
   const save = useSaveEssay(essay.id)
   const restore = useRestore(essay.id)
   const current = useEssay(essay.id)
@@ -82,6 +66,13 @@ export function EssayEditor({ essay }: { essay: Essay }) {
   const latest = useRef(draft)
   const dirty = useRef(false)
   const inFlight = useRef<Promise<number> | null>(null)
+  const body = useRef<HTMLTextAreaElement>(null)
+  const wide = useWide()
+  const list = useList()
+  const [panel, setPanel] = useState<Panel>(null)
+  const [tab, setTab] = useState<ToolTab>("plan")
+  const [railOpen, setRailOpen] = useState(false)
+  const [shareOpen, setShareOpen] = useState(false)
 
   /** Saves the current draft when it has changes; resolves to the lock version to use next. */
   const flush = useCallback(async (): Promise<number> => {
@@ -161,7 +152,6 @@ export function EssayEditor({ essay }: { essay: Essay }) {
   }
 
   const words = countWords(draft.body)
-  const over = draft.word_limit !== null && words > draft.word_limit
   const status =
     state === "saving"
       ? t("save.saving")
@@ -173,34 +163,59 @@ export function EssayEditor({ essay }: { essay: Essay }) {
             ? t("save.conflict")
             : t("save.saved")
 
+  const openPanel = (next: Panel, nextTab?: ToolTab) => {
+    if (nextTab) setTab(nextTab)
+    setPanel((current) => (current === next && !nextTab ? null : next))
+  }
+  const history = (command: "undo" | "redo") => {
+    body.current?.focus()
+    document.execCommand(command)
+  }
+  const entry = list.data?.find((item) => item.id === essay.list_entry_id)
+  const panelTitle =
+    panel === "comments" ? t("tabs.comments") : panel === "review" ? t("tabs.review") : t("editor.tools")
+
   return (
-    <div className={pageClass("wide")}>
-      <PageHeader
-        back={
-          <Link
-            href="/essays/"
-            aria-label={t("back")}
-            className="text-muted-foreground hover:text-foreground inline-flex size-11 items-center justify-center md:size-6"
-          >
-            <Icons.chevronLeft aria-hidden />
-          </Link>
+    <div className="bg-muted/40 flex min-h-[calc(100dvh-4rem)] flex-col">
+      <TopBar
+        title={draft.title}
+        onTitle={(title) => update({ title })}
+        status={
+          <>
+            {status}
+            {state === "error" ? (
+              <Button type="button" size="sm" variant="ghost" onClick={() => void flush().catch(() => undefined)}>
+                {t("save.retry")}
+              </Button>
+            ) : null}
+          </>
         }
-        title={label({ ...essay, title: draft.title })}
-        meta={t(`kind.${essay.kind}`)}
-        actions={<DraftSwitcher currentId={essay.id} />}
+        onRail={() => setRailOpen(true)}
+        onVersions={() => openPanel("tools", "versions")}
+        onComments={() => openPanel("comments")}
+        onShare={() => setShareOpen(true)}
+        commentsOpen={panel === "comments"}
       />
-      <div className="grid grid-cols-1 gap-6 lg:grid-cols-[minmax(0,1fr)_minmax(0,24rem)]">
-        <div className="flex flex-col gap-3">
+      <Toolbar
+        words={words}
+        wordLimit={draft.word_limit}
+        onUndo={() => history("undo")}
+        onRedo={() => history("redo")}
+        onReview={() => openPanel("review")}
+        onTools={() => openPanel("tools")}
+      />
+      <div className="flex min-w-0 flex-1 items-start gap-4 p-3 md:p-4">
+        <SidePanel
+          side="left"
+          title={t("editor.rail.title")}
+          open={wide || railOpen}
+          onOpenChange={setRailOpen}
+          className="w-52 shrink-0"
+        >
+          <DocumentRail currentId={essay.id} liveTitle={draft.title} onNavigate={() => setRailOpen(false)} />
+        </SidePanel>
+        <div className="flex min-w-0 flex-1 flex-col gap-3">
           {essay.kind === "supplemental" ? <SuppInfo essay={essay} /> : null}
-          <div className="flex flex-col gap-1">
-            <Label htmlFor="essay-title-edit">{t("titleLabel")}</Label>
-            <Input
-              id="essay-title-edit"
-              value={draft.title}
-              maxLength={120}
-              onChange={(e) => update({ title: e.target.value })}
-            />
-          </div>
           <EssayMeta
             prompt={draft.prompt_text}
             wordLimit={draft.word_limit}
@@ -209,38 +224,14 @@ export function EssayEditor({ essay }: { essay: Essay }) {
             onPrompt={(prompt_text) => update({ prompt_text })}
             onWordLimit={(word_limit) => update({ word_limit })}
           />
-          <div className="flex flex-col gap-1">
-            <Label htmlFor="essay-body">{t("body")}</Label>
-            <Textarea
-              id="essay-body"
-              className="min-h-[24rem] text-base leading-relaxed"
-              value={draft.body}
-              readOnly={state === "conflict"}
-              aria-describedby="essay-count essay-save"
-              onChange={(e) => update({ body: e.target.value })}
-            />
-          </div>
-          <div className="flex flex-wrap items-center justify-between gap-2 text-sm">
-            <span id="essay-count" className={over ? "text-destructive font-medium" : "text-muted-foreground"}>
-              {draft.word_limit
-                ? t("wordsOf", { count: words, limit: draft.word_limit })
-                : t("words", { count: words })}
-              {over ? ` · ${t("overLimit", { count: words - (draft.word_limit ?? 0) })}` : ""}
-            </span>
-            <span
-              id="essay-save"
-              role="status"
-              aria-live="polite"
-              className="text-muted-foreground flex items-center gap-2"
-            >
-              {status}
-              {state === "error" ? (
-                <Button type="button" size="sm" variant="ghost" onClick={() => void flush().catch(() => undefined)}>
-                  {t("save.retry")}
-                </Button>
-              ) : null}
-            </span>
-          </div>
+          <Paper
+            title={draft.title}
+            prompt={draft.prompt_text}
+            body={draft.body}
+            readOnly={state === "conflict"}
+            onBody={(next) => update({ body: next })}
+            textareaRef={body}
+          />
           {state === "conflict" ? (
             <Alert variant="destructive">
               <AlertDescription className="flex flex-col gap-2">
@@ -266,64 +257,46 @@ export function EssayEditor({ essay }: { essay: Essay }) {
             </p>
           ) : null}
         </div>
-        <Tabs defaultValue="plan" className="flex flex-col gap-3">
-          <ScrollTabsList>
-            <TabsTrigger value="plan" className="shrink-0 flex-none font-medium">
-              {t("tabs.plan")}
-            </TabsTrigger>
-            <TabsTrigger value="check" className="shrink-0 flex-none font-medium">
-              {tc("tab")}
-            </TabsTrigger>
-            <TabsTrigger value="review" className="shrink-0 flex-none font-medium">
-              {t("tabs.review")}
-            </TabsTrigger>
-            <TabsTrigger value="refine" className="shrink-0 flex-none font-medium">
-              {t("tabs.refine")}
-            </TabsTrigger>
-            <TabsTrigger value="versions" className="shrink-0 flex-none font-medium">
-              {t("tabs.versions")}
-            </TabsTrigger>
-            <TabsTrigger value="ideas" className="shrink-0 flex-none font-medium">
-              {t("tabs.ideas")}
-            </TabsTrigger>
-            <TabsTrigger value="comments" className="shrink-0 flex-none font-medium">
-              {t("tabs.comments")}
-            </TabsTrigger>
-          </ScrollTabsList>
-          <TabsContent value="plan">
-            <div className="flex flex-col gap-3">
-              <PlanPane plan={draft.plan} notes={draft.notes} links={draft.links} onChange={update} />
-              <CoachPanel essayId={essay.id} beforeRun={flush} onUseOutline={(plan) => update({ plan })} />
-            </div>
-          </TabsContent>
-          <TabsContent value="check">
-            <CheckPanel essayId={essay.id} beforeRun={flush} />
-          </TabsContent>
-          <TabsContent value="review">
-            <ReviewPanel essayId={essay.id} beforeRun={flush} />
-          </TabsContent>
-          <TabsContent value="refine">
-            <RefinePanel essayId={essay.id} />
-          </TabsContent>
-          <TabsContent value="versions">
-            <VersionsPanel
-              essay={essay}
-              draftBody={draft.body}
-              beforeChange={flush}
-              onRestore={(v) => void onRestore(v)}
-              restoring={restore.isPending}
+        <SidePanel
+          side="right"
+          title={panelTitle}
+          open={panel !== null}
+          onOpenChange={(next) => setPanel(next ? panel : null)}
+          className="bg-background border-hairline rounded-card w-96 max-w-[40%] shrink-0 border p-4"
+        >
+          {panel === "comments" ? <CommentsDrawer essayId={essay.id} /> : null}
+          {panel === "review" ? (
+            <EssayReviewPanel essayId={essay.id} entryInstitutionIds={entry ? [entry.institution.id] : []} />
+          ) : null}
+          {panel === "tools" ? (
+            <ToolsPanel
+              tab={tab}
+              onTab={setTab}
+              panes={{
+                plan: (
+                  <div className="flex flex-col gap-3">
+                    <PlanPane plan={draft.plan} notes={draft.notes} links={draft.links} onChange={update} />
+                    <CoachPanel essayId={essay.id} beforeRun={flush} onUseOutline={(plan) => update({ plan })} />
+                  </div>
+                ),
+                check: <CheckPanel essayId={essay.id} beforeRun={flush} />,
+                refine: <RefinePanel essayId={essay.id} />,
+                versions: (
+                  <VersionsPanel
+                    essay={essay}
+                    draftBody={draft.body}
+                    beforeChange={flush}
+                    onRestore={(v) => void onRestore(v)}
+                    restoring={restore.isPending}
+                  />
+                ),
+                ideas: <IdeasBoard essayId={essay.id} />,
+              }}
             />
-          </TabsContent>
-          <TabsContent value="ideas">
-            <IdeasBoard essayId={essay.id} />
-          </TabsContent>
-          <TabsContent value="comments">
-            {session?.user.id ? (
-              <CommentsPanel target={{ studentId: session.user.id, kind: "essay", id: essay.id }} />
-            ) : null}
-          </TabsContent>
-        </Tabs>
+          ) : null}
+        </SidePanel>
       </div>
+      <ShareDialog essayId={essay.id} open={shareOpen} onOpenChange={setShareOpen} />
     </div>
   )
 }

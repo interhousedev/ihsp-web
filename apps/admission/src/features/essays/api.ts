@@ -227,22 +227,11 @@ export function useCheckEssay(id: string) {
   })
 }
 
-/** Mirrors `CoachReviewIn.mode`. */
-export const REVIEW_MODES = ["overall", "sentences", "both", "partial"] as const
-export type ReviewMode = (typeof REVIEW_MODES)[number]
 /** Mirrors `CoachRefineIn.action`. */
 export const REFINE_ACTIONS = ["reword", "transition", "merge"] as const
 export type RefineAction = (typeof REFINE_ACTIONS)[number]
 
 export type LifeStoryReading = { drivers: string[]; support: string[]; leave_out: string[]; ideas: string[] }
-
-/** Reviews the saved draft in a mode; `excerpt` is the passage of the `partial` mode. */
-export function useReview(id: string) {
-  return useMutation({
-    mutationFn: (body: { mode: ReviewMode; excerpt: string }) =>
-      getApiClient().post<CoachFeedback>(`${BASE}/essays/${seg(id)}/coach/review`, body),
-  })
-}
 
 /** Hints for rewording, connecting or merging one passage; the coach never returns new text. */
 export function useRefine(id: string) {
@@ -267,6 +256,35 @@ export function useSuppPrompts(institutionId: string | null) {
     enabled: !!institutionId,
     queryFn: ({ signal }) =>
       getApiClient().get<SuppCycle[]>(`${BASE}/catalog/institutions/${seg(institutionId ?? "")}/supp-prompts`, {
+        signal,
+      }),
+  })
+}
+
+/** An admitted essay as a student sees it: about 80 words, the source and where to read the rest. */
+export type ExemplarExcerpt = {
+  id: string
+  excerpt: string
+  institution_id: string | null
+  kind: "personal_statement" | "supplement" | "why_us" | "activity" | "other"
+  language: string
+  prompt: string
+  school_name: string
+  source_name: string
+  source_url: string
+  tags: string[]
+  title: string
+  word_count: number
+  year: number | null
+}
+
+/** Published exemplar excerpts, optionally of one university. */
+export function useExemplars(institutionId: string | null) {
+  return useQuery({
+    queryKey: ["admission", "exemplars", institutionId ?? ""] as const,
+    queryFn: ({ signal }) =>
+      getApiClient().get<{ items: ExemplarExcerpt[]; total: number }>(`${BASE}/exemplars`, {
+        query: { limit: 100, ...(institutionId ? { institution_id: institutionId } : {}) },
         signal,
       }),
   })

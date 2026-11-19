@@ -3,6 +3,7 @@
 import { useT } from "@ihsp/i18n"
 import { Icons } from "@ihsp/ui"
 import Link from "next/link"
+import { LogoAvatar } from "../../../components/lib/photo-header"
 import { AsideCard } from "../../../components/lib/split-layout"
 import { useList } from "../../chooser/hooks"
 import type { Essay } from "../api"
@@ -20,7 +21,19 @@ export function SuppInfo({ essay }: { essay: Essay }) {
           <dt className="text-muted-foreground text-xs">{t("college")}</dt>
           <dd>
             {name ? (
-              <Link href="/chooser/">{name}</Link>
+              <Link
+                href={`/chooser/list/?entry=${encodeURIComponent(essay.list_entry_id ?? "")}`}
+                className="flex items-center gap-2"
+              >
+                <LogoAvatar
+                  name={name}
+                  src={entry?.institution.logo_url}
+                  fit={entry?.institution.logo_fit}
+                  zoom={entry?.institution.logo_zoom}
+                  className="size-6"
+                />
+                {name}
+              </Link>
             ) : (
               <span className="text-muted-foreground">{t("supp.noCollege")}</span>
             )}

@@ -34,7 +34,7 @@ const editorHandlers = () => [
   http.get(apiUrl("/v1/admission/me/items"), () => HttpResponse.json({ items: [], next_cursor: null })),
   http.get(apiUrl("/v1/admission/essays/e1"), () => HttpResponse.json(essay)),
   http.get(apiUrl("/v1/admission/me/profile"), () => HttpResponse.json({ answers: {} })),
-  http.get(apiUrl("/v1/admission/list"), () => HttpResponse.json({ items: [] })),
+  http.get(apiUrl("/v1/admission/list"), () => HttpResponse.json([])),
   http.get(apiUrl("/v1/admission/essays"), () => HttpResponse.json({ items: [summary(essay)] })),
 ]
 
@@ -67,7 +67,7 @@ describe("essays", () => {
     server.use(
       http.get(apiUrl("/v1/admission/essays"), () => HttpResponse.json({ items: [summary(essay)] })),
       http.get(apiUrl("/v1/admission/essay-ideas"), () => HttpResponse.json({ items: [] })),
-      http.get(apiUrl("/v1/admission/list"), () => HttpResponse.json({ items: [] })),
+      http.get(apiUrl("/v1/admission/list"), () => HttpResponse.json([])),
       http.post(apiUrl("/v1/admission/essays"), async ({ request }) => {
         body = await request.json()
         return HttpResponse.json({ ...essay, id: "e2", title: "Community" }, { status: 201 })
@@ -146,29 +146,6 @@ describe("essays", () => {
     expect(link.getAttribute("href")).toMatch(/^\/settings\/?#consent$/)
   })
 
-  test("the review tab posts the chosen mode", async () => {
-    let body: unknown
-    server.use(
-      ...editorHandlers(),
-      http.patch(apiUrl("/v1/admission/essays/e1"), () => HttpResponse.json(essay)),
-      http.post(apiUrl("/v1/admission/essays/e1/coach/review"), async ({ request }) => {
-        body = await request.json()
-        return HttpResponse.json({
-          summary: "Clear voice",
-          strengths: [],
-          suggestions: [],
-          sentences: [{ quote: "One two", comment: "Add detail" }],
-        })
-      }),
-    )
-    renderAdmissionApp(<EssayEditor essay={essay} />)
-    fireEvent.click(screen.getByRole("tab", { name: "Review" }))
-    fireEvent.click(await screen.findByRole("radio", { name: "Sentence by sentence" }))
-    fireEvent.click(screen.getByRole("button", { name: "Review" }))
-    await screen.findByText("Add detail")
-    expect(body).toMatchObject({ mode: "sentences" })
-  })
-
   test("the refine tab posts the action and passage", async () => {
     let body: unknown
     server.use(
@@ -179,6 +156,7 @@ describe("essays", () => {
       }),
     )
     renderAdmissionApp(<EssayEditor essay={essay} />)
+    fireEvent.click(screen.getByRole("button", { name: "Plan & tools" }))
     fireEvent.click(screen.getByRole("tab", { name: "Refine" }))
     fireEvent.click(await screen.findByRole("radio", { name: "Transition" }))
     fireEvent.change(screen.getByLabelText("Passage to refine"), { target: { value: "It began." } })
@@ -203,5 +181,56 @@ describe("essays", () => {
     const parts = wordDiff("the quick fox", "the slow fox") ?? []
     expect(parts.filter((p) => p.op === "del").map((p) => p.text.trim())).toEqual(["quick"])
     expect(parts.filter((p) => p.op === "add").map((p) => p.text.trim())).toEqual(["slow"])
+  })
+
+  test("each ?tab renders its own content and there is no second tab bar", async () => {
+    server.use(
+      http.get(apiUrl("/v1/admission/essays"), () => HttpResponse.json({ items: [] })),
+      http.get(apiUrl("/v1/admission/exemplars"), () =>
+        HttpResponse.json({
+          total: 1,
+          items: [
+            {
+              id: "x1",
+              excerpt: "I learned to solder at nine.",
+              institution_id: null,
+              kind: "personal_statement",
+              language: "en",
+              prompt: "",
+              school_name: "Example University",
+              source_name: "Example",
+              source_url: "https://example.org/essay",
+              tags: [],
+              title: "Solder",
+              word_count: 80,
+              year: 2024,
+            },
+          ],
+        }),
+      ),
+    )
+    const view = renderAdmissionApp(<EssaysBody />, { route: "/essays/?tab=examples" })
+    await screen.findByText("I learned to solder at nine.")
+    expect(document.querySelector('a[href="https://example.org/essay"]')).toBeTruthy()
+    expect(screen.queryByRole("tablist")).toBeNull()
+    await Bun.sleep(300)
+    view.unmount()
+    const colleges = renderAdmissionApp(<EssaysBody />, { route: "/essays/?tab=colleges&entry=e9" })
+    const back = await screen.findByTestId("essays-back")
+    expect(back.getAttribute("href")).toBe("/chooser/list?entry=e9")
+    await Bun.sleep(300)
+    colleges.unmount()
+  })
+
+  test("the next step links to the documents and keeps the entry", async () => {
+    server.use(
+      http.get(apiUrl("/v1/admission/essays"), () => HttpResponse.json({ items: [] })),
+      http.get(apiUrl("/v1/admission/list"), () => HttpResponse.json([])),
+    )
+    const view = renderAdmissionApp(<EssaysBody />, { route: "/essays/?entry=e9" })
+    const link = await screen.findByRole("link", { name: "Check application requirements" })
+    expect(link.getAttribute("href")).toBe("/documents?entry=e9")
+    await Bun.sleep(300)
+    view.unmount()
   })
 })
