@@ -18,16 +18,23 @@ import type {
 
 const BASE = "/v1/admission"
 
-export function searchInstitutions(filters: Filters, cursor: number, limit: number, signal?: AbortSignal) {
+export function searchInstitutions(
+  filters: Filters,
+  cursor: number,
+  limit: number,
+  locale: string,
+  signal?: AbortSignal,
+) {
   return getApiClient().get<InstitutionPage>(`${BASE}/catalog/institutions`, {
     query: { ...filtersToQuery(filters), cursor, limit },
+    headers: { "Accept-Language": locale },
     signal,
   })
 }
 
 /** Text search for the college picker: the first `limit` matches of `q` (an empty `q` returns the catalog's default order). */
-export function searchInstitutionsByText(q: string, limit: number, signal?: AbortSignal) {
-  return searchInstitutions({ ...EMPTY_FILTERS, q }, 0, limit, signal)
+export function searchInstitutionsByText(q: string, limit: number, locale: string, signal?: AbortSignal) {
+  return searchInstitutions({ ...EMPTY_FILTERS, q }, 0, limit, locale, signal)
 }
 
 export function getFacets(locale: string, signal?: AbortSignal) {
@@ -41,8 +48,11 @@ export function getStudyFields(locale: string, signal?: AbortSignal) {
   })
 }
 
-export function getInstitution(id: string, signal?: AbortSignal) {
-  return getApiClient().get<Institution>(`${BASE}/catalog/institutions/${encodeURIComponent(id)}`, { signal })
+export function getInstitution(id: string, locale: string, signal?: AbortSignal) {
+  return getApiClient().get<Institution>(`${BASE}/catalog/institutions/${encodeURIComponent(id)}`, {
+    headers: { "Accept-Language": locale },
+    signal,
+  })
 }
 
 export function postSummary(id: string, language: string) {
@@ -53,8 +63,12 @@ export function postSummary(id: string, language: string) {
 
 export type ScholarshipFilters = { institution_id?: string; country?: string; basis?: string; coverage_min?: number }
 
-export function getScholarships(filters: ScholarshipFilters, signal?: AbortSignal) {
-  return getApiClient().get<Scholarship[]>(`${BASE}/catalog/scholarships`, { query: { ...filters }, signal })
+export function getScholarships(filters: ScholarshipFilters, locale: string, signal?: AbortSignal) {
+  return getApiClient().get<Scholarship[]>(`${BASE}/catalog/scholarships`, {
+    query: { ...filters },
+    headers: { "Accept-Language": locale },
+    signal,
+  })
 }
 
 export function getList(signal?: AbortSignal) {

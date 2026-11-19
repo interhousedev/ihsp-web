@@ -1,17 +1,18 @@
 "use client"
 
-import { useErrorMessage, useT } from "@ihsp/i18n"
+import { useErrorMessage, useLocale, useT } from "@ihsp/i18n"
 import { Alert, AlertDescription, AlertTitle, Button, Icons, Label } from "@ihsp/ui"
 import { useState } from "react"
 import { useAffordability } from "../hooks"
 import { useWorkflow } from "../../../lib/config"
 import type { ListEntry } from "../types"
 import { useOptionLabel } from "./option-label"
-import { formatMoney } from "./institution-card"
+import { formatCurrency } from "./money"
 
 /** Affordability of one list entry: the check, and for a binding round that does not fit, the sign-off request. */
 export function AffordabilityPanel({ entry }: { entry: ListEntry }) {
   const t = useT("chooser")
+  const locale = useLocale()
   const errorMessage = useErrorMessage()
   const statusLabel = useOptionLabel("affordability")
   const workflow = useWorkflow()
@@ -26,7 +27,7 @@ export function AffordabilityPanel({ entry }: { entry: ListEntry }) {
     binding && (status === "signed_off" || (status !== null && workflow.affordability_ack_statuses.includes(status)))
   const requestedAt = result?.requested_sign_off_at ?? null
   const error = check.error ?? signOff.error
-  const money = (value: string | null) => (value === null ? "—" : formatMoney(value, currency))
+  const money = (value: string | null) => (value === null ? "—" : (formatCurrency(value, currency, locale) ?? value))
 
   return (
     <section className="flex flex-col gap-3" aria-label={t("afford.title")}>

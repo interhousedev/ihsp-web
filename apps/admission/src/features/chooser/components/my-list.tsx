@@ -2,9 +2,12 @@
 
 import { todayIso, useErrorMessage, useLocale, useT } from "@ihsp/i18n"
 import { Alert, AlertDescription, cn, Icons, Pill, Reveal, SortableList, StateView, Textarea, Button } from "@ihsp/ui"
+import { useQuery } from "@tanstack/react-query"
 import Link from "next/link"
 import { usePathname, useRouter, useSearchParams } from "next/navigation"
-import { useState } from "react"
+import { useEffect, useState } from "react"
+import { NextStep } from "../../../components/next-step"
+import { careerPlanQuery } from "../../career/api"
 import { AsideCard, SplitLayout } from "../../../components/lib/split-layout"
 import { UnderlineTabs } from "../../../components/lib/underline-tabs"
 import { ScrollFade } from "../../../components/scroll-fade"
@@ -13,9 +16,11 @@ import { useWorkflow } from "../../../lib/config"
 import { LogoAvatar } from "../../../components/lib/photo-header"
 import { useNow } from "../../../lib/use-now"
 import type { Bucket, Deadline, ListEntry, Round } from "../types"
+import { ConflictBadges, ConflictBanner } from "./list-conflicts"
 import { AffordabilityPanel } from "./affordability-panel"
 import { EstimateView } from "./estimate-view"
 import { InstitutionCombobox } from "./institution-combobox"
+import { FieldFocus } from "./field-focus"
 import { useOptionLabel } from "./option-label"
 
 /** The earliest deadline that is not past, with its plan and a "binding" marker. */
@@ -97,6 +102,13 @@ function AddSchoolRow() {
 const SELECT =
   "border-input bg-background h-11 rounded-lg border px-2 text-sm md:h-8 focus-visible:ring-[3px] focus-visible:ring-ring/50 focus-visible:outline-none"
 
+/** Where an entry leads: its university page, its essays and its documents. */
+const ENTRY_LINKS = [
+  { key: "university", href: (e: ListEntry) => `/chooser/institution/?id=${encodeURIComponent(e.institution.id)}` },
+  { key: "essays", href: (e: ListEntry) => `/essays/?tab=colleges&entry=${encodeURIComponent(e.id)}` },
+  { key: "documents", href: (e: ListEntry) => `/documents/?entry=${encodeURIComponent(e.id)}` },
+] as const
+
 function EntryRow({ entry }: { entry: ListEntry }) {
   const t = useT("chooser")
   const errorMessage = useErrorMessage()
@@ -107,6 +119,8 @@ function EntryRow({ entry }: { entry: ListEntry }) {
   const patch = usePatchEntry()
   const remove = useRemoveEntry()
   const [notes, setNotes] = useState(entry.notes ?? "")
+  // Follow the server's value after a reload or another change instead of keeping a stale draft.
+  useEffect(() => setNotes(entry.notes ?? ""), [entry.notes, entry.lock_version])
   const [open, setOpen] = useState(false)
   const change = (body: { bucket?: Bucket; round?: Round; notes?: string }) =>
     patch.mutate({ id: entry.id, body: { lock_version: entry.lock_version, ...body } })
@@ -126,7 +140,7 @@ function EntryRow({ entry }: { entry: ListEntry }) {
           <div className="min-w-0">
             <Link
               href={`/chooser/institution/?id=${encodeURIComponent(entry.institution.id)}`}
-              className="text-sm font-medium hover:underline"
+              className="flex min-h-11 items-center text-sm font-medium hover:underline"
             >
               {entry.institution.name}
             </Link>
@@ -134,6 +148,21 @@ function EntryRow({ entry }: { entry: ListEntry }) {
               {[entry.institution.city, countryLabel(entry.institution.country)].filter(Boolean).join(", ")}
             </p>
             <NextDeadline deadlines={entry.institution.deadlines} />
+            <ConflictBadges entry={entry} />
+            <nav
+              aria-label={t("list.links.label", { name: entry.institution.name })}
+              className="flex flex-wrap gap-x-3"
+            >
+              {ENTRY_LINKS.map(({ key, href }) => (
+                <Link
+                  key={key}
+                  href={href(entry)}
+                  className="text-primary inline-flex min-h-9 items-center text-xs underline-offset-2 hover:underline"
+                >
+                  {t(`list.links.${key}`)}
+                </Link>
+              ))}
+            </nav>
           </div>
         </div>
         <div className="flex flex-wrap items-center gap-2">
@@ -228,6 +257,8 @@ export function MyList() {
   const pathname = usePathname()
   const params = useSearchParams()
   const cycle = params.get("cycle") ?? ""
+  const plan = useQuery(careerPlanQuery())
+  const noField = plan.data !== undefined && (plan.data.study_focus?.labels ?? []).length === 0
   function setCycle(value: string) {
     const next = new URLSearchParams(params.toString())
     if (value) next.set("cycle", value)
@@ -243,13 +274,17 @@ export function MyList() {
   if (all.length === 0)
     return (
       <div className="flex flex-col gap-4">
+        {noField ? <FieldFocus /> : null}
         <StateView
           state="empty"
           icon={<Icons.search className="size-8" aria-hidden />}
           title={t("list.emptyTitle")}
           description={t("list.emptyText")}
           action={
-            <Link href="/chooser/search/" className="text-primary text-sm underline-offset-2 hover:underline">
+            <Link
+              href="/chooser/search/"
+              className="text-primary inline-flex min-h-11 items-center text-sm underline-offset-2 hover:underline"
+            >
               {t("list.find")}
             </Link>
           }
@@ -305,6 +340,8 @@ export function MyList() {
       }
     >
       <div className="flex flex-col gap-4">
+        {noField ? <FieldFocus /> : null}
+        <ConflictBanner entries={all} />
         {cycles.length > 0 ? (
           <label className="flex items-center gap-2 text-sm">
             {t("list.cycle")}
@@ -352,6 +389,14 @@ export function MyList() {
           )}
         </section>
         <AddSchoolRow />
+        <div className="flex flex-col gap-2 md:flex-row">
+          <NextStep href="/chooser/budget/" label={t("list.next.budget")} className="md:flex-1" />
+          <NextStep
+            href="/essays/?tab=colleges"
+            label={t("list.next.essays", { count: all.length })}
+            className="md:flex-1"
+          />
+        </div>
       </div>
     </SplitLayout>
   )

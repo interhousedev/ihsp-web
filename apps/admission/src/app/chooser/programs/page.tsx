@@ -1,12 +1,9 @@
 "use client"
 
-import { ChooserPage } from "../../../features/chooser/components/chooser-page"
-import { ProgramsBody } from "../../../features/opportunities/components/programs-tab"
+import { RouteRedirect, type RedirectTarget } from "../../../components/route-redirect"
+
+const target: RedirectTarget = () => ({ to: "/opportunities/?kind=program" })
 
 export default function Page() {
-  return (
-    <ChooserPage>
-      <ProgramsBody />
-    </ChooserPage>
-  )
+  return <RouteRedirect target={target} />
 }

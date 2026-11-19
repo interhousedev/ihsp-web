@@ -1,12 +1,9 @@
 "use client"
 
-import { ChooserPage } from "../../../features/chooser/components/chooser-page"
-import { ScholarshipsView } from "../../../features/chooser/components/scholarships-view"
+import { RouteRedirect, type RedirectTarget } from "../../../components/route-redirect"
+
+const target: RedirectTarget = () => ({ to: "/chooser/budget/?view=scholarships" })
 
 export default function Page() {
-  return (
-    <ChooserPage>
-      <ScholarshipsView />
-    </ChooserPage>
-  )
+  return <RouteRedirect target={target} />
 }

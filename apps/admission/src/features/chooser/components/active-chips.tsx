@@ -50,7 +50,7 @@ export function ActiveChips({
               type="button"
               aria-label={t("filters.remove", { filter: text })}
               onClick={() => onRemove(key)}
-              className="bg-primary/10 text-primary hover:bg-primary/20 inline-flex min-h-8 items-center gap-1.5 rounded-full px-3 text-sm"
+              className="bg-primary/10 text-primary hover:bg-primary/20 inline-flex min-h-11 items-center gap-1.5 rounded-full px-3 text-sm"
             >
               {text}
               <Icons.close className="size-3.5" aria-hidden />

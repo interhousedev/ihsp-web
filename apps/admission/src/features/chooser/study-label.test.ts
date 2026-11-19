@@ -1,5 +1,5 @@
 import { describe, expect, test } from "bun:test"
-import { normalizeFieldLabel, normalizeStudyGroups } from "./study-label"
+import { fieldSlug, normalizeFieldLabel, normalizeStudyGroups } from "./study-label"
 
 describe("study field labels", () => {
   test("lower-case English labels are title-cased", () => {
@@ -23,5 +23,12 @@ describe("study field labels", () => {
       },
     ]
     expect(normalizeStudyGroups(groups, "en")[0]?.items).toHaveLength(1)
+  })
+
+  test("ADM-UX-A1-S11: a translated name replaces the English taxonomy label", () => {
+    const groups = [{ id: "b", label: "Business", items: [{ id: "1", label: "Computer Science" }] }]
+    const names = { "computer-science": "Kompyuter fanlari" }
+    expect(normalizeStudyGroups(groups, "uz", names)[0]?.items[0]?.label).toBe("Kompyuter fanlari")
+    expect(fieldSlug("Computer Science")).toBe("computer-science")
   })
 })

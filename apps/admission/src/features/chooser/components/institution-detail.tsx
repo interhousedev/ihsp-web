@@ -16,13 +16,13 @@ import { AddToListButton } from "./add-to-list-button"
 import { AiSummary } from "./ai-summary"
 import { FactRows } from "./fact-rows"
 import { VerifiedBadge } from "./fact-source"
-import { formatMoney } from "./institution-card"
 import { ChancesView } from "./chances-view"
 import { ScholarshipList } from "./scholarships-table"
 import { useOptionLabel } from "./option-label"
 import { rowText } from "./detail/groups"
 import { RichDetail } from "./detail/rich-detail"
 import { sectionId } from "./detail/section-id"
+import { currencyOf, formatCurrency } from "./money"
 
 /** Which recorded facts each tab shows; facts outside the lists go to "Campus & outcomes". */
 const TAB_FACTS = {
@@ -86,7 +86,11 @@ function Panel({ value, children }: { value: Tab; children: ReactNode }) {
 }
 
 function firstDeadline(institution: Institution): DeadlineItem | undefined {
-  return institution.deadlines.find((item) => item.date)
+  const now = new Date()
+  const today = `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, "0")}-${String(now.getDate()).padStart(2, "0")}`
+  return institution.deadlines
+    .filter((item) => item.date && item.date >= today)
+    .sort((a, b) => a.date.localeCompare(b.date))[0]
 }
 
 function Stat({ label, children }: { label: string; children: ReactNode }) {
@@ -152,8 +156,6 @@ function DetailBody({ institution }: { institution: Institution }) {
   const aidBasis = rowText(institution.details, "aid_basis")
   const testPolicy = rowText(institution.details, "test_policy")
   const loose = t as unknown as { (key: string): string; has: (key: string) => boolean }
-  const factName = (key: string) =>
-    loose.has(`facts.${key.toLowerCase()}`) ? loose(`facts.${key.toLowerCase()}`) : key
   const kindLabel = (value: string) =>
     loose.has(`options.studyType.${value.toLowerCase()}`) ? loose(`options.studyType.${value.toLowerCase()}`) : value
   const hasDeadlines = institution.deadlines.length > 0
@@ -165,13 +167,23 @@ function DetailBody({ institution }: { institution: Institution }) {
   ) : aid.length > 0 ? (
     <ScholarshipList items={aid} />
   ) : null
+  const highlightText = (highlight: { key: string; value_text: string }) => {
+    if (highlight.key !== "intl_tuition") return highlight.value_text
+    for (const group of institution.details) {
+      const row = group.rows.find((item) => item.key === "intl_tuition_usd")
+      if (!row) continue
+      const amount = formatCurrency(row.value, currencyOf(row.value_text), locale)
+      if (amount) return t("detail.perYear", { value: amount })
+    }
+    return highlight.value_text
+  }
   const highlightBlock =
     institution.highlights.length > 0 ? (
       <dl className="grid gap-3 sm:grid-cols-2" data-testid="highlights" aria-label={t("detail.highlights")}>
         {institution.highlights.map((highlight) => (
           <div key={highlight.key} className="bg-card border-hairline-strong rounded-card border p-3">
             <dt className="text-muted-foreground text-xs">{highlight.label}</dt>
-            <dd className="text-sm font-semibold">{highlight.value_text}</dd>
+            <dd className="text-sm font-semibold">{highlightText(highlight)}</dd>
           </div>
         ))}
       </dl>
@@ -228,9 +240,13 @@ function DetailBody({ institution }: { institution: Institution }) {
           {rateValue !== null ? <Stat label={t("detail.stats.admissionRate")}>{percent(rateValue)}</Stat> : null}
           {kind && hasValue(kind) ? <Stat label={t("detail.stats.type")}>{kindLabel(String(kind.value))}</Stat> : null}
           {institution.coa_total ? (
-            <Stat label={t("detail.stats.cost")}>{formatMoney(institution.coa_total, institution.coa_currency)}</Stat>
+            <Stat label={t("detail.stats.cost")}>
+              {formatCurrency(institution.coa_total, institution.coa_currency, locale) ?? institution.coa_total}
+            </Stat>
           ) : null}
-          {deadline ? <Stat label={t("detail.stats.deadline")}>{deadlineText(deadline, locale)}</Stat> : null}
+          <Stat label={t("detail.stats.deadline")}>
+            {deadline ? deadlineText(deadline, locale) : t("list.noDeadline")}
+          </Stat>
           {rich && intlCost ? <Stat label={tDetails("stats.intlCost")}>{intlCost}</Stat> : null}
           {rich && aidBasis ? <Stat label={tDetails("stats.aid")}>{aidBasis}</Stat> : null}
           {rich && testPolicy ? <Stat label={tDetails("stats.testPolicy")}>{testPolicy}</Stat> : null}
@@ -297,10 +313,9 @@ function DetailBody({ institution }: { institution: Institution }) {
                 href={source.url ?? undefined}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-primary underline-offset-2 hover:underline"
+                className="text-primary inline-flex min-h-11 items-center underline-offset-2 hover:underline"
               >
-                {factName(source.key)}
-                {source.year ? ` ${source.year}` : ""}
+                {source.year ? `${t("detail.sourceLabel")} · ${source.year}` : t("detail.sourceLabel")}
               </a>
             ))}
         </p>

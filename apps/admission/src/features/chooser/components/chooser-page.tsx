@@ -13,7 +13,7 @@ import { ListPlanning } from "./list-planning"
 const SECTIONS = [
   { key: "search", href: "/chooser/search/" },
   { key: "list", href: "/chooser/list/" },
-  { key: "scholarships", href: "/chooser/scholarships/" },
+  { key: "budget", href: "/chooser/budget/" },
 ] as const
 
 const TABS = [

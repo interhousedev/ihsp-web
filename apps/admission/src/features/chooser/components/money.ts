@@ -1,0 +1,27 @@
+const SYMBOLS: Record<string, string> = { $: "USD", "€": "EUR", "£": "GBP" }
+
+/** ISO currency code at the start of a backend label such as "EUR 17 700" or "$17 700"; null when there is none. */
+export function currencyOf(text: string): string | null {
+  const iso = /^[A-Z]{3}(?=\s|\d)/.exec(text.trim())
+  if (iso) return iso[0]
+  return SYMBOLS[text.trim().charAt(0)] ?? null
+}
+
+/** A whole-number amount in the reader's locale; the plain number when the currency is unknown. */
+export function formatCurrency(value: unknown, currency: string | null, locale: string): string | null {
+  const number = typeof value === "number" ? value : typeof value === "string" ? Number(value) : Number.NaN
+  if (!Number.isFinite(number)) return null
+  try {
+    return currency
+      ? new Intl.NumberFormat(locale, { style: "currency", currency, maximumFractionDigits: 0 }).format(number)
+      : new Intl.NumberFormat(locale, { maximumFractionDigits: 0 }).format(number)
+  } catch {
+    return new Intl.NumberFormat(locale, { maximumFractionDigits: 0 }).format(number)
+  }
+}
+
+/** Display text for a money row: Intl-formatted when value and currency are known, the backend text otherwise. */
+export function moneyText(row: { kind: string; value: unknown; value_text: string }, locale: string): string {
+  if (row.kind !== "money") return row.value_text
+  return formatCurrency(row.value, currencyOf(row.value_text), locale) ?? row.value_text
+}

@@ -15,6 +15,10 @@ import {
 } from "@ihsp/ui"
 import { usePathname, useRouter, useSearchParams } from "next/navigation"
 import { useMemo, useState } from "react"
+import { NextStep } from "../../../components/next-step"
+import { ScrollFade } from "../../../components/scroll-fade"
+import { AlgorithmPanel } from "../../algorithm"
+import { DiscoverPage } from "../../discover/components/discover-page"
 import {
   activeFilterKeys,
   filtersFromParams,
@@ -26,10 +30,14 @@ import {
   type SortKey,
 } from "../filters"
 import { sortInstitutions } from "../facets"
-import { useFacets, useInstitutionSearch, useStudyFields } from "../hooks"
+import { useFacets, useInstitutionSearch, useList, useStudyFields } from "../hooks"
 import { ActiveChips } from "./active-chips"
+import { FieldFocus } from "./field-focus"
 import { FiltersPanel } from "./filters-panel"
 import { InstitutionCard } from "./institution-card"
+
+const VIEWS = ["list", "discover"] as const
+type View = (typeof VIEWS)[number]
 
 export function SearchView() {
   const t = useT("chooser")
@@ -39,19 +47,32 @@ export function SearchView() {
   const filters = useMemo(() => filtersFromParams(new URLSearchParams(params.toString())), [params])
   const isMobile = useIsMobile()
   const [sheetOpen, setSheetOpen] = useState(false)
-  const [text, setText] = useState(filters.q)
+  const view: View = params.get("view") === "discover" ? "discover" : "list"
+  const prefsOpen = params.get("prefs") === "1"
+  const [text, setText] = useState(filters.q ?? "")
   const { facets } = useFacets()
   const { groups } = useStudyFields()
   const search = useInstitutionSearch(filters)
+  const list = useList()
   const items = useMemo(
     () => sortInstitutions(search.data?.pages.flatMap((page) => page.items) ?? [], filters.sort),
     [search.data, filters.sort],
   )
   const active = activeFilterKeys(filters)
 
+  /** The address for the filters, keeping the view and the preferences panel. */
+  function href(next: Filters, extra: { view?: View; prefs?: boolean } = {}) {
+    const search = new URLSearchParams(filtersToSearch(next).slice(1))
+    const nextView = extra.view ?? view
+    if (nextView === "discover") search.set("view", "discover")
+    if (extra.prefs ?? prefsOpen) search.set("prefs", "1")
+    const text = search.toString()
+    return `${pathname}${text ? `?${text}` : ""}`
+  }
+
   function apply(next: Filters) {
     setSheetOpen(false)
-    router.replace(`${pathname}${filtersToSearch(next)}`)
+    router.replace(href(next))
   }
 
   const panel = (
@@ -93,10 +114,60 @@ export function SearchView() {
       </div>
     )
 
+  const toolbar = (
+    <div className="flex flex-wrap items-center justify-between gap-2">
+      <div role="group" aria-label={t("view.label")} className="bg-muted inline-flex rounded-lg p-1">
+        {VIEWS.map((key) => (
+          <button
+            key={key}
+            type="button"
+            aria-pressed={view === key}
+            onClick={() => router.replace(href(filters, { view: key }))}
+            className="aria-pressed:bg-background aria-pressed:shadow-sm inline-flex min-h-9 items-center rounded-md px-3 text-sm font-medium"
+          >
+            {t(`view.${key}`)}
+          </button>
+        ))}
+      </div>
+      <Button type="button" variant="outline" onClick={() => router.replace(href(filters, { prefs: true }))}>
+        <Icons.discover aria-hidden />
+        {t("prefs.open")}
+      </Button>
+    </div>
+  )
+
+  const prefsSheet = (
+    <Sheet open={prefsOpen} onOpenChange={(open) => !open && router.replace(href(filters, { prefs: false }))}>
+      <SheetContent side={isMobile ? "bottom" : "right"} className="max-h-[100dvh] overflow-y-auto p-4">
+        <SheetHeader>
+          <SheetTitle>{t("prefs.title")}</SheetTitle>
+        </SheetHeader>
+        <AlgorithmPanel />
+      </SheetContent>
+    </Sheet>
+  )
+
+  if (view === "discover") {
+    return (
+      <div className="flex min-w-0 flex-col gap-4">
+        {toolbar}
+        <FieldFocus />
+        <DiscoverPage />
+        {prefsSheet}
+      </div>
+    )
+  }
+
   return (
     <div className="grid gap-6 md:grid-cols-[16rem_minmax(0,1fr)]">
-      {isMobile ? null : <aside className="flex flex-col gap-3">{panel}</aside>}
+      {isMobile ? null : (
+        <aside className="flex flex-col gap-3 md:sticky md:top-4 md:max-h-[calc(100dvh-8rem)] md:self-start md:overflow-y-auto md:pr-1">
+          {panel}
+        </aside>
+      )}
       <div className="flex min-w-0 flex-col gap-4">
+        {toolbar}
+        <FieldFocus />
         <form
           role="search"
           className="flex gap-2"
@@ -157,8 +228,12 @@ export function SearchView() {
             </label>
           </div>
         ) : null}
-        {results}
+        <ScrollFade maxHeight={isMobile ? undefined : "calc(100dvh - 26rem)"} className="pr-1">
+          {results}
+        </ScrollFade>
+        <NextStep href="/chooser/list/" label={t("nextStep.review", { count: list.data?.length ?? 0 })} />
       </div>
+      {prefsSheet}
     </div>
   )
 }

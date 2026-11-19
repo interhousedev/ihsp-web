@@ -3,7 +3,7 @@
 import { useLocale, useT } from "@ihsp/i18n"
 import { Button, Icons, Input, ResponsiveDialog, cn } from "@ihsp/ui"
 import { cloneElement, useMemo, useState, type MouseEventHandler, type ReactElement, type ReactNode } from "react"
-import { normalizeStudyGroups } from "../study-label"
+import { FIELD_SLUGS, normalizeStudyGroups } from "../study-label"
 import type { StudyGroup } from "../types"
 
 /** Keeps the entries whose label contains the text; groups left empty are dropped. */
@@ -73,7 +73,12 @@ function StudyFieldList({
 /** Normalized (title-cased, deduplicated) groups of the taxonomy in the UI language. */
 export function useNormalizedGroups(groups: StudyGroup[]): StudyGroup[] {
   const locale = useLocale()
-  return useMemo(() => normalizeStudyGroups(groups, locale), [groups, locale])
+  const t = useT("chooserPicker")
+  return useMemo(() => {
+    const names =
+      locale === "en" ? {} : Object.fromEntries(FIELD_SLUGS.map((slug) => [slug, t(`fieldNames.${slug}`)] as const))
+    return normalizeStudyGroups(groups, locale, names)
+  }, [groups, locale, t])
 }
 
 /** The search box and the list of the dialog; the dialog is a desktop dialog and a bottom sheet on a phone. */

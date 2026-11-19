@@ -1,6 +1,6 @@
 "use client"
 
-import { useT } from "@ihsp/i18n"
+import { useLocale, useT } from "@ihsp/i18n"
 import { Icons, Pill } from "@ihsp/ui"
 import Link from "next/link"
 import { LogoAvatar } from "../../../components/lib/photo-header"
@@ -9,15 +9,11 @@ import { useFacets } from "../hooks"
 import type { Institution } from "../types"
 import { AddToListButton } from "./add-to-list-button"
 import { useOptionLabel } from "./option-label"
+import { formatCurrency } from "./money"
 import { VerifiedBadge } from "./fact-source"
 
-export function formatMoney(amount: string, currency: string | null): string {
-  const number = Number(amount)
-  const text = Number.isFinite(number) ? new Intl.NumberFormat().format(Math.round(number)) : amount
-  return currency ? `${text} ${currency}` : text
-}
-
 export function InstitutionCard({ institution }: { institution: Institution }) {
+  const locale = useLocale()
   const t = useT("chooser")
   const aidLabel = useOptionLabel("aid")
   const countryLabel = useOptionLabel("country")
@@ -55,7 +51,10 @@ export function InstitutionCard({ institution }: { institution: Institution }) {
           <li>
             <Pill>
               <Icons.creditCard className="size-3.5" aria-hidden />
-              {t("cost", { amount: formatMoney(institution.coa_total, institution.coa_currency) })}
+              {t("cost", {
+                amount:
+                  formatCurrency(institution.coa_total, institution.coa_currency, locale) ?? institution.coa_total,
+              })}
             </Pill>
           </li>
         ) : null}

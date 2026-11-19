@@ -78,7 +78,7 @@ export function FiltersPanel({
       {SELECT_FILTERS.map(({ param, key }) => {
         const facet = facetOf(facets?.list, param)
         if (!facet) return null
-        const value = draft[key] as string
+        const value = (draft[key] as string | undefined) ?? ""
         return (
           <Field key={param} id={`f-${param}`} label={facet.label}>
             <Select id={`f-${param}`} value={value} options={facet.options} onChange={(v) => set(key, v as never)} />
@@ -95,7 +95,7 @@ export function FiltersPanel({
           inputMode="numeric"
           min={0}
           max={cost?.max ?? undefined}
-          value={draft.maxCost}
+          value={draft.maxCost ?? ""}
           onChange={(event) => set("maxCost", event.target.value)}
         />
       </Field>

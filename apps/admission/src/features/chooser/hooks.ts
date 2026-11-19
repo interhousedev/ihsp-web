@@ -3,10 +3,12 @@
 import { normalizeStudyGroups } from "./study-label"
 import { useInfiniteQuery, useMutation, useQueries, useQuery, useQueryClient } from "@tanstack/react-query"
 import { getApiClient } from "@ihsp/api"
-import { useLocale } from "@ihsp/i18n"
+import { useLocale, useT } from "@ihsp/i18n"
+import { toast } from "sonner"
 import { useMemo } from "react"
 import type { Filters } from "./filters"
 import { tidyStudyGroups, toFacets } from "./facets"
+import { distinctConflicts, newConflicts, useConflictText } from "./components/list-conflicts"
 import {
   addToList,
   checkAffordability,
@@ -30,28 +32,31 @@ import type { ListEntry, ListPatchBody } from "./types"
 export const PAGE_SIZE = 20
 
 const KEYS = {
-  search: (filters: Filters) => ["admission", "catalog", "search", filters] as const,
+  search: (filters: Filters, locale: string) => ["admission", "catalog", "search", filters, locale] as const,
   facets: (locale: string) => ["admission", "catalog", "facets", locale] as const,
   studyFields: (locale: string) => ["admission", "catalog", "study-fields", locale] as const,
-  institution: (id: string) => ["admission", "catalog", "institution", id] as const,
-  scholarships: (filters: ScholarshipFilters) => ["admission", "catalog", "scholarships", filters] as const,
+  institution: (id: string, locale: string) => ["admission", "catalog", "institution", id, locale] as const,
+  scholarships: (filters: ScholarshipFilters, locale: string) =>
+    ["admission", "catalog", "scholarships", filters, locale] as const,
   list: ["admission", "list"] as const,
 }
 
 export function useInstitutionSearch(filters: Filters) {
+  const locale = useLocale()
   return useInfiniteQuery({
-    queryKey: KEYS.search(filters),
+    queryKey: KEYS.search(filters, locale),
     initialPageParam: 0,
-    queryFn: ({ pageParam, signal }) => searchInstitutions(filters, pageParam, PAGE_SIZE, signal),
+    queryFn: ({ pageParam, signal }) => searchInstitutions(filters, pageParam, PAGE_SIZE, locale, signal),
     getNextPageParam: (last) => last.next_cursor ?? undefined,
   })
 }
 
 /** Picker results for the typed text (the caller debounces); `limit` matches. */
 export function useInstitutionPickerSearch(q: string, limit: number, enabled = true) {
+  const locale = useLocale()
   return useQuery({
-    queryKey: ["admission", "catalog", "picker", q, limit] as const,
-    queryFn: ({ signal }) => searchInstitutionsByText(q, limit, signal),
+    queryKey: ["admission", "catalog", "picker", q, limit, locale] as const,
+    queryFn: ({ signal }) => searchInstitutionsByText(q, limit, locale, signal),
     enabled,
     staleTime: 60_000,
   })
@@ -59,10 +64,11 @@ export function useInstitutionPickerSearch(q: string, limit: number, enabled = t
 
 /** Institutions by id (the detail endpoint, shared with the detail page's cache), in the order of `ids`. */
 export function useInstitutionsByIds(ids: string[]) {
+  const locale = useLocale()
   const results = useQueries({
     queries: ids.map((id) => ({
-      queryKey: KEYS.institution(id),
-      queryFn: ({ signal }: { signal: AbortSignal }) => getInstitution(id, signal),
+      queryKey: KEYS.institution(id, locale),
+      queryFn: ({ signal }: { signal: AbortSignal }) => getInstitution(id, locale, signal),
       staleTime: 5 * 60_000,
     })),
   })
@@ -100,9 +106,10 @@ export function useStudyFields() {
 }
 
 export function useInstitution(id: string | null) {
+  const locale = useLocale()
   return useQuery({
-    queryKey: KEYS.institution(id ?? ""),
-    queryFn: ({ signal }) => getInstitution(id as string, signal),
+    queryKey: KEYS.institution(id ?? "", locale),
+    queryFn: ({ signal }) => getInstitution(id as string, locale, signal),
     enabled: Boolean(id),
   })
 }
@@ -112,7 +119,11 @@ export function useSummary(id: string, language: string) {
 }
 
 export function useScholarships(filters: ScholarshipFilters) {
-  return useQuery({ queryKey: KEYS.scholarships(filters), queryFn: ({ signal }) => getScholarships(filters, signal) })
+  const locale = useLocale()
+  return useQuery({
+    queryKey: KEYS.scholarships(filters, locale),
+    queryFn: ({ signal }) => getScholarships(filters, locale, signal),
+  })
 }
 
 export function useList() {
@@ -144,16 +155,28 @@ export function useEntryLabel(): (entry: ListEntry) => string | null {
   return (entry) => (byEntry.has(entry.id) ? (byEntry.get(entry.id) ?? null) : entry.bucket)
 }
 
-/** Puts a changed entry into the cached list (the server's answer carries the new `lock_version`). */
+/**
+ * Puts a changed entry into the cached list (the server's answer carries the new `lock_version`).
+ * A conflict the answer introduces raises a warning toast; it never blocks the change. The other entries'
+ * conflicts moved with it, so the list is reloaded.
+ */
 function useListWriter() {
   const client = useQueryClient()
-  return (entry: ListEntry) =>
-    client.setQueryData<ListEntry[]>(KEYS.list, (current) => {
-      const list = current ?? []
-      return list.some((item) => item.id === entry.id)
-        ? list.map((item) => (item.id === entry.id ? entry : item))
-        : [...list, entry]
-    })
+  const t = useT("chooser")
+  const conflictText = useConflictText()
+  return (entry: ListEntry) => {
+    const before = client.getQueryData<ListEntry[]>(KEYS.list) ?? []
+    const known = distinctConflicts(before.map((item) => (item.id === entry.id ? { ...item, conflicts: [] } : item)))
+    const previous = before.find((item) => item.id === entry.id)
+    const seen = [...known, ...(previous?.conflicts ?? [])]
+    const next = before.some((item) => item.id === entry.id)
+      ? before.map((item) => (item.id === entry.id ? entry : item))
+      : [...before, entry]
+    client.setQueryData<ListEntry[]>(KEYS.list, next)
+    for (const conflict of newConflicts(seen, entry.conflicts ?? []))
+      toast.warning(t("list.conflicts.toast", { text: conflictText(conflict, next) }))
+    void client.invalidateQueries({ queryKey: KEYS.list })
+  }
 }
 
 export function useAddToList() {

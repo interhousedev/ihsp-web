@@ -40,7 +40,7 @@ export function SectionNav({ sections }: { sections: readonly string[] }) {
                 setActive(name)
                 document.getElementById(sectionId(name))?.scrollIntoView({ behavior: "smooth", block: "start" })
               }}
-              className="border-hairline-strong text-muted-foreground aria-[current=true]:text-foreground aria-[current=true]:bg-muted min-h-8 w-full rounded-full border px-3 text-left text-sm whitespace-nowrap lg:rounded-lg lg:border-transparent"
+              className="border-hairline-strong text-muted-foreground aria-[current=true]:text-foreground aria-[current=true]:bg-muted min-h-11 w-full rounded-full border px-3 text-left text-sm whitespace-nowrap lg:rounded-lg lg:border-transparent"
             >
               {t(`groups.${name}`)}
             </button>

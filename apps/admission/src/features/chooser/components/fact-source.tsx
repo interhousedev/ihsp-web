@@ -38,7 +38,7 @@ export function FactSource({ fact, source }: { fact: Pick<Fact, "verified">; sou
           href={href}
           target="_blank"
           rel="noopener noreferrer"
-          className="text-primary inline-flex min-h-6 items-center gap-1 underline-offset-2 hover:underline"
+          className="text-primary inline-flex min-h-11 items-center gap-1 underline-offset-2 hover:underline"
         >
           {t("source")}
           <Icons.externalLink className="size-3" aria-hidden />
@@ -86,7 +86,7 @@ export function SourceChip({ url, year }: { url: string | null; year: number | n
       target="_blank"
       rel="noopener noreferrer"
       aria-label={t("sourceLink", { host })}
-      className="border-hairline-strong text-muted-foreground hover:text-foreground inline-flex min-h-6 max-w-full items-center gap-1 rounded-full border px-2 text-xs"
+      className="border-hairline-strong text-muted-foreground hover:text-foreground inline-flex min-h-11 max-w-full items-center gap-1 rounded-full border px-2 text-xs"
     >
       <span className="truncate">{label}</span>
       <Icons.externalLink className="size-3 shrink-0" aria-hidden />
