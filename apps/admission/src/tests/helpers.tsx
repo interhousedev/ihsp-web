@@ -1,4 +1,5 @@
 import { apiUrl, renderWithProviders, server, type RenderWithProvidersOptions } from "@ihsp/test-utils"
+import { MotionGlobalConfig } from "motion/react"
 import { http, HttpResponse } from "msw"
 import { configure } from "@testing-library/react"
 import type { ReactElement } from "react"
@@ -7,6 +8,8 @@ import en from "../../messages/en.json"
 
 // The first render of a page in a cold test run takes several seconds.
 configure({ asyncUtilTimeout: 10_000 })
+// Motion animations cancelled at unmount reject in happy-dom and fail the run between tests.
+MotionGlobalConfig.skipAnimations = true
 
 const notFound = () => HttpResponse.json({ type: "not-found", title: "Not found", status: 404 }, { status: 404 })
 const A = "/v1/admission"
