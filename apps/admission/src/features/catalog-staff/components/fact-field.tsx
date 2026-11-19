@@ -2,7 +2,7 @@
 
 import { useT } from "@ihsp/i18n"
 import { Button, Icons, Input, Select, SelectContent, SelectItem, SelectTrigger, SelectValue, cn } from "@ihsp/ui"
-import { useState } from "react"
+import { useId, useState } from "react"
 import { filterStudyGroups, studyFieldLabel } from "../../chooser/components/study-field-select"
 import { useStudyFields } from "../../chooser/hooks"
 import type { FactSpecItem } from "../api"
@@ -72,17 +72,34 @@ function BoolField({ item, draft, onChange }: FieldProps<string>) {
 }
 
 function NumberField({ item, draft, onChange }: FieldProps<string>) {
+  const t = useT("catalogFacts")
+  const errorId = useId()
+  const min = item.min ?? (item.kind === "percent" ? 0 : null)
+  const max = item.max ?? (item.kind === "percent" ? 100 : null)
+  const text = draft ?? ""
+  const value = text.trim() === "" ? null : Number(text.replace(",", "."))
+  const outOfRange =
+    value !== null && Number.isFinite(value) && ((min !== null && value < min) || (max !== null && value > max))
   return (
-    <Input
-      type="number"
-      inputMode="decimal"
-      aria-label={item.label}
-      min={item.min ?? undefined}
-      max={item.max ?? undefined}
-      step={item.step ?? "any"}
-      value={draft}
-      onChange={(event) => onChange(event.target.value)}
-    />
+    <>
+      <Input
+        type="number"
+        inputMode="decimal"
+        aria-label={item.label}
+        aria-invalid={outOfRange || undefined}
+        aria-describedby={outOfRange ? errorId : undefined}
+        min={min ?? undefined}
+        max={max ?? undefined}
+        step={item.step ?? "any"}
+        value={text}
+        onChange={(event) => onChange(event.target.value)}
+      />
+      {outOfRange && (
+        <p id={errorId} role="alert" className="text-destructive text-xs">
+          {t("rangeError", { min: min ?? "", max: max ?? "" })}
+        </p>
+      )}
+    </>
   )
 }
 
@@ -122,7 +139,7 @@ function RangeField({ item, draft, onChange }: FieldProps<Record<string, string>
           type="number"
           inputMode="decimal"
           aria-label={t(end, { label: item.label })}
-          placeholder={t(end, { label: "" }).trim()}
+          placeholder={t(end === "min" ? "from" : "to")}
           min={item.min ?? undefined}
           max={item.max ?? undefined}
           step={item.step ?? "any"}
@@ -261,7 +278,7 @@ function DeadlinesField({ item, draft, onChange }: FieldProps<DeadlineDraft[]>) 
             <Input
               type="date"
               aria-label={t("deadlineDate")}
-              value={row.date}
+              value={row.date ?? ""}
               onChange={(e) => update(index, { date: e.target.value })}
             />
             <Input
@@ -269,7 +286,7 @@ function DeadlinesField({ item, draft, onChange }: FieldProps<DeadlineDraft[]>) 
               placeholder="2026-27"
               pattern="\d{4}-\d{2}"
               maxLength={7}
-              value={row.cycle}
+              value={row.cycle ?? ""}
               onChange={(e) => update(index, { cycle: e.target.value })}
             />
             <Choice
@@ -282,14 +299,14 @@ function DeadlinesField({ item, draft, onChange }: FieldProps<DeadlineDraft[]>) 
               aria-label={t("deadlineZone")}
               placeholder="America/New_York"
               maxLength={64}
-              value={row.time_zone}
+              value={row.time_zone ?? ""}
               onChange={(e) => update(index, { time_zone: e.target.value })}
             />
             <Input
               aria-label={t("deadlineNote")}
               placeholder={t("deadlineNote")}
               maxLength={200}
-              value={row.note}
+              value={row.note ?? ""}
               onChange={(e) => update(index, { note: e.target.value })}
             />
           </div>
@@ -346,7 +363,12 @@ export function FactField({ item, draft, onChange }: FieldProps<Draft>) {
       return <DeadlinesField item={item} draft={draft as DeadlineDraft[]} onChange={onChange} />
     case "date":
       return (
-        <Input type="date" aria-label={item.label} value={draft as string} onChange={(e) => onChange(e.target.value)} />
+        <Input
+          type="date"
+          aria-label={item.label}
+          value={(draft as string | undefined) ?? ""}
+          onChange={(e) => onChange(e.target.value)}
+        />
       )
     case "enum":
       return <Choice label={item.label} value={draft as string} options={item.options} onChange={onChange} />
@@ -355,7 +377,7 @@ export function FactField({ item, draft, onChange }: FieldProps<Draft>) {
         <Input
           aria-label={item.label}
           maxLength={300}
-          value={draft as string}
+          value={(draft as string | undefined) ?? ""}
           onChange={(e) => onChange(e.target.value)}
         />
       )

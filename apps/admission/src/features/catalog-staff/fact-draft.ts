@@ -158,14 +158,99 @@ export function effectiveCitation(entry: FactEntry | undefined, section: Section
   return section?.same ? section : (entry ?? emptyCitation())
 }
 
+function record(value: unknown): Record<string, unknown> | null {
+  return typeof value === "object" && value !== null && !Array.isArray(value)
+    ? (value as Record<string, unknown>)
+    : null
+}
+
+function textOf(value: unknown): string {
+  return typeof value === "number" || typeof value === "string" ? String(value) : ""
+}
+
+function textRecord(value: unknown): Record<string, string> | null {
+  const source = record(value)
+  if (!source) return null
+  return Object.fromEntries(Object.entries(source).map(([key, entry]) => [key, textOf(entry)]))
+}
+
+/** The draft that holds a stored value, or `undefined` when the value does not fit the kind of the fact. */
+export function draftFromValue(item: FactSpecItem, value: unknown): Draft | undefined {
+  if (value === null || value === undefined) return undefined
+  switch (item.kind) {
+    case "bool":
+      return typeof value === "boolean" ? (value ? "yes" : "no") : undefined
+    case "int":
+    case "percent":
+      return typeof value === "number" ? String(value) : undefined
+    case "money": {
+      const money = record(value)
+      if (money) return { amount: textOf(money.amount), currency: textOf(money.currency).toUpperCase() }
+      return typeof value === "number"
+        ? { amount: String(value), currency: isUsdFact(item) ? "USD" : (item.unit ?? "").toUpperCase() }
+        : undefined
+    }
+    case "date":
+    case "text":
+    case "enum":
+      return typeof value === "string" ? value : undefined
+    case "multi":
+    case "study_fields":
+      return Array.isArray(value) ? value.map(String) : undefined
+    case "range": {
+      const range = textRecord(value)
+      return range ? { min: range.min ?? "", max: range.max ?? "" } : undefined
+    }
+    case "scores":
+    case "factors":
+      return textRecord(value) ?? undefined
+    case "deadlines":
+      return Array.isArray(value)
+        ? value.map((entry) => {
+            const row = record(entry) ?? {}
+            return {
+              plan: textOf(row.plan),
+              date: textOf(row.date),
+              cycle: textOf(row.cycle),
+              binding: typeof row.binding === "boolean" ? (row.binding ? "yes" : "no") : "",
+              time_zone: textOf(row.time_zone),
+              note: textOf(row.note),
+            } satisfies DeadlineDraft
+          })
+        : undefined
+    default:
+      return undefined
+  }
+}
+
+/** The facts an existing school already has, as drafts with their citation; `rows` are the rows of its detail view. */
+export function factsFromRows(
+  groups: { facts: FactSpecItem[] }[],
+  rows: { key: string; value: unknown; source_url: string | null; year: number | null }[],
+): FactsState {
+  const specs = new Map(groups.flatMap((group) => group.facts).map((item) => [item.key, item]))
+  const facts: Record<string, FactEntry> = {}
+  for (const row of rows) {
+    const item = specs.get(row.key)
+    const draft = item ? draftFromValue(item, row.value) : undefined
+    if (!item || draft === undefined) continue
+    facts[row.key] = { draft, url: row.source_url ?? "", year: row.year ? String(row.year) : currentYear(), note: "" }
+  }
+  return { facts, sections: {} }
+}
+
 export type BuiltFacts = {
   facts: Record<string, { value: unknown; source_url: string; year: number; note?: string | null }>
   /** Keys of filled facts whose citation is not a valid https link and year. */
   incomplete: string[]
 }
 
-/** The facts to send: only filled ones, each with its citation. */
-export function buildFacts(groups: { key: string; facts: FactSpecItem[] }[], state: FactsState): BuiltFacts {
+/** The facts to send: only filled ones that differ from the `baseline` (the school's current facts), each with its citation. */
+export function buildFacts(
+  groups: { key: string; facts: FactSpecItem[] }[],
+  state: FactsState,
+  baseline: FactsState = EMPTY_FACTS,
+): BuiltFacts {
   const facts: BuiltFacts["facts"] = {}
   const incomplete: string[] = []
   for (const group of groups) {
@@ -174,6 +259,16 @@ export function buildFacts(groups: { key: string; facts: FactSpecItem[] }[], sta
       const value = serializeDraft(item, entry?.draft)
       if (value === undefined) continue
       const cite = effectiveCitation(entry, state.sections[group.key])
+      const before = baseline.facts[item.key]
+      if (
+        before &&
+        JSON.stringify(serializeDraft(item, before.draft)) === JSON.stringify(value) &&
+        before.url.trim() === cite.url.trim() &&
+        before.year === cite.year &&
+        before.note.trim() === cite.note.trim()
+      ) {
+        continue
+      }
       const year = Number(cite.year)
       if (!isHttpsUrl(cite.url) || !Number.isInteger(year) || year < 1900 || year > 2100) {
         incomplete.push(item.key)

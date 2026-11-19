@@ -19,9 +19,10 @@ import Link from "next/link"
 import { useState, type FormEvent } from "react"
 import { toast } from "sonner"
 import { InstitutionCombobox } from "../../chooser/components/institution-combobox"
+import { useInstitution } from "../../chooser/hooks"
 import type { Institution } from "../../chooser/types"
 import { useCreateProposal, useFactSpec, type ProposalKind } from "../api"
-import { buildFacts, EMPTY_FACTS, isHttpsUrl, type FactsState } from "../fact-draft"
+import { buildFacts, EMPTY_FACTS, factsFromRows, isHttpsUrl, type FactsState } from "../fact-draft"
 import { FactsStep, type FactError } from "./facts-step"
 
 /** Empty is fine (the field is optional); anything else must be an https URL. */
@@ -29,6 +30,7 @@ function isHttps(value: string): boolean {
   return value.trim() === "" || isHttpsUrl(value)
 }
 
+const COUNTRY_CODE = /^[A-Za-z]{2}$/
 const KINDS: ProposalKind[] = ["institution", "scholarship"]
 const PROVIDERS = ["institution", "government", "foundation"] as const
 const BASES = ["merit", "need", "government", "sports", "work_study"] as const
@@ -56,13 +58,28 @@ function readProblem(error: unknown): Problem | null {
   return null
 }
 
-function Field({ id, label, children }: { id: string; label: string; children: React.ReactNode }) {
+function Field({
+  id,
+  label,
+  error,
+  children,
+}: {
+  id: string
+  label: string
+  error?: string | null
+  children: React.ReactNode
+}) {
   return (
     <div className="flex flex-col gap-1">
       <Label htmlFor={id} className="text-muted-foreground text-[13px] font-normal">
         {label}
       </Label>
       {children}
+      {error && (
+        <p id={`${id}-error`} className="text-destructive text-xs">
+          {error}
+        </p>
+      )}
     </div>
   )
 }
@@ -124,11 +141,23 @@ export function ProposeDialog({ open, onOpenChange }: { open: boolean; onOpenCha
   const [logoUrl, setLogoUrl] = useState("")
   const [coverUrl, setCoverUrl] = useState("")
   const [facts, setFacts] = useState<FactsState>(EMPTY_FACTS)
+  const [baseline, setBaseline] = useState<FactsState>(EMPTY_FACTS)
+  const [seededFor, setSeededFor] = useState<string | null>(null)
+  const detail = useInstitution(kind === "institution" ? (target?.id ?? null) : null)
   const [openGroups, setOpenGroups] = useState<string[]>([])
   const [problem, setProblem] = useState<Problem | null>(null)
 
   const groups = kind === "institution" ? (spec.data?.groups ?? []) : []
-  const built = buildFacts(groups, facts)
+  if (target && detail.data?.id === target.id && spec.data && seededFor !== target.id) {
+    const seeded = factsFromRows(
+      spec.data.groups,
+      detail.data.details.flatMap((group) => group.rows),
+    )
+    setSeededFor(target.id)
+    setFacts(seeded)
+    setBaseline(seeded)
+  }
+  const built = buildFacts(groups, facts, baseline)
   const factCount = Object.keys(built.facts).length
   const aliasList = aliases
     .split(",")
@@ -147,7 +176,22 @@ export function ProposeDialog({ open, onOpenChange }: { open: boolean; onOpenCha
           cover_url: coverUrl.trim(),
         }
       : { name, provider, basis, country: country.toUpperCase() }
-  const filled = Object.values(fields).some((value) => value !== "")
+  const current: Record<string, unknown> = target
+    ? {
+        name: target.name,
+        country: COUNTRY_CODE.test(target.country) ? target.country.toUpperCase() : "",
+        city: target.city ?? "",
+        aliases: target.aliases.length > 0 ? target.aliases : "",
+        logo_url: target.logo_url ?? "",
+        cover_url: target.cover_url ?? "",
+      }
+    : {}
+  const changed = Object.fromEntries(
+    Object.entries(fields).filter(
+      ([key, value]) => value !== "" && JSON.stringify(value) !== JSON.stringify(current[key]),
+    ),
+  )
+  const filled = Object.keys(changed).length > 0
   const firstFact = Object.values(built.facts)[0]
   const proposalSource = sourceUrl.trim() || firstFact?.source_url || ""
   const mediaValid = kind !== "institution" || (isHttps(logoUrl) && isHttps(coverUrl))
@@ -160,12 +204,20 @@ export function ProposeDialog({ open, onOpenChange }: { open: boolean; onOpenCha
 
   function pickTarget(institution: Institution | null) {
     setTarget(institution)
-    setName("")
+    setName(institution?.name ?? "")
+    setCountry(institution && COUNTRY_CODE.test(institution.country) ? institution.country : "")
+    setFacts(EMPTY_FACTS)
+    setBaseline(EMPTY_FACTS)
+    setSeededFor(null)
+    setCity(institution?.city ?? "")
+    setAliases(institution?.aliases.join(", ") ?? "")
+    setLogoUrl(institution?.logo_url ?? "")
+    setCoverUrl(institution?.cover_url ?? "")
     setProblem(null)
   }
 
   function startNewSchool(query: string) {
-    setTarget(null)
+    pickTarget(null)
     setName(query.trim())
     setStep("details")
   }
@@ -182,7 +234,7 @@ export function ProposeDialog({ open, onOpenChange }: { open: boolean; onOpenCha
       if (kind === "scholarship" || target) setStep("details")
       return
     }
-    const clean = Object.fromEntries(Object.entries(fields).filter(([, value]) => value !== ""))
+    const clean = changed
     setProblem(null)
     try {
       await create.mutateAsync({
@@ -224,9 +276,21 @@ export function ProposeDialog({ open, onOpenChange }: { open: boolean; onOpenCha
             {tf("next")}
           </Button>
         ) : (
-          <LoadingButton type="submit" disabled={!ready} loading={create.isPending}>
-            {t("submit")}
-          </LoadingButton>
+          <>
+            {!ready && (
+              <p id="cp-required-hint" className="text-muted-foreground mr-auto self-center text-xs">
+                {t("requiredHint")}
+              </p>
+            )}
+            <LoadingButton
+              type="submit"
+              disabled={!ready}
+              loading={create.isPending}
+              aria-describedby={!ready ? "cp-required-hint" : undefined}
+            >
+              {t("submit")}
+            </LoadingButton>
+          </>
         )
       }
     >
@@ -238,11 +302,11 @@ export function ProposeDialog({ open, onOpenChange }: { open: boolean; onOpenCha
               onValueChange={(value) => {
                 if (!value) return
                 setKind(value as ProposalKind)
-                setTarget(null)
+                pickTarget(null)
               }}
             >
               <SelectTrigger aria-label={t("kindLabel")} className="min-h-11 w-full md:min-h-8">
-                <SelectValue />
+                <SelectValue>{t(`kind.${kind}`)}</SelectValue>
               </SelectTrigger>
               <SelectContent>
                 {KINDS.map((value) => (
@@ -258,7 +322,6 @@ export function ProposeDialog({ open, onOpenChange }: { open: boolean; onOpenCha
                 value={target}
                 onChange={pickTarget}
                 onAddSchool={startNewSchool}
-                placeholder={t("editLabel")}
               />
             )}
           </>
@@ -275,44 +338,51 @@ export function ProposeDialog({ open, onOpenChange }: { open: boolean; onOpenCha
             {problem && <ProblemAlert problem={problem} />}
             <div className="grid gap-3 sm:grid-cols-2">
               <Field id="cp-name" label={t("nameLabel")}>
-                <Input id="cp-name" value={name} onChange={(e) => setName(e.target.value)} />
+                <Input id="cp-name" value={name ?? ""} onChange={(e) => setName(e.target.value)} />
               </Field>
               <Field id="cp-country" label={t("countryLabel")}>
-                <Input id="cp-country" maxLength={2} value={country} onChange={(e) => setCountry(e.target.value)} />
+                <Input
+                  id="cp-country"
+                  maxLength={2}
+                  value={country ?? ""}
+                  onChange={(e) => setCountry(e.target.value)}
+                />
               </Field>
               {kind === "institution" ? (
                 <>
                   <Field id="cp-city" label={t("cityLabel")}>
-                    <Input id="cp-city" value={city} onChange={(e) => setCity(e.target.value)} />
+                    <Input id="cp-city" value={city ?? ""} onChange={(e) => setCity(e.target.value)} />
                   </Field>
                   <Field id="cp-domain" label={tf("domainLabel")}>
                     <Input
                       id="cp-domain"
                       placeholder="example.edu"
-                      value={domain}
+                      value={domain ?? ""}
                       onChange={(e) => setDomain(e.target.value)}
                     />
                   </Field>
                   <div className="sm:col-span-2">
                     <Field id="cp-aliases" label={tf("aliasesLabel")}>
-                      <Input id="cp-aliases" value={aliases} onChange={(e) => setAliases(e.target.value)} />
+                      <Input id="cp-aliases" value={aliases ?? ""} onChange={(e) => setAliases(e.target.value)} />
                     </Field>
                   </div>
-                  <Field id="cp-logo" label={t("logoLabel")}>
+                  <Field id="cp-logo" label={t("logoLabel")} error={!isHttps(logoUrl) ? t("httpsError") : null}>
                     <Input
                       id="cp-logo"
                       type="url"
                       aria-invalid={!isHttps(logoUrl)}
-                      value={logoUrl}
+                      aria-describedby={!isHttps(logoUrl) ? "cp-logo-error" : undefined}
+                      value={logoUrl ?? ""}
                       onChange={(e) => setLogoUrl(e.target.value)}
                     />
                   </Field>
-                  <Field id="cp-cover" label={t("coverLabel")}>
+                  <Field id="cp-cover" label={t("coverLabel")} error={!isHttps(coverUrl) ? t("httpsError") : null}>
                     <Input
                       id="cp-cover"
                       type="url"
                       aria-invalid={!isHttps(coverUrl)}
-                      value={coverUrl}
+                      aria-describedby={!isHttps(coverUrl) ? "cp-cover-error" : undefined}
+                      value={coverUrl ?? ""}
                       onChange={(e) => setCoverUrl(e.target.value)}
                     />
                   </Field>
@@ -322,7 +392,7 @@ export function ProposeDialog({ open, onOpenChange }: { open: boolean; onOpenCha
                   <Field id="cp-provider" label={t("providerLabel")}>
                     <Select value={provider} onValueChange={(value) => value && setProvider(value)}>
                       <SelectTrigger id="cp-provider" className="min-h-11 w-full md:min-h-8">
-                        <SelectValue />
+                        <SelectValue>{t(`provider.${provider}`)}</SelectValue>
                       </SelectTrigger>
                       <SelectContent>
                         {PROVIDERS.map((value) => (
@@ -336,7 +406,7 @@ export function ProposeDialog({ open, onOpenChange }: { open: boolean; onOpenCha
                   <Field id="cp-basis" label={t("basisLabel")}>
                     <Select value={basis} onValueChange={(value) => value && setBasis(value)}>
                       <SelectTrigger id="cp-basis" className="min-h-11 w-full md:min-h-8">
-                        <SelectValue />
+                        <SelectValue>{t(`basis.${basis}`)}</SelectValue>
                       </SelectTrigger>
                       <SelectContent>
                         {BASES.map((value) => (
@@ -350,19 +420,25 @@ export function ProposeDialog({ open, onOpenChange }: { open: boolean; onOpenCha
                 </>
               )}
               <div className="sm:col-span-2">
-                <Field id="cp-source" label={t("sourceLabel")}>
+                <Field
+                  id="cp-source"
+                  label={t("sourceLabel")}
+                  error={sourceUrl.trim() !== "" && !isHttpsUrl(sourceUrl) ? t("httpsError") : null}
+                >
                   <Input
                     id="cp-source"
                     type="url"
                     placeholder="https://"
-                    value={sourceUrl}
+                    aria-invalid={sourceUrl.trim() !== "" && !isHttpsUrl(sourceUrl)}
+                    aria-describedby={sourceUrl.trim() !== "" && !isHttpsUrl(sourceUrl) ? "cp-source-error" : undefined}
+                    value={sourceUrl ?? ""}
                     onChange={(e) => setSourceUrl(e.target.value)}
                   />
                 </Field>
               </div>
               <div className="sm:col-span-2">
                 <Field id="cp-note" label={t("noteLabel")}>
-                  <Input id="cp-note" maxLength={500} value={note} onChange={(e) => setNote(e.target.value)} />
+                  <Input id="cp-note" maxLength={500} value={note ?? ""} onChange={(e) => setNote(e.target.value)} />
                 </Field>
               </div>
             </div>

@@ -5,10 +5,18 @@ import { Button, ConfirmDialog, Icons, Pill, Skeleton, StateView, Switch } from 
 import { useSearchParams } from "next/navigation"
 import { useState } from "react"
 import { toast } from "sonner"
+import { LogoAvatar } from "../../../components/lib/photo-header"
 import { AppPageHeader, PageSection, pageClass } from "../../../components/lib/page"
 import { useInstitution } from "../../chooser/hooks"
 import { AdmissionShell } from "../../shell/components/admission-shell"
-import { useDeleteOutcome, useOutcomes, useOutcomeSummary, useUpdateOutcome, type Outcome } from "../api"
+import {
+  useDeleteOutcome,
+  useOutcomes,
+  useOutcomeSummary,
+  useUpdateOutcome,
+  type Outcome,
+  type OutcomeTally,
+} from "../api"
 import { OutcomeDialog } from "./outcome-dialog"
 import { OutcomeSummary } from "./outcome-summary"
 
@@ -24,11 +32,13 @@ const TONE = {
 function OutcomeRow({
   outcome,
   name,
+  logo,
   onEdit,
   onRemove,
 }: {
   outcome: Outcome
   name: string
+  logo?: OutcomeTally
   onEdit: () => void
   onRemove: () => void
 }) {
@@ -44,15 +54,24 @@ function OutcomeRow({
   }
   return (
     <li className="bg-card rounded-card flex flex-col gap-4 border p-4 md:flex-row md:items-center md:justify-between">
-      <div className="flex min-w-0 flex-col gap-1.5">
-        <p className="truncate text-sm font-semibold">{name || t("unknownUniversity")}</p>
-        <div className="flex flex-wrap items-center gap-2">
-          <Pill tone={TONE[outcome.status as keyof typeof TONE] ?? "neutral"} className="h-6 px-2 text-xs">
-            {t(`status.${outcome.status}`)}
-          </Pill>
-          <span className="text-muted-foreground text-xs">
-            {t(`plan.${outcome.plan}`)} · {t("cycleValue", { cycle: outcome.cycle })}
-          </span>
+      <div className="flex min-w-0 items-center gap-3">
+        <LogoAvatar
+          name={name || t("unknownUniversity")}
+          src={logo?.logo_url}
+          fit={logo?.logo_fit}
+          zoom={logo?.logo_zoom}
+          className="size-10 ring-0"
+        />
+        <div className="flex min-w-0 flex-col gap-1.5">
+          <p className="truncate text-sm font-semibold">{name || t("unknownUniversity")}</p>
+          <div className="flex flex-wrap items-center gap-2">
+            <Pill tone={TONE[outcome.status as keyof typeof TONE] ?? "neutral"} className="h-6 px-2 text-xs">
+              {t(`status.${outcome.status}`)}
+            </Pill>
+            <span className="text-muted-foreground text-xs">
+              {t(`plan.${outcome.plan}`)} · {t("cycleValue", { cycle: outcome.cycle })}
+            </span>
+          </div>
         </div>
       </div>
       <div className="flex flex-wrap items-center gap-3">
@@ -80,6 +99,7 @@ function MyOutcomes({ onAdd }: { onAdd: () => void }) {
   const remove = useDeleteOutcome()
   const [editing, setEditing] = useState<Outcome | null>(null)
   const [removing, setRemoving] = useState<Outcome | null>(null)
+  const tallies = new Map((summary.data?.items ?? []).map((tally) => [tally.institution_id, tally]))
   const names = new Map((summary.data?.items ?? []).map((tally) => [tally.institution_id, tally.institution_name]))
   if (mine.isPending) return <Skeleton className="h-24 w-full" />
   if (mine.isError) return <StateView state="error" error={mine.error} onRetry={() => void mine.refetch()} />
@@ -104,6 +124,7 @@ function MyOutcomes({ onAdd }: { onAdd: () => void }) {
               key={outcome.id}
               outcome={outcome}
               name={names.get(outcome.institution_id) ?? ""}
+              logo={tallies.get(outcome.institution_id)}
               onEdit={() => setEditing(outcome)}
               onRemove={() => setRemoving(outcome)}
             />
@@ -117,6 +138,7 @@ function MyOutcomes({ onAdd }: { onAdd: () => void }) {
           onOpenChange={(open) => !open && setEditing(null)}
           outcome={editing}
           institutionName={names.get(editing.institution_id)}
+          logo={tallies.get(editing.institution_id)}
         />
       ) : null}
       <ConfirmDialog

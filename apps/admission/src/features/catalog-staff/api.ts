@@ -9,6 +9,8 @@ import {
   type AdmissionLogoPatchIn,
   type AdmissionSuppCycle,
   type AdmissionSuppPromptIn,
+  ApiError,
+  type PersonalTokenCreated,
   getApiClient,
   seg,
 } from "@ihsp/api"
@@ -27,6 +29,14 @@ export type FactSpecItem = AdmissionFactSpecItem
 export type ProposalKind = "institution" | "scholarship"
 export type ProposalStatus = "pending" | "approved" | "rejected"
 
+export type ProposalSuppPrompt = {
+  cycle: string
+  prompt: string
+  word_limit: number | null
+  required: boolean
+  source_url: string
+}
+
 export type Proposal = {
   id: string
   kind: ProposalKind
@@ -43,6 +53,7 @@ export type Proposal = {
   applied_id: string | null
   lock_version: number
   facts?: Record<string, ProposalFact>
+  supp_prompts?: ProposalSuppPrompt[]
 }
 
 export type ProposalList = { items: Proposal[]; can_review: boolean }
@@ -165,4 +176,22 @@ export function usePutSuppPrompts() {
       ),
     onSuccess: (cycles, { id }) => client.setQueryData(suppKey(id), cycles),
   })
+}
+
+export type CatalogTokenInput = { name: string; expires_in_days: number; otp_code: string }
+
+/** Thrown when the one-time code is wrong; the session stays signed in. */
+export class OtpInvalidError extends Error {}
+
+/** POST /v1/id/personal-tokens: a wrong code answers 401 `auth/otp-invalid`, which keeps the session signed in. */
+export async function createCatalogToken(input: CatalogTokenInput): Promise<PersonalTokenCreated> {
+  try {
+    return await getApiClient().post<PersonalTokenCreated>("/v1/id/personal-tokens", {
+      ...input,
+      scopes: ["admission:catalog"],
+    })
+  } catch (error) {
+    if (error instanceof ApiError && error.type === "auth/otp-invalid") throw new OtpInvalidError()
+    throw error
+  }
 }

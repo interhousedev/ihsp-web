@@ -2,6 +2,7 @@
 
 import { useFormatters, useT } from "@ihsp/i18n"
 import { Icons, Skeleton, StateView, StatusBadge } from "@ihsp/ui"
+import { LogoAvatar } from "../../../components/lib/photo-header"
 import { ScrollFade } from "../../../components/scroll-fade"
 import { useNow } from "../../../lib/use-now"
 import { useMyDeadlines, type Milestone } from "../api"
@@ -31,11 +32,20 @@ export function Agenda() {
               key={item.id}
               className={`bg-card flex flex-wrap items-center justify-between gap-2 rounded-card border border-l-4 p-3 ${item.predicted ? "border-dashed border-l-muted-foreground" : overdue ? "border-l-destructive" : "border-l-primary"}`}
             >
-              <div className="flex flex-col">
-                <span className="font-medium">{item.institution_name}</span>
-                <span className="text-muted-foreground text-xs">
-                  {t.has(`milestone.${item.kind}`) ? t(`milestone.${item.kind}`) : item.kind}
-                </span>
+              <div className="flex items-center gap-3">
+                <LogoAvatar
+                  name={item.institution_name ?? ""}
+                  src={item.logo_url}
+                  fit={item.logo_fit}
+                  zoom={item.logo_zoom}
+                  className="size-8 ring-0"
+                />
+                <div className="flex flex-col">
+                  <span className="font-medium">{item.institution_name}</span>
+                  <span className="text-muted-foreground text-xs">
+                    {t.has(`milestone.${item.kind}`) ? t(`milestone.${item.kind}`) : item.kind}
+                  </span>
+                </div>
               </div>
               <div className="flex items-center gap-2">
                 <span className="text-sm">{item.due_utc ? date(item.due_utc) : t("noDate")}</span>

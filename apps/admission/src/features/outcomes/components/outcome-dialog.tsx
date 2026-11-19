@@ -17,6 +17,7 @@ import {
 } from "@ihsp/ui"
 import { useState, type FormEvent } from "react"
 import { toast } from "sonner"
+import { LogoAvatar } from "../../../components/lib/photo-header"
 import { useInstitutionSearch, type InstitutionHit } from "../../deadlines/api"
 import {
   OUTCOME_PLANS,
@@ -26,6 +27,7 @@ import {
   type Outcome,
   type OutcomePlan,
   type OutcomeStatus,
+  type OutcomeTally,
 } from "../api"
 
 type Preset = { institution: InstitutionHit; cycle?: number }
@@ -41,12 +43,14 @@ export function OutcomeDialog({
   onOpenChange,
   outcome,
   institutionName,
+  logo,
   preset,
 }: {
   open: boolean
   onOpenChange: (open: boolean) => void
   outcome?: Outcome
   institutionName?: string
+  logo?: OutcomeTally
   preset?: Preset
 }) {
   const t = useT("outcomes")
@@ -103,7 +107,18 @@ export function OutcomeDialog({
       <div className="flex flex-col gap-5">
         {name || picked ? (
           <div className="rounded-card flex items-center justify-between gap-2 border p-3 text-sm">
-            <span className="font-medium">{name}</span>
+            <span className="flex min-w-0 items-center gap-2 font-medium">
+              {name ? (
+                <LogoAvatar
+                  name={name}
+                  src={outcome ? logo?.logo_url : picked?.logo_url}
+                  fit={outcome ? logo?.logo_fit : picked?.logo_fit}
+                  zoom={outcome ? logo?.logo_zoom : picked?.logo_zoom}
+                  className="size-8 ring-0"
+                />
+              ) : null}
+              {name}
+            </span>
             {outcome ? null : (
               <Button type="button" variant="ghost" size="sm" onClick={() => setPicked(null)}>
                 {t("change")}
@@ -146,7 +161,7 @@ export function OutcomeDialog({
               type="number"
               inputMode="numeric"
               disabled={!!outcome}
-              value={cycle}
+              value={cycle ?? ""}
               onChange={(event) => {
                 setCycle(event.target.value)
                 setDuplicate(false)

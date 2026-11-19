@@ -5,6 +5,7 @@ import { useErrorMessage, useT } from "@ihsp/i18n"
 import { Button, Input, Skeleton, StateView } from "@ihsp/ui"
 import { useState } from "react"
 import { toast } from "sonner"
+import { LogoAvatar } from "../../../components/lib/photo-header"
 import { usePatchChecklist, useStudentChecklist, type ChecklistItem } from "../api"
 import { QueryError } from "../../shell/components/query-error"
 
@@ -46,9 +47,20 @@ function SourceUrlForm({ item }: { item: ChecklistItem }) {
 
   return (
     <li className="flex flex-col gap-1.5 py-3">
-      <span className="font-medium">
-        {title}
-        {item.institution_name ? ` · ${item.institution_name}` : ""}
+      <span className="flex items-center gap-2 font-medium">
+        {item.institution_name ? (
+          <LogoAvatar
+            name={item.institution_name}
+            src={item.logo_url}
+            fit={item.logo_fit}
+            zoom={item.logo_zoom}
+            className="size-6 ring-0"
+          />
+        ) : null}
+        <span>
+          {title}
+          {item.institution_name ? ` · ${item.institution_name}` : ""}
+        </span>
       </span>
       <label htmlFor={inputId} className="text-muted-foreground text-xs">
         {t("sourceUrl.label")}

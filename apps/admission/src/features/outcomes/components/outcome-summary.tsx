@@ -3,6 +3,7 @@
 import { useT } from "@ihsp/i18n"
 import { Icons, Pill, Skeleton, StateView } from "@ihsp/ui"
 import { StatCard, StatGrid } from "../../../components/lib/page"
+import { LogoAvatar } from "../../../components/lib/photo-header"
 import { useOutcomeSummary, type OutcomeTally } from "../api"
 
 const TONE = {
@@ -19,7 +20,20 @@ function TallyCard({ tally, showName }: { tally: OutcomeTally; showName: boolean
   return (
     <li className="bg-card rounded-card flex min-w-0 flex-col gap-4 border p-5">
       <div className="flex flex-wrap items-baseline justify-between gap-2">
-        {showName ? <h3 className="text-base font-semibold">{tally.institution_name}</h3> : <span />}
+        {showName ? (
+          <div className="flex min-w-0 items-center gap-2">
+            <LogoAvatar
+              name={tally.institution_name ?? ""}
+              src={tally.logo_url}
+              fit={tally.logo_fit}
+              zoom={tally.logo_zoom}
+              className="size-8 ring-0"
+            />
+            <h3 className="text-base font-semibold">{tally.institution_name}</h3>
+          </div>
+        ) : (
+          <span />
+        )}
         <span className="text-muted-foreground text-xs tabular-nums">{t("cycleValue", { cycle: tally.cycle })}</span>
       </div>
       <p className="text-muted-foreground text-sm">

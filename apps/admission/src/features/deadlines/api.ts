@@ -66,7 +66,14 @@ export function useRemoveDeadline() {
 }
 
 export type DeadlineCreateBody = AdmissionDeadlineIn
-export type InstitutionHit = { id: string; name: string; country: string }
+export type InstitutionHit = {
+  id: string
+  name: string
+  country: string
+  logo_url?: string | null
+  logo_fit?: "circle" | "contain"
+  logo_zoom?: number
+}
 
 export function useInstitutionSearch(q: string) {
   return useQuery({

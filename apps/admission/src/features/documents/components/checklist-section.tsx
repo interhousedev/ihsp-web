@@ -5,6 +5,8 @@ import { Button, Checkbox, Icons, Skeleton, StateView, StatusBadge } from "@ihsp
 import Link from "next/link"
 import { useState } from "react"
 import { toast } from "sonner"
+import { NextStep } from "../../../components/next-step"
+import { LogoAvatar } from "../../../components/lib/photo-header"
 import { useChecklist, usePatchChecklist, type ChecklistItem } from "../api"
 import { groupChecklist, QUADRANTS, SORTS, sortChecklist, type ChecklistSort } from "../priority"
 
@@ -61,6 +63,15 @@ function ChecklistRow({ item }: { item: ChecklistItem }) {
         disabled={patch.isPending}
         onCheckedChange={(checked) => send({ id: item.id, status: checked ? DONE : TODO })}
       />
+      {item.institution_name ? (
+        <LogoAvatar
+          name={item.institution_name}
+          src={item.logo_url}
+          fit={item.logo_fit}
+          zoom={item.logo_zoom}
+          className="size-8 ring-0"
+        />
+      ) : null}
       <div className="flex min-w-0 flex-1 flex-col gap-0.5">
         <span className={done ? "text-muted-foreground line-through" : "font-medium"}>
           {title}
@@ -94,14 +105,16 @@ function ChecklistRow({ item }: { item: ChecklistItem }) {
 }
 
 /** Items grouped by institution (general ones first), each group collapsible; only the first starts open. */
-function groupByInstitution(items: readonly ChecklistItem[]): { name: string; items: ChecklistItem[] }[] {
+function groupByInstitution(
+  items: readonly ChecklistItem[],
+): { name: string; items: ChecklistItem[]; logo: ChecklistItem }[] {
   const groups = new Map<string, ChecklistItem[]>()
   for (const item of items) {
     const name = item.institution_name ?? ""
     groups.set(name, [...(groups.get(name) ?? []), item])
   }
   return [...groups]
-    .map(([name, list]) => ({ name, items: list }))
+    .map(([name, list]) => ({ name, items: list, logo: list[0] }))
     .sort((a, b) => Number(b.name === "") - Number(a.name === ""))
 }
 
@@ -113,6 +126,15 @@ function ChecklistGroups({ items }: { items: readonly ChecklistItem[] }) {
         <details key={group.name} open={index === 0} className="group py-1">
           <summary className="flex min-h-11 cursor-pointer list-none items-center gap-2 text-sm font-semibold [&::-webkit-details-marker]:hidden">
             <Icons.chevronRight aria-hidden className="size-4 transition-transform group-open:rotate-90" />
+            {group.name ? (
+              <LogoAvatar
+                name={group.name}
+                src={group.logo.logo_url}
+                fit={group.logo.logo_fit}
+                zoom={group.logo.logo_zoom}
+                className="size-6 ring-0"
+              />
+            ) : null}
             <span className="min-w-0 flex-1 truncate">{group.name || t("groupGeneral")}</span>
             <span className="text-muted-foreground text-xs font-normal">
               {group.items.filter((item) => item.status === DONE).length}/{group.items.length}
@@ -168,7 +190,14 @@ export function ChecklistSection() {
   const [sort, setSort] = useState<ChecklistSort>("urgency")
   if (query.isPending) return <Skeleton className="h-32 w-full" />
   if (query.isError) return <StateView state="error" onRetry={() => void query.refetch()} />
-  if (query.data.length === 0) return <StateView state="empty" title={t("checklistEmpty")} />
+  if (query.data.length === 0) {
+    return (
+      <div className="flex flex-col gap-3">
+        <StateView state="empty" title={t("checklistEmpty")} />
+        <NextStep href="/chooser/search/" label={t("nextSearch")} hint={t("nextSearchHint")} />
+      </div>
+    )
+  }
   const groups = view === "matrix" ? groupChecklist(query.data) : null
   return (
     <div className="flex flex-col gap-2">

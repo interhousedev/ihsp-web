@@ -2,19 +2,31 @@
 
 import { AppPageHeader, pageClass } from "../../../components/lib/page"
 import { useErrorMessage, useT } from "@ihsp/i18n"
-import { Button, Icons, Skeleton, StateView, StatusBadge } from "@ihsp/ui"
+import { Button, ConfirmDialog, Icons, Input, Label, Skeleton, StateView, StatusBadge } from "@ihsp/ui"
 import { useState } from "react"
 import { toast } from "sonner"
 import { ScrollFade } from "../../../components/scroll-fade"
 import { CURATOR_ROLES } from "../../../config/nav"
 import { AdmissionShell } from "../../shell/components/admission-shell"
+import { useInstitution } from "../../chooser/hooks"
 import { useProposals, useReviewProposal, type Proposal, type ProposalStatus } from "../api"
 import { LogoTuner } from "./logo-tuner"
 import { SuppPromptsEditor } from "./supp-prompts-editor"
 import { CatalogTokenCard } from "./catalog-token-card"
 import { ProposalFacts } from "./proposal-facts"
+import { ProposalPrompts } from "./proposal-prompts"
 import { ProposeDialog } from "./propose-dialog"
 import { QueryError } from "../../shell/components/query-error"
+
+const FIELD_LABELS: Record<string, string> = {
+  name: "nameLabel",
+  country: "countryLabel",
+  city: "cityLabel",
+  logo_url: "logoLabel",
+  cover_url: "coverLabel",
+  provider: "providerLabel",
+  basis: "basisLabel",
+}
 
 const TONES = { pending: "neutral", approved: "success", rejected: "destructive" } as const
 
@@ -22,11 +34,34 @@ function Row({ item, canReview }: { item: Proposal; canReview: boolean }) {
   const t = useT("catalogStaff")
   const errorMessage = useErrorMessage()
   const review = useReviewProposal()
-  const title = typeof item.fields.name === "string" ? item.fields.name : item.target_id
-  function decide(approve: boolean) {
+  const tf = useT("catalogFacts")
+  const target = useInstitution(item.target_id)
+  const [rejecting, setRejecting] = useState(false)
+  const [reason, setReason] = useState("")
+  const name = typeof item.fields.name === "string" && item.fields.name ? item.fields.name : null
+  const title = name ?? target.data?.name ?? t(`kind.${item.kind}`)
+  function fieldLabel(key: string): string {
+    const own = FIELD_LABELS[key]
+    if (own) return t(own)
+    if (key === "website_domain") return tf("domainLabel")
+    if (key === "aliases") return tf("aliasesLabel")
+    return key.replace(/_/g, " ")
+  }
+  function fieldValue(key: string, value: unknown): string {
+    if (Array.isArray(value)) return value.join(", ")
+    if ((key === "provider" || key === "basis") && typeof value === "string") return t(`${key}.${value}`)
+    return String(value)
+  }
+  function decide(approve: boolean, note: string | null = null) {
     review.mutate(
-      { id: item.id, approve, lock_version: item.lock_version },
-      { onSuccess: () => toast.success(t("reviewed")), onError: (error) => toast.error(errorMessage(error)) },
+      { id: item.id, approve, lock_version: item.lock_version, ...(approve ? {} : { note }) },
+      {
+        onSuccess: () => {
+          setRejecting(false)
+          toast.success(t("reviewed"))
+        },
+        onError: (error) => toast.error(errorMessage(error)),
+      },
     )
   }
   return (
@@ -41,12 +76,14 @@ function Row({ item, canReview }: { item: Proposal; canReview: boolean }) {
         <StatusBadge tone={TONES[item.status]} label={t(`status.${item.status}`)} />
       </div>
       <dl className="grid grid-cols-[auto_1fr] gap-x-3 text-sm">
-        {Object.entries(item.fields).map(([key, value]) => (
-          <div key={key} className="contents">
-            <dt className="text-muted-foreground">{key}</dt>
-            <dd className="break-words">{String(value)}</dd>
-          </div>
-        ))}
+        {Object.entries(item.fields)
+          .filter(([, value]) => value !== null && value !== "")
+          .map(([key, value]) => (
+            <div key={key} className="contents">
+              <dt className="text-muted-foreground">{fieldLabel(key)}</dt>
+              <dd className="break-words">{fieldValue(key, value)}</dd>
+            </div>
+          ))}
       </dl>
       <a
         className="text-primary text-sm break-all underline"
@@ -57,17 +94,44 @@ function Row({ item, canReview }: { item: Proposal; canReview: boolean }) {
         {item.source_url}
       </a>
       {item.facts && Object.keys(item.facts).length > 0 && <ProposalFacts facts={item.facts} />}
+      {item.supp_prompts && item.supp_prompts.length > 0 && <ProposalPrompts prompts={item.supp_prompts} />}
       {item.note && <p className="text-sm">{item.note}</p>}
       {canReview && item.status === "pending" && (
         <div className="flex gap-2">
           <Button type="button" size="sm" disabled={review.isPending} onClick={() => decide(true)}>
             {t("approve")}
           </Button>
-          <Button type="button" size="sm" variant="outline" disabled={review.isPending} onClick={() => decide(false)}>
+          <Button
+            type="button"
+            size="sm"
+            variant="outline"
+            disabled={review.isPending}
+            onClick={() => setRejecting(true)}
+          >
             {t("reject")}
           </Button>
         </div>
       )}
+      <ConfirmDialog
+        open={rejecting}
+        onOpenChange={setRejecting}
+        title={t("rejectTitle")}
+        description={t("rejectDescription")}
+        confirmLabel={t("reject")}
+        destructive
+        loading={review.isPending}
+        onConfirm={() => decide(false, reason.trim() || null)}
+      >
+        <div className="flex flex-col gap-1">
+          <Label htmlFor={`reject-${item.id}`}>{t("rejectReasonLabel")}</Label>
+          <Input
+            id={`reject-${item.id}`}
+            maxLength={500}
+            value={reason}
+            onChange={(event) => setReason(event.target.value)}
+          />
+        </div>
+      </ConfirmDialog>
     </li>
   )
 }

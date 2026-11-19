@@ -56,12 +56,12 @@ describe("catalog proposal regressions", () => {
       }),
     )
     renderAdmissionApp(<ProposeDialog open onOpenChange={() => {}} />)
-    fireEvent.change(await screen.findByPlaceholderText("Edit an existing university (optional)"), {
+    fireEvent.change(await screen.findByRole("combobox", { name: "University" }), {
       target: { value: "Harv" },
     })
     fireEvent.mouseDown(await screen.findByRole("option", { name: /Add "Harv"/ }))
     fireEvent.click(await screen.findByRole("button", { name: /New school/ }))
-    fireEvent.change(await screen.findByPlaceholderText("Edit an existing university (optional)"), {
+    fireEvent.change(await screen.findByRole("combobox", { name: "University" }), {
       target: { value: "Uni" },
     })
     fireEvent.mouseDown(await screen.findByRole("option", { name: /Uni One/ }))

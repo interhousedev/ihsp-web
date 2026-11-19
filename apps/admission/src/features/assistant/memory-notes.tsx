@@ -28,7 +28,7 @@ export function MemoryNotes() {
     <div className="flex flex-col gap-4">
       <form onSubmit={submit} className="flex flex-col gap-2">
         <Textarea
-          value={text}
+          value={text ?? ""}
           maxLength={4000}
           rows={2}
           placeholder={t("placeholder")}

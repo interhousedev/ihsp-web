@@ -2,11 +2,13 @@
 
 import { useT } from "@ihsp/i18n"
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger, Badge, Checkbox, Input, Label } from "@ihsp/ui"
+import { useId } from "react"
 import type { FactSpecGroup, FactSpecItem } from "../api"
 import {
   emptyCitation,
   emptyDraft,
   filledCount,
+  isHttpsUrl,
   type Citation,
   type Draft,
   type FactEntry,
@@ -29,14 +31,19 @@ function CitationInputs({
   onChange: (next: Citation) => void
 }) {
   const t = useT("catalogFacts")
+  const to = useT("catalogStaff")
+  const errorId = useId()
+  const badUrl = citation.url.trim() !== "" && !isHttpsUrl(citation.url)
   return (
     <div className="grid grid-cols-[1fr_5rem] gap-2">
       <Input
         type="url"
+        aria-invalid={badUrl || undefined}
+        aria-describedby={badUrl ? errorId : undefined}
         aria-label={`${prefix}: ${t("sourceUrl")}`}
         placeholder={t("sourceUrl")}
         disabled={disabled}
-        value={citation.url}
+        value={citation.url ?? ""}
         onChange={(e) => onChange({ ...citation, url: e.target.value })}
       />
       <Input
@@ -44,7 +51,7 @@ function CitationInputs({
         inputMode="numeric"
         aria-label={`${prefix}: ${t("sourceYear")}`}
         disabled={disabled}
-        value={citation.year}
+        value={citation.year ?? ""}
         onChange={(e) => onChange({ ...citation, year: e.target.value })}
       />
       <Input
@@ -53,9 +60,14 @@ function CitationInputs({
         placeholder={t("sourceNote")}
         maxLength={300}
         disabled={disabled}
-        value={citation.note}
+        value={citation.note ?? ""}
         onChange={(e) => onChange({ ...citation, note: e.target.value })}
       />
+      {badUrl && (
+        <p id={errorId} className="text-destructive col-span-2 text-xs">
+          {to("httpsError")}
+        </p>
+      )}
     </div>
   )
 }
@@ -114,7 +126,11 @@ function SectionSourceBox({
       </label>
       {current.same && (
         <CitationInputs
-          prefix={group.label}
+          prefix={
+            group.key === "final_results_before_enrolment"
+              ? t("groupLabel.final_results_before_enrolment")
+              : group.label
+          }
           citation={current}
           onChange={(citation) => onChange({ ...current, ...citation })}
         />
@@ -151,7 +167,9 @@ export function FactsStep({
           <AccordionItem key={group.key} value={group.key}>
             <AccordionTrigger>
               <span className="flex flex-1 items-center gap-2">
-                {group.label}
+                {group.key === "final_results_before_enrolment"
+                  ? t("groupLabel.final_results_before_enrolment")
+                  : group.label}
                 {count > 0 && <Badge variant="secondary">{t("filled", { count })}</Badge>}
               </span>
             </AccordionTrigger>

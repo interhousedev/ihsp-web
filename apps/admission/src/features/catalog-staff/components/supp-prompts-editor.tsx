@@ -79,7 +79,7 @@ function CycleForm({
             aria-label={t("suppPrompt")}
             required
             maxLength={4000}
-            value={row.prompt}
+            value={row.prompt ?? ""}
             onChange={(e) => update(i, { prompt: e.target.value })}
           />
           <div className="grid gap-2 sm:grid-cols-2">
@@ -89,7 +89,7 @@ function CycleForm({
               type="number"
               min={1}
               max={5000}
-              value={row.word_limit}
+              value={row.word_limit ?? ""}
               onChange={(e) => update(i, { word_limit: e.target.value })}
             />
             <Input
@@ -97,7 +97,7 @@ function CycleForm({
               placeholder={t("suppSource")}
               type="url"
               pattern="https://.*"
-              value={row.source_url}
+              value={row.source_url ?? ""}
               onChange={(e) => update(i, { source_url: e.target.value })}
             />
           </div>

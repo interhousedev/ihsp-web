@@ -1,6 +1,7 @@
 "use client"
 
 import { useLocale, useT } from "@ihsp/i18n"
+import { kbLibrary, MessageWithOpenUi, safeLinkUrl } from "@ihsp/features-core/openui"
 import { buttonVariants, Icons, Markdown, Skeleton } from "@ihsp/ui"
 import Link from "next/link"
 import { QueryError } from "../../shell/components/query-error"
@@ -21,7 +22,12 @@ export function ArticleReader({ id }: { id: string }) {
         <p className="text-muted-foreground text-xs">
           {t("updated", { date: new Date(article.updated_at).toLocaleDateString(locale) })}
         </p>
-        <Markdown>{article.body}</Markdown>
+        <MessageWithOpenUi
+          text={article.body}
+          library={kbLibrary}
+          links="kb"
+          renderMarkdown={(part) => <Markdown allowLink={(href) => safeLinkUrl(href, "kb") !== null}>{part}</Markdown>}
+        />
       </article>
     )
   }

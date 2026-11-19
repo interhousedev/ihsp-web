@@ -4,6 +4,7 @@ import { AppPageHeader, pageClass } from "../../../components/lib/page"
 import { useErrorMessage, useFormatters, useT } from "@ihsp/i18n"
 import { Alert, AlertDescription, Button, ConfirmDialog, cn, Icons, Skeleton, StateView, StatusBadge } from "@ihsp/ui"
 import { useState } from "react"
+import { LogoAvatar } from "../../../components/lib/photo-header"
 import { AsideCard, SplitLayout } from "../../../components/lib/split-layout"
 import { UnderlineTabs } from "../../../components/lib/underline-tabs"
 import { ScrollFade } from "../../../components/scroll-fade"
@@ -30,7 +31,13 @@ function Row({ item }: { item: Deadline }) {
       )}
     >
       <div className="flex items-center gap-3">
-        <Icons.calendarEvent aria-hidden className="text-muted-foreground size-5 shrink-0" />
+        <LogoAvatar
+          name={item.institution_name || t("unknownInstitution")}
+          src={item.logo_url}
+          fit={item.logo_fit}
+          zoom={item.logo_zoom}
+          className="size-8 ring-0"
+        />
         <div className="flex flex-col">
           <span className="font-medium">{item.institution_name || t("unknownInstitution")}</span>
           <span className="text-muted-foreground text-xs">

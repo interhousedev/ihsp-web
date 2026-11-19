@@ -64,4 +64,24 @@ describe("checklist", () => {
     await screen.findByRole("button", { name: "Important" })
     expect(body as unknown).toEqual({ important: true })
   })
+
+  test("shows the institution logo, or initials when there is none", async () => {
+    serve([
+      {
+        ...base,
+        id: "a",
+        institution_name: "Harvard University",
+        logo_url: "https://cdn.example/h.png",
+        logo_fit: "circle",
+        logo_zoom: 1,
+      },
+      { ...base, id: "b", institution_name: "Yale College", logo_url: null, logo_fit: "contain", logo_zoom: 1 },
+    ])
+    const { container } = renderAdmissionApp(<ChecklistSection />)
+    await screen.findAllByText(/Harvard University/)
+    expect(
+      container.querySelector('img[src="https://cdn.example/h.png"]') ?? screen.queryAllByText("HU")[0],
+    ).not.toBeNull()
+    expect(screen.getAllByText("YC").length).toBeGreaterThan(0)
+  })
 })

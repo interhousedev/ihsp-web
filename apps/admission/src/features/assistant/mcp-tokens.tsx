@@ -85,7 +85,7 @@ export function McpTokenCreate({ connection, codeResetKey }: { connection: McpCo
     >
       <div className="flex flex-col gap-2">
         <Label htmlFor={nameId}>{t("name")}</Label>
-        <Input id={nameId} value={name} maxLength={80} onChange={(event) => setName(event.target.value)} />
+        <Input id={nameId} value={name ?? ""} maxLength={80} onChange={(event) => setName(event.target.value)} />
       </div>
       <fieldset className="flex flex-col gap-2">
         <legend className="mb-1 text-sm font-medium">{t("scopes")}</legend>
@@ -118,7 +118,7 @@ export function McpTokenCreate({ connection, codeResetKey }: { connection: McpCo
         <div className="flex gap-2">
           <Input
             id={codeId}
-            value={code}
+            value={code ?? ""}
             inputMode="numeric"
             autoComplete="one-time-code"
             maxLength={6}

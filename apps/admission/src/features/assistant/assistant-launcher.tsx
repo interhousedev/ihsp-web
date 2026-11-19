@@ -10,6 +10,7 @@ import { McpPanel } from "./mcp-panel"
 import { McpPrompt } from "./mcp-prompt"
 import { usePathname } from "next/navigation"
 import { tourKey, useTourOpen } from "../steps"
+import { ASSISTANT_PREFILL_EVENT } from "../home/components/start-here-card"
 
 const SUGGESTIONS = ["1", "2", "3", "4"] as const
 
@@ -48,6 +49,19 @@ function AssistantDock({ userId }: { userId: string }) {
     return () => window.removeEventListener("keydown", onKey)
   }, [open])
 
+  useEffect(() => {
+    const onPrefill = (event: Event) => {
+      const text = (event as CustomEvent<{ text?: string }>).detail?.text
+      if (!text) return
+      setView("chat")
+      setOpened(true)
+      setOpen(true)
+      setPrefill({ key: Date.now(), text })
+    }
+    window.addEventListener(ASSISTANT_PREFILL_EVENT, onPrefill)
+    return () => window.removeEventListener(ASSISTANT_PREFILL_EVENT, onPrefill)
+  }, [])
+
   function show() {
     setOpened(true)
     setOpen(true)
@@ -69,7 +83,7 @@ function AssistantDock({ userId }: { userId: string }) {
         tabIndex={open ? -1 : 0}
         onClick={show}
         className={cn(
-          "bg-primary text-primary-foreground fixed right-4 bottom-20 z-40 flex size-14 origin-bottom-right items-center justify-center rounded-full shadow-lg md:right-6 md:bottom-6",
+          "bg-primary text-primary-foreground fixed right-4 bottom-[calc(var(--bottom-nav-height,4.5rem)+var(--safe-bottom,0px)+0.5rem)] z-40 flex size-14 origin-bottom-right items-center justify-center rounded-full shadow-lg md:right-6 md:bottom-6",
           "motion-safe:transition-[transform,opacity] motion-safe:duration-200 motion-safe:hover:scale-105",
           open && "pointer-events-none scale-50 opacity-0",
           hideLauncher && "hidden",

@@ -42,6 +42,9 @@ export type ChecklistItem = {
   important: boolean
   urgent_override: boolean | null
   institution_name?: string | null
+  logo_url?: string | null
+  logo_fit?: "circle" | "contain"
+  logo_zoom?: number
   app_path: string | null
   urgent: boolean
   quadrant: "do" | "schedule" | "delegate" | "drop"
