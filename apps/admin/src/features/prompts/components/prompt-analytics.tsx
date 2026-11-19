@@ -3,13 +3,7 @@
 import { getAdminPromptAnalyticsQuery } from "@ihsp/api"
 import { QueryState } from "@ihsp/features-core"
 import { useFormatters, useT } from "@ihsp/i18n"
-import {
-  Card,
-  CardContent,
-  CardHeader,
-  CardTitle,
-  ResponsiveTable,
-} from "@ihsp/ui"
+import { Card, CardContent, CardHeader, CardTitle, ResponsiveTable } from "@ihsp/ui"
 import { useQuery } from "@tanstack/react-query"
 import { addDays, compact, todayIso, usd } from "../../limits/utils"
 

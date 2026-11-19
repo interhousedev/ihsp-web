@@ -88,7 +88,9 @@ function EditorForm({ detail, locale }: { detail: PromptDetail; locale: PromptLo
   const changed = text !== detail.text
   return (
     <div className="flex flex-col gap-4">
-      <p className="text-muted-foreground text-sm">{t.has(summaryKey(detail.summary)) ? t(summaryKey(detail.summary)) : detail.summary}</p>
+      <p className="text-muted-foreground text-sm">
+        {t.has(summaryKey(detail.summary)) ? t(summaryKey(detail.summary)) : detail.summary}
+      </p>
       <div className="flex flex-wrap items-center gap-2 text-xs">
         <Badge variant="secondary">
           {detail.version === 0 ? t("editor.builtin") : t("history.version", { version: detail.version })}

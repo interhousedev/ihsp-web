@@ -3,14 +3,7 @@
 import { getAdminPromptCallsQuery } from "@ihsp/api"
 import { QueryState } from "@ihsp/features-core"
 import { useFormatters, useT } from "@ihsp/i18n"
-import {
-  Badge,
-  Card,
-  CardContent,
-  CardHeader,
-  CardTitle,
-  ResponsiveTable,
-} from "@ihsp/ui"
+import { Badge, Card, CardContent, CardHeader, CardTitle, ResponsiveTable } from "@ihsp/ui"
 import { useQuery } from "@tanstack/react-query"
 import { compact, usd } from "../../limits/utils"
 
