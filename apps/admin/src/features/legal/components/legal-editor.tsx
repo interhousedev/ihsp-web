@@ -2,6 +2,7 @@
 
 import { ApiError, keys, postAdminLegalPublish, putAdminLegalDraft, type LegalKind } from "@ihsp/api"
 import { LegalDocumentView } from "@ihsp/features-core"
+import { RichTextEditor } from "@ihsp/features-core/rich-text"
 import { useErrorMessage, useT } from "@ihsp/i18n"
 import {
   Alert,
@@ -49,12 +50,12 @@ function LocalePane({
         </div>
         <div className="grid gap-2">
           <FieldLabel htmlFor={`${id}-body`}>{t("editor.body")}</FieldLabel>
-          <Textarea
+          <RichTextEditor
             id={`${id}-body`}
-            rows={24}
-            className="font-mono text-sm"
+            ariaLabel={t("editor.body")}
+            minHeight="24rem"
             value={form.body[locale]}
-            onChange={(e) => onChange("body", e.target.value)}
+            onChange={(value) => onChange("body", value)}
           />
         </div>
         <div className="grid gap-2">

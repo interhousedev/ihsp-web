@@ -1655,7 +1655,8 @@
         "notebooks": "Bloknotlar va Studiya",
         "web_search": "Internet qidiruvi",
         "lms": "Kurs muallifligi",
-        "admission": "Qabul"
+        "admission": "Qabul",
+        "essay": "Insho tekshiruvi"
       },
       "value": "Qiymat",
       "default": "Standart: {value}",
@@ -1843,6 +1844,18 @@
       "lms_ai_max_tool_steps": {
         "label": "Muallif yordamchisi vosita qadamlari",
         "hint": "Muallif yordamchisining bitta javobida modelga eng koʻp murojaatlar."
+      },
+      "admit_essay_review_per_week": {
+        "label": "Haftasiga esse tekshiruvlari",
+        "hint": "Talaba bir haftada so‘rashi mumkin bo‘lgan asosiy esse tekshiruvlari soni (model ishlaydigan har bir so‘rov uchun bittadan)."
+      },
+      "admit_essay_uni_review_per_week": {
+        "label": "Haftasiga universitet esse tekshiruvlari",
+        "hint": "Talaba bir haftada olishi mumkin bo‘lgan universitetlar bo‘yicha esse tekshiruvlari soni (model tekshiradigan har bir universitet uchun bittadan)."
+      },
+      "admit_essay_studio_runs_per_day": {
+        "label": "Kuniga prompt studiyasi ishga tushirishlari",
+        "hint": "Xodim prompt studiyasida bir kunda bajarishi mumkin bo‘lgan sinov ishga tushirishlari soni. Barcha xodimlar uchun bir xil."
       }
     },
     "admission": {
@@ -2624,16 +2637,16 @@
       "admission_career_profession_suggestions": "Qabul va karyera: kasblar taklifi",
       "admission_career_fit_of_majors_and_minors": "Qabul va karyera: mutaxassislik va yoʻnalishlarga moslik",
       "admission_career_spike_draft": "Qabul va karyera: spike qoralamasi",
-      "admission_essay_coach_brainstorm_questions": "Esse murabbiyi: fikr almashish savollari",
-      "admission_essay_coach_angles_on_one_idea": "Esse murabbiyi: bitta gʻoyaning yoʻnalishlari",
-      "admission_essay_coach_outline_suggestion": "Esse murabbiyi: reja taklifi",
-      "admission_essay_coach_feedback_on_a_draft": "Esse murabbiyi: qoralama boʻyicha fikr",
+      "admission_essay_coach_brainstorm_questions": "Insho murabbiyi: fikr almashish savollari",
+      "admission_essay_coach_angles_on_one_idea": "Insho murabbiyi: bitta gʻoyaning yoʻnalishlari",
+      "admission_essay_coach_outline_suggestion": "Insho murabbiyi: reja taklifi",
+      "admission_essay_coach_feedback_on_a_draft": "Insho murabbiyi: qoralama boʻyicha fikr",
       "admission_event_post_into_an_opportunity_draft_bot_intake": "Qabul: tadbir postidan imkoniyat qoralamasi (bot orqali)",
       "admission_grade_9_12_plan_of_saved_opportunities": "Qabul: saqlangan imkoniyatlarning 9–12-sinf rejasi",
       "admission_full_application_review_profile_section": "Qabul: arizani toʻliq tahlil, «Profil» boʻlimi",
       "admission_full_application_review_activities_section": "Qabul: arizani toʻliq tahlil, «Faoliyat» boʻlimi",
       "admission_full_application_review_alignment_section": "Qabul: arizani toʻliq tahlil, «Moslik» boʻlimi",
-      "admission_full_application_review_essays_section": "Qabul: arizani toʻliq tahlil, «Esselar» boʻlimi",
+      "admission_full_application_review_essays_section": "Qabul: arizani toʻliq tahlil, «Insholar» boʻlimi",
       "admission_full_application_review_academics_section": "Qabul: arizani toʻliq tahlil, «Oʻqish» boʻlimi",
       "admission_full_application_review_universities_section": "Qabul: arizani toʻliq tahlil, «Universitetlar» boʻlimi",
       "admission_full_application_review_readiness_section": "Qabul: arizani toʻliq tahlil, «Tayyorlik» boʻlimi",
@@ -2675,5 +2688,33 @@
       "subject_names": "Fan nomlari",
       "guest_assistant": "Mehmon yordamchisi"
     }
+  },
+  "richText": {
+    "toolbar": "Formatlash",
+    "tool": {
+      "bold": "Qalin",
+      "italic": "Kursiv",
+      "h2": "2-sarlavha",
+      "h3": "3-sarlavha",
+      "bullet": "Markerli roʻyxat",
+      "ordered": "Raqamlangan roʻyxat",
+      "quote": "Iqtibos",
+      "link": "Havola",
+      "undo": "Bekor qilish",
+      "redo": "Qaytarish"
+    },
+    "linkUrl": "Havola manzili",
+    "linkApply": "Qoʻllash",
+    "linkCancel": "Bekor qilish",
+    "linkInvalid": "Havola https://, mailto: yoki / bilan boshlanishi kerak",
+    "mode": {
+      "label": "Tahrirlash rejimi",
+      "visual": "Vizual",
+      "markdown": "Markdown"
+    },
+    "preview": "Oldindan koʻrish",
+    "previewEmpty": "Hozircha koʻrsatadigan narsa yoʻq.",
+    "lossyNotice": "Matnda formulalar, jadvallar yoki vizual muharrir oʻzgartirib yuboradigan boshqa Markdown belgilari bor. Matn Markdown rejimida qoladi.",
+    "lossyWarning": "Matnda formulalar, jadvallar yoki vizual muharrir oʻzgartirishi mumkin boʻlgan boshqa Markdown belgilari bor."
   }
 }

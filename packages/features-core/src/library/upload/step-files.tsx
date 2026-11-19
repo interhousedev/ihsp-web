@@ -37,6 +37,7 @@ export function StepFiles({
           value={values.body}
           onChange={(body) => onChange({ body })}
           label={t("markdownLabel")}
+          defaultMode="markdown"
           invalid={problems.includes("bodyRequired")}
           describedBy={problems.length > 0 ? "files-error" : undefined}
         />

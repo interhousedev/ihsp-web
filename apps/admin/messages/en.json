@@ -1655,7 +1655,8 @@
         "notebooks": "Notebooks & Studio",
         "web_search": "Web search",
         "lms": "LMS authoring",
-        "admission": "Admission"
+        "admission": "Admission",
+        "essay": "Essay reviewer"
       },
       "value": "Value",
       "default": "Default: {value}",
@@ -1843,6 +1844,18 @@
       "lms_ai_max_tool_steps": {
         "label": "Author assistant tool steps",
         "hint": "Most model requests in one author assistant answer."
+      },
+      "admit_essay_review_per_week": {
+        "label": "Essay reviews per week",
+        "hint": "Base essay reviews a student may request each week (one per request that runs the model)."
+      },
+      "admit_essay_uni_review_per_week": {
+        "label": "University essay reviews per week",
+        "hint": "Per-university essay reviews a student may get each week (one per university the model reviews)."
+      },
+      "admit_essay_studio_runs_per_day": {
+        "label": "Prompt studio runs per day",
+        "hint": "Sample runs a staff member may start in the prompt studio each day. The same for all staff."
       }
     },
     "admission": {
@@ -2675,5 +2688,33 @@
       "subject_names": "Subject names",
       "guest_assistant": "Guest assistant"
     }
+  },
+  "richText": {
+    "toolbar": "Formatting",
+    "tool": {
+      "bold": "Bold",
+      "italic": "Italic",
+      "h2": "Heading 2",
+      "h3": "Heading 3",
+      "bullet": "Bulleted list",
+      "ordered": "Numbered list",
+      "quote": "Quote",
+      "link": "Link",
+      "undo": "Undo",
+      "redo": "Redo"
+    },
+    "linkUrl": "Link address",
+    "linkApply": "Apply",
+    "linkCancel": "Cancel",
+    "linkInvalid": "Use a link that starts with https://, mailto: or /",
+    "mode": {
+      "label": "Editing mode",
+      "visual": "Visual",
+      "markdown": "Markdown"
+    },
+    "preview": "Preview",
+    "previewEmpty": "Nothing to preview yet.",
+    "lossyNotice": "This text has formulas, tables or other Markdown that the visual editor would change. It stays in Markdown mode.",
+    "lossyWarning": "This text has formulas, tables or other Markdown that the visual editor may change."
   }
 }

@@ -1262,5 +1262,33 @@
     "contactHint": "To get access, write to {name}.",
     "contactTelegram": "Telegram: @{handle}",
     "locked": "Locked"
+  },
+  "richText": {
+    "toolbar": "Formatting",
+    "tool": {
+      "bold": "Bold",
+      "italic": "Italic",
+      "h2": "Heading 2",
+      "h3": "Heading 3",
+      "bullet": "Bulleted list",
+      "ordered": "Numbered list",
+      "quote": "Quote",
+      "link": "Link",
+      "undo": "Undo",
+      "redo": "Redo"
+    },
+    "linkUrl": "Link address",
+    "linkApply": "Apply",
+    "linkCancel": "Cancel",
+    "linkInvalid": "Use a link that starts with https://, mailto: or /",
+    "mode": {
+      "label": "Editing mode",
+      "visual": "Visual",
+      "markdown": "Markdown"
+    },
+    "preview": "Preview",
+    "previewEmpty": "Nothing to preview yet.",
+    "lossyNotice": "This text has formulas, tables or other Markdown that the visual editor would change. It stays in Markdown mode.",
+    "lossyWarning": "This text has formulas, tables or other Markdown that the visual editor may change."
   }
 }

@@ -73,6 +73,7 @@ export function MaterialDetailsEditor({ item, initialBody = "" }: { item: ItemDe
             value={values.body}
             onChange={(body) => patch({ body })}
             label={t("body")}
+            defaultMode="visual"
             invalid={showProblem && bodyMissing}
           />
         </div>

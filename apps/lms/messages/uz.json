@@ -1262,5 +1262,33 @@
     "contactHint": "Kirish uchun {name} ga yozing.",
     "contactTelegram": "Telegram: @{handle}",
     "locked": "Yopiq"
+  },
+  "richText": {
+    "toolbar": "Formatlash",
+    "tool": {
+      "bold": "Qalin",
+      "italic": "Kursiv",
+      "h2": "2-sarlavha",
+      "h3": "3-sarlavha",
+      "bullet": "Markerli roʻyxat",
+      "ordered": "Raqamlangan roʻyxat",
+      "quote": "Iqtibos",
+      "link": "Havola",
+      "undo": "Bekor qilish",
+      "redo": "Qaytarish"
+    },
+    "linkUrl": "Havola manzili",
+    "linkApply": "Qoʻllash",
+    "linkCancel": "Bekor qilish",
+    "linkInvalid": "Havola https://, mailto: yoki / bilan boshlanishi kerak",
+    "mode": {
+      "label": "Tahrirlash rejimi",
+      "visual": "Vizual",
+      "markdown": "Markdown"
+    },
+    "preview": "Oldindan koʻrish",
+    "previewEmpty": "Hozircha koʻrsatadigan narsa yoʻq.",
+    "lossyNotice": "Matnda formulalar, jadvallar yoki vizual muharrir oʻzgartirib yuboradigan boshqa Markdown belgilari bor. Matn Markdown rejimida qoladi.",
+    "lossyWarning": "Matnda formulalar, jadvallar yoki vizual muharrir oʻzgartirishi mumkin boʻlgan boshqa Markdown belgilari bor."
   }
 }

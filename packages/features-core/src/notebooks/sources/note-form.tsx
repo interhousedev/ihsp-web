@@ -2,10 +2,11 @@
 
 import type { SourceDetail } from "@ihsp/api"
 import { useT } from "@ihsp/i18n"
-import { Button, Input, Label, LoadingButton, Textarea } from "@ihsp/ui"
+import { Button, Input, Label, LoadingButton } from "@ihsp/ui"
 import { IconArrowLeft } from "@ihsp/ui"
 import { useId, useState } from "react"
 import { useServerFieldErrors } from "../../form-errors"
+import { RichTextEditor } from "../../rich-text"
 import { useAddSources, useUpdateSource } from "../api"
 import { CitedMarkdown } from "../chat"
 import { stripCitations } from "../lib/citations"
@@ -127,14 +128,14 @@ export function NoteForm({ notebookId, source, onClose }: NoteFormProps) {
           ) : (
             <div className="flex flex-col gap-1">
               <Label htmlFor={bodyId}>{t("note.body")}</Label>
-              <Textarea
+              <RichTextEditor
                 id={bodyId}
                 value={body}
+                ariaLabel={t("note.body")}
                 placeholder={t("note.placeholder")}
-                className="min-h-72"
-                onChange={(event) => setBody(event.target.value)}
+                minHeight="18rem"
+                onChange={setBody}
               />
-              <p className="text-muted-foreground text-xs">{t("note.markdownHint")}</p>
             </div>
           )}
           {error ? (

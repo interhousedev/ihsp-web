@@ -1,9 +1,21 @@
-import { describe, expect, it } from "bun:test"
+import { describe, expect, it, mock } from "bun:test"
 import { apiUrl, citation1, nbIds, problem, server, sourceDetailOf, sourceText } from "@ihsp/test-utils"
 import { screen, waitFor } from "@testing-library/react"
 import { HttpResponse, http } from "msw"
 import { allowSlowRenders, renderNotebook } from "../test-support"
 import { NoteEditor } from "./note-editor"
+
+// ProseMirror cannot take pasted text in jsdom; the editor itself is covered in rich-text/.
+mock.module("../../rich-text", () => ({
+  RichTextEditor: (props: { id?: string; value: string; ariaLabel: string; onChange: (value: string) => void }) => (
+    <textarea
+      id={props.id}
+      aria-label={props.ariaLabel}
+      value={props.value}
+      onChange={(event) => props.onChange(event.target.value)}
+    />
+  ),
+}))
 
 allowSlowRenders()
 
