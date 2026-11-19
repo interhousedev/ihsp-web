@@ -90,6 +90,20 @@
       "unavailableText": "Muddati tugagan yoki bekor qilingan. Yangisini so‘rang.",
       "limitedTitle": "Urinishlar juda ko‘p",
       "limitedText": "Bir necha daqiqadan keyin qayta urining."
+    },
+    "essayReview": {
+      "name": "Ismingiz",
+      "comment": "Izohingiz",
+      "send": "Izohni yuborish",
+      "comments": "Izohlar",
+      "noComments": "Hozircha izoh yoʻq.",
+      "readOnly": "Bu havola faqat oʻqish uchun.",
+      "words": "{count, plural, one {# soʻz} other {# soʻz}}",
+      "validUntil": "Havola {time} gacha amal qiladi",
+      "notFoundTitle": "Havola mavjud emas",
+      "notFoundText": "Muddati tugagan yoki bekor qilingan boʻlishi mumkin. Muallifdan yangi havola soʻrang.",
+      "limitedTitle": "Urinishlar juda koʻp",
+      "limitedText": "Bir necha daqiqadan keyin qayta urinib koʻring."
     }
   }
 }

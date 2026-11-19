@@ -90,6 +90,20 @@
       "unavailableText": "It expired or was revoked. Ask for a new one.",
       "limitedTitle": "Too many attempts",
       "limitedText": "Try again in a few minutes."
+    },
+    "essayReview": {
+      "name": "Your name",
+      "comment": "Your comment",
+      "send": "Send comment",
+      "comments": "Comments",
+      "noComments": "No comments yet.",
+      "readOnly": "This link is read-only.",
+      "words": "{count, plural, one {# word} other {# words}}",
+      "validUntil": "Link valid until {time}",
+      "notFoundTitle": "This link is not available",
+      "notFoundText": "It may have expired or been revoked. Ask the author for a new link.",
+      "limitedTitle": "Too many attempts",
+      "limitedText": "Try again in a few minutes."
     }
   }
 }
