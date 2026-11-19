@@ -3,7 +3,7 @@ export const RANGES = ["7", "30", "90", "month"] as const
 export type RangeKey = (typeof RANGES)[number]
 
 /** The groups of the limits editor, in the order they are shown. */
-export const LIMIT_GROUPS = ["assistant", "smart", "notebooks", "web_search", "lms", "admission"] as const
+export const LIMIT_GROUPS = ["assistant", "smart", "notebooks", "web_search", "lms", "admission", "essay"] as const
 
 const TASHKENT = "Asia/Tashkent"
 

@@ -90,6 +90,31 @@ describe("changesOf", () => {
 })
 
 describe("limits editor", () => {
+  test("the essay reviewer limits form their own group", async () => {
+    const essay = (key: string): LimitItem => ({
+      ...(adminLimits[0] as LimitItem),
+      key,
+      group: "essay",
+      period: "week",
+      value: 10,
+      default: 10,
+      description: `Essay limit ${key}.`,
+    })
+    server.use(
+      http.get(apiUrl("/v1/admin/ai/limits"), () =>
+        HttpResponse.json({
+          limits: [essay("admit_essay_review_per_week"), essay("admit_essay_studio_runs_per_day")],
+        }),
+      ),
+    )
+    renderAdmin(<LimitsEditor />, { route: "/limits/" })
+
+    const heading = await screen.findByRole("heading", { name: "Essay reviewer" })
+    const section = heading.closest("section") as HTMLElement
+    expect(within(section).getAllByRole("listitem").length).toBeGreaterThanOrEqual(2)
+    expect(screen.queryByRole("heading", { name: "Assistant" })).toBeNull()
+  })
+
   test("nothing is saved while nothing has changed", async () => {
     renderAdmin(<LimitsEditor />, { route: "/limits/" })
 

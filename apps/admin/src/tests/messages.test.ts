@@ -454,6 +454,7 @@ describe("keys used in the code", () => {
         "transfer",
         "verify",
       ],
+      "prompts.calls.errorKinds.${row.error}": ["SchemaInvalid"],
     }
     const unknown = [...dynamic.keys()].filter((key) => !(key in expected))
     expect(unknown).toEqual([])
