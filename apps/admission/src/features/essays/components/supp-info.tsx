@@ -22,7 +22,7 @@ export function SuppInfo({ essay }: { essay: Essay }) {
           <dd>
             {name ? (
               <Link
-                href={`/chooser/list/?entry=${encodeURIComponent(essay.list_entry_id ?? "")}`}
+                href={`/chooser/?step=list&entry=${encodeURIComponent(essay.list_entry_id ?? "")}`}
                 className="flex items-center gap-2"
               >
                 <LogoAvatar

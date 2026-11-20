@@ -35,7 +35,7 @@ export function ExemplarsTab({ institutionId }: { institutionId: string | null }
           description={t("examples.emptyText")}
           action={
             mine.size === 0 ? (
-              <Link href="/chooser/search/" className={buttonVariants()}>
+              <Link href="/chooser/?step=match" className={buttonVariants()}>
                 {t("collegeOpen")}
               </Link>
             ) : undefined

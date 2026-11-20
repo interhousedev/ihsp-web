@@ -25,6 +25,8 @@ const essay: Essay = {
   status: "draft",
   current_version: 0,
   lock_version: 3,
+  forked_from: null,
+  targets: [],
   updated_at: "2026-01-01T00:00:00Z",
 }
 
@@ -43,47 +45,6 @@ const consentBody = (active: boolean) => ({
 })
 
 describe("essays", () => {
-  test("the AI help card shows the lock only without consent", async () => {
-    for (const granted of [false, true]) {
-      server.use(
-        http.get(apiUrl("/v1/admission/essays"), () => HttpResponse.json({ items: [summary(essay)] })),
-        http.get(apiUrl("/v1/admission/consent"), () => HttpResponse.json(consentBody(granted))),
-      )
-      const view = renderAdmissionApp(<EssaysBody />)
-      if (granted) {
-        await screen.findByText(/AI help is on/)
-        await waitFor(() => expect(screen.queryByText(/needs your consent/)).toBeNull())
-      } else {
-        await screen.findByText(/needs your consent/)
-      }
-      // Let the Reveal fade-in finish; happy-dom rejects an animation cancelled by unmount.
-      await Bun.sleep(300)
-      view.unmount()
-    }
-  })
-
-  test("lists essays and creates one", async () => {
-    let body: unknown
-    server.use(
-      http.get(apiUrl("/v1/admission/essays"), () => HttpResponse.json({ items: [summary(essay)] })),
-      http.get(apiUrl("/v1/admission/essay-ideas"), () => HttpResponse.json({ items: [] })),
-      http.get(apiUrl("/v1/admission/list"), () => HttpResponse.json([])),
-      http.post(apiUrl("/v1/admission/essays"), async ({ request }) => {
-        body = await request.json()
-        return HttpResponse.json({ ...essay, id: "e2", title: "Community" }, { status: 201 })
-      }),
-    )
-    renderAdmissionApp(<EssaysBody />)
-    await screen.findByText("Why physics")
-    fireEvent.click(screen.getByRole("button", { name: "New essay" }))
-    fireEvent.change(await screen.findByLabelText("Title"), { target: { value: "Community" } })
-    fireEvent.click(screen.getByRole("button", { name: "Create" }))
-    await waitFor(() => expect(body).toMatchObject({ kind: "personal_statement", title: "Community" }))
-    await waitFor(() => expect(testRouter.push).toHaveBeenCalled())
-    // Let the Reveal fade-in finish; happy-dom rejects a cancelled animation during the next test's cleanup.
-    await Bun.sleep(300)
-  })
-
   test("autosaves the draft with the lock version", async () => {
     let body: Record<string, unknown> | undefined
     server.use(
@@ -183,45 +144,6 @@ describe("essays", () => {
     expect(parts.filter((p) => p.op === "add").map((p) => p.text.trim())).toEqual(["slow"])
   })
 
-  test("each ?tab renders its own content and there is no second tab bar", async () => {
-    server.use(
-      http.get(apiUrl("/v1/admission/essays"), () => HttpResponse.json({ items: [] })),
-      http.get(apiUrl("/v1/admission/exemplars"), () =>
-        HttpResponse.json({
-          total: 1,
-          items: [
-            {
-              id: "x1",
-              excerpt: "I learned to solder at nine.",
-              institution_id: null,
-              kind: "personal_statement",
-              language: "en",
-              prompt: "",
-              school_name: "Example University",
-              source_name: "Example",
-              source_url: "https://example.org/essay",
-              tags: [],
-              title: "Solder",
-              word_count: 80,
-              year: 2024,
-            },
-          ],
-        }),
-      ),
-    )
-    const view = renderAdmissionApp(<EssaysBody />, { route: "/essays/?tab=examples" })
-    await screen.findByText("I learned to solder at nine.")
-    expect(document.querySelector('a[href="https://example.org/essay"]')).toBeTruthy()
-    expect(screen.queryByRole("tablist")).toBeNull()
-    await Bun.sleep(300)
-    view.unmount()
-    const colleges = renderAdmissionApp(<EssaysBody />, { route: "/essays/?tab=colleges&entry=e9" })
-    const back = await screen.findByTestId("essays-back")
-    expect(back.getAttribute("href")).toBe("/chooser/list?entry=e9")
-    await Bun.sleep(300)
-    colleges.unmount()
-  })
-
   test("the next step links to the documents and keeps the entry", async () => {
     server.use(
       http.get(apiUrl("/v1/admission/essays"), () => HttpResponse.json({ items: [] })),
@@ -235,26 +157,61 @@ describe("essays", () => {
   })
 })
 
-describe("ADM-ESSAYS-TABS", () => {
-  const empty = () =>
+describe("essays flow", () => {
+  const group = {
+    key: "g1",
+    kind: "shared",
+    spread: 0.2,
+    covered: false,
+    prompts: [
+      {
+        key: "p1",
+        institution_id: "i1",
+        institution_name: "MIT",
+        position: 0,
+        prompt: "Describe the world you come from.",
+        word_limit: 250,
+        limit_unit: "words",
+        required: true,
+        in_list: true,
+      },
+    ],
+  }
+  const base = () =>
     server.use(
       http.get(apiUrl("/v1/admission/essays"), () => HttpResponse.json({ items: [] })),
       http.get(apiUrl("/v1/admission/list"), () => HttpResponse.json([])),
+      http.get(apiUrl("/v1/admission/essay-ideas"), () => HttpResponse.json({ items: [] })),
+      http.get(apiUrl("/v1/admission/essays/prompt-map"), () =>
+        HttpResponse.json({ available: true, model: "m", delta: 0.4, groups: [group] }),
+      ),
     )
 
-  test("ADM-ESSAYS-TABS-1 a missing tab is written to the address with replace", async () => {
-    empty()
-    const view = renderAdmissionApp(<EssaysBody />, { route: "/essays/?entry=e9" })
-    await waitFor(() => expect(testRouter.replace).toHaveBeenCalledWith("/essays/?entry=e9&tab=essays"))
+  test("the first step shows the prompt map with the list mark", async () => {
+    base()
+    const view = renderAdmissionApp(<EssaysBody />)
+    await screen.findByText("Describe the world you come from.")
+    expect(screen.getByText(/In your list|map\.inList/)).toBeTruthy()
+    expect(screen.getByTestId("flow-step-map").getAttribute("aria-current")).toBe("step")
+    expect(screen.getByTestId("flow-step-gallery").getAttribute("data-status")).toBe("locked")
     await Bun.sleep(300)
     view.unmount()
   })
 
-  test("ADM-ESSAYS-TABS-2 a deep link selects the tab and leaves the address alone", async () => {
-    empty()
+  test("an old ?tab=ideas link opens the ideas step, which offers the life story while ideas stall", async () => {
+    base()
     const view = renderAdmissionApp(<EssaysBody />, { route: "/essays/?tab=ideas" })
-    await waitFor(() => expect(document.getElementById("ideas-title")).toBeTruthy())
-    expect(testRouter.replace).not.toHaveBeenCalledWith(expect.stringContaining("tab=essays"))
+    await screen.findByTestId("ideas-stall")
+    expect(screen.getByTestId("flow-step-ideas").getAttribute("aria-current")).toBe("step")
+    await Bun.sleep(300)
+    view.unmount()
+  })
+
+  test("the next step links to the documents and keeps the entry", async () => {
+    base()
+    const view = renderAdmissionApp(<EssaysBody />, { route: "/essays/?entry=e9" })
+    const link = await screen.findByRole("link", { name: "Check application requirements" })
+    expect(link.getAttribute("href")).toBe("/documents?entry=e9")
     await Bun.sleep(300)
     view.unmount()
   })

@@ -23,6 +23,8 @@ const essay: Essay = {
   status: "draft",
   current_version: 0,
   lock_version: 3,
+  forked_from: null,
+  targets: [],
   updated_at: "2026-01-01T00:00:00Z",
 }
 const summary = ({ body: _b, notes: _n, plan: _p, links: _l, ...rest }: Essay): EssaySummary => rest
