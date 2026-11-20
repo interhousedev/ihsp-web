@@ -1,8 +1,9 @@
 "use client"
 
 import { BRAND } from "@ihsp/config/brand"
+import { AssistantEntry } from "@ihsp/features-core"
 import { useT } from "@ihsp/i18n"
-import { Button, Icons, buttonVariants, cn } from "@ihsp/ui"
+import { AppHeaderActions, Button, Icons, buttonVariants, cn } from "@ihsp/ui"
 import Link from "next/link"
 import type { ReactNode } from "react"
 import { hrefs } from "../../shared/utils/hrefs"
@@ -41,8 +42,8 @@ export function LearnerTopBar({ strip, onOpenContents }: { strip: ReactNode; onO
         <span className="truncate">{app("name")}</span>
       </Link>
       <div className="min-w-0 flex-1">{strip}</div>
-      <div className="shrink-0">
-        <ProfileMenu />
+      <div className="flex shrink-0 items-center">
+        <AppHeaderActions ai={<AssistantEntry />} profile={<ProfileMenu />} />
       </div>
     </header>
   )

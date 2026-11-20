@@ -1,6 +1,8 @@
 "use client"
 
+import { getIdMeTelegramQuery } from "@ihsp/api"
 import { useT } from "@ihsp/i18n"
+import { useQuery } from "@tanstack/react-query"
 import { PageContainer } from "@ihsp/ui"
 import { StudentCardButton } from "../../student-card/components/student-card-button"
 import { LinkButton } from "../../shared/components/link-button"
@@ -22,6 +24,7 @@ import { TelegramCard } from "./telegram-card"
 export function ProfileSections() {
   const profile = useProfile()
   const account = useAccount()
+  const telegram = useQuery(getIdMeTelegramQuery())
   const record = useStudentRecordState()
   const t = useT("profile")
   const { session } = useSession()
@@ -51,7 +54,7 @@ export function ProfileSections() {
             <AccountCard profile={data} account={account.data} />
             <div className="flex flex-col gap-4">
               <EmisCard profile={data} />
-              <TelegramCard accounts={account.data?.telegram ?? []} />
+              <TelegramCard accounts={telegram.data ?? []} />
               <StorageCard />
             </div>
           </div>

@@ -7,7 +7,6 @@ import { isPwaMode } from "@ihsp/features-core/pwa"
 import { getConfig } from "@ihsp/config"
 import { AppShell } from "@ihsp/ui"
 import { Suspense, type ReactNode } from "react"
-import { AssistantBubble } from "../../assistant/components/assistant-bubble"
 import { useNav } from "../../../config/nav"
 import { OnboardingGate, useOnboardingGatePending } from "../../onboarding/components/onboarding-gate"
 import { QueryPersistence } from "../../offline/components/query-persistence"
@@ -42,7 +41,7 @@ export function ShellTour() {
 /**
  * The frame of every page of this app: login check, student role check, offline cache, sidebar and the phone bottom bar
  * (the pages chosen in Settings, More; in the installed app the phone has no sidebar), header with search, bell and profile menu (WEB-2, GEN-9).
- * Study-tools pages use it too: `<SpShell><YourPage /></SpShell>`. The assistant lives in the floating bubble, not in the nav.
+ * Study-tools pages use it too: `<SpShell><YourPage /></SpShell>`. The assistant entry is in the header (AI button), not floating.
  * `hideBottomNav` drops the phone bottom bar for pages that bring their own (the notebook workspace).
  */
 export function SpShell({ children, hideBottomNav = false }: { children: ReactNode; hideBottomNav?: boolean }) {
@@ -60,7 +59,6 @@ export function SpShell({ children, hideBottomNav = false }: { children: ReactNo
             sidebarFooter={<ProfileMenu variant="row" />}
             controlsLeading={<ShellNavControls />}
             controls={<ShellHeader nav={[...nav.groups, ...nav.search]} />}
-            floating={hideBottomNav ? null : <AssistantBubble />}
           >
             <MaintenanceBanner />
             <Suspense fallback={<PageLoading />}>{children}</Suspense>

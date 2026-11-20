@@ -1,7 +1,16 @@
 /** UF-ID-04-UF-ID-06, UF-ID-09, UF-ID-11, UF-ID-12, UF-ID-14, UF-ID-16: the security pages. */
 import { getSession } from "@ihsp/auth"
 import { beforeEach, describe, expect, test } from "bun:test"
-import { adminMe, apiUrl, dataExport, erasureRequest, server, teacherMe, userMe } from "@ihsp/test-utils"
+import {
+  adminMe,
+  apiUrl,
+  dataExport,
+  erasureRequest,
+  server,
+  teacherMe,
+  telegramAccounts,
+  userMe,
+} from "@ihsp/test-utils"
 import { screen, waitFor } from "@testing-library/react"
 import { HttpResponse, http } from "msw"
 import {
@@ -102,7 +111,7 @@ describe("Telegram accounts", () => {
     server.use(
       http.patch(apiUrl("/v1/id/me/telegram/:id"), async ({ request }) => {
         patch = (await request.json()) as { otp_delivery: boolean }
-        return HttpResponse.json({ ...userMe.telegram[0], otp_delivery: false })
+        return HttpResponse.json({ ...telegramAccounts[0], otp_delivery: false })
       }),
     )
     const { user } = renderId(<TelegramLinksPage />, { route: "/security/telegram/", session: LOGGED_IN })

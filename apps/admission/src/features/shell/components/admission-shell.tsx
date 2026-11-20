@@ -4,7 +4,7 @@ import type { Role } from "@ihsp/api"
 import { RequireAuth, RequireRole, useSession } from "@ihsp/auth"
 import { MaintenanceBanner, PageLoading, ShellNavControls, usePlatformLinks } from "@ihsp/features-core"
 import { useT } from "@ihsp/i18n"
-import { AppShell, buttonVariants, Icons, OfflineBadge, StateView } from "@ihsp/ui"
+import { AppHeaderActions, AppShell, buttonVariants, Icons, OfflineBadge, StateView } from "@ihsp/ui"
 import Link from "next/link"
 import { useRouter } from "next/navigation"
 import { Suspense, useEffect, type ReactNode } from "react"
@@ -13,7 +13,7 @@ import { useIsAlumnus } from "../../../config/applicant"
 import { useNotApplicantError } from "../use-not-applicant-error"
 import { SectionTabs } from "../../../components/section-tabs"
 import { AdmissionBrand } from "./admission-brand"
-import { AssistantLauncher, ScreenContextProvider } from "../../assistant"
+import { AssistantHeaderButton, AssistantLauncher, ScreenContextProvider } from "../../assistant"
 import { StudentTour } from "../../steps"
 import { AdmissionConsentGate } from "../../consent/components/consent-gate"
 import { ProfileMenu } from "./profile-menu"
@@ -98,12 +98,12 @@ function Frame({ tour, children }: { tour: boolean; children: ReactNode }) {
       brand={<AdmissionBrand />}
       sidebarFooter={<ProfileMenu variant="row" />}
       controls={
-        <>
+        <AppHeaderActions ai={<AssistantHeaderButton />} profile={<ProfileMenu />}>
           <OfflineBadge />
           {sectionNav ? (
             <SecondaryMenu links={secondary?.items ?? []} staff={staff.flatMap((group) => group.items)} />
           ) : null}
-        </>
+        </AppHeaderActions>
       }
     >
       <ScreenContextProvider>

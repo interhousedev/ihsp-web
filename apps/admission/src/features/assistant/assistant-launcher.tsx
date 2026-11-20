@@ -1,7 +1,7 @@
 "use client"
 
 import { useSession } from "@ihsp/auth"
-import { AssistantChatPane, AssistantProvider, TierPicker } from "@ihsp/features-core"
+import { AssistantChatPane, AssistantEntry, AssistantProvider, TierPicker } from "@ihsp/features-core"
 import { useT } from "@ihsp/i18n"
 import { Button, Icons, Skeleton, cn } from "@ihsp/ui"
 import { useEffect, useRef, useState } from "react"
@@ -9,48 +9,23 @@ import { AssistantConsentCard } from "./consent-card"
 import { useDockChat } from "./dock-chat"
 import { McpPanel } from "./mcp-panel"
 import { McpPrompt } from "./mcp-prompt"
-import { usePathname } from "next/navigation"
-import { tourKey, useTourOpen } from "../steps"
 import { ASSISTANT_PREFILL_EVENT } from "../home/components/start-here-card"
 
 const SUGGESTIONS = ["1", "2", "3", "4"] as const
 
 /**
- * Floating button at the bottom right of every applicant page. It opens a rectangular chat popup (about half the page
- * on wide screens, a bottom sheet on phones). The popup stays mounted after the first open and is shown and hidden with
- * transform and opacity only, so the conversation survives route changes and closing. Only students see it.
+ * The chat popup of every applicant page, opened by the AI button of the header (`AssistantHeaderButton`): about half
+ * the page on wide screens, a bottom sheet on phones. It stays mounted after the first open and is shown and hidden with
+ * transform and opacity only, so the conversation survives route changes and closing. Only students get it.
  */
-const OVERLAY =
-  '[aria-modal="true"], [role="dialog"][data-state="open"], [role="alertdialog"], [data-vaul-drawer][data-state="open"]'
-const TEXT_FIELD =
-  "textarea, input:not([type=checkbox]):not([type=radio]):not([type=button]):not([type=submit]), [contenteditable=true]"
+/** The header's AI button asks the dock to open with this window event. */
+export const ASSISTANT_OPEN_EVENT = "admission:assistant-open"
 
-/** True while another dialog, sheet or drawer is open, or (on phones) a text field has focus: the button would cover it. */
-function useOverlayOpen(): boolean {
-  const [hidden, setHidden] = useState(false)
-  useEffect(() => {
-    const phone = () => typeof window.matchMedia !== "function" || window.matchMedia("(max-width: 767px)").matches
-    const sync = () => {
-      const typing = phone() && !!document.activeElement?.matches(TEXT_FIELD)
-      setHidden(typing || !!document.querySelector(OVERLAY))
-    }
-    sync()
-    const observer = new MutationObserver(sync)
-    observer.observe(document.body, {
-      subtree: true,
-      childList: true,
-      attributes: true,
-      attributeFilter: ["aria-modal", "data-state", "role"],
-    })
-    document.addEventListener("focusin", sync)
-    document.addEventListener("focusout", sync)
-    return () => {
-      observer.disconnect()
-      document.removeEventListener("focusin", sync)
-      document.removeEventListener("focusout", sync)
-    }
-  }, [])
-  return hidden
+/** The AI button of the header (students only): opens the dock of `AssistantLauncher`. */
+export function AssistantHeaderButton() {
+  const { session } = useSession()
+  if (!session?.user.roles?.includes("student")) return null
+  return <AssistantEntry onClick={() => window.dispatchEvent(new Event(ASSISTANT_OPEN_EVENT))} />
 }
 
 export function AssistantLauncher() {
@@ -66,19 +41,15 @@ function AssistantDock({ userId }: { userId: string }) {
   const [prefill, setPrefill] = useState<{ key: number; text: string } | null>(null)
   const [view, setView] = useState<"chat" | "mcp">("chat")
   const chat = useDockChat(userId, opened)
-  const launcher = useRef<HTMLButtonElement>(null)
+  const returnFocus = useRef<HTMLElement | null>(null)
   const panel = useRef<HTMLElement>(null)
-  const path = usePathname()
-  const tourOpen = useTourOpen(tourKey(userId))
-  const overlayOpen = useOverlayOpen()
-  const hideLauncher = tourOpen || path.startsWith("/faq") || overlayOpen
 
   useEffect(() => {
     if (!open) return
     const onKey = (event: KeyboardEvent) => {
       if (event.key !== "Escape") return
       setOpen(false)
-      launcher.current?.focus()
+      returnFocus.current?.focus()
     }
     window.addEventListener("keydown", onKey)
     return () => window.removeEventListener("keydown", onKey)
@@ -97,10 +68,15 @@ function AssistantDock({ userId }: { userId: string }) {
     return () => window.removeEventListener(ASSISTANT_PREFILL_EVENT, onPrefill)
   }, [])
 
-  function show() {
-    setOpened(true)
-    setOpen(true)
-  }
+  useEffect(() => {
+    const onOpen = () => {
+      returnFocus.current = document.activeElement instanceof HTMLElement ? document.activeElement : null
+      setOpened(true)
+      setOpen(true)
+    }
+    window.addEventListener(ASSISTANT_OPEN_EVENT, onOpen)
+    return () => window.removeEventListener(ASSISTANT_OPEN_EVENT, onOpen)
+  }, [])
 
   useEffect(() => {
     if (!open) return
@@ -110,22 +86,6 @@ function AssistantDock({ userId }: { userId: string }) {
 
   return (
     <AssistantProvider assistant="admission">
-      <button
-        ref={launcher}
-        type="button"
-        aria-label={t("open")}
-        aria-expanded={open}
-        tabIndex={open ? -1 : 0}
-        onClick={show}
-        className={cn(
-          "bg-primary text-primary-foreground fixed right-4 bottom-[calc(var(--safe-bottom,0px)+5.25rem)] z-40 flex size-14 origin-bottom-right items-center justify-center rounded-full shadow-lg md:right-6 md:bottom-6",
-          "motion-safe:transition-[transform,opacity] motion-safe:duration-200 motion-safe:hover:scale-105",
-          open && "pointer-events-none scale-50 opacity-0",
-          hideLauncher && "hidden",
-        )}
-      >
-        <Icons.sparkles aria-hidden className="size-6" />
-      </button>
       {opened ? (
         <aside
           role="dialog"
@@ -176,7 +136,7 @@ function AssistantDock({ userId }: { userId: string }) {
               aria-label={t("close")}
               onClick={() => {
                 setOpen(false)
-                launcher.current?.focus()
+                returnFocus.current?.focus()
               }}
             >
               <Icons.close className="size-4" aria-hidden />

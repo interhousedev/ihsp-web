@@ -4,7 +4,7 @@
  */
 
 /** The apps that can be installed, each on its own host. `sp` is also the apps hub (`app.ihsu.uz`). */
-export const PWA_APP_IDS = ["sp", "lms", "library", "staff", "admin"] as const
+export const PWA_APP_IDS = ["sp", "lms", "library", "staff", "admin", "admission"] as const
 
 export type PwaAppId = (typeof PWA_APP_IDS)[number]
 

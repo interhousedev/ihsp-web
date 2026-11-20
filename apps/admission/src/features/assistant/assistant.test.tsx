@@ -14,7 +14,7 @@ import {
 import { screen, waitFor } from "@testing-library/react"
 import { HttpResponse, http } from "msw"
 import { renderAdmissionApp } from "../../tests/helpers"
-import { AssistantLauncher } from "./assistant-launcher"
+import { AssistantHeaderButton, AssistantLauncher } from "./assistant-launcher"
 import { dockChatKey } from "./dock-chat"
 import { McpPanel } from "./mcp-panel"
 
@@ -50,19 +50,29 @@ describe("AssistantLauncher", () => {
 
   it("creates one smart chat, keeps it across close and remount, and does not create another", async () => {
     const chats = serveChats()
-    const first = renderAdmissionApp(<AssistantLauncher />)
-    await first.user.click(screen.getByRole("button", { name: "Open assistant" }))
+    const first = renderAdmissionApp(
+      <>
+        <AssistantHeaderButton />
+        <AssistantLauncher />
+      </>,
+    )
+    await first.user.click(screen.getByRole("button", { name: "AI assistant" }))
     expect(screen.getByRole("dialog", { name: "Assistant" })).toBeInTheDocument()
     await waitFor(() => expect(window.localStorage.getItem(dockChatKey(userMe.id))).toContain(CHAT))
     expect(chats.tier()).toBe("smart")
 
     await first.user.click(screen.getByRole("button", { name: "Close" }))
-    await first.user.click(screen.getByRole("button", { name: "Open assistant" }))
+    await first.user.click(screen.getByRole("button", { name: "AI assistant" }))
     first.unmount()
 
     // A route change remounts the page tree: the stored chat id is reused.
-    const second = renderAdmissionApp(<AssistantLauncher />)
-    await second.user.click(screen.getByRole("button", { name: "Open assistant" }))
+    const second = renderAdmissionApp(
+      <>
+        <AssistantHeaderButton />
+        <AssistantLauncher />
+      </>,
+    )
+    await second.user.click(screen.getByRole("button", { name: "AI assistant" }))
     expect(await screen.findByRole("dialog", { name: "Assistant" })).toBeInTheDocument()
     await waitFor(() => expect(screen.getByRole("textbox")).toBeInTheDocument())
     expect(chats.created()).toBe(1)
@@ -154,8 +164,13 @@ describe("AssistantLauncher: suggestion approval", () => {
       }),
     )
     window.localStorage.setItem(dockChatKey(userMe.id), JSON.stringify({ chatId: ids.chat, tier: "smart" }))
-    const { user } = renderAdmissionApp(<AssistantLauncher />)
-    await user.click(screen.getByRole("button", { name: "Open assistant" }))
+    const { user } = renderAdmissionApp(
+      <>
+        <AssistantHeaderButton />
+        <AssistantLauncher />
+      </>,
+    )
+    await user.click(screen.getByRole("button", { name: "AI assistant" }))
 
     await user.click(await screen.findByRole("button", { name: "Approve" }))
     await waitFor(() => expect(approved).toBe(1))
@@ -194,8 +209,13 @@ describe("AssistantLauncher consent", () => {
 
   it("ADM-CONSENT-1 shows the consent card instead of the composer and links to the settings", async () => {
     serveConsentRefusal()
-    const view = renderAdmissionApp(<AssistantLauncher />)
-    await view.user.click(screen.getByRole("button", { name: "Open assistant" }))
+    const view = renderAdmissionApp(
+      <>
+        <AssistantHeaderButton />
+        <AssistantLauncher />
+      </>,
+    )
+    await view.user.click(screen.getByRole("button", { name: "AI assistant" }))
     const field = await screen.findByRole("textbox")
     await view.user.type(field, "hello{Enter}")
     const card = await screen.findByTestId("assistant-consent")
@@ -206,8 +226,13 @@ describe("AssistantLauncher consent", () => {
 
   it("ADM-CONSENT-2 grants admission_ai and sends the refused message again", async () => {
     const calls = serveConsentRefusal()
-    const view = renderAdmissionApp(<AssistantLauncher />)
-    await view.user.click(screen.getByRole("button", { name: "Open assistant" }))
+    const view = renderAdmissionApp(
+      <>
+        <AssistantHeaderButton />
+        <AssistantLauncher />
+      </>,
+    )
+    await view.user.click(screen.getByRole("button", { name: "AI assistant" }))
     await view.user.type(await screen.findByRole("textbox"), "hello{Enter}")
     await view.user.click(await screen.findByRole("button", { name: "Allow AI help" }))
     await waitFor(() => expect(calls.sends()).toBe(2))

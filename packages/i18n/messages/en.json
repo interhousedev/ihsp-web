@@ -35,6 +35,7 @@
       "leaveConfirm": "You have unsaved changes. Leave this page?"
     },
     "appName": "{brand}",
+    "aiAssistant": "AI assistant",
     "loading": "Loading…",
     "retry": "Try again",
     "cancel": "Cancel",

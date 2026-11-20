@@ -70,8 +70,8 @@
 #                              img-src and connect-src of the library site's CSP header
 #
 #   PWA_APPS                 - Apps that run as installable apps on their own host (APP_MODE "pwa" in their
-#                              env.js), space or comma separated, from: lms library staff admin
-#                              (default: none). The student app is installed from the PWA host (APP_HOST_APP).
+#                              env.js), space or comma separated, from: lms library staff admin admission
+#                              (default: all of them). The student app is installed from the PWA host (APP_HOST_APP).
 #
 # RUNTIME PATHS (not configurable for the container; the nginx config names them):
 #   NGINX_DIR, ENV_DIR   - Rendered nginx config and env.js (default: /tmp/ihsp/nginx and /tmp/ihsp/env)
@@ -178,11 +178,11 @@ ENV_JS_VARS='${APP_ENV} ${APP_MODE} ${IHSP_WEB_API_URL} ${IHSP_WEB_ID_URL} ${IHS
 NGINX_VARS='${LISTEN_PORT} ${APP_HOST_ID} ${APP_HOST_MY} ${APP_HOST_APP} ${APP_HOST_STAFF} ${APP_HOST_ADMIN} ${APP_HOST_LMS} ${APP_HOST_LIBRARY} ${APP_HOST_ADMISSION} ${APP_HOST_SHARE} ${API_HOST} ${MCP_HOST} ${ROOT_HOST} ${HYDRA_UPSTREAM} ${IDENTITY_UPSTREAM} ${API_UPSTREAM} ${BOT_UPSTREAM} ${BACKEND_UPSTREAM} ${CSP_CONNECT_SRC} ${CSP_IMG_SRC} ${IHSP_STORAGE_ORIGIN} ${IHSP_WEB_SP_URL}'
 
 # app_mode APP: "pwa" for an app listed in PWA_APPS that can be installed on its own host, "sp" otherwise
-PWA_APPS="${PWA_APPS:-}"
+PWA_APPS="${PWA_APPS:-lms library staff admin admission}"
 PWA_APPS=$(printf '%s' "$PWA_APPS" | tr ',' ' ')
 app_mode() {
   case "$1" in
-    lms | library | staff | admin)
+    lms | library | staff | admin | admission)
       case " $PWA_APPS " in
         *" $1 "*) echo pwa ;;
         *) echo sp ;;

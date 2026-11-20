@@ -1,6 +1,6 @@
 "use client"
 
-import { getIdMeSecurityQuery, type UserMe } from "@ihsp/api"
+import { getIdMeSecurityQuery, getIdMeTelegramQuery, type UserMe } from "@ihsp/api"
 import { Badge } from "@ihsp/ui"
 import {
   IconActivity,
@@ -29,6 +29,7 @@ export function SecurityOverview({ user }: { user: UserMe }) {
   const t = useTr()
   const isStudent = user.roles.includes("student")
   const factors = useQuery(getIdMeSecurityQuery()).data
+  const telegram = useQuery(getIdMeTelegramQuery()).data
   return (
     <div className="grid gap-4">
       {user.emis_status === "needs_reauth" ? <EmisReauthBanner /> : null}
@@ -73,7 +74,11 @@ export function SecurityOverview({ user }: { user: UserMe }) {
           href="/security/telegram/"
           icon={IconBrandTelegram}
           title={t("security.cards.telegram")}
-          status={<Badge variant="outline">{t("security.cards.telegramCount", { count: user.telegram.length })}</Badge>}
+          status={
+            telegram ? (
+              <Badge variant="outline">{t("security.cards.telegramCount", { count: telegram.length })}</Badge>
+            ) : undefined
+          }
         />
         <SecurityCard
           href="/security/email/"

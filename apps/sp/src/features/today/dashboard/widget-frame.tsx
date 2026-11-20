@@ -60,7 +60,7 @@ export function CardError({ onRetry }: { onRetry?: () => void }) {
 
 /**
  * The one chrome of every dashboard block: a header with the block's icon, its title and, when the block links to a
- * page, a "Show all" action; then the body (scrolls inside a fixed-height desktop tile, grows on a phone), or the
+ * page, a "Show all" action; then the body (grows with its content, never scrolls inside), or the
  * loading / error state. The tile's colour comes with a text colour that reads on it.
  */
 export function DashboardCard({
@@ -98,7 +98,7 @@ export function DashboardCard({
           </span>
         ) : null}
       </header>
-      <div className="flex min-h-0 flex-1 flex-col gap-1 overflow-y-auto overscroll-contain md:overflow-y-auto">
+      <div className="flex min-h-0 flex-1 flex-col gap-1">
         {status === "loading" ? <CardSkeleton /> : status === "error" ? <CardError onRetry={onRetry} /> : children}
       </div>
     </>

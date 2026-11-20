@@ -13,7 +13,6 @@ import {
   type NavItem,
 } from "@ihsp/ui"
 import Link from "next/link"
-import { ProfileMenu } from "./profile-menu"
 
 /**
  * Phone header: the secondary links (knowledge base, consultations, settings), the staff entries of a user who is also
@@ -37,7 +36,6 @@ export function SecondaryMenu({ links, staff = [] }: { links: NavItem[]; staff?:
           {staff.map(row)}
         </DropdownMenuContent>
       </DropdownMenu>
-      <ProfileMenu />
     </div>
   )
 }

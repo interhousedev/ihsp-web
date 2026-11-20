@@ -44,6 +44,8 @@ export type PlatformLink = {
   current: boolean
   /** Replaces the plain navigation where the page cannot follow the link itself (the Telegram mini app). */
   onClick?: (event: MouseEvent) => void
+  /** The app's own icon (its `icons/icon-192.png`), absolute address. */
+  iconSrc?: string
 }
 
 /**
@@ -138,31 +140,46 @@ export function UserMenu({
             <DropdownMenuSeparator />
             <DropdownMenuGroup>
               <DropdownMenuLabel>{t("platforms.title")}</DropdownMenuLabel>
-              {platforms.map((platform) => (
-                <DropdownMenuItem
-                  key={platform.key}
-                  className="min-h-11 md:min-h-9"
-                  render={
-                    <a
-                      href={platform.href}
-                      aria-current={platform.current ? "page" : undefined}
-                      data-platform={platform.key}
-                      onClick={platform.onClick}
-                    />
-                  }
-                >
-                  <span className="flex min-w-0 flex-1 flex-col">
-                    <span className="font-medium">{platform.name}</span>
-                    <span className="text-muted-foreground truncate text-xs">{platform.description}</span>
-                  </span>
-                  {platform.current ? (
-                    <>
-                      <Icons.check aria-hidden />
-                      <span className="sr-only">{t("platforms.current")}</span>
-                    </>
-                  ) : null}
-                </DropdownMenuItem>
-              ))}
+              <div className="grid grid-cols-2 gap-1" data-testid="app-switcher">
+                {platforms.map((platform) => (
+                  <DropdownMenuItem
+                    key={platform.key}
+                    className="min-h-11 flex-col items-start gap-1.5 px-2 py-2 md:min-h-9"
+                    render={
+                      <a
+                        href={platform.href}
+                        aria-current={platform.current ? "page" : undefined}
+                        data-platform={platform.key}
+                        onClick={platform.onClick}
+                      />
+                    }
+                  >
+                    <span className="flex w-full items-center gap-2">
+                      {platform.iconSrc ? (
+                        // oxlint-disable-next-line nextjs/no-img-element -- static export, the icon is a plain file of that app
+                        <img
+                          src={platform.iconSrc}
+                          alt=""
+                          width={28}
+                          height={28}
+                          className="size-7 shrink-0 rounded-md"
+                          data-testid={`platform-icon-${platform.key}`}
+                        />
+                      ) : null}
+                      {platform.current ? (
+                        <>
+                          <Icons.check aria-hidden className="ms-auto" />
+                          <span className="sr-only">{t("platforms.current")}</span>
+                        </>
+                      ) : null}
+                    </span>
+                    <span className="flex min-w-0 flex-col">
+                      <span className="truncate font-medium">{platform.name}</span>
+                      <span className="text-muted-foreground truncate text-xs">{platform.description}</span>
+                    </span>
+                  </DropdownMenuItem>
+                ))}
+              </div>
             </DropdownMenuGroup>
           </>
         ) : null}

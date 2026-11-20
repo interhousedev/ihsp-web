@@ -1,6 +1,6 @@
 "use client"
 
-import { postOtpEnable, postOtpEnableConfirm, type UserMe } from "@ihsp/api"
+import { getIdMeTelegramQuery, postOtpEnable, postOtpEnableConfirm, type UserMe } from "@ihsp/api"
 import {
   Alert,
   AlertDescription,
@@ -12,7 +12,7 @@ import {
   CardTitle,
   LoadingButton,
 } from "@ihsp/ui"
-import { useMutation } from "@tanstack/react-query"
+import { useMutation, useQuery } from "@tanstack/react-query"
 import { useState } from "react"
 import { CheckboxRow } from "../../shared/components/checkbox-row"
 import { CodeStep } from "../../shared/components/code-step"
@@ -25,9 +25,11 @@ type OtpEnableFormProps = { user: UserMe; onEnabled: (user: UserMe) => void }
 /** UF-ID-06 steps 1-4: pick the channels, get a test code, enter it. */
 export function OtpEnableForm({ user, onEnabled }: OtpEnableFormProps) {
   const t = useTr()
-  const [viaEmail, setViaEmail] = useState(Boolean(user.recovery_email) && user.telegram.length === 0)
+  const accounts = useQuery(getIdMeTelegramQuery()).data ?? []
+  const [emailChoice, setViaEmail] = useState<boolean | null>(null)
+  const viaEmail = emailChoice ?? (Boolean(user.recovery_email) && accounts.length === 0)
   const [sent, setSent] = useState(false)
-  const telegramChannels = user.telegram.filter((account) => account.otp_delivery)
+  const telegramChannels = accounts.filter((account) => account.otp_delivery)
   const hasChannel = viaEmail || telegramChannels.length > 0
 
   const start = useMutation({

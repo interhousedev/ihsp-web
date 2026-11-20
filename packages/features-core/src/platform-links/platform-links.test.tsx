@@ -1,10 +1,12 @@
 import { describe, expect, it } from "bun:test"
 import type { Role } from "@ihsp/api"
-import { resetConfig } from "@ihsp/config"
+import { BRAND, resetConfig } from "@ihsp/config"
 import { teacherMe, userMe } from "@ihsp/test-utils"
 import { renderWithProviders } from "@ihsp/test-utils"
 import { UserMenu, type PlatformLink } from "@ihsp/ui"
 import { screen, within } from "@testing-library/react"
+import { existsSync } from "node:fs"
+import { join } from "node:path"
 import { platformKeysFor } from "./platform-keys"
 import { usePlatformLinks } from "./use-platform-links"
 
@@ -147,5 +149,41 @@ describe("UserMenu with platform links", () => {
     expect(within(menu).getByRole("menuitem", { name: /IHT ID/ })).toHaveAttribute("href", "http://localhost:3001")
     expect(within(menu).queryByRole("menuitem", { name: /admin\.iht/ })).not.toBeInTheDocument()
     expect(within(menu).queryByRole("menuitem", { name: /my\.iht/ })).not.toBeInTheDocument()
+  })
+})
+
+const APPS_DIR = join(import.meta.dir, "..", "..", "..", "..", "apps")
+
+describe("the app switcher: icons and names", () => {
+  it("gives every app its display name in the three languages and its own icon address", () => {
+    const links = linksFor(["student", "teacher", "admin"])
+
+    expect(links.map((link) => link.key)).toEqual(["sp", "staff", "admin", "lms", "library", "admission", "id"])
+    for (const link of links) {
+      expect(link.name).toBe(BRAND.displayName[link.key].en)
+      expect(link.iconSrc).toBe(`${link.href}${BRAND.appIcon}`)
+      for (const locale of ["uz", "ru", "en"] as const) expect(BRAND.displayName[link.key][locale]).toBeString()
+    }
+  })
+
+  it("points at an icon file that exists in every app's public folder", () => {
+    for (const key of ["sp", "staff", "admin", "lms", "library", "admission", "id"]) {
+      expect(existsSync(join(APPS_DIR, key, "public", BRAND.appIcon)), key).toBe(true)
+    }
+  })
+
+  it("shows the icon and the name of each app in the avatar menu's switcher grid", async () => {
+    const { user } = renderWithProviders(<Menu client="sp" />, {
+      session: { user: { ...userMe, roles: ["student", "teacher"] } },
+    })
+
+    await user.click(screen.getByRole("button", { name: "Account menu" }))
+
+    const grid = await screen.findByTestId("app-switcher")
+    for (const key of ["sp", "staff", "lms", "library", "admission", "id"] as const) {
+      const icon = within(grid).getByTestId(`platform-icon-${key}`)
+      expect(icon.getAttribute("src")).toEndWith(BRAND.appIcon)
+      expect(within(grid).getByText(BRAND.displayName[key].en)).toBeInTheDocument()
+    }
   })
 })

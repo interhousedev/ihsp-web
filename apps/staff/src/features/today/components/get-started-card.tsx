@@ -1,10 +1,12 @@
 "use client"
 
+import { getIdMeTelegramQuery } from "@ihsp/api"
 import { useSession } from "@ihsp/auth"
 import { getConfig } from "@ihsp/config"
 import { usePreferences, useUpdatePreferences } from "@ihsp/features-core"
 import { useT } from "@ihsp/i18n"
 import { Button, Icons } from "@ihsp/ui"
+import { useQuery } from "@tanstack/react-query"
 import { LinkButton } from "../../shared/components/link-button"
 import { TodayCard } from "./today-card"
 
@@ -18,13 +20,14 @@ export function GetStartedCard() {
   const t = useT("today.getStarted")
   const { session } = useSession()
   const preferences = usePreferences()
+  const telegram = useQuery(getIdMeTelegramQuery()).data
   const update = useUpdatePreferences()
 
-  if (!session || !preferences) return null
+  if (!session || !preferences || !telegram) return null
 
   const dismissed = preferences.onboarding_dismissed
   const steps: { id: StepId; done: boolean; href: string }[] = [
-    { id: "telegram", done: session.user.telegram.length > 0, href: `${getConfig().ID_URL}/security/telegram/` },
+    { id: "telegram", done: telegram.length > 0, href: `${getConfig().ID_URL}/security/telegram/` },
     { id: "notifications", done: preferences.notify_push, href: "/settings/" },
   ]
   const open = steps.filter((step) => !step.done && !dismissed.includes(step.id))

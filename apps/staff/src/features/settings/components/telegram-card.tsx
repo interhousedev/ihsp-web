@@ -1,9 +1,10 @@
 "use client"
 
-import { useSession } from "@ihsp/auth"
+import { getIdMeTelegramQuery } from "@ihsp/api"
 import { getConfig } from "@ihsp/config"
 import { useT } from "@ihsp/i18n"
 import { Badge } from "@ihsp/ui"
+import { useQuery } from "@tanstack/react-query"
 import { LinkButton } from "../../shared/components/link-button"
 
 /**
@@ -12,9 +13,8 @@ import { LinkButton } from "../../shared/components/link-button"
  */
 export function TelegramCard() {
   const t = useT("settings.telegram")
-  const { session } = useSession()
-  if (!session) return null
-  const accounts = session.user.telegram
+  const accounts = useQuery(getIdMeTelegramQuery()).data
+  if (!accounts) return null
   const href = `${getConfig().ID_URL}/security/telegram/`
 
   return (

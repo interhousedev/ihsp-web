@@ -3,8 +3,8 @@ import { LegalGate, MaintenanceBanner } from "@ihsp/features-core"
 
 import type { Role } from "@ihsp/api"
 import { RequireAuth, RequireRole } from "@ihsp/auth"
-import { PageLoading, ShellNavControls, useLibraryAccess, usePlatformLinks } from "@ihsp/features-core"
-import { AppShell, OfflineBadge } from "@ihsp/ui"
+import { AssistantEntry, PageLoading, ShellNavControls, useLibraryAccess, usePlatformLinks } from "@ihsp/features-core"
+import { AppHeaderActions, AppShell, OfflineBadge } from "@ihsp/ui"
 import { Suspense, type ReactNode } from "react"
 import { useNav } from "../../../config/nav"
 import { LibraryBrand } from "./library-brand"
@@ -23,10 +23,10 @@ export type LibraryAccessRule = "public" | "auth" | { roles: Role[] }
 function Header() {
   const { status } = useLibraryAccess()
   return (
-    <>
+    <AppHeaderActions ai={<AssistantEntry />} profile={status === "anonymous" ? null : <ProfileMenu />}>
       <OfflineBadge />
       {status === "anonymous" ? <SignInButton /> : null}
-    </>
+    </AppHeaderActions>
   )
 }
 

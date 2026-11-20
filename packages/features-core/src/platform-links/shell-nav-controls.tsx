@@ -1,11 +1,10 @@
 "use client"
 
 import { isMiniApp, useBackButton } from "@ihsp/telegram/core"
-import { normalizePath, PlatformMenu } from "@ihsp/ui"
+import { normalizePath } from "@ihsp/ui"
 import { usePathname, useRouter } from "next/navigation"
 import { useCallback, useEffect, useState } from "react"
 import { HistoryButtons, useHistoryStack } from "../history-nav"
-import { usePlatformLinks } from "./use-platform-links"
 
 /**
  * Inside Telegram the native back button takes the place of the history buttons: hidden on the home page, one step back
@@ -21,17 +20,11 @@ function MiniAppBack({ home }: { home: string }) {
 }
 
 /**
- * Start of the shell's floating controls: back, forward and the menu of the other platforms.
+ * Start of the shell's floating controls: back and forward (the other platforms are in the avatar menu).
  * `home` is the app's first page, where Telegram's back button is hidden.
  */
 export function ShellNavControls({ home = "/" }: { home?: string }) {
-  const platforms = usePlatformLinks()
   const [miniApp, setMiniApp] = useState(false)
   useEffect(() => setMiniApp(isMiniApp()), [])
-  return (
-    <>
-      {miniApp ? <MiniAppBack home={home} /> : <HistoryButtons />}
-      <PlatformMenu platforms={platforms} />
-    </>
-  )
+  return <>{miniApp ? <MiniAppBack home={home} /> : <HistoryButtons />}</>
 }

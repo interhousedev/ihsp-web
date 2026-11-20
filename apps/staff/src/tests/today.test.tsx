@@ -1,6 +1,6 @@
 /** STF-2, UF-STF-01, UF-STF-02: Today. */
 import { afterEach, beforeEach, describe, expect, test } from "bun:test"
-import { apiUrl, ids, server, staffToday, teacherMe, userPreferences } from "@ihsp/test-utils"
+import { apiUrl, ids, server, staffToday, teacherMe, telegramAccounts, userPreferences } from "@ihsp/test-utils"
 import { screen, waitFor, within } from "@testing-library/react"
 import { HttpResponse, http } from "msw"
 import { TodayPage } from "../features/today/components/today-page"
@@ -123,6 +123,7 @@ const pushOff = { user: { ...teacherMe, preferences: { ...userPreferences, notif
 
 describe("Get started card", () => {
   test("suggests linking Telegram and checking notifications", async () => {
+    server.use(http.get(apiUrl("/v1/id/me/telegram"), () => HttpResponse.json([])))
     renderStaff(<TodayPage />, { session: pushOff })
 
     const started = await card("Get started")
@@ -142,6 +143,7 @@ describe("Get started card", () => {
         return HttpResponse.json({ ...userPreferences, ...body })
       }),
     )
+    server.use(http.get(apiUrl("/v1/id/me/telegram"), () => HttpResponse.json([])))
     const { user } = renderStaff(<TodayPage />, { session: pushOff })
 
     const started = await card("Get started")
@@ -152,19 +154,11 @@ describe("Get started card", () => {
   })
 
   test("is not shown when Telegram is linked and the steps are dismissed", async () => {
+    server.use(http.get(apiUrl("/v1/id/me/telegram"), () => HttpResponse.json(telegramAccounts)))
     renderStaff(<TodayPage />, {
       session: {
         user: {
           ...teacherMe,
-          telegram: [
-            {
-              telegram_user_id: 1,
-              username: "kalandarova",
-              otp_delivery: false,
-              blocked: false,
-              linked_at: "2026-09-01T00:00:00Z",
-            },
-          ],
           preferences: { ...userPreferences, onboarding_dismissed: ["notifications"] },
         },
       },

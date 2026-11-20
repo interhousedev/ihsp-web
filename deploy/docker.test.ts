@@ -703,16 +703,16 @@ describe.skipIf(!haveTools)("entrypoint.sh rendering", () => {
     // the sp export keeps its own file
     expect(run.envJs("sp")).toContain('APP_MODE: "sp"')
     expect(run.envJs("sp")).toContain('OAUTH_CLIENT_ID: "sp"')
-    for (const app of ["id", "staff", "admin", "lms", "library", "share/ai"]) {
+    for (const app of ["id", "share/ai"]) {
       expect(run.envJs(app)).toContain('APP_MODE: "sp"')
     }
     expect(run.exists("env", "app")).toBe(false)
   })
 
   it("PWA_APPS turns the listed apps into installable ones on their own host, and only those", () => {
-    const run = runEntrypoint({ PWA_APPS: "lms library,staff admin sp id" })
+    const run = runEntrypoint({ PWA_APPS: "lms library,staff admin admission sp id" })
     expect(run.exitCode).toBe(0)
-    for (const app of ["lms", "library", "staff", "admin"]) {
+    for (const app of ["lms", "library", "staff", "admin", "admission"]) {
       expect(run.envJs(app)).toContain('APP_MODE: "pwa"')
       expect(run.envJs(app)).toContain(`OAUTH_CLIENT_ID: "${app}"`)
     }
@@ -724,7 +724,7 @@ describe.skipIf(!haveTools)("entrypoint.sh rendering", () => {
     expect(run.envJs("app-env")).toContain('OAUTH_CLIENT_ID: "app"')
   })
 
-  it.each(["lms", "staff", "admin"])(
+  it.each(["lms", "staff", "admin", "admission"])(
     "%s.conf revalidates the service worker and the manifest and never caches env.js",
     (app) => {
       const conf = read("sites", `${app}.conf`)
@@ -736,18 +736,21 @@ describe.skipIf(!haveTools)("entrypoint.sh rendering", () => {
     },
   )
 
-  it("treats an unset PWA_APPS as none (no unbound variable under set -u)", () => {
+  it("makes every installable app a PWA when PWA_APPS is unset (no unbound variable under set -u)", () => {
     const run = runEntrypoint({})
     expect(run.stderr).not.toContain("unbound variable")
     expect(run.exitCode).toBe(0)
-    for (const app of ["lms", "library", "staff", "admin"]) expect(run.envJs(app)).toContain('APP_MODE: "sp"')
+    for (const app of ["lms", "library", "staff", "admin", "admission"]) {
+      expect(run.envJs(app)).toContain('APP_MODE: "pwa"')
+    }
+    for (const app of ["sp", "id", "share/ai"]) expect(run.envJs(app)).toContain('APP_MODE: "sp"')
   })
 
   it("PWA_APPS lists one app at a time", () => {
     const run = runEntrypoint({ PWA_APPS: "lms" })
     expect(run.exitCode).toBe(0)
     expect(run.envJs("lms")).toContain('APP_MODE: "pwa"')
-    for (const app of ["library", "staff", "admin"]) expect(run.envJs(app)).toContain('APP_MODE: "sp"')
+    for (const app of ["library", "staff", "admin", "admission"]) expect(run.envJs(app)).toContain('APP_MODE: "sp"')
   })
 
   it("renders the app host and URL from APP_HOST_APP and IHSP_WEB_APP_URL", () => {
@@ -759,11 +762,11 @@ describe.skipIf(!haveTools)("entrypoint.sh rendering", () => {
     expect(run.envJs("sp")).toContain('APP_URL: "https://app.example.test"')
   })
 
-  it("renders the library's own env.js (client library, sp mode) into its env directory", () => {
+  it("renders the library's own env.js (client library, installable by default) into its env directory", () => {
     const run = runEntrypoint({})
     expect(run.exitCode).toBe(0)
     expect(run.envJs("library")).toContain('OAUTH_CLIENT_ID: "library"')
-    expect(run.envJs("library")).toContain('APP_MODE: "sp"')
+    expect(run.envJs("library")).toContain('APP_MODE: "pwa"')
     expect(run.envJs("library")).toContain('LIBRARY_URL: "http://localhost:3008"')
     expect(run.envJs("library")).toContain('API_URL: "http://localhost:8000"')
     expect(run.envJs("library")).toContain('STORAGE_ORIGIN: "http://localhost:8000"')
@@ -794,7 +797,7 @@ describe.skipIf(!haveTools)("entrypoint.sh rendering", () => {
     expect(run.conf("admission.conf")).toContain("root /srv/admission;")
     expect(run.envJs("admission")).toContain('OAUTH_CLIENT_ID: "admission"')
     expect(run.envJs("admission")).toContain('APP_NAME: "admission"')
-    expect(run.envJs("admission")).toContain('APP_MODE: "sp"')
+    expect(run.envJs("admission")).toContain('APP_MODE: "pwa"')
     expect(run.envJs("sp")).toContain('ADMISSION_URL: "https://admission.example.test"')
     expect(run.envJs("app-env")).toContain('APP_NAME: "sp"')
     expect(run.envJs("share/ai")).toContain('APP_NAME: "share"')

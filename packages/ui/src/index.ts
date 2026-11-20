@@ -75,6 +75,7 @@ export { useAppForm, withForm } from "./lib/form"
 export { useFieldContext, useFormContext, useFieldInvalid, type BaseFieldProps } from "./lib/form-context"
 
 // - - - Layout - - -
+export * from "./components/layout/app-header-actions"
 export * from "./components/layout/app-shell"
 export * from "./components/layout/app-sidebar"
 export * from "./components/layout/bottom-nav"

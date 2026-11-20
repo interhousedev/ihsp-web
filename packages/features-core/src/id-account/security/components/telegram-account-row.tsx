@@ -9,7 +9,15 @@ import { ErrorAlert } from "../../shared/components/error-alert"
 import { useTr } from "../../shared/hooks/use-tr"
 
 /** ID-21: OTP delivery per account (switch) and **Unlink**; unlinking the last OTP channel warns first (UF-ID-05 2b). */
-export function TelegramAccountRow({ account, user }: { account: TelegramAccount; user: UserMe }) {
+export function TelegramAccountRow({
+  account,
+  accounts,
+  user,
+}: {
+  account: TelegramAccount
+  accounts: TelegramAccount[]
+  user: UserMe
+}) {
   const t = useTr()
   const format = useFormatters()
   const queryClient = useQueryClient()
@@ -31,7 +39,7 @@ export function TelegramAccountRow({ account, user }: { account: TelegramAccount
       setConfirming(false)
     },
   })
-  const channels = user.telegram.filter((item) => item.otp_delivery).length + (user.otp_via_email ? 1 : 0)
+  const channels = accounts.filter((item) => item.otp_delivery).length + (user.otp_via_email ? 1 : 0)
   const lastChannel = user.otp_enabled && account.otp_delivery && channels <= 1
   const name = account.username ? `@${account.username}` : String(account.telegram_user_id)
 

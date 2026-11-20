@@ -27,7 +27,7 @@ export function TelegramLinksPage() {
             <ul className="grid gap-3">
               {items.map((account) => (
                 <li key={account.telegram_user_id}>
-                  <TelegramAccountRow account={account} user={user} />
+                  <TelegramAccountRow account={account} accounts={items} user={user} />
                 </li>
               ))}
             </ul>

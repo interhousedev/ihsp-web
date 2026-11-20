@@ -1,8 +1,8 @@
 "use client"
 
 import { useAuthStore } from "@ihsp/auth"
-import { getConfig, type AppEnv } from "@ihsp/config"
-import { useT } from "@ihsp/i18n"
+import { BRAND, getConfig, type AppEnv } from "@ihsp/config"
+import { useLocale, useT, type Locale } from "@ihsp/i18n"
 import { isMiniApp } from "@ihsp/telegram/core"
 import type { PlatformLink } from "@ihsp/ui"
 import type { MouseEvent } from "react"
@@ -47,6 +47,7 @@ export function leaveMiniApp(href: string) {
  */
 export function usePlatformLinks(): PlatformLink[] {
   const t = useT("platforms")
+  const locale = useLocale()
   const roles = useAuthStore((state) => state.user?.roles)
   if (!roles) return []
 
@@ -60,9 +61,10 @@ export function usePlatformLinks(): PlatformLink[] {
       const href = hub && HUB_ANCHORS.includes(key) ? installAnchorUrl(hub, key) : String(config[URL_KEYS[key]])
       return {
         key,
-        name: t(`${key}.name`),
+        name: BRAND.displayName[key][locale as Locale],
         description: t(`${key}.description`),
         href,
+        iconSrc: `${String(config[URL_KEYS[key]]).replace(/\/+$/, "")}${BRAND.appIcon}`,
         // The installable app (client `app`) is the student portal in another host.
         current: (config.OAUTH_CLIENT_ID === "app" ? "sp" : config.OAUTH_CLIENT_ID) === key,
         ...(miniApp ? { onClick: leaveMiniApp(href) } : {}),

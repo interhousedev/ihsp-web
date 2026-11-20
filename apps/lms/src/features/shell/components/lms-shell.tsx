@@ -2,8 +2,8 @@
 import { LegalGate, MaintenanceBanner } from "@ihsp/features-core"
 
 import { useSession } from "@ihsp/auth"
-import { PageLoading, ShellNavControls, usePlatformLinks } from "@ihsp/features-core"
-import { AppShell, OfflineBadge } from "@ihsp/ui"
+import { AssistantEntry, PageLoading, ShellNavControls, usePlatformLinks } from "@ihsp/features-core"
+import { AppHeaderActions, AppShell, OfflineBadge } from "@ihsp/ui"
 import { Suspense, type ReactNode } from "react"
 import { useNav } from "../../../config/nav"
 import { AccessGate, type Access } from "./access-gate"
@@ -29,10 +29,10 @@ export function LmsShell({ children, access = "auth" }: { children: ReactNode; a
         sidebarFooter={<ProfileMenu variant="row" />}
         controlsLeading={<ShellNavControls />}
         controls={
-          <>
+          <AppHeaderActions ai={<AssistantEntry />} profile={status === "anonymous" ? null : <ProfileMenu />}>
             {status === "anonymous" ? <SignInButton /> : null}
             <OfflineBadge />
-          </>
+          </AppHeaderActions>
         }
       >
         <MaintenanceBanner />

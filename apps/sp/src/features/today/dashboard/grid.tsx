@@ -165,7 +165,7 @@ export function DashboardGrid({
     >
       <SortableContext items={ordered.map((widget) => widget.id)} strategy={rectSortingStrategy}>
         <div
-          className="grid auto-rows-auto grid-flow-dense grid-cols-1 gap-3 [--dashboard-row:10rem] sm:grid-cols-2 md:auto-rows-[var(--dashboard-row)] md:grid-cols-4"
+          className="grid auto-rows-auto grid-flow-dense grid-cols-1 gap-3 [--dashboard-row:10rem] sm:grid-cols-2 md:auto-rows-[minmax(var(--dashboard-row),auto)] md:grid-cols-4"
           data-testid="dashboard-grid"
         >
           {ordered.map((widget, index) => (

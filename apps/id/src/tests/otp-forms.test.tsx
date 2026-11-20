@@ -42,7 +42,8 @@ describe("OtpEnableForm", () => {
   })
 
   test("without any channel the test code cannot be sent", async () => {
-    const noChannels = { ...userMe, recovery_email: null, telegram: [] }
+    server.use(http.get(apiUrl("/v1/id/me/telegram"), () => HttpResponse.json([])))
+    const noChannels = { ...userMe, recovery_email: null }
     renderId(<OtpEnableForm user={noChannels} onEnabled={() => undefined} />)
 
     expect(await screen.findByText(/Choose at least one channel/)).toBeInTheDocument()

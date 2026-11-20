@@ -15,6 +15,8 @@ const manifestBrandColor = "#273D88"
 /** The same for the teacher and admin apps. */
 const manifestPlainColor = "#ffffff"
 
+const names = (value: string) => ({ uz: value, ru: value, en: value })
+
 export const BRAND = {
   /** Short platform name in running text ("your IHT account"). */
   name,
@@ -60,10 +62,26 @@ export const BRAND = {
       manifestDescription: `Books, textbooks and study materials of ${orgName}.`,
       manifestColor: manifestBrandColor,
     },
-    admission: { name: "admission.iht" },
+    admission: {
+      name: "admission.iht",
+      pwaName: `${name} Admission`,
+      manifestDescription: `Preparing applications to universities with ${orgName}.`,
+      manifestColor: manifestBrandColor,
+    },
     share: { name: `${name} shares` },
   },
+  /** The name of each app in the switcher, per interface language (the product names are the same in all three). */
+  displayName: {
+    id: names(`${name} ID`),
+    sp: names("my.iht"),
+    staff: names(`${name} Учителям`),
+    admin: names("admin.iht"),
+    lms: names("lms.iht"),
+    library: names("library.iht"),
+    admission: names("admission.iht"),
+  },
   /** Paths under each app's `public/` (the files themselves are per app). */
+  appIcon: "/icons/icon-192.png",
   logos: { svg: "/icons/logo.svg", png64: "/icons/logo-64.png" },
   /**
    * The lyceum's own logo on the student card, shown in a circle: the teachers app logo (`/icons/lyceum-logo.png` of the
@@ -91,7 +109,7 @@ export const BRAND = {
 } as const
 
 /** The apps with an installable manifest. */
-export const BRAND_PWA_APPS = ["sp", "staff", "admin", "lms", "library"] as const
+export const BRAND_PWA_APPS = ["sp", "staff", "admin", "lms", "library", "admission"] as const
 
 /** Every placeholder a message may use for a brand name. */
 export const BRAND_MESSAGE_VALUES = {

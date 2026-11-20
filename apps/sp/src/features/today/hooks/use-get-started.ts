@@ -1,6 +1,6 @@
 "use client"
 
-import { getMeProfileQuery } from "@ihsp/api"
+import { getIdMeTelegramQuery, getMeProfileQuery } from "@ihsp/api"
 import { useSession } from "@ihsp/auth"
 import { getConfig } from "@ihsp/config"
 import { usePreferences, useUpdatePreferences } from "@ihsp/features-core"
@@ -26,17 +26,18 @@ export function useGetStarted(): {
   const { session } = useSession()
   const preferences = usePreferences()
   const profile = useQuery(getMeProfileQuery())
+  const telegram = useQuery(getIdMeTelegramQuery())
   const update = useUpdatePreferences()
   const t = useT("today.getStarted")
 
-  if (!session || !preferences || profile.isPending) return null
+  if (!session || !preferences || profile.isPending || !telegram.data) return null
 
   const dismissed = preferences.onboarding_dismissed
   const subgroup = profile.data?.subgroup ?? null
   const steps: Step[] = [
     {
       id: "telegram",
-      done: session.user.telegram.length > 0,
+      done: telegram.data.length > 0,
       hint: null,
       href: `${getConfig().ID_URL}/security/telegram/`,
     },

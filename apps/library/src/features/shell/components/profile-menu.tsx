@@ -14,12 +14,13 @@ export function ProfileMenu({ variant = "avatar" }: { variant?: "avatar" | "row"
   const feedback = useFeedbackMenu({ area: "library" })
   const license = useLicenseMenu()
   if (!session) return null
-  const { first_name, last_name, login } = session.user
+  const { first_name, last_name, login, photo_url } = session.user
   return (
     <>
       <UserMenu
         name={`${last_name} ${first_name}`}
         subtitle={login}
+        imageUrl={photo_url}
         variant={variant}
         items={[...feedback.items, ...license.items, ...(installItem ? [installItem] : [])]}
         platforms={platforms}

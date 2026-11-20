@@ -6,7 +6,7 @@ import { HttpResponse, http } from "msw"
 import { NotificationsPage } from "../features/notifications/components/notifications-page"
 import { SettingsPage } from "../features/settings/components/settings-page"
 import { StaffShell } from "../features/shell/components/staff-shell"
-import { configureTests, hrefOf, renderStaff, teacherWith } from "./helpers"
+import { configureTests, hrefOf, renderStaff } from "./helpers"
 
 configureTests()
 
@@ -137,6 +137,7 @@ describe("settings page", () => {
   })
 
   test("without Telegram it says notifications arrive only on the web and links to the setup", async () => {
+    server.use(http.get(apiUrl("/v1/id/me/telegram"), () => HttpResponse.json([])))
     renderStaff(<SettingsPage />)
 
     expect(await screen.findByText(/Telegram is not linked/)).toBeInTheDocument()
@@ -147,21 +148,20 @@ describe("settings page", () => {
   })
 
   test("with Telegram it lists the linked account", async () => {
-    renderStaff(<SettingsPage />, {
-      session: teacherWith({
-        user: {
-          telegram: [
-            {
-              telegram_user_id: 7,
-              username: "kalandarova",
-              otp_delivery: true,
-              blocked: false,
-              linked_at: "2026-09-01T00:00:00Z",
-            },
-          ],
-        },
-      }),
-    })
+    server.use(
+      http.get(apiUrl("/v1/id/me/telegram"), () =>
+        HttpResponse.json([
+          {
+            telegram_user_id: 7,
+            username: "kalandarova",
+            otp_delivery: true,
+            blocked: false,
+            linked_at: "2026-09-01T00:00:00Z",
+          },
+        ]),
+      ),
+    )
+    renderStaff(<SettingsPage />)
 
     expect(await screen.findByText("@kalandarova")).toBeInTheDocument()
     expect(screen.getByText("Linked")).toBeInTheDocument()
