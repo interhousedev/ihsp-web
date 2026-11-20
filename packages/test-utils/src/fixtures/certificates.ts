@@ -52,6 +52,8 @@ export const certificateTypes: CertificateType[] = [
     name: name("IELTS"),
     custom_fields: [{ ...levelField(IELTS_LEVELS), primary: true }, yearField],
     builtin: false,
+    standard: false,
+    category: null,
     position: 1,
   },
   {
@@ -60,6 +62,8 @@ export const certificateTypes: CertificateType[] = [
     name: name("CEFR"),
     custom_fields: [levelField(CEFR_LEVELS)],
     builtin: true,
+    standard: false,
+    category: null,
     position: 2,
   },
   {
@@ -68,6 +72,8 @@ export const certificateTypes: CertificateType[] = [
     name: name("SAT"),
     custom_fields: [{ ...yearField, key: "score", label: name("Score", "Балл", "Ball"), primary: true }],
     builtin: false,
+    standard: false,
+    category: null,
     position: 3,
   },
   {
@@ -76,6 +82,8 @@ export const certificateTypes: CertificateType[] = [
     name: name("National Certificate", "Национальный сертификат", "Milliy sertifikat"),
     custom_fields: [levelField(NATIONAL_LEVELS), percentField, subjectField],
     builtin: true,
+    standard: false,
+    category: null,
     position: 4,
   },
 ]

@@ -9,7 +9,7 @@ import { Icons } from "../icons"
 import { Sheet, SheetContent, SheetHeader, SheetTitle } from "../ui/sheet"
 import { NavIconView } from "./nav-icon"
 import { isActivePath, type BottomNavItem, type NavGroup } from "./nav-types"
-import { PLATFORM_ICONS } from "./platform-menu"
+import { PLATFORM_ICONS } from "./platform-icons"
 import type { PlatformLink } from "./user-menu"
 
 const MAX_ITEMS = 5

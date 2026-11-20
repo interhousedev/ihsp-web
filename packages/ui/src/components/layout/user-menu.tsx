@@ -18,6 +18,7 @@ import {
   DropdownMenuTrigger,
 } from "../ui/dropdown-menu"
 import { NavIconView } from "./nav-icon"
+import { PlatformIcon } from "./platform-icon"
 import type { NavIcon } from "./nav-types"
 import { UserAvatar } from "./user-avatar"
 
@@ -144,7 +145,7 @@ export function UserMenu({
                 {platforms.map((platform) => (
                   <DropdownMenuItem
                     key={platform.key}
-                    className="min-h-11 flex-col items-start gap-1.5 px-2 py-2 md:min-h-9"
+                    className="min-h-11 min-w-0 flex-col items-start gap-1.5 px-2 py-2 md:min-h-9"
                     render={
                       <a
                         href={platform.href}
@@ -155,17 +156,7 @@ export function UserMenu({
                     }
                   >
                     <span className="flex w-full items-center gap-2">
-                      {platform.iconSrc ? (
-                        // oxlint-disable-next-line nextjs/no-img-element -- static export, the icon is a plain file of that app
-                        <img
-                          src={platform.iconSrc}
-                          alt=""
-                          width={28}
-                          height={28}
-                          className="size-7 shrink-0 rounded-md"
-                          data-testid={`platform-icon-${platform.key}`}
-                        />
-                      ) : null}
+                      <PlatformIcon platform={platform} />
                       {platform.current ? (
                         <>
                           <Icons.check aria-hidden className="ms-auto" />
@@ -173,7 +164,7 @@ export function UserMenu({
                         </>
                       ) : null}
                     </span>
-                    <span className="flex min-w-0 flex-col">
+                    <span className="flex w-full min-w-0 flex-col">
                       <span className="truncate font-medium">{platform.name}</span>
                       <span className="text-muted-foreground truncate text-xs">{platform.description}</span>
                     </span>
@@ -205,15 +196,16 @@ export function UserMenu({
         <DropdownMenuGroup>
           <DropdownMenuLabel>{t("common.theme")}</DropdownMenuLabel>
           <DropdownMenuRadioGroup
-            className="flex gap-1 px-1"
+            className="grid grid-cols-3 gap-1 px-1"
             value={theme}
             onValueChange={(value) => {
               if (isThemeChoice(value)) setTheme(value)
             }}
           >
             {THEME_CHOICES.map((mode) => (
-              <DropdownMenuRadioItem key={mode} value={mode} className="min-h-11 flex-1 justify-center md:min-h-8">
-                {t(`theme.${mode}`)}
+              <DropdownMenuRadioItem key={mode} value={mode} className="data-checked:bg-accent data-checked:font-medium min-h-11 min-w-0 justify-center px-1 pr-1 pl-1 text-xs md:min-h-8 [&_[data-slot=dropdown-menu-radio-item-indicator]]:hidden"
+              >
+                <span className="truncate">{t(`theme.${mode}`)}</span>
               </DropdownMenuRadioItem>
             ))}
           </DropdownMenuRadioGroup>

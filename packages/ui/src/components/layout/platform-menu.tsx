@@ -5,19 +5,8 @@ import { Icons } from "../icons"
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "../ui/dropdown-menu"
 import { IconButton } from "../ui/icon-button"
 import { NavIconView } from "./nav-icon"
-import type { IconName } from "./nav-types"
+import { PLATFORM_ICONS } from "./platform-icons"
 import type { PlatformLink } from "./user-menu"
-
-/** One icon per platform, the same in the menu of every app and in the phone's "More" sheet. */
-export const PLATFORM_ICONS: Record<PlatformLink["key"], IconName> = {
-  sp: "grades",
-  staff: "journal",
-  admin: "settings",
-  lms: "courses",
-  library: "library",
-  admission: "admission",
-  id: "account",
-}
 
 /** The other IHSP platforms of this user behind one icon; nothing when there are none. Links open in the same tab. */
 export function PlatformMenu({ platforms }: { platforms: PlatformLink[] }) {

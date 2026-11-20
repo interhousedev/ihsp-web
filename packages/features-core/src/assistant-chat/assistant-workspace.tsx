@@ -4,7 +4,7 @@ import type { AssistantKind } from "@ihsp/api"
 import { useT } from "@ihsp/i18n"
 import { Sheet, SheetContent, SheetDescription, SheetHeader, SheetTitle } from "@ihsp/ui"
 import { usePathname, useSearchParams } from "next/navigation"
-import { useEffect, useState } from "react"
+import { useEffect, useState, type ReactNode } from "react"
 import { AssistantProvider, useAssistantScope } from "./assistant-context"
 import { AssistantChatPane } from "./assistant-chat-pane"
 import { AssistantHome } from "./assistant-home"
@@ -20,6 +20,8 @@ export type AssistantWorkspaceProps = AssistantSidebarLinks & {
   assistant: Exclude<AssistantKind, "lms_author">
   /** Route of the assistant section; the chat page is `<basePath>/chat/?id=`. */
   basePath: string
+  /** Shown in place of the composer when the model answers `consent_required` (apps with a consent purpose). */
+  consentCard?: (ctx: { retry: () => void }) => ReactNode
 }
 
 function isEditable(target: EventTarget | null): boolean {
@@ -32,15 +34,23 @@ function isEditable(target: EventTarget | null): boolean {
  * smaller screens, and the home or the open chat (`?id=`) as the main area. Fill the height you give it
  * (`h-full`); the page wraps it in `<Suspense>` because it reads `useSearchParams`.
  */
-export function AssistantWorkspace({ assistant, basePath, ...links }: AssistantWorkspaceProps) {
+export function AssistantWorkspace({ assistant, basePath, consentCard, ...links }: AssistantWorkspaceProps) {
   return (
     <AssistantProvider assistant={assistant}>
-      <WorkspaceBody basePath={basePath} links={links} />
+      <WorkspaceBody basePath={basePath} links={links} consentCard={consentCard} />
     </AssistantProvider>
   )
 }
 
-function WorkspaceBody({ basePath, links }: { basePath: string; links: AssistantSidebarLinks }) {
+function WorkspaceBody({
+  basePath,
+  links,
+  consentCard,
+}: {
+  basePath: string
+  links: AssistantSidebarLinks
+  consentCard: AssistantWorkspaceProps["consentCard"]
+}) {
   const t = useT("assistant")
   // `?id=` is the chat on the chat page and the project on the project page; the path decides which one it is.
   const pathname = usePathname().replace(/\/+$/, "")
@@ -107,6 +117,7 @@ function WorkspaceBody({ basePath, links }: { basePath: string; links: Assistant
             basePath={basePath}
             navButtons={navButtons}
             trailing={trailing}
+            consentCard={consentCard}
           />
         ) : (
           <AssistantHome basePath={basePath} navButtons={navButtons} trailing={trailing} />
