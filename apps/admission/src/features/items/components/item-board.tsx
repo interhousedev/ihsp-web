@@ -16,7 +16,7 @@ import {
 } from "@dnd-kit/core"
 import { useErrorMessage, useT } from "@ihsp/i18n"
 import { Pill } from "@ihsp/ui"
-import { useState } from "react"
+import { useEffect, useRef, useState } from "react"
 import { toast } from "sonner"
 import { ScrollFade } from "@/components/scroll-fade"
 import { incompleteFields, useMoveItem, useReorderItems, type Item, type ItemStatus } from "../api"
@@ -27,8 +27,6 @@ const TONE = { draft: "warning", ready: "success" } as const
 const COLUMN = "column:"
 const CARD = "item:"
 const STEP = 48
-/** On a desktop screen the card list scrolls inside its column so the page below stays in view. */
-const FIT = "md:max-h-[max(14rem,calc(100dvh-39rem))]"
 
 /** Left and right jump to the other column, up and down step through the cards. */
 const coordinateGetter: KeyboardCoordinateGetter = (event, { context: { droppableRects }, currentCoordinates }) => {
@@ -67,6 +65,7 @@ function DraggableCard({
       {...drag.attributes}
       role="group"
       aria-label={item.title}
+      data-item-id={item.id}
       className={`focus-visible:ring-primary/60 flex cursor-grab rounded-card outline-none focus-visible:ring-2 active:cursor-grabbing ${
         drag.isDragging ? "opacity-40" : ""
       } ${drop.isOver && !drag.isDragging ? "ring-primary/40 ring-2" : ""}`}
@@ -81,13 +80,11 @@ function Column({
   items,
   onEdit,
   onDelete,
-  fit,
 }: {
   status: ItemStatus
   items: Item[]
   onEdit: (item: Item) => void
   onDelete: (item: Item) => void
-  fit?: boolean
 }) {
   const t = useT("items")
   const drop = useDroppable({ id: `${COLUMN}${status}` })
@@ -110,7 +107,7 @@ function Column({
           {t(`column.empty.${status}`)}
         </p>
       ) : (
-        <ScrollFade className={fit ? FIT : undefined}>
+        <ScrollFade>
           <ul className="flex flex-col gap-2 p-1">
             {items.map((item) => (
               <DraggableCard key={item.id} item={item} onEdit={onEdit} onDelete={onDelete} />
@@ -132,14 +129,11 @@ export function ItemBoard({
   ready,
   onEdit,
   onDelete,
-  fit,
 }: {
   drafts: Item[]
   ready: Item[]
   onEdit: (item: Item) => void
   onDelete: (item: Item) => void
-  /** Keeps the whole page within one desktop screen by scrolling the card lists. */
-  fit?: boolean
 }) {
   const t = useT("items")
   const errorMessage = useErrorMessage()
@@ -148,6 +142,17 @@ export function ItemBoard({
   const [active, setActive] = useState<Item | null>(null)
   const [notice, setNotice] = useState<string | null>(null)
   const all = [...drafts, ...ready]
+  const seen = useRef<Set<string> | null>(null)
+  useEffect(() => {
+    const ids = new Set(all.map((i) => i.id))
+    const fresh = seen.current ? all.find((i) => !seen.current?.has(i.id)) : undefined
+    seen.current = ids
+    if (fresh) {
+      document
+        .querySelector(`[data-item-id="${fresh.id}"]`)
+        ?.scrollIntoView({ block: "nearest", behavior: "smooth" })
+    }
+  })
   const sensors = useSensors(
     useSensor(MouseSensor, { activationConstraint: { distance: 6 } }),
     useSensor(TouchSensor, { activationConstraint: { delay: 200, tolerance: 8 } }),
@@ -226,7 +231,6 @@ export function ItemBoard({
             items={status === "draft" ? drafts : ready}
             onEdit={onEdit}
             onDelete={onDelete}
-            fit={fit}
           />
         ))}
       </div>

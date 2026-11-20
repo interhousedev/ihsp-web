@@ -131,7 +131,7 @@ export function ItemList() {
         ) : null}
         {items.isSuccess ? (
           <div className={ofKind.length === 0 ? "hidden md:block" : undefined}>
-            <ItemBoard fit={kind === "honor"} drafts={drafts} ready={ready} onEdit={openItem} onDelete={setDeleting} />
+            <ItemBoard drafts={drafts} ready={ready} onEdit={openItem} onDelete={setDeleting} />
           </div>
         ) : null}
         {items.isSuccess && (kind === "activity" || items.data.length === 0) ? (

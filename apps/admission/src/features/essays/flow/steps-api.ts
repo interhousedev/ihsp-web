@@ -2,6 +2,7 @@
 
 import { getApiClient, seg } from "@ihsp/api"
 import { useLocale } from "@ihsp/i18n"
+import { essayKeys } from "../api"
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query"
 
 const BASE = "/v1/admission"
@@ -22,6 +23,10 @@ export type GalleryItem = {
   published_at: string | null
 }
 export type Gallery = { items: GalleryItem[]; mine: GalleryItem[] }
+
+/** Mirrors `flowKeys.map` / `flowKeys.fit` of ./api (which imports ../api, so not imported here). */
+const PROMPT_MAP_KEY = ["admission", "essays", "prompt-map"] as const
+const IDEA_FIT_KEY = ["admission", "essay-fit"] as const
 
 export const SHARING_PURPOSE = "admission_sharing"
 
@@ -44,7 +49,10 @@ export function usePublish() {
   const qc = useQueryClient()
   return useMutation({
     mutationFn: (essayId: string) => getApiClient().post<GalleryItem>(`${BASE}/essays/${seg(essayId)}/gallery`),
-    onSuccess: () => qc.invalidateQueries({ queryKey: flowKeys.gallery }),
+    onSuccess: () => {
+      void qc.invalidateQueries({ queryKey: essayKeys.all })
+      return qc.invalidateQueries({ queryKey: flowKeys.gallery })
+    },
   })
 }
 
@@ -52,7 +60,10 @@ export function useUnpublish() {
   const qc = useQueryClient()
   return useMutation({
     mutationFn: (essayId: string) => getApiClient().delete<void>(`${BASE}/essays/${seg(essayId)}/gallery`),
-    onSuccess: () => qc.invalidateQueries({ queryKey: flowKeys.gallery }),
+    onSuccess: () => {
+      void qc.invalidateQueries({ queryKey: essayKeys.all })
+      return qc.invalidateQueries({ queryKey: flowKeys.gallery })
+    },
   })
 }
 
@@ -170,6 +181,10 @@ export function useAssignSlot(universityId: string) {
         ? getApiClient().put<MatchTable>(url, { essay_id: essayId })
         : getApiClient().delete<MatchTable>(url)
     },
-    onSuccess: (data) => qc.setQueryData(flowKeys.match(universityId), data),
+    onSuccess: (data) => {
+      qc.setQueryData(flowKeys.match(universityId), data)
+      void qc.invalidateQueries({ queryKey: PROMPT_MAP_KEY })
+      void qc.invalidateQueries({ queryKey: IDEA_FIT_KEY })
+    },
   })
 }

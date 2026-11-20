@@ -6,7 +6,6 @@ import { useQueryClient } from "@tanstack/react-query"
 import { useCallback, useEffect, useMemo, useState, useSyncExternalStore, type ReactNode } from "react"
 import { toast } from "sonner"
 import { SwipeDeck, type SwipeDirection } from "../../../components/lib/swipe-deck"
-import { ScrollFade } from "../../../components/scroll-fade"
 import type { AdmissionMatch as Match } from "@ihsp/api"
 import { useDecide, useMatches, useUndoDecision } from "../hooks"
 import { DeckSettings } from "./deck-settings"
@@ -24,7 +23,6 @@ const serverSnapshot = () => true
 
 type Decided = { match: Match; direction: SwipeDirection }
 
-const COLUMN_HEIGHT = "calc(100dvh - 21rem)"
 
 /** The Kollegio-style matching feed, embedded in the chooser (no page chrome): settings, swipe deck and assistant context. */
 export function DiscoverPage({ lead }: { lead?: ReactNode }) {
@@ -167,9 +165,7 @@ export function DiscoverPage({ lead }: { lead?: ReactNode }) {
         <div className="grid grid-cols-[minmax(0,1fr)_24rem] items-start gap-6">
           {deck}
           <aside data-testid="discover-side-slot" className="relative z-10 min-w-0">
-            <ScrollFade maxHeight={COLUMN_HEIGHT} className="pr-2">
-              {context}
-            </ScrollFade>
+            {context}
           </aside>
         </div>
       ) : (

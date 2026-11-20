@@ -1,6 +1,7 @@
 "use client"
 
 import { useT } from "@ihsp/i18n"
+import { usePromptMap } from "../flow/api"
 import { Icons } from "@ihsp/ui"
 import Link from "next/link"
 import { LogoAvatar } from "../../../components/lib/photo-header"
@@ -13,10 +14,26 @@ import { SuppPrompts } from "./supp-prompts"
 export function SuppInfo({ essay }: { essay: Essay }) {
   const t = useT("essays")
   const entry = useList().data?.find((e) => e.id === essay.list_entry_id)
+  const map = usePromptMap()
   const name = entry?.institution.name
+  const targets = essay.targets ?? []
+  const owners = new Map((map.data?.groups ?? []).flatMap((g) => g.prompts.map((p) => [p.prompt, p.institution_name])))
   return (
     <AsideCard title={t("supp.panel")} icon={<Icons.post aria-hidden className="size-4" />}>
-      <dl className="flex flex-col gap-2 text-sm">
+      {targets.length > 0 ? (
+        <div className="flex flex-col gap-2 text-sm">
+          <h4 className="text-muted-foreground text-xs">{t("supp.targets")}</h4>
+          <ul className="flex flex-col gap-2" data-testid="essay-targets">
+            {targets.map((tg) => (
+              <li key={`${tg.institution_id ?? "common"}-${tg.position}`} className="flex flex-col gap-0.5">
+                <span className="font-medium">{owners.get(tg.prompt) ?? t("supp.common")}</span>
+                <span className="text-muted-foreground">{tg.prompt}</span>
+              </li>
+            ))}
+          </ul>
+        </div>
+      ) : null}
+      <dl className={targets.length > 0 && !name ? "hidden" : "flex flex-col gap-2 text-sm"}>
         <div>
           <dt className="text-muted-foreground text-xs">{t("college")}</dt>
           <dd>

@@ -578,6 +578,8 @@
       "add": "Add",
       "empty": "No ideas yet. Add one, or take a seed from today's practice.",
       "fitTitle": "Best fit among open prompts",
+      "fitScore": "fit {score}/100",
+      "fitScoreAria": "Fit with this prompt: {score} out of 100",
       "fitNone": "No open prompt to compare with.",
       "fitConsent": "Fit scores need your AI consent.",
       "fitConsentLink": "Allow AI help in settings",
@@ -868,6 +870,8 @@
       "title": "Supp letter for {college}",
       "panel": "Supplemental letter",
       "noCollege": "No college linked",
+      "targets": "Prompts this essay answers",
+      "common": "Common App",
       "prompts": "This year's prompts ({cycle})",
       "words": "{count} words",
       "optional": "Optional",
@@ -4041,6 +4045,7 @@
     "tab": "Ask about this college",
     "ask": "Ask AI",
     "empty": "Pick a college to start a chat.",
+    "emptyChat": "Ask anything about this college: deadlines, cost, aid or your chances.",
     "open": "Open college page",
     "run": "Run research",
     "researching": "Researching…",
@@ -4464,6 +4469,16 @@
     "base": {
       "title": "Essay review",
       "criteria": "Criteria",
+      "dim": {
+        "responsiveness": "Responsiveness to the prompt",
+        "hook": "Hook",
+        "theme": "Theme",
+        "detail": "Detail",
+        "voice": "Voice",
+        "authenticity": "Authenticity",
+        "reflection": "Reflection",
+        "writing": "Writing"
+      },
       "strengths": "Strengths",
       "improvements": "Improvements"
     },

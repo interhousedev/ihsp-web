@@ -8,7 +8,8 @@ import { toast } from "sonner"
 import { useCreateEssay, useEssay, useEssays, type EssaySummary } from "../api"
 import { CoachError } from "../components/coach-error"
 import { useEssayLabel } from "../components/supp-label"
-import { useForkEssay, useGroupCritique, type PromptGroup } from "./api"
+import { useForkEssay, type PromptGroup } from "./api"
+import { useGroupCritique } from "./steps-api"
 import { groupLabel, groupWordLimit } from "./group-label"
 
 const MAX_TARGETS = 5
@@ -22,6 +23,8 @@ function GroupTools({ essayId }: { essayId: string }) {
   const fork = useForkEssay(essayId)
   const targets = essay.data?.targets ?? []
   if (targets.length === 0) return null
+  // Common App prompts have no university to critique against; the critique is per university.
+  const uniCount = new Set(targets.map((tg) => tg.institution_id).filter(Boolean)).size
   const run = (refresh: boolean) => critique.mutate(refresh, { onError: () => undefined })
   return (
     <div className="flex flex-col gap-3 border-t pt-3">
@@ -37,10 +40,12 @@ function GroupTools({ essayId }: { essayId: string }) {
         ))}
       </ul>
       <div className="flex flex-wrap gap-2">
-        <Button type="button" size="sm" disabled={critique.isPending} onClick={() => run(false)}>
-          <Icons.sparkles aria-hidden />
-          {critique.isPending ? t("drafts.critiquing") : t("drafts.critique", { count: targets.length })}
-        </Button>
+        {uniCount > 0 ? (
+          <Button type="button" size="sm" disabled={critique.isPending} onClick={() => run(false)}>
+            <Icons.sparkles aria-hidden />
+            {critique.isPending ? t("drafts.critiquing") : t("drafts.critique", { count: uniCount })}
+          </Button>
+        ) : null}
         {critique.data ? (
           <Button type="button" size="sm" variant="ghost" disabled={critique.isPending} onClick={() => run(true)}>
             {t("drafts.refresh")}

@@ -75,7 +75,11 @@ export function useCreateEssay() {
   const qc = useQueryClient()
   return useMutation({
     mutationFn: (body: EssayInput) => getApiClient().post<Essay>(`${BASE}/essays`, body),
-    onSuccess: () => qc.invalidateQueries({ queryKey: essayKeys.list }),
+    onSuccess: () => {
+      void qc.invalidateQueries({ queryKey: ["admission", "essays", "prompt-map"] })
+      void qc.invalidateQueries({ queryKey: ["admission", "essay-fit"] })
+      return qc.invalidateQueries({ queryKey: essayKeys.list })
+    },
   })
 }
 

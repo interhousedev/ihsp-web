@@ -107,7 +107,7 @@ export function UniChatPanel({ match }: { match: Match | undefined }) {
               {runErrorText(state.error)}
             </p>
           ) : null}
-          <div className="flex h-[26rem] min-h-0 flex-col">
+          <div className="flex h-[min(28rem,70dvh)] min-h-0 flex-col overflow-hidden">
             <AssistantProvider assistant="admission">
               <AssistantChatPane
                 key={chat.data.chat_id}
@@ -116,6 +116,7 @@ export function UniChatPanel({ match }: { match: Match | undefined }) {
                 navButtons={null}
                 bare
                 placeholder={t("placeholder")}
+                emptyText={t("emptyChat")}
                 prefill={prefill}
                 aboveComposer={above}
               />

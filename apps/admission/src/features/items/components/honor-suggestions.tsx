@@ -49,7 +49,7 @@ export function HonorSuggestionsRow() {
           >
             <div className="flex min-w-0 flex-1 flex-col">
               <span className="truncate text-sm font-medium">{s.title}</span>
-              <span className="text-muted-foreground truncate text-xs">
+              <span className="text-muted-foreground line-clamp-2 text-xs">
                 {tc(s.category)}
                 {s.issued_at ? ` · ${t("suggestions.issued", { date: formatDate(s.issued_at) })}` : ""}
               </span>

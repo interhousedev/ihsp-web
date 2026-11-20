@@ -36,7 +36,10 @@ function FitList({
           return (
             <li key={prompt.key} className="flex min-w-0 flex-col gap-1 text-xs sm:flex-row sm:items-center sm:gap-2">
               <span className="flex min-w-0 flex-1 items-center gap-2">
-                <Pill tone={score >= 60 ? "success" : score >= 40 ? "warning" : "neutral"}>{score}</Pill>
+                <Pill tone={score >= 60 ? "success" : score >= 40 ? "warning" : "neutral"}>
+                  <span className="sr-only">{t("ideas.fitScoreAria", { score })}</span>
+                  <span aria-hidden>{t("ideas.fitScore", { score })}</span>
+                </Pill>
                 <span className="min-w-0 truncate" title={prompt.prompt}>
                   <span className="font-medium">{group ? groupLabel(group) : prompt.institution_name}</span>
                   {" · "}

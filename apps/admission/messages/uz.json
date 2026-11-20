@@ -578,6 +578,8 @@
       "add": "Qoʻshish",
       "empty": "Hozircha gʻoya yoʻq. Oʻzingiznikini qoʻshing yoki bugungi mashqdan urugʻ oling.",
       "fitTitle": "Ochiq promptlar ichida eng mos",
+      "fitScore": "mosligi {score}/100",
+      "fitScoreAria": "Bu mavzuga mosligi: 100 dan {score}",
       "fitNone": "Solishtirish uchun ochiq prompt yoʻq.",
       "fitConsent": "Moslik bahosi AI uchun rozilikni talab qiladi.",
       "fitConsentLink": "Sozlamalarda AI yordamiga ruxsat bering",
@@ -868,6 +870,8 @@
       "title": "{college} uchun supp letter",
       "panel": "Qoʻshimcha xat",
       "noCollege": "Kollej biriktirilmagan",
+      "targets": "Insho javob beradigan mavzular",
+      "common": "Common App",
       "prompts": "Shu yilgi mavzular ({cycle})",
       "words": "{count} soʻz",
       "optional": "Ixtiyoriy",
@@ -4041,6 +4045,7 @@
     "tab": "Bu kollej haqida soʻrang",
     "ask": "SIdan soʻrash",
     "empty": "Chatni boshlash uchun kollejni tanlang.",
+    "emptyChat": "Kollej haqida istalgan narsani soʻrang: muddatlar, narx, yordam yoki imkoniyatlaringiz.",
     "open": "Kollej sahifasini ochish",
     "run": "Tadqiqotni boshlash",
     "researching": "Tadqiq qilinmoqda…",
@@ -4464,6 +4469,16 @@
     "base": {
       "title": "Insho tahlili",
       "criteria": "Mezonlar",
+      "dim": {
+        "responsiveness": "Mavzuga mosligi",
+        "hook": "Boshlanish",
+        "theme": "Gʻoya",
+        "detail": "Tafsilotlar",
+        "voice": "Muallif ovozi",
+        "authenticity": "Samimiylik",
+        "reflection": "Fikr yuritish",
+        "writing": "Bayon"
+      },
       "strengths": "Kuchli tomonlar",
       "improvements": "Nimani yaxshilash kerak"
     },

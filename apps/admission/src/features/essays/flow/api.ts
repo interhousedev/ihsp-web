@@ -2,7 +2,6 @@
 
 import {
   type AdmissionEssayFork,
-  type AdmissionEssayReviews,
   type AdmissionIdeaFit,
   type AdmissionPracticeEntry,
   type AdmissionPracticeToday,
@@ -11,6 +10,7 @@ import {
   seg,
 } from "@ihsp/api"
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query"
+import { useLocale } from "@ihsp/i18n"
 import { essayKeys } from "../api"
 
 const BASE = "/v1/admission/essays"
@@ -21,7 +21,6 @@ export type PromptRef = PromptGroup["prompts"][number]
 export type IdeaFit = AdmissionIdeaFit
 export type PracticeToday = AdmissionPracticeToday
 export type PracticeEntry = AdmissionPracticeEntry
-export type GroupReviews = AdmissionEssayReviews
 
 export const flowKeys = {
   map: [...essayKeys.all, "prompt-map"] as const,
@@ -78,20 +77,15 @@ export function useSavePractice() {
 }
 
 export function useEvaluatePractice() {
+  const locale = useLocale()
   const qc = useQueryClient()
   return useMutation({
-    mutationFn: () => getApiClient().post<PracticeToday>(`${BASE}/practice/today/evaluate`, {}),
+    mutationFn: () =>
+      getApiClient().post<PracticeToday>(`${BASE}/practice/today/evaluate`, {}, { headers: { "Accept-Language": locale } }),
     onSuccess: (today) => {
       qc.setQueryData(flowKeys.today, today)
       void qc.invalidateQueries({ queryKey: flowKeys.practice })
     },
-  })
-}
-
-export function useGroupCritique(essayId: string) {
-  return useMutation({
-    mutationFn: (refresh: boolean) =>
-      getApiClient().post<GroupReviews>(`${BASE}/${seg(essayId)}/group-critique`, { refresh }),
   })
 }
 
@@ -100,6 +94,9 @@ export function useForkEssay(essayId: string) {
   return useMutation({
     mutationFn: (body: { institution_id: string | null; position: number }) =>
       getApiClient().post<AdmissionEssayFork>(`${BASE}/${seg(essayId)}/fork`, body),
-    onSuccess: () => qc.invalidateQueries({ queryKey: essayKeys.all }),
+    onSuccess: () => {
+      void qc.invalidateQueries({ queryKey: ["admission", "essay-fit"] })
+      return qc.invalidateQueries({ queryKey: essayKeys.all })
+    },
   })
 }

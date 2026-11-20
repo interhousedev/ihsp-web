@@ -217,9 +217,10 @@ export function EssayEditor({ essay }: { essay: Essay }) {
           <DocumentRail currentId={essay.id} liveTitle={draft.title} onNavigate={() => setRailOpen(false)} />
         </SidePanel>
         <div className="flex min-w-0 flex-1 flex-col gap-3">
-          {essay.kind === "supplemental" ? <SuppInfo essay={essay} /> : null}
+          {essay.kind === "supplemental" || (essay.targets?.length ?? 0) > 0 ? <SuppInfo essay={essay} /> : null}
           <EssayMeta
             prompt={draft.prompt_text}
+            showPrompt={(essay.targets?.length ?? 0) === 0}
             wordLimit={draft.word_limit}
             words={words}
             status={essay.status === "final" ? "final" : "draft"}

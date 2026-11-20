@@ -1,5 +1,6 @@
 "use client"
 
+import { useSession } from "@ihsp/auth"
 import { useT } from "@ihsp/i18n"
 import { usePathname, useRouter, useSearchParams } from "next/navigation"
 import { useEffect, useState, type ReactNode } from "react"
@@ -14,19 +15,20 @@ import { PracticeStep } from "./practice-step"
 import { PromptMapStep } from "./prompt-map-step"
 import { FLOW_STEP_IDS, stepFromParams, type FlowStepId } from "./steps"
 
-const FURTHEST_KEY = "ihsp.essays.furthest"
+const furthestKey = (userId: string) => `ihsp.essays.furthest.${userId}`
 
-/** How far the student has walked, kept on this device; a step past it stays closed until the one before is done. */
-function useFurthest(current: FlowStepId) {
+/** How far the student has walked, kept on this device per user and raised by what the server holds; a step past it stays closed until the one before is done. */
+function useFurthest(current: FlowStepId, userId: string | undefined, served: number) {
   const [stored, setStored] = useState(0)
   const index = FLOW_STEP_IDS.indexOf(current)
   useEffect(() => {
-    const saved = Number(window.localStorage.getItem(FURTHEST_KEY) ?? 0)
+    if (!userId) return
+    const saved = Number(window.localStorage.getItem(furthestKey(userId)) ?? 0)
     const next = Math.max(saved, index)
     setStored(next)
-    if (next !== saved) window.localStorage.setItem(FURTHEST_KEY, String(next))
-  }, [index])
-  return Math.max(stored, index)
+    if (next !== saved) window.localStorage.setItem(furthestKey(userId), String(next))
+  }, [index, userId])
+  return Math.max(stored, index, served)
 }
 
 /** The six steps of the essays section as one linear path: the prompts, daily practice, ideas and drafts, other essays, evaluation, matching. */
@@ -36,10 +38,13 @@ export function EssayFlow() {
   const pathname = usePathname()
   const params = useSearchParams()
   const current = stepFromParams(params.get("step"), params.get("tab"))
-  const furthest = useFurthest(current)
   const map = usePromptMap()
   const today = usePracticeToday()
   const essays = useEssays()
+  const { session } = useSession()
+  // What the server already knows counts as walked: a practice written today opens the ideas, any essay opens the rest of the way to evaluation.
+  const served = essays.data?.items.length ? FLOW_STEP_IDS.indexOf("gallery") : today.data?.entry?.body ? FLOW_STEP_IDS.indexOf("ideas") : 0
+  const furthest = useFurthest(current, session?.user.id, served)
 
   const go = (id: FlowStepId) => {
     const next = new URLSearchParams(params.toString())
