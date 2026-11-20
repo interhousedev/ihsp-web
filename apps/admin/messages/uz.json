@@ -47,7 +47,8 @@
     "excuses": "Sababli qoldirishlar",
     "legal": "Huquqiy hujjatlar",
     "erasure": "Oʻchirish soʻrovlari",
-    "prompts": "AI promptlari"
+    "prompts": "AI promptlari",
+    "aiHarness": "AI infratuzilmasi"
   },
   "shared": {
     "lessonList": "Sanalar boʻyicha darslar",
@@ -2687,6 +2688,165 @@
       "exercise_feedback": "Mashq boʻyicha fikr",
       "subject_names": "Fan nomlari",
       "guest_assistant": "Mehmon yordamchisi"
+    }
+  },
+  "aiHarness": {
+    "title": "AI infratuzilmasi",
+    "tabs": {
+      "label": "AI infratuzilmasi boʻlimlari",
+      "connectors": "Konnektorlar",
+      "pipelines": "Pipelinelar",
+      "requests": "Soʻrovlar",
+      "analytics": "Tahlil"
+    },
+    "diff": {
+      "title": "Farqlar",
+      "same": "Oʻzgarish yoʻq.",
+      "summary": "v{from} → v{to}: {chars} belgi, ≈{tokens} token"
+    },
+    "prompts": {
+      "showChanges": "{version}-versiya oʻzgarishlarini koʻrsatish",
+      "changes": "Oʻzgarishlar"
+    },
+    "connectors": {
+      "title": "Konnektorlar",
+      "add": "Konnektor qoʻshish",
+      "empty": "Konnektorlar yoʻq.",
+      "columns": {
+        "title": "Konnektor",
+        "kind": "Turi",
+        "secret": "Kalit",
+        "status": "Holati",
+        "test": "Tekshiruv",
+        "actions": "Amallar"
+      },
+      "noSecret": "Kiritilmagan",
+      "enabled": "Yoqilgan",
+      "disabled": "Oʻchirilgan",
+      "fromEnv": "Muhitdan",
+      "test": "Tekshirish",
+      "testConnector": "{title} ni tekshirish",
+      "testOk": "Ishlaydi · {ms} ms",
+      "testFailed": "Xato: {error}",
+      "edit": "Tahrirlash",
+      "editConnector": "{title} ni tahrirlash",
+      "remove": "Oʻchirish",
+      "removeConnector": "{title} ni oʻchirish",
+      "removed": "Konnektor oʻchirildi.",
+      "removeTitle": "{title} oʻchirilsinmi?",
+      "removeDescription": "Kalit omborxonadan oʻchiriladi. Pipeline ishlatayotgan konnektorni oʻchirib boʻlmaydi.",
+      "removeBuiltin": "Faqat qayta belgilash oʻchiriladi: konnektor muhit sozlamalariga qaytadi.",
+      "kinds": {
+        "openrouter": "OpenRouter",
+        "anthropic": "Anthropic",
+        "openai_compatible": "OpenAI bilan mos",
+        "exa": "Exa qidiruvi"
+      },
+      "addTitle": "Konnektor qoʻshish",
+      "editTitle": "{title} ni tahrirlash",
+      "cancel": "Bekor qilish",
+      "submitAdd": "Qoʻshish",
+      "submitSave": "Saqlash",
+      "added": "Konnektor qoʻshildi.",
+      "saved": "Konnektor saqlandi.",
+      "fields": {
+        "id": "Identifikator",
+        "idHint": "Lotin harflari, raqamlar, - va _; keyin oʻzgartirib boʻlmaydi.",
+        "kind": "Turi",
+        "title": "Nomi",
+        "baseUrl": "Asosiy URL",
+        "apiKey": "API kaliti",
+        "apiKeyKeep": "Saqlangan kalit {last4} bilan tugaydi. Oʻzgartirmaslik uchun boʻsh qoldiring.",
+        "enabled": "Yoqilgan"
+      }
+    },
+    "pipelines": {
+      "description": "Pipeline AI vazifalarini birlashtiradi. Boʻsh maydonlar muhit sozlamalaridan olinadi.",
+      "empty": "Pipelinelar yoʻq.",
+      "runtime": "Admin marshruti",
+      "environment": "Muhit",
+      "effective": "Ishlatilmoqda:",
+      "connector": "Konnektor",
+      "model": "Model",
+      "reasoning": "Mulohaza",
+      "envDefault": "Muhit boʻyicha",
+      "save": "Saqlash",
+      "saved": "{pipeline} marshruti saqlandi.",
+      "reset": "Muhitga qaytarish",
+      "resetDone": "{pipeline} yana muhitni ishlatadi.",
+      "efforts": {
+        "none": "Oʻchiq",
+        "minimal": "Minimal",
+        "low": "Past",
+        "medium": "Oʻrtacha",
+        "high": "Yuqori"
+      }
+    },
+    "requests": {
+      "title": "AI soʻrovlari",
+      "pipeline": "Pipeline",
+      "allPipelines": "Barcha pipelinelar",
+      "empty": "Soʻrovlar yoʻq.",
+      "columns": {
+        "request": "Soʻrov",
+        "pipeline": "Pipeline",
+        "owner": "Modul",
+        "version": "Prompt"
+      },
+      "open": "{id} ni ochish",
+      "builtin": "Ichki",
+      "codeChanged": "Koddagi prompt oʻzgargan",
+      "retired": "Olib tashlangan",
+      "template": "Shablon",
+      "tools": "Vositalar",
+      "arguments": "Argumentlar",
+      "noArguments": "Argumentlar yoʻq.",
+      "required": "majburiy",
+      "versions": "Prompt versiyalari",
+      "noVersions": "Hozircha versiyalar yoʻq.",
+      "source": {
+        "admin": "Admin",
+        "code": "Kod"
+      },
+      "active": "Faol",
+      "size": "≈{tokens} token",
+      "diff": "Farqlar",
+      "diffVersion": "v{version} farqlari"
+    },
+    "analytics": {
+      "range": {
+        "label": "Davr",
+        "d7": "7 kun",
+        "d30": "30 kun",
+        "d90": "90 kun"
+      },
+      "slot": "Prompt",
+      "empty": "Bu davr uchun maʼlumot yoʻq.",
+      "builtin": "Ichki",
+      "requests": {
+        "title": "Soʻrovlar",
+        "request": "Soʻrov",
+        "calls": "Chaqiruvlar",
+        "failed": "Xatolar",
+        "promptTokens": "Prompt, ≈ token",
+        "answerChars": "Javob, belgi",
+        "toolCalls": "Vosita chaqiruvlari",
+        "cost": "Narxi"
+      },
+      "users": {
+        "title": "Foydalanuvchilar xarajati",
+        "user": "Foydalanuvchi",
+        "role": "Roli",
+        "calls": "Chaqiruvlar",
+        "cost": "Narxi"
+      },
+      "charts": {
+        "promptSize": "Prompt hajmi versiyalar boʻyicha",
+        "tokens": "≈ token",
+        "spend": "Kunlik xarajat soʻrovlar boʻyicha",
+        "answerChars": "Oʻrtacha javob uzunligi (belgi)",
+        "toolCalls": "Vosita chaqiruvlari oʻrtachasi"
+      }
     }
   },
   "richText": {

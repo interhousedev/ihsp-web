@@ -47,7 +47,8 @@
     "excuses": "Уважительные причины",
     "legal": "Юридические документы",
     "erasure": "Запросы на удаление",
-    "prompts": "Промпты ИИ"
+    "prompts": "Промпты ИИ",
+    "aiHarness": "Инфраструктура ИИ"
   },
   "shared": {
     "lessonList": "Уроки по датам",
@@ -2687,6 +2688,165 @@
       "exercise_feedback": "Отзыв об упражнении",
       "subject_names": "Названия предметов",
       "guest_assistant": "Гостевой ассистент"
+    }
+  },
+  "aiHarness": {
+    "title": "Инфраструктура ИИ",
+    "tabs": {
+      "label": "Разделы инфраструктуры ИИ",
+      "connectors": "Коннекторы",
+      "pipelines": "Пайплайны",
+      "requests": "Запросы",
+      "analytics": "Аналитика"
+    },
+    "diff": {
+      "title": "Различия",
+      "same": "Без изменений.",
+      "summary": "v{from} → v{to}: {chars} симв., ≈{tokens} токенов"
+    },
+    "prompts": {
+      "showChanges": "Показать изменения версии {version}",
+      "changes": "Изменения"
+    },
+    "connectors": {
+      "title": "Коннекторы",
+      "add": "Добавить коннектор",
+      "empty": "Коннекторов нет.",
+      "columns": {
+        "title": "Коннектор",
+        "kind": "Тип",
+        "secret": "Ключ",
+        "status": "Статус",
+        "test": "Проверка",
+        "actions": "Действия"
+      },
+      "noSecret": "Не задан",
+      "enabled": "Включён",
+      "disabled": "Выключен",
+      "fromEnv": "Из окружения",
+      "test": "Проверить",
+      "testConnector": "Проверить {title}",
+      "testOk": "Работает · {ms} мс",
+      "testFailed": "Ошибка: {error}",
+      "edit": "Изменить",
+      "editConnector": "Изменить {title}",
+      "remove": "Удалить",
+      "removeConnector": "Удалить {title}",
+      "removed": "Коннектор удалён.",
+      "removeTitle": "Удалить {title}?",
+      "removeDescription": "Ключ будет удалён из хранилища. Коннектор, который используется пайплайном, удалить нельзя.",
+      "removeBuiltin": "Удаляется только переопределение: коннектор вернётся к настройкам окружения.",
+      "kinds": {
+        "openrouter": "OpenRouter",
+        "anthropic": "Anthropic",
+        "openai_compatible": "Совместимый с OpenAI",
+        "exa": "Поиск Exa"
+      },
+      "addTitle": "Добавить коннектор",
+      "editTitle": "Изменить {title}",
+      "cancel": "Отмена",
+      "submitAdd": "Добавить",
+      "submitSave": "Сохранить",
+      "added": "Коннектор добавлен.",
+      "saved": "Коннектор сохранён.",
+      "fields": {
+        "id": "Идентификатор",
+        "idHint": "Латиница, цифры, - и _; позже изменить нельзя.",
+        "kind": "Тип",
+        "title": "Название",
+        "baseUrl": "Базовый URL",
+        "apiKey": "API-ключ",
+        "apiKeyKeep": "Сохранённый ключ оканчивается на {last4}. Оставьте пустым, чтобы не менять.",
+        "enabled": "Включён"
+      }
+    },
+    "pipelines": {
+      "description": "Пайплайн объединяет задачи ИИ. Пустые поля берутся из настроек окружения.",
+      "empty": "Пайплайнов нет.",
+      "runtime": "Маршрут из админки",
+      "environment": "Окружение",
+      "effective": "Используется:",
+      "connector": "Коннектор",
+      "model": "Модель",
+      "reasoning": "Рассуждение",
+      "envDefault": "Из окружения",
+      "save": "Сохранить",
+      "saved": "Маршрут {pipeline} сохранён.",
+      "reset": "Сбросить к окружению",
+      "resetDone": "{pipeline} снова использует окружение.",
+      "efforts": {
+        "none": "Выключено",
+        "minimal": "Минимальное",
+        "low": "Низкое",
+        "medium": "Среднее",
+        "high": "Высокое"
+      }
+    },
+    "requests": {
+      "title": "Запросы ИИ",
+      "pipeline": "Пайплайн",
+      "allPipelines": "Все пайплайны",
+      "empty": "Запросов нет.",
+      "columns": {
+        "request": "Запрос",
+        "pipeline": "Пайплайн",
+        "owner": "Модуль",
+        "version": "Промпт"
+      },
+      "open": "Открыть {id}",
+      "builtin": "Встроенный",
+      "codeChanged": "Изменился промпт в коде",
+      "retired": "Снят",
+      "template": "Шаблон",
+      "tools": "Инструменты",
+      "arguments": "Аргументы",
+      "noArguments": "Аргументов нет.",
+      "required": "обязателен",
+      "versions": "Версии промпта",
+      "noVersions": "Версий пока нет.",
+      "source": {
+        "admin": "Админ",
+        "code": "Код"
+      },
+      "active": "Активна",
+      "size": "≈{tokens} токенов",
+      "diff": "Различия",
+      "diffVersion": "Различия v{version}"
+    },
+    "analytics": {
+      "range": {
+        "label": "Период",
+        "d7": "7 дней",
+        "d30": "30 дней",
+        "d90": "90 дней"
+      },
+      "slot": "Промпт",
+      "empty": "Нет данных за период.",
+      "builtin": "Встроенный",
+      "requests": {
+        "title": "Запросы",
+        "request": "Запрос",
+        "calls": "Вызовы",
+        "failed": "Ошибки",
+        "promptTokens": "Промпт, ≈ токенов",
+        "answerChars": "Ответ, симв.",
+        "toolCalls": "Вызовы инструментов",
+        "cost": "Стоимость"
+      },
+      "users": {
+        "title": "Расходы по пользователям",
+        "user": "Пользователь",
+        "role": "Роль",
+        "calls": "Вызовы",
+        "cost": "Стоимость"
+      },
+      "charts": {
+        "promptSize": "Размер промпта по версиям",
+        "tokens": "≈ токенов",
+        "spend": "Расходы по дням и запросам",
+        "answerChars": "Средняя длина ответа (симв.)",
+        "toolCalls": "Среднее число вызовов инструментов"
+      }
     }
   },
   "richText": {

@@ -49,6 +49,7 @@ describe("admin sidebar (ADM-1)", () => {
       "/mcp-activity/",
       "/limits/",
       "/prompts/",
+      "/ai/connectors/",
       "/devices/",
       "/vault/",
       "/migration/",

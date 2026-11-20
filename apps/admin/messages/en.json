@@ -47,7 +47,8 @@
     "excuses": "Excuses",
     "legal": "Legal documents",
     "erasure": "Erasure requests",
-    "prompts": "AI prompts"
+    "prompts": "AI prompts",
+    "aiHarness": "AI harness"
   },
   "shared": {
     "lessonList": "Lessons by date",
@@ -2687,6 +2688,165 @@
       "exercise_feedback": "Exercise feedback",
       "subject_names": "Subject names",
       "guest_assistant": "Guest assistant"
+    }
+  },
+  "aiHarness": {
+    "title": "AI harness",
+    "tabs": {
+      "label": "AI harness sections",
+      "connectors": "Connectors",
+      "pipelines": "Pipelines",
+      "requests": "Requests",
+      "analytics": "Analytics"
+    },
+    "diff": {
+      "title": "Diff",
+      "same": "No changes.",
+      "summary": "v{from} → v{to}: {chars} characters, ≈{tokens} tokens"
+    },
+    "prompts": {
+      "showChanges": "Show changes of version {version}",
+      "changes": "Changes"
+    },
+    "connectors": {
+      "title": "Connectors",
+      "add": "Add connector",
+      "empty": "No connectors.",
+      "columns": {
+        "title": "Connector",
+        "kind": "Kind",
+        "secret": "Key",
+        "status": "Status",
+        "test": "Check",
+        "actions": "Actions"
+      },
+      "noSecret": "Not set",
+      "enabled": "Enabled",
+      "disabled": "Disabled",
+      "fromEnv": "Environment",
+      "test": "Test",
+      "testConnector": "Test {title}",
+      "testOk": "Works · {ms} ms",
+      "testFailed": "Failed: {error}",
+      "edit": "Edit",
+      "editConnector": "Edit {title}",
+      "remove": "Remove",
+      "removeConnector": "Remove {title}",
+      "removed": "Connector removed.",
+      "removeTitle": "Remove {title}?",
+      "removeDescription": "The key is deleted from the vault. A connector that a pipeline uses cannot be removed.",
+      "removeBuiltin": "Only the override is removed; the connector returns to the environment settings.",
+      "kinds": {
+        "openrouter": "OpenRouter",
+        "anthropic": "Anthropic",
+        "openai_compatible": "OpenAI-compatible",
+        "exa": "Exa search"
+      },
+      "addTitle": "Add connector",
+      "editTitle": "Edit {title}",
+      "cancel": "Cancel",
+      "submitAdd": "Add",
+      "submitSave": "Save",
+      "added": "Connector added.",
+      "saved": "Connector saved.",
+      "fields": {
+        "id": "Id",
+        "idHint": "Latin letters, digits, - and _; cannot be changed later.",
+        "kind": "Kind",
+        "title": "Title",
+        "baseUrl": "Base URL",
+        "apiKey": "API key",
+        "apiKeyKeep": "Stored key ends with {last4}. Leave empty to keep it.",
+        "enabled": "Enabled"
+      }
+    },
+    "pipelines": {
+      "description": "Each pipeline groups AI tasks. Empty fields use the environment settings.",
+      "empty": "No pipelines.",
+      "runtime": "Runtime route",
+      "environment": "Environment",
+      "effective": "In use:",
+      "connector": "Connector",
+      "model": "Model",
+      "reasoning": "Reasoning",
+      "envDefault": "Environment default",
+      "save": "Save",
+      "saved": "Route of {pipeline} saved.",
+      "reset": "Reset to environment",
+      "resetDone": "{pipeline} uses the environment again.",
+      "efforts": {
+        "none": "Off",
+        "minimal": "Minimal",
+        "low": "Low",
+        "medium": "Medium",
+        "high": "High"
+      }
+    },
+    "requests": {
+      "title": "AI requests",
+      "pipeline": "Pipeline",
+      "allPipelines": "All pipelines",
+      "empty": "No requests registered.",
+      "columns": {
+        "request": "Request",
+        "pipeline": "Pipeline",
+        "owner": "Module",
+        "version": "Prompt"
+      },
+      "open": "Open {id}",
+      "builtin": "Built-in",
+      "codeChanged": "Code default changed",
+      "retired": "Retired",
+      "template": "Template",
+      "tools": "Tools",
+      "arguments": "Arguments",
+      "noArguments": "No arguments.",
+      "required": "required",
+      "versions": "Prompt versions",
+      "noVersions": "No versions yet.",
+      "source": {
+        "admin": "Admin",
+        "code": "Code"
+      },
+      "active": "Active",
+      "size": "≈{tokens} tokens",
+      "diff": "Diff",
+      "diffVersion": "Diff v{version}"
+    },
+    "analytics": {
+      "range": {
+        "label": "Period",
+        "d7": "7 days",
+        "d30": "30 days",
+        "d90": "90 days"
+      },
+      "slot": "Prompt",
+      "empty": "No data for this period.",
+      "builtin": "Built-in",
+      "requests": {
+        "title": "Requests",
+        "request": "Request",
+        "calls": "Calls",
+        "failed": "Failed",
+        "promptTokens": "Prompt ≈ tokens",
+        "answerChars": "Answer chars",
+        "toolCalls": "Tool calls",
+        "cost": "Cost"
+      },
+      "users": {
+        "title": "Spend per user",
+        "user": "User",
+        "role": "Role",
+        "calls": "Calls",
+        "cost": "Cost"
+      },
+      "charts": {
+        "promptSize": "Prompt size by version",
+        "tokens": "≈ tokens",
+        "spend": "Spend per day by request",
+        "answerChars": "Average answer length (chars)",
+        "toolCalls": "Average tool calls"
+      }
     }
   },
   "richText": {

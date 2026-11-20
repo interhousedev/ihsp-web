@@ -12,11 +12,12 @@ export function ProfileMenu({ variant = "avatar" }: { variant?: "avatar" | "row"
   const platforms = usePlatformLinks()
   const installItem = useInstallAppMenuItem()
   if (!session) return null
-  const { first_name, last_name, login } = session.user
+  const { first_name, last_name, login, photo_url } = session.user
   return (
     <UserMenu
       name={`${last_name} ${first_name}`}
       subtitle={login}
+      imageUrl={photo_url}
       variant={variant}
       items={installItem ? [installItem] : []}
       platforms={platforms}

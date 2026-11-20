@@ -2,8 +2,8 @@
 import { LegalGate, MaintenanceBanner } from "@ihsp/features-core"
 
 import { RequireAuth, RequireRole } from "@ihsp/auth"
-import { ShellNavControls } from "@ihsp/features-core"
-import { AppShell, StateView, ThemeToggle } from "@ihsp/ui"
+import { AssistantEntry, ShellNavControls } from "@ihsp/features-core"
+import { AppHeaderActions, AppShell, StateView, ThemeToggle } from "@ihsp/ui"
 import { Suspense, type ReactNode } from "react"
 import { useNav } from "../../../config/nav"
 import { AdminBrand } from "./admin-brand"
@@ -32,7 +32,11 @@ export function AdminFrame({ children }: { children: ReactNode }) {
           brand={<AdminBrand />}
           sidebarFooter={<ProfileMenu variant="row" />}
           controlsLeading={<ShellNavControls />}
-          controls={<ThemeToggle />}
+          controls={
+            <AppHeaderActions ai={<AssistantEntry href="/assistant/" />} profile={<ProfileMenu />}>
+              <ThemeToggle />
+            </AppHeaderActions>
+          }
         >
           <div className="p-4 pb-0 md:px-6 md:pt-6" data-shell-flush>
             <VaultSealedBanner />
