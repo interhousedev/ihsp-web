@@ -4,6 +4,19 @@ All notable changes to this project are documented here. The format follows [Kee
 
 ## [Unreleased]
 
+## [1.9.0] - 2026-11-20
+
+### Added
+
+- Admin: AI harness pages (connectors, pipelines, requests, analytics) and a diff view in prompt history.
+- One header for every app: AI entry, notifications, and the avatar menu with an app switcher (app icons and names). admission.ihsu.uz is an installable PWA.
+- my.iht: Student Card button on the dashboard header.
+
+### Changed
+
+- my.iht dashboard widgets grow with their content instead of scrolling inside.
+- Linked Telegram accounts are read from `/v1/id/me/telegram`.
+
 ## [1.8.0] - 2026-11-19
 
 ### Changed
