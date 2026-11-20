@@ -277,7 +277,7 @@ function ActivityCard({ item }: { item: Item }) {
           {ready ? t("activities.ready") : t("activities.draft")}
         </Pill>
       </div>
-      <p className="line-clamp-2 min-h-10 text-sm font-semibold">{item.title}</p>
+      <p className="line-clamp-2 min-h-10 text-sm font-semibold xl:min-h-0">{item.title}</p>
       <dl className="text-muted-foreground flex gap-4 text-xs">
         {item.hours_per_week ? (
           <div>
@@ -385,7 +385,7 @@ function CollegeCard({ entry, match, label }: { entry: ListEntry; match: Match |
           {t("colleges.open")}
         </Link>
         <Link
-          href="/chooser/list/"
+          href="/chooser/"
           className={cn(buttonVariants({ variant: "ghost", size: "sm" }), "relative z-10 min-h-11 flex-1 md:min-h-9")}
         >
           {t("colleges.compare")}
@@ -406,10 +406,10 @@ export function CollegesCarousel() {
     <Section
       title={t("colleges.title")}
       icon={<Icons.globe aria-hidden className="text-primary size-4" />}
-      href="/chooser/list/"
+      href="/chooser/"
       action={
         <Link
-          href="/chooser/search/?view=discover"
+          href="/chooser/?step=match"
           aria-label={t("colleges.add")}
           title={t("colleges.add")}
           className={cn(buttonVariants({ variant: "outline", size: "icon" }), "size-11 md:size-9")}
@@ -423,7 +423,7 @@ export function CollegesCarousel() {
       ) : entries.length === 0 ? (
         <Empty icon={<Icons.globe aria-hidden className="size-6" />}>
           {t("colleges.empty")}{" "}
-          <Link href="/chooser/search/?view=discover" className="text-foreground underline">
+          <Link href="/chooser/?step=match" className="text-foreground underline">
             {t("colleges.discover")}
           </Link>
         </Empty>
@@ -556,7 +556,7 @@ export function ChancesBanner() {
   const target = list.data?.[0]?.institution.id ?? matches.data?.items[0]?.university_id
   const href = target
     ? `/chooser/institution/?id=${encodeURIComponent(target)}&tab=chances`
-    : "/chooser/search/?view=discover"
+    : "/chooser/?step=match"
   return (
     <Reveal>
       <div className="bg-primary/10 border-primary/20 rounded-card flex flex-col gap-3 border p-4 sm:flex-row sm:items-center sm:justify-between">
@@ -578,7 +578,7 @@ export function ChancesBanner() {
 
 const NEW_HERE = [
   { key: "journey", href: "/#journey", icon: Icons.route, tint: "bg-primary/10 text-primary" },
-  { key: "discover", href: "/chooser/search/?view=discover", icon: Icons.globe, tint: "bg-success-muted text-success" },
+  { key: "discover", href: "/chooser/?step=match", icon: Icons.globe, tint: "bg-success-muted text-success" },
   { key: "career", href: "/career/", icon: Icons.sparkles, tint: "bg-warning-muted text-warning" },
 ] as const
 
@@ -654,31 +654,48 @@ export function ToolsCard() {
  * The student home dashboard. Desktop: main column plus an aside; tablet: the aside is a two-column grid below the
  * main column; mobile: one column with snap carousels.
  */
+/**
+ * The dashboard. From `xl` up it is a compact two-column board that fits one screen: the five section tiles across the
+ * top, activities and colleges on the left, readiness, deadlines and tasks on the right. The secondary widgets (links,
+ * scores, journey) have their own pages and show only on narrower screens, stacked.
+ */
 export function HomeWidgets() {
   return (
-    <div className="grid grid-cols-[minmax(0,1fr)] gap-6 xl:grid-cols-[minmax(0,1fr)_22rem]">
-      <div className="flex min-w-0 flex-col gap-6">
-        <ContinueAction />
+    <div className="grid grid-cols-[minmax(0,1fr)] gap-5 xl:grid-cols-[minmax(0,1fr)_20rem] xl:gap-4">
+      <div className="min-w-0 xl:col-span-2">
         <SectionCards />
+      </div>
+      <div className="flex min-w-0 flex-col gap-5 xl:gap-4">
+        <ContinueAction />
         <StartHereCard />
         <DeadlineNudges />
         <ActivitiesCarousel />
         <CollegesCarousel />
-        <ChancesBanner />
-        <NewHere />
-        <div className="grid gap-4 md:grid-cols-2">
-          <TasksWidget />
+        <div className="xl:hidden">
+          <ChancesBanner />
+        </div>
+        <div className="xl:hidden">
+          <NewHere />
+        </div>
+        <div className="xl:hidden">
           <ScoresWidget />
         </div>
-        <ToolsCard />
-        <JourneySection />
+        <div className="xl:hidden">
+          <ToolsCard />
+        </div>
+        <div className="xl:hidden">
+          <JourneySection />
+        </div>
       </div>
-      <aside className="grid content-start gap-4 md:grid-cols-2 xl:grid-cols-1">
+      <aside className="grid content-start gap-4 md:grid-cols-2 xl:grid-cols-1 xl:gap-4">
         <div className="md:col-span-2 xl:col-span-1">
           <ReadinessWidget />
         </div>
         <div className="md:col-span-2 xl:col-span-1">
           <DeadlinesWidget />
+        </div>
+        <div className="md:col-span-2 xl:col-span-1">
+          <TasksWidget />
         </div>
       </aside>
     </div>

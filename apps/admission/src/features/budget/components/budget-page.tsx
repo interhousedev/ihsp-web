@@ -6,8 +6,8 @@ import { useSearchParams } from "next/navigation"
 import { ScholarshipsView } from "../../chooser/components/scholarships-view"
 import { BudgetView } from "./budget-view"
 
-/** `/chooser/budget/`: the budget, or with `?view=scholarships` the scholarships of the catalog. */
-export function BudgetPage() {
+/** `/chooser/?step=budget`: the budget, or with `?view=scholarships` the scholarships of the catalog. */
+export function BudgetPage({ onViewed }: { onViewed?: () => void } = {}) {
   const t = useT("budget")
   const scholarships = useSearchParams().get("view") === "scholarships"
   return (
@@ -15,8 +15,8 @@ export function BudgetPage() {
       <nav aria-label={t("views.label")} className="flex gap-2 overflow-x-auto">
         {(
           [
-            { key: "budget", href: "/chooser/budget/", current: !scholarships },
-            { key: "scholarships", href: "/chooser/budget/?view=scholarships", current: scholarships },
+            { key: "budget", href: "/chooser/?step=budget", current: !scholarships },
+            { key: "scholarships", href: "/chooser/?step=budget&view=scholarships", current: scholarships },
           ] as const
         ).map(({ key, href, current }) => (
           <Link
@@ -37,7 +37,7 @@ export function BudgetPage() {
           </Link>
         </>
       ) : (
-        <BudgetView />
+        <BudgetView onViewed={onViewed} />
       )}
     </div>
   )

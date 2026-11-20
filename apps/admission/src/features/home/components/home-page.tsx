@@ -15,7 +15,7 @@ const STEPS = [
   { id: "profile", url: "/setup/" },
   { id: "activities", url: "/activities/" },
   { id: "plans", url: "/plan/" },
-  { id: "universities", url: "/chooser/list/" },
+  { id: "universities", url: "/chooser/" },
   { id: "documents", url: "/documents/" },
 ] as const
 
@@ -42,7 +42,7 @@ export function HomePage() {
         title={t("title")}
         summary={`Home. Application steps: ${items.map((i) => `${i.label} (${i.status})`).join(", ")}.`}
       />
-      <div className={pageClass("wide", "overflow-x-clip")}>
+      <div className={pageClass("overflow-x-clip xl:gap-4 xl:pb-4")}>
         <MadeForHeader />
         <HomeWidgets />
       </div>

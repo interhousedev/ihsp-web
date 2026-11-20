@@ -107,7 +107,7 @@ export function ScholarshipsBody() {
     )
 
   return (
-    <div className={pageClass("wide")}>
+    <div className={pageClass()}>
       <AppPageHeader
         icon="courses"
         title={t("title")}

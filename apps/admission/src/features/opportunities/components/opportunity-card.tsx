@@ -84,6 +84,15 @@ export function OpportunityCard({
           <span className="text-muted-foreground text-xs">{t("sourceLanguage")}</span>
         </div>
       )}
+      {(f.tuition_usd != null || f.hours_per_week != null || f.starts_on) && (
+        <div className="text-muted-foreground flex flex-wrap gap-x-3 gap-y-1 text-xs">
+          {f.tuition_usd != null && (
+            <span>{f.tuition_usd === 0 ? t("filters.free") : t("filters.costValue", { amount: f.tuition_usd })}</span>
+          )}
+          {f.hours_per_week != null && <span>{t("filters.hoursValue", { hours: f.hours_per_week })}</span>}
+          {f.starts_on && <span>{t("filters.startsValue", { date: formatDate(f.starts_on) })}</span>}
+        </div>
+      )}
       {(f.grades ?? []).length > 0 && (
         <div className="flex flex-wrap gap-1">
           {(f.grades ?? []).map((g) => (

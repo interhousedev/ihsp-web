@@ -58,6 +58,8 @@ const messages = {
 }
 
 const row = (id: string, name: string, overrides: Partial<BudgetRow> = {}): BudgetRow => ({
+  admit_rate: null,
+  aid_profile: null,
   entry_id: id,
   institution: { id: `i-${id}`, name, logo_url: null, logo_fit: "circle", logo_zoom: 1 },
   round: "RD",
@@ -124,18 +126,11 @@ describe("budget page", () => {
     await waitFor(() => expect(patches).toEqual([{ id: "e1", body: { lock_version: 7, fee_status: "paid" } }]))
   })
 
-  it("links to the essays with the number of universities", async () => {
-    serve()
-    renderAdmissionApp(<BudgetPage />, { route: "/chooser/budget/", messages })
-    const cta = await screen.findByRole("link", { name: "Start essays for 3 universities" })
-    expect(cta.getAttribute("href")).toBe("/essays?tab=colleges")
-  })
-
   it("an empty list points to the search", async () => {
     serve({ rows: [], totals: { by_currency: [], css_profile_schools: 0, unknown_fee_count: 0 } })
     renderAdmissionApp(<BudgetPage />, { route: "/chooser/budget/", messages })
     const link = await screen.findByRole("link", { name: "Find universities" })
-    expect(link.getAttribute("href")).toBe("/chooser/search")
+    expect(link.getAttribute("href")).toBe("/chooser?step=match")
   })
 
   it("?view=scholarships shows the scholarships and the opportunities link", async () => {

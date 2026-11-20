@@ -33,9 +33,11 @@ export function ItemCard({
   const t = useT("items")
   const honor = item.kind === "honor"
   const grades = item.grades.map((g) => (g === POST_GRAD ? t("form.postGrad") : String(g))).join(", ")
+  const tc = useT("honorCategory")
+  const level = honor && item.level ? t(`recognition.${item.level}`) : null
   const category = item.category
     ? honor
-      ? t(`recognition.${item.category}`)
+      ? tc(item.category)
       : (ACTIVITY_CATEGORIES as readonly string[]).includes(item.category)
         ? t(`category.${item.category}`)
         : item.category
@@ -62,9 +64,9 @@ export function ItemCard({
                 {category}
               </Pill>
             ) : null}
-            {honor ? (
-              <Pill tone={item.status === "ready" ? "success" : "warning"} className="h-6 px-2 text-xs">
-                {t(`status.${item.status}`)}
+            {level ? (
+              <Pill tone="neutral" className="h-6 px-2 text-xs">
+                {level}
               </Pill>
             ) : null}
           </span>

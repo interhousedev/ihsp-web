@@ -52,7 +52,7 @@ export function OpportunityDetailBody() {
   const toggle = () => (saved ? remove.mutate(item.id, { onError }) : save.mutate({ id: item.id }, { onError }))
 
   return (
-    <div className={pageClass("default")}>
+    <div className={pageClass()}>
       {back}
       <div className="flex items-start gap-4">
         <LogoAvatar

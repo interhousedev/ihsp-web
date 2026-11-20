@@ -63,7 +63,7 @@ export function StudentDetailPage() {
 
   return (
     <AdmissionShell roles={[...STAFF_ROLES]}>
-      <div className={pageClass("wide")}>
+      <div className={pageClass()}>
         <PageHeader
           title={name ?? t("student.title")}
           back={

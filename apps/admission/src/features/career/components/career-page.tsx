@@ -47,7 +47,7 @@ function FieldTab() {
   const plan = useQuery(careerPlanQuery())
   const labels = plan.data?.study_focus?.labels ?? []
   return (
-    <div className={pageClass("narrow")}>
+    <div className={pageClass()}>
       <InterestsSection />
       {labels.length > 0 && (
         <NextStep href="/opportunities/" label={t("nextActivities", { fields: listLabels(labels, locale) })} />
@@ -129,7 +129,7 @@ function CareerContent() {
     <AdmissionShell>
       {tab === "field" && <FieldTab />}
       {tab === "future" && data && (
-        <div className={pageClass("narrow")}>
+        <div className={pageClass()}>
           <CareerDeepDive data={data} />
         </div>
       )}
@@ -156,7 +156,7 @@ function CareerContent() {
         </div>
       )}
       {tab === "explore" && data && majors.data && restored && !showResults && (
-        <div className={pageClass("narrow")}>
+        <div className={pageClass()}>
           <StepperWizard
             key={round}
             questions={questions}

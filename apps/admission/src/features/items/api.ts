@@ -26,6 +26,31 @@ export const ACTIVITY_CATEGORIES = [
   "stem_research",
   "other",
 ] as const
+/** The category set shared by honors and certificate types (`options.honor_categories` of the config). */
+export const HONOR_CATEGORIES = [
+  "olympiad",
+  "award",
+  "scholarship",
+  "research",
+  "leadership",
+  "arts",
+  "sports",
+  "academic",
+  "other",
+] as const
+export type HonorCategory = (typeof HONOR_CATEGORIES)[number]
+export const RECOGNITION_LEVELS = ["school", "regional", "national", "international"] as const
+/** A platform certificate with the honor fields it prefills. */
+export type HonorSuggestion = {
+  entry_id: string
+  name: string
+  title: string
+  description: string
+  category: string
+  level: string | null
+  issued_at: string | null
+  dismissed: boolean
+}
 export type MetricInput = AdmissionItemMetricIn
 export type Horizon = MetricInput["horizon"]
 export const DIMENSIONS = ["clarity", "role_name", "impact", "alignment"] as const
@@ -63,6 +88,7 @@ export const itemKeys = {
   all: ["admission", "items"] as const,
   list: (kind?: ItemKind) => ["admission", "items", "list", kind ?? "all"] as const,
   interview: (id: string) => ["admission", "items", "interview", id] as const,
+  suggestions: ["admission", "items", "honor-suggestions"] as const,
 }
 
 const BASE = "/v1/admission/me"
@@ -199,4 +225,23 @@ export function usePostInterview(id: string) {
 export function incompleteFields(error: unknown): string[] {
   const fields = (error as { params?: { fields?: unknown } } | null)?.params?.fields
   return Array.isArray(fields) ? fields.filter((f): f is string => typeof f === "string") : []
+}
+
+/** Non-standard certificates of the student: `suggested` is the row, `available` the creation pick list. */
+export function useHonorSuggestions() {
+  return useQuery({
+    queryKey: itemKeys.suggestions,
+    queryFn: ({ signal }) =>
+      getApiClient().get<{ suggested: HonorSuggestion[]; available: HonorSuggestion[] }>(`${BASE}/honor-suggestions`, {
+        signal,
+      }),
+  })
+}
+
+export function useDismissSuggestion() {
+  const invalidate = useInvalidate()
+  return useMutation({
+    mutationFn: (entryId: string) => getApiClient().post<void>(`${BASE}/honor-suggestions/${seg(entryId)}/dismiss`),
+    onSuccess: invalidate,
+  })
 }

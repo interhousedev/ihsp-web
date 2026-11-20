@@ -5,6 +5,7 @@ import Link from "next/link"
 import { LogoAvatar } from "../../../components/lib/photo-header"
 import { SourceChip } from "../../chooser/components/fact-source"
 import { formatCurrency } from "../../chooser/components/money"
+import { AidFacts } from "./aid-facts"
 import { useFeeStatus } from "../hooks"
 import { FEE_STATUSES, type BudgetRow, type FeeStatus } from "../types"
 
@@ -90,6 +91,7 @@ export function FeeRow({ row }: { row: BudgetRow }) {
           </span>
         ) : null}
       </div>
+      <AidFacts row={row} />
     </li>
   )
 }

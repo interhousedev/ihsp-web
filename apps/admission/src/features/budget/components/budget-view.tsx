@@ -3,6 +3,7 @@
 import { useT } from "@ihsp/i18n"
 import { buttonVariants, StateView } from "@ihsp/ui"
 import Link from "next/link"
+import { useEffect } from "react"
 import { CSS_PROFILE_URL } from "../types"
 import { useBudget } from "../hooks"
 import { AttendCosts } from "./attend-costs"
@@ -10,9 +11,13 @@ import { BudgetTotals } from "./budget-totals"
 import { FeeRow } from "./fee-row"
 
 /** "Cost to apply" per list entry, the totals, "Cost to attend", and the way on to the essays. */
-export function BudgetView() {
+export function BudgetView({ onViewed }: { onViewed?: () => void }) {
   const t = useT("budget")
   const query = useBudget()
+  const seen = query.data !== undefined && query.data.rows.length > 0
+  useEffect(() => {
+    if (seen) onViewed?.()
+  }, [seen, onViewed])
   if (query.isPending) return <StateView state="loading" />
   if (query.isError) return <StateView state="error" error={query.error} onRetry={() => void query.refetch()} />
   const { rows, totals } = query.data
@@ -22,7 +27,7 @@ export function BudgetView() {
         state="empty"
         emptyText={t("empty")}
         action={
-          <Link href="/chooser/search/" className={buttonVariants()}>
+          <Link href="/chooser/?step=match" className={buttonVariants()}>
             {t("emptyAction")}
           </Link>
         }
@@ -59,11 +64,6 @@ export function BudgetView() {
         </section>
       ) : null}
       <AttendCosts rows={rows} />
-      <div>
-        <Link href="/essays/?tab=colleges" className={buttonVariants()}>
-          {t("startEssays", { count: rows.length })}
-        </Link>
-      </div>
     </div>
   )
 }

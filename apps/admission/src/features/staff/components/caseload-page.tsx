@@ -49,7 +49,7 @@ export function CaseloadContent() {
   const active = Boolean(filters.stage || filters.risk || filters.deadline_before || filters.group_id)
 
   return (
-    <div className={pageClass("default")}>
+    <div className={pageClass()}>
       <AppPageHeader icon="teams" title={t("caseload.title")} />
       {all.data ? <StaffOverview items={all.data.items} /> : null}
       <SavedViews filters={filters} onApply={(view) => setFilters(view.filters)} />

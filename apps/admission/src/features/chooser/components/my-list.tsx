@@ -3,13 +3,9 @@
 import { isApiError } from "@ihsp/api"
 import { todayIso, useErrorMessage, useLocale, useT } from "@ihsp/i18n"
 import { Alert, AlertDescription, cn, Icons, Pill, Reveal, SortableList, StateView, Textarea, Button } from "@ihsp/ui"
-import { useQuery } from "@tanstack/react-query"
 import Link from "next/link"
 import { usePathname, useRouter, useSearchParams } from "next/navigation"
 import { useEffect, useState } from "react"
-import { NextStep } from "../../../components/next-step"
-import { careerPlanQuery } from "../../career/api"
-import { AsideCard, SplitLayout } from "../../../components/lib/split-layout"
 import { UnderlineTabs } from "../../../components/lib/underline-tabs"
 import { ScrollFade } from "../../../components/scroll-fade"
 import { useAddToList, useEntryLabel, useList, usePatchEntry, useRemoveEntry } from "../hooks"
@@ -23,7 +19,7 @@ import { ConflictBadges, ConflictBanner } from "./list-conflicts"
 import { AffordabilityPanel } from "./affordability-panel"
 import { EstimateView } from "./estimate-view"
 import { InstitutionCombobox } from "./institution-combobox"
-import { FieldFocus } from "./field-focus"
+import { FieldFocus, useStudyFocusLabels } from "./field-focus"
 import { useOptionLabel } from "./option-label"
 
 /**
@@ -176,19 +172,19 @@ function EntryRow({ entry }: { entry: ListEntry }) {
 
   return (
     <div className="flex flex-col gap-3 py-1">
-      <div className="flex flex-wrap items-center justify-between gap-2">
-        <div className="flex min-w-0 flex-1 items-center gap-3">
+      <div className="flex min-w-0 flex-col gap-3">
+        <div className="flex min-w-0 items-start gap-3">
           <LogoAvatar
             name={entry.institution.name}
             src={entry.institution.logo_url}
             fit={entry.institution.logo_fit}
             zoom={entry.institution.logo_zoom}
-            className="size-9 text-xs ring-0"
+            className="size-10 shrink-0 text-xs ring-0"
           />
-          <div className="min-w-0">
+          <div className="min-w-0 flex-1">
             <Link
               href={`/chooser/institution/?id=${encodeURIComponent(entry.institution.id)}`}
-              className="flex min-h-11 items-center text-sm font-medium hover:underline"
+              className="flex min-h-9 items-center text-sm font-medium hover:underline"
             >
               {entry.institution.name}
             </Link>
@@ -221,7 +217,7 @@ function EntryRow({ entry }: { entry: ListEntry }) {
             </nav>
           </div>
         </div>
-        <div className="flex flex-wrap items-center gap-2">
+        <div className="flex flex-wrap items-center gap-2 sm:pl-[3.25rem]">
           <select
             aria-label={t("list.bucket")}
             className={SELECT}
@@ -301,12 +297,6 @@ function EntryRow({ entry }: { entry: ListEntry }) {
 }
 
 const GROUP_TONE = { reach: "warning", target: "primary", safety: "success", none: "neutral" } as const
-const GROUP_TINT = {
-  reach: "bg-warning/10",
-  target: "bg-primary/10",
-  safety: "bg-success/10",
-  none: "bg-muted",
-} as const
 
 /** The student's list in three buckets. The order inside a bucket is the student's own; it is never sorted by chance. */
 export function MyList() {
@@ -320,8 +310,8 @@ export function MyList() {
   const pathname = usePathname()
   const params = useSearchParams()
   const cycle = params.get("cycle") ?? ""
-  const plan = useQuery(careerPlanQuery())
-  const noField = plan.data !== undefined && (plan.data.study_focus?.labels ?? []).length === 0
+  const focus = useStudyFocusLabels()
+  const noField = focus !== undefined && focus.length === 0
   function setCycle(value: string) {
     const next = new URLSearchParams(params.toString())
     if (value) next.set("cycle", value)
@@ -345,7 +335,7 @@ export function MyList() {
           description={t("list.emptyText")}
           action={
             <Link
-              href="/chooser/search/"
+              href="/chooser/?step=match"
               className="text-primary inline-flex min-h-11 items-center text-sm underline-offset-2 hover:underline"
             >
               {t("list.find")}
@@ -373,36 +363,21 @@ export function MyList() {
   const active =
     visible.find((group) => group.key === tab) ?? visible.find((group) => group.entries.length > 0) ?? visible[0]
 
+  const summary = (
+    <div className="flex flex-wrap items-center gap-2">
+      <Pill tone="primary">{t("list.view.total", { count: entries.length })}</Pill>
+    </div>
+  )
+
   return (
-    <SplitLayout
-      aside={
-        <>
-          <AsideCard title={t("list.view.summaryTitle")} icon={<Icons.homework aria-hidden className="size-4" />}>
-            <Pill tone="primary" className="self-start">
-              {t("list.view.total", { count: entries.length })}
-            </Pill>
-            <ul className="flex flex-col gap-2">
-              {visible.map((group) => (
-                <li key={group.key} className={cn("flex items-start gap-3 rounded-lg p-2", GROUP_TINT[group.key])}>
-                  <span className="text-lg font-semibold tabular-nums">{group.entries.length}</span>
-                  <span className="flex min-w-0 flex-col">
-                    <span className="text-sm font-medium">{t(`list.groups.${group.key}`)}</span>
-                    <span className="text-muted-foreground text-xs">{t(`list.view.hint.${group.key}`)}</span>
-                  </span>
-                </li>
-              ))}
-            </ul>
-          </AsideCard>
-          {noSafety ? (
-            <Alert>
-              <Icons.info aria-hidden />
-              <AlertDescription>{t("list.noSafety")}</AlertDescription>
-            </Alert>
-          ) : null}
-        </>
-      }
-    >
-      <div className="flex flex-col gap-4">
+      <div className="flex min-w-0 flex-col gap-4">
+        {summary}
+        {noSafety ? (
+          <Alert>
+            <Icons.info aria-hidden />
+            <AlertDescription>{t("list.noSafety")}</AlertDescription>
+          </Alert>
+        ) : null}
         {noField ? <FieldFocus /> : null}
         <ConflictBanner entries={all} />
         {cycles.length > 0 ? (
@@ -452,15 +427,6 @@ export function MyList() {
           )}
         </section>
         <AddSchoolRow />
-        <div className="flex flex-col gap-2 md:flex-row">
-          <NextStep href="/chooser/budget/" label={t("list.next.budget")} className="md:flex-1" />
-          <NextStep
-            href="/essays/?tab=colleges"
-            label={t("list.next.essays", { count: all.length })}
-            className="md:flex-1"
-          />
-        </div>
       </div>
-    </SplitLayout>
   )
 }

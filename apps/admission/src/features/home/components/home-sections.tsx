@@ -18,7 +18,7 @@ type SectionKey = "career" | "activities" | "universities" | "essays" | "apply"
 export const SECTIONS = [
   { key: "career", href: "/career/", icon: Icons.sparkles },
   { key: "activities", href: "/activities/", icon: Icons.exams },
-  { key: "universities", href: "/chooser/list/", icon: Icons.globe },
+  { key: "universities", href: "/chooser/", icon: Icons.globe },
   { key: "essays", href: "/essays/", icon: Icons.text },
   { key: "apply", href: "/documents/", icon: Icons.checks },
 ] as const satisfies readonly { key: SectionKey; href: string; icon: unknown }[]
@@ -48,12 +48,12 @@ export function SectionCards() {
   const statuses = useStatuses()
   return (
     <nav aria-label={t("label")}>
-      <ul className="grid gap-3 sm:grid-cols-2 xl:grid-cols-3">
+      <ul className="grid gap-3 sm:grid-cols-2 xl:grid-cols-5">
         {SECTIONS.map(({ key, href, icon: Icon }) => (
           <li key={key}>
             <Link
               href={href}
-              className="bg-card border-hairline-strong rounded-card hover:border-primary/40 flex h-full min-h-11 items-start gap-3 border p-4 shadow-sm"
+              className="bg-card border-hairline-strong rounded-card hover:border-primary/40 flex h-full min-h-11 items-start gap-3 border p-4 shadow-sm xl:items-center xl:p-3"
             >
               <span className="bg-primary/10 text-primary flex size-9 shrink-0 items-center justify-center rounded-full">
                 <Icon aria-hidden className="size-4" />
@@ -64,7 +64,7 @@ export function SectionCards() {
                   {statuses[key] ?? t("status.loading")}
                 </span>
               </span>
-              <span className="mt-1 flex w-6 shrink-0 justify-end">
+              <span className="mt-1 flex w-6 shrink-0 justify-end xl:hidden">
                 <Icons.arrowRight aria-hidden className="text-muted-foreground size-4" />
               </span>
             </Link>

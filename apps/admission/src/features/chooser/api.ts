@@ -1,4 +1,4 @@
-import { getApiClient } from "@ihsp/api"
+import { getApiClient, type AdmissionListBrief } from "@ihsp/api"
 import type { Filters } from "./filters"
 import { EMPTY_FILTERS, filtersToQuery } from "./filters"
 import type {
@@ -103,5 +103,12 @@ export function getUniSuggestions(id: string, locale: string, signal?: AbortSign
   return getApiClient().get<UniSuggestions>(`${BASE}/uni-chats/${encodeURIComponent(id)}/suggestions`, {
     headers: { "Accept-Language": locale },
     signal,
+  })
+}
+
+/** The AI brief on the balance of my list (`POST /list/brief`; needs the `admission_ai` consent). */
+export function postListBrief(locale: string) {
+  return getApiClient().post<AdmissionListBrief>(`${BASE}/list/brief`, undefined, {
+    headers: { "Accept-Language": locale },
   })
 }

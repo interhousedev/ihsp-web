@@ -2,7 +2,6 @@ import { apiUrl, server } from "@ihsp/test-utils"
 import { fireEvent, screen, waitFor } from "@testing-library/react"
 import { afterEach, describe, expect, it } from "bun:test"
 import { http, HttpResponse } from "msw"
-import { ListPlanning } from "../features/chooser/components/list-planning"
 import { MyList } from "../features/chooser/components/my-list"
 import { institution, listEntry, mockChooser } from "./chooser-handlers"
 import { renderAdmissionApp } from "./helpers"
@@ -40,25 +39,6 @@ const profile = (answers: Record<string, unknown>) =>
   http.get(apiUrl("/v1/admission/me/profile"), () => HttpResponse.json({ answers, lock_version: 1 }))
 
 describe("my list planning, gate and deadline", () => {
-  it("ADM-LIST-1: the balance card is a summary; the entries sit behind Show details", async () => {
-    const entry = listEntry({ id: "e1", institution: institution({ id: "i1", name: "Alpha U" }) })
-    mockChooser({ list: [entry] })
-    server.use(
-      http.get(apiUrl("/v1/admission/list/insights"), () =>
-        HttpResponse.json({
-          entries: [{ entry_id: "e1", classification: { effective: "target", source: "computed" } }],
-          balance: { reach: 0, target: 1, safety: 0, unlabelled: 0, status: "no_safety" },
-        }),
-      ),
-    )
-    renderAdmissionApp(<ListPlanning />, { messages })
-    await screen.findByText("Add a safety option.")
-    expect(screen.queryByText(/Your choice|Based on your profile/)).toBeNull()
-    fireEvent.click(screen.getByRole("button", { name: "Show details" }))
-    expect(await screen.findByText(/Based on your profile/)).toBeTruthy()
-    expect(screen.getByText("Alpha U")).toBeTruthy()
-  })
-
   it("ADM-LIST-2: the affordability gate shows its message and opens the panel", async () => {
     mockChooser({ list: [listEntry({ id: "e1", institution: institution({ id: "i1", name: "Alpha U" }) })] })
     server.use(

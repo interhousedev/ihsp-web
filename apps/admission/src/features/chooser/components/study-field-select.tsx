@@ -109,7 +109,7 @@ function StudyFieldDialog({
       }}
       title={t("filters.field")}
       size="md"
-      bodyClassName="flex max-h-[60dvh] flex-col gap-3"
+      bodyClassName="flex max-h-[60dvh] flex-col gap-3 overflow-hidden"
     >
       <Input
         type="search"

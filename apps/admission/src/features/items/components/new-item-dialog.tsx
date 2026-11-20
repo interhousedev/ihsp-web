@@ -5,6 +5,7 @@ import { ResponsiveDialog } from "@ihsp/ui"
 import { useState, type FormEvent } from "react"
 import { incompleteFields, useCreateItem, type ItemKind } from "../api"
 import { ActivityWizard } from "./activity-wizard"
+import { CertificatePicker } from "./honor-suggestions"
 import { emptyForm, toInput, type FormState } from "./item-fields"
 
 export function NewItemDialog({
@@ -31,7 +32,7 @@ export function NewItemDialog({
     event.preventDefault()
     if (step < 3) return
     create.mutate(
-      { kind, ...toInput(form) },
+      { kind, ...toInput(form, kind) },
       {
         onSuccess: (item) => {
           setForm(emptyForm)
@@ -52,6 +53,22 @@ export function NewItemDialog({
       title={t(`new.${kind}`)}
       onSubmit={submit}
     >
+      {kind === "honor" && step === 1 ? (
+        <div className="mb-3">
+          <CertificatePicker
+            onPick={(s) =>
+              setForm({
+                ...form,
+                title: s.title,
+                description: s.description,
+                category: s.category,
+                level: s.level ?? "",
+                certificateEntryId: s.entry_id,
+              })
+            }
+          />
+        </div>
+      ) : null}
       <ActivityWizard kind={kind} value={form} onChange={setForm} onStepChange={setStep} />
       {create.isError && missing.length === 0 ? (
         <p role="alert" className="text-destructive mt-2 text-sm">

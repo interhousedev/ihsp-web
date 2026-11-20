@@ -94,6 +94,12 @@ export type CatalogFilter = {
   scope?: Scope
   org_id?: string
   college_credit?: CreditKind
+  delivery?: "local" | "external"
+  free?: boolean
+  max_tuition?: number
+  max_hours?: number
+  starts_within?: number
+  starts_month?: number
   sort?: CatalogSort
 }
 
@@ -141,6 +147,7 @@ export function useOpportunities(filter: CatalogFilter) {
   return useQuery({
     queryKey: [...OPPORTUNITIES_KEY, "list", query] as const,
     queryFn: ({ signal }) => getApiClient().get<AdmissionOpportunityList>(BASE, { query, signal }),
+    placeholderData: (prev) => prev,
   })
 }
 

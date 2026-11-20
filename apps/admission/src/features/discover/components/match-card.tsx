@@ -30,7 +30,7 @@ export function MatchCard({ match }: { match: Match }) {
     <article className="bg-card border-hairline-strong rounded-card flex h-full flex-col overflow-hidden border shadow-sm">
       <div
         data-testid="match-cover"
-        className="from-primary/30 to-primary/5 relative h-32 shrink-0 bg-gradient-to-br bg-cover bg-center md:h-40"
+        className="from-primary/30 to-primary/5 relative h-28 shrink-0 bg-gradient-to-br bg-cover bg-center md:h-24"
         style={match.cover_url ? { backgroundImage: `url(${JSON.stringify(encodeURI(match.cover_url))})` } : undefined}
       >
         {match.status ? (
@@ -39,7 +39,7 @@ export function MatchCard({ match }: { match: Match }) {
           </div>
         ) : null}
       </div>
-      <div className="flex min-h-0 flex-1 flex-col gap-4 px-4 pb-4 md:px-5">
+      <div className="flex min-h-0 flex-1 flex-col gap-3 px-4 pb-4 md:px-5">
         <LogoAvatar name={match.name} src={match.logo_url} className="-mt-8 size-16" />
         <div className="min-w-0">
           <h3 className="text-lg leading-tight font-semibold">{match.name}</h3>

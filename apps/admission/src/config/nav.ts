@@ -42,36 +42,26 @@ export const SECTIONS: Record<SectionId, Section> = {
     prefixes: ["/activities", "/plan", "/opportunities", "/tests", "/courses"],
     parts: [
       { id: "done", url: "/activities/" },
-      { id: "planned", url: "/plan/" },
       { id: "ideas", url: "/opportunities/" },
+      { id: "planned", url: "/plan/" },
       { id: "tests", url: "/tests/" },
       { id: "courses", url: "/courses/" },
     ],
   },
   universities: {
     id: "universities",
-    url: "/chooser/list/",
+    url: "/chooser/",
     icon: "search",
     prefixes: ["/chooser"],
-    parts: [
-      { id: "list", url: "/chooser/list/" },
-      { id: "search", url: "/chooser/search/" },
-      { id: "budget", url: "/chooser/budget/" },
-    ],
+    parts: [],
   },
   essays: {
     id: "essays",
     url: "/essays/",
     icon: "post",
     prefixes: ["/essays"],
-    parts: [
-      { id: "essays", url: "/essays/?tab=essays", isDefault: true },
-      { id: "colleges", url: "/essays/?tab=colleges" },
-      { id: "ideas", url: "/essays/?tab=ideas" },
-      { id: "story", url: "/essays/?tab=story" },
-      { id: "examples", url: "/essays/?tab=examples" },
-      { id: "alignment", url: "/essays/?tab=alignment" },
-    ],
+    // One linear stepper on the page itself: no section tabs.
+    parts: [],
   },
   apply: {
     id: "apply",

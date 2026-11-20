@@ -171,6 +171,14 @@
     }
   },
   "settingsHub": {
+    "schoolGrades": {
+      "title": "School grades",
+      "text": "The range of grades students plan opportunities for.",
+      "from": "From grade",
+      "to": "To grade",
+      "save": "Save",
+      "saved": "Grade range saved"
+    },
     "title": "Settings",
     "testCatalog": {
       "title": "Test catalog",
@@ -313,7 +321,10 @@
     "superscore": "Superscore",
     "verified": "Verified",
     "markVerified": "Mark verified",
-    "removeVerification": "Remove verification"
+    "removeVerification": "Remove verification",
+    "fromCertificate": "From my certificates",
+    "examsTitle": "Other standard certificates",
+    "examsHint": "From your certificates list; edit them in your profile."
   },
   "career": {
     "title": "Career exploration",
@@ -441,6 +452,7 @@
     "open": "Open assistant",
     "title": "Assistant",
     "close": "Close",
+    "openFull": "Open full page",
     "newChat": "New chat",
     "placeholder": "Ask about your applications…",
     "emptyText": "Ask about universities, essays, deadlines and opportunities.",
@@ -506,6 +518,200 @@
       "text": "The assistant uses AI to read your answers. Allow it here or change it later in the privacy settings.",
       "allow": "Allow AI help",
       "settings": "Privacy settings"
+    }
+  },
+  "essayFlow": {
+    "label": "Essay path",
+    "next": "Next: {step}",
+    "locked": "Finish “{step}” first",
+    "status": { "done": "Done", "current": "Open", "locked": "Locked" },
+    "steps": {
+      "map": { "title": "Prompt map", "hint": "Which prompts one essay can answer", "summary": "{groups} prompt groups, {covered} covered" },
+      "practice": { "title": "Practice", "hint": "A few free minutes on today's theme", "summary": "Today: {count} words" },
+      "ideas": { "title": "Ideas and drafts", "hint": "Score ideas, write for a prompt group", "summary": "{count} essays" },
+      "gallery": { "title": "Other essays", "hint": "Essays shared by other students" },
+      "deep": { "title": "Evaluation", "hint": "Paragraph by paragraph reading" },
+      "match": { "title": "Match to universities", "hint": "Put essays into each university's slots" }
+    },
+    "map": {
+      "intro": "Many universities ask almost the same question. Prompts are grouped by meaning so one essay can serve several of them.",
+      "unavailable": "Meaning search is off, so every prompt stands alone.",
+      "emptyTitle": "No prompts yet",
+      "emptyText": "The prompt catalog is empty.",
+      "inList": "In your list",
+      "words": "{count} words",
+      "chars": "{count} characters",
+      "covered": "Covered",
+      "open": "Open",
+      "showAll": "Show all {count}",
+      "showLess": "Show less",
+      "common": { "title": "Most common", "hint": "Common App prompts, asked of almost everyone." },
+      "shared": { "title": "Shared across universities", "hint": "Similar prompts: one essay can answer the whole group." },
+      "unique": { "title": "Unique", "hint": "Prompts that need an essay of their own." }
+    },
+    "practice": {
+      "today": "Today, {day}",
+      "label": "Your free writing",
+      "placeholder": "Write whatever comes, without stopping…",
+      "status": { "saving": "Saving…", "pending": "Unsaved", "saved": "Saved", "idle": "Not started" },
+      "wordCount": "{count} words",
+      "dictate": "Dictate",
+      "dictateStop": "Stop",
+      "evaluate": "Get feedback",
+      "reevaluate": "Get feedback again",
+      "evaluating": "Reading…",
+      "score": { "imagery": "Imagery", "voice": "Voice", "structure": "Structure", "originality": "Originality" },
+      "scoreOf": "{score} out of 5",
+      "praise": "What works",
+      "tryNext": "Try next",
+      "seeds": "Ideas for your bank",
+      "addSeed": "Add to ideas",
+      "seedAdded": "In your ideas",
+      "seedTag": "practice",
+      "history": "Earlier days",
+      "historyEmpty": "Earlier entries will appear here."
+    },
+    "ideas": {
+      "intro": "Collect ideas, see which open prompts each fits, then write a draft for a whole prompt group.",
+      "bankTitle": "Ideas bank",
+      "bodyLabel": "A new idea",
+      "add": "Add",
+      "empty": "No ideas yet. Add one, or take a seed from today's practice.",
+      "fitTitle": "Best fit among open prompts",
+      "fitNone": "No open prompt to compare with.",
+      "fitConsent": "Fit scores need your AI consent.",
+      "fitConsentLink": "Allow AI help in settings",
+      "draftFromFit": "Draft",
+      "stallTitle": "Stuck for ideas?",
+      "stallFew": "You have fewer than three ideas. Write freely about your life and let the helper find themes.",
+      "stallWeak": "No idea fits an open prompt well yet. Write about your life to find new material.",
+      "stallOpen": "Open Life story",
+      "wordsTitle": "Words that describe you"
+    },
+    "drafts": {
+      "title": "Drafts",
+      "empty": "No drafts yet.",
+      "new": "New draft for a prompt group",
+      "create": "Create",
+      "cancel": "Cancel",
+      "created": "Draft created",
+      "groupLabel": "Prompt group",
+      "groupHint": "One draft will answer {count} prompts.",
+      "titleLabel": "Title",
+      "targets": "Prompts of this draft",
+      "critique": "Critique for {count} prompts",
+      "critiquing": "Reading…",
+      "refresh": "Refresh",
+      "alignment": "Fit {score}",
+      "fork": "Split off for {name}",
+      "forked": "A separate version for {name} was created",
+      "forkedPill": "Fork",
+      "final": "Final",
+      "draft": "Draft",
+      "wordsOf": "{count} of {limit} words",
+      "words": "{count} words",
+      "open": "Open"
+    },
+    "gallery": {
+      "title": "Read essays other students shared",
+      "intro": "See how others answered a prompt. Authors stay anonymous. Publish yours when you want to share it.",
+      "targets": "{count, plural, one {# target} other {# targets}}",
+      "read": "Read",
+      "prompt": "Prompt",
+      "consentOn": "Sharing is on: you can publish essays to the gallery.",
+      "consentOff": "Publishing needs your consent to share essays with other students.",
+      "consentGrant": "Allow sharing",
+      "publishLabel": "Publish one of your essays",
+      "publishEmpty": "Write an essay first, then you can publish it here.",
+      "published": "published",
+      "publish": "Publish",
+      "alreadyPublished": "Published",
+      "republish": "Publish the latest version",
+      "publishHint": "The gallery shows a frozen copy of the current text without your name. You can withdraw it at any time.",
+      "mine": "Your published essays",
+      "mineHint": "Only the copy you published is visible to others.",
+      "others": "From other students",
+      "othersHint": "Anonymous essays shared by students who allowed sharing.",
+      "empty": "No essays have been shared yet.",
+      "unpublish": "Unpublish",
+      "next": "Next: deep read"
+    },
+    "deep": {
+      "title": "Deep read",
+      "intro": "A paragraph-by-paragraph reading: what each part reveals about you, how unique the essay is, and the one thing to fix.",
+      "pick": "Essay",
+      "noEssays": "You have no essays yet. Write one to get a deep read.",
+      "notRun": "This essay has not been deep-read yet.",
+      "run": "Run deep read",
+      "rerun": "Read again",
+      "running": "Reading…",
+      "runHint": "Uses AI and counts toward your weekly review limit. Needs at least 50 words.",
+      "staleNote": "The essay changed since this reading. Read again to refresh it.",
+      "uniqueness": "Uniqueness",
+      "uniquenessLabel": "Uniqueness {value} out of 100",
+      "tropes": "Familiar tropes",
+      "noTropes": "No common tropes found.",
+      "fix": "What to fix",
+      "fixWhere": "Weakest on {dimension}, paragraph {paragraph}.",
+      "fixTry": "Try this:",
+      "paragraphs": "Paragraph by paragraph",
+      "paragraphsHint": "What each paragraph does and how strongly. The one to fix is outlined.",
+      "paragraph": "Paragraph {n}",
+      "roles": {
+        "hook": "Hook",
+        "context": "Context",
+        "turn": "Turn",
+        "evidence": "Evidence",
+        "insight": "Insight",
+        "close": "Close"
+      },
+      "strength": {
+        "strong": "Strong",
+        "ok": "Fine",
+        "weak": "Weak"
+      },
+      "moments": "Moments that stand out",
+      "momentsHint": "Lines an admissions reader is likely to remember.",
+      "kind": {
+        "surprising": "Surprising",
+        "fresh": "Fresh",
+        "earned": "Earned"
+      },
+      "fit": "Fit per university",
+      "fitHint": "The essay read against each university it is written for, under that prompt.",
+      "fitEmpty": "This essay has no university targets yet. Attach it to a prompt of a university on your list.",
+      "fitRun": "Check fit for my universities",
+      "fitRerun": "Check again",
+      "alignment": "Alignment {value} out of 100",
+      "stale": "Out of date",
+      "tips": "Supplement tips",
+      "next": "Next: match to universities"
+    },
+    "match": {
+      "title": "Match essays to universities",
+      "intro": "Choose which essay goes into each slot of each university: the personal statement and the supplements.",
+      "top": "Your strongest essays",
+      "topHint": "Ranked by their stored review score.",
+      "topEmpty": "Review an essay first and your strongest ones will appear here.",
+      "byUni": "By university",
+      "byUniHint": "Slots come from the university's prompts. Candidates are sorted by fit.",
+      "pickUni": "University",
+      "noList": "Add universities to your list to match essays to them.",
+      "noListLink": "Open my list",
+      "howTo": "Drag an essay onto a slot, or press its button. Remove it with the Remove button.",
+      "slotPs": "Personal statement",
+      "slotSupp": "Supplement {n}",
+      "limit": "{count, plural, one {# word max} other {# words max}}",
+      "dropHere": "Drop an essay here",
+      "candidates": "Candidates",
+      "noCandidates": "No essay fits this slot yet.",
+      "assignAria": "Put “{title}” in this slot",
+      "clear": "Remove",
+      "clearAria": "Remove “{title}” from this slot",
+      "overLimit": "{count, plural, one {# word over the limit} other {# words over the limit}}",
+      "targeted": "For this prompt",
+      "alignment": "Fit {value}",
+      "next": "Done"
     }
   },
   "essays": {
@@ -2477,7 +2683,9 @@
       "intend": "Do you intend to participate in college?",
       "yes": "Yes",
       "no": "No",
-      "required": "Required to mark as ready"
+      "required": "Required to mark as ready",
+      "category": "Category",
+      "level": "Level of recognition"
     },
     "delete": {
       "button": "Delete",
@@ -2674,6 +2882,26 @@
     "nextStep": {
       "explore": "Explore universities",
       "exploreHint": "See which universities fit these activities"
+    },
+    "suggestions": {
+      "title": "From your certificates",
+      "hint": "Olympiads, medals and other certificates that can become honors.",
+      "add": "Add as honor",
+      "dismiss": "Dismiss",
+      "added": "Honor added from {name}",
+      "dismissed": "Hidden. Find it under “Add from my certificates”.",
+      "pick": "Add from my certificates",
+      "pickTitle": "Add from my certificates",
+      "pickEmpty": "No certificates left to add.",
+      "pickHint": "Pick a certificate to prefill the honor.",
+      "issued": "Issued {date}"
+    },
+    "distribution": {
+      "title": "Your honors by category",
+      "hint": "How your profile reads: balance the categories you want to show.",
+      "none": "Add honors to see the balance.",
+      "ready": "ready",
+      "draft": "drafts"
     }
   },
   "documents": {
@@ -2858,11 +3086,18 @@
       "tests": "Tests",
       "deadlines": "Deadlines",
       "empty": "Add tasks, test dates or deadlines to see your prep calendar.",
-      "task": "{title}, {start} to {end}",
-      "test": "{title}, {date}",
-      "registration": "{title}: registration closes {date}",
-      "deadline": "{title}, {date}",
-      "week": "Week of {date}"
+      "exam": "Exam",
+      "registrationCloses": "Registration closes",
+      "predicted": "Predicted",
+      "dayCount": "{date}: {count, plural, one {# item} other {# items}}",
+      "zoom": "Timeline scale",
+      "zoomLevel": {
+        "year": "Year",
+        "month": "Month",
+        "week": "Week"
+      },
+      "reminders": "Reminders",
+      "openItem": "Open"
     },
     "title": "Deadlines",
     "view": {
@@ -3159,6 +3394,31 @@
       "search": "Search the LMS catalog",
       "empty": "No LMS courses found.",
       "cta": "Find an LMS course"
+    },
+    "path": {
+      "label": "Your path",
+      "academic": "Academic",
+      "toTake": "Courses and certifications to take",
+      "events": "Events and competitions"
+    },
+    "academic": {
+      "title": "Academic: what you study",
+      "hint": "Lyceum subjects and LMS courses, plus anything you completed elsewhere. This is what goes on your profile."
+    },
+    "toTake": {
+      "title": "Courses and certifications to take",
+      "hint": "Recommended for your field of study. Save one to put it in your plan.",
+      "local": "At the lyceum (LMS)",
+      "localHint": "Run on the lyceum platform: enrol in one click.",
+      "localEmpty": "No lyceum courses are recommended yet.",
+      "external": "External",
+      "externalHint": "Run by universities and other providers; check cost and weekly load first.",
+      "externalEmpty": "No external courses or certifications yet."
+    },
+    "events": {
+      "title": "Events and competitions",
+      "text": "Olympiads, hackathons and summer programs are not courses. They live under Ideas, next to your plan.",
+      "cta": "Open events"
     }
   },
   "opportunities": {
@@ -3324,7 +3584,7 @@
     "noteLabel": "Note for the reviewer",
     "planTitle": "Saved opportunities",
     "planEmptyTitle": "Your plan is empty",
-    "planEmptyText": "Save exams, courses and events to plan grades 9 to 12.",
+    "planEmptyText": "Save exams, courses and events to plan grades {from} to {to}.",
     "loadTitle": "Load per term",
     "coverageTitle": "Fields covered",
     "unplaced": "{count, plural, one {# entry has} other {# entries have}} no grade yet",
@@ -3369,7 +3629,32 @@
       "title": "Title"
     },
     "openPlan": "Open my plan",
-    "nextPlanHint": "Your saved opportunities and deadlines are in the plan."
+    "nextPlanHint": "Your saved opportunities and deadlines are in the plan.",
+    "place": "Place in plan",
+    "termNotSet": "Term not set",
+    "unplacedTitle": "Not placed yet",
+    "boardTitle": "Your plan by grade and term",
+    "startsOnLabel": "Starts on",
+    "hoursLabel": "Hours per week",
+    "costLabel": "Cost, USD (0 = free)",
+    "filters": {
+      "delivery": "Where it runs",
+      "cost": "Cost",
+      "hours": "Weekly load",
+      "starts": "Starts within",
+      "startMonth": "Starts in month",
+      "free": "Free",
+      "costUpTo": "Up to ${amount}",
+      "costValue": "${amount}",
+      "hoursUpTo": "Up to {hours} h/week",
+      "hoursValue": "{hours} h/week",
+      "startsWithin": "{days} days",
+      "startsValue": "Starts {date}"
+    },
+    "delivery": {
+      "local": "At the lyceum (LMS)",
+      "external": "External"
+    }
   },
   "opportunitiesStaff": {
     "reports": {
@@ -3746,6 +4031,10 @@
     },
     "deck": {
       "label": "College cards"
+    },
+    "settings": {
+      "open": "Settings",
+      "title": "Matching settings"
     }
   },
   "uniChat": {
@@ -3785,6 +4074,11 @@
     "search": "Search articles",
     "allTags": "All topics",
     "topics": {
+      "admission": "Admission",
+      "private": "Private universities",
+      "tashkent": "Tashkent",
+      "uzbekistan": "Uzbekistan",
+      "uzbmb": "UZBMB",
       "costs": "Costs",
       "deadlines": "Deadlines",
       "documents": "Documents",
@@ -3803,9 +4097,14 @@
     "articles": "Articles",
     "none": "No articles found.",
     "updated": "Updated {date}",
+    "shareArticle": "Copy link to article",
+    "shareSection": "Copy link to section: {title}",
+    "onThisPage": "On this page",
+    "categories": "Topics",
     "back": "All articles",
     "notFound": "This article is not available.",
     "chatTab": "Admission assistant",
+    "askAssistant": "Ask the assistant",
     "chatEmpty": "Ask anything about admission. Answers link to the articles they come from.",
     "chatPlaceholder": "Ask about admission",
     "newChat": "New chat",
@@ -4132,6 +4431,25 @@
       "title": "What to check",
       "css": "Some fees or aid forms are unknown. The CSS Profile is filed on the College Board site.",
       "generic": "Some fees or aid forms are unknown: check each college's aid forms."
+    },
+    "aid": {
+      "title": "University aid",
+      "meetsNeed": "Meets full need",
+      "yes": "Yes",
+      "no": "No",
+      "noData": "no data",
+      "avgAid": "Average aid ({scope})",
+      "avgAidPlain": "Average aid",
+      "admit": "Admit rate ({scope})",
+      "admitPlain": "Admit rate",
+      "composition": "Aid composition",
+      "grant": "Grants",
+      "loan": "Loans",
+      "work": "Work",
+      "scope": {
+        "intl": "international",
+        "overall": "overall"
+      }
     }
   },
   "essayReview": {
@@ -4281,6 +4599,94 @@
       "band": "Band {before} to {after}",
       "active": "Active prompt",
       "draft": "Draft"
+    }
+  },
+  "flow": {
+    "label": "University search steps",
+    "title": "Universities and budget",
+    "next": "Next: {step}",
+    "status": {
+      "done": "Done",
+      "current": "Now",
+      "locked": "Locked"
+    },
+    "steps": {
+      "quiz": {
+        "title": "Quiz",
+        "summary": "Tell us what matters to you"
+      },
+      "match": {
+        "title": "Match",
+        "summary": "On your list: {count}"
+      },
+      "list": {
+        "title": "My list",
+        "summary": "Universities: {count}"
+      },
+      "budget": {
+        "title": "Budget and aid",
+        "summary": "Cost to apply and financial aid"
+      },
+      "brief": {
+        "title": "List brief",
+        "summary": "AI brief on the balance of your list",
+        "text": "The AI reviews the balance of your list and suggests the universities it lacks.",
+        "essays": "Go to essays"
+      }
+    },
+    "locked": {
+      "quiz": "Finish the quiz first",
+      "match": "Add at least one university",
+      "list": "Add {count} more (you need {target})",
+      "budget": "View the budget first"
+    },
+    "hint": {
+      "quiz": "Answer all the questions",
+      "match": "Swipe right on at least one university",
+      "list": "Your list needs at least {count} universities",
+      "budget": "Opens once you have seen the budget"
+    }
+  },
+  "brief": {
+    "title": "List brief",
+    "open": "Open the list brief",
+    "reopen": "Open the brief",
+    "close": "Close",
+    "unlabelled": "not rated",
+    "loading": "Preparing the brief",
+    "refresh": "Refresh the brief",
+    "retry": "Retry",
+    "noSuggestions": "No new universities to add",
+    "noData": "no data",
+    "admit": "admit {percent}% ({scope}, {year})",
+    "scope": {
+      "intl": "international",
+      "overall": "overall"
+    },
+    "sections": {
+      "balance": "List balance",
+      "steps": "What to do next",
+      "suggestions": "Add to your list"
+    },
+    "balance": {
+      "empty": "The list is empty",
+      "too_few": "The list is short",
+      "no_safety": "No safety options",
+      "too_many_reach": "Too many reach schools",
+      "balanced": "The list is balanced"
+    },
+    "consent": {
+      "title": "AI consent needed",
+      "text": "To write the brief the AI processes your list and profile.",
+      "allow": "Allow",
+      "settings": "Consent settings"
+    },
+    "limit": {
+      "title": "AI limit reached",
+      "text": "Try again later: the limit renews."
+    },
+    "error": {
+      "title": "The brief could not be prepared"
     }
   }
 }

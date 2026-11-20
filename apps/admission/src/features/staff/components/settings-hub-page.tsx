@@ -2,9 +2,11 @@
 
 import { AppPageHeader, pageClass } from "../../../components/lib/page"
 import { useT } from "@ihsp/i18n"
+import { useSession } from "@ihsp/auth"
 import { Card, CardContent } from "@ihsp/ui"
 import Link from "next/link"
 import { AdmissionShell } from "../../shell/components/admission-shell"
+import { SchoolGradesCard } from "./school-grades-card"
 
 const ITEMS = [
   { key: "testCatalog", href: "/staff/test-catalog/" },
@@ -15,8 +17,9 @@ const ITEMS = [
 /** Entry point of the admission settings that counselors and administrators edit. */
 export function SettingsHubBody() {
   const t = useT("settingsHub")
+  const isAdmin = !!useSession().session?.user.roles?.includes("admin")
   return (
-    <div className={pageClass("narrow")}>
+    <div className={pageClass()}>
       <AppPageHeader icon="settings" title={t("title")} />
       <ul className="grid gap-3 md:grid-cols-2">
         {ITEMS.map((item) => (
@@ -32,6 +35,7 @@ export function SettingsHubBody() {
           </li>
         ))}
       </ul>
+      {isAdmin && <SchoolGradesCard />}
     </div>
   )
 }

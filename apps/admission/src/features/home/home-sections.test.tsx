@@ -71,7 +71,7 @@ describe("home sections", () => {
     )
     await waitFor(() => expect(screen.getAllByRole("link").map((l) => l.getAttribute("href"))).toContain("/#journey"))
     const hrefs = screen.getAllByRole("link").map((l) => l.getAttribute("href"))
-    expect(hrefs).toContain("/chooser/search?view=discover")
+    expect(hrefs).toContain("/chooser?step=match")
     expect(hrefs.some((h) => h?.startsWith("/colleges"))).toBe(false)
   })
 })

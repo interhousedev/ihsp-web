@@ -10,6 +10,11 @@ import {
   buttonVariants,
   Input,
   LoadingButton,
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
   Skeleton,
   StateView,
   Icons,
@@ -17,21 +22,17 @@ import {
 import Link from "next/link"
 import { useMemo, useState, type FormEvent } from "react"
 import { toast } from "sonner"
-import { ScrollFade } from "../../../components/scroll-fade"
 import { AdmissionShell } from "../../shell/components/admission-shell"
 import {
-  localName,
   useAiPlan,
   useGenerateAiPlan,
   usePlan,
   useRemoveFromPlan,
   useSaveToPlan,
-  useTaxonomy,
   type Opportunity,
   type Plan,
 } from "../api"
-import { GRADES } from "./catalog-page"
-import { OpportunityCard } from "./opportunity-card"
+import { useSchoolGrades } from "../../../lib/config"
 
 const TERMS = ["fall", "spring", "summer"] as const
 
@@ -64,6 +65,7 @@ function AiError({ error }: { error: unknown }) {
 }
 
 function AiPlanner({ titles }: { titles: Map<string, string> }) {
+  const GRADES = useSchoolGrades()
   const t = useT("opportunities")
   const locale = useLocale()
   const current = useAiPlan()
@@ -148,118 +150,132 @@ function AiPlanner({ titles }: { titles: Map<string, string> }) {
   )
 }
 
-function Analytics({ plan }: { plan: Plan }) {
-  const t = useT("opportunities")
-  const locale = useLocale()
-  const taxonomy = useTaxonomy()
-  const a = plan.analytics
-  const peak = Math.max(1, ...Object.values(a.load))
-  return (
-    <section className="grid gap-4 md:grid-cols-2">
-      <div className="bg-card flex flex-col gap-2 rounded-card border p-4">
-        <h2 className="font-medium">{t("loadTitle")}</h2>
-        <table className="text-sm">
-          <thead>
-            <tr>
-              <th />
-              {TERMS.map((term) => (
-                <th key={term} className="text-muted-foreground font-normal">
-                  {t(`term.${term}`)}
-                </th>
-              ))}
-            </tr>
-          </thead>
-          <tbody>
-            {GRADES.map((grade) => (
-              <tr key={grade}>
-                <th className="text-left font-normal">{t("gradeShort", { grade })}</th>
-                {TERMS.map((term) => {
-                  const n = a.load[`${grade}:${term}`] ?? 0
-                  return (
-                    <td key={term} className="p-1 text-center">
-                      <span
-                        className="bg-primary/15 inline-block min-w-8 rounded px-1 transition-colors"
-                        style={{ opacity: 0.4 + (0.6 * n) / peak }}
-                      >
-                        {n}
-                      </span>
-                    </td>
-                  )
-                })}
-              </tr>
-            ))}
-          </tbody>
-        </table>
-        {a.unplaced > 0 && <p className="text-muted-foreground text-xs">{t("unplaced", { count: a.unplaced })}</p>}
-      </div>
-      {(taxonomy.data?.fields ?? []).length > 0 && (
-        <div className="bg-card flex flex-col gap-2 rounded-card border p-4">
-          <h2 className="font-medium">{t("coverageTitle")}</h2>
-          <ul className="flex flex-col gap-1 text-sm">
-            {(taxonomy.data?.fields ?? []).map((f) => (
-              <li key={f.id} className="flex justify-between gap-2">
-                <span>{localName(f.name, locale)}</span>
-                <span className={a.coverage[f.id] ? "font-medium" : "text-muted-foreground"}>
-                  {a.coverage[f.id] ?? 0}
-                </span>
-              </li>
-            ))}
-          </ul>
-        </div>
-      )}
-    </section>
-  )
-}
+const UNSET = "unset"
 
-function Entry({ item, grade, entryId }: { item: Opportunity; grade: number | null; entryId: string }) {
+type Cell = { grade: number | null; term: (typeof TERMS)[number] | typeof UNSET }
+
+function Placement({ item, entry }: { item: Opportunity; entry: Plan["entries"][number] }) {
+  const GRADES = useSchoolGrades()
   const t = useT("opportunities")
   const tItems = useT("items")
   const errorMessage = useErrorMessage()
   const save = useSaveToPlan()
   const remove = useRemoveFromPlan()
   const onError = (error: unknown) => toast.error(errorMessage(error))
+  const options: Cell[] = GRADES.flatMap((grade) => TERMS.map((term) => ({ grade, term })))
+  const current = entry.planned_grade === null ? "" : `${entry.planned_grade}:${entry.planned_term ?? UNSET}`
   return (
-    <OpportunityCard
-      item={item}
-      actionBelow
-      action={
-        <div className="flex flex-wrap items-center gap-1">
-          {GRADES.map((g) => (
-            <Button
-              key={g}
-              type="button"
-              size="sm"
-              variant={g === grade ? "default" : "outline"}
-              aria-pressed={g === grade}
-              disabled={save.isPending}
-              onClick={() => save.mutate({ id: item.id, planned_grade: g }, { onError })}
-            >
-              {g}
-            </Button>
-          ))}
-          <Link
-            href={`/activities/?item=new&from=${encodeURIComponent(entryId)}`}
-            className={buttonVariants({ size: "sm", variant: "outline" })}
-          >
-            {tItems("plan.addToAchievements")}
-          </Link>
-          <Button
-            type="button"
-            size="sm"
-            variant="ghost"
-            disabled={remove.isPending}
-            onClick={() => remove.mutate(item.id, { onError })}
-          >
-            {t("removeFromPlan")}
-          </Button>
+    <li className="bg-card flex flex-col gap-2 rounded-card border p-2 text-sm">
+      <Link href={`/opportunities/view/?id=${encodeURIComponent(item.id)}`} className="line-clamp-2 break-words font-medium hover:underline">
+        {item.fields.title}
+      </Link>
+      <div className="flex items-center gap-1">
+        <Select
+          value={current}
+          onValueChange={(v) => {
+            if (!v) return
+            const [grade, term] = v.split(":")
+            save.mutate(
+              { id: item.id, planned_grade: Number(grade), planned_term: term === UNSET ? null : (term as (typeof TERMS)[number]) },
+              { onError },
+            )
+          }}
+        >
+          <SelectTrigger aria-label={t("place")} className="h-8 min-w-0 flex-1">
+            <SelectValue>{current ? placeLabel(t, entry.planned_grade, entry.planned_term) : t("place")}</SelectValue>
+          </SelectTrigger>
+          <SelectContent>
+            {options.map((o) => (
+              <SelectItem key={`${o.grade}:${o.term}`} value={`${o.grade}:${o.term}`}>
+                {placeLabel(t, o.grade, o.term)}
+              </SelectItem>
+            ))}
+          </SelectContent>
+        </Select>
+        <Button
+          type="button"
+          size="icon-sm"
+          variant="ghost"
+          aria-label={t("removeFromPlan")}
+          disabled={remove.isPending}
+          onClick={() => remove.mutate(item.id, { onError })}
+        >
+          <Icons.close aria-hidden className="size-4" />
+        </Button>
+      </div>
+      <Link
+        href={`/activities/?item=new&from=${encodeURIComponent(entry.id)}`}
+        className="text-primary text-xs hover:underline"
+      >
+        {tItems("plan.addToAchievements")}
+      </Link>
+    </li>
+  )
+}
+
+function placeLabel(t: ReturnType<typeof useT>, grade: number | null, term: string | null): string {
+  const termText = term && term !== UNSET ? t(`term.${term}`) : t("termNotSet")
+  return grade === null ? t("unplacedTitle") : `${t("gradeShort", { grade })} · ${termText}`
+}
+
+/** The saved plan: one row per school grade, one column per term, plus what is not placed yet. */
+function Board({ plan }: { plan: Plan }) {
+  const GRADES = useSchoolGrades()
+  const t = useT("opportunities")
+  const byId = new Map(plan.opportunities.map((o) => [o.id, o]))
+  const rows = plan.entries.flatMap((e) => {
+    const item = byId.get(e.opportunity_id)
+    return item ? [{ entry: e, item }] : []
+  })
+  const cellRows = (grade: number, term: string) =>
+    rows.filter((r) => r.entry.planned_grade === grade && (r.entry.planned_term ?? UNSET) === term)
+  const unplaced = rows.filter((r) => r.entry.planned_grade === null || !GRADES.includes(r.entry.planned_grade))
+  const columns = rows.some((r) => r.entry.planned_grade !== null && !r.entry.planned_term)
+    ? ([...TERMS, UNSET] as const)
+    : TERMS
+  return (
+    <section aria-label={t("boardTitle")} className="flex flex-col gap-3">
+      <h2 className="font-medium">{t("boardTitle")}</h2>
+      {unplaced.length > 0 && (
+        <div className="flex flex-col gap-2">
+          <h3 className="text-muted-foreground text-sm">{t("unplacedTitle")}</h3>
+          <ul className="grid gap-2 sm:grid-cols-2 lg:grid-cols-3">
+            {unplaced.map((r) => (
+              <Placement key={r.entry.id} item={r.item} entry={r.entry} />
+            ))}
+          </ul>
         </div>
-      }
-    />
+      )}
+      {GRADES.map((grade) => (
+        <div key={grade} className="flex flex-col gap-2">
+          <h3 className="text-sm font-medium">{t("gradeLong", { grade })}</h3>
+          <div className={`grid gap-2 ${columns.length === 4 ? "md:grid-cols-4" : "md:grid-cols-3"}`}>
+            {columns.map((term) => {
+              const here = cellRows(grade, term)
+              return (
+                <div key={term} className="bg-muted/40 flex min-h-16 flex-col gap-2 rounded-card p-2">
+                  <p className="text-muted-foreground text-xs">
+                    {term === UNSET ? t("termNotSet") : t(`term.${term}`)}
+                    {here.length > 0 ? ` · ${here.length}` : ""}
+                  </p>
+                  <ul className="flex flex-col gap-2">
+                    {here.map((r) => (
+                      <Placement key={r.entry.id} item={r.item} entry={r.entry} />
+                    ))}
+                  </ul>
+                </div>
+              )
+            })}
+          </div>
+        </div>
+      ))}
+    </section>
   )
 }
 
 export function PlanBody() {
   const t = useT("opportunities")
+  const grades = useSchoolGrades()
   const query = usePlan()
   const titles = useMemo(() => new Map(query.data?.opportunities.map((o) => [o.id, o.fields.title])), [query.data])
   let body
@@ -271,7 +287,7 @@ export function PlanBody() {
         state="empty"
         icon={<Icons.heart aria-hidden />}
         title={t("planEmptyTitle")}
-        description={t("planEmptyText")}
+        description={t("planEmptyText", { from: grades[0] ?? 9, to: grades[grades.length - 1] ?? 12 })}
         action={
           <Link href="/opportunities/" className={buttonVariants()}>
             {t("browse")}
@@ -281,11 +297,9 @@ export function PlanBody() {
     )
   else {
     const plan = query.data
-    const byId = new Map(plan.opportunities.map((o) => [o.id, o]))
     const conflicts = plan.analytics.conflicts
     body = (
       <>
-        <Analytics plan={plan} />
         {conflicts.length > 0 && (
           <Alert variant="destructive">
             <AlertDescription>
@@ -321,18 +335,11 @@ export function PlanBody() {
           </section>
         )}
         <AiPlanner titles={titles} />
-        <ScrollFade maxHeight="75vh">
-          <ul className="grid gap-3 md:grid-cols-2">
-            {plan.entries.map((e) => {
-              const item = byId.get(e.opportunity_id)
-              return item ? <Entry key={e.id} item={item} grade={e.planned_grade} entryId={e.id} /> : null
-            })}
-          </ul>
-        </ScrollFade>
+        <Board plan={plan} />
       </>
     )
   }
-  return <div className={pageClass("wide")}>{body}</div>
+  return <div className={pageClass()}>{body}</div>
 }
 
 export function OpportunityPlanPage() {

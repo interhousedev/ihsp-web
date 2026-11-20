@@ -12,7 +12,7 @@ export function StepPage({ page, icon, roles }: { page: string; icon: keyof type
   const Icon = Icons[icon]
   return (
     <AdmissionShell roles={roles}>
-      <div className={pageClass("narrow")}>
+      <div className={pageClass()}>
         <AppPageHeader icon="sparkles" title={t(`${page}.title`)} />
         <StateView
           state="empty"

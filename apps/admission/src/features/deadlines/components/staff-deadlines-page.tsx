@@ -108,7 +108,7 @@ export function StaffDeadlinesPage() {
     )
   return (
     <AdmissionShell roles={[...CURATOR_ROLES]}>
-      <div className={pageClass("wide")}>
+      <div className={pageClass()}>
         <AppPageHeader
           icon="calendar"
           title={t("staffTitle")}

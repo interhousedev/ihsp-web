@@ -4,6 +4,8 @@ import { useT } from "@ihsp/i18n"
 import { Input, Label, Textarea } from "@ihsp/ui"
 import {
   ACTIVITY_CATEGORIES,
+  HONOR_CATEGORIES,
+  RECOGNITION_LEVELS,
   type Item,
   type ItemGrade,
   type ItemInput,
@@ -24,6 +26,10 @@ export type FormState = {
   organization: string
   description: string
   category: string
+  /** Honors: the recognition level. */
+  level: string
+  /** Honors made from a platform certificate. */
+  certificateEntryId: string | null
   grades: ItemGrade[]
   timing: ItemTiming[]
   hours: string
@@ -37,6 +43,8 @@ export const emptyForm: FormState = {
   organization: "",
   description: "",
   category: "",
+  level: "",
+  certificateEntryId: null,
   grades: [],
   timing: [],
   hours: "",
@@ -50,6 +58,8 @@ export const toForm = (item: Item): FormState => ({
   organization: item.organization,
   description: item.description,
   category: item.category ?? "",
+  level: item.level ?? "",
+  certificateEntryId: item.certificate_entry_id ?? null,
   grades: item.grades as ItemGrade[],
   timing: item.timing as ItemTiming[],
   hours: item.hours_per_week?.toString() ?? "",
@@ -73,8 +83,9 @@ export function formValid(f: FormState): boolean {
   )
 }
 
-export function toInput(f: FormState): Omit<ItemInput, "kind"> {
+export function toInput(f: FormState, kind: ItemKind = "activity"): Omit<ItemInput, "kind"> {
   return {
+    ...(kind === "honor" ? { level: f.level.trim() || null, certificate_entry_id: f.certificateEntryId } : {}),
     status: f.status,
     title: f.title.trim(),
     organization: f.organization.trim(),
@@ -119,8 +130,11 @@ export function ItemFields({
 }) {
   const t = useT("items")
   const options = useAdmissionConfig().data?.options
-  const configured = optionList(options, kind === "honor" ? "recognition_levels" : "activity_categories")
-  const categories = configured.length > 0 ? configured : kind === "honor" ? [] : [...ACTIVITY_CATEGORIES]
+  const tc = useT("honorCategory")
+  const configured = optionList(options, kind === "honor" ? "honor_categories" : "activity_categories")
+  const categories = configured.length > 0 ? configured : [...(kind === "honor" ? HONOR_CATEGORIES : ACTIVITY_CATEGORIES)]
+  const levelOptions = optionList(options, "recognition_levels")
+  const levels = levelOptions.length > 0 ? levelOptions : [...RECOGNITION_LEVELS]
   const grades = optionList(options, "item_grades").map(Number) as ItemGrade[]
   const timings = optionList(options, "activity_timing") as ItemTiming[]
   const set = (patch: Partial<FormState>) => onChange({ ...value, ...patch })
@@ -159,7 +173,7 @@ export function ItemFields({
         </div>
       </fieldset>
       <div className="flex flex-col gap-1">
-        <Label htmlFor={`${idPrefix}-category`}>{t(activity ? "form.activityType" : "form.recognition")}</Label>
+        <Label htmlFor={`${idPrefix}-category`}>{t(activity ? "form.activityType" : "form.category")}</Label>
         <select
           id={`${idPrefix}-category`}
           className="border-input bg-background min-h-11 rounded-md border px-2 text-sm md:min-h-9"
@@ -172,12 +186,31 @@ export function ItemFields({
           ) : null}
           {categories.map((c) => (
             <option key={c} value={c}>
-              {activity ? t(`category.${c}`) : t(`recognition.${c}`)}
+              {activity ? t(`category.${c}`) : tc(c)}
             </option>
           ))}
         </select>
         {err("category")}
       </div>
+      {activity ? null : (
+        <div className="flex flex-col gap-1">
+          <Label htmlFor={`${idPrefix}-level`}>{t("form.recognition")}</Label>
+          <select
+            id={`${idPrefix}-level`}
+            className="border-input bg-background min-h-11 rounded-md border px-2 text-sm md:min-h-9"
+            value={value.level}
+            onChange={(e) => set({ level: e.target.value })}
+          >
+            <option value="">{t("form.choose")}</option>
+            {levels.map((l) => (
+              <option key={l} value={l}>
+                {t(`recognition.${l}`)}
+              </option>
+            ))}
+          </select>
+          {err("level")}
+        </div>
+      )}
       <div className="flex flex-col gap-1">
         <Label htmlFor={`${idPrefix}-title`}>{t("form.title")}</Label>
         <Input

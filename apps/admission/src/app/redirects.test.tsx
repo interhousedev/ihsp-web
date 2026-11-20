@@ -34,10 +34,10 @@ describe("old routes", () => {
   test("/colleges/ and /colleges/algorithm/ land on the search", async () => {
     open("/colleges/?country=uz")
     render(<Colleges />)
-    await waitFor(() => expect(testRouter.replace).toHaveBeenCalledWith("/chooser/search/?country=uz"))
+    await waitFor(() => expect(testRouter.replace).toHaveBeenCalledWith("/chooser/?step=match&country=uz"))
     open("/colleges/algorithm/")
     render(<Algorithm />)
-    await waitFor(() => expect(testRouter.replace).toHaveBeenCalledWith("/chooser/search/?prefs=1"))
+    await waitFor(() => expect(testRouter.replace).toHaveBeenCalledWith("/chooser/?step=quiz"))
   })
 
   test("/words/ keeps the target hash and /alignment/ the incoming query", async () => {

@@ -334,7 +334,7 @@ export function InstitutionDetail() {
       <StateView
         state="empty"
         title={t("detail.missingTitle")}
-        action={<Link href="/chooser/search/">{t("detail.back")}</Link>}
+        action={<Link href="/chooser/?step=match">{t("detail.back")}</Link>}
       />
     )
   if (query.isLoading) return <StateView state="loading" rows={4} />

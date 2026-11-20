@@ -33,7 +33,8 @@ export function ItemEditor({ item, onDeleted }: { item: Item; onDeleted: () => v
         className="flex flex-col gap-3"
         onSubmit={(e) => {
           e.preventDefault()
-          patch.mutate({ ...toInput(form), lock_version: item.lock_version })
+          const { certificate_entry_id: _linked, ...changes } = toInput(form, item.kind as ItemKind)
+          patch.mutate({ ...changes, lock_version: item.lock_version })
         }}
       >
         <ItemFields

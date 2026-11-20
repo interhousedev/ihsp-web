@@ -6,7 +6,7 @@ export const TOUR_STOPS: readonly TourStop[] = [
   { id: "home", href: "/" },
   { id: "career", href: "/career/" },
   { id: "activities", href: "/activities/" },
-  { id: "universities", href: "/chooser/list/" },
+  { id: "universities", href: "/chooser/" },
   { id: "essays", href: "/essays/" },
   { id: "apply", href: "/documents/" },
 ]

@@ -23,7 +23,7 @@ describe("pathway links", () => {
   test("an empty checklist suggests searching for universities", async () => {
     server.use(http.get(apiUrl("/v1/admission/checklist"), () => HttpResponse.json([])))
     renderAdmissionApp(<ChecklistSection />, { messages })
-    expect((await link("Find universities")).getAttribute("href")).toBe("/chooser/search")
+    expect((await link("Find universities")).getAttribute("href")).toBe("/chooser?step=match")
   })
 
   test("the documents page ends with the application review", async () => {
@@ -35,7 +35,7 @@ describe("pathway links", () => {
   test("an entry in the URL adds a back link to the list", async () => {
     renderAdmissionApp(<DocumentsPage />, { messages, route: "/documents/?entry=e1" })
     // A Button rendered as a Link carries role="button".
-    expect((await link("Back to my list", "button")).getAttribute("href")).toBe("/chooser/list?entry=e1")
+    expect((await link("Back to my list", "button")).getAttribute("href")).toBe("/chooser?step=list&entry=e1")
   })
 
   test("the review page suggests recording results", async () => {

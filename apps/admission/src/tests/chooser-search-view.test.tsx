@@ -41,41 +41,19 @@ const render = (route: string) => renderAdmissionApp(<SearchView />, { route, me
 describe("chooser search view toggle", () => {
   it("shows the list by default and switches to Discover through ?view", async () => {
     mockChooser({ items: [institution()] })
-    render("/chooser/search/")
+    render("/chooser/?step=match&view=list")
     await screen.findByText("Uni One")
     expect(screen.getByRole("button", { name: "List" }).getAttribute("aria-pressed")).toBe("true")
     fireEvent.click(screen.getByRole("button", { name: "Discover" }))
-    await waitFor(() => expect(testRouter.replace).toHaveBeenCalledWith("/chooser/search/?view=discover"))
+    await waitFor(() => expect(testRouter.replace).toHaveBeenCalledWith("/chooser/?step=match"))
   })
 
   it("renders Discover for ?view=discover", async () => {
     mockChooser({ items: [institution()] })
-    render("/chooser/search/?view=discover")
+    render("/chooser/?step=match")
     expect(await screen.findByRole("button", { name: "Discover" })).toBeDefined()
     expect(screen.getByRole("button", { name: "Discover" }).getAttribute("aria-pressed")).toBe("true")
     expect(screen.queryByText("Uni One")).toBeNull()
-  })
-})
-
-describe("chooser search preferences", () => {
-  it("opens the preferences sheet for ?prefs=1 and closing drops the param", async () => {
-    mockChooser({ items: [institution()] })
-    server.use(
-      http.get(apiUrl("/v1/admission/preferences"), () =>
-        HttpResponse.json({ answers: {}, tags: [], completed: false, updated_at: null }),
-      ),
-    )
-    render("/chooser/search/?prefs=1")
-    expect(await screen.findByText("Your preferences")).toBeDefined()
-    fireEvent.keyDown(document.activeElement ?? document.body, { key: "Escape" })
-    await waitFor(() => expect(testRouter.replace).toHaveBeenCalledWith("/chooser/search/"))
-  })
-
-  it("the Preferences button sets ?prefs=1", async () => {
-    mockChooser({ items: [institution()] })
-    render("/chooser/search/")
-    fireEvent.click(await screen.findByRole("button", { name: "Preferences" }))
-    await waitFor(() => expect(testRouter.replace).toHaveBeenCalledWith("/chooser/search/?prefs=1"))
   })
 })
 
@@ -83,7 +61,7 @@ describe("chooser search field of study", () => {
   it("shows the chosen fields as a chip linking to the career field tab", async () => {
     mockChooser({ items: [institution()] })
     server.use(plan(["Biology", "Physics"]))
-    render("/chooser/search/")
+    render("/chooser/?step=match&view=list")
     expect(await screen.findByText("Field of study: Biology, Physics")).toBeDefined()
     expect(screen.getByRole("link", { name: "change" }).getAttribute("href")).toBe("/career?tab=field")
   })
@@ -91,17 +69,8 @@ describe("chooser search field of study", () => {
   it("shows a banner when no field is chosen", async () => {
     mockChooser({ items: [institution()] })
     server.use(plan([]))
-    render("/chooser/search/")
+    render("/chooser/?step=match&view=list")
     expect(await screen.findByText("Choose your field of study")).toBeDefined()
     expect(screen.getByRole("link", { name: "Choose a field" }).getAttribute("href")).toBe("/career?tab=field")
-  })
-})
-
-describe("chooser search next step", () => {
-  it("links to the list", async () => {
-    mockChooser({ items: [institution()] })
-    render("/chooser/search/")
-    const link = await screen.findByRole("link", { name: /Review my list/ })
-    expect(link.getAttribute("href")).toBe("/chooser/list")
   })
 })

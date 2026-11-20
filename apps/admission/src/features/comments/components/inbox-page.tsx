@@ -11,7 +11,7 @@ export function CommentsInboxPage() {
   const t = useT("comments")
   return (
     <AdmissionShell roles={[...STAFF_ROLES]}>
-      <div className={pageClass("narrow")}>
+      <div className={pageClass()}>
         <AppPageHeader icon="inbox" title={t("inboxTitle")} />
         <CommentsInbox />
       </div>

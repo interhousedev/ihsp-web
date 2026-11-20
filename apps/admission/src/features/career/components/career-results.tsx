@@ -45,7 +45,7 @@ export function CareerResults({
       .map(([question, option]) => t(`quiz.${question}.${option}`))
       .join("; ")
   return (
-    <div className={pageClass("narrow")}>
+    <div className={pageClass()}>
       <header className="space-y-2">
         <h1 className="text-2xl font-bold md:text-3xl lg:text-4xl">{t("resultsTitle")}</h1>
         <p className="text-muted-foreground">{t("resultsText")}</p>

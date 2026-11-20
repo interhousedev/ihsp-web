@@ -3,7 +3,9 @@
 import { useSession } from "@ihsp/auth"
 import { AssistantChatPane, AssistantEntry, AssistantProvider, TierPicker } from "@ihsp/features-core"
 import { useT } from "@ihsp/i18n"
-import { Button, Icons, Skeleton, cn } from "@ihsp/ui"
+import { Button, Icons, Skeleton, buttonVariants, cn } from "@ihsp/ui"
+import Link from "next/link"
+import { usePathname } from "next/navigation"
 import { useEffect, useRef, useState } from "react"
 import { AssistantConsentCard } from "./consent-card"
 import { useDockChat } from "./dock-chat"
@@ -24,13 +26,15 @@ export const ASSISTANT_OPEN_EVENT = "admission:assistant-open"
 /** The AI button of the header (students only): opens the dock of `AssistantLauncher`. */
 export function AssistantHeaderButton() {
   const { session } = useSession()
-  if (!session?.user.roles?.includes("student")) return null
+  const onAssistantPage = usePathname().startsWith("/assistant")
+  if (!session?.user.roles?.includes("student") || onAssistantPage) return null
   return <AssistantEntry onClick={() => window.dispatchEvent(new Event(ASSISTANT_OPEN_EVENT))} />
 }
 
 export function AssistantLauncher() {
   const { session } = useSession()
-  if (!session?.user.roles?.includes("student")) return null
+  const onAssistantPage = usePathname().startsWith("/assistant")
+  if (!session?.user.roles?.includes("student") || onAssistantPage) return null
   return <AssistantDock userId={session.user.id} />
 }
 
@@ -117,6 +121,15 @@ function AssistantDock({ userId }: { userId: string }) {
             >
               <Icons.add className="size-4" aria-hidden />
             </Button>
+            <Link
+              href="/assistant/"
+              aria-label={t("openFull")}
+              title={t("openFull")}
+              className={cn(buttonVariants({ variant: "ghost", size: "icon" }), "size-11 md:size-9")}
+              onClick={() => setOpen(false)}
+            >
+              <Icons.externalLink className="size-4" aria-hidden />
+            </Link>
             <Button
               type="button"
               variant="ghost"

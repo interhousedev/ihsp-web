@@ -71,10 +71,11 @@ const entry = (id: string, ebrw: number, math: number, verified = false): ScoreE
   verified_at: verified ? "2026-04-01T00:00:00Z" : null,
   created_at: "2026-03-20T00:00:00Z",
   updated_at: "2026-03-20T00:00:00Z",
+  source: "manual",
 })
 
 function overview(over: Partial<ScoreOverview> = {}): ScoreOverview {
-  return { entries: [], summaries: [], is_owner: true, can_verify: false, ...over }
+  return { entries: [], summaries: [], is_owner: true, can_verify: false, exams: [], ...over }
 }
 
 function common(data: ScoreOverview) {
@@ -227,5 +228,29 @@ describe("test scores: confirmation and server errors", () => {
     fireEvent.change(await screen.findByLabelText("Test"), { target: { value: "t-sat" } })
     fireEvent.click(await screen.findByRole("button", { name: "Save" }))
     await screen.findByText("Scores need a taken date")
+  })
+})
+
+describe("certificates in the test scores", () => {
+  test("a certificate entry shows read-only and unmatched standard exams are listed", async () => {
+    common(
+      overview({
+        entries: [{ ...entry("c1", 700, 750), source: "certificate" }],
+        exams: [
+          {
+            entry_id: "x1",
+            type_code: "duolingo",
+            name: { en: "Duolingo", ru: "Duolingo", uz: "Duolingo" },
+            issued_at: "2026-02-01",
+            expires_at: null,
+            values: { score: 120 },
+          },
+        ],
+      }),
+    )
+    renderAdmissionApp(<TestsBody />)
+    expect((await screen.findAllByText("From my certificates")).length).toBeGreaterThanOrEqual(2)
+    expect(screen.getByText("Other standard certificates")).toBeTruthy()
+    expect(screen.queryByRole("button", { name: /Delete/ })).toBeNull()
   })
 })

@@ -5,8 +5,8 @@ import { useInstallAppMenuItem } from "@ihsp/features-core/pwa"
 import { useFeedbackMenu, useLicenseMenu, usePlatformLinks, useUpdatePreferences } from "@ihsp/features-core"
 import { UserMenu } from "@ihsp/ui"
 
-/** Profile menu: language, theme, the other IHSP platforms and log out. */
-export function ProfileMenu({ variant = "avatar" }: { variant?: "avatar" | "row" }) {
+/** Profile menu (the only place the account is shown): language, theme, the other IHSP platforms and log out. */
+export function ProfileMenu() {
   const { session } = useSession()
   const update = useUpdatePreferences()
   const platforms = usePlatformLinks()
@@ -14,14 +14,12 @@ export function ProfileMenu({ variant = "avatar" }: { variant?: "avatar" | "row"
   const feedback = useFeedbackMenu({ area: "other" })
   const license = useLicenseMenu()
   if (!session) return null
-  const { first_name, last_name, login, photo_url } = session.user
+  const { first_name, last_name, photo_url } = session.user
   return (
     <>
       <UserMenu
         name={`${last_name} ${first_name}`}
-        subtitle={login}
         imageUrl={photo_url}
-        variant={variant}
         items={[...feedback.items, ...license.items, ...(installItem ? [installItem] : [])]}
         platforms={platforms}
         onLocaleChange={(locale) => update.mutate({ locale })}

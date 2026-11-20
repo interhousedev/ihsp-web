@@ -5,7 +5,7 @@ import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query"
 import { useMemo } from "react"
 import type { StepValue } from "../../components/stepper"
 import { fetchQuiz, putQuiz, quizKey, type QuizAnswers } from "../profile/details-api"
-import { careerMajorsQuery, pick } from "../career/api"
+import { careerKeys, careerMajorsQuery, pick } from "../career/api"
 import { useFacets } from "../chooser/hooks"
 import { countryName } from "../chooser/components/option-label"
 import { preferencesKey, preferencesQuery, putPreferences } from "./api"
@@ -53,6 +53,7 @@ export function useAlgorithm() {
       if (prefs) client.setQueryData(preferencesKey, prefs)
       client.setQueryData(quizKey("algorithm"), savedQuiz)
       void client.invalidateQueries({ queryKey: ["admission", "profile", "details"] })
+      void client.invalidateQueries({ queryKey: careerKeys.plan() })
       // The deck and the chances depend on the preferences.
       void client.invalidateQueries({ queryKey: ["admission", "matches"] })
     },

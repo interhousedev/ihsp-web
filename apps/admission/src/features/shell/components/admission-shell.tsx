@@ -2,7 +2,7 @@
 
 import type { Role } from "@ihsp/api"
 import { RequireAuth, RequireRole, useSession } from "@ihsp/auth"
-import { MaintenanceBanner, PageLoading, ShellNavControls, usePlatformLinks } from "@ihsp/features-core"
+import { MaintenanceBanner, NotificationBell, PageLoading, ShellNavControls, usePlatformLinks } from "@ihsp/features-core"
 import { useT } from "@ihsp/i18n"
 import { AppHeaderActions, AppShell, buttonVariants, Icons, OfflineBadge, StateView } from "@ihsp/ui"
 import Link from "next/link"
@@ -96,9 +96,8 @@ function Frame({ tour, children }: { tour: boolean; children: ReactNode }) {
       bottomBar={sectionNav ? <SectionBottomBar items={nav.bottom} /> : undefined}
       platforms={platforms}
       brand={<AdmissionBrand />}
-      sidebarFooter={<ProfileMenu variant="row" />}
       controls={
-        <AppHeaderActions ai={<AssistantHeaderButton />} profile={<ProfileMenu />}>
+        <AppHeaderActions ai={<AssistantHeaderButton />} bell={<NotificationBell />} profile={<ProfileMenu />}>
           <OfflineBadge />
           {sectionNav ? (
             <SecondaryMenu links={secondary?.items ?? []} staff={staff.flatMap((group) => group.items)} />

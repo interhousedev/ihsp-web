@@ -31,15 +31,6 @@ describe("my list pathway", () => {
     expect(await href("Documents")).toBe("/documents?entry=e1")
   })
 
-  it("ends with the budget and essays suggestions", async () => {
-    mockChooser({ list: [entry] })
-    renderAdmissionApp(<MyList />, { messages })
-    const budget = await screen.findByRole("link", { name: /Check application budget/ })
-    expect(budget.getAttribute("href")).toBe("/chooser/budget")
-    const essays = await screen.findByRole("link", { name: /Start essays for 1 universities/ })
-    expect(essays.getAttribute("href")).toBe("/essays?tab=colleges")
-  })
-
   it("asks for a field of study above the list when there is none", async () => {
     mockChooser({ list: [entry] })
     server.use(http.get(apiUrl("/v1/admission/career"), () => HttpResponse.json({ study_focus: { labels: [] } })))

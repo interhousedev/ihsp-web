@@ -15,9 +15,7 @@ import {
 } from "@ihsp/ui"
 import { usePathname, useRouter, useSearchParams } from "next/navigation"
 import { useMemo, useState } from "react"
-import { NextStep } from "../../../components/next-step"
 import { ScrollFade } from "../../../components/scroll-fade"
-import { AlgorithmPanel } from "../../algorithm"
 import { DiscoverPage } from "../../discover/components/discover-page"
 import {
   activeFilterKeys,
@@ -47,8 +45,7 @@ export function SearchView() {
   const filters = useMemo(() => filtersFromParams(new URLSearchParams(params.toString())), [params])
   const isMobile = useIsMobile()
   const [sheetOpen, setSheetOpen] = useState(false)
-  const view: View = params.get("view") === "discover" ? "discover" : "list"
-  const prefsOpen = params.get("prefs") === "1"
+  const view: View = params.get("view") === "list" ? "list" : "discover"
   const [text, setText] = useState(filters.q ?? "")
   const { facets } = useFacets()
   const { groups } = useStudyFields()
@@ -61,11 +58,11 @@ export function SearchView() {
   const active = activeFilterKeys(filters)
 
   /** The address for the filters, keeping the view and the preferences panel. */
-  function href(next: Filters, extra: { view?: View; prefs?: boolean } = {}) {
+  function href(next: Filters, extra: { view?: View } = {}) {
     const search = new URLSearchParams(filtersToSearch(next).slice(1))
     const nextView = extra.view ?? view
-    if (nextView === "discover") search.set("view", "discover")
-    if (extra.prefs ?? prefsOpen) search.set("prefs", "1")
+    search.set("step", "match")
+    if (nextView === "list") search.set("view", "list")
     const text = search.toString()
     return `${pathname}${text ? `?${text}` : ""}`
   }
@@ -129,31 +126,20 @@ export function SearchView() {
           </button>
         ))}
       </div>
-      <Button type="button" variant="outline" onClick={() => router.replace(href(filters, { prefs: true }))}>
-        <Icons.discover aria-hidden />
-        {t("prefs.open")}
-      </Button>
     </div>
-  )
-
-  const prefsSheet = (
-    <Sheet open={prefsOpen} onOpenChange={(open) => !open && router.replace(href(filters, { prefs: false }))}>
-      <SheetContent side={isMobile ? "bottom" : "right"} className="max-h-[100dvh] overflow-y-auto p-4">
-        <SheetHeader>
-          <SheetTitle>{t("prefs.title")}</SheetTitle>
-        </SheetHeader>
-        <AlgorithmPanel />
-      </SheetContent>
-    </Sheet>
   )
 
   if (view === "discover") {
     return (
-      <div className="flex min-w-0 flex-col gap-4">
-        {toolbar}
-        <FieldFocus />
-        <DiscoverPage />
-        {prefsSheet}
+      <div className="flex min-w-0 flex-col gap-3">
+        <DiscoverPage
+          lead={
+            <>
+              {toolbar}
+              <FieldFocus />
+            </>
+          }
+        />
       </div>
     )
   }
@@ -231,9 +217,7 @@ export function SearchView() {
         <ScrollFade maxHeight={isMobile ? undefined : "calc(100dvh - 22rem)"} className="pr-1">
           {results}
         </ScrollFade>
-        <NextStep href="/chooser/list/" label={t("nextStep.review", { count: list.data?.length ?? 0 })} />
       </div>
-      {prefsSheet}
     </div>
   )
 }

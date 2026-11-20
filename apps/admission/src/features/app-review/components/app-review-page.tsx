@@ -103,7 +103,7 @@ export function AppReviewPanel() {
   }
 
   return (
-    <div className={pageClass("narrow")}>
+    <div className={pageClass()}>
       <AppPageHeader
         icon="badgeCheck"
         title={t("title")}

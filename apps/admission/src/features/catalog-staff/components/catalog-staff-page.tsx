@@ -168,7 +168,7 @@ export function CatalogStaffBody() {
     )
   }
   return (
-    <div className={pageClass("narrow")}>
+    <div className={pageClass()}>
       <AppPageHeader
         icon="search"
         title={t("title")}

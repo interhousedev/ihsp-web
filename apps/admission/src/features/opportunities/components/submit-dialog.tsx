@@ -1,5 +1,6 @@
 "use client"
 
+import { useSchoolGrades } from "../../../lib/config"
 import { useErrorMessage, useLocale, useT } from "@ihsp/i18n"
 import {
   Button,
@@ -35,7 +36,6 @@ const AWARDS: AwardType[] = ["scholarship", "fellowship", "grant", "tuition_waiv
 const SCOPES: Scope[] = ["local", "international"]
 const COVERAGES: Coverage[] = ["full_tuition", "partial_tuition", "stipend", "cash", "travel"]
 const CREDITS: CreditKind[] = ["none", "possible", "yes"]
-const GRADES = [9, 10, 11, 12]
 
 function NativeSelect<T extends string>({
   label,
@@ -73,6 +73,7 @@ export function SubmitDialog({
   target?: Opportunity
 }) {
   const t = useT("opportunities")
+  const GRADES = useSchoolGrades()
   const locale = useLocale()
   const errorMessage = useErrorMessage()
   const submit = useSubmitOpportunity()
@@ -90,6 +91,9 @@ export function SubmitDialog({
   const [exam, setExam] = useState(base?.exam_dates?.[0] ?? "")
   const [lastYear, setLastYear] = useState(base?.last_year_dates?.[0] ?? "")
   const [recurrence, setRecurrence] = useState(base?.recurrence ?? "")
+  const [cost, setCost] = useState(base?.tuition_usd?.toString() ?? "")
+  const [hours, setHours] = useState(base?.hours_per_week?.toString() ?? "")
+  const [startsOn, setStartsOn] = useState(base?.starts_on ?? "")
   const [note, setNote] = useState("")
   const orgs = useOrgs()
   const [orgId, setOrgId] = useState(base?.org_id ?? "")
@@ -126,6 +130,9 @@ export function SubmitDialog({
           registration_deadlines: one(registration),
           exam_dates: one(exam),
           last_year_dates: one(lastYear),
+          tuition_usd: cost.trim() === "" ? null : Math.max(0, Math.round(Number(cost))),
+          hours_per_week: hours.trim() === "" ? null : Number(hours),
+          starts_on: startsOn || null,
           recurrence: kind === "recurring" ? recurrence.trim() || null : null,
           lms_course_id: base?.lms_course_id ?? null,
           materials: base?.materials ?? [],
@@ -246,6 +253,20 @@ export function SubmitDialog({
           <label className="flex flex-col gap-1 text-sm">
             {t("lastYearLabel")}
             <Input type="date" value={lastYear} onChange={(e) => setLastYear(e.target.value)} />
+          </label>
+        </div>
+        <div className="grid gap-3 sm:grid-cols-3">
+          <label className="flex flex-col gap-1 text-sm">
+            {t("startsOnLabel")}
+            <Input type="date" value={startsOn} onChange={(e) => setStartsOn(e.target.value)} />
+          </label>
+          <label className="flex flex-col gap-1 text-sm">
+            {t("hoursLabel")}
+            <Input type="number" min={0.5} max={80} step={0.5} value={hours} onChange={(e) => setHours(e.target.value)} />
+          </label>
+          <label className="flex flex-col gap-1 text-sm">
+            {t("costLabel")}
+            <Input type="number" min={0} step={1} value={cost} onChange={(e) => setCost(e.target.value)} />
           </label>
         </div>
         {kind === "recurring" && (

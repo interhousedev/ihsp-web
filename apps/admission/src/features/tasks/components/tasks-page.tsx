@@ -211,7 +211,7 @@ export function TasksPage() {
   const t = useT("tasks")
   return (
     <AdmissionShell>
-      <div className={pageClass("wide")}>
+      <div className={pageClass()}>
         <AppPageHeader icon="kanban" title={t("title")} />
         <TasksBody />
       </div>

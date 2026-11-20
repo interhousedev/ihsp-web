@@ -3,47 +3,41 @@
 import { useErrorMessage, useT } from "@ihsp/i18n"
 import { Button, Icons, ResponsiveDialog, StateView } from "@ihsp/ui"
 import { useQueryClient } from "@tanstack/react-query"
-import { useCallback, useEffect, useMemo, useState, useSyncExternalStore } from "react"
+import { useCallback, useEffect, useMemo, useState, useSyncExternalStore, type ReactNode } from "react"
 import { toast } from "sonner"
 import { SwipeDeck, type SwipeDirection } from "../../../components/lib/swipe-deck"
 import { ScrollFade } from "../../../components/scroll-fade"
 import type { AdmissionMatch as Match } from "@ihsp/api"
-import { AlgorithmPanel } from "../../algorithm/components/algorithm-panel"
 import { useDecide, useMatches, useUndoDecision } from "../hooks"
+import { DeckSettings } from "./deck-settings"
 import { MatchCard } from "./match-card"
 import { SwipeExplainer } from "./swipe-explainer"
 import { UniChatPanel } from "./uni-chat-panel"
 
-/** Three columns need 1440px; below that the algorithm moves into a dialog so deck and chat keep their width. */
-type Layout = "mobile" | "tablet" | "desktop" | "wide"
-
+/** The assistant sits beside the deck from 1024px; narrower it opens in a dialog. */
 function subscribe(onChange: () => void) {
   window.addEventListener("resize", onChange)
   return () => window.removeEventListener("resize", onChange)
 }
-const snapshot = (): Layout => {
-  const width = window.innerWidth
-  return width < 768 ? "mobile" : width < 1024 ? "tablet" : width < 1440 ? "desktop" : "wide"
-}
-const serverSnapshot = (): Layout => "wide"
+const snapshot = () => window.innerWidth >= 1024
+const serverSnapshot = () => true
 
 type Decided = { match: Match; direction: SwipeDirection }
 
-const COLUMN_HEIGHT = "calc(100dvh - 9rem)"
+const COLUMN_HEIGHT = "calc(100dvh - 21rem)"
 
-/** The Kollegio-style matching feed, embedded in the chooser search (no page chrome): algorithm, swipe deck and assistant context. */
-export function DiscoverPage() {
+/** The Kollegio-style matching feed, embedded in the chooser (no page chrome): settings, swipe deck and assistant context. */
+export function DiscoverPage({ lead }: { lead?: ReactNode }) {
   const t = useT("discover")
   const tChat = useT("uniChat")
   const errorMessage = useErrorMessage()
   const client = useQueryClient()
-  const layout = useSyncExternalStore(subscribe, snapshot, serverSnapshot)
+  const wide = useSyncExternalStore(subscribe, snapshot, serverSnapshot)
   const matches = useMatches()
   const decide = useDecide()
   const undo = useUndoDecision()
   const [history, setHistory] = useState<Decided[]>([])
   const [stamp, setStamp] = useState<string | null>(null)
-  const [panelOpen, setPanelOpen] = useState(false)
   const [chatOpen, setChatOpen] = useState(false)
 
   const remaining = useMemo(() => {
@@ -104,7 +98,6 @@ export function DiscoverPage() {
   }
 
   const refresh = () => void client.invalidateQueries({ queryKey: ["admission", "matches"] })
-  const algorithm = <AlgorithmPanel onSaved={refresh} />
   const context = <UniChatPanel match={top} />
 
   const deck = matches.isLoading ? (
@@ -116,9 +109,10 @@ export function DiscoverPage() {
       <SwipeExplainer />
       <div className="rounded-card relative isolate z-0 min-w-0 overflow-hidden">
         <SwipeDeck
-          className="h-[min(34rem,calc(100dvh-22rem))] min-h-[20rem] md:h-[min(34rem,calc(100dvh-16rem))] md:min-h-[26rem]"
+          className="h-[min(34rem,calc(100dvh-30rem))] min-h-[16rem] md:h-[min(34rem,calc(100dvh-26.5rem))] md:min-h-[20rem]"
           items={remaining}
           getKey={(match) => match.university_id}
+          getExitDirection={(match) => history.find((entry) => entry.match.university_id === match.university_id)?.direction}
           renderCard={(match) => <MatchCard match={match} />}
           onSwipe={onSwipe}
           rightStamp={t("stamp.interested")}
@@ -156,86 +150,36 @@ export function DiscoverPage() {
   )
 
   return (
-    <>
-      <div className="flex w-full min-w-0 flex-col gap-4">
-        <div className="flex flex-wrap items-center justify-end gap-2">
-          {layout === "mobile" ? (
-            <div className="flex flex-wrap gap-2">
-              <Button type="button" variant="outline" size="sm" onClick={() => setChatOpen(true)}>
-                <Icons.sparkles aria-hidden />
-                {tChat("ask")}
-              </Button>
-              <Button type="button" variant="outline" size="sm" onClick={() => setPanelOpen(true)}>
-                <Icons.discover aria-hidden />
-                {t("algorithm.open")}
-              </Button>
-            </div>
-          ) : null}
-          {layout === "desktop" ? (
-            <Button type="button" variant="outline" size="sm" onClick={() => setPanelOpen(true)}>
-              <Icons.discover aria-hidden />
-              {t("algorithm.open")}
-            </Button>
-          ) : null}
-          {layout === "tablet" ? (
-            <Button
-              type="button"
-              variant="outline"
-              size="sm"
-              aria-expanded={panelOpen}
-              onClick={() => setPanelOpen((open) => !open)}
-            >
-              <Icons.panelLeft aria-hidden />
-              {panelOpen ? t("algorithm.hide") : t("algorithm.show")}
-            </Button>
-          ) : null}
-        </div>
-        {layout === "wide" ? (
-          <div className="grid grid-cols-[20rem_minmax(0,1fr)_22rem] items-start gap-6">
-            <ScrollFade maxHeight={COLUMN_HEIGHT} className="pr-2">
-              {algorithm}
-            </ScrollFade>
-            {deck}
-            <aside data-testid="discover-side-slot" className="relative z-10 min-w-0">
-              <ScrollFade maxHeight={COLUMN_HEIGHT} className="pr-2">
-                {context}
-              </ScrollFade>
-            </aside>
-          </div>
-        ) : layout === "desktop" ? (
-          <div className="grid grid-cols-[minmax(0,1fr)_24rem] items-start gap-6">
-            {deck}
-            <aside data-testid="discover-side-slot" className="relative z-10 min-w-0">
-              <ScrollFade maxHeight={COLUMN_HEIGHT} className="pr-2">
-                {context}
-              </ScrollFade>
-            </aside>
-            <ResponsiveDialog open={panelOpen} onOpenChange={setPanelOpen} title={t("algorithm.title")}>
-              {algorithm}
-            </ResponsiveDialog>
-          </div>
-        ) : layout === "tablet" ? (
-          <div className={panelOpen ? "grid grid-cols-[minmax(0,1fr)_18rem] items-start gap-4" : "grid grid-cols-1"}>
-            {deck}
-            {panelOpen ? (
-              <ScrollFade maxHeight={COLUMN_HEIGHT} className="flex flex-col gap-6 pr-2">
-                {algorithm}
-                {context}
-              </ScrollFade>
-            ) : null}
-          </div>
-        ) : (
-          <>
-            {deck}
-            <ResponsiveDialog open={panelOpen} onOpenChange={setPanelOpen} title={t("algorithm.title")}>
-              {algorithm}
-            </ResponsiveDialog>
-            <ResponsiveDialog open={chatOpen} onOpenChange={setChatOpen} title={tChat("tab")}>
-              {context}
-            </ResponsiveDialog>
-          </>
+    <div className="flex w-full min-w-0 flex-col gap-4">
+      <div className="flex flex-wrap items-center justify-between gap-2">
+        <div className="flex min-w-0 flex-wrap items-center gap-2">{lead}</div>
+        <div className="flex items-center gap-2">
+        {wide ? null : (
+          <Button type="button" variant="outline" size="sm" onClick={() => setChatOpen(true)}>
+            <Icons.sparkles aria-hidden />
+            {tChat("ask")}
+          </Button>
         )}
+        <DeckSettings onSaved={refresh} />
+        </div>
       </div>
-    </>
+      {wide ? (
+        <div className="grid grid-cols-[minmax(0,1fr)_24rem] items-start gap-6">
+          {deck}
+          <aside data-testid="discover-side-slot" className="relative z-10 min-w-0">
+            <ScrollFade maxHeight={COLUMN_HEIGHT} className="pr-2">
+              {context}
+            </ScrollFade>
+          </aside>
+        </div>
+      ) : (
+        <>
+          {deck}
+          <ResponsiveDialog open={chatOpen} onOpenChange={setChatOpen} title={tChat("tab")}>
+            {context}
+          </ResponsiveDialog>
+        </>
+      )}
+    </div>
   )
 }

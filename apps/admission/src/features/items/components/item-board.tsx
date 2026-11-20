@@ -27,6 +27,8 @@ const TONE = { draft: "warning", ready: "success" } as const
 const COLUMN = "column:"
 const CARD = "item:"
 const STEP = 48
+/** On a desktop screen the card list scrolls inside its column so the page below stays in view. */
+const FIT = "md:max-h-[max(14rem,calc(100dvh-39rem))]"
 
 /** Left and right jump to the other column, up and down step through the cards. */
 const coordinateGetter: KeyboardCoordinateGetter = (event, { context: { droppableRects }, currentCoordinates }) => {
@@ -79,11 +81,13 @@ function Column({
   items,
   onEdit,
   onDelete,
+  fit,
 }: {
   status: ItemStatus
   items: Item[]
   onEdit: (item: Item) => void
   onDelete: (item: Item) => void
+  fit?: boolean
 }) {
   const t = useT("items")
   const drop = useDroppable({ id: `${COLUMN}${status}` })
@@ -106,7 +110,7 @@ function Column({
           {t(`column.empty.${status}`)}
         </p>
       ) : (
-        <ScrollFade>
+        <ScrollFade className={fit ? FIT : undefined}>
           <ul className="flex flex-col gap-2 p-1">
             {items.map((item) => (
               <DraggableCard key={item.id} item={item} onEdit={onEdit} onDelete={onDelete} />
@@ -128,11 +132,14 @@ export function ItemBoard({
   ready,
   onEdit,
   onDelete,
+  fit,
 }: {
   drafts: Item[]
   ready: Item[]
   onEdit: (item: Item) => void
   onDelete: (item: Item) => void
+  /** Keeps the whole page within one desktop screen by scrolling the card lists. */
+  fit?: boolean
 }) {
   const t = useT("items")
   const errorMessage = useErrorMessage()
@@ -219,6 +226,7 @@ export function ItemBoard({
             items={status === "draft" ? drafts : ready}
             onEdit={onEdit}
             onDelete={onDelete}
+            fit={fit}
           />
         ))}
       </div>

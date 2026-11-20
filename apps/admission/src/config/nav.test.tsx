@@ -55,7 +55,8 @@ describe("sections", () => {
     expect(activePart(SECTIONS.apply, "/outcomes/", null)?.id).toBe("results")
     expect(activePart(SECTIONS.career, "/career/", "future")?.id).toBe("future")
     expect(activePart(SECTIONS.career, "/career/", null)?.id).toBe("explore")
-    expect(activePart(SECTIONS.essays, "/essays/", "alignment")?.id).toBe("alignment")
+    expect(SECTIONS.essays.parts).toEqual([])
+    expect(activePart(SECTIONS.essays, "/essays/", "alignment")).toBeUndefined()
   })
 })
 
@@ -66,7 +67,7 @@ describe("useNav", () => {
     expect(bottom).toEqual([
       "Career=/career/",
       "Activities=/activities/",
-      "Universities=/chooser/list/",
+      "Universities=/chooser/",
       "Essays=/essays/",
       "Apply=/documents/",
     ])

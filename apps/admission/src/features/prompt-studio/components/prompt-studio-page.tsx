@@ -31,7 +31,7 @@ export function PromptStudioPage() {
   const t = useT("promptStudio")
   return (
     <AdmissionShell>
-      <div className={pageClass("narrow")}>
+      <div className={pageClass()}>
         <AppPageHeader icon="sparkles" title={t("title")} />
         <PromptStudioBody />
       </div>

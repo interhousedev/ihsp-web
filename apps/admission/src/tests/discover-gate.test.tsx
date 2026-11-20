@@ -24,17 +24,16 @@ afterEach(() => {
 })
 
 describe("discover gate", () => {
-  test("shows the algorithm while its quiz is incomplete", async () => {
-    mockQuizzes()
+  test("offers the algorithm questions behind the Settings button", async () => {
+    mockQuizzes({ algorithm: { answers: {}, completed: true } })
     other()
-    renderAdmissionApp(<SearchView />, { route: "/chooser/search/?view=discover" })
-    expect(await screen.findByRole("heading", { name: "Your Algorithm" })).toBeInTheDocument()
-    expect(screen.getByText("Answer the questions to get your tags.")).toBeInTheDocument()
+    renderAdmissionApp(<SearchView />, { route: "/chooser/?step=match" })
+    expect(await screen.findByRole("button", { name: /Settings|Настройки/ })).toBeInTheDocument()
   })
   test("shows the swipe deck once the quiz is complete", async () => {
     mockQuizzes({ algorithm: { answers: {}, completed: true } })
     other()
-    renderAdmissionApp(<SearchView />, { route: "/chooser/search/?view=discover" })
+    renderAdmissionApp(<SearchView />, { route: "/chooser/?step=match" })
     expect(await screen.findByTestId("discover-side-slot")).toBeInTheDocument()
     await waitFor(() => expect(screen.getAllByRole("status").length).toBeGreaterThan(0))
   })
