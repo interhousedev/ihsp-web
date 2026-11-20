@@ -89,10 +89,8 @@ describe("settings page", () => {
   })
 
   test("a student without Telegram is told where notifications go", async () => {
-    renderSp(<SettingsPage />, {
-      route: "/settings/?section=notifications",
-      session: { user: { ...userMe, telegram: [] } },
-    })
+    server.use(http.get(apiUrl("/v1/id/me/telegram"), () => HttpResponse.json([])))
+    renderSp(<SettingsPage />, { route: "/settings/?section=notifications" })
 
     expect(await screen.findByText(/Notifications go to Telegram/)).toBeInTheDocument()
     expect(screen.getByRole("link", { name: "Link Telegram" }).getAttribute("href")).toBe(

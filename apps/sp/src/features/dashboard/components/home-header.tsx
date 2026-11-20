@@ -3,6 +3,8 @@
 import { TeacherAvatar } from "@ihsp/features-core"
 import { useT } from "@ihsp/i18n"
 import Link from "next/link"
+import { useSession, hasRole } from "@ihsp/auth"
+import { StudentCardButton } from "../../student-card/components/student-card-button"
 import { useScrolled } from "../../today/dashboard/use-scrolled"
 import { useHomeStudent } from "../hooks/use-home-student"
 
@@ -17,6 +19,8 @@ const PROFILE_HREF = "/profile/"
 export function HomeHeader() {
   const t = useT("home")
   const student = useHomeStudent()
+  const { session } = useSession()
+  const isStudent = hasRole(session?.user.roles, "student")
   const compact = useScrolled(24)
   const profileLabel = student.name ? t("openProfileNamed", { name: student.name }) : t("openProfile")
 
@@ -72,6 +76,11 @@ export function HomeHeader() {
             {student.line ? <span className="truncate text-sm">{student.line}</span> : null}
           </span>
         </Link>
+        {isStudent ? (
+          <div className="relative mx-auto mt-3 flex w-full max-w-4xl">
+            <StudentCardButton />
+          </div>
+        ) : null}
       </header>
     </>
   )

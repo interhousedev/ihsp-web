@@ -163,7 +163,7 @@ describe("the Today layout", () => {
     expect(grid.className).toContain("sm:grid-cols-2")
     expect(grid.className).toContain("md:grid-cols-4")
     expect(grid.className).toContain("auto-rows-auto")
-    expect(grid.className).toContain("md:auto-rows-[var(--dashboard-row)]")
+    expect(grid.className).toContain("md:auto-rows-[minmax(var(--dashboard-row),auto)]")
   })
 
   test("a retired kind left in a saved layout is not shown, and an edit drops it", async () => {

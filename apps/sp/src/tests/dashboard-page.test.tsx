@@ -1,6 +1,6 @@
 /** The Home page (`/`): the student's widget grid, the only Today-style page; `/today/` redirects here. */
 import { afterEach, beforeEach, describe, expect, test } from "bun:test"
-import { apiUrl, server } from "@ihsp/test-utils"
+import { apiUrl, server, userMe } from "@ihsp/test-utils"
 import { act, screen, within } from "@testing-library/react"
 import { HttpResponse, http } from "msw"
 import { DashboardPage } from "../features/dashboard/components/dashboard-page"
@@ -35,7 +35,7 @@ describe("Home", () => {
     expect(face.getAttribute("href")).toMatch(/^\/profile\/?$/)
     expect(screen.queryByTestId("home-stats")).toBeNull()
     expect(screen.queryByRole("navigation", { name: "Sections" })).toBeNull()
-    expect(screen.queryByRole("button", { name: "Student card" })).toBeNull()
+    expect(screen.queryByRole("button", { name: "Student card" })).not.toBeNull()
   })
 
   test("the compact bar links the face and the name to the profile", async () => {
@@ -56,5 +56,11 @@ describe("Home", () => {
     })
     expect(screen.getByTestId("home-compact-bar")).toHaveAttribute("data-compact", "true")
     Object.defineProperty(window, "scrollY", { value: 0, configurable: true })
+  })
+
+  test("a teacher has no student card button", async () => {
+    renderSp(<DashboardPage />, { session: { user: { ...userMe, roles: ["teacher"] } } })
+    expect(await screen.findByTestId("home-header")).toBeInTheDocument()
+    expect(screen.queryByRole("button", { name: "Student card" })).toBeNull()
   })
 })
