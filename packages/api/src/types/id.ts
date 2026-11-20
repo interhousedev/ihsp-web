@@ -97,7 +97,6 @@ export type UserMe = {
   /** A link to the account's own photo; null when there is none. */
   photo_url: string | null
   preferences: UserPreferences
-  telegram: TelegramAccount[]
 }
 
 export type SessionItem = {

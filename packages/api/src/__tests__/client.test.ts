@@ -38,6 +38,23 @@ describe("api client", () => {
     expect(new Headers(calls[1]?.init.headers).get("Authorization")).toBeNull()
   })
 
+  test("sends X-IHSP-App with the app id", async () => {
+    const calls: Call[] = []
+    const api = createApiClient({
+      baseUrl: () => "http://api.test",
+      appName: () => "staff",
+      getToken: () => "t",
+      onRefresh: async () => false,
+      onUnauthorized: () => undefined,
+      fetch: (async (input: string, init: RequestInit) => {
+        calls.push({ url: input, init })
+        return json({})
+      }) as unknown as typeof fetch,
+    })
+    await api.get("/v1/me/today")
+    expect(new Headers(calls[0]?.init.headers).get("X-IHSP-App")).toBe("staff")
+  })
+
   test("`cache` reaches fetch, so learning GETs can revalidate past the 60 s browser cache", async () => {
     const { api, calls } = client([json({}), json({})])
     await api.get("/v1/lms/courses/x/steps/y", { cache: "no-cache" })

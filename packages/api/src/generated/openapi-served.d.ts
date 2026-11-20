@@ -204,6 +204,154 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/v1/admin/ai/analytics/prompt-sizes": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Prompt Sizes
+         * @description Characters and estimated tokens of every prompt version, the built-in as v0.
+         */
+        get: operations["prompt_sizes_v1_admin_ai_analytics_prompt_sizes_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/admin/ai/analytics/requests": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Request Stats
+         * @description Averages, totals and cost per request, day, user or pipeline.
+         */
+        get: operations["request_stats_v1_admin_ai_analytics_requests_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/admin/ai/analytics/spend": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Spend
+         * @description Spend per day, request or user, most expensive first.
+         */
+        get: operations["spend_v1_admin_ai_analytics_spend_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/admin/ai/analytics/spend/daily": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Spend Daily
+         * @description Spend per day and request: the twenty costliest requests, the rest folded.
+         */
+        get: operations["spend_daily_v1_admin_ai_analytics_spend_daily_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/admin/ai/connectors": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * List Connectors
+         * @description Every connector: made from the environment or added here (no keys).
+         */
+        get: operations["list_connectors_v1_admin_ai_connectors_get"];
+        put?: never;
+        /**
+         * Add Connector
+         * @description Add a connector; its key is written to Vault first and never read back.
+         */
+        post: operations["add_connector_v1_admin_ai_connectors_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/admin/ai/connectors/{connector_id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post?: never;
+        /**
+         * Remove Connector
+         * @description Remove a connector and its key; a built-in one returns to the environment.
+         */
+        delete: operations["remove_connector_v1_admin_ai_connectors__connector_id__delete"];
+        options?: never;
+        head?: never;
+        /**
+         * Change Connector
+         * @description Change a connector; a connector of the environment gets an override row.
+         */
+        patch: operations["change_connector_v1_admin_ai_connectors__connector_id__patch"];
+        trace?: never;
+    };
+    "/v1/admin/ai/connectors/{connector_id}/test": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Test Connector
+         * @description Ask the provider something tiny; the answer never contains the key.
+         */
+        post: operations["test_connector_v1_admin_ai_connectors__connector_id__test_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/v1/admin/ai/limit-extensions": {
         parameters: {
             query?: never;
@@ -287,6 +435,50 @@ export interface paths {
         put: operations["put_limits_v1_admin_ai_limits_put"];
         post?: never;
         delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/admin/ai/pipelines": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * List Pipelines
+         * @description Every pipeline with its tasks, runtime route and what its calls use.
+         */
+        get: operations["list_pipelines_v1_admin_ai_pipelines_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/admin/ai/pipelines/{pipeline}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        /**
+         * Route Pipeline
+         * @description Route a pipeline to a connector, model and effort; applies within 30 s.
+         */
+        put: operations["route_pipeline_v1_admin_ai_pipelines__pipeline__put"];
+        post?: never;
+        /**
+         * Reset Pipeline
+         * @description Send the pipeline back to the environment's values.
+         */
+        delete: operations["reset_pipeline_v1_admin_ai_pipelines__pipeline__delete"];
         options?: never;
         head?: never;
         patch?: never;
@@ -382,6 +574,46 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/v1/admin/ai/prompts/{task}/{name}/diff": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get Prompt Diff
+         * @description The unified diff between two versions (0 is the built-in); latest by default.
+         */
+        get: operations["get_prompt_diff_v1_admin_ai_prompts__task___name__diff_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/admin/ai/prompts/{task}/{name}/versions": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * List Prompt Versions
+         * @description The stored versions of a slot for a locale, without their text.
+         */
+        get: operations["list_prompt_versions_v1_admin_ai_prompts__task___name__versions_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/v1/admin/ai/prompts/{task}/{name}/versions/{version}/activate": {
         parameters: {
             query?: never;
@@ -396,6 +628,46 @@ export interface paths {
          * @description Make a stored version the active one of its locale again (a rollback).
          */
         post: operations["activate_prompt_v1_admin_ai_prompts__task___name__versions__version__activate_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/admin/ai/requests": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * List Requests
+         * @description The registered AI requests, with the state of their prompt templates.
+         */
+        get: operations["list_requests_v1_admin_ai_requests_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/admin/ai/requests/{request_id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get Request
+         * @description One registered AI request.
+         */
+        get: operations["get_request_v1_admin_ai_requests__request_id__get"];
+        put?: never;
+        post?: never;
         delete?: never;
         options?: never;
         head?: never;
@@ -22190,6 +22462,86 @@ export interface components {
             with_lesson_id: string | null;
         };
         /**
+         * ConnectorBody
+         * @description POST /connectors: a new connector; the key goes to Vault.
+         */
+        ConnectorBody: {
+            /**
+             * Api Key
+             * @description Write-only.
+             */
+            api_key?: string | null;
+            /**
+             * Base Url
+             * @description Required for openai_compatible.
+             */
+            base_url?: string | null;
+            /**
+             * Headers
+             * @description Extra headers (openai_compatible), write-only.
+             */
+            headers?: {
+                [key: string]: string;
+            };
+            /**
+             * Id
+             * @description Slug: a-z, 0-9, _ and -.
+             */
+            id: string;
+            kind: components["schemas"]["ConnectorKind"];
+            /** Title */
+            title: string;
+        };
+        /**
+         * ConnectorKind
+         * @description What a connector talks to.
+         * @enum {string}
+         */
+        ConnectorKind: "openrouter" | "anthropic" | "openai_compatible" | "exa";
+        /**
+         * ConnectorOut
+         * @description A connector; the key is never returned, only whether one is stored.
+         */
+        ConnectorOut: {
+            /** Base Url */
+            base_url: string | null;
+            /** Builtin */
+            builtin: boolean;
+            /** Enabled */
+            enabled: boolean;
+            /** Has Secret */
+            has_secret: boolean;
+            /** Id */
+            id: string;
+            kind: components["schemas"]["ConnectorKind"];
+            /** Secret Last4 */
+            secret_last4: string | null;
+            /**
+             * Source
+             * @enum {string}
+             */
+            source: "env" | "db";
+            /** Title */
+            title: string;
+        };
+        /**
+         * ConnectorPatchBody
+         * @description PATCH /connectors/{id}: only the fields sent change.
+         */
+        ConnectorPatchBody: {
+            /**
+             * Api Key
+             * @description Write-only.
+             */
+            api_key?: string | null;
+            /** Base Url */
+            base_url?: string | null;
+            /** Enabled */
+            enabled?: boolean | null;
+            /** Title */
+            title?: string | null;
+        };
+        /**
          * ConnectorResponse
          * @description Connector.
          */
@@ -22227,6 +22579,28 @@ export interface components {
             server: "student" | "lms" | "admin" | "teacher" | "app";
             /** Token Prefix */
             token_prefix: string | null;
+        };
+        /**
+         * ConnectorTestOut
+         * @description POST /connectors/{id}/test.
+         */
+        ConnectorTestOut: {
+            /** Error */
+            error: string | null;
+            /** Latency Ms */
+            latency_ms: number;
+            /** Ok */
+            ok: boolean;
+        };
+        /**
+         * ConnectorsResponse
+         * @description GET /connectors.
+         */
+        ConnectorsResponse: {
+            /** Items */
+            items: components["schemas"]["ConnectorOut"][];
+            /** Kinds */
+            kinds: components["schemas"]["ConnectorKind"][];
         };
         /**
          * ConsentBody
@@ -24317,6 +24691,23 @@ export interface components {
             };
         };
         /**
+         * EffectiveOut
+         * @description What the calls of a pipeline use now.
+         */
+        EffectiveOut: {
+            /** Connector Id */
+            connector_id: string;
+            /** Model */
+            model: string;
+            /** Reasoning Effort */
+            reasoning_effort: string | null;
+            /**
+             * Source
+             * @enum {string}
+             */
+            source: "runtime" | "env";
+        };
+        /**
          * EmailChangeBody
          * @description POST /v1/id/me/email/change.
          */
@@ -24732,6 +25123,18 @@ export interface components {
             name: string | null;
             /** To Date */
             to_date: string | null;
+        };
+        /**
+         * EnvDefaultOut
+         * @description What the pipeline uses without a runtime route.
+         */
+        EnvDefaultOut: {
+            /** Connector Id */
+            connector_id: string;
+            /** Model */
+            model: string;
+            /** Reasoning Effort */
+            reasoning_effort: string | null;
         };
         /**
          * ErasedOut
@@ -33757,6 +34160,39 @@ export interface components {
             pinned: boolean;
         };
         /**
+         * PipelineOut
+         * @description One pipeline with its tasks and routes.
+         */
+        PipelineOut: {
+            effective: components["schemas"]["EffectiveOut"];
+            env_default: components["schemas"]["EnvDefaultOut"];
+            /** Pipeline */
+            pipeline: string;
+            route: components["schemas"]["RouteOut"];
+            /** Tasks */
+            tasks: string[];
+        };
+        /**
+         * PipelineRouteBody
+         * @description PUT /pipelines/{pipeline}: each field null falls through to the environment.
+         */
+        PipelineRouteBody: {
+            /** Connector Id */
+            connector_id?: string | null;
+            /** Model */
+            model?: string | null;
+            /** Reasoning Effort */
+            reasoning_effort?: ("none" | "minimal" | "low" | "medium" | "high") | null;
+        };
+        /**
+         * PipelinesResponse
+         * @description GET /pipelines.
+         */
+        PipelinesResponse: {
+            /** Items */
+            items: components["schemas"]["PipelineOut"][];
+        };
+        /**
          * PlanConfirmResponse
          * @description The confirmed plan and the deck that is being generated.
          */
@@ -34837,6 +35273,66 @@ export interface components {
             versions: components["schemas"]["PromptVersionOut"][];
         };
         /**
+         * PromptDiffOut
+         * @description The unified diff between two versions of a slot (0 is the built-in).
+         */
+        PromptDiffOut: {
+            /** Chars Delta */
+            chars_delta: number;
+            /** Diff */
+            diff: string;
+            /** From Version */
+            from_version: number;
+            /** Locale */
+            locale: string;
+            /** Name */
+            name: string;
+            /** Task */
+            task: string;
+            /** To Version */
+            to_version: number;
+            /** Tokens Delta */
+            tokens_delta: number;
+        };
+        /**
+         * PromptSizeOut
+         * @description The size of one prompt version (0 is the built-in text).
+         */
+        PromptSizeOut: {
+            /** Active */
+            active: boolean;
+            /** Chars */
+            chars: number;
+            /**
+             * Created At
+             * Format: date-time
+             */
+            created_at: string;
+            /** Locale */
+            locale: string;
+            /** Name */
+            name: string;
+            /**
+             * Source
+             * @enum {string}
+             */
+            source: "code" | "admin";
+            /** Task */
+            task: string;
+            /** Tokens Est */
+            tokens_est: number;
+            /** Version */
+            version: number;
+        };
+        /**
+         * PromptSizesResponse
+         * @description Prompt sizes per slot and version.
+         */
+        PromptSizesResponse: {
+            /** Items */
+            items: components["schemas"]["PromptSizeOut"][];
+        };
+        /**
          * PromptSlotOut
          * @description An editable piece of a task's prompt, overridden or built-in.
          */
@@ -34903,6 +35399,11 @@ export interface components {
             /** Active */
             active: boolean;
             /**
+             * Chars
+             * @default 0
+             */
+            chars: number;
+            /**
              * Created At
              * Format: date-time
              */
@@ -34920,10 +35421,65 @@ export interface components {
             locale: string;
             /** Note */
             note: string;
+            /**
+             * Source
+             * @default admin
+             */
+            source: string;
             /** Text */
             text: string;
+            /**
+             * Tokens Est
+             * @default 0
+             */
+            tokens_est: number;
             /** Version */
             version: number;
+        };
+        /**
+         * PromptVersionSummaryOut
+         * @description A stored version without its text.
+         */
+        PromptVersionSummaryOut: {
+            /** Active */
+            active: boolean;
+            /** Chars */
+            chars: number;
+            /**
+             * Created At
+             * Format: date-time
+             */
+            created_at: string;
+            /** Created By */
+            created_by: string | null;
+            /** Has Diff */
+            has_diff: boolean;
+            /** Hash */
+            hash: string;
+            /** Locale */
+            locale: string;
+            /** Note */
+            note: string;
+            /**
+             * Source
+             * @description `admin` (an administrator) or `code` (a deploy).
+             */
+            source: string;
+            /**
+             * Tokens Est
+             * @description About a quarter of the characters.
+             */
+            tokens_est: number;
+            /** Version */
+            version: number;
+        };
+        /**
+         * PromptVersionsResponse
+         * @description The versions of one slot, newest first.
+         */
+        PromptVersionsResponse: {
+            /** Items */
+            items: components["schemas"]["PromptVersionSummaryOut"][];
         };
         /**
          * ProofIn
@@ -36184,6 +36740,116 @@ export interface components {
             user_id: string;
         };
         /**
+         * RequestOut
+         * @description A request the code published, and the state of its prompt template.
+         */
+        RequestOut: {
+            /**
+             * Active Version
+             * @description The template version in force; 0 is built-in.
+             */
+            active_version: number;
+            /** Args Schema */
+            args_schema: {
+                [key: string]: unknown;
+            };
+            /**
+             * Code Changed Since Active
+             * @description An administrator's text predates the latest code default.
+             */
+            code_changed_since_active: boolean;
+            /**
+             * Code Version
+             * @description The version that recorded the code's text.
+             */
+            code_version: number;
+            /**
+             * Id
+             * @example notebooks.studio_quiz.generate
+             */
+            id: string;
+            /** Owner App */
+            owner_app: string;
+            /** Pipeline */
+            pipeline: string;
+            /** Published At */
+            published_at: string | null;
+            /**
+             * Retired
+             * @description True once no code declares the request.
+             */
+            retired: boolean;
+            /** Summary */
+            summary: string;
+            /** Task */
+            task: string;
+            /**
+             * Template Id
+             * @description `<task>/<name>` of the prompt slot.
+             */
+            template_id: string;
+            /** Tools */
+            tools: string[];
+        };
+        /**
+         * RequestStatsOut
+         * @description Averages and totals of one group of calls.
+         */
+        RequestStatsOut: {
+            /** Avg Answer Chars */
+            avg_answer_chars: number;
+            /** Avg Output Tokens */
+            avg_output_tokens: number;
+            /** Avg Prompt Chars */
+            avg_prompt_chars: number;
+            /** Avg Prompt Tokens */
+            avg_prompt_tokens: number;
+            /** Avg Tool Calls */
+            avg_tool_calls: number;
+            /** Calls */
+            calls: number;
+            /** Cost Micro */
+            cost_micro: number;
+            /** Failed */
+            failed: number;
+            /**
+             * Key
+             * @description Request id, day, user id or pipeline.
+             */
+            key: string;
+        };
+        /**
+         * RequestStatsResponse
+         * @description Per-group statistics and their totals.
+         */
+        RequestStatsResponse: {
+            /** Items */
+            items: components["schemas"]["RequestStatsOut"][];
+            totals: components["schemas"]["RequestTotalsOut"];
+        };
+        /**
+         * RequestTotalsOut
+         * @description The totals over every group (averages weighted by calls).
+         */
+        RequestTotalsOut: {
+            /** Avg Answer Chars */
+            avg_answer_chars: number;
+            /** Avg Output Tokens */
+            avg_output_tokens: number;
+            /** Avg Prompt Chars */
+            avg_prompt_chars: number;
+            /** Avg Prompt Tokens */
+            avg_prompt_tokens: number;
+            /** Avg Tool Calls */
+            avg_tool_calls: number;
+            /** Calls */
+            calls: number;
+            /** Cost Micro */
+            cost_micro: number;
+            /** Failed */
+            failed: number;
+        };
+        /**
          * RequestUploadBody
          * @description Declared properties of the file the client is going to upload.
          */
@@ -36201,6 +36867,14 @@ export interface components {
             sha256_b64: string;
             /** Size */
             size: number;
+        };
+        /**
+         * RequestsResponse
+         * @description The registered requests.
+         */
+        RequestsResponse: {
+            /** Items */
+            items: components["schemas"]["RequestOut"][];
         };
         /**
          * ResolveAction
@@ -36775,6 +37449,20 @@ export interface components {
             binding: boolean;
             /** Id */
             id: string;
+        };
+        /**
+         * RouteOut
+         * @description The runtime route of a pipeline.
+         */
+        RouteOut: {
+            /** Connector Id */
+            connector_id: string | null;
+            /** Model */
+            model: string | null;
+            /** Reasoning Effort */
+            reasoning_effort: string | null;
+            /** Updated At */
+            updated_at: string | null;
         };
         /**
          * RunOut
@@ -38432,6 +39120,65 @@ export interface components {
              * Format: uuid
              */
             question_id: string;
+        };
+        /**
+         * SpendDailyOut
+         * @description Spend of one request on one day (`other` folds the tail).
+         */
+        SpendDailyOut: {
+            /** Calls */
+            calls: number;
+            /** Cost Micro */
+            cost_micro: number;
+            /** Day */
+            day: string;
+            /** Request Id */
+            request_id: string;
+        };
+        /**
+         * SpendDailyResponse
+         * @description The day x request matrix.
+         */
+        SpendDailyResponse: {
+            /** Items */
+            items: components["schemas"]["SpendDailyOut"][];
+        };
+        /**
+         * SpendOut
+         * @description Spend of one day, request or user.
+         */
+        SpendOut: {
+            /** Calls */
+            calls: number;
+            /** Cost Micro */
+            cost_micro: number;
+            /** Key */
+            key: string;
+            user: components["schemas"]["SpendUserOut"] | null;
+            /** Users */
+            users: number;
+        };
+        /**
+         * SpendResponse
+         * @description Spend rows, most expensive first.
+         */
+        SpendResponse: {
+            /** Items */
+            items: components["schemas"]["SpendOut"][];
+            /** Total Cost Micro */
+            total_cost_micro: number;
+        };
+        /**
+         * SpendUserOut
+         * @description The user of a spend row grouped by user.
+         */
+        SpendUserOut: {
+            /** Full Name */
+            full_name: string;
+            /** Id */
+            id: string;
+            /** Role */
+            role: string | null;
         };
         /**
          * SpikeIn
@@ -42614,8 +43361,6 @@ export interface components {
             roles: components["schemas"]["Role"][];
             /** Status */
             status: string;
-            /** Telegram */
-            telegram: components["schemas"]["app__interfaces__http__v1__id__schemas__TelegramAccountResponse"][];
         };
         /**
          * UserPatchBody
@@ -46105,6 +46850,292 @@ export interface operations {
             };
         };
     };
+    prompt_sizes_v1_admin_ai_analytics_prompt_sizes_get: {
+        parameters: {
+            query?: {
+                task?: string | null;
+                name?: string | null;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["PromptSizesResponse"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    request_stats_v1_admin_ai_analytics_requests_get: {
+        parameters: {
+            query?: {
+                start?: string | null;
+                end?: string | null;
+                request_id?: string | null;
+                pipeline?: string | null;
+                user_id?: string | null;
+                group_by?: "request" | "day" | "user" | "pipeline";
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["RequestStatsResponse"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    spend_v1_admin_ai_analytics_spend_get: {
+        parameters: {
+            query?: {
+                start?: string | null;
+                end?: string | null;
+                by?: "day" | "request" | "user";
+                request_id?: string | null;
+                user_id?: string | null;
+                limit?: number;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["SpendResponse"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    spend_daily_v1_admin_ai_analytics_spend_daily_get: {
+        parameters: {
+            query?: {
+                start?: string | null;
+                end?: string | null;
+                request_id?: string | null;
+                user_id?: string | null;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["SpendDailyResponse"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    list_connectors_v1_admin_ai_connectors_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ConnectorsResponse"];
+                };
+            };
+        };
+    };
+    add_connector_v1_admin_ai_connectors_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["ConnectorBody"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ConnectorOut"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    remove_connector_v1_admin_ai_connectors__connector_id__delete: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                connector_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            204: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    change_connector_v1_admin_ai_connectors__connector_id__patch: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                connector_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["ConnectorPatchBody"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ConnectorOut"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    test_connector_v1_admin_ai_connectors__connector_id__test_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                connector_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ConnectorTestOut"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
     list_extensions_v1_admin_ai_limit_extensions_get: {
         parameters: {
             query?: {
@@ -46272,6 +47303,90 @@ export interface operations {
                 content: {
                     "application/json": components["schemas"]["LimitsResponse"];
                 };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    list_pipelines_v1_admin_ai_pipelines_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["PipelinesResponse"];
+                };
+            };
+        };
+    };
+    route_pipeline_v1_admin_ai_pipelines__pipeline__put: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                pipeline: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["PipelineRouteBody"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["PipelineOut"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    reset_pipeline_v1_admin_ai_pipelines__pipeline__delete: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                pipeline: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            204: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
             };
             /** @description Validation Error */
             422: {
@@ -46472,6 +47587,76 @@ export interface operations {
             };
         };
     };
+    get_prompt_diff_v1_admin_ai_prompts__task___name__diff_get: {
+        parameters: {
+            query?: {
+                locale?: "" | "uz" | "ru" | "en";
+                from?: number | null;
+                to?: number | null;
+            };
+            header?: never;
+            path: {
+                task: string;
+                name: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["PromptDiffOut"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    list_prompt_versions_v1_admin_ai_prompts__task___name__versions_get: {
+        parameters: {
+            query?: {
+                locale?: "" | "uz" | "ru" | "en";
+            };
+            header?: never;
+            path: {
+                task: string;
+                name: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["PromptVersionsResponse"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
     activate_prompt_v1_admin_ai_prompts__task___name__versions__version__activate_post: {
         parameters: {
             query?: never;
@@ -46492,6 +47677,70 @@ export interface operations {
                 };
                 content: {
                     "application/json": components["schemas"]["PromptVersionOut"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    list_requests_v1_admin_ai_requests_get: {
+        parameters: {
+            query?: {
+                owner_app?: string | null;
+                pipeline?: string | null;
+                include_retired?: boolean;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["RequestsResponse"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    get_request_v1_admin_ai_requests__request_id__get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                request_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["RequestOut"];
                 };
             };
             /** @description Validation Error */

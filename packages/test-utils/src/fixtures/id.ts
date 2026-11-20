@@ -66,7 +66,6 @@ export const userMe: UserMe = {
   mailbox: "brastilov.aleksey@mail.ihsu.uz",
   photo_url: null,
   preferences: userPreferences,
-  telegram: telegramAccounts,
 }
 
 /** The demo teacher Kalandarova Gavxar. */
@@ -82,7 +81,6 @@ export const teacherMe: UserMe = {
   otp_enabled: true,
   emis_status: null,
   mailbox: "kalandarova.gavxar@mail.ihsu.uz",
-  telegram: [],
 }
 
 /** The demo administrator `admin.ihsp` (password and OTP are required in the real flow). */
@@ -98,7 +96,6 @@ export const adminMe: UserMe = {
   otp_enabled: true,
   emis_status: null,
   mailbox: "admin.ihsp@mail.ihsu.uz",
-  telegram: [],
 }
 
 export const loginInfo: LoginInfo = {

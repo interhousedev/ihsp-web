@@ -57,6 +57,7 @@ import { adminWorkOffsHandlers } from "./work-offs-admin"
 import { loginCuesHandlers } from "./login-cues"
 import { appMapHandlers } from "./app-map"
 import { adminPromptsHandlers } from "./admin-prompts"
+import { adminAiHarnessHandlers } from "./admin-ai-harness"
 import { clientConfigHandlers } from "./client-config"
 import { botPostsHandlers } from "./bot-posts"
 import { botsHandlers } from "./bots"
@@ -75,6 +76,7 @@ export { resetAdminJobs } from "./admin-jobs"
 export { personalTokenSecret, resetPersonalTokens } from "./id-personal-tokens"
 export { resetAdminMigration, setAdminMigration } from "./admin-migration"
 export { resetAdminVault } from "./admin-vault"
+export { aiConnectorsFixture, aiPipelinesFixture, aiRequestsFixture } from "./admin-ai-harness"
 export { resetFaces, setMyFace } from "./faces"
 export { onboardingCalls, resetOnboarding, setOnboarding, setOnboardingEmisEntries } from "./onboarding"
 export { resetAdminKnowledge } from "./admin-knowledge"
@@ -175,6 +177,7 @@ export {
   loginCuesHandlers,
   appMapHandlers,
   adminPromptsHandlers,
+  adminAiHarnessHandlers,
   clientConfigHandlers,
   botPostsHandlers,
   botsHandlers,
@@ -200,6 +203,7 @@ export const allHandlers = [
   ...loginCuesHandlers,
   ...appMapHandlers,
   ...adminPromptsHandlers,
+  ...adminAiHarnessHandlers,
   ...clientConfigHandlers,
   ...botPostsHandlers,
   ...botsHandlers,

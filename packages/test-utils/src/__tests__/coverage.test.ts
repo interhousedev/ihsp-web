@@ -17,11 +17,26 @@ function normalize(path: string): string {
   return path.replace(/\$\{[^}]+\}/g, "{}").replace(/:[A-Za-z_]+/g, "{}")
 }
 
+/**
+ * Inlines `const BASE = "/v1/..."` and path helpers (`const promptPath = (ref) => `${BASE}/prompts/...``) so a call
+ * written as `${BASE}/connectors` is compared by its full path.
+ */
+function inlinePaths(source: string): string {
+  let out = source
+  for (const [, name, value] of source.matchAll(/^const (\w+) = "(\/[^"]*)"/gm)) {
+    out = out.replaceAll(`\${${name}}`, value ?? "")
+  }
+  for (const [, name, value] of out.matchAll(/^const (\w+) = \([^)]*\)(?:: string)? => `([^`]+)`/gm)) {
+    out = out.replace(new RegExp(`\\$\\{${name}\\([^)]*\\)\\}`, "g"), value ?? "")
+  }
+  return out
+}
+
 /** Every `api.<method>(path)` call of the typed endpoint functions of `@ihsp/api`. */
 function clientRoutes(): Route[] {
   const routes: Route[] = []
   for (const file of readdirSync(ENDPOINTS_DIR).filter((name) => name.endsWith(".ts"))) {
-    const source = readFileSync(join(ENDPOINTS_DIR, file), "utf8")
+    const source = inlinePaths(readFileSync(join(ENDPOINTS_DIR, file), "utf8"))
     for (const match of source.matchAll(CALL)) {
       routes.push({ method: (match[1] ?? "").toUpperCase(), path: normalize((match[3] ?? "").split("?")[0] ?? "") })
     }
